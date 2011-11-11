@@ -46,10 +46,10 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl5[] = {
   { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field11a_NSBMD, GFL_G3D_UTIL_RESARC },
   { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field11a_NSBCA, GFL_G3D_UTIL_RESARC },
 };
-//都会・雑踏Ｂ
+//都会・雑踏Ｂー２
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl6[] = {
-  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field03f_NSBMD, GFL_G3D_UTIL_RESARC },
-  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field03f_NSBCA, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field03g_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field03g_NSBCA, GFL_G3D_UTIL_RESARC },
 };
 //都会・雑踏ー１
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl7[] = {
@@ -190,7 +190,7 @@ static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl5[] = {
   { G3DRES_BCTA_BCA, 0  },
 //  { G3DRES_01_BTP, 0  },
 };
-// 「都会・雑踏Ｂ」 アニメ定義
+// 「都会・雑踏Ｂー２」 アニメ定義
 static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl6[] = {
   { G3DRES_BCTA_BCA, 0  },
 //  { G3DRES_01_BTP, 0  },
@@ -364,7 +364,7 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl5[] = {
     NELEMS(g3Dutil_anmTbl5), //アニメデータ数
   },
 };
-// 都会・雑踏Ｂ
+// 都会・雑踏Ｂー２
 static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl6[] = {
   {
     G3DRES_BCTA_BMD,         //モデルID
@@ -625,7 +625,7 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup[] = {
     g3Dutil_objTbl5,           //オブジェクト設定テーブル
     NELEMS(g3Dutil_objTbl5),   //オブジェクト数
   },
-  { // シナリオ7 ( 都会・雑踏Ｂ )
+  { // シナリオ7 ( 都会・雑踏Ｂー２ )
     g3Dutil_resTbl6,           //データテーブル
     NELEMS(g3Dutil_resTbl6),   //データ数
     g3Dutil_objTbl6,           //オブジェクト設定テーブル
