@@ -7,5 +7,7 @@
 //スクリプトデータID定義
 #define SCRID_C09R0701_SHOP (1)
 #define SCRID_C09R0701_FIX_SHOP (2)
+#define SCRID_C09R0701_TRAINERW_01 (3)
+#define SCRID_C09R0701_VETERANM_01 (4)
 
 #endif //_C09R0701_DEF_H_

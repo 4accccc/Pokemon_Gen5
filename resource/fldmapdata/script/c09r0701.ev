@@ -21,6 +21,8 @@
 //--------------------------------------------------------------
 _EVENT_DATA   ev_c09r0701_shop
 _EVENT_DATA   ev_c09r0701_fix_shop
+_EVENT_DATA	ev_c09r0701_trainerw_01
+_EVENT_DATA	ev_c09r0701_veteranm_01
 _EVENT_DATA_END
 
 //=============================================================
@@ -37,4 +39,18 @@ EVENT_END
 EVENT_START ev_c09r0701_fix_shop
   _TALK_OBJ_START()
   _FIX_SHOP_CALL( C09_FS )
+EVENT_END
+
+/************************************************************/
+/*	VETERANM	一言メッセージ							*/
+/************************************************************/
+EVENT_START	ev_c09r0701_veteranm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c09r0701_veteranm_01 )
+EVENT_END
+
+/************************************************************/
+/*	TRAINERW	一言メッセージ							*/
+/************************************************************/
+EVENT_START	ev_c09r0701_trainerw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c09r0701_trainerw_01 )
 EVENT_END

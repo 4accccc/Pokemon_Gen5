@@ -13,6 +13,8 @@
 #define C09R0701_SHOPM1_01                 1
 #define C09R0701_SHOPM1_02                 2
 #define C09R0701_MEDALOYAJI                3
+#define C09R0701_TRAINERW_01               4
+#define C09R0701_VETERANM_01               5
 
 #endif //ZONE_C09R0701_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c09r0701.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
