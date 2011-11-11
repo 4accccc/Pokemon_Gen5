@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-04-17T17:42:29"/>
+	<create user="ariizumi_nobuhiko" host="W00248" date="2011-04-22T20:03:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -199,7 +199,7 @@
 			<tag entry="49" japanese="ミュージカルグッズ部位" english="ミュージカルグッズ部位" view="EP" width="39" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
-			<tag entry="50" japanese="PDW家具名" english="PDW家具名" view="EP" width="169" line="1">
+			<tag entry="50" japanese="PDW家具名" english="PDW家具名" view="EP" width="192" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
 			<tag entry="51" japanese="ミュージカル客層" english="ミュージカル客層" view="EP" width="78" line="1">
@@ -211,6 +211,58 @@
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">DS本体のユーザー名</comment>
 				<comment language="english">DS本体のユーザー名</comment>
+			</tag>
+			<tag entry="53" japanese="メダル名" english="メダル名" view="EP" width="130" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">様々なことをするともらえる称号をあらわすメダルの名前</comment>
+				<comment language="english">様々なことをするともらえる称号をあらわすメダルの名前</comment>
+			</tag>
+			<tag entry="54" japanese="メダリストランク名" english="メダリストランク名" view="EP" width="65" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">メダルを集めると上昇するメダルボックスのランク名</comment>
+				<comment language="english">メダルを集めると上昇するメダルボックスのランク名</comment>
+			</tag>
+			<tag entry="55" japanese="リゾートフリーワード" english="リゾートフリーワード" view="EP" width="104" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リゾートで使用する自由入力の挨拶文です。</comment>
+				<comment language="english">リゾートで使用する自由入力の挨拶文です。</comment>
+			</tag>
+			<tag entry="56" japanese="リゾート店名" english="リゾート店名" view="EP" width="169" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リゾートで使用する店の名前です。</comment>
+				<comment language="english">リゾートで使用する店の名前です。</comment>
+			</tag>
+			<tag entry="57" japanese="リゾート街名" english="リゾート街名" view="EP" width="130" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リゾートで使用する自由入力の街名です。</comment>
+				<comment language="english">リゾートで使用する自由入力の街名です。</comment>
+			</tag>
+			<tag entry="58" japanese="リゾート市長名" english="リゾート市長名" view="EP" width="130" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リゾートで使用する自由入力の市長名です。</comment>
+				<comment language="english">リゾートで使用する自由入力の市長名です。</comment>
+			</tag>
+			<tag entry="59" japanese="WBTトーナメント名" english="WBTトーナメント名" view="EP" width="208" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WBTのトーナメント名称</comment>
+				<comment language="english">WBTのトーナメント名称</comment>
+			</tag>
+			<tag entry="60" japanese="未設定タグ" english="未設定タグ" view="EP" width="130" line="1">
+				<parameter number="0" japanese="場所" english="場所" type="int8"/>
+				<comment language="japanese">開発中の決定していないタグに使用する</comment>
+				<comment language="english">開発中の決定していないタグに使用する</comment>
+			</tag>
+			<tag entry="61" japanese="トライアルハウスランク" english="トライアルハウスランク" view="EP" width="91" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">トライアルハウスでのランクです。
+「マスターランク」など</comment>
+				<comment language="english">トライアルハウスでのランクです。
+「マスターランク」など</comment>
+			</tag>
+			<tag entry="62" japanese="天候" english="天候" view="EP" width="65" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ゲートの電光掲示板に表示されます。「はれ」・「すなあらし」など</comment>
+				<comment language="english">ゲートの電光掲示板に表示されます。「はれ」・「すなあらし」など</comment>
 			</tag>
 		</group>
 
@@ -365,13 +417,13 @@
 		</language>
 	</columns>
 
-	<dialog left="0" top="112" right="579" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="-126" top="97" right="579" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="571"/>
+		<tag-palette left="736" top="133" right="1209" bottom="536" visible="no"/>
+		<band id="0" index="0" style="0000" width="522"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="404"/>
-		<band id="3" index="3" style="0000" width="591"/>
+		<band id="2" index="2" style="0000" width="689"/>
+		<band id="3" index="3" style="0000" width="689"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -418,46 +470,30 @@
 	</row>
 
 	<row id="EV_BGM_006">
-		<language name="JPN" width="216">SEQ_BGM_VS_PLASMA</language>
-	</row>
-
-	<row id="EV_BGM_007">
 		<language name="JPN" width="216">SEQ_BGM_VS_SHITENNO</language>
 	</row>
 
-	<row id="EV_BGM_008">
+	<row id="EV_BGM_007">
 		<language name="JPN" width="216">SEQ_BGM_VS_CHAMP</language>
 	</row>
 
-	<row id="EV_BGM_009">
-		<language name="JPN" width="216">SEQ_BGM_VS_N</language>
-	</row>
-
-	<row id="EV_BGM_010">
-		<language name="JPN" width="216">SEQ_BGM_VS_N_2</language>
-	</row>
-
-	<row id="EV_BGM_011">
-		<language name="JPN" width="216">SEQ_BGM_VS_G_CIS</language>
-	</row>
-
-	<row id="EV_BGM_012">
+	<row id="EV_BGM_008">
 		<language name="JPN" width="216">SEQ_BGM_VS_SHIN</language>
 	</row>
 
-	<row id="EV_BGM_013">
+	<row id="EV_BGM_009">
 		<language name="JPN" width="216">SEQ_BGM_VS_MU</language>
 	</row>
 
-	<row id="EV_BGM_014">
+	<row id="EV_BGM_010">
 		<language name="JPN" width="216">SEQ_BGM_VS_RAI</language>
 	</row>
 
-	<row id="EV_BGM_015">
+	<row id="EV_BGM_011">
 		<language name="JPN" width="216">SEQ_BGM_VS_MOVEPOKE</language>
 	</row>
 
-	<row id="EV_BGM_016">
+	<row id="EV_BGM_012">
 		<language name="JPN" width="216">SEQ_BGM_VS_SETPOKE</language>
 	</row>
 
