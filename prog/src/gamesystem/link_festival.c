@@ -390,7 +390,7 @@ u32 LINK_FESTIVAL_MissionEnd( LINK_FESTIVAL* wk )
   FMISSION_LOG_TBL_Clear( &wk->mlog_stack_tbl );
   FMISSION_LOG_TBL_Clear( &wk->mlog_view_tbl );
 
-  if( FSND_GetLastBGM( wk->gdata ) != SEQ_BGM_PALACE2 ){
+  if( FSND_GetLastBGM( wk->gdata ) != SEQ_BGM_FES ){
     return FES_BGM_RECOVER_NONE;
   }
   //ƒtƒFƒXBGM‚¾‚Á‚½‚çBGM‚ðŒ³‚É–ß‚·
