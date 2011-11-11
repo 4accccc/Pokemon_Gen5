@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-11-11T18:34:04" source="intro_town_camera.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-11-11T20:19:39" source="intro_town_camera.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2011-11-11T18:34:04" source="intro_town_camera.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2011-11-11T20:19:39" source="intro_town_camera.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="4" xyz="-1.237549 0.099365 -0.600098" whd="2.074951 0.974854 5.099854"/>
 
-<tex_image_array size="21">
+<tex_image_array size="24">
 	<tex_image index="0" name="babygirl1.1"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
@@ -464,7 +464,133 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="11" name="swmama1.2"
+	<tex_image index="11" name="swmama1.10"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="swmama1.10_pl"
+		path="C:/home/swan_data3d/demo/intro_town/tex/obj/swmama1.10.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 eeee 000e 0000 0000 0000
+			0000 0000 ee00 6667 00e6 0000 0000 0000
+			0000 0000 667e 6666 000e 0000 0000 0000
+			0000 e000 6667 7666 000e 0000 0000 0000
+			0000 0550 667e 5576 005b 0000 0000 0000
+			0000 5650 7e55 cb57 0565 0000 0000 0000
+			0000 6e00 cbe6 77cc 5667 0000 0000 0000
+			0000 e000 755e 6677 6676 0005 0000 0000
+			0000 0000 6565 6666 9676 0008 0000 0000
+			0000 0000 6767 6666 9986 0079 0000 0000
+			0000 5000 6676 6666 9996 00a9 0000 0000
+			0000 5000 6676 6666 9996 0089 0000 0000
+			0000 e000 6676 6666 8898 0a99 0000 0000
+			0000 e000 6766 6666 5d98 0a99 0000 0000
+			0000 0000 7665 6757 7dc8 0a99 0000 0000
+			0000 0000 767e 7885 9997 0899 0000 0000
+			0000 0000 75e0 6585 9876 00a8 0000 0000
+			0000 0000 e000 e755 5566 0000 0000 0000
+			0000 0000 0000 5ee0 0aee 0000 0000 0000
+			0000 0000 0000 be00 0a4c 0000 0000 0000
+			0000 0000 0000 1430 e14b 0000 0000 0000
+			0000 0000 0000 41eb e11e 0000 0000 0000
+			0000 0000 b000 83ec 0e4e 0000 0000 0000
+			0000 0000 e000 9e5b 0be8 0000 0000 0000
+			0000 0000 0000 9ebe bce9 0000 0000 0000
+			0000 0000 0000 e24e eb3e 0000 0000 0000
+			0000 0000 0000 9ee0 0ee8 0000 0000 0000
+			0000 0000 0000 4e00 00e4 0000 0000 0000
+			0000 0000 0000 e000 000e 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="12" name="swmama1.11"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="swmama1.11_pl"
+		path="C:/home/swan_data3d/demo/intro_town/tex/obj/swmama1.11.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 eeee 000e 0000 0000 0000
+			0000 0000 ee00 6667 00e6 0000 0000 0000
+			0000 0000 667e 6666 000e 0000 0000 0000
+			0000 e000 6667 7666 000e 0000 0000 0000
+			0000 0550 667e 5576 005b 0000 0000 0000
+			0000 5650 7e55 cb57 0565 0000 0000 0000
+			0000 6e00 cbe6 77cc 5667 0000 0000 0000
+			0000 e000 755e 6677 6676 0005 0000 0000
+			0000 0000 6565 6666 9676 0008 0000 0000
+			0000 0000 6767 6666 9986 0079 0000 0000
+			0000 5000 6676 6666 9996 00a9 0000 0000
+			0000 5000 6676 6666 9996 0089 0000 0000
+			0000 e000 6676 6666 8898 0a99 0000 0000
+			0000 e000 6766 6666 5d98 0a99 0000 0000
+			0000 0000 7665 6757 7dc8 0a99 0000 0000
+			0000 0000 767e 7885 9997 0899 0000 0000
+			0000 0000 75e0 6585 9876 00a8 0000 0000
+			0000 0000 e000 e755 5566 0000 0000 0000
+			0000 0000 0000 5ee0 0aee 0000 0000 0000
+			0000 0000 0000 cbe0 0a44 0000 0000 0000
+			0000 0000 0000 b143 e144 0000 0000 0000
+			0000 0000 0000 e1eb e114 0000 0000 0000
+			0000 0000 b000 e89e 0e4e 0000 0000 0000
+			0000 0000 e000 e99e 0bcb 0000 0000 0000
+			0000 0000 0000 ceeb bccc 0000 0000 0000
+			0000 0000 0000 443e ee22 0000 0000 0000
+			0000 0000 e000 4ee3 e224 0033 0000 0000
+			0000 0000 e000 ee44 299e 00e2 0000 0000
+			0000 0000 0000 00ee 22e0 000e 0000 0000
+			0000 0000 0000 0000 ee00 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="13" name="swmama1.12"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="swmama1.12_pl"
+		path="C:/home/swan_data3d/demo/intro_town/tex/obj/swmama1.12.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 eeee 000e 0000 0000 0000
+			0000 0000 ee00 6667 00e6 0000 0000 0000
+			0000 0000 667e 6666 000e 0000 0000 0000
+			0000 e000 6667 7666 000e 0000 0000 0000
+			0000 0550 667e 5576 005b 0000 0000 0000
+			0000 5650 7e55 cb57 0565 0000 0000 0000
+			0000 6e00 cbe6 77cc 5667 0000 0000 0000
+			0000 e000 755e 6677 6676 0005 0000 0000
+			0000 0000 6565 6666 9676 0008 0000 0000
+			0000 0000 6767 6666 9986 0079 0000 0000
+			0000 5000 6676 6666 9996 00a9 0000 0000
+			0000 5000 6676 6666 9996 0089 0000 0000
+			0000 e000 6676 6666 8898 0a99 0000 0000
+			0000 e000 6766 6666 5d98 0a99 0000 0000
+			0000 0000 7665 6757 7dc8 0a99 0000 0000
+			0000 0000 767e 7885 9997 0899 0000 0000
+			0000 0000 75e0 6585 9876 00a8 0000 0000
+			0000 0000 e000 e755 5566 0000 0000 0000
+			0000 0000 0000 5ee0 0aee 0000 0000 0000
+			0000 0000 0000 5e00 0acb 0000 0000 0000
+			0000 0000 0000 4330 e1b1 0000 0000 0000
+			0000 0000 0000 1eeb e1e4 0000 0000 0000
+			0000 0000 b000 8ebc 0ee9 0000 0000 0000
+			0000 0000 e000 eb5b e898 0000 0000 0000
+			0000 0000 0000 ccce e99e 0000 0000 0000
+			0000 0000 e000 cb23 3eec 0000 0000 0000
+			0000 0000 ee00 2222 e3e4 000e 0000 0000
+			0000 0000 91e0 ee29 44ee 000e 0000 0000
+			0000 0000 11e0 00ee ee00 0000 0000 0000
+			0000 0000 ee00 000e 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="14" name="swmama1.2"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -506,7 +632,7 @@
 			0000 0000 0000 ee00 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="12" name="swmama1.3"
+	<tex_image index="15" name="swmama1.3"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -548,7 +674,7 @@
 			0000 0000 0000 0000 00ee 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="13" name="swmama1.4"
+	<tex_image index="16" name="swmama1.4"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -590,7 +716,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="14" name="swmama1.5"
+	<tex_image index="17" name="swmama1.5"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -632,7 +758,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="15" name="swmama1.6"
+	<tex_image index="18" name="swmama1.6"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -674,7 +800,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="16" name="swmama1.7"
+	<tex_image index="19" name="swmama1.7"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -716,7 +842,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="17" name="swmama1.8"
+	<tex_image index="20" name="swmama1.8"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -758,7 +884,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="18" name="swmama1.9"
+	<tex_image index="21" name="swmama1.9"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -800,7 +926,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="19" name="swrival.1"
+	<tex_image index="22" name="swrival.1"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -842,7 +968,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="20" name="woman1.1"
+	<tex_image index="23" name="woman1.1"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -886,7 +1012,7 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="21">
+<tex_palette_array size="24">
 	<tex_palette index="0" name="babygirl1.1_pl" color_size="16">
 		49ca 4e3f 3979 2a6e 1d69 2f78 2639 194e
 		1db4 2191 3e9b 5f5f 14c8 7fff 0000 7fff
@@ -926,47 +1052,59 @@
 		51f7 7338 1ea7 4390 09a3 3f9d 0297 192a
 		0e7c 05d7 192f 6f9f 4ebc 7fff 0000 7fff
 	</tex_palette>
-	<tex_palette index="10" name="swmama1.1_pl" color_size="16">
+	<tex_palette index="10" name="swmama1.10_pl" color_size="16">
 		22f5 62f6 62ef 3189 422e 04a7 1191 090c
 		3a7a 5f5f 192f 1cf6 3dfc 7fff 0000 7fff
 	</tex_palette>
-	<tex_palette index="11" name="swmama1.2_pl" color_size="16">
+	<tex_palette index="11" name="swmama1.11_pl" color_size="16">
 		22f5 62f6 62ef 3189 422e 04a7 1191 090c
 		3a7a 5f5f 192f 1cf6 3dfc 7fff 0000 7fff
 	</tex_palette>
-	<tex_palette index="12" name="swmama1.3_pl" color_size="16">
+	<tex_palette index="12" name="swmama1.12_pl" color_size="16">
 		22f5 62f6 62ef 3189 422e 04a7 1191 090c
 		3a7a 5f5f 192f 1cf6 3dfc 7fff 0000 7fff
 	</tex_palette>
-	<tex_palette index="13" name="swmama1.4_pl" color_size="16">
+	<tex_palette index="13" name="swmama1.1_pl" color_size="16">
 		22f5 62f6 62ef 3189 422e 04a7 1191 090c
 		3a7a 5f5f 192f 1cf6 3dfc 7fff 0000 7fff
 	</tex_palette>
-	<tex_palette index="14" name="swmama1.5_pl" color_size="16">
+	<tex_palette index="14" name="swmama1.2_pl" color_size="16">
 		22f5 62f6 62ef 3189 422e 04a7 1191 090c
 		3a7a 5f5f 192f 1cf6 3dfc 7fff 0000 7fff
 	</tex_palette>
-	<tex_palette index="15" name="swmama1.6_pl" color_size="16">
+	<tex_palette index="15" name="swmama1.3_pl" color_size="16">
 		22f5 62f6 62ef 3189 422e 04a7 1191 090c
 		3a7a 5f5f 192f 1cf6 3dfc 7fff 0000 7fff
 	</tex_palette>
-	<tex_palette index="16" name="swmama1.7_pl" color_size="16">
+	<tex_palette index="16" name="swmama1.4_pl" color_size="16">
 		22f5 62f6 62ef 3189 422e 04a7 1191 090c
 		3a7a 5f5f 192f 1cf6 3dfc 7fff 0000 7fff
 	</tex_palette>
-	<tex_palette index="17" name="swmama1.8_pl" color_size="16">
+	<tex_palette index="17" name="swmama1.5_pl" color_size="16">
 		22f5 62f6 62ef 3189 422e 04a7 1191 090c
 		3a7a 5f5f 192f 1cf6 3dfc 7fff 0000 7fff
 	</tex_palette>
-	<tex_palette index="18" name="swmama1.9_pl" color_size="16">
+	<tex_palette index="18" name="swmama1.6_pl" color_size="16">
 		22f5 62f6 62ef 3189 422e 04a7 1191 090c
 		3a7a 5f5f 192f 1cf6 3dfc 7fff 0000 7fff
 	</tex_palette>
-	<tex_palette index="19" name="swrival.1_pl" color_size="16">
+	<tex_palette index="19" name="swmama1.7_pl" color_size="16">
+		22f5 62f6 62ef 3189 422e 04a7 1191 090c
+		3a7a 5f5f 192f 1cf6 3dfc 7fff 0000 7fff
+	</tex_palette>
+	<tex_palette index="20" name="swmama1.8_pl" color_size="16">
+		22f5 62f6 62ef 3189 422e 04a7 1191 090c
+		3a7a 5f5f 192f 1cf6 3dfc 7fff 0000 7fff
+	</tex_palette>
+	<tex_palette index="21" name="swmama1.9_pl" color_size="16">
+		22f5 62f6 62ef 3189 422e 04a7 1191 090c
+		3a7a 5f5f 192f 1cf6 3dfc 7fff 0000 7fff
+	</tex_palette>
+	<tex_palette index="22" name="swrival.1_pl" color_size="16">
 		32e7 2098 1c72 3106 1ca4 4168 20c4 6f37
 		3a7a 5f5f 1530 108c 7fff 2108 0000 7fff
 	</tex_palette>
-	<tex_palette index="20" name="woman1.1_pl" color_size="16">
+	<tex_palette index="23" name="woman1.1_pl" color_size="16">
 		02b2 41aa 5eae 10a4 25ed 3671 1108 3a7a
 		5f5f 192f 2536 2111 3dfe 7fff 0000 7fff
 	</tex_palette>
@@ -1086,7 +1224,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="19" tex_palette_idx="19"
+		tex_image_idx="22" tex_palette_idx="22"
 		tex_tiling="clamp clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1134,7 +1272,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="20" tex_palette_idx="20"
+		tex_image_idx="23" tex_palette_idx="23"
 		tex_tiling="clamp clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1182,7 +1320,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="10" tex_palette_idx="10"
+		tex_image_idx="10" tex_palette_idx="13"
 		tex_tiling="clamp clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
