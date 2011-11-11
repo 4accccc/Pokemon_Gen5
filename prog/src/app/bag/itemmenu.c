@@ -3387,17 +3387,20 @@ static void SORT_Data( FIELD_ITEMMENU_WORK* p_wk , s32 sort_mode )
 //-----------------------------------------------------------------------------
 static void SORT_Repository_Data( FIELD_ITEMMENU_WORK* p_wk , s32 sort_mode )
 {
-  p_wk->repository_sort_mode = sort_mode;
+  if( p_wk->repository_sort_mode != sort_mode )
+  {
+    p_wk->repository_sort_mode = sort_mode;
 
-  // 保管ポケット内のならびをソート
-  BAGITEM_SortRepositoryItem( &p_wk->bag_item , p_wk->repository_sort_mode );
+    // 保管ポケット内のならびをソート
+    BAGITEM_SortRepositoryItem( &p_wk->bag_item , p_wk->repository_sort_mode );
 
-  // カーソルは一番上に表示
-  p_wk->curpos = 0;
-  p_wk->oamlistpos = -1;
-  p_wk->oamlistpos_old = 0xffff;
-  p_wk->bCursorChange = 1;
-  ITEMDISP_ScrollCursorChangePos( p_wk ); // カーソル位置を即時反映
+    // カーソルは一番上に表示
+    p_wk->curpos = 0;
+    p_wk->oamlistpos = -1;
+    p_wk->oamlistpos_old = 0xffff;
+    p_wk->bCursorChange = 1;
+    ITEMDISP_ScrollCursorChangePos( p_wk ); // カーソル位置を即時反映
+  }
 }
 
 //-----------------------------------------------------------------------------
