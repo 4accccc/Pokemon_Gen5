@@ -354,6 +354,10 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
       {
         namein_mode = NAMEIN_THANKS_WORD;
       }
+      else if( namein_mode == NAMEIN_FES_POKEMON )
+      {
+        namein_mode = NAMEIN_POKEMON;
+      }
       mode    = MISC_GetNameInMode( p_param->p_misc, namein_mode );
     }
   }
@@ -4757,6 +4761,7 @@ static ICON_TYPE ICON_GetModoToType( NAMEIN_MODE mode, int param1 )
     return ICON_TYPE_HERO;
 
 	case NAMEIN_POKEMON:
+	case NAMEIN_FES_POKEMON:
     return ICON_TYPE_POKE;
     
 	case NAMEIN_BOX:
@@ -5811,6 +5816,10 @@ static void SEQFUNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       else if( namein_mode == NAMEIN_BOAST_WORD )
       {
         namein_mode = NAMEIN_THANKS_WORD;
+      }
+      else if( namein_mode == NAMEIN_FES_POKEMON )
+      {
+        namein_mode = NAMEIN_POKEMON;
       }
 
       input_type  = KEYBOARD_GetInputType( &p_wk->keyboard );
