@@ -34,6 +34,7 @@
 #define C13_MAN3A_01                      15
 #define C13_WOMAN2A_01                    16
 #define C13_MAN3_01                       17
+#define C13_BOY2_01                       18
 
 #endif //ZONE_C13_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c13.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

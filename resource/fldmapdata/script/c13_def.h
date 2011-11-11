@@ -26,5 +26,6 @@
 #define SCRID_C13_WOMAN2A_01 (19)
 #define SCRID_C13_MAN3_01 (20)
 #define SCRID_C13_MAN3A_01 (21)
+#define SCRID_C13_BOY2_01 (22)
 
 #endif //_C13_DEF_H_

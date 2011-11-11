@@ -321,6 +321,9 @@ ev_leader1_btl:
 
 	//リーダー：わざマシンの解説
 	_BALLOONWIN_TALKOBJ_MSG( msg_c12gym0201_swleader1_10 )
+
+	//メッセージ：この　イッシュちほう
+	_BALLOONWIN_TALKOBJ_MSG( msg_c12gym0201_swleader1_11 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
