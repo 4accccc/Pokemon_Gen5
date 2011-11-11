@@ -13,6 +13,7 @@
   .include  "r18.h"
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori//マキシ・演出調整
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -29,99 +30,113 @@ _EVENT_DATA_END
 DEFINE_LOCAL  LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
-
+DEFINE_LOCAL	LWK_WBTCHK
 
 /**************************************************************/
 /*  マキシ：話しかけ                                          */
 /**************************************************************/
 EVENT_START   ev_r18_dpleader5_01
 
-  _TALK_OBJ_START()
+  _TALK_START_TURN_NOT()
+
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+	
+  //カメラ操作
+  _CAMERA_MOVE( 9688,0,970752,40910848,327759,46628864,30 )	//一番最後の引数は移動にかかるフレーム数
+  _CAMERA_WAIT_MOVE()
 
   //マキシ：リングは　おれの　うみ♪
-  _BALLOONWIN_TALKOBJ_MSG( msg_r18_dpleader5_01 )
-  _AB_KEYWAIT_MARK()
+  _GIZAWIN_OBJMSG_POS( msg_r18_dpleader5_01 , R18_DPLEADER5_01, POS_UP )
+  _GIZAWIN_CLOSE()
+
+  _CAMERA_RECV_MOVE(30)
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラのバインドを解く
+  _CAMERA_END()
+
+  _PLAYER_DIR_GET(SCWK_ANSWER)
+  
+  SWITCH $SCWK_ANSWER
+  CASE DIR_UP THEN
+	_OBJ_ANIME( R18_DPLEADER5_01, anm_dir_d )
+  CASE DIR_LEFT THEN
+	_OBJ_ANIME( R18_DPLEADER5_01, anm_dir_r )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
+
+  //WBTで勝負したことがあるかｃｈｋ
+  _WBT_GET_TRAINER_FLAG( 49, LWK_WBTCHK )
 
   //WBTで勝負したことがあるか
-  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN    //【仮】クリアフラグで分岐中
+  IF $LWK_WBTCHK == TRUE THEN
 
-    //マキシ：おお！　おまえか！
-    _BALLOONWIN_TALKOBJ_MSG( msg_r18_dpleader5_02 )
-    _AB_KEYWAIT_MARK()
-    _MSGWIN_CLOSE()
+	//マキシ：おお！　おまえか！
+	_BALLOONWIN_TALKOBJ_MSG( msg_r18_dpleader5_02 )
+	_AB_KEYWAIT_MARK()
+	_MSGWIN_CLOSE()
 
-    //自機座標取得
-    _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
-
-    //アニメ：マキシ退場
-    IF $LCW_POSX == 625 && $LCW_POSZ == 712 THEN
-      _OBJ_ANIME_AUTO( R18_DPLEADER5_01, 626, 719, FORCE_TYPE_NPC, 8, DIR_LR )
-      _TIME_WAIT( 16 )
-      _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
-      _OBJ_ANIME_WAIT()
-    ELSE
-      _OBJ_ANIME_AUTO( R18_DPLEADER5_01, 626, 719, FORCE_TYPE_NPC, 8, DIR_UD )
-      _TIME_WAIT( 8 )
-      _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
-      _OBJ_ANIME_WAIT()
-    ENDIF
-    _OBJ_DEL( R18_DPLEADER5_01 )
-
-    //========================================//
-    //マキシを非表示に
-    _FLAG_SET( FV_R18_DPLEADER5_01 )
-    //========================================//
-
+  //WBTで勝負したことがない。
   ELSE
 
-    //マキシ：いま　うたっていたのは　おれさま！▼
-    _BALLOONWIN_TALKOBJ_MSG( msg_r18_dpleader5_03 )
+	//マキシ：いま　うたっていたのは　おれさま！▼
+	_BALLOONWIN_TALKOBJ_MSG( msg_r18_dpleader5_03 )
 
-    //テーマソングを知っている？
-    _YES_NO_WIN( SCWK_ANSWER )
+	//テーマソングを知っている？
+	_YES_NO_WIN( SCWK_ANSWER )
 
-    IF $SCWK_ANSWER == SCR_YES THEN   //はい
+	IF $SCWK_ANSWER == SCR_YES THEN   //はい
 
-      //マキシ：そうだぁ！▼
-      _BALLOONWIN_TALKOBJ_MSG( msg_r18_dpleader5_04 )
-      _AB_KEYWAIT_MARK()
+		//マキシ：そうだぁ！▼
+		_BALLOONWIN_TALKOBJ_MSG( msg_r18_dpleader5_04 )
+	
+	//いいえ
+	ELSE
 
-    ELSE    //いいえ
-
-      //マキシ：なんと　しらないのかぁ！！▼
-      _BALLOONWIN_TALKOBJ_MSG( msg_r18_dpleader5_05 )
-      _AB_KEYWAIT_MARK()
+		//マキシ：なんと　しらないのかぁ！！▼
+		_BALLOONWIN_TALKOBJ_MSG( msg_r18_dpleader5_05 )
 
     ENDIF
 
     //マキシ：ここで　とうとつに
     _BALLOONWIN_TALKOBJ_MSG( msg_r18_dpleader5_06 )
-    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
-    //自機座標取得
-    _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
-
-    //マキシを暗転中に退場
-    _TIME_WAIT( 15 )  //暗転前の間
-
-    //暗転
-    _BLACK_OUT_SLOW()
-    _DISP_FADE_END_CHECK()
-
-    //マキシ削除
-    _OBJ_DEL( R18_DPLEADER5_01 )
-
-    //========================================//
-    //マキシを非表示に
-    _FLAG_SET( FV_R18_DPLEADER5_01 )
-    //========================================//
-
-    //暗転復帰
-    _BLACK_IN_SLOW()
-    _DISP_FADE_END_CHECK()
-
   ENDIF
+  
+  _PLAYER_DIR_GET(SCWK_ANSWER)
+  
+  SWITCH $SCWK_ANSWER
+  CASE DIR_LEFT THEN
+	_OBJ_ANIME( R18_DPLEADER5_01, anm_common_turn_r )
+	_TIME_WAIT( 10 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_doke )
+	_OBJ_ANIME_WAIT()
+  ENDSWITCH
+
+  _OBJ_ANIME_AUTO( R18_DPLEADER5_01, 632, 711, FORCE_TYPE_NPC, 8, DIR_LR )
+  _TIME_WAIT( 10 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_r )
+  _TIME_WAIT( 15 )
+  //暗転
+  _BLACK_OUT_SLOW()
+
+  _DISP_FADE_END_CHECK()
+  _OBJ_ANIME_WAIT()
+  
+  //マキシ削除
+  _OBJ_DEL( R18_DPLEADER5_01 )
+
+  //========================================//
+  //マキシを非表示に
+  _FLAG_SET( FV_R18_DPLEADER5_01 )
+  //========================================//
+
+  _TIME_WAIT( 30 )
+
+  //暗転復帰
+  _BLACK_IN_SLOW()
+  _DISP_FADE_END_CHECK()
 
 EVENT_END
 
@@ -183,4 +198,59 @@ _ANIME_LABEL  anm_itemget
   _ANIME_DATA AC_HERO_ITEMGET,1
   _ANIME_DATA ACMD_END,0
 
+//--------------------------------------------------------------------
+//☆共通処理：下に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk_d
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
 
+//--------------------------------------------------------------------
+//☆共通処理：上に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk_u
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：右に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk_r
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+  
+//--------------------------------------------------------------------
+//☆共通処理：左に1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk_l
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_dir_u
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_dir_d
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_dir_l
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_dir_r
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆主人公：退く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_doke
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
