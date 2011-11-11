@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<itp version="1.6.0">
+
+<head>
+	<create user="fuchino_hiroki" host="W00252" date="2011-11-11T18:34:04" source="intro_town_camera.mb"/>
+	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+</head>
+
+<body>
+
+<tex_pattern_info
+	frame_size="1000"
+	tool_start_frame="1"
+	tool_end_frame="1000"
+	compress_material="on" material_size="9 9"
+/>
+
+<tex_pattern_list_data image_size="15" palette_size="15">
+	<image_name index="0" name="boy2.1"/>
+	<image_name index="1" name="boy2.2"/>
+	<image_name index="2" name="boy2.3"/>
+	<image_name index="3" name="oldman1.1"/>
+	<image_name index="4" name="oldman1.2"/>
+	<image_name index="5" name="oldman1.3"/>
+	<image_name index="6" name="swmama1.1"/>
+	<image_name index="7" name="swmama1.2"/>
+	<image_name index="8" name="swmama1.3"/>
+	<image_name index="9" name="swmama1.4"/>
+	<image_name index="10" name="swmama1.5"/>
+	<image_name index="11" name="swmama1.6"/>
+	<image_name index="12" name="swmama1.7"/>
+	<image_name index="13" name="swmama1.8"/>
+	<image_name index="14" name="swmama1.9"/>
+	<palette_name index="0" name="boy2.1_pl"/>
+	<palette_name index="1" name="boy2.2_pl"/>
+	<palette_name index="2" name="boy2.3_pl"/>
+	<palette_name index="3" name="oldman1.1_pl"/>
+	<palette_name index="4" name="oldman1.2_pl"/>
+	<palette_name index="5" name="oldman1.3_pl"/>
+	<palette_name index="6" name="swmama1.1_pl"/>
+	<palette_name index="7" name="swmama1.2_pl"/>
+	<palette_name index="8" name="swmama1.3_pl"/>
+	<palette_name index="9" name="swmama1.4_pl"/>
+	<palette_name index="10" name="swmama1.5_pl"/>
+	<palette_name index="11" name="swmama1.6_pl"/>
+	<palette_name index="12" name="swmama1.7_pl"/>
+	<palette_name index="13" name="swmama1.8_pl"/>
+	<palette_name index="14" name="swmama1.9_pl"/>
+</tex_pattern_list_data>
+
+<tex_pattern_data>
+	<frame_idx size="93">
+		0 611 615 619 623 627 631 635 639 643
+		647 651 655 659 663 667 671 675 679 683
+		687 691 695 699 703 707 711 715 718 722
+		727 731 735 739 743 747 751 755 759 763
+		767 771 775 779 783 787 791 795 799 803
+		807 811 815 819 823 827 831 835 839 841
+		846 851 855 859 879 883 887 891 895 899
+		0 359 379 459 0 79 119 161 210 289
+		329 371 420 499 539 581 630 709 749 791
+		840 919 959
+	</frame_idx>
+	<image_idx size="93">
+		12 14 12 13 12 14 12 13 12 14
+		12 13 12 14 12 13 12 14 12 13
+		12 14 12 13 12 14 12 13 12 6
+		7 6 8 6 7 6 8 6 7 6
+		8 6 7 6 8 6 7 6 8 6
+		7 6 8 6 7 6 8 6 7 9
+		10 9 11 9 10 9 11 9 10 9
+		0 1 2 1 3 4 5 4 3 4
+		5 4 3 4 5 4 3 4 5 4
+		3 4 5
+	</image_idx>
+	<palette_idx size="93">
+		12 14 12 13 12 14 12 13 12 14
+		12 13 12 14 12 13 12 14 12 13
+		12 14 12 13 12 14 12 13 12 6
+		7 6 8 6 7 6 8 6 7 6
+		8 6 7 6 8 6 7 6 8 6
+		7 6 8 6 7 6 8 6 7 9
+		10 9 11 9 10 9 11 9 10 9
+		0 1 2 1 3 4 5 4 3 4
+		5 4 3 4 5 4 3 4 5 4
+		3 4 5
+	</palette_idx>
+</tex_pattern_data>
+
+<tex_pattern_anm_array size="3">
+	<tex_pattern_anm index="0" material_name="lambert109" data_size="70" data_head="0"/>
+	<tex_pattern_anm index="1" material_name="lambert108" data_size="4" data_head="70"/>
+	<tex_pattern_anm index="2" material_name="lambert105" data_size="19" data_head="74"/>
+</tex_pattern_anm_array>
+
+</body>
+
+</itp>

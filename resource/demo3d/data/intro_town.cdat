@@ -42,12 +42,12 @@ static const DEMO3D_SCENE_DATA data_intro_town_scene = {
 //============================================
 
 static const DEMO3D_CMD_DATA demo3d_cmd_intro_town_data[] = {
- { DEMO3D_CMD_TYPE_BGM_PLAY, 0, { SEQ_BGM_E_OPENING, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SCR_DRAW_REQ, 40, { 0xFF, NARC_demo3d_2dgra_intro_town_NCLR, NARC_demo3d_2dgra_intro_town_lz_NCGR, NARC_demo3d_2dgra_intro_town01_lz_NSCR, 90, 8, 8, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SCR_DRAW_REQ, 190, { VERSION_B2, NARC_demo3d_2dgra_intro_town_NCLR, NARC_demo3d_2dgra_intro_town_lz_NCGR, NARC_demo3d_2dgra_intro_town02_b_lz_NSCR, 90, 8, 8, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_SCR_DRAW_REQ, 190, { VERSION_W2, NARC_demo3d_2dgra_intro_town_NCLR, NARC_demo3d_2dgra_intro_town_lz_NCGR, NARC_demo3d_2dgra_intro_town02_w_lz_NSCR, 90, 8, 8, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 510-60, { MASK_DOUBLE_DISPLAY, 60, 0, 16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BGM_FADE, 510-30, { 1, 30, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_BGM_PLAY, 0, { SEQ_BGM_SW_DEMO_OPENING, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_SCR_DRAW_REQ, 40, { 0xFF, NARC_demo3d_2dgra_intro_town_NCLR, NARC_demo3d_2dgra_intro_town_lz_NCGR, NARC_demo3d_2dgra_intro_town01_lz_NSCR, 50, 8, 8, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_SCR_DRAW_REQ, 300, { VERSION_B2, NARC_demo3d_2dgra_intro_town_NCLR, NARC_demo3d_2dgra_intro_town_lz_NCGR, NARC_demo3d_2dgra_intro_town02_b_lz_NSCR, 90, 8, 8, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_SCR_DRAW_REQ, 300, { VERSION_W2, NARC_demo3d_2dgra_intro_town_NCLR, NARC_demo3d_2dgra_intro_town_lz_NCGR, NARC_demo3d_2dgra_intro_town02_w_lz_NSCR, 90, 8, 8, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 1000-60, { MASK_DOUBLE_DISPLAY, 60, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_BGM_FADE, 1000-30, { 1, 30, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_END, 0, { DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
 };
 
@@ -66,28 +66,61 @@ static const DEMO3D_CMD_DATA demo3d_cmd_intro_town_end_data[] = {
 //============================================
 
 ///==================================
-/// intro_town01 Unit File Resource
+/// intro_town_obj1 Unit File Resource
 
-static const u16 res_intro_town_file_intro_town01[] = {
- NARC_data_demo3d_intro_town01_nsbmd,
- NARC_data_demo3d_intro_town01_nsbca,
+static const u16 res_intro_town_file_intro_town_obj1[] = {
+ NARC_data_demo3d_intro_town_obj1_nsbmd,
+ NARC_data_demo3d_intro_town_obj1_nsbtp,
+ NARC_data_demo3d_intro_town_obj1_nsbta,
 };
 
-static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town01[] = {
- { res_intro_town_file_intro_town01, 2 },
+static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town_obj1[] = {
+ { res_intro_town_file_intro_town_obj1, 3 },
 };
 
 ///==================================
-/// intro_town02 Unit File Resource
+/// intro_town_obj2 Unit File Resource
 
-static const u16 res_intro_town_file_intro_town02[] = {
- NARC_data_demo3d_intro_town02_nsbmd,
- NARC_data_demo3d_intro_town02_nsbtp,
- NARC_data_demo3d_intro_town02_nsbca,
+static const u16 res_intro_town_file_intro_town_obj2_morning[] = {
+ NARC_data_demo3d_intro_town_obj2_nsbmd,
+ NARC_data_demo3d_intro_town_obj2_hiru_nsbca,
+};
+static const u16 res_intro_town_file_intro_town_obj2_noon[] = {
+ NARC_data_demo3d_intro_town_obj2_nsbmd,
+ NARC_data_demo3d_intro_town_obj2_hiru_nsbca,
+};
+static const u16 res_intro_town_file_intro_town_obj2_evening[] = {
+ NARC_data_demo3d_intro_town_obj2_nsbmd,
+ NARC_data_demo3d_intro_town_obj2_yuu_nsbca,
+};
+static const u16 res_intro_town_file_intro_town_obj2_night[] = {
+ NARC_data_demo3d_intro_town_obj2_nsbmd,
+ NARC_data_demo3d_intro_town_obj2_yoru_nsbca,
+};
+static const u16 res_intro_town_file_intro_town_obj2_midnight[] = {
+ NARC_data_demo3d_intro_town_obj2_nsbmd,
+ NARC_data_demo3d_intro_town_obj2_yoru_nsbca,
 };
 
-static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town02[] = {
- { res_intro_town_file_intro_town02, 3 },
+static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town_obj2[] = {
+ { res_intro_town_file_intro_town_obj2_morning, 2 },
+ { res_intro_town_file_intro_town_obj2_noon, 2 },
+ { res_intro_town_file_intro_town_obj2_evening, 2 },
+ { res_intro_town_file_intro_town_obj2_night, 2 },
+ { res_intro_town_file_intro_town_obj2_midnight, 2 },
+};
+
+///==================================
+/// intro_town_hito Unit File Resource
+
+static const u16 res_intro_town_file_intro_town_hito[] = {
+ NARC_data_demo3d_intro_town_hito_nsbmd,
+ NARC_data_demo3d_intro_town_hito_nsbtp,
+ NARC_data_demo3d_intro_town_hito_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town_hito[] = {
+ { res_intro_town_file_intro_town_hito, 3 },
 };
 
 ///==================================
@@ -142,16 +175,80 @@ static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town03wi[] = {
  { res_intro_town_file_intro_town03wi, 3 },
 };
 
+///==================================
+/// intro_hira_sp Unit File Resource
+
+static const u16 res_intro_town_file_intro_hira_sp[] = {
+ NARC_data_demo3d_intro_hira_sp_nsbmd,
+ NARC_data_demo3d_intro_hira_sp_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_hira_sp[] = {
+ { res_intro_town_file_intro_hira_sp, 2 },
+};
+
+///==================================
+/// intro_hira_su Unit File Resource
+
+static const u16 res_intro_town_file_intro_hira_su[] = {
+ NARC_data_demo3d_intro_hira_su_nsbmd,
+ NARC_data_demo3d_intro_hira_su_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_hira_su[] = {
+ { res_intro_town_file_intro_hira_su, 2 },
+};
+
+///==================================
+/// intro_hira_au Unit File Resource
+
+static const u16 res_intro_town_file_intro_hira_au[] = {
+ NARC_data_demo3d_intro_hira_au_nsbmd,
+ NARC_data_demo3d_intro_hira_au_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_hira_au[] = {
+ { res_intro_town_file_intro_hira_au, 2 },
+};
+
+///==================================
+/// intro_hira_wi Unit File Resource
+
+static const u16 res_intro_town_file_intro_hira_wi[] = {
+ NARC_data_demo3d_intro_hira_wi_nsbmd,
+ NARC_data_demo3d_intro_hira_wi_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_hira_wi[] = {
+ { res_intro_town_file_intro_hira_wi, 2 },
+};
+
+///==================================
+/// intro_cs Unit File Resource
+
+static const u16 res_intro_town_file_intro_cs[] = {
+ NARC_data_demo3d_intro_cs_nsbmd,
+ NARC_data_demo3d_intro_cs_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_cs[] = {
+ { res_intro_town_file_intro_cs, 2 },
+};
+
 ///========================================================
 /// シーンユニットテーブル
 ///========================================================
 
-static const DEMO3D_FILE_UNIT_TBL res_intro_town_file_unit_intro_town01_tbl[] = {
- { res_intro_town_file_unit_intro_town01, 1 },
+static const DEMO3D_FILE_UNIT_TBL res_intro_town_file_unit_intro_town_obj1_tbl[] = {
+ { res_intro_town_file_unit_intro_town_obj1, 1 },
 };
 
-static const DEMO3D_FILE_UNIT_TBL res_intro_town_file_unit_intro_town02_tbl[] = {
- { res_intro_town_file_unit_intro_town02, 1 },
+static const DEMO3D_FILE_UNIT_TBL res_intro_town_file_unit_intro_town_obj2_tbl[] = {
+ { res_intro_town_file_unit_intro_town_obj2, 5 },
+};
+
+static const DEMO3D_FILE_UNIT_TBL res_intro_town_file_unit_intro_town_hito_tbl[] = {
+ { res_intro_town_file_unit_intro_town_hito, 1 },
 };
 
 static const DEMO3D_FILE_UNIT_TBL res_intro_town_file_unit_intro_town03sp_tbl[] = {
@@ -161,9 +258,23 @@ static const DEMO3D_FILE_UNIT_TBL res_intro_town_file_unit_intro_town03sp_tbl[] 
  { res_intro_town_file_unit_intro_town03wi, 1 },
 };
 
+static const DEMO3D_FILE_UNIT_TBL res_intro_town_file_unit_intro_hira_sp_tbl[] = {
+ { res_intro_town_file_unit_intro_hira_sp, 1 },
+ { res_intro_town_file_unit_intro_hira_su, 1 },
+ { res_intro_town_file_unit_intro_hira_au, 1 },
+ { res_intro_town_file_unit_intro_hira_wi, 1 },
+};
+
+static const DEMO3D_FILE_UNIT_TBL res_intro_town_file_unit_intro_cs_tbl[] = {
+ { res_intro_town_file_unit_intro_cs, 1 },
+};
+
 static const DEMO3D_SCENE_UNIT res_intro_town_scene_unit[] = {
- { res_intro_town_file_unit_intro_town01_tbl, 1, DEMO3D_UNITCHG_NONE },
- { res_intro_town_file_unit_intro_town02_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_intro_town_file_unit_intro_town_obj1_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_intro_town_file_unit_intro_town_obj2_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_intro_town_file_unit_intro_town_hito_tbl, 1, DEMO3D_UNITCHG_NONE },
  { res_intro_town_file_unit_intro_town03sp_tbl, 4, DEMO3D_UNITCHG_SEASON },
+ { res_intro_town_file_unit_intro_hira_sp_tbl, 4, DEMO3D_UNITCHG_SEASON },
+ { res_intro_town_file_unit_intro_cs_tbl, 1, DEMO3D_UNITCHG_NONE },
 };
 
