@@ -25985,4 +25985,29 @@
 				Time="2011-11-02T03:03:03" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="fanw_13">
+		<LanguageCell
+			Language="JPN">
+			<Text>●と●</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-11T07:22:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-11T07:22:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>●と●</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-11T07:22:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-11T07:22:40" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

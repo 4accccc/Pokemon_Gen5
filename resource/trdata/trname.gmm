@@ -4405,6 +4405,11 @@
 		<language name="JPN_KANJI" width="216">コハル</language>
 	</row>
 
+	<row id="fanw_13">
+		<language name="JPN" width="216">●と●</language>
+		<language name="JPN_KANJI" width="216">●と●</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
