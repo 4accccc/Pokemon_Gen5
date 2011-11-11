@@ -356,11 +356,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひょっとして　ポケモンしょうぶで
-きぜつ　させて　ばかりじゃない？</Text>
+			<Text>ひょっとして　ポケモン勝負で
+気絶させて　ばかりじゃない？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T09:47:11" />
+				Time="2011-11-11T11:36:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -408,10 +408,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あらま？　スパルタ？　それとも
-やつあたりの　わざを　つかうの？</Text>
+やつあたりの　技を　使うの？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T09:46:43" />
+				Time="2011-11-11T11:36:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

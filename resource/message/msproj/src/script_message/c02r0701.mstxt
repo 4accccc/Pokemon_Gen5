@@ -179,12 +179,12 @@
 			Language="JPN_KANJI">
 			<Text>あっ　あのう……
 トレーナーさん▼
-そだてやさんで　みつかった
+育て屋さんで　みつかった
 ポケモンの　タマゴ　なんですけど▽
-あなた　そだててみませんか？</Text>
+あなた　育ててみませんか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T06:07:07" />
+				Time="2011-11-11T11:40:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -235,12 +235,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そだてやさんで　みつかった
+			<Text>育て屋さんで　みつかった
 ポケモンの　タマゴ　なんですけど▽
-あなた　そだててみませんか？</Text>
+あなた　育ててみませんか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T06:07:07" />
+				Time="2011-11-11T11:40:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -293,10 +293,10 @@
 			Language="JPN_KANJI">
 			<Text>あのう……▼
 ポケモンが　いっぱいで
-タマゴ　うけとれないですよね</Text>
+タマゴ　受け取れないですよね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T06:07:07" />
+				Time="2011-11-11T11:40:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -346,11 +346,11 @@
 			Language="JPN_KANJI">
 			<Text>……あっ　はい
 わかりました▼
-あのう　タマゴを　そだてたくなったら
-また　はなしかけてくださいね</Text>
+あのう　タマゴを　育てたくなったら
+また　話しかけてくださいね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T06:07:07" />
+				Time="2011-11-11T11:41:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -400,10 +400,10 @@
 			Language="JPN_KANJI">
 			<Text>あっ　はい！▼
 では　この　タマゴを
-よろしく　おねがい　します！▼</Text>
+よろしく　お願い　します！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T06:07:07" />
+				Time="2011-11-11T11:41:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -458,16 +458,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンの　タマゴ　ですけれど
-げんきな　ポケモンと▽
+元気な　ポケモンと▽
 いっしょに　しておくと　いいそうです▼
 あっ　はい……　わかりやすくいえば
-タマゴを　つれあるくって　ことです▼
-そうですね　３ばんどうろに
-そだてやさんが　あるので▽
-そこで　くわしいことが　きけるかも</Text>
+タマゴを　連れ歩くって　ことです▼
+そうですね　３番道路に
+育て屋さんが　あるので▽
+そこで　詳しいことが　きけるかも</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T06:07:07" />
+				Time="2011-11-11T11:41:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

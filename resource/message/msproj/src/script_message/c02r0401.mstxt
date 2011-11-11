@@ -262,12 +262,12 @@
 なくすことが　できますぞ！▼
 さらに　なげつける　や
 しぜんのめぐみ　などの　技が▽
-うまく　決ららなく　なります！▼
+うまく　決まらなく　なります！▼
 不思議な　力を　持つ　ポケモンが
 多く　覚えることが　できますぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T10:20:29" />
+				Time="2011-11-11T11:37:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -454,12 +454,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>クリティカッター？　イッシュじゃ
-クリティカットって　なまえ　なんだよ▼
-しょうぶのとき　わざが　きゅうしょに
-あたるって　かなり　きょうりょくだぜ</Text>
+クリティカットって　なまえ　なんだよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T11:38:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -468,12 +466,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>クリティカッター？　イッシュじゃ
-クリティカットって　名称なんだよ▼
-勝負のとき　技が　急所に
-当たるって　かなり　強力だぜ！</Text>
+クリティカットって　名称なんだよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T11:38:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -482,10 +478,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T07:05:00" />
+				Time="2011-11-11T11:38:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
