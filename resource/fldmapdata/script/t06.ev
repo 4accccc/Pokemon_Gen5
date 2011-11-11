@@ -35,6 +35,7 @@ _EVENT_DATA    ev_t06_oldman1_01
 _EVENT_DATA    ev_t06_middleman1_01
 _EVENT_DATA    ev_bg_t06_board_01
 _EVENT_DATA    ev_t06_woman2_01
+_EVENT_DATA    ev_bg_t06_board_02
 _EVENT_DATA_END
 
 //ÉhÉAïœêîíËã`
@@ -339,6 +340,13 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bg_t06_board_01
   _EASY_BGWIN_MSG( msg_t06_sign_01, TYPE_TOWN )
+EVENT_END
+
+/**************************************************************/
+/*  äXä≈î¬                                                    */
+/**************************************************************/
+EVENT_START   ev_bg_t06_board_02
+  _EASY_BGWIN_MSG( msg_t06_sign_02, TYPE_POST )
 EVENT_END
 
 /**************************************************************/

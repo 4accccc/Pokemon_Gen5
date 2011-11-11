@@ -614,7 +614,7 @@
 #define FV_C13_SUNGLASSES                  725 /* 0x02d5 C13：ポケウッド用 */
 #define FV_C13_SWLEADER2_MEET              726 /* 0x02d6 C13：ホミカとホミカ父用 */
 #define FV_D22R0101_BREEDER_01             727 /* 0x02d7 牧場：ブリーダー */
-#define FV_D22R0101_POKEMON_01             728 /* 0x02d8 牧場：ヨーテリー */
+#define FV_D22R0101_SWPLAZMA_01            728 /* 0x02d8 牧場：プラズマ団 */
 #define FV_D22R0101_SWRIVAL_01             729 /* 0x02d9 牧場：ライバル */
 #define FV_T06_SUNGLASSES_01               730 /* 0x02da サンギタウン：メダルおやじ */
 #define FV_T06_CHAMPION_01                 731 /* 0x02db サンギタウン：アデク */

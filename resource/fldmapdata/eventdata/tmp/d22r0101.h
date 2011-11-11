@@ -20,6 +20,12 @@
 #define FLD_ITEM_14                        8
 #define FLD_ITEM_15                        9
 #define D22R0101_POKE31_02                10
+#define D22R0101_MELEEP_01                11
+#define D22R0101_MELEEP_02                12
+#define D22R0101_MELEEP_03                13
+#define D22R0101_MELEEP_04                14
+#define D22R0101_MELEEP_05                15
+#define D22R0101_SWPLAZMAM_01             16
 
 #endif //ZONE_D22R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d22r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

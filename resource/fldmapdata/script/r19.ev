@@ -47,6 +47,17 @@ EVENT_START   ev_pos_r19_pokeget_01
   //アニメ：ベル登場
   _CALL ev_r19_swbell_commeing_01
   
+  //アニメ：ベル右向き
+  _OBJ_ANIME( R19_SWBELL_01, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+  _BALLOONWIN_OBJMSG_POS( msg_r19_white_02, R19_SWBELL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ベル下向き
+  _OBJ_ANIME( R19_SWBELL_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
   _BALLOONWIN_OBJMSG_POS( msg_r19_white_03, R19_SWBELL_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   

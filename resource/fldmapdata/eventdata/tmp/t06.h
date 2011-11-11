@@ -40,5 +40,6 @@
 #define BG_T06_DUMMY_FES_11              11
 #define BG_T06_DUMMY_FES_12              12
 #define BG_T06_DUMMY_FES_13              13
+#define BG_T06_BOARD_02                  14
 
 #endif //ZONE_T06_EVB_H
