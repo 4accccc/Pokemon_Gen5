@@ -162,7 +162,6 @@ EVENT_START   ev_pos_c09_firstvisit_01
 
     //ベテラン♂：では　すすむべし！▼
     _BALLOONWIN_OBJMSG_POS( msg_c09_veteranm1_03, C09_VETERANM_01, POS_UR )
-    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
     //ベテラン：道をあける
