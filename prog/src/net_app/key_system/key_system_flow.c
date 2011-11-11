@@ -310,6 +310,14 @@ void KEYSYS_KEYFLOW_Exit( KEY_SYSTEM_WORK *p_wk )
 {
   if( p_wk->p_param->mode == KEY_SYSTEM_MODE_GET )
   {
+    //タイトルメニューでメッセージを出す
+    if( p_wk->p_param->get_key == KEY_SYSTEM_TYPE_DIFFICULT_EASY
+      || p_wk->p_param->get_key == KEY_SYSTEM_TYPE_DIFFICULT_HARD )
+    {
+      MISC *p_misc = GAMEDATA_GetMiscWork( p_wk->p_param->p_gamedata );
+      MISC_SetStartMenuMessageFlag(p_misc, TRUE );
+    }
+
     PMSND_PopBGM();
   }
 }

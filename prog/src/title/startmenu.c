@@ -131,7 +131,7 @@ typedef struct {
 
 	u32	svBreak;		// セーブデータ破損フラグ
 	u32	svBreakPos;	// セーブデータ破損メッセージ表示位置
- 
+
 }START_MENU_WORK;
 
 // リスト項目データ
@@ -152,7 +152,7 @@ enum {
 
 	MAINSEQ_CONTINUE,
 	MAINSEQ_NEWGAME,
-//	MAINSEQ_HUSHIGI,
+	MAINSEQ_KEYMSG,
 	MAINSEQ_WIFISET,
 
 	MAINSEQ_SAVE_BREAK,
@@ -182,7 +182,7 @@ static int MainSeq_Main( START_MENU_WORK * wk );
 static int MainSeq_Scroll( START_MENU_WORK * wk );
 static int MainSeq_Continue( START_MENU_WORK * wk );
 static int MainSeq_NewGame( START_MENU_WORK * wk );
-//static int MainSeq_Hushigi( START_MENU_WORK * wk );
+static int MainSeq_KeyMsg( START_MENU_WORK * wk );
 static int MainSeq_WiFiSet( START_MENU_WORK * wk );
 static int MainSeq_SaveBreak( START_MENU_WORK * wk );
 static int MainSeq_EndSet( START_MENU_WORK * wk );
@@ -285,7 +285,7 @@ static const pSTARTMENU_FUNC MainSeq[] = {
 
 	MainSeq_Continue,
 	MainSeq_NewGame,
-//	MainSeq_Hushigi,
+	MainSeq_KeyMsg,
 	MainSeq_WiFiSet,
 
 	MainSeq_SaveBreak,
@@ -819,7 +819,20 @@ static int MainSeq_InitWait( START_MENU_WORK * wk )
 		if( CheckSaveDataBreak( wk ) == TRUE ){
 			return MAINSEQ_SAVE_BREAK;
 		}
-		return SetFadeIn( wk, MAINSEQ_MAIN );
+
+    if( MISC_GetStartMenuMessageFlag(wk->misc) )
+    {
+      MISC_SetStartMenuMessageFlag(wk->misc, FALSE );
+
+		  GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2, VISIBLE_OFF );
+		  VanishListObj( wk, FALSE );
+
+		  return SetFadeIn( wk, MAINSEQ_KEYMSG );
+    }
+    else
+    {
+		  return SetFadeIn( wk, MAINSEQ_MAIN );
+    }
 	}
 	return MAINSEQ_INIT_WAIT;
 }
@@ -837,12 +850,7 @@ static int MainSeq_Main( START_MENU_WORK * wk )
 {
 	BLINKPALANM_Main( wk->blink );
 
-/*
 	// 不思議な贈り物受信チェック
-	if( CheckHushigiBeacon( wk ) == TRUE ){
-		return MAINSEQ_HUSHIGI;
-	}
-*/
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
 		PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
@@ -1135,52 +1143,35 @@ static int MainSeq_NewGame( START_MENU_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		メインシーケンス：「不思議な贈り物」受信
+ * @brief		メインシーケンス：「キー入手メッセージ」
  *
  * @param		wk		タイトルメニューワーク
  *
  * @return	次の処理
  */
 //--------------------------------------------------------------------------------------------
-/*
-static int MainSeq_Hushigi( START_MENU_WORK * wk )
+static int MainSeq_KeyMsg( START_MENU_WORK * wk )
 {
 	switch( wk->subSeq ){
 	case 0:
-		// ビーコン取得終了待ち
-		if( GFL_NET_IsResetEnable() == TRUE ){
-			wk->subSeq++;
-		}
-		break;
-
-	case 1:
-		// リスト非表示
-		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2, VISIBLE_OFF );
-		VanishListObj( wk, FALSE );
-		wk->subSeq++;
-		break;
-
-	case 2:
 		// メッセージ表示
 		StartMessage( wk, START_MENU_STR_ATTENTION_03 );
 		wk->subSeq++;
 		break;
 
-	case 3:
+	case 1:
 		// メッセージ待ち
 		if( MainMessage( wk ) == FALSE ){
 			wk->subSeq++;
 		}
 		break;
 
-	case 4:
-    if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
-			ClearMessage( wk );
-			wk->subSeq++;
-		}
+	case 2:
+		ClearMessage( wk );
+		wk->subSeq++;
 		break;
 
-	case 5:
+	case 3:
 		// リスト再構築
 		MISC_SetStartMenuFlag( wk->misc, MISC_STARTMENU_TYPE_HUSHIGI, MISC_STARTMENU_FLAG_OPEN );
 		InitList( wk );
@@ -1191,7 +1182,7 @@ static int MainSeq_Hushigi( START_MENU_WORK * wk )
 		wk->subSeq++;
 		break;
 
-	case 6:
+	case 4:
 		// リスト表示
 		VanishListObj( wk, TRUE );
 		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2, VISIBLE_ON );
@@ -1199,9 +1190,8 @@ static int MainSeq_Hushigi( START_MENU_WORK * wk )
 		return MAINSEQ_MAIN;
 	}
 
-	return MAINSEQ_HUSHIGI;
+	return MAINSEQ_KEYMSG;
 }
-*/
 
 //--------------------------------------------------------------------------------------------
 /**

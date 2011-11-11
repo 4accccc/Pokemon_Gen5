@@ -115,6 +115,10 @@ extern void MISC_SetStartMenuFlag( MISC * misc, MISC_STARTMENU_TYPE type, MISC_S
 extern u8 MISC_GetStartMenuFlag( const MISC * misc, MISC_STARTMENU_TYPE type );
 extern u8 MISC_GetStartMenuFlagAll( const MISC * misc );
 extern void MISC_SetStartMenuFlagAll( MISC * misc, u8 flg );
+
+extern u8 MISC_GetStartMenuMessageFlag(const MISC * misc);
+extern void MISC_SetStartMenuMessageFlag( MISC * misc, u8 flg );
+
 // Ç∑ÇÍà·Ç¢í≤ç∏ë‡
 extern u8 MISC_GetResearchRequestID( const MISC* misc );
 extern void MISC_SetResearchRequestID( MISC* misc, u8 id );

@@ -651,6 +651,31 @@ void MISC_SetStartMenuFlagAll( MISC * misc, u8 flg )
 {
 	misc->start_menu_open = flg;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スタートメニューでメッセージだしてよいか  取得
+ *
+ *	@param	MISC * misc ワーク
+ *
+ *	@return TRUEだしてよい  FALSEだめ
+ */
+//-----------------------------------------------------------------------------
+u8 MISC_GetStartMenuMessageFlag(const MISC * misc)
+{
+  return misc->startmenu_message_flag;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スタートメニューでメッセージだしてよいか  設定
+ *
+ *	@param	* misc  ワーク
+ *	@param	flg     TRUEだしてよい  FALSEだめ
+ */
+//-----------------------------------------------------------------------------
+void MISC_SetStartMenuMessageFlag(MISC * misc, u8 flg)
+{
+  misc->startmenu_message_flag  = flg;
+}
 
 
 //==============================================================================
