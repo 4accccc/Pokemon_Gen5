@@ -209,11 +209,12 @@ Pretty cool, isn't it?</Text>
 ・よう　トレーナー！
 　おれの動き見てみろよ！
 　もう次の町には行った？
-　そこのミュージカルでこの動き習ったんだよ
+　そこのミュージカルで
+　この動き習ったんだよ
 　かっこいいだろ？</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T06:01:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -358,11 +359,11 @@ Pretty cool, isn't it?</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>スーパーモデルの　カミツレさんが
-きてた　ワンピース　みた？▼</Text>
+			<Text>スーパーモデルの
+カミツレさんの　いしょう　みた？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T06:02:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -370,11 +371,11 @@ Pretty cool, isn't it?</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>スーパーモデルの　カミツレさんが
-着てた　ワンピース　みた？▼</Text>
+			<Text>スーパーモデルの
+カミツレさんの　衣装　みた？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T06:02:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -384,10 +385,11 @@ Pretty cool, isn't it?</Text>
 			Language="JPN">
 			<Comment>♀
 ・下記動作モデルと隣りあわせで
-・どちらに話しかけてもこのメッセージから</Comment>
+・どちらに話しかけてもこのメッセージから
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T06:02:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -409,11 +411,11 @@ Pretty cool, isn't it?</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カミツレさんが　きてると
+			<Text>カミツレさん　なにを　きても
 ステキよね！　しびれちゃう！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T06:02:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -421,11 +423,11 @@ Pretty cool, isn't it?</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレさんが　着てると
+			<Text>カミツレさん　なにを　着ても
 ステキよね！　しびれちゃう！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T06:02:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -434,10 +436,11 @@ Pretty cool, isn't it?</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・上記動作モデルと隣りあわせで</Comment>
+・上記動作モデルと隣りあわせで
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T06:02:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -546,10 +549,10 @@ Feel free to talk to anyone.</Text>
 ・やあ　こんにちわ
 　楽しんでる？
 　はずかしがらなくていいんだよ
-　色んな人に話しかけてみなよ</Comment>
+　いろんな人に話しかけてみなよ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T06:02:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

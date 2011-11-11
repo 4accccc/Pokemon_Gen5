@@ -2295,6 +2295,107 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c03r1202_rally_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レッツ　トライ　ヒウンラリー！
+メダルじむきょく　オーケー！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:57:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:57:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レッツ　トライ　ヒウンラリー！
+メダル事務局　オーケー！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:57:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:57:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・初回会話</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:57:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>CLOWN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:57:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r1202_rally_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>メダルじむきょくでも　ラリー！
+どんどん　メダル　あつめてー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:58:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:57:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メダル事務局でも　ラリー！
+どんどん　メダル　集めてー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:58:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:57:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・2回目以降
+※施設に関する情報メッセージ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:57:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>CLOWN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:57:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_mdlbg_01"
 		Style="Large">
 		<LanguageCell

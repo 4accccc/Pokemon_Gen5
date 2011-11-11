@@ -244,7 +244,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#80ffff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -301,7 +301,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#80ffff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -355,5 +355,385 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:11" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0601_rally_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やるも　やらぬも　じゆうの
+ヒウンラリー！　あなたが▽
+まだ　おとずれて　いないのは……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やるも　やらぬも　自由の
+ヒウンラリー！　あなたが▽
+まだ　訪れて　いないのは……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・rally_02表示後、話しかけたとき
+・すべて訪れたときはrally_10
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>CLOWN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0601_rally_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>メダルじむきょく！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メダルじむきょく！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メダル事務局まだだったら表示
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>CLOWN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0601_rally_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すれちがいちょうさたい！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すれちがい調査隊！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・すれちがい調査隊まだだったら表示
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>CLOWN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0601_rally_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>バトルカンパニー！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バトルカンパニー！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・バトルカンパニーまだだったら表示
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>CLOWN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0601_rally_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>の　[Digit:1digit Idx="0" ]かしょ　ですね！▼
+では　めぐって　めぐって
+ヒウンラリー！　レッツ　ゴー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>の　[Digit:1digit Idx="0" ]カ所　ですね！▼
+では　巡って　巡って
+ヒウンラリー！　レッツ　ゴー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・締めの言葉
+・0＝１桁の数字
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>CLOWN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0601_rally_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なんと！　のこり　０！
+……ということは▼
+ヒウンラリー　せいは！
+おめでとう　ございます！▼
+これは　ささやかな　ものですが
+きねんひんに　どうぞ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なんと！　残り　０！
+……ということは▼
+ヒウンラリー　制覇！
+おめでとう　ございます！▼
+これは　ささやかな　ものですが
+記念品に　どうぞ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・残り０箇所＝アイテム入手前
+・アイテム入手処理
+　No050「ふしぎなアメ」
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>CLOWN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03r0601_rally_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヒウンシティを　あいする
+ひとを　ふやすための　ラリー！▼
+ですから　さいしょに　きまえよく
+じてんしゃも　プレゼント　したのです▼
+これからも　ヒウンシティを
+あいして　くださいね！▼
+ヒウン　ヒウン　ヒウンシティ♪
+ヒヤ　ウィー　ゴー♪</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヒウンシティを　愛する
+人を　増やすための　ラリー！▼
+ですから　最初に　気前よく
+じてんしゃも　プレゼント　したのです▼
+これからも　ヒウンシティを
+愛して　くださいね！▼
+ヒウン　ヒウン　ヒウンシティ♪
+ヒヤ　ウィー　ゴー♪</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・残り０箇所＝アイテム入手後
+・以降繰り返し
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>CLOWN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T05:44:55" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>
