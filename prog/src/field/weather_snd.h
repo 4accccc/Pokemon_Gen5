@@ -49,7 +49,9 @@ extern "C"{
 #define WEATHER_SND_SE_KAZAKAMI_NORMAL_RAIN ( SEQ_SE_FLD_31 )         // í èÌÇÃâJ
 #define WEATHER_SND_SE_KAZAKAMI_NORMAL_MIDDLE_WIND ( SEQ_SE_FLD_99 )  // íÜä‘ÇÃïó
 #define WEATHER_SND_SE_KAZAKAMI_MIDDLE_HIGH_WIND ( SEQ_SE_FLD_98 )    // ã≠Ç¢ïó
-#define WEATHER_SND_SE_KAZAKAMI_HIGH_RAIN   ( SEQ_SE_FLD_100 )        // ã≠Ç¢âJ
+//swanèCê≥ÅFSEQ_SE_FLD_100ÇçÌèúó\íË
+#define WEATHER_SND_SE_KAZAKAMI_HIGH_RAIN   ( SEQ_SE_FLD_32 )        // ã≠Ç¢âJ
+//#define WEATHER_SND_SE_KAZAKAMI_HIGH_RAIN   ( SEQ_SE_FLD_100 )        // ã≠Ç¢âJ
 
 
 #ifdef _cplusplus

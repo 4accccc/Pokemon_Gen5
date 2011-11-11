@@ -908,7 +908,7 @@ static const u16 StaticEntryList[] = {
 	SEQ_SE_FLD_84,
 	SEQ_SE_FLD_85,
 	SEQ_SE_FLD_91,
-	SEQ_SE_FLD_100,
+	//SEQ_SE_FLD_100, swanÇ≈ÇÕçÌèúó\íË
 	SEQ_SE_FLD_120,
 	SEQ_SE_FLD_122,
 	SEQ_SE_SYS_35,
