@@ -172,53 +172,26 @@
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『ぎゃあっ！
 あたり　かまわず……▽
-なんて　こうげきなの！</Text>
+なんて　こうげきだ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				Time="2011-11-11T03:35:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				Time="2011-11-11T03:35:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『ぎゃあっ！
-辺り　構わず……　なんて　攻撃なの！</Text>
+辺り　構わず……　なんて　攻撃だ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				Time="2011-11-11T03:35:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="pw_turn_enemy_2">
-		<LanguageCell
-			Language="JPN">
-			<Text>メカポリス『ショーダウン！
-けっちゃくの　ときだ</Text>
-			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T12:53:49" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T12:53:49" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>メカポリス『ショーダウン！
-決着の　時だ</Text>
-			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T12:53:49" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T12:53:49" />
+				Time="2011-11-11T03:35:53" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -366,26 +339,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>メカポリス『ていこう　したな……
-てきたい　こうどうと　みなす！</Text>
+てきたい　こうどうと　みなす！▼
+てじょう　ランチャー！
+はっしゃ！　ブラストオフ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T05:37:28" />
+				Time="2011-11-10T13:04:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T05:37:28" />
+				Time="2011-11-10T13:04:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メカポリス『抵抗　したな……
-敵対行動と　みなす！</Text>
+敵対行動と　みなす！▼
+手錠　ランチャー！
+発射！　ブラストオフ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T05:37:28" />
+				Time="2011-11-10T13:04:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T05:37:28" />
+				Time="2011-11-10T13:04:43" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -399,25 +376,27 @@
 		Label="pw_event1_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『ぎゃあっ！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『あぶないっ！
+いきなり　なに　すんのよ！？</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				Time="2011-11-11T03:35:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				Time="2011-11-11T03:35:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『ぎゃあっ！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『危ないっ！
+いきなり　何　すんのよ！？</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				Time="2011-11-11T03:35:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				Time="2011-11-11T03:35:53" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -451,31 +430,93 @@
 		Label="pw_event1_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『く……
-くちより　さきに▽
-てが　うごくなんて！▼
-こんな　らんぼうな　けいじに……</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『なんなの！？
+アタシは　ポケモン　つかって▽
+ぬすみを　してるってのに▼
+アンタだけ　そんな　ぶき　つかって
+ズルい　じゃないの！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				Time="2011-11-10T13:04:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				Time="2011-11-10T13:04:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『く……
-口より　先に▽
-手が　動くなんて！▼
-こんな　乱暴な　刑事に……</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『何なの！？
+アタシは　ポケモン　使って▽
+盗みを　してるってのに▼
+アンタだけ　そんな　武器　使って
+ズルい　じゃないの！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				Time="2011-11-10T13:04:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				Time="2011-11-10T13:04:43" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_enemy_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>メカポリス『フム……　なるほど
+あくにんに　ケチを　つけられては▽
+わたしの　せいぎに　きずが　つく▼
+ここは　ポケモンを　つかい
+ヤツを　たいほ　すべきだな</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T13:04:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T13:04:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メカポリス『フム……　なるほど
+悪人に　ケチを　つけられては▽
+私の　正義に　傷が　付く▼
+ここは　ポケモンを　使い
+ヤツを　逮捕　すべきだな</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T13:04:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T13:04:43" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event1_hero_3">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『こ……　こんな
+らんぼうな　けいじに……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T13:04:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T13:04:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『こ……　こんな
+乱暴な　刑事に……</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T13:04:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-10T13:04:43" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -688,28 +729,28 @@
 			<Text>[Name:PokemonNickname Idx="0" ]クノイチ（フン！　アタシは
 しょうめんから　ぶつかるほど▽
 おひとよしじゃ　ないの▼
-スキをみて　にげだしてやるわ</Text>
+スキをみて　にげだしてやるよ</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T05:37:28" />
+				Time="2011-11-11T03:35:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T05:37:28" />
+				Time="2011-11-11T03:35:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]クノイチ（フン！　アタシは
 正面から　ぶつかるほど▽
 お人好しじゃ　ないの▼
-スキをみて　逃げ出してやるわ</Text>
+スキをみて　逃げ出してやるよ</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T05:37:28" />
+				Time="2011-11-11T03:35:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-21T05:37:28" />
+				Time="2011-11-11T03:35:53" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1041,27 +1082,27 @@
 		Label="pw_event4_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『くそーっ！
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『クソッ！
 こんな　クズてつ　けいじに……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				Time="2011-11-11T03:35:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				Time="2011-11-11T03:35:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『くそーっ！
+			<Text>[Name:PokemonNickname Idx="0" ]クノイチ『クソッ！
 こんな　クズ鉄　刑事に……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				Time="2011-11-11T03:35:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T11:47:51" />
+				Time="2011-11-11T03:35:53" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

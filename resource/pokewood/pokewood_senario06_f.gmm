@@ -429,25 +429,41 @@
 カッコイイところ▽
 みせてやるんだから！</language>
 	</row>
-	<row id="pw_event1_hero_0">
+	<row id="pw_event1_enemy_0">
+		<language name="JPN" width="256">ポリアンナ『にいさんに
+おそわった　ごしんじゅつ　で▽
+あんたなんか　ポイ！　なんだから！▼
+ポリス　ジュードー！　セイッ！</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『兄さんに
+教わった　護身術で▽
+あんたなんか　ポイ！　なんだから！▼
+ポリス　ジュードー！　セイッ！</language>
+	</row>
+	<row id="pw_event1_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ぎゃあっ！
 い……　いがいと　やるのねぇ▽
 まあ　いがいと　だけど▼
-（なによ……　この　うでっぷし
-おんなの　ちからじゃ　ない……</language>
+……っていうか　ポケモンで
+しょうぶ　しなさいよ！　アンタ！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ぎゃあっ！
 い……　意外と　やるのねぇ▽
 まあ　意外と　だけど▼
-（何よ……　この　腕っぷし
-女の　力じゃ　ない……</language>
+……っていうか　ポケモンで
+勝負　しなさいよ！　アンタ！</language>
 	</row>
-	<row id="pw_event1_enemy_0">
-		<language name="JPN" width="256">ポリアンナ『にいさんに
-おそわった　たたかいかたで▽
-あんたを　やっつけてやるわ！</language>
-		<language name="JPN_KANJI" width="256">ポリアンナ『兄さんに
-教わった　戦い方で▽
-あんたを　やっつけてやるわ！</language>
+	<row id="pw_event1_enemy_1">
+		<language name="JPN" width="256">ポリアンナ『あっ……　そうだった▼
+わたしったら　あたまに
+ちが　のぼって　つい……▼
+フン！　にいさんには
+ポケモンしょうぶの　さくせんも▽
+おそわってるんだから！</language>
+		<language name="JPN_KANJI" width="256">ポリアンナ『あっ……　そうだった▼
+私ったら　頭に
+血が　上って　つい……▼
+フン！　兄さんには
+ポケモン勝負の　作戦も▽
+教わってるんだから！</language>
 	</row>
 	<row id="pw_event1_react_hero_0">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『フーン……</language>
@@ -472,12 +488,10 @@
 みせてやるわ！</language>
 	</row>
 	<row id="pw_event2_hero_0">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ぎゃあっ！
-この……　バカぢから　おんな……▽
-ちょうしに　のってんじゃ　ないよ！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ぎゃあっ！
-この……　怪力女……▽
-調子に　乗ってんじゃ　ないよ！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『クソッ！
+ちょうしに　のっちゃってさ……！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『クソッ！
+調子に　乗っちゃってさ……！</language>
 	</row>
 	<row id="pw_event2_enemy_0">
 		<language name="JPN" width="256">ポリアンナ『あんたこそ！▼

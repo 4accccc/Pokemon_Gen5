@@ -429,33 +429,47 @@
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">メカポリス『な　なぜ
 ダゲキが　どくどくだまを！？▽
-おのれ　ゆるさん！</language>
+おのれ　ゆるさん！▼
+ちょうごうきん　ネット！
+はっしゃ！　ブラフトオフ！</language>
 		<language name="JPN_KANJI" width="256">メカポリス『な　なぜ
 ダゲキが　どくどくだまを！？▽
-おのれ　許さん！</language>
+おのれ　許さん！▼
+超合金　ネット！
+発射！　ブラフトオフ！</language>
 	</row>
 	<row id="pw_event1_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『フフフ！
 スキを　みて▽
 すりかえておいたんだよ！……って▽
-ぎゃあ！　いたいっ！</language>
+あぶないっ！▼
+アンタ　また……！
+ぶき　つかったね！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『フフフ！
 スキをみて▽
 すり替えておいたんだよ！……って▽
-ぎゃあ！　痛い！</language>
+危ないっ！▼
+アンタ　また……！
+武器　使ったね！</language>
 	</row>
 	<row id="pw_event1_enemy_1">
-		<language name="JPN" width="256">メカポリス『ぬぅっ……！</language>
-		<language name="JPN_KANJI" width="256">メカポリス『ぬぅっ……！</language>
+		<language name="JPN" width="256">メカポリス『ぬぅっ……！
+わたしと　した　ことが▼
+あたまに　ちが　のぼって
+つい……</language>
+		<language name="JPN_KANJI" width="256">メカポリス『ぬぅっ……！
+私と　した　ことが▼
+頭に　血が　上って
+つい……</language>
 	</row>
 	<row id="pw_event1_hero_2">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『いてて……▼
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ハァ　ハァ……▼
 フフフ　うろたえちゃってさ！
 つらいの？　メカポリスさん！▽
 こうさんするなら　いまのうちよ？▼
 ゲットダウン！　とうこうしろ！
 ……だったっけ？　フフフ！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『いてて……▼
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ハァ　ハァ……▼
 フフフ　うろたえちゃってさ！
 辛いの？　メカポリスさん！▽
 降参するなら　今のうちよ？▼

@@ -379,6 +379,36 @@
 畜生！　これまでか……</language>
 	</row>
 	<row id="pw_event0_enemy_0">
+		<language name="JPN" width="256">メカポリス『トリモチ　マシンガン！
+はっしゃ！　ブラストオフ！</language>
+		<language name="JPN_KANJI" width="256">メカポリス『トリモチ　マシンガン！
+はっしゃ！　ブラストオフ！</language>
+	</row>
+	<row id="pw_event0_hero_1">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『あぶないっ！
+ま……　また！　まただ！▼
+アンタ　ぶき　つかってるじゃない！
+ぜったい　わざと　やってるでしょ！？</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『危ないっ！
+ま……　また！　まただ！▼
+アンタ　武器　使ってるじゃない！
+絶対　わざと　やってるでしょ！？</language>
+	</row>
+	<row id="pw_event0_enemy_1">
+		<language name="JPN" width="256">メカポリス『すまん　すまん
+ちょっと　ためしうち　したくなって</language>
+		<language name="JPN_KANJI" width="256">メカポリス『すまん　すまん
+ちょっと　試し撃ち　したくなって</language>
+	</row>
+	<row id="pw_event0_hero_2">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ（こんなのが
+せいぎの　みかた　とか▽
+ヤバすぎる　でしょ……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ（こんなのが
+正義の　味方　とか▽
+ヤバすぎる　でしょ……</language>
+	</row>
+	<row id="pw_event0_enemy_2">
 		<language name="JPN" width="256">メカポリス『ついに　おいつめたぞ
 [1:02:ポケモンニックネーム:0]クノイチ！▽
 ゲットダウン！　とうこうせよ！</language>
@@ -386,17 +416,17 @@
 [1:02:ポケモンニックネーム:0]クノイチ！▽
 ゲットダウン！　投降せよ！</language>
 	</row>
-	<row id="pw_event0_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『くそっ……▼
+	<row id="pw_event0_hero_3">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『クソッ……▼
 ねえ　メカポリス……
 アタシの　さいごの　たのみ▽
 きいて　くれない……？</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『くそっ……▼
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『クソッ……▼
 ねえ　メカポリス！
 アタシの　最後の　頼み▽
 聞いて　くれない……？</language>
 	</row>
-	<row id="pw_event0_enemy_1">
+	<row id="pw_event0_enemy_3">
 		<language name="JPN" width="256">メカポリス『……なんだ？
 [1:02:ポケモンニックネーム:0]クノイチ！</language>
 		<language name="JPN_KANJI" width="256">メカポリス『……なんだ？
