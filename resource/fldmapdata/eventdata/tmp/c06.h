@@ -23,6 +23,13 @@
 #define FLD_ITEM_100                       6
 #define C06_BREEDERM_01                    7
 #define C06_POKE40_01                      8
+#define C06_RANGERW_01                     9
+#define C06_WOMAN1_01                     10
+#define C06_BOY3_01                       11
+#define C06_PILOT_01                      12
+#define C06_GIRL2_01                      13
+#define C06_WORKMAN_01                    14
+#define C06_WORKMAN_01WB                  15
 
 #endif //ZONE_C06_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c06.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

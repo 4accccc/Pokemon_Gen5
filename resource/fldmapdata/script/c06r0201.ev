@@ -11,8 +11,11 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c06r0201.h"
   .include  "c06r0201.h"
+  
+  .include  "t07r0101_def.h"
 
   //@author fujimura_souichirou（ヤマジタウンへ行くまで、エースメダル見せイベント、カーゴサービス）
+  //@author suginaka_katsunori //スクリプト調整・NPC配置
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -27,6 +30,9 @@ _EVENT_DATA   ev_c06r0201_swleader6_01
 _EVENT_DATA   ev_c06r0201_hakase2_01
 _EVENT_DATA   ev_c06r0201_pilot_01
 _EVENT_DATA   ev_c06r0201_informationw_01
+_EVENT_DATA	ev_c06r0201_workman1_01
+_EVENT_DATA	ev_c06r0201_workman2_01
+_EVENT_DATA	ev_c06r0201_poke19_01
 _EVENT_DATA_END
 
 //アイテムチェック用変数
@@ -82,7 +88,7 @@ ev_item_get:
 			_MSGWIN_CLOSE()
 			_ITEM_EVENT_SUCCESS_NOWAIT(ITEM_HAATONOUROKO,1)
 			
-			//ハートスーツ減産処理
+			//ハートスイーツ減産処理
 			_SUB_ITEM( ITEM_HAATOSUIITU,10,LWK_ITEM_SUB_CHK )
 		ENDIF
 	ELSE
@@ -448,19 +454,16 @@ EVENT_END
 //フキヨセカーゴ・ヤマジタウンへ
 ev_map_change_t07:
 
-  //暗転【仮】発着デモへ（詳細未定）
-  _BLACK_OUT_SLOW()
-  _DISP_FADE_END_CHECK()
+  //３Ｄデモコール
+  _DEMO_FADEOUT_BLACK_CALL_SINGLE()
+  _CALL_3D_DEMO( DEMO3D_ID_PLANE_TAKE_OFF )
 
-  //t07ヤマジタウンまでジャンプ【仮】
-  _MAP_CHANGE( ZONE_ID_T07R0101, 6, 4, DIR_DOWN )
+  //リザーブスクリプト
+  _RESERVE_SCRIPT( SCRID_RESERVE_T07R0101_END )
 
-  //暗転復帰
-  _BLACK_IN_SLOW()
-  _DISP_FADE_END_CHECK()
-
-  _TIME_WAIT( 15 )
-
+  //マップチェンジ
+  _MAP_CHANGE_NO_FADE( ZONE_ID_T07R0101, 6, 0, 4, DIR_DOWN )
+  
 _RET
 
 //フキヨセカーゴ・保護区へへ
@@ -520,4 +523,23 @@ _ANIME_LABEL  anm_common_gyoe
   _ANIME_DATA AC_MARK_GYOE,1
   _ANIME_DATA ACMD_END,0
 
+/************************************************************/
+/*	WORKMAN	一言メッセージ							*/
+/************************************************************/
+EVENT_START	ev_c06r0201_workman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c06r0201_workman1_01 )
+EVENT_END
 
+/************************************************************/
+/*	WORKMAN2	一言メッセージ							*/
+/************************************************************/
+EVENT_START	ev_c06r0201_workman2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c06r0201_workman2_01 )
+EVENT_END
+
+/************************************************************/
+/*	POKE19	一言メッセージ							*/
+/************************************************************/
+EVENT_START	ev_c06r0201_poke19_01
+	_EASY_TALK_POKEVOICE( MONSNO_533, msg_c06r0201_poke_01 )
+EVENT_END

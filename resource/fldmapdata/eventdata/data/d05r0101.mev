@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/26 21:41:03
+#save date:2011/11/11 16:12:19
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d05r0101.wms
 #SECTION START:OBJ_EVENT
@@ -16,7 +16,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d05r0101.wms
 #ID name
 D05R0101_INFOMATIONW_01
 #OBJ CODE Number
-INFORMATIONW
+WBTINFO1
 #MOVE CODE Number
 MV_DOWN
 #EVENT TYPE Number
@@ -264,7 +264,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 D05R0101_INFOMATIONW_02
 #OBJ CODE Number
-INFORMATIONW
+WBTINFO2
 #MOVE CODE Number
 MV_DOWN
 #EVENT TYPE Number

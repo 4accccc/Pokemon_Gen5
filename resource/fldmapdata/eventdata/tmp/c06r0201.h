@@ -18,6 +18,9 @@
 #define C06R0201_SWLEADER6_01              4
 #define C06R0201_PILOT_01                  5
 #define C06R0201_INFORMATIONW_01           6
+#define C06R0201_WORKMAN1_01               7
+#define C06R0201_WORKMAN2_01               8
+#define C06R0201_POKE19_01                 9
 
 #endif //ZONE_C06R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c06r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

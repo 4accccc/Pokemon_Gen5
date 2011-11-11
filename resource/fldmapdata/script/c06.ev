@@ -17,6 +17,7 @@
 
   //@author fujimura_souichirou
   //@author Mizuguchi_Mai（リンクイベント）
+  //@author suginaka_katsunori //演出修正・NPC追加
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -35,6 +36,13 @@ _EVENT_DATA    ev_zone_c06
 _EVENT_DATA    ev_init_c06
 _EVENT_DATA    ev_c06_swleader6_01
 _EVENT_DATA    ev_reserve_c06_link_event_ret
+_EVENT_DATA	ev_c06_boy3_01
+_EVENT_DATA	ev_c06_girl2_01
+_EVENT_DATA	ev_c06_pilot_01
+_EVENT_DATA	ev_c06_rangerw_01
+_EVENT_DATA	ev_c06_workman_01
+_EVENT_DATA	ev_c06_woman1_01
+_EVENT_DATA	ev_c06_workman_01wb
 _EVENT_DATA_END
 
 //主人公方向取得変数
@@ -190,8 +198,10 @@ EVENT_START   ev_pos_c06_hakase_01
   $WK_SCENE_C06HAKASE = 1
   //==================================//
 
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+
   //アニメ：アララギ博士登場
-  _OBJ_ANIME_AUTO( C06_HAKASE2_01, 100, 297, FORCE_TYPE_NPC, 8, DIR_LR )
+  _OBJ_ANIME_AUTO( C06_HAKASE2_01, LCW_POSX, 297, FORCE_TYPE_NPC, 8, DIR_LR )
   _OBJ_ANIME_WAIT()
 
   //アニメ：アララギ「！」
@@ -235,20 +245,25 @@ EVENT_START   ev_pos_c06_hakase_01
 
   //アララギ：マスターボールの説明
   _BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_05, C06_HAKASE2_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：アララギ振り向き
+  _OBJ_ANIME( C06_HAKASE2_01, anm_common_turn_l )
+  _OBJ_ANIME_WAIT()
 
   //アララギ：しかし　ポケモンの　ぶんぷって
   _BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_06, C06_HAKASE2_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
 
   //軽く間
-  _TIME_WAIT( 15 )
+  _TIME_WAIT( 30 )
 
   //？？？：アララギはかせーッ！！（フウロのメッセージのみ）
   _PLAINWIN_MSG_UP( msg_c06_swleader6_01 )
   _MSGWIN_CLOSE()
 
   //アニメ：アララギ振り向き
-  _OBJ_ANIME( C06_HAKASE2_01, anm_common_turn_u )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gyoe )
   _OBJ_ANIME_WAIT()
 
   //自機座標取得
@@ -256,19 +271,27 @@ EVENT_START   ev_pos_c06_hakase_01
   //アニメ：フウロ登場
   IF $LCW_POSX == 100 && $LCW_POSZ == 301 THEN
     _OBJ_ANIME_AUTO( C06_SWLEADER6_01, 101, 300, FORCE_TYPE_NPC, 8, DIR_LR )  //主人公が柵側の場合は指定位置
+    _TIME_WAIT( 80 )
+    _OBJ_ANIME( C06_HAKASE2_01, anm_common_turn_u )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
     _OBJ_ANIME_WAIT()
     _OBJ_ANIME( C06_SWLEADER6_01, anm_common_turn_l )
-    _TIME_WAIT( 3 )
+    _TIME_WAIT( 8 )
     _OBJ_ANIME( C06_HAKASE2_01, anm_common_turn_r )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_r )
     _OBJ_ANIME_WAIT()
   ELSE
     $LCW_POSZ -= 1
     $LCW_POSX -= 1
     _OBJ_ANIME_AUTO( C06_SWLEADER6_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR )
-    _TIME_WAIT( 64 )
-    _OBJ_ANIME( C06_HAKASE2_01, anm_common_turn_l )
+    _TIME_WAIT( 80 )
+    _OBJ_ANIME( C06_HAKASE2_01, anm_common_turn_u )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
     _OBJ_ANIME_WAIT()
     _OBJ_ANIME( C06_SWLEADER6_01, anm_common_turn_r )
+    _TIME_WAIT( 8 )
+    _OBJ_ANIME( C06_HAKASE2_01, anm_common_turn_l )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
     _OBJ_ANIME_WAIT()
   ENDIF
 
@@ -278,6 +301,8 @@ EVENT_START   ev_pos_c06_hakase_01
 
   //アニメ：アララギ振り向き
   _OBJ_ANIME( C06_HAKASE2_01, anm_common_turn_d )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
   _OBJ_ANIME_WAIT()
 
   //アララギ：こちらは　フウロ！
@@ -288,10 +313,26 @@ EVENT_START   ev_pos_c06_hakase_01
   _BALLOONWIN_OBJMSG_POS( msg_c06_swleader6_02, C06_SWLEADER6_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
 
+  //アニメ：アララギ振り向き
+  _OBJ_ANIME( C06_HAKASE2_01, anm_common_turn_l )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
+  _OBJ_ANIME_WAIT()
+
   //主人公名代入
   _PLAYER_NAME( 0 )
   //アララギ：あはは！　そうだったわね
   _BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_10, C06_HAKASE2_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //アニメ：アララギ振り向き
+  _OBJ_ANIME( C06_HAKASE2_01, anm_common_turn_d )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
+  _OBJ_ANIME_WAIT()
+
+  //アララギ：
+  _BALLOONWIN_OBJMSG_POS( msg_c06_hakase2_10a, C06_HAKASE2_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
 
   //自機座標取得
@@ -322,7 +363,6 @@ EVENT_START   ev_pos_c06_hakase_01
 
   //フウロ：さてと　アナタ▼
   _BALLOONWIN_OBJMSG_POS( msg_c06_swleader6_04, C06_SWLEADER6_01, POS_DEFAULT )
-  _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
 
   //フウロ退場
@@ -505,6 +545,58 @@ EVENT_START   ev_reserve_c06_link_event_ret
   
 EVENT_END
 
+/************************************************************/
+/*	BOY3		一言メッセージ							*/
+/************************************************************/
+EVENT_START	ev_c06_boy3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c06_boy3_01 )
+EVENT_END
+
+/************************************************************/
+/*	PILOT	一言メッセージ							*/
+/************************************************************/
+EVENT_START	ev_c06_pilot_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c06_pilot_01 )
+EVENT_END
+
+/************************************************************/
+/*	GIRL2	一言メッセージ							*/
+/************************************************************/
+EVENT_START	ev_c06_girl2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c06_girl2_01 )
+EVENT_END
+
+/************************************************************/
+/*	RANGERW	一言メッセージ							*/
+/************************************************************/
+EVENT_START	ev_c06_rangerw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c06_rangerw_01 )
+EVENT_END
+
+/************************************************************/
+/*	WORKMAN	一言メッセージ							*/
+/************************************************************/
+EVENT_START	ev_c06_workman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c06_workman_01 )
+EVENT_END
+
+/************************************************************/
+/*	WOMAN1	一言メッセージ							*/
+/************************************************************/
+EVENT_START	ev_c06_woman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c06_woman1_01 )
+EVENT_END
+
+/************************************************************/
+/*	WORKMAN	一言メッセージ							*/
+/************************************************************/
+EVENT_START	ev_c06_workman_01wb
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_WB( msg_c06_workman_01w, msg_c06_workman_01b, C06_WORKMAN_01WB, POS_DEFAULT )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
 //--------------------------------------------------------------------
 //アララギ：ジム前にやってくる
 //--------------------------------------------------------------------
@@ -519,6 +611,14 @@ _ANIME_LABEL  anm_swleader6_return
 _ANIME_LABEL  anm_hakase2_guide01
   _ANIME_DATA AC_STAY_WALK_D_8F,1
   _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：「！」振り向く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_player_gyoe
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------

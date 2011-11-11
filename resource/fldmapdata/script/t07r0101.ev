@@ -11,9 +11,12 @@
   .include  "scr_seq_def.h"
   .include  "msg_t07r0101.h"
   .include  "t07r0101.h"
+  
+  .include  "c06r0201_def.h"
 
   //@author fujimura_souichirou
   //@author Mizuguchi_Mai（わざオススメ人）
+  //@author suginaka_katsunori //飛行機遷移処理
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -23,6 +26,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_t07r0101_middleman1_01
+_EVENT_DATA	ev_reserve_t07r0101_end
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -55,3 +59,13 @@ EVENT_START   ev_t07r0101_middleman1_01
 }
 EVENT_END
 
+/************************************************************/
+/*		飛行機降りた後のリザーブ						*/
+/************************************************************/
+EVENT_START	ev_reserve_t07r0101_end
+
+	//暗転復帰
+	_MAP_FADE_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+	
+EVENT_END
