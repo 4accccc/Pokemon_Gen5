@@ -1,5 +1,5 @@
 #event data
-#save date:2011/10/20 17:00:26
+#save date:2011/11/11 18:56:41
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c09r0701.wms
 #SECTION START:OBJ_EVENT
@@ -109,7 +109,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C09R0701_MEDALOYAJI
 #OBJ CODE Number
-SUNGLASSES
+MEDALMAN
 #MOVE CODE Number
 MV_RND
 #EVENT TYPE Number
