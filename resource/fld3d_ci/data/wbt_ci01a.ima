@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ima version="1.6.0">
+
+<head>
+	<create user="toyama" host="W00153" date="2011-11-11T11:43:48" source="wbt_ci01a.mb"/>
+	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<mat_color_info
+	frame_size="81"
+	tool_start_frame="0"
+	tool_end_frame="80"
+	interpolation="linear"
+	interp_end_to_start="off"
+	compress_material="on" material_size="7 7"
+	frame_step_mode="1"
+	tolerance_color="2"
+/>
+
+<mat_color_data size="327">
+	25 31 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 31 31
+	31 31 31 31 31 30 29 27 25 23
+	21 18 15 13 10 7 5 2 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	16 31 16 0 16 31 16 0 16 31
+	16 0 16 31 16 0 16 31 19 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 1 1
+	2 3 4 5 7 8 9 11 12 14
+	16 17 19 21 22 24 25 27 28 30
+	31 31 31 31 31 31 0 0 0 0
+	0 0 0 1 2 3 4 6 7 9
+	11 13 16 18 20 22 24 25 27 28
+	29 30 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 30 30 30 29 29 29 28 28 27
+	27 26 26 25 24 24 23
+</mat_color_data>
+
+<mat_color_anm_array size="5">
+	<mat_color_anm index="0" material_name="dust_1">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="1"/>
+		<ambient_g frame_step="1" data_size="1" data_head="1"/>
+		<ambient_b frame_step="1" data_size="1" data_head="1"/>
+		<specular_r frame_step="1" data_size="1" data_head="2"/>
+		<specular_g frame_step="1" data_size="1" data_head="2"/>
+		<specular_b frame_step="1" data_size="1" data_head="2"/>
+		<emission_r frame_step="1" data_size="1" data_head="2"/>
+		<emission_g frame_step="1" data_size="1" data_head="2"/>
+		<emission_b frame_step="1" data_size="1" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="81" data_head="3"/>
+	</mat_color_anm>
+	<mat_color_anm index="1" material_name="light_1">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="1"/>
+		<ambient_g frame_step="1" data_size="1" data_head="1"/>
+		<ambient_b frame_step="1" data_size="1" data_head="1"/>
+		<specular_r frame_step="1" data_size="1" data_head="2"/>
+		<specular_g frame_step="1" data_size="1" data_head="2"/>
+		<specular_b frame_step="1" data_size="1" data_head="2"/>
+		<emission_r frame_step="1" data_size="1" data_head="2"/>
+		<emission_g frame_step="1" data_size="1" data_head="2"/>
+		<emission_b frame_step="1" data_size="1" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="81" data_head="84"/>
+	</mat_color_anm>
+	<mat_color_anm index="2" material_name="lm3">
+		<diffuse_r frame_step="1" data_size="1" data_head="2"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="2"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="2"/>
+		<ambient_r frame_step="1" data_size="1" data_head="1"/>
+		<ambient_g frame_step="1" data_size="1" data_head="1"/>
+		<ambient_b frame_step="1" data_size="1" data_head="1"/>
+		<specular_r frame_step="1" data_size="1" data_head="2"/>
+		<specular_g frame_step="1" data_size="1" data_head="2"/>
+		<specular_b frame_step="1" data_size="1" data_head="2"/>
+		<emission_r frame_step="1" data_size="1" data_head="2"/>
+		<emission_g frame_step="1" data_size="1" data_head="2"/>
+		<emission_b frame_step="1" data_size="1" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="81" data_head="165"/>
+	</mat_color_anm>
+	<mat_color_anm index="3" material_name="wbtlogo_cl_1">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="1"/>
+		<ambient_g frame_step="1" data_size="1" data_head="1"/>
+		<ambient_b frame_step="1" data_size="1" data_head="1"/>
+		<specular_r frame_step="1" data_size="1" data_head="2"/>
+		<specular_g frame_step="1" data_size="1" data_head="2"/>
+		<specular_b frame_step="1" data_size="1" data_head="2"/>
+		<emission_r frame_step="1" data_size="1" data_head="2"/>
+		<emission_g frame_step="1" data_size="1" data_head="2"/>
+		<emission_b frame_step="1" data_size="1" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="81" data_head="246"/>
+	</mat_color_anm>
+	<mat_color_anm index="4" material_name="wbtlogo_cl_2">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="1"/>
+		<ambient_g frame_step="1" data_size="1" data_head="1"/>
+		<ambient_b frame_step="1" data_size="1" data_head="1"/>
+		<specular_r frame_step="1" data_size="1" data_head="2"/>
+		<specular_g frame_step="1" data_size="1" data_head="2"/>
+		<specular_b frame_step="1" data_size="1" data_head="2"/>
+		<emission_r frame_step="1" data_size="1" data_head="2"/>
+		<emission_g frame_step="1" data_size="1" data_head="2"/>
+		<emission_b frame_step="1" data_size="1" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="81" data_head="246"/>
+	</mat_color_anm>
+</mat_color_anm_array>
+
+</body>
+
+</ima>

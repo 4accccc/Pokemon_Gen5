@@ -3,41 +3,40 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-04-29T11:38:56" source="cut_get1_02.mb"/>
+	<create user="toyama" host="W00153" date="2011-11-11T19:09:15" source="get1_medal.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="unno" host="W00199" date="2010-04-29T11:38:56" source="cut_get1_02.mb"/>
+<original_create user="toyama" host="W00153" date="2011-11-11T19:09:15" source="get1_medal.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
-	pos_scale="2"
+	pos_scale="0"
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
-	compress_node="none" node_size="1 1"
-	compress_material="off" material_size="1 1"
+	compress_node="merge" node_size="1 1"
+	compress_material="on" material_size="1 1"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="1" xyz="-1.600098 -1.600098 -6.000000" whd="3.199951 3.199951 0.000000"/>
+<box_test pos_scale="0" xyz="-2.448242 -2.613770 1.804932" whd="4.896484 4.896484 0.000000"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="ci_item_medal"
 		width="64" height="64" original_width="64" original_height="64"
-		format="palette16"
-		color0_mode="transparency"
-		palette_name="ci_item_medal"
-		path="C:/0_WB/cut_in/mb/item_get1/souceimages/ncg/ci_item_665.tga"
+		format="a3i5"
+		palette_name="ci_item_medal_pl"
+		path="C:/Documents and Settings/toyama/ƒfƒXƒNƒgƒbƒv/encountefect/medal_get/ci_item_medal.tga"
 	>
-		<bitmap size="1024">
+		<bitmap size="2048">
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -47,116 +46,244 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 2301 8544 c9a8 ebea
+			eaeb a8c9 4486 0123 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0200 8744 ebea ebeb ebeb ebeb
+			ebeb ebeb ebeb eaeb 4487 0002 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 2300 ea86 ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb 86ea 0023 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
+			2300 eb87 ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb 87eb 0023
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 2200
+			eb66 ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb 66eb
+			0022 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 c844
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			44c8 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 6501 ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb 0165 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0100 eb86 ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb 86eb 0001 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 8702 ebeb ebeb
+			ebeb ebeb e0e0 ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb e0eb e0e0 e0e0 e0e0 ebe0 ebeb
+			ebeb ebeb 0287 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0100 eb87 ebeb ebeb
+			ebeb e0eb e0e0 ebe0 ebeb ebeb ebeb ebeb
+			e0eb e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
+			ebeb ebeb 87eb 0002 0000 0000 0000 0000
+			0000 0000 0000 0000 8701 ebeb ebeb ebeb
+			ebeb e0e0 e0e0 ebe0 ebeb e0eb e0e0 e0e0
+			e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
+			ebeb ebeb ebeb 0087 0000 0000 0000 0000
+			0000 0000 0000 0000 eb65 ebeb ebeb ebeb
+			ebeb e0e0 e0e0 ebe0 ebeb e0eb e0e0 e0e0
+			e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
+			ebeb ebeb ebeb 65eb 0000 0000 0000 0000
+			0000 0000 0000 4300 ebeb ebeb ebeb ebeb
+			e0eb e0e0 e0e0 ebeb ebeb e0eb e0e0 e0e0
+			e0e0 e0e0 e0e0 e0e0 e0e0 ebe0 ebeb ebeb
+			ebeb ebeb ebeb ebeb 0044 0000 0000 0000
+			0000 0000 0000 c802 ebeb ebeb ebeb ebeb
+			e0e0 e0e0 ebe0 ebeb ebeb e0eb e0e0 ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb 23c8 0000 0000 0000
+			0000 0000 0000 eb66 ebeb ebeb ebeb e0eb
+			e0e0 e0e0 ebeb ebeb ebeb e0eb e0e0 ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb 65eb 0000 0000 0000
+			0000 0000 2300 ebeb ebeb ebeb ebeb e0e0
+			e0e0 e0e0 ebeb ebeb ebeb e0eb e0e0 ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb 0023 0000 0000
+			0000 0000 8700 ebeb ebeb ebeb e0eb e0e0
+			e0e0 ebe0 ebeb ebeb ebeb e0eb e0e0 ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb 0087 0000 0000
+			0000 0000 eb23 ebeb ebeb ebeb e0eb e0e0
+			e0e0 ebeb ebeb ebeb ebeb e0eb e0e0 ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb 23eb 0000 0000
+			0000 0000 eb86 ebeb ebeb ebeb e0eb e0e0
+			e0e0 ebeb ebeb ebeb ebeb e0eb e0e0 ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb 86eb 0000 0000
+			0000 0200 ebea ebeb ebeb ebeb e0e0 e0e0
+			e0e0 ebeb ebeb ebeb ebeb e0eb e0e0 ebeb
+			ebeb ebeb e0e0 e0e0 e0e0 e0e0 e0e0 ebe0
+			ebeb ebeb ebeb ebeb ebeb eaeb 0002 0000
+			0000 4400 ebeb ebeb ebeb ebeb e0e0 e0e0
+			e0e0 ebeb ebeb ebeb ebeb e0eb e0e0 e0e0
+			e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 ebe0
+			ebeb ebeb ebeb ebeb ebeb ebeb 0044 0000
+			0000 8700 ebeb ebeb ebeb e0eb e0e0 e0e0
+			e0e0 ebeb ebeb ebeb ebeb e0eb e0e0 e0e0
+			e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0 e0e0
+			ebeb ebeb ebeb ebeb ebeb ebeb 0087 0000
+			0000 ea01 ebeb ebeb ebeb e0e0 e0e0 e0e0
+			e0e0 ebeb ebeb ebeb ebeb e0eb e0e0 e0e0
+			e0e0 e0e0 e0e0 ebeb ebeb e0eb e0e0 e0e0
+			ebeb ebeb ebeb ebeb ebeb ebeb 01ea 0000
+			0000 eb22 ebeb ebeb e0eb e0e0 e0e0 e0e0
+			e0e0 ebeb ebeb ebeb ebeb e0eb e0e0 ebe0
+			ebeb ebeb ebeb ebeb ebeb e0eb e0e0 ebe0
+			ebeb ebeb ebeb ebeb ebeb ebeb 23eb 0000
+			0000 eb45 ebeb ebeb e0e0 e0e0 e0e0 e0eb
+			e0e0 ebeb ebeb ebeb ebeb e0e0 e0e0 e0e0
+			e0e0 ebeb ebeb ebeb ebeb e0eb e0e0 ebe0
+			ebeb ebeb ebeb ebeb ebeb ebeb 44eb 0000
+			0000 eb85 ebeb ebeb e0e0 e0e0 e0e0 e0e0
+			e0e0 ebeb ebeb ebeb ebeb e0e0 e0e0 e0e0
+			e0e0 ebeb ebeb ebeb ebeb e0e0 e0e0 ebe0
+			ebeb ebeb ebeb ebeb ebeb ebeb 86eb 0000
+			0000 eba7 ebeb e0eb e0e0 e0e0 ebeb e0e0
+			e0e0 ebe0 ebeb ebeb ebeb e0e0 e0e0 e0e0
+			e0e0 e0e0 ebeb ebeb ebeb e0e0 e0e0 ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb a7eb 0000
+			0000 ebc9 ebeb e0eb e0e0 ebe0 ebeb e0e0
+			e0e0 ebe0 ebeb ebeb ebeb e0e0 e0e0 e0eb
+			e0e0 e0e0 ebe0 ebeb ebeb e0e0 e0e0 ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb c9eb 0000
+			0000 ebea ebeb e0eb e0e0 ebe0 ebeb e0eb
+			e0e0 ebe0 ebeb ebeb ebeb e0e0 e0e0 ebeb
+			e0e0 e0e0 e0e0 ebeb e0eb e0e0 e0e0 ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb eaeb 0000
+			0000 ebeb ebeb e0eb e0e0 ebeb ebeb e0eb
+			e0e0 ebe0 ebeb ebeb ebeb e0e0 e0e0 ebeb
+			ebeb e0e0 e0e0 ebeb e0eb e0e0 e0e0 ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb 0000
+			0000 ebeb ebeb ebeb ebeb ebeb ebeb e0eb
+			e0e0 ebe0 ebeb ebeb ebeb e0e0 e0e0 ebeb
+			ebeb e0eb e0e0 ebe0 e0e0 e0e0 ebe0 ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb 0000
+			0000 ebea ebeb ebeb ebeb ebeb ebeb e0eb
+			e0e0 ebe0 ebeb ebeb ebeb e0e0 e0e0 ebeb
+			ebeb e0eb e0e0 e0e0 e0e0 e0e0 ebe0 ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb eaeb 0000
+			0000 ebc9 ebeb ebeb ebeb ebeb ebeb e0eb
+			e0e0 ebe0 ebeb ebeb ebeb e0e0 e0e0 ebeb
+			ebeb ebeb e0e0 e0e0 e0e0 e0e0 ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb c9eb 0000
+			0000 eba7 ebeb ebeb ebeb ebeb ebeb e0eb
+			e0e0 ebe0 ebeb ebeb ebeb e0e0 e0e0 ebeb
+			ebeb ebeb e0eb e0e0 e0e0 e0e0 ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb a7eb 0000
+			0000 eb86 ebeb ebeb ebeb ebeb ebeb e0eb
+			e0e0 ebe0 ebeb ebeb ebeb e0e0 e0e0 ebeb
+			ebeb ebeb ebeb e0e0 e0e0 e0e0 ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb 86eb 0000
+			0000 eb44 ebeb ebeb ebeb ebeb ebeb e0eb
+			e0e0 e0e0 ebeb ebeb ebeb e0e0 e0e0 ebeb
+			ebeb ebeb ebeb e0eb e0e0 e0e0 ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb 44eb 0000
+			0000 eb23 ebeb ebeb ebeb ebeb ebeb ebeb
+			e0e0 e0e0 ebeb ebeb ebeb e0e0 e0e0 ebeb
+			ebeb ebeb ebeb e0e0 e0e0 e0e0 ebe0 ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb 23eb 0000
+			0000 ea01 ebeb ebeb ebeb ebeb ebeb ebeb
+			e0e0 ebe0 ebeb ebeb e0eb e0e0 e0e0 ebeb
+			ebeb ebeb ebeb e0e0 e0e0 e0e0 e0e0 ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb 01ea 0000
+			0000 8700 ebeb ebeb ebeb ebeb ebeb ebeb
+			e0e0 e0e0 ebeb ebeb e0eb e0e0 e0e0 ebeb
+			ebeb ebeb e0eb e0e0 e0e0 e0e0 e0e0 e0e0
+			ebeb ebeb ebeb ebeb ebeb ebeb 0087 0000
+			0000 4400 ebeb ebeb ebeb ebeb ebeb ebeb
+			e0e0 e0e0 ebeb ebeb e0eb e0e0 e0e0 ebeb
+			ebeb ebeb e0eb e0e0 e0e0 e0eb e0e0 e0e0
+			ebe0 ebeb ebeb ebeb ebeb ebeb 0044 0000
+			0000 0200 ebea ebeb ebeb ebeb ebeb ebeb
+			e0e0 e0e0 ebeb ebeb e0eb e0e0 ebe0 ebeb
+			ebeb ebeb e0e0 e0e0 ebe0 ebeb e0e0 e0e0
+			ebe0 ebeb ebeb ebeb ebeb eaeb 0002 0000
+			0000 0000 eb85 ebeb ebeb ebeb ebeb ebeb
+			e0e0 e0e0 ebeb ebeb e0eb e0e0 ebe0 ebeb
+			ebeb ebeb e0e0 e0e0 ebe0 ebeb e0eb e0e0
+			ebe0 ebeb ebeb ebeb ebeb 86eb 0000 0000
+			0000 0000 eb23 ebeb ebeb ebeb ebeb ebeb
+			e0e0 e0e0 ebeb ebeb e0eb e0e0 ebe0 ebeb
+			ebeb ebeb e0e0 e0e0 ebe0 ebeb ebeb e0e0
+			ebe0 ebeb ebeb ebeb ebeb 23eb 0000 0000
+			0000 0000 8700 ebeb ebeb ebeb ebeb ebeb
+			e0e0 e0e0 ebeb ebeb e0eb e0e0 ebeb ebeb
+			ebeb e0eb e0e0 e0e0 ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb 0087 0000 0000
+			0000 0000 2300 ebeb ebeb ebeb ebeb ebeb
+			e0e0 e0e0 ebeb ebeb e0eb e0e0 ebeb ebeb
+			ebeb e0eb e0e0 e0e0 ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb 0023 0000 0000
+			0000 0000 0000 eb65 ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb e0eb e0e0 e0e0 ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb 66eb 0000 0000 0000
+			0000 0000 0000 c822 ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb e0eb e0e0 ebe0 ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb 22c8 0000 0000 0000
+			0000 0000 0000 4400 ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb 0044 0000 0000 0000
+			0000 0000 0000 0000 eb65 ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb 65eb 0000 0000 0000 0000
+			0000 0000 0000 0000 8601 ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb 0186 0000 0000 0000 0000
+			0000 0000 0000 0000 0200 eb87 ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb 87eb 0001 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 8702 ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb 0287 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0200 eb86 ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb 86eb 0002 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 6501 ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb 0165 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 c844
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			44c8 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 2200
+			eb66 ebeb ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb ebeb 66eb
+			0002 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			2300 eb87 ebeb ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb ebeb 86eb 0023
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 2300 ea86 ebeb ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb ebeb ebeb 86ea 0023 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0200 8744 ebea ebeb ebeb ebeb
+			ebeb ebeb ebeb eaeb 4587 0002 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0111 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 2110 0143 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 1100 5432 0155 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			1000 4321 5555 1055 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			3211 5554 5555 1455 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 2110
-			5543 5555 5555 1145 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 1100 5432
-			5555 5555 5555 4314 0001 0000 0000 0000
-			0000 0000 0000 0000 0000 1000 4321 5555
-			5555 5555 4555 5431 0001 0000 0000 0000
-			0000 0000 0000 0000 0000 3211 5554 5555
-			5555 5555 1455 5543 0001 0000 0000 0000
-			0000 0000 0000 0000 2110 5543 5555 5555
-			5555 5555 3145 5554 0013 0000 0000 0000
-			0000 0000 0000 1100 5432 5555 5555 5555
-			5555 5555 4314 5555 0014 0000 0000 0000
-			0000 0000 1000 4321 5555 5555 5555 5555
-			5555 4555 5431 5555 0015 0000 0000 0000
-			0000 0000 1000 5553 5555 5555 5555 5555
-			5555 1455 5543 5555 0135 0000 0000 0000
-			0000 0000 0000 5551 5555 5555 5555 5555
-			5555 3145 5554 5555 0145 0000 0000 0000
-			0000 0000 0000 5541 5555 5555 5555 5555
-			5555 4314 5555 5555 0155 0000 0000 0000
-			0000 0000 0000 5531 5555 5555 5555 5555
-			4555 5431 5555 5555 1455 0000 0000 0000
-			0000 0000 0000 4410 4444 4444 4444 4444
-			1444 5543 5555 5555 1665 0000 0000 0000
-			0000 0000 0000 1110 1111 1111 1111 1111
-			3111 5554 5555 6655 1776 0000 0000 0000
-			0000 0000 0000 3310 3333 3333 3333 3333
-			4333 5555 6555 7766 8887 0001 0000 0000
-			0000 0000 0000 4100 4444 4444 4444 4444
-			4444 5555 7666 8877 7888 0001 0000 0000
-			0000 0000 0000 4100 5555 5555 5555 5555
-			5555 6665 8777 8888 6777 0001 0000 0000
-			0000 0000 0000 3100 5555 5555 5555 5555
-			6655 7776 8888 7778 5666 0014 0000 0000
-			0000 0000 0000 1000 5555 5555 5555 6555
-			7766 8887 7788 6667 5555 0015 0000 0000
-			0000 0000 0000 1000 5554 5555 5555 7666
-			8877 7888 6677 5556 3455 0011 0000 0000
-			0000 0000 0000 1000 5553 5555 6665 8777
-			8888 6777 5566 4555 1113 0002 0000 0000
-			0000 0000 0000 0000 5551 6655 7776 8888
-			7778 5666 5555 1134 0021 0000 0000 0000
-			0000 0000 0000 0000 6541 7766 8887 7788
-			6667 5555 1345 0211 0000 0000 0000 0000
-			0000 0000 0000 0000 7661 8877 7888 6677
-			5556 3455 2111 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 8710 8888 6777 5566
-			4555 1113 0002 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 8810 7778 5666 5555
-			1134 0021 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 7810 6667 5555 1345
-			0211 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 6100 5556 3455 2111
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 4100 4555 1113 0002
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 4100 1134 0021 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 1000 0211 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 2301 8645 c9a7 ebea
+			eaeb a7c9 4585 0123 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -171,27 +298,27 @@
 </tex_image_array>
 
 <tex_palette_array size="1">
-	<tex_palette index="0" name="ci_item_medal" color_size="16">
-		5ad6 18c6 294a 5ef7 779c 7fff 6798 4b30
-		32c8 0000 0000 0000 0000 0000 0000 0000
+	<tex_palette index="0" name="ci_item_medal_pl" color_size="16">
+		0000 1084 18c6 294a 39ce 4a52 5294 5ad6
+		6b5a 6f7b 77bd 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
 <material_array size="1">
-	<material index="0" name="lambert3"
+	<material index="0" name="ci_item_medal_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="0"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="37"
-		fog_flag="on"
+		polygon_id="8"
+		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="25 25 25"
-		ambient="0 0 0"
+		ambient="31 31 31"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
@@ -212,9 +339,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 -4.000000 0.000000"
-		volume_max="4.000000 4.000000 0.000000"
-		volume_r="5.656738"
+		volume_min="-0.500000 -0.557373 0.000000"
+		volume_max="0.500000 0.442627 0.000000"
+		volume_r="0.748779"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -225,13 +352,13 @@
 					<mtx idx="0"/>
 					<tex st="0.000000 64.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_s xyz="-4.000000 -4.000000 0.000000"/>
+					<pos_xyz xyz="-0.500000 -0.557373 0.000000"/>
 					<tex st="64.000000 64.000000"/>
-					<pos_xy xy="4.000000 -4.000000"/>
+					<pos_xy xy="0.500000 -0.557373"/>
 					<tex st="64.000000 0.000000"/>
-					<pos_xy xy="4.000000 4.000000"/>
+					<pos_xy xy="0.500000 0.442627"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-4.000000 4.000000"/>
+					<pos_xy xy="-0.500000 0.442627"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -239,23 +366,23 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="item_ica_ima" kind="mesh"
+	<node index="0" name="pPlane2" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
-		scale="0.199951 0.199951 0.199951"
-		rotate="0.000000 0.000000 -180.000000"
-		translate="0.000000 0.000000 -12.000000"
+		scale="4.896484 4.896484 4.896484"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.115723 1.804932"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 -4.000000 0.000000"
-		volume_max="4.000000 4.000000 0.000000"
-		volume_r="5.656738"
+		volume_min="-0.500000 -0.557373 0.000000"
+		volume_max="0.500000 0.442627 0.000000"
+		volume_r="0.748779"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
