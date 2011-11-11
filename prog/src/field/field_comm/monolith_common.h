@@ -26,9 +26,8 @@
 ///モノリスメインメニューIndex
 typedef enum{
   MONOLITH_MENU_TITLE,      ///<タイトル画面
-  MONOLITH_MENU_MISSION,    ///<ミッションを受ける
-  MONOLITH_MENU_STATUS,     ///<状態を見る
   MONOLITH_MENU_POWER,      ///<不思議なパワーをもらう
+  MONOLITH_MENU_STATUS,     ///<状態を見る
   MONOLITH_MENU_FMISSION,   ///<フェスミッションを受ける
   
   MONOLITH_MENU_END,        ///<モノリス画面終了
@@ -209,10 +208,8 @@ typedef struct{
 //==============================================================================
 //  外部データ
 //==============================================================================
-extern const GFL_PROC_DATA MonolithAppProc_Up_PalaceMap;
 extern const GFL_PROC_DATA MonolithAppProc_Down_Title;
-extern const GFL_PROC_DATA MonolithAppProc_Down_MissionSelect;
-extern const GFL_PROC_DATA MonolithAppProc_Up_MissionExplain;
+extern const GFL_PROC_DATA MonolithAppProc_Up_Status;
 extern const GFL_PROC_DATA MonolithAppProc_Down_Status;
 extern const GFL_PROC_DATA MonolithAppProc_Down_PowerSelect;
 extern const GFL_PROC_DATA MonolithAppProc_Up_PowerExplain;

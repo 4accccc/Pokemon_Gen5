@@ -98,23 +98,24 @@ static const struct{
   const GFL_PROC_DATA *proc_down;  ///<‰º‰æ–ÊPROC
 }MonolithProcTbl[] = {
   {//MONOLITH_MENU_TITLE
-    &MonolithAppProc_Up_PalaceMap,
+    &MonolithAppProc_Up_Status,  	// C³
     &MonolithAppProc_Down_Title,
   },
+#if 0	// –¢Žg—p
   {//MONOLITH_MENU_MISSION
     &MonolithAppProc_Up_MissionExplain,
     &MonolithAppProc_Down_MissionSelect,
   },
+#endif
   {//MONOLITH_MENU_POWER
     &MonolithAppProc_Up_PowerExplain,
     &MonolithAppProc_Down_PowerSelect,
   },
   {//MONOLITH_MENU_STATUS
-    &MonolithAppProc_Up_PalaceMap,
+    &MonolithAppProc_Up_Status,		// C³
     &MonolithAppProc_Down_Status,
   },
   {//MONOLITH_MENU_FMISSION
-//    &MonolithAppProc_Up_PalaceMap,
     &MonolithAppProc_Up_FMission,
     &MonolithAppProc_Down_FMissionSelect,
   },
