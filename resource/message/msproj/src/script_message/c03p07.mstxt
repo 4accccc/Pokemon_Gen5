@@ -550,10 +550,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>キズぐすりの　かずは　ばっちり！
-これなら　ジムリーダーに　かてそうね</Text>
+これなら　ジムリーダーに　かてそう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T06:48:21" />
+				Time="2011-11-11T02:58:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -562,10 +562,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>キズぐすりの　数は　ばっちり！
-これなら　ジムリーダーに　勝てそうね</Text>
+これなら　ジムリーダーに　勝てそう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T06:48:11" />
+				Time="2011-11-11T02:58:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -857,7 +857,7 @@
 わたくしと　勝負を　どうぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-26T12:15:09" />
+				Time="2011-11-11T02:59:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"

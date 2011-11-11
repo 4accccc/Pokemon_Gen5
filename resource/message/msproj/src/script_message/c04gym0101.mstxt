@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……ようこそ
+			<Text>ようこそ
 この　ステージへ▼
 わたしの　いとしの　ポケモンたちと
 あなたの　ポケモン……！▼
@@ -14,7 +14,7 @@
 ここで　くらべましょう！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-04T07:56:01" />
+				Time="2011-11-11T02:37:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22,7 +22,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……ようこそ
+			<Text>ようこそ
 この　ステージへ▼
 わたしの　愛しの　ポケモンたちと
 あなたの　ポケモン……！▼
@@ -30,7 +30,7 @@
 ここで　競いましょう！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-04T07:55:54" />
+				Time="2011-11-11T02:37:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -253,7 +253,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>その「ボルトチェンジ」はね……▼
+			<Text>その「ボルトチェンジ」はね▼
 あいてに　こうげき　したあと
 ほかの　ポケモンと　いれかわるの▼
 もっとも
@@ -261,7 +261,7 @@
 そのまま　だけど……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T10:06:37" />
+				Time="2011-11-11T02:38:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -269,7 +269,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>その「ボルトチェンジ」はね……▼
+			<Text>その「ボルトチェンジ」はね▼
 相手に　攻撃したあと
 他の　ポケモンと　入れ替わるの▼
 もっとも
@@ -277,7 +277,7 @@
 そのまま　だけど……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T10:06:49" />
+				Time="2011-11-11T02:38:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -633,12 +633,12 @@
 ファッションショーの▽
 はじまり　でーす！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T02:42:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T02:42:56" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -649,38 +649,31 @@
 はじまり　でーす！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T10:56:55" />
+				Time="2011-11-11T02:42:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T02:42:56" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
 ・トレーナー登場メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T02:42:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>トレーナー
 princess_01</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T02:42:50" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -818,12 +811,12 @@ princess_01</Text>
 わたしたちの　かれいな　たたかいぶり
 みとれてしまわないで▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T02:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T02:43:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -833,38 +826,31 @@ princess_01</Text>
 みとれてしまわないで▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T10:56:45" />
+				Time="2011-11-11T02:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T02:43:01" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
 ・トレーナー登場メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T02:43:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>トレーナー
 princess_02</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T02:42:49" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1002,12 +988,12 @@ princess_02</Text>
 たつ　しかくが　あるか
 わたくしが　たしかめてさしあげます！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T02:43:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T02:43:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1017,38 +1003,31 @@ princess_02</Text>
 わたくしが　確かめてさしあげます！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T10:57:52" />
+				Time="2011-11-11T02:43:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T02:43:05" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
 ・トレーナー登場メッセージ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T02:43:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>トレーナー
 princess_03</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-11T02:42:47" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#ff78ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

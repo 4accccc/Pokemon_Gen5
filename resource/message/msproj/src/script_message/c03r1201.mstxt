@@ -45,12 +45,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・イッシュポケモン図鑑のみつけた数：３９匹以下
+・イッシュポケモン図鑑の
+　みつけた数：３９匹以下
 ・0＝見つけた数
 ※swanで条件変更</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T09:31:10" />
+				Time="2011-11-11T03:25:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -120,14 +121,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・イッシュポケモン図鑑のみつけた数：４０匹以上
+・イッシュポケモン図鑑の
+　みつけた数：４０匹以上
 ・アイテム入手処理
 　No562「しんかのきせき」
 ・0＝見つけた数
 ※swanで条件変更</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T09:31:11" />
+				Time="2011-11-11T03:25:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

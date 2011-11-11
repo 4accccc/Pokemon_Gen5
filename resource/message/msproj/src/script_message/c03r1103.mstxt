@@ -2,80 +2,17 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_c03r1103_inventor_08"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ヤッホー！
-アタシは　マコモ▼
-アナタ　イッシュちほうに　いる
-すべての　ポケモンと　であうんでしょ？▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T13:21:00" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T13:20:59" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ヤッホー！
-アタシは　マコモ▼
-アナタ　イッシュちほうに　いる
-すべての　ポケモンと　であうんでしょ？▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T13:21:01" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T13:21:00" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03r1103_inventor_07"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>あっ　いきなり　ゴメンね
-アタシ　アララギはかせの　ともだちよ▼
-・Ｃギアとの関係を説明▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T13:21:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T13:21:05" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>あっ　いきなり　ゴメンね
-アタシ　アララギはかせの　ともだちよ▼
-・Ｃギアとの関係を説明▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T13:21:12" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T13:21:06" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
 		Label="msg_c03r1103_inventor_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どう？　Ｃギア　つかっている？▼
-でんげんを　いれたあとは
-がめんの　みぎしたに　ある▼
-？マークに　タッチすれば
-Ｃギアの　せつめいが　よめます▼</Text>
+			<Text>ヤッホー！　トレーナーさん
+アタシは　マコモ▼
+トレーナーについての
+けんきゅうを　しています！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T06:41:23" />
+				Time="2011-11-11T03:10:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -83,14 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どう？　Ｃ－ＧＥＡＲ　使っている？▼
-電源を　いれたあとは
-画面の　右下に　ある▼
-？マークに　タッチすれば
-Ｃ－ＧＥＡＲの　説明が　読めます▼</Text>
+			<Text>ヤッホー！　トレーナーさん
+アタシは　マコモ▼
+トレーナーについての
+研究を　しています！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:35:14" />
+				Time="2011-11-11T03:10:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -99,13 +35,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・Ｃギア入手後に登場
-・初回イベント
+・メッセージ後、その場ジャンプ
 ・続けてinventor_02
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:43:02" />
+				Time="2011-11-11T03:14:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -135,12 +70,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さてと　[System:Color name="2" ]ゲームシンク[/System:Color]……▼
-トレーナーの　レポートを　あつめる
-システムに　ついて　せつめい　するよ</Text>
+			<Text>その　けんきゅうに　かかせないのが
+ずばり　[System:Color name="2" ]ゲームシンク　[/System:Color]なの！▼
+それでは
+トレーナーの　レポートを　あつめる▽
+システムについて　せつめい　します▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:11:11" />
+				Time="2011-11-11T03:23:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -148,12 +85,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さてと　[System:Color name="2" ]ゲームシンク[/System:Color]……▼
-トレーナーの　レポートを　集める
-システムに　ついて　説明するよ</Text>
+			<Text>その　研究に　かかせないのが
+[System:Color name="2" ]ずばり　ゲームシンク　[/System:Color]なの！▼
+それでは
+トレーナーの　レポートを　集める▽
+システムについて　説明しますね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:34:14" />
+				Time="2011-11-11T03:23:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -367,11 +306,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・ゲームシンクをｔ利用するまで
+・ゲームシンクを利用するまで
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:00:24" />
+				Time="2011-11-11T03:11:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -669,6 +608,21 @@
 				User="matsumiya:W00224"
 				Time="2011-08-19T07:21:28" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢
+・選択後→girl3_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T03:23:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-11T03:23:43" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c01r0102_select_02"
@@ -698,10 +652,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>選択肢
-・選択後→girl3_08</Comment>
+・選択後→girl3_05</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:20:30" />
+				Time="2011-11-11T03:24:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -739,10 +693,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>選択肢
-・選択後→girl3_09</Comment>
+・選択後→girl3_06</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:20:30" />
+				Time="2011-11-11T03:24:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -780,10 +734,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>選択肢
-・選択後→girl3_10</Comment>
+・選択後→girl3_07</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:20:30" />
+				Time="2011-11-11T03:24:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1060,6 +1014,7 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
+・クリア後
 ・ポケモン入手前
 ・はい/いいえ
 　はい
@@ -1068,7 +1023,7 @@
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T10:28:08" />
+				Time="2011-11-11T03:24:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1217,13 +1172,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>システム
-・はい／いいえの選択肢表示
+・はい/いいえの選択肢表示
 　はい　→名前入力画面に
 　いいえ→終了
 ・1=ポケモン名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T10:27:46" />
+				Time="2011-11-11T03:24:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

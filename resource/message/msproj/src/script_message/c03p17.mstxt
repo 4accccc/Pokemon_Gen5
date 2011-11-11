@@ -132,11 +132,11 @@
 			Language="JPN">
 			<Text>ウソにも　２つあるってさ▼
 ひとが　よろこぶ　ウソと
-ひとを　かなしませる　ウソ▽
+ひとを　かなしませる　ウソ……▽
 いいたいこと　わかるよな？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T07:59:33" />
+				Time="2011-11-11T03:03:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -146,11 +146,11 @@
 			Language="JPN_KANJI">
 			<Text>ウソにも　２つあるってさ▼
 人が　喜ぶ　ウソと
-人を　悲しませる　ウソ▽
+人を　悲しませる　ウソ……▽
 いいたいこと　わかるよな？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T07:59:24" />
+				Time="2011-11-11T03:03:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -324,11 +324,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイリス『うん！　ヒウン下水道なら
+			<Text>アイリス『うん！　下水道なら
 隠れる　場所に　ぴったり　かも！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-29T07:57:03" />
+				Time="2011-11-11T03:03:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -488,11 +488,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんか　げすいどう　から
-ひとのこえが　きこえるような……</Text>
+			<Text>げすいどうでも　ポケモンを　きたえる
+トレーナーが　いるんだよね……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T10:21:39" />
+				Time="2011-11-11T03:06:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -500,11 +500,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なんか　下水道から
-人の声が　きこえるような……</Text>
+			<Text>下水道でも　ポケモンを　鍛える
+トレーナーが　いるんだよね……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T10:21:42" />
+				Time="2011-11-11T03:06:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
