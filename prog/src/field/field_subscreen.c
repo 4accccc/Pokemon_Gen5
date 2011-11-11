@@ -605,6 +605,11 @@ FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_CGearCheck(FIELD_SUBSCREEN_WORK* pWork, FIE
     if(LINK_FESTIVAL_IsMissionEntry( GAMESYSTEM_GetLinkFestivalWork( gsys ) )){
       return FIELD_SUBSCREEN_FMISSION_VIEW;
     }
+    //swan変更：ハイリンク島＆ハイリンクの森ではNOGEARになる
+    if(ZONEDATA_IsPalace(zone_id) || ZONEDATA_IsBingo(zone_id))
+    {
+      return FIELD_SUBSCREEN_NOGEAR;
+    }
   }
   return new_mode;
 }
