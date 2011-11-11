@@ -8319,6 +8319,30 @@
   .short  \ret_wk
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _FES_NPC_QUIZ_NAME_INPUT
+ * @brief　フェスミッションの回答入力画面を呼び出す
+ *
+ * @param mons_no     出題するモンスターNo.
+ * @param idx         回答をセットするタグナンバー
+ * @param ret_wk      入力結果を受け取るワーク
+ *
+ * @retval  SCR_FES_ANSWER_CANCEL 入力したキャンセルした場合
+ * @retval  SCR_FES_ANSWER_YES    正解
+ * @retval  SCR_FES_ANSWER_NO     不正解
+ */
+//--------------------------------------------------------------
+#define _FES_NPC_QUIZ_NAME_INPUT( mons_no, idx, ret_wk ) \
+    _ASM_FES_NPC_QUIZ_NAME_INPUT mons_no, idx, ret_wk
+
+  .macro  _ASM_FES_NPC_QUIZ_NAME_INPUT mons_no, idx, ret_wk
+  .short  EV_SEQ_FES_NPC_QUIZ_NAME_INPUT
+  .short  \mons_no
+  .short  \idx
+  .short  \ret_wk
+  .endm
+
 //======================================================================
 //  ショップ関連
 //======================================================================

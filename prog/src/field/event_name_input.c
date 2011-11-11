@@ -19,6 +19,11 @@
 #include "savedata/resonance_resort_sv.h"
 #include "savedata/etc_save.h"
 
+// フェスミッション回答入力用
+#include "print/global_msg.h" // for GlobalMsg_PokeName
+#include "script_def.h"
+#include "scrcmd_work.h"
+
 
 //=====================================================================================
 // ■非公開関数のプロトタイプ宣言
@@ -31,6 +36,8 @@ static GMEVENT_RESULT EVENT_FUNC_NameInput_PartyPoke(
 static GMEVENT_RESULT EVENT_FUNC_NameInput_Resort(
     GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_FUNC_NameInput_Rival(
+    GMEVENT* event, int* seq, void* wk );
+static GMEVENT_RESULT EVENT_FUNC_NameInput_FMission(
     GMEVENT* event, int* seq, void* wk );
 
 
@@ -493,3 +500,115 @@ static GMEVENT_RESULT EVENT_FUNC_NameInput_Rival( GMEVENT* event, int* seq, void
   return GMEVENT_RES_CONTINUE;
 }
 
+//=============================================================================
+// ■フェスミッション用の入力画面呼び出しイベント
+//=============================================================================
+//-------------------------------------
+///	イベントワーク
+//=====================================
+typedef struct {
+	GAMESYS_WORK*  gameSystem;  // ゲームシステム 
+	FIELDMAP_WORK* fieldmap;    // フィールドマップ
+  NAMEIN_PARAM*  nameInParam; // 名前入力画面のパラメータ
+  u16*           retWork;     // 結果の格納先ワークへのポインタ
+  u16            mons_no;     // モンスターNo.
+  u16            idx;         // タグナンバー
+  WORDSET*       wordset;
+} FMISSION_NAMEIN_WORK;
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェスミッション用の入力呼び出しイベント
+ *
+ *	@param	GAMESYS_WORK* gameSystem
+ *	@param	mons_no モンスターナンバー
+ *	@param	idx     タグナンバー
+ *	@param	ret_wk  入力結果を受け取るワーク
+ *
+ *  @retval  SCR_FES_ANSWER_CANCEL 入力したキャンセルした場合
+ *  @retval  SCR_FES_ANSWER_YES    正解
+ *  @retval  SCR_FES_ANSWER_NO     不正解
+ *
+ *	@return event
+ */
+//-----------------------------------------------------------------------------
+GMEVENT* EVENT_NameInput_FMission( GAMESYS_WORK* gameSystem, u16 mons_no, u16 idx, u16* ret_wk, WORDSET *wordset )
+{
+  GAMEDATA*   gdata = GAMESYSTEM_GetGameData( gameSystem );
+  MISC        *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(gdata) );
+
+
+  GMEVENT* event;
+  FMISSION_NAMEIN_WORK * work;
+
+  // イベント生成
+  event = GMEVENT_Create( 
+      gameSystem, NULL, EVENT_FUNC_NameInput_FMission, sizeof(FMISSION_NAMEIN_WORK) );
+
+  // イベントワークを初期化
+  work = GMEVENT_GetEventWork( event );
+  work->gameSystem = gameSystem;
+  work->fieldmap   = GAMESYSTEM_GetFieldMapWork( gameSystem );
+  work->retWork    = ret_wk;
+  work->idx        = idx;
+  work->mons_no    = mons_no;
+  work->wordset    = wordset;
+
+  work->nameInParam = NAMEIN_AllocParam( HEAPID_PROC, NAMEIN_FES_POKEMON, mons_no, 0, NAMEIN_POKEMON_LENGTH, NULL, misc );
+
+  return event;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベント処理関数(フェスミッション用の入力画面呼び出し)
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FUNC_NameInput_FMission( GMEVENT* event, int* seq, void* wk )
+{
+  FMISSION_NAMEIN_WORK* pniw = wk;
+
+  switch( *seq )
+  {
+  case 0: //----------------------------------------------- 共通イベント呼び出し
+    GMEVENT_CallEvent( event,
+        EVENT_NameInput(pniw->gameSystem, pniw->fieldmap, pniw->nameInParam, TRUE) );
+    ++(*seq);
+    break;
+  case 1: //----------------------------------------------- イベント終了
+    {
+      STRBUF  *p_default_str = GFL_STR_CreateBuffer( 32, HEAPID_PROC );
+      // ポケモン種族名取得
+      GFL_MSG_GetString( GlobalMsg_PokeName, pniw->mons_no, p_default_str );
+
+      if( pniw->nameInParam->cancel != TRUE )
+      {
+        // 正解か比較
+        if( GFL_STR_CompareBuffer( pniw->nameInParam->strbuf, p_default_str ) == TRUE )
+        {
+          // 正解
+          *(pniw->retWork) = SCR_FES_ANSWER_YES;
+        }
+        else
+        {
+          // 不正解
+          *(pniw->retWork) = SCR_FES_ANSWER_NO;
+        }
+
+        // 入力文字をタグに登録
+        WORDSET_RegisterWord( pniw->wordset, pniw->idx, pniw->nameInParam->strbuf, 0, TRUE, PM_LANG );
+      }
+      else
+      {
+        // キャンセル
+        *(pniw->retWork) = SCR_FES_ANSWER_CANCEL;
+      }
+
+      GFL_STR_DeleteBuffer( p_default_str );
+      NAMEIN_FreeParam( pniw->nameInParam );
+    }
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}

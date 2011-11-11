@@ -979,7 +979,7 @@
 
   //呼び出し関連（SWAN追加版）
   DEF_CMD( EvCmdCallTownMap, EV_SEQ_CALL_SORAWOTOBU )
-  NO_CMD()
+  DEF_CMD( EvCmdFMissionNameInput, EV_SEQ_FES_NPC_QUIZ_NAME_INPUT )
   NO_CMD()
   NO_CMD()
   NO_CMD()

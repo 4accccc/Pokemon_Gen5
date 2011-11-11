@@ -931,3 +931,10 @@
 #define SCR_HABITAT_TYPE_SEA        (1)   ///<海
 #define SCR_HABITAT_TYPE_FISHING    (2)   ///<釣り
 
+//--------------------------------------------------------------
+//  フェスミッションの回答入力結果
+//--------------------------------------------------------------
+#define SCR_FES_ANSWER_CANCEL       (0)   ///<入力をキャンセルした
+#define SCR_FES_ANSWER_YES          (1)   ///<正解
+#define SCR_FES_ANSWER_NO           (2)   ///<不正解
+

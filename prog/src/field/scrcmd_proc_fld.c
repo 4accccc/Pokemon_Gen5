@@ -550,6 +550,32 @@ VMCMD_RESULT EvCmdRivalNameInput( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief　フェスミッションの回答入力画面を呼び出す
+ * @param   core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdFMissionNameInput( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  WORDSET   *wordset = SCRIPT_GetWordSet( scw );
+  u16         mons_no= SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
+  u16         idx    = SCRCMD_GetVMWorkValue( core, work );  // コマンド第2引数
+  u16*        ret_wk = SCRCMD_GetVMWork( core, work );     // コマンド第3引数
+
+  GMEVENT   *event;
+  event = EVENT_NameInput_FMission( gsys, mons_no, idx, ret_wk, wordset );
+
+  // イベントを呼び出す
+  SCRIPT_CallEvent( scw, event );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  EVENT_FieldSubProcNoFade_Callbackに渡すコールバック関数

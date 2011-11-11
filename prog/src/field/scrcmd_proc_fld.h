@@ -73,3 +73,7 @@ extern VMCMD_RESULT EvCmdCallTownMap( VMHANDLE *core, void *wk );
 
 // ライバルの名前入力呼び出し
 extern VMCMD_RESULT EvCmdRivalNameInput( VMHANDLE *core, void *wk );
+
+// フェスミッションの回答入力呼び出し
+extern VMCMD_RESULT EvCmdFMissionNameInput( VMHANDLE *core, void *wk );
+

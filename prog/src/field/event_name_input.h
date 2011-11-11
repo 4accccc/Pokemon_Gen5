@@ -36,3 +36,7 @@ extern GMEVENT* EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE type, GAMESYS_WORK* g
 
 // ライバル名入力画面呼び出しイベント
 extern GMEVENT* EVENT_NameInput_Rival( GAMESYS_WORK* gameSystem, u16* ret_wk );
+
+// フェスミッション用の入力画面呼び出しイベント
+extern GMEVENT* EVENT_NameInput_FMission( GAMESYS_WORK* gameSystem, u16 mons_no, u16 idx, u16* ret_wk, WORDSET *wordset );
+

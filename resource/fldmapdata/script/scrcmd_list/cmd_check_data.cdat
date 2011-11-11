@@ -641,7 +641,7 @@ static const CMD_CHECK_DATA cmd_check_data[] = {
   { FALSE, FALSE, FALSE }, // NO_CMD (638)
   { FALSE, FALSE, FALSE }, // NO_CMD (639)
   { TRUE, FALSE, FALSE }, // NO_DATA_640 (640)
-  { FALSE, FALSE, FALSE }, // NO_CMD (641)
+  { TRUE, FALSE, FALSE }, // _FES_NPC_QUIZ_NAME_INPUT (641)
   { FALSE, FALSE, FALSE }, // NO_CMD (642)
   { FALSE, FALSE, FALSE }, // NO_CMD (643)
   { FALSE, FALSE, FALSE }, // NO_CMD (644)
