@@ -231,7 +231,7 @@ typedef struct {
 static FIELD_TASK_RETVAL TaskFunc( void* wk );
 #define ONE_CYCLE_SYNC    ( 35 )    // 1周期のシンク数
 #define BASE_HEIGHT       ( 3 )     // ゆれ幅
-#define OFFSET_HEIGHT     ( 2 )     // 高さオフセット
+#define OFFSET_HEIGHT     ( 0xD800 ) // 高さオフセット
 
 //=============================================================================
 /**
