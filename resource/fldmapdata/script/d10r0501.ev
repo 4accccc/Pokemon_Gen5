@@ -12,6 +12,7 @@
   .include  "d10r0501.h"
   
   //@author Mizuguchi_Mai
+  // キュレム合体のPOSイベントのみ ichiraku_katsuhiko
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -151,13 +152,13 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 	
   // こごえるせかいエフェクト(前半)
   _DEMO_GIMMICK_GIANTHOLE_ANM_START(0)
-  _TIME_WAIT(60) //@TODO 値は仮
+  _TIME_WAIT(500) //@TODO 値は仮
 
   // 暗転処理(メモリ開放)
   {
     // 背景を真っ暗なままメッセージを出したいので
-    // 専用フェードを使う
-    _DEMO_GIMMICK_GIANTHOLE_FADE_OUT()
+    // 専用フェードアウトを使う
+    _MAP_FADE_OUT_MSG_ENABLE()
 
     _TIME_WAIT(20)
 
@@ -172,8 +173,6 @@ EVENT_START ev_pos_d10r0501_swsage1_01
       _PLAINWIN_MSG_DOWN( msg_d10r0501_boss_01w )
     ENDIF
     _MSGWIN_CLOSE()
-
-    _DEMO_GIMMICK_GIANTHOLE_BRIGHTNESS_BLACK()
 
     // カメラ戻し
     _CAMERA_BIND()	//カメラバインド
@@ -196,8 +195,8 @@ EVENT_START ev_pos_d10r0501_swsage1_01
     // こごえるせかい(後半)モデル表示
     _DEMO_GIMMICK_GIANTHOLE_DISP(1)
 
-    _MAP_FADE_BLACK_IN()
-    _MAP_FADE_END_CHECK()
+    // 専用フェードイン
+    _MAP_FADE_IN_MSG_ENABLE()
 
   }
 
@@ -211,7 +210,7 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 
   // こごえるせかいエフェクト(後半)
   _DEMO_GIMMICK_GIANTHOLE_ANM_START(1)
-  _TIME_WAIT(20) //@TODO 値は仮
+  _TIME_WAIT(50) //@TODO 値は仮
 
   //ゲーチス：きましたか　ひとのこころをもたぬ ばけもの Nよ
   _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_05 , D10R0501_SWSAGE1_01 ,POS_DEFAULT )
@@ -220,11 +219,11 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   // ゼクロムonNがおりてくる
   _DEMO_GIMMICK_GIANTHOLE_NPOKE_ANM_START()
 
-  _TIME_WAIT(10)
+  _TIME_WAIT(70)
   
   // 暗転処理(メモリ開放)
   {
-    _MAP_FADE_BLACK_OUT()
+    _MAP_FADE_BLACK_OUT_SLOW()
     _MAP_FADE_END_CHECK()
 
     //=======================================
