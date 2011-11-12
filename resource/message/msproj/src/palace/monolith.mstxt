@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]の　ハイルツリー</Text>
+			<Text>ハイルツリー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:08" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T05:45:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]の　ハイルツリー</Text>
+			<Text>ハイルツリー</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:08" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T05:45:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -75,10 +75,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>タイトルメニュー項目</Comment>
+			<Comment>タイトルメニュー項目（未使用？）</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:08" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T05:46:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -122,10 +122,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>タイトルメニュー項目</Comment>
+			<Comment>タイトルメニュー項目（未使用？）</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:08" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T05:46:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -169,10 +169,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>タイトルメニュー項目</Comment>
+			<Comment>タイトルメニュー項目（未使用？）</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:08" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T05:46:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -218,10 +218,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>タイトルメニュー項目</Comment>
+			<Comment>タイトルメニュー項目（不要なはず）
+侵入ミッション用</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:08" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T05:46:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -337,10 +338,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じょうたいを　みる</Text>
+			<Text>きろくを　みる</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:08" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T05:52:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -348,10 +349,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>状態を　見る</Text>
+			<Text>記録を　見る</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:08" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T05:52:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -378,6 +379,90 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_title_info_001">
+		<LanguageCell
+			Language="JPN">
+			<Text>フェスミッションを　うけてください！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:39:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:36:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フェスミッションを　受けてください！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:39:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:37:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>タイトルメニュー
+チュートリアル時の注意テキスト</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:40:03" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>タイトルメニュー
+チュートリアル時の注意テキスト</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:40:07" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_title_info_002">
+		<LanguageCell
+			Language="JPN">
+			<Text>デルパワーを
+うけとって　ください！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:39:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:37:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デルパワーを
+うけとって　ください！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:39:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:39:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>タイトルメニュー
+チュートリアル時の注意テキスト</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:40:06" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>タイトルメニュー
+チュートリアル時の注意テキスト</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:40:08" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_mono_st_000"
@@ -713,10 +798,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たっせいしたミッション　　「[Digit:5digits Idx="0" ]かい」</Text>
+			<Text>たっせいしたミッション</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:08" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:27:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -724,10 +809,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>達成したミッション　　「[Digit:5digits Idx="0" ]回」</Text>
+			<Text>達成したミッション</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:08" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:29:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -801,6 +886,393 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_st_009">
+		<LanguageCell
+			Language="JPN">
+			<Text>かいさいしたミッション</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:28:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:04:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>開催したミッション</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:28:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:06:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>状態画面
+
+（SWAN追加）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:07:52" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>状態画面
+
+（SWAN追加）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:08:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_st_010">
+		<LanguageCell
+			Language="JPN">
+			<Text>さんかしたミッション</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:28:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:05:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>参加したミッション</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:28:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:06:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>状態画面
+
+（SWAN追加）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:07:59" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>状態画面
+
+（SWAN追加）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:08:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_st_011">
+		<LanguageCell
+			Language="JPN">
+			<Text>さいこうにんずう</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:05:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:05:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>最高参加人数</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:06:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:05:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>状態画面
+
+（SWAN追加）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:07:59" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>状態画面
+
+（SWAN追加）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:08:01" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_st_012">
+		<LanguageCell
+			Language="JPN">
+			<Text>トップスコア</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:06:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:06:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トップスコア</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:06:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:06:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>状態画面
+
+（SWAN追加）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:07:59" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>状態画面
+
+（SWAN追加）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:08:02" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_st_013">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:5digits Idx="3" ]かい</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:33:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:5digits Idx="3" ]回</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:34:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:30:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>状態画面
+達成した回数の単位
+（SWAN追加）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:31:13" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>状態画面
+達成した回数の単位
+（SWAN追加）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:31:16" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_st_014">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:5digits Idx="1" ]かい</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:31:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:31:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:5digits Idx="1" ]回</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:31:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:31:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>状態画面
+開催した回数の単位
+（SWAN追加）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:32:29" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>状態画面
+開催した回数の単位
+（SWAN追加）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:32:30" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_st_015">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:5digits Idx="2" ]かい</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:31:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:31:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:5digits Idx="2" ]回</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:32:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:31:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>状態画面
+参加した回数の単位
+（SWAN追加）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:32:34" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>状態画面
+参加した回数の単位
+（SWAN追加）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:32:36" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_st_016">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:3digits Idx="4" ]にん</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:34:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:34:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:3digits Idx="4" ]人</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:34:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:34:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>状態画面
+最高参加人数の単位
+（SWAN追加）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:34:47" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>状態画面
+最高参加人数の単位
+（SWAN追加）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:34:49" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_mono_st_017">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:5digits Idx="3" ]かい</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:32:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:32:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:5digits Idx="2" ]回</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:32:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:32:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>状態画面
+トップスコアの単位
+（SWAN追加）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:32:45" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>状態画面
+トップスコアの単位
+（SWAN追加）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T06:32:48" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_mono_mis_000"
@@ -972,10 +1444,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ミッション画面</Comment>
+			<Comment>ミッション画面（未使用）</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:08" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T05:53:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1021,10 +1493,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ミッション画面</Comment>
+			<Comment>ミッション画面（未使用）</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:08" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T05:53:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1068,10 +1540,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ミッション画面</Comment>
+			<Comment>ミッション画面（未使用）</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:08" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T05:53:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1118,10 +1590,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ミッション画面：３人接続時に、バトルミッションと、
-買い物ミッションをはじく</Comment>
+買い物ミッションをはじく
+（未使用）</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:08" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T05:53:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1167,10 +1640,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ミッション画面：ターゲットが冒険中ではない</Comment>
+			<Comment>ミッション画面：ターゲットが冒険中ではない
+（未使用）</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:08" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T05:53:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1222,10 +1696,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ミッション画面：チュートリアル中のメッセージ</Comment>
+			<Comment>ミッション画面：チュートリアル中のメッセージ
+（未使用）</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:08" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T05:54:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1275,10 +1750,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ミッション画面：チュートリアル中のメッセージ</Comment>
+			<Comment>ミッション画面：チュートリアル中のメッセージ
+（未使用）</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:08" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-12T05:54:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
