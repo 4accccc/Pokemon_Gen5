@@ -641,13 +641,29 @@
 操り人形……▽
 ただの　マシンだったのさ</language>
 	</row>
-	<row id="pw_event5_hero_0">
+	<row id="pw_event5_enemy_0">
+		<language name="JPN" width="256">きどうたいいん『そういん！
+[1:02:ポケモンニックネーム:0]クノイチを　かくほしろ！</language>
+		<language name="JPN_KANJI" width="256">機動隊員『総員！
+[1:02:ポケモンニックネーム:0]クノイチを　確保しろ！</language>
+	</row>
+	<row id="pw_event5_enemy_1">
+		<language name="JPN" width="256">メカポリス『まあ　まちたまえ
+かのじょは　もう　２どと▽
+にげだしたりは　しない……▽
+そうだろう？　[1:02:ポケモンニックネーム:0]クノイチ</language>
+		<language name="JPN_KANJI" width="256">メカポリス『まあ　待ちたまえ
+彼女は　もう　２度と▽
+逃げ出したりは　しない……▽
+そうだろう？　[1:02:ポケモンニックネーム:0]クノイチ</language>
+	</row>
+	<row id="pw_event5_hero_2">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『フフフ……
 まけたわ　メカポリス……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『フフフ……
 負けたわ　メカポリス……</language>
 	</row>
-	<row id="pw_event5_enemy_0">
+	<row id="pw_event5_enemy_2">
 		<language name="JPN" width="256">メカポリス『ミッションコンプリート
 にんむ　かんりょう……▼
 さあ　[1:02:ポケモンニックネーム:0]クノイチ
@@ -659,7 +675,7 @@
 罪を　償うんだ▽
 そして　生まれ変われ！</language>
 	</row>
-	<row id="pw_event5_hero_1">
+	<row id="pw_event5_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『……▼
 ……
 ありがとう……</language>
@@ -667,7 +683,7 @@
 ……
 ありがとう……</language>
 	</row>
-	<row id="pw_event5_hero_2">
+	<row id="pw_event5_hero_4">
 		<language name="JPN" width="256">こうして　いくどとなく
 だつごく　とうそうを　くりかえした▽
 [1:02:ポケモンニックネーム:0]クノイチは▽
@@ -685,7 +701,7 @@
 [1:02:ポケモンニックネーム:0]クノイチは▽
 脱走を　しなくなったという……</language>
 	</row>
-	<row id="pw_event5_hero_3">
+	<row id="pw_event5_hero_5">
 		<language name="JPN" width="256">そして　すうねんご……▼
 しみんを　はんざいから　まもる
 ひみつけいじ　メカポリス▼

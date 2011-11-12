@@ -1091,18 +1091,76 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_event5_hero_0">
+		Label="pw_event5_enemy_0">
+		<LanguageCell
+			Language="JPN">
+			<Text>きどうたいいん『そういん！
+[Name:PokemonNickname Idx="0" ]ニンジャを　かくほしろ！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-12T06:36:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-12T06:36:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>機動隊員『総員！
+[Name:PokemonNickname Idx="0" ]ニンジャを　確保しろ！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-12T06:36:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-12T06:36:51" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_enemy_1">
+		<LanguageCell
+			Language="JPN">
+			<Text>メカポリス『まあ　まちたまえ
+かれは　もう　２どと▽
+にげだしたりは　しない……▽
+そうだろう？　[Name:PokemonNickname Idx="0" ]ニンジャ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-12T06:49:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-12T06:49:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メカポリス『まあ　待ちたまえ
+彼は　もう　２度と▽
+逃げ出したりは　しない……▽
+そうだろう？　[Name:PokemonNickname Idx="0" ]ニンジャ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-12T06:49:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-12T06:49:20" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_hero_2">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『ヘヘヘ……
 まけたぜ　メカポリス……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:48" />
+				Time="2011-11-12T06:36:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:48" />
+				Time="2011-11-12T06:36:51" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1110,15 +1168,15 @@
 負けたぜ　メカポリス……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:48" />
+				Time="2011-11-12T06:36:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:48" />
+				Time="2011-11-12T06:36:51" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_event5_enemy_0">
+		Label="pw_event5_enemy_2">
 		<LanguageCell
 			Language="JPN">
 			<Text>メカポリス『ミッションコンプリート
@@ -1128,11 +1186,11 @@
 そして　うまれかわれ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:48" />
+				Time="2011-11-12T06:36:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:48" />
+				Time="2011-11-12T06:36:51" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1143,15 +1201,15 @@
 そして　生まれ変われ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-11T12:07:11" />
+				Time="2011-11-12T06:36:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-11T12:07:11" />
+				Time="2011-11-12T06:36:51" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_event5_hero_1">
+		Label="pw_event5_hero_3">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]ニンジャ『……▼
@@ -1159,11 +1217,11 @@
 ありがとうよ……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:48" />
+				Time="2011-11-12T06:36:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:48" />
+				Time="2011-11-12T06:36:51" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1172,15 +1230,15 @@
 ありがとうよ……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:48" />
+				Time="2011-11-12T06:36:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:48" />
+				Time="2011-11-12T06:36:51" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_event5_hero_2">
+		Label="pw_event5_hero_4">
 		<LanguageCell
 			Language="JPN">
 			<Text>こうして　いくどとなく
@@ -1193,11 +1251,11 @@
 だっそうを　しなくなったという……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T05:47:39" />
+				Time="2011-11-12T06:36:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T05:47:39" />
+				Time="2011-11-12T06:36:51" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1211,15 +1269,15 @@
 脱走を　しなくなったという……</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T05:47:39" />
+				Time="2011-11-12T06:36:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T05:47:39" />
+				Time="2011-11-12T06:36:51" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_event5_hero_3">
+		Label="pw_event5_hero_5">
 		<LanguageCell
 			Language="JPN">
 			<Text>そして　すうねんご……▼
@@ -1232,11 +1290,11 @@
 つみを　にくんで　ひとを　にくまず！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:48" />
+				Time="2011-11-12T06:36:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:48" />
+				Time="2011-11-12T06:36:51" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1250,11 +1308,11 @@
 罪を　憎んで　人を　憎まず！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:48" />
+				Time="2011-11-12T06:36:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-25T02:02:48" />
+				Time="2011-11-12T06:36:51" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
