@@ -1727,6 +1727,8 @@ EVENT_START   ev_debug_ichiraku
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_8,   8 ) // TV番組
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_9,   9 ) // キュレム戦
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_10,  10 ) // 観覧車トレーナーリセット
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_11,  11 ) // 背景真っ黒のままメッセージ
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_12,  12 ) // キュレム合体イベントリセット
 	_BMPMENU_START()
 
   SWITCH $SCWK_ANSWER
@@ -1811,7 +1813,27 @@ EVENT_START   ev_debug_ichiraku
 		_FLAG_RESET( TMFLG_AMUSEMENT_TR_BTL )
 		_FLAG_RESET( TMFLG_AMUSEMENT_NPC )
     _SET_ZENKOKU_ZUKAN_FLAG()
-    
+
+  CASE 11 THEN
+    _MAP_FADE_OUT_MSG_ENABLE()
+    _TIME_WAIT(15)
+    _RIVAL_NAME(0)
+    _PLAINWIN_MSG_DOWN( msg_debug_ichiraku_4_a )
+	  _LAST_KEYWAIT()	
+	  _PLAINWIN_CLOSE()
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C12, 47, 1, 762, DIR_DOWN )
+    _MAP_FADE_IN_MSG_ENABLE()
+
+  CASE 12 THEN
+    // キュレム合体イベントリセット
+    _FLAG_SET( FV_D10R0401_BOSS_01 )
+    _FLAG_RESET( FV_D10R0401_POKE_01 )
+    _FLAG_SET( FV_D10R0401_POKE_02 )
+    _FLAG_SET( FV_D10R0401_POKE_03 )
+    $WK_SCENE_D10R0401_SWSAGE1_01 = 1
+
+    _MAP_CHANGE_DEFAULT_POS( ZONE_ID_D10R0401, DIR_DOWN )
+
   ENDSWITCH
 
 EVENT_END
