@@ -648,7 +648,37 @@ SRCS_OVERLAY_WIFI_BREAK = system/wifi_info_break.c
 #===> SRCS_OVERLAY_DEV_IRC
 #GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_FIELD_INTRUDE = field/symbol_pokemon.c \
-        field/event_fmission_field.c
+        field/event_fmission_field.c \
+        field/scrcmd_fmission.c \
+        field/event_move_hilink.c \
+        field/palace_warp_check.c \
+        field/event_cg_power.c \
+				field/event_freeword_input.c \
+        field/scrcmd_pdw.c \
+        field/pdw_postman.c \
+        field/scrcmd_postman.c \
+        field/field_mystery_gift.c \
+        savedata/intrude_save_field.c \
+        field/intrude_secret_item.c \
+        field/scrcmd_hiden.c \
+        field/fskill_amaikaori.c \
+        field/fskill_sorawotobu.c \
+        field/fskill_osyaberi.c \
+        field/event_fishing.c \
+        field/event_dendou_anime.c \
+        field/event_dendou_pc.c \
+        field/event_pokecen_pc.c \
+        field/event_pc_recovery.c \
+        field/event_game_manual.c \
+        field/event_seatemple.c \
+        field/event_rail_slipdown.c \
+        field/scrcmd_movepoke.c \
+        field/event_movepoke.c \
+        field/fld_trade.c \
+        field/united_nations.c \
+        field/trial_house.c \
+        field/bsubway_scr.c \
+        field/bsubway_tr.c
 
 #===> SRCS_OVERLAY_DEV_IRC
 #GROUP_OVERLAY_UNION_INTRUDE
@@ -767,11 +797,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_crowd_people.c \
         field/scrcmd_feeling_check.c \
         field/scrcmd_elevator.c \
-        field/scrcmd_postman.c \
         field/scrcmd_item_judge.c \
         field/scrcmd_traintown.c \
-        field/pdw_postman.c \
-        field/field_mystery_gift.c \
         field/field_rail.c \
         field/field_rail_func.c \
 				field/rail_attr.c \
@@ -783,7 +810,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fldeff_reflect.c \
         field/field_place_name.c \
         field/field_fmission_info.c \
-        field/scrcmd_fmission.c \
         field/fes_gimmick.c \
         field/place_name_letter.c \
         field/event_entrance_in.c \
@@ -797,23 +823,16 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/event_disappear.c \
         field/height_ex.c \
         field/event_comm_error.c \
-        field/event_pc_recovery.c \
-        field/event_dendou_anime.c \
         field/field_player_grid_event.c \
         field/fld_particle.c \
         field/fld3d_ci.c \
         field/sodateya.c \
         field/pokemon_egg.c \
-        field/scrcmd_hiden.c \
-        field/event_rail_slipdown.c \
         field/fldeff_ripple.c \
         field/fldeff_splash.c \
         field/sound_obj.c \
 				field/shortcut_menu.c \
         field/event_name_input.c \
-        field/event_dendou_pc.c \
-        field/event_fishing.c \
-        field/fskill_amaikaori.c \
         field/field_g3dobj.c \
         field/fieldmap_tcb_camera_zoom.c \
         field/field_task.c \
@@ -834,50 +853,33 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fieldskill_mapeff.c \
         field/fld_wipe_3dobj.c \
         field/scrcmd_fldci.c \
-        field/fskill_sorawotobu.c \
         field/pleasure_boat.c \
         field/event_autoway.c \
         field/event_current.c \
         field/fldeff_d06denki.c \
         field/land_data_patch.c \
         field/fldeff_iaigiri.c \
-        field/event_pokecen_pc.c \
-        field/bsubway_scr.c \
-        field/bsubway_tr.c \
-        field/fld_trade.c \
         field/scrcmd_league_front.c \
         field/scrcmd_beacon.c \
         field/party_select_list.c \
         field/field_bbd_color.c \
-				field/event_freeword_input.c \
         field/field_diving_data.c \
 				net_app/comm_entry_menu.c \
 				net_app/comm_entry_menu_comm_command.c \
         field/enceff.c \
         field/enceffno.c \
         field/scrcmd_pokeid_search.c \
-        savedata/intrude_save_field.c \
-        field/intrude_secret_item.c \
-        field/united_nations.c \
         field/fldeff_btrain.c \
         field/fldeff_hide.c \
         field/fldeff_bubble.c \
-        field/trial_house.c \
         field/field_saveanime.c \
         field/mapdatafunc/mapdata_attr.c \
-        field/scrcmd_pdw.c \
-        field/event_movepoke.c \
-        field/scrcmd_movepoke.c \
         field/scrcmd_subscreen.c \
-        field/fskill_osyaberi.c \
         field/scrcmd_password.c \
         field/field_envse_data.c \
-        field/event_seatemple.c \
         field/scrcmd_quiz.c \
         field/scrcmd_poke_win.c \
         field/scrcmd_evt_lock.c \
-        field/palace_warp_check.c \
-        field/event_cg_power.c \
         field/scrcmd_cgear.c \
         field/scrcmd_record.c \
         field/scrcmd_tv.c \
@@ -885,7 +887,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_zoroa.c \
         field/scrcmd_leg_gmk.c \
         field/scrcmd_medal.c \
-        field/event_game_manual.c \
         field/fld_vreq.c \
     		field/field_palace_sys.c \
         field/field_goout_effect.c \
@@ -895,7 +896,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_animal_trail.c \
         field/fldeff_ochiba.c \
         field/scrcmd_ochiba.c \
-        field/event_move_hilink.c \
         field/wbt_system_st.c \
         field/scrcmd_habitat_info.c \
         field/scrcmd_infinity_dungeon_field.c \

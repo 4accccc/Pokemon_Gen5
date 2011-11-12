@@ -113,7 +113,7 @@ typedef struct {
 //============================================================================================
 //マルチブート用きり分け
 #ifndef MULTI_BOOT_MAKE //通常時処理
-#define SOUND_HEAP_SIZE (0x0a0000 - 30000 - 12288)   //640K - 30000 - 0x3000
+#define SOUND_HEAP_SIZE (0x0a0000 - 30000 - 12288 + 24864)   //640K - 30000 - 0x3000
 #else                   //DL子機時処理
 #define SOUND_HEAP_SIZE (0x030000)   //非常に適当
 #endif //MULTI_BOOT_MAKE
