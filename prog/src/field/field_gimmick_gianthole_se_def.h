@@ -19,3 +19,7 @@
 
 #define GIANTHOLE_SE_ICE_BREAK  (SEQ_SE_SW_GIANTHOLE_09)  // •X‚ªÓ‚¯ŽU‚é
 
+#define GIANTHOLE_SE_RESIRAMU_FLY_01  ( SEQ_SE_FLD_167 )      // ƒŒƒVƒ‰ƒ€‰H‚Î‚½‚«‰¹
+#define GIANTHOLE_SE_RESIRAMU_FLY_02  ( SEQ_SE_FLD_168 )      // ƒŒƒVƒ‰ƒ€‰H‚Î‚½‚«‰¹
+#define GIANTHOLE_SE_ZEKUROMU_FLY     ( SEQ_SE_FLD_169 )      // ƒ[ƒNƒƒ€ã¸‰¹
+

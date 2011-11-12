@@ -48,6 +48,7 @@ typedef enum {
   ANIME_TYPE_NULL,
   ANIME_TYPE_FIRST_HALF,    // ‘O”¼
   ANIME_TYPE_SECOND_HALF,   // Œã”¼
+  ANIME_TYPE_N_POKE,        // ƒŒƒVƒ[ƒN‚Éæ‚Á‚½N
 } ANIME_TYPE;
 
 
@@ -61,6 +62,8 @@ enum{
   FRAME_SE_ICE_ATTACK =40,  // •X‚ªŽålŒö‚ÉP‚¢Š|‚©‚é
 
   FRAME_SE_ICE_BREAK  =10,  // •X‚ªÓ‚¯ŽU‚é
+
+  FRAME_SE_MAX = 500,       // Å’·‚ÌƒAƒjƒƒtƒŒ[ƒ€”
 };
 
 //=============================================================================
@@ -77,6 +80,7 @@ typedef struct {
 
   ANIME_TYPE          anm_type;
   u32                 frame;
+
 
 } GIANTHOLE_GIMMICK_TMP;
 
@@ -320,29 +324,61 @@ void GIANTHOLE_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
 #endif
 
   // SEÄ¶
-  if( p_wk->anm_type != ANIME_TYPE_NULL )
   {
-    // ‘O”¼
-    if( p_wk->anm_type == ANIME_TYPE_FIRST_HALF )
+    if( p_wk->anm_type != ANIME_TYPE_NULL )
     {
-      switch( p_wk->frame ){
-      case FRAME_SE_COLD:       PMSND_PlaySE( GIANTHOLE_SE_COLD );      break;
-      case FRAME_SE_ICE_ROT_1:  PMSND_PlaySE( GIANTHOLE_SE_ICE_ROT_1 ); break;
-      case FRAME_SE_ICE_ROT_2:  PMSND_PlaySE( GIANTHOLE_SE_ICE_ROT_2 ); break;
-      case FRAME_SE_ICE_STOP:   PMSND_PlaySE( GIANTHOLE_SE_ICE_STOP );  break;
-      case FRAME_SE_ICE_LEAVE:  PMSND_PlaySE( GIANTHOLE_SE_ICE_LEAVE ); break;
-      case FRAME_SE_ICE_ATTACK: PMSND_PlaySE( GIANTHOLE_SE_ICE_ATTACK );break;
+      // ‚±‚²‚¦‚é‚¹‚©‚¢
+      // ‘O”¼
+      if( p_wk->anm_type == ANIME_TYPE_FIRST_HALF )
+      {
+        switch( p_wk->frame ){
+        case FRAME_SE_COLD:       PMSND_PlaySE( GIANTHOLE_SE_COLD );      break;
+        case FRAME_SE_ICE_ROT_1:  PMSND_PlaySE( GIANTHOLE_SE_ICE_ROT_1 ); break;
+        case FRAME_SE_ICE_ROT_2:  PMSND_PlaySE( GIANTHOLE_SE_ICE_ROT_2 ); break;
+        case FRAME_SE_ICE_STOP:   PMSND_PlaySE( GIANTHOLE_SE_ICE_STOP );  break;
+        case FRAME_SE_ICE_LEAVE:  PMSND_PlaySE( GIANTHOLE_SE_ICE_LEAVE ); break;
+        case FRAME_SE_ICE_ATTACK: PMSND_PlaySE( GIANTHOLE_SE_ICE_ATTACK );break;
+        }
       }
-    }
-    // Œã”¼
-    else
-    {
-      switch( p_wk->frame ){
-      case FRAME_SE_ICE_BREAK:  PMSND_PlaySE( GIANTHOLE_SE_ICE_BREAK ); break;
+      // ‚±‚²‚¦‚é‚¹‚©‚¢
+      // Œã”¼
+      else if( p_wk->anm_type == ANIME_TYPE_SECOND_HALF )
+      {
+        switch( p_wk->frame ){
+        case FRAME_SE_ICE_BREAK:  PMSND_PlaySE( GIANTHOLE_SE_ICE_BREAK ); break;
+        }
       }
-    }
+      // Nonƒ[ƒNƒŒƒV
+      else if( p_wk->anm_type == ANIME_TYPE_N_POKE )
+      {
+        if(GetVersion()==VERSION_B2){
+          if( p_wk->frame == 10 ){
+            PMSND_PlaySE( GIANTHOLE_SE_ZEKUROMU_FLY );
+          }
+        } else {
+          // ƒŒƒVƒ‰ƒ€‚Í‰H‚Î‚½‚«‰¹
+          switch( p_wk->frame ){
+          case 10:
+          case 35:
+          case 60:
+          case 85:
+            PMSND_PlaySE( GIANTHOLE_SE_RESIRAMU_FLY_01 );
+            break;
+          case 13:
+          case 38:
+          case 63:
+          case 88:
+            PMSND_PlaySE( GIANTHOLE_SE_RESIRAMU_FLY_02 );
+            break;
+          }
+        }
+      }
 
-    p_wk->frame++;
+      p_wk->frame++;
+
+      // ƒAƒjƒ‚ªI—¹‚Æ‚·‚é
+      if( p_wk->frame > FRAME_SE_MAX ) { p_wk->anm_type = ANIME_TYPE_NULL; }
+    }
   }
 
 
@@ -439,6 +475,9 @@ void GIANTHOLE_GIMMICK_N_POKE_AnmStart( GAMESYS_WORK *gsys )
 {
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   GIANTHOLE_GIMMICK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GIMMICK_TMP_ASSIGN_ID );
+
+  p_wk->anm_type = ANIME_TYPE_N_POKE;
+  p_wk->frame = 0;
 
   ANM_Play( p_wk->exp_obj, OBJ_BLIZZARD_N );
 }
