@@ -1613,6 +1613,150 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_h04_girl2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>どこからか　きこえる　かなしいような
+どこか　マヌケな　ねいろ……▽
+もしかしたら　ゆうれい　なのかも？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:04:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:03:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>どこからか　きこえる　悲しいような
+なんだか　マヌケな　音色……▽
+もしかしたら　ゆうれい　なのかも？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:04:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:03:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・GRIDX＝31、GRIDZ＝35、下向き
+・msg_h04r0801_girl4_01表示前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:06:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:16:53" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h04_girl2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>どこからか　きこえる　かなしいような
+どこか　マヌケな　ねいろ……▽
+もしかしたら　ゆうれい　なのかも？▼
+えっ？
+おんなのこが　いた……▼
+そっか！　そういうことね！
+ありがと！　これは　おれいよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:06:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:05:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>どこからか　きこえる　悲しいような
+なんだか　マヌケな　音色……▽
+もしかしたら　ゆうれい　なのかも？▼
+えっ？
+女の子が　いた……▼
+そっか！　そういうことね！
+ありがと！　これは　お礼よ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:07:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:05:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・msg_h04r0801_girl4_01表示後
+・アイテム入手処理
+　No000「オボンのみ」×５</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:15:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:16:55" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h04_girl2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひとの　ひみつは　まもらないと
+じぶんの　ひみつが　もれちゃうもの</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:15:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:13:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>他人の　秘密は　守らないと
+自分の　秘密が　漏れちゃうもの</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:15:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:13:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アイテム入手後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:05:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:16:55" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_h04_sign_01"
 		Style="Large">
 		<LanguageCell

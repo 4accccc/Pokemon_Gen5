@@ -2,14 +2,15 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_mapscript_dummy"
+		Label="msg_c03p19_01_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>テストメッセージ
+せんとうまえ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:59:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>仮メッセージ
+戦闘前▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:59:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,17 +30,25 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>？？？</Comment>
+			<Comment>♂
+・１人目
+・GRIDX＝17、GRIDZ＝4
+・posイベント
+　GRIDX＝14～21、GRIDZ＝7
+・全員に！マークで画面下を向き
+　こいつが隣接してメッセージ表示
+・表示後、トレーナー戦闘に</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:18:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>？？？
+トレーナーID：？？？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:15:32" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -47,5 +57,422 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:10" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03p19_01_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ
+かった</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:00:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:59:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+勝利</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:00:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:59:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・戦闘後
+・続けて02_01</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:15:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:04:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03p19_01_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ
+ぜんいんに　かった</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:16:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:00:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+みんなに勝利</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:16:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:00:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・全員に勝利後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:16:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:04:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03p19_02_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ
+せんとうまえ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:00:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:00:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+戦闘前▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:00:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:00:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・２人目
+・GRIDX＝19、GRIDZ＝4
+・隣接してメッセージ表示
+・表示後、トレーナー戦闘に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:17:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？
+トレーナーID：？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:15:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03p19_02_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ
+かった</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:00:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:00:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+勝利</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:00:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:00:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・戦闘後
+・続けて03_01</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:16:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:04:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03p19_02_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ
+ぜんいんに　かった</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:16:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:00:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+みんなに勝利</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:16:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:00:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・全員に勝利後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:16:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:04:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03p19_03_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ
+せんとうまえ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:04:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:04:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+戦闘前▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:04:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:04:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・３人目
+・GRIDX＝18、GRIDZ＝3
+・戦闘前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:17:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？
+トレーナーID：？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:15:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03p19_03_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ
+かった</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:04:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:04:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+勝利</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:04:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:04:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・戦闘後
+・メダル入手条件ON</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:17:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:04:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c03p19_03_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>テストメッセージ
+ぜんいんに　かった</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:17:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:04:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+みんなに勝利</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:17:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:04:55" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・戦闘後＋全員に勝利後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:04:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>？？？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T11:04:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>

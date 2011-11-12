@@ -165,10 +165,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>画面真っ暗状態のメッセージ▼</Text>
+			<Text>おもおもしい　タラップが
+おごそかに　おりてきた……！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-11-12T06:34:36" />
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:59:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -176,10 +177,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>画面真っ暗状態のメッセージ▼</Text>
+			<Text>重々しい　タラップが
+厳かに　降りてきた……！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-11-12T06:34:39" />
+				User="matsumiya:W00224"
+				Time="2011-11-12T10:59:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
