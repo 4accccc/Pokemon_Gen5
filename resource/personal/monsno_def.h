@@ -883,4 +883,4 @@
 #define OTHER_FORM_MAX  ( 66 )
 
 //イッシュ図鑑トータル
-#define ZUKANNO_ISSHU_END  ( 253 )
+#define ZUKANNO_ISSHU_END  ( 300 )
