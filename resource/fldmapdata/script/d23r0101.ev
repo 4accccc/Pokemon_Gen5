@@ -58,10 +58,9 @@ INIT_EVENT_END
 /*		D23R0101	MIDDLEMAN2		現場監督イベント		  */
 /**************************************************************/
 EVENT_START		ev_d23r0101_middleman2_01
-_TALK_OBJ_START()
 	//依頼を請けていない場合
 	IF FLAG_OFF ( FE_D23R0101_MANAGER_TALK) THEN
-		
+		_TALK_OBJ_START()
 		_BALLOONWIN_TALKOBJ_MSG( sg_d23r0101_workman_01 )
 		
 		//はい・いいえ分岐
@@ -95,17 +94,12 @@ _TALK_OBJ_START()
 		//依頼を達成した場合
 		IF FLAG_ON(FE_D23R0101_WORKMAN2A_BTL) && FLAG_ON(FE_D23R0101_WORKMAN2B_BTL) && FLAG_ON(FE_D23R0101_WORKMAN2C_BTL) THEN
 		
-			_BALLOONWIN_TALKOBJ_MSG( sg_d23r0101_workman_05 )
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
-		
+			_EASY_TALK_ITEM_EVENT(ITEM_YAKEDONAOSI, 1, FE_D23R0101_ITEMGET_02, sg_d23r0101_workman_05 , msg_d23r0101_workman_06 , msg_d23r0101_workman_06 )
 		
 		//依頼を達成していない場合
 		ELSE
 		
-			_BALLOONWIN_TALKOBJ_MSG( sg_d23r0101_workman_04 )
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
+			_EASY_BALLOONWIN_TALKOBJ_MSG( sg_d23r0101_workman_04 )
 		
 		ENDIF
 	
