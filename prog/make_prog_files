@@ -944,8 +944,12 @@ SRCS_OVERLAY_DEBUGMENU_WBT  = field/event_debug_menu_ov_wbt.c
 # デバッグメニュー並列化  スタッフ系
 #===> SRCS_OVERLAY_FIELDMAP
 #GROUP_OVERLAY_DEBUGMENU
-SRCS_OVERLAY_DEBUGMENU_STAFF  = field/event_debug_menu_ov_staff.c \
-                                field/event_debug_menu_medal.c
+SRCS_OVERLAY_DEBUGMENU_STAFF  = field/event_debug_menu_ov_staff.c
+
+# デバッグメニュー並列化  ずかん系
+#===> SRCS_OVERLAY_FIELDMAP
+#GROUP_OVERLAY_DEBUGMENU
+SRCS_OVERLAY_DEBUGMENU_ZUKAN  = field/event_debug_menu_ov_zukan.c
 
 # デバッグメニュー並列化  バトルサブウェイ系
 #===> SRCS_OVERLAY_FIELDMAP
@@ -960,7 +964,8 @@ SRCS_OVERLAY_DEBUGMENU_INFINITY  = field/event_debug_menu_ov_infinity.c
 # デバッグメニュー並列化  メダル詳細画面
 #===> SRCS_OVERLAY_FIELDMAP
 #GROUP_OVERLAY_DEBUGMENU
-SRCS_OVERLAY_DEBUGMENU_MEDALINFO  = field/event_debug_menu_ov_medalinfo.c
+SRCS_OVERLAY_DEBUGMENU_MEDALINFO  = field/event_debug_menu_ov_medalinfo.c \
+                                    field/event_debug_menu_medal.c
 
 # デバッグメニュー並列化  けものみち
 #===> SRCS_OVERLAY_FIELDMAP

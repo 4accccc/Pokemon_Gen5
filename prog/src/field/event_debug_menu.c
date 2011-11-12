@@ -41,6 +41,7 @@
 #include "event_debug_menu_ov_net.h"
 #include "event_debug_menu_ov_app.h"
 #include "event_debug_menu_ov_staff.h"
+#include "event_debug_menu_ov_zukan.h"
 #include "event_debug_menu_ov_bsubway.h"
 #include "event_debug_menu_ov_wbt.h"
 #include "event_debug_menu_ov_infinity.h"
@@ -61,6 +62,7 @@ FS_EXTERN_OVERLAY( debugmenu_net );
 FS_EXTERN_OVERLAY( debugmenu_app );
 FS_EXTERN_OVERLAY( debugmenu_wbt );
 FS_EXTERN_OVERLAY( debugmenu_staff );
+FS_EXTERN_OVERLAY( debugmenu_zukan );
 FS_EXTERN_OVERLAY( debugmenu_bsubway );
 FS_EXTERN_OVERLAY( debugmenu_infinity );
 FS_EXTERN_OVERLAY( debugmenu_medalinfo );
@@ -200,11 +202,11 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR51  , debugMenuCallProc_OpenGTSNegoMenu, FS_OVERLAY_ID(debugmenu_staff) }, //GTSネゴ
   //event_debug_menu_ov_bsubway.c サブウェイ部分だけ大きかったので切り分け
   { DEBUG_FIELD_BSW_00, debugMenuCallProc_BSubway, FS_OVERLAY_ID(debugmenu_bsubway) },                //バトルサブウェイ
-  //event_debug_menu_ov_staff.c
-  { DEBUG_FIELD_ZUKAN_04, debugMenuCallProc_Zukan, FS_OVERLAY_ID(debugmenu_staff) },            //ずかん
+  //event_debug_menu_ov_zukan.c
+  { DEBUG_FIELD_ZUKAN_04, debugMenuCallProc_Zukan, FS_OVERLAY_ID(debugmenu_zukan) },            //ずかん
   { DEBUG_FIELD_STR66,  debugMenuCallProc_RingTone, FS_OVERLAY_ID(debugmenu_staff) },           //着信音
   { DEBUG_FIELD_STR73, debugMenu_WfbcDebug, FS_OVERLAY_ID(debugmenu_staff) },                   //WFBCオートチェック
-  { DEBUG_FIELD_MEDALBOX_01 , debugMenuCallProc_MedalBox , FS_OVERLAY_ID(debugmenu_staff) },    // メダルボックス
+  { DEBUG_FIELD_MEDALBOX_01 , debugMenuCallProc_MedalBox , FS_OVERLAY_ID(debugmenu_medalinfo) },    // メダルボックス
   { DEBUG_FIELD_MEDAL_INFO , debugMenuCallProc_MedalInfo , FS_OVERLAY_ID(debugmenu_medalinfo) },    // メダル詳細画面
   { DEBUG_FIELD_INFINITY , debugMenuCallProc_InfinityDungeon , FS_OVERLAY_ID(debugmenu_infinity) },    // 無限ダンジョン
   { DEBUG_FIELD_ANIMAL_TRAIL , debugMenuCallProc_AnimalTrail , FS_OVERLAY_ID(debugmenu_animal_trail) },    // けものみち
