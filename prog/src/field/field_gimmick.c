@@ -54,6 +54,7 @@
 #include "field_gimmick_h06.h"
 #include "field_gimmick_gianthole.h"
 #include "field_gimmick_c12.h"
+#include "field_gimmick_c14.h"
 
 FS_EXTERN_OVERLAY(field_gym_insect);
 FS_EXTERN_OVERLAY(field_gym_elec);
@@ -97,6 +98,7 @@ FS_EXTERN_OVERLAY(field_gimmick_h06);
 FS_EXTERN_OVERLAY(wbt_lobby_gimmick);
 FS_EXTERN_OVERLAY(field_gimmick_gianthole);
 FS_EXTERN_OVERLAY(field_gimmick_c12);
+FS_EXTERN_OVERLAY(field_gimmick_c14);
 
 
 #include "field_gimmick_table.cdat"

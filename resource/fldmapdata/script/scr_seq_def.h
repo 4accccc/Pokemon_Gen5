@@ -16411,8 +16411,27 @@
   .short  EV_SEQ_DEMO_GIMMICK_INTRO_ANM_START
   .endm
 
-
-
 //======================================================================
+
+//--------------------------------------------------------------
+/**
+ * @def   _C12_GMK_SPLASH
+ * @brief 水しぶきアニメ再生
+ *
+ * 表示する座標
+ * @param gx グリッドX座標
+ * @param gy グリッドY座標
+ * @param gz グリッドZ座標
+ */
+//--------------------------------------------------------------
+#define _C12_GMK_SPLASH( gx, gy, gz )  \
+    _ASM_C12_GMK_SPLASH gx, gy, gz
+
+	.macro	_ASM_C12_GMK_SPLASH	gx,gy,gz
+	.short	EV_SEQ_C12_GMK_SPLASH
+	.short	\gx
+	.short	\gy
+	.short	\gz
+	.endm
 //======================================================================
 

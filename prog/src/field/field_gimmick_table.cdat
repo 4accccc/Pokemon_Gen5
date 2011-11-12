@@ -330,5 +330,11 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     C12_GIMMICK_End,    // ヒオウギシティ
     C12_GIMMICK_Move,   // ヒオウギシティ
   },
+  {
+    FS_OVERLAY_ID(field_gimmick_c14),
+    C14_GIMMICK_Setup,  // セイガイハシティ
+    C14_GIMMICK_End,    // セイガイハシティ
+    C14_GIMMICK_Move,   // セイガイハシティ
+  },
 };
 
