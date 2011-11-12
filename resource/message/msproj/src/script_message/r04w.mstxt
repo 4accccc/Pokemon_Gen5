@@ -119,10 +119,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>まさか　ポケモンの
-イワパレス　だったとは……▼</Text>
+イワパレス　だったとは……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-11-12T04:25:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -131,10 +131,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>まさか　ポケモンの
-イワパレス　だったとは……▼</Text>
+イワパレス　だったとは……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-11-12T04:25:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -158,7 +158,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -212,7 +212,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -386,18 +386,14 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_r04w_swboss_03"
+		Label="msg_r04w_rock_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アクロマ『ほら　めざめましたよ▼
-そうだ！　あなた
-イワパレスと　たたかってください！▼
-そうすれば　ポケモンの　つよさを
-ひきだせる　りゆうが　わかるかも……</Text>
+			<Text>ぱれっしゅ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-11-12T04:26:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -405,14 +401,66 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アクロマ『ほら　めざめましたよ▼
-そうだ！　あなた
-イワパレスと　戦ってください！▼
-そうすれば　ポケモンの　強さを
-ひきだせる　理由が　わかるかも……</Text>
+			<Text>ぱれっしゅ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
+				Time="2011-11-12T04:26:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
 				Time="2011-08-11T09:18:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イワパレス
+・どれでも同じ
+・メッセージ表示後、野生ポケモンとの戦闘に
+・どれか一匹と戦闘すると
+　フィールド復帰時、他の動作モデルも削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T04:26:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>大きな岩
+イワパレス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T04:26:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r04w_swboss_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アクロマ『……イワパレス▼
+いわを　せおったまま　ここで
+ちからつきていたの　でしょうか？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T04:26:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-11T09:18:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アクロマ『……イワパレス▼
+岩を　背負ったまま　ここで
+力尽きていたの　でしょうか？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T04:26:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -421,10 +469,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・メッセージ表示後、主人公操作可能に</Comment>
+・画面上をむいてメッセージ表示
+・続けて主人公を向いて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-11-12T04:26:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -447,13 +496,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アクロマ『おねがいです
-イワパレスと　たたかいなさい！▼
-そうすれば　ポケモンの　つよさを
-ひきだせる　りゆうが　わかるかも……</Text>
+			<Text>プラズマだんは　いいました▼
+ポケモンのもつ　かのうせいを　みとめ
+にんげんから　かいほう　すべきだと▼
+わたくしは　そうは　おもいません！▼
+むしろ　にんげんが
+ポケモンが　ひめている▽
+のうりょくを　ひきだすべきなのです！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T09:44:38" />
+				Time="2011-11-12T04:26:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -461,13 +513,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アクロマ『お願いです
-イワパレスと　戦いなさい！▼
-そうすれば　ポケモンの　強さを
-ひきだせる　理由が　わかるかも……</Text>
+			<Text>プラズマ団は　いいました▼
+ポケモンの持つ　可能性を　認め
+人間から　開放すべきだと▼
+わたくしは　そうは　思いません！▼
+むしろ　人間が
+ポケモンが　秘めている▽
+能力を　ひきだすべきなのです！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T09:44:38" />
+				Time="2011-11-12T04:26:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -476,12 +531,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・03表示後から
-　イワパレスの動作モデルを調べるまで
-・イワパレス</Comment>
+・</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-11-12T04:26:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -489,63 +542,11 @@
 アクロマ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-11-12T04:26:11" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ffff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_r04w_rock_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ぱれっしゅ！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ぱれっしゅ！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>イワパレス
-・どれでも同じ
-・メッセージ表示後、野生ポケモンとの戦闘に
-・どれか一匹と戦闘すると
-　フィールド復帰時、他の動作モデルも削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>大きな岩
-イワパレス</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -602,7 +603,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -661,7 +662,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -718,7 +719,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -735,13 +736,12 @@
 ……　……　……▼
 [Name:TrainerName Idx="0" ]さん　ですか
 その　なまえ　おぼえておきます！▼
-さて　ヒウンシティでの
-やくそくどおり　ポケモンしょうぶを▼
-しっけい！　そのまえに　あなたの
-ポケモンを　かいふく　せねば！▼</Text>
+では　あなたが
+ポケモンの　ちからを　ひきだせる▽
+トレーナーか　たしかめます！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-11-12T04:26:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -755,13 +755,12 @@
 ……　……　……▼
 [Name:TrainerName Idx="0" ]さん　ですか
 その名前　おぼえておきます！▼
-さて　ヒウンシティでの
-約束どおり　ポケモン勝負を▼
-失敬！　その前に　あなたの
-ポケモンを　回復せねば！▼</Text>
+では　あなたが
+ポケモンの　力を　ひきだせる▽
+トレーナーか　確かめます！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-11-12T04:26:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -770,11 +769,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けてswboss_09
+・表示後、トレーナー戦闘に
 ・0＝主人公名前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-11-12T04:26:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -840,7 +839,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -870,14 +869,14 @@
 			Language="JPN_KANJI">
 			<Text>それでは　[Name:TrainerName Idx="0" ]さん
 全力で　いきます！▼
-あっ　ごあんしんを！
+あっ　ご安心を！
 さきほどの　装置は　使いません▼
 あれは　試作品ですし
 そもそも　フェアでは　ないのでね▼
 では　あらためて！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T09:47:37" />
+				Time="2011-11-12T04:26:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -902,7 +901,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -954,10 +953,10 @@
 			<Comment>♂
 ・トレーナー戦後、自動で表示
 ・アイテム入手処理
-　No000「」（内容未定）</Comment>
+　No270「いのちのたま」</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-11-12T04:26:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -986,11 +985,11 @@
 かいわ　できれば　いいのですがね！▼
 ……そのような　にんげんが
 せかいに　いる　わけが　ない！▼
-それでは　[Name:TrainerName Idx="0" ]
-また　あいましょう▼</Text>
+それでは　[Name:TrainerName Idx="0" ]さん
+また　おあいしましょう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-11-12T04:26:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1004,11 +1003,11 @@
 会話できれば　いいのですがね！▼
 ……そのような　人間が
 世界に　いる　わけが　ない！▼
-それでは　[Name:TrainerName Idx="0" ]
-また　会いましょう▼</Text>
+それでは　[Name:TrainerName Idx="0" ]さん
+また　お会いしましょう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-11-12T04:26:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
