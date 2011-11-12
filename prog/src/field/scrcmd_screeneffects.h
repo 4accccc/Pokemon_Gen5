@@ -49,6 +49,8 @@ extern VMCMD_RESULT EvCmdBModelAnimeWait( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdMapFade_InitBG( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdPlaceNameDisplay( VMHANDLE * core, void *wk );
 
+extern VMCMD_RESULT EvCmdMapFadeOut_MsgEnable( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdMapFadeIn_MsgEnable( VMHANDLE *core, void *wk );
 
 
 

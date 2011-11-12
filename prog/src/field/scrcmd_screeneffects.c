@@ -45,6 +45,10 @@
 
 #include "field_place_name.h" // for FIELD_PLACE_NAME_DisplayForce
 #include "field_fade.h"
+#include "system/brightness.h" // for
+
+// フェード面定義
+#define FADE_PLANEMASK  (GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD)
 
 static BOOL EvWaitDispFade( VMHANDLE *core, void *wk );
 static BOOL EvWaitMapFade( VMHANDLE *core, void *wk );
@@ -52,6 +56,22 @@ static BOOL EvWaitMapFade( VMHANDLE *core, void *wk );
 #ifdef PM_DEBUG
 extern BOOL MapFadeReqFlg;  //マップフェードリクエストフラグ  宣言元　script.c
 #endif
+
+//=============================================================================
+// メッセージ面以外フェードイベント
+//=====================================
+typedef enum {
+  FADE_TYPE_OUT,
+  FADE_TYPE_IN,
+}FADE_TYPE;
+// イベントワーク
+typedef struct {
+  FIELDMAP_WORK   *p_fieldmap;
+  FADE_TYPE       fade_type;  // フェードタイプ
+} FADE_MSG_ENABLE_EV_WORK;
+// イベント関数
+static GMEVENT_RESULT Fade_MsgEnableEvent( GMEVENT* event, int* seq, void* wk );
+//=============================================================================
 
 extern void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork );
 extern void FIELDMAP_InitBGMode( void );
@@ -352,6 +372,180 @@ VMCMD_RESULT EvCmdMapFadeCheck( VMHANDLE *core, void *wk )
 {
   VMCMD_SetWait( core, EvWaitMapFade );
   return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief メッセージ以外のフェードスタート
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdMapFadeOut_MsgEnable( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+  GMEVENT *event;
+  FADE_MSG_ENABLE_EV_WORK *event_work;
+
+  event = GMEVENT_Create( gsys, NULL, Fade_MsgEnableEvent, sizeof(FADE_MSG_ENABLE_EV_WORK ) );
+  event_work = GMEVENT_GetEventWork( event );
+
+  // 初期化
+  event_work->fade_type = FADE_TYPE_OUT;
+  event_work->p_fieldmap = p_fieldmap;
+
+  if( event == NULL )
+  {
+    GF_ASSERT(0);
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  SCRIPT_CallEvent( sc, event );
+
+  //イベントコールするので、一度制御を返す
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief メッセージ以外のフェードスタート
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdMapFadeIn_MsgEnable( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+  GMEVENT *event;
+  FADE_MSG_ENABLE_EV_WORK *event_work;
+
+  event = GMEVENT_Create( gsys, NULL, Fade_MsgEnableEvent, sizeof(FADE_MSG_ENABLE_EV_WORK ) );
+  event_work = GMEVENT_GetEventWork( event );
+
+  // 初期化
+  event_work->fade_type = FADE_TYPE_IN;
+  event_work->p_fieldmap = p_fieldmap;
+
+  if( event == NULL )
+  {
+    GF_ASSERT(0);
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  SCRIPT_CallEvent( sc, event );
+
+  //イベントコールするので、一度制御を返す
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メッセージ面以外のフェードイベント関数
+ *
+ *	@param	event イベントポインタ
+ *	@param	seq   シーケンス
+ *	@param	wk    ワーク
+ *
+ *	@return GMEVENT_RESULT
+ */
+//----------------------------------------------------------------------------
+static GMEVENT_RESULT Fade_MsgEnableEvent( GMEVENT* event, int* seq, void* wk )
+{
+  FADE_MSG_ENABLE_EV_WORK *p_wk = wk;
+
+  // 処理シーケンス
+  enum{
+    SEQ_START,
+    SEQ_FADE_OUT,  // フェードアウト
+    SEQ_FADE_IN,   // フェードイン
+    SEQ_FADE_END,  // フェード終了
+  };
+
+  switch( *seq ){
+  case SEQ_START:
+    // フェードインの時はBG初期化する
+    if( p_wk->fade_type == FADE_TYPE_IN )
+    {
+      // 両面のマスター輝度を黒に設定
+      GX_SetMasterBrightness( -16 );
+      GXS_SetMasterBrightness( -16 );
+
+      // BGモード設定と表示設定の復帰
+      {
+        int mv = GFL_DISP_GetMainVisible();
+        FIELDMAP_InitBGMode();
+        GFL_DISP_GX_SetVisibleControlDirect( mv );
+      }
+      FIELDMAP_InitBG( p_wk->p_fieldmap );
+      *seq = SEQ_FADE_IN;
+    }
+    else
+    {
+      *seq = SEQ_FADE_OUT;
+    }
+
+    break;
+
+  case SEQ_FADE_OUT:
+
+    // 上画面
+    // フェードリクエスト
+    ChangeBrightnessRequest( 
+        16,       // フェードするのにかかるSync数
+        BRIGHTNESS_BLACK, // フェード終了時の輝度
+        BRIGHTNESS_NORMAL,// フェード開始時の輝度
+        FADE_PLANEMASK,   // フェードが反映されるBG面
+        MASK_MAIN_DISPLAY );      // フェードが反映されるLCD
+
+    // 下画面
+    GFL_FADE_SetMasterBrightReq(
+        GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,
+        0,
+        16,
+        1 );
+
+    *seq = SEQ_FADE_END;
+    break;
+
+
+  case SEQ_FADE_IN:
+
+    // 両画面
+    GFL_FADE_SetMasterBrightReq(
+        GFL_FADE_MASTER_BRIGHT_BLACKOUT,
+        16,
+        0,
+        1 );
+
+    *seq = SEQ_FADE_END;
+    break;
+
+  case SEQ_FADE_END:
+    // 終了チェック
+    if( IsFinishedBrightnessChg( MASK_MAIN_DISPLAY ) == TRUE &&
+		    GFL_FADE_CheckFade() == FALSE )
+    {
+      // フェードインの時は輝度を初期化しておく
+      if( p_wk->fade_type == FADE_TYPE_IN )
+      {
+        BrightnessChgReset( MASK_MAIN_DISPLAY );
+      }
+
+      return GMEVENT_RES_FINISH;
+    }
+    break;
+
+  default:
+    GF_ASSERT(0);
+  }
+
+  return GMEVENT_RES_CONTINUE;
 }
 
 //======================================================================

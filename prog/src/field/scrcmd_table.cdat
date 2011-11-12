@@ -1148,6 +1148,10 @@
   NO_CMD()
   NO_CMD()
 
+  // BGM面以外のフェード
+  DEF_CMD( EvCmdMapFadeOut_MsgEnable, EV_SEQ_MAP_FADE_OUT_MSG_ENABLE )
+  DEF_CMD( EvCmdMapFadeIn_MsgEnable, EV_SEQ_MAP_FADE_IN_MSG_ENABLE )
+
   END_CMD
   //スクリプトコマンドテーブル終了
 
