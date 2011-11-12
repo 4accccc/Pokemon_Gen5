@@ -65,13 +65,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　りっぱな　たてものが
-ポケモンワールドトーナメントの▽
-かいじょう！　どうだ！▼
-じゃあ　おまえら　ついてこい▼</Text>
+			<Text>どうだ！　りっぱな　たてもの　だろ！
+ポケモンワールドトーナメントの
+かいじょう　だぞ！　ホレボレするよな▼
+おまえら　ついてこい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T06:54:05" />
+				Time="2011-11-12T06:30:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -79,13 +79,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　立派な　建物が
-ポケモンワールドトーナメントの▽
-会場！　どうだ！▼
-じゃあ　おまえら　ついてこい▼</Text>
+			<Text>どうだ！　立派な　建物だろ！
+ポケモンワールドトーナメントの
+会場だぞ！　ホレボレするよな▼
+おまえら　ついてこい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T06:54:10" />
+				Time="2011-11-12T06:30:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -249,11 +249,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『プラズマだん！▼
-ついせき　するぜ！
+おいかけるぞ！
 [Name:TrainerName ]　オマエも　こい！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T05:39:04" />
+				Time="2011-11-12T06:31:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -262,11 +262,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『プラズマ団！▼
-追跡するぜ！
+追いかけるぞ！
 [Name:TrainerName ]　オマエも　来い！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T05:39:08" />
+				Time="2011-11-12T06:31:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -311,13 +311,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アクロマ『はなしは　きこえましたが
+			<Text>アクロマ『きこえましたが
 およしなさい▼
 わざわざ　きけんなことに
 くびを　はさむ　ひつようは　ない！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:36:28" />
+				Time="2011-11-12T06:31:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -325,13 +325,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アクロマ『話は　聞こえましたが
+			<Text>アクロマ『聞こえましたが
 およしなさい▼
 わざわざ　危険なことに
 首を　はさむ　必要は　ない！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:36:45" />
+				Time="2011-11-12T06:31:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -503,7 +503,7 @@
 のうりょくを　ひきだすのでしょうか……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:04:03" />
+				Time="2011-11-12T06:31:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -689,10 +689,10 @@
 「われわれは　いまいちど
 でんせつの　ドラゴンポケモンを▽
 したがえ　イッシュを　しはいする！」▽
-だけど……？▼</Text>
+だって……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-27T03:55:07" />
+				Time="2011-11-12T06:32:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -706,10 +706,10 @@
 「われわれは　今一度
 伝説の　ドラゴンポケモンを▽
 従え　イッシュを　支配する！」▽
-だけど……？▼</Text>
+だって……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T05:42:25" />
+				Time="2011-11-12T06:32:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1278,11 +1278,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トーナメント
-トリートメント　リーゼント</Text>
+			<Text>どんな　トレーナーが　つどうのか？
+どんな　たたかいに　なるのか！？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T10:46:32" />
+				Time="2011-11-12T06:39:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1290,11 +1290,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トーナメント
-トリートメント　リーゼント</Text>
+			<Text>どんな　トレーナーが　集うのか？
+どんな　戦いに　なるのか！？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T10:46:37" />
+				Time="2011-11-12T06:39:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

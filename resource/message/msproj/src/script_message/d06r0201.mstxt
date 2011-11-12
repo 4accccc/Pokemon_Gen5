@@ -39,13 +39,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・？？まで繰り返し（条件未定）
-※ゴールへの誘導となるポイントに配置
-※ポケモン勝負の可能性を検討
-　→せいそくちリスト2回目にする</Comment>
+・msg_c06r0201_swbell_01表示まで
+　繰り返し（条件未定）
+※ゴールへの誘導となるポイントに配置</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T06:27:07" />
+				Time="2011-11-12T06:46:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -297,10 +296,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>それは　おじさんの　きんのたま！
-ゆうこうに　かつよう　してくれ！</Text>
+ゆうこうに　かつよう　してくれ！▼
+なんといっても
+おじさんの　きんのたま　だからね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-11-12T06:44:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -309,10 +310,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>それは　おじさんの　きんのたま！
-有効に　活用してくれ！</Text>
+有効に　活用してくれ！▼
+なんといっても
+おじさんの　きんのたま　だからね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-11-12T06:44:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

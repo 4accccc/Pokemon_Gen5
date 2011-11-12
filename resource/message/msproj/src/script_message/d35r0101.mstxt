@@ -96,10 +96,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アタシの　ひこうきで　ひとっとび！
-どうです　フキヨセに　もどりますか？</Text>
+フキヨセに　もどりますか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T06:25:56" />
+				Time="2011-11-12T07:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -107,11 +107,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アタシの　ひこうきで　ひとっとび！
-どうです　フキヨセに　もどりますか？</Text>
+			<Text>アタシの　飛行で　ひとっとび！
+フキヨセに　戻りますか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T06:26:03" />
+				Time="2011-11-12T07:11:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -149,10 +149,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>それでは
-レッツ　フライトだよ！▼</Text>
+レッツ　フライト！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T06:25:10" />
+				Time="2011-11-12T07:10:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -161,10 +161,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>それでは
-レッツ　フライトだよ！▼</Text>
+レッツ　フライト！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T06:25:12" />
+				Time="2011-11-12T07:10:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -174,10 +174,10 @@
 			Language="JPN">
 			<Comment>♂
 ・はい選択時
-・発着デモへ（詳細未定）</Comment>
+・発着デモへ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T06:26:24" />
+				Time="2011-11-12T07:11:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

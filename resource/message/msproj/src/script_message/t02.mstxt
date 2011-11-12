@@ -124,10 +124,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きみは　ポケモンが　すきかね？</Text>
+			<Text>ポケモンが　すきかね？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T08:48:50" />
+				Time="2011-11-12T05:43:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -135,10 +135,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きみは　ポケモンが　好きかね？</Text>
+			<Text>ポケモンが　好きかね？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T08:53:05" />
+				Time="2011-11-12T05:43:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -388,10 +388,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぷっちゅってゅう♪</Text>
+			<Text>ぷってゅう♪</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T11:51:48" />
+				Time="2011-11-12T05:47:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -399,10 +399,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぷっちゅってゅう♪</Text>
+			<Text>ぷってゅう♪</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T11:51:51" />
+				Time="2011-11-12T05:47:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -854,13 +854,13 @@
 [Name:PokemonName ]の　うえに　のったら
 とっても　きもちよさそう！▼
 たかい　ところ　からだと
-とおくの　やま　とか▽
-おうちの　やねのうえ　とか▼
+やねのうえ　とか▽
+とおくの　やま　とか▼
 いつもは　みられない　ものが　みえて
 だから　おっきいもの　だいすき！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T08:02:14" />
+				Time="2011-11-12T05:48:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -873,13 +873,12 @@
 [Name:PokemonName ]の　上に　乗ったら
 とっても　気持ちよさそう！▼
 高い　ところ　からだと
-遠くの　山とか▽
-おうちの　屋根の上　とか▼
+屋根の上とか　遠くの山とか▼
 いつもは　みられない　ものが　みえて
 だから　おっきいもの　大好き！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T08:51:58" />
+				Time="2011-11-12T05:48:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
