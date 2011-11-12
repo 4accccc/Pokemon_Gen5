@@ -27,6 +27,7 @@
 #define C12_MIDDLEMAN1_02                  9
 #define C12_GIRL1_01                      10
 #define C12_WOMAN1_01                     11
+#define C12_GIRL2_01                      12
 
 #endif //ZONE_C12_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c12.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

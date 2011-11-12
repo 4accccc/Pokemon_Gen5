@@ -60,6 +60,7 @@ _EVENT_DATA	ev_c12_woman1_01
 _EVENT_DATA    ev_pos_c12_swbell_meet_stop_02a
 _EVENT_DATA    ev_c12_game_start_init
 _EVENT_DATA    ev_c12_game_start
+_EVENT_DATA	ev_c12_girl2_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -1787,6 +1788,19 @@ EVENT_START   ev_c12_boy2_01
 	ENDIF
 EVENT_END
 
+/**************************************************************/
+/* 少女２			                                          */
+/**************************************************************/
+EVENT_START   ev_c12_girl2_01
+ 	//ジム開放前
+	IF $WK_SCENE_C12GYM_OPEN < 1 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12_girl2_01 )
+	
+	//ジム開放後
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12_girl2_02 )
+	ENDIF
+EVENT_END
 
 /**************************************************************/
 /* 老人1                                         */
