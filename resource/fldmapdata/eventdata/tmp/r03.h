@@ -34,6 +34,9 @@
 #define R03_BABYBOY1_01                   19
 #define R03_POKE18_01                     20
 #define R03_POKE38_01                     21
+#define TR_FANW_13                        22
+#define TR_FANW_13_2                      23
+#define TR_MINI_18                        24
 
 #endif //ZONE_R03_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r03.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
