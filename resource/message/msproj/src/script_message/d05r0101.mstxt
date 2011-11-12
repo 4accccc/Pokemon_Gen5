@@ -1251,4 +1251,60 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d05r0101_assistantm_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>トレーナーさん
+ＢＰについて　せつめい　しましょう！▼
+ＢＰ……　すなはち
+バトルポイント　とは！▼
+ライモンシティの　バトルサブウェイや
+ここの　トーナメントで　かちぬくと▽
+もらえる　ポイントの　ことです！▼
+ポイントを　たくさん　ためると
+べんりな　どうぐと　ひきかえられます</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T08:58:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T08:54:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トレーナーさん
+ＢＰについて　説明しましょう！▼
+ＢＰ……　すなはち
+バトルポイント　とは！▼
+ライモンシティの　バトルサブウェイや
+ここの　トーナメントで　勝ち抜くと▽
+もらえる　ポイントの　ことです！▼
+ポイントを　たくさん　貯めると
+便利な　道具と　ひきかえられます</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T08:58:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T08:58:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T08:54:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T08:54:22" />
+		</AttributeCell>
+	</TextRow>
 </MessageStudioText>

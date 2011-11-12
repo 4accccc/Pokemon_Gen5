@@ -1,3 +1,176 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_h04r0801_girl4_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぶべえ♪</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T09:40:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T08:42:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぶべえ♪</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T09:40:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T09:40:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・GRIDX＝9、GRIDZ＝9、上向き
+・入るとイベント開始
+・サブウィンで
+・続けてgirl4_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T09:45:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T09:43:58" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h04r0801_girl4_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぼぉー♪</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T09:40:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T09:40:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぼぉー♪</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T09:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T09:40:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・サブウィンで
+・続けてgirl4_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T09:45:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T09:43:59" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h04r0801_girl4_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きゃっ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T09:43:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T09:41:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きゃっ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T09:43:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T09:41:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・！マーク後、主人公をむいてメッセージ
+・続けてgirl4_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T09:45:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T09:43:59" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_h04r0801_girl4_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>れんしゅうちゅう　なの
+でていってよーッ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T09:44:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T09:41:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>練習中　なの！
+でていってよーッ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T09:44:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T09:41:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・メッセージ表示後、倍速で主人公に隣接
+・主人公、マップを押しだされh04に戻る</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T09:43:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T09:43:59" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>
