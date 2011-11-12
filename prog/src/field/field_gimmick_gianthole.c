@@ -54,14 +54,14 @@ typedef enum {
 
 // SE再生フレーム定義
 enum{
-  FRAME_SE_COLD       = 0,  // キュレム足元から冷気
-  FRAME_SE_ICE_ROT_1  = 5,  // 氷の回転音(1段階目)
-  FRAME_SE_ICE_ROT_2  =10,  // 氷の回転音(3段階目)
-  FRAME_SE_ICE_STOP   =20,  // 氷が主人公の周囲に集まり一瞬とまる
-  FRAME_SE_ICE_LEAVE  =30,  // 氷が一瞬はなれる
-  FRAME_SE_ICE_ATTACK =40,  // 氷が主人公に襲い掛かる
+  FRAME_SE_COLD       = 0,    // キュレム足元から冷気
+  FRAME_SE_ICE_ROT_1  = 120,  // 氷の回転音(1段階目)
+  FRAME_SE_ICE_ROT_2  = 290,  // 氷の回転音(3段階目)
+  FRAME_SE_ICE_STOP   = 370,  // 氷が主人公の周囲に集まり一瞬とまる
+  FRAME_SE_ICE_LEAVE  = 480,  // 氷が一瞬はなれる
+  FRAME_SE_ICE_ATTACK = 498,  // 氷が主人公に襲い掛かる
 
-  FRAME_SE_ICE_BREAK  =10,  // 氷が砕け散る
+  FRAME_SE_ICE_BREAK  = 5,    // 氷が砕け散る
 
   FRAME_SE_MAX = 500,       // 最長のアニメフレーム数
 };
