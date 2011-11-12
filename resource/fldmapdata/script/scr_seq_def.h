@@ -16362,40 +16362,6 @@
 
 //--------------------------------------------------------------
 /**
- * @def   _DEMO_GIMMICK_GIANTHOLE_FADE_OUT
- * @brief メッセージ以外フェードアウト
- * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
- *        
- *        ※ジャイアントホールデモ専用のコマンドです。
- *        　通常は使わないように！
- */
-//--------------------------------------------------------------
-#define _DEMO_GIMMICK_GIANTHOLE_FADE_OUT() \
-    _ASM_DEMO_GIMMICK_GIANTHOLE_FADE_OUT
-
-  .macro  _ASM_DEMO_GIMMICK_GIANTHOLE_FADE_OUT
-  .short  EV_SEQ_DEMO_GIMMICK_GIANTHOLE_FADE_OUT
-  .endm
-
-//--------------------------------------------------------------
-/**
- * @def   _DEMO_GIMMICK_GIANTHOLE_BRIGHTNESS_BLACK
- * @brief マスター輝度を黒にする
- * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
- *
- *        ※ジャイアントホールデモ専用のコマンドです。
- *        　通常は使わないように！
- */
-//--------------------------------------------------------------
-#define _DEMO_GIMMICK_GIANTHOLE_BRIGHTNESS_BLACK() \
-    _ASM_DEMO_GIMMICK_GIANTHOLE_BRIGHTNESS_BLACK
-
-  .macro  _ASM_DEMO_GIMMICK_GIANTHOLE_BRIGHTNESS_BLACK
-  .short  EV_SEQ_DEMO_GIMMICK_GIANTHOLE_BRIGHTNESS_BLACK
-  .endm
-
-//--------------------------------------------------------------
-/**
  * @def   _DEMO_GIMMICK_GIANTHOLE_STONE_FLOAT
  * @brief ストーン状態のゼクロム(レシラム)を浮遊させる
  * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
