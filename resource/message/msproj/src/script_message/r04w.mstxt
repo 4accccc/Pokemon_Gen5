@@ -1464,19 +1464,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おとくな　けいじばん！[Ctrl2:PageClear ]
+			<Text>おとくな　けいじばん！▼
 
 ポケモンは　わざを　だすための
-げんきの　みなもとの　ＰＰ……[Ctrl2:PageClear ]
+げんきの　みなもとの　ＰＰ……▼
 すなわち　パワーポイントを
-わざごとに　もってます[Ctrl2:PageClear ]
+わざごとに　もってます▼
 この　パワーポイントが　なくなると
-わざが　だせなくなります[Ctrl2:PageClear ]
+わざが　だせなくなります▼
 パワーポイントが　へったときも
 ポケモンセンターに　いきましょう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-11-12T05:21:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1484,19 +1484,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お得な　掲示板！[Ctrl2:PageClear ]
+			<Text>お得な　掲示板！▼
 
 ポケモンは　技を　だすための
-元気の源の　ＰＰ……[Ctrl2:PageClear ]
+元気の源の　ＰＰ……▼
 すなわち　パワーポイントを
-技ごとに　もってます[Ctrl2:PageClear ]
+技ごとに　もってます▼
 この　パワーポイントが　なくなると
-技が　だせなくなります[Ctrl2:PageClear ]
+技が　だせなくなります▼
 パワーポイントが　減ったときも
 ポケモンセンターに　行きましょう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-11-12T05:21:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

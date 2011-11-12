@@ -3562,17 +3562,17 @@ musician_01</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おとくな　けいじばん！[Ctrl2:PageClear ]
+			<Text>おとくな　けいじばん！▼
 
 バッグには　どうぐの　しゅるいごとに
-ポケットが　あります[Ctrl2:PageClear ]
+ポケットが　あります▼
 いれる　どうぐの　しゅるいに　よって
-じどうてきに　ふりわけられます[Ctrl2:PageClear ]
+じどうてきに　ふりわけられます▼
 つかいたい　どうぐが　どこに　あるのか
 ポケットの　なまえで　すぐわかります</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-12T05:22:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3580,17 +3580,17 @@ musician_01</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お得な　掲示板！[Ctrl2:PageClear ]
+			<Text>お得な　掲示板！▼
 
 バッグには　道具の　種類ごとに
-ポケットが　あります[Ctrl2:PageClear ]
+ポケットが　あります▼
 いれる　道具の　種類に　よって
-自動的に　ふりわけられます[Ctrl2:PageClear ]
+自動的に　ふりわけられます▼
 使いたい　道具が　どこに　あるのか
 ポケットの　名前で　すぐわかります</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-12T05:22:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3865,14 +3865,14 @@ Nという　ポケモントレーナーと
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>昔　ここで
-[Name:TrainerName Idx="1" ]と　はなしたんだ▼
+[Name:TrainerName Idx="1" ]と　話したんだ▼
 人も　ポケモンも
 それぞれの　強さを　もっている▼
 夢を　かなえる　強さや
 なにかを　守る　強さ……って▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T06:44:42" />
+				Time="2011-11-12T05:23:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

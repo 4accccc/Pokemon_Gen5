@@ -827,11 +827,11 @@
 			Language="JPN">
 			<Text>あおぞらのように　さわやかな
 ブルーの　ボディ……▼
-ビギナーランクの　メダリスト
+[Name:MedalistRank ]ランクの　メダリスト
 せんようの　とそう　ですな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:42:42" />
+				Time="2011-11-12T05:13:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -841,11 +841,11 @@
 			Language="JPN_KANJI">
 			<Text>青空のように　さわやかな
 ブルーの　ボディ……▼
-ビギナーランクの
+[Name:MedalistRank ]ランクの
 メダリスト専用の　塗装ですな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:48:12" />
+				Time="2011-11-12T05:13:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -854,11 +854,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ビギナー
+・ビギナー（仮称）
+・0＝メダリストランク
 ・swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:41:50" />
+				Time="2011-11-12T05:14:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -882,11 +883,11 @@
 			Language="JPN">
 			<Text>じょうひんに　かがやく
 カッパーの　ボディ……▼
-ルーキーランクの　メダリスト
+[Name:MedalistRank ]ランクの　メダリスト
 せんようの　とそう　ですな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:46:35" />
+				Time="2011-11-12T05:14:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -896,11 +897,11 @@
 			Language="JPN_KANJI">
 			<Text>上品に　輝く
 カッパーの　ボディ……▼
-ルーキーランクの
+[Name:MedalistRank ]ランクの
 メダリスト専用の　塗装ですな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:49:12" />
+				Time="2011-11-12T05:14:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -909,11 +910,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ルーキー
+・ルーキー（仮称）
+・0＝メダリストランク
 ・swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:41:58" />
+				Time="2011-11-12T05:14:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -937,11 +939,11 @@
 			Language="JPN">
 			<Text>シブさ　あふれる　シックな
 シルバーの　ボディ……▼
-エリートランクの　メダリスト
+[Name:MedalistRank ]ランクの　メダリスト
 せんようの　とそう　ですな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:42:57" />
+				Time="2011-11-12T05:14:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -951,11 +953,11 @@
 			Language="JPN_KANJI">
 			<Text>シブさ　あふれる　シックな
 シルバーの　ボディ……▼
-エリートランクの
+[Name:MedalistRank ]ランクの
 メダリスト専用の　塗装ですな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:48:20" />
+				Time="2011-11-12T05:14:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -964,11 +966,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・エリート
+・エリート（仮称）
+・0＝メダリストランク
 ・swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:42:23" />
+				Time="2011-11-12T05:14:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -992,11 +995,11 @@
 			Language="JPN">
 			<Text>ゴージャスで　ラグジュアリーな
 ゴールドの　ボディ……▼
-マスターランクの　メダリスト
+[Name:MedalistRank ]ランクの　メダリスト
 せんようの　とそう　ですな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:43:03" />
+				Time="2011-11-12T05:14:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1006,11 +1009,11 @@
 			Language="JPN_KANJI">
 			<Text>ゴージャスで　ラグジュアリーな
 ゴールドの　ボディ……▼
-マスターランクの
+[Name:MedalistRank ]ランクの
 メダリスト専用の　塗装ですな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:48:22" />
+				Time="2011-11-12T05:14:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1019,11 +1022,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・マスター
+・マスター（仮称）
+・0＝メダリストランク
 ・swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:42:11" />
+				Time="2011-11-12T05:14:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1049,11 +1053,11 @@
 ゼクロムを　モチーフとした　という▼
 しっこくの　ボディに
 あおい　さしいろが　スタイリッシュな▼
-レジェンドランクの　メダリスト
+[Name:MedalistRank ]ランクの　メダリスト
 せんようの　とそう　ですな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:51:19" />
+				Time="2011-11-12T05:14:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1065,11 +1069,11 @@
 ゼクロムを　モチーフとした　という▼
 漆黒の　ボディに
 青い　挿し色が　スタイリッシュな▼
-レジェンドランクの
+[Name:MedalistRank ]ランクの
 メダリスト専用の　塗装ですな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:51:10" />
+				Time="2011-11-12T05:14:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1079,10 +1083,11 @@
 			Language="JPN">
 			<Comment>♂
 ・レジェンド（黒）
+・0＝メダリストランク
 ・swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:42:15" />
+				Time="2011-11-12T05:14:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1108,11 +1113,11 @@
 レシラムを　モチーフとした　という▼
 じゅんぱくの　ボディに
 あかい　さしいろが　エレガントな▼
-レジェンドランクの　メダリスト
+[Name:MedalistRank ]ランクの　メダリスト
 せんようの　とそう　ですな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:51:27" />
+				Time="2011-11-12T05:14:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1124,11 +1129,11 @@
 レシラムを　モチーフとした　という▼
 純白の　ボディに
 紅い　挿し色が　エレガントな▼
-レジェンドランクの
+[Name:MedalistRank ]ランクの
 メダリスト専用の　塗装ですな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:51:32" />
+				Time="2011-11-12T05:14:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1138,10 +1143,11 @@
 			Language="JPN">
 			<Comment>♂
 ・レジェンド（白）
+・0＝メダリストランク
 ・swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T12:42:20" />
+				Time="2011-11-12T05:14:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

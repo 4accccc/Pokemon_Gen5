@@ -721,15 +721,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おとくな　けいじばん！[Ctrl2:PageClear ]
+			<Text>おとくな　けいじばん！▼
 
 ポケモンリストの　ひだりうえに
-セットする　ポケモンは　だいじです！[Ctrl2:PageClear ]
+セットする　ポケモンは　だいじです！▼
 ポケモンしょうぶのとき　とびだすのは
 そこに　セットされた　ポケモンです！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-12T05:21:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -737,15 +737,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お得な　掲示板！[Ctrl2:PageClear ]
+			<Text>お得な　掲示板！▼
 
 ポケモンリストの　左上に
-セットする　ポケモンは　大事です！[Ctrl2:PageClear ]
+セットする　ポケモンは　大事です！▼
 ポケモン勝負のとき　飛びだすのは
 そこに　セットされた　ポケモンです！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-12T05:21:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
