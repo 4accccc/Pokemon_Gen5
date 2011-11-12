@@ -1164,11 +1164,11 @@
 [Digit:3digits ]コ！▼
 メダリストランクは
 [Name:MedalistRank Idx="1" ]ランク　ね▼
-んー　なるほど
-まずは　５０コ　めざそっか！</Text>
+メダルラリーは　まだ
+はじまった　ばかりよ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T12:16:57" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-12T05:21:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1183,11 +1183,11 @@
 [Digit:3digits ]コ！▼
 メダリストランクは
 [Name:MedalistRank Idx="1" ]ランク　ね▼
-んー　なるほど
-まずは　５０コ　めざそっか！</Text>
+メダルラリーは　まだ
+始まった　ばかりよ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T12:17:00" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-12T05:21:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1567,10 +1567,10 @@
 ひょうか　するんだ▼
 まあ　きみたちは
 こまかいことは　きにせず▽
-ぼうけんを　たのしんでおくれ</Text>
+ぼうけんを　たのしんでおくれ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T12:09:13" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-12T05:23:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1590,10 +1590,10 @@
 強化するんだ▼
 まあ　きみたちは
 細かいことは　気にせず▽
-冒険を　楽しんでおくれ</Text>
+冒険を　楽しんでおくれ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T12:09:13" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-12T05:23:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1642,10 +1642,10 @@
 きんいろの　『とくべつ』メダル▽
 ……と　５つの　しゅるいが　あるよ▼
 あとは　むずかしい　メダルほど
-かざりが　ついて　ハデだね</Text>
+かざりが　ついて　ハデだね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T12:10:32" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-12T05:23:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1668,10 +1668,10 @@
 金色の　『とくべつ』メダル▽
 ……と　５つの　種類が　あるよ▼
 あとは　難しい　メダルほど
-飾りが　ついて　ハデだね</Text>
+飾りが　ついて　ハデだね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T12:10:27" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-12T05:23:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1788,10 +1788,10 @@
 メダルの　ならびを
 かえることが　できるぞ▼
 ちなみに　メダルボックスを
-つくったのは　わし　だぞ！</Text>
+つくったのは　わし　だぞ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T12:12:56" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-12T05:23:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1814,10 +1814,10 @@
 メダルの　並びを
 変えることが　できるぞ▼
 ちなみに　メダルボックスを
-造ったのは　わし　だぞ！</Text>
+造ったのは　わし　だぞ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T12:13:49" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-12T05:24:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1861,10 +1861,10 @@
 Ａボタンを　おすと▽
 イチオシとうろく　できるぞ▼
 もう１ど　Ａボタンを　おすと
-とうろくが　かいじょ　されるぞ</Text>
+とうろくが　かいじょ　されるぞ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T12:14:11" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-12T05:24:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1882,10 +1882,10 @@
 Ａボタンを　押すと▽
 イチオシとうろく　できるぞ▼
 もう１度　Ａボタンを　押すと
-登録が　解除されるぞ</Text>
+登録が　解除されるぞ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T12:14:49" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-12T05:24:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
