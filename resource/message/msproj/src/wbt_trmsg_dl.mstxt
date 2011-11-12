@@ -366,10 +366,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つぎは　もっと　めずらしいポケモンを
-もってきてちょうだいよ！▼</Text>
+もってきて　ほしいな！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-25T06:03:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-12T08:39:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -378,10 +378,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>次は　もっと　珍しいポケモンを
-持ってきてちょうだいよ！▼</Text>
+持ってきて　ほしいな！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-25T06:04:40" />
+				User="matsumiya:W00224"
+				Time="2011-11-12T08:39:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"

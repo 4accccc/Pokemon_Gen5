@@ -7067,11 +7067,11 @@ msg_wbt_subev_sinou_～</Comment>
 			<Text>ワタル▼
 カントーポケモンリーグの
 チャンピオン　だな▼
-ドラゴンつかいで
+ドラゴンタイプの　ポケモンつかいで
 フスべシティの　しゅっしん　だったか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-18T04:05:29" />
+				Time="2011-11-12T08:34:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -7082,11 +7082,11 @@ msg_wbt_subev_sinou_～</Comment>
 			<Text>ワタル▼
 カントーポケモンリーグの
 チャンピオン　だな▼
-ドラゴンつかいで
-フスべシティの　しゅっしん　だったか？▼</Text>
+ドラゴンタイプの　ポケモン使いで
+フスべシティの　出身だったか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-18T04:07:22" />
+				Time="2011-11-12T08:34:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -7235,10 +7235,12 @@ msg_wbt_subev_sinou_～</Comment>
 シンオウちほうの
 チャンピオンにして　こうこがくしゃ！▼
 さまざまな　タイプの　ポケモンを
-バランスよく　つかうんだよな！▼</Text>
+バランスよく　つかうんだよな！▼
+ちょうさのため　サザナミの
+べっそうに　くるって　ウワサだな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-18T03:38:08" />
+				Time="2011-11-12T08:35:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -7250,10 +7252,12 @@ msg_wbt_subev_sinou_～</Comment>
 シンオウ地方の
 チャンピオンにして　考古学者！▼
 さまざまな　タイプの　ポケモンを
-バランスよく　使うんだよな！▼</Text>
+バランスよく　使うんだよな！▼
+調査のため　サザナミの
+別荘に　来るって　ウワサだな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-18T07:43:01" />
+				Time="2011-11-12T08:35:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -7472,12 +7476,12 @@ msg_wbt_subev_sinou_～</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>マチス！▼
-元　軍人で　クチバシティの
+元軍人で　クチバシティの
 ジムリーダーを　務めている▼
 イッシュ地方の　出身かな？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-18T07:44:43" />
+				Time="2011-11-12T08:35:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -7692,11 +7696,11 @@ msg_wbt_subev_sinou_～</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>サカキ　ね……▼
-いろんな　うわさを　きくけれど
+いろんな　ウワサを　きくけれど
 くわしいことは　しらないな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T11:33:09" />
+				Time="2011-11-12T08:35:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -7705,11 +7709,11 @@ msg_wbt_subev_sinou_～</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>サカキ　ね……▼
-いろんな　うわさを　きくけれど
+いろんな　ウワサを　きくけれど
 詳しいことは　しらないな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-18T07:46:57" />
+				Time="2011-11-12T08:35:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
