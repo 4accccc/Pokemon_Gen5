@@ -262,10 +262,11 @@
 			Language="JPN">
 			<Comment>♂
 ・振り向き会話その１
-・1＝ライバル名</Comment>
+・1＝ライバル名
+※pair_scr.mstxtに移植</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T05:59:56" />
+				Time="2011-11-12T03:44:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -314,10 +315,11 @@
 			Language="JPN">
 			<Comment>♂
 ・振り向き会話その２
-・1＝ライバル名</Comment>
+・1＝ライバル名
+※pair_scr.mstxtに移植</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T06:00:01" />
+				Time="2011-11-12T03:44:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -366,10 +368,11 @@
 			Language="JPN">
 			<Comment>♂
 ・振り向き会話その３
-・1＝ライバル名</Comment>
+・1＝ライバル名
+※pair_scr.mstxtに移植</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T06:00:04" />
+				Time="2011-11-12T03:44:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -418,10 +421,11 @@
 			Language="JPN">
 			<Comment>♂
 ・振り向き会話その４
-・1＝ライバル名</Comment>
+・1＝ライバル名
+※pair_scr.mstxtに移植</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T06:00:10" />
+				Time="2011-11-12T03:44:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -473,10 +477,11 @@
 			<Comment>♂
 ・振り向き会話その５
 ・以降、このメッセージを繰り返し
-・1＝ライバル名</Comment>
+・1＝ライバル名
+※pair_scr.mstxtに移植</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-14T06:01:37" />
+				Time="2011-11-12T03:44:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

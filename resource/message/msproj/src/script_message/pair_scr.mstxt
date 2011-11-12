@@ -1234,4 +1234,267 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d11r0101_swrival_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『まきこんで　わるいけど
+オレ　プラズマだんは　ゆるせないんだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『巻きこんで　悪いけど
+オレ　プラズマ団は　許せないんだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・振り向き会話その１
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d11r0101_swrival_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『げすいどう　ね……
+そんなに　におわないんだな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『下水道　ね……
+そんなに　におわないんだな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・振り向き会話その２
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d11r0101_swrival_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『それにしても……
+ポケモンって　どこにでも　いるのな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『それにしても……
+ポケモンって　どこにでも　いるのな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・振り向き会話その３
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d11r0101_swrival_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『……つよくないと
+まもれない　ものが　あるからな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『……強くないと
+守れない　ものが　あるからな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・振り向き会話その４
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d11r0101_swrival_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『なんだよ？▼
+オレのことは　いいから
+プラズマだんを　さがそうぜ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『なんだよ？▼
+オレのことは　いいから
+プラズマ団を　探そうぜ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・振り向き会話その５
+・以降、このメッセージを繰り返し
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-12T03:43:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

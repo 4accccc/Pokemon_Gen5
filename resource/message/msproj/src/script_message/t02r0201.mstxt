@@ -60,10 +60,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こうかんバトルの　よてい</Text>
+			<Text>ジョインアベニュー
+いまごろ　どうなってるかしら？▼
+それに　ポケウッド　ポケウッド！
+どんな　えいが　やってるのかな
+</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T07:33:17" />
+				Time="2011-11-11T11:56:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -71,10 +75,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>交換バトルの　予定</Text>
+			<Text>ジョインアベニュー
+いまごろ　どうなってるかしら？▼
+それに　ポケウッド　ポケウッド！
+どんな　映画　やってるのかな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T07:33:26" />
+				Time="2011-11-11T11:57:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

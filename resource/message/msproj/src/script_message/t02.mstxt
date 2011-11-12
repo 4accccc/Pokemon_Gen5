@@ -619,13 +619,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>うーん……▼
-ちいさい　ポケモン
-もってないんだね……▼
+ちいさい　ポケモン　いないんだね……▼
 ０．２ｍより
 ちいさい　ポケモン　みたいなあ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T07:55:10" />
+				Time="2011-11-11T11:50:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -633,14 +632,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うーん……▼
-小さい　ポケモン
-もってないんだね……▼
+			<Text>うーん……
+小さい　ポケモン　いないんだね……▼
 ０．２ｍより
 小さい　ポケモン　みたいなあ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T08:50:00" />
+				Time="2011-11-11T11:50:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -919,14 +917,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>えーっ！？▼
-おっきい　ポケモン
-もってないのー？▼
+			<Text>えーっ！？
+おっきい　ポケモン　いないのー？▼
 ５ｍより
 おっきい　ポケモン　みたーい！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-15T08:02:23" />
+				Time="2011-11-11T11:50:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -934,14 +931,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>えーっ！？▼
-おっきい　ポケモン
-持ってないのー？▼
+			<Text>えーっ！？
+おっきい　ポケモン　いないのー？▼
 ５ｍより
 おっきい　ポケモン　みたーい！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T08:52:06" />
+				Time="2011-11-11T11:50:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
