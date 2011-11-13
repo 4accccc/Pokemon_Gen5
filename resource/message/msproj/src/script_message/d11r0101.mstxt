@@ -10,12 +10,11 @@
 オマエには　つよくなってもらうぜ！▼
 さすがに　オレ　ひとりでは
 プラズマだんと　やりあうのはな……▼
-だいじょうぶ！
-オマエだけだと　ふあん　だろ▽
+だいじょうぶ！　オレが
 ついていって　やるから！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T05:27:03" />
+				Time="2011-11-13T00:24:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -27,12 +26,11 @@
 オマエには　強くなってもらうぜ！▼
 さすがに　オレ　一人で
 プラズマ団と　やりあうのはな……▼
-大丈夫！
-オマエだけだと　不安だろ▽
+大丈夫！　オレが
 ついていって　やるから！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T05:27:11" />
+				Time="2011-11-13T00:24:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -71,12 +69,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『なんだよ
-じゅんびが　できていないのか？▽
-はやく　しろよな▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『しょうがないな
+はやく　じゅんび　しろよな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T11:36:00" />
+				Time="2011-11-13T00:32:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -84,12 +81,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『なんだよ
-準備が　できていないのか？▽
-はやく　しろよな▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『しょうがないな
+はやく　準備しろよな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T02:40:34" />
+				Time="2011-11-13T00:32:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1736,11 +1732,11 @@
 			Language="JPN">
 			<Text>プラズマだん　あいてに
 みごとな　たたかいぶり　でしたね！▼
-いい！　ひじょうに　いい！
+いい！　すばらしく　いい！
 そして　おもしろい！　なるほどです▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T12:51:59" />
+				Time="2011-11-13T00:36:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1750,11 +1746,11 @@
 			Language="JPN_KANJI">
 			<Text>プラズマ団　相手に
 みごとな　戦いぶり　でしたね！▼
-いい！　ひじょうに　いい！
+いい！　すばらしく　いい！
 そして　おもしろい！　なるほどです▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T12:57:32" />
+				Time="2011-11-13T00:36:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1861,13 +1857,13 @@
 			<Text>まあ　いいや
 きみは　どうする？▼
 ここで　ポケモンを
-きたえるのも　よし▼
+鍛えるのも　よし▼
 ジムリーダーである　ボクに
-ちょうせん　するのも▽
-いいと　おもうよ！　それじゃーねー▼</Text>
+挑戦するのも▽
+いいと　思うよ！　それじゃーねー▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T12:55:52" />
+				Time="2011-11-13T00:33:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
