@@ -510,12 +510,12 @@
 			<Text>ちくでん　ね……▼
 この　とくせいの　ポケモンは
 でんきタイプの　わざの　ダメージを▽
-むこうに　してしまえるんだ▼
+むこうに　するんだ▼
 くわえて　たいりょくも
 すこし　かいふく　してくれるよ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T08:03:36" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T06:36:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -526,12 +526,12 @@
 			<Text>ちくでん　ね……▼
 この特性の　ポケモンは
 でんきタイプの　技の　ダメージを▽
-無効に　してしまえるんだ▼
+無効に　するんだ▼
 くわえて　体力も
 すこし　回復してくれるよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:19:07" />
+				Time="2011-11-13T06:36:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -560,12 +560,12 @@
 			<Text>ちょすい　ね……▼
 この　とくせいの　ポケモンは
 みずタイプの　わざの　ダメージを▽
-むこうに　してしまえるんだ▼
+むこうに　するんだ▼
 くわえて　たいりょくも
 すこし　かいふく　してくれるよ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T08:03:57" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T06:36:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -576,12 +576,12 @@
 			<Text>ちょすい　ね……▼
 この特性の　ポケモンは
 みずタイプの　技の　ダメージを▽
-無効に　してしまえるんだ▼
+無効に　するんだ▼
 くわえて　体力も
 すこし　回復してくれるよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:19:20" />
+				Time="2011-11-13T06:36:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -909,13 +909,13 @@
 			<Text>もらいび　ね……▼
 この　とくせいの　ポケモンは
 ほのおタイプの　わざを　うけても▽
-むこうに　してしまえるんだ▼
+むこうに　するんだ▼
 くわえて　じぶんが　つかう
 ほのおタイプの　わざの　いりょくを▽
 あげる　こうかも　あるんだよ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T08:11:14" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T06:37:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -926,13 +926,13 @@
 			<Text>もらいび　ね……▼
 この特性の　ポケモンは
 ほのおタイプの　技を　受けても▽
-無効に　してしまえるんだ▼
+無効に　するんだ▼
 くわえて　自分が　使う
 ほのおタイプの　技の　威力を▽
 あげる　効果も　あるんだよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:21:19" />
+				Time="2011-11-13T06:37:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1641,10 +1641,10 @@
 			<Text>てんのめぐみ　ね……▼
 この　とくせいの　ポケモンは
 こうげきわざの　ついかこうかが▽
-でやすく　なるんだ▼</Text>
+はっせい　しやすく　なるんだよ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T08:57:06" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T06:38:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1655,10 +1655,10 @@
 			<Text>てんのめぐみ　ね……▼
 この特性の　ポケモンは
 攻撃技の　追加効果が▽
-でやすく　なるんだ▼</Text>
+発生しやすく　なるんだよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:29:36" />
+				Time="2011-11-13T06:38:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1786,7 +1786,7 @@
 まだ　はんめいして　ないんだよね……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-31T06:34:02" />
+				Time="2011-11-13T06:38:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2332,15 +2332,15 @@
 			<Text>プレッシャー　ね……▼
 この　とくせいの　ポケモンは
 あいてが　つかった　わざの▽
-パワーポイントを▽
+ＰＰ　つまり　パワーポイントを▽
 おおく　へらすことが　できるんだ▼
 あと……▼
 てもちの　せんとうに　いると
 レベルの　たかい　ポケモンと▽
 であいやすくなる　こうかもあるね▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T09:18:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T06:43:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2351,7 +2351,7 @@
 			<Text>プレッシャー　ね……▼
 この特性の　ポケモンは
 相手が　使った　技の▽
-パワーポイントを▽
+ＰＰ　つまり　パワーポイントを▽
 多く　減らすことが　できるんだ▼
 あと……▼
 手持ちの　先頭に　いると
@@ -2359,7 +2359,7 @@
 であいやすくなる　効果もあるね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:30:00" />
+				Time="2011-11-13T06:43:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2389,10 +2389,10 @@
 この　とくせいの　ポケモンは
 ほのおと　こおりタイプの▽
 わざの　いりょくを▽
-はんぶんに　してしまえるんだ▼</Text>
+はんぶんに　するんだよ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T09:18:35" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T06:43:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2404,10 +2404,10 @@
 この特性の　ポケモンは
 ほのおと　こおりタイプの▽
 技の　威力を▽
-半分に　してしまえるんだ▼</Text>
+半分に　するんだよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:34:07" />
+				Time="2011-11-13T06:43:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2701,12 +2701,12 @@
 いいものを　ひろってくるから▽
 おぼえておくと　いいよ▼
 まぁ……▼
-どちらの　ばあいも
+どちらの　ばあいも　ポケモンが
 もちものを　もっていない　ことが▽
 じょうけん　なんだけどね▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T10:38:58" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T06:44:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2728,12 +2728,12 @@
 いいものを　ひろってくるから▽
 おぼえておくと　いいよ▼
 まぁ……▼
-どちらの　場合も
+どちらの　場合も　ポケモンが
 持ち物を　もっていない　ことが▽
 条件なんだけどね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:36:14" />
+				Time="2011-11-13T06:44:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2937,11 +2937,11 @@
 とくこうが　あがるんだ▼
 １ｖｓ１では　いみがないけど
 ダブルや　トリプルの　せんとうでは▽
-おたがいの　とくこうを　あげあうから▽
+おたがいの　とくこうを　あげるから▽
 すごい　ことに　なるかもね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:38:31" />
+				Time="2011-11-13T06:44:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2957,11 +2957,11 @@
 特攻が　あがるんだ▼
 １ｖｓ１では　意味がないけど
 ダブルや　トリプルの　戦闘では▽
-お互いの　特攻を　あげあうから▽
+お互いの　特攻を　あげるから▽
 すごい　ことに　なるかもね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:38:09" />
+				Time="2011-11-13T06:44:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2995,11 +2995,11 @@
 とくこうが　あがるんだ▼
 １ｖｓ１では　いみがないけど
 ダブルや　トリプルの　せんとうでは▽
-おたがいの　とくこうを　あげあうから▽
+おたがいの　とくこうを　あげるから▽
 すごい　ことに　なるかもね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-31T05:01:32" />
+				Time="2011-11-13T06:44:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3015,11 +3015,11 @@
 特攻が　あがるんだ▼
 １ｖｓ１では　意味がないけど
 ダブルや　トリプルの　戦闘では▽
-お互いの　特攻を　あげあうから▽
+お互いの　特攻を　あげるから▽
 すごい　ことに　なるかもね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-31T05:01:23" />
+				Time="2011-11-13T06:45:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3154,10 +3154,10 @@
 			<Text>だっぴ　ね……▼
 この　とくせいの　ポケモンは
 せんとうちゅうに　じょうたいいじょうを▽
-かいふく　することが　あるんだ▼</Text>
+かいふく　することが　あるよ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T09:48:07" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T06:46:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3168,10 +3168,10 @@
 			<Text>だっぴ　ね……▼
 この特性の　ポケモンは
 戦闘中に　状態異常を▽
-回復することが　あるんだ▼</Text>
+回復することが　あるよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T10:40:21" />
+				Time="2011-11-13T06:46:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6601,10 +6601,10 @@
 こうげきと　とくこうが　さがるんだ▼
 いかに　たいりょくを　へらさないか！▼
 それが　この　とくせいで
-しょうりする　ポイント　だろうね▼</Text>
+しょうりする　ポイント　かな▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-26T12:52:31" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T06:50:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6618,10 +6618,10 @@
 攻撃と　特攻が　さがるんだ▼
 いかに　体力を　減らさないか！▼
 それが　この特性で
-勝利する　ポイント　だろうね▼</Text>
+勝利する　ポイント　かな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:06:30" />
+				Time="2011-11-13T06:50:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6859,11 +6859,10 @@
 			Language="JPN">
 			<Text>ヘヴィメタル　ね……▼
 この　とくせいの　ポケモンは
-じぶんの　おもさが▽
-ばいに　なるんだ▼</Text>
+じぶんの　おもさが　ばいに　なるんだ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T02:57:57" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T06:50:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6873,11 +6872,10 @@
 			Language="JPN_KANJI">
 			<Text>ヘヴィメタル　ね……▼
 この特性の　ポケモンは
-自分の　重さが▽
-倍に　なるんだ▼</Text>
+自分の　重さが　倍に　なるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:08:43" />
+				Time="2011-11-13T06:50:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6919,11 +6917,10 @@
 			Language="JPN_KANJI">
 			<Text>ライトメタル　ね……▼
 この特性の　ポケモンは
-自分の　重さが▽
-半分に　なるんだ▼</Text>
+自分の　重さが　半分に　なるんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:08:53" />
+				Time="2011-11-13T06:50:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7148,13 +7145,13 @@
 			<Text>テレパシー　ね……▼
 この　とくせいの　ポケモンは
 みかたの　こうどうを　よみとって▽
-どうしうちを　おこらなく　させるんだ▼
+どうしうちを　ふせぐんだ▼
 １ｖｓ１では　いみがないけど
 ダブルや　トリプルの　せんとうでは▽
 じゅうような　とくせいだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:10:28" />
+				Time="2011-11-13T06:51:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7165,13 +7162,13 @@
 			<Text>テレパシー　ね……▼
 この特性の　ポケモンは
 味方の　行動を　読み取って▽
-同士討ちを　おこらなく　させるんだ▼
+同士討ちを　ふせぐんだ▼
 １ｖｓ１では　意味がないけど
 ダブルや　トリプルの　戦闘では▽
 重要な　特性だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:10:20" />
+				Time="2011-11-13T06:51:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7487,10 +7484,10 @@
 かいひりつが　ばいに　なるんだ▼
 じぶんで　じぶんに　つかう
 へんかわざには　こうかが　ないから▽
-おぼえておくｊと　いいよ▼</Text>
+おぼえておくと　いいよ▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-07-27T10:30:51" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T06:51:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -7504,10 +7501,10 @@
 回避率が　倍に　なるんだ▼
 自分で　自分に　使う
 変化技には　効果が　ないから▽
-おぼえておくｊと　いいよ▼</Text>
+おぼえておくと　いいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T11:11:41" />
+				Time="2011-11-13T06:51:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -8371,10 +8368,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>特性なし（タマゴ）</Text>
+			<Text>タマゴに
+とくせいは　ないよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T06:52:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8382,10 +8380,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>特性なし（タマゴ）</Text>
+			<Text>タマゴに
+特性は　ないよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T06:52:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

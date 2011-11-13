@@ -677,7 +677,7 @@
 わざを　おしえてくださるって！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T02:27:48" />
+				Time="2011-11-13T06:14:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -942,11 +942,11 @@
 パフォーマーを　みるため▼
 ポケモンセンターを
 ぬけだしたわね……▼
-たしか　どうぐを　かいとってくれる
-おんなのこが　いるんじゃない？▼</Text>
+ついでに　どうぐを　かいとってくれる
+おんなのこと　あったりしてたわ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T02:28:04" />
+				Time="2011-11-13T06:16:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -958,11 +958,11 @@
 パフォーマーを　みるため▼
 ポケモンセンターを
 抜け出したわね……▼
-確か　道具を　買い取ってくれる
-女の子が　いるんじゃない？▼</Text>
+ついでに　道具を　買い取ってくれる
+女の子と　会ったりしてたわ▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T05:37:41" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T06:16:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2210,10 +2210,10 @@
 			<Text>カゴメタウン　かあ▼
 行ったときの　印象だと
 昼と　夜とで▽
-全然　違う　町　だったわ！▼</Text>
+全然　違う　町だったわ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T05:57:44" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T06:19:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2250,11 +2250,11 @@
 むかしは　すっごい
 おかねもちが　いたんだけど▽
 ひっこし　なさったらしいわね▼
-それから　べっそうも　へって
-ちょっと　さみしい　はなしね▼</Text>
+でも　マリンチューブが
+すごいって　ウワサを　きいたわ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T02:29:02" />
+				Time="2011-11-13T06:20:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2266,11 +2266,11 @@
 昔は　すっごい
 お金持ちが　いたんだけど▽
 引越し　なさったらしいわね▼
-それから　別荘も　減って
-ちょっと　さみしい　話ね▼</Text>
+でも　マリンチューブが
+すごいって　ウワサを　きいたわ▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T05:59:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T06:20:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3287,13 +3287,13 @@
 			Language="JPN_KANJI">
 			<Text>ジャイアントホール？▼
 どこだっけ……？
-いんせきが　落ちた　場所？▼
+いん石が　落ちた　場所？▼
 あれ　違ったっけ？▼
 アララギ博士に　そんな
 話を　聞いた　気がするけど……▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T06:21:20" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T06:23:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3328,12 +3328,11 @@
 			Language="JPN">
 			<Text>いま　どこなの？▼
 リバティガーデンとう　ね▼
-２ねんまえ
-まぼろしの　ポケモンが▽
+２ねんまえ　まぼろしの　ポケモンが
 みつかったって　わだい　だったわ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T02:30:26" />
+				Time="2011-11-13T06:23:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3343,12 +3342,11 @@
 			Language="JPN_KANJI">
 			<Text>今　どこなの？▼
 リバティガーデン島　ね▼
-２年前
-幻の　ポケモンが▽
-みつかったって　話題　だったわ！▼</Text>
+２年前　幻の　ポケモンが
+みつかったって　話題だったわ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T06:22:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T06:23:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6500,12 +6498,12 @@
 			<Text>ポケウッド　ですって！▼
 なあに　あなた
 えいがに　でるの！？▽
-じゃあ　ＤＶＤを　かわないとね！▼
+じゃあ　みにいかないとね！▼
 あっ　アドバイスよ！
 えんぎは　しぜんたい　でね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T02:33:11" />
+				Time="2011-11-13T06:25:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6516,12 +6514,12 @@
 			<Text>ポケウッド　ですって！▼
 なあに　あなた
 映画に　でるの！？▽
-じゃあ　ＤＶＤを　買わないとね！▼
+じゃあ　観に行かないとね！▼
 あっ　アドバイスよ！
 演技は　自然体でね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T13:37:51" />
+				Time="2011-11-13T06:26:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6663,11 +6661,11 @@
 			<Text>ヤマジタウンは
 リバースマウンテン　ちかくの▽
 ちいさな　まち　だけど▼
-かわった　まちなみの
+かわった　まちなみで
 いがいと　にんきの　ばしょよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T02:33:19" />
+				Time="2011-11-13T06:26:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6677,12 +6675,12 @@
 			Language="JPN_KANJI">
 			<Text>ヤマジタウンは
 リバースマウンテン　近くの▽
-小さな　町　だけど▼
-変わった　町並みの
+小さな　町だけど▼
+変わった　町並みで
 意外と　人気の　場所よ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T06:59:17" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T06:26:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
