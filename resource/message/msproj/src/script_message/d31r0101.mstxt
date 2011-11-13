@@ -9,11 +9,11 @@
 			<Text>もうっ！
 せっかく　いいところまで　いったのに▽
 やられちゃった！▼
-むりしないで　たたかいを　さけて
-おいしゃさんを　さがすべきだったかな</Text>
+むりして　たたかわないで
+ドクターを　さがすべきだったかな</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-29T09:51:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:22:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24,11 +24,11 @@
 			<Text>もうっ！
 せっかく　いいところまで　行ったのに▽
 やられちゃった！▼
-無理しないで　戦いを　さけて
-お医者さんを　探すべきだったかな？</Text>
+無理して　戦かわないで
+ドクターを　探すべきだったかな？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-29T09:52:22" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:22:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -36,11 +36,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>受付階にいるモブＮＰＣＡ（ホワイト）
-エリア1～5クリアまで</Comment>
+			<Comment>♀
+・受付階にいるモブＮＰＣＡ（ホワイト）
+・エリア1～5クリアまで</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-22T02:59:57" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:27:44" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
@@ -51,10 +52,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>FIGHTERW</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:25:52" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -63,6 +64,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d31r0101_fighterw_02"
@@ -97,11 +105,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>受付階にいるモブＮＰＣＡ（ホワイト）
-エリア5クリア後</Comment>
+			<Comment>♀
+・エリア5クリア後</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-22T02:59:57" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:27:42" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
@@ -110,6 +118,20 @@
 				User="nakamura_akira:W00280"
 				Time="2011-09-22T02:59:57" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FIGHTERW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:25:54" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d31r0101_fighterw_03"
@@ -148,11 +170,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>受付階にいるモブＮＰＣＡ（ホワイト）
-エリア10クリア後</Comment>
+			<Comment>♀
+・エリア10クリア後</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-22T02:59:57" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:27:41" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
@@ -161,6 +183,20 @@
 				User="nakamura_akira:W00280"
 				Time="2011-09-22T02:59:57" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FIGHTERW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:25:54" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d31r0101_mountman_01"
@@ -195,11 +231,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>受付階にいるモブＮＰＣＢ（ホワイト）
-エリア1～5クリアまで</Comment>
+			<Comment>♂
+・受付階にいるモブＮＰＣＢ（ホワイト）
+・エリア1～5クリアまで</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-22T02:59:57" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:27:36" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
@@ -209,6 +246,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-09-22T02:59:57" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MOUNTAIN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:25:59" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d31r0101_mountman_02"
@@ -243,11 +287,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>受付階にいるモブＮＰＣＢ（ホワイト）
-エリア5クリア後</Comment>
+			<Comment>♂
+・エリア5クリア後</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-22T02:59:57" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:27:33" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
@@ -257,6 +301,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-09-22T02:59:57" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MOUNTAIN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:26:00" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d31r0101_mountman_03"
@@ -266,14 +317,14 @@
 			<Text>ふふっ！　げきせんを　くぐりぬけ
 ついに　わたしは　クリアした！▽
 あの　やばすぎる　エリア５をな！▼
-……って　ぜんぶ　クリアしたの？
-きみ　さいかそうまで　いったの？▼
+……って　きみ
+さいかそうまで　いったの？▼
 ははっ……すごすぎる……▼
 ……いつか　わたしも　このめで
 さいかそうを　みてみたいもんだな……</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-29T09:52:13" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:30:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -284,14 +335,14 @@
 			<Text>ふふっ！　激戦を　くぐりぬけ
 ついに　わたしは　クリアした！▽
 あの　やばすぎる　エリア５をな！▼
-……って　全部　クリアしたの？
-きみ　最下層まで　行ったの？▼
+……って　きみ
+最下層まで　行ったの？▼
 ははっ……すごすぎる……▼
 ……いつか　わたしも　この目で
 最下層を　みてみたいもんだな……</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-29T09:52:37" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:30:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -299,11 +350,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>受付階にいるモブＮＰＣＢ（ホワイト）
-エリア10クリア後</Comment>
+			<Comment>♂
+・エリア10クリア後</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-22T02:59:57" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:27:31" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
@@ -313,5 +364,70 @@
 				User="nakamura_akira:W00280"
 				Time="2011-09-22T02:59:57" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MOUNTAIN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:26:00" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d31r0101_stop_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>えっ！　しろのじゅどうで
+いちばん　つよい　バンジロウって▽
+アデクさんの　まご　なの！？▼
+オレも　サンギタウンの
+アデクさんに　きたえてもらおうかな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:38:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:38:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>えっ！　白の樹洞で
+一番　強い　バンジロウって▽
+アデクさんの　孫なの！？▼
+オレも　サンギタウンの
+アデクさんに　鍛えてもらおうかな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:38:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:38:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・受付前に配置
+・msg_t06r0101_mugenboss_end_07表示で
+　ここから削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:39:48" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:29:15" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>

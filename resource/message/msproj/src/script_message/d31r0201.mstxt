@@ -32,11 +32,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>受付階にいるモブＮＰＣＡ（ブラック）
-エリア1～5クリアまで</Comment>
+			<Comment>♀
+・受付階にいるモブＮＰＣＡ（ブラック）
+・エリア1～5クリアまで</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-22T02:54:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:26:49" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
@@ -47,10 +48,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>ASSISTANTW</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:25:33" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -59,6 +60,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:14" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d31r0201_assistantw_02"
@@ -97,11 +105,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>受付階にいるモブＮＰＣＡ（ブラック）
-エリア5クリア後</Comment>
+			<Comment>♀
+・エリア5クリア後</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-22T02:54:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:26:54" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
@@ -110,6 +118,20 @@
 				User="nakamura_akira:W00280"
 				Time="2011-09-22T02:54:12" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:25:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d31r0201_assistantw_03"
@@ -120,11 +142,11 @@
 エリアも　クリアしたんだってね……▼
 バンジロウくんしか　そんなこと
 できるトレーナー　いないとおもってた▼
-すごいわ……！　まさに　もう
+すごいわ……！　まさに
 くもの　うえの　ひとって　かんじね！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-29T09:52:57" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:20:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -136,11 +158,11 @@
 エリアも　クリアしたんだってね……▼
 バンジロウくんしか　そんなこと
 できるトレーナー　いないと思ってた▼
-すごいわ……！　まさに　もう
+すごいわ……！　まさに
 雲の上の人って　感じね！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-29T09:53:20" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:20:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -148,11 +170,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>受付階にいるモブＮＰＣＡ（ブラック）
-エリア10クリア後</Comment>
+			<Comment>♀
+・エリア10クリア後</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-22T02:54:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:26:59" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
@@ -161,6 +183,20 @@
 				User="nakamura_akira:W00280"
 				Time="2011-09-22T02:54:12" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:25:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d31r0201_espm_01"
@@ -197,11 +233,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>受付階にいるモブＮＰＣＢ（ブラック）
-エリア1～5クリアまで</Comment>
+			<Comment>♂
+・受付階にいるモブＮＰＣＢ（ブラック）
+・エリア1～5クリアまで</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-22T02:54:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:27:08" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
@@ -210,6 +247,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-09-22T02:54:12" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ESPM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:25:39" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d31r0201_espm_02"
@@ -233,12 +277,12 @@
 			Language="JPN_KANJI">
 			<Text>なんなんだ　この　力は！
 どんどん　大きくなって　いるんだ！▼
-ううっ……　鳥肌が　止まらない……▼
+ううっ……　鳥肌が　とまらない……▼
 黒の摩天楼……
 いったい　どんな　秘密が……</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-29T09:53:26" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:20:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -246,11 +290,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>受付階にいるモブＮＰＣＢ（ブラック）
-エリア5クリア後</Comment>
+			<Comment>♂
+・エリア5クリア後</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-22T02:54:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:27:10" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
@@ -259,6 +303,13 @@
 				User="nakamura_akira:W00280"
 				Time="2011-09-22T02:54:12" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ESPM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:25:41" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d31r0201_espm_03"
@@ -299,11 +350,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>受付階にいるモブＮＰＣＢ（ブラック）
-エリア10クリア後</Comment>
+			<Comment>♂
+・エリア10クリア後</Comment>
 			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-22T02:54:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:27:12" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
@@ -312,5 +363,70 @@
 				User="nakamura_akira:W00280"
 				Time="2011-09-22T02:54:12" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ESPM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:25:41" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d31r0101_stop_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>えっ！　くろのまうんてんで
+いちばん　つよい　バンジロウって▽
+アデクさんの　まご　なの！？▼
+オレも　サンギタウンの
+アデクさんに　きたえてもらおうかな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:38:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:37:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>えっ！　黒の摩天楼で
+一番　強い　バンジロウって▽
+アデクさんの　孫なの！？▼
+オレも　サンギタウンの
+アデクさんに　鍛えてもらおうかな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:38:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:37:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・受付前に配置
+・msg_t06r0101_mugenboss_end_07表示で
+　ここから削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:39:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T01:37:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>

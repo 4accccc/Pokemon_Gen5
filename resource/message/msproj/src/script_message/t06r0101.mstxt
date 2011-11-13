@@ -1006,13 +1006,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂：クリア後
-・WBT登場前
+・ポケモンワールドトーナメント登場前
 ・はい/いいえの選択肢表示
 　はい　→champion_end_03
 　いいえ→champion_end_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T04:47:50" />
+				Time="2011-11-13T01:34:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1068,13 +1068,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂：クリア後
-・WBT登場後
+・ポケモンワールドトーナメント登場後
 ・はい/いいえの選択肢表示
 　はい　→champion_end_03
 　いいえ→champion_end_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T04:47:51" />
+				Time="2011-11-13T01:34:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1273,10 +1273,10 @@
 			<Text>？？？『じーちゃん！▼
 やったぜ！▼
 黒の摩天楼！▼
-天辺まで　上ったぜ！▼</Text>
+天辺まで　のぼったぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T03:59:18" />
+				Time="2011-11-13T01:40:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2585,10 +2585,10 @@
 			<Text>おまえを　みとめて　たくすんだ！▼
 だいじに　そだててくれよ▼
 [Name:TrainerName ]！▼
-くろのまてんろうで　まってる！▼</Text>
+くろのまてんろうで　まってるぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T08:51:33" />
+				Time="2011-11-13T01:41:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2599,10 +2599,10 @@
 			<Text>おまえを　認めて　たくすんだ！▼
 大事に　育ててくれよ▼
 [Name:TrainerName ]！▼
-黒の摩天楼で　待ってる！▼</Text>
+黒の摩天楼で　待ってるぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T08:51:35" />
+				Time="2011-11-13T01:41:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2644,10 +2644,10 @@
 			<Text>おまえを　みとめて　たくすんだ！▼
 だいじに　そだててくれよ▼
 [Name:TrainerName ]！▼
-しろのじゅどうで　まってる！▼</Text>
+しろのじゅどうで　まってるぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T08:57:41" />
+				Time="2011-11-13T01:41:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2658,10 +2658,10 @@
 			<Text>おまえを　認めて　たくすんだ！▼
 大事に　育ててくれよ▼
 [Name:TrainerName ]！▼
-白の樹洞で　待ってる！▼</Text>
+白の樹洞で　待ってるぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T08:57:34" />
+				Time="2011-11-13T01:41:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
