@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-10-30T16:00:15" source="out00_tex_summer.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-11-13T17:32:04" source="out00_tex_summer.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-10-30T16:00:15" source="out00_tex_summer.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-11-13T17:32:04" source="out00_tex_summer.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -182,9 +182,9 @@
 	>
 		<bitmap size="32">
 			4433 4334 4433 3434 3211 1123 3310 1102
-			2011 0012 1205 0050 0500 6500 0056 5555
-			5665 b855 558b 7576 8886 aa88 bbba 6888
-			ab88 99aa aaa9 88bb 9ab8 9999 a999 8bba
+			2011 0012 1205 0050 0500 7500 0057 5555
+			5775 a955 559a 6567 9997 aa88 988a 7999
+			ca99 dddd aaac 9998 dca9 dddd aacd 998a
 		</bitmap>
 	</tex_image>
 	<tex_image index="7" name="gake1_2"
@@ -751,22 +751,22 @@
 		path="C:/home/swan_data3d/field/out00/chip/tex_summer/iwa01.tga"
 	>
 		<bitmap size="128">
-			5555 5555 3331 5553 5555 5533 1155 5511
-			3315 7513 7777 5555 1335 a755 7aaa 5577
-			5315 aa75 aaaa 5577 5155 aaa7 7aaa 5117
-			5555 aaa7 7aaa 5311 5155 a7a7 35aa 1333
-			3355 7775 b357 553b 3155 7753 3337 5513
-			3551 5513 3315 5553 3511 5133 3315 5553
-			1511 5133 3357 5533 5533 a733 3157 1133
-			5511 a755 1315 3333 5555 7555 5533 3355
-			5553 5555 3315 3333 5133 1155 3333 bb33
-			3333 b331 bbb3 bbb3 333b bb33 bb8b bbbb
-			33bb bbb3 bb68 bbbb 3bbb bbbb bb68 888b
-			8886 8b86 8866 8668 6666 6866 6866 6666
-			4444 6664 6666 4466 2444 4222 6466 2446
-			9224 9929 4224 4446 9999 9999 2229 2244
-			cc99 9999 9cc9 9922 ccc9 c99c cccc cc99
-			ddcc cccc cddd ddcc 00dd dddd d000 dddd
+			cccc cccc aaab ccca cccc ccaa bbcc ccbb
+			aabc dcba dddd cccc baac edcc deee ccdd
+			cabc eedc eeee ccdd cbcc eeed deee cbbd
+			cccc eeed deee cabb cbcc eded acee baaa
+			aacc dddc 9acd cca9 abcc ddca aaad ccba
+			accb ccba aabc ccca acbb cbaa aabc ccca
+			bcbb cbaa aacd ccaa ccaa edaa abcd bbaa
+			ccbb edcc babc aaaa cccc dccc ccaa aacc
+			ccca cccc aabc aaaa cbaa bbcc aaaa 99aa
+			aaaa 9aab 999a 999a aaa9 99aa 9969 9999
+			aa99 999a 9956 9999 a999 9999 9956 6669
+			6665 6965 6655 6556 5555 5655 5655 5555
+			4444 5554 5555 4455 2444 4222 5455 2445
+			1224 1121 4224 4445 1111 1111 2221 2244
+			3311 1111 1331 1122 3331 3113 3333 3311
+			7773 8337 7777 7787 0027 7772 0002 7772
 		</bitmap>
 	</tex_image>
 	<tex_image index="18" name="kage_out"
@@ -1699,10 +1699,10 @@
 		path="C:/home/swan_data3d/field/out00/chip/tex_summer/michi03b.tga"
 	>
 		<bitmap size="32">
-			aaaa aaaa a55a a5aa 9556 955a 5919 5a56
-			6406 6465 9041 9019 4190 4106 06a4 0641
-			1969 1a90 655a 65a4 9696 9569 5aa5 5a5a
-			6aa9 6a95 aaaa aaa5 aaaa aaaa aaaa aaaa
+			5005 5015 4ff1 4f05 3ffc 3ff0 ffbf fffc
+			feaf feff faab fabf eaea eaaf abfa abab
+			affe afea bc3f bffa f00f f03f c003 c00f
+			0140 0003 0550 0540 1555 1550 5555 5554
 		</bitmap>
 	</tex_image>
 	<tex_image index="49" name="michi_hage"
@@ -2604,8 +2604,8 @@
 		1e14 1df3 2236 2a78 2e99 2215 2a57 7fff
 	</tex_palette>
 	<tex_palette index="6" name="gake1_1_pl" color_size="16">
-		46cd 4aee 4f2f 5350 4f70 29eb 29ef 2dad
-		2612 2eda 2a98 2a55 7fff 7fff 7fff 7fff
+		46cd 4aee 4f2f 5350 4f70 29eb 2dad 25cf
+		2612 1df2 2634 2a55 2a56 2a78 7fff 7fff
 	</tex_palette>
 	<tex_palette index="7" name="gake1_2_pl" color_size="8">
 		537c 3275 4f5c 2213 42d8 2256 2634 2e99
@@ -2643,8 +2643,8 @@
 		7aa8 7aec 7733 770f
 	</tex_palette>
 	<tex_palette index="17" name="iwa01_pl" color_size="16">
-		6c1b 3aba 2a15 369a 2e36 3abb 3257 3edc
-		3258 29f4 3edd 3679 2dd2 39ce 7fff 7fff
+		0000 2a14 2a35 2df2 2e56 3277 3278 35d0
+		35f2 3699 36ba 3ada 3adb 3efc 3efd 7fff
 	</tex_palette>
 	<tex_palette index="18" name="kage_out_pl" color_size="8">
 		1461 7fff 7fff 7fff 7fff 7fff 7fff 7fff
@@ -2750,7 +2750,7 @@
 		530f 532f 5750 5770 5791 5b70 5b71 5b91
 	</tex_palette>
 	<tex_palette index="48" name="michi03b_pl" color_size="4">
-		5b71 5b91 5791 7fff
+		5791 57b1 5b71 5b91
 	</tex_palette>
 	<tex_palette index="49" name="michi_hage02_pl" color_size="8">
 		7fff 4f0f 5330 477c 3af9 475c 431a 4b3b
