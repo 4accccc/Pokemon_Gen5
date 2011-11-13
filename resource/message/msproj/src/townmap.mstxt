@@ -3817,11 +3817,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しばらく　まえまでは　なにもなにのに
+			<Text>しばらく　まえまでは　なにもないのに
 まよう　ばしょとして　しられていた</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T06:39:28" />
+				Time="2011-11-13T03:30:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3829,11 +3829,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しばらく前までは　なにもなにのに
+			<Text>しばらく前までは　なにもないのに
 迷う　場所として　知られていた</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-30T06:39:45" />
+				Time="2011-11-13T03:30:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

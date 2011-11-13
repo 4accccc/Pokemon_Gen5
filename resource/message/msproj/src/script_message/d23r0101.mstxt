@@ -1148,10 +1148,18 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>あら？　あなたってば
+ポケモンずかんを　もってるんだ！▼
+あたし　きいたよ！
+さいしんの　ポケモンずかん　って▼
+せいそくちリスト　って
+すごい　きのうが　あるんでしょ！▼
+じゃあさ　この　コンビナートに
+どんな　ポケモンが　いるのか▽
+あたしに　みせてくれない？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:21:57" />
+				Time="2011-11-13T01:51:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1159,10 +1167,18 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>あら？　あなたってば
+ポケモン図鑑を　持ってるんだ！▼
+あたし　きいたよ！
+最新の　ポケモン図鑑　って▼
+生息地リスト　って
+すごい　機能が　あるんでしょ！▼
+じゃあさ　この　コンビナートに
+どんな　ポケモンが　いるのか▽
+あたしに　みせてくれない？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:22:04" />
+				Time="2011-11-13T01:57:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1170,14 +1186,25 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>せいそくちリスト
+			<Comment>♀：せいそくちリスト
 ・対象マップが
 　埋まっている　→list_02
-　埋まっていない→list_03</Comment>
+　埋まっていない→list_03
+※sg_d23r0101_workman_01よりも
+　奥に配置してください。
+※コンビナートのメインの遊びは
+　新人探しなので</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:21:47" />
+				Time="2011-11-13T02:03:09" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T02:02:23" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
@@ -1191,10 +1218,12 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>あら？　せいそくちリストの
+コンビナートの　ぶぶん▽
+まだ　うまってないんだね……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:22:11" />
+				Time="2011-11-13T01:53:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1202,10 +1231,12 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>あら？　生息地リストの
+コンビナートの　部分▽
+まだ　埋まってないんだね……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:22:12" />
+				Time="2011-11-13T01:57:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1213,12 +1244,19 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>せいそくちリスト
+			<Comment>♀：せいそくちリスト
 ・埋まってない</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:20:41" />
+				Time="2011-11-13T02:00:06" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T02:02:25" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
@@ -1232,10 +1270,14 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>すごーい！
+せいそくちリスト　うまってる！▼
+すごいすごい！　この　コンビナート
+こんなに　ポケモンが　いるんだ！▼
+アリガト！　これは　おれいだよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:22:07" />
+				Time="2011-11-13T01:54:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1243,10 +1285,14 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>すごーい！
+生息地リスト　埋まってる！▼
+すごいすごい！　この　コンビナート
+こんなに　ポケモンが　いるんだ！▼
+アリガト！　これは　お礼だよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:22:07" />
+				Time="2011-11-13T01:57:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1254,14 +1300,21 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>せいそくちリスト
+			<Comment>♀：せいそくちリスト
 ・埋まっている
 ・アイテム入手処理
-　No000「」×5</Comment>
+　No003「スーパーボール」×5</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:21:00" />
+				Time="2011-11-13T02:03:29" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T02:02:25" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
@@ -1275,10 +1328,12 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>せいそくちリストを　うめていたら
+いつのまにか　ポケモンずかん▽
+かんせい　しちゃうかもね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:22:14" />
+				Time="2011-11-13T01:56:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1286,10 +1341,12 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>生息地リストを　埋めていたら
+いつのまにか　ポケモン図鑑▽
+完成しちゃうかもね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:22:14" />
+				Time="2011-11-13T01:56:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1297,12 +1354,19 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>せいそくちリスト
+			<Comment>♀：せいそくちリスト
 ・アイテム入手後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:21:04" />
+				Time="2011-11-13T02:00:09" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T02:02:25" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>

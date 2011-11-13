@@ -613,10 +613,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>ねえねえ　ねえねえ
+せいそくちリスト　みせて！▼
+３ばんどうろの　ポケモン　ぜんぶだよ
+くさむらも　つりも　みずのうえも！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:24:01" />
+				Time="2011-11-13T03:37:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -624,10 +627,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>ねえねえ　ねえねえ
+せいそくちリスト　みせて！▼
+３番道路の　ポケモン　全部だよ
+草むらも　つりも　水上も！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:24:01" />
+				Time="2011-11-13T03:38:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -635,14 +641,21 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>せいそくちリスト
+			<Comment>♂：せいそくちリスト
 ・対象マップが
 　埋まっている　→list_02
 　埋まっていない→list_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:24:01" />
+				Time="2011-11-13T03:23:42" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T03:23:57" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
@@ -656,10 +669,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>３ばんどうろの　ポケモン　ぜんぶだよ
+くさむらも　つりも　みずのうえも！▼
+せいそくちリストが　うまったら
+ぼくに　おしえてほしいな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:24:01" />
+				Time="2011-11-13T03:37:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -667,10 +683,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>３番道路の　ポケモン　全部だよ
+草むらも　つりも　水上も！▼
+せいそくちリストが　うまったら
+ぼくに　おしえてほしいな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:24:01" />
+				Time="2011-11-13T03:38:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -678,12 +697,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>せいそくちリスト
+			<Comment>♂：せいそくちリスト
 ・埋まってない</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:24:01" />
+				Time="2011-11-13T03:24:04" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T03:23:59" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
@@ -697,10 +723,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ▼</Text>
+			<Text>うう……　なんてこったい▼
+３ばんどうろには　こんなに
+たくさんの　ポケモンが　いるんだ！▼
+トレーナーさん　すごい！
+かんどうしたから　これ　あげる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:24:01" />
+				Time="2011-11-13T03:38:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -708,10 +738,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼</Text>
+			<Text>うう……　なんてこったい▼
+３番道路には　こんなに
+たくさんの　ポケモンが　いるんだ！▼
+トレーナーさん　すごい！
+感動したから　これ　あげる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:24:01" />
+				Time="2011-11-13T03:39:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -719,14 +753,21 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>せいそくちリスト
+			<Comment>♂：せいそくちリスト
 ・埋まっている
 ・アイテム入手処理
-　No000「」×5</Comment>
+　No007「ダイブボール」×5</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:24:01" />
+				Time="2011-11-13T03:24:21" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T03:23:59" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
@@ -740,10 +781,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>トレーナーさん
+であいの　たつじん　だね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:24:01" />
+				Time="2011-11-13T03:34:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -751,10 +793,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>トレーナーさん
+出会いの　達人だね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:24:01" />
+				Time="2011-11-13T03:34:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -762,12 +805,19 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>せいそくちリスト
+			<Comment>♂：せいそくちリスト
 ・アイテム入手後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:24:01" />
+				Time="2011-11-13T03:24:07" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-13T03:23:59" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
