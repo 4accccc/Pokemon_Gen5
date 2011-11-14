@@ -104,10 +104,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はやく　そうじを　おわらさねば！▼</Text>
+			<Text>はやく　そうじを　おわらさねば！
+それまで　まってくださいよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T09:27:41" />
+				Time="2011-11-14T11:45:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -115,10 +116,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はやく　掃除を　終わらさねば！▼</Text>
+			<Text>はやく　掃除を　終わらさねば！
+それまで　待ってくださいよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T09:28:46" />
+				Time="2011-11-14T11:45:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -212,6 +214,48 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t04r0101_girl4_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マリンチューブを　さいしょに
+わたるためだけに　こしてきましたの</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T12:45:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T12:40:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マリンチューブを　最初に
+渡るためだけに　越してきましたの</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T12:45:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T12:40:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T12:45:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T12:40:15" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_t04r0101_board_01"

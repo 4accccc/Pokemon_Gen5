@@ -978,6 +978,59 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_t04_workman2_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>サザナミの　リゾートを　もっともっと
+はってん　させるべく　こうじスタート！▼
+そしたら　かざんと　つながって
+しぜん　すごいなー　って　ところだわ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T11:37:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T11:37:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>サザナミの　リゾートを　もっともっと
+発展させるべく　工事スタート！▼
+そしたら　火山と　つながって
+自然　すごいなー　って　ところだわ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T11:37:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T11:37:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T11:37:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WORKMAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T11:37:58" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_t04_sign1_01"
 		Style="Large">
 		<LanguageCell
@@ -1038,11 +1091,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このさき　マリンチューブ
-あるく　すいぞくかん</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:29:20" />
+				Time="2011-11-14T11:52:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1050,11 +1102,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この先　マリンチューブ
-歩く　水族館</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-16T10:29:20" />
+				Time="2011-11-14T11:52:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1062,11 +1113,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>BGメッセージ
-※swanで新規作成</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T12:36:52" />
+				Time="2011-11-14T11:52:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1088,11 +1138,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おつかれの　さぎょういんは
-この　プレハブへ！（かり）</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T01:45:48" />
+				Time="2011-11-14T11:51:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1100,11 +1149,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おつかれの　さぎょういんは
-この　プレハブへ！(仮称）</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T01:45:53" />
+				Time="2011-11-14T11:52:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1112,12 +1160,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>BGメッセージ
-・プレハブ小屋用
-※swanで新規作成</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T12:36:54" />
+				Time="2011-11-14T11:51:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1190,10 +1236,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>このさき　マリンチューブ
+あるく　すいぞくかん</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T08:56:26" />
+				Time="2011-11-14T11:51:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1201,10 +1248,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>この先　マリンチューブ
+歩く　水族館</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T08:56:29" />
+				Time="2011-11-14T11:51:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1212,11 +1260,26 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanで削除</Comment>
+			<Comment>BGメッセージ
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T08:56:37" />
+				Time="2011-11-14T11:51:26" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T11:51:26" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_t04_sage7_end_01"
@@ -1224,8 +1287,8 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ヴィオ『ここは　あたたかいな▼
-とつぜんだが
-ここに　ゲーチスさまが▽
+さて　ほんだいに　はいるぞ！▼
+ここに　ゲーチスさまが
 のこされた　しょもつが　ある▼
 これが　あれば　かいていいせきの
 こだいもじが　よめるという　しろもの▼
@@ -1233,7 +1296,7 @@
 この　しょもつを　よむがいい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T06:55:47" />
+				Time="2011-11-14T11:52:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1242,8 +1305,8 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヴィオ『ここは　あたたかいな▼
-突然だが
-ここに　ゲーチスさまが▽
+さて　ほんだいに　はいるぞ！▼
+ここに　ゲーチスさまが
 残された　書物が　ある▼
 これが　あれば　海底遺跡の
 古代文字が　読めるという　代物▼
@@ -1251,7 +1314,7 @@
 この書物を　読むがいい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T06:55:27" />
+				Time="2011-11-14T11:52:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

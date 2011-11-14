@@ -812,10 +812,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・？？まで繰り返し（条件保留）</Comment>
+・t03：カゴメタウンまで繰り返し
+・上記タイミングで動作モデルを削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-27T06:19:03" />
+				Time="2011-11-14T11:40:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

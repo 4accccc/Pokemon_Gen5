@@ -2,6 +2,55 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_t04r0201_man3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ブルジョワールいっかの　みなさんは
+とおくへ　ひっこし　したのに▽
+おとうさんだけ　ここに　のこって……▼
+りゆうを　ぜったい　ひみつ　なのが
+すごく　きになるんだ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T12:49:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T12:47:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ブルジョワール一家の　みなさんは
+遠くへ　引越し　したのに▽
+お父さんだけ　ここに　残って……▼
+理由が　絶対　秘密なのが
+すごく　気になるんだ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T12:49:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T12:48:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+※裏設定では前作でダイエットした男</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T12:50:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN3</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T12:47:00" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_t04r0201_workman2_01"
 		Style="Large">
 		<LanguageCell
@@ -47,6 +96,13 @@
 				User="matsumiya:W00224"
 				Time="2011-06-04T02:55:30" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_t04r0201_diet_01"
