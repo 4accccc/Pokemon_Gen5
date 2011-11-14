@@ -626,6 +626,9 @@ select_area:
 
       // 歩数カウント開始
       _SC_WALK_COUNT_START()
+
+      // ビーコン：無限ダンジョン進入
+      _BEACON_SET_REQ_INF_DUNGEON_ENTRY( LWK_AREA_MENU )
     ELSE
       // やめる
       IF $LWK_D_VERSION == VERSION_B2 THEN
@@ -793,7 +796,10 @@ EVENT_START  ev_infinity_dungeon_comeback
   // ボス勝利判定
   IF $LWK_MAP_STATUS == INFINITY_DUNGEON_MAP_STATUS_BOSS_WIN THEN
     $LWK_CLEAR_AREA_ID = $LWK_NOW_AREA
-   
+
+    // 無限ダンジョンクリアビーコン
+    _BEACON_SET_REQ_INF_DUNGEON_CLEAR( LWK_CLEAR_AREA_ID )
+
     // エリア2~5のメダル取得
     IF (($LWK_CLEAR_AREA_ID >= INFINITY_DUNGEON_AREA_ID_2) && ($LWK_CLEAR_AREA_ID <= INFINITY_DUNGEON_AREA_ID_5)) THEN
 

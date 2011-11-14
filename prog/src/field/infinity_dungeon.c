@@ -499,7 +499,12 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
 
         if( IsMoveElevator( p_wk ) )
         {
-          GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Black( p_wk->p_gsys, p_wk->p_field_work ,FIELD_FADE_WAIT ) );
+          //ＢＧ復帰
+          BGSettingRecover( p_wk->p_field_work );
+
+          // 遅いフェードアウト
+          GFL_FADE_SetMasterBrightReq(
+              GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, FIELD_FADE_SLOW_WAIT );
         }
         else
         {
