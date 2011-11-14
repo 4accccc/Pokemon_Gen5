@@ -59,6 +59,7 @@
 #include "arc/fieldmap/fldmmdl_mdlparam.naix"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 #include "resort_const.h"
+#include "gamesystem/game_beacon.h"
 
 // BMPWIN定義テーブル
 
@@ -504,6 +505,9 @@ VMCMD_RESULT EvCmdResortCallList( VMHANDLE *core, void *wk )
     }
     break;
   } 
+
+  GAMEBEACON_Set_JoinAvenueShopping();
+
   // ショップ呼び出し
   VMCMD_SetWait( core, EvShopBuyWait );
 

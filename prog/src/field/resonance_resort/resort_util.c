@@ -341,7 +341,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
       return SexGetMsgID( sex, resort_secretary_greet_01_m, resort_secretary_greet_01_f );
     case RESORT_SECRETARY_TYPE_CENTER:
       return SexGetMsgID( sex, resort_secretary_greet_02_m, resort_secretary_greet_02_f );
-    case RESORT_SECRETARY_TYPE_PC:
+    case RESORT_SECRETARY_TYPE_ARRANGE:
       return SexGetMsgID( sex, resort_secretary_greet_03_m, resort_secretary_greet_03_f );
     }
 
@@ -357,7 +357,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
       return SexGetMsgID( sex, resort_secretary_bye_01_m, resort_secretary_bye_01_f );
     case RESORT_SECRETARY_TYPE_CENTER:
       return SexGetMsgID( sex, resort_secretary_bye_02_m, resort_secretary_bye_02_f );
-    case RESORT_SECRETARY_TYPE_PC:
+    case RESORT_SECRETARY_TYPE_ARRANGE:
       return SexGetMsgID( sex, resort_secretary_bye_03_m, resort_secretary_bye_03_f );
     }
   case RESORT_SECRETARY_CITYLV_MSGID:
@@ -2659,8 +2659,8 @@ void RESORT_UTIL_SetPresetPeople( RESORT_SYSTEM *p_sys, const MYSTATUS *cp_mysta
       {
         { RESORT_PRESET_SECRETARY_01, RESORT_SECRETARY_TYPE_WORK },
         { RESORT_PRESET_SECRETARY_02, RESORT_SECRETARY_TYPE_MOVE },
+        { RESORT_PRESET_SECRETARY_04, RESORT_SECRETARY_TYPE_ARRANGE },
         { RESORT_PRESET_SECRETARY_03, RESORT_SECRETARY_TYPE_CENTER },
-        { RESORT_PRESET_SECRETARY_04, RESORT_SECRETARY_TYPE_PC },
       };
       int i;
       BOOL is_set;

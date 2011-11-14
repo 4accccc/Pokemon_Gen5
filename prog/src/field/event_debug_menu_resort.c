@@ -583,8 +583,13 @@ static BOOL debugMenuCallProc_Script( DEBUG_MENU_EVENT_WORK *p_wk )
   if( FIELDMAP_GetZoneID( p_wk->fieldWork) == RESORT_ZONE_ID_FIELD )
   {
     SCRIPT_ChangeScript( p_wk->gmEvent, SCRID_RESERVE_RESORT_DEBUG, NULL, p_wk->heapID );
+    return TRUE;
   }
-  return TRUE;
+  else
+  {
+    PMSND_PlaySE( SEQ_SE_BEEP );
+    return FALSE;
+  }
 }
 
 static BOOL debugMenuCallProc_CallDebugInput( DEBUG_MENU_EVENT_WORK *p_wk )

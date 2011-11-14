@@ -644,6 +644,8 @@ sub_come_shop:
 
       _NUMBER( 5, LWK_EXP, 5 )
       _SYSWIN_MSG( resort_sys_16, POS_DOWN )
+      _SE_PLAY( SEQ_SE_SW_JA_EXP )
+      _SE_WAIT()
 
       _NUMBER( 6, LWK_LV, 1 )
       //施設レベルアップ
@@ -739,7 +741,10 @@ sub_city_app_exp:
     //経験値加算メッセージ
     _RESORT_SET_WORD( RESORT_WORD_FREE_CITY, RESORT_WORD_PARAM_NONE, 0, 0 )
     _NUMBER( 7, LWK_EXP, 5 )
+
     _SYSWIN_MSG( resort_sys_17, POS_DOWN )
+    _SE_PLAY( SEQ_SE_SW_JA_EXP )
+    _SE_WAIT()
 
     //街レベルアップ
     IF $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_RANK || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE_RANK THEN
@@ -1722,9 +1727,6 @@ EVENT_START    ev_resort_secretary_work
 	      _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
       ENDIF
 
-    CASE SEQ_SECRETARY_WORK_RANKWINDOW THEN //ランクウィンドウ
-      _CALL sub_secretary_rankwindow
-
     CASE SEQ_SECRETARY_WORK_CITYNAME THEN   //街名
        _BALLOONWIN_CLOSE()
        _RESORT_INPUT_CITYNAME( TRUE )
@@ -1740,56 +1742,6 @@ EVENT_START    ev_resort_secretary_work
     CASE SEQ_SECRETARY_WORK_AUTHERTHANKS THEN //自分感謝
        _BALLOONWIN_CLOSE()
        _RESORT_INPUT_AUTHERTHANKS( TRUE )
-
-    CASE SEQ_SECRETARY_WORK_SECSORT THEN  //秘書交換
-      _BALLOONWIN_CLOSE()
-
-      _RESORT_CHANGE_OV_TO_SHOP()
-
-      _RESORT_CALL_LIST( RESORT_LIST_TYPE_SORT, RESORT_LIST_SORT_SECRETARY, RESORT_LIST_CAMERA_RECEPTION,LWK_LIST_RET_TYPE, LWK_LIST_RET_PARAM, LWK_LIST_RET_PARAM2, LWK_LIST_RET_IDX, LWK_LIST_RET_PRICE )
-
-      _RESORT_CHANGE_OV_TO_COMMON()
-
-      IF $LWK_LIST_RET_TYPE == TRUE THEN
-        _RESORT_GET_MSGID( RESORT_SECRETARY_SECSORT_MSGID, LWK_MSGID )
-	      _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
-        _BALLOONWIN_CLOSE()
-    	  _MAP_FADE_BLACK_OUT_SLOW()
-	      _MAP_FADE_END_CHECK()
-	      _FIELD_CLOSE()
-	      _FIELD_OPEN()
-
-        _RESORT_RESET_MMDL( RESORT_RESET_MMDL_SECRETARY_ALL )
-
-	      _MAP_FADE_BLACK_IN_SLOW()
-	      _MAP_FADE_END_CHECK()
-        $LWK_MENU_LOOP = FALSE
-      ENDIF
-
-    CASE SEQ_SECRETARY_WORK_SHOPSORT THEN //お店交換
-      _BALLOONWIN_CLOSE()
-
-      _RESORT_CHANGE_OV_TO_SHOP()
-
-      _RESORT_CALL_LIST( RESORT_LIST_TYPE_SORT, RESORT_LIST_SORT_INSTATITUTION, RESORT_LIST_CAMERA_RECEPTION,LWK_LIST_RET_TYPE, LWK_LIST_RET_PARAM, LWK_LIST_RET_PARAM2, LWK_LIST_RET_IDX, LWK_LIST_RET_PRICE )
-
-      _RESORT_CHANGE_OV_TO_COMMON()
-
-      IF $LWK_LIST_RET_TYPE == TRUE THEN
-        _RESORT_GET_MSGID( RESORT_SECRETARY_SHOPSORT_MSGID, LWK_MSGID )
-	      _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
-        _BALLOONWIN_CLOSE()
-    	  _MAP_FADE_BLACK_OUT_SLOW()
-	      _MAP_FADE_END_CHECK()
-	      _FIELD_CLOSE()
-	      _FIELD_OPEN()
-	      _MAP_FADE_BLACK_IN_SLOW()
-	      _MAP_FADE_END_CHECK()
-        $LWK_MENU_LOOP = FALSE
-      ENDIF
-
-    CASE SEQ_SECRETARY_WORK_NEON THEN //工事
-      _CALL sub_secretary_neon
 
     CASE SEQ_SECRETARY_WORK_BYE THEN          //またね
       _RESORT_GET_MSGID( RESORT_SECRETARY_BYE_MSGID, LWK_MSGID )
@@ -1823,7 +1775,6 @@ sub_secretary_work_main_menu:
 
 	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_MENU_RET )
 	_BMPMENU_MAKE_LIST( resort_sys_select_12, SEQ_SECRETARY_WORK_CITYLV )	    //街情報
-  _BMPMENU_MAKE_LIST( resort_sys_select_47, SEQ_SECRETARY_WORK_RANKWINDOW ) //ランキングウィンドウ
 
   _RESORT_GET_DATA( RESORT_GET_PARAM_IS_CITYNAME, LWK_RET )
   IF $LWK_RET == TRUE THEN
@@ -1832,13 +1783,6 @@ sub_secretary_work_main_menu:
   _BMPMENU_MAKE_LIST( resort_sys_select_32, SEQ_SECRETARY_WORK_AUTHERNAME )	//自分の呼び名
   _BMPMENU_MAKE_LIST( resort_sys_select_33, SEQ_SECRETARY_WORK_AUTHERPHRASE )	//くちぐせ
   _BMPMENU_MAKE_LIST( resort_sys_select_39, SEQ_SECRETARY_WORK_AUTHERTHANKS )	//かんげき
-  _BMPMENU_MAKE_LIST( resort_sys_select_40, SEQ_SECRETARY_WORK_SECSORT )	//秘書並び
-  _BMPMENU_MAKE_LIST( resort_sys_select_41, SEQ_SECRETARY_WORK_SHOPSORT )	//お店並び
-
-  _RESORT_GET_DATA( RESORT_GET_PARAM_IS_NEON, LWK_RET )
-  IF $LWK_RET == TRUE THEN
-    _BMPMENU_MAKE_LIST( resort_sys_select_13, SEQ_SECRETARY_WORK_NEON )	//ネオン
-  ENDIF
   _BMPMENU_MAKE_LIST( resort_sys_select_10, SEQ_SECRETARY_WORK_BYE )	//またね
 
 	//メニュー表示
@@ -2122,43 +2066,39 @@ EVENT_START    ev_resort_secretary_pc
     //メニュー表示
     _CALL sub_secretary_pc_main_menu
 
-
-    IF $LWK_MENU_RET == SEQ_SECRETARY_PC_BYE THEN
-      _RESORT_GET_MSGID( RESORT_SECRETARY_BYE_MSGID, LWK_MSGID )
-      _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, RESORT_WORD_PARAM_NONE,0, 0 )
-  	  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
-	    _LAST_KEYWAIT()
-  	  _BALLOONWIN_CLOSE()
-      $LWK_MENU_LOOP = FALSE
-
-    ELSIF $LWK_MENU_RET == SEQ_SECRETARY_PC_RECORD THEN
-  	  _BALLOONWIN_CLOSE()
-      _CALL_DENDOU_PC_PROC( SCRCMD_DENDOU_PC_DENDOU, LWK_RET )
-    ELSIF $LWK_MENU_RET == SEQ_SECRETARY_PC_HELP THEN
-	    _BALLOONWIN_CLOSE()
-      _CALL_GAME_MANUAL( LWK_RET )
-    ELSE 
-
+    //分岐
+    SWITCH $LWK_MENU_RET
+    CASE SEQ_SECRETARY_PC_BOX THEN    //整理
 	    _BALLOONWIN_CLOSE()
       _MAP_FADE_BLACK_OUT()                  // フェードアウト
       _MAP_FADE_END_CHECK()                  //
-
-      //分岐
-      SWITCH $LWK_MENU_RET
-      CASE SEQ_SECRETARY_PC_BOX THEN    //整理
-        _CALL_BOX_PROC( LWK_RET, BOX_MODE_SEIRI )
-      CASE SEQ_SECRETARY_PC_BTLBOX THEN //バトルボックス
-        _CALL_BOX_PROC( LWK_RET, BOX_MODE_BATTLE )
-      CASE SEQ_SECRETARY_PC_ITEM THEN
-        _CALL_BOX_PROC( LWK_RET, BOX_MODE_ITEM )
-      CASE SEQ_SECRETARY_PC_MAILBOX THEN       //メール
-        _CALL_MAILBOX_PROC( LWK_RET ) // メールボックス画面へ
-      DEFAULT
-      ENDSWITCH
-
+      _CALL_BOX_PROC( LWK_RET, BOX_MODE_SEIRI )
       _MAP_FADE_BLACK_IN()                   // フェードイン
       _MAP_FADE_END_CHECK()                  //
-    ENDIF
+
+    CASE SEQ_SECRETARY_PC_RANK THEN   //ランキング
+      _CALL sub_secretary_rankwindow
+
+    CASE SEQ_SECRETARY_PC_SORT_SEC THEN //秘書入れ替え
+      _CALL sub_secretary_sort_sec
+
+    CASE SEQ_SECRETARY_PC_SORT_SHOP THEN //お店入れ替え
+      _CALL sub_secretary_sort_shop
+
+    CASE SEQ_SECRETARY_PC_CHANGE_NEON THEN //ネオン
+      _CALL sub_secretary_neon
+
+    CASE SEQ_SECRETARY_PC_BYE THEN
+      _RESORT_GET_MSGID( RESORT_SECRETARY_BYE_MSGID, LWK_MSGID )
+      _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, RESORT_WORD_PARAM_NONE,0, 0 )
+	    _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+	      _LAST_KEYWAIT()
+	    _BALLOONWIN_CLOSE()
+      $LWK_MENU_LOOP = FALSE
+
+    DEFAULT
+    ENDSWITCH
+
   ENDWHILE
 
   _RESORT_TALK_END()
@@ -2173,12 +2113,15 @@ sub_secretary_pc_main_menu:
 	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_MENU_RET )
 
 	_BMPMENU_MAKE_LIST( resort_sys_select_22, SEQ_SECRETARY_PC_BOX )	//せいり
-  _BMPMENU_MAKE_LIST( resort_sys_select_23, SEQ_SECRETARY_PC_BTLBOX )	//バトルボックス
-  _BMPMENU_MAKE_LIST( resort_sys_select_24, SEQ_SECRETARY_PC_ITEM )	  //もちもの
-  _BMPMENU_MAKE_LIST( resort_sys_select_25, SEQ_SECRETARY_PC_RECORD )	  //きろく
-  _BMPMENU_MAKE_LIST( resort_sys_select_26, SEQ_SECRETARY_PC_MAILBOX )	  //メール
-  _BMPMENU_MAKE_LIST( resort_sys_select_27, SEQ_SECRETARY_PC_HELP )	  //ヘルプをみる
-  _BMPMENU_MAKE_LIST( resort_sys_select_10, SEQ_SECRETARY_PC_BYE )	  //またね
+  _BMPMENU_MAKE_LIST( resort_sys_select_47, SEQ_SECRETARY_PC_RANK )	//ランキング
+  _BMPMENU_MAKE_LIST( resort_sys_select_40, SEQ_SECRETARY_PC_SORT_SEC )	  //秘書入れ替え
+  _BMPMENU_MAKE_LIST( resort_sys_select_41, SEQ_SECRETARY_PC_SORT_SHOP )  //お店入れ替え
+
+  _RESORT_GET_DATA( RESORT_GET_PARAM_IS_NEON, LWK_RET )
+  IF $LWK_RET == TRUE THEN
+    _BMPMENU_MAKE_LIST( resort_sys_select_13, SEQ_SECRETARY_PC_CHANGE_NEON )	//ネオン
+  ENDIF
+  _BMPMENU_MAKE_LIST( resort_sys_select_10, SEQ_SECRETARY_PC_BYE )	//またね
 
 	//メニュー表示
 	_BMPMENU_START()
@@ -2188,6 +2131,68 @@ sub_secretary_pc_main_menu:
   ENDIF
 }
 _RET
+
+
+//==============================================================
+//サブルーチン：秘書　秘書入れ替え
+//==============================================================
+sub_secretary_sort_sec:
+{
+  _BALLOONWIN_CLOSE()
+
+  _RESORT_CHANGE_OV_TO_SHOP()
+
+  _RESORT_CALL_LIST( RESORT_LIST_TYPE_SORT, RESORT_LIST_SORT_SECRETARY, RESORT_LIST_CAMERA_RECEPTION,LWK_LIST_RET_TYPE, LWK_LIST_RET_PARAM, LWK_LIST_RET_PARAM2, LWK_LIST_RET_IDX, LWK_LIST_RET_PRICE )
+
+  _RESORT_CHANGE_OV_TO_COMMON()
+
+  IF $LWK_LIST_RET_TYPE == TRUE THEN
+    _RESORT_GET_MSGID( RESORT_SECRETARY_SECSORT_MSGID, LWK_MSGID )
+	  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+    _BALLOONWIN_CLOSE()
+ 	  _MAP_FADE_BLACK_OUT_SLOW()
+    _MAP_FADE_END_CHECK()
+    _FIELD_CLOSE()
+	  _FIELD_OPEN()
+
+    _RESORT_RESET_MMDL( RESORT_RESET_MMDL_SECRETARY_ALL )
+
+	  _MAP_FADE_BLACK_IN_SLOW()
+	  _MAP_FADE_END_CHECK()
+    $LWK_MENU_LOOP = FALSE
+  ENDIF
+}
+_RET
+
+
+//==============================================================
+//サブルーチン：秘書　お店入れ替え
+//==============================================================
+sub_secretary_sort_shop:
+{
+  _BALLOONWIN_CLOSE()
+
+  _RESORT_CHANGE_OV_TO_SHOP()
+
+  _RESORT_CALL_LIST( RESORT_LIST_TYPE_SORT, RESORT_LIST_SORT_INSTATITUTION, RESORT_LIST_CAMERA_RECEPTION,LWK_LIST_RET_TYPE, LWK_LIST_RET_PARAM, LWK_LIST_RET_PARAM2, LWK_LIST_RET_IDX, LWK_LIST_RET_PRICE )
+
+  _RESORT_CHANGE_OV_TO_COMMON()
+
+  IF $LWK_LIST_RET_TYPE == TRUE THEN
+    _RESORT_GET_MSGID( RESORT_SECRETARY_SHOPSORT_MSGID, LWK_MSGID )
+	  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+    _BALLOONWIN_CLOSE()
+    _MAP_FADE_BLACK_OUT_SLOW()
+	  _MAP_FADE_END_CHECK()
+	  _FIELD_CLOSE()
+	  _FIELD_OPEN()
+	  _MAP_FADE_BLACK_IN_SLOW()
+	  _MAP_FADE_END_CHECK()
+    $LWK_MENU_LOOP = FALSE
+  ENDIF
+}
+_RET
+
 /**************************************************************/
 /*            秘書  得意なお店用スクリプト                      */
 /**************************************************************/
@@ -2961,8 +2966,6 @@ EVENT_START ev_resort_celeb
     SWITCH $LWK_MENU_RET
     CASE SEQ_CELEB_SPOT THEN         //おすすめスポット
       _CALL sub_tourist_spot
-    CASE SEQ_CELEB_TRADE THEN         //ポケモン交換
-      _CALL sub_celeb_trade
     CASE SEQ_CELEB_BYE THEN          //またね
       _CALL sub_tourist_bye
     DEFAULT
@@ -2986,9 +2989,6 @@ sub_seleb_menu:
 
   _RESORT_GET_MY_DATA( RESORT_MY_PARAM_CELEB_TRADE_FLAG, LWK_RET )
 
-  IF $LWK_RET == FALSE THEN
-	  _BMPMENU_MAKE_LIST_EX( resort_sys_select_48, resort_sys_select_info_11, SEQ_CELEB_TRADE )	    //トレード
-  ENDIF
 	_BMPMENU_MAKE_LIST_EX( resort_sys_select_10, resort_sys_select_info_10, SEQ_CELEB_BYE )	      //またね
 
 	//メニュー表示
@@ -3178,6 +3178,9 @@ EVENT_START ev_reserve_resort_debug
 
   CASE 4 THEN
     $WK_SCENE_C16_PARADE = 1
+
+    _FLAG_SET( SYS_FLAG_BGM_C16_PARADE )
+
     _MAP_CHANGE( ZONE_ID_C16R0101, 8, 8, DIR_DOWN )
     $LWK_MENU_LOOP = FALSE
   DEFAULT

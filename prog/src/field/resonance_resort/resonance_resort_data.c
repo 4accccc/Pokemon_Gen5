@@ -1030,7 +1030,7 @@ static void RESORT_EXTEND6_DATA_GetPhrase( const RESORT_EXTEND6_DATA *cp_data, S
   else
   {
     GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(HEAPID_PROC) );
-    STRBUF *p_strbuf = GFL_MSG_CreateString( p_msg, resort_kutiguse_00+trainerID%10 );
+    STRBUF *p_strbuf = GFL_MSG_CreateString( p_msg, resort_kutiguse_def_00+trainerID%32 );
     GFL_STR_GetStringCode( p_strbuf, p_str, RESORT_PHRASE_LEN+EOM_SIZE );
     GFL_STR_DeleteBuffer( p_strbuf );
     GFL_MSG_Delete( p_msg );
@@ -1093,7 +1093,7 @@ static void RESORT_EXTEND7_DATA_GetThanks( const RESORT_EXTEND7_DATA *cp_data, S
   else
   {
     GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(HEAPID_PROC) );
-    STRBUF *p_strbuf = GFL_MSG_CreateString( p_msg, resort_thanks_00+trainerID%10 );
+    STRBUF *p_strbuf = GFL_MSG_CreateString( p_msg, resort_thanks_def_00+trainerID%32 );
     GFL_STR_GetStringCode( p_strbuf, p_str, RESORT_THANKS_LEN+EOM_SIZE );
     GFL_STR_DeleteBuffer( p_strbuf );
     GFL_MSG_Delete( p_msg );
@@ -2562,7 +2562,7 @@ u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM
   case RESORT_DATA_PARAM_INTRODUCTION:
     {
       GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(HEAPID_PROC) );
-      STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_introduction_00+cp_wk->basic1.trainerID%10 );
+      STRBUF *p_str = GFL_MSG_CreateString( p_msg, resort_introduction_def_00+cp_wk->basic1.trainerID%32 );
       GFL_STR_GetStringCode( p_str, (STRCODE*)p_ret_adrs, GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN+EOM_SIZE );
       GFL_STR_DeleteBuffer( p_str );
       GFL_MSG_Delete( p_msg );

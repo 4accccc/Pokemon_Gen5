@@ -1545,6 +1545,18 @@ static void Resort_Crowd_People_Wk_InitKyoroKyoro( RESORT_CROWD_PEOPLE_WK *p_wk 
 {
   u16 bit_num = RESORT_PEOPLE_GetData( p_wk->p_people, RESORT_DATA_PARAM_EXTEND_NUM, NULL );
 
+  //チュートリアル用の人物はキョロキョロしまくる
+  //→追いつきやすくする対応
+  if( RESORT_PEOPLE_GetPeopleData( p_wk->p_people, RESORT_PEOPLE_DATA_PARAM_TYPE ) == RESORT_PEOPLE_TYPE_PROXY )
+  {
+    u32 type = RESORT_PEOPLE_GetData(p_wk->p_people,RESORT_DATA_PARAM_TYPE,NULL);
+    if( type == RESORT_PROXY_TYPE_TUTORIAL_01
+        || type == RESORT_PROXY_TYPE_TUTORIAL_02 )
+    {
+      bit_num = RESORT_EXTEND_TYPE_MAX;
+    }
+  }
+
   GF_ASSERT(p_wk->move_grid > 0 );
 
   //距離に応じた振り向き回数を出す

@@ -54,12 +54,11 @@
 #define SEQ_SECRETARY_MOVE_POS_BYE    (4)
 
 #define SEQ_SECRETARY_PC_BOX      (0)
-#define SEQ_SECRETARY_PC_BTLBOX   (1)
-#define SEQ_SECRETARY_PC_ITEM     (2)
-#define SEQ_SECRETARY_PC_RECORD   (3)
-#define SEQ_SECRETARY_PC_MAILBOX  (4)
-#define SEQ_SECRETARY_PC_HELP     (5)
-#define SEQ_SECRETARY_PC_BYE      (6)
+#define SEQ_SECRETARY_PC_RANK     (1)
+#define SEQ_SECRETARY_PC_SORT_SEC (2)
+#define SEQ_SECRETARY_PC_SORT_SHOP  (3)
+#define SEQ_SECRETARY_PC_CHANGE_NEON  (4)
+#define SEQ_SECRETARY_PC_BYE      (5)
 
 #define SEQ_SCRETARY_RANK_BYE     (10)
 
@@ -82,9 +81,19 @@
 #define SEQ_INFOMATION_Q05        (5)
 #define SEQ_INFOMATION_Q06        (6)
 #define SEQ_INFOMATION_Q07        (7)
+#define SEQ_INFOMATION_Q08        (8)
+
+#define SEQ_INFOMATION_SHOP_00    (0)
+#define SEQ_INFOMATION_SHOP_01    (1)
+#define SEQ_INFOMATION_SHOP_02    (2)
+#define SEQ_INFOMATION_SHOP_03    (3)
+#define SEQ_INFOMATION_SHOP_04    (4)
+#define SEQ_INFOMATION_SHOP_05    (5)
+#define SEQ_INFOMATION_SHOP_06    (6)
+#define SEQ_INFOMATION_SHOP_07    (7)
+#define SEQ_INFOMATION_SHOP_08    (8)
+#define SEQ_INFOMATION_SHOP_09    (9)
 
 //ƒZƒŒƒu
 #define SEQ_CELEB_SPOT            (0)
-#define SEQ_CELEB_TRADE           (1)
-#define SEQ_CELEB_BYE             (2)
-
+#define SEQ_CELEB_BYE             (1)

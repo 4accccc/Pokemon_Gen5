@@ -2142,6 +2142,9 @@ VMCMD_RESULT EvCmdResortGetMyData( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_MY_PARAM_CELEB_TRADE_FLAG:
     *p_ret_wk = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_CELEB_TRADE_FLAG, NULL );
     break;
+  case RESORT_MY_PARAM_IS_PRIZE_DENDOU:
+    *p_ret_wk = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_PRIZE_DENDOU, NULL );
+    break;
 
   default:
     GF_ASSERT_MSG(0,"%d\n",param);
