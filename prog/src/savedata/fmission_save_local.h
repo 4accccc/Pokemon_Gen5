@@ -17,6 +17,7 @@
 #define FMISSION_SAVE_OPEN_NUM_MAX ( 9999 )
 #define FMISSION_SAVE_ENTRY_NUM_MAX ( 9999 )
 #define FMISSION_SAVE_CLEAR_NUM_MAX ( 9999 )
+#define FMISSION_SAVE_TOP_SCORE_NUM_MAX ( 9999 )
 
 typedef struct _FMISSION_STATUS{
   u8  level:4;      ///<クリアしているミッションレベル(max3bit)
@@ -29,7 +30,9 @@ struct _FMISSION_SAVE{
   u16 open_num;   ///<フェスミッション開催回数
   u16 entry_num;  ///<フェスミッション参加回数
   u16 clear_num;  ///<フェスミッション達成回数
+//  u16 top_score_num;	///<トップスコアを取った回数
   u8 exp[FMISSION_SV_EXP_IDX_MAX];     ///<経験値white&black
+//  u8 max_join_num;  ///<最大参加者数  
 };
 
 

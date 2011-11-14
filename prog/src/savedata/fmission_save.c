@@ -168,6 +168,104 @@ void FMISSION_SAVE_SetMissionClearNum( FMISSION_SAVE* sv, u32 value )
 
 //---------------------------------------------------------------------------
 /**
+ * @brief ミッション最高参加者数を返す	
+ * @param	work		ワークへのポインタ
+ */
+//---------------------------------------------------------------------------
+u8 FMISSION_SAVE_GetMissionMaxJoinNum( FMISSION_SAVE* sv )
+{
+  return 0;
+//  return sv->max_join_num; @TODO
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief ミッション最高参加者数をアップデートする	
+ * @param	work		ワークへのポインタ
+ *
+ * @param entry_num 参加人数、記録より少なければ更新しない
+ */
+//---------------------------------------------------------------------------
+void FMISSION_SAVE_UpdateMissionMaxJoinNum( FMISSION_SAVE* sv, u8 join_num )
+{
+  if( join_num > LINKFEST_JOIN_MAX ){
+    GF_ASSERT(0);
+    return;
+  }
+#if 0 
+  @TODO
+  if( sv->max_join_num < join_num ){
+    sv->max_join_num = join_num;
+  }
+#endif
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief ミッション最高参加者数をセットする	
+ * @param	work		ワークへのポインタ
+ */
+//---------------------------------------------------------------------------
+void FMISSION_SAVE_SetMissionMaxJoinNum( FMISSION_SAVE* sv, u16 join_num )
+{
+#if 0 //@TODO
+  if( join_num <= LINKFEST_JOIN_MAX ){
+    sv->max_join_num = join_num;
+  }
+#endif
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief ミッショントップスコアを取った回数を返す	
+ * @param	work		ワークへのポインタ
+ */
+//---------------------------------------------------------------------------
+u32 FMISSION_SAVE_GetMissionTopScoreNum( FMISSION_SAVE* sv )
+{
+  return 0;
+//  return sv->top_score_num; @TODO
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief ミッショントップスコアを取った回数をアップデートする	
+ * @param	work		ワークへのポインタ
+ *
+ * @param entry_num 参加人数、記録より少なければ更新しない
+ */
+//---------------------------------------------------------------------------
+void FMISSION_SAVE_UpdateMissionTopScoreNum( FMISSION_SAVE* sv, u16 top_num )
+{
+  if( top_num > FMISSION_SAVE_TOP_SCORE_NUM_MAX ){
+    GF_ASSERT(0);
+    return;
+  }
+#if 0
+  @TODO
+  if( sv->top_score_num < top_num ){
+    sv->top_score_num = top_num;
+  }
+#endif
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief ミッショントップスコアを取った回数をセットする	
+ * @param	work		ワークへのポインタ
+ */
+//---------------------------------------------------------------------------
+void FMISSION_SAVE_SetMissionTopScoreNum( FMISSION_SAVE* sv, u16 top_num )
+{
+#if 0 //@TODO
+  if( top_num <= FMISSION_SAVE_TOP_SCORE_NUM_MAX ){
+    sv->top_score_num = top_num;
+  }
+#endif
+}
+
+//---------------------------------------------------------------------------
+/**
  * @brief ミッションステータス ハイスコア(数値)を返す	
  * @param	work		ワークへのポインタ
  */

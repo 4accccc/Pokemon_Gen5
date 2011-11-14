@@ -938,3 +938,14 @@
 #define SCR_FES_ANSWER_YES          (1)   ///<正解
 #define SCR_FES_ANSWER_NO           (2)   ///<不正解
 
+//--------------------------------------------------------------
+//  SYS_WORK WK_SYS_FES_TUTORIAL フェスチュートリアルイベント遷移状態
+//--------------------------------------------------------------
+#define SCR_FES_TUTORIAL_1ST_EVENT        (0)  ///<初回訪問イベント有効
+#define SCR_FES_TUTORIAL_1ST_EVENT_END    (1)  ///<初回訪問イベント終了
+#define SCR_FES_TUTORIAL_MISSION_FAILED   (2)  ///<初回ミッション失敗イベント有効
+#define SCR_FES_TUTORIAL_MISSION_SUCCESS  (3)  ///<初回ミッション成功イベント有効
+#define SCR_FES_TUTORIAL_GPOWER_1ST_GET   (4)  ///<デルパワー初回受け取り待ち(ハイルツリー機能制限でデルパワー受け取りしかできない)
+#define SCR_FES_TUTORIAL_GPOWER_EXP_EVENT (5)  ///<デルパワー使用説明イベント有効
+#define SCR_FES_TUTORIAL_END              (6)  ///<フェスチュートリアル終了
+
