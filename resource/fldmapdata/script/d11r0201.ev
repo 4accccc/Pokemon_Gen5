@@ -10,7 +10,8 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d11r0201.h"
-  //.include  "d11r0201.h"
+  .include  "d11r0201.h"
+  .include  "pair_scr_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体

@@ -35,6 +35,8 @@
 #define TR_WORKER2_32                     16
 #define TR_SCIENTISTM_15                  17
 #define TR_CLEANING_05                    18
+#define D11R0101_SWBOSS_01                19
+#define D11R0101_SWLEADER3_01             20
 
 #endif //ZONE_D11R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d11r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

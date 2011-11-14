@@ -10,7 +10,8 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c03p19.h"
-  //.include  "c03p19.h"
+  .include  "c03p19.h"
+  .include  "pair_scr_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
