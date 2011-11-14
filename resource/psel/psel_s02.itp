@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-10-28T20:17:26" source="psel_s02_012.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-11-14T22:05:48" source="psel_s02_015.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -11,9 +11,9 @@
 <body>
 
 <tex_pattern_info
-	frame_size="400"
+	frame_size="410"
 	tool_start_frame="1"
-	tool_end_frame="400"
+	tool_end_frame="410"
 	compress_material="off" material_size="27 27"
 />
 
