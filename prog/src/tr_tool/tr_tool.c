@@ -788,26 +788,12 @@ static  void  pp_set_param( TrainerID tr_id, POKEMON_PARAM* pp, int form_no, int
   //２：上記の理由からトレーナーデータに性格きめうちも入れる（パワー乱数で調整しきれないとき用に）
   //性格セット
   { 
-    //特定のトレーナーの特定ポケモンの性格を固定にする
-    //レシラム
-    if( ( tr_id == TRID_BOSS_2_06 ) && ( mons_no == MONSNO_650 ) )
-    { 
-      PP_SetSeikaku( pp, PTL_SEIKAKU_YOUKI );
-    }
-    //ゼクロム
-    else if( ( tr_id == TRID_BOSS_2_07 ) && ( mons_no == MONSNO_651 ) )
-    { 
-      PP_SetSeikaku( pp, PTL_SEIKAKU_OKUBYOU );
-    }
-    else
-    { 
-      int rnd = PP_Get( pp, ID_PARA_personal_rnd, NULL );
+    int rnd = PP_Get( pp, ID_PARA_personal_rnd, NULL );
 
-      //下位1バイトは性別のために偏りがあるので、上位24bitで計算する
-      rnd >>= 8;
+    //下位1バイトは性別のために偏りがあるので、上位24bitで計算する
+    rnd >>= 8;
 
-      PP_SetSeikaku( pp, rnd % PTL_SEIKAKU_MAX );
-    }
+    PP_SetSeikaku( pp, rnd % PTL_SEIKAKU_MAX );
   }
 #ifdef SEIKAKU_PRINT
   {
