@@ -18,6 +18,7 @@
 #include "intrude_work.h"
 #include "monolith_snd_def.h"
 #include "field/monolith_tool_notwifi.h"
+#include "savedata/fmission_save.h"
 
 #include "monolith.naix"
 
@@ -455,9 +456,11 @@ static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MON
   STRBUF *strbuf, *expand_strbuf;
   const OCCUPY_INFO *occupy;
   MYSTATUS *myst = MonolithTool_GetMystatus(appwk);
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
+  SAVE_CONTROL_WORK *work = GAMEDATA_GetSaveControlWork( gamedata );
+  FMISSION_SAVE *fsave = SAVEDATA_GetFMissionSave( work );
   u16 size;
-  s32 tmp=9999;
-  
+  u32 num;
   occupy = MonolithTool_GetOccupyInfo(appwk);
   
   strbuf = GFL_STR_CreateBuffer(256, HEAPID_MONOLITH);
@@ -476,8 +479,9 @@ static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MON
     0, 0, strbuf, setup->font_handle);
   
   //開催したミッションの回数
+  num = FMISSION_SAVE_GetMissionOpenNum( fsave );
   GFL_MSG_GetString(setup->mm_monolith, status_mestbl[6], strbuf);
-  WORDSET_RegisterNumber(setup->wordset, 0, tmp, 4, 
+  WORDSET_RegisterNumber(setup->wordset, 0, num, 4, 
     STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
   size = ms_get_strsize( expand_strbuf, setup->font_handle, 1 );	// 右
@@ -492,9 +496,10 @@ static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MON
   PRINT_UTIL_Print(&msw->print_util[BMPWIN_JOIN], setup->printQue, 
     0, 0, strbuf, setup->font_handle);
   
-  //開催したミッションの回数
+  //参加したミッションの回数
+  num = FMISSION_SAVE_GetMissionEntryNum( fsave );
   GFL_MSG_GetString(setup->mm_monolith, status_mestbl[7], strbuf);
-  WORDSET_RegisterNumber(setup->wordset, 0, tmp, 4, 
+  WORDSET_RegisterNumber(setup->wordset, 0, num, 4, 
     STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
   size = ms_get_strsize( expand_strbuf, setup->font_handle, 1 );	// 右
@@ -509,8 +514,9 @@ static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MON
     0, 0, strbuf, setup->font_handle);
   
   //達成したミッションの回数
+  num = FMISSION_SAVE_GetMissionClearNum( fsave );
   GFL_MSG_GetString(setup->mm_monolith, status_mestbl[8], strbuf);
-  WORDSET_RegisterNumber(setup->wordset, 0, tmp, 4, 
+  WORDSET_RegisterNumber(setup->wordset, 0, num, 4, 
     STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
   size = ms_get_strsize( expand_strbuf, setup->font_handle, 1 );	// 右
@@ -525,8 +531,9 @@ static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MON
     0, 0, strbuf, setup->font_handle);
   
   // 参加者数
+  num = FMISSION_SAVE_GetMissionMaxJoinNum( fsave );
   GFL_MSG_GetString(setup->mm_monolith, status_mestbl[9], strbuf);
-  WORDSET_RegisterNumber(setup->wordset, 0, tmp, 4, 
+  WORDSET_RegisterNumber(setup->wordset, 0, num, 4, 
     STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
   size = ms_get_strsize( expand_strbuf, setup->font_handle, 1 );	// 右
@@ -541,8 +548,9 @@ static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MON
     0, 0, strbuf, setup->font_handle);
   
   // トップスコア数
+  num = FMISSION_SAVE_GetMissionTopScoreNum( fsave );
   GFL_MSG_GetString(setup->mm_monolith, status_mestbl[10], strbuf);
-  WORDSET_RegisterNumber(setup->wordset, 0, tmp, 4, 
+  WORDSET_RegisterNumber(setup->wordset, 0, num, 4, 
     STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
   size = ms_get_strsize( expand_strbuf, setup->font_handle, 1 );	// 右

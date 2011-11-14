@@ -83,15 +83,10 @@ static GFL_PROC_RESULT MonolithUpStatusProc_End(
   GFL_PROC * proc, int * seq, void * pwk, void * mywk);
 static void _UpSetup_BGFrameSetting( MONOLITH_UPSTATUS_WORK *msw );
 static void _UpSetup_BGFrameExit( MONOLITH_UPSTATUS_WORK *msw );
-static void _UpSetup_BGGraphicLoad(MONOLITH_SETUP *setup, MONOLITH_UPSTATUS_WORK *msw);
+static void _UpSetup_BGGraphicLoad( MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_UPSTATUS_WORK *msw);
 static void _UpSetup_BmpWin_Create(MONOLITH_SETUP *setup, MONOLITH_UPSTATUS_WORK *msw);
 static void _UpSetup_BmpWin_Exit(MONOLITH_UPSTATUS_WORK *msw);
 static void _UpWrite_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_UPSTATUS_WORK *msw);
-//
-static void _Status_CancelIconCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_UPSTATUS_WORK *msw);
-static void _Status_CancelIconDelete(MONOLITH_UPSTATUS_WORK *msw);
-static void _Status_CancelIconUpdate(MONOLITH_UPSTATUS_WORK *msw);
-
 
 //==============================================================================
 //  データ
@@ -151,10 +146,8 @@ static GFL_PROC_RESULT MonolithUpStatusProc_Init(GFL_PROC * proc, int * seq, voi
     
     //BG
     _UpSetup_BGFrameSetting( msw );
-    _UpSetup_BGGraphicLoad(appwk->setup, msw);
+    _UpSetup_BGGraphicLoad(appwk, appwk->setup, msw);
     _UpSetup_BmpWin_Create(appwk->setup, msw);
-    //OBJ
-    _Status_CancelIconCreate(appwk, msw);
     
     //メッセージ描画
     _UpWrite_Status(appwk, appwk->setup, msw);
@@ -206,7 +199,6 @@ static GFL_PROC_RESULT MonolithUpStatusProc_Main( GFL_PROC * proc, int * seq, vo
   for(i = 0; i < BMPWIN_MAX; i++){
     PRINT_UTIL_Trans(&msw->print_util[i], appwk->setup->printQue);
   }
-  _Status_CancelIconUpdate(msw);
   
   switch(*seq){
   case 0:
@@ -216,11 +208,8 @@ static GFL_PROC_RESULT MonolithUpStatusProc_Main( GFL_PROC * proc, int * seq, vo
       }
     }
     break;
-  case 1:
-    if(MonolithTool_CancelIcon_FlashCheck(&msw->cancel_icon) == FALSE){
-      appwk->next_menu_index = MONOLITH_MENU_TITLE;
-      return GFL_PROC_RES_FINISH;
-    }
+  //
+  default:
     break;
   }
   
@@ -247,9 +236,6 @@ static GFL_PROC_RESULT MonolithUpStatusProc_End( GFL_PROC * proc, int * seq, voi
   }
   
   GFL_DISP_GX_SetVisibleControlDirect(GX_PLANEMASK_BG3);
-  
-  //OBJ
-  _Status_CancelIconDelete(msw);
   
   //BG
   _UpSetup_BmpWin_Exit(msw);
@@ -311,12 +297,15 @@ static void _UpSetup_BGFrameExit( MONOLITH_UPSTATUS_WORK *msw )
  * @param   hdl		アーカイブハンドル
  */
 //--------------------------------------------------------------
-static void _UpSetup_BGGraphicLoad(MONOLITH_SETUP *setup, MONOLITH_UPSTATUS_WORK *msw)
+static void _UpSetup_BGGraphicLoad( MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_UPSTATUS_WORK *msw)
 {
   // データは仮
   GFL_ARCHDL_UTIL_TransVramScreen(setup->hdl, NARC_monolith_mono_bgu_power_lz_NSCR, 
     GFL_BG_FRAME2_M, 0, 0, TRUE, HEAPID_MONOLITH);
   
+  // ゲージ転送
+  MonolithTool_BalanceGaugeRewrite( appwk, BALANCE_GAUGE_UP, GFL_BG_FRAME2_M);
+  //
   GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
   GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
 }
@@ -336,7 +325,6 @@ static void _UpSetup_BmpWin_Create(MONOLITH_SETUP *setup, MONOLITH_UPSTATUS_WORK
   
   frm = GFL_BG_FRAME0_M;
   //タイトル
-//  msw->bmpwin[BMPWIN_TITLE] = GFL_BMPWIN_Create(GFL_BG_FRAME0_S, 
   msw->bmpwin[BMPWIN_TITLE] = GFL_BMPWIN_Create( frm, 
     BMPWIN_POS_TITLE_X, BMPWIN_POS_TITLE_Y, 
     BMPWIN_POS_TITLE_SIZE_X, BMPWIN_POS_TITLE_SIZE_Y, 
@@ -345,7 +333,6 @@ static void _UpSetup_BmpWin_Create(MONOLITH_SETUP *setup, MONOLITH_UPSTATUS_WORK
   GFL_BMPWIN_MakeScreen( msw->bmpwin[BMPWIN_TITLE] );
 
   //レベル合計
-//  msw->bmpwin[BMPWIN_LEVEL] = GFL_BMPWIN_Create(GFL_BG_FRAME0_S, 
   msw->bmpwin[BMPWIN_LEVEL] = GFL_BMPWIN_Create( frm, 
     BMPWIN_POS_LEVEL_X, BMPWIN_POS_LEVEL_Y, 
     BMPWIN_POS_LEVEL_SIZE_X, BMPWIN_POS_LEVEL_SIZE_Y, 
@@ -354,7 +341,6 @@ static void _UpSetup_BmpWin_Create(MONOLITH_SETUP *setup, MONOLITH_UPSTATUS_WORK
   GFL_BMPWIN_MakeScreen( msw->bmpwin[BMPWIN_LEVEL] );
 
   //ブラックとホワイト
-//  msw->bmpwin[BMPWIN_WBLV] = GFL_BMPWIN_Create(GFL_BG_FRAME0_S, 
   msw->bmpwin[BMPWIN_WBLV] = GFL_BMPWIN_Create( frm, 
     BMPWIN_POS_WBLV_X, BMPWIN_POS_WBLV_Y, 
     BMPWIN_POS_WBLV_SIZE_X, BMPWIN_POS_WBLV_SIZE_Y, 
@@ -363,7 +349,6 @@ static void _UpSetup_BmpWin_Create(MONOLITH_SETUP *setup, MONOLITH_UPSTATUS_WORK
   GFL_BMPWIN_MakeScreen( msw->bmpwin[BMPWIN_WBLV] );
 
   //使えるデルパワー
-//  msw->bmpwin[BMPWIN_USE_GPOWER] = GFL_BMPWIN_Create(GFL_BG_FRAME0_S, 
   msw->bmpwin[BMPWIN_USE_GPOWER] = GFL_BMPWIN_Create( frm, 
     BMPWIN_POS_USE_GPOWER_X, BMPWIN_POS_USE_GPOWER_Y, 
     BMPWIN_POS_USE_GPOWER_SIZE_X, BMPWIN_POS_USE_GPOWER_SIZE_Y, 
@@ -374,9 +359,7 @@ static void _UpSetup_BmpWin_Create(MONOLITH_SETUP *setup, MONOLITH_UPSTATUS_WORK
   for(i = 0; i < BMPWIN_MAX; i++){
     PRINT_UTIL_Setup(&msw->print_util[i], msw->bmpwin[i]);
   }
-  
-//	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
-	GFL_BG_LoadScreenReq( frm );
+  GFL_BG_LoadScreenReq( frm );
 }
 
 //--------------------------------------------------------------
@@ -457,42 +440,5 @@ static void _UpWrite_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, M
   
   GFL_STR_DeleteBuffer(strbuf);
   GFL_STR_DeleteBuffer(expand_strbuf);
-}
-
-//==================================================================
-/**
- * キャンセルアイコン生成
- *
- * @param   appwk		
- * @param   msw		
- */
-//==================================================================
-static void _Status_CancelIconCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_UPSTATUS_WORK *msw)
-{
-  MonolithTool_CancelIcon_Create(appwk->setup, &msw->cancel_icon);
-}
-
-//==================================================================
-/**
- * キャンセルアイコン削除
- *
- * @param   msw		
- */
-//==================================================================
-static void _Status_CancelIconDelete(MONOLITH_UPSTATUS_WORK *msw)
-{
-  MonolithTool_CancelIcon_Delete(&msw->cancel_icon);
-}
-
-//==================================================================
-/**
- * キャンセルアイコン更新処理
- *
- * @param   msw		
- */
-//==================================================================
-static void _Status_CancelIconUpdate(MONOLITH_UPSTATUS_WORK *msw)
-{
-  MonolithTool_CancelIcon_Update(&msw->cancel_icon);
 }
 

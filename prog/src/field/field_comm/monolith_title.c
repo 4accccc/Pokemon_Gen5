@@ -21,7 +21,9 @@
 #include "field/eventwork.h"
 #include "../../../../resource/fldmapdata/flagwork/flag_define.h" //SYS_FLAG_
 #include "intrude_work.h"
-
+//
+#include "field/script_def.h"
+#include "../../../../resource/fldmapdata/flagwork/work_define.h" //WK_SYS_FES_TUTORIAL
 
 //==============================================================================
 //  定数定義
@@ -706,6 +708,23 @@ static s32 mt_chk_input( MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *mtw )
 //--------------------------------------------------------------
 static void mt_init( MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *mtw )
 {
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( appwk->parent->gsys );
+  EVENTWORK	*ev = GAMEDATA_GetEventWork( gamedata );
+  BOOL	bflg;
+  u16	*adr;
+  
+  // チュートリアル中かどうか
+  bflg = EVENTWORK_CheckEventFlag( ev, SYS_FLAG_FES_TUTORIAL_CLEAR );
+  if(bflg == FALSE){
+    mtw->Mode = MODE_TUTORIAL;
+  }
+  // デルパワーチュートリアル中かどうか
+  adr = EVENTWORK_GetEventWorkAdrs( ev,  WK_SYS_FES_TUTORIAL );
+  if(*adr == SCR_FES_TUTORIAL_GPOWER_1ST_GET){
+    mtw->Mode = MODE_GPOWER;
+  }
+  
+  
   // 初期化をまとめて行う
 #ifdef PM_DEBUG
   // Lを押しながら..
