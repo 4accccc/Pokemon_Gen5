@@ -1222,10 +1222,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>技マシンのリスト表示をするときに番号と技名を
-表示するための文字列</Comment>
+表示するための文字列
+
+SWAN追加</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-14T06:58:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1234,6 +1236,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="mes_shop_10_01"
@@ -1267,10 +1276,12 @@
 			<Comment>わざおしえでわざを選択したとき
 0：技の名前
 1：道具名　かけら
-2：コスト</Comment>
+2：コスト
+
+SWAN追加</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-06-30T10:17:35" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-14T06:58:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1279,6 +1290,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="mes_shop_10_02"
@@ -1307,10 +1325,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>わざおしえでリストにかけら個数を表示する時の文字列</Comment>
+			<Comment>わざおしえでリストにかけら個数を表示する時の文字列
+
+SWAN追加</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-06-30T09:20:49" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-14T06:58:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1319,6 +1339,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="mes_shop_10_03"
@@ -1347,10 +1374,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>わざおしえショップで、かけらが足りないとき</Comment>
+			<Comment>わざおしえショップで、かけらが足りないとき
+
+SWAN追加</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-07-01T03:35:30" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-14T06:58:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1359,6 +1388,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="mes_shop_10_04"
@@ -1389,10 +1425,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>わざおしえショップで、技をえらんだとき</Comment>
+			<Comment>わざおしえショップで、技をえらんだとき
+
+SWAN追加</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-07-01T03:35:23" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-14T06:58:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1401,6 +1439,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="mes_shop_10_05"
@@ -1429,10 +1474,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>わざおしえの時に左上に表示する残りかけら数</Comment>
+			<Comment>わざおしえの時に左上に表示する残りかけら数
+
+SWAN追加</Comment>
 			<CommentModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-06-30T09:33:27" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-14T06:58:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1441,5 +1488,12 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>
