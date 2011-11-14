@@ -165,7 +165,7 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 	},
 	{ // No.039 HAKAIM1♂プラズマだん
 		 39,PTL_SEX_MALE,
-		SEQ_BGM_EYE_PLASMA
+		SEQ_BGM_EYE_01
 	},
 	{ // No.040 BOSS♂ポケモントレーナー
 		 40,PTL_SEX_MALE,
@@ -317,7 +317,7 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 	},
 	{ // No.077 HAKAIW1♀プラズマだん
 		 76,PTL_SEX_FEMALE,
-		SEQ_BGM_EYE_PLASMA
+		SEQ_BGM_EYE_01
 	},
 	{ // No.078 BIGFOUR1♀してんのう
 		 77,PTL_SEX_FEMALE,
@@ -385,15 +385,15 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 	},
 	{ // No.094 VETERANW_1♀ブルジョワールけ
 		 70,PTL_SEX_FEMALE,
-		SEQ_BGM_EYE_04
+		SEQ_BGM_EYE_01
 	},
 	{ // No.095 MADAM_1♀ブルジョワールけ
 		 74,PTL_SEX_FEMALE,
-		SEQ_BGM_EYE_13
+		SEQ_BGM_EYE_01
 	},
 	{ // No.096 GENTLE_1♂ブルジョワールけ
 		 75,PTL_SEX_MALE,
-		SEQ_BGM_EYE_13
+		SEQ_BGM_EYE_01
 	},
 	{ // No.097 VETERANM_1♂ゲームフリーク
 		 69,PTL_SEX_MALE,
@@ -401,7 +401,7 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 	},
 	{ // No.098 PRINCESS_1♀ブルジョワールけ
 		 42,PTL_SEX_FEMALE,
-		SEQ_BGM_EYE_02
+		SEQ_BGM_EYE_01
 	},
 	{ // No.099 PRINCE_1♂ブルジョワールけ
 		 41,PTL_SEX_MALE,
