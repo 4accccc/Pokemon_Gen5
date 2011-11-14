@@ -37,13 +37,22 @@
 //#define DEBUG_DUMP_TEXVRAM      // デバッグボタンを押すとTEX-VRAMのデバッグプリントが出る
 
 #ifdef DEBUG_ONLY_FOR_yoshida
-#define DEBUG_BG_ANIME_CHANGE   // デバッグボタンを押すと背景アニメが切り替わる
+#define DEBUG_BG_ANIME_CHANGE   // Xボタンを押すと背景アニメが切り替わる
+#endif
+#ifdef DEBUG_ONLY_FOR_mizutani_megumi
+#define DEBUG_BG_ANIME_CHANGE   // Xボタンを押すと背景アニメが切り替わる
+#endif
+#ifdef DEBUG_ONLY_FOR_kawamoto_yuki
+#define DEBUG_BG_ANIME_CHANGE   // Xボタンを押すと背景アニメが切り替わる
+#endif
+#ifdef DEBUG_ONLY_FOR_ohtani_mayo
+#define DEBUG_BG_ANIME_CHANGE   // Xボタンを押すと背景アニメが切り替わる
 #endif
 #ifdef DEBUG_ONLY_FOR_toyama
-#define DEBUG_BG_ANIME_CHANGE   // デバッグボタンを押すと背景アニメが切り替わる
+#define DEBUG_BG_ANIME_CHANGE   // Xボタンを押すと背景アニメが切り替わる
 #endif
 #ifdef DEBUG_ONLY_FOR_mori
-#define DEBUG_BG_ANIME_CHANGE   // デバッグボタンを押すと背景アニメが切り替わる
+#define DEBUG_BG_ANIME_CHANGE   // Xボタンを押すと背景アニメが切り替わる
 #endif
 //============================================================================================
 /**
