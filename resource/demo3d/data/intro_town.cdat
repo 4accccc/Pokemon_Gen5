@@ -128,12 +128,11 @@ static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town_hito[] = {
 
 static const u16 res_intro_town_file_intro_town03sp[] = {
  NARC_data_demo3d_intro_town03sp_nsbmd,
- NARC_data_demo3d_intro_town03sp_nsbtp,
- NARC_data_demo3d_intro_town03sp_nsbta,
+ NARC_data_demo3d_intro_town03_ita_nsbta,
 };
 
 static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town03sp[] = {
- { res_intro_town_file_intro_town03sp, 3 },
+ { res_intro_town_file_intro_town03sp, 2 },
 };
 
 ///==================================
@@ -141,12 +140,11 @@ static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town03sp[] = {
 
 static const u16 res_intro_town_file_intro_town03su[] = {
  NARC_data_demo3d_intro_town03su_nsbmd,
- NARC_data_demo3d_intro_town03su_nsbtp,
- NARC_data_demo3d_intro_town03su_nsbta,
+ NARC_data_demo3d_intro_town03_ita_nsbta,
 };
 
 static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town03su[] = {
- { res_intro_town_file_intro_town03su, 3 },
+ { res_intro_town_file_intro_town03su, 2 },
 };
 
 ///==================================
@@ -154,12 +152,11 @@ static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town03su[] = {
 
 static const u16 res_intro_town_file_intro_town03au[] = {
  NARC_data_demo3d_intro_town03au_nsbmd,
- NARC_data_demo3d_intro_town03au_nsbtp,
- NARC_data_demo3d_intro_town03au_nsbta,
+ NARC_data_demo3d_intro_town03_ita_nsbta,
 };
 
 static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town03au[] = {
- { res_intro_town_file_intro_town03au, 3 },
+ { res_intro_town_file_intro_town03au, 2 },
 };
 
 ///==================================
@@ -167,12 +164,11 @@ static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town03au[] = {
 
 static const u16 res_intro_town_file_intro_town03wi[] = {
  NARC_data_demo3d_intro_town03wi_nsbmd,
- NARC_data_demo3d_intro_town03wi_nsbtp,
- NARC_data_demo3d_intro_town03wi_nsbta,
+ NARC_data_demo3d_intro_town03_ita_nsbta,
 };
 
 static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town03wi[] = {
- { res_intro_town_file_intro_town03wi, 3 },
+ { res_intro_town_file_intro_town03wi, 2 },
 };
 
 ///==================================
