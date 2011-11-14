@@ -8,10 +8,10 @@
 			Language="JPN">
 			<Text>ノーマル　タイプか……▼
 かくとう　タイプの
-こうげきに　よわいよ▼</Text>
+こうげきだけが　にがて　だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:56:13" />
+				Time="2011-11-14T07:40:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -21,10 +21,10 @@
 			Language="JPN_KANJI">
 			<Text>ノーマル　タイプか……▼
 かくとう　タイプの
-攻撃に　弱いよ▼</Text>
+攻撃だけが　苦手だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:56:14" />
+				Time="2011-11-14T07:35:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -231,10 +231,12 @@
 			<Text>ノーマル　いわ　タイプか……▼
 じめん　はがね　みず
 くさ　かくとう　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:56:37" />
+				Time="2011-11-14T07:56:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -245,10 +247,12 @@
 			<Text>ノーマル　いわ　タイプか……▼
 じめん　はがね　みず
 くさ　かくとう　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:56:39" />
+				Time="2011-11-14T07:56:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -320,10 +324,10 @@
 			Language="JPN">
 			<Text>ノーマル　ゴースト　タイプか……▼
 あく　タイプの
-こうげきに　よわいよ▼</Text>
+こうげきだけが　にがて　だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:56:47" />
+				Time="2011-11-14T07:35:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -333,10 +337,10 @@
 			Language="JPN_KANJI">
 			<Text>ノーマル　ゴースト　タイプか……▼
 あく　タイプの
-攻撃に　弱いよ▼</Text>
+攻撃だけが　苦手だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:56:47" />
+				Time="2011-11-14T07:35:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -499,10 +503,12 @@
 			<Text>ノーマル　くさ　タイプか……▼
 かくとう　ひこう　どく
 むし　ほのお　こおり　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:57:08" />
+				Time="2011-11-14T07:56:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -513,10 +519,12 @@
 			<Text>ノーマル　くさ　タイプか……▼
 かくとう　ひこう　どく
 むし　ほのお　こおり　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:57:09" />
+				Time="2011-11-14T07:56:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -901,10 +909,12 @@
 			<Text>かくとう　じめん　タイプか……▼
 ひこう　みず　くさ
 エスパー　こおり　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:57:47" />
+				Time="2011-11-14T07:56:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -915,10 +925,12 @@
 			<Text>かくとう　じめん　タイプか……▼
 ひこう　みず　くさ
 エスパー　こおり　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:57:48" />
+				Time="2011-11-14T07:56:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -947,10 +959,12 @@
 			<Text>かくとう　いわ　タイプか……▼
 かくとう　じめん　はがね
 みず　くさ　エスパー　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:57:51" />
+				Time="2011-11-14T07:57:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -961,10 +975,12 @@
 			<Text>かくとう　いわ　タイプか……▼
 かくとう　じめん　はがね
 みず　くさ　エスパー　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:57:52" />
+				Time="2011-11-14T07:57:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1217,10 +1233,12 @@
 			<Text>かくとう　くさ　タイプか……▼
 どく　ほのお　エスパー
 こおり　ひこう　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:58:18" />
+				Time="2011-11-14T07:57:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1231,10 +1249,12 @@
 			<Text>かくとう　くさ　タイプか……▼
 どく　ほのお　エスパー
 こおり　ひこう　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:58:19" />
+				Time="2011-11-14T07:57:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1351,10 +1371,12 @@
 			<Text>かくとう　こおり　タイプか……▼
 かくとう　ひこう　はがね
 ほのお　エスパー　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:58:35" />
+				Time="2011-11-14T07:58:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1365,10 +1387,12 @@
 			<Text>かくとう　こおり　タイプか……▼
 かくとう　ひこう　はがね
 ほのお　エスパー　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:58:36" />
+				Time="2011-11-14T07:58:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1621,10 +1645,12 @@
 			<Text>ひこう　いわ　タイプか……▼
 いわ　はがね　みず
 でんき　こおり　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:58:56" />
+				Time="2011-11-14T07:58:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1635,10 +1661,12 @@
 			<Text>ひこう　いわ　タイプか……▼
 いわ　はがね　みず
 でんき　こおり　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:58:57" />
+				Time="2011-11-14T07:58:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1667,10 +1695,12 @@
 			<Text>ひこう　むし　タイプか……▼
 ひこう　ほのお　でんき
 こおり　いわ　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:59:00" />
+				Time="2011-11-14T07:58:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1681,10 +1711,12 @@
 			<Text>ひこう　むし　タイプか……▼
 ひこう　ほのお　でんき
 こおり　いわ　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:59:02" />
+				Time="2011-11-14T07:58:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1713,10 +1745,12 @@
 			<Text>ひこう　ゴースト　タイプか……▼
 いわ　ゴースト　でんき
 こおり　あく　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:59:06" />
+				Time="2011-11-14T07:58:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1727,10 +1761,12 @@
 			<Text>ひこう　ゴースト　タイプか……▼
 いわ　ゴースト　でんき
 こおり　あく　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:59:07" />
+				Time="2011-11-14T07:58:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1891,10 +1927,12 @@
 			<Text>ひこう　くさ　タイプか……▼
 ひこう　どく　いわ
 ほのお　こおり　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:59:23" />
+				Time="2011-11-14T07:58:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1905,10 +1943,12 @@
 			<Text>ひこう　くさ　タイプか……▼
 ひこう　どく　いわ
 ほのお　こおり　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:59:24" />
+				Time="2011-11-14T07:58:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1981,10 +2021,12 @@
 			<Text>ひこう　エスパー　タイプか……▼
 いわ　ゴースト　でんき
 こおり　あく　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:59:31" />
+				Time="2011-11-14T07:59:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1995,10 +2037,12 @@
 			<Text>ひこう　エスパー　タイプか……▼
 いわ　ゴースト　でんき
 こおり　あく　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T06:59:32" />
+				Time="2011-11-14T07:59:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2346,7 +2390,7 @@
 こうげきに　よわいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:00:09" />
+				Time="2011-11-14T07:38:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2526,7 +2570,7 @@
 こうげきに　よわいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:00:28" />
+				Time="2011-11-14T07:38:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2657,10 +2701,12 @@
 			<Text>どく　こおり　タイプか……▼
 じめん　いわ　はがね
 ほのお　エスパー　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:00:41" />
+				Time="2011-11-14T07:59:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2671,10 +2717,12 @@
 			<Text>どく　こおり　タイプか……▼
 じめん　いわ　はがね
 ほのお　エスパー　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:00:42" />
+				Time="2011-11-14T07:59:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2748,10 +2796,10 @@
 			Language="JPN">
 			<Text>どく　あく　タイプか……▼
 じめん　タイプの
-こうげきに　よわいよ▼</Text>
+こうげきだけが　にがて　だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:00:49" />
+				Time="2011-11-14T07:38:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2761,10 +2809,10 @@
 			Language="JPN_KANJI">
 			<Text>どく　あく　タイプか……▼
 じめん　タイプの
-攻撃に　弱いよ▼</Text>
+攻撃だけが　苦手だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:00:50" />
+				Time="2011-11-14T07:38:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2837,10 +2885,12 @@
 			<Text>じめん　いわ　タイプか……▼
 かくとう　じめん　はがね
 こおり　みず　くさ　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:00:56" />
+				Time="2011-11-14T08:00:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2851,10 +2901,12 @@
 			<Text>じめん　いわ　タイプか……▼
 かくとう　じめん　はがね
 こおり　みず　くさ　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:00:57" />
+				Time="2011-11-14T08:00:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2929,10 +2981,12 @@
 			<Text>じめん　ゴースト　タイプか……▼
 ゴースト　みず　くさ
 こおり　あく　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:01:05" />
+				Time="2011-11-14T08:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2943,10 +2997,12 @@
 			<Text>じめん　ゴースト　タイプか……▼
 ゴースト　みず　くさ
 こおり　あく　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:01:06" />
+				Time="2011-11-14T08:00:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3064,10 +3120,10 @@
 			Language="JPN">
 			<Text>じめん　みず　タイプか……▼
 くさ　タイプの
-こうげきに　よわいよ▼</Text>
+こうげきだけが　にがて　だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:01:19" />
+				Time="2011-11-14T07:38:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3077,10 +3133,10 @@
 			Language="JPN_KANJI">
 			<Text>じめん　みず　タイプか……▼
 くさ　タイプの
-攻撃に　弱いよ▼</Text>
+攻撃だけが　苦手だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:01:18" />
+				Time="2011-11-14T07:38:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3201,10 +3257,12 @@
 			<Text>じめん　エスパー　タイプか……▼
 むし　ゴースト　みず
 くさ　こおり　あく　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:01:31" />
+				Time="2011-11-14T08:00:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3215,10 +3273,12 @@
 			<Text>じめん　エスパー　タイプか……▼
 むし　ゴースト　みず
 くさ　こおり　あく　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:01:32" />
+				Time="2011-11-14T08:00:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3247,10 +3307,12 @@
 			<Text>じめん　こおり　タイプか……▼
 かくとう　はがね　みず
 ほのお　くさ　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:01:35" />
+				Time="2011-11-14T08:00:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3261,10 +3323,12 @@
 			<Text>じめん　こおり　タイプか……▼
 かくとう　はがね　みず
 ほのお　くさ　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:01:36" />
+				Time="2011-11-14T08:00:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3337,10 +3401,12 @@
 			<Text>じめん　あく　タイプか……▼
 かくとう　むし　みず
 くさ　こおり　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:01:47" />
+				Time="2011-11-14T08:00:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3351,10 +3417,12 @@
 			<Text>じめん　あく　タイプか……▼
 かくとう　むし　みず
 くさ　こおり　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:01:48" />
+				Time="2011-11-14T08:00:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3383,10 +3451,12 @@
 			<Text>いわ　タイプか……▼
 かくとう　じめん　はがね
 みず　くさ　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:01:50" />
+				Time="2011-11-14T08:23:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3397,10 +3467,12 @@
 			<Text>いわ　タイプか……▼
 かくとう　じめん　はがね
 みず　くさ　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:01:51" />
+				Time="2011-11-14T08:23:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3975,10 +4047,12 @@
 			<Text>むし　ゴースト　タイプか……▼
 ひこう　いわ　ゴースト
 ほのお　あく　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:02:42" />
+				Time="2011-11-14T08:24:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3989,10 +4063,12 @@
 			<Text>むし　ゴースト　タイプか……▼
 ひこう　いわ　ゴースト
 ほのお　あく　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:02:42" />
+				Time="2011-11-14T08:24:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4020,10 +4096,10 @@
 			Language="JPN">
 			<Text>むし　はがね　タイプか……▼
 ほのお　タイプの
-こうげきに　よわいよ▼</Text>
+こうげきだけが　にがて　だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:02:44" />
+				Time="2011-11-14T07:39:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4033,10 +4109,10 @@
 			Language="JPN_KANJI">
 			<Text>むし　はがね　タイプか……▼
 ほのお　タイプの
-攻撃に　弱いよ▼</Text>
+攻撃だけが　苦手だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:02:45" />
+				Time="2011-11-14T07:39:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4153,10 +4229,12 @@
 			<Text>むし　くさ　タイプか……▼
 どく　いわ　むし
 こおり　ひこう　ほのお　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:02:52" />
+				Time="2011-11-14T08:24:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4167,10 +4245,12 @@
 			<Text>むし　くさ　タイプか……▼
 どく　いわ　むし
 こおり　ひこう　ほのお　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:02:53" />
+				Time="2011-11-14T08:24:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4243,10 +4323,12 @@
 			<Text>むし　エスパー　タイプか……▼
 ひこう　いわ　むし
 ゴースト　ほのお　あく　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:02:58" />
+				Time="2011-11-14T08:24:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4257,10 +4339,12 @@
 			<Text>むし　エスパー　タイプか……▼
 ひこう　いわ　むし
 ゴースト　ほのお　あく　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:02:58" />
+				Time="2011-11-14T08:24:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4292,7 +4376,7 @@
 こうげきに　よわいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:03:00" />
+				Time="2011-11-14T08:24:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4515,10 +4599,12 @@
 			<Text>ゴースト　ほのお　タイプか……▼
 じめん　いわ　ゴースト
 みず　あく　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:03:15" />
+				Time="2011-11-14T08:25:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4529,10 +4615,12 @@
 			<Text>ゴースト　ほのお　タイプか……▼
 じめん　いわ　ゴースト
 みず　あく　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:03:15" />
+				Time="2011-11-14T08:25:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4607,10 +4695,12 @@
 			<Text>ゴースト　くさ　タイプか……▼
 ひこう　ゴースト　ほのお
 こおり　あく　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:03:21" />
+				Time="2011-11-14T08:25:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4621,10 +4711,12 @@
 			<Text>ゴースト　くさ　タイプか……▼
 ひこう　ゴースト　ほのお
 こおり　あく　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:03:22" />
+				Time="2011-11-14T08:25:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4741,10 +4833,12 @@
 			<Text>ゴースト　こおり　タイプか……▼
 いわ　ゴースト　はがね
 ほのお　あく　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:03:31" />
+				Time="2011-11-14T08:25:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4755,10 +4849,12 @@
 			<Text>ゴースト　こおり　タイプか……▼
 いわ　ゴースト　はがね
 ほのお　あく　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:03:32" />
+				Time="2011-11-14T08:25:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4831,11 +4927,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ゴースト　あく　タイプか……▼
-じゃくてんのない
+じゃくてんの　ない
 めずらしい　タイプだね▼</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-09-02T04:41:43" />
+				User="matsumiya:W00224"
+				Time="2011-11-14T07:39:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4844,11 +4940,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ゴースト　あく　タイプか……▼
-じゃくてんのない
+弱点の　ない
 めずらしい　タイプだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T10:16:53" />
+				Time="2011-11-14T07:39:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5449,10 +5545,12 @@
 			<Text>ほのお　エスパー　タイプか……▼
 じめん　いわ　ゴースト
 みず　あく　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:04:18" />
+				Time="2011-11-14T08:25:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5463,10 +5561,12 @@
 			<Text>ほのお　エスパー　タイプか……▼
 じめん　いわ　ゴースト
 みず　あく　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:04:18" />
+				Time="2011-11-14T08:25:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5763,10 +5863,12 @@
 			<Text>みず　エスパー　タイプか……▼
 むし　ゴースト　くさ
 でんき　あく　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:04:37" />
+				Time="2011-11-14T08:26:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5777,10 +5879,12 @@
 			<Text>みず　エスパー　タイプか……▼
 むし　ゴースト　くさ
 でんき　あく　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:04:37" />
+				Time="2011-11-14T08:26:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5945,10 +6049,12 @@
 			<Text>くさ　タイプか……▼
 ひこう　どく　むし
 ほのお　こおり　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:04:48" />
+				Time="2011-11-14T08:27:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5959,10 +6065,12 @@
 			<Text>くさ　タイプか……▼
 ひこう　どく　むし
 ほのお　こおり　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:04:48" />
+				Time="2011-11-14T08:26:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6037,10 +6145,12 @@
 			<Text>くさ　エスパー　タイプか……▼
 ひこう　どく　ゴースト
 ほのお　こおり　あく　むし　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:04:53" />
+				Time="2011-11-14T08:27:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6051,10 +6161,12 @@
 			<Text>くさ　エスパー　タイプか……▼
 ひこう　どく　ゴースト
 ほのお　こおり　あく　むし　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:04:53" />
+				Time="2011-11-14T08:27:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6083,10 +6195,12 @@
 			<Text>くさ　こおり　タイプか……▼
 かくとう　ひこう　どく
 いわ　むし　はがね　ほのお　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:04:56" />
+				Time="2011-11-14T08:27:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6097,10 +6211,12 @@
 			<Text>くさ　こおり　タイプか……▼
 かくとう　ひこう　どく
 いわ　むし　はがね　ほのお　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:04:57" />
+				Time="2011-11-14T08:27:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6129,10 +6245,12 @@
 			<Text>くさ　ドラゴン　タイプか……▼
 ひこう　どく　むし
 ドラゴン　こおり　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:04:59" />
+				Time="2011-11-14T08:27:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6143,10 +6261,12 @@
 			<Text>くさ　ドラゴン　タイプか……▼
 ひこう　どく　むし
 ドラゴン　こおり　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:05:00" />
+				Time="2011-11-14T08:27:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6175,10 +6295,12 @@
 			<Text>くさ　あく　タイプか……▼
 かくとう　ひこう　どく
 ほのお　こおり　むし　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:05:02" />
+				Time="2011-11-14T08:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6189,10 +6311,12 @@
 			<Text>くさ　あく　タイプか……▼
 かくとう　ひこう　どく
 ほのお　こおり　むし　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:05:02" />
+				Time="2011-11-14T08:27:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6220,10 +6344,10 @@
 			Language="JPN">
 			<Text>でんき　タイプか……▼
 じめん　タイプの
-こうげきに　よわいよ▼</Text>
+こうげきだけが　にがて　だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:05:05" />
+				Time="2011-11-14T07:40:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6233,10 +6357,10 @@
 			Language="JPN_KANJI">
 			<Text>でんき　タイプか……▼
 じめん　タイプの
-攻撃に　弱いよ▼</Text>
+攻撃だけが　苦手だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:05:05" />
+				Time="2011-11-14T07:40:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6489,10 +6613,12 @@
 			<Text>エスパー　こおり　タイプか……▼
 いわ　むし　ゴースト
 はがね　ほのお　あく　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:05:21" />
+				Time="2011-11-14T08:28:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6503,10 +6629,12 @@
 			<Text>エスパー　こおり　タイプか……▼
 いわ　むし　ゴースト
 はがね　ほのお　あく　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:05:21" />
+				Time="2011-11-14T08:28:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6535,10 +6663,12 @@
 			<Text>エスパー　ドラゴン　タイプか……▼
 むし　ゴースト　こおり
 ドラゴン　あく　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:05:23" />
+				Time="2011-11-14T08:28:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6549,10 +6679,12 @@
 			<Text>エスパー　ドラゴン　タイプか……▼
 むし　ゴースト　こおり
 ドラゴン　あく　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:05:24" />
+				Time="2011-11-14T08:28:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6580,10 +6712,10 @@
 			Language="JPN">
 			<Text>エスパー　あく　タイプか……▼
 むし　タイプの
-こうげきに　よわいよ▼</Text>
+こうげきだけが　にがて　だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:05:26" />
+				Time="2011-11-14T07:40:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6593,10 +6725,10 @@
 			Language="JPN_KANJI">
 			<Text>エスパー　あく　タイプか……▼
 むし　タイプの
-攻撃に　弱いよ▼</Text>
+攻撃だけが　苦手だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:05:27" />
+				Time="2011-11-14T07:40:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6717,10 +6849,12 @@
 			<Text>こおり　あく　タイプか……▼
 いわ　むし　はがね
 ほのお　かくとう　タイプの▽
-こうげきに　よわいよ▼</Text>
+こうげきに　よわいんだよね▼
+あいしょうの　わるい　タイプが
+おおいから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:05:41" />
+				Time="2011-11-14T08:28:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6731,10 +6865,12 @@
 			<Text>こおり　あく　タイプか……▼
 いわ　むし　はがね
 ほのお　かくとう　タイプの▽
-攻撃に　弱いよ▼</Text>
+攻撃に　弱いんだよね▼
+相性の　悪い　タイプが
+多いから　トレーナーが　カバーだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:05:42" />
+				Time="2011-11-14T08:28:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6855,7 +6991,7 @@
 こうげきに　よわいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:05:49" />
+				Time="2011-11-14T07:40:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6868,7 +7004,7 @@
 攻撃に　弱いよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T07:05:53" />
+				Time="2011-11-14T08:28:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
