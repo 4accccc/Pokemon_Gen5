@@ -34,7 +34,9 @@ enum {
 	NARC_pkwd_poster_pkwd_title10_poster_NCLR = 20,
 	NARC_pkwd_poster_pkwd_title10_poster_bin = 21,
 	NARC_pkwd_poster_pkwd_title11_poster_NCLR = 22,
-	NARC_pkwd_poster_pkwd_title11_poster_bin = 23
+	NARC_pkwd_poster_pkwd_title11_poster_bin = 23,
+	NARC_pkwd_poster_pkwd_title12_poster_NCLR = 24,
+	NARC_pkwd_poster_pkwd_title12_poster_bin = 25
 };
 
 /* NARC_PKWD_POSTER_NAIX_ */
