@@ -184,10 +184,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>こどもは　わたしの　せんせい
+ポケモンは　あなたの　せんせい▽
+いろんなことを　おしえてくれるもの</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-18T06:10:04" />
+				Time="2011-11-14T02:42:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -195,10 +197,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>こどもは　わたしの　先生
+ポケモンは　あなたの　先生▽
+いろんなことを　教えてくれるもの</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-18T06:10:11" />
+				Time="2011-11-14T02:42:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -225,10 +229,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>ショップの　おにいさんと　おねえさん
+うってくれる　ものが　ちがうんだよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-18T06:10:14" />
+				Time="2011-11-14T02:51:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -236,10 +241,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>ショップの　おにいさんと　おねえさん
+うってくれる　ものが　ちがうんだよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-18T06:10:14" />
+				Time="2011-11-14T02:51:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -266,10 +272,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>むしよけスプレーを　つかうと
+やせいの　ポケモンは　でてこないの！▽
+あなた　ごぞんじ　でした？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-18T06:10:14" />
+				Time="2011-11-14T02:37:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -277,10 +285,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>むしよけスプレーを　つかうと
+やせいの　ポケモンは　でてこないの！▽
+あなた　ごぞんじ　でした？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-18T06:10:14" />
+				Time="2011-11-14T02:37:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -307,10 +317,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>たたかうとき　とびだすのは
+リストの　ひだりうえの　ポケモン！▼
+って　どーゆーこと？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-18T06:10:14" />
+				Time="2011-11-14T02:34:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -318,10 +330,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>たたかうとき　とびだすのは
+リストの　ひだりうえの　ポケモン！▼
+って　どーゆーこと？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-18T06:10:14" />
+				Time="2011-11-14T02:34:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

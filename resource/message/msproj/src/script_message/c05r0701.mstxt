@@ -118,10 +118,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>ポケモンワールドトーナメント
+かいじょうは　このさき　でーす！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T03:02:05" />
+				Time="2011-11-14T02:55:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -129,10 +130,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>ポケモンワールドトーナメント
+会場は　この先でーす！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T03:02:16" />
+				Time="2011-11-14T02:55:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -167,10 +169,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>きいたか？　トーナメントに　かちぬけば
+ＢＰが　もらえる！　ＢＰを　ためれば▽
+いいものを　こうかん　できるって！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T03:02:17" />
+				Time="2011-11-14T02:53:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -178,10 +182,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>きいたか？　トーナメントに　勝ち抜けば
+ＢＰが　もらえる！　ＢＰを　貯めれば▽
+いい道具を　交換できるって！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T03:02:17" />
+				Time="2011-11-14T02:53:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -203,16 +203,16 @@
 			Language="JPN">
 			<Text>すてきな　トレーナーさん
 いいことを　おしえてあげる▼
-トレーナーとの　しょうぶの　とき
+トレーナーとの　しょうぶで
 ポケモンに　もたせた　どうぐを▽
-とられたりしても　あんしん　してね▼
+とられても　だいじょうぶ！▼
 しょうぶが　おわれば
 きちんと　かえしてもらえるわ▼
-……だけど　つかうと　なくなる
-どうぐは　どこかに　いっちゃうみたい</Text>
+……つかうと　なくなる　どうぐは
+どこかに　いっちゃうみたいだけどね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-14T02:31:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -222,16 +222,16 @@
 			Language="JPN_KANJI">
 			<Text>すてきな　トレーナーさん
 いいことを　教えてあげる▼
-トレーナーとの　勝負の　とき
+トレーナーとの　勝負で
 ポケモンに　持たせた　道具を▽
-とられたりしても　安心してね▼
+とられても　大丈夫！▼
 勝負が　終われば
 きちんと　返してもらえるわ▼
-……だけど　使うと　なくなる
-道具は　どこかに　いっちゃうみたい</Text>
+……つかうと　なくなる　道具は
+どこかに　いっちゃうみたいだけどね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-14T02:31:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -240,10 +240,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・メッセージ内容調整予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-14T02:31:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
