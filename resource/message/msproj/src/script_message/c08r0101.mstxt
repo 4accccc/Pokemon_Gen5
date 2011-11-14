@@ -551,13 +551,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・？マーク表示してからメッセージ
 ・主人公と連れ立って
 　c08方面へ移動、画面切り替え
 ・msg_c08_swleader7_04へ
 ※氷漬けイベント終了後は、ドラゴン技教え</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-19T05:15:52" />
+				Time="2011-11-14T10:20:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

@@ -477,10 +477,11 @@
 			Language="JPN">
 			<Comment>♂
 ・c08r0101でのイベント後
-・主人公がフィールドにでるとイベント開始</Comment>
+・主人公がフィールドにでるとイベント開始
+　メッセージ表示後にデモへ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-09T03:42:25" />
+				Time="2011-11-14T10:22:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

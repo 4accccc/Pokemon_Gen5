@@ -54,4 +54,107 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d26r0701_poke23_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>くあぁん！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:15:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:14:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>くあぁん！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:15:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:15:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・殿堂入り前ストッパー
+・あわせて鳴き声再生
+・GRIDX＝35、GRIDZ＝32
+・続けてpoke23_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:16:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE23
+ポケモン・ゾロアーク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:14:32" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d26r0701_poke23_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なにかを　まもっているのか
+ポケモンは　うごいてくれない……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:16:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:15:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なにかを　守っているのか
+ポケモンは　動いてくれない……
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:16:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:16:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:16:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE23
+ポケモン・ゾロアーク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:15:37" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

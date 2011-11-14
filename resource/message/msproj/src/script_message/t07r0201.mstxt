@@ -2,14 +2,132 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_t07r0201_00_01"
+		Label="msg_t07r0201_fighterw_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>むむ！　この　わたしに
+はなしかけるとは……▼
+なかなかの　トレーナーね
+あなた　きにいったわ！▽
+わざマシンを　うけとりなさい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T11:19:23" />
+				Time="2011-11-14T10:33:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:33:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>むむ！　この　わたしに
+話しかけるとは……▼
+なかなかの　トレーナーね
+あなた　気に入ったわ！▽
+わざマシンを　受け取りなさい！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:33:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:33:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・技マシン入手前
+　アイテム入手処理
+　No384「チャージビーム」</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:33:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FIGHTREW
+格闘家♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:33:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t07r0201_fighterw_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チャージビームは　つかった
+ポケモンの　とくこうを▽
+たまに　あげることが　あるの▼
+うまくいけば　どんどん
+いりょくが　あがっていくのよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:33:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:33:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チャージビームは　使った
+ポケモンの　特攻を▽
+たまに　あげることが　あるの▼
+うまくいけば　どんどん
+威力が　あがっていくのよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:33:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:33:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・技マシン入手後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:33:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FIGHTREW
+格闘家♀</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:33:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t07r0201_oldman_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここで　うまれて　ここで　しぬ▼
+ヤマジは　いなかまち　だが
+よそを　しらんから　きにならんよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:46:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -17,25 +135,43 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>ここで　生まれて　ここで　死ぬ▼
+ヤマジは　田舎町だが
+他所を　知らんから　気にならんよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T11:19:29" />
+				Time="2011-11-14T10:47:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-12T11:19:24" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:40:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:38:03" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t07r0201_01_01"
+		Label="msg_t07r0201_oldwoman_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>きれいなだけが　とりえで
+なにも　ないけど　たりないモノは▽
+フウロちゃんが　はこんでくれるんだ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T11:19:35" />
+				Time="2011-11-14T10:40:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -43,14 +179,30 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>きれいなだけが　とりえで
+なにも　ないけど　足りないモノは▽
+フウロちゃんが　運んでくれるんだ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T11:19:35" />
+				Time="2011-11-14T10:42:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-12T11:19:35" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:40:30" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDWOMAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:35:13" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
