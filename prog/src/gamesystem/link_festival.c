@@ -799,7 +799,7 @@ static void lnkfes_BeaconSend( LINK_FESTIVAL* wk )
     --wk->beacon_timer;
     return;
   }
-//  GAMEBEACON_Set_FestMission();
+  GAMEBEACON_Set_FestMission();
   wk->beacon_timer = wk->beacon_wait;
 }
 

@@ -31,17 +31,14 @@ typedef struct _FMISSION_ARCDATA_LV_PARAM{
  *
  * この構造体の構成を変えた場合、resource/fmission_data/tool/fmission_dat_conv.rbを
  * 修正する必要があります
- *
- * 8bitのメンバをu8で定義せずu16のbit field として扱っているのは
- * 構造体サイズをu16[3]にするためです
  */
 typedef struct _FMISSION_ARC_COMMON{
-  u16  m_type:8;         ///<ミッションタイプ FMISSION_TYPE_ID
-  u16  unit:4;           ///<表示単位 FMISSION_UNIT_ID
-  u16  host:4;           ///<開催制限 FMISSION_HOST_TYPE
-  u16  m_title_id:8;     ///<タイトルメッセージID
-  u16  m_exp_id:8;       ///<説明文メッセージID
-  u16  entry_flag_id;    ///<参加条件フラグID
+  u8   m_type;         ///<ミッションタイプ FMISSION_TYPE_ID
+  u8   unit:4;         ///<表示単位 FMISSION_UNIT_ID
+  u8   host:4;         ///<開催制限 FMISSION_HOST_TYPE
+  u8   m_title_id;     ///<タイトルメッセージID
+  u8   m_exp_id;       ///<説明文メッセージID
+  u16  entry_flag_id;  ///<参加条件フラグID
 }FMISSION_ARC_COMMON;
 
 /*
