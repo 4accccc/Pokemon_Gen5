@@ -53,6 +53,20 @@ enum{
   TPANEL_MAX = 3,		// パネル最大数
 };
 
+// モード
+enum{
+  MODE_NORMAL = 0,		// 通常
+  MODE_TUTORIAL,		// チュートリアル
+  MODE_GPOWER,			// チュートリアルGPOWER
+};
+
+// 戻り
+enum{
+  RET_NORMAL = 0,		// 通常
+  RET_DECIDE,			// 決定
+  RET_DISPMES,			// メッセージ表示
+};
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -63,6 +77,7 @@ typedef struct{
   s8 select_panel;    ///<選択したパネル(TITLE_PANEL_xxx)
   u8 title_mode;      ///<タイトルの表示モード(TITLE_MODE_xxx)
   u8 no_focus;        ///<TRUE:カーソルが何もフォーカスしていない状態
+  s32   Mode;         ///<モード(0:通常、1:チュートリアル、2:GPOWERチュートリアル)
   MONOLITH_CANCEL_ICON cancel_icon;   ///<キャンセルアイコンアクターへのポインタ
   GFL_BMPWIN *bmpwin;
   PRINT_STREAM *print_stream;
@@ -97,6 +112,9 @@ static void _Set_MsgStream(MONOLITH_TITLE_WORK *mtw, MONOLITH_SETUP *setup, u16 
 static BOOL _Wait_MsgStream(MONOLITH_SETUP *setup, MONOLITH_TITLE_WORK *mtw);
 static void _Clear_MsgStream(MONOLITH_TITLE_WORK *mtw);
 
+//
+static s32 mt_chk_input( MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *mtw );
+static void mt_init( MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *mtw );
 
 //==============================================================================
 //  データ
@@ -114,7 +132,7 @@ const GFL_PROC_DATA MonolithAppProc_Down_Title = {
 static const MONO_TITLE_OBJ_DATA mtitle_obj_tbl[] = {
   { PANEL_SIZE_SMALL, TPANEL_X, TPANEL_Y0, msg_mono_title_005 },	// フェスミッション
   { PANEL_SIZE_SMALL, TPANEL_X, TPANEL_Y1, msg_mono_title_002 },	// デルパワーをうけとる
-  { PANEL_SIZE_SMALL, TPANEL_X, TPANEL_Y2, msg_mono_title_003 },	// きろくをみる(仮)
+  { PANEL_SIZE_SMALL, TPANEL_X, TPANEL_Y2, msg_mono_title_007 },	// きろくをみる
   //
   { -1, 0, 0, 0 },	// end
 };
@@ -142,6 +160,26 @@ static const s16 title_ret_mode[] = {
   MONOLITH_MENU_STATUS,     ///<状態を見る
   //
   MONOLITH_MENU_END,        ///<終了
+};
+
+//----------------------------------
+// フラグ処理(0:押せない、1:押せる)
+// (フェス、デルパワー、記録を見る、pad)
+//----------------------------------
+static const s16 title_sel_tbl[] = {
+  1, 1, 1, 0,		// 通常時
+  1, 0, 0, 0,		// チュートリアル時
+  0, 1, 0, 0,		// デルパワーチュートリアル時
+};
+
+//----------------------------------
+// メッセージ
+//----------------------------------
+static const s16 title_mes_tbl[] = {
+  msg_mono_title_info_001,		// 通常(dummy)
+  msg_mono_title_info_001,		// フェスミッション
+  msg_mono_title_info_002,		// デルパワー
+  msg_mono_title_info_002,		// pad(dummy)
 };
 
 //==============================================================================
@@ -172,6 +210,9 @@ static GFL_PROC_RESULT MonolithTitleProc_Init(GFL_PROC * proc, int * seq, void *
   _Setup_BGFrameSetting();
   _Setup_BmpWinCreate(mtw, appwk->setup);
 
+  // 初期化
+  mt_init( appwk, mtw );
+
   _Title_PanelCreate(appwk, mtw);
   _Title_CancelIconCreate(appwk, mtw);
   
@@ -196,6 +237,8 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(appwk->parent->gsys);
   INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   int tp_ret;
+  s32 ret;
+  
   enum{
     _SEQ_MAIN,
     _SEQ_DECIDE,
@@ -211,59 +254,21 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
   }
 
   switch(*seq){
+  // 入力処理
   case _SEQ_MAIN:
-    tp_ret = GFL_UI_TP_HitTrg( title_rect_tbl );
-    if(tp_ret != GFL_UI_TP_HIT_NONE){
-      OS_TPrintf("タッチ有効 %d\n", tp_ret);
-      mtw->cursor_pos = tp_ret;
-      mtw->select_panel = tp_ret;	// そのままセット
-      GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
-      mtw->no_focus = FALSE;
+    // 入力処理をまとめておく
+    ret = mt_chk_input( appwk, mtw );
+    // 決定
+    if(ret == RET_DECIDE){
       (*seq)++;
-      break;
     }
-    else{
-      int repeat = GFL_UI_KEY_GetRepeat();
-      int trg = GFL_UI_KEY_GetTrg();
-      
-      if(trg > 0 && mtw->no_focus == TRUE){
-        GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-        mtw->no_focus = FALSE;
-        MonolithTool_PanelOBJ_Focus(appwk, mtw->panel, TPANEL_MAX, 
-          mtw->cursor_pos, FADE_SUB_OBJ);
-        PMSND_PlaySE(MONOLITH_SE_SELECT);
-      }
-      else if(trg & PAD_BUTTON_DECIDE){
-        mtw->select_panel = mtw->cursor_pos;	// そのままセット
-//        OS_TPrintf("panel %d\n", mtw->select_panel);
-        (*seq)++;
-      }
-      else if(trg & PAD_BUTTON_CANCEL){
-        mtw->select_panel = TITLE_PANEL_CANCEL;
-//        OS_TPrintf("panel %d\n", mtw->select_panel);
-        (*seq)++;
-      }
-      else if(repeat & PAD_KEY_DOWN){
-        mtw->cursor_pos++;
-        if(mtw->cursor_pos >= TPANEL_MAX){
-          mtw->cursor_pos = 0;
-        }
-        MonolithTool_PanelOBJ_Focus(appwk, mtw->panel, 
-          TPANEL_MAX, mtw->cursor_pos, FADE_SUB_OBJ);
-        PMSND_PlaySE(MONOLITH_SE_SELECT);
-      }
-      else if(repeat & PAD_KEY_UP){
-        mtw->cursor_pos--;
-        if(mtw->cursor_pos < 0){
-          mtw->cursor_pos = TPANEL_MAX - 1;
-        }
-        MonolithTool_PanelOBJ_Focus(
-          appwk, mtw->panel, TPANEL_MAX, 
-          mtw->cursor_pos, FADE_SUB_OBJ);
-        PMSND_PlaySE(MONOLITH_SE_SELECT);
-      }
+    // メッセージ表示
+    else if(ret == RET_DISPMES){
+      _Set_MsgStream( mtw, appwk->setup, title_mes_tbl[mtw->Mode] );
+      *seq = _SEQ_STREAM_WAIT;
     }
     break;
+  // 決定時
   case _SEQ_DECIDE:
     if(mtw->select_panel != TITLE_PANEL_CANCEL){
       MonolithTool_PanelOBJ_Flash(appwk, mtw->panel, 
@@ -292,7 +297,7 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
       }
     }
     break;
-  
+  // メッセージ待ち
   case _SEQ_STREAM_WAIT:
     if(_Wait_MsgStream(appwk->setup, mtw) == TRUE){
       if(GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
@@ -362,17 +367,29 @@ static GFL_PROC_RESULT MonolithTitleProc_End( GFL_PROC * proc, int * seq, void *
 static void _Title_PanelCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *mtw)
 {
   int i;
+  s32 j;
   const MONO_TITLE_OBJ_DATA *adr = &mtitle_obj_tbl[0];
+  STRBUF *strbuf;
+  static const PRINTSYS_LSB print_color[] = {
+    PRINTSYS_MACRO_LSB(2, 1, 0),		// 色変え
+    PRINTSYS_MACRO_LSB(0xf, 2, 0),		// 通常
+  };
+  
+  //mtw->Modeで判断
   
   MonolithTool_Panel_Init(appwk);
   // objのセット
   for(i=0;i<TPANEL_MAX;i++){
-      if(adr->index == -1){
-        break;
-      }
-      MonolithTool_PanelOBJ_Create(appwk->setup, &mtw->panel[i], 
-        COMMON_RESOURCE_INDEX_DOWN, adr->index, adr->x, adr->y, adr->msgid, NULL );
-      adr++;
+    if(adr->index == -1){
+      break;
+    }
+    // 押せるか判定
+    j = title_sel_tbl[4*mtw->Mode+i];
+    //
+    // 色指定表示
+    MonolithTool_PanelOBJ_Create_Color(appwk->setup, &mtw->panel[i], 
+      COMMON_RESOURCE_INDEX_DOWN, adr->index, adr->x, adr->y, adr->msgid, NULL, print_color[j]);
+    adr++;
   }
   //
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_KEY ){
@@ -590,5 +607,116 @@ static void _Clear_MsgStream(MONOLITH_TITLE_WORK *mtw)
 
   GFL_FONTSYS_SetColor( 
     MONOLITH_FONT_DEFCOLOR_LETTER, MONOLITH_FONT_DEFCOLOR_SHADOW, MONOLITH_FONT_DEFCOLOR_BACK );
+}
+
+
+//--------------------------------------------------------------
+/**
+ * キー入力処理(まとめ)
+ *
+ * @param   appwk	
+ * @param   mtw		
+ *
+ * @ret     s32		(0:なにもしない、1:DECIDE、2:メッセージ表示)
+ */
+//--------------------------------------------------------------
+static s32 mt_chk_input( MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *mtw )
+{
+  int tp_ret;
+  int repeat;
+  int trg;
+  int ret=RET_NORMAL;
+  
+  tp_ret = GFL_UI_TP_HitTrg( title_rect_tbl );
+  if(tp_ret != GFL_UI_TP_HIT_NONE){
+    mtw->cursor_pos = tp_ret;
+    mtw->select_panel = tp_ret;	// そのままセット
+    GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+    mtw->no_focus = FALSE;
+    if(title_sel_tbl[4*mtw->Mode+tp_ret] == 1){
+      // 抜ける
+      ret = RET_DECIDE;
+    }else{
+      // パネルの更新はしておく
+      MonolithTool_PanelOBJ_Focus(appwk, mtw->panel, TPANEL_MAX, 
+        mtw->cursor_pos, FADE_SUB_OBJ);
+      PMSND_PlaySE(MONOLITH_SE_SELECT);
+      // メッセージ表示
+      ret = RET_DISPMES;
+    }
+//    OS_Printf("decide tp:%d\n",tp_ret);
+  }
+  else{
+    repeat = GFL_UI_KEY_GetRepeat();
+    trg = GFL_UI_KEY_GetTrg();
+    
+    if(trg > 0 && mtw->no_focus == TRUE){
+      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+      mtw->no_focus = FALSE;
+      MonolithTool_PanelOBJ_Focus(appwk, mtw->panel, TPANEL_MAX, 
+        mtw->cursor_pos, FADE_SUB_OBJ);
+      PMSND_PlaySE(MONOLITH_SE_SELECT);
+    }
+    else if(trg & PAD_BUTTON_DECIDE){
+      if(title_sel_tbl[4*mtw->Mode+mtw->cursor_pos] == 1){
+        mtw->select_panel = mtw->cursor_pos;	// そのままセット
+        // 抜ける
+        ret = RET_DECIDE;
+      }else{
+        ret = RET_DISPMES;
+      }
+//      OS_Printf("decide\n");
+    }
+    else if(trg & PAD_BUTTON_CANCEL){
+      mtw->select_panel = TITLE_PANEL_CANCEL;
+      // 抜ける
+      ret = RET_DECIDE;
+    }
+    else if(repeat & PAD_KEY_DOWN){
+      mtw->cursor_pos++;
+      if(mtw->cursor_pos >= TPANEL_MAX){
+        mtw->cursor_pos = 0;
+      }
+      MonolithTool_PanelOBJ_Focus(appwk, mtw->panel, 
+        TPANEL_MAX, mtw->cursor_pos, FADE_SUB_OBJ);
+      PMSND_PlaySE(MONOLITH_SE_SELECT);
+    }
+    else if(repeat & PAD_KEY_UP){
+      mtw->cursor_pos--;
+      if(mtw->cursor_pos < 0){
+        mtw->cursor_pos = TPANEL_MAX - 1;
+      }
+      MonolithTool_PanelOBJ_Focus(
+        appwk, mtw->panel, TPANEL_MAX, 
+        mtw->cursor_pos, FADE_SUB_OBJ);
+      PMSND_PlaySE(MONOLITH_SE_SELECT);
+    }
+  }
+  return( ret );
+}
+
+
+//--------------------------------------------------------------
+/**
+ * 初期化(フラグの判定)
+ *
+ * @param   appwk	
+ *
+ */
+//--------------------------------------------------------------
+static void mt_init( MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *mtw )
+{
+  // 初期化をまとめて行う
+#ifdef PM_DEBUG
+  // Lを押しながら..
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){
+      mtw->Mode = MODE_TUTORIAL;
+    }
+    else if(GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ){
+      mtw->Mode = MODE_GPOWER;
+    }
+  }
+#endif
 }
 

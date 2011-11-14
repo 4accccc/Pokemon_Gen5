@@ -221,6 +221,92 @@ void MonolithTool_PanelOBJ_Create(MONOLITH_SETUP *setup, PANEL_ACTOR *dest, COMM
 
 //==================================================================
 /**
+ * パネルアクター生成(色指定)
+ *
+ * @param   setup       モノリス全画面共通設定データへのポインタ
+ * @param   dest		    生成したパネルアクター代入先
+ * @param   res_index		共通素材Index
+ * @param   size		    パネルサイズ
+ * @param   x           X座標(中心)
+ * @param   y		        Y座標(中心)
+ * @param   msg_id      メッセージID
+ * @param   wordset       WORDSETが不必要な場合はNULL指定
+ * 
+ * WORDSETが必要な場合は外側であらかじめWORDSETをしてください
+ */
+//==================================================================
+void MonolithTool_PanelOBJ_Create_Color(MONOLITH_SETUP *setup, PANEL_ACTOR *dest,COMMON_RESOURCE_INDEX res_index, 
+                                        PANEL_SIZE size, int x, int y, u32 msg_id, WORDSET *wordset, PRINTSYS_LSB color)
+{
+  CLSYS_DEFREND_TYPE defrend_type;
+  GFL_CLWK_DATA head = ActHead_Panel;
+  BMPOAM_ACT_DATA bmpoam_head = BmpOamHead_Panel;
+  int bmp_size_x;
+  STRBUF *strbuf;
+  
+  switch(size){
+  case PANEL_SIZE_LARGE:
+    bmp_size_x = PANEL_LARGE_CHARSIZE_X;
+    head.anmseq = COMMON_ANMSEQ_PANEL_LARGE;
+    bmpoam_head.x = PANEL_LARGE_BMPFONT_POS_X(x);
+    break;
+  case PANEL_SIZE_SMALL:
+    bmp_size_x = PANEL_SMALL_CHARSIZE_X;
+    head.anmseq = COMMON_ANMSEQ_PANEL_SMALL;
+    bmpoam_head.x = PANEL_SMALL_BMPFONT_POS_X(x);
+    break;
+  case PANEL_SIZE_DECIDE:
+  default:
+    bmp_size_x = PANEL_DECIDE_CHARSIZE_X;
+    head.anmseq = COMMON_ANMSEQ_PANEL_DECIDE;
+    bmpoam_head.x = PANEL_DECIDE_BMPFONT_POS_X(x);
+    break;
+  }
+  
+  //BMP作成
+  dest->bmp = GFL_BMP_Create(bmp_size_x, PANEL_CHARSIZE_Y, GFL_BMP_16_COLOR, HEAPID_MONOLITH);
+  
+  //ヘッダ作成
+  head.pos_x = x;
+  head.pos_y = y;
+  bmpoam_head.y = y - 8;
+  bmpoam_head.bmp = dest->bmp;
+  bmpoam_head.pltt_index = setup->common_res[res_index].pltt_bmpfont_index;
+  if(res_index == COMMON_RESOURCE_INDEX_UP){
+    defrend_type = CLSYS_DEFREND_MAIN;
+    bmpoam_head.draw_type = CLSYS_DRAW_MAIN;
+  }
+  else{
+    defrend_type = CLSYS_DEFREND_SUB;
+    bmpoam_head.draw_type = CLSYS_DRAW_SUB;
+  }
+  bmpoam_head.setSerface = defrend_type;
+  
+  //生成
+  dest->cap = GFL_CLACT_WK_Create(setup->clunit, setup->common_res[res_index].char_index, 
+    setup->common_res[res_index].pltt_index, setup->common_res[res_index].cell_index, 
+	  &head, defrend_type, HEAPID_MONOLITH);
+  dest->bmpoam = BmpOam_ActorAdd(setup->bmpoam_sys, &bmpoam_head);
+  
+  //文字描画
+  strbuf = GFL_MSG_CreateString( setup->mm_monolith, msg_id );
+  if(wordset != NULL){
+    STRBUF *expand_str = GFL_STR_CreateBuffer(128, HEAPID_MONOLITH);
+    WORDSET_ExpandStr( wordset, expand_str, strbuf );
+    PRINTSYS_PrintQueColor( setup->printQue, dest->bmp, 0, 0, expand_str, setup->font_handle, color );
+    GFL_STR_DeleteBuffer(expand_str);
+  }
+  else{
+    PRINTSYS_PrintQueColor( setup->printQue, dest->bmp, 0, 0, strbuf, setup->font_handle, color);
+  }
+  GFL_STR_DeleteBuffer(strbuf);
+  
+  //内部フラグセット
+  dest->trans_flag = TRUE;
+}
+
+//==================================================================
+/**
  * パネルアクター削除
  *
  * @param   panel		パネルアクターへのポインタ

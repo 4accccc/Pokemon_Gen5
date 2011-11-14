@@ -87,6 +87,8 @@ typedef struct{
 //  ƒpƒlƒ‹OBJ
 //--------------------------------------------------------------
 extern void MonolithTool_PanelOBJ_Create(MONOLITH_SETUP *setup, PANEL_ACTOR *dest, COMMON_RESOURCE_INDEX res_index, PANEL_SIZE size, int x, int y, u32 msg_id, WORDSET *wordset);
+extern void MonolithTool_PanelOBJ_Create_Color(MONOLITH_SETUP *setup, PANEL_ACTOR *dest,COMMON_RESOURCE_INDEX res_index, 
+                                        PANEL_SIZE size, int x, int y, u32 msg_id, WORDSET *wordset, PRINTSYS_LSB color);
 extern void MonolithTool_PanelOBJ_Delete(PANEL_ACTOR *panel);
 extern void MonolithTool_PanelOBJ_SetEnable(PANEL_ACTOR *panel, BOOL on_off);
 extern BOOL MonolithTool_PanelOBJ_TransUpdate(MONOLITH_SETUP *setup, PANEL_ACTOR *panel);

@@ -381,6 +381,39 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_mono_title_008"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミッションの　きろく</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-14T04:16:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-14T04:16:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミッションの　記録</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-14T04:16:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-14T04:16:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>タイトルメニュー項目</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-14T04:16:24" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="msg_mono_title_info_001">
 		<LanguageCell
 			Language="JPN">
@@ -1063,10 +1096,10 @@
 		Label="msg_mono_st_013">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:5digits Idx="3" ]かい</Text>
+			<Text>[Digit:5digits ]かい</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-12T06:33:52" />
+				User="tanaka_ryota:W00283"
+				Time="2011-11-14T04:13:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1074,10 +1107,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:5digits Idx="3" ]回</Text>
+			<Text>[Digit:5digits ]回</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-12T06:34:00" />
+				User="tanaka_ryota:W00283"
+				Time="2011-11-14T04:15:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1106,10 +1139,10 @@
 		Label="msg_mono_st_014">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:5digits Idx="1" ]かい</Text>
+			<Text>[Digit:5digits ]かい</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-12T06:31:38" />
+				User="tanaka_ryota:W00283"
+				Time="2011-11-14T04:13:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1117,10 +1150,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:5digits Idx="1" ]回</Text>
+			<Text>[Digit:5digits ]回</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-12T06:31:54" />
+				User="tanaka_ryota:W00283"
+				Time="2011-11-14T04:15:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1149,10 +1182,10 @@
 		Label="msg_mono_st_015">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:5digits Idx="2" ]かい</Text>
+			<Text>[Digit:5digits ]かい</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-12T06:31:47" />
+				User="tanaka_ryota:W00283"
+				Time="2011-11-14T04:14:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1160,10 +1193,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:5digits Idx="2" ]回</Text>
+			<Text>[Digit:5digits ]回</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-12T06:32:00" />
+				User="tanaka_ryota:W00283"
+				Time="2011-11-14T04:15:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1192,10 +1225,10 @@
 		Label="msg_mono_st_016">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:3digits Idx="4" ]にん</Text>
+			<Text>[Digit:3digits ]にん</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-12T06:34:25" />
+				User="tanaka_ryota:W00283"
+				Time="2011-11-14T04:14:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1203,10 +1236,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:3digits Idx="4" ]人</Text>
+			<Text>[Digit:3digits ]人</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-12T06:34:55" />
+				User="tanaka_ryota:W00283"
+				Time="2011-11-14T04:15:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1235,10 +1268,10 @@
 		Label="msg_mono_st_017">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:5digits Idx="3" ]かい</Text>
+			<Text>[Digit:5digits ]かい</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-12T06:32:55" />
+				User="tanaka_ryota:W00283"
+				Time="2011-11-14T04:14:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1246,10 +1279,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:5digits Idx="2" ]回</Text>
+			<Text>[Digit:5digits ]回</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-12T06:32:07" />
+				User="tanaka_ryota:W00283"
+				Time="2011-11-14T04:15:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"

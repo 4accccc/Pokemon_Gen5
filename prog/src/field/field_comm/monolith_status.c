@@ -28,51 +28,54 @@
 ///BMPWIN
 enum{
   BMPWIN_TITLE,               ///<タイトル
-  BMPWIN_LEVEL,               ///<モノリスレベル
-  BMPWIN_WBLV,                ///<ホワイト＆ブラックのレベル
-  BMPWIN_TIME,                ///<滞在時間
-  BMPWIN_CLEAR_MISSION,       ///<クリアしたミッション数
-  BMPWIN_USE_GPOWER,          ///<使えるGパワー数
+  BMPWIN_OPEN,                ///<開催したミッション
+  BMPWIN_JOIN,                ///<参加したミッション
+  BMPWIN_FINISH,              ///<達成したミッション
+  BMPWIN_MEMBER,              ///<最高参加者数
+  BMPWIN_TOPSCORE,            ///<トップスコア
   
   BMPWIN_MAX,
 };
 
 ///BMPWINのサイズ定義など
 enum{
+  // タイトル
   BMPWIN_POS_TITLE_X = 2,
   BMPWIN_POS_TITLE_Y = 0,
   BMPWIN_POS_TITLE_SIZE_X = 32 - BMPWIN_POS_TITLE_X,
   BMPWIN_POS_TITLE_SIZE_Y = 3,
 
-  //合計レベル
-  BMPWIN_POS_LEVEL_X = 2,
-  BMPWIN_POS_LEVEL_Y = 5,
-  BMPWIN_POS_LEVEL_SIZE_X = 32 - BMPWIN_POS_LEVEL_X,
-  BMPWIN_POS_LEVEL_SIZE_Y = 2,
+  //開催したミッション
+  BMPWIN_OPEN_X = 2,
+  BMPWIN_OPEN_Y = 5,
+  BMPWIN_OPEN_SIZE_X = 32 - BMPWIN_OPEN_X,
+  BMPWIN_OPEN_SIZE_Y = 2,
   
-  //ホワイト＆ブラックのレベル
-  BMPWIN_POS_WBLV_X = 2,
-  BMPWIN_POS_WBLV_Y = BMPWIN_POS_LEVEL_Y + 3,
-  BMPWIN_POS_WBLV_SIZE_X = 32 - BMPWIN_POS_WBLV_X,
-  BMPWIN_POS_WBLV_SIZE_Y = 2,
+  //参加したミッション
+  BMPWIN_JOIN_X = 2,
+  BMPWIN_JOIN_Y = BMPWIN_OPEN_Y + 2,
+  BMPWIN_JOIN_SIZE_X = 32 - BMPWIN_JOIN_X,
+  BMPWIN_JOIN_SIZE_Y = 2,
   
-  //滞在時間
-  BMPWIN_POS_TIME_X = 2,
-  BMPWIN_POS_TIME_Y = 14,
-  BMPWIN_POS_TIME_SIZE_X = 32 - BMPWIN_POS_TIME_X,
-  BMPWIN_POS_TIME_SIZE_Y = 4,
+  //達成したミッション
+  BMPWIN_FINISH_X = 2,
+  BMPWIN_FINISH_Y = BMPWIN_JOIN_Y + 2,
+  BMPWIN_FINISH_SIZE_X = 32 - BMPWIN_FINISH_X,
+  BMPWIN_FINISH_SIZE_Y = 4,
   
-  //クリアしたミッション
-  BMPWIN_POS_CLEAR_MISSION_X = BMPWIN_POS_TIME_X,
-  BMPWIN_POS_CLEAR_MISSION_Y = BMPWIN_POS_TIME_Y + 2,
-  BMPWIN_POS_CLEAR_MISSION_SIZE_X = 32 - BMPWIN_POS_CLEAR_MISSION_X,
-  BMPWIN_POS_CLEAR_MISSION_SIZE_Y = 2,
+  //最高人数
+  BMPWIN_MEMBER_X = BMPWIN_FINISH_X,
+  BMPWIN_MEMBER_Y = 14 + 2,
+  BMPWIN_MEMBER_SIZE_X = 32 - BMPWIN_MEMBER_X,
+  BMPWIN_MEMBER_SIZE_Y = 2,
   
-  //使えるGパワーの数
-  BMPWIN_POS_USE_GPOWER_X = BMPWIN_POS_TIME_X,
-  BMPWIN_POS_USE_GPOWER_Y = BMPWIN_POS_CLEAR_MISSION_Y + 2,
-  BMPWIN_POS_USE_GPOWER_SIZE_X = 32 - BMPWIN_POS_USE_GPOWER_X,
-  BMPWIN_POS_USE_GPOWER_SIZE_Y = 2,
+  //トップスコア
+  BMPWIN_TOPSCORE_X = BMPWIN_FINISH_X,
+  BMPWIN_TOPSCORE_Y = BMPWIN_MEMBER_Y + 2,
+  BMPWIN_TOPSCORE_SIZE_X = 32 - BMPWIN_TOPSCORE_X,
+  BMPWIN_TOPSCORE_SIZE_Y = 2,
+  //
+  MES_OFFSET = 16,     // サイズ調整
 };
 
 //==============================================================================
@@ -104,7 +107,8 @@ static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MON
 static void _Status_CancelIconCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_STATUS_WORK *msw);
 static void _Status_CancelIconDelete(MONOLITH_STATUS_WORK *msw);
 static void _Status_CancelIconUpdate(MONOLITH_STATUS_WORK *msw);
-
+//
+static u16 ms_get_strsize( const STRBUF * buf, GFL_FONT * font, u32 mode );
 
 //==============================================================================
 //  データ
@@ -127,7 +131,21 @@ static const GFL_UI_TP_HITTBL StatusTouchRect[] = {
   { GFL_UI_TP_HIT_END, 0, 0, 0 },
 };
 
-
+// メッセージID
+static const s16 status_mestbl[] = {
+  msg_mono_title_008,	// ミッションのきろく
+  msg_mono_st_009,		// かいさいしたミッション
+  msg_mono_st_010,		// さんかしたミッション
+  msg_mono_st_007,		// たっせいしたミッション
+  msg_mono_st_011,		// さいこうさんかしゃすう
+  msg_mono_st_012,		// トップスコア
+  //
+  msg_mono_st_014,		// 開催した回数
+  msg_mono_st_015,		// 参加した回数
+  msg_mono_st_013,		// 達成した回数
+  msg_mono_st_016,		// 最高回数
+  msg_mono_st_017,		// トップスコア数
+};
 
 //==============================================================================
 //
@@ -351,7 +369,7 @@ static void _Setup_BmpWin_Create(MONOLITH_SETUP *setup, MONOLITH_STATUS_WORK *ms
 {
   int i;
   
-  //モノリスタイトル
+  //タイトル
   msw->bmpwin[BMPWIN_TITLE] = GFL_BMPWIN_Create(GFL_BG_FRAME0_S, 
     BMPWIN_POS_TITLE_X, BMPWIN_POS_TITLE_Y, 
     BMPWIN_POS_TITLE_SIZE_X, BMPWIN_POS_TITLE_SIZE_Y, 
@@ -359,45 +377,45 @@ static void _Setup_BmpWin_Create(MONOLITH_SETUP *setup, MONOLITH_STATUS_WORK *ms
   GFL_BMPWIN_TransVramCharacter( msw->bmpwin[BMPWIN_TITLE] );
   GFL_BMPWIN_MakeScreen( msw->bmpwin[BMPWIN_TITLE] );
 
-  //モノリスレベル
-  msw->bmpwin[BMPWIN_LEVEL] = GFL_BMPWIN_Create(GFL_BG_FRAME0_S, 
-    BMPWIN_POS_LEVEL_X, BMPWIN_POS_LEVEL_Y, 
-    BMPWIN_POS_LEVEL_SIZE_X, BMPWIN_POS_LEVEL_SIZE_Y, 
+  //開催したミッション
+  msw->bmpwin[BMPWIN_OPEN] = GFL_BMPWIN_Create(GFL_BG_FRAME0_S, 
+    BMPWIN_OPEN_X, BMPWIN_OPEN_Y, 
+    BMPWIN_OPEN_SIZE_X, BMPWIN_OPEN_SIZE_Y, 
     MONOLITH_BG_DOWN_FONT_PALNO, GFL_BMP_CHRAREA_GET_B);
-  GFL_BMPWIN_TransVramCharacter( msw->bmpwin[BMPWIN_LEVEL] );
-  GFL_BMPWIN_MakeScreen( msw->bmpwin[BMPWIN_LEVEL] );
+  GFL_BMPWIN_TransVramCharacter( msw->bmpwin[BMPWIN_OPEN] );
+  GFL_BMPWIN_MakeScreen( msw->bmpwin[BMPWIN_OPEN] );
 
-  //モノリスの通称
-  msw->bmpwin[BMPWIN_WBLV] = GFL_BMPWIN_Create(GFL_BG_FRAME0_S, 
-    BMPWIN_POS_WBLV_X, BMPWIN_POS_WBLV_Y, 
-    BMPWIN_POS_WBLV_SIZE_X, BMPWIN_POS_WBLV_SIZE_Y, 
+  //参加したミッション
+  msw->bmpwin[BMPWIN_JOIN] = GFL_BMPWIN_Create(GFL_BG_FRAME0_S, 
+    BMPWIN_JOIN_X, BMPWIN_JOIN_Y, 
+    BMPWIN_JOIN_SIZE_X, BMPWIN_JOIN_SIZE_Y, 
     MONOLITH_BG_DOWN_FONT_PALNO, GFL_BMP_CHRAREA_GET_B);
-  GFL_BMPWIN_TransVramCharacter( msw->bmpwin[BMPWIN_WBLV] );
-  GFL_BMPWIN_MakeScreen( msw->bmpwin[BMPWIN_WBLV] );
+  GFL_BMPWIN_TransVramCharacter( msw->bmpwin[BMPWIN_JOIN] );
+  GFL_BMPWIN_MakeScreen( msw->bmpwin[BMPWIN_JOIN] );
 
-  //パワーバランス
-  msw->bmpwin[BMPWIN_TIME] = GFL_BMPWIN_Create(GFL_BG_FRAME0_S, 
-    BMPWIN_POS_TIME_X, BMPWIN_POS_TIME_Y, 
-    BMPWIN_POS_TIME_SIZE_X, BMPWIN_POS_TIME_SIZE_Y, 
+  //達成したミッション
+  msw->bmpwin[BMPWIN_FINISH] = GFL_BMPWIN_Create(GFL_BG_FRAME0_S, 
+    BMPWIN_FINISH_X, BMPWIN_FINISH_Y, 
+    BMPWIN_FINISH_SIZE_X, BMPWIN_FINISH_SIZE_Y, 
     MONOLITH_BG_DOWN_FONT_PALNO, GFL_BMP_CHRAREA_GET_B);
-  GFL_BMPWIN_TransVramCharacter( msw->bmpwin[BMPWIN_TIME] );
-  GFL_BMPWIN_MakeScreen( msw->bmpwin[BMPWIN_TIME] );
+  GFL_BMPWIN_TransVramCharacter( msw->bmpwin[BMPWIN_FINISH] );
+  GFL_BMPWIN_MakeScreen( msw->bmpwin[BMPWIN_FINISH] );
 
-  //使えるパワーの数
-  msw->bmpwin[BMPWIN_CLEAR_MISSION] = GFL_BMPWIN_Create(GFL_BG_FRAME0_S, 
-    BMPWIN_POS_CLEAR_MISSION_X, BMPWIN_POS_CLEAR_MISSION_Y, 
-    BMPWIN_POS_CLEAR_MISSION_SIZE_X, BMPWIN_POS_CLEAR_MISSION_SIZE_Y, 
+  //最高参加者数
+  msw->bmpwin[BMPWIN_MEMBER] = GFL_BMPWIN_Create(GFL_BG_FRAME0_S, 
+    BMPWIN_MEMBER_X, BMPWIN_MEMBER_Y, 
+    BMPWIN_MEMBER_SIZE_X, BMPWIN_MEMBER_SIZE_Y, 
     MONOLITH_BG_DOWN_FONT_PALNO, GFL_BMP_CHRAREA_GET_B);
-  GFL_BMPWIN_TransVramCharacter( msw->bmpwin[BMPWIN_CLEAR_MISSION] );
-  GFL_BMPWIN_MakeScreen( msw->bmpwin[BMPWIN_CLEAR_MISSION] );
+  GFL_BMPWIN_TransVramCharacter( msw->bmpwin[BMPWIN_MEMBER] );
+  GFL_BMPWIN_MakeScreen( msw->bmpwin[BMPWIN_MEMBER] );
 
-  //滞在時間
-  msw->bmpwin[BMPWIN_USE_GPOWER] = GFL_BMPWIN_Create(GFL_BG_FRAME0_S, 
-    BMPWIN_POS_USE_GPOWER_X, BMPWIN_POS_USE_GPOWER_Y, 
-    BMPWIN_POS_USE_GPOWER_SIZE_X, BMPWIN_POS_USE_GPOWER_SIZE_Y, 
+  //トップスコア
+  msw->bmpwin[BMPWIN_TOPSCORE] = GFL_BMPWIN_Create(GFL_BG_FRAME0_S, 
+    BMPWIN_TOPSCORE_X, BMPWIN_TOPSCORE_Y, 
+    BMPWIN_TOPSCORE_SIZE_X, BMPWIN_TOPSCORE_SIZE_Y, 
     MONOLITH_BG_DOWN_FONT_PALNO, GFL_BMP_CHRAREA_GET_B);
-  GFL_BMPWIN_TransVramCharacter( msw->bmpwin[BMPWIN_USE_GPOWER] );
-  GFL_BMPWIN_MakeScreen( msw->bmpwin[BMPWIN_USE_GPOWER] );
+  GFL_BMPWIN_TransVramCharacter( msw->bmpwin[BMPWIN_TOPSCORE] );
+  GFL_BMPWIN_MakeScreen( msw->bmpwin[BMPWIN_TOPSCORE] );
 
   for(i = 0; i < BMPWIN_MAX; i++){
     PRINT_UTIL_Setup(&msw->print_util[i], msw->bmpwin[i]);
@@ -437,85 +455,99 @@ static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MON
   STRBUF *strbuf, *expand_strbuf;
   const OCCUPY_INFO *occupy;
   MYSTATUS *myst = MonolithTool_GetMystatus(appwk);
+  u16 size;
+  s32 tmp=9999;
   
   occupy = MonolithTool_GetOccupyInfo(appwk);
   
   strbuf = GFL_STR_CreateBuffer(256, HEAPID_MONOLITH);
   expand_strbuf = GFL_STR_CreateBuffer( 256, HEAPID_MONOLITH );
-
+  
   //タイトル
-  GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_008, strbuf);
+  GFL_MSG_GetString(setup->mm_monolith, status_mestbl[0], strbuf);
   PRINT_UTIL_Print(&msw->print_util[BMPWIN_TITLE], setup->printQue, 
     0, 4, strbuf, setup->font_handle);
   
-  //ハイルツリーのレベル
-  GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_000, strbuf);
-  WORDSET_RegisterNumber(setup->wordset, 0, occupy->black_level + occupy->white_level, 5, 
-    STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT); // level + 1 = 表示を1origin化
-  WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
-  PRINT_UTIL_Print(&msw->print_util[BMPWIN_LEVEL], setup->printQue, 
-    0, 0, expand_strbuf, setup->font_handle);
+  //-------------------
+  // 開催したミッション
+  //-------------------
+  GFL_MSG_GetString(setup->mm_monolith, status_mestbl[1], strbuf);
+  PRINT_UTIL_Print(&msw->print_util[BMPWIN_OPEN], setup->printQue, 
+    0, 0, strbuf, setup->font_handle);
   
-  //ブラックのレベル
-  GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_004, strbuf);
-  WORDSET_RegisterNumber(setup->wordset, 0, occupy->black_level, 4, 
+  //開催したミッションの回数
+  GFL_MSG_GetString(setup->mm_monolith, status_mestbl[6], strbuf);
+  WORDSET_RegisterNumber(setup->wordset, 0, tmp, 4, 
     STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
-  PRINT_UTIL_Print(&msw->print_util[BMPWIN_WBLV], setup->printQue, 
-    0, 0, expand_strbuf, setup->font_handle);
-  //ホワイトのレベル
-  GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_003, strbuf);
-  WORDSET_RegisterNumber(setup->wordset, 0, occupy->white_level, 4, 
+  size = ms_get_strsize( expand_strbuf, setup->font_handle, 1 );	// 右
+//  OS_Printf("%d\n",size);
+  PRINT_UTIL_Print(&msw->print_util[BMPWIN_OPEN], setup->printQue, 
+    BMPWIN_OPEN_SIZE_X*8-MES_OFFSET-size, 0, expand_strbuf, setup->font_handle);
+  
+  //--------------------
+  // 参加したミッション
+  //--------------------
+  GFL_MSG_GetString(setup->mm_monolith, status_mestbl[2], strbuf);
+  PRINT_UTIL_Print(&msw->print_util[BMPWIN_JOIN], setup->printQue, 
+    0, 0, strbuf, setup->font_handle);
+  
+  //開催したミッションの回数
+  GFL_MSG_GetString(setup->mm_monolith, status_mestbl[7], strbuf);
+  WORDSET_RegisterNumber(setup->wordset, 0, tmp, 4, 
     STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
-  PRINT_UTIL_Print(&msw->print_util[BMPWIN_WBLV], setup->printQue, 
-    BMPWIN_POS_WBLV_SIZE_X / 2 * 8, 0, expand_strbuf, setup->font_handle);
+  size = ms_get_strsize( expand_strbuf, setup->font_handle, 1 );	// 右
+  PRINT_UTIL_Print(&msw->print_util[BMPWIN_JOIN], setup->printQue, 
+    BMPWIN_JOIN_SIZE_X*8-MES_OFFSET-size, 0, expand_strbuf, setup->font_handle);
   
-  //滞在時間
-  {
-    s64 src_seq;
-    u32 hour, minute;
-    src_seq = appwk->parent->monolith_status.palace_sojourn_time;
-    hour = src_seq / 60 / 60;
-    if(hour > 999){
-      hour = 999;
-      minute = 59;
-    }
-    else{
-      src_seq -= hour * 60 * 60;
-      minute = src_seq / 60;
-    }
-
-    GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_006, strbuf);
-    
-    WORDSET_RegisterNumber(setup->wordset, 0, hour, 3, 
-      STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
-    WORDSET_RegisterNumber(setup->wordset, 1, minute, 2, 
-      STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
-    WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
-    PRINT_UTIL_Print(&msw->print_util[BMPWIN_TIME], setup->printQue, 
-      0, 0, expand_strbuf, setup->font_handle);
-  }
+  //--------------------
+  // 達成したミッション
+  //--------------------
+  GFL_MSG_GetString(setup->mm_monolith, status_mestbl[3], strbuf);
+  PRINT_UTIL_Print(&msw->print_util[BMPWIN_FINISH], setup->printQue, 
+    0, 0, strbuf, setup->font_handle);
   
-  //クリアしたミッションの数
-  GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_007, strbuf);
-  WORDSET_RegisterNumber(setup->wordset, 0, 
-    appwk->parent->monolith_status.clear_mission_count, 5, 
+  //達成したミッションの回数
+  GFL_MSG_GetString(setup->mm_monolith, status_mestbl[8], strbuf);
+  WORDSET_RegisterNumber(setup->wordset, 0, tmp, 4, 
     STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
-  PRINT_UTIL_Print(&msw->print_util[BMPWIN_CLEAR_MISSION], setup->printQue, 
-    0, 0, expand_strbuf, setup->font_handle);
+  size = ms_get_strsize( expand_strbuf, setup->font_handle, 1 );	// 右
+  PRINT_UTIL_Print(&msw->print_util[BMPWIN_FINISH], setup->printQue, 
+    BMPWIN_FINISH_SIZE_X*8-MES_OFFSET-size, 0, expand_strbuf, setup->font_handle);
   
-  //使えるGパワーの数
-  GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_005, strbuf);
-  WORDSET_RegisterNumber(setup->wordset, 0, 
-    MonolithToolEx_CountUsePower(
-    setup->powerdata, MonolithTool_GetOccupyInfo(appwk), 
-    appwk->parent->monolith_status.gpower_distribution_bit), 
-    4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+  //--------------
+  // 最高参加者数
+  //--------------
+  GFL_MSG_GetString(setup->mm_monolith, status_mestbl[4], strbuf);
+  PRINT_UTIL_Print(&msw->print_util[BMPWIN_MEMBER], setup->printQue, 
+    0, 0, strbuf, setup->font_handle);
+  
+  // 参加者数
+  GFL_MSG_GetString(setup->mm_monolith, status_mestbl[9], strbuf);
+  WORDSET_RegisterNumber(setup->wordset, 0, tmp, 4, 
+    STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
-  PRINT_UTIL_Print(&msw->print_util[BMPWIN_USE_GPOWER], setup->printQue, 
-    0, 0, expand_strbuf, setup->font_handle);
+  size = ms_get_strsize( expand_strbuf, setup->font_handle, 1 );	// 右
+  PRINT_UTIL_Print(&msw->print_util[BMPWIN_MEMBER], setup->printQue, 
+    BMPWIN_MEMBER_SIZE_X*8-MES_OFFSET-size, 0, expand_strbuf, setup->font_handle);
+  
+  //--------------
+  // トップスコア
+  //--------------
+  GFL_MSG_GetString(setup->mm_monolith, status_mestbl[5], strbuf);
+  PRINT_UTIL_Print(&msw->print_util[BMPWIN_TOPSCORE], setup->printQue, 
+    0, 0, strbuf, setup->font_handle);
+  
+  // トップスコア数
+  GFL_MSG_GetString(setup->mm_monolith, status_mestbl[10], strbuf);
+  WORDSET_RegisterNumber(setup->wordset, 0, tmp, 4, 
+    STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+  WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
+  size = ms_get_strsize( expand_strbuf, setup->font_handle, 1 );	// 右
+  PRINT_UTIL_Print(&msw->print_util[BMPWIN_TOPSCORE], setup->printQue, 
+    BMPWIN_TOPSCORE_SIZE_X*8-MES_OFFSET-size, 0, expand_strbuf, setup->font_handle);
   
   GFL_STR_DeleteBuffer(strbuf);
   GFL_STR_DeleteBuffer(expand_strbuf);
@@ -556,5 +588,30 @@ static void _Status_CancelIconDelete(MONOLITH_STATUS_WORK *msw)
 static void _Status_CancelIconUpdate(MONOLITH_STATUS_WORK *msw)
 {
   MonolithTool_CancelIcon_Update(&msw->cancel_icon);
+}
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		文字列表示サイズから各モードの補正値を取得(static)
+ *				(ui/printtoolから持ってきた)
+ *
+ * @param		buf			文字列
+ * @param		font		フォント
+ * @param		mode		表示モード(0-2)
+ *
+ * @return	補正値
+ */
+//--------------------------------------------------------------------------------------------
+static u16 ms_get_strsize( const STRBUF * buf, GFL_FONT * font, u32 mode )
+{
+	// 右詰
+	if( mode == 1 ){
+		return PRINTSYS_GetStrWidth( buf, font, 0 );
+	// 中央
+	}else if( mode == 2 ){
+		return ( PRINTSYS_GetStrWidth( buf, font, 0 ) / 2 );
+	}
+	return 0;
 }
 

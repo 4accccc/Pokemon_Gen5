@@ -41,7 +41,7 @@ enum{
   BMPWIN_POS_TITLE_Y = 0,
   BMPWIN_POS_TITLE_SIZE_X = 32 - BMPWIN_POS_TITLE_X,
   BMPWIN_POS_TITLE_SIZE_Y = 3,
-
+  
   //合計レベル
   BMPWIN_POS_LEVEL_X = 2,
   BMPWIN_POS_LEVEL_Y = 5,
@@ -56,7 +56,7 @@ enum{
   
   //使えるGパワーの数
   BMPWIN_POS_USE_GPOWER_X = 2,
-  BMPWIN_POS_USE_GPOWER_Y = BMPWIN_POS_WBLV_Y + 2,
+  BMPWIN_POS_USE_GPOWER_Y = BMPWIN_POS_WBLV_Y + 3,
   BMPWIN_POS_USE_GPOWER_SIZE_X = 32 - BMPWIN_POS_USE_GPOWER_X,
   BMPWIN_POS_USE_GPOWER_SIZE_Y = 2,
 };
@@ -112,6 +112,15 @@ static const GFL_UI_TP_HITTBL StatusTouchRect[] = {
     CANCEL_POS_X + CANCEL_TOUCH_RANGE_HALF,
   },
   { GFL_UI_TP_HIT_END, 0, 0, 0 },
+};
+
+// メッセージのID
+static const s16 upstatus_mes_tbl[] = {
+  msg_mono_title_000,	// ハイルツリー
+  msg_mono_st_000,		// ハイルツリーのごうけいLV
+  msg_mono_st_004,		// ブラック
+  msg_mono_st_003,		// ホワイト
+  msg_mono_st_005,		// 使えるGパワー
 };
 
 //==============================================================================
@@ -326,7 +335,7 @@ static void _UpSetup_BmpWin_Create(MONOLITH_SETUP *setup, MONOLITH_UPSTATUS_WORK
   int i;
   
   frm = GFL_BG_FRAME0_M;
-  //モノリスタイトル
+  //タイトル
 //  msw->bmpwin[BMPWIN_TITLE] = GFL_BMPWIN_Create(GFL_BG_FRAME0_S, 
   msw->bmpwin[BMPWIN_TITLE] = GFL_BMPWIN_Create( frm, 
     BMPWIN_POS_TITLE_X, BMPWIN_POS_TITLE_Y, 
@@ -335,7 +344,7 @@ static void _UpSetup_BmpWin_Create(MONOLITH_SETUP *setup, MONOLITH_UPSTATUS_WORK
   GFL_BMPWIN_TransVramCharacter( msw->bmpwin[BMPWIN_TITLE] );
   GFL_BMPWIN_MakeScreen( msw->bmpwin[BMPWIN_TITLE] );
 
-  //モノリスレベル
+  //レベル合計
 //  msw->bmpwin[BMPWIN_LEVEL] = GFL_BMPWIN_Create(GFL_BG_FRAME0_S, 
   msw->bmpwin[BMPWIN_LEVEL] = GFL_BMPWIN_Create( frm, 
     BMPWIN_POS_LEVEL_X, BMPWIN_POS_LEVEL_Y, 
@@ -344,7 +353,7 @@ static void _UpSetup_BmpWin_Create(MONOLITH_SETUP *setup, MONOLITH_UPSTATUS_WORK
   GFL_BMPWIN_TransVramCharacter( msw->bmpwin[BMPWIN_LEVEL] );
   GFL_BMPWIN_MakeScreen( msw->bmpwin[BMPWIN_LEVEL] );
 
-  //モノリスの通称
+  //ブラックとホワイト
 //  msw->bmpwin[BMPWIN_WBLV] = GFL_BMPWIN_Create(GFL_BG_FRAME0_S, 
   msw->bmpwin[BMPWIN_WBLV] = GFL_BMPWIN_Create( frm, 
     BMPWIN_POS_WBLV_X, BMPWIN_POS_WBLV_Y, 
@@ -353,7 +362,7 @@ static void _UpSetup_BmpWin_Create(MONOLITH_SETUP *setup, MONOLITH_UPSTATUS_WORK
   GFL_BMPWIN_TransVramCharacter( msw->bmpwin[BMPWIN_WBLV] );
   GFL_BMPWIN_MakeScreen( msw->bmpwin[BMPWIN_WBLV] );
 
-  //滞在時間
+  //使えるデルパワー
 //  msw->bmpwin[BMPWIN_USE_GPOWER] = GFL_BMPWIN_Create(GFL_BG_FRAME0_S, 
   msw->bmpwin[BMPWIN_USE_GPOWER] = GFL_BMPWIN_Create( frm, 
     BMPWIN_POS_USE_GPOWER_X, BMPWIN_POS_USE_GPOWER_Y, 
@@ -408,12 +417,12 @@ static void _UpWrite_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, M
   expand_strbuf = GFL_STR_CreateBuffer( 256, HEAPID_MONOLITH );
 
   //タイトル
-  GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_008, strbuf);
+  GFL_MSG_GetString(setup->mm_monolith, upstatus_mes_tbl[0], strbuf);
   PRINT_UTIL_Print(&msw->print_util[BMPWIN_TITLE], setup->printQue, 
     0, 4, strbuf, setup->font_handle);
   
   //ハイルツリーのレベル
-  GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_000, strbuf);
+  GFL_MSG_GetString(setup->mm_monolith, upstatus_mes_tbl[1], strbuf);
   WORDSET_RegisterNumber(setup->wordset, 0, occupy->black_level + occupy->white_level, 5, 
     STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT); // level + 1 = 表示を1origin化
   WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
@@ -421,14 +430,14 @@ static void _UpWrite_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, M
     0, 0, expand_strbuf, setup->font_handle);
   
   //ブラックのレベル
-  GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_004, strbuf);
+  GFL_MSG_GetString(setup->mm_monolith, upstatus_mes_tbl[2], strbuf);
   WORDSET_RegisterNumber(setup->wordset, 0, occupy->black_level, 4, 
     STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
   PRINT_UTIL_Print(&msw->print_util[BMPWIN_WBLV], setup->printQue, 
     0, 0, expand_strbuf, setup->font_handle);
   //ホワイトのレベル
-  GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_003, strbuf);
+  GFL_MSG_GetString(setup->mm_monolith, upstatus_mes_tbl[3], strbuf);
   WORDSET_RegisterNumber(setup->wordset, 0, occupy->white_level, 4, 
     STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
@@ -436,7 +445,7 @@ static void _UpWrite_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, M
     BMPWIN_POS_WBLV_SIZE_X / 2 * 8, 0, expand_strbuf, setup->font_handle);
   
   //使えるGパワーの数
-  GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_005, strbuf);
+  GFL_MSG_GetString(setup->mm_monolith, upstatus_mes_tbl[4], strbuf);
   WORDSET_RegisterNumber(setup->wordset, 0, 
     MonolithToolEx_CountUsePower(
     setup->powerdata, MonolithTool_GetOccupyInfo(appwk), 
