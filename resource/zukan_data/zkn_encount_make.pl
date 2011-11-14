@@ -460,75 +460,79 @@ sub ReadEncountFile
                   ($line =~ /("[^"]*(?:""[^"]*)*"|[^,]*),/g);
 
     # @values を処理する
-   
 
-    $zoneseason_tbl[$zoneseason_num][$zoneseason_col_zonename] = $values[$encount_csv_col_zonename];
-    $zoneseason_tbl[$zoneseason_num][$zoneseason_col_season]   = $season_bitflag_tbl{ $values[$encount_csv_col_season] };
-    if( !defined($zoneseason_tbl[$zoneseason_num][$zoneseason_col_season]) )
+    if(!($values[$encount_csv_col_zonename] eq $SKIP_ZONE_ID))
     {
-      # 存在しない季節名
-      die "season \"$zoneseason_tbl[$zoneseason_num][$zoneseason_col_season]\" error, stopped";
-    }
+      print "$values[$encount_csv_col_zonename]\n";
 
-    my $version_difference = 0;  # 0のときバージョン違いなし、1のときバージョン違いあり。
-    if( $values[$encount_csv_col_version_difference] eq $encount_csv_version_difference_mark )
-    {
-      $version_difference = 1;
-    }
-    
-    if(    ( $version eq $version_w )
+      $zoneseason_tbl[$zoneseason_num][$zoneseason_col_zonename] = $values[$encount_csv_col_zonename];
+      $zoneseason_tbl[$zoneseason_num][$zoneseason_col_season]   = $season_bitflag_tbl{ $values[$encount_csv_col_season] };
+      if( !defined($zoneseason_tbl[$zoneseason_num][$zoneseason_col_season]) )
+      {
+        # 存在しない季節名
+        die "season \"$zoneseason_tbl[$zoneseason_num][$zoneseason_col_season]\" error, stopped";
+      }
+
+      my $version_difference = 0;  # 0のときバージョン違いなし、1のときバージョン違いあり。
+      if( $values[$encount_csv_col_version_difference] eq $encount_csv_version_difference_mark )
+      {
+        $version_difference = 1;
+      }
+
+      if(    ( $version eq $version_w )
         || ( $version_difference == 0 ) )
-    {
-      foreach my $ref (@col_tbl)
       {
-        for( my $i=0; $i<$$ref[1]; $i++ )
+        foreach my $ref (@col_tbl)
         {
-          $zoneseason_tbl[$zoneseason_num][$$ref[2]+$i] = $mons_tbl_idx_hash{ $values[$$ref[0]+$i] };
-          if( $values[$$ref[0]+$i] ne "" && (!defined($zoneseason_tbl[$zoneseason_num][$$ref[2]+$i])) )
+          for( my $i=0; $i<$$ref[1]; $i++ )
           {
-            # 存在しないポケモン名
-            die "pokemon name \"$values[$$ref[0]+$i]\" error, stopped";
+            $zoneseason_tbl[$zoneseason_num][$$ref[2]+$i] = $mons_tbl_idx_hash{ $values[$$ref[0]+$i] };
+            if( $values[$$ref[0]+$i] ne "" && (!defined($zoneseason_tbl[$zoneseason_num][$$ref[2]+$i])) )
+            {
+              # 存在しないポケモン名
+              die "pokemon name \"$values[$$ref[0]+$i]\" error, stopped";
+            }
           }
         }
       }
-    }
-    else
-    {
-      foreach my $ref (@col_tbl_b)
+      else
       {
-        for( my $i=0; $i<$$ref[1]; $i++ )
+        foreach my $ref (@col_tbl_b)
         {
-          $zoneseason_tbl[$zoneseason_num][$$ref[2]+$i] = $mons_tbl_idx_hash{ $values[$$ref[0]+$i] };
-          if( $values[$$ref[0]+$i] ne "" && (!defined($zoneseason_tbl[$zoneseason_num][$$ref[2]+$i])) )
+          for( my $i=0; $i<$$ref[1]; $i++ )
           {
-            # 存在しないポケモン名
-            die "pokemon name \"$values[$$ref[0]+$i]\" error, stopped";
+            $zoneseason_tbl[$zoneseason_num][$$ref[2]+$i] = $mons_tbl_idx_hash{ $values[$$ref[0]+$i] };
+            if( $values[$$ref[0]+$i] ne "" && (!defined($zoneseason_tbl[$zoneseason_num][$$ref[2]+$i])) )
+            {
+              # 存在しないポケモン名
+              die "pokemon name \"$values[$$ref[0]+$i]\" error, stopped";
+            }
           }
         }
       }
-    }
 
-    my $zone_season_bitflag = $zone_hash_for_season{ $values[$encount_csv_col_zonename] };
-    if( !defined($zone_season_bitflag) )  # 初登場のゾーン。だから、「このファイルで決めたゾーンID」をここで決める。
-    {
-      $zone_hash_for_season{ $values[$encount_csv_col_zonename] } = $season_bitflag_tbl{ $values[$encount_csv_col_season] };
-      $zone_hash{ $values[$encount_csv_col_zonename] } = $zone_num;
-      $zone_num++;
-    }
-    else  # 2度目(以降)の登場になるゾーン(季節が違う)。だから、「このファイルで決めたゾーンID」は既に決まっているので、ここでは出てきた季節を覚えておくことしかしない。
-    {
-      if( $zone_hash_for_season{ $values[$encount_csv_col_zonename] } & $season_bitflag_tbl{ $values[$encount_csv_col_season] } )  # 出てきた季節を覚える前に、既出の季節でないかチェックする
+      my $zone_season_bitflag = $zone_hash_for_season{ $values[$encount_csv_col_zonename] };
+      if( !defined($zone_season_bitflag) )  # 初登場のゾーン。だから、「このファイルで決めたゾーンID」をここで決める。
       {
-        # 既出の季節
-        die "season overlap \"$values[$encount_csv_col_zonename]\" \"$values[$encount_csv_col_season]\" error, stopped";
+        $zone_hash_for_season{ $values[$encount_csv_col_zonename] } = $season_bitflag_tbl{ $values[$encount_csv_col_season] };
+        $zone_hash{ $values[$encount_csv_col_zonename] } = $zone_num;
+        $zone_num++;
       }
-      $zone_hash_for_season{ $values[$encount_csv_col_zonename] } |= $season_bitflag_tbl{ $values[$encount_csv_col_season] };
+      else  # 2度目(以降)の登場になるゾーン(季節が違う)。だから、「このファイルで決めたゾーンID」は既に決まっているので、ここでは出てきた季節を覚えておくことしかしない。
+      {
+        if( $zone_hash_for_season{ $values[$encount_csv_col_zonename] } & $season_bitflag_tbl{ $values[$encount_csv_col_season] } )  # 出てきた季節を覚える前に、既出の季節でないかチェックする
+        {
+          # 既出の季節
+          die "season overlap \"$values[$encount_csv_col_zonename]\" \"$values[$encount_csv_col_season]\" error, stopped";
+        }
+        $zone_hash_for_season{ $values[$encount_csv_col_zonename] } |= $season_bitflag_tbl{ $values[$encount_csv_col_season] };
+      }
+      $zoneseason_tbl[$zoneseason_num][$zoneseason_col_zoneid] = $zone_hash{ $values[$encount_csv_col_zonename] };
+
+      $zoneseason_num++;
+
+
     }
-    $zoneseason_tbl[$zoneseason_num][$zoneseason_col_zoneid] = $zone_hash{ $values[$encount_csv_col_zonename] };
-
-    $zoneseason_num++;
-
-
   }
 
 
