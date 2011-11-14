@@ -1094,11 +1094,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Place ]の
+			<Text>[Name:Place ]
 つりざおで　つれる　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-05T03:22:38" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-14T03:30:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1106,11 +1106,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Place ]の
+			<Text>[Name:Place ]
 釣りざおで　釣れる　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-05T03:23:03" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-14T03:30:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1991,14 +1991,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>みる条件達成時
-くさむら</Comment>
+くさむら
+※削除ラベル</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-05T03:33:40" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-14T03:32:08" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8000</CellData>
+			<CellData>#000000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2034,14 +2035,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>みる条件達成時
-すなち</Comment>
+すなち
+※削除ラベル</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-05T03:33:44" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-14T03:32:16" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8000</CellData>
+			<CellData>#000000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2077,14 +2079,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>みる条件達成時
-ぬまち</Comment>
+ぬまち
+※削除ラベル</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-05T03:33:47" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-14T03:32:19" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8000</CellData>
+			<CellData>#000000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2120,14 +2123,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>みる条件達成時
-洞窟内</Comment>
+洞窟内
+※削除ラベル</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-05T03:33:51" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-14T03:32:21" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8000</CellData>
+			<CellData>#000000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2163,14 +2167,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>みる条件達成時
-すいじょう</Comment>
+すいじょう
+※削除ラベル</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-05T03:33:54" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-14T03:32:24" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8000</CellData>
+			<CellData>#000000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2206,14 +2211,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>みる条件達成時
-つり</Comment>
+つり
+※削除ラベル</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-05T03:33:56" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-14T03:32:27" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8000</CellData>
+			<CellData>#000000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2249,14 +2255,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>みる条件達成時
-混合時</Comment>
+混合時
+※削除ラベル</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-06T04:40:30" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-14T03:32:29" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8000</CellData>
+			<CellData>#000000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2292,14 +2299,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>捕獲条件達成時
-くさむら</Comment>
+くさむら
+※削除ラベル</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-06T04:39:33" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-14T03:32:32" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8000</CellData>
+			<CellData>#000000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2336,14 +2344,14 @@
 			Language="JPN">
 			<Comment>捕獲条件達成時
 すなち
-</Comment>
+※削除ラベル</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-06T04:39:33" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-14T03:32:35" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8000</CellData>
+			<CellData>#000000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2379,14 +2387,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>捕獲条件達成時
-ぬまち</Comment>
+ぬまち
+※削除ラベル</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-06T04:39:33" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-14T03:32:38" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8000</CellData>
+			<CellData>#000000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2422,14 +2431,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>捕獲条件達成時
-洞窟内</Comment>
+洞窟内
+※削除ラベル</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-06T04:39:33" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-14T03:32:40" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8000</CellData>
+			<CellData>#000000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2465,14 +2475,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>捕獲条件達成時
-すいじょう</Comment>
+すいじょう
+※削除ラベル</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-06T04:39:33" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-14T03:32:43" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8000</CellData>
+			<CellData>#000000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2508,14 +2519,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>捕獲条件達成時
-つり</Comment>
+つり
+※削除ラベル</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-06T04:39:33" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-14T03:32:45" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8000</CellData>
+			<CellData>#000000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2551,14 +2563,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>捕獲条件達成時
-混合時</Comment>
+混合時
+※削除ラベル</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-06T04:41:43" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-14T03:32:48" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8000</CellData>
+			<CellData>#000000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2593,11 +2606,19 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>捕獲条件達成時
-橋</Comment>
+橋
+※削除ラベル</Comment>
 			<CommentModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-09-17T08:02:04" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-14T03:32:52" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#000000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_seisoku_result_16"
@@ -2629,14 +2650,15 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>みる条件達成時
-橋</Comment>
+橋
+※削除ラベル</Comment>
 			<CommentModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-09-17T08:03:14" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-14T03:32:54" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8000</CellData>
+			<CellData>#000000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
