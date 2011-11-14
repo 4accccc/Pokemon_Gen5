@@ -51,7 +51,7 @@ class CMonsterData
 end
 
 # ポケモンデータの出力
-def OutPuPokeInfo( poke_data , prob ,zone_cnt ,season_appear,pi_f )
+def OutPuPokeInfo( poke_data , prob ,zone_group ,zone_cnt ,season_appear,pi_f )
   GTYPE_MAX.times{|g_type|
     pi_f.puts " 四季 :%s"%[season_appear[g_type]]
     pi_f.puts "【 %s 】"%[$ground_type_name[g_type]]
@@ -59,7 +59,7 @@ def OutPuPokeInfo( poke_data , prob ,zone_cnt ,season_appear,pi_f )
       poke_data[g_type].each_key{|season|
         pi_f.print "%s(%2d種類):"%[$season_name[season],poke_data[g_type][season].size]
         if poke_data[g_type][season].size > 20 then
-          raise "20種類以上使用されています"
+          raise "20種類以上使用されています->%s"%[zone_group]
         end
         poke_data[g_type][season].each{|mons_data|
           is_star = false
@@ -337,7 +337,7 @@ zone_group_data.each_key{|zone_group|
   pi_f.puts " 黒地形 :%s"%[$info_ground_type_name[data.black_ground_type]]
 
   # ホワイト
-  OutPuPokeInfo( data.white_data ,data.white_prob ,data.GetZoneCnt ,data.ground_season_w ,pi_f )
+  OutPuPokeInfo( data.white_data ,data.white_prob ,zone_group ,data.GetZoneCnt ,data.ground_season_w ,pi_f )
 
   pi_f.puts "--------------------------------------------------------------"
 
@@ -345,7 +345,7 @@ zone_group_data.each_key{|zone_group|
   pi_f.puts "【 %s(ブラック) 】"%[zone_group]
 
   # ブラック
-  OutPuPokeInfo( data.black_data ,data.black_prob ,data.GetZoneCnt ,data.ground_season_b ,pi_f )
+  OutPuPokeInfo( data.black_data ,data.black_prob ,zone_group ,data.GetZoneCnt ,data.ground_season_b ,pi_f )
 
 }
 pi_f.close
