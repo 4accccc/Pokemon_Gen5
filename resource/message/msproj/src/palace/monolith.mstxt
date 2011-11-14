@@ -3665,14 +3665,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>デルパワーは　３つまでしか
-うけとれません！▼
-あたらしく　デルパワーを
-うけとる　ために▽
-ハイルツリーに　かえす▽
-デルパワーを　えらんでください</Text>
+受け取れません！▼
+新しく　デルパワーを
+受け取る　ために▽
+ハイルツリーに　返す▽
+デルパワーを　選んでください</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-10-27T05:38:45" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-14T06:53:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -3680,11 +3680,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>パワー画面：上</Comment>
+			<Comment>パワー画面
+
+SWAN追加</Comment>
 			<CommentModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-10-27T05:39:05" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-14T06:59:07" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_mono_pow_up_101"
@@ -3708,14 +3717,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>『[Name:PMS ]』　を
-ハイルツリーに　かえし▼
+ハイルツリーに　返し▼
 『[Name:PMS Idx="1" ]』を
-ハイルツリーから　うけとった！▼
-うけとった『[Name:PMS Idx="1" ]』を
-Ｃギアに　とうろくした！</Text>
+ハイルツリーから　受け取った！▼
+受け取った『[Name:PMS Idx="1" ]』を
+Ｃ－ＧＥＡＲに　登録した！</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-10-27T05:42:06" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-14T06:54:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -3723,11 +3732,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>パワー画面：上</Comment>
+			<Comment>パワー画面
+
+SWAN追加</Comment>
 			<CommentModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-10-27T05:42:12" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-14T06:59:05" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_mono_pow_up_102"
@@ -3758,8 +3776,15 @@
 			Language="JPN">
 			<Comment>パワー画面</Comment>
 			<CommentModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-10-27T07:00:51" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-14T06:52:48" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>
