@@ -451,10 +451,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　こおりの　せかいは……▼</Text>
+			<Text>なんだ？
+なにが　とんできている……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-09T06:46:04" />
+				Time="2011-11-14T10:03:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -462,10 +463,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この氷の　世界は……▼</Text>
+			<Text>なんだ？
+なにが　飛んできている……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-09T06:46:09" />
+				Time="2011-11-14T10:03:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -487,6 +489,56 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-09T11:22:46" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c08_swleader7_04a"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　こおりの　せかいは……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:01:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:01:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この氷の　世界は……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:01:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:01:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・デモ終了後にメッセージ表示
+・続けてswleader7_05</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:02:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER7
+ジムリーダー・シャガ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T10:01:58" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

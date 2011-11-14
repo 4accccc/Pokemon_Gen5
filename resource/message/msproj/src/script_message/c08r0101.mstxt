@@ -478,10 +478,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どごおおっおっ！！▼</Text>
+			<Text>……ぶぅん▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T05:58:58" />
+				Time="2011-11-14T09:59:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -489,10 +489,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どごおおっおっ！！▼</Text>
+			<Text>……ぶぅん▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T05:59:02" />
+				Time="2011-11-14T09:59:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -501,12 +501,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ギザウインで
-・爆音SE+画面ゆれ
 ・続けてswleader7_06</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T05:59:18" />
+				Time="2011-11-14T10:00:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -528,10 +526,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャガ『なにごと　だ？▼</Text>
+			<Text>シャガ『ん？▼
+なんの　おとだ……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T06:19:18" />
+				Time="2011-11-14T10:03:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -539,10 +538,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シャガ『なにごと　だ？▼</Text>
+			<Text>シャガ『ん？▼
+なんの　音だ……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T06:19:21" />
+				Time="2011-11-14T10:03:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
