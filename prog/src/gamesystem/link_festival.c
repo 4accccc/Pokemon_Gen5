@@ -38,9 +38,9 @@ static void lnkfes_BeaconSend( LINK_FESTIVAL* wk );
 static void topscore_Clear( LINK_FESTIVAL* wk, LINKFEST_LOG_TOP_SCORE* tsp );
 static void log_ClearAll( LINK_FESTIVAL* wk );
 static void log_LastMissionLogStore( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk );
-static BOOL log_CheckEgnoreLog( LINK_FESTIVAL* wk, const FEST_BEACON* beacon );
-static void log_mission_LogStore( LINKFEST_LOG* log, const FEST_BEACON* beacon );
-static BOOL log_mission_IsSame( LINKFEST_LOG* log, const FEST_BEACON* beacon );
+static BOOL log_CheckEgnoreLog( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk );
+static void log_mission_LogStore( LINKFEST_LOG* log, const FEST_MISSION* fmwk );
+static BOOL log_mission_IsSame( LINKFEST_LOG* log, const FEST_MISSION* fmwk );
 
 
 static void festlog_Clear( LINKFEST_LOG* log );
@@ -167,7 +167,7 @@ void LINK_FESTIVAL_GetBeaconSendParam( LINK_FESTIVAL* wk, FEST_BEACON* dat, u16 
 //---------------------------------------------------------
 u16 LINK_FESTIVAL_GetMyScore( LINK_FESTIVAL* wk )
 {
-  return wk->m_beacon->my_score;
+  return wk->mission.my_score;
 }
 
 //---------------------------------------------------------
@@ -204,7 +204,7 @@ void LINK_FESTIVAL_GetMissionStatus( LINK_FESTIVAL* wk, LINKFEST_MISSION_STATUS*
   MI_CpuClear8( sp, sizeof(LINKFEST_MISSION_STATUS) );
 
   sp->entry_num = wk->log_num+1;  //自分も含めるので+1
-  sp->my_score = wk->m_beacon->my_score;
+  sp->my_score = wk->mission.my_score;
   sp->total_score = LINK_FESTIVAL_GetNowScore( wk );
  
   //自分のスコアのランキングを取得
@@ -425,7 +425,7 @@ u16 LINK_FESTIVAL_FInfoMyScoreGet( LINK_FESTIVAL* wk )
 void LINK_FESTIVAL_FInfoScoreUpdate( LINK_FESTIVAL* wk, u16 now_total_score )
 {
   wk->finfo_total_score = now_total_score;
-  wk->finfo_my_score = wk->m_beacon->my_score;
+  wk->finfo_my_score = wk->mission.my_score;
 }
 
 //---------------------------------------------------------
@@ -486,7 +486,7 @@ void* LINK_FESTIVAL_GetMissionGimmickWork( LINK_FESTIVAL* wk )
 u32 LINK_FESTIVAL_GetNowScore( LINK_FESTIVAL* wk )
 {
   int i;
-  u32 score = wk->m_beacon->my_score;
+  u32 score = wk->mission.my_score;
 
   if( FEST_MISSION_IsEntry(&wk->mission) == FALSE){
     return 0;
@@ -572,7 +572,7 @@ BOOL LINK_FESTIVAL_MissionScoreCalc( GAMESYS_WORK* gsys, FMISSION_LOG_ACTION act
   ret = FEST_MISSION_ScoreCalc( &wk->mission, action, param, 1 );  //スコア加算は1固定
 
   if( ret ){
-    LINK_FESTIVAL_TopScoreUpdate( wk, 0, wk->m_beacon->my_score, NULL );
+    LINK_FESTIVAL_TopScoreUpdate( wk, 0, wk->mission.my_score, NULL );
   }
   return ret;
 }
@@ -592,60 +592,6 @@ int LINK_FESTIVAL_GetMissionEntryNum( LINK_FESTIVAL* wk )
 
 //---------------------------------------------------------
 /*
- * @brief リンクフェスティバル　ログストア
- *
- * @param log 情報を格納したLINKFEST_LOG構造体型ワークへのポインタ
- */
-//---------------------------------------------------------
-LINKFEST_SCORELOG_SET_CODE LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKFEST_LOG_PARAM* src, BOOL with_param, int* log_score )
-{
-  int i;
-  LINKFEST_LOG* log;
-  *log_score = 0;
-
-  if( (with_param) && 
-      (wk->m_beacon->m_id != src->m_id || wk->m_beacon->key != src->key || wk->m_beacon->base_param != src->base_param ) ){
-    return LINKFEST_SCORELOG_SET_FAILED;  //違うミッションなのではじく
-  }
-  for(i = 0;i < wk->log_num; i++){
-    log = &wk->log[i];
-
-    if( log->score.tr_id == src->prm.score.tr_id ){ //上書き
-      u16 root = log->score.tmap_root;
-      u32 value = log->score.value;
-
-      log->score = src->prm.score;  //構造体コピー
-      if( !with_param ){
-        log->score.value = value; //パラメータ無しタイプはスコア取得できないので元の値を書き戻す
-      }
-//      OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS log%d up tr_id=%d, score=%d\n",i, log->score.tr_id,log->score.value );
-
-      *log_score = log->score.value;  //今のスコアを返す
-
-      if( root != src->prm.score.tmap_root ){
-        return LINKFEST_SCORELOG_SET_MAP_CHANGE;
-      }
-      return LINKFEST_SCORELOG_SET_UPDATE;
-    }
-  }
-  if( !with_param ){
-    return LINKFEST_SCORELOG_SET_FAILED;  //ミッションパラメータを持たないタイプは、新規では取得しない
-  }
-  if( wk->log_num >= LINKFEST_LOG_MAX ){
-//    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS BufFull\n");
-    return LINKFEST_SCORELOG_SET_FAILED;  //もう入らない
-  }
-  //新規
-  log = &wk->log[wk->log_num];
-  log->score = src->prm.score;
-  *log_score = log->score.value;  //今のスコアを返す
-//  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS nLog%d tr_id=%d, score=%d\n",wk->log_num, log->score.tr_id,log->score.value );
-  ++wk->log_num;
-  return LINKFEST_SCORELOG_SET_NEW_ENTRY;
-}
-
-//---------------------------------------------------------
-/*
  * @brief リンクフェスティバル　無視したミッションのログをストア
  *
  * @param fmwk ミッション情報を格納したFEST_MISSION構造体型ワークへのポインタ
@@ -661,14 +607,14 @@ void LINK_FESTIVAL_EgnoreLogStore( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk )
     return;
   }
   //同じログがあるか？
-  if( log_CheckEgnoreLog( wk, beacon )){
+  if( log_CheckEgnoreLog( wk, fmwk )){
     return;
   }
   //新規
   log = &wk->log[wk->log_idx];
-  log_mission_LogStore( log, beacon );
+  log_mission_LogStore( log, fmwk );
   OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS nLogEgnore%d num=%d, id=%d, key=%08x, param=%d\n",
-    wk->log_idx, wk->log_num, beacon->m_id, beacon->key, beacon->base_param );
+    wk->log_idx, wk->log_num, beacon->m_id, fmwk->key, beacon->base_param );
 
   wk->log_idx = (wk->log_idx + 1)%LINKFEST_LOG_MAX;
   if( wk->log_num < LINKFEST_LOG_MAX ){
@@ -683,36 +629,43 @@ void LINK_FESTIVAL_EgnoreLogStore( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk )
 /*
  * @brief リンクフェスティバル　無視するミッションかチェック
  *
- * @param beacon フェスビーコン情報を格納したFEST_BEACON構造体型ワークへのポインタ
+ * @param fmwk フェスビーコン情報を格納したFEST_MISSION構造体型ワークへのポインタ
  */
 //---------------------------------------------------------
-BOOL LINK_FESTIVAL_IsEgnoreMission( LINK_FESTIVAL* wk, const FEST_BEACON* beacon )
+BOOL LINK_FESTIVAL_IsEgnoreMission( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk )
 {
   int i;
   LINKFEST_LOG* log;
+  const FEST_BEACON* beacon = &fmwk->beacon;
 
-  IWASAWA_Printf("MissionIsEgnore last( %d,%08x,%d) now(%d,%08x,%d)",
+  IWASAWA_Printf("MissionIsEgnore last( %d,%08x,%d) now(%d,%08x,%d) ",
     wk->last.mission.m_id,wk->last.mission.key, wk->last.mission.base_param,
-    beacon->m_id, beacon->key, beacon->base_param );
+    beacon->m_id, fmwk->key, beacon->base_param );
 
+  //チュートリアルミッションは無視
+  if( fmwk->beacon.m_id == 0 ){
+    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS Egnore0 m_id=%d, key=%08x, param=%d\n",
+      beacon->m_id, fmwk->key, beacon->base_param );
+    return TRUE;
+  }
   //最後のミッションと同一か？
   if( wk->last.mission.m_id != FMISSION_ID_NULL &&
-      log_mission_IsSame( &wk->last, beacon ))
+      log_mission_IsSame( &wk->last, fmwk ))
   {
     OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS Egnore1 m_id=%d, key=%08x, param=%d\n",
-      beacon->m_id, beacon->key, beacon->base_param );
+      beacon->m_id, fmwk->key, beacon->base_param );
     return TRUE;
   }
   //無視ログ登録されているか？
-  if( log_CheckEgnoreLog( wk, beacon )){
+  if( log_CheckEgnoreLog( wk, fmwk )){
     OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS Egnore2 m_id=%d, key=%08x, param=%d\n",
-      beacon->m_id, beacon->key, beacon->base_param );
+      beacon->m_id, fmwk->key, beacon->base_param );
     return TRUE;
   }
   //制限時間が一定以上か？
   if( beacon->time < LINKFEST_LIFE_LIMIT ){
     OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS Egnore3 m_id=%d, key=%08x, param=%d time=%dsec\n",
-      beacon->m_id, beacon->key, beacon->base_param, beacon->time );
+      beacon->m_id, fmwk->key, beacon->base_param, beacon->time );
     return TRUE;
   }
   return FALSE;
@@ -730,10 +683,10 @@ void LINK_FESTIVAL_TopScoreUpdate( LINK_FESTIVAL* wk, u16 tr_id, u16 score, STRB
   if( name == NULL ){ //プレイヤー
     MYSTATUS* my = GAMEDATA_GetMyStatus( wk->gdata );
 
-    if( tsp->score >= wk->m_beacon->my_score ){
+    if( tsp->score >= wk->mission.my_score ){
       return;
     }
-    tsp->score = wk->m_beacon->my_score;
+    tsp->score = wk->mission.my_score;
     tsp->tr_id = MyStatus_GetID_Low( my );
     MyStatus_CopyNameString( my, tsp->name );
   }else{
@@ -774,27 +727,6 @@ void LINK_FESTIVAL_TopScoreGet( LINK_FESTIVAL* wk, LINKFEST_LOG_TOP_SCORE* tsp )
   tsp->score = wk->top_score->score;
   GFL_STR_CopyBuffer( tsp->name, wk->top_score->name );
   wk->top_score_update_f = FALSE;
-}
-
-//---------------------------------------------------------
-/*
- * @brief リンクフェスティバル　ログ構造体クリア
- */
-//---------------------------------------------------------
-void LINKFEST_LOG_Clear( LINKFEST_LOG* log )
-{
-  MI_CpuClear8( log, sizeof(LINKFEST_LOG) );
-}
-
-//---------------------------------------------------------
-/*
- * @brief リンクフェスティバル　ログパラメータ構造体クリア
- */
-//---------------------------------------------------------
-void LINKFEST_LOG_PARAM_Clear( LINKFEST_LOG_PARAM* log_prm )
-{
-  MI_CpuClear8( log_prm, sizeof(LINKFEST_LOG_PARAM) );
-  LINKFEST_LOG_Clear( &log_prm->prm );
 }
 
 //---------------------------------------------------------
@@ -867,7 +799,7 @@ static void lnkfes_BeaconSend( LINK_FESTIVAL* wk )
     --wk->beacon_timer;
     return;
   }
-  GAMEBEACON_Set_FestMission();
+//  GAMEBEACON_Set_FestMission();
   wk->beacon_timer = wk->beacon_wait;
 }
 
@@ -925,7 +857,7 @@ static void log_ClearAll( LINK_FESTIVAL* wk )
 static void log_LastMissionLogStore( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk )
 {
   LINKFEST_LOG_Clear( &wk->last );
-  log_mission_LogStore( &wk->last, &fmwk->beacon );
+  log_mission_LogStore( &wk->last, fmwk );
 }
 
 //---------------------------------------------------------
@@ -933,13 +865,13 @@ static void log_LastMissionLogStore( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk
  * @brief リンクフェスティバル　指定ミッションが無視ログ内にあるかチェック
  */
 //---------------------------------------------------------
-static BOOL log_CheckEgnoreLog( LINK_FESTIVAL* wk, const FEST_BEACON* beacon )
+static BOOL log_CheckEgnoreLog( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk )
 {
   int i,idx;
 
   idx = ((int)wk->log_idx+LINKFEST_LOG_END)%LINKFEST_LOG_MAX;
   for(i = 0;i < wk->log_num;i++){
-    if( log_mission_IsSame( &wk->log[idx], beacon )){
+    if( log_mission_IsSame( &wk->log[idx], fmwk )){
       return TRUE;
     }
     idx = (idx+LINKFEST_LOG_END)%LINKFEST_LOG_MAX;
@@ -952,11 +884,10 @@ static BOOL log_CheckEgnoreLog( LINK_FESTIVAL* wk, const FEST_BEACON* beacon )
  * @brief リンクフェスティバル　ミッションログストア
  */
 //---------------------------------------------------------
-static void log_mission_LogStore( LINKFEST_LOG* log, const FEST_BEACON* beacon )
+static void log_mission_LogStore( LINKFEST_LOG* log, const FEST_MISSION* fmwk )
 {
-  log->mission.m_id = beacon->m_id;
-  log->mission.key = beacon->key;
-  log->mission.base_param = beacon->base_param;
+  log->mission.key = fmwk->key;
+  log->mission.id_param = fmwk->beacon.id_param;
 }
 
 
@@ -965,11 +896,10 @@ static void log_mission_LogStore( LINKFEST_LOG* log, const FEST_BEACON* beacon )
  * @brief リンクフェスティバル　ミッションログと同じミッションか？
  */
 //---------------------------------------------------------
-static BOOL log_mission_IsSame( LINKFEST_LOG* log, const FEST_BEACON* beacon )
+static BOOL log_mission_IsSame( LINKFEST_LOG* log, const FEST_MISSION* fmwk)
 {
-  if( log->mission.key != beacon->key ||
-      log->mission.m_id != beacon->m_id ||
-      log->mission.base_param != beacon->base_param ){
+  if( log->mission.key != fmwk->key ||
+      log->mission.id_param != fmwk->beacon.id_param ){
       return FALSE; //違うミッション
   }
   return TRUE;

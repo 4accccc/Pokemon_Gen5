@@ -94,6 +94,7 @@ NETWORKSRC =  net/net_icondata.c \
         net_app/gds/gds_main.c \
         gamesystem/g_power.c \
         gamesystem/link_festival.c \
+        gamesystem/link_festival_log.c \
         gamesystem/fest_mission.c \
         gamesystem/fmission_log.c
 

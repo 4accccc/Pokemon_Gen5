@@ -1,0 +1,89 @@
+//==============================================================================
+/**
+ * @file    link_festival_log.c
+ * @brief   リンクフェスティバル の開催ログ収集関連
+ * @author  iwasawa
+ * @date    2011.11.11
+ */
+//==============================================================================
+#include <gflib.h>
+#include "system/gfl_use.h"
+#include "system/main.h"
+#include "gamesystem/gamesystem.h"
+#include "gamesystem/game_comm.h"
+#include "arc_def.h"
+
+#include "gamesystem/link_festival.h"
+#include "gamesystem/link_festival_local.h"
+#include "savedata/fmission_save.h"
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル　ログ構造体クリア
+ */
+//---------------------------------------------------------
+void LINKFEST_LOG_Clear( LINKFEST_LOG* log )
+{
+  MI_CpuClear8( log, sizeof(LINKFEST_LOG) );
+  log->mission.m_id = FMISSION_ID_NULL;
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル　ログパラメータ構造体クリア
+ */
+//---------------------------------------------------------
+void LINKFEST_LOG_PARAM_Clear( LINKFEST_LOG_PARAM* log_prm )
+{
+  MI_CpuClear8( log_prm, sizeof(LINKFEST_LOG_PARAM) );
+  FEST_MISSION_Clear( &log_prm->m_data );
+  LINKFEST_LOG_Clear( &log_prm->prm );
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル　ログストア
+ *
+ * @param log 情報を格納したLINKFEST_LOG構造体型ワークへのポインタ
+ */
+//---------------------------------------------------------
+LINKFEST_SCORELOG_SET_CODE LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKFEST_LOG_PARAM* src, int* log_score )
+{
+  int i;
+  LINKFEST_LOG* log;
+  *log_score = 0;
+
+  if( !FEST_MISSION_IsSame(&wk->mission, &src->m_data) ){
+    return LINKFEST_SCORELOG_SET_FAILED;  //違うミッションなのではじく
+  }
+  for(i = 0;i < wk->log_num; i++){
+    log = &wk->log[i];
+
+    if( log->score.tr_id == src->prm.score.tr_id ){ //上書き
+      u16 root = log->score.tmap_root;
+      u32 value = log->score.value;
+
+      log->score = src->prm.score;  //構造体コピー
+//    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS log%d up tr_id=%d, score=%d\n",i, log->score.tr_id,log->score.value );
+
+      *log_score = log->score.value;  //今のスコアを返す
+
+      if( root != src->prm.score.tmap_root ){
+        return LINKFEST_SCORELOG_SET_MAP_CHANGE;
+      }
+      return LINKFEST_SCORELOG_SET_UPDATE;
+    }
+  }
+  if( wk->log_num >= LINKFEST_LOG_MAX ){
+//    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS BufFull\n");
+    return LINKFEST_SCORELOG_SET_FAILED;  //もう入らない
+  }
+  //新規
+  log = &wk->log[wk->log_num];
+  log->score = src->prm.score;
+  *log_score = log->score.value;  //今のスコアを返す
+//  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"FMIS nLog%d tr_id=%d, score=%d\n",wk->log_num, log->score.tr_id,log->score.value );
+  ++wk->log_num;
+  return LINKFEST_SCORELOG_SET_NEW_ENTRY;
+}
+

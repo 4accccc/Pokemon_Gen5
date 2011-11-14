@@ -19,6 +19,8 @@ typedef enum{
   FM_CHECK_SCORE_SUCCESS_UP,  //スコアがあがった
 }FM_CHECK_SCORE_RET;
 
+#define GAMEBEACON_BUFLEN_FOR_ACTION  (10)  //アクションで送れる文字数バッファのサイズ(バッファが20byteなのでEOM抜き10文字まで)
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -151,6 +153,18 @@ extern BOOL GAMEBEACON_SUB_CheckPriority(u16 action_no);
  */
 //==================================================================
 extern BOOL GAMEBEACON_SUB_PokeBeaconTypeIsSpecial(const monsno );
+
+//--------------------------------------------------------------
+/**
+ * @brief 文字数がFullの場合はEOMを差し込まないビーコンアクション用独自コピー処理
+ * ※EOM込みのバッファ長を確保できるものは、GFL_STR_GetStringCode()を使うこと
+ *
+ * @param   src_buf		  コピー元STRBUF
+ * @param   dest		    コピー先STRCODEバッファ
+ * @param   len	  	    コピーしたいSTRCODEバッファ長(=EOM抜きの文字数 GAMEBEACON_BUFLEN_FOR_ACTIONまで)
+ */
+//--------------------------------------------------------------
+extern void GAMEBEACON_SUB_GetStringCodeForAction(const STRBUF *src, STRCODE *dest, u32 len );
 
 //--------------------------------------------------------------
 /**

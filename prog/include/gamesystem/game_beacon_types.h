@@ -70,6 +70,11 @@ typedef struct{
                                  //最大サイズであるnormalを縮小し、共用体自体のアライメントも阻止
                                  //し、結果的に構造体全体のサイズを縮めている
     u16 resort_extend_type;
+
+    struct{ ///<本当はfest_beaconの中にいるべきだが、入りきらないのでこの領域を利用
+      u16 score:14; ///<フェスミッションのスコア(max=FMISSION_SCORE_MAX=9999)
+      u16 fword_sid:2;  ///<メッセージ入力時に使用したショートカットのID NAMEIN_SHORTCUT_RET in include/app/name_input.h
+    }fmission;
   };
 
   //action_noによってセットされるものが変わる
@@ -105,7 +110,7 @@ typedef struct{
       u8  tournament_id;  ///<WBTトーナメントID
       u8  round;          ///<何回戦か？
     }wbt;
-    FEST_BEACON  fmission;
+    FEST_BEACON  fest_beacon;
     u8 extend_buff[20];   ///<２０バイトのフリーエリア  リゾートで使用
   };
 }GAMEBEACON_INFO_ACTION;
@@ -153,9 +158,10 @@ struct _GAMEBEACON_INFO{
   u8  medal_count;                            ///<獲得メダル数
   u8  push_medal;                           ///<イチオシメダルID  
 
-  u32 dummy2;                               ///GAMEBEACON_INFOを領域末尾に含むビーコンのユーザー領域を定義している
-                                            ///GBS_BEACON構造体(include/field/game_beacon_search.h)のサイズは104byteまでOK。
-                                            ///BWでは100byteだったので、swanでGAMEBEACON_INFOのサイズを4byte足しても問題ないハズ
+  union{  //最大4byteまでの汎用パラメータ領域(アクション別に使い道が異なる。SWでしか解釈できないので注意)
+    u32 ex_param; 
+    u32 fmission_key;
+  };
 };
 
 //==================================================================

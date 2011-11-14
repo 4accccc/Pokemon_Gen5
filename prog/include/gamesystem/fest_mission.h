@@ -12,11 +12,12 @@
 
 #define OSPRINT_LINKFEST_PAGE (2) //OS_FPrintf出力ページ指定
 
+#define FMISSION_FWORD_MESSAGE_LEN  (8) //フェスミッション用フリーワード文字列長 _EOM抜き8文字
 #define BUFLEN_FMISSION_TITLE (15*2+EOM_SIZE) //15文字*2+EOM
-//#define BUFLEN_FMISSION_EXP   (18*3*2+EOM_SIZE) //(18文字*3行)*2+EOM
 #define BUFLEN_FMISSION_EXP   (18*4*2+EOM_SIZE) //(18文字*4行)*2+EOM
 
 ///外部参照用
+typedef union  _FEST_BEACON_ID  FEST_BEACON_ID;
 typedef struct _FEST_BEACON FEST_BEACON;
 typedef struct _FEST_MISSION FEST_MISSION;
 
@@ -144,7 +145,7 @@ extern u32 FEST_MISSION_TimeBonusCalc( FEST_MISSION* fmwk,  u16 score_diff );
  * @brief フェスビーコン比較
  */
 //---------------------------------------------------------
-extern BOOL FEST_BEACON_IsSame( const FEST_BEACON* b1, const FEST_BEACON* b2 );
+extern BOOL FEST_MISSION_IsSame( const FEST_MISSION* f1, const FEST_MISSION* f2 );
 
 //=================================================
 //以下デバッグルーチン

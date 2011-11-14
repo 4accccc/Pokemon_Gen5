@@ -19,7 +19,7 @@ typedef enum{
 ///ミッションログデータ
 struct _FMISSION_LOG{
   STRCODE name[PERSON_NAME_SIZE+EOM_SIZE];  //7+EOM 16byte
-  STRCODE str[GAMEBEACON_FREEWORD_MESSAGE_LEN];  //8+EOM 18byte
+  STRCODE str[FMISSION_FWORD_MESSAGE_LEN+EOM_SIZE];  //8+EOM 18byte
 
   u16     tr_id;      //トレーナーID(下位2byte)
   u8      mine_f:1;   //プレイヤーフラグ
@@ -65,6 +65,18 @@ struct _FMISSION_ENTRY_TBL{
   struct _FMISSION_ENTRY  entry[FMISSION_ENTRY_TBL_MAX];
   int entry_num;
 };
+
+//==================================================================
+/**
+ * フェスタミッションパラメータ取得：
+ * @param   info	ビーコン情報へのポインタ
+ * @param  FEST_MISSION*		データを格納するフェスミッションデータ構造体型ワークへのポインタ
+ *
+ * @retval  TRUE  データ取得成功
+ * @retval  FALSE データ取得失敗
+ */
+//==================================================================
+extern BOOL FMISSION_GetBeaconParam( FEST_MISSION* fmwk, const GAMEBEACON_INFO *info );
 
 //------------------------------------------------------------------
 /*
@@ -112,15 +124,16 @@ extern void FMISSION_LOG_TBL_SetLogFromBeacon( FMISSION_LOG_TBL* tbl, const GAME
 
 //------------------------------------------------------------------
 /*
- *  ミッション開催ログをスタックにセット
+ *  ミッション開始時(開催/参加)ログをスタックにセット
  *
  *  @param  tbl     FMISSION_LOG_TBL型構造体へのポインタ
  *  @param  GAMEDATA*
+ *  @param	entry_f	参加者ならTRUE,開催者ならFALSE
  *
  *  データがいっぱいの場合、先頭のデータをところてん式に押し出して末尾にセット
  */
 //------------------------------------------------------------------
-extern void FMISSION_LOG_TBL_SetLogMissionOpen( FMISSION_LOG_TBL* tbl, GAMEDATA* gdata );
+extern void FMISSION_LOG_TBL_SetLogMissionStart( FMISSION_LOG_TBL* tbl, GAMEDATA* gdata, BOOL entry_f );
 
 //------------------------------------------------------------------
 /*

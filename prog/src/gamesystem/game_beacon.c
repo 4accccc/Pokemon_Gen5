@@ -14,6 +14,7 @@
 #include "gamesystem/game_beacon_types.h"
 #include "gamesystem/fest_mission.h"
 #include "gamesystem/fmission_log_local.h"
+#include "gamesystem/link_festival_log.h"
 #include "msg/msg_beacon_status.h"
 #include "savedata/encount_sv.h"
 #include "savedata/misc.h"
@@ -609,7 +610,7 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
   LINK_FESTIVAL*  fest_sys;
   LINKFEST_LOG_PARAM log;
   LINKFEST_SCORELOG_SET_CODE ret = LINKFEST_SCORELOG_SET_FAILED;
-  BOOL is_entry,with_param;
+  BOOL is_entry;
   int log_score;
 
   if( bsys->gsys == NULL ){
@@ -640,16 +641,11 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
   LINKFEST_LOG_PARAM_Clear( &log );
   log.prm.score.tr_id = info->trainer_id;
   log.prm.score.tmap_root = info->townmap_root_zone_id;
+  log.prm.score.value = info->action.fmission.score;
 
-  with_param = GAMEBEACON_Check_FestMissionWithParam( info );
-  if( with_param ){
-    log.m_id = info->action.fmission.m_id;
-    log.key = info->action.fmission.key;
-    log.base_param = info->action.fmission.base_param;
-    log.prm.score.value = info->action.fmission.my_score;
-  }  
+  FMISSION_GetBeaconParam( &log.m_data, info );
   
-  ret = LINK_FESTIVAL_ScoreLogStore( fest_sys, &log, with_param, &log_score );
+  ret = LINK_FESTIVAL_ScoreLogStore( fest_sys, &log, &log_score );
 
   if( ret != LINKFEST_SCORELOG_SET_FAILED ){
     FMISSION_LOG_TBL* tbl = LINK_FESTIVAL_GetMissionLogStackTbl( fest_sys );
@@ -1205,6 +1201,7 @@ static void sub_SendBeaconSetCommonCore(GAMEBEACON_SEND_MANAGER *send, u32 versi
   send->info.suretigai_count = MISC_CrossComm_GetSuretigaiCount(misc);
   
   send->info.version_bit = version_bit;
+  send->info.ex_param = 0;  //まずは0初期化。有効なパラメータを入れたい場合は各ビーコンのリクエスト側で設定すること
 
   send->info.send_counter++;
   send->life = 0;
@@ -1258,35 +1255,35 @@ void GAMEBEACON_SUB_SendBeaconSetCommonForFMissionEx(GAMEBEACON_SEND_MANAGER *se
 {
   GAMEBEACON_SEND_MANAGER tmp;
   LINK_FESTIVAL* fest_sys;
+  const FEST_MISSION* fmwk;
   GAMEBEACON_INFO* info = &tmp.info;
 
   if( GameBeaconSys->gsys  == NULL ) {
     return;
   }
   fest_sys = GAMESYSTEM_GetLinkFestivalWork( GameBeaconSys->gsys );
+  fmwk = LINK_FESTIVAL_GetMissionWork( fest_sys );
+
   tmp = *send;  //現時点での内容をコピー
 
   //パラメータ生成
   GAMEBEACON_SUB_SendBeaconSetCommonSwan( &tmp );
   
+  LINK_FESTIVAL_GetBeaconSendParam( fest_sys, &info->action.fest_beacon, (u16)param1 );
   switch( action ){
   case GAMEBEACON_ACTION_FMISSION_FREEWORD:
-    BEACONINFO_Set_FreeWord( info, (const STRBUF*)param1, param2 );
-    break;
-  case GAMEBEACON_ACTION_FMISSION_POKE_DOWN:
-    BEACONINFO_Set_Dying( info, (const STRBUF*)param1);
-    break;
-  case GAMEBEACON_ACTION_FMISSION_POKE_HP_LITTLE:
-    BEACONINFO_Set_HPLittle( info, (const STRBUF*)param1);
-    break;
-  case GAMEBEACON_ACTION_FMISSION_POKE_PP_LITTLE:
-    BEACONINFO_Set_PPLittle( info, (const STRBUF*)param1);
+    //フリーワードは一部領域を上書き
+    GAMEBEACON_SUB_GetStringCodeForAction( (const STRBUF*)param1, info->action.fest_beacon.fword, FMISSION_FWORD_MESSAGE_LEN );
+    info->action.fmission.fword_sid = param2; ///<NAMEIN_SHORTCUT_RET ショートカットID
     break;
   default:
-    LINK_FESTIVAL_GetBeaconSendParam( fest_sys, &info->action.fmission, (u16)param1 );
+    info->action.fmission.fword_sid = 0;
     break;
   }
   info->action.action_no = action;  //アクションno上書き
+  info->action.fmission.score = fmwk->my_score;
+  info->fmission_key = fmwk->key; //マジックキー登録
+
   BEACONINFO_Set_Details_Walk( info );
 
   //生成したパラメータで、自分用のミッションログを生成
@@ -1422,6 +1419,37 @@ BOOL GAMEBEACON_SUB_PokeBeaconTypeIsSpecial(const monsno )
 
 //--------------------------------------------------------------
 /**
+ * @brief 文字数がFullの場合はEOMを差し込まないビーコン用独自コピー処理
+ * ※EOM込みのバッファ長を確保できるものは、GFL_STR_GetStringCode()を使うこと
+ *
+ * @param   src_buf		  コピー元STRBUF
+ * @param   dest		    コピー先STRCODEバッファ
+ * @param   len	  	    コピーしたいSTRCODEバッファ長(=EOM抜きの文字数 GAMEBEACON_BUFLEN_FOR_ACTIONまで)
+ */
+//--------------------------------------------------------------
+void GAMEBEACON_SUB_GetStringCodeForAction(const STRBUF *src, STRCODE *dest, u32 len )
+{
+  STRCODE temp[GAMEBEACON_BUFLEN_FOR_ACTION+EOM_SIZE];
+  STRCODE code_eom = GFL_STR_GetEOMCode();
+  int i;
+
+  GF_ASSERT_MSG( len<=GAMEBEACON_BUFLEN_FOR_ACTION, "%d>GAMEBEACON_BUFLEN_FOR_ACTION",len);
+
+  //文字数がFullの場合はEOMを差し込まない独自コピー
+  GFL_STD_MemFill16( dest, code_eom, len*sizeof(STRCODE) );
+  
+  //STRBUFに入っているSTRCODEをEOMも込みで展開できる一時バッファに取り出す
+  GFL_STR_GetStringCode( src, temp, len+EOM_SIZE);
+  for(i = 0; i < len; i++){
+    dest[i] = temp[i];
+    if(temp[i] == code_eom){
+      break;
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * ニックネームのコピー　※文字数がFullの場合はEOMを差し込まないので独自コピー処理
  *
  * @param   nickname		    コピー元ニックネーム
@@ -1430,6 +1458,8 @@ BOOL GAMEBEACON_SUB_PokeBeaconTypeIsSpecial(const monsno )
 //--------------------------------------------------------------
 void GAMEBEACON_SUB_StrbufNicknameCopy(const STRBUF *nickname, STRCODE *dest_nickname)
 {
+  GAMEBEACON_SUB_GetStringCodeForAction( nickname, dest_nickname, MONS_NAME_SIZE );
+#if 0
   STRCODE temp_name[BUFLEN_POKEMON_NAME];
   STRCODE code_eom = GFL_STR_GetEOMCode();
   int i;
@@ -1444,6 +1474,7 @@ void GAMEBEACON_SUB_StrbufNicknameCopy(const STRBUF *nickname, STRCODE *dest_nic
       break;
     }
   }
+#endif
 }
 
 //==============================================================================

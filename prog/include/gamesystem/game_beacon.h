@@ -176,10 +176,10 @@ typedef enum{
   GAMEBEACON_ACTION_FMISSION_RUN_OUT_OF_MONEY,   ///<フェスミッション お金が足りない 97
   GAMEBEACON_ACTION_FMISSION_RPS_LOSE,           ///<フェスミッション じゃんけんに負けた 98
 
+  GAMEBEACON_ACTION_FMISSION_POKE_DOWN,        ///<フェスミッション [ポケモン名]が瀕死 99
+  GAMEBEACON_ACTION_FMISSION_POKE_HP_LITTLE,   ///<フェスミッション [ポケモン名]のHPが少ない 100
+  GAMEBEACON_ACTION_FMISSION_POKE_PP_LITTLE,   ///<フェスミッション [ポケモン名]のPPが少ない 101
   //Haven't MissionParam
-  GAMEBEACON_ACTION_FMISSION_POKE_DOWN,        ///<フェスミッション [ポケモンニックネーム]が瀕死 99
-  GAMEBEACON_ACTION_FMISSION_POKE_HP_LITTLE,   ///<フェスミッション [ポケモンニックネーム]のHPが少ない 100
-  GAMEBEACON_ACTION_FMISSION_POKE_PP_LITTLE,   ///<フェスミッション [ポケモンニックネーム]のPPが少ない 101
   GAMEBEACON_ACTION_FMISSION_FREEWORD,         ///<フェスミッション 一言メッセージ 102
 
   GAMEBEACON_ACTION_MAX, ///<103
@@ -190,7 +190,7 @@ typedef enum{
 #define GAMEBEACON_ACTION_FEST_BEACON_END   ( GAMEBEACON_ACTION_FMISSION_FREEWORD )
 #define GAMEBEACON_ACTION_FEST_BEACON_NUM   ( (GAMEBEACON_FEST_BEACON_END-GAMEBEACON_ACTION_FEST_BEACON_START)+1)
 #define GAMEBEACON_ACTION_FEST_BEACON_WP_START ( GAMEBEACON_ACTION_FMISSION ) //ミッションパラメータ持ち
-#define GAMEBEACON_ACTION_FEST_BEACON_WP_END ( GAMEBEACON_ACTION_FMISSION_POKE_DOWN-1 )  //ミッションパラメータ持ち
+#define GAMEBEACON_ACTION_FEST_BEACON_WP_END ( GAMEBEACON_ACTION_FMISSION_FREEWORD-1 )  //ミッションパラメータ持ち
 #define GAMEBEACON_ACTION_FEST_BEACON_LOG_ACT_START  (GAMEBEACON_ACTION_FMISSION_POKE_ENCOUNT)  //ログアクションビーコンスタート
 
 //==============================================================================
@@ -270,9 +270,9 @@ extern void GAMEBEACON_Set_DistributionGPower(GPOWER_ID gpower_id);
 extern void GAMEBEACON_Set_CriticalHit(const STRBUF *nickname);
 extern void GAMEBEACON_Set_CriticalDamage(const STRBUF *nickname);
 extern void GAMEBEACON_Set_Escape( u16 monsno, BOOL run_enemy_f );
-extern void GAMEBEACON_Set_HPLittle(const STRBUF *nickname);
-extern void GAMEBEACON_Set_PPLittle(const STRBUF *nickname);
-extern void GAMEBEACON_Set_Dying(const STRBUF *nickname);
+extern void GAMEBEACON_Set_HPLittle(const u16 monsno, const STRBUF *nickname);
+extern void GAMEBEACON_Set_PPLittle(const u16 monsno, const STRBUF *nickname);
+extern void GAMEBEACON_Set_Dying(const u16 monsno, const STRBUF *nickname);
 extern void GAMEBEACON_Set_StateIsAbnormal(const STRBUF *nickname);
 extern void GAMEBEACON_Set_UseItem(u16 item_no);
 extern void GAMEBEACON_Set_FieldSkill(u16 wazano);

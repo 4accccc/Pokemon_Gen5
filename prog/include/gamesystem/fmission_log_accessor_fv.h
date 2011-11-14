@@ -117,20 +117,10 @@ extern GPOWER_ID FMISSION_GPOWER_TBL_GetData( FMISSION_GPOWER_TBL* tbl, STRBUF* 
 
 //------------------------------------------------------------------
 /**
- * ログパラメータ取得　 ポケモンニックネーム
- *
- * @param   p_log	    	ログ情報
- * @param   s_buf       MONS_NAME_SIZE+EOM_SIZEを格納可能なSTRBUFのポインタ
- */
-//------------------------------------------------------------------
-extern void FMISSION_LOG_GetPokeNickname( FMISSION_LOG* p_log, STRBUF* s_buf );
-
-//------------------------------------------------------------------
-/**
  * ログパラメータ取得　一言メッセージ
  *
- * @param   p_log	    	ログ情報
- * @param   s_buf       GAMEBEACON_FREEWORD_MESSAGE_LENを格納可能なSTRBUFのポインタ
+ * @param   p_log	    ログ情報
+ * @param   s_buf       FMISSION_FWORD_MESSAGE_LEN+EOM_SIZEを格納可能なSTRBUFのポインタ
  */
 //------------------------------------------------------------------
 extern void FMISSION_LOG_GetFreeWord( FMISSION_LOG* p_log, STRBUF* s_buf );

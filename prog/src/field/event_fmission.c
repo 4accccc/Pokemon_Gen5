@@ -422,8 +422,6 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
       }else{  //自分で開催した場合。LINK_FESTIVAL_MissionStartはこのイベントに来る前に呼ばれている
         u32 open_num = FMISSION_SAVE_IncMissionOpenNum( f_save );
       
-        //開催しましたログセット
-        FMISSION_LOG_TBL_SetLogMissionOpen( LINK_FESTIVAL_GetMissionLogStackTbl( wk->fest_sys ), wk->gdata );
 
         //開催回数でメダルセット
         if( open_num >= 30 ){
@@ -433,6 +431,9 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
           }
         }
       }
+      //開催/参加しましたログセット
+      FMISSION_LOG_TBL_SetLogMissionStart( LINK_FESTIVAL_GetMissionLogStackTbl( wk->fest_sys ), wk->gdata, wk->succeed_f );
+
       //ジョインアベニュー履歴セット
       RESORT_RECORD_AddID( RESORT_RECORD_ID_HILINKFES );
     }

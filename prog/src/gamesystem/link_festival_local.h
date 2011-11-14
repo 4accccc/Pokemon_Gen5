@@ -10,6 +10,7 @@
 #pragma once
 
 #include "fmission_log_local.h"
+#include "gamesystem/link_festival_log.h"
 
 //==============================================================================
 //  \‘¢‘Ì’è‹`

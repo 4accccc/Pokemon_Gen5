@@ -85,15 +85,15 @@ void FEST_MISSION_Start( FEST_MISSION* fmwk, const FEST_MISSION* src, BOOL succe
 
   *fmwk = *src;
   if( !succeed_f ){ //継承ミッションでなければキー生成
-    beacon->key = GFUser_GetPublicRand(GFL_STD_RAND_MAX);  //32bitランダムキー生成
+    fmwk->key = GFUser_GetPublicRand(GFL_STD_RAND_MAX);  //32bitランダムキー生成
     fmwk->start_rtc = FMISSION_RTC_NULL;
   }else{
-    beacon->my_score = 0; //継承ミッションの場合、スコアクリア
+    fmwk->my_score = 0; //継承ミッションの場合、スコアクリア
     beacon->time = FEST_MISSION_GetLife( src ); //受信時点からの残りライフを設定
   }
 
   OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション スタート m_id=%d, key = %08x, goal=%d, param=%d, time=%d sec\n",
-    beacon->m_id, beacon->key, beacon->goal, beacon->base_param, beacon->time);
+    beacon->m_id, fmwk->key, beacon->goal, beacon->base_param, beacon->time);
 }
 
 //---------------------------------------------------------
@@ -192,7 +192,7 @@ void FEST_MISSION_Update( FEST_MISSION* fmwk )
   if( beacon->life ){
     --beacon->life;
     if( beacon->life == 0 ){
-      OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション %d key = %08x 時間切れ\n", beacon->m_id, beacon->key );
+      OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション %d key = %08x 時間切れ\n", beacon->m_id, fmwk->key );
     }
   }
 #endif
@@ -309,13 +309,13 @@ BOOL FEST_MISSION_ScoreCalc( FEST_MISSION* fmwk,  FMISSION_LOG_ACTION action, u1
   if( !FEST_MISSION_IsScoreUp( fmwk, action, param )){
     return FALSE;
   }
-  if( (beacon->my_score + inc ) > FMISSION_SCORE_MAX ){
-    beacon->my_score = FMISSION_SCORE_MAX;
+  if( (fmwk->my_score + inc ) > FMISSION_SCORE_MAX ){
+    fmwk->my_score = FMISSION_SCORE_MAX;
   }else{
-    beacon->my_score += inc;
+    fmwk->my_score += inc;
   }
   OS_FPrintf(OSPRINT_LINKFEST_PAGE,"ミッション m_id=%d key=%08x スコア加算 %d ノルマ %d\n",
-      beacon->m_id, beacon->key, beacon->my_score, beacon->goal );
+      beacon->m_id, fmwk->key, fmwk->my_score, beacon->goal );
   return TRUE;
 }
 
@@ -346,7 +346,7 @@ u32 FEST_MISSION_TimeBonusCalc( FEST_MISSION* fmwk,  u16 score_diff )
   }else{
     bonus /= 60;
   }
-  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"ミッション m_id=%d key=%08x スコア加算 %d ボーナス %d\n",beacon->m_id, beacon->key, score_diff, bonus );
+  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"ミッション m_id=%d key=%08x スコア加算 %d ボーナス %d\n",beacon->m_id, fmwk->key, score_diff, bonus );
   return bonus;
 }
 
@@ -355,11 +355,10 @@ u32 FEST_MISSION_TimeBonusCalc( FEST_MISSION* fmwk,  u16 score_diff )
  * @brief フェスビーコン比較
  */
 //---------------------------------------------------------
-BOOL FEST_BEACON_IsSame( const FEST_BEACON* b1, const FEST_BEACON* b2 )
+BOOL FEST_MISSION_IsSame( const FEST_MISSION* f1, const FEST_MISSION* f2 )
 {
-  if( b1->m_id != b2->m_id ||
-      b1->key != b2->key ||
-      b1->base_param != b2->base_param ){
+  if( f1->key != f2->key ||
+      f1->beacon.id_param != f2->beacon.id_param ){
     return FALSE;
   }
   return TRUE;
@@ -417,7 +416,7 @@ void FEST_MISSION_DEBUG_KillMission( FEST_MISSION* fmwk )
     return;
   }
   beacon->time = 0;
-  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション %d key = %08x 寿命強制破棄\n", beacon->m_id, beacon->key );
+  OS_FPrintf(OSPRINT_LINKFEST_PAGE,"フェスミッション %d key = %08x 寿命強制破棄\n", beacon->m_id, fmwk->key );
 }
 
 #endif  //PM_DEBUG

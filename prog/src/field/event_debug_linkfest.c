@@ -1737,7 +1737,7 @@ static void ninput_SetDebugParam( DMENU_LINK_FEST* wk, int param, int value )
     break;
   case NINPUT_MISSION_MY_SCORE:
     if( LINK_FESTIVAL_IsMissionEntry( wk->fest_sys )){
-      wk->fmwk->beacon.my_score = value;
+      wk->fmwk->my_score = value;
     }
     break;
   case NINPUT_MISSION_TIME_STOP:

@@ -48,7 +48,6 @@ typedef enum{
   LOG_WORDSET_PLACENAME,
   LOG_WORDSET_WAZA,
   LOG_WORDSET_FREEWORD,
-  LOG_WORDSET_POKE_NICKNAME,
   LOG_WORDSET_GPOWER,
   LOG_WORDSET_MONSNAME,
 }LOG_WORDSET_TYPE;
@@ -100,10 +99,10 @@ static const u8 DATA_LogWordsetTypeTbl[] = {
   LOG_WORDSET_NULL,  //RUN_OUT_OF_MONEY = 39,   ///<お金が足りない
   LOG_WORDSET_NULL,  //RPS_LOSE = 40,           ///<じゃんけんに負けた
 
+  LOG_WORDSET_MONSNAME,  //POKE_DOWN = 41,        ///<[ポケモン名]が瀕死
+  LOG_WORDSET_MONSNAME,  //POKE_HP_LITTLE = 42,   ///<[ポケモン名]のHPが少ない
+  LOG_WORDSET_MONSNAME,  //POKE_PP_LITTLE = 43,   ///<[ポケモン名]のPPが少ない
   //Haven't MissionParam
-  LOG_WORDSET_POKE_NICKNAME,  //POKE_DOWN = 41,        ///<[ポケモンニックネーム]が瀕死
-  LOG_WORDSET_POKE_NICKNAME,  //POKE_HP_LITTLE = 42,   ///<[ポケモンニックネーム]のHPが少ない
-  LOG_WORDSET_POKE_NICKNAME,  //POKE_PP_LITTLE = 43,   ///<[ポケモンニックネーム]のPPが少ない
   LOG_WORDSET_FREEWORD,       //FREEWORD = 44,         ///<一言メッセージ
 };
 
@@ -288,29 +287,16 @@ GPOWER_ID FMISSION_GPOWER_TBL_GetData( FMISSION_GPOWER_TBL* tbl, STRBUF* name_bu
 
 //------------------------------------------------------------------
 /**
- * ログパラメータ取得　 ポケモンニックネーム
- *
- * @param   p_log	    	ログ情報
- * @param   s_buf       MONS_NAME_SIZE+EOM_SIZEを格納可能なSTRBUFのポインタ
- */
-//------------------------------------------------------------------
-void FMISSION_LOG_GetPokeNickname( FMISSION_LOG* p_log, STRBUF* s_buf )
-{
-  GFL_STR_SetStringCodeOrderLength( s_buf, p_log->str, MONS_NAME_SIZE+EOM_SIZE );
-}
-
-//------------------------------------------------------------------
-/**
  * ログパラメータ取得　 一言メッセージ
  *
  * @param   p_log	    	ログ情報
  * @param   
- * @param   s_buf       GAMEBEACON_FREEWORD_MESSAGE_LENを格納可能なSTRBUFのポインタ
+ * @param   s_buf       GAMEBEACON_FREEWORD_MESSAGE_LEN+EOM_SIZEを格納可能なSTRBUFのポインタ
  */
 //------------------------------------------------------------------
 void FMISSION_LOG_GetFreeWord( FMISSION_LOG* p_log, STRBUF* s_buf )
 {
-  GFL_STR_SetStringCodeOrderLength( s_buf, p_log->str, GAMEBEACON_FREEWORD_MESSAGE_LEN );
+  GFL_STR_SetStringCodeOrderLength( s_buf, p_log->str, FMISSION_FWORD_MESSAGE_LEN+EOM_SIZE );
 }
 
 //------------------------------------------------------------------
@@ -419,10 +405,6 @@ void FMISSION_LOG_ActionWordset( FMISSION_LOG* p_log,  WORDSET* wset, HEAPID tmp
     break;
   case LOG_WORDSET_FREEWORD:
     FMISSION_LOG_GetFreeWord( p_log, s_buf );
-    WORDSET_RegisterWord( wset, 0, s_buf, p_log->sex, TRUE, PM_LANG);
-    break;
-  case LOG_WORDSET_POKE_NICKNAME:
-    FMISSION_LOG_GetPokeNickname( p_log, s_buf );
     WORDSET_RegisterWord( wset, 0, s_buf, p_log->sex, TRUE, PM_LANG);
     break;
   case LOG_WORDSET_GPOWER:

@@ -632,13 +632,14 @@ void BEACONINFO_Set_Escape(GAMEBEACON_INFO *info)
 /**
  * 送信ビーコンセット：戦闘後、先頭のポケモンのHPが5割以上少なくなっている
  *
+ * @param   monsno      対象ポケモンのモンスターナンバー
  * @param   nickname		対象のポケモンのニックネーム
  */
 //==================================================================
-void GAMEBEACON_Set_HPLittle(const STRBUF *nickname)
+void GAMEBEACON_Set_HPLittle(const u16 monsno, const STRBUF *nickname)
 {
-  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_POKE_HP_LITTLE, (u32)nickname ) ){
-    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_POKE_HP_LITTLE, (u32)nickname );
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_POKE_HP_LITTLE, monsno ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_POKE_HP_LITTLE, monsno );
     return;
   }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_HP_LITTLE) == FALSE){ return; };
@@ -666,13 +667,14 @@ void BEACONINFO_Set_HPLittle(GAMEBEACON_INFO *info, const STRBUF *nickname)
 /**
  * 送信ビーコンセット：戦闘後、先頭のポケモンのPPが1つでも0になっている
  *
+ * @param   monsno      対象ポケモンのモンスターナンバー
  * @param   nickname		対象のポケモンのニックネーム
  */
 //==================================================================
-void GAMEBEACON_Set_PPLittle(const STRBUF *nickname)
+void GAMEBEACON_Set_PPLittle(const u16 monsno, const STRBUF *nickname)
 {
-  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_POKE_PP_LITTLE, (u32)nickname ) ){
-    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_POKE_PP_LITTLE, (u32)nickname );
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_POKE_PP_LITTLE, monsno ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_POKE_PP_LITTLE, monsno );
     return;
   }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_PP_LITTLE) == FALSE){ return; };
@@ -700,13 +702,15 @@ void BEACONINFO_Set_PPLittle(GAMEBEACON_INFO *info, const STRBUF *nickname)
 /**
  * 送信ビーコンセット：戦闘後、戦闘のポケモンが瀕死
  *
+ * @param   monsno      対象ポケモンのモンスターナンバー
  * @param   nickname		対象のポケモンのニックネーム
  */
 //==================================================================
-void GAMEBEACON_Set_Dying(const STRBUF *nickname)
+void GAMEBEACON_Set_Dying(const u16 monsno, const STRBUF *nickname)
 {
-  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_POKE_DOWN, 0 ) ){
-    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_POKE_DOWN, (u32)nickname );
+  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_POKE_DOWN, monsno ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_POKE_DOWN, monsno );
+    return;
   }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_DYING) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);

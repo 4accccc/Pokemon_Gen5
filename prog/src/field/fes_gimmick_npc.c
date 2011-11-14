@@ -237,7 +237,7 @@ void FES_GIMMICK_NPC_MemoryQuizParamGet( FES_GIMMICK* sys_wk, u16* q_num, u16* q
 
   //出題数を決める
   {
-    twk->q_num = sys_wk->fmwk->beacon.my_score;  //現在のマイスコア
+    twk->q_num = LINK_FESTIVAL_GetMyScore( sys_wk->fest_sys );  //現在のマイスコア
     if( twk->q_num < NPC_MEMORY_QUIZ_QUESTION_MIN ){
       twk->q_num = NPC_MEMORY_QUIZ_QUESTION_MIN;
     }else if( twk->q_num > NPC_MEMORY_QUIZ_QUESTION_MAX ){

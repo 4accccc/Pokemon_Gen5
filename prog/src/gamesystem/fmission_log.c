@@ -31,6 +31,7 @@
 #include "savedata/mystatus.h"
 
 #include "game_beacon_local.h"
+#include "gamesystem/game_beacon_accessor.h"
 #include "debug/debug_flg.h"
 
 #include "link_festival_local.h"
@@ -47,6 +48,31 @@ static FMISSION_LOG_ACTION log_GetLogActionFromBeacon( const GAMEBEACON_INFO *in
 static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *info, int score, FMISSION_LOG_SET_MODE mode, BOOL mine_f );
 static ENTRY_CHECK entry_CheckStock( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *info );
 
+//==================================================================
+/**
+ * フェスタミッションパラメータ取得：
+ * @param  FEST_MISSION*		データを格納するフェスミッションデータ構造体型ワークへのポインタ
+ * @param   info	ビーコン情報へのポインタ
+ *
+ * @retval  TRUE  データ取得成功
+ * @retval  FALSE データ取得失敗
+ */
+//==================================================================
+BOOL FMISSION_GetBeaconParam( FEST_MISSION* fmwk, const GAMEBEACON_INFO *info )
+{
+  FEST_MISSION_Clear( fmwk );
+  
+  if( GAMEBEACON_Check_FestMission(info) ){
+    fmwk->beacon = info->action.fest_beacon;
+    fmwk->my_score = info->action.fmission.score;
+    fmwk->fword_sid = info->action.fmission.fword_sid;
+    fmwk->key = info->fmission_key;
+    return TRUE;
+  }
+  GF_ASSERT(0);
+  return FALSE;
+}
+
 //------------------------------------------------------------------
 /*
  *  ログクリア
@@ -58,7 +84,7 @@ void FMISSION_LOG_Clear( FMISSION_LOG* log )
   {
     STRCODE eom = GFL_STR_GetEOMCode();
     GFL_STD_MemFill16( log->name, eom, (PERSON_NAME_SIZE+EOM_SIZE)*sizeof(STRCODE));
-    GFL_STD_MemFill16( log->str, eom, (GAMEBEACON_FREEWORD_MESSAGE_LEN)*sizeof(STRCODE) );
+    GFL_STD_MemFill16( log->str, eom, (FMISSION_FWORD_MESSAGE_LEN+EOM_SIZE)*sizeof(STRCODE) );
   }
 }
 
@@ -144,18 +170,19 @@ void FMISSION_LOG_TBL_SetLogFromBeacon( FMISSION_LOG_TBL* tbl, const GAMEBEACON_
  *
  *  @param  tbl     FMISSION_LOG_TBL型構造体へのポインタ
  *  @param  GAMEDATA*
+ *	@param	entry_f	参加者ならTRUE,開催者ならFALSE
  *
  *  データがいっぱいの場合、先頭のデータをところてん式に押し出して末尾にセット
  */
 //------------------------------------------------------------------
-void FMISSION_LOG_TBL_SetLogMissionOpen( FMISSION_LOG_TBL* tbl, GAMEDATA* gdata )
+void FMISSION_LOG_TBL_SetLogMissionStart( FMISSION_LOG_TBL* tbl, GAMEDATA* gdata, BOOL entry_f  )
 {
   FMISSION_LOG  log;
   MYSTATUS* my =  GAMEDATA_GetMyStatus( gdata );
  
   FMISSION_LOG_Clear(&log); 
   
-  log.action = FMISSION_LOG_ACT_OPEN;
+  log.action = FMISSION_LOG_ACT_OPEN+entry_f;
   log.mine_f = TRUE;
   log.tr_id =  MyStatus_GetID_Low( my );
   log.sex = MyStatus_GetMySex( my );
@@ -301,7 +328,7 @@ void FMISSION_ENTRY_TBL_Set( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *inf
   ENTRY_CHECK ret;
   FMISSION_ENTRY_TBL* tbl = &fest_sys->mlog_entry_tbl;
 
-  //アクションチェック
+  //アクションチェック(完全パラメータを持つビーコンしかエントリーデータには出来ない)
   if(GAMEBEACON_Check_FestMissionWithParam(info) == FALSE){
     return;
   }
@@ -313,11 +340,11 @@ void FMISSION_ENTRY_TBL_Set( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *inf
 
   FMISSION_ENTRY_Clear(&entry);
 
-  //ビーコン継承パラメータセット
-  entry.mission.beacon = info->action.fmission;
+  //ビーコン継承パラメータ取得
+  FMISSION_GetBeaconParam( &entry.mission, info );
 
   //コモンアーカイブデータセット
-  LINK_FESTIVAL_GetMissionArcCommonData( fest_sys, info->action.fmission.m_id, &entry.mission.arc );
+  LINK_FESTIVAL_GetMissionArcCommonData( fest_sys, info->action.fest_beacon.m_id, &entry.mission.arc );
  
   //名前(info->nameはEOM抜き)
   GFL_STD_MemCopy16( info->name, entry.name, PERSON_NAME_SIZE*sizeof(STRCODE));
@@ -390,7 +417,7 @@ void FMISSION_ENTRY_TBL_DeleteData( LINK_FESTIVAL* fest_sys, const FEST_MISSION*
   FMISSION_ENTRY_TBL* tbl = &fest_sys->mlog_entry_tbl;
 
   for(i = 0;i < tbl->entry_num; i++ ){
-    if( FEST_BEACON_IsSame( &tbl->entry[i].mission.beacon, &fmwk->beacon ) ){
+    if( FEST_MISSION_IsSame( &tbl->entry[i].mission, fmwk ) ){
       //同じミッションなので削除
       end = tbl->entry_num-1;
       if( i < end ){
@@ -466,21 +493,14 @@ static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *i
   switch( action ){
   case FMISSION_LOG_ACT_FREEWORD:
     //EOM込み
-    GFL_STD_MemCopy16( info->action.freeword.freeword_message, p_log->str, GAMEBEACON_FREEWORD_MESSAGE_LEN*sizeof(STRCODE));
-    p_log->param = info->action.freeword.shortcut_id;
-    break;
-  case FMISSION_LOG_ACT_POKE_DOWN:
-  case FMISSION_LOG_ACT_POKE_HP_LITTLE:
-  case FMISSION_LOG_ACT_POKE_PP_LITTLE:
-    //EOM込み
-    GFL_STD_MemCopy16( info->action.normal.nickname, p_log->str, MONS_NAME_SIZE*sizeof(STRCODE));
-    p_log->param = 0;
+    GFL_STD_MemCopy16( info->action.fest_beacon.fword, p_log->str, FMISSION_FWORD_MESSAGE_LEN*sizeof(STRCODE));
+    p_log->param = info->action.fmission.fword_sid;
     break;
   case FMISSION_LOG_ACT_MAP_CHANGE:
     p_log->param = info->townmap_root_zone_id;
     break;
   default:
-    p_log->param = info->action.fmission.act_param;
+    p_log->param = info->action.fest_beacon.act_param;
     break;
   }
   return TRUE;
@@ -497,19 +517,19 @@ static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *i
 static ENTRY_CHECK entry_CheckStock( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *info )
 {
   int i;
-  const FEST_BEACON* beacon;
+  FEST_MISSION  m_data;
   FMISSION_ENTRY_TBL* tbl = &fest_sys->mlog_entry_tbl;
 
   //アクションチェック
   if(GAMEBEACON_Check_FestMissionWithParam(info) == FALSE){
     return ENTRY_NONE;
   }
-  beacon = &info->action.fmission;
+  FMISSION_GetBeaconParam( &m_data, info );
 
   //スタックにすでに積まれているミッションと同一なら無視か上書き
   for( i = 0;i < tbl->entry_num;i++){
-    if( FEST_BEACON_IsSame( &tbl->entry[i].mission.beacon, beacon )){
-      if( tbl->entry[i].mission.beacon.time < beacon->time ){  //新しい方がライフが長ければ上書き
+    if( FEST_MISSION_IsSame( &tbl->entry[i].mission, &m_data )){
+      if( tbl->entry[i].mission.beacon.time < m_data.beacon.time ){  //新しい方がライフが長ければ上書き
         return ENTRY_UPDATE0+i;
       }
       return ENTRY_NONE;
@@ -517,12 +537,12 @@ static ENTRY_CHECK entry_CheckStock( LINK_FESTIVAL* fest_sys, const GAMEBEACON_I
   }
   //現在のミッションと同一なら積まない
   if( LINK_FESTIVAL_IsMissionEntry( fest_sys )){
-    if( FEST_BEACON_IsSame( beacon, fest_sys->m_beacon )){
+    if( FEST_MISSION_IsSame( &fest_sys->mission, &m_data )){
       return ENTRY_NONE;
     }
   }
   //無視対象のミッションなら積まない
-  if( LINK_FESTIVAL_IsEgnoreMission( fest_sys, beacon )){
+  if( LINK_FESTIVAL_IsEgnoreMission( fest_sys, &m_data )){
     return ENTRY_NONE;
   }
   return ENTRY_NEW;

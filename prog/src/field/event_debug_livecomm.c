@@ -147,6 +147,7 @@ typedef enum{
  BEACON_PSET_TR_ID,      //対戦相手名
  BEACON_PSET_MONSNO,    //ポケモン種族名
  BEACON_PSET_NICKNAME,    //ポケモンニックネーム
+ BEACON_PSET_MONSNO_NICKNAME,    //モンスターNoとポケモンニックネーム
  BEACON_PSET_ITEM,        //アイテム名
  BEACON_PSET_PTIME,       //プレイタイム
  BEACON_PSET_SURETIGAI_CT,//すれ違い回数
@@ -414,11 +415,11 @@ static const D_BEACON_PARAM DATA_DebugBeaconParam[GAMEBEACON_ACTION_NORMAL_MAX] 
   ///<ESCAPE 戦闘から逃げ出した 30
   { GAMEBEACON_Set_Escape,                BEACON_PSET_MONSNO,	    BEACON_ARG_ESCAPE,	},
   ///<HP_LITTLE HPが残り少ない 31
-  { GAMEBEACON_Set_HPLittle,              BEACON_PSET_NICKNAME,	  BEACON_ARG_STR,	},
+  { GAMEBEACON_Set_HPLittle,              BEACON_PSET_MONSNO_NICKNAME,	  BEACON_ARG_U16_STR,	},
   ///<PP_LITTLE PPが残り少ない 32
-  { GAMEBEACON_Set_PPLittle,              BEACON_PSET_NICKNAME,	  BEACON_ARG_STR,	},
+  { GAMEBEACON_Set_PPLittle,              BEACON_PSET_MONSNO_NICKNAME,	  BEACON_ARG_U16_STR,	},
   ///<DYING 先頭のポケモンが瀕死 33
-  { GAMEBEACON_Set_Dying,                 BEACON_PSET_NICKNAME,	  BEACON_ARG_STR,	},
+  { GAMEBEACON_Set_Dying,                 BEACON_PSET_MONSNO_NICKNAME,	  BEACON_ARG_U16_STR,	},
   ///<STATE_IS_ABNORMAL 先頭のポケモンが状態異常 34
   { GAMEBEACON_Set_StateIsAbnormal,       BEACON_PSET_NICKNAME,	  BEACON_ARG_STR,	},
   ///<USE_ITEM アイテムを使用 35
@@ -482,6 +483,7 @@ static const  D_BEACON_PRM_SET DATA_DebugBeaconParamSet[BEACON_PSET_MAX] = {
  { 1, TRID_MAX-1, BPRM_WSET_TRNAME }, //BEACON_PSET_TR_ID,      対戦相手名
  { MONSNO_HUSIGIDANE, MONSNO_END, BPRM_WSET_MONSNAME }, //BEACON_PSET_MONSNO,    ポケモン種族名
  { -1, -1, BPRM_WSET_NONE }, //BEACON_PSET_NICKNAME,    ポケモンニックネーム
+ { MONSNO_HUSIGIDANE, MONSNO_END, BPRM_WSET_MONSNAME }, //BEACON_PSET_MONSNO_NICKNAME,    モンスターNoとポケモンニックネーム
  { ITEM_MASUTAABOORU, ITEM_DATA_MAX, BPRM_WSET_ITEMNAME }, //BEACON_PSET_ITEM,        アイテム名
  { 0, 999, BPRM_WSET_NONE }, //BEACON_PSET_PTIME,       プレイタイム
  { 0, CROSS_COMM_SURETIGAI_COUNT_MAX, BPRM_WSET_NONE }, //BEACON_PSET_SURETIGAI_CT, すれ違い回数
@@ -1787,7 +1789,7 @@ static void breq_BeaconSend( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, u8 dire
       fmwk = LINK_FESTIVAL_GetMissionWork( wk->fest_sys );
       if( FEST_MISSION_IsLive( fmwk ) ){
         mission = *fmwk;
-        mission.beacon.my_score = value;
+        mission.my_score = value;
         ((BEACON_SET_FUNC_FMISSION)evwk->b_prm->func)( &mission );
       }
     }

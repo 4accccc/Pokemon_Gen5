@@ -1251,25 +1251,6 @@ u16 GAMEBEACON_Get_Action_GPowerID(const GAMEBEACON_INFO *info)
 
 //==================================================================
 /**
- * フェスタミッションパラメータ取得：
- * @param   info	ビーコン情報へのポインタ
- * @param  FEST_BEACON*		データを格納するフェスビーコン構造体型ワークへのポインタ
- *
- * @retval  TRUE  データ取得成功
- * @retval  FALSE データ取得失敗
- */
-//==================================================================
-BOOL GAMEBEACON_Get_Action_FestMission(const GAMEBEACON_INFO *info, FEST_BEACON* fbwk )
-{
-  if( GAMEBEACON_Check_FestMissionWithParam(info)){
-    *fbwk = info->action.fmission;
-    return TRUE;
-  }
-  return FALSE;
-}
-
-//==================================================================
-/**
  * 行動パラメータ取得：ポケウッドシナリオNo
  * @param   info		ビーコン情報へのポインタ
  * @retval  u8		  ポケウッドシナリオNo

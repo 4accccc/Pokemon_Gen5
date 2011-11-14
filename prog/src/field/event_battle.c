@@ -1011,6 +1011,7 @@ static void BeaconReq_BattleEnd( BATTLE_EVENT_WORK* bew )
 
   if( (bp->result != BTL_RESULT_LOSE) && (bp->result != BTL_RESULT_DRAW))
   {
+	u16	monsno = PP_Get( pp, ID_PARA_monsno, NULL );
     STRBUF* nickname = GFL_STR_CreateBuffer( BUFLEN_POKEMON_NAME, GFL_HEAP_LOWID( HEAPID_PROC ) );
     PP_Get( pp, ID_PARA_nickname, nickname );
 
@@ -1020,9 +1021,9 @@ static void BeaconReq_BattleEnd( BATTLE_EVENT_WORK* bew )
       u16 hp_max = PP_Get(pp,ID_PARA_hpmax,NULL);
 
       if( hp == 0 ){
-        GAMEBEACON_Set_Dying(nickname);
+        GAMEBEACON_Set_Dying( monsno, nickname);
       }else if( (hp*2) <= hp_max ){
-        GAMEBEACON_Set_HPLittle(nickname);
+        GAMEBEACON_Set_HPLittle( monsno, nickname);
       }
     }
     { //残PPチェック
@@ -1031,7 +1032,7 @@ static void BeaconReq_BattleEnd( BATTLE_EVENT_WORK* bew )
       for(i = 0;i < 4;i++){
         if( ( PP_Get( pp, ID_PARA_waza1+i, NULL) != WAZANO_NULL ) &&
             ( PP_Get( pp, ID_PARA_pp1+i,NULL) == 0) ){
-          GAMEBEACON_Set_PPLittle(nickname);
+          GAMEBEACON_Set_PPLittle( monsno, nickname);
           break;
         }
       }

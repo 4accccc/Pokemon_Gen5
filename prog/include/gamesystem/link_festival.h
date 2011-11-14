@@ -27,36 +27,12 @@
 
 #define LINKFEST_LOG_MAX  (99) //フェスミッションログMax(自分含めて100がmax)
 #define LINKFEST_LOG_END  (LINKFEST_LOG_MAX-1) //フェスミッションログEndIndex
+#define LINKFEST_JOIN_MAX (LINKFEST_LOG_MAX+1)  //自分を含めた参加者数Maxは100
 
 #define LINKFEST_LIFE_LIMIT (30) //30秒
-
 #define FES_BGM_RECOVER_NONE  (0xFFFFFFFF)  //BGMのリカバー無しコード
 
-typedef enum{
-  LINKFEST_SCORELOG_SET_FAILED,     ///<ログストア失敗
-  LINKFEST_SCORELOG_SET_NEW_ENTRY,  ///<新規
-  LINKFEST_SCORELOG_SET_UPDATE,     ///<上書き&マップチェンジ無し
-  LINKFEST_SCORELOG_SET_MAP_CHANGE, ///<上書き&マップチェンジ
-}LINKFEST_SCORELOG_SET_CODE;
-
 typedef struct _LINK_FESTIVAL LINK_FESTIVAL;
-
-//フェスログデータ構造体
-typedef struct _LINKFEST_LOG{
-  union{  //8byteのログ領域
-    struct{ //スコアログ
-      u16 tr_id;      ///<トレーナーID
-      u16 tmap_root;  ///<現在地のゾーン
-      u32 value;      ///<スコア
-    }score;
-
-    struct{ //受信ミッションログ
-      u8  m_id;   //<ミッションID
-      u16 base_param;  //<ミッションパラメータ
-      u32 key;    ///<ミッションマジックキー
-    }mission;
-  };
-}LINKFEST_LOG;
 
 //トップスコア保存用構造体
 typedef struct _LINKFEST_LOG_TOP_SCORE{
@@ -72,15 +48,6 @@ typedef struct _LINFEST_MISSION_STATUS{
   u16 my_score;         ///<自分のスコア
   u16 total_score;      ///<現在のスコア
 }LINKFEST_MISSION_STATUS;
-
-//フェスログ受け渡し構造体
-typedef struct _LINKFEST_LOG_PARAM{
-  FEST_MISSION_ID  m_id; ///<ミッションID
-  u32 key;  ///<ミッションマジックキー
-  u16 base_param;  ///<基礎パラメータ
-  LINKFEST_LOG prm;
-}LINKFEST_LOG_PARAM;
-
 
 //フェスミッション結果取得用構造体
 typedef struct _LINKFEST_MISSION_RESULT{
@@ -346,15 +313,6 @@ extern int LINK_FESTIVAL_GetMissionEntryNum( LINK_FESTIVAL* wk );
 
 //---------------------------------------------------------
 /*
- * @brief リンクフェスティバル　ログストア
- *
- * @param log 情報を格納したLINKFEST_LOG_PARAM構造体型ワークへのポインタ
- */
-//---------------------------------------------------------
-extern LINKFEST_SCORELOG_SET_CODE LINK_FESTIVAL_ScoreLogStore( LINK_FESTIVAL* wk, LINKFEST_LOG_PARAM* src, BOOL with_param,int* log_score );
-
-//---------------------------------------------------------
-/*
  * @brief リンクフェスティバル　無視したミッションのログをストア
  *
  * @param fmwk ミッション情報を格納したFEST_MISSION構造体型ワークへのポインタ
@@ -366,10 +324,10 @@ extern void LINK_FESTIVAL_EgnoreLogStore( LINK_FESTIVAL* wk, const FEST_MISSION*
 /*
  * @brief リンクフェスティバル　無視するミッションかチェック
  *
- * @param beacon フェスビーコン情報を格納したFEST_BEACON構造体型ワークへのポインタ
+ * @param fmwk フェスビーコン情報を格納したFEST_MISSION構造体型ワークへのポインタ
  */
 //---------------------------------------------------------
-extern BOOL LINK_FESTIVAL_IsEgnoreMission( LINK_FESTIVAL* wk, const FEST_BEACON* beacon );
+extern BOOL LINK_FESTIVAL_IsEgnoreMission( LINK_FESTIVAL* wk, const FEST_MISSION* fmwk );
 
 //---------------------------------------------------------
 /*
@@ -397,22 +355,6 @@ extern BOOL LINK_FESTIVAL_TopScoreIsUpdate( LINK_FESTIVAL* wk );
  */
 //---------------------------------------------------------
 extern void LINK_FESTIVAL_TopScoreGet( LINK_FESTIVAL* wk, LINKFEST_LOG_TOP_SCORE* tsp );
-
-
-
-//---------------------------------------------------------
-/*
- * @brief リンクフェスティバル　ログ構造体クリア
- */
-//---------------------------------------------------------
-extern void LINKFEST_LOG_Clear( LINKFEST_LOG* log );
-
-//---------------------------------------------------------
-/*
- * @brief リンクフェスティバル　ログパラメータ構造体クリア
- */
-//---------------------------------------------------------
-extern void LINKFEST_LOG_PARAM_Clear( LINKFEST_LOG_PARAM* prm );
 
 //---------------------------------------------------------
 /*
