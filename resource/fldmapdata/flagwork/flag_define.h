@@ -642,11 +642,11 @@
 #define FV_C03P07_SUNGLASSES_01            752 /* 0x02f0 ヒウンシティジム前：ダンペイ */
 #define FV_C03P17_SWCHAMPION_01            753 /* 0x02f1 ヒウンシティ下水道前：アイリス */
 #define FV_C03P17_SWRIVAL_01               754 /* 0x02f2 ヒウンシティ下水道前：ライバル */
-#define FV_D11R0101_SWRIVAL_01             755 /* 0x02f3 ヒウンシティ下水道：ライバルとプラズマ団 */
+#define FV_D11R0101_SWRIVAL_01             755 /* 0x02f3 ヒウンシティ下水道：ライバル */
 #define FV_C03P01_SWBOSS_01                756 /* 0x02f4 ヒウンシティセントラルエリア：アクロマ */
 #define FV_R04_BIGROCK_01                  757 /* 0x02f5 4番道路：イワパレス擬態大きな岩 */
 #define FV_R04_SWBOSS_01                   758 /* 0x02f6 4番道路：アクロマ */
-		/* not used   759(0x02f7) */
+#define FV_D11R0101_SWPLAZMA_01            759 /* 0x02f7 ヒウンシティ下水道：プラズマ団たち */
 #define FV_R05_STOP                        760 /* 0x02f8 5番道路：チャールズ、ストッパー */
 #define FV_C04_SWRIVAL_01                  761 /* 0x02f9 ライモンシティ：ライバル */
 #define FV_C04_SWPLASMAM_01                762 /* 0x02fa ライモンシティ：プラズマ団 */
