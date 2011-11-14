@@ -188,11 +188,11 @@ u8 FMISSION_SAVE_GetMissionMaxJoinNum( FMISSION_SAVE* sv )
 //---------------------------------------------------------------------------
 void FMISSION_SAVE_UpdateMissionMaxJoinNum( FMISSION_SAVE* sv, u8 join_num )
 {
+#if 0 
   if( join_num > LINKFEST_JOIN_MAX ){
     GF_ASSERT(0);
     return;
   }
-#if 0 
   @TODO
   if( sv->max_join_num < join_num ){
     sv->max_join_num = join_num;
