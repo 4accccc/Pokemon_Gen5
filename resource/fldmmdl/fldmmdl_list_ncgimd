@@ -334,6 +334,11 @@ FMMDL_RESLIST_NCGIMD = \
 	wbtinfo1.imd \
 	wbtinfo2.imd \
 	poke59.imd \
+	sppoke01_re.imd \
+	sppoke02_ze.imd \
+	sppoke03_ku.imd \
+	sppoke04_kure.imd \
+	sppoke05_kuze.imd \
 	tsure_001.imd \
 	tsure_002.imd \
 	tsure_003.imd \
