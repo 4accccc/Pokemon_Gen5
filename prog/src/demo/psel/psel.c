@@ -3143,7 +3143,7 @@ static int Psel_S02FadeIn  ( PSEL_WORK* work, int* seq )
   case 0:
     {
       // フェードイン(白→見える)
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, S02_FADE_IN_WAIT );
+      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 16, 0, S02_FADE_IN_WAIT );
       (*seq)++;
     }
     break;
@@ -3270,6 +3270,9 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
       {
         PMSND_PlaySE( PSELSND_DEMO_BEL_SWITCH );
         PMSND_PlaySE( PSELSND_DEMO_GLASS_CLEAR );
+
+        // 上画面フェードイン
+        GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB, 16, 0, S02_FADE_IN_WAIT );
       }
       else if( work->three_frame == TIMETABLE_S02_SE02 )
       {
@@ -3295,6 +3298,11 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
     break;
   case S02_MAIN_SEQ_EXPLAIN_INIT:
     {
+      // 万が一フェードが終わってない場合
+      if( GFL_FADE_CheckFade() == TRUE )
+      {
+        return SEQ_S02_MAIN;
+      }
       // テキストとウィンドウは表示
       work->vblank_req |= VBLANK_REQ_S02_TEXT_WIN_M_VISIBLE_ON;
       Psel_TextExplainStreamStart( work, msg_c12_ball_select_01 );
