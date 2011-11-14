@@ -60,21 +60,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トレーナーさん！▼
-あなたに　オススメする　わざは
-ズバリ　いびき！▼
-いびきは　ねむっている　ときだけに
-つかうことのできる　わざです！▼
-いりょくは　ひくめ　ですが
-じぶんが　ねむっていても▼
-こうげき　できるので
-すきが　ない　ですぞ！▼
-ねむることが　できる
-ほとんどの　ポケモンが▽
-おぼえることが　できますぞ</Text>
+			<Text>トレーナーさん！
+あなたに　オススメする　わざは▽
+ズバリ　はねやすめ！▼
+はねやすめは　たいりょくを
+かいふく　できる　わざです！▼
+さらに　ひこうタイプの　ポケモンが
+つかうと　つかったターンの　あいだ▽
+ひこうタイプが　なくなりますぞ！▼
+こうか　ばつぐんの　わざが
+ふつうに　なったり▼
+あたらなかった　わざが
+あたるようになったり▼
+タイプの　あいしょうが　かわるので
+なかなか　トリッキーな　わざですぞ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-05T10:33:21" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-14T07:38:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -84,19 +86,21 @@
 			Language="JPN_KANJI">
 			<Text>トレーナーさん！▼
 あなたに　オススメする　技は
-ズバリ　いびき！▼
-いびきは　眠っている　ときだけに
-使うことの　できる　技です！▼
-威力は　低めですが
-自分が　眠っていても▼
-攻撃できるので
-すきが　ない　ですぞ！▼
-ねむることが　できる
-ほとんどの　ポケモンが▽
-覚えることが　できますぞ</Text>
+ズバリ　はねやすめ！▼
+はねやすめは　体力を
+回復　できる　技です！▼
+さらに　ひこうタイプの　ポケモンが
+使うと　使ったターンの　間▽
+ひこうタイプが　なくなりますぞ！▼
+効果　ばつぐんの　技が
+普通に　なったり▼
+当たらなかった　技が
+当たるようになったり▼
+タイプの　相性が　変わるので
+なかなか　トリッキーな　技ですぞ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-18T09:38:10" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-14T07:39:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -142,12 +146,10 @@
 あめや　あられが　ふっていたり
 すなあらしが　ふいている　ときは▼
 あまり　かいふく　できないので
-ゆだんは　きんもつ　ですぞ！▼
-くさタイプの　ポケモンが
-おおく　おぼえることが　できますぞ</Text>
+てんこうに　きをつけるのですぞ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-05T10:33:06" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-14T07:41:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -166,12 +168,10 @@
 あめや　あられが　降っていたり
 すなあらしが　吹いている　ときは▼
 あまり　回復できないので
-油断は　禁物ですぞ！▼
-くさタイプの　ポケモンが
-多く　覚えることが　できますぞ</Text>
+天候に　気を付けるのですぞ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-05T10:32:59" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-14T07:41:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -213,14 +213,11 @@
 ポケモンの　じょうたいいじょうを▽
 なおすことが　できる　わざです！▼
 てもちの　すべての　ポケモンの
-じょうたいいじょうを　なおすので▽
-だいぎゃくてんが　ねらえますぞ！▼
-やさしそうな　ポケモンや
-エスパータイプの　ポケモンが▽
-おおく　おぼえることが　できますぞ</Text>
+じょうたいいじょうを　なおす▽
+あいに　あふれた　わざですぞ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-05T10:10:22" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-14T07:42:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -235,14 +232,11 @@
 ポケモンの　状態異常を▽
 なおすことが　できる　技です！▼
 てもちの　すべての　ポケモンの
-状態異常を　なおすので▽
-大逆転が　ねらえますぞ！▼
-優しそうな　ポケモンや
-エスパータイプの　ポケモンが▽
-多く　覚えることが　できますぞ</Text>
+状態異常を　なおす▽
+愛に　あふれた　技ですぞ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-05T10:31:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-14T07:42:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -286,12 +280,10 @@
 すばやさを　２ばいにする　わざです！▼
 あいてより　さきに
 こうどう　できれば▽
-かなり　ゆうりに　なれますぞ！▼
-はねの　はえた　ポケモンが
-おおく　おぼえることが　できますぞ</Text>
+かなり　ゆうりに　なれますぞ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-05T10:10:27" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-14T07:42:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -308,12 +300,10 @@
 すばやさを　２倍にする　技です！▼
 相手より　先に
 行動できれば▽
-かなり　有利に　なれますぞ！▼
-はねの　はえた　ポケモンが
-多く　覚えることが　できますぞ</Text>
+かなり　有利に　なれますぞ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-05T10:31:38" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-14T07:42:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -360,12 +350,10 @@
 おおい　ときに　つかえば▼
 じぶんの　たいりょくを　ふやしつつ
 あいての　たいりょくを▽
-へらせる　ことが　できますぞ！▼
-ゴーストタイプの　ポケモンが
-おおく　おぼえることが　できますぞ</Text>
+へらせる　ことが　できますぞ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-05T10:32:46" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-14T07:43:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -385,12 +373,10 @@
 多い　ときに　つかえば▼
 自分の　体力を　増やしつつ
 相手の　体力を▽
-減らせる　ことが　できますぞ！▼
-ゴーストタイプの　ポケモンが
-多く　覚えることが　できますぞ</Text>
+減らせる　ことが　できますぞ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-05T10:32:33" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-14T07:43:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
