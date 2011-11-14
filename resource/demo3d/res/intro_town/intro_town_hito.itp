@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-11-11T20:19:39" source="intro_town_camera.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-11-14T12:22:15" source="intro_town_camera.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -14,7 +14,7 @@
 	frame_size="1000"
 	tool_start_frame="1"
 	tool_end_frame="1000"
-	compress_material="on" material_size="9 9"
+	compress_material="on" material_size="8 8"
 />
 
 <tex_pattern_list_data image_size="18" palette_size="18">
@@ -64,7 +64,7 @@
 		727 731 735 739 743 747 751 755 759 763
 		767 771 775 779 783 787 791 795 799 803
 		807 811 815 819 823 827 831 835 839 841
-		846 851 855 859 863 919 923 927 931 935
+		846 851 855 859 873 919 923 927 931 935
 		939 0 359 379 459 0 79 119 161 210
 		289 329 371 420 499 539 581 630 709 749
 		791 840 919 959
