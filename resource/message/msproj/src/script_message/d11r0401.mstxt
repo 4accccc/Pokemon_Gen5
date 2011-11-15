@@ -2,14 +2,20 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_mapscript_dummy"
+		Label="msg_d11r0401_assistantm_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>げすいどうに　たまった　どくを
+くすりに　かえる　じっけん……▼
+これが　かんぜんに　せいこうすれば
+どくタイプの　ポケモンから▽
+どんどん　くすりが　つくれるんだ▼
+さて
+きょうの　じっけんは……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:44:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +23,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>げすいどうに　たまった　どくを
+くすりに　かえる　じっけん……▼
+これが　かんぜんに　せいこうすれば
+どくタイプの　ポケモンから▽
+どんどん　くすりが　つくれるんだ▼
+さて
+きょうの　じっけんは……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:44:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,17 +40,22 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>？？？</Comment>
+			<Comment>♂
+・部屋の中央に配置
+・続けてのメッセージ
+　80％→assistantm_02
+　15％→assistantm_03
+　　5％→assistantm_04</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:44:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>ASSISTANTM</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:19:32" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -46,6 +63,196 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d11r0401_assistantm_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんかいの　じっけんは
+ふつう　だったな▼
+きみ　この
+どくけしを　あげるよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:41:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:40:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こんかいの　じっけんは
+ふつう　だったな▼
+きみ　この
+どくけしを　あげるよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:41:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:40:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アイテム入手処理
+　No018「どくけし」</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:39:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:38:28" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d11r0401_assistantm_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんかいの　じっけんは
+うまく　いったぞ！▼
+きみ　この
+なんでもなおしを　あげるよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:41:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:40:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こんかいの　じっけんは
+うまく　いったぞ！▼
+きみ　この
+なんでもなおしを　あげるよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:41:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:40:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アイテム入手処理
+　No027「なんでもなおし」</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:40:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:38:28" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d11r0401_assistantm_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんかいの　じっけんは
+とても　うまく　いったぞ！▼
+きみ　この
+かいふくのくすりを　あげるよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:41:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:40:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こんかいの　じっけんは
+とても　うまく　いったぞ！▼
+きみ　この
+かいふくのくすりを　あげるよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:41:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:40:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アイテム入手処理
+　No024「かいふくのくすり」</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:40:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:38:29" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d11r0401_assistantm_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あしたは　あしたの　かぜがふく！▼
+ぼくは　まいにち　じっけんする
+よければ　けっかを　みにおいでよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:45:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:40:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あしたは　あしたの　かぜがふく！▼
+ぼくは　まいにち　じっけんする
+よければ　けっかを　みにおいでよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:45:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:40:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アイテム入手後
+　日付が変わるまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:40:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T13:38:29" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
