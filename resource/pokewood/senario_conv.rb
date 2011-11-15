@@ -477,6 +477,7 @@ class STR_CHECKER
     check_word.each{ |c|
       ok = 0
       match_word.each{ |m|
+
         if c == m then
           ok = 1
           break
@@ -484,7 +485,7 @@ class STR_CHECKER
       }
       if ok == 0 then
         puts "『#{str}』の中の『#{c}』の文字は使えません！\n"
-        return 0;
+        return 0
       end
     }
     return 1
@@ -529,13 +530,31 @@ class MAKE_GMM
 
 
   def tag_translate( str )
+
+      #単語登録分回す
       $gmmtag_hash.each {|k,v|
+
+        #引っかかった単語登録
         reg = Regexp.new(/#{k}\d/)
         if reg =~ str then
+
+          #単語だけ取り出して
           tag = str.scan( reg )
-          tag = str.scan( /\d/ )
-          v.gsub!( /@/, tag[0] )
-          str.gsub!( reg, v )
+
+          #取り出した単語分まわす
+          #(単語が複数あり、指定バッファが違う場合を考慮している)
+          tag.each { |t|
+        
+            #数値を取り出して、置換する
+
+            t = t.split( /#{k}/ )
+
+            v2 = v
+            v2.gsub!( /@/, t[1] )
+
+            str.gsub!( reg, v )
+          }
+
         end
       }
 

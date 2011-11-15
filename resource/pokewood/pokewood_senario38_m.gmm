@@ -470,8 +470,8 @@
 		<language name="JPN_KANJI" width="256">声『ほう……</language>
 	</row>
 	<row id="pw_event1_react_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:02:ポケモンニックネーム:1]だ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:02:ポケモンニックネーム:1]だ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:02:ポケモンニックネーム:0]だ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:02:ポケモンニックネーム:0]だ！</language>
 	</row>
 	<row id="pw_event1_react_enemy_2">
 		<language name="JPN" width="256">こえ『ほう……</language>
@@ -566,8 +566,8 @@
 		<language name="JPN_KANJI" width="256">声『自分が　かわいいか……</language>
 	</row>
 	<row id="pw_event3_react_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:02:ポケモンニックネーム:1]だ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:02:ポケモンニックネーム:1]だ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:02:ポケモンニックネーム:0]だ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:02:ポケモンニックネーム:0]だ！</language>
 	</row>
 	<row id="pw_event3_react_enemy_1">
 		<language name="JPN" width="256">こえ『ほう……</language>
@@ -1069,7 +1069,7 @@
 ひほうの　ふういん　とかれる▼
 まじん　ふっかつの　おそれあり
 アーカムの　ゆくえを　おう▼
-コードネーム：　[1:02:ポケモンニックネーム:1]　こと
+コードネーム：　[1:02:ポケモンニックネーム:0]　こと
 [1:00:トレーナー名:1]</language>
 		<language name="JPN_KANJI" width="256">『ゴーストイレイザー　ほうこくしょ
 ファイル№００３　への追記』▼
@@ -1077,7 +1077,7 @@
 秘宝の　封印　とかれる▼
 破壊の魔神　復活の　恐れあり
 アーカムの　行方　追う▼
-コードネーム：　[1:02:ポケモンニックネーム:1]　こと
+コードネーム：　[1:02:ポケモンニックネーム:0]　こと
 [1:00:トレーナー名:1]</language>
 	</row>
 ﻿	<flowchart-group-list>

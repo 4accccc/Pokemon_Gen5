@@ -528,15 +528,15 @@
 きみの　大好き　だったもの</language>
 	</row>
 	<row id="pw_event2_react_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ほら　[1:02:ポケモンニックネーム:1]だよ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ほら　[1:02:ポケモンニックネーム:1]だよ</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ほら　[1:02:ポケモンニックネーム:0]だよ</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ほら　[1:02:ポケモンニックネーム:0]だよ</language>
 	</row>
 	<row id="pw_event2_react_enemy_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『きみが　かわいがっていた
-[1:02:ポケモンニックネーム:1]だよ　おぼえているだろ▼
+[1:02:ポケモンニックネーム:0]だよ　おぼえているだろ▼
 マリア『……　……（ニコッ）</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『きみが　可愛がっていた
-[1:02:ポケモンニックネーム:1]だよ　覚えているだろう？▼
+[1:02:ポケモンニックネーム:0]だよ　覚えているだろう？▼
 マリア『……　……（ニコッ）</language>
 	</row>
 	<row id="pw_event2_react_hero_1">
@@ -598,13 +598,13 @@
 メロメロだよ▼
 きみに　メロメロだった
 [1:00:トレーナー名:1]だよ▼
-[1:02:ポケモンニックネーム:1]も　いるよ
+[1:02:ポケモンニックネーム:0]も　いるよ
 すきだったろう？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ほら
 メロメロだよ▼
 きみに　メロメロだった
 [1:00:トレーナー名:1]だよ▼
-[1:02:ポケモンニックネーム:1]も　いるよ
+[1:02:ポケモンニックネーム:0]も　いるよ
 好きだったろう？</language>
 	</row>
 	<row id="pw_event4_enemy_0">
@@ -612,8 +612,8 @@
 		<language name="JPN_KANJI" width="256">マリア『……　……？？？</language>
 	</row>
 	<row id="pw_event4_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:02:ポケモンニックネーム:1]だよー</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:02:ポケモンニックネーム:1]だよー</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:02:ポケモンニックネーム:0]だよー</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:02:ポケモンニックネーム:0]だよー</language>
 	</row>
 	<row id="pw_event4_enemy_1">
 		<language name="JPN" width="256">マリア『……　……？？？</language>
