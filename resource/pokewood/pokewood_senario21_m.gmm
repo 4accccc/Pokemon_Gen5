@@ -504,8 +504,8 @@
 		<language name="JPN_KANJI" width="256">マリア『（ニコッ）</language>
 	</row>
 	<row id="pw_event1_react_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『……（ことばは　いらない！）</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……（ことばは　いらない！）</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『（ことばは　いらない！）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『（ことばは　いらない！）</language>
 	</row>
 	<row id="pw_event1_react_enemy_2">
 		<language name="JPN" width="256">マリア『……　……？？？</language>
@@ -700,16 +700,18 @@
 もういちど　しょうぶを！</language>
 	</row>
 	<row id="pw_event6_enemy_1">
-		<language name="JPN" width="256">ドーブル『ざんねん　ながら　ダメ　です
-この　せかいに　たましいが▽
+		<language name="JPN" width="256">ドーブル『ざんねん　ながら
+ダメ　です▼
+この　せかいに　たましいが
 ながい　あいだ　とどまっていると▼
 こおりの　ように
 きおくが　とけて　しまうんです▽
 なので　きょうは　ここまで　です▼
 また　もどって　きますので
 ここで　おあい　しましょう</language>
-		<language name="JPN_KANJI" width="256">ドーブル『残念ながら　ダメ　です
-この世界に　魂が▽
+		<language name="JPN_KANJI" width="256">ドーブル『残念ながら
+ダメ　です▼
+この世界に　魂が
 長い時間　とどまっていると▼
 氷の　ように
 記憶が　とけて　しまうんです▽
