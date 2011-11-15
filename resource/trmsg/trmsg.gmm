@@ -17275,6 +17275,57 @@
 大好き　なんだよ！　わかる？</language>
 	</row>
 
+	<row id="TRID_NURSE_05_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">あなた　げんきー！▼
+げんきの　ないコは
+あたしが　おしおき　しちゃうわよ！▼</language>
+		<language name="JPN_KANJI" width="216">あなた　元気ー！▼
+元気の　ない子は
+あたしが　お仕置き　しちゃうわよ！▼</language>
+	</row>
+
+	<row id="TRID_NURSE_05_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">スタミナ　ありあまっているわね！
+もう　げんき　びんびん　じゃない！</language>
+		<language name="JPN_KANJI" width="216">スタミナ　ありあまっているわね！
+もう　元気　びんびん　じゃない！</language>
+	</row>
+
+	<row id="TRID_NURSE_05_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<language name="JPN" width="216">よーし！　げんきな　トレーナー！
+これも　もらっていきなさい！▼</language>
+		<language name="JPN_KANJI" width="216">よーし！　元気な　トレーナー！
+これも　もらっていきなさい！▼</language>
+	</row>
+
+	<row id="TRID_NURSE_05_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
+		<language name="JPN" width="216">ナースも　スタミナしょうぶ　なの！
+あさも　ひるも　よるもね！</language>
+		<language name="JPN_KANJI" width="216">ナースも　スタミナ勝負なの！
+朝も　昼も　夜もね！</language>
+	</row>
+
+	<row id="TRID_HEADS_11_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうまけ
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘負け
+テストメッセージ</language>
+	</row>
+
+	<row id="TRID_DANCER_08_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうまけ
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘負け
+テストメッセージ</language>
+	</row>
+
+	<row id="TRID_GUITARW_04_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">せんとうまけ
+テストメッセージ</language>
+		<language name="JPN_KANJI" width="216">戦闘負け
+テストメッセージ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
