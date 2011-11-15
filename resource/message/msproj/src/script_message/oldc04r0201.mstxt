@@ -6,10 +6,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>……それにしても　[Name:TrainerName ]さん
+うっかりなのか　いとてき　なのか▽
+グッズケースを　おいていくなんて▼
+あれほど　センスが　あって
+すばらしい　コーディネートが▽
+できる　ひとは　いないのに……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T13:04:50" />
+				Time="2011-11-15T07:08:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -17,10 +22,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>……それにしても　[Name:TrainerName ]さん
+うっかりなのか　意図的なのか▽
+グッズケースを　置いていくなんて▼
+あれほど　センスが　あって
+すばらしい　コーディネートが▽
+できる　ひとは　いないのに……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T13:04:55" />
+				Time="2011-11-15T07:08:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -28,10 +38,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂
+・0＝前作主人公
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T13:05:02" />
+				Time="2011-11-15T06:40:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -40,6 +52,493 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-14T13:04:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc04r0201_old_champion_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>グッズケースを　あけると
+ミュージカルで　ポケモンに　つける▽
+いろとりどりの　グッズが　たくさん▼
+よし！　それでは　さっそく
+レッツ　ドレスアップで　ございます！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T07:03:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:29:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>グッズケースを　あけると
+ミュージカルで　ポケモンに　つける▽
+色とりどりの　グッズが　たくさん▼
+よし！　それでは　さっそく
+レッツ　ドレスアップで　ございます！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T07:08:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:29:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・一歩前進
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:57:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN
+＝オーナー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:28:03" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc04r0201_old_champion_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたまに　にあう　シルクハットは
+エレガントな　グッズなのです！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:44:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:29:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>頭に　似合う　シルクハットは
+エレガントな　グッズなのです！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T07:08:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:29:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・その場で回転してから
+　メッセージ表示
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:51:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN
+＝オーナー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:28:03" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc04r0201_old_champion_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>キュートな　ブルーのかみどめを
+みみに　つけてみたりして？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:45:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:29:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>キュートな　ブルーのかみどめを
+耳に　つけてみたりして？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T07:08:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:29:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・右に２歩移動＋回転してから
+　メッセージ表示
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T07:00:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN
+＝オーナー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:28:03" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc04r0201_old_champion_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しかくいメガネは　エレガント
+かおに　つけると　いい　グッズ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:46:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:29:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しかくいメガネは　エレガント
+顔に　つけると　いい　グッズ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T07:08:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:29:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・上に２歩＋左に２歩＋回転してから
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T07:01:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN
+＝オーナー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:28:03" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc04r0201_old_champion_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>マラカス　マラカス　マラカス
+うでに　もたせたら　ユニークですね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T07:09:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:29:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>マラカス　マラカス　マラカス
+腕に　持たせたら　ユニークですね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T07:09:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:29:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・左に１歩＋回転してから
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T07:01:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN
+＝オーナー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:28:03" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc04r0201_old_champion_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こしに　まいた　ちゃいろバックル！
+こりゃまた　なんとも　クール！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:50:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:29:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>腰に　まいた　ちゃいろバックル！
+こりゃまた　なんとも　クール！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T07:09:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:29:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・下に４歩＋回転してから
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T07:01:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN
+＝オーナー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:28:03" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc04r0201_old_champion_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>グッズの　よこじまネクタイ
+からだに　つければ　クール！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:46:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:41:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>グッズの　よこじまネクタイ
+体に　つければ　クール！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T07:09:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:41:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・右に２歩＋上に２歩、その場振り向きしてから
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T07:01:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN
+＝オーナー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:41:38" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc04r0201_old_champion_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きめました！　１ねんかんは　この
+グッズケースを　あずかりましょう！▼
+それまでに　[Name:TrainerName ]さんが
+もどってくれば　かえすし……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T07:05:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:41:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>決めました！　１年間は　この
+グッズケースを　預りましょう！▼
+それまでに　[Name:TrainerName ]さんが
+戻ってくれば　返すし……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T07:09:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:41:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・0＝前作主人公
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T07:07:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN
+＝オーナー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:41:38" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_oldc04r0201_old_champion_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もどって　こなければ▼
+これを　もつに　ふさわしい
+センスの　ある　トレーナーに▼
+[Name:TrainerName ]さんの　グッズケースを
+たくすことに　いたしましょう！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T07:05:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:41:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戻って　こなければ▼
+これを　持つに　ふさわしい
+センスの　ある　トレーナーに▼
+[Name:TrainerName ]さんの　グッズケースを
+託すことに　いたしましょう！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T07:09:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:41:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・0＝前作主人公
+・その場回転しながら
+　画面暗転して終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T07:07:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN
+＝オーナー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-15T06:41:38" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
