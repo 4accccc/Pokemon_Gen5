@@ -10,11 +10,11 @@
 //=========================================================================
 
 //============================================
-// 待機正面
+// 待機背面
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActSpPoke_StopU[] = {
-  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<全員持ってる
-  {  5, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<SPPOKE01_RE/SPPOKE02_ZE/SPPOKE03_KU/SPPOKE04_KURE/SPPOKE05_KUZE/POKE10
+  {  4, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<レシゼク(SPPOKE01_RE/SPPOKE02_ZE)のみ
+  {  5, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
   {  6, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
   {  5, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
   {  7, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
@@ -22,11 +22,11 @@ static const GFL_BBDACT_ANM DATA_BlActSpPoke_StopU[] = {
 };
 
 //============================================
-// 待機背面
+// 待機正面
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActSpPoke_StopD[] = {
-  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<レシゼク(SPPOKE01_RE/SPPOKE02_ZE)のみ
-  {  1, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<全員持ってる
+  {  1, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<SPPOKE01_RE/SPPOKE02_ZE/SPPOKE03_KU/SPPOKE04_KURE/SPPOKE05_KUZE/POKE10
   {  2, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
   {  3, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
   {  1, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<

@@ -10,7 +10,7 @@
 //=========================================================================
 
 //============================================
-// ë“ã@ê≥ñ 
+// ë“ã@îwñ 
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActShinMu_B_StopU[] = {
   {  4, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
@@ -22,7 +22,7 @@ static const GFL_BBDACT_ANM DATA_BlActShinMu_B_StopU[] = {
 };
 
 //============================================
-// ë“ã@îwñ 
+// ë“ã@ê≥ñ 
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActShinMu_B_StopD[] = {
   {  0, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
