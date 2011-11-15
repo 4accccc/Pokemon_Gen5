@@ -236,7 +236,7 @@ _EVENT_DATA  ev_hide_item_212
 //--------------------------------------------------------------
 EVENT_START ev_hide_item_000
 //サンヨウシティ ( 754, 580 )
-	_ITEM_EVENT_HIDEITEM( 23, 1, FLAG_HIDEITEM_000 )// かいふくのくすり
+	_ITEM_EVENT_HIDEITEM( 51, 1, FLAG_HIDEITEM_000 )// ポイントアップ
 EVENT_END
 
 EVENT_START ev_hide_item_001
@@ -275,8 +275,8 @@ EVENT_START ev_hide_item_007
 EVENT_END
 
 EVENT_START ev_hide_item_008
-//ヒオウギシティ ( 11, 5 )
-	_ITEM_EVENT_HIDEITEM( 17, 1, FLAG_HIDEITEM_008 )// キズぐすり
+//セイガイハシティ ( 10, 5 )
+	_ITEM_EVENT_HIDEITEM( 23, 1, FLAG_HIDEITEM_008 )// かいふくのくすり
 EVENT_END
 
 EVENT_START ev_hide_item_009
@@ -610,7 +610,7 @@ EVENT_START ev_hide_item_074
 EVENT_END
 
 EVENT_START ev_hide_item_075
-//ジャイアントホール　中 ( 55, 23 )
+//ジャイアントホール　中 ( 40, 7 )
 	_ITEM_EVENT_HIDEITEM( 552, 1, FLAG_HIDEITEM_075 )// こおりのジュエル
 EVENT_END
 
@@ -885,7 +885,7 @@ EVENT_START ev_hide_item_129
 EVENT_END
 
 EVENT_START ev_hide_item_130
-//２番道路 ( 775, 629 )
+//２番道路 ( 775, 626 )
 	_ITEM_EVENT_HIDEITEM( 29, 1, FLAG_HIDEITEM_130 )// げんきのかたまり
 EVENT_END
 
@@ -1240,7 +1240,7 @@ EVENT_START ev_hide_item_200
 EVENT_END
 
 EVENT_START ev_hide_item_201
-//サザナミタウン ( 711, 291 )
+//サザナミタウン ( 709, 290 )
 	_ITEM_EVENT_HIDEITEM( 107, 1, FLAG_HIDEITEM_201 )// ひかりのいし
 EVENT_END
 

@@ -410,10 +410,10 @@ EVENT_START ev_fld_item_2
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r20 X=157 Y=654 ITEM=キズぐすり FLAG=3
+// MAP=r20 X=157 Y=654 ITEM=まひなおし FLAG=3
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_3
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
+  _FLD_ITEM_EVENT ITEM_MAHINAOSI,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1950,7 +1950,7 @@ EVENT_START ev_fld_item_222
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r08 X=241 Y=166 ITEM=ポイントアップ FLAG=223
+// MAP=C07 X=222 Y=196 ITEM=ポイントアップ FLAG=223
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_223
   _FLD_ITEM_EVENT ITEM_POINTOAPPU,1
@@ -2174,10 +2174,10 @@ EVENT_START ev_fld_item_254
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r14r0201 X=23 Y=33 ITEM=わざマシン３５ FLAG=255
+// MAP=r14r0201 X=23 Y=33 ITEM=げんきのかたまり FLAG=255
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_255
-  _FLD_ITEM_EVENT ITEM_WAZAMASIN35,1
+  _FLD_ITEM_EVENT ITEM_GENKINOKATAMARI,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -2650,10 +2650,10 @@ EVENT_START ev_fld_item_322
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP= X=999 Y=999 ITEM=ピッピにんぎょう FLAG=323
+// MAP=r19 X=85 Y=687 ITEM=キズぐすり FLAG=323
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_323
-  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
 EVENT_END
 
 //--------------------------------------------------------------
