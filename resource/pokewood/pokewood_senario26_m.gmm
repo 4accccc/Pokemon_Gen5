@@ -726,14 +726,14 @@
 	</row>
 	<row id="pw_event4_enemy_2">
 		<language name="JPN" width="256">グアイ『フッ……▼
-たかが　ポケモンを　そこまで
-あいするとは……▼
+たかが　ポケモンに　そこまで
+あいを　そそげるとはな……▼
 ……きに　いった▼
 その　こころいき……
 かおうじゃないか……</language>
 		<language name="JPN_KANJI" width="256">グアイ『フッ……▼
 たかが　ポケモンを　そこまで
-愛するとは……▼
+愛を　注げるとはな……▼
 ……気に　いった▼
 その　心意気……
 買おうじゃないか……</language>
@@ -743,12 +743,12 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『え……</language>
 	</row>
 	<row id="pw_event4_enemy_3">
-		<language name="JPN" width="256">グアイ『そのボールは
-あきらめよう……▼
+		<language name="JPN" width="256">グアイ『いいさ……
+そのボールは　あきらめよう▼
 キミは　たいせつな　ポケモンと
 いっしょに　くらすが　いいさ……</language>
-		<language name="JPN_KANJI" width="256">グアイ『そのボールは
-あきらめよう……▼
+		<language name="JPN_KANJI" width="256">グアイ『いいさ……
+そのボールは　あきらめよう▼
 キミは　大切な　ポケモンと
 一緒に　暮らすが　いいさ……</language>
 	</row>

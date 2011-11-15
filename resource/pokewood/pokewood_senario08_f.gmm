@@ -416,7 +416,7 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『了解！▼
 巨大な　ＵＦＯから
 ポケモンが　出現！▽
-市民を　おそっています！▼
+市民を　襲っています！▼
 逃げ惑う　人々で　街は
 パニック状態に▽
 おちいって　います！</language>
@@ -502,13 +502,13 @@
 		<language name="JPN_KANJI" width="256">ＵＦＯ『……　……</language>
 	</row>
 	<row id="pw_event2_hero_4">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『マズいわね……
-こっちに　ちかづいて　くる……▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『チッ　マズいわね……
+こっちに　せっきん　してくる……▼
 ……しかも　なに？
 UFOの　ぜんしんが　すこしずつ▽
 ひかり　はじめてる……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『マズいわね……
-こっちに　近づいてくる……▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『チッ　マズいわね……
+こっちに　接近してくる……▼
 ……しかも　何？
 UFOの　全身が　少しずつ▽
 光り始めてる……</language>
@@ -670,10 +670,10 @@ UFOたちに　やられ　ポケモンが
 	<row id="pw_event4_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『なぜですか！？
 ポケモンさえ　いれば▽
-わたし　まだ　たたかえます！</language>
+じぶんは　まだ　たたかえます！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なぜですか！？
 ポケモンさえ　いれば▽
-私　まだ　戦えます！</language>
+自分は　まだ　戦えます！</language>
 	</row>
 	<row id="pw_event4_hero_5">
 		<language name="JPN" width="256">つうしん『[1:00:トレーナー名:1]……▼
@@ -711,7 +711,7 @@ UFOも　おって　こないよね……▼
 ここまで　逃げれば▽
 UFOも　追って　こないだろう……▼
 ……まったく　あんな　相手と
-戦うなんて　バカげてるよ……</language>
+戦うなんて　バカげてるわ……</language>
 	</row>
 	<row id="pw_event5_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『チッ！！
@@ -730,9 +730,9 @@ UFOも　追って　こないだろう……▼
 こうなったら……</language>
 	</row>
 	<row id="pw_event5_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『なあ！　ＵＦＯさん！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ねえ！　ＵＦＯさん！
 わたしの　はなしを　きいてっ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なあ！　ＵＦＯさん！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ねえ！　ＵＦＯさん！
 私の　話を　聞いて！</language>
 	</row>
 	<row id="pw_event5_enemy_3">
@@ -740,20 +740,20 @@ UFOも　追って　こないだろう……▼
 		<language name="JPN_KANJI" width="256">ＵＦＯ『……　……</language>
 	</row>
 	<row id="pw_event5_hero_4">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ねえ！　あなたたちの
-もくてきは　なに？▼
-この　ほしの　せいふくでも
-かんがえてるの？▼
-だったら　わたしにも
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ねえねえ！
+あなたたちの　もくてきは　なに？▼
+もしかして　この　ほしの
+せいふくでも　かんがえてるの？▼
+だったら　わたしも　ちからに　なるわ！
 きょうりょく　させて？　ね？▼
 だから　そのかわり……　
 どうか　わたしだけは▽
 みのがしてよ！　おねがいっ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ねえ！　あなたたちの
-目的は　なに？▼
-この　星の　征服でも
-考えてるの？▼
-だったら　私にも
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ねえねえ！
+あなたたちの　目的は　なに？▼
+もしかして　この星の
+征服でも　考えてるの？▼
+だったら　私も　力になるわ！
 協力　させて？　ね？▼
 だから　その代わり……　
 どうか　私だけは▽

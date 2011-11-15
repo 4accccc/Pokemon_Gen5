@@ -373,12 +373,12 @@
 	</row>
 	<row id="pw_event0_react_enemy_0">
 		<language name="JPN" width="256">モニカ『ちょっと！　ちょっと！
-かんたんに　あきらめないでよ！▼
-あんた　わたしのこいびと　でしょ！
+サラッと　あきらめないでよ！▼
+あんた　わたしのかぞく　でしょ！
 ほうほうが　ないか　かんがえてよ！</language>
 		<language name="JPN_KANJI" width="256">モニカ『ちょっと！！ちょっと！！
 簡単に　あきらめないでよ！▼
-あんた　私の恋人　でしょ！
+あんた　私の家族　でしょ！
 方法が　ないか　考えてよ！</language>
 	</row>
 	<row id="pw_event0_react_hero_1">
@@ -394,17 +394,17 @@
 私　生きてられないわっ！！</language>
 	</row>
 	<row id="pw_event0_react_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『まずは　おちついて</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『まずは　落ち着いて</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『まずは　おちついて！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『まずは　落ち着いて！</language>
 	</row>
 	<row id="pw_event0_react_enemy_2">
-		<language name="JPN" width="256">モニカ『わかってるわよ！▼
+		<language name="JPN" width="256">モニカ『しってるわよ！▼
 でも　どうしたら　いいのか
 わかんないんだもんっ！！▽
 じぶんが　こわいんだもん！！</language>
-		<language name="JPN_KANJI" width="256">モニカ『分かってるわよ！……▼
+		<language name="JPN_KANJI" width="256">モニカ『知ってるわよ！▼
 でも　どうしたら　いいのか
-分かんないんだもんっ！！▽
+わかんないんだもんっ！！▽
 自分が　こわいんだもん！！</language>
 	</row>
 	<row id="pw_event1_hero_0">
@@ -421,19 +421,17 @@
 そうだな……▼
 のろいとは　つまるところ
 こころの　ちから　だ……▼
-だから　ボールの　のろいよりも
-つよい　こころのちからを▽
-かのじょに　しめすことが▽
-できれば　きっと……</language>
+だから　ボールの　もつ　のろいよりも
+つよいこころの　ちからを　かのじょに▽
+しめすことが　できれば　きっと……</language>
 		<language name="JPN_KANJI" width="256">グアイ『ボールに　かけられた
 のろいを　解く　方法か……▼
 そうだな……▼
 のろいとは　つまるところ
 心の　力だ……▼
-だから　ボールの　のろいよりも
-強い　心の力を▽
-彼女に　示すことが▽
-できれば　きっと……</language>
+だから　ボールが　宿す　のろいよりも
+強い心の　力を　彼女に▽
+示すことが　できれば　きっと……</language>
 	</row>
 	<row id="pw_event1_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『こころの　ちから？</language>
@@ -461,11 +459,11 @@
 	</row>
 	<row id="pw_event2_enemy_0">
 		<language name="JPN" width="256">モニカ『ああ！　もうっ！！
-[1:00:トレーナー名:1]！！▼
+そもそも　[1:00:トレーナー名:1]！！▼
 もとはと　いえば　ぜーんぶ
 あんたの　せい　なんだから！！</language>
 		<language name="JPN_KANJI" width="256">モニカ『ああ！　もうっ！！
-[1:00:トレーナー名:1]！！▼
+そもそも　[1:00:トレーナー名:1]！！▼
 元はと　言えば　ぜーんぶ
 あんたの　せい　なんだから！！</language>
 	</row>
@@ -487,11 +485,11 @@
 	</row>
 	<row id="pw_event2_react_enemy_1">
 		<language name="JPN" width="256">モニカ『なに　いってるのよ！？▼
-そもそも　あなたが
+そもそも　あなたが　かくれて
 へんなボール　かってきたのが▽
 げんいんじゃない！！</language>
 		<language name="JPN_KANJI" width="256">モニカ『何　言ってるのよ！？▼
-そもそも　あなたが
+そもそも　あなたが　隠れて
 変なボール　買ってきたのが▽
 原因じゃない！！</language>
 	</row>
@@ -533,7 +531,7 @@
 	</row>
 	<row id="pw_event3_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『しかたないからね</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『しかたないからね</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『仕方ないからね</language>
 	</row>
 	<row id="pw_event3_react_enemy_0">
 		<language name="JPN" width="256">モニカ『なによ　しかたないって……▼
@@ -541,9 +539,9 @@
 こんなふうに　なった　わたしのこと▽
 ただ　めんどくさがってるんでしょ！？</language>
 		<language name="JPN_KANJI" width="256">モニカ『なによ　仕方ないって……▼
-けっきょく　[1:00:トレーナー名:1]は
+結局　[1:00:トレーナー名:1]は
 こんな風に　なった　私のこと▽
-ただ　めんどくさがってるんでしょ！？</language>
+ただ　面倒くさがってるんでしょ！？</language>
 	</row>
 	<row id="pw_event3_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『してるけど……</language>
@@ -606,8 +604,8 @@
 どうせ　わたしは　このまま　いっしょう
 この　おおきな　からだの　ままで▽
 いきていくんでしょっ！？▼
-こんな　からだじゃ　いっしょう
-およめにも　いけないっ！！▼
+こんな　からだじゃ
+もう　およめにも　いけないっ！！▼
 [1:00:トレーナー名:1]　だって
 こんな　デカい　おねえちゃんと▽
 いっしょに　いたくないんでしょ！！</language>
@@ -615,11 +613,11 @@
 どうせ　私は　このまま　一生
 この　大きな　身体の　ままで▽
 生きていくんでしょっ！？▼
-こんな　身体じゃ　いっしょう
-お嫁にも　いけないっ！！▼
+こんな　身体じゃ
+もう　お嫁にも　いけないっ！！▼
 [1:00:トレーナー名:1]　だって
 こんな　デカい　お姉ちゃんと▽
-いっしょに　いたくないんでしょ！！</language>
+一緒に　いたくないんでしょ！！</language>
 	</row>
 	<row id="pw_event4_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんなこと……</language>
@@ -627,11 +625,11 @@
 	</row>
 	<row id="pw_event4_react_enemy_0">
 		<language name="JPN" width="256">モニカ『もう　いいわっ！！
-みんな　みんな　だいきらい！！▼
+どいつも　こいつも　だいきらい！！▼
 [1:00:トレーナー名:1]の　かおも　みたくないわ！</language>
 		<language name="JPN_KANJI" width="256">モニカ『もう　いいわっ！！
-みんな　みんな　だいきらい！！▼
-[1:00:トレーナー名:1]の　かおも　みたくないわ！</language>
+どいつも　こいつも　大嫌い！！▼
+[1:00:トレーナー名:1]の　顔も　見たくない！</language>
 	</row>
 	<row id="pw_event4_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『べつに　かわらないのに…</language>
@@ -706,12 +704,12 @@
 もういいわ……　つかれた……
 なにもかも　ぜんぶ……▼
 こんな　すがたに　した　あなたも……
-この　せかいも……</language>
+この　せかいも　すべて……</language>
 		<language name="JPN_KANJI" width="256">モニカ『はあっ……▼
 もういいわ……　疲れた……
 なにもかも　全部……▼
 こんな姿に　した　あなたも……
-この世界も……</language>
+この世界も　すべて……</language>
 	</row>
 	<row id="pw_event6_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『お……　おねえちゃん……</language>
@@ -733,11 +731,11 @@
 		<language name="JPN" width="256">モニカ『どこだって　いいわ……
 ひとのいない　ところ　なら……▼
 だって　わたしは　もう
-もう　にんげん　じゃないもの……</language>
+にんげん　じゃないもの……</language>
 		<language name="JPN_KANJI" width="256">モニカ『どこだって　いいわ……
 人のいない　ところ　なら……▼
 だって　私は　もう
-もう　人間　じゃないもの……</language>
+人間　じゃないもの……</language>
 	</row>
 	<row id="pw_event6_hero_3">
 		<language name="JPN" width="256">そこまで　アタシに　つげると
@@ -770,11 +768,11 @@
 ウッ……</language>
 	</row>
 	<row id="pw_event7_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ごめんね……
-おねえちゃん……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ごめん……
+ごめんなさい　おねえちゃん……
 アタシには　こうするしかないの……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ごめんね……
-お姉ちゃん……
+ごめんなさい　お姉ちゃん……
 アタシには　こうするしかないの……</language>
 	</row>
 	<row id="pw_event7_enemy_1">
@@ -789,13 +787,13 @@
 	</row>
 	<row id="pw_event7_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……　……　……▼
-グアイさん……▼
+あの　グアイさん……▼
 やっぱり　そのモンスターボールを
-アタシに　ください……</language>
+アタシに　かえしてちょうだい……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……　……　……▼
-グアイさん……▼
+あの　グアイさん……▼
 やっぱり　そのモンスターボールを
-アタシに　ください……</language>
+アタシに　返してちょうだい……</language>
 	</row>
 	<row id="pw_event7_enemy_2">
 		<language name="JPN" width="256">グアイ『ダメだ……
@@ -823,24 +821,28 @@
 	</row>
 	<row id="pw_event7_enemy_3">
 		<language name="JPN" width="256">グアイ『キミは……▼
-ひみつけいさつ　である
-この　わたしを　おどすつもりか……
+ひみつけいさつ　である　このわたしを
+おどすつもり　かね……
 </language>
 		<language name="JPN_KANJI" width="256">グアイ『キミは……▼
-秘密警察　である
-この私を　おどすつもりか……
+秘密警察　である　この私を
+おどすつもり　かね……
 </language>
 	</row>
 	<row id="pw_event7_hero_4">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『グアイさん……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『グアイさん……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『グアイさん……
+アタシは　きめたの……▼
+どんなことが　あっても　アタシだけは
+おねえちゃんの　そばに　いるって……　</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『グアイさん……
+アタシは　決めたの……▼
+どんなことが　あっても　アタシだけは
+お姉ちゃんの　側に　いるって……　</language>
 	</row>
 	<row id="pw_event7_enemy_4">
-		<language name="JPN" width="256">グアイ『……　……　……　……▼
-わかった……
+		<language name="JPN" width="256">グアイ『……　……　……わかった
 わたしは　もう　なにも　いうまい……</language>
-		<language name="JPN_KANJI" width="256">グアイ『……　……　……　……▼
-分かった……
+		<language name="JPN_KANJI" width="256">グアイ『……　……　……わかった
 私は　もう　なにも　言うまい……</language>
 	</row>
 	<row id="pw_event7_hero_5">
@@ -848,9 +850,9 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ありがとう……</language>
 	</row>
 	<row id="pw_event7_enemy_5">
-		<language name="JPN" width="256">グアイ『それで……
+		<language name="JPN" width="256">グアイ『それで　キミたちは
 これから　どうする　つもりだ？</language>
-		<language name="JPN_KANJI" width="256">グアイ『それで……
+		<language name="JPN_KANJI" width="256">グアイ『それで　キミたちは
 これから　どうする　つもりだ？</language>
 	</row>
 	<row id="pw_event7_hero_6">
@@ -859,7 +861,7 @@
 どこだって　いいから……▼
 それじゃあ……　さよなら……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『さあ……▼
-アタシは　おねえちゃんとなら
+アタシは　お姉ちゃんとなら
 どこだって　いいから……▼
 それじゃあ……　さよなら……</language>
 	</row>
@@ -876,7 +878,7 @@
 みすごして　しまったのだ……▼
 ……わたしは　この　じけんの
 せきにんを　とって▽
-こくさいけいさつを　やめた……▼
+ひみつけいさつを　やめた……▼
 ……あれから　１０ねんいじょうの
 つきひが　ながれた……▼
 しかし　あのひから　いちども
@@ -892,7 +894,7 @@
 見過ごして　しまったのだ……▼
 ……私は　この件の
 責任を　取って▽
-国際警察を　辞めた……▼
+秘密警察を　辞めた……▼
 ……あれから　１０年以上の
 月日が　流れた……▼
 しかし　あの日から　一度も
@@ -900,6 +902,126 @@
 目撃報告は　なかった……▼
 果たして　あの　ふたりは
 どうなったのだろう……</language>
+	</row>
+	<row id="pw_event8_enemy_0">
+		<language name="JPN" width="256">モニカ『そもそも　[1:00:トレーナー名:1]！！
+わたしに　むかって　ポケモンを▽
+けしかるって　どういうつもりなの！！</language>
+		<language name="JPN_KANJI" width="256">モニカ『そもそも　[1:00:トレーナー名:1]！！
+私に　向かって　ポケモンを▽
+けしかけるって　どういうつもりなの！！</language>
+	</row>
+	<row id="pw_event8_hero_1">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『しかたないじゃん！▼
+いまの　アタシじゃ　おねえちゃんに
+なにも　できないんだもん！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『仕方ないじゃん！▼
+今のアタシじゃ　お姉ちゃんに
+なにも　出来ないんだもん！！</language>
+	</row>
+	<row id="pw_event8_enemy_1">
+		<language name="JPN" width="256">モニカ『[1:00:トレーナー名:1]……</language>
+		<language name="JPN_KANJI" width="256">モニカ『[1:00:トレーナー名:1]……</language>
+	</row>
+	<row id="pw_event8_hero_2">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『おねえちゃんが
+くるしんでるのに　ポケモンに▽
+たよらなきゃ　なにも　できないなんて▽
+アタシだって　なさけない！！▼
+でも　どうしようも　ないんだよっ！！
+どうしたらいいか　わからないもん！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『お姉ちゃんが
+苦しんでるのに　ポケモンに▽
+頼らなきゃ　なにも　出来ないなんて▽
+アタシだって　情けない！！▼
+でも　どうしようも　ないんだよっ！！
+どうしたらいいか　わからないもん！！</language>
+	</row>
+	<row id="pw_event8_enemy_2">
+		<language name="JPN" width="256">モニカ『わかった……
+もう　いいよ……　[1:00:トレーナー名:1]……</language>
+		<language name="JPN_KANJI" width="256">モニカ『わかった……
+もう　いいよ……　[1:00:トレーナー名:1]……</language>
+	</row>
+	<row id="pw_event8_hero_3">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『おねえちゃん……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『お姉ちゃん……</language>
+	</row>
+	<row id="pw_event8_enemy_3">
+		<language name="JPN" width="256">モニカ『ねえ　[1:00:トレーナー名:1]……
+この　ビーチ　おぼえてる？</language>
+		<language name="JPN_KANJI" width="256">モニカ『ねえ　[1:00:トレーナー名:1]……
+この　ビーチ　覚えてる？</language>
+	</row>
+	<row id="pw_event8_hero_4">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『え？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『え？</language>
+	</row>
+	<row id="pw_event8_enemy_4">
+		<language name="JPN" width="256">モニカ『おぼえてないか……▼
+そうね　まだ　[1:00:トレーナー名:1]は
+ちいさかったもんね……</language>
+		<language name="JPN_KANJI" width="256">モニカ『覚えてないか……▼
+そうね　まだ　[1:00:トレーナー名:1]は
+小さかったもんね……</language>
+	</row>
+	<row id="pw_event8_hero_5">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『いつのこと……？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『いつのこと……？</language>
+	</row>
+	<row id="pw_event8_enemy_5">
+		<language name="JPN" width="256">モニカ『パパと　ママがね
+げんき　だったころの　はなし……▼
+[1:00:トレーナー名:1]はね　はじめて
+ここで　うみを　みたのよ……▼
+まだ　およげないのに　はしゃいでさ
+パパと　ママが　ちょっと　めを▽
+はなした　すきに　ひとりで▽
+どんどん　うみの　なかに▽
+はいって　いっちゃったのよね</language>
+		<language name="JPN_KANJI" width="256">モニカ『パパと　ママがね
+元気だった　ころの　話……▼
+[1:00:トレーナー名:1]はね　初めて
+ここで　海を　見たのよ……▼
+まだ　泳げないのに　はしゃいでさ
+パパと　ママが　ちょっと　目を▽
+離した　すきに　ひとりで▽
+どんどん　海の　中に▽
+入って　いっちゃったのよね</language>
+	</row>
+	<row id="pw_event8_hero_6">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『そうなの……？
+ぜんぜん　おぼえてないや……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そうなの……？
+全然　覚えてないや……</language>
+	</row>
+	<row id="pw_event8_enemy_6">
+		<language name="JPN" width="256">モニカ『わたしが　あわてて
+およいで　いったらさ　アンタね▽
+おぼれかけてるのに　たのしそうに▽
+ニコニコ　わらってるんだよ？▼
+わたしも　おもわず　わらっちゃったわよ
+ひとの　きも　しらないで　なんて▽
+ワガママな　いもうとなの！　ってね</language>
+		<language name="JPN_KANJI" width="256">モニカ『私が　あわてて
+泳いで　いったら　アンタね▽
+おぼれかけてるのに　楽しそうに▽
+ニコニコ　笑ってるんだよ？▼
+私も　思わず　笑っちゃったわよ
+こっちの気も　知らないで　なんて▽
+ワガママな　妹なの！　ってね</language>
+	</row>
+	<row id="pw_event8_hero_7">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな……</language>
+	</row>
+	<row id="pw_event8_enemy_7">
+		<language name="JPN" width="256">モニカ『あのときは　たのしかった……▼
+わたしたち　また　いっしょに
+ここで　あそべるのかな……</language>
+		<language name="JPN_KANJI" width="256">モニカ『あのときは　楽しかった……▼
+私たち　また　一緒に
+ここで　遊べるのかな……</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

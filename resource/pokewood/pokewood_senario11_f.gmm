@@ -457,7 +457,7 @@ UFOの　テストと　偽り
 	</row>
 	<row id="pw_event0_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『なんですって……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なんですって……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『何ですって……</language>
 	</row>
 	<row id="pw_event0_react_enemy_1">
 		<language name="JPN" width="256">E『マザーシップは　われわれの
@@ -471,7 +471,7 @@ UFOの　テストと　偽り
 	</row>
 	<row id="pw_event0_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『もう　おわりね……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『もう　おわりね……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『もう　終わりね……</language>
 	</row>
 	<row id="pw_event0_react_enemy_2">
 		<language name="JPN" width="256">Ｅ『そうだ……　あきらめろ……▼

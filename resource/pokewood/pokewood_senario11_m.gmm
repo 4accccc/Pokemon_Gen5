@@ -385,9 +385,9 @@ Eなのか……？</language>
 	</row>
 	<row id="pw_event0_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『なぜ　にんげんに
-ばけて　ぼくに　ちかづいた……？</language>
+ばけて　オレに　ちかづいた……？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なぜ　人間に
-化けて　僕に　近づいた……？</language>
+化けて　オレに　近づいた……？</language>
 	</row>
 	<row id="pw_event0_enemy_2">
 		<language name="JPN" width="256">E『かんたんな　ことだ……
@@ -457,7 +457,7 @@ UFOの　テストと　偽り
 	</row>
 	<row id="pw_event0_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『なんだって……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なんだって……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『何だって……</language>
 	</row>
 	<row id="pw_event0_react_enemy_1">
 		<language name="JPN" width="256">E『マザーシップは　われわれの
@@ -471,7 +471,7 @@ UFOの　テストと　偽り
 	</row>
 	<row id="pw_event0_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『もう　おわりだ……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『もう　おわりだ……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『もう　終わりだ……</language>
 	</row>
 	<row id="pw_event0_react_enemy_2">
 		<language name="JPN" width="256">Ｅ『そうだ……　あきらめろ……▼
@@ -692,13 +692,13 @@ UFOの　テストと　偽り
 	</row>
 	<row id="pw_event2_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……きみたちや
-ぼくたち　にんげん……▽
+オレたち　にんげん……▽
 そして　ポケモンが▽
 いっしょに　いきる……▼
 そんな　ほうほうを
 ぼくたちと　さがそう！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……君たちや
-僕たち　人間……▽
+俺たち　人間……▽
 そして　ポケモンが▽
 一緒に　生きる……▼
 そんな　方法を
@@ -772,9 +772,9 @@ UFOの　テストと　偽り
 	</row>
 	<row id="pw_event3_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ち……ちがう！！
-ぼくは　そんな！！</language>
+オレは　そんな！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ち……違う！！
-僕は　そんな！！</language>
+俺は　そんな！！</language>
 	</row>
 	<row id="pw_event3_enemy_1">
 		<language name="JPN" width="256">E『……　……　……
@@ -889,11 +889,11 @@ UFOの　テストと　偽り
 	<row id="pw_event4_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『どうやって……？▼
 ウウッ……▼
-ぼくは……　おまえの……
+オレは……　おまえの……
 ぶかに　なんか　ならないぞ……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どうやって……？▼
 ウウッ……▼
-僕は……　お前の……
+オレは……　お前の……
 ペットに　なんか　ならないぞ……</language>
 	</row>
 	<row id="pw_event4_enemy_4">

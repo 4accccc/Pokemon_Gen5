@@ -554,14 +554,14 @@
 ザザザザ……　ザザザザ……</language>
 	</row>
 	<row id="pw_event2_enemy_3">
-		<language name="JPN" width="256">セリザワ『あまいねえ……▼
+		<language name="JPN" width="256">セリザワ『あまいねェ……▼
 キミたちが　つうしんで
 れんらくを　とりあうのは▽
-しっているよ……</language>
-		<language name="JPN_KANJI" width="256">セリザワ『甘いねえ……▼
+しっているんだよ……</language>
+		<language name="JPN_KANJI" width="256">セリザワ『甘いねェ……▼
 キミたちが　通信で
 連絡を　取り合うのは▽
-知っているよ……</language>
+知っているんだよ……</language>
 	</row>
 	<row id="pw_event2_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『くっ……
@@ -581,9 +581,9 @@
 	</row>
 	<row id="pw_event2_react_enemy_0">
 		<language name="JPN" width="256">セリザワ『わるいねえ……
-でも　かつためだからねえ</language>
+でも　かつためだからねェ</language>
 		<language name="JPN_KANJI" width="256">セリザワ『悪いねえ……
-でも　勝つためだからねえ</language>
+でも　勝つためだからねェ</language>
 	</row>
 	<row id="pw_event2_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ひきょうものね！</language>
@@ -591,9 +591,9 @@
 	</row>
 	<row id="pw_event2_react_enemy_1">
 		<language name="JPN" width="256">セリザワ『ハハハ……
-わたしには　ホメことば　だねえ</language>
+わたしには　ホメことば　だねェ</language>
 		<language name="JPN_KANJI" width="256">セリザワ『ハハハ……
-わたしには　ホメ言葉　だねえ</language>
+わたしには　ホメ言葉　だねェ</language>
 	</row>
 	<row id="pw_event2_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ちくしょうっ！</language>
@@ -862,16 +862,16 @@
 ざいさんが　あるのだッ……▼
 こんな　ポンコツよりも
 さらに　すぐれた　Ｍ・Ｂを▽
-てに　いれることも▽
-ぞうさも　ないこと　なんだぞ！</language>
+てに　いれることなど▽
+ぞうさも　ないこと　なんだぞッ！</language>
 		<language name="JPN_KANJI" width="256">セリザワ『ググググ……
 調子に　のるなよ……▼
 ……私には　ありあまる　富と
 財産が　あるのだッ……▼
 こんな　ポンコツよりも
 さらに　優れたＭ・Ｂを▽
-手に　入れることも▽
-造作も　ないこと　なんだぞ！</language>
+手に　入れることなど▽
+造作も　ないこと　なんだぞッ！</language>
 	</row>
 	<row id="pw_event6_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『なんて　やつ……</language>
@@ -880,10 +880,12 @@
 	<row id="pw_event6_enemy_1">
 		<language name="JPN" width="256">セリザワ『あたらしい　Ｍ・Ｂで
 おまえを　はかい　してやる……▼
-おぼえていろよっ！！</language>
+ぜったい　こうかいさせて　やる！
+いいかっ！　おぼえていろっ！！</language>
 		<language name="JPN_KANJI" width="256">セリザワ『新しい　Ｍ・Ｂで
 お前を　破壊　してやる……▼
-覚えていろよっ！！</language>
+絶対に　後悔させて　やる！！
+いいかっ！　覚えていろっ！！</language>
 	</row>
 	<row id="pw_event6_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ちょっとっ！　まてっ！！</language>
@@ -958,6 +960,96 @@
 イッシュは　救われました……▼
 あなたは　イッシュの　守護者
 だったのですね……</language>
+	</row>
+	<row id="pw_event8_enemy_0">
+		<language name="JPN" width="256">Ｍ・Ｂ２『グゴガガーンッ！！</language>
+		<language name="JPN_KANJI" width="256">Ｍ・Ｂ２『グゴガガーンッ！！</language>
+	</row>
+	<row id="pw_event8_enemy_1">
+		<language name="JPN" width="256">セリザワ『ハハハ……
+なんだね！　なんだね！▽
+その　てぬるい　こうげきは？▼
+そんなことでは　わたしの　Ｍ・Ｂ２を
+たおすなど　ゆめのまたゆめ　だよ？</language>
+		<language name="JPN_KANJI" width="256">セリザワ『ハハハ……
+なんだね　なんだね▽
+その　手ぬるい　攻撃は？▼
+そんなことでは　私の　Ｍ・Ｂ２を
+倒すなど　夢のまた夢　だよ？</language>
+	</row>
+	<row id="pw_event8_hero_2">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『クッ……▼
+Ｍ・Ｂいじょうに　きょうりょく　ね……
+しかし　こんな　きけん　ものを▽
+どうやって　てに　いれたんだろう……▼
+まさか……　じぶんで　Ｍ・Ｂを
+かいはつ　したとでも　いうの？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『クッ……▼
+Ｍ・Ｂ以上に　強力ね……
+しかし　こんな危険な　ものを▽
+どうやって　手に　入れたんだろう……▼
+まさか……　自分で　Ｍ・Ｂを
+開発したとでも　いうの？</language>
+	</row>
+	<row id="pw_event8_enemy_2">
+		<language name="JPN" width="256">セリザワ『フハハハッ！！
+わたしは　こんなものを　つくれるほど▽
+きような　にんげんでは　ないさ▼
+そもそもね　Ｍ・Ｂという　マシンは
+せかいに　たった　ひとつだけ　と▽
+いうわけでは　ないからねェ</language>
+		<language name="JPN_KANJI" width="256">セリザワ『フハハハッ！！
+私は　こんな物を　作れるほど▽
+器用な　人間では　ないさ▼
+そもそも　Ｍ・Ｂという　マシンは
+世界に　たった　ひとつだけ　と▽
+いうわけでは　ないからねェ</language>
+	</row>
+	<row id="pw_event8_hero_3">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『なんですって……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なんだって……</language>
+	</row>
+	<row id="pw_event8_enemy_3">
+		<language name="JPN" width="256">セリザワ『ん？　いがいかね？
+このＭ・Ｂは　うりもの　なのだよ▼
+シリーズか　も　されている▽
+にんきしょうひん　なんだがねェ▼
+かねと　ちょっとしたコネさえ　あれば
+かんたんに　てに　いれられるさ</language>
+		<language name="JPN_KANJI" width="256">セリザワ『ん？　意外かね？
+このＭ・Ｂは　売り物　なのだよ▼
+シリーズ化も　されている▽
+大人気商品　なんだがねェ▼
+金と　ちょっとしたコネさえ　あれば
+簡単に　手に　入れられるのさ</language>
+	</row>
+	<row id="pw_event8_hero_4">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな……▼
+いったい　だれが　なんのために
+こんな　きけんな　ものを　つくるの……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな……▼
+いったい　だれが　なんのために
+こんな　危険な物を　造るの……</language>
+	</row>
+	<row id="pw_event8_enemy_4">
+		<language name="JPN" width="256">セリザワ『そうだねェ……▼
+まあ　このよのなかには　さまざまな
+マニアが　そんざいする　からねェ▼
+かんがえても　みたまえよ▼
+わたしのように　はかいを　あいする
+はかいマニアが　いるのだよ？▼
+Ｍ・Ｂのような　マシンを　つくることを
+よろこびとする　マニアが　いても▽
+べつに　ふしぎでは　ないだろう？</language>
+		<language name="JPN_KANJI" width="256">セリザワ『そうだねェ……▼
+また　この世の中には　様々な
+マニアが　存在する　からねェ▼
+考えて　みたまえよ▼
+私のように　破壊を　愛する
+破壊マニアが　いるのだよ？▼
+Ｍ・Ｂのような　マシンを　作ることを
+喜びとする　マニアが　いても▽
+別に　不思議では　ないだろう？</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

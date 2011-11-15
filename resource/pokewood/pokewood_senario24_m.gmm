@@ -353,66 +353,77 @@
 		<language name="JPN" width="256">まほうクイーン</language>
 		<language name="JPN_KANJI" width="256">まほうクイーン</language>
 	</row>
+	<row id="pw_turn_enemy_6">
+		<language name="JPN" width="256">ジュジュベ『チッ　マズいわね
+せかいが　ほころび　はじめた……▼
+わたしも　エネルギーぎれが　ちかいか
+まほうのパワーが　つきるまえに▽
+このこの　エキスを　すわないと……</language>
+		<language name="JPN_KANJI" width="256">ジュジュベ『チッ　マズいわね
+世界が　ほころび　はじめた……▼
+私も　エネルギー切れが　近いか
+魔法のパワーが　つきるまえに▽
+この子の　エキスを　吸わないと……</language>
+	</row>
 	<row id="pw_event0_enemy_0">
 		<language name="JPN" width="256">ジュジュベ『おまえッ！
-どうやって　地下ろうから　でたの▼
-もんばんが　みはって
-いたはずなのに……</language>
-		<language name="JPN_KANJI" width="256">ジュジュベ『おまえッ！
-どうやって　地下ろうから　でたの▼
-門番が　見張って
-いたはずなのに……</language>
+どうやって　オリから　でたの！！▼
+わたしの　ぬいぐるみが
+みはって　いたはずなのに……</language>
+		<language name="JPN_KANJI" width="256">ジュジュベ『お前ッ！
+どうやって　オリから　出たの▼
+私の　ぬいぐるみが
+見張って　いたはずなのに……</language>
 	</row>
 	<row id="pw_event0_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ああ！　あいつなら
 ぼくが　ちょっと　なぐったら▽
 なきながら　にげだしちゃったよ！▼
-もんばん『ちょ　ちょっと……
+ぬいぐるみ『ちょ　ちょっと……
 ボクの　イメージが……▼
-[1:00:トレーナー名:1]おうじ『シーッ
+[1:00:トレーナー名:1]おうじ『シーッ！
 しゃべるな　だまってて！▼
 [1:00:トレーナー名:1]おうじ『とにかく
 もとの　せかいに　かえしてもらうよ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ああ！　あいつなら
-ぼくが　ちょっと　殴ったら▽
+僕が　ちょっと　殴ったら▽
 泣きながら　逃げ出しちゃったよ！▼
-もんばん『ちょ　ちょっと……
+ぬいぐるみ『ちょ　ちょっと……
 ボクの　イメージが……▼
-[1:00:トレーナー名:1]王子『シーッ
+[1:00:トレーナー名:1]王子『シーッ！
 しゃべるな　だまってて！▼
 [1:00:トレーナー名:1]王子『とにかく
-もとの世界に　帰してもらうよ！</language>
+元の世界に　帰してもらうよ！</language>
 	</row>
 	<row id="pw_event0_enemy_1">
 		<language name="JPN" width="256">ジュジュベ『ふん……
 おもしろい　じゃない……▽
 だけど　かえしは　しないわ▼
-ほら　これ
+ほら　これを　ごらん……
 あなたが　とおってきた　とびらよ▼
 これに　かつことが　できて？</language>
 		<language name="JPN_KANJI" width="256">ジュジュベ『ふん……
 面白いじゃない……▽
 だけど　帰しは　しないわ▼
-ほら　これ
+ほら　これを　ごらん……
 あなたが　通ってきた　扉よ▼
 これに　勝つことが　できて？</language>
 	</row>
 	<row id="pw_event0_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『えー！
-また　とびら？▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『えー　また　とびら？▼
 でも　ぼくが　はいってきた
 とびらなら……▽
 かったら　でられる　チャンスだよな！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『えー！　また扉？▼
-でも　ぼくが　入ってきた
+でも　僕が　入ってきた
 扉なら……▽
 勝ったら　出られる　チャンスよね！</language>
 	</row>
 	<row id="pw_event0_enemy_2">
-		<language name="JPN" width="256">ジュジュベ『さあ！　ちからを
-みせて　ごらんなさい！</language>
-		<language name="JPN_KANJI" width="256">ジュジュベ『さあ！　力を
-見せて　ごらんなさい！</language>
+		<language name="JPN" width="256">ジュジュベ『おほほ……
+ちからを　みせて　ごらんなさい！</language>
+		<language name="JPN_KANJI" width="256">ジュジュベ『おほほ……
+力を　見せて　ごらんなさい！</language>
 	</row>
 	<row id="pw_event0_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『よし！
@@ -423,8 +434,8 @@
 大事なのは……</language>
 	</row>
 	<row id="pw_event0_react_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『やっぱり　さくせんだ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『やっぱり　作戦だ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『さくせんだ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『作戦だ！</language>
 	</row>
 	<row id="pw_event0_react_enemy_0">
 		<language name="JPN" width="256">ジュジュベ『ほほほ
@@ -432,11 +443,11 @@
 なにか　わかると　いうの？</language>
 		<language name="JPN_KANJI" width="256">ジュジュベ『ほほほ
 子供の　浅知恵で▽
-何か　わかると　いうの？</language>
+何か　分かると　いうの？</language>
 	</row>
 	<row id="pw_event0_react_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ぼくの　かっこよさだぜ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ぼくの　かっこよさだぜ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『かっこよさだぜ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『かっこよさだぜ！</language>
 	</row>
 	<row id="pw_event0_react_enemy_1">
 		<language name="JPN" width="256">ジュジュベ『ふざけないで！
@@ -447,42 +458,42 @@
 決まってる　でしょ！？</language>
 	</row>
 	<row id="pw_event1_hero_0">
-		<language name="JPN" width="256">もんばん『おい　[1:00:トレーナー名:1]！
+		<language name="JPN" width="256">ぬいぐるみ『おい　[1:00:トレーナー名:1]！
 とびらは　ふたつ　あるぜ！▽
-キミが　とおって　きたのは▽
-しろいほうの　とびらだ▼
+そして　キミが　とおって　きたのは▽
+しろいほうの　とびらだよな▼
 [1:00:トレーナー名:1]おうじ『つまり……？▼
-もんばん『しろいほうは
-たおしちゃ　ならない▽
-くろいもんだけ　たおすんだ▼
+ぬいぐるみ『しろいほうの　とびらは
+たおすのは　まったほうが　いい▽
+まず　くろいほうだけ　たおすんだ▼
 [1:00:トレーナー名:1]おうじ『なるほど！
 かえるための　とびらは▽
 のこして　おくんだね？</language>
-		<language name="JPN_KANJI" width="256">もんばん『おい　[1:00:トレーナー名:1]！
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『おい　[1:00:トレーナー名:1]！
 扉は　ふたつ　あるぜ！▽
 キミが　通ってきたのは▽
-白いほうの　扉だ▼
+白いほうの　扉だよな▼
 [1:00:トレーナー名:1]王子『つまり……？▼
-もんばん『白いほうは
-倒しちゃ　ならない▽
-黒い門だけ　倒すんだ▼
+ぬいぐるみ『白いほうの　扉を
+倒すのは　待ったほうがいい▽
+まず　黒い扉だけ　倒すんだ▼
 [1:00:トレーナー名:1]王子『なるほど！
 帰るための　扉は▽
 残して　おくんだね？</language>
 	</row>
 	<row id="pw_event1_enemy_0">
-		<language name="JPN" width="256">ジュジュベ『なにを
-ひとりで　ごちゃごちゃと▽
+		<language name="JPN" width="256">ジュジュベ『あら……
+なにを　ひとりで　ゴチャゴチャと▽
 しゃべって　いるのかしら？</language>
-		<language name="JPN_KANJI" width="256">ジュジュベ『なにを
-一人で　ごちゃごちゃと▽
-喋っているのかしら？</language>
+		<language name="JPN_KANJI" width="256">ジュジュベ『あら……
+何を　一人で　ゴチャゴチャと▽
+しゃべっているのかしら？</language>
 	</row>
 	<row id="pw_event1_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『……ちょっと
 さくせんを　たててた　だけだよ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『……ちょっと
-作戦を　たててた　だけだよ！</language>
+作戦を　立ててただけだよ！</language>
 	</row>
 	<row id="pw_event2_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ぜったい
@@ -540,43 +551,43 @@
 ぼくみたいに　つかまるのか？</language>
 	</row>
 	<row id="pw_event3_enemy_1">
-		<language name="JPN" width="256">ジュジュベ『そうよ▼
-それに　にんげんたちは
-この　せかいに　いるだけで▽
-いきる　エネルギーを　どんどん▽
-わたしに　あたえて　くれるように▽
-なっている　わけ……</language>
-		<language name="JPN_KANJI" width="256">ジュジュベ『そうよ▼
-それに　人間たちは
-この　世界に　いるだけで▽
-生きる　エネルギーを　どんどん▽
-私に　与えて　くれるように▽
-なっている　わけ……</language>
+		<language name="JPN" width="256">ジュジュベ『そのとおり……▼
+そして　にんげんたちは
+このせかいに　いるだけで▽
+いきる　エネルギーを　すわれていくの▼
+その　いのちのエキスは　どんどん
+わたしに　そそがれていくって　わけ</language>
+		<language name="JPN_KANJI" width="256">ジュジュベ『そのとおり……▼
+そして　人間たちは
+この世界に　いるだけで▽
+生きる　エネルギーを　吸われていくの▼
+その　命のエキスは　どんどん
+私に　注がれていくって　わけ</language>
 	</row>
 	<row id="pw_event3_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『なんだって？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『なんだって？</language>
 	</row>
 	<row id="pw_event3_enemy_2">
-		<language name="JPN" width="256">ジュジュベ『いきる　ちからが
+		<language name="JPN" width="256">ジュジュベ『いきる　エネルギーが
 よわった　にんげんたちは▽
 にげだそうとも　おもわなくなる▼
 いつか　ふたつの　せかいの
 つよさは　ぎゃくてんして……▽
 この　わたしに　さからえる▽
-いきものは　いなくなる　でしょうね</language>
-		<language name="JPN_KANJI" width="256">ジュジュベ『生きる力が
+いきものは　いなくなるのよ</language>
+		<language name="JPN_KANJI" width="256">ジュジュベ『生きる　エネルギーが
 弱った　人間たちは▽
 逃げ出そうとも　思わなくなる▼
-いつか　ふたつの　世界の
+いつか　二つの　世界の
 強さは　逆転して……▽
 この　私に　逆らえる▽
-生きものは　いなくなる　でしょうね</language>
+生物は　いなくなるのよ</language>
 	</row>
 	<row id="pw_event3_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『そんな……
 そんなに　おそろしい▽
-とびらだったなんて</language>
+とびら　だったなんて</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『そんな……
 そんなに恐ろしい　扉だったなんて</language>
 	</row>
@@ -585,16 +596,20 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『許せない！</language>
 	</row>
 	<row id="pw_event3_react_enemy_0">
-		<language name="JPN" width="256">ジュジュベ『わたしの
-しった　ことでは　ないわ！▼
-うふふ　それに　もうすぐ
-あなたの　いきる　ちからも▽
-よわくなって　しまうわ……</language>
-		<language name="JPN_KANJI" width="256">ジュジュベ『私の
-知った　ことでは　ないわ！▼
-うふふ　それに　もうすぐ
-あなたの　生きる　力も▽
-弱くなって　しまうわ……</language>
+		<language name="JPN" width="256">ジュジュベ『さあ　ねえ……▼
+わたしが　なにを　しようと
+かってじゃ　ないの……▼
+そんなことより　たった　いま
+こうして　はなしている　あいだにも▽
+あなたの　いきる　エネルギーも▽
+すわれていることを　おわすれなく！</language>
+		<language name="JPN_KANJI" width="256">ジュジュベ『さあ　ねえ……▼
+私が　何を　しようと
+勝手じゃ　ないの……▼
+そんなことより　たった　今
+こうして　話している　間にも▽
+あなたの　生きる　エネルギーも▽
+吸われていることを　お忘れなく！</language>
 	</row>
 	<row id="pw_event3_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『しょうじき　こわい！</language>
@@ -610,6 +625,18 @@
 怖がって　ちょうだい！▼
 そうしないと　面白く　ないわ！</language>
 	</row>
+	<row id="pw_event3_react_hero_2">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『それは　すごい！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]おうじ『それは　すごい！</language>
+	</row>
+	<row id="pw_event3_react_enemy_2">
+		<language name="JPN" width="256">ジュジュベ『そうでしょう？▼
+まほうクイーンで　ある　わたしの
+けいかくは　パーフェクトですもの！</language>
+		<language name="JPN_KANJI" width="256">ジュジュベ『そうでしょう？▼
+まほうクイーンで　ある　私の
+計画は　パーフェクトですもの！</language>
+	</row>
 	<row id="pw_event4_hero_0">
 		<language name="JPN" width="256">しろいとびら『ガチャアアーン……！▼
 [1:00:トレーナー名:1]おうじ『し……
@@ -621,12 +648,12 @@
 	<row id="pw_event4_enemy_0">
 		<language name="JPN" width="256">ジュジュベ『うふふふ……
 きづいて　いた　ようね▼
-そう　しろい　とびらは
+そう　その　しろとびらは
 あなたが　とおってきた　とびら▽
 それを　こわして　しまっては……</language>
 		<language name="JPN_KANJI" width="256">ジュジュベ『うふふふ……
 気づいて　いたようね▼
-そう　白い扉は
+そう　その　白扉は
 あなたが　通ってきた　扉▽
 それを　壊して　しまっては……</language>
 	</row>
@@ -648,17 +675,17 @@
 	</row>
 	<row id="pw_event4_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『そんなこと……
-なあ　もんばん！▽
+なあ　ぬいぐるみ！▽
 なんとか　ならないのか？▼
-もんばん『い　いや
+ぬいぐるみ『い　いや
 ボクにも　こればっかりは▽
 どうすれば　いいのか……▼
 [1:00:トレーナー名:1]おうじ『も　もう
 ここから　でられないのか……？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『そんなこと……
-なあ　もんばん！▽
+なあ　ぬいぐるみ！▽
 なんとか　ならないのか？▼
-もんばん『い　いや
+ぬいぐるみ『い　いや
 ボクにも　こればっかりは▽
 どうすれば　いいのか……▼
 [1:00:トレーナー名:1]王子『も　もう
@@ -668,11 +695,11 @@
 		<language name="JPN" width="256">ジュジュベ『ざんねん　だったわね
 [1:00:トレーナー名:1]おうじ　サマ！▼
 これからは　わたしの　もとで
-たくさん　はたらいて　もらうわね！</language>
+しぬまで　はたらいて　もらうわね！</language>
 		<language name="JPN_KANJI" width="256">ジュジュベ『残念　だったわね
 [1:00:トレーナー名:1]王子　サマ！▼
 これからは　私の　もとで
-たくさん　働いて　もらうわね！</language>
+永遠に　働いて　もらうわね！</language>
 	</row>
 	<row id="pw_event4_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『せ　せっかく
@@ -681,14 +708,16 @@
 ここまで　来たのに……</language>
 	</row>
 	<row id="pw_event4_hero_4">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじの　たびは
+		<language name="JPN" width="256">もとのせかいへの　だっしゅつを　かけた
+[1:00:トレーナー名:1]おうじの　たたかいは▽
 かなしい　けっかに　おわってしまった▼
 そのご　おうじが　どうなったかは
-だれにも　わからなかった……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子の　旅は
+だれも　しらない……</language>
+		<language name="JPN_KANJI" width="256">元の世界への　脱出を　かけた
+[1:00:トレーナー名:1]王子の　戦いは▽
 悲しい　結果に　終わってしまった▼
 その後　王子が　どうなったかは
-だれにも　わからなかった……</language>
+だれも　知らない……</language>
 	</row>
 	<row id="pw_event5_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『はあ……
@@ -700,7 +729,7 @@
 はあ……　う……▼
 もんばん『ど　どうしたんだ？▼
 [1:00:トレーナー名:1]王子『なんか……
-ぼく　くるしくて……</language>
+僕　苦しくて……</language>
 	</row>
 	<row id="pw_event5_enemy_0">
 		<language name="JPN" width="256">ジュジュベ『ふふふ……
@@ -712,7 +741,7 @@
 	</row>
 	<row id="pw_event5_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ち　ちがう……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ち　ちがう……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ち　違う……</language>
 	</row>
 	<row id="pw_event5_enemy_1">
 		<language name="JPN" width="256">ジュジュベ『ちがわないわよ▼
@@ -724,20 +753,20 @@
 	</row>
 	<row id="pw_event5_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ちがうよ！
-体の　もんだいじゃない！▼
-これは　ぼくの
-きもちの　もんだいなんです！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ちがうよ！
-体の　問題じゃない！▼
-これは　ぼくの
-気持ちの問題なんです！</language>
+からだの　もんだいじゃないんだ！▼
+これは　ぼくの　きもちの
+もんだい　なんです！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『違うよ！
+体の　問題じゃないんだ！▼
+これは　僕の　気持ちの
+問題なんです！</language>
 	</row>
 	<row id="pw_event5_enemy_2">
 		<language name="JPN" width="256">ジュジュベ『は……？</language>
 		<language name="JPN_KANJI" width="256">ジュジュベ『は……？</language>
 	</row>
 	<row id="pw_event5_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]王子『ジュジュベ！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ジュジュベ！
 いや……　ジュジュベさん！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ジュジュベ！
 いや……　ジュジュベさん！</language>
@@ -747,11 +776,11 @@
 		<language name="JPN_KANJI" width="256">ジュジュベ『……！？</language>
 	</row>
 	<row id="pw_event5_hero_4">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]王子『ぼく……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ぼく……
 ずっと　たたかってたら　あなたを▽
 すきに　なっちゃったんです！▼
 もんばん『えーっ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ぼく……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『僕……
 ずっと　戦ってたら　あなたを▽
 好きに　なっちゃったんです！▼
 もんばん『えーっ！</language>
@@ -763,11 +792,11 @@
 あら……　え……？</language>
 	</row>
 	<row id="pw_event5_hero_5">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]王子『ぼく
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ぼく
 ここで　ずっと　くらします！▽
 それで　いいんですよね？▼
 ジュジュベさん！　あいしてます！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ぼく
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『僕
 ここで　ずっと　暮らします！▽
 それで　いいんですよね？▼
 ジュジュベさん！　愛してます！</language>
@@ -779,44 +808,46 @@
 う　うん……　エヘ……</language>
 	</row>
 	<row id="pw_event5_hero_6">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]王子『よかった！
-幸せに　なろうぜ！　ちゅ！▼
-もんばん『お……　おめでとう？？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『よかった！
-幸せに　なろうぜ！　ちゅ！▼
-もんばん『お……　おめでとう？？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『よかった！
+しあわせに　なろうぜ！▼
+ちゅ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『良かった！
+幸せに　なろうぜ！▼
+ちゅ！</language>
 	</row>
 	<row id="pw_event5_enemy_6">
 		<language name="JPN" width="256">ジュジュベ『ウフ……</language>
 		<language name="JPN_KANJI" width="256">ジュジュベ『ウフ……</language>
 	</row>
 	<row id="pw_event5_hero_7">
-		<language name="JPN" width="256">こうして　王子とジュジュベは
+		<language name="JPN" width="256">もんばん『お……　おめでとう？？</language>
+		<language name="JPN_KANJI" width="256">もんばん『お……　おめでとう？？</language>
+	</row>
+	<row id="pw_event5_hero_8">
+		<language name="JPN" width="256">こうして　おうじと　ジュジュベは
 すえながく　しあわせに▽
-くらしました　とさ</language>
-		<language name="JPN_KANJI" width="256">こうして　王子とジュジュベは
-末永く　幸せに▽
-暮らしました　とさ</language>
+くらしましたとさ……</language>
+		<language name="JPN_KANJI" width="256">こうして　王子と　ジュジュベは
+末永く　幸せに　暮らしました　とさ</language>
 	</row>
 	<row id="pw_event6_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『つ　つよい……
-だめだった……▽
-ここまで　がんばった　のに</language>
+ダメ　なのか……▽
+ここまで　がんばったのに</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『つ　強い……
-だめだった……▽
-ここまで　頑張った　のに</language>
+ダメ　だった……▽
+ここまで　頑張ったのに</language>
 	</row>
 	<row id="pw_event6_enemy_0">
 		<language name="JPN" width="256">ジュジュベ『おほほほ
 ほんと　ざんねんねえ……▼
-はーい　じゃあ
-ちかろうに　ぎゃくもどり　してね！▽
+オリに　ぎゃくもどり　してね！▽
 こんどから　もっと　たっぷり▽
 みはりを　つけないとね！</language>
 		<language name="JPN_KANJI" width="256">ジュジュベ『おほほほ
 ほんと　残念ねえ……▼
 はーい　じゃあ
-地下ろうに　逆戻り　してね！▽
+オリに　逆戻り　してね！▽
 今度から　もっと　たっぷり▽
 見張りを　つけないとね！</language>
 	</row>
@@ -825,7 +856,7 @@
 あきらめないから！▽
 なんどでも　にげだして　やる！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『……絶対
-諦めないから！▽
+あきらめないから！▽
 何度でも　逃げ出して　やる！</language>
 	</row>
 	<row id="pw_event6_enemy_1">
@@ -880,19 +911,23 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『おまえは
 人間を　憎んで　いるから▽
 この　世界に　呼んで▽
-ひどい事を　するのか？</language>
+ひどいことを　するのか？</language>
 	</row>
 	<row id="pw_event7_enemy_0">
 		<language name="JPN" width="256">ジュジュベ『べつに……
-ただ　エネルギーを　くれるから▽
-りようして　いる　だけよ</language>
-		<language name="JPN_KANJI" width="256">ジュジュベ『べつに……
-ただ　エネルギーを　くれるから▽
-利用して　いる　だけよ</language>
+わたしは　ただ　いきものが　もつ▽
+いのちのエキスが　ほしいだけ▼
+それを　すいとる　げんりょうとして
+にんげんを　りようしている　だけよ</language>
+		<language name="JPN_KANJI" width="256">ジュジュベ『別に……
+私は　ただ　生き物が　持つ▽
+命のエキスが　欲しいだけ▼
+それを　吸い取る　原料として
+人間を　利用している　だけよ</language>
 	</row>
 	<row id="pw_event7_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ひどい……
-ひとを　どうぐみたいに……</language>
+ひとを　どうぐ　みたいに……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ひどい……
 人を　道具みたいに……</language>
 	</row>
@@ -907,23 +942,30 @@
 王様って　そういう　ものでしょ</language>
 	</row>
 	<row id="pw_event7_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ちちうえは
-こくみんが　だいじだと　いっていた！▽
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ちがう！▼
+ちちうえは　いつも　こくみんが
+たいせつだと　いっていた！▼
+こくみんのために　おうは　いる！
+おうのための　こくみんは　いない　と！▼
 おまえとは　ちがう！▼
 ……ぼくも　いま　はじめて
-このことの　たいせつさに▽
+ちちうえの　ことばの　いみに▽
 きが　ついたけど……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『父上は
-国民が　大事だと　言っていた！▽
-おまえとは　ちがう！▼
-……ぼくも今　初めて
-この事の　大切さに　気づいたけど……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『違う！▼
+父上は　いつも　国民が
+大切だと　言っていた！▼
+国民のために　王は　いる！
+王のための　国民は　いない　と！▼
+お前とは　違う！▼
+……僕も　今　初めて
+父上の　言葉の意味に▽
+気が　ついたけど……</language>
 	</row>
 	<row id="pw_event7_enemy_2">
 		<language name="JPN" width="256">ジュジュベ『ふん……
 まあ　なんとでも　おっしゃい</language>
 		<language name="JPN_KANJI" width="256">ジュジュベ『ふん……
-まあ　なんとでも　おっしゃい</language>
+まあ　何とでも　おっしゃい</language>
 	</row>
 	<row id="pw_event7_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ちちうえ……！
@@ -932,8 +974,8 @@
 父上……！</language>
 	</row>
 	<row id="pw_event7_react_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ぼく　かつからね！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ぼく　勝つからね！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ぼく　かつからね！</language>
+		<language name="JPN_KANJI" width="256">%MYNAME王子1『ぼく　勝つからね！</language>
 	</row>
 	<row id="pw_event7_react_enemy_0">
 		<language name="JPN" width="256">ジュジュベ『おもしろい！
@@ -942,24 +984,38 @@
 本気で　来なさいよ！</language>
 	</row>
 	<row id="pw_event7_react_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『なまえ　なんだっけ…？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『名前　なんだっけ…？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『あれ？　なまえが……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『あれ？　名前が……</language>
 	</row>
 	<row id="pw_event7_react_enemy_1">
 		<language name="JPN" width="256">ジュジュベ『……　……　……
-とんだ　あほおうじね　あなた</language>
+とんだ　アホおうじね　あなた</language>
 		<language name="JPN_KANJI" width="256">ジュジュベ『……　……　……
-とんだ　あほ王子ね　あなた</language>
+とんだ　アホ王子ね　あなた</language>
+	</row>
+	<row id="pw_event7_react_hero_2">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『あと　ははうえ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『あと　母上！</language>
+	</row>
+	<row id="pw_event7_react_enemy_2">
+		<language name="JPN" width="256">ジュジュベ『あんたさ……
+なに　ひとりで　ぼやいてるの？▼
+じぶんの　おかれた　じょうきょうが
+りかい　できてないのかしら！？</language>
+		<language name="JPN_KANJI" width="256">ジュジュベ『あんたさ……
+何　ひとりで　ぼやいてるの？▼
+自分の　置かれた　状況が
+理解　できてないのかしら！？</language>
 	</row>
 	<row id="pw_event8_hero_0">
-		<language name="JPN" width="256">くろいとびら『ガチャアアーン……！▼
+		<language name="JPN" width="256">くろとびら『ガチャアアーン……！▼
 [1:00:トレーナー名:1]おうじ『やった……！
-くろいとびらを　たおした！▼
-もんばん『よし！</language>
-		<language name="JPN_KANJI" width="256">黒い扉『ガチャアアーン……！▼
+くろいほうの　とびらを　たおした！▼
+ぬいぐるみ『よし！</language>
+		<language name="JPN_KANJI" width="256">黒扉『ガチャアアーン……！▼
 [1:00:トレーナー名:1]王子『やった……！
-黒い扉を　倒した！▼
-もんばん『よし！</language>
+黒いほうの　扉を　倒した！▼
+ぬいぐるみ『よし！</language>
 	</row>
 	<row id="pw_event8_enemy_0">
 		<language name="JPN" width="256">ジュジュベ『うぎゃああああ！
@@ -971,15 +1027,15 @@
 	</row>
 	<row id="pw_event8_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ど　どうしたんだろ▼
-もんばん『ジュジュベさまは
+ぬいぐるみ『ジュジュベさまは
 とびらに　じぶんの　まりょくを▽
-ぜんぶ　つかって　いたから▽
-とびらが　こわされたせいで▽
+ぜんぶ　つかって　いたからね▼
+とびらが　こわされたせいで
 じぶんも　ダメージを　くらったのさ</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ど　どうしたんだろ▼
-もんばん『ジュジュベさまは
+ぬいぐるみ『ジュジュベさまは
 扉に　自分の　魔力を▽
-全部　使って　いたから▽
+全部　使って　いたからね▼
 扉が　壊された　せいで▽
 自分も　ダメージを　くらったのさ</language>
 	</row>
@@ -994,67 +1050,97 @@
 	<row id="pw_event8_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ジュジュベが
 きえて　しまった！▼
-もんばん『あぶないな……
-このせかいも　なくなりそうだ▽
+ぬいぐるみ『あぶないな……
+このせかいも　なくなりそうだ……▽
 いまのうちに　しろい　とびらから▽
-でるんだ！</language>
+でるんだ！▼
+[1:00:トレーナー名:1]おうじ『よし！　かえろう！
+もとの　せかいへ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ジュジュベが
 消えて　しまった！▼
-もんばん『危ないな……
+ぬいぐるみ『危ないな……
 この世界も　なくなりそうだ▽
 今のうちに　白い扉から▽
 出るんだ！</language>
 	</row>
 	<row id="pw_event8_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『……
-ぼく　もどってこられた？▽
-よかったああ！▼
-もんばん『キミは　すごいな！
-こんなことが　出来る人が▽
-いるなんてね▽
-まったく　かんどうしたよ▼
-まりょくが　なくなったから
-ボクも　もうすぐ▽
-にんげんに　もどれる　かもな▼
-[1:00:トレーナー名:1]おうじ『わー　ほんとか？
-よかった！　ほんとよかった！▼
-ぼく　ともだちのことで
-こんなに　よろこんだ▽
-ことって　ない！▽
-だいすきな　みんなの▽
-しあわせを　よろこべるような▽
-おとなに　なれますように！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『……
-ぼく　もどってこられた？▽
-よかったああ！▼
-もんばん『キミは　すごいな！
-こんなことが　出来る人が▽
-いるなんてね▽
-まったく　感動したよ▼
-魔力が　なくなったから
-ボクも　もうすぐ▽
-人間に　もどれるかもな▼
-[1:00:トレーナー名:1]王子『わー　ほんとか？
-良かった！　ほんと良かった！▼
-ぼく　友達のことで
-こんなに　喜んだことって　ない！▽
-大好きな　みんなの▽
-幸せを　喜べるような▽
-大人に　なれますように！</language>
-	</row>
-	<row id="pw_event8_hero_4">
-		<language name="JPN" width="256">おおきく　せいちょう　した
-[1:00:トレーナー名:1]おうじは　こうして▽
+		<language name="JPN" width="256">……　……　……　……▼
+こうして　[1:00:トレーナー名:1]おうじは　ぶじに
 もとのせかいに　かえることが▽
-できたので　あった▼
-このくには　そのごも
-しあわせに　さかえつづけたという……</language>
-		<language name="JPN_KANJI" width="256">おおきく　成長した
-[1:00:トレーナー名:1]王子は　こうして▽
-もとの世界に　帰ることが▽
-できたので　あった▼
-この国は　その後も
-幸せに　栄え続けた　という……</language>
+できたのだった……▼
+まほうのせかいでの　けいけんは　%MYNAMEおうじの　こころを▽
+おおきく　せいちょう　させた▼
+ときがたち　%MYNAMEおうじ　が
+おうさまを　ついでからも　くには▽
+しあわせに　さかえつづけた……</language>
+		<language name="JPN_KANJI" width="256">……　……　……　……▼
+こうして　[1:00:トレーナー名:1]王子は　無事に
+元の世界に　帰ることが▽
+できたのだった……▼
+魔法の世界での　経験は
+%MYNAME王子の　心を▽
+大きく　成長　させた▼
+時が経ち　%MYNAME王子が
+王様を　継いでからも　国は▽
+幸せに　栄え続けた……</language>
+	</row>
+	<row id="pw_event9_enemy_0">
+		<language name="JPN" width="256">ジュジュベ『あー　しつこいわね！▼
+あんたさあ　もう　いいかげんに
+あきらめちゃいなさいよ！　</language>
+		<language name="JPN_KANJI" width="256">ジュジュベ『あー　しつこいわね！▼
+あんたさあ　もう　いい加減に
+あきらめちゃいなさいよ！　</language>
+	</row>
+	<row id="pw_event9_react_hero_0">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『うーん……</language>
+		<language name="JPN_KANJI" width="256">%MYNAME王子1『うーん……</language>
+	</row>
+	<row id="pw_event9_react_enemy_0">
+		<language name="JPN" width="256">ジュジュベ『もう　いいじゃない……
+すめば　みやこと　いうでしょう？▼
+くらくて　さむくて　ジメジメした
+まほうのおりでも　いずれ　なれるわよ！</language>
+		<language name="JPN_KANJI" width="256">ジュジュベ『もう　いいじゃない……
+住めば　都と　いうでしょう？▼
+暗くて　寒くて　ジメジメした
+魔法のおりでも　いずれ　慣れるわよ！</language>
+	</row>
+	<row id="pw_event9_react_hero_1">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『まだまだ！</language>
+		<language name="JPN_KANJI" width="256">%MYNAME王子1『まだまだ！</language>
+	</row>
+	<row id="pw_event9_react_enemy_1">
+		<language name="JPN" width="256">ジュジュベ『かんべんしてよ　もう……
+わたし　そろそろ　かえって▽
+メイク　おとしたいんだけど……▼
+ちょうじかんの　おけしょうは
+おはだの　コンディションに▽
+ひびくんだからさあ</language>
+		<language name="JPN_KANJI" width="256">ジュジュベ『勘弁してよ　もう……
+わたし　そろそろ　帰って▽
+メイク　落したいんだけど……▼
+長時間の　お化粧は
+お肌の　コンディションに▽
+ひびくんだからさあ</language>
+	</row>
+	<row id="pw_event9_react_hero_2">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『そっちこそ！</language>
+		<language name="JPN_KANJI" width="256">%MYNAME王子1『そっちこそ！</language>
+	</row>
+	<row id="pw_event9_react_enemy_2">
+		<language name="JPN" width="256">ジュジュベ『ざんねん　ながら
+そういうわけにも　いかないのよ▼
+あなたのような　わかい　にんげんの
+エネルギーを　すわないと▽
+おはだに　できた　シミや　クマが▽
+とれないんですもの……</language>
+		<language name="JPN_KANJI" width="256">ジュジュベ『残念　ながら
+そういうわけにも　いかないのよ▼
+あなたのような　若い人間の
+エネルギーを　吸わないと▽
+お肌に　できた　シミと　クマが▽
+取れないんですもの……</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

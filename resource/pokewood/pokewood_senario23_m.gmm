@@ -354,10 +354,10 @@
 		<language name="JPN_KANJI" width="256">もんばん</language>
 	</row>
 	<row id="pw_turn_enemy_1">
-		<language name="JPN" width="256">もんばん『むだだと　おもうぜー▼
+		<language name="JPN" width="256">ぬいぐるみ『むだだと　おもうぜー▼
 ボクと　いっしょに
 ここに　いれば　いいのに……</language>
-		<language name="JPN_KANJI" width="256">門番『無駄だと　思うぜー▼
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『無駄だと　思うぜー▼
 ボクと　一緒に
 ここに　いれば　いいのに……</language>
 	</row>
@@ -368,10 +368,10 @@
 ここから　出せよ！</language>
 	</row>
 	<row id="pw_event0_enemy_0">
-		<language name="JPN" width="256">もんばん『もんの　とびらには
+		<language name="JPN" width="256">ぬいぐるみ『もんの　とびらには
 まほうが　かかってるから▽
 あけられないよ……</language>
-		<language name="JPN_KANJI" width="256">門番『門の　扉には
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『門の　扉には
 魔法が　かかってるから▽
 開けられないよ……</language>
 	</row>
@@ -384,18 +384,20 @@
 すっげー！　ほしーい！</language>
 	</row>
 	<row id="pw_event0_enemy_1">
-		<language name="JPN" width="256">もんばん『……そんなに
+		<language name="JPN" width="256">ぬいぐるみ『……そんなに
 むじゃきに　よろこんでくれる▽
 ひとは　はじめてだよ▼
-おれいに　ヒントを　あげようか？▼
-この　とびらは
+なんか　きぶんが　いいから
+おれいに　ヒントを　あげようかな▼
+この　とびらはさ
 ひやすと　よわるのさ▽
 ただし……</language>
-		<language name="JPN_KANJI" width="256">門番『……そんなに
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『……そんなに
 無邪気に　喜んでくれる▽
 人は　初めてだよ▼
-お礼に　ヒントを　あげようか？▼
-この　扉は
+何か　気分がいいから
+お礼に　ヒントを　あげようかな▼
+この　扉はさ
 冷やすと　弱るのさ▽
 ただし……</language>
 	</row>
@@ -404,14 +406,16 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ただし……？</language>
 	</row>
 	<row id="pw_event0_enemy_2">
-		<language name="JPN" width="256">もんばん『あとは
-じぶんで　かんがえなよ</language>
-		<language name="JPN_KANJI" width="256">門番『あとは
-自分で　考えなよ</language>
+		<language name="JPN" width="256">ぬいぐるみ『うーん
+これいじょうは　いえないなあ▼
+あとは　じぶんで　かんがえなよ</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『うーん
+これ以上は　言えないなあ▼
+後は　自分で　考えなよ</language>
 	</row>
 	<row id="pw_event1_enemy_0">
-		<language name="JPN" width="256">もんばん『がんばってるねー</language>
-		<language name="JPN_KANJI" width="256">もんばん『がんばってるねー</language>
+		<language name="JPN" width="256">ぬいぐるみ『がんばってるねー</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『がんばってるねー</language>
 	</row>
 	<row id="pw_event1_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『みてるなら
@@ -420,14 +424,16 @@
 手伝って　くれても　いいだろ！</language>
 	</row>
 	<row id="pw_event1_enemy_1">
-		<language name="JPN" width="256">もんばん『えー　めんどうだもん
-それに……▼
+		<language name="JPN" width="256">ぬいぐるみ『むりだよー
+そんなことしたら　ジュジュベさまに
+おこられちゃうし　それに……▼
 ボクだって　むかし
 とびらを　あけようと　したけど▽
 ダメだった▽
 しっぱい　したからね……</language>
-		<language name="JPN_KANJI" width="256">門番『えー　面倒だもん
-それに……▼
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『むりだよー
+そんなことしたら　ジュジュベ様に
+怒られちゃうし　それに……▼
 ボクだって　むかし
 扉を　開けようと　したけど▽
 ダメだった▽
@@ -438,22 +444,22 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『どうして？</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
-		<language name="JPN" width="256">もんばん『キミと　おなじさ
+		<language name="JPN" width="256">ぬいぐるみ『キミと　おなじさ
 とびらが　どうしたら　こわれるか▽
 わからなかったのさ</language>
-		<language name="JPN_KANJI" width="256">門番『キミと　同じさ
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『キミと　同じさ
 扉が　どうしたら　壊れるか▽
 わからなかったのさ</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『え……　きみも？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『え……　きみも？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『え……　君も？</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
-		<language name="JPN" width="256">もんばん『……ボクの　こと
+		<language name="JPN" width="256">ぬいぐるみ『……ボクの　こと
 きにして　くれるわけ？▼
 ……　……　……</language>
-		<language name="JPN_KANJI" width="256">門番『……ボクの　こと
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『……ボクの　こと
 気にして　くれるわけ？▼
 ……　……　……</language>
 	</row>
@@ -462,10 +468,10 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ぷぷっ！</language>
 	</row>
 	<row id="pw_event1_react_enemy_2">
-		<language name="JPN" width="256">もんばん『……せいかく
-わるくない？　キミ……</language>
-		<language name="JPN_KANJI" width="256">門番『……性格
-悪くない？　キミ……</language>
+		<language name="JPN" width="256">ぬいぐるみ『……
+せいかくわるくない？　キミ……</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『……
+性格悪くない？　キミ……</language>
 	</row>
 	<row id="pw_event2_hero_0">
 		<language name="JPN" width="256">とびら『ガチャアアーン……！</language>
@@ -478,8 +484,8 @@
 扉を　壊せたよね！？</language>
 	</row>
 	<row id="pw_event2_enemy_1">
-		<language name="JPN" width="256">もんばん『いや　ダメだね……</language>
-		<language name="JPN_KANJI" width="256">門番『いや　ダメだね……</language>
+		<language name="JPN" width="256">ぬいぐるみ『いや　ダメだね……</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『いや　ダメだね……</language>
 	</row>
 	<row id="pw_event2_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『なんで？
@@ -488,26 +494,28 @@
 ちゃんと　壊れたのに！</language>
 	</row>
 	<row id="pw_event2_enemy_2">
-		<language name="JPN" width="256">もんばん『こんな　ふうに
+		<language name="JPN" width="256">ぬいぐるみ『わかんないかな？
+こんな　ふうに　とびらを▽
 こわしちゃ　ダメだったんだ▼
 まほうで　つくられた　ものを
 ちからづくで　こわす　なんてね▼
-いまの　おとを　きいて
-ジュジュベさまが　もうすぐ　くるよ▽
+きっと　いまの　おとを　きいて
+ジュジュベさまが　こっちに　くるよ▽
 キミは　ゆるされない　だろうね▼
-……こんやは　ひさしぶりに
-あったかい　にんげんの▽
-スープが　のめそうだな</language>
-		<language name="JPN_KANJI" width="256">門番『こんな　ふうに
+へへへ……▼
+こんやは　ひさしぶりに　にんげんの
+あったかいスープが　のめそうだな</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『分かんないかな？
+こんな風に　扉を▽
 壊しちゃ　ダメだったんだ▼
 魔法で　作られた　ものを
 力づくで　壊すなんてね▼
-今の　音を　聞いて
-ジュジュベ様が　もうすぐ　来るよ▽
+きっと　今の　音を　聞いて
+ジュジュベさまが　こっちに　来るよ▽
 キミは　許されない　だろうね▼
-……今夜は　久しぶりに
-あったかい　人間の▽
-スープが　飲めそうだな</language>
+へへへ……▼
+今夜は　久しぶりに　人間の
+暖かいスープが　飲めそうだな</language>
 	</row>
 	<row id="pw_event2_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『や……
@@ -516,27 +524,23 @@
 いやだああーっ！</language>
 	</row>
 	<row id="pw_event2_hero_4">
-		<language name="JPN" width="256">……もんばんの　それは
-じょうだんだったのか　いなか？▼
-[1:00:トレーナー名:1]おうじは
-ぶじに　にげだせたのか？▼
-きろくは　どこにも
-のこっていない……</language>
-		<language name="JPN_KANJI" width="256">……門番の　それは
-冗談だったのか　否か？▼
-[1:00:トレーナー名:1]王子は
-無事に　逃げ出せたのか？▼
-記録は　どこにも
-残っていない……</language>
+		<language name="JPN" width="256">……ぬいぐるみの　つぶやいた
+ことばは　ほんとう　だったのか？▼
+それからの　[1:00:トレーナー名:1]おうじの
+きろくは　どこにも　のこっていない……</language>
+		<language name="JPN_KANJI" width="256">……ぬいぐるみの　つぶやいた
+言葉は　本当　だったのか？▼
+それからの　[1:00:トレーナー名:1]王子の
+記録は　どこにも　残っていない……</language>
 	</row>
 	<row id="pw_event3_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ひぃ……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ひい……</language>
 	</row>
 	<row id="pw_event3_enemy_0">
-		<language name="JPN" width="256">もんばん『おい……
+		<language name="JPN" width="256">ぬいぐるみ『おい……
 いつまで　やってんの</language>
-		<language name="JPN_KANJI" width="256">門番『おい……
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『おい……
 いつまで　やってんの</language>
 	</row>
 	<row id="pw_event3_hero_1">
@@ -546,20 +550,20 @@
 こいつ……　しぶとくて……</language>
 	</row>
 	<row id="pw_event3_enemy_1">
-		<language name="JPN" width="256">もんばん『まあ　いいんじゃない？
-キミ　なかなか　ねばりづよい▽
-せいかく　みたいだし▼
-あしたから　もう　とんでもなく
-ジュジュベさまに　こきつかわれるけど▽
-うん　キミなら▽
+		<language name="JPN" width="256">ぬいぐるみ『ふーん▼
+キミは　なかなか　ねばりづよい▽
+せいかく　みたいだね▼
+きっと　あしたから　ジュジュベさまに
+もう　とんでもなく　こきつかわれるけど▽
+うん！　キミなら▽
 たえぬいて　いけそうだね！</language>
-		<language name="JPN_KANJI" width="256">門番『まあ　いいんじゃない？
-キミ　なかなか　ねばり強い▽
-性格　みたいだし▼
-明日から　もう　とんでもなく
-ジュジュベ様に　こき使われるけど▽
-うん　キミなら▽
-耐え抜いて　行けそうだね！</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『ふーん▼
+キミは　なかなか　ねばり強い▽
+性格　みたいだね▼
+きっと　明日から　ジュジュベ様に
+もう　とんでもなく　こき使われるけど▽
+うん！　キミなら▽
+耐え抜いて　いけそうだね！</language>
 	</row>
 	<row id="pw_event3_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ほめられても
@@ -569,7 +573,7 @@
 ぼく　おうじさまなのに……
 なんで……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ほめられても
-嬉しくないよーっ！▼
+うれしくないよーっ！▼
 ここから　出たいよー
 父上ぇー……▼
 私　お王子様なのに……
@@ -579,43 +583,43 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじは　あしたからの
 きょうふに　ふるえながら▽
 ねむりに　ついた……▼
-いのちが　あるだけ
-ましだったと　おもうしか　ないだろう</language>
+いのちが　あるだけ　マシだったと
+じぶんに　いいきかせて……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子は　明日からの
 恐怖に　震えながら▽
-ねむりに　ついた……▼
-命が　あるだけ
-ましだったと　思うしか　ないだろう</language>
+眠りに　ついた……▼
+命が　あるだけ　マシだったと
+自分に　言い聞かせて……</language>
 	</row>
 	<row id="pw_event4_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『や　やられた……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『や　やられた……</language>
 	</row>
 	<row id="pw_event4_enemy_0">
-		<language name="JPN" width="256">もんばん『はあ！？
-なに　やってんだよ！▼
-うわ　うわ
-たいへんな　ことになるぞ！</language>
-		<language name="JPN_KANJI" width="256">門番『はあ！？
-何　やってんだよ！▼
-うわ　うわ
-大変な　ことになるぞ！</language>
+		<language name="JPN" width="256">ぬいぐるみ『あーあ……
+なに　やってんだよ……▼
+たいへんな　ことになるぞ……</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『あーあ……
+何　やってんだよ……▼
+大変な　ことになるぞ……</language>
 	</row>
 	<row id="pw_event4_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『えっ
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『えっ！？
 どうなっちゃうの？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『えっ
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『えっ！？
 どうなっちゃうの？</language>
 	</row>
 	<row id="pw_event4_enemy_1">
-		<language name="JPN" width="256">もんばん『とびらに
-まけてしまった　にんげんは▽
+		<language name="JPN" width="256">ぬいぐるみ『とびらに
+まけてしまった　にんげんは……▼
 ……　……　……▼
-とびらに　されてしまうのさ！</language>
-		<language name="JPN_KANJI" width="256">門番『とびらに
-まけてしまった　にんげんは▽
+ジュジュベさまの　まほうで
+とびらに　かえらちゃうのさ！</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『扉に
+負けてしまった　人間は……▼
 ……　……　……▼
-とびらに　されてしまうのさ！</language>
+ジュジュベ様の　魔法で
+扉に　変えられちゃうのさ！</language>
 	</row>
 	<row id="pw_event4_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『な！
@@ -624,16 +628,16 @@
 何だよ　それ……</language>
 	</row>
 	<row id="pw_event4_enemy_2">
-		<language name="JPN" width="256">もんばん『いったとおりさ▼
-おうじさまの　キミは
-ゴージャスな　かざりのついた▽
-とびらに　なって▽
-たかく　うられるんだよ！</language>
-		<language name="JPN_KANJI" width="256">門番『言ったとおりさ▼
-王子様の　キミは
-ゴージャスな　飾りのついた▽
-扉になって▽
-高く　売られるんだよ！</language>
+		<language name="JPN" width="256">ぬいぐるみ『だから　いったとおりさ▼
+おうじさまの　キミなら　きっと
+ゴージャスな　かざりの　ついた▽
+とびらに　なるだろうね……▽
+きっと　いいねだんで　うれるとおもうよ</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『だから　言ったとおりさ▼
+王子様の　キミなら　きっと
+ゴージャスな　飾りの　ついた▽
+立派な　扉に　なるだろうね……▽
+きっと　いい値段で　売れると思うよ</language>
 	</row>
 	<row id="pw_event4_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『いやだ！
@@ -652,33 +656,39 @@
 耐えられない！</language>
 	</row>
 	<row id="pw_event4_enemy_3">
-		<language name="JPN" width="256">もんばん『いまの
-あいて　ないよな……？▼
-まあ　ボケたって　むだだぜ
-キミは　もうすぐ▽
+		<language name="JPN" width="256">ぬいぐるみ『……▼
+いまのじゃあ　いちども
+ひらいて　ないよな……？▼
+……まあ　ボケて　いられるのも
+いまのうち　だぜ▼
+もうすぐ　キミは
+とじたり　ひらいたりしか　できない▽
 とびらに　なっちゃうんだからさ</language>
-		<language name="JPN_KANJI" width="256">門番『いまの
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『……▼
+今のじゃあ　一度も
 開いて　ないよな……？▼
-まあ　ボケたって　無駄だぜ
-キミは　もうすぐ▽
-扉に　なっちゃうんだからさ</language>
+……まあ　ボケて　いられるのも
+今のうち　だぜ▼
+もうすぐ　キミは
+閉じたり　開いたりしか　できない▽
+ただの扉に　なっちゃうんだからさ</language>
 	</row>
 	<row id="pw_event4_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『……</language>
 	</row>
 	<row id="pw_event4_hero_5">
-		<language name="JPN" width="256">こうして　[1:00:トレーナー名:1]おうじは
-なぜか　とびらにされて▽
-しまったのだった▼
-きっと　今ごろ　そのとびらは
-どこかの　いえの　とびらとして▽
+		<language name="JPN" width="256">……こうして　とびらに　たおされた
+[1:00:トレーナー名:1]おうじは　じぶんが▽
+とびらに　かえられてしまったのだった▼
+きっと　いまごろ　そのとびらは
+どこかの　いえの　とびらと　して▽
 やくめを　はたして　いるだろう……</language>
-		<language name="JPN_KANJI" width="256">こうして　[1:00:トレーナー名:1]王子は
-なぜか　扉にされて▽
-しまったのだった▼
+		<language name="JPN_KANJI" width="256">……こうして　扉に　倒された
+[1:00:トレーナー名:1]王子は　自分が▽
+扉に　変えられてしまったのだった▼
 きっと　今ごろ　その扉は
-どこかの　家の　扉として▽
+どこかの家の　扉と　して▽
 役目を　果たして　いるだろう……</language>
 	</row>
 	<row id="pw_event5_hero_0">
@@ -688,31 +698,31 @@
 いいかげん　ヒント　教えてよ……</language>
 	</row>
 	<row id="pw_event5_enemy_0">
-		<language name="JPN" width="256">もんばん『ヒントなんて　ないさ▼
-そもそも　キミ　ここから
-でられたと　しても▽
-この　くにから　でられるわけじゃ▽
-ないんだぜ？</language>
-		<language name="JPN_KANJI" width="256">門番『ヒントなんて　ないさ▼
-そもそも　キミ　ここから
-出られたと　しても▽
-この　国から　出られるわけじゃ▽
-ないんだぜ？</language>
+		<language name="JPN" width="256">ぬいぐるみ『ヒントなんて　ないさ▼
+そもそも　キミさあ　かりに
+ここから　でられたと　しても▽
+ジュジュベさまの　せかいから
+にげられるわけじゃ　ないんだぜ？</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『ヒントなんて　ないさ▼
+そもそも　キミさあ　仮に
+このオリから　出られたと　しても▽
+ジュジュベ様の　世界から▽
+逃げられるわけじゃ　ないんだぜ？</language>
 	</row>
 	<row id="pw_event5_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『わかってるよ！
-けど　だまって　待ってるなんて▽
-出来るわけ　ないだろ！？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『わかってるよ！
+けど　だまって　まってるなんて▽
+できるわけ　ないだろ！？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『分かってるよ！
 けど　だまって　待ってるなんて▽
 出来るわけ　ないだろ！？</language>
 	</row>
 	<row id="pw_event5_enemy_1">
-		<language name="JPN" width="256">もんばん『フーン▼
+		<language name="JPN" width="256">ぬいぐるみ『フーン▼
 ……やっぱ　キミ
 おうじさま　だけ　あるのかもね▽
 けっこう　きが　つよいし</language>
-		<language name="JPN_KANJI" width="256">門番『フーン▼
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『フーン▼
 ……やっぱ　キミ
 王子様　だけ　あるのかもね▽
 けっこう　気が強いし</language>
@@ -724,76 +734,80 @@
 絶対　壊すからな！</language>
 	</row>
 	<row id="pw_event5_enemy_2">
-		<language name="JPN" width="256">もんばん『うーん
+		<language name="JPN" width="256">ぬいぐるみ『うーん……
 その　きあいなら　こわせるかも……</language>
-		<language name="JPN_KANJI" width="256">門番『うーん
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『うーん
 その　気合いなら　壊せるかも……</language>
 	</row>
 	<row id="pw_event6_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ていうかさ……
-とびらとか　どうでもいいよ▼
-おこづかい　あげたら　きみが
-にがしてくれる　とかって▽
+もう　ぼく　めんどうくさいよー▽
+とびらとか　どうでもいいよー▼
+おこづかい　あげるからさ
+きみが　にがしてくれる　とかって▽
 どうかな？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ていうかさ……
-扉とか　どうでもいいよ▼
-おこづかい　あげたら　きみが
-逃がしてくれる　とかって▽
+もう　僕　面倒臭いんだよー▽
+扉とか　どうでもいいよー▼
+お小遣い　あげるからさ
+君が　逃がしてくれる　とかって▽
 どうかな？</language>
 	</row>
 	<row id="pw_event6_enemy_0">
-		<language name="JPN" width="256">もんばん『げー
-ばいしゅう　かよ！▼
-まったく　このくにの　みらいは
-まっくらだね！▽
-こづかいなんて　きょうみ　ないね</language>
-		<language name="JPN_KANJI" width="256">門番『げー
-買収　かよ！▼
-全く　この国の　未来は
-まっくらだね！▽
-こづかいなんて　興味ないね</language>
+		<language name="JPN" width="256">ぬいぐるみ『ゲー！　ばいしゅう　かよ！▼
+まったく　いっこくのおうじが　これじゃ
+にんげんのみらいは　まっくらだね！▼
+ボクは　ぬいぐるみ　なんだぜ
+こづかいなんて　きょうみ　ないね！</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『ゲー！　買収かよ！▼
+まったく　一国の王子が　これじゃ
+人間の未来は　真っ暗だね！▼
+ボクは　ぬいぐるみ　なんだぜ
+小遣いなんて　興味ないね！</language>
 	</row>
 	<row id="pw_event6_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ぼくに
-そんなくち　きくなんて　なまいき！▼
-いいよ！
-こわせば　いいんだろ　こわせば！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ぼくに
-そんな口　きくなんて　生意気！▼
-いいよ！
-壊せば　いいんだろ　壊せば！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ムカーッ！！▼
+おまえこそ　ぬいぐるみの　くせに
+そんな　くち　きくなんて　なまいきな！▼
+いいよ！　わかったよ！
+こわせば　いいんだろ！　こわせば！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]おうじ『ムカーッ！！▼
+お前こそ　ぬいぐるみの　くせに
+そんな　口　聞くなんて　生意気な！▼
+いいよ！　分かったよ！
+壊せばいいんだろ！　壊せば！！</language>
 	</row>
 	<row id="pw_event7_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『なあ……
 きみは　なぜ　つかまったの？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『なあ……
-きみは　なぜ　つかまったの？</language>
+君は　なぜ　捕まったの？</language>
 	</row>
 	<row id="pw_event7_enemy_0">
-		<language name="JPN" width="256">もんばん『むかしの　ことだから
-あんまり　おぼえてないね▼
-キミと　にたような　もの
-だったかもね</language>
-		<language name="JPN_KANJI" width="256">門番『昔の　事だから
-あんまり　覚えてないね▼
-キミと　似たような　もの
-だったかもね</language>
+		<language name="JPN" width="256">ぬいぐるみ『むかしの　ことだから
+あんまり　おぼえてないけど……▼
+きっと　キミと　にたような
+りゆう　だったかもね</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『昔の　ことだから
+あんまり　覚えてないけど……▼
+きっと　キミと　似たような
+理由だったかもね</language>
 	</row>
 	<row id="pw_event7_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『そうか……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『そうか……</language>
 	</row>
 	<row id="pw_event7_enemy_1">
-		<language name="JPN" width="256">もんばん『ボクも　キミと　おなじ
-にんげんだった▼
+		<language name="JPN" width="256">ぬいぐるみ『おぼえてるのは
+ボクも　キミと　おなじ　にんげんだった▼
 まほうで　すがたを　かえられて
 えいえんに　もんばんを　する▽
 しごとを　あたえられたんだ</language>
-		<language name="JPN_KANJI" width="256">門番『ボクも　キミと　おなじ
-人間だった▼
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『覚えてるのは
+ボクも　キミと　同じ　人間だった▼
 魔法で　姿を　変えられて
 永遠に　門番を　する▽
-仕事を　あたえられたんだ</language>
+仕事を　与えられたんだ</language>
 	</row>
 	<row id="pw_event7_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『そんなの　ひどい！
@@ -802,63 +816,67 @@
 逃げないのか？</language>
 	</row>
 	<row id="pw_event7_enemy_2">
-		<language name="JPN" width="256">もんばん『そうしたいような
-きも　するけど……▼
-キミと　ちがって
+		<language name="JPN" width="256">ぬいぐるみ『そうだね……
+そうしたいような　きも　するけど……▼
+キミと　ちがって　ボクは
 ポケモンも　もってないし▽
-どう　やって　たちむかえるか▽
-わからないね</language>
-		<language name="JPN_KANJI" width="256">門番『そうしたいような
-気もする　けど……▼
-キミと　ちがって
+どうやって　ジュジュベさまに▽
+たちむかえばいいか　わからないね</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『そうだね……
+そうしたいような気も　するけど……▼
+キミと　違って　ボクは
 ポケモンも　持ってないし▽
-どう　やって　立ち向かえるか▽
-わからないね</language>
+どうやって　ジュジュベ様に▽
+立ち向かえばいいか　分からないね</language>
 	</row>
 	<row id="pw_event7_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『どうでも　いいや</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『どうでも　いいや</language>
 	</row>
 	<row id="pw_event7_react_enemy_0">
-		<language name="JPN" width="256">もんばん『つ　つめてえ……</language>
-		<language name="JPN_KANJI" width="256">門番『つ　つめてえ……</language>
+		<language name="JPN" width="256">ぬいぐるみ『つ　つめてえ……▼
+なんだよ……　キミのほうから
+ボクの　みのうえを　きいたくせに……</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『つ　冷てえ……▼
+なんだよ……　キミのほうから
+ボクの　身の上を　聞いたくせに……</language>
 	</row>
 	<row id="pw_event7_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『いっしょに　いく？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『一緒に　行く？</language>
 	</row>
 	<row id="pw_event7_react_enemy_1">
-		<language name="JPN" width="256">もんばん『……ほんき？</language>
-		<language name="JPN_KANJI" width="256">門番『……本気？</language>
+		<language name="JPN" width="256">ぬいぐるみ『……ほんき？</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『……本気？</language>
 	</row>
 	<row id="pw_event7_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ぜつぼうてきだね……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『絶望的だね……</language>
 	</row>
 	<row id="pw_event7_react_enemy_2">
-		<language name="JPN" width="256">もんばん『どうじょうは
-いらないさ……</language>
-		<language name="JPN_KANJI" width="256">門番『同情は
-いらないさ……</language>
+		<language name="JPN" width="256">ぬいぐるみ『いいの　いいの
+どうじょうは　いらないさ……</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『いいの　いいの
+同情は　いらないさ……</language>
 	</row>
 	<row id="pw_event8_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『あと　ちょっとで
 とびらを　こわせそうだ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『あと　ちょっとで
-扉を　こわせそうだ！</language>
+扉を　壊せそうだ！</language>
 	</row>
 	<row id="pw_event8_enemy_0">
-		<language name="JPN" width="256">もんばん『……　……</language>
-		<language name="JPN_KANJI" width="256">門番『……　……</language>
+		<language name="JPN" width="256">ぬいぐるみ『……　……</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『……　……</language>
 	</row>
 	<row id="pw_event8_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『どうした？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『どうした？</language>
 	</row>
 	<row id="pw_event8_enemy_1">
-		<language name="JPN" width="256">もんばん『……　あ…のさ
+		<language name="JPN" width="256">ぬいぐるみ『……　あ……　のさ
 とびらの　ことだけど……</language>
-		<language name="JPN_KANJI" width="256">門番『……　あ…のさ
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『……　あ……　のさ
 扉の　ことだけど……</language>
 	</row>
 	<row id="pw_event8_hero_2">
@@ -866,35 +884,37 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『扉が　なんだい？</language>
 	</row>
 	<row id="pw_event8_enemy_2">
-		<language name="JPN" width="256">もんばん『ふつうに
-こわしても　ダメなんだ▼
+		<language name="JPN" width="256">ぬいぐるみ『この　とびらはね
+ふつうに　こわしても　ダメなんだ▼
 もうすぐ　こわれそうな
 さいごのさいご　って　ときに▽
-ちょっと　びっくりさせてやると▽
-とびらは　こわれずに　にげだす▼
-とびらを　どかすには
-それ　しか　ほうほうはないんだ</language>
-		<language name="JPN_KANJI" width="256">門番『普通に　壊しても
-ダメなんだ▼
+びっくりさせて　やると　とびらは
+こわれずに　にげだすんだ▼
+この　とびらを　どかすには
+それしか　ほうほうはないんだ</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『この　扉はね
+普通に　壊しても　ダメなんだ▼
 もうすぐ　壊れそうな
-最後の最後　ってときに▽
-ちょっと　びっくりさせてやると▽
-扉は　壊れずに　逃げ出す▼
-扉を　どかすには
+最後の最後　って　ときに▽
+びっくりさせて　やると　扉は
+壊れずに　逃げ出すんだ▼
+この扉を　どかすには
 それしか　方法はないんだ</language>
 	</row>
 	<row id="pw_event8_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『……なんで
-おしえて　くれたんだ？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『……なんで
-教えてくれたんだ？</language>
+そんなこと　おしえて　くれるんだ？▼
+きみは　ここの　もんばん　だろ？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]おうじ『……なんで
+そんなこと　教えて　くれるんだ？▼
+君は　ここの門番　だろ？</language>
 	</row>
 	<row id="pw_event8_enemy_3">
-		<language name="JPN" width="256">もんばん『……だって
-いっしょに　にげようって▽
+		<language name="JPN" width="256">ぬいぐるみ『……▼
+だって　いっしょに　にげようって▽
 いって　くれただろ</language>
-		<language name="JPN_KANJI" width="256">門番『……だって
-一緒に　逃げようって▽
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『……▼
+だって　一緒に　逃げようって▽
 言って　くれただろ</language>
 	</row>
 	<row id="pw_event8_hero_4">
@@ -904,10 +924,12 @@
 絶対　一緒に　行こうな！</language>
 	</row>
 	<row id="pw_event9_enemy_0">
-		<language name="JPN" width="256">もんばん『とびらのやつ
-びっくりして　にげだしやがった！</language>
-		<language name="JPN_KANJI" width="256">門番『扉のやつ
-びっくりして　逃げ出しやがった！</language>
+		<language name="JPN" width="256">ぬいぐるみ『ははは！▼
+とびらのやつ　びっくりして
+にげだしやがった！</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『ははは！▼
+扉のやつ　びっくりして
+逃げ出しやがった！</language>
 	</row>
 	<row id="pw_event9_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『とびらが　なくなった
@@ -916,10 +938,10 @@
 ……うまく　いったんだ　よな？</language>
 	</row>
 	<row id="pw_event9_enemy_1">
-		<language name="JPN" width="256">もんばん『そのようだね
+		<language name="JPN" width="256">ぬいぐるみ『そのようだね
 じゃあ　はやく　いきなよ</language>
-		<language name="JPN_KANJI" width="256">門番『そのようだね
-じゃあ　はやく　行きなよ</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『そのようだね
+じゃあ　早く　行きなよ</language>
 	</row>
 	<row id="pw_event9_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『なに　いってんだよ
@@ -930,16 +952,16 @@
 一緒に　逃げるんだ！</language>
 	</row>
 	<row id="pw_event9_enemy_2">
-		<language name="JPN" width="256">もんばん『でも……
+		<language name="JPN" width="256">ぬいぐるみ『でも……
 ボクは　キミの　せかいで▽
 どう　いきたら　いいのか▽
 わからないし……▼
 どっちみち　ジュジュベさまに
 つかまったら　けされちゃうよ</language>
-		<language name="JPN_KANJI" width="256">門番『でも……
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『でも……
 ボクは　キミの　世界で▽
 どう　生きたら　いいのか▽
-わからないし……▼
+分からないし……▼
 どっちみち　ジュジュベさまに
 捕まったら　消されちゃうよ</language>
 	</row>
@@ -963,14 +985,18 @@
 ずっと　お城に　いればいいよ！</language>
 	</row>
 	<row id="pw_event9_enemy_3">
-		<language name="JPN" width="256">もんばん『キミは　つよいね▼
-わかった　キミが　かてるように
-おうえんするよ▼
-じゃあ　ポケットに　はいらせてね</language>
-		<language name="JPN_KANJI" width="256">門番『キミは　強いね▼
-わかった　キミが　勝てるように
-応援するよ▼
-じゃあ　ポケットに　入らせてね</language>
+		<language name="JPN" width="256">ぬいぐるみ『キミは　つよいな……▼
+うん……　わかったよ▼
+ボクも　キミに　ついていく！
+キミが　かてるように　おうえんするよ▼
+じゃあ　ちいさくなるから
+ポケットに　はいらせてね</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『キミは　強いな……▼
+うん……　分かったよ▼
+ボクも　キミに　付いて行く！
+キミが　勝てるように　応援するよ▼
+じゃあ　小さくなるから
+ポケットに　入らせてね</language>
 	</row>
 	<row id="pw_event9_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『あはは
@@ -983,20 +1009,100 @@
 一緒に　頑張ろうぜ！</language>
 	</row>
 	<row id="pw_event9_hero_5">
-		<language name="JPN" width="256">ぬいぐるみの　もんばんと
-いっしょに　ちかろうから▽
+		<language name="JPN" width="256">ぬいぐるみと　いっしょに
+まほうの　オリから▽
 ぬけだした　[1:00:トレーナー名:1]おうじ▼
 すこし　やさしさを　おぼえ
 ひとまわり　つよくなった　おうじなら▽
 きっと　さいごの　しれんも▽
-のりこえられる　だろう</language>
-		<language name="JPN_KANJI" width="256">ぬいぐるみの　門番と
-一緒に　地下ろうから　ぬけだした▽
+のりこえられる　だろう……</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみと　一緒に
+魔法のオリから　脱げ出した▽
 [1:00:トレーナー名:1]王子▼
 すこし　優しさを　おぼえ
 ひとまわり　強くなった　王子なら▽
 きっと　最後の　試練も▽
-乗り越えられる　だろう</language>
+乗り越えられる　だろう……</language>
+	</row>
+	<row id="pw_event10_enemy_0">
+		<language name="JPN" width="256">ぬいぐるみ『わっ！　びっくりした！</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『わっ！　びっくりした！</language>
+	</row>
+	<row id="pw_event10_hero_1">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『えっ！？
+きゅうに　なんだよ！？▼
+……ああ　もしかして　この　みがわりの
+ぬいぐるみの　ことか</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『えっ！？
+急に　何だよ！？▼
+……ああ　もしかして　この
+みがわりの　ぬいぐるみの　ことか</language>
+	</row>
+	<row id="pw_event10_enemy_1">
+		<language name="JPN" width="256">ぬいぐるみ『……うん</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『……うん</language>
+	</row>
+	<row id="pw_event10_hero_2">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『きみに
+そっくり　だもんな</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『キミに
+そっくり　だもんな</language>
+	</row>
+	<row id="pw_event10_enemy_2">
+		<language name="JPN" width="256">ぬいぐるみ『まあ　ボクは
+もとから　このすがた　って▽
+わけでも　ないけどね</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『まあ　ボクも
+元から　この姿って▽
+わけでも　ないけどね</language>
+	</row>
+	<row id="pw_event10_hero_3">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『そうなの！？▼
+あっ！　もしかして……▼
+じつは　ぼくさ　むかし　ゆくえふめいに
+なった　にいさんが　いるんだけど▽
+それが　きみ！▽
+とか　だったりして！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『そうなの！？▼
+あっ　もしかして……▼
+実は　僕さ　昔　行方不明に
+なった　兄さんが　いるんだけど▽
+それが　君！▽
+とか　だったりして！</language>
+	</row>
+	<row id="pw_event10_enemy_3">
+		<language name="JPN" width="256">ぬいぐるみ『はは……　まさか</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『はは……　まさか</language>
+	</row>
+	<row id="pw_event10_hero_4">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ふーん▼
+まあ　でも　いつか　もとの
+すがたに　もどれると　いいな！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ふーん▼
+まあ　でも　いつか　元の
+姿に　元に　戻れると　いいな！</language>
+	</row>
+	<row id="pw_event10_enemy_4">
+		<language name="JPN" width="256">ぬいぐるみ『まあね……▼
+ボクも　ここから　でられれば
+まほうが　とけるの　かも……</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『まあね……▼
+ボクも　ここから　出られれば
+魔法が　とけるの　かも……</language>
+	</row>
+	<row id="pw_event10_hero_5">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『……▼
+（ほんとの　すがた
+みて　みたいな……）</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『……▼
+（ほんとの　姿
+見てみたいな……）</language>
+	</row>
+	<row id="pw_event10_enemy_5">
+		<language name="JPN" width="256">ぬいぐるみ『……
+（おおきく　なりやがって……）</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『……
+（大きく　なりやがって……）</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

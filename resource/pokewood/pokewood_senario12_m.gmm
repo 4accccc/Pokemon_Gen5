@@ -410,7 +410,7 @@
 おそわれたら　ひとたまりもないぞ！！</language>
 		<language name="JPN_KANJI" width="256">逃げ遅れた　市民『逃げろっ！！
 あんな　大きな　バンギラスに▽
-おそわれたら　ひとたまりもないぞ！！</language>
+襲われたら　ひとたまりもないぞ！！</language>
 	</row>
 	<row id="pw_event1_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『やはり　こいつは
@@ -452,7 +452,7 @@
 		<language name="JPN" width="256">にげおくれた　しみん『ひぃー！！
 なんで　こんなことにっ！！</language>
 		<language name="JPN_KANJI" width="256">逃げ遅れた　市民『ひぃー！！
-なんで　こんなことにっ！！</language>
+何で　こんなことにっ！！</language>
 	</row>
 	<row id="pw_event1_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『やられるぞー！！</language>
@@ -497,7 +497,7 @@
 	<row id="pw_event2_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『このさきには
 にんげんの　くらす　まちが　ある！▼
-きみの　ように　おおきな　ポケモンが
+きみのように　おおきな　ポケモンが
 まちに　いけば　きっと　なにかの▽
 トラブルが　はっせいする！▼
 ……だから　いまは　おとなしく
@@ -505,7 +505,7 @@
 もどってくれないか？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『この先には
 人間の　暮らす　街が　ある！▼
-きみの　ように　大きな　ポケモンが
+君のように　巨大なポケモンが
 街に　いけば　きっと　何かの▽
 トラブルが　発生するだろう！▼
 ……だから　今は　おとなしく
@@ -581,10 +581,10 @@
 	<row id="pw_event3_hero_1">
 		<language name="JPN" width="256">つうしん『おい！　きこえるか！？
 おうとうせよ！　[1:00:トレーナー名:1]！▽
-じょうきょうを　ほうこく　しろ！</language>
+じょうきょうを　ほうこくしろ！</language>
 		<language name="JPN_KANJI" width="256">通信『おい！　聞こえるか！？
 応答せよ！　[1:00:トレーナー名:1]！▽
-状況を　報告　しろ！</language>
+直ちに　状況を　報告しろ！</language>
 	</row>
 	<row id="pw_event3_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『もうしわけ　ありません……
@@ -665,8 +665,8 @@
 きさまの　ような　にんげんには
 おもい　つみを　あたえよう……</language>
 		<language name="JPN_KANJI" width="256">？？？『おろかな……▼
-きさまの　ような　にんげんには
-おもい　つみを　あたえよう……</language>
+貴様の　ような　人間には
+厳罰を　与えよう……</language>
 	</row>
 	<row id="pw_event4_enemy_5">
 		<language name="JPN" width="256">？？？『グロローン！！</language>

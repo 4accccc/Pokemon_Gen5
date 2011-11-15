@@ -520,10 +520,10 @@
 	</row>
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">ハチクマン『ファファファ！！
-すばらしいぞ！！　ハチクかん！！
+すばらしいぞ！　ハチクかん！！▽
 そして　ハチクほうの　いりょく！！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファファファ！！
-素晴らしいぞ！！　ハチクかん！！
+素晴らしいぞ！　ハチクかん！！▽
 そして　ハチク砲の　威力！！</language>
 	</row>
 	<row id="pw_event1_hero_1">
@@ -955,6 +955,60 @@
 こだま　するの　だった……▼
 さらば！　悪の　怪人
 ハチクマン！</language>
+	</row>
+	<row id="pw_event5_enemy_0">
+		<language name="JPN" width="256">ハチクマン『ファファファ……▼
+せいぎの　ヒーローで　ありながら
+そのような　わざを　つかうとは……</language>
+		<language name="JPN_KANJI" width="256">ハチクマン『ファファファ……▼
+正義のヒーローで　ありながら
+そのような　わざを　使うとは……</language>
+	</row>
+	<row id="pw_event5_hero_1">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『なにがわるい！▼
+ぼくは　せいぎの　ためなら
+しゅだんは　えらばないぞ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『なにが悪い！▼
+僕は　正義の　ためなら
+手段は　選ばないぞ！</language>
+	</row>
+	<row id="pw_event5_enemy_1">
+		<language name="JPN" width="256">ハチクマン『ファファファ……
+わがはいのような　セリフを　はく……▼
+せいぎの　ヒーローに　しておくには
+いささか　おしい　じんざいよ……▼
+どうだ？ ヒーローなど　やめ
+わがはいの　ぶかに　ならぬか？</language>
+		<language name="JPN_KANJI" width="256">ハチクマン『ファファファ……
+我輩のような　セリフを　はく……▼
+正義のヒーローに　しておくには
+いささか　惜しい　人材よ……▼
+どうだ？　ヒーローなど　辞め
+我輩の　部下に　ならぬか？</language>
+	</row>
+	<row id="pw_event5_hero_2">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『ありえないな！▼
+おまえこそ　あくのかいじんを　やめ
+ぼくと　いっしょに　せいぎのみちを▽
+あゆめば　いいじゃないか！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『あり得ないな！▼
+お前こそ　悪の怪人を　辞め
+僕と　一緒に　正義の道を▽
+歩めば　いいじゃないか！</language>
+	</row>
+	<row id="pw_event5_enemy_2">
+		<language name="JPN" width="256">ハチクマン『ファーファファ！！
+ありえぬ！！　ありえぬなっ！！▼
+ともを　うらぎり　つまやこを　すてて
+あゆんできた　かいじんの　みち……▼
+わがじんせいは　しょうがい　かいじん！
+あくのみちを　しょうじんする　のみよ！</language>
+		<language name="JPN_KANJI" width="256">ハチクマン『ファーファファ！！
+あり得ぬ！！　あり得ぬなっ！！▼
+友を　裏切り　妻子を　捨てて
+歩んできた　怪人の　道……▼
+我が人生は　生涯　怪人！！
+悪の道を　精進する　のみよ！！</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
