@@ -670,6 +670,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
         && MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_OBJ) != PANEL_COLORMODE_FLASH
         && MonolithTool_CancelIcon_FlashCheck(&mpw->cancel_icon) == FALSE){
       appwk->next_menu_index = MONOLITH_MENU_TITLE;
+      appwk->common->title_curpos = MONOLITH_RET_POWER;
       return GFL_PROC_RES_FINISH;
     }
     break;

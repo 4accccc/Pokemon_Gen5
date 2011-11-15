@@ -121,6 +121,12 @@ enum{
 ///パネルコントロール数
 #define PANEL_CONTROL_MAX     (4)
 
+// 戻り先カーソル位置
+enum{
+  MONOLITH_RET_FMISSION = 0, ///<フェスミッションを受ける
+  MONOLITH_RET_POWER,        ///<デルパワー
+  MONOLITH_RET_STATUS,       ///<状態を見る
+};
 
 //==============================================================================
 //  構造体定義
@@ -162,6 +168,8 @@ typedef struct{
 //  u8 padding;
   u8 fmission_id;
   u8 fmission_level;
+  s8 title_curpos;           ///<タイトルのカーソル
+  u8 pad;
   u8 gpower_no[4];           ///<パワー画面：選択中の3つ(1つはpad)
 }MONOLITH_COMMON_WORK;
 

@@ -960,6 +960,7 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
       appwk->next_menu_index = MONOLITH_MENU_END;
     }else{
       appwk->next_menu_index = MONOLITH_MENU_TITLE;
+      appwk->common->title_curpos = MONOLITH_RET_FMISSION;
     }
     return GFL_PROC_RES_FINISH;
   }

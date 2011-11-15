@@ -101,12 +101,6 @@ static const struct{
     &MonolithAppProc_Up_Status,  	// èCê≥
     &MonolithAppProc_Down_Title,
   },
-#if 0	// ñ¢égóp
-  {//MONOLITH_MENU_MISSION
-    &MonolithAppProc_Up_MissionExplain,
-    &MonolithAppProc_Down_MissionSelect,
-  },
-#endif
   {//MONOLITH_MENU_POWER
     &MonolithAppProc_Up_PowerExplain,
     &MonolithAppProc_Down_PowerSelect,

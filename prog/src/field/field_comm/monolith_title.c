@@ -395,7 +395,7 @@ static void _Title_PanelCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *
   }
   //
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_KEY ){
-    MonolithTool_PanelOBJ_Focus(appwk, mtw->panel, TPANEL_MAX, 0, FADE_SUB_OBJ);
+    MonolithTool_PanelOBJ_Focus(appwk, mtw->panel, TPANEL_MAX, mtw->cursor_pos, FADE_SUB_OBJ);
     mtw->no_focus = FALSE;
   }
   else{
@@ -724,6 +724,10 @@ static void mt_init( MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *mtw )
     mtw->Mode = MODE_GPOWER;
   }
   
+  // 初期カーソル位置セット
+  mtw->cursor_pos   = appwk->common->title_curpos;
+  mtw->select_panel = mtw->cursor_pos;
+  appwk->common->title_curpos = MONOLITH_RET_FMISSION;
   
   // 初期化をまとめて行う
 #ifdef PM_DEBUG

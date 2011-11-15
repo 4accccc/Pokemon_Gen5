@@ -256,6 +256,7 @@ static GFL_PROC_RESULT MonolithStatusProc_Main( GFL_PROC * proc, int * seq, void
   case 1:
     if(MonolithTool_CancelIcon_FlashCheck(&msw->cancel_icon) == FALSE){
       appwk->next_menu_index = MONOLITH_MENU_TITLE;
+      appwk->common->title_curpos = MONOLITH_RET_STATUS;
       return GFL_PROC_RES_FINISH;
     }
     break;

@@ -2632,6 +2632,7 @@ static void pwm_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
 {
 	s32			i;
 	s32			id;
+	s32			num;
 	STRBUF	*strbuf;
 	STRBUF	*namebuf;
 //  HEAPID  heapID = GFL_HEAP_LOWID( wk->heapID );
@@ -2737,7 +2738,13 @@ static void pwm_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
 #if 1
 	strbuf  = GFL_MSG_CreateString( wk->MsgData, pwm_mes_tbl[3] );
 	namebuf = GFL_STR_CreateBuffer( 128, wk->heapID );
-	WORDSET_RegisterNumber( wk->Wordset, 2, p_pkwd_record->profits, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	num = p_pkwd_record->profits;
+	if(num > 9999){
+		num = 9999;
+		OS_Printf("max over:%d\n",p_pkwd_record->profits);
+	}
+//	WORDSET_RegisterNumber( wk->Wordset, 2, p_pkwd_record->profits, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	WORDSET_RegisterNumber( wk->Wordset, 2, num, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	WORDSET_ExpandStr( wk->Wordset, namebuf, strbuf );
 	GFL_STR_DeleteBuffer( strbuf );
 	// •\Ž¦

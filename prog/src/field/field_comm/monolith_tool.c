@@ -243,6 +243,8 @@ void MonolithTool_PanelOBJ_Create_Color(MONOLITH_SETUP *setup, PANEL_ACTOR *dest
   BMPOAM_ACT_DATA bmpoam_head = BmpOamHead_Panel;
   int bmp_size_x;
   STRBUF *strbuf;
+  u16 fsize;
+  s32 xx;
   
   switch(size){
   case PANEL_SIZE_LARGE:
@@ -290,14 +292,19 @@ void MonolithTool_PanelOBJ_Create_Color(MONOLITH_SETUP *setup, PANEL_ACTOR *dest
   
   //文字描画
   strbuf = GFL_MSG_CreateString( setup->mm_monolith, msg_id );
+  // センタリング用の処理
+  fsize = PRINTSYS_GetStrWidth( strbuf, setup->font_handle, 0 ) / 2;
+  xx = bmp_size_x*8/2-fsize;
+//  OS_Printf("size :%d,%d\n",fsize,xx);
+  //
   if(wordset != NULL){
     STRBUF *expand_str = GFL_STR_CreateBuffer(128, HEAPID_MONOLITH);
     WORDSET_ExpandStr( wordset, expand_str, strbuf );
-    PRINTSYS_PrintQueColor( setup->printQue, dest->bmp, 0, 0, expand_str, setup->font_handle, color );
+    PRINTSYS_PrintQueColor( setup->printQue, dest->bmp, xx, 0, expand_str, setup->font_handle, color );
     GFL_STR_DeleteBuffer(expand_str);
   }
   else{
-    PRINTSYS_PrintQueColor( setup->printQue, dest->bmp, 0, 0, strbuf, setup->font_handle, color);
+    PRINTSYS_PrintQueColor( setup->printQue, dest->bmp, xx, 0, strbuf, setup->font_handle, color);
   }
   GFL_STR_DeleteBuffer(strbuf);
   
