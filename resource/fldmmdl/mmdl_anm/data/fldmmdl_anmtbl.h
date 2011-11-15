@@ -41,6 +41,7 @@
 #include "fmmdl_anm_nonflip_swrival.h"
 #include "fmmdl_anm_nonflip_swsage1.h"
 #include "fmmdl_anm_flip_swmama2.h"
+#include "fmmdl_anm_sppoke.h"
 
 
 //===================================================
@@ -83,6 +84,7 @@ typedef enum
   MMDL_BLACT_ANMTBLNO_NONFLIP_SWRIVAL,  ///<スワンライバル(ヒュウ)　フリップ無しアニメ＋芝居1パターン
   MMDL_BLACT_ANMTBLNO_NONFLIP_SWSAGE1,  ///<スワンゲーチス　フリップ無しアニメ＋芝居２パターン
   MMDL_BLACT_ANMTBLNO_FLIP_SWMAMA2,  ///<スワンママ お芝居3種有り　フリップ有アニメを継承
+  MMDL_BLACT_ANMTBLNO_SPPOKE,  ///<スワン レシゼク+キュレム4形態(N/+W/+B/プラグ無し)アニメ　待機正面・待機背面・吼える
   MMDL_BLACT_ANMTBLNO_MAX,  ///<最大
 }MMDL_BLACT_ANMTBLNO;
 

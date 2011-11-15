@@ -579,7 +579,7 @@
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke9.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
 
 #poke10.imd
-./mmdl_res/poke10.imd: ./mmdl_nchara/poke10.ncg ./mmdl_nchara/poke10.ncl ./mmdl_dmy/t8x8x15.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_shinmu_a.csv
+./mmdl_res/poke10.imd: ./mmdl_nchara/poke10.ncg ./mmdl_nchara/poke10.ncl ./mmdl_dmy/t8x8x15.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_sppoke.csv
 	@echo convert ncg_imd poke10
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke10.ncg ./mmdl_res ./mmdl_dmy/t8x8x15.imd 8 8 15
 
@@ -1674,27 +1674,27 @@
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke59.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
 
 #sppoke01_re.imd
-./mmdl_res/sppoke01_re.imd: ./mmdl_nchara/sppoke01_re.ncg ./mmdl_nchara/sppoke01_re.ncl ./mmdl_dmy/t8x8x15.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_shinmu_a.csv
+./mmdl_res/sppoke01_re.imd: ./mmdl_nchara/sppoke01_re.ncg ./mmdl_nchara/sppoke01_re.ncl ./mmdl_dmy/t8x8x15.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_sppoke.csv
 	@echo convert ncg_imd sppoke01_re
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/sppoke01_re.ncg ./mmdl_res ./mmdl_dmy/t8x8x15.imd 8 8 15
 
 #sppoke02_ze.imd
-./mmdl_res/sppoke02_ze.imd: ./mmdl_nchara/sppoke02_ze.ncg ./mmdl_nchara/sppoke02_ze.ncl ./mmdl_dmy/t8x8x15.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_shinmu_a.csv
+./mmdl_res/sppoke02_ze.imd: ./mmdl_nchara/sppoke02_ze.ncg ./mmdl_nchara/sppoke02_ze.ncl ./mmdl_dmy/t8x8x15.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_sppoke.csv
 	@echo convert ncg_imd sppoke02_ze
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/sppoke02_ze.ncg ./mmdl_res ./mmdl_dmy/t8x8x15.imd 8 8 15
 
 #sppoke03_ku.imd
-./mmdl_res/sppoke03_ku.imd: ./mmdl_nchara/sppoke03_ku.ncg ./mmdl_nchara/sppoke03_ku.ncl ./mmdl_dmy/t8x8x15.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_shinmu_a.csv
+./mmdl_res/sppoke03_ku.imd: ./mmdl_nchara/sppoke03_ku.ncg ./mmdl_nchara/sppoke03_ku.ncl ./mmdl_dmy/t8x8x15.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_sppoke.csv
 	@echo convert ncg_imd sppoke03_ku
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/sppoke03_ku.ncg ./mmdl_res ./mmdl_dmy/t8x8x15.imd 8 8 15
 
 #sppoke04_kure.imd
-./mmdl_res/sppoke04_kure.imd: ./mmdl_nchara/sppoke04_kure.ncg ./mmdl_nchara/sppoke04_kure.ncl ./mmdl_dmy/t8x8x15.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_shinmu_a.csv
+./mmdl_res/sppoke04_kure.imd: ./mmdl_nchara/sppoke04_kure.ncg ./mmdl_nchara/sppoke04_kure.ncl ./mmdl_dmy/t8x8x15.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_sppoke.csv
 	@echo convert ncg_imd sppoke04_kure
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/sppoke04_kure.ncg ./mmdl_res ./mmdl_dmy/t8x8x15.imd 8 8 15
 
 #sppoke05_kuze.imd
-./mmdl_res/sppoke05_kuze.imd: ./mmdl_nchara/sppoke05_kuze.ncg ./mmdl_nchara/sppoke05_kuze.ncl ./mmdl_dmy/t8x8x15.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_shinmu_a.csv
+./mmdl_res/sppoke05_kuze.imd: ./mmdl_nchara/sppoke05_kuze.ncg ./mmdl_nchara/sppoke05_kuze.ncl ./mmdl_dmy/t8x8x15.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_sppoke.csv
 	@echo convert ncg_imd sppoke05_kuze
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/sppoke05_kuze.ncg ./mmdl_res ./mmdl_dmy/t8x8x15.imd 8 8 15
 

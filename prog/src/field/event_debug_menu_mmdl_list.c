@@ -406,7 +406,12 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
                 ac_act_d = AC_SWMAMA2_HANG_UP_PHONE;
                 ac_act_l = ac_act_r = AC_SWMAMA2_CHASE_PETAL;
                 break;
-#if 0
+              case MMDL_BLACT_ANMTBLNO_SPPOKE:
+                ac_act_u = AC_DIR_U;
+                ac_act_d = AC_DIR_D;
+                ac_act_l = ac_act_r = AC_SPPOKE_BARK;
+                break;
+#if 1
               case MMDL_BLACT_ANMTBLNO_SHINMU_A:
                 ac_act_u = AC_DIR_U;
                 ac_act_d = AC_SHIN_MU_GUTARI;

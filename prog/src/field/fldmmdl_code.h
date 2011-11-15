@@ -403,6 +403,10 @@
 #define DRAW_STA_SHINMU_C_STOP 0x00
 #define DRAW_STA_SHINMU_C_FLY  (DRAW_STA_MAX)
 
+//スワン追加 レシゼク,キュレム4形態(N/+W/+B/プラグ無し)
+#define DRAW_STA_SPPOKE_STOP_D  0x00  //スワン 正面待機(デフォルト)
+#define DRAW_STA_SPPOKE_BARK    (DRAW_STA_MAX)  //吼える
+
 //--------------------------------------------------------------
 ///  フィールド動作モデル くもの巣専用描画ステータス
 //--------------------------------------------------------------
@@ -616,7 +620,8 @@
 #define AC_SHIN_MU_C_FLY 0xbc ///<シンムC 滞空アニメ
 #define AC_MARK_GYOE_NO_SE 0xbd ///<!マークを出す・SEなし [rail]
 #define AC_MARK_ONPU_NO_SE 0xbe ///<♪マークを出す・SEなし [rail]
-#define ACMD_MAX 0xbf ///<アニメーションコマンド最大数
+#define AC_SPPOKE_BARK     0xbf ///<スワン レシゼク,キュレムx4形態専用 吼える
+#define ACMD_MAX 0xc0 ///<アニメーションコマンド最大数
 
 #define ACMD_AUTO_END 0xfd  // アニメーションコマンド終了（_OBJ_ANIME_AUTO用）>> update ichiraku 2010/10/14
 #define ACMD_END 0xfe ///<アニメーションコマンド終了
@@ -647,5 +652,21 @@
 #define AC_SWMAMA2_CHASE_PETAL (AC_ACT0_STOP)      ///<スワンママ専用 花びらを目で追うアニメ
 #define AC_SWMAMA2_ANSWER_PHONE (AC_ACT1_LOOP)      ///<スワンママ専用 電話に出るアニメ
 #define AC_SWMAMA2_HANG_UP_PHONE (AC_ACT2_STOP)     ///<スワンママ専用 電話を切るアニメ
+
+#define AC_SPPOKE01_RE_STOP_D (AC_DIR_D) //スワンレシラム専用 正面待機
+#define AC_SPPOKE01_RE_STOP_U (AC_DIR_U) //スワンレシラム専用 背面待機
+#define AC_SPPOKE01_RE_BARK   (AC_SPPOKE_BARK) //スワンレシラム専用 吼える 
+#define AC_SPPOKE02_ZE_STOP_D (AC_DIR_D) //スワンゼクロム専用 正面待機
+#define AC_SPPOKE02_ZE_STOP_U (AC_DIR_U) //スワンゼクロム専用 背面待機
+#define AC_SPPOKE02_ZE_BARK   (AC_SPPOKE_BARK) //スワンゼクロム専用 吼える 
+
+#define AC_SPPOKE03_KU_STOP_D (AC_DIR_D) //スワンキュレム プラグ無し専用 正面待機
+
+#define AC_SPPOKE04_KURE_STOP_D (AC_DIR_D) //スワンホワイトキュレム専用 正面待機
+#define AC_SPPOKE04_KURE_BARK   (AC_SPPOKE_BARK) //スワンホワイトキュレム専用 吼える 
+#define AC_SPPOKE05_KUZE_STOP_D (AC_DIR_D) //スワンブラックキュレム専用 正面待機
+#define AC_SPPOKE05_KUZE_BARK   (AC_SPPOKE_BARK) //スワンブラックキュレム専用 吼える 
+#define AC_POKE10_STOP_D        (AC_DIR_D) //スワンキュレム専用 正面待機
+#define AC_POKE10_BARK          (AC_SPPOKE_BARK) //スワンキュレム専用 吼える 
 
 #endif //MMDL_CODE_H_FILE

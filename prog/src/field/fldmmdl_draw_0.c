@@ -1675,6 +1675,155 @@ static void DrawBlActShinMu_Delete( MMDL *mmdl )
  * @retval  nothing
  */
 //--------------------------------------------------------------
+enum{
+ SHINMU_DRAW_SHINMU_A,
+ SHINMU_DRAW_SHINMU_B,
+ SHINMU_DRAW_SHINMU_C,
+ SHINMU_DRAW_SPPOKE_DUB,  ///正面待機,背面待機,吼える
+ SHINMU_DRAW_SPPOKE_DB,   ///正面待機,吼える
+ SHINMU_DRAW_SPPOKE_D,    ///正面待機
+};
+
+typedef struct{
+ u16  obj_code;
+ u8   draw_code:4;
+ u8   dir_f:4;  //向き判定するか？
+ u8   anm_idx;  //デフォルトアニメindex
+}SHINMU_DRAW_CODE;
+
+static const SHINMU_DRAW_CODE DATA_ShinMu_DrawCode[] = {
+ { SHIN_A, SHINMU_DRAW_SHINMU_A, FALSE, DRAW_ANMNO_SHINMU_A_STOP },
+ { MU_A,   SHINMU_DRAW_SHINMU_A, FALSE, DRAW_ANMNO_SHINMU_A_STOP },
+ { SHIN_B, SHINMU_DRAW_SHINMU_B, TRUE,  DRAW_ANMNO_SHINMU_B_STOPU },
+ { MU_B,   SHINMU_DRAW_SHINMU_B, TRUE,  DRAW_ANMNO_SHINMU_B_STOPU },
+ { SHIN_C, SHINMU_DRAW_SHINMU_C, FALSE, DRAW_ANMNO_SHINMU_C_FLYUP },
+ { MU_C,   SHINMU_DRAW_SHINMU_C, FALSE, DRAW_ANMNO_SHINMU_C_FLYUP },
+
+ { SPPOKE01_RE,   SHINMU_DRAW_SPPOKE_DUB, TRUE,  DRAW_ANMNO_SPPOKE_STOPD }, //スワンレシラム
+ { SPPOKE02_ZE,   SHINMU_DRAW_SPPOKE_DUB, TRUE,  DRAW_ANMNO_SPPOKE_STOPD }, //スワンゼクロム
+ { SPPOKE03_KU,   SHINMU_DRAW_SPPOKE_D,   FALSE, DRAW_ANMNO_SPPOKE_STOPD }, //開放されたキュレム(プラグ外れた姿)
+ { SPPOKE04_KURE, SHINMU_DRAW_SPPOKE_DB,  FALSE, DRAW_ANMNO_SPPOKE_STOPD }, //キュレム+レシラム
+ { SPPOKE05_KUZE, SHINMU_DRAW_SPPOKE_DB,  FALSE, DRAW_ANMNO_SPPOKE_STOPD }, //キュレム+ゼクロム
+ { POKE10,        SHINMU_DRAW_SPPOKE_DB,  FALSE, DRAW_ANMNO_SPPOKE_STOPD }, //スワンキュレム
+};
+
+static void DrawBlActShinMu_Draw( MMDL *mmdl )
+{
+  u16 status,code,dir;
+  u16 init_flag = FALSE;
+  DRAW_BLACT_WORK *work;
+  GFL_BBDACT_SYS *actSys;
+  const SHINMU_DRAW_CODE* pDraw = NULL;
+  
+  work = MMDL_GetDrawProcWork( mmdl );
+
+  if( work->actID == MMDL_BLACTID_NULL ){ //未登録
+    return;
+  }
+  
+  actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+  
+  code = MMDL_GetOBJCode( mmdl );
+  status = MMDL_GetDrawStatus( mmdl );
+  dir = blact_GetDrawDir( mmdl );
+  
+  {
+    int i;
+    for( i = 0;i < NELEMS(DATA_ShinMu_DrawCode); i++ ){
+      if( DATA_ShinMu_DrawCode[i].obj_code == code ){
+        pDraw = &DATA_ShinMu_DrawCode[i];
+        break;
+      }
+    }
+    if( pDraw == NULL ){
+      GF_ASSERT(0);
+      return; //何もしない
+    }
+  }
+  
+  if( (status != work->anmcnt.set_anm_status) ||
+      ( pDraw->dir_f && (status < DRAW_STA_MAX) && (dir != work->anmcnt.set_anm_dir) ) 
+  )
+  {
+    u16 anm_idx = pDraw->anm_idx; //デフォルトをセット(指定条件に合致しないステータスが来たら全部デフォルト)
+    
+    switch( pDraw->draw_code ){
+    case SHINMU_DRAW_SHINMU_A:
+      {
+        switch( status ){
+        case DRAW_STA_SHINMU_A_GUTARI:
+          anm_idx = DRAW_ANMNO_SHINMU_A_GUTARI;
+          break;
+        case DRAW_STA_SHINMU_A_FLY_UP:
+          anm_idx = DRAW_ANMNO_SHINMU_A_FLYUP;
+          break;
+        case DRAW_STA_SHINMU_A_FLY:
+          anm_idx = DRAW_ANMNO_SHINMU_A_FLY;
+          break;
+        }
+      }
+      break;
+    case SHINMU_DRAW_SHINMU_B:
+      {
+        switch( status ){
+        case DRAW_STA_SHINMU_B_HOERU:
+          anm_idx = DRAW_ANMNO_SHINMU_B_HOERU;
+          break;
+        case DRAW_STA_SHINMU_B_TURN:
+          anm_idx = DRAW_ANMNO_SHINMU_B_TURN;
+          break;
+        default:
+          if( dir == DIR_UP )         anm_idx = DRAW_ANMNO_SHINMU_B_STOPU;
+          else if( dir == DIR_DOWN )  anm_idx = DRAW_ANMNO_SHINMU_B_STOPD;
+          break;
+        }
+      }
+      break;
+    case SHINMU_DRAW_SPPOKE_DUB:
+      { //正面待機/背面待機/吼える
+        if( status == DRAW_STA_SPPOKE_BARK ){
+          anm_idx = DRAW_ANMNO_SPPOKE_BARK;
+        }else{
+          if( dir == DIR_UP )        anm_idx = DRAW_ANMNO_SPPOKE_STOPU;
+          else if( dir == DIR_DOWN ) anm_idx = DRAW_ANMNO_SPPOKE_STOPD;
+        }
+      }
+      break;
+    case SHINMU_DRAW_SPPOKE_DB:
+      { //正面待機/吼える
+        if( status == DRAW_STA_SPPOKE_BARK ){
+          anm_idx = DRAW_ANMNO_SPPOKE_BARK;
+        }
+      }
+      break;
+    case SHINMU_DRAW_SHINMU_C:
+    case SHINMU_DRAW_SPPOKE_D:
+      //特に判定無しでデフォルトコードを適用
+      break;
+    }
+    
+    //描画ステータス書き換え
+    if( pDraw->dir_f ){
+      work->anmcnt.set_anm_dir = dir;
+    }
+    init_flag = TRUE;
+    work->anmcnt.set_anm_status = status;
+    GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
+  }
+  
+  blact_UpdatePauseVanish( //シンムは動作ポーズを無視する
+      mmdl, actSys, work->actID, init_flag, TRUE );
+
+  {
+    VecFx32 pos;
+
+    MMDL_GetDrawVectorPos( mmdl, &pos );
+    blact_SetCommonOffsPos( mmdl, &pos );
+    GFL_BBD_SetObjectTrans( GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
+  }
+}
+
+#if 0
 static void DrawBlActShinMu_Draw( MMDL *mmdl )
 {
   u16 status,code;
@@ -1735,7 +1884,7 @@ static void DrawBlActShinMu_Draw( MMDL *mmdl )
     }else{
       if( status != work->anmcnt.set_anm_status ){
         switch( status ){
-        case DRAW_STA_SHINMU_B_HOERU:
+         case DRAW_STA_SHINMU_B_HOERU:
           anm_idx = DRAW_ANMNO_SHINMU_B_HOERU;
           break;
         case DRAW_STA_SHINMU_B_TURN:
@@ -1766,6 +1915,8 @@ static void DrawBlActShinMu_Draw( MMDL *mmdl )
   GFL_BBD_SetObjectTrans(
   GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 }
+
+#endif
 
 //--------------------------------------------------------------
 /**

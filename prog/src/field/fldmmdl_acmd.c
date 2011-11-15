@@ -4792,6 +4792,22 @@ static int AC_ShinMuC_Fly1( MMDL * mmdl )
   return( TRUE );
 }
 
+//--------------------------------------------------------------
+/**
+ * AC_SPPOKE_BARK	スワン レシゼク,キュレム4形態(N/+W/+B/プラグ無し)専用
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再起
+ */
+//--------------------------------------------------------------
+static int AC_SpPoke_Bark( MMDL * mmdl )
+{
+  MMDL_SetDrawStatus( mmdl, DRAW_STA_SPPOKE_BARK );
+  MMDL_IncAcmdSeq( mmdl );
+
+  return( TRUE );
+}
+
+
 //======================================================================
 //	AC_MELODYER系
 //======================================================================
@@ -6743,6 +6759,15 @@ int (* const DATA_AC_ShinMuC_Fly_Tbl[])( MMDL * ) =
 {
   AC_ShinMuC_Fly0,
   AC_ShinMuC_Fly1,
+  AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_SPPOKE_BARK
+//--------------------------------------------------------------
+int (* const DATA_AC_SpPoke_Bark_Tbl[])( MMDL * ) =
+{
+  AC_SpPoke_Bark,
   AC_End,
 };
 
