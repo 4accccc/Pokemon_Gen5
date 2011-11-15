@@ -6,15 +6,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]『　ゴーストイレイザー　ほうこくしょ
+			<Text>[Ctrl1:xcenter ]ゴーストイレイザー　ほうこくしょ
 
-[Ctrl1:xcenter ]　ファイル№　００１
+[Ctrl1:xcenter ]ファイル№　００１
 
-[Ctrl1:xcenter ]　コードネーム：　[Name:PokemonNickname ]　』
+[Ctrl1:xcenter ]コードネーム：　[Name:PokemonNickname ]
 </Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T07:13:10" />
+				Time="2011-11-15T02:35:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22,15 +22,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]『　ゴーストイレイザー　報告書
+			<Text>[Ctrl1:xcenter ]ゴーストイレイザー　報告書
 
-[Ctrl1:xcenter ]　ファイル№　００１
+[Ctrl1:xcenter ]ファイル№　００１
 
-[Ctrl1:xcenter ]　コードネーム：　[Name:PokemonNickname ]　』
+[Ctrl1:xcenter ]コードネーム：　[Name:PokemonNickname ]
 </Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:27:56" />
+				Time="2011-11-15T02:35:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -327,15 +327,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]『　ゴーストイレイザー　ほうこくしょ
+			<Text>[Ctrl1:xcenter ]ゴーストイレイザー　ほうこくしょ
 
-[Ctrl1:xcenter ]　ファイル№　００１
+[Ctrl1:xcenter ]ファイル№　００１
 
-[Ctrl1:xcenter ]　コードネーム：　[Name:PokemonNickname ]　』
+[Ctrl1:xcenter ]コードネーム：　[Name:PokemonNickname ]
 </Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T07:25:44" />
+				Time="2011-11-15T02:35:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -343,15 +343,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]『　ゴーストイレイザー　報告書
+			<Text>[Ctrl1:xcenter ]ゴーストイレイザー　報告書
 
-[Ctrl1:xcenter ]　ファイル№　００１
+[Ctrl1:xcenter ]ファイル№　００１
 
-[Ctrl1:xcenter ]　コードネーム：　[Name:PokemonNickname ]　』
+[Ctrl1:xcenter ]コードネーム：　[Name:PokemonNickname ]
 </Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:27:47" />
+				Time="2011-11-15T02:35:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
