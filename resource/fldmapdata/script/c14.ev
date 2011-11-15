@@ -150,34 +150,44 @@ EVENT_END
 EVENT_START   ev_pos_c14_swleader8_01
   
   //シズイ動作モデル生成
-  _OBJ_ADD_EX( 798, 149, DIR_DOWN, MMDL_ID_EVENTOBJ_00, SWLEADER8, MV_DMY )
-  
-  //【仮】アニメ：シズイ登場
-  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 797, 157, FORCE_TYPE_NPC, 8, DIR_LR )
-  _OBJ_ANIME_WAIT()
-  
-  //アニメ：シズイ・主人公向き合う
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_common_turn_l )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_r )
-  _OBJ_ANIME_WAIT()
-  
-  //シズイ：ばっしゃーん！って
+  // 見えないところに。
+  _OBJ_ADD_EX( 792, 100, DIR_DOWN, MMDL_ID_EVENTOBJ_00, SWLEADER8, MV_DMY )
+
+  //水しぶきの演出
+  _C14_GMK_SPLASH( 791, -5, 151 )
+  // ハイジャンプ
+  _C14_GMK_OBJ_WATER_JUMP( MMDL_ID_EVENTOBJ_00, 791, 156, DIR_DOWN )
+
+  //シズイ：とりゃお
   _BALLOONWIN_OBJMSG_POS( msg_c14_swleader8_01, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
-  
+  _MSGWIN_CLOSE()
+
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+
+  // アニメ：左向く
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
+  // アニメ：シズイ近づく
+  IF $LCW_POSZ == 156 THEN
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swleader8_come_z156 )
+  ELSE
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swleader8_come_z157 )
+  ENDIF
+  _OBJ_ANIME_WAIT()
+
+
   //おう！おはん
   _BALLOONWIN_OBJMSG_POS( msg_c14_swleader8_02, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
-  //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   
   //アニメ：シズイ退場・主人公見送り
-  IF $LCW_POSX == 795 THEN
-    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swleader8_bye_x795 )
-    _TIME_WAIT( 8*2 )
-  ELSE
-    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swleader8_bye_x794 )
+  IF $LCW_POSZ == 156 THEN
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swleader8_bye_z156 )
     _TIME_WAIT( 8*5 )
+  ELSE
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swleader8_bye_z157 )
+    _TIME_WAIT( 8*4 )
   ENDIF
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
   _OBJ_ANIME_WAIT()
@@ -193,20 +203,34 @@ EVENT_START   ev_pos_c14_swleader8_01
 EVENT_END
 
 //--------------------------------------------------------------------
-//	シズイ退場：x794
+//	シズイ近づく：z156
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_swleader8_bye_x794
-	_ANIME_DATA	AC_WALK_L_8F,2
+_ANIME_LABEL	anm_swleader8_come_z156
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	シズイ近づく：z157
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader8_come_z157
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	シズイ退場：z156
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader8_bye_z156
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,9
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//	シズイ退場：x795
+//	シズイ退場：z157
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_swleader8_bye_x795
-  _ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_L_8F,3
-	_ANIME_DATA	AC_WALK_D_8F,10
+_ANIME_LABEL	anm_swleader8_bye_z157
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,8
 	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/

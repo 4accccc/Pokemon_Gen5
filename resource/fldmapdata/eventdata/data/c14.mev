@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/10 16:01:25
+#save date:2011/11/14 20:50:43
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c14.wms
 #SECTION START:OBJ_EVENT
@@ -681,9 +681,9 @@ WK_SCENE_C14GYM0101_STOPPER
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 -56 -216
+184 -56 -200
 #size
-3 1
+1 2
 #event number: 1
 #Pos Event Label
 POS_C14_KAODASI_01
