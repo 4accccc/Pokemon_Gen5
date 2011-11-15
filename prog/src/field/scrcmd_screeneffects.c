@@ -472,9 +472,9 @@ static GMEVENT_RESULT Fade_MsgEnableEvent( GMEVENT* event, int* seq, void* wk )
     // フェードインの時はBG初期化する
     if( p_wk->fade_type == FADE_TYPE_IN )
     {
-      // 両面のマスター輝度を黒に設定
-      GX_SetMasterBrightness( -16 );
-      GXS_SetMasterBrightness( -16 );
+      // 両面のマスター輝度を白に設定
+      GX_SetMasterBrightness( 16 );
+      GXS_SetMasterBrightness( 16 );
 
       // BGモード設定と表示設定の復帰
       {
@@ -497,18 +497,18 @@ static GMEVENT_RESULT Fade_MsgEnableEvent( GMEVENT* event, int* seq, void* wk )
     // 上画面
     // フェードリクエスト
     ChangeBrightnessRequest( 
-        16,       // フェードするのにかかるSync数
-        BRIGHTNESS_BLACK, // フェード終了時の輝度
+        2,       // フェードするのにかかるSync数
+        BRIGHTNESS_WHITE, // フェード終了時の輝度
         BRIGHTNESS_NORMAL,// フェード開始時の輝度
         FADE_PLANEMASK,   // フェードが反映されるBG面
         MASK_MAIN_DISPLAY );      // フェードが反映されるLCD
 
     // 下画面
     GFL_FADE_SetMasterBrightReq(
-        GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,
+        GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB,
         0,
         16,
-        1 );
+        -8 );
 
     *seq = SEQ_FADE_END;
     break;
@@ -518,10 +518,10 @@ static GMEVENT_RESULT Fade_MsgEnableEvent( GMEVENT* event, int* seq, void* wk )
 
     // 両画面
     GFL_FADE_SetMasterBrightReq(
-        GFL_FADE_MASTER_BRIGHT_BLACKOUT,
+        GFL_FADE_MASTER_BRIGHT_WHITEOUT,
         16,
         0,
-        1 );
+        -1 );
 
     *seq = SEQ_FADE_END;
     break;

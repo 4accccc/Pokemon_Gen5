@@ -70,9 +70,8 @@ INIT_EVENT_END
 /************************************************************/
 INIT_EVENT_START ev_init_d10r0501
 
-  //ゲーチス勝利前だったらNのとゲーチス配置を変更
+  //ゲーチス勝利前だったらゲーチス配置を変更
    IF $WK_SCENE_D10R0401_SWSAGE1_01 == 2 THEN
-    //_OBJ_POS_CHANGE( D10R0501_BOSS_01,16,0,18,DIR_UP)
     _OBJ_POS_CHANGE( D10R0501_SWSAGE1_01, 17, 0, 16, DIR_DOWN)
    ENDIF
 
@@ -132,16 +131,16 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 	_BALLOONWIN_CLOSE()
 	
 	//ゲーチス：わたしには
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_03 , D10R0501_SWSAGE1_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_03, D10R0501_SWSAGE1_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
   
-  // ゲーチス：つえをかかげる
+  // ゲーチス：右に歩いてつえをかかげる
   _OBJ_ANIME( D10R0501_SWSAGE1_01, anm_swsage_2 )
   _OBJ_ANIME_WAIT()
 
   //ゲーチス：キュレム！こごえるせかいです
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_04 , D10R0501_SWSAGE1_01 ,POS_DEFAULT )
-  _MSGWIN_CLOSE()
+  _GIZAPLAINWIN_MSG_POS( msg_d10r0501_swsage01_04, POS_UP )
+  _GIZAPLAINWIN_CLOSE()
   
   //キュレム：ヒュラッ！
   _VOICE_PLAY(MONSNO_653,0)
@@ -151,9 +150,16 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 	_GIZAPLAINWIN_CLOSE()
 	
   // こごえるせかいエフェクト(前半)
+  // 全部で500フレーム
   _DEMO_GIMMICK_GIANTHOLE_ANM_START(0)
-  _TIME_WAIT(500) //@TODO 値は仮
+  _TIME_WAIT(300)
 
+  // 氷の移動と同時にカメラも移動
+	_CAMERA_MOVE( 9688,0,970752,1015808,0,1298432,40 )	//一番最後の引数は移動にかかるフレーム数
+
+  _TIME_WAIT(200)
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  
   // 暗転処理(メモリ開放)
   {
     // 背景を真っ暗なままメッセージを出したいので
@@ -167,12 +173,12 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 
     //ブラック：クロスサンダー
     IF $LCWK_VERSION == VERSION_B2 THEN
-      _PLAINWIN_MSG_DOWN( msg_d10r0501_boss_01b )
+      _GIZAPLAINWIN_MSG_POS( msg_d10r0501_boss_01b, POS_DOWN )
     //ホワイト：クロスフレイム
     ELSE
-      _PLAINWIN_MSG_DOWN( msg_d10r0501_boss_01w )
+      _GIZAPLAINWIN_MSG_POS( msg_d10r0501_boss_01w, POS_DOWN )
     ENDIF
-    _MSGWIN_CLOSE()
+    _GIZAPLAINWIN_CLOSE()
 
     // カメラ戻し
     _CAMERA_BIND()	//カメラバインド
@@ -183,13 +189,14 @@ EVENT_START ev_pos_d10r0501_swsage1_01
     // 暗転中にカメラを変える
 	  _CAMERA_START()		//カメラ操作開始
 	  _CAMERA_PURGE()		//カメラのバインドを解く
-	  _CAMERA_MOVE( 9688,0,970752,1015808,0,1081344, 1 )	//一番最後の引数は移動にかかるフレーム数
+	  _CAMERA_MOVE( 9688,0,970752,1015808,0,1298432,1 )	//一番最後の引数は移動にかかるフレーム数
 	  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
     //=======================================
     // キュレムを表示し、ゲーチスを横に移動
     _OBJ_POS_CHANGE( D10R0501_POKE1_01, 14, 0, 16, DIR_DOWN )
-    _OBJ_POS_CHANGE( D10R0501_SWSAGE1_01, 17, 0, 16, DIR_DOWN)
+    _OBJ_POS_CHANGE( D10R0501_SWSAGE1_01, 18, 0, 16, DIR_DOWN)
+    _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 15, 0, 20, DIR_UP)
     //=======================================
 
     // こごえるせかい(後半)モデル表示
@@ -210,8 +217,16 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 
   // こごえるせかいエフェクト(後半)
   _DEMO_GIMMICK_GIANTHOLE_ANM_START(1)
-  _TIME_WAIT(50) //@TODO 値は仮
+  _TIME_WAIT(50)
 
+  // カメラ元に戻す
+	_CAMERA_MOVE( 9688,0,970752,1015808,0,1081344,20 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
+  //アニメ：ゲーチス一歩左へ
+  _OBJ_ANIME( D10R0501_SWSAGE1_01, anm_swsage_3 )
+  _OBJ_ANIME_WAIT()
+  
   //ゲーチス：きましたか　ひとのこころをもたぬ ばけもの Nよ
   _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_05 , D10R0501_SWSAGE1_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
@@ -248,6 +263,7 @@ EVENT_START ev_pos_d10r0501_swsage1_01
     // キュレムを表示し、ゲーチスを横に移動
     _OBJ_POS_CHANGE( D10R0501_POKE1_01, 14, 0, 16, DIR_DOWN )
     _OBJ_POS_CHANGE( D10R0501_SWSAGE1_01, 17, 0, 16, DIR_DOWN)
+    //_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 15, 0, 20, DIR_UP)
     //=======================================
 
     _MAP_FADE_BLACK_IN()
@@ -299,7 +315,7 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   _MSGWIN_CLOSE()
   
   // ゲーチス：つえをかかげる
-  _OBJ_ANIME( D10R0501_SWSAGE1_01, anm_swsage_2 )
+  _OBJ_ANIME( D10R0501_SWSAGE1_01, anm_swsage_4 )
   _CAMERA_MOVE( 9688,0,970752,1015808,0,983040, 20 )	//一番最後の引数は移動にかかるフレーム数
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   _OBJ_ANIME_WAIT()
@@ -329,6 +345,8 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   // キュレムを表示し、ゲーチスを横に移動
   _OBJ_POS_CHANGE( D10R0501_POKE1_01, 14, 0, 16, DIR_DOWN )
   _OBJ_POS_CHANGE( D10R0501_SWSAGE1_01, 17, 0, 16, DIR_DOWN)
+  //_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 15, 0, 20, DIR_UP)
+  //=======================================
 
   //ゼクロム・レシラム非表示
   _FLAG_SET( FV_D10R0401_POKE_02 )
@@ -380,6 +398,8 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   _OBJ_DEL( D10R0501_POKE1_01 )
   //ゲーチス移動
   _OBJ_POS_CHANGE( D10R0501_SWSAGE1_01, 17, 0, 16, DIR_DOWN)
+  //主人公移動
+  //_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 15, 0, 20, DIR_UP)
   //========================================//
 
   // 暗転中にカメラを変える
@@ -432,16 +452,31 @@ EVENT_END
 // いでよキュレムのとき
 //
 _ANIME_LABEL anm_swsage_1
+	_ANIME_DATA	AC_WALK_R_16F,2
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+//-------------------------------------
+// 右に歩いてつえをかかげる
+//
+_ANIME_LABEL anm_swsage_2
 	_ANIME_DATA	AC_WALK_R_16F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_SWSAGE1_RAISE_STICK,1
+	_ANIME_DATA	ACMD_END,0
+//-------------------------------------
+// 1歩左に歩く
+_ANIME_LABEL anm_swsage_3
+	_ANIME_DATA	AC_WALK_L_16F,1
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 //-------------------------------------
 // つえをかかげる
 //
-_ANIME_LABEL anm_swsage_2
+_ANIME_LABEL anm_swsage_4
 	_ANIME_DATA	AC_SWSAGE1_RAISE_STICK,1
 	_ANIME_DATA	ACMD_END,0
 //-------------------------------------
+
 
 /************************************************************/
 /*					CALL：ゲーチス戦						*/
