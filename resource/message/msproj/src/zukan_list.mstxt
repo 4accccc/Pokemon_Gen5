@@ -386,6 +386,14 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-26T12:55:17" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>SWAN追加
+モード選択</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-14T05:53:34" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="str_mode_local"
@@ -412,6 +420,14 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-26T12:55:26" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>SWAN追加
+モード選択</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-14T05:53:39" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="str_mode_seisoku"
@@ -438,5 +454,13 @@
 				User="onoue_masayuki:W00272"
 				Time="2011-08-26T12:55:39" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>SWAN追加
+モード選択</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-14T05:53:39" />
+		</CommentCell>
 	</TextRow>
 </MessageStudioText>
