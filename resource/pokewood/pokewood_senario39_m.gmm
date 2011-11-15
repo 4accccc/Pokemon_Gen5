@@ -379,496 +379,583 @@
 	</row>
 	<row id="pw_turn_enemy_9">
 		<language name="JPN" width="256">アーカム『ええい　まじんよ
-はやく　しまつ　するのだ……</language>
+なにを　やっているんだ……</language>
 		<language name="JPN_KANJI" width="256">アーカム『ええい　魔神よ
-早く　始末するのだ……</language>
+何を　やっているんだ……</language>
 	</row>
 	<row id="pw_event0_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]！『そこまでだ！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『そこまでだ！
 アーカム！▽
 はかいのまじん！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]！『そこまでだ！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そこまでだ！
 アーカム！▽
 破壊の魔神！</language>
 	</row>
 	<row id="pw_event0_enemy_0">
-		<language name="JPN" width="256">アーカム『おお！
+		<language name="JPN" width="256">アーカム『やあ！　おひさしぶり！
 [1:00:トレーナー名:1]！　しょうかい　するよ▽
 はかいのまじん　だよ</language>
-		<language name="JPN_KANJI" width="256">アーカム『おお！
+		<language name="JPN_KANJI" width="256">アーカム『やあ！　お久しぶり！
 [1:00:トレーナー名:1]！　紹介するよ▽
 破壊の魔神　だよ</language>
 	</row>
 	<row id="pw_event0_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]！『おそろしい　ほど
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『おそろしい　ほど
 まがまがしい　ちからを　かんじる……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]！『恐ろしい　ほど
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『恐ろしい　ほど
 まがまがしい　力を　感じる……</language>
 	</row>
 	<row id="pw_event0_enemy_1">
-		<language name="JPN" width="256">まじん『ウホッ！
-アーカム　カラ　キイタ▽
-オマエ　オレノ　タメニ▽
-チカラヲ　カシテ　クレタ　ヤツダナ▽
-タスケテクレテ　アリガトぅうううう▽
-うううううううううううううううううう</language>
-		<language name="JPN_KANJI" width="256">魔神『ウホッ！
-アーカム　カラ　キイタ▽
-オマエ　オレノ　タメニ▽
-チカラヲ　カイテ　クレタ　ヤツダナ▽
-タスケテクレテ　アリガトぅうううう▽
-うううううううううううううううううう</language>
+		<language name="JPN" width="256">まじん『るるるーーん♪
+アーカム　から　きいた▼
+わがはいの　ために
+ちからを　かしてくれた▽
+もので　ごじゃるな？▼
+たすけてくれて　ありがとうで
+ごじゃるるる♪</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーん♪
+アーカム　から　きいた▼
+我輩の　ために
+ちからを　かしてくれた▽
+もので　ごじゃるな？▼
+助けてくれて　ありがとうで
+ごじゃるるる♪</language>
 	</row>
 	<row id="pw_event0_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]！『くっ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]！『くっ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『くっ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『くっ！</language>
 	</row>
 	<row id="pw_event0_enemy_2">
 		<language name="JPN" width="256">アーカム『ククククッ
-れいぎ　ただしいだろ▽
-ひと　なつっこいんだけど▽
-ちょっと　おこりっぽいんだよね▽
-かれを　とめられるかな？
-</language>
+れいぎ　ただしいだろ▼
+ひと　なつっこくて　とっても
+ゆかいな　やつ　なんだけど▽
+ちょっと　おこりっぽいんだよね▼
+かれを　とめられるかな？</language>
 		<language name="JPN_KANJI" width="256">アーカム『ククククッ
-礼儀　正しいだろ▽
-人懐っこいんだけど▽
-ちょっと　おこりっぽいんだよね▽
+礼儀　正しいだろ▼
+人懐っこくて　とっても
+ゆかいな　やつ　なんだけど▽
+ちょっと　怒りっぽいんだよね▼
 彼を　とめられるかな？
 </language>
 	</row>
 	<row id="pw_event0_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]！『やってやる！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]！『やってやる！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『やってやる！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『やってやる！</language>
 	</row>
 	<row id="pw_event0_enemy_3">
-		<language name="JPN" width="256">まじん『ナンカ　オマエトハ
-キガ　アイソウダぁあああああああああ▽
-あああああああああああああああああ</language>
-		<language name="JPN_KANJI" width="256">魔神『ナンカ　オマエトハ
-キガ　アイソウダぁあああああああああ▽
-あああああああああああああああああ</language>
+		<language name="JPN" width="256">まじん『なんか　おぬしとは
+きが　あいそうで　ごじゃる▼
+なんか　うれしくて　うれしくて
+壊したいで　ごじゃるよおおおお▽
+おおおおおおおおおおおおおお</language>
+		<language name="JPN_KANJI" width="256">魔神『なんか　お主とは
+気が　あいそうで　ごじゃるるる♪▼
+なんか　うれしくて　うれしくて
+壊したいで　ごじゃるよおおおお▽
+おおおおおおおおおおおおおお</language>
+	</row>
+	<row id="pw_event0_enemy_4">
+		<language name="JPN" width="256">ゴォオオオオオオオオオ▼
+ドボビゴドカッーーーーーーン！！▼
+ブボビビボカッーーーーーン！▼</language>
+		<language name="JPN_KANJI" width="256">ゴォオオオオオオオオオ▼
+ドボビゴドカッーーーーーーン！！▼
+ブボビビボカッーーーーーン！▼</language>
+	</row>
+	<row id="pw_event0_hero_5">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『なんてことだ……！
+まちが　いっしゅんで……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なんてことだ……！
+まちが　いっしゅんで……</language>
 	</row>
 	<row id="pw_event1_enemy_0">
-		<language name="JPN" width="256">まじん『オイ　オレ
-ナニガ　ニゲテダト　オモウ？</language>
-		<language name="JPN_KANJI" width="256">魔神『オイ　オレ
-ナニガ　ニゲテダト　オモウ？</language>
+		<language name="JPN" width="256">まじん『るるるーーん♪
+るるるーーーん♪▼
+おぬし　きにいったで　ごじゃる
+わがはいの　きもちが▽
+わかりそうで　ごじゃる</language>
+		<language name="JPN_KANJI" width="256">まじん『るるるーーん♪
+るるるーーーん♪▼
+お主　気に　いったで　ごじゃる
+我輩の　気持ちが▽
+わかりそうで　ごじゃる</language>
 	</row>
 	<row id="pw_event1_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]（あそんで　いるのか？
-どうする……？）</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]（遊んで　いるのか？
-どうする……？）</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『なにを　いっている？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『何を　言っている？</language>
+	</row>
+	<row id="pw_event1_enemy_1">
+		<language name="JPN" width="256">まじん『わがはいの　しつもんに
+こたえるので　ごじゃる▼
+こたえが　まちがっていたら
+もっと　もっと　もっと　たくさん▽
+こわすで　ごじゃるよおおおおおおおお</language>
+		<language name="JPN_KANJI" width="256">まじん『我輩の　質問に
+答えるので　ごじゃる▼
+答えが　間違っていたら
+もっと　もっと　もっと▽
+壊すで　ごじゃるよおおおおおおおおお</language>
+	</row>
+	<row id="pw_event1_hero_2">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『じょうだん　じゃない！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『冗談　じゃない！</language>
+	</row>
+	<row id="pw_event1_enemy_2">
+		<language name="JPN" width="256">まじん『るるるーーん♪
+さてさて　わがはいは▽
+なにが　にがてと　おもうで　ごじゃる？</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーん♪
+さてさて　我輩▽
+なにが　苦手と　おもうで　ごじゃる？</language>
+	</row>
+	<row id="pw_event1_hero_3">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『（とにかく　へたに
+おこらせると　きけんだ……▽
+うまく　しつもんに　こたえよう）▼
+まじんの　にがてな　ことは……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『（とにかく　下手に
+怒らせると　危険だ……▽
+上手く　質問に　答えよう）
+魔神の　苦手なことは……</language>
 	</row>
 	<row id="pw_event1_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『うそ？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『うそ？</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
-		<language name="JPN" width="256">まじん『ウン　ウソ　ニガテ
-ワカッテ　クレテ　ウレシイゾ</language>
-		<language name="JPN_KANJI" width="256">魔神『ウン　ウソ　ニガテ
-ワカッテ　クレテ　ウレシイゾ</language>
+		<language name="JPN" width="256">まじん『るるるーーん♪
+わかってくれて　うれしいで　ごじゃる▽
+おどるで　ごじゃる♪▼
+るるるーーん♪
+るるるーーーん♪</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーん♪
+わかってくれて　うれしいで　ごじゃる▽
+踊るで　ごじゃる▼
+るるるーーん♪
+るるるーーーん♪</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『たいくつ？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『退屈？</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
-		<language name="JPN" width="256">まじん『ウン　タイクツ　ニガテ
-ワカッテ　クレテ　ウレシイゾ</language>
-		<language name="JPN_KANJI" width="256">魔神『ウン　タイクツ　ニガテ
-ワカッテ　クレテ　ウレシイゾ</language>
+		<language name="JPN" width="256">まじん『るるるーーん♪
+わかってくれて　うれしいで　ごじゃる▽
+おどるで　ごじゃる♪▼
+るるるーーん♪
+るるるーーーん♪</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーん♪
+わかってくれて　うれしいで　ごじゃる▽
+踊るで　ごじゃる▼
+るるるーーん♪
+るるるーーーん♪</language>
 	</row>
 	<row id="pw_event1_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『よいこと？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『良いこと？</language>
 	</row>
 	<row id="pw_event1_react_enemy_2">
-		<language name="JPN" width="256">まじん『ナニモ　ワカッテナイ
-カナシイイゾぉおおおおおお▽
-おおおおおおおおおおおおお</language>
-		<language name="JPN_KANJI" width="256">魔神『ナニモ　ワカッテナイ
-カナシイイゾぉおおおおおお▽
-おおおおおおおおおおおおお</language>
+		<language name="JPN" width="256">まじん『るるるーーん♪
+かなしいで　ごじゃるぞおおおおお▽
+おおおおおおおおおおおおおおおお</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーん♪
+悲しいで　ごじゃるぞおおおおお▽
+おおおおおおおおおおおおおおおお</language>
 	</row>
 	<row id="pw_event1_react_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『しらない！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『知らない！</language>
 	</row>
 	<row id="pw_event1_react_enemy_3">
-		<language name="JPN" width="256">まじん『ナニモ　ワカッテナイ
-カナシイイゾぉおおおおおお▽
-おおおおおおおおおおおおお</language>
-		<language name="JPN_KANJI" width="256">魔神『ナニモ　ワカッテナイ
-カナシイイゾぉおおおおおお▽
-おおおおおおおおおおおおお</language>
+		<language name="JPN" width="256">まじん『るるるーーん♪
+かなしいで　ごじゃるぞおおおおお▽
+おおおおおおおおおおおおおおおお</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーん♪
+悲しいで　ごじゃるぞおおおおお▽
+おおおおおおおおおおおおおおおお</language>
 	</row>
 	<row id="pw_event2_enemy_0">
-		<language name="JPN" width="256">まじん『オレ　オレ
-ナニガ　スキダト　オモウ？</language>
-		<language name="JPN_KANJI" width="256">魔神『オレ　オレ
-ナニガ　スキダト　オモウ？</language>
+		<language name="JPN" width="256">まじん『るるるーーーん♪
+わがはいは　どんなことが▽
+すきだと　おもうで　ごじゃる？</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーーん♪
+我輩いは　どんなことが▽
+好きだと　思うで　ごじゃる？</language>
 	</row>
 	<row id="pw_event2_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]（あそんで　いるのか？
-どうする……？）</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]（遊んで　いるのか？
-どうする……？）</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『（とにかく　へたに
+おこらせると　きけんだ……）▼
+まじんの　すきなことは……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『（とにかく　下手に
+怒らせると　危険だ……）▼
+魔神の　好きなことは……</language>
 	</row>
 	<row id="pw_event2_react_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『たべること！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『食べること！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『こわすこと！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『壊すこと！</language>
 	</row>
 	<row id="pw_event2_react_enemy_0">
-		<language name="JPN" width="256">まじん『オレノ　タイケイデ
-ハンダン　スルナぁああああ▽
-あああああああああああああ</language>
-		<language name="JPN_KANJI" width="256">魔神『オレノ　タイケイデ
-ハンダン　スルナぁああああ▽
-あああああああああああああ</language>
+		<language name="JPN" width="256">まじん『わがはいを　みためで
+はんだん　するなああああああああ</language>
+		<language name="JPN_KANJI" width="256">魔神『我輩を　みためで
+判断　するなぁああああ</language>
 	</row>
 	<row id="pw_event2_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ねること！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『寝ること！</language>
 	</row>
 	<row id="pw_event2_react_enemy_1">
-		<language name="JPN" width="256">まじん『ウン　ネルコト　ダイスキ
-オレ　ヤスム</language>
-		<language name="JPN_KANJI" width="256">魔神『ウン　ネルコト　ダイスキ
-オレ　ヤスム</language>
+		<language name="JPN" width="256">まじん『るるるーーーん♪▼
+わがはいのこと　わかってくれて
+うれしいで　ごじゃる▽
+やすむで　ごじゃる♪</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーーん♪▼
+我輩のこと　わかってくれて
+うれしいで　ごじゃる▽
+休むで　ごじゃる♪</language>
 	</row>
 	<row id="pw_event2_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『かんがえること！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『考えること！</language>
 	</row>
 	<row id="pw_event2_react_enemy_2">
-		<language name="JPN" width="256">まじん『バカニ　シタナぁああああ
-あああああああああああああ</language>
-		<language name="JPN_KANJI" width="256">魔神『バカニ　シタナぁああああ
+		<language name="JPN" width="256">まじん『ばかに　したなぁあああ
+ああああああああああああああ</language>
+		<language name="JPN_KANJI" width="256">魔神『ばかに　したなぁあああ
 あああああああああああああ</language>
 	</row>
 	<row id="pw_event2_react_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『あそぶこと！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『遊ぶこと！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『おどること！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『踊ること！</language>
 	</row>
 	<row id="pw_event2_react_enemy_3">
-		<language name="JPN" width="256">まじん『ウン　アソブコト　ダイスキ
-ワカッテ　クレテ　ウレシイナ</language>
-		<language name="JPN_KANJI" width="256">魔神『ウン　アソブコト　ダイスキ
-ワカッテ　クレテ　ウレシイナ</language>
+		<language name="JPN" width="256">まじん『るるるーーん♪
+わかってくれて　うれしいで　ごじゃる▽
+おどるで　ごじゃる♪▼
+るるるーーん♪
+るるるーーーん♪</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーん♪
+わかってくれて　うれしいで　ごじゃる▽
+踊るで　ごじゃる▼
+るるるーーん♪
+るるるーーーん♪</language>
 	</row>
 	<row id="pw_event3_enemy_0">
-		<language name="JPN" width="256">まじん『オイ　オマエ　オレミテ
-ドウオモッタ？</language>
-		<language name="JPN_KANJI" width="256">魔神『オイ　オマエ　オレミテ
-ドウオモッタ？</language>
+		<language name="JPN" width="256">まじん『るるるーーーん♪▼
+おぬしは　わがはいを
+どう　おもったで　ごじゃる？</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーーん♪▼
+お主は　我輩を
+どう　思ったで　ごじゃる？</language>
 	</row>
 	<row id="pw_event3_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]（あそんで　いるのか？
-どうする……？）</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]（遊んで　いるのか？
-どうする……？）</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『（とにかく　へたに
+おこらせると　きけんだ……）▼
+まじんのことを　どうおもうか……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『（とにかく　下手に
+怒らせると　危険だ……）▼
+魔神のことを　どう思うか……</language>
 	</row>
 	<row id="pw_event3_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ステキ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ステキ！</language>
 	</row>
 	<row id="pw_event3_react_enemy_0">
-		<language name="JPN" width="256">まじん『フンガァアアア
-ウソハ　ダメダゾぉおおおおお▽
-おおおおおおおおおおおおお</language>
-		<language name="JPN_KANJI" width="256">魔神『フンガァアアア
-ウソハ　ダメダゾぉおおおおお▽
-おおおおおおおおおおおおお</language>
+		<language name="JPN" width="256">まじん『ふんがぁあああ
+うそは　だめだぞぉおおお</language>
+		<language name="JPN_KANJI" width="256">魔神『ふんがぁあああ
+うそは　だめだぞぉおおお</language>
 	</row>
 	<row id="pw_event3_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さみしがり！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『寂しがり！</language>
 	</row>
 	<row id="pw_event3_react_enemy_1">
-		<language name="JPN" width="256">まじん『フンガァアアア
-ウソハ　ダメダゾぉおおおおお▽
-おおおおおおおおおおおおお</language>
-		<language name="JPN_KANJI" width="256">魔神『フンガァアアア
-ウソハ　ダメダゾぉおおおおお▽
-おおおおおおおおおおおおお</language>
+		<language name="JPN" width="256">まじん『ふんがぁあああ
+うそは　だめだぞぉおおお</language>
+		<language name="JPN_KANJI" width="256">魔神『ふんがぁあああ
+うそは　だめだぞぉおおお</language>
 	</row>
 	<row id="pw_event3_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『あばれもの！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『暴れもの！</language>
 	</row>
 	<row id="pw_event3_react_enemy_2">
-		<language name="JPN" width="256">まじん『ウン　アバレモノ
-ワカッテ　クレテ　ウレシイゾ</language>
-		<language name="JPN_KANJI" width="256">魔神『ウン　アバレモノ
-ワカッテ　クレテ　ウレシイゾ</language>
+		<language name="JPN" width="256">まじん『るるるーーん♪
+わかってくれて　うれしいで　ごじゃる▽
+おどるで　ごじゃる♪▼
+るるるーーん♪
+るるるーーーん♪</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーん♪
+わかってくれて　うれしいで　ごじゃる▽
+踊るで　ごじゃる▼
+るるるーーん♪
+るるるーーーん♪</language>
 	</row>
 	<row id="pw_event3_react_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『こせいてき！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『個性的！</language>
 	</row>
 	<row id="pw_event3_react_enemy_3">
-		<language name="JPN" width="256">まじん『ウン　コセイハ　ダイジ
-オレ　ヤスム</language>
-		<language name="JPN_KANJI" width="256">魔神『ウン　コセイハ　ダイジ
-オレ　ヤスム</language>
+		<language name="JPN" width="256">まじん『るるるーーーん♪▼
+わがはいのこと　わかってくれて
+うれしいで　ごじゃる▽
+やすむで　ごじゃる♪</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーーん♪▼
+我輩のこと　わかってくれて
+うれしいで　ごじゃる▽
+休むで　ごじゃる♪</language>
 	</row>
 	<row id="pw_event4_enemy_0">
-		<language name="JPN" width="256">まじん『オイ　オマエ　オレハ
-ナニガ　タリテナイト　オモウ</language>
-		<language name="JPN_KANJI" width="256">魔神『オイ　オマエ　オレハ
-ナニガ　タリテナイト　オモウ</language>
+		<language name="JPN" width="256">まじん『るるるーーん♪▼
+おぬしは　わがはいに　なにが
+たりてないと　おもうでごじゃる？</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーん♪▼
+お主は　我輩に　何が
+足りてないと　思うで　ごじゃる？</language>
 	</row>
 	<row id="pw_event4_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]（あそんで　いるのか？
-どうする……？）</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]（遊んで　いるのか？
-どうする……？）</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]（とにかく　へたに
+おこらせると　きけんだ……）▼
+まじんに　たりていないことは……
+</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『（とにかく　下手に
+怒らせると　危険だ……）▼
+魔神に　足りていないことは……</language>
 	</row>
 	<row id="pw_event4_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『かんぺき　だ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『かんぺき　だ！</language>
 	</row>
 	<row id="pw_event4_react_enemy_0">
-		<language name="JPN" width="256">まじん『ジャ　オレイガイノ
-イマイチナ　モノ　コワスゾ</language>
-		<language name="JPN_KANJI" width="256">魔神『ジャ　オレイガイノ
-イマイチナ　モノ　コワソウ</language>
+		<language name="JPN" width="256">まじん『るるるーーん♪
+そうかー　わがはい　いがいの▽
+いまいちなもの　こわすぞおおお</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーん♪
+そうかー　我輩　以外の▽
+いまいちなもの　壊すぞおお</language>
 	</row>
 	<row id="pw_event4_react_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『たんき　だ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『短気　だ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『がまん　だ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『がまん　だ！</language>
 	</row>
 	<row id="pw_event4_react_enemy_1">
-		<language name="JPN" width="256">まじん『ウン　タンキダナ
-ワカッテ　クレテ　ウレシイゾ</language>
-		<language name="JPN_KANJI" width="256">魔神『ウン　タンキダナ
-ワカッテ　クレテ　ウレシイゾ</language>
+		<language name="JPN" width="256">まじん『るるるーーん♪
+わかってくれて　うれしいで　ごじゃる▽
+おどるで　ごじゃる♪▼
+るるるーーん♪
+るるるーーーん♪</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーん♪
+わかってくれて　うれしいで　ごじゃる▽
+踊るで　ごじゃる▼
+るるるーーん♪
+るるるーーーん♪</language>
 	</row>
 	<row id="pw_event4_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『やさしさ　だ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『優しさ　だ！</language>
 	</row>
 	<row id="pw_event4_react_enemy_2">
-		<language name="JPN" width="256">まじん『ナニモ　ワカッテナイ
-カナシイゾぉおおおおおおお▽
-おおおおおおおおおおおおお</language>
-		<language name="JPN_KANJI" width="256">魔神『ナニモ　ワカッテナイ
-カナシイゾぉおおおおおおお▽
-おおおおおおおおおおおおお</language>
+		<language name="JPN" width="256">まじん『ふんがぁあああ
+かなしいいぞぉおおお</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーん♪
+悲しいいぞぉおおお</language>
 	</row>
 	<row id="pw_event4_react_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『わからない！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『わからない！</language>
 	</row>
 	<row id="pw_event4_react_enemy_3">
-		<language name="JPN" width="256">まじん『オレモ　ヨク　ワカラナイ
-オレ　ヤスムゾ</language>
-		<language name="JPN_KANJI" width="256">魔神『オレモ　ヨク　ワカラナイ
-オレ　ヤスムゾ</language>
+		<language name="JPN" width="256">まじん『るるるーーーん♪▼
+わがはいのこと　わかってくれて
+うれしいで　ごじゃる▽
+やすむで　ごじゃる♪</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーーん♪▼
+我輩のこと　わかってくれて
+うれしいで　ごじゃる▽
+休むで　ごじゃる♪</language>
 	</row>
 	<row id="pw_event5_enemy_0">
-		<language name="JPN" width="256">まじん『オマエ　オレニ
-ナニヲ　シテホシイ？</language>
-		<language name="JPN_KANJI" width="256">魔神『オマエ　オレニ
-ナニヲ　シテホシイ？</language>
+		<language name="JPN" width="256">まじん『るるるーーん♪
+おぬしを　きにいったで　ごじゃる▼
+おぬしは　わがはいに
+なにを　してほしいで　ごじゃる？▽
+なんでも　いいで　ごじゃるぞおお
+</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーん♪
+お主を　きにいったで　ごじゃる▼
+おぬしは　我輩に
+何を　して欲しいで　ごじゃる？▽
+何でも　かなえるで　ごじゃるぞおお
+</language>
 	</row>
 	<row id="pw_event5_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]（たおせない……？
-さいごの　せっとく　する……？▽
-どうする……？）</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]（倒せない……？
-最後に　説得する……？▽
-どうする……？）</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『（これは　チャンス？
+どうにか　せっとくして……▽
+とめることが　できないか？）▼
+まじんに　して　ほしいことは……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『（これは　チャンス？
+どうにか　説得して……▽
+とめることが　できないか？）▼
+魔神にして　欲しいことは……</language>
 	</row>
 	<row id="pw_event5_react_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『はかいを　やめろ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『破壊　やめろ</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『はかいを　やめろ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『破壊を　やめろ！</language>
 	</row>
 	<row id="pw_event5_react_enemy_0">
-		<language name="JPN" width="256">まじん『ナンデダ　ワカラナイ</language>
-		<language name="JPN_KANJI" width="256">魔神『ナンデダ　ワカラナイ</language>
+		<language name="JPN" width="256">まじん『ふんがああああ
+なんでだ　わからない？▽
+とにかく　こわすぞおおお</language>
+		<language name="JPN_KANJI" width="256">魔神『ふんがああああ
+何でだ　わからない？▽
+とにかく　壊すぞおおお</language>
 	</row>
 	<row id="pw_event5_react_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『きえて　くれ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『消えてくれ</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『せかいから　きえてくれ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『世界から　消えてくれ！</language>
 	</row>
 	<row id="pw_event5_react_enemy_1">
-		<language name="JPN" width="256">まじん『オマエノ　チカラデ
-ヤッテミロ</language>
-		<language name="JPN_KANJI" width="256">魔神『オマエノ　チカラデ
-ヤッテミロ</language>
+		<language name="JPN" width="256">まじん『ふんがああああ
+おぬしの　ちからで▽
+やってみろおおお</language>
+		<language name="JPN_KANJI" width="256">魔神『お主の　ちからで
+やってみろおおお</language>
 	</row>
 	<row id="pw_event5_react_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『せかいを　まもってくれ</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『せかいを　まもってくれ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『世界を　守ってくれ</language>
 	</row>
 	<row id="pw_event5_react_enemy_2">
-		<language name="JPN" width="256">まじん『マモルッテ　ナンダ
-アバレテカラ　カンガエテ　ミル</language>
-		<language name="JPN_KANJI" width="256">魔神『マモルッテ　ナンダ
-アバレテカラ　カンガエテ　ミル</language>
+		<language name="JPN" width="256">まじん『るるるーーーん♪▼
+……まもるって　なんだ？
+あばれてから▽
+かんがえるで　ごじゃる</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーーん♪▼
+……守るって　なんだ？
+暴れてから　考えるで　ごじゃる</language>
 	</row>
 	<row id="pw_event5_react_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『はんせい　してくれ</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『はんせい　してくれ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『反省　してくれ</language>
 	</row>
 	<row id="pw_event5_react_enemy_3">
-		<language name="JPN" width="256">まじん『ナンデダ　ワカラナイ</language>
-		<language name="JPN_KANJI" width="256">魔神『ナンデダ　ワカラナイ</language>
+		<language name="JPN" width="256">まじん『ふんがああああ
+なんでだ　わからない？▽
+とにかく　こわすぞおおお</language>
+		<language name="JPN_KANJI" width="256">魔神『ふんがああああ
+何でだ　わからない？▽
+とにかく　壊すぞおおお</language>
 	</row>
 	<row id="pw_event6_enemy_0">
-		<language name="JPN" width="256">まじん『オレ　ツヨイカ？
-ドレクライ　ツヨイト　オモウ？</language>
-		<language name="JPN_KANJI" width="256">魔神『オレ　ツヨイカ？
-ドレクライ　ツヨイト　オモウ？</language>
+		<language name="JPN" width="256">まじん『るるるーーーん♪
+おぬしの　おどり　さいこうで▽
+ごじゃる♪</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーーん♪
+お主の　踊り　最高で▽
+ごじゃるぞおおお</language>
 	</row>
-	<row id="pw_event6_react_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『</language>
+	<row id="pw_event6_hero_1">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……</language>
 	</row>
-	<row id="pw_event6_react_enemy_0">
-		<language name="JPN" width="256">まじん『ウン　ウソ　ニガテ</language>
-		<language name="JPN_KANJI" width="256">魔神『ウン　ウソ　ニガテ</language>
+	<row id="pw_event6_enemy_1">
+		<language name="JPN" width="256">まじん『るるるーーーん♪
+おぬしの　おどりは▽
+マイハニーを　おもいだす……▼
+るるるるーーーーーん♪
+るるるるーーーーーん♪</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーーん♪
+お主の　踊りは▽
+マイハニーを　思い出す……▼
+るるるるーーーーーん♪
+るるるるーーーーーん♪</language>
 	</row>
-	<row id="pw_event6_react_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『</language>
+	<row id="pw_event6_hero_2">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『マイハニー……？
+かのじょの　こと……？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『マイハニー……？
+彼女の　こと……？</language>
 	</row>
-	<row id="pw_event6_react_enemy_1">
-		<language name="JPN" width="256">まじん『ウン　タイクツ　ニガテ</language>
-		<language name="JPN_KANJI" width="256">魔神『ウン　タイクツ　ニガテ</language>
+	<row id="pw_event6_enemy_2">
+		<language name="JPN" width="256">まじん『るるるるーーーーーん♪
+るるるるーーーーーん♪▼
+マイハニーよ！
+どうして　いなくなった？▼
+……　……　……　……　……　……　
+……　……　……　……　……　……▼
+うおおおおおおっ
+うおおおおおおっ▼
+そうだ　にんげんが　うらぎり
+マイハニーを▽
+ワナに　おとしいれたので　ごじゃる▼
+ゆるさんぞおおおおおお
+おおおおおおおおおおおっ　</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるるるるーーーーーん♪
+るるるるるるーーーーーん♪▼
+マイハニーよ！
+どうして　いなくなった？▼
+……　……　……　……　……　……　
+……　……　……　……　……　……▼
+うおおおおおおっ
+うおおおおおおっ▼
+そうだ　人間が　裏切り
+マイハニーを▽
+ワナに　おとしいれたので　ごじゃる▼
+許さんぞおおおおおお
+おおおおおおおおおおおっ　</language>
 	</row>
-	<row id="pw_event6_react_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『</language>
+	<row id="pw_event6_hero_3">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『それで
+はかいを……？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『それで
+破壊を……？</language>
 	</row>
-	<row id="pw_event6_react_enemy_2">
-		<language name="JPN" width="256">まじん『ナニモ　ワカッテナイ
-カナシイ</language>
-		<language name="JPN_KANJI" width="256">魔神『ナニモ　ワカッテナイ
-カナシイ</language>
+	<row id="pw_event6_enemy_3">
+		<language name="JPN" width="256">まじん『ふんがあああああああ！
+こんな　せかい　こわす　のだあああ</language>
+		<language name="JPN_KANJI" width="256">魔神『ふんがあああああああ！
+こんな世界　壊すのだあああ　</language>
 	</row>
-	<row id="pw_event6_react_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『</language>
+	<row id="pw_event6_hero_4">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『たとえ　どんな
+りゆうが　あっても▽
+ゆるすことは　できない……！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『たとえ　どんな
+理由が　あっても▽
+許すことは　できない……！</language>
 	</row>
-	<row id="pw_event6_react_enemy_3">
-		<language name="JPN" width="256">まじん『ナニモ　ワカッテナイ
-カナシイ</language>
-		<language name="JPN_KANJI" width="256">魔神『ナニモ　ワカッテナイ
-カナシイ</language>
+	<row id="pw_event7_hero_0">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『だめだ……
+たおせない！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『だめだ……
+たおせない！</language>
 	</row>
 	<row id="pw_event7_enemy_0">
-		<language name="JPN" width="256">まじん『オレ
-ナニガ　ニゲテダト　オモウ？</language>
-		<language name="JPN_KANJI" width="256">魔神『オレ
-ナニガ　ニゲテダト　オモウ？</language>
+		<language name="JPN" width="256">まじん『るるるーーん♪
+おわりで　ごじゃるか？▽
+かなしいで　ごじゃる！▼
+こんな　たいくつな　せかい
+すべて　こわすぞおおお▼
+おおおおおおおおおおおおお</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーん♪
+終わりで　ごじゃるか？▽
+悲しいで　ごじゃる！▼
+こんな　たいくつな　世界
+すべて　壊すぞおおお▼
+おおおおおおおおおおおおお</language>
 	</row>
-	<row id="pw_event7_react_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『うそ？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『うそ？</language>
-	</row>
-	<row id="pw_event7_react_enemy_0">
-		<language name="JPN" width="256">まじん『ウン　ウソ　ニガテ</language>
-		<language name="JPN_KANJI" width="256">魔神『ウン　ウソ　ニガテ</language>
-	</row>
-	<row id="pw_event7_react_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『たいくつ？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『たいくつ？</language>
-	</row>
-	<row id="pw_event7_react_enemy_1">
-		<language name="JPN" width="256">まじん『ウン　タイクツ　ニガテ</language>
-		<language name="JPN_KANJI" width="256">魔神『ウン　タイクツ　ニガテ</language>
-	</row>
-	<row id="pw_event7_react_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『せいぎ？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『せいぎ？</language>
-	</row>
-	<row id="pw_event7_react_enemy_2">
-		<language name="JPN" width="256">まじん『ナニモ　ワカッテナイ
-カナシイ</language>
-		<language name="JPN_KANJI" width="256">魔神『ナニモ　ワカッテナイ
-カナシイ</language>
-	</row>
-	<row id="pw_event7_react_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『わるいこと？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『わるいこと？</language>
-	</row>
-	<row id="pw_event7_react_enemy_3">
-		<language name="JPN" width="256">まじん『ナニモ　ワカッテナイ
-カナシイ</language>
-		<language name="JPN_KANJI" width="256">魔神『ナニモ　ワカッテナイ
-カナシイ</language>
-	</row>
-	<row id="pw_event8_enemy_0">
-		<language name="JPN" width="256">まじん『オレ
-ナニガ　ニゲテダト　オモウ？</language>
-		<language name="JPN_KANJI" width="256">魔神『オレ
-ナニガ　ニゲテダト　オモウ？</language>
-	</row>
-	<row id="pw_event8_react_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『うそ？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『うそ？</language>
-	</row>
-	<row id="pw_event8_react_enemy_0">
-		<language name="JPN" width="256">まじん『ウン　ウソ　ニガテ</language>
-		<language name="JPN_KANJI" width="256">魔神『ウン　ウソ　ニガテ</language>
-	</row>
-	<row id="pw_event8_react_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『たいくつ？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『たいくつ？</language>
-	</row>
-	<row id="pw_event8_react_enemy_1">
-		<language name="JPN" width="256">まじん『ウン　タイクツ　ニガテ</language>
-		<language name="JPN_KANJI" width="256">魔神『ウン　タイクツ　ニガテ</language>
-	</row>
-	<row id="pw_event8_react_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『せいぎ？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『せいぎ？</language>
-	</row>
-	<row id="pw_event8_react_enemy_2">
-		<language name="JPN" width="256">まじん『ナニモ　ワカッテナイ
-カナシイ</language>
-		<language name="JPN_KANJI" width="256">魔神『ナニモ　ワカッテナイ
-カナシイ</language>
-	</row>
-	<row id="pw_event8_react_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『わるいこと？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『わるいこと？</language>
-	</row>
-	<row id="pw_event8_react_enemy_3">
-		<language name="JPN" width="256">まじん『ナニモ　ワカッテナイ
-カナシイ</language>
-		<language name="JPN_KANJI" width="256">魔神『ナニモ　ワカッテナイ
-カナシイ</language>
-	</row>
-	<row id="pw_event9_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『だめだ……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『だめだ……</language>
-	</row>
-	<row id="pw_event9_enemy_0">
-		<language name="JPN" width="256">まじん『モウ　オワリカ
-タイクツ　ダナ▼
-ヤッパリ　ゼンブ　コワシテ
-ツクリ　ナオソウ……</language>
-		<language name="JPN_KANJI" width="256">魔神『モウ　オワリカ
-タイクツ　ダナ▼
-ヤッパリ　ゼンブ　コワシテ
-ツクリ　ナオソウ……▼
-</language>
-	</row>
-	<row id="pw_event9_hero_1">
+	<row id="pw_event7_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『やめろ……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『やめろ……</language>
 	</row>
-	<row id="pw_event9_enemy_1">
+	<row id="pw_event7_enemy_1">
 		<language name="JPN" width="256">アーカム『アハハハハッーーー</language>
 		<language name="JPN_KANJI" width="256">アーカム『アハハハハッーーー</language>
 	</row>
-	<row id="pw_event9_hero_2">
+	<row id="pw_event7_hero_2">
 		<language name="JPN" width="256">ゴォオオオオオオオオオ
 ドボビゴドカッーーーーーーン！！▼
 ブボビビボカッーーーーーン！
@@ -882,15 +969,145 @@
 ……　……　……　……　……　……　
 ……　……　……　……　……　……</language>
 	</row>
+	<row id="pw_event8_hero_0">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『だめだ……
+たおせない！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『だめだ……
+たおせない！</language>
+	</row>
+	<row id="pw_event8_enemy_0">
+		<language name="JPN" width="256">まじん『るるるーーん♪
+おわりで　ごじゃるか？▽
+かなしいで　ごじゃる！▼
+こんな　たいくつな　せかい
+すべて　こわすぞおおお▼
+おおおおおおおおおおおおお</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーん♪
+終わりで　ごじゃるか？▽
+悲しいで　ごじゃる！▼
+こんな　たいくつな　世界
+すべて　壊すぞおおお▼
+おおおおおおおおおおおおお</language>
+	</row>
+	<row id="pw_event8_hero_1">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『やめろ……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『やめろ……</language>
+	</row>
+	<row id="pw_event8_enemy_1">
+		<language name="JPN" width="256">アーカム『アハハハハッーーー</language>
+		<language name="JPN_KANJI" width="256">アーカム『アハハハハッーーー</language>
+	</row>
+	<row id="pw_event8_hero_2">
+		<language name="JPN" width="256">ゴォオオオオオオオオオ
+ドボビゴドカッーーーーーーン！！▼
+ブボビビボカッーーーーーン！
+ドボビゴドカッーーーーーーン！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……</language>
+		<language name="JPN_KANJI" width="256">ゴォオオオオオオオオオ
+ドボビゴドカッーーーーーーン！！▼
+ブボビビボカッーーーーーン！
+ドボビゴドカッーーーーーーン！！▼
+……　……　……　……　……　……　
+……　……　……　……　……　……</language>
+	</row>
+	<row id="pw_event9_hero_0">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『まじんの　ようすが……？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『魔神の　様子が……？</language>
+	</row>
+	<row id="pw_event9_enemy_0">
+		<language name="JPN" width="256">まじん『るるるーーん♪
+るるるーーーん♪▼
+おぬしは　タフで　ごじゃる
+きにいったで　ごじゃる▼
+……るるるーーん♪▼
+そうだ！
+おぬしと　いっしょに▽
+せかいを　こわさずに　まもろう▽
+たのしく　しはいするで　ごじゃる</language>
+		<language name="JPN_KANJI" width="256">魔神『るるるーーん♪
+るるるーーーん♪▼
+お主は　タフで　ごじゃる
+気に　いったで　ごじゃる▼
+……るるるーーん♪▼
+そうだ！
+お主と　いっしょに▽
+世界を　壊さずに　守ろう▽
+楽しく　支配するで　ごじゃる</language>
+	</row>
+	<row id="pw_event9_hero_1">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『世界を　支配する……？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『世界を　支配する……？</language>
+	</row>
+	<row id="pw_event9_enemy_1">
+		<language name="JPN" width="256">アーカム『まじんよ
+なにを　いっている？▼
+はかい　こそ　すべて　だろう？
+</language>
+		<language name="JPN_KANJI" width="256">アーカム『魔神よ
+何を　言っている？▼
+破壊こそ　全てだろう？
+</language>
+	</row>
+	<row id="pw_event9_enemy_2">
+		<language name="JPN" width="256">まじん『アーカム
+おぬしは　あたまが　かたくて▽
+つまらないぬで　ごじゃる▽
+さらばで　ごじゃる</language>
+		<language name="JPN_KANJI" width="256">魔神『アーカム
+お主は　頭が　固くて▽
+つまらないぬで　ごじゃる▽
+さらばで　ごじゃる</language>
+	</row>
+	<row id="pw_event9_enemy_3">
+		<language name="JPN" width="256">シュボッ！</language>
+		<language name="JPN_KANJI" width="256">シュボッ！</language>
+	</row>
+	<row id="pw_event9_enemy_4">
+		<language name="JPN" width="256">アーカム『なにを　いって……
+いるんだひあああああがゃあーーー▼
+……　……　……　……　……　……　
+……　……　……　……　……　……</language>
+		<language name="JPN_KANJI" width="256">アーカム『何を　言って……
+いるんだひあああああがゃあーーー▼
+……　……　……　……　……　……　
+……　……　……　……　……　……</language>
+	</row>
+	<row id="pw_event9_hero_5">
+		<language name="JPN" width="256">あれから　はんとしが　たった……▼
+せかいは　まじんに　よって
+しはい　された……▼
+いま　げんざい　おおきな
+あらそいごとは　ない……▼
+まじんが　ぼうそう　したとき
+はかいが　おきる　だけだ……▼
+いまでは　こんな　せかいも
+ひとつの　りそうで　あると▽
+かんがえている……▼
+……　……　……　……　……　……　
+……　……　……　……　……　……</language>
+		<language name="JPN_KANJI" width="256">あれから　半年が　たった……▼
+世界は　魔神に　よって
+支配　された……▼
+今　現在　大きな
+争いごとは　ない……▼
+魔神が　暴走したとき
+破壊が　起きる　だけだ……▼
+今では　こんな　世界も
+ひとつの　理想で　あると▽
+考えている……▼
+……　……　……　……　……　……　
+……　……　……　……　……　……</language>
+	</row>
 	<row id="pw_event10_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『たおせた……？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『たおせた……？</language>
 	</row>
 	<row id="pw_event10_enemy_0">
-		<language name="JPN" width="256">まじん『オマエ　ツヨイナ
-タノシカッタゾ</language>
-		<language name="JPN_KANJI" width="256">魔神『オマエ　ツヨイナ
-タノシカッタゾ</language>
+		<language name="JPN" width="256">まじん『おぬし　つよいで　ごじゃる
+たのしかったで　ごじゃる</language>
+		<language name="JPN_KANJI" width="256">魔神『お主は　強いで　ごじゃる
+楽しかったで　ごじゃる</language>
 	</row>
 	<row id="pw_event10_enemy_1">
 		<language name="JPN" width="256">アーカム『ばかな……
@@ -900,116 +1117,52 @@
 </language>
 	</row>
 	<row id="pw_event10_enemy_2">
-		<language name="JPN" width="256">まじん『ツカレタカラ
-シバラク　ネヨウ……▽
-アーカム　カエロウ</language>
-		<language name="JPN_KANJI" width="256">魔神『ツカレタカラ
-シバラク　ネヨウ……▽
-アーカム　カエロウ</language>
+		<language name="JPN" width="256">まじん『つかれたから
+しばらく　ねむろうで　ごじゃる……▽
+アーカム　かえるぞおおお</language>
+		<language name="JPN_KANJI" width="256">魔神『つかれたから
+しばらく　眠るで　ごじゃる……▽
+アーカム　帰るぞあああああ</language>
 	</row>
 	<row id="pw_event10_enemy_3">
 		<language name="JPN" width="256">アーカム『バカな……
-バカな……　バカな……　ばきひひひひ</language>
+バカな……　バカな……</language>
 		<language name="JPN_KANJI" width="256">アーカム『バカな……
-バカな……　バカな……　ばきひひひひ</language>
+バカな……　バカな……</language>
 	</row>
 	<row id="pw_event10_enemy_4">
-		<language name="JPN" width="256">……　……　……　……　……　……　
-……　……　……　……　……　……
-ゴォオオオオオオオオオオオオオオオオ
-ゴォオオオオオオオオオォォォォォォォォ▼
-……　……　……　……　……　……　
+		<language name="JPN" width="256">るるるーーーん♪
+るるるーーーん♪▽
+……　……　……　……　……　……▽　
 ……　……　……　……　……　……</language>
-		<language name="JPN_KANJI" width="256">……　……　……　……　……　……　
-……　……　……　……　……　……
-ゴォオオオオオオオオオオオオオオオオ
-ゴォオオオオオオオオオォォォォォォォォ▼
-……　……　……　……　……　……　
+		<language name="JPN_KANJI" width="256">るるるーーーん♪
+るるるーーーん♪▽
+……　……　……　……　……　……▽　
 ……　……　……　……　……　……</language>
 	</row>
 	<row id="pw_event10_hero_5">
 		<language name="JPN" width="256">『ゴーストイレイザー　ほうこくしょ
 　№００４への　ついき』▼
 まじん　たおすことに　せいこう
-ふたたび　ねむりに　つく▼
+まじんは　ふたたび　ねむりに　つく▼
 また　めざめる　おそれあり
-ちゅうい　せよ▼　
-また　ふっかつ　するときも
+ちゅうい　せよ▼
+ふたたび　ふっかつ　するときも
 ただしい　せんたくで▽
-すくわれことを　ねがう</language>
+せかいが　すくわれことを　ねがう▼
+コードネーム：[1:02:ポケモンニックネーム:0]　こと
+[1:00:トレーナー名:1]</language>
 		<language name="JPN_KANJI" width="256">『ゴーストイレイザー報告書
 　№００４への　追記』▼
 魔神　倒すことに　成功
-再び　眠りに　つく▼
+魔神は　再び　眠りに　つく▼
 また　目覚める　恐れあり
 注意　せよ▼
 ふたたび　復活するときも
-正しき　選択と　勇気で▽
-救われること　願う</language>
-	</row>
-	<row id="pw_event11_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『はかいが　とまった……？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『破壊が　止まった……？</language>
-	</row>
-	<row id="pw_event11_enemy_0">
-		<language name="JPN" width="256">まじん『オマエ　シブトイナ
-キニイッタゾ▼
-セカイヲ　コワサズニ　マモル
-タノシク　シハイ　スル</language>
-		<language name="JPN_KANJI" width="256">魔神『オマエ　シブトイナ
-キニイッタゾ▼
-セカイヲ　コワサズニ　マモル
-タノシク　シハイ　スル</language>
-	</row>
-	<row id="pw_event11_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『世界を　支配する……？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『世界を　支配する……？</language>
-	</row>
-	<row id="pw_event11_enemy_1">
-		<language name="JPN" width="256">アーカム『まじんよ
-なにを　いっている▼
-はかい　こそ　すべて　だろう？
-</language>
-		<language name="JPN_KANJI" width="256">アーカム『魔神よ
-何を　言っている▼
-破壊こそ　全てだろう？
-</language>
-	</row>
-	<row id="pw_event11_enemy_2">
-		<language name="JPN" width="256">まじん『アーカム
-オマエ　ツマラナイ　バイバイ
-</language>
-		<language name="JPN_KANJI" width="256">魔神『アーカム
-オマエ　ツマラナイ　バイバイ
-</language>
-	</row>
-	<row id="pw_event11_enemy_3">
-		<language name="JPN" width="256">アーカム『なにを　いって……
-いるんだひあああああがゃあーーー▼
-……　……　……　……　……　……　
-……　……　……　……　……　……</language>
-		<language name="JPN_KANJI" width="256">アーカム『何を　いって……
-いるんだひあああああがゃあーーー▼
-……　……　……　……　……　……　
-……　……　……　……　……　……</language>
-	</row>
-	<row id="pw_event11_hero_4">
-		<language name="JPN" width="256">せかいは　まじんと　わたしに　よって
-しはい　された▼
-いま　げんざい　おおきな
-あらそいごとは　ない▼
-まじんが　ぼうそう　したとき
-はかいが　おきる　だけだ▼
-いまでは　これも　ひとつの
-りそうで　あると　かんがえている……</language>
-		<language name="JPN_KANJI" width="256">世界は　魔神と　私に　よって
-支配　された▼
-今　現在　大きな
-争いごとは　ない▼
-魔神が　暴走したとき
-破壊が　起きる　だけだ▼
-いまでは　これも　ひとつの
-理想であると　考えている……</language>
+正しい　選択で▽
+世界が　救われること　願う▼
+コードネーム：[1:02:ポケモンニックネーム:0]
+[1:00:トレーナー名:1]</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

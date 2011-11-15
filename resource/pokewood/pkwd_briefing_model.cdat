@@ -141,20 +141,20 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl24[] = {
   { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field10b_NSBMD, GFL_G3D_UTIL_RESARC },
   { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field10b_NSBCA, GFL_G3D_UTIL_RESARC },
 };
-//墓地ー３
+//墓地ー１
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl25[] = {
-  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field09c_NSBMD, GFL_G3D_UTIL_RESARC },
-  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field09c_NSBCA, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field09a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field09a_NSBCA, GFL_G3D_UTIL_RESARC },
 };
 //一般家屋室内ー４
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl26[] = {
   { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field11d_NSBMD, GFL_G3D_UTIL_RESARC },
   { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field11d_NSBCA, GFL_G3D_UTIL_RESARC },
 };
-//ビル屋上Ａー３
+//ビル屋上Ａー１
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl27[] = {
-  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01c_NSBMD, GFL_G3D_UTIL_RESARC },
-  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01c_NSBCA, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01a_NSBCA, GFL_G3D_UTIL_RESARC },
 };
 
 //=======================================================
@@ -285,7 +285,7 @@ static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl24[] = {
   { G3DRES_BCTA_BCA, 0  },
 //  { G3DRES_01_BTP, 0  },
 };
-// 「墓地ー３」 アニメ定義
+// 「墓地ー１」 アニメ定義
 static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl25[] = {
   { G3DRES_BCTA_BCA, 0  },
 //  { G3DRES_01_BTP, 0  },
@@ -295,7 +295,7 @@ static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl26[] = {
   { G3DRES_BCTA_BCA, 0  },
 //  { G3DRES_01_BTP, 0  },
 };
-// 「ビル屋上Ａー３」 アニメ定義
+// 「ビル屋上Ａー１」 アニメ定義
 static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl27[] = {
   { G3DRES_BCTA_BCA, 0  },
 //  { G3DRES_01_BTP, 0  },
@@ -554,7 +554,7 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl24[] = {
     NELEMS(g3Dutil_anmTbl24), //アニメデータ数
   },
 };
-// 墓地ー３
+// 墓地ー１
 static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl25[] = {
   {
     G3DRES_BCTA_BMD,         //モデルID
@@ -574,7 +574,7 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl26[] = {
     NELEMS(g3Dutil_anmTbl26), //アニメデータ数
   },
 };
-// ビル屋上Ａー３
+// ビル屋上Ａー１
 static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl27[] = {
   {
     G3DRES_BCTA_BMD,         //モデルID
@@ -799,7 +799,7 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup[] = {
     g3Dutil_objTbl24,           //オブジェクト設定テーブル
     NELEMS(g3Dutil_objTbl24),   //オブジェクト数
   },
-  { // シナリオ36 ( 墓地ー３ )
+  { // シナリオ36 ( 墓地ー１ )
     g3Dutil_resTbl25,           //データテーブル
     NELEMS(g3Dutil_resTbl25),   //データ数
     g3Dutil_objTbl25,           //オブジェクト設定テーブル
@@ -817,7 +817,7 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup[] = {
     g3Dutil_objTbl26,           //オブジェクト設定テーブル
     NELEMS(g3Dutil_objTbl26),   //オブジェクト数
   },
-  { // シナリオ39 ( ビル屋上Ａー３ )
+  { // シナリオ39 ( ビル屋上Ａー１ )
     g3Dutil_resTbl27,           //データテーブル
     NELEMS(g3Dutil_resTbl27),   //データ数
     g3Dutil_objTbl27,           //オブジェクト設定テーブル
