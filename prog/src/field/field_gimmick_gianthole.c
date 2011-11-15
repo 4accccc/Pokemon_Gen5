@@ -405,11 +405,15 @@ void GIANTHOLE_GIMMICK_Disp( GAMESYS_WORK *gsys, int id )
   {
     // 表示
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, OBJ_BLIZZARD_01, FALSE );
+    // 非表示
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, OBJ_BLIZZARD_02, TRUE );
   }
   else
   {
     // 表示
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, OBJ_BLIZZARD_02, FALSE );
+    // 非表示
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, OBJ_BLIZZARD_01, TRUE );
   }
 }
 

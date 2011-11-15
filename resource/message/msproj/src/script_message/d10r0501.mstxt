@@ -340,11 +340,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]ゼクロム！
-クロスサンダー！！[Ctrl2:CtrlSpeed ]▼</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ][System:Color name="2" ]ゼクロム！
+クロスサンダー！！[Ctrl2:CtrlSpeed ][/System:Color]</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-14T11:10:01" />
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-15T13:33:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -352,11 +352,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]ゼクロム！
-クロスサンダー！！[Ctrl2:CtrlSpeed ]▼</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ][System:Color name="2" ]ゼクロム！
+クロスサンダー！！[Ctrl2:CtrlSpeed ][/System:Color]</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-14T11:10:03" />
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-15T13:33:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -394,11 +394,11 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]レシラム！
-クロスフレイム！！[Ctrl2:CtrlSpeed ]▼</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ][System:Color name="1" ]レシラム！
+クロスフレイム！！[/System:Color][Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-14T11:10:14" />
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-15T13:34:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -406,11 +406,11 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]レシラム！
-クロスフレイム！！[Ctrl2:CtrlSpeed ]▼</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ][System:Color name="1" ]レシラム！
+クロスフレイム！！[/System:Color][Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-14T11:10:15" />
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-15T13:34:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

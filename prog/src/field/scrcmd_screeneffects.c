@@ -462,8 +462,6 @@ static GMEVENT_RESULT Fade_MsgEnableEvent( GMEVENT* event, int* seq, void* wk )
   // 処理シーケンス
   enum{
     SEQ_START,
-    SEQ_FADE_OUT,  // フェードアウト
-    SEQ_FADE_IN,   // フェードイン
     SEQ_FADE_END,  // フェード終了
   };
 
@@ -472,69 +470,37 @@ static GMEVENT_RESULT Fade_MsgEnableEvent( GMEVENT* event, int* seq, void* wk )
     // フェードインの時はBG初期化する
     if( p_wk->fade_type == FADE_TYPE_IN )
     {
-      // 両面のマスター輝度を白に設定
-      GX_SetMasterBrightness( 16 );
-      GXS_SetMasterBrightness( 16 );
-
-      // BGモード設定と表示設定の復帰
-      {
-        int mv = GFL_DISP_GetMainVisible();
-        FIELDMAP_InitBGMode();
-        GFL_DISP_GX_SetVisibleControlDirect( mv );
-      }
-      FIELDMAP_InitBG( p_wk->p_fieldmap );
-      *seq = SEQ_FADE_IN;
+      // フェードリクエスト
+      ChangeBrightnessRequest( 
+          6,       // フェードするのにかかるSync数
+          BRIGHTNESS_NORMAL, // フェード終了時の輝度
+          BRIGHTNESS_WHITE,// フェード開始時の輝度
+          FADE_PLANEMASK,   // フェードが反映されるBG面
+          MASK_DOUBLE_DISPLAY );
     }
     else
     {
-      *seq = SEQ_FADE_OUT;
+      // フェードリクエスト
+      ChangeBrightnessRequest( 
+          4,       // フェードするのにかかるSync数
+          BRIGHTNESS_WHITE, // フェード終了時の輝度
+          BRIGHTNESS_NORMAL,// フェード開始時の輝度
+          FADE_PLANEMASK,   // フェードが反映されるBG面
+          MASK_DOUBLE_DISPLAY );      // フェードが反映されるLCD
     }
 
-    break;
-
-  case SEQ_FADE_OUT:
-
-    // 上画面
-    // フェードリクエスト
-    ChangeBrightnessRequest( 
-        2,       // フェードするのにかかるSync数
-        BRIGHTNESS_WHITE, // フェード終了時の輝度
-        BRIGHTNESS_NORMAL,// フェード開始時の輝度
-        FADE_PLANEMASK,   // フェードが反映されるBG面
-        MASK_MAIN_DISPLAY );      // フェードが反映されるLCD
-
-    // 下画面
-    GFL_FADE_SetMasterBrightReq(
-        GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB,
-        0,
-        16,
-        -8 );
-
     *seq = SEQ_FADE_END;
-    break;
 
-
-  case SEQ_FADE_IN:
-
-    // 両画面
-    GFL_FADE_SetMasterBrightReq(
-        GFL_FADE_MASTER_BRIGHT_WHITEOUT,
-        16,
-        0,
-        -1 );
-
-    *seq = SEQ_FADE_END;
     break;
 
   case SEQ_FADE_END:
     // 終了チェック
-    if( IsFinishedBrightnessChg( MASK_MAIN_DISPLAY ) == TRUE &&
-		    GFL_FADE_CheckFade() == FALSE )
+    if( IsFinishedBrightnessChg( MASK_MAIN_DISPLAY ) == TRUE )
     {
       // フェードインの時は輝度を初期化しておく
       if( p_wk->fade_type == FADE_TYPE_IN )
       {
-        BrightnessChgReset( MASK_MAIN_DISPLAY );
+        BrightnessChgReset( MASK_DOUBLE_DISPLAY );
       }
 
       return GMEVENT_RES_FINISH;

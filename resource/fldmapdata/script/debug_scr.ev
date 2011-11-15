@@ -1819,9 +1819,8 @@ EVENT_START   ev_debug_ichiraku
     _TIME_WAIT(15)
     _RIVAL_NAME(0)
     _PLAINWIN_MSG_DOWN( msg_debug_ichiraku_4_a )
-	  _LAST_KEYWAIT()	
+    _TIME_WAIT(90)
 	  _PLAINWIN_CLOSE()
-    _MAP_CHANGE_NO_FADE( ZONE_ID_C12, 47, 1, 762, DIR_DOWN )
     _MAP_FADE_IN_MSG_ENABLE()
 
   CASE 12 THEN

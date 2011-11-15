@@ -53,14 +53,14 @@ INIT_EVENT_START   ev_zone_d10r0501
 	//BlackVERならレシラム
 	IF $SCWK_ANSWER == VERSION_B2 THEN
 		$OBJCHRWORK0 = POKE10
-		$OBJCHRWORK1 = MU_B
-		$OBJCHRWORK2 = MU_B
+		$OBJCHRWORK1 = SPPOKE02_ZE
+		$OBJCHRWORK2 = SPPOKE05_KUZE
 	
 	//Whiteならゼクロム
 	ELSE
 		$OBJCHRWORK0 = POKE10
-		$OBJCHRWORK1 = SHIN_B
-		$OBJCHRWORK2 = SHIN_B
+		$OBJCHRWORK1 = SPPOKE01_RE
+		$OBJCHRWORK2 = SPPOKE04_KURE
 	ENDIF
   
 INIT_EVENT_END
@@ -178,28 +178,10 @@ EVENT_START ev_pos_d10r0501_swsage1_01
     ELSE
       _GIZAPLAINWIN_MSG_POS( msg_d10r0501_boss_01w, POS_DOWN )
     ENDIF
+    _TIME_WAIT(60)
     _GIZAPLAINWIN_CLOSE()
 
-    // カメラ戻し
-    _CAMERA_BIND()	//カメラバインド
-    _CAMERA_END()		//カメラ操作終了
-
-    _MAP_CHANGE_NO_FADE( ZONE_ID_D10R0501, 15, 0, 21, DIR_UP )
-
-    // 暗転中にカメラを変える
-	  _CAMERA_START()		//カメラ操作開始
-	  _CAMERA_PURGE()		//カメラのバインドを解く
-	  _CAMERA_MOVE( 9688,0,970752,1015808,0,1298432,1 )	//一番最後の引数は移動にかかるフレーム数
-	  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
-
-    //=======================================
-    // キュレムを表示し、ゲーチスを横に移動
-    _OBJ_POS_CHANGE( D10R0501_POKE1_01, 14, 0, 16, DIR_DOWN )
-    _OBJ_POS_CHANGE( D10R0501_SWSAGE1_01, 18, 0, 16, DIR_DOWN)
-    _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 15, 0, 20, DIR_UP)
-    //=======================================
-
-    // こごえるせかい(後半)モデル表示
+      // こごえるせかい(後半)モデル表示
     _DEMO_GIMMICK_GIANTHOLE_DISP(1)
 
     // 専用フェードイン
@@ -217,7 +199,7 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 
   // こごえるせかいエフェクト(後半)
   _DEMO_GIMMICK_GIANTHOLE_ANM_START(1)
-  _TIME_WAIT(115)
+  _TIME_WAIT(50)
 
   // カメラ元に戻す
 	_CAMERA_MOVE( 9688,0,970752,1015808,0,1081344,20 )	//一番最後の引数は移動にかかるフレーム数
@@ -234,7 +216,7 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   // ゼクロムonNがおりてくる
   _DEMO_GIMMICK_GIANTHOLE_NPOKE_ANM_START()
 
-  _TIME_WAIT(70)
+  _TIME_WAIT(100)
   
   // 暗転処理(メモリ開放)
   {
@@ -340,6 +322,11 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   _CAMERA_PURGE()		//カメラのバインドを解く
   _CAMERA_MOVE( 9688,0,970752,1015808,0,1081344, 1 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
+  //=======================================
+  // 解放状態のキュレムにする
+  $OBJCHRWORK0 = SPPOKE03_KU
+  //=======================================
 
   //=======================================
   // キュレムを表示し、ゲーチスを横に移動
