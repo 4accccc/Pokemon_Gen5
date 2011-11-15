@@ -436,8 +436,8 @@
         <language name="JPN" width="256">タロウ</language>
         <language name="JPN_KANJI" width="256">タロウ</language>
       </row><row id="TRADE_POKE_18">
-        <language name="JPN" width="256">ツボツボ</language>
-        <language name="JPN_KANJI" width="256">ツボツボ</language>
+        <language name="JPN" width="256">カラナクシ</language>
+        <language name="JPN_KANJI" width="256">カラナクシ</language>
       </row><row id="TRADE_OYA_18">
         <language name="JPN" width="256">タロウ</language>
         <language name="JPN_KANJI" width="256">タロウ</language>
@@ -472,8 +472,8 @@
         <language name="JPN" width="256">タロウ</language>
         <language name="JPN_KANJI" width="256">タロウ</language>
       </row><row id="TRADE_POKE_24">
-        <language name="JPN" width="256">リオル</language>
-        <language name="JPN_KANJI" width="256">リオル</language>
+        <language name="JPN" width="256">トゲピー</language>
+        <language name="JPN_KANJI" width="256">トゲピー</language>
       </row><row id="TRADE_OYA_24">
         <language name="JPN" width="256">タロウ</language>
         <language name="JPN_KANJI" width="256">タロウ</language>
@@ -508,8 +508,8 @@
         <language name="JPN" width="256">ハナコ</language>
         <language name="JPN_KANJI" width="256">ハナコ</language>
       </row><row id="TRADE_POKE_30">
-        <language name="JPN" width="256">ツボツボ</language>
-        <language name="JPN_KANJI" width="256">ツボツボ</language>
+        <language name="JPN" width="256">カラナクシ</language>
+        <language name="JPN_KANJI" width="256">カラナクシ</language>
       </row><row id="TRADE_OYA_30">
         <language name="JPN" width="256">ハナコ</language>
         <language name="JPN_KANJI" width="256">ハナコ</language>
@@ -544,8 +544,8 @@
         <language name="JPN" width="256">ハナコ</language>
         <language name="JPN_KANJI" width="256">ハナコ</language>
       </row><row id="TRADE_POKE_36">
-        <language name="JPN" width="256">リオル</language>
-        <language name="JPN_KANJI" width="256">リオル</language>
+        <language name="JPN" width="256">トゲピー</language>
+        <language name="JPN_KANJI" width="256">トゲピー</language>
       </row><row id="TRADE_OYA_36">
         <language name="JPN" width="256">ハナコ</language>
         <language name="JPN_KANJI" width="256">ハナコ</language>
