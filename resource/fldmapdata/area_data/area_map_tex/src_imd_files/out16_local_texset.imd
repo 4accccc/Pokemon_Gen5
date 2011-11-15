@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-09-16T17:45:23"/>
+	<create user="swan_3dcg01" host="W00300" date="2011-11-15T13:07:13"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -38,10 +38,10 @@
 		path="C:/home/swan_data3d/field/out16/chip/tex/gake_ishi.tga"
 	>
 		<bitmap size="32">
-			77cc 8777 7789 aa7a ea7c aaef dedb fea7
-			fea7 aeff efe9 eda7 ea73 9aee ded8 aa7a
-			7711 3777 aa73 777a 1331 4111 7745 1227
-			5443 6665 4556 4421 6654 6666 5666 4204
+			0046 1000 0012 5505 8506 5589 7873 9850
+			9850 5899 8982 8750 8500 2588 7871 5505
+			00aa a000 550a 0005 bbbe dbbb 00ad ecc0
+			dbbb fddd dddf bbbd fdbb ffff dfff bbdd
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="gake_ishi2"
@@ -627,8 +627,8 @@
 		56d5 5ad6 6318 675a 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="gake_ishi_pl" color_size="16">
-		298f 29af 29d2 2dad 2df4 2e17 2e18 4a10
-		4a31 4e52 5294 5694 56d5 5ad6 6318 675a
+		4a10 4a31 4e52 5694 56d5 5294 56d5 5ad6
+		6318 675a 3611 2213 3632 2256 2634 2e99
 	</tex_palette>
 	<tex_palette index="2" name="grass_ishi_pl" color_size="16">
 		4610 4a51 4e52 4a31 4e52 4e73 5293 5294
@@ -765,7 +765,7 @@
 	triangle_size="0" quad_size="1"/>
 
 <ex_nns_3dme>
-	<ex_model_info scene_name="新規シーン" disp_pos="0.000000 60.000000"/>
+	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
 	<ex_tex_image_array size="17">
 		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
