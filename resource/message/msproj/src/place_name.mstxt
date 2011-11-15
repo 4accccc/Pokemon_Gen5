@@ -6122,4 +6122,167 @@ R14R0101/R15R0101</Comment>
 				Time="2011-07-20T05:23:59" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="MAPNAME_D29R0401"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちていいせき</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-15T08:29:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-15T08:28:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>地底遺跡</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-15T08:29:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-15T08:28:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>D29R0401/R0501/R0601
+</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-15T08:29:09" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="MAPNAME_D29R0701"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いわやまのま</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-15T08:31:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-15T08:31:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>岩山の間</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-15T08:31:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-15T08:31:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>D29R0701
+
+</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-15T08:31:17" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="MAPNAME_D29R0801"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひょうざんのま</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-15T08:31:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-15T08:31:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>氷山の間</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-15T08:31:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-15T08:31:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>D29R0801</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-15T08:31:27" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="MAPNAME_D29R0901"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>くろがねのま</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-15T08:32:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-15T08:31:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>鉄の間</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-15T08:32:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-15T08:31:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>D29R0901</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-15T08:31:33" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

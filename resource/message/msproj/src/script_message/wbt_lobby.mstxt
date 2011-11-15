@@ -2,61 +2,6 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_wbt_info_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-18T08:02:19" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-18T08:02:22" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-削除対象</Comment>
-			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T06:46:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>INFORMATIONW</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
 		Label="msg_wbt_info_02"
 		Style="Large">
 		<LanguageCell
@@ -1297,74 +1242,6 @@ msg_wbt_menu_wcs</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_info_explain_wcs"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ＷＣＳ２０１１トーナメントは
-ＷＣＳを　かちぬいた　トレーナーと▽
-たいせんできる　トーナメントです▼
-イッシュちほうの
-ポケモンのみが　さんかできます▼
-すべて　ちがう　ポケモンを
-せんたくして　ください▼
-もたせる　どうぐも　すべて
-ちがうもので　なければ　なりません▼
-バトルルールは
-ダブルバトルとなります▼
-ＷＣＳ２０１１トーナメントでは
-バトルポイントは　もらえません▽
-めいよの　ために　たたかいましょう！▼　</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-20T09:39:48" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:29:41" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ＷＣＳ２０１１トーナメントは
-ＷＣＳに　出場した　トレーナーと▽
-対戦できる　トーナメントです▼
-イッシュ地方の
-ポケモンのみが　参加できます▼
-すべて　異なる　ポケモンを
-選択して　ください▼
-持たせる　道具も　すべて
-違うもので　なければ　なりません▼
-バトルルールは
-ダブルバトルとなります▼
-ＷＣＳ２０１１トーナメントでは
-バトルポイントは　もらえません▽
-名誉の　ために　戦いましょう！▼　</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-20T09:39:42" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:29:41" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・WCS2011はダウンロードトーナメント内に入るため
-削除ラベルです</Comment>
-			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T06:06:02" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
 		Label="msg_wbt_info_explain_rental"
 		Style="Large">
 		<LanguageCell
@@ -2511,48 +2388,6 @@ msg_wbt_info_11へ</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_menu_wcs"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>WCS２０１１</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:23:49" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:23:41" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>WCS２０１１</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:23:57" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-13T08:23:41" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・WCS2011はダウンロードトーナメント内に入るため
-削除ラベルです</Comment>
-			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T06:10:44" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
 		Label="msg_wbt_menu_explain_rule"
 		Style="Large">
 		<LanguageCell
@@ -2736,11 +2571,11 @@ msg_wbt_info_11へ</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どの　タイプトーナメントに
+			<Text>どの　タイプの　トーナメントに
 さんか　なさいますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-15T02:50:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2748,11 +2583,11 @@ msg_wbt_info_11へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どの　タイプトーナメントに
+			<Text>どの　タイプの　トーナメントに
 参加なさいますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-15T02:51:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6465,106 +6300,6 @@ msg_wbt_info_11へ</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_pc_on"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]は　エントリーチェッカーの
-スイッチを　いれた！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]は　エントリーチェッカーの
-スイッチを　いれた！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>未使用
-</Comment>
-			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-11-08T03:18:17" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_wbt_pc_off"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]は　エントリーチェッカーの
-スイッチを　きった！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]は　エントリーチェッカーの
-スイッチを　きった！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>未使用
-</Comment>
-			<CommentModifiedBy
-				User="tamada:W00253"
-				Time="2011-11-08T03:18:19" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
 		Label="msg_wbt_pc_blank"
 		Style="Large">
 		<LanguageCell
@@ -6691,62 +6426,6 @@ msg_wbt_info_11へ</Comment>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_wbt_notice_06"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>さんかじょうけんが
-おなじなので▼
-msg_wbt_notice_02に
-まとめました▼</Text>
-			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T05:42:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T07:34:16" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>さんかじょうけんが
-おなじなので▼
-msg_wbt_notice_02に
-まとめました▼</Text>
-			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T05:42:22" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T07:34:16" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・タイプエキスパートトーナメントの解禁条件が揃っている場合に表示
-・つづけてmsg_wbt_info_17へ
-</Comment>
-			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T07:34:44" />
-		</CommentCell>
-		<CommentCell
-			Language="JPN_KANJI">
-			<Comment />
-			<CommentModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T05:39:55" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
