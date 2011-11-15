@@ -763,25 +763,25 @@
 		Label="pw_event1_react_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……（ことばは　いらない！）</Text>
+			<Text>[Name:TrainerName Idx="1" ]『（ことばは　いらない！）</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:39" />
+				Time="2011-11-15T03:47:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:39" />
+				Time="2011-11-15T03:47:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……（ことばは　いらない！）</Text>
+			<Text>[Name:TrainerName Idx="1" ]『（ことばは　いらない！）</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:39" />
+				Time="2011-11-15T03:47:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:39" />
+				Time="2011-11-15T03:47:28" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1850,8 +1850,9 @@
 		Label="pw_event6_enemy_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>ドーブル『ざんねん　ながら　ダメ　です
-この　せかいに　たましいが▽
+			<Text>ドーブル『ざんねん　ながら
+ダメ　です▼
+この　せかいに　たましいが
 ながい　あいだ　とどまっていると▼
 こおりの　ように
 きおくが　とけて　しまうんです▽
@@ -1860,16 +1861,17 @@
 ここで　おあい　しましょう</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-11T12:14:33" />
+				Time="2011-11-15T03:49:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-11T12:14:33" />
+				Time="2011-11-15T03:49:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ドーブル『残念ながら　ダメ　です
-この世界に　魂が▽
+			<Text>ドーブル『残念ながら
+ダメ　です▼
+この世界に　魂が
 長い時間　とどまっていると▼
 氷の　ように
 記憶が　とけて　しまうんです▽
@@ -1878,11 +1880,11 @@
 ここで　お会い　しましょう</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-11T12:14:33" />
+				Time="2011-11-15T03:49:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-11T12:14:33" />
+				Time="2011-11-15T03:49:48" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
