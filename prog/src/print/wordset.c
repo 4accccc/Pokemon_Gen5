@@ -17,7 +17,10 @@
 #include "savedata/medalbox_rank_def.h" // for MEDALBOX_RANK_xxxx
 #include "battle/pokewood.h"
 #include "savedata/wbt_save.h"
+
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 #include "field/wbt_tool.h"
+#endif //MULTI_BOOT_MAKE
 #include "../../../resource/research_radar/data/hobby_id.h"  // for HOBBY_ID_xxxx
 #include "../../../resource/research_radar/data/job_id.h"  // for JOB_ID_xxxx
 #include "../../../resource/research_radar/data/answer_id.h"  // for ANSWER_ID_xxxx
@@ -955,6 +958,8 @@ void WORDSET_RegisterPokewoodMovieTitle( WORDSET* wordset, u32 bufID, u32 senari
  *
  */
 //------------------------------------------------------------------
+//マルチブート用きり分け  (MB子機ではARCID_SCRIPT_MESSAGE無いので通らないようにします  nagihashi111115
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 void WORDSET_RegisterWBTTournamentName( WORDSET* wordset, u32 bufID, u32 tournamentID )
 {
   if( tournamentID >= POKEWOOD_SENARIO_MAX ){
@@ -965,6 +970,7 @@ void WORDSET_RegisterWBTTournamentName( WORDSET* wordset, u32 bufID, u32 tournam
   WBTTOOL_GetTournamentName( wordset->heapID, tournamentID, wordset->tmpBuf );
   RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
 }
+#endif  //MULTI_BOOT_MAKE
 
 //======================================================================================================
 // 文字列展開
