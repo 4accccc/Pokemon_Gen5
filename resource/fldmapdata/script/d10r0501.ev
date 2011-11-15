@@ -217,7 +217,7 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 
   // こごえるせかいエフェクト(後半)
   _DEMO_GIMMICK_GIANTHOLE_ANM_START(1)
-  _TIME_WAIT(50)
+  _TIME_WAIT(115)
 
   // カメラ元に戻す
 	_CAMERA_MOVE( 9688,0,970752,1015808,0,1081344,20 )	//一番最後の引数は移動にかかるフレーム数
