@@ -75403,4 +75403,195 @@
 				Time="2011-11-14T09:51:00" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="TRID_NURSE_05_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなた　げんきー！▼
+げんきの　ないコは
+あたしが　おしおき　しちゃうわよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなた　元気ー！▼
+元気の　ない子は
+あたしが　お仕置き　しちゃうわよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_NURSE_05_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>スタミナ　ありあまっているわね！
+もう　げんき　びんびん　じゃない！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>スタミナ　ありあまっているわね！
+もう　元気　びんびん　じゃない！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_NURSE_05_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		<LanguageCell
+			Language="JPN">
+			<Text>よーし！　げんきな　トレーナー！
+これも　もらっていきなさい！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>よーし！　元気な　トレーナー！
+これも　もらっていきなさい！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_NURSE_05_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>ナースも　スタミナしょうぶ　なの！
+あさも　ひるも　よるもね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ナースも　スタミナ勝負なの！
+朝も　昼も　夜もね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_HEADS_11_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうまけ
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘負け
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_DANCER_08_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうまけ
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘負け
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_GUITARW_04_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんとうまけ
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘負け
+テストメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-14T14:30:06" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>
