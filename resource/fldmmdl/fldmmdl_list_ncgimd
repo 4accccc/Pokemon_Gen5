@@ -339,6 +339,7 @@ FMMDL_RESLIST_NCGIMD = \
 	sppoke03_ku.imd \
 	sppoke04_kure.imd \
 	sppoke05_kuze.imd \
+	poke4_step.imd \
 	tsure_001.imd \
 	tsure_002.imd \
 	tsure_003.imd \

@@ -1698,6 +1698,11 @@
 	@echo convert ncg_imd sppoke05_kuze
 	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/sppoke05_kuze.ncg ./mmdl_res ./mmdl_dmy/t8x8x15.imd 8 8 15
 
+#poke4_step.imd
+./mmdl_res/poke4_step.imd: ./mmdl_nchara/poke4_step.ncg ./mmdl_nchara/poke4_step.ncl ./mmdl_dmy/t4x4x12.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_nonflip.csv
+	@echo convert ncg_imd poke4_step
+	@ruby ../../tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke4_step.ncg ./mmdl_res ./mmdl_dmy/t4x4x12.imd 4 4 12
+
 #tsure_001.imd
 ./mmdl_res/tsure_001.imd: ./mmdl_nchara/pokemon//tsure_001.ncg ./mmdl_nchara/pokemon//tsure_001.ncl ./mmdl_dmy/t4x4x8.imd ./tmp/fldmmdl_list.csv mmdl_anm/tmp/fmmdl_anm_poke_nonflip.csv
 	@echo convert ncg_imd tsure_001
