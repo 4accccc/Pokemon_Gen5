@@ -129,7 +129,7 @@ const CI_FADE_TBL FTbl27[] = {
 };
 
 const CI_FADE_TBL FTbl28[] = {
-	{ 5, CI_FADE_MASTER_BRIGHT_WHITEOUT ,0 ,16 ,10 },
+	{ 30, CI_FADE_MASTER_BRIGHT_WHITEOUT ,0 ,16 ,10 },
 	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
 };
 
