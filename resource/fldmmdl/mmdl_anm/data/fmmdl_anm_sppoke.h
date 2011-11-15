@@ -13,15 +13,15 @@
 #define __H_FMMDL_ANM_SPPOKE_H__
 
 ///ANM_NO定義
-#define DRAW_ANMNO_SPPOKE_STOPU  ( 0 )
-#define DRAW_ANMNO_SPPOKE_STOPD  ( 1 )
+#define DRAW_ANMNO_SPPOKE_STOPD  ( 0 )
+#define DRAW_ANMNO_SPPOKE_STOPU  ( 1 )
 #define DRAW_ANMNO_SPPOKE_BARK  ( 2 )
 #define DRAW_ANMNO_SPPOKE_MAX  ( 3 )
 
 
 ///フレーム数定義
-#define DRAW_ANMFRM_SPPOKE_STOPU  ( 35 )
 #define DRAW_ANMFRM_SPPOKE_STOPD  ( 35 )
+#define DRAW_ANMFRM_SPPOKE_STOPU  ( 35 )
 #define DRAW_ANMFRM_SPPOKE_BARK  ( 12 )
 
 
