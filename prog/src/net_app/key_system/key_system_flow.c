@@ -16,6 +16,7 @@
 #include "system/bmp_winframe.h"
 #include "print/wordset.h"
 #include "field/zonedata.h"
+#include "fieldmap/zone_id.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -436,7 +437,12 @@ void KEYSYS_KEYFLOW_SEQ_GetKey( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     break;
   case SEQ_SET:
     KEY_SYSTEM_SAVE_SetHave( p_wk->p_key_sv, p_wk->p_param->get_key );
-    KEY_SYSTEM_SAVE_SetUse( p_wk->p_key_sv, p_wk->p_param->get_key );
+
+    //WFBCキーは相手からの通信じゃないと使用付加
+    if( p_wk->p_param->get_key != KEY_SYSTEM_TYPE_CITY_WFBC )
+    {
+      KEY_SYSTEM_SAVE_SetUse( p_wk->p_key_sv, p_wk->p_param->get_key );
+    }
     (*p_seq)++;
     break;
   case SEQ_FADEOUT:
@@ -3357,8 +3363,11 @@ static KEYSYS_SELECT_MENU_RET KeySys_SelMenu_Wfbc_DecideCallBack( int index, voi
     {
       const LOCATION *cp_locate = GAMEDATA_GetStartLocation(p_wk->p_gamedata);
 
-      //今WFBCにいるなら押せない
-      if( ZONEDATA_IsWfbc( ZONEDATA_GetGroupID(cp_locate->zone_id) ) )
+      //今WFBC及び、無限ダンジョン及び、無限ダンジョン受付にいるなら押せない
+      if( ZONEDATA_IsWfbc( ZONEDATA_GetGroupID(cp_locate->zone_id) )
+        || ZONEDATA_IsInfinityDungeon(cp_locate->zone_id) 
+        || ZONE_ID_D31R0101 == cp_locate->zone_id
+        || ZONE_ID_D31R0201 == cp_locate->zone_id )
       {
         return KEYSYS_SELECT_MENU_RET_SP_UNSELECT;
       }

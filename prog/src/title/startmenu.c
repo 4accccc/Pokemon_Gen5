@@ -820,7 +820,7 @@ static int MainSeq_InitWait( START_MENU_WORK * wk )
 			return MAINSEQ_SAVE_BREAK;
 		}
 
-    if( MISC_GetStartMenuMessageFlag(wk->misc) )
+    if( MISC_GetStartMenuMessageFlag(wk->misc) == TRUE )
     {
       MISC_SetStartMenuMessageFlag(wk->misc, FALSE );
 

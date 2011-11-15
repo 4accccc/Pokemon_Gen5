@@ -605,6 +605,7 @@ static GFL_PROC_RESULT GameStart_ContinueProcEnd( GFL_PROC * proc, int * seq, vo
   int search_mode_temp = CONFIG_GetNetworkSearchMode( work->selModeParam.configSave );
   // タイトルメニューの項目情報取得
   u8  title_menu_flag = MISC_GetStartMenuFlagAll( work->selModeParam.miscSave );
+  u8  title_msg_flag = MISC_GetStartMenuMessageFlag(work->selModeParam.miscSave);
 
   SaveControl_Load(sv_ctrl);
   CONFIG_ApplyMojiMode( SaveData_GetConfig( sv_ctrl ) );  //ロードしたコンフィグに従って文字モード設定
@@ -619,6 +620,7 @@ static GFL_PROC_RESULT GameStart_ContinueProcEnd( GFL_PROC * proc, int * seq, vo
   CONFIG_SetNetworkSearchMode( work->selModeParam.configSave, search_mode_temp );
   // セーブデータでタイトルメニューの項目情報が上書きされてしまっているので再設定
   MISC_SetStartMenuFlagAll( work->selModeParam.miscSave, title_menu_flag );
+  MISC_SetStartMenuMessageFlag(work->selModeParam.miscSave, title_msg_flag );
 
   GFL_PROC_FreeWork( proc );
   
