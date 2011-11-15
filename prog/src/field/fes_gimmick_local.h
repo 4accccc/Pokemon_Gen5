@@ -12,6 +12,7 @@
 #include "field/fes_gimmick_def.h"
 #include "field/fes_gimmick_item.h"
 #include "field/fes_gimmick_npc.h"
+#include "field/fes_gimmick_event.h"
 
 //ミッション中保持しつづけるワーク
 typedef union _FES_GIMMICK_WORK{

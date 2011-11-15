@@ -50,6 +50,7 @@
 
 FS_EXTERN_OVERLAY( field_fes_gimmick_item );
 FS_EXTERN_OVERLAY( field_fes_gimmick_npc );
+FS_EXTERN_OVERLAY( field_fes_gimmick_event );
 
 //======================================================================
 //======================================================================
@@ -129,6 +130,9 @@ static void sub_OverlayLoadUnload( FES_GIMMICK* wk, BOOL load_f )
       break;
     case FMISSION_TYPE_NPC:
       ol_field = FS_OVERLAY_ID( field_fes_gimmick_npc );
+      break;
+    case FMISSION_TYPE_EVENT:
+      ol_field = FS_OVERLAY_ID( field_fes_gimmick_event );
       break;
     default:
       return;
@@ -211,6 +215,14 @@ void FES_GIMMICK_MissionInitSetup( FES_GIMMICK* wk )
   if( wk->fmwk->arc.m_type == FMISSION_TYPE_MUSHROOM_ENC ){
     mission_init_mushroom_enc( wk );
   }
+  else if( wk->fmwk->arc.m_type == FMISSION_TYPE_EVENT ){
+    // 隠し穴調査（特殊ポケモン配置版）用ワークを初期化する
+    if( FES_GIMMICK_EVENT_IsExAnimalTrailMission( wk ) )
+    {
+      FES_GIMMICK_EVENT_ExAnimalTrailMissionWkCreate( wk );
+    }
+  }
+
 }
 
 /*
@@ -265,6 +277,8 @@ BOOL FES_GIMMICK_Delete( FES_GIMMICK* wk )
     return FES_GIMMICK_ITEM_Delete( wk, (FES_GIMMICK_ITEM_WORK*)gmk_wk );
   case FMISSION_TYPE_NPC:
     return FES_GIMMICK_NPC_Delete( wk, (FES_GIMMICK_NPC_WORK*)gmk_wk );
+  case FMISSION_TYPE_EVENT:
+    return FES_GIMMICK_EVENT_Delete( wk );
   }
   return FALSE;
 }
@@ -384,5 +398,31 @@ void FES_GIMMICK_FesTrainerPartySetForNpcMission( FES_GIMMICK* wk, POKEPARTY* pa
     return;
   }
   FES_GIMMICK_NPC_FesTrainerPartySet( wk, party );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  隠し穴調査（特殊ポケモン配置版）に選ばれているか調べる
+ *
+ *	@param	wk 
+ *	@param	trail_id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+BOOL FES_GIMMICK_IsExtraAnimalTrailMission( FES_GIMMICK* wk ,u8 trail_id )
+{
+  // フェスミッションタイプチェック
+  if( FES_GIMMICK_MissionTypeCheck( wk, FMISSION_TYPE_EVENT ) ){
+    // 隠し穴大調査EXかチェック
+    if( FES_GIMMICK_EVENT_IsExAnimalTrailMission( wk ) )
+    {
+      if( FES_GIMMICK_EVENT_GetExAnimalTrailDataID( wk, trail_id ) != FES_ATRAIL_REPLACE_NUM )
+      {
+        return TRUE;
+      }
+    }
+  }
+  return FALSE;
 }
 

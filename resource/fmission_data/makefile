@@ -27,6 +27,7 @@ data_item_hdat = fes_gimmick_item_dat.h
 data_npc_cdat = fes_gimmick_npc.cdat
 data_npc_hdat = fes_gimmick_npc_dat.h
 data_trail_cdat = fes_gimmick_trail.cdat
+data_trail_hdat = fes_gimmick_trail.h
 msg_data = $(PROJECT_RSCDIR)/message/msproj/src/fest_mission.mstxt
 monsno_def = $(PROJECT_RSCDIR)/personal/monsno_def.h
 
@@ -52,6 +53,7 @@ target_item_hdat = $(addprefix $(FIELD_S_DIR),$(notdir $(data_item_hdat)))
 target_npc_cdat = $(addprefix $(FIELD_S_DIR),$(notdir $(data_npc_cdat)))
 target_npc_hdat = $(addprefix $(FIELD_S_DIR),$(notdir $(data_npc_hdat)))
 trail_mons_cdat = $(addprefix $(FIELD_S_DIR),$(notdir $(data_trail_cdat)))
+trail_mons_hdat = $(addprefix $(FIELD_S_DIR),$(notdir $(data_trail_hdat)))
 
 BIN_DEPEND_LIST	= $(data_csv) $(data_def_csv) $(evflag_h) $(msg_id_h) $(poke_name_hash) $(item_name_hash) $(msg_data)
 ITEM_DEPEND_LIST	= $(data_item_csv) $(data_trail_csv) $(item_name_hash)
@@ -79,7 +81,7 @@ CSVCONV = ../../tools/exceltool/xls2xml/tab_out_direct.rb
 #	build
 #---------------------------------------------------------------
 #do-build: $(data_csv) $(data_def_csv) $(target_narc)
-do-build: $(target_narc) $(target_mission_id_h) $(target_def_h) $(target_item_cdat) $(target_item_hdat) $(target_npc_cdat) $(target_npc_hdat) $(trail_mons_cdat)
+do-build: $(target_narc) $(target_mission_id_h) $(target_def_h) $(target_item_cdat) $(target_item_hdat) $(target_npc_cdat) $(target_npc_hdat) $(trail_mons_cdat) $(trail_mons_hdat)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 
@@ -120,7 +122,7 @@ $(data_npc_hdat): $(ITEM_DEPEND_LIST)
 	$(RUBY) $(RUBY_ITEM_RES) $(data_item_cdat) $(data_item_hdat) $(data_npc_cdat) $(data_npc_hdat) $(data_item_csv)
 
 $(data_trail_cdat): $(ITEM_DEPEND_LIST) $(monsno_def) $(def_header) $(RUBY_TRAIL_RES)
-	$(RUBY) $(RUBY_TRAIL_RES) $(data_trail_cdat) $(def_header) $(monsno_def) $(data_trail_csv)
+	$(RUBY) $(RUBY_TRAIL_RES) $(data_trail_cdat) $(data_trail_hdat) $(def_header) $(monsno_def) $(data_trail_csv)
 
 $(mission_id_h): $(BIN_DEPEND_LIST)
 	@echo $@ $<
@@ -153,6 +155,8 @@ $(target_npc_hdat): $(data_npc_hdat)
 	$(COPY) -f $< $@
 $(trail_mons_cdat): $(data_trail_cdat)
 	$(COPY) -f $< $@
+$(trail_mons_hdat): $(data_trail_hdat)
+	$(COPY) -f $< $@
 
 # narc のコピーだけ実行する
 $(target_narc): $(data_narc)
@@ -172,5 +176,5 @@ endif
 	rm -f $(target_def_h)
 	rm -f $(target_item_cdat) $(target_item_hdat)
 	rm -f $(target_npc_cdat) $(target_npc_hdat)
-	rm -f $(trail_mons_cdat)
+	rm -f $(trail_mons_cdat) $(trail_mons_hdat)
 

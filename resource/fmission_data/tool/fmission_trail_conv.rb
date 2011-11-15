@@ -27,9 +27,10 @@ require "csv"
 #====================================================
 
 TRAIL_DATA_CDAT_FNAME = ARGV[0]
-TRAIL_DATA_DEF_FNAME  = ARGV[1]
-MONS_NO_DEF_FNAME     = ARGV[2]
-TRAIL_DATA_SRC_FNAME  = ARGV[3]
+TRAIL_DATA_HDAT_FNAME = ARGV[1]
+TRAIL_DATA_DEF_FNAME  = ARGV[2]
+MONS_NO_DEF_FNAME     = ARGV[3]
+TRAIL_DATA_SRC_FNAME  = ARGV[4]
 
 COLNO_DATA_NO = 0
 COLNO_DATA_ID = 1
@@ -56,8 +57,25 @@ HEADER_DATA =<<EOS
 static const FES_TRAIL_DATA_SET DATA_TrailMonsTbl[FMISSION_EXP_TRAIL_MONS_MAX] = {
 EOS
 
+# ヘッダ
+H_HEADER_DATA =<<EOS
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		%s
+ *	@brief  フェスミッション：隠し穴大調査用データ定義
+ *	@author	Masayuki Onoue
+ *	@date		2011.11.10
+ *  @note   %sが出力しています
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+EOS
+
 # データ
 DATA_TEMPLATE = '  { %3d , %3d },   // %s'
+DEF_DATA_TEMPLATE = '#define %s (%s)  // %s'
 
 
 #====================================================
@@ -78,6 +96,7 @@ class CTrailTbl
     @monsdata = Struct.new("MonsData", :mons_no, :form_no )
     # データ配列
     @monsdata_arry = Array.new
+    @def_array = Array.new
   end
 
   # モンスターテーブル解釈
@@ -114,6 +133,11 @@ class CTrailTbl
     @monsdata_arry[index] = data
   end
 
+  # 定義テーブル解釈
+  def def_table_list src_data
+    @def_array << DEF_DATA_TEMPLATE%[src_data[1],src_data[2],src_data[3]]
+  end
+
   # データ取り込み
   def line_import line
       
@@ -125,6 +149,8 @@ class CTrailTbl
         case @table_key
         when "#LIST0"
           mons_table_list line
+        when "#LIST1"
+          def_table_list line
         end
       end
 
@@ -175,6 +201,18 @@ class CTrailTbl
     fp.close
   end
 
+  # 定義データ出力
+  def output_hdata fname
+
+    # 書き込み
+    fp = File.open( fname, "w" )
+    fp.puts H_HEADER_DATA%[fname,File.basename(__FILE__)]
+    @def_array.each{|line|
+      fp.puts line
+    }
+    fp.close
+  end
+
 end
 
 #====================================================
@@ -202,4 +240,6 @@ src_data.each{|line|
 # モンスターデータを出力する
 table.output_mons_data( TRAIL_DATA_CDAT_FNAME )
 
+# ヘッダデータを出力する
+table.output_hdata( TRAIL_DATA_HDAT_FNAME )
 

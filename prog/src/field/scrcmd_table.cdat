@@ -1145,7 +1145,7 @@
 
   // 獣道２
   DEF_CMD( EvCmdSetAnimalTrailData, EV_SEQ_ANIMAL_TRAIL_SET_DATA )
-  NO_CMD()
+  DEF_CMD( EvCmdSetupAnimalTrail, EV_SEQ_ANIMAL_TRAIL_SETUP )
   NO_CMD()
 
   // BGM面以外のフェード

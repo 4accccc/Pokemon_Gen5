@@ -15243,6 +15243,19 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _ANIMAL_TRAIL_SETUP
+ * @brief 獣道のセットアップ
+ */
+//--------------------------------------------------------------
+#define _ANIMAL_TRAIL_SETUP() \
+    _ASM_ANIMAL_TRAIL_SETUP
+
+    .macro  _ASM_ANIMAL_TRAIL_SETUP
+    .short  EV_SEQ_ANIMAL_TRAIL_SETUP
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @def _ANIMAL_TRAIL_DATA_SET
  * @brief 獣道のデータを設定
  * @param trail_id          獣道のID(SCR_ANIMAL_TRAIL_ID_01~SCR_ANIMAL_TRAIL_ID_20)

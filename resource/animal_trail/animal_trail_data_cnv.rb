@@ -64,12 +64,47 @@ def put_animal_trail_data( out_file ,data ,index )
 end
 
 ##================================
+# レベル出力関数
+##================================
+def put_fes_animal_trail_lv_data( out_file ,data ,index )
+
+  # 最大のレベルを取得する
+  max_lv = 1
+  w_max_lv = get_max_lv( data.pokemon_w )
+  b_max_lv = get_max_lv( data.pokemon_b )
+
+  if w_max_lv > b_max_lv then
+    max_lv = w_max_lv
+  else
+    max_lv = b_max_lv
+  end
+  out_file.puts "   %d, // けものみち%d"%[max_lv,index]
+ 
+end
+
+##================================
+# レベル最大値を取得
+##================================
+def get_max_lv mons_data
+  max_lv = 1
+  mons_data.each{|rank_poke_list|
+    rank_poke_list.each{|poke_data|
+      if max_lv < poke_data.max_lv.to_i then
+        max_lv = poke_data.max_lv.to_i
+      end
+    }
+  }
+  return max_lv
+end
+
+##================================
 # main
 ##================================
-dir_name = ARGV[0]
-in_data_name = ARGV[1]
-data_cnt = ARGV[2].to_i
+dir_name      = ARGV[0]
+in_data_name  = ARGV[1]
+data_cnt      = ARGV[2].to_i
 out_data_name = ARGV[3]
+fes_lv_data_name = ARGV[4]
 
 animal_trail_data_list = Array.new(data_cnt)
 
@@ -240,6 +275,15 @@ data_cnt.times{|index|
   data_bin.close
 }
  
+out_file.puts "};"
+out_file.close
+
+# フェス用レベルデータ出力
+out_file = open( fes_lv_data_name ,"w" )
+out_file.puts $lvheader%[fes_lv_data_name,data_cnt]
+data_cnt.times{|index|
+  put_fes_animal_trail_lv_data( out_file ,animal_trail_data_list[index] ,index )
+}
 out_file.puts "};"
 out_file.close
 

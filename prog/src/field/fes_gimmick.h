@@ -149,3 +149,15 @@ extern u8 FES_GIMMICK_ObjTypeGetForNpcMission( FES_GIMMICK* wk );
 //----------------------------------------------------------------------
 extern void FES_GIMMICK_FesTrainerPartySetForNpcMission( FES_GIMMICK* wk, POKEPARTY* party );
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  隠し穴調査（特殊ポケモン配置版）に選ばれているか調べる
+ *
+ *	@param	wk 
+ *	@param	trail_id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+extern BOOL FES_GIMMICK_IsExtraAnimalTrailMission( FES_GIMMICK* wk ,u8 trail_id );
+

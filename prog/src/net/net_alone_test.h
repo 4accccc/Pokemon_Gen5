@@ -67,6 +67,8 @@
 #define _DEBUG_ALONETEST (23)
 #elif DEBUG_ONLY_FOR_debug_graphic_white
 #define _DEBUG_ALONETEST (24)
+#elif DEBUG_ONLY_FOR_onoue_masayuki
+#define _DEBUG_ALONETEST (25)
 #else
 //誰でも繋がる、、、が、パレスの通信バージョンとして使用 昔の通信と接続で問題があるときにバージョンを上げていく
 #define _DEBUG_ALONETEST (_DEBUG_ALONETEST_DEFAULT)

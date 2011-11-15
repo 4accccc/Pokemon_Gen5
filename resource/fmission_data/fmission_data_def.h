@@ -188,7 +188,7 @@ typedef enum{
 #define  FMISSION_EXP_TRAIL_RIZAADON  ( 6 )   ///<リザードン
 #define  FMISSION_EXP_TRAIL_ZENIGAME  ( 7 )   ///<ゼニガメ
 #define  FMISSION_EXP_TRAIL_KAMEERU  ( 8 )   ///<カメール
-#define  FMISSION_EXP_TRAIL_KAMEKKUSU  ( 9 )   ///<カメックス
+#define  FMISSION_EXP_TRAIL_TORITODON  ( 9 )   ///<トリトドン
 #define  FMISSION_EXP_TRAIL_KYATAPII  ( 10 )   ///<キャタピー
 #define  FMISSION_EXP_TRAIL_MONS_MAX  ( 11 )   ///<
 

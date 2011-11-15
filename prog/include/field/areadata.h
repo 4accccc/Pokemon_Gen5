@@ -73,4 +73,5 @@ extern BOOL AREADATA_HasSeasonDiff(u16 area_id);
 extern BOOL AREADATA_IsDungeonArea(u16 area_id);
 extern BOOL AREADATA_IsResortInstitutionArea(u16 area_id);
 extern BOOL AREADATA_IsWBTHallArea(u16 area_id);
+extern BOOL AREADATA_IsAnimalTrailArea(u16 area_id);
 

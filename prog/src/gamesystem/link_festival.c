@@ -29,6 +29,7 @@
 
 FS_EXTERN_OVERLAY( notwifi_fes_gimmick_item );
 FS_EXTERN_OVERLAY( notwifi_fes_gimmick_npc );
+FS_EXTERN_OVERLAY( notwifi_fes_gimmick_event );
 
 //==============================================================================
 //  ç\ë¢ëÃíËã`
@@ -776,6 +777,9 @@ static void lnkfes_OverlayLoadUnload( const FEST_MISSION* m_src, BOOL load_f )
     break;
   case FMISSION_TYPE_NPC:
     ol_nw = FS_OVERLAY_ID( notwifi_fes_gimmick_npc );
+    break;
+  case FMISSION_TYPE_EVENT:
+    ol_nw = FS_OVERLAY_ID( notwifi_fes_gimmick_event );
     break;
   default:
     return;

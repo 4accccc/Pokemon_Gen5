@@ -12,6 +12,7 @@ ANIMAL_TRAIL_POS_XLS = animal_trail_pos_data.xls
 ANIMAL_TRAIL_XLS = animal_trail_data.xls
 ANIMAL_TRAIL_CDAT = animal_trail_data.cdat
 ANIMAL_TRAIL_POS_CDAT = animal_trail_pos_data.cdat
+FES_ANIMAL_TRAIL_LV_CDAT = fes_animal_trail_lv_data.cdat
 
 LIST_FILE = arc_list.txt
 TMPDIR = ./tmp
@@ -51,14 +52,14 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #------------------------------------------------------------------------------
 LDIRT_CLEAN = 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-	LDIRT_CLEAN += $(TMPDIR)/* out_end $(ANIMAL_TRAIL_CDAT) item_hash.rb monsno_hash.rb $(NARCNAME) $(NAIXNAME) $(ANIMAL_TRAIL_POS_CDAT)
+	LDIRT_CLEAN += $(TMPDIR)/* out_end $(ANIMAL_TRAIL_CDAT) item_hash.rb monsno_hash.rb $(NARCNAME) $(NAIXNAME) $(ANIMAL_TRAIL_POS_CDAT) $(FES_ANIMAL_TRAIL_LV_CDAT)
 endif
 
 .PHONY:	do-build
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
-do-build: out_end $(NARCNAME) $(ANIMAL_TRAIL_POS_CDAT)
+do-build: out_end $(NARCNAME) $(ANIMAL_TRAIL_POS_CDAT) $(FES_ANIMAL_TRAIL_LV_CDAT)
 
 out_end: $(ANIMAL_TRAIL_XLS) animal_trail_data_cnv.rb
 	cp ../itemconv/item_hash.rb item_hash.rb
@@ -66,7 +67,7 @@ out_end: $(ANIMAL_TRAIL_XLS) animal_trail_data_cnv.rb
 	@for x in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20;\
 	do $(EXCELCONV) -o $(TMPDIR)/$(ANIMAL_TRAIL_CSV_NAME)$$x.csv -p $$x -s csv  $(ANIMAL_TRAIL_XLS) ;\
 	done
-	@ruby animal_trail_data_cnv.rb $(TMPDIR) $(ANIMAL_TRAIL_CSV_NAME) 20 $(ANIMAL_TRAIL_CDAT)
+	@ruby animal_trail_data_cnv.rb $(TMPDIR) $(ANIMAL_TRAIL_CSV_NAME) 20 $(ANIMAL_TRAIL_CDAT) $(FES_ANIMAL_TRAIL_LV_CDAT)
 	@echo end > out_end
 
 $(NARCNAME) : $(ANIMAL_TRAIL_XLS)

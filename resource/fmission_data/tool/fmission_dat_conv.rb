@@ -371,7 +371,11 @@ class CMission
       exit 1
     end
     
-    @ex_param = work[COLUMN_EX_PARAM].to_i
+    if work[COLUMN_EX_PARAM] =~ /\d/ then
+      @ex_param = work[COLUMN_EX_PARAM].to_i
+    else
+      @ex_param = c_def_list.search( work[COLUMN_EX_PARAM], "FMISSION_EXP_", "ExParam")
+    end
 
     @unit = c_def_list.search( work[COLUMN_UNIT], "FMISSION_UNIT_", "íPà ån")
     @end_type = c_def_list.search( work[COLUMN_END_TYPE], "FMISSION_ENDTYPE_", "èIóπèåè" ) 

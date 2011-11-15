@@ -30,6 +30,10 @@
 #include "animal_trail_def.h"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h" // for SYS_FLAG_AT_DOWSING_HIT
 
+// フェス
+#include "field/fes_gimmick_event.h"
+#include "../../../resource/animal_trail/fes_animal_trail_lv_data.cdat"  // フェス用レベルテーブルデータ
+
 //=============================================================================
 /**
  *					定数宣言
@@ -79,9 +83,12 @@ static void SetGridPos( VecFx32 *vec ,s32 x ,s32 y ,s32 z );
 static void SetObject( MAP_CHAGE_EVENT_WORK *p_wk );
 static void SetPokemon( MAP_CHAGE_EVENT_WORK *p_wk );
 static void SetItem( MMDLSYS *p_mmdlsys );
-static void SetPokemonMMDL( MMDLSYS *p_mmdlsys ,u16 monsno ,u8 sex ,u16 formno ,HEAPID heapID );
+static void SetFesPokemon( MAP_CHAGE_EVENT_WORK *p_wk );
+static void SetPokemonMMDL( MMDLSYS *p_mmdlsys ,u16 monsno ,u8 sex ,u16 formno ,BOOL is_fes ,HEAPID heapID );
 static BOOL is_ex_monster( u16 monsno );
 static AT_POKEMON_DATA* GetPokemonData( ANIMAL_TRAIL_ARC_DATA* p_data ,int main_table_index);
+static void SetupFesData( MAP_CHAGE_EVENT_WORK *p_wk );
+static u8 GetFesPokeLevel( u8 trail_id );
 
 
 //----------------------------------------------------------------------------
@@ -104,9 +111,14 @@ VMCMD_RESULT EvCmdGetAnimalTrailData( VMHANDLE* core, void* wk )
   ETC_SAVE_WORK *p_save;
   SCRCMD_WORK   *p_wk     = wk;
   GAMEDATA      *p_gdata  = SCRCMD_WORK_GetGameData( p_wk );
+  GAMESYS_WORK  *p_gsys   = SCRCMD_WORK_GetGameSysWork( p_wk );
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gsys );
   u16 get_type            = SCRCMD_GetVMWorkValue( core, p_wk );
   u16 *p_ret_wk	          = SCRCMD_GetVMWork( core, p_wk );
   SAVE_CONTROL_WORK*      p_save_control;
+  BOOL use_fes_data = FALSE;
+  const FES_ANIMAL_TRAIL_DATA *p_trail_data;
+  FES_GIMMICK *p_fes_gmk = NULL;
 
   // セーブデータの取得
   p_save_control  = GAMEDATA_GetSaveControlWork( p_gdata );
@@ -116,52 +128,97 @@ VMCMD_RESULT EvCmdGetAnimalTrailData( VMHANDLE* core, void* wk )
   main_table_index = ANIMAL_TRAIL_SAVE_GetMainTableIndex( p_save ,trail_id );
   data_table_index = ANIMAL_TRAIL_SAVE_GetDataTableIndex( p_save ,trail_id );
 
+  // 隠し穴大調査EXミッションか調べる
+  p_fes_gmk = FIELDMAP_GetFesGimmickSys( p_fieldmap );
+
+  // フェス中か調べる
+  if( FES_GIMMICK_IsExtraAnimalTrailMission( p_fes_gmk ,trail_id ) )
+  {
+    // フェスポケモン配置中か調べる
+    if( FES_GIMMICK_EVENT_IsSetExAnimalTrailData( p_fes_gmk ,trail_id ) == TRUE)
+    {
+      p_trail_data = FES_GIMMICK_EVENT_GetExAnimalTrailData( p_fes_gmk, trail_id);
+      use_fes_data = TRUE;
+    }
+  }
+
+
   switch( get_type )
   {
   // モンスターナンバーを返す
   case SCR_ANIMAL_TRAIL_GET_MONSNO:
     {
-      GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, trail_id );
-      p_poke = GetPokemonData( &data ,main_table_index );
-      (*p_ret_wk) = p_poke->pokemon_id[data_table_index];
+      if( !use_fes_data )
+      {
+        GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, trail_id );
+        p_poke = GetPokemonData( &data ,main_table_index );
+        (*p_ret_wk) = p_poke->pokemon_id[data_table_index];
+      }
+      else
+      {
+        (*p_ret_wk) = p_trail_data->monsno;
+      }
     }
     break;
   case SCR_ANIMAL_TRAIL_GET_LV:
     {
-      u8 lv_range;
-      u8 max_lv,min_lv;
-      GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, trail_id );
-      p_poke = GetPokemonData( &data ,main_table_index );
-      max_lv = p_poke->max_lv[data_table_index];
-      min_lv = p_poke->min_lv[data_table_index];
-      lv_range = ( max_lv - min_lv);
-      OS_Printf("max_lv:%u\n",max_lv);
-      OS_Printf("min_lv:%u\n",min_lv);
-      OS_Printf("lv_range:%u\n",lv_range);
-      (*p_ret_wk) = min_lv + GFUser_GetPublicRand( lv_range );
+      if( !use_fes_data )
+      {
+        u8 lv_range;
+        u8 max_lv,min_lv;
+        GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, trail_id );
+        p_poke = GetPokemonData( &data ,main_table_index );
+        max_lv = p_poke->max_lv[data_table_index];
+        min_lv = p_poke->min_lv[data_table_index];
+        lv_range = ( max_lv - min_lv);
+        OS_Printf("max_lv:%u\n",max_lv);
+        OS_Printf("min_lv:%u\n",min_lv);
+        OS_Printf("lv_range:%u\n",lv_range);
+        (*p_ret_wk) = min_lv + GFUser_GetPublicRand( lv_range );
+      }
+      else
+      {
+        // フェス用ポケモンレベルを返す
+        (*p_ret_wk) = GetFesPokeLevel( trail_id );
+      }
     }
     break;
   // フォルムナンバーを返す
   case SCR_ANIMAL_TRAIL_GET_FORMNO:
     {
-      GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, trail_id );
-      p_poke = GetPokemonData( &data ,main_table_index );
-      (*p_ret_wk) = p_poke->forum[data_table_index];
+      if( !use_fes_data )
+      {
+        GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, trail_id );
+        p_poke = GetPokemonData( &data ,main_table_index );
+        (*p_ret_wk) = p_poke->forum[data_table_index];
+      }
+      else
+      {
+        (*p_ret_wk) = p_trail_data->formno;
+      }
     }
     break;
   case SCR_ANIMAL_TRAIL_GET_IS_FEMALE:
     {
-      u8 female_num = ANIMAL_TRAIL_SAVE_GetFemaleNum( p_save, trail_id );
-      u8 is_female = FALSE;
-
-      GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, trail_id );
-      p_poke = GetPokemonData( &data ,main_table_index );
-      // メス判定
-      if( female_num < p_poke->female_probability[data_table_index]  )
+      if( !use_fes_data )
       {
-        is_female = TRUE;
+        u8 female_num = ANIMAL_TRAIL_SAVE_GetFemaleNum( p_save, trail_id );
+        u8 is_female = FALSE;
+
+        GFL_ARC_LoadData( &data, ARCID_ANIMAL_TRAIL, trail_id );
+        p_poke = GetPokemonData( &data ,main_table_index );
+        // メス判定
+        if( female_num < p_poke->female_probability[data_table_index]  )
+        {
+          is_female = TRUE;
+        }
+        (*p_ret_wk) = is_female;
       }
-      (*p_ret_wk) = is_female;
+      else
+      {
+        // フェス用性別を返す
+        (*p_ret_wk) = p_trail_data->is_female;
+      }
     }
     break;
   case SCR_ANIMAL_TRAIL_GET_ITEM_ID:
@@ -180,13 +237,21 @@ VMCMD_RESULT EvCmdGetAnimalTrailData( VMHANDLE* core, void* wk )
     break;
   case SCR_ANIMAL_TRAIL_GET_IS_HIDE_ITEM:
     {
-      AT_OBJ_TYPE obj_type = ANIMAL_TRAIL_SAVE_GetObjType( p_save ,trail_id );
-      if( obj_type == AT_OBJ_TYPE_HIDE_ITEM )
+      if( !use_fes_data )
       {
-        (*p_ret_wk) = TRUE;
+        AT_OBJ_TYPE obj_type = ANIMAL_TRAIL_SAVE_GetObjType( p_save ,trail_id );
+        if( obj_type == AT_OBJ_TYPE_HIDE_ITEM )
+        {
+          (*p_ret_wk) = TRUE;
+        }
+        else
+        {
+          (*p_ret_wk) = FALSE;
+        }
       }
       else
       {
+        // フェス中は常にアイテムが存在しない
         (*p_ret_wk) = FALSE;
       }
     }
@@ -217,13 +282,37 @@ VMCMD_RESULT EvCmdResetNowAnimalTrailObject( VMHANDLE* core, void* wk )
   ETC_SAVE_WORK *p_save;
   SCRCMD_WORK   *p_wk     = wk;
   GAMEDATA      *p_gdata  = SCRCMD_WORK_GetGameData( p_wk );
+  GAMESYS_WORK  *p_gsys   = SCRCMD_WORK_GetGameSysWork( p_wk );
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gsys );
   SAVE_CONTROL_WORK*      p_save_control;
-
-  // セーブデータの取得
+  FES_GIMMICK *p_fes_gmk;
+  BOOL is_fes = FALSE;
   p_save_control  = GAMEDATA_GetSaveControlWork( p_gdata );
   p_save          = SaveData_GetEtc( p_save_control );
   trail_id = ANIMAL_TRAIL_SAVE_GetNowAnimalTrailID( p_save );
-  ANIMAL_TRAIL_SAVE_SetObjectSetFlag( p_save ,trail_id ,FALSE);
+
+  // 隠し穴大調査EXミッションか調べる
+  p_fes_gmk = FIELDMAP_GetFesGimmickSys( p_fieldmap );
+  if( FES_GIMMICK_IsExtraAnimalTrailMission( p_fes_gmk ,trail_id ) )
+  {
+    // フェスポケモン配置中か調べる
+    if( FES_GIMMICK_EVENT_IsSetExAnimalTrailData( p_fes_gmk ,trail_id ) == TRUE)
+    {
+      is_fes = TRUE;
+    }
+  }
+
+  // フラグの落とし方を変える
+  if( is_fes )
+  {
+    // フェス中はアイテムをリセットせず、次の抽選箇所を塗りつぶす
+    FES_GIMMICK_EVENT_RefreshExtraAnimalTrailData( p_fes_gmk ,trail_id );
+  }
+  else
+  {
+    // セーブデータの取得
+    ANIMAL_TRAIL_SAVE_SetObjectSetFlag( p_save ,trail_id ,FALSE);
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -285,6 +374,12 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
   {
   case 0:
     {
+      // 獣道IDを保存
+      ANIMAL_TRAIL_SAVE_SetNowAnimalTrailID( p_wk->p_save ,p_wk->trail_id );  
+      
+      // フェス用初期化を呼び出す
+      SetupFesData( p_wk );
+
       // フェードアウト
       MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( p_wk->p_field_work ) );
       GMEVENT_CallEvent( event, EVENT_FieldFadeOut_Hole( p_wk->p_gsys, p_wk->p_field_work ) );
@@ -296,7 +391,7 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
       // マップ移動
       VecFx32 warp_pos;       // 遷移先でのマップ位置
       SetGridPos( &warp_pos ,WARP_POS_X ,0 ,WARP_POS_Z);
-      ANIMAL_TRAIL_SAVE_SetNowAnimalTrailID( p_wk->p_save ,p_wk->trail_id );  // 獣道IDを保存
+
       GMEVENT_CallEvent(event,
           EVENT_ChangeMapPosNoFade(p_wk->p_gsys, p_wk->p_field_work,ANIMAL_TRAIL_ZONE_ID ,&warp_pos,DIR_UP));
       (*seq)++;
@@ -310,9 +405,6 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
       {
         break;
       }
-
-      // オブジェクトの設置
-      SetObject( p_wk );
 
       GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Black( p_wk->p_gsys, p_wk->p_field_work ,FIELD_FADE_NO_WAIT ) );
       (*seq)++;
@@ -362,23 +454,39 @@ static void SetObject( MAP_CHAGE_EVENT_WORK *p_wk )
 {
   // 配置するオブジェクトタイプごとの処理を行う
   AT_OBJ_TYPE obj_type = ANIMAL_TRAIL_SAVE_GetObjType( p_wk->p_save ,p_wk->trail_id );
-  switch( obj_type )
+  FES_GIMMICK *p_fes_gmk = FIELDMAP_GetFesGimmickSys( p_wk->p_field_work );
+
+  // 隠し穴大調査EXミッションか調べる
+  if( !FES_GIMMICK_IsExtraAnimalTrailMission( p_fes_gmk ,p_wk->trail_id ) )
   {
-  case AT_OBJ_TYPE_MONSTER:
-    OS_Printf("ポケモン\n");
-    SetPokemon( p_wk );
+    // 通常状態
+    switch( obj_type )
+    {
+    case AT_OBJ_TYPE_MONSTER:
+      OS_Printf("ポケモン\n");
+      SetPokemon( p_wk );
+      EVENTWORK_ResetEventFlag(p_wk->p_evwork ,SYS_FLAG_AT_DOWSING_HIT);
+      break;
+    case AT_OBJ_TYPE_ITEM:
+      OS_Printf("配置アイテム\n");
+      SetItem( p_wk->p_mmdlsys );
+      EVENTWORK_ResetEventFlag(p_wk->p_evwork ,SYS_FLAG_AT_DOWSING_HIT);
+      break;
+    case AT_OBJ_TYPE_HIDE_ITEM:
+      // 隠しアイテムイベントはイベントエディタで配置済み
+      OS_Printf("隠しアイテム\n");
+      EVENTWORK_SetEventFlag(p_wk->p_evwork ,SYS_FLAG_AT_DOWSING_HIT);
+      break;
+    }
+  }
+  else
+  {
+    // フェス中専用ポケモンを配置
+    if( FES_GIMMICK_EVENT_IsSetExAnimalTrailData( p_fes_gmk ,p_wk->trail_id ) )
+    {
+      SetFesPokemon( p_wk );
+    }
     EVENTWORK_ResetEventFlag(p_wk->p_evwork ,SYS_FLAG_AT_DOWSING_HIT);
-    break;
-  case AT_OBJ_TYPE_ITEM:
-    OS_Printf("配置アイテム\n");
-    SetItem( p_wk->p_mmdlsys );
-    EVENTWORK_ResetEventFlag(p_wk->p_evwork ,SYS_FLAG_AT_DOWSING_HIT);
-    break;
-  case AT_OBJ_TYPE_HIDE_ITEM:
-    // 隠しアイテムイベントはイベントエディタで配置済み
-    OS_Printf("隠しアイテム\n");
-    EVENTWORK_SetEventFlag(p_wk->p_evwork ,SYS_FLAG_AT_DOWSING_HIT);
-    break;
   }
 }
 
@@ -413,7 +521,7 @@ static void SetPokemon( MAP_CHAGE_EVENT_WORK *p_wk )
   }
 
   // ポケモン動作モデルの追加
-  SetPokemonMMDL( p_wk->p_mmdlsys ,p_poke->pokemon_id[data_table_index] ,is_female ,p_poke->forum[data_table_index] ,HEAPID_FIELDMAP );
+  SetPokemonMMDL( p_wk->p_mmdlsys ,p_poke->pokemon_id[data_table_index] ,is_female ,p_poke->forum[data_table_index] ,FALSE ,HEAPID_FIELDMAP );
 }
 
 //----------------------------------------------------------------------------
@@ -424,12 +532,13 @@ static void SetPokemon( MAP_CHAGE_EVENT_WORK *p_wk )
  *	@param	monsno      モンスターナンバー
  *	@param	sex         性別
  *	@param	formno      フォルムナンバー
+ *	@param	is_fes      フェス用かどうか
  *	@param	heapID      ヒープID
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void SetPokemonMMDL( MMDLSYS *p_mmdlsys ,u16 monsno ,u8 sex ,u16 formno ,HEAPID heapID )
+static void SetPokemonMMDL( MMDLSYS *p_mmdlsys ,u16 monsno ,u8 sex ,u16 formno ,BOOL is_fes ,HEAPID heapID )
 {
   u16 obj_code;
   MMDL *mmdl;
@@ -453,6 +562,13 @@ static void SetPokemonMMDL( MMDLSYS *p_mmdlsys ,u16 monsno ,u8 sex ,u16 formno ,
         MMDL_ID_ANIMAL_TRAIL_OBJ ,MONSTERBALL, MV_DMY ,ANIMAL_TRAIL_ZONE_ID  );
   }
   MMDL_SetEventID( mmdl, SCRID_ANIMAL_TRAIL_BATTLE );
+
+    
+  //フェスの場合はセーブしない
+  if( is_fes == TRUE )
+  {
+    MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_NOT_SAVE );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -575,7 +691,7 @@ static GMEVENT_RESULT MapExitEvent( GMEVENT *event, int *seq, void *wk )
       {
         break;
       }
-
+      
       GMEVENT_CallEvent( event, EVENT_FieldFadeIn_White( p_wk->p_gsys, p_wk->p_field_work, FIELD_FADE_NO_WAIT ) );
       (*seq)++;
       break;
@@ -661,5 +777,102 @@ VMCMD_RESULT EvCmdSetAnimalTrailData( VMHANDLE* core, void* wk )
   }
 
   return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェス専用ポケモンを設置する
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetFesPokemon( MAP_CHAGE_EVENT_WORK *p_wk )
+{
+  int i,n;
+  FES_GIMMICK *p_fes_gmk = FIELDMAP_GetFesGimmickSys( p_wk->p_field_work );
+  const FES_ANIMAL_TRAIL_DATA *p_trail_data;
+  p_trail_data = FES_GIMMICK_EVENT_GetExAnimalTrailData( p_fes_gmk, p_wk->trail_id);
+
+  // ポケモン動作モデルの追加
+  SetPokemonMMDL( p_wk->p_mmdlsys ,p_trail_data->monsno ,p_trail_data->is_female ,p_trail_data->formno ,TRUE ,HEAPID_FIELDMAP );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  進入時限定フェスデータをセットする
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetupFesData( MAP_CHAGE_EVENT_WORK *p_wk )
+{
+  // 配置するオブジェクトタイプごとの処理を行う
+  AT_OBJ_TYPE obj_type = ANIMAL_TRAIL_SAVE_GetObjType( p_wk->p_save,p_wk->trail_id );
+  FES_GIMMICK *p_fes_gmk = FIELDMAP_GetFesGimmickSys( p_wk->p_field_work );
+
+  // 隠し穴大調査EXミッションか調べる
+  if( FES_GIMMICK_IsExtraAnimalTrailMission( p_fes_gmk ,p_wk->trail_id ) )
+  {
+    // ドア通過フラグをセットする
+    FES_GIMMICK_EVENT_SetExAnimalTrailDoorFlag( p_fes_gmk ,p_wk->trail_id );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  獣道内のオブジェクトをセットアップする
+ *
+ *	@param	core
+ *	@param	wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdSetupAnimalTrail( VMHANDLE* core, void* wk )
+{
+  u16 trail_id;
+  SCRCMD_WORK   *p_wk     = wk;
+  GAMESYS_WORK  *p_gsys   = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA      *p_gdata  = SCRCMD_WORK_GetGameData( p_wk );
+  SCRIPT_WORK   *p_scr_wk = SCRCMD_WORK_GetScriptWork( p_wk );
+  ETC_SAVE_WORK *p_save;
+  MAP_CHAGE_EVENT_WORK ev_wk;
+  SAVE_CONTROL_WORK* p_save_control;
+
+  // イベントのパラメータ設定
+  p_save_control     = GAMEDATA_GetSaveControlWork( p_gdata );
+  p_save             = SaveData_GetEtc( p_save_control );
+  trail_id           = ANIMAL_TRAIL_SAVE_GetNowAnimalTrailID(p_save);
+  ev_wk.p_gsys       = p_gsys;
+  ev_wk.p_field_work = GAMESYSTEM_GetFieldMapWork( p_gsys );
+  ev_wk.p_mmdlsys    = FIELDMAP_GetMMdlSys( ev_wk.p_field_work );
+  ev_wk.p_save       = p_save;
+  ev_wk.trail_id     = trail_id;
+  ev_wk.p_evwork     = GAMEDATA_GetEventWork( p_gdata );
+ 
+  // オブジェクトの設置
+  SetObject( &ev_wk );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェスポケモンのレベルを取得
+ *
+ *	@param	trail_id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static u8 GetFesPokeLevel( u8 trail_id )
+{
+  GF_ASSERT( trail_id < ANIMAL_TRAIL_NUM );
+  GF_ASSERT( trail_id >= 0 );
+  return sc_fes_animal_trail_lv_table[trail_id];
 }
 
