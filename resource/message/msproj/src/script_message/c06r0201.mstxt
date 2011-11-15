@@ -807,11 +807,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あ……！　それは　きょかしょう！
-では　ほごくに　いかれますか？</Text>
+			<Text>あ……！
+それは　きょかしょう！▼
+イッシュちほう　から
+とおくとおく　はなれた▽
+しぜんほごくへ　いくための　もの！▼
+それでは
+しぜんほごくに　いかれますか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T06:41:08" />
+				Time="2011-11-15T13:25:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -819,11 +824,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あ……！　それは　きょかしょう！
-では　保護区に　行かれますか？</Text>
+			<Text>あ……！
+それは　きょかしょう！▼
+イッシュ地方　から
+遠く遠く　離れた▽
+自然保護区へ　行くための　もの！▼
+それでは
+自然保護区に　行かれますか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T06:43:56" />
+				Time="2011-11-15T13:25:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

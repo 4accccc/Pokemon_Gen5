@@ -74,10 +74,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よそものの　くせに……▼</Text>
+			<Text>よそものの　くせに……
+つよい　ヤツは　きらいじゃないぜ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T05:58:32" />
+				Time="2011-11-15T13:12:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -85,10 +86,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よそものの　くせに……▼</Text>
+			<Text>よそものの　くせに……
+つよい　ヤツは　きらいじゃないぜ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T06:03:19" />
+				Time="2011-11-15T13:12:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -124,10 +126,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おれたちの　チームワーク</Text>
+			<Text>おれたち　３にんに　かてたら
+なかまに　いれてやっても　いいぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T06:02:54" />
+				Time="2011-11-15T13:14:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -135,10 +138,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おれたちの　チームワーク</Text>
+			<Text>おれたち　３にんに　かてたら
+なかまに　いれてやっても　いいぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T06:03:19" />
+				Time="2011-11-15T13:14:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -173,11 +177,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ
-ぜんいんに　かった</Text>
+			<Text>オレは　つよい　やつを　みとめる
+つまり　あんたは　なかまだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T05:58:05" />
+				Time="2011-11-15T13:03:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -185,11 +189,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-みんなに勝利</Text>
+			<Text>オレは　つよい　やつを　みとめる
+つまり　あんたは　なかまだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T05:58:05" />
+				Time="2011-11-15T13:03:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -224,11 +228,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ
-せんとうまえ▼</Text>
+			<Text>こんな　うらびれた　ばしょでも
+おいらたちの　パラダイス！▼
+なにも　しらない　おまえなんかに
+あらされて　たまるかよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T11:00:49" />
+				Time="2011-11-15T13:04:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -236,11 +242,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-戦闘前▼</Text>
+			<Text>こんな　うらびれた　ばしょでも
+おいらたちの　パラダイス！▼
+なにも　しらない　おまえなんかに
+あらされて　たまるかよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T11:00:49" />
+				Time="2011-11-15T13:04:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -278,10 +286,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よそものの　くせに……▼</Text>
+			<Text>なんだよ　おまえ！
+いい　リズムで　たたかうんだな！▽
+おもわず　ノッっちまったぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T06:03:22" />
+				Time="2011-11-15T13:13:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -289,10 +299,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よそものの　くせに……▼</Text>
+			<Text>なんだよ　おまえ！
+いい　リズムで　たたかうんだな！▽
+おもわず　ノッっちまったぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T06:03:22" />
+				Time="2011-11-15T13:13:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -328,10 +340,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おれたちの　チームワーク</Text>
+			<Text>ここで　かたよせあって　いきてきた
+いまさら　だれかを　しんじないぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T06:03:22" />
+				Time="2011-11-15T13:14:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -339,10 +352,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おれたちの　チームワーク</Text>
+			<Text>ここで　かたよせあって　いきてきた
+いまさら　だれかを　しんじないぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T06:03:22" />
+				Time="2011-11-15T13:14:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -377,11 +391,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あんたが　リーダー
-アネゴは　サブリーダー</Text>
+			<Text>あんたが　リーダー！
+アネゴは　サブリーダー！▽
+さあ！　みんなで　おどろうぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T06:03:52" />
+				Time="2011-11-15T13:05:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -389,11 +404,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-みんなに勝利</Text>
+			<Text>あんたが　リーダー！
+アネゴは　サブリーダー！▽
+さあ！　みんなで　おどろうぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T05:58:11" />
+				Time="2011-11-15T13:05:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -421,11 +437,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アンタ
-あたいの　かわいい　こぶんに～▼</Text>
+			<Text>あたいの　かわいい　こぶんを
+かなしい　きもちを　させやがって▼
+ばいがえしで　あんたを　もっともっと
+かなしい　きもちに　させるよ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T06:03:11" />
+				Time="2011-11-15T13:07:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -433,11 +451,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-戦闘前▼</Text>
+			<Text>あたいの　かわいい　こぶんを
+かなしい　きもちを　させやがって▼
+ばいがえしで　あんたを　もっともっと
+かなしい　きもちに　させるよ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T11:04:55" />
+				Time="2011-11-15T13:07:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -474,11 +494,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ
-かった</Text>
+			<Text>まったく　あんたって　やつは……
+メダルに　ふさわしいね▼
+きめたよ！
+あんたが　ここの　リーダーさ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T11:04:55" />
+				Time="2011-11-15T13:06:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -486,11 +508,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-勝利</Text>
+			<Text>まったく　あんたって　やつは……
+メダルに　ふさわしいね▼
+きめたよ！
+あんたが　ここの　リーダーさ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T11:04:55" />
+				Time="2011-11-15T13:06:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -526,12 +550,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたらしいびるがたつ
-ふるいばしょはうもれていく
-おなじヒウンなのに</Text>
+			<Text>あたらしい　ビルが　たって
+ふるい　ばしょは　うもれていく▼
+いいかい？　おなじ　ヒウンでも
+おもてと　うらが　あるんだよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T05:58:56" />
+				Time="2011-11-15T13:16:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -539,11 +564,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-みんなに勝利</Text>
+			<Text>あたらしい　ビルが　たって
+ふるい　ばしょは　うもれていく▼
+いいかい？　おなじ　ヒウンでも
+おもてと　うらが　あるんだよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T11:17:00" />
+				Time="2011-11-15T13:16:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
