@@ -325,8 +325,6 @@ static void DrawMapNameMsg( HABITAT_ZONE_WK *p_wk );
 //static void DrawNoHabitatDatatMsg( HABITAT_ZONE_WK *p_wk );
 //static void ClearNoHabitatDataMsg( HABITAT_ZONE_WK *p_wk );
 static u32 GetLandTypeMsgID( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO_TYPE info_type);
-static u32 GetLandTypeMsgIDLookCmp( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO_TYPE info_type);
-static u32 GetLandTypeMsgIDGetCmp( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO_TYPE info_type);
 static u32 GetLandTypeMsgIDSelect( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO_TYPE info_type ,const u32 *p_ground_msg,u32 sea_msg,u32 fishing_msg);
 
 // データ処理系---------------------------------------
@@ -2269,72 +2267,6 @@ static u32 GetLandTypeMsgID( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO_TYPE 
       msg_id_table,
       msg_seisoku_zone_05,
       msg_seisoku_zone_06);
-
-  return msg_id;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  現在の地形情報から捕獲コンプリートメッセージIDを取得する
- *
- *	@param	type 
- *	@param	info_type
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static u32 GetLandTypeMsgIDGetCmp( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO_TYPE info_type)
-{
-  u32 msg_id = msg_seisoku_zone_01;
-  const u32 msg_id_table[] =
-  {
-    msg_seisoku_result_08,  // 草地
-    msg_seisoku_result_09,  // 砂地
-    msg_seisoku_result_10,  // 沼
-    msg_seisoku_result_11,  // 洞窟
-    msg_seisoku_result_15,  // 橋
-    msg_seisoku_result_14,  // 混合
-    msg_seisoku_result_14,  // なし
-  };
-  
-  // メッセージを取得
-  msg_id = GetLandTypeMsgIDSelect(type,info_type,
-      msg_id_table,
-      msg_seisoku_result_12,
-      msg_seisoku_result_13);
-
-  return msg_id;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  現在の地形情報からみたコンプリートメッセージIDを取得する
- *
- *	@param	type 
- *	@param	info_type
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static u32 GetLandTypeMsgIDLookCmp( HABITAT_GROUND_TYPE type ,HABITAT_GROUND_INFO_TYPE info_type)
-{
-  u32 msg_id = msg_seisoku_zone_01;
-  const u32 msg_id_table[] =
-  {
-    msg_seisoku_result_01,  // 草地
-    msg_seisoku_result_02,  // 砂地
-    msg_seisoku_result_03,  // 沼
-    msg_seisoku_result_04,  // 洞窟
-    msg_seisoku_result_16,  // 橋
-    msg_seisoku_result_07,  // 混合
-    msg_seisoku_result_07,  // なし
-  };
-   
-  // メッセージを取得
-  msg_id = GetLandTypeMsgIDSelect(type,info_type,
-      msg_id_table,
-      msg_seisoku_result_05,
-      msg_seisoku_result_06);
 
   return msg_id;
 }
