@@ -9509,6 +9509,14 @@
 		<language name="JPN" width="256">SW-JA-EXP</language>
 		<language name="JPN_KANJI" width="256">SW-JA-EXP</language>
 	</row>
+	<row id="msg_seq_se_sw_ja_01">
+		<language name="JPN" width="256">SW-JA-01</language>
+		<language name="JPN_KANJI" width="256">SW-JA-01</language>
+	</row>
+	<row id="msg_seq_se_sw_ja_02">
+		<language name="JPN" width="256">SW-JA-02</language>
+		<language name="JPN_KANJI" width="256">SW-JA-02</language>
+	</row>
 	<row id="msg_seq_se_sw_shizui">
 		<language name="JPN" width="256">SW-SHIZUI</language>
 		<language name="JPN_KANJI" width="256">SW-SHIZUI</language>
