@@ -1,8 +1,8 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
- *	@file		scrcmd_c14_gmk.c
- *	@brief
+ *	@file		scrcmd_gimmick_out58.c
+ *	@brief  スクリプトコマンド  C14ギミック
  *	@author		Katsuhiko=Ichiraku
  *	@date		2011.11.12
  *
@@ -22,8 +22,8 @@
 
 #include "fieldmap.h"
 
-#include "scrcmd_c14_gmk.h"
-
+// mine
+#include "scrcmd_gimmick_out58.h"
 #include "field_gimmick_c14.h"
 
 //=============================================================================
@@ -72,6 +72,39 @@ VMCMD_RESULT EvCmdC14GMK_Splash( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  水からジャンプコマンド
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdC14GMK_ObjWaterJump( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GMEVENT *event;
+
+  u16 obj_id;
+  int gx, gz;
+  u16 dir;
+
+  obj_id  = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
+  gx      = SCRCMD_GetVMWorkValue( core, work );  // コマンド第2引数
+  gz      = SCRCMD_GetVMWorkValue( core, work );  // コマンド第3引数
+  dir     = SCRCMD_GetVMWorkValue( core, work );  // コマンド第4引数
+
+  // 水ジャンプイベント作成
+  event = C14_GIMMICK_ObjWaterJump( gsys, obj_id, gx, gz, dir );
+
+  if( event == NULL ) {
+    GF_ASSERT(0);
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  SCRIPT_CallEvent( sc, event );
+
+  return VMCMD_RESULT_SUSPEND;
+}
 //=============================================================================
 /**
  *					static関数

@@ -30,6 +30,7 @@
   .include "../../../prog/src/field/scrcmd_hide_ship_table.cdat"
   .include "../../../prog/src/field/scrcmd_pokecen_table.cdat"
   .include "../../../prog/src/field/scrcmd_demo_gimmick_table.cdat"
+  .include "../../../prog/src/field/scrcmd_gimmick_out58_table.cdat"
 
 //======================================================================
 // イベントデータ関連
@@ -16411,5 +16412,50 @@
   .short  EV_SEQ_DEMO_GIMMICK_INTRO_ANM_START
   .endm
 
+//======================================================================
+
+//======================================================================
+// スクリプトコマンドオーバーレイに分けています
+//--------------------------------------------------------------
+/**
+ * @def   _C14_GMK_SPLASH
+ * @brief 水しぶきアニメ再生
+ *
+ * 表示する座標
+ * @param gx グリッドX座標
+ * @param gy グリッドY座標
+ * @param gz グリッドZ座標
+ */
+//--------------------------------------------------------------
+#define _C14_GMK_SPLASH( gx, gy, gz )  \
+    _ASM_C14_GMK_SPLASH gx, gy, gz
+
+	.macro	_ASM_C14_GMK_SPLASH	gx,gy,gz
+	.short	EV_SEQ_C14_GMK_SPLASH
+	.short	\gx
+	.short	\gy
+	.short	\gz
+	.endm
+
+//--------------------------------------------------------------
+/**
+ * @def   _C14_GMK_OBJ_WATER_JUMP
+ * @brief シズイの水から飛び出し
+ *
+ * 落ちてくる座標
+ * @param gx グリッドX座標
+ * @param gz グリッドZ座標
+ */
+//--------------------------------------------------------------
+#define _C14_GMK_OBJ_WATER_JUMP( obj_id, gx, gz, dir )  \
+    _ASM_C14_GMK_OBJ_WATER_JUMP obj_id, gx, gz, dir
+
+	.macro	_ASM_C14_GMK_OBJ_WATER_JUMP	obj_id,gx,gz,dir
+	.short	EV_SEQ_C14_GMK_OBJ_WATER_JUMP
+	.short	\obj_id
+	.short	\gx
+	.short	\gz
+	.short	\dir
+	.endm
 //======================================================================
 

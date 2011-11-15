@@ -129,6 +129,47 @@ static void EXPOBJ_ObjMain( C14_GIMMICK_TMP *p_wk );
 // アニメ再生
 static void ANM_Play( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx );
 
+// シズイのジャンプイベント処理
+typedef struct {
+  MMDL*     p_mmdl;   // 動作モデル
+  s16       count;
+  VecFx32   start;
+  VecFx32   move;
+  VecFx32   end;
+} WATER_JUMP_EV_WORK;
+static GMEVENT_RESULT EVENTFUNC_WaterJump(GMEVENT * event, int *seq, void*work);
+
+//-------------------------------------
+// ジャンプ系 高さYオフセット
+//-------------------------------------
+static const fx32 DATA_JumpOffsTbl[] =
+{
+  2*FX32_ONE,
+  6*FX32_ONE,
+  10*FX32_ONE,
+  14*FX32_ONE,
+  18*FX32_ONE,
+  21*FX32_ONE,
+  24*FX32_ONE,
+  27*FX32_ONE,
+  30*FX32_ONE,
+  32*FX32_ONE,
+  34*FX32_ONE,
+  36*FX32_ONE,
+  38*FX32_ONE,
+  38*FX32_ONE,
+  36*FX32_ONE,
+  34*FX32_ONE,
+  33*FX32_ONE,
+  31*FX32_ONE,
+  29*FX32_ONE,
+  28*FX32_ONE,
+  26*FX32_ONE,
+  24*FX32_ONE,
+  22*FX32_ONE,
+};
+#define EV_WATERJUMP_FRAME (NELEMS(DATA_JumpOffsTbl)-1)  // フレーム
+
 //=============================================================================
 /**
  *					外部公開関数
@@ -154,6 +195,8 @@ void C14_GIMMICK_Setup( FIELDMAP_WORK *p_fieldmap )
 
   // EXPOBJセット
   EXPOBJ_ObjSet( p_wk );
+
+  ICHI_Printf("c14ギミックセットアップ\n");
 }
 
 //--------------------------------------------------------------
@@ -225,6 +268,67 @@ void C14_GIMMICK_AnmStart( GAMESYS_WORK *gsys, int gx, int gy, int gz )
 
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  シズイの水から飛び出してくる演出
+ *
+ *	@param	GAMESYS_WORK *gsys
+ *	@param	obj_id    OBJID
+ *	@param	gx        着地グリッドX
+ *	@param	gz        着地グリッドZ
+ *	@param	dir       着地後向き
+ */
+//-----------------------------------------------------------------------------
+GMEVENT* C14_GIMMICK_ObjWaterJump( GAMESYS_WORK *gsys, u16 obj_id, int gx, int gz, u16 dir )
+{
+  GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( gsys );
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  const MMDLSYS *cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
+
+  MMDL *mmdl = MMDLSYS_SearchOBJID( cp_mmdlsys, obj_id );  // 
+  VecFx32 before_pos; // 現在場所
+  VecFx32 after_pos;
+
+  GMEVENT * event;
+  WATER_JUMP_EV_WORK *event_work;
+
+  // 指定されたOBJIDは存在しない
+  if( mmdl == NULL ) {
+    GF_ASSERT(0);
+    return NULL;
+  }
+
+  // スタート位置を設定
+  {
+    before_pos.x = GRID_TO_FX32( 791 ) + GRID_HALF_FX32;
+    before_pos.y = GRID_TO_FX32( -5 );
+    before_pos.z = GRID_TO_FX32( 151 ) + GRID_HALF_FX32;
+    MMDL_SetVectorPos( mmdl, &before_pos  );
+  }
+
+  // 動作モデルを着地地点に移動
+  {
+    fx32    y = 0;
+
+    after_pos.x = GRID_TO_FX32( gx ) + GRID_HALF_FX32;  // グリッドの中心
+    after_pos.y = 250 << FX32_SHIFT;
+    after_pos.z = GRID_TO_FX32( gz ) + GRID_HALF_FX32;  // グリッドの中心
+
+    MMDL_GetMapPosHeight( mmdl, &after_pos, &y );
+    after_pos.y = y;
+  }
+
+  // イベント作成
+  event = GMEVENT_Create( gsys, NULL, EVENTFUNC_WaterJump, sizeof(WATER_JUMP_EV_WORK) );
+  event_work = GMEVENT_GetEventWork( event );
+  event_work->p_mmdl = mmdl;
+  event_work->count = 0;
+  event_work->start = before_pos;
+  event_work->end   = after_pos;
+  VEC_Subtract( &after_pos, &before_pos, &event_work->move );
+
+  return event;
+}
 //=============================================================================
 /**
  *					static関数
@@ -335,5 +439,75 @@ static void ANM_Play( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx )
     FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
     FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );   // アニメ再生設定
   }
+}
+
+//=============================================================================
+/**
+ *          シズイ水ジャンプイベント
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベント関数
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT EVENTFUNC_WaterJump(GMEVENT * event, int *seq, void*work)
+{
+  WATER_JUMP_EV_WORK *p_wk = work;
+  VecFx32 pos;
+
+  // シーケンス処理
+  enum{
+    SEQ_ARCH,
+    SEQ_FALL,
+  };
+
+  // シーケンス別処理
+  switch( *seq ){
+  case SEQ_ARCH:
+    // まずはARCH
+    pos = p_wk->start;
+    pos.y += DATA_JumpOffsTbl[ p_wk->count ];
+
+    // 平行移動
+    pos.x += FX_Div( FX_Mul( p_wk->move.x, p_wk->count<<FX32_SHIFT ), EV_WATERJUMP_FRAME << FX32_SHIFT );
+    pos.z += FX_Div( FX_Mul( p_wk->move.z, p_wk->count<<FX32_SHIFT ), EV_WATERJUMP_FRAME << FX32_SHIFT );
+
+    // 座標を更新
+    MMDL_SetVectorPos( p_wk->p_mmdl, &pos );
+
+    p_wk->count += 1;
+    if( p_wk->count > EV_WATERJUMP_FRAME )
+    {
+      (*seq)++;
+    }
+    break;
+
+  case SEQ_FALL:
+    {
+      // 落ちるだけ
+      // 終点のYになるまで落とす。
+      MMDL_GetVectorPos( p_wk->p_mmdl, &pos );
+      if( (pos.y) > p_wk->end.y ){
+        pos.y -= (FX32_ONE);
+
+        MMDL_SetVectorPos( p_wk->p_mmdl, &pos );
+      }else{
+        pos.y = p_wk->end.y;
+        pos.x = p_wk->end.x;
+        pos.z = p_wk->end.z;
+
+        MMDL_InitPosition( p_wk->p_mmdl, &pos, MMDL_GetDirDisp( p_wk->p_mmdl ) );
+        //PMSND_PlaySE( SEQ_SE_FLD_10 );  // 着地
+        // SE再生(着地音)
+        PMSND_PlaySE( SEQ_SE_FLD_17 );
+
+        return FIELD_TASK_RETVAL_FINISH;
+      }
+    }
+    break;
+  }
+
+  return GMEVENT_RES_CONTINUE;
 }
 

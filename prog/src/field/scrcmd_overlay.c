@@ -33,6 +33,7 @@
 #include "scrcmd_hide_ship_table.h"
 #include "scrcmd_pokecen_table.h"
 #include "scrcmd_demo_gimmick_table.h"
+#include "scrcmd_gimmick_out58_table.h"
 
 //-------------------------------------
 ///	デバッグ
@@ -62,6 +63,7 @@ FS_EXTERN_OVERLAY( scrcmd_bgate );
 FS_EXTERN_OVERLAY( scrcmd_hide_ship );
 FS_EXTERN_OVERLAY( scrcmd_pokecen );
 FS_EXTERN_OVERLAY( scrcmd_demo_gimmick );
+FS_EXTERN_OVERLAY( scrcmd_gimmick_out58 );
 
 //=============================================================================
 /**
@@ -233,6 +235,16 @@ static const ZONEID UseZoneIDTbl_demo_gimmick[] =
   ZONE_ID_D10R0501,   // ジャイアントホール
   ZONE_ID_C12,        // ヒオウギシティ
 };
+//-------------------------------------
+///	OUT58のギミック関係
+//=====================================
+static const ZONEID UseZoneIDTbl_gimmick_out58[] = 
+{
+  ZONE_ID_C14,        // セイガイハシティ
+  ZONE_ID_W21,        // 21番水路(セイガイハと地続きの為含める)
+  ZONE_ID_R22,        // 22番道路(セイガイハと地続きの為含める)
+};
+
 
 //=============================================================================
 /**
@@ -368,6 +380,14 @@ static const struct
     UseZoneIDTbl_demo_gimmick,
     NELEMS(UseZoneIDTbl_demo_gimmick),
     FS_OVERLAY_ID( scrcmd_demo_gimmick ),
+    GFL_OVERLAY_BLANK_ID,
+  },
+  //GIMMICK_OUT58
+  {
+    ScriptCmdTbl_gimmick_out58,
+    UseZoneIDTbl_gimmick_out58,
+    NELEMS(UseZoneIDTbl_gimmick_out58),
+    FS_OVERLAY_ID( scrcmd_gimmick_out58 ),
     GFL_OVERLAY_BLANK_ID,
   },
 };
