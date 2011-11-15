@@ -14,8 +14,8 @@
   //スクリプトコマンドテーブル開始
   INIT_OVERLAY_CMD( pokewood )
 
-  DEF_CMD( EvCmdPokewoodRec,                    EV_SEQ_PKWD_REC )     // ポケウッド　再生
-  DEF_CMD( EvCmdPokewoodShow,                   EV_SEQ_PKWD_SHOW )    // ポケウッド　撮影
+  DEF_CMD( EvCmdPokewoodRec,                    EV_SEQ_PKWD_REC )     // ポケウッド　撮影
+  DEF_CMD( EvCmdPokewoodShow,                   EV_SEQ_PKWD_SHOW )    // ポケウッド　再生
   DEF_CMD( EvCmdPokewoodSelectScenario,         EV_SEQ_PKWD_SELECT_SCENARIO )    // ポケウッド　台本
   DEF_CMD( EvCmdPokewoodSelectMovie,            EV_SEQ_PKWD_SELECT_MOVIE )
   DEF_CMD( EvCmdPokewoodSaveMovie,              EV_SEQ_PKWD_SAVE_MOVIE )    //映画をセーブ
@@ -45,6 +45,8 @@
   DEF_CMD( EvCmdPokewoodGetBonusItem,          EV_SEQ_PKWD_GET_BONUS_ITEM )
 
   DEF_CMD( EvCmdPokewoodGetFlagTotal,           EV_SEQ_PKWD_GET_FLAG_TOTAL )
+
+  DEF_CMD( EvCmdPokewoodShowTutorial,           EV_SEQ_PKWD_SHOW_TUTORIAL )  // ポケウッド再生（チュートリアル）
 
   END_CMD
   //スクリプトコマンドテーブル終了

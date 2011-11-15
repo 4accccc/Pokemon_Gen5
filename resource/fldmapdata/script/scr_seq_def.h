@@ -15598,8 +15598,7 @@
 
 //--------------------------------------------------------------
 /**
- * _PKWD_REC
- * @brief ポケウッド録画呼び出し
+ * @brief ポケウッド：録画呼び出し
  * @param[in] rec_pos
  * @param[in] scenario_no
  * @param[out] ret_wk
@@ -15617,9 +15616,9 @@
 
 //--------------------------------------------------------------
 /**
- * _PKWD_SHOW
- * @brief ポケウッド上映呼び出し
- * @param[in]   rec_pos
+ * @brief ポケウッド：上映呼び出し
+ * @param[in]   rec_pos   上映データの指定
+ * @param[out]  ret_wk    TRUE：最後まで見た　FALSE:途中でキャンセル
  */
 //--------------------------------------------------------------
 #define _PKWD_SHOW( rec_pos, ret_wk ) \
@@ -15633,7 +15632,20 @@
 
 //--------------------------------------------------------------
 /**
- * @brief ポケウッド：シナリオ選択
+ * @brief ポケウッド：上映呼び出し（チュートリアル用）
+ */
+//--------------------------------------------------------------
+#define _PKWD_SHOW_TUTORIAL() \
+    _ASM_PKWD_SHOW_TUTORIAL
+
+    .macro  _ASM_PKWD_SHOW_TUTORIAL
+    .short  EV_SEQ_PKWD_SHOW_TUTORIAL
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ポケウッド：シナリオ選択アプリ呼び出し
+ * @param[out]    scenario_no
  */
 //--------------------------------------------------------------
 #define _PKWD_SELECT_SCENARIO( scenario_no )  \
@@ -15689,6 +15701,9 @@
 //--------------------------------------------------------------
 /**
  * @brief ポケウッド：シナリオ状態取得
+ * @param[in]   type    状態フラグの種類指定：SCR_PKWD_SCENARIO_～_FLAGを参照
+ * @param[in]   sc_no   シナリオ指定
+ * @param[out]  ret_wk  状態を受け取るためのワーク
  */
 //--------------------------------------------------------------
 #define _PKWD_GET_SCENARIO_STATUS( type, sc_no, ret_wk ) \
@@ -15704,10 +15719,12 @@
 //--------------------------------------------------------------
 /**
  * @brief ポケウッド：シナリオ状態セット
+ * @param[in]   type    状態フラグの種類指定：SCR_PKWD_SCENARIO_～_FLAGを参照
+ * @param[in]   sc_no   シナリオ指定
  */
 //--------------------------------------------------------------
 #define _PKWD_SET_SCENARIO_STATUS( type, sc_no ) \
-    _ASM_PKWD_SET_SCENARIO_STATUS type, sc_no, value
+    _ASM_PKWD_SET_SCENARIO_STATUS type, sc_no
 
     .macro  _ASM_PKWD_SET_SCENARIO_STATUS type, sc_no
     .short  EV_SEQ_PKWD_SET_SCENARIO_STATUS
@@ -15731,7 +15748,7 @@
 //--------------------------------------------------------------
 /**
  * @brief ポケウッド：新着シナリオのチェック
- * @param[in]   sc_no
+ * @param[in]   sc_no   シナリオ指定
  * @param[out]  msg_type
  * @param[out]  ret_wk
  */

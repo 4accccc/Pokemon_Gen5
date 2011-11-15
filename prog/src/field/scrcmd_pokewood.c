@@ -325,14 +325,35 @@ VMCMD_RESULT EvCmdPokewoodShow( VMHANDLE *core, void *wk )
   next_event = GMEVENT_CreateOverlayEventCall( gsys,
       FS_OVERLAY_ID(notwifi_event_pokewood), POKEWOOD_EVENT_Show, (void*)&rec_id );
 
-//  こっちはチュートリアル再生
-//  next_event = GMEVENT_CreateOverlayEventCall( gsys,
-//      FS_OVERLAY_ID(notwifi_event_pokewood), POKEWOOD_EVENT_TutorialShow, (void*)&rec_id );
-
   SCRIPT_CallEvent( scw, next_event );
   PKWDSYS_SetScriptAnswerWork( pkwdsys, ret_wk );
 
   OS_Printf("EvCmdPokewoodShow( rec_id = %d\n", rec_id );
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリプトコマンド：ポケウッド上映アプリ呼び出し（チュートリアル用）
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdPokewoodShowTutorial( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
+  PKWDSYS      *pkwdsys = getPOKEWOODSys( wk );
+  GMEVENT *next_event;
+
+//  こっちはチュートリアル再生
+  next_event = GMEVENT_CreateOverlayEventCall( gsys,
+      FS_OVERLAY_ID(notwifi_event_pokewood), POKEWOOD_EVENT_TutorialShow, (void*)NULL );
+
+  SCRIPT_CallEvent( scw, next_event );
+  PKWDSYS_SetScriptAnswerWork( pkwdsys, NULL );
+
+  OS_PutString("EvCmdPokewoodShowTutorial()\n");
   return VMCMD_RESULT_SUSPEND;
 }
 

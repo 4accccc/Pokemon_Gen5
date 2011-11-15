@@ -22,10 +22,12 @@ extern VMCMD_RESULT EvCmdPKWDSelectPokemon( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdPKWDSetJoinMypoke( VMHANDLE *core, void *wk );
 
 
-// ポケウッド　再生
+// ポケウッド　録画アプリ呼び出し
 extern VMCMD_RESULT EvCmdPokewoodRec( VMHANDLE *core, void *wk );
-// ポケウッド　録画
+// ポケウッド　再生アプリ呼び出し
 extern VMCMD_RESULT EvCmdPokewoodShow( VMHANDLE *core, void *wk );
+// ポケウッド　再生アプリ呼び出し（チュートリアル用）
+extern VMCMD_RESULT EvCmdPokewoodShowTutorial( VMHANDLE *core, void *wk );
 // ポケウッド　台本選択
 extern VMCMD_RESULT EvCmdPokewoodSelectScenario( VMHANDLE *core, void *wk );
 // ポケウッド　上映選択
