@@ -44,7 +44,7 @@ enum{
   
   //合計レベル
   BMPWIN_POS_LEVEL_X = 2,
-  BMPWIN_POS_LEVEL_Y = 5,
+  BMPWIN_POS_LEVEL_Y = 8,
   BMPWIN_POS_LEVEL_SIZE_X = 32 - BMPWIN_POS_LEVEL_X,
   BMPWIN_POS_LEVEL_SIZE_Y = 2,
   
@@ -299,8 +299,7 @@ static void _UpSetup_BGFrameExit( MONOLITH_UPSTATUS_WORK *msw )
 //--------------------------------------------------------------
 static void _UpSetup_BGGraphicLoad( MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_UPSTATUS_WORK *msw)
 {
-  // データは仮
-  GFL_ARCHDL_UTIL_TransVramScreen(setup->hdl, NARC_monolith_mono_bgu_power_lz_NSCR, 
+  GFL_ARCHDL_UTIL_TransVramScreen(setup->hdl, NARC_monolith_mono_bgu_map_lz_NSCR, 
     GFL_BG_FRAME2_M, 0, 0, TRUE, HEAPID_MONOLITH);
   
   // ゲージ転送
