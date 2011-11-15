@@ -121,7 +121,6 @@
 #include "scrcmd_wbt.h"
 #include "scrcmd_un.h"
 #include "scrcmd_goout_effect.h"
-#include "scrcmd_c14_gmk.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
