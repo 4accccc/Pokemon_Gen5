@@ -1040,7 +1040,7 @@
 
 <tex_palette_array size='1'>
 	<tex_palette name='t8x8x15' color_size='16' index='0'>
-		6218 07bf 1efd 0842 14c6 2529 2d8c 39ef 
+		5e77 07bf 1efd 0842 2108 318d 4211 4e74 
 		2d89 4a71 5f36 6b9a 7c1f 7c1f 294a 7fbd 
 	</tex_palette>
 </tex_palette_array>
