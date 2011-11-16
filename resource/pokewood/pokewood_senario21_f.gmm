@@ -417,7 +417,7 @@
 	</row>
 	<row id="pw_event0_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ゆうれい……！
-……　……　……　……　……　……▽
+……　……　……　……　……▽
 ……　そうだった……　１ねんまえ……▽
 アントニオは……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『幽霊……！
@@ -636,8 +636,14 @@
 		<language name="JPN_KANJI" width="256">アントニオ『……　……？？？</language>
 	</row>
 	<row id="pw_event4_hero_4">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『やっぱり　だいすきー！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『やっぱり　大好きー！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『……そうよ▼
+きらいに　なるなんて
+ぜったい　むりー！▼
+やっぱり　だいすきー！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……そうよ▼
+嫌いに　なるなんて
+絶対　無理ー！▼
+やっぱり　大好きー！</language>
 	</row>
 	<row id="pw_event4_enemy_4">
 		<language name="JPN" width="256">アントニオ『（ニコッ）</language>

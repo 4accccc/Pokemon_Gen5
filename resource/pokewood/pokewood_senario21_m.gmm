@@ -417,7 +417,7 @@
 	</row>
 	<row id="pw_event0_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ゆうれい……！
-……　……　……　……　……　……▽
+……　……　……　……　……▽
 ……　そうだった……　１ねんまえ……▽
 マリアは……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『幽霊……！
@@ -557,7 +557,7 @@
 そうだな……　あそこに　きめた！
 おもいでの　ばしょ！……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そうだ！
-遊園地で　遊ぼう！▽
+遊園地で　遊ぼう！▼
 そうだな……　あそこに　きめた！
 思い出の　場所！……</language>
 	</row>
@@ -612,16 +612,20 @@
 		<language name="JPN_KANJI" width="256">マリア『……　……？？？</language>
 	</row>
 	<row id="pw_event4_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:02:ポケモンニックネーム:0]だよー</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:02:ポケモンニックネーム:0]だよー</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ほーら
+[1:02:ポケモンニックネーム:0]だよー</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ほーら
+[1:02:ポケモンニックネーム:0]だよー</language>
 	</row>
 	<row id="pw_event4_enemy_1">
 		<language name="JPN" width="256">マリア『……　……？？？</language>
 		<language name="JPN_KANJI" width="256">マリア『……　……？？？</language>
 	</row>
 	<row id="pw_event4_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:00:トレーナー名:1]だよー</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:00:トレーナー名:1]だよー</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ほらほら
+[1:00:トレーナー名:1]だよー</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ほらほら
+[1:00:トレーナー名:1]だよー</language>
 	</row>
 	<row id="pw_event4_enemy_2">
 		<language name="JPN" width="256">マリア『……　……？？？</language>
@@ -636,8 +640,14 @@
 		<language name="JPN_KANJI" width="256">マリア『……　……？？？</language>
 	</row>
 	<row id="pw_event4_hero_4">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『やっぱり　だいすきだー！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『やっぱり　だいすきだー！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『……そうさ！
+きらいに　なるなんて
+ぜったい　むりなんだ！▼
+やっぱり　だいすきなんだー！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……そうさ！▼
+きらいに　なるなんて
+絶対　無理なんだ！▼
+やっぱり　大好きなんだー！</language>
 	</row>
 	<row id="pw_event4_enemy_4">
 		<language name="JPN" width="256">マリア『（ニコッ）</language>
