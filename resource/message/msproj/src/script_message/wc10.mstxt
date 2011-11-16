@@ -743,10 +743,10 @@
 あの　ぐうたらショップに▽
 新商品が　並んだんです！▼
 うーん……
-大雨でも　振らなきゃ　いいんですけど</Text>
+大雨でも　降らなきゃ　いいんですけど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:53:30" />
+				Time="2011-11-16T06:55:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -795,7 +795,7 @@
 きもちのいい　ひだと　いいですね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:53:15" />
+				Time="2011-11-16T06:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -804,13 +804,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヒロコ『ポケモンたちが　遊んでいるのを
-朝から　ボーっと　眺めていたら▽
+朝から　ボーっと　ながめていたら▽
 幸せな　気分に　なってきました▼
 明日も　こんな風に
 気持ちの良い日だと　いいですね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:53:33" />
+				Time="2011-11-16T06:55:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1365,13 +1365,13 @@
 			Language="JPN_KANJI">
 			<Text>マサオ『おれの　兄ちゃんは
 ショップで　働いてるんだけど▼
-面倒臭がって　なかなか
+面倒くさがって　なかなか
 新製品を　並べないのさ▼
 洞穴探検でも　しながら
 気長に　待っておくれよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:54:07" />
+				Time="2011-11-16T06:56:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1485,8 +1485,8 @@
 [Name:TrainerName ]　って　トレーナーに▽
 しげき　されたんだって！</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-27T02:45:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T06:56:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3179,13 +3179,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カルロス『ホワイトフォレストじゃ
-みんなで　集めた木の実を▽
+みんなで　集めた　木の実を▽
 みんなで　分け合うんだ▼
 お年寄りの　分だけ　ちょっと
 多めに　拾ってきたよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:55:10" />
+				Time="2011-11-16T06:57:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3301,7 +3301,7 @@
 いってたけど　どういう　いみだろ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:54:54" />
+				Time="2011-11-16T06:57:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3309,7 +3309,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カルロス『旅の準備を　しようと思って
+			<Text>カルロス『旅の準備を　しようと
 ショップに　行ってみたら▽
 ずいぶん　品ぞろえが　良くなってたよ▼
 でさ　ショップの　にいちゃんが
@@ -3317,7 +3317,7 @@
 いってたけど　どういう意味だろ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:54:57" />
+				Time="2011-11-16T06:57:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4380,11 +4380,11 @@
 話には　きいてるよ
 白の樹洞の　だいぶ　深い所まで▽
 潜ったみたいだな！▼
-早くも　あきらめ気味の　わしに
+はやくも　あきらめ気味の　わしに
 代わって　最下層まで　行ってくれ！</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-27T02:56:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T06:57:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4912,7 +4912,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミホ『野原に　ねっころがるとか
+			<Text>ミホ『野原に　寝っ転がるとか
 ぼんやりと　森の向こうに▽
 落ちていく　太陽を　みているとか▼
 そういう　なんでもないことが
@@ -4920,7 +4920,7 @@
 森の人たちが　教えてくれたの！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:55:51" />
+				Time="2011-11-16T06:57:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6340,11 +6340,11 @@
 			<Text>ローザ『まずい……　まずいわ……
 まいにち　ひるね　ばかりしていたら▽
 うでが　すっごい　にぶっちゃった！▼
-よーっし！　しろのたいじゅで
+よーっし！　しろのじゅどう　で
 しゅぎょうを　やりなおすわよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:56:08" />
+				Time="2011-11-16T06:58:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6355,11 +6355,11 @@
 			<Text>ローザ『まずい……　まずいわ……
 毎日　昼寝ばかり　していたら▽
 腕が　すっごい　鈍っちゃった！▼
-よーっし！　白の大樹で
+よーっし！　白の樹洞で
 修行を　やり直すわよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:56:14" />
+				Time="2011-11-16T06:58:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6468,7 +6468,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ローザ『しょしんに　かえって
-しろのたいじゅで　しゅぎょうしたらね▼
+しろのじゅどうで　しゅぎょうしたらね▼
 かけだしのころに　かんじた
 ポケモンしょうぶの　たのしさを▽
 おもいだしたわ！▼
@@ -6476,7 +6476,7 @@
 たいせつなものを　みつけられた？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:56:32" />
+				Time="2011-11-16T06:58:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6485,7 +6485,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ローザ『初心に　返って
-白の大樹で　修行していたらね▼
+白の樹洞で　修行していたらね▼
 駆け出しのころに　感じた
 純粋な　ポケモン勝負の▽
 楽しさを　思い出したわ！▼
@@ -6493,7 +6493,7 @@
 大切なものを　みつけられた？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T08:59:34" />
+				Time="2011-11-16T06:58:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

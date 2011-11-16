@@ -1702,12 +1702,12 @@
 			Language="JPN">
 			<Text>カレン『くろのまてんろうの
 クリアおめでとう　[Name:TrainerName ]！！▽
-まちは　あなたの　うわさでもちきりよ！▼
+あなたの　うわさで　もちきりよ！▼
 ショップでも　クリアきねんに
 しんせいひんを　にゅうかしたってさ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:09:24" />
+				Time="2011-11-16T06:49:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1717,12 +1717,12 @@
 			Language="JPN_KANJI">
 			<Text>カレン『黒の摩天楼の
 クリアおめでとう　[Name:TrainerName ]！！▽
-街は　あなたの　うわさでもちきりよ！▼
+あなたの　うわさで　もちきりよ！▼
 ショップでも　クリア記念に
 新製品を　入荷したってさ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:09:18" />
+				Time="2011-11-16T06:49:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2278,12 +2278,12 @@
 			<Text>カズホ『論文を　書くために
 ブラックシティに　来たんです▼
 テーマは　都市生活とポケモン！▼
-都会で疲れた　人々に
+都会で　つかれた　人々に
 ポケモンが　与える▽
 癒しの　効果を　調べにきたの！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:09:41" />
+				Time="2011-11-16T06:49:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4042,13 +4042,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ユミコ『なだたる　かいしゃが　あつまる
-このブラックシティでも　ゆびおりの▽
+この　ブラックシティでも　ゆびおりの▽
 きぎょうに　しゅうしょく　したの！▼
 バリバリ　はたらいて
 しゅっせ　しちゃうんだから！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T11:56:45" />
+				Time="2011-11-16T06:49:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4057,13 +4057,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ユミコ『名だたる会社が　集まる
-このブラックシティでも▽
+この　ブラックシティでも▽
 指折りの　企業に　就職したの！▼
 バリバリ　働いて
-出世　しちゃうんだから！</Text>
+出世しちゃうんだから！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T11:56:49" />
+				Time="2011-11-16T06:49:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4177,10 +4177,10 @@
 いろいろ　あったけど　やめないで
 つづけてて　よかったな！▼
 これからも　このブラックシティで
-バリバリおかねを　かせいでいくわよ～</Text>
+バリバリ　おかねを　かせいでいくわよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:10:22" />
+				Time="2011-11-16T06:50:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4194,10 +4194,10 @@
 いろいろ　あったけど　辞めないで
 続けてて　良かったな！▼
 これからも　このブラックシティで
-バリバリお金を　かせいでいくわよ～</Text>
+バリバリ　お金を　かせいでいくわよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:10:19" />
+				Time="2011-11-16T06:50:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4976,14 +4976,14 @@
 			<Text>エリザ『富と　名声を　求めて
 この欲望の　街に　やってきたの！▼
 まずは　黒の摩天楼　ってのを
-だれよりも　早く　クリアして▽
+だれよりも　はやく　クリアして▽
 有名人に　なってやるんだから！▼
 ……って　うそ！
 あなた　クリアしたの？▽
 えー！　わたしの　計画がぁ！！</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-27T02:25:00" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T06:50:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

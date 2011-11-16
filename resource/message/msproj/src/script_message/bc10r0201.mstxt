@@ -39,10 +39,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ修正</Comment>
+※swanでメッセージ修正
+※swanでマップ削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:30:48" />
+				Time="2011-11-16T06:54:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -93,10 +94,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-※swanでメッセージ修正</Comment>
+※swanでメッセージ修正
+※swanでマップ削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:30:50" />
+				Time="2011-11-16T06:54:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -147,10 +149,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swanでメッセージ修正</Comment>
+※swanでメッセージ修正
+※swanでマップ削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:30:51" />
+				Time="2011-11-16T06:54:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
