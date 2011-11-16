@@ -22,7 +22,17 @@
 typedef struct _CGEAR_SAVEDATA CGEAR_SAVEDATA;
 
 #define CGEAR_RING_COLOR_MAX (6)
-#define CGEAR_RING_NUM (5) //リングIDは内側から0→4
+ 
+//カラーカスタムIDは内側のリングから0→5 5番はフレーム
+typedef enum{
+ CGEAR_CUSTOM_COLOR_RING0,
+ CGEAR_CUSTOM_COLOR_RING1,
+ CGEAR_CUSTOM_COLOR_RING2,
+ CGEAR_CUSTOM_COLOR_RING3,
+ CGEAR_CUSTOM_COLOR_RING4,
+ CGEAR_CUSTOM_COLOR_FRAME,
+ CGEAR_CUSTOM_COLOR_NUM,
+}CGEAR_CUSTOM_COLOR_ID;
 
 ///パネルID
 typedef enum{
@@ -31,23 +41,6 @@ typedef enum{
   CGEAR_PANEL_WIFI,
   CGEAR_PANEL_MAX,
 }CGEAR_PANEL_ID;
-
-#if 0
-/// ぱねるタイプ
-//0x80 ビットがTRUEなら文字の出るところ。
-//0x40ビットがTRUEならIRの１つまえ
-//0x20ビットがTRUEならWIFIの１つまえ
-//0x10ビットがTRUEならWIRELESSの１つまえ
-typedef enum {
-  CGEAR_PANELTYPE_NONE,
-  CGEAR_PANELTYPE_IR,
-  CGEAR_PANELTYPE_WIRELESS,
-  CGEAR_PANELTYPE_WIFI,
-  CGEAR_PANELTYPE_BASE,
-  CGEAR_PANELTYPE_MAX,
-  CGEAR_PANELTYPE_BOOT=CGEAR_PANELTYPE_MAX,
-} CGEAR_PANELTYPE_ENUM;
-#endif
 
 //----------------------------------------------------------
 //	セーブデータシステムが依存する関数
@@ -67,8 +60,8 @@ extern BOOL CGEAR_SV_GetCGearPictureONOFF(CGEAR_SAVEDATA* pSV);
 extern void CGEAR_SV_SetCGearPictureCRC(CGEAR_SAVEDATA* pSV,u16 pictureCRC);
 extern u16 CGEAR_SV_GetCGearPictureCRC(CGEAR_SAVEDATA* pSV);
 
-extern void CGEAR_SV_SetCGearRingColor( CGEAR_SAVEDATA* pSV, u8 ring_id, u8 color );
-extern u8 CGEAR_SV_GetCGearRingColor(const CGEAR_SAVEDATA* pSV, u8 ring_id );
+extern void CGEAR_SV_SetCGearCustomColor( CGEAR_SAVEDATA* pSV, u8 ring_id, u8 color );
+extern u8 CGEAR_SV_GetCGearCustomColor(const CGEAR_SAVEDATA* pSV, u8 ring_id );
 extern void CGEAR_SV_SetCGearPanelPos( CGEAR_SAVEDATA* pSV, CGEAR_PANEL_ID panel_id, u8 pos );
 extern u8 CGEAR_SV_GetCGearPanelPos(const CGEAR_SAVEDATA* pSV, CGEAR_PANEL_ID panel_id );
 

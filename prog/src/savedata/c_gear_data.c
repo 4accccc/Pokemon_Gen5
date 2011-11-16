@@ -29,7 +29,7 @@
 #define PANEL_INIT_POS_WIRELESS (21)
 #define PANEL_INIT_POS_WIFI     (9)
 
-//初期リングカラー
+//初期カスタムカラー
 #define INITIAL_RING_COLOR  (0) //0がデフォルトカラー(男:青、女:ピンク)
 
 //--------------------------------------------------------------------------------------------
@@ -68,8 +68,8 @@ void CGEAR_SV_Init(CGEAR_SAVEDATA* pSV)
 
 	GFL_STD_MemClear(pSV, CGEAR_SV_GetWorkSize());
 
-  for( i = 0;i < CGEAR_RING_NUM;i++ ){
-    pSV->ring_col[i] = INITIAL_RING_COLOR;
+  for( i = 0;i < CGEAR_CUSTOM_COLOR_NUM;i++ ){
+    pSV->custom_col[i] = INITIAL_RING_COLOR;
   }
 
   pSV->panel_pos[CGEAR_PANEL_IR] = PANEL_INIT_POS_IR;
@@ -178,35 +178,35 @@ u16 CGEAR_SV_GetCGearPictureCRC(CGEAR_SAVEDATA* pSV)
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief   CGEAR リングカラーをセット
- * @param   ring_id  リングID(内側から外に向かって0～)
+ * @brief   CGEAR カスタムカラーをセット
+ * @param   custom_id  カスタムID(内側から外に向かって0～)
  * @param   color カラーNo
  */
 //--------------------------------------------------------------------------------------------
-void CGEAR_SV_SetCGearRingColor( CGEAR_SAVEDATA* pSV, u8 ring_id, u8 color )
+void CGEAR_SV_SetCGearCustomColor( CGEAR_SAVEDATA* pSV, u8 custom_id, u8 color )
 {
-  if( ring_id >= CGEAR_RING_NUM || color >= CGEAR_RING_COLOR_MAX ){
+  if( custom_id >= CGEAR_CUSTOM_COLOR_NUM || color >= CGEAR_RING_COLOR_MAX ){
     GF_ASSERT(0);
     return;
   }
-  pSV->ring_col[ring_id] = color;
+  pSV->custom_col[custom_id] = color;
 }
 
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief   CGEAR リングカラーを得る
- * @param   ring_id  リングID(内側から外に向かって0～)
+ * @brief   CGEAR カスタムカラーを得る
+ * @param   custom_id  カスタムカラーID(内側から外に向かって0～)
  * @return  カラーNo
  */
 //--------------------------------------------------------------------------------------------
-u8 CGEAR_SV_GetCGearRingColor(const CGEAR_SAVEDATA* pSV, u8 ring_id )
+u8 CGEAR_SV_GetCGearCustomColor(const CGEAR_SAVEDATA* pSV, u8 custom_id )
 {
-  if( ring_id >= CGEAR_RING_NUM ){
+  if( custom_id >= CGEAR_CUSTOM_COLOR_NUM ){
     GF_ASSERT(0);
     return 0;
   }
-  return pSV->ring_col[ring_id];
+  return pSV->custom_col[custom_id];
 }
 
 //--------------------------------------------------------------------------------------------

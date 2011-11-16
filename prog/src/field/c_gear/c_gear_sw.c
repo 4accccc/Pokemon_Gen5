@@ -148,8 +148,8 @@ enum{
 #define CROSS_COLOR_ICON_MAX  (10)  //アイコン数
 
 //リング色変え処理用
-#define RING_NUM                ( CGEAR_RING_NUM )
-#define RING_COLOR_MAX          ( CGEAR_RING_COLOR_MAX+1 )    //リングカラー数+BOOT時カラー
+#define RING_NUM                ( CGEAR_CUSTOM_COLOR_NUM-1 ) //大外はフレームなので、純粋なリング数は-1
+#define RING_COLOR_MAX          ( CGEAR_RING_COLOR_MAX )    //リングカラー数
 
 #define RING_COLOR_SET_NUM   (3)
 enum{
@@ -158,12 +158,14 @@ enum{
   RING_COLOR_SET_OBJ_D = RING_COLOR_SET_OBJ+RING_COLOR_SET_NUM, //OBJ用の暗色
 };
 
+#define FRAME_COLOR_SET_NUM_ALL (16)  //大外のフレームは16色丸ごと変える
 #define RING_COLOR_SET_NUM_ALL  ( RING_COLOR_SET_NUM*3 ) //1セット3色
 #define RING_COLOR_DEF_NO 　    ( 0 )  //リングカラーのデフォルト
-#define RING_COLOR_BASE_NO      ( RING_COLOR_MAX-2 )  //リングの地味カラーNo
-#define RING_COLOR_BOOT_NO       ( RING_COLOR_MAX-1 ) //リングのBOOT時のカラーNo
+#define RING_COLOR_BASE_NO      ( RING_COLOR_MAX-1 )  //リングの地味カラーNo
+//#define RING_COLOR_BOOT_NO       ( RING_COLOR_MAX-1 ) //リングのBOOT時のカラーNo
 
-#define RING_COLOR_TRANS_POS_BG_PALNO  (1) //転送場所のパレットNo
+#define FRAME_COLOR_TRANS_POS_BG_PALNO  (0) //フレームカラー転送場所のパレットNo
+#define RING_COLOR_TRANS_POS_BG_PALNO   (1) //リングカラー転送場所のパレットNo
 #define RING_COLOR_TRANS_POS_BG_START  ((RING_COLOR_TRANS_POS_BG_PALNO*16)+1) //転送場所のパレットNo
 #define RING_COLOR_TRANS_POS_OBJ_R2_START1 (0*16+1+RING_COLOR_SET_NUM)
 #define RING_COLOR_TRANS_POS_OBJ_R2_START2 (1*16+1+RING_COLOR_SET_NUM)
@@ -591,6 +593,9 @@ enum{
 #define TP_CIRCLE3_IN_R     (TP_CIRCLE3_OUT_R-8)
 #define TP_CIRCLE4_OUT_R    (14*8+4)
 #define TP_CIRCLE4_IN_R     (TP_CIRCLE4_OUT_R-8)
+//フレーム
+#define TP_CIRCLE5_IN_R     (17*8)
+#define TP_CIRCLE5_OUT_R    (TP_CIRCLE5_IN_R+24)
 
 // タイプ
 //#define _CLACT_TYPE_MAX (3)
@@ -634,6 +639,7 @@ enum{
   TOUCH_LABEL_RING2,
   TOUCH_LABEL_RING3,
   TOUCH_LABEL_RING4,
+  TOUCH_LABEL_FRAME,
   TOUCH_LABEL_MAX,
 };
 
@@ -665,6 +671,8 @@ static const GFL_UI_TP_HITTBL DATA_FixedCircleTbl[] = {  //code, x, y, r
   { GFL_UI_TP_USE_CIRCLE, TP_CIRCLE_CENTER_X, TP_CIRCLE_CENTER_Y, TP_CIRCLE3_OUT_R },
   { GFL_UI_TP_USE_CIRCLE, TP_CIRCLE_CENTER_X, TP_CIRCLE_CENTER_Y, TP_CIRCLE4_IN_R },
   { GFL_UI_TP_USE_CIRCLE, TP_CIRCLE_CENTER_X, TP_CIRCLE_CENTER_Y, TP_CIRCLE4_OUT_R },
+  { GFL_UI_TP_USE_CIRCLE, TP_CIRCLE_CENTER_X, TP_CIRCLE_CENTER_Y, TP_CIRCLE5_IN_R },
+  { GFL_UI_TP_USE_CIRCLE, TP_CIRCLE_CENTER_X, TP_CIRCLE_CENTER_Y, TP_CIRCLE5_OUT_R },
   {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
 };
 
@@ -684,19 +692,19 @@ static const PANEL_POS_DATA DATA_PanelPosTbl[] = {
   {	216	,	96 	,	3	},  ///<	4
   {	240	,	96 	,	4	},  ///<	5
   {	128	,	64 	,	0	},  ///<	6
-  {	128	,	128 	,	0	},  ///<	7
-  {	128	,	144 	,	1	},  ///<	8
-  {	128	,	164 	,	2	},  ///<	9
-  {	128	,	184 	,	3	},  ///<	10
+  {	128	,	128 ,	0	},  ///<	7
+  {	128	,	144 ,	1	},  ///<	8
+  {	128	,	164 ,	2	},  ///<	9
+  {	128	,	184 ,	3	},  ///<	10
   {	52	,	52 	,	3	},  ///<	11
   {	68	,	60 	,	2	},  ///<	12
   {	88	,	72 	,	1	},  ///<	13
-  {	168	,	120 	,	1	},  ///<	14
-  {	188	,	132 	,	2	},  ///<	15
-  {	204	,	140 	,	3	},  ///<	16
-  {	52	,	140 	,	3	},  ///<	17
-  {	68	,	132 	,	2	},  ///<	18
-  {	88	,	120 	,	1	},  ///<	19
+  {	168	,	120 ,	1	},  ///<	14
+  {	188	,	132 ,	2	},  ///<	15
+  {	204	,	140 ,	3	},  ///<	16
+  {	52	,	140 ,	3	},  ///<	17
+  {	68	,	132 ,	2	},  ///<	18
+  {	88	,	120 ,	1	},  ///<	19
   {	168	,	72 	,	1	},  ///<	20
   {	188	,	60 	,	2	},  ///<	21
   {	204	,	52 	,	3	},  ///<	22
@@ -704,18 +712,21 @@ static const PANEL_POS_DATA DATA_PanelPosTbl[] = {
   {	96	,	36 	,	2	},  ///<	24
   {	104	,	56 	,	1	},  ///<	25
   {	112	,	68 	,	0	},  ///<	26
-  {	144	,	124 	,	0	},  ///<	27
-  {	152	,	136 	,	1	},  ///<	28
-  {	160	,	156 	,	2	},  ///<	29
-  {	172	,	172 	,	3	},  ///<	30
-  {	84	,	172 	,	3	},  ///<	31
-  {	96	,	156 	,	2	},  ///<	32
-  {	104	,	136 	,	1	},  ///<	33
-  {	112	,	124 	,	0	},  ///<	34
+  {	144	,	124 ,	0	},  ///<	27
+  {	152	,	136 ,	1	},  ///<	28
+  {	160	,	156 ,	2	},  ///<	29
+  {	172	,	172 ,	3	},  ///<	30
+  {	84	,	172 ,	3	},  ///<	31
+  {	96	,	156 ,	2	},  ///<	32
+  {	104	,	136 ,	1	},  ///<	33
+  {	112	,	124 ,	0	},  ///<	34
   {	144	,	68 	,	0	},  ///<	35
   {	152	,	56 	,	1	},  ///<	36
   {	160	,	36 	,	2	},  ///<	37
   {	172	,	20 	,	3	},  ///<	38
+  {	128	,	48	,	1	},  ///<	39
+  {	32	,	40	,	4	},  ///<	40
+  {	224	,	40	,	4	},  ///<	41
 };
 #define PANEL_POS_TBL_MAX (NELEMS(DATA_PanelPosTbl))
 #define PANEL_POS_NULL    (0xFF)  //パネルポジションの無効値
@@ -888,7 +899,8 @@ struct _C_GEAR_WORK {
   u16 palChangeType[ CGEAR_PANEL_MAX ];
   u16 palChangeCol[_CGEAR_NET_PALTYPE_MAX][_CGEAR_NET_CHANGEPAL_NUM];
 
-  u16 palRing[RING_COLOR_MAX][RING_COLOR_SET_NUM_ALL];  //リングカラーパレットを保存しておくバッファ
+  u16 palRing[RING_COLOR_MAX][RING_COLOR_SET_NUM_ALL];   //リングカラーパレットを保存しておくバッファ
+  u16 palFrame[RING_COLOR_MAX][FRAME_COLOR_SET_NUM_ALL]; //フレームカラーパレットを保存しておくバッファ
 
   u8 select_panel;
   u8 select_count;
@@ -915,7 +927,7 @@ struct _C_GEAR_WORK {
   u8 bPanelDrug;    //パネルドラッグモード？
   u8 design_no;     //パネルデザインNo
   u8 panel_pos[CGEAR_PANEL_MAX];   //パネルポジションID
-  u8 ring_col[RING_NUM];    //リングカラーNo
+  u8 custom_col[CGEAR_CUSTOM_COLOR_NUM];    //カスタムカラーNo
   u8 sex;
   u8 power_flag;    // 電源がはいっているか？
   u8 connect_flag;  // 一人分でも通信バッファにデータがあるか？
@@ -992,6 +1004,7 @@ static BOOL _gearStartUpMainBoot(C_GEAR_WORK* pWork);
 static BOOL _gearStartUpMainWakeUp(C_GEAR_WORK* pWork);
 static void _taskAdd_StartUpRingAnm( C_GEAR_WORK* pWork, u8 mode, u8 ring_id, u8 ring_col, u8 wait, int* task_ct );
 
+static void _gearFrameColorChange(C_GEAR_WORK* pWork, u8 col_no );
 static void _gearRingColorChangeCore(C_GEAR_WORK* pWork, u8 ring_id, u8 col_no );
 static void _gearRingColorPalAnmCore(C_GEAR_WORK* pWork, u8 ring_id, u8 evy, u16 color  );
 static void _gearRingObjVisibleSet(C_GEAR_WORK* pWork, u8 ring_id, BOOL visible_f );
@@ -2181,6 +2194,15 @@ static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 design_no, BOOL pal_
       MI_CpuCopy8( &pltt_data[(16*(pal+(sex*RING_COLOR_MAX)))], pWork->palRing[pal], RING_COLOR_SET_NUM_ALL*2 );
     }
     GFL_HEAP_FreeMemory( buff );
+    
+    //フレーム色変更用のパレットソースを取得
+    buff = GFL_ARCHDL_UTIL_LoadPalette( pWork->handle, NARC_c_gear_sw_c_gear_frame_nclr, &pltt, GFL_HEAP_LOWID(pWork->heapID) );
+
+    pltt_data = pltt->pRawData;
+    for( pal = 0 ; pal < RING_COLOR_MAX; pal++){
+      MI_CpuCopy8( &pltt_data[(16*(pal+(sex*RING_COLOR_MAX)))], pWork->palFrame[pal], FRAME_COLOR_SET_NUM_ALL*2 );
+    }
+    GFL_HEAP_FreeMemory( buff );
 
   }
 
@@ -2573,15 +2595,20 @@ static void _InputCheck( C_GEAR_WORK* pWork )
   case TOUCH_LABEL_RING2:
   case TOUCH_LABEL_RING3:
   case TOUCH_LABEL_RING4:
+  case TOUCH_LABEL_FRAME:
     {
-      u8 ring_id = ret-TOUCH_LABEL_RING0;
+      u8 custom_id = ret-TOUCH_LABEL_RING0;
 
       PMSND_PlaySE( SEQ_SE_MSCL_07 );
-      pWork->ring_col[ring_id] = (++pWork->ring_col[ring_id]) % CGEAR_RING_COLOR_MAX;
+      pWork->custom_col[custom_id] = (++pWork->custom_col[custom_id]) % CGEAR_RING_COLOR_MAX;
 
-      CGEAR_SV_SetCGearRingColor( pWork->pCGSV, ring_id, pWork->ring_col[ring_id] );
+      CGEAR_SV_SetCGearCustomColor( pWork->pCGSV, custom_id, pWork->custom_col[custom_id] );
 
-      _gearRingColorChangeCore( pWork, ring_id, pWork->ring_col[ring_id] );
+      if( custom_id == CGEAR_CUSTOM_COLOR_FRAME ){
+        _gearFrameColorChange( pWork, pWork->custom_col[custom_id] );
+      }else{
+        _gearRingColorChangeCore( pWork, custom_id, pWork->custom_col[custom_id] );
+      }
     }
     break;
   }
@@ -2933,7 +2960,7 @@ static BOOL _gearStartUpMainBoot(C_GEAR_WORK* pWork)
 
       for( i = 0;i < RING_NUM;i++ ){
         _taskAdd_StartUpRingAnm( pWork, STARTUP_ANM_MODE_BOOT,
-          i, pWork->ring_col[i], STARTUP_ANM_RING_ANM_INTERVAL*i, &pWork->eff_task_ct );
+          i, pWork->custom_col[i], STARTUP_ANM_RING_ANM_INTERVAL*i, &pWork->eff_task_ct );
       }
     }
     pWork->state_seq ++;
@@ -2964,7 +2991,7 @@ static BOOL _gearStartUpMainWakeUp(C_GEAR_WORK* pWork)
 
       for( i = RING_NUM-1;i >= 0; i-- ){
         _taskAdd_StartUpRingAnm( pWork, STARTUP_ANM_MODE_WAKEUP,
-          i, pWork->ring_col[i], STARTUP_ANM_RING_ANM_INTERVAL*((RING_NUM-1)-i), &pWork->eff_task_ct );
+          i, pWork->custom_col[i], STARTUP_ANM_RING_ANM_INTERVAL*((RING_NUM-1)-i), &pWork->eff_task_ct );
       }
     }
     pWork->state_seq ++;
@@ -3078,6 +3105,106 @@ static void tcb_StartUpRingAnm( GFL_TCBL *tcb , void* tcb_wk)
   GFL_TCBL_Delete(tcb);
 }
 
+#if 0
+//========================================================================
+//フェスミッション通知時のリングパレットアニメーション
+//========================================================================
+typedef struct{
+  C_GEAR_WORK* cgw;
+
+  u8  mode;
+  u8  ring_id;
+  u8  ring_col;
+  u8  pal_pos;
+  u8  ini_wait;
+  s8  evy;
+  s8  end_evy;
+  s8  dif;
+  u8  seq;
+
+  int*  task_ct;
+}TASKWK_STARTUP_RINGANM;
+
+static void tcb_StartUpRingAnm( GFL_TCBL *tcb , void* tcb_wk);
+
+/*
+ *  @brief  起動リングアニメ登録
+ */
+static void _taskAdd_StartUpRingAnm( C_GEAR_WORK* pWork, u8 mode, u8 ring_id, u8 ring_col, u8 wait, int* task_ct )
+{
+  GFL_TCBL* tcb;
+  TASKWK_STARTUP_RINGANM* twk;
+
+  tcb = GFL_TCBL_Create( pWork->tcbsys, tcb_StartUpRingAnm, sizeof(TASKWK_STARTUP_RINGANM), 0 );
+
+  twk = GFL_TCBL_GetWork(tcb);
+  MI_CpuClear8( twk, sizeof( TASKWK_STARTUP_RINGANM ));
+
+  twk->cgw = pWork;
+  twk->mode = mode;
+  twk->ring_id = ring_id;
+  twk->ring_col = ring_col;
+  twk->ini_wait = wait;
+
+  twk->evy = -16;
+  twk->end_evy = 0;
+  twk->dif = 2;
+  _gearRingColorChangeCore( pWork, ring_id, ring_col ); //カラーをセット
+  _gearRingColorPalAnmCore( pWork, ring_id, 16, _BLACK_COLOR[pWork->sex] ); //一度黒く
+
+  if( task_ct != NULL ){
+    twk->task_ct = task_ct;
+    (*twk->task_ct)++;
+  }
+}
+
+static void tcb_StartUpRingAnm( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_STARTUP_RINGANM* twk = (TASKWK_STARTUP_RINGANM*)tcb_wk;
+  C_GEAR_WORK* pWork = twk->cgw;
+  u16 color[2];
+
+  color[0] = 0x7FFF;  //白
+  color[1] = _BLACK_COLOR[pWork->sex];  //黒
+
+  switch( twk->seq ){
+  case 0: //初期ウェイト
+    if( twk->ini_wait--  <= 0 ){
+      twk->seq++;
+    }
+    return;
+  case 1: //オリジナルカラー+8までフェード
+    twk->evy += twk->dif;
+    _gearRingColorPalAnmCore( pWork, twk->ring_id, MATH_ABS(twk->evy), color[(twk->evy<=0)] );
+    if( twk->evy != twk->end_evy ){
+      return;
+    }
+
+    if( twk->mode == STARTUP_ANM_MODE_BOOT ){
+      twk->dif = -2;
+      twk->end_evy = -16;
+    }else{
+      twk->dif = 0;
+      twk->end_evy = 0;
+      _gearRingObjVisibleSet( pWork, twk->ring_id, TRUE );
+    }
+    twk->seq++;
+    return;
+  case 2: //終端カラーまで戻す
+    twk->evy += twk->dif;
+    _gearRingColorPalAnmCore( pWork, twk->ring_id, MATH_ABS(twk->evy), color[(twk->evy<=0)] );
+    if( twk->evy != twk->end_evy ){
+      return;
+    }
+    break;
+  }
+  if( twk->task_ct != NULL ){
+    (*twk->task_ct)--;
+  }
+  GFL_TCBL_Delete(tcb);
+}
+#endif
+
 //------------------------------------------------------------------------------
 /**
  * @brief   すれ違いOBJの実行
@@ -3144,6 +3271,22 @@ static void _gearCrossObjMain(C_GEAR_WORK* pWork)
     }
   }
 }
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   フレーム色変更
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _gearFrameColorChange(C_GEAR_WORK* pWork, u8 col_no )
+{
+  u16*  pal = pWork->palFrame[ col_no ];
+
+  PaletteWorkSet( pWork->pfade_ptr, pal,
+    FADE_SUB_BG, FRAME_COLOR_TRANS_POS_BG_PALNO, FRAME_COLOR_SET_NUM_ALL*2 );
+}
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   パネルリング色変更
@@ -3293,9 +3436,13 @@ static void _gearRingColorChangeInit(C_GEAR_WORK* pWork )
 {
   int i;
 
-  for( i = 0; i < RING_NUM;i++){
-    pWork->ring_col[i] = CGEAR_SV_GetCGearRingColor( pWork->pCGSV, i );
-    _gearRingColorChangeCore( pWork, i, pWork->ring_col[i] );
+  for( i = 0; i < CGEAR_CUSTOM_COLOR_NUM;i++){
+    pWork->custom_col[i] = CGEAR_SV_GetCGearCustomColor( pWork->pCGSV, i );
+    if( i < CGEAR_CUSTOM_COLOR_FRAME ){
+      _gearRingColorChangeCore( pWork, i, pWork->custom_col[i] );
+    }else{
+      _gearFrameColorChange( pWork, pWork->custom_col[i] );
+    }
   }
 }
 
@@ -3339,7 +3486,7 @@ static void _gearPanelPosSet( C_GEAR_WORK* pWork, CGEAR_PANEL_ID id, u8 pos )
 
   pd = &DATA_PanelPosTbl[pos];
   _gearObjSetPanelPos( pWork, id, pd->x, pd->y );
-  _gearRingColorChangePanel( pWork, id, pWork->ring_col[ pd->ring_id ] );
+  _gearRingColorChangePanel( pWork, id, pWork->custom_col[ pd->ring_id ] );
   OS_Printf("panel pos %d p=%d -> ( %d, %d, %d )\n",id, pos, pd->x, pd->y, pd->ring_id );
 }
 
@@ -3478,8 +3625,8 @@ static void _modeInit(C_GEAR_WORK* pWork,BOOL bBoot)
 
   {
     int i;
-    for( i = 0;i < RING_NUM; i++ ){
-      pWork->ring_col[i] = CGEAR_SV_GetCGearRingColor( pWork->pCGSV, i);
+    for( i = 0;i < CGEAR_CUSTOM_COLOR_NUM; i++ ){
+      pWork->custom_col[i] = CGEAR_SV_GetCGearCustomColor( pWork->pCGSV, i );
     }
   } 
 

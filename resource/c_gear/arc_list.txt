@@ -5,6 +5,7 @@
 "c_gear_m.nclr"
 "c_gear_f.nclr"
 "c_gear_ring.nclr"
+"c_gear_frame.nclr"
 "c_gear.ncgr"
 "c_gear01.nscr"
 "off_gear.nscr"
