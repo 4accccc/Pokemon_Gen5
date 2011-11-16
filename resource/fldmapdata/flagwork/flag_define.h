@@ -877,7 +877,7 @@
 #define FV_C14_KAODASI_01                  985 /* 0x03d9 セイガイハシティ：顔出し看板イベントのカメラマン */
 #define FV_T04R101_STOPPER_02              986 /* 0x03da サザナミタウンゲート：ストッパー（解除後） */
 #define FV_R19_SWBELL_01                   987 /* 0x03db 19番道路：ベル */
-		/* not used   988(0x03dc) */
+#define FV_R04_WORKMAN_01                  988 /* 0x03dc 4番道路：作業員 */
 		/* not used   989(0x03dd) */
 		/* not used   990(0x03de) */
 #define FV_D05R0101_TRAINERW_01            991 /* 0x03df WBTロビー：クリア後に出現するエリートトレーナー♀ */

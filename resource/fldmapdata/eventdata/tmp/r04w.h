@@ -28,7 +28,7 @@
 #define TR_PRINCESS_08                    10
 #define TR_BACKPACKERM_18                 11
 #define R04W_POKE628_01                   12
-#define R04W_OLDMAN1_01                   13
+#define R04W_WORKMAN_01                   13
 #define R04W_SWBOSS_01                    14
 #define R04W_BIGROCK_01                   15
 #define R04W_BIGROCK_02                   16

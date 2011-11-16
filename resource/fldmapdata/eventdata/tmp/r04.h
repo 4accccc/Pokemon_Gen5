@@ -31,7 +31,7 @@
 #define R04_BIGROCK_02                    13
 #define R04_BIGROCK_03                    14
 #define R04_SWBOSS_01                     15
-#define R04_OLDMAN1_01                    16
+#define R04_WORKMAN_01                    16
 #define R04_BIGROCK_04                    17
 #define R04_BIGROCK_05                    18
 #define R04_BIGROCK_06                    19

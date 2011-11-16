@@ -26,9 +26,8 @@ _EVENT_DATA		ev_bg_r04_sign3_01
 _EVENT_DATA		ev_bg_r04_sign4_01
 _EVENT_DATA		ev_bg_r04_sign1_01
 _EVENT_DATA		ev_r04_bigrock_01
-_EVENT_DATA		ev_pos_r04_oldman1_02
 _EVENT_DATA		ev_pos_r04_swboss_02
-_EVENT_DATA		ev_r04_oldman1_01
+_EVENT_DATA		ev_r04_workman_01
 _EVENT_DATA		ev_r04_swboss_01
 _EVENT_DATA   ev_r04_poke630_01
 _EVENT_DATA   ev_zone_r04
@@ -75,237 +74,132 @@ INIT_EVENT_START  ev_zone_r04
 INIT_EVENT_END
 
 /**************************************************************/
-/*	R04		POS：かいりき入手								  */
-/**************************************************************/
-EVENT_START  ev_pos_r04_oldman1_02
-  
-  //アニメ：「！」
-  _OBJ_ANIME( R04_OLDMAN1_01,anm_common_gyoe  )
-  _OBJ_ANIME_WAIT()
-
-  //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-  $LCW_POSZ -= 1
-   
-  //アニメ：じいさん接近
-  _OBJ_ANIME_AUTO( R04_OLDMAN1_01, LCW_POSX,LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
-  _OBJ_ANIME_WAIT()
-  
-  //じいさん：おい！トレーナー
-  _BALLOONWIN_OBJMSG_POS( msg_r04_stop_01, R04_OLDMAN1_01, POS_DEFAULT )
-  
-  //じいさん：おせないけどな
-  _BALLOONWIN_OBJMSG_POS( msg_r04_stop_02, R04_OLDMAN1_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  //アニメ：もといた位置に戻る
-  _OBJ_ANIME_AUTO( R04_OLDMAN1_01, 427,585, FORCE_TYPE_NOT, 8, DIR_LR )
-  _OBJ_ANIME_WAIT()
-  
-  //==================================//
-  
-  //R04のPOS無効
-  $WK_SCENE_R04_POKE = 1
-  
-  //==================================//
-  
-EVENT_END
-
-/**************************************************************/
 /*	R04		POS：アクロマと会話								  */
 /**************************************************************/
 EVENT_START  ev_pos_r04_swboss_02
   
-  /*
-  //カメラ移動
-  _CAMERA_START()		//カメラ操作開始
-  _CAMERA_PURGE()		//カメラのバインドを解く
-  _CAMERA_MOVE( 9688,0,970752,28213248,0,38240256,24 )
-  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
-  */
-  
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-  $LCW_POSZ -= 1
+  //主人公方向取得
+  _PLAYER_DIR_GET( LWK_DIR )
   
-  //中央以外なら隣接
-  IF $LCW_POSX != 430 THEN
+  //一番左のグリッド
+  IF $LCW_POSX == 432 THEN
+    _OBJ_ANIME( R04_SWBOSS_01, anm_swboss_commeing_x432_01 )
+    IF $LWK_DIR == DIR_LEFT THEN
+      _TIME_WAIT( 20 )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+    ENDIF
+    _OBJ_ANIME_WAIT()
+    
+    _OBJ_ANIME( R04_SWBOSS_01, anm_swboss_commeing_x432_02 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_swboss_guide_x432 )
+    _OBJ_ANIME_WAIT()
+  //真ん中のグリッド
+  ELSIF $LCW_POSX == 430 THEN
+    _OBJ_ANIME_AUTO( R04_SWBOSS_01, 431,583, FORCE_TYPE_NOT, 8, DIR_LR )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_u )
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( R04_SWBOSS_01, anm_staystep_l )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+    _OBJ_ANIME_WAIT()
+  
+  //いっこ右
+  ELSIF $LCW_POSX == 431 THEN
+    _OBJ_ANIME( R04_SWBOSS_01, anm_swboss_commeing_x431_01 )
+    _OBJ_ANIME_WAIT()
+    
+    _OBJ_ANIME( R04_SWBOSS_01, anm_staystep_l )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_swboss_guide_x431 )
+    _OBJ_ANIME_WAIT()
+  ELSE
+    $LCW_POSZ -= 1
     _OBJ_ANIME_AUTO( R04_SWBOSS_01, LCW_POSX,LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
     _OBJ_ANIME_WAIT()
     _OBJ_ANIME( R04_SWBOSS_01, anm_staystep_d )
     _OBJ_ANIME_WAIT()
+    
+    _OBJ_ANIME_AUTO( R04_SWBOSS_01, 431,583, FORCE_TYPE_ALL, 8, DIR_LR )
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 430,583, FORCE_TYPE_ALL, 8, DIR_UD )
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( R04_SWBOSS_01, anm_staystep_l )
+    _OBJ_ANIME_WAIT()
   ENDIF
-
+  
   //アクロマ：まってましたよ！
   _BALLOONWIN_OBJMSG_POS( msg_r04_swboss_01, R04_SWBOSS_01, POS_DEFAULT )
-  //アクロマ：これは
+  //アクロマ：これはいわではなく
   _BALLOONWIN_OBJMSG_POS( msg_r04_swboss_02, R04_SWBOSS_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
   //アニメ：アクロマ上を見る
   _OBJ_ANIME( R04_SWBOSS_01, anm_staystep_u)
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u)
   _OBJ_ANIME_WAIT()
   
-  //アクロマ：ほら　めをさましました
+  //アニメ：イワパレス目が覚める
+  _OBJ_ANIME( R04_BIGROCK_01, anm_poke50_hatena)
+  _OBJ_ANIME( R04_BIGROCK_03, anm_poke50_gyoe)
+  _OBJ_ANIME( R04_BIGROCK_04, anm_staystep_d)
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME( R04_BIGROCK_10, anm_poke50_gyoe)
+  _OBJ_ANIME( R04_BIGROCK_02, anm_poke50_gyoe)
+  _OBJ_ANIME( R04_BIGROCK_05, anm_staystep_d)
+  _OBJ_ANIME_WAIT()
+
+  _OBJ_ANIME( R04_BIGROCK_06, anm_poke50_gyoe)
+  _OBJ_ANIME( R04_BIGROCK_08, anm_staystep_d)
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME( R04_BIGROCK_07, anm_staystep_d)
+  _OBJ_ANIME( R04_BIGROCK_09, anm_staystep_d)
+  _OBJ_ANIME( R04_BIGROCK_11, anm_poke50_hatena)
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：イワパレス退場
+  _OBJ_ANIME( R04_BIGROCK_08, anm_poke50_bye_z580)
+  _OBJ_ANIME( R04_BIGROCK_09, anm_poke50_bye_z580)
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME( R04_BIGROCK_06, anm_poke50_bye_z581)
+  _OBJ_ANIME( R04_BIGROCK_11, anm_poke50_bye_z580)
+  _OBJ_ANIME( R04_BIGROCK_01, anm_poke50_bye_z581)
+  _OBJ_ANIME( R04_BIGROCK_02, anm_poke50_bye_z581)
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME( R04_BIGROCK_05, anm_poke50_bye_z581)
+  _OBJ_ANIME_WAIT()
+  
+  _OBJ_ANIME( R04_BIGROCK_10, anm_poke50_bye_z579)
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME( R04_BIGROCK_03, anm_poke50_bye_z581)
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME( R04_BIGROCK_04, anm_poke50_bye_z581)
+  _OBJ_ANIME( R04_BIGROCK_07, anm_poke50_bye_z581)
+  _OBJ_ANIME_WAIT()
+  
+  //アクロマ：……イワパレス
   _BALLOONWIN_OBJMSG_POS( msg_r04_swboss_03, R04_SWBOSS_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
-  
-  //アニメ：アクロマ下を見る
-  _OBJ_ANIME( R04_SWBOSS_01, anm_staystep_d)
-  _OBJ_ANIME_WAIT()
-  
-  
-  
-  /*
-  //自機にカメラを戻す
-  _CAMERA_DEF_MOVE (24)
-  //カメラ待ち
-  _CAMERA_WAIT_MOVE()
-  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
-  _CAMERA_END()		//カメラ操作終了
-  */
-  
-	//==================================//
-  
-  //R04アクロマのPOS無効
-  $WK_SCENE_R04_SWBOSS = 2
-  
-  //==================================//
-EVENT_END
-
-/**************************************************************/
-/*	R04		OLDMAN1								  */
-/**************************************************************/
-EVENT_START  ev_r04_oldman1_01
-  //アクロマイベント終了後
-	IF $WK_SCENE_R04_SWBOSS == 3 THEN
-	  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r04_stop_03 )
-	//それ以外
-  ELSE
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r04_stop_02 )
-  ENDIF
-EVENT_END
-
-/**************************************************************/
-/*	R04		SWBOSS1								  */
-/**************************************************************/
-EVENT_START  ev_r04_swboss_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r04_swboss_04 )
-EVENT_END
-
-/**************************************************************/
-/*	R04		擬態イワパレス								  */
-/**************************************************************/
-EVENT_START  ev_r04_bigrock_01
-
-  //アクロマイベント起動中
-	IF $WK_SCENE_R04_SWBOSS == 2 THEN
-    //イワパレス・アクロマ戦をコール
-    _CALL	ev_vs_r04swboss
-  //アクロマイベント以外
-  ELSE
-    _TALK_START_SE_PLAY()
-    _PLAYER_NAME( 0 )
-    _SYSWIN_MSG( msg_r04_rock_01, POS_DOWN )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
-  ENDIF
-  
-EVENT_END
-
-ev_vs_r04swboss:
-  _TALK_START_SE_PLAY()
-  
-  //イワパレス：ぱれっしゅ！
-  _VOICE_PLAY(MONSNO_569,0)
-	 _PLAINWIN_MSG_DOWN(msg_r04_rock_02 )
-	_VOICE_WAIT()
-	_AB_KEYWAIT_MARK()
-	_MSGWIN_CLOSE()
-  
-  //イワパレス戦をセット
-  _WILD_BTL_SET_TALK( MONSNO_569, 25 )
-  _WILD_LOSE_CHECK( SCWK_ANSWER )
-  
-  //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-   
-  //勝利チェック
-  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-    //大きな岩動作モデル削除
-    _OBJ_DEL( R04_BIGROCK_01 )
-    _OBJ_DEL( R04_BIGROCK_02 )
-    _OBJ_DEL( R04_BIGROCK_03 )
-    _OBJ_DEL( R04_BIGROCK_04 )
-    _OBJ_DEL( R04_BIGROCK_05 )
-    _OBJ_DEL( R04_BIGROCK_06 )
-    _OBJ_DEL( R04_BIGROCK_07 )
-    _OBJ_DEL( R04_BIGROCK_08 )
-    _OBJ_DEL( R04_BIGROCK_09 )
-    _OBJ_DEL( R04_BIGROCK_10 )
-    _OBJ_DEL( R04_BIGROCK_11 )
-    
-    //アクロマ隣接
-    IF $LCW_POSX > 431 THEN
-      _OBJ_POS_CHANGE( R04_SWBOSS_01, 431, 0, 582, DIR_LEFT )
-      _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 430, 0, 582, DIR_UP )
-    ELSE
-      $LCW_POSX += 1
-      _OBJ_POS_CHANGE( R04_SWBOSS_01, LCW_POSX, 0, LCW_POSZ, DIR_LEFT )
-    ENDIF
-    
-    _WILD_WIN()
-  ELSE
-    _WILD_LOSE()
-  ENDIF
-  
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   
   //アクロマテーマ曲再生
   _START_EVENT_BGM( SEQ_BGM_E_ACHROMA )
   
-  //アニメ：主人公アクロマの方を向く
+  //アニメ：アクロマ主人公の方を向く
+  _OBJ_ANIME( R04_SWBOSS_01, anm_staystep_l )
+  _TIME_WAIT( 4 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
   _OBJ_ANIME_WAIT()
   
-  //【仮】リトライのリストに追加する必要あり。岩澤さんに報告
-  _WILD_RETRY_CHECK( SCWK_ANSWER )
-    
-  SWITCH $SCWK_ANSWER
-  CASE SCR_WILD_BTL_RET_WIN THEN
-  //勝利した場合
-    _BALLOONWIN_OBJMSG_POS( msg_r04_swboss_05, R04_SWBOSS_01, POS_DEFAULT )
-  CASE SCR_WILD_BTL_RET_ESCAPE THEN
-  //逃げた場合
-    _BALLOONWIN_OBJMSG_POS( msg_r04_swboss_07, R04_SWBOSS_01, POS_DEFAULT )
-  CASE SCR_WILD_BTL_RET_CAPTURE THEN
-  //捕まえた場合
-    _BALLOONWIN_OBJMSG_POS( msg_r04_swboss_06, R04_SWBOSS_01, POS_DEFAULT )
-  ENDSWITCH
+  //アクロマ：プラズマ団はいいました
+  _BALLOONWIN_OBJMSG_POS( msg_r04_swboss_04, R04_SWBOSS_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
   
-  //アニメ：アクロマ芝居
-  _OBJ_ANIME( R04_SWBOSS_01, anm_swboss_act)
+  //アニメ：アクロマ演技
+  _OBJ_ANIME( R04_SWBOSS_01, anm_swboss_act )
   _OBJ_ANIME_WAIT()
   
   //アクロマ：なまえは？
   _PLAYER_NAME( 0 )
   _BALLOONWIN_OBJMSG_POS( msg_r04_swboss_08, R04_SWBOSS_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  //システムメッセージ：回復させた
-  _PLAYER_NAME( 0 )
-  _SYSWIN_MSG( msg_r04_swboss_09, POS_DEFAULT )
-  _SE_PLAY( SEQ_SE_RECOVERY )
-  //回復処理
-  _TEMOTI_POKEMON_KAIFUKU()
-  
-  _SE_WAIT()
-  _AB_KEYWAIT_MARK()
-  _MSGWIN_CLOSE()
-  
-  //アクロマ：それでは
-  _PLAYER_NAME( 0 )
-  _BALLOONWIN_OBJMSG_POS( msg_r04_swboss_10, R04_SWBOSS_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
   //トレーナー戦
@@ -334,21 +228,27 @@ ev_vs_r04swboss:
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   
-  //アクロマ隣接
-  IF $LCW_POSX == 433 THEN
-    $LCW_POSX -= 1
-  ELSE
-    $LCW_POSX += 1
-  ENDIF
-  
   //アクロマ退場
-  _OBJ_ANIME_AUTO( R04_SWBOSS_01, LCW_POSX,572, FORCE_TYPE_ALL, 8, DIR_LR )
+  _OBJ_ANIME_AUTO( R04_SWBOSS_01, 431,572, FORCE_TYPE_ALL, 8, DIR_LR )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
   _OBJ_ANIME_WAIT()
   
   //イベント曲終了
   _END_EVENT_BGM()
   
   _OBJ_DEL( R04_SWBOSS_01 )
+  _OBJ_DEL( R04_BIGROCK_01 )
+  _OBJ_DEL( R04_BIGROCK_02 )
+  _OBJ_DEL( R04_BIGROCK_03 )
+  _OBJ_DEL( R04_BIGROCK_04 )
+  _OBJ_DEL( R04_BIGROCK_05 )
+  _OBJ_DEL( R04_BIGROCK_06 )
+  _OBJ_DEL( R04_BIGROCK_07 )
+  _OBJ_DEL( R04_BIGROCK_08 )
+  _OBJ_DEL( R04_BIGROCK_09 )
+  _OBJ_DEL( R04_BIGROCK_10 )
+  _OBJ_DEL( R04_BIGROCK_11 )
   
   //==================================//
   
@@ -358,15 +258,129 @@ ev_vs_r04swboss:
   _FLAG_SET( FV_R04_SWBOSS_01 )
   //R04おおきな岩非表示
   _FLAG_SET( FV_R04_BIGROCK_01 )
+  //R04作業員表示
+  _FLAG_RESET( FV_R04_WORKMAN_01 )
   
   //==================================//
-_RET
+  
+EVENT_END
+
+/**************************************************************/
+/*	R04		OLDMAN1								  */
+/**************************************************************/
+EVENT_START  ev_r04_workman_01
+  //アクロマイベント終了後
+	IF $WK_SCENE_R04_SWBOSS == 2 THEN
+	  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r04_stop_02 )
+	//それ以外
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r04_stop_01 )
+  ENDIF
+EVENT_END
+
+/**************************************************************/
+/*	R04		SWBOSS1								  */
+/**************************************************************/
+EVENT_START  ev_r04_swboss_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r04_swboss_04 )
+EVENT_END
+
+/**************************************************************/
+/*	R04		擬態イワパレス								  */
+/**************************************************************/
+EVENT_START  ev_r04_bigrock_01
+
+  _TALK_START_SE_PLAY()
+  _PLAYER_NAME( 0 )
+  _SYSWIN_MSG( msg_r04_rock_01, POS_DOWN )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+EVENT_END
 
 //--------------------------------------------------------------------
-//☆アクロマ：芝居
+//アクロマ：登場01
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_swboss_commeing_x432_01
+  _ANIME_DATA AC_WALK_R_8F,2
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//アクロマ：登場02
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_swboss_commeing_x432_02
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//アクロマ：登場01
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_swboss_commeing_x431_01
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+  
+//--------------------------------------------------------------------
+//主人公：誘導される
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_swboss_guide_x431
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：誘導される
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_swboss_guide_x432
+  _ANIME_DATA AC_WALK_L_8F,2
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//アクロマ：芝居
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_swboss_act
   _ANIME_DATA AC_SWBOSS_POINT_FINGER_L,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//イワパレス：「！」
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_poke50_gyoe
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA AC_MARK_GYOE,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//イワパレス：「？」
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_poke50_hatena
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA AC_MARK_HATENA,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//イワパレス：退場（一番下）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_poke50_bye_z581
+  _ANIME_DATA AC_WALK_U_8F,8
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//イワパレス：退場（まんなか）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_poke50_bye_z580
+  _ANIME_DATA AC_WALK_U_8F,7
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//イワパレス：退場（上）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_poke50_bye_z579
+  _ANIME_DATA AC_WALK_U_8F,6
   _ANIME_DATA ACMD_END,0
 
 /**************************************************************/

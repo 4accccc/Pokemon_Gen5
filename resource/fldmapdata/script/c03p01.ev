@@ -202,6 +202,8 @@ EVENT_START   ev_pos_c03P01_swboss_01
   _FLAG_RESET( FV_R04_SWBOSS_01 )
   //R04のアクロマPOS有効
   $WK_SCENE_R04_SWBOSS = 1
+  //R04作業員非表示
+  _FLAG_SET( FV_R04_WORKMAN_01 )
   //==================================//
 
 EVENT_END
