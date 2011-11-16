@@ -164,7 +164,7 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   {
     // 背景を真っ暗なままメッセージを出したいので
     // 専用フェードアウトを使う
-    _MAP_FADE_OUT_MSG_ENABLE()
+    _MAP_FADE_OUT_MSG_ENABLE( MSG_FADE_WHITE, 0 )
 
     _TIME_WAIT(20)
 
@@ -185,7 +185,7 @@ EVENT_START ev_pos_d10r0501_swsage1_01
     _DEMO_GIMMICK_GIANTHOLE_DISP(1)
 
     // 専用フェードイン
-    _MAP_FADE_IN_MSG_ENABLE()
+    _MAP_FADE_IN_MSG_ENABLE( MSG_FADE_WHITE, 0 )
 
   }
 

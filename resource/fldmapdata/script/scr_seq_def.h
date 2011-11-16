@@ -9047,25 +9047,34 @@
 //=============================================================================
 // MSG面以外のフェード
 //=============================================================================
+//-------------------------------------
+///	フェードモード
+//-------------------------------------
+#define MSG_FADE_BLACK      (0x1) ///フェード 黒
+#define MSG_FADE_WHITE      (0x2) ///フェード 白
 //----------------------------------------------------------------------------
 /**
  *  @def   _MAP_FADE_OUT_MSG_ENABLE
  *  @brief メッセージ以外のフェードアウト
  *
- *  @param sync フェードするのにかかるシンク数
+ *  @param  mode  フェードモード  MSG_FADE_XXXXX
+ *  @param map_change_flag    このコマンドの後にマップチェンジをするか
+ *                            0:しない
+ *                            1:する
  *
  * ＊使用はプログラマの許可制です。
  *
  *  @note 注意！
- *      _MAP_CHANGE_NO_FADEのコマンドの前に使用する以外の使い方は出来ません。
  *      このコマンドの後に_MAP_FADE_IN_MSG_ENABLEを必ず呼ぶこと
  */
 //-----------------------------------------------------------------------------
-#define _MAP_FADE_OUT_MSG_ENABLE() \
-    _ASM_MAP_FADE_OUT_MSG_ENABLE
+#define _MAP_FADE_OUT_MSG_ENABLE( mode, map_change_flag ) \
+    _ASM_MAP_FADE_OUT_MSG_ENABLE mode, map_change_flag
 
-  .macro  _ASM_MAP_FADE_OUT_MSG_ENABLE
+  .macro  _ASM_MAP_FADE_OUT_MSG_ENABLE mode, map_change_flag
   .short EV_SEQ_MAP_FADE_OUT_MSG_ENABLE
+  .short \mode
+  .short \map_change_flag
   .endm
 
 //----------------------------------------------------------------------------
@@ -9073,20 +9082,21 @@
  *  @def   _MAP_FADE_IN_MSG_ENABLE
  *  @brief メッセージ以外のフェードイン
  *
- *  @param mode 画面フェードモード 
- *  @param sync フェードするのにかかるシンク数
+ *  @param  mode  フェードモード  MSG_FADE_XXXXX
+ *  @param map_change_flag    このコマンドの前にマップチェンジをしていたか
+ *                            0:していない
+ *                            1:している
  *
  * ＊使用はプログラマの許可制です。
- *
- *  @note 注意！
- *      _MAP_CHANGE_NO_FADEのコマンドの後に使用する以外の使い方は出来ません。
  */
 //-----------------------------------------------------------------------------
-#define _MAP_FADE_IN_MSG_ENABLE() \
-    _ASM_MAP_FADE_IN_MSG_ENABLE
+#define _MAP_FADE_IN_MSG_ENABLE( mode, map_change_flag ) \
+    _ASM_MAP_FADE_IN_MSG_ENABLE mode, map_change_flag
 
-  .macro  _ASM_MAP_FADE_IN_MSG_ENABLE
+  .macro  _ASM_MAP_FADE_IN_MSG_ENABLE mode, map_change_flag
   .short EV_SEQ_MAP_FADE_IN_MSG_ENABLE
+  .short \mode
+  .short \map_change_flag
   .endm
 
 //======================================================================

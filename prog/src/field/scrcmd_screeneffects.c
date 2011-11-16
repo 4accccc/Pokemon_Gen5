@@ -61,13 +61,16 @@ extern BOOL MapFadeReqFlg;  //マップフェードリクエストフラグ  宣言元　script.c
 // メッセージ面以外フェードイベント
 //=====================================
 typedef enum {
-  FADE_TYPE_OUT,
-  FADE_TYPE_IN,
+  FADE_TYPE_BLACK_OUT,
+  FADE_TYPE_BLACK_IN,
+  FADE_TYPE_WHITE_OUT,
+  FADE_TYPE_WHITE_IN,
 }FADE_TYPE;
 // イベントワーク
 typedef struct {
   FIELDMAP_WORK   *p_fieldmap;
   FADE_TYPE       fade_type;  // フェードタイプ
+  BOOL            map_change; // マップチェンジをした
 } FADE_MSG_ENABLE_EV_WORK;
 // イベント関数
 static GMEVENT_RESULT Fade_MsgEnableEvent( GMEVENT* event, int* seq, void* wk );
@@ -390,12 +393,16 @@ VMCMD_RESULT EvCmdMapFadeOut_MsgEnable( VMHANDLE *core, void *wk )
   GMEVENT *event;
   FADE_MSG_ENABLE_EV_WORK *event_work;
 
+  u16 mode       = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
+  u16 map_change = SCRCMD_GetVMWorkValue( core, work );  // コマンド第2引数
+
   event = GMEVENT_Create( gsys, NULL, Fade_MsgEnableEvent, sizeof(FADE_MSG_ENABLE_EV_WORK ) );
   event_work = GMEVENT_GetEventWork( event );
 
   // 初期化
-  event_work->fade_type = FADE_TYPE_OUT;
+  event_work->fade_type = (mode==0x1) ? FADE_TYPE_BLACK_OUT:FADE_TYPE_WHITE_OUT;
   event_work->p_fieldmap = p_fieldmap;
+  event_work->map_change = map_change;
 
   if( event == NULL )
   {
@@ -425,12 +432,16 @@ VMCMD_RESULT EvCmdMapFadeIn_MsgEnable( VMHANDLE *core, void *wk )
   GMEVENT *event;
   FADE_MSG_ENABLE_EV_WORK *event_work;
 
+  u16 mode       = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
+  u16 map_change = SCRCMD_GetVMWorkValue( core, work );  // コマンド第2引数
+
   event = GMEVENT_Create( gsys, NULL, Fade_MsgEnableEvent, sizeof(FADE_MSG_ENABLE_EV_WORK ) );
   event_work = GMEVENT_GetEventWork( event );
 
   // 初期化
-  event_work->fade_type = FADE_TYPE_IN;
+  event_work->fade_type = (mode==0x1) ? FADE_TYPE_BLACK_IN:FADE_TYPE_WHITE_IN;
   event_work->p_fieldmap = p_fieldmap;
+  event_work->map_change = map_change;
 
   if( event == NULL )
   {
@@ -462,43 +473,202 @@ static GMEVENT_RESULT Fade_MsgEnableEvent( GMEVENT* event, int* seq, void* wk )
   // 処理シーケンス
   enum{
     SEQ_START,
+    SEQ_FADE_OUT_BLACK, // フェードアウト 黒
+    SEQ_FADE_IN_BLACK,  // フェードイン 黒
+    SEQ_FADE_OUT_WHITE, // フェードアウト 白
+    SEQ_FADE_IN_WHITE,  // フェードイン 白
     SEQ_FADE_END,  // フェード終了
   };
 
   switch( *seq ){
   case SEQ_START:
-    // フェードインの時はBG初期化する
-    if( p_wk->fade_type == FADE_TYPE_IN )
     {
-      // フェードリクエスト
-      ChangeBrightnessRequest( 
-          6,       // フェードするのにかかるSync数
-          BRIGHTNESS_NORMAL, // フェード終了時の輝度
-          BRIGHTNESS_WHITE,// フェード開始時の輝度
-          FADE_PLANEMASK,   // フェードが反映されるBG面
-          MASK_DOUBLE_DISPLAY );
+      BOOL field_init = FALSE;
+      switch( p_wk->fade_type ){
+      case FADE_TYPE_BLACK_OUT:
+        (*seq) = SEQ_FADE_OUT_BLACK;
+        break;
+      case FADE_TYPE_BLACK_IN:
+        {
+          // マップチェンジしたとき
+          if( p_wk->map_change == TRUE )
+          {
+            // 両面のマスター輝度を黒に設定
+            GX_SetMasterBrightness( -16 );
+            GXS_SetMasterBrightness( -16 );
+
+            // フィールドを初期化する
+            field_init = TRUE;
+          }
+        }
+        (*seq) = SEQ_FADE_IN_BLACK;
+        break;
+      case FADE_TYPE_WHITE_OUT:
+        (*seq) = SEQ_FADE_OUT_WHITE;
+        break;
+      case FADE_TYPE_WHITE_IN:
+        {
+          // マップチェンジしたとき
+          if( p_wk->map_change == TRUE )
+          {
+            // 両面のマスター輝度を白に設定
+            GX_SetMasterBrightness( 16 );
+            GXS_SetMasterBrightness( 16 );
+
+            // フィールドを初期化する
+            field_init = TRUE;
+          }
+        }
+        (*seq) = SEQ_FADE_IN_WHITE;
+        break;
+      default:
+        GF_ASSERT(0);
+      }
+
+      // マップチェンジした時はBG初期化する
+      if( field_init == TRUE )
+      {
+        // BGモード設定と表示設定の復帰
+        {
+          int mv = GFL_DISP_GetMainVisible();
+          FIELDMAP_InitBGMode();
+          GFL_DISP_GX_SetVisibleControlDirect( mv );
+        }
+        FIELDMAP_InitBG( p_wk->p_fieldmap );
+      }
     }
-    else
+    break;
+
+  case SEQ_FADE_OUT_BLACK: // フェードアウト 黒
     {
-      // フェードリクエスト
-      ChangeBrightnessRequest( 
-          4,       // フェードするのにかかるSync数
-          BRIGHTNESS_WHITE, // フェード終了時の輝度
-          BRIGHTNESS_NORMAL,// フェード開始時の輝度
-          FADE_PLANEMASK,   // フェードが反映されるBG面
-          MASK_DOUBLE_DISPLAY );      // フェードが反映されるLCD
+      // マップチェンジするかどうかでフェードをわける
+      if( p_wk->map_change == TRUE )
+      {
+        // 上画面
+        // フェードリクエスト
+        ChangeBrightnessRequest( 
+            16,       // フェードするのにかかるSync数
+            BRIGHTNESS_BLACK, // フェード終了時の輝度
+            BRIGHTNESS_NORMAL,// フェード開始時の輝度
+            FADE_PLANEMASK,   // フェードが反映されるBG面
+            MASK_MAIN_DISPLAY );      // フェードが反映されるLCD
+
+        // 下画面
+        GFL_FADE_SetMasterBrightReq(
+            GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB,
+            0,
+            16,
+            1 );
+      }
+      else
+      {
+        // フェードリクエスト
+        ChangeBrightnessRequest( 
+            4,       // フェードするのにかかるSync数
+            BRIGHTNESS_BLACK, // フェード終了時の輝度
+            BRIGHTNESS_NORMAL,// フェード開始時の輝度
+            FADE_PLANEMASK,   // フェードが反映されるBG面
+            MASK_DOUBLE_DISPLAY );      // フェードが反映されるLCD
+      }
+      (*seq) = SEQ_FADE_END;
     }
+    break;
 
-    *seq = SEQ_FADE_END;
+  case SEQ_FADE_IN_BLACK:  // フェードイン 黒
+    {
+      // マップチェンジするかどうかでフェードをわける
+      if( p_wk->map_change == TRUE )
+      {
+        // 両画面
+        GFL_FADE_SetMasterBrightReq(
+            GFL_FADE_MASTER_BRIGHT_BLACKOUT,
+            16,
+            0,
+            1 );
+      }
+      else
+      {
+        // フェードリクエスト
+        ChangeBrightnessRequest( 
+            6,       // フェードするのにかかるSync数
+            BRIGHTNESS_NORMAL, // フェード終了時の輝度
+            BRIGHTNESS_BLACK,// フェード開始時の輝度
+            FADE_PLANEMASK,   // フェードが反映されるBG面
+            MASK_DOUBLE_DISPLAY );
+      }
+      (*seq) = SEQ_FADE_END;
+    }
+    break;
 
+  case SEQ_FADE_OUT_WHITE: // フェードアウト 白
+    {
+      // マップチェンジするかどうかでフェードをわける
+      if( p_wk->map_change == TRUE )
+      {
+        // 上画面
+        // フェードリクエスト
+        ChangeBrightnessRequest( 
+            16,       // フェードするのにかかるSync数
+            BRIGHTNESS_WHITE, // フェード終了時の輝度
+            BRIGHTNESS_NORMAL,// フェード開始時の輝度
+            FADE_PLANEMASK,   // フェードが反映されるBG面
+            MASK_MAIN_DISPLAY );      // フェードが反映されるLCD
+
+        // 下画面
+        GFL_FADE_SetMasterBrightReq(
+            GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB,
+            0,
+            16,
+            1 );
+      }
+      else
+      {
+        // フェードリクエスト
+        ChangeBrightnessRequest( 
+            4,       // フェードするのにかかるSync数
+            BRIGHTNESS_WHITE, // フェード終了時の輝度
+            BRIGHTNESS_NORMAL,// フェード開始時の輝度
+            FADE_PLANEMASK,   // フェードが反映されるBG面
+            MASK_DOUBLE_DISPLAY );      // フェードが反映されるLCD
+      }
+      (*seq) = SEQ_FADE_END;
+    }
+    break;
+
+  case SEQ_FADE_IN_WHITE:  // フェードイン 白
+    {
+      // マップチェンジするかどうかでフェードをわける
+      if( p_wk->map_change == TRUE )
+      {
+        // 両画面
+        GFL_FADE_SetMasterBrightReq(
+            GFL_FADE_MASTER_BRIGHT_WHITEOUT,
+            16,
+            0,
+            1 );
+      }
+      else
+      {
+        // フェードリクエスト
+        ChangeBrightnessRequest( 
+            6,       // フェードするのにかかるSync数
+            BRIGHTNESS_NORMAL, // フェード終了時の輝度
+            BRIGHTNESS_WHITE,// フェード開始時の輝度
+            FADE_PLANEMASK,   // フェードが反映されるBG面
+            MASK_DOUBLE_DISPLAY );
+      }
+      (*seq) = SEQ_FADE_END;
+    }
     break;
 
   case SEQ_FADE_END:
     // 終了チェック
-    if( IsFinishedBrightnessChg( MASK_MAIN_DISPLAY ) == TRUE )
+    if( IsFinishedBrightnessChg( MASK_DOUBLE_DISPLAY ) == TRUE &&
+		    GFL_FADE_CheckFade() == FALSE )
     {
       // フェードインの時は輝度を初期化しておく
-      if( p_wk->fade_type == FADE_TYPE_IN )
+      if( p_wk->fade_type == FADE_TYPE_BLACK_IN || 
+          p_wk->fade_type == FADE_TYPE_WHITE_IN )
       {
         BrightnessChgReset( MASK_DOUBLE_DISPLAY );
       }
