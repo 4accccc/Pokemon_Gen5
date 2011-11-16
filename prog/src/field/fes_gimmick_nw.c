@@ -57,7 +57,22 @@ static BOOL rnd_CheckConflict( u32 value, u32* p_tbl, int tbl_max );
 //----------------------------------------------------------------------
 u16 FES_GIMMICK_SUB_GetRndInitZone( const u16 zone_id )
 {
-  if( zone_id == ZONE_ID_R04W ) return ZONE_ID_R04;
+  int i;
+  static const u16 tbl[][2] = {
+    { ZONE_ID_R04,      ZONE_ID_R04W },
+    { ZONE_ID_D24R0101,	ZONE_ID_D24R0701 },
+    { ZONE_ID_D24R0201,	ZONE_ID_D24R0801 },
+    { ZONE_ID_D24R0301,	ZONE_ID_D24R0901 },
+    { ZONE_ID_D24R0401,	ZONE_ID_D24R1001 },
+    { ZONE_ID_D24R0501,	ZONE_ID_D24R1101 },
+    { ZONE_ID_D24R0601,	ZONE_ID_D24R1201 },
+    { ZONE_ID_D26R0201,	ZONE_ID_D26R0901 },
+    { ZONE_ID_D26R0401,	ZONE_ID_D26R1001 },
+  };
+
+  for( i = 0; NELEMS(tbl);i++){
+    if( zone_id == tbl[i][0] ) return tbl[i][1];
+  }
   return zone_id;
 }
 
