@@ -88,6 +88,9 @@ VMCMD_RESULT EvCmdBeaconSetRequest( VMHANDLE* core, void* wk )
   case SCR_BEACON_SET_REQ_INF_DUNGEON_CLEAR:  ///<無限ダンジョンクリア
     GAMEBEACON_Set_InfinityDungeonClear( (u8)value1 );
     break;
+  case SCR_BEACON_SET_REQ_POKEWOOD_FILMING:  ///<ポケウッド撮影開始
+    GAMEBEACON_Set_PokewoodFilming( (u8)value1 );
+    break;
   }
   return VMCMD_RESULT_CONTINUE;
 }

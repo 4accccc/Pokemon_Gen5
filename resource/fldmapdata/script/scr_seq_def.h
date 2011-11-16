@@ -8760,6 +8760,15 @@
 #define _BEACON_SET_REQ_INF_DUNGEON_CLEAR( area_no ) \
     _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_INF_DUNGEON_CLEAR, area_no, 0
 
+/**
+ * @def _BEACON_SET_REQ_POKEWOOD_FILMING
+ * @brief ポケウッド撮影開始 
+ *
+ * @param ポケウッドシナリオNO 
+ */
+#define _BEACON_SET_REQ_POKEWOOD_FILMING( scenario_no ) \
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_POKEWOOD_FILMING, scenario_no, 0
+
 //--------------------------------------------------------------
 /**
  * @def _CHECK_GPOWER_FINISH

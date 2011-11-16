@@ -444,6 +444,7 @@
 #define SCR_BEACON_SET_REQ_WBT_LOSE           (11) ///<WBTトーナメントX回戦敗退
 #define SCR_BEACON_SET_REQ_INF_DUNGEON_ENTRY  (12) ///<無限ダンジョン挑戦
 #define SCR_BEACON_SET_REQ_INF_DUNGEON_CLEAR  (13) ///<無限ダンジョンクリア
+#define SCR_BEACON_SET_REQ_POKEWOOD_FILMING   (14) ///<ポケウッド撮影開始(上映は関数で処理)
 
 //--------------------------------------------------------------
 //    タイトルからのスタートメニュー項目
