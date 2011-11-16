@@ -3136,9 +3136,11 @@ static void PrintMessage( BOX_SEARCH_MAIN_WORK *wk, int bmpid, int msgID, int y 
 //=======================================================================================
 // リスト関連処理
 //=======================================================================================
+#define	LIST_TOUCH_AREA_REVISE_111116	( 48 )	// リストのタッチエリア補正値
 // リストタッチデータ
 static const FRAMELIST_TOUCH_DATA FrameListTouchTbl[] =
 {
+/*
   { {   0,  23, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: 
   { {  24,  47, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 01: 
   { {  48,  71, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 02: 
@@ -3146,6 +3148,14 @@ static const FRAMELIST_TOUCH_DATA FrameListTouchTbl[] =
   { {  96, 119, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 04: 
   { { 120, 143, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 05: 
   { { 144, 167, 136, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 06: 
+*/
+  { {   0,  23, 136+LIST_TOUCH_AREA_REVISE_111116, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 00: 
+  { {  24,  47, 136+LIST_TOUCH_AREA_REVISE_111116, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 01: 
+  { {  48,  71, 136+LIST_TOUCH_AREA_REVISE_111116, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 02: 
+  { {  72,  95, 136+LIST_TOUCH_AREA_REVISE_111116, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 03: 
+  { {  96, 119, 136+LIST_TOUCH_AREA_REVISE_111116, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 04: 
+  { { 120, 143, 136+LIST_TOUCH_AREA_REVISE_111116, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 05: 
+  { { 144, 167, 136+LIST_TOUCH_AREA_REVISE_111116, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },    // 06: 
 
   { {   0, 168, 232, 255 }, FRAMELIST_TOUCH_PARAM_RAIL },     // 07: レール
 
@@ -3157,13 +3167,13 @@ static const FRAMELIST_TOUCH_DATA FrameListTouchTbl[] =
 // スクロールなしのタッチデータ
 static const FRAMELIST_TOUCH_DATA FrameListTouchNoScrollTbl[] =
 {
-  { {   0,  23, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 00: 
-  { {  24,  47, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 01: 
-  { {  48,  71, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 02: 
-  { {  72,  95, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 03: 
-  { {  96, 119, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 04: 
-  { { 120, 143, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 05: 
-  { { 144, 167, 136, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 06: 
+  { {   0,  23, 136+LIST_TOUCH_AREA_REVISE_111116, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 00: 
+  { {  24,  47, 136+LIST_TOUCH_AREA_REVISE_111116, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 01: 
+  { {  48,  71, 136+LIST_TOUCH_AREA_REVISE_111116, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 02: 
+  { {  72,  95, 136+LIST_TOUCH_AREA_REVISE_111116, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 03: 
+  { {  96, 119, 136+LIST_TOUCH_AREA_REVISE_111116, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 04: 
+  { { 120, 143, 136+LIST_TOUCH_AREA_REVISE_111116, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 05: 
+  { { 144, 167, 136+LIST_TOUCH_AREA_REVISE_111116, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },    // 06: 
 
   { { GFL_UI_TP_HIT_END, 0, 0, 0 }, 0 },
 };
@@ -4198,13 +4208,13 @@ static BOOL CheckCancelButton( BOX_SEARCH_MAIN_WORK * wk )
 
 static const GFL_UI_TP_HITTBL CheckBoxHitTbl[] =
 {
-  {   0,  23, 112, 135 },
-  {  24,  47, 112, 135 },
-  {  48,  71, 112, 135 },
-  {  72,  95, 112, 135 },
-  {  96, 119, 112, 135 },
-  { 120, 143, 112, 135 },
-  { 144, 167, 112, 135 },
+  {   0,  23, 112, 135+LIST_TOUCH_AREA_REVISE_111116 },
+  {  24,  47, 112, 135+LIST_TOUCH_AREA_REVISE_111116 },
+  {  48,  71, 112, 135+LIST_TOUCH_AREA_REVISE_111116 },
+  {  72,  95, 112, 135+LIST_TOUCH_AREA_REVISE_111116 },
+  {  96, 119, 112, 135+LIST_TOUCH_AREA_REVISE_111116 },
+  { 120, 143, 112, 135+LIST_TOUCH_AREA_REVISE_111116 },
+  { 144, 167, 112, 135+LIST_TOUCH_AREA_REVISE_111116 },
   { GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
 

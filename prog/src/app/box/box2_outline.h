@@ -42,14 +42,14 @@
 
 #define POSITION_NUM  ( 4 ) // 左上X,左上Y,右下X,右下Yの２頂点分
 
-#define MS_DEFAULT_ANIME_MAX   ( 96*2 )
+#define MS_DEFAULT_ANIME_MAX   ( 96*2*2 )
 #define MS_DEFAULT_ANIME_SKIP  ( MS_DEFAULT_ANIME_MAX/BOX2OBJ_ID_SELECTLINE_MAX )
 
 
 typedef struct{
   int    position[POSITION_NUM];  // 選択中の左上・右下座標
-  u8     anime_max;      // アニメフレームの最大
-  u8     anime_count;    // 現在のアニメフレーム
+  u16    anime_max;      // アニメフレームの最大
+  u16    anime_count;    // 現在のアニメフレーム
   u8     appear_flag;    // 表示するか（TRUE=on, FALSE=off)
   u8     appear_old;     // 表示するか過去
   u8     start_pos;      // 始点はボックス上のどの位置か
