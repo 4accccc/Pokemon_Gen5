@@ -22,6 +22,12 @@
   .include  "c12r0402.h"
   
   .include  "d11r0101.h"
+  .include  "d11r0201.h"
+  .include  "d11r0301.h"
+  .include  "d11r0401.h"
+  .include  "d11r0501.h"
+  .include  "c03p18.h"
+  .include  "c03p19.h"
   
   .include  "n01r0401.h"
   .include  "n01r0402.h"
@@ -51,6 +57,7 @@ _EVENT_DATA   ev_pair_trainer_free_call
 _EVENT_DATA   ev_n01r0401_boss
 _EVENT_DATA   ev_d24_swbell
 _EVENT_DATA   ev_c12_swrival
+_EVENT_DATA   ev_d11r0101_swrival_pair_01
 _EVENT_DATA_END //終了
 
 //話しかけた方向取得変数
@@ -84,6 +91,32 @@ EVENT_START		ev_c12_swrival
  
   
 EVENT_END
+
+/**************************************************************/
+/*		話しかけ：D11のライバル
+/**************************************************************/
+EVENT_START		ev_d11r0101_swrival_pair_01
+  _TALK_START_SE_PLAY()
+  
+ //主人公・ライバル名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
+
+  //話しかけるごとに0～4のセリフを順番に表示（4で終わり）
+  $SCWK_TEMP0 = msg_d11r0101_swrival_05
+  $SCWK_TEMP0 += $WK_OTHER_D11R0101_PAIR
+  
+  _TALK_OBJ_START()
+  _BALLOONWIN_OBJMSG( SCWK_TEMP0, PAIR_TRAINER_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+  IF $WK_OTHER_D11R0101_PAIR != 4 THEN
+    $WK_OTHER_D11R0101_PAIR += 1
+  ENDIF
+  
+EVENT_END
+
 
 
 /**************************************************************/

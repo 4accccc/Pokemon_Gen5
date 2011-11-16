@@ -27,7 +27,6 @@ _EVENT_DATA		ev_zone_d11r0101
 _EVENT_DATA		ev_init_d11r0101
 _EVENT_DATA		ev_pos_d11r0101_plasma_01
 _EVENT_DATA		ev_pos_d11r0101_swrival_01
-_EVENT_DATA		ev_d11r0101_swrival_02
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -66,15 +65,6 @@ EVENT_START		ev_pos_d11r0101_swrival_01
 
 EVENT_END
 
-/**************************************************************/
-/*		ライバル話しかけ
-/**************************************************************/
-EVENT_START		ev_d11r0101_swrival_02
-  _TALK_START_SE_PLAY()
-  //連れ歩き話しかけ
-  _CALL ev_d11r0101_swrival_pair_01
-EVENT_END
-
 //連れ歩き開始スクリプト
 ev_d11r0101_pairstart_01:
 
@@ -82,6 +72,14 @@ ev_d11r0101_pairstart_01:
   _PLAYER_NAME( 0 )
   _RIVAL_NAME( 1 )
   
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  IF $LCW_POSZ == 21 THEN
+    _OBJ_ANIME( D11R0101_SWRIVAL_01, anm_swrival_pair_start_z21 )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+    
   //一緒に行こう！
   _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_01, D11R0101_SWRIVAL_01, POS_DEFAULT )
   
@@ -94,20 +92,20 @@ ev_d11r0101_pairstart_01:
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
     
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
+    _OBJ_ANIME_WAIT()
+    
     //連れ歩き開始
    IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
      //初期３匹で草タイプを選択
-     _PAIR_TRAINER_SET( D11R0101_SWRIVAL_01, PAIR_ID_D11R0101_SWRIVAL, PAIR_TYPE_ONE_ZONE, TRID_SWRIVAL_13, SCRID_D11R0101_SWRIVAL_02 )
+     _PAIR_TRAINER_SET( D11R0101_SWRIVAL_01, PAIR_ID_D11R0101_SWRIVAL, PAIR_TYPE_FREE_ZONE, TRID_SWRIVAL_13, SCRID_D11R0101_SWRIVAL_PAIR_01 )
    ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN
      //初期３匹で炎タイプを選択
-     _PAIR_TRAINER_SET( D11R0101_SWRIVAL_01, PAIR_ID_D11R0101_SWRIVAL, PAIR_TYPE_ONE_ZONE, TRID_SWRIVAL_14, SCRID_D11R0101_SWRIVAL_02 )
+     _PAIR_TRAINER_SET( D11R0101_SWRIVAL_01, PAIR_ID_D11R0101_SWRIVAL, PAIR_TYPE_FREE_ZONE, TRID_SWRIVAL_14, SCRID_D11R0101_SWRIVAL_PAIR_01 )
    ELSE
      //初期３匹で水タイプを選択
-     _PAIR_TRAINER_SET( D11R0101_SWRIVAL_01, PAIR_ID_D11R0101_SWRIVAL, PAIR_TYPE_ONE_ZONE, TRID_SWRIVAL_15, SCRID_D11R0101_SWRIVAL_02 )
+     _PAIR_TRAINER_SET( D11R0101_SWRIVAL_01, PAIR_ID_D11R0101_SWRIVAL, PAIR_TYPE_FREE_ZONE, TRID_SWRIVAL_15, SCRID_D11R0101_SWRIVAL_PAIR_01 )
    ENDIF
-   
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
-    _OBJ_ANIME_WAIT()
     
     //==================================//
     //プラズマ団・ライバルを非表示に
@@ -133,8 +131,20 @@ ev_d11r0101_pairend_01:
   _PLAYER_NAME( 0 )
   _RIVAL_NAME( 1 )
   
+  //主人公方向取得
+  _PLAYER_DIR_GET( LWK_DIR )
+  
   //アニメ：主人公振り向き
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  IF $LWK_DIR == DIR_DOWN THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_dir_d )
+  ELSIF $LWK_DIR == DIR_RIGHT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_dir_r )
+  ELSE
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_dir_r )
+  ENDIF
   _OBJ_ANIME_WAIT()
   
   //ライバル：いちどそとにでる？
@@ -149,20 +159,27 @@ ev_d11r0101_pairend_01:
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
     
-    //連れ歩き解除
-    _PAIR_TRAINER_FREE( SCRID_D11R0101_SWRIVAL_02, MV_DMY )
+    //自機座標取得
+    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
     
+    //アニメ：ライバル戻す
+    _OBJ_ANIME_AUTO( PAIR_TRAINER_01, 81,20, FORCE_TYPE_NPC, 8, DIR_LR )
+      
     //アニメ：主人公戻す
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
     _OBJ_ANIME_WAIT()
+    
+    //アニメ：ライバル振り向く
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_r )
+    _OBJ_ANIME_WAIT()
+    
+    //連れ歩き解除
+    _PAIR_TRAINER_FREE( SCRID_DUMMY, MV_DMY )
     
     //==================================//
     //プラズマ団・ライバルを表示に
     _FLAG_RESET( FV_D11R0101_SWRIVAL_01 )
     //==================================//
-    
-    //ライバル動作モデル再生成
-    _OBJ_ADD( D11R0101_SWRIVAL_01 )
     
   //いいえ
   ELSE
@@ -176,37 +193,19 @@ ev_d11r0101_pairend_01:
   }
 _RET
 
-//====================================================================
-// D11R0101：話しかけ 
-//====================================================================
-
-//連れ歩き中話しかけスクリプト
-ev_d11r0101_swrival_pair_01:
-
- //主人公・ライバル名代入
-  _PLAYER_NAME( 0 )
-  _RIVAL_NAME( 1 )
-
-  //話しかけるごとに0～4のセリフを順番に表示（4で終わり）
-  $SCWK_TEMP0 = msg_d11r0101_swrival_05
-  $SCWK_TEMP0 += $WK_OTHER_D11R0101_PAIR
-  
-  _TALK_OBJ_START()
-  _BALLOONWIN_OBJMSG( SCWK_TEMP0, PAIR_TRAINER_01 )
-  _LAST_KEYWAIT()
-  _MSGWIN_CLOSE()
-  
-  IF $WK_OTHER_D11R0101_PAIR != 4 THEN
-    $WK_OTHER_D11R0101_PAIR += 1
-  ENDIF
-  
-_RET
+//--------------------------------------------------------------------
+//	ライバル：向き合う
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swrival_pair_start_z21
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*		POS：プラズマ団戦
 /**************************************************************/
 EVENT_START		ev_pos_d11r0101_plasma_01
-  /*
+  
   //主人公・ライバル名代入
   _PLAYER_NAME( 0 )
   _RIVAL_NAME( 1 )
@@ -214,31 +213,23 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   
+  //カメラ操作　アデク追従
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  
+  _CAMERA_MOVE( 9688,0,970752,3375104,0,413696,32 )
+  
   //アニメ：主人公・ライバル所定の位置に移動
   _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 51,8, FORCE_TYPE_NPC, 8, DIR_LR )
   _OBJ_ANIME_AUTO( PAIR_TRAINER_01, 50,8, FORCE_TYPE_NPC, 8, DIR_LR )
   _OBJ_ANIME_WAIT()
   
-  //11.11.11　アーティは動作モデルに変更・アクロマ登場処理追加
-  //プラズマ団退場アニメ作成
-  //ライバルは独自のバニッシュフラグを持った
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち  
   
-  //連れ歩き解除
-  _PAIR_TRAINER_FREE( SCRID_D11R0101_SWRIVAL_02, MV_DMY )
-
   _PLAYER_NAME( 0 )
-  
-  //アニメ：ライバル主人公の位置に合わせて移動
-  IF $LCW_POSZ == 10 THEN
-    _OBJ_ANIME_AUTO( D11R0101_SWRIVAL_01, 53,11, FORCE_TYPE_NOT, 8, DIR_LR )
-  ELSE
-    _OBJ_ANIME_AUTO( D11R0101_SWRIVAL_01, 53,10, FORCE_TYPE_NOT, 8, DIR_LR )
-  ENDIF
-  
-  _OBJ_ANIME_WAIT()
 	
   //ライバル：「！」
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_12, D11R0101_SWRIVAL_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_12, PAIR_TRAINER_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
   //アニメ：プラズマ団振り向き
@@ -251,7 +242,7 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _MSGWIN_CLOSE()
   
   //ライバル：プラズマ団なの？
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_13, D11R0101_SWRIVAL_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_13, PAIR_TRAINER_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
   //プラズマ団：そうとも！
@@ -259,7 +250,7 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _MSGWIN_CLOSE()
   
   //ライバル：あきれた…！
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_14, D11R0101_SWRIVAL_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_14, PAIR_TRAINER_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
   //プラズマ団：タチワキ？
@@ -267,17 +258,18 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _MSGWIN_CLOSE()
   
   //アニメ：ライバルと向きあう
-  _OBJ_ANIME( D11R0101_SWRIVAL_01, anm_staystep_r )
+  _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_r )
+  _TIME_WAIT( 4 )
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_l )
   _OBJ_ANIME_WAIT()
   
   //ライバル：主人公！
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_15, D11R0101_SWRIVAL_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_15, PAIR_TRAINER_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
    //アニメ：プラズマ団に向き合う
-  _OBJ_ANIME( D11R0101_SWRIVAL_01, anm_staystep_l )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_u )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
   _OBJ_ANIME_WAIT()
    
   //マルチバトル
@@ -295,6 +287,13 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   //結果チェック
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )
   IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    
+    //カメラ操作　アデク追従
+    _CAMERA_START()		//カメラ操作開始
+    _CAMERA_PURGE()		//カメラのバインドを解く
+    _CAMERA_MOVE( 9688,0,970752,3375104,0,413696,1 )
+    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+    
     _TRAINER_WIN()
   ELSE
     _TRAINER_LOSE()
@@ -309,32 +308,43 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _OBJ_ANIME( D11R0101_PLASMAM_01 , anm_swplazma_bye_l )
   _TIME_WAIT( 4 )
   _OBJ_ANIME( D11R0101_PLASMAM_02 , anm_swplazma_bye_r )
-  _TIME_WAIT( 12 )
-  _OBJ_ANIME( D11R0101_SWRIVAL_01 , anm_swrival_backstep )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_backstep )
+  _TIME_WAIT ( 4 )
+  _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
   _OBJ_ANIME_WAIT()
 	
 	//プラズマ団員の動作モデルを削除
 	_OBJ_DEL( D11R0101_PLASMAM_01 )
   _OBJ_DEL( D11R0101_PLASMAM_02 )
   
-  //ライバル：まちなさいよ！
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_16, D11R0101_SWRIVAL_01, POS_DEFAULT )
+  //ライバル：まてよ！
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_16, PAIR_TRAINER_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
   //？？？：そのひつようはないっぽいよ
-  _PLAINWIN_MSG_DOWN(msg_d11r0101_swleader3_01 )
+  _PLAINWIN_MSG_UP(msg_d11r0101_swleader3_01 )
 	_MSGWIN_CLOSE()
   
-  //アーティ隣接
+  //アニメ：ライバル・主人公「？」
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe )
-  _OBJ_ANIME( D11R0101_SWRIVAL_01, anm_common_gyoe )
-  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 51,10, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME( PAIR_TRAINER_01, anm_common_gyoe )
   _OBJ_ANIME_WAIT()
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_r )
+  
+  //アニメ：アーティ隣接
+  _OBJ_ANIME_AUTO( D11R0101_SWLEADER3_01, 50,6, FORCE_TYPE_NOT, 8, DIR_LR )
+  _TIME_WAIT( 8*5 )
+  _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_u )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( D11R0101_SWLEADER3_01, anm_staystep_d )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_return_pos )
   _OBJ_ANIME_WAIT()
   
   //ライバル：あっ　アーティ！
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_17, D11R0101_SWRIVAL_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_17, PAIR_TRAINER_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
   //アーティ：奥は調べたけど
@@ -342,7 +352,7 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _MSGWIN_CLOSE()
   
   //ライバル：それにしても
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_18, D11R0101_SWRIVAL_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_18, PAIR_TRAINER_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
   //アーティ：そうだねー
@@ -350,57 +360,53 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _MSGWIN_CLOSE()
   
   //ライバル：…そうだね
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_19, D11R0101_SWRIVAL_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_19, PAIR_TRAINER_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
   //アニメ：ライバル主人公の方を向く
-  IF $LCW_POSZ == 10 THEN
-    _OBJ_ANIME( D11R0101_SWRIVAL_01, anm_staystep_u )
-    _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d )
-  ELSE
-    _OBJ_ANIME( D11R0101_SWRIVAL_01, anm_staystep_d )
-    _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u )
-  ENDIF
+  _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_r )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_l )
   _OBJ_ANIME_WAIT()
   
   //ライバル：（主人公名）！いっしょに
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_20, D11R0101_SWRIVAL_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_20, PAIR_TRAINER_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
-  
-  //ライバル：隣接
-  _OBJ_ANIME_AUTO( D11R0101_SWRIVAL_01, 51,8, FORCE_TYPE_NOT, 8, DIR_LR )
-  _TIME_WAIT( 4 )
-  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_l )
-  _OBJ_ANIME_WAIT()
   
   //ひでんマシン「かいりき」入手処理
 	_ITEM_EVENT_KEYWAIT(ITEM_HIDENMASIN04, 1)
 	
 	//ライバル：ほかにも
-  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_21, D11R0101_SWRIVAL_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_21, PAIR_TRAINER_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
   //アニメ：ライバル退場
-  _OBJ_ANIME( D11R0101_SWRIVAL_01 , anm_staystep_u )
-  _OBJ_ANIME( D11R0101_SWLEADER3_01 , anm_staystep_u )
-  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u )
+  _OBJ_ANIME( PAIR_TRAINER_01 , anm_swrival_bye )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d )
   _OBJ_ANIME_WAIT()
   
   //？？？：そこのあなた！
-  _PLAINWIN_MSG_DOWN( msg_d11r0101_swboss_01 )
+  _PLAINWIN_MSG_UP( msg_d11r0101_swboss_01 )
   _PLAINWIN_CLOSE()
+  
+  //アニメ：「！」
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_common_gyoe )
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME( D11R0101_SWLEADER3_01 , anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
   
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
   
   //アニメ：上を向く
   _OBJ_ANIME( D11R0101_SWLEADER3_01 , anm_staystep_u )
+  _TIME_WAIT( 4 )
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u )
   
   _TIME_WAIT( 4 )
   
   //アクロマ配置変更
-  _OBJ_POS_CHANGE( D11R0101_SWBOSS_01, 51, 0, 396, DIR_DOWN )
+  _OBJ_POS_CHANGE( D11R0101_SWBOSS_01, 51, 0, 0, DIR_DOWN )
   
   _SE_WAIT()
   _OBJ_ANIME_WAIT()
@@ -415,13 +421,51 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   
   //アニメ：アクロマ退場
   _OBJ_ANIME( D11R0101_SWBOSS_01 , anm_swboss_bye )
+  _TIME_WAIT(8*5)
+  _OBJ_ANIME( D11R0101_SWLEADER3_01 , anm_staystep_d )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d )
   _OBJ_ANIME_WAIT()
+  
+  //アニメ：アーティ：「？」
+  _OBJ_ANIME_AUTO( D11R0101_SWLEADER3_01, 52,8, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( D11R0101_SWLEADER3_01 , anm_common_hatena )
+  _OBJ_ANIME_WAIT()
+  
+  //アーティ：いまの…だれ？
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swleader3_05, D11R0101_SWLEADER3_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：アーティと主人公向き合う
+  _OBJ_ANIME( D11R0101_SWLEADER3_01 , anm_staystep_l )
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+  //アーティ：まあいいや
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swleader3_06, D11R0101_SWLEADER3_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (32)
+  
+  //アニメ：アーティ・退場
+  _OBJ_ANIME( D11R0101_SWLEADER3_01 , anm_swleader3_bye )
+  _OBJ_ANIME_WAIT()
+  
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
+  
+  //連れ歩き解除
+  _PAIR_TRAINER_FREE( SCRID_DUMMY, MV_DMY )
   
   //プラズマ団イベント関連の動作モデル削除
   _OBJ_DEL( D11R0101_SWRIVAL_01 )
   _OBJ_DEL( D11R0101_SWBOSS_01 )
-  _OBJ_DEL( D11R0101_SWLEADER4_01 )
-  */
+  _OBJ_DEL( D11R0101_SWLEADER3_01 )
+  
   //==================================//
   //下水道クリア
   $WK_SCENE_D11R0101 = 1
@@ -443,7 +487,7 @@ EVENT_END
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swplazma_bye_l
   _ANIME_DATA	AC_WALK_R_4F,1
-  _ANIME_DATA	AC_WALK_D_4F,1
+  _ANIME_DATA	AC_WALK_D_4F,4
   _ANIME_DATA	AC_WALK_R_4F,9
   _ANIME_DATA	ACMD_END,0
 
@@ -452,18 +496,26 @@ _ANIME_LABEL	anm_swplazma_bye_l
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swplazma_bye_r
   _ANIME_DATA	AC_WALK_L_4F,1
-  _ANIME_DATA	AC_WALK_D_4F,1
+  _ANIME_DATA	AC_WALK_D_4F,4
   _ANIME_DATA	AC_WALK_R_4F,9
   _ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//	ライバル：どつかれる
+//	主人公：おしのけられる
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_swrival_backstep
+_ANIME_LABEL	anm_player_backstep
   _ANIME_DATA	AC_DIR_L,1
   _ANIME_DATA AC_DIR_PAUSE_ON,1
   _ANIME_DATA	AC_WALK_R_8F,1
   _ANIME_DATA AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	主人公：元の位置に戻る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_return_pos
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
   _ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -482,10 +534,19 @@ _ANIME_LABEL	anm_swboss_comming
   _ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//	アクロマ：登場
+//	アクロマ：退場
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swboss_bye
+  _ANIME_DATA	AC_WALK_R_8F,1
   _ANIME_DATA	AC_WALK_D_8F,5
+  _ANIME_DATA	AC_WALK_R_8F,9
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	アーティ：退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader3_bye
+  _ANIME_DATA	AC_WALK_D_8F,2
   _ANIME_DATA	AC_WALK_R_8F,9
   _ANIME_DATA	ACMD_END,0
 
