@@ -1094,10 +1094,12 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゼクロム！？▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]！？▼
+そ　そんな……▼
+ゼッ　ゼクロムがっ！！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-11-16T06:49:36" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T13:21:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1105,10 +1107,12 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゼクロム！？▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]！？▼
+そ　そんな……▼
+ゼッ　ゼクロムがっ！！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-11-16T06:49:37" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T13:21:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1144,10 +1148,12 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レシラム！？▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]！？▼
+そ　そんな……▼
+レッ　レシラムがっ！！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-11-16T06:49:41" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T13:22:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1155,10 +1161,12 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レシラム！？▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]！？▼
+そ　そんな……▼
+レッ　レシラムがっ！！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-11-16T06:49:42" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T13:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1303,7 +1311,7 @@ N</Text>
 そんな　すうしき　あるものか……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:02:09" />
+				Time="2011-11-16T13:20:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
