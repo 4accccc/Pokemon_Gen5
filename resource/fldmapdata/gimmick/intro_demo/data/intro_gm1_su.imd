@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-11-07T17:20:47" source="intro_gm1_su.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-11-16T14:18:43" source="intro_gm1_su.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2011-11-07T17:20:47" source="intro_gm1_su.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2011-11-16T14:18:43" source="intro_gm1_su.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -20,16 +20,16 @@
 	magnify="1.000000"
 	tool_start_frame="1"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="5 5"
-	compress_material="on" material_size="4 4"
+	compress_node="merge" node_size="7 4"
+	compress_material="on" material_size="3 3"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="3" xyz="-4.250000 6.625000 -3.937500" whd="2.875000 1.000000 2.062500"/>
+<box_test pos_scale="3" xyz="0.149902 6.625000 -2.350098" whd="1.574951 0.750000 1.949951"/>
 
-<tex_image_array size="4">
+<tex_image_array size="3">
 	<tex_image index="0" name="intro_su01"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
@@ -38,10 +38,10 @@
 		path="C:/home/swan_data3d/demo/intro_town/gimmick/tex/intro_su01.tga"
 	>
 		<bitmap size="32">
-			0000 0000 0000 2aa0 0000 1aaa a000 16aa
-			a800 15aa aa00 156a aa80 155a aa80 0556
-			aaa0 0555 6aa0 0155 5aa8 0155 56a8 0055
-			55a8 0015 5568 0001 0558 0000 0000 0000
+			0000 0000 0000 1540 0000 3955 5000 3e55
+			5400 3f95 5500 3fe5 5540 3ff9 5540 0ffe
+			9550 0fff e550 03ff f950 03ff fe54 00ff
+			ff94 003f ffe4 0003 0ff4 0000 0000 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="intro_su02"
@@ -52,10 +52,10 @@
 		path="C:/home/swan_data3d/demo/intro_town/gimmick/tex/intro_su02.tga"
 	>
 		<bitmap size="32">
-			0000 0000 0000 1550 0000 2555 5000 2955
-			5400 2a55 5500 2a95 5540 2aa5 5540 0aa9
-			5550 0aaa 9550 02aa a554 02aa a954 00aa
-			aa54 002a aa94 0002 0aa4 0000 0000 0000
+			0000 0000 0000 3fc0 0000 27ff f000 29ff
+			fc00 2a7f ff00 2a9f ffc0 2aa7 ffc0 0aa9
+			7ff0 0aaa 9ff0 02aa a7f0 02aa a9fc 00aa
+			aa7c 002a aa9c 0002 0aac 0000 0000 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="2" name="intro_su03"
@@ -66,44 +66,27 @@
 		path="C:/home/swan_data3d/demo/intro_town/gimmick/tex/intro_su03.tga"
 	>
 		<bitmap size="32">
-			0000 0000 0000 2aa0 0000 1aaa a000 16aa
-			a800 15aa aa00 156a aa80 155a aa80 0556
-			aaa0 0555 6aa0 0155 5aa8 0155 56a8 0055
-			55a8 0015 5568 0001 0558 0000 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="3" name="intro_su04"
-		width="16" height="16" original_width="16" original_height="16"
-		format="palette4"
-		color0_mode="transparency"
-		palette_name="intro_su04_pl"
-		path="C:/home/swan_data3d/demo/intro_town/gimmick/tex/intro_su04.tga"
-	>
-		<bitmap size="32">
-			0000 0000 0000 1550 0000 2555 5000 2955
-			5400 2a55 5500 2a95 5540 2aa5 5540 0aa9
-			5550 0aaa 9550 02aa a554 02aa a954 00aa
-			aa54 002a aa94 0002 0aa4 0000 0000 0000
+			0000 0000 0000 1540 0000 3955 5000 3e55
+			5400 3f95 5500 3fe5 5540 3ff9 5540 0ffe
+			9550 0fff e550 030f f950 0303 fe54 0003
+			ff94 003f ffe4 0003 0ff4 0000 0000 0000
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="4">
+<tex_palette_array size="3">
 	<tex_palette index="0" name="intro_su01_pl" color_size="4">
-		7fff 0f27 0e85 7fff
+		7fff 0ec5 0e85 0f27
 	</tex_palette>
 	<tex_palette index="1" name="intro_su02_pl" color_size="4">
-		7fff 02ed 0391 7fff
+		7fff 02ed 0391 032f
 	</tex_palette>
 	<tex_palette index="2" name="intro_su03_pl" color_size="4">
-		7fff 0f27 0e85 7fff
-	</tex_palette>
-	<tex_palette index="3" name="intro_su04_pl" color_size="4">
-		7fff 02ed 0391 7fff
+		7fff 0ec5 0e85 0f27
 	</tex_palette>
 </tex_palette_array>
 
-<material_array size="4">
+<material_array size="3">
 	<material index="0" name="intro_01_sp"
 		light0="on" light1="off" light2="off" light3="off"
 		face="both"
@@ -119,7 +102,7 @@
 		diffuse="25 25 25"
 		ambient="31 31 31"
 		specular="0 0 0"
-		emission="0 0 0"
+		emission="12 12 12"
 		shininess_table_flag="off"
 		tex_image_idx="0" tex_palette_idx="0"
 		tex_tiling="clamp clamp"
@@ -143,7 +126,7 @@
 		diffuse="25 25 25"
 		ambient="31 31 31"
 		specular="0 0 0"
-		emission="0 0 0"
+		emission="12 12 12"
 		shininess_table_flag="off"
 		tex_image_idx="1" tex_palette_idx="1"
 		tex_tiling="clamp clamp"
@@ -167,7 +150,7 @@
 		diffuse="25 25 25"
 		ambient="31 31 31"
 		specular="0 0 0"
-		emission="0 0 0"
+		emission="12 12 12"
 		shininess_table_flag="off"
 		tex_image_idx="2" tex_palette_idx="2"
 		tex_tiling="clamp clamp"
@@ -176,40 +159,15 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="lambert103"
-		light0="on" light1="off" light2="off" light3="off"
-		face="both"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="0"
-		fog_flag="on"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="31 31 31"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="3" tex_palette_idx="3"
-		tex_tiling="clamp clamp"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
 </material_array>
 
-<matrix_array size="4">
+<matrix_array size="3">
 	<matrix index="0" mtx_weight="1" node_idx="1"/>
 	<matrix index="1" mtx_weight="1" node_idx="2"/>
 	<matrix index="2" mtx_weight="1" node_idx="3"/>
-	<matrix index="3" mtx_weight="1" node_idx="4"/>
 </matrix_array>
 
-<polygon_array size="4">
+<polygon_array size="3">
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
@@ -251,14 +209,14 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="16.000000 16.000000"/>
+					<tex st="0.000000 16.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="2.000000 0.000000 -2.000000"/>
-					<tex st="0.000000 16.000000"/>
+					<tex st="16.000000 16.000000"/>
 					<pos_xy xy="-2.000000 0.000000"/>
-					<tex st="0.000000 0.000000"/>
-					<pos_xz xz="-2.000000 2.000000"/>
 					<tex st="16.000000 0.000000"/>
+					<pos_xz xz="-2.000000 2.000000"/>
+					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="2.000000 0.000000"/>
 				</primitive>
 			</primitive_array>
@@ -278,41 +236,14 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="16.000000 0.000000"/>
+					<tex st="16.000000 16.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_s xyz="2.000000 0.000000 -2.000000"/>
+					<tex st="0.000000 16.000000"/>
+					<pos_xy xy="-2.000000 0.000000"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-2.000000 0.000000"/>
-					<tex st="0.000000 16.000000"/>
 					<pos_xz xz="-2.000000 2.000000"/>
-					<tex st="16.000000 16.000000"/>
-					<pos_xy xy="2.000000 0.000000"/>
-				</primitive>
-			</primitive_array>
-		</mtx_prim>
-	</polygon>
-	<polygon index="3" name="polygon3"
-		vertex_size="4" polygon_size="1"
-		triangle_size="0" quad_size="1"
-		volume_min="-2.000000 0.000000 -2.000000"
-		volume_max="2.000000 0.000000 2.000000"
-		volume_r="2.828369"
-		mtx_prim_size="1"
-		nrm_flag="on" clr_flag="off" tex_flag="on"
-	>
-		<mtx_prim index="0">
-			<mtx_list size="1">3</mtx_list>
-			<primitive_array size="1">
-				<primitive index="0" type="quads" vertex_size="4">
-					<mtx idx="0"/>
-					<tex st="0.000000 16.000000"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_s xyz="2.000000 0.000000 -2.000000"/>
-					<tex st="16.000000 16.000000"/>
-					<pos_xy xy="-2.000000 0.000000"/>
 					<tex st="16.000000 0.000000"/>
-					<pos_xz xz="-2.000000 2.000000"/>
-					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="2.000000 0.000000"/>
 				</primitive>
 			</primitive_array>
@@ -320,8 +251,8 @@
 	</polygon>
 </polygon_array>
 
-<node_array size="5">
-	<node index="0" name="null1" kind="null"
+<node_array size="4">
+	<node index="0" name="world_root" kind="null"
 		parent="-1"
 		child="1"
 		brother_next="-1"
@@ -335,16 +266,16 @@
 		display_size="0"
 	>
 	</node>
-	<node index="1" name="a121" kind="mesh"
+	<node index="1" name="a124" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="2"
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 1.000000"
+		scale="1.399902 1.399902 1.399902"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-13.000000 53.000000 -17.000000"
+		translate="11.000000 53.000000 -6.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -355,16 +286,16 @@
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
-	<node index="2" name="a122" kind="mesh"
+	<node index="2" name="a125" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="3"
 		brother_prev="1"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 1.000000"
+		scale="1.399902 1.399902 1.399902"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-20.000000 56.000000 -19.000000"
+		translate="10.000000 56.000000 -13.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -375,16 +306,16 @@
 	>
 		<display index="0" material="1" polygon="1" priority="0"/>
 	</node>
-	<node index="3" name="a123" kind="mesh"
+	<node index="3" name="a126" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="4"
+		brother_next="-1"
 		brother_prev="2"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 1.000000"
+		scale="1.399902 1.399902 1.399902"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-23.000000 59.000000 -23.000000"
+		translate="4.000000 59.000000 -16.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -395,30 +326,10 @@
 	>
 		<display index="0" material="2" polygon="2" priority="0"/>
 	</node>
-	<node index="4" name="a124" kind="mesh"
-		parent="0"
-		child="-1"
-		brother_next="-1"
-		brother_prev="3"
-		draw_mtx="on"
-		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
-		translate="-32.000000 61.000000 -29.500000"
-		visibility="on"
-		display_size="1"
-		vertex_size="4" polygon_size="1"
-		triangle_size="0" quad_size="1"
-		volume_min="-2.000000 0.000000 -2.000000"
-		volume_max="2.000000 0.000000 2.000000"
-		volume_r="2.828369"
-	>
-		<display index="0" material="3" polygon="3" priority="0"/>
-	</node>
 </node_array>
 
-<output_info vertex_size="16" polygon_size="4"
-	triangle_size="0" quad_size="4"/>
+<output_info vertex_size="12" polygon_size="3"
+	triangle_size="0" quad_size="3"/>
 
 </body>
 

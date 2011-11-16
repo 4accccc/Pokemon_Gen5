@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-11-07T17:28:14" source="intro_gm1_sp.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-11-16T13:55:27" source="intro_gm1_sp.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -15,50 +15,38 @@
 	tool_start_frame="1"
 	tool_end_frame="125"
 	interpolation="frame"
-	compress_material="on" material_size="4 4"
+	compress_material="on" material_size="3 3"
 	frame_step_mode="1"
 	tolerance_color="2"
 />
 
-<mat_color_data size="503">
-	25 31 0 31 31 31 31 31 31 31
+<mat_color_data size="379">
+	25 31 0 12 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
-	31 30 29 26 23 19 15 11 7 3
+	31 31 31 31 30 30 29 28 28 27
+	26 25 23 22 21 19 18 17 15 14
+	12 11 9 8 6 5 4 2 1 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 30 30 29 28 27 25 24 22 20
+	18 17 15 13 11 9 7 5 3 2
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 30
-	29 26 23 19 15 11 7 3 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 30
-	29 26 23 19 15 11 7 3 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 31 31
+	0 0 0 0 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
@@ -68,13 +56,12 @@
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 30
-	29 27 25 23 21 18 15 13 10 7
-	5 2 0
+	31 30 29 28 27 25 23 21 19 17
+	15 13 10 8 6 4 2 0 0 0
+	0 0 0 0 0 0 0 0 0
 </mat_color_data>
 
-<mat_color_anm_array size="4">
+<mat_color_anm_array size="3">
 	<mat_color_anm index="0" material_name="intro_01_sp">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
@@ -85,10 +72,10 @@
 		<specular_r frame_step="1" data_size="1" data_head="2"/>
 		<specular_g frame_step="1" data_size="1" data_head="2"/>
 		<specular_b frame_step="1" data_size="1" data_head="2"/>
-		<emission_r frame_step="1" data_size="1" data_head="2"/>
-		<emission_g frame_step="1" data_size="1" data_head="2"/>
-		<emission_b frame_step="1" data_size="1" data_head="2"/>
-		<polygon_alpha frame_step="1" data_size="125" data_head="3"/>
+		<emission_r frame_step="1" data_size="1" data_head="3"/>
+		<emission_g frame_step="1" data_size="1" data_head="3"/>
+		<emission_b frame_step="1" data_size="1" data_head="3"/>
+		<polygon_alpha frame_step="1" data_size="125" data_head="4"/>
 	</mat_color_anm>
 	<mat_color_anm index="1" material_name="lambert101">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
@@ -100,10 +87,10 @@
 		<specular_r frame_step="1" data_size="1" data_head="2"/>
 		<specular_g frame_step="1" data_size="1" data_head="2"/>
 		<specular_b frame_step="1" data_size="1" data_head="2"/>
-		<emission_r frame_step="1" data_size="1" data_head="2"/>
-		<emission_g frame_step="1" data_size="1" data_head="2"/>
-		<emission_b frame_step="1" data_size="1" data_head="2"/>
-		<polygon_alpha frame_step="1" data_size="125" data_head="128"/>
+		<emission_r frame_step="1" data_size="1" data_head="3"/>
+		<emission_g frame_step="1" data_size="1" data_head="3"/>
+		<emission_b frame_step="1" data_size="1" data_head="3"/>
+		<polygon_alpha frame_step="1" data_size="125" data_head="129"/>
 	</mat_color_anm>
 	<mat_color_anm index="2" material_name="lambert102">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
@@ -115,25 +102,10 @@
 		<specular_r frame_step="1" data_size="1" data_head="2"/>
 		<specular_g frame_step="1" data_size="1" data_head="2"/>
 		<specular_b frame_step="1" data_size="1" data_head="2"/>
-		<emission_r frame_step="1" data_size="1" data_head="2"/>
-		<emission_g frame_step="1" data_size="1" data_head="2"/>
-		<emission_b frame_step="1" data_size="1" data_head="2"/>
-		<polygon_alpha frame_step="1" data_size="125" data_head="253"/>
-	</mat_color_anm>
-	<mat_color_anm index="3" material_name="lambert103">
-		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
-		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
-		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
-		<ambient_r frame_step="1" data_size="1" data_head="1"/>
-		<ambient_g frame_step="1" data_size="1" data_head="1"/>
-		<ambient_b frame_step="1" data_size="1" data_head="1"/>
-		<specular_r frame_step="1" data_size="1" data_head="2"/>
-		<specular_g frame_step="1" data_size="1" data_head="2"/>
-		<specular_b frame_step="1" data_size="1" data_head="2"/>
-		<emission_r frame_step="1" data_size="1" data_head="2"/>
-		<emission_g frame_step="1" data_size="1" data_head="2"/>
-		<emission_b frame_step="1" data_size="1" data_head="2"/>
-		<polygon_alpha frame_step="1" data_size="125" data_head="378"/>
+		<emission_r frame_step="1" data_size="1" data_head="3"/>
+		<emission_g frame_step="1" data_size="1" data_head="3"/>
+		<emission_b frame_step="1" data_size="1" data_head="3"/>
+		<polygon_alpha frame_step="1" data_size="125" data_head="254"/>
 	</mat_color_anm>
 </mat_color_anm_array>
 
