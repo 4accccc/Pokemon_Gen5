@@ -1427,6 +1427,8 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WOR
         GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
         if(mpw->use_power[mpw->cursor_pos] == MONO_USE_POWER_OK){
           PMSND_PlaySE(MONOLITH_SE_DECIDE);
+        }else{
+          PMSND_PlaySE(MONOLITH_SE_BEEP);
         }
         return TRUE;
       }
@@ -1513,7 +1515,11 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WOR
           if(list_no != _LIST_NO_NONE){
             decide_on = TRUE;
             cursor_pos = list_no;
-            PMSND_PlaySE(MONOLITH_SE_SELECT);
+            if(mpw->use_power[cursor_pos] == MONO_USE_POWER_OK){
+              PMSND_PlaySE(MONOLITH_SE_SELECT);
+            }else{
+              PMSND_PlaySE(MONOLITH_SE_BEEP);
+            }
           }
         }
       }

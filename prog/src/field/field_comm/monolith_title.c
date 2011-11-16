@@ -260,11 +260,13 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
     if(ret == RET_DECIDE){
       (*seq)++;
     }
+#if 0
     // メッセージ表示(決定不可)
     else if(ret == RET_DISPMES){
       _Set_MsgStream( mtw, appwk->setup, title_mes_tbl[mtw->Mode] );
       *seq = _SEQ_STREAM_WAIT;
     }
+#endif
     break;
   // 決定時
   case _SEQ_DECIDE:
@@ -641,9 +643,9 @@ static s32 mt_chk_input( MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *mtw )
       // パネルの更新はしておく
       MonolithTool_PanelOBJ_Focus(appwk, mtw->panel, TPANEL_MAX, 
         mtw->cursor_pos, FADE_SUB_OBJ);
-      PMSND_PlaySE(MONOLITH_SE_SELECT);
+      PMSND_PlaySE(MONOLITH_SE_BEEP);
       // メッセージ表示
-      ret = RET_DISPMES;
+//      ret = RET_DISPMES;
     }
 //    OS_Printf("decide tp:%d\n",tp_ret);
   }
@@ -664,7 +666,8 @@ static s32 mt_chk_input( MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *mtw )
         // 抜ける
         ret = RET_DECIDE;
       }else{
-        ret = RET_DISPMES;
+//        ret = RET_DISPMES;
+        PMSND_PlaySE(MONOLITH_SE_BEEP);
       }
 //      OS_Printf("decide\n");
     }

@@ -32,6 +32,9 @@
 ///「隠しコマンド入力成功」
 #define MONOLITH_SE_SECRET_COMMAND    (SEQ_SE_FLD_133)
 
+///選択不可
+#define MONOLITH_SE_BEEP      (SEQ_SE_BEEP)
+
 
 //==============================================================================
 //  ME
