@@ -550,14 +550,14 @@
         <language name="JPN" width="256">ハナコ</language>
         <language name="JPN_KANJI" width="256">ハナコ</language>
       </row><row id="TRADE_POKE_37">
-        <language name="JPN" width="256">マイム</language>
-        <language name="JPN_KANJI" width="256">マイム</language>
+        <language name="JPN" width="256">エネぽん</language>
+        <language name="JPN_KANJI" width="256">エネぽん</language>
       </row><row id="TRADE_OYA_37">
         <language name="JPN" width="256">ユキエ</language>
         <language name="JPN_KANJI" width="256">ユキエ</language>
       </row><row id="TRADE_POKE_38">
-        <language name="JPN" width="256">ウソきち</language>
-        <language name="JPN_KANJI" width="256">ウソきち</language>
+        <language name="JPN" width="256">ミミィ</language>
+        <language name="JPN_KANJI" width="256">ミミィ</language>
       </row><row id="TRADE_OYA_38">
         <language name="JPN" width="256">ショウスケ</language>
         <language name="JPN_KANJI" width="256">ショウスケ</language>
@@ -574,8 +574,8 @@
         <language name="JPN" width="256">ツルマル</language>
         <language name="JPN_KANJI" width="256">ツルマル</language>
       </row><row id="TRADE_POKE_41">
-        <language name="JPN" width="256">メタモン</language>
-        <language name="JPN_KANJI" width="256">メタモン</language>
+        <language name="JPN" width="256">バッキー</language>
+        <language name="JPN_KANJI" width="256">バッキー</language>
       </row><row id="TRADE_OYA_41">
         <language name="JPN" width="256">ユイ</language>
         <language name="JPN_KANJI" width="256">ユイ</language>
@@ -586,8 +586,8 @@
         <language name="JPN" width="256">ハツネ</language>
         <language name="JPN_KANJI" width="256">ハツネ</language>
       </row><row id="TRADE_POKE_43">
-        <language name="JPN" width="256">チャック</language>
-        <language name="JPN_KANJI" width="256">チャック</language>
+        <language name="JPN" width="256">おヒゲ</language>
+        <language name="JPN_KANJI" width="256">おヒゲ</language>
       </row><row id="TRADE_OYA_43">
         <language name="JPN" width="256">ハツネ</language>
         <language name="JPN_KANJI" width="256">ハツネ</language>
