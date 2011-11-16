@@ -59,6 +59,22 @@ BOOL PLC_WP_CHK_Check(GAMESYS_WORK * gsys)
     }
   }
 
+  //ダミーＰＯＳチェック(グリッドのみ)
+  if( FIELDMAP_GetBaseSystemType( fieldWork ) == FLDMAP_BASESYS_GRID )
+  {
+    const POS_EVENT_DATA * pos_data;
+    VecFx32 pos;
+    MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+    EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
+    MMDL_GetVectorPos( mmdl, &pos );
+    pos_data = EVENTDATA_GetDummyPosEvent( evdata, evwork, &pos );
+    if( pos_data != NULL ) //ダミーイベントを取得できたらその場では侵入不可
+    {
+      NOZOMU_Printf( "Dummy Pos Dont warp\n");
+      return FALSE;
+    }
+  }
+
   if (tbl == NULL || max == 0)
   {
     if ( (zone_id != ZONE_ID_BC10)&&(zone_id != ZONE_ID_WC10) )
@@ -100,22 +116,6 @@ BOOL PLC_WP_CHK_Check(GAMESYS_WORK * gsys)
           return FALSE;
         }
       }
-    }
-  }
-
-  //ダミーＰＯＳチェック(グリッドのみ)
-  if( FIELDMAP_GetBaseSystemType( fieldWork ) == FLDMAP_BASESYS_GRID )
-  {
-    const POS_EVENT_DATA * pos_data;
-    VecFx32 pos;
-    MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
-    EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
-    MMDL_GetVectorPos( mmdl, &pos );
-    pos_data = EVENTDATA_GetDummyPosEvent( evdata, evwork, &pos );
-    if( pos_data != NULL ) //ダミーイベントを取得できたらその場では侵入不可
-    {
-      NOZOMU_Printf( "Dummy Pos Dont warp\n");
-      return FALSE;
     }
   }
 
