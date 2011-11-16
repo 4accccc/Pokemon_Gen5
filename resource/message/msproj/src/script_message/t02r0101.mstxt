@@ -218,12 +218,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ね！　よかったらなんだけど▼
-あなたの　ツンベアーと
-あたしの　エイパムを▽
+あなたの　ドリュウズと
+あたしの　エテボースを▽
 ポケモンこうかん　しよーよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:07:12" />
+				Time="2011-11-16T11:16:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -232,12 +232,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ね！　よかったらなんだけど▼
-あなたの　ツンベアーと
-あたしの　エイパムを▽
+あなたの　ドリュウズと
+あたしの　エテボースを▽
 ポケモン交換　しよーよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:06:07" />
+				Time="2011-11-16T11:16:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -326,11 +326,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたしの　エイパム
+			<Text>あたしの　エテボース
 ものひろいを　おぼえているのよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T05:49:32" />
+				Time="2011-11-16T11:16:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -338,11 +338,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたしの　エイパム
+			<Text>あたしの　エテボース
 ものひろいを　おぼえているのよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T05:49:33" />
+				Time="2011-11-16T11:16:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -433,11 +433,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あなたに　こうかんして　もらった
-ツンベアー！　つよくなったわ！▽
+ドリュウズ！　つよくなったわ！▽
 きっと　たまげちゃうわよ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:40:31" />
+				Time="2011-11-16T11:14:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -446,11 +446,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あなたに　交換して　もらった
-ツンベアー！　強くなったわ！▽
+ドリュウズ！　強くなったわ！▽
 きっと　たまげちゃうわよ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:06:32" />
+				Time="2011-11-16T11:14:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -539,11 +539,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>いくわよ！　あたしが
-ツンベアーを　どう　そだてたか▽
+ドリュウズを　どう　そだてたか▽
 じっせんで　おしえてあげるから！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:14:09" />
+				Time="2011-11-16T11:14:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -552,11 +552,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いくわよ！　あたしが
-ツンベアーを　どう　育てたか▽
+ドリュウズを　どう　育てたか▽
 実戦で　教えてあげるから！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:14:35" />
+				Time="2011-11-16T11:14:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -646,12 +646,12 @@
 			<Text>ふぁー！
 おもしろかった！▼
 ね！　よかったらなんだけど▼
-ユキノオーを　くれない？
-あたしの　ジュペッタ　あげるから！▽
+カバルドンを　くれない？
+あたしの　フーディン　あげるから！▽
 ポケモンこうかん　しよーよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:43:46" />
+				Time="2011-11-16T11:15:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -662,12 +662,12 @@
 			<Text>ふぁー！
 おもしろかった！▼
 ね！　よかったらなんだけど▼
-ユキノオーを　くれない？
-あたしの　ジュペッタ　あげるから！▽
+カバルドンを　くれない？
+あたしの　フーディン　あげるから！▽
 ポケモン交換　しよーよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:08:13" />
+				Time="2011-11-16T11:15:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -757,11 +757,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたしの　ジュペッタ
+			<Text>あたしの　フーディン
 おみとおしを　おぼえているのよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:45:21" />
+				Time="2011-11-16T11:15:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -769,11 +769,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたしの　ジュペッタ
+			<Text>あたしの　フーディン
 おみとおしを　おぼえているのよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:11:09" />
+				Time="2011-11-16T11:15:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -866,11 +866,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あなたに　こうかんして　もらった
-ユキノオー！　つよくなったわ！▽
+カバルドン！　つよくなったわ！▽
 きっと　たまげちゃうわよ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:11:17" />
+				Time="2011-11-16T11:15:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -879,11 +879,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あなたに　交換して　もらった
-ユキノオー！　強くなったわ！▽
+カバルドン！　強くなったわ！▽
 きっと　たまげちゃうわよ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:10:54" />
+				Time="2011-11-16T11:15:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -972,11 +972,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>いくわよ！　あたしが
-ユキノオーを　どう　そだてたか▽
+カバルドンを　どう　そだてたか▽
 じっせんで　おしえてあげるから！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:15:04" />
+				Time="2011-11-16T11:15:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -985,11 +985,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いくわよ！　あたしが
-ユキノオーを　どう　育てたか▽
+カバルドンを　どう　育てたか▽
 実戦で　教えてあげるから！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:15:09" />
+				Time="2011-11-16T11:15:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
