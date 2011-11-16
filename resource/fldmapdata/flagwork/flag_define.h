@@ -479,6 +479,8 @@
 #define FE_C01GYM0101_LINKEVENT_03         463 /* 0x01cf サンヨウレストラン：リンクイベント・デント会話フラグ */
 #define FE_C07GYM0101_LEADER7              464 /* 0x01d0 セッカジム：ハチク話しかけフラグ */
 #define FE_D23R0101_ITEMGET_02             465 /* 0x01d1 コンビナート：現場監督のアイテム入手フラグ */
+#define FE_H04R0801_FIRSTLOOK              466 /* 0x01d2 ビレッジブリッジ：橋の下の部屋でイベントを見たフラグ */
+#define FE_D23R0101_ITEMGET_03             467 /* 0x01d3 コンビナート：せいそくちリストイベントアイテム入手フラグ */
 
 #define FE_AREA_END                        599 /* 0x0257  */
 
