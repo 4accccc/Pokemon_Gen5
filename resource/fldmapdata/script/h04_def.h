@@ -19,5 +19,6 @@
 #define SCRID_H04_BACKPACKERW_01 (12)
 #define SCRID_H04_MAN3_01 (13)
 #define SCRID_INIT_H04 (14)
+#define SCRID_H04_GIRL2_01 (15)
 
 #endif //_H04_DEF_H_

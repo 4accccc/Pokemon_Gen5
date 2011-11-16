@@ -1,5 +1,5 @@
 #event data
-#save date:2011/10/20 15:32:05
+#save date:2011/11/16 19:35:15
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d23r0101.wms
 #SECTION START:OBJ_EVENT
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--40 -16 -680
+-8 -16 -680
 #event number: 2
 #type
 1
@@ -324,37 +324,6 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-D23_TREE_01
-#OBJ CODE Number
-TREE
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_HIDEN_IAIGIRI
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-232 0 -408
-#event number: 11
-#type
-1
-#ID name
 D23_TREE_02
 #OBJ CODE Number
 TREE
@@ -382,6 +351,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -184 0 -136
+#event number: 11
+#type
+1
+#ID name
+D23R0101_WOMAN2_01
+#OBJ CODE Number
+WOMAN2
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_D23R0101_WOMAN2_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 -16 -616
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

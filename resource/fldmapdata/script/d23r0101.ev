@@ -11,6 +11,8 @@
   .include  "scr_seq_def.h"
   .include  "msg_d23r0101.h"
   .include  "d23r0101.h"
+  
+  //@author suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -25,6 +27,7 @@ _EVENT_DATA		ev_d23r0101_workman2_02
 _EVENT_DATA		ev_d23r0101_workman2_03
 _EVENT_DATA		ev_d23r0101_assistantm_01
 _EVENT_DATA		ev_init_d23r0101
+_EVENT_DATA		ev_d23r0101_woman2_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -299,6 +302,7 @@ _TALK_START_TURN_NOT()
 	SWITCH $WK_SCENE_D23R0101_ASSISTANTM
 	CASE 0 THEN
 		_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_assistantm_01 )
+		_AB_KEYWAIT_MARK()
 		_MSGWIN_CLOSE()
 		
 		//主人公と向き合って
@@ -314,6 +318,7 @@ _TALK_START_TURN_NOT()
 		_OBJ_ANIME_WAIT()
 		
 		_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_assistantm_02 )
+		_AB_KEYWAIT_MARK()
 		_MSGWIN_CLOSE()
 	
 		//煙突に移動する
@@ -338,6 +343,7 @@ _TALK_START_TURN_NOT()
 	//煙突の前
 	CASE 1 THEN
 		_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_assistantm_03 )
+		_AB_KEYWAIT_MARK()
 		_MSGWIN_CLOSE()
 		
 		//主人公と向き合って
@@ -353,6 +359,7 @@ _TALK_START_TURN_NOT()
 		_OBJ_ANIME_WAIT()
 
 		_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_assistantm_04 )
+		_AB_KEYWAIT_MARK()
 		_MSGWIN_CLOSE()
 
 		//煙突に移動する
@@ -379,6 +386,7 @@ _TALK_START_TURN_NOT()
 	//ガスホルダーの前
 	CASE 2 THEN
 		_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_assistantm_05 )
+		_AB_KEYWAIT_MARK()
 		_MSGWIN_CLOSE()
 		
 		//主人公と向き合って
@@ -394,6 +402,7 @@ _TALK_START_TURN_NOT()
 		IF FLAG_OFF( FE_D23R0101_ITEMGET_01 ) THEN
 		
 			_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_assistantm_06 )
+			_AB_KEYWAIT_MARK()
 			_MSGWIN_CLOSE()
 			
 			//どうぐ入手処理：ピーピーエイド
@@ -407,6 +416,7 @@ _TALK_START_TURN_NOT()
 		ELSE
 		
 			_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_assistantm_07 )
+			_AB_KEYWAIT_MARK()
 			_MSGWIN_CLOSE()
 		
 		ENDIF
@@ -544,4 +554,52 @@ _ANIME_LABEL	anm_staystep_r
 _ANIME_LABEL	anm_common_gyoe
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
-	
+
+/************************************************************/
+/*		せいそくちリストイベント						*/
+/************************************************************/
+EVENT_START	ev_d23r0101_woman2_01
+
+	//イベント終了前か？
+	IF FLAG_OFF( FE_D23R0101_ITEMGET_03 ) THEN
+
+		_TALK_OBJ_START()
+		
+		//あら？
+		_BALLOONWIN_TALKOBJ_MSG(msg_d23r0101_list_01)
+		
+		//せいそくちリストが埋まっているかチェック
+		_SC_GET_ZONE_POKE_CMP_CHECK( ZONE_ID_D23 ,SCR_HABITAT_TYPE_LAND ,FALSE ,SCWK_ANSWER )
+
+		//みたコンプしている場合
+		IF $SCWK_ANSWER == TRUE THEN
+		
+			_BALLOONWIN_TALKOBJ_MSG(msg_d23r0101_list_03)
+			_MSGWIN_CLOSE()
+			
+			_ITEM_EVENT_KEYWAIT( ITEM_SUUPAABOORU, 5 )
+			
+			//========================================//
+			//イベント終了フラグセット
+			_FLAG_SET(FE_D23R0101_ITEMGET_03)
+			
+			//========================================//
+		
+		ELSE
+			
+			//うまってないんだね
+			_BALLOONWIN_TALKOBJ_MSG(msg_d23r0101_list_02)
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		ENDIF
+
+
+	//イベント終了後の場合
+	ELSE
+
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d23r0101_list_04 )
+
+	ENDIF
+
+EVENT_END

@@ -13,7 +13,7 @@
   .include  "c12pc0101.h"
   
   //@author Mizuguchi_Mai（案内イベント・ショップ等配置担当）
-  //@author	suginaka_katsunori	//性格NPC配置・演出調整
+  //@author	suginaka_katsunori	//性格NPC配置・演出調整・スクリプト修正
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -66,6 +66,7 @@ EVENT_START ev_reserve_c12pc0101_pcguide_01
     
 	_CALL sub_heal_kaifuku_anime     //回復アニメ呼び出し
 	_TEMOTI_POKEMON_KAIFUKU()        //手持ちポケモン回復処理
+    _ADD_RECORD( RECID_RECOVERY_PC, 1 ) //レコード加算
     
 	_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_PC_AZUKE )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_uketori )
@@ -94,7 +95,7 @@ EVENT_START ev_reserve_c12pc0101_pcguide_01
 
 	//ベル：これはパソコン
 	_BALLOONWIN_OBJMSG_POS( msg_c12pc0101_white_04 , C12PC0101_SWBELL_01 , POS_DEFAULT )
-  _MSGWIN_CLOSE()
+	_MSGWIN_CLOSE()
 	
 	//アニメ：主人公・ベル、ショップ方面を見る
 	_OBJ_ANIME( C12PC0101_SWBELL_01, anm_staystep_d )
@@ -129,7 +130,7 @@ EVENT_START ev_reserve_c12pc0101_pcguide_01
 	
 	//ベル：ここはショップ
 	_BALLOONWIN_OBJMSG_POS( msg_c12pc0101_white_06 , C12PC0101_SWBELL_01 , POS_DEFAULT )
-  _MSGWIN_CLOSE()
+	_MSGWIN_CLOSE()
 	
 	//アニメ：主人公・ベル、向き合う
 	_OBJ_ANIME( C12PC0101_SWBELL_01, anm_staystep_u )
@@ -146,30 +147,30 @@ EVENT_START ev_reserve_c12pc0101_pcguide_01
 	
 	//ベル：つぎは
 	_BALLOONWIN_OBJMSG_POS( msg_c12pc0101_white_09 , C12PC0101_SWBELL_01 , POS_DEFAULT )
-  _MSGWIN_CLOSE()
+	_MSGWIN_CLOSE()
 	
 	//ベル退場
 	_OBJ_ANIME( C12PC0101_SWBELL_01, anm_pcguide_bell_bye )
 	_OBJ_ANIME_WAIT()
 	
 	//階段SE再生
-  _SE_PLAY( SEQ_SE_KAIDAN )
-  _SE_WAIT()
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
   
-  //ベル動作モデル非表示
-  _OBJ_DEL(C12PC0101_SWBELL_01)
+	//ベル動作モデル非表示
+	_OBJ_DEL(C12PC0101_SWBELL_01)
   
-  //==================================//
+	//==================================//
   
-  //ゾーンBGM変更フラグをリセット
+	//ゾーンBGM変更フラグをリセット
 	_FLAG_RESET( SYS_FLAG_BGM_C12PC0101_GUIDE)
 	
-  //==================================//
+	//==================================//
   
-  //フィールド通常曲に戻す
+	//フィールド通常曲に戻す
 	_BGM_NOW_MAP_RECOVER()
   
-  //==================================//
+	//==================================//
 	
 	//C12のSCENE_CHANGE起動
 	$WK_SCENE_C12_WHITE_MEET = 5

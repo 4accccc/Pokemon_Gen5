@@ -1959,7 +1959,7 @@ EVENT_END
 /************************************************************/
 EVENT_START   ev_c12_game_start_init
 
-   _OBJ_ADD_EX( 45, 763, DIR_DOWN, MMDL_ID_EVENTOBJ_00, SWMAMA2, MV_DMY )
+   _OBJ_ADD_EX( 45, 763, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, SWMAMA2, MV_DMY )
    
 EVENT_END
 /************************************************************/
@@ -1975,9 +1975,6 @@ EVENT_START   ev_c12_game_start
   _OBJ_ANIME_WAIT()
 
   _TIME_WAIT(60)
-  
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_d )
-  _OBJ_ANIME_WAIT()
   
   _TIME_WAIT( 30 )
   

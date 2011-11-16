@@ -13,7 +13,7 @@
   .include  "h04.h"
 
   //@author fujimura_souichirou
-  //@author suginaka_katsunori //演出調整・作り直し
+  //@author suginaka_katsunori //演出調整・POSイベント作り直し
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -36,6 +36,7 @@ _EVENT_DATA    ev_h04_oldman1_01
 _EVENT_DATA    ev_h04_backpackerw_01
 _EVENT_DATA    ev_h04_man3_01
 _EVENT_DATA	ev_init_h04
+_EVENT_DATA	ev_h04_girl2_01
 _EVENT_DATA_END
 
 //主人公座標取得変数
@@ -889,3 +890,32 @@ _ANIME_LABEL	anm_common_tenten
 _ANIME_LABEL	anm_common_onpu
 	_ANIME_DATA	AC_MARK_ONPU,1
 	_ANIME_DATA	ACMD_END,0
+
+/************************************************************/
+/*	GIRL2	アイテム入手イベント					*/
+/************************************************************/
+EVENT_START	ev_h04_girl2_01
+
+	//アイテム入手済みの場合
+	IF FLAG_ON( FH_01) THEN
+		
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_girl2_03 )
+	
+	//まだアイテムを入手していない
+	ELSE
+		
+		//橋の下の部屋イベントを見た場合
+		IF FLAG_ON( FE_H04R0801_FIRSTLOOK ) THEN
+			
+			_EASY_TALK_ITEM_EVENT(ITEM_OBONNOMI, 5, FH_01, msg_h04_girl2_02, msg_h04_girl2_03, msg_h04_girl2_03 )
+		
+		//まだ見ていない場合
+		ELSE
+		
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_girl2_01 )
+		
+		ENDIF
+	
+	ENDIF
+
+EVENT_END
