@@ -124,6 +124,54 @@ static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town_hito[] = {
 };
 
 ///==================================
+/// intro_town02sp Unit File Resource
+
+static const u16 res_intro_town_file_intro_town02sp[] = {
+ NARC_data_demo3d_intro_town02sp_nsbmd,
+ NARC_data_demo3d_intro_town03_ita_nsbta,
+};
+
+static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town02sp[] = {
+ { res_intro_town_file_intro_town02sp, 2 },
+};
+
+///==================================
+/// intro_town02su Unit File Resource
+
+static const u16 res_intro_town_file_intro_town02su[] = {
+ NARC_data_demo3d_intro_town02su_nsbmd,
+ NARC_data_demo3d_intro_town03_ita_nsbta,
+};
+
+static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town02su[] = {
+ { res_intro_town_file_intro_town02su, 2 },
+};
+
+///==================================
+/// intro_town02au Unit File Resource
+
+static const u16 res_intro_town_file_intro_town02au[] = {
+ NARC_data_demo3d_intro_town02au_nsbmd,
+ NARC_data_demo3d_intro_town03_ita_nsbta,
+};
+
+static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town02au[] = {
+ { res_intro_town_file_intro_town02au, 2 },
+};
+
+///==================================
+/// intro_town02wi Unit File Resource
+
+static const u16 res_intro_town_file_intro_town02wi[] = {
+ NARC_data_demo3d_intro_town02wi_nsbmd,
+ NARC_data_demo3d_intro_town03_ita_nsbta,
+};
+
+static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town02wi[] = {
+ { res_intro_town_file_intro_town02wi, 2 },
+};
+
+///==================================
 /// intro_town03sp Unit File Resource
 
 static const u16 res_intro_town_file_intro_town03sp[] = {
@@ -247,6 +295,13 @@ static const DEMO3D_FILE_UNIT_TBL res_intro_town_file_unit_intro_town_hito_tbl[]
  { res_intro_town_file_unit_intro_town_hito, 1 },
 };
 
+static const DEMO3D_FILE_UNIT_TBL res_intro_town_file_unit_intro_town02sp_tbl[] = {
+ { res_intro_town_file_unit_intro_town02sp, 1 },
+ { res_intro_town_file_unit_intro_town02su, 1 },
+ { res_intro_town_file_unit_intro_town02au, 1 },
+ { res_intro_town_file_unit_intro_town02wi, 1 },
+};
+
 static const DEMO3D_FILE_UNIT_TBL res_intro_town_file_unit_intro_town03sp_tbl[] = {
  { res_intro_town_file_unit_intro_town03sp, 1 },
  { res_intro_town_file_unit_intro_town03su, 1 },
@@ -269,6 +324,7 @@ static const DEMO3D_SCENE_UNIT res_intro_town_scene_unit[] = {
  { res_intro_town_file_unit_intro_town_obj1_tbl, 1, DEMO3D_UNITCHG_NONE },
  { res_intro_town_file_unit_intro_town_obj2_tbl, 1, DEMO3D_UNITCHG_NONE },
  { res_intro_town_file_unit_intro_town_hito_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_intro_town_file_unit_intro_town02sp_tbl, 4, DEMO3D_UNITCHG_SEASON },
  { res_intro_town_file_unit_intro_town03sp_tbl, 4, DEMO3D_UNITCHG_SEASON },
  { res_intro_town_file_unit_intro_hira_sp_tbl, 4, DEMO3D_UNITCHG_SEASON },
  { res_intro_town_file_unit_intro_cs_tbl, 1, DEMO3D_UNITCHG_NONE },
