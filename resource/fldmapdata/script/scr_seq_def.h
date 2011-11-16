@@ -14393,16 +14393,20 @@
 
 //--------------------------------------------------------------
 /**
- * @brief リゾート用　タマゴ孵化歩数を０にする
- * @param[in]   idx   パーティ内で何番目のポケモンか
+ * @brief リゾート用　タマゴ孵化歩数を減算
+ * @param[in]   index リスト何番目か
+ * @param[in]   pos   何番目のポケモンか
+ * @param[out]  ret_wk  減算後の孵化歩数
  */
 //--------------------------------------------------------------
-#define _RESORT_HATCH( idx ) \
-      _ASM_RESORT_HATCH idx
+#define _RESORT_HATCH( index, pos, ret_wk ) \
+      _ASM_RESORT_HATCH index, pos, ret_wk
 
-  .macro _ASM_RESORT_HATCH idx
+  .macro _ASM_RESORT_HATCH index, pos, ret_wk
   .short EV_SEQ_RESORT_HATCH
-  .short \idx
+  .short \index
+  .short \pos
+  .short \ret_wk
   .endm
 
 //--------------------------------------------------------------

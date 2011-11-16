@@ -180,6 +180,19 @@ def  convertService( csv, data, h_define, h_item, gmm, h_service, presentlist_h 
         exit(1)
       end
 
+    when "孵化"
+      if $item_list_hash[param1] != "孵化確率用"
+        puts "#{tag}に孵化確率用以外の抽選アイテムリストが指定されています"
+        exit(1)
+      end
+      begin
+        data.write_u16( predata.search( "RESORT_LIST_ID_#{param1}", "#{row}行の抽選アイテムリスト" ) )
+        data.write_u16( 0 )
+      rescue HeaderSearchError
+        exit(1)
+      end
+
+
     else
       data.write_u16( param1 )
       if param2 == nil 

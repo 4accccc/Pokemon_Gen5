@@ -1426,9 +1426,9 @@ _RET
 //==============================================================
 sub_resident_service_effort:
 {
-  _RESORT_GET_MSGID( RESORT_SHOP_EXERCIDE_POKESEL_MSGID, LWK_MSGID )
-  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
-	_BALLOONWIN_CLOSE()
+  //ポケモン選択文
+  _CALL sub_poke_select_msg
+
   _SELECT_TEMOTI_POKE( LWK_RET, LWK_RET_IDX, 0 )
 
   IF $LWK_RET == TRUE THEN
@@ -1483,8 +1483,7 @@ sub_resident_service_effort:
         _CALL sub_resident_service_effect
 
         //演出終了
-        _RESORT_GET_MSGID( RESORT_SHOP_EXERCIDE_OK_MSGID, LWK_MSGID )
-        _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+        _CALL sub_service_end_msg
 
         //あげた
         _CALL sub_resident_gold
@@ -1505,9 +1504,8 @@ _RET
 //==============================================================
 sub_resident_service_friend:
 {
-  _RESORT_GET_MSGID( RESORT_SHOP_BREEDER_POKESEL_MSGID, LWK_MSGID )
-  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
-	_BALLOONWIN_CLOSE()
+  //ポケモン選択文
+  _CALL sub_poke_select_msg
   _SELECT_TEMOTI_POKE( LWK_RET, LWK_RET_IDX, 0 )
 
   IF $LWK_RET == TRUE THEN
@@ -1526,8 +1524,7 @@ sub_resident_service_friend:
         _CALL sub_resident_service_effect
 
         //演出終了
-        _RESORT_GET_MSGID( RESORT_SHOP_BREEDER_OK_MSGID, LWK_MSGID )
-        _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+        _CALL sub_service_end_msg
 
         //お金
         _CALL sub_resident_gold
@@ -1548,9 +1545,10 @@ _RET
 //==============================================================
 sub_resident_service_hatch:
 {
-  _RESORT_GET_MSGID( RESORT_SHOP_NURSERY_POKESEL_MSGID, LWK_MSGID )
-  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
-	_BALLOONWIN_CLOSE()
+  DEFINE_LOCAL LWK_HATCH
+
+  //ポケモン選択文
+  _CALL sub_poke_select_msg
   _SELECT_TEMOTI_TAMAGO( LWK_RET, LWK_RET_IDX, 0 )
 
   IF $LWK_RET == TRUE THEN
@@ -1563,19 +1561,33 @@ sub_resident_service_hatch:
       //演出
       _CALL sub_resident_service_effect
 
-      _RESORT_HATCH( LWK_RET_IDX )
+      //減らす
+      //割合を取得して、百分率で現在の値を減らす
+      _RESORT_HATCH( LWK_LIST_RET_IDX, LWK_RET_IDX, LWK_RET )
 
-      //生まれますよ
-      _RESORT_GET_MSGID( RESORT_SHOP_NURSERY_HATCH_MSGID, LWK_MSGID )
+      IF $LWK_RET == 0 THEN
+        _RESORT_GET_MSGID( RESORT_SHOP_NURSERY_HATCH_00_MSGID, LWK_MSGID )
+      ELSIF $LWK_RET <= 5 THEN
+        _RESORT_GET_MSGID( RESORT_SHOP_NURSERY_HATCH_01_MSGID, LWK_MSGID )
+      ELSIF $LWK_RET <= 10 THEN
+        _RESORT_GET_MSGID( RESORT_SHOP_NURSERY_HATCH_02_MSGID, LWK_MSGID )
+      ELSIF $LWK_RET <= 40 THEN
+        _RESORT_GET_MSGID( RESORT_SHOP_NURSERY_HATCH_03_MSGID, LWK_MSGID )
+      ELSE
+        _RESORT_GET_MSGID( RESORT_SHOP_NURSERY_HATCH_04_MSGID, LWK_MSGID )
+      ENDIF
       _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
 	    _BALLOONWIN_CLOSE()
 
-      //生まれる
-      _PARTY_POKE_EGG_BIRTH( LWK_RET )
+      //もし０なら産まれる
+      IF $LWK_RET == 0 THEN
+        //生まれる
+        _PARTY_POKE_EGG_BIRTH( LWK_RET )
 
-      //おわる文
-      _RESORT_GET_MSGID( RESORT_SHOP_NURSERY_OK_MSGID, LWK_MSGID )
-      _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+        //おわる文
+        _RESORT_GET_MSGID( RESORT_SHOP_NURSERY_OK_MSGID, LWK_MSGID )
+        _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+      ENDIF
 
       //お金払う
       _CALL sub_resident_gold
@@ -1595,9 +1607,8 @@ _RET
 //==============================================================
 sub_resident_service_lv:
 {
-  _RESORT_GET_MSGID( RESORT_SHOP_EXERCIDE_POKESEL_MSGID, LWK_MSGID )
-  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
-	_BALLOONWIN_CLOSE()
+  //ポケモン選択文
+  _CALL sub_poke_select_msg
   _SELECT_TEMOTI_POKE( LWK_RET, LWK_RET_IDX, 0 )
 
   IF $LWK_RET == TRUE THEN
@@ -1616,8 +1627,7 @@ sub_resident_service_lv:
         //演出
         _CALL sub_resident_service_effect
         //終了
-        _RESORT_GET_MSGID( RESORT_SHOP_EXERCIDE_OK_MSGID, LWK_MSGID )
-        _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+        _CALL sub_service_end_msg
         //金支払い
         _CALL sub_resident_gold
       ELSE
@@ -1664,6 +1674,57 @@ sub_resident_service_effect:
 
   //フェード
   _CALL sub_camera_ret
+}
+_RET
+
+//==============================================================
+//サブルーチン：ポケモン選択メッセージ
+//==============================================================
+sub_poke_select_msg:
+{
+	DEFINE_LOCAL LWK_TYPE
+
+  _RESORT_GET_DATA( RESORT_GET_PARAM_SHOPKIND, LWK_TYPE )
+
+  SWITCH $LWK_TYPE
+  CASE RESORT_RESIDENT_TYPE_PARLOR THEN //美容室
+    _RESORT_GET_MSGID( RESORT_SHOP_PARLOR_POKESEL_MSGID, LWK_MSGID )
+  CASE RESORT_RESIDENT_TYPE_EXERCICE THEN //道場
+    _RESORT_GET_MSGID( RESORT_SHOP_EXERCIDE_POKESEL_MSGID, LWK_MSGID )
+  CASE RESORT_RESIDENT_TYPE_NURSERY THEN //保育所
+    _RESORT_GET_MSGID( RESORT_SHOP_NURSERY_POKESEL_MSGID, LWK_MSGID )
+  CASE RESORT_RESIDENT_TYPE_CAFE THEN //カフェ（レストラン？）
+    _RESORT_GET_MSGID( RESORT_SHOP_BREEDER_POKESEL_MSGID, LWK_MSGID )
+  DEFAULT
+    _RESORT_GET_MSGID( RESORT_SHOP_PARLOR_POKESEL_MSGID, LWK_MSGID )
+  ENDSWITCH
+
+  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+	_BALLOONWIN_CLOSE()
+}
+_RET
+
+//==============================================================
+//サブルーチン：サービス終了メッセージ
+//==============================================================
+sub_service_end_msg:
+{
+	DEFINE_LOCAL LWK_TYPE
+
+  _RESORT_GET_DATA( RESORT_GET_PARAM_SHOPKIND, LWK_TYPE )
+
+  SWITCH $LWK_TYPE
+  CASE RESORT_RESIDENT_TYPE_PARLOR THEN //美容室
+    _RESORT_GET_MSGID( RESORT_SHOP_PARLOR_OK_MSGID, LWK_MSGID )
+  CASE RESORT_RESIDENT_TYPE_EXERCICE THEN //道場
+    _RESORT_GET_MSGID( RESORT_SHOP_EXERCIDE_OK_MSGID, LWK_MSGID )
+  CASE RESORT_RESIDENT_TYPE_CAFE THEN //カフェ（レストラン？）
+    _RESORT_GET_MSGID( RESORT_SHOP_BREEDER_OK_MSGID, LWK_MSGID )
+  DEFAULT
+    _RESORT_GET_MSGID( RESORT_SHOP_PARLOR_OK_MSGID, LWK_MSGID )
+  ENDSWITCH
+
+  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
 }
 _RET
 

@@ -471,8 +471,16 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
     return SexGetMsgID( sex, resort_nursery_01_m, resort_nursery_01_f );
   case RESORT_SHOP_NURSERY_POKESEL_MSGID:
     return SexGetMsgID( sex, resort_nursery_00_m, resort_nursery_00_f );
-  case RESORT_SHOP_NURSERY_HATCH_MSGID:
+  case RESORT_SHOP_NURSERY_HATCH_00_MSGID:
     return SexGetMsgID( sex, resort_nursery_02_m, resort_nursery_02_f );
+  case RESORT_SHOP_NURSERY_HATCH_01_MSGID:
+    return SexGetMsgID( sex, resort_nursery_03_m, resort_nursery_03_f );
+  case RESORT_SHOP_NURSERY_HATCH_02_MSGID:
+    return SexGetMsgID( sex, resort_nursery_04_m, resort_nursery_04_f );
+  case RESORT_SHOP_NURSERY_HATCH_03_MSGID:
+    return SexGetMsgID( sex, resort_nursery_05_m, resort_nursery_05_f );
+  case RESORT_SHOP_NURSERY_HATCH_04_MSGID:
+    return SexGetMsgID( sex, resort_nursery_06_m, resort_nursery_06_f );
   case RESORT_CELEB_GREET_MSGID:
     return RESORT_UTIL_GetCelebData( p_set, p_abstruct, RESORT_BINARY_PRESET_PARAM_CELEB_GREET );
   case RESORT_CELEB_TRADE_GREET_MSGID:

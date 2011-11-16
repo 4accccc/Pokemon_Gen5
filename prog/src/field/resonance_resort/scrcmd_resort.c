@@ -881,7 +881,7 @@ VMCMD_RESULT EvCmdResortLot( VMHANDLE *p_core, void *p_wk_adrs )
   RESORT_ABSTRUCT_DATA *p_abstruct = RESORT_PEOPLE_GetAbstructData( p_people );
 
   GF_ASSERT( RESORT_PEOPLE_GetPeopleData(p_people,RESORT_PEOPLE_DATA_PARAM_TYPE) == RESORT_PEOPLE_TYPE_RESIDENT );
-  GF_ASSERT( param < 6 );
+  GF_ASSERT( param < 16 );
 
   *p_ret_wk   = RESORT_LOT_FAILURE;
 
@@ -1060,7 +1060,7 @@ VMCMD_RESULT EvCmdResortAddEffort( VMHANDLE *p_core, void *p_wk_adrs )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  タマゴを孵化する(孵化歩数を０にする)
+ *	@brief  タマゴ孵化歩数をいくつ減算するか
  *
  *	@param	VMHANDLE *p_core 仮想マシンハンドル
  *	@param	*p_wk_adrs       スクリプトコマンドワーク
@@ -1074,14 +1074,88 @@ VMCMD_RESULT EvCmdResortHatch( VMHANDLE *p_core, void *p_wk_adrs )
   SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
+  RESORT_SYSTEM *p_sys = RESORT_UTIL_GetSystem( p_field );
   
-  u16 idx   = SCRCMD_GetVMWorkValue(p_core, p_wk );
+  u16 idx         = SCRCMD_GetVMWorkValue(p_core, p_wk );
+  u16 pos         = SCRCMD_GetVMWorkValue(p_core, p_wk );
+  u16 *p_ret_wk  = SCRCMD_GetVMWork(p_core, p_wk );
 
-  POKEPARTY *p_party = GAMEDATA_GetMyPokemon( GAMESYSTEM_GetGameData(p_gamesys) );
-  POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer( p_party, idx );
+  RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
+  RESORT_PEOPLE* p_people = RESORT_UTIL_GetFrontPeople( p_wk, p_people_sys );
+  RESORT_ABSTRUCT_DATA *p_abstruct = RESORT_PEOPLE_GetAbstructData( p_people );
 
-  GF_ASSERT( PP_Get( p_pp, ID_PARA_tamago_flag, NULL ) == TRUE );
-  PP_Put( p_pp, ID_PARA_friend, 0 );
+  u32 rate  = 0;
+
+  GF_ASSERT( RESORT_PEOPLE_GetPeopleData(p_people,RESORT_PEOPLE_DATA_PARAM_TYPE) == RESORT_PEOPLE_TYPE_RESIDENT );
+
+  GF_ASSERT( idx < 16 );
+  GF_ASSERT( pos < 6 );
+
+  //この人の住民を取得
+  //そこからリストのサービスIDを取得
+  //サービスIDに登録されている抽選アイテムリストIDを取得
+  //抽選アイテムリストを乱数にかける
+  {
+    const RESORT_BINARY_SHOP  *cp_shop = RESORT_SYSTEM_GetBinaryShop(p_sys);
+    const RESORT_BINARY_PRESENT *cp_present = RESORT_SYSTEM_GetBinaryPresent(p_sys);
+    int i;
+    RESORT_RESIDENT_DATA *p_resi = RESORT_PEOPLE_GetDataAdrs( p_people );
+    const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_SearchDataByData(cp_shop, p_resi  );
+    const RESORT_BINARY_SERVICE_DATA *cp_service = RESORT_BINARY_SHOP_DATA_GetList( cp_shop, cp_shop_data, idx );
+
+    u16 listID = RESORT_BINARY_SERVICE_DATA_GetData( cp_service, RESORT_BINARY_SERVICE_PARAM_PARAM_1 );
+    u16 service = RESORT_BINARY_SERVICE_DATA_GetData( cp_service, RESORT_BINARY_SERVICE_PARAM_SERVICE_ID );
+
+    u32 rnd_max = RESORT_BINARY_PRESENT_GetData(cp_present, listID, RESORT_BINARY_PRESENT_PARAM_DENOMINATOR);
+
+    u32 rnd = RESORT_ABSTRUCT_DATA_GetRnd( p_abstruct, RESORT_RND_ID_SHOP_LIST_00+idx, rnd_max );
+    u16 index = RESORT_BINARY_PRESENT_DrawLotsIndex( cp_present, listID, rnd );
+
+    GF_ASSERT( listID < RESORT_BINARY_GetMax(cp_present) );
+    GF_ASSERT( service == RESORT_SERVICE_TYPE_HATCH );
+
+    if( index != RESORT_BINARY_PRESENT_PARAM_ITEM_MAX )
+    {
+      rate = RESORT_BINARY_PRESENT_GetData(cp_present, listID, RESORT_BINARY_PRESENT_PARAM_ITEM_00+index*2);
+    }
+  }
+
+
+  {
+    POKEPARTY *p_party = GAMEDATA_GetMyPokemon( GAMESYSTEM_GetGameData(p_gamesys) );
+    POKEMON_PARAM *p_pp   = PokeParty_GetMemberPointer( p_party, pos );
+
+    POKEMON_PERSONAL_DATA *p_personal = POKE_PERSONAL_OpenHandle( PP_Get(p_pp, ID_PARA_monsno, NULL ), PP_Get(p_pp, ID_PARA_form_no, NULL ), FIELDMAP_GetHeapID( p_field ) );
+
+    u32 egg_birth = POKE_PERSONAL_GetParam( p_personal, POKEPER_ID_egg_birth );
+
+    POKE_PERSONAL_CloseHandle( p_personal );
+
+    if( PP_Get(p_pp, ID_PARA_tamago_flag, NULL ) == TRUE )
+    {
+      u32 now = PP_Get(p_pp, ID_PARA_friend, NULL );
+      s32 dst = (s32)egg_birth * (s32)rate / 100;
+
+      GF_ASSERT( rate <= 100 );
+
+      if( (s32)now - dst <= 0 )
+      {
+        now = 0;
+      }
+      else
+      {
+        now -= dst;
+      }
+
+      PP_Put(p_pp, ID_PARA_friend, now );
+    }
+    else
+    {
+      GF_ASSERT(0);
+    }
+  }
+
+
 
   return VMCMD_RESULT_CONTINUE;
 }

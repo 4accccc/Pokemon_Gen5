@@ -245,15 +245,19 @@
 #define RESORT_SHOP_EXERCIDE_POKESEL_MSGID    (155)
 #define RESORT_SHOP_NURSERY_OK_MSGID          (156)
 #define RESORT_SHOP_NURSERY_POKESEL_MSGID     (157)
-#define RESORT_SHOP_NURSERY_HATCH_MSGID       (158)
+#define RESORT_SHOP_NURSERY_HATCH_00_MSGID       (158)
+#define RESORT_SHOP_NURSERY_HATCH_01_MSGID       (159)
+#define RESORT_SHOP_NURSERY_HATCH_02_MSGID       (160)
+#define RESORT_SHOP_NURSERY_HATCH_03_MSGID       (161)
+#define RESORT_SHOP_NURSERY_HATCH_04_MSGID       (162)
 
-#define RESORT_SHOP_MONEY_MSGID               (160) //お代をいただきますね
-#define RESORT_SHOP_EGG_NG_MSGID              (161) //タマゴはだめ
-#define RESORT_SHOP_POKE_NG_MSGID             (162) //ポケモンはだめ
-#define RESORT_SHOP_DORYOKU_U_NG_MSGID        (163) //努力値あがらない
-#define RESORT_SHOP_DORYOKU_D_NG_MSGID        (164) //努力値さがらない
-#define RESORT_SHOP_NATUKI_NG_MSGID           (165) //なつきあがらない
-#define RESORT_SHOP_LV_NG_MSGID               (166) //LVあがらない
+#define RESORT_SHOP_MONEY_MSGID               (163) //お代をいただきますね
+#define RESORT_SHOP_EGG_NG_MSGID              (164) //タマゴはだめ
+#define RESORT_SHOP_POKE_NG_MSGID             (165) //ポケモンはだめ
+#define RESORT_SHOP_DORYOKU_U_NG_MSGID        (166) //努力値あがらない
+#define RESORT_SHOP_DORYOKU_D_NG_MSGID        (167) //努力値さがらない
+#define RESORT_SHOP_NATUKI_NG_MSGID           (168) //なつきあがらない
+#define RESORT_SHOP_LV_NG_MSGID               (169) //LVあがらない
 
   //セレブ
 #define RESORT_CELEB_GREET_MSGID              (170)

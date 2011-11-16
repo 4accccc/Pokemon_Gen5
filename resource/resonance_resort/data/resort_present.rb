@@ -1,5 +1,6 @@
 #! ruby -Ks
 $item_list_hash = {
+	"ITEM_EGG_00"=>"孵化確率用",
 	"ITEM_LOT_20"=>"くじ用",
 	"ITEM_LOT_18"=>"くじ用",
 	"ITEM_ANTIQUE_13"=>"掘り出し物用",

@@ -84,11 +84,16 @@ def convertPresent( csv, data, header, hash )
         data.write_u16(0)
       else
         data.write_u16(per)
-        if $item_hash[ item ] == nil
-          p "そんな名前のアイテムは存在しません#{item}#{cnt}"
-          exit(1)
+
+        if use == "孵化確率用"
+          data.write_u16( item )
         else
-          data.write_u16( $item_hash[ item ] )
+          if $item_hash[ item ] == nil
+            p "そんな名前のアイテムは存在しません#{item}#{cnt}"
+            exit(1)
+          else
+            data.write_u16( $item_hash[ item ] )
+          end
         end
       end
     end

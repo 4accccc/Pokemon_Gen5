@@ -90,7 +90,8 @@ void RESORT_NPC_SYS_Exit( RESORT_NPC_SYS *p_wk )
 //-----------------------------------------------------------------------------
 void RESORT_NPC_SYS_Main( RESORT_NPC_SYS *p_wk, const FIELDMAP_WORK* cp_fieldmap )
 {
-  if( FIELDMAP_CheckDoEvent( cp_fieldmap ) )
+  //if( FIELDMAP_CheckDoEvent( cp_fieldmap ) )
+  if( 0 )
   {
     if( !p_wk->is_pause )
     {
