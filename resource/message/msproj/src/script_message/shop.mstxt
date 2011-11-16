@@ -1277,11 +1277,10 @@ SWAN追加</Comment>
 0：技の名前
 1：道具名　かけら
 2：コスト
-
-SWAN追加</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-14T06:58:27" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T10:56:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1326,11 +1325,10 @@ SWAN追加</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>わざおしえでリストにかけら個数を表示する時の文字列
-
-SWAN追加</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-14T06:58:33" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T10:56:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1375,11 +1373,10 @@ SWAN追加</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>わざおしえショップで、かけらが足りないとき
-
-SWAN追加</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-14T06:58:34" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T10:56:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1426,11 +1423,10 @@ SWAN追加</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>わざおしえショップで、技をえらんだとき
-
-SWAN追加</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-14T06:58:37" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T10:57:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1475,11 +1471,10 @@ SWAN追加</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>わざおしえの時に左上に表示する残りかけら数
-
-SWAN追加</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-14T06:58:41" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T10:57:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
