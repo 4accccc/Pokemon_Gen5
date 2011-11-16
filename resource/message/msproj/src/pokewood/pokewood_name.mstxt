@@ -211,10 +211,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アイ</Text>
+			<Text>ヨハンソン</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:43:41" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-10T07:22:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -222,10 +222,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アイ</Text>
+			<Text>ヨハンソン</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:43:41" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-10T07:22:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -1794,10 +1794,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクかん</Text>
+			<Text>ハチク艦</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:43:41" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-11T03:53:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3042,10 +3042,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あかいきり</Text>
+			<Text>赤い霧</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:43:41" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-11T03:53:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3090,10 +3090,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あかいきり</Text>
+			<Text>赤い霧</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:43:41" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-11T03:53:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3138,10 +3138,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あかいきり</Text>
+			<Text>赤い霧</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:43:41" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-11T03:53:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -5084,10 +5084,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクかん</Text>
+			<Text>ハチク艦</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T09:28:55" />
+				Time="2011-11-11T03:53:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -5172,10 +5172,10 @@
 		Label="pw_show_trainername_f_06">
 		<LanguageCell
 			Language="JPN">
-			<Text>セツコ</Text>
+			<Text>ポリアンナ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T09:28:00" />
+				Time="2011-11-10T07:22:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -5183,10 +5183,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>セツコ</Text>
+			<Text>ポリアンナ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T09:28:55" />
+				Time="2011-11-10T07:22:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -5942,10 +5942,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あかいきり</Text>
+			<Text>赤い霧</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T09:28:55" />
+				Time="2011-11-11T03:54:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -5975,10 +5975,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あかいきり</Text>
+			<Text>赤い霧</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T09:28:55" />
+				Time="2011-11-11T03:54:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -6008,10 +6008,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あかいきり</Text>
+			<Text>赤い霧</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T09:28:55" />
+				Time="2011-11-11T03:54:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -6459,10 +6459,10 @@ MONSNO_HATIKUMANの
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｍ・Ｖ</Text>
+			<Text>Ｍ・Ｂ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:43:41" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-09T11:34:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -6470,10 +6470,10 @@ MONSNO_HATIKUMANの
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｍ・Ｖ</Text>
+			<Text>Ｍ・Ｂ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:43:41" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-09T11:34:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -6508,10 +6508,10 @@ MONSNO_mvの
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｍ・Ｖ２</Text>
+			<Text>Ｍ・Ｂ２</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:43:41" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-09T11:34:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -6519,10 +6519,10 @@ MONSNO_mvの
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｍ・Ｖ２</Text>
+			<Text>Ｍ・Ｂ２</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:43:41" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-09T11:34:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -6559,10 +6559,10 @@ MONSNO_mvの
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>てんそうき</Text>
+			<Text>転送機</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T09:00:17" />
+				Time="2011-11-11T03:55:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -6757,10 +6757,10 @@ MONSNO_657の
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あくりょう</Text>
+			<Text>まじん</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:43:41" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T07:04:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -6768,10 +6768,10 @@ MONSNO_657の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あくりょう</Text>
+			<Text>魔神</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:43:41" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T07:04:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -6808,10 +6808,10 @@ MONSNO_657の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しろとびら</Text>
+			<Text>白扉</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T08:59:34" />
+				Time="2011-11-11T03:54:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -6848,10 +6848,10 @@ MONSNO_657の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くろとびら</Text>
+			<Text>黒扉</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T08:59:43" />
+				Time="2011-11-11T03:54:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

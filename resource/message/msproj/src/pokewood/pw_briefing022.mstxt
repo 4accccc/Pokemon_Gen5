@@ -6,15 +6,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]は　わがままな
-[Ctrl1:xcenter ]こまった　おうじさま
-[Ctrl1:xcenter ]
+			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]は　とあるくにの
+[Ctrl1:xcenter ]ワガママで　ゆうめいな　おうじさま
+
 [Ctrl1:xcenter ]きょうも　おうさまの
 [Ctrl1:xcenter ]いいつけに　そむいて
 [Ctrl1:xcenter ]よるおそく　にわを　さんぽしていた</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-07T09:32:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-14T12:34:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22,15 +22,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]は　わがままな
-[Ctrl1:xcenter ]こまった　王子様
-[Ctrl1:xcenter ]
+			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]は　とあるくにの
+[Ctrl1:xcenter ]ワガママで　有名な　王子様
+
 [Ctrl1:xcenter ]今日も　王様の
 [Ctrl1:xcenter ]言いつけに　そむいて
-[Ctrl1:xcenter ]夜おそく　庭を　散歩していた</Text>
+[Ctrl1:xcenter ]夜遅く　庭を　散歩していた</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-07T09:32:20" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-14T12:35:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -57,11 +57,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]ふと　きがつくと
-[Ctrl1:xcenter ]にわの　おくに　あやしい
-[Ctrl1:xcenter ]とびらが　ひとつ……</Text>
+[Ctrl1:xcenter ]ひろい　にわの　おくに
+[Ctrl1:xcenter ]あやしい　しろいとびらが　ひとつ……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-07T09:32:23" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-12T06:40:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -70,11 +70,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]ふと　気がつくと
-[Ctrl1:xcenter ]庭の　おくに　怪しい
-[Ctrl1:xcenter ]とびらが　ひとつ……</Text>
+[Ctrl1:xcenter ]広い庭の　奥に
+[Ctrl1:xcenter ]怪しい　白い扉が　ひとつ……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-07T09:32:24" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-12T06:41:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -106,11 +106,11 @@
 [Ctrl1:xcenter ]扉を　開けると
 [Ctrl1:xcenter ]
 [Ctrl1:xcenter ]そこには　見たこともない
-[Ctrl1:xcenter ]ぶきみな　風景が
+[Ctrl1:xcenter ]不気味な　風景が
 [Ctrl1:xcenter ]広がるばかり……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-06T03:25:39" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-14T12:35:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -304,16 +304,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]は　わがままな
-[Ctrl1:xcenter ]こまった　おひめさま
-[Ctrl1:xcenter ]
+			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]は　とあるくにの
+[Ctrl1:xcenter ]ワガママで　ゆうめいな　おひめさま
+
 [Ctrl1:xcenter ]きょうも　おうさまの
 [Ctrl1:xcenter ]いいつけに　そむいて
-[Ctrl1:xcenter ]よるおそく　にわを　さんぽしていた
-</Text>
+[Ctrl1:xcenter ]よるおそく　にわを　さんぽしていた</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-06T03:26:08" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-14T12:34:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -321,16 +320,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]は　わがままな
-[Ctrl1:xcenter ]こまった　お姫様
+			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]は　とある国の
+[Ctrl1:xcenter ]ワガママで　有名な　お姫様
 [Ctrl1:xcenter ]
 [Ctrl1:xcenter ]今日も　王様の
 [Ctrl1:xcenter ]言いつけに　そむいて
-[Ctrl1:xcenter ]夜おそく　庭を　散歩していた
-</Text>
+[Ctrl1:xcenter ]夜おそく　庭を　散歩していた</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-06T03:26:12" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-14T12:33:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -350,12 +348,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]ふと　きがつくと
-[Ctrl1:xcenter ]にわの　おくに　あやしい
-[Ctrl1:xcenter ]とびらが　ひとつ……
-</Text>
+[Ctrl1:xcenter ]ひろい　にわの　おくに
+[Ctrl1:xcenter ]あやしい　しろいとびらが　ひとつ……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-06T03:25:56" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-12T06:41:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -364,12 +361,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]ふと　気がつくと
-[Ctrl1:xcenter ]庭の　おくに　怪しい
-[Ctrl1:xcenter ]とびらが　ひとつ……
-</Text>
+[Ctrl1:xcenter ]広い庭の　奥に
+[Ctrl1:xcenter ]怪しい　白い扉が　ひとつ……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-06T03:26:01" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-12T06:41:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -383,13 +379,13 @@
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]ひめが
 [Ctrl1:xcenter ]とびらを　あけると
-[Ctrl1:xcenter ]
+
 [Ctrl1:xcenter ]そこには　みたこともない
 [Ctrl1:xcenter ]ぶきみな　ふうけいが
 [Ctrl1:xcenter ]ひろがるばかり……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-06T03:26:24" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-14T12:35:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -399,13 +395,14 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]姫が
 [Ctrl1:xcenter ]扉を　開けると
+
 [Ctrl1:xcenter ]
 [Ctrl1:xcenter ]そこには　見たこともない
-[Ctrl1:xcenter ]ぶきみな　風景が
+[Ctrl1:xcenter ]不気味な　風景が
 [Ctrl1:xcenter ]広がるばかり……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-06T03:26:29" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-14T12:35:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

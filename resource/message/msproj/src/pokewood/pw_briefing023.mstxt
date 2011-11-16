@@ -6,14 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]まほうのくにの　じょおう
-[Ctrl1:xcenter ]ジュジュベが　つくりだした
-[Ctrl1:xcenter ]ふしぎな　とびらを　とおって
-[Ctrl1:xcenter ]あやしいくにに　まよいこんだ
+			<Text>[Ctrl1:xcenter ]まほうクイーンと　なのる
+[Ctrl1:xcenter ]ジュジュベに　よって
+[Ctrl1:xcenter ]まほうのオリに　とじこめられた
 [Ctrl1:xcenter ][Name:TrainerName Idx="1" ]おうじ</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-06T10:10:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-14T12:37:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21,14 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]魔法の国の　女王
-[Ctrl1:xcenter ]ジュジュベが　作りだした
-[Ctrl1:xcenter ]不思議な　扉を　通って
-[Ctrl1:xcenter ]怪しい国に　迷い込んだ
+			<Text>[Ctrl1:xcenter ]まほうクイーンと　名乗る
+[Ctrl1:xcenter ]ジュジュベに　よって
+[Ctrl1:xcenter ]魔法のオリに　閉じ込められた
 [Ctrl1:xcenter ][Name:TrainerName Idx="1" ]王子</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-06T10:10:53" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-14T12:38:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -54,14 +52,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ジュジュベが　あやつる
-[Ctrl1:xcenter ]たくさんの　まほうの　とびら
-
-[Ctrl1:xcenter ]どれを　とおれば　おしろに
-[Ctrl1:xcenter ]かえれるのか……</Text>
+			<Text>[Ctrl1:xcenter ]ふと　みあげると　どこかで
+[Ctrl1:xcenter ]みたことの　あるような　すがたが……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-07T09:31:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-15T02:08:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -69,14 +64,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ジュジュベが　あやつる
-[Ctrl1:xcenter ]たくさんの　魔法の扉
-
-[Ctrl1:xcenter ]どれを　通れば　お城に
-[Ctrl1:xcenter ]帰れるのか……</Text>
+			<Text>[Ctrl1:xcenter ]ふと　見上げると　どこかで
+[Ctrl1:xcenter ]見たことの　あるような　姿が……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-07T09:32:00" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-15T02:08:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -88,15 +80,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ちかろうに　とじこめられた
-[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]おうじが
-[Ctrl1:xcenter ]ふと　みあげると
-
-[Ctrl1:xcenter ]そこには　どこかで
-[Ctrl1:xcenter ]みたことのあるような　すがたが……</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-07T09:32:04" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-15T02:08:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -104,15 +91,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]地下ろうに　閉じこめられた
-[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]王子が
-[Ctrl1:xcenter ]ふと　見上げると
-
-[Ctrl1:xcenter ]そこには　どこかで
-[Ctrl1:xcenter ]見たことのあるような　姿が……</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-07T09:32:04" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-15T02:08:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -137,8 +119,8 @@
 			Language="JPN_KANJI">
 			<Text>なし</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:04" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-15T02:07:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -306,14 +288,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]まほうのくにの　じょおう
-[Ctrl1:xcenter ]ジュジュベが　つくりだした
-[Ctrl1:xcenter ]ふしぎな　とびらを　とおって
-[Ctrl1:xcenter ]あやしいくにに　まよいこんだ
+			<Text>[Ctrl1:xcenter ]まほうクイーンと　なのる
+[Ctrl1:xcenter ]ジュジュベに　よって
+[Ctrl1:xcenter ]まほうのオリに　とじこめられた
 [Ctrl1:xcenter ][Name:TrainerName Idx="1" ]ひめ</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-06T10:14:15" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-15T02:08:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -321,14 +302,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]魔法の国の　女王
-[Ctrl1:xcenter ]ジュジュベが　作りだした
-[Ctrl1:xcenter ]不思議な　扉を　通って
-[Ctrl1:xcenter ]怪しい国に　迷い込んだ
+			<Text>[Ctrl1:xcenter ]まほうクイーンと　名乗る
+[Ctrl1:xcenter ]ジュジュベに　よって
+[Ctrl1:xcenter ]魔法のオリに　閉じ込められた
 [Ctrl1:xcenter ][Name:TrainerName Idx="1" ]姫</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-06T10:14:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-15T02:08:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -347,15 +327,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ジュジュベが　あやつる
-[Ctrl1:xcenter ]たくさんの　まほうの　とびら
-
-[Ctrl1:xcenter ]どれを　とおれば　おしろに
-[Ctrl1:xcenter ]かえれるのか……
-</Text>
+			<Text>[Ctrl1:xcenter ]ふと　みあげると　どこかで
+[Ctrl1:xcenter ]みたことの　あるような　すがたが……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-06T10:14:10" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-15T02:08:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -363,15 +339,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ジュジュベが　あやつる
-[Ctrl1:xcenter ]たくさんの　魔法の扉
-
-[Ctrl1:xcenter ]どれを　通れば　お城に
-[Ctrl1:xcenter ]帰れるのか……
-</Text>
+			<Text>[Ctrl1:xcenter ]ふと　見上げると　どこかで
+[Ctrl1:xcenter ]見たことの　あるような　姿が……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-06T10:14:27" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-15T02:08:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -383,16 +355,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ちかろうに　とじこめられた
-[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]ひめが
-[Ctrl1:xcenter ]ふと　みあげると
-
-[Ctrl1:xcenter ]そこには　どこかで
-[Ctrl1:xcenter ]みたことのあるような　すがたが……
-</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-06T10:14:44" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-14T12:40:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -400,16 +366,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]地下ろうに　閉じこめられた
-[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]姫が
-[Ctrl1:xcenter ]ふと　見上げると
-
-[Ctrl1:xcenter ]そこには　どこかで
-[Ctrl1:xcenter ]見たことのあるような　姿が……
-</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-06T10:14:48" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-14T12:40:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

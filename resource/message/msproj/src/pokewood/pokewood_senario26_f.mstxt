@@ -1753,34 +1753,34 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>グアイ『フッ……▼
-たかが　ポケモンを　そこまで
-あいするとは……▼
+たかが　ポケモンに　そこまで
+あいを　そそげるとはな……▼
 ……きに　いった▼
 その　こころいき……
 かおうじゃないか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:30" />
+				Time="2011-11-16T10:09:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:30" />
+				Time="2011-11-16T10:09:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>グアイ『フッ……▼
 たかが　ポケモンを　そこまで
-愛するとは……▼
+愛を　注げるとはな……▼
 ……気に　いった▼
 その　心意気……
 買おうじゃないか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:30" />
+				Time="2011-11-16T10:09:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:30" />
+				Time="2011-11-16T10:09:41" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1828,31 +1828,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>グアイ『そのボールは
-あきらめよう……▼
+			<Text>グアイ『いいさ……
+そのボールは　あきらめよう▼
 キミは　たいせつな　ポケモンと
 いっしょに　くらすが　いいさ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:40:50" />
+				Time="2011-11-16T10:09:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:40:50" />
+				Time="2011-11-16T10:09:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>グアイ『そのボールは
-あきらめよう……▼
+			<Text>グアイ『いいさ……
+そのボールは　あきらめよう▼
 キミは　大切な　ポケモンと
 一緒に　暮らすが　いいさ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:40:50" />
+				Time="2011-11-16T10:09:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:40:50" />
+				Time="2011-11-16T10:09:41" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

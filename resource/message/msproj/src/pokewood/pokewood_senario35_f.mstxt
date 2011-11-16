@@ -816,14 +816,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『できないよ……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『出来ないよ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:56:05" />
+				Time="2011-11-16T10:10:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:56:05" />
+				Time="2011-11-16T10:10:31" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1366,7 +1366,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じょしゅ『博士……▼
+			<Text>助手『博士……▼
 Ｆー００は　メモリを　消され
 プログラムを　変えられた……▼
 その結果　Ｆー００は　いつ
@@ -1378,11 +1378,11 @@
 どうなって　いたことか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:56:05" />
+				Time="2011-11-16T10:10:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:56:05" />
+				Time="2011-11-16T10:10:31" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2434,11 +2434,11 @@
 おそわれた　わたしは　たおれ▽
 そのまま　きを　うしなった……▼
 ……そのご　Ｆー００は　もがき
-くるしむように　みずから▽
+くるしむように　みずからの　てで▽
 じぶんの　からだを　はかいし▽
 こわれていったと　いう……▼
 ……あのとき　わたしは
-Ｆー００が　たすからない　という
+Ｆー００が　たすからない　という▽
 しんじつから　めを　そむけ▽
 げんじつから　にげだした……▼
 わたしは　Ｆー００を……▼
@@ -2446,23 +2446,23 @@
 すくうことが　できなかったのだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-05T04:52:11" />
+				Time="2011-11-16T10:10:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-05T04:52:11" />
+				Time="2011-11-16T10:10:31" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……暴走する　Ｆー００に
-おそわれた　私は　倒れた▽
+襲われた　私は　倒れた▽
 そのまま　気を　失った……▼
 ……その後　Ｆー００は　もがき
-苦しむように　自ら▽
+苦しむように　自らの　手で▽
 自分の　身体を　破壊し▽
 壊れていったと　いう……▼
 ……あの時　私は
-Ｆー００が　助からない　という
+Ｆー００が　助からない　という▽
 真実から　目を　そむけ▽
 現実から　逃げ出した……▼
 私は　Ｆー００を……▼
@@ -2470,11 +2470,11 @@
 救うことが　出来なかったのだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-05T04:52:11" />
+				Time="2011-11-16T10:10:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-05T04:52:11" />
+				Time="2011-11-16T10:10:31" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

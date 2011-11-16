@@ -53,10 +53,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]あっけに　とられる　ぼくのまえに
-[Ctrl1:xcenter ]なぞの　おとこが　あらわれた……</Text>
+[Ctrl1:xcenter ]なぞの　おとこが　あらわれたんだ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T07:06:29" />
+				Time="2011-11-10T12:55:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -65,10 +65,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]あっけに　取られる　僕の前に
-[Ctrl1:xcenter ]なぞの　男が　現れた……</Text>
+[Ctrl1:xcenter ]なぞの　男が　現れたんだ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T07:07:07" />
+				Time="2011-11-10T12:55:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -330,10 +330,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]あっけに　とられる　アタシのまえに
-[Ctrl1:xcenter ]ヘンな　おとこが　あらわれた……</Text>
+[Ctrl1:xcenter ]ヘンな　おとこが　あらわれたの</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T07:09:58" />
+				Time="2011-11-10T12:55:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -342,10 +342,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]あっけに　取られる　アタシの前に
-[Ctrl1:xcenter ]ヘンな　男が　現れた……</Text>
+[Ctrl1:xcenter ]ヘンな　男が　現れたの</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T07:10:12" />
+				Time="2011-11-10T12:55:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

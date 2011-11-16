@@ -8,12 +8,12 @@
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]ゴーストイレイザー　ほうこくしょ
 
-[Ctrl1:xcenter ]ファイル№　００２
+[Ctrl1:xcenter ]ファイル　Ｎｏ．００２
 
-[Ctrl1:xcenter ]コードネーム：[Name:PokemonNickname ]</Text>
+[Ctrl1:xcenter ]コードネーム　[Name:PokemonNickname ]</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-15T02:39:10" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:55:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23,12 +23,12 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]ゴーストイレイザー　報告書
 
-[Ctrl1:xcenter ]ファイル№　００２
+[Ctrl1:xcenter ]ファイル　Ｎｏ．００２
 
-[Ctrl1:xcenter ]コードネーム：[Name:PokemonNickname ]</Text>
+[Ctrl1:xcenter ]コードネーム　[Name:PokemonNickname ]</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-15T02:39:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:55:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -60,10 +60,10 @@
 
 [Ctrl1:xcenter ]しょうじょが　いるとの
 
-[Ctrl1:xcenter ]じょうほう　あり。</Text>
+[Ctrl1:xcenter ]じょうほう　あり</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T15:23:31" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:55:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -73,12 +73,12 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]ある　村で
 
-[Ctrl1:xcenter ]悪霊に　とりつかれた
+[Ctrl1:xcenter ]悪霊に　取りつかれた
 
-[Ctrl1:xcenter ]少女が　いるとの　情報あり。</Text>
+[Ctrl1:xcenter ]少女が　いるとの　情報あり</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T15:23:39" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:55:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -92,14 +92,14 @@
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]ゆうれい　そうどうが
 
-[Ctrl1:xcenter ]おきて　いらい
+[Ctrl1:xcenter ]はっせいして　いらい
 
 [Ctrl1:xcenter ]だれも　しょうじょを
 
-[Ctrl1:xcenter ]みかけて　いないという。</Text>
+[Ctrl1:xcenter ]みかけて　いないという</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T14:56:32" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:56:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -109,14 +109,14 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]幽霊騒動が
 
-[Ctrl1:xcenter ]おきて以来
+[Ctrl1:xcenter ]発生して　以来
 
 [Ctrl1:xcenter ]だれも　少女を　
 
-[Ctrl1:xcenter ]見かけていないという。</Text>
+[Ctrl1:xcenter ]見かけていないという</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T14:56:57" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:56:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -130,10 +130,10 @@
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]これより　ちょうさの　ため
 
-[Ctrl1:xcenter ]せっしょくを　こころみる。</Text>
+[Ctrl1:xcenter ]せっしょくを　こころみる</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-03T07:27:27" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:56:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -143,10 +143,10 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]これより　調査の　ため
 
-[Ctrl1:xcenter ]接触を　こころみる。</Text>
+[Ctrl1:xcenter ]接触を　試みる</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:29:21" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -316,12 +316,12 @@
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]ゴーストイレイザー　ほうこくしょ
 
-[Ctrl1:xcenter ]ファイル№　００２
+[Ctrl1:xcenter ]ファイル　Ｎｏ．００２
 
-[Ctrl1:xcenter ]コードネーム：[Name:PokemonNickname ]</Text>
+[Ctrl1:xcenter ]コードネーム　[Name:PokemonNickname ]</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-15T02:39:27" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:56:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -331,12 +331,12 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]ゴーストイレイザー　報告書
 
-[Ctrl1:xcenter ]ファイル№　００２
+[Ctrl1:xcenter ]ファイル　Ｎｏ．００２
 
-[Ctrl1:xcenter ]コードネーム：[Name:PokemonNickname ]</Text>
+[Ctrl1:xcenter ]コードネーム　[Name:PokemonNickname ]</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-15T02:39:31" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:56:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -361,10 +361,10 @@
 
 [Ctrl1:xcenter ]しょうじょが　いるとの
 
-[Ctrl1:xcenter ]じょうほう　あり。</Text>
+[Ctrl1:xcenter ]じょうほう　あり</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T15:23:21" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:56:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -374,12 +374,12 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]ある　村で
 
-[Ctrl1:xcenter ]悪霊に　とりつかれた
+[Ctrl1:xcenter ]悪霊に　取りつかれた
 
-[Ctrl1:xcenter ]少女が　いるとの　情報あり。</Text>
+[Ctrl1:xcenter ]少女が　いるとの　情報あり</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T15:22:46" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:56:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -393,14 +393,14 @@
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]ゆうれい　そうどうが
 
-[Ctrl1:xcenter ]おきて　いらい
+[Ctrl1:xcenter ]はっせいして　いらい
 
 [Ctrl1:xcenter ]だれも　しょうじょを
 
-[Ctrl1:xcenter ]みかけて　いないという。</Text>
+[Ctrl1:xcenter ]みかけて　いないという</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T14:57:15" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:56:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -410,14 +410,14 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]幽霊騒動が
 
-[Ctrl1:xcenter ]おきて以来
+[Ctrl1:xcenter ]発生して　以来
 
 [Ctrl1:xcenter ]だれも　少女を　
 
-[Ctrl1:xcenter ]見かけていないという。</Text>
+[Ctrl1:xcenter ]見かけていないという</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T14:57:23" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:56:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -431,10 +431,10 @@
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]これより　ちょうさの　ため
 
-[Ctrl1:xcenter ]せっしょくを　こころみる。</Text>
+[Ctrl1:xcenter ]せっしょくを　こころみる</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-03T07:27:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:56:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -444,10 +444,10 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]これより　調査の　ため
 
-[Ctrl1:xcenter ]接触を　こころみる。</Text>
+[Ctrl1:xcenter ]接触を　試みる</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:29:31" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:56:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

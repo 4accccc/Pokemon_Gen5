@@ -997,31 +997,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>セリザワ『あまいねえ……▼
+			<Text>セリザワ『あまいねェ……▼
 キミたちが　つうしんで
 れんらくを　とりあうのは▽
-しっているよ……</Text>
+しっているんだよ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>セリザワ『甘いねえ……▼
+			<Text>セリザワ『甘いねェ……▼
 キミたちが　通信で
 連絡を　取り合うのは▽
-知っているよ……</Text>
+知っているんだよ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1140,26 +1140,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>セリザワ『わるいねえ……
-でも　かつためだからねえ</Text>
+でも　かつためだからねェ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>セリザワ『悪いねえ……
-でも　勝つためだからねえ</Text>
+でも　勝つためだからねェ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1208,26 +1208,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>セリザワ『ハハハ……
-わたしには　ホメことば　だねえ</Text>
+わたしには　ホメことば　だねェ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>セリザワ『ハハハ……
-わたしには　ホメ言葉　だねえ</Text>
+わたしには　ホメ言葉　だねェ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2552,15 +2552,15 @@
 ざいさんが　あるのだッ……▼
 こんな　ポンコツよりも
 さらに　すぐれた　Ｍ・Ｂを▽
-てに　いれることも▽
-ぞうさも　ないこと　なんだぞ！</Text>
+てに　いれることなど▽
+ぞうさも　ないこと　なんだぞッ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:25" />
+				Time="2011-11-16T10:08:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:25" />
+				Time="2011-11-16T10:08:33" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2570,15 +2570,15 @@
 財産が　あるのだッ……▼
 こんな　ポンコツよりも
 さらに　優れたＭ・Ｂを▽
-手に　入れることも▽
-造作も　ないこと　なんだぞ！</Text>
+手に　入れることなど▽
+造作も　ないこと　なんだぞッ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:25" />
+				Time="2011-11-16T10:08:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:25" />
+				Time="2011-11-16T10:08:33" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2628,27 +2628,29 @@
 			Language="JPN">
 			<Text>セリザワ『あたらしい　Ｍ・Ｂで
 おまえを　はかい　してやる……▼
-おぼえていろよっ！！</Text>
+ぜったい　こうかいさせて　やる！
+いいかっ！　おぼえていろっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:25" />
+				Time="2011-11-16T10:08:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:25" />
+				Time="2011-11-16T10:08:33" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>セリザワ『新しい　Ｍ・Ｂで
 お前を　破壊　してやる……▼
-覚えていろよっ！！</Text>
+絶対に　後悔させて　やる！！
+いいかっ！　覚えていろっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:25" />
+				Time="2011-11-16T10:08:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:25" />
+				Time="2011-11-16T10:08:33" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2963,5 +2965,263 @@
 				User="mori:W00269"
 				Time="2011-10-14T09:40:18" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event8_enemy_0">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｍ・Ｂ２『グゴガガーンッ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｍ・Ｂ２『グゴガガーンッ！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event8_enemy_1">
+		<LanguageCell
+			Language="JPN">
+			<Text>セリザワ『ハハハ……
+なんだね！　なんだね！▽
+その　てぬるい　こうげきは？▼
+そんなことでは　わたしの　Ｍ・Ｂ２を
+たおすなど　ゆめのまたゆめ　だよ？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セリザワ『ハハハ……
+なんだね　なんだね▽
+その　手ぬるい　攻撃は？▼
+そんなことでは　私の　Ｍ・Ｂ２を
+倒すなど　夢のまた夢　だよ？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event8_hero_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『クッ……▼
+Ｍ・Ｂいじょうに　きょうりょくだな……
+しかし　こんな　きけん　ものを▽
+どうやって　てに　いれたんだ……▼
+まさか……　じぶんで　Ｍ・Ｂを
+かいはつ　したとでも　いうのか？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『クッ……▼
+Ｍ・Ｂ以上に　強力だな……
+しかし　こんな危険な　ものを▽
+どうやって　手に　入れたんだ……▼
+まさか……　自分で　Ｍ・Ｂを
+開発したとでも　いうのか？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event8_enemy_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>セリザワ『フハハハッ！！
+わたしは　こんなものを　つくれるほど▽
+きような　にんげんでは　ないさ▼
+そもそもね　Ｍ・Ｂという　マシンは
+せかいに　たった　ひとつだけ　と▽
+いうわけでは　ないからねェ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セリザワ『フハハハッ！！
+私は　こんな物を　作れるほど▽
+器用な　人間では　ないさ▼
+そもそも　Ｍ・Ｂという　マシンは
+世界に　たった　ひとつだけ　と▽
+いうわけでは　ないからねェ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event8_hero_3">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『なんだって……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『なんだって……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event8_enemy_3">
+		<LanguageCell
+			Language="JPN">
+			<Text>セリザワ『ん？　いがいかね？
+このＭ・Ｂは　うりもの　なのだよ▼
+シリーズか　も　されている▽
+にんきしょうひん　なんだがねェ▼
+かねと　ちょっとしたコネさえ　あれば
+かんたんに　てに　いれられるさ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セリザワ『ん？　意外かね？
+このＭ・Ｂは　売り物　なのだよ▼
+シリーズ化も　されている▽
+大人気商品　なんだがねェ▼
+金と　ちょっとしたコネさえ　あれば
+簡単に　手に　入れられるのさ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event8_hero_4">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『そんな……▼
+いったい　だれが　なんのために
+こんな　きけんな　ものを　つくるんだ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『そんな……▼
+いったい　だれが　なんのために
+こんな　危険な物を　造るんだ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event8_enemy_4">
+		<LanguageCell
+			Language="JPN">
+			<Text>セリザワ『そうだねェ……▼
+まあ　このよのなかには　さまざまな
+マニアが　そんざいする　からねェ▼
+かんがえても　みたまえよ▼
+わたしのように　はかいを　あいする
+はかいマニアが　いるのだよ？▼
+Ｍ・Ｂのような　マシンを　つくることを
+よろこびとする　マニアが　いても▽
+べつに　ふしぎでは　ないだろう？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>セリザワ『そうだねェ……▼
+また　この世の中には　様々な
+マニアが　存在する　からねェ▼
+考えて　みたまえよ▼
+私のように　破壊を　愛する
+破壊マニアが　いるのだよ？▼
+Ｍ・Ｂのような　マシンを　作ることを
+喜びとする　マニアが　いても▽
+別に　不思議では　ないだろう？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:33" />
+		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

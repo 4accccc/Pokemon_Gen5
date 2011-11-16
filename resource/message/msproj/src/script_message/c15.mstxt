@@ -938,13 +938,12 @@ msg_c15_oldman1_01_04
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂MAN1
-
+			<Comment>♂PWSTAFF
 
 （X6,Y21）辺りに固定配置</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:22:20" />
+				Time="2011-11-09T03:50:52" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -1775,13 +1774,13 @@ msg_c15_oldman1_01_04
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂sunglasses
+			<Comment>♂PWSTAFF
 
 
 （X13,Y43）辺りに上向きに固定配置</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:54:31" />
+				Time="2011-11-09T03:53:01" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -2196,12 +2195,12 @@ Bis  bald.</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂VETERANM（スペイン語キャラ）
+			<Comment>♂TRAINERM（スペイン語キャラ）
 
 主人公スターランク４から出現。（X37,ｚ42）辺りに配置</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T12:02:05" />
+				Time="2011-11-09T03:56:26" />
 		</CommentCell>
 	</TextRow>
 	<TextRow

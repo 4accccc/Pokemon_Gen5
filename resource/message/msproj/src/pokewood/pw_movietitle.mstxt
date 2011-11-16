@@ -822,11 +822,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まほうのくにの　クイーンが
-しかけた　ふしぎなとびらの　むこうへ</Text>
+			<Text>まほうせかいの　クイーンの　ワナ
+あやしいとびらの　むこうへ
+</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T03:58:38" />
+				Time="2011-11-15T02:52:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -834,11 +835,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>魔法の国の　クイーンが
-しかけた　不思議な扉の　向こうへ</Text>
+			<Text>魔法世界の　クイーンの　ワナ
+怪しい扉の　向こうへ
+</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T03:58:52" />
+				Time="2011-11-15T02:47:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -861,11 +863,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とじこめられた　ちかろうの　とびらを
-まもる　もんばんとの　であい</Text>
+			<Text>とじこめられた　まほうのオリ
+もんばんとの　であい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T03:59:01" />
+				Time="2011-11-15T02:44:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -873,11 +875,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>閉じこめられた　地下ろうの　扉を
-守る　門番との　出会い</Text>
+			<Text>閉じこめられた　魔法のオリ
+門番との　出会い</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T03:59:08" />
+				Time="2011-11-15T02:44:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -900,11 +902,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もとのせかいに　つながる　とびらを
-かけた　クイーンとの　けっせん</Text>
+			<Text>もとのせかいに　つながる　とびら
+うんめいを　かけた　せんたく</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T03:59:20" />
+				Time="2011-11-15T02:51:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -913,11 +915,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>元の世界に　つながる　扉を
-かけた　クイーンとの　決戦
+運命を　かけた　選択
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T03:59:28" />
+				Time="2011-11-15T02:51:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1071,10 +1073,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>巨大化した　ＯＬの　運命
-運命の　カギは　「愛」</Text>
+運命の　カギは　「ＬＯＶＥ」</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T06:49:58" />
+				Time="2011-11-15T02:53:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2545,10 +2547,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＯＬ・ザ・ジャイアント！！</Text>
+			<Text>ＯＬ　Ｔｈｅ Ｇｉａｎｔ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:24:46" />
+				Time="2011-11-11T03:16:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2582,10 +2584,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＯＬ・ザ・ジャイアント！！　Ｐｔ．２</Text>
+			<Text>ＯＬ　Ｔｈｅ Ｇｉａｎｔ！！　Ｐｔ．２</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:25:40" />
+				Time="2011-11-11T03:15:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2619,10 +2621,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＯＬ・ザ・ジャイアント！！　Ｐｔ．３</Text>
+			<Text>ＯＬ　Ｔｈｅ Ｇｉａｎｔ！！　Ｐｔ．３</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:25:48" />
+				Time="2011-11-11T03:15:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2656,10 +2658,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＯＬ・ザ・ジャイアント！！　Ｐｔ．４</Text>
+			<Text>ＯＬ　Ｔｈｅ Ｇｉａｎｔ！！　Ｐｔ．４</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:25:54" />
+				Time="2011-11-11T03:15:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3089,10 +3091,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマンのぎゃくしゅう　ファイナル</Text>
+			<Text>ハチクマンのぎゃくしゅうファイナル</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T05:50:57" />
+				Time="2011-11-09T03:57:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3239,11 +3241,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１５カットいないに　セットをたおせ
-ほかの　あいては　むししても　OK</Text>
+			<Text>１５カットいないにセットＨ１をたおせ
+ほかの　あいては　むししても　ＯＫ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:08:18" />
+				Time="2011-11-11T03:34:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3251,11 +3253,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１５カット以内に　セットを　倒せ
-他の　相手は　無視しても　OK</Text>
+			<Text>１５カット以内に　セットＨ１を倒せ
+他の　相手は　無視しても　ＯＫ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:08:20" />
+				Time="2011-11-11T03:28:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3543,11 +3545,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１０カットいないに　セットをたおせ
+			<Text>１０カットいないにセットＵ２をたおせ
 ほかのあいてを　たおすと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-14T03:37:33" />
+				Time="2011-11-11T03:33:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3555,11 +3557,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１０カットいないに　セットを倒せ
+			<Text>１０カット以内に　セットＵ２を倒せ
 他の相手を　倒すと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-14T03:37:30" />
+				Time="2011-11-11T03:33:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3621,10 +3623,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１５カットいないに　セットをたおせ</Text>
+			<Text>１５カットいないにセットＭ１をたおせ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:07:40" />
+				Time="2011-11-11T03:35:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3632,10 +3634,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１５カット以内に　セットを倒せ</Text>
+			<Text>１５カット以内に　セットＭ１を倒せ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:07:38" />
+				Time="2011-11-11T03:35:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3697,10 +3699,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１０カットいないに　セットをたおせ</Text>
+			<Text>１５カットいないにセットＭ２をたおせ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:07:14" />
+				Time="2011-11-11T03:35:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3708,10 +3710,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１０カット以内に　セットを倒せ</Text>
+			<Text>１５カット以内にセットＭ２を倒せ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:07:15" />
+				Time="2011-11-11T03:35:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3734,11 +3736,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>４カットいないに　セットを　たおせ
-</Text>
+			<Text>４カットいないにセットＴ１をたおせ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:07:09" />
+				Time="2011-11-11T03:42:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3746,11 +3747,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>４カット以内に　セットを　倒せ
-</Text>
+			<Text>４カット以内に　セットＴ１を倒せ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:07:11" />
+				Time="2011-11-11T03:42:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3774,10 +3774,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>５カットの　あいだ　いきのこれ
-セットを　たおすと　ＮＧ</Text>
+セットＫ１を　たおすと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:06:56" />
+				Time="2011-11-11T03:41:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3786,10 +3786,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>５カットの　あいだ　生き残れ
-セットを　倒すと　ＮＧ</Text>
+セットＫ１を　倒すと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:07:01" />
+				Time="2011-11-11T03:40:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3813,11 +3813,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かみなり　で　セットを　たおせ
+			<Text>かみなり　で　セットＴ１をたおせ
 それいがいの　わざは　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:06:46" />
+				Time="2011-11-11T03:41:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3825,11 +3825,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かみなり　で　セットを　倒せ
+			<Text>かみなり　で　セットＴ１を　倒せ
 それ以外の　わざは　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:06:51" />
+				Time="2011-11-11T03:41:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3853,10 +3853,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>６カット　いないに　あいてを　たおせ</Text>
+			<Text>６カットいないに　あいてを　たおせ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T06:51:23" />
+				Time="2011-11-11T03:42:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3864,10 +3864,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>６カット　以内に　相手を　倒せ</Text>
+			<Text>６カット以内に　相手を　倒せ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T06:51:52" />
+				Time="2011-11-11T03:42:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4003,11 +4003,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おどろかす　で　セットをたおせ
+			<Text>おどろかす　で　セットＷ２をたおせ
 それいがいの　わざは　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:05:46" />
+				Time="2011-11-11T03:44:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4015,11 +4015,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おどろかす　で　セットを倒せ
+			<Text>おどろかす　で　セットＷ２を倒せ
 それ以外の　技は　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:05:50" />
+				Time="2011-11-11T03:44:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4155,11 +4155,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>６カットの　あいだ　いきのこれ
+			<Text>５カットの　あいだ　いきのこれ
 あいてを　たおすと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T12:19:21" />
+				Time="2011-11-11T03:47:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4167,11 +4167,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>６カットの　あいだ　生き残れ
+			<Text>５カットの　あいだ　生き残れ
 相手を　倒すと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T12:19:23" />
+				Time="2011-11-11T03:46:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4233,11 +4233,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>４カットの　あいだ　いきのこれ
-あいてを　たおすと　ＮＧ</Text>
+			<Text>１０カットいないに
+すべての　あいてを　たおせ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:08:45" />
+				Time="2011-11-10T10:58:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4245,11 +4245,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>４カットの　あいだ　生き残れ
-相手を　倒すと　ＮＧ</Text>
+			<Text>１０カット以内に
+すべての　相手を　倒せ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:08:47" />
+				Time="2011-11-10T10:58:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4272,11 +4272,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１０カットいないに
+			<Text>２０カットいないに
 すべての　あいてを　たおせ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:40:39" />
+				Time="2011-11-10T10:58:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4284,11 +4284,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１０カット以内に
+			<Text>２０カット以内に
 すべての　相手を　倒せ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:41:00" />
+				Time="2011-11-10T10:58:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4311,11 +4311,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０カットいないに
-すべての　あいてを　たおせ</Text>
+			<Text>１５カットいないにセットＣ２をたおせ
+ほかの　あいてを　たおしても　ＯＫ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:41:20" />
+				Time="2011-11-10T11:00:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4323,11 +4323,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０カット以内に
-すべての　相手を　倒せ</Text>
+			<Text>１５カット以内に　セットＣ２を倒せ
+他の　相手を　倒しても　ＯＫ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:41:23" />
+				Time="2011-11-10T10:59:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4350,11 +4350,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>４カットの　あいだ　いきのこれ
+			<Text>５カットの　あいだ　いきのこれ
 あいてを　たおすと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:09:01" />
+				Time="2011-11-11T03:48:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4362,11 +4362,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>４カットの　間　生き残れ
+			<Text>５カットの　間　生き残れ
 相手を　倒すと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:09:03" />
+				Time="2011-11-11T03:48:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4428,11 +4428,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふぶき　で　セットを　たおせ
+			<Text>ふぶき　で　セットＲ２をたおせ
 それいがいの　わざは　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T05:40:51" />
+				Time="2011-11-11T03:49:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4440,11 +4440,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふぶき　で　セットを　倒せ
+			<Text>ふぶき　で　セットＲ２を倒せ
 それ以外の　わざは　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T05:40:57" />
+				Time="2011-11-11T03:49:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4467,10 +4467,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>５カットいないに　セットをたおせ</Text>
+			<Text>５カットいないにセットＲ１をたおせ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:09:22" />
+				Time="2011-11-11T03:50:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4478,10 +4478,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>５カット以内に　セットを倒せ</Text>
+			<Text>５カット以内に　セットＲ１を倒せ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:09:23" />
+				Time="2011-11-11T03:50:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -5440,10 +5440,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この台本の　撮影に
-チャンレンジ　しますか？</Text>
+チャレンジ　しますか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T08:42:35" />
+				Time="2011-11-11T06:49:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -6009,10 +6009,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド
-かえって　きた　ハチクマン</Text>
+かえってきた　ハチクマン</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T05:53:03" />
+				Time="2011-11-11T02:48:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -6261,10 +6261,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＵＦＯと　謎の女</Text>
+			<Text>ＵＦＯと　なぞの女</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T06:08:31" />
+				Time="2011-11-11T02:50:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -6864,11 +6864,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ОＬの　かのじょは　その
+			<Text>ＯＬの　かのじょは　その
 きょだいかに　いかに　くのうしたか</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T12:22:21" />
+				Time="2011-11-11T04:11:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -6876,11 +6876,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ОＬの　彼女は　その
+			<Text>ＯＬの　彼女は　その
 巨大化に　いかに　苦悩したか</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T12:22:17" />
+				Time="2011-11-11T04:11:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7317,10 +7317,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ザ・ドリームマッチ</Text>
+			<Text>ザ・ドリームマッチ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:28:27" />
+				Time="2011-11-11T03:22:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7328,10 +7328,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｔｈｅ　Ｄｒｅａｍ　Ｍａｔｃｈ！</Text>
+			<Text>Ｔｈｅ　Ｄｒｅａｍ　Ｍａｔｃｈ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:28:53" />
+				Time="2011-11-11T03:22:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8291,7 +8291,7 @@
 巨大化に　苦悩　したか</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T06:04:30" />
+				Time="2011-11-11T04:11:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8728,10 +8728,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ザ・ドリームマッチ</Text>
+			<Text>ザ・ドリームマッチ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:29:15" />
+				Time="2011-11-11T03:23:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8739,10 +8739,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｔｈｅ　Ｄｒｅａｍ　Ｍａｔｃｈ！</Text>
+			<Text>Ｔｈｅ　Ｄｒｅａｍ　Ｍａｔｃｈ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T05:48:52" />
+				Time="2011-11-11T03:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8762,10 +8762,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＶＳ　[Name:PokemonNickname2 ]ガール</Text>
+			<Text>ＶＳ　[Name:PokemonNickname2 ]マン</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T10:43:21" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-11T03:23:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8773,10 +8773,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＶＳ　[Name:PokemonNickname2 ]ガール</Text>
+			<Text>ＶＳ　[Name:PokemonNickname2 ]マン</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T10:43:22" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-11T03:23:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

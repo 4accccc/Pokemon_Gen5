@@ -8,11 +8,14 @@
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]ぼくは　[Name:TrainerName ]
 
-[Ctrl1:xcenter ]ヘンなものを　あつめるのが　すきな
-[Ctrl1:xcenter ]ごく　ふつうの　おとこさ……</Text>
+[Ctrl1:xcenter ]ヘンなものを　あつめるのが　しゅみの
+[Ctrl1:xcenter ]ごくごく　ふつうの　おとこさ……
+
+[Ctrl1:xcenter ]まあ　かのじょからは　マニアって
+[Ctrl1:xcenter ]よばれてるけどさ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T09:59:07" />
+				Time="2011-11-10T12:50:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22,11 +25,14 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]僕は　[Name:TrainerName ]
 
-[Ctrl1:xcenter ]ヘンなものを　集めるのが　好きな
-[Ctrl1:xcenter ]ごく　普通の　男さ……</Text>
+[Ctrl1:xcenter ]ヘンなものを　集めるのが　趣味の
+[Ctrl1:xcenter ]ごくごく　普通の　男さ……
+
+[Ctrl1:xcenter ]まあ　彼女からは　マニアって
+[Ctrl1:xcenter ]呼ばれてるけどさ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T10:03:04" />
+				Time="2011-11-10T12:50:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -52,15 +58,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]モニカって　なまえの
-[Ctrl1:xcenter ]すこし　としうえの　かのじょが　いて
-[Ctrl1:xcenter ]いつも　いっしょ……
+			<Text>[Ctrl1:xcenter ]そんな　かのじょの　なまえは　モニカ
+[Ctrl1:xcenter ]すこし　としうえで　しっかりものなんだ
 
 [Ctrl1:xcenter ]ケンカしたり　なかなおり　したりが
 [Ctrl1:xcenter ]まいにちの　にっかに　なってる……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T10:10:29" />
+				Time="2011-11-10T12:49:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -68,15 +73,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]モニカって　名前の
-[Ctrl1:xcenter ]少し　年上の　彼女が　いて
-[Ctrl1:xcenter ]いつも　一緒……
+			<Text>[Ctrl1:xcenter ]そんな　彼女の　名前は　モニカ
+[Ctrl1:xcenter ]少し　年上で　しっかり者なんだ
 
 [Ctrl1:xcenter ]ケンカしたり　仲直り　したりが
 [Ctrl1:xcenter ]毎日の　日課に　なってる……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T10:10:30" />
+				Time="2011-11-10T12:49:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -308,11 +312,14 @@
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]アタシは　[Name:TrainerName ]
 
-[Ctrl1:xcenter ]ヘンなものを　あつめるのが　すきな
-[Ctrl1:xcenter ]ごく　ふつうの　おんなのこ……</Text>
+[Ctrl1:xcenter ]ヘンなものを　あつめるのが　しゅみの
+[Ctrl1:xcenter ]ごくごく　ふつうの　おんなのこ……
+
+[Ctrl1:xcenter ]まあ　おねえちゃんからは　マニアって
+[Ctrl1:xcenter ]よばれてるけどさ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T10:12:54" />
+				Time="2011-11-10T12:51:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -322,11 +329,14 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]アタシは　[Name:TrainerName ]
 
-[Ctrl1:xcenter ]ヘンなものを　集めるのが　好きな
-[Ctrl1:xcenter ]ごく　普通の　女の子……</Text>
+[Ctrl1:xcenter ]ヘンなものを　集めるのが　趣味の
+[Ctrl1:xcenter ]ごくごく　普通の　女の子……
+
+[Ctrl1:xcenter ]まあ　お姉ちゃんからは　マニアって
+[Ctrl1:xcenter ]呼ばれてるけどさ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T10:13:08" />
+				Time="2011-11-10T12:52:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -345,15 +355,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]モニカって　なまえの
-[Ctrl1:xcenter ]すこし　としうえの　おねえちゃんがいて
-[Ctrl1:xcenter ]いつも　いっしょ……
+			<Text>[Ctrl1:xcenter ]おねえちゃんの　なまえは　モニカ
+[Ctrl1:xcenter ]すこし　としうえで　ちょっと　ガンコ
 
 [Ctrl1:xcenter ]ケンカしたり　なかなおり　したりが
 [Ctrl1:xcenter ]まいにちの　にっかに　なってる……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T10:13:27" />
+				Time="2011-11-10T12:53:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -361,15 +370,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]モニカって　名前の
-[Ctrl1:xcenter ]少し　年上の　彼女が　いて
-[Ctrl1:xcenter ]いつも　一緒……
+			<Text>[Ctrl1:xcenter ]お姉ちゃんの　名前は　モニカ
+[Ctrl1:xcenter ]少し　年上で　ちょっと　ガンコ
 
 [Ctrl1:xcenter ]ケンカしたり　仲直り　したりが
 [Ctrl1:xcenter ]毎日の　日課に　なってる……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T10:12:36" />
+				Time="2011-11-10T12:54:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

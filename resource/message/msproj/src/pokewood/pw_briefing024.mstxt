@@ -6,16 +6,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ちかろうの　ぬいぐるみの　じょげんで
-[Ctrl1:xcenter ]なんとか　ろうの　もんを　こわし
-[Ctrl1:xcenter ]おもてにでる　ことが　できた
+			<Text>[Ctrl1:xcenter ]ぬいぐるみの　じょげんも　あって
+[Ctrl1:xcenter ]なんとか　とびらを　たおした
 [Ctrl1:xcenter ][Name:TrainerName Idx="1" ]おうじ
 
-[Ctrl1:xcenter ]もんばんを　ポケットに　かくし
-[Ctrl1:xcenter ]もとのせかいを　めざして　にげる</Text>
+[Ctrl1:xcenter ]ぬいぐるみを　ポケットに　かくし
+[Ctrl1:xcenter ]オリのそとに　とびだした……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-07T09:31:08" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-14T13:35:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23,16 +22,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]地下ろうの　ぬいぐるみの　助言で
-[Ctrl1:xcenter ]なんとか　ろうの　門をこわし
-[Ctrl1:xcenter ]表に出ることが　できた
+			<Text>[Ctrl1:xcenter ]ぬいぐるみの　助言も　あって
+[Ctrl1:xcenter ]なんとか　扉を　倒した
 [Ctrl1:xcenter ][Name:TrainerName Idx="1" ]王子
 
-[Ctrl1:xcenter ]門番を　ポケットに　かくし
-[Ctrl1:xcenter ]もとの世界を　めざして　逃げる</Text>
+[Ctrl1:xcenter ]ぬいぐるみを　ポケットに　隠し
+[Ctrl1:xcenter ]オリの外に　飛び出した……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-07T09:31:51" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-15T02:14:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -58,11 +56,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]だが　クイーン　ジュジュベが
-[Ctrl1:xcenter ]おうじを　みのがすはずも　なく……</Text>
+			<Text>[Ctrl1:xcenter ]しかし
+
+[Ctrl1:xcenter ]とびらの　むこうに　まっていたのは
+[Ctrl1:xcenter ]かわりばえしない　こうけい……
+
+[Ctrl1:xcenter ]そして　おうじを　にらみつける
+[Ctrl1:xcenter ]ジュジュベの　すがた　だった……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-07T09:33:21" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-15T02:18:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -70,11 +73,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]だが　クイーン　ジュジュベが
-[Ctrl1:xcenter ]王子を　見逃すはずも　なく……</Text>
+			<Text>[Ctrl1:xcenter ]しかし
+
+[Ctrl1:xcenter ]扉の　向こうに　待っていたのは
+[Ctrl1:xcenter ]代わり映えのしない　光景……
+
+[Ctrl1:xcenter ]そして　王子を　にらみつける
+[Ctrl1:xcenter ]ジュジュベの姿　だった……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-07T09:33:21" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-15T02:17:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -86,16 +94,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]さいごの　しょうぶが
-[Ctrl1:xcenter ]いま　はじまろうと　している
-
-[Ctrl1:xcenter ]あやしい　とびらで　せかいを
-[Ctrl1:xcenter ]こんらんさせる　あしきクイーン
-[Ctrl1:xcenter ]ジュジュベの　たくらみに
-[Ctrl1:xcenter ]おうじは　かつことが　できるか！？</Text>
+			<Text>[Ctrl1:xcenter ]おいつめられた
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]おうじ……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-07T09:34:13" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-14T13:40:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -103,16 +106,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]最後の　勝負が
-[Ctrl1:xcenter ]いま　始まろうと　している
-[Ctrl1:xcenter ]怪しい　扉で　世界を
-[Ctrl1:xcenter ]混乱させる　悪しきクイーン
-
-[Ctrl1:xcenter ]ジュジュベの　たくらみに
-[Ctrl1:xcenter ]王子は　勝つことが　出来るか！？</Text>
+			<Text>[Ctrl1:xcenter ]追いつめられた
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]おうじ……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-07T09:34:52" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-15T02:20:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -124,10 +122,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]はたして　おうじは　ジュジュベから
+[Ctrl1:xcenter ]にげのびることは　できるのか！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:00:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-15T02:17:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -135,10 +134,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]果たして　王子は　ジュジュベから
+[Ctrl1:xcenter ]逃げのびることは　できるのか！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:04" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-15T02:21:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -152,8 +152,8 @@
 			Language="JPN">
 			<Text>なし</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-11T10:22:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -163,8 +163,8 @@
 			Language="JPN_KANJI">
 			<Text>なし</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:12" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-11T10:22:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -306,16 +306,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ちかろうの　ぬいぐるみの　じょげんで
-[Ctrl1:xcenter ]なんとか　ろうの　もんを　こわし
-[Ctrl1:xcenter ]おもてにでる　ことが　できた
+			<Text>[Ctrl1:xcenter ]ぬいぐるみの　じょげんも　あって
+[Ctrl1:xcenter ]なんとか　とびらを　たおした
 [Ctrl1:xcenter ][Name:TrainerName Idx="1" ]ひめ
 
-[Ctrl1:xcenter ]もんばんを　ポケットに　かくし
-[Ctrl1:xcenter ]もとのせかいを　めざして　にげる</Text>
+[Ctrl1:xcenter ]ぬいぐるみを　ポケットに　かくし
+[Ctrl1:xcenter ]オリのそとに　とびだした……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-07T09:35:25" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-15T02:18:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -323,16 +322,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]地下ろうの　ぬいぐるみの　助言で
-[Ctrl1:xcenter ]なんとか　ろうの　門をこわし
-[Ctrl1:xcenter ]表に出ることが　できた
+			<Text>[Ctrl1:xcenter ]ぬいぐるみの　助言も　あって
+[Ctrl1:xcenter ]なんとか　扉を　倒した
 [Ctrl1:xcenter ][Name:TrainerName Idx="1" ]姫
 
-[Ctrl1:xcenter ]門番を　ポケットに　かくし
-[Ctrl1:xcenter ]もとの世界を　めざして　逃げる</Text>
+[Ctrl1:xcenter ]ぬいぐるみを　ポケットに　隠し
+[Ctrl1:xcenter ]オリの外に　飛び出した……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-07T09:35:30" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-15T02:18:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -351,11 +349,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]だが　クイーン　ジュジュベが
-[Ctrl1:xcenter ]ひめを　みのがすはずも　なく……</Text>
+			<Text>[Ctrl1:xcenter ]しかし
+
+[Ctrl1:xcenter ]とびらの　むこうに　まっていたのは
+[Ctrl1:xcenter ]かわりばえしない　こうけい……
+
+[Ctrl1:xcenter ]そして　ひめを　にらみつける
+[Ctrl1:xcenter ]ジュジュベの　すがた　だった……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-07T09:35:37" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-15T02:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -363,11 +366,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]だが　クイーン　ジュジュベが
-[Ctrl1:xcenter ]姫を　見逃すはずも　なく……</Text>
+			<Text>[Ctrl1:xcenter ]しかし
+
+[Ctrl1:xcenter ]扉の　向こうに　待っていたのは
+[Ctrl1:xcenter ]代わり映えのしない　光景……
+
+[Ctrl1:xcenter ]そして　姫を　にらみつける
+[Ctrl1:xcenter ]ジュジュベの姿　だった……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-07T09:35:40" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-15T02:19:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -379,16 +387,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]さいごの　しょうぶが
-[Ctrl1:xcenter ]いま　はじまろうと　している
-
-[Ctrl1:xcenter ]あやしい　とびらで　せかいを
-[Ctrl1:xcenter ]こんらんさせる　あしきクイーン
-[Ctrl1:xcenter ]ジュジュベの　たくらみに
-[Ctrl1:xcenter ]ひめは　かつことが　できるか！？</Text>
+			<Text>[Ctrl1:xcenter ]おいつめられた
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]ひめ……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-07T09:35:48" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-15T02:19:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -396,16 +399,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]最後の　勝負が
-[Ctrl1:xcenter ]いま　始まろうと　している
-[Ctrl1:xcenter ]怪しい　扉で　世界を
-[Ctrl1:xcenter ]混乱させる　悪しきクイーン
-
-[Ctrl1:xcenter ]ジュジュベの　たくらみに
-[Ctrl1:xcenter ]姫は　勝つことが　出来るか！？</Text>
+			<Text>[Ctrl1:xcenter ]追いつめられた
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]姫……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-07T09:35:52" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-15T02:19:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -417,10 +415,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]はたして　ひめは　ジュジュベから
+[Ctrl1:xcenter ]にげのびることは　できるのか！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:40" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-15T02:21:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -428,10 +427,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]果たして　姫は　ジュジュベから
+[Ctrl1:xcenter ]逃げのびることは　できるのか！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-15T02:21:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

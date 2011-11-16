@@ -1404,33 +1404,33 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『もうっ……▼
 なんて　かたいからだ　なの……
-[Name:PokemonNickname Idx="1" ]の　こうげきも▽
+[Name:PokemonNickname Idx="0" ]の　こうげきも▽
 まるで　はが　たたないし……▼
 アハハ……　もうダメ……
 ここで　わたし　おしまいよ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T09:26:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T09:26:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『くっ……▼
 何て　かたい体　なの……
-[Name:PokemonNickname Idx="1" ]の　こうげきも▽
+[Name:PokemonNickname Idx="0" ]の　こうげきも▽
 まるで　歯が　立たないし……▼
 アハハ……　もうダメ……
 ここで　私　お終いよ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T09:26:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T09:26:02" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

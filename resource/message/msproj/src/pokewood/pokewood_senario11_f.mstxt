@@ -620,14 +620,14 @@ UFOの　テストと　偽り
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『なんですって……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『何ですって……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -692,14 +692,14 @@ UFOの　テストと　偽り
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『もう　おわりね……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『もう　終わりね……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-16T10:08:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
