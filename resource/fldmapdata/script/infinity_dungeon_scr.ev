@@ -497,6 +497,9 @@ select_area:
 
     IF $SCWK_ANSWER == SCR_YES THEN
 
+      // ビーコン：無限ダンジョン進入
+      _BEACON_SET_REQ_INF_DUNGEON_ENTRY( LWK_AREA_MENU )
+
       // JA履歴
       IF $LWK_D_VERSION == VERSION_B2 THEN
         _RESORT_SET_RECORD( RESORT_RECORD_ID_INFINITYD_B )
@@ -627,8 +630,6 @@ select_area:
       // 歩数カウント開始
       _SC_WALK_COUNT_START()
 
-      // ビーコン：無限ダンジョン進入
-      _BEACON_SET_REQ_INF_DUNGEON_ENTRY( LWK_AREA_MENU )
     ELSE
       // やめる
       IF $LWK_D_VERSION == VERSION_B2 THEN
@@ -1932,6 +1933,7 @@ all_area_clear:
 
     // クリアフラグをセット
     $WK_SCENE_MUGENDUNGEON_CLEAR = 1
+    _FLAG_RESET( FV_T06R0101_MUGENBOSS_01 )
 
     // 自分の名前をセット
     _PLAYER_NAME( 0 )
