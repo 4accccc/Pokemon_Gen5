@@ -252,10 +252,6 @@ EVENT_START ev_pos_d10r0501_swsage1_01
     _MAP_FADE_END_CHECK()
   }
 
-  //アニメ：N接近
-  //_OBJ_ANIME_AUTO( D10R0501_BOSS_01, 16, 18, FORCE_TYPE_NPC, 8, DIR_LR)
-  //_OBJ_ANIME_WAIT()
-
   _TIME_WAIT(7)
   
   //N：おしえてくれた
@@ -302,6 +298,11 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   _OBJ_ANIME_WAIT()
 
+  //=======================================
+  // 解放状態のキュレムにする
+  $OBJCHRWORK0 = SPPOKE03_KU
+  //=======================================
+
   // いでんしのくさびカットイン
   IF $LCWK_VERSION == VERSION_B2 THEN
     _CALL_FLD3D_CUTIN( FLDCIID_KUSABI_B )
@@ -322,11 +323,6 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   _CAMERA_PURGE()		//カメラのバインドを解く
   _CAMERA_MOVE( 9688,0,970752,1015808,0,1081344, 1 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-
-  //=======================================
-  // 解放状態のキュレムにする
-  $OBJCHRWORK0 = SPPOKE03_KU
-  //=======================================
 
   //=======================================
   // キュレムを表示し、ゲーチスを横に移動
@@ -354,6 +350,14 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 	_DEMO_FADEIN_BLACK_CALL()
   
   _TIME_WAIT(18)
+
+  //アニメ：Nビックリ
+  _OBJ_ANIME( D10R0501_BOSS_01, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+
+  //N：ゼクロム（レシラム）！？
+  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_boss_14w, msg_d10r0501_boss_14b, D10R0501_BOSS_01, POS_DEFAULT)
+  _MSGWIN_CLOSE()
 
   //ゲーチス：きゅうしゅうなさい！
   _BALLOONWIN_OBJMSG_WB( msg_d10r0501_swsage01_10w, msg_d10r0501_swsage01_10b, D10R0501_SWSAGE1_01, POS_DEFAULT )
@@ -397,7 +401,6 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 
 	//フェードインでフィールドに戻る
 	_DEMO_FADEIN_BLACK_CALL()
-  
   
   //N：まさか
   _BALLOONWIN_OBJMSG_POS( msg_d10r0501_boss_04 , D10R0501_BOSS_01 ,POS_DEFAULT )

@@ -1067,11 +1067,11 @@ N</Text>
 			<Comment>♂
 ・表示後、動作モデルが杖を掲げるアニメ
 ・デモへ移行
-　Black2→swsage01_10b
-　White2→swsage01_10w</Comment>
+　Black2→boss_14b
+　White2→boss_14w</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-16T06:36:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1084,6 +1084,106 @@ N</Text>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0501_boss_14b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゼクロム！？▼</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-16T06:49:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:33:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゼクロム！？▼</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-16T06:49:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:33:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・Black2ver
+・続けてswsage01_10b</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-16T06:35:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:33:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0501_boss_14w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レシラム！？▼</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-16T06:49:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:33:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レシラム！？▼</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-16T06:49:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:33:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・White2ver
+・続けてswsage01_10w</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-16T06:35:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-09-07T03:33:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
