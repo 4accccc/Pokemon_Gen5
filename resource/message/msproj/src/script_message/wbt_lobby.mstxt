@@ -1460,7 +1460,7 @@ msg_wbt_menu_wcs</Comment>
 ５０と　させていただきます▼
 ミックスマスタートーナメントには
 イッシュちほうの　ジムリーダーが▽
-さんかしますので▽
+さんか　しますので▽
 より　めずらしいポケモンを▽
 ミックスして　たたかうことができます▼
 ゆうしょうすると　ちょっぴりおおめに
@@ -1468,7 +1468,7 @@ msg_wbt_menu_wcs</Comment>
 がんばって　ください！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T09:41:19" />
+				Time="2011-11-16T08:58:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4384,11 +4384,11 @@ msg_wbt_info_11へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>決勝まで　あとひとつ……▼
-大丈夫　次は
+大丈夫！　次は
 もっと上まで　行けるはずですよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T09:47:34" />
+				Time="2011-11-16T08:59:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6212,7 +6212,7 @@ msg_wbt_info_11へ</Comment>
 トーナメントを　ダウンロードできます</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T09:55:58" />
+				Time="2011-11-16T09:00:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6224,7 +6224,7 @@ msg_wbt_info_11へ</Comment>
 トーナメントを　ダウンロードできます</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T09:55:54" />
+				Time="2011-11-16T09:00:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

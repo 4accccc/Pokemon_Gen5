@@ -6,12 +6,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ユニオンルームへ　ようこそ[Ctrl2:PageClear ]
+			<Text>ユニオンルームへ　ようこそ▼
 なにか　わからないことが　ありましたら
-おもうしつけ　くださいませ！[Ctrl2:PageClear ]</Text>
+おもうしつけ　くださいませ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:06:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,12 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ユニオンルームへ　ようこそ[Ctrl2:PageClear ]
+			<Text>ユニオンルームへ　ようこそ▼
 なにか　わからないことが　ありましたら
-お申しつけ　くださいませ！[Ctrl2:PageClear ]</Text>
+お申しつけ　くださいませ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:06:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -152,19 +152,19 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>たいせんには　５しゅるいの
-モードがあります[Ctrl2:PageClear ]
+モードがあります▼
 シングルバトルは　たたかいの　ばに
-ポケモンを　１ひき　だして[Ctrl2:LineFeed ]
-ふたりで　たいせん　します[Ctrl2:PageClear ]
+ポケモンを　１ひき　だして▽
+ふたりで　たいせん　します▼
 ダブルバトルは　たたかいの　ばに
-ポケモンを　２ひきずつ　だして[Ctrl2:LineFeed ]
-ふたりで　たいせん　します[Ctrl2:PageClear ]
+ポケモンを　２ひきずつ　だして▽
+ふたりで　たいせん　します▼
 トリプルバトルは　たたかいの　ばに
-ポケモンを　３ひきずつ　だして[Ctrl2:LineFeed ]
-ふたりで　たいせん　します[Ctrl2:PageClear ]</Text>
+ポケモンを　３ひきずつ　だして▽
+ふたりで　たいせん　します▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:15:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -173,19 +173,19 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>対戦には　５種類の
-モードがあります[Ctrl2:PageClear ]
+モードがあります▼
 シングルバトルは　戦いの　場に
-ポケモンを　１匹　だして[Ctrl2:LineFeed ]
-２人で　対戦します[Ctrl2:PageClear ]
+ポケモンを　１匹　だして▽
+２人で　対戦します▼
 ダブルバトルは　戦いの　場に
-ポケモンを　２匹ずつ　だして[Ctrl2:LineFeed ]
-２人で　対戦します[Ctrl2:PageClear ]
+ポケモンを　２匹ずつ　だして▽
+２人で　対戦します▼
 トリプルバトルは　戦いの　場に
-ポケモンを　３匹ずつ　だして[Ctrl2:LineFeed ]
-２人で　対戦します[Ctrl2:PageClear ]</Text>
+ポケモンを　３匹ずつ　だして▽
+２人で　対戦します▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:15:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -214,16 +214,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ローテーションバトルは
-ポケモンを　まえに　１ひき[Ctrl2:LineFeed ]
-うしろに　２ひき　だしながら[Ctrl2:LineFeed ]
-ふたりで　たいせん　します[Ctrl2:PageClear ]
+ポケモンを　まえに　１ひき▽
+うしろに　２ひき　だしながら▽
+ふたりで　たいせん　します▼
 マルチバトルは　たたかいの　ばに
-４にんで　ポケモンを[Ctrl2:LineFeed ]
-１ひきずつ　だして[Ctrl2:LineFeed ]
-２たい２で　たいせん　します[Ctrl2:PageClear ]</Text>
+４にんで　ポケモンを▽
+１ひきずつ　だして▽
+２たい２で　たいせん　します▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:15:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -232,16 +232,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ローテーションバトルは
-ポケモンを　前に　１匹[Ctrl2:LineFeed ]
-後ろに　２匹　だしながら[Ctrl2:LineFeed ]
-２人で　対戦します[Ctrl2:PageClear ]
+ポケモンを　前に　１匹▽
+後ろに　２匹　だしながら▽
+２人で　対戦します▼
 マルチバトルは　戦いの　場に
-４人で　ポケモンを[Ctrl2:LineFeed ]
-１匹ずつ　だして[Ctrl2:LineFeed ]
-２対２で　対戦します[Ctrl2:PageClear ]</Text>
+４人で　ポケモンを▽
+１匹ずつ　だして▽
+２対２で　対戦します▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:15:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -270,13 +270,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おたがいの　ポケモンを
-こうかんすることが　できます[Ctrl2:PageClear ]
+こうかんすることが　できます▼
 あたらしい　ひととの　であいが
-めずらしい　ポケモンとの[Ctrl2:LineFeed ]
-であいになるかも　しれませんね！[Ctrl2:PageClear ]</Text>
+めずらしい　ポケモンとの▽
+であいになるかも　しれませんね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:15:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -285,13 +285,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>お互いの　ポケモンを
-交換することが　できます[Ctrl2:PageClear ]
+交換することが　できます▼
 新しい　人との　出会いが
-珍しい　ポケモンとの[Ctrl2:LineFeed ]
-出会いになるかも　しれませんね！[Ctrl2:PageClear ]</Text>
+珍しい　ポケモンとの▽
+出会いになるかも　しれませんね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:15:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -320,17 +320,17 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>レコードつうしん　では
-じぶんの　きろくを[Ctrl2:LineFeed ]
-みんなで　こうかんすることが　できます[Ctrl2:PageClear ]
+じぶんの　きろくを▽
+みんなで　こうかんすることが　できます▼
 きろくを　こうかんすることで
-いったい　なにがおきるのか！？[Ctrl2:PageClear ]
+いったい　なにがおきるのか！？▼
 それは　じぶんの　めで
-たしかめてみて　ください！[Ctrl2:PageClear ]
+たしかめてみて　ください！▼
 ５にんまで　さんか　できるので
-ともだちと　やってみてくださいね！[Ctrl2:PageClear ]</Text>
+ともだちと　やってみてくださいね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:15:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -339,17 +339,17 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レコードつうしん　では
-自分の　きろくを[Ctrl2:LineFeed ]
-みんなで　こうかんすることが　できます[Ctrl2:PageClear ]
-きろくを　こうかんすることで
-いったい　なにがおきるのか！？[Ctrl2:PageClear ]
+自分の　記録を▽
+みんなで　交換することが　できます▼
+記録を　交換することで
+いったい　なにがおきるのか！？▼
 それは　自分の　めで
-たしかめてみて　ください！[Ctrl2:PageClear ]
-５にんまで　さんか　できるので
-ともだちと　やってみてくださいね！[Ctrl2:PageClear ]</Text>
+確かめてみて　ください！▼
+５人まで　参加できるので
+ともだちと　やってみてくださいね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:16:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -385,16 +385,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ぐるぐるこうかん　は　もっている
-タマゴを　みんなで　もちよって[Ctrl2:LineFeed ]
-こうかん　することが　できます[Ctrl2:PageClear ]
+タマゴを　みんなで　もちよって▽
+こうかん　することが　できます▼
 いったい　どのタマゴが　くるか？
-どんな　ポケモンの　タマゴなのか？[Ctrl2:LineFeed ]
-わくわく　ドキドキ　ですね！[Ctrl2:PageClear ]
+どんな　ポケモンの　タマゴなのか？▽
+わくわく　ドキドキ　ですね！▼
 ５にんまで　さんか　できるので
-ともだちと　やってみてくださいね！[Ctrl2:PageClear ]</Text>
+ともだちと　やってみてくださいね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:16:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -403,16 +403,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ぐるぐる交換　は　持っている
-タマゴを　みんなで　持ち寄って[Ctrl2:LineFeed ]
-交換することが　できます[Ctrl2:PageClear ]
+タマゴを　みんなで　持ち寄って▽
+交換することが　できます▼
 いったい　どのタマゴが　くるか？
-どんな　ポケモンの　タマゴなのか？[Ctrl2:LineFeed ]
-わくわく　ドキドキ　ですね！[Ctrl2:PageClear ]
+どんな　ポケモンの　タマゴなのか？▽
+わくわく　ドキドキ　ですね！▼
 ５人まで　参加できるので
-友達と　やってみてくださいね！[Ctrl2:PageClear ]</Text>
+友達と　やってみてくださいね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:16:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -441,16 +441,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>みんなで　おえかきを
-することが　できます[Ctrl2:PageClear ]
+することが　できます▼
 １まいの　かみの　うえに
-すきに　えを　かいてみてください！[Ctrl2:PageClear ]
+すきに　えを　かいてみてください！▼
 みんなで　かいた　えは　きっと
-すばらしい　えに　なるはずですよ！[Ctrl2:PageClear ]
+すばらしい　えに　なるはずですよ！▼
 ５にんまで　さんか　できるので
-ともだちと　やってみて　くださいね！[Ctrl2:PageClear ]</Text>
+ともだちと　やってみて　くださいね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:07:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -459,16 +459,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>みんなで　お絵描きを
-することが　できます[Ctrl2:PageClear ]
+することが　できます▼
 １枚の　紙の上に
-好きに　絵を　描いてみてください！[Ctrl2:PageClear ]
+好きに　絵を　描いてみてください！▼
 みんなで　描いた　絵は　きっと
-すばらしい　絵に　なるはずですよ！[Ctrl2:PageClear ]
+すばらしい　絵に　なるはずですよ！▼
 ５人まで　参加できるので
-友達と　やってみて　くださいね！[Ctrl2:PageClear ]</Text>
+友達と　やってみて　くださいね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:07:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -497,17 +497,17 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>したがめんの　バーにある　マークを
-タッチすると　チャットの　ことばを[Ctrl2:LineFeed ]
-えらべたり　たいせんや　こうかんなど[Ctrl2:LineFeed ]
-じぶんが　やりたいことを　みんなに[Ctrl2:LineFeed ]
-つたえることが　できます[Ctrl2:PageClear ]
+タッチすると　チャットの　ことばを▽
+えらべたり　たいせんや　こうかんなど▼
+じぶんが　やりたいことを　みんなに
+つたえることが　できます▼
 また　じぶんと　おなじマークを
-えらんでいる　ひとは　ジャンプします[Ctrl2:PageClear ]
+えらんでいる　ひとは　ジャンプします▼
 マークを　タッチして　あそびたい
-あいてを　さがして　くださいね！[Ctrl2:PageClear ]</Text>
+あいてを　さがして　くださいね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:16:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -516,17 +516,17 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>下画面の　バーにある　マークを
-タッチすると　チャットの　言葉を[Ctrl2:LineFeed ]
-選べたり　対戦や　交換など[Ctrl2:LineFeed ]
-自分が　やりたいことを　みんなに[Ctrl2:LineFeed ]
-伝えることが　できます[Ctrl2:PageClear ]
+タッチすると　チャットの　言葉を▽
+選べたり　対戦や　交換など▼
+自分が　やりたいことを　みんなに
+伝えることが　できます▼
 また　自分と　同じマークを
-選んでいる　人は　ジャンプします[Ctrl2:PageClear ]
+選んでいる　人は　ジャンプします▼
 マークを　タッチして　遊びたい
-相手を　探してくださいね！[Ctrl2:PageClear ]</Text>
+相手を　探してくださいね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:16:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -554,12 +554,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あ！
-だれか　きてますよ！[Ctrl2:PageClear ]
+だれか　きてますよ！▼
 ほらほら　わたし　じゃなくて　あのひとと
-おはなししては　どうですか？[Ctrl2:PageClear ]</Text>
+おはなししては　どうですか？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:07:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -568,12 +568,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あ！
-だれか　きてますよ！[Ctrl2:PageClear ]
+だれか　きてますよ！▼
 ほらほら　わたし　じゃなくて　あのひとと
-おはなししては　どうですか？[Ctrl2:PageClear ]</Text>
+おはなししては　どうですか？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:07:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -608,12 +608,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>だれも　こないと
-ひまですね[Ctrl2:PageClear ]
-なにか　おもしろいこと
-ないかな……[Ctrl2:PageClear ]</Text>
+ひまですね▼
+なにか
+おもしろいこと　ないかな……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:08:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -622,12 +622,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>だれも　こないと
-ひまですね[Ctrl2:PageClear ]
-なにか　おもしろいこと
-ないかな……[Ctrl2:PageClear ]</Text>
+ひまですね▼
+なにか
+おもしろいこと　ないかな……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:08:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -662,12 +662,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あなたって　[Name:TrainerType Idx="0" ]に
-みまちがえられた ことないですか？[Ctrl2:PageClear ]
+みまちがえられた ことないですか？▼
 なんとなく　そんな
-ふんいきが　するんですよねー[Ctrl2:PageClear ]</Text>
+ふんいきが　するんですよねー▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:08:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -676,12 +676,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あなたって　[Name:TrainerType Idx="0" ]に
-みまちがえられた ことないですか？[Ctrl2:PageClear ]
+みまちがえられた ことないですか？▼
 なんとなく　そんな
-ふんいきが　するんですよねー[Ctrl2:PageClear ]</Text>
+ふんいきが　するんですよねー▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:08:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -715,14 +715,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんにちは！[Ctrl2:PageClear ]
+			<Text>こんにちは！▼
 そうです！
-あいさつが　じゅうようなんです！[Ctrl2:PageClear ]
+あいさつが　じゅうようなんです！▼
 だれかが　きたら
-もっと　アピール　アピール！[Ctrl2:PageClear ]</Text>
+もっと　アピール　アピール！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:08:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -730,14 +730,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんにちは！[Ctrl2:PageClear ]
+			<Text>こんにちは！▼
 そうです！
-あいさつが　じゅうようなんです！[Ctrl2:PageClear ]
+あいさつが　じゅうようなんです！▼
 だれかが　きたら
-もっと　アピール　アピール！[Ctrl2:PageClear ]</Text>
+もっと　アピール　アピール！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:08:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -771,18 +771,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はじめまして！[Ctrl2:PageClear ]
+			<Text>はじめまして！▼
 [Name:PMS Idx="0" ]　は
-いいですよねー[Ctrl2:LineFeed ]
-わたしも　だいすき　なんです！[Ctrl2:PageClear ]
+いいですよねー▽
+わたしも　だいすき　なんです！▼
 はじめて　あったひとには
-きちんと　じこしょうかいを　するのが[Ctrl2:LineFeed ]
-マナーですよ！[Ctrl2:PageClear ]
+きちんと　じこしょうかいを　するのが▽
+マナーですよ！▼
 じぶんを　しょうかい　することで
-あいてのことも　わかって　くるんです！[Ctrl2:PageClear ]</Text>
+あいてのことも　わかって　くるんです！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:16:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -790,18 +790,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はじめまして！[Ctrl2:PageClear ]
+			<Text>はじめまして！▼
 [Name:PMS Idx="0" ]　は
-いいですよねー[Ctrl2:LineFeed ]
-わたしも　だいすき　なんです！[Ctrl2:PageClear ]
+いいですよねー▽
+わたしも　だいすき　なんです！▼
 はじめて　あったひとには
-きちんと　じこしょうかいを　するのが[Ctrl2:LineFeed ]
-マナーですよ！[Ctrl2:PageClear ]
+きちんと　じこしょうかいを　するのが▽
+マナーですよ！▼
 じぶんを　しょうかい　することで
-あいてのことも　わかって　くるんです！[Ctrl2:PageClear ]</Text>
+あいてのことも　わかって　くるんです！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:16:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -836,15 +836,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>へー　[Name:PMS Idx="0" ]　トレーナー
-なんですか！？[Ctrl2:LineFeed ]
-すごい　ですねー[Ctrl2:PageClear ]
+なんですか！？▽
+すごいですねー▼
 でも　ごめんなさい！
-わたし　ポケモン　もってないんです……[Ctrl2:PageClear ]
+わたし　ポケモン　もってないんです……▼
 たいせんは　するよりも
-みてるほうが　すきなので！[Ctrl2:PageClear ]</Text>
+みてるほうが　すきなので！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:16:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -853,15 +853,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>へー　[Name:PMS Idx="0" ]　トレーナー
-なんですか！？[Ctrl2:LineFeed ]
-すごい　ですねー[Ctrl2:PageClear ]
+なんですか！？▽
+すごいですねー▼
 でも　ごめんなさい！
-わたし　ポケモン　もってないんです……[Ctrl2:PageClear ]
+わたし　ポケモン　もってないんです……▼
 対戦は　するよりも
-みてるほうが　すきなので！[Ctrl2:PageClear ]</Text>
+みてるほうが　すきなので！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:16:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -896,15 +896,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あ！
-わたし　[Name:PMS Idx="0" ]　ほしいです！[Ctrl2:LineFeed ]
-わたしのと　こうかん　してください[Ctrl2:PageClear ]
-……[Ctrl2:PageClear ]
-あ　いまの　うそです[Ctrl2:PageClear ]
+わたし　[Name:PMS Idx="0" ]　ほしいです！▽
+わたしのと　こうかん　してください▼
+……　……　……
+……　……　……▼
+あ　いまの　うそです▼
 わたし　ほんとは　ポケモン　もって
-ないので　こうかん　できないんです……[Ctrl2:PageClear ]</Text>
+ないので　こうかん　できないんです……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:16:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -913,15 +914,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あ！
-わたし　[Name:PMS Idx="0" ]　ほしいです！[Ctrl2:LineFeed ]
-わたしのと　こうかん　してください[Ctrl2:PageClear ]
-……[Ctrl2:PageClear ]
-あ　いまの　うそです[Ctrl2:PageClear ]
+わたし　[Name:PMS Idx="0" ]　ほしいです！▽
+わたしのと　こうかん　してください▼
+……　……　……
+……　……　……▼
+あ　いまの　うそです▼
 わたし　ほんとは　ポケモン　もって
-ないので　こうかん　できないんです……[Ctrl2:PageClear ]</Text>
+ないので　こうかん　できないんです……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:16:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -956,14 +958,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PMS Idx="0" ]が　ほしいのは
-わかりますが[Ctrl2:PageClear ]
+わかりますが▼
 こうかんを　するときは
-むりを　いっちゃ　だめですよ！[Ctrl2:PageClear ]
+むりを　いっちゃ　だめですよ！▼
 あいての　ほしいポケモンの　ことも
-かんがえなきゃね！[Ctrl2:PageClear ]</Text>
+かんがえなきゃね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:09:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -972,14 +974,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PMS Idx="0" ]が　ほしいのは
-わかりますが[Ctrl2:PageClear ]
+わかりますが▼
 こうかんを　するときは
-むりを　いっちゃ　だめですよ！[Ctrl2:PageClear ]
+むりを　いっちゃ　だめですよ！▼
 あいての　ほしいポケモンの　ことも
-かんがえなきゃね！[Ctrl2:PageClear ]</Text>
+かんがえなきゃね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:09:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1013,16 +1015,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ユニオンルームへ　ようこそ！[Ctrl2:PageClear ]
+			<Text>ユニオンルームへ　ようこそ！▼
 いまは　わたししか　いませんが
-ともだちと　いっしょに　はいって[Ctrl2:LineFeed ]
-いろいろと　あそんで　みてくださいね！[Ctrl2:PageClear ]
+ともだちと　いっしょに　はいって▽
+いろいろと　あそんで　みてくださいね！▼
 あと　ひまだったら　わたしにも
-はなしかけて　ください！[Ctrl2:PageClear ]
-わたしも　ひまなので……[Ctrl2:PageClear ]</Text>
+はなしかけて　ください！▼
+わたしも　ひまなので……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:16:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1030,16 +1032,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ユニオンルームへ　ようこそ！[Ctrl2:PageClear ]
+			<Text>ユニオンルームへ　ようこそ！▼
 いまは　わたししか　いませんが
-ともだちと　いっしょに　はいって[Ctrl2:LineFeed ]
-いろいろと　あそんで　みてくださいね！[Ctrl2:PageClear ]
+ともだちと　いっしょに　はいって▽
+いろいろと　あそんで　みてくださいね！▼
 あと　ひまだったら　わたしにも
-はなしかけて　ください！[Ctrl2:PageClear ]
-わたしも　ひまなので……[Ctrl2:PageClear ]</Text>
+はなしかけて　ください！▼
+わたしも　ひまなので……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:16:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1074,13 +1076,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わたし　おえかきは
-うまいんですよ！[Ctrl2:PageClear ]
+うまいんですよ！▼
 [Name:PMS Idx="0" ]　だったら
-まかせて　ください！[Ctrl2:LineFeed ]
-だれにも　まけませんよ！[Ctrl2:PageClear ]</Text>
+まかせて　ください！▽
+だれにも　まけませんよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:17:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1089,13 +1091,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わたし　おえかきは
-うまいんですよ！[Ctrl2:PageClear ]
+うまいんですよ！▼
 [Name:PMS Idx="0" ]　だったら
-まかせて　ください！[Ctrl2:LineFeed ]
-だれにも　まけませんよ！[Ctrl2:PageClear ]</Text>
+まかせて　ください！▽
+だれにも　まけませんよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:17:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1129,14 +1131,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かえっちゃうんですか……[Ctrl2:PageClear ]
-……[Ctrl2:PageClear ]
-さみしいです[Ctrl2:PageClear ]
+			<Text>かえっちゃうんですか……▼
+……　……　……
+……　……　……▼
+さみしいです▼
 また
-あいにきて　くださいね！[Ctrl2:PageClear ]</Text>
+あいにきて　くださいね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:11:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1144,14 +1147,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かえっちゃうんですか……[Ctrl2:PageClear ]
-……[Ctrl2:PageClear ]
-さみしいです[Ctrl2:PageClear ]
+			<Text>かえっちゃうんですか……▼
+……　……　……
+……　……　……▼
+さみしいです▼
 また
-あいにきて　くださいね！[Ctrl2:PageClear ]</Text>
+あいにきて　くださいね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:11:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1186,14 +1190,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>どうしたんですか？
-なにか　いやなこと　あったんですか？[Ctrl2:PageClear ]
+なにか　いやなこと　あったんですか？▼
 そういう　ときは
-ひとりで　いるよりも[Ctrl2:LineFeed ]
-ともだちと　いっぱい[Ctrl2:LineFeed ]
-あそんだほうが　いいですよ！[Ctrl2:PageClear ]</Text>
+ひとりで　いるよりも▽
+ともだちと　いっぱい▽
+あそんだほうが　いいですよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:17:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1202,14 +1206,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>どうしたんですか？
-なにか　いやなこと　あったんですか？[Ctrl2:PageClear ]
+なにか　いやなこと　あったんですか？▼
 そういう　ときは
-ひとりで　いるよりも[Ctrl2:LineFeed ]
-ともだちと　いっぱい[Ctrl2:LineFeed ]
-あそんだほうが　いいですよ！[Ctrl2:PageClear ]</Text>
+ひとりで　いるよりも▽
+ともだちと　いっぱい▽
+あそんだほうが　いいですよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:17:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1244,15 +1248,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>はーい！
-[Name:PMS Idx="0" ]　したいです！[Ctrl2:PageClear ]
+[Name:PMS Idx="0" ]　したいです！▼
 ……したい　ですけど
-ここを　うごけないので[Ctrl2:LineFeed ]
-やっぱり　できません[Ctrl2:PageClear ]
+ここを　うごけないので▽
+やっぱり　できません▼
 はぁ
-[Name:PMS Idx="0" ]　したいなぁ[Ctrl2:PageClear ]</Text>
+[Name:PMS Idx="0" ]　したいなぁ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:17:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1261,15 +1265,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>はーい！
-[Name:PMS Idx="0" ]　したいです！[Ctrl2:PageClear ]
+[Name:PMS Idx="0" ]　したいです！▼
 ……したい　ですけど
-ここを　うごけないので[Ctrl2:LineFeed ]
-やっぱり　できません[Ctrl2:PageClear ]
+ここを　うごけないので▽
+やっぱり　できません▼
 はぁ
-[Name:PMS Idx="0" ]　したいなぁ[Ctrl2:PageClear ]</Text>
+[Name:PMS Idx="0" ]　したいなぁ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:17:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1304,14 +1308,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>はーい！
-わたしも　[Name:PMS Idx="0" ]します！[Ctrl2:PageClear ]
+わたしも　[Name:PMS Idx="0" ]します！▼
 でも　ここで　みんなに　せつめいを
-しないと　いけないんです……[Ctrl2:PageClear ]
-なので　みんなと　あそんで
-くださいね！[Ctrl2:PageClear ]</Text>
+しないと　いけないんです……▼
+なので　みんなと
+あそんで　くださいね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:11:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1320,14 +1324,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>はーい！
-わたしも　[Name:PMS Idx="0" ]します！[Ctrl2:PageClear ]
+わたしも　[Name:PMS Idx="0" ]します！▼
 でも　ここで　みんなに　せつめいを
-しないと　いけないんです……[Ctrl2:PageClear ]
-なので　みんなと　あそんで
-くださいね！[Ctrl2:PageClear ]</Text>
+しないと　いけないんです……▼
+なので　みんなと
+あそんで　くださいね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:11:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1362,15 +1366,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PMS Idx="0" ]を
-さそわれて　しまった！[Ctrl2:PageClear ]
+さそわれて　しまった！▼
 ……　あ！
-でも　わたしは　ここで　せつめいを[Ctrl2:LineFeed ]
-しないと　いけないので[Ctrl2:PageClear ]
+でも　わたしは　ここで　せつめいを▽
+しないと　いけないので▼
 すみませんが　おさそいは
-おことわりします　ごめんなさい！[Ctrl2:PageClear ]</Text>
+おことわりします　ごめんなさい！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:17:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1379,15 +1383,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PMS Idx="0" ]を
-さそわれて　しまった！[Ctrl2:PageClear ]
+さそわれて　しまった！▼
 ……　あ！
-でも　わたしは　ここで　せつめいを[Ctrl2:LineFeed ]
-しないと　いけないので[Ctrl2:PageClear ]
+でも　わたしは　ここで　せつめいを▽
+しないと　いけないので▼
 すみませんが　おさそいは
-おことわりします　ごめんなさい！[Ctrl2:PageClear ]</Text>
+おことわりします　ごめんなさい！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:17:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1421,14 +1425,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そうです！[Ctrl2:PageClear ]
+			<Text>そうです！▼
 ときには　つよきで　ともだちを
-さそうのも　いいですよ！[Ctrl2:PageClear ]
+さそうのも　いいですよ！▼
 でも　[Name:PMS Idx="0" ]が　したくて
-わがままに　ならないようにね！[Ctrl2:PageClear ]</Text>
+わがままに　ならないようにね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:12:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1436,14 +1440,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そうです！[Ctrl2:PageClear ]
+			<Text>そうです！▼
 ときには　つよきで　ともだちを
-さそうのも　いいですよ！[Ctrl2:PageClear ]
+さそうのも　いいですよ！▼
 でも　[Name:PMS Idx="0" ]が　したくて
-わがままに　ならないようにね！[Ctrl2:PageClear ]</Text>
+わがままに　ならないようにね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:12:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1478,13 +1482,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>はい！
-オーケー　なのです！[Ctrl2:PageClear ]
-だめな　ことなんて　ありません！[Ctrl2:PageClear ]
-まえむきに　かんがえて
-いきましょう！[Ctrl2:PageClear ]</Text>
+オーケー　なのです！▼
+だめな　ことなんて　ありません！▼
+まえむきに
+かんがえて　いきましょう！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:12:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1493,13 +1497,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>はい！
-オーケー　なのです！[Ctrl2:PageClear ]
-だめな　ことなんて　ありません！[Ctrl2:PageClear ]
-前むきに　かんがえて
-いきましょう！[Ctrl2:PageClear ]</Text>
+オーケー　なのです！▼
+だめな　ことなんて　ありません！▼
+前向きに
+考えて　いきましょう！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:12:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1534,14 +1538,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>だれにでも　にがてな　ことは
-ひとつは　ありますよ[Ctrl2:PageClear ]
+ひとつは　ありますよ▼
 あなたも　あいての　いやがることを
-むりに　さそっては　ダメですよ[Ctrl2:PageClear ]
+むりに　さそっては　ダメですよ▼
 ちなみに　わたしは
-[Name:PMS Idx="0" ]は　してみたいですけど！[Ctrl2:PageClear ]</Text>
+[Name:PMS Idx="0" ]は　してみたいですけど！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:13:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1550,14 +1554,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>だれにでも　にがてな　ことは
-ひとつは　ありますよ[Ctrl2:PageClear ]
+ひとつは　ありますよ▼
 あなたも　あいての　いやがることを
-むりに　さそっては　ダメですよ[Ctrl2:PageClear ]
+むりに　さそっては　ダメですよ▼
 ちなみに　わたしは
-[Name:PMS Idx="0" ]は　してみたいですけど！[Ctrl2:PageClear ]</Text>
+[Name:PMS Idx="0" ]は　してみたいですけど！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:13:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1591,13 +1595,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いってらっしゃいませ！[Ctrl2:PageClear ]
+			<Text>いってらっしゃいませ！▼
 ユニオンルームでは　できない
 ほんかくてきな　たいせんを[Ctrl2:LineFeed ]
-たのしんできて　くださいね！[Ctrl2:PageClear ]</Text>
+たのしんできて　くださいね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:13:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1605,13 +1609,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いってらっしゃいませ！[Ctrl2:PageClear ]
+			<Text>いってらっしゃいませ！▼
 ユニオンルームでは　できない
 ほんかくてきな　対戦を[Ctrl2:LineFeed ]
-たのしんできて　くださいね！[Ctrl2:PageClear ]</Text>
+たのしんできて　くださいね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:13:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1645,15 +1649,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はなしかけて！[Ctrl2:PageClear ]
+			<Text>はなしかけて！▼
 って　いいながら　なんで　わたしに
-はなしかけて　いるんですか！？[Ctrl2:PageClear ]
+はなしかけて　いるんですか！？▼
 もっと　じぶんから
-せっきょくてきに　はなしかけなくちゃ[Ctrl2:LineFeed ]
-ともだちは　できませんよ！[Ctrl2:PageClear ]</Text>
+せっきょくてきに　はなしかけなくちゃ▽
+ともだちは　できませんよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:17:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1661,15 +1665,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はなしかけて！[Ctrl2:PageClear ]
+			<Text>はなしかけて！▼
 って　いいながら　なんで　わたしに
-はなしかけて　いるんですか！？[Ctrl2:PageClear ]
+はなしかけて　いるんですか！？▼
 もっと　じぶんから
-せっきょくてきに　はなしかけなくちゃ[Ctrl2:LineFeed ]
-ともだちは　できませんよ！[Ctrl2:PageClear ]</Text>
+せっきょくてきに　はなしかけなくちゃ▽
+ともだちは　できませんよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:17:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1705,18 +1709,18 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>どこに
-いるかって……[Ctrl2:LineFeed ]
-めのまえに　いますね[Ctrl2:PageClear ]
+いるかって……▽
+めのまえに　いますね▼
 あ！
-もしかして　にせもの！？[Ctrl2:PageClear ]
+もしかして　にせもの！？▼
 ほんものは
-べつに　いるとか？[Ctrl2:PageClear ]
+べつに　いるとか？▼
 ……　って
-へんなこと　いわないで　くださいよ！[Ctrl2:LineFeed ]
-もうっ！[Ctrl2:PageClear ]</Text>
+へんなこと　いわないで　くださいよ！▽
+もうっ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:17:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1725,18 +1729,18 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>どこに
-いるかって……[Ctrl2:LineFeed ]
-めの前に　いますね[Ctrl2:PageClear ]
+いるかって……▽
+めの前に　いますね▼
 あ！
-もしかして　にせもの！？[Ctrl2:PageClear ]
+もしかして　にせもの！？▼
 ほんものは
-べつに　いるとか？[Ctrl2:PageClear ]
+べつに　いるとか？▼
 ……　って
-へんなこと　いわないで　くださいよ！[Ctrl2:LineFeed ]
-もうっ！[Ctrl2:PageClear ]</Text>
+へんなこと　いわないで　くださいよ！▽
+もうっ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:17:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1771,13 +1775,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PMS Idx="0" ]こうかん
-したいですよ　ねえ！[Ctrl2:LineFeed ]
-わたしも　したいですもん[Ctrl2:PageClear ]
+したいですよ　ねえ！▽
+わたしも　したいですもん▼
 でも　わたしに　はなしかけても
-こうかんは　できませんけどね[Ctrl2:PageClear ]</Text>
+こうかんは　できませんけどね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:17:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1785,14 +1789,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="0" ]こうかん
-したいですよ　ねえ！[Ctrl2:LineFeed ]
-わたしも　したいですもん[Ctrl2:PageClear ]
-でも　わたしに　はなしかけても
-こうかんは　できませんけどね[Ctrl2:PageClear ]</Text>
+			<Text>[Name:PMS Idx="0" ]交換
+したいですよ　ねえ！▽
+わたしも　したいですもん▼
+でも　わたしに　話しかけても
+交換は　できませんけどね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:17:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1828,14 +1832,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PMS Idx="0" ]たいせんを
-するんだったら[Ctrl2:PageClear ]
+するんだったら▼
 じぶんから　はなしかけるぐらい
-つよきで　いかないと！[Ctrl2:PageClear ]
+つよきで　いかないと！▼
 [Name:PMS Idx="0" ]　たいせんを
-するまえに　まけちゃい　ますよ！[Ctrl2:PageClear ]</Text>
+するまえに　まけちゃい　ますよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:14:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1844,14 +1848,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PMS Idx="0" ]対戦を
-するんだったら[Ctrl2:PageClear ]
-じぶんから　はなしかけるぐらい
-つよきで　いかないと！[Ctrl2:PageClear ]
+するんだったら▼
+自分から　話しかけるぐらい
+強気で　いかないと！▼
 [Name:PMS Idx="0" ]　対戦を
-する前に　まけちゃい　ますよ！[Ctrl2:PageClear ]</Text>
+する前に　負けちゃい　ますよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:14:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

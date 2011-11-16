@@ -1814,13 +1814,13 @@ msg_wbt_announce_09へ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>トーナメントに　さんかする
-トレーナーの　わけるもの……　それは▽
+トレーナーを　わけるもの……　それは▽
 ゆうしょうを　しっているか　いないか▼
 その　ゆうしょうを　しっている
 [Name:TrainerName Idx="0" ]　にゅうじょうッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T04:57:55" />
+				Time="2011-11-16T09:01:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1829,13 +1829,13 @@ msg_wbt_announce_09へ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>トーナメントに　参加する
-トレーナーの　分けるもの……　それは▽
+トレーナーを　分けるもの……　それは▽
 優勝を　知っているか　いないか▼
 その　優勝を　知っている
 [Name:TrainerName Idx="0" ]　入場ッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T04:58:03" />
+				Time="2011-11-16T09:01:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2844,10 +2844,10 @@ msg_wbt_announce_07へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それでは　ミックス　かいし！▼</Text>
+			<Text>それでは　ミックス開始！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-08-26T12:44:56" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T09:01:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"

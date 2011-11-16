@@ -876,10 +876,10 @@
 			<Text>ワタル『しっているだろう▼
 ドラゴンは　せいなる
 でんせつの　いきものだ！▼
-だから　つぎは　まけない！</Text>
+だから　つぎは　まけない！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T04:16:43" />
+				Time="2011-11-16T08:52:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -890,10 +890,10 @@
 			<Text>ワタル『知っているだろう▼
 ドラゴンは　聖なる
 伝説の　生き物だ！▼
-だから　つぎは　まけない！</Text>
+だから　次は　負けない！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T04:16:48" />
+				Time="2011-11-16T08:52:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1040,10 +1040,10 @@
 きょうごうが　いるはず……▼
 もっともっと　いろんな　ところで▽
 いろんな　ひと　いろんな　ポケモンに▽
-であっていきたいわね……</Text>
+であって　いきたいわね……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T04:23:30" />
+				Time="2011-11-16T08:52:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1057,10 +1057,10 @@
 強豪が　いるはず……▼
 もっともっと　いろんな　ところで▽
 いろんな　人　いろんな　ポケモンに▽
-出会っていきたいわね……</Text>
+出会って　いきたいわね……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T04:23:40" />
+				Time="2011-11-16T08:52:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1680,12 +1680,12 @@
 			Language="JPN_KANJI">
 			<Text>アカネ『うち　びっくりした
 あんた　ほんま　強いねんね！▼
-うん　ゆうしょうも　うなずけるわ▼
+うん　優勝も　うなずけるわ▼
 なんで　そんな　強いんか
 今度　いろいろ　教えてな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-18T07:11:48" />
+				Time="2011-11-16T08:53:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -2249,13 +2249,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アスナ『あなたの　つよさって
+			<Text>アスナ『あなたの　強さって
 自分らしさを　だせてることかな▼
 あなたの　優勝で
-みんなが　盛り上がっていたよ！</Text>
+みんなが　盛りあがっていたよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T11:35:26" />
+				Time="2011-11-16T08:53:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -2566,11 +2566,11 @@
 それにしても　それだけ
 ポケモンを　きたえるのって▽
 たいへん　だったんじゃないの？▼
-ところで　シッポウの
-はくぶつかん　って　すごい？</Text>
+ところで　シッポウの　はくぶつかんに
+カセキって　あるの？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-28T10:11:51" />
+				Time="2011-11-16T08:54:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -2583,11 +2583,11 @@
 それにしても　それだけ
 ポケモンを　鍛えるのって▽
 大変だったんじゃないの？▼
-ところで　シッポウの
-博物館　って　すごい？</Text>
+ところで　シッポウの　博物館に
+カセキって　あるの？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-28T10:11:59" />
+				Time="2011-11-16T08:55:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -2866,11 +2866,11 @@
 負けたが　いい　ものを　みれた▼
 さて　シンオウに　戻り
 息子を　鍛えなおすと　するか▼
-なあに！　次は　かつために
+なあに！　次は　勝つために
 トーナメントに　挑戦するぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-18T07:27:08" />
+				Time="2011-11-16T08:56:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -6691,11 +6691,11 @@ msg_wbt_subev_sinou_～</Comment>
 カノコタウン　出身で
 チェレンたちと　いっしょに▽
 冒険の　旅を　はじめたって！▼
-じぶんでは　けんそん　しているが
+自分では　けんそん　しているが
 かなり　強い　トレーナーだぜ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-18T07:33:57" />
+				Time="2011-11-16T08:56:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
