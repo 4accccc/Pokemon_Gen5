@@ -29,6 +29,11 @@ extern "C"{
 //  src/field/script_def.hの定義と一致している必要がある。
 //=====================================
 typedef enum {
+
+  // swan
+  EV_MOVEPOKE_ANIME_KOBARUON_IN,    // コバルオン 登場
+  EV_MOVEPOKE_ANIME_KOBARUON_OUT,   // コバルオン 退場
+
   EV_MOVEPOKE_ANIME_RAI_KAZA_INSIDE,
   EV_MOVEPOKE_ANIME_RAI_KAZA_OUTSIDE,
 

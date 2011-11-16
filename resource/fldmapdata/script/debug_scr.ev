@@ -1731,6 +1731,7 @@ EVENT_START   ev_debug_ichiraku
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_10,  10 ) // 観覧車トレーナーリセット
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_11,  11 ) // 背景真っ黒のままメッセージ
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_12,  12 ) // キュレム合体イベントリセット
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_13,  13 ) // コバルオン入退場
 	_BMPMENU_START()
 
   SWITCH $SCWK_ANSWER
@@ -1817,6 +1818,7 @@ EVENT_START   ev_debug_ichiraku
     _SET_ZENKOKU_ZUKAN_FLAG()
 
   CASE 11 THEN
+    // メッセージ面以外のフェード
     _MAP_FADE_OUT_MSG_ENABLE( MSG_FADE_WHITE, 0 )
     _TIME_WAIT(15)
     _RIVAL_NAME(0)
@@ -1835,6 +1837,37 @@ EVENT_START   ev_debug_ichiraku
 
     _MAP_CHANGE_DEFAULT_POS( ZONE_ID_D10R0401, DIR_DOWN )
 
+  CASE 13 THEN
+    // コバルオンイベント
+    {
+
+      // コバルオンOBJ生成
+      _OBJ_ADD_EX( 103, 364, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE4_STEP, MV_DMY )
+
+      // 鳴き声を鳴らす
+      // voice_play
+
+      // 移動ポケモンアニメ作成
+      _EV_MOVEPOKE_CREATE( MMDL_ID_EVENTOBJ_00 )
+    
+      // 登場アニメ
+      _EV_MOVEPOKE_START_ANIME( SCR_EV_MOVEPOKE_ANIME_KOBARUON_IN )
+      _EV_MOVEPOKE_CHECK_ANIME_END()
+
+      // なんかしゃべる?
+      _TIME_WAIT(60)
+
+      // 退場アニメ
+      _EV_MOVEPOKE_START_ANIME( SCR_EV_MOVEPOKE_ANIME_KOBARUON_OUT )
+      _EV_MOVEPOKE_CHECK_ANIME_END()
+
+      // 移動ポケモンアニメ破棄
+      _EV_MOVEPOKE_DELETE()
+
+      // コバルオンOBJ削除
+      _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+    }
+
   ENDSWITCH
 
 EVENT_END
@@ -1843,6 +1876,12 @@ EVENT_END
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_tr_gyoe
 	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+//--------------------------------------------------------------
+//	下向く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/

@@ -458,10 +458,12 @@
 //  移動ポケモン
 //  src/field/event_movepoke.hの定義と一致している必要がある。
 //--------------------------------------------------------------
-#define SCR_EV_MOVEPOKE_ANIME_RAI_KAZA_INSIDE (0)
-#define SCR_EV_MOVEPOKE_ANIME_RAI_KAZA_OUTSIDE (1)
-#define SCR_EV_MOVEPOKE_ANIME_TUCHI_INSIDE  (2)
-#define SCR_EV_MOVEPOKE_ANIME_TUCHI_OUTSIDE (3)
+#define SCR_EV_MOVEPOKE_ANIME_KOBARUON_IN   (0)
+#define SCR_EV_MOVEPOKE_ANIME_KOBARUON_OUT  (1)
+#define SCR_EV_MOVEPOKE_ANIME_RAI_KAZA_INSIDE (2)
+#define SCR_EV_MOVEPOKE_ANIME_RAI_KAZA_OUTSIDE (3)
+#define SCR_EV_MOVEPOKE_ANIME_TUCHI_INSIDE  (4)
+#define SCR_EV_MOVEPOKE_ANIME_TUCHI_OUTSIDE (5)
 
 
 //--------------------------------------------------------------

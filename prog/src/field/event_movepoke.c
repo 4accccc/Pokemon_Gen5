@@ -54,7 +54,9 @@ enum
 ///	アニメ終了後の影ON　設定
 //=====================================
 static const BOOL sc_EV_MOVEPOKE_END_SHADOW_ON[ EV_MOVEPOKE_ANIME_MAX ] = {
-  FALSE,     // EV_MOVEPOKE_ANIME_RAI_KAZA_INSIDE,
+  TRUE,     // EV_MOVEPOKE_ANIME_KOBARUON_IN,
+  FALSE,    // EV_MOVEPOKE_ANIME_KOBARUON_OUT,
+  FALSE,    // EV_MOVEPOKE_ANIME_RAI_KAZA_INSIDE,
   FALSE,    // EV_MOVEPOKE_ANIME_RAI_KAZA_OUTSIDE,
   FALSE,    // EV_MOVEPOKE_ANIME_TUCHI_INSIDE,
   TRUE,     // EV_MOVEPOKE_ANIME_TUCHI_OUTSIDE,
@@ -177,7 +179,7 @@ void EVENT_MOVEPOKE_StartAnime( EV_MOVEPOKE_WORK* p_wk, EV_MOVEPOKE_ANIME_TYPE a
 
   // アニメーション生成
   p_wk->p_anime = ICA_ANIME_CreateStreaming( p_wk->heapID, ARCID_EV_MOVEPOKE, 
-      NARC_event_movepoke_rai_kaza_01_bin + anime_no, 
+      NARC_event_movepoke_cobalion_in_bin + anime_no, 
       EV_MOVEPOKE_ANIME_INTERVAL, p_wk->animebuf, EV_MOVEPOKE_ANIME_BUF );
 
   // アニメーション開始
@@ -317,24 +319,31 @@ static void MOVEPOKE_SetUpMMdl( const ICA_ANIME* cp_anime, MMDL* p_mmdl, const V
 
   VEC_Add( &trans, cp_pos, &trans );
 
-//  OS_TPrintf( "trans x[%d] y[%d] z[%d]\n", FX_Whole( trans.x ), FX_Whole( trans.y ), FX_Whole( trans.z ) );
+  //OS_TPrintf( "trans x[%d] y[%d] z[%d]\n", FX_Whole( trans.x ), FX_Whole( trans.y ), FX_Whole( trans.z ) );
+  //OS_TPrintf( "rot y[%d]\n", FX_Whole( rotate.y ) );
   
   // 位置反映
   MMDL_SetVectorPos( p_mmdl, &trans );
 
   // 角度から、方向反映
   // rotate.yの値で方向を管理
-  if( rotate.y == 0 ){
+  switch( rotate.y ){
+  case 0:
     MMDL_SetDirAll( p_mmdl, DIR_DOWN );
-  }
-  else if( rotate.y == FX32_CONST(90) ){
+    break;
+  case FX32_CONST(90):
+  case FX32_CONST(-270):
     MMDL_SetDirAll( p_mmdl, DIR_RIGHT );
-  }
-  else if( rotate.y == FX32_CONST(180) ){
+    break;
+  case FX32_CONST(180):
+  case FX32_CONST(-180):
     MMDL_SetDirAll( p_mmdl, DIR_UP );
-  }
-  else if( rotate.y == FX32_CONST(270) ){
+    break;
+  case FX32_CONST(270):
+  case FX32_CONST(-90):
     MMDL_SetDirAll( p_mmdl, DIR_LEFT );
+    break;
   }
+
 }
 
