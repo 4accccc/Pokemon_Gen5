@@ -336,5 +336,11 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     C14_GIMMICK_End,    // セイガイハシティ
     C14_GIMMICK_Move,   // セイガイハシティ
   },
+  {
+    FS_OVERLAY_ID(field_gimmick_rezi),
+    REZI_GIMMICK_Setup,  // レジ３体の地底遺跡
+    REZI_GIMMICK_End,    // レジ３体の地底遺跡
+    REZI_GIMMICK_Move,   // レジ３体の地底遺跡
+  },
 };
 
