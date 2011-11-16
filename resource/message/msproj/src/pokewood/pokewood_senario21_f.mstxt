@@ -413,16 +413,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『ゆうれい……！
-……　……　……　……　……　……▽
+……　……　……　……　……▽
 ……　そうだった……　１ねんまえ……▽
 アントニオは……</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-14T17:21:24" />
+				Time="2011-11-16T02:22:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-14T17:21:24" />
+				Time="2011-11-16T02:22:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -893,25 +893,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ほら　[Name:PokemonNickname Idx="1" ]だよ</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ほら　[Name:PokemonNickname Idx="0" ]だよ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:20:55" />
+				Time="2011-11-15T11:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:20:55" />
+				Time="2011-11-15T11:45:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ほら　[Name:PokemonNickname Idx="1" ]だよ</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ほら　[Name:PokemonNickname Idx="0" ]だよ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:20:55" />
+				Time="2011-11-15T11:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T04:20:55" />
+				Time="2011-11-15T11:45:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -927,28 +927,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『あなたが　かわいがっていた
-[Name:PokemonNickname Idx="1" ]よ　おぼえているでしょ▼
+[Name:PokemonNickname Idx="0" ]よ　おぼえているでしょ▼
 アントニオ『……　……（ニコッ）</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:37" />
+				Time="2011-11-15T11:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:37" />
+				Time="2011-11-15T11:45:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『あなたが　可愛がっていた
-[Name:PokemonNickname Idx="1" ]よ　覚えているでしょ▼
+[Name:PokemonNickname Idx="0" ]よ　覚えているでしょ▼
 アントニオ『……　……（ニコッ）</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:37" />
+				Time="2011-11-15T11:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:37" />
+				Time="2011-11-15T11:45:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1300,15 +1300,15 @@
 メロメロよ▼
 きみに　メロメロだった
 [Name:TrainerName Idx="1" ]だよ▼
-[Name:PokemonNickname Idx="1" ]も　いるよ
+[Name:PokemonNickname Idx="0" ]も　いるよ
 すきだった　でしょう？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:29" />
+				Time="2011-11-15T11:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:29" />
+				Time="2011-11-15T11:45:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1316,15 +1316,15 @@
 メロメロよ▼
 きみに　メロメロだった
 [Name:TrainerName Idx="1" ]だよ▼
-[Name:PokemonNickname Idx="1" ]も　いるよ
+[Name:PokemonNickname Idx="0" ]も　いるよ
 好きだった　でしょう？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:29" />
+				Time="2011-11-15T11:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:29" />
+				Time="2011-11-15T11:45:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1363,25 +1363,25 @@
 		Label="pw_event4_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『[Name:PokemonNickname Idx="1" ]だよー</Text>
+			<Text>[Name:TrainerName Idx="1" ]『[Name:PokemonNickname Idx="0" ]だよー</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:29" />
+				Time="2011-11-15T11:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:29" />
+				Time="2011-11-15T11:45:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『[Name:PokemonNickname Idx="1" ]だよー</Text>
+			<Text>[Name:TrainerName Idx="1" ]『[Name:PokemonNickname Idx="0" ]だよー</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:29" />
+				Time="2011-11-15T11:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:29" />
+				Time="2011-11-15T11:45:14" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1513,25 +1513,31 @@
 		Label="pw_event4_hero_4">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『やっぱり　だいすきー！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……そうよ▼
+きらいに　なるなんて
+ぜったい　むりー！▼
+やっぱり　だいすきー！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:29" />
+				Time="2011-11-16T03:14:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:29" />
+				Time="2011-11-16T03:14:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『やっぱり　大好きー！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……そうよ▼
+嫌いに　なるなんて
+絶対　無理ー！▼
+やっぱり　大好きー！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:29" />
+				Time="2011-11-16T03:14:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:29" />
+				Time="2011-11-16T03:14:48" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
