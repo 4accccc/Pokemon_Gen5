@@ -62,6 +62,7 @@
 #include "poke_tool/pokewood_party.h"
 
 #include "pokewood_party.naix"
+#include "gamesystem/game_beacon.h"
 
 #include "field_fade.h"
 
@@ -420,6 +421,7 @@ static BATTLE_SETUP_PARAM *_createNormalShowBSP(
     return bsp;
   }
 
+
   GF_ASSERT_MSG( 0,"再生データが読み込めていないのに上映しようとしている!!!\n" );
   return NULL;
 }
@@ -458,20 +460,26 @@ static BATTLE_SETUP_PARAM *_createTutorialShowBSP(
 //-----------------------------------------------------------------------------
 /**
  * @brief ポケウッド再生用セットアップ
+ *        この関数でscenario_noが代入されます
  */
 //-----------------------------------------------------------------------------
 static BATTLE_SETUP_PARAM * createPokewoodShowBattleParam( 
                             GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, HEAPID heapID, u8 replay_id )
 {
+  BATTLE_SETUP_PARAM *bsp;
   // チュートリアル再生用のBSP作成
   if(replay_id==POKEWOOD_TUTORIAL_MOVIE_NO){
     return _createTutorialShowBSP( gsys, fieldmap, heapID);
   }
   
   // 通常時BSP作成
-  return _createNormalShowBSP( gsys, fieldmap, heapID, replay_id);
+  bsp = _createNormalShowBSP( gsys, fieldmap, heapID, replay_id );
 
-  // ここでscenario_noが代入されます
+  // すれちがいログで「ポケウッドで「●●●」を上映中」と表示
+  GAMEBEACON_Set_PokewoodWatchMovie( bsp->pokewoodSenario );
+
+  return bsp;
+
 }
 
 //-----------------------------------------------------------------------------

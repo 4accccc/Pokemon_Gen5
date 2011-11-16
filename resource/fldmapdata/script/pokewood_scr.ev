@@ -165,6 +165,8 @@ EVENT_START ev_pokewood_rec
       IF $SCWK_ANSWER == SCR_REPORT_OK THEN
         //JA履歴への対応：ポケウッドで映画を撮った
         _RESORT_SET_RECORD( RESORT_RECORD_ID_POKEWOOD )
+	//すれちがいログで「●●撮影中」と告知
+	_BEACON_SET_REQ_POKEWOOD_FILMING( LWK_PKWD_SCENARIO )
         _CALL ev_pkwd_rec_go_studio
         _CALL ev_pkwd_rec_studio
         _CALL ev_pkwd_rec_exit_studio
