@@ -13,9 +13,6 @@
 #include "arc_def.h"
 #include "monolith_tool.h"
 #include "msg/msg_monolith.h"
-#include "mission_types.h"
-#include "intrude_mission.h"
-#include "intrude_work.h"
 #include "monolith_snd_def.h"
 #include "field/monolith_tool_notwifi.h"
 
@@ -252,6 +249,8 @@ static GFL_PROC_RESULT MonolithUpStatusProc_End( GFL_PROC * proc, int * seq, voi
 //--------------------------------------------------------------
 /**
  * @brief   BGフレーム設定
+ *
+ * @param	MONOLITH_UPSTATUS	*msw
  */
 //--------------------------------------------------------------
 static void _UpSetup_BGFrameSetting( MONOLITH_UPSTATUS_WORK *msw )
@@ -280,6 +279,8 @@ static void _UpSetup_BGFrameSetting( MONOLITH_UPSTATUS_WORK *msw )
 //--------------------------------------------------------------
 /**
  * BGフレーム解放
+ *
+ * @param	MONOLITH_UPSTATUS	*msw
  */
 //--------------------------------------------------------------
 static void _UpSetup_BGFrameExit( MONOLITH_UPSTATUS_WORK *msw )
@@ -294,7 +295,9 @@ static void _UpSetup_BGFrameExit( MONOLITH_UPSTATUS_WORK *msw )
 /**
  * @brief   BGグラフィックをVRAMへ転送
  *
- * @param   hdl		アーカイブハンドル
+ * @param	MONOLITH_APP_PARENT	*appwk
+ * @param	MONOLITH_SETUP		*setup
+ * @param	MONOLITH_UPSTATUS	*msw
  */
 //--------------------------------------------------------------
 static void _UpSetup_BGGraphicLoad( MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_UPSTATUS_WORK *msw)
@@ -302,7 +305,7 @@ static void _UpSetup_BGGraphicLoad( MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *
   GFL_ARCHDL_UTIL_TransVramScreen(setup->hdl, NARC_monolith_mono_bgu_map_lz_NSCR, 
     GFL_BG_FRAME2_M, 0, 0, TRUE, HEAPID_MONOLITH);
   
-  // ゲージ転送
+  // レベルゲージ転送
   MonolithTool_BalanceGaugeRewrite( appwk, BALANCE_GAUGE_UP, GFL_BG_FRAME2_M);
   //
   GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
@@ -313,8 +316,8 @@ static void _UpSetup_BGGraphicLoad( MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *
 /**
  * BMPWIN作成
  *
- * @param   setup		
- * @param   msw		
+ * @param	MONOLITH_SETUP		*setup
+ * @param	MONOLITH_UPSTATUS	*msw
  */
 //--------------------------------------------------------------
 static void _UpSetup_BmpWin_Create(MONOLITH_SETUP *setup, MONOLITH_UPSTATUS_WORK *msw)
@@ -365,7 +368,7 @@ static void _UpSetup_BmpWin_Create(MONOLITH_SETUP *setup, MONOLITH_UPSTATUS_WORK
 /**
  * BMPWIN削除
  *
- * @param   msw		
+ * @param	MONOLITH_UPSTATUS	*msw
  */
 //--------------------------------------------------------------
 static void _UpSetup_BmpWin_Exit(MONOLITH_UPSTATUS_WORK *msw)
@@ -379,12 +382,11 @@ static void _UpSetup_BmpWin_Exit(MONOLITH_UPSTATUS_WORK *msw)
 
 //--------------------------------------------------------------
 /**
- * ミッション説明描画
+ * 各種情報表示
  *
- * @param   appwk		
- * @param   setup		
- * @param   msw		
- * @param   select_town		
+ * @param	MONOLITH_APP_PARENT	*appwk
+ * @param	MONOLITH_SETUP		*setup
+ * @param	MONOLITH_UPSTATUS	*msw
  */
 //--------------------------------------------------------------
 static void _UpWrite_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_UPSTATUS_WORK *msw)

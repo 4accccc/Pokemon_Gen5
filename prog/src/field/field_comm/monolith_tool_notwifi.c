@@ -14,7 +14,6 @@
 #include "monolith.naix"
 #include "monolith_tool.h"
 #include "field/intrude_common.h"
-#include "intrude_work.h"
 #include "msg/msg_monolith.h"
 #include "field/monolith_tool_notwifi.h"
 

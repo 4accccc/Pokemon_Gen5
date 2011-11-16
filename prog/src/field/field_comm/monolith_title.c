@@ -1,7 +1,7 @@
 //==============================================================================
 /**
  * @file    monolith_title.c
- * @brief   モノリス：ミッション説明
+ * @brief   モノリス：タイトル
  * @author  matsuda
  * @date    2009.11.20(金)
  */
@@ -12,15 +12,12 @@
 #include "monolith_common.h"
 #include "arc_def.h"
 #include "monolith_tool.h"
-#include "intrude_mission.h"
 #include "msg/msg_monolith.h"
-#include "intrude_types.h"
 #include "system/bmp_winframe.h"
 #include "gamesystem/msgspeed.h"
 #include "monolith_snd_def.h"
 #include "field/eventwork.h"
 #include "../../../../resource/fldmapdata/flagwork/flag_define.h" //SYS_FLAG_
-#include "intrude_work.h"
 //
 #include "field/script_def.h"
 #include "../../../../resource/fldmapdata/flagwork/work_define.h" //WK_SYS_FES_TUTORIAL
@@ -30,9 +27,9 @@
 //==============================================================================
 /// カーソル位置と戻り先を合わせる
 enum{
-  TITLE_PANEL_FMISSION,
-  TITLE_PANEL_POWER,
-  TITLE_PANEL_STATUS,
+  TITLE_PANEL_FMISSION,	// フェスミッション
+  TITLE_PANEL_POWER,	// Gパワーをうけとる
+  TITLE_PANEL_STATUS,	// 記録を見る
   
   TITLE_PANEL_MAX,
   TITLE_PANEL_CANCEL = TITLE_PANEL_MAX,
@@ -55,7 +52,7 @@ enum{
   TPANEL_MAX = 3,		// パネル最大数
 };
 
-// モード
+// モード(Mode)(フラグで分岐)
 enum{
   MODE_NORMAL = 0,		// 通常
   MODE_TUTORIAL,		// チュートリアル
@@ -66,7 +63,7 @@ enum{
 enum{
   RET_NORMAL = 0,		// 通常
   RET_DECIDE,			// 決定
-  RET_DISPMES,			// メッセージ表示
+  RET_DISPMES,			// メッセージ表示(決定不可)
 };
 
 //==============================================================================
@@ -115,7 +112,7 @@ static BOOL _Wait_MsgStream(MONOLITH_SETUP *setup, MONOLITH_TITLE_WORK *mtw);
 static void _Clear_MsgStream(MONOLITH_TITLE_WORK *mtw);
 
 //
-static s32 mt_chk_input( MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *mtw );
+static s32  mt_chk_input( MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *mtw );
 static void mt_init( MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *mtw );
 
 //==============================================================================
@@ -133,8 +130,8 @@ const GFL_PROC_DATA MonolithAppProc_Down_Title = {
 //-----------------
 static const MONO_TITLE_OBJ_DATA mtitle_obj_tbl[] = {
   { PANEL_SIZE_SMALL, TPANEL_X, TPANEL_Y0, msg_mono_title_005 },	// フェスミッション
-  { PANEL_SIZE_SMALL, TPANEL_X, TPANEL_Y1, msg_mono_title_002 },	// デルパワーをうけとる
-  { PANEL_SIZE_SMALL, TPANEL_X, TPANEL_Y2, msg_mono_title_007 },	// きろくをみる
+  { PANEL_SIZE_SMALL, TPANEL_X, TPANEL_Y1, msg_mono_title_002 },	// Gパワーをうけとる
+  { PANEL_SIZE_SMALL, TPANEL_X, TPANEL_Y2, msg_mono_title_007 },	// 記録を見る
   //
   { -1, 0, 0, 0 },	// end
 };
@@ -145,8 +142,8 @@ static const MONO_TITLE_OBJ_DATA mtitle_obj_tbl[] = {
 //-----------------
 static const GFL_UI_TP_HITTBL title_rect_tbl[] = {
   { 44-8, 44+8, 128-72, 128+72, },		// フェスミッション
-  { 84-8, 84+8, 128-72, 128+72, },		// デルパワー
-  {124-8,124+8, 128-72, 128+72, },		// きろくをみる
+  { 84-8, 84+8, 128-72, 128+72, },		// Gパワーをうけとる
+  {124-8,124+8, 128-72, 128+72, },		// 記録を見る
   { CANCEL_POS_Y - 8, CANCEL_POS_Y + 8, CANCEL_POS_X - 8, CANCEL_POS_X + 8, }, // キャンセル
   //
   { GFL_UI_TP_HIT_END, 0, 0, 0 },		// end
@@ -157,21 +154,21 @@ static const GFL_UI_TP_HITTBL title_rect_tbl[] = {
 // (monolith_common.hで定義)
 //--------------------------
 static const s16 title_ret_mode[] = {
-  MONOLITH_MENU_FMISSION,   ///<フェスミッションを受ける
-  MONOLITH_MENU_POWER,      ///<デルパワー
-  MONOLITH_MENU_STATUS,     ///<状態を見る
+  MONOLITH_MENU_FMISSION,   ///<フェスミッション
+  MONOLITH_MENU_POWER,      ///<Gパワーをうけとる
+  MONOLITH_MENU_STATUS,     ///<記録を見る
   //
   MONOLITH_MENU_END,        ///<終了
 };
 
 //----------------------------------
 // フラグ処理(0:押せない、1:押せる)
-// (フェス、デルパワー、記録を見る、pad)
+// (フェス、デルパワー、記録を見る、戻る)
 //----------------------------------
 static const s16 title_sel_tbl[] = {
-  1, 1, 1, 0,		// 通常時
-  1, 0, 0, 0,		// チュートリアル時
-  0, 1, 0, 0,		// デルパワーチュートリアル時
+  1, 1, 1, 1,		// 通常時
+  1, 0, 0, 1,		// チュートリアル時
+  0, 1, 0, 1,		// デルパワーチュートリアル時
 };
 
 //----------------------------------
@@ -237,7 +234,6 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_TITLE_WORK *mtw = mywk;
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(appwk->parent->gsys);
-  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   int tp_ret;
   s32 ret;
   
@@ -264,7 +260,7 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
     if(ret == RET_DECIDE){
       (*seq)++;
     }
-    // メッセージ表示
+    // メッセージ表示(決定不可)
     else if(ret == RET_DISPMES){
       _Set_MsgStream( mtw, appwk->setup, title_mes_tbl[mtw->Mode] );
       *seq = _SEQ_STREAM_WAIT;
@@ -362,8 +358,8 @@ static GFL_PROC_RESULT MonolithTitleProc_End( GFL_PROC * proc, int * seq, void *
 /**
  * パネル生成
  *
- * @param   appwk		
- * @param   mtw		
+ * @param   MONOLITH_APP_PARENT		*appwk
+ * @param   MONOLITH_TITLE_WORK		*mtw
  */
 //==================================================================
 static void _Title_PanelCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *mtw)
@@ -382,10 +378,11 @@ static void _Title_PanelCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *
   MonolithTool_Panel_Init(appwk);
   // objのセット
   for(i=0;i<TPANEL_MAX;i++){
+    // 終了判定
     if(adr->index == -1){
       break;
     }
-    // 押せるか判定
+    // 押せるか判定(0 or 1)
     j = title_sel_tbl[4*mtw->Mode+i];
     //
     // 色指定表示
@@ -407,7 +404,7 @@ static void _Title_PanelCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *
 /**
  * パネル削除
  *
- * @param   mtw		
+ * @param   MONOLITH_TITLE_WORK		*mtw
  */
 //==================================================================
 static void _Title_PanelDelete(MONOLITH_TITLE_WORK *mtw)
@@ -423,7 +420,8 @@ static void _Title_PanelDelete(MONOLITH_TITLE_WORK *mtw)
 /**
  * パネル更新処理
  *
- * @param   mtw		
+ * @param   MONOLITH_APP_PARENT		*appwk
+ * @param   MONOLITH_TITLE_WORK		*mtw
  */
 //==================================================================
 static void _Title_PanelUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *mtw)
@@ -440,8 +438,8 @@ static void _Title_PanelUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *
 /**
  * キャンセルアイコン生成
  *
- * @param   appwk		
- * @param   mtw		
+ * @param   MONOLITH_APP_PARENT		*appwk
+ * @param   MONOLITH_TITLE_WORK		*mtw
  */
 //==================================================================
 static void _Title_CancelIconCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *mtw)
@@ -453,7 +451,7 @@ static void _Title_CancelIconCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_W
 /**
  * キャンセルアイコン削除
  *
- * @param   mtw		
+ * @param   MONOLITH_TITLE_WORK		*mtw
  */
 //==================================================================
 static void _Title_CancelIconDelete(MONOLITH_TITLE_WORK *mtw)
@@ -465,7 +463,7 @@ static void _Title_CancelIconDelete(MONOLITH_TITLE_WORK *mtw)
 /**
  * キャンセルアイコン更新処理
  *
- * @param   mtw		
+ * @param   MONOLITH_TITLE_WORK		*mtw
  */
 //==================================================================
 static void _Title_CancelIconUpdate(MONOLITH_TITLE_WORK *mtw)
@@ -510,8 +508,8 @@ static void _Setup_BGFrameExit(void)
 /**
  * BMPWIN作成
  *
- * @param   mtw		
- * @param   setup		
+ * @param   MONOLITH_TITLE_WORK		*mtw
+ * @param   MONOLITH_SETUP			*setup
  */
 //--------------------------------------------------------------
 static void _Setup_BmpWinCreate(MONOLITH_TITLE_WORK *mtw, MONOLITH_SETUP *setup)
@@ -540,7 +538,7 @@ static void _Setup_BmpWinCreate(MONOLITH_TITLE_WORK *mtw, MONOLITH_SETUP *setup)
 /**
  * BMPWIN削除
  *
- * @param   mtw		
+ * @param   MONOLITH_TITLE_WORK		*mtw
  */
 //--------------------------------------------------------------
 static void _Setup_BmpWinDelete(MONOLITH_TITLE_WORK *mtw)
@@ -550,10 +548,11 @@ static void _Setup_BmpWinDelete(MONOLITH_TITLE_WORK *mtw)
 
 //--------------------------------------------------------------
 /**
- * メッセージ出力開始
+ * メッセージ出力開始(stream)
  *
- * @param   mtw		
- * @param   setup		
+ * @param   MONOLITH_TITLE_WORK		*mtw
+ * @param   MONOLITH_SETUP			*setup
+ * @param   u16						msg_id
  */
 //--------------------------------------------------------------
 static void _Set_MsgStream(MONOLITH_TITLE_WORK *mtw, MONOLITH_SETUP *setup, u16 msg_id)
@@ -573,11 +572,12 @@ static void _Set_MsgStream(MONOLITH_TITLE_WORK *mtw, MONOLITH_SETUP *setup, u16 
 
 //--------------------------------------------------------------
 /**
- * メッセージ出力完了待ち
+ * メッセージ出力完了待ち(stream)
  *
- * @param   mtw		
+ * @param   MONOLITH_SETUP			*setup
+ * @param   MONOLITH_TITLE_WORK		*mtw
  *
- * @retval  BOOL		TRUE:出力完了
+ * @retval  BOOL					(TRUE:出力完了、FALSE:まだ)
  */
 //--------------------------------------------------------------
 static BOOL _Wait_MsgStream(MONOLITH_SETUP *setup, MONOLITH_TITLE_WORK *mtw)
@@ -587,9 +587,9 @@ static BOOL _Wait_MsgStream(MONOLITH_SETUP *setup, MONOLITH_TITLE_WORK *mtw)
 
 //--------------------------------------------------------------
 /**
- * メッセージクリア
+ * メッセージクリア(stream)
  *
- * @param   mtw		
+ * @param   MONOLITH_TITLE_WORK		*mtw
  */
 //--------------------------------------------------------------
 static void _Clear_MsgStream(MONOLITH_TITLE_WORK *mtw)
@@ -611,15 +611,14 @@ static void _Clear_MsgStream(MONOLITH_TITLE_WORK *mtw)
     MONOLITH_FONT_DEFCOLOR_LETTER, MONOLITH_FONT_DEFCOLOR_SHADOW, MONOLITH_FONT_DEFCOLOR_BACK );
 }
 
-
 //--------------------------------------------------------------
 /**
  * キー入力処理(まとめ)
  *
- * @param   appwk	
- * @param   mtw		
+ * @param   MONOLITH_APP_PARENT		*appwk
+ * @param   MONOLITH_TITLE_WORK		*mtw
  *
- * @ret     s32		(0:なにもしない、1:DECIDE、2:メッセージ表示)
+ * @retval  s32						(0:なにもしない、1:DECIDE、2:メッセージ表示)
  */
 //--------------------------------------------------------------
 static s32 mt_chk_input( MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *mtw )
@@ -700,10 +699,10 @@ static s32 mt_chk_input( MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *mtw )
 
 //--------------------------------------------------------------
 /**
- * 初期化(フラグの判定)
+ * 初期化(主にフラグの判定)
  *
- * @param   appwk	
- *
+ * @param   MONOLITH_APP_PARENT		*appwk
+ * @param   MONOLITH_TITLE_WORK		*mtw
  */
 //--------------------------------------------------------------
 static void mt_init( MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *mtw )

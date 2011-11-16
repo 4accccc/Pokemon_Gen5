@@ -13,7 +13,6 @@
 #include "arc_def.h"
 #include "monolith_tool.h"
 #include "msg/msg_monolith.h"
-#include "intrude_work.h"
 #include "gamesystem/fest_mission_data.h"
 #include "monolith.naix"
 //

@@ -13,8 +13,6 @@
 #include "monolith_common.h"
 #include "monolith.naix"
 #include "monolith_tool.h"
-#include "field/intrude_common.h"
-//#include "intrude_work.h"
 #include "msg/msg_monolith.h"
 
 
@@ -231,7 +229,8 @@ void MonolithTool_PanelOBJ_Create(MONOLITH_SETUP *setup, PANEL_ACTOR *dest, COMM
  * @param   y		        Y座標(中心)
  * @param   msg_id      メッセージID
  * @param   wordset       WORDSETが不必要な場合はNULL指定
- * 
+ * @param   PRINTSYS_LSB  文字カラー
+ *
  * WORDSETが必要な場合は外側であらかじめWORDSETをしてください
  */
 //==================================================================
@@ -764,11 +763,7 @@ void MonolithTool_Bmpoam_BGPriSet(MONOLITH_SETUP *setup, MONOLITH_BMPSTR *bmpstr
 //==================================================================
 MYSTATUS * MonolithTool_GetMystatus(MONOLITH_APP_PARENT *appwk)
 {
-#ifdef  DISABLE_INTRUDE // swanで侵入を削除
   return GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(appwk->parent->gsys));
-#else
-  return Intrude_GetMyStatus(GAMESYSTEM_GetGameData(appwk->parent->gsys), appwk->parent->palace_area);
-#endif  //DISABLE_INTRUDE swanで侵入を削除
 }
 
 //==================================================================
@@ -782,11 +777,7 @@ MYSTATUS * MonolithTool_GetMystatus(MONOLITH_APP_PARENT *appwk)
 //==================================================================
 OCCUPY_INFO * MonolithTool_GetOccupyInfo(MONOLITH_APP_PARENT *appwk)
 {
-#ifdef  DISABLE_INTRUDE // swanで侵入を削除
   return GAMEDATA_GetMyOccupyInfo( GAMESYSTEM_GetGameData(appwk->parent->gsys) );
-#else
-  return Intrude_GetOccupyInfo(GAMESYSTEM_GetGameData(appwk->parent->gsys), appwk->parent->palace_area);
-#endif  //DISABLE_INTRUDE swanで侵入を削除
 }
 
 //==================================================================

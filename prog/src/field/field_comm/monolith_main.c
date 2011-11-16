@@ -19,14 +19,8 @@
 #include "system/wipe.h"
 #include "gamesystem/g_power.h"
 
-#include "mission.naix"
 #include "app_menu_common.naix"
 #include "app/app_menu_common.h"
-#include "system/net_err.h"
-//#include "intrude_comm_command.h"
-//#include "intrude_work.h"
-
-
 
 //==============================================================================
 //  定数定義
@@ -86,8 +80,9 @@ static void _Setup_ActorExit(MONOLITH_SETUP *setup);
 static void _Setup_OBJGraphicLoad(MONOLITH_SETUP *setup);
 static void _Setup_OBJGraphicUnload(MONOLITH_SETUP *setup);
 static void _VblankFunc(GFL_TCB *tcb, void *work);
+#if 0
 static void _Setup_MissionListData(MONOLITH_SYSTEM *monosys, MONOLITH_PARENT_WORK *parent);
-
+#endif
 
 //==============================================================================
 //  データ
@@ -196,8 +191,7 @@ static GFL_PROC_RESULT MonolithProc_Init(GFL_PROC * proc, int * seq, void * pwk,
   monosys->common.power_select_no = GPOWER_ID_NULL;
   
   //ミッションリストに従ってミッションデータの配列を作成
-  _Setup_MissionListData(monosys, parent);
-  
+//  _Setup_MissionListData(monosys, parent);
 	monosys->setup.hdl = GFL_ARC_OpenDataHandle(ARCID_MONOLITH, HEAPID_MONOLITH);
   {
     _Setup_VramSetting();
@@ -245,9 +239,6 @@ static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk
   MONOLITH_SYSTEM *monosys = mywk;
   MONOLITH_PARENT_WORK *parent = pwk;
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(parent->gsys);
-#ifndef  DISABLE_INTRUDE // swanで侵入を削除
-  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
-#endif  //DISABLE_INTRUDE swanで侵入を削除
   enum{
     SEQ_INIT,
     SEQ_MONOLITH_IN,
@@ -266,18 +257,7 @@ static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk
     (*seq)++;
     break;
   case SEQ_MONOLITH_IN:
-#ifdef  DISABLE_INTRUDE // swanで侵入を削除
     (*seq)++;
-#else
-    if(intcomm == NULL || NetErr_App_CheckError()){
-      (*seq)++;
-    }
-    else{
-      if(IntrudeSend_OtherMonolithIn() == TRUE){
-        (*seq)++;
-      }
-    }
-#endif  //DISABLE_INTRUDE swanで侵入を削除
     break;
   case SEQ_INIT_WAIT:
     if(WIPE_SYS_EndCheck() == TRUE){
@@ -285,13 +265,6 @@ static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk
     }
     break;
   case SEQ_PROC_MAIN:
-#ifndef  DISABLE_INTRUDE // swanで侵入を削除
-    //侵入が起動していた状態で切断状態になったらモノリス画面を終了させる
-    if(NetErr_App_CheckError() || (intcomm == NULL && GameCommSys_GetLastStatus(game_comm) != GAME_COMM_LAST_STATUS_NULL) || (intcomm == NULL && GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION)){
-      monosys->app_parent.force_finish = TRUE;
-    }
-#endif  //DISABLE_INTRUDE swanで侵入を削除
-    
     if(monosys->app_parent.force_finish == FALSE){
       //上下、各PROCが無い場合は次のPROCを生成
       if(monosys->proc_up_occ == FALSE){
@@ -356,18 +329,7 @@ static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk
     (*seq)++;
     break;
   case SEQ_MONOLITH_OUT:
-#ifdef  DISABLE_INTRUDE // swanで侵入を削除
     (*seq)++;
-#else
-    if(intcomm == NULL || NetErr_App_CheckError()){
-      (*seq)++;
-    }
-    else{
-      if(IntrudeSend_OtherMonolithOut() == TRUE){
-        (*seq)++;
-      }
-    }
-#endif
     break;
   case SEQ_END_WAIT:
     if(WIPE_SYS_EndCheck() == TRUE){
@@ -819,6 +781,7 @@ static void _VblankFunc(GFL_TCB *tcb, void *work)
  * @param   parent		
  */
 //--------------------------------------------------------------
+#if 0
 static void _Setup_MissionListData(MONOLITH_SYSTEM *monosys, MONOLITH_PARENT_WORK *parent)
 {
   MISSION_TYPE mission_type;
@@ -844,3 +807,4 @@ static void _Setup_MissionListData(MONOLITH_SYSTEM *monosys, MONOLITH_PARENT_WOR
   
   GFL_HEAP_FreeMemory(mcd);
 }
+#endif

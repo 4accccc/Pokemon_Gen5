@@ -13,10 +13,6 @@
 #include "arc_def.h"
 #include "monolith_tool.h"
 #include "msg/msg_monolith.h"
-#include "msg/msg_mission_monolith.h"
-#include "mission_types.h"
-#include "intrude_mission.h"
-#include "intrude_types.h"
 #include "gamesystem/g_power.h"
 #include "field/monolith_tool_notwifi.h"
 

@@ -13,8 +13,6 @@
 #include "monolith_common.h"
 #include "arc_def.h"
 #include "monolith_tool.h"
-#include "intrude_mission.h"
-#include "intrude_comm_command.h"
 #include "msg/msg_monolith.h"
 #include "msg/msg_fest_mission.h"
 #include "monolith.naix"
@@ -26,7 +24,6 @@
 #include "app/app_menu_common.h"
 #include "gamesystem/game_comm.h"
 #include "monolith_snd_def.h"
-#include "intrude_work.h"
 #include "field/monolith_tool_notwifi.h"
 
 #include "gamesystem/link_festival.h"
@@ -688,7 +685,6 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_FMSELECT_WORK *mfw = mywk;
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(appwk->parent->gsys);
-  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   int i;
   enum{
     SEQ_INIT,
@@ -2521,13 +2517,11 @@ static BOOL fmission_chk_open( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
     flg = 1;
   }
   else if(mfw->fmd_arc[id].common.host == FMISSION_HOST_WHITE){
-//    if(GET_VERSION() == VERSION_WHITE){
     if(GET_VERSION() == VERSION_W2){
       flg = 1;
     }
   }
   else if(mfw->fmd_arc[id].common.host == FMISSION_HOST_BLACK){
-//    if(GET_VERSION() == VERSION_BLACK){
     if(GET_VERSION() == VERSION_B2){
       flg = 1;
     }

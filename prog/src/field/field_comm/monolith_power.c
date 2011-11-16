@@ -12,8 +12,6 @@
 #include "monolith_common.h"
 #include "arc_def.h"
 #include "monolith_tool.h"
-#include "intrude_mission.h"
-#include "intrude_comm_command.h"
 #include "msg/msg_monolith.h"
 #include "monolith.naix"
 #include "system/bmp_winframe.h"
@@ -23,9 +21,7 @@
 #include "app_menu_common.naix"
 #include "app/app_menu_common.h"
 #include "app/app_keycursor.h"
-#include "gamesystem/game_comm.h"
 #include "monolith_snd_def.h"
-#include "intrude_work.h"
 #include "field/monolith_tool_notwifi.h"
 
 
@@ -406,7 +402,6 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_PWSELECT_WORK *mpw = mywk;
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(appwk->parent->gsys);
-  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   int i;
   enum{
     SEQ_INIT,
@@ -587,14 +582,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     }
     break;
   case SEQ_DECIDE_SEND:
-    if(intcomm != NULL){
-      if(IntrudeSend_GPowerEquip(appwk->parent->palace_area) == TRUE){
-        *seq = SEQ_DECIDE_STREAM_WAIT;
-      }
-    }
-    else{
-      *seq = SEQ_DECIDE_STREAM_WAIT;
-    }
+    *seq = SEQ_DECIDE_STREAM_WAIT;
     break;
   case SEQ_DECIDE_STREAM_WAIT:
     if(_Wait_MsgStream(appwk->setup, mpw) == TRUE){

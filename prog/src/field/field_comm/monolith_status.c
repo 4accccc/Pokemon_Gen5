@@ -13,15 +13,11 @@
 #include "arc_def.h"
 #include "monolith_tool.h"
 #include "msg/msg_monolith.h"
-#include "mission_types.h"
-#include "intrude_mission.h"
-#include "intrude_work.h"
 #include "monolith_snd_def.h"
 #include "field/monolith_tool_notwifi.h"
 #include "savedata/fmission_save.h"
 
 #include "monolith.naix"
-
 
 //==============================================================================
 //  定数定義
@@ -121,7 +117,7 @@ const GFL_PROC_DATA MonolithAppProc_Down_Status = {
   MonolithStatusProc_End,
 };
 
-///タッチ範囲テーブル
+///タッチ範囲テーブル(キャンセルアイコン用)
 static const GFL_UI_TP_HITTBL StatusTouchRect[] = {
   {
     CANCEL_POS_Y - CANCEL_TOUCH_RANGE_HALF,
@@ -144,7 +140,7 @@ static const s16 status_mestbl[] = {
   msg_mono_st_014,		// 開催した回数
   msg_mono_st_015,		// 参加した回数
   msg_mono_st_013,		// 達成した回数
-  msg_mono_st_016,		// 最高回数
+  msg_mono_st_016,		// 最高参加者数
   msg_mono_st_017,		// トップスコア数
 };
 
@@ -347,7 +343,7 @@ static void _Setup_BGFrameExit(void)
 /**
  * @brief   BGグラフィックをVRAMへ転送
  *
- * @param   hdl		アーカイブハンドル
+ * @param   MONOLITH_SETUP			*setup
  */
 //--------------------------------------------------------------
 static void _Setup_BGGraphicLoad(MONOLITH_SETUP *setup)
@@ -363,8 +359,8 @@ static void _Setup_BGGraphicLoad(MONOLITH_SETUP *setup)
 /**
  * BMPWIN作成
  *
- * @param   setup		
- * @param   msw		
+ * @param   MONOLITH_SETUP			*setup
+ * @param   MONOLITH_STATUS_WORK	*msw
  */
 //--------------------------------------------------------------
 static void _Setup_BmpWin_Create(MONOLITH_SETUP *setup, MONOLITH_STATUS_WORK *msw)
@@ -430,7 +426,7 @@ static void _Setup_BmpWin_Create(MONOLITH_SETUP *setup, MONOLITH_STATUS_WORK *ms
 /**
  * BMPWIN削除
  *
- * @param   msw		
+ * @param   MONOLITH_STATUS_WORK	*msw
  */
 //--------------------------------------------------------------
 static void _Setup_BmpWin_Exit(MONOLITH_STATUS_WORK *msw)
@@ -444,12 +440,11 @@ static void _Setup_BmpWin_Exit(MONOLITH_STATUS_WORK *msw)
 
 //--------------------------------------------------------------
 /**
- * ミッション説明描画
+ * 各種情報表示
  *
- * @param   appwk		
- * @param   setup		
- * @param   msw		
- * @param   select_town		
+ * @param   MONOLITH_APP_PARENT		*appwk
+ * @param   MONOLITH_SETUP			*setup
+ * @param   MONOLITH_STATUS_WORK	*msw
  */
 //--------------------------------------------------------------
 static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_STATUS_WORK *msw)
@@ -579,7 +574,7 @@ static void _Status_CancelIconCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_STATUS
 /**
  * キャンセルアイコン削除
  *
- * @param   msw		
+ * @param   MONOLITH_STATUS_WORK	*msw
  */
 //==================================================================
 static void _Status_CancelIconDelete(MONOLITH_STATUS_WORK *msw)
@@ -591,7 +586,7 @@ static void _Status_CancelIconDelete(MONOLITH_STATUS_WORK *msw)
 /**
  * キャンセルアイコン更新処理
  *
- * @param   msw		
+ * @param   MONOLITH_STATUS_WORK	*msw
  */
 //==================================================================
 static void _Status_CancelIconUpdate(MONOLITH_STATUS_WORK *msw)
@@ -599,28 +594,26 @@ static void _Status_CancelIconUpdate(MONOLITH_STATUS_WORK *msw)
   MonolithTool_CancelIcon_Update(&msw->cancel_icon);
 }
 
-
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		文字列表示サイズから各モードの補正値を取得(static)
- *				(ui/printtoolから持ってきた)
+ * 文字列表示サイズから各モードの補正値を取得
+ * (ui/printtoolから持ってきた)
  *
- * @param		buf			文字列
- * @param		font		フォント
- * @param		mode		表示モード(0-2)
+ * @param   const STRBUF	*buf(文字列)
+ * @param   GFL_FONT		*font(フォント)
+ * @param	u32				mode(表示モード(0-2))
  *
  * @return	補正値
  */
 //--------------------------------------------------------------------------------------------
 static u16 ms_get_strsize( const STRBUF * buf, GFL_FONT * font, u32 mode )
 {
-	// 右詰
-	if( mode == 1 ){
-		return PRINTSYS_GetStrWidth( buf, font, 0 );
-	// 中央
-	}else if( mode == 2 ){
-		return ( PRINTSYS_GetStrWidth( buf, font, 0 ) / 2 );
-	}
-	return 0;
+  // (0:左、1:右、2:中央)
+  if( mode == 1 ){			// 右(サイズを取得できる)
+    return PRINTSYS_GetStrWidth( buf, font, 0 );
+  }else if( mode == 2 ){	// 中央(サイズの半分)
+    return ( PRINTSYS_GetStrWidth( buf, font, 0 ) / 2 );
+  }
+  return 0;
 }
 
