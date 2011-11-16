@@ -148,7 +148,14 @@ enum{
 #define CROSS_COLOR_ICON_MAX  (10)  //アイコン数
 
 //リング色変え処理用
-#define RING_NUM                ( CGEAR_CUSTOM_COLOR_NUM-1 ) //大外はフレームなので、純粋なリング数は-1
+enum{
+  RING_0, //一番内側
+  RING_1,
+  RING_2,
+  RING_3,
+  RING_4, //一番外側
+  RING_NUM,
+}RING_ID;
 #define RING_COLOR_MAX          ( CGEAR_RING_COLOR_MAX )    //リングカラー数
 
 #define RING_COLOR_SET_NUM   (3)
@@ -885,6 +892,7 @@ struct _C_GEAR_WORK {
   GFL_TCBLSYS* tcbsys;      //通常tcb動作用
   GFL_TCBSYS* pfade_tcbsys; //PaletteFadeReq専用
   GFL_TCB*                    vblank_tcb;
+  GFL_TCBL*                   p_tcbl_fesinfo; //フェスミッション通知用TCB
   void* pfade_tcbsys_wk;
   PALETTE_FADE_PTR            pfade_ptr;
  
@@ -1075,6 +1083,7 @@ static void SleepMode_End( C_GEAR_WORK* pWork );
 static void SleepMode_ColorUpdate( C_GEAR_WORK* pWork );
 static void SleepMode_ColorUpdateEx( C_GEAR_WORK* pWork );
 static BOOL SleepMode_IsSleep( const C_GEAR_WORK* cpWork );
+static BOOL SleepMode_IsSleepView( const C_GEAR_WORK* cpWork );
 
 // レーダー、すれ違いボタンの色のみ黒く
 static void RadarCrossBttn_Off( C_GEAR_WORK* pWork );
@@ -1127,6 +1136,12 @@ static void _changeState(C_GEAR_WORK* pWork,StateFunc state)
   pWork->state = state;
   pWork->startCounter = 0;
   pWork->state_seq = 0;
+}
+
+//ステートが通常ループかどうか？(起動演出ステートなどでないかチェック)
+static BOOL _checkStateIsNormal(C_GEAR_WORK* pWork)
+{
+  return ( pWork->state == _modeSelectMenuWait );
 }
 
 //------------------------------------------------------------------------------
@@ -2801,7 +2816,11 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
   {
     pos += num_ofs[i];
     pWork->cellCursor[ACT_T_HOUR1+i] = 
+#if 1
       _gearObjAdd( pWork, pos, POS_T_NUM_Y, ACTANM_N10, CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_PARTS, _CLACT_RES_COMMON );
+#else
+      _gearObjAdd( pWork, pos, POS_T_NUM_Y, ACTANM_N10, CGEAR_CLACT_BG_PRI, ACT_SPRI_PARTS, _CLACT_RES_COMMON );
+#endif
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[ACT_T_HOUR1+i], FALSE );
 
   }
@@ -2823,9 +2842,13 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
       { ACTANM_HELP,      POS_HELP_X, POS_HELP_Y, CGEAR_CLACT_BG_PRI,     ACT_SPRI_PARTS, _CLACT_RES_COMMON },
       { ACTANM_CUSTOM,    POS_CUSTOM_X, POS_CUSTOM_Y, CGEAR_CLACT_BG_PRI,     ACT_SPRI_PARTS, _CLACT_RES_COMMON },
       { ACTANM_S_RADAR,   POS_S_RADAR_X, POS_S_RADAR_Y, CGEAR_CLACT_BG_PRI,     ACT_SPRI_PARTS, _CLACT_RES_COMMON },
+#if 0
       { ACTANM_CROSS,     POS_CROSS_X, POS_CROSS_Y, CGEAR_CLACT_BG_PRI_NA,  ACT_SPRI_CROSS, _CLACT_RES_COMMON },
       { ACTANM_CONNECT,   POS_CONNECT_X, POS_CONNECT_Y,  CGEAR_CLACT_BG_PRI_NA, ACT_SPRI_CROSS, _CLACT_RES_COMMON },
-      
+#else
+      { ACTANM_CROSS,     POS_CROSS_X, POS_CROSS_Y, CGEAR_CLACT_BG_PRI,  ACT_SPRI_CROSS, _CLACT_RES_COMMON },
+      { ACTANM_CONNECT,   POS_CONNECT_X, POS_CONNECT_Y,  CGEAR_CLACT_BG_PRI, ACT_SPRI_CROSS, _CLACT_RES_COMMON },
+#endif
       { ACTANM_IR,            POS_IR_DEF_X, POS_IR_DEF_Y, CGEAR_CLACT_BG_PRI,  ACT_SPRI_PANEL_BASE, _CLACT_RES_PANEL },
       { ACTANM_RING_IR,       POS_IR_DEF_X, POS_IR_DEF_Y, CGEAR_CLACT_BG_PRI,  ACT_SPRI_PANEL_RING, _CLACT_RES_COMMON },
       { ACTANM_WIRELESS,      POS_WIRELESS_DEF_X, POS_WIRELESS_DEF_Y,  CGEAR_CLACT_BG_PRI, ACT_SPRI_PANEL_BASE, _CLACT_RES_PANEL },
@@ -3105,16 +3128,12 @@ static void tcb_StartUpRingAnm( GFL_TCBL *tcb , void* tcb_wk)
   GFL_TCBL_Delete(tcb);
 }
 
-#if 0
 //========================================================================
 //フェスミッション通知時のリングパレットアニメーション
 //========================================================================
 typedef struct{
   C_GEAR_WORK* cgw;
 
-  u8  mode;
-  u8  ring_id;
-  u8  ring_col;
   u8  pal_pos;
   u8  ini_wait;
   s8  evy;
@@ -3123,87 +3142,71 @@ typedef struct{
   u8  seq;
 
   int*  task_ct;
-}TASKWK_STARTUP_RINGANM;
+}TASKWK_FESINFO_RINGANM;
 
-static void tcb_StartUpRingAnm( GFL_TCBL *tcb , void* tcb_wk);
+static void tcb_FesInfoRingAnm( GFL_TCBL *tcb , void* tcb_wk);
+
+static void ring2_FesInfoAnmCore( C_GEAR_WORK* pWork, u8 evy )
+{
+  //リングベースの3色に適用
+  SoftFadePfd( pWork->pfade_ptr, FADE_SUB_BG,
+     RING_1*RING_COLOR_SET_NUM+RING_COLOR_TRANS_POS_BG_START, RING_COLOR_SET_NUM, evy, 0x7FFF );
+}
 
 /*
- *  @brief  起動リングアニメ登録
+ *  @brief  フェスミッション情報表示アニメ登録
  */
-static void _taskAdd_StartUpRingAnm( C_GEAR_WORK* pWork, u8 mode, u8 ring_id, u8 ring_col, u8 wait, int* task_ct )
+static void _taskAdd_FesInfoRingAnm( C_GEAR_WORK* pWork )
 {
   GFL_TCBL* tcb;
-  TASKWK_STARTUP_RINGANM* twk;
+  TASKWK_FESINFO_RINGANM* twk;
 
-  tcb = GFL_TCBL_Create( pWork->tcbsys, tcb_StartUpRingAnm, sizeof(TASKWK_STARTUP_RINGANM), 0 );
+  if( pWork->p_tcbl_fesinfo != NULL ){
+    GF_ASSERT(0);
+    return;
+  }
+  tcb = GFL_TCBL_Create( pWork->tcbsys, tcb_FesInfoRingAnm, sizeof(TASKWK_FESINFO_RINGANM), 0 );
 
   twk = GFL_TCBL_GetWork(tcb);
-  MI_CpuClear8( twk, sizeof( TASKWK_STARTUP_RINGANM ));
+  MI_CpuClear8( twk, sizeof( TASKWK_FESINFO_RINGANM ));
 
   twk->cgw = pWork;
-  twk->mode = mode;
-  twk->ring_id = ring_id;
-  twk->ring_col = ring_col;
-  twk->ini_wait = wait;
+  twk->ini_wait = 2;
 
-  twk->evy = -16;
-  twk->end_evy = 0;
-  twk->dif = 2;
-  _gearRingColorChangeCore( pWork, ring_id, ring_col ); //カラーをセット
-  _gearRingColorPalAnmCore( pWork, ring_id, 16, _BLACK_COLOR[pWork->sex] ); //一度黒く
+  twk->evy = 0;
+  twk->end_evy = 10;
+  twk->dif = 1;
+//  ring2_FesInfoAnmCore( pWork, twk->evy );
 
-  if( task_ct != NULL ){
-    twk->task_ct = task_ct;
-    (*twk->task_ct)++;
-  }
+  pWork->p_tcbl_fesinfo = tcb;  //TCBのポインタを憶えておく  
 }
 
-static void tcb_StartUpRingAnm( GFL_TCBL *tcb , void* tcb_wk)
+static void _taskDel_FesInfoRingAnm( C_GEAR_WORK* pWork )
 {
-  TASKWK_STARTUP_RINGANM* twk = (TASKWK_STARTUP_RINGANM*)tcb_wk;
-  C_GEAR_WORK* pWork = twk->cgw;
-  u16 color[2];
-
-  color[0] = 0x7FFF;  //白
-  color[1] = _BLACK_COLOR[pWork->sex];  //黒
-
-  switch( twk->seq ){
-  case 0: //初期ウェイト
-    if( twk->ini_wait--  <= 0 ){
-      twk->seq++;
-    }
+  if( pWork->p_tcbl_fesinfo == NULL ){
     return;
-  case 1: //オリジナルカラー+8までフェード
-    twk->evy += twk->dif;
-    _gearRingColorPalAnmCore( pWork, twk->ring_id, MATH_ABS(twk->evy), color[(twk->evy<=0)] );
-    if( twk->evy != twk->end_evy ){
-      return;
-    }
+  }
+  //元の色に戻す
+  ring2_FesInfoAnmCore( pWork, 0 );
 
-    if( twk->mode == STARTUP_ANM_MODE_BOOT ){
-      twk->dif = -2;
-      twk->end_evy = -16;
-    }else{
-      twk->dif = 0;
-      twk->end_evy = 0;
-      _gearRingObjVisibleSet( pWork, twk->ring_id, TRUE );
-    }
-    twk->seq++;
-    return;
-  case 2: //終端カラーまで戻す
-    twk->evy += twk->dif;
-    _gearRingColorPalAnmCore( pWork, twk->ring_id, MATH_ABS(twk->evy), color[(twk->evy<=0)] );
-    if( twk->evy != twk->end_evy ){
-      return;
-    }
-    break;
-  }
-  if( twk->task_ct != NULL ){
-    (*twk->task_ct)--;
-  }
-  GFL_TCBL_Delete(tcb);
+  GFL_TCBL_Delete( pWork->p_tcbl_fesinfo );
+  pWork->p_tcbl_fesinfo = NULL;
 }
-#endif
+
+static void tcb_FesInfoRingAnm( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_FESINFO_RINGANM* twk = (TASKWK_FESINFO_RINGANM*)tcb_wk;
+  C_GEAR_WORK* pWork = twk->cgw;
+  
+  if( SleepMode_IsSleepView( pWork ) ) return;  //スリープ中/スリープ表示状態遷移中は停止
+
+  twk->evy += twk->dif;
+  ring2_FesInfoAnmCore( pWork, twk->evy );
+  
+  if( twk->evy == 0 || twk->evy == twk->end_evy ){
+    twk->dif *= -1; //方向逆
+  }
+}
 
 //------------------------------------------------------------------------------
 /**
@@ -3327,13 +3330,13 @@ static void _gearRingColorChangeCore(C_GEAR_WORK* pWork, u8 ring_id, u8 col_no )
 
   //関連づいたOBJのリング色を転送
   switch( ring_id ){
-  case 2: //内から3番目
+  case RING_2: //内から3番目
     PaletteWorkSet( pWork->pfade_ptr, &pal[RING_COLOR_SET_OBJ],
       FADE_SUB_OBJ, RING_COLOR_TRANS_POS_OBJ_R2_START1, siz );
     PaletteWorkSet( pWork->pfade_ptr, &pal[RING_COLOR_SET_OBJ_D],
       FADE_SUB_OBJ, RING_COLOR_TRANS_POS_OBJ_R2_START2, siz );
     break;
-  case 4: //一番外側
+  case RING_4: //一番外側
     PaletteWorkSet( pWork->pfade_ptr, &pal[RING_COLOR_SET_OBJ],
       FADE_SUB_OBJ, RING_COLOR_TRANS_POS_OBJ_R4_START1, siz );
     PaletteWorkSet( pWork->pfade_ptr, &pal[RING_COLOR_SET_OBJ_D],
@@ -3366,13 +3369,13 @@ static void _gearRingColorPalAnmCore(C_GEAR_WORK* pWork, u8 ring_id, u8 evy, u16
 
   //関連づいたOBJのリング色を転送
   switch( ring_id ){
-  case 2: //内から3番目
+  case RING_2: //内から3番目
     SoftFadePfd( pWork->pfade_ptr, FADE_SUB_OBJ,
       RING_COLOR_TRANS_POS_OBJ_R2_START1, RING_COLOR_SET_NUM, evy, color );
     SoftFadePfd( pWork->pfade_ptr, FADE_SUB_OBJ,
       RING_COLOR_TRANS_POS_OBJ_R2_START2, RING_COLOR_SET_NUM, evy, color );
     break;
-  case 4: //一番外側
+  case RING_4: //一番外側
     SoftFadePfd( pWork->pfade_ptr, FADE_SUB_OBJ,
       RING_COLOR_TRANS_POS_OBJ_R4_START1, RING_COLOR_SET_NUM, evy, color );
     SoftFadePfd( pWork->pfade_ptr, FADE_SUB_OBJ,
@@ -3402,7 +3405,7 @@ static void _gearRingObjVisibleSet(C_GEAR_WORK* pWork, u8 ring_id, BOOL visible_
 
   //関連づいたOBJの表示制御
   switch( ring_id ){
-  case 1: //内から2番目
+  case RING_1: //内から2番目
     if( pWork->power_flag ){
       GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[ACT_CROSS], visible_f );
       if( pWork->connect_flag ){ //一人も通信バッファにいない時は、CONNECT表示は強制Off
@@ -3410,10 +3413,10 @@ static void _gearRingObjVisibleSet(C_GEAR_WORK* pWork, u8 ring_id, BOOL visible_
       }
     }
     break;
-  case 2: //内から3番目
+  case RING_2: //内から3番目
     GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[ACT_LOGO], visible_f );
     break;
-  case 4: //一番外側
+  case RING_4: //一番外側
     for( i = ACT_R4_OBJ_START; i <= ACT_R4_OBJ_END; i++){
       if( i == ACT_LOGO ) continue; //ACT_LOGOのみr3 ちょっと仲間はずれ
       if( !pWork->power_flag && i>ACT_COMMON_MAX ){
@@ -3654,7 +3657,6 @@ static void _modeInit(C_GEAR_WORK* pWork,BOOL bBoot)
     _gearAllObjDrawEnable(pWork, TRUE);
 //    _gearMarkObjDrawEnable(pWork,TRUE);
   }
-  _cgear_CheckBeaconInfo( pWork );
 }
 
 
@@ -4093,7 +4095,9 @@ static void cgear_InitWork( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pCGSV,FIELD_SUBS
   
   // CrossObj初期化
   _gearCrossObjMain( pWork );
-
+  
+  //インフォメーション通知初期化
+  //_cgear_CheckBeaconInfo( pWork );
 
   //初期設定を行う。
   {
@@ -4143,6 +4147,7 @@ static void cgear_ExitWork( C_GEAR_WORK* pWork )
     }
   }
   
+  _taskDel_FesInfoRingAnm( pWork );
   _BUTTONPAL_Exit( &pWork->button_palfade );
   
   GFL_UI_SleepGoSetFunc(NULL,  NULL);
@@ -4676,6 +4681,21 @@ static BOOL SleepMode_IsSleep( const C_GEAR_WORK* cpWork )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  スリープモードチェック
+ *
+ *	@param	cpWork 
+ *
+ *	スリープ表示状態遷移中もTRUEと返す
+ */
+//-----------------------------------------------------------------------------
+static BOOL SleepMode_IsSleepView( const C_GEAR_WORK* cpWork )
+{
+  if( SleepMode_IsSleep( cpWork ) ) return TRUE;
+  return cpWork->sleep_color_req;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  レーダーcrossボタン　OFF
  *
  *	@param	pWork   ワーク
@@ -5081,6 +5101,9 @@ static void _cgear_CheckBeaconInfo( C_GEAR_WORK* pWork )
 {
   int i;
 
+  if( !_checkStateIsNormal( pWork ) ){
+    return; //通常ステートでない場合は更新しない
+  }
 #ifdef PM_DEBUG
   {
     int cont = GFL_UI_KEY_GetCont();
@@ -5132,6 +5155,7 @@ static void _cgear_CheckBeaconInfo( C_GEAR_WORK* pWork )
       _gearObjSetAnmSeq( pWork->cellCursor[ACT_CONNECT], ACTANM_FMISSION );
       pWork->info_flag[INFO_FLAG_FMISSION] = TRUE;
       pWork->info_flag[INFO_FLAG_HOT] = FALSE;
+      _taskAdd_FesInfoRingAnm( pWork );
     }
     return;
   }
@@ -5143,6 +5167,7 @@ static void _cgear_CheckBeaconInfo( C_GEAR_WORK* pWork )
       _gearObjSetAnmSeq( pWork->cellCursor[ACT_CONNECT], ACTANM_CONNECT_INFO );
       pWork->info_flag[INFO_FLAG_HOT] = TRUE;
       pWork->info_flag[INFO_FLAG_FMISSION] = FALSE;
+      _taskDel_FesInfoRingAnm( pWork );
     }
     return;
   }
@@ -5151,6 +5176,7 @@ static void _cgear_CheckBeaconInfo( C_GEAR_WORK* pWork )
     _gearObjSetAnmSeq( pWork->cellCursor[ACT_CONNECT], ACTANM_CONNECT );
     pWork->info_flag[INFO_FLAG_HOT] = FALSE;
     pWork->info_flag[INFO_FLAG_FMISSION] = FALSE;
+    _taskDel_FesInfoRingAnm( pWork );
   }
 }
 
