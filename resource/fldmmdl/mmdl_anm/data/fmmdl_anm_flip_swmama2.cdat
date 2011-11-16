@@ -13,13 +13,15 @@
 // スワンママ２芝居１　花びらを目で追う
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActFlip_SWMama2_Act0[] = {
-  {  4, ANMFLIP_ON, ANMFLIP_OFF,  4 },  ///<
-  {  9, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  9, ANMFLIP_OFF, ANMFLIP_OFF,  9 },  ///<
   { 10, ANMFLIP_OFF, ANMFLIP_OFF, 33 },  ///<
   {  9, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
   { 11, ANMFLIP_OFF, ANMFLIP_OFF, 44 },  ///<
   {  4, ANMFLIP_ON, ANMFLIP_OFF,  4 },  ///<
-  { 12, ANMFLIP_OFF, ANMFLIP_OFF, 30 },  ///<
+  { 12, ANMFLIP_OFF, ANMFLIP_OFF, 40 },  ///<
+  {  4, ANMFLIP_ON, ANMFLIP_OFF, 20 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  3 },  ///<
+  {  2, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
   { GFL_BBDACT_ANMCOM_END,0,0,0 },
 };
 

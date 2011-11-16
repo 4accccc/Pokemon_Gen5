@@ -20,7 +20,7 @@
 
 
 ///ƒtƒŒ[ƒ€”’è‹`
-#define DRAW_ANMFRM_FLIP_SWMAMA2_ACT0  ( 123 )
+#define DRAW_ANMFRM_FLIP_SWMAMA2_ACT0  ( 158 )
 #define DRAW_ANMFRM_FLIP_SWMAMA2_ACT1  ( 8 )
 #define DRAW_ANMFRM_FLIP_SWMAMA2_ACT2  ( 8 )
 
