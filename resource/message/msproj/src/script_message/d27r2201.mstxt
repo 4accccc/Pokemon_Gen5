@@ -6,13 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん『あんたが　のぞむモノ
+			<Text>あんたが　のぞむモノ
 あたい　もってるわ！▼
 でも　ほしけりゃ……
 わかるでしょ？　しょうぶよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T13:00:32" />
+				Time="2011-11-16T05:44:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -20,13 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマだん『あんたが　望むモノ
+			<Text>あんたが　望むモノ
 あたい　持ってるわ！▼
 でも　ほしけりゃ……
 わかるでしょ？　勝負よ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T13:00:39" />
+				Time="2011-11-16T05:44:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -371,6 +371,263 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r2201_swplazmaw_pic_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>イッシュちほうを　つくった
+でんせつポケモン　レシラム▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:45:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イッシュ地方を　つくった
+伝説ポケモン　レシラム▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:45:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アジト船：２回目
+・メッセージ表示後、レシラムのBG表示
+※図鑑登録後は
+　swplazmaw_03→swplazmaw_05で終了</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+プラズマ団♀・したっぱ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r2201_swplazmaw_pic_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レシラムの　ことが
+ポケモンずかんに　きろくされた</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レシラムの　ことが
+ポケモン図鑑に　記録された</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・イッシュ図鑑登録
+・みたあつかい</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r2201_swplazmaw_pic_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そして　もういっぴきの
+でんせつポケモン　ゼクロム▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そして　もう一匹の
+伝説ポケモン　ゼクロム▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アジト船：２回目</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+プラズマ団♀・したっぱ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r2201_swplazmaw_pic_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゼクロムの　ことが
+ポケモンずかんに　きろくされた</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゼクロムの　ことが
+ポケモン図鑑に　記録された</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・イッシュ図鑑登録
+・みたあつかい</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r2201_swplazmaw_pic_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こーゆー　ポケモンが　いたら
+イッシュなんて　かんたんに▽
+しはい　できるって　もんですよね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こーゆー　ポケモンが　いたら
+イッシュなんて　簡単に▽
+支配できるって　もんですよね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+プラズマ団♀・したっぱ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-16T05:39:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

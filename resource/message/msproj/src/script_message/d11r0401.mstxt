@@ -6,16 +6,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>げすいどうに　たまった　どくを
+			<Text>げすいどうに　あふれる　どくを
 くすりに　かえる　じっけん……▼
 これが　かんぜんに　せいこうすれば
 どくタイプの　ポケモンから▽
 どんどん　くすりが　つくれるんだ▼
-さて
+さて……
 きょうの　じっけんは……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:44:30" />
+				Time="2011-11-16T02:44:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23,16 +23,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>げすいどうに　たまった　どくを
-くすりに　かえる　じっけん……▼
-これが　かんぜんに　せいこうすれば
+			<Text>下水道に　あふれる　毒を
+薬に　変える　実験……▼
+これが　完全に　成功すれば
 どくタイプの　ポケモンから▽
-どんどん　くすりが　つくれるんだ▼
-さて
-きょうの　じっけんは……▼</Text>
+どんどん　薬が　つくれるんだ▼
+さて……
+今日の　実験は……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:44:31" />
+				Time="2011-11-16T02:44:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -84,13 +84,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんかいの　じっけんは
-ふつう　だったな▼
+			<Text>今回の　実験は
+普通　だったな▼
 きみ　この
 どくけしを　あげるよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:41:40" />
+				Time="2011-11-16T02:47:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -132,13 +132,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんかいの　じっけんは
+			<Text>今回の　実験は
 うまく　いったぞ！▼
 きみ　この
 なんでもなおしを　あげるよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:41:50" />
+				Time="2011-11-16T02:47:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -180,13 +180,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんかいの　じっけんは
+			<Text>今回の　実験は
 とても　うまく　いったぞ！▼
 きみ　この
 かいふくのくすりを　あげるよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:41:23" />
+				Time="2011-11-16T02:47:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -227,12 +227,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あしたは　あしたの　かぜがふく！▼
-ぼくは　まいにち　じっけんする
-よければ　けっかを　みにおいでよ</Text>
+			<Text>明日は　明日の　風が吹く！▼
+ぼくは　毎日　実験する
+よければ　結果を　みにおいでよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:45:44" />
+				Time="2011-11-16T02:47:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

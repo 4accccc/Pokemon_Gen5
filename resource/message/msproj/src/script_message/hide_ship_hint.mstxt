@@ -1724,12 +1724,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>その　プラズマカードが　ないと
-パスワードは　にゅうりょく　できない▼
+			<Text>その　プラズマカードが　あれば
+パスワードは　にゅうりょく　できる！▽
 あとは　じぶんで　なんとかなさい</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T05:00:16" />
+				Time="2011-11-16T03:29:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1737,12 +1737,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>その　プラズマカードが　ないと
-パスワードは　入力できない▼
+			<Text>その　プラズマカードが　あれば
+パスワードは　入力できる！▽
 あとは　自分で　なんとかなさい</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T05:00:16" />
+				Time="2011-11-16T03:30:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

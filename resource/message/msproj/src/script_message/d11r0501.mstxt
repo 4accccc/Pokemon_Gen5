@@ -8,14 +8,14 @@
 			Language="JPN">
 			<Text>げすいどうに　たまった　どくを
 くすりに　かえる　じっけん……▼
-これが　かんぜんに　せいこうすれば
+これが　１００％　せいこうすれば
 どくタイプの　ポケモンから▽
-どんどん　くすりが　つくれるんだ▼
-さて
-きょうの　じっけんは……▼</Text>
+どんどん　くすりが　つくれるの！▼
+ではでは
+ほんじつの　じっけんけっかは……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:46:04" />
+				Time="2011-11-16T02:37:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23,16 +23,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>げすいどうに　たまった　どくを
-くすりに　かえる　じっけん……▼
-これが　かんぜんに　せいこうすれば
+			<Text>下水道に　溜まった　どくを
+薬に　変える　実験……▼
+これが　１００％　せいこうすれば
 どくタイプの　ポケモンから▽
-どんどん　くすりが　つくれるんだ▼
-さて
-きょうの　じっけんは……▼</Text>
+どんどん　薬を　つくれるの！▼
+ではでは
+本日の　実験結果は……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:46:04" />
+				Time="2011-11-16T02:37:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -77,13 +77,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんかいの　じっけんは
-ふつう　だったな▼
-きみ　この
-どくけしを　あげるよ▼</Text>
+			<Text>こんかいの　じっけんけっかは
+ふつう　ね……▼
+ねえ　きみ！
+この　どくけしを　あげるよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:46:04" />
+				Time="2011-11-16T02:40:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -91,13 +91,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんかいの　じっけんは
-ふつう　だったな▼
-きみ　この
-どくけしを　あげるよ▼</Text>
+			<Text>今回の　実験結果は
+普通ね……▼
+ねえ　きみ！
+この　どくけしを　あげるよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:46:04" />
+				Time="2011-11-16T02:37:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -133,12 +133,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>こんかいの　じっけんは
-うまく　いったぞ！▼
-きみ　この
-なんでもなおしを　あげるよ▼</Text>
+うまく　いったわ！▼
+ねえ　きみ！
+この　なんでもなおしを　どうぞ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:46:04" />
+				Time="2011-11-16T02:33:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -146,13 +146,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんかいの　じっけんは
-うまく　いったぞ！▼
-きみ　この
-なんでもなおしを　あげるよ▼</Text>
+			<Text>今回の　実験は
+うまく　いったわ！▼
+ねえ　きみ！
+この　なんでもなおしを　どうぞ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:46:04" />
+				Time="2011-11-16T02:37:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -187,13 +187,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんかいの　じっけんは
-とても　うまく　いったぞ！▼
-きみ　この
-かいふくのくすりを　あげるよ▼</Text>
+			<Text>わあ！　こんかいの
+じっけんは　だいせいこう！▼
+ねえねえ　きみ！　この
+かいふくのくすりを　どうぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:46:04" />
+				Time="2011-11-16T02:34:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -201,13 +201,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんかいの　じっけんは
-とても　うまく　いったぞ！▼
-きみ　この
-かいふくのくすりを　あげるよ▼</Text>
+			<Text>わあ！　今回の
+実験は　大成功！▼
+ねえねえ　きみ！　この
+かいふくのくすりを　どうぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:46:04" />
+				Time="2011-11-16T02:38:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -242,12 +242,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あしたは　あしたの　かぜがふく！▼
-ぼくは　まいにち　じっけんする
-よければ　けっかを　みにおいでよ</Text>
+			<Text>あしたも　あさっても　じっけん！
+つづけることが　だいじ　なの！▽
+よければ　けっかを　みにきてね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:46:04" />
+				Time="2011-11-16T02:40:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -255,12 +255,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あしたは　あしたの　かぜがふく！▼
-ぼくは　まいにち　じっけんする
-よければ　けっかを　みにおいでよ</Text>
+			<Text>明日も　明後日も　実験！
+続けることが　大事なの！▽
+よければ　結果を　みにきてね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:46:04" />
+				Time="2011-11-16T02:39:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -7,11 +7,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>そうちが　ある……▼
-パスワードを　いれるみたいだが
+パスワードを　いれるには
 カードキーが　ひつよう　みたいだ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:13:40" />
+				Time="2011-11-16T03:19:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -20,11 +20,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>装置が　ある……▼
-パスワードを　入力するみたいだが
+パスワードを　入力するには
 カードキーが　必要みたいだ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:13:48" />
+				Time="2011-11-16T03:19:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -155,10 +155,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バリアが　かいじょ　される！</Text>
+			<Text>パスワード
+にゅうりょく　せいこう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-08T13:05:27" />
+				Time="2011-11-16T05:42:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -166,10 +167,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バリアが　解除される！</Text>
+			<Text>パスワード
+入力成功！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-08T13:05:32" />
+				Time="2011-11-16T05:42:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -527,10 +529,10 @@
 ということは　キュレムを
 そこから　すくいだすことは　できない▼
 といっても　あきらめきれぬだろう？
-いんどうを　わたすのが　やさしさだな▼</Text>
+いんどうを　わたすのが　やさしさ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T08:34:24" />
+				Time="2011-11-16T05:43:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -542,10 +544,10 @@
 ということは　キュレムを
 そこから　救い出すことは　できない▼
 といっても　あきらめきれぬだろう？
-引導を　渡すのが　優しさだな▼</Text>
+引導を　渡すのが　優しさ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T08:35:13" />
+				Time="2011-11-16T05:43:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -904,13 +906,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん『あんたが　ほしいもの
+			<Text>プラズマだん『あんたが　のぞむモノ
 あたい　もってるわ！▼
 でも　ほしけりゃ……
 わかるでしょ？　しょうぶよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:35:57" />
+				Time="2011-11-16T05:44:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -918,13 +920,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団『あんたが　ほしいもの
-あたい　もってるわ！▼
+			<Text>プラズマ団『あんたが　望むモノ
+あたい　持ってるわ！▼
 でも　ほしけりゃ……
 わかるでしょ？　勝負よ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T03:53:10" />
+				Time="2011-11-16T05:44:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1018,12 +1020,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマカードが　ないと
+			<Text>その　プラズマカードが　ないと
 パスワードは　にゅうりょく　できない▼
-あとは　じぶんで　がんばりなさい</Text>
+あとは　じぶんで　なんとかなさい</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:42:00" />
+				Time="2011-11-16T05:44:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1031,12 +1033,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマカードが　ないと
+			<Text>その　プラズマカードが　ないと
 パスワードは　入力できない▼
-あとは　自分で　がんばりなさい</Text>
+あとは　自分で　なんとかなさい</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:42:03" />
+				Time="2011-11-16T05:44:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
