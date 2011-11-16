@@ -595,12 +595,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>そうね　ベル▼
-その　むかし　いかずちで
+その　むかし　はげしい　いかずちで
 イッシュを　やきはらったと　される▽
 ゼクロム　みたいだわ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:53:19" />
+				Time="2011-11-16T09:59:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -609,12 +609,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そうね　ベル▼
-その昔　雷で
+その昔　激しい　雷で
 イッシュを　焼き払ったと　される▽
 ゼクロム　みたいだわ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T12:36:02" />
+				Time="2011-11-16T09:59:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -650,12 +650,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>そうね　ベル▼
-その　むかし　ほのおで
+その　むかし　もえあがる　ほのおで
 イッシュを　やきはらったと　される▽
 レシラム　みたいだわ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T07:53:30" />
+				Time="2011-11-16T09:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -664,12 +664,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そうね　ベル▼
-その昔　炎で
+その昔　燃えあがる　炎で
 イッシュを　焼きはらったと　される▽
 レシラム　みたいだわ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T10:09:25" />
+				Time="2011-11-16T09:59:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1781,7 +1781,7 @@
 それは　ごくろうな　はなしだな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-05T07:26:56" />
+				Time="2011-11-16T10:00:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1996,11 +1996,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『オマエの　ちからを
-かりるけど　じゅんびは　いいか？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『じゅんびは　いいか？
+オマエの　ちからを　かりるぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T11:05:06" />
+				Time="2011-11-16T10:01:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2008,11 +2008,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『オマエの　力を
-借りるけど　準備は　いいか？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『準備は　いいか？
+オマエの　力を　借りるぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T06:06:14" />
+				Time="2011-11-16T10:01:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2540,12 +2540,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ここは　カゴメタウン
-カゴメは　あんだ　かごのめ[Ctrl2:LineFeed ]
-まよけの　さんかくけい
-</Text>
+カゴメは　あんだ　かごのめ▽
+まよけの　さんかくけい</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T03:30:07" />
+				Time="2011-11-16T10:02:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2554,12 +2553,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ここは　カゴメタウン
-カゴメは　編んだ　かごの目[Ctrl2:LineFeed ]
-魔よけの　三角形
-</Text>
+カゴメは　編んだ　かごの目▽
+魔よけの　三角形</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T03:30:33" />
+				Time="2011-11-16T10:02:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

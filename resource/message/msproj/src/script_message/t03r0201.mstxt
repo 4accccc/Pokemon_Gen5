@@ -404,7 +404,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたりが　やみに　包まれると▼
+			<Text>辺りが　やみに　包まれると▼
 ポケモンは　凍えるような
 冷たい　風と　ともに　現われ▼
 辺りを　凍てつかせては
@@ -412,7 +412,7 @@
 そう　恐れられて　いたんじゃ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T11:45:12" />
+				Time="2011-11-16T09:57:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -561,11 +561,11 @@
 			Language="JPN">
 			<Text>アララギ『とても　きょうみぶかい
 おはなし　ありがとう　ございました▼
-こんごの　わたしの　けんきゅうに
+こんごの　けんきゅうに
 とても　やくだちます▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T10:29:21" />
+				Time="2011-11-16T09:57:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -575,11 +575,11 @@
 			Language="JPN_KANJI">
 			<Text>アララギ『とても　興味深い
 お話　ありがとう　ございました▼
-今後の　わたしの　研究に
+今後の　研究に
 とても　役立ちます▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-06T11:41:04" />
+				Time="2011-11-16T09:57:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

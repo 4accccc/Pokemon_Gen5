@@ -113,13 +113,11 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……なるほど
 それなりに　きたえているな▼
-それなら　もし　プラズマだんと
-なにか　あったとしても▼
-ポケモンを　まもれる！
-オレの　あしでまといにも　ならない！▼</Text>
+それなら　プラズマだん　からも
+ポケモンを　まもれるよな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T01:50:26" />
+				Time="2011-11-16T09:55:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -129,13 +127,11 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……なるほど
 それなりに　鍛えているな▼
-それなら　もし　プラズマ団と
-なにか　あったとしても▼
-ポケモンを　守れる！
-オレの　足手まといにも　ならない！▼</Text>
+それなら　プラズマ団からも
+ポケモンを　守れるよな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T01:50:45" />
+				Time="2011-11-16T09:55:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -171,11 +167,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まっ　プラズマだんの　あいては
+			<Text>まっ　アイツらの　あいては
 オレが　するけどな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T01:36:52" />
+				Time="2011-11-16T09:55:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -183,11 +179,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まっ　プラズマ団の　相手は
+			<Text>まっ　アイツらの　相手は
 オレが　するけどな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T01:39:32" />
+				Time="2011-11-16T09:55:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -978,7 +974,8 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t04_workman2_01">
+		Label="msg_t04_workman2_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>サザナミの　リゾートを　もっともっと
@@ -1305,7 +1302,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヴィオ『ここは　あたたかいな▼
-さて　ほんだいに　はいるぞ！▼
+さて　本題に　はいるぞ！▼
 ここに　ゲーチスさまが
 残された　書物が　ある▼
 これが　あれば　海底遺跡の
@@ -1314,7 +1311,7 @@
 この書物を　読むがいい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T11:52:45" />
+				Time="2011-11-16T09:56:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1701,7 +1698,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>けんとうの　つかない　もじもあるが
-ぜんごから　さっするに▼
+ぜんごから　さっするに……▼
 とんでもなく　すばらしい　おうが
 いせきで　ねむりに　ついたと▼
 もし　おうの　しそんが　いるなら
@@ -1709,7 +1706,7 @@
 つたわっておるのかも　しれんな……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T12:39:59" />
+				Time="2011-11-16T09:56:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1718,7 +1715,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>見当の　つかない　文字もあるが
-前後から　察するに▼
+前後から　察するに……▼
 とんでもなく　すばらしい　王が
 遺跡で　眠りに　ついたと▼
 もし　王の　子孫が　いるなら
@@ -1726,7 +1723,7 @@
 伝わっておるのかも　しれんな……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T13:01:00" />
+				Time="2011-11-16T09:56:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

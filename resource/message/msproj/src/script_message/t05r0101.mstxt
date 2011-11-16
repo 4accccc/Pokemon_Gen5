@@ -58,12 +58,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でんしゃ　てさ
-のってるだけで　いろんな▽
+			<Text>でんしゃって　のるだけで　いろんな
 けしきが　みれて　すごくない？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T08:07:08" />
+				Time="2011-11-16T09:48:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -71,12 +70,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>電車てさ
-乗ってるだけで　いろんな▽
+			<Text>電車って　乗るだけで　いろんな
 景色が　みれて　すごくない？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T08:07:18" />
+				Time="2011-11-16T09:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
