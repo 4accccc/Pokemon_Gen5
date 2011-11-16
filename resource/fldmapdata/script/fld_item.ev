@@ -921,10 +921,10 @@ EVENT_START ev_fld_item_75
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r06 X=139 Y=362 ITEM=‚í‚´ƒ}ƒVƒ“‚U‚S FLAG=76
+// MAP=r06 X=139 Y=362 ITEM=‚í‚´ƒ}ƒVƒ“‚T‚U FLAG=76
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_76
-  _FLD_ITEM_EVENT ITEM_WAZAMASIN64,1
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN56,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1964,10 +1964,10 @@ EVENT_START ev_fld_item_224
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=R08R0101 X=15 Y=53 ITEM=‚í‚´ƒ}ƒVƒ“‚Q‚T FLAG=225
+// MAP=R08R0101 X=15 Y=53 ITEM=‚í‚´ƒ}ƒVƒ“‚W‚S FLAG=225
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_225
-  _FLD_ITEM_EVENT ITEM_WAZAMASIN25,1
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN84,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -2146,10 +2146,10 @@ EVENT_START ev_fld_item_250
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r15 X=632 Y=443 ITEM=‚í‚´ƒ}ƒVƒ“‚P‚T FLAG=251
+// MAP=r15 X=632 Y=443 ITEM=‚í‚´ƒ}ƒVƒ“‚Q‚U FLAG=251
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_251
-  _FLD_ITEM_EVENT ITEM_WAZAMASIN15,1
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN26,1
 EVENT_END
 
 //--------------------------------------------------------------
