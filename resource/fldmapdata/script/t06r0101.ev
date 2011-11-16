@@ -12,8 +12,8 @@
   .include  "msg_t06r0101.h"
   .include  "t06r0101.h"
 
-  //@author Mizuguchi_Mai
-  //@author fujimura_souichirou（クリア後イベント）
+  //@author Mizuguchi_Mai（初回・バンジロウ話しかけ）
+  //@author fujimura_souichirou（バンジロウ登場）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -28,6 +28,7 @@ _EVENT_DATA    ev_scene_t06r0101_champion_01
 _EVENT_DATA    ev_t06r0101_champion_01
 _EVENT_DATA    ev_t06r0101_girl3_01
 _EVENT_DATA    ev_t06r0101_boy3_01
+_EVENT_DATA    ev_t06r0101_mugenboss_01
 _EVENT_DATA_END
 
 //主人公方向取得変数
@@ -530,6 +531,8 @@ ev_mugenboss_01:
     //========================================//
     //アデク（クリア後）に勝利した
     _FLAG_SET( FE_T06R0101_CHAMPION_WIN_01 )
+    //無限ダンジョンストッパー解除
+    _FLAG_SET( FV_D31D32_MUGEN_STOPPER )
     //========================================//
 
   ELSE
@@ -542,6 +545,137 @@ ev_mugenboss_01:
   ENDIF
 
 _RET
+
+/**************************************************************/
+/* バンジロウ：話しかけ                                         */
+/**************************************************************/
+EVENT_START   ev_t06r0101_mugenboss_01
+{
+  _TALK_OBJ_START()
+  
+  //プレイヤー名代入
+  _PLAYER_NAME( 0 )
+  
+  DEFINE_LOCAL  LCW_VERSION
+  DEFINE_LOCAL  LCW_PT_RESURT
+  
+  //WB分岐：よお！やくそくだったな
+  _BALLOONWIN_OBJMSG_WB( msg_t06r0101_mugenboss_end_08w , msg_t06r0101_mugenboss_end_08b , T06R0101_MUGENBOSS_01 , POS_DEFAULT)
+  _MSGWIN_CLOSE()
+  
+  //バージョンによって入手ポケモンを変更
+  _GET_ROM_VERSION( LCW_VERSION )
+  
+  IF $LCW_VERSION == VERSION_B2 THEN
+    //ポケモン入手処理ブラック：フカマル
+    _ADD_POKEMON_TO_PARTY_EX( LCW_PT_RESURT, MONSNO_443, 0, 1, SCR_TOKUSEI_SPEC_BOTH, SCR_SEX_SPEC_UNKNOWN, SCR_RARE_SPEC_TRUE, ITEM_DUMMY_DATA, ITEM_MONSUTAABOORU )
+    _MONS_NAME(1,MONSNO_443)
+  ELSE
+    //ポケモン入手処理ホワイト：ミニリュウ
+    _ADD_POKEMON_TO_PARTY_EX( LCW_PT_RESURT, MONSNO_147, 0, 1, SCR_TOKUSEI_SPEC_BOTH, SCR_SEX_SPEC_UNKNOWN, SCR_RARE_SPEC_TRUE, ITEM_DUMMY_DATA, ITEM_MONSUTAABOORU )
+    _MONS_NAME(1,MONSNO_147)
+  ENDIF
+  
+  //追加できたかチェック
+  
+  //追加した
+  IF $LCW_PT_RESURT == TRUE THEN
+    
+    //プレイヤー名代入
+    _PLAYER_NAME( 0 )
+    
+    //手に入れた
+    _ME_PLAY( SEQ_ME_POKEGET )
+    _SYSWIN_MSG(msg_t06r0101_poke_01, POS_DEFAULT)
+    _ME_WAIT()
+    _AB_KEYWAIT_MARK()
+    _SYSWIN_CLOSE()
+
+    //名前をつけますか？
+    _SYSWIN_MSG(msg_t06r0101_poke_02, POS_DEFAULT )
+    DEFINE_LOCAL LCW_NAME_ANS
+    DEFINE_LOCAL LCW_NAMEINPUT
+    _YES_NO_WIN( LCW_NAME_ANS )
+    _SYSWIN_CLOSE()
+    
+    //はい
+    IF $LCW_NAME_ANS == 0 THEN
+      
+      //手持ち数格納（最後尾のPOSを指定するため）
+      DEFINE_LOCAL LWK_POKE_COUNT
+      _GET_PARTY_POKE_COUNT (LWK_POKE_COUNT,POKECOUNT_MODE_TOTAL)
+      //名前入力結果が格納されるローカル変数を定義
+      DEFINE_LOCAL SCWK_NAMEINPUT
+      
+      //$POKE_COUNTに1をひいて手持ちの最後尾の数を指定
+      $LWK_POKE_COUNT -= 1
+      //名前入力画面呼び出し
+      _PARTY_POKE_NAME_INPUT(LCW_NAMEINPUT,LWK_POKE_COUNT,TRUE)
+    ENDIF
+    
+    //WB分岐：おまえをみとめて
+    _BALLOONWIN_OBJMSG_WB( msg_t06r0101_mugenboss_end_10w , msg_t06r0101_mugenboss_end_10b , T06R0101_MUGENBOSS_01 , POS_DEFAULT)
+    _MSGWIN_CLOSE()
+    
+    //主人公方向取得
+    _PLAYER_DIR_GET( LWK_DIR )
+    
+    //アニメ：下から話しかけ退場
+    IF $LWK_DIR == DIR_UP THEN
+      _OBJ_ANIME( T06R0101_MUGENBOSS_01, anm_mugenboss_bye_down )
+    //アニメ：下以外から退場
+    ELSE
+      _OBJ_ANIME( T06R0101_MUGENBOSS_01, anm_mugenboss_bye )
+    ENDIF
+    
+    //アニメ：バンジロウを見送る
+    IF $LWK_DIR != DIR_DOWN THEN
+      _TIME_WAIT( 8 )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+    ENDIF
+    _OBJ_ANIME_WAIT()
+    
+    //階段SE再生
+    _SE_PLAY( SEQ_SE_KAIDAN )
+  
+    //バンジロウ動作モデル削除
+    _OBJ_DEL( T06R0101_MUGENBOSS_01 )
+    
+    //SE待ち
+    _SE_WAIT()
+    //========================================//
+    //バンジロウ非表示
+    _FLAG_SET( FV_T06R0101_MUGENBOSS_01 )
+    //========================================//
+  
+  //追加できなかった
+  ELSE
+    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_mugenboss_end_09, T06R0101_MUGENBOSS_01, POS_DEFAULT )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+  ENDIF
+}
+EVENT_END
+
+//--------------------------------------------------------------------
+//	バンジロウ：退場（下から話しかけ）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mugenboss_bye_down
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_WALK_D_8F,2
+  _ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	バンジロウ：退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mugenboss_bye
+  _ANIME_DATA	AC_WALK_D_8F,3
+  _ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,6
+	_ANIME_DATA	ACMD_END,0
+
 
 /**************************************************************/
 /* BOY3はなしかけ                                         */

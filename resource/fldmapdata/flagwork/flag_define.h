@@ -637,7 +637,7 @@
 #define FV_D06R0101_PAIR                   747 /* 0x02eb 電気穴の洞窟連れ歩き */
 #define FV_C03P15_SWRIVAL_01               748 /* 0x02ec ヒウンシティ：船着場ライバル */
 #define FV_H01R0201_STOPPER_01             749 /* 0x02ed スカイアローブリッジ：ストッパー */
-		/* not used   750(0x02ee) */
+#define FV_D31D32_MUGEN_STOPPER            750 /* 0x02ee 無限ダンジョン：ストッパー */
 #define FV_C03_SWCHAMPION_01               751 /* 0x02ef ヒウンシティ外周：アイリス */
 #define FV_C03P07_SUNGLASSES_01            752 /* 0x02f0 ヒウンシティジム前：ダンペイ */
 #define FV_C03P17_SWCHAMPION_01            753 /* 0x02f1 ヒウンシティ下水道前：アイリス */
@@ -883,6 +883,7 @@
 #define FV_C08_PEOPLE_01                   993 /* 0x03e1 ソウリュウシティ：NPC */
 #define FV_C15_BRONZE_01                   994 /* 0x03e2 ポケウッド：銅像 */
 #define FV_C15_BONUS_EVENT_01              995 /* 0x03e3 ポケウッド：ごほうびイベント中のNPC */
+#define FV_T06R0101_MUGENBOSS_01           996 /* 0x03e4 サンギタウン：バンジロウ */
 
 #define FV_AREA_END                       1099 /* 0x044b  */
 

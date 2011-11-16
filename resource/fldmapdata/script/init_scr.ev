@@ -108,6 +108,8 @@ init_flags:
 	
 	//T06のメダルおやじを非表示
 	_FLAG_SET( FV_T06_SUNGLASSES_01 )
+	//T06R0101 バンジロウを非表示
+	_FLAG_SET( FV_T06R0101_MUGENBOSS_01 )
 	
 	//C13
 	_FLAG_SET( FV_C13_SWPLAZMA )

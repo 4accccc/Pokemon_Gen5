@@ -12,6 +12,7 @@
 #define T06R0101_GIRL3_01                  0
 #define T06R0101_BOY3_01                   1
 #define T06R0101_CHAMPION_01               2
+#define T06R0101_MUGENBOSS_01              3
 
 #endif //ZONE_T06R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t06r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

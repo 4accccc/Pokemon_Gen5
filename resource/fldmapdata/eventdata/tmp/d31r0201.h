@@ -12,6 +12,7 @@
 #define D31R0201_INFORMATIONW_00           0
 #define D31R0201_ASSISTANTW_00             1
 #define D31R0201_ESPM_00                   2
+#define D31R0201_TRAINERM_01               3
 
 #endif //ZONE_D31R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d31r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
