@@ -182,6 +182,8 @@ EVENT_START   ev_c08pc0101_man3_01
 
   //現在のメダルリストのランクを取得
   _GET_MEDAL_COUNT( SCR_MEDALCOUNT_RANK, LWK_MEDALRANK )
+  //ランク名格納
+  _MEDAL_RANK_NAME( 0, LWK_MEDALRANK )
 
   //メダルリストランクで分岐
   SWITCH $LWK_MEDALRANK
