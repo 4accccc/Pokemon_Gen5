@@ -15401,7 +15401,8 @@
  * @param get_key   KEYSYS_TYPE_DIFFICULT_EASY  …  （白の難易度簡単キー）
  *                  KEYSYS_TYPE_DIFFICULT_HARD  …  （黒の難易度難しいキー）
  *                  KEYSYS_TYPE_CITY_WFBC     …    （白＆黒  自分の街キー）
- *
+ *                  KEYSYS_TYPE_DOOR_BLACK     (3)     //黒のドアキー
+ *                  KEYSYS_TYPE_DOOR_WHITE     (4)     //白のドアキー
  */
 //--------------------------------------------------------------
 #define _KEYSYS_CALL_DEMO( get_key ) \
