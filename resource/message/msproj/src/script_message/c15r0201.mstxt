@@ -2,7 +2,8 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_c15r0201_policeman_01_01">
+		Label="msg_c15r0201_policeman_01_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ここはな　セレブな　じょゆう
@@ -49,7 +50,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_policeman_01_02">
+		Label="msg_c15r0201_policeman_01_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]さん！
@@ -87,7 +89,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_policeman_02_01">
+		Label="msg_c15r0201_policeman_02_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ここはさ　ウチの　ボスが　みとめた
@@ -136,7 +139,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_policeman_02_02">
+		Label="msg_c15r0201_policeman_02_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>お　おつかれさまですっ！
@@ -196,7 +200,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_woman2_01">
+		Label="msg_c15r0201_woman2_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケウッドの　さつえい って
@@ -248,18 +253,19 @@ msg_c15r0301_middleman2_01</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_boy4_01">
+		Label="msg_c15r0201_boy4_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>いちど　レンタルポケモンで
 チャレンジした　えいがを▽
-こうかいすれば　OKらしいぜ！▼
+こうかいすれば　ＯＫらしいぜ！▼
 だから　オレは　この　マッギョと
 スターを　めざすぜっ！▼
 なっ！？　マッギョ！？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:40:19" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T06:23:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -269,13 +275,13 @@ msg_c15r0301_middleman2_01</Comment>
 			Language="JPN_KANJI">
 			<Text>いちど　レンタルポケモンで
 チャレンジした　映画を▽
-公開すれば　OKらしいぜ！▼
+公開すれば　ＯＫらしいぜ！▼
 だからオレは　自分の　マッギョと
 スターを　目指すぜっ！▼
 なっ！？　マッギョ！？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:40:09" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T06:23:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -294,7 +300,8 @@ msg_c15r0301_middleman2_01</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_poke44_01">
+		Label="msg_c15r0201_poke44_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>……</Text>
@@ -328,7 +335,8 @@ msg_c15r0301_middleman2_01</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_ol_01">
+		Label="msg_c15r0201_ol_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ようこそ　さつえいスタジオへ
@@ -375,7 +383,8 @@ msg_c15r0301_middleman2_01</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_ol_02">
+		Label="msg_c15r0201_ol_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ようこそ　さつえいスタジオへ
@@ -422,7 +431,8 @@ msg_c15r0301_middleman2_01</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_ol_03">
+		Label="msg_c15r0201_ol_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ようこそ　さつえいスタジオへ
@@ -470,7 +480,8 @@ msg_c15r0301_middleman2_01</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_ol_04">
+		Label="msg_c15r0201_ol_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ようこそ　さつえいスタジオへ
@@ -520,7 +531,8 @@ msg_c15r0301_middleman2_01</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_ol_05">
+		Label="msg_c15r0201_ol_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ようこそ　さつえいスタジオへ
@@ -574,7 +586,8 @@ msg_c15r0301_middleman2_01</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_middleman1_01">
+		Label="msg_c15r0201_middleman1_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>よお！　あんた　しんじんだろ？▼
@@ -620,7 +633,8 @@ msg_c15r0301_middleman2_01</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_middleman1_02">
+		Label="msg_c15r0201_middleman1_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>よお！　あんた　[Name:TrainerName ]だろ？▼
@@ -660,7 +674,8 @@ msg_c15r0301_middleman2_01</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_middleman1_03">
+		Label="msg_c15r0201_middleman1_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>よお！　[Name:TrainerName ]！▼
@@ -704,7 +719,8 @@ msg_c15r0301_middleman2_01</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_man3_01_01">
+		Label="msg_c15r0201_man3_01_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボク　ＶＦＸの　スペシャリスト！▼
@@ -751,7 +767,8 @@ msg_c15r0301_middleman2_01</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_pwmoji_01_01">
+		Label="msg_c15r0201_pwmoji_01_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>やあ！　ポケウッドに　ついて
@@ -806,7 +823,8 @@ msg_c15r0301_middleman2_01</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_pwmoji_01_02">
+		Label="msg_c15r0201_pwmoji_01_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケウッドの　えいがの　さつえいは
@@ -843,14 +861,13 @@ msg_c15r0301_middleman2_01</Comment>
 情報が　書かれてるよ！▼
 撮影中にも　見られるから
 困ったときは　要チェックさ！▼
-台本は　キミが　つくった
-チャレンジできる　台本は▽
+チャレンジできる　台本は
 キミが　つくった　映画の　内容や▽
 興行成績の　結果　などで▽
 少しずつ　増えていくよ！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T11:40:42" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T06:24:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -871,7 +888,8 @@ msg_c15r0201_pwmoji_01_01</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_pwmoji_01_03">
+		Label="msg_c15r0201_pwmoji_01_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケウッドの　さつえいにも
@@ -927,7 +945,8 @@ msg_c15r0201_pwmoji_01_01</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_pwmoji_01_04">
+		Label="msg_c15r0201_pwmoji_01_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケウッドの　えんぎの　きほんは
@@ -979,7 +998,8 @@ msg_c15r0201_pwmoji_01_01</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_pwmoji_01_05">
+		Label="msg_c15r0201_pwmoji_01_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さつえいを　すすめていると
@@ -1031,7 +1051,8 @@ msg_c15r0201_pwmoji_01_01</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_pwmoji_01_06">
+		Label="msg_c15r0201_pwmoji_01_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>たくさん　えいがを　さつえいして
@@ -1077,7 +1098,8 @@ msg_c15r0201_pwmoji_01_01</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_pwmoji_01_07">
+		Label="msg_c15r0201_pwmoji_01_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>じゃあ　がんばってね！</Text>
@@ -1113,7 +1135,8 @@ msg_c15r0201_pwmoji_01_01</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_pwmoji_01_08">
+		Label="msg_c15r0201_pwmoji_01_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>だいほんに　ついて</Text>
@@ -1147,7 +1170,8 @@ msg_c15r0201_pwmoji_01_01</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_pwmoji_01_09">
+		Label="msg_c15r0201_pwmoji_01_09"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンに　ついて</Text>
@@ -1181,7 +1205,8 @@ msg_c15r0201_pwmoji_01_01</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_pwmoji_01_10">
+		Label="msg_c15r0201_pwmoji_01_10"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>えんぎに　ついて</Text>
@@ -1215,7 +1240,8 @@ msg_c15r0201_pwmoji_01_01</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_pwmoji_01_11">
+		Label="msg_c15r0201_pwmoji_01_11"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>セリフに　ついて</Text>
@@ -1249,7 +1275,8 @@ msg_c15r0201_pwmoji_01_01</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_pwmoji_01_12">
+		Label="msg_c15r0201_pwmoji_01_12"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>にんきに　ついて</Text>
@@ -1283,7 +1310,8 @@ msg_c15r0201_pwmoji_01_01</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0201_pwmoji_01_13">
+		Label="msg_c15r0201_pwmoji_01_13"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>いいえ</Text>

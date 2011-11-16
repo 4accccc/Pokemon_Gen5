@@ -2,7 +2,8 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_c15r0101_pwmoji_01_01">
+		Label="msg_c15r0101_pwmoji_01_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>この　ジャンプスーツは
@@ -50,16 +51,17 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0101_man3_01_01">
+		Label="msg_c15r0101_man3_01_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ＶＦＸとは　コンピュータを　つかった
 えいぞうを　かこうする　ぎじゅつ▼
 ポケウッドの　えいがは
-このVFXが　いのち　なんです</Text>
+このＶＦＸが　いのち　なんです</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-16T07:49:57" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T06:22:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -70,10 +72,10 @@
 			<Text>ＶＦＸとは　コンピュータを　使った
 映像を　加工する　技術▼
 ポケウッドの　映画は
-このVFXが　命なんです</Text>
+このＶＦＸが　命なんです</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-16T07:58:13" />
+				User="matsumiya:W00224"
+				Time="2011-11-16T06:22:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -91,7 +93,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0101_middlewoman1_01">
+		Label="msg_c15r0101_middlewoman1_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>わたくしは　ライター▼
@@ -134,7 +137,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0101_middeman2_01">
+		Label="msg_c15r0101_middeman2_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>わしは　ビックな　おおおとこ！
@@ -175,7 +179,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0101_middeman1_01">
+		Label="msg_c15r0101_middeman1_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>どうも　シネマトグラファーです▼
@@ -214,7 +219,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0101_middeman1_02">
+		Label="msg_c15r0101_middeman1_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ボクは　ろくおんぎし！▼
@@ -259,7 +265,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0101_woman2_01">
+		Label="msg_c15r0101_woman2_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>もう……　どこ　いったのよ……▼
