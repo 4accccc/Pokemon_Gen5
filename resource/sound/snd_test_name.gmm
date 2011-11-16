@@ -7741,10 +7741,6 @@
 		<language name="JPN" width="256">FLD-99</language>
 		<language name="JPN_KANJI" width="256">FLD-99</language>
 	</row>
-	<row id="msg_seq_se_fld_100">
-		<language name="JPN" width="256">FLD-100</language>
-		<language name="JPN_KANJI" width="256">FLD-100</language>
-	</row>
 	<row id="msg_seq_se_fld_101">
 		<language name="JPN" width="256">FLD-101</language>
 		<language name="JPN_KANJI" width="256">FLD-101</language>

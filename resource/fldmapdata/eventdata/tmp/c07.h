@@ -40,7 +40,5 @@
 #define C07_BOARD_02                      1
 #define C07_BOARD_03                      2
 #define C07_BOARD_04                      3
-#define C07_HIDE_ITEM_06                  4
-#define C07_HIDE_ITEM_07                  5
 
 #endif //ZONE_C07_EVB_H
