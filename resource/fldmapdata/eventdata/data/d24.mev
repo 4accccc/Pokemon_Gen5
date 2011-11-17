@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/17 20:31:54
+#save date:2011/11/17 20:37:19
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d24.wms
 #SECTION START:OBJ_EVENT
@@ -111,7 +111,7 @@ TR_CYCLINGM_03
 #OBJ CODE Number
 CYCLEM
 #MOVE CODE Number
-MV_RT2
+MV_RTUL         
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -119,7 +119,7 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_CYCLINGM_03
 #Direction Type Number
-DIR_LEFT
+DIR_UP
 #Parameter 0 Number
 1
 #Parameter 1 Number
@@ -127,13 +127,13 @@ DIR_LEFT
 #Parameter 2 Number
 0
 #Move Limit X Number
-6
+7
 #Move Limit Z Number
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 -80 -104
+40 -80 -104
 #event number: 4
 #type
 1
@@ -142,9 +142,9 @@ TR_CYCLINGW_03
 #OBJ CODE Number
 CYCLEW
 #MOVE CODE Number
-MV_RT2
+MV_RTDL         
 #EVENT TYPE Number
-EV_TYPE_TRAINER_SPIN_STOP_R
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
@@ -154,17 +154,17 @@ DIR_DOWN
 #Parameter 0 Number
 1
 #Parameter 1 Number
-5
+0
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+2
 #Move Limit Z Number
-5
+6
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-72 -80 -8
+88 -80 -8
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
