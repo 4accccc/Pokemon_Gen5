@@ -92,8 +92,20 @@ EVENT_START   ev_r16r0201_backpackerm_01
   ELSE
     _OBJ_ADD_EX( 8, 14, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE23, MV_DMY )
   ENDIF
-
-  _TIME_WAIT( 4 )
+  
+  _TIME_WAIT( 6 )
+  
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe )
+  
+  //ヨーテリー鳴く
+  _VOICE_PLAY(MONSNO_530,0)
+  _BALLOONWIN_OBJMSG_POS(msg_r16r0201_backpackerm_06,MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _BALLOONWIN_CLOSE()
+  
+  //アニメ待ち
+  _OBJ_ANIME_WAIT()
 
   //ゾロアーク退場
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_poke_walk_d )
@@ -134,4 +146,16 @@ _ANIME_LABEL  anm_poke_walk_d
   _ANIME_DATA AC_WALK_D_4F,4
   _ANIME_DATA ACMD_END,0
 
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------------
+//	☆共通処理：ハテナ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0

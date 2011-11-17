@@ -5,5 +5,6 @@
 #define _D13_DEF_H_
 
 //スクリプトデータID定義
+#define SCRID_D13_SWPLAZMAM_01 (1)
 
 #endif //_D13_DEF_H_
