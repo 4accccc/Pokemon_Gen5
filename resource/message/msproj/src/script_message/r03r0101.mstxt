@@ -73,11 +73,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなた　ポケモンの　とくせい
-ほのおのからだ　って　ごぞんじ？</Text>
+			<Text>あなた　ポケモンの　特性
+ほのおのからだ　って　ご存知？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T09:49:11" />
+				Time="2011-11-17T03:22:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

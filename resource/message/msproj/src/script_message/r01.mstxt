@@ -197,6 +197,70 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_r01_man1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カノコしゅっしんの　[Name:TrainerName ]が
+２ねんまえ　すごいことを　したんだ！▼
+プラズマだんと　たたかい
+イッシュを　すくったんだよね！▼
+おれさ
+その　トレーナーに▼
+やせいポケモンと　たたかいたいとき
+あるいは　つかまえたいときは▼
+くさむらに　はいれば　いいってこと
+おしえて　あげたんだよね▼
+つまり　おれも　イッシュを　すくった
+にんげんの　ひとり　ってことだよな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:31:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:30:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カノコしゅっしんの　[Name:TrainerName ]が
+２年前　すごいことを　したんだ！▼
+プラズマ団と　戦い
+イッシュを　救ったんだよね！▼
+おれさ
+その　トレーナーに▼
+野生ポケモンと　戦いたいとき
+あるいは　捕まえたいときは▼
+草むらに　入れば　いいってこと
+教えて　あげたんだよね▼
+つまり　おれも　イッシュを　救った
+人間の　一人　ってことだよな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:31:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:30:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・0＝前作主人公
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:30:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>青年</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:30:07" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_r01_fishing_01"
 		Style="Large">
 		<LanguageCell
