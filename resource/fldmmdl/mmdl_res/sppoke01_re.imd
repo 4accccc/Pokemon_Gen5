@@ -291,16 +291,20 @@
 	<tex_image name='t8x8x15.4' format='palette16' original_width='64' original_height='64' index='4' height='64' path='C:/SWANwork/mmdl/mmdl_dammy_mb/tga_mb/t8x8x15/t8x8x15.4.tga' palette_name='t8x8x15' width='64' color0_mode='transparency'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 c000 0000 0000 0000 c000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 5c00 000c 0000 0000 5c00 000c 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 5c00 000b 0000 0000 5b00 000c 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 2c00 000b 0000 0000 2b00 000c 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 2000 00b2 0000 0000 22b0 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 9c00 00b9 0000 0000 99b0 000c 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 f9c0 0bff 0000 0000 fffb 00c9 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 f9c0 0bff 0000 0000 fffb 00c9 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 fffb bfff 0000 b000 ffff 0bff 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 fffb ffff 000c fc00 ffff 0bff 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 f9c0 0bff 0000 0000 fffb 00c9 0000 0000 0000 f000 00ff 
+			0000 0000 0000 0000 0000 f9c0 0bff 0000 0000 fffb 00c9 0000 0000 0000 f000 00f0 
+			0000 0000 0000 0000 0000 fffb bfff 0000 b000 ffff 0bff 0000 0000 0000 f000 00f0 
+			0000 0000 0000 0000 0000 fffb ffff 000c fc00 ffff 0bff 0000 0000 0000 f000 00ff 
 			0000 0000 0000 0000 0000 ffb0 ffff 000b fb00 ffff 00bf 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 ffb0 ffff 000b fb00 ffff 00bf 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 b000 cfff 00bf cfb0 bfff 0000 0000 0000 0000 0000 0000 
@@ -309,49 +313,45 @@
 			0000 0000 0000 b000 00b0 0000 eea0 eeee eeee 00ae 0000 b0b0 0000 0000 0000 0000 
 			0000 0000 0000 fb0b 0bfb 0000 eeb0 eeee eeee 00be 0000 fbfb 0b0b 0000 0000 0000 
 			0000 0000 b000 eebf aaea 0000 ebfb fffe eeff 0bfb a000 eaea bfbe 0000 0000 0000 
-			0000 0000 eb00 bbbb aeab b00c ebec fffe eeff bceb ac00 bbae ebbb 000b 0000 0000 
-			0000 0000 bb00 ffff aaff b0cf eeff ffff efff bffe afc0 fffa bfff 00bb 0000 0000 
-			0000 0000 dfb0 ffff afff c0cf eefa ffff efff cafe afc0 ffff dfff 0bff 0000 0000 
-			0000 0000 ffb0 dddd dffd 00cf eecc cccc eccc 0cce dfc0 ddff fddd bfff 0000 0000 
-			0000 0000 fffb ffff fddf 0cff cc00 fffe ceff 000c fffc ffdd ffff ffff 000b 0000 
-			0000 b000 ffff ffff ffff 0cff ec00 ccce eecc 000c fffc ffff ffff ffff 00bf 0000 
-			0000 fb00 ffff ffff ffff cfff ec00 fffc ecff c00c ffff ffff ffff ffff 00bf 0000 
-			0000 fb00 ffff ffff ffff ffff c00c cccc cccc fc00 ffff ffff ffff ffff 0aff 0000 
-			0000 ffa0 ffff ffff ffff ffff cccf fffe ceff ffcc ffff ffff ffff ffff 0aff 0000 
-			0000 ffa0 ffff ffff ffff ffff ecff ccce eecc fffc ffff ffff ffff ffff afff 0000 
-			0000 fffa ffff ffff ffff ffff cfff fffc ccff ffff ffff ffff ffff ffff afff 0000 
-			0000 fffa ffff ffff ffff ffff cfff ffff cfff ffff ffff bbff ffff ffff ffff 000a 
-			a000 ffff ffff ffff bbbf ffff ffff ffff ffff ffff bfff 00bb fffb ffff ffff 000a 
-			a000 ffff ffff ffff 000f bbbb fffc ffff ffff bcff 0bbb 0000 dffb ffff ffff 00af 
-			fa00 ffff ffff ffff 0000 00cc fcc0 ffff ffff 00cc 0cc0 0000 dffb ffff ffdf 00af 
-			fa00 fdff ffff ffff 0000 ccfc feec ffff ffff ccee 0cfc 0000 dfb0 fdff ffdf 00af 
-			fa00 fdff ffff 0fff cc00 cfec feef ffff ffff cfee ccef 000c ffb0 fdfb fdff 00af 
-			fa00 ffdf ffff 00ff fb00 cfcf feff ffff ffff cffe ffcf 000b fb00 fdfb fdff 0aff 
-			ffa0 ffdf ffff 00ff b000 ffff ffef fffe feff ffef bfff 0000 fb00 dffb fdff 0aff 
-			ffa0 ffdf fffd 000f b000 fffb ffef fffc fcff ffef bbff 0000 b000 dfa0 cfff 0aff 
-			ffa0 fffc fffd 0000 fb00 ffef ffef ffec fcef ffef ffef 000b 0000 dfa0 cfff 0aff 
-			ffa0 fffc 0fff 0000 b000 ffcc fcee cccf ffcc feec bccf 0000 0000 cfa0 cfff 0aff 
-			ffa0 fffc 0afc 0000 0000 eefc fcee 22cc fcc1 eeec 0cfe 0000 0000 cfc0 cfff 0aff 
-			ffa0 fffc 0cfc 0000 0000 eecc ceee ffff cfff eeee 0cce 0000 0000 0c00 fffc 0afc 
-			cfa0 cfff 00c0 0000 0000 ec00 ecee cccc eccc eeec 000c 0000 0000 0000 fffc 0afc 
-			cfa0 cfff 0000 0000 cc00 eccc eece 112c ec22 eece cccc 000c 0000 0000 cffc 0afc 
-			cfa0 cffc 0000 0000 cec0 eece ccce ffff cfff eecc cece 00ce 0000 0000 cffc 00a0 
-			0a00 cffc 0000 0000 ecec eeee eece ccce eecc eece eeee 0cec 0000 0000 cfc0 0000 
-			0000 0cfc 0000 1100 eaaa eeee ceec 222c cc21 ecee eeee 1aaa 0001 0000 cfc0 0000 
-			0000 0cfc 0000 1110 a111 eeea ccec 2222 c221 ecec aaee 111c 0011 0000 0c00 0000 
-			0000 00c0 0000 1110 1111 aaac cecc 3333 c332 acce 11aa 1111 0011 0000 0000 0000 
-			0000 0000 0000 1100 1111 1111 3eec 9993 3399 1cee 1111 1111 0001 0000 0000 0000 
-			0000 0000 0000 0000 1111 1111 3efc 9999 3999 1cfe 1111 0111 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 c111 3cff ff99 399f 1ffc 0111 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 c000 3cff fff3 33ff cffc 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 fc00 ccff fff3 c3ff fffc 000c 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 fa00 ccfa ff3e cfff fafc 000a 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 fa00 00ca fcec cfff fac0 000a 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 ac00 0000 ccec ffff a00c 000c 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 00c0 fffc 000c 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 fffc 000a 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 caa0 afff 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 fffa 0aaf 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 e000 bbbb aeab b00c ebec fffe eeff bceb ac00 bbae ebbb 0000 0000 0000 
+			0000 0000 bb00 ffff aaff b0cf eeff ffff efff bffe afc0 fffa bfff 000b 0000 0000 
+			0000 0000 dfb0 ffff afff c0cf eefa ffff efff cafe afc0 ffff dfff 00bf 0000 0000 
+			0000 0000 fffb dddd dffd 00cf eecc cccc eccc 0cce dfc0 ddff fddd 0bff 0000 0000 
+			0000 b000 ffff ffff fddf 0cff cc00 fffe ceff 000c fffc ffdd ffff bfff 0000 0000 
+			0000 fb00 ffff ffff ffff 0cff ec00 ccce eecc 000c fffc ffff ffff ffff 000b 0000 
+			0000 fb00 ffff ffff ffff cfff ec00 fffc ecff c00c ffff ffff ffff ffff 000b 0000 
+			0000 ffa0 ffff ffff ffff ffff c00c cccc cccc fc00 ffff ffff ffff ffff 00af 0000 
+			0000 ffa0 ffff ffff ffff ffff cccf fffe ceff ffcc ffff ffff ffff ffff 00af 0000 
+			0000 fffa ffff ffff ffff ffff ecff ccce eecc fffc ffff ffff ffff ffff 0aff 0000 
+			0000 fffa ffff ffff ffff ffff cfff fffc ccff ffff ffff ffff ffff ffff 0aff 0000 
+			0000 fffa ffff ffff fffb ffff cfff ffff cfff ffff ffff fbff ffff ffff 0aff 0000 
+			a000 ffff ffff ffff bbbb ffff ffff ffff ffff ffff bfff fbbb ffff ffff afff 0000 
+			a000 ffff ffff bfff 0000 bbbb fffc ffff ffff bcff 0bbb b000 ffff ffff afff 0000 
+			fa00 ffff ffff bffd 0000 0000 fcc0 ffff ffff 00cc 0000 b000 fdff ffff ffff 000a 
+			fa00 fdff ffff 0bfd c000 cc0c feee ffff ffff ceee cc0c 0000 fdfb ffff fffd 000a 
+			fa00 fdff ffdf 0bfd c000 fccf ffee fffe feff feef cfcc 0000 fdfb ffdf fffd 000a 
+			fa00 ffdf bfdf 0bff ccc0 fcfe ffff fffc fcff ffff cefc 00cc bffb ffdf ffdf 000a 
+			ffa0 ffdf bfdf 00bf ffb0 fffc ffee ffec fcef feef fcff 00bf bfb0 ffdf ffdf 00af 
+			ffa0 ffdf bffd 00bf fb00 ffff fcee cccf ffcc feec ffff 000b bfb0 fdff ffdf 00af 
+			ffa0 fffc 0afd 000b bb00 ffff ceee ffff cfff feee bfff 000b 0b00 fdfa fcff 00af 
+			ffa0 fffc 0afd 0000 ffb0 effe ecee cccc eccc eeec feff 00bf 0000 fdfa fcff 00af 
+			ffa0 fffc 0afc 0000 cb00 eefc eeee 332c ec22 eeee ccfe 000b 0000 fcfa fcff 00af 
+			cfa0 cfff 0cfc 0000 c000 eeef ccee ffff cfff eeec cfee 0000 0000 ccfc cfff 00af 
+			cfa0 cfff 00c0 0000 0000 eecc eece ccce eecc eece 0cce 0000 0000 c0c0 cfff 00af 
+			cfa0 cffc 0000 0000 0000 eec0 cece 222c cc33 eece 00ce 0000 0000 c000 ccff 00af 
+			0a00 cffc 0000 0000 0000 eeec ccce 2222 c223 eecc 0cee 0000 0000 c000 0cff 000a 
+			0000 0cfc 0000 0000 cccc eeec ceec 9993 c399 ecee ccee 0ccc 0000 0000 0cfc 0000 
+			0000 0cfc 0000 c000 cece eeee 3eec 9993 3399 ecee ceee cece 0000 0000 0cfc 0000 
+			0000 00c0 0000 ec10 eeec eeee 3ecc 9999 3999 ecce eeee ecee 001c 0000 00c0 0000 
+			0000 0000 0000 aa11 eeea eeee 3cec ff99 399f ecec eeee aaee 011a 0000 0000 0000 
+			0000 0000 0000 1111 eaa1 aaee 3cfc fff3 33ff acfc eeea 11aa 0111 0000 0000 0000 
+			0000 0000 0000 1110 a111 c1aa ccff fff3 c3ff cffc aaa1 1111 0011 0000 0000 0000 
+			0000 0000 0000 1000 1111 c111 ccff ff3e cfff cffc 1111 1111 0000 0000 0000 0000 
+			0000 0000 0000 0000 1000 f111 11ff fcec ffff fffc 1111 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 fc00 00fa c0c0 ffff fafc 000c 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 fa00 00ca 0000 fffc faca 000a 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 aa00 0000 caa0 afff a000 000a 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0c00 0000 fffa 0aaf 0000 000c 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 aaa0 000a 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
@@ -359,16 +359,20 @@
 	<tex_image name='t8x8x15.5' format='palette16' original_width='64' original_height='64' index='5' height='64' path='C:/SWANwork/mmdl/mmdl_dammy_mb/tga_mb/t8x8x15/t8x8x15.5.tga' palette_name='t8x8x15' width='64' color0_mode='transparency'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 c000 0000 0000 0000 c000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 5c00 000c 0000 0000 5c00 000c 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 5c00 000b 0000 0000 5b00 000c 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 2c00 000b 0000 0000 2b00 000c 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 2000 00b2 0000 0000 22b0 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 9c00 00b9 0000 0000 99b0 000c 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 f9c0 0bff 0000 0000 fffb 00c9 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 f9c0 0bff 0000 0000 fffb 00c9 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 fffb bfff 0000 b000 ffff 0bff 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 fffb ffff 000c fc00 ffff 0bff 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 f9c0 0bff 0000 0000 fffb 00c9 0000 0000 0000 0000 00ff 
+			0000 0000 0000 0000 0000 f9c0 0bff 0000 0000 fffb 00c9 0000 0000 0000 0000 00f0 
+			0000 0000 0000 0000 0000 fffb bfff 0000 b000 ffff 0bff 0000 0000 0000 0000 00f0 
+			0000 0000 0000 0000 0000 fffb ffff 000c fc00 ffff 0bff 0000 0000 0000 0000 00f0 
 			0000 0000 0000 0000 0000 ffb0 ffff 000b fb00 ffff 00bf 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 ffb0 ffff 000b fb00 ffff 00bf 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 b000 cfff 00bf cfb0 bfff 0000 0000 0000 0000 0000 0000 
@@ -377,49 +381,45 @@
 			0000 0000 0000 b000 00b0 0000 eea0 eeee eeee 00ae 0000 b0b0 0000 0000 0000 0000 
 			0000 0000 0000 fb0b 0bfb 0000 eeb0 eeee eeee 00be 0000 fbfb 0b0b 0000 0000 0000 
 			0000 0000 b000 eebf aaea 0000 ebfb fffe eeff 0bfb a000 eaea bfbe 0000 0000 0000 
-			0000 0000 eb00 bbbb aeab b00c ebec fffe eeff bceb ac00 bbae ebbb 000b 0000 0000 
-			0000 0000 bb00 ffff aaff b0cf eeff ffff efff bffe afc0 fffa bfff 00bb 0000 0000 
-			0000 0000 dfb0 ffff afff c0cf eefa ffff efff cafe afc0 ffff dfff 0bff 0000 0000 
-			0000 0000 ffb0 dddd dffd 00cf eecc cccc eccc 0cce dfc0 ddff fddd bfff 0000 0000 
-			0000 0000 fffb ffff fddf 0cff cc00 fffe ceff 000c fffc ffdd ffff ffff 000b 0000 
-			0000 b000 ffff ffff ffff 0cff ec00 ccce eecc 000c fffc ffff ffff ffff 00bf 0000 
-			0000 fb00 ffff ffff ffff cfff ec00 fffc ecff c00c ffff ffff ffff ffff 00bf 0000 
-			0000 fb00 ffff ffff ffff ffff c00c cccc cccc fc00 ffff ffff ffff ffff 0aff 0000 
-			0000 ffa0 ffff ffff ffff ffff cccf fffe ceff ffcc ffff ffff ffff ffff 0aff 0000 
-			0000 ffa0 ffff ffff ffff ffff ecff ccce eecc fffc ffff ffff ffff ffff afff 0000 
-			0000 fffa ffff ffff ffff ffff cfff fffc ccff ffff ffff ffff ffff ffff afff 0000 
-			0000 fffa ffff ffff ffff ffff cfff ffff cfff ffff ffff bbff ffff ffff ffff 000a 
-			a000 ffff ffff ffff bbbf ffff ffff ffff ffff ffff bfff 00bb fffb ffff ffff 000a 
-			a000 ffff ffff ffff 000f bbbb fffc ffff ffff bcff 0bbb 0000 dffb ffff ffff 00af 
-			fa00 ffff ffff ffff 0000 00cc fcc0 ffff ffff 00cc 0cc0 0000 dffb ffff ffdf 00af 
-			fa00 fdff ffff ffff 0000 ccfc feec ffff ffff ccee 0cfc 0000 dfb0 fdff ffdf 00af 
-			fa00 fdff ffff 0fff cc00 cfec feef ffff ffff cfee ccef 000c ffb0 fdfb fdff 00af 
-			fa00 ffdf ffff 00ff fb00 cfcf feff ffff ffff cffe ffcf 000b fb00 fdfb fdff 0aff 
-			ffa0 ffdf ffff 00ff b000 ffff ffef fffe feff ffef bfff 0000 fb00 dffb fdff 0aff 
-			ffa0 ffdf fffd 000f b000 fffb ffef fffc fcff ffef bbff 0000 b000 dfa0 cfff 0aff 
-			ffa0 fffc fffd 0000 fb00 ffef ffef ffec fcef ffef ffef 000b 0000 dfa0 cfff 0aff 
-			ffa0 fffc 0fff 0000 b000 ffcc fcee cccf ffcc feec bccf 0000 0000 cfa0 cfff 0aff 
-			ffa0 fffc 0afc 0000 0000 eefc fcee 22cc fcc1 eeec 0cfe 0000 0000 cfc0 cfff 0aff 
-			ffa0 fffc 0cfc 0000 0000 eecc ceee ffff cfff eeee 0cce 0000 0000 0c00 fffc 0afc 
-			cfa0 cfff 00c0 0000 0000 ec00 ecee cccc eccc eeec 000c 0000 0000 0000 fffc 0afc 
-			cfa0 cfff 0000 0000 cc00 eccc eece 112c ec22 eece cccc 000c 0000 0000 cffc 0afc 
-			cfa0 cffc 0000 0000 cec0 eece ccce ffff cfff eecc cece 00ce 0000 0000 cffc 00a0 
-			0a00 cffc 0000 0000 ecec eeee eece ccce eecc eece eeee 0cec 0000 0000 cfc0 0000 
-			0000 0cfc 0000 1100 eaaa eeee ceec 222c cc21 ecee eeee 1aaa 0001 0000 cfc0 0000 
-			0000 0cfc 0000 1110 a111 eeea ccec 2222 c221 ecec aaee 111c 0011 0000 0c00 0000 
-			0000 00c0 0000 1110 1111 aaac cecc 3333 c332 acce 11aa 1111 0011 0000 0000 0000 
-			0000 0000 0000 1100 1111 1111 3eec 9993 3399 1cee 1111 1111 0001 0000 0000 0000 
-			0000 0000 0000 0000 1111 1111 3efc 9999 3999 1cfe 1111 0111 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 c111 3cff ff99 399f 1ffc 0111 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 c000 3cff fff3 33ff cffc 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 fc00 ccff fff3 c3ff fffc 000c 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 fa00 ccfa ff3e cfff fafc 000a 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 fa00 00ca fcec cfff fac0 000a 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 ac00 0000 ccec ffff a00c 000c 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 00c0 fffc 000c 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 fffc 000a 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 caa0 afff 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 fffa 0aaf 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 e000 bbbb aeab b00c ebec fffe eeff bceb ac00 bbae ebbb 0000 0000 0000 
+			0000 0000 bb00 ffff aaff b0cf eeff ffff efff bffe afc0 fffa bfff 000b 0000 0000 
+			0000 0000 dfb0 ffff afff c0cf eefa ffff efff cafe afc0 ffff dfff 00bf 0000 0000 
+			0000 0000 fffb dddd dffd 00cf eecc cccc eccc 0cce dfc0 ddff fddd 0bff 0000 0000 
+			0000 b000 ffff ffff fddf 0cff cc00 fffe ceff 000c fffc ffdd ffff bfff 0000 0000 
+			0000 fb00 ffff ffff ffff 0cff ec00 ccce eecc 000c fffc ffff ffff ffff 000b 0000 
+			0000 fb00 ffff ffff ffff cfff ec00 fffc ecff c00c ffff ffff ffff ffff 000b 0000 
+			0000 ffa0 ffff ffff ffff ffff c00c cccc cccc fc00 ffff ffff ffff ffff 00af 0000 
+			0000 ffa0 ffff ffff ffff ffff cccf fffe ceff ffcc ffff ffff ffff ffff 00af 0000 
+			0000 fffa ffff ffff ffff ffff ecff ccce eecc fffc ffff ffff ffff ffff 0aff 0000 
+			0000 fffa ffff ffff ffff ffff cfff fffc ccff ffff ffff ffff ffff ffff 0aff 0000 
+			0000 fffa ffff ffff fffb ffff cfff ffff cfff ffff ffff fbff ffff ffff 0aff 0000 
+			a000 ffff ffff ffff bbbb ffff ffff ffff ffff ffff bfff fbbb ffff ffff afff 0000 
+			a000 ffff ffff bfff 0000 bbbb fffc ffff ffff bcff 0bbb b000 ffff ffff afff 0000 
+			fa00 ffff ffff bffd 0000 0000 fcc0 ffff ffff 00cc 0000 b000 fdff ffff ffff 000a 
+			fa00 fdff ffff 0bfd c000 cc0c feee ffff ffff ceee cc0c 0000 fdfb ffff fffd 000a 
+			fa00 fdff ffdf 0bfd c000 fccf ffee fffe feff feef cfcc 0000 fdfb ffdf fffd 000a 
+			fa00 ffdf bfdf 0bff ccc0 fcfe ffff fffc fcff ffff cefc 00cc bffb ffdf ffdf 000a 
+			ffa0 ffdf bfdf 00bf ffb0 fffc ffee ffec fcef feef fcff 00bf bfb0 ffdf ffdf 00af 
+			ffa0 ffdf bffd 00bf fb00 ffff fcee cccf ffcc feec ffff 000b bfb0 fdff ffdf 00af 
+			ffa0 fffc 0afd 000b bb00 ffff ceee ffff cfff feee bfff 000b 0b00 fdfa fcff 00af 
+			ffa0 fffc 0afd 0000 ffb0 effe ecee cccc eccc eeec feff 00bf 0000 fdfa fcff 00af 
+			ffa0 fffc 0afc 0000 cb00 eefc eeee 332c ec22 eeee ccfe 000b 0000 fcfa fcff 00af 
+			cfa0 cfff 0cfc 0000 c000 eeef ccee ffff cfff eeec cfee 0000 0000 ccfc cfff 00af 
+			cfa0 cfff 00c0 0000 0000 eecc eece ccce eecc eece 0cce 0000 0000 c0c0 cfff 00af 
+			cfa0 cffc 0000 0000 0000 eec0 cece 222c cc33 eece 00ce 0000 0000 c000 ccff 00af 
+			0a00 cffc 0000 0000 0000 eeec ccce 2222 c223 eecc 0cee 0000 0000 c000 0cff 000a 
+			0000 0cfc 0000 0000 cccc eeec ceec 9993 c399 ecee ccee 0ccc 0000 0000 0cfc 0000 
+			0000 0cfc 0000 c000 cece eeee 3eec 9993 3399 ecee ceee cece 0000 0000 0cfc 0000 
+			0000 00c0 0000 ec10 eeec eeee 3ecc 9999 3999 ecce eeee ecee 001c 0000 00c0 0000 
+			0000 0000 0000 aa11 eeea eeee 3cec ff99 399f ecec eeee aaee 011a 0000 0000 0000 
+			0000 0000 0000 1111 eaa1 aaee 3cfc fff3 33ff acfc eeea 11aa 0111 0000 0000 0000 
+			0000 0000 0000 1110 a111 c1aa ccff fff3 c3ff cffc aaa1 1111 0011 0000 0000 0000 
+			0000 0000 0000 1000 1111 c111 ccff ff3e cfff cffc 1111 1111 0000 0000 0000 0000 
+			0000 0000 0000 0000 1000 f111 11ff fcec ffff fffc 1111 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 fc00 00fa c0c0 ffff fafc 000c 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 fa00 00ca 0000 fffc faca 000a 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 aa00 0000 caa0 afff a000 000a 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0c00 0000 fffa 0aaf 0000 000c 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 aaa0 000a 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
@@ -427,16 +427,20 @@
 	<tex_image name='t8x8x15.6' format='palette16' original_width='64' original_height='64' index='6' height='64' path='C:/SWANwork/mmdl/mmdl_dammy_mb/tga_mb/t8x8x15/t8x8x15.6.tga' palette_name='t8x8x15' width='64' color0_mode='transparency'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 c000 0000 0000 0000 c000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 5c00 000c 0000 0000 5c00 000c 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 5c00 000b 0000 0000 5b00 000c 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 2c00 000b 0000 0000 2b00 000c 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 2000 00b2 0000 0000 22b0 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 9c00 00b9 0000 0000 99b0 000c 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 f9c0 0bff 0000 0000 fffb 00c9 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 f9c0 0bff 0000 0000 fffb 00c9 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 fffb bfff 0000 b000 ffff 0bff 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 fffb ffff 000c fc00 ffff 0bff 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 f9c0 0bff 0000 0000 fffb 00c9 0000 0000 0000 f000 00ff 
+			0000 0000 0000 0000 0000 f9c0 0bff 0000 0000 fffb 00c9 0000 0000 0000 0000 00ff 
+			0000 0000 0000 0000 0000 fffb bfff 0000 b000 ffff 0bff 0000 0000 0000 f000 0000 
+			0000 0000 0000 0000 0000 fffb ffff 000c fc00 ffff 0bff 0000 0000 0000 f000 00ff 
 			0000 0000 0000 0000 0000 ffb0 ffff 000b fb00 ffff 00bf 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 ffb0 ffff 000b fb00 ffff 00bf 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 b000 cfff 00bf cfb0 bfff 0000 0000 0000 0000 0000 0000 
@@ -445,49 +449,45 @@
 			0000 0000 0000 b000 00b0 0000 eea0 eeee eeee 00ae 0000 b0b0 0000 0000 0000 0000 
 			0000 0000 0000 fb0b 0bfb 0000 eeb0 eeee eeee 00be 0000 fbfb 0b0b 0000 0000 0000 
 			0000 0000 b000 eebf aaea 0000 ebfb fffe eeff 0bfb a000 eaea bfbe 0000 0000 0000 
-			0000 0000 eb00 bbbb aeab b00c ebec fffe eeff bceb ac00 bbae ebbb 000b 0000 0000 
-			0000 0000 bb00 ffff aaff b0cf eeff ffff efff bffe afc0 fffa bfff 00bb 0000 0000 
-			0000 0000 dfb0 ffff afff c0cf eefa ffff efff cafe afc0 ffff dfff 0bff 0000 0000 
-			0000 0000 ffb0 dddd dffd 00cf eecc cccc eccc 0cce dfc0 ddff fddd bfff 0000 0000 
-			0000 0000 fffb ffff fddf 0cff cc00 fffe ceff 000c fffc ffdd ffff ffff 000b 0000 
-			0000 b000 ffff ffff ffff 0cff ec00 ccce eecc 000c fffc ffff ffff ffff 00bf 0000 
-			0000 fb00 ffff ffff ffff cfff ec00 fffc ecff c00c ffff ffff ffff ffff 00bf 0000 
-			0000 fb00 ffff ffff ffff ffff c00c cccc cccc fc00 ffff ffff ffff ffff 0aff 0000 
-			0000 ffa0 ffff ffff ffff ffff cccf fffe ceff ffcc ffff ffff ffff ffff 0aff 0000 
-			0000 ffa0 ffff ffff ffff ffff ecff ccce eecc fffc ffff ffff ffff ffff afff 0000 
-			0000 fffa ffff ffff ffff ffff cfff fffc ccff ffff ffff ffff ffff ffff afff 0000 
-			0000 fffa ffff ffff ffff ffff cfff ffff cfff ffff ffff bbff ffff ffff ffff 000a 
-			a000 ffff ffff ffff bbbf ffff ffff ffff ffff ffff bfff 00bb fffb ffff ffff 000a 
-			a000 ffff ffff ffff 000f bbbb fffc ffff ffff bcff 0bbb 0000 dffb ffff ffff 00af 
-			fa00 ffff ffff ffff 0000 00cc fcc0 ffff ffff 00cc 0cc0 0000 dffb ffff ffdf 00af 
-			fa00 fdff ffff ffff 0000 ccfc feec ffff ffff ccee 0cfc 0000 dfb0 fdff ffdf 00af 
-			fa00 fdff ffff 0fff cc00 cfec feef ffff ffff cfee ccef 000c ffb0 fdfb fdff 00af 
-			fa00 ffdf ffff 00ff fb00 cfcf feff ffff ffff cffe ffcf 000b fb00 fdfb fdff 0aff 
-			ffa0 ffdf ffff 00ff b000 ffff ffef fffe feff ffef bfff 0000 fb00 dffb fdff 0aff 
-			ffa0 ffdf fffd 000f b000 fffb ffef fffc fcff ffef bbff 0000 b000 dfa0 cfff 0aff 
-			ffa0 fffc fffd 0000 fb00 ffef ffef ffec fcef ffef ffef 000b 0000 dfa0 cfff 0aff 
-			ffa0 fffc 0fff 0000 b000 ffcc fcee cccf ffcc feec bccf 0000 0000 cfa0 cfff 0aff 
-			ffa0 fffc 0afc 0000 0000 eefc fcee 22cc fcc1 eeec 0cfe 0000 0000 cfc0 cfff 0aff 
-			ffa0 fffc 0cfc 0000 0000 eecc ceee ffff cfff eeee 0cce 0000 0000 0c00 fffc 0afc 
-			cfa0 cfff 00c0 0000 0000 ec00 ecee cccc eccc eeec 000c 0000 0000 0000 fffc 0afc 
-			cfa0 cfff 0000 0000 cc00 eccc eece 112c ec22 eece cccc 000c 0000 0000 cffc 0afc 
-			cfa0 cffc 0000 0000 cec0 eece ccce ffff cfff eecc cece 00ce 0000 0000 cffc 00a0 
-			0a00 cffc 0000 0000 ecec eeee eece ccce eecc eece eeee 0cec 0000 0000 cfc0 0000 
-			0000 0cfc 0000 1100 eaaa eeee ceec 222c cc21 ecee eeee 1aaa 0001 0000 cfc0 0000 
-			0000 0cfc 0000 1110 a111 eeea ccec 2222 c221 ecec aaee 111c 0011 0000 0c00 0000 
-			0000 00c0 0000 1110 1111 aaac cecc 3333 c332 acce 11aa 1111 0011 0000 0000 0000 
-			0000 0000 0000 1100 1111 1111 3eec 9993 3399 1cee 1111 1111 0001 0000 0000 0000 
-			0000 0000 0000 0000 1111 1111 3efc 9999 3999 1cfe 1111 0111 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 c111 3cff ff99 399f 1ffc 0111 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 c000 3cff fff3 33ff cffc 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 fc00 ccff fff3 c3ff fffc 000c 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 fa00 ccfa ff3e cfff fafc 000a 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 fa00 00ca fcec cfff fac0 000a 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 ac00 0000 ccec ffff a00c 000c 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 00c0 fffc 000c 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 fffc 000a 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 caa0 afff 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 fffa 0aaf 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 e000 bbbb aeab b00c ebec fffe eeff bceb ac00 bbae ebbb 0000 0000 0000 
+			0000 0000 bb00 ffff aaff b0cf eeff ffff efff bffe afc0 fffa bfff 000b 0000 0000 
+			0000 0000 dfb0 ffff afff c0cf eefa ffff efff cafe afc0 ffff dfff 00bf 0000 0000 
+			0000 0000 fffb dddd dffd 00cf eecc cccc eccc 0cce dfc0 ddff fddd 0bff 0000 0000 
+			0000 b000 ffff ffff fddf 0cff cc00 fffe ceff 000c fffc ffdd ffff bfff 0000 0000 
+			0000 fb00 ffff ffff ffff 0cff ec00 ccce eecc 000c fffc ffff ffff ffff 000b 0000 
+			0000 fb00 ffff ffff ffff cfff ec00 fffc ecff c00c ffff ffff ffff ffff 000b 0000 
+			0000 ffa0 ffff ffff ffff ffff c00c cccc cccc fc00 ffff ffff ffff ffff 00af 0000 
+			0000 ffa0 ffff ffff ffff ffff cccf fffe ceff ffcc ffff ffff ffff ffff 00af 0000 
+			0000 fffa ffff ffff ffff ffff ecff ccce eecc fffc ffff ffff ffff ffff 0aff 0000 
+			0000 fffa ffff ffff ffff ffff cfff fffc ccff ffff ffff ffff ffff ffff 0aff 0000 
+			0000 fffa ffff ffff fffb ffff cfff ffff cfff ffff ffff fbff ffff ffff 0aff 0000 
+			a000 ffff ffff ffff bbbb ffff ffff ffff ffff ffff bfff fbbb ffff ffff afff 0000 
+			a000 ffff ffff bfff 0000 bbbb fffc ffff ffff bcff 0bbb b000 ffff ffff afff 0000 
+			fa00 ffff ffff bffd 0000 0000 fcc0 ffff ffff 00cc 0000 b000 fdff ffff ffff 000a 
+			fa00 fdff ffff 0bfd c000 cc0c feee ffff ffff ceee cc0c 0000 fdfb ffff fffd 000a 
+			fa00 fdff ffdf 0bfd c000 fccf ffee fffe feff feef cfcc 0000 fdfb ffdf fffd 000a 
+			fa00 ffdf bfdf 0bff ccc0 fcfe ffff fffc fcff ffff cefc 00cc bffb ffdf ffdf 000a 
+			ffa0 ffdf bfdf 00bf ffb0 fffc ffee ffec fcef feef fcff 00bf bfb0 ffdf ffdf 00af 
+			ffa0 ffdf bffd 00bf fb00 ffff fcee cccf ffcc feec ffff 000b bfb0 fdff ffdf 00af 
+			ffa0 fffc 0afd 000b bb00 ffff ceee ffff cfff feee bfff 000b 0b00 fdfa fcff 00af 
+			ffa0 fffc 0afd 0000 ffb0 effe ecee cccc eccc eeec feff 00bf 0000 fdfa fcff 00af 
+			ffa0 fffc 0afc 0000 cb00 eefc eeee 332c ec22 eeee ccfe 000b 0000 fcfa fcff 00af 
+			cfa0 cfff 0cfc 0000 c000 eeef ccee ffff cfff eeec cfee 0000 0000 ccfc cfff 00af 
+			cfa0 cfff 00c0 0000 0000 eecc eece ccce eecc eece 0cce 0000 0000 c0c0 cfff 00af 
+			cfa0 cffc 0000 0000 0000 eec0 cece 222c cc33 eece 00ce 0000 0000 c000 ccff 00af 
+			0a00 cffc 0000 0000 0000 eeec ccce 2222 c223 eecc 0cee 0000 0000 c000 0cff 000a 
+			0000 0cfc 0000 0000 cccc eeec ceec 9993 c399 ecee ccee 0ccc 0000 0000 0cfc 0000 
+			0000 0cfc 0000 c000 cece eeee 3eec 9993 3399 ecee ceee cece 0000 0000 0cfc 0000 
+			0000 00c0 0000 ec10 eeec eeee 3ecc 9999 3999 ecce eeee ecee 001c 0000 00c0 0000 
+			0000 0000 0000 aa11 eeea eeee 3cec ff99 399f ecec eeee aaee 011a 0000 0000 0000 
+			0000 0000 0000 1111 eaa1 aaee 3cfc fff3 33ff acfc eeea 11aa 0111 0000 0000 0000 
+			0000 0000 0000 1110 a111 c1aa ccff fff3 c3ff cffc aaa1 1111 0011 0000 0000 0000 
+			0000 0000 0000 1000 1111 c111 ccff ff3e cfff cffc 1111 1111 0000 0000 0000 0000 
+			0000 0000 0000 0000 1000 f111 11ff fcec ffff fffc 1111 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 fc00 00fa c0c0 ffff fafc 000c 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 fa00 00ca 0000 fffc faca 000a 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 aa00 0000 caa0 afff a000 000a 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0c00 0000 fffa 0aaf 0000 000c 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 aaa0 000a 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
@@ -495,16 +495,20 @@
 	<tex_image name='t8x8x15.7' format='palette16' original_width='64' original_height='64' index='7' height='64' path='C:/SWANwork/mmdl/mmdl_dammy_mb/tga_mb/t8x8x15/t8x8x15.7.tga' palette_name='t8x8x15' width='64' color0_mode='transparency'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 c000 0000 0000 0000 c000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 5c00 000c 0000 0000 5c00 000c 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 5c00 000b 0000 0000 5b00 000c 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 2c00 000b 0000 0000 2b00 000c 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 2000 00b2 0000 0000 22b0 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 9c00 00b9 0000 0000 99b0 000c 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 f9c0 0bff 0000 0000 fffb 00c9 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 f9c0 0bff 0000 0000 fffb 00c9 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 fffb bfff 0000 b000 ffff 0bff 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 fffb ffff 000c fc00 ffff 0bff 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 f9c0 0bff 0000 0000 fffb 00c9 0000 0000 0000 f000 00ff 
+			0000 0000 0000 0000 0000 f9c0 0bff 0000 0000 fffb 00c9 0000 0000 0000 0000 00ff 
+			0000 0000 0000 0000 0000 fffb bfff 0000 b000 ffff 0bff 0000 0000 0000 0000 00f0 
+			0000 0000 0000 0000 0000 fffb ffff 000c fc00 ffff 0bff 0000 0000 0000 f000 00ff 
 			0000 0000 0000 0000 0000 ffb0 ffff 000b fb00 ffff 00bf 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 ffb0 ffff 000b fb00 ffff 00bf 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 b000 cfff 00bf cfb0 bfff 0000 0000 0000 0000 0000 0000 
@@ -513,49 +517,45 @@
 			0000 0000 0000 b000 00b0 0000 eea0 eeee eeee 00ae 0000 b0b0 0000 0000 0000 0000 
 			0000 0000 0000 fb0b 0bfb 0000 eeb0 eeee eeee 00be 0000 fbfb 0b0b 0000 0000 0000 
 			0000 0000 b000 eebf aaea 0000 ebfb fffe eeff 0bfb a000 eaea bfbe 0000 0000 0000 
-			0000 0000 eb00 bbbb aeab b00c ebec fffe eeff bceb ac00 bbae ebbb 000b 0000 0000 
-			0000 0000 bb00 ffff aaff b0cf eeff ffff efff bffe afc0 fffa bfff 00bb 0000 0000 
-			0000 0000 dfb0 ffff afff c0cf eefa ffff efff cafe afc0 ffff dfff 0bff 0000 0000 
-			0000 0000 ffb0 dddd dffd 00cf eecc cccc eccc 0cce dfc0 ddff fddd bfff 0000 0000 
-			0000 0000 fffb ffff fddf 0cff cc00 fffe ceff 000c fffc ffdd ffff ffff 000b 0000 
-			0000 b000 ffff ffff ffff 0cff ec00 ccce eecc 000c fffc ffff ffff ffff 00bf 0000 
-			0000 fb00 ffff ffff ffff cfff ec00 fffc ecff c00c ffff ffff ffff ffff 00bf 0000 
-			0000 fb00 ffff ffff ffff ffff c00c cccc cccc fc00 ffff ffff ffff ffff 0aff 0000 
-			0000 ffa0 ffff ffff ffff ffff cccf fffe ceff ffcc ffff ffff ffff ffff 0aff 0000 
-			0000 ffa0 ffff ffff ffff ffff ecff ccce eecc fffc ffff ffff ffff ffff afff 0000 
-			0000 fffa ffff ffff ffff ffff cfff fffc ccff ffff ffff ffff ffff ffff afff 0000 
-			0000 fffa ffff ffff ffff ffff cfff ffff cfff ffff ffff bbff ffff ffff ffff 000a 
-			a000 ffff ffff ffff bbbf ffff ffff ffff ffff ffff bfff 00bb fffb ffff ffff 000a 
-			a000 ffff ffff ffff 000f bbbb fffc ffff ffff bcff 0bbb 0000 dffb ffff ffff 00af 
-			fa00 ffff ffff ffff 0000 00cc fcc0 ffff ffff 00cc 0cc0 0000 dffb ffff ffdf 00af 
-			fa00 fdff ffff ffff 0000 ccfc feec ffff ffff ccee 0cfc 0000 dfb0 fdff ffdf 00af 
-			fa00 fdff ffff 0fff cc00 cfec feef ffff ffff cfee ccef 000c ffb0 fdfb fdff 00af 
-			fa00 ffdf ffff 00ff fb00 cfcf feff ffff ffff cffe ffcf 000b fb00 fdfb fdff 0aff 
-			ffa0 ffdf ffff 00ff b000 ffff ffef fffe feff ffef bfff 0000 fb00 dffb fdff 0aff 
-			ffa0 ffdf fffd 000f b000 fffb ffef fffc fcff ffef bbff 0000 b000 dfa0 cfff 0aff 
-			ffa0 fffc fffd 0000 fb00 ffef ffef ffec fcef ffef ffef 000b 0000 dfa0 cfff 0aff 
-			ffa0 fffc 0fff 0000 b000 ffcc fcee cccf ffcc feec bccf 0000 0000 cfa0 cfff 0aff 
-			ffa0 fffc 0afc 0000 0000 eefc fcee 22cc fcc1 eeec 0cfe 0000 0000 cfc0 cfff 0aff 
-			ffa0 fffc 0cfc 0000 0000 eecc ceee ffff cfff eeee 0cce 0000 0000 0c00 fffc 0afc 
-			cfa0 cfff 00c0 0000 0000 ec00 ecee cccc eccc eeec 000c 0000 0000 0000 fffc 0afc 
-			cfa0 cfff 0000 0000 cc00 eccc eece 112c ec22 eece cccc 000c 0000 0000 cffc 0afc 
-			cfa0 cffc 0000 0000 cec0 eece ccce ffff cfff eecc cece 00ce 0000 0000 cffc 00a0 
-			0a00 cffc 0000 0000 ecec eeee eece ccce eecc eece eeee 0cec 0000 0000 cfc0 0000 
-			0000 0cfc 0000 1100 eaaa eeee ceec 222c cc21 ecee eeee 1aaa 0001 0000 cfc0 0000 
-			0000 0cfc 0000 1110 a111 eeea ccec 2222 c221 ecec aaee 111c 0011 0000 0c00 0000 
-			0000 00c0 0000 1110 1111 aaac cecc 3333 c332 acce 11aa 1111 0011 0000 0000 0000 
-			0000 0000 0000 1100 1111 1111 3eec 9993 3399 1cee 1111 1111 0001 0000 0000 0000 
-			0000 0000 0000 0000 1111 1111 3efc 9999 3999 1cfe 1111 0111 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 c111 3cff ff99 399f 1ffc 0111 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 c000 3cff fff3 33ff cffc 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 fc00 ccff fff3 c3ff fffc 000c 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 fa00 ccfa ff3e cfff fafc 000a 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 fa00 00ca fcec cfff fac0 000a 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 ac00 0000 ccec ffff a00c 000c 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 00c0 fffc 000c 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 fffc 000a 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 caa0 afff 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 fffa 0aaf 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 e000 bbbb aeab b00c ebec fffe eeff bceb ac00 bbae ebbb 0000 0000 0000 
+			0000 0000 bb00 ffff aaff b0cf eeff ffff efff bffe afc0 fffa bfff 000b 0000 0000 
+			0000 0000 dfb0 ffff afff c0cf eefa ffff efff cafe afc0 ffff dfff 00bf 0000 0000 
+			0000 0000 fffb dddd dffd 00cf eecc cccc eccc 0cce dfc0 ddff fddd 0bff 0000 0000 
+			0000 b000 ffff ffff fddf 0cff cc00 fffe ceff 000c fffc ffdd ffff bfff 0000 0000 
+			0000 fb00 ffff ffff ffff 0cff ec00 ccce eecc 000c fffc ffff ffff ffff 000b 0000 
+			0000 fb00 ffff ffff ffff cfff ec00 fffc ecff c00c ffff ffff ffff ffff 000b 0000 
+			0000 ffa0 ffff ffff ffff ffff c00c cccc cccc fc00 ffff ffff ffff ffff 00af 0000 
+			0000 ffa0 ffff ffff ffff ffff cccf fffe ceff ffcc ffff ffff ffff ffff 00af 0000 
+			0000 fffa ffff ffff ffff ffff ecff ccce eecc fffc ffff ffff ffff ffff 0aff 0000 
+			0000 fffa ffff ffff ffff ffff cfff fffc ccff ffff ffff ffff ffff ffff 0aff 0000 
+			0000 fffa ffff ffff fffb ffff cfff ffff cfff ffff ffff fbff ffff ffff 0aff 0000 
+			a000 ffff ffff ffff bbbb ffff ffff ffff ffff ffff bfff fbbb ffff ffff afff 0000 
+			a000 ffff ffff bfff 0000 bbbb fffc ffff ffff bcff 0bbb b000 ffff ffff afff 0000 
+			fa00 ffff ffff bffd 0000 0000 fcc0 ffff ffff 00cc 0000 b000 fdff ffff ffff 000a 
+			fa00 fdff ffff 0bfd c000 cc0c feee ffff ffff ceee cc0c 0000 fdfb ffff fffd 000a 
+			fa00 fdff ffdf 0bfd c000 fccf ffee fffe feff feef cfcc 0000 fdfb ffdf fffd 000a 
+			fa00 ffdf bfdf 0bff ccc0 fcfe ffff fffc fcff ffff cefc 00cc bffb ffdf ffdf 000a 
+			ffa0 ffdf bfdf 00bf ffb0 fffc ffee ffec fcef feef fcff 00bf bfb0 ffdf ffdf 00af 
+			ffa0 ffdf bffd 00bf fb00 ffff fcee cccf ffcc feec ffff 000b bfb0 fdff ffdf 00af 
+			ffa0 fffc 0afd 000b bb00 ffff ceee ffff cfff feee bfff 000b 0b00 fdfa fcff 00af 
+			ffa0 fffc 0afd 0000 ffb0 effe ecee cccc eccc eeec feff 00bf 0000 fdfa fcff 00af 
+			ffa0 fffc 0afc 0000 cb00 eefc eeee 332c ec22 eeee ccfe 000b 0000 fcfa fcff 00af 
+			cfa0 cfff 0cfc 0000 c000 eeef ccee ffff cfff eeec cfee 0000 0000 ccfc cfff 00af 
+			cfa0 cfff 00c0 0000 0000 eecc eece ccce eecc eece 0cce 0000 0000 c0c0 cfff 00af 
+			cfa0 cffc 0000 0000 0000 eec0 cece 222c cc33 eece 00ce 0000 0000 c000 ccff 00af 
+			0a00 cffc 0000 0000 0000 eeec ccce 2222 c223 eecc 0cee 0000 0000 c000 0cff 000a 
+			0000 0cfc 0000 0000 cccc eeec ceec 9993 c399 ecee ccee 0ccc 0000 0000 0cfc 0000 
+			0000 0cfc 0000 c000 cece eeee 3eec 9993 3399 ecee ceee cece 0000 0000 0cfc 0000 
+			0000 00c0 0000 ec10 eeec eeee 3ecc 9999 3999 ecce eeee ecee 001c 0000 00c0 0000 
+			0000 0000 0000 aa11 eeea eeee 3cec ff99 399f ecec eeee aaee 011a 0000 0000 0000 
+			0000 0000 0000 1111 eaa1 aaee 3cfc fff3 33ff acfc eeea 11aa 0111 0000 0000 0000 
+			0000 0000 0000 1110 a111 c1aa ccff fff3 c3ff cffc aaa1 1111 0011 0000 0000 0000 
+			0000 0000 0000 1000 1111 c111 ccff ff3e cfff cffc 1111 1111 0000 0000 0000 0000 
+			0000 0000 0000 0000 1000 f111 11ff fcec ffff fffc 1111 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 fc00 00fa c0c0 ffff fafc 000c 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 fa00 00ca 0000 fffc faca 000a 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 aa00 0000 caa0 afff a000 000a 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0c00 0000 fffa 0aaf 0000 000c 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 aaa0 000a 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
@@ -706,61 +706,61 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 b000 0000 0000 0000 cc0c 0000 b000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 5b00 000b 0000 c000 cece 0000 5b00 000b 0000 0000 0000 0000 
+			0000 0000 0000 0000 2b00 000b 0000 ec00 0cee 0000 2b00 000b 0000 0000 0000 0000 
+			0000 0000 0000 0000 9b00 00b9 0000 eec0 00cc 0000 99b0 000b 0000 0000 0000 0000 
+			0000 0000 0000 0000 9b00 0be9 0000 ceec 0000 0000 99eb 000b 0000 0000 0000 0000 
+			0000 0000 0000 0000 b000 bff9 0000 ceec 0000 b000 b9ff 0000 0000 0000 0000 0000 
+			0000 0000 00b0 0000 b000 bfff c000 ceee 0000 b000 bfff 0000 0000 00b0 0000 0000 
+			0000 0000 0bfb 0000 fb00 ffff c00b eeee 000c fb00 ffff 000b 0000 0bfb 0000 0000 
+			0000 0000 0bfb 0000 fb00 ffff c00b eeee 00cd fb00 ffff 000b 0000 0bfb 0000 0000 
+			0000 b00a 0bff 0000 eb00 ffff c0be eeee 00ce feb0 efff 000b 0000 bffb 0a00 0000 
+			a000 b0af 0bff 0000 eb00 ffff cbff eeed ccee fffb efff 000b 0000 bffb afa0 0000 
+			a000 c0af 0bff 0000 b000 fffb ffff eecc fcce ffff bbff 0000 0000 cffb afa0 0000 
+			a000 ecaf 0bff 0000 0000 ffb0 ffff ecfb fbfc ffff 00bf 0000 0000 effb afac 0000 
+			ea00 ebff 0bff 0000 0000 ffb0 cfff cfbf cfbf ffff 00bf 0000 0000 effb effb 000a 
+			ea00 ebff 0bfe 000c 0000 fffb dfff eebf dfbe ffff 0bff 0000 0c00 eefb effb 000a 
+			ea00 ebff ccfe 00bf 0000 fffb fdff ebff fffb fffd 0bff 0000 cfb0 eefc effb 000a 
+			fa00 ebff ecee 00bf 0000 ffeb fdef beff fffe ffed 0bef 0000 efb0 eeec fffb 000a 
+			fa00 ebff ecee 00af 0000 eeb0 deee dfff dfff eeee 00be 0000 efa0 eeec fffb 000a 
+			fa00 ceff edee 00ae 0000 db00 ffee effe feff deef 000b 0000 eea0 ceed fffe 000a 
+			fa00 cfff deee a0ae 0000 bc00 f9db ffef ffef bbd9 000c a000 dea0 ceee ffff 000a 
+			fa00 cfff deee eaee 000a bccc 8bdf ffff 8fff bfdb 0ccc ea00 deea ceee ffff 000a 
+			fa00 dfff eeee ecee 000a bddc 8efd fff7 87ff bdfe 0cdd ea00 eeec deee ffff 000a 
+			ea00 dfff eeee edee 000a 3dc0 7fdb ffe4 74ef 3bdf 00cd ea00 eeed deee efff 000a 
+			ea00 ffff eeed eeee 000a 33dc ffa2 ffd8 f8df 32af 0cd3 ea00 eeee fdee efff 000a 
+			b000 ffff eeed eeee 00be 23cc feea fddf ffdd 2aee 0cc3 eeb0 eeee fdee bfff 0000 
+			b000 ffff eeef eeee 00be 23c0 edb2 33f3 e3f3 22bd 00c3 eeb0 eeee ffee bfff 0000 
+			a000 fffe eeff eeee 0bee 3ddc ebb2 2235 e532 32bb 0cdd eeeb eeee fffe aeff 0000 
+			a000 fffe efff eeee 0bee bbc0 cddb 2235 c532 bbdd 00cb eeeb eeee ffff aeff 0000 
+			0000 fffb ffff eeee beee edbb ceee 225c cc52 eeee bbbd eeee feee ffff 0bff 0000 
+			0000 fffa ffff eeef eeee fffe eeff 55fc ecf5 fffe eeff eeee ffee ffff 0aff 0000 
+			0000 ffea ffff efff ffee ffff ccff cccd cdcc fffc ffff eeef ffff ffff 0aef 0000 
+			0000 ffb0 ffff ffff ffff ffff fcef eede fede ffec ffff ffff ffff ffff 00bf 0000 
+			0000 fea0 ffff ffff ffff efff ffcb edff fffd ebcf ffff ffff ffff ffff 00ae 0000 
+			0000 fb00 dfff ffdd ffff bbef cddd efff cfff bddd ffeb ffff dddf ffff 000b 0000 
+			0000 eb00 fdff ddff ffff ddbb fcdd efff ffff dddc fbbd dfff fffd effd 000b 0000 
+			0000 b000 ffde ffff bffd dddb cddd eefe cefe dddd bbdd fdff ffff bedf 0000 0000 
+			0000 0000 fdda ffdd dbad eddd ecde eeee eeee eedc dddd fdab fddf 0add 0000 0000 
+			0000 0000 dfa0 bddf bbaf eeee ebde eeed edee eedb beee bfab dfdd 00af 0000 0000 
+			0000 0000 fba0 bfbf eeaa ffee eebe eeed edee febe eeef baae ffbf 00ab 0000 0000 
+			0000 0000 fb00 afba db00 ffff eebe eede eede febe dfff a00b fabf 000b 0000 0000 
+			0000 0000 a000 0a0b b000 effe ecba eede eede eabc beff 0000 ab0a 0000 0000 0000 
+			0000 0000 0000 0000 b000 eeed bb0a eedd bdde ea0b bdee 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 db00 aeed 0000 edbb 0bbd a000 ddee 000b 0000 0000 0000 0000 
+			0000 0000 0000 0000 dfb0 bdff 0000 eb00 000b b000 dffd 00bf 0000 0000 0000 0000 
+			0000 0000 0000 0000 fffb dfdd 000a a111 0111 da00 fddf 0bff 0000 0000 0000 0000 
+			0000 0000 0000 0000 ffcc bfff 1111 1111 1111 b111 ffff 0ccf 0000 0000 0000 0000 
+			0000 0000 0000 b000 facf befa 1111 1111 1111 b111 fafe bfca 0000 0000 0000 0000 
+			0000 0000 0000 b000 afaf 1acf 1111 1111 1111 1111 afca bfaf 0000 0000 0000 0000 
+			0000 0000 0000 b000 affa 11af 1111 1111 1111 1111 afa1 baff 0000 0000 0000 0000 
+			0000 0000 0000 0000 cafa 111a 1111 1111 1111 1111 ca11 0afa 0000 0000 0000 0000 
+			0000 0000 0000 0000 00aa 0000 1111 1111 1111 0111 0000 0aa0 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
@@ -774,61 +774,61 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 000b 0000 0000 0000 0000 0b00 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 b000 00b5 0000 0000 0000 0000 b5b0 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 b000 00b2 0000 0000 cc0c 0000 b2b0 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 b000 0b99 0000 c000 cece 0000 b99b 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 b000 be99 0000 ec00 0cee b000 b99e 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 ff9b 000b eec0 00cc fb00 0b9f 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 fffb 000b ceec 0000 fb00 0bff 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 b000 ffff 00bf ceec 0000 ffb0 bfff 0000 0000 0000 0000 0000 
+			0000 0000 b000 0000 b000 ffff c0bf eeee 000c ffb0 bfff 0000 b000 0000 0000 0000 
+			0000 0000 fb00 000b b000 fffe c0bf eeee 00cd ffb0 beff 0000 fb00 000b 0000 0000 
+			0000 0000 fb00 000b b000 fffe cbff eeee c0ce fffb beff 0000 fb00 000b 0000 0000 
+			0000 0a00 ffb0 000b 0000 ffeb ffff eecc fcce ffff 0bef 0000 fb00 00bf 000a 0000 
+			0000 afa0 ffb0 000b 0000 ffb0 ffff ecfb fbfc ffff 00bf 0000 fb00 a0bf 00af 0000 
+			0000 afa0 ffc0 000b 0000 ffb0 cfff cfbf cfbf ffff 00bf 0000 fb00 a0cf 00af 0000 
+			0000 afa0 ffec 000b 0000 fffb dfff eebf dfbe ffff 0bff 0000 fb00 acef 00af 0000 
+			0000 ffea ffeb 000b 0000 fffb fdff ebff fffb fffd 0bff 0000 fb00 fbef 0aef 0000 
+			0000 ffea feeb 00cb 0000 ffeb fdef beff fffe ffed 0bef 0000 fbc0 fbee 0aef 0000 
+			0000 ffea feeb 0bfc 0000 eeb0 deee dfff dfff eeee 00be 0000 fcfb fbee 0aef 0000 
+			0000 fffa eeeb 0bfc 0000 db00 ffee effe feff deef 000b 0000 ecfb fbee 0aff 0000 
+			0000 fffa eeeb 0afc 0000 b000 f9db ffef ffef bbd9 0000 0000 ecfa fbee 0aff 0000 
+			0000 fffa eece 0aed 0000 b000 8bdf ffff 8fff bfdb 0000 0000 edea fece 0aff 0000 
+			0000 fffa eecf 0aee 000a bccc 8efd fff7 87ff bdfe 0ccc 0a00 eeea ffce 0aff 0000 
+			0000 fffa eecf aeee 00ae dddc 7fdb ffe4 74ef dbdf 0cdd aea0 eeee ffce 0aff 0000 
+			0000 fffa eedf ceee 00ae 5dc0 ffa5 ffd8 f8df 55af 00cd cea0 eeee ffde 0aff 0000 
+			0000 fffa edff deee 00ae 55dc feea fddf ffdd 5aee 0cd5 dea0 eeee fffd 0aff 0000 
+			0000 fffa edff eeee 00ae 65cc edb6 33f3 e3f3 66bd 0cc5 eea0 eeee fffd 0aff 0000 
+			0000 ffea efff eeee 00be 65c0 eb66 2235 e532 666b 00c5 eeb0 eeee ffff 0aef 0000 
+			0000 ffea ffff eeee 00be 5ddc cb66 2235 c532 566b 0cdd eeb0 feee ffff 0aef 0000 
+			0000 ffea ffff eeee 0bee 5dc0 cdbb 225c cc52 5bbd 00cd eeeb feee ffff 0aef 0000 
+			0000 ffb0 ffff eeef 0bee bbc0 eeed 55fc ecf5 bdee 00cb eeeb ffee ffff 00bf 0000 
+			0000 fea0 ffff eeef beee edbb eeee ccce eecc eeee bbbd eeee ffee ffff 00ae 0000 
+			0000 fea0 ffff eeff eeee ffff ccff eeed cdee fffc efff eeee fffe ffff 00ae 0000 
+			0000 fb00 ffff ffff ffee ffff fcef eede fede ffec ffff feef ffff ffff 000b 0000 
+			0000 ea00 ffff ffff ffff ffff ffce edff fffd fecf ffff ffff ffff efff 000a 0000 
+			0000 b000 ffff ffff ffff beff cddc efff cfff bcdd fffe ffff ffff bfff 0000 0000 
+			0000 a000 ffff fddd ffff dbbe fcdd efff ffff dddc febb ffff fddd afff 0000 0000 
+			0000 0000 dffb dfff bffd dddb cddd eefe cefe dddd bbdd ddff dfff 0bff 0000 0000 
+			0000 0000 fdea ffff bbdf eddd ecde eeee eeee eedc bddd ffdb ffff 0aed 0000 0000 
+			0000 0000 dda0 fddf badf eeee ebde eeed edee eedb beee ffda dfdd 00ad 0000 0000 
+			0000 0000 fa00 ddfd eafb ffee eebe eeed edee febe eeef dbfa fdfd 000a 0000 0000 
+			0000 0000 ba00 fbff daab ffff eebe eede eede febe dfff fbaa bffb 000a 0000 0000 
+			0000 0000 b000 fbaf b00a effe ecba eede eede eabc beff fa00 bfab 0000 0000 0000 
+			0000 0000 0000 a0ba b000 eeed bb0a eedd bdde ea0b bdee a000 0ab0 0000 0000 0000 
+			0000 0000 0000 0000 db00 aeed 0000 edbb 0bbd a000 ddee 000b 0000 0000 0000 0000 
+			0000 0000 0000 0000 dfb0 bdff 0000 eb00 000b b000 dffd 00bf 0000 0000 0000 0000 
+			0000 0000 0000 0000 fffb dfdd 000a a111 0111 da00 fddf 0bff 0000 0000 0000 0000 
+			0000 0000 0000 0000 ffcc bfff 1111 1111 1111 b111 ffff 0ccf 0000 0000 0000 0000 
+			0000 0000 0000 b000 facf befa 1111 1111 1111 b111 fafe bfca 0000 0000 0000 0000 
+			0000 0000 0000 b000 afaf 1acf 1111 1111 1111 1111 afca bfaf 0000 0000 0000 0000 
+			0000 0000 0000 b000 affa 11af 1111 1111 1111 1111 afa1 baff 0000 0000 0000 0000 
+			0000 0000 0000 0000 cafa 111a 1111 1111 1111 1111 ca11 0afa 0000 0000 0000 0000 
+			0000 0000 0000 0000 00aa 0000 1111 1111 1111 0111 0000 0aa0 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
@@ -910,61 +910,61 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 b000 0000 0000 0000 cc0c 0000 b000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 5b00 000b 0000 c000 cece 0000 5b00 000b 0000 0000 0000 0000 
-			0000 0000 0000 0000 2b00 000b 0000 ec00 0cee 0000 2b00 000b 0000 0000 0000 0000 
-			0000 0000 0000 0000 9b00 00b9 0000 eec0 00cc 0000 99b0 000b 0000 0000 0000 0000 
-			0000 0000 0000 0000 9b00 0be9 0000 ceec 0000 0000 99eb 000b 0000 0000 0000 0000 
-			0000 0000 0000 0000 b000 bff9 0000 ceec 0000 b000 b9ff 0000 0000 0000 0000 0000 
-			0000 0000 00b0 0000 b000 bfff c000 ceee 0000 b000 bfff 0000 0000 00b0 0000 0000 
-			0000 0000 0bfb 0000 fb00 ffff c00b eeee 000c fb00 ffff 000b 0000 0bfb 0000 0000 
-			0000 0000 0bfb 0000 fb00 ffff c00b eeee 00cd fb00 ffff 000b 0000 0bfb 0000 0000 
-			0000 b00a 0bff 0000 eb00 ffff c0be eeee 00ce feb0 efff 000b 0000 bffb 0a00 0000 
-			a000 b0af 0bff 0000 eb00 ffff cbff eeed ccee fffb efff 000b 0000 bffb afa0 0000 
-			a000 c0af 0bff 0000 b000 fffb ffff eecc fcce ffff bbff 0000 0000 cffb afa0 0000 
-			a000 ecaf 0bff 0000 0000 ffb0 ffff ecfb fbfc ffff 00bf 0000 0000 effb afac 0000 
-			ea00 ebff 0bff 0000 0000 ffb0 cfff cfbf cfbf ffff 00bf 0000 0000 effb effb 000a 
-			ea00 ebff 0bfe 000c 0000 fffb dfff eebf dfbe ffff 0bff 0000 0c00 eefb effb 000a 
-			ea00 ebff ccfe 00bf 0000 fffb fdff ebff fffb fffd 0bff 0000 cfb0 eefc effb 000a 
-			fa00 ebff ecee 00bf 0000 ffeb fdef beff fffe ffed 0bef 0000 efb0 eeec fffb 000a 
-			fa00 ebff ecee 00af 0000 eeb0 deee dfff dfff eeee 00be 0000 efa0 eeec fffb 000a 
-			fa00 ceff edee 00ae 0000 db00 ffee effe feff deef 000b 0000 eea0 ceed fffe 000a 
-			fa00 cfff deee a0ae 0000 bc00 f9db ffef ffef bbd9 000c a000 dea0 ceee ffff 000a 
-			fa00 cfff deee eaee 000a bccc 8bdf ffff 8fff bfdb 0ccc ea00 deea ceee ffff 000a 
-			fa00 dfff eeee ecee 000a bddc 8efd fff7 87ff bdfe 0cdd ea00 eeec deee ffff 000a 
-			ea00 dfff eeee edee 000a 3dc0 7fdb ffe4 74ef 3bdf 00cd ea00 eeed deee efff 000a 
-			ea00 ffff eeed eeee 000a 33dc ffa2 ffd8 f8df 32af 0cd3 ea00 eeee fdee efff 000a 
-			b000 ffff eeed eeee 00be 23cc feea fddf ffdd 2aee 0cc3 eeb0 eeee fdee bfff 0000 
-			b000 ffff eeef eeee 00be 23c0 edb2 33f3 e3f3 22bd 00c3 eeb0 eeee ffee bfff 0000 
-			a000 fffe eeff eeee 0bee 3ddc ebb2 2235 e532 32bb 0cdd eeeb eeee fffe aeff 0000 
-			a000 fffe efff eeee 0bee bbc0 cddb 2235 c532 bbdd 00cb eeeb eeee ffff aeff 0000 
-			0000 fffb ffff eeee beee edbb ceee 225c cc52 eeee bbbd eeee feee ffff 0bff 0000 
-			0000 fffa ffff eeef eeee fffe eeff 55fc ecf5 fffe eeff eeee ffee ffff 0aff 0000 
-			0000 ffea ffff efff ffee ffff ccff cccd cdcc fffc ffff eeef ffff ffff 0aef 0000 
-			0000 ffb0 ffff ffff ffff ffff fcef eede fede ffec ffff ffff ffff ffff 00bf 0000 
-			0000 fea0 ffff ffff ffff efff ffcb edff fffd ebcf ffff ffff ffff ffff 00ae 0000 
-			0000 fb00 dfff ffdd ffff bbef cddd efff cfff bddd ffeb ffff dddf ffff 000b 0000 
-			0000 eb00 fdff ddff ffff ddbb fcdd efff ffff dddc fbbd dfff fffd effd 000b 0000 
-			0000 b000 ffde ffff bffd dddb cddd eefe cefe dddd bbdd fdff ffff bedf 0000 0000 
-			0000 0000 fdda ffdd dbad eddd ecde eeee eeee eedc dddd fdab fddf 0add 0000 0000 
-			0000 0000 dfa0 bddf bbaf eeee ebde eeed edee eedb beee bfab dfdd 00af 0000 0000 
-			0000 0000 fba0 bfbf eeaa ffee eebe eeed edee febe eeef baae ffbf 00ab 0000 0000 
-			0000 0000 fb00 afba db00 ffff eebe eede eede febe dfff a00b fabf 000b 0000 0000 
-			0000 0000 a000 0a0b b000 effe ecba eede eede eabc beff 0000 ab0a 0000 0000 0000 
-			0000 0000 0000 0000 b000 eeed bb0a eedd bdde ea0b bdee 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 db00 aeed 0000 edbb 0bbd a000 ddee 000b 0000 0000 0000 0000 
-			0000 0000 0000 0000 dfb0 bdff 0000 eb00 000b b000 dffd 00bf 0000 0000 0000 0000 
-			0000 0000 0000 0000 fffb dfdd 000a a111 0111 da00 fddf 0bff 0000 0000 0000 0000 
-			0000 0000 0000 0000 ffcc bfff 1111 1111 1111 b111 ffff 0ccf 0000 0000 0000 0000 
-			0000 0000 0000 b000 facf befa 1111 1111 1111 b111 fafe bfca 0000 0000 0000 0000 
-			0000 0000 0000 b000 afaf 1acf 1111 1111 1111 1111 afca bfaf 0000 0000 0000 0000 
-			0000 0000 0000 b000 affa 11af 1111 1111 1111 1111 afa1 baff 0000 0000 0000 0000 
-			0000 0000 0000 0000 cafa 111a 1111 1111 1111 1111 ca11 0afa 0000 0000 0000 0000 
-			0000 0000 0000 0000 00aa 0000 1111 1111 1111 0111 0000 0aa0 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
@@ -978,61 +978,61 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 7000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0070 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0007 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 000b 0000 0000 0000 0000 0b00 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 b000 00b5 0000 0000 0000 0000 b5b0 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 b000 00b2 0000 0000 cc0c 0000 b2b0 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 b000 0b99 0000 c000 cece 0000 b99b 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 b000 be99 0000 ec00 0cee b000 b99e 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 ff9b 000b eec0 00cc fb00 0b9f 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 fffb 000b ceec 0000 fb00 0bff 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 b000 ffff 00bf ceec 0000 ffb0 bfff 0000 0000 0000 0000 0000 
-			0000 0000 b000 0000 b000 ffff c0bf eeee 000c ffb0 bfff 0000 b000 0000 0000 0000 
-			0000 0000 fb00 000b b000 fffe c0bf eeee 00cd ffb0 beff 0000 fb00 000b 0000 0000 
-			0000 0000 fb00 000b b000 fffe cbff eeee c0ce fffb beff 0000 fb00 000b 0000 0000 
-			0000 0a00 ffb0 000b 0000 ffeb ffff eecc fcce ffff 0bef 0000 fb00 00bf 000a 0000 
-			0000 afa0 ffb0 000b 0000 ffb0 ffff ecfb fbfc ffff 00bf 0000 fb00 a0bf 00af 0000 
-			0000 afa0 ffc0 000b 0000 ffb0 cfff cfbf cfbf ffff 00bf 0000 fb00 a0cf 00af 0000 
-			0000 afa0 ffec 000b 0000 fffb dfff eebf dfbe ffff 0bff 0000 fb00 acef 00af 0000 
-			0000 ffea ffeb 000b 0000 fffb fdff ebff fffb fffd 0bff 0000 fb00 fbef 0aef 0000 
-			0000 ffea feeb 00cb 0000 ffeb fdef beff fffe ffed 0bef 0000 fbc0 fbee 0aef 0000 
-			0000 ffea feeb 0bfc 0000 eeb0 deee dfff dfff eeee 00be 0000 fcfb fbee 0aef 0000 
-			0000 fffa eeeb 0bfc 0000 db00 ffee effe feff deef 000b 0000 ecfb fbee 0aff 0000 
-			0000 fffa eeeb 0afc 0000 b000 f9db ffef ffef bbd9 0000 0000 ecfa fbee 0aff 0000 
-			0000 fffa eece 0aed 0000 b000 8bdf ffff 8fff bfdb 0000 0000 edea fece 0aff 0000 
-			0000 fffa eecf 0aee 000a bccc 8efd fff7 87ff bdfe 0ccc 0a00 eeea ffce 0aff 0000 
-			0000 fffa eecf aeee 00ae dddc 7fdb ffe4 74ef dbdf 0cdd aea0 eeee ffce 0aff 0000 
-			0000 fffa eedf ceee 00ae 5dc0 ffa5 ffd8 f8df 55af 00cd cea0 eeee ffde 0aff 0000 
-			0000 fffa edff deee 00ae 55dc feea fddf ffdd 5aee 0cd5 dea0 eeee fffd 0aff 0000 
-			0000 fffa edff eeee 00ae 65cc edb6 33f3 e3f3 66bd 0cc5 eea0 eeee fffd 0aff 0000 
-			0000 ffea efff eeee 00be 65c0 eb66 2235 e532 666b 00c5 eeb0 eeee ffff 0aef 0000 
-			0000 ffea ffff eeee 00be 5ddc cb66 2235 c532 566b 0cdd eeb0 feee ffff 0aef 0000 
-			0000 ffea ffff eeee 0bee 5dc0 cdbb 225c cc52 5bbd 00cd eeeb feee ffff 0aef 0000 
-			0000 ffb0 ffff eeef 0bee bbc0 eeed 55fc ecf5 bdee 00cb eeeb ffee ffff 00bf 0000 
-			0000 fea0 ffff eeef beee edbb eeee ccce eecc eeee bbbd eeee ffee ffff 00ae 0000 
-			0000 fea0 ffff eeff eeee ffff ccff eeed cdee fffc efff eeee fffe ffff 00ae 0000 
-			0000 fb00 ffff ffff ffee ffff fcef eede fede ffec ffff feef ffff ffff 000b 0000 
-			0000 ea00 ffff ffff ffff ffff ffce edff fffd fecf ffff ffff ffff efff 000a 0000 
-			0000 b000 ffff ffff ffff beff cddc efff cfff bcdd fffe ffff ffff bfff 0000 0000 
-			0000 a000 ffff fddd ffff dbbe fcdd efff ffff dddc febb ffff fddd afff 0000 0000 
-			0000 0000 dffb dfff bffd dddb cddd eefe cefe dddd bbdd ddff dfff 0bff 0000 0000 
-			0000 0000 fdea ffff bbdf eddd ecde eeee eeee eedc bddd ffdb ffff 0aed 0000 0000 
-			0000 0000 dda0 fddf badf eeee ebde eeed edee eedb beee ffda dfdd 00ad 0000 0000 
-			0000 0000 fa00 ddfd eafb ffee eebe eeed edee febe eeef dbfa fdfd 000a 0000 0000 
-			0000 0000 ba00 fbff daab ffff eebe eede eede febe dfff fbaa bffb 000a 0000 0000 
-			0000 0000 b000 fbaf b00a effe ecba eede eede eabc beff fa00 bfab 0000 0000 0000 
-			0000 0000 0000 a0ba b000 eeed bb0a eedd bdde ea0b bdee a000 0ab0 0000 0000 0000 
-			0000 0000 0000 0000 db00 aeed 0000 edbb 0bbd a000 ddee 000b 0000 0000 0000 0000 
-			0000 0000 0000 0000 dfb0 bdff 0000 eb00 000b b000 dffd 00bf 0000 0000 0000 0000 
-			0000 0000 0000 0000 fffb dfdd 000a a111 0111 da00 fddf 0bff 0000 0000 0000 0000 
-			0000 0000 0000 0000 ffcc bfff 1111 1111 1111 b111 ffff 0ccf 0000 0000 0000 0000 
-			0000 0000 0000 b000 facf befa 1111 1111 1111 b111 fafe bfca 0000 0000 0000 0000 
-			0000 0000 0000 b000 afaf 1acf 1111 1111 1111 1111 afca bfaf 0000 0000 0000 0000 
-			0000 0000 0000 b000 affa 11af 1111 1111 1111 1111 afa1 baff 0000 0000 0000 0000 
-			0000 0000 0000 0000 cafa 111a 1111 1111 1111 1111 ca11 0afa 0000 0000 0000 0000 
-			0000 0000 0000 0000 00aa 0000 1111 1111 1111 0111 0000 0aa0 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
@@ -1040,7 +1040,7 @@
 
 <tex_palette_array size='1'>
 	<tex_palette name='t8x8x15' color_size='16' index='0'>
-		2a91 35ad 161f 24f8 7fe0 10fd 16bf 3da3 
+		2a91 294a 161f 24f8 7fe0 10fd 16bf 3da3 
 		56a2 571d 0842 2d08 49ad 5e73 6f39 7fbd 
 	</tex_palette>
 </tex_palette_array>

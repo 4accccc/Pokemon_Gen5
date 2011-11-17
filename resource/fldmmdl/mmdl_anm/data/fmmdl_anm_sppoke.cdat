@@ -39,10 +39,10 @@ static const GFL_BBDACT_ANM DATA_BlActSpPoke_StopU[] = {
 static const GFL_BBDACT_ANM DATA_BlActSpPoke_Bark[] = {
   {  8, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<プラグ無しキュレムのみ無し(SPOPOKE03_KU)
   {  9, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
-  { 13, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
-  { 14, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
-  { 13, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<4コマ目
-  { 14, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  { 10, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  { 11, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
+  { 10, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<4コマ目
+  { 11, ANMFLIP_OFF, ANMFLIP_OFF,  2 },  ///<
   { GFL_BBDACT_ANMCOM_JMP,0,0, 4 },
 };
 
