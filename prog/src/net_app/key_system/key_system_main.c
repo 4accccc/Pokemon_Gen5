@@ -1778,7 +1778,7 @@ static void KeySys_Display_CreateMainMenu( void *p_wk_adrs, HEAPID heapID )
 
   //‰º‰æ–Êà–¾•¶
   KEYSYS_INFO_Create( p_wk, heapID );
-  KEYSYS_TEXT_Print( p_wk->p_info, p_wk->p_msg, KEYSYS_STR_65, KEYSYS_TEXT_TYPE_QUE );
+  KEYSYS_TEXT_Print( p_wk->p_info, p_wk->p_msg, KEYSYS_STR_65+KEYSYS_MENU_GetSelect( p_wk->p_menu ), KEYSYS_TEXT_TYPE_QUE );
 
   KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
 }

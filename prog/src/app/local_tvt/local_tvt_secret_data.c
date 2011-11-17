@@ -33,7 +33,7 @@ static const struct
 {
   { LOCAL_TVT_SECRET_PHASE_1_START, //フェース範囲開始
     LOCAL_TVT_SECRET_PHASE_1_END,   //フェーズ範囲終了
-    LTVT_SECREAT_TALK_FORCE_TALK,   //会話プログラム処理
+    LTVT_SECREAT_TALK_QANSWER,   //会話プログラム処理
     LTVT_SECREAT_FACE_SOUND,        //顔
     PERSON_STATE_SECRET_DATE_NONE,         //デートにさそうか
     FALSE,                          //プレイヤーがかけられるか

@@ -508,6 +508,28 @@ extern u16 ZUKANSAVE_GetLocalSeeCompCount( const ZUKAN_SAVEDATA * zw, HEAPID hea
 extern BOOL ZUKANSAVE_GetTextVersionUpFlag( const ZUKAN_SAVEDATA * zw, u16 monsno, u32 country_code );
 
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		図鑑評価データ取得
+ *          ※通常、評価の流れでは、これで取得できるデータ以外に
+ *          判別しなければならないものとして、
+ *          前振りメッセージ「どれどれ、イッシュ地方で捕まえたポケモンは～」と
+ *          プレゼントメッセージもあります。
+ *
+ * @param		zw						図鑑セーブデータ
+ * @param		monsno				モード  
+ *                          SCR_ZUKAN_HYOUKA_MODE_LOCAL_GET
+ *                          SCR_ZUKAN_HYOUKA_MODE_LOCAL_SEE
+ *                          SCR_ZUKAN_HYOUKA_MODE_GLOBAL
+ * @param		heap_id         テンポラリ用ヒープID
+ * @param		p_msg           評価メッセージ
+ * @param		p_count         モード別の評価数
+ * @param		p_me            評価ME
+ *
+ */
+//--------------------------------------------------------------------------------------------
+extern void ZUKANSAVE_GetHyouka( const ZUKAN_SAVEDATA * zw, u16 mode, HEAPID heap_id, u16 *p_msg, u16 *p_count, u16 *p_me );
+
 
 //============================================================================================
 //  デバッグ用
@@ -517,4 +539,3 @@ extern void ZUKANSAVE_DebugDataClear( ZUKAN_SAVEDATA * zw, u16 start, u16 end );
 extern void ZUKANSAVE_DebugDataSetSee( ZUKAN_SAVEDATA * zw, u16 start, u16 end, HEAPID heapID );
 extern void ZUKANSAVE_DebugDataSetGet( ZUKAN_SAVEDATA * zw, u16 start, u16 end, HEAPID heapID );
 #endif	// PM_DEBUG
-

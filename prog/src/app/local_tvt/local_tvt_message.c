@@ -19,6 +19,7 @@
 #include "app/app_keycursor.h"
 #include "app/app_printsys_common.h"
 #include "field/zonedata.h"
+#include "sound/pm_sndsys.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -46,8 +47,6 @@
  *					定数宣言
 */
 //=============================================================================
-#define LTVT_FRAME_MAIN_CGX (1)
-#define LTVT_FRAME_SUB_CGX  (32*10)
 #define LTVT_MSG_PRINT_MAX  (0x20)
 
 //=============================================================================
@@ -78,6 +77,10 @@ struct _LOCAL_TVT_MESSAGE
   s16             print_x;
   s16             print_y;
   LOCAL_TVT_MESSAGE_POS print_pos;
+
+  void (*MessageMain)(LOCAL_TVT_MESSAGE *p_wk);
+
+  BOOL  is_manual_wait_cursor;
 };
 
 //=============================================================================
@@ -86,6 +89,9 @@ struct _LOCAL_TVT_MESSAGE
 */
 //=============================================================================
 static void Local_Tvt_Message_CalcPos( const LOCAL_TVT_MESSAGE *cp_wk, GFL_BMPWIN *p_bmpwin, const STRBUF *cp_strbuf, s16 *p_x, s16 *p_y );
+
+static void Local_Tvt_Message_StreamMain( LOCAL_TVT_MESSAGE *p_wk );
+static void Local_Tvt_Message_StreamWaitMain( LOCAL_TVT_MESSAGE *p_wk );
 
 //----------------------------------------------------------------------------
 /**
@@ -194,12 +200,7 @@ void LOCAL_TVT_MESSAGE_Main( LOCAL_TVT_MESSAGE *p_wk )
   GFL_TCBL_Main( p_wk->p_tcblsys );
   if( p_wk->p_stream != NULL && p_wk->p_msgwin != NULL  )
   {
-    APP_KEYCURSOR_Main( p_wk->p_cursor , p_wk->p_stream , p_wk->p_msgwin );
-    if( APP_PRINTSYS_COMMON_PrintStreamFunc( &p_wk->print_wk, p_wk->p_stream ) == TRUE )
-    {
-      PRINTSYS_PrintStreamDelete( p_wk->p_stream );
-      p_wk->p_stream = NULL;
-    }
+    p_wk->MessageMain( p_wk );
   }
 
   PRINTSYS_QUE_Main( p_wk->p_que );
@@ -641,7 +642,7 @@ void LOCAL_TVT_MSGWIN_CloseWindow( LOCAL_TVT_MESSAGE *p_wk )
  *	@param	u16 msgId               メッセージ番号
  */
 //-----------------------------------------------------------------------------
-void LOCAL_TVT_MSGWIN_DispMessage( LOCAL_TVT_MESSAGE *p_wk, const GFL_MSGDATA *cp_msg, const u16 msgId )
+void LOCAL_TVT_MSGWIN_DispMessage( LOCAL_TVT_MESSAGE *p_wk, const GFL_MSGDATA *cp_msg, const u16 msgId, LOCAL_TVT_MESSAGE_TYPE type )
 {
   if( p_wk->p_stream != NULL )
   {
@@ -663,6 +664,19 @@ void LOCAL_TVT_MSGWIN_DispMessage( LOCAL_TVT_MESSAGE *p_wk, const GFL_MSGDATA *c
     
     p_wk->p_stream = PRINTSYS_PrintStream( p_wk->p_msgwin , 0,0, p_wk->p_str ,p_wk->p_font,
                         MSGSPEED_GetWait() , p_wk->p_tcblsys , 2 , p_wk->heapID , 0x0f );
+
+    switch( type )
+    {
+    default:
+      GF_ASSERT(0);
+    case LOCAL_TVT_MESSAGE_TYPE_NORMAL:
+      p_wk->MessageMain = Local_Tvt_Message_StreamMain;
+      break;
+    case LOCAL_TVT_MESSAGE_TYPE_WAIT:
+      p_wk->MessageMain = Local_Tvt_Message_StreamWaitMain;
+      p_wk->is_manual_wait_cursor = FALSE;
+      break;
+    }
   }
 }
 //----------------------------------------------------------------------------
@@ -694,6 +708,19 @@ BOOL LOCAL_TVT_MSGWIN_IsFinish( const LOCAL_TVT_MESSAGE *cp_wk )
 BOOL LOCAL_TVT_MSGWIN_IsPause( const LOCAL_TVT_MESSAGE *cp_wk )
 {
   return PRINTSYS_PrintStreamGetState( cp_wk->p_stream ) != PRINTSTREAM_STATE_RUNNING;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  文字列終端まで表示したかチェック
+ *
+ *	@param	const LOCAL_TVT_MESSAGE *cp_wk  ワーク
+ *
+ *	@return TRUEで文字列終端まで終了  FALSEまだ
+ */
+//-----------------------------------------------------------------------------
+BOOL LOCAL_TVT_MSGWIN_IsDone( const LOCAL_TVT_MESSAGE *cp_wk )
+{
+  return PRINTSYS_PrintStreamGetState( cp_wk->p_stream ) == PRINTSTREAM_STATE_DONE;
 }
 
 //----------------------------------------------------------------------------
@@ -728,4 +755,51 @@ static void Local_Tvt_Message_CalcPos( const LOCAL_TVT_MESSAGE *cp_wk, GFL_BMPWI
   default:
     GF_ASSERT(0);
   }
+}
+
+
+static void Local_Tvt_Message_StreamMain( LOCAL_TVT_MESSAGE *p_wk )
+{
+  APP_KEYCURSOR_Main( p_wk->p_cursor , p_wk->p_stream , p_wk->p_msgwin );
+  if( APP_PRINTSYS_COMMON_PrintStreamFunc( &p_wk->print_wk, p_wk->p_stream ) == TRUE )
+  {
+    PRINTSYS_PrintStreamDelete( p_wk->p_stream );
+    p_wk->p_stream = NULL;
+  }
+}
+static void Local_Tvt_Message_StreamWaitMain( LOCAL_TVT_MESSAGE *p_wk )
+{
+  APP_KEYCURSOR_Main( p_wk->p_cursor , p_wk->p_stream , p_wk->p_msgwin );
+
+  if( LOCAL_TVT_MSGWIN_IsDone(p_wk) )
+  {
+    if( !p_wk->is_manual_wait_cursor )
+    {
+      return;
+    }
+    else
+    {
+      if( !APP_PRINTSYS_COMMON_GetTrg(APP_PRINTSYS_COMMON_TYPE_BOTH) )
+      {
+        return;
+      }
+      else
+      {
+        PMSND_PlaySE( APP_PRINTSYS_COMMON_SE_TRG );
+      }
+    }
+  }
+
+  if( APP_PRINTSYS_COMMON_PrintStreamFunc( &p_wk->print_wk, p_wk->p_stream ) == TRUE )
+  {
+    PRINTSYS_PrintStreamDelete( p_wk->p_stream );
+    p_wk->p_stream = NULL;
+  }
+}
+
+
+void LOCAL_TVT_MSGWIN_SetWaitIcon( LOCAL_TVT_MESSAGE *p_wk )
+{
+  APP_KEYCURSOR_WriteReq( p_wk->p_cursor );
+  p_wk->is_manual_wait_cursor = TRUE;
 }

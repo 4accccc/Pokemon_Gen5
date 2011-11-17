@@ -70,4 +70,3 @@ extern VMCMD_RESULT EvCmdGetPartyPokeGetDate( VMHANDLE* core, void* wk );
 
 extern VMCMD_RESULT EvCmdGetPartyPokeParameter( VMHANDLE* core, void* wk );
 extern VMCMD_RESULT EvCmdSetPartyPokeParameter( VMHANDLE* core, void* wk );
-

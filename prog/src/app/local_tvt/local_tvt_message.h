@@ -28,6 +28,9 @@ typedef enum
 #define LOCAL_TVT_MSG_COLOR_RED     (PRINTSYS_MACRO_LSB(5,6,0))
 #define LOCAL_TVT_MSG_COLOR_BLUE    (PRINTSYS_MACRO_LSB(3,4,0))
 
+#define LTVT_FRAME_MAIN_CGX (1)
+#define LTVT_FRAME_SUB_CGX  (32*10)
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -82,9 +85,20 @@ extern void LOCAL_TVT_MESSAGE_RegisterQuestionnaire( LOCAL_TVT_MESSAGE *p_wk, u1
 //メッセージウィンドウ処理
 extern void LOCAL_TVT_MSGWIN_OpenWindow( LOCAL_TVT_MESSAGE *p_wk, LOCAL_TVT_MSG_POS pos );
 extern void LOCAL_TVT_MSGWIN_CloseWindow( LOCAL_TVT_MESSAGE *p_wk );
-extern void LOCAL_TVT_MSGWIN_DispMessage( LOCAL_TVT_MESSAGE *p_wk, const GFL_MSGDATA *cp_msg, const u16 msgId );
+
+
+typedef enum
+{
+  LOCAL_TVT_MESSAGE_TYPE_NORMAL,
+  LOCAL_TVT_MESSAGE_TYPE_WAIT,
+}LOCAL_TVT_MESSAGE_TYPE;
+extern void LOCAL_TVT_MSGWIN_DispMessage( LOCAL_TVT_MESSAGE *p_wk, const GFL_MSGDATA *cp_msg, const u16 msgId, LOCAL_TVT_MESSAGE_TYPE type );
+
 extern BOOL LOCAL_TVT_MSGWIN_IsFinish( const LOCAL_TVT_MESSAGE *cp_wk );
 extern BOOL LOCAL_TVT_MSGWIN_IsPause( const LOCAL_TVT_MESSAGE *cp_wk );
+extern BOOL LOCAL_TVT_MSGWIN_IsDone( const LOCAL_TVT_MESSAGE *cp_wk );
+
+extern void LOCAL_TVT_MSGWIN_SetWaitIcon( LOCAL_TVT_MESSAGE *p_wk );
 
 //便利関数
 static inline void LOCAL_TVT_MESSAGE_PrintMsgSys( LOCAL_TVT_MESSAGE *p_wk, GFL_BMPWIN *p_bmpwin, const u16 msgId )

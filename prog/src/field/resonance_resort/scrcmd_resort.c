@@ -1106,11 +1106,13 @@ VMCMD_RESULT EvCmdResortHatch( VMHANDLE *p_core, void *p_wk_adrs )
     u16 listID = RESORT_BINARY_SERVICE_DATA_GetData( cp_service, RESORT_BINARY_SERVICE_PARAM_PARAM_1 );
     u16 service = RESORT_BINARY_SERVICE_DATA_GetData( cp_service, RESORT_BINARY_SERVICE_PARAM_SERVICE_ID );
 
+
     u32 rnd_max = RESORT_BINARY_PRESENT_GetData(cp_present, listID, RESORT_BINARY_PRESENT_PARAM_DENOMINATOR);
 
     u32 rnd = RESORT_ABSTRUCT_DATA_GetRnd( p_abstruct, RESORT_RND_ID_SHOP_LIST_00+idx, rnd_max );
     u16 index = RESORT_BINARY_PRESENT_DrawLotsIndex( cp_present, listID, rnd );
 
+    OS_TPrintf( "サービス%d リスト%d\n", service, listID );
     GF_ASSERT( listID < RESORT_BINARY_GetMax(cp_present) );
     GF_ASSERT( service == RESORT_SERVICE_TYPE_HATCH );
 
@@ -1118,6 +1120,7 @@ VMCMD_RESULT EvCmdResortHatch( VMHANDLE *p_core, void *p_wk_adrs )
     {
       rate = RESORT_BINARY_PRESENT_GetData(cp_present, listID, RESORT_BINARY_PRESENT_PARAM_ITEM_00+index*2);
     }
+    OS_TPrintf( "選択セル%d わりあい%d\n", index, rate );
   }
 
 
@@ -1148,9 +1151,11 @@ VMCMD_RESULT EvCmdResortHatch( VMHANDLE *p_core, void *p_wk_adrs )
       }
 
       PP_Put(p_pp, ID_PARA_friend, now );
+      *p_ret_wk = now;
     }
     else
     {
+      *p_ret_wk = 200;
       GF_ASSERT(0);
     }
   }

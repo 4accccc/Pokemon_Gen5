@@ -1528,6 +1528,183 @@ BOOL ZUKANSAVE_GetTextVersionUpFlag( const ZUKAN_SAVEDATA * zw, u16 monsno, u32 
 }
 
 
+//======================================================================
+//
+//    図鑑評価系
+//
+//======================================================================
+#include "msg/script/msg_hyouka_scr.h"
+#include "sound/swan_sound_data.sadl"
+#include "field/script_def.h"
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+typedef struct{
+  u16 range;
+  u16 msg_id;
+} ZUKAN_HYOUKA_TABLE;
+
+static const ZUKAN_HYOUKA_TABLE LocalSeeTable[] = {
+  {  14, msg_hyouka_i00 },
+  {  29, msg_hyouka_i01 },
+  {  44, msg_hyouka_i02 },
+  {  64, msg_hyouka_i03 },
+  {  84, msg_hyouka_i04 },
+  { 104, msg_hyouka_i05 },
+  { 124, msg_hyouka_i06 },
+  { 144, msg_hyouka_i07 },
+  { 164, msg_hyouka_i08 },
+  { 184, msg_hyouka_i09 },
+  { 204, msg_hyouka_i10 },
+  { 224, msg_hyouka_i11 },
+  { 239, msg_hyouka_i12 },
+  { 249, msg_hyouka_i13 },
+  {   0, msg_hyouka_i13 },  //Sentinel
+};
+
+static const ZUKAN_HYOUKA_TABLE LocalGetTable[] = {
+  {  14, msg_hyouka_i15 },
+  {  29, msg_hyouka_i16 },
+  {  44, msg_hyouka_i17 },
+  {  64, msg_hyouka_i18 },
+  {  84, msg_hyouka_i19 },
+  { 104, msg_hyouka_i20 },
+  { 124, msg_hyouka_i21 },
+  { 144, msg_hyouka_i22 },
+  { 164, msg_hyouka_i23 },
+  { 184, msg_hyouka_i24 },
+  { 204, msg_hyouka_i25 },
+  { 224, msg_hyouka_i26 },
+  { 239, msg_hyouka_i27 },
+  { 249, msg_hyouka_i28 },
+  {   0, msg_hyouka_i28 },  //Sentinel
+};
+
+static const ZUKAN_HYOUKA_TABLE GlobalGetTable[] = {
+  {  49, msg_hyouka_z01 },
+  { 104, msg_hyouka_z02 },
+  { 164, msg_hyouka_z03 },
+  { 229, msg_hyouka_z04 },
+  { 289, msg_hyouka_z05 },
+  { 344, msg_hyouka_z06 },
+  { 394, msg_hyouka_z07 },
+  { 444, msg_hyouka_z08 },
+  { 494, msg_hyouka_z09 },
+  { 529, msg_hyouka_z10 },
+  { 559, msg_hyouka_z11 },
+  { 579, msg_hyouka_z12 },
+  { 599, msg_hyouka_z13 },
+  { 614, msg_hyouka_z14 },
+  { 629, msg_hyouka_z15 },
+  { 633, msg_hyouka_z16 },
+  {   0, msg_hyouka_z16 },  //Sentinel
+};
+
+static const ZUKAN_HYOUKA_TABLE LocalMeGetTable[] = {
+  {  39, SEQ_ME_HYOUKA1 },
+  {  99, SEQ_ME_HYOUKA2 },
+  { 149, SEQ_ME_HYOUKA3 },
+  { 199, SEQ_ME_HYOUKA4 },
+  { 249, SEQ_ME_HYOUKA5 },
+  {   0, SEQ_ME_HYOUKA6 },  //Sentinel
+};
+
+static const ZUKAN_HYOUKA_TABLE GlobalMeGetTable[] = {
+  { 159, SEQ_ME_HYOUKA1 },
+  { 349, SEQ_ME_HYOUKA2 },
+  { 449, SEQ_ME_HYOUKA3 },
+  { 549, SEQ_ME_HYOUKA4 },
+  { 633, SEQ_ME_HYOUKA5 },
+  {   0, SEQ_ME_HYOUKA6 },  //Sentinel
+};
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static get_msgid( const ZUKAN_HYOUKA_TABLE * tbl, int count )
+{
+  int i;
+  for ( i = 0; ; i ++ )
+  {
+    if ( tbl[i].range == 0 )
+    { //番兵：万が一テーブルにない値が来た場合
+      return tbl[i].msg_id;
+    }
+    if ( count <= tbl[i].range )
+    { //範囲以下の場合、その対応メッセージIDを返す
+      return tbl[i].msg_id;
+    }
+  }
+  GF_ASSERT( 0 );
+  return tbl[0].msg_id;  //念のため
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  図鑑評価用メッセージを取得
+ *	        外部でも使うためEvCmdGetZukanHyouka から切り出した
+ *
+ *	@param	ZUKAN_SAVEDATA * zw 図鑑セーブデータ
+ *	@param	mode    モード
+ *	@param	heapID  ヒープID
+ */
+//-----------------------------------------------------------------------------
+void ZUKANSAVE_GetHyouka( const ZUKAN_SAVEDATA * zw, u16 mode, HEAPID heap_id, u16 *p_msg, u16 *p_count, u16 *p_me )
+{
+  BOOL zenkoku_flag = ZUKANSAVE_GetZenkokuZukanFlag( zw );
+
+  *p_msg = msg_hyouka_i01; //念のため
+  *p_count = 0;              //念のため
+  *p_me   = SEQ_ME_HYOUKA1; //念のため
+  switch ( mode )
+  {
+  case SCR_ZUKAN_HYOUKA_MODE_LOCAL_GET: //博士（娘）捕まえた
+    {
+      //ちほうずかん（全国モード後）は「捕まえた数」
+      *p_count = ZUKANSAVE_GetLocalPokeGetCount( zw, heap_id );
+      if ( ZUKANSAVE_CheckLocalGetComp( zw, heap_id ) == TRUE ) {
+        *p_msg = msg_hyouka_i29;
+        *p_me = SEQ_ME_HYOUKA6;
+      } else {
+        *p_msg = get_msgid( LocalGetTable, *p_count );
+        *p_me = get_msgid( LocalMeGetTable, *p_count );
+      }
+    }
+    break;
+
+  case SCR_ZUKAN_HYOUKA_MODE_LOCAL_SEE: //博士（娘）見た
+    {
+      //ちほうずかん（全国モード前）は「見た数」
+      *p_count = ZUKANSAVE_GetLocalPokeSeeCount( zw, heap_id );
+      if ( ZUKANSAVE_CheckLocalSeeComp( zw, heap_id ) == TRUE ) {
+        *p_msg = msg_hyouka_i14;
+        *p_me = SEQ_ME_HYOUKA6;
+      } else {
+        *p_msg = get_msgid( LocalSeeTable, *p_count );
+        *p_me = get_msgid( LocalMeGetTable, *p_count ); //MEは見たと捕まえた同じ
+      }
+    }
+    break;
+
+  case SCR_ZUKAN_HYOUKA_MODE_GLOBAL:  //博士（父）
+    GF_ASSERT( zenkoku_flag == TRUE );
+    {
+      //ぜんこくずかんは「捕まえた数」
+      *p_count = ZUKANSAVE_GetZukanPokeGetCount( zw, heap_id );
+      if ( ZUKANSAVE_CheckZenkokuComp( zw ) == TRUE ) {
+        *p_msg = msg_hyouka_z17;
+        *p_me = SEQ_ME_HYOUKA6;
+      } else {
+        *p_msg = get_msgid( GlobalGetTable, *p_count );
+        *p_me = get_msgid( GlobalMeGetTable, *p_count );
+      }
+    }
+    break;
+
+  default:
+    GF_ASSERT( 0 );
+  }
+}
+
 
 
 

@@ -20,6 +20,8 @@ extern VMCMD_RESULT EvCmdSetFavoritePoke( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdSetGymVictoryInfo( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetGymVictoryInfo( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetBreederJudgeResult( VMHANDLE * core, void *wk );
+
+//ì‡ïîÇÃä÷êîÇäOÇ≈Ç‡égÇ§ÇΩÇﬂÇ…scrcmd_pokemon.hÇ…à⁄ÇµÇ‹ÇµÇΩ nagihashi11/11/17
 extern VMCMD_RESULT EvCmdGetZukanHyouka( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetZukanComplete( VMHANDLE * core, void *wk );
 

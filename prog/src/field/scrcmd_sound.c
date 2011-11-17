@@ -721,12 +721,15 @@ VMCMD_RESULT EvCmdSeWait(VMHANDLE *core, void *wk)
  * @retval VMCMD_RESULT
  */
 //--------------------------------------------------------------
+#include "eventwork_def.h"
+SDK_COMPILER_ASSERT( SEQ_ME_END < SVWK_START ); //sound_idex‚ÌŽæ“¾‚ðGetVMWorkValue‚É•Ï‚¦‚½‚Ì‚Å’´‚¦‚È‚¢‚æ‚¤‚ÉŒ©‚Ä‚¢‚éB
+
 VMCMD_RESULT EvCmdMePlay(VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK*  work = wk;
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
   SCRIPT_WORK*    sc = SCRCMD_WORK_GetScriptWork( work );
-  u16      sound_idx = VMGetU16( core );
+  u16      sound_idx = SCRCMD_GetVMWorkValue(core, work);
 
   {
     GMEVENT* event;

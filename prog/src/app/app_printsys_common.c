@@ -20,7 +20,6 @@
 //-------------------------------------
 ///	プロトタイプ
 //=====================================
-static BOOL App_PrintSys_IsTrg( APP_PRINTSYS_COMMON_TYPE type );
 static BOOL App_PrintSys_IsCont( APP_PRINTSYS_COMMON_TYPE type );
 static BOOL App_PrintSys_IsRelease( APP_PRINTSYS_COMMON_TYPE type );
 
@@ -59,7 +58,7 @@ BOOL APP_PRINTSYS_COMMON_PrintStreamFunc( APP_PRINTSYS_COMMON_WORK *wk, PRINT_ST
 
     case PRINTSTREAM_STATE_PAUSE:
       //入力
-      if( App_PrintSys_IsTrg( wk->type ) )
+      if( APP_PRINTSYS_COMMON_GetTrg( wk->type ) )
       { 
         PMSND_PlaySE( APP_PRINTSYS_COMMON_SE_TRG );
   		  PRINTSYS_PrintStreamReleasePause( handle );
@@ -101,7 +100,7 @@ BOOL APP_PRINTSYS_COMMON_PrintStreamFunc( APP_PRINTSYS_COMMON_WORK *wk, PRINT_ST
  *	@return TRUEトリガしている FALSEで何か押している
  */
 //-----------------------------------------------------------------------------
-static BOOL App_PrintSys_IsTrg( APP_PRINTSYS_COMMON_TYPE type )
+BOOL APP_PRINTSYS_COMMON_GetTrg( APP_PRINTSYS_COMMON_TYPE type )
 {
   BOOL is_trg = FALSE;
 

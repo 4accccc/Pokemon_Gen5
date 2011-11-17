@@ -118,8 +118,21 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
       {
         dataWork->cardType = CARD_TYPE_GS;
       }
-      else if( headerData->game_code == MB_ROMCODE_BLACK ||
-               headerData->game_code == MB_ROMCODE_WHITE )
+      else if( headerData->game_code == MB_ROMCODE_BLACK_J ||
+               headerData->game_code == MB_ROMCODE_WHITE_J ||
+               headerData->game_code == MB_ROMCODE_BLACK_D ||
+               headerData->game_code == MB_ROMCODE_WHITE_D ||
+               headerData->game_code == MB_ROMCODE_BLACK_F ||
+               headerData->game_code == MB_ROMCODE_WHITE_F ||
+               headerData->game_code == MB_ROMCODE_BLACK_I ||
+               headerData->game_code == MB_ROMCODE_WHITE_I ||
+               headerData->game_code == MB_ROMCODE_BLACK_K ||
+               headerData->game_code == MB_ROMCODE_WHITE_K ||
+               headerData->game_code == MB_ROMCODE_BLACK_O ||
+               headerData->game_code == MB_ROMCODE_WHITE_O ||
+               headerData->game_code == MB_ROMCODE_BLACK_S ||
+               headerData->game_code == MB_ROMCODE_WHITE_S
+               )
       {
         dataWork->cardType = CARD_TYPE_WB;
       }

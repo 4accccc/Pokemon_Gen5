@@ -5655,14 +5655,15 @@
  * @param ret_count   É|ÉPÉÇÉìêî
  */
 //--------------------------------------------------------------
-#define _GET_ZUKAN_HYOUKA( mode, ret_msgid, ret_count ) \
-    _ASM_GET_ZUKAN_HYOUKA mode, ret_msgid, ret_count
+#define _GET_ZUKAN_HYOUKA( mode, ret_msgid, ret_count, ret_me ) \
+    _ASM_GET_ZUKAN_HYOUKA mode, ret_msgid, ret_count, ret_me
 
-    .macro  _ASM_GET_ZUKAN_HYOUKA mode, ret_msgid, ret_count
+    .macro  _ASM_GET_ZUKAN_HYOUKA mode, ret_msgid, ret_count, ret_me
     .short  EV_SEQ_GET_ZUKAN_HYOUKA
     .short  \mode
     .short  \ret_msgid
     .short  \ret_count
+    .short  \ret_me
     .endm
 
 //--------------------------------------------------------------

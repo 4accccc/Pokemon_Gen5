@@ -125,7 +125,8 @@ void LOCAL_TVT_SECRET_SetPerson( LOCAL_TVT_PERSON *p_person, const GFL_MSGDATA *
     {
       p_person->greetingFunction  = LOCAL_TVT_SECRET_TrueFace;
     }
-    else if( LTVT_SECREAT_TALK_FORCE_TALK == talk )
+    else if( LTVT_SECREAT_TALK_FORCE_TALK == talk
+        || LTVT_SECREAT_TALK_QANSWER == talk)
     {
       p_person->greetingFunction  = LOCAL_TVT_SECRET_ForceTalk;
     }

@@ -66,3 +66,5 @@ extern void APP_PRINTSYS_COMMON_PrintStreamInit(APP_PRINTSYS_COMMON_WORK *wk, AP
 //-----------------------------------------------------------------------------
 extern BOOL APP_PRINTSYS_COMMON_PrintStreamFunc( APP_PRINTSYS_COMMON_WORK *wk, PRINT_STREAM* handle );
 
+
+extern BOOL APP_PRINTSYS_COMMON_GetTrg( APP_PRINTSYS_COMMON_TYPE type );

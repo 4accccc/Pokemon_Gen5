@@ -14,6 +14,7 @@
 #include "system/gfl_use.h"
 #include "system/time_icon.h"
 #include "sound/pm_sndsys.h"
+#include "system/bmp_winframe.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -747,7 +748,7 @@ static void LOCAL_TVT_SEQ_FadeOut( LOCAL_TVT_SEQ *p_seqwk, int *p_seq, void *p_w
  *    呼び出しメッセージ
  */
 //=============================================================================
-#define CALLMSG_CALL_CNT  (120)
+#define CALLMSG_CALL_CNT  (80)
 //----------------------------------------------------------------------------
 /**
  *	@brief  呼び出しメッセージ初期化
@@ -776,6 +777,9 @@ static void CALLMSG_Init( CALLMSG *p_wk, LOCAL_TVT_MESSAGE *p_message, u32 call_
   //表示開始
   LOCAL_TVT_MESSAGE_SetPrintColor( p_wk->p_message, LOCAL_TVT_MSG_COLOR_BLACK );
   GF_ASSERT( GFL_MSG_GetStrCount(LOCAL_TVT_MESSAGE_GetCallMsgData(p_wk->p_message)) != 0 );
+
+  BmpWinFrame_GraphicSet( LTVT_FRAME_SUB_MSG , LTVT_FRAME_SUB_CGX, LTVT_PLT_BG_SUB_WINFRAME , 0 , heapID );
+
   LOCAL_TVT_MESSAGE_PrintMsgCall( p_wk->p_message, p_wk->p_msgwin, CALL_STR_03 );
   LOCAL_TVT_MESSAGE_WriteFrame( p_wk->p_message, p_wk->p_msgwin );
 

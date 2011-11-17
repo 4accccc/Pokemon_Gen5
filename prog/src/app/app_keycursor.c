@@ -56,7 +56,8 @@ struct _APP_KEYCURSOR_WORK
   u8 push_flag;
   u8 decide_key_flag : 1;
   u8 decide_tp_flag : 1;
-  u8 padding : 6;
+  u8 write_req :1;
+  u8 padding : 5;
   u16 n_col;
   u16 padding_16;
 };
@@ -259,8 +260,11 @@ void APP_KEYCURSOR_Main( APP_KEYCURSOR_WORK* work, PRINT_STREAM* stream, GFL_BMP
   switch( state )
   {
   case PRINTSTREAM_STATE_DONE : // 終了
-    work->push_flag = FALSE;
-    break;
+    if( !work->write_req )
+    {
+      work->push_flag = FALSE;
+      break;
+    }
 
   case PRINTSTREAM_STATE_PAUSE : // 一時停止中
     // キー入力待ち
@@ -281,6 +285,7 @@ void APP_KEYCURSOR_Main( APP_KEYCURSOR_WORK* work, PRINT_STREAM* stream, GFL_BMP
 
       if( is_decide )
       {
+        work->write_req = FALSE;
         work->push_flag = TRUE;
         APP_KEYCURSOR_Clear( work, GFL_BMPWIN_GetBmp(msgwin), work->n_col );
 		    GFL_BMPWIN_TransVramCharacter( msgwin );
@@ -347,6 +352,19 @@ BOOL APP_KEYCURSOR_MainNotStream( APP_KEYCURSOR_WORK* work, GFL_BMPWIN* msgwin )
 	  GFL_BMPWIN_TransVramCharacter( msgwin );
   }
   return is_decide;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  表示リクエスト
+ *
+ *	@param	APP_KEYCURSOR_WORK* work ワーク
+ */
+//-----------------------------------------------------------------------------
+void APP_KEYCURSOR_WriteReq( APP_KEYCURSOR_WORK* work )
+{
+  work->write_req = TRUE;
 }
 
 //=============================================================================

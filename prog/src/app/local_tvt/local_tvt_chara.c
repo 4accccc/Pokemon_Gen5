@@ -665,16 +665,8 @@ void LOCAL_TVT_CHARA_SYS_GetLoadParam( const LOCAL_TVT_CHARA_SYS *sys, LOCAL_TVT
 
   *p_member = sys->member;
 }
-//----------------------------------------------------------------------------
-/**
- *	@brief  話開始
- *
- *	@param	LOCAL_TVT_CHARA *charaWork  キャラ
- *	@param	*p_msg  メッセージデータ
- *	@param	msgID   メッセージID
- */
-//-----------------------------------------------------------------------------
-void LOCAL_TVT_CHARA_StartTalk( LOCAL_TVT_CHARA *charaWork, const GFL_MSGDATA *cp_msg, u16 msgID )
+
+static void Local_Tvt_Chara_StartTalkCore( LOCAL_TVT_CHARA *charaWork, const GFL_MSGDATA *cp_msg, u16 msgID, LOCAL_TVT_MESSAGE_TYPE type )
 {
   LOCAL_TVT_MSG_POS pos;
 
@@ -696,8 +688,27 @@ void LOCAL_TVT_CHARA_StartTalk( LOCAL_TVT_CHARA *charaWork, const GFL_MSGDATA *c
   LOCAL_TVT_RECICON_Visible( charaWork->sys, charaWork->charaIdx );
 
   //メッセージON
-  LOCAL_TVT_MSGWIN_DispMessage( charaWork->sys->param.message, cp_msg, msgID );
+  LOCAL_TVT_MSGWIN_DispMessage( charaWork->sys->param.message, cp_msg, msgID, type );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  話開始
+ *
+ *	@param	LOCAL_TVT_CHARA *charaWork  キャラ
+ *	@param	*p_msg  メッセージデータ
+ *	@param	msgID   メッセージID
+ */
+//-----------------------------------------------------------------------------
+void LOCAL_TVT_CHARA_StartTalk( LOCAL_TVT_CHARA *charaWork, const GFL_MSGDATA *cp_msg, u16 msgID )
+{
+  Local_Tvt_Chara_StartTalkCore( charaWork, cp_msg, msgID, LOCAL_TVT_MESSAGE_TYPE_NORMAL);
+}
+void LOCAL_TVT_CHARA_StartTalkWait( LOCAL_TVT_CHARA *charaWork, const GFL_MSGDATA *cp_msg, u16 msgID )
+{
+  Local_Tvt_Chara_StartTalkCore( charaWork, cp_msg, msgID, LOCAL_TVT_MESSAGE_TYPE_WAIT);
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  話処理中

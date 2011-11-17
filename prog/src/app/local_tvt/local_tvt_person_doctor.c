@@ -19,6 +19,9 @@
 #include "item/itemsym.h"
 #include "waza_tool/wazano_def.h"
 #include "savedata/zukan_savedata.h"
+#include "field/eventwork.h"
+#include "field/eventwork_def.h"
+#include "field/script_def.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -80,6 +83,11 @@ typedef struct
   GFL_MSGDATA         *p_msgdata_hyouka;
   ARCHANDLE           *p_evo_handle;
   HEAPID              heapID;
+
+  u16 zukan_check_message;
+  u16 zukan_check_count;
+  u16 zukan_check_me;
+  BOOL zukan_check_is_item;
 } LOCAL_TVT_DOCTOR;
 
 
@@ -103,9 +111,7 @@ static u16 Shinka_GetMsgID( ARCHANDLE *p_handle, u16 monsNO );
 static BOOL ShinkaData_Search( const SHINKA_DATA *cp_data_tbl, u32 len, u16 param, u16 *p_msgID );
 
 //図鑑チェック
-static u16 ZukanCheck_GetMsgID( const ZUKAN_SAVEDATA *p_zukan_sv, HEAPID heapID );
-static u16 ZukanCheck_GetMe( const ZUKAN_SAVEDATA *p_zukan_sv, HEAPID heapID );
-static BOOL ZukanData_Search( const ZUKAN_HYOUKA_DATA *cp_data_tbl, u32 len, u16 param, u16 *p_msgID );
+static void ZukanCheck_GetData( const ZUKAN_SAVEDATA *p_zukan_sv, EVENTWORK *p_ev, HEAPID heapID, u16 *p_beforemsg, u16 *p_checkmsg, u16 *p_count, u16 *p_me, BOOL *p_is_item );
 
 //=============================================================================
 /**
@@ -289,40 +295,7 @@ static const SHINKA_DATA sc_pokemon_data[]=
     SHINKA_STR_064,
   },
 };
-//-------------------------------------
-///	図鑑評価メッセージデータ
-//=====================================
-static const ZUKAN_HYOUKA_DATA sc_zukan_hyouka_data[] = 
-{
-  {  39, msg_hyouka_z01 },
-  {  79, msg_hyouka_z02 },
-  { 119, msg_hyouka_z03 },
-  { 159, msg_hyouka_z04 },
-  { 199, msg_hyouka_z05 },
-  { 249, msg_hyouka_z06 },
-  { 299, msg_hyouka_z07 },
-  { 349, msg_hyouka_z08 },
-  { 399, msg_hyouka_z09 },
-  { 449, msg_hyouka_z10 },
-  { 499, msg_hyouka_z11 },
-  { 549, msg_hyouka_z12 },
-  { 599, msg_hyouka_z13 },
-  { 614, msg_hyouka_z14 },
-  { 629, msg_hyouka_z15 },
-  { 633, msg_hyouka_z16 },
-};
 
-//-------------------------------------
-///	図鑑評価MEデータ
-//=====================================
-static const ZUKAN_HYOUKA_DATA sc_zukan_hyouka_me_data[] = 
-{
-  { 159, SEQ_ME_HYOUKA1 },
-  { 349, SEQ_ME_HYOUKA2 },
-  { 499, SEQ_ME_HYOUKA3 },
-  { 549, SEQ_ME_HYOUKA4 },
-  { 633, SEQ_ME_HYOUKA5 },
-};
 
 //----------------------------------------------------------------------------
 /**
@@ -622,11 +595,14 @@ static BOOL LOCAL_TVT_DOCTOR_CheckZukan( LOCAL_TVT_PERSON_SYS *p_person, const L
   enum
   {
     SEQ_NUM_INIT,
-    SEQ_NUM_MAIN,
+    SEQ_NUM_MAIN1,
     SEQ_ME_INIT,
     SEQ_ME_WAIT,
+    SEQ_NUM_MAIN2,
     SEQ_RESULT_INIT,
     SEQ_RESULT_MAIN,
+    SEQ_ITEM_INIT,
+    SEQ_ITEM_MAIN,
     SEQ_END,
   };
   LOCAL_TVT_DOCTOR *p_wk       = p_wk_adrs;
@@ -637,49 +613,70 @@ static BOOL LOCAL_TVT_DOCTOR_CheckZukan( LOCAL_TVT_PERSON_SYS *p_person, const L
   case SEQ_NUM_INIT:
     {
       const ZUKAN_SAVEDATA *cp_zukan_sv  = GAMEDATA_GetZukanSave( p_wk->p_gamedata );
-      u16 num = ZUKANSAVE_GetZukanPokeGetCount( cp_zukan_sv, p_wk->heapID );
-      LOCAL_TVT_MESSAGE_RegisterNumber( cp_param->p_message, num, 3, 0 );
-      LOCAL_TVT_CHARA_StartTalk( p_doctor, p_wk->p_msgdata_hyouka, msg_hyouka_hakase_02 );
+      EVENTWORK *p_ev  = SaveData_GetEventWork( GAMEDATA_GetSaveControlWork(p_wk->p_gamedata) );
+      u16 before_msg;
+
+      ZukanCheck_GetData( cp_zukan_sv, p_ev, p_wk->heapID, &before_msg, &p_wk->zukan_check_message, &p_wk->zukan_check_count, &p_wk->zukan_check_me, &p_wk->zukan_check_is_item );
+
+      LOCAL_TVT_MESSAGE_RegisterNumber( cp_param->p_message, p_wk->zukan_check_count, 3, 0 );
+      LOCAL_TVT_CHARA_StartTalkWait( p_doctor, p_wk->p_msgdata_hyouka, before_msg );
     }
     p_wk->seq++;
     break;
-  case SEQ_NUM_MAIN:
-    if( LOCAL_TVT_CHARA_WaitTalk( p_doctor, cp_param->p_chara_sys ) )
+  case SEQ_NUM_MAIN1:
+    LOCAL_TVT_CHARA_WaitTalk( p_doctor, cp_param->p_chara_sys );
+    if( LOCAL_TVT_MSGWIN_IsDone( cp_param->p_message ) )
     {
       p_wk->seq++;
     }
     break;
   case SEQ_ME_INIT:
-    {
-      const ZUKAN_SAVEDATA *p_zukan_sv  = GAMEDATA_GetZukanSave( p_wk->p_gamedata );
-      u16 me = ZukanCheck_GetMe( p_zukan_sv, p_wk->heapID );
-      PMSND_PushBGM();
-      PMSND_PlayBGM( me );
-    }
+    PMSND_PushBGM();
+    PMSND_PlayBGM( p_wk->zukan_check_me );
     p_wk->seq++;
     break;
   case SEQ_ME_WAIT:
     if( !PMSND_CheckPlayBGM() )
     {
+      LOCAL_TVT_MSGWIN_SetWaitIcon( cp_param->p_message );
       PMSND_PopBGM();
       p_wk->seq++;
     }
     break;
-  case SEQ_RESULT_INIT:
-    {
-      const ZUKAN_SAVEDATA *p_zukan_sv  = GAMEDATA_GetZukanSave( p_wk->p_gamedata );
-      u16 msgID = ZukanCheck_GetMsgID( p_zukan_sv, p_wk->heapID );
-      LOCAL_TVT_CHARA_StartTalk( p_doctor, p_wk->p_msgdata_hyouka, msgID );
-    }
-    p_wk->seq++;
-    break;
-  case SEQ_RESULT_MAIN:
+
+  case SEQ_NUM_MAIN2:
     if( LOCAL_TVT_CHARA_WaitTalk( p_doctor, cp_param->p_chara_sys ) )
     {
       p_wk->seq++;
     }
     break;
-
+  case SEQ_RESULT_INIT:
+    LOCAL_TVT_CHARA_StartTalk( p_doctor, p_wk->p_msgdata_hyouka, p_wk->zukan_check_message );
+    p_wk->seq++;
+    break;
+  case SEQ_RESULT_MAIN:
+    if( LOCAL_TVT_CHARA_WaitTalk( p_doctor, cp_param->p_chara_sys ) )
+    {
+      if( p_wk->zukan_check_is_item )
+      {
+        p_wk->seq++;
+      }
+      else
+      {
+        p_wk->seq = SEQ_END;
+      }
+    }
+    break;
+  case SEQ_ITEM_INIT:
+    LOCAL_TVT_CHARA_StartTalk( p_doctor, p_wk->p_msgdata_hyouka, msg_hyouka_hakase2_04 );
+    p_wk->seq++;
+    break;
+  case SEQ_ITEM_MAIN:
+    if( LOCAL_TVT_CHARA_WaitTalk( p_doctor, cp_param->p_chara_sys ) )
+    {
+      p_wk->seq++;
+    }
+    break;
   case SEQ_END:
     p_wk->seq = 0;
     return TRUE;
@@ -831,72 +828,52 @@ static BOOL ShinkaData_Search( const SHINKA_DATA *cp_data_tbl, u32 len, u16 para
  *	@return メッセージ
  */
 //-----------------------------------------------------------------------------
-static u16 ZukanCheck_GetMsgID( const ZUKAN_SAVEDATA *p_zukan_sv, HEAPID heapID )
+static void ZukanCheck_GetData( const ZUKAN_SAVEDATA *p_zukan_sv, EVENTWORK *p_ev, HEAPID heapID, u16 *p_beforemsg, u16 *p_checkmsg, u16 *p_count, u16 *p_me, BOOL *p_is_item )
 {
-  u16 count = ZUKANSAVE_GetZukanPokeGetCount( p_zukan_sv, heapID );
-  u16 msgID = msg_hyouka_z01;
+  u16 msgID;
+  u16 count;
+  u16 me;
 
-  if ( ZUKANSAVE_CheckZenkokuComp( p_zukan_sv ) )
-  {
-    msgID = msg_hyouka_z17;
-  }
-  else
-  {
-    ZukanData_Search( sc_zukan_hyouka_data, NELEMS(sc_zukan_hyouka_data), count, &msgID );
-  }
+  *p_is_item = FALSE;
 
-  return msgID;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  図鑑チェックMEを取得
- *
- *	@param	const ZUKAN_SAVEDATA *p_zukan_sv  図鑑セーブ
- *	@param	heapID  ヒープID
- *
- *	@return ME
- */
-//-----------------------------------------------------------------------------
-static u16 ZukanCheck_GetMe( const ZUKAN_SAVEDATA *p_zukan_sv, HEAPID heapID )
-{
-  u16 count = ZUKANSAVE_GetZukanPokeGetCount( p_zukan_sv, heapID );
-  u16 me = SEQ_ME_HYOUKA1;
-
-  if ( ZUKANSAVE_CheckZenkokuComp( p_zukan_sv ) )
+  if( EVENTWORK_CheckEventFlag( p_ev, FE_ZUKAN_COMPLETE_LOCAL_SEE ) )
   {
-    me = SEQ_ME_HYOUKA6;
-  }
-  else
-  {
-    ZukanData_Search( sc_zukan_hyouka_me_data, NELEMS(sc_zukan_hyouka_me_data), count, &me );
-  }
-
-  return me;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  データを検索する
- *
- *	@param	const ZUKAN_HYOUKA_DATA *cp_data  データ
- *	@param	len       データ長さ
- *	@param  param     検索キー
- *	@param	*p_msgID  メッセージID
- *
- *	@return TRUEで検索完了
- */
-//-----------------------------------------------------------------------------
-static BOOL ZukanData_Search( const ZUKAN_HYOUKA_DATA *cp_data_tbl, u32 len, u16 param, u16 *p_msgID )
-{
-  int i;
-
-  *p_msgID  = cp_data_tbl[0].msgID;
-  for( i = 0; i < len; i ++ )
-  {
-    if( param <= cp_data_tbl[i].range )
+    *p_beforemsg = msg_hyouka_hakase2_02a;
+    ZUKANSAVE_GetHyouka( p_zukan_sv, SCR_ZUKAN_HYOUKA_MODE_LOCAL_GET, heapID, &msgID, &count, &me );
+    if( ZUKANSAVE_CheckLocalSeeComp( p_zukan_sv, heapID ) )
     {
-      *p_msgID  = cp_data_tbl[i].msgID;
-      return TRUE;
+      if( !EVENTWORK_CheckEventFlag( p_ev,FE_HYOUKA_ITEMGET_02) )
+      {
+        *p_is_item = TRUE;
+      }
     }
   }
-  return FALSE; 
+  else
+  {
+    *p_beforemsg = msg_hyouka_hakase2_02;
+    ZUKANSAVE_GetHyouka( p_zukan_sv, SCR_ZUKAN_HYOUKA_MODE_LOCAL_SEE, heapID, &msgID, &count, &me );
+
+    if( ZUKANSAVE_CheckLocalSeeComp( p_zukan_sv, heapID ) )
+    {
+      EVENTWORK_SetEventFlag( p_ev, FE_ZUKAN_COMPLETE_LOCAL_SEE );
+
+      if( !EVENTWORK_CheckEventFlag( p_ev,FE_HYOUKA_ITEMGET_01) )
+      {
+        *p_is_item = TRUE;
+      }
+    }
+  }
+
+  if( p_checkmsg )
+  {
+    *p_checkmsg = msgID;
+  }
+  if( p_count )
+  {
+    *p_count = count;
+  }
+  if( p_me )
+  {
+    *p_me = me;
+  }
 }

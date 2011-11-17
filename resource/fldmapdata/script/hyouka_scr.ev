@@ -23,6 +23,7 @@ _EVENT_DATA_END //終了
 //====================================================================
   DEFINE_LOCAL    HYOUKA_MSGID
   DEFINE_LOCAL    HYOUKA_COUNT
+  DEFINE_LOCAL    HYOUKA_ME
   DEFINE_LOCAL    ITEM_RESULT_COUNT
   DEFINE_LOCAL    ITEM_RESULT_01
   DEFINE_LOCAL    ITEM_RESULT_02
@@ -39,13 +40,14 @@ ev_zukan_daughter:
 
   IF $SCWK_ANSWER == SCR_YES THEN
   //ずかんを見せる→「はい」
-      _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_LOCAL_SEE, HYOUKA_MSGID, HYOUKA_COUNT )
+      _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_LOCAL_SEE, HYOUKA_MSGID, HYOUKA_COUNT, HYOUKA_ME )
 
       IF FLAG_ON( FE_ZUKAN_COMPLETE_LOCAL_SEE ) THEN
       //地方図鑑・見たをコンプリート→捕まえた数
           _CALL sub_zukan_setup_local_get
           _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_02a )
-          _CALL sub_zuken_local_get_me_play
+          //_CALL sub_zuken_local_get_me_play
+          _ME_PLAY( HYOUKA_ME )
           _ME_WAIT()
           _AB_KEYWAIT_MARK()
           _BALLOONWIN_TALKOBJ_MSG( HYOUKA_MSGID )
@@ -53,7 +55,8 @@ ev_zukan_daughter:
       //地方図鑑・見た数
           _CALL sub_zukan_setup_local_see
           _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_02 )
-          _CALL sub_zuken_local_see_me_play
+          //_CALL sub_zuken_local_see_me_play
+          _ME_PLAY( HYOUKA_ME )
           _ME_WAIT()
           _AB_KEYWAIT_MARK()
           _BALLOONWIN_TALKOBJ_MSG( HYOUKA_MSGID )
@@ -95,7 +98,7 @@ sub_zukan_setup_local_see:
         _FLAG_SET( FE_ZUKAN_COMPLETE_LOCAL_SEE )
     ENDIF
 
-    _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_LOCAL_SEE, HYOUKA_MSGID, HYOUKA_COUNT )
+    _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_LOCAL_SEE, HYOUKA_MSGID, HYOUKA_COUNT, HYOUKA_ME )
 
     _NUMBER( 0, HYOUKA_COUNT, 3 )
     _RET
@@ -104,7 +107,7 @@ sub_zukan_setup_local_see:
 //地方図鑑：捕まえた数評価
 //--------------------------------------------------------------------
 sub_zukan_setup_local_get:
-    _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_LOCAL_GET, HYOUKA_MSGID, HYOUKA_COUNT )
+    _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_LOCAL_GET, HYOUKA_MSGID, HYOUKA_COUNT, HYOUKA_ME )
 
     _NUMBER( 0, HYOUKA_COUNT, 3 )
     _RET
@@ -309,11 +312,12 @@ ev_zukan_father:
 
   IF $SCWK_ANSWER == SCR_YES THEN
 
-      _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_GLOBAL, HYOUKA_MSGID, HYOUKA_COUNT )
+      _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_GLOBAL, HYOUKA_MSGID, HYOUKA_COUNT, HYOUKA_ME )
 
       _NUMBER( 0, HYOUKA_COUNT, 3 )
       _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase_02 )
-      _CALL   sub_zukan_global_me_play
+      //_CALL   sub_zukan_global_me_play
+      _ME_PLAY(HYOUKA_ME)
       _ME_WAIT()
       _AB_KEYWAIT_MARK()
       _BALLOONWIN_TALKOBJ_MSG( HYOUKA_MSGID )
@@ -346,11 +350,12 @@ ev_zukan_machine:
   _GET_ZENKOKU_ZUKAN_FLAG( SCWK_ANSWER )
   IF $SCWK_ANSWER == TRUE THEN
   //全国図鑑モード＝博士（父）の評価
-      _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_GLOBAL, HYOUKA_MSGID, HYOUKA_COUNT )
+      _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_GLOBAL, HYOUKA_MSGID, HYOUKA_COUNT, HYOUKA_ME )
 
       _NUMBER( 0, HYOUKA_COUNT, 3 )
       _SYSWIN_MSG( msg_hyouka_hakase_02, POS_DOWN )
-      _CALL   sub_zukan_global_me_play
+      //_CALL   sub_zukan_global_me_play
+      _ME_PLAY(HYOUKA_ME)
       _ME_WAIT()
       _AB_KEYWAIT_MARK()
       _SYSWIN_MSG( HYOUKA_MSGID, POS_DOWN )
@@ -369,7 +374,8 @@ ev_zukan_machine:
       //地方図鑑・見たをコンプリート→捕まえた数
           _CALL sub_zukan_setup_local_get
           _SYSWIN_MSG( msg_hyouka_hakase2_02a, POS_DOWN )
-          _CALL sub_zuken_local_get_me_play
+          //_CALL sub_zuken_local_get_me_play
+          _ME_PLAY(HYOUKA_ME)
           _ME_WAIT()
           _AB_KEYWAIT_MARK()
           _SYSWIN_MSG( HYOUKA_MSGID, POS_DOWN )
@@ -377,7 +383,8 @@ ev_zukan_machine:
       //地方図鑑・見た数
           _CALL sub_zukan_setup_local_see
           _SYSWIN_MSG( msg_hyouka_hakase2_02, POS_DOWN )
-          _CALL sub_zuken_local_see_me_play
+          //_CALL sub_zuken_local_see_me_play
+          _ME_PLAY(HYOUKA_ME)
           _ME_WAIT()
           _AB_KEYWAIT_MARK()
           _SYSWIN_MSG( HYOUKA_MSGID, POS_DOWN )

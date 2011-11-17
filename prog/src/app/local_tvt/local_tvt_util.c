@@ -1658,6 +1658,12 @@ static LIST_UI_RESULT Local_Tvt_Pokelist_KeyUpdate( void *p_wk_adrs )
     if( now_col < 0 )
     {
       now_col = max_col-1;
+
+      now_row--;
+      if( now_row < 0 )
+      {
+        now_row = max_row-1;
+      }
     }
 
     PMSND_PlaySE( LOCAL_TVT_SE_SELECT );
@@ -1666,7 +1672,16 @@ static LIST_UI_RESULT Local_Tvt_Pokelist_KeyUpdate( void *p_wk_adrs )
   else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
   {
     now_col++;
-    now_col  %= max_col;
+    if( now_col >= max_col )
+    {
+      now_col = 0;
+
+      now_row++;
+      if( now_row >= max_row )
+      {
+        now_row = 0;
+      }
+    }
 
     PMSND_PlaySE( LOCAL_TVT_SE_SELECT );
     is_key_move = TRUE;
