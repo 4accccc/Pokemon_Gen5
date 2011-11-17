@@ -5851,21 +5851,21 @@
 	</row>
 
 	<row id="ITEMINFO_636">
-		<language name="JPN" width="256">おとしものの　ライブキャスター
-おとこアイドルのもの
-かりせつめいぶん</language>
-		<language name="JPN_KANJI" width="256">落し物の　ライブキャスター
-男アイドルのもの
-仮説明文</language>
+		<language name="JPN" width="256">ライモンシティの　ゆうえんちで
+ひろった　ライブキャスター。
+おとしぬしは　おとこのこ　らしい。</language>
+		<language name="JPN_KANJI" width="256">ライモンシティの　遊園地で
+拾った　ライブキャスター。
+落とし主は　男の子らしい。</language>
 	</row>
 
 	<row id="ITEMINFO_637">
-		<language name="JPN" width="256">おとしものの　ライブキャスター
-おんなアイドルのもの
-かりせつめいぶん</language>
-		<language name="JPN_KANJI" width="256">落し物の　ライブキャスター
-女アイドルのもの
-仮説明文</language>
+		<language name="JPN" width="256">ライモンシティの　ゆうえんちで
+ひろった　ライブキャスター。
+おとしぬしは　おんなのこ　らしい。</language>
+		<language name="JPN_KANJI" width="256">ライモンシティの　遊園地で
+拾った　ライブキャスター。
+落とし主は　女の子らしい。</language>
 	</row>
 
 	<row id="ITEMINFO_638">
