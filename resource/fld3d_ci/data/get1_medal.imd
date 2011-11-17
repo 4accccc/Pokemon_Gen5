@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="toyama" host="W00153" date="2011-11-11T19:09:15" source="get1_medal.mb"/>
+	<create user="toyama" host="W00153" date="2011-11-17T15:19:12" source="get1_medal.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="toyama" host="W00153" date="2011-11-11T19:09:15" source="get1_medal.mb"/>
+<original_create user="toyama" host="W00153" date="2011-11-17T15:19:12" source="get1_medal.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="0" xyz="-2.448242 -2.613770 1.804932" whd="4.896484 4.896484 0.000000"/>
+<box_test pos_scale="2" xyz="-2.070557 2.374512 2.000000" whd="4.141113 4.141113 0.000000"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="ci_item_medal"
@@ -307,7 +307,7 @@
 <material_array size="1">
 	<material index="0" name="ci_item_medal_1"
 		light0="off" light1="off" light2="off" light3="off"
-		face="front"
+		face="both"
 		alpha="0"
 		wire_mode="off"
 		polygon_mode="modulate"
@@ -339,9 +339,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-0.500000 -0.557373 0.000000"
-		volume_max="0.500000 0.442627 0.000000"
-		volume_r="0.748779"
+		volume_min="-0.500000 -0.492188 0.000000"
+		volume_max="0.500000 0.507813 0.000000"
+		volume_r="0.712646"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -352,13 +352,13 @@
 					<mtx idx="0"/>
 					<tex st="0.000000 64.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_xyz xyz="-0.500000 -0.557373 0.000000"/>
+					<pos_xyz xyz="-0.500000 -0.492188 0.000000"/>
 					<tex st="64.000000 64.000000"/>
-					<pos_xy xy="0.500000 -0.557373"/>
+					<pos_xy xy="0.500000 -0.492188"/>
 					<tex st="64.000000 0.000000"/>
-					<pos_xy xy="0.500000 0.442627"/>
+					<pos_xy xy="0.500000 0.507813"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-0.500000 0.442627"/>
+					<pos_xy xy="-0.500000 0.507813"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -373,16 +373,16 @@
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
-		scale="4.896484 4.896484 4.896484"
+		scale="16.564453 16.564453 16.564453"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.115723 1.804932"
+		translate="0.000000 17.652588 8.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-0.500000 -0.557373 0.000000"
-		volume_max="0.500000 0.442627 0.000000"
-		volume_r="0.748779"
+		volume_min="-0.500000 -0.492188 0.000000"
+		volume_max="0.500000 0.507813 0.000000"
+		volume_r="0.712646"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
