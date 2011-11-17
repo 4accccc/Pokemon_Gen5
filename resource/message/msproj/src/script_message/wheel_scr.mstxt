@@ -8351,4 +8351,74 @@ N</Text>
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_wheel_trade_sys_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName Idx="2" ]と　[Name:PokemonName Idx="1" ]を
+こうかんしますか？▼</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-17T08:23:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-17T07:45:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName Idx="2" ]と　[Name:PokemonName Idx="1" ]を
+交換しますか？▼</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-17T08:23:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-17T07:46:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン交換のシステム
+・ポケモン確認メッセージ</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-17T07:46:09" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wheel_trade_sys_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>その　ポケモンは
+こうかん　できません▼</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-17T07:59:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-17T07:45:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その　ポケモンは
+交換　できません▼</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-17T07:59:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-17T07:46:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン交換のシステム
+・ポケモン交換にだせない</Comment>
+			<CommentModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-17T07:48:58" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>

@@ -256,60 +256,98 @@ sub_wheel_trade:
   // YES NO
   _YES_NO_WIN( SCWK_ANSWER )
 
+  _BALLOONWIN_CLOSE()
+
   // はい
   IF $SCWK_ANSWER == 0 THEN
     DEFINE_LOCAL lwk_select   // 選択ポケモン
     DEFINE_LOCAL select_monso   // 選択ポケモン種族名
     DEFINE_LOCAL lwk_result   // キャンセルしたか
+    DEFINE_LOCAL i_loop
 
-    _BALLOONWIN_CLOSE()
+    // ポケモンを選択するまでループ
+    $i_loop = TRUE
+    WHILE $i_loop == TRUE
+    {
+      // ポケモン選択画面開く
+      _SELECT_TEMOTI_POKE( lwk_result, lwk_select, 0 )
 
-    // ポケモン選択画面開く
-    _SELECT_TEMOTI_POKE( lwk_result, lwk_select, 0 )
+      // ポケモンを選択した
+      IF $lwk_result == TRUE THEN
+        DEFINE_LOCAL lwk_trade_check
 
-    // ポケモンを選択した
-    IF $lwk_result == TRUE THEN
-      DEFINE_LOCAL lwk_trade_check
+        // 選択したポケモンが交換可能かチェック
+        _FIELD_POKE_TRADE_CHECK( lwk_trade_check, fld_trade_poke_no, lwk_select )
 
-      // 選択したポケモンが交換可能かチェック
-      _FIELD_POKE_TRADE_CHECK( lwk_trade_check, fld_trade_poke_no, lwk_select )
+        // 観覧車専用の交換不可でないなら交換OKにする
+        //  ダメタマゴと合体キュレムを交換不可にしている
+        IF $lwk_trade_check != FLD_TRADE_DISABLE_AMUSEMENT THEN
 
-      // 観覧車専用の交換不可でないなら交換OKにする
-      //  ダメタマゴと合体キュレムを交換不可にしている
-      IF $lwk_trade_check != FLD_TRADE_DISABLE_AMUSEMENT THEN
+          // 交換にだすポケモン名をセット
+          _TEMOTI_MONS_NAME( 2, lwk_select )
+          // 交換でもらうポケモン名をタグにセット
+          _MONS_NAME( 1, trade_monsno )
 
-        // 交換でもらうポケモン名をタグにセット
-        _MONS_NAME( 1, trade_monsno )
-        // プレイヤー名をタグにセット
-        _PLAYER_NAME( 0 )
+          // このポケモンでいいですか？
+          _SYSWIN_MSG( msg_wheel_trade_sys_01, POS_DOWN )
+          _YES_NO_WIN( SCWK_ANSWER )
+          _SYSWIN_CLOSE()
 
-        // 交換成立メッセージ
-        $msg_id += 1
-        _BALLOONWIN_TALKOBJ_MSG( msg_id )
-        _BALLOONWIN_CLOSE()
+          IF $SCWK_ANSWER == SCR_YES THEN // はい
+            // ループ終了
+            $i_loop = FALSE
+          ENDIF
 
-        //選んだポケモンの種族ナンバーを取得
-        _GET_PARTY_POKE_PARAM( select_monso, lwk_select, SCR_POKEPARA_MONSNO )
+        ELSE
 
-        // 交換処理
-        _FIELD_POKE_TRADE( fld_trade_poke_no, lwk_select )
-
-			  //==================================//
-        // 交換完了 カウントアップ
-        $WK_OTHER_LCC_TRADE_CNT += 1
-        IF $WK_OTHER_LCC_TRADE_CNT >= 12 THEN
-           $WK_OTHER_LCC_TRADE_CNT = 0
+          // このポケモンは交換にだせません。
+          _SYSWIN_MSG( msg_wheel_trade_sys_02, POS_DOWN )
+          _SYSWIN_CLOSE()
         ENDIF
 
-        // 交換完了フラグを設定
-        _PERSON_STATE_SET_TRADE( select_monso )
-
-			  //==================================//
-
-        // ここで終了
-        _RET
-
+      ELSE
+        // ポケモンを選択しなくても
+        // ループ終了
+        $i_loop = FALSE
       ENDIF
+    }
+    ENDWHILE
+
+    // ポケモンを選択した
+    // =この時点で交換できるポケモンしか選択されていない
+    IF $lwk_result == TRUE THEN
+
+      // 交換でもらうポケモン名をタグにセット
+      _MONS_NAME( 1, trade_monsno )
+      // プレイヤー名をタグにセット
+      _PLAYER_NAME( 0 )
+
+      // 交換成立メッセージ
+      $msg_id += 1
+      _BALLOONWIN_TALKOBJ_MSG( msg_id )
+      _BALLOONWIN_CLOSE()
+
+      //選んだポケモンの種族ナンバーを取得
+      _GET_PARTY_POKE_PARAM( select_monso, lwk_select, SCR_POKEPARA_MONSNO )
+
+      // 交換処理
+      _FIELD_POKE_TRADE( fld_trade_poke_no, lwk_select )
+
+			//==================================//
+      // 交換完了 カウントアップ
+      $WK_OTHER_LCC_TRADE_CNT += 1
+      IF $WK_OTHER_LCC_TRADE_CNT >= 12 THEN
+         $WK_OTHER_LCC_TRADE_CNT = 0
+      ENDIF
+
+      // 交換完了フラグを設定
+      _PERSON_STATE_SET_TRADE( select_monso )
+
+			//==================================//
+
+      // ここで終了
+      _RET
+
     ENDIF
 
   // いいえ
@@ -326,6 +364,23 @@ sub_wheel_trade:
   _BALLOONWIN_TALKOBJ_MSG( msg_id )
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
+
+}
+_RET
+
+//==============================================================
+//サブルーチン：交換ポケモン選択
+//==============================================================
+sub_wheel_poke_select:
+{
+  DEFINE_LOCAL lwk_select   // 選択ポケモン
+  DEFINE_LOCAL select_monso   // 選択ポケモン種族名
+  DEFINE_LOCAL lwk_result   // キャンセルしたか
+
+  // ポケモン選択画面開く
+  _SELECT_TEMOTI_POKE( lwk_result, lwk_select, 0 )
+
+
 
 }
 _RET
