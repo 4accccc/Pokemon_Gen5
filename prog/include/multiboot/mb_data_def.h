@@ -29,8 +29,21 @@
 #define MB_ROMCODE_PLATINUM (0x4A555043)
 #define MB_ROMCODE_H_GOLD   (0x4A4B5049)
 #define MB_ROMCODE_S_SILVER (0x4A475049)
-#define MB_ROMCODE_BLACK    (0x4A415249)
-#define MB_ROMCODE_WHITE    (0x4A425249)
+#define MB_ROMCODE_BLACK_J  ('JBRI')
+#define MB_ROMCODE_WHITE_J  ('JARI')
+#define MB_ROMCODE_BLACK_D	('DBRI')
+#define MB_ROMCODE_WHITE_D	('DARI')
+#define MB_ROMCODE_BLACK_F	('FBRI')
+#define MB_ROMCODE_WHITE_F	('FARI')
+#define MB_ROMCODE_BLACK_I	('IBRI')
+#define MB_ROMCODE_WHITE_I	('IARI')
+#define MB_ROMCODE_BLACK_K	('KBRI')
+#define MB_ROMCODE_WHITE_K	('KARI')
+#define MB_ROMCODE_BLACK_O	('OBRI')
+#define MB_ROMCODE_WHITE_O	('OARI')
+#define MB_ROMCODE_BLACK_S	('SBRI')
+#define MB_ROMCODE_WHITE_S	('SARI')
+
 
 //本体に刺さっているカードの種類
 typedef enum {
