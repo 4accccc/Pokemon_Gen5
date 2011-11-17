@@ -350,8 +350,10 @@ static void _keyWait(DEBUGSAVEADDR_WORK* pWork)
     u8* pAddr;
     u8 const * topAddr = (u8*)SaveControl_GetSaveWorkAdrs(pWork->pSaveData, &size);
 
-    //zukandummydata(pWork);
-    //cgeardummydata(pWork);
+#if !defined(DEBUG_ONLY_FOR_tamada)
+    zukandummydata(pWork);
+    cgeardummydata(pWork);
+#endif
     
     OS_TPrintf("SAVESIZE ,%x\n", size);
 
