@@ -24,7 +24,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_zone_c14
 _EVENT_DATA    ev_init_c14
-_EVENT_DATA    ev_scene_c14_swrival_01
+_EVENT_DATA    ev_pos_c14_swrival_01
 _EVENT_DATA    ev_scene_c14_swleader8_01
 _EVENT_DATA    ev_c14_swrival_01
 _EVENT_DATA    ev_c14_girl4_01
@@ -36,6 +36,10 @@ _EVENT_DATA    ev_c14_girl4_02
 _EVENT_DATA    ev_c14_middleman2_01
 _EVENT_DATA    ev_c14_swimmerw_01
 _EVENT_DATA    ev_c14_swimmerw_02
+_EVENT_DATA    ev_c14_fighterm_01
+_EVENT_DATA    ev_bg_c14_board_01
+_EVENT_DATA    ev_bg_c14_board_02
+_EVENT_DATA    ev_bg_c14_board_03
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -71,8 +75,8 @@ INIT_EVENT_END
 /************************************************************/
 INIT_EVENT_START  ev_init_c14
 
-  IF $WK_SCENE_C14_SWRIVAL_01 == 1 THEN
-    _OBJ_POS_CHANGE( C14_SWRIVAL_01, 787, -4, 179, DIR_RIGHT )
+  IF $WK_SCENE_C14_SWLEADER8_01 == 1 THEN
+    _OBJ_POS_CHANGE( C14_SWRIVAL_01, 787, -4, 176, DIR_LEFT )
   ENDIF
 
   //カップル男と会話済みでありゲームクリア後である場合、ユニットを再配置
@@ -107,38 +111,31 @@ INIT_EVENT_END
 /************************************************************/
 /*  SCENE_CHANGE01：街到着ライバルイベント                  */
 /************************************************************/
-EVENT_START   ev_scene_c14_swrival_01
+EVENT_START   ev_pos_c14_swrival_01
+
+  //主人公方向取得
+  _PLAYER_DIR_GET( LWK_DIR )
 
   //アニメ：ライバル「！」
   _OBJ_ANIME( C14_SWRIVAL_01, anm_common_gyoe )
-  _OBJ_ANIME_WAIT()
-
-  //アニメ：ライバル移動
-  _OBJ_ANIME_AUTO( C14_SWRIVAL_01, 788, 179, FORCE_TYPE_NPC, 8, DIR_LR )
+  
+  //アニメ：主人公上向き以外なら上を向く
+  IF $LWK_DIR != DIR_UP THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
+  ENDIF
   _OBJ_ANIME_WAIT()
 
   //ライバル名代入
   _RIVAL_NAME( 1 )
   //ライバル：いでんしのくさび
   _BALLOONWIN_OBJMSG_POS( msg_c14_swrival_01, C14_SWRIVAL_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
 
-  //アニメ：ライバル２１番水道を見る
-  _OBJ_ANIME( C14_SWRIVAL_01, anm_common_turn_d )
-  _OBJ_ANIME_WAIT()
-
-  //ライバル：その　プラズマだん　だけど
+  //ライバル：はやく
   _BALLOONWIN_OBJMSG_POS( msg_c14_swrival_02, C14_SWRIVAL_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
 
-  //アニメ：ライバル定位置へ
-  _OBJ_ANIME_AUTO( C14_SWRIVAL_01, 787, 176, FORCE_TYPE_NPC, 8, DIR_LR )
-  _OBJ_ANIME_WAIT()
-  _OBJ_ANIME( C14_SWRIVAL_01, anm_common_turn_l )
-  _OBJ_ANIME_WAIT()
-
   //========================================//
-  //C14到着SCENE_CHANGE無効
+  //C14 POS無効
   $WK_SCENE_C14_SWRIVAL_01 = 2
   //========================================//
 
@@ -256,79 +253,52 @@ EVENT_START   ev_scene_c14_swleader8_01
   //ライバル名代入
   _RIVAL_NAME( 1 )
   //ライバル：バッジがそろったか▼
-  _BALLOONWIN_OBJMSG_POS( msg_c14_swrival_04, C14_SWRIVAL_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_c14_swrival_04, C14_SWRIVAL_01, POS_UR )
   _MSGWIN_CLOSE()
-
-  //アニメ：主人公・ライバル「！」
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe )
-  _OBJ_ANIME( C14_SWRIVAL_01, anm_common_gyoe )
-  _OBJ_ANIME_WAIT()
 
   //========================================//
   //シズイ表示
   _FLAG_RESET( FV_C14_SWLEADER8_01 )
   //========================================//
 
-  //カメラ操作　ビリジオン追従
-  _CAMERA_START()   //カメラ操作開始
-  _CAMERA_PURGE()   //カメラのバインドを解く
-
-  _CAMERA_MOVE( 9688, 0, 970752, 51347456, -262207, 12423168, 32 )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
-  _OBJ_ANIME( C14_SWRIVAL_01, anm_common_turn_d )
-  _OBJ_ANIME_WAIT()
-
-  _CAMERA_WAIT_MOVE()  //カメラ移動待ち
-
-  //泳いでくるシズイ【仮】その場に出現
+  //シズイ動作モデル生成
   _OBJ_ADD( C14_SWLEADER8_01 )
-
-  //間（泳ぎ待ち）
-  _TIME_WAIT ( 32 )
 
   //アニメ：シズイ移動
   _OBJ_ANIME_AUTO( C14_SWLEADER8_01, 783, 178, FORCE_TYPE_NPC, 8, DIR_UD )
-
-  //自機にカメラを戻す
-  _CAMERA_DEF_MOVE ( 68 )
-
+  _TIME_WAIT( 8*4 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
+  _OBJ_ANIME( C14_SWRIVAL_01, anm_common_turn_d )
   //アニメーション待ち
   _OBJ_ANIME_WAIT()
 
-  //カメラ待ち
-  _CAMERA_WAIT_MOVE()
-  _CAMERA_BIND()    //カメラバインド
-  _CAMERA_END()   //カメラ操作終了
-
-  _TIME_WAIT ( 8 )  //間
-
   //シズイ：よう！　おはんら！▼
-  _BALLOONWIN_OBJMSG_POS( msg_c14_swleader8_03, C14_SWLEADER8_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_c14_swleader8_03, C14_SWLEADER8_01, POS_DR )
   _MSGWIN_CLOSE()
 
   //ライバル名代入
   _RIVAL_NAME( 1 )
   //ライバル：プラズマだん　ってのは
-  _BALLOONWIN_OBJMSG_POS( msg_c14_swrival_05, C14_SWRIVAL_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_c14_swrival_05, C14_SWRIVAL_01, POS_UR )
   _MSGWIN_CLOSE()
 
   //シズイ：しらん！▼
-  _BALLOONWIN_OBJMSG_POS( msg_c14_swleader8_04, C14_SWLEADER8_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_c14_swleader8_04, C14_SWLEADER8_01, POS_DR )
 
   //シズイ：で　おまはん
-  _BALLOONWIN_OBJMSG_POS( msg_c14_swleader8_05, C14_SWLEADER8_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_c14_swleader8_05, C14_SWLEADER8_01, POS_DR )
 
   //プラズマ団は悪いと思う？
   _YES_NO_WIN( SCWK_ANSWER )
 
   IF $SCWK_ANSWER == SCR_YES THEN  //はい
     //シズイ：そうか
-    _BALLOONWIN_OBJMSG_POS( msg_c14_swleader8_06, C14_SWLEADER8_01, POS_DEFAULT )
+    _BALLOONWIN_OBJMSG_POS( msg_c14_swleader8_06, C14_SWLEADER8_01, POS_DR )
     _MSGWIN_CLOSE()
 
   ELSE    //いいえ
     //シズイ：ほう　わるくない……　そう
-    _BALLOONWIN_OBJMSG_POS( msg_c14_swleader8_07, C14_SWLEADER8_01, POS_DEFAULT )
+    _BALLOONWIN_OBJMSG_POS( msg_c14_swleader8_07, C14_SWLEADER8_01, POS_DR )
     _MSGWIN_CLOSE()
 
   ENDIF
@@ -338,25 +308,29 @@ EVENT_START   ev_scene_c14_swleader8_01
   _OBJ_ANIME_WAIT()
 
   //シズイ：さてと……▼
-  _BALLOONWIN_OBJMSG_POS( msg_c14_swleader8_08, C14_SWLEADER8_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_c14_swleader8_08, C14_SWLEADER8_01, POS_DR )
   _MSGWIN_CLOSE()
 
   //アニメ：シズイ退散
-  _OBJ_ANIME_AUTO( C14_SWLEADER8_01, 783, 186, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_AUTO( C14_SWLEADER8_01, 783, 184, FORCE_TYPE_NPC, 8, DIR_UD )
   _OBJ_ANIME_WAIT()
-  _OBJ_DEL( C14_SWLEADER8_01 )  //シズイ削除
+  
+  //シズイ動作モデル削除
+  _OBJ_DEL( C14_SWLEADER8_01 )
 
   //ライバル名代入
   _RIVAL_NAME( 1 )
   //ライバル：なんだ
-  _BALLOONWIN_OBJMSG_POS( msg_c14_swrival_06, C14_SWRIVAL_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_c14_swrival_06, C14_SWRIVAL_01, POS_UR )
   _AB_KEYWAIT()
   _MSGWIN_CLOSE()
 
   //アニメ：ライバル退散
-  _OBJ_ANIME_AUTO( C14_SWRIVAL_01, 783, 186, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_AUTO( C14_SWRIVAL_01, 783, 184, FORCE_TYPE_NPC, 8, DIR_UD )
   _OBJ_ANIME_WAIT()
-  _OBJ_DEL( C14_SWRIVAL_01 )  //シズイ削除
+  
+  //ライバル動作モデル削除
+  _OBJ_DEL( C14_SWRIVAL_01 )
 
   //========================================//
   //イベント進行
@@ -373,10 +347,21 @@ EVENT_END
 /*  ライバル：話しかけ                                        */
 /**************************************************************/
 EVENT_START   ev_c14_swrival_01
-
-  //ライバル名代入
-  _RIVAL_NAME( 1 )
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14_swrival_03 )
+  
+  //C14初回会話時（POSを踏んでいない時
+  IF $WK_SCENE_C14_SWRIVAL_01 == 1 THEN
+    //ライバル名代入
+    _RIVAL_NAME( 1 )
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14_swrival_01 )
+    //========================================//
+    //C14 POS無効
+    $WK_SCENE_C14_SWRIVAL_01 = 2
+    //========================================//
+  ELSE
+    //ライバル名代入
+    _RIVAL_NAME( 1 )
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14_swrival_03 )
+  ENDIF
 
 EVENT_END
 
@@ -546,6 +531,26 @@ EVENT_START   ev_pos_c14_kaodasi_01
 
 EVENT_END
 
+/**************************************************************/
+/* 街看板                                         */
+/**************************************************************/
+EVENT_START   ev_bg_c14_board_01
+  _EASY_BGWIN_MSG( msg_c14_sign1_01, TYPE_TOWN )
+EVENT_END
+
+/**************************************************************/
+/* 施設看板                                         */
+/**************************************************************/
+EVENT_START   ev_bg_c14_board_02
+  _EASY_BGWIN_MSG( msg_c14_sign2_01, TYPE_POST )
+EVENT_END
+
+/**************************************************************/
+/* ジム看板                                         */
+/**************************************************************/
+EVENT_START   ev_bg_c14_board_03
+  _EASY_BGWIN_MSG( msg_c14_sign3_01, TYPE_POST )
+EVENT_END
 
 //--------------------------------------------------------------------
 //共通：ターン右
@@ -681,4 +686,11 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c14_swimmerw_02
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14_swimmerw1_01 )
+EVENT_END
+
+/**************************************************************/
+/*		FIGHTERM_01	会話スクリプト						  */
+/**************************************************************/
+EVENT_START		ev_c14_fighterm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14_fighterm_01 )
 EVENT_END

@@ -78,7 +78,6 @@ EVENT_START ev_c14r0501_lady_01
       
       //LADY：話がわかる！
       _BALLOONWIN_OBJMSG_POS( msg_c14r0501_lady_02,C14R0501_LADY_01, POS_DEFAULT )
-      _AB_KEYWAIT_MARK() 
       _MSGWIN_CLOSE()
       
       //進入方向によって演出を分岐
@@ -144,7 +143,6 @@ EVENT_START ev_c14r0501_lady_01
       
       //LADY：またきがむいたら
       _BALLOONWIN_OBJMSG_POS( msg_c14r0501_lady_09,C14R0501_LADY_01, POS_DEFAULT )
-      _AB_KEYWAIT_MARK()
       _MSGWIN_CLOSE()
       
       //連れ歩き解除
@@ -186,7 +184,6 @@ EVENT_START ev_c14r0501_lady_01
    //LADY：たくましくみえますわ
    _TALK_OBJ_START()
    _BALLOONWIN_OBJMSG_POS( msg_c14r0501_lady_04,C14R0501_LADY_01, POS_DEFAULT )
-   _AB_KEYWAIT_MARK()
    _MSGWIN_CLOSE()
    
     //アイテム入手処理：しんじゅ
@@ -224,6 +221,8 @@ EVENT_START ev_c14r0501_lady_01
       _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d)
       _OBJ_ANIME_WAIT()
     ENDIF
+    
+    _TURN_HERO_SITE()
     
     //LADY：またわたくしの
     _BALLOONWIN_OBJMSG_POS( msg_c14r0501_lady_05,C14R0501_LADY_01, POS_DEFAULT )
@@ -355,7 +354,6 @@ EVENT_START ev_bg_c14r0501_tv_01
     _OBJ_ANIME_WAIT()
     
     _BALLOONWIN_OBJMSG_POS( msg_c14r0501_lady_13,C14R0501_LADY_01, POS_DEFAULT )
-    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
     
     //アニメ：LADYもとの位置に
@@ -397,7 +395,6 @@ EVENT_START ev_bg_c14r0501_trash_01
     _OBJ_ANIME_WAIT()
     
     _BALLOONWIN_OBJMSG_POS( msg_c14r0501_lady_12,C14R0501_LADY_01, POS_DEFAULT )
-    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
     
     //アニメ：LADYもとの位置に
@@ -430,7 +427,6 @@ EVENT_START ev_pos_c14r0501_stopper_01
   _OBJ_ANIME_WAIT()
   
   _BALLOONWIN_OBJMSG_POS( msg_c14r0501_lady_11,C14R0501_LADY_01, POS_DEFAULT )
-  _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
   
   //アニメ：LADYもとの位置に・主人公戻る

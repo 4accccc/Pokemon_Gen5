@@ -29,6 +29,7 @@
 #define C14_SWIMMERW_01                   10
 #define C14_SWIMMERW_02                   11
 #define C14_GIRL4_02                      12
+#define C14_FIGHTERM_01                   13
 
 #endif //ZONE_C14_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c14.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -53,5 +54,9 @@
 #define BG_C14_DUMMY_FES_16              15
 #define BG_C14_DUMMY_FES_17              16
 #define HIDE_ITEM_208                    17
+#define BG_C14_BOARD_01                  18
+#define C14_BG_BOARD_02                  19
+#define BG_C14_BOARD_03                  20
+#define BG_C14_BOARD_04                  21
 
 #endif //ZONE_C14_EVB_H

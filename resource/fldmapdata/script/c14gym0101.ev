@@ -13,7 +13,7 @@
   .include  "c14gym0101.h"
 
   //@author fujimura_souichirou
-  //@author Mizuguchi_Mai（ストッパー）
+  //@author Mizuguchi_Mai（ストッパー・演出調整）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -28,7 +28,10 @@ _EVENT_DATA   ev_bg_c14gym0101_statue_01
 _EVENT_DATA   ev_pos_c14gym0101_stopper_01
 _EVENT_DATA_END
 
-
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
 /**************************************************************/
 /*  ジムリーダー会話                                          */
 /**************************************************************/
@@ -156,9 +159,23 @@ ev_leader8_btl:
   $WK_SCENE_R22_POKE5 = 1
   _FLAG_RESET( FV_R22_POKE5_01 )
   //================================================//
-
-  //上に2歩
-  _OBJ_ANIME( C14GYM0101_SWLEADER8_01, anm_tr_up )
+  
+  //主人公方向取得
+  _PLAYER_DIR_GET( LWK_DIR )
+  
+  //アニメ：シズイ退場
+  _OBJ_ANIME( C14GYM0101_SWLEADER8_01, anm_swleader_go_sea_def )
+  
+  //アニメ：主人公が上から話しかけていたらのく
+  IF $LWK_DIR == DIR_DOWN THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_backstep )
+  
+  //アニメ：主人公が左右から話しかけていたら見送り
+  ELSIF $LWK_DIR == DIR_LEFT || $LWK_DIR == DIR_RIGHT THEN
+    _TIME_WAIT( 4 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  ENDIF
+  
   _OBJ_ANIME_WAIT()
 
   //海にジャンプ
@@ -182,8 +199,23 @@ _RET
 
 //ジムリーダーが海へ帰っていく
 sub_leader_return:
-  //上に2歩
-  _OBJ_ANIME( C14GYM0101_SWLEADER8_01, anm_tr_up )
+  
+  //主人公方向取得
+  _PLAYER_DIR_GET( LWK_DIR )
+  
+  //アニメ：シズイ退場
+  _OBJ_ANIME( C14GYM0101_SWLEADER8_01, anm_swleader_go_sea_def )
+  
+  //アニメ：主人公が上から話しかけていたらのく
+  IF $LWK_DIR == DIR_DOWN THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_backstep )
+  
+  //アニメ：主人公が左右から話しかけていたら見送り
+  ELSIF $LWK_DIR == DIR_LEFT || $LWK_DIR == DIR_RIGHT THEN
+    _TIME_WAIT( 4 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  ENDIF
+  
   _OBJ_ANIME_WAIT()
 
   //海にジャンプ
@@ -326,11 +358,23 @@ EVENT_END
 
 
 //--------------------------------------------------------------
-//上に2歩進む
+//シズイ：上に2歩進む
 //--------------------------------------------------------------
-_ANIME_LABEL  anm_tr_up
-  _ANIME_DATA AC_WALK_U_8F,3
+_ANIME_LABEL  anm_swleader_go_sea_def
+  _ANIME_DATA AC_WALK_U_4F,2
   _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//	主人公：のく
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_backstep
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA AC_DIR_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_L_4F,1
+  _ANIME_DATA AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+  _ANIME_DATA	ACMD_END,0
+
 
 //--------------------------------------------------------------
 //非表示
