@@ -536,6 +536,14 @@
 				Time="2011-09-07T03:40:18" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>MUGENBOSS
+バンジロウ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-17T05:35:59" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -1126,6 +1134,14 @@
 				User="nakamura_akira:W00280"
 				Time="2011-09-07T03:43:16" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MUGENBOSS
+バンジロウ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-17T05:36:05" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -1781,6 +1797,14 @@
 				User="nakamura_akira:W00280"
 				Time="2011-09-07T03:45:32" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MUGENBOSS
+バンジロウ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-17T05:36:16" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -2459,6 +2483,14 @@
 				Time="2011-09-07T03:45:40" />
 		</CommentCell>
 		<AttributeCell
+			Name="Character">
+			<Text>MUGENBOSS
+バンジロウ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-17T05:36:11" />
+		</AttributeCell>
+		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
 			<TextModifiedBy
@@ -3089,6 +3121,14 @@
 				User="nakamura_akira:W00280"
 				Time="2011-09-07T03:45:47" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MUGENBOSS
+バンジロウ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-17T05:36:22" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -3723,6 +3763,14 @@
 				User="nakamura_akira:W00280"
 				Time="2011-09-07T03:45:59" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MUGENBOSS
+バンジロウ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-17T05:36:27" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -4374,14 +4422,14 @@
 トレーナーと　ポケモンの▼
 チームワークなら　どこでも　いける▼
 それが　わかって　うれしいぜ！▼
-そうだ！　あとで　じーちゃんの
-いえに　きてくれよ▼
-この　たたかいの　きねんに
-わたしたいものが　あるからさ！▼
-やくそくだぜ！▼</Text>
+おい！▼
+じーちゃんの　いえに　こいよ！▼
+わかるだろ　サンギタウンの！▼
+すごいもの　わたすからな！▼
+おいらとの　やくそく　だぜ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-09T09:25:51" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T05:35:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4399,14 +4447,14 @@
 トレーナーと　ポケモンの▼
 チームワークなら　どこでも　行ける▼
 それが　わかって　うれしいぜ！▼
-そうだ！　あとで　じーちゃんの
-家に　来てくれよ▼
-この　戦いの　記念に
-渡したいものが　あるからさ！▼
-約束だぜ！▼</Text>
+おい！▼
+じーちゃんの　家に　来いよ！▼
+わかるだろ　サンギタウンの！▼
+すごいもの　渡すからな！▼
+おいらとの　約束だぜ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-09T09:30:23" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T05:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5070,14 +5118,14 @@
 トレーナーと　ポケモンの▼
 チームワークなら　どこでも　いける▼
 それが　わかって　うれしいぜ！▼
-そうだ！　あとで　じーちゃんの
-いえに　きてくれよ▼
-この　たたかいの　きねんに
-わたしたいものが　あるからさ！▼
-やくそくだぜ！▼</Text>
+おい！▼
+じーちゃんの　いえに　こいよ！▼
+わかるだろ　サンギタウンの！▼
+すごいもの　わたすからな！▼
+おいらとの　やくそく　だぜ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-09T09:31:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T05:35:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5095,14 +5143,14 @@
 トレーナーと　ポケモンの▼
 チームワークなら　どこでも　行ける▼
 それが　わかって　うれしいぜ！▼
-そうだ！　あとで　じーちゃんの
-家に　来てくれよ▼
-この　戦いの　記念に
-渡したいものが　あるからさ！▼
-約束だぜ！▼</Text>
+おい！▼
+じーちゃんの　家に　来いよ！▼
+わかるだろ　サンギタウンの！▼
+すごいもの　渡すからな！▼
+おいらとの　約束だぜ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-09T09:31:08" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T05:35:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5116,6 +5164,14 @@
 				User="nakamura_akira:W00280"
 				Time="2011-09-07T03:46:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MUGENBOSS
+バンジロウ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-17T05:35:51" />
+		</AttributeCell>
 		<AttributeCell
 			Name="Width">
 			<Text>256</Text>
@@ -7875,6 +7931,14 @@ NPC：MUGENBOSS（バンジロウ）
 				User="nakamura_akira:W00280"
 				Time="2011-10-25T01:48:37" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MUGENBOSS
+バンジロウ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-17T05:36:31" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_w_01_01_00"
@@ -8282,6 +8346,14 @@ NPC：MUGENBOSS（バンジロウ）
 				User="nakamura_akira:W00280"
 				Time="2011-10-25T01:47:52" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MUGENBOSS
+バンジロウ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-17T05:36:36" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_b_02_01_00"
@@ -8621,6 +8693,14 @@ NPC：MUGENBOSS（バンジロウ）
 				User="nakamura_akira:W00280"
 				Time="2011-09-07T04:07:13" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MUGENBOSS
+バンジロウ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-17T05:36:41" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_b_03_01_00"
@@ -8668,6 +8748,14 @@ NPC：MUGENBOSS（バンジロウ）
 				User="nakamura_akira:W00280"
 				Time="2011-09-07T04:07:25" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MUGENBOSS
+バンジロウ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-17T05:36:44" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_hint_up_01"
