@@ -1927,10 +1927,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>セツコ</Text>
+			<Text>ポリアンヌ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:43:41" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T12:52:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -1938,10 +1938,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>セツコ</Text>
+			<Text>ポリアンヌ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:43:41" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T12:52:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3463,10 +3463,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アーカム</Text>
+			<Text>こだいぞう</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:43:41" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T13:05:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3474,10 +3474,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アーカム</Text>
+			<Text>古代像</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:43:41" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T13:05:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3511,10 +3511,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カダス</Text>
+			<Text>アーカム</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:43:41" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T13:05:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3522,10 +3522,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カダス</Text>
+			<Text>アーカム</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:43:41" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T13:05:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -6228,10 +6228,10 @@
 		Label="pw_show_trainername_f_38">
 		<LanguageCell
 			Language="JPN">
-			<Text>アーカム</Text>
+			<Text>こだいぞう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T09:28:00" />
+				Time="2011-11-17T13:01:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -6239,10 +6239,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アーカム</Text>
+			<Text>古代像</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T09:28:55" />
+				Time="2011-11-17T13:02:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -6261,10 +6261,10 @@
 		Label="pw_show_trainername_f_39">
 		<LanguageCell
 			Language="JPN">
-			<Text>カダス</Text>
+			<Text>アーカム</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T09:28:00" />
+				Time="2011-11-17T13:07:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -6272,10 +6272,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カダス</Text>
+			<Text>アーカム</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T09:28:55" />
+				Time="2011-11-17T13:07:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

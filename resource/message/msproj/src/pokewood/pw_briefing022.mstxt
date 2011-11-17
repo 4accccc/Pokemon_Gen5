@@ -88,13 +88,13 @@
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]おうじが
 [Ctrl1:xcenter ]とびらを　あけると
-[Ctrl1:xcenter ]
+
 [Ctrl1:xcenter ]そこには　みたこともない
 [Ctrl1:xcenter ]ぶきみな　ふうけいが
 [Ctrl1:xcenter ]ひろがるばかり……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-06T03:26:40" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T12:49:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -104,13 +104,13 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]王子が
 [Ctrl1:xcenter ]扉を　開けると
-[Ctrl1:xcenter ]
+
 [Ctrl1:xcenter ]そこには　見たこともない
 [Ctrl1:xcenter ]不気味な　風景が
 [Ctrl1:xcenter ]広がるばかり……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-14T12:35:44" />
+				Time="2011-11-17T12:50:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
