@@ -156,11 +156,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しぜんに　つつまれるなら……
+			<Text>しぜんに　くるまれたいなら……
 ホワイトフォレストへ　どうぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:21:03" />
+				Time="2011-11-17T02:32:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -168,11 +168,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>自然に　つつまれるなら……
+			<Text>自然に　くるまれたいなら……
 ホワイトフォレストへ　どうぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:20:55" />
+				Time="2011-11-17T02:32:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -217,12 +217,11 @@
 			Language="JPN">
 			<Text>ブラックシティの　ような
 とかいで　くらしていると▽
-いなかにも　あこがれるな▼
-ないものねだり　とは
-わかっているけどな……</Text>
+いなかにも　あこがれるね▼
+ないものねだり　だけど……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T03:33:52" />
+				Time="2011-11-17T02:33:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -232,12 +231,11 @@
 			Language="JPN_KANJI">
 			<Text>ブラックシティの　ような
 都会で　暮らしていると▽
-田舎にも　あこがれるな▼
-ないものねだり　とは
-わかっているけどな……</Text>
+田舎にも　あこがれるね▼
+ないものねだり　だけど……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T03:34:13" />
+				Time="2011-11-17T02:33:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -281,12 +279,11 @@
 			Language="JPN">
 			<Text>ホワイトフォレストの　ような
 いなかで　くらしていると▽
-とかいにも　あこがれるな▼
-ないものねだり　とは
-わかっているけどな……</Text>
+とかいにも　あこがれるね▼
+ないものねだり　だけど……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T03:34:01" />
+				Time="2011-11-17T02:33:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -296,12 +293,11 @@
 			Language="JPN_KANJI">
 			<Text>ホワイトフォレストの　ような
 田舎で　暮らしていると▽
-都会にも　あこがれるな▼
-ないものねだり　とは
-わかっているけどな……</Text>
+都会にも　あこがれるね▼
+ないものねだり　だけど……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T03:34:25" />
+				Time="2011-11-17T02:33:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

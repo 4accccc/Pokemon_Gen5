@@ -210,10 +210,14 @@
 			<Comment>♂
 ・2回目以降
 ・アイテム入手処理
-※入手アイテムを調整予定</Comment>
+　065「あおいビードロ」
+　066「きいろビードロ」
+　067「あかいビードロ」
+　068「くろいビードロ」
+　069「しろいビードロ」のうちどれか</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T08:04:30" />
+				Time="2011-11-17T02:35:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

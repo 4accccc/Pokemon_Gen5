@@ -48,13 +48,13 @@
 			Language="JPN">
 			<Comment>♂
 ・GRIDX＝625、GRIDZ＝711.左向き
-・WBTで、マキシと
+・PWTで、マキシと
 　勝負した→dpleader5_02
 　勝負していない→dpleader5_03
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T03:56:37" />
+				Time="2011-11-17T02:27:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -117,11 +117,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・WBTで勝負したことがある
+・PWTで勝負したことがある
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T03:56:26" />
+				Time="2011-11-17T02:27:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -168,14 +168,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・WBTで勝負したことがない
+・PWTで勝負したことがない
 ・はい/いいえの選択肢表示
 　はい　→dpleader5_04
 　いいえ→dpleader5_05
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T03:56:27" />
+				Time="2011-11-17T02:27:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

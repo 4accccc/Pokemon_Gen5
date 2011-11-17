@@ -6,15 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ショッピングモールには
-よく　くるよ！▼
-ぜんぶの　わざマシンを
-そろえてみたい　からね！▼
-そして　フキヨセシティの
+			<Text>わざマシンを　そろえるには
+ショッピングモールも　チェック！▼
+そう！　フキヨセシティの
 わざマシンコレクターに　じまんさ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T11:23:12" />
+				Time="2011-11-17T02:39:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22,15 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ショッピングモールには
-よく　買い物に　来るよ！▼
-全部の　わざマシンを
-そろえてみたい　からね！▼
-そして　フキヨセシティの
+			<Text>わざマシンを　そろえるには
+ショッピングモールも　チェック！▼
+そう！　フキヨセシティの
 わざマシンコレクターに　自慢さ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T11:23:20" />
+				Time="2011-11-17T02:39:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

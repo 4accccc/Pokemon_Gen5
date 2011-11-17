@@ -1033,10 +1033,10 @@ GFBTS1607：不要なスペース削除</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケウッド　撮影　回数</Text>
+			<Text>ポケウッド　撮影回数</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-03T06:54:38" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T02:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -1068,10 +1068,10 @@ GFBTS1607：不要なスペース削除</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＰＷＴ　優勝　回数</Text>
+			<Text>ＰＷＴ　優勝回数</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T11:19:51" />
+				Time="2011-11-17T02:16:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -1138,10 +1138,10 @@ GFBTS1607：不要なスペース削除</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>招待した　人の　数</Text>
+			<Text>招待した　人の数</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-03T06:58:13" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T02:17:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3969,7 +3969,7 @@ GFBTS1607：不要なスペース削除</Comment>
 [Digit:4digits Idx="0" ]年[Digit:2digits Idx="1" ]月[Digit:2digits Idx="2" ]日　獲得</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T12:58:29" />
+				Time="2011-11-17T02:18:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
