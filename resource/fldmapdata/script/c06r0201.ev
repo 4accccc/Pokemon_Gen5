@@ -151,6 +151,7 @@ EVENT_START   ev_c06r0201_swleader6_01
 
       //フウロ：じゃ　いきましょ！
       _BALLOONWIN_OBJMSG( msg_c06r0201_swleader6_03, C06R0201_SWLEADER6_01 )
+      _AB_KEYWAIT_MARK()
       _MSGWIN_CLOSE()
 
       //アララギ：もくてきは　ソウリュウシティ！
@@ -194,34 +195,22 @@ EVENT_START   ev_c06r0201_swleader6_01
       _BALLOONWIN_OBJMSG( msg_c06r0201_swleader6_06, C06R0201_SWLEADER6_01 )
       _MSGWIN_CLOSE()
 
-      //暗転【仮】発着デモへ（詳細未定）
-      _BLACK_OUT_SLOW()
-      _DISP_FADE_END_CHECK()
-
-      //フウロ、博士、ベル削除
-      _OBJ_DEL( C06R0201_SWLEADER6_01 )
-      _OBJ_DEL( C06R0201_HAKASE2_01 )
-      _OBJ_DEL( C06R0201_SWBELL_01 )
+        //ヤマジタウンへ
+        _CALL ev_map_change_t07
 
       //========================================//
       //暗転中にフウロ、博士、ベルを非表示
       _FLAG_SET( FV_C06R0201_SWLEADER6_01 )
       _FLAG_SET( FV_C06R0201_HAKASE2_01 )
       _FLAG_SET( FV_C06R0201_SWBELL_01 )
+      
+      //電気石の洞穴のベルを非表示
+      _FLAG_SET( FV_D06R0201_SWBELL_01 )
+      
       //========================================//
-
-      //t07ヤマジタウンまでジャンプ【仮】
+	 $WK_SCENE_T07 = 1 //イベント発生
       //========================================//
-      $WK_SCENE_T07 = 1 //イベント発生
-      //========================================//
-      _MAP_CHANGE( ZONE_ID_T07R0101, 6, 4, DIR_DOWN )
-
-      //暗転復帰
-      _BLACK_IN_SLOW()
-      _DISP_FADE_END_CHECK()
-
-      _TIME_WAIT( 15 )
-
+      
     //いいえ
     ELSE
 

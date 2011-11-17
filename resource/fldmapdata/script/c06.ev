@@ -456,7 +456,6 @@ EVENT_START   ev_scene_c06_swleader6_01
 
     //フウロ：じゃ　アナタも　きてね！　▼
     _BALLOONWIN_OBJMSG_POS( msg_c06_swleader6_08, C06_SWLEADER6_01, POS_DEFAULT )
-    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
     //========================================//
@@ -468,7 +467,6 @@ EVENT_START   ev_scene_c06_swleader6_01
   ELSE
     //フウロ：まだ　タワーオブヘブンを
     _BALLOONWIN_OBJMSG_POS( msg_c06_swleader6_06, C06_SWLEADER6_01, POS_DEFAULT )
-    _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
     //========================================//
