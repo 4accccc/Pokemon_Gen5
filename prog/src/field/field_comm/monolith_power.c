@@ -2086,6 +2086,11 @@ static void _mp_chg_brightness( MONOLITH_PWSELECT_WORK *mpw, const BOOL bflg )
   }
 //  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG1 |GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ, rate );
   G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ, rate );
+  //
+  // ñﬂÇ∑ç€Ç…alphaÇ‡ñﬂÇ∑
+  if(bflg == FALSE){
+    G2S_SetBlendAlpha(GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 15, 15);
+  }
 }
 
 //--------------------------------------------------------------
