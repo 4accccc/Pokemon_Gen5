@@ -7,10 +7,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]は
-パソコンの　スイッチを　いれた！[Ctrl2:PageClear ]</Text>
+パソコンの　スイッチを　いれた！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:46:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19,10 +19,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]は
-パソコンの　スイッチを　いれた！[Ctrl2:PageClear ]</Text>
+パソコンの　スイッチを　いれた！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:46:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -433,10 +433,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アララギはかせの
-パソコンに　せつぞくした！[Ctrl2:LineFeed ]</Text>
+パソコンに　せつぞく　した！▽</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:45:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -445,10 +445,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アララギ博士の
-パソコンに　接続した！[Ctrl2:LineFeed ]</Text>
+パソコンに　接続した！▽</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:45:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -477,12 +477,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>でんどういりの
-データが　こわれています[Ctrl2:PageClear ]
+データが　こわれています▼
 もういちど　でんどういり　すれば
-だいじょうぶ　です[Ctrl2:PageClear ]</Text>
+だいじょうぶ　です▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:45:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -491,12 +491,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>殿堂入りの
-データが　壊れています[Ctrl2:PageClear ]
+データが　壊れています▼
 もう一度　殿堂入り　すれば
-大丈夫　です[Ctrl2:PageClear ]</Text>
+大丈夫　です▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:45:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -525,12 +525,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おめでとうございます！[Ctrl2:PageClear ]
+			<Text>おめでとうございます！▼
 はじめて　クリアした　きねんとして
-かべがみが　ついか　されました！[Ctrl2:PageClear ]</Text>
+かべがみが　ついか　されました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:46:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -538,12 +538,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おめでとうございます！[Ctrl2:PageClear ]
+			<Text>おめでとうございます！▼
 初めて　クリアした　記念として
-壁紙が　追加されました！[Ctrl2:PageClear ]</Text>
+壁紙が　追加されました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:46:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -570,12 +570,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おめでとうございます！[Ctrl2:PageClear ]
+			<Text>おめでとうございます！▼
 チャンピオンに　かった　きねんとして
-かべがみが　ついか　されました！[Ctrl2:PageClear ]</Text>
+かべがみが　ついか　されました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:46:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -583,12 +583,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おめでとうございます！[Ctrl2:PageClear ]
+			<Text>おめでとうございます！▼
 チャンピオンに勝った　記念として
-壁紙が　追加されました！[Ctrl2:PageClear ]</Text>
+壁紙が　追加されました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:46:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -611,15 +611,16 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pc_on_07">
+		Label="msg_pc_on_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おめでとうございます！[Ctrl2:PageClear ]
+			<Text>おめでとうございます！▼
 キュレムを　つかまえた　きねんとして
-かべがみが　ついか　されました！[Ctrl2:PageClear ]</Text>
+かべがみが　ついか　されました！▼</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-21T11:58:28" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -627,12 +628,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おめでとうございます！[Ctrl2:PageClear ]
-キュレムを捕まえた　記念として
-壁紙が　追加　されました！[Ctrl2:PageClear ]</Text>
+			<Text>おめでとうございます！▼
+キュレムを　捕まえた　記念として
+壁紙が　追加されました！▼</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-21T11:58:58" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:45:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -653,10 +654,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　あずかりシステムを
-よびだした！[Ctrl2:PageClear ]</Text>
+よびだした！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:45:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -665,10 +666,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンの　預かりシステムを
-よびだした！[Ctrl2:PageClear ]</Text>
+よびだした！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:45:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1242,10 +1243,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]の
-パソコンに　せつぞくした！[Ctrl2:PageClear ]</Text>
+パソコンに　せつぞく　した！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:44:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1254,10 +1255,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]の
-パソコンに　接続した！[Ctrl2:PageClear ]</Text>
+パソコンに　接続した！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:44:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1579,10 +1580,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>きろく　システムに
-せつぞくした！[Ctrl2:PageClear ]</Text>
+せつぞく　した！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:44:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1591,10 +1592,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>記録システムに
-接続した！[Ctrl2:PageClear ]</Text>
+接続した！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:44:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1627,11 +1628,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はじめて　クリア　したときの
+			<Text>はじめて　クリアしたときの
 メンバーを　みることが　できます</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:44:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1639,11 +1640,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>初めて　クリア　したときの
+			<Text>初めて　クリアしたときの
 メンバーを　みることが　できます</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:44:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1757,10 +1758,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アララギはかせの
-パソコンに　せつぞくした！[Ctrl2:PageClear ]</Text>
+パソコンに　せつぞく　した！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:44:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1769,10 +1770,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アララギ博士の
-パソコンに　接続した！[Ctrl2:PageClear ]</Text>
+パソコンに　接続した！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:44:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1799,10 +1800,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘルプ　システムに
-せつぞくした！[Ctrl2:PageClear ]</Text>
+せつぞく　した！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:44:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1811,10 +1812,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヘルプ　システムに
-接続した！[Ctrl2:PageClear ]</Text>
+接続した！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:44:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

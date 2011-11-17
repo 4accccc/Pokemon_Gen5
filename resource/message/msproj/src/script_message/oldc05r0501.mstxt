@@ -540,10 +540,10 @@
 			Language="JPN">
 			<Text>その１『バカバカバカバカ！▼
 もうひとつ　おまけに　バカ！▼
-かわいく　いって　アンポンタン！</Text>
+かわいく　いって　アンポンタン！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T03:31:01" />
+				Time="2011-11-17T03:57:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -553,10 +553,10 @@
 			Language="JPN_KANJI">
 			<Text>その１『バカバカバカバカ！▼
 もうひとつ　おまけに　バカ！▼
-かわいく　いって　アンポンタン！</Text>
+かわいく　いって　アンポンタン！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T03:30:59" />
+				Time="2011-11-17T03:57:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -866,10 +866,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『……ここに　いるけどね▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……ここに　いるけどね[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T03:35:04" />
+				Time="2011-11-17T04:00:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -917,14 +917,14 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボクを　しんじてくれた
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクを　しんじてくれた
 ミンナが　どうなんているか▽
 あんじて　いたが……▼
 カレラは　カレラで　ポケモンのために
-やれることを　わかっているんだね▼</Text>
+やれることを　わかっているんだね[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T03:56:57" />
+				Time="2011-11-17T04:00:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -932,14 +932,14 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボクを　信じてくれた
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクを　信じてくれた
 ミンナが　どうなんているか▽
 案じていたが……▼
 カレラは　カレラで　ポケモンのために
-やれることを　わかっているんだね▼</Text>
+やれることを　わかっているんだね[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T03:56:47" />
+				Time="2011-11-17T04:00:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -975,14 +975,14 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……それに　くらべ
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……それに　くらべ
 この　ボクと　きたら！▼
 ほんとうに　すべきだったのは▼
 ポケモンの　こえを
-とどける　ことだった……！▼</Text>
+とどける　ことだった……！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T03:55:27" />
+				Time="2011-11-17T04:00:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -990,14 +990,14 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……それに　くらべ
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……それに　くらべ
 この　ボクと　きたら！▼
 本当に　すべきだったのは▼
 ポケモンの　声を
-届ける　ことだった……！▼</Text>
+届ける　ことだった……！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T03:57:10" />
+				Time="2011-11-17T04:00:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1035,7 +1035,7 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゼクロムは　しっていた▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ゼクロムは　しっていた▼
 ながく　いきて
 おおくの　ひとを　しっていた▼
 にんげんと　ポケモンは　これまでも
@@ -1046,10 +1046,10 @@ N</Text>
 それゆえ　りそうを　おいもとめる……▼
 ポケモンと　ひとの
 みらいを　きりひらく　ものを▽
-たすけようと　してくれるのだ▼</Text>
+たすけようと　してくれるのだ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T03:53:28" />
+				Time="2011-11-17T04:00:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1057,7 +1057,7 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゼクロムは　知っていた▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ゼクロムは　知っていた▼
 長く　生きて
 多くの　ヒトを　知っていた▼
 人間と　ポケモンは　これまでも
@@ -1068,10 +1068,10 @@ N</Text>
 それゆえ　理想を　追い求める……▼
 ポケモンと　ヒトの
 未来を　切り拓く　モノを▽
-助けようと　してくれるのだ▼</Text>
+助けようと　してくれるのだ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T04:00:58" />
+				Time="2011-11-17T04:00:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1106,7 +1106,7 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レシラムは　しっていた▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]レシラムは　しっていた▼
 ながく　いきて
 おおくの　ひとを　しっていた▼
 にんげんと　ポケモンは　これまでも
@@ -1117,10 +1117,10 @@ N</Text>
 それゆえ　しんじつを　おいもとめる……▼
 ポケモンと　ひとの
 みらいを　きりひらく　ものを▽
-たすけようと　してくれるのだ▼</Text>
+たすけようと　してくれるのだ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T03:55:39" />
+				Time="2011-11-17T04:00:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1128,7 +1128,7 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レシラムは　知っていた▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]レシラムは　知っていた▼
 長く　生きて
 多くの　ヒトを　知っていた▼
 人間と　ポケモンは　これまでも
@@ -1139,10 +1139,10 @@ N</Text>
 それゆえ　真実を　追い求める……▼
 ポケモンと　ヒトの
 未来を　切り拓く　モノを▽
-助けようと　してくれるのだ▼</Text>
+助けようと　してくれるのだ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T04:01:10" />
+				Time="2011-11-17T04:01:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1177,7 +1177,7 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しろと　くろを……▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]しろと　くろを……▼
 ポケモンと　にんげんを　わける
 そんな　ひつようは　ない！▼
 それぞれの　いのち……▼
@@ -1193,10 +1193,10 @@ N</Text>
 かたちが　うまれる▼
 これらの　すうしきに　より
 せかいは　つくりなおされ▽
-より　ゆたかに　なるッ！▼</Text>
+より　ゆたかに　なるッ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T06:27:54" />
+				Time="2011-11-17T04:01:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1204,7 +1204,7 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>白と　黒を……▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]白と　黒を……▼
 ポケモンと　人間を　わける
 そんな　必要は　ない！▼
 それぞれの　命……▼
@@ -1220,10 +1220,10 @@ N</Text>
 形が　うまれる▼
 これらの　数式に　より
 世界は　再構築され▽
-より　あざやかに　彩られるッ！▼</Text>
+より　あざやかに　彩られるッ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T06:27:59" />
+				Time="2011-11-17T04:01:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1259,17 +1259,17 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボクには　きこえる▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクには　きこえる▼
 モンスターボールの　なか
 ポケモンが　はなつ　トレーナーへの▽
 さまざまな　おもい……！▼
 なにより
 じぶんを　ひつようと　してくれる▼
 ひとと　であえた
-ポケモンの　よろこび……！▼</Text>
+ポケモンの　よろこび……！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T06:48:15" />
+				Time="2011-11-17T04:01:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1277,17 +1277,17 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボクには　きこえる▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクには　きこえる▼
 モンスターボールの　中
 ポケモンが　放つ　トレーナーへの▽
 さまざまな　思い……！▼
 なにより
 自分を　必要と　してくれる▼
 ヒトと　出会えた
-ポケモンの　喜び……！▼</Text>
+ポケモンの　喜び……！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T06:48:33" />
+				Time="2011-11-17T04:01:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1323,15 +1323,15 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボクは　いくよ▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクは　いくよ▼
 ポケモンの　ため
 トレーナーの　ため▽
 すべての　いのちの　ため……▼
 そして　この　ボクを　すくってくれた
-トモダチの　ために……！▼</Text>
+トモダチの　ために……！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T04:51:44" />
+				Time="2011-11-17T04:01:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1339,15 +1339,15 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボクは　行くよ▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクは　行くよ▼
 ポケモンの　ため
 トレーナーの　ため▽
 すべての　命の　ため……▼
 そして　この　ボクを　救ってくれた
-トモダチの　ために……！▼</Text>
+トモダチの　ために……！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-08T12:24:27" />
+				Time="2011-11-17T04:01:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

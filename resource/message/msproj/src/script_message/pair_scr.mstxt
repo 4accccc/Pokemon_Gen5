@@ -727,10 +727,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・その場で振り向き会話その１</Comment>
+・その場で振り向き会話その１
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-19T04:40:42" />
+				Time="2011-11-17T03:48:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -778,10 +779,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・その場で振り向き会話その２</Comment>
+・その場で振り向き会話その２
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-19T04:40:42" />
+				Time="2011-11-17T03:48:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -830,10 +832,11 @@
 			Language="JPN">
 			<Comment>♂
 ・その場で振り向き会話その３
-　繰り返し</Comment>
+　繰り返し
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-19T04:40:42" />
+				Time="2011-11-17T03:48:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

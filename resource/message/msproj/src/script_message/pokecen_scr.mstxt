@@ -7,14 +7,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おつかれさまです！
-ポケモン　センター　です[Ctrl2:PageClear ]
+ポケモン　センター　です▼
 ここでは　ポケモンの
-たいりょく　かいふくを　します[Ctrl2:PageClear ]
+たいりょく　かいふくを　します▼
 あなたの　ポケモンを
 やすませて　あげますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:34:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23,14 +23,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おつかれさまです！
-ポケモン　センター　です[Ctrl2:PageClear ]
+ポケモン　センター　です▼
 ここでは　ポケモンの
-体力回復を　します[Ctrl2:PageClear ]
+体力回復を　します▼
 あなたの　ポケモンを
 休ませて　あげますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:34:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67,14 +67,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おはようございます！
-ポケモン　センター　です[Ctrl2:PageClear ]
+ポケモン　センター　です▼
 ここでは　ポケモンの
-たいりょく　かいふくを　します[Ctrl2:PageClear ]
+たいりょく　かいふくを　します▼
 あなたの　ポケモンを
 やすませて　あげますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:34:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -83,14 +83,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おはようございます！
-ポケモン　センター　です[Ctrl2:PageClear ]
+ポケモン　センター　です▼
 ここでは　ポケモンの
-体力回復を　します[Ctrl2:PageClear ]
+体力回復を　します▼
 あなたの　ポケモンを
 休ませて　あげますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:34:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -127,14 +127,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>こんにちは！
-ポケモン　センター　です[Ctrl2:PageClear ]
+ポケモン　センター　です▼
 ここでは　ポケモンの
-たいりょく　かいふくを　します[Ctrl2:PageClear ]
+たいりょく　かいふくを　します▼
 あなたの　ポケモンを
 やすませて　あげますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:34:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -143,14 +143,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>こんにちは！
-ポケモン　センター　です[Ctrl2:PageClear ]
+ポケモン　センター　です▼
 ここでは　ポケモンの
-体力回復を　します[Ctrl2:PageClear ]
+体力回復を　します▼
 あなたの　ポケモンを
 休ませて　あげますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:34:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -415,12 +415,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おまちどおさま！[Ctrl2:PageClear ]
+			<Text>おまちどおさま！▼
 おあずかり　した　ポケモンは
-みんな　げんきに　なりましたよ！[Ctrl2:PageClear ]</Text>
+みんな　げんきに　なりましたよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:34:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -428,12 +428,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おまちどおさま！[Ctrl2:PageClear ]
+			<Text>おまちどおさま！▼
 お預かりした　ポケモンは
-みんな　元気に　なりましたよ！[Ctrl2:PageClear ]</Text>
+みんな　元気に　なりましたよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:34:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -518,13 +518,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おつかれさまです！
-ポケモン　センター　です[Ctrl2:PageClear ]
+ポケモン　センター　です▼
 ここでは　ポケモンの
-たいりょく　かいふくを　します[Ctrl2:PageClear ]
-あなたの　ポケモンを……[Ctrl2:PageClear ]</Text>
+たいりょく　かいふくを　します▼
+あなたの　ポケモンを……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:34:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -533,13 +533,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おつかれさまです！
-ポケモン　センター　です[Ctrl2:PageClear ]
+ポケモン　センター　です▼
 ここでは　ポケモンの
-体力回復を　します[Ctrl2:PageClear ]
-あなたの　ポケモンを……[Ctrl2:PageClear ]</Text>
+体力回復を　します▼
+あなたの　ポケモンを……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:34:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -576,20 +576,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そ　その　カードは！？[Ctrl2:PageClear ]
+			<Text>そ　その　カードは！？▼
 その　いろ！！
-その　かがやき！！[Ctrl2:PageClear ]
+その　かがやき！！▼
 わたしも　これまでに
-シルバーカードの　トレーナーさんなら[Ctrl2:LineFeed ]
-なんにんか　みてきましたが[Ctrl2:PageClear ]
+シルバーカードの　トレーナーさんなら▽
+なんにんか　みてきましたが▼
 それより　すごい
-トレーナーカードを　おもちの　かたは[Ctrl2:LineFeed ]
-[Name:TrainerName Idx="0" ]さんが　はじめて　です！[Ctrl2:PageClear ]
+トレーナーカードを　おもちの　かたは▽
+[Name:TrainerName Idx="0" ]さんが　はじめて　です！▼
 さあ　[Name:TrainerName Idx="0" ]さんの
 ポケモンを　やすませて　あげましょう！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:35:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -597,20 +597,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そ　その　カードは！？[Ctrl2:PageClear ]
+			<Text>そ　その　カードは！？▼
 その色！！
-その輝き！！[Ctrl2:PageClear ]
+その輝き！！▼
 わたしも　これまでに
-シルバーカードの　トレーナーさんなら[Ctrl2:LineFeed ]
-何人か　みてきましたが[Ctrl2:PageClear ]
+シルバーカードの　トレーナーさんなら▽
+何人か　みてきましたが▼
 それより　すごい
-トレーナーカードを　お持ちの　方は[Ctrl2:LineFeed ]
-[Name:TrainerName Idx="0" ]さんが　初めてです！[Ctrl2:PageClear ]
+トレーナーカードを　お持ちの　方は▽
+[Name:TrainerName Idx="0" ]さんが　初めてです！▼
 さあ　[Name:TrainerName Idx="0" ]さんの
 ポケモンを　休ませてあげましょう！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:35:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -702,16 +702,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おあずかりした　ポケモンに
-ポケルスが　ついて　いるようです[Ctrl2:PageClear ]
+ポケルスが　ついて　いるようです▼
 くわしいことは　わかって　いませんが
-ポケルスと　いうのは[Ctrl2:LineFeed ]
-ポケモンに　くっつく[Ctrl2:LineFeed ]
-ちいさな　せいめいたい　だそうです[Ctrl2:PageClear ]
+ポケルスと　いうのは▼
+ポケモンに　くっつく
+ちいさな　せいめいたい　だそうです▼
 これが　ついている　あいだ
 ポケモンが　よく　そだつ　みたいです</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:35:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -720,16 +720,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>お預かりした　ポケモンに
-ポケルスが　ついて　いるようです[Ctrl2:PageClear ]
+ポケルスが　ついて　いるようです▼
 詳しいことは　わかって　いませんが
-ポケルスと　いうのは[Ctrl2:LineFeed ]
-ポケモンに　くっつく[Ctrl2:LineFeed ]
-小さな　生命体　だそうです[Ctrl2:PageClear ]
+ポケルスと　いうのは▼
+ポケモンに　くっつく
+小さな　生命体　だそうです▼
 これが　ついている　あいだ
 ポケモンが　よく　育つみたいです</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:35:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1408,19 +1408,17 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>初めてユニオンに接続する際にそれまで一度も
-トレーナーカード内のトレーナータイプを変更して
-いない場合、店員が隠してあるトレーナータイプを告知
-
-事前にトレーナータイプを触っていた場合は起こさない
-
+			<Comment>・初めてユニオンに接続する際に
+　それまで一度も
+　トレーナーカード内のトレーナータイプを
+　変更していない場合、
+　店員が隠してあるトレーナータイプを告知
+・事前にトレーナータイプを触っていた場合は起こさない
 ・0:トレーナータイプ
-
-
-告知が終わると続いてmsg_pc_union_03</Comment>
+・告知が終わると続いてmsg_pc_union_03</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:36:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1547,10 +1545,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]は
-ライブキャスターを　つなげた[Ctrl2:PageClear ]</Text>
+ライブキャスターを　つなげた▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:37:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1559,10 +1557,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]は
-ライブキャスターを　つなげた[Ctrl2:PageClear ]</Text>
+ライブキャスターを　つなげた▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:37:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1622,10 +1620,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリンクようメッセージ</Comment>
+			<Comment>おもいでリンクようメッセージ
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T10:22:24" />
+				Time="2011-11-17T03:37:45" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1675,13 +1674,11 @@ DS本体の　電源が　切れましたね▼
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ＳＷＡＮより追加
-
-電源切断の警告
-</Comment>
+			<Comment>※swanで新規作成
+・電源切断の警告</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-04T09:17:09" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:36:29" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1708,11 +1705,11 @@ DS本体の　電源が　切れましたね▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たいせんの　せいかを　たたえて
-バトルポイントを　しんてい　いたします</Text>
+			<Text>対戦の　成果を　称えて
+バトルポイントを　進呈いたします</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-07T09:13:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:37:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1720,13 +1717,12 @@ DS本体の　電源が　切れましたね▼
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ＳＷＡＮより追加
-
-ＢＰ入手ｍｓｇ
+			<Comment>※swanで新規作成
+・ＢＰ入手ｍｓｇ
 </Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-04T09:17:09" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:36:46" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1765,13 +1761,12 @@ DS本体の　電源が　切れましたね▼
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ＳＷＡＮより追加
-
-ＢＰ入手ｍｓｇ
+			<Comment>※swanで新規作成
+・ＢＰ入手ｍｓｇ
 </Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-04T09:17:09" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:36:45" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1810,13 +1805,12 @@ DS本体の　電源が　切れましたね▼
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ＳＷＡＮより追加
-
-ＢＰ入手ｍｓｇ
+			<Comment>※swanで新規作成
+・ＢＰ入手ｍｓｇ
 </Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-04T09:17:09" />
+				User="matsumiya:W00224"
+				Time="2011-11-17T03:36:44" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

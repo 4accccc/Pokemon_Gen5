@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]Ｎ『ガントル　バチュル
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ガントル　バチュル
 ギアルに　テッシード▼
 アリガトウ
 ボクの　トモダチ▼
@@ -14,7 +14,7 @@
 くらしに　もどりたまえ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T08:01:08" />
+				Time="2011-11-17T03:58:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -22,7 +22,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]Ｎ『ガントル　バチュル
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ガントル　バチュル
 ギアルに　テッシード▼
 アリガトウ
 ボクの　トモダチ▼
@@ -30,7 +30,7 @@
 暮らしに　もどりたまえ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T08:00:56" />
+				Time="2011-11-17T03:59:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -117,7 +117,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]Ｎ『ポケモンを……▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ポケモンを……▼
 モンスターボールに
 とじこめておくなんて……▽
 ボクには　できない！▼
@@ -130,7 +130,7 @@
 ツラすぎる[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T12:22:48" />
+				Time="2011-11-17T03:59:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -138,7 +138,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]Ｎ『ポケモンを……▼
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ポケモンを……▼
 モンスターボールに
 閉じこめておくなんて……▽
 ボクには　できない！▼
@@ -151,7 +151,7 @@
 ツラすぎる[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T12:22:50" />
+				Time="2011-11-17T03:59:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -241,7 +241,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]ポケモンを　つかまえ
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ポケモンを　つかまえ
 たたかわせることが　あたりまえだと▽
 だれが　きめた　というのか？▼
 モンスターボールが　できる　まえは
@@ -250,7 +250,7 @@
 ルールで　しはい　されたんだ……！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T12:24:19" />
+				Time="2011-11-17T03:58:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -258,7 +258,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]ポケモンを　捕まえ
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ポケモンを　捕まえ
 戦わせることが　当たり前だと▽
 だれが　決めた　というのか？▼
 モンスターボールが　できる　前は
@@ -267,7 +267,7 @@
 ルールで　支配されたんだ……！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T12:24:30" />
+				Time="2011-11-17T03:58:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -356,7 +356,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]Ｎ『まだだ！
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]まだだ！
 まだ　せかいは　かわっていない▼
 ポケモンを　かいほう　するのは
 ボクが　でんせつの　ポケモン▽
@@ -365,7 +365,7 @@
 えいゆうと　なってからだよ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T02:51:02" />
+				Time="2011-11-17T03:59:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -373,7 +373,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]Ｎ『まだだ！
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]まだだ！
 まだ　世界は　変わっていない▼
 ポケモンを　解放するのは
 ボクが　伝説の　ポケモン▽
@@ -382,7 +382,7 @@
 英雄と　なってからだよ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T02:50:57" />
+				Time="2011-11-17T03:59:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -418,7 +418,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]Ｎ『まだだ！
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]まだだ！
 まだ　せかいは　かわっていない▼
 ポケモンを　かいほう　するのは
 ボクが　でんせつの　ポケモン▽
@@ -427,7 +427,7 @@
 えいゆうと　なってからだよ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T02:51:12" />
+				Time="2011-11-17T03:59:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -435,7 +435,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]Ｎ『まだだ！
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]まだだ！
 まだ　世界は　変わっていない▼
 ポケモンを　解放するのは
 ボクが　伝説の　ポケモン▽
@@ -444,7 +444,7 @@
 英雄と　なってからだよ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T02:51:13" />
+				Time="2011-11-17T03:59:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -532,7 +532,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]Ｎ『ボクは
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクは
 ポケモンと　にんげんを　くぶんし▽
 しろくろ　はっきり　わける！▼
 そうしてこそ
@@ -543,7 +543,7 @@
 ボクとの　わかれを　おしむのか……？[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T12:35:48" />
+				Time="2011-11-17T03:58:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -551,7 +551,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]Ｎ『ボクは
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクは
 ポケモンと　人間を　区分し▽
 白黒　はっきり　わける！▼
 そうしてこそ
@@ -562,7 +562,7 @@
 ボクとの　別れを　惜しむのか……？[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T02:54:22" />
+				Time="2011-11-17T03:58:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
