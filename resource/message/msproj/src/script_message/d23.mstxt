@@ -379,11 +379,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0" ]を　ゆずって
+			<Text>[Name:Item Idx="0" ]を　譲って
 代わりに　[Name:Item Idx="2" ]を　もらった！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T05:23:25" />
+				Time="2011-11-17T12:17:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

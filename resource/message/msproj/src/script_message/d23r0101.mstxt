@@ -241,10 +241,10 @@ GRIDX=15、GRIDZ=26
 ・はい選択後
 　すべての新人作業員と会話した
 ・アイテム入手処理
-　No019「やけどなおし」×１</Comment>
+　No619「わざマシン９４」（いわくだき）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T05:19:50" />
+				Time="2011-11-17T12:19:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -364,11 +364,11 @@ GRIDX=15、GRIDZ=26
 ぼくの　ゆめ　だった……▼
 それが　かなったから
 もう　まんぞく　なんだよお……▼
-え？　げんばかんとく？
+え？　げんばかんとく　が？
 しょうぶすれば　いいんでしょ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T03:06:54" />
+				Time="2011-11-17T12:20:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -380,11 +380,11 @@ GRIDX=15、GRIDZ=26
 ぼくの　夢だった……▼
 それが　かなったから
 もう　満足なんだよお……▼
-え？　現場監督？
+え？　現場監督が？
 勝負すれば　いいんでしょ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T03:07:23" />
+				Time="2011-11-17T12:20:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
