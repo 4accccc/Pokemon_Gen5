@@ -63,9 +63,7 @@ INIT_EVENT_END
 /*					FIELD_INIT_SCRIPT						*/
 /************************************************************/
 INIT_EVENT_START ev_init_r20
-  IF $WK_SCENE_R20 == 2 THEN
-    _OBJ_POS_CHANGE( R20_SWRIVAL_01 , 161, -3, 662, DIR_UP )
-  ELSIF $WK_SCENE_R20 == 3 THEN
+  IF $WK_SCENE_R20 == 3 THEN
     _OBJ_POS_CHANGE( R20_SWRIVAL_01 , 162, -3, 668, DIR_DOWN )
   ENDIF
 
@@ -202,45 +200,61 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_pos_r20_swrival_01
 
-  //アニメ：ライバル「！」
-  _OBJ_ANIME( R20_SWRIVAL_01, anm_common_gyoe )
-  _OBJ_ANIME_WAIT()
+  //主人公・ライバル名格納
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
+
+  //メッセージ：プレイヤー名！
+  _PLAINWIN_MSG_DOWN( msg_r20_swrival_01 )
+  _MSGWIN_CLOSE()
+  
+  //ライバル・チェレン配置変更
+  _OBJ_POS_CHANGE( R20_SWRIVAL_01 , 160, -1, 650, DIR_DOWN )
+  _OBJ_POS_CHANGE( R20_SWLEADER1_01 , 161, -1, 650, DIR_DOWN )
 
   //プレイヤー位置取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
   
+  //チェレン専用曲再生
+  _START_EVENT_BGM( SEQ_BGM_E_CHEREN )
+  
   //アニメ：ライバル隣接
-  _OBJ_ANIME_AUTO( R20_SWRIVAL_01, LCW_POSX, 661, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_AUTO( R20_SWLEADER1_01, 161, 658, FORCE_TYPE_ALL, 8, DIR_LR)
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME_AUTO( R20_SWRIVAL_01, 160, 658, FORCE_TYPE_ALL, 8, DIR_LR)
+  _TIME_WAIT( 8 )
+  
+  //主人公振り向く
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u)
   _OBJ_ANIME_WAIT()
+  
+  IF $LCW_POSX != 161 THEN
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 161, 660, FORCE_TYPE_NPC, 8, DIR_LR)
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u)
+    _OBJ_ANIME_WAIT()
+  ENDIF
   
   //主人公・ライバル名格納
   _PLAYER_NAME( 0 )
   _RIVAL_NAME( 1 )
   
-  //ライバル：こっちだ！
-  _BALLOONWIN_OBJMSG_POS( msg_r20_swrival_01, R20_SWRIVAL_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  //アニメ：主人公・ライバル長い草方面に移動
-  _OBJ_ANIME_AUTO( R20_SWRIVAL_01, 162, 665, FORCE_TYPE_NPC, 8, DIR_LR)
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 163, 665, FORCE_TYPE_NPC, 8, DIR_LR)
-  _OBJ_ANIME_WAIT()
-  
-  //アニメ：主人公・ライバル、チェレンに向き合う
-  _OBJ_ANIME( R20_SWRIVAL_01, anm_staystep_r)
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r)
-  _OBJ_ANIME( R20_SWLEADER1_01, anm_staystep_l)
-  _OBJ_ANIME_WAIT()
-  
   //チェレン：二人とも見て！
   _BALLOONWIN_OBJMSG_POS( msg_r20_swleader1_01, R20_SWLEADER1_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
-  //アニメ：全員長い草方面を見る
-  _OBJ_ANIME( R20_SWLEADER1_01, anm_staystep_d)
-  _TIME_WAIT( 8 )
-  _OBJ_ANIME( R20_SWRIVAL_01, anm_staystep_d)
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d)
+  //アニメ：主人公隣接
+  _OBJ_ANIME( R20_SWLEADER1_01, anm_swleader1_commeing )
+  _TIME_WAIT( 16 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+  _OBJ_ANIME( R20_SWRIVAL_01, anm_swrival_commeing )
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：長い草へ
+  _OBJ_ANIME( R20_SWLEADER1_01, anm_swleader1_look_kusa)
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME( R20_SWRIVAL_01, anm_player_look_kusa)
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_kusa)
   _OBJ_ANIME_WAIT()
   
   //チェレン：いろのこい
@@ -248,22 +262,45 @@ EVENT_START   ev_pos_r20_swrival_01
   _MSGWIN_CLOSE()
   
   //アニメ：チェレンと向き合う
-  _OBJ_ANIME( R20_SWLEADER1_01, anm_staystep_l)
-  _TIME_WAIT( 8 )
-  _OBJ_ANIME( R20_SWRIVAL_01, anm_staystep_r)
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r)
+  _OBJ_ANIME( R20_SWLEADER1_01, anm_staystep_u)
   _OBJ_ANIME_WAIT()
   
-  //チェレン：そう！
+  //チェレン：つぎに
   _BALLOONWIN_OBJMSG_POS( msg_r20_swleader1_03, R20_SWLEADER1_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
+  //アニメ：主人公に隣接
+  _OBJ_ANIME( R20_SWLEADER1_01, anm_walk_u)
+  _OBJ_ANIME_WAIT()
+  
+  //オレンのみ入手処理
+  _ITEM_EVENT_KEYWAIT(ITEM_MOMONNOMI, 3)
+  
+  //アニメ：ライバルに隣接
+  _OBJ_ANIME( R20_SWLEADER1_01, anm_swleader1_to_rival)
+  _OBJ_ANIME_WAIT()
+  
+  //主人公・ライバル名格納
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
+  
+  //チェレン：ライバルにも！
+  _BALLOONWIN_OBJMSG_POS( msg_r20_swleader1_04, R20_SWLEADER1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //チェレン：じゃ　ふたりとも
+  _BALLOONWIN_OBJMSG_POS( msg_r20_swleader1_05, R20_SWLEADER1_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
   //アニメ：チェレン退場
-  _OBJ_ANIME_AUTO( R20_SWLEADER1_01, 161, 653, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( R20_SWLEADER1_01, 161, 653, FORCE_TYPE_NPC, 8, DIR_LR)
   _TIME_WAIT( 16 )
   _OBJ_ANIME( R20_SWRIVAL_01, anm_staystep_u)
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u)
   _OBJ_ANIME_WAIT()
+  
+  //イベント曲終了
+  _END_EVENT_BGM()
   
   //ライバル：へぇ
   _BALLOONWIN_OBJMSG_POS( msg_r20_swrival_02, R20_SWRIVAL_01, POS_DEFAULT )
@@ -293,6 +330,49 @@ EVENT_START   ev_pos_r20_swrival_01
   //==================================//
   
 EVENT_END
+
+//--------------------------------------------------------------------
+//	チェレン：主人公に隣接
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader1_commeing
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_D_8F,2
+  _ANIME_DATA	AC_STAY_WALK_L_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ライバル：主人公に隣接
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swrival_commeing
+  _ANIME_DATA	AC_WALK_D_8F,2
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	チェレン：草に接近
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader1_look_kusa
+  _ANIME_DATA	AC_WALK_D_8F,3
+  _ANIME_DATA	AC_WALK_R_8F,2
+  _ANIME_DATA	AC_WALK_D_8F,2
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	主人公：長い草に隣接
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_look_kusa
+  _ANIME_DATA	AC_WALK_D_8F,3
+  _ANIME_DATA	AC_WALK_R_8F,3
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	チェレン：ライバルに隣接
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader1_to_rival
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+  _ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*  ライバル：話しかけ                                      */
