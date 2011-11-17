@@ -59,12 +59,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きみは……　[Name:TrainerName ]か▼
+			<Text>[Name:TrainerName ]か！▼
 なるほど　こうして　かくちを　めぐり
 おのれを　きたえているわけ　だな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T07:21:41" />
+				Time="2011-11-17T11:36:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -72,12 +72,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きみは……　[Name:TrainerName ]か▼
+			<Text>[Name:TrainerName ]か！▼
 なるほど　こうして　各地を　巡り
 おのれを　鍛えているわけ　だな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T07:31:48" />
+				Time="2011-11-17T11:36:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
