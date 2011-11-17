@@ -465,7 +465,7 @@
 	</row>
 	<row id="pw_event1_react_enemy_0">
 		<language name="JPN" width="256">カダス『ウグ……　バカニ　スルナ……</language>
-		<language name="JPN_KANJI" width="256">カダス『ウグ……　馬鹿ニ　スルナ……</language>
+		<language name="JPN_KANJI" width="256">カダス『ウグ……　バカニ　スルナ……</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『おこっているのか？</language>
@@ -494,7 +494,7 @@
 た……　た……　たすけ……</language>
 		<language name="JPN_KANJI" width="256">カダス『ウググ……
 ウググ……　ウググ……▽
-俺タチ　娘　ガ　心配……▽
+オレタチ　娘　ガ　心配……▽
 オ前ニ……　頼ミ……　ガググ…▽
 あががががががあががあ……▽
 た……　た……　助け……</language>
@@ -606,11 +606,11 @@
 イツモ　オレタチニ
 ヤサシク　コエ　ヲ　カケテクレル……</language>
 		<language name="JPN_KANJI" width="256">カダス『コノ　男ノ　娘……
-俺タチノ　コト　分カル……▼
+オレタチノ　コト　分カル……▼
 ダカラ　トテモ　優シイ……▼
-俺タチノ　墓　ヲ　イツモ
+オレタチノ　墓　ヲ　イツモ
 キレイニ　シテクレル▼
-イツモ　俺タチニ
+イツモ　オレタチニ
 優シク　声ヲ　カケテクレル……</language>
 	</row>
 	<row id="pw_event3_hero_2">
@@ -678,7 +678,7 @@
 ……　……　……　……　……　……　
 ……　……　……　……　……　……</language>
 		<language name="JPN_KANJI" width="256">カダス『オ前ノ　身体　丈夫▼
-俺ノ　器ニ　シテヤル
+オレノ　器ニ　シテヤル
 オ前ノ　タマシイ　ハ　イラナイ▼
 ……　……　……　……　……　……　
 ……　……　……　……　……　……</language>
@@ -746,7 +746,7 @@
 ……　……　……　……　……　……
 ……　……　……　……　……　……</language>
 		<language name="JPN_KANJI" width="256">カダス『オ前ノ　身体　丈夫▼
-俺ノ　器ニ　シテヤル
+オレノ　器ニ　シテヤル
 オ前ノ　タマシイ　モ　残シテ　ヤル▼
 ……　……　……　……　……　……
 ……　……　……　……　……　……</language>

@@ -62,10 +62,10 @@
 [Ctrl1:xcenter ]かわりばえしない　こうけい……
 
 [Ctrl1:xcenter ]そして　おうじを　にらみつける
-[Ctrl1:xcenter ]ジュジュベの　すがた　だった……</Text>
+[Ctrl1:xcenter ]ジュジュベの　すがた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-15T02:18:04" />
+				Time="2011-11-17T12:16:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -107,10 +107,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]追いつめられた
-[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]おうじ……</Text>
+[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]王子……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-15T02:20:28" />
+				Time="2011-11-17T12:16:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

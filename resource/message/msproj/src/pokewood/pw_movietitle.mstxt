@@ -3091,10 +3091,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマンのぎゃくしゅうファイナル</Text>
+			<Text>ハチクマンのぎゃくしゅうリターンズ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-09T03:57:55" />
+				Time="2011-11-17T10:15:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3102,10 +3102,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマンの逆襲　ＦＩＮＡＬ</Text>
+			<Text>ハチクマンの逆襲　Ｒｅｔｕｒｎｓ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T05:51:55" />
+				Time="2011-11-17T09:53:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -6352,10 +6352,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しゅつげん！　だいバンギラス</Text>
+			<Text>しゅつげん！　だいバンギラス！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:00:47" />
+				Time="2011-11-17T12:38:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -6363,10 +6363,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>出現！　大バンギラス</Text>
+			<Text>出現！　大バンギラス！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:04:26" />
+				Time="2011-11-17T12:38:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7172,11 +7172,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゴーストイレイザー
-あくりょうの　むら</Text>
+			<Text>ゴーストイレイザー　ファイル１
+ゆうれいたちの　むら</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:21:44" />
+				Time="2011-11-17T12:14:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7184,11 +7184,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゴーストイレイザー
-悪霊の　村</Text>
+			<Text>ゴーストイレイザー　ＦＩＬＥ１
+幽霊たちの　村</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:21:46" />
+				Time="2011-11-17T12:14:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7209,10 +7209,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ゴーストイレイザー　ファイル２
-あくりょうしょうじょ</Text>
+あくりょう　しょうじょ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:20:45" />
+				Time="2011-11-17T12:14:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7281,10 +7281,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ゴーストイレイザー　ファイル４
-あくりょうの　まじん</Text>
+はかいの　まじん</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:22:20" />
+				Time="2011-11-17T12:12:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7293,11 +7293,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ゴーストイレイザー　ＦＩＬＥ４
-悪霊の　魔神
+破壊の　魔神
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:22:19" />
+				Time="2011-11-17T12:12:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7763,10 +7763,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しゅつげん！　だいバンギラス</Text>
+			<Text>しゅつげん！　だいバンギラス！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:05:19" />
+				Time="2011-11-17T12:38:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7774,10 +7774,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>出現！　大バンギラス</Text>
+			<Text>出現！　大バンギラス！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-24T05:05:19" />
+				Time="2011-11-17T12:38:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8583,11 +8583,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゴーストイレイザー
-あくりょうの　むら</Text>
+			<Text>ゴーストイレイザー　ファイル１
+ゆうれいたちの　むら</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:30:20" />
+				Time="2011-11-17T12:14:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8595,11 +8595,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゴーストイレイザー
-悪霊の　村</Text>
+			<Text>ゴーストイレイザー　ＦＩＬＥ１
+幽霊たちの　村</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:29:43" />
+				Time="2011-11-17T12:13:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8692,10 +8692,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ゴーストイレイザー　ファイル４
-あくりょうの　まじん</Text>
+はかいの　まじん</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:30:20" />
+				Time="2011-11-17T12:12:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -8704,11 +8704,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ゴーストイレイザー　ＦＩＬＥ４
-悪霊の　魔神
+破壊の　魔神
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:29:43" />
+				Time="2011-11-17T12:12:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

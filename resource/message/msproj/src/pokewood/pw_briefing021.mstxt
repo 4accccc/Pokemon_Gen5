@@ -10,11 +10,11 @@
 
 [Ctrl1:xcenter ]そこは　かのじょとの
 
-[Ctrl1:xcenter ]おいでの　ばしょ。
+[Ctrl1:xcenter ]おもいでの　ばしょ
 </Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-03T13:36:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T12:19:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26,11 +26,10 @@
 
 [Ctrl1:xcenter ]そこは　彼女との
 
-[Ctrl1:xcenter ]思い出の　場所。
-</Text>
+[Ctrl1:xcenter ]思い出の　場所</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-03T13:37:05" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T12:20:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -56,12 +55,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]はじめて
+			<Text>[Ctrl1:xcenter ]はじめて　ふたりきりの
 
-[Ctrl1:xcenter ]デートを　した　ばしょ。</Text>
+[Ctrl1:xcenter ]デートを　した　ばしょ</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T09:31:35" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T12:20:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -69,12 +68,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]初めて　
+			<Text>[Ctrl1:xcenter ]初めて　二人きりの
 
-[Ctrl1:xcenter ]デートを　した　場所。</Text>
+[Ctrl1:xcenter ]デートを　した　場所</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T09:31:34" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T12:20:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -86,13 +85,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]プロポーズは　ゆうえんちの
-
-[Ctrl1:xcenter ]かんらんしゃ　だった。
-</Text>
+			<Text>[Ctrl1:xcenter ]こくはくは　かんらんしゃの　なか</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T09:31:43" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T12:26:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -100,13 +96,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]プロポーズは　遊園地の
-
-[Ctrl1:xcenter ]観覧車　だった。
+			<Text>[Ctrl1:xcenter ]告白は　観覧車の　中
 </Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T09:31:46" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T12:26:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -120,11 +114,10 @@
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]かのじょと　わかれた　いまも
 
-[Ctrl1:xcenter ]ゆうえんちを　おとずれる。
-</Text>
+[Ctrl1:xcenter ]きがつけば　ゆうえんちに　いる</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T09:30:32" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T12:21:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -132,13 +125,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]彼女と　わかれた　今も
+			<Text>[Ctrl1:xcenter ]彼女と　別れた　今も
 
-[Ctrl1:xcenter ]遊園地を　訪れる。
-</Text>
+[Ctrl1:xcenter ]気がつけば　遊園地に　いる</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T09:30:32" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T12:22:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -150,12 +142,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]そして　かのじょと
-
-[Ctrl1:xcenter ]さいかい　した。</Text>
+			<Text>[Ctrl1:xcenter ]そして　かのじょと　さいかい　した</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T09:30:32" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T12:23:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -163,12 +153,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]そして　彼女と
-
-[Ctrl1:xcenter ]再会を　した。</Text>
+			<Text>[Ctrl1:xcenter ]そして　彼女と　再会した</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T09:30:32" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T12:23:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -321,11 +309,11 @@
 
 [Ctrl1:xcenter ]そこは　かれとの
 
-[Ctrl1:xcenter ]おいでの　ばしょ。
+[Ctrl1:xcenter ]おもいでの　ばしょ
 </Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-03T07:11:21" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T12:23:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -337,11 +325,11 @@
 
 [Ctrl1:xcenter ]そこは　彼との
 
-[Ctrl1:xcenter ]思い出の　場所。
+[Ctrl1:xcenter ]思い出の　場所
 </Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-03T07:11:34" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T12:23:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -360,12 +348,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]はじめて
+			<Text>[Ctrl1:xcenter ]はじめて　ふたりきりで
 
-[Ctrl1:xcenter ]デートを　した　ばしょ。</Text>
+[Ctrl1:xcenter ]デートを　した　ばしょ</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T09:32:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T12:24:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -373,12 +361,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]初めて　
+			<Text>[Ctrl1:xcenter ]初めて　二人きりで
 
-[Ctrl1:xcenter ]デートを　した　場所。</Text>
+[Ctrl1:xcenter ]デートを　した　場所</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T09:32:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T12:24:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -390,13 +378,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]プロポーズは　ゆうえんちの
-
-[Ctrl1:xcenter ]かんらんしゃ　だった。
+			<Text>[Ctrl1:xcenter ]こくはくは　かんらんしゃの　なか
 </Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T09:32:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T12:24:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -404,13 +390,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]プロポーズは　遊園地の
-
-[Ctrl1:xcenter ]観覧車　だった。
+			<Text>[Ctrl1:xcenter ]告白は　観覧車の　中
 </Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T09:32:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T12:25:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -424,11 +408,11 @@
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]かのじょと　わかれた　いまも
 
-[Ctrl1:xcenter ]ゆうえんちを　おとずれる。
+[Ctrl1:xcenter ]きがつけば　ゆうえんちに　いる　
 </Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T09:31:58" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T12:25:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -436,13 +420,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]彼と　わかれた　今も
+			<Text>[Ctrl1:xcenter ]彼と　別れた　今も
 
-[Ctrl1:xcenter ]遊園地を　訪れる。
+[Ctrl1:xcenter ]気がつけば　遊園地に　いる
 </Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T09:31:58" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T12:25:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -456,10 +440,10 @@
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]そして　かれと
 
-[Ctrl1:xcenter ]さいかい　した。</Text>
+[Ctrl1:xcenter ]さいかい　した</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T09:31:58" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T12:26:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -469,10 +453,10 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]そして　彼と
 
-[Ctrl1:xcenter ]再会を　した。</Text>
+[Ctrl1:xcenter ]再会を　した</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T09:31:58" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-17T12:26:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

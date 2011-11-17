@@ -9,12 +9,12 @@
 			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]は　とあるくにの
 [Ctrl1:xcenter ]ワガママで　ゆうめいな　おうじさま
 
-[Ctrl1:xcenter ]きょうも　おうさまの
+[Ctrl1:xcenter ]きょうも　また　おうさまの
 [Ctrl1:xcenter ]いいつけに　そむいて
 [Ctrl1:xcenter ]よるおそく　にわを　さんぽしていた</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-14T12:34:51" />
+				Time="2011-11-17T12:18:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22,15 +22,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]は　とあるくにの
+			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]は　とある国の
 [Ctrl1:xcenter ]ワガママで　有名な　王子様
 
-[Ctrl1:xcenter ]今日も　王様の
-[Ctrl1:xcenter ]言いつけに　そむいて
+[Ctrl1:xcenter ]今日も　また　王様の
+[Ctrl1:xcenter ]言いつけに　背いて
 [Ctrl1:xcenter ]夜遅く　庭を　散歩していた</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-14T12:35:06" />
+				Time="2011-11-17T12:19:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -307,12 +307,12 @@
 			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]は　とあるくにの
 [Ctrl1:xcenter ]ワガママで　ゆうめいな　おひめさま
 
-[Ctrl1:xcenter ]きょうも　おうさまの
+[Ctrl1:xcenter ]きょうも　また　おうさまの
 [Ctrl1:xcenter ]いいつけに　そむいて
 [Ctrl1:xcenter ]よるおそく　にわを　さんぽしていた</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-14T12:34:11" />
+				Time="2011-11-17T12:18:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -322,13 +322,13 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]は　とある国の
 [Ctrl1:xcenter ]ワガママで　有名な　お姫様
-[Ctrl1:xcenter ]
-[Ctrl1:xcenter ]今日も　王様の
-[Ctrl1:xcenter ]言いつけに　そむいて
-[Ctrl1:xcenter ]夜おそく　庭を　散歩していた</Text>
+
+[Ctrl1:xcenter ]今日も　また　王様の
+[Ctrl1:xcenter ]言いつけに　背いて
+[Ctrl1:xcenter ]夜遅く　庭を　散歩していた</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-14T12:33:56" />
+				Time="2011-11-17T12:19:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
