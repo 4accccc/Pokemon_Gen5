@@ -52,17 +52,17 @@ INIT_EVENT_START   ev_zone_d10r0501
 	
 	//BlackVERならレシラム
 	IF $SCWK_ANSWER == VERSION_B2 THEN
-		$OBJCHRWORK0 = POKE10
+    $OBJCHRWORK0 = POKE10
 		$OBJCHRWORK1 = SPPOKE02_ZE
 		$OBJCHRWORK2 = SPPOKE05_KUZE
 	
 	//Whiteならゼクロム
 	ELSE
-		$OBJCHRWORK0 = POKE10
+    $OBJCHRWORK0 = POKE10
 		$OBJCHRWORK1 = SPPOKE01_RE
 		$OBJCHRWORK2 = SPPOKE04_KURE
 	ENDIF
-  
+
 INIT_EVENT_END
 
 /************************************************************/
@@ -298,10 +298,6 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   _OBJ_ANIME_WAIT()
 
-  //=======================================
-  // 解放状態のキュレムにする
-  $OBJCHRWORK0 = SPPOKE03_KU
-  //=======================================
 
   // いでんしのくさびカットイン
   IF $LCWK_VERSION == VERSION_B2 THEN
@@ -325,11 +321,19 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
   //=======================================
+  _OBJ_DEL( D10R0501_POKE1_01 )
+  // 解放状態のキュレムにする
+  $OBJCHRWORK0 = SPPOKE03_KU
+  _OBJ_ADD( D10R0501_POKE1_01 )
+  //=======================================
+  //=======================================
   // キュレムを表示し、ゲーチスを横に移動
-  _OBJ_POS_CHANGE( D10R0501_POKE1_01, 14, 0, 16, DIR_DOWN )
   _OBJ_POS_CHANGE( D10R0501_SWSAGE1_01, 17, 0, 16, DIR_DOWN)
+  // 解放キュレムはXに+1する
+  _OBJ_POS_CHANGE( D10R0501_POKE1_01, 15, 0, 16, DIR_DOWN )
   //_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 15, 0, 20, DIR_UP)
   //=======================================
+
 
   //ゼクロム・レシラム非表示
   _FLAG_SET( FV_D10R0401_POKE_02 )
