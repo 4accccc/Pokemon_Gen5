@@ -475,6 +475,66 @@ GMEVENT* CHAMPION_HallRoom( GAMESYS_WORK *gsys )
   return event;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ビル影OFF
+ *
+ *	@param	GAMESYS_WORK *gsys 
+ */
+//-----------------------------------------------------------------------------
+void CHAMPION_LightAttrOFF( GAMESYS_WORK *gsys )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+
+  // アイリス
+  {
+    const MMDLSYS *cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
+    MMDL* mmdl = MMDLSYS_SearchOBJID( cp_mmdlsys, C09R0501_SWCHAMPION_01 );  // アイリス
+    GF_ASSERT( mmdl );
+    // アトリビュートライト無効
+    MMDL_SetStatusLightAttrOFF( mmdl, TRUE );
+  }
+
+  // 主人公
+  {
+    FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+    MMDL* mmdl = FIELD_PLAYER_GetMMdl( p_player );
+
+    // アトリビュートライト無効
+    MMDL_SetStatusLightAttrOFF( mmdl, TRUE );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ビル影ON
+ *
+ *	@param	GAMESYS_WORK *gsys 
+ */
+//-----------------------------------------------------------------------------
+void CHAMPION_LightAttrON( GAMESYS_WORK *gsys )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+
+  // アイリス
+  {
+    const MMDLSYS *cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
+    MMDL* mmdl = MMDLSYS_SearchOBJID( cp_mmdlsys, C09R0501_SWCHAMPION_01 );  // アイリス
+    GF_ASSERT( mmdl );
+    // アトリビュートライト有効
+    MMDL_SetStatusLightAttrOFF( mmdl, FALSE );
+  }
+
+  // 主人公
+  {
+    FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+    MMDL* mmdl = FIELD_PLAYER_GetMMdl( p_player );
+
+    // アトリビュートライト有効
+    MMDL_SetStatusLightAttrOFF( mmdl, FALSE );
+  }
+}
+
 //=============================================================================
 /**
  *					static関数
@@ -856,27 +916,6 @@ static GMEVENT_RESULT LightingEvent( GMEVENT* event, int* seq, void* wk )
         ANM_Stop( p_wk->exp_obj, OBJ_RELIEF_1, anm_idx );
       }
 
-      // ビル影を無効にする
-      {
-        // アイリス
-        {
-          const MMDLSYS *cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
-          MMDL* mmdl = MMDLSYS_SearchOBJID( cp_mmdlsys, C09R0501_SWCHAMPION_01 );  // アイリス
-          GF_ASSERT( mmdl );
-          // アトリビュートライト無効
-          MMDL_SetStatusLightAttrOFF( mmdl, TRUE );
-        }
-        
-        // 主人公
-        {
-          FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
-          MMDL* mmdl = FIELD_PLAYER_GetMMdl( p_player );
-
-          // アトリビュートライト無効
-          MMDL_SetStatusLightAttrOFF( mmdl, TRUE );
-        }
-      }
-
       // 切り替え後になったことを保存
       SAVE_SetExchangeFlag( p_wk->p_sv_wk, TRUE );
 
@@ -981,26 +1020,6 @@ static GMEVENT_RESULT HallRoomEvent( GMEVENT* event, int* seq, void* wk )
     break;
 
   case SEQ_END:
-    // ビル影を有効にする
-    {
-      // アイリス
-      {
-        const MMDLSYS *cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
-        MMDL* mmdl = MMDLSYS_SearchOBJID( cp_mmdlsys, C09R0501_SWCHAMPION_01 );  // アイリス
-        GF_ASSERT( mmdl );
-        // アトリビュートライト有効
-        MMDL_SetStatusLightAttrOFF( mmdl, FALSE );
-      }
-
-      // 主人公
-      {
-        FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
-        MMDL* mmdl = FIELD_PLAYER_GetMMdl( p_player );
-
-        // アトリビュートライト有効
-        MMDL_SetStatusLightAttrOFF( mmdl, FALSE );
-      }
-    }
     return GMEVENT_RES_FINISH;
 
   default:

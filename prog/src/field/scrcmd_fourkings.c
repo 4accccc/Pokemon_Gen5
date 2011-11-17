@@ -512,3 +512,34 @@ VMCMD_RESULT EvCmdChampion_HallRoom( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ìaì∞ì¸ÇËïîâÆÅ@ÉrÉãâeOFF
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdChampion_LightAttrOFF( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  CHAMPION_LightAttrOFF( gsys );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ìaì∞ì¸ÇËïîâÆÅ@ÉrÉãâeON
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdChampion_LightAttrON( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  CHAMPION_LightAttrON( gsys );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+

@@ -44,6 +44,8 @@
   // チャンピオン部屋
   DEF_CMD( EvCmdChampion_Lighting, EV_SEQ_CHAMPION_LIGHTING )
   DEF_CMD( EvCmdChampion_HallRoom, EV_SEQ_CHAMPION_HALL_ROOM )
+  DEF_CMD( EvCmdChampion_LightAttrOFF, EV_SEQ_CHAMPION_LIGHT_ATTR_OFF )
+  DEF_CMD( EvCmdChampion_LightAttrON, EV_SEQ_CHAMPION_LIGHT_ATTR_ON )
 
   END_CMD
   //スクリプトコマンドテーブル終了

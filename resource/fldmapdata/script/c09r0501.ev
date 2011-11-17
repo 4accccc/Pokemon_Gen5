@@ -56,6 +56,8 @@ EVENT_START ev_pos_c09r0501_lighting_01
 
     //照明が点灯
     _CHAMPION_LIGHTING()
+    // ビル影OFF
+    _CHAMPION_LIGHT_ATTR_OFF()
     _SE_PLAY( SEQ_SE_SW_CHAMPIRIS_01 )    // 部屋の照明がつく音
 
     _TIME_WAIT( 16 )
@@ -216,6 +218,9 @@ EVENT_START ev_c09r0501_swchampion_01
   _TIME_WAIT( 16 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_work_up_01 )
   _OBJ_ANIME_WAIT()
+  
+  // ビル影ON
+  _CHAMPION_LIGHT_ATTR_ON()
 
   //マップチェンジ後以下のスクリプトを起動する
   _RESERVE_SCRIPT( SCRID_RESERVE_C09R0601_SWCHAMPION_01 )

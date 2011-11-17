@@ -10320,6 +10320,36 @@
   .short  EV_SEQ_CHAMPION_HALL_ROOM
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _CHAMPION_LIGHT_ATTR_OFF
+ * @brief チャンピオン部屋  主人公とアイリスのビル影をOFF
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ *
+ * @note  通常使用禁止
+ */
+//--------------------------------------------------------------
+#define _CHAMPION_LIGHT_ATTR_OFF() _ASM_CHAMPION_LIGHT_ATTR_OFF
+
+  .macro  _ASM_CHAMPION_LIGHT_ATTR_OFF
+  .short  EV_SEQ_CHAMPION_LIGHT_ATTR_OFF
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _CHAMPION_LIGHT_ATTR_ON
+ * @brief チャンピオン部屋  主人公とアイリスのビル影をON
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ *
+ * @note  通常使用禁止
+ */
+//--------------------------------------------------------------
+#define _CHAMPION_LIGHT_ATTR_ON() _ASM_CHAMPION_LIGHT_ATTR_ON
+
+  .macro  _ASM_CHAMPION_LIGHT_ATTR_ON
+  .short  EV_SEQ_CHAMPION_LIGHT_ATTR_ON
+  .endm
+
 
 
 //======================================================================
