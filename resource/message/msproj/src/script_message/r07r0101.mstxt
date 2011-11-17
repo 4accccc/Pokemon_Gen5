@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『はーい!
+			<Text>アララギ『ハーイ！
 フウロちゃんは　どうだった？▼
 あら？　まだ　
 ジムバッジを　もらってないのね▼
@@ -16,7 +16,7 @@
 これを　つかってみない？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-04T09:52:15" />
+				Time="2011-11-17T03:03:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -24,7 +24,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『はーい!
+			<Text>アララギ『ハーイ！
 フウロちゃんは　どうだった？▼
 あら？　まだ　
 ジムバッジを　もらってないのね▼
@@ -34,7 +34,7 @@
 これを　使ってみない？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-04T09:52:20" />
+				Time="2011-11-17T03:04:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -45,10 +45,11 @@
 			<Comment>♀
 ・c06ジムバッジ取得前
 ・アイテム入手処理
-　No000「しあわせタマゴ」</Comment>
+　No231「しあわせタマゴ」
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T11:03:55" />
+				Time="2011-11-17T03:03:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -105,10 +106,11 @@
 			<Comment>♀
 ・c06ジムバッジ取得前
 ・アイテム入手後
-・続けて</Comment>
+・続けてhakase2_03
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T11:06:00" />
+				Time="2011-11-17T03:03:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -166,10 +168,11 @@
 			Language="JPN">
 			<Comment>♀
 ・c06ジムバッジ入手まで繰り返し
-・c06ジムバッジ入手でここから削除</Comment>
+・c06ジムバッジ入手でここから削除
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T11:06:54" />
+				Time="2011-11-17T03:02:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -230,10 +233,11 @@
 　ここで会話しなかった場合
 ・c06ジムバッジ取得後
 ・アイテム入手処理
-　No000「しあわせタマゴ」</Comment>
+　No231「しあわせタマゴ」
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T11:11:56" />
+				Time="2011-11-17T03:03:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -255,7 +259,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『はーい!
+			<Text>アララギ『ハーイ！
 フウロちゃんは　どうだった？▼
 あら！　ジェットバッジ　じゃない！
 それじゃ　ひこうきが　とぶのね▼
@@ -264,7 +268,7 @@
 きみ　つかってみてよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T11:14:41" />
+				Time="2011-11-17T03:04:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -272,7 +276,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『はーい!
+			<Text>アララギ『ハーイ！
 フウロちゃんは　どうだった？▼
 あら！　ジェットバッジ　じゃない！
 それじゃ　飛行機が　飛ぶのね▼
@@ -281,7 +285,7 @@
 きみ　使ってみてよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-27T02:07:45" />
+				Time="2011-11-17T03:04:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -294,10 +298,11 @@
 　ここで会話しなかった場合
 ・c06ジムバッジ取得後
 ・アイテム入手処理
-　No000「しあわせタマゴ」</Comment>
+　No231「しあわせタマゴ」
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T11:14:41" />
+				Time="2011-11-17T03:03:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -352,10 +357,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・アイテム入手</Comment>
+・アイテム入手
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T11:14:41" />
+				Time="2011-11-17T03:02:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -401,10 +407,11 @@
 			Language="JPN">
 			<Comment>♀
 ・メッセージ表示後、r07方面へ移動
-　画面外に消えると主人公操作可能に</Comment>
+　画面外に消えると主人公操作可能に
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T11:14:41" />
+				Time="2011-11-17T03:02:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

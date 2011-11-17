@@ -7,7 +7,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>まさか　したの　３にんが
-やぶれてしまう　だなんて……▼
+やぶれた　だなんて……▼
 とはいえ　これいじょう
 すすむのは　むり▼
 あなたは　あの　カップルのため
@@ -15,7 +15,7 @@
 どちらが　つよいか　わかるでしょ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T06:29:46" />
+				Time="2011-11-17T03:01:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24,7 +24,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>まさか　下の　３人が
-敗れてしまう　だなんて……▼
+敗れた　だなんて……▼
 とはいえ　これ以上
 進むのは　無理▼
 あなたは　あの　カップルのため
@@ -32,7 +32,7 @@
 どちらが　強いか　わかるでしょ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-17T06:29:41" />
+				Time="2011-11-17T03:01:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
