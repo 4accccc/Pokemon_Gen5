@@ -23,12 +23,11 @@
 #define T03_BREEDERM_01                    7
 #define T03_POKE19_01                      8
 #define T03_SWBELL_01                      9
-#define T03_SWPLAZMAM_01                  10
-#define T03_SWSAGE7_01                    11
-#define T03_SWPLAZMAM_02                  12
-#define T03_SWRIVAL_01                    13
-#define FLD_ITEM_142                      14
-#define FLD_ITEM_144_DUMMY                15
+#define T03_SWSAGE7_01                    10
+#define T03_SWPLAZMAM_02                  11
+#define T03_SWRIVAL_01                    12
+#define FLD_ITEM_142                      13
+#define FLD_ITEM_144_DUMMY                14
 
 #endif //ZONE_T03_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t03.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

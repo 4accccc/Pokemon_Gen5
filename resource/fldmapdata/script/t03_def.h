@@ -20,5 +20,6 @@
 #define SCRID_T03_POLICEMAN_01 (13)
 #define SCRID_T03_POKE19_01 (14)
 #define SCRID_T03_BREEDERM_01 (15)
+#define SCRID_T03_SWRIVAL_01 (16)
 
 #endif //_T03_DEF_H_

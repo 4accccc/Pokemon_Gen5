@@ -75,7 +75,7 @@ INIT_EVENT_END
 INIT_EVENT_START  ev_init_t03r0201
 
   //カゴメタウンのプラズマ団を倒していなかった場合は表示
-  IF $WK_SCENE_T03 != 4 && FLAG_ON( FV_T03R0201_OLDWOMAN1_01 ) THEN
+  IF $WK_SCENE_T03 <= 4 THEN
 
     //========================================//
     //おばあさん表示
@@ -187,6 +187,9 @@ EVENT_START   ev_reserve_t03r0201_hakase2_01
 
   //アニメ：アララギ娘、主人公らを見る
   _OBJ_ANIME( T03R0201_HAKASE2_01, anm_common_turn_r )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( T03R0201_SWBELL_01, anm_dir_l )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
   _OBJ_ANIME_WAIT()
 
   //アララギ娘：とても　きょうみぶかい
@@ -196,6 +199,8 @@ EVENT_START   ev_reserve_t03r0201_hakase2_01
   //アニメ：アララギ娘、ベル退場
   _OBJ_ANIME( T03R0201_HAKASE2_01, anm_hakase2_back )
   _OBJ_ANIME( T03R0201_SWBELL_01, anm_swbell_back )
+  _TIME_WAIT( 16 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
   _OBJ_ANIME_WAIT()
   _OBJ_DEL( T03R0201_HAKASE2_01 )
   _OBJ_DEL( T03R0201_SWBELL_01 )
@@ -316,4 +321,21 @@ _ANIME_LABEL  anm_common_gyoe
   _ANIME_DATA AC_MARK_GYOE,1
   _ANIME_DATA ACMD_END,0
 
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
