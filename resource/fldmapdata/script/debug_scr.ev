@@ -47,6 +47,9 @@
 
   .include  "tv_scr_def.h"
   .include  "resort_scr_def.h"
+  
+  .include  "w21.h" //w21への遷移参照用
+  .include  "w21_def.h" //w21への遷移参照用
 
 
 //--------------------------------------------------------------
@@ -559,8 +562,10 @@ EVENT_START   ev_debug_mizuguchi
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_18, 17 )	//d24連れ歩き開始
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_19, 18 )	//c14イベント開始
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_20, 19 )	//c15チュートリアル開始
-		_BMPMENU_MAKE_LIST( msg_debug_mizu_20, 20 )	//テスト
-		_BMPMENU_MAKE_LIST( msg_debug_mizu_20, 21 )	//テスト
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_21, 20 )	//コバルオン登場
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_00, 21 )	//テスト
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_00, 22 )	//テスト
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_00, 23 )	//テスト
 		
 		//メニュー表示
 		_BMPMENU_START()
@@ -586,7 +591,9 @@ EVENT_START   ev_debug_mizuguchi
 			$WK_SCENE_R04_SWBOSS = 1
 			_FLAG_RESET( FV_R04_SWBOSS_01 )
 			_FLAG_RESET( FV_R04_BIGROCK_01 )
-			_MAP_CHANGE( ZONE_ID_R04, 430, 589, DIR_LEFT )
+			_FLAG_SET( FV_R04_WORKMAN_01 )
+			//_MAP_CHANGE( ZONE_ID_R04, 430, 589, DIR_LEFT )
+			_MAP_CHANGE( ZONE_ID_R04W, 405, 579, DIR_UP )
 		ELSIF $SCWK_TEMP2 == 4 THEN
 		  //C08アイリス表示
       $WK_SCENE_C08_SWCHAMPION = 1
@@ -848,11 +855,23 @@ EVENT_START   ev_debug_mizuguchi
       _MAP_CHANGE( ZONE_ID_C13R0501, 5, 3, DIR_UP)
 
     ELSIF $SCWK_TEMP2 == 20 THEN
+      
+      //コバルオン登場
+      $WK_SCENE_R06_LEGEND_MEET = 1
+      //R06七賢人ロット非表示
+      _FLAG_SET( FV_R06_SAGE6_01 )
+      //R06事情通の老人非表示
+      _FLAG_SET( FV_R06_OLDMAN1_01 )
+      _MAP_CHANGE( ZONE_ID_R06, 103, 366, DIR_UP )
+      
+      /*
+      //牧場イベント最後の
       $WK_SCENE_D22R0101 = 4
       _FLAG_RESET(FV_D22R0101_BREEDER_01)
       _FLAG_RESET(FV_D22R0101_SWRIVAL_01)
       _FLAG_RESET(FV_D22R0101_SWPLAZMA_01)
       _MAP_CHANGE( ZONE_ID_D22, 142, 631, DIR_UP )
+      */
     ELSIF $SCWK_TEMP2 == 21 THEN
       //D11R0101初期化
       $WK_SCENE_D11R0101 = 0
@@ -862,21 +881,22 @@ EVENT_START   ev_debug_mizuguchi
       
       
     ELSIF $SCWK_TEMP2 == 22 THEN
-      //W21のイベント進行状態を進めて接続を作成
-      $WK_SCENE_W21_01 = 3
-      $WK_SCENE_D05 = 0
-      //W21アジト船表示（タラップあり）
-      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, FALSE , FALSE )
-      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, TRUE , TRUE )
+      _FLAG_SET( FV_W21_SWRIVAL_01 )
+      _FLAG_SET( FV_W21_SWLEADER1_01 )
+      //W21のイベント進行状態を進めてイベントを発生
+      $WK_SCENE_W21_01 = 1
       //マップ遷移
-      _MAP_CHANGE( ZONE_ID_W21, 797, 243, DIR_RIGHT )
+      _MAP_CHANGE( ZONE_ID_D32R0101, 29, 11, DIR_RIGHT )
     
     ELSIF $SCWK_TEMP2 == 23 THEN
-      //W21アジト船非表示
-      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, FALSE , FALSE )
-      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, FALSE , FALSE )
-      //マップ遷移
-      _MAP_CHANGE( ZONE_ID_W21, 797, 243, DIR_RIGHT )
+      //W21ライバル表示
+      _FLAG_RESET( FV_W21_SWRIVAL_01 )
+      //W21チェレン表示
+      _FLAG_RESET( FV_W21_SWLEADER1_01 )
+      //W21イベント進行
+      $WK_SCENE_W21_01 = 4
+      _RESERVE_SCRIPT( SCRID_RESERVE_W21_SWPLAZMA_END_01 )
+      _MAP_CHANGE( ZONE_ID_W21, 794, 241, DIR_DOWN )
     
     ELSIF $SCWK_TEMP2 == 24 THEN
     

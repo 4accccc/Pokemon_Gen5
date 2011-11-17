@@ -23,14 +23,15 @@
 #define FLD_ITEM_126                       5
 #define T04_SWRIVAL_01                     6
 #define T04_SAGE7_01                       7
+#define T04_WORKMAN2_01                    8
 
 #endif //ZONE_T04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_T04_EVB_H
 #define ZONE_T04_EVB_H
 
-#define BGID_T04_SIGN1_01                 0
-#define BGID_T04_SIGN1_02                 1
+#define BG_T04_SIGN1_01                   0
+#define BG_T04_SIGN1_02                   1
 #define BG_T04_DUMMY_FES_01               2
 #define BG_T04_DUMMY_FES_02               3
 #define BG_T04_DUMMY_FES_03               4
@@ -44,5 +45,6 @@
 #define HIDE_ITEM_202                    12
 #define HIDE_ITEM_203                    13
 #define HIDE_ITEM_204                    14
+#define BG_T04_SIGN4_01                  15
 
 #endif //ZONE_T04_EVB_H

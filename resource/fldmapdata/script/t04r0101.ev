@@ -27,18 +27,13 @@ _EVENT_DATA    ev_bg_t04r0101_board_01
 _EVENT_DATA    ev_t04r0101_informationw_01
 _EVENT_DATA    ev_pos_t04r0101_stopper_01
 _EVENT_DATA    ev_t04r0101_stopper_02
+_EVENT_DATA    ev_t04r0101_girl4_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
 DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
-//------------------------------注意--------------------------------//
-
-//	イベントで　LOCALWORK9～15　を使用しています
-//	同マップ内での使用を禁止します
-
-//------------------------------------------------------------------//
 
 /************************************************************/
 /*					FIELD_INIT_LABEL						*/
@@ -56,6 +51,13 @@ EVENT_START		ev_t04r0101_informationw_01
   ELSE
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0101_infomationw_02 )
   ENDIF
+EVENT_END
+
+/**************************************************************/
+/* 			GIRL4：話しかけ			  */
+/**************************************************************/
+EVENT_START		ev_t04r0101_girl4_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0101_girl4_01 )
 EVENT_END
 
 /**************************************************************/

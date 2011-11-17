@@ -10,7 +10,7 @@
 #ifndef ZONE_T04R0101_EVC_H
 #define ZONE_T04R0101_EVC_H
 
-#define T04R0101_FIGHTERM_01               0
+#define T04R0101_GIRL4_01                  0
 #define T04R0101_STOPPER_01                1
 #define T04R0101_INFORMATIONW_01           2
 #define T04R0101_STOPPER_02                3

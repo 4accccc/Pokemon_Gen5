@@ -17,5 +17,7 @@
 #define SCRID_T04_SWRIVAL_01 (10)
 #define SCRID_T04_SAGE7_01 (11)
 #define SCRID_POS_T04_LOCALTVT_01 (12)
+#define SCRID_T04_WORKMAN2_01 (13)
+#define SCRID_BG_T04_SIGN4_01 (14)
 
 #endif //_T04_DEF_H_

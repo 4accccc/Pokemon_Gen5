@@ -2760,6 +2760,38 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_debug_mizu_00">
+		<LanguageCell
+			Language="JPN">
+			<Text>テスト</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-17T02:23:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-17T02:23:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>テスト</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-17T02:23:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-17T02:23:51" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_debug_mizu_01"
 		Style="Large">
 		<LanguageCell
@@ -3459,10 +3491,10 @@
 		Label="msg_debug_mizu_21">
 		<LanguageCell
 			Language="JPN">
-			<Text>D05 船非表示</Text>
+			<Text>R06 コバルオン登場！</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-30T06:40:18" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-17T02:07:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"
@@ -3470,10 +3502,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>D05 船非表示</Text>
+			<Text>R06 コバルオン登場！</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-08-30T06:40:21" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-17T02:07:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00226"

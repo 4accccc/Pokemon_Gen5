@@ -161,17 +161,41 @@ EVENT_START   ev_pos_r06_legend_meet_01
   _FLAG_RESET( FV_R06_OLDMAN1_01 )
   //========================================//
   
-   //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  // コバルオンOBJ生成
+  _OBJ_ADD_EX( 110, 353, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE4_STEP, MV_DMY )
   
-  //フィールド上にコバルオン配置
-  _OBJ_ADD_EX( LCW_POSX, 355, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE4, MV_DMY )
+  //？？？：こふおおおーーっ！
+  _VOICE_PLAY( MONSNO_645, 0 )
+  _GIZAPLAINWIN_MSG_POS( msg_r06_poke4_01, POS_UP )
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _GIZAPLAINWIN_CLOSE()
   
-  //アニメ：コバルオン接近
-  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, LCW_POSX, 363, FORCE_TYPE_NPC, 8, DIR_UD)
   //アニメ：主人公「！」
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_common_gyoe )
   _OBJ_ANIME_WAIT()
+  
+   //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
+  
+  //主人公中央に移動
+  IF $LCW_POSX != 103 THEN
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 103, 365, FORCE_TYPE_NPC, 8, DIR_LR)
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
+  _TIME_WAIT( 15 )
+  
+  // 移動ポケモンアニメ作成
+  _EV_MOVEPOKE_CREATE( MMDL_ID_EVENTOBJ_00 )
+  
+  // 登場アニメ
+  _EV_MOVEPOKE_START_ANIME( SCR_EV_MOVEPOKE_ANIME_KOBARUON_IN )
+  _EV_MOVEPOKE_CHECK_ANIME_END()
+  
+  _TIME_WAIT( 30 )
   
   //コバルオン：こふおおおーっ！
   _BALLOONWIN_OBJMSG_POS( msg_r06_poke4_01,MMDL_ID_EVENTOBJ_00, POS_DEFAULT ) 
@@ -180,11 +204,16 @@ EVENT_START   ev_pos_r06_legend_meet_01
   _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
   
-  //アニメ：コバルオン退場
-  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 114, 363, FORCE_TYPE_NPC, 8, DIR_UD)
-  _OBJ_ANIME_WAIT()
+  _TIME_WAIT( 12 )
   
-  //コバルオン動作OBJ削除
+  // 退場アニメ
+  _EV_MOVEPOKE_START_ANIME( SCR_EV_MOVEPOKE_ANIME_KOBARUON_OUT )
+  _EV_MOVEPOKE_CHECK_ANIME_END()
+
+  // 移動ポケモンアニメ破棄
+  _EV_MOVEPOKE_DELETE()
+
+  // コバルオンOBJ削除
   _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
   
   //七賢人動作OBJ生成
@@ -201,6 +230,8 @@ EVENT_START   ev_pos_r06_legend_meet_01
   
   //事情通老人・配置箇所変更
   _OBJ_POS_CHANGE( R06_OLDMAN1_01, LCW_POSX, 0, 372, DIR_UP )
+  
+  _TIME_WAIT( 30 )
   
   $LCW_POSZ += 2
   //アニメ：ロット接近
