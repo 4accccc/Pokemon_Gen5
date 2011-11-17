@@ -397,8 +397,17 @@ EVENT_START   ev_reserve_c08_plazma_comming_01
   //ホワイトアウト
   _DEMO_FADEOUT_WHITE_CALL()
   
-  //デモ再生処理
-  _CALL_3D_DEMO( DEMO3D_ID_CITY_PLASMA_COME )
+  {
+    DEFINE_LOCAL LCWK_VERSION
+    // ROMバージョン取得
+    _GET_ROM_VERSION( LCWK_VERSION )
+    //デモ再生処理
+    IF $LCWK_VERSION == VERSION_B2 THEN
+      _CALL_3D_DEMO( DEMO3D_ID_CITY_PLASMA_COME_B )
+    ELSE
+      _CALL_3D_DEMO( DEMO3D_ID_CITY_PLASMA_COME_W )
+    ENDIF
+  }
   
   //ホワイトイン
   _DEMO_FADEIN_WHITE_CALL()
