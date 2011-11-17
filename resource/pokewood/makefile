@@ -101,11 +101,11 @@ clean:
 	@$(MAKE_SUBDIR)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
-	rm *.txt
-	rm pokewood_senario*.bin
-	rm *_f.gmm
-	rm *_m.gmm
-	rm bgm_hash.rb
+	-rm -f *.txt
+	-rm -f pokewood_senario*.bin
+	-rm -f *_f.gmm
+	-rm -f *_m.gmm
+	-rm -f bgm_hash.rb
 endif
 	-rm -f $(TARGETDIR)/$(targetname).narc
 	-rm -f $(TARGETDIR)/$(targetname).naix
