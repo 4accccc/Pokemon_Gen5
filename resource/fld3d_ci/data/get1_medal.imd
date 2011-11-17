@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="toyama" host="W00153" date="2011-11-17T17:01:19" source="get1_medal.mb"/>
+	<create user="toyama" host="W00153" date="2011-11-17T20:55:39" source="get1_medal.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="toyama" host="W00153" date="2011-11-17T17:01:19" source="get1_medal.mb"/>
+<original_create user="toyama" host="W00153" date="2011-11-17T20:55:39" source="get1_medal.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,57 +27,57 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="2" xyz="-2.070557 2.374268 2.000000" whd="4.141113 4.141113 0.000000"/>
+<box_test pos_scale="2" xyz="-1.941406 2.503662 2.000000" whd="3.882324 3.882324 0.000000"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="ci_item_medal"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="ci_item_medal_pl"
 		path="C:/Documents and Settings/toyama/デスクトップ/encountefect/medal_get/ci_item_medal.tga"
 	>
 		<bitmap size="256">
-			0000 0000 0000 1100 0011 0000 0000 0000
-			0000 0000 3200 9766 5779 0024 0000 0000
-			0000 0000 b752 bbbb bbbb 257b 0000 0000
-			0000 4000 bbb8 bbbb bbbb 8bbb 0004 0000
-			0000 b510 b9bb bbbb 9bbb bb99 016b 0000
-			0000 bb51 626b 99ab 1456 5312 16bb 0000
-			0000 bbb5 501a 015b 0000 1100 5bb9 0000
-			4000 bbbb 9403 505b 5555 9965 bbbb 0004
-			8200 39bb b910 b05b bbbb bbbb bbbb 0027
-			b500 05bb bb61 a05b bbbb bbbb bbbb 005b
-			b820 03bb bbb1 805b 4599 7555 bbbb 028b
-			bb40 006b bb92 105b 0000 3000 bbba 04bb
-			bb50 1016 bba1 305b 9554 3059 bbba 05bb
-			8b70 3201 bb81 0019 bba3 503b bbbb 06bb
-			5b71 1830 bb50 3119 b620 9109 bbbb 17bb
-			5b91 5b61 bb50 8119 b105 9205 bbbb 19bb
-			ab91 5bb9 bb50 a119 305b b502 bbbb 19bb
-			bb71 5bbb bb50 9119 039b b910 bbbb 17bb
-			bb60 5bbb ba30 911a 3abb ba10 bbbb 06bb
-			bb60 9bbb ba30 9106 29bb 9300 bbbb 06bb
-			bb30 abbb b921 9104 05bb 2032 bbb6 03bb
-			b720 9bbb b911 b505 02ab 03b5 bbb5 027b
-			b500 9bbb b900 b605 106b 5ab6 bbb6 005b
-			8200 abbb ba55 bb56 104b bbbb bbbb 0028
-			4000 bbbb bbbb bbbb 656b bbbb bbbb 0005
-			0000 bbb5 bbbb bbbb bbbb bbbb 6bbb 0000
-			0000 bb51 bbbb bbbb bbbb bbbb 16bb 0000
-			0000 b510 bbbb bbbb bbbb bbbb 015b 0000
-			0000 5000 bbb7 bbbb bbbb 7bbb 0004 0000
-			0000 0000 b752 bbbb bbbb 347b 0000 0000
-			0000 0000 4100 9766 5769 0024 0000 0000
-			0000 0000 0000 1100 0011 0000 0000 0000
+			bbbb bbbb bbbb aabb bbaa bbbb bbbb bbbb
+			bbbb bbbb 89bb 2455 6442 bb97 bbbb bbbb
+			bbbb bbbb 0469 7777 0777 9640 bbbb bbbb
+			bbbb 7bbb 7703 7777 7777 3077 bbb7 bbbb
+			bbbb 06ab 7777 7777 7777 7777 ba50 bbbb
+			bbbb 706a 7777 7777 7777 7777 a577 bbbb
+			bbbb 7706 7777 7777 7777 7777 6077 bbbb
+			7bbb 7700 7777 7777 7777 7777 0777 bbb7
+			39bb 7770 7777 7777 7777 7777 0777 bb94
+			06bb 7770 7777 7777 7777 7777 7777 bb60
+			039b 7777 7777 7777 7777 7777 7777 b930
+			007b 7777 7777 7777 7777 7777 7777 b707
+			706b 7777 7777 7777 7777 7777 7777 b607
+			704b 7777 7777 7777 7777 7777 7777 b507
+			704a 7777 7777 7777 7777 7777 7777 a407
+			702a 7777 7777 7777 7777 7777 7777 a207
+			702a 7777 7777 7777 7777 7777 7777 a207
+			704a 7777 7777 7777 7777 7777 7777 a407
+			705b 7777 7777 7777 7777 7777 7777 b507
+			705b 7777 7777 7777 7777 7777 7777 b507
+			708b 7777 7777 7777 7777 7777 7777 b800
+			749b 7777 7777 7777 7777 7777 7777 b940
+			06bb 7777 7777 7777 7777 7777 0777 bb60
+			39bb 7770 7777 7777 7777 7777 0777 bb93
+			7bbb 7700 7777 7777 7777 7777 0077 bbb6
+			bbbb 7706 7777 7777 7777 7777 5000 bbbb
+			bbbb 006a 7777 7777 7777 0077 a500 bbbb
+			bbbb 06ab 7700 7777 7777 0000 ba60 bbbb
+			bbbb 6bbb 0004 0000 0000 4000 bbb7 bbbb
+			bbbb bbbb 0469 0000 0000 8740 bbbb bbbb
+			bbbb bbbb 7abb 2455 6452 bb97 bbbb bbbb
+			bbbb bbbb bbbb aabb bbaa bbbb bbbb bbbb
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="1">
 	<tex_palette index="0" name="ci_item_medal_pl" color_size="16">
-		0000 0421 0c63 2108 2d6b 4210 5ef7 6f7b
-		739c 77bd 7bde 7fff 7fff 7fff 7fff 7fff
+		7fff 7bde 77bd 739c 6f7b 5ef7 4210 2d6b
+		2108 0c63 0421 0000 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
@@ -116,9 +116,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-0.500000 -0.492188 0.000000"
-		volume_max="0.500000 0.507813 0.000000"
-		volume_r="0.712646"
+		volume_min="-0.468750 -0.460938 0.000000"
+		volume_max="0.468750 0.476563 0.000000"
+		volume_r="0.668457"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -129,13 +129,13 @@
 					<mtx idx="0"/>
 					<tex st="0.000000 32.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_xyz xyz="-0.500000 -0.492188 0.000000"/>
+					<pos_xyz xyz="-0.468750 -0.460938 0.000000"/>
 					<tex st="32.000000 32.000000"/>
-					<pos_xy xy="0.500000 -0.492188"/>
+					<pos_xy xy="0.468750 -0.460938"/>
 					<tex st="32.000000 0.000000"/>
-					<pos_xy xy="0.500000 0.507813"/>
+					<pos_xy xy="0.468750 0.476563"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-0.500000 0.507813"/>
+					<pos_xy xy="-0.468750 0.476563"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -157,9 +157,9 @@
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-0.500000 -0.492188 0.000000"
-		volume_max="0.500000 0.507813 0.000000"
-		volume_r="0.712646"
+		volume_min="-0.468750 -0.460938 0.000000"
+		volume_max="0.468750 0.476563 0.000000"
+		volume_r="0.668457"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
