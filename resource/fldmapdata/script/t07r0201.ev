@@ -19,7 +19,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_t07r0201
+_EVENT_DATA	ev_t07r0201_fighterw_01
+_EVENT_DATA	ev_t07r0201_oldman_01
+_EVENT_DATA	ev_t07r0201_oldwoman_01
 _EVENT_DATA_END
 
 
@@ -30,9 +32,23 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*  わざマシンくれる格闘家女子                          */
 /**************************************************************/
-ev_t07r0201:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START	ev_t07r0201_fighterw_01
+  //わざマシン入手：チャージビーム
+  _EASY_TALK_ITEM_EVENT(ITEM_WAZAMASIN57, 1, FE_R07_FIGHTREW_01, msg_t07r0201_fighterw_01, msg_t07r0201_fighterw_02, msg_t07r0201_fighterw_02 )
+EVENT_END
 
+/************************************************************/
+/*	oldman：一言会話								*/
+/************************************************************/
+EVENT_START	ev_t07r0201_oldman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t07r0201_oldman_01 )
+EVENT_END
+
+/************************************************************/
+/*	oldwoman：一言会話								*/
+/************************************************************/
+EVENT_START	ev_t07r0201_oldwoman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t07r0201_oldwoman_01 )
+EVENT_END

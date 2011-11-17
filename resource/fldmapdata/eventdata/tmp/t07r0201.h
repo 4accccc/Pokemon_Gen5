@@ -9,6 +9,9 @@
 #ifndef ZONE_T07R0201_EVC_H
 #define ZONE_T07R0201_EVC_H
 
+#define T07R0201_OLDWOMAN1_01              0
+#define T07R0201_OLDMAN_01                 1
+#define T07R0201_FIGHTERW_01               2
 
 #endif //ZONE_T07R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t07r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

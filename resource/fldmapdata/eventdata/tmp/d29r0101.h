@@ -16,20 +16,19 @@
 #define D29R0101_ROCK_02                   3
 #define FLD_ITEM_83                        4
 #define FLD_ITEM_85                        5
-#define D29R0101_FIGHTERW_01               6
-#define D29R0101_STOP3_01                  7
-#define D29R0101_STOP2_01                  8
-#define D29R0101_STOP1_01                  9
-#define D29R0101_SPROCK_01                10
-#define D29R0101_SPROCK_02                11
-#define D29R0101_SPROCK_03                12
-#define D29R0101_SPROCK_04                13
-#define D29R0101_SPROCK_05                14
-#define D29R0101_SPROCK_06                15
-#define D29R0101_SPROCK_07                16
-#define D29R0101_WORKMAN2_01              17
-#define D29R0101_WORKMAN2_02              18
-#define D29R0101_WORKMAN2_03              19
+#define D29R0101_STOP3_01                  6
+#define D29R0101_STOP2_01                  7
+#define D29R0101_STOP1_01                  8
+#define D29R0101_SPROCK_01                 9
+#define D29R0101_SPROCK_02                10
+#define D29R0101_SPROCK_03                11
+#define D29R0101_SPROCK_04                12
+#define D29R0101_SPROCK_05                13
+#define D29R0101_SPROCK_06                14
+#define D29R0101_SPROCK_07                15
+#define D29R0101_WORKMAN2_01              16
+#define D29R0101_WORKMAN2_02              17
+#define D29R0101_WORKMAN2_03              18
 
 #endif //ZONE_D29R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d29r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
