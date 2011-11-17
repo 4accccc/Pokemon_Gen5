@@ -14,5 +14,6 @@
 #define SCRID_R03_BABYGIRL1_02 (7)
 #define SCRID_R03_BABYBOY1_01 (8)
 #define SCRID_R03_BABYBOY1_02 (9)
+#define SCRID_R03_BOY1_01 (10)
 
 #endif //_R03_DEF_H_

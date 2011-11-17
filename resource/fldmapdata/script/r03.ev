@@ -13,6 +13,7 @@
   .include  "r03.h"
 
   //@author fujimura_souichirou（一言NPC）
+  //@author suginaka_katsunori //せいそくちリストイベント
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -30,6 +31,7 @@ _EVENT_DATA    ev_r03_babygirl1_01
 _EVENT_DATA    ev_r03_babygirl1_02
 _EVENT_DATA    ev_r03_babyboy1_01
 _EVENT_DATA    ev_r03_babyboy1_02
+_EVENT_DATA	ev_r03_boy1_01
 _EVENT_DATA_END
 
 //主人公座標取得変数
@@ -203,4 +205,63 @@ EVENT_START   ev_r03_babyboy1_02
 
 EVENT_END
 
+/************************************************************/
+/*		せいそくちリストイベント						*/
+/************************************************************/
+EVENT_START	ev_r03_boy1_01
+
+	//イベント終了前か？
+	IF FLAG_OFF( FE_R03_ITEMGET_01 ) THEN
+
+		_TALK_OBJ_START()
+		
+		//あら？
+		_BALLOONWIN_TALKOBJ_MSG(msg_r03_list_01)
+		
+		DEFINE_LOCAL	LWK_LAND
+		DEFINE_LOCAL	LWK_SEA
+		DEFINE_LOCAL	LWK_FISHING
+		
+		//せいそくちリストが埋まっているかチェック
+		_SC_GET_ZONE_POKE_CMP_CHECK( ZONE_ID_R03 ,SCR_HABITAT_TYPE_LAND ,FALSE ,LWK_LAND )
+		_SC_GET_ZONE_POKE_CMP_CHECK( ZONE_ID_R03 ,SCR_HABITAT_TYPE_SEA  ,FALSE ,LWK_SEA )
+		_SC_GET_ZONE_POKE_CMP_CHECK( ZONE_ID_R03 ,SCR_HABITAT_TYPE_FISHING ,FALSE ,LWK_FISHING )
+
+		//全てのみたコンプしている場合
+		IF $LWK_LAND == TRUE && $LWK_SEA == TRUE && $LWK_FISHING == TRUE THEN
+		
+			_BALLOONWIN_TALKOBJ_MSG(msg_r03_list_03)
+			_MSGWIN_CLOSE()
+			
+			_ITEM_EVENT_KEYWAIT( ITEM_DAIBUBOORU, 5 )
+			
+			//========================================//
+			//イベント終了フラグセット
+			_FLAG_SET(FE_R03_ITEMGET_01)
+			
+			//========================================//
+			
+			//うまってないんだね
+			_BALLOONWIN_TALKOBJ_MSG(msg_r03_list_04)
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+		ELSE
+			
+			//うまってないんだね
+			_BALLOONWIN_TALKOBJ_MSG(msg_r03_list_02)
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		ENDIF
+
+
+	//イベント終了後の場合
+	ELSE
+
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r03_list_04 )
+
+	ENDIF
+
+EVENT_END
 

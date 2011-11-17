@@ -9,9 +9,6 @@
 #ifndef ZONE_D29R0401_EVC_H
 #define ZONE_D29R0401_EVC_H
 
-#define D29R0401_POKE1_01                  0
-#define D29R0401_POKE2_01                  1
-#define D29R0401_POKE3_01                  2
 
 #endif //ZONE_D29R0401_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d29r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

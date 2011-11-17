@@ -584,7 +584,12 @@ EVENT_START	ev_d23r0101_woman2_01
 			_FLAG_SET(FE_D23R0101_ITEMGET_03)
 			
 			//========================================//
-		
+
+			//Ç¢Ç¬ÇÃÇ‹Ç…Ç©Å@Ç©ÇÒÇπÇ¢
+			_BALLOONWIN_TALKOBJ_MSG(msg_d23r0101_list_04)
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+
 		ELSE
 			
 			//Ç§Ç‹Ç¡ÇƒÇ»Ç¢ÇÒÇæÇÀ

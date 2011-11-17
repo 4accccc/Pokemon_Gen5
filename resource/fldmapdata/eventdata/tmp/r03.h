@@ -37,6 +37,7 @@
 #define TR_FANW_13                        22
 #define TR_FANW_13_2                      23
 #define TR_MINI_18                        24
+#define R03_BOY1_01                       25
 
 #endif //ZONE_R03_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r03.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

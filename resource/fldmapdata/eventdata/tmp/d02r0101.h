@@ -34,6 +34,7 @@
 #define TR_RANGERW_27                     20
 #define D02R0101_SWLEADER1_01             21
 #define FLD_ITEM_258                      22
+#define D02R0101_GIRL4_01                 23
 
 #endif //ZONE_D02R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d02r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

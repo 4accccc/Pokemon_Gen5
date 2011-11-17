@@ -14,6 +14,7 @@
   .include  "d02r0101_def.h"
   
   //@author Mizuguchi_Mai
+  //@author suginaka_katsunori //せいそくちリストイベント
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -27,6 +28,7 @@ _EVENT_DATA		ev_bg_d02r0101_sign1_01
 _EVENT_DATA		ev_pos_d02r0101_swleader1_01
 _EVENT_DATA		ev_pos_d02r0101_swleader1_02
 _EVENT_DATA		ev_d02r0101_swleader1_03
+_EVENT_DATA		ev_d02r0101_girl4_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -391,3 +393,63 @@ _ANIME_LABEL	anm_common_gyoe
 _ANIME_LABEL	anm_common_hatena
 	_ANIME_DATA	AC_MARK_HATENA,1
 	_ANIME_DATA	ACMD_END,0
+
+/************************************************************/
+/*		せいそくちリストイベント						*/
+/************************************************************/
+EVENT_START	ev_d02r0101_girl4_01
+
+	//イベント終了前か？
+	IF FLAG_OFF( FE_D02R0101_ITEMGET_01 ) THEN
+
+		_TALK_OBJ_START()
+		
+		//あら？
+		_BALLOONWIN_TALKOBJ_MSG(msg_d02r0101_list_01)
+		
+		DEFINE_LOCAL	LWK_LAND
+		DEFINE_LOCAL	LWK_SEA
+		DEFINE_LOCAL	LWK_FISHING
+		
+		//せいそくちリストが埋まっているかチェック
+		_SC_GET_ZONE_POKE_CMP_CHECK( ZONE_ID_D02 ,SCR_HABITAT_TYPE_LAND ,FALSE ,LWK_LAND )
+		_SC_GET_ZONE_POKE_CMP_CHECK( ZONE_ID_D02 ,SCR_HABITAT_TYPE_SEA  ,FALSE ,LWK_SEA )
+		_SC_GET_ZONE_POKE_CMP_CHECK( ZONE_ID_D02 ,SCR_HABITAT_TYPE_FISHING ,FALSE ,LWK_FISHING )
+
+		//全てのみたコンプしている場合
+		IF $LWK_LAND == TRUE && $LWK_SEA == TRUE && $LWK_FISHING == TRUE THEN
+		
+			_BALLOONWIN_TALKOBJ_MSG(msg_d02r0101_list_03)
+			_MSGWIN_CLOSE()
+			
+			_ITEM_EVENT_KEYWAIT( ITEM_DAAKUBOORU, 5 )
+			
+			//========================================//
+			//イベント終了フラグセット
+			_FLAG_SET(FE_D02R0101_ITEMGET_01)
+			
+			//========================================//
+		
+			//お礼
+			_BALLOONWIN_TALKOBJ_MSG(msg_d02r0101_list_04)
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		ELSE
+			
+			//うまってないんだね
+			_BALLOONWIN_TALKOBJ_MSG(msg_d02r0101_list_02)
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		ENDIF
+
+
+	//イベント終了後の場合
+	ELSE
+
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d02r0101_list_04 )
+
+	ENDIF
+
+EVENT_END

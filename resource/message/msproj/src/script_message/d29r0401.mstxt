@@ -2,438 +2,240 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_d29r0401_poke1_01"
+		Label="msg_d29r0401_espm_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こおりの　ちからを　かんじさせる
-ポケモンの　ぞうが　うごきだした！</Text>
+			<Text>仮メッセージ▼
+このトビラは　ひみつのトビラ
+さっき　なかに　はいったのだけど▼
+きのうの　よるに　はいったときと
+なかの　へやが　かわっていたんだ！▼
+なにか　ひみつの　ちからが
+トビラに　やどっているのだろうね……</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T05:05:11" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:35:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:22:03" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:32:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>氷の　力を　感じさせる
-ポケモンの　像が　動きだした！</Text>
+			<Text>仮メッセージ▼
+このトビラは　ひみつのトビラ
+さっき　なかに　はいったのだけど▼
+きのうの　よるに　はいったときと
+なかの　へやが　かわっていたんだ！▼
+なにか　ひみつの　ちからが
+トビラに　やどっているのだろうね……</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T05:05:31" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:35:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:36:39" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:32:39" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>イベント
-・続けて</Comment>
+			<Comment>♂
+・時間が午前に話しかけた時</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:32:46" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:34:33" />
 		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>POKE
-ポケモン・レジアイス</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:21:40" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ffff00</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d29r0401_poke1_02"
+		Label="msg_d29r0401_espm_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃきー！！</Text>
+			<Text>仮メッセージ▼
+このトビラは　ひみつのトビラ
+さっき　なかに　はいったのだけど▼
+きのうの　あさに　はいったときと
+なかの　へやが　かわっていたんだ！▼
+なにか　ひみつの　ちからが
+トビラに　やどっているのだろうね……</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:30:07" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:35:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:30:07" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:35:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃきー！！</Text>
+			<Text>仮メッセージ▼
+このトビラは　ひみつのトビラ
+さっき　なかに　はいったのだけど▼
+きのうの　あさに　はいったときと
+なかの　へやが　かわっていたんだ！▼
+なにか　ひみつの　ちからが
+トビラに　やどっているのだろうね……</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:33:36" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:35:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:33:36" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:35:24" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ポケモン
-・あわせて鳴き声再生
-・続けて戦闘に</Comment>
+			<Comment>♂
+・時間が午後に話しかけた時</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:29:51" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:35:43" />
 		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>POKE
-ポケモン・レジアイス</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:21:41" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ffff00</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d29r0401_poke1_03"
+		Label="msg_d29r0401_switch_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レジアイスは　こうどうの
-どこかへ　きえてしまった……</Text>
+			<Text>仮メッセージ▼
+あしもとに　スイッチが　ある……
+おしてみますか？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T05:10:54" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:37:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:31:37" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:37:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンは　坑道の
-どこかへ　消えてしまった……</Text>
+			<Text>仮メッセージ▼
+あしもとに　スイッチが　ある……
+おしてみますか？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:31:37" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:37:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:31:37" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:37:58" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>イベント
-・捕獲以外で戦闘終了した場合
-・殿堂入りで復帰</Comment>
+			<Comment>・岩山の間へのスイッチイベント文
+・POSX=24 POSZ=11の位置を調べると表示</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T05:11:42" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:41:53" />
 		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>POKE
-ポケモン・レジアイス</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:23:52" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d29r0401_poke2_01"
+		Label="msg_d29r0401_switch_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いわの　ちからを　かんじさせる
-ポケモンの　ぞうが　うごきだした！</Text>
+			<Text>仮メッセージ▼
+トビラの　ほうから　なにかが
+うごく　おとが　ひびいた……</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T05:05:18" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:40:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:22:21" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:40:26" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>岩の　力を　感じさせる
-ポケモンの　像が　動きだした！</Text>
+			<Text>仮メッセージ▼
+トビラの　ほうから　なにかが
+うごく　おとが　ひびいた……</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T05:05:37" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:40:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:36:33" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:40:26" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>イベント
-・続けて</Comment>
+			<Comment>・岩山の間へのスイッチイベント文
+・キーシステム"岩山の間"を選択している場合表示
+・トビラの接続先を岩山の間に固定する</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:32:45" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:41:59" />
 		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>POKE
-ポケモン・レジロック</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:21:47" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d29r0401_poke2_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ざざ　ざり　ざ……</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:29:21" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:29:21" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ざざ　ざり　ざ……</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:33:37" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:33:37" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ポケモン
-・あわせて鳴き声再生
-・続けて戦闘に</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:29:41" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>POKE
-ポケモン・レジロック</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:21:48" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d29r0401_poke2_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>レジロックは　こうどうの
-どこかへ　きえてしまった……</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T05:10:48" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:31:37" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ポケモンは　坑道の
-どこかへ　消えてしまった……</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:31:37" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:31:37" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>イベント
-・捕獲以外で戦闘終了した場合
-・殿堂入りで復帰</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T05:11:44" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>POKE
-ポケモン・レジロック</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:23:54" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d29r0401_poke3_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>はがねの　ちからを　かんじさせる
-ポケモンの　ぞうが　うごきだした！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T05:05:25" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:22:26" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>鋼の　力を　感じさせる
-ポケモンの　像が　動きだした！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T05:05:40" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:36:09" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>イベント
-・続けて</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:32:43" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>POKE
-ポケモン・レジスチル</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:21:52" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d29r0401_poke3_02"
+		Label="msg_d29r0401_switch_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じ・じ・ぜ・じ・ぞ</Text>
+			<Text>仮メッセージ
+……なにもおこらないみたいだ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:30:18" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:42:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:30:18" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:40:26" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じ・じ・ぜ・じ・ぞ</Text>
+			<Text>仮メッセージ
+……なにもおこらないみたいだ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:33:39" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:42:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:33:39" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:40:26" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ポケモン
-・あわせて鳴き声再生
-・続けて戦闘に</Comment>
+			<Comment>・岩山の間へのスイッチイベント文
+・キーシステム"岩山の間”を選択していない場合表示</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:29:52" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-17T03:42:35" />
 		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>POKE
-ポケモン・レジスチル</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:21:53" />
-		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_d29r0401_poke3_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>レジスチルは　こうどうの
-どこかへ　きえてしまった……</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T05:10:41" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:30:23" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ポケモンは　坑道の
-どこかへ　消えてしまった……</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:31:32" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:31:17" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>イベント
-・捕獲以外で戦闘終了した場合
-・殿堂入りで復帰</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T05:11:45" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>POKE
-ポケモン・レジスチル</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-12T03:23:55" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

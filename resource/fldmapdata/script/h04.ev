@@ -897,7 +897,7 @@ _ANIME_LABEL	anm_common_onpu
 EVENT_START	ev_h04_girl2_01
 
 	//アイテム入手済みの場合
-	IF FLAG_ON( FH_01) THEN
+	IF FLAG_ON( FE_H04_ITEMGET_01 ) THEN
 		
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04_girl2_03 )
 	
@@ -907,7 +907,7 @@ EVENT_START	ev_h04_girl2_01
 		//橋の下の部屋イベントを見た場合
 		IF FLAG_ON( FE_H04R0801_FIRSTLOOK ) THEN
 			
-			_EASY_TALK_ITEM_EVENT(ITEM_OBONNOMI, 5, FH_01, msg_h04_girl2_02, msg_h04_girl2_03, msg_h04_girl2_03 )
+			_EASY_TALK_ITEM_EVENT(ITEM_OBONNOMI, 5, FE_H04_ITEMGET_01, msg_h04_girl2_02, msg_h04_girl2_03, msg_h04_girl2_03 )
 		
 		//まだ見ていない場合
 		ELSE
