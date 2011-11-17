@@ -13,7 +13,7 @@
   .include  "appraisal_scr_def.h"
   .include  "r05r0101.h"
   .include  "c07pc0101.h"
-  .include  "t04r0101.h"
+  .include  "t04r0201.h"
   .include  "r18r0101.h"
   .include  "c06.h"
 
@@ -346,7 +346,7 @@ _TALK_OBJ_START()
 			_ITEM_NAME( 0,LWK_ITEM )
 
 			//それは　こだいのおうかん！
-			_BALLOONWIN_OBJMSG_POS( msg_appraisal_r_08 , T04R0101_FIGHTERM_01, POS_DOWN )
+			_BALLOONWIN_OBJMSG_POS( msg_appraisal_r_08 , T04R0201_FIGHTERM_01, POS_DOWN )
 			_YES_NO_WIN( SCWK_ANSWER )
 		
 			//========================================/
@@ -464,7 +464,7 @@ ev_fugou:
 				_ITEM_NAME( 0,LWK_ITEM )
 	
 				//ゆずってくれないかね？　かね？
-				_BALLOONWIN_OBJMSG_POS( msg_appraisal_r_03 , T04R0101_FIGHTERM_01, POS_DOWN )
+				_BALLOONWIN_OBJMSG_POS( msg_appraisal_r_03 , T04R0201_FIGHTERM_01, POS_DOWN )
 				_YES_NO_WIN( SCWK_ANSWER )
 		
 				//譲る場合
