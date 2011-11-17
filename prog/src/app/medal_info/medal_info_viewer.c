@@ -757,7 +757,7 @@ static void MEDALVIEWER_CommonDataInit( MEDALVIEWER_WK *p_wk ,MEDALVIEWER_INITPA
 
 	// フォント
 	p_wk->p_large_font	= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
-	p_wk->p_small_font	= GFL_FONT_Create( ARCID_FONT, NARC_font_small_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+	p_wk->p_small_font	= GFL_FONT_Create( ARCID_FONT, NARC_font_small_batt_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
 
   // アプリケーション用メッセージ
   p_wk->p_app_msg =GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_medalinfo_dat, heapID );
@@ -921,8 +921,9 @@ static void MEDALVIEWER_BGInit( MEDALVIEWER_WK *p_wk )
           PALTYPE_MAIN_BG, 0x20*MDLINFO_BAR_PAL_ID, 0x20 , heapID );
  
       // フォント用パレットの読み込み
-      GFL_ARCHDL_UTIL_TransVramPalette( p_common_handle, NARC_medalinfo_gra_medalinfo_bg_NCLR,
-          PALTYPE_MAIN_BG, 0x20*MDLINFO_FONT_PAL_ID, 0x20 , heapID );
+      GFL_ARCHDL_UTIL_TransVramPaletteEx( p_handle, NARC_medalinfo_gra_medalinfo_bg_NCLR,
+          PALTYPE_MAIN_BG, 0x20*6 , 0x20*MDLINFO_FONT_PAL_ID , 0x20 , heapID );
+
     }
 
     // キャラクターデータ
@@ -1164,6 +1165,7 @@ static void DrawMedalInfo( MEDALVIEWER_WK *p_wk )
   STRBUF * str;
   WORDSET *p_word_set = WORDSET_Create( p_wk->heapID ); 
   PRINTSYS_LSB font_colro = PRINTSYS_LSB_Make( FLONT_COLLAR_L , FLONT_COLLAR_S , FLONT_COLLAR_B);
+  PRINTSYS_LSB bttl_font_colro = PRINTSYS_LSB_Make( BTL_FLONT_COLLAR_L , BTL_FLONT_COLLAR_S , BTL_FLONT_COLLAR_B);
 
   // タイトル
   {
@@ -1191,7 +1193,7 @@ static void DrawMedalInfo( MEDALVIEWER_WK *p_wk )
     // 文字列を描画
     PRINT_UTIL_PrintColor( &p_wk->print_util ,
         p_wk->p_print_que , STR_POS_TITLE_KAKUTOKU_X , STR_POS_TITLE_KAKUTOKU_Y ,
-        str ,p_wk->p_small_font , font_colro);
+        str ,p_wk->p_small_font , bttl_font_colro);
 
     // バッファーの消去 
     GFL_STR_DeleteBuffer( str );
@@ -1223,7 +1225,7 @@ static void DrawMedalInfo( MEDALVIEWER_WK *p_wk )
     // 文字列を描画
     PRINT_UTIL_PrintColor( &p_wk->print_util ,
         p_wk->p_print_que , STR_POS_TITLE_ICHIOSI_X , STR_POS_TITLE_ICHIOSI_Y ,
-        str ,p_wk->p_small_font , font_colro);
+        str ,p_wk->p_small_font , bttl_font_colro);
 
     // バッファーの消去 
     GFL_STR_DeleteBuffer( str );
@@ -1258,7 +1260,7 @@ static void DrawMedalInfo( MEDALVIEWER_WK *p_wk )
       // 文字列を描画
       PRINT_UTIL_PrintColor( &p_wk->print_util ,
           p_wk->p_print_que , STR_POS_TITLE_GET_DAY_X , STR_POS_TITLE_GET_DAY_Y ,
-          str ,p_wk->p_small_font , font_colro);
+          str ,p_wk->p_small_font , bttl_font_colro);
 
       // バッファーの消去 
       GFL_STR_DeleteBuffer( str );
@@ -1319,6 +1321,7 @@ static void DrawMedalInfo_no_pushMedal( MEDALVIEWER_WK *p_wk )
   STRBUF * str;
   WORDSET *p_word_set = WORDSET_Create( p_wk->heapID ); 
   PRINTSYS_LSB font_colro = PRINTSYS_LSB_Make( FLONT_COLLAR_L , FLONT_COLLAR_S , FLONT_COLLAR_B);
+  PRINTSYS_LSB bttl_font_colro = PRINTSYS_LSB_Make( BTL_FLONT_COLLAR_L , BTL_FLONT_COLLAR_S , BTL_FLONT_COLLAR_B);
 
   // タイトル
   {
@@ -1346,7 +1349,7 @@ static void DrawMedalInfo_no_pushMedal( MEDALVIEWER_WK *p_wk )
     // 文字列を描画
     PRINT_UTIL_PrintColor( &p_wk->print_util , p_wk->p_print_que ,
         STR_POS_TITLE_KAKUTOKU_X_NO_PUSH , STR_POS_TITLE_KAKUTOKU_Y_NO_PUSH ,
-        str ,p_wk->p_small_font , font_colro);
+        str ,p_wk->p_small_font , bttl_font_colro);
 
     // バッファーの消去 
     GFL_STR_DeleteBuffer( str );
@@ -1378,7 +1381,7 @@ static void DrawMedalInfo_no_pushMedal( MEDALVIEWER_WK *p_wk )
     // 文字列を描画
     PRINT_UTIL_PrintColor( &p_wk->print_util , p_wk->p_print_que , 
         STR_POS_TITLE_ICHIOSI_X_NO_PUSH , STR_POS_TITLE_ICHIOSI_Y_NO_PUSH ,
-        str ,p_wk->p_small_font , font_colro);
+        str ,p_wk->p_small_font , bttl_font_colro);
 
     // バッファーの消去 
     GFL_STR_DeleteBuffer( str );

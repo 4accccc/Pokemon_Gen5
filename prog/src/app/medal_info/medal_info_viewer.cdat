@@ -85,6 +85,16 @@ enum
 }STR_COLOR;
 
 //-------------------------------------
+// バトルスモールフォントで使用するパレット番号
+//=====================================
+enum
+{
+  BTL_FLONT_COLLAR_L = 3,
+  BTL_FLONT_COLLAR_S = 4,
+  BTL_FLONT_COLLAR_B = 0,
+}BTL_STR_COLOR;
+
+//-------------------------------------
 // 文字の表示位置
 //=====================================
 enum
@@ -92,15 +102,15 @@ enum
  STR_POS_TITLE_X = (8),
  STR_POS_TITLE_Y = (8),
  STR_POS_TITLE_KAKUTOKU_X = (128),
- STR_POS_TITLE_KAKUTOKU_Y = (32),
+ STR_POS_TITLE_KAKUTOKU_Y = (29),
  STR_POS_KAKUTOKU_X = (216),
  STR_POS_KAKUTOKU_Y = (28),
  STR_POS_TITLE_ICHIOSI_X = (48),
- STR_POS_TITLE_ICHIOSI_Y = (52),
+ STR_POS_TITLE_ICHIOSI_Y = (49),
  STR_POS_MEDAL_NAME_X = (48),
  STR_POS_MEDAL_NAME_Y = (64),
  STR_POS_TITLE_GET_DAY_X = (48),
- STR_POS_TITLE_GET_DAY_Y = (88),
+ STR_POS_TITLE_GET_DAY_Y = (85),
  STR_POS_GET_DAY_X = (152),
  STR_POS_GET_DAY_Y = (84),
  STR_POS_INFO_X = (16),
@@ -110,11 +120,11 @@ enum
  STR_POS_TITLE_X_NO_PUSH = (8),
  STR_POS_TITLE_Y_NO_PUSH = (8),
  STR_POS_TITLE_KAKUTOKU_X_NO_PUSH = (128),
- STR_POS_TITLE_KAKUTOKU_Y_NO_PUSH = (32+28),
+ STR_POS_TITLE_KAKUTOKU_Y_NO_PUSH = (32+25),
  STR_POS_KAKUTOKU_X_NO_PUSH = (216),
  STR_POS_KAKUTOKU_Y_NO_PUSH = (28+28),
  STR_POS_TITLE_ICHIOSI_X_NO_PUSH = (8),
- STR_POS_TITLE_ICHIOSI_Y_NO_PUSH = (52+28),
+ STR_POS_TITLE_ICHIOSI_Y_NO_PUSH = (52+25),
  STR_POS_MEDAL_NAME_X_NO_PUSH = (8),
  STR_POS_MEDAL_NAME_Y_NO_PUSH = (64+28),
 
