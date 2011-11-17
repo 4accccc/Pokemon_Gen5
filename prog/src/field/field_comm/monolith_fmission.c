@@ -587,6 +587,15 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Init(GFL_PROC * proc, int * se
       	GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
         (*seq)++;
         mfw->Flag |= FLG_FMISS_SET_INIT;
+        //
+        // ここでメッセージのウインドウだけ出す(時間稼ぎ)
+        // 実際のメッセージは読み込み後で処理
+        GFL_BMPWIN_MakeScreen( mfw->bmpwin[_BMPWIN_TALKWIN] );
+        BmpWinFrame_Write( mfw->bmpwin[_BMPWIN_TALKWIN], 
+        WINDOW_TRANS_ON_V, BMPWIN_FRAME_START_CGX, BMPWIN_FRAME_PALNO );
+        //
+        GFL_BMP_Clear( GFL_BMPWIN_GetBmp( mfw->bmpwin[_BMPWIN_TALKWIN] ), 0xf );
+        GFL_BMPWIN_TransVramCharacter( mfw->bmpwin[_BMPWIN_TALKWIN] );
       }
     }
     break;

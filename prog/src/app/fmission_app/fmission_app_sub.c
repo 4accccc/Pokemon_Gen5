@@ -139,11 +139,22 @@ typedef struct{
 // ■BG関連
 //---------------
 // BGPAL
-static const FMA_BGPAL_DATA fma_bgpal_tbl[] = {
+static const FMA_BGPAL_DATA fma_bgpal_00_tbl[] = {
 	{ PALTYPE_SUB_BG,	NARC_fmission_app_fmapp_bgu_nclr,	0,	2,},		// 上、BG
 	{ PALTYPE_MAIN_BG,	NARC_fmission_app_fmapp_bgd_nclr,	0,	2,},		// 下、BG
 
 	{ 0xff, 0, 0, 0,}, // end code
+};
+static const FMA_BGPAL_DATA fma_bgpal_01_tbl[] = {
+	{ PALTYPE_SUB_BG,	NARC_fmission_app_fmapp_bgu_nclr,	2,	2,},		// 上、BG
+	{ PALTYPE_MAIN_BG,	NARC_fmission_app_fmapp_bgd_nclr,	2,	2,},		// 下、BG
+
+	{ 0xff, 0, 0, 0,}, // end code
+};
+// まとめ
+static const FMA_BGPAL_DATA *fma_bgpal_tbl[] = {
+	fma_bgpal_00_tbl,		// 詳細
+	fma_bgpal_01_tbl,		// 評価
 };
 
 // BGCHR
@@ -453,6 +464,7 @@ void FmaCmn_data_exit( FMISSION_APP_WORK* wk )
  *	@brief  BG初期化
  *
  *	@param	FMISSION_APP_WORK* wk 
+ *	@param	const s32			(0:詳細、1:評価)
  *
  *	@retval
  */
@@ -461,7 +473,9 @@ static void fma_init_bg( FMISSION_APP_WORK* wk, const s32 mode )
 {
 	s32		i;
 	s32		tmp;
-	const FMA_BGPAL_DATA	*padr = &fma_bgpal_tbl[0];
+	s32		off;
+//	const FMA_BGPAL_DATA	*padr = &fma_bgpal_tbl[0];
+	const FMA_BGPAL_DATA	*padr = fma_bgpal_tbl[mode];	// まとめ
 	const FMA_BGCHR_DATA	*cadr = &fma_bgchr_tbl[0];
 	const FMA_BGSCN_DATA	*sadr = &fma_bgscn_tbl[0];
 	//
@@ -477,7 +491,9 @@ static void fma_init_bg( FMISSION_APP_WORK* wk, const s32 mode )
 		}
 		tmp = padr->size;
 		tmp *= 0x20;		// 転送サイズ
-		GFL_ARCHDL_UTIL_TransVramPalette( handle, padr->arcid, padr->type, padr->offset, tmp, wk->heapID );
+		off = padr->offset;
+		off *= 0x20;
+		GFL_ARCHDL_UTIL_TransVramPaletteEx( handle, padr->arcid, padr->type, off, 0, tmp, wk->heapID );
 		padr++;
 	}
 	//
