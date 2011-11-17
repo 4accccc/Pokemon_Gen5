@@ -669,6 +669,13 @@ static void sub_FMissionParamDraw( FMISSION_EVWORK* wk, STRBUF* str, u8 px, u8 l
 static void sub_FMissionParamDrawCommon( FMISSION_EVWORK* wk )
 {
   int sec = FEST_MISSION_GetLife( &wk->mission ); //残り時間
+  
+  //名前ワードセット展開
+  GFL_MSG_GetString( wk->msgData, msg_fmission_start_title, wk->s_buf );
+  //ミッション名ワードセット展開
+  FMISSION_DATA_GetTitleStr( wk->fm_data_man, wk->s_tmp, &wk->mission, wk->tmpHeapID );
+  WORDSET_RegisterWord( wk->wset, 0, wk->s_tmp, 0, TRUE, PM_LANG );
+  sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 0 );
  
 //  OS_TFPrintf(2,"draw sec=%d\n",sec);
   //説明文
@@ -710,10 +717,11 @@ static void sub_FMissionParamDrawCommon( FMISSION_EVWORK* wk )
 //-----------------------------------------------------------------
 static void sub_FMissionStartParamDraw( FMISSION_EVWORK* wk )
 {
+#if 0
   //タイトル
   FMISSION_DATA_GetTitleStr( wk->fm_data_man, wk->s_buf, &wk->mission, wk->heapID );
   FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX01, CWIN_STR_OY*0, wk->s_buf );
-
+#endif
   sub_FMissionParamDrawCommon( wk );
 }
 
@@ -725,10 +733,6 @@ static void sub_FMissionStartParamDraw( FMISSION_EVWORK* wk )
 //-----------------------------------------------------------------
 static void sub_FMissionCheckParamDraw( FMISSION_EVWORK* wk )
 {
-  //タイトル
-  FMISSION_DATA_GetTitleStr( wk->fm_data_man, wk->s_buf, &wk->mission, wk->heapID );
-  FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX01, CWIN_STR_OY*0, wk->s_buf );
-
   sub_FMissionParamDrawCommon( wk );
 }
 
