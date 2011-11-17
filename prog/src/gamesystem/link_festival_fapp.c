@@ -27,6 +27,8 @@
 #include "app/mdlid_def.h"  // for MDLID_
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
+#include "../../../resource/fldmapdata/flagwork/work_define.h"
+#include "field/script_def.h"
 
 #define PAY_BONUS_MAX (99)  //スコア&タイムボーナスのmax値は99
 
@@ -54,6 +56,16 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
   MI_CpuClear8( pl, sizeof(LINKFEST_MISSION_RESULT));
 
   pl->clear_f = LINK_FESTIVAL_IsMissionClear( wk, &pl->score );
+
+  //@TODO フェスチュートリアルができるまでの仮処理
+  if( wk->m_beacon->m_id == FMISSION_ID_ITEM_TUTORIAL_01 ){
+    EVENTWORK* ev = GAMEDATA_GetEventWork( wk->gdata );
+    if( !EVENTWORK_CheckEventFlag( ev, SYS_FLAG_FES_TUTORIAL_CLEAR )){
+      EVENTWORK_SetEventFlag( ev, SYS_FLAG_FES_TUTORIAL_CLEAR );
+    }
+    //イベント起動用ワークを設定
+    *( EVENTWORK_GetEventWorkAdrs( ev, WK_SYS_FES_TUTORIAL ) ) = SCR_FES_TUTORIAL_MISSION_FAILED+pl->clear_f;
+  }
 
   if( wk->m_beacon->end_type == FMISSION_ENDTYPE_TIME ){
     //時間依存型の場合、失敗でもハイスコアを更新する
@@ -173,11 +185,6 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
 
   //メダルチェック
   linkfes_SetMissionResultMedal( wk, pl, save, f_save );
-
-  //@TODO フェスチュートリアルができるまでの仮処理
-  if( wk->m_beacon->m_id == FMISSION_ID_ITEM_TUTORIAL_01 ){
-    EVENTWORK_SetEventFlag( GAMEDATA_GetEventWork( wk->gdata ), SYS_FLAG_FES_TUTORIAL_CLEAR );
-  }
 }
 
 //---------------------------------------------------------

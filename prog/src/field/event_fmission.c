@@ -491,7 +491,9 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
     (*seq)++;
     break;
   case 6:
-    LINK_FESTIVAL_MissionPlayStart( wk->fest_sys, wk->succeed_f );
+    if( wk->succeed_f ){
+      LINK_FESTIVAL_MissionPlayStart( wk->fest_sys, wk->succeed_f );
+    }
     sub_ReleaseFMissionWork( wk );
     return GMEVENT_RES_FINISH;
   }
@@ -709,7 +711,7 @@ static void sub_FMissionParamDrawCommon( FMISSION_EVWORK* wk )
 static void sub_FMissionStartParamDraw( FMISSION_EVWORK* wk )
 {
   //ƒ^ƒCƒgƒ‹
-  GFL_MSG_GetString( wk->msgData, msg_fmission_start_title, wk->s_buf );
+  FMISSION_DATA_GetTitleStr( wk->fm_data_man, wk->s_buf, &wk->mission, wk->heapID );
   FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX01, CWIN_STR_OY*0, wk->s_buf );
 
   sub_FMissionParamDrawCommon( wk );

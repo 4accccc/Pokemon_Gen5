@@ -23,7 +23,7 @@
 #include "../../../resource/fldmapdata/script/palace01_def.h"  //SCRID_PALACE01_～
 #include "event_symbol.h"
 #include "field/zonedata.h" //ZONEDATA_IsPalace
-
+#include "field/palace_gimmick.h"
 #include "field_comm/intrude_field.h"
 
 static GMEVENT_RESULT EVENT_MapChangeFMissionStart(GMEVENT * event, int *seq, void*work);
@@ -44,7 +44,7 @@ GMEVENT * EVENT_IntrudeChangeMapFMissionStart(GAMESYS_WORK * gsys)
 {
 	GMEVENT * event;
 
-	event = GMEVENT_Create(gsys, NULL, EVENT_MapChangeFMissionStart, 0 );
+	event = GMEVENT_Create(gsys, NULL, EVENT_MapChangeFMissionStart, 4 );
 	
 	return event;
 }
@@ -55,6 +55,8 @@ static GMEVENT_RESULT EVENT_MapChangeFMissionStart(GMEVENT * event, int *seq, vo
   FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
 	LINK_FESTIVAL* fest_sys = GAMESYSTEM_GetLinkFestivalWork(gsys);
+  int* ev_work = (int*)work;
+
   enum{
   	SEQ_INIT,
     SEQ_PLAYER_POS_RESET,
@@ -84,6 +86,9 @@ static GMEVENT_RESULT EVENT_MapChangeFMissionStart(GMEVENT * event, int *seq, vo
     (*seq)++;
     break;
   case SEQ_PLAYER_POS_RESET:
+    // ミッション開始のギミックエフェクト開始
+    PALACE_GMK_EffectStart( gsys );
+
     if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION){//INVASIONじゃない場合はFIELD_BEACONの場合があるのでINVASIONじゃないかどうかでチェック
       GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
       int i;
@@ -108,10 +113,14 @@ static GMEVENT_RESULT EVENT_MapChangeFMissionStart(GMEVENT * event, int *seq, vo
     break;
 
 	case SEQ_MAP_WARP:
+    if( (*ev_work)++ < (30*3) ){  //3秒待ち
+      break;
+    }
   	GMEVENT_CallEvent( event, EVENT_ChangeMapFromPalace(gsys) );
     (*seq)++;
     break;
 	case SEQ_FINISH:
+    LINK_FESTIVAL_MissionPlayStart( fest_sys, FALSE );  //時間カウントスタート
  	  MMDLSYS_ClearPauseMoveProc(FIELDMAP_GetMMdlSys(fieldmap));
  	  return GMEVENT_RES_FINISH;
   }

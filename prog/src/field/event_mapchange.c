@@ -3356,6 +3356,7 @@ typedef struct PALACE_JUMP_tag
   FIELDMAP_WORK* fieldmap;
   BOOL           partner;     ///<TRUE：協力者としてパレスへワープ
   u8             palace_area;
+  BOOL           fmission_entry_f;
 }PALACE_JUMP;
 
 //------------------------------------------------------------------
@@ -3395,7 +3396,7 @@ static GMEVENT * EVENT_ChangeMapPalace( GAMESYS_WORK* gameSystem, FIELDMAP_WORK*
   work->gameSystem = gameSystem;
   work->gameData = GAMESYSTEM_GetGameData( gameSystem );
   work->fieldmap = fieldmap;
-
+  work->fmission_entry_f = LINK_FESTIVAL_IsMissionEntry( GAMESYSTEM_GetLinkFestivalWork( gameSystem ));
   return event;
 }
 
@@ -3415,10 +3416,17 @@ static GMEVENT_RESULT EVENT_MapChangePalace( GMEVENT* event, int* seq, void* wk 
     // 地名表示を消去
     FIELD_PLACE_NAME_Hide( FIELDMAP_GetPlaceNameSys( fieldmap ) );
 #endif
-    //ＳＥ
-    PMSND_PlaySE( SEQ_SE_FLD_131 );
-    //エフェクトコール
-    ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(fieldmap), event, ENCEFFID_PALACE_WARP);
+    if( work->fmission_entry_f ){
+      //ＳＥ
+      PMSND_PlaySE( SEQ_SE_FLD_131 );
+      //エフェクトコール
+      GMEVENT_CallEvent( event, EVENT_FieldFadeOut_White( gameSystem, fieldmap, FIELD_FADE_WAIT ) );
+    }else{
+      //ＳＥ
+      PMSND_PlaySE( SEQ_SE_FLD_131 );
+      //エフェクトコール
+      ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(fieldmap), event, ENCEFFID_PALACE_WARP);
+    }
     (*seq)++;
     break;
   case 1:
@@ -3442,7 +3450,11 @@ static GMEVENT_RESULT EVENT_MapChangePalace( GMEVENT* event, int* seq, void* wk 
     break;
   case 2:
     //ブラックインリクエスト　そらをとぶ演出流用
-    GMEVENT_CallEvent(event, EVENT_FlySkyBrightIn(gameSystem, fieldmap, FIELD_FADE_BLACK, FIELD_FADE_WAIT, 2));
+    if( work->fmission_entry_f ){
+      GMEVENT_CallEvent(event, EVENT_FlySkyBrightIn(gameSystem, fieldmap, FIELD_FADE_WHITE, FIELD_FADE_WAIT, 2));
+    }else{
+      GMEVENT_CallEvent(event, EVENT_FlySkyBrightIn(gameSystem, fieldmap, FIELD_FADE_BLACK, FIELD_FADE_WAIT, 2));
+    }
     (*seq)++;
     break;
   case 3:
