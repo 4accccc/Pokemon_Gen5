@@ -13,7 +13,8 @@ DEMO_LIST =	c_cruiser.xls \
 			      title_b.xls \
 			      title_w.xls \
             plasma_ship_fly.xls \
-            city_plasma_come.xls \
+            city_plasma_come_b.xls \
+            city_plasma_come_w.xls \
             kyuremu_union_b_01.xls \
             kyuremu_union_b_02.xls \
             kyuremu_union_w_01.xls \
