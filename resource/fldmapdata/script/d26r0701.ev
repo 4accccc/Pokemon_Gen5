@@ -23,6 +23,8 @@
 //--------------------------------------------------------------
 _EVENT_DATA   ev_zone_d26r0701
 _EVENT_DATA   ev_pos_d26r0701_poke23_01
+_EVENT_DATA	ev_init_d26r0701
+_EVENT_DATA	ev_d26r0701_poke23_01
 _EVENT_DATA_END
 
 //主人公方向取得変数
@@ -36,15 +38,28 @@ DEFINE_LOCAL  LCW_POSZ
 /**************************************************************/
 INIT_EVENT_START  ev_zone_d26r0701
 
-  //クリア後ならばゾロアークを表示（１回のみ）
-  IF $WK_SCENE_D26_POKE23_01 == 1 THEN
+  //クリア後イベントを一度も見ていないのならば、ゾロアークを表示（１回のみ）
+  IF $WK_SCENE_D26_POKE23_01 <= 1 THEN
 
-    //==================================//
-    //ゾロアーク表示
-    _FLAG_RESET( FV_D26_POKE23_01 )
-    //==================================//
+	//==================================//
+	//ゾロアーク表示
+	_FLAG_RESET( FV_D26_POKE23_01 )
+	//==================================//
 
   ENDIF
+
+INIT_EVENT_END
+
+/************************************************************/
+/*	INIT_CHANGE_LABEL								*/
+/************************************************************/
+INIT_EVENT_START	ev_init_d26r0701
+
+	IF $WK_SCENE_D26_POKE23_01 == 0 THEN
+	
+		_OBJ_POS_CHANGE( D26R0701_POKE23_01, 35, 2, 32, DIR_DOWN )
+	
+	ENDIF
 
 INIT_EVENT_END
 
@@ -55,11 +70,9 @@ EVENT_START   ev_pos_d26r0701_poke23_01
 
   //ゾロアーク：くあぁああああぁん！！
   _VOICE_PLAY( MONSNO_530, 0 ) 
-  //_PLAINWIN_MSG_UP( msg_d26r1101_poke23_01 )
   _BALLOONWIN_OBJMSG_POS( msg_d26r1101_poke23_01, D26R0701_POKE23_01, POS_DEFAULT )
   _VOICE_WAIT()
   _AB_KEYWAIT_MARK()
-  //_PLAINWIN_CLOSE()
   _MSGWIN_CLOSE()
 
   //アニメ：ゾロアーク、Ｎ城方面へ移動
@@ -100,4 +113,20 @@ _ANIME_LABEL  anm_staystep_r
   _ANIME_DATA AC_STAY_WALK_R_8F,1
   _ANIME_DATA ACMD_END,0
 
+/************************************************************/
+/*	ＰＯＫＥ２３：話しかけ							*/
+/************************************************************/
+EVENT_START	ev_d26r0701_poke23_01
+	_TALK_OBJ_START()
+	//ゾロアーク：くあぁああああぁん！！
+	_VOICE_PLAY( MONSNO_530, 0 ) 
+	_BALLOONWIN_OBJMSG_POS( msg_d26r0701_poke23_02, D26R0701_POKE23_01, POS_DEFAULT )
+	_VOICE_WAIT()
+	_AB_KEYWAIT_MARK()
+	_MSGWIN_CLOSE()
 
+	_SYSWIN_MSG( msg_d26r0701_poke23_03, POS_DOWN )
+	_LAST_KEYWAIT()
+	_SYSWIN_CLOSE()
+
+EVENT_END
