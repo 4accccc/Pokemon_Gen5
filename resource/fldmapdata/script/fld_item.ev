@@ -385,6 +385,36 @@ _EVENT_DATA ev_fld_item_366
 _EVENT_DATA ev_fld_item_367
 _EVENT_DATA ev_fld_item_368
 _EVENT_DATA ev_fld_item_369
+_EVENT_DATA ev_fld_item_370
+_EVENT_DATA ev_fld_item_371
+_EVENT_DATA ev_fld_item_372
+_EVENT_DATA ev_fld_item_373
+_EVENT_DATA ev_fld_item_374
+_EVENT_DATA ev_fld_item_375
+_EVENT_DATA ev_fld_item_376
+_EVENT_DATA ev_fld_item_377
+_EVENT_DATA ev_fld_item_378
+_EVENT_DATA ev_fld_item_379
+_EVENT_DATA ev_fld_item_380
+_EVENT_DATA ev_fld_item_381
+_EVENT_DATA ev_fld_item_382
+_EVENT_DATA ev_fld_item_383
+_EVENT_DATA ev_fld_item_384
+_EVENT_DATA ev_fld_item_385
+_EVENT_DATA ev_fld_item_386
+_EVENT_DATA ev_fld_item_387
+_EVENT_DATA ev_fld_item_388
+_EVENT_DATA ev_fld_item_389
+_EVENT_DATA ev_fld_item_390
+_EVENT_DATA ev_fld_item_391
+_EVENT_DATA ev_fld_item_392
+_EVENT_DATA ev_fld_item_393
+_EVENT_DATA ev_fld_item_394
+_EVENT_DATA ev_fld_item_395
+_EVENT_DATA ev_fld_item_396
+_EVENT_DATA ev_fld_item_397
+_EVENT_DATA ev_fld_item_398
+_EVENT_DATA ev_fld_item_399
 _EVENT_DATA ev_fld_item2
 _EVENT_DATA_END
 
@@ -704,7 +734,7 @@ EVENT_START ev_fld_item_44
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=d280201 X=5 Y=7 ITEM=おおきなしんじゅ FLAG=45
+// MAP=d280201 X=6 Y=7 ITEM=おおきなしんじゅ FLAG=45
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_45
   _FLD_ITEM_EVENT ITEM_OOKINASINZYU,1
@@ -1341,7 +1371,7 @@ EVENT_START ev_fld_item_135
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r13 X=690 Y=193 ITEM=ピーピーリカバー FLAG=136
+// MAP=r13 X=692 Y=189 ITEM=ピーピーリカバー FLAG=136
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_136
   _FLD_ITEM_EVENT ITEM_PIIPIIRIKABAA,1
@@ -2976,6 +3006,216 @@ EVENT_END
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_369
   _FLD_ITEM_EVENT ITEM_KODAINOOUKAN,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r22 X=730 Y=132 ITEM=ポイントアップ FLAG=370
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_370
+  _FLD_ITEM_EVENT ITEM_POINTOAPPU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r22 X=713 Y=144 ITEM=あかいかけら FLAG=371
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_371
+  _FLD_ITEM_EVENT ITEM_AKAIKAKERA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r23 X=598 Y=82 ITEM=みどりのかけら FLAG=372
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_372
+  _FLD_ITEM_EVENT ITEM_MIDORINOKAKERA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r13 X=689 Y=195 ITEM=あおいかけら FLAG=373
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_373
+  _FLD_ITEM_EVENT ITEM_AOIKAKERA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r12 X=611 Y=164 ITEM=きいろいかけら FLAG=374
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_374
+  _FLD_ITEM_EVENT ITEM_KIIROIKAKERA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=375
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_375
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=376
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_376
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=377
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_377
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=378
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_378
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=379
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_379
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=380
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_380
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=381
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_381
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=382
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_382
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=383
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_383
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=384
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_384
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=385
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_385
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=386
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_386
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=387
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_387
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=388
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_388
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=389
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_389
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=390
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_390
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=391
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_391
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=392
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_392
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=393
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_393
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=394
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_394
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=395
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_395
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=396
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_396
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=397
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_397
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=398
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_398
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=0 Y=0 ITEM=ピッピにんぎょう FLAG=399
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_399
+  _FLD_ITEM_EVENT ITEM_PIPPININGYOU,1
 EVENT_END
 
 
