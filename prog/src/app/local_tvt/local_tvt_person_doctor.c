@@ -668,10 +668,14 @@ static BOOL LOCAL_TVT_DOCTOR_CheckZukan( LOCAL_TVT_PERSON_SYS *p_person, const L
     }
     break;
   case SEQ_ITEM_INIT:
-    LOCAL_TVT_CHARA_StartTalk( p_doctor, p_wk->p_msgdata_hyouka, msg_hyouka_hakase2_04 );
+    LOCAL_TVT_CHARA_StartTalkWait( p_doctor, p_wk->p_msgdata_hyouka, msg_hyouka_hakase2_04 );
     p_wk->seq++;
     break;
   case SEQ_ITEM_MAIN:
+    if( LOCAL_TVT_MSGWIN_IsDone( cp_param->p_message ) )
+    {
+      LOCAL_TVT_MSGWIN_SetWaitIcon( cp_param->p_message );
+    }
     if( LOCAL_TVT_CHARA_WaitTalk( p_doctor, cp_param->p_chara_sys ) )
     {
       p_wk->seq++;
@@ -840,7 +844,7 @@ static void ZukanCheck_GetData( const ZUKAN_SAVEDATA *p_zukan_sv, EVENTWORK *p_e
   {
     *p_beforemsg = msg_hyouka_hakase2_02a;
     ZUKANSAVE_GetHyouka( p_zukan_sv, SCR_ZUKAN_HYOUKA_MODE_LOCAL_GET, heapID, &msgID, &count, &me );
-    if( ZUKANSAVE_CheckLocalSeeComp( p_zukan_sv, heapID ) )
+    if( ZUKANSAVE_CheckLocalGetComp( p_zukan_sv, heapID ) )
     {
       if( !EVENTWORK_CheckEventFlag( p_ev,FE_HYOUKA_ITEMGET_02) )
       {

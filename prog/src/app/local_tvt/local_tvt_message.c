@@ -720,7 +720,12 @@ BOOL LOCAL_TVT_MSGWIN_IsPause( const LOCAL_TVT_MESSAGE *cp_wk )
 //-----------------------------------------------------------------------------
 BOOL LOCAL_TVT_MSGWIN_IsDone( const LOCAL_TVT_MESSAGE *cp_wk )
 {
-  return PRINTSYS_PrintStreamGetState( cp_wk->p_stream ) == PRINTSTREAM_STATE_DONE;
+  if( cp_wk->p_stream )
+  {
+    return PRINTSYS_PrintStreamGetState( cp_wk->p_stream ) == PRINTSTREAM_STATE_DONE;
+  }
+
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------

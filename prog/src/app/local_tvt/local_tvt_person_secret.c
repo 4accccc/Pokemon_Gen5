@@ -93,7 +93,7 @@ static PERSON_STATE_SECRET_DATE Local_Tvt_Secret_GetDateEvent( const LOCAL_TVT_C
 
 static u32 Local_Tvt_Secret_GetTalkMsgID( const QUESTIONNAIRE_ANSWER_WORK *cp_quest, const LOCAL_TVT_CALLDATA *cp_data, LOCAL_TVT_MESSAGE *p_message );
 
-static void Local_Tvt_Secret_SetWord( const LOCAL_TVT_CALLDATA *cp_data, LOCAL_TVT_MESSAGE *p_message, u32 state, BOOL answerID );
+static void Local_Tvt_Secret_SetWord( const LOCAL_TVT_CALLDATA *cp_data, LOCAL_TVT_MESSAGE *p_message, u32 state, u32 answerID );
 
 static u32 Local_Tvt_Secret_Qanswer_GetTalkMsgID( const LOCAL_TVT_CALLDATA *cp_data, u32 state, BOOL is_answer );
 static u32 Local_Tvt_Secret_DailyRnd_GetTalkMsgID( const LOCAL_TVT_CALLDATA *cp_data, u32 state );
@@ -766,7 +766,7 @@ static u32 Local_Tvt_Secret_GetTalkMsgID( const QUESTIONNAIRE_ANSWER_WORK *cp_qu
  *	@param  答えID
  */
 //-----------------------------------------------------------------------------
-static void Local_Tvt_Secret_SetWord( const LOCAL_TVT_CALLDATA *cp_data, LOCAL_TVT_MESSAGE *p_message, u32 state, BOOL answerID )
+static void Local_Tvt_Secret_SetWord( const LOCAL_TVT_CALLDATA *cp_data, LOCAL_TVT_MESSAGE *p_message, u32 state, u32 answerID )
 {
   GAMEDATA *p_gamedata = LOCAL_TVT_CALLDATA_GetGameData( cp_data );
 
@@ -774,17 +774,13 @@ static void Local_Tvt_Secret_SetWord( const LOCAL_TVT_CALLDATA *cp_data, LOCAL_T
   LOCAL_TVT_MESSAGE_RegisterPlayerName( p_message, p_gamedata );
 
   //１段階目は最初の８つはプレイヤーのアンケートに答える
-  if( state < 8 )
-  {
-    LOCAL_TVT_MESSAGE_RegisterQuestionnaire( p_message, 1, answerID );
-  }
-  else if( state == 8 )
+  if( state == ZERO_ORIGIN(9) )
   {
     //バッジの数を聞く
     u32 badge = LOCAL_TVT_CALLDATA_GetBadgeCnt( cp_data );
     LOCAL_TVT_MESSAGE_RegisterNumber( p_message, badge, 1, 1 );
   }
-  else if( state == 21 )
+  else if( state == ZERO_ORIGIN(22) )
   {
     static const u32 sc_type_msgID[]  =
     {
@@ -798,6 +794,10 @@ static void Local_Tvt_Secret_SetWord( const LOCAL_TVT_CALLDATA *cp_data, LOCAL_T
     GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE , NARC_message_typename_dat, GFL_HEAP_LOWID( HEAPID_LOCAL_TVT ) );
     LOCAL_TVT_MESSAGE_RegisterWord( p_message, p_msg, sc_type_msgID[ *cp_evwk ], 1 );
     GFL_MSG_Delete( p_msg );
+  }
+  else if( state < LOCAL_TVT_SECRET_PHASE_1_END )
+  {
+    LOCAL_TVT_MESSAGE_RegisterQuestionnaire( p_message, 1, answerID );
   }
 }
 
@@ -817,7 +817,7 @@ static u32 Local_Tvt_Secret_Qanswer_GetTalkMsgID( const LOCAL_TVT_CALLDATA *cp_d
 {
   u16 msgID = LOCAL_TVT_CALLDATA_GetTalkMsgID( cp_data, LOCAL_TVT_PERSON_SECRET );
 
-  if( is_answer )
+  if( is_answer == FALSE )
   {
     //答えていなければ、１こ次に聞いてない時用の会話があるので次のメッセージIDにする
     ++msgID;
@@ -873,7 +873,7 @@ static void Local_Tvt_Secret_Qanswer_Check( const QUESTIONNAIRE_ANSWER_WORK *cp_
     QUESTION_ID_PERSON,
   };
 
-  if( state >= 8 )
+  if( state >= NELEMS(sc_quest_tbl) )
   {
     *p_is_limit = FALSE;
     return;
