@@ -169,7 +169,7 @@
 #define WK_SCENE_C13GYM0102              16557 /* 0x40ad C13GYM0102：ジムリーダーとの出会い用ワーク */
 #define WK_SCENE_C03P15                  16558 /* 0x40ae C13R15：船着場到着イベント管理ワーク */
 #define WK_SCENE_H01R0201                16559 /* 0x40af H01R0201：スカイアローブリッジストッパー（クリアまで） */
-#define WK_SCENE_C03                     16560 /* 0x40b0 C03：マコモと出会うイベント管理ワーク */
+#define WK_SCENE_C03                     16560 /* 0x40b0 C03：ヒウンラリー開始ワーク */
 #define WK_SCENE_C03GYM_STOPPER          16561 /* 0x40b1 C03ジムまわり：下水道クリアまでストッパー管理ワーク */
 #define WK_SCENE_C03P17                  16562 /* 0x40b2 C03P17：下水道まわりイベント管理ワーク */
 #define WK_SCENE_D11R0101                16563 /* 0x40b3 D11R0101：下水道連れ歩き管理ワーク */
@@ -320,6 +320,7 @@
 #define WK_SCENE_MUGENDUNGEON_CLEAR      16708 /* 0x4144 無限ダンジョン：自分のROMバージョンと同じダンジョンをクリアしたか */
 #define WK_SCENE_C08GYM0101_GUIDE        16709 /* 0x4145 ドラゴンジム：ジムガイドイベント用 */
 #define WK_SCENE_T04_D20_TVT             16710 /* 0x4146 サザナミタウン・サザナミ湾：ライブキャスターPOS制御ワーク */
+#define WK_SCENE_C03P19                  16711 /* 0x4147 ヒウンシティはじまりの場所：ワルそうなチームイベント進行制御ワーク */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 
