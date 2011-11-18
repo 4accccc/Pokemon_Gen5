@@ -7,10 +7,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>このコ　むかしは　みんなに
-メールを　はいたつ　してたの！</Text>
+メールを　はいたつ　してたの！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-05T07:45:52" />
+				Time="2011-11-18T06:15:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -19,10 +19,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このコ　昔は　みんなに
-メールを　配達してたの！</Text>
+メールを　配達してたの！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-05T07:45:58" />
+				Time="2011-11-18T06:15:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -31,10 +31,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
+・Black2→girl1_02b
+　White2→girl1_02w
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T08:17:04" />
+				Time="2011-11-18T06:19:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -43,6 +45,167 @@
 				User="matsumiya:W00224"
 				Time="2011-05-31T06:12:18" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r13r0101_girl1_02b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうだ！　このコが　もらった
+パワーレンズ！　あなたに　あげる！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T06:21:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T06:16:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうだ！　このコが　もらった
+パワーレンズ！　あなたに　あげる！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T06:21:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T06:17:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・Black2
+・アイテム入手処理
+　No291「パワーレンズ」</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T06:18:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T06:15:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r13r0101_girl1_02w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうだ！　このコが　もらった
+パワーバンド！　あなたに　あげる！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T06:21:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T06:17:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうだ！　このコが　もらった
+パワーバンド！　あなたに　あげる！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T06:21:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T06:17:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・White2ver
+・アイテム入手処理
+　No292「パワーバンド」</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T06:20:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T06:15:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r13r0101_girl1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンしょうぶで　つよくなくても
+このコには　かんけい　ないもの！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T06:22:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T06:21:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモン勝負で　強くなくても
+このコには　関係ないもの！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T06:22:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T06:22:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・アイテム入手後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T06:17:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T06:15:04" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_r13_poke_01"
