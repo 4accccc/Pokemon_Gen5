@@ -38,6 +38,7 @@ struct _RESORT_NPC_SYS
   RESORT_BINARY_MOUTHCOMM *p_binary_mouthcomm;
   RESORT_NPC_SYS_PARAM param;
   BOOL  is_pause;
+  u32   npc_num;
 };
 //=============================================================================
 /**
@@ -108,6 +109,43 @@ void RESORT_NPC_SYS_Main( RESORT_NPC_SYS *p_wk, const FIELDMAP_WORK* cp_fieldmap
     }
   }
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  MMDLを取得
+ *
+ *	@param	RESORT_NPC_SYS *p_wk  ワーク
+ *
+ *	@return MMDL
+ */
+//-----------------------------------------------------------------------------
+MMDL * RESORT_NPC_SYS_GetMmdl( RESORT_NPC_SYS *p_wk, u32 index )
+{
+  int i;
+  for( i = 0; i < RESORT_BINARY_NPC_GetMax( p_wk->p_binary_npc ); i++ )
+  {
+    MMDL *p_mmdl = MMDLSYS_SearchOBJID( p_wk->param.p_mmdlsys, RESORT_NPC_INDEX_TO_MMDLID(i) );
+    if( p_mmdl != NULL && i == index )
+    {
+      return p_mmdl;
+    }
+  }
+
+  return NULL;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  NPCの数を取得
+ *
+ *	@param	const RESORT_NPC_SYS *cp_wk   ワーク
+ *
+ *	@return 最大数
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_NPS_SYS_GetMax( const RESORT_NPC_SYS *cp_wk )
+{
+  return cp_wk->npc_num;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  全MMDL表示設定
@@ -228,6 +266,7 @@ static void Resort_Npc_Sys_AddAll( RESORT_NPC_SYS *p_wk )
 
       MMDLHEADER_SetGridPos( &header, grid_x, grid_z, 0 );
       MMDLSYS_AddMMdl( p_wk->param.p_mmdlsys, &header, RESORT_ZONE_ID_FIELD );
+      p_wk->npc_num++;
     }
   }
 }

@@ -351,6 +351,7 @@
 
 //_RESORT_xxxx_EFFECT—p
 #define RESORT_EFFECT_CONFETTI                (0)
+#define RESORT_EFFECT_PARADE                  (1)
 
 //_RESORT_SET_PRESET_PEOPLE—p
 #define RESORT_PRESET_TUTORIAL_01             (0)

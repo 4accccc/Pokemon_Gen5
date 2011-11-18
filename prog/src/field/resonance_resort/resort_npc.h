@@ -45,6 +45,9 @@ extern RESORT_NPC_SYS * RESORT_NPC_SYS_Init( const RESORT_NPC_SYS_PARAM *cp_para
 extern void RESORT_NPC_SYS_Exit( RESORT_NPC_SYS *p_wk );
 extern void RESORT_NPC_SYS_Main( RESORT_NPC_SYS *p_wk, const FIELDMAP_WORK* cp_fieldmap );
 
+extern MMDL * RESORT_NPC_SYS_GetMmdl( RESORT_NPC_SYS *p_wk, u32 index );
+extern u32 RESORT_NPS_SYS_GetMax( const RESORT_NPC_SYS *cp_wk );
+
 extern void RESORT_NPC_SYS_SetVisibleAll( RESORT_NPC_SYS *p_wk, BOOL is_visible );
 
 extern u16 RESORT_NPC_SYS_GetType( const RESORT_NPC_SYS *cp_wk, u32 index );

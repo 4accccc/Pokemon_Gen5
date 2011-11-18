@@ -3397,7 +3397,9 @@ static u32 ResortShop_CalcPlace( SHOP_BUY_APP_WORK *p_wk, u32 price )
   u32 city_lv = RESORT_CITY_DATA_GetData( p_wk->p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
   GF_ASSERT( city_lv != 0 );
 
-  if( 0 < city_lv && city_lv < RESORT_BINARY_CITY_GetCityLvMax(RESORT_SYSTEM_GetBinaryCity(p_wk->p_resort_sys))  )
+  city_lv = MATH_CLAMP( city_lv, 0, RESORT_CONST_LEVEL_CAP );
+
+  if( 0 < city_lv && city_lv <  RESORT_CONST_LEVEL_CAP )
   {
     city_lv--;
   }

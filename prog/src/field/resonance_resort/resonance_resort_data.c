@@ -4630,7 +4630,9 @@ struct _RESORT_CITY_DATA
   u32     celeb_trade_flag  :1;
   u32     prize_dendou  :1;
   u32     ev_prize_dendou :1;
-  u32     dummy         :16;    //4 224
+  u32     prize_parade  :1;
+  u32     ev_prize_parade: 1;
+  u32     dummy         :14;    //4 224
 
   u16     trainerID_max;
   u16     trainerID_cnt;        //4 228
@@ -4753,6 +4755,8 @@ u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_DATA_PA
     return cp_wk->prize_scout;
   case RESORT_CITY_DATA_PARAM_PRIZE_DENDOU:
     return cp_wk->prize_dendou;
+  case RESORT_CITY_DATA_PARAM_PRIZE_PARADE:
+    return cp_wk->prize_parade;
   case RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC03:
     return cp_wk->ev_prize_sec03;
   case RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC04:
@@ -4765,6 +4769,8 @@ u32 RESORT_CITY_DATA_GetData( const RESORT_CITY_DATA *cp_wk, RESORT_CITY_DATA_PA
     return cp_wk->ev_prize_scout;
   case RESORT_CITY_DATA_PARAM_EV_PRIZE_DENDOU:
     return cp_wk->ev_prize_dendou;
+  case RESORT_CITY_DATA_PARAM_EV_PRIZE_PARADE:
+    return cp_wk->ev_prize_parade;
   case RESORT_CITY_DATA_CELEB_DAY_FLAG:
     return cp_wk->celeb_day_flag;
   case RESORT_CITY_DATA_CELEB_TRADE_FLAG:
@@ -4830,6 +4836,9 @@ void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM pa
   case RESORT_CITY_DATA_PARAM_PRIZE_DENDOU:
     p_wk->prize_dendou  = data;
     break;
+  case RESORT_CITY_DATA_PARAM_PRIZE_PARADE:
+    p_wk->prize_parade  = data;
+    break;
   case RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC03:
     p_wk->ev_prize_sec03 = data;
     break;
@@ -4847,6 +4856,9 @@ void RESORT_CITY_DATA_SetData( RESORT_CITY_DATA *p_wk, RESORT_CITY_DATA_PARAM pa
     break;
   case RESORT_CITY_DATA_PARAM_EV_PRIZE_DENDOU:
     p_wk->ev_prize_dendou = data;
+    break;
+  case RESORT_CITY_DATA_PARAM_EV_PRIZE_PARADE:
+    p_wk->ev_prize_parade = data;
     break;
   case RESORT_CITY_DATA_CELEB_DAY_FLAG:
     p_wk->celeb_day_flag = data;

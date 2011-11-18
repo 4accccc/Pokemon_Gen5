@@ -81,6 +81,12 @@
  *
  */
 #define RESORT_CONST_FEVER_EXIST_COEFFEICENT    (2)
+/*
+ *  お店の品物・サービスの価格
+ *  レベルキャップ
+ *
+ */
+#define RESORT_CONST_LEVEL_CAP    (50)
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /*
  *  お店を建てたときのカメラ
