@@ -31,6 +31,7 @@
   .include "../../../prog/src/field/scrcmd_pokecen_table.cdat"
   .include "../../../prog/src/field/scrcmd_demo_gimmick_table.cdat"
   .include "../../../prog/src/field/scrcmd_gimmick_out58_table.cdat"
+  .include "../../../prog/src/field/scrcmd_gimmick_sppoke_table.cdat"
 
 //======================================================================
 // イベントデータ関連

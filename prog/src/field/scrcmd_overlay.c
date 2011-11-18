@@ -34,6 +34,7 @@
 #include "scrcmd_pokecen_table.h"
 #include "scrcmd_demo_gimmick_table.h"
 #include "scrcmd_gimmick_out58_table.h"
+#include "scrcmd_gimmick_sppoke_table.h"
 
 //-------------------------------------
 ///	デバッグ
@@ -64,6 +65,7 @@ FS_EXTERN_OVERLAY( scrcmd_hide_ship );
 FS_EXTERN_OVERLAY( scrcmd_pokecen );
 FS_EXTERN_OVERLAY( scrcmd_demo_gimmick );
 FS_EXTERN_OVERLAY( scrcmd_gimmick_out58 );
+FS_EXTERN_OVERLAY( scrcmd_gimmick_sppoke );
 
 //=============================================================================
 /**
@@ -244,6 +246,14 @@ static const ZONEID UseZoneIDTbl_gimmick_out58[] =
   ZONE_ID_W21,        // 21番水路(セイガイハと地続きの為含める)
   ZONE_ID_R22,        // 22番道路(セイガイハと地続きの為含める)
 };
+//-------------------------------------
+///	特殊ポケのギミック関係
+//=====================================
+static const ZONEID UseZoneIDTbl_gimmick_sppoke[] = 
+{
+  ZONE_ID_D29R0401,   // レジ３体の地底遺跡
+};
+
 
 
 //=============================================================================
@@ -388,6 +398,14 @@ static const struct
     UseZoneIDTbl_gimmick_out58,
     NELEMS(UseZoneIDTbl_gimmick_out58),
     FS_OVERLAY_ID( scrcmd_gimmick_out58 ),
+    GFL_OVERLAY_BLANK_ID,
+  },
+  //GIMMICK_SPPOKE
+  {
+    ScriptCmdTbl_gimmick_sppoke,
+    UseZoneIDTbl_gimmick_sppoke,
+    NELEMS(UseZoneIDTbl_gimmick_sppoke),
+    FS_OVERLAY_ID( scrcmd_gimmick_sppoke ),
     GFL_OVERLAY_BLANK_ID,
   },
 };
