@@ -50,13 +50,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ
-ゆうきある　ものよ▼
-しゅごしゃの　めだまから
-したに●　みぎに９を　しらべろ▼</Text>
+			<Text>ただしい　ばしょの　こたえは
+ふたつに　わけられた▼
+ゆうき　ある　ものよ
+わたしの　もつ　こたえを　おしえよう▼
+めだまから　みぎに９を
+そして　したに●を　しらべるのだ▼
+もうひとつの　こたえは
+たいようが　のぼるときに　わかる</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-16T11:40:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T10:48:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -64,13 +68,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-ゆうきある　ものよ▼
-しゅごしゃの　めだまから
-したに●　みぎに９を　しらべろ▼</Text>
+			<Text>正しい　場所の　答えは
+二つに　わけられた▼
+勇気ある　者よ
+私が　知る　答えを　教えよう▼
+めだまから　右に９を
+そして　下に●を　調べるのだ▼
+もう一つの　答えは
+太陽が　昇るときに　わかる</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-16T11:41:00" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T10:50:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"

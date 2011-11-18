@@ -6,16 +6,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ▼
-このトビラは　ひみつのトビラ
-さっき　なかに　はいったのだけど▼
-きのうの　よるに　はいったときと
-なかの　へやが　かわっていたんだ！▼
-なにか　ひみつの　ちからが
-トビラに　やどっているのだろうね……</Text>
+			<Text>なんなんだ……
+この　とびらは……▼
+たいようが　のぼっている　ときと
+のぼっていない　ときとでは▽
+つながっている　へやが　ちがう！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-17T03:35:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T10:36:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -23,16 +21,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼
-このトビラは　ひみつのトビラ
-さっき　なかに　はいったのだけど▼
-きのうの　よるに　はいったときと
-なかの　へやが　かわっていたんだ！▼
-なにか　ひみつの　ちからが
-トビラに　やどっているのだろうね……</Text>
+			<Text>なんなんだ……
+この扉は……▼
+太陽が　昇っている　ときと
+昇っていない　ときとでは▽
+つながっている　部屋が　違う！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-17T03:35:54" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T10:37:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -59,16 +55,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ▼
-このトビラは　ひみつのトビラ
-さっき　なかに　はいったのだけど▼
-きのうの　あさに　はいったときと
-なかの　へやが　かわっていたんだ！▼
-なにか　ひみつの　ちからが
-トビラに　やどっているのだろうね……</Text>
+			<Text>なんなんだ……
+この　とびらは……！？▼
+つきが　みえる　ときと
+みえない　ときとでは▽
+つながっている　へやが　ちがう！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-17T03:35:36" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T10:37:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -76,16 +70,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼
-このトビラは　ひみつのトビラ
-さっき　なかに　はいったのだけど▼
-きのうの　あさに　はいったときと
-なかの　へやが　かわっていたんだ！▼
-なにか　ひみつの　ちからが
-トビラに　やどっているのだろうね……</Text>
+			<Text>なんなんだ……
+この扉は……▼
+月が　みえる　ときと
+みえない　ときとでは▽
+つながっている　部屋が　違う！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-17T03:35:37" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T10:37:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -112,12 +104,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ▼
-あしもとに　スイッチが　ある……
-おしてみますか？</Text>
+			<Text>あしもとに　ふるい　スイッチがある！
+ふんでみますか？</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-17T03:37:55" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T10:08:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -125,12 +116,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼
-あしもとに　スイッチが　ある……
-おしてみますか？</Text>
+			<Text>足元に　古い　スイッチがある！
+踏んでみますか？</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-17T03:37:58" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T10:08:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -139,10 +129,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>・岩山の間へのスイッチイベント文
-・POSX=24 POSZ=11の位置を調べると表示</Comment>
+・POSX=24 POSZ=11の位置を調べると表示
+・はい/いいえの選択肢表示
+　はい　→switch_02
+　いいえ→switch_03</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-17T03:41:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T10:08:39" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -157,12 +150,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ▼
-トビラの　ほうから　なにかが
-うごく　おとが　ひびいた……</Text>
+			<Text>とびらの　むこうがわ　で
+おもおもしい　おとが　ひびいた……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-17T03:40:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T10:35:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -170,12 +162,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼
-トビラの　ほうから　なにかが
-うごく　おとが　ひびいた……</Text>
+			<Text>扉の　向こう側で
+重々しい　音が　響いた……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-17T03:40:57" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T10:35:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -203,11 +194,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ
-……なにもおこらないみたいだ</Text>
+			<Text>……どうやら
+なにも　おこらないようだ</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-17T03:42:51" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T10:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -215,11 +206,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-……なにもおこらないみたいだ</Text>
+			<Text>……どうやら
+なにも　起こらないようだ</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-17T03:42:54" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T10:24:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"

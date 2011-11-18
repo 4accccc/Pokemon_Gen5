@@ -7,10 +7,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>こおりの　ちからを　かんじさせる
-ポケモンの　ぞうが　うごきだした！</Text>
+ポケモンの　ぞうが　うごきだした！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-16T11:07:59" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T10:52:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -19,10 +19,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>氷の　力を　感じさせる
-ポケモンの　像が　動きだした！</Text>
+ポケモンの　像が　動きだした！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-16T11:07:59" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T10:52:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -107,11 +107,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レジアイスは　こうどうの
-どこかへ　きえてしまった……</Text>
+			<Text>レジアイスは　いせきの
+おくふかくへ　きえてしまった……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-16T11:07:59" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T10:52:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -119,11 +119,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンは　坑道の
-どこかへ　消えてしまった……</Text>
+			<Text>レジアイスは　遺跡の
+奥深くへ　消えてしまった……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-16T11:07:59" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T10:52:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
