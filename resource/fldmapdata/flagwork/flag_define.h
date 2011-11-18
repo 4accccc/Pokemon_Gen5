@@ -2232,6 +2232,7 @@
 #define SYS_FLAG_ARRIVE_D13               2543 /* 0x09ef 到着フラグ：D13 */
 #define SYS_FLAG_ARRIVE_D29R0101          2544 /* 0x09f0 到着フラグ：D29R0101 */
 #define SYS_FLAG_BGM_C16_PARADE           2545 /* 0x09f1 BGM変更フラグ：ジョインアベニュー */
+#define SYS_FLAG_BGM_C08_PLAZMA           2546 /* 0x09f2 BGM変更フラグ：氷漬けプラズマ団 */
 
 #define SYS_FLAG_AREA_END                 2639 /* 0x0a4f  */
 
