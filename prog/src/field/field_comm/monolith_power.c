@@ -462,6 +462,15 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
         else{
           _SetCursorPos(mpw, _CURSOR_POS_NONE, _SET_CURSOR_MODE_INIT);
         }
+        // 「パワーをうけとる」表示
+        {
+          BOOL bflg=TRUE;
+          // 待ち
+          if(GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH){
+            bflg = FALSE;
+          }
+          MonolithTool_PanelOBJ_SetEnable(&mpw->panel, bflg);
+        }
         (*seq)++;
       }
     }
@@ -1859,6 +1868,8 @@ static void _mp_init( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw )
   //
   // メッセージ送りマーク用
   mpw->MsgCursorWork = APP_KEYCURSOR_Create( 15, TRUE, TRUE, HEAPID_MONOLITH );
+  // 「パワーをうけとる」非表示
+  MonolithTool_PanelOBJ_SetEnable(&mpw->panel, FALSE);
 }
 
 //--------------------------------------------------------------
