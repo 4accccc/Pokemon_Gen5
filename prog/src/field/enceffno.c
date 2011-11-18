@@ -69,9 +69,6 @@ void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, const int inFormNo, ENCO
     *outEffNo = ENCEFFID_PACKAGE_POKE;
     return;
   case MONSNO_644:  //ドラー MONSNO_DORAA
-  case MONSNO_380:  // ラティアス MONSNO_RATHIASU
-  case MONSNO_381:  // ラティオス MONSNO_RATHIOSU
-  case MONSNO_488:  // クレセリア MONSNO_KURESERIA
     *outBgmNo = SEQ_BGM_VS_NORAPOKE;
     *outEffNo = ENCEFFID_EFF_POKE;
     return;
@@ -93,6 +90,32 @@ void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, const int inFormNo, ENCO
   case MONSNO_652:  //ツチノカミ MONSNO_TUTINOKAMI:
     *outBgmNo = SEQ_BGM_VS_MOVEPOKE;
     *outEffNo = ENCEFFID_MOVE_POKE;
+    return;
+  case MONSNO_380:  //ラティアス MONSNO_RATHIASU
+  case MONSNO_381:  //ラティオス MONSNO_RATHIOSU
+  case MONSNO_488:  //クレセリア MONSNO_KURESERIA
+  case MONSNO_509:  //オノノクス  MONSNO_ONONOKUSU
+    *outBgmNo = SEQ_BGM_VS_TSUYOPOKE;
+    *outEffNo = ENCEFFID_EFF_POKE;
+    return;
+  // レジ系
+  case MONSNO_377:  //レジロック MONSNO_REZIROKKU
+  case MONSNO_378:  //レジアイス MONSNO_REZIAISU
+  case MONSNO_379:  //レジスチル MONSNO_REZISUTIRU
+  case MONSNO_486:  //レジギガス MONSNO_REZIGIGASU
+    *outBgmNo = SEQ_BGM_VS_REGI;
+    *outEffNo = ENCEFFID_EFF_POKE;
+    return;
+  // UMA
+  case MONSNO_480:  //ユクシー    MONSNO_YUKUSII
+  case MONSNO_481:  //エムリット  MONSNO_EMURITTO
+  case MONSNO_482:  //アグノム    MONSNO_AGUNOMU
+    *outBgmNo = SEQ_BGM_VS_UMA;
+    *outEffNo = ENCEFFID_EFF_POKE;
+    return;
+  case MONSNO_485:  //ヒードラン  MONSNO_HIIDORAN
+    *outBgmNo = SEQ_BGM_VS_DPLEGEND;
+    *outEffNo = ENCEFFID_EFF_POKE;
     return;
   }
 
