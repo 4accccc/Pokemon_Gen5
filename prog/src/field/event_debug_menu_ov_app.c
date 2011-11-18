@@ -198,7 +198,7 @@ static GMEVENT_RESULT IntroDemoEvent( GMEVENT* event, int* seq, void* wk )
     break;
 
   case SEQ_FADE_OUT:
-    GMEVENT_CallEvent(event, EVENT_FieldFadeOut_White( gsys, fieldmap, FIELD_FADE_WAIT));
+    GMEVENT_CallEvent(event, EVENT_FieldFadeOut_Black( gsys, fieldmap, FIELD_FADE_WAIT));
 
     (*seq)++;
     break;
@@ -226,7 +226,7 @@ static GMEVENT_RESULT IntroDemoEvent( GMEVENT* event, int* seq, void* wk )
     break;
 
   case SEQ_FADE_IN:
-    // 画面フェードイン(ゲームスタートデモのつながりを加味して、ホワイトフェード)
+    // 画面フェードイン(ゲームスタートデモのつながりを加味して、ブラックフェード)
     GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Black( gsys, fieldmap, FIELD_FADE_WAIT ) );
 
     (*seq)++;

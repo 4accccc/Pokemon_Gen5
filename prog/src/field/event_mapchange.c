@@ -401,7 +401,7 @@ static GMEVENT_RESULT FirstMapInEvent(GMEVENT * event, int *seq, void *work)
 
   case 4:
     fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-    // 画面フェードイン(ゲームスタートデモのつながりを加味して、ホワイトフェード)
+    // 画面フェードイン(ゲームスタートデモのつながりを加味して、ブラックフェード)
     GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Black( gsys, fieldmap, FIELD_FADE_WAIT ) );
 
 #ifdef PM_DEBUG
