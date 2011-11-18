@@ -4668,9 +4668,9 @@
 
 	<row id="TRID_MAID_02_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">あー　たのしかった！
-さ〜て　おそうじ　しなくっちゃ！</language>
+さあて　おそうじ　しなくっちゃ！</language>
 		<language name="JPN_KANJI" width="216">あー　楽しかった！
-さ〜て　お掃除　しなくっちゃ！</language>
+さあて　お掃除　しなくっちゃ！</language>
 	</row>
 
 	<row id="TRID_BIGFOUR1_02_TRMSG_FIGHT_FIRST_DAMAGE">
@@ -4972,7 +4972,7 @@
 		<language name="JPN" width="216">キミと　キミの　ポケモンから
 すさまじい　あつりょくを　かんじたよ！</language>
 		<language name="JPN_KANJI" width="216">キミと　キミの　ポケモンから
-凄まじい　圧力を　感じたよ！</language>
+すさまじい　圧力を　感じたよ！</language>
 	</row>
 
 	<row id="TRID_PILOT_04_TRMSG_FIGHT_AFTER">
@@ -7210,7 +7210,7 @@
 		<language name="JPN" width="216">わたしも　わかいころは　ポケモンと
 あちこち　たびを　していた▽
 おてんばむすめ　でしたのよ　オホホ！</language>
-		<language name="JPN_KANJI" width="216">わたしも　若い頃は　ポケモンと
+		<language name="JPN_KANJI" width="216">わたしも　若いころは　ポケモンと
 あちこち　旅を　していた▽
 おてんば娘　でしたのよ　オホホ！</language>
 	</row>
@@ -9125,8 +9125,8 @@
 	<row id="TRID_SWIMMERM_06_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">この　でっけえ　みずたまり！
 うみ　っていうんだぜ！▼</language>
-		<language name="JPN_KANJI" width="216">この　でっけえ　水溜まり！
-海っていうんだぜ！▼</language>
+		<language name="JPN_KANJI" width="216">この　でっけえ　水たまり！
+海って　いうんだぜ！▼</language>
 	</row>
 
 	<row id="TRID_SWIMMERM_06_TRMSG_FIGHT_LOSE">
@@ -9240,7 +9240,7 @@
 うみに　むかって　せいけんづき！
 さあ　きみも　やってみよう！▼</language>
 		<language name="JPN_KANJI" width="216">ソヤッ！　ソヤッ！▼
-海に向かって　正拳突き！
+海に向かって　せいけん突き！
 さあ　きみも　やってみよう！▼</language>
 	</row>
 
@@ -9248,7 +9248,7 @@
 		<language name="JPN" width="216">ソヤッ！　ソヤッ！
 まけても　せいけんづきは　やめない！</language>
 		<language name="JPN_KANJI" width="216">ソヤッ！　ソヤッ！
-負けても　正拳突きは　やめない！</language>
+負けても　せいけん突きは　やめない！</language>
 	</row>
 
 	<row id="TRID_KARATE_15_TRMSG_FIGHT_AFTER">
@@ -9969,7 +9969,7 @@
 		<language name="JPN" width="216">あんたの　じょうねつに
 この　きのみを　ささげるわ</language>
 		<language name="JPN_KANJI" width="216">あんたの　情熱に
-この　きのみを　捧げるわ</language>
+この　きのみを　ささげるわ</language>
 	</row>
 
 	<row id="TRID_RANGERW_18_TRMSG_FIGHT_AFTER">
@@ -12830,7 +12830,7 @@
 とがった　いし……▽
 あなた　あれを　ごぞんじかしら？▼</language>
 		<language name="JPN_KANJI" width="216">あちらこちらにある
-尖った　石……▽
+とがった　石……▽
 あなた　あれを　ご存知かしら？▼</language>
 	</row>
 
@@ -12849,7 +12849,7 @@
 じみちな　つみかさねが
 おおきな　せいちょうになる……▽
 ポケモントレーナーと　にてません？</language>
-		<language name="JPN_KANJI" width="216">あれは　石筍　と　いって
+		<language name="JPN_KANJI" width="216">あれは　せきじゅん　と　いって
 石灰質の　水滴が▽
 何百年も　かけて　固まって▽
 できる　ものなのです▼
@@ -13445,7 +13445,7 @@
 		<language name="JPN_KANJI" width="216">行き当たり　ばったりの
 旅を　していると▼
 思っても　いない　所に
-辿り着いたり　するのさ▽
+たどり着いたり　するのさ▽
 例えば　ここみたいな</language>
 	</row>
 
@@ -14997,7 +14997,7 @@
 		<language name="JPN" width="216">だんがい　ぜっぺき！▼
 このみ　ひとつで
 てっぺん　めざします！</language>
-		<language name="JPN_KANJI" width="216">断崖　絶壁！▼
+		<language name="JPN_KANJI" width="216">だんがい　ぜっぺき！▼
 この身　ひとつで
 頂上　目指します！</language>
 	</row>
@@ -15005,7 +15005,7 @@
 	<row id="TRID_BATTLEG_21_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">あなたと　いう　がけを
 こえられなかった……！</language>
-		<language name="JPN_KANJI" width="216">あなたと　いう　崖を
+		<language name="JPN_KANJI" width="216">あなたと　いう　がけを
 越えられなかった……！</language>
 	</row>
 
@@ -15013,7 +15013,7 @@
 		<language name="JPN" width="216">この　がけを　のぼれば
 トレーナーの　たかみ▽
 ポケモンリーグは　もうすぐです</language>
-		<language name="JPN_KANJI" width="216">この　崖を　登れば
+		<language name="JPN_KANJI" width="216">この　がけを　登れば
 トレーナーの　高み▽
 ポケモンリーグは　もうすぐです</language>
 	</row>
@@ -16558,8 +16558,10 @@
 	</row>
 
 	<row id="TRID_NINJA_06_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">しょせん　かげの　そんざい　か</language>
-		<language name="JPN_KANJI" width="216">所詮　影の存在か</language>
+		<language name="JPN" width="216">しょせん
+かげの　そんざい　か</language>
+		<language name="JPN_KANJI" width="216">しょせん
+影の存在　か</language>
 	</row>
 
 	<row id="TRID_NINJA_07_TRMSG_FIGHT_LOSE">
