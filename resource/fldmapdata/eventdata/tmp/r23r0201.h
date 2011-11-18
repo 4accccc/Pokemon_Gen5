@@ -10,6 +10,7 @@
 #define ZONE_R23R0201_EVC_H
 
 #define R23R0201_OLDMAN_01                 0
+#define R23R0201_POKE46_01                 1
 
 #endif //ZONE_R23R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r23r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

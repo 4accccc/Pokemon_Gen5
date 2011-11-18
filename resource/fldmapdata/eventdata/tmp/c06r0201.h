@@ -21,6 +21,7 @@
 #define C06R0201_WORKMAN1_01               7
 #define C06R0201_WORKMAN2_01               8
 #define C06R0201_POKE19_01                 9
+#define C06R0201_WORKMAN_01               10
 
 #endif //ZONE_C06R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c06r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

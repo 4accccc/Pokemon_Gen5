@@ -15,7 +15,7 @@
   .include  "t07r0101_def.h"
 
   //@author fujimura_souichirou（ヤマジタウンへ行くまで、エースメダル見せイベント、カーゴサービス）
-  //@author suginaka_katsunori //スクリプト調整・NPC配置
+  //@author suginaka_katsunori //スクリプト調整・NPC配置・タイプ見せイベント作成
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -33,12 +33,20 @@ _EVENT_DATA   ev_c06r0201_informationw_01
 _EVENT_DATA	ev_c06r0201_workman1_01
 _EVENT_DATA	ev_c06r0201_workman2_01
 _EVENT_DATA	ev_c06r0201_poke19_01
+_EVENT_DATA	ev_c06r0201_workman3_01
 _EVENT_DATA_END
 
 //アイテムチェック用変数
 DEFINE_LOCAL  LWK_ITEM_CHK
 //行き先選択用変数
 DEFINE_LOCAL  LWK_NUM_SELECT
+
+DEFINE_LOCAL	LWK_PARTY_NUM		//手持ちポケモンの数
+DEFINE_LOCAL	LWK_COUNT_NUM		//WHILE文のカウンタ
+DEFINE_LOCAL	LWK_TYPE1			//１番目のタイプ格納
+DEFINE_LOCAL	LWK_TYPE2			//２番目のタイプ格納
+DEFINE_LOCAL	LWK_RET_MONSNO		//ポケモン種族名を格納
+DEFINE_LOCAL	LWK_EV_CHK		//指定タイプがいるか・いないか
 
 
 /**************************************************************/
@@ -473,10 +481,6 @@ ev_map_change_d35r0101:
 
 _RET
 
-
-
-
-
 //--------------------------------------------------------------------
 //共通：ターン右                 
 //--------------------------------------------------------------------
@@ -532,3 +536,107 @@ EVENT_END
 EVENT_START	ev_c06r0201_poke19_01
 	_EASY_TALK_POKEVOICE( MONSNO_533, msg_c06r0201_poke_01 )
 EVENT_END
+
+/************************************************************/
+/*	WORKMAN3	エスパー/ひこうポケモン　サブイベント		*/
+/************************************************************/
+EVENT_START	ev_c06r0201_workman3_01
+
+_TALK_OBJ_START()
+
+//イベント後か前か？
+IF FLAG_OFF( FE_C06R0201_ITEMGET_01 ) THEN
+
+	//おっ　きみ！　ひこうタイプか　エスパータイプの
+	_BALLOONWIN_TALKOBJ_MSG( msg_c06r0201_workman3_01 )
+
+	_CALL ev_poketype_chk
+	
+	//指定タイプがいたか？
+	IF $LWK_EV_CHK == 1 THEN
+	
+		//あっ！　●●●●が　いるね！
+		_BALLOONWIN_TALKOBJ_MSG( msg_c06r0201_workman3_02 )
+		_MSGWIN_CLOSE()
+		
+		//暗転
+		_BLACK_OUT_SLOW()
+		_DISP_FADE_END_CHECK()
+
+		_TIME_WAIT( 45 ) 
+
+		//暗転復帰
+		_BLACK_IN_SLOW()
+		_DISP_FADE_END_CHECK()
+	
+		//サンキュー！
+		_BALLOONWIN_TALKOBJ_MSG( msg_c06r0201_workman3_03 )
+		_MSGWIN_CLOSE()
+		
+		//ネットボール×５　入手
+		_ITEM_EVENT_KEYWAIT( ITEM_NETTOBOORU, 5 )
+
+		//ポケモンが　いてくれる
+		_BALLOONWIN_TALKOBJ_MSG( msg_c06r0201_workman3_04 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+
+		//========================================//
+		
+		//イベント終了
+		_FLAG_SET( FE_C06R0201_ITEMGET_01 )
+		
+		//========================================//
+	
+	//いなかった場合
+	ELSE
+	
+		//そっかー
+		_BALLOONWIN_TALKOBJ_MSG( msg_c06r0201_workman3_05 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
+	ENDIF
+
+
+//イベント後の場合
+ELSE
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c06r0201_workman3_04 )
+
+ENDIF
+
+EVENT_END
+
+ev_poketype_chk:
+
+//ＰＯＳ値に０を代入
+$LWK_COUNT_NUM = 0
+
+//手持ちのポケモンの数を確認（ひんし、タマゴのポケモンは除外）
+_GET_PARTY_POKE_COUNT( LWK_PARTY_NUM, POKECOUNT_MODE_BATTLE_ENABLE )
+
+//手持ちのポケモン数分繰り返す
+WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+
+	//指定POSのポケモンのタイプを取得
+	_GET_TEMOTI_POKE_TYPE( LWK_TYPE1, LWK_TYPE2, LWK_COUNT_NUM )
+
+	//エスパータイプ・ひこうタイプの場合
+	IF $LWK_TYPE1 == POKETYPE_ESPER || $LWK_TYPE1 == POKETYPE_HIKOU || $LWK_TYPE2 == POKETYPE_ESPER || $LWK_TYPE2 == POKETYPE_HIKOU  THEN
+	
+		//指定POSのポケモンのNOを取得
+		_GET_PARTY_POKE_MONSNO( LWK_RET_MONSNO, LWK_COUNT_NUM )
+	
+		_MONS_NAME( 0, LWK_RET_MONSNO )
+
+		$LWK_EV_CHK = 1
+	
+	ENDIF
+
+	//カウント
+	$LWK_COUNT_NUM += 1
+
+ENDWHILE
+
+_RET
