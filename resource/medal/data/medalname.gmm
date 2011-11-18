@@ -756,18 +756,18 @@
 	</row>
 
 	<row id="MDL_NAME_FIELD_062">
-		<language name="JPN" width="216">スクランブル３０</language>
-		<language name="JPN_KANJI" width="216">スクランブル３０</language>
+		<language name="JPN" width="216">すれちがいファースト</language>
+		<language name="JPN_KANJI" width="216">すれちがいファースト</language>
 	</row>
 
 	<row id="MDL_NAME_FIELD_063">
-		<language name="JPN" width="216">スクランブル１００</language>
-		<language name="JPN_KANJI" width="216">スクランブル１００</language>
+		<language name="JPN" width="216">すれちがい３０</language>
+		<language name="JPN_KANJI" width="216">すれちがい３０</language>
 	</row>
 
 	<row id="MDL_NAME_FIELD_064">
-		<language name="JPN" width="216">スクランブル５００</language>
-		<language name="JPN_KANJI" width="216">スクランブル５００</language>
+		<language name="JPN" width="216">すれちがい１００</language>
+		<language name="JPN_KANJI" width="216">すれちがい１００</language>
 	</row>
 
 	<row id="MDL_NAME_FIELD_065">
@@ -1011,8 +1011,8 @@
 	</row>
 
 	<row id="MDL_NAME_BATTLE_026">
-		<language name="JPN" width="216">ハンターチャンス</language>
-		<language name="JPN_KANJI" width="216">ハンターチャンス</language>
+		<language name="JPN" width="216">たんさくハンター</language>
+		<language name="JPN_KANJI" width="216">たんさくハンター</language>
 	</row>
 
 	<row id="MDL_NAME_BATTLE_027">

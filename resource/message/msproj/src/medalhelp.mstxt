@@ -1521,27 +1521,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンを　よく　そだてて
-たくさん　しんかさせよう！</Text>
+			<Text>ポケモンの　なかには
+そだてると　すがたが　かわる
+ものが　いる　らしいぞ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-15T10:55:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-15T10:55:12" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンを　よく　育てて
-たくさん　進化させよう！</Text>
+			<Text>ポケモンの　中には
+育てると　姿が　変わる
+ものが　いる　らしいぞ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-15T10:55:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-15T10:55:12" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1690,27 +1692,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じゃまする　いわは　すべて
+			<Text>じゃまする　いわは　ことごとく
 あなに　おとしてやるのだ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-15T10:55:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-15T10:55:12" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>邪魔する　岩は　すべて
+			<Text>邪魔する　岩は　ことごとく
 穴に　落としてやるのだ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-15T10:55:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-15T10:55:12" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1797,27 +1799,27 @@
 			Language="JPN">
 			<Text>おとくな　けいじばんの
 おとくな　じょうほうを
-すべて　チェックしよう！</Text>
+たくさん　チェックしよう！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-15T10:55:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-15T10:55:12" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>お得な　掲示板の
 お得な　情報を
-すべて　チェックしよう！</Text>
+たくさん　チェックしよう！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-15T10:55:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-15T10:55:12" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

@@ -757,10 +757,12 @@
 	</row>
 
 	<row id="MDL_HINT_FIELD_043">
-		<language name="JPN" width="216">ポケモンを　よく　そだてて
-たくさん　しんかさせよう！</language>
-		<language name="JPN_KANJI" width="216">ポケモンを　よく　育てて
-たくさん　進化させよう！</language>
+		<language name="JPN" width="216">ポケモンの　なかには
+そだてると　すがたが　かわる
+ものが　いる　らしいぞ！</language>
+		<language name="JPN_KANJI" width="216">ポケモンの　中には
+育てると　姿が　変わる
+ものが　いる　らしいぞ！</language>
 	</row>
 
 	<row id="MDL_HINT_FIELD_044">
@@ -786,9 +788,9 @@
 	</row>
 
 	<row id="MDL_HINT_FIELD_048">
-		<language name="JPN" width="216">じゃまする　いわは　すべて
+		<language name="JPN" width="216">じゃまする　いわは　ことごとく
 あなに　おとしてやるのだ！</language>
-		<language name="JPN_KANJI" width="216">邪魔する　岩は　すべて
+		<language name="JPN_KANJI" width="216">邪魔する　岩は　ことごとく
 穴に　落としてやるのだ！</language>
 	</row>
 
@@ -809,10 +811,10 @@
 	<row id="MDL_HINT_FIELD_051">
 		<language name="JPN" width="216">おとくな　けいじばんの
 おとくな　じょうほうを
-すべて　チェックしよう！</language>
+たくさん　チェックしよう！</language>
 		<language name="JPN_KANJI" width="216">お得な　掲示板の
 お得な　情報を
-すべて　チェックしよう！</language>
+たくさん　チェックしよう！</language>
 	</row>
 
 	<row id="MDL_HINT_FIELD_052">

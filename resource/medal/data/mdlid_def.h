@@ -73,9 +73,9 @@
 #define MDLID_PREMIUM_BALL_LV1	(59)	// かいものじょうず
 #define MDLID_SODATEYA_CNT_LV1	(60)	// そだてやマニア
 #define MDLID_RECOVERY_HOME	(61)	// スイートホーム
-#define MDLID_SURECHIGAI_CNT_LV1	(62)	// スクランブル３０
-#define MDLID_SURECHIGAI_CNT_LV2	(63)	// スクランブル１００
-#define MDLID_SURECHIGAI_CNT_LV3	(64)	// スクランブル５００
+#define MDLID_SURECHIGAI_CNT_LV1	(62)	// すれちがいファースト
+#define MDLID_SURECHIGAI_CNT_LV2	(63)	// すれちがい３０
+#define MDLID_SURECHIGAI_CNT_LV3	(64)	// すれちがい１００
 #define MDLID_SURECHIGAI_CNT_MAX	(65)	// ラッシュアワー
 #define MDLID_DELPOWER_USE_LV1	(66)	// デルパワー＋
 #define MDLID_DELPOWER_USE_LV2	(67)	// デルパワー＋＋
@@ -124,7 +124,7 @@
 #define MDLID_TRIALHOUSE_LV4	(110)	// トライアルマスター
 #define MDLID_WIN_BP_LV1	(111)	// ＢＰミリオネア
 #define MDLID_DAYMAX_EXP_LV1	(112)	// ＥＸＰミリオネア
-#define MDLID_EFFECT_ENCOUNT_LV1	(113)	// ハンターチャンス
+#define MDLID_EFFECT_ENCOUNT_LV1	(113)	// たんさくハンター
 #define MDLID_SAISEN_LV1	(114)	// バトルリピーター
 #define MDLID_YUURANSEN_LV1	(115)	// サンセットクルーズ
 #define MDLID_WBT_HODOMOE	(116)	// ホドモエさいきょう
