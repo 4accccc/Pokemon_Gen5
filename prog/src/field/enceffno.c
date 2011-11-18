@@ -69,6 +69,9 @@ void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, const int inFormNo, ENCO
     *outEffNo = ENCEFFID_PACKAGE_POKE;
     return;
   case MONSNO_644:  //ドラー MONSNO_DORAA
+  case MONSNO_380:  // ラティアス MONSNO_RATHIASU
+  case MONSNO_381:  // ラティオス MONSNO_RATHIOSU
+  case MONSNO_488:  // クレセリア MONSNO_KURESERIA
     *outBgmNo = SEQ_BGM_VS_NORAPOKE;
     *outEffNo = ENCEFFID_EFF_POKE;
     return;
