@@ -145,34 +145,34 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>じょしゅ『[Name:TrainerName Idx="1" ]はかせ！▼
-とうとう　あなたの　けんきゅうが
+ついに　われわれの　けんきゅうが
 むくわれる　ひが　きましたね！▼
 ひとの　こころに　かぎりなく　ちかい
 プログラムを　もつ　ロボットが▽
-たんじょう するのですね！</Text>
+たんじょうの　しゅんかん　ですね！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T10:27:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T10:27:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>助手『[Name:TrainerName Idx="1" ]博士！▼
-とうとう　あなたの　研究が
-むくわれる　日が　来ましたね！▼
+とうとう　我々の　研究が
+報われる　日が　来ましたね！▼
 人の　心に　限りなく　近い
 プログラムを　持つ　ロボットが▽
-誕生 するのですね！</Text>
+誕生する　瞬間ですね！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T10:27:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T10:27:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -225,32 +225,30 @@
 			<Text>じょしゅ『[Name:TrainerName Idx="1" ]はかせ！▼
 それでは　さいごの　テストを
 スタート　しましょう！▼
-ポケモンと　にんげんと
-いっしょに　コミニュケーションを
-おこなう　テストです！</Text>
+ポケモンと　にんげんを　まじえた
+コミニュケーション　テストです！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T10:27:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T10:27:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>助手『[Name:TrainerName Idx="1" ]博士！▼
 それでは　最期のテストを
 スタート　しましょう！▼
-ポケモンと　人間と
-一緒に　コミニュケーションを▽
-行なう　テストです！</Text>
+ポケモンと　人間を　交えた
+コミニュケーション　テストです！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T10:27:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T10:27:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

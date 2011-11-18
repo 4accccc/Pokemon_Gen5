@@ -749,10 +749,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こくはくしろ！　せめろ！</Text>
+			<Text>セリフの　せんたくが　じゅうよう！
+あいてを　こうげきしろ！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:38:12" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:25:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -760,10 +761,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>告白しろ！　せめろ！</Text>
+			<Text>セリフの　選択が　重要！
+相手を　攻撃しろ！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:38:22" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:25:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -791,10 +793,11 @@
 		Label="pw_movie_hint_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>こくはくしろ！　せめろ！</Text>
+			<Text>セリフの　せんたくが　じゅうよう！
+あいてを　こうげきしろ！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:38:30" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:26:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -802,10 +805,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>告白しろ！　せめろ！</Text>
+			<Text>セリフの　選択が　重要！
+相手を　攻撃しろ！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:38:34" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:26:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -826,10 +830,11 @@
 		Label="pw_movie_hint_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>こくはくしろ！　のうりょくをコピーしろ！</Text>
+			<Text>セリフの　せんたくが　じゅうよう！
+あいての　のうりょくを　りようしろ！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:39:00" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T02:47:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -837,10 +842,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>告白しろ！　能力をコピーしろ！</Text>
+			<Text>セリフの　選択が　重要！
+相手の　能力を　利用しろ！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:39:15" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T02:47:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -861,10 +867,10 @@
 		Label="pw_movie_hint_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>こくはくしろ！　せめろ！</Text>
+			<Text>あいてを　こうげきしろ！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:38:30" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T02:49:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -872,10 +878,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>告白しろ！　せめろ！</Text>
+			<Text>相手を　攻撃しろ！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:38:34" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T02:49:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -896,10 +902,10 @@
 		Label="pw_movie_hint_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>こくはくしろ！　せめろ！</Text>
+			<Text>いっきに　きめろ！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:38:30" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:28:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -907,10 +913,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>告白しろ！　せめろ！</Text>
+			<Text>一気に　決めろ！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:38:34" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:28:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -931,10 +937,10 @@
 		Label="pw_movie_hint_05">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>いっきに　きめろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-03T02:19:32" />
+				Time="2011-11-18T03:28:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -942,10 +948,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>一気に　決めろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-03T02:19:35" />
+				Time="2011-11-18T03:28:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

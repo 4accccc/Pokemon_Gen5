@@ -346,8 +346,8 @@
 
 
 	<row id="pw_trname_rec">
-		<language name="JPN" width="256">はいゆう</language>
-		<language name="JPN_KANJI" width="256">はいゆう</language>
+		<language name="JPN" width="256">ベテランはいゆう</language>
+		<language name="JPN_KANJI" width="256">ベテランはいゆう</language>
 	</row>
 	<row id="pw_trname_show">
 		<language name="JPN" width="256">じょしゅ</language>

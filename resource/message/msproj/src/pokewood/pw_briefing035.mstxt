@@ -51,12 +51,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]じょしゅに　うらぎられ
-[Ctrl1:xcenter ]Ｆ－００の　プログラムと　メモリーを
+[Ctrl1:xcenter ]プログラムと　メモリーを
 [Ctrl1:xcenter ]かきかえられた　けっか
 [Ctrl1:xcenter ]Ｆ－００は　ぼうそう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T08:49:51" />
+				Time="2011-11-18T09:21:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -65,12 +65,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]助手に　裏切られ
-[Ctrl1:xcenter ]Ｆ－００の　プログラムと　メモリーを
+[Ctrl1:xcenter ]プログラムと　メモリーを
 [Ctrl1:xcenter ]書き換えられた　結果
 [Ctrl1:xcenter ]Ｆ－００は　暴走……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T08:49:53" />
+				Time="2011-11-18T09:21:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -82,11 +82,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]そのけっか　もはや　ロボットとしての
+			<Text>[Ctrl1:xcenter ]もはや　ロボットとしての
 [Ctrl1:xcenter ]じゅみょうは　つきようとしていた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T10:36:25" />
+				Time="2011-11-18T09:22:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -94,11 +94,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]その結果　もはや　ロボットとしての
+			<Text>[Ctrl1:xcenter ]もはや　ロボットとしての
 [Ctrl1:xcenter ]寿命は　尽きようとしていた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T10:36:37" />
+				Time="2011-11-18T09:22:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -330,12 +330,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]じょしゅに　うらぎられ
-[Ctrl1:xcenter ]Ｆ－００の　プログラムと　メモリーを
+[Ctrl1:xcenter ]プログラムと　メモリーを
 [Ctrl1:xcenter ]かきかえられた　けっか
 [Ctrl1:xcenter ]Ｆ－００は　ぼうそう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T08:49:59" />
+				Time="2011-11-18T09:21:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -344,12 +344,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]助手に　裏切られ
-[Ctrl1:xcenter ]Ｆ－００の　プログラムと　メモリーを
+[Ctrl1:xcenter ]プログラムと　メモリーを
 [Ctrl1:xcenter ]書き換えられた　結果
 [Ctrl1:xcenter ]Ｆ－００は　暴走……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-23T08:49:59" />
+				Time="2011-11-18T09:21:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -361,11 +361,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]そのけっか　もはや　ロボットとしての
+			<Text>[Ctrl1:xcenter ]もはや　ロボットとしての
 [Ctrl1:xcenter ]じゅみょうは　つきようとしていた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T10:36:44" />
+				Time="2011-11-18T09:22:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -373,11 +373,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]その結果　もはや　ロボットとしての
+			<Text>[Ctrl1:xcenter ]もはや　ロボットとしての
 [Ctrl1:xcenter ]寿命は　尽きようとしていた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T10:36:50" />
+				Time="2011-11-18T09:22:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

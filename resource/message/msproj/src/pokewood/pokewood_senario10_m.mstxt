@@ -2076,16 +2076,16 @@ Eからの　連絡は　まだか！！</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『かなり　マズいな！
-このままじゃ　俺も　やられる▼
+このままじゃ　オレも　やられる▼
 すまないが　作戦を　中断し
 助けに　来てもらえないか！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:04" />
+				Time="2011-11-18T13:32:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:04" />
+				Time="2011-11-18T13:32:25" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

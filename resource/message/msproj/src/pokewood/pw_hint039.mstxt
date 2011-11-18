@@ -749,10 +749,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とくせいを　かえろ！</Text>
+			<Text>あいての　とくせいを　かえろ！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-15T02:42:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T02:57:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -760,10 +760,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>特性を　変えろ！</Text>
+			<Text>相手の　特性を　変えろ！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-15T02:42:56" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T02:57:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -791,10 +791,11 @@
 		Label="pw_movie_hint_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>とくせいを　かえろ！</Text>
+			<Text>セリフの　せんたくが　じゅうよう！
+あいてを　こうげきしろ！！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-15T02:43:04" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:00:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -802,10 +803,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>特性を　変えろ！</Text>
+			<Text>セリフの　選択が　重要！
+相手を　攻撃しろ！！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-15T02:43:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:01:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -826,10 +828,10 @@
 		Label="pw_movie_hint_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>セリフの　せんたくが　じゅうよう！</Text>
+			<Text>あいてを　こうげきしろ！！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-27T04:31:42" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:01:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -837,10 +839,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>セリフの　選択が　重要！</Text>
+			<Text>相手を　攻撃しろ！！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-27T04:31:48" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:01:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -861,10 +863,11 @@
 		Label="pw_movie_hint_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>こうげき　しろ！</Text>
+			<Text>セリフの　せんたくが　じゅうよう！
+あいてを　こうげきしろ！！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-15T02:43:22" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:01:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -872,10 +875,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>攻撃しろ！！</Text>
+			<Text>セリフの　選択が　重要！
+相手を　攻撃しろ！！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-15T02:43:27" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:01:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -896,10 +900,10 @@
 		Label="pw_movie_hint_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>セリフの　せんたくが　じゅうよう！</Text>
+			<Text>あいてを　こうげきしろ！！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-27T04:31:42" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:01:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -907,10 +911,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>セリフの　選択が　重要！</Text>
+			<Text>相手を　攻撃しろ！！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-27T04:31:48" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:01:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -931,10 +935,11 @@
 		Label="pw_movie_hint_05">
 		<LanguageCell
 			Language="JPN">
-			<Text>こうげき　しろ！</Text>
+			<Text>セリフの　せんたくが　じゅうよう！
+あいてを　こうげきしろ！！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-15T02:43:38" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:01:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -942,10 +947,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>攻撃しろ！！</Text>
+			<Text>セリフの　選択が　重要！
+相手を　攻撃しろ！！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-15T02:43:34" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:01:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -966,10 +972,10 @@
 		Label="pw_movie_hint_06">
 		<LanguageCell
 			Language="JPN">
-			<Text>セリフの　せんたくが　じゅうよう！</Text>
+			<Text>あいてを　こうげきしろ！！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-27T04:31:42" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:01:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -977,10 +983,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>セリフの　選択が　重要！</Text>
+			<Text>相手を　攻撃しろ！！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-27T04:31:48" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:01:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1001,10 +1007,11 @@
 		Label="pw_movie_hint_07">
 		<LanguageCell
 			Language="JPN">
-			<Text>こうげき　しろ！</Text>
+			<Text>セリフの　せんたくが　じゅうよう！
+あいてを　こうげきしろ！！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-15T02:43:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:01:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1012,10 +1019,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>攻撃しろ！！</Text>
+			<Text>セリフの　選択が　重要！
+相手を　攻撃しろ！！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-15T02:43:46" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:01:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1036,10 +1044,11 @@
 		Label="pw_movie_hint_08">
 		<LanguageCell
 			Language="JPN">
-			<Text>セリフの　せんたくが　じゅうよう！</Text>
+			<Text>セリフの　せんたくが　じゅうよう！
+いっきに　きめろ！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-27T04:31:42" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:15:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1047,10 +1056,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>セリフの　選択が　重要！</Text>
+			<Text>セリフの　選択が　重要！
+一気に　決めろ！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-27T04:31:48" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:15:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1071,10 +1081,10 @@
 		Label="pw_movie_hint_09">
 		<LanguageCell
 			Language="JPN">
-			<Text>セリフの　せんたくが　じゅうよう！</Text>
+			<Text>いっきに　きめろ！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-27T04:31:42" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:15:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1082,10 +1092,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>セリフの　選択が　重要！</Text>
+			<Text>一気に　決めろ！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-27T04:31:48" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T03:16:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1109,7 +1119,7 @@
 			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-03T02:19:32" />
+				Time="2011-11-18T03:02:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

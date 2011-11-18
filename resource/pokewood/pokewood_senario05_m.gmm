@@ -586,7 +586,7 @@
 		<language name="JPN_KANJI" width="256">メカポリス『待てーっ！
 [1:02:ポケモンニックネーム:0]ニンジャ！▼
 次こそは……　次こそは
-絶対に　刑務所に　ぶちこむ！</language>
+絶対に　刑務所に　ぶち込む！</language>
 	</row>
 	<row id="pw_event3_hero_2">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ヘッ！
@@ -719,7 +719,7 @@
 あくに　おちた　メカポリスだった！▼
 めを　さませ　メカポリス！
 だれでも　ヘマは　するものさ！</language>
-		<language name="JPN_KANJI" width="256">任務　失敗が　きっかけで
+		<language name="JPN_KANJI" width="256">任務失敗が　きっかけで
 正義に　疑問を　抱いた▽
 秘密刑事　メカポリスは▽
 国際コップを　辞職した……▼

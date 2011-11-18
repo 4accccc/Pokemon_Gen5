@@ -749,10 +749,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいてタイプの　じゃくてんを　つけ！</Text>
+			<Text>あいてタイプの　じゃくてんを　つけ！
+セリフの　せんたくが　じゅうよう！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:40:47" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T02:53:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -760,10 +761,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手タイプの　弱点を　つけ！</Text>
+			<Text>相手タイプの　弱点を　つけ！
+セリフの　選択が　重要！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:40:47" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T02:53:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -791,10 +793,11 @@
 		Label="pw_movie_hint_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいてタイプの　じゃくてんを　つけ！</Text>
+			<Text>あいてタイプの　じゃくてんを　つけ！
+セリフの　せんたくが　じゅうよう！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-15T02:41:43" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T02:53:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -802,10 +805,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手タイプの　弱点を　つけ！</Text>
+			<Text>相手タイプの　弱点を　つけ！
+セリフの　選択が　重要！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:40:52" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T02:53:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

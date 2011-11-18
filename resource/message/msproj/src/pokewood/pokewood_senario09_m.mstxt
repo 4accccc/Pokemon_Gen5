@@ -1793,15 +1793,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『待ってください……▼
-もう　俺には　戦える
+もう　オレには　戦える
 ポケモンも　いませんよ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:58" />
+				Time="2011-11-18T13:32:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:58" />
+				Time="2011-11-18T13:32:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1996,7 +1996,7 @@
 			<Text>……こうして　[Name:TrainerName Idx="1" ]は
 ポケモンに　かわって▽
 ＵＦＯの　テストを　はじめた……▼
-しかし　しょせんは　[Name:TrainerName Idx="1" ]は
+しかし　しょせん　[Name:TrainerName Idx="1" ]は
 なまみの　にんげん……▼
 Ｅの　のぞむ　テストの　けっかは
 なかなか　えられない……▼
@@ -2006,18 +2006,18 @@
 けっせんは　はじまっていた……　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:58" />
+				Time="2011-11-18T06:03:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:58" />
+				Time="2011-11-18T06:03:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……こうして　[Name:TrainerName Idx="1" ]は
 ポケモンに　代わって▽
 ＵＦＯの　テストを　始めた……▼
-しかし　しょせんは　[Name:TrainerName Idx="1" ]は
+しかし　所詮　[Name:TrainerName Idx="1" ]は
 生身の　人間……▼
 Ｅの　望む　テストの　結果は
 なかなか　得られない……▼
@@ -2027,11 +2027,11 @@
 決戦は　始まっていた……　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:58" />
+				Time="2011-11-18T06:03:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:58" />
+				Time="2011-11-18T06:03:41" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2668,33 +2668,33 @@
 			Language="JPN">
 			<Text>なぞの　かがくしゃ　Ｅが
 かいはつした　ＵＦＯを▽
-はかいした　[Name:TrainerName Idx="1" ]……▼
+こわしてしまった　[Name:TrainerName Idx="1" ]……▼
 はらいきれない　しゃっきんと
 Ｅの　したで　こきつかわれる▽
 じんせいが　はじまりを　つげた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:58" />
+				Time="2011-11-18T06:03:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:58" />
+				Time="2011-11-18T06:03:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なぞの　科学者　Ｅが
 開発した　ＵＦＯを▽
-破壊した　[Name:TrainerName Idx="1" ]……▼
+壊してしまった　[Name:TrainerName Idx="1" ]……▼
 払いきれない　借金と
 Ｅの　下で　こき使われる▽
 人生が　始まりを　告げた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:58" />
+				Time="2011-11-18T06:03:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:58" />
+				Time="2011-11-18T06:03:41" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2703,5 +2703,250 @@
 				User="mori:W00269"
 				Time="2011-10-14T09:40:17" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_enemy_0">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＵＦＯ『フウォォォォォン！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＵＦＯ『ウォォォォォン！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_hero_1">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『なんだろう……
+ＵＦОの　ようすが　へんだ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『なんだろう……
+ＵＦОの　ようすが　へんだ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_enemy_1">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＵＦＯ『フウォォン！　フウォォン！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＵＦＯ『フウォォン！　フウォォン！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_enemy_2">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｅ『おい……
+そのわざは　やめろ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｅ『おい……
+そのわざは　止めろ……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_hero_3">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『え……？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『え……？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_enemy_3">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｅ『いいか……▼
+そのわざは　ＵＦＯには
+ぜったいに　つかうんじゃないぞ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｅ『いいか……▼
+そのわざは　ＵＦＯには
+絶対に　使うんじゃないぞ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_hero_4">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『わかりましたよ……
+そんなに　おこらなくても……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『分かりましたよ……
+そんなに　怒らなくても……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_enemy_4">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｅ『おぼえておけ……▼
+ＵＦＯは　せいみつな　きかい　なのだ
+そのわざは　せいぎょシステムに▽
+ごさどうを　およぼしかねない</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｅ『覚えておけ……▼
+ＵＦＯは　精密な　機械　なのだ
+そのわざは　制御システムに▽
+誤作動を　及ぼしかねない</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_hero_5">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『はい……▼
+（なるほど……　じゅうりょくは
+ＵＦＯの　じゃくてんと　いうことか……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『はい……▼
+（なるほど……　じゅうりょくは
+ＵＦＯの　弱点と　いうことか……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T06:03:41" />
+		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

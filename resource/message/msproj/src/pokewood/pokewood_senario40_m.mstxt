@@ -1764,7 +1764,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>怪人ハチクマンに　呆れられた
+			<Text>怪人ハチクマンに　あきれられた
 [Name:PokemonNickname Idx="0" ]キッド……▼
 戦うべき　悪の　いない
 ヒーローなど　夢見がちな▽
@@ -1777,11 +1777,11 @@
 [Name:PokemonNickname Idx="0" ]キッド！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T04:05:24" />
+				Time="2011-11-18T13:42:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T04:05:24" />
+				Time="2011-11-18T13:42:23" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

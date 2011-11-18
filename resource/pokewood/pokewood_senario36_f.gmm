@@ -346,8 +346,8 @@
 
 
 	<row id="pw_trname_rec">
-		<language name="JPN" width="256">はいゆう</language>
-		<language name="JPN_KANJI" width="256">はいゆう</language>
+		<language name="JPN" width="256">ベテランはいゆう</language>
+		<language name="JPN_KANJI" width="256">ベテランはいゆう</language>
 	</row>
 	<row id="pw_trname_show">
 		<language name="JPN" width="256">とりつかれたおとこ</language>
@@ -358,7 +358,7 @@
 けしかけてくる　ポケモンを▽
 なんとか　しなければ……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『まずは　あの男が
-けしかけてくる　ポケモンを▽
+けしかけて来る　ポケモンを▽
 何とか　しなければ……</language>
 	</row>
 	<row id="pw_turn_hero_1">
@@ -574,8 +574,8 @@
 ウググ……　ハナシ　キイテクレルカ</language>
 	</row>
 	<row id="pw_event2_react_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『どちらも　うそだ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どちらも　うそだ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『どちらも　ウソね！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どちらも　ウソね！</language>
 	</row>
 	<row id="pw_event2_react_enemy_3">
 		<language name="JPN" width="256">カダス『なっ……

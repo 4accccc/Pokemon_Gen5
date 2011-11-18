@@ -727,16 +727,16 @@ UFOの　テストと　偽り
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｅ『そうだ……　諦めろ……▼
+			<Text>Ｅ『そうだ……　あきらめろ……▼
 この星は　我々　エイリアンが
 もらいうける……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:26:51" />
+				Time="2011-11-18T13:41:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:26:51" />
+				Time="2011-11-18T13:41:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1604,16 +1604,16 @@ UFOの　テストと　偽り
 			<Text>[Name:TrainerName Idx="1" ]『……▼
 この星には　たくさんの
 人間と　ポケモンが　いる……▼
-だけど　まだ　誰も　知らない
+だけど　まだ　だれも　知らない
 新しい　生命が　生まれる▽
 可能性だって　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:26:51" />
+				Time="2011-11-18T13:41:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:26:51" />
+				Time="2011-11-18T13:41:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2108,17 +2108,17 @@ UFOの　テストと　偽り
 			Language="JPN_KANJI">
 			<Text>E『……　……　……
 感情を　乱したな……▼
-その　心の　隙間が
+その　心の　スキマが
 生まれるのを　待っていたぞ……▼
 私が　サイコエネルギーで▽
 お前の　心を　支配してやる</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T13:41:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T13:41:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

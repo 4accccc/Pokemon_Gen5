@@ -817,14 +817,14 @@
 			<Text>メカポリス『待てーっ！
 [Name:PokemonNickname Idx="0" ]クノイチ！▼
 次こそは……　次こそは
-絶対に　刑務所に　ぶちこむ！</Text>
+絶対に　刑務所に　ぶち込む！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T09:44:53" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T07:09:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T09:44:53" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T07:09:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1244,7 +1244,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>任務　失敗が　きっかけで
+			<Text>任務失敗が　きっかけで
 正義に　疑問を　抱いた▽
 秘密刑事　メカポリスは▽
 国際コップを　辞職した……▼
@@ -1255,12 +1255,12 @@
 目を覚ませ　メカポリス！
 だれでも　ヘマは　するものさ！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T07:09:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-21T13:14:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-18T07:09:13" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>
