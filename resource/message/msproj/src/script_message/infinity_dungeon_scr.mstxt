@@ -5539,10 +5539,10 @@
 			<Text>いらっしゃいませ
 くろのまてんろうに　ようこそ！▼
 それでは　ごようけんを
-おつたえください</Text>
+おつたえください▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T12:43:56" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:23:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -5552,10 +5552,11 @@
 			Language="JPN_KANJI">
 			<Text>いらっしゃいませ
 黒の摩天楼に　ようこそ！▼
-それでは　ご用件を　お伝えください▼</Text>
+それでは
+ご用件を　お伝えください▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-09T12:41:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:23:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6454,7 +6455,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この　施設は　お前ら
-トレーナーの　鍛錬の　場所として▽　
+トレーナーの　鍛錬の　場所として▽
 提供されている　施設だ▼
 施設内には　お前と　同じように
 施設を　挑戦中の▽
@@ -6464,8 +6465,8 @@
 立ちふさがる　トレーナーを　倒し
 エリア突破を　目指すんだ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-01T10:54:10" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:23:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

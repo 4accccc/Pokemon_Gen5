@@ -90,10 +90,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]は
-こうかん　されませんでした[Ctrl2:PageClear ]</Text>
+こうかん　されませんでした▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:02:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -102,10 +102,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]は
-交換されませんでした[Ctrl2:PageClear ]</Text>
+交換されませんでした▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:02:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -134,10 +134,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]は
-にげてしまった　みたい……[Ctrl2:PageClear ]</Text>
+にげてしまった　みたい……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:02:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -146,10 +146,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]は
-逃げてしまった　みたい……[Ctrl2:PageClear ]</Text>
+逃げてしまった　みたい……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:02:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1088,10 +1088,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>このポケモンを　こうかんに
-だすことは　できません！[Ctrl2:PageClear ]</Text>
+だすことは　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:02:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1100,10 +1100,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このポケモンを　交換に
-だすことは　できません！[Ctrl2:PageClear ]</Text>
+だすことは　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:02:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1123,10 +1123,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>このポケモンを　こうかんに
-だすことは　できません！（１３２６６）[Ctrl2:PageClear ]</Text>
+だすことは　できません！（１３２６６）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:02:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1135,10 +1135,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このポケモンを　交換に
-だすことは　できません！（１３２６６）[Ctrl2:PageClear ]</Text>
+だすことは　できません！（１３２６６）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:02:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1168,10 +1168,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>このポケモンを　こうかんに
-だすことは　できません！（１３２６７）[Ctrl2:PageClear ]</Text>
+だすことは　できません！（１３２６７）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:02:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1180,10 +1180,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このポケモンを　交換に
-だすことは　できません！（１３２６７）[Ctrl2:PageClear ]</Text>
+だすことは　できません！（１３２６７）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:02:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1203,10 +1203,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>このポケモンを　こうかんに
-だすことは　できません！（１３２６８）[Ctrl2:PageClear ]</Text>
+だすことは　できません！（１３２６８）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:02:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1215,10 +1215,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このポケモンを　交換に
-だすことは　できません！（１３２６８）[Ctrl2:PageClear ]</Text>
+だすことは　できません！（１３２６８）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:02:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1238,10 +1238,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>このポケモンを　こうかんに
-だすことは　できません！（１３２６９）[Ctrl2:PageClear ]</Text>
+だすことは　できません！（１３２６９）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:03:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1250,10 +1250,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このポケモンを　交換に
-だすことは　できません！（１３２６９）[Ctrl2:PageClear ]</Text>
+だすことは　できません！（１３２６９）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:03:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1273,10 +1273,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>このポケモンを　こうかんに
-だすことは　できません！（１３２７０）[Ctrl2:PageClear ]</Text>
+だすことは　できません！（１３２７０）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:03:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1285,10 +1285,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このポケモンを　交換に
-だすことは　できません！（１３２７０）[Ctrl2:PageClear ]</Text>
+だすことは　できません！（１３２７０）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:03:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1308,10 +1308,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>このポケモンを　こうかんに
-だすことは　できません！（１３２７１）[Ctrl2:PageClear ]</Text>
+だすことは　できません！（１３２７１）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:03:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1320,10 +1320,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このポケモンを　交換に
-だすことは　できません！（１３２７１）[Ctrl2:PageClear ]</Text>
+だすことは　できません！（１３２７１）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:03:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1343,10 +1343,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>タマゴを　こうかんに
-だすことは　できません！[Ctrl2:PageClear ]</Text>
+だすことは　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:03:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1355,10 +1355,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>タマゴを　交換に
-だすことは　できません！[Ctrl2:PageClear ]</Text>
+だすことは　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:03:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1386,10 +1386,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>てもちが　いっぱいで　ポケモンを
-うけとることが　できません！[Ctrl2:PageClear ]</Text>
+うけとることが　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:03:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1398,10 +1398,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>手持ちが　一杯で　ポケモンを
-受け取ることが　できません！[Ctrl2:PageClear ]</Text>
+受け取ることが　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:03:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1430,10 +1430,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ボックスが　いっぱいで　ポケモンを
-うけとることが　できません！[Ctrl2:PageClear ]</Text>
+うけとることが　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:03:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1442,10 +1442,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボックスが　一杯で　ポケモンを
-受け取ることが　できません！[Ctrl2:PageClear ]</Text>
+受け取ることが　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:03:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1703,10 +1703,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>てもちがいっぱいで　メールをもってる
-ポケモンを　うけとれません！[Ctrl2:PageClear ]</Text>
+ポケモンを　うけとれません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:03:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1714,11 +1714,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>手持ちが一杯で　メールを　持ってる
-ポケモンを　受け取れません！[Ctrl2:PageClear ]</Text>
+			<Text>手持ちが一杯で　メールを持ってる
+ポケモンを　受け取れません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:03:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1794,10 +1794,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>とくべつな　リボンが　ついているので
-こうかんに　だすことは　できません！[Ctrl2:PageClear ]</Text>
+こうかんに　だすことは　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:03:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1806,10 +1806,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>特別な　リボンが　ついているので
-交換に　だすことは　できません！[Ctrl2:PageClear ]</Text>
+交換に　だすことは　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:03:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6011,10 +6011,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ＧＴＳに　ポケモンが
-とうろく　されました！[Ctrl2:PageClear ]</Text>
+とうろく　されました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:03:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6023,10 +6023,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ＧＴＳに　ポケモンが
-登録されました！[Ctrl2:PageClear ]</Text>
+登録されました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:04:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6081,10 +6081,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ＧＴＳから　ポケモンを
-ひきとりました！[Ctrl2:PageClear ]</Text>
+ひきとりました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:04:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6093,10 +6093,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ＧＴＳから　ポケモンを
-引き取りました！[Ctrl2:PageClear ]</Text>
+引き取りました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:04:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6151,10 +6151,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　こうかんが
-せいりつ　しました！[Ctrl2:PageClear ]</Text>
+せいりつ　しました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:04:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6163,10 +6163,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンの　交換が
-成立しました！[Ctrl2:PageClear ]</Text>
+成立しました！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:04:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6186,10 +6186,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ざんねんですが　ほかのひとと
-こうかん　されていました[Ctrl2:PageClear ]</Text>
+こうかん　されていました▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:04:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6198,10 +6198,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>残念ですが　他の人と
-交換されていました[Ctrl2:PageClear ]</Text>
+交換されていました▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:04:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6291,12 +6291,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ＧＴＳは
-げんざい　メンテナンスちゅう　です[Ctrl2:PageClear ]
+げんざい　メンテナンスちゅう　です▼
 しばらく　おまちいただいたのち　
-ごりようください[Ctrl2:PageClear ]</Text>
+ごりようください▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:04:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6305,12 +6305,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ＧＴＳは
-現在　メンテナンス中　です[Ctrl2:PageClear ]
+現在　メンテナンス中　です▼
 しばらく　お待ちいただいたのち　
-ご利用ください[Ctrl2:PageClear ]</Text>
+ご利用ください▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:04:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6330,12 +6330,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ＧＴＳは
-げんざい　こみあって　おります[Ctrl2:PageClear ]
+げんざい　こみあって　おります▼
 しばらく　おまちいただいたのち
-ごりようください（１３２６１）[Ctrl2:PageClear ]</Text>
+ごりようください（１３２６１）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:04:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6344,12 +6344,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ＧＴＳは
-現在　混み合っております[Ctrl2:PageClear ]
+現在　混み合っております▼
 しばらく　お待ちいただいたのち
-ご利用ください（１３２６１）[Ctrl2:PageClear ]</Text>
+ご利用ください（１３２６１）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:04:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6442,10 +6442,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしんエラーが　はっせいしました
-（１３２７２）[Ctrl2:PageClear ]</Text>
+（１３２７２）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:04:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6454,10 +6454,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信エラーが　発生しました
-（１３２７２）[Ctrl2:PageClear ]</Text>
+（１３２７２）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:04:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6484,10 +6484,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしんエラーが　はっせいしました
-（１３２７５）[Ctrl2:PageClear ]</Text>
+（１３２７５）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:04:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6496,10 +6496,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信エラーが　発生しました
-（１３２７５）[Ctrl2:PageClear ]</Text>
+（１３２７５）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:04:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6519,10 +6519,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしんエラーが　はっせいしました
-（１３２６３）[Ctrl2:PageClear ]</Text>
+（１３２６３）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:04:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6531,10 +6531,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信エラーが　発生しました
-（１３２６３）[Ctrl2:PageClear ]</Text>
+（１３２６３）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:04:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6554,10 +6554,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしんエラーが　はっせいしました
-（１３２６５）[Ctrl2:PageClear ]</Text>
+（１３２６５）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:04:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6566,10 +6566,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信エラーが　発生しました
-（１３２６５）[Ctrl2:PageClear ]</Text>
+（１３２６５）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:04:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6589,10 +6589,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしんエラーが　はっせいしました
-（１３２６４）[Ctrl2:PageClear ]</Text>
+（１３２６４）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:04:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6601,10 +6601,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信エラーが　発生しました
-（１３２６４）[Ctrl2:PageClear ]</Text>
+（１３２６４）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:04:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6624,10 +6624,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしんエラーが　はっせいしました
-（１３２７３）[Ctrl2:PageClear ]</Text>
+（１３２７３）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:05:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6636,10 +6636,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信エラーが　発生しました
-（１３２７３）[Ctrl2:PageClear ]</Text>
+（１３２７３）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:05:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6659,10 +6659,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしんエラーが　はっせいしました
-（１３２８１）[Ctrl2:PageClear ]</Text>
+（１３２８１）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:05:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6671,10 +6671,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信エラーが　発生しました
-（１３２８１）[Ctrl2:PageClear ]</Text>
+（１３２８１）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:05:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6694,10 +6694,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしんエラーが　はっせいしました
-（１３２８２）[Ctrl2:PageClear ]</Text>
+（１３２８２）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:05:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6706,10 +6706,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信エラーが　発生しました
-（１３２８２）[Ctrl2:PageClear ]</Text>
+（１３２８２）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:05:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6729,10 +6729,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ＧＴＳに　せつぞく
-できませんでした[Ctrl2:PageClear ]</Text>
+できませんでした▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:05:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6741,10 +6741,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ＧＴＳに　接続
-できませんでした[Ctrl2:PageClear ]</Text>
+できませんでした▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:05:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6764,10 +6764,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ＧＴＳとの　つうしんが
-せつだん　されました（１３２６２）[Ctrl2:PageClear ]</Text>
+せつだん　されました（１３２６２）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:05:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6776,10 +6776,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ＧＴＳとの　通信が
-切断されました（１３２６２）[Ctrl2:PageClear ]</Text>
+切断されました（１３２６２）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:05:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6799,10 +6799,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ＧＴＳとの　つうしんが
-せつだん　されました（１３２７４）[Ctrl2:PageClear ]</Text>
+せつだん　されました（１３２７４）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:05:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6811,10 +6811,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ＧＴＳとの　通信が
-切断されました（１３２７４）[Ctrl2:PageClear ]</Text>
+切断されました（１３２７４）▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:05:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7638,10 +7638,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>このフォルムの　ポケモンは
-こうかんに　だすことは　できません！[Ctrl2:PageClear ]</Text>
+こうかんに　だすことは　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:05:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7650,10 +7650,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>このフォルムの　ポケモンは
-交換に　だすことは　できません！[Ctrl2:PageClear ]</Text>
+交換に　だすことは　できません！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:05:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7681,10 +7681,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ギザみみピチューは　
-こうかんに　だせません[Digit:8digits Idx="0" ]</Text>
+こうかんに　だせません▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:05:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7693,10 +7693,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ギザみみピチューは　
-交換に　だせません[Digit:8digits Idx="0" ]</Text>
+交換に　だせません▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:05:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7813,10 +7813,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>にんしょうメールの　そうしんに
-しっぱいしました[Ctrl2:PageClear ]</Text>
+しっぱい　しました▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:06:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7825,10 +7825,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>認証メールの　送信に
-失敗しました[Ctrl2:PageClear ]</Text>
+失敗しました▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:05:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7855,10 +7855,10 @@ eメールエラー</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つうしんエラーが　はっせいしました[Ctrl2:PageClear ]</Text>
+			<Text>つうしんエラーが　はっせいしました▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:06:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7866,10 +7866,10 @@ eメールエラー</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>通信エラーが　発生しました</Text>
+			<Text>通信エラーが　発生しました▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:01:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7897,10 +7897,10 @@ eメールエラー</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ないように　もんだいがあり
-おくれませんでした[Ctrl2:PageClear ]</Text>
+おくれませんでした▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:06:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7909,10 +7909,10 @@ eメールエラー</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>内容に　問題があり
-送れませんでした[Ctrl2:PageClear ]</Text>
+送れませんでした▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:06:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7940,10 +7940,10 @@ eメールエラー</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>サーバーが　メンテナンスちゅう　です
-しばらく　まって　せつぞくしてください[Ctrl2:PageClear ]</Text>
+しばらく　まって　せつぞくしてください▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:06:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7952,10 +7952,10 @@ eメールエラー</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>サーバーが　メンテナンス中　です
-しばらく待って　接続してください[Ctrl2:PageClear ]</Text>
+しばらく待って　接続してください▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:06:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7983,10 +7983,10 @@ eメールエラー</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ｅメールの　にんしょうに
-しっぱいしました[Ctrl2:PageClear ]</Text>
+しっぱい　しました▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:06:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7995,10 +7995,10 @@ eメールエラー</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ｅメールの　認証に
-失敗しました[Ctrl2:PageClear ]</Text>
+失敗しました▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:06:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

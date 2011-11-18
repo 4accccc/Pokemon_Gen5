@@ -426,10 +426,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>よりすぐりの　ポケモンを　たずさえて
-わくわくトレーナー　カモーンッ！！▼　</Text>
+わくわくトレーナー　カモーンッ！！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-25T06:31:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:00:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -438,10 +438,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>選りすぐりの　ポケモンを　携えて
-わくわくトレーナー　カモーンッ！！▼　</Text>
+わくわくトレーナー　カモーンッ！！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-25T06:30:59" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:00:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -12344,7 +12344,7 @@
 ぜったい　まけられないよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T03:25:59" />
+				Time="2011-11-18T13:01:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -12353,12 +12353,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あたしが　優勝したら
-応援してくれてる▽　
+応援してくれてる▽
 みんなが　喜んでくれるの！▼
 ぜったい　負けられないよっ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-15T03:26:13" />
+				Time="2011-11-18T13:01:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"

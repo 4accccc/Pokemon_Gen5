@@ -4609,10 +4609,10 @@
 			<Text>いつだって　テストは　１００てん！
 えがおも　キラリ！▼
 スーパーてんさいしょうじょ　とは
-わたしのことよ！　しょうぶっ！▼　</Text>
+わたしのことよ！　しょうぶっ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-14T08:49:45" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:51:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4625,8 +4625,8 @@
 スーパー天才少女とは
 わたしのことよ！　勝負っ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-14T08:49:45" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:51:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8604,13 +8604,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>またきたか……
+			<Text>また　きたか……
 たいしたことの　ないやつばかりだ！▼
-ふふっ！　おまえら　ひよっこトレーナーに
+おまえら　ひよっこトレーナーに
 げんじつを　おしえてやる！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-10T02:45:57" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:49:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -8618,13 +8618,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>また来たか……
+			<Text>また　来たか……
 たいしたことの　ない奴ばかりだ！▼
-ふふっ！　おまえら　ひよっこトレーナーに
+おまえら　ひよっこトレーナーに
 現実を　教えてやる！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-10T02:48:01" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:49:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -8743,10 +8743,10 @@
 だけど　ここにきて　つよくなった！
 たたかえる　オンナになった！▼
 すべては　そとに　つれだしてくれた
-このポケモンたちの　おかげよ！▼　</Text>
+このポケモンたちの　おかげよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-31T04:13:50" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:49:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -8759,10 +8759,10 @@
 だけど　ここにきて　強くなった！
 戦える　オンナになった！▼
 すべては　外に　連れ出してくれた
-このポケモンたちの　おかげよ！▼　</Text>
+このポケモンたちの　おかげよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-31T04:13:56" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:49:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -13307,10 +13307,10 @@
 			<Text>しょうねん　たんていだんの　みんなが
 いよいよ　たちあがったよ！▼
 わたしだって　おんなのこだけど
-すいり　できるよ！</Text>
+すいり　できるよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-12T03:24:31" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:51:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16819,10 +16819,10 @@
 どうだい　ここでの　たんさくには
 もう　なれたかい？▼
 ……じゅんちょうなら　なにより！
-それじゃあ　いつもの　いくよ！▼　</Text>
+それじゃあ　いつもの　いくよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-23T04:36:55" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:50:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -16835,10 +16835,10 @@
 どうだい　ここでの　探索には
 もう　慣れたかい？▼
 ……順調なら　なにより！
-それじゃあ　いつもの　行くよ！▼　</Text>
+それじゃあ　いつもの　行くよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-23T04:37:45" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:50:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22316,10 +22316,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>３０びょうで　けりを　つけてやる！
-きみは　ぼくには　かてない！▼　</Text>
+きみは　ぼくには　かてない！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-30T10:34:40" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:50:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -22330,8 +22330,8 @@
 			<Text>３０秒で　けりを　つけてやる！
 きみは　ぼくには　勝てない！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-30T10:35:26" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:50:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -23116,10 +23116,10 @@
 さいきょうの　ポケモンたちを　つかう
 わたしが　なぜ　かてない！▼
 なぜだ　なぜだ　なぜだ！！
-なぁ！　おしえてくれよ！▼　</Text>
+なぁ！　おしえてくれよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-26T02:15:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:50:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -23132,10 +23132,10 @@
 最強の　ポケモンたちを　使う
 わたしが　なぜ　勝てない！▼
 なぜだ　なぜだ　なぜだ！！
-なぁ！　教えてくれよ！▼　</Text>
+なぁ！　教えてくれよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-26T02:16:04" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:50:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"

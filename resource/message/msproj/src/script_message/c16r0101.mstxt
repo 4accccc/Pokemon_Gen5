@@ -2196,12 +2196,13 @@
 			Language="JPN">
 			<Text>すばらしい！！▼
 [Name:ResortTown Idx="2" ]は、もう
-[Name:ResortMayor Idx="1" ]　のまちだ！▼
-あとのことは　たのんだよ
-もっと　もっと　ひとを　たのしませる　まちに　しておくれ▼</Text>
+[Name:ResortMayor Idx="1" ]　のまちだ！▽
+あとのことは　たのんだよ▼
+もっと　もっと　ひとを
+たのしませる　まちに　しておくれ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-28T10:21:05" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:14:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2211,12 +2212,13 @@
 			Language="JPN_KANJI">
 			<Text>すばらしい！！▼
 [Name:ResortTown Idx="2" ]は、もう
-[Name:ResortMayor Idx="1" ]　の街だ！▼
-後のことは　頼んだよ
-もっと　もっと　ひとを　楽しませる　街に　しておくれ▼</Text>
+[Name:ResortMayor Idx="1" ]　の街だ！▽
+後のことは　頼んだよ▼
+もっと　もっと　ひとを
+楽しませる　街に　しておくれ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-28T10:21:33" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:14:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"

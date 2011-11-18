@@ -869,7 +869,7 @@
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……ここに　いるけどね[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T04:00:30" />
+				Time="2011-11-18T13:22:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -877,10 +877,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『……ここに　いるけどね▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……ここに　いるけどね[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T03:56:20" />
+				Time="2011-11-18T13:22:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

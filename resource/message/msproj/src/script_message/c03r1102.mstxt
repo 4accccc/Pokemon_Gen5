@@ -7,11 +7,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]は
-メダル[System:Color name="2" ]「[Name:Medal Idx="1" ]」[/System:Color]を[Ctrl2:LineFeed ]
+メダル[System:Color name="2" ]「[Name:Medal Idx="1" ]」[/System:Color]を▽
 てにいれた！▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:36:00" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:12:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20,11 +20,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]は
-メダル[System:Color name="2" ][System:Color name="2" ]「[Name:Medal Idx="1" ]」[/System:Color][/System:Color]を[Ctrl2:LineFeed ][System:Color name="2" ]
+メダル[System:Color name="2" ]「[Name:Medal Idx="1" ]」[/System:Color]を▽[System:Color name="2" ]
 [/System:Color]手に入れた！▼</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:36:10" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:11:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

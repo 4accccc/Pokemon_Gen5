@@ -1439,10 +1439,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つぎは　ぜったい　まけないから！
-さきに　うえに　いくのは　わたしよ！▼　</Text>
+さきに　うえに　いくのは　わたしよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-11T03:43:05" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:47:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1451,10 +1451,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>次は　絶対　負けないから！
-先に　上に行くのは　わたしよ！▼　</Text>
+先に　上に行くのは　わたしよ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-07-11T03:43:35" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:47:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3254,10 +3254,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>まけたか！　ハッ！
-いちにちいちぜんは　かかせねぇな！</Text>
+いちにちいちぜんは　かかせねぇな！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-09T06:25:14" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:47:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3268,8 +3268,8 @@
 			<Text>負けたか！　ハッ！
 一日一善は　かかせねぇな！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-09T06:25:07" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:47:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10070,10 +10070,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>まだまだ！　わたしなんかより
-つよいひとは　たくさんいるんだから！▼　</Text>
+つよいひとは　たくさんいるんだから！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-10T08:05:26" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:45:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -10082,10 +10082,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>まだまだ！　わたしなんかより
-強い人は　たくさんいるんだから！▼　</Text>
+強い人は　たくさんいるんだから！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-10T08:05:35" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:47:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="swan_scenario:W00293"
@@ -13763,11 +13763,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょうぶの　あいまに　そうじかんりょう！
+			<Text>そうじ　かんりょう！
 ちょっとは　きれいに　なったじゃろ？▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-12T09:48:50" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:46:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13775,11 +13775,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>勝負の合間に　掃除完了！
+			<Text>掃除完了！
 ちょっとは　きれいに　なったじゃろ？▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-12T09:49:17" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:46:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18188,10 +18188,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ふむ……
-勝負は　決したか……</Text>
+勝負は　決したか……▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-24T09:44:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:48:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

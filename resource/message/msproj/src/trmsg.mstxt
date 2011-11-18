@@ -9739,15 +9739,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>べんきょうの　あいまに　しあいかんせん！
-しあいの　あいまに　ポケモンしょうぶ！▼</Text>
+			<Text>べんきょうの　あいまに
+しあいかんせん！▼
+しあいの　あいまに
+ポケモンしょうぶ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -14931,27 +14933,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いちどで　いいから　ホームランボールを
+			<Text>いちどで　ホームランボールを
 キャッチしてみたいなぁ……！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>一度で　いいから　ホームランボールを
+			<Text>一度で　ホームランボールを
 キャッチしてみたいなぁ……！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -41396,31 +41398,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みず　ってのはね　へんげんじざい……▼
+			<Text>みず　ってのは　へんげんじざい……▼
 いってんを　つらぬく　つよさ
 ぶつりょうで　おしつぶす　パワー▽
 それを　いまから　おみせするわ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>水ってのはね　変幻自在……▼
+			<Text>水ってのは　変幻自在……▼
 一点を　貫く　強さ
 物量で　押しつぶす　パワー▽
 それを　今から　おみせするわ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -48691,29 +48693,31 @@
 			Language="JPN">
 			<Text>くりかえす！　あたしたちと　ちがう
 かんがえの　もちぬしは　ゆるさない！▼
-プラズマだんが　せかいを　しはいすれば
-みんな　おんなじ　かんがえに　なるの！</Text>
+あたしたち　プラズマだんが
+せかいを　しはいすれば　みんな▽
+おんなじ　かんがえに　なるの！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>繰り返す！　あたしたちと　違う
 考えの　持ち主は　許さない！▼
-プラズマ団が　世界を　支配すれば
-みんな　おんなじ　考えに　なるの！</Text>
+あたしたち　プラズマ団が
+世界を　支配すれば　みんな▽
+おんなじ　考えに　なるの！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -50334,29 +50338,31 @@
 			Language="JPN">
 			<Text>くりかえす！　あたしたちと　ちがう
 かんがえの　もちぬしは　ゆるさない！▼
-プラズマだんが　せかいを　しはいすれば
-みんな　おんなじ　かんがえに　なるの！</Text>
+あたしたち　プラズマだんが
+せかいを　しはいすれば　みんな▽
+おんなじ　かんがえに　なるの！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>繰り返す！　あたしたちと　違う
 考えの　持ち主は　許さない！▼
-プラズマ団が　世界を　支配すれば
-みんな　おんなじ　考えに　なるの！</Text>
+あたしたち　プラズマ団が
+世界を　支配すれば　みんな▽
+おんなじ　考えに　なるの！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -59733,14 +59739,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>＾</Text>
+			<Text>あっ！　いけない！
+この　カゴのみを　あげなきゃ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -68614,27 +68621,27 @@
 			Language="JPN">
 			<Text>わたしが　しっている　はなしでは
 でんせつの　ポケモンは▽
-でしの　ポケモンを　きたえていたそうよ</Text>
+でしの　ポケモンを　きたえていたって</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わたしが　知っている　話では
 伝説の　ポケモンは▽
-弟子の　ポケモンを　鍛えていたそうよ</Text>
+弟子の　ポケモンを　鍛えていたって</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T13:25:51" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
