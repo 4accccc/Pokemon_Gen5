@@ -1,0 +1,7 @@
+"reji_door_01.nsbmd"
+"reji_door_01.nsbca"
+"reji_eye_01.nsbmd"
+"reji_eye_02.nsbmd"
+"reji_eye_03.nsbmd"
+"reji_eye_04.nsbmd"
+

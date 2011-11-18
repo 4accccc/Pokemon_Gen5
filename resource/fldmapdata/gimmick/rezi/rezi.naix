@@ -1,0 +1,23 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: rezi.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_REZI_NAIX_
+#define NARC_REZI_NAIX_
+
+enum {
+	NARC_rezi_reji_door_01_nsbmd = 0,
+	NARC_rezi_reji_door_01_nsbca = 1,
+	NARC_rezi_reji_eye_01_nsbmd = 2,
+	NARC_rezi_reji_eye_02_nsbmd = 3,
+	NARC_rezi_reji_eye_03_nsbmd = 4,
+	NARC_rezi_reji_eye_04_nsbmd = 5
+};
+
+/* NARC_REZI_NAIX_ */
+#endif

@@ -40,7 +40,8 @@ SUBDIRS	=	gym_denki \
 					pokewood \
 					h06 \
 					gianthole \
-					intro_demo
+					intro_demo \
+					rezi
 
 .PHONY:	do-build clean
 
