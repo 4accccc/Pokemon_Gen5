@@ -891,7 +891,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_tv.c \
         field/event_camera_shake.c \
         field/scrcmd_zoroa.c \
-        field/scrcmd_leg_gmk.c \
         field/scrcmd_medal.c \
         field/fld_vreq.c \
     		field/field_palace_sys.c \
@@ -1387,10 +1386,6 @@ SRCS_OVERLAY_FIELD_GIMMICK_D12 = field/field_gimmick_d12.c
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_FIELD_D09_SLIPDOWN = field/rail_slipdown.c
-
-#===> GROUP_OVERLAY_SUBSCREEN
-#GROUP_OVERLAY_GIMMICK
-SRCS_OVERLAY_LEGEND_GIMMICK = field/legend_gmk.c
 
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK

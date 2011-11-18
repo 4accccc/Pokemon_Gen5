@@ -809,7 +809,7 @@
   DEF_CMD( EvCmdChangeZoroa, EV_SEQ_CHG_ZOROA )
 
   //伝説ポケギミック
-  DEF_CMD( EvCmdStartLegGmk, EV_SEQ_START_LEG_GMK )
+  NO_CMD() //DEF_CMD( EvCmdStartLegGmk, EV_SEQ_START_LEG_GMK )
 
   //アイテムカットイン
   DEF_CMD( EvCmdFldCi_CallItemCutin, EV_SEQ_CALL_ITEM_CUTIN )
@@ -869,10 +869,10 @@
   DEF_CMD( EvCmdBgmVolumeRecover, EV_SEQ_BGM_VOLUME_RECOVER )
 
   //Ｎの城用ボール投げエフェクト関連
-  DEF_CMD( EvCmdLegMoveBall, EV_SEQ_LEG_MOVE_BALL )
-  DEF_CMD( EvCmdLegStartBallAnm, EV_SEQ_LEG_START_BALL_ANM )
-  DEF_CMD( EvCmdLegWaitBallAnm, EV_SEQ_LEG_WAIT_BALL_ANM )
-  DEF_CMD( EvCmdLegWaitBallPokeApp, EV_SEQ_LEG_WAIT_BALL_POKE_APP )
+  NO_CMD() //DEF_CMD( EvCmdLegMoveBall, EV_SEQ_LEG_MOVE_BALL )
+  NO_CMD() //DEF_CMD( EvCmdLegStartBallAnm, EV_SEQ_LEG_START_BALL_ANM )
+  NO_CMD() //DEF_CMD( EvCmdLegWaitBallAnm, EV_SEQ_LEG_WAIT_BALL_ANM )
+  NO_CMD() //DEF_CMD( EvCmdLegWaitBallPokeApp, EV_SEQ_LEG_WAIT_BALL_POKE_APP )
 
   //無音BGMの再生
   DEF_CMD( EvCmdBgmPlaySilent, EV_SEQ_START_EVENT_BGM_SILENT )

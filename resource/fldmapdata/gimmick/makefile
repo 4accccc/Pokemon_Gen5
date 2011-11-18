@@ -21,7 +21,6 @@ SUBDIRS	=	gym_denki \
 					sppoke \
 					d12 \
 					zoroa \
-					legend \
 					r04d03 \
 					t01 \
 					infinity \

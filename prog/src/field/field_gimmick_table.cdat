@@ -193,12 +193,6 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     D12_GIMMICK_Move,    //D12
   },
   {
-    FS_OVERLAY_ID(legend_gimmick), //N01R0502
-    LEGEND_GMK_Setup,     //N01R0502
-    LEGEND_GMK_End,     //N01R0502
-    LEGEND_GMK_Move,     //N01R0502
-  },
-  {
     FS_OVERLAY_ID(field_gimmick_t01),  // T01 and R01 and T02
     T01_GIMMICK_Setup,    //T01 and R01 and T02
     T01_GIMMICK_End,    //T01 and R01 and T02
@@ -241,13 +235,13 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     GYM_WATER_Move,       // 水ジム
   },
   {
-    FS_OVERLAY_ID(field_fourkings_ghost),//C09R0101           //40
+    FS_OVERLAY_ID(field_fourkings_ghost),//C09R0101
     FOURKINGS_GHOST_Setup,  // 四天王 ゴースト
     FOURKINGS_GHOST_End,    // 四天王 ゴースト
     FOURKINGS_GHOST_Move,   // 四天王 ゴースト
   },
   {
-    FS_OVERLAY_ID(field_fourkings_evil),//C09R0201
+    FS_OVERLAY_ID(field_fourkings_evil),//C09R0201            //40
     FOURKINGS_EVIL_Setup,  // 四天王 悪
     FOURKINGS_EVIL_End,    // 四天王 悪
     FOURKINGS_EVIL_Move,   // 四天王 悪
@@ -301,13 +295,13 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     GYM_OLD_ELEC_Move,
   },
   {
-    FS_OVERLAY_ID(pkwd_field_gimmick),//C15         //50
+    FS_OVERLAY_ID(pkwd_field_gimmick),//C15
     PKWD_FIELD_Setup,  // ポケウッド フィールド
     PKWD_FIELD_End,    // ポケウッド フィールド
     PKWD_FIELD_Move,   // ポケウッド フィールド
   },
   {
-    FS_OVERLAY_ID(field_gimmick_h06),
+    FS_OVERLAY_ID(field_gimmick_h06),               //50
     H06_GIMMICK_Setup,  // マリンチューブ
     H06_GIMMICK_End,    // マリンチューブ
     H06_GIMMICK_Move,   // マリンチューブ

@@ -32,7 +32,6 @@
 #include "sp_poke_gimmick.h"
 #include "palace_gimmick.h"
 #include "field_gimmick_d12.h"
-#include "legend_gmk.h"
 #include "field_gimmick_t01.h"
 #include "resonance_resort/resort_reception.h"
 #include "resonance_resort/resort_field.h"
