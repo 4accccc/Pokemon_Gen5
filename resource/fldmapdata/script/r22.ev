@@ -12,7 +12,7 @@
   .include  "msg_r22.h"
   .include  "r22.h"
 
-  //@author fujimura_souichirou
+  //@author suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -30,185 +30,49 @@ DEFINE_LOCAL  LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
 
-
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_r22:
-//  _END
-
 /**************************************************************/
 /*POS：テラキオン登場                                         */
 /**************************************************************/
-EVENT_START   ev_pos_r22_poke5_01
+EVENT_START	ev_pos_r22_poke5_01
 
-  //アニメ：主人公「！」
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe )
-  _OBJ_ANIME_WAIT()
+	//プレイヤーの方向取得
+	_PLAYER_DIR_GET(LWK_DIR)
+	
+	SWITCH $LWK_DIR
+	CASE DIR_LEFT THEN
+		_OBJ_ANIME( R22_POKE5_01, anm_dir_r )
+	CASE DIR_UP THEN
+		_OBJ_ANIME( R22_POKE5_01, anm_dir_d )
+	ENDSWITCH
+	_OBJ_ANIME_WAIT()
+	
+	//アニメ：主人公「！」
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe )
+	_OBJ_ANIME_WAIT()
 
-  //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ )
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	_CAMERA_MOVE( 9688,0,970752,47480832,0,9142272,20 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()
 
-  //アニメ：テラキオン主人公の前に
-  IF $LCW_POSZ == 139 THEN
-    $LCW_POSX -= 2
-    _OBJ_ANIME_AUTO( R22_POKE5_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 6, DIR_LR )
-    _OBJ_ANIME_WAIT()
-  ELSE
-    $LCW_POSX -= 2
-    _OBJ_ANIME_AUTO( R22_POKE5_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 6, DIR_LR )
-    _OBJ_ANIME_WAIT()
-    _OBJ_ANIME( R22_POKE5_01, anm_common_turn_r )
-    _OBJ_ANIME_WAIT()
-  ENDIF
+	//テラキオン：ぐるるおおーっ！
+	_VOICE_PLAY( MONSNO_646, 0 )
+	_GIZAPLAINWIN_MSG_POS( msg_r22_poke5_01, POS_UP )
+	_VOICE_WAIT()
+	_AB_KEYWAIT_MARK()
+	_GIZAPLAINWIN_CLOSE()
 
-  //テラキオン：ぐるるおおーっ！
-  _VOICE_PLAY( MONSNO_646, 0 )
-  _GIZAPLAINWIN_MSG_POS( msg_r22_poke5_01, POS_UP )
-  _VOICE_WAIT()
-  _AB_KEYWAIT_MARK()
-  _GIZAPLAINWIN_CLOSE()
+	_CAMERA_RECV_MOVE(20)
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_BIND()		//カメラのバインドを解く
+	_CAMERA_END()
 
-  //戦闘開始
-  {
-    DEFINE_LOCAL flag
-    $flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
-    $flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
-    _WILD_BTL_SET_EX( MONSNO_646, 40, flag ) // Lv.40 テラキオン
-  }
-
-  _WILD_LOSE_CHECK( SCWK_ANSWER )
-  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
-
-    //==================================//
-    //テラキオン非表示
-    _FLAG_SET( FV_R22_POKE5_01 )
-    //==================================//
-    _OBJ_DEL( R22_POKE5_01 )   //テラキオンを消す
-
-    _WILD_WIN()
-  ELSE
-    _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
-  ENDIF
-
-  //テラキオンを捕獲した？
-  _WILD_RETRY_CHECK( SCWK_ANSWER )
-  SWITCH $SCWK_ANSWER
-  CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
-    //==================================//
-    //テラキオンを捕獲した
-    _FLAG_SET( FE_R22_POKE5_GET_01 )
-    //==================================//
-
-  CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN //勝利した場合、あるいは逃げた場合
-
-  ENDSWITCH
-
-  //テラキオンを捕獲できなかった場合の分岐
-  IF FLAG_OFF( FE_R22_POKE5_GET_01 ) THEN
-
-    //システム：ポケモンは　どうろの　さきへ
-    _SYSWIN_MSG( msg_r22_poke5_02, POS_DOWN )
-    _AB_KEYWAIT()
-    _SYSWIN_CLOSE()
-
-  ENDIF
-
-  //==================================//
-  //アクロマ表示
-  _FLAG_RESET( FV_R22_SWBOSS_01 )
-  //==================================//
-  _OBJ_ADD( R22_SWBOSS_01 )
-
-  //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
-
-  _START_EVENT_BGM( SEQ_BGM_E_ACHROMA )
-
-  //アニメ：アクロマ主人公の前へ
-  IF $LCW_POSZ == 137 || $LCW_POSZ == 138 THEN
-  $LCW_POSX -= 2
-    _OBJ_ANIME_AUTO( R22_SWBOSS_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
-    _OBJ_ANIME_WAIT()
-    _OBJ_ANIME( R22_SWBOSS_01, anm_common_turn_r )
-    _OBJ_ANIME_WAIT()
-  ELSE
-    $LCW_POSX -= 2
-    _OBJ_ANIME_AUTO( R22_SWBOSS_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
-    _OBJ_ANIME_WAIT()
-  ENDIF
-
-  //アクロマ：ひさしぶり　ですね！▼
-  _BALLOONWIN_OBJMSG_POS( msg_r22_swboss_01, R22_SWBOSS_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-
-  //アニメ：アクロマ下を向く
-  _OBJ_ANIME( R22_SWBOSS_01, anm_common_turn_d )
-  _OBJ_ANIME_WAIT()
-
-  //アクロマ：きっと　プラズマだんに　たいして
-  _BALLOONWIN_OBJMSG_POS( msg_r22_swboss_02, R22_SWBOSS_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-
-  //アニメ：アクロマ右を向く（主人公側）
-  _OBJ_ANIME( R22_SWBOSS_01, anm_common_turn_r )
-  _OBJ_ANIME_WAIT()
-
-  //アクロマ：あなたの　まえに　あらわれたのは
-  _BALLOONWIN_OBJMSG_POS( msg_r22_swboss_03, R22_SWBOSS_01, POS_DEFAULT )
-
-  //プラズマ団と対抗する？
-  _YES_NO_WIN( SCWK_ANSWER )
-
-  IF $SCWK_ANSWER == SCR_YES THEN   //はい
-
-    //アクロマ：じぶんの　ポケモンをまもれる▽
-    _BALLOONWIN_OBJMSG_POS( msg_r22_swboss_04, R22_SWBOSS_01, POS_DEFAULT )
-    _MSGWIN_CLOSE()
-
-  ELSE    //いいえ
-
-    //アクロマ：それも　ありでしょう！▼
-    _BALLOONWIN_OBJMSG_POS( msg_r22_swboss_05, R22_SWBOSS_01, POS_DEFAULT )
-    _MSGWIN_CLOSE()
-
-  ENDIF
-
-  //アイテム「アクロママシーン」入手 
-  _ITEM_EVENT_NOWAIT( ITEM_AKUROMAMASIIN, 1 )
-
-  //アクロマ：なにかの　やくに　たつでしょう！▼
-  _BALLOONWIN_OBJMSG_POS( msg_r22_swboss_06, R22_SWBOSS_01, POS_DEFAULT )
-  _AB_KEYWAIT_MARK()
-  _MSGWIN_CLOSE()
-
-  //アニメ：アクロマ退場
-  _OBJ_ANIME_AUTO( R22_SWBOSS_01, 724, 147, FORCE_TYPE_NPC, 8, DIR_UD )
-  _TIME_WAIT( 16 )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
-  _OBJ_ANIME_WAIT()
-  _OBJ_DEL( R22_SWBOSS_01 )
-  
-  _END_EVENT_BGM()
-  
-  //W21アジト船表示（タラップなし）
-  _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, TRUE , TRUE )
-  _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, FALSE , FALSE )
-
-  //==================================//
-  //POS無効
-  $WK_SCENE_R22_POKE5 = 2
-  //テラキオン発見
-  _FLAG_SET( FE_R22_POKE5_MEET_01 )
-  //アクロマ非表示
-  _FLAG_SET( FV_R22_SWBOSS_01 )
-  //フラグON（D32のイワパレスイベント用）
-  _FLAG_SET( FE_R22_SWBOSS_ITEM_01 )
-  //プラズマフリゲート・現在地対応
-  $WK_SYS_HIDE_SHIP_PLACE = SCR_HIDE_SHIP_PLACE_W21
-  //W21 POS起動
-  $WK_SCENE_W21_01 = 1
-  //==================================//
+	//========================================//
+	
+	//POS無効
+	$WK_SCENE_R22_POKE5 = 2
+	
+	//========================================//
 
 EVENT_END
 
@@ -217,82 +81,225 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_r22_poke5_01
 
-  _TALK_OBJ_START()
+	_TALK_OBJ_START()
 
-  //テラキオン：ぐるるおおーっ！
-  _VOICE_PLAY( MONSNO_646, 0 ) 
-  _GIZAPLAINWIN_MSG_POS( msg_r22_poke5_01, POS_UP )
-  _VOICE_WAIT()
-  _AB_KEYWAIT_MARK()
-  _GIZAPLAINWIN_CLOSE()
+	//テラキオン：ぐるるおおーっ！
+	_VOICE_PLAY( MONSNO_646, 0 ) 
+	_GIZAPLAINWIN_MSG_POS( msg_r22_poke5_01, POS_UP )
+	_VOICE_WAIT()
+	_AB_KEYWAIT_MARK()
+	_GIZAPLAINWIN_CLOSE()
 
-  //テラキオンを見たことがあるか
-  IF FLAG_OFF( FE_R22_POKE5_MEET_01 ) THEN
+	//テラキオンを見たことがあるか
+	IF FLAG_OFF( FE_R22_POKE5_MEET_01 ) THEN
 
-    //==================================//
-    //テラキオン発見
-    _FLAG_SET( FE_R22_POKE5_MEET_01 )
-    //==================================//
+		//戦闘開始
+		{
+		DEFINE_LOCAL flag
+		$flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
+		$flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
+		_WILD_BTL_SET_EX( MONSNO_646, 40, flag ) // Lv.40 テラキオン
+		}
+		
+	ELSE
 
-    //戦闘開始
-    {
-      DEFINE_LOCAL flag
-      $flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
-      $flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
-      _WILD_BTL_SET_EX( MONSNO_646, 40, flag ) // Lv.40 テラキオン
-    }
+		//戦闘開始
+		{
+		DEFINE_LOCAL flag
+		$flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
+		$flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
+		_WILD_BTL_SET_EX( MONSNO_646, 60, flag ) // Lv.60 テラキオン
+		}
 
-  ELSE
+	ENDIF
 
-    //戦闘開始
-    {
-      DEFINE_LOCAL flag
-      $flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
-      $flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
-      _WILD_BTL_SET_EX( MONSNO_646, 60, flag ) // Lv.60 テラキオン
-    }
+	_WILD_LOSE_CHECK( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
 
-  ENDIF
+		//==================================//
+		//テラキオン非表示
+		_FLAG_SET( FV_R22_POKE5_01 )
+		//==================================//
+		_OBJ_DEL( R22_POKE5_01 )   //テラキオンを消す
 
-  _WILD_LOSE_CHECK( SCWK_ANSWER )
-  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
+		_WILD_WIN()
+	ELSE
+		_WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+	ENDIF
 
-    //==================================//
-    //テラキオン非表示
-    _FLAG_SET( FV_R22_POKE5_01 )
-    //==================================//
-    _OBJ_DEL( R22_POKE5_01 )   //テラキオンを消す
-
-    _WILD_WIN()
-  ELSE
-    _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
-  ENDIF
-
-  //テラキオンを捕獲した？
-  _WILD_RETRY_CHECK( SCWK_ANSWER )
-  SWITCH $SCWK_ANSWER
-  CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
-    //==================================//
-    //テラキオンを捕獲した
-    _FLAG_SET( FE_R22_POKE5_GET_01 )
-    //==================================//
-
-  CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN   //勝利した場合、あるいは逃げた場合
-
-  ENDSWITCH
-
-  //テラキオンを捕獲できなかった場合の分岐
-  IF FLAG_OFF( FE_R22_POKE5_GET_01 ) THEN
-
-    //システム：ポケモンは　どうろの　さきへ
-    _SYSWIN_MSG( msg_r22_poke5_02, POS_DOWN )
-    _AB_KEYWAIT()
-    _SYSWIN_CLOSE()
-
-  ENDIF
+	//アクロマイベント起動
+	IF FLAG_OFF( FE_R22_POKE5_MEET_01 ) THEN
+		_CALL ev_swboss_ev
+	ENDIF
 
 EVENT_END
 
+ev_swboss_ev:
+
+	//テラキオンを捕獲した？
+	_WILD_RETRY_CHECK( SCWK_ANSWER )
+	
+	SWITCH $SCWK_ANSWER
+	CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
+		//==================================//
+		//テラキオンを捕獲した
+		_FLAG_SET( FE_R22_POKE5_GET_01 )
+		//==================================//
+	CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN   //勝利した場合、あるいは逃げた場合
+	ENDSWITCH
+
+	//テラキオンを捕獲できなかった場合の分岐
+	IF FLAG_OFF( FE_R22_POKE5_GET_01 ) THEN
+
+		//システム：ポケモンは　どうろの　さきへ
+		_SYSWIN_MSG( msg_r22_poke5_02, POS_DOWN )
+		_AB_KEYWAIT_MARK()
+		_SYSWIN_CLOSE()
+	ENDIF
+
+	//==================================//
+	//アクロマ表示
+	_FLAG_RESET( FV_R22_SWBOSS_01 )
+	//==================================//
+	_OBJ_ADD( R22_SWBOSS_01 )
+
+	//自機座標取得
+	_PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+	//自機方向取得
+	_PLAYER_DIR_GET( LWK_DIR )
+	
+	_START_EVENT_BGM( SEQ_BGM_E_ACHROMA )
+
+	SWITCH $LWK_DIR
+	CASE DIR_LEFT THEN
+		$LCW_POSX -= 1
+	CASE DIR_RIGHT THEN
+		$LCW_POSX += 1
+	CASE DIR_UP THEN
+		$LCW_POSX -= 1
+	ENDSWITCH
+	
+	//アクロマ主人公に近づく
+	_OBJ_ANIME_AUTO( R22_SWBOSS_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_UD )
+	_OBJ_ANIME_WAIT()
+
+	SWITCH $LWK_DIR
+	CASE DIR_LEFT THEN
+		_OBJ_ANIME( R22_SWBOSS_01, anm_common_turn_r )
+	CASE DIR_RIGHT THEN
+		_OBJ_ANIME( R22_SWBOSS_01, anm_common_turn_l )
+	CASE DIR_UP THEN
+		_OBJ_ANIME( R22_SWBOSS_01, anm_common_turn_r )
+		_TIME_WAIT( 8 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
+	ENDSWITCH
+	_OBJ_ANIME_WAIT()
+
+	//アクロマ：ひさしぶり　ですね！▼
+	_BALLOONWIN_OBJMSG_POS( msg_r22_swboss_01, R22_SWBOSS_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	//アニメ：アクロマ下を向く
+	_OBJ_ANIME( R22_SWBOSS_01, anm_common_turn_d )
+	_OBJ_ANIME_WAIT()
+
+	//アクロマ：きっと　プラズマだんに　たいして
+	_BALLOONWIN_OBJMSG_POS( msg_r22_swboss_02, R22_SWBOSS_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	SWITCH $LWK_DIR
+	CASE DIR_LEFT THEN
+		_OBJ_ANIME( R22_SWBOSS_01, anm_common_turn_r )
+	CASE DIR_RIGHT THEN
+		_OBJ_ANIME( R22_SWBOSS_01, anm_common_turn_l )
+	CASE DIR_UP THEN
+		_OBJ_ANIME( R22_SWBOSS_01, anm_common_turn_r )
+	ENDSWITCH
+	_OBJ_ANIME_WAIT()
+
+	//アクロマ：あなたの　まえに　あらわれたのは
+	_BALLOONWIN_OBJMSG_POS( msg_r22_swboss_03, R22_SWBOSS_01, POS_DEFAULT )
+
+	//プラズマ団と対抗する？
+	_YES_NO_WIN( SCWK_ANSWER )
+
+	IF $SCWK_ANSWER == SCR_YES THEN   //はい
+
+		//アクロマ：じぶんの　ポケモンをまもれる▽
+		_BALLOONWIN_OBJMSG_POS( msg_r22_swboss_04, R22_SWBOSS_01, POS_DEFAULT )
+		_MSGWIN_CLOSE()
+
+	ELSE    //いいえ
+
+		//アクロマ：それも　ありでしょう！▼
+		_BALLOONWIN_OBJMSG_POS( msg_r22_swboss_05, R22_SWBOSS_01, POS_DEFAULT )
+		_MSGWIN_CLOSE()
+
+	ENDIF
+
+	//アイテム「アクロママシーン」入手 
+	_ITEM_EVENT_KEYWAIT( ITEM_AKUROMAMASIIN, 1 )
+
+	//アクロマ：なにかの　やくに　たつでしょう！▼
+	_BALLOONWIN_OBJMSG_POS( msg_r22_swboss_06, R22_SWBOSS_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	//アニメ：アクロマ退場
+	_OBJ_ANIME( R22_SWBOSS_01, anm_swboss_leave )
+	_TIME_WAIT( 16 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
+	_OBJ_ANIME_WAIT()
+
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	SWITCH $LWK_DIR
+	CASE DIR_LEFT THEN
+		_CAMERA_MOVE( 9688,0,970752,47480832,0,9404416,20 )	//一番最後の引数は移動にかかるフレーム数
+	CASE DIR_RIGHT THEN
+		_CAMERA_MOVE( 9688,0,970752,47415296,0,9404416,20 )	//一番最後の引数は移動にかかるフレーム数
+	CASE DIR_UP THEN
+		_CAMERA_MOVE( 9688,0,970752,47480832,0,9469952,20 )	//一番最後の引数は移動にかかるフレーム数
+	ENDSWITCH
+	_CAMERA_WAIT_MOVE()
+	
+	//アクロマ：なにかの　やくに　たつでしょう！▼
+	_BALLOONWIN_OBJMSG_POS( msg_r22_swboss_07, R22_SWBOSS_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	_OBJ_ANIME( R22_SWBOSS_01, anm_swboss_anime )
+	_OBJ_ANIME_WAIT()	
+	
+	_CAMERA_RECV_MOVE(30)
+	_OBJ_ANIME_AUTO( R22_SWBOSS_01, LCW_POSX, 150, FORCE_TYPE_NOT, 8, DIR_UD )
+	_OBJ_ANIME_WAIT()
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_BIND()		//カメラのバインドを解く
+	_CAMERA_END()
+	
+	_OBJ_DEL( R22_SWBOSS_01 )
+  
+	_END_EVENT_BGM()
+  
+	//W21アジト船表示（タラップなし）
+	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, TRUE , TRUE )
+	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, FALSE , FALSE )
+
+	//==================================//
+
+	//テラキオン発見
+	_FLAG_SET( FE_R22_POKE5_MEET_01 )
+	//アクロマ非表示
+	_FLAG_SET( FV_R22_SWBOSS_01 )
+	//フラグON（D32のイワパレスイベント用）
+	_FLAG_SET( FE_R22_SWBOSS_ITEM_01 )
+	//プラズマフリゲート・現在地対応
+	$WK_SYS_HIDE_SHIP_PLACE = SCR_HIDE_SHIP_PLACE_W21
+	//W21 POS起動
+	$WK_SCENE_W21_01 = 1
+	//==================================//
+
+_RET
 
 //--------------------------------------------------------------------
 //☆共通処理：ギョエ
@@ -329,4 +336,30 @@ _ANIME_LABEL  anm_common_turn_d
   _ANIME_DATA AC_STAY_WALK_D_8F,1
   _ANIME_DATA ACMD_END,0
 
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_swboss_anime
+	_ANIME_DATA	AC_SWBOSS_POINT_FINGER_D,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_swboss_leave
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
