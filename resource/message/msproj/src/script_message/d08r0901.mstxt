@@ -562,4 +562,57 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d08r0901_boss_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ登場
+・捕獲
+・捕獲以外
+キュレムの話</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-17T12:58:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-17T12:58:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｎ登場
+・捕獲
+・捕獲以外
+キュレムの話</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-17T12:58:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-17T12:58:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-17T12:59:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-17T12:58:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

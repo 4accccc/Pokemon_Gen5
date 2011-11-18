@@ -600,4 +600,56 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c03p19_guitarw_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたいの　あいてを　したいなら
+ダンサーに　かつことだね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T04:05:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T04:05:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あたいの　相手を　したいなら
+ダンサーに　勝つことだね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T04:05:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T04:05:23" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・二人目で負けた場合で
+　こいつとは戦闘不可能</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T04:05:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MUSICIANW
+トレーナーID：guitarw_04</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T04:04:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
