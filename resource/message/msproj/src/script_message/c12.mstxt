@@ -6224,12 +6224,12 @@ GIRL2</Text>
 [Name:TrainerName ]さん▼
 ここんとこね
 ポケモンの　ゆめを　みるの▽
-３びきの　ポケモンが　うかんでて……▼
-えーっと　それでね　[Name:TrainerName ]さんの
-なまえも　きこえてきて……▼</Text>
+ゾロアーク　って　ポケモンの……▼
+なんか　[Name:TrainerName ]さんの
+なまえを　よんでいるんだよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-28T09:32:28" />
+				Time="2011-11-18T11:32:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6241,12 +6241,12 @@ GIRL2</Text>
 [Name:TrainerName ]さん▼
 ここんとこね
 ポケモンの　ゆめを　みるの▽
-３びきの　ポケモンが　うかんでて……▼
-えーっと　それでね　[Name:TrainerName ]さんの
-なまえも　きこえてきて……▼</Text>
+ゾロアーク　って　ポケモンの……▼
+なんか　[Name:TrainerName ]さんの
+なまえを　よんでいるんだよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-28T09:32:31" />
+				Time="2011-11-18T11:32:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6283,16 +6283,15 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『なんか　よくわかんないけど
-ほかには　２０ばんどうろ　みたいな▽
-ふうけいも　みるんだってよ▼
-オマエの　なまえが　きこえるってのも
-きになるけど　ゆめ　だしな……▼
-はなしは　それだけ
+			<Text>[Name:TrainerName Idx="1" ]『よく　わかんないけど
+はなしを　きくと　どうやら▼
+その　ゆめのなかの　ゾロアーク
+チャンピオンロードに　いるらしいんだ▼
+ま　はなしは　それだけ
 じゃーな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T06:59:09" />
+				Time="2011-11-18T11:32:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6300,16 +6299,15 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『なんか　よくわかんないけど
-他には　２０番道路　みたいな▽
-風景も　みるんだってよ▼
-オマエの　名前が　きこえるってのも
-気になるけど　夢だしな……▼
+			<Text>[Name:TrainerName Idx="1" ]『よく　わかんないけど
+はなしを　きくと　どうやら▼
+その夢の　中の　ゾロアーク
+チャンピオンロードに　いるらしいんだ▼
 話は　それだけ
 じゃーな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T06:59:14" />
+				Time="2011-11-18T11:32:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6348,12 +6346,10 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>あっ　わすれてた▼
-オマエに　はなしがある　って
-アデクさんが　いってたぜ！▽
-ヒマなら　サンギタウンに　いけば？▼</Text>
+チャンピオン　おめでとな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T10:54:58" />
+				Time="2011-11-18T11:31:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6362,12 +6358,10 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あっ　忘れてた▼
-オマエに　話がある　って
-アデクさんが　いってたぜ！▽
-ヒマなら　サンギタウンに　行けば？▼</Text>
+チャンピオン　おめでとな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T10:55:02" />
+				Time="2011-11-18T11:31:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

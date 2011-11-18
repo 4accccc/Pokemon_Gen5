@@ -32,7 +32,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>システム：BLACK2ver
+			<Comment>システム：Black2ver
 ・ダークストーン所有＋posイベント
 　GRIDX＝16、GRIDZ＝18で起動
 ・はい/いいえの選択肢表示
@@ -40,7 +40,7 @@
 　いいえ→dstone_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T08:37:30" />
+				Time="2011-11-18T11:57:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -92,13 +92,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>システム：BLACK2ver
+			<Comment>システム：Black2ver
 ・はい選択時
 ・まずストーン浮上デモ
 ・ゼクロム復活デモ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T08:39:24" />
+				Time="2011-11-18T11:57:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -144,13 +144,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>システム：BLACK2ver
+			<Comment>システム：Black2ver
 ・いいえ選択時
 ・主人公、一歩押し戻される
 ・0＝主人公名前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T08:37:33" />
+				Time="2011-11-18T11:57:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -187,13 +187,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ポケモン：BLACK2ver
+			<Comment>ポケモン：Black2ver
 ・話かけでメッセージ表示とともに鳴き声再生
 　つづけてポケモン戦闘に
 ・倒した場合は、殿堂入りで復活処理</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T08:37:44" />
+				Time="2011-11-18T11:57:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -247,13 +247,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ポケモン：BLACK2ver
+			<Comment>ポケモン：Black2ver
 ・倒した場合、フィールド復帰時に
 　このメッセージを表示
 ※復帰条件未定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T08:37:46" />
+				Time="2011-11-18T11:57:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -309,7 +309,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>システム：WHITE2ver
+			<Comment>システム：White2ver
 ・ライトストーン所有＋posイベント
 　GRIDX＝16、GRIDZ＝18で起動
 ・はい/いいえの選択肢表示
@@ -317,7 +317,7 @@
 　いいえ→lstone_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T08:37:54" />
+				Time="2011-11-18T11:57:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -376,13 +376,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>システム：WHITE2ver
+			<Comment>システム：White2ver
 ・はい選択時
 ・まずストーン浮上デモ
 ・レシラム復活デモ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T08:39:22" />
+				Time="2011-11-18T11:57:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -428,13 +428,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>システム：WHITE2ver
+			<Comment>システム：White2ver
 ・いいえ選択時
 ・主人公、一歩押し戻される
 ・0＝主人公名前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T08:37:57" />
+				Time="2011-11-18T11:58:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -471,13 +471,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ポケモン：WHITE2ver
+			<Comment>ポケモン：White2ver
 ・話かけでメッセージ表示とともに鳴き声再生
 　つづけてポケモン戦闘に
 ・倒した場合は、殿堂入りで復活処理</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T08:38:05" />
+				Time="2011-11-18T11:58:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -531,13 +531,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ポケモン：WHITE2ver
+			<Comment>ポケモン：White2ver
 ・倒した場合、フィールド復帰時に
 　このメッセージを表示
 ※復帰条件未定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T08:38:10" />
+				Time="2011-11-18T11:58:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -573,7 +573,7 @@
 キュレムの話</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T12:58:25" />
+				Time="2011-11-18T11:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -587,7 +587,7 @@
 キュレムの話</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T12:58:26" />
+				Time="2011-11-18T12:00:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -595,10 +595,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂
+・戦闘後に登場
+・ポケモンを捕獲した場合
+　倒した場合→
+　逃げた場合→</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T12:59:00" />
+				Time="2011-11-18T12:03:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -606,6 +610,189 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-17T12:58:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0901_boss_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T11:58:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T11:58:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>闇</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T11:59:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T11:58:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ポケモンを倒した場合</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:04:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T11:58:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0901_boss_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T11:58:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T11:58:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T11:58:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T11:58:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ポケモンから逃げた場合</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:04:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T11:58:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0901_boss_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T11:58:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T11:58:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T11:58:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T11:58:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:04:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T11:58:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0901_boss_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:04:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:04:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:04:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:04:06" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:04:08" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

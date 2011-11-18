@@ -179,12 +179,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もういちど　きくけれど▼
+			<Text>もういちど　たずねるけど▼
 じぶんの　パートナーとなる
 ポケモンは　ほしい？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T03:43:32" />
+				Time="2011-11-18T11:06:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -192,12 +192,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もう一度　きくけれど▼
+			<Text>もう一度　たずねるけど▼
 自分の　パートナーとなる
 ポケモンは　ほしい？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T03:43:43" />
+				Time="2011-11-18T11:06:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -538,10 +538,10 @@
 その　いみを　かんがえてみて▼
 というわけで　もういちど▼
 あなた
-ポケモンずかんも　ほしくない？</Text>
+ポケモンずかんも　ほしいよね？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T10:44:02" />
+				Time="2011-11-18T11:06:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -556,10 +556,10 @@
 その　意味を　考えてみて▼
 というわけで　もういちど▼
 あなた
-ポケモン図鑑も　ほしくない？</Text>
+ポケモン図鑑も　ほしいよね？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T10:43:52" />
+				Time="2011-11-18T11:06:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1734,11 +1734,11 @@
 			<Text>アララギ『どこが　パワーアップしたか
 おしえるから　きいてくれるかい？▼
 といっても　すごく　シンプル！▼
-あらゆる　ポケモンを
+ぜんこくの　あらゆる　ポケモンを
 きろく　できるように　したんだよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T07:44:24" />
+				Time="2011-11-18T11:09:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1749,11 +1749,11 @@
 			<Text>アララギ『どこが　パワーアップしたか
 教えるから　きいてくれるかい？▼
 といっても　すごく　シンプル！▼
-あらゆる　ポケモンを
+全国の　あらゆる　ポケモンを
 記録できるように　したんだよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T05:39:30" />
+				Time="2011-11-18T11:09:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

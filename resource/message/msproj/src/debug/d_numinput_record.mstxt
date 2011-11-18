@@ -5089,7 +5089,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="dni_record_118">
+		Label="dni_record_118"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>そらをとぶ使った回数</Text>
@@ -5114,7 +5115,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="dni_record_119">
+		Label="dni_record_119"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ゴミ箱調べた回数</Text>
@@ -5139,7 +5141,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="dni_record_120">
+		Label="dni_record_120"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ダウジングアイテムを入手した回数</Text>
@@ -5164,7 +5167,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="dni_record_121">
+		Label="dni_record_121"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>デルパワーを使用した回数</Text>
@@ -5189,7 +5193,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="dni_record_122">
+		Label="dni_record_122"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ハイリンクでポケモンを捕まえた回数</Text>
@@ -5214,7 +5219,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="dni_record_123">
+		Label="dni_record_123"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>効果がバツグンのわざが命中した回数</Text>
@@ -5239,7 +5245,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="dni_record_124">
+		Label="dni_record_124"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>バトルサブウェイに挑戦した回数</Text>
@@ -5264,7 +5271,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="dni_record_125">
+		Label="dni_record_125"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>無限ダンジョンでトレーナーを倒した数</Text>
@@ -5289,7 +5297,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="dni_record_126">
+		Label="dni_record_126"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ライブキャスターミニゲームで風船を割った数</Text>
@@ -5314,7 +5323,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="dni_record_127">
+		Label="dni_record_127"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>自販機で飲み物買った回数</Text>
@@ -5339,7 +5349,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="dni_record_128">
+		Label="dni_record_128"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>遊覧船に乗った回数</Text>
@@ -5364,7 +5375,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="dni_record_129">
+		Label="dni_record_129"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>レゾナンスリゾートで観光客を街に案内した数</Text>
@@ -5389,7 +5401,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="dni_record_130">
+		Label="dni_record_130"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>レゾナンスリゾートでお店を作った数</Text>
@@ -5414,7 +5427,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="dni_record_131">
+		Label="dni_record_131"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ライブキャスターミニゲームのプレイ回数</Text>
@@ -5439,13 +5453,14 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="dni_record_132">
+		Label="dni_record_132"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レゾナンスリゾートのおみやげ貰った回数</Text>
+			<Text>レゾナンスリゾートのおみやげもらった回数</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-08-30T11:07:38" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:33:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -5453,10 +5468,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レゾナンスリゾートのおみやげ貰った回数</Text>
+			<Text>レゾナンスリゾートのおみやげもらった回数</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-08-30T11:07:41" />
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:33:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -5464,7 +5479,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="dni_record_133">
+		Label="dni_record_133"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケウッド撮影回数</Text>
