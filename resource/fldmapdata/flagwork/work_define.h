@@ -321,6 +321,7 @@
 #define WK_SCENE_C08GYM0101_GUIDE        16709 /* 0x4145 ドラゴンジム：ジムガイドイベント用 */
 #define WK_SCENE_T04_D20_TVT             16710 /* 0x4146 サザナミタウン・サザナミ湾：ライブキャスターPOS制御ワーク */
 #define WK_SCENE_C03P19                  16711 /* 0x4147 ヒウンシティはじまりの場所：ワルそうなチームイベント進行制御ワーク */
+#define WK_SCENE_C16_NEON                16712 /* 0x4148 ジョインアベニュー：ネオン */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 
