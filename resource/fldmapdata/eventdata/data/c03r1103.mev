@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/28 14:23:08
+#save date:2011/11/18 12:49:39
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c03r1103.wms
 #SECTION START:OBJ_EVENT
@@ -22,7 +22,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_C03R1103_MACOMO_01
+0
 #Event Script Name
 SCRID_C03R1103_INVENTOR_01
 #Direction Type Number

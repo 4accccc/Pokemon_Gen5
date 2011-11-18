@@ -13,13 +13,11 @@
 #define ZONE_C03P07_EVC_H
 
 #define C03P07_SUNGLASSES_01               0
-#define C03P07_INFORMATIONW_01             1
-#define C03P07_MACOMO_01                   2
-#define C03P07_BUSINESSMAN1_01             3
-#define C03P07_OL1_01                      4
-#define C03P07_VETERANM_01                 5
-#define C03P07_TRAINERW_01                 6
-#define C03P07_BUSINESSMAN2_01             7
+#define C03P07_BUSINESSMAN1_01             1
+#define C03P07_OL1_01                      2
+#define C03P07_VETERANM_01                 3
+#define C03P07_TRAINERW_01                 4
+#define C03P07_BUSINESSMAN2_01             5
 
 #endif //ZONE_C03P07_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03p07.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

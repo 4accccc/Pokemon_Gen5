@@ -10,6 +10,7 @@
 #define ZONE_C03P18_EVC_H
 
 #define FLD_ITEM_28                        0
+#define C03P18_VETERANM_01                 1
 
 #endif //ZONE_C03P18_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03p18.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -20,5 +20,6 @@
 #define SCRID_MEMBER_G (13)
 #define SCRID_PAPER (14)
 #define SCRID_ZONE_C03R0101 (15)
+#define SCRID_C03R0101_CLOWN_01 (16)
 
 #endif //_C03R0101_DEF_H_

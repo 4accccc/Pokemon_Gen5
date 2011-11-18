@@ -28,6 +28,7 @@ _EVENT_DATA   ev_c03r0301_businessman_01
 _EVENT_DATA   ev_c03r0301_trainerw_01
 _EVENT_DATA   ev_c03r0301_cleaningm_01
 _EVENT_DATA   ev_pos_c03r0301_cleaningm_01
+_EVENT_DATA   ev_c03r0301_clown_01
 _EVENT_DATA_END
 
 //主人公方向取得変数
@@ -375,4 +376,35 @@ _ANIME_LABEL  anm_common_gyoe
   _ANIME_DATA AC_MARK_GYOE,1
   _ANIME_DATA ACMD_END,0
 
+/************************************************************/
+/*            クラウン１（ヒウンラリー）                  */
+/************************************************************/
+EVENT_START   ev_c03r0301_clown_01
 
+  _TALK_OBJ_START()
+  //ライモンラリー・バトルカンパニー通過（1回のみ）
+  IF $WK_SCENE_C03_RALLY_01 != 6 && FLAG_OFF( FE_C03_RALLYPOINT_03 )THEN
+    _SE_PLAY( SEQ_SE_FLD_41 ) //正解SE
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0301_rally_01 )
+
+    //========================================//
+    //クリア後メッセージ表示終了
+    _FLAG_SET( FE_C03_RALLYPOINT_03 )
+    //========================================//
+    //C04イベント進行
+    $WK_SCENE_C03_RALLY_01 += 1
+    //========================================//
+
+    _SE_WAIT()
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ELSE
+    //以降のメッセージ
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0301_rally_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END

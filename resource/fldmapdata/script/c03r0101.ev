@@ -29,6 +29,7 @@ _EVENT_DATA	ev_member_f        // 一般隊員F
 _EVENT_DATA	ev_member_g        // 一般隊員G
 _EVENT_DATA	ev_paper           // 書類
 _EVENT_DATA ev_zone_c03r0101   // ゾーンチェンジ
+_EVENT_DATA ev_c03r0101_clown_01
 _EVENT_DATA_END
 
 
@@ -4100,7 +4101,38 @@ EVENT_START	ev_paper
 }
 EVENT_END
 
+/************************************************************/
+/*            クラウン１（ヒウンラリー）                  */
+/************************************************************/
+EVENT_START   ev_c03r0101_clown_01
 
+  _TALK_OBJ_START()
+  //ライモンラリー・すれ違い調査隊通過（1回のみ）
+  IF $WK_SCENE_C03_RALLY_01 != 6 && FLAG_OFF( FE_C03_RALLYPOINT_02 )THEN
+    _SE_PLAY( SEQ_SE_FLD_41 ) //正解SE
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0101_rally_01 )
+
+    //========================================//
+    //クリア後メッセージ表示終了
+    _FLAG_SET( FE_C03_RALLYPOINT_02 )
+    //========================================//
+    //C04イベント進行
+    $WK_SCENE_C03_RALLY_01 += 1
+    //========================================//
+
+    _SE_WAIT()
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ELSE
+    //以降のメッセージ
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0101_rally_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
 
 //======================================================================
 // ■ゾーンチェンジ時の初期化

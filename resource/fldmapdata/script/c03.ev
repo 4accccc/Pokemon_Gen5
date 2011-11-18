@@ -13,6 +13,7 @@
   .include  "c03.h"
   
   //@author	suginaka_katsunori //一言NPC配置
+  //@author Mizuguchi_Mai //ヒウンラリー作成
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -40,13 +41,12 @@ _EVENT_DATA		ev_c03_businessman2_01
 _EVENT_DATA		ev_c03_businessman3_01
 _EVENT_DATA		ev_c03_businessman4_01
 _EVENT_DATA		ev_c03_businessman5_01
+_EVENT_DATA		ev_scene_c03_rarry_start
+_EVENT_DATA		ev_c03_clown_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
 DEFINE_LOCAL LWK_DIR
-DEFINE_LOCAL  LCW_POSI
-DEFINE_LOCAL  LCW_POSX
-DEFINE_LOCAL  LCW_POSZ
 
 /**************************************************************/
 /*		POS：アイリス誘導
@@ -87,6 +87,169 @@ EVENT_END
 _ANIME_LABEL	anm_swchampion_bye
 	_ANIME_DATA	AC_WALK_R_8F,8
 	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*		SCENE_CHANGE：ライモンラリー開始
+/**************************************************************/
+EVENT_START		ev_scene_c03_rarry_start
+{
+DEFINE_LOCAL  LCW_POSI
+DEFINE_LOCAL  LCW_POSF
+DEFINE_LOCAL  LCW_POSS
+
+  //アニメ：ピエロ「！」
+  _OBJ_ANIME( C03_CLOWN_01, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+  
+  _GET_PLAYER_RAIL_LOC( LCW_POSI, LCW_POSF, LCW_POSS )
+  
+  //アニメ：ピエロ接近
+  IF $LCW_POSI == 5 && $LCW_POSF == 4 && $LCW_POSS == 5 THEN
+    _OBJ_ANIME( C03_CLOWN_01, anm_rarry_come_01 )
+  ELSIF $LCW_POSI == 5 && $LCW_POSF == 3 && $LCW_POSS == 5 THEN
+    _OBJ_ANIME( C03_CLOWN_01, anm_rarry_come_02 )
+  ELSIF $LCW_POSI == 5 && $LCW_POSF == 2 && $LCW_POSS == 5 THEN
+    _OBJ_ANIME( C03_CLOWN_01, anm_rarry_come_03 )
+  ELSIF $LCW_POSI == 5 && $LCW_POSF == 1 && $LCW_POSS == 5 THEN
+    _OBJ_ANIME( C03_CLOWN_01, anm_rarry_come_04 )
+  ELSIF $LCW_POSI == 5 && $LCW_POSF == 0 && $LCW_POSS == 5 THEN
+    _OBJ_ANIME( C03_CLOWN_01, anm_rarry_come_05 )
+  ELSIF $LCW_POSI == 3 && $LCW_POSF == 28 && $LCW_POSS == 5 THEN
+    _OBJ_ANIME( C03_CLOWN_01, anm_rarry_come_06 )
+  ELSIF $LCW_POSI == 3 && $LCW_POSF == 27 && $LCW_POSS == 5 THEN
+    _OBJ_ANIME( C03_CLOWN_01, anm_rarry_come_07 )
+  ELSIF $LCW_POSI == 3 && $LCW_POSF == 26 && $LCW_POSS == 5 THEN
+    _OBJ_ANIME( C03_CLOWN_01, anm_rarry_come_08 )
+  ELSIF $LCW_POSI == 3 && $LCW_POSF == 25 && $LCW_POSS == 5 THEN
+    _OBJ_ANIME( C03_CLOWN_01, anm_rarry_come_09 )
+  ENDIF
+  
+  _OBJ_ANIME_WAIT()
+  
+  //ピエロ：ようこそ！ヒウンシティ！
+  _BALLOONWIN_OBJMSG_POS( msg_c03_rally_01, C03_CLOWN_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //じてんしゃ入手処理
+  _ITEM_EVENT_KEYWAIT( ITEM_ZITENSYA, 1 )
+  
+  //ピエロ：ルールは簡単
+  _BALLOONWIN_OBJMSG_POS( msg_c03_rally_02, C03_CLOWN_01, POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //アニメ：ピエロ戻る
+  IF $LCW_POSI == 5 && $LCW_POSF == 4 && $LCW_POSS == 5 THEN
+    _OBJ_ANIME( C03_CLOWN_01, anm_rarry_ret_01 )
+  ELSIF $LCW_POSI == 5 && $LCW_POSF == 3 && $LCW_POSS == 5 THEN
+    _OBJ_ANIME( C03_CLOWN_01, anm_rarry_ret_02 )
+  ELSIF $LCW_POSI == 5 && $LCW_POSF == 2 && $LCW_POSS == 5 THEN
+    _OBJ_ANIME( C03_CLOWN_01, anm_rarry_ret_03 )
+  ELSIF $LCW_POSI == 5 && $LCW_POSF == 1 && $LCW_POSS == 5 THEN
+    _OBJ_ANIME( C03_CLOWN_01, anm_rarry_ret_04 )
+  ELSIF $LCW_POSI == 5 && $LCW_POSF == 0 && $LCW_POSS == 5 THEN
+    _OBJ_ANIME( C03_CLOWN_01, anm_rarry_ret_05 )
+  ELSIF $LCW_POSI == 3 && $LCW_POSF == 28 && $LCW_POSS == 5 THEN
+    _OBJ_ANIME( C03_CLOWN_01, anm_rarry_ret_06 )
+  ELSIF $LCW_POSI == 3 && $LCW_POSF == 27 && $LCW_POSS == 5 THEN
+    _OBJ_ANIME( C03_CLOWN_01, anm_rarry_ret_07 )
+  ELSIF $LCW_POSI == 3 && $LCW_POSF == 26 && $LCW_POSS == 5 THEN
+    _OBJ_ANIME( C03_CLOWN_01, anm_rarry_ret_08 )
+  ELSIF $LCW_POSI == 3 && $LCW_POSF == 25 && $LCW_POSS == 5 THEN
+    _OBJ_ANIME( C03_CLOWN_01, anm_rarry_ret_09 )
+  ENDIF
+  
+  _OBJ_ANIME_WAIT()
+  
+  //==================================//
+  //SCENE_CHANGE無効
+  $WK_SCENE_C03_RALLY_01 = 2
+  //==================================//
+  
+}
+EVENT_END
+
+/**************************************************************/
+/*  クラウン：話しかけ（ヒウンラリー）                      */
+/**************************************************************/
+EVENT_START   ev_c03_clown_01
+{
+  _TALK_OBJ_START()
+
+  //ラリーイベント中の場合
+  IF $WK_SCENE_C03_RALLY_01 != 6 THEN
+
+    //クラウン：まだ　おとずれて　いないのは……
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03_rally_03 )
+
+    //全てのポイントをめぐっていた場合
+    IF $WK_SCENE_C03_RALLY_01 == 5 THEN
+      //クラウン：なんと！　のこり０！
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03_rally_08 )
+      _MSGWIN_CLOSE()
+
+      //記念品受け取り
+      _ITEM_EVENT_KEYWAIT( ITEM_HUSIGINAAME, 1 )
+      
+      //クラウン：なんと！　のこり０！
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03_rally_09 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+      
+      //========================================//
+      //クリア後メッセージ表示終了
+      $WK_SCENE_C03_RALLY_01 = 6
+      //========================================//
+
+    ELSE
+      //まだ訪れていない場所を数える用変数定義
+      DEFINE_LOCAL LWK_POINT_NUM  //訪れていないポイントの数
+      DEFINE_LOCAL LWK_COUNT_NUM  //WHILE文のカウンタ
+
+      //訪れていない場所の確認処理（繰り返し処理）
+      WHILE $LWK_COUNT_NUM < 3
+
+        //メダル事務局におとずれていない
+        IF $LWK_COUNT_NUM == 0 && FLAG_OFF( FE_C03_RALLYPOINT_01 ) THEN
+          _BALLOONWIN_OBJMSG_POS( msg_c03_rally_04, C03_CLOWN_01, POS_DEFAULT )
+          $LWK_POINT_NUM += 1 //ポイント加算
+
+        //すれ違い調査隊におとずれていない
+        ELSIF $LWK_COUNT_NUM == 1 && FLAG_OFF( FE_C03_RALLYPOINT_02 ) THEN
+          _BALLOONWIN_OBJMSG_POS( msg_c03_rally_05, C03_CLOWN_01, POS_DEFAULT )
+          $LWK_POINT_NUM += 1 //ポイント加算
+
+        //バトルカンパニーにおとずれていない
+        ELSIF $LWK_COUNT_NUM == 2 && FLAG_OFF( FE_C03_RALLYPOINT_03 ) THEN
+          _BALLOONWIN_OBJMSG_POS( msg_c03_rally_06, C03_CLOWN_01, POS_DEFAULT )
+          $LWK_POINT_NUM += 1 //ポイント加算
+
+        ENDIF
+
+        //カウント
+        $LWK_COUNT_NUM += 1
+
+      ENDWHILE
+
+      //訪れていない場所の数値を指定タグにセット
+      _NUMBER( 0, LWK_POINT_NUM, 1 )
+
+      //クラウン：～の　X箇所　ですね
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03_rally_07 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+
+    ENDIF
+
+  ELSE
+    //クラウン：ヒウンを　あいする
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03_rally_09 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+}
+EVENT_END
 
 /**************************************************************/
 /*		看板１
@@ -143,6 +306,109 @@ EVENT_END
 EVENT_START		ev_bg_c03_sign8_01
 	_EASY_BGWIN_MSG( msg_c03_sign8_01, TYPE_POST )
 EVENT_END
+
+//--------------------------------------------------------------------
+//	ヒウンラリー：来る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rarry_come_01
+	_ANIME_DATA	AC_WALK_L_8F,5
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rarry_come_02
+	_ANIME_DATA	AC_WALK_L_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rarry_come_03
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rarry_come_04
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rarry_come_05
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rarry_come_06
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rarry_come_07
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rarry_come_08
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rarry_come_09
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ヒウンラリー：戻る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rarry_ret_01
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rarry_ret_02
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rarry_ret_03
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rarry_ret_04
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rarry_ret_05
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rarry_ret_06
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rarry_ret_07
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rarry_ret_08
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rarry_ret_09
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //	☆共通処理：1歩歩く

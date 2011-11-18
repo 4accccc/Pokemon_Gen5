@@ -39,6 +39,7 @@
 #define C03_BUSINESSMAN4_01                8
 #define C03_OL5_01                         9
 #define C03_BUSINESSMAN1_01               10
+#define C03_CLOWN_01                      11
 
 #endif //ZONE_C03_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

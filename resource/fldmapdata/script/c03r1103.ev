@@ -112,14 +112,34 @@ EVENT_END
 /*			C03R1103	マコモ								  */
 /**************************************************************/
 EVENT_START		ev_c03r1103_inventor_01
+{
 _TALK_OBJ_START()
-	
+
 	//初回会話か？
 	IF FLAG_OFF( FE_C03R1103_FIRSTTALK ) THEN	
-	
-		//どう　Ｃギア？
+	 
+		//ヤッホー！
 		_BALLOONWIN_TALKOBJ_MSG( msg_c03r1103_inventor_01 )
-	
+		
+    
+    //主人公の向きの変数を定義
+    DEFINE_LOCAL LWK_DIR
+    
+    //主人公方向取得
+    _PLAYER_DIR_GET( LWK_DIR )
+    
+    IF $LWK_DIR == DIR_UP THEN
+      _OBJ_ANIME( C03R1103_INVENTOR_01, anm_stayjump_d )
+    ELSIF $LWK_DIR == DIR_DOWN THEN
+      _OBJ_ANIME( C03R1103_INVENTOR_01, anm_stayjump_u )
+    ELSIF $LWK_DIR == DIR_LEFT THEN
+      _OBJ_ANIME( C03R1103_INVENTOR_01, anm_stayjump_r )
+    ELSIF $LWK_DIR == DIR_RIGHT THEN
+      _OBJ_ANIME( C03R1103_INVENTOR_01, anm_stayjump_l )
+    ENDIF
+    _OBJ_ANIME_WAIT()
+    
+    
 		//さてと　ゲームシンク
 		_BALLOONWIN_TALKOBJ_MSG( msg_c03r1103_inventor_02 )
 	
@@ -130,13 +150,15 @@ _TALK_OBJ_START()
 		_BALLOONWIN_TALKOBJ_MSG( msg_c03r1103_inventor_04 )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
-
+    
 		//----------------------------------
 
 		//マコモと会話フラグ
 		_FLAG_SET(FE_C03R1103_FIRSTTALK)
 
 		//----------------------------------
+		
+		
 
 	//既に会話済みの場合
 	ELSE
@@ -164,8 +186,27 @@ _TALK_OBJ_START()
 		ENDIF
 
 	ENDIF
-
+}
 EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場ジャンプ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stayjump_u
+  _ANIME_DATA	AC_STAY_JUMP_U_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stayjump_d
+  _ANIME_DATA	AC_STAY_JUMP_D_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stayjump_l
+  _ANIME_DATA	AC_STAY_JUMP_L_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stayjump_r
+  _ANIME_DATA	AC_STAY_JUMP_R_8F,1
+  _ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*			C03R1103	ショーロ							  */

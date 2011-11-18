@@ -12,6 +12,8 @@
   .include  "msg_c03p19.h"
   .include  "c03p19.h"
   .include  "pair_scr_def.h"
+  
+  //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -20,20 +22,326 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c03p19
+_EVENT_DATA    ev_c03p19_badman_01
+_EVENT_DATA    ev_c03p19_dancer_01
+_EVENT_DATA    ev_c03p19_guitarw_01
+_EVENT_DATA    ev_pos_c03p19_vsteam_01
 _EVENT_DATA_END
 
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+/**************************************************************/
+/*		POS：戦闘起動
+/**************************************************************/
+EVENT_START		ev_pos_c03p19_vsteam_01
+  
+  //アニメ：「！」
+  _OBJ_ANIME( C03P19_GUITARW_01, anm_common_gyoe )
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME( C03P19_BADMAN_01, anm_look_down_gyoe )
+  _OBJ_ANIME( C03P19_DANCER_01, anm_look_down_gyoe )
+  _OBJ_ANIME_WAIT()
+  
+  //プレイヤー位置取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  //アニメ：BADMAN隣接
+  $LCW_POSZ -= 1
+  _OBJ_ANIME_AUTO( C03P19_BADMAN_01, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C03P19_BADMAN_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //BADMAN：おら！ここは
+  _BALLOONWIN_OBJMSG_POS( msg_c03p19_badman_01, C03P19_BADMAN_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //トレーナー戦闘呼び出し
+  _TRAINER_BTL_SET( TRID_HEADS_11, 0 )
+  
+  //勝敗チェック
+  _CALL ev_battle_check
+  
+  //BADMAN：よそものの　くせに
+  _BALLOONWIN_OBJMSG_POS( msg_c03p19_badman_02, C03P19_BADMAN_01, POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+  
+  //========================================//
+  //イベント進行
+  $WK_SCENE_C03P19 = 1
+  //トレーナーフラグセット
+  _TRAINER_FLAG_SET( TRID_HEADS_11 )
+  //========================================//
+  
+  //アニメ：ポジション交代
+  _OBJ_ANIME( C03P19_BADMAN_01, anm_badman_ret )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( C03P19_DANCER_01, anm_dancer_come )
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+  
+  //二人目との戦闘処理
+  _CALL ev_c03p19_trbtl_02
+
+EVENT_END
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*		話しかけ：badman
 /**************************************************************/
-//ev_zone_c03p19:
-//  _END
+EVENT_START		ev_c03p19_badman_01
+  
+  //全員に勝利した
+  IF $WK_SCENE_C03P19 == 3 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p19_badman_04 )
+  //まだクリアしていない
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p19_badman_03 )
+  ENDIF
+  
+EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/*		話しかけ：dancer
 /**************************************************************/
-ev_c03p19:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_c03p19_dancer_01
+{
+   
+  //既に戦闘しているかチェック
+  _TRAINER_FLAG_CHECK( TRID_DANCER_08, LOCALWORK15 )
+  
+  //全員に勝利した
+  IF $WK_SCENE_C03P19 == 3 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p19_dancer_04 )
+  //このトレーナーに勝利した
+  ELSIF $LOCALWORK15 == TRUE THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p19_dancer_03 )
+  ELSE
+  
+    _TALK_OBJ_START()
+    
+    //二人目との戦闘処理
+    _CALL ev_c03p19_trbtl_02
+    
+    //三人目との戦闘処理
+    _CALL ev_c03p19_trbtl_03
+    
+  ENDIF
+}
+EVENT_END
 
+/**************************************************************/
+/*		話しかけ：guitarw
+/**************************************************************/
+EVENT_START		ev_c03p19_guitarw_01
+{
+
+  //既に戦闘しているかチェック
+  _TRAINER_FLAG_CHECK( TRID_GUITARW_04, LOCALWORK15 )
+  //ダンサーと既に戦闘しているかチェック
+  _TRAINER_FLAG_CHECK( TRID_DANCER_08, LOCALWORK14 )
+
+  //全員に勝利した
+  IF $WK_SCENE_C03P19 == 3 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p19_guitarw_03 )
+  //ダンサーに勝利していない
+  ELSIF $LOCALWORK14 == FALSE THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p19_guitarw_04 )
+  //このトレーナーにまだ勝利していない
+  ELSE
+    
+    _TALK_OBJ_START()
+    
+    //三人目との戦闘処理
+    _CALL ev_c03p19_trbtl_03
+    
+  ENDIF
+}
+EVENT_END
+
+/**************************************************************/
+/*		CALL：二人目と戦闘
+/**************************************************************/
+ev_c03p19_trbtl_02:
+  
+  _BALLOONWIN_OBJMSG_POS( msg_c03p19_dancer_01, C03P19_DANCER_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //トレーナー戦闘呼び出し
+  _TRAINER_BTL_SET( TRID_DANCER_08, 0 )
+  
+  //勝敗チェック
+  _CALL ev_battle_check
+  
+  _BALLOONWIN_OBJMSG_POS( msg_c03p19_dancer_02, C03P19_DANCER_01, POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ポジション交代
+  _OBJ_ANIME( C03P19_DANCER_01, anm_dancer_ret )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( C03P19_GUITARW_01, anm_guiterw_come )
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //========================================//
+  //イベント進行
+  $WK_SCENE_C03P19 = 2
+  //トレーナーフラグセット
+  _TRAINER_FLAG_SET( TRID_DANCER_08 )
+  //========================================//
+  
+_RET
+/**************************************************************/
+/*		CALL：三人目と戦闘
+/**************************************************************/
+ev_c03p19_trbtl_03:
+
+  _BALLOONWIN_OBJMSG_POS( msg_c03p19_guitarw_01, C03P19_GUITARW_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //トレーナー戦闘呼び出し
+  _TRAINER_BTL_SET( TRID_GUITARW_04, 0 )
+  
+  //勝敗チェック
+  _CALL ev_battle_check
+  
+  _BALLOONWIN_OBJMSG_POS( msg_c03p19_guitarw_02, C03P19_GUITARW_01, POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+  
+  //アニメ：GUITARW戻る
+  _OBJ_ANIME( C03P19_GUITARW_01, anm_guiterw_ret )
+  _OBJ_ANIME_WAIT()
+  
+  //【仮】メダル入手処理
+  
+  //========================================//
+  //イベント終了
+  $WK_SCENE_C03P19 = 3
+  //トレーナーフラグセット
+  _TRAINER_FLAG_SET( TRID_GUITARW_04 )
+  //========================================//
+
+_RET
+/**************************************************************/
+/*		CALL：配置位置変更
+/**************************************************************/
+ev_btl_pos_change:
+  
+  //一人目と戦闘後
+  IF $WK_SCENE_C03P19 == 0 THEN
+    _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 17, 0, 6, DIR_RIGHT )
+    _OBJ_POS_CHANGE( C03P19_GUITARW_01, 17, 0, 4, DIR_DOWN )
+    _OBJ_POS_CHANGE( C03P19_BADMAN_01, 18, 0, 6, DIR_LEFT )
+    _OBJ_POS_CHANGE( C03P19_DANCER_01, 15, 0, 5, DIR_DOWN )
+  //一人目と戦闘後
+  ELSIF $WK_SCENE_C03P19 == 1 THEN
+    _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 17, 0, 6, DIR_LEFT )
+    _OBJ_POS_CHANGE( C03P19_GUITARW_01, 17, 0, 4, DIR_DOWN )
+    _OBJ_POS_CHANGE( C03P19_BADMAN_01, 19, 0, 5, DIR_DOWN )
+    _OBJ_POS_CHANGE( C03P19_DANCER_01, 16, 0, 6, DIR_RIGHT )
+  //三人目と戦闘後
+  ELSIF $WK_SCENE_C03P19 == 1 THEN
+    _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 17, 0, 6, DIR_UP )
+    _OBJ_POS_CHANGE( C03P19_GUITARW_01, 17, 0, 5, DIR_DOWN )
+    _OBJ_POS_CHANGE( C03P19_BADMAN_01, 19, 0, 5, DIR_LEFT )
+    _OBJ_POS_CHANGE( C03P19_DANCER_01, 15, 0, 5, DIR_RIGHT )
+  ENDIF
+
+_RET
+
+/**************************************************************/
+/*		CALL：戦闘処理
+/**************************************************************/
+ev_battle_check:	
+  //敗戦チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+  
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _CALL ev_btl_pos_change
+    _TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+  ELSE
+    _TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+  ENDIF
+_RET
+
+//--------------------------------------------------------------------
+//	BADMAN：戻る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_badman_ret
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	DANCER：来る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dancer_come
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	DANCER：戻る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dancer_ret
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	GUITARW：来る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_guiterw_come
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	GUITARW：来る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_guiterw_ret
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	「！」下を見る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_look_down_gyoe
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0

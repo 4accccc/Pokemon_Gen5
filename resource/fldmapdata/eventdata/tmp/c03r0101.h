@@ -21,6 +21,7 @@
 #define C03R0101_GIRL3_01                  9
 #define C03R0101_WOMAN2_01                10
 #define C03R0101_MAN2_01                  11
+#define C03R0101_CLOWN_01                 12
 
 #endif //ZONE_C03R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

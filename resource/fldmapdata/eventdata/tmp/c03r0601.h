@@ -14,6 +14,7 @@
 #define C03R0601_INFORMATIONW_01           0
 #define C03R0601_MIDDLEMAN2_01             1
 #define C03R0601_SWBELL_01                 2
+#define C03R0601_CLOWN_01                  3
 
 #endif //ZONE_C03R0601_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03r0601.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
