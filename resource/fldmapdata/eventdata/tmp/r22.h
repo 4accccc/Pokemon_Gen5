@@ -50,5 +50,6 @@
 #define BG_R22_DUMMY_FES_18              19
 #define HIDE_ITEM_195                    20
 #define HIDE_ITEM_196                    21
+#define BGID_R22_SIGN1_01                22
 
 #endif //ZONE_R22_EVB_H
