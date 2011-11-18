@@ -2615,8 +2615,10 @@
 	</row>
 
 	<row id="TRID_SCHOOLB_05_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">べんきょうの　あいまに　しあいかんせん！
-しあいの　あいまに　ポケモンしょうぶ！▼</language>
+		<language name="JPN" width="216">べんきょうの　あいまに
+しあいかんせん！▼
+しあいの　あいまに
+ポケモンしょうぶ！▼</language>
 		<language name="JPN_KANJI" width="216">勉強の　合間に　試合観戦！
 試合の　合間に　ポケモン勝負！▼</language>
 	</row>
@@ -3747,9 +3749,9 @@
 	</row>
 
 	<row id="TRID_FANM_11_TRMSG_FIGHT_AFTER_2">
-		<language name="JPN" width="216">いちどで　いいから　ホームランボールを
+		<language name="JPN" width="216">いちどで　ホームランボールを
 キャッチしてみたいなぁ……！</language>
-		<language name="JPN_KANJI" width="216">一度で　いいから　ホームランボールを
+		<language name="JPN_KANJI" width="216">一度で　ホームランボールを
 キャッチしてみたいなぁ……！</language>
 	</row>
 
@@ -9592,11 +9594,11 @@
 	</row>
 
 	<row id="TRID_ELITEW_28_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">みず　ってのはね　へんげんじざい……▼
+		<language name="JPN" width="216">みず　ってのは　へんげんじざい……▼
 いってんを　つらぬく　つよさ
 ぶつりょうで　おしつぶす　パワー▽
 それを　いまから　おみせするわ！▼</language>
-		<language name="JPN_KANJI" width="216">水ってのはね　変幻自在……▼
+		<language name="JPN_KANJI" width="216">水ってのは　変幻自在……▼
 一点を　貫く　強さ
 物量で　押しつぶす　パワー▽
 それを　今から　おみせするわ！▼</language>
@@ -11295,12 +11297,14 @@
 	<row id="TRID_SWPLAZMAW_03_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">くりかえす！　あたしたちと　ちがう
 かんがえの　もちぬしは　ゆるさない！▼
-プラズマだんが　せかいを　しはいすれば
-みんな　おんなじ　かんがえに　なるの！</language>
+あたしたち　プラズマだんが
+せかいを　しはいすれば　みんな▽
+おんなじ　かんがえに　なるの！</language>
 		<language name="JPN_KANJI" width="216">繰り返す！　あたしたちと　違う
 考えの　持ち主は　許さない！▼
-プラズマ団が　世界を　支配すれば
-みんな　おんなじ　考えに　なるの！</language>
+あたしたち　プラズマ団が
+世界を　支配すれば　みんな▽
+おんなじ　考えに　なるの！</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAW_04_TRMSG_FIGHT_START">
@@ -11678,12 +11682,14 @@
 	<row id="TRID_SWPLAZMAW_08_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">くりかえす！　あたしたちと　ちがう
 かんがえの　もちぬしは　ゆるさない！▼
-プラズマだんが　せかいを　しはいすれば
-みんな　おんなじ　かんがえに　なるの！</language>
+あたしたち　プラズマだんが
+せかいを　しはいすれば　みんな▽
+おんなじ　かんがえに　なるの！</language>
 		<language name="JPN_KANJI" width="216">繰り返す！　あたしたちと　違う
 考えの　持ち主は　許さない！▼
-プラズマ団が　世界を　支配すれば
-みんな　おんなじ　考えに　なるの！</language>
+あたしたち　プラズマ団が
+世界を　支配すれば　みんな▽
+おんなじ　考えに　なるの！</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAW_09_TRMSG_FIGHT_START">
@@ -13831,7 +13837,8 @@
 	<row id="TRID_RANGERW_25_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
 		<language name="JPN" width="216">あっ！　いけない！
 この　カゴのみを　あげなきゃ！▼</language>
-		<language name="JPN_KANJI" width="216">＾</language>
+		<language name="JPN_KANJI" width="216">あっ！　いけない！
+この　カゴのみを　あげなきゃ！▼</language>
 	</row>
 
 	<row id="TRID_RANGERW_25_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
@@ -15794,10 +15801,10 @@
 	<row id="TRID_ELITEW_43_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">わたしが　しっている　はなしでは
 でんせつの　ポケモンは▽
-でしの　ポケモンを　きたえていたそうよ</language>
+でしの　ポケモンを　きたえていたって</language>
 		<language name="JPN_KANJI" width="216">わたしが　知っている　話では
 伝説の　ポケモンは▽
-弟子の　ポケモンを　鍛えていたそうよ</language>
+弟子の　ポケモンを　鍛えていたって</language>
 	</row>
 
 	<row id="TRID_DAISUKIM_06_TRMSG_FIGHT_START">
