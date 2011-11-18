@@ -1386,8 +1386,8 @@
 	</row>
 
 	<row id="rangerm_2_01">
-		<language name="JPN" width="216">ザグレブ</language>
-		<language name="JPN_KANJI" width="216">ザグレブ</language>
+		<language name="JPN" width="216">サグレブ</language>
+		<language name="JPN_KANJI" width="216">サグレブ</language>
 	</row>
 
 	<row id="rangerm_1_01">
@@ -3526,28 +3526,28 @@
 	</row>
 
 	<row id="pilot_1_01">
-		<language name="JPN" width="216">ミッキー</language>
-		<language name="JPN_KANJI" width="216">ミッキー</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="pilot_1_02">
-		<language name="JPN" width="216">リッキー</language>
-		<language name="JPN_KANJI" width="216">リッキー</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="pilot_1_03">
-		<language name="JPN" width="216">エドモンド</language>
-		<language name="JPN_KANJI" width="216">エドモンド</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="pilot_1_04">
-		<language name="JPN" width="216">レイモンド</language>
-		<language name="JPN_KANJI" width="216">レイモンド</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="pilot_1_05">
-		<language name="JPN" width="216">ベルモンド</language>
-		<language name="JPN_KANJI" width="216">ベルモンド</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="prince_10">
@@ -4216,18 +4216,53 @@
 	</row>
 
 	<row id="heads_11">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">リッキー</language>
+		<language name="JPN_KANJI" width="216">リッキー</language>
 	</row>
 
 	<row id="dancer_08">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">ベルモンド</language>
+		<language name="JPN_KANJI" width="216">ベルモンド</language>
 	</row>
 
 	<row id="guitarw_04">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">ティナ</language>
+		<language name="JPN_KANJI" width="216">ティナ</language>
+	</row>
+
+	<row id="elitem_45">
+		<language name="JPN" width="216">フェス１</language>
+		<language name="JPN_KANJI" width="216">フェス１</language>
+	</row>
+
+	<row id="elitem_46">
+		<language name="JPN" width="216">フェス２</language>
+		<language name="JPN_KANJI" width="216">フェス２</language>
+	</row>
+
+	<row id="elitem_47">
+		<language name="JPN" width="216">フェス３</language>
+		<language name="JPN_KANJI" width="216">フェス３</language>
+	</row>
+
+	<row id="elitem_48">
+		<language name="JPN" width="216">フェス４</language>
+		<language name="JPN_KANJI" width="216">フェス４</language>
+	</row>
+
+	<row id="elitem_49">
+		<language name="JPN" width="216">フェス５</language>
+		<language name="JPN_KANJI" width="216">フェス５</language>
+	</row>
+
+	<row id="elitem_50">
+		<language name="JPN" width="216">フェス６</language>
+		<language name="JPN_KANJI" width="216">フェス６</language>
+	</row>
+
+	<row id="swplazmaw_13">
+		<language name="JPN" width="216">したっぱ</language>
+		<language name="JPN_KANJI" width="216">したっぱ</language>
 	</row>
 
 	<flowchart-group-list>

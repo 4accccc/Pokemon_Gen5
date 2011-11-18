@@ -767,7 +767,14 @@
 #define	TRID_HEADS_11   ( 754 ) 
 #define	TRID_DANCER_08   ( 755 ) 
 #define	TRID_GUITARW_04   ( 756 ) 
-#define TRID_MAX  ( 757 )
+#define	TRID_ELITEM_45   ( 757 ) 
+#define	TRID_ELITEM_46   ( 758 ) 
+#define	TRID_ELITEM_47   ( 759 ) 
+#define	TRID_ELITEM_48   ( 760 ) 
+#define	TRID_ELITEM_49   ( 761 ) 
+#define	TRID_ELITEM_50   ( 762 ) 
+#define	TRID_SWPLAZMAW_13   ( 763 ) 
+#define TRID_MAX  ( 764 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
