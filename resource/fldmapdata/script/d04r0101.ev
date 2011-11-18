@@ -22,6 +22,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA		ev_mapchange1
 _EVENT_DATA		ev_mapchange2
+_EVENT_DATA		ev_d04r0101_assistantm_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -33,4 +34,11 @@ EVENT_END
 
 EVENT_START ev_mapchange2
 	_MAP_CHANGE_SAND_STREAM( ZONE_ID_D04R0201, 10, 10 )
+EVENT_END
+
+/**************************************************************/
+/*		ASSISTANTM	一言メッセージ				  */
+/**************************************************************/
+EVENT_START		ev_d04r0101_assistantm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d04r0101_assistantm_01 )
 EVENT_END

@@ -22,6 +22,8 @@
 _EVENT_DATA    ev_t04pc0101_shop
 _EVENT_DATA    ev_t04pc0101_fix_shop
 _EVENT_DATA    ev_t04pc0101_middleman1_01
+_EVENT_DATA    ev_t04pc0101_girl4_01
+_EVENT_DATA    ev_t04pc0101_badman_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -68,6 +70,19 @@ EVENT_START   ev_t04pc0101_middleman1_01
 }
 EVENT_END
 
+/**************************************************************/
+/*		GIRL4	一言メッセージ				  */
+/**************************************************************/
+EVENT_START		ev_t04pc0101_girl4_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04pc0101_girl4_01 )
+EVENT_END
+
+/**************************************************************/
+/*		BADMAN	一言メッセージ				  */
+/**************************************************************/
+EVENT_START		ev_t04pc0101_badman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04pc0101_badman_01 )
+EVENT_END
 
 //=============================================================
 //ショップカウンター 変動ショップ

@@ -30,6 +30,7 @@
 #define D05R0101_SWBOSS_01                17
 #define D05R0101_BPSHOP_WAZA              18
 #define D05R0101_BPSHOP_ITEM              19
+#define D05R0101_ASSISTANTM_01            20
 
 #endif //ZONE_D05R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d05r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

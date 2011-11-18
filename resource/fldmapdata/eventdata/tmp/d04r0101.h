@@ -12,6 +12,7 @@
 #define ZONE_D04R0101_EVC_H
 
 #define TR_ESPM_09                         0
+#define D04R0101_ASSISTANTM_01             1
 
 #endif //ZONE_D04R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d04r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

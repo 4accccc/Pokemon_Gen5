@@ -42,6 +42,7 @@ _EVENT_DATA   ev_d05r0101_swrival_01
 _EVENT_DATA		ev_d05r0101_trainerw_01
 _EVENT_DATA		ev_d05r0101_bpshop_waza
 _EVENT_DATA		ev_d05r0101_bpshop_item
+_EVENT_DATA		ev_d05r0101_assistantm_01
 _EVENT_DATA_END
 
 
@@ -353,6 +354,13 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_d05r0101_trainerw_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0101_trainerw_01 )
+EVENT_END
+
+/**************************************************************/
+/*		助手男	一言メッセージ				  */
+/**************************************************************/
+EVENT_START		ev_d05r0101_assistantm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0101_assistantm_01 )
 EVENT_END
 
 //--------------------------------------------------------------
