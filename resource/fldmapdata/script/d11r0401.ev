@@ -20,7 +20,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d11r0401
+_EVENT_DATA	ev_d11r0401_assistantm_01
 _EVENT_DATA_END
 
 
@@ -30,10 +30,114 @@ _EVENT_DATA_END
 //ev_zone_d11r0401:
 //  _END
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_d11r0401:
-  //とりあえず最初のラベルだけ生成している
-  _END
+/************************************************************/
+/*		毒実験イベント		一日一回					*/
+/************************************************************/
+EVENT_START		ev_d11r0401_assistantm_01
 
+	//イベント起動済みの場合
+	IF FLAG_ON( TMFLG_D11R0401_EXPERIMENT ) THEN
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d11r0401_assistantm_05 )
+	
+	//イベントをまだ起動させていない場合
+	ELSE
+
+		_CALL ev_rnd_itemget
+
+	ENDIF
+
+EVENT_END
+
+ev_rnd_itemget:
+
+_TALK_OBJ_START()
+
+//げすいどうに　あふれる　どくを
+_BALLOONWIN_TALKOBJ_MSG_POS( msg_d11r0401_assistantm_01, POS_DEFAULT )
+_MSGWIN_CLOSE()
+
+_OBJ_ANIME( D11R0401_ASSISTANTM_01, anm_common_tenten )
+_OBJ_ANIME_WAIT()
+
+_TIME_WAIT( 30 ) //間
+
+//乱数取得
+_GET_RND( SCWK_ANSWER, 100 )
+_DEBUG_PRINT_WK( SCWK_ANSWER )
+		
+//10%
+IF $SCWK_ANSWER >= 89 THEN
+	
+	_OBJ_ANIME( D11R0401_ASSISTANTM_01, anm_common_hatena )
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT( 15 ) //間
+	
+	_OBJ_ANIME( D11R0401_ASSISTANTM_01, anm_common_gyoe )
+	_OBJ_ANIME_WAIT()
+	
+	//こんかいの　じっけんは　とても　うまくいった
+	_BALLOONWIN_TALKOBJ_MSG_POS( msg_d11r0401_assistantm_04, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//かいふくのくすり入手
+	_ITEM_EVENT_KEYWAIT( ITEM_KAIHUKUNOKUSURI, 1 )
+	
+//30%
+ELSIF $SCWK_ANSWER >= 59 THEN
+
+	_OBJ_ANIME( D11R0401_ASSISTANTM_01, anm_common_gyoe )
+	_OBJ_ANIME_WAIT()
+	
+	//こんかいの　じっけんは　うまくいった
+	_BALLOONWIN_TALKOBJ_MSG_POS( msg_d11r0401_assistantm_03, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//なんでもなおし入手
+	_ITEM_EVENT_KEYWAIT( ITEM_NANDEMONAOSI, 1 )
+
+//60%
+ELSE
+
+	//こんかいの　じっけんは　ふつう　だったな
+	_BALLOONWIN_TALKOBJ_MSG_POS( msg_d11r0401_assistantm_02, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//どくけし入手
+	_ITEM_EVENT_KEYWAIT( ITEM_DOKUKESI, 1 )
+
+ENDIF
+
+//あしたは　あしたの
+_BALLOONWIN_TALKOBJ_MSG_POS( msg_d11r0401_assistantm_05, POS_DEFAULT )
+_LAST_KEYWAIT()
+_MSGWIN_CLOSE()
+
+//========================================//
+
+//タイムフラグセット
+_FLAG_SET(TMFLG_D11R0401_EXPERIMENT)
+
+//========================================//
+
+_RET
+
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ・？・…
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_tenten
+	_ANIME_DATA	AC_MARK_TENTEN,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_onpu
+	_ANIME_DATA	AC_MARK_ONPU,1
+	_ANIME_DATA	ACMD_END,0
