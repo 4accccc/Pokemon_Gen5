@@ -3,15 +3,15 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="matsuzaki_tsubasa" host="W00193" date="2011-04-01T19:59:17" source="no_77.mb"/>
+	<create user="matsuzaki_tsubasa" host="W00301" date="2011-11-19T11:22:53" source="m_gym0601_00_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+	<generator name="Maya 2011 NNS_Export" version="1.6.0.20110413"/>
 </head>
 
 <body>
 
-<original_create user="matsuzaki_tsubasa" host="W00193" date="2011-04-01T19:59:17" source="no_77.mb"/>
-<original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+<original_create user="matsuzaki_tsubasa" host="W00301" date="2011-11-19T11:22:53" source="m_gym0601_00_01.mb"/>
+<original_generator name="Maya 2011 NNS_Export" version="1.6.0.20110413"/>
 
 <model_info
 	pos_scale="7"
@@ -35,7 +35,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="gym06_ami_pl"
-		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_ami.tga"
+		path="C:/home/swan_data3d/field/in28/chip/tex/gym06_ami.tga"
 	>
 		<bitmap size="64">
 			ba91 fedc cde8 99ab 0002 e000 0007 9000
@@ -53,7 +53,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="gym06_amiside_pl"
-		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_amiside.tga"
+		path="C:/home/swan_data3d/field/in28/chip/tex/gym06_amiside.tga"
 	>
 		<bitmap size="16">
 			ffff ffff ffff ffff aaaa aaaa 5555 5555
@@ -63,27 +63,27 @@
 	<tex_image index="2" name="gym06_asiba"
 		width="32" height="16" original_width="32" original_height="16"
 		format="palette16"
-		color0_mode="transparency"
+		color0_mode="color"
 		palette_name="gym06_asiba_pl"
-		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_asiba.tga"
+		path="C:/home/swan_data3d/field/in28/chip/tex/gym06_asiba.tga"
 	>
 		<bitmap size="128">
-			3333 3333 3333 3333 3333 3333 3333 3333
-			3333 3333 3333 3333 3333 3333 3333 3333
-			2222 2222 2222 2222 2222 2222 2222 2222
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
 			1111 1111 1111 1111 1111 1111 1111 1111
-			5555 5555 5555 5555 5555 5555 5555 2255
-			5555 5555 5555 5555 5555 5555 5555 2255
-			7777 7777 7777 7777 7777 7777 7777 2277
-			bbbb bb99 bbbb 99bb bbbb bbbb bb99 22bb
-			a999 9a66 9999 66a9 999a a999 9a66 2299
-			a999 9a66 9999 66a9 999a a999 9a66 2299
-			a999 9a66 9999 66a9 999a a999 9a66 2299
-			a999 9a66 9999 66a9 999a a999 9a66 2299
-			a999 9a66 9999 66a9 999a a999 9a66 2299
-			4444 4444 4444 4444 4444 4444 4444 2244
-			5555 5555 5555 5555 5555 5555 5555 2255
-			8888 8888 8888 8888 8888 8888 8888 2288
+			5555 5555 5555 5555 5555 5555 5555 5555
+			6666 6666 6666 6666 6666 6666 6666 1166
+			6666 6666 6666 6666 6666 6666 6666 1166
+			4444 4444 4444 4444 4444 4444 4444 1144
+			2222 2233 2222 3322 2222 2222 2233 1122
+			3333 3344 3333 4433 3333 3333 3344 1133
+			3333 3344 3333 4433 3333 3333 3344 1133
+			3333 3344 3333 4433 3333 3333 3344 1133
+			3333 3344 3333 4433 3333 3333 3344 1133
+			3333 3344 3333 4433 3333 3333 3344 1133
+			7777 7777 7777 7777 7777 7777 7777 1177
+			6666 6666 6666 6666 6666 6666 6666 1166
+			4444 4444 4444 4444 4444 4444 4444 1144
 		</bitmap>
 	</tex_image>
 	<tex_image index="3" name="gym06_asiba2"
@@ -91,7 +91,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="gym06_asiba2_pl"
-		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_asiba2.tga"
+		path="C:/home/swan_data3d/field/in28/chip/tex/gym06_asiba2.tga"
 	>
 		<bitmap size="64">
 			3333 3333 3333 3333 3333 3333 3333 3333
@@ -109,7 +109,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="gym06_emb_pl"
-		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_emb.tga"
+		path="C:/home/swan_data3d/field/in28/chip/tex/gym06_emb.tga"
 	>
 		<bitmap size="1024">
 			dddd dddd dddd dddd dddd dddd dddd dddd
@@ -247,7 +247,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="gym06_emb_jet_pl"
-		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_emb_jet.tga"
+		path="C:/home/swan_data3d/field/in28/chip/tex/gym06_emb_jet.tga"
 	>
 		<bitmap size="256">
 			abbb 5568 ccb6 88ab 66fa 6666 6666 6666
@@ -289,7 +289,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="gym06_iriguti_pl"
-		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_iriguti.tga"
+		path="C:/home/swan_data3d/field/in28/chip/tex/gym06_iriguti.tga"
 	>
 		<bitmap size="128">
 			7795 7777 8888 8888 9995 9999 7777 7777
@@ -315,7 +315,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="gym06_kabe_pl"
-		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_kabe.tga"
+		path="C:/home/swan_data3d/field/in28/chip/tex/gym06_kabe.tga"
 	>
 		<bitmap size="128">
 			bbbf bbbb bbbb bbbb bbbb bbbb dfbb d949
@@ -341,7 +341,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="gym06_kabe2_pl"
-		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_kabe2.tga"
+		path="C:/home/swan_data3d/field/in28/chip/tex/gym06_kabe2.tga"
 	>
 		<bitmap size="256">
 			2bbb 6432 2a97 bbb2 1555 1111 1111 5551
@@ -383,7 +383,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="gym06_mark_pl"
-		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_mark.tga"
+		path="C:/home/swan_data3d/field/in28/chip/tex/gym06_mark.tga"
 	>
 		<bitmap size="16">
 			8576 1111 8576 1221 8576 1221 8576 1111
@@ -395,7 +395,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="gym06_p01_pl"
-		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_p01.tga"
+		path="C:/home/swan_data3d/field/in28/chip/tex/gym06_p01.tga"
 	>
 		<bitmap size="512">
 			bbbb bbbb bbbb bbbb bbbb 00bb 1111 1111
@@ -469,7 +469,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="gym06_p02_pl"
-		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_p02.tga"
+		path="C:/home/swan_data3d/field/in28/chip/tex/gym06_p02.tga"
 	>
 		<bitmap size="512">
 			7777 7777 7777 7777 7777 7777 7777 7777
@@ -543,7 +543,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="gym06_p03_pl"
-		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_p03.tga"
+		path="C:/home/swan_data3d/field/in28/chip/tex/gym06_p03.tga"
 	>
 		<bitmap size="8">
 			0000 0000 3ffc 3a5c 369c 35ac 3ffc 0000
@@ -554,7 +554,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="gym06_p04_pl"
-		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_p04.tga"
+		path="C:/home/swan_data3d/field/in28/chip/tex/gym06_p04.tga"
 	>
 		<bitmap size="128">
 			6666 6666 6666 6666 6666 6666 6666 6666
@@ -580,7 +580,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="gym06_s_kabe_pl"
-		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_s_kabe.tga"
+		path="C:/home/swan_data3d/field/in28/chip/tex/gym06_s_kabe.tga"
 	>
 		<bitmap size="512">
 			2222 2222 2222 2222 2222 2222 2222 2222
@@ -654,7 +654,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="gym06_s_yuka_pl"
-		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_s_yuka.tga"
+		path="C:/home/swan_data3d/field/in28/chip/tex/gym06_s_yuka.tga"
 	>
 		<bitmap size="256">
 			dddd dddd dddd c99d c99c cccc cccc cc99
@@ -696,7 +696,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="gym06_sasae_pl"
-		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_sasae.tga"
+		path="C:/home/swan_data3d/field/in28/chip/tex/gym06_sasae.tga"
 	>
 		<bitmap size="256">
 			4488 6666 4446 9933 2288 2222 2222 2222
@@ -738,7 +738,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="gym06_sasae2_pl"
-		path="C:/Documents and Settings/matsuzaki_tsubasa/My Documents/Swan/in28/map/tex/gym06_sasae2.tga"
+		path="C:/home/swan_data3d/field/in28/chip/tex/gym06_sasae2.tga"
 	>
 		<bitmap size="256">
 			3333 3333 5555 5555 5555 5555 5555 5555
@@ -788,9 +788,8 @@
 	<tex_palette index="2" name="gym06_asiba2_pl" color_size="8">
 		264a 2249 266b 2eac 2e6c 32ae 328e 7fff
 	</tex_palette>
-	<tex_palette index="3" name="gym06_asiba_pl" color_size="16">
-		7fff 439f 2b5e 1afd 39ce 35ad 318c 318c
-		318c 2d6b 2d6b 294a 7fff 7fff 7fff 7fff
+	<tex_palette index="3" name="gym06_asiba_pl" color_size="8">
+		1e09 262b 294a 2d6b 318c 324d 35ad 39ce
 	</tex_palette>
 	<tex_palette index="4" name="gym06_emb_jet_pl" color_size="16">
 		7fff 4eaa 35e8 2dc4 2143 739c 6739 6318
