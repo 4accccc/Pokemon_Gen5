@@ -356,7 +356,7 @@ EVENT_START   ev_debug_scr_map
        _FLAG_SET(FV_C08R0101_SWLEADER7_01) //シャガ家：シャガ
        _FLAG_RESET(FV_C08_PEOPLE_01)  //ソウリュウシティ：一般市民
        _FLAG_SET( FE_C08_PLAZMA_COME )
-       _FLAG_SET( SYS_FLAG_BGM_C08_PLAZMA )
+       _FLAG_RESET( SYS_FLAG_BGM_C08_PLAZMA )
        _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_01, FALSE, FALSE ) //マップ復帰
        
        _MAP_CHANGE( ZONE_ID_C08, 425, 173, DIR_DOWN)
@@ -879,6 +879,13 @@ EVENT_START   ev_debug_mizuguchi
       */
     ELSIF $SCWK_TEMP2 == 21 THEN
       
+      //D10R0101イベント初期化
+      //ライバル・見張り（２）非表示
+      _FLAG_RESET( FV_D10R0101_SWPLAZMAM_01 )
+      _FLAG_SET( FV_D10R0101_SWPLAZMAM_03 )
+      //D10R0101 POS無効
+      $WK_SCENE_D10R0101_SWPLAZMA_01 = 1
+      
       /*
       //C08ダークトリニティ（１）（２）表示
       _FLAG_RESET( FV_C08_NINJA_01 )
@@ -887,13 +894,13 @@ EVENT_START   ev_debug_mizuguchi
       $WK_SCENE_C08_SWPLAZMA = 6
       */
       
-      
+      /*
       //C08R0101伝説解説SCENE_CHANGEイベント起動
       $WK_SCENE_C08R0101 = 1
       //C08R0101シャガ表示
       _FLAG_RESET( FV_C08R0101_SWLEADER7_01 )
       _MAP_CHANGE( ZONE_ID_C08, 418, 162, DIR_LEFT )
-      
+      */
       
       /*
       //はじまりの場所イベント初期化
