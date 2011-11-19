@@ -381,11 +381,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュちほうを　つくった
-でんせつポケモン　レシラム▼</Text>
+			<Text>でんせつの
+ほのおポケモン　レシラム！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T05:45:25" />
+				Time="2011-11-19T09:47:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -393,11 +393,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ地方を　つくった
-伝説ポケモン　レシラム▼</Text>
+			<Text>伝説の
+ほのおポケモン　レシラム！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T05:45:25" />
+				Time="2011-11-19T09:47:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -485,11 +485,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そして　もういっぴきの
-でんせつポケモン　ゼクロム▼</Text>
+			<Text>そして　こちらは　でんせつの
+でんきポケモン　ゼクロム！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T05:39:10" />
+				Time="2011-11-19T09:47:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -497,11 +497,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そして　もう一匹の
-伝説ポケモン　ゼクロム▼</Text>
+			<Text>そして　こちらは　伝説の
+でんきポケモン　ゼクロム！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T05:39:10" />
+				Time="2011-11-19T09:47:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -586,12 +586,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こーゆー　ポケモンが　いたら
-イッシュなんて　かんたんに▽
-しはい　できるって　もんですよね</Text>
+			<Text>ちいさいころから　あこがれていて
+ほんものを　２ねんまえ　みたとき▽
+かんどうして　ないちゃったんだ……！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T05:39:10" />
+				Time="2011-11-19T09:45:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -599,12 +599,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こーゆー　ポケモンが　いたら
-イッシュなんて　簡単に▽
-支配できるって　もんですよね</Text>
+			<Text>小さいころから　あこがれていて
+本物を　２年前　みたとき▽
+感動して　泣いちゃったんだ……！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T05:39:10" />
+				Time="2011-11-19T09:46:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

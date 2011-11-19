@@ -1134,11 +1134,10 @@
 			Language="JPN">
 			<Text>ヒオウギ　ポケモンジム▼
 ジムリーダー　チェレン
-にんてい　トレーナー！▽
-[Name:TrainerName Idx="1" ]</Text>
+にんてい　トレーナー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-17T09:51:00" />
+				Time="2011-11-19T09:32:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1148,11 +1147,10 @@
 			Language="JPN_KANJI">
 			<Text>ヒオウギ　ポケモンジム▼
 ジムリーダー　チェレン
-認定　トレーナー！▽
-[Name:TrainerName Idx="1" ]</Text>
+認定　トレーナー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T12:48:50" />
+				Time="2011-11-19T09:32:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1161,11 +1159,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>BGメッセージ
-・ジムバッジ取得前
-・1＝ライバル名</Comment>
+・ジムバッジ取得前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T12:48:20" />
+				Time="2011-11-19T09:33:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1190,10 +1187,10 @@
 			<Text>ヒオウギ　ポケモンジム▼
 ジムリーダー　チェレン
 にんてい　トレーナー！▽
-[Name:TrainerName ]　[Name:TrainerName Idx="1" ]</Text>
+[Name:TrainerName ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-17T09:51:35" />
+				Time="2011-11-19T09:33:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1204,10 +1201,10 @@
 			<Text>ヒオウギ　ポケモンジム▼
 ジムリーダー　チェレン
 認定　トレーナー！▽
-[Name:TrainerName ]　[Name:TrainerName Idx="1" ]</Text>
+[Name:TrainerName ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-17T09:51:39" />
+				Time="2011-11-19T09:33:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1216,11 +1213,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>BGメッセージ
-・ジムバッジ取得後
-・1＝ライバル名</Comment>
+・ジムバッジ取得後から
+　msg_r20_swrival_01表示後まで
+・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-17T09:51:09" />
+				Time="2011-11-19T09:33:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1228,6 +1226,62 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-21T12:48:20" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12gym0101_statue_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヒオウギ　ポケモンジム▼
+ジムリーダー　チェレン
+にんてい　トレーナー！▽
+[Name:TrainerName ]　[Name:TrainerName Idx="1" ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:32:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:32:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヒオウギ　ポケモンジム▼
+ジムリーダー　チェレン
+認定　トレーナー！▽
+[Name:TrainerName ]　[Name:TrainerName Idx="1" ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:32:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:32:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・msg_r20_swrival_01表示後から
+・0＝主人公名
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:33:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ポケモン像</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:32:46" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

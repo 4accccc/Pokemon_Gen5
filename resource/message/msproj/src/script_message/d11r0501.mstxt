@@ -43,12 +43,12 @@
 			<Comment>♀
 ・部屋の中央に配置
 ・続けてのメッセージ
-　80％→assistantm_02
-　15％→assistantm_03
-　　5％→assistantm_04</Comment>
+　60％→assistantw_02
+　30％→assistantw_03
+　10％→assistantw_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:46:32" />
+				Time="2011-11-19T09:35:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -79,11 +79,11 @@
 			Language="JPN">
 			<Text>こんかいの　じっけんけっかは
 ふつう　ね……▼
-ねえ　きみ！
-この　どくけしを　あげるよ▼</Text>
+ねえ　きみ！　つくれた
+キズぐすりを　あげるよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T02:40:27" />
+				Time="2011-11-19T09:34:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -93,11 +93,11 @@
 			Language="JPN_KANJI">
 			<Text>今回の　実験結果は
 普通ね……▼
-ねえ　きみ！
-この　どくけしを　あげるよ▼</Text>
+ねえ　きみ！　つくれた
+キズぐすりを　あげるよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T02:37:39" />
+				Time="2011-11-19T09:34:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -134,11 +134,11 @@
 			Language="JPN">
 			<Text>こんかいの　じっけんは
 うまく　いったわ！▼
-ねえ　きみ！
-この　なんでもなおしを　どうぞ▼</Text>
+ねえ　きみ！　つくれた
+いいキズぐすりを　どうぞ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T02:33:30" />
+				Time="2011-11-19T09:34:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -148,11 +148,11 @@
 			Language="JPN_KANJI">
 			<Text>今回の　実験は
 うまく　いったわ！▼
-ねえ　きみ！
-この　なんでもなおしを　どうぞ▼</Text>
+ねえ　きみ！　つくれた
+いいキズぐすりを　どうぞ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T02:37:47" />
+				Time="2011-11-19T09:34:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -190,10 +190,10 @@
 			<Text>わあ！　こんかいの
 じっけんは　だいせいこう！▼
 ねえねえ　きみ！　この
-かいふくのくすりを　どうぞ！▼</Text>
+げんきのかけらを　どうぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T02:34:04" />
+				Time="2011-11-19T09:35:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -204,10 +204,10 @@
 			<Text>わあ！　今回の
 実験は　大成功！▼
 ねえねえ　きみ！　この
-かいふくのくすりを　どうぞ！▼</Text>
+げんきのかけらを　どうぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T02:38:02" />
+				Time="2011-11-19T09:35:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

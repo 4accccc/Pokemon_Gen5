@@ -43,12 +43,12 @@
 			<Comment>♂
 ・部屋の中央に配置
 ・続けてのメッセージ
-　80％→assistantm_02
-　15％→assistantm_03
-　　5％→assistantm_04</Comment>
+　60％→assistantm_02
+　30％→assistantm_03
+　10％→assistantm_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:44:42" />
+				Time="2011-11-19T09:35:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

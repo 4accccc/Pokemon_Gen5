@@ -115,11 +115,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・図鑑登録イベント後
 ・一度ウインドウを閉じてから
  続けてoldman_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T08:12:31" />
+				Time="2011-11-19T09:17:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -173,10 +174,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>♂
+・終了</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T08:08:49" />
+				Time="2011-11-19T09:17:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -195,6 +197,323 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r07r0301_oldman_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わしが　ムッキムキの　びだんし
+ばあさんも　ピッチピチの　むすめっこ▽
+そんな　じだいの　はなしじゃ▼
+すぐ　ちかくで　ある　ポケモンが
+トルネロスと　ボルトロスを
+こらしめたんじゃ▼
+それから　３０ねんほどは
+ボルトロスも　トルネロスも▽
+おとなしくして　おったんじゃな……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:18:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:18:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わしが　ムッキムキの　美男子
+ばあさんも　ピッチピチの　娘っ子▽
+そんな時代の　話じゃ▼
+すぐ　近くで　ある　ポケモンが
+トルネロスと　ボルトロスを
+こらしめたんじゃ▼
+それから　３０年ほどは
+ボルトロスも　トルネロスも▽
+おとなしくして　おったんじゃな……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:18:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:18:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・図鑑登録イベント前
+・続けてoldman_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:18:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>おじいさん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:17:45" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r07r0301_oldman_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ほら　みせてやろう！▼
+こいつが　トルネロスで▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:19:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:16:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ほら　みせてやろう！▼
+こいつが　トルネロスで▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:19:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:16:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:51:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>おじいさん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:16:52" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r07r0301_oldman_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こっちが　ボルトロスじゃ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:16:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:16:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こっちが　ボルトロスじゃ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:16:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:16:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:51:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>おじいさん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:16:52" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r07r0301_oldman_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>トルネロス　ボルトロスの　ことが
+ポケモンずかんに　きろくされた</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:52:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:51:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トルネロス　ボルトロスの　ことが
+ポケモン図鑑に　記録された</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:52:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:51:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・イッシュ図鑑登録
+・みたあつかい</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:51:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>おじいさん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:51:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r07r0301_oldman_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わるさを　していた　２ひきを
+こらしめた　ポケモンの　なまえは▼
+ランドロスと　いってな
+こんな　ポケモン　なんじゃよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:19:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:19:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>悪さを　していた　２匹を
+こらしめた　ポケモンの　名前は▼
+ランドロスと　いってな
+こんな　ポケモン　なんじゃよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:19:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:19:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:52:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>おじいさん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:17:45" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r07r0301_oldman_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ランドロスの　ことが
+ポケモンずかんに　きろくされた</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:53:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:52:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ランドロスの　ことが
+ポケモン図鑑に　記録された</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:52:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:52:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・イッシュ図鑑登録
+・みたあつかい</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:52:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>おじいさん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:52:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
