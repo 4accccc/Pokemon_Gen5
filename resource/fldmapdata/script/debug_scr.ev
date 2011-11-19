@@ -335,6 +335,7 @@ EVENT_START   ev_debug_scr_map
 		    _FLAG_RESET(FV_C08_SWSAGE7_01)
 		    _FLAG_RESET(FV_C08_SWPLAZMA_01)
 		    _FLAG_SET(FV_C08_PEOPLE_01)  //ソウリュウシティ：一般市民
+		    _FLAG_SET( SYS_FLAG_BGM_C08_PLAZMA )
 		    _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_01, TRUE, TRUE )
 		    
 		    _MAP_CHANGE( ZONE_ID_C08, 425, 173, DIR_DOWN)
@@ -354,6 +355,8 @@ EVENT_START   ev_debug_scr_map
        _FLAG_SET(FV_C08_NINJA_02)  //ソウリュウシティ：ダークトリニティ（戦わないやつ）
        _FLAG_SET(FV_C08R0101_SWLEADER7_01) //シャガ家：シャガ
        _FLAG_RESET(FV_C08_PEOPLE_01)  //ソウリュウシティ：一般市民
+       _FLAG_SET( FE_C08_PLAZMA_COME )
+       _FLAG_SET( SYS_FLAG_BGM_C08_PLAZMA )
        _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_01, FALSE, FALSE ) //マップ復帰
        
        _MAP_CHANGE( ZONE_ID_C08, 425, 173, DIR_DOWN)
@@ -612,6 +615,8 @@ EVENT_START   ev_debug_mizuguchi
 		    _FLAG_RESET(FV_C08_SWSAGE7_01)
 		    _FLAG_RESET(FV_C08_SWPLAZMA_01)
 		    _FLAG_SET(FV_C08_PEOPLE_01)  //ソウリュウシティ：一般市民
+		    _FLAG_SET( FE_C08_PLAZMA_COME )
+		    _FLAG_SET( SYS_FLAG_BGM_C08_PLAZMA )
 		    _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_01, TRUE, TRUE )
 		ELSIF $SCWK_TEMP2 == 6 THEN
 		   //C08初期化
@@ -873,22 +878,85 @@ EVENT_START   ev_debug_mizuguchi
       _MAP_CHANGE( ZONE_ID_D22, 142, 631, DIR_UP )
       */
     ELSIF $SCWK_TEMP2 == 21 THEN
+      
+      /*
+      //C08ダークトリニティ（１）（２）表示
+      _FLAG_RESET( FV_C08_NINJA_01 )
+      //C08：ダークトリニティ戦起動
+      $WK_SCENE_C08_NINJA = 1
+      $WK_SCENE_C08_SWPLAZMA = 6
+      */
+      
+      
+      //C08R0101伝説解説SCENE_CHANGEイベント起動
+      $WK_SCENE_C08R0101 = 1
+      //C08R0101シャガ表示
+      _FLAG_RESET( FV_C08R0101_SWLEADER7_01 )
+      _MAP_CHANGE( ZONE_ID_C08, 418, 162, DIR_LEFT )
+      
+      
+      /*
+      //はじまりの場所イベント初期化
+      $WK_SCENE_C03P19 = 0
+      _TRAINER_FLAG_RESET( TRID_HEADS_11 )
+      _TRAINER_FLAG_RESET( TRID_DANCER_08 )
+      _TRAINER_FLAG_RESET( TRID_GUITARW_04 )
+      */
+      
+      /*
+      //ヒウンラリー初期化
+      $WK_SCENE_C03_RALLY_01 = 1
+      _FLAG_RESET( FE_C03_RALLYPOINT_01 )
+      _FLAG_RESET( FE_C03_RALLYPOINT_02 )
+      _FLAG_RESET( FE_C03_RALLYPOINT_03 )
+      _MAP_CHANGE( ZONE_ID_C03P15, 16, 3, DIR_UP )
+      */
+      
+      //R13R0201 迷いの森ゾロアーク
+      //_FLAG_RESET( FV_R16R0201_BACKPACKERM_01 )
+      
+      /*
+      //R20長い草イベント
+      _FLAG_RESET( FV_R20_SWLEADER1_01 )
+      $WK_SCENE_R20 = 2
+      _MAP_CHANGE( ZONE_ID_R20, 161, 658, DIR_DOWN )
+      */
+      /*
       //D11R0101初期化
       $WK_SCENE_D11R0101 = 0
       _FLAG_RESET( FV_D11R0101_SWRIVAL_01 )
       _FLAG_RESET( FV_D11R0101_SWPLAZMA_01 )
       _MAP_CHANGE( ZONE_ID_D11R0101, 84, 21, DIR_DOWN )
-      
+      */
       
     ELSIF $SCWK_TEMP2 == 22 THEN
+      
+      //はじまりの場所イベント二人目
+      $WK_SCENE_C03P19 = 1
+      _TRAINER_FLAG_SET( TRID_HEADS_11 )
+      _TRAINER_FLAG_RESET( TRID_DANCER_08 )
+      _TRAINER_FLAG_RESET( TRID_GUITARW_04 )
+      
+      /*
+      //W21開始イベント
       _FLAG_SET( FV_W21_SWRIVAL_01 )
       _FLAG_SET( FV_W21_SWLEADER1_01 )
       //W21のイベント進行状態を進めてイベントを発生
       $WK_SCENE_W21_01 = 1
       //マップ遷移
       _MAP_CHANGE( ZONE_ID_D32R0101, 29, 11, DIR_RIGHT )
+      */
     
     ELSIF $SCWK_TEMP2 == 23 THEN
+      
+      //はじまりの場所イベント三人目
+      $WK_SCENE_C03P19 = 2
+      _TRAINER_FLAG_SET( TRID_HEADS_11 )
+      _TRAINER_FLAG_SET( TRID_DANCER_08 )
+      _TRAINER_FLAG_RESET( TRID_GUITARW_04 )
+      
+      /*
+      //W21終了イベント
       //W21ライバル表示
       _FLAG_RESET( FV_W21_SWRIVAL_01 )
       //W21チェレン表示
@@ -897,6 +965,7 @@ EVENT_START   ev_debug_mizuguchi
       $WK_SCENE_W21_01 = 4
       _RESERVE_SCRIPT( SCRID_RESERVE_W21_SWPLAZMA_END_01 )
       _MAP_CHANGE( ZONE_ID_W21, 794, 241, DIR_DOWN )
+      */
     
     ELSIF $SCWK_TEMP2 == 24 THEN
     
