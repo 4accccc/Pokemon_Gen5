@@ -76,7 +76,6 @@ EVENT_START ev_d27_hint_01
      
      //戦闘前メッセージ
      _BALLOONWIN_TALKOBJ_MSG( msg_hide_ship_hint1_start )
-     _AB_KEYWAIT_MARK()
      _MSGWIN_CLOSE()
      
      //B2
@@ -142,7 +141,6 @@ EVENT_START ev_d27_hint_02
     
      //戦闘前メッセージ
      _BALLOONWIN_TALKOBJ_MSG( msg_hide_ship_hint2_start )
-     _AB_KEYWAIT_MARK()
      _MSGWIN_CLOSE()
      
      //B2
@@ -208,7 +206,6 @@ EVENT_START ev_d27_hint_03
      
      //戦闘前メッセージ
      _BALLOONWIN_TALKOBJ_MSG( msg_hide_ship_hint3_start )
-     _AB_KEYWAIT_MARK()
      _MSGWIN_CLOSE()
      
      //B2
@@ -274,7 +271,6 @@ EVENT_START ev_d27_hint_04
     
      //戦闘前メッセージ
      _BALLOONWIN_TALKOBJ_MSG( msg_hide_ship_hint4_start )
-     _AB_KEYWAIT_MARK()
      _MSGWIN_CLOSE()
      
      //B2
@@ -353,7 +349,6 @@ EVENT_START ev_d27_hint_06
     
      //戦闘前メッセージ
      _BALLOONWIN_TALKOBJ_MSG( msg_hide_ship_hint6_start )
-     _AB_KEYWAIT_MARK()
      _MSGWIN_CLOSE()
      
      //B2
@@ -419,7 +414,6 @@ EVENT_START ev_d27_hint_07
     
      //戦闘前メッセージ
      _BALLOONWIN_TALKOBJ_MSG( msg_hide_ship_hint7_start )
-     _AB_KEYWAIT_MARK()
      _MSGWIN_CLOSE()
      
      //B2

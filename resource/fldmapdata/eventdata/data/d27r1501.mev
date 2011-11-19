@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/20 21:27:59
+#save date:2011/11/19 16:49:51
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d27r1501.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d27r1501.wms
 #hold event type:
 1
 #hold event number:
-2
+3
 #event number: 0
 #type
 1
@@ -72,6 +72,37 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 216 0 168
+#event number: 2
+#type
+1
+#ID name
+D27R1501_SWPLAZMAM_02
+#OBJ CODE Number
+SWPLAZMAM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D27_BEFORE_PWPLAZMA_01
+#Event Script Name
+SCRID_D27R1501_SWPLAZMAM_02
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+152 0 216
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -81,7 +112,137 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-0
+10
+#event number: 0
+#Bg Event Label
+BG_D27R1501_BED_01
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_D27R1501_BED_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+120 0 216
+#event number: 1
+#Bg Event Label
+BG_D27R1501_BED_02
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_D27R1501_BED_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+120 0 200
+#event number: 2
+#Bg Event Label
+BG_D27R1501_BED_03
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_D27R1501_BED_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+120 0 184
+#event number: 3
+#Bg Event Label
+BG_D27R1501_BED_04
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_D27R1501_BED_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+136 0 184
+#event number: 4
+#Bg Event Label
+BG_D27R1501_BED_05
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_D27R1501_BED_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+136 0 200
+#event number: 5
+#Bg Event Label
+BG_D27R1501_BED_06
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_D27R1501_BED_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+168 0 200
+#event number: 6
+#Bg Event Label
+BG_D27R1501_BED_07
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_D27R1501_BED_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+168 0 184
+#event number: 7
+#Bg Event Label
+BG_D27R1501_BED_08
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_D27R1501_BED_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+184 0 184
+#event number: 8
+#Bg Event Label
+BG_D27R1501_BED_09
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_D27R1501_BED_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+184 0 200
+#event number: 9
+#Bg Event Label
+BG_D27R1501_BED_10
+#Bg Event Type
+BG_TALK_TYPE_NORMAL
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_BG_D27R1501_BED_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+184 0 216
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

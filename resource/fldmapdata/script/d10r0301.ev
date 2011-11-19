@@ -337,9 +337,9 @@ _ANIME_LABEL	anm_look_swrival_hatena
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swrival_bye_01
 	_ANIME_DATA	AC_WALK_R_4F,3
-	_ANIME_DATA	AC_WALK_U_4F,9
-	_ANIME_DATA	AC_WALK_L_4F,2
-	_ANIME_DATA	AC_WALK_U_4F,4
+	_ANIME_DATA	AC_WALK_U_4F,6
+	_ANIME_DATA	AC_WALK_R_4F,4
+	_ANIME_DATA	AC_WALK_U_4F,5
 	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/

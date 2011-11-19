@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d27r0901.h"
-  //.include  "d27r0901.h"
+  .include  "d27r0901.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,61 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d27r0901
+_EVENT_DATA    ev_d27r0901_swplazmaw_01
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_d27r0901:
-//  _END
-
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_d27r0901:
-  //とりあえず最初のラベルだけ生成している
-  _END
-
+/************************************************************/
+/*	SWPLAZMAW：ゼクロムレシラム図鑑登録イベント						*/
+/************************************************************/
+EVENT_START ev_d27r0901_swplazmaw_01
+  
+  //初回会話
+  IF FLAG_OFF( FE_D27_LEGEND_ZUKAN_LOOK ) THEN
+    
+    _TALK_OBJ_START()
+    
+    //SWPLAZMAW：レシラム
+    _BALLOONWIN_TALKOBJ_MSG( msg_d27r0901_swplazmaw_01 )
+    _BALLOONWIN_CLOSE()
+    
+    
+    //ポケモンウィンドウ表示
+    _DISP_POKE_WIN( MONSNO_650, 0, 0, 0 )
+    //図鑑登録処理
+    _SET_ZUKAN_FLAG( ZUKANCTRL_MODE_SEE, MONSNO_650 )
+    
+    //システム：登録された
+    _SYSWIN_MSG( msg_d27r0901_swplazmaw_02 , POS_DEFAULT )
+    _AB_KEYWAIT_MARK()
+    _SYSWIN_CLOSE()
+    
+    //SWPLAZMAW：ゼクロム
+    _BALLOONWIN_TALKOBJ_MSG( msg_d27r0901_swplazmaw_03 )
+    _BALLOONWIN_CLOSE()
+    
+    //ポケモンウィンドウ表示
+    _DISP_POKE_WIN( MONSNO_651, 0, 0, 0 )
+    //図鑑登録処理
+    _SET_ZUKAN_FLAG( ZUKANCTRL_MODE_SEE, MONSNO_651 )
+    
+    //システム：登録された
+    _SYSWIN_MSG( msg_d27r0901_swplazmaw_04 , POS_DEFAULT )
+    _AB_KEYWAIT_MARK()
+    _SYSWIN_CLOSE()
+    
+    //SWPLAZMAW：レシラム
+    _BALLOONWIN_TALKOBJ_MSG( msg_d27r0901_swplazmaw_05 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+    
+    //========================================/
+    //図鑑登録イベント終了
+    _FLAG_SET( FE_D27_LEGEND_ZUKAN_LOOK )
+    //========================================/
+    
+  //2回目以降
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0901_swplazmaw_05 )
+  ENDIF
+EVENT_END

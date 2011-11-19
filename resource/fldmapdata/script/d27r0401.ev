@@ -139,11 +139,27 @@ INIT_EVENT_START	ev_scene_d27r0401_swboss_01
   _BALLOONWIN_OBJMSG_POS( msg_d27r0401_swboss_03_05 , D27R0401_SWBOSS_01 ,POS_DEFAULT )
   _YES_NO_WIN( SCWK_ANSWER )
   
-  //アクロマ：なるほど……！
-  _BALLOONWIN_OBJMSG_WB( msg_d27r0401_swboss_03_06 , msg_d27r0401_swboss_03_07 , D27R0401_SWBOSS_01 , POS_DEFAULT)
+  //はい
+  IF $SCWK_ANSWER == SCR_YES THEN
+    //アクロマ：なるほど……！
+    _BALLOONWIN_OBJMSG_POS( msg_d27r0401_swboss_03_06 , D27R0401_SWBOSS_01 ,POS_DEFAULT )
+  //いいえ
+  ELSE
+    _BALLOONWIN_OBJMSG_POS( msg_d27r0401_swboss_03_07 , D27R0401_SWBOSS_01 ,POS_DEFAULT )
+  ENDIF
+  _MSGWIN_CLOSE()
+  
+  //アニメ：アクロマ一歩右へ
+  _OBJ_ANIME( D27R0401_SWBOSS_01 , anm_walk_r)
+  _OBJ_ANIME_WAIT()
   
   //アクロマ：くりかえしますが
   _BALLOONWIN_OBJMSG_POS( msg_d27r0401_swboss_03_08 , D27R0401_SWBOSS_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：アクロマ元の位置に戻る
+  _OBJ_ANIME( D27R0401_SWBOSS_01 , anm_swboss_ret_01)
+  _OBJ_ANIME_WAIT()
   
   //アクロマ：ごぶうんを
   _BALLOONWIN_OBJMSG_POS( msg_d27r0401_swboss_03_09 , D27R0401_SWBOSS_01 ,POS_DEFAULT )
@@ -162,6 +178,15 @@ INIT_EVENT_START	ev_scene_d27r0401_swboss_01
   //========================================//
 
 INIT_EVENT_END
+
+//--------------------------------------------------------------------
+//	アクロマ：戻って向き合う
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swboss_ret_01
+  _ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 
 /**************************************************************/
 /* アクロマ：話しかけ                                         */
