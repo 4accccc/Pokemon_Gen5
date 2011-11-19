@@ -20,9 +20,12 @@ typedef enum {
   PKWD_REC_POS_01,
   PKWD_REC_POS_02,
   PKWD_REC_POS_03,
-  PKWD_REC_POS_TMP,
-
-  PKWD_REC_POS_MAX = PKWD_REC_POS_TMP,
+  PKWD_REC_POS_04,
+  PKWD_REC_POS_05,
+  PKWD_REC_POS_06,
+  PKWD_REC_POS_07,
+  
+  PKWD_REC_POS_MAX,
 }PKWD_REC_POS;
 
 //======================================================================

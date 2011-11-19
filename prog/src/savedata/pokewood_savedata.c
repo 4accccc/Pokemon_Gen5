@@ -14,7 +14,8 @@
 
 // フラグ管理に必要な配列用の個数
 #define POKEWOOD_ARRAY_NUM  (( POKEWOOD_SENARIO_MAX/32 )+1)
-#define POKEWOOD_RECSAVEDATA_MAX  ( 8 ) //正確にはpokewood_rec.hを参照
+#define POKEWOOD_RECSAVEDATA_MAX  ( 8 ) // 正確にはpokewood_rec.hを参照
+#define POKEWOOD_KANBAN_MAX       ( 4 ) // ポケウッド劇場の外の看板の最大数
 
 // 初期化時の興行収入値
 #define POKEWOOD_BOXOFFICE_FIRST_PROFITS ( -9999 )
@@ -33,7 +34,7 @@ struct _POKEWOOD_SAVEDATA{
   POKEWOOD_BOXOFFICE_RECORD boxoffice_record[POKEWOOD_BOXOFFICE_DATA_MAX];  // 興行成績ランキング 16*40
   s16 star_point;                             ///< プレイヤーのスターポイント 2
   s16 star_rank_announce;                     ///< スターポイントが上がった事を告知したか
-  u8  title_no[POKEWOOD_SHOWING_MAX];         ///< 上映中の映画の看板ナンバー
+  u8  title_no[POKEWOOD_KANBAN_MAX];         ///< 上映中の映画の看板ナンバー
   u32 strange_flag[POKEWOOD_ARRAY_NUM];       ///< ストレンジエンド取得済みフラグ
   u32 senario_theatergo_flag[POKEWOOD_ARRAY_NUM];///< 指定のシナリオを一度でも上映して観た事がある
   u32 bad_flag[POKEWOOD_ARRAY_NUM];           ///< バッドエンド取得済みフラグ
@@ -465,7 +466,7 @@ void POKEWOOD_SAVEDATA_SetStarRankAnnounced( POKEWOOD_SAVEDATA *sv, int rank, BO
 //=============================================================================================
 int POKEWOOD_SAVEDATA_GetKanbanNo( POKEWOOD_SAVEDATA *sv, u32 index )
 {
-  GF_ASSERT_MSG( index<POKEWOOD_SHOWING_MAX, "上映映画のindexが4を超えている\n" );
+  GF_ASSERT_MSG( index<POKEWOOD_KANBAN_MAX, "上映映画のindexが4を超えている\n" );
   return sv->title_no[index];
 }
 
@@ -481,7 +482,7 @@ int POKEWOOD_SAVEDATA_GetKanbanNo( POKEWOOD_SAVEDATA *sv, u32 index )
 void POKEWOOD_SAVEDATA_SetKanbanNo( POKEWOOD_SAVEDATA *sv, u32 index, int title_no )
 {
   // セーブデータが４つ以上になるので、看板数以上の登録は無視するように変更
-//  if(index<POKEWOOD_SHOWING_MAX){
+//  if(index<POKEWOOD_KANBAN_MAX){
     sv->title_no[index] = title_no;
 //  }
 }

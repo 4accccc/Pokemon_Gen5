@@ -5554,6 +5554,13 @@
 				User="mori:W00269"
 				Time="2011-07-20T11:57:51" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-17T12:52:55" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_select_02"
@@ -5582,6 +5589,13 @@
 				User="mori:W00269"
 				Time="2011-07-20T11:58:25" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-17T12:52:55" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_select_03"
@@ -5611,6 +5625,13 @@
 				User="mori:W00269"
 				Time="2011-07-20T12:00:56" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-17T12:52:55" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_select_yes"
@@ -5637,6 +5658,13 @@
 				User="mori:W00269"
 				Time="2011-07-25T11:33:00" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢「はい」</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-17T12:52:56" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_select_no"
@@ -5663,6 +5691,145 @@
 				User="mori:W00269"
 				Time="2011-07-25T11:33:07" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢「いいえ」</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-17T12:52:56" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_select_info"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じょうほう</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-17T12:51:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-25T11:33:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>情報</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-17T12:51:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-25T11:33:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢「じょうほう」</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-17T12:52:56" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_select_watch"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>みる</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-17T12:51:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-25T11:33:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>みる</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-17T12:51:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-25T11:33:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢「みる」</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-17T12:53:03" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_select_return"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もどる</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-17T13:39:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-25T11:33:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もどる</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-17T13:39:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-25T11:33:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢「みる」</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-17T12:53:03" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_select_end"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しゅうりょうする</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-17T13:40:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-25T11:33:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>終了する</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-17T13:40:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-25T11:33:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢「みる」</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-11-17T12:53:03" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="pw_screen_01"
@@ -5762,6 +5929,188 @@
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-10-29T09:27:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-26T11:51:49" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_screen_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>スクリーン　５</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-16T09:56:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-26T11:51:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＲＥＥＮ　５</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-16T09:56:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-26T11:51:49" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_screen_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>スクリーン　６</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-16T09:57:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-26T11:51:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＲＥＥＮ　６</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-16T09:57:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-26T11:51:49" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_screen_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>スクリーン　７</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-16T09:57:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-26T11:51:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＲＥＥＮ　７</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-16T09:57:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-26T11:51:49" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_screen_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>スクリーン　８</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-16T09:57:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-26T11:51:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＳＣＲＥＥＮ　８</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-16T09:57:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-26T11:51:49" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_info_pokemons"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おもな　しゅつえんキャスト</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-18T09:30:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-26T11:51:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>主な　出演キャスト</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-18T09:30:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-26T11:51:49" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_info_estimate"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こうぎょうせいせき</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-18T09:31:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-26T11:51:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>興行成績</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-18T09:31:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-26T11:51:49" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_info_brief"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あらすじ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-18T09:31:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-07-26T11:51:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あらすじ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-18T09:31:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

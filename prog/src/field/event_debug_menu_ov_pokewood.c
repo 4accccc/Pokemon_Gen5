@@ -561,6 +561,7 @@ static BOOL debugMenuCallProc_PokewoodSelect( POKEWOOD_FUNC_WORK * wk )
   
   pkwd_param = PKWD_SELECT_SCREEN_PARAM_Create( HEAPID_PROC, wk->gmSys, PKWD_SELECT_MODE_NORMAL, &wk->result );
 
+  pkwd_param->mode = PKWD_SELECT_MODE_DEL;
 	new_event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
       FS_OVERLAY_ID(notwifi_event_pokewood), PKWD_SELECT_SCREEN_EVENT_Call, (void *)pkwd_param );
 

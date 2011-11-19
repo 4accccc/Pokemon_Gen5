@@ -840,7 +840,7 @@
 //  ポケウッド関連
 //--------------------------------------------------------------
 ///最大録画本数
-#define   SCR_PKWD_MOVIE_MAX        (4)
+#define   SCR_PKWD_MOVIE_MAX        (8)
 
 ///最大シナリオナンバー
 #define   SCR_PKWD_SCENARIO_MAX     (41)

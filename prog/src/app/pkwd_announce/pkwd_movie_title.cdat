@@ -17,15 +17,18 @@
 // BGPAL(パレットは、始めにまとめて所定のタイトルだけを転送)
 static const PKWD_COUNT_BGPAL_DATA pwc_bgpal_01_tbl[] = {
 	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title00_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 00 ハチクマン
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 01 侵略者
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title02_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 02 大怪獣
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title03_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 03(dummy)
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title04_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 04(dummy)
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title05_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 05(dummy)
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title06_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 06(dummy)
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title07_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 07(dummy)
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title08_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 08(dummy)
-	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title09_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 09(dummy)
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 01 Full Metal Cop
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title02_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 02 侵略者
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title03_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 03 大怪獣
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title04_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 04 Timegate Traveler
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title05_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 05 Amor a primera vista
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title06_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 06 Die Pforten des Zauberreichs
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title07_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 07 The Giant Woman!
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title08_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 08 La nebbia rossa
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title09_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 09 Un souvenir inoubliable
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title10_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 10 Ghost Eraser
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title11_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 11 ハチクマンの逆襲
+	{ PALTYPE_MAIN_BG,	NARC_pkwd_announce_gra_pkwd_title12_logo_NCLR,	PLTID_MAIN_BG_TITLE,	1,},	// 12 ハチクマンの逆襲FINAL
 	//
 	{ 0xff, 0, 0, 0,}, // end code
 };
@@ -33,31 +36,37 @@ static const PKWD_COUNT_BGPAL_DATA pwc_bgpal_01_tbl[] = {
 // BGCHR(切り替え時に、所定のタイトルだけを転送)
 static const PKWD_COUNT_BGCHR_DATA pwc_bgchr_01_tbl[] = {
 	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title00_logo_NCGR,	0,	0,},	// 00 ハチクマン
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// 01 侵略者
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title02_logo_NCGR,	0,	0,},	// 02 大怪獣
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title03_logo_NCGR,	0,	0,},	// 03(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title04_logo_NCGR,	0,	0,},	// 04(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title05_logo_NCGR,	0,	0,},	// 05(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title06_logo_NCGR,	0,	0,},	// 06(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title07_logo_NCGR,	0,	0,},	// 07(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title08_logo_NCGR,	0,	0,},	// 08(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title09_logo_NCGR,	0,	0,},	// 09(dummy)
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_logo_NCGR,	0,	0,},	// 01 Full Metal Cop
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title02_logo_NCGR,	0,	0,},	// 02 侵略者
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title03_logo_NCGR,	0,	0,},	// 03 大怪獣
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title04_logo_NCGR,	0,	0,},	// 04 Timegate Traveler
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title05_logo_NCGR,	0,	0,},	// 05 Amor a primera vista
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title06_logo_NCGR,	0,	0,},	// 06 Die Pforten des Zauberreichs
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title07_logo_NCGR,	0,	0,},	// 07 The Giant Woman!
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title08_logo_NCGR,	0,	0,},	// 08 La nebbia rossa
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title09_logo_NCGR,	0,	0,},	// 09 Un souvenir inoubliable
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title10_logo_NCGR,	0,	0,},	// 10 Ghost Eraser
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title11_logo_NCGR,	0,	0,},	// 11 ハチクマンの逆襲
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title12_logo_NCGR,	0,	0,},	// 12 ハチクマンの逆襲FINAL
 
 	{ 0xff, 0, 0, 0,}, // end code
 };
 
 // BGSCN(切り替え時に、所定のタイトルだけを転送)
 static const PKWD_COUNT_BGSCN_DATA pwc_bgscn_01_tbl[] = {
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title00_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 00
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 01
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title02_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 02(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title03_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 03(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title04_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 04(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title05_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 05(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title06_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 06(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title07_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 07(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title08_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 08(dummy)
-	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title09_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 09(dummy)
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title00_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 00 ハチクマン
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title01_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 01 Full Metal Cop
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title02_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 02 侵略者
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title03_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 03 大怪獣
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title04_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 04 Timegate Traveler
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title05_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 05 Amor a primera vista
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title06_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 06 Die Pforten des Zauberreichs
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title07_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 07 The Giant Woman!
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title08_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 08 La nebbia rossa
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title09_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 09 Un souvenir inoubliable
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title10_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 10 Ghost Eraser
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title11_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 11 ハチクマンの逆襲
+	{ GFL_BG_FRAME1_M,	NARC_pkwd_announce_gra_pkwd_title12_NSCR,		0,	PLTID_MAIN_BG_TITLE,},	// 12 ハチクマンの逆襲FINAL
 
 	{ 0xff, 0, 0, 0,}, // end code
 };
@@ -66,17 +75,17 @@ static const PKWD_COUNT_BGSCN_DATA pwc_bgscn_01_tbl[] = {
 // シナリオデータからタイトルロゴデータを引っ張るためのテーブル
 // pwc_bgscn_01_tbl[scenario_logo_tbl[scenario_no]].frameというようなアクセス方法になる
 static const u8 scenario_logo_tbl[]={
-  1,  1,  1,  1,  //  1 -  4本目  
-  0,  0,  0,  0,  //  5 -  8本目
-  0,  0,  0,  2,  //  9 - 12本目  
-  2,  2,  2,  3,  // 13 - 16本目
-  4,  4,  4,  4,  // 17 - 20本目  
-  5,  5,  5,  5,  // 21 - 24本目
-  6,  6,  6,  6,  // 25 - 28本目  
-  7,  7,  7,  7,  // 29 - 32本目
-  8,  8,  8,  8,  // 33 - 36本目  
-  9,  9,  9,  9,  // 37 - 40本目
-  1,  
+  0,  11,  11,   1,  //  1 -  4本目
+  1,   1,   1,   2,  //  5 -  8本目
+  2,   2,   2,   3,  //  9 - 12本目
+  3,   3,   3,   4,  // 13 - 16本目
+  4,   4,   5,   5,  // 17 - 20本目
+  5,   6,   6,   6,  // 21 - 24本目
+  7,   7,   7,   7,  // 25 - 28本目
+  8,   8,   8,   9,  // 29 - 32本目
+  9,   9,   9,  10,  // 33 - 36本目
+ 10,  10,  10,  12,  // 37 - 40本目
+  0,  // 41本目
 };
 
 
