@@ -228,29 +228,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュの　だいちを　２０００かい
+			<Text>イッシュの　だいちを　５０００かい
 ふみしめた　そこそこの
 けんきゃくを　たたえる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-18T11:42:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-18T11:42:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュの　大地を　２０００回
+			<Text>イッシュの　大地を　５０００回
 踏みしめた　そこそこの
 健脚を　称える　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-18T11:42:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-18T11:42:48" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -265,29 +265,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュの　だいちを　５０００かい
+			<Text>イッシュの　だいちを　１００００かい
 ふみしめた　なかなかの
 けんきゃくを　たたえる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-15T10:55:11" />
+				Time="2011-11-18T11:42:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-15T10:55:11" />
+				Time="2011-11-18T11:42:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュの　大地を　５０００回
+			<Text>イッシュの　大地を　１００００回
 踏みしめた　なかなかの
 健脚を　称える　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-15T10:55:11" />
+				Time="2011-11-18T11:42:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-15T10:55:11" />
+				Time="2011-11-18T11:42:48" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -302,29 +302,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュの　だいちを　１００００かい
+			<Text>イッシュの　だいちを　２００００かい
 ふみしめた　かなりの
 けんきゃくを　たたえる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-15T10:55:11" />
+				Time="2011-11-18T11:42:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-15T10:55:11" />
+				Time="2011-11-18T11:42:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュの　大地を　１００００回
+			<Text>イッシュの　大地を　２００００回
 踏みしめた　かなりの
 健脚を　称える　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-15T10:55:11" />
+				Time="2011-11-18T11:42:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-15T10:55:11" />
+				Time="2011-11-18T11:42:48" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3258,29 +3258,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>５０かいもの　せんとうを
+			<Text>１００かいもの　せんとうを
 かいくぐった　わかわかしい
 ゆうきを　しょうめいする　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-19T06:49:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-19T06:49:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>５０回もの　戦闘を
+			<Text>１００回もの　戦闘を
 かいくぐった　若々しい
 勇気を　証明する　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-19T06:49:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-19T06:49:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3300,11 +3300,11 @@
 ゆうきを　しょうめいする　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-14T08:51:12" />
+				Time="2011-11-19T06:49:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-14T08:51:12" />
+				Time="2011-11-19T06:49:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3313,11 +3313,11 @@
 勇気を　証明する　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-14T08:51:12" />
+				Time="2011-11-19T06:49:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-14T08:51:12" />
+				Time="2011-11-19T06:49:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3332,29 +3332,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>５００かいもの　せんとうを
+			<Text>４００かいもの　せんとうを
 かいくぐった　すさまじい
 ゆうきを　しょうめいする　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-14T08:51:12" />
+				Time="2011-11-19T06:49:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-14T08:51:12" />
+				Time="2011-11-19T06:49:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>５００回もの　戦闘を
+			<Text>４００回もの　戦闘を
 かいくぐった　すさまじい
 勇気を　証明する　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-14T08:51:12" />
+				Time="2011-11-19T06:49:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-14T08:51:12" />
+				Time="2011-11-19T06:49:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3369,29 +3369,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１０００かいもの　せんとうを
+			<Text>２０００かいもの　せんとうを
 かいくぐった　てんかむそうの
 ゆうきを　しょうめいする　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-14T08:51:12" />
+				Time="2011-11-19T04:38:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-14T08:51:12" />
+				Time="2011-11-19T04:38:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１０００回もの　戦闘を
+			<Text>２０００回もの　戦闘を
 かいくぐった　天下無双の
 勇気を　証明する　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-14T08:51:12" />
+				Time="2011-11-19T04:38:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-14T08:51:12" />
+				Time="2011-11-19T04:38:39" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

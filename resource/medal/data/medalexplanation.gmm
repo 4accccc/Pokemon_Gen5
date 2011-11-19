@@ -500,28 +500,28 @@
 	</row>
 
 	<row id="MDL_EXP_FIELD_006">
-		<language name="JPN" width="216">イッシュの　だいちを　２０００かい
+		<language name="JPN" width="216">イッシュの　だいちを　５０００かい
 ふみしめた　そこそこの
 けんきゃくを　たたえる　メダル。</language>
-		<language name="JPN_KANJI" width="216">イッシュの　大地を　２０００回
+		<language name="JPN_KANJI" width="216">イッシュの　大地を　５０００回
 踏みしめた　そこそこの
 健脚を　称える　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_007">
-		<language name="JPN" width="216">イッシュの　だいちを　５０００かい
+		<language name="JPN" width="216">イッシュの　だいちを　１００００かい
 ふみしめた　なかなかの
 けんきゃくを　たたえる　メダル。</language>
-		<language name="JPN_KANJI" width="216">イッシュの　大地を　５０００回
+		<language name="JPN_KANJI" width="216">イッシュの　大地を　１００００回
 踏みしめた　なかなかの
 健脚を　称える　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_008">
-		<language name="JPN" width="216">イッシュの　だいちを　１００００かい
+		<language name="JPN" width="216">イッシュの　だいちを　２００００かい
 ふみしめた　かなりの
 けんきゃくを　たたえる　メダル。</language>
-		<language name="JPN_KANJI" width="216">イッシュの　大地を　１００００回
+		<language name="JPN_KANJI" width="216">イッシュの　大地を　２００００回
 踏みしめた　かなりの
 健脚を　称える　メダル。</language>
 	</row>
@@ -1234,10 +1234,10 @@
 	</row>
 
 	<row id="MDL_EXP_BATTLE_001">
-		<language name="JPN" width="216">５０かいもの　せんとうを
+		<language name="JPN" width="216">１００かいもの　せんとうを
 かいくぐった　わかわかしい
 ゆうきを　しょうめいする　メダル。</language>
-		<language name="JPN_KANJI" width="216">５０回もの　戦闘を
+		<language name="JPN_KANJI" width="216">１００回もの　戦闘を
 かいくぐった　若々しい
 勇気を　証明する　メダル。</language>
 	</row>
@@ -1252,19 +1252,19 @@
 	</row>
 
 	<row id="MDL_EXP_BATTLE_003">
-		<language name="JPN" width="216">５００かいもの　せんとうを
+		<language name="JPN" width="216">４００かいもの　せんとうを
 かいくぐった　すさまじい
 ゆうきを　しょうめいする　メダル。</language>
-		<language name="JPN_KANJI" width="216">５００回もの　戦闘を
+		<language name="JPN_KANJI" width="216">４００回もの　戦闘を
 かいくぐった　すさまじい
 勇気を　証明する　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_BATTLE_004">
-		<language name="JPN" width="216">１０００かいもの　せんとうを
+		<language name="JPN" width="216">２０００かいもの　せんとうを
 かいくぐった　てんかむそうの
 ゆうきを　しょうめいする　メダル。</language>
-		<language name="JPN_KANJI" width="216">１０００回もの　戦闘を
+		<language name="JPN_KANJI" width="216">２０００回もの　戦闘を
 かいくぐった　天下無双の
 勇気を　証明する　メダル。</language>
 	</row>
