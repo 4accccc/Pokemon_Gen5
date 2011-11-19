@@ -440,10 +440,10 @@
 			Language="JPN">
 			<Text>またまた　しつもんです！▼
 あなた
-ポケモンずかんも　ほしくない？</Text>
+ポケモンずかんも　ほしいよね？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T03:52:21" />
+				Time="2011-11-19T05:57:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -453,10 +453,10 @@
 			Language="JPN_KANJI">
 			<Text>またまた　質問です！▼
 あなた
-ポケモン図鑑も　ほしくない？</Text>
+ポケモン図鑑も　ほしいよね？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T04:02:30" />
+				Time="2011-11-19T05:58:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1977,11 +1977,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀：クリア後
-・アイテム入手処理
-　No000「すごいつりざお」</Comment>
+・玄関をみたままメッセージ表示
+・続けて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T08:10:03" />
+				Time="2011-11-19T06:11:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1997,21 +1997,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>その　すごいつりざおを　つかえば
-みずのなかの　ポケモンも▽
-つりあげることが　できるのよ！▼
-すごいつりざおの
-せつめいしょを　よむわね▼
-まず　すいめんに　むかって
-すごいつりざおを　つかいます！▼
-つぎに　きもちを　しゅうちゅう！▼
-ポケモンが　くいついたら
-「！」と　でるので　そのときに▽
-すばやく　つりざおを　ひきましょう！▼
-ですって</Text>
+			<Text>ママ『なにをしても　それは　すべて
+あなたと　ポケモンの　じかん▼
+だから　じぶんで　きめて
+じぶんが　したいことを　しなさいな▼
+ママも　じぶんの　じかんを
+ママの　すきなように　たのしむから！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T08:20:27" />
+				Time="2011-11-19T06:13:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2019,21 +2013,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>その　すごいつりざおを　使えば
-水中の　ポケモンも▽
-つりあげることが　できるのよ！▼
-すごいつりざおの
-説明書を　読むわね▼
-まず　水面に　向かって
-すごいつりざおを　使います！▼
-次に　気持ちを　集中！▼
-ポケモンが　くいついたら
-「！」と　でるので　そのときに▽
-すばやく　つりざおを　ひきましょう！▼
-ですって</Text>
+			<Text>ママ『なにをしても　それは　すべて
+あなたと　ポケモンの　時間▼
+だから　自分で　決めて
+自分が　したいことを　しなさいな▼
+ママも　自分の　時間を
+ママの　好きなように　楽しむから！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T05:41:36" />
+				Time="2011-11-19T06:13:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2042,10 +2030,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀：クリア後
-・</Comment>
+・主人公と向き合って
+　メッセージ表示
+※これ以降は回復処理</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T07:58:56" />
+				Time="2011-11-19T06:21:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2061,15 +2051,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なにをしても　それは　すべて
-あなたと　ポケモンの　じかん▼
-だから　じぶんで　きめて
-じぶんが　したいことを　しなさいな▼
-ママも　じぶんの　じかんを
-ママの　すきなように　たのしむから！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T05:42:13" />
+				Time="2011-11-19T06:13:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2077,15 +2062,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なにをしても　それは　すべて
-あなたと　ポケモンの　時間▼
-だから　自分で　決めて
-自分が　したいことを　しなさいな▼
-ママも　自分の　時間を
-ママの　好きなように　楽しむから！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T05:42:08" />
+				Time="2011-11-19T06:13:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2093,11 +2073,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀：クリア後
-・</Comment>
+			<Comment>削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T07:58:56" />
+				Time="2011-11-19T06:14:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2107,6 +2086,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-17T07:58:56" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c12r0101_game_01"

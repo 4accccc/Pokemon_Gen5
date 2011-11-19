@@ -2940,13 +2940,14 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！　キミと　ポケモンが
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！▼
+キミと　ポケモンが
 めざす　みちは　どんなものか？▼
 その　りそうを　たしかめるため
 ポケモンリーグへ　むかいたまえ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:10:23" />
+				Time="2011-11-19T07:35:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2954,13 +2955,14 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！　キミと　ポケモンが
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！▼
+キミと　ポケモンが
 目指す　道は　どんなものか？▼
 その理想を　確かめるため
 ポケモンリーグへ　向かいたまえ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:10:28" />
+				Time="2011-11-19T07:35:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2997,13 +2999,14 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！　キミと　ポケモンが
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！▼
+キミと　ポケモンが
 めざす　みちは　どんなものか？▼
 その　しんじつを　たしかめるため
 ポケモンリーグへ　むかいたまえ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:10:25" />
+				Time="2011-11-19T07:35:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3011,13 +3014,14 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！　キミと　ポケモンが
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミ！▼
+キミと　ポケモンが
 目指す　道は　どんなものか？▼
 その真実を　確かめるため
 ポケモンリーグへ　向かいたまえ！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:30:38" />
+				Time="2011-11-19T07:36:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3204,6 +3208,344 @@ N</Text>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0501_swleader1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チェレン『[Name:TrainerName ]！
+いまのが　キュレム　だね？▼
+プラズマだん……▼
+いや　ゲーチスに　りようされていた
+でんせつの　ポケモンか……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:54:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:39:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チェレン『[Name:TrainerName ]！
+いまのが　キュレム　だね？▼
+プラズマ団……▼
+いや　ゲーチスに　利用されていた
+伝説の　ポケモンか……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:11:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:54:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・キュレムとの戦闘後、ベルと一緒に出現
+・続けてswbell_01</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:13:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:32:28" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0501_swbell_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベル『[Name:TrainerName ]って　すごいね！
+いろんな　ポケモンと　であって▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:54:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:39:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベル『[Name:TrainerName ]って　すごいね！
+いろんな　ポケモンと　であって▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:11:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:04:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・msg_t01r0401_hakase2_01を
+　表示前→swbell_02
+　表示後→swbell_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:13:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:32:21" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0501_swbell_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ねえねえ！　ポケモンずかんも
+かなり　うまってるんじゃない？▼
+アララギはかせに　みせたら
+とても　よろこぶよ　きっと！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:12:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:00:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ねえねえ！　ポケモン図鑑も
+かなり　うまってるんじゃない？▼
+アララギ博士に　みせたら
+とても　喜ぶよ　きっと！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:11:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:04:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・msg_t01r0401_hakase2_01表示前
+・続けてswleader1_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:14:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:59:52" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0501_swbell_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギはかせに
+ポケモンずかんを　みせたんでしょ？▼
+はかせ　よろこんでいて
+あたしに　はなしてくれたよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:04:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:00:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ博士に
+ポケモン図鑑を　みせたんでしょ？▼
+博士　喜んでいて
+あたしに　話してくれたよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:12:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:04:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・msg_t01r0401_hakase2_01表示後
+・続けてswleader1_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:13:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:00:56" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0501_swleader1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チェレン『そうだね！▼
+そのために　ポケモンずかんを
+[Name:TrainerName ]に　たくしたんだから▼
+じゃあ　ぼくは　プラズマだんが
+どうなったか　しらべてみる▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:05:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:04:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チェレン『そうだね！▼
+そのために　ポケモン図鑑を
+[Name:TrainerName ]に　託したんだから▼
+じゃあ　ぼくは　プラズマ団が
+どうなったか　しらべてみる▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:13:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:05:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてswbell_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:13:49" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER1
+ジムリーダー・チェレン</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:04:32" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0501_swbell_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベル『……それにしても
+ポケモンって　いったいぜんたい▽
+どれだけ　いるんだろうねえ？▼
+カノコタウンに　もどって
+アララギはかせに　きいてみようかな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:12:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:07:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベル『……それにしても
+ポケモンって　一体全体▽
+どれだけ　いるんだろうねえ？▼
+カノコタウンに　戻って
+アララギ博士に　きいてみようかな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:13:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:11:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ベルとチェレン、揃って退場
+・画面外に消えると主人公、操作可能に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:09:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:05:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

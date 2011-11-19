@@ -42,25 +42,25 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>バトルたいかいには
-Ｗｉ－Ｆｉコネクションで[Ctrl2:LineFeed ]
-おこなわれる　Ｗｉ－Ｆｉたいかいと[Ctrl2:PageClear ]
+Ｗｉ－Ｆｉコネクションで▽
+おこなわれる　Ｗｉ－Ｆｉたいかいと▼
 イベントかいじょうで　おこなわれる
-ライブたいかいが　あります[Ctrl2:PageClear ]
+ライブたいかいが　あります▼
 さんかする　ポケモンは
-バトルボックスに　とうろく　している[Ctrl2:LineFeed ]
-ポケモンです[Ctrl2:PageClear ]
+バトルボックスに　とうろく　している▽
+ポケモンです▼
 いちど　たいかいに　とうろく　すると
-たいかい　さんかちゅうは[Ctrl2:LineFeed ]
-バトルボックスを[Ctrl2:LineFeed ]
-へんこう　できなくなるので[Ctrl2:LineFeed ]
-ちゅうい　してください[Ctrl2:PageClear ]
+たいかい　さんかちゅうは▽
+バトルボックスを▽
+へんこう　できなくなるので▽
+ちゅうい　してください▼
 たいかいに　さんかすると
-デジタルせんしゅしょうに[Ctrl2:LineFeed ]
-データが　とうろく　されるので[Ctrl2:LineFeed ]
-かくにん　してみてください[Ctrl2:PageClear ]</Text>
+デジタルせんしゅしょう　に▽
+データが　とうろく　されるので▽
+かくにん　してみてください▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T05:54:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -69,21 +69,21 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>バトル大会には
-Ｗｉ－Ｆｉコネクションで[Ctrl2:LineFeed ]
-行われるＷｉ－Ｆｉ大会と[Ctrl2:PageClear ]
+Ｗｉ－Ｆｉコネクションで▽
+行われるＷｉ－Ｆｉ大会と▼
 イベント会場で行われる
-ライブ大会が　あります[Ctrl2:PageClear ]
+ライブ大会が　あります▼
 参加するポケモンは　バトルボックスに
-登録している　ポケモンです[Ctrl2:PageClear ]
+登録している　ポケモンです▼
 一度　大会に　登録すると
-大会参加中は　バトルボックスを[Ctrl2:LineFeed ]
-変更できなくなるので　注意してください[Ctrl2:PageClear ]
+大会参加中は　バトルボックスを▽
+変更できなくなるので　注意してください▼
 大会に　参加すると　デジタル選手証に
-データが　登録されるので[Ctrl2:LineFeed ]
-確認してみてください[Ctrl2:PageClear ]</Text>
+データが　登録されるので▽
+確認してみてください▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T05:54:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -308,24 +308,23 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｗｉ－Ｆｉたいかいは
-おてもとの　パソコンで[Ctrl2:LineFeed ]
-ポケモングローバルリンクの[Ctrl2:LineFeed ]
-ホームページに　アクセスし[Ctrl2:LineFeed ]
-とうろく　することで　たいかいに[Ctrl2:LineFeed ]
-さんか　できます[Ctrl2:PageClear ]
+おてもとの　パソコンで▽
+ポケモングローバルリンクの▽
+ホームページに　アクセスし▼
+とうろく　することで　たいかいに
+さんか　できます▼
 http://www.pokemon-gl.com/[Ctrl2:PageClear ]
 たいかいのルールや　かいさいきかんは
-ポケモングローバルリンク[Ctrl2:LineFeed ]
-ホームページで　かくにんしてください[Ctrl2:PageClear ]
-また　Wi-Fi大会や
-ランダムマッチに参加中[Ctrl2:PageClear ]
-本体の電源が　切れると
-しばらく　大会に　出られなくなります[Ctrl2:LineFeed ]
-ご注意　ください[Ctrl2:PageClear ]
-</Text>
+ポケモングローバルリンク▽
+ホームページで　かくにんしてください▼
+また　Ｗｉ－Ｆｉたいかいや
+ランダムマッチに　さんかちゅう▼
+ほんたいの　でんげんが　きれると
+しばらく　たいかいに　でられなくなります▽
+ごちゅうい　ください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T13:25:16" />
+				Time="2011-11-19T05:54:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -342,14 +341,14 @@ http://www.pokemon-gl.com/[Ctrl2:PageClear ]
 大会のルールや　開催期間は
 ポケモングローバルリンク▽
 ホームページで　確認してください▼
-また　Wi-Fi大会や
+また　Ｗｉ－Ｆｉ大会や
 ランダムマッチに参加中▼
 本体の電源が　切れると
 しばらく　大会に　出られなくなります▽
 ご注意　ください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T13:25:22" />
+				Time="2011-11-19T05:53:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -587,16 +586,16 @@ http://www.pokemon-gl.com/[Ctrl2:PageClear ]
 		<LanguageCell
 			Language="JPN">
 			<Text>ライブたいかいの
-かいさいじょうほうに　ついては[Ctrl2:LineFeed ]
-ポケットモンスターオフィシャルサイトで[Ctrl2:LineFeed ]
-かくにん　することが　できます[Ctrl2:PageClear ]
+かいさいじょうほうに　ついては▽
+ポケットモンスターオフィシャルサイトで▽
+かくにん　することが　できます▼
 http://www.pokemon.co.jp/[Ctrl2:PageClear ]
 たいかいのルールや　かいさいきかんは
-ポケットモンスターオフィシャルサイト[Ctrl2:LineFeed ]
-ホームページで　かくにんしてください[Ctrl2:PageClear ]</Text>
+ポケットモンスターオフィシャルサイト▽
+ホームページで　かくにんしてください▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T05:55:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -605,15 +604,15 @@ http://www.pokemon.co.jp/[Ctrl2:PageClear ]
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ライブ大会の　開催情報については
-ポケットモンスターオフィシャルサイトで[Ctrl2:LineFeed ]
-確認する事が　できます[Ctrl2:PageClear ]
+ポケットモンスターオフィシャルサイトで▽
+確認する事が　できます▼
 http://www.pokemon.co.jp/[Ctrl2:PageClear ]
 大会のルールや　開催期間は
-ポケットモンスターオフィシャルサイト[Ctrl2:LineFeed ]
-ホームページで　確認してください[Ctrl2:PageClear ]</Text>
+ポケットモンスターオフィシャルサイト▽
+ホームページで　確認してください▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T05:52:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -639,17 +638,17 @@ http://www.pokemon.co.jp/[Ctrl2:PageClear ]
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Wi-Fi大会 または
-ランダムマッチに　参加中▽
-電源を　切ったため▼
+			<Text>Ｗｉ－Ｆｉたいかい　または
+ランダムマッチに　さんかちゅうに▽
+でんげんを　きったため▼
 しばらくの　あいだ
-Wi-Fi大会には　参加できません▼
-しばらく　時間が　たちましたら
-お越しください▼
-</Text>
+Ｗｉ－Ｆｉたいかい　には▽
+さんか　できません▼
+しばらく　じかんが　たちましたら
+おこしください▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-08T09:52:19" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T05:50:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -657,17 +656,16 @@ Wi-Fi大会には　参加できません▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Wi-Fi大会 または
+			<Text>Ｗｉ－Ｆｉ大会 または
 ランダムマッチに　参加中▽
 電源を　切ったため▼
 しばらくの　あいだ
-Wi-Fi大会には　参加できません▼
+Ｗｉ－Ｆｉ大会には　参加できません▼
 しばらく　時間が　たちましたら
-お越しください▼
-</Text>
+お越しください▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-08T09:49:51" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T05:49:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -675,10 +673,10 @@ Wi-Fi大会には　参加できません▼
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>SWAN追加</Comment>
+			<Comment>SWANで新規作成</Comment>
 			<CommentModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-08T09:49:45" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T05:50:24" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -686,11 +684,11 @@ Wi-Fi大会には　参加できません▼
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レポートに　書き込んでいます
-電源を　切らないください</Text>
+			<Text>レポートに　かきこんでいます
+でんげんを　きらないください</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-08T09:53:22" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T05:50:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -710,10 +708,10 @@ Wi-Fi大会には　参加できません▼
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>SWAN追加</Comment>
+			<Comment>SWANで新規作成</Comment>
 			<CommentModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-08T09:53:36" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T05:50:30" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -733,11 +731,11 @@ Wi-Fi大会には　参加できません▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たいせんの　せいかを　たたえて
-バトルポイントを　しんてい　いたします▼</Text>
+			<Text>対戦の　成果を　称えて
+バトルポイントを　進呈いたします▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-08T13:31:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T05:51:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -745,13 +743,12 @@ Wi-Fi大会には　参加できません▼
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ＳＷＡＮより追加
-
-ＢＰ入手ｍｓｇ
+			<Comment>SWANで新規作成
+・ＢＰ入手ｍｓｇ
 </Comment>
 			<CommentModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-08T09:53:22" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T05:50:33" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -759,11 +756,11 @@ Wi-Fi大会には　参加できません▼
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName ]は バトルポイントを
+			<Text>[Name:TrainerName ]は　バトルポイントを
 [Digit:2digits Idx="1" ]　てにいれた！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-08T13:29:51" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T05:52:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -771,11 +768,11 @@ Wi-Fi大会には　参加できません▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]は バトルポイントを
-[Digit:2digits Idx="1" ]　てにいれた！▼</Text>
+			<Text>[Name:TrainerName ]は　バトルポイントを
+[Digit:2digits Idx="1" ]　手に入れた！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-08T13:29:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T05:51:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -783,13 +780,12 @@ Wi-Fi大会には　参加できません▼
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ＳＷＡＮより追加
-
-ＢＰ入手ｍｓｇ
+			<Comment>SWANで新規作成
+・ＢＰ入手ｍｓｇ
 </Comment>
 			<CommentModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-08T09:52:58" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T05:50:37" />
 		</CommentCell>
 	</TextRow>
 </MessageStudioText>

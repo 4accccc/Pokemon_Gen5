@@ -159,11 +159,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ
-ここは　いわやまのま</Text>
+			<Text>いわやまのま</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-16T11:15:41" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T05:42:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -171,11 +170,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-ここは　岩山の間</Text>
+			<Text>岩山の間</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-16T11:15:46" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T05:42:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -203,11 +201,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ
-いわの　しゅごしゃ</Text>
+			<Text>いわの　ちからを　もって
+ここを　まもる　もの</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-16T11:17:27" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T05:45:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -215,11 +213,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-岩の　守護者</Text>
+			<Text>岩の　力を　もって
+ここを　守る　もの</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-16T11:17:40" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T05:45:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"

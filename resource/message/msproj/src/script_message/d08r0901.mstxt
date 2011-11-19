@@ -37,10 +37,11 @@
 　GRIDX＝16、GRIDZ＝18で起動
 ・はい/いいえの選択肢表示
 　はい　→dstone_02
-　いいえ→dstone_03</Comment>
+　いいえ→dstone_03
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T11:57:39" />
+				Time="2011-11-19T07:30:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -95,10 +96,11 @@
 			<Comment>システム：Black2ver
 ・はい選択時
 ・まずストーン浮上デモ
-・ゼクロム復活デモ</Comment>
+・ゼクロム復活デモ
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T11:57:41" />
+				Time="2011-11-19T07:30:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -147,10 +149,11 @@
 			<Comment>システム：Black2ver
 ・いいえ選択時
 ・主人公、一歩押し戻される
-・0＝主人公名前</Comment>
+・0＝主人公名前
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T11:57:43" />
+				Time="2011-11-19T07:30:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -188,12 +191,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン：Black2ver
+・GRIDX＝16、GRIDZ＝12に配置
 ・話かけでメッセージ表示とともに鳴き声再生
 　つづけてポケモン戦闘に
-・倒した場合は、殿堂入りで復活処理</Comment>
+・倒した場合は、殿堂入りで復活処理
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T11:57:45" />
+				Time="2011-11-19T07:30:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -250,10 +255,10 @@
 			<Comment>ポケモン：Black2ver
 ・倒した場合、フィールド復帰時に
 　このメッセージを表示
-※復帰条件未定</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T11:57:47" />
+				Time="2011-11-19T07:30:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -314,10 +319,11 @@
 　GRIDX＝16、GRIDZ＝18で起動
 ・はい/いいえの選択肢表示
 　はい　→lstone_02
-　いいえ→lstone_03</Comment>
+　いいえ→lstone_03
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T11:57:53" />
+				Time="2011-11-19T07:30:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -379,10 +385,11 @@
 			<Comment>システム：White2ver
 ・はい選択時
 ・まずストーン浮上デモ
-・レシラム復活デモ</Comment>
+・レシラム復活デモ
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T11:57:57" />
+				Time="2011-11-19T07:30:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -431,10 +438,11 @@
 			<Comment>システム：White2ver
 ・いいえ選択時
 ・主人公、一歩押し戻される
-・0＝主人公名前</Comment>
+・0＝主人公名前
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T11:58:03" />
+				Time="2011-11-19T07:30:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -472,12 +480,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン：White2ver
+・GRIDX＝16、GRIDZ＝12に配置
 ・話かけでメッセージ表示とともに鳴き声再生
 　つづけてポケモン戦闘に
-・倒した場合は、殿堂入りで復活処理</Comment>
+・倒した場合は、殿堂入りで復活処理
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T11:58:04" />
+				Time="2011-11-19T07:30:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -534,10 +544,10 @@
 			<Comment>ポケモン：White2ver
 ・倒した場合、フィールド復帰時に
 　このメッセージを表示
-※復帰条件未定</Comment>
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T11:58:07" />
+				Time="2011-11-19T07:30:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -563,46 +573,211 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d08r0901_boss_01"
+		Label="msg_d08r0901_boss_01b"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ登場
-・捕獲
-・捕獲以外
-キュレムの話</Text>
+			<Text>Ｎ『キミは　ゼクロムに
+あたらしい　えいゆうと　みとめられた▼
+そう！　せかいを　かえるだけの
+おもいを　もつ　トレーナーとして！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T11:59:28" />
+				Time="2011-11-19T07:29:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T12:58:01" />
+				Time="2011-11-19T07:18:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ登場
-・捕獲
-・捕獲以外
-キュレムの話</Text>
+			<Text>Ｎ『キミは　ゼクロムに
+新しい　英雄と　認められた▼
+そう！　世界を　変えるだけの
+想いを　持つ　トレーナーとして！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T12:00:16" />
+				Time="2011-11-19T07:29:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T12:58:25" />
+				Time="2011-11-19T07:18:13" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・戦闘後に登場
+			<Comment>♂：Black2ver
+・戦闘後に画面下から登場
 ・ポケモンを捕獲した場合
-　倒した場合→
-　逃げた場合→</Comment>
+　倒した場合→boss_02
+　逃げた場合→boss_03
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T12:03:58" />
+				Time="2011-11-19T07:30:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:17:50" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0901_boss_02b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ『ゼクロムに　キミの　ポケモンの
+つよさを　しめしてみせたんだね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:17:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:18:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｎ『ゼクロムに　キミの　ポケモンの
+強さを　示してみせたんだね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:27:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:18:13" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：Black2ver
+・ポケモンを倒した場合
+・続けてboss_04
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:30:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:17:50" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0901_boss_03b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ『ゼクロムとの
+けっちゃくを　さけるだなんて▽
+キミは　おもしろい　トレーナーだ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:17:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:18:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｎ『ゼクロムとの
+決着を　避けるだなんて▽
+キミは　おもしろい　トレーナーだ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:17:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:18:13" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：Black2ver
+・ポケモンから逃げた場合
+・続けてboss_04
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:30:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:17:50" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0901_boss_01w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ『キミは　レシラムに
+あたらしい　えいゆうと　みとめられた▼
+そう！　せかいを　かえるだけの
+おもいを　もつ　トレーナーとして！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:29:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:29:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｎ『キミは　レシラムに
+新しい　英雄と　認められた▼
+そう！　世界を　変えるだけの
+想いを　持つ　トレーナーとして！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:29:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:29:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：White2ver
+・戦闘後に画面下から登場
+・ポケモンを捕獲した場合
+　倒した場合→boss_02
+　逃げた場合→boss_03
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:30:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -620,14 +795,15 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d08r0901_boss_02"
+		Label="msg_d08r0901_boss_02w"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>Ｎ『レシラムに　キミの　ポケモンの
+つよさを　しめしてみせたんだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T11:58:20" />
+				Time="2011-11-19T06:30:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -635,10 +811,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>闇</Text>
+			<Text>Ｎ『レシラムに　キミの　ポケモンの
+強さを　示してみせたんだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T11:59:59" />
+				Time="2011-11-19T07:26:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -646,11 +823,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・ポケモンを倒した場合</Comment>
+			<Comment>♂：White2ver
+・ポケモンを倒した場合
+・続けてboss_04
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T12:04:03" />
+				Time="2011-11-19T07:30:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -668,14 +847,16 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_d08r0901_boss_03"
+		Label="msg_d08r0901_boss_03w"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>Ｎ『レシラムとの
+けっちゃくを　さけるだなんて▽
+キミは　おもしろい　トレーナーだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T11:58:22" />
+				Time="2011-11-19T07:01:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -683,10 +864,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>Ｎ『レシラムとの
+決着を　避けるだなんて▽
+キミは　おもしろい　トレーナーだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T11:58:22" />
+				Time="2011-11-19T07:01:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -694,11 +877,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・ポケモンから逃げた場合</Comment>
+			<Comment>♂：White2ver
+・ポケモンから逃げた場合
+・続けてboss_04
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T12:04:03" />
+				Time="2011-11-19T07:30:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -720,10 +905,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>キミに　つたえることが　ある▼
+ジャイアントホールに　いきたまえ！
+キュレムが　もどってきたんだ▼
+ボクの　トモダチが
+そう　おしえてくれたよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T11:58:22" />
+				Time="2011-11-19T07:30:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -731,10 +920,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>キミに　伝えることが　ある▼
+ジャイアントホールに　行きたまえ！
+キュレムが　戻ってきたんだ▼
+ボクの　トモダチが
+そう　教えてくれたよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T11:58:22" />
+				Time="2011-11-19T07:27:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -742,10 +935,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>♂
+・続けてboss_05
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T12:04:10" />
+				Time="2011-11-19T07:30:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -767,10 +962,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>[Name:TrainerName ]！▼
+キミが　のぞむ
+ポケモンとの　せかい……▼
+どれほど　ラブに　あふれているのか
+ボクも　たのしみに　しているよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T12:04:06" />
+				Time="2011-11-19T07:22:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -778,15 +977,30 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Name:TrainerName ]！▼
+キミが　望む
+ポケモンとの　世界……▼
+どれほど　ラブに　あふれているのか
+ボクも　楽しみに　しているよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T12:04:06" />
+				Time="2011-11-19T07:27:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-18T12:04:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ終了後、画面下に退場
+・画面外に消えると主人公操作可能に
+・0＝主人公名前
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T07:30:18" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>Ｎ</Text>

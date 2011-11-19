@@ -334,10 +334,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>イッシュずかんに　とうろくされる
+すべての　ポケモンと　であえたら▽
+プレゼントしたい　ものが　あるの▼
+イッシュちほうの　すみずみまで
+ポケモンを　さがしてね！　ヨロシク！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T10:45:16" />
+				Time="2011-11-19T08:28:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -345,10 +349,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>イッシュ図鑑に　登録される
+すべての　ポケモンと　であえたら▽
+プレゼントしたい　ものが　あるの▼
+イッシュ地方の　すみずみまで
+ポケモンを　探してね！　ヨロシク！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T10:45:16" />
+				Time="2011-11-19T08:27:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -356,10 +364,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanで削除</Comment>
+			<Comment>♀
+・図鑑評価後
+　No630「きょかしょう」を持っていないとき
+・１回のみ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T10:51:04" />
+				Time="2011-11-19T08:17:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -378,7 +389,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -955,6 +966,122 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t01r0401_hakase1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうだったよ▼
+ヒオウギタウンで　わたすのを
+すっかり　わすれていてね▼
+すごいつりざお　だ！
+えんりょせずに　もっておゆき▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:30:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:29:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうだったよ▼
+ヒオウギタウンで　わたすのを
+すっかり　わすれていてね▼
+すごいつりざお　だ！
+えんりょせずに　もっておゆき▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:30:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:30:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・図鑑評価後
+　No447「すごいつりざお」を
+　持っていないとき
+・アイテム入手処理
+　No447「すごいつりざお」</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:31:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE
+アララギ博士・父</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:28:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t01r0401_hakase1_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>その　すごいつりざおを　つかえば
+みずのなかの　ポケモンも▽
+つりあげることが　できるんだよ！▼
+いいかい？　すごいつりざおの
+せつめいしょを　よむよ▼
+まず　すいめんに　むかって
+すごいつりざおを　つかいます！▼
+つぎに　きもちを　しゅうちゅう！▼
+ポケモンが　くいついたら
+「！」と　でるので　そのときに▽
+すばやく　つりざおを　ひきましょう！▼
+だってさ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:31:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:28:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>その　すごいつりざおを　使えば
+水中の　ポケモンも▽
+つりあげることが　できるんだよ！▼
+いいかい？　すごいつりざおの
+説明書を　読むよ▼
+まず　水面に　向かって
+すごいつりざおを　使います！▼
+次に　気持ちを　集中！▼
+ポケモンが　くいついたら
+「！」と　でるので　そのときに▽
+すばやく　つりざおを　ひきましょう！▼
+だってさ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:31:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:28:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:31:55" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_t01r0401_poke29_01"
