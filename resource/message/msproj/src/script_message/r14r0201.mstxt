@@ -2,6 +2,283 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_r14r0201_skill_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName ]は　わざの
+しんそくを　おぼえようと　している！▼
+[Name:PokemonName ]に
+しんそくを　おぼえさせますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:07:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:59:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName ]は　わざの
+しんそくを　おぼえようと　している！▼
+[Name:PokemonName ]に
+しんそくを　おぼえさせますか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:08:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:08:04" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・このマップに来たとき、てもちに
+　１：フォルムチェンジした
+　　　トルネロス、ボルトロス、ランドロスがいる
+　２：しかも技「しんそく」を覚えていない
+　１＋２ならこのメッセージを表示
+
+・はい/いいえの選択肢表示
+
+　はい　→技の空きチェック
+
+　いいえ→skill_05　or　skill_06
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:28:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:03:48" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r14r0201_skill_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すでに　わざを　４つ　おぼえている！
+わざを　わすれさせますか？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:02:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:02:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すでに　技を　４つ　覚えている！
+技を　忘れさせますか？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:02:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:02:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・技に空きがない場合
+・わすれさせる/あきらめるの選択肢表示
+　わすれさせる→技リスト画面へ
+　あきらめる→skill_05　or　skill_06</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:28:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:03:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r14r0201_skill_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わすれさせる</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:03:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:03:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わすれさせる</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:03:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:03:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・選択肢
+　技リスト画面へ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:07:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:03:45" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r14r0201_skill_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あきらめる</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:03:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:03:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あきらめる</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:03:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:03:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・選択肢
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:03:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:03:45" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r14r0201_skill_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName ]は
+しんそくを　おぼえなかった</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:08:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:07:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName ]は
+しんそくを　おぼえなかった</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:08:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:08:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:02:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:21:34" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r14r0201_boy1_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonName ]は
+しんそくを　おぼえなかった▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:21:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:21:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonName ]は
+しんそくを　おぼえなかった▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:21:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:18:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・条件を満たしたポケモンが複数いる場合
+　続けてskill_01
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:22:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T10:21:39" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_r14r0201_boy1_01"
 		Style="Large">
 		<LanguageCell
@@ -686,7 +963,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -744,7 +1021,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -804,7 +1081,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -861,7 +1138,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -919,7 +1196,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
