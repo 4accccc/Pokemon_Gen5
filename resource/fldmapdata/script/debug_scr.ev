@@ -879,12 +879,27 @@ EVENT_START   ev_debug_mizuguchi
       */
     ELSIF $SCWK_TEMP2 == 21 THEN
       
+      //D27R0501初期化
+      $WK_SCENE_D27R0501_SWSAGE7_01 = 1
+      _FLAG_SET( FV_D27R0501_SWSAGE7_01 )
+      _FLAG_SET( FV_D27R0501_NINJA_01 )
+      _MAP_CHANGE( ZONE_ID_D27R0201, 11, 3, DIR_UP )
+      /*
+      //D10R0301イベント初期化
+      _FLAG_RESET( FV_D10R0301_SWRIVAL_01 )
+      _FLAG_RESET( FV_D10R0301_SWPLAZMAM_01 )
+      //D10R0301 POSを無効
+      $WK_SCENE_D10R0301_SWPLAZMA_01 = 0
+      */
+      
+      /*
       //D10R0101イベント初期化
       //ライバル・見張り（２）非表示
       _FLAG_RESET( FV_D10R0101_SWPLAZMAM_01 )
       _FLAG_SET( FV_D10R0101_SWPLAZMAM_03 )
       //D10R0101 POS無効
       $WK_SCENE_D10R0101_SWPLAZMA_01 = 1
+      */
       
       /*
       //C08ダークトリニティ（１）（２）表示

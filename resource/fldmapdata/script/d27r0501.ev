@@ -70,7 +70,7 @@ INIT_EVENT_END
 /************************************************************/
 /*					SCENE_CHANGE：ヴィオ戦  						*/
 /************************************************************/
-INIT_EVENT_START	ev_scene_d27r0501_swsage7_01
+EVENT_START	ev_scene_d27r0501_swsage7_01
 
   //========================================//
   //ヴィオ・ダークトリニティ表示
@@ -82,11 +82,11 @@ INIT_EVENT_START	ev_scene_d27r0501_swsage7_01
   _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 12, 17, FORCE_TYPE_NPC, 8, DIR_UD)
   _OBJ_ANIME_WAIT()
   
+  //イベント曲再生
+  //_START_TEMP_EVENT_BGM( SEQ_BGM_E_7_SAGE )
+  
   //七賢人動作モデル生成
   _OBJ_ADD( D27R0501_SWSAGE7_01 )
-  
-  //イベント曲再生
-  _START_TEMP_EVENT_BGM( SEQ_BGM_E_7_SAGE )
   
   //アニメ：ヴィオワープして登場・主人公振り向き
   _OBJ_ANIME( D27R0501_SWSAGE7_01, anm_swsage7_warp_in )
@@ -117,7 +117,7 @@ INIT_EVENT_START	ev_scene_d27r0501_swsage7_01
   //ライバル動作モデル生成
   _OBJ_ADD_EX( 12, 20, DIR_UP, MMDL_ID_EVENTOBJ_00, SWRIVAL, MV_DMY )
   
-  //【仮】アニメ：ライバルワープして登場
+  //アニメ：ライバルワープして登場
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swrival_warp_in )
   _TIME_WAIT( 16 )
   _OBJ_ANIME( D27R0501_SWSAGE7_01, anm_staystep_d )
@@ -139,9 +139,21 @@ INIT_EVENT_START	ev_scene_d27r0501_swsage7_01
   _BALLOONWIN_OBJMSG_POS( msg_d27r0501_swrival_02_02 , MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
   
+  //アニメ：ライバル窓を見る・ヴィオも隣接
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swrival_look_window )
+  _TIME_WAIT( 16 )
+  _OBJ_ANIME( D27R0501_SWSAGE7_01, anm_swsage7_look_swrival )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
   //ヴィオ：そうとも
   _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_06 , D27R0501_SWSAGE7_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル下を見る
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
   
   //ライバル：きまってるだろ！
   _BALLOONWIN_OBJMSG_POS( msg_d27r0501_swrival_02_03 , MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
@@ -181,7 +193,7 @@ INIT_EVENT_START	ev_scene_d27r0501_swsage7_01
   _OBJ_ANIME( D27R0501_NINJA_02, anm_ninja_coming_01 )
   _TIME_WAIT( 8 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_r )
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_u )
   _OBJ_ANIME_WAIT()
   
   //========================================//
@@ -215,9 +227,10 @@ INIT_EVENT_START	ev_scene_d27r0501_swsage7_01
   //予約スクリプト
   _RESERVE_SCRIPT( SCRID_RESERVE_W21_SWPLAZMA_END_01 )
   //W21マップチェンジ1
-  _MAP_CHANGE( ZONE_ID_W21, 794, 241, DIR_DOWN )
+  _MAP_CHANGE_NO_FADE( ZONE_ID_W21, 794, 0, 241, DIR_DOWN )
+  
 
-INIT_EVENT_END
+EVENT_END
 
 ev_battle_check:	
   //敗戦チェック
@@ -243,7 +256,26 @@ _ANIME_LABEL	anm_swsage7_warp_in
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swrival_warp_in
   _ANIME_DATA	AC_WARP_DOWN,1
-  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_WALK_U_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ライバル：ワープして登場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swrival_look_window
+  _ANIME_DATA	AC_WALK_R_4F,1
+  _ANIME_DATA	AC_WALK_U_4F,2
+  _ANIME_DATA	AC_WALK_R_4F,1
+  _ANIME_DATA	AC_WALK_U_4F,2
+  _ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ライバル：ワープして登場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swsage7_look_swrival
+  _ANIME_DATA	AC_WALK_R_16F,1
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
