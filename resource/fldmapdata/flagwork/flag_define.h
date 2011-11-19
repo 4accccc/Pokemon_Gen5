@@ -2391,6 +2391,8 @@
 #define TMFLG_C14_PHOTO                   2778 /* 0x0ada セイガイハシティ：顔出し看板 */
 #define TMFLG_C05R0501_SWRIVAL_BTL        2779 /* 0x0adb ホドモエシティ：クリア後ライバル再戦フラグ */
 #define TMFLG_C14_KAODASI_01              2780 /* 0x0adc セイガイハシティ：顔出し看板イベント制御（１日１回） */
+#define TMFLG_D11R0401_EXPERIMENT         2781 /* 0x0add ヒウン下水道：毒実験イベント・アイテム入手フラグ（１日1回） */
+#define TMFLG_D11R0501_EXPERIMENT         2782 /* 0x0ade ヒウン下水道：毒実験イベント・アイテム入手フラグ（１日１回） */
 
 #define TMFLG_AREA_END                    2819 /* 0x0b03  */
 
