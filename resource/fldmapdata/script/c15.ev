@@ -45,7 +45,7 @@ _EVENT_DATA    ev_c15_babygirl1_01
 _EVENT_DATA    ev_c15_babygirl1_02
 _EVENT_DATA    ev_c15_middlewoman1_01
 _EVENT_DATA    ev_c15_middlewoman1_02
-_EVENT_DATA    ev_c15_sunglasses_02
+_EVENT_DATA    ev_c15_pwstaff_02
 _EVENT_DATA    ev_c15_man1_03
 _EVENT_DATA    ev_c15_woman3_01
 _EVENT_DATA    ev_c15_pwmoji_04
@@ -104,13 +104,18 @@ INIT_EVENT_START ev_init_c15
 
   //イベント進行で配置を分岐
   IF $WK_SCENE_C15_TUTORIAL_01 == 1 THEN
-    _OBJ_POS_CHANGE( C15_SUNGLASSES_01, 31, 0, 56, DIR_DOWN )
+    //　スタッフ移動
+    _OBJ_POS_CHANGE( C15_PWSTAFF_01, 31, 0, 56, DIR_UP )
+    //　オーナー移動
+    _OBJ_POS_CHANGE( C15_PWOWNER_01, 31, 0, 55, DIR_DOWN )
   ENDIF
 
   // ごほうびイベントチェック
   IF $WK_SCENE_C15_BONUS_EVENT_01 == 1 THEN
-    //　サングラス移動
-    _OBJ_POS_CHANGE( C15_SUNGLASSES_01, 45, 2, 21, DIR_UP )
+    //　スタッフ移動
+    _OBJ_POS_CHANGE( C15_PWSTAFF_01, 45, 2, 21, DIR_UP )
+    //　オーナー移動
+    _OBJ_POS_CHANGE( C15_PWOWNER_01, 31, 0, 10 ,DIR_DOWN )
   ENDIF
 
 INIT_EVENT_END
@@ -120,28 +125,53 @@ INIT_EVENT_END
 /**************************************************************/
 EVENT_START		ev_scene_c15_tutorial_01
 
-  //アニメ：サングラス「！」
-  _OBJ_ANIME( C15_SUNGLASSES_01, anm_common_gyoe )
+  //TODO：オーナーとスタッフを中心にするカメラの移動が必要！！！
+
+  //オーナー：「なるほどな…よさそうじゃないか　そのこ…
+  _BALLOONWIN_OBJMSG_POS( msg_c15_tutorial_00_01, C15_PWOWNER_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  //スタッフ：「ええ…まもなくみえるとおもうんですが…
+  _BALLOONWIN_OBJMSG_POS( msg_c15_tutorial_00_02, C15_PWSTAFF_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  //アニメ：スタッフ「！」
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_common_gyoe )
   _OBJ_ANIME_WAIT()
-  
+  //スタッフ：「あ！うわさをすれば！
+  _BALLOONWIN_OBJMSG_POS( msg_c15_tutorial_00_03, C15_PWSTAFF_01, POS_DEFAULT )
+  //スタッフ：ウェルカムトゥ
+  _PLAYER_NAME( 0 )
+  _BALLOONWIN_OBJMSG_POS( msg_c15_tutorial_00_04, C15_PWSTAFF_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  //オーナー：「ハロー！ハロー！バクはウッドウ！
+  _BALLOONWIN_OBJMSG_POS( msg_c15_tutorial_00_05, C15_PWOWNER_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  //スタッフ：「ではそれまでの間　案内しましょう！
+  _BALLOONWIN_OBJMSG_POS( msg_c15_tutorial_00_06, C15_PWSTAFF_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  //オーナー：「ウンウン！それナイスね！
+  _BALLOONWIN_OBJMSG_POS( msg_c15_tutorial_00_07, C15_PWOWNER_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //TODO!!!!!オーナー退出アニメが必要
+
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
   $LCW_POSZ -= 2
   
-  //アニメ：サングラス接近
-  _OBJ_ANIME_AUTO( C15_SUNGLASSES_01, LCW_POSX,LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
+  //アニメ：スタッフ接近
+  _OBJ_ANIME_AUTO( C15_PWSTAFF_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
   _OBJ_ANIME_WAIT()
   
-  //サングラス：ウェルカムトゥ
-  _BALLOONWIN_OBJMSG_POS( msg_c15_sunglasses_01,C15_SUNGLASSES_01, POS_DEFAULT )
+  //スタッフ：「イエス！ボス！では～さん　わたくしとまいりましょう！」
+  _BALLOONWIN_OBJMSG_POS( msg_c15_tutorial_01,C15_PWSTAFF_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
-  //アニメ：サングラス隣接
-  _OBJ_ANIME( C15_SUNGLASSES_01, anm_walk_d )
+  //アニメ：スタッフ隣接
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_walk_d )
   _OBJ_ANIME_WAIT()
   
   //アニメ：移動
-  _OBJ_ANIME_AUTO( C15_SUNGLASSES_01, 31,40, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_AUTO( C15_PWSTAFF_01, 31,40, FORCE_TYPE_NOT, 8, DIR_LR )
   _TIME_WAIT( 4 )
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
   IF $LCW_POSX == 30 THEN
@@ -153,16 +183,16 @@ EVENT_START		ev_scene_c15_tutorial_01
   ENDIF
   _OBJ_ANIME_WAIT()
   
-  //アニメ：サングラス左右を見る
-  _OBJ_ANIME( C15_SUNGLASSES_01, anm_sunglasses_lr_look )
+  //アニメ：スタッフ左右を見る
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_pwstaff_lr_look )
   _OBJ_ANIME_WAIT()
   
-  //サングラス：ついでといってはなんですが
-  _BALLOONWIN_OBJMSG_POS( msg_c15_sunglasses_02,C15_SUNGLASSES_01, POS_DEFAULT )
+  //スタッフ：「せっかくですからポケウッドについて軽くご紹介しましょう
+  _BALLOONWIN_OBJMSG_POS( msg_c15_tutorial_02, C15_PWSTAFF_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
   //アニメ：移動
-  _OBJ_ANIME( C15_SUNGLASSES_01, anm_sunglasses_to_theater )
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_pwstaff_to_theater )
   _TIME_WAIT( 4 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_theater )
   _OBJ_ANIME_WAIT()
@@ -173,8 +203,8 @@ EVENT_START		ev_scene_c15_tutorial_01
   _CAMERA_MOVE( 8664,0,970752,2981888,65551,1232896,40 )
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   
-  //サングラス：ここは　シアター！
-  _PLAINWIN_MSG_DOWN( msg_c15_sunglasses_03 )
+  //スタッフ：「ここは　シアター！
+  _PLAINWIN_MSG_DOWN( msg_c15_tutorial_03 )
   _PLAINWIN_CLOSE()
   
   //自機にカメラを戻す
@@ -185,20 +215,23 @@ EVENT_START		ev_scene_c15_tutorial_01
   _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
   _CAMERA_END()		//カメラ操作終了
   
+
+  //new!!!!!!    ここで　シアター内に遷移！　!!!!!!///
+
   //アニメ：移動
-  _OBJ_ANIME( C15_SUNGLASSES_01, anm_sunglasses_to_studio )
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_pwstaff_to_studio )
   _TIME_WAIT( 8*2 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_studio )
   _OBJ_ANIME_WAIT()
   
-  //サングラス：さあ！
-  _BALLOONWIN_OBJMSG_POS( msg_c15_sunglasses_04,C15_SUNGLASSES_01, POS_DEFAULT )
+  //スタッフ：さあ！
+  _BALLOONWIN_OBJMSG_POS( msg_c15_tutorial_04,C15_PWSTAFF_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
   //アニメ：入場
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_in_studio )
   _TIME_WAIT( 4 )
-  _OBJ_ANIME( C15_SUNGLASSES_01, anm_sunglasses_in_studio )
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_pwstaff_in_studio )
   _OBJ_ANIME_WAIT()
   
   //チュートリアル開始
@@ -258,7 +291,7 @@ _ANIME_LABEL	anm_player_to_theater
 //--------------------------------------------------------------------
 //	ガイド：映画館へ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_sunglasses_to_theater
+_ANIME_LABEL	anm_pwstaff_to_theater
   _ANIME_DATA	AC_WALK_U_8F,10
   _ANIME_DATA	AC_WALK_R_8F,4
   _ANIME_DATA	AC_WALK_U_8F,3
@@ -280,7 +313,7 @@ _ANIME_LABEL	anm_player_to_studio
 //--------------------------------------------------------------------
 //	ガイド：スタジオへ（１）
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_sunglasses_to_studio
+_ANIME_LABEL	anm_pwstaff_to_studio
   _ANIME_DATA	AC_WALK_U_8F,1
   _ANIME_DATA	AC_WALK_L_8F,11
   _ANIME_DATA	AC_WALK_U_8F,2
@@ -298,7 +331,7 @@ _ANIME_LABEL	anm_player_in_studio
 //--------------------------------------------------------------------
 //	ガイド：スタジオへ（２）
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_sunglasses_in_studio
+_ANIME_LABEL	anm_pwstaff_in_studio
   _ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
@@ -306,7 +339,7 @@ _ANIME_LABEL	anm_sunglasses_in_studio
 //--------------------------------------------------------------------
 //	ガイド：左右を見る
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_sunglasses_lr_look
+_ANIME_LABEL	anm_pwstaff_lr_look
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	AC_WAIT_4F,1
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
@@ -321,14 +354,14 @@ _ANIME_LABEL	anm_sunglasses_lr_look
 EVENT_START   ev_scene_c15_bonus_event_01
 {
 
-  //アニメ：サングラス「！」
-  _OBJ_ANIME( C15_SUNGLASSES_01, anm_common_gyoe )
+  //アニメ：スタッフ「！」
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_common_gyoe )
   _OBJ_ANIME_WAIT()
 
   //タグ０にプレイヤー名
   _PLAYER_NAME( 0 )
 
-  //サングラスの前に移動
+  //スタッフの前に移動
   {
     DEFINE_LOCAL  LWK_HERO_X
     DEFINE_LOCAL  LWK_HERO_Z
@@ -346,14 +379,14 @@ EVENT_START   ev_scene_c15_bonus_event_01
     _OBJ_ANIME_WAIT()
   }
 
-  //サングラス：ヘイヘイ！　～！！
-  _BALLOONWIN_OBJMSG_POS( msg_c15_end_01,C15_SUNGLASSES_01, POS_DEFAULT )
+  //スタッフ：ヘイヘイ！　～！！
+  _BALLOONWIN_OBJMSG_POS( msg_c15_end_01,C15_PWSTAFF_01, POS_DEFAULT )
   _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
 
   //=================================================
   //♀MAIDの前に移動
-  _OBJ_ANIME( C15_SUNGLASSES_01, anm_bonus_event_02_s )
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_bonus_event_02_s )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_02_p )
   _OBJ_ANIME_WAIT()
 
@@ -364,7 +397,7 @@ EVENT_START   ev_scene_c15_bonus_event_01
 
   //=================================================
   //♂PWMOJIの前に移動
-  _OBJ_ANIME( C15_SUNGLASSES_01, anm_bonus_event_03 )
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_bonus_event_03 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_03 )
   _OBJ_ANIME_WAIT()
   
@@ -375,7 +408,7 @@ EVENT_START   ev_scene_c15_bonus_event_01
 
   //=================================================
   // ♂BACKPACKERMの前に移動
-  _OBJ_ANIME( C15_SUNGLASSES_01, anm_bonus_event_04 )
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_bonus_event_04 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_04 )
   _OBJ_ANIME_WAIT()
 
@@ -386,7 +419,7 @@ EVENT_START   ev_scene_c15_bonus_event_01
 
   //=================================================
   // ♀RGLEADER5の前に移動
-  _OBJ_ANIME( C15_SUNGLASSES_01, anm_bonus_event_05_s )
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_bonus_event_05_s )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_05_p )
   _OBJ_ANIME_WAIT()
 
@@ -397,7 +430,7 @@ EVENT_START   ev_scene_c15_bonus_event_01
 
   //=================================================
   //♀OLの前に移動
-  _OBJ_ANIME( C15_SUNGLASSES_01, anm_bonus_event_06 )
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_bonus_event_06 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_06 )
   _OBJ_ANIME_WAIT()
 
@@ -408,7 +441,7 @@ EVENT_START   ev_scene_c15_bonus_event_01
 
   //=================================================
   //♂GENTLEMAN の前に移動
-  _OBJ_ANIME( C15_SUNGLASSES_01, anm_bonus_event_07 )
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_bonus_event_07 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_07 )
   _OBJ_ANIME_WAIT()
 
@@ -419,28 +452,28 @@ EVENT_START   ev_scene_c15_bonus_event_01
 
   //=================================================
   // ♂PWOWNERの前に移動
-  _OBJ_ANIME( C15_SUNGLASSES_01, anm_bonus_event_08 )
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_bonus_event_08 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_08 )
   _OBJ_ANIME_WAIT()
 
-  //サングラス：ヘイ！ボス！おつれしました
-  _BALLOONWIN_OBJMSG_POS( msg_c15_end_08,C15_SUNGLASSES_01, POS_DOWN )
+  //スタッフ：ヘイ！ボス！おつれしました
+  _BALLOONWIN_OBJMSG_POS( msg_c15_end_08,C15_PWSTAFF_01, POS_DOWN )
   _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
 
   // 横にどける
-  _OBJ_ANIME( C15_SUNGLASSES_01, anm_bonus_event_09 )
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_bonus_event_09 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_u )
   _OBJ_ANIME_WAIT()
 
   //=================================================
   // PWOWNERこちらを向く
-  _OBJ_ANIME( C15_BONUS_PWOWNER_01, anm_dir_d )
+  _OBJ_ANIME( C15_PWOWNER_01, anm_dir_d )
   _OBJ_ANIME( C15_BONUS_LEADER7_01, anm_dir_d )
   _OBJ_ANIME_WAIT()
 
   //オーナー：うむ・・・ ○○ちゃん　きょうは　きねんすべき　ひ　なんだ・・・
-  _BALLOONWIN_OBJMSG_POS( msg_c15_end_09, C15_BONUS_PWOWNER_01, POS_DOWN )
+  _BALLOONWIN_OBJMSG_POS( msg_c15_end_09, C15_PWOWNER_01, POS_DOWN )
   _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
 
@@ -450,20 +483,20 @@ EVENT_START   ev_scene_c15_bonus_event_01
   _MSGWIN_CLOSE()
 
   //オーナー：○○ちゃん！！　キミこそ　ポケウッドのしんの　スターだ
-  _BALLOONWIN_OBJMSG_POS( msg_c15_end_11, C15_BONUS_PWOWNER_01, POS_DOWN )
+  _BALLOONWIN_OBJMSG_POS( msg_c15_end_11, C15_PWOWNER_01, POS_DOWN )
   _ME_PLAY( SEQ_ME_HYOUKA6 )             //ファンファーレ
   _ME_WAIT()
 
   //オーナー：とういことで　○○ちゃんに　ボクから　ささやかな　プレゼントだよ
-  _BALLOONWIN_OBJMSG_POS( msg_c15_end_12, C15_BONUS_PWOWNER_01, POS_DOWN )
+  _BALLOONWIN_OBJMSG_POS( msg_c15_end_12, C15_PWOWNER_01, POS_DOWN )
   _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
 
-  //サングラス：横向く
-  _OBJ_ANIME( C15_SUNGLASSES_01, anm_dir_r )
+  //スタッフ：横向く
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_dir_r )
   _OBJ_ANIME_WAIT()
-  //サングラス：イエッサー！ボス！　さぁ　○○！　カモン！
-  _BALLOONWIN_OBJMSG_POS( msg_c15_end_13,C15_SUNGLASSES_01, POS_DOWN )
+  //スタッフ：イエッサー！ボス！　さぁ　○○！　カモン！
+  _BALLOONWIN_OBJMSG_POS( msg_c15_end_13,C15_PWSTAFF_01, POS_DOWN )
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
 
@@ -485,7 +518,7 @@ EVENT_END
 
 
 //--------------------------------------------------------------
-//	サングラスの前に移動
+//	スタッフの前に移動
 //--------------------------------------------------------------
 _ANIME_LABEL  anm_bonus_event_01_a
   _ANIME_DATA AC_WALK_D_8F, 1
@@ -567,7 +600,7 @@ _ANIME_LABEL  anm_bonus_event_08
   _ANIME_DATA ACMD_END, 0
 
 //--------------------------------------------------------------
-//	サングラス横にどける
+//	スタッフ横にどける
 //--------------------------------------------------------------
 _ANIME_LABEL  anm_bonus_event_09
   _ANIME_DATA AC_WALK_L_8F, 1
@@ -801,9 +834,9 @@ EVENT_END
 /**************************************************************/
 /*			一言メッセージ					  */
 /**************************************************************/
-EVENT_START		ev_c15_sunglasses_02
+EVENT_START		ev_c15_pwstaff_02
 
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c15_sunglasses_05 )
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c15_pwstaff_02 )
   
 EVENT_END
 

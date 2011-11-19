@@ -3,7 +3,7 @@
  * @file  scr_offset.cdat
  * @bfief  スクリプトIDのオフセットとそれに対応するアーカイブの定義テーブル
  * @author  tamada GAMEFREAK inc.
- * @date  2011 09/22 (Thu) 10:52
+ * @date  2011 11/19 (Sat) 18:50
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -21,6 +21,13 @@ static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
       NARC_debug_message_debug_scr_dat
     },
 #endif //PM_DEBUG
+    {//ポケウッド用スクリプト：上映部分
+      ID_POKEWOOD_THEATER_OFFSET,     //(10865),
+      ID_POKEWOOD_THEATER_OFFSET_END, //(10884),
+      NARC_script_seq_pokewood_theater_bin,
+      ARCID_SCRIPT_MESSAGE,
+      NARC_script_message_pokewood_theater_scr_dat
+    },
     {//ローカルライブキャスターのイベント
       ID_LOCAL_TVT_SCR_OFFSET,        //(10860),
       ID_LOCAL_TVT_SCR_OFFSET_END,    //(10864),
@@ -42,7 +49,7 @@ static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_hide_ship_hint_dat
     },
-    {//ポケウッド用スクリプト
+    {//ポケウッド用スクリプト：撮影部分
       ID_POKEWOOD_SCR_OFFSET,         //(10815),
       ID_POKEWOOD_SCR_OFFSET_END,     //(10834),
       NARC_script_seq_pokewood_scr_bin,

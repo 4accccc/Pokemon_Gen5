@@ -1725,6 +1725,8 @@
 				<ContentItem
 					Name="pokewood_scr.mstxt" />
 				<ContentItem
+					Name="pokewood_theater_scr.mstxt" />
+				<ContentItem
 					Name="postman.mstxt" />
 				<ContentItem
 					Name="r01.mstxt" />

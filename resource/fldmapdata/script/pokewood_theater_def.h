@@ -1,0 +1,14 @@
+//pokewood_theater_def.h
+//このファイルはコンバータによって作成されました
+
+#ifndef _POKEWOOD_THEATER_DEF_H_
+#define _POKEWOOD_THEATER_DEF_H_
+
+//スクリプトデータID定義
+#define SCRID_POKEWOOD_SHOW (10865)
+#define SCRID_POKEWOOD_MONITOR (10866)
+#define SCRID_RESERVE_PKWD_THEATER_TUTORIAL (10867)
+#define SCRID_INIT_PKWD_THEATER (10868)
+#define SCRID_POS_PKWD_THEATER_OWNER_APPEAR (10869)
+
+#endif //_POKEWOOD_THEATER_DEF_H_

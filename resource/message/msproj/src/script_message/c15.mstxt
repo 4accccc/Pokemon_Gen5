@@ -44,7 +44,7 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15_sunglasses_00_01"
+		Label="msg_c15_tutorial_00_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -80,14 +80,14 @@ C15に入室と同時にイベント起動
 
 x31,z55辺りに配置
 
-メッセージ終了後→msg_c15_sunglasses_00_02</Comment>
+メッセージ終了後→msg_c15_tutorial_00_02</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-04T05:35:01" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15_sunglasses_00_02"
+		Label="msg_c15_tutorial_00_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -121,14 +121,14 @@ x31,z55辺りに配置
 
 x31,z54辺りに配置
 
-メッセージ終了後→msg_c15_sunglasses_00_03</Comment>
+メッセージ終了後→msg_c15_tutorial_00_03</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-04T05:36:14" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15_sunglasses_00_03"
+		Label="msg_c15_tutorial_00_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -160,14 +160,14 @@ x31,z54辺りに配置
 
 チュートリアルイベントキャラ
 
-メッセージ終了後→msg_c15_sunglasses_00_03</Comment>
+メッセージ終了後→msg_c15_tutorial_00_03</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-04T05:36:19" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15_sunglasses_00_04"
+		Label="msg_c15_tutorial_00_04"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -205,14 +205,14 @@ x31,z54辺りに配置
 
 チュートリアルイベントキャラ
 
-メッセージ終了後→msg_c15_sunglasses_00_04</Comment>
+メッセージ終了後→msg_c15_tutorial_00_04</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-04T05:36:22" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15_sunglasses_00_05"
+		Label="msg_c15_tutorial_00_05"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -256,14 +256,14 @@ x31,z54辺りに配置
 
 チュートリアルイベントキャラ
 
-メッセージ終了後→msg_c15_sunglasses_00_06</Comment>
+メッセージ終了後→msg_c15_tutorial_00_06</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-04T05:36:34" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15_sunglasses_00_06"
+		Label="msg_c15_tutorial_00_06"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -295,14 +295,14 @@ x31,z54辺りに配置
 
 チュートリアルイベントキャラ
 
-メッセージ終了後→msg_c15_sunglasses_00_07</Comment>
+メッセージ終了後→msg_c15_tutorial_00_07</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-04T05:36:44" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15_sunglasses_00_07"
+		Label="msg_c15_tutorial_00_07"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -344,14 +344,14 @@ x31,z54辺りに配置
 
 チュートリアルイベントキャラ
 
-メッセージ終了後→msg_c15_sunglasses_01</Comment>
+メッセージ終了後→msg_c15_tutorial_01</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-04T05:37:15" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15_sunglasses_01"
+		Label="msg_c15_tutorial_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -386,14 +386,14 @@ x31,z54辺りに配置
 チュートリアルイベントキャラ
 
 メッセージ終了後→連れ歩き開始
-→msg_c15_sunglasses_02</Comment>
+→msg_c15_tutorial_02</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-07T12:31:03" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15_sunglasses_02"
+		Label="msg_c15_tutorial_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -443,7 +443,7 @@ x31,z54辺りに配置
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15_sunglasses_03"
+		Label="msg_c15_tutorial_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -503,7 +503,7 @@ x31,z54辺りに配置
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15_sunglasses_04"
+		Label="msg_c15_tutorial_04"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -1742,7 +1742,7 @@ msg_c15_oldman1_01_04
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15_sunglasses_05"
+		Label="msg_c15_pwstaff_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -2245,7 +2245,7 @@ Bis  bald.</Text>
 条件を満した後シアターからC15に出るとＸ４５Ｙ２１辺りにいる
 
 
-♂sunglasses
+♂PWSTAFF
 
 終了後つれあるき開始
 
@@ -2550,7 +2550,7 @@ Bis  bald.</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂sunglasses
+			<Comment>♂PWSTAFF
 
 Ｘ３１Ｙ１３辺りで停止し左（Ｘ３0Ｙ１３）に移動
 
@@ -2807,7 +2807,7 @@ Bis  bald.</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂sunglasses
+			<Comment>♂PWSTAFF
 
 終了後→C15R0401にマップ遷移しmsg_pw__end_15</Comment>
 			<CommentModifiedBy

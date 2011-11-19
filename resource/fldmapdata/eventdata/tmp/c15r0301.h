@@ -34,6 +34,8 @@
 #define C15R0301_SWPLAZMAW_01             22
 #define C15R0301_CLEANINGM_01             23
 #define C15R0301_GIRL2_01                 24
+#define C15R0301_PWSTAFF_01               25
+#define C15R0301_PWDADDY_01               26
 
 #endif //ZONE_C15R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c15r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

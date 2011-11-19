@@ -1,0 +1,625 @@
+//======================================================================
+//                pokewood_theater.ev
+//
+//    スクリプトファイル：ポケウッド上映用
+//
+//    @author tamada GAMEFREAK inc.
+//    @date   2011.11.19
+//
+//    pokewood_scr.evが複雑になってきたので切り離した
+//
+//======================================================================
+
+  .text
+
+  .include  "scr_seq_def.h"
+  .include  "msg_pokewood_theater_scr.h"
+  .include  "pokewood_scr_def.h"
+
+  //.include  "c15r0101.h"
+  //.include  "c15r0201.h"
+  .include  "c15r0301.h"
+
+  .include  "pkwd_scr_define.h"
+
+
+//--------------------------------------------------------------
+//               スクリプト本体
+//--------------------------------------------------------------
+
+//--------------------------------------------------------------
+//               スクリプトテーブル
+//--------------------------------------------------------------
+_EVENT_DATA   ev_pokewood_show
+_EVENT_DATA   ev_pokewood_monitor
+_EVENT_DATA   ev_reserve_pkwd_theater_tutorial
+_EVENT_DATA   ev_init_pkwd_theater
+_EVENT_DATA   ev_pos_pkwd_theater_owner_appear
+_EVENT_DATA_END
+
+
+/**************************************************************/
+/*            ZONE_CHANGE_LABEL                               */
+/**************************************************************/
+//ev_zone_pokewood_theater:
+//  _END
+
+/**************************************************************/
+/*                                                            */
+/**************************************************************/
+INIT_EVENT_START  ev_init_pkwd_theater
+INIT_EVENT_END
+
+
+//==============================================================================
+//
+//
+//    ポケウッドシアター  上映受付
+//
+//
+//==============================================================================
+
+DEFINE_LOCAL  LWK_PKWD_SHOW_SEQ
+DEFINE_LOCAL  LWK_PKWD_SHOW_MENU
+DEFINE_LOCAL  LWK_PKWD_SHOW_LOOP
+DEFINE_LOCAL  LWK_PKWD_SHOW_REC_POS
+DEFINE_LOCAL  LWK_PKWD_SHOW_REC_COUNT
+DEFINE_LOCAL  LWK_BM_DOOR_ID
+DEFINE_LOCAL  LWK_PKWD_SHOW_FINISH
+
+DEFINE_LOCAL  LWK_HEROX
+DEFINE_LOCAL  LWK_HEROZ
+/**************************************************************/
+//    ポケウッド：シアターチュートリアル
+/**************************************************************/
+EVENT_START   ev_reserve_pkwd_theater_tutorial
+  //→c15.mstxt::msg_c15_sunglasses_03から
+
+  //(14,25)に主人公と移動
+  //「さあさあ！受付はこちらですよ▼
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_01, C15R0301_PWSTAFF_01, POS_DOWN )
+
+  //(12,23)あたりに配置
+  //「！」表示
+  //「スカウトさんじゃありませんか！
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_02, C15R0301_PWSTAFF_01, POS_DOWN )
+  //「そうですか！それは　なにより！
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_03, C15R0301_PWSTAFF_01, POS_DOWN )
+  //「で？　こちらは　どちらさま？
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_04, C15R0301_PWSTAFF_01, POS_DOWN )
+  //「こちらは～さん！おたくの娘さんにチャレンジしているところを
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_05, C15R0301_PWSTAFF_01, POS_DOWN )
+  //「そうか娘を…それはたしかにいいウデをしたトレーナーなんでしょうね
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_06, C15R0301_PWSTAFF_01, POS_DOWN )
+  //「それはいい！　～さん！これからの参考になりますよ
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_07, C15R0301_PWSTAFF_01, POS_DOWN )
+  //「よしよし！いきましょう！
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_08, C15R0301_PWSTAFF_01, POS_DOWN )
+
+  _CALL ev_pkwd_tutorial_watch_movie
+  //「……　……
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_09, C15R0301_PWSTAFF_01, POS_DOWN )
+  //「おつかれさまでした！どうでしたか！映画は？
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_10, C15R0301_PWSTAFF_01, POS_DOWN )
+  //「……　……
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_11, C15R0301_PWSTAFF_01, POS_DOWN )
+  //「ん？どうしたんです？
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_12, C15R0301_PWSTAFF_01, POS_DOWN )
+  //「フフフッ……あこがれの銀幕に立てたんです…いい夢見せてもらいました…
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_13, C15R0301_PWSTAFF_01, POS_DOWN )
+  //「え……？
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_14, C15R0301_PWSTAFF_01, POS_DOWN )
+  //「人には向きと不向きがある…そんなのはわかってるんです…
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_15, C15R0301_PWSTAFF_01, POS_DOWN )
+  //「そ　その　とおりです！チャレンジすることをあきらめちゃダメですよ！
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_16, C15R0301_PWSTAFF_01, POS_DOWN )
+  //「とはいえひとまず私は自分の仕事に戻ります
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_17, C15R0301_PWSTAFF_01, POS_DOWN )
+  //「さてと……そろそろ　まいりましょうか！
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_18, C15R0301_PWSTAFF_01, POS_DOWN )
+
+
+  //→c15.mstxt::msg_c15_sunglasses_04へ
+EVENT_END
+
+ev_pkwd_tutorial_watch_movie:
+  //フェスミッション強制終了処理
+  _FMISSION_END_FORCE()
+  
+  //スクリーンに入る
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_door )
+  _OBJ_ANIME_WAIT()
+
+  _PLAYER_POS_GET( LWK_HEROX, LWK_HEROZ )
+  $LWK_HEROZ -= 1
+  _BMODEL_ANIME_CREATE( LWK_BM_DOOR_ID, SCR_BMID_DOOR, LWK_HEROX, LWK_HEROZ )
+  _BMODEL_ANIME_SET( LWK_BM_DOOR_ID, SCR_BMANM_DOOR_OPEN )
+  _BMODEL_ANIME_WAIT( LWK_BM_DOOR_ID )
+
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_in_theater )
+  _OBJ_ANIME_WAIT()
+
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
+
+  _BMODEL_ANIME_DELETE( LWK_BM_DOOR_ID )
+
+  _PKWD_SHOW_TUTORIAL()
+
+  _PLAYER_POS_GET( LWK_HEROX, LWK_HEROZ )
+  //閉まるアニメの1フレーム目で止めておく
+  _BMODEL_ANIME_CREATE( LWK_BM_DOOR_ID, SCR_BMID_DOOR, LWK_HEROX, LWK_HEROZ )
+  _BMODEL_ANIME_SET( LWK_BM_DOOR_ID, SCR_BMANM_DOOR_CLOSE )
+  _BMODEL_ANIME_STOP( LWK_BM_DOOR_ID )
+
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+
+  //スクリーンから出てくる
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_out_theater )
+  _OBJ_ANIME_WAIT()
+
+  //アニメ再開
+  _BMODEL_ANIME_SET( LWK_BM_DOOR_ID, SCR_BMANM_DOOR_CLOSE )
+  _BMODEL_ANIME_WAIT( LWK_BM_DOOR_ID )
+
+_RET
+
+/**************************************************************/
+//    ポケウッド：上映受付
+/**************************************************************/
+
+EVENT_START ev_pokewood_show
+
+  _TALK_OBJ_START()
+
+  _PKWD_SYSTEM_START()
+
+  $LWK_PKWD_SHOW_SEQ = PKWD_SHOW_SEQ_FIRST_MENU
+
+  WHILE $LWK_PKWD_SHOW_SEQ != PKWD_SHOW_SEQ_END
+
+    SWITCH $LWK_PKWD_SHOW_SEQ
+    CASE PKWD_SHOW_SEQ_GOODBYE      THEN
+      //「それでは　またのお越しをお待ちしております」
+      _BALLOONWIN_OBJMSG_POS( msg_pw_theater_06, SCWK_TARGET_OBJID, POS_DOWN )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+      $LWK_PKWD_SHOW_SEQ = PKWD_SHOW_SEQ_END
+
+    CASE PKWD_SHOW_SEQ_FIRST_MENU   THEN
+      _CALL ev_pkwd_show_first_menu
+
+    CASE PKWD_SHOW_SEQ_SELECT_MOVIE THEN
+      _CALL ev_pkwd_show_select_movie
+
+    CASE PKWD_SHOW_SEQ_WATCH_MOVIE  THEN
+      _CALL ev_pkwd_show_watch_movie
+
+    CASE PKWD_SHOW_SEQ_AFTER        THEN
+      _CALL ev_pkwd_show_after
+
+    DEFAULT
+      $LWK_PKWD_SHOW_SEQ = PKWD_SHOW_SEQ_END
+
+    ENDSWITCH
+
+  ENDWHILE
+
+  _PKWD_SYSTEM_END()
+
+EVENT_END
+
+
+/**************************************************************/
+//  選択メニュー
+/**************************************************************/
+ev_pkwd_show_first_menu:
+
+  $LWK_PKWD_SHOW_LOOP = TRUE
+
+  WHILE $LWK_PKWD_SHOW_LOOP == TRUE
+    _BALLOONWIN_OBJMSG_POS( msg_pw_theater_01, SCWK_TARGET_OBJID, POS_DOWN )
+    _BMPMENU_INIT_RIGHT( MENU_X1,MENU_Y1,0,1,LWK_PKWD_SHOW_MENU )
+    _BMPMENU_MAKE_LIST( msg_pw_theater_menu_06, 0 )  //えいがをみる
+    _BMPMENU_MAKE_LIST( msg_pw_theater_menu_07, 1 )  //せつめいをきく
+    _BMPMENU_MAKE_LIST( msg_pw_theater_menu_08, 2 )  //やめる
+    _BMPMENU_START()
+
+    SWITCH $LWK_PKWD_SHOW_MENU
+    CASE 0 THEN
+      _PKWD_GET_MOVIE_COUNT( LWK_PKWD_SHOW_REC_COUNT )
+      IF $LWK_PKWD_SHOW_REC_COUNT == 0 THEN
+        _BALLOONWIN_OBJMSG_POS( msg_pw_theater_04, SCWK_TARGET_OBJID, POS_DOWN )
+        $LWK_PKWD_SHOW_LOOP = FALSE
+        $LWK_PKWD_SHOW_SEQ  = PKWD_SHOW_SEQ_GOODBYE
+      ELSE
+        $LWK_PKWD_SHOW_LOOP = FALSE
+        $LWK_PKWD_SHOW_SEQ  = PKWD_SHOW_SEQ_SELECT_MOVIE
+      ENDIF
+
+    CASE 1 THEN
+      _BALLOONWIN_OBJMSG_POS( msg_pw_theater_02, SCWK_TARGET_OBJID, POS_DOWN )
+
+    DEFAULT
+      $LWK_PKWD_SHOW_LOOP = FALSE
+      $LWK_PKWD_SHOW_SEQ  = PKWD_SHOW_SEQ_GOODBYE
+
+    ENDSWITCH
+  ENDWHILE
+_RET
+
+/**************************************************************/
+//
+/**************************************************************/
+ev_pkwd_show_select_movie:
+  //「それでは　ご覧になりたい作品を選んでください」
+  _BALLOONWIN_OBJMSG_POS( msg_pw_theater_03, SCWK_TARGET_OBJID, POS_DOWN )
+  _MSGWIN_CLOSE()
+  //上映選択へ
+  _PKWD_SELECT_MOVIE( SCR_PKWD_SELECT_MODE_NORMAL, LWK_PKWD_SHOW_REC_POS )
+
+  _DEBUG_PRINT_WK( LWK_PKWD_SHOW_REC_POS )
+  IF $LWK_PKWD_SHOW_REC_POS == SCR_PKWD_MOVIE_MAX THEN
+    //「それでは　またのお越しをお待ちしております」
+    $LWK_PKWD_SHOW_SEQ = PKWD_SHOW_SEQ_GOODBYE
+  ELSE
+    //映画鑑賞へ
+    $LWK_PKWD_SHOW_SEQ = PKWD_SHOW_SEQ_WATCH_MOVIE
+  ENDIF
+_RET
+
+
+/**************************************************************/
+//
+/**************************************************************/
+ev_pkwd_show_watch_movie:
+  //フェスミッション強制終了処理
+  _FMISSION_END_FORCE()
+  
+  //「それでは　まもなく上映です」
+  _BALLOONWIN_OBJMSG_POS( msg_pw_theater_05, SCWK_TARGET_OBJID, POS_DOWN )
+  _MSGWIN_CLOSE()
+
+  //スクリーンに入る
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_door )
+  _OBJ_ANIME_WAIT()
+
+  _PLAYER_POS_GET( LWK_HEROX, LWK_HEROZ )
+  $LWK_HEROZ -= 1
+  _BMODEL_ANIME_CREATE( LWK_BM_DOOR_ID, SCR_BMID_DOOR, LWK_HEROX, LWK_HEROZ )
+  _BMODEL_ANIME_SET( LWK_BM_DOOR_ID, SCR_BMANM_DOOR_OPEN )
+  _BMODEL_ANIME_WAIT( LWK_BM_DOOR_ID )
+
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_in_theater )
+  _OBJ_ANIME_WAIT()
+
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
+
+  _BMODEL_ANIME_DELETE( LWK_BM_DOOR_ID )
+
+  _PKWD_SHOW( LWK_PKWD_SHOW_REC_POS, LWK_PKWD_SHOW_FINISH )
+
+  _PKWD_IS_SHOWED_MOVIE( LWK_PKWD_SHOW_REC_POS, SCWK_ANSWER )
+  //最後まで上映して、初上映の場合のみファンの処理を行う
+  IF $LWK_PKWD_SHOW_FINISH == TRUE && $SCWK_ANSWER == FALSE THEN
+    _CALL sub_pkwd_fan_appear
+  ENDIF
+
+  _PLAYER_POS_GET( LWK_HEROX, LWK_HEROZ )
+  //閉まるアニメの1フレーム目で止めておく
+  _BMODEL_ANIME_CREATE( LWK_BM_DOOR_ID, SCR_BMID_DOOR, LWK_HEROX, LWK_HEROZ )
+  _BMODEL_ANIME_SET( LWK_BM_DOOR_ID, SCR_BMANM_DOOR_CLOSE )
+  _BMODEL_ANIME_STOP( LWK_BM_DOOR_ID )
+
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+
+  //スクリーンから出てくる
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_out_theater )
+  _OBJ_ANIME_WAIT()
+
+  //アニメ再開
+  _BMODEL_ANIME_SET( LWK_BM_DOOR_ID, SCR_BMANM_DOOR_CLOSE )
+  _BMODEL_ANIME_WAIT( LWK_BM_DOOR_ID )
+
+  IF $LWK_PKWD_SHOW_FINISH == TRUE THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_to_reception )
+    _OBJ_ANIME_WAIT()
+
+    $LWK_PKWD_SHOW_SEQ = PKWD_SHOW_SEQ_AFTER
+  ELSE
+    //キャンセルの場合は終わりにしてしまう
+    $LWK_PKWD_SHOW_SEQ = PKWD_SHOW_SEQ_END
+  ENDIF
+_RET
+
+_ANIME_LABEL  anm_player_go_door
+  _ANIME_DATA AC_WALK_R_8F, 6
+  _ANIME_DATA AC_WALK_U_8F, 2
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_go_in_theater
+  _ANIME_DATA AC_WALK_U_8F, 1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_go_out_theater
+  _ANIME_DATA AC_WALK_D_8F, 1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_player_go_to_reception
+  _ANIME_DATA AC_WALK_D_8F, 2
+  _ANIME_DATA AC_WALK_L_8F, 6
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+
+/**************************************************************/
+//  スターランクによりファンが出現
+/**************************************************************/
+sub_pkwd_fan_appear:
+  //スターランクによりファンの表示を変更
+  _PKWD_GET_STAR_RANK( SCWK_ANSWER )
+  _DEBUG_PRINT_WK( SCWK_ANSWER )
+  // スターランク0
+  IF $SCWK_ANSWER >= $SCR_PKWD_STAR_RANK_0 && FLAG_ON( FV_C15R0301_BONUS_0 ) THEN
+    _FLAG_RESET( FV_C15R0301_BONUS_0 )
+    _OBJ_ADD( C15R0301_BACKPACKERM_01 )
+  ENDIF
+  // スターランク1
+  IF $SCWK_ANSWER >= $SCR_PKWD_STAR_RANK_1 && FLAG_ON( FV_C15R0301_BONUS_1 ) THEN
+    _FLAG_RESET( FV_C15R0301_BONUS_1 )
+    _OBJ_ADD( C15R0301_WOMAN2_01 )
+    _OBJ_ADD( C15R0301_MAN3_01 )
+    _OBJ_ADD( C15R0301_MUSICIANW_01 )
+  ENDIF
+  // スターランク2
+  IF $SCWK_ANSWER >= $SCR_PKWD_STAR_RANK_2 && FLAG_ON( FV_C15R0301_BONUS_2 ) THEN
+    _FLAG_RESET( FV_C15R0301_BONUS_2 )
+    _OBJ_ADD( C15R0301_POLICEMAN_01 )
+    _OBJ_ADD( C15R0301_WOMAN2_03 )
+    _OBJ_ADD( C15R0301_BABYBOY2_01 )
+    _OBJ_ADD( C15R0301_NURSE_01 )
+  ENDIF
+  // スターランク3
+  IF $SCWK_ANSWER >= $SCR_PKWD_STAR_RANK_3 && FLAG_ON( FV_C15R0301_BONUS_3 ) THEN
+    _FLAG_RESET( FV_C15R0301_BONUS_3 )
+    _OBJ_ADD( C15R0301_TRAINERM_01 )
+    _OBJ_ADD( C15R0301_WOMAN2_02 )
+    _OBJ_ADD( C15R0301_MAN3_02 )
+    _OBJ_ADD( C15R0301_OLDWOMAN1_01 )
+    _OBJ_ADD( C15R0301_MAN3_03 )
+    _OBJ_ADD( C15R0301_TENNISW_01 )
+  ENDIF
+  // スターランク4
+  IF $SCWK_ANSWER >= $SCR_PKWD_STAR_RANK_4 && FLAG_ON( FV_C15R0301_BONUS_4 ) THEN
+    _FLAG_RESET( FV_C15R0301_BONUS_4 )
+    _OBJ_ADD( C15R0301_MAN3_04 )
+    _OBJ_ADD( C15R0301_WOMAN2_04 )
+    _OBJ_ADD( C15R0301_BABYBOY1_01 )
+    _OBJ_ADD( C15R0301_WOMAN2_05 )
+    _OBJ_ADD( C15R0301_MAN3_05 )
+    _OBJ_ADD( C15R0301_WOMAN2_06 )
+    _OBJ_ADD( C15R0301_HAKAIM_01 )
+    _OBJ_ADD( C15R0301_SWPLAZMAW_01 )
+  ENDIF
+
+  $LOCALWORK2 = $LWK_PKWD_SHOW_REC_POS
+  $LOCALWORK5 = 0   // 道具もらえるようにする
+  $LOCALWORK6 = 0   // 道具もらえるようにする
+  $LOCALWORK7 = 0   // 道具もらえるようにする
+  $LOCALWORK8 = 0   // 道具もらえるようにする
+  $LOCALWORK9 = 0   // 道具もらえるようにする
+  $LOCALWORK10 = 0   // 道具もらえるようにする
+  $LOCALWORK11 = 0   // 道具もらえるようにする
+  $LOCALWORK12 = 0   // 道具もらえるようにする
+  $LOCALWORK13 = 0   // 道具もらえるようにする
+  $LOCALWORK14 = 0   // 道具もらえるようにする
+  $LOCALWORK15 = 0   // 道具もらえるようにする
+
+  _RET
+
+
+/**************************************************************/
+//  上映後の処理
+/**************************************************************/
+ev_pkwd_show_after:
+  _PKWD_GET_MOVIE_VALUE( LWK_PKWD_SHOW_REC_POS, SCWK_ANSWER )
+  _DEBUG_PRINT_WK( SCWK_ANSWER )
+  _PLAYER_NAME( 0 )
+  SWITCH $SCWK_ANSWER
+  CASE SCR_PKWD_RESULT_GOOD_END THEN
+    _BALLOONWIN_OBJMSG_POS( msg_pw_theater_09, SCWK_TARGET_OBJID, POS_DOWN )
+  CASE SCR_PKWD_RESULT_BAD_END THEN
+    _BALLOONWIN_OBJMSG_POS( msg_pw_theater_07, SCWK_TARGET_OBJID, POS_DOWN )
+  CASE SCR_PKWD_RESULT_STRANGE_END THEN
+    _BALLOONWIN_OBJMSG_POS( msg_pw_theater_08, SCWK_TARGET_OBJID, POS_DOWN )
+  ENDSWITCH
+
+  
+  //上映済みかチェック
+  _PKWD_IS_SHOWED_MOVIE( LWK_PKWD_SHOW_REC_POS, SCWK_ANSWER  )
+  //このコマンドで上映済みフラグをONにしているので注意）
+  _PKWD_SET_SHOWED_MOVIE( LWK_PKWD_SHOW_REC_POS )
+  IF $SCWK_ANSWER == FALSE THEN
+    //オーナー登場POSイベント設定
+    $LOCALWORK0 = 1
+    $LOCALWORK1 = $LWK_PKWD_SHOW_REC_POS
+  ELSE
+    //オーナー登場POSイベント解除（念のため）
+    $LOCALWORK0 = 0
+  ENDIF
+    $LWK_PKWD_SHOW_SEQ = PKWD_SHOW_SEQ_GOODBYE
+_RET
+
+//==============================================================================
+//
+//  ポケウッドシアター  オーナー出現イベント
+//
+//==============================================================================
+EVENT_START ev_pos_pkwd_theater_owner_appear
+  _CALL ev_pkwd_show_owner_judge
+
+  //オーナー登場POSイベント解除
+  $LOCALWORK0 = 0
+EVENT_END
+
+
+/**************************************************************/
+//
+//
+//  オーナーの評価イベント本体
+//
+//  param[in] LOCALWORK1  上映データの場所
+//
+//  _OBJ_ADD_EXで動作モデルを生成しているので限界数に注意
+//
+//
+/**************************************************************/
+ev_pkwd_show_owner_judge:
+
+  //オーナー出現
+  _OBJ_ADD_EX( 15, 31, DIR_UP, MMDL_ID_EVENTOBJ_00, PWOWNER, MV_DMY )
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  _SE_WAIT()
+
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_owner_bikkuri )
+  _OBJ_ANIME_WAIT()
+
+  //「いやあーちょっと！！～ちゃん！
+  _PLAYER_NAME( 0 )
+  _BALLOONWIN_OBJMSG_POS( msg_pw_starnpc_01, MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  _MSGWIN_CLOSE()
+
+  //プレイヤーの位置によりアニメ分岐
+  _PLAYER_POS_GET( LWK_HEROX, LWK_HEROZ )
+  SWITCH $LWK_HEROX
+  CASE 14 THEN
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_owner_appear1 )
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turn_right )
+    _OBJ_ANIME_WAIT()
+  CASE 15 THEN
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_owner_appear2 )
+    _OBJ_ANIME_WAIT()
+  CASE 16 THEN
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_owner_appear3 )
+    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turn_left )
+    _OBJ_ANIME_WAIT()
+  ENDSWITCH
+
+  //オーナーから評価メッセージ
+  _PLAYER_NAME( 0 )
+  _PKWD_GET_MOVIE_VALUE( LOCALWORK1, SCWK_ANSWER )
+  SWITCH $SCWK_ANSWER
+  CASE SCR_PKWD_RESULT_GOOD_END THEN
+    _BALLOONWIN_OBJMSG_POS( msg_pw_starnpc_04, MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  CASE SCR_PKWD_RESULT_BAD_END THEN
+    _BALLOONWIN_OBJMSG_POS( msg_pw_starnpc_02, MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  CASE SCR_PKWD_RESULT_STRANGE_END THEN
+    _BALLOONWIN_OBJMSG_POS( msg_pw_starnpc_03, MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  ENDSWITCH
+
+  //出演ポケモンはレンタルか？
+  _PKWD_IS_RENTAL_POKE_MOVIE( LOCALWORK1, SCWK_ANSWER )
+  IF $SCWK_ANSWER == FALSE THEN
+    //→手持ちの場合、手持ちポケモンスターランク変化を示唆する
+    //「んーそうねー～～ちゃんのポケモンにも何か変化がありそうだね
+    _BALLOONWIN_OBJMSG_POS( msg_pw_starnpc_05, MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  ENDIF
+  //「じゃーね！
+  _BALLOONWIN_OBJMSG_POS( msg_pw_starnpc_06, MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  _MSGWIN_CLOSE()
+
+  //ごほうびイベントチェック
+  IF $WK_SCENE_C15_BONUS_EVENT_01 == 0 THEN
+    
+    // 全てのシナリオのGOODENDチェック
+    _PKWD_CHECK_ALL_SUCCESS( SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+
+      // 全てのシナリオでGOODEND達成した
+      $WK_SCENE_C15_BONUS_EVENT_01 = 1     //ごほうびイベント起動
+    ENDIF
+  ENDIF
+
+
+  //オーナー去っていく
+  //プレイヤーの位置によりアニメ分岐
+  SWITCH $LWK_HEROX
+  CASE 14, 16 THEN
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_owner_disappear1 )
+  CASE 15 THEN
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_owner_disappear2 )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
+  //オーナーOBJ削除
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+
+_RET
+
+_ANIME_LABEL  anm_owner_bikkuri
+  _ANIME_DATA AC_MARK_GYOE, 1
+  _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL  anm_owner_appear1
+  _ANIME_DATA AC_WALK_U_8F, 5
+  _ANIME_DATA AC_STAY_WALK_L_8F, 1
+  _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL  anm_owner_appear2
+  _ANIME_DATA AC_WALK_U_8F, 4
+  _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL  anm_owner_appear3
+  _ANIME_DATA AC_WALK_U_8F, 5
+  _ANIME_DATA AC_STAY_WALK_R_8F, 1
+  _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL  anm_player_turn_right
+  _ANIME_DATA AC_STAY_WALK_R_8F, 1
+  _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL  anm_player_turn_left
+  _ANIME_DATA AC_STAY_WALK_L_8F, 1
+  _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL  anm_owner_disappear1
+  _ANIME_DATA AC_WALK_U_8F, 9
+  _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL anm_owner_disappear2
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_U_8F, 9
+  _ANIME_DATA ACMD_END, 0
+
+//==============================================================================
+//
+//  上映成績記録モニター
+//
+//==============================================================================
+EVENT_START   ev_pokewood_monitor
+{
+  DEFINE_LOCAL  flag_total
+
+  // 上映して観たことのある総数を取得
+  _PKWD_GET_FLAG_TOTAL( SCR_PKWD_SCENARIO_THEATERGO_FLAG, flag_total )
+
+  // 一度もないなら記録がないのでSKIP
+  IF $flag_total > 0 THEN
+    _TALK_START_SE_PLAY()
+    _PKWD_RECORD_MONITOR( SCWK_ANSWER )
+
+  ELSE
+    // 「ただいま こちらの モニターは ちょうせいちゅう です・・・」
+    _SYSWIN_MSG( msg_pw__monitor_01, POS_DOWN )
+    _LAST_KEYWAIT()
+    _SYSWIN_CLOSE()
+  ENDIF
+}
+EVENT_END
+
+
+

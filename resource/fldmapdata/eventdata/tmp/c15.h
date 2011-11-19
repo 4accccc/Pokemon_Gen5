@@ -11,7 +11,7 @@
 #ifndef ZONE_C15_EVC_H
 #define ZONE_C15_EVC_H
 
-#define C15_SUNGLASSES_01                  0
+#define C15_PWSTAFF_01                     0
 #define C15_OLDMAN1_01                     1
 #define C15_MIDDLEMAN1_01                  2
 #define C15_POKE30_01                      3
@@ -29,7 +29,7 @@
 #define C15_BABYGIRL1_01                  15
 #define C15_BABYGIRL1_02                  16
 #define C15_MIDDLEMAN1_02                 17
-#define C15_SUNGLASSES_02                 18
+#define C15_PWSTAFF_02                    18
 #define C15_MIDDLEWOMAN1_02               19
 #define C15_BONUS_MAID_01                 20
 #define C15_BONUS_PWMOJI_01               21
@@ -37,7 +37,7 @@
 #define C15_BONUS_OL_01                   23
 #define C15_BONUS_RGLEADER5_01            24
 #define C15_BONUS_BACKPACKERM_01          25
-#define C15_BONUS_PWOWNER_01              26
+#define C15_PWOWNER_01                    26
 #define C15_BONUS_LEADER7_01              27
 #define DUMMY_OBJ                         28
 #define C15_MAN1_03                       29
