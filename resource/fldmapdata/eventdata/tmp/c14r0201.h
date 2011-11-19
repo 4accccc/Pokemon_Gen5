@@ -17,5 +17,6 @@
 #ifndef ZONE_C14R0201_EVB_H
 #define ZONE_C14R0201_EVB_H
 
+#define HIDE_ITEM_008                     0
 
 #endif //ZONE_C14R0201_EVB_H

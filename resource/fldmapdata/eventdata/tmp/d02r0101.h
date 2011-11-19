@@ -43,19 +43,17 @@
 
 #define BGID_D02R0101_STONE_01            0
 #define BGID_D02R0101_SIGN1_01            1
-#define D02R0101_HIDE_ITEM_01             2
-#define BGID_D02R0101_STONE_02            3
-#define BGID_D02R0101_STONE_03            4
-#define BGID_D02R0101_STONE_04            5
-#define BGID_D02R0101_STONE_05            6
-#define BGID_D02R0101_STONE_06            7
-#define BGID_D02R0101_STONE_07            8
-#define D02R0101_HIDE_ITEM_03             9
-#define BGID_D02R0101_ANIMAL_TRAIL_01_1  10
-#define HIDE_ITEM_046                    11
-#define HIDE_ITEM_047                    12
-#define HIDE_ITEM_048                    13
-#define HIDE_ITEM_049                    14
-#define HIDE_ITEM_050                    15
+#define BGID_D02R0101_STONE_02            2
+#define BGID_D02R0101_STONE_03            3
+#define BGID_D02R0101_STONE_04            4
+#define BGID_D02R0101_STONE_05            5
+#define BGID_D02R0101_STONE_06            6
+#define BGID_D02R0101_STONE_07            7
+#define BGID_D02R0101_ANIMAL_TRAIL_01_1   8
+#define HIDE_ITEM_046                     9
+#define HIDE_ITEM_047                    10
+#define HIDE_ITEM_048                    11
+#define HIDE_ITEM_049                    12
+#define HIDE_ITEM_050                    13
 
 #endif //ZONE_D02R0101_EVB_H
