@@ -12,7 +12,7 @@
 //============================================
 
 static const DEMO3D_SCENE_DATA data_kyuremu_union_w_01_scene = {
-	NARC_data_demo3d_kyuremu_union_w_01_camera_bin,	///<カメラID
+	NARC_data_demo3d_w01_camera_bin,	///<カメラID
 	DEMO3D_BGM_NONE,	///<BGM No
 	ZONE_ID_T01,	///<ゾーンID
 	DEMO3D_FRAME_RATE_30FPS,	///<フレームレート定義
@@ -21,7 +21,7 @@ static const DEMO3D_SCENE_DATA data_kyuremu_union_w_01_scene = {
 	FALSE,FALSE,	///<1dotポリゴン描画、フォグOn/Off,エッジマーキングOn/Off
 	GX_SORTMODE_AUTO,GX_BUFFERMODE_W,	///<SwapBuf αソートモード,バッファモード
 	FALSE,16,	///<αテストOn/Off,αテスト敷居値
-	FX32_CONST(28.0),FX32_CONST(28.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
+	FX32_CONST(27.0),FX32_CONST(27.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
 	FX32_CONST(0.100 ),FX32_CONST(2048.000 ),	///<near,far
 	FX32_CONST(1.0 ),	///<ScaleW
 	149,-142,	///<2画面main_ofs,2画面sub_ofs
@@ -33,7 +33,7 @@ static const DEMO3D_SCENE_DATA data_kyuremu_union_w_01_scene = {
 	{ 0,0,0,0,0,0,0,0, }, 	///<フォグ濃度テーブル
 	{ GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),	///<エッジマーキングカラーテーブル
 	  GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0), },
-	DEMO3D_FADE_BLACK, 30,	///<フェードイン
+	DEMO3D_FADE_BLACK, 40,	///<フェードイン
 	DEMO3D_FADE_BLACK, 0,	///<フェードアウト
 };
 
@@ -42,6 +42,8 @@ static const DEMO3D_SCENE_DATA data_kyuremu_union_w_01_scene = {
 //============================================
 
 static const DEMO3D_CMD_DATA demo3d_cmd_kyuremu_union_w_01_data[] = {
+ { DEMO3D_CMD_TYPE_FOVY_SET, 406, { FX32_CONST( 14 ), FX32_CONST( 14 ), 71, -99, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_FOVY_SET, 496, { FX32_CONST( 27 ), FX32_CONST( 27 ), 149, -142, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_END, 0, { DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
 };
 
@@ -59,25 +61,78 @@ static const DEMO3D_CMD_DATA demo3d_cmd_kyuremu_union_w_01_end_data[] = {
 //============================================
 
 ///==================================
-/// kyuremu_union_w_01 Unit File Resource
+/// km_w01 Unit File Resource
 
-static const u16 res_kyuremu_union_w_01_file_kyuremu_union_w_01[] = {
- NARC_data_demo3d_kyuremu_union_w_01_nsbmd,
+static const u16 res_kyuremu_union_w_01_file_km_w01[] = {
+ NARC_data_demo3d_km_w01_nsbmd,
+ NARC_data_demo3d_km_w01_nsbca,
+ NARC_data_demo3d_km_w01_nsbva,
 };
 
-static const DEMO3D_FILE_UNIT res_kyuremu_union_w_01_file_unit_kyuremu_union_w_01[] = {
- { res_kyuremu_union_w_01_file_kyuremu_union_w_01, 1 },
+static const DEMO3D_FILE_UNIT res_kyuremu_union_w_01_file_unit_km_w01[] = {
+ { res_kyuremu_union_w_01_file_km_w01, 3 },
+};
+
+///==================================
+/// ak_w01 Unit File Resource
+
+static const u16 res_kyuremu_union_w_01_file_ak_w01[] = {
+ NARC_data_demo3d_ak_w01_nsbmd,
+ NARC_data_demo3d_ak_w01_nsbca,
+ NARC_data_demo3d_ak_w01_nsbva,
+};
+
+static const DEMO3D_FILE_UNIT res_kyuremu_union_w_01_file_unit_ak_w01[] = {
+ { res_kyuremu_union_w_01_file_ak_w01, 3 },
+};
+
+///==================================
+/// shin_w01 Unit File Resource
+
+static const u16 res_kyuremu_union_w_01_file_shin_w01[] = {
+ NARC_data_demo3d_shin_w01_nsbmd,
+ NARC_data_demo3d_shin_w01_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_kyuremu_union_w_01_file_unit_shin_w01[] = {
+ { res_kyuremu_union_w_01_file_shin_w01, 2 },
+};
+
+///==================================
+/// bg_w01 Unit File Resource
+
+static const u16 res_kyuremu_union_w_01_file_bg_w01[] = {
+ NARC_data_demo3d_bg_w01_nsbmd,
+};
+
+static const DEMO3D_FILE_UNIT res_kyuremu_union_w_01_file_unit_bg_w01[] = {
+ { res_kyuremu_union_w_01_file_bg_w01, 1 },
 };
 
 ///========================================================
 /// シーンユニットテーブル
 ///========================================================
 
-static const DEMO3D_FILE_UNIT_TBL res_kyuremu_union_w_01_file_unit_kyuremu_union_w_01_tbl[] = {
- { res_kyuremu_union_w_01_file_unit_kyuremu_union_w_01, 1 },
+static const DEMO3D_FILE_UNIT_TBL res_kyuremu_union_w_01_file_unit_km_w01_tbl[] = {
+ { res_kyuremu_union_w_01_file_unit_km_w01, 1 },
+};
+
+static const DEMO3D_FILE_UNIT_TBL res_kyuremu_union_w_01_file_unit_ak_w01_tbl[] = {
+ { res_kyuremu_union_w_01_file_unit_ak_w01, 1 },
+};
+
+static const DEMO3D_FILE_UNIT_TBL res_kyuremu_union_w_01_file_unit_shin_w01_tbl[] = {
+ { res_kyuremu_union_w_01_file_unit_shin_w01, 1 },
+};
+
+static const DEMO3D_FILE_UNIT_TBL res_kyuremu_union_w_01_file_unit_bg_w01_tbl[] = {
+ { res_kyuremu_union_w_01_file_unit_bg_w01, 1 },
 };
 
 static const DEMO3D_SCENE_UNIT res_kyuremu_union_w_01_scene_unit[] = {
- { res_kyuremu_union_w_01_file_unit_kyuremu_union_w_01_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_kyuremu_union_w_01_file_unit_km_w01_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_kyuremu_union_w_01_file_unit_ak_w01_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_kyuremu_union_w_01_file_unit_shin_w01_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_kyuremu_union_w_01_file_unit_bg_w01_tbl, 1, DEMO3D_UNITCHG_NONE },
 };
 
