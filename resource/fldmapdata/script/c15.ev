@@ -13,6 +13,7 @@
   .include  "c15.h"
   .include  "c15r0401_def.h"
   .include  "pokewood_scr_def.h"
+  .include  "pokewood_theater_def.h"
   
   //@author Mizuguchi_Mai
 
@@ -55,6 +56,7 @@ _EVENT_DATA    ev_c15_pwmoji_05
 _EVENT_DATA    ev_c15_babyboy1_03
 _EVENT_DATA    ev_c15_adultw_03
 _EVENT_DATA    ev_c15_veteranm_01
+_EVENT_DATA    ev_scene_c15_tutorial_02
 _EVENT_DATA_END
 
 //主人公方向取得変数
@@ -104,10 +106,16 @@ INIT_EVENT_START ev_init_c15
 
   //イベント進行で配置を分岐
   IF $WK_SCENE_C15_TUTORIAL_01 == 1 THEN
+    //チュートリアル開始：初めてC15に入ったタイミング
     //　スタッフ移動
     _OBJ_POS_CHANGE( C15_PWSTAFF_01, 31, 0, 56, DIR_UP )
     //　オーナー移動
     _OBJ_POS_CHANGE( C15_PWOWNER_01, 31, 0, 55, DIR_DOWN )
+  ELSIF $WK_SCENE_C15_TUTORIAL_01 == 2 THEN
+    //チュートリアル中：シアターから出てきたタイミング
+    //　スタッフ移動
+    _OBJ_POS_CHANGE( C15_PWSTAFF_01, 46, 0, 18, DIR_UP )
+    //　オーナー移動なし（プレイヤーにみえない位置）
   ENDIF
 
   // ごほうびイベントチェック
@@ -151,8 +159,10 @@ EVENT_START		ev_scene_c15_tutorial_01
   //オーナー：「ウンウン！それナイスね！
   _BALLOONWIN_OBJMSG_POS( msg_c15_tutorial_00_07, C15_PWOWNER_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
-
-  //TODO!!!!!オーナー退出アニメが必要
+  //オーナー退出アニメ
+  _OBJ_ANIME_AUTO( C15_PWOWNER_01, 31, 40, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  _OBJ_DEL( C15_PWOWNER_01 )
 
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
@@ -215,10 +225,27 @@ EVENT_START		ev_scene_c15_tutorial_01
   _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
   _CAMERA_END()		//カメラ操作終了
   
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_pwstaff_to_theater_in )
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_theater_in )
+  _OBJ_ANIME_WAIT()
+  
 
+  //==================================//
+  //C16誘導イベントその２へ
+  $WK_SCENE_C15_TUTORIAL_01 = 2
+  //==================================//
   //new!!!!!!    ここで　シアター内に遷移！　!!!!!!///
+  _MAP_CHANGE( ZONE_ID_C15R0301, 15, 31, DIR_UP )
+  _RESERVE_SCRIPT( SCRID_RESERVE_PKWD_THEATER_TUTORIAL )
+EVENT_END
 
+EVENT_START ev_scene_c15_tutorial_02
   //アニメ：移動
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_pwstaff_theater_out )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_theater_out )
+  _OBJ_ANIME_WAIT()
+
   _OBJ_ANIME( C15_PWSTAFF_01, anm_pwstaff_to_studio )
   _TIME_WAIT( 8*2 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_studio )
@@ -241,9 +268,7 @@ EVENT_START		ev_scene_c15_tutorial_01
   
   //==================================//
   //C16誘導イベント終了
-  $WK_SCENE_C15_TUTORIAL_01 = 2
-  //C16ライバル非表示
-  _FLAG_SET( FV_C15_SUNGLASSES_01 )
+  $WK_SCENE_C15_TUTORIAL_01 = 3
   
   //C13プラズマ団イベント開始
   $WK_SCENE_C13 = 5
@@ -288,6 +313,9 @@ _ANIME_LABEL	anm_player_to_theater
   _ANIME_DATA	AC_STAY_WALK_U_8F,1
   _ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL  anm_player_to_theater_in
+  _ANIME_DATA AC_WALK_U_8F, 9
+  _ANIME_DATA	ACMD_END,0
 //--------------------------------------------------------------------
 //	ガイド：映画館へ
 //--------------------------------------------------------------------
@@ -299,9 +327,16 @@ _ANIME_LABEL	anm_pwstaff_to_theater
   _ANIME_DATA	AC_STAY_WALK_U_8F,1
   _ANIME_DATA	ACMD_END,0
   
+_ANIME_LABEL  anm_pwstaff_to_theater_in
+  _ANIME_DATA AC_WALK_U_8F, 9
+  _ANIME_DATA	ACMD_END,0
   //--------------------------------------------------------------------
 //	主人公：スタジオへ（１）
 //--------------------------------------------------------------------
+_ANIME_LABEL  anm_player_theater_out
+  _ANIME_DATA AC_WALK_D_8F, 9
+  _ANIME_DATA	ACMD_END,0
+
 _ANIME_LABEL	anm_player_to_studio
   _ANIME_DATA	AC_WALK_U_8F,1
   _ANIME_DATA	AC_WALK_L_8F,10
@@ -313,6 +348,10 @@ _ANIME_LABEL	anm_player_to_studio
 //--------------------------------------------------------------------
 //	ガイド：スタジオへ（１）
 //--------------------------------------------------------------------
+_ANIME_LABEL  anm_pwstaff_theater_out
+  _ANIME_DATA AC_WALK_D_8F, 9
+  _ANIME_DATA	ACMD_END,0
+
 _ANIME_LABEL	anm_pwstaff_to_studio
   _ANIME_DATA	AC_WALK_U_8F,1
   _ANIME_DATA	AC_WALK_L_8F,11

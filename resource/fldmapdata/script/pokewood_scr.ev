@@ -115,6 +115,9 @@ EVENT_START ev_pokewood_rec
 
   _TALK_OBJ_START()
 
+  //TODO:初めて撮影したムービーを鑑賞するまでは再度撮影させない
+  //msg_pkwd_studio_23を話し続けて、終了させる
+
   //ようこそ！
   _BALLOONWIN_OBJMSG_POS( msg_pw_studio_01, SCWK_TARGET_OBJID, POS_DOWN )
 
@@ -234,7 +237,7 @@ ev_pkwd_rec_studio:
     _DEBUG_PRINT_WK( SCWK_ANSWER )
     IF $SCWK_ANSWER == FALSE THEN
       //監督のセリフ：もう一度撮影するか？
-      $SCWK_ANSWER = msg_pw_studio_23
+      $SCWK_ANSWER = msg_pw_director_11
       _CALL sub_director_talk
       _YES_NO_WIN( SCWK_ANSWER )
       IF $SCWK_ANSWER != SCR_YES THEN

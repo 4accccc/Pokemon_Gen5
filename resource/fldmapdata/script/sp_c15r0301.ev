@@ -11,11 +11,13 @@
 
   .include  "scr_seq_def.h"
   .include  "c15r0301_def.h"
+  .include  "pokewood_theater_def.h"
 
 //--------------------------------------------------------------
 //              特殊スクリプト
 //--------------------------------------------------------------
 _ZONE_CHANGE_LABEL  SCRID_ZONE_C15R0301
+_FIELD_INIT_LABEL   SCRID_INIT_PKWD_THEATER
 _SP_EVENT_DATA_END
 
 

@@ -2,32 +2,7 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_pw_theater_menu_05">
-		<LanguageCell
-			Language="JPN">
-			<Text>やめる</Text>
-			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-13T05:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-07-11T10:02:21" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>やめる</Text>
-			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-07-13T05:30:26" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-07-11T10:07:26" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="msg_pw_theater_menu_06">
+		Label="msg_pw_theater_menu_01">
 		<LanguageCell
 			Language="JPN">
 			<Text>えいがを　みる</Text>
@@ -52,7 +27,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_theater_menu_07">
+		Label="msg_pw_theater_menu_02">
 		<LanguageCell
 			Language="JPN">
 			<Text>せつめいを　きく</Text>
@@ -77,7 +52,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_theater_menu_08">
+		Label="msg_pw_theater_menu_03">
 		<LanguageCell
 			Language="JPN">
 			<Text>やめる</Text>
@@ -357,131 +332,6 @@
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-08-30T10:41:07" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_pw_theater_07">
-		<LanguageCell
-			Language="JPN">
-			<Text>まあ　えいがの　このみは
-ひと　それぞれと　いいます……▼
-わたくしと　しましては　あじのある
-さくひんだと　おもいますが▼</Text>
-			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:06:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:12:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>まあ　映画の　好みは
-人　それぞれと　いいます……▼
-わたくしと　しましては　味のある
-作品だと　思いますが▼</Text>
-			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:06:52" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:12:45" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀　シアター受付（INFORMATIONW）
-撮影してから初めて鑑賞した作品に対するコメント（BADEND）
-
-終了後→msg_pw_theater_06</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:42:02" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_pw_theater_08">
-		<LanguageCell
-			Language="JPN">
-			<Text>さすがは　[Name:TrainerName ]さんが
-しゅつえんした　さくひん……▼
-わたくし　こんな　けつまつに　なるとは
-おもいも　よりませんでしたよ！▼</Text>
-			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:06:54" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:15:08" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>流石は　[Name:TrainerName ]さんが
-出演した　作品……▼
-わたくし　こんな　ラストに　なるとは
-思いも　よりませんでしたよ！▼</Text>
-			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:06:56" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:15:08" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀　シアター受付（INFORMATIONW）
-撮影してから初めて鑑賞した作品に対するコメント（STRANGE END）
-
-終了後→msg_pw_theater_06</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:41:40" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_pw_theater_09">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName ]さんの
-しゅつえんする　さくひんは▽
-すばらしいですね！▼
-わたくし　じかいさくが
-たいへんに　たのしみです！▼</Text>
-			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:06:59" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:15:09" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]さんの
-出演される　作品は▽
-素晴らしいですね！▼
-わたくし　次回作が
-大変に　楽しみです！▼</Text>
-			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:07:00" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:15:09" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀　シアター受付（INFORMATIONW）
-撮影してから初めて鑑賞した作品に対するコメント（GOODEND）
-
-終了後→msg_pw_theater_06</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T08:55:43" />
 		</CommentCell>
 	</TextRow>
 	<TextRow

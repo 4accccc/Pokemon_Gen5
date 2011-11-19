@@ -1010,196 +1010,37 @@
 		Label="msg_pw_studio_23">
 		<LanguageCell
 			Language="JPN">
-			<Text>どうした……？
-さつえいを　やめるのか？</Text>
+			<Text>仮　かんせいした　えいがは　ポケウッドに
+シアターで　じょうえい　されるから▽
+チェック　してくれよな！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:34:37" />
+				User="tamada:W00253"
+				Time="2011-11-19T12:53:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:09:53" />
+				Time="2011-09-12T12:48:45" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どうした……？
-撮影を　止めるのか？</Text>
+			<Text>仮　かんせいした　えいがは　ポケウッドに
+シアターで　じょうえい　されるから▽
+チェック　してくれよな！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:34:45" />
+				User="tamada:W00253"
+				Time="2011-11-19T12:53:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:22:48" />
+				Time="2011-09-13T02:23:08" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂OLDMAN1
-
-監督：撮影中断した時のセリフ
-
-
-はい→受付にマップ遷移しmsg_pw_studio_11
-いいえ→msg_pw_director_01へ移行し撮影再開</Comment>
+			<Comment>♂　pwstaff
+初回撮影後、自分のムービーを見るまでは再度撮影させない</Comment>
 			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:25:06" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_pw_studio_24">
-		<LanguageCell
-			Language="JPN">
-			<Text>おいおい！　どうしたんだ！？
-もう　あきらめるのか？</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:21:55" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:19:53" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>おいおい！　どうしたんだ！？
-もう　あきらめるのか？</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:22:48" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:22:48" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂SUNGLASSES
-
-監督：撮影中断した時のセリフ
-
-
-はい→受付にマップ遷移しmsg_pw_studio_11
-いいえ→msg_pw_director_02へ移行し撮影再開</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:25:04" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_pw_studio_25">
-		<LanguageCell
-			Language="JPN">
-			<Text>あれ？　だいじょうぶ　ですか？
-あきらめて　とりなおしますか？</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T06:07:37" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:22:13" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>あれ？　大丈夫ですか？
-あきらめて　撮り直しますかね？</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T06:07:42" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:22:48" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂MIDDLEMAN2
-
-監督：撮影中断した時のセリフ
-
-
-はい→受付にマップ遷移しmsg_pw_studio_11
-いいえ→msg_pw_director_03へ移行し撮影再開</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:25:08" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_pw_studio_26">
-		<LanguageCell
-			Language="JPN">
-			<Text>どうしたんじゃ？
-ほんとに　さつえいを　あきらめるか？</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:06:54" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:06:05" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>どうしたんじゃ？
-ほんとに　撮影を　あきらめるか？</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:24:19" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:22:48" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂GENTLEMAN
-監督：撮影中断した時のセリフ
-
-
-はい→受付にマップ遷移しmsg_pw_studio_11
-いいえ→msg_pw_director_05へ移行し撮影再開</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:25:10" />
-		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_pw_studio_27">
-		<LanguageCell
-			Language="JPN">
-			<Text>ドウシタノ？　アキラメルノ？</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:34:59" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:11:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ドウシタノ？　アキラメルノ？</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:35:07" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:22:48" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀ADULTW
-
-監督：撮影中断した時のセリフ
-
-はい→受付にマップ遷移しmsg_pw_studio_11
-いいえ→msg_pw_director_05へ移行し撮影再開</Comment>
-			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:25:15" />
+				User="tamada:W00253"
+				Time="2011-11-19T12:52:09" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -1716,6 +1557,202 @@
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-15T06:55:49" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_director_11">
+		<LanguageCell
+			Language="JPN">
+			<Text>どうした……？
+さつえいを　やめるのか？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-29T09:34:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:09:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>どうした……？
+撮影を　止めるのか？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-29T09:34:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:22:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂OLDMAN1
+
+監督：撮影中断した時のセリフ
+
+
+はい→受付にマップ遷移しmsg_pw_studio_11
+いいえ→msg_pw_director_01へ移行し撮影再開</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:25:06" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_director_12">
+		<LanguageCell
+			Language="JPN">
+			<Text>おいおい！　どうしたんだ！？
+もう　あきらめるのか？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:21:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:19:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おいおい！　どうしたんだ！？
+もう　あきらめるのか？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:22:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:22:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂SUNGLASSES
+
+監督：撮影中断した時のセリフ
+
+
+はい→受付にマップ遷移しmsg_pw_studio_11
+いいえ→msg_pw_director_02へ移行し撮影再開</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:25:04" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_director_13">
+		<LanguageCell
+			Language="JPN">
+			<Text>あれ？　だいじょうぶ　ですか？
+あきらめて　とりなおしますか？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-22T06:07:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:22:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あれ？　大丈夫ですか？
+あきらめて　撮り直しますかね？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-22T06:07:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:22:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂MIDDLEMAN2
+
+監督：撮影中断した時のセリフ
+
+
+はい→受付にマップ遷移しmsg_pw_studio_11
+いいえ→msg_pw_director_03へ移行し撮影再開</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:25:08" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_director_14">
+		<LanguageCell
+			Language="JPN">
+			<Text>どうしたんじゃ？
+ほんとに　さつえいを　あきらめるか？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:06:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:06:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>どうしたんじゃ？
+ほんとに　撮影を　あきらめるか？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:24:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:22:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂GENTLEMAN
+監督：撮影中断した時のセリフ
+
+
+はい→受付にマップ遷移しmsg_pw_studio_11
+いいえ→msg_pw_director_05へ移行し撮影再開</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:25:10" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_director_15">
+		<LanguageCell
+			Language="JPN">
+			<Text>ドウシタノ？　アキラメルノ？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-29T09:34:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:11:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ドウシタノ？　アキラメルノ？</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-10-29T09:35:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:22:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀ADULTW
+
+監督：撮影中断した時のセリフ
+
+はい→受付にマップ遷移しmsg_pw_studio_11
+いいえ→msg_pw_director_05へ移行し撮影再開</Comment>
+			<CommentModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-09-15T10:25:15" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
