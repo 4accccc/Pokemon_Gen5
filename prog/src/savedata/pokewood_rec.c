@@ -184,6 +184,17 @@ LOAD_RESULT POKEWOOD_REC_Load( SAVE_CONTROL_WORK *p_sv, HEAPID heapID, POKEWOOD_
 
 }
 
+//=============================================================================================
+/**
+ * @brief	ROMに入っている録画データを読み込む(チュートリアル上映用）
+ *
+ * @param   p_sv		セーブデータ(=いらないけど）
+ * @param   heapID	HEAPID
+ * @param   num		  ナンバー指定（現在は意味なし。複数指定の可能性を考えて）
+ *
+ * @retval  LOAD_RESULT		
+ */
+//=============================================================================================
 LOAD_RESULT POKEWOOD_REC_Load_ROM( SAVE_CONTROL_WORK *p_sv, HEAPID heapID, POKEWOOD_LOADDATA_NUM num )
 {
   GF_ASSERT( sp_pokewood_rec_sv != NULL );
@@ -317,11 +328,17 @@ u32 POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM param, void *dst )
   // 成功フラグ
   case POKEWOOD_REC_PARAM_SUCCESS:
     return sp_pokewood_rec_sv->rec.senario.success;
-  // 手持ち１匹目のポケモンPOKEMON_PARAM
+  // 手持ちポケモンのPOKEMON_PARAMを返す
   case POKEWOOD_REC_PARAM_POKE0:
+  case POKEWOOD_REC_PARAM_POKE1:
+  case POKEWOOD_REC_PARAM_POKE2:
+  case POKEWOOD_REC_PARAM_POKE3:
+  case POKEWOOD_REC_PARAM_POKE4:
+  case POKEWOOD_REC_PARAM_POKE5:
     {
       POKEMON_PARAM *pp = (POKEMON_PARAM*)dst;
-      POKETOOL_RecPokePara_to_PokePara( &sp_pokewood_rec_sv->rec.rec_party[0].member[0], pp);
+      POKETOOL_RecPokePara_to_PokePara( &sp_pokewood_rec_sv->rec.rec_party[0].
+                                        member[param-POKEWOOD_REC_PARAM_POKE0], pp);
     }
     return 1;
   // 初期観客数
@@ -330,8 +347,12 @@ u32 POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM param, void *dst )
   // レンタルポケモンを使用しているか？
   case POKEWOOD_REC_PARAM_RENTAL_FLAG:
     return sp_pokewood_rec_sv->rec.rental_flag;
+  // 日付
   case POKEWOOD_REC_PARAM_DATE:
     return sp_pokewood_rec_sv->rec.save_date;
+  // 興行収入(=評価）
+  case POKEWOOD_REC_PARAM_PROFIT:
+    return sp_pokewood_rec_sv->rec.profit;
   default:
     GF_ASSERT(0);
     return 0;

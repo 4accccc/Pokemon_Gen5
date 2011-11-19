@@ -49,10 +49,16 @@ typedef enum
 {
   POKEWOOD_REC_PARAM_SENARIO,         ///< ƒVƒiƒŠƒIƒiƒ“ƒo[
   POKEWOOD_REC_PARAM_SUCCESS,         ///< ¬Œ÷ƒtƒ‰ƒO
-  POKEWOOD_REC_PARAM_POKE0,           ///< Ž©•ª‚ÌŽèŽ‚¿‚P•C–Ú‚ÌPOKEMON_PARAM
+  POKEWOOD_REC_PARAM_POKE0,           ///< Ž©•ª‚ÌŽèŽ‚¿0•C–Ú‚ÌPOKEMON_PARAM
+  POKEWOOD_REC_PARAM_POKE1,           ///< Ž©•ª‚ÌŽèŽ‚¿1•C–Ú‚ÌPOKEMON_PARAM
+  POKEWOOD_REC_PARAM_POKE2,           ///< Ž©•ª‚ÌŽèŽ‚¿2•C–Ú‚ÌPOKEMON_PARAM
+  POKEWOOD_REC_PARAM_POKE3,           ///< Ž©•ª‚ÌŽèŽ‚¿3•C–Ú‚ÌPOKEMON_PARAM
+  POKEWOOD_REC_PARAM_POKE4,           ///< Ž©•ª‚ÌŽèŽ‚¿4•C–Ú‚ÌPOKEMON_PARAM
+  POKEWOOD_REC_PARAM_POKE5,           ///< Ž©•ª‚ÌŽèŽ‚¿5•C–Ú‚ÌPOKEMON_PARAM
   POKEWOOD_REC_PARAM_AUDIENCE_NUM,    ///< ‰ŠúŠÏ‹q”
   POKEWOOD_REC_PARAM_RENTAL_FLAG,     ///< ƒŒƒ“ƒ^ƒ‹ƒ|ƒPƒ‚ƒ“‚ðŽg—p‚µ‚Ä‚¢‚é‚©H
   POKEWOOD_REC_PARAM_DATE,            ///< “úŽž
+  POKEWOOD_REC_PARAM_PROFIT,          ///< ‹»sŽû“ü
 
 } POKEWOOD_REC_PARAM;
 
