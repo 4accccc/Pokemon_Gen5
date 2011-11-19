@@ -68,7 +68,7 @@ INIT_EVENT_START   ev_zone_c06
   IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_02 == 0 && $WK_SCENE_T07 >= 1 THEN
     //========================================//
     //C06ÉtÉEÉçï\é¶
-    _FLAG_RESET( FV_C08_SWLEADER7_01 )
+    _FLAG_RESET( FV_C06_SWLEADER6_01 )
     //========================================//
   ENDIF
 }
