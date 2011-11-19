@@ -6,11 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ
-ここは　しゅごしゃの　ねむりのま</Text>
+			<Text>つきと　ともに
+ここを　まもるものの　へや</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-16T11:41:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:53:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-ここは　しゅごしゃの　ねむりのま</Text>
+			<Text>月と　ともに
+ここを　守るものの　部屋</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-16T11:41:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:53:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -57,10 +57,10 @@
 めだまから　みぎに９を
 そして　したに●を　しらべるのだ▼
 もうひとつの　こたえは
-たいようが　のぼるときに　わかる</Text>
+たいようが　あるときに　わかる</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T08:36:13" />
+				Time="2011-11-19T08:43:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -75,10 +75,10 @@
 めだまから　右に９を
 そして　下に●を　調べるのだ▼
 もう一つの　答えは
-太陽が　昇るときに　わかる</Text>
+太陽が　あるときに　わかる</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T10:50:44" />
+				Time="2011-11-19T08:43:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -106,11 +106,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ
-説明１</Text>
+			<Text>せかいは　２つに　わかれる
+あさと　よる……　しろと　くろ……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-16T11:40:09" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:06:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -118,11 +118,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-説明１</Text>
+			<Text>世界は　２つに　わかれる
+朝と　夜……　白と　黒……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-16T11:40:09" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:06:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -150,11 +150,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ
-説明２</Text>
+			<Text>がんせき　こおり　マグマ　から
+まもる　ものを　うみだした……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-16T11:40:09" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:03:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -162,11 +162,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-説明２</Text>
+			<Text>岩石　氷　マグマ　から
+守るものを　うみだした……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-16T11:40:09" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:03:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"

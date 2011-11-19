@@ -6,11 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ
-ここは　しゅごしゃの　めざめのま</Text>
+			<Text>たいようと　ともに
+ここを　まもるものの　へや</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-16T11:31:04" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:53:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-ここは　しゅごしゃの　めざめのま</Text>
+			<Text>太陽と　ともに
+ここを　守るものの　部屋</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-16T11:31:10" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T08:53:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -106,11 +106,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ
-説明１</Text>
+			<Text>せかいは　２つに　わかれる
+あさと　よる……　しろと　くろ……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-16T11:39:01" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:06:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -118,11 +118,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-説明１</Text>
+			<Text>世界は　２つに　わかれる
+朝と　夜……　白と　黒……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-16T11:38:54" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:06:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -150,11 +150,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ
-説明２</Text>
+			<Text>がんせき　こおり　マグマ　から
+まもる　ものを　うみだした……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-16T11:39:10" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:03:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -162,11 +162,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ
-説明２</Text>
+			<Text>岩石　氷　マグマ　から
+守るものを　うみだした……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-16T11:39:13" />
+				User="matsumiya:W00224"
+				Time="2011-11-19T09:03:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
