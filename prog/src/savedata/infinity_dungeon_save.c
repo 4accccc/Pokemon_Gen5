@@ -11,6 +11,7 @@
 
 #include <gflib.h>
 #include "savedata/save_control.h"	        //SAVE_CONTROL_WORKéQè∆ÇÃÇΩÇﬂ
+#include "../../../resource/infinity_dungeon/data/inf_floor_num.h"
 #include "field/infinity_dungeon_def.h"
 #include "field/field_wfbc_data.h" 
 #include "savedata/infinity_dungeon_save.h"

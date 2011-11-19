@@ -888,8 +888,9 @@ static void SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no , u32 
     int room_id_array[ROOM_MAX];
     u32 member_num[ROOM_MAX];
     u32 recover_index = 0;
+    u8 top_floor = INFINITYDUNGEON_SAVE_GetFloorNum( area_no );
 
-    for( n = 0; n<INFINITYDUNGEON_FLOOR_MAX; n++)
+    for( n = 0; n<top_floor; n++)
     {
       int cnt = 0;
       for( i = 0; i<ROOM_MAX; i++)
@@ -2276,7 +2277,7 @@ u32 INFINITY_DUNGEON_TrainerCount( const INF_DUNGEON_DATA *p_dungeon_data )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  一つ上の部屋タイプを取得する
+ *	@brief  一つ上の部屋タイプを取得す
  *
  *	@param	*p_wk 
  *

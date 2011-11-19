@@ -15,6 +15,7 @@
  	.include  "../../../prog/include/tr_tool/tr_tool.h"
   .include  "../../../prog/src/field/infinity_dungeon_warp_dir.h"
   .include  "msg_infinity_dungeon_scr.h"
+  .include  "../../infinity_dungeon/data/inf_floor_num.h"
   .include  "infinity_dungeon_scr_def.h"
   .include  "d31r0101.h"
   .include  "d31r0201.h"

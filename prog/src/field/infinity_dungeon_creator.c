@@ -31,6 +31,7 @@
 //=============================================================================
 static u8 GetFloorNum( u8 area_id );
 static void RemoveTrRoom( INF_DUNGEON_DATA *p_dungeon_data ,const u8 floor_no ,int rmv_num ,GFL_STD_RandContext *rand_context );
+static int GetBossRoomSetArray( ROOM_DATA *p_room_data ,int *p_index_array ,int fs_x ,int fs_y);
 static int GetElevatorSetArray( ROOM_DATA *p_room_data ,int *p_index_array ,int fs_x ,int fs_y);
 static ROOM_DATA* GetDigPosRoomData( const DIG_POS *p_dig_pos,ROOM_DATA* p_room_data);
 static const ROOM_DATA* GetDigPosRoomDataConst( const DIG_POS *p_dig_pos,const ROOM_DATA* p_room_data);
@@ -40,6 +41,8 @@ static BOOL CheckCloseAllDoor( const DIG_POS *p_dig_pos ,const ROOM_DATA *p_room
 static void pop_dig_pos( INF_DIG_DATA *p_dig_data );
 static void push_dig_pos( INF_DIG_DATA *p_dig_data ,const DIG_POS *p_dig_pos);
 static BOOL CheckDigEnd( const ROOM_DATA *p_room_data ,int fs_x ,int fs_y);
+static u8 GetRoomTypeArray( int area_no ,u8 floor_no ,u8 version ,u8 *p_pos_type_id_array );
+static u8 GetDefaultRoomTypeArray( int area_no ,u8 floor_no ,u8 version ,u8 *p_pos_type_id_array );
 
 //----------------------------------------------------------------------------
 /**
@@ -61,7 +64,6 @@ void INF_DCREATOR_SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no,
   DIG_POS boss_pos;
   s32 boss_floor;
   GFL_STD_RandContext rand_context;
-  const INF_ROOM_SETUP_PARAM *sc_room_setup = INF_TOOL_GetRoomSetupParam(area_no);
 
   // 乱数を作成
   GFL_STD_RandInit( &rand_context, seed );
@@ -88,47 +90,58 @@ void INF_DCREATOR_SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no,
     }
   }
 
+  // エレベータ設置配列を設定（必ず右上）
+  {
+    for( i = 0; i<INFINITYDUNGEON_FLOOR_MAX; i++ )
+    {
+      ROOM_DATA *p_room_data = p_dungeon_data->room_data[i];
+      p_room_data[0].room_type    = ROOM_TYPE_ELEVATOR;
+      p_room_data[0].tr_pos_type  = INF_TR_ROOM_POS_TYPE_NONE;
+      // エレベーター位置を格納（穴掘りスタート位置に使用）
+      elv_pos[i].x = 0;
+      elv_pos[i].y = 0;
+    }
+  }
+
   // ボス部屋の設置
   {
     ROOM_DATA *p_rd;
     ROOM_DATA *p_room_data;
     int floor_no;
-    u8 top_floor = GetFloorNum( area_no );
+    u8 top_floor;
+    int max;
+    int room_index;
+    int index_array[ROOM_MAX];
+    u8 room_id;
+
+    // 階数を決定
+    top_floor = GetFloorNum( area_no );
     floor_no = GFL_STD_Rand( &rand_context ,top_floor);
     p_room_data = p_dungeon_data->room_data[floor_no];
-    boss_pos.x = GFL_STD_Rand( &rand_context ,fs_x);
-    boss_pos.y = GFL_STD_Rand( &rand_context ,fs_y-1); // 一番下の部屋には置けない
-    p_rd= GetDigPosRoomData( &boss_pos ,p_room_data);
+
+    // 場所を決定
+    max = GetBossRoomSetArray(p_room_data,index_array,fs_x,fs_y);
+    GF_ASSERT_MSG((max > 0),"ボス部屋を置く場所がありません\n");
+    room_index = GFL_STD_Rand( &rand_context ,max);
+
+    // 部屋データを設定
+    room_id = index_array[room_index];
+    p_rd= &p_room_data[room_id];
     p_rd->room_type = ROOM_TYPE_BOSS;
     p_rd->tr_pos_type = INF_TR_ROOM_POS_TYPE_NONE;
+
+    // 位置を保存
+    boss_pos.x = room_id % ROOM_MAX_X;
+    boss_pos.y = room_id / ROOM_MAX_X;
     boss_floor = floor_no;
   }
 
-  // エレベータ設置配列を取得
-  {
-    for( i = 0; i<INFINITYDUNGEON_FLOOR_MAX; i++ )
-    {
-      ROOM_DATA *p_room_data = p_dungeon_data->room_data[i];
-      int index_array[ROOM_MAX];
-      int room_index;
-      int max = GetElevatorSetArray(p_room_data,index_array,fs_x,fs_y);
-
-      GF_ASSERT_MSG((max > 0),"エレベータを置く場所がありません\n");
-      room_index = GFL_STD_Rand( &rand_context ,max);
-      p_room_data[index_array[room_index]].room_type    = ROOM_TYPE_ELEVATOR;
-      p_room_data[index_array[room_index]].tr_pos_type  = INF_TR_ROOM_POS_TYPE_NONE;
-
-      // エレベーター位置を格納（穴掘りスタート位置に使用）
-      elv_pos[i].x = index_array[room_index]%ROOM_MAX_X;
-      elv_pos[i].y = index_array[room_index]/ROOM_MAX_X;
-
-    }
-  }
 
   //ランダム
   {
     int floor_no;
-    for( floor_no = 0; floor_no < INFINITYDUNGEON_FLOOR_MAX; floor_no++ )
+    u8 top_floor = GetFloorNum( area_no );
+    for( floor_no = 0; floor_no < top_floor; floor_no++ )
     {
       ROOM_DATA *p_room_data = p_dungeon_data->room_data[floor_no];
       INF_DIG_DATA dig_data;
@@ -210,111 +223,135 @@ void INF_DCREATOR_SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no,
   // 部屋タイプ取得部分はVSプロジェクト移植対象外です
 #ifndef VS_PROJECT
   {
-    for( i = 0; i<INFINITYDUNGEON_FLOOR_MAX; i++ )
+    u8 top_floor = GetFloorNum( area_no );
+    for( i = 0; i<top_floor; i++ )
     {
-      u8  no_tr_room_data[ROOM_MAX];
-      int no_tr_room_cnt = 0;
-      GFL_STD_MemFill(no_tr_room_data ,ROOM_MAX ,sizeof(u8)*ROOM_MAX );
+      // 配置する部屋を取得
+      int data_index = 0;
+      u8 pos_type_id_array[ROOM_MAX];
+      u8 room_array_max;
+      room_array_max = GetRoomTypeArray( area_no ,i
+                                    ,p_dungeon_data->version ,pos_type_id_array );
+      ONOUE_Printf("配置可能部屋数:%d\n",room_array_max);
 
+      // 配置可能な部屋のみをランダムに並び替える
+      INF_TOOL_RndArrayU8( pos_type_id_array ,room_array_max ,&rand_context);
+
+      // 実際に部屋を配置
       for( j = 0; j<ROOM_MAX; j++ )
       {
-        // 部屋タイプを抽選する(ボス部屋、エレベータ部屋など既に配置済みの場所には配置しない)
         if( p_dungeon_data->room_data[i][j].room_type == ROOM_TYPE_DEFAULT )
         {
           int x = j % ROOM_MAX_X;
           int y = j / ROOM_MAX_X;
-
           if( (x < fs_x) && (y < fs_y ) )
           {
-            BOOL is_set_trainer  = FALSE;
-            u32 sum_num = 0;
-            u32 rnd_num = GFL_STD_Rand( &rand_context ,100 ) + 1; // 抽選値を決定（1~100）
-            for( k = 0 ; k < sc_room_setup->member_num; k++ )
+            if( (boss_pos.x == x) && ((boss_pos.y+1) == y) && ( i == boss_floor ) )
             {
-              const INF_ROOM_DATA *p_rs_data = &sc_room_setup->room_setup_data[k];
-              const u32 dungeon_color = p_dungeon_data->version;
-              const u8 room_version = INF_TOOL_GetRoomVersion(p_rs_data->tr_pos_type);
+              // ボス部屋の下の部屋はデフォルト部屋から選ぶ
+              u8 idx;
+              u8 default_id_array[ROOM_MAX];
+              const INF_ROOM_SET_TR_PARAM *p_room_param;
+              u8 max = GetDefaultRoomTypeArray( area_no ,i ,p_dungeon_data->version ,default_id_array );
 
-              // バージョンでの制限
-              if( (dungeon_color == VERSION_B2) && (room_version == INF_B2_ONLY_DUNGEON) || // ブラック専用
-                  (dungeon_color == VERSION_W2) && (room_version == INF_W2_ONLY_DUNGEON) || // ホワイト専用
-                  (room_version == INF_MULTI_DUNGEON) )
-              {
-                sum_num += p_rs_data->probability;
-                if( rnd_num <= sum_num )
-                {
-                  p_dungeon_data->room_data[i][j].tr_pos_type = p_rs_data->tr_pos_type;
-                  p_dungeon_data->room_data[i][j].room_type = INF_TOOL_GetRoomType(p_rs_data->tr_pos_type);
-                  is_set_trainer = TRUE;
-                  break;
-                }
-              }
+              GF_ASSERT_MSG( max != 0,"通常部屋が設置されていません\n");
+              idx = default_id_array[GFL_STD_Rand( &rand_context,max)];
+              p_room_param = INF_TOOL_GetRoomTrParam( idx );
+              p_dungeon_data->room_data[i][j].tr_pos_type = idx;
+              p_dungeon_data->room_data[i][j].room_type = p_room_param->room_type;
             }
-            if( is_set_trainer == FALSE )
+            else
             {
-              // 未配置部屋は配置人数が０のとき用に保存しておく
-              no_tr_room_data[no_tr_room_cnt] = j;
-              no_tr_room_cnt++;
+              // 通常部屋
+              const INF_ROOM_SET_TR_PARAM *p_room_param;
+              u8 idx = pos_type_id_array[data_index];
+              p_room_param = INF_TOOL_GetRoomTrParam( idx );
+              p_dungeon_data->room_data[i][j].tr_pos_type = idx;
+              p_dungeon_data->room_data[i][j].room_type = p_room_param->room_type;
+              ONOUE_Printf("通常部屋設置:%d max = %d \n",data_index,room_array_max);
+              GF_ASSERT_MSG(data_index<room_array_max,"部屋配列が取得できませんでした。エリアデータを確認してください。\n");
+              data_index++;
             }
           }
         }
       }
-      
-      // 最低5部屋は置く（BOSS+エレベータ+回復×2+通常部屋=5）
-      {
-        int no_tr_room_index  = 0;
-        int tr_room_cnt   = (fs_x*fs_y) - no_tr_room_cnt; // 部屋数 - トレーナーが配置されていない部屋 = トレーナー配置済みの部屋数
-        for( j = tr_room_cnt; j < INFINITY_DUNGEON_TR_ROOM_MIN ;j++ )
-        {
-          u8 room_id = no_tr_room_data[no_tr_room_index];
-          p_dungeon_data->room_data[i][room_id].tr_pos_type = INF_ROOM_POS_TYPE_EX_1;
-          p_dungeon_data->room_data[i][room_id].room_type = INF_TOOL_GetRoomType(INF_ROOM_POS_TYPE_EX_1);
-          no_tr_room_index++;
-          // 未配置部屋数以上は配置できない
-          GF_ASSERT( no_tr_room_index <= no_tr_room_cnt  );
-        }
-      }
     }
   }
+#endif
+}
 
-  // 配置人数が32人以上の場合、ランダムで適当な人数まで減らす
+//----------------------------------------------------------------------------
+/**
+ *	@brief  指定階に配置する部屋テーブルを取得する
+ *
+ *	@param	area_no 
+ *	@param	floor_no 
+ *	@param	version 
+ *	@param	*p_pos_type_id_array 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static u8 GetRoomTypeArray( int area_no ,u8 floor_no ,u8 version ,u8 *p_pos_type_id_array )
+{
+  int i = 0;
+  int data_index = 0;
+  const u8 *p_room_table = INF_TOOL_GetFloorData( area_no ,floor_no ,version );
+  // クリア
+  GFL_STD_MemFill(p_pos_type_id_array ,INF_TR_ROOM_POS_TYPE_NONE ,sizeof(u8)*ROOM_MAX );
+
+  // 使用可能な部屋を取得
+  for( i = 0; i < INF_TR_ROOM_POS_TYPE_NONE; i++)
   {
-    int floor_no;
-    for( floor_no = 0; floor_no < INFINITYDUNGEON_FLOOR_MAX; floor_no++ )
+    u8 room_num = p_room_table[i];
+    while( room_num > 0 )
     {
-      int member_num = 0;
-      for( i = 0; i< ROOM_MAX; i++ )
-      {
-        u8 pos_type = p_dungeon_data->room_data[floor_no][i].tr_pos_type;
-        if( INF_TOOL_GetMemberNum(pos_type) > 0 )
-        {
-          member_num += INF_TOOL_GetMemberNum(pos_type);
-        }
-      }
-
-      if( member_num > INFINITY_DUNGEON_TRID_MAX )
-      {
-        int rmv_num = member_num - INFINITY_DUNGEON_TRID_MAX;
-        RemoveTrRoom( p_dungeon_data , floor_no , rmv_num , &rand_context);
-      }
-
-#ifdef  PM_DEBUG
-      // 再度人数を数える
-      member_num = 0;
-      for( i = 0; i< ROOM_MAX; i++ )
-      {
-        u8 pos_type = p_dungeon_data->room_data[floor_no][i].tr_pos_type;
-        if( INF_TOOL_GetMemberNum(pos_type) > 0 )
-        {
-          member_num += INF_TOOL_GetMemberNum(pos_type);
-        }
-      }
-      // 人数チェック
-      GF_ASSERT_MSG( member_num > 0 ,"配置人数が０人です\n");
-#endif
+      ONOUE_Printf("抽選可能部屋タイプ:%d\n",i);
+      p_pos_type_id_array[data_index] = i;
+      data_index++;
+      room_num--;
     }
   }
-#endif
+  return data_index;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デフォルト部屋の配列を取得する
+ *
+ *	@param	area_no 
+ *	@param	floor_no 
+ *	@param	version 
+ *	@param	*p_pos_type_id_array 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static u8 GetDefaultRoomTypeArray( int area_no ,u8 floor_no ,u8 version ,u8 *p_pos_type_id_array )
+{
+  int i = 0;
+  int data_index = 0;
+  const u8 *p_room_table = INF_TOOL_GetFloorData( area_no ,floor_no ,version );
+
+  // クリア
+  GFL_STD_MemFill(p_pos_type_id_array ,INF_TR_ROOM_POS_TYPE_NONE ,sizeof(u8)*ROOM_MAX );
+
+  // 使用可能な部屋を取得
+  for( i = 0; i < INF_TR_ROOM_POS_TYPE_NONE; i++)
+  {
+    u8 room_num = p_room_table[i];
+    if( room_num > 0 )
+    {
+      const INF_ROOM_SET_TR_PARAM *p_room_param = INF_TOOL_GetRoomTrParam( i );
+      if( p_room_param->room_type == ROOM_TYPE_DEFAULT )
+      {
+        p_pos_type_id_array[data_index] = i;
+        data_index++;
+      }
+    }
+  }
+  return data_index;
+
 }
 
 //----------------------------------------------------------------------------
@@ -393,6 +430,53 @@ static void RemoveTrRoom( INF_DUNGEON_DATA *p_dungeon_data ,const u8 floor_no ,i
   }
 
     GF_ASSERT_MSG(0,"トレーナーが配置されている部屋がありません\n");
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボス部屋の設置可能配列を取得する
+ *
+ *	@param	*p_room_data 
+ *	@param	*p_index_array 
+ *	@param	fs_x 
+ *	@param	fs_y
+ *
+ *	@retval 配列に格納した数
+ */
+//-----------------------------------------------------------------------------
+static int GetBossRoomSetArray( ROOM_DATA *p_room_data ,int *p_index_array ,int fs_x ,int fs_y)
+{
+  DIG_POS pos;
+  int cnt = 0;
+  int x,y;
+  ROOM_DATA *p_rd;
+  GFL_STD_MemFill(p_index_array, ROOM_MAX, sizeof(int)*ROOM_MAX);
+
+  // ボス部屋は一番下の列に出ない
+  for( y = 0; y<fs_y-1; y++ )
+  {
+    for( x = 0; x<fs_x; x++ )
+    {
+      // 現在地がエレベータ部屋
+      {
+        pos.x = x;
+        pos.y = y;
+        p_rd= GetDigPosRoomData( &pos ,p_room_data);
+        if( p_rd->room_type == ROOM_TYPE_ELEVATOR )
+        {
+          continue;
+        }
+      }
+
+      // 設置可能位置を保存する
+      {
+        p_index_array[cnt] = x + y*ROOM_MAX_X;
+        cnt++;
+      }
+    }
+  }
+  return cnt;
+
 }
 
 //----------------------------------------------------------------------------

@@ -37,11 +37,11 @@ enum{
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_tr_move_type.cdat"
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_tr_move_type.h"
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_room_pos_type.cdat"
-#include "../../../resource/infinity_dungeon/data/infinity_dungeon_room_setup_data.cdat"
 // トレーナーデータ
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_tr_area_data.cdat"
 // ダンジョン関連データ
 #include "infinity_dungeon_tool.cdat"
+#include "../../../resource/infinity_dungeon/data/inf_area_data.cdat"
 
 #ifndef VS_PROJECT
 SDK_COMPILER_ASSERT( INF_TR_AREA_DATA_MAX == (INF_DUNGEON_TR_ID_MAX -INF_TRID_CNT_RECOVERY) );
@@ -73,20 +73,6 @@ const INF_MMDL_PARAM* INF_TOOL_GetMMDLParam( u16 move_type )
 const INF_ROOM_SET_TR_PARAM* INF_TOOL_GetRoomTrParam( u16 tr_pos_type )
 {
   return &sc_room_tr_param[tr_pos_type];
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  部屋配置トレーナーパラメータ取得
- *
- *	@param	tr_pos_type 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-const INF_ROOM_SETUP_PARAM* INF_TOOL_GetRoomSetupParam( u16 area_no )
-{
-  return &sc_room_setup_param[area_no];
 }
 
 //----------------------------------------------------------------------------
@@ -375,6 +361,30 @@ void INF_TOOL_RndArray( u32 *p_array , int size ,GFL_STD_RandContext *rand_conte
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  配列内のデータをランダムにならびかえる(u8版)
+ *
+ *	@param	*p_array 
+ *	@param	size 
+ *	@param	context 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void INF_TOOL_RndArrayU8( u8 *p_array , int size ,GFL_STD_RandContext *rand_context )
+{
+  int i;
+  u32 tmp;
+  for( i = 0; i < size ;i++ )
+  {
+    u32 rnd = GFL_STD_Rand( rand_context,size);
+    tmp = p_array[rnd];
+    p_array[rnd] = p_array[i];
+    p_array[i] = tmp;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  無限ダンジョン用シードを生成する
  *
  *	@param	*p_seed 
@@ -406,6 +416,27 @@ void INF_TOOL_SetDungeonSeed( INF_DUNGEON_SEED *p_seed ,u32 master_seed )
       p_seed->tr_seed[i][n] = GFL_STD_Rand( &rand_context, GFL_STD_RAND_MAX);
     }
   }
+}
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フロアデータ配列を取得する
+ *
+ *	@param	area_no 
+ *	@param	version 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+const u8* INF_TOOL_GetFloorData( u16 area_no ,u16 floor_no ,u8 version )
+{
+  if( version == VERSION_B2 )
+  {
+    return sc_floor_data_b[area_no][floor_no];
+  }
+  else
+  {
+    return sc_floor_data_w[area_no][floor_no];
+  }
 }
 

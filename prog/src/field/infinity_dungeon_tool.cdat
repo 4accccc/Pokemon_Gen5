@@ -303,21 +303,5 @@ static const struct
 //-------------------------------------
 // 各エリアのフロアサイズ
 //=====================================
-static const struct 
-{
-  int fs_x;
-  int fs_y;
-}sc_floor_size[INFINITY_DUNGEON_AREA_ID_MAX] =
-{
-  { 3 ,3 }, // エリア 1
-  { 3 ,3 }, // エリア 2
-  { 3 ,3 }, // エリア 3
-  { 3 ,3 }, // エリア 4
-  { 3 ,3 }, // エリア 5
-  { 4 ,4 }, // エリア 6
-  { 4 ,4 }, // エリア 7
-  { 4 ,4 }, // エリア 8
-  { 4 ,4 }, // エリア 9
-  { 4 ,4 }, // エリア 10
-};
+#include "../../../resource/infinity_dungeon/data/inf_floor_size.cdat"
 

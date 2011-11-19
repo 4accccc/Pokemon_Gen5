@@ -10,17 +10,6 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
-#define INFINITYDUNGEON_FLOOR_AREA1_MAX   (1)  // エリア1の階数
-#define INFINITYDUNGEON_FLOOR_AREA2_MAX   (1)  // エリア2の階数
-#define INFINITYDUNGEON_FLOOR_AREA3_MAX   (2)  // エリア3の階数
-#define INFINITYDUNGEON_FLOOR_AREA4_MAX   (2)  // エリア4の階数
-#define INFINITYDUNGEON_FLOOR_AREA5_MAX   (3)  // エリア5の階数
-#define INFINITYDUNGEON_FLOOR_AREA6_MAX   (3)  // エリア6の階数
-#define INFINITYDUNGEON_FLOOR_AREA7_MAX   (4)  // エリア7の階数
-#define INFINITYDUNGEON_FLOOR_AREA8_MAX   (4)  // エリア8の階数
-#define INFINITYDUNGEON_FLOOR_AREA9_MAX   (5)  // エリア9の階数
-#define INFINITYDUNGEON_FLOOR_AREA10_MAX  (5)  // エリア10の階数
-
 #define INFINITYDUNGEON_FLOOR_MAX   (5)  // フロアの最大数
 
 #define INFINITY_DUNGEON_AREA_ID_1  (0)

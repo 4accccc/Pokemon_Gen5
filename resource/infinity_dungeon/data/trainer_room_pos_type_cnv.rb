@@ -176,6 +176,36 @@ room_data_list.each_with_index { |item,i|
 
 max = room_data_list.size
 out_header_file.puts "#define INF_TR_ROOM_POS_TYPE_NONE (%d) // トレーナーを配置しない"%max
+out_header_file.puts "#define INF_TR_ROOM_POS_TYPE_MAX  (%d)"%max
 
 out_file.close
 out_header_file.close
+
+
+
+header =  <<EOS
+#/[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+#**
+#*
+#*	@file		%s
+#*	@brief  無限ダンジョン内部屋データハッシュファイル
+#*	@author	Masayuki Onoue
+#*	@date		2011.11.18
+#*  @note   コンバータによって出力されたファイルです
+#*
+#*/
+#/]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+$room_type_hash = {
+EOS
+file_name = "room_type_hash.rb"
+out_file = open( file_name ,"w" )
+out_file.puts header % [file_name]
+
+room_data_list.each_with_index { |item,i|
+  out_file.puts '  "%s" => %d,'%[item.type_name,i]
+}
+out_file.puts "}"
+
+out_file.close
+

@@ -23,9 +23,9 @@
 #include "C:/home\pokemon_tool/inf_dungeon_test/inf_dungeon_test/inf_debug_gflib_override.h"
 #endif
 
-#include "../../../resource/infinity_dungeon/data/infinity_dungeon_room_setup_data.h" // for INF_AREA_ROOM_SET_MAX
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_tr_area_data.h" // for INF_TR_AREA_DATA_MAX
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_room_pos_type.h" // for INF_TR_ROOM_POS_TYPE_NONE
+#include "../../../resource/infinity_dungeon/data/inf_floor_num.h" // for INF_AREA_ROOM_SET_MAX
 #include "arc/fieldmap/fldmmdl_objcode.h"   // for OBJCODE
 #include "infinity_dungeon_warp_dir.h"      // for WARP_DIR_*
 #include "fieldmap/zone_id.h"               // for ZONE_ID_*
@@ -128,16 +128,8 @@ typedef struct {
 //=====================================
 typedef struct {
   u32 tr_pos_type;
-  u32 probability;
+//  u32 probability;
 }INF_ROOM_DATA;
-
-//-------------------------------------
-///	部屋設置用データ
-//=====================================
-typedef struct {
-  u8  member_num;
-  INF_ROOM_DATA room_setup_data[INF_AREA_ROOM_SET_MAX];
-}INF_ROOM_SETUP_PARAM;
 
 //-------------------------------------
 ///	トレーナーデータ
@@ -216,7 +208,6 @@ extern const INF_ROOM_SET_TR_PARAM* INF_TOOL_GetRoomTrParam( u16 tr_pos_type );
 extern u8 INF_TOOL_GetMemberNum( u8 pos_type );
 extern u8 INF_TOOL_GetRoomType( u8 pos_type );
 extern u8 INF_TOOL_GetRoomVersion( u8 pos_type );
-extern const INF_ROOM_SETUP_PARAM* INF_TOOL_GetRoomSetupParam( u16 area_no );
 extern const INF_TR_AREA_DATA* INF_TOOL_GetTrainerParam( u16 tr_index );
 extern void INF_TOOL_GetFloorSize( u8 area_no ,s32 *fs_x ,s32 *fs_y );
 extern const u16* INF_TOOL_GetZoneIdTable( u8 version );
@@ -229,5 +220,7 @@ extern u8 INF_TOOL_GetPowRnd( u16 area_no );
 extern u8 INF_TOOL_GetTrainerHintType( u16 obj_code);
 extern u8 INF_TOOL_GetTrainerTalkType( u16 obj_code);
 extern void INF_TOOL_RndArray( u32 *p_array , int size ,GFL_STD_RandContext *rand_context );
+extern void INF_TOOL_RndArrayU8( u8 *p_array , int size ,GFL_STD_RandContext *rand_context );
 extern void INF_TOOL_SetDungeonSeed( INF_DUNGEON_SEED *p_seed ,u32 master_seed );
+extern const u8* INF_TOOL_GetFloorData( u16 area_no ,u16 floor_no ,u8 version );
 
