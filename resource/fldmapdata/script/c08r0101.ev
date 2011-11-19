@@ -145,9 +145,9 @@ EVENT_END
 //	éÂêlåˆÅFÉVÉÉÉKÇ…ó◊ê⁄
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_to_swleader8
-	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 

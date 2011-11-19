@@ -398,7 +398,7 @@ EVENT_END
 EVENT_START   ev_reserve_c08_plazma_comming_01
   
   //シャガ：なんだ？
-  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_04 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_04 , C08_SWLEADER7_01 , POS_UR)
   _MSGWIN_CLOSE()
   
   //３Ｄデモコール
@@ -449,19 +449,19 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
   _DISP_FADE_END_CHECK()
   
   //シャガ：この　こおりの　せかいは…
-  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_04a , C08_SWLEADER7_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_04a , C08_SWLEADER7_01 , POS_UR)
   _MSGWIN_CLOSE()
   
   //オノノクス動作OBJ表示
   _OBJ_ADD_EX( 419, 163, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE46, MV_DMY )
   
   //シャガ：ドラゴンテールだ
-  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_05 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_05 , C08_SWLEADER7_01 , POS_UR)
   _MSGWIN_CLOSE()
   
   //オノノクスの鳴き声を鳴らす
   _VOICE_PLAY(MONSNO_509,0)
-  _BALLOONWIN_OBJMSG_POS( msg_c08_poke47_01 , MMDL_ID_EVENTOBJ_00 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_poke47_01 , MMDL_ID_EVENTOBJ_00 , POS_DR)
   _VOICE_WAIT()
   _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
@@ -486,13 +486,13 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
   _OBJ_ANIME_WAIT()
   
   //シャガ：よくやった！
-  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_06 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_06 , C08_SWLEADER7_01 , POS_UR)
   
   //オノノクス動作OBJ非表示
   _OBJ_DEL(MMDL_ID_EVENTOBJ_00)
   
   //シャガ：それにしても
-  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_07 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_07 , C08_SWLEADER7_01 , POS_UR)
   _MSGWIN_CLOSE()
   
   //？？？：そうでしょうとも
@@ -520,7 +520,7 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
   _OBJ_ANIME_WAIT()
   
   //シャガ：おまえは
-  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_08 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_08 , C08_SWLEADER7_01 , POS_UR)
   _MSGWIN_CLOSE()
   
   //アニメ：ヴィオ左右を見る
@@ -528,19 +528,19 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
   _OBJ_ANIME_WAIT()
   
   //ヴィオ：それにしても
-  _BALLOONWIN_OBJMSG_POS( msg_c08_sage7_02 , C08_SWSAGE7_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_sage7_02 , C08_SWSAGE7_01 , POS_DL)
   _MSGWIN_CLOSE()
   
   //ヴィオ：ようけんを
-  _BALLOONWIN_OBJMSG_POS( msg_c08_sage7_03 , C08_SWSAGE7_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_sage7_03 , C08_SWSAGE7_01 , POS_DL)
   _MSGWIN_CLOSE()
   
   //シャガ：2年前
-  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_09 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_09 , C08_SWLEADER7_01 , POS_UR)
   _MSGWIN_CLOSE()
   
   //ヴィオ：想像通りの
-  _BALLOONWIN_OBJMSG_POS( msg_c08_sage7_04 , C08_SWSAGE7_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_sage7_04 , C08_SWSAGE7_01 , POS_DL)
   _MSGWIN_CLOSE()
   
   //アニメ：ヴィオ1歩上へ
@@ -560,7 +560,7 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
   _OBJ_DEL( C08_SWSAGE7_01 )
   
   //シャガ：2年前
-  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_10 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_10 , C08_SWLEADER7_01 , POS_UR)
   
   //アニメ：主人公とシャガ向き合う
   _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_r )
@@ -571,7 +571,7 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
   _PLAYER_NAME( 0 )
   
   //シャガ：（主人公名）！きみの
-  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_11 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_11 , C08_SWLEADER7_01 , POS_UR)
   _MSGWIN_CLOSE()
   
   //アニメ：シャガ退場
