@@ -794,6 +794,7 @@ static void pokewood_store_Subset( const BATTLE_SETUP_PARAM *setup, POKEWOOD_REC
 {
   rec->audience_num = setup->audience_num;       // 上映開始時観客数
   rec->rental_flag  = setup->pokewoodRentalFlag; // レンタルポケモンを使っているか？
+  rec->profit       = setup->pokewoodProfit;     // 興行収入
 }
 
 //----------------------------------------------------------------------------------
@@ -808,5 +809,6 @@ static void pokewood_restore_Subset( BATTLE_SETUP_PARAM* setup, const POKEWOOD_R
 {
   setup->audience_num = rec->audience_num;      // 上映開始時観客数
   setup->pokewoodRentalFlag = rec->rental_flag; // レンタルポケモンを使っているか？
+  // 興行収入は計算されるので代入しなくても大丈夫
 }
 
