@@ -26,7 +26,31 @@ _EVENT_DATA    ev_d10r0301_plazmam_02
 _EVENT_DATA    ev_d10r0301_swplazmam_01
 _EVENT_DATA    ev_d10r0301_swplazmam_02
 _EVENT_DATA    ev_d10r0301_swplazmaw_01
+_EVENT_DATA    ev_zone_d10r0301
+_EVENT_DATA    ev_init_d10r0301
 _EVENT_DATA_END
+
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_d10r0301
+
+//
+  
+INIT_EVENT_END
+
+/************************************************************/
+/*		FIELD_INIT_SCRIPT                             */
+/************************************************************/
+INIT_EVENT_START   ev_init_d10r0301
+
+  //ロットイベント終了後ならOBJ配置変更
+  IF $WK_SCENE_D10R0301_SWPLAZMA_01 == 1 THEN
+    _OBJ_POS_CHANGE( D10R0301_PLAZMAM_01, 25, 0, 65, DIR_UP )
+    _OBJ_POS_CHANGE( D10R0301_PLAZMAM_02, 27, 0, 65, DIR_UP )
+  ENDIF
+  
+INIT_EVENT_END
 
 
 /************************************************************/
@@ -37,40 +61,58 @@ EVENT_START ev_pos_d10r0301_sage6_01
   //主人公・ライバル名代入
   _PLAYER_NAME( 0 )
   _RIVAL_NAME( 1 )
-
-  //アニメ：主人公移動
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 25, 71, FORCE_TYPE_NPC, 8, DIR_LR)
-  _TIME_WAIT( 40 )
+  
   //アニメ：ライバル振り向く
   _OBJ_ANIME( D10R0301_SWRIVAL_01 , anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：こっちだ
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swrival_00 , D10R0301_SWRIVAL_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：主人公移動
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 25, 70, FORCE_TYPE_NPC, 8, DIR_LR)
   _OBJ_ANIME_WAIT()
   
   //ライバル：ちょっとまってな
   _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swrival_01 , D10R0301_SWRIVAL_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
   
+  //カメラ操作　アデク追従
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_MOVE( 9688,0,970752,1736704,0,4358144,40 )
+  
   //アニメ：ライバル上を見る
   _OBJ_ANIME( D10R0301_SWRIVAL_01 , anm_staystep_u )
   _OBJ_ANIME_WAIT()
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   
   //ロット：ええい！
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_sage6_01 , D10R0301_SAGE6_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_sage6_01 , D10R0301_SAGE6_01 ,POS_DR )
   _MSGWIN_CLOSE()
   
   //プラズマ団員：ダメだね
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swplazmam1_01 , D10R0301_SWPLAZMAM_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swplazmam1_01 , D10R0301_SWPLAZMAM_01 ,POS_UL )
   _MSGWIN_CLOSE()
   
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (40)
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
+  
   //ライバル：ダメだな
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swrival_02 , D10R0301_SWRIVAL_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swrival_02 , D10R0301_SWRIVAL_01 ,POS_UL )
   _MSGWIN_CLOSE()
   
   //アニメ：ライバル移動
-  _OBJ_ANIME_AUTO( D10R0301_SWRIVAL_01 , 25, 69, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_AUTO( D10R0301_SWRIVAL_01 , 25, 68, FORCE_TYPE_NPC, 8, DIR_LR)
   _OBJ_ANIME_WAIT()
   
   //ライバル：おい！
-  _GIZAWIN_OBJMSG_POS( msg_d10r0301_swrival_03 , D10R0301_SWRIVAL_01, POS_DEFAULT )
+  _GIZAWIN_OBJMSG_POS( msg_d10r0301_swrival_03 , D10R0301_SWRIVAL_01, POS_UL )
   _GIZAWIN_CLOSE()
   
   //アニメ：全員振り向く
@@ -83,21 +125,27 @@ EVENT_START ev_pos_d10r0301_sage6_01
   _OBJ_ANIME_WAIT()
   
   //ライバル：オマエら
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swrival_04 , D10R0301_SWRIVAL_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swrival_04 , D10R0301_SWRIVAL_01 ,POS_UL )
   _MSGWIN_CLOSE()
   
   //プラズマ団員：なにいってんだ？
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swplazmam1_02 , D10R0301_SWPLAZMAM_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swplazmam1_02 , D10R0301_SWPLAZMAM_03 ,POS_UR )
   _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル右を見る
+  _OBJ_ANIME( D10R0301_SWRIVAL_01 , anm_staystep_r )
+  _OBJ_ANIME_WAIT()
   
   //ライバル：じょうとうだね
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swrival_05 , D10R0301_SWRIVAL_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swrival_05 , D10R0301_SWRIVAL_01 ,POS_UL )
   _MSGWIN_CLOSE()
   
-  //【仮】アニメ：ライバルロットを見る（現在は仮配置なので処理なし）
+  //アニメ：ライバルロットを見る
+  _OBJ_ANIME( D10R0301_SWRIVAL_01 , anm_staystep_u )
+  _OBJ_ANIME_WAIT()
   
   //ライバル：ロットの　じいさん！
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swrival_06 , D10R0301_SWRIVAL_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swrival_06 , D10R0301_SWRIVAL_01 ,POS_UL )
   _MSGWIN_CLOSE()
   
   _OBJ_ANIME( D10R0301_SAGE6_01 , anm_common_hatena )
@@ -107,26 +155,39 @@ EVENT_START ev_pos_d10r0301_sage6_01
   _OBJ_ANIME_WAIT()
   
   //ライバル：だいじなものを
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swrival_07 , D10R0301_SWRIVAL_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swrival_07 , D10R0301_SWRIVAL_01 ,POS_UL)
   _MSGWIN_CLOSE()
   
-  //プラズマ団員：おこさまが
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swplazmam1_03 , D10R0301_SWPLAZMAM_01 ,POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  //【仮】アニメ：プラズマ団員接近（仮配置なので移動位置も仮）
-  _OBJ_ANIME_AUTO( D10R0301_SWPLAZMAM_03 , 26, 69, FORCE_TYPE_NPC, 8, DIR_LR)
-  _OBJ_ANIME_AUTO( D10R0301_SWPLAZMAM_04 , 26, 71, FORCE_TYPE_NPC, 8, DIR_LR)
+  //アニメ：ライバル・主人公プラズマ団員を見る
   _OBJ_ANIME( D10R0301_SWRIVAL_01 , anm_staystep_r )
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_r )
   _OBJ_ANIME_WAIT()
   
-  //ライバル：（主人公名）そっちは任せる！
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swrival_08 , D10R0301_SWRIVAL_01 ,POS_DEFAULT )
+  //プラズマ団員：おこさまが
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swplazmam1_03 , D10R0301_SWPLAZMAM_03 ,POS_UR )
   _MSGWIN_CLOSE()
   
+  //アニメ：プラズマ団員接近
+  _OBJ_ANIME_AUTO( D10R0301_SWPLAZMAM_03 , 26, 68, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_AUTO( D10R0301_SWPLAZMAM_04 , 26, 70, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：ライバル・主人公向き合う
+  _OBJ_ANIME( D10R0301_SWRIVAL_01 , anm_staystep_d )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：（主人公名）そっちは任せる！
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swrival_08 , D10R0301_SWRIVAL_01 ,POS_UL )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル・主人公プラズマ団員を見る
+  _OBJ_ANIME( D10R0301_SWRIVAL_01 , anm_staystep_r )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
   //プラズマ団員（４）：だってよ！
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swplazmam2_01 , D10R0301_SWPLAZMAM_04 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swplazmam2_01 , D10R0301_SWPLAZMAM_04 ,POS_DR )
   _MSGWIN_CLOSE()
   
   //トレーナー戦
@@ -152,7 +213,7 @@ EVENT_START ev_pos_d10r0301_sage6_01
   ENDIF
   
   //アニメ：ロット接近
-  _OBJ_ANIME_AUTO( D10R0301_SAGE6_01 , 26, 71, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( D10R0301_SAGE6_01 , 26, 70, FORCE_TYPE_NPC, 8, DIR_UD)
   _OBJ_ANIME_WAIT()
   
   //アニメ：ロット主人公の方を向く
@@ -160,7 +221,7 @@ EVENT_START ev_pos_d10r0301_sage6_01
   _OBJ_ANIME_WAIT()
   
   //ロット：そなたたち
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_sage6_02 , D10R0301_SAGE6_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_sage6_02 , D10R0301_SAGE6_01 ,POS_UR )
   _MSGWIN_CLOSE()
   
   //アイテム入手処理：げんきのかたまり*3
@@ -171,18 +232,18 @@ EVENT_START ev_pos_d10r0301_sage6_01
   _RIVAL_NAME( 1 )
   
   //アニメ：ロットライバルの方へ
-  _OBJ_ANIME_AUTO( D10R0301_SAGE6_01 , 26, 69, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( D10R0301_SAGE6_01 , 26, 68, FORCE_TYPE_NPC, 8, DIR_UD)
   _OBJ_ANIME_WAIT()
   //アニメ：ロットライバルの方を向く
   _OBJ_ANIME( D10R0301_SAGE6_01 , anm_staystep_l )
   _OBJ_ANIME_WAIT()
   
   //ロット：そなたも
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_sage6_03 , D10R0301_SAGE6_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_sage6_03 , D10R0301_SAGE6_01 ,POS_UR )
   _MSGWIN_CLOSE()
   
   //ライバル：ありがとよ
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swrival_09 , D10R0301_SWRIVAL_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swrival_09 , D10R0301_SWRIVAL_01 ,POS_UL )
   _MSGWIN_CLOSE()
   
   //アニメ：ライバル上を向く
@@ -191,18 +252,25 @@ EVENT_START ev_pos_d10r0301_sage6_01
   _OBJ_ANIME_WAIT()
   
   //ライバル：さ　いくぜ
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swrival_10 , D10R0301_SWRIVAL_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swrival_10 , D10R0301_SWRIVAL_01 ,POS_UL )
   _MSGWIN_CLOSE()
   
+  //カメラ操作　アデク追従
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_MOVE( 9688,0,970752,1736704,0,4358144,40 )
+  
   //アニメ：ロット・プラズマ団と対峙
-  _OBJ_ANIME_AUTO( D10R0301_SAGE6_01 , 26, 67, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( D10R0301_SAGE6_01 , 26, 66, FORCE_TYPE_NPC, 8, DIR_UD)
   _TIME_WAIT( 16 )
-  _OBJ_ANIME( D10R0301_PLAZMAM_01 , anm_staystep_u )
-  _OBJ_ANIME( D10R0301_PLAZMAM_02 , anm_staystep_u )
+  _OBJ_ANIME_AUTO( D10R0301_PLAZMAM_01 , 25, 65, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( D10R0301_PLAZMAM_02 , 27, 65, FORCE_TYPE_NPC, 8, DIR_UD)
   _OBJ_ANIME_WAIT()
   
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  
   //ロット：つよさのないこころも
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_sage6_04 , D10R0301_SAGE6_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_sage6_04 , D10R0301_SAGE6_01 ,POS_UR )
   _MSGWIN_CLOSE()
   
   //アニメ：ロットふりむき
@@ -210,11 +278,11 @@ EVENT_START ev_pos_d10r0301_sage6_01
   _OBJ_ANIME_WAIT()
   
   //ロット：おまえたち　いけ！
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_sage6_05 , D10R0301_SAGE6_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_sage6_05 , D10R0301_SAGE6_01 ,POS_UR )
   _MSGWIN_CLOSE()
   
   //ライバル：…そっか
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swrival_11 , D10R0301_SWRIVAL_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_swrival_11 , D10R0301_SWRIVAL_01 ,POS_DL )
   _MSGWIN_CLOSE()
   
   //アニメ：ロットふりむき・ライバル退場
@@ -223,9 +291,16 @@ EVENT_START ev_pos_d10r0301_sage6_01
   _OBJ_ANIME_WAIT()
   
   //ロット：たしかにあのとき
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_sage6_06 , D10R0301_SAGE6_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0301_sage6_06 , D10R0301_SAGE6_01 ,POS_UR )
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (40)
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
   
   //ライバル動作モデル削除
   _OBJ_DEL( D10R0301_SWRIVAL_01 )
@@ -262,49 +337,69 @@ _ANIME_LABEL	anm_look_swrival_hatena
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swrival_bye_01
 	_ANIME_DATA	AC_WALK_R_4F,3
-	_ANIME_DATA	AC_WALK_U_4F,10
+	_ANIME_DATA	AC_WALK_U_4F,9
+	_ANIME_DATA	AC_WALK_L_4F,2
+	_ANIME_DATA	AC_WALK_U_4F,4
 	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
 /*					話しかけ：ロット						*/
 /************************************************************/
 EVENT_START ev_d10r0301_sage6_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d10r0301_sage6_06 )
+  _TALK_START_SE_PLAY()
+  _BALLOONWIN_TALKOBJ_MSG( msg_d10r0301_sage6_06 )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
 EVENT_END
 
 /************************************************************/
 /*					話しかけ：元プラズマ団（１）						*/
 /************************************************************/
 EVENT_START ev_d10r0301_plazmam_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d10r0301_hakaim1_01 )
+  _TALK_START_SE_PLAY()
+  _BALLOONWIN_TALKOBJ_MSG( msg_d10r0301_hakaim1_01 )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
 EVENT_END
 
 /************************************************************/
 /*					話しかけ：元プラズマ団（２）						*/
 /************************************************************/
 EVENT_START ev_d10r0301_plazmam_02
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d10r0301_hakaim2_01 )
+  _TALK_START_SE_PLAY()
+  _BALLOONWIN_TALKOBJ_MSG( msg_d10r0301_hakaim2_01 )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
 EVENT_END
 
 /************************************************************/
 /*					話しかけ：プラズマ団（１）						*/
 /************************************************************/
 EVENT_START ev_d10r0301_swplazmam_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d10r0301_swplazmam3_01 )
+  _TALK_START_SE_PLAY()
+  _BALLOONWIN_TALKOBJ_MSG( msg_d10r0301_swplazmam3_01 )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
 EVENT_END
 
 /************************************************************/
 /*					話しかけ：プラズマ団（２）						*/
 /************************************************************/
 EVENT_START ev_d10r0301_swplazmam_02
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d10r0301_swplazmam4_01 )
+  _TALK_START_SE_PLAY()
+  _BALLOONWIN_TALKOBJ_MSG( msg_d10r0301_swplazmam4_01 )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
 EVENT_END
 
 /************************************************************/
 /*					話しかけ：プラズマ団（３）						*/
 /************************************************************/
 EVENT_START ev_d10r0301_swplazmaw_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d10r0301_swplazmaw1_01 )
+  _TALK_START_SE_PLAY()
+  _BALLOONWIN_TALKOBJ_MSG( msg_d10r0301_swplazmaw1_01 )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
 EVENT_END
 
 //--------------------------------------------------------------------

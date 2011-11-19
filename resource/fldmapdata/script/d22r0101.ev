@@ -554,29 +554,12 @@ EVENT_START ev_pos_d22r0101_pokesearch_05
   _CAMERA_DEF_MOVE (32)
   
   //アニメ：プラズマ団退場
-  /*
-  IF $LCW_POSX == 51 THEN
-   _OBJ_ANIME( D22R0101_SWPLAZMAM_01, anm_swplazmam_goto_out_x51 )
-  ELSE
-   _OBJ_ANIME( D22R0101_SWPLAZMAM_01, anm_swplazmam_goto_out )
-  ENDIF
-  */
   _OBJ_ANIME( D22R0101_SWPLAZMAM_01, anm_swplazmam_goto_out_x51 )
   _TIME_WAIT( 4 * 5)
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
   _OBJ_ANIME_WAIT()
   
   //アニメ：ヨーテリーはしゃぐ
-  
-  /*
-  IF $LCW_POSX == 50 THEN
-    _OBJ_ANIME( D22R0101_POKE31_01, anm_pokeserch05_poke_x50 )
-  ELSIF $LCW_POSX == 51 THEN
-    _OBJ_ANIME( D22R0101_POKE31_01, anm_pokeserch05_poke_x51 )
-  ELSE
-    _OBJ_ANIME( D22R0101_POKE31_01, anm_pokeserch05_poke_x52 )
-  ENDIF
-  */
   _OBJ_ANIME( D22R0101_POKE31_01, anm_pokeserch05_poke_x51 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
   _OBJ_ANIME_WAIT()

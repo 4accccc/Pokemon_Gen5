@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/14 18:40:22
+#save date:2011/11/19 14:24:44
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d10r0301.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 0 -840
+152 0 -824
 #event number: 1
 #type
 1
@@ -71,7 +71,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-184 0 -840
+184 0 -824
 #event number: 2
 #type
 1
@@ -102,7 +102,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-168 0 -824
+168 0 -808
 #event number: 3
 #type
 1
@@ -164,7 +164,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-200 0 -856
+200 0 -840
 #event number: 5
 #type
 1
@@ -195,7 +195,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-200 0 -888
+200 0 -872
 #event number: 6
 #type
 1
@@ -226,7 +226,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 0 -872
+152 0 -856
 #event number: 7
 #type
 1
@@ -416,7 +416,7 @@ WK_SCENE_D10R0301_SWPLAZMA_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 32 -936
+152 0 -888
 #size
 3 1
 #Map Event List Data End
