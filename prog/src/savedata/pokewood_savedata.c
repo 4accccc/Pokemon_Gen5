@@ -481,10 +481,16 @@ int POKEWOOD_SAVEDATA_GetKanbanNo( POKEWOOD_SAVEDATA *sv, u32 index )
 //=============================================================================================
 void POKEWOOD_SAVEDATA_SetKanbanNo( POKEWOOD_SAVEDATA *sv, u32 index, int title_no )
 {
-  // セーブデータが４つ以上になるので、看板数以上の登録は無視するように変更
+  // セーブデータが４つ以上になったので、押し出し式に変更
 //  if(index<POKEWOOD_KANBAN_MAX){
-    sv->title_no[index] = title_no;
+//    sv->title_no[index] = title_no;
 //  }
+
+  // 最新の看板は常に０として扱い、登録されるたびに押し出していく３を超えたら廃棄
+  sv->title_no[3] = sv->title_no[2];
+  sv->title_no[2] = sv->title_no[1];
+  sv->title_no[1] = sv->title_no[0];
+  sv->title_no[0] = title_no;
 }
 
 //=============================================================================================

@@ -41,7 +41,7 @@
 #define GIMMICK_TMP_ASSIGN_ID   (1)
 
 // ŠÅ”ÂŒn
-#define POSTER_NUM    (POKEWOOD_SHOWING_MAX)   // ‘”
+#define POSTER_NUM    ( 4 )   // ‰f‰æŠÙ‚É‘¶Ý‚·‚éŠÅ”Â‚Ì‘”
 
 // À•WŠÖŒW
 #define GRID_HALF_SIZE  ((FIELD_CONST_GRID_SIZE/2)*FX32_ONE)
