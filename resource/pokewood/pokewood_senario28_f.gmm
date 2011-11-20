@@ -549,9 +549,9 @@
 	</row>
 	<row id="pw_event3_react_enemy_1">
 		<language name="JPN" width="256">モニカ『けど　って　なによ！！
-けど　って　いうのは！</language>
-		<language name="JPN_KANJI" width="256">モニカ『けど　って　なによ！！
-けど　って　言うのはっ！</language>
+ほかに　なんか　あるわけ！？</language>
+		<language name="JPN_KANJI" width="256">モニカ『けど　って　何よ！！
+他に　なんか　あるわけ！？</language>
 	</row>
 	<row id="pw_event3_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『してるよ！！</language>
@@ -561,7 +561,7 @@
 		<language name="JPN" width="256">モニカ『フン！
 くちだけなら　なんとでも　いえるわ！</language>
 		<language name="JPN_KANJI" width="256">モニカ『フン！
-口だけなら　なんとでも　言えるわ！</language>
+口だけなら　何とでも　言えるわ！</language>
 	</row>
 	<row id="pw_event4_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『おねえちゃん……</language>
@@ -609,7 +609,7 @@
 [1:00:トレーナー名:1]　だって
 こんな　デカい　おねえちゃんと▽
 いっしょに　いたくないんでしょ！！</language>
-		<language name="JPN_KANJI" width="256">モニカ『なんだって　いうのよっ！！▼
+		<language name="JPN_KANJI" width="256">モニカ『何だって　いうのよっ！！▼
 どうせ　私は　このまま　一生
 この　大きな　身体の　ままで▽
 生きていくんでしょっ！？▼
@@ -675,14 +675,7 @@
 ボールが　はじけて　こわれたって▼
 いそいで　おねえちゃんを　みると
 あんなに　デカかった　からだが▽
-みるみる　ちぢんでいった……▼
-……グアイさんの　いってた
-のろいとか　こころの　ちからって▽
-いみは　よく　わかんない……▼
-だけど　おねえちゃんは
-アタシの　かけがえのない　かぞく……▼
-もとどおりに　なった　おねえちゃんに
-アタシは　おもいきり　とびついた……</language>
+みるみる　ちぢんでいった……</language>
 		<language name="JPN_KANJI" width="256">……ふたりで　笑いあってると
 突然　グアイさんが▽
 大きな　声で　さけんだの……▼
@@ -690,8 +683,18 @@
 ボールが　弾けて　壊れたって▼
 急いで　お姉ちゃんを　みると
 あんなに　デカかった　身体が▽
-みるみる　縮んでいった……▼
-……グアイさんの　言ってた
+みるみる　縮んでいった……
+</language>
+	</row>
+	<row id="pw_event5_hero_3">
+		<language name="JPN" width="256">……グアイさんの　いってた
+のろいとか　こころの　ちからって▽
+いみは　よく　わかんない……▼
+だけど　おねえちゃんは
+アタシの　かけがえのない　かぞく……▼
+もとどおりに　なった　おねえちゃんに
+アタシは　おもいきり　とびついた……</language>
+		<language name="JPN_KANJI" width="256">……グアイさんの　言ってた
 のろいとか　心の　力って▽
 意味は　よく　分かんない……▼
 だけど　お姉ちゃんは
@@ -917,7 +920,7 @@
 なにも　できないんだもん！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『仕方ないじゃん！▼
 今のアタシじゃ　お姉ちゃんに
-なにも　出来ないんだもん！！</language>
+何も　出来ないんだもん！！</language>
 	</row>
 	<row id="pw_event8_enemy_1">
 		<language name="JPN" width="256">モニカ『[1:00:トレーナー名:1]……</language>
@@ -929,13 +932,13 @@
 たよらなきゃ　なにも　できないなんて▽
 アタシだって　なさけない！！▼
 でも　どうしようも　ないんだよっ！！
-どうしたらいいか　わからないもん！！</language>
+どうしたらいいか　わかんないの！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『お姉ちゃんが
 苦しんでるのに　ポケモンに▽
 頼らなきゃ　なにも　出来ないなんて▽
 アタシだって　情けない！！▼
 でも　どうしようも　ないんだよっ！！
-どうしたらいいか　わからないもん！！</language>
+どうしたらいいか　分かんないの！！</language>
 	</row>
 	<row id="pw_event8_enemy_2">
 		<language name="JPN" width="256">モニカ『わかった……

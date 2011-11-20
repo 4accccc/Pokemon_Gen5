@@ -922,10 +922,10 @@
 	<row id="pw_event8_enemy_2">
 		<language name="JPN" width="256">こえ『……　……　……　……
 すっ！　すみません　でした！▽
-かんべん　してください！</language>
+かんべんして　くだせえ！</language>
 		<language name="JPN_KANJI" width="256">声『……　……　……　……
 すみません　でした！▽
-勘弁　してください！</language>
+勘弁して　くだせえ！</language>
 	</row>
 	<row id="pw_event8_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『やれやれ……
@@ -934,18 +934,21 @@
 やっと　正体を　現しましたね</language>
 	</row>
 	<row id="pw_event8_enemy_3">
-		<language name="JPN" width="256">こえ『もうしわけ　ありません！！
-おさっしの　とおり　わたくし
-ただの　にんげんで　ございます▼
-こだいのせきぞう　なんて
+		<language name="JPN" width="256">こえ『もうしわけ　ありやせん！▼
+おさっしの　とおり　あっしは
+ただの　にんげんで　ございやす▼
+こだいのせきぞう　なんてもんは
 まっかな　ウソ！▼
-せきぞうの　のろいも
+せきぞうの　のろい　なんてえのも
 まっかな　ウソ！▼
 きょうげんで　ございます……</language>
-		<language name="JPN_KANJI" width="256">声『お察しの　通り
-人間で　ございます▼
-古代の　石像なんて
-真っ赤な　ウソ！▽
+		<language name="JPN_KANJI" width="256">声『申し訳　ありやせん！▼
+お察しの　とおり　あっしは
+ただの　人間で　ございやす▼
+古代の石像　なんてもんは
+真っ赤な　ウソ！▼
+石像の　のろい　なんてえのも
+真っ赤な　ウソ！▼
 狂言で　ございます……</language>
 	</row>
 	<row id="pw_event8_hero_4">
@@ -955,26 +958,28 @@
 	<row id="pw_event8_enemy_4">
 		<language name="JPN" width="256">こえ『そちらに　いらっしゃる
 せんせいから　いらいを　うけて……▼
-ギャラが　たんまり　もらえるって
-いうんで　やってみたんで……</language>
-		<language name="JPN_KANJI" width="256">声『そこにいる　先生から
-依頼を　受けて……▽
-ギャラが　たんまり　頂けるって▽
-いうから　やってみたら……</language>
+ギャラの　ほうを　たんまり
+いただけるって　いうもんですから▽
+ついつい　やってみたんでさ……</language>
+		<language name="JPN_KANJI" width="256">声『そちらに　いらっしゃる
+先生から　依頼を　うけて……▼
+ギャラの　ほうを　たんまり
+頂けるって　いうもんですから▽
+ついつい　やってみたんでさ……</language>
 	</row>
 	<row id="pw_event8_enemy_5">
 		<language name="JPN" width="256">いらいぬし『こら！　バカもの！
 あくりょうたいじの　せんもんか　である
 ゴーストイレイザーに　しんようされれば▽
 のろいのせきぞう　としての　かちも
-はねあがり　ばかな　コレクターに▽
+はねあがり　アホな　コレクターに▽
 たかねで　うりとばせた　ものを！▼
 って　あっ……</language>
 		<language name="JPN_KANJI" width="256">依頼主『こら！　バカもんが！
 悪霊退治の　スペシャリスト　である
 ゴーストイレイザーに　信用されれば▽
 のろいの石像　としての価値も
-跳ね上がり　バカな　コレクターに▽
+跳ね上がり　アホな　コレクターに▽
 高値で　売り飛ばせた　ものを！▼
 って　あっ……</language>
 	</row>
@@ -1067,48 +1072,50 @@
 はかいのまじんの　もとに　かえります▼
 そして　まじんは　おそろしい　ちからを
 とりもどし　ふっかつ　するのです！▼
-どうですか？　ワクワクしません？
-ロマンを　かんじませんか？</language>
+どう？　ワクワクしない？
+ロマンとか　かんじない？▼
+ねえ　[1:00:トレーナー名:1]くん……</language>
 		<language name="JPN_KANJI" width="256">依頼主『オフコース！！
 封印を　解けば▽
 このエネルギーの　結晶は▽
 破壊の魔神の　元に　かえります▼
 そして　魔神は　恐ろしい　力を
 取り戻し　復活するのです！▼
-どうですか？　ワクワクしません？
-ロマンを　感じませんか？</language>
+どう？　ワクワクしない？
+ロマンとか　感じない？▼
+ねえ　[1:00:トレーナー名:1]くん……</language>
 	</row>
 	<row id="pw_event9_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『まさか……　おまえは……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『まさか……　お前は……</language>
 	</row>
 	<row id="pw_event9_enemy_3">
-		<language name="JPN" width="256">いらいぬし『さみしい　ですねえ……
-ようやく　きづいて　もらえました？▼
-ものおぼえの　わるい　あなたに▽
-もう　いちど　おおしえしましょう！▼
-わたしの　なは　アーカム！！
+		<language name="JPN" width="256">いらいぬし『さみしいなあ……
+ようやく　きづいて　もらえた？▼
+ものおぼえの　わるい　キミに▽
+もう　いちど　おしえて　あげるね！▼
+ボクの　なまえは　アーカム！！
 はかいのまじん　ふっかつを▽
-めざす　てんさいまじゅつし　です！</language>
-		<language name="JPN_KANJI" width="256">依頼主『さみしい　ですねえ……
-ようやく　気づいて　もらえました？▼
-物覚えの　悪い　あなたに▽
-もう一度　お教えしましょう！▼
-私の名は　アーカム！！
+めざす　てんさいまじゅつし　さ！</language>
+		<language name="JPN_KANJI" width="256">依頼主『さみしいなあ……
+ようやく　気づいて　もらえた？▼
+物覚えの　悪い　キミに▽
+もう一度　教えてあげるね！▼
+ボクの　名前は　アーカム！！
 破壊の魔神　復活を▽
-目指す　天才魔術師　です！</language>
+目指す　天才魔術師さ！</language>
 	</row>
 	<row id="pw_event9_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『アーカム……　あなた……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『アーカム……　あなた……</language>
 	</row>
 	<row id="pw_event9_enemy_4">
-		<language name="JPN" width="256">アーカム『あなたの　おかげで
-まじんの　ふういんは　とけた！！▼
-その　ほうせきを　みてみなさい！！</language>
-		<language name="JPN_KANJI" width="256">アーカム『あなたの　おかげで
-魔神の　封印は　解けた！▼
-その　宝石を　御覧なさい！！</language>
+		<language name="JPN" width="256">アーカム『キミの　おかげで
+まじんの　ふういんは　とけたよ！！▼
+その　ほうせきを　みてごらん！！</language>
+		<language name="JPN_KANJI" width="256">アーカム『キミの　おかげで
+魔神の　封印は　解けたよ！▼
+その　宝石を　見てごらん！</language>
 	</row>
 	<row id="pw_event9_hero_5">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな……
@@ -1117,9 +1124,9 @@
 宝石が　溶けていく……</language>
 	</row>
 	<row id="pw_event9_enemy_5">
-		<language name="JPN" width="256">アーカム『かえっていくのですよ！
+		<language name="JPN" width="256">アーカム『かえっていくのさ！
 ほんらいの　もちぬしの　もとへね！！</language>
-		<language name="JPN_KANJI" width="256">アーカム『帰っていくのですよ！
+		<language name="JPN_KANJI" width="256">アーカム『帰っていくのさ！
 本来の　持ち主の　元へね！！</language>
 	</row>
 	<row id="pw_event9_hero_6">

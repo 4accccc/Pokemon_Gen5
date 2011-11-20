@@ -3123,7 +3123,7 @@
 		Label="pw_event8_enemy_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>セリザワ『ん？　いがいかね？
+			<Text>セリザワ『ん？　いがい　かね？
 このＭ・Ｂは　うりもの　なのだよ▼
 シリーズか　も　されている▽
 にんきしょうひん　なんだがねェ▼
@@ -3131,11 +3131,11 @@
 かんたんに　てに　いれられるさ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:32" />
+				Time="2011-11-20T08:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:32" />
+				Time="2011-11-20T08:08:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">

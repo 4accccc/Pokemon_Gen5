@@ -630,13 +630,13 @@
 ……　……わかったよ▼
 いまは　あなたを　しんじよう▼
 でも　あなたの　もくてきは？▼
-ぼくの　ちからを　ためして
+オレの　ちからを　ためして
 どうする　つもりだ？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……　……▼
 ……　……分かった▼
 今は　あなたを　信じよう▼
 でも　あなたの　目的は？▼
-僕の　力を　試して
+オレの　力を　試して
 どうする　つもりだ？</language>
 	</row>
 	<row id="pw_event2_enemy_3">
@@ -649,10 +649,10 @@
 	</row>
 	<row id="pw_event2_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『そうか……▼
-どうしても　ぼくと　たたかうか……▼
+どうしても　オレと　たたかうか……▼
 だったら　こっちも　ほんきで　いくぞ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そうか……▼
-どうしても　僕と　戦う気か……▼
+どうしても　オレと　戦う気か……▼
 だったら　こっちも　本気で　いくぞ！</language>
 	</row>
 	<row id="pw_event2_enemy_4">
@@ -801,9 +801,9 @@
 	</row>
 	<row id="pw_event4_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ダメだ……
-ぼくじゃ　かなわない……</language>
+オレじゃ　かなわない……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ダメだ……
-僕じゃ　かなわない……</language>
+オレじゃ　かなわない……</language>
 	</row>
 	<row id="pw_event4_enemy_0">
 		<language name="JPN" width="256">？？？『グロロロ……▼
@@ -863,7 +863,7 @@
 	</row>
 	<row id="pw_event4_hero_5">
 		<language name="JPN" width="256">……　……　……▼
-……めざめると　ぼくは
+……めざめると　オレは
 イッシュぼうえいたい　ほんぶの▽
 びょういんの　ベットに　いた……▼
 かいがんに　たおれている　ところを
@@ -874,7 +874,7 @@
 バンギラスと　ひかる　おんな……
 すべては　ゆめ　だったのか……</language>
 		<language name="JPN_KANJI" width="256">……　……　……▼
-……目覚めると　僕は
+……目覚めると　オレは
 イッシュ防衛隊　本部の▽
 病院の　ベットに　寝ていた……▼
 海岸に　倒れている　所を

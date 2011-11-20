@@ -1105,7 +1105,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>クククッ……　アッハハハーッ！！！▼
-わたしの　なは　アーカム！
+ボクの　なまえは　アーカム！
 むかしばなし　せかいでは▽
 それなりに　ゆうめい　かな？▼
 もういちど　いうよ！　アーカムだよ！
@@ -1115,16 +1115,16 @@
 ……　……　……　……　……　……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:03:59" />
+				Time="2011-11-20T08:56:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:03:59" />
+				Time="2011-11-20T08:56:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>クククッ……　アッハハハーッ！！！▼
-私の　名は　アーカム！
+ボクの　名前は　アーカム！
 昔話の　世界では▽
 それなりに　有名　かな？▼
 もう一度　言うよ！　アーカムだよ！
@@ -1134,11 +1134,11 @@
 ……　……　……　……　……　……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:03:59" />
+				Time="2011-11-20T08:56:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:03:59" />
+				Time="2011-11-20T08:56:44" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1176,22 +1176,14 @@
 とりはらうことに　せいこう▼
 しょうじょは　じゅんちょうに　かいふく
 ただし　アーカムと　なのる▽
-あくりょうの　ほかくに　しっぱい▼
-なお　しらべに　よると
-はかいのまじんと　よばれる　かみの▽
-ふっかつを　くわだてた▽
-まじゅつしの　なまえが▽
-アーカムとの　きろく　あり▽
-ひきつづき　ちょうさを　けいぞくする▼
-コードネーム　[Name:PokemonNickname Idx="0" ]　こと
-[Name:TrainerName Idx="1" ]</Text>
+あくりょうの　ほかくに　しっぱい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:03:59" />
+				Time="2011-11-20T06:22:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:03:59" />
+				Time="2011-11-20T06:22:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1201,8 +1193,39 @@
 取り払うことに　成功▼
 少女は　順調に　回復
 ただし　アーカムと　名乗る▽
-悪霊の　捕獲に　失敗▼
-なお　調べによると
+悪霊の　捕獲に　失敗</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T06:22:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T06:22:04" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event3_enemy_5">
+		<LanguageCell
+			Language="JPN">
+			<Text>なお　しらべに　よると
+はかいのまじんと　よばれる　かみの▽
+ふっかつを　くわだてた▽
+まじゅつしの　なまえが▽
+アーカムとの　きろく　あり▽
+ひきつづき　ちょうさを　けいぞくする▼
+コードネーム　[Name:PokemonNickname Idx="0" ]　こと
+[Name:TrainerName Idx="1" ]</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T06:22:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T06:22:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なお　調べに　よると
 破壊の魔神と　呼ばれる　神の▽
 復活を　企てた▽
 魔術師の　名前が▽
@@ -1212,11 +1235,11 @@
 [Name:TrainerName Idx="1" ]</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:03:59" />
+				Time="2011-11-20T06:22:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:03:59" />
+				Time="2011-11-20T06:22:04" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1711,15 +1734,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>しょうじょ『あれ……？
-おにいちゃん　どうしたの？▽
-とっても　こわいかお　して……</Text>
+おにいちゃん　どうしたん？▽
+すごい　こわいかお　して……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:45" />
+				Time="2011-11-20T08:09:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:45" />
+				Time="2011-11-20T08:09:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1787,28 +1810,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>しょうじょ『……　……あれ？▼
-てへへ　ばれちゃった？
-ごめんなさーい！</Text>
+てへへ　ばれた？　ごめんなさーい！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:45" />
+				Time="2011-11-20T08:09:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:45" />
+				Time="2011-11-20T08:09:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>少女『……　……あれ？▼
-てへへ　ばれちゃった？
-ごめんなさーい！</Text>
+てへへ　ばれた？　ごめんなさーい！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:45" />
+				Time="2011-11-20T08:09:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:45" />
+				Time="2011-11-20T08:09:11" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1849,29 +1870,31 @@
 		Label="pw_event6_enemy_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょうじょ『えー！　ほんと！？
-うまく　だませていると▽
-おもったのにさー</Text>
+			<Text>しょうじょ『えー！　ホンマ！？▼
+こうみえて　ウチ　えんぎには
+けっこう　じしん　あるのになー▼
+だませてると　おもっとったのにー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:45" />
+				Time="2011-11-20T08:09:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:45" />
+				Time="2011-11-20T08:09:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>少女『えー！　ほんと！？
-うまく　だませていると▽
-おもったのにさー</Text>
+			<Text>少女『えー！　ホンマ！？▼
+こうみえて　ウチ　えんぎには
+けっこう　じしん　あるのになー▼
+だませてると　おもっとったのにー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:45" />
+				Time="2011-11-20T08:09:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:45" />
+				Time="2011-11-20T08:09:11" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1905,39 +1928,37 @@
 		Label="pw_event6_enemy_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょうじょ『だって　パパとママが
+			<Text>しょうじょ『だって　パパと　ママが
 むらを　せんでん　するために▽
-やれって　いうんだもん！▼
-ゆうれいそうどうで　むらおこしだ！
-かんこうきゃくを　よぶんだ！　って▽
-すごく　ひっし　なんだもん！▽
+オマエもやれ　って……！▼
+ゆうれいそうどうで　むらおこし　やで！
+かんこうきゃくで　ボロもうけや　って▼
 う……　うっ……　うわーん！
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:11:17" />
+				Time="2011-11-20T08:09:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:11:17" />
+				Time="2011-11-20T08:09:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しょうじょ『だって　パパとママが
+			<Text>少女『だって　パパと　ママが
 むらを　せんでん　するために▽
-やれって　いうんだもん！▼
-ゆうれいそうどうで　むらおこしだ！
-かんこうきゃくを　よぶんだ！　って▽
-すごく　ひっし　なんだもん！▽
+オマエもやれ　って……！▼
+ゆうれいそうどうで　むらおこし　やで！
+かんこうきゃくで　ボロもうけや　って▼
 う……　うっ……　うわーん！
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:11:17" />
+				Time="2011-11-20T08:09:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:11:17" />
+				Time="2011-11-20T08:09:11" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

@@ -249,31 +249,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ぼくは　[Name:TrainerName Idx="1" ]！
+			<Text>[Name:TrainerName Idx="1" ]『オレは　[Name:TrainerName Idx="1" ]！
 イッシュぼうえいたい　です！▼
 セリザワさんと　いいましたね……
 そのＭ・Ｂは　あなたのもの　ですか？　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:25" />
+				Time="2011-11-20T08:09:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:25" />
+				Time="2011-11-20T08:09:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『僕は　[Name:TrainerName Idx="1" ]！
+			<Text>[Name:TrainerName Idx="1" ]『オレは　[Name:TrainerName Idx="1" ]！
 イッシュ防衛隊　です！▼
 セリザワさんと　言いましたね……
 そのＭ・Ｂは　あなたのもの　ですか？　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:25" />
+				Time="2011-11-20T08:09:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:25" />
+				Time="2011-11-20T08:09:00" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2216,26 +2216,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『なにを　いってるんだ！
-ぼくは　イッシュぼうえいたい　だぞ！</Text>
+オレは　イッシュぼうえいたい　だぞ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:09:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:09:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『何を　言ってるんだ！
-僕は　イッシュ防衛隊　だぞ！</Text>
+オレは　イッシュ防衛隊　だぞ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:09:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:09:00" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3123,7 +3123,7 @@
 		Label="pw_event8_enemy_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>セリザワ『ん？　いがいかね？
+			<Text>セリザワ『ん？　いがい　かね？
 このＭ・Ｂは　うりもの　なのだよ▼
 シリーズか　も　されている▽
 にんきしょうひん　なんだがねェ▼
@@ -3131,11 +3131,11 @@
 かんたんに　てに　いれられるさ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:33" />
+				Time="2011-11-20T08:09:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:33" />
+				Time="2011-11-20T08:09:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">

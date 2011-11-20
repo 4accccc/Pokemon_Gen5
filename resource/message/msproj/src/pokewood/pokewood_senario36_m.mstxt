@@ -853,29 +853,29 @@
 			Language="JPN">
 			<Text>カダス『こ…こいつを
 こいつらを……　たいじ　してくれ！▼
-こいつらに　わたしの　むすめが
-とりつかれた……</Text>
+こいつらに　ワシの　だいじなむすめが
+とりつかれて　しもうたんや……</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T03:59:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:09:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-04T03:59:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:09:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カダス『こ…こいつを
 こいつらを……　退治　してくれ！▼
-こいつらに　私の　娘が
-取りつかれた……</Text>
+こいつらに　ワシの　大事な娘が
+取りつかれて　しもうたんや……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-20T08:09:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-20T08:09:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -994,27 +994,27 @@
 			Language="JPN">
 			<Text>カダス『たのむ　たのむグググ……
 グガアアアアウオア……▽
-ウググ……　カエリウチシテヤル</Text>
+ウググ……　カエリウチニ　シテヤル</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:44" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:09:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:44" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:09:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カダス『頼む　たのむグググ……
+			<Text>カダス『頼む　頼むグググ……
 グガアアアアウオア……▽
-ウググ……　カエリウチシテヤル</Text>
+ウググ……　返リ討チニ　シテヤル</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:46" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:09:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:46" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:09:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1047,30 +1047,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カダス『なっ……
-なにを　いっているんだアアアア……▽
+なにを　いっとんのやアアアア……▽
 ……　……　……　……　……　……▽
 ウググ……　ハナシ　キイテクレルカ</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-11T11:22:40" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:09:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-11T11:22:40" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:09:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カダス『なっ……
-何を　言っているんだアアアア……▽
+何を　言っとんのやアアアア……▽
 ……　……　……　……　……　……▽
 ウググ……　ハナシ　キイテクレルカ</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-11T11:22:40" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:09:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-11T11:22:40" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:09:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1102,31 +1102,31 @@
 		Label="pw_event2_react_enemy_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>カダス『なっ……
-なにを　いっているんだアアアア……▽
+			<Text>カダス『ウッ……
+ウソ　ちゃうわアアアア……▽
 グガアアアアウオア……▽
 ウググ……　シンジヌカ</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:44" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:09:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:44" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:09:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カダス『なっ……
-何を　言っているんだアアアア……▽
+			<Text>カダス『ウッ……
+ウソ　ちゃうわアアアア……▽
 グガアアアアウオア……▽
-ウググ……　シンジヌカ</Text>
+ウググ……　信ジヌカ</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:46" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:09:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:46" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:09:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1180,14 +1180,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『教えてくれ！
-何が　起きている</Text>
+何が　起きている？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-20T08:09:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-20T08:09:05" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1815,18 +1815,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ちょっと　あんた！
+			<Text>[Name:TrainerName Idx="1" ]『ちょっと　あなた！
 もう　ウソは　バレバレだよ▽
 そんな　小芝居　止めなさい▼
 あなた　取りつかれて
 なんか　いないでしょう？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-20T08:09:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-20T08:09:05" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1843,27 +1843,27 @@
 			Language="JPN">
 			<Text>カダス『……　……　……　……▼
 あれ？　バレちゃいましたか？
-ひえぇー！！　ごめんなさーい！</Text>
+ひえぇー！！　すんませーん！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-20T08:09:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-20T08:09:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カダス『……　……　……　……▼
 あれ？　バレちゃいましたか？
-ひえぇー！！　ごめんなさーい！</Text>
+ひえぇー！！　すんませーん！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-20T08:09:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-20T08:09:05" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1904,29 +1904,29 @@
 		Label="pw_event6_enemy_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>カダス『えー！　ほんとうですか！？
-ばっちり　だませていると▽
-おもっていたんですが……</Text>
+			<Text>カダス『えー！　ホンマですか！？
+これ　ばっちり　だませていると▽
+おもうとったんですが……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-20T08:09:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-20T08:09:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カダス『えー！　本当ですか！？
-ばっちり　だませていると▽
-思っていたんですが……</Text>
+			<Text>カダス『えー！　ホンマですか！？
+これ　ばっちり　だませていると▽
+思うとったんですが……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-20T08:09:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-20T08:09:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1961,55 +1961,57 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カダス『いや……
-うちの　ワイフがね▽
+これは　うちの　ワイフがね▽
 このむらの　かんこうじむしょに▽
-つとめているんですがね……▼
-むらを　せんでん　するために
-やってくれって　なきつかれまして▼
-ゆうれいそうどうで　かんこうきゃくを
-いっぱい　よぶの！　ってねえ▼
-それは　まあ　コーフンして
-いうもんですから　ことわれず……▼
-ごっ　ごめんなさいっ！！
-もう　しません　ゆるしてださい！！
+つとめとるんですがね……▼
+ここんとこ　パッせん　むらを
+せんでん　するためや！　って▽
+ビービー　なきよるんですよ▼
+ゆうれいそうどうで　おきゃくさんを
+いっぱい　よぶんや！　ってねえ▼
+そりゃ　えらく　コーフンして
+いうもんですから　ことわれんで……▼
+えっ　えろう　すいませんでした！！
+もう　しません　かんにんしてください！
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-20T08:09:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-20T08:09:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カダス『いや……
-うちの　ワイフがね▽
+これは　うちの　ワイフがね▽
 この村の　観光事務所に▽
-勤めているんですがね……▼
-村を　宣伝するために
-やってくれって　泣きつかれまして▼
-幽霊騒動で　観光客を
-いっぱい　呼ぶの！　ってねえ▼
-それは　まあ　コーフンして
-言うもんですから　断れず……▼
-ごっ　ごめんなさいっ！！
-もう　しません　許してださい！！
+勤めとるんですがね……▼
+ここんとこ　パッと　せん　村を
+ピーアール　するためや！　って▽
+ビービー　なきよるんですよ▼
+幽霊騒動で　お客さんを
+いっぱい　呼ぶんや！　ってねえ▼
+そりゃ　えらく　コーフンして
+言うもんですから　断れんで……▼
+えっ　えろう　すいませんでした！！
+もう　しません　堪忍してください！
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-20T08:09:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-20T08:09:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event6_hero_4">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『あなたねえ
+			<Text>[Name:TrainerName Idx="1" ]『あなた　ねえ
 なきついても　ゆるしませんよ！▼
 はずかしく　ないんですか？
 これから　おくさんと　ふたりで▽
@@ -2017,11 +2019,11 @@
 みっちり　おせっきょう　しますんで！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-20T08:09:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-20T08:09:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">

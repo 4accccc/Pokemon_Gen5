@@ -791,26 +791,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>モニカ『けど　って　なによ！！
-けど　って　いうのは！</Text>
+ほかに　なんか　あるわけ！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:01" />
+				Time="2011-11-20T04:51:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:01" />
+				Time="2011-11-20T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『けど　って　なによ！！
-けど　って　言うのはっ！</Text>
+			<Text>モニカ『けど　って　何よ！！
+他に　なんか　あるわけ！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-11-20T04:51:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-11-20T04:51:04" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -855,14 +855,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『フン！
-口だけなら　なんとでも　言えるわ！</Text>
+口だけなら　何とでも　言えるわ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T12:07:19" />
+				Time="2011-11-20T04:51:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T12:07:19" />
+				Time="2011-11-20T04:51:04" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1029,7 +1029,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『なんだって　いうのよっ！！▼
+			<Text>モニカ『何だって　いうのよっ！！▼
 どうせ　私は　このまま　一生
 この　大きな　身体の　ままで▽
 生きていくんでしょっ！？▼
@@ -1040,11 +1040,11 @@
 一緒に　いたくないんでしょ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:52" />
+				Time="2011-11-20T05:11:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:52" />
+				Time="2011-11-20T05:11:37" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1274,21 +1274,14 @@
 ボールが　はじけて　こわれたって▼
 いそいで　おねえちゃんを　みると
 あんなに　デカかった　からだが▽
-みるみる　ちぢんでいった……▼
-……グアイさんの　いってた
-のろいとか　こころの　ちからって▽
-いみは　よく　わかんない……▼
-だけど　おねえちゃんは
-アタシの　かけがえのない　かぞく……▼
-もとどおりに　なった　おねえちゃんに
-アタシは　おもいきり　とびついた……</Text>
+みるみる　ちぢんでいった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:41" />
+				Time="2011-11-20T04:51:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:41" />
+				Time="2011-11-20T04:51:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1299,8 +1292,39 @@
 ボールが　弾けて　壊れたって▼
 急いで　お姉ちゃんを　みると
 あんなに　デカかった　身体が▽
-みるみる　縮んでいった……▼
-……グアイさんの　言ってた
+みるみる　縮んでいった……
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T04:51:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T04:51:04" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event5_hero_3">
+		<LanguageCell
+			Language="JPN">
+			<Text>……グアイさんの　いってた
+のろいとか　こころの　ちからって▽
+いみは　よく　わかんない……▼
+だけど　おねえちゃんは
+アタシの　かけがえのない　かぞく……▼
+もとどおりに　なった　おねえちゃんに
+アタシは　おもいきり　とびついた……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T04:51:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T04:51:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……グアイさんの　言ってた
 のろいとか　心の　力って▽
 意味は　よく　分かんない……▼
 だけど　お姉ちゃんは
@@ -1309,11 +1333,11 @@
 アタシは　思いっきり　飛びついた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T07:43:27" />
+				Time="2011-11-20T04:51:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T07:43:27" />
+				Time="2011-11-20T04:51:04" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1988,14 +2012,14 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『仕方ないじゃん！▼
 今のアタシじゃ　お姉ちゃんに
-なにも　出来ないんだもん！！</Text>
+何も　出来ないんだもん！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:52" />
+				Time="2011-11-20T06:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:52" />
+				Time="2011-11-20T06:08:59" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2032,14 +2056,14 @@
 たよらなきゃ　なにも　できないなんて▽
 アタシだって　なさけない！！▼
 でも　どうしようも　ないんだよっ！！
-どうしたらいいか　わからないもん！！</Text>
+どうしたらいいか　わかんないの！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:52" />
+				Time="2011-11-20T06:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:52" />
+				Time="2011-11-20T06:08:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2048,14 +2072,14 @@
 頼らなきゃ　なにも　出来ないなんて▽
 アタシだって　情けない！！▼
 でも　どうしようも　ないんだよっ！！
-どうしたらいいか　わからないもん！！</Text>
+どうしたらいいか　分かんないの！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:52" />
+				Time="2011-11-20T06:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:52" />
+				Time="2011-11-20T06:08:59" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

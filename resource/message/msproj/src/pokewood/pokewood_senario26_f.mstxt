@@ -259,28 +259,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……はあ▼
-あの　ちょっと　ボクは　いま
+あの　ちょっと　アタシは　いま
 それどころ　じゃないんですが……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T04:10:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T04:10:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……はあ▼
-あの　ちょっと　ボクは　今
+あの　ちょっと　アタシは　今
 それどころ　じゃないんですが……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T04:10:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T04:10:41" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -311,17 +311,17 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>グアイ『そうかね……
-では　単刀直入に　いおう▼
-先日　キミに　ゆずった
+では　単刀直入に　言おう▼
+先日　キミに　譲った
 あの　モンスターボール……▼
 返して　もらえないだろうか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:30" />
+				Time="2011-11-20T04:50:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:30" />
+				Time="2011-11-20T04:50:51" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -996,17 +996,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>グアイ『はなす　つもりが
-ないなら　それでも　かまわない……▼
+			<Text>グアイ『話すつもりが
+ないなら　それでも　構わない……▼
 だが　モンスターボールだけは
-いただいて　いくぞ！</Text>
+頂いて　いくぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:30" />
+				Time="2011-11-20T04:50:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T08:20:30" />
+				Time="2011-11-20T04:50:51" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1240,9 +1240,9 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>……グアイと　なのる　おとこに
-おそわれた　アタシは
+おそわれた　アタシは▽
 いしきを　うしなった……▼
-……きが　つくと
+……きが　ついたときには
 おとこの　すがたは　すでになく▽
 モンスターボールも　なくなっていた▼
 そのかわり　テーブルの　うえには
@@ -1252,20 +1252,20 @@
 どうなっちゃうんだろう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T07:01:45" />
+				Time="2011-11-20T04:10:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T07:01:45" />
+				Time="2011-11-20T04:10:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……グアイと　名乗る　男に
-おそわれた　アタシは
+襲われた　アタシは▽
 意識を　失った……▼
-……気が　つくと
+……気が　ついたときには
 男の　姿は　すでになく▽
-モンスターボールも　なくなっていた▼
+モンスターボールも　消えていた▼
 その代わり　テーブルの　上には
 見たこともないほど　高く　積まれた▽
 札束の　山が……▼
@@ -1273,11 +1273,11 @@
 どうなっちゃうんだろう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T07:01:45" />
+				Time="2011-11-20T04:10:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T07:01:45" />
+				Time="2011-11-20T04:10:41" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

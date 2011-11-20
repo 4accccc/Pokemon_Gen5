@@ -386,11 +386,11 @@
 それよりも　だれだね？　キミは？</language>
 	</row>
 	<row id="pw_event0_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ぼくは　[1:00:トレーナー名:1]！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『オレは　[1:00:トレーナー名:1]！
 イッシュぼうえいたい　です！▼
 セリザワさんと　いいましたね……
 そのＭ・Ｂは　あなたのもの　ですか？　</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『僕は　[1:00:トレーナー名:1]！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『オレは　[1:00:トレーナー名:1]！
 イッシュ防衛隊　です！▼
 セリザワさんと　言いましたね……
 そのＭ・Ｂは　あなたのもの　ですか？　</language>
@@ -787,9 +787,9 @@
 	</row>
 	<row id="pw_event5_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『なにを　いってるんだ！
-ぼくは　イッシュぼうえいたい　だぞ！</language>
+オレは　イッシュぼうえいたい　だぞ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『何を　言ってるんだ！
-僕は　イッシュ防衛隊　だぞ！</language>
+オレは　イッシュ防衛隊　だぞ！</language>
 	</row>
 	<row id="pw_event5_enemy_2">
 		<language name="JPN" width="256">セリザワ『わかっているよ……▼
@@ -1010,7 +1010,7 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なんだって……</language>
 	</row>
 	<row id="pw_event8_enemy_3">
-		<language name="JPN" width="256">セリザワ『ん？　いがいかね？
+		<language name="JPN" width="256">セリザワ『ん？　いがい　かね？
 このＭ・Ｂは　うりもの　なのだよ▼
 シリーズか　も　されている▽
 にんきしょうひん　なんだがねェ▼

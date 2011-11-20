@@ -652,30 +652,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『どうしたんだ……
-ぼくを　みたまま　うごかない……▼
+オレを　みたまま　うごかない……▼
 ……よーし　こうなったら
 はなしかけて　みようか……▼</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:06:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:06:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『どうしたんだ……
-僕を　見たまま　動かない……▼
+オレを　見たまま　動かない……▼
 ……よーし　こうなったら
 話しかけて　みようか……▼</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:06:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:06:00" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -723,29 +723,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ぼくは　[Name:TrainerName Idx="1" ]！
+			<Text>[Name:TrainerName Idx="1" ]『オレは　[Name:TrainerName Idx="1" ]！
 イッシュのへいわを　まもる▽
 イッシュぼうえいたいの　クルーだ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:06:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:06:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『僕は　[Name:TrainerName Idx="1" ]！
+			<Text>[Name:TrainerName Idx="1" ]『オレは　[Name:TrainerName Idx="1" ]！
 イッシュの平和を　守る▽
 イッシュ防衛隊の　クルーだ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:06:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:06:00" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1048,33 +1048,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『まさか　ぼくの
+			<Text>[Name:TrainerName Idx="1" ]『まさか　オレの
 きもちが　つうじたのか……？▼
 ……まあ　なんにしても
 これで　まちに　ひがいが▽
 およぶことも　なくなったな……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:06:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:06:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ひょっとして　僕の
+			<Text>[Name:TrainerName Idx="1" ]『ひょっとして　オレの
 気持ちが　通じたのか……？▼
 ……まあ　何にしても
 これで　街に　被害が▽
 及ぶことも　なくなったな……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:06:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:06:00" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1431,32 +1431,32 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『ハハハ！　ハハハッ！
-これで　ぼくは　ゆうめいじん！！▼
+これで　オレは　ゆうめいじん！！▼
 もう　こんな　あぶない　しごとで
 くろうする　ひつようも　ないっ！▼
 いっしょう　あそんで　いきていけるぜ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:06:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:06:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ハハハ！　ハハハッ！
-これで　僕は　有名人！！▼
+これで　オレは　有名人！！▼
 もう　こんな　危ない　仕事で
 苦労する　必要も　ないっ！▼
 一生　遊んで　生きて行けるぜ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:06:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:06:00" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

@@ -86,14 +86,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]まじんが　とおった　まちは
+			<Text>[Ctrl1:xcenter ]まじんが　とおったあとの
 
-[Ctrl1:xcenter ]あとかたも　なく
+[Ctrl1:xcenter ]とちは　あとかたも　なく
 
 [Ctrl1:xcenter ]きえていると　いう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:52:42" />
+				Time="2011-11-20T08:02:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -101,14 +101,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]魔神が　とおった　街は
+			<Text>[Ctrl1:xcenter ]魔神が　通った後
 
-[Ctrl1:xcenter ]あとかたも　なく
+[Ctrl1:xcenter ]土地は　あとかたも　なく
 
-[Ctrl1:xcenter ]消えていると　いう。</Text>
+[Ctrl1:xcenter ]消えていると　いう</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-15T02:46:00" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:02:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -379,14 +379,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]まじんが　とおった　まちは
+			<Text>[Ctrl1:xcenter ]まじんが　とおったあとの
 
-[Ctrl1:xcenter ]あとかたも　なく
+[Ctrl1:xcenter ]とちは　あとかたも　なく
 
 [Ctrl1:xcenter ]きえていると　いう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:53:02" />
+				Time="2011-11-20T08:02:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -394,14 +394,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]魔神が　とおった　街は
+			<Text>[Ctrl1:xcenter ]魔神が　通った後
 
-[Ctrl1:xcenter ]あとかたも　なく
+[Ctrl1:xcenter ]土地は　あとかたも　なく
 
-[Ctrl1:xcenter ]消えていると　いう。</Text>
+[Ctrl1:xcenter ]消えていると　いう</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-15T02:45:53" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T08:02:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

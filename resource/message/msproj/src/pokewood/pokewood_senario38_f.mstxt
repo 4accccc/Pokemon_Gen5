@@ -2310,27 +2310,27 @@
 			Language="JPN">
 			<Text>こえ『……　……　……　……
 すっ！　すみません　でした！▽
-かんべん　してください！</Text>
+かんべんして　くだせえ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T03:40:19" />
+				Time="2011-11-20T08:56:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T03:40:19" />
+				Time="2011-11-20T08:56:50" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>声『……　……　……　……
 すみません　でした！▽
-勘弁　してください！</Text>
+勘弁して　くだせえ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T03:40:19" />
+				Time="2011-11-20T08:56:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T03:40:19" />
+				Time="2011-11-20T08:56:50" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2364,36 +2364,39 @@
 		Label="pw_event8_enemy_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>こえ『もうしわけ　ありません！！
-おさっしの　とおり　わたくし
-ただの　にんげんで　ございます▼
-こだいのせきぞう　なんて
+			<Text>こえ『もうしわけ　ありやせん！▼
+おさっしの　とおり　あっしは
+ただの　にんげんで　ございやす▼
+こだいのせきぞう　なんてもんは
 まっかな　ウソ！▼
-せきぞうの　のろいも
+せきぞうの　のろい　なんてえのも
 まっかな　ウソ！▼
 きょうげんで　ございます……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T03:40:19" />
+				Time="2011-11-20T08:56:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T03:40:19" />
+				Time="2011-11-20T08:56:50" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>声『お察しの　通り
-人間で　ございます▼
-古代の　石像なんて
-真っ赤な　ウソ！▽
+			<Text>声『申し訳　ありやせん！▼
+お察しの　とおり　あっしは
+ただの　人間で　ございやす▼
+古代の石像　なんてもんは
+真っ赤な　ウソ！▼
+石像の　のろい　なんてえのも
+真っ赤な　ウソ！▼
 狂言で　ございます……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T03:40:19" />
+				Time="2011-11-20T08:56:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T03:40:19" />
+				Time="2011-11-20T08:56:50" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2427,29 +2430,31 @@
 			Language="JPN">
 			<Text>こえ『そちらに　いらっしゃる
 せんせいから　いらいを　うけて……▼
-ギャラが　たんまり　もらえるって
-いうんで　やってみたんで……</Text>
+ギャラの　ほうを　たんまり
+いただけるって　いうもんですから▽
+ついつい　やってみたんでさ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T03:40:19" />
+				Time="2011-11-20T08:56:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T03:40:19" />
+				Time="2011-11-20T08:56:50" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>声『そこにいる　先生から
-依頼を　受けて……▽
-ギャラが　たんまり　頂けるって▽
-いうから　やってみたら……</Text>
+			<Text>声『そちらに　いらっしゃる
+先生から　依頼を　うけて……▼
+ギャラの　ほうを　たんまり
+頂けるって　いうもんですから▽
+ついつい　やってみたんでさ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T03:40:19" />
+				Time="2011-11-20T08:56:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T03:40:19" />
+				Time="2011-11-20T08:56:50" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2460,16 +2465,16 @@
 あくりょうたいじの　せんもんか　である
 ゴーストイレイザーに　しんようされれば▽
 のろいのせきぞう　としての　かちも
-はねあがり　ばかな　コレクターに▽
+はねあがり　アホな　コレクターに▽
 たかねで　うりとばせた　ものを！▼
 って　あっ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T03:40:19" />
+				Time="2011-11-20T08:56:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T03:40:19" />
+				Time="2011-11-20T08:56:50" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2477,16 +2482,16 @@
 悪霊退治の　スペシャリスト　である
 ゴーストイレイザーに　信用されれば▽
 のろいの石像　としての価値も
-跳ね上がり　バカな　コレクターに▽
+跳ね上がり　アホな　コレクターに▽
 高値で　売り飛ばせた　ものを！▼
 って　あっ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T03:40:19" />
+				Time="2011-11-20T08:56:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T03:40:19" />
+				Time="2011-11-20T08:56:50" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2728,15 +2733,16 @@
 はかいのまじんの　もとに　かえります▼
 そして　まじんは　おそろしい　ちからを
 とりもどし　ふっかつ　するのです！▼
-どうですか？　ワクワクしません？
-ロマンを　かんじませんか？</Text>
+どう？　ワクワクしない？
+ロマンとか　かんじない？▼
+ねえ　[Name:TrainerName Idx="1" ]くん……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2011-11-20T08:56:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2011-11-20T08:56:50" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2746,15 +2752,16 @@
 破壊の魔神の　元に　かえります▼
 そして　魔神は　恐ろしい　力を
 取り戻し　復活するのです！▼
-どうですか？　ワクワクしません？
-ロマンを　感じませんか？</Text>
+どう？　ワクワクしない？
+ロマンとか　感じない？▼
+ねえ　[Name:TrainerName Idx="1" ]くん……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2011-11-20T08:56:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2011-11-20T08:56:50" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2786,37 +2793,37 @@
 		Label="pw_event9_enemy_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>いらいぬし『さみしい　ですねえ……
-ようやく　きづいて　もらえました？▼
-ものおぼえの　わるい　あなたに▽
-もう　いちど　おおしえしましょう！▼
-わたしの　なは　アーカム！！
+			<Text>いらいぬし『さみしいなあ……
+ようやく　きづいて　もらえた？▼
+ものおぼえの　わるい　キミに▽
+もう　いちど　おしえて　あげるね！▼
+ボクの　なまえは　アーカム！！
 はかいのまじん　ふっかつを▽
-めざす　てんさいまじゅつし　です！</Text>
+めざす　てんさいまじゅつし　さ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2011-11-20T08:56:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2011-11-20T08:56:50" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>依頼主『さみしい　ですねえ……
-ようやく　気づいて　もらえました？▼
-物覚えの　悪い　あなたに▽
-もう一度　お教えしましょう！▼
-私の名は　アーカム！！
+			<Text>依頼主『さみしいなあ……
+ようやく　気づいて　もらえた？▼
+物覚えの　悪い　キミに▽
+もう一度　教えてあげるね！▼
+ボクの　名前は　アーカム！！
 破壊の魔神　復活を▽
-目指す　天才魔術師　です！</Text>
+目指す　天才魔術師さ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2011-11-20T08:56:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2011-11-20T08:56:50" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2848,29 +2855,29 @@
 		Label="pw_event9_enemy_4">
 		<LanguageCell
 			Language="JPN">
-			<Text>アーカム『あなたの　おかげで
-まじんの　ふういんは　とけた！！▼
-その　ほうせきを　みてみなさい！！</Text>
+			<Text>アーカム『キミの　おかげで
+まじんの　ふういんは　とけたよ！！▼
+その　ほうせきを　みてごらん！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2011-11-20T08:56:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2011-11-20T08:56:50" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アーカム『あなたの　おかげで
-魔神の　封印は　解けた！▼
-その　宝石を　御覧なさい！！</Text>
+			<Text>アーカム『キミの　おかげで
+魔神の　封印は　解けたよ！▼
+その　宝石を　見てごらん！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2011-11-20T08:56:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2011-11-20T08:56:50" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2904,27 +2911,27 @@
 		Label="pw_event9_enemy_5">
 		<LanguageCell
 			Language="JPN">
-			<Text>アーカム『かえっていくのですよ！
+			<Text>アーカム『かえっていくのさ！
 ほんらいの　もちぬしの　もとへね！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2011-11-20T08:56:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2011-11-20T08:56:50" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アーカム『帰っていくのですよ！
+			<Text>アーカム『帰っていくのさ！
 本来の　持ち主の　元へね！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2011-11-20T08:56:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2011-11-20T08:56:50" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

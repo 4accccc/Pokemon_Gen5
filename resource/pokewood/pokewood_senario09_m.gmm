@@ -492,10 +492,10 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『よし！　いくぞっ！</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
-		<language name="JPN" width="256">Ｅ『りょうかいだ……
-はやく　エネルギーを　おくれ</language>
-		<language name="JPN_KANJI" width="256">Ｅ『了解だ……
-早く　エネルギーを　送れ</language>
+		<language name="JPN" width="256">Ｅ『いい　へんじだ……
+さあ　はやく　エネルギーを　おくれ</language>
+		<language name="JPN_KANJI" width="256">Ｅ『いい　返事だ……
+さあ　早く　エネルギーを　送れ</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『へ？　なんて？</language>
@@ -669,8 +669,8 @@
 作戦が　決行　される……</language>
 	</row>
 	<row id="pw_event3_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『う……　うう……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『う……　うう……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ハアッ　ハアッ……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ハアッ　ハアッ……</language>
 	</row>
 	<row id="pw_event3_enemy_0">
 		<language name="JPN" width="256">Ｅ『どうした　[1:00:トレーナー名:1]……
@@ -681,56 +681,75 @@
 さっさと　立つんだ……</language>
 	</row>
 	<row id="pw_event3_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ちょっと……
-もう　オレも　[1:02:ポケモンニックネーム:0]も▽
-ヘトヘト　ですよ……▼
-ちょっと　やすませて……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ちょっと……
-もう　オレ　[1:02:ポケモンニックネーム:0]も▽
-ヘトヘト　ですよ……▼
-ちょっと　休ませて……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『まって　くださいよー
+もう　オレ　ヘトヘトですよー▼
+べつに　このほしの　きき　って
+きまったわけでも　ないんでしょ？▼
+ちょっと　くらい　やすんだって
+だいじょうぶでしょ　きっとー▼
+あー　もー　つかれたー
+はらも　へったし　みず　のみてーなー</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『待ってくださいよー
+もう　オレ　ヘトヘトですよー▼
+別に　この星の　危機　って
+決まったわけでも　ないんでしょ？▼
+ちょっと　くらい　休んだって
+大丈夫でしょ　きっとー▼
+あー　もー　疲れた！
+腹も　減ったし　水　飲みてーなー</language>
 	</row>
 	<row id="pw_event3_enemy_1">
-		<language name="JPN" width="256">Ｅ『……ふがいない　ヤツだ▼
-……おまえを　みこんだ
-わたしの　じんせんミス　だったか</language>
-		<language name="JPN_KANJI" width="256">Ｅ『……ふがいない　ヤツだ▼
-……お前を　見込んだ
-私の　人選ミス　だったか</language>
+		<language name="JPN" width="256">Ｅ『やれやれ……
+よそうがいに　ふがいない　ヤツだ▼
+……おまえを　みこんだ　わたしの
+じんせんミス　だったようだな……</language>
+		<language name="JPN_KANJI" width="256">Ｅ『やれやれ……
+予想外に　ふがいない　ヤツだ▼
+……お前を　見込んだ　私の
+人選ミス　だったようだな……</language>
 	</row>
 	<row id="pw_event3_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『やだなー
+そんな　イヤミな　いいかた▽
+しなくても　いいじゃないですかー</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『やだなー
+そんな　イヤミな　言い方▽
+しなくても　いいじゃないですかー</language>
 	</row>
 	<row id="pw_event3_enemy_2">
-		<language name="JPN" width="256">Ｅ『しかたない……▼
-じんるいに　のこされた
-じかんは　すくないのだ▼
+		<language name="JPN" width="256">Ｅ『いいか……▼
+じんるいに　のこされた　じかんは
+あと　わずか　なのだ▼
 わたしは　ただちに　あたらしい
 じんざいを　さがしに　いく……</language>
-		<language name="JPN_KANJI" width="256">Ｅ『仕方ない……▼
-人類に　残された
-時間は　少ないのだ▼
-私は　ただちに　新しい
-人材を　探しに　いく……</language>
+		<language name="JPN_KANJI" width="256">Ｅ『いいか……▼
+人類に　残された　時間は
+あと　わずか　なのだ▼
+私は　ただちに　新し
+人材を　探しに　行く……</language>
 	</row>
 	<row id="pw_event3_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『え……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『いっちゃった……▼
+まあいいか　どうせ　オレより
+つよい　トレーナーなんていないし▽
+Ｅも　そのうち　かえってくるだろう▼
+あーあ▼
+つかれたし　ちょっと　やすむか……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『え……</language>
 	</row>
 	<row id="pw_event3_hero_4">
 		<language name="JPN" width="256">なぞの　かがくしゃ　Ｅに
-みすてられた　[1:00:トレーナー名:1]……▼
-やがて……
-こどくな　かれを　よそに▽
-じんるいと　ＵＦＯの　けっせんが▽
-はじまるので　あった……</language>
-		<language name="JPN_KANJI" width="256">なぞの　科学者　Ｅに
-見捨てられた　[1:00:トレーナー名:1]……▼
-やがて……
-孤独な　彼を　よそに▽
-人類と　ＵＦＯの　決戦が▽
-始めるので　あった……</language>
+みすてられた　[1:00:トレーナー名:1]は▽
+よだれを　たらし　ねむりこける▼
+そして　この　すうじゅうじかんご……
+たいりょうの　ＵＦＯに　おそわれ▽
+じんるいは　めつぼう　するのだった</language>
+		<language name="JPN_KANJI" width="256">なぞの科学者　Ｅに
+見捨てられた　[1:00:トレーナー名:1]は▽
+ヨダレを　たらし　眠りこける▼
+そして　この　数十時間後……
+大量の　ＵＦＯが　襲われ▽
+人類は　滅亡するのだった</language>
 	</row>
 	<row id="pw_event4_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『う……　うう……</language>

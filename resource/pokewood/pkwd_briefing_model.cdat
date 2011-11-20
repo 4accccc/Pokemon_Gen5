@@ -156,10 +156,10 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl27[] = {
   { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field11d_NSBMD, GFL_G3D_UTIL_RESARC },
   { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field11d_NSBCA, GFL_G3D_UTIL_RESARC },
 };
-//ビル屋上Ａー１
+//ビル屋上Ａー５
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl28[] = {
-  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01a_NSBMD, GFL_G3D_UTIL_RESARC },
-  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01a_NSBCA, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01d_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01d_NSBCA, GFL_G3D_UTIL_RESARC },
 };
 
 //=======================================================
@@ -305,7 +305,7 @@ static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl27[] = {
   { G3DRES_BCTA_BCA, 0  },
 //  { G3DRES_01_BTP, 0  },
 };
-// 「ビル屋上Ａー１」 アニメ定義
+// 「ビル屋上Ａー５」 アニメ定義
 static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl28[] = {
   { G3DRES_BCTA_BCA, 0  },
 //  { G3DRES_01_BTP, 0  },
@@ -594,7 +594,7 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl27[] = {
     NELEMS(g3Dutil_anmTbl27), //アニメデータ数
   },
 };
-// ビル屋上Ａー１
+// ビル屋上Ａー５
 static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl28[] = {
   {
     G3DRES_BCTA_BMD,         //モデルID
@@ -837,7 +837,7 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup[] = {
     g3Dutil_objTbl27,           //オブジェクト設定テーブル
     NELEMS(g3Dutil_objTbl27),   //オブジェクト数
   },
-  { // シナリオ39 ( ビル屋上Ａー１ )
+  { // シナリオ39 ( ビル屋上Ａー５ )
     g3Dutil_resTbl28,           //データテーブル
     NELEMS(g3Dutil_resTbl28),   //データ数
     g3Dutil_objTbl28,           //オブジェクト設定テーブル

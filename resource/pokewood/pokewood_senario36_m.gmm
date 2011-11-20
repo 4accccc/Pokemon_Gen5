@@ -518,12 +518,12 @@
 	<row id="pw_event2_enemy_2">
 		<language name="JPN" width="256">カダス『こ…こいつを
 こいつらを……　たいじ　してくれ！▼
-こいつらに　わたしの　むすめが
-とりつかれた……</language>
+こいつらに　ワシの　だいじなむすめが
+とりつかれて　しもうたんや……</language>
 		<language name="JPN_KANJI" width="256">カダス『こ…こいつを
 こいつらを……　退治　してくれ！▼
-こいつらに　私の　娘が
-取りつかれた……</language>
+こいつらに　ワシの　大事な娘が
+取りつかれて　しもうたんや……</language>
 	</row>
 	<row id="pw_event2_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さて……▼
@@ -554,10 +554,10 @@
 	<row id="pw_event2_react_enemy_1">
 		<language name="JPN" width="256">カダス『たのむ　たのむグググ……
 グガアアアアウオア……▽
-ウググ……　カエリウチシテヤル</language>
-		<language name="JPN_KANJI" width="256">カダス『頼む　たのむグググ……
+ウググ……　カエリウチニ　シテヤル</language>
+		<language name="JPN_KANJI" width="256">カダス『頼む　頼むグググ……
 グガアアアアウオア……▽
-ウググ……　カエリウチシテヤル</language>
+ウググ……　返リ討チニ　シテヤル</language>
 	</row>
 	<row id="pw_event2_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ゆうれいに　きく！</language>
@@ -565,11 +565,11 @@
 	</row>
 	<row id="pw_event2_react_enemy_2">
 		<language name="JPN" width="256">カダス『なっ……
-なにを　いっているんだアアアア……▽
+なにを　いっとんのやアアアア……▽
 ……　……　……　……　……　……▽
 ウググ……　ハナシ　キイテクレルカ</language>
 		<language name="JPN_KANJI" width="256">カダス『なっ……
-何を　言っているんだアアアア……▽
+何を　言っとんのやアアアア……▽
 ……　……　……　……　……　……▽
 ウググ……　ハナシ　キイテクレルカ</language>
 	</row>
@@ -578,14 +578,14 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どちらも　ウソだ！</language>
 	</row>
 	<row id="pw_event2_react_enemy_3">
-		<language name="JPN" width="256">カダス『なっ……
-なにを　いっているんだアアアア……▽
+		<language name="JPN" width="256">カダス『ウッ……
+ウソ　ちゃうわアアアア……▽
 グガアアアアウオア……▽
 ウググ……　シンジヌカ</language>
-		<language name="JPN_KANJI" width="256">カダス『なっ……
-何を　言っているんだアアアア……▽
+		<language name="JPN_KANJI" width="256">カダス『ウッ……
+ウソ　ちゃうわアアアア……▽
 グガアアアアウオア……▽
-ウググ……　シンジヌカ</language>
+ウググ……　信ジヌカ</language>
 	</row>
 	<row id="pw_event3_enemy_0">
 		<language name="JPN" width="256">カダス『オマエ　ココロガ　ツヨイ……　</language>
@@ -595,7 +595,7 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『おしえてくれ！
 なにが　おきている？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『教えてくれ！
-何が　起きている</language>
+何が　起きている？</language>
 	</row>
 	<row id="pw_event3_enemy_1">
 		<language name="JPN" width="256">カダス『コノ　オトコノ　ムスメ……
@@ -809,7 +809,7 @@
 そんな　こしばい　やめなさい▼
 あなた　とりつかれて
 なんか　いないでしょう？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ちょっと　あんた！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ちょっと　あなた！
 もう　ウソは　バレバレだよ▽
 そんな　小芝居　止めなさい▼
 あなた　取りつかれて
@@ -818,10 +818,10 @@
 	<row id="pw_event6_enemy_1">
 		<language name="JPN" width="256">カダス『……　……　……　……▼
 あれ？　バレちゃいましたか？
-ひえぇー！！　ごめんなさーい！</language>
+ひえぇー！！　すんませーん！</language>
 		<language name="JPN_KANJI" width="256">カダス『……　……　……　……▼
 あれ？　バレちゃいましたか？
-ひえぇー！！　ごめんなさーい！</language>
+ひえぇー！！　すんませーん！</language>
 	</row>
 	<row id="pw_event6_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『あのねえ　そんなの
@@ -830,12 +830,12 @@
 最初から　お見通しです！！</language>
 	</row>
 	<row id="pw_event6_enemy_2">
-		<language name="JPN" width="256">カダス『えー！　ほんとうですか！？
-ばっちり　だませていると▽
-おもっていたんですが……</language>
-		<language name="JPN_KANJI" width="256">カダス『えー！　本当ですか！？
-ばっちり　だませていると▽
-思っていたんですが……</language>
+		<language name="JPN" width="256">カダス『えー！　ホンマですか！？
+これ　ばっちり　だませていると▽
+おもうとったんですが……</language>
+		<language name="JPN_KANJI" width="256">カダス『えー！　ホンマですか！？
+これ　ばっちり　だませていると▽
+思うとったんですが……</language>
 	</row>
 	<row id="pw_event6_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『なんで　こんな
@@ -845,34 +845,36 @@
 	</row>
 	<row id="pw_event6_enemy_3">
 		<language name="JPN" width="256">カダス『いや……
-うちの　ワイフがね▽
+これは　うちの　ワイフがね▽
 このむらの　かんこうじむしょに▽
-つとめているんですがね……▼
-むらを　せんでん　するために
-やってくれって　なきつかれまして▼
-ゆうれいそうどうで　かんこうきゃくを
-いっぱい　よぶの！　ってねえ▼
-それは　まあ　コーフンして
-いうもんですから　ことわれず……▼
-ごっ　ごめんなさいっ！！
-もう　しません　ゆるしてださい！！
+つとめとるんですがね……▼
+ここんとこ　パッせん　むらを
+せんでん　するためや！　って▽
+ビービー　なきよるんですよ▼
+ゆうれいそうどうで　おきゃくさんを
+いっぱい　よぶんや！　ってねえ▼
+そりゃ　えらく　コーフンして
+いうもんですから　ことわれんで……▼
+えっ　えろう　すいませんでした！！
+もう　しません　かんにんしてください！
 </language>
 		<language name="JPN_KANJI" width="256">カダス『いや……
-うちの　ワイフがね▽
+これは　うちの　ワイフがね▽
 この村の　観光事務所に▽
-勤めているんですがね……▼
-村を　宣伝するために
-やってくれって　泣きつかれまして▼
-幽霊騒動で　観光客を
-いっぱい　呼ぶの！　ってねえ▼
-それは　まあ　コーフンして
-言うもんですから　断れず……▼
-ごっ　ごめんなさいっ！！
-もう　しません　許してださい！！
+勤めとるんですがね……▼
+ここんとこ　パッと　せん　村を
+ピーアール　するためや！　って▽
+ビービー　なきよるんですよ▼
+幽霊騒動で　お客さんを
+いっぱい　呼ぶんや！　ってねえ▼
+そりゃ　えらく　コーフンして
+言うもんですから　断れんで……▼
+えっ　えろう　すいませんでした！！
+もう　しません　堪忍してください！
 </language>
 	</row>
 	<row id="pw_event6_hero_4">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『あなたねえ
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『あなた　ねえ
 なきついても　ゆるしませんよ！▼
 はずかしく　ないんですか？
 これから　おくさんと　ふたりで▽
