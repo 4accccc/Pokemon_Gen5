@@ -1395,7 +1395,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1444,6 +1444,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-10T12:25:33" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_kanban_02"
@@ -1493,6 +1500,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-10T12:25:33" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_kanban_03"
@@ -1542,6 +1556,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-10T12:25:33" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_parade_00"
@@ -1583,6 +1604,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-10T12:25:33" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_parade_01"
@@ -1628,6 +1656,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-10T12:25:33" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_parade_02_a"
@@ -1647,10 +1682,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]
-であったひ：２０[Digit:2digits Idx="1" ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち▼</Text>
+出会った日：２０[Digit:2digits Idx="1" ]年[Digit:2digits Idx="2" ]月[Digit:2digits Idx="3" ]日▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-18T10:07:37" />
+				User="shimoyamada:W00184"
+				Time="2011-11-20T09:32:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1671,6 +1706,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-10T12:25:33" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_parade_02_b"
@@ -1690,10 +1732,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:ResortShop Idx="4" ]
-みせのランク　[Digit:1digit Idx="5" ]</Text>
+店のランク　[Digit:1digit Idx="5" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-18T10:07:47" />
+				User="shimoyamada:W00184"
+				Time="2011-11-20T09:41:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1714,6 +1756,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-10T12:25:33" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_parade_03"
@@ -1757,17 +1806,27 @@
 				User="matsumiya:W00224"
 				Time="2011-08-10T12:25:33" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c16_sys_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>にゅうりょく　する　ことばは
-つうしんで　あいてに　おくります▼</Text>
+			<Text>[System:Color name="2" ][Ctrl1:xcenter ]※ちゅうい！[/System:Color]▼
+これから　にゅうりょくする　ことばは
+つうしんで　あいてに　おくられます▼
+じっくり　かんがえて
+とうろく　してください▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-14T07:30:16" />
+				User="shimoyamada:W00184"
+				Time="2011-11-20T09:31:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1775,11 +1834,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>にゅうりょく　する　ことばは
-つうしんで　あいてに　おくります▼</Text>
+			<Text>[System:Color name="2" ][Ctrl1:xcenter ]※ご注意！[/System:Color]▼
+これから　入力する　言葉は
+通信で　相手に　送られます▼
+じっくり　考えてから
+登録　してください▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-14T07:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-11-20T09:38:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1792,5 +1854,12 @@
 				User="shimoyamada:W00184"
 				Time="2011-11-05T11:01:58" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>

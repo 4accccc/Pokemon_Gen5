@@ -558,10 +558,10 @@
 			Language="JPN">
 			<Text>マーケットでは
 ぼうけんに　やくだつ　しなものを▽
-やすく　かうことが　できます</Text>
+やすく　かうことが　できます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-05T10:39:32" />
+				Time="2011-11-15T10:33:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -571,10 +571,10 @@
 			Language="JPN_KANJI">
 			<Text>マーケットでは
 ぼうけんに　やくだつ　しなものを▽
-やすく　かうことが　できます</Text>
+やすく　かうことが　できます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-05T10:39:25" />
+				Time="2011-11-15T10:36:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -594,10 +594,10 @@
 			Language="JPN">
 			<Text>くじやでは　１にち　１かいの
 ちゅうせんに　あたると▽
-ごうか　けいひんが　もらえます</Text>
+ごうか　けいひんが　もらえます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-05T10:50:02" />
+				Time="2011-11-15T10:33:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -607,10 +607,10 @@
 			Language="JPN_KANJI">
 			<Text>くじやでは　１にち　１かいの
 ちゅうせんに　あたると▽
-ごうか　けいひんが　もらえます</Text>
+ごうか　けいひんが　もらえます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-05T10:50:11" />
+				Time="2011-11-15T10:36:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -629,10 +629,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>はなや　では
-きのみを　かうことが　できます</Text>
+きのみを　かうことが　できます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-05T11:21:53" />
+				Time="2011-11-15T10:33:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -641,10 +641,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>はなや　では
-きのみを　かうことが　できます</Text>
+きのみを　かうことが　できます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-05T11:29:31" />
+				Time="2011-11-15T10:36:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -665,10 +665,10 @@
 			<Text>ほいくじょでは
 ポケモンの　タマゴを　あたためて▼
 ふだん　より　はやく
-ふか　させることが　できます</Text>
+ふか　させることが　できます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-05T11:24:50" />
+				Time="2011-11-15T10:36:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -679,10 +679,10 @@
 			<Text>ほいくじょでは
 ポケモンの　タマゴを　あたためて▼
 ふだん　より　はやく
-ふか　させることが　できます</Text>
+ふか　させることが　できます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-05T11:24:55" />
+				Time="2011-11-15T10:36:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -704,10 +704,10 @@
 ポケモンを　きたえて　つよくします▼
 ポケモンの　レベルや
 ポケモンの　つよさの　きそポイントを▽
-あげることが　できます</Text>
+あげることが　できます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-05T11:27:15" />
+				Time="2011-11-15T10:35:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -719,10 +719,10 @@
 ポケモンを　きたえて　つよくします▼
 ポケモンの　レベルや
 ポケモンの　つよさの　きそポイントを▽
-あげることが　できます</Text>
+あげることが　できます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-05T11:27:20" />
+				Time="2011-11-15T10:36:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -743,10 +743,10 @@
 			<Text>ふるどうぐや　では
 ほりだしものが　うっています▼
 ふつうの　おみせでは　かえない
-しなものが　ならぶことが　あります</Text>
+しなものが　ならぶことが　あります▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-05T11:35:21" />
+				Time="2011-11-15T10:35:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -757,10 +757,10 @@
 			<Text>ふるどうぐや　では
 ほりだしものが　うっています▼
 ふつうの　おみせでは　かえない
-しなものが　ならぶことが　あります</Text>
+しなものが　ならぶことが　あります▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-05T11:35:32" />
+				Time="2011-11-15T10:36:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -784,10 +784,10 @@
 よろこんで　なつきやすく　なります▼
 また　しょくじの　こうかに　より
 レベルや　つよさの　きそポイントを▽
-あげることが　できます</Text>
+あげることが　できます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-05T11:39:14" />
+				Time="2011-11-15T10:35:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -801,10 +801,10 @@
 よろこんで　なつきやすく　なります▼
 また　しょくじの　こうかに　より
 レベルや　つよさの　きそポイントを▽
-あげることが　できます</Text>
+あげることが　できます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-05T11:39:24" />
+				Time="2011-11-15T10:36:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -826,10 +826,10 @@
 ポケモンを　きれいに　します▼
 カットや　メイクを　することで
 ポケモンは　よろこび▽
-なつき　やすく　なります</Text>
+なつき　やすく　なります▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-05T11:43:48" />
+				Time="2011-11-15T10:35:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -841,10 +841,10 @@
 ポケモンを　きれいに　します▼
 カットや　メイクを　することで
 ポケモンは　よろこび▽
-なつき　やすく　なります</Text>
+なつき　やすく　なります▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-05T11:43:56" />
+				Time="2011-11-15T10:36:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -869,10 +869,10 @@
 おみせが　たてられます▼
 おみせに　ひとを　あんないして
 にんきを　あげると　ランクアップして▽
-おみせは　おおきく　なります</Text>
+おみせは　おおきく　なります▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-05T12:22:37" />
+				Time="2011-11-15T10:35:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -887,10 +887,10 @@
 おみせが　たてられます▼
 おみせに　ひとを　あんないして
 にんきを　あげると　ランクアップして▽
-おみせは　おおきく　なります</Text>
+おみせは　おおきく　なります▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-05T12:22:42" />
+				Time="2011-11-15T10:36:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -918,10 +918,10 @@
 おみせが　たてられます▼
 おみせに　ひとを　あんないして
 にんきを　あげると　ランクアップして▽
-おみせは　おおきく　なります</Text>
+おみせは　おおきく　なります▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-05T12:22:53" />
+				Time="2011-11-15T10:35:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -936,10 +936,10 @@
 おみせが　たてられます▼
 おみせに　ひとを　あんないして
 にんきを　あげると　ランクアップして▽
-おみせは　おおきく　なります</Text>
+おみせは　おおきく　なります▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-05T12:22:56" />
+				Time="2011-11-15T10:36:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
