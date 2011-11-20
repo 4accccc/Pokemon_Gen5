@@ -16203,7 +16203,7 @@
 /**
  * @brief 指定ゾーンのポケモンを全て捕まえたかを取得
  *
- * @param zone_group_id    ゾーンID
+ * @param zone_group_id    ゾーングループID
  * @param ground_id        地形タイプ
  * @param is_get           TRUEの時は捕獲コンプリート、FALSEの時は見たコンプリート
  * @param ret_wk           コンプリート時にTRUEが帰ってくる
