@@ -1694,10 +1694,10 @@ DS本体の　電源が　切れましたね▼
 		<LanguageCell
 			Language="JPN">
 			<Text>たいせんの　せいかを　たたえて
-バトルポイントを　しんてい　いたします</Text>
+バトルポイントを　しんてい　いたします▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-07T09:14:03" />
+				Time="2011-11-18T02:10:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1706,10 +1706,10 @@ DS本体の　電源が　切れましたね▼
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>対戦の　成果を　称えて
-バトルポイントを　進呈いたします</Text>
+バトルポイントを　進呈いたします▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-17T03:37:26" />
+				User="shimoyamada:W00184"
+				Time="2011-11-18T02:10:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
