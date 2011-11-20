@@ -27,6 +27,10 @@ TUTORIAL_FILE = infinity_dungeon_tutorial_data.cdat
 AREA_DATA_FILE = inf_area_data.cdat
 FLOOR_NUM_DATA_FILE = inf_floor_num.h
 FLOOR_SIZE_DATA_FILE = inf_floor_size.cdat
+INF_TRDATA = ../inf_tr.tdm
+TR_CNT_CSV_FILE_W = tr_cnt_data_w.csv
+TR_CNT_CSV_FILE_B = tr_cnt_data_b.csv
+TR_CNT_DATA_FILE = inf_area_tr_cnt.cdat
 
 # エリアデータ
 W_AREA_CSV_FILE = w_area_data_csv.csv
@@ -92,6 +96,12 @@ $(W_AREA_CSV_FILE): $(XLS_FILE)
 $(B_AREA_CSV_FILE): $(XLS_FILE) 
 	@ruby $(EXCELCONV) $(XLS_FILE) -n 3 -s > $(B_AREA_CSV_FILE)
 
+$(TR_CNT_CSV_FILE_W): $(TR_XLS_FILE) trainer_area_data_cnv.rb
+	@ruby $(EXCELCONV) $(TR_XLS_FILE) -n 1 -s > $(TR_CNT_CSV_FILE_W)
+
+$(TR_CNT_CSV_FILE_B): $(TR_XLS_FILE) trainer_area_data_cnv.rb
+	@ruby $(EXCELCONV) $(TR_XLS_FILE) -n 2 -s > $(TR_CNT_CSV_FILE_B)
+
 $(TUTORIAL_FILE) : $(TUTORIAL_CSV_FILE) tutorial_data_cnv.rb
 	@ruby tutorial_data_cnv.rb $(TUTORIAL_FILE) $(TUTORIAL_CSV_FILE)
 
@@ -104,8 +114,8 @@ $(ROOM_FILE):$(ROOM_CSV_FILE)
 $(AREA_DATA_FILE):$(W_AREA_CSV_FILE) $(B_AREA_CSV_FILE) area_data_cnv.rb
 	@ruby area_data_cnv.rb $(W_AREA_CSV_FILE) $(B_AREA_CSV_FILE) $(AREA_DATA_FILE) $(FLOOR_NUM_DATA_FILE) $(FLOOR_SIZE_DATA_FILE)
 
-$(TR_DATA_FILE):$(TR_DATA_CSV_FILE) trainer_area_data_cnv.rb
-	@ruby trainer_area_data_cnv.rb $(TR_DATA_FILE) $(TR_DATA_HEADER_FILE) $(TR_DATA_CSV_FILE)
+$(TR_DATA_FILE):$(TR_DATA_CSV_FILE) $(INF_TRDATA) $(TR_CNT_CSV_FILE_W) $(TR_CNT_CSV_FILE_B) trainer_area_data_cnv.rb
+	@ruby trainer_area_data_cnv.rb $(TR_DATA_FILE) $(TR_DATA_HEADER_FILE) $(TR_DATA_CSV_FILE) $(INF_TRDATA) $(TR_CNT_CSV_FILE_W) $(TR_CNT_CSV_FILE_B) $(TR_CNT_DATA_FILE)
 
 endif
 

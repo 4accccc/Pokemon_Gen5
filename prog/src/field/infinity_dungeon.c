@@ -1031,13 +1031,18 @@ static int GetSetTrainerIDTable( const INF_DUNGEON_DATA *p_dungeon_data ,u32 are
   u16 tr_id = 0;
   int cnt = 0;
   u8 version = INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data );
+  u32 trid_array[INF_DUNGEON_TR_DATA_MAX];
+  u32 tmp_trid_array[INF_DUNGEON_TR_DATA_MAX];
+  u32 add_data_num = 0;
 
-  // 通常トレーナー
+  // メモリをクリーン
+  GFL_STD_MemFill( trid_array ,0 , sizeof(trid_array));
+
+  // 使用できるトレーナーデータを決定
   for( i = 0 ; i < INF_TR_AREA_DATA_MAX; i++ )
   {
     const INF_TR_AREA_DATA* sc_tr_area_data = INF_TOOL_GetTrainerParam( i );
     GF_ASSERT_MSG(cnt<INF_DUNGEON_TR_DATA_MAX,"無限ダンジョンのトレーナー抽選に使用するトレーナー数が多すぎます(%d<%d)\n",cnt,INF_DUNGEON_TR_DATA_MAX);
-
 
     if( (area_no >= sc_tr_area_data->start_area ) &&
         (area_no <= sc_tr_area_data->end_area ) )
@@ -1046,19 +1051,54 @@ static int GetSetTrainerIDTable( const INF_DUNGEON_DATA *p_dungeon_data ,u32 are
       if( (sc_tr_area_data->version == version) ||
           (sc_tr_area_data->version == 0) )
       {
-        // 出現率計算
-        if( GFL_STD_Rand( rand_context ,100 ) < sc_tr_area_data->set_lv )
+        trid_array[add_data_num] = i;
+        add_data_num++;
+      }
+    }
+  }
+
+  // トレーナータイプごとに抽選データを取得する
+  {
+    u8 tr_type;
+    const u8 *p_trtype_cnt = INF_TOOL_GetTrTypeCntTable(area_no,version); 
+
+    for( tr_type = 0; tr_type < INF_TR_TYPE_MAX; tr_type++ )
+    {
+      // 配置人数が0の場合のみテーブルに追加する作業を行う
+      if( p_trtype_cnt[tr_type] > 0 )
+      {
+        int add_index = 0;
+        int add_cnt = p_trtype_cnt[tr_type];
+        int tmp_data_cnt = 0;
+        GFL_STD_MemFill( tmp_trid_array ,0 , sizeof(tmp_trid_array));
+
+        // タイプを絞り込んだテーブルを作成
+        for( i = 0; i < add_data_num; i++ )
         {
-          p_trid_array[cnt] = i;
-          cnt++;
+          if( INF_TOOL_GetTrainerType( trid_array[i] ) == tr_type )
+          {
+            // トレーナーIDを一時保存
+            tmp_trid_array[tmp_data_cnt] = trid_array[i];
+            tmp_data_cnt++;
+          }
+        }
+        // テーブル内をランダムにする
+        INF_TOOL_RndArray( tmp_trid_array, tmp_data_cnt, rand_context );
+
+        // テーブルに追加
+        while( add_cnt > 0 )
+        {
+          p_trid_array[cnt] = tmp_trid_array[add_index];
+          add_cnt--;    // 追加する数
+          add_index++;  // 追加した位置
+          cnt++;        // 出力トレーナー数
+          GF_ASSERT_MSG(add_index<=tmp_data_cnt,"トレーナータイプ数の指定が間違っています[タイプインデックス->%dのトレーナーが足りない]\n",tr_type);
+          ONOUE_Printf("tr_type => %u add\n",tr_type);
         }
       }
     }
   }
   
-  // 1階に32人まで出現する可能性がある
-  GF_ASSERT_MSG(cnt>=32,"エリア%u-抽選に使用するトレーナーが少なすぎます(%d<=%d)\n",area_no,cnt,32);
-
   return cnt;
 }
 

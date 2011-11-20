@@ -42,6 +42,7 @@ enum{
 // ダンジョン関連データ
 #include "infinity_dungeon_tool.cdat"
 #include "../../../resource/infinity_dungeon/data/inf_area_data.cdat"
+#include "../../../resource/infinity_dungeon/data/inf_area_tr_cnt.cdat"
 
 #ifndef VS_PROJECT
 SDK_COMPILER_ASSERT( INF_TR_AREA_DATA_MAX == (INF_DUNGEON_TR_ID_MAX -INF_TRID_CNT_RECOVERY) );
@@ -87,6 +88,20 @@ const INF_ROOM_SET_TR_PARAM* INF_TOOL_GetRoomTrParam( u16 tr_pos_type )
 const INF_TR_AREA_DATA* INF_TOOL_GetTrainerParam( u16 tr_index )
 {
   return &sc_tr_area_data[tr_index];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  無限ダンジョン内トレーナーインデックスからトレーナータイプを取得する
+ *
+ *	@param	tr_index 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u8 INF_TOOL_GetTrainerType( u16 tr_index )
+{
+  return sc_tr_area_data[tr_index].tr_type;
 }
 
 //----------------------------------------------------------------------------
@@ -284,6 +299,27 @@ const INF_LEVEL_TABLE_PARAM* INF_TOOL_GetLevelData( u16 area_no )
 u8 INF_TOOL_GetPowRnd( u16 area_no )
 {
   return sc_pow_rnd_table[area_no];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  トレーナータイプごとの配置数テーブルを取得
+ *
+ *	@param	area_no 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+const u8* INF_TOOL_GetTrTypeCntTable( u16 area_no ,u8 version)
+{
+  if( version == VERSION_B2 )
+  {
+    return sc_inf_tr_setdata_b[area_no];
+  }
+  else
+  {
+    return sc_inf_tr_setdata_w[area_no];
+  }
 }
 
 //----------------------------------------------------------------------------

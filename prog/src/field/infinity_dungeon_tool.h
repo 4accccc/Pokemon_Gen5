@@ -138,7 +138,7 @@ typedef struct {
   u8 start_area;
   u8 end_area;
   u8 version;
-  u8 set_lv;
+  u8 tr_type;
 }INF_TR_AREA_DATA;
 
 //-------------------------------------
@@ -223,4 +223,6 @@ extern void INF_TOOL_RndArray( u32 *p_array , int size ,GFL_STD_RandContext *ran
 extern void INF_TOOL_RndArrayU8( u8 *p_array , int size ,GFL_STD_RandContext *rand_context );
 extern void INF_TOOL_SetDungeonSeed( INF_DUNGEON_SEED *p_seed ,u32 master_seed );
 extern const u8* INF_TOOL_GetFloorData( u16 area_no ,u16 floor_no ,u8 version );
+extern const u8* INF_TOOL_GetTrTypeCntTable( u16 area_no ,u8 version);
+extern u8 INF_TOOL_GetTrainerType( u16 tr_index );
 
