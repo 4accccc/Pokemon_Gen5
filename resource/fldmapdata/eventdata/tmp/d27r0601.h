@@ -11,9 +11,10 @@
 
 #define D27R0601_SWRIVAL_01                0
 #define D27R0601_NINJA_01                  1
-#define D27R0601_NINJA_02                  2
+#define D27R0601_POKE32_01                 2
 #define D27R0601_NINJA_03                  3
 #define D27R0601_SWSAGE1_01                4
+#define D27R0601_NINJA_02                  5
 
 #endif //ZONE_D27R0601_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d27r0601.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -30,5 +31,7 @@
 #define BG_D27R0601_MONITOR3_04           7
 #define BG_D27R0601_MONITOR3_05           8
 #define BG_D27R0601_MONITOR3_06           9
+#define BG_D27R0601_MONITOR3_07          10
+#define BG_D27R0601_MONITOR3_08          11
 
 #endif //ZONE_D27R0601_EVB_H

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/19 18:53:10
+#save date:2011/11/21 16:16:09
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d27r0701.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d27r0701.wms
 #hold event type:
 1
 #hold event number:
-2
+3
 #event number: 0
 #type
 1
@@ -45,7 +45,7 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-D27R0701_SWPLAZMAM_02
+D27R0701_SWPLAZMAM_02W
 #OBJ CODE Number
 SWPLAZMAM
 #MOVE CODE Number
@@ -53,9 +53,9 @@ MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_D27R0701_SWPLAZMAM_02W
 #Event Script Name
-SCRID_D27R0701_SWPLAZMAM_02
+SCRID_D27R0701_SWPLAZMAM_02W
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
@@ -72,6 +72,37 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 -40 0 -552
+#event number: 2
+#type
+1
+#ID name
+D27R0701_SWPLAZMAM_02B
+#OBJ CODE Number
+SWPLAZMAM
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D27R0701_SWPLAZMAM_02B
+#Event Script Name
+SCRID_D27R0701_SWPLAZMAM_02B
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+3
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 0 -24
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

@@ -26,7 +26,8 @@ _EVENT_DATA    ev_zone_d27r0701
 _EVENT_DATA    ev_init_d27r0701
 _EVENT_DATA    ev_recover_d27r0701
 _EVENT_DATA    ev_scene_d27r0701_plazmam_01
-_EVENT_DATA    ev_d27r0701_swplazmam_02
+_EVENT_DATA    ev_d27r0701_swplazmam_02w
+_EVENT_DATA    ev_d27r0701_swplazmam_02b
 _EVENT_DATA_END
 
 //バージョン取得
@@ -59,6 +60,24 @@ INIT_EVENT_START	ev_zone_d27r0701
    _FLAG_RESET( FV_D27R0701_SWPLAZMAM_01 )
   ENDIF
   
+  //乗船2回目終了ならば移動手段助言キャラを非表示に
+  IF $WK_SCENE_D27R0501_SWSAGE7_01 == 2 THEN
+  
+    _FLAG_SET( FV_D27R0701_SWPLAZMAM_02B )
+    _FLAG_SET( FV_D27R0701_SWPLAZMAM_02W )
+  
+  ELSIF $LCWK_VERSION == VERSION_B2 THEN
+  
+    _FLAG_RESET( FV_D27R0701_SWPLAZMAM_02B )
+    _FLAG_SET( FV_D27R0701_SWPLAZMAM_02W )
+  
+  ELSIF $LCWK_VERSION == VERSION_W2 THEN
+    
+    _FLAG_SET( FV_D27R0701_SWPLAZMAM_02B )
+    _FLAG_RESET( FV_D27R0701_SWPLAZMAM_02W )
+  
+  ENDIF
+  
 INIT_EVENT_END
 
 /************************************************************/
@@ -74,9 +93,6 @@ INIT_EVENT_START	ev_init_d27r0701
     _OBJ_POS_CHANGE(D27R0701_SWPLAZMAM_01,16,0,25,DIR_UP)
   ENDIF
   
-  IF $LCWK_VERSION == VERSION_B2 THEN
-    _OBJ_POS_CHANGE(D27R0701_SWPLAZMAM_02,13,0,16,DIR_RIGHT)
-  ENDIF
   
 INIT_EVENT_END
 /************************************************************/
@@ -140,14 +156,22 @@ EVENT_END
 /************************************************************/
 /*					話しかけ：プラズマ団員  						*/
 /************************************************************/
-EVENT_START	ev_d27r0701_swplazmam_02  
+EVENT_START	ev_d27r0701_swplazmam_02w
   IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0701_swplazmam_end_01 )
   ELSE
-    _TALK_OBJ_START() 
-    _BALLOONWIN_OBJMSG_WB( msg_d27r0701_swplazmam2_01w , msg_d27r0701_swplazmam2_01b , D27R0701_SWPLAZMAM_02 , POS_DEFAULT)
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0701_swplazmam2_01w )
+  ENDIF
+EVENT_END
+
+/************************************************************/
+/*					話しかけ：プラズマ団員  						*/
+/************************************************************/
+EVENT_START	ev_d27r0701_swplazmam_02b
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0701_swplazmam_end_01 )
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0701_swplazmam2_01b )
   ENDIF
 EVENT_END
 

@@ -147,16 +147,17 @@ INIT_EVENT_START	ev_scene_d27r0601_swsage1_01
   _MSGWIN_CLOSE()
   
   //自機にカメラを戻す
-  _CAMERA_DEF_MOVE (40)
-  _CAMERA_WAIT_MOVE()
-  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
-  _CAMERA_END()		//カメラ操作終了
+  _CAMERA_DEF_MOVE (60)
   
   //アニメ：ゲーチス1歩下へ
   _OBJ_ANIME_AUTO( D27R0601_SWSAGE1_01 , 13, 7, FORCE_TYPE_NOT, 16, DIR_LR)
   _TIME_WAIT( 40 )
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_r)
   _OBJ_ANIME_WAIT()
+  
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
   
   //ゲーチス：そうです！
   _BALLOONWIN_OBJMSG_POS( msg_d27r0601_swsage01_03_06 , D27R0601_SWSAGE1_01 ,POS_DEFAULT )
@@ -183,7 +184,7 @@ INIT_EVENT_START	ev_scene_d27r0601_swsage1_01
   
   //アニメ：ゲーチス退場
   _OBJ_ANIME( D27R0601_SWSAGE1_01 , anm_swsage1_bye_01)
-  _TIME_WAIT( 32 )
+  _TIME_WAIT( 26 )
   _OBJ_ANIME( D27R0601_NINJA_01 , anm_staystep_d)
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d)
   _OBJ_ANIME_WAIT()
@@ -216,11 +217,11 @@ INIT_EVENT_START	ev_scene_d27r0601_swsage1_01
   _MSGWIN_CLOSE()
   
   //レパルダス動作モデル生成
-  _OBJ_ADD_EX( 10, 6, DIR_LEFT, MMDL_ID_EVENTOBJ_00, POKE32, MV_DMY )
+  _OBJ_ADD( D27R0601_POKE32_01 )
   
   //レパルダス：グルルゥー！
   _VOICE_PLAY(MONSNO_653,0)
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0601_poke32_03_01 , MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0601_poke32_03_01 , D27R0601_POKE32_01 ,POS_DEFAULT )
   _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
   
@@ -280,8 +281,8 @@ INIT_EVENT_END
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swrival_warp_in
   _ANIME_DATA	AC_WARP_DOWN,1
-  _ANIME_DATA	AC_WALK_U_8F,3
-  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_U_4F,3
+  _ANIME_DATA	AC_STAY_WALK_R_4F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -453,11 +454,11 @@ EVENT_START	ev_d27r0601_swrival_01
   
   //ダークトリニティ戦終了前
   IF $WK_SCENE_D27R0601_SWSAGE1_01 < 4 THEN
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swrival_03_02 )
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swrival_03_03 )
     
   //ダークトリニティ戦終了後
   ELSE
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swrival_03_03 )
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swrival_03_04 )
   ENDIF
   
 EVENT_END
@@ -471,14 +472,77 @@ EVENT_END
 
 
 /************************************************************/
-/*					【仮】POS：STOPPER				*/
+/*				POS：STOPPER				*/
 /************************************************************/
 EVENT_START	ev_pos_d27r0601_stopper_01
   
-  _OBJ_ANIME( MMDL_ID_PLAYER , anm_walk_u)
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  IF $LCW_POSX == 10 THEN
+    _OBJ_ANIME( D27R0601_NINJA_02 , anm_ninja_press_l)
+  ELSE
+    _OBJ_ANIME( D27R0601_NINJA_02 , anm_ninja_press_r)
+  ENDIF
+  _TIME_WAIT( 46 )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_backstep)
+  _OBJ_ANIME_WAIT()
+  
+  IF $LCW_POSX == 10 THEN
+    _OBJ_ANIME( D27R0601_NINJA_02 , anm_ninja_back_l)
+  ELSE
+    _OBJ_ANIME( D27R0601_NINJA_02 , anm_ninja_back_r)
+  ENDIF
   _OBJ_ANIME_WAIT()
   
 EVENT_END
+
+//--------------------------------------------------------------------
+//	NINJA：押し戻す（L）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_press_l
+  _ANIME_DATA	AC_STAY_WALK_L_4F,1
+  _ANIME_DATA	AC_MARK_GYOE,1
+  _ANIME_DATA	AC_WALK_D_4F,1
+  _ANIME_DATA	AC_WALK_L_4F,1
+  _ANIME_DATA	AC_WALK_U_4F,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	NINJA：押し戻す（R）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_press_r
+  _ANIME_DATA	AC_STAY_WALK_R_4F,1
+  _ANIME_DATA	AC_MARK_GYOE,1
+  _ANIME_DATA	AC_WALK_D_4F,1
+  _ANIME_DATA	AC_WALK_R_4F,1
+  _ANIME_DATA	AC_WALK_U_4F,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	NINJA：押し戻す（L）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_back_l
+  _ANIME_DATA	AC_WALK_R_4F,1
+  _ANIME_DATA	AC_STAY_WALK_U_4F,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	NINJA：押し戻す（R）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_back_r
+  _ANIME_DATA	AC_WALK_L_4F,1
+  _ANIME_DATA	AC_STAY_WALK_U_4F,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	PLAYER：戻される
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_backstep
+  _ANIME_DATA AC_DIR_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_U_4F,1
+  _ANIME_DATA AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA	ACMD_END,0
 
 /************************************************************/
 /*					特殊接続				*/
@@ -576,13 +640,6 @@ ev_battle_check:
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-    
-    //ダークトリニティ戦1人目後なら
-    IF $WK_SCENE_D27R0601_SWSAGE1_01 == 1 THEN
-      //レパルダス動作モデル削除
-      _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
-    ENDIF
-    
 			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 	ELSE
 			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）

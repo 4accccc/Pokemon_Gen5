@@ -114,20 +114,9 @@ EVENT_START	ev_reserve_d27r0201_rival_01
   _OBJ_ANIME( D27R0201_SWRIVAL_01 , anm_staystep_u)
   _OBJ_ANIME_WAIT()
   
-  //カメラ操作　バリアにフォーカス
-  _CAMERA_START()		//カメラ操作開始
-  _CAMERA_PURGE()		//カメラのバインドを解く
-  _CAMERA_MOVE( 9688,0,970752,753664,0,339968,30 )
-  
   //ライバル：……バリアだ
   _BALLOONWIN_OBJMSG_POS( msg_d27r0201_swrival_02_01 , D27R0201_SWRIVAL_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
-  
-  //自機にカメラを戻す
-  _CAMERA_DEF_MOVE (30)
-  _CAMERA_WAIT_MOVE()
-  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
-  _CAMERA_END()		//カメラ操作終了
   
   //アニメ：主人公とライバル向き合う
   _OBJ_ANIME( D27R0201_SWRIVAL_01 , anm_staystep_l)
@@ -143,11 +132,11 @@ EVENT_START	ev_reserve_d27r0201_rival_01
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d)
   _OBJ_ANIME_WAIT()
   
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
   //動作モデル削除
   _OBJ_DEL( D27R0201_SWRIVAL_01 )
   
-  //階段SE再生
-  _SE_PLAY( SEQ_SE_KAIDAN )
   _SE_WAIT()
   
   //========================================//
@@ -165,9 +154,9 @@ EVENT_END
 //	ライバル：退場
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_rival_bye_01
-  _ANIME_DATA	AC_WALK_D_8F,1
-  _ANIME_DATA	AC_WALK_L_8F,1
-  _ANIME_DATA	AC_WALK_D_8F,4
+  _ANIME_DATA	AC_WALK_D_4F,1
+  _ANIME_DATA	AC_WALK_L_4F,1
+  _ANIME_DATA	AC_WALK_D_4F,4
   _ANIME_DATA	ACMD_END,0
 
 /************************************************************/
