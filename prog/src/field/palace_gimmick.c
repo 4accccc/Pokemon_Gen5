@@ -58,6 +58,8 @@ typedef enum {
   RES_EFFECT_03_ANM_ICA,  //
   RES_EFFECT_03_ANM_IMA,  //
   RES_EFFECT_03_ANM_ITA,  //
+  RES_EFFECT_04_MDL,      // ミッション開始時2
+  RES_EFFECT_04_ANM_ICA,  // 
 
   RES_NUM
 } RES_INDEX;
@@ -75,6 +77,8 @@ static const GFL_G3D_UTIL_RES res_table[ RES_NUM ] =
   { ARCID_PALACE_EFFECT, NARC_palace_effect_hilink_e03_s_nsbca, GFL_G3D_UTIL_RESARC },  // 
   { ARCID_PALACE_EFFECT, NARC_palace_effect_hilink_e03_s_nsbma, GFL_G3D_UTIL_RESARC },  // 
   { ARCID_PALACE_EFFECT, NARC_palace_effect_hilink_e03_nsbta, GFL_G3D_UTIL_RESARC },    // 
+  { ARCID_PALACE_EFFECT, NARC_palace_effect_hilink_e04_nsbmd, GFL_G3D_UTIL_RESARC },    // ミッション開始時2
+  { ARCID_PALACE_EFFECT, NARC_palace_effect_hilink_e04_nsbca, GFL_G3D_UTIL_RESARC },    // 
 };
 
 // ANIME
@@ -99,12 +103,19 @@ static const GFL_G3D_UTIL_ANM anm_effect_03[] =
 };
 #define ANM_EFFECT_03_NUM  ( NELEMS(anm_effect_03) )
 
+static const GFL_G3D_UTIL_ANM anm_effect_04[] =
+{
+  { RES_EFFECT_04_ANM_ICA, 0 },
+};
+#define ANM_EFFECT_04_NUM  ( NELEMS(anm_effect_04) )
+
 // アニメ総数のテーブル
 static const int anm_num_tbl[] =
 {
   ANM_EFFECT_01_NUM,
   ANM_EFFECT_02_NUM,
   ANM_EFFECT_03_NUM,
+  ANM_EFFECT_04_NUM,
 };
 
 // オブジェクトインデックス
@@ -124,6 +135,7 @@ typedef enum {
   OBJ_EFFECT_01,
   OBJ_EFFECT_02,
   OBJ_EFFECT_03,
+  OBJ_EFFECT_04,
 
   OBJ_NUM,
 
@@ -155,6 +167,7 @@ static const GFL_G3D_UTIL_OBJ obj_table[ OBJ_NUM ] =
   { RES_EFFECT_01_MDL, 0, RES_EFFECT_01_MDL, anm_effect_01, ANM_EFFECT_01_NUM },
   { RES_EFFECT_02_MDL, 0, RES_EFFECT_02_MDL, anm_effect_02, ANM_EFFECT_02_NUM },
   { RES_EFFECT_03_MDL, 0, RES_EFFECT_03_MDL, anm_effect_03, ANM_EFFECT_03_NUM },
+  { RES_EFFECT_04_MDL, 0, RES_EFFECT_04_MDL, anm_effect_04, ANM_EFFECT_04_NUM },
 };
 
 static const GFL_G3D_UTIL_SETUP setup = { res_table, RES_NUM, obj_table, OBJ_NUM };
@@ -183,6 +196,7 @@ static void ANM_Stop( FLD_EXP_OBJ_CNT_PTR exp_obj, u16 obj_idx, u16 anm_idx );
 static void ANM_EFFECT_01_Play( PALACE_GMK_WORK *p_wk );
 static void ANM_EFFECT_02_Play( PALACE_GMK_WORK *p_wk );
 static void ANM_EFFECT_03_Play( PALACE_GMK_WORK *p_wk );
+static void ANM_EFFECT_04_Play( PALACE_GMK_WORK *p_wk );
 
 // チェック
 static BOOL CHECK_BridgeInPos( PALACE_GMK_WORK *p_wk );
@@ -285,6 +299,12 @@ void PALACE_GMK_Move(FIELDMAP_WORK *fieldWork)
 
       ANM_EFFECT_03_Play( work );
     }
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
+    {
+      OS_Printf("デバッグ エフェクト04再生\n");
+
+      ANM_EFFECT_04_Play( work );
+    }
   }
 #endif
 
@@ -382,7 +402,7 @@ static void EXPOBJ_ObjSet( PALACE_GMK_WORK *p_wk )
 
   //=====================================
   // エフェクト
-  for( i=OBJ_EFFECT_01; i<=OBJ_EFFECT_03; i++ )
+  for( i=OBJ_EFFECT_01; i<=OBJ_EFFECT_04; i++ )
   {
     int anm_idx;
     int anm_num = anm_num_tbl[ i - OBJ_EFFECT_01 ];
@@ -682,6 +702,24 @@ static void ANM_EFFECT_03_Play( PALACE_GMK_WORK *p_wk )
   ANM_Play( p_wk->exp_obj, obj_idx, 0, FALSE ); // ICA
   ANM_Play( p_wk->exp_obj, obj_idx, 1, FALSE ); // IMA
   ANM_Play( p_wk->exp_obj, obj_idx, 2, TRUE ); // ITA
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ミッション開始時エフェクト2 アニメ再生	
+ *
+ *	@param	PALACE_GMK_WORK *p_wk  ギミックワーク
+ */
+//-----------------------------------------------------------------------------
+static void ANM_EFFECT_04_Play( PALACE_GMK_WORK *p_wk )
+{
+  int i;
+  u16 obj_idx = OBJ_EFFECT_04;
+
+  // 表示
+  FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, EXPOBJ_UNIT_IDX, obj_idx, FALSE );
+
+  ANM_Play( p_wk->exp_obj, obj_idx, 0, FALSE ); // ICA
 }
 
 //----------------------------------------------------------------------------

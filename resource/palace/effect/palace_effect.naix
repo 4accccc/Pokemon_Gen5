@@ -19,7 +19,9 @@ enum {
 	NARC_palace_effect_hilink_e03_nsbmd = 5,
 	NARC_palace_effect_hilink_e03_nsbta = 6,
 	NARC_palace_effect_hilink_e03_s_nsbca = 7,
-	NARC_palace_effect_hilink_e03_s_nsbma = 8
+	NARC_palace_effect_hilink_e03_s_nsbma = 8,
+	NARC_palace_effect_hilink_e04_nsbca = 9,
+	NARC_palace_effect_hilink_e04_nsbmd = 10
 };
 
 /* NARC_PALACE_EFFECT_NAIX_ */

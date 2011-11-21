@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ica version="1.6.0">
+
+<head>
+	<create user="fuchino_hiroki" host="W00252" date="2011-11-21T17:03:22" source="hilink_e04.mb"/>
+	<title>Character Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+</head>
+
+<body>
+
+<node_anm_info
+	frame_size="60"
+	scaling_rule="standard"
+	magnify="1.000000"
+	tool_start_frame="1"
+	tool_end_frame="60"
+	interpolation="frame"
+	compress_node="merge" node_size="2 1"
+	frame_step_mode="1"
+	tolerance_scale="0.100000"
+	tolerance_rotate="0.100000"
+	tolerance_translate="0.010000"
+/>
+
+<node_scale_data size="60">
+	0.000000 0.059326 0.118652 0.177979 0.237305 0.296631 0.355957 0.415283 0.474609 0.533936
+	0.593262 0.652588 0.711914 0.771240 0.830566 0.889893 0.949219 1.008545 1.067871 1.127197
+	1.186523 1.245850 1.305176 1.364502 1.423828 1.483154 1.542480 1.601807 1.661133 1.720459
+	1.779541 1.838867 1.898193 1.957520 2.016846 2.076172 2.135498 2.194824 2.254150 2.313477
+	2.372803 2.432129 2.491455 2.550781 2.610107 2.669434 2.728760 2.788086 2.847412 2.906738
+	2.966064 3.025391 3.084717 3.144043 3.203369 3.262695 3.322021 3.381348 3.440674 3.500000
+</node_scale_data>
+
+<node_rotate_data size="1">
+	0.000000
+</node_rotate_data>
+
+<node_translate_data size="2">
+	-8.000000 34.000000
+</node_translate_data>
+
+<node_anm_array size="1">
+	<node_anm index="0">
+		<scale_x frame_step="1" data_size="60" data_head="0"/>
+		<scale_y frame_step="1" data_size="60" data_head="0"/>
+		<scale_z frame_step="1" data_size="60" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="0"/>
+		<translate_y frame_step="1" data_size="1" data_head="1"/>
+		<translate_z frame_step="1" data_size="1" data_head="0"/>
+	</node_anm>
+</node_anm_array>
+
+</body>
+
+</ica>
