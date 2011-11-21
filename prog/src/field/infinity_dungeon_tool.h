@@ -59,12 +59,14 @@
 //=====================================
 enum
 {
-  INFTR_HINT_TYPE_UP,
-  INFTR_HINT_TYPE_DOWN,
-  INFTR_HINT_TYPE_BOSS_FLOOR,
-  INFTR_HINT_TYPE_BOSS_DIR,
-  INFTR_HINT_TYPE_BOSS_MONSTER,
-  INFTR_HINT_TYPE_MEDIC_DIR,
+  INFTR_HINT_TYPE_GATE_TR_DIR,          // A-1
+  INFTR_HINT_TYPE_GATE_TR_UP_DOWN,      // A-2
+  INFTR_HINT_TYPE_GATE_TR_ROOM_TR_NUM,  // A-3
+  INFTR_HINT_TYPE_GATE_SEX,             // B-1
+  INFTR_HINT_TYPE_GATE_MOVE_TYPE,       // B-2
+  INFTR_HINT_TYPE_MEDIC_DIR,            // C
+  INFTR_HINT_TYPE_BOSS_MONSTER,         // D
+  INFTR_HINT_TYPE_BOSS_INFO,            // E1,E2
   INFTR_HINT_TYPE_NONE,
   INFTR_HINT_TYPE_MAX,
 };
@@ -195,6 +197,9 @@ typedef struct {
   DUNGEON_TRAINER   tr_data[INFINITYDUNGEON_FLOOR_MAX];
   u16               recover_data[INFINITY_DUNGEON_RECOVERTR_MAX];
   u16               recover_room_id[INFINITYDUNGEON_FLOOR_MAX];
+  u8                gate_trainer_floor;
+  u8                gate_trainer_room_id;
+  u8                gate_trainer_id_pos;
   u8                version;
 }INF_DUNGEON_DATA;
 
@@ -217,7 +222,7 @@ extern const GRID_DATA* INF_TOOL_GetWarpPosTable( u8 version ,int room_type ,int
 extern const GRID_DATA* INF_TOOL_GetBmodelPos( u8 version ,int room_type ,int warp_dir  );
 extern const INF_LEVEL_TABLE_PARAM* INF_TOOL_GetLevelData( u16 area_no );
 extern u8 INF_TOOL_GetPowRnd( u16 area_no );
-extern u8 INF_TOOL_GetTrainerHintType( u16 obj_code);
+extern u8 INF_TOOL_GetTrainerHintType( const INF_DUNGEON_DATA *p_dungeon_data,u16 obj_code ,u8 floor_no, u8 id_pos );
 extern u8 INF_TOOL_GetTrainerTalkType( u16 obj_code);
 extern void INF_TOOL_RndArray( u32 *p_array , int size ,GFL_STD_RandContext *rand_context );
 extern void INF_TOOL_RndArrayU8( u8 *p_array , int size ,GFL_STD_RandContext *rand_context );
@@ -225,4 +230,5 @@ extern void INF_TOOL_SetDungeonSeed( INF_DUNGEON_SEED *p_seed ,u32 master_seed )
 extern const u8* INF_TOOL_GetFloorData( u16 area_no ,u16 floor_no ,u8 version );
 extern const u8* INF_TOOL_GetTrTypeCntTable( u16 area_no ,u8 version);
 extern u8 INF_TOOL_GetTrainerType( u16 tr_index );
+extern BOOL INF_TOOL_DUNGEON_GetIsGateTrainer( const INF_DUNGEON_DATA *p_wk ,u8 floor_no, u8 id_pos );
 

@@ -331,15 +331,24 @@ const u8* INF_TOOL_GetTrTypeCntTable( u16 area_no ,u8 version)
  *	@retval
  */
 //-----------------------------------------------------------------------------
-u8 INF_TOOL_GetTrainerHintType( u16 obj_code)
+u8 INF_TOOL_GetTrainerHintType( const INF_DUNGEON_DATA *p_dungeon_data,u16 obj_code ,u8 floor_no, u8 id_pos )
 {
-  int i;
-  for( i = 0; i < INFINITY_DUNGEON_TALK_PATTERN_MAX; i++ )
+  BOOL is_gate = INF_TOOL_DUNGEON_GetIsGateTrainer( p_dungeon_data ,floor_no ,id_pos );
+  if( is_gate == FALSE )
   {
-    if( sc_talk_pattern_table[i].obj_code == obj_code )
+    int i;
+    for( i = 0; i < INFINITY_DUNGEON_TALK_PATTERN_MAX; i++ )
     {
-      return sc_talk_pattern_table[i].hint_type;
+      if( sc_talk_pattern_table[i].obj_code == obj_code )
+      {
+        return sc_talk_pattern_table[i].hint_type;
+      }
     }
+  }
+  else
+  {
+    // ゲートトレーナー専用ヒント
+    return INFTR_HINT_TYPE_BOSS_INFO;
   }
   
   GF_ASSERT_MSG(0,"ヒントタイプの登録されていない表示コードです\n");
@@ -474,5 +483,27 @@ const u8* INF_TOOL_GetFloorData( u16 area_no ,u16 floor_no ,u8 version )
   {
     return sc_floor_data_w[area_no][floor_no];
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  指定トレーナーがゲートトレーナーか調べる
+ *
+ *	@param	INF_DUNGEON_DATA *p_wk 
+ *	@param	floor_no
+ *	@param	id_pos 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+BOOL INF_TOOL_DUNGEON_GetIsGateTrainer( const INF_DUNGEON_DATA *p_wk ,u8 floor_no, u8 id_pos )
+{
+  if( (p_wk->gate_trainer_id_pos == id_pos) &&
+      (p_wk->gate_trainer_floor == floor_no) )
+  {
+    return TRUE;
+  }
+    
+  return FALSE;
 }
 

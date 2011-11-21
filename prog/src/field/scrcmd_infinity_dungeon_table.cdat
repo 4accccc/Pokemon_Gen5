@@ -41,6 +41,10 @@
   DEF_CMD( EvCmdInfinityDungeonGetVersion, EV_SEQ_INFINITY_DUNGEON_GET_VERSION )
   DEF_CMD( EvCmdInfinityDungeonGetDungeonData, EV_SEQ_INFINITY_DUNGEON_GET_PARAM )
   DEF_CMD( EvCmdInfinityDungeonLiftBanElevator, EV_SEQ_INFINITY_DUNGEON_LIFT_BAN_ELEVATOR )
+  DEF_CMD( EvCmdInfinityDungeonGetIsGateTrainer, EV_SEQ_INFINITY_DUNGEON_GET_IS_GATE_TRAINER )
+  DEF_CMD( EvCmdInfinityDungeonGetGateBattleMsgID ,EV_SEQ_INFINITY_DUNGEON_GET_GATE_TRAINER_BATTLE_MSG )
+  NO_CMD()
+  NO_CMD()
  
   END_CMD
   //スクリプトコマンドテーブル終了

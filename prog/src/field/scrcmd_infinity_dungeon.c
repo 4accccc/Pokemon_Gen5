@@ -457,12 +457,13 @@ VMCMD_RESULT EvCmdInfinityDungeonGetHintMsgID( VMHANDLE *p_core, void *p_wk_adrs
   u16 obj_code = MMDL_GetOBJCode( mmdl );
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
   INF_DUNGEON_DATA *p_dungeon_data = INFINITY_DUNGEON_DataGet(p_fieldmap);
+  u8 id_pos = MMDL_GetOBJID( mmdl ) - INFINITY_DUNGEON_TR_OBJ_ID_OFS;
 
   // セーブデータから必要情報を取得
   p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
 
   // ヒントメッセージIDを設定する
-  *p_ret_wk = INFINITY_DUNGEON_GetHintMessage( p_save ,p_dungeon_data ,obj_code);
+  *p_ret_wk = INFINITY_DUNGEON_GetHintMessage( p_save ,p_dungeon_data ,obj_code,id_pos);
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -834,8 +835,8 @@ VMCMD_RESULT EvCmdInfinityDungeonGetDungeonData( VMHANDLE *p_core, void *p_wk_ad
   case SCR_INFDUNGEON_PARAM_CHECK_UP_ROOMTYPE_BOSS:
     {
       u8 room_id = INFINITYDUNGEON_SAVE_GetRoomID( p_save );
-      u8 foor_id = INFINITYDUNGEON_SAVE_GetFloorID( p_save );
-      *p_ret_wk = INFINITY_DUNGEON_GetUpPosRoomType( p_dungeon_data,foor_id,room_id );
+      u8 floor_id = INFINITYDUNGEON_SAVE_GetFloorID( p_save );
+      *p_ret_wk = INFINITY_DUNGEON_GetUpPosRoomType( p_dungeon_data,floor_id,room_id );
     }
     break;
   default:
@@ -902,5 +903,74 @@ static const INF_BOSS_DATA* GetBossData( SCRCMD_WORK *p_wk )
   }
 
   return &p_boss[area_id];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲートトレーナーかどうかを取得する
+ *
+ *	@param	*p_core
+ *	@param	*p_wk_adrs 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdInfinityDungeonGetIsGateTrainer( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+
+  // 無限ダンジョンデータ
+  GAMESYS_WORK  *p_gsys             = SCRCMD_WORK_GetGameSysWork( p_wk );
+  FIELDMAP_WORK *p_fieldmap         = GAMESYSTEM_GetFieldMapWork( p_gsys );
+  INF_DUNGEON_DATA *p_dungeon_data  = INFINITY_DUNGEON_DataGet(p_fieldmap);
+  
+  // セーブデータ
+  GAMEDATA *p_gamedata            = GAMESYSTEM_GetGameData(p_gsys);
+  SAVE_CONTROL_WORK *p_save_data  = GAMEDATA_GetSaveControlWork(p_gamedata);
+  INFINITYDUNGEON_SAVE* p_save    = SaveData_GetINFINITYDUNGEON( p_save_data );
+
+  // パラメータ取得
+  u16 id_pos  = SCRCMD_GetVMWorkValue( p_core, p_wk )- INFINITY_DUNGEON_TR_OBJ_ID_OFS;
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+  u8 floor_id = INFINITYDUNGEON_SAVE_GetFloorID( p_save );
+
+  (*p_ret_wk) = INF_TOOL_DUNGEON_GetIsGateTrainer( p_dungeon_data ,floor_id ,id_pos);
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  無限ダンジョンゲートトレーナーのバトル前メッセージIDを取得する
+ *
+ *	@param	*p_core
+ *	@param	*p_wk_adrs 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdInfinityDungeonGetGateBattleMsgID( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  int i,j;
+  SCRCMD_WORK   *p_wk = p_wk_adrs;
+  GAMESYS_WORK  *p_gamesys  = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA      *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
+  BOOL          is_before_battle  = SCRCMD_GetVMWorkValue( p_core, p_wk );
+  u16           *p_ret_wk   = SCRCMD_GetVMWork( p_core, p_wk );
+  SCRIPT_WORK   *p_scr_wk = SCRCMD_WORK_GetScriptWork( p_wk );
+  const MMDL    *mmdl = SCRIPT_GetTargetObj( p_scr_wk );
+  INFINITYDUNGEON_SAVE  *p_save;
+  SAVE_CONTROL_WORK     *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
+  u16 obj_code = MMDL_GetOBJCode( mmdl );
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gamesys );
+  INF_DUNGEON_DATA *p_dungeon_data = INFINITY_DUNGEON_DataGet(p_fieldmap);
+
+  // セーブデータから必要情報を取得
+  p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
+
+  // 戦闘前後メッセージ
+  *p_ret_wk = INFINITY_DUNGEON_GetGateBeforeBattleMessage( p_save ,p_dungeon_data ,obj_code ,is_before_battle);
+
+  return VMCMD_RESULT_CONTINUE;
 }
 

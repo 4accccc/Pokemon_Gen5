@@ -65,6 +65,7 @@ DEFINE_LOCAL LWK_ROM_VERSION
 DEFINE_LOCAL LWK_DRAW_FLOOR_NO
 DEFINE_LOCAL LWK_DRAW_AREA_NO
 DEFINE_LOCAL LWK_MOVE_ROOM_NUM
+DEFINE_LOCAL LWK_IS_GATE
 
 //----------------------------------------------------------------------------
 //	リタイアイベント
@@ -1081,7 +1082,9 @@ EVENT_END
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_talk_battle_trainer
 {
-  _TALK_OBJ_START()
+  DEFINE_LOCAL	LWK_MSG_ID
+
+ _TALK_OBJ_START()
 
   // OBJID=LWK_TRID_POS
   $LWK_TRID_POS = $SCWK_TARGET_OBJID
@@ -1095,13 +1098,23 @@ EVENT_START  ev_infinity_dungeon_talk_battle_trainer
   // 戦闘データ取得
   _INFINITY_DUNGEON_GET_TRAINER_BATTLE_FLAG( LWK_TRID_POS ,LWK_IS_BATTLE )
 
+  // ゲートトレーナー判断
+  _INFINITY_DUNGEON_GET_IS_GATE_TRAINER( LWK_TRID_POS ,LWK_IS_GATE )
+
 	IF $LWK_IS_BATTLE == FALSE THEN
 
     //視線曲セット
     _TRAINER_BGM_SET_BY_TRTYPE( LWK_TRTYPE )
   
     //移動終了前、会話へ
-    _TRAINER_MSG_SET( LWK_TRID, TRMSG_FIGHT_START, SCWK_TARGET_OBJID )
+    IF $LWK_IS_GATE == TRUE THEN
+      // ゲート専用会話メッセージ
+      _INFINITY_DUNGEON_GET_GATE_TR_MSG_ID( TRUE, LWK_MSG_ID )
+	    _EASY_BALLOONWIN_TALKOBJ_MSG( LWK_MSG_ID )
+    ELSE
+      // 通常戦闘前メッセージ
+      _TRAINER_MSG_SET( LWK_TRID, TRMSG_FIGHT_START, SCWK_TARGET_OBJID )
+    ENDIF
     _BALLOONWIN_CLOSE()
 
     // トレーナーとの戦闘
@@ -1114,6 +1127,18 @@ EVENT_START  ev_infinity_dungeon_talk_battle_trainer
       _INFINITY_DUNGEON_SET_TRAINER_BATTLE_FLAG( LWK_TRID_POS , TRUE )
       // レコードを加算：無限ダンジョントレーナーを倒した数
       _ADD_RECORD( RECID_INF_TRAINER_WIN, 1 )
+
+      //移動終了後、会話へ
+      IF $LWK_IS_GATE == TRUE THEN
+        // ゲート専用会話メッセージ
+        _INFINITY_DUNGEON_GET_GATE_TR_MSG_ID( FALSE, LWK_MSG_ID )
+        _EASY_BALLOONWIN_TALKOBJ_MSG( LWK_MSG_ID )
+        
+        // ゲート開門
+        _BALLOONWIN_CLOSE()
+        _CALL gate_open_event
+
+      ENDIF
 
       //ヒントメッセージ
       _INFINITY_DUNGEON_GET_AFTER_BTL_MSG_TYPE( SCWK_ANSWER )
@@ -1146,6 +1171,8 @@ EVENT_END
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_move_battle_trainer
 {
+  DEFINE_LOCAL	LWK_MSG_ID
+
   // 視線データ取得
   _EYE_TRAINER_ID_GET( SCR_EYE_TR_0, LWK_TRID_POS )
   
@@ -1158,6 +1185,9 @@ EVENT_START  ev_infinity_dungeon_move_battle_trainer
   // 戦闘済み確認
   _INFINITY_DUNGEON_GET_TRAINER_BATTLE_FLAG( LWK_TRID_POS ,LWK_IS_BATTLE )
 
+  // ゲートトレーナー判断
+  _INFINITY_DUNGEON_GET_IS_GATE_TRAINER( LWK_TRID_POS ,LWK_IS_GATE )
+
 	IF $LWK_IS_BATTLE == FALSE THEN
   
     //視線曲セット
@@ -1169,7 +1199,16 @@ EVENT_START  ev_infinity_dungeon_move_battle_trainer
 
     //移動終了前、会話へ
     _EYE_TRAINER_OBJ_ID_GET( SCR_EYE_TR_0, LWK_TR_OBJID )
-    _TRAINER_MSG_SET( LWK_TRID, TRMSG_FIGHT_START, LWK_TR_OBJID )
+
+    //移動終了前、会話へ
+    IF $LWK_IS_GATE == TRUE THEN
+      // ゲート専用会話メッセージ
+      _INFINITY_DUNGEON_GET_GATE_TR_MSG_ID( TRUE, LWK_MSG_ID )
+	    _BALLOONWIN_OBJMSG( LWK_MSG_ID, SCWK_TARGET_OBJID )
+    ELSE
+      // 通常戦闘前メッセージ
+      _TRAINER_MSG_SET( LWK_TRID, TRMSG_FIGHT_START, SCWK_TARGET_OBJID )
+    ENDIF
     _BALLOONWIN_CLOSE()
 
     // トレーナーとの戦闘
@@ -1183,6 +1222,18 @@ EVENT_START  ev_infinity_dungeon_move_battle_trainer
       // レコードを加算：無限ダンジョントレーナーを倒した数
       _ADD_RECORD( RECID_INF_TRAINER_WIN, 1 )
       
+      //移動終了後、会話へ
+      IF $LWK_IS_GATE == TRUE THEN
+        // ゲート専用会話メッセージ
+        _INFINITY_DUNGEON_GET_GATE_TR_MSG_ID( FALSE, LWK_MSG_ID )
+        _EASY_BALLOONWIN_TALKOBJ_MSG( LWK_MSG_ID )
+         
+        // ゲート開門
+        _BALLOONWIN_CLOSE()
+        _CALL gate_open_event
+
+      ENDIF
+
       //ヒントメッセージ
       _INFINITY_DUNGEON_GET_AFTER_BTL_MSG_TYPE( SCWK_ANSWER )
       IF $SCWK_ANSWER == INF_SRC_MSG_TYPE_HINT THEN
@@ -2230,6 +2281,23 @@ recover_temoti_poke:
   _TEMOTI_POKEMON_KAIFUKU()
   _ME_PLAY( SEQ_ME_ASA )
   _ME_WAIT()
+
+  // フェード
+  _BLACK_IN()
+  _DISP_FADE_END_CHECK()
+}
+_RET
+
+//--------------------------------------------------------------------
+// 手持ちポケモン回復
+//--------------------------------------------------------------------
+gate_open_event:
+{
+  // フェード
+  _BLACK_OUT()
+  _DISP_FADE_END_CHECK()
+
+  // ボス部屋への入り口開門演出再生
 
   // フェード
   _BLACK_IN()

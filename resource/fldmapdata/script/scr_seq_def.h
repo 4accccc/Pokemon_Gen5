@@ -14986,6 +14986,23 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _INFINITY_DUNGEON_GET_GATE_TR_MSG_ID
+ * @brief ゲートトレーナー用メッセージを取得する
+ * @param is_before_battle   戦闘前メッセージを取得するならTRUE
+ * @param ret_wk             メッセージID格納先
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_GET_GATE_TR_MSG_ID( is_before_battle ,ret_wk ) \
+    _ASM_INFINITY_DUNGEON_GET_GATE_TR_MSG_ID is_before_battle,ret_wk
+
+    .macro  _ASM_INFINITY_DUNGEON_GET_GATE_TR_MSG_ID is_before_battle,ret_wk
+    .short  EV_SEQ_INFINITY_DUNGEON_GET_GATE_TRAINER_BATTLE_MSG
+    .short  \is_before_battle
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @def _INFINITY_DUNGEON_GET_AFTER_BTL_MSG_TYPE
  * @brief 戦闘後のメッセージタイプを取得する（ヒント、ナース、ドクター)
  * @param ret_wk   メッセージID格納先
@@ -15179,6 +15196,23 @@
 
     .macro  _ASM_INFINITY_DUNGEON_INIT_LIFT_BAN_ELEVATOR
     .short  EV_SEQ_INFINITY_DUNGEON_LIFT_BAN_ELEVATOR
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_GET_IS_GATE_TRAINER
+ * @brief ゲートトレーナかどうかを返す
+ * @param id_pos   トレーナーNO
+ * @param ret_wk   メッセージID格納先
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_GET_IS_GATE_TRAINER( id_pos ,ret_wk ) \
+    _ASM_INFINITY_DUNGEON_GET_IS_GATE_TRAINER id_pos ,ret_wk
+
+    .macro  _ASM_INFINITY_DUNGEON_GET_IS_GATE_TRAINER id_pos ,ret_wk
+    .short  EV_SEQ_INFINITY_DUNGEON_GET_IS_GATE_TRAINER
+    .short  \id_pos
+    .short  \ret_wk
     .endm
 
 //--------------------------------------------------------------
