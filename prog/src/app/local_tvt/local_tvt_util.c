@@ -1627,9 +1627,12 @@ static LIST_UI_RESULT Local_Tvt_Pokelist_KeyUpdate( void *p_wk_adrs )
   s16 max_row;
   s16 max_col;
 
+  const s32 now_pos = p_wk->cursor_pos;
+  const s32 max_pos = PokeParty_GetPokeCount(p_wk->param.p_party);
+
   //現在の上下左右インデックス取得
-  Local_Tvt_Pokelist_GetRowColIndex( p_wk->cursor_pos, &now_row, &now_col );
-  Local_Tvt_Pokelist_GetRowColIndexMax( p_wk->cursor_pos, PokeParty_GetPokeCount(p_wk->param.p_party), &max_row, &max_col );
+  Local_Tvt_Pokelist_GetRowColIndex( now_pos, &now_row, &now_col );
+  Local_Tvt_Pokelist_GetRowColIndexMax( now_pos, max_pos, &max_row, &max_col );
 
   NAGI_Printf( "row %d/%d col %d/%d\n", now_row, max_row, now_col, max_col );
 
@@ -1654,34 +1657,28 @@ static LIST_UI_RESULT Local_Tvt_Pokelist_KeyUpdate( void *p_wk_adrs )
   }
   else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
   {
-    now_col--;
-    if( now_col < 0 )
-    {
-      now_col = max_col-1;
+    s32 now = now_pos;
 
-      now_row--;
-      if( now_row < 0 )
-      {
-        now_row = max_row-1;
-      }
+    --now;
+    if( now < 0  )
+    {
+      now = max_pos-1;
     }
+    Local_Tvt_Pokelist_GetRowColIndex( now, &now_row, &now_col );
 
     PMSND_PlaySE( LOCAL_TVT_SE_SELECT );
     is_key_move = TRUE;
   }
   else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
   {
-    now_col++;
-    if( now_col >= max_col )
-    {
-      now_col = 0;
+    s32 now = now_pos;
 
-      now_row++;
-      if( now_row >= max_row )
-      {
-        now_row = 0;
-      }
+    ++now;
+    if( now >= max_pos )
+    {
+      now = 0;
     }
+    Local_Tvt_Pokelist_GetRowColIndex( now, &now_row, &now_col );
 
     PMSND_PlaySE( LOCAL_TVT_SE_SELECT );
     is_key_move = TRUE;
