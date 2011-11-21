@@ -1271,6 +1271,36 @@
 #define FV_FLD_ITEM_367                   1467 /* 0x05bb  */
 #define FV_FLD_ITEM_368                   1468 /* 0x05bc  */
 #define FV_FLD_ITEM_369                   1469 /* 0x05bd  */
+#define FV_FLD_ITEM_370                   1470 /* 0x05be  */
+#define FV_FLD_ITEM_371                   1471 /* 0x05bf  */
+#define FV_FLD_ITEM_372                   1472 /* 0x05c0  */
+#define FV_FLD_ITEM_373                   1473 /* 0x05c1  */
+#define FV_FLD_ITEM_374                   1474 /* 0x05c2  */
+#define FV_FLD_ITEM_375                   1475 /* 0x05c3  */
+#define FV_FLD_ITEM_376                   1476 /* 0x05c4  */
+#define FV_FLD_ITEM_377                   1477 /* 0x05c5  */
+#define FV_FLD_ITEM_378                   1478 /* 0x05c6  */
+#define FV_FLD_ITEM_379                   1479 /* 0x05c7  */
+#define FV_FLD_ITEM_380                   1480 /* 0x05c8  */
+#define FV_FLD_ITEM_381                   1481 /* 0x05c9  */
+#define FV_FLD_ITEM_382                   1482 /* 0x05ca  */
+#define FV_FLD_ITEM_383                   1483 /* 0x05cb  */
+#define FV_FLD_ITEM_384                   1484 /* 0x05cc  */
+#define FV_FLD_ITEM_385                   1485 /* 0x05cd  */
+#define FV_FLD_ITEM_386                   1486 /* 0x05ce  */
+#define FV_FLD_ITEM_387                   1487 /* 0x05cf  */
+#define FV_FLD_ITEM_388                   1488 /* 0x05d0  */
+#define FV_FLD_ITEM_389                   1489 /* 0x05d1  */
+#define FV_FLD_ITEM_390                   1490 /* 0x05d2  */
+#define FV_FLD_ITEM_391                   1491 /* 0x05d3  */
+#define FV_FLD_ITEM_392                   1492 /* 0x05d4  */
+#define FV_FLD_ITEM_393                   1493 /* 0x05d5  */
+#define FV_FLD_ITEM_394                   1494 /* 0x05d6  */
+#define FV_FLD_ITEM_395                   1495 /* 0x05d7  */
+#define FV_FLD_ITEM_396                   1496 /* 0x05d8  */
+#define FV_FLD_ITEM_397                   1497 /* 0x05d9  */
+#define FV_FLD_ITEM_398                   1498 /* 0x05da  */
+#define FV_FLD_ITEM_399                   1499 /* 0x05db  */
 
 #define FV_FLD_ITEM_AREA_END              1499 /* 0x05db  */
 
@@ -2151,24 +2181,24 @@
 #define SYS_FLAG_WBT_TUTORIAL             2441 /* 0x0989 WBT:チュートリアル中のフラグ */
 #define SYS_FLAG_NPOKE_OPEN               2442 /* 0x098a ホドモエシティ：Nポケ開放フラグ */
 #define SYS_FLAG_FMISSION_ENTRY           2443 /* 0x098b フェスミッション参加フラグ */
-#define SYS_FLAG_FES_OPEN_01              2444 /* 0x098c フェスミッションのオープンフラグその1 */
-#define SYS_FLAG_FES_OPEN_02              2445 /* 0x098d フェスミッションのオープンフラグその2 */
-#define SYS_FLAG_FES_OPEN_03              2446 /* 0x098e フェスミッションのオープンフラグその3 */
-#define SYS_FLAG_FES_OPEN_04              2447 /* 0x098f フェスミッションのオープンフラグその4 */
-#define SYS_FLAG_FES_OPEN_05              2448 /* 0x0990 フェスミッションのオープンフラグその5 */
-#define SYS_FLAG_FES_OPEN_06              2449 /* 0x0991 フェスミッションのオープンフラグその6 */
-#define SYS_FLAG_FES_OPEN_07              2450 /* 0x0992 フェスミッションのオープンフラグその7 */
-#define SYS_FLAG_FES_OPEN_08              2451 /* 0x0993 フェスミッションのオープンフラグその8 */
-#define SYS_FLAG_FES_OPEN_09              2452 /* 0x0994 フェスミッションのオープンフラグその9 */
-#define SYS_FLAG_FES_OPEN_10              2453 /* 0x0995 フェスミッションのオープンフラグその10 */
-#define SYS_FLAG_FES_OPEN_11              2454 /* 0x0996 フェスミッションのオープンフラグその11 */
-#define SYS_FLAG_FES_OPEN_12              2455 /* 0x0997 フェスミッションのオープンフラグその12 */
-#define SYS_FLAG_FES_OPEN_13              2456 /* 0x0998 フェスミッションのオープンフラグその13 */
-#define SYS_FLAG_FES_OPEN_14              2457 /* 0x0999 フェスミッションのオープンフラグその14 */
-#define SYS_FLAG_FES_OPEN_15              2458 /* 0x099a フェスミッションのオープンフラグその15 */
-#define SYS_FLAG_FES_OPEN_16              2459 /* 0x099b フェスミッションのオープンフラグその16 */
-#define SYS_FLAG_FES_OPEN_17              2460 /* 0x099c フェスミッションのオープンフラグその17 */
-#define SYS_FLAG_FES_OPEN_18              2461 /* 0x099d フェスミッションのオープンフラグその18 */
+#define SYS_FLAG_FES_LOSTITEM1            2444 /* 0x098c フェスミッションのオープンフラグその1 */
+#define SYS_FLAG_FES_SHOP1                2445 /* 0x098d フェスミッションのオープンフラグその2 */
+#define SYS_FLAG_FES_POKEBTL1             2446 /* 0x098e フェスミッションのオープンフラグその3 */
+#define SYS_FLAG_FES_TREASURE1            2447 /* 0x098f フェスミッションのオープンフラグその4 */
+#define SYS_FLAG_FES_STONE1BW             2448 /* 0x0990 フェスミッションのオープンフラグその5 */
+#define SYS_FLAG_FES_KINOMI2              2449 /* 0x0991 フェスミッションのオープンフラグその6 */
+#define SYS_FLAG_FES_KOYASHI1             2450 /* 0x0992 フェスミッションのオープンフラグその7 */
+#define SYS_FLAG_FES_HEART1               2451 /* 0x0993 フェスミッションのオープンフラグその8 */
+#define SYS_FLAG_FES_TRBTL1               2452 /* 0x0994 フェスミッションのオープンフラグその9 */
+#define SYS_FLAG_FES_TRADE1BW             2453 /* 0x0995 フェスミッションのオープンフラグその10 */
+#define SYS_FLAG_FES_MQUIZ1               2454 /* 0x0996 フェスミッションのオープンフラグその11 */
+#define SYS_FLAG_FES_JANKEN1              2455 /* 0x0997 フェスミッションのオープンフラグその12 */
+#define SYS_FLAG_FES_KINOKO1              2456 /* 0x0998 フェスミッションのオープンフラグその13 */
+#define SYS_FLAG_FES_FEATHER1             2457 /* 0x0999 フェスミッションのオープンフラグその14 */
+#define SYS_FLAG_FES_JEWEL1               2458 /* 0x099a フェスミッションのオープンフラグその15 */
+#define SYS_FLAG_FES_SHOCKSHOP1           2459 /* 0x099b フェスミッションのオープンフラグその16 */
+#define SYS_FLAG_FES_TRADE2               2460 /* 0x099c フェスミッションのオープンフラグその17 */
+#define SYS_FLAG_FES_TRAIL2BW             2461 /* 0x099d フェスミッションのオープンフラグその18 */
 #define SYS_FLAG_FES_OPEN_19              2462 /* 0x099e フェスミッションのオープンフラグその19 */
 #define SYS_FLAG_ARRIVE_N01R0401          2463 /* 0x099f 到着フラグ：N01R0101 */
 #define SYS_FLAG_ARRIVE_D20R0501          2464 /* 0x09a0 到着フラグ：D20R0501 */
