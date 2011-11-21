@@ -15089,6 +15089,21 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _INFINITY_DUNGEON_GET_GATE_TR_ROOM_TR_NUM
+ * @brief ゲートトレーナーの存在する部屋にいるトレーナーの数を格納する
+ * @param ret_wk   ボスの存在するフロア
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_GET_GATE_TR_ROOM_TR_NUM( ret_wk ) \
+    _ASM_INFINITY_DUNGEON_GET_GATE_TR_ROOM_TR_NUM ret_wk
+
+    .macro  _ASM_INFINITY_DUNGEON_GET_GATE_TR_ROOM_TR_NUM ret_wk
+    .short  EV_SEQ_INFINITY_DUNGEON_GET_GATE_TRAINER_ROOM_TR_NUM
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @def _INFINITY_DUNGEON_GET_TRTYPE
  * @brief 無限ダンジョン内トレーナーのトレーナータイプ
  * @param ret_wk   トレーナータイプ

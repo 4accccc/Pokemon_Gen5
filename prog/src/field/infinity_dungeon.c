@@ -62,6 +62,7 @@ typedef struct{
 
 // チュートリアルマップデータ
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_tutorial_data.cdat"
+#include "../../../resource/infinity_dungeon/data/infinity_dungeon_tutorial_data.h"
 
 //-------------------------------------
 ///	イベントチェンジ用ワーク
@@ -1853,6 +1854,20 @@ static void SetTutorialTrainerData( const INFINITYDUNGEON_SAVE *p_save ,INF_DUNG
           }
         }
       }
+    }
+
+    // ゲートトレーナーを設定する
+    if( tutorial_data_index == 0 )
+    {
+      p_dungeon_data->gate_trainer_floor    = INF_TUTORIAL_FLOOR_NO_AREA_1;
+      p_dungeon_data->gate_trainer_room_id  = INF_TUTORIAL_ROOM_ID_AREA_1;
+      p_dungeon_data->gate_trainer_id_pos   = INF_TUTORIAL_TR_INDEX_AREA_1;
+    }
+    else
+    {
+      p_dungeon_data->gate_trainer_floor    = INF_TUTORIAL_FLOOR_NO_AREA_2;
+      p_dungeon_data->gate_trainer_room_id  = INF_TUTORIAL_ROOM_ID_AREA_2;
+      p_dungeon_data->gate_trainer_id_pos   = INF_TUTORIAL_TR_INDEX_AREA_2;
     }
   }
 }

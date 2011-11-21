@@ -24,6 +24,7 @@ ROOM_FILE = infinity_dungeon_room_pos_type.cdat
 ROOM_TYPE_HEADER_FILE = infinity_dungeon_room_pos_type.h
 ROOM_DATA_CSV_FILE = room_data.csv
 TUTORIAL_FILE = infinity_dungeon_tutorial_data.cdat
+TUTORIAL_H_FILE = infinity_dungeon_tutorial_data.h
 AREA_DATA_FILE = inf_area_data.cdat
 FLOOR_NUM_DATA_FILE = inf_floor_num.h
 FLOOR_SIZE_DATA_FILE = inf_floor_size.cdat
@@ -103,7 +104,7 @@ $(TR_CNT_CSV_FILE_B): $(TR_XLS_FILE) trainer_area_data_cnv.rb
 	@ruby $(EXCELCONV) $(TR_XLS_FILE) -n 2 -s > $(TR_CNT_CSV_FILE_B)
 
 $(TUTORIAL_FILE) : $(TUTORIAL_CSV_FILE) tutorial_data_cnv.rb
-	@ruby tutorial_data_cnv.rb $(TUTORIAL_FILE) $(TUTORIAL_CSV_FILE)
+	@ruby tutorial_data_cnv.rb $(TUTORIAL_FILE) $(TUTORIAL_H_FILE) $(TUTORIAL_CSV_FILE)
 
 $(POS_FILE):$(POS_CSV_FILE)
 	@ruby trainer_move_type_cnv.rb $(POS_FILE) $(MOVE_TYPE_FILE) $(POS_CSV_FILE)

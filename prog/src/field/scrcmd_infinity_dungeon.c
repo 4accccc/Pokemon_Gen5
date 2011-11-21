@@ -633,6 +633,33 @@ VMCMD_RESULT EvCmdInfinityDungeonGetBossFloor( VMHANDLE *p_core, void *p_wk_adrs
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ゲートトレーナーが存在するフロアに存在するトレーナーの人数を取得
+ *
+ *	@param	*p_core
+ *	@param	*p_wk_adrs 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdInfinityDungeonGetGateTrainerRoomTrNum( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  GAMESYS_WORK *p_gsys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( p_gsys );
+  INF_DUNGEON_DATA *p_dungeon_data = INFINITY_DUNGEON_DataGet(p_fieldmap);
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+
+  // ゲートトレーナーの場所取得
+  s32 floor_id  = p_dungeon_data->gate_trainer_floor;
+  s32 room_id   = p_dungeon_data->gate_trainer_room_id;
+
+  (*p_ret_wk) = INF_TOOL_GetMemberNum(p_dungeon_data->room_data[floor_id][room_id].tr_pos_type);
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  無限ダンジョントレーナーのトレーナータイプを取得
  *
  *	@param	*p_core

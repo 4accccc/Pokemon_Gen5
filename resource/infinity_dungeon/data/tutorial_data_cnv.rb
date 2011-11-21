@@ -72,13 +72,27 @@ def put_tr_data( struct_name1 ,struct_name2 , data_csv, out_file )
   out_file.print "};\n\n"
 end
 
+# データをenumの形式で出力する
+def put_enum_data( enum_name ,suffix , data_csv, out_file )
+  
+  out_file.puts "typedef enum{"
+  # データ取得
+  data_csv.each_with_index { |item,i|
+    if item[0].include?("#STRUCTEND") then break end
+    out_file.puts "  %s = (%d), // %s"%[suffix+item[0],item[1].to_i,item[2]]
+  }
+  out_file.puts "} %s;"%[enum_name]
+  
+end
+
 #define
 AREA_NO_COLUMN_INDEX = 0
 ROOM_TYPE_COLUMN_INDEX = 1
 PROBABILITY_COLUMN_INDEX = 2
 
-OUT_FILE = ARGV[0]
-CSV_FILE = ARGV[1]
+OUT_FILE          = ARGV[0]
+TUTORIAL_DEF_FILE = ARGV[1]
+CSV_FILE          = ARGV[2]
 
 out_file = open( OUT_FILE ,"w" )
 
@@ -144,6 +158,27 @@ put_tr_data( "sc_tutorial_tr_data_w1", "sc_tutorial_rectr_data_w1", data_csv ,ou
 # トレーナーデータ出力(白エリア2)
 out_file.puts("// 白 エリア2 トレーナーデータ")
 put_tr_data( "sc_tutorial_tr_data_w2", "sc_tutorial_rectr_data_w2", data_csv ,out_file )
+4.times{ data_csv.shift }
+out_file.close
+
+# チュートリアル用定義を出力
+out_file = open( TUTORIAL_DEF_FILE ,"w" )
+header =  <<EOS
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		%s
+ *	@brief  無限ダンジョンTUTORIAL定義データ
+ *	@author	Masayuki Onoue
+ *	@date		2011.11.21
+ *  @note   コンバータによって出力されたファイルです
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+EOS
+out_file.puts header % [TUTORIAL_DEF_FILE]
+put_enum_data( "INF_TUTORIAL_DEF_DATA","INF_TUTORIAL_",data_csv ,out_file )
 
 out_file.close
 
