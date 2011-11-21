@@ -35,6 +35,11 @@
   .include  "oldt04r0301_def.h"
   .include  "oldc05r0501.h"
   .include  "oldc05r0501_def.h"
+  .include  "oldc04r0201.h"
+  .include  "oldc04r0201_def.h"
+  .include  "oldd06r0101.h"
+  .include  "oldd06r0101_def.h"
+
   .include "c08r0401_def.h"
   .include "t01.h"
   .include "hiden_def.h"
@@ -1088,6 +1093,8 @@ EVENT_START   ev_debug_suginaka
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_10, 7 )	//過去イベント・ソウリュウ
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_11, 8 )	//過去イベント・サザナミ
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_13, 9 )	//過去イベント・ホドモエ
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_19, 15 )	//過去イベント・ミュージカルホール
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_20, 16 )	//過去イベント・電気石の洞穴
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_14, 10 )	//せいそくち・水上エンカウント用フラグセット
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_15, 11 )	//せいそくち・釣りエンカウント用フラグセット
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_16, 12 )	//ローカルライブキャスターＰＯＳ起動
@@ -1359,6 +1366,34 @@ EVENT_START   ev_debug_suginaka
     
 			//マップチェンジ
 			_MAP_CHANGE( ZONE_ID_C04, 411, 438, DIR_LEFT )
+			
+			$SCWK_TEMP0 = 428
+
+		ELSIF $SCWK_ANSWER == 15 THEN
+
+			_MAP_FADE_BLACK_OUT_SLOW()
+		
+			//過去イベント・ミュージカルホール起動
+			_RESERVE_SCRIPT( SCRID_RESERVE_OLDC04R0201_EVENT_01 )
+			
+			_MAP_FADE_END_CHECK()
+			
+			//マップチェンジ
+			_MAP_CHANGE_NO_FADE( ZONE_ID_OLDC04R0201, 14, 0, 15, DIR_DOWN )
+			
+			$SCWK_TEMP0 = 428
+
+		ELSIF $SCWK_ANSWER == 16 THEN
+
+			_MAP_FADE_BLACK_OUT_SLOW()
+		
+			//過去イベント・電気石の洞穴起動
+			_RESERVE_SCRIPT( SCRID_RESERVE_OLDD06R0101_EVENT_01 )
+			
+			_MAP_FADE_END_CHECK()
+			
+			//マップチェンジ
+			_MAP_CHANGE_NO_FADE( ZONE_ID_OLDD06R0101, 9, 0, 19, DIR_DOWN )
 			
 			$SCWK_TEMP0 = 428
 

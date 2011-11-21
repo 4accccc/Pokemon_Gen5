@@ -6409,7 +6409,7 @@
 		</LanguageCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#000080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -6442,7 +6442,7 @@
 		</LanguageCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#000080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -6475,7 +6475,7 @@
 		</LanguageCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#000080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -6508,7 +6508,7 @@
 		</LanguageCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#000080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -6541,7 +6541,7 @@
 		</LanguageCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#000080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -6574,7 +6574,7 @@
 		</LanguageCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#000080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -6607,7 +6607,7 @@
 		</LanguageCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#000080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -6640,7 +6640,7 @@
 		</LanguageCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#000080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -6673,7 +6673,7 @@
 		</LanguageCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#000080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -6706,7 +6706,7 @@
 		</LanguageCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#000080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -6739,7 +6739,7 @@
 		</LanguageCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#000080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -6769,6 +6769,237 @@
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-09-15T11:24:18" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#000080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_debug_suginaka_19"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>過去EV：ミュージカルホール</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:13:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:11:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>過去EV：ミュージカルホール</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:13:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:11:16" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_debug_suginaka_20"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>過去EV：電気石の洞穴</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T08:14:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:12:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>過去EV：電気石の洞穴</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T08:14:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:12:54" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_debug_suginaka_21"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かくほ</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:12:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:12:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かくほ</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:12:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:12:54" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_debug_suginaka_22"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かくほ</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:12:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:12:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かくほ</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:12:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:12:54" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_debug_suginaka_23"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かくほ</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:12:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:12:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かくほ</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:12:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:12:54" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_debug_suginaka_24"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かくほ</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:12:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:12:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かくほ</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:12:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:12:54" />
+		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_debug_suginaka_25"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かくほ</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:12:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:12:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かくほ</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:12:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-21T06:12:54" />
 		</LanguageCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
