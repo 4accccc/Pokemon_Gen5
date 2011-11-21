@@ -489,6 +489,10 @@
 #define FE_R23R0201_ITEMGET_01             473 /* 0x01d9 ２３番道路民家：わざマシン入手フラグ */
 #define FE_D27_LEGEND_ZUKAN_LOOK           474 /* 0x01da プラズマフリゲート：ゼクロム・レシラムみたイベント */
 #define FE_INFDUNGEON_TUTORIAL_04          475 /* 0x01db 無限ダンジョン：チュートリアルフラグ（ボス部屋の追加） */
+#define FE_T01R0401_TALK_01                476 /* 0x01dc アララギポケモン研究所：許可証持っていない話　会話フラグ */
+#define FE_T01R0401_TALK_02                477 /* 0x01dd アララギポケモン研究所：許可証話　会話フラグ */
+#define FE_T01R0401_TALK_03                478 /* 0x01de アララギポケモン研究所：まるいおまもり話　会話フラグ */
+#define FE_T01R0401_TALK_04                479 /* 0x01df アララギポケモン研究所：ひかるおまもり話　会話フラグ */
 
 #define FE_AREA_END                        599 /* 0x0257  */
 
