@@ -318,6 +318,7 @@ typedef struct
   int         profit     [LOAD_SAVEDATA_MAX];
   int         success    [LOAD_SAVEDATA_MAX];   // 評価
   u32         date       [LOAD_SAVEDATA_MAX];   // 日付
+  u32         time       [LOAD_SAVEDATA_MAX];   // 時間
   u16         my_monsno  [LOAD_SAVEDATA_MAX][PKWD_POKEMON_MAX];
 
 } PKWD_SELECT_SCREEN_MAIN_WORK;
@@ -1525,6 +1526,8 @@ static void  _load_pokewood_rec_data( PKWD_SELECT_SCREEN_MAIN_WORK *wk, PKWD_SEL
       wk->success[i]     = POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_SUCCESS, NULL);
       // 公開日取得
       wk->date[i]        = POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_DATE, NULL);
+      // 公開時間取得
+      wk->time[i]        = POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_TIME, NULL);
       
       // 手持ちポケモンNO取得
       for(j=0;j<PKWD_POKEMON_MAX;j++){
@@ -1801,8 +1804,8 @@ static void _draw_movie_subtitle( PKWD_SELECT_SCREEN_MAIN_WORK *wk, int index )
     // ○:○
     // とりあえず00:00としておく
     GFL_MSG_GetString( wk->msg, up_msg_tbl[1], strbuf );
-    WORDSET_RegisterNumber( wk->UpWordset, 0, 0, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterNumber( wk->UpWordset, 1, 0, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wk->UpWordset, 0, GFTIME_GetHour(  wk->time[index]), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wk->UpWordset, 1, GFTIME_GetMinute(wk->time[index]), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
     WORDSET_ExpandStr( wk->UpWordset, expandbuf, strbuf );
     PRINT_UTIL_PrintColor( &wk->print_util[PKWD_BMP_SUB_DATE], wk->print_que,
                        23*8, 0, expandbuf, wk->font, PRINTSYS_LSB_Make( 15, 14, 0 ) );
