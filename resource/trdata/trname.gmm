@@ -4230,32 +4230,32 @@
 		<language name="JPN_KANJI" width="216">ティナ</language>
 	</row>
 
-	<row id="elitem_45">
+	<row id="veteranm_22">
 		<language name="JPN" width="216">フェス１</language>
 		<language name="JPN_KANJI" width="216">フェス１</language>
 	</row>
 
-	<row id="elitem_46">
+	<row id="veteranm_23">
 		<language name="JPN" width="216">フェス２</language>
 		<language name="JPN_KANJI" width="216">フェス２</language>
 	</row>
 
-	<row id="elitem_47">
+	<row id="veteranm_24">
 		<language name="JPN" width="216">フェス３</language>
 		<language name="JPN_KANJI" width="216">フェス３</language>
 	</row>
 
-	<row id="elitem_48">
+	<row id="veteranm_25">
 		<language name="JPN" width="216">フェス４</language>
 		<language name="JPN_KANJI" width="216">フェス４</language>
 	</row>
 
-	<row id="elitem_49">
+	<row id="veteranm_26">
 		<language name="JPN" width="216">フェス５</language>
 		<language name="JPN_KANJI" width="216">フェス５</language>
 	</row>
 
-	<row id="elitem_50">
+	<row id="veteranm_27">
 		<language name="JPN" width="216">フェス６</language>
 		<language name="JPN_KANJI" width="216">フェス６</language>
 	</row>
@@ -4263,6 +4263,96 @@
 	<row id="swplazmaw_13">
 		<language name="JPN" width="216">したっぱ</language>
 		<language name="JPN_KANJI" width="216">したっぱ</language>
+	</row>
+
+	<row id="swleader1_02">
+		<language name="JPN" width="216">チェレン</language>
+		<language name="JPN_KANJI" width="216">チェレン</language>
+	</row>
+
+	<row id="swleader2_02">
+		<language name="JPN" width="216">ホミカ</language>
+		<language name="JPN_KANJI" width="216">ホミカ</language>
+	</row>
+
+	<row id="swleader3_02">
+		<language name="JPN" width="216">アーティ</language>
+		<language name="JPN_KANJI" width="216">アーティ</language>
+	</row>
+
+	<row id="swleader4_02">
+		<language name="JPN" width="216">カミツレ</language>
+		<language name="JPN_KANJI" width="216">カミツレ</language>
+	</row>
+
+	<row id="swleader5_02">
+		<language name="JPN" width="216">ヤーコン</language>
+		<language name="JPN_KANJI" width="216">ヤーコン</language>
+	</row>
+
+	<row id="swleader6_02">
+		<language name="JPN" width="216">フウロ</language>
+		<language name="JPN_KANJI" width="216">フウロ</language>
+	</row>
+
+	<row id="swleader7_02">
+		<language name="JPN" width="216">シャガ</language>
+		<language name="JPN_KANJI" width="216">シャガ</language>
+	</row>
+
+	<row id="swleader8_02">
+		<language name="JPN" width="216">シズイ</language>
+		<language name="JPN_KANJI" width="216">シズイ</language>
+	</row>
+
+	<row id="bigfour1_03">
+		<language name="JPN" width="216">シキミ</language>
+		<language name="JPN_KANJI" width="216">シキミ</language>
+	</row>
+
+	<row id="bigfour2_03">
+		<language name="JPN" width="216">ギーマ</language>
+		<language name="JPN_KANJI" width="216">ギーマ</language>
+	</row>
+
+	<row id="bigfour3_03">
+		<language name="JPN" width="216">レンブ</language>
+		<language name="JPN_KANJI" width="216">レンブ</language>
+	</row>
+
+	<row id="bigfour4_03">
+		<language name="JPN" width="216">カトレア</language>
+		<language name="JPN_KANJI" width="216">カトレア</language>
+	</row>
+
+	<row id="swchampion_03">
+		<language name="JPN" width="216">アイリス</language>
+		<language name="JPN_KANJI" width="216">アイリス</language>
+	</row>
+
+	<row id="bigfour1_04">
+		<language name="JPN" width="216">シキミ</language>
+		<language name="JPN_KANJI" width="216">シキミ</language>
+	</row>
+
+	<row id="bigfour2_04">
+		<language name="JPN" width="216">ギーマ</language>
+		<language name="JPN_KANJI" width="216">ギーマ</language>
+	</row>
+
+	<row id="bigfour3_04">
+		<language name="JPN" width="216">レンブ</language>
+		<language name="JPN_KANJI" width="216">レンブ</language>
+	</row>
+
+	<row id="bigfour4_04">
+		<language name="JPN" width="216">カトレア</language>
+		<language name="JPN_KANJI" width="216">カトレア</language>
+	</row>
+
+	<row id="swchampion_04">
+		<language name="JPN" width="216">アイリス</language>
+		<language name="JPN_KANJI" width="216">アイリス</language>
 	</row>
 
 	<flowchart-group-list>
