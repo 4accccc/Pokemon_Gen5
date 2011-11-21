@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="kawamoto_yuki" host="W00239" date="2011-11-15T08:44:21" source="zekuromu_ci_a_09.mb"/>
+	<create user="kawamoto_yuki" host="W00239" date="2011-11-15T21:28:10" source="zekuromu_ci_a_13.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -11,9 +11,9 @@
 <body>
 
 <tex_pattern_info
-	frame_size="41"
+	frame_size="81"
 	tool_start_frame="0"
-	tool_end_frame="40"
+	tool_end_frame="80"
 	compress_material="on" material_size="8 8"
 />
 
@@ -29,25 +29,28 @@
 </tex_pattern_list_data>
 
 <tex_pattern_data>
-	<frame_idx size="21">
+	<frame_idx size="31">
 		0 2 4 6 8 10 12 14 16 18
 		20 22 24 26 28 30 32 34 36 38
-		40
+		40 42 44 46 48 50 52 54 56 58
+		60
 	</frame_idx>
-	<image_idx size="21">
+	<image_idx size="31">
 		0 1 2 3 0 1 2 3 0 1
 		2 3 0 1 2 3 0 1 2 3
-		0
+		0 1 2 3 0 1 2 3 0 1
+		2
 	</image_idx>
-	<palette_idx size="21">
+	<palette_idx size="31">
 		0 1 2 3 0 1 2 3 0 1
 		2 3 0 1 2 3 0 1 2 3
-		0
+		0 1 2 3 0 1 2 3 0 1
+		2
 	</palette_idx>
 </tex_pattern_data>
 
 <tex_pattern_anm_array size="1">
-	<tex_pattern_anm index="0" material_name="elec_l" data_size="21" data_head="0"/>
+	<tex_pattern_anm index="0" material_name="elec_l" data_size="31" data_head="0"/>
 </tex_pattern_anm_array>
 
 </body>
