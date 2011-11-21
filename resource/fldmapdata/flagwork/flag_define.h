@@ -488,6 +488,7 @@
 #define FE_C06R0201_ITEMGET_01             472 /* 0x01d8 フキヨセカーゴ：タイプ見せイベントアイテム入手フラグ */
 #define FE_R23R0201_ITEMGET_01             473 /* 0x01d9 ２３番道路民家：わざマシン入手フラグ */
 #define FE_D27_LEGEND_ZUKAN_LOOK           474 /* 0x01da プラズマフリゲート：ゼクロム・レシラムみたイベント */
+#define FE_INFDUNGEON_TUTORIAL_04          475 /* 0x01db 無限ダンジョン：チュートリアルフラグ（ボス部屋の追加） */
 
 #define FE_AREA_END                        599 /* 0x0257  */
 

@@ -379,6 +379,7 @@
 #define WK_OTHER_C01GYM0101_SARU         16782 /* 0x418e サンヨウレストラン：３猿決定用ワーク */
 #define WK_OTHER_D20_ARRIVE              16783 /* 0x418f 海底遺跡到達度・取得ワーク */
 #define WK_OTHER_INF_ELEVATOR_UP_MOVE    16784 /* 0x4190 無限ダンジョン内のエレベーター移動方向 */
+#define WK_OTHER_INF_EXIT_TYPE           16785 /* 0x4191 無限ダンジョン内の終了方法 */
 
 #define WK_AREA_END                      16815 /* 0x41af  */
 

@@ -22,6 +22,16 @@
   .include  "d31r0501.h"
   .include  "d31r0601.h"
 
+  
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *  @note WK_OTHER_INF_EXIT_TYPEが1で抜けたときはリタイア、0の時はゲームオーバーです
+ *        また受付初期化でゲームオーバー抜け状態にまず初期化してあります
+ *        なので、リタイア時のみ１を設定するようにしてください
+ *  @note SCWK_TEMP0,SCWK_TEMP1は一時的な使用に限って使っています
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
 //--------------------------------------------------------------------
 //		スクリプトテーブル
 //--------------------------------------------------------------------
@@ -39,7 +49,8 @@ _EVENT_DATA   ev_infinity_dungeon_talk_battle_trainer
 _EVENT_DATA   ev_infinity_dungeon_battle_boss_trainer
 _EVENT_DATA   ev_infinity_dungeon_area_arrival
 _EVENT_DATA   ev_infinity_dungeon_area_arrival_tutorial
-_EVENT_DATA   ev_infinity_dungeon_area1_tutorial
+_EVENT_DATA   ev_infinity_dungeon_area1_tutorial_01
+_EVENT_DATA   ev_infinity_dungeon_area1_tutorial_02
 _EVENT_DATA   ev_infinity_dungeon_area2_tutorial
 _EVENT_DATA   ev_infinity_dungeon_area3_tutorial_boss
 _EVENT_DATA   ev_infinity_dungeon_retire
@@ -79,6 +90,9 @@ EVENT_START  ev_infinity_dungeon_retire
   _CALL play_elevator_move_se
   _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_COMEBACK )
   _SE_STOP()
+
+  // リタイア抜け設定
+  $WK_OTHER_INF_EXIT_TYPE = 1
 }
 EVENT_END
 
@@ -94,6 +108,7 @@ EVENT_START  ev_infinity_dungeon_gameover
   _CALL play_elevator_move_se
   _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_COMEBACK )
   _SE_STOP()
+ 
 }
 
 //----------------------------------------------------------------------------
@@ -111,8 +126,13 @@ EVENT_START  ev_infinity_dungeon_warp_up
   _OBJ_ANIME_WAIT()
   _CALL play_floor_move_se
   _CALL tutorial_event_boss_call
-  _INFINITY_DUNGEON_WARP(WARP_DIR_UP,SCR_INFDUNGEON_WARP_FADE,SCR_INFDUNGEON_WARP_FADE)
+  _INFINITY_DUNGEON_WARP(WARP_DIR_UP,SCR_INFDUNGEON_WARP_FADE,SCR_INFDUNGEON_WARP_NO_FADE)
   _CALL tutorial_event_call
+    
+  // ブラックイン
+  _BLACK_IN()
+  _DISP_FADE_END_CHECK()
+
 EVENT_END
 
 //----------------------------------------------------------------------------
@@ -122,8 +142,13 @@ EVENT_START  ev_infinity_dungeon_warp_down
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_down_dir )
   _OBJ_ANIME_WAIT()
   _CALL play_floor_move_se
-  _INFINITY_DUNGEON_WARP(WARP_DIR_DOWN,SCR_INFDUNGEON_WARP_FADE,SCR_INFDUNGEON_WARP_FADE)
+  _INFINITY_DUNGEON_WARP(WARP_DIR_DOWN,SCR_INFDUNGEON_WARP_FADE,SCR_INFDUNGEON_WARP_NO_FADE)
   _CALL tutorial_event_call
+  
+  // ブラックイン
+  _BLACK_IN()
+  _DISP_FADE_END_CHECK()
+
 EVENT_END
 
 //----------------------------------------------------------------------------
@@ -133,8 +158,13 @@ EVENT_START  ev_infinity_dungeon_warp_left
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_left_dir )
   _OBJ_ANIME_WAIT()
   _CALL play_floor_move_se
-  _INFINITY_DUNGEON_WARP(WARP_DIR_LEFT,SCR_INFDUNGEON_WARP_FADE,SCR_INFDUNGEON_WARP_FADE)
+  _INFINITY_DUNGEON_WARP(WARP_DIR_LEFT,SCR_INFDUNGEON_WARP_FADE,SCR_INFDUNGEON_WARP_NO_FADE)
   _CALL tutorial_event_call
+
+  // ブラックイン
+  _BLACK_IN()
+  _DISP_FADE_END_CHECK()
+
 EVENT_END
 
 //----------------------------------------------------------------------------
@@ -144,8 +174,13 @@ EVENT_START  ev_infinity_dungeon_warp_right
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_set_right_dir )
   _OBJ_ANIME_WAIT()
   _CALL play_floor_move_se
-  _INFINITY_DUNGEON_WARP(WARP_DIR_RIGHT,SCR_INFDUNGEON_WARP_FADE,SCR_INFDUNGEON_WARP_FADE)
+  _INFINITY_DUNGEON_WARP(WARP_DIR_RIGHT,SCR_INFDUNGEON_WARP_FADE,SCR_INFDUNGEON_WARP_NO_FADE)
   _CALL tutorial_event_call
+  
+  // ブラックイン
+  _BLACK_IN()
+  _DISP_FADE_END_CHECK()
+
 EVENT_END
 
 //----------------------------------------------------------------------------
@@ -300,6 +335,9 @@ EVENT_START  ev_infinity_dungeon_elevator
         _INFINITY_DUNGEON_WARP(WARP_INFORMATION,SCR_INFDUNGEON_WARP_FADE,SCR_INFDUNGEON_WARP_NO_FADE)
         _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_COMEBACK )
         _SE_STOP()
+
+        // リタイア抜け設定
+        $WK_OTHER_INF_EXIT_TYPE = 1
 
         _CAMERA_BIND()        // カメラバインド
         _CAMERA_END()
@@ -628,6 +666,9 @@ select_area:
 
       // エレベータから出る
       _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_OUT_ELEVATOR )
+ 
+      // ゲームオーバー抜けで初期化
+      $WK_OTHER_INF_EXIT_TYPE = 0
 
       // 歩数カウント開始
       _SC_WALK_COUNT_START()
@@ -817,7 +858,7 @@ EVENT_START  ev_infinity_dungeon_comeback
       _INFINITY_DUNGEON_GET_PARAM( SCR_INFDUNGEON_PARAM_TRAINER_COUNT  ,0 ,SCWK_TEMP0 )
       // 倒したトレーナーの数取得
       _INFINITY_DUNGEON_GET_PARAM( SCR_INFDUNGEON_PARAM_WIN_TRAINER_COUNT  ,0 ,SCWK_TEMP1 )
-      IF $SCWK_TEMP1 == 0 THEN
+      IF $SCWK_TEMP1 <= 3 THEN
         _SET_MEDAL_ACHIVE( MDLID_MUGEN_BOSS_ONLY_LV1 )
       ENDIF
       IF $SCWK_TEMP0 == $SCWK_TEMP1 THEN
@@ -855,7 +896,7 @@ EVENT_START  ev_infinity_dungeon_comeback
       _INFINITY_DUNGEON_GET_PARAM( SCR_INFDUNGEON_PARAM_TRAINER_COUNT  ,0 ,SCWK_TEMP0 )
       // 倒したトレーナーの数取得
       _INFINITY_DUNGEON_GET_PARAM( SCR_INFDUNGEON_PARAM_WIN_TRAINER_COUNT  ,0 ,SCWK_TEMP1 )
-      IF $SCWK_TEMP1 == 0 THEN
+      IF $SCWK_TEMP1 <= 5 THEN
         _SET_MEDAL_ACHIVE( MDLID_MUGEN_BOSS_ONLY_LV2 )
       ENDIF
       IF $SCWK_TEMP0 == $SCWK_TEMP1 THEN
@@ -946,12 +987,22 @@ EVENT_START  ev_infinity_dungeon_comeback
     _CAMERA_BIND()        // カメラバインド
     _CAMERA_END()
   ELSE
-    // エレベータからの帰還
-    // 案内メッセージ
-    IF $LWK_D_VERSION == VERSION_B2 THEN
-      _BALLOONWIN_OBJMSG_POS( msg_info_b_cancel_00 , LWK_INFOOBJ_ID, POS_DL )
-    ELSE 
-      _BALLOONWIN_OBJMSG_POS( msg_info_w_cancel_00 , LWK_INFOOBJ_ID, POS_DL )
+    
+    // 終了方法によってメッセージを変える
+    IF $WK_OTHER_INF_EXIT_TYPE == 1 THEN
+      // リタイア
+      IF $LWK_D_VERSION == VERSION_B2 THEN
+        _BALLOONWIN_OBJMSG_POS( msg_info_clear_b_09_00 , LWK_INFOOBJ_ID, POS_DL )
+      ELSE 
+        _BALLOONWIN_OBJMSG_POS( msg_info_clear_w_09_00 , LWK_INFOOBJ_ID, POS_DL )
+      ENDIF
+    ELSE
+      // ゲームオーバー
+      IF $LWK_D_VERSION == VERSION_B2 THEN
+        _BALLOONWIN_OBJMSG_POS( msg_info_clear_b_08_00 , LWK_INFOOBJ_ID, POS_DL )
+      ELSE 
+        _BALLOONWIN_OBJMSG_POS( msg_info_clear_w_08_00 , LWK_INFOOBJ_ID, POS_DL )
+      ENDIF
     ENDIF
 
     _LAST_KEYWAIT()
@@ -1487,9 +1538,51 @@ EVENT_START  ev_infinity_dungeon_area_arrival
 EVENT_END
 
 //----------------------------------------------------------------------------
-//	エリア1用チュートリアルイベント(途中の部屋)
+//	エリア1用チュートリアルイベント(回復トレーナー説明)
 //-----------------------------------------------------------------------------
-EVENT_START  ev_infinity_dungeon_area1_tutorial
+EVENT_START  ev_infinity_dungeon_area1_tutorial_01
+{
+  DEFINE_LOCAL LWK_MSG_ID
+  
+  // 無限ダンジョンのバージョン取得
+  _INFINITY_DUNGEON_GET_VERSION( LWK_D_VERSION )
+
+  // 一歩右に
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_right_1 )
+  _OBJ_ANIME_WAIT()
+
+  // 主人公がびっくり
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_gyoe )
+  _OBJ_ANIME_WAIT()
+   
+  // 主人公の前まで移動
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 3, 7, FORCE_TYPE_ALL, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+ 
+  // メッセージ
+  IF $LWK_D_VERSION == VERSION_B2 THEN
+    $LWK_MSG_ID = msg_event_b_02_02_00
+  ELSE
+    $LWK_MSG_ID = msg_event_w_02_02_00
+  ENDIF
+ 
+  _BALLOONWIN_OBJMSG_POS( LWK_MSG_ID , MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  _BALLOONWIN_CLOSE() 
+  
+  // 扉の外に移動
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 6, 0, FORCE_TYPE_ALL, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+
+  // 画面外まで移動させる
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_move_up_3 )
+  _OBJ_ANIME_WAIT()
+}
+EVENT_END
+
+//----------------------------------------------------------------------------
+//	エリア1用チュートリアルイベント(ゲートトレーナー説明)
+//-----------------------------------------------------------------------------
+EVENT_START  ev_infinity_dungeon_area1_tutorial_02
 {
   DEFINE_LOCAL LWK_MSG_ID
   
@@ -1519,11 +1612,11 @@ EVENT_START  ev_infinity_dungeon_area1_tutorial
   _BALLOONWIN_CLOSE() 
   
   // 扉の外に移動
-  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 6, 0, FORCE_TYPE_ALL, 8, DIR_LR)
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 6, 13, FORCE_TYPE_ALL, 8, DIR_LR)
   _OBJ_ANIME_WAIT()
 
   // 画面外まで移動させる
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_move_up_3 )
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_move_down_3 )
   _OBJ_ANIME_WAIT()
 }
 EVENT_END
@@ -1552,9 +1645,9 @@ EVENT_START  ev_infinity_dungeon_area2_tutorial
  
   // メッセージ
   IF $LWK_D_VERSION == VERSION_B2 THEN
-    $LWK_MSG_ID = msg_event_b_02_02_00
+    $LWK_MSG_ID = msg_event_b_01_02_00
   ELSE
-    $LWK_MSG_ID = msg_event_w_02_02_00
+    $LWK_MSG_ID = msg_event_w_01_02_00
   ENDIF
   
   _BALLOONWIN_OBJMSG_POS( LWK_MSG_ID , MMDL_ID_EVENTOBJ_00, POS_DOWN )
@@ -1660,9 +1753,9 @@ add_arrival_model:
     _FLAG_CHECK( FE_INF_AREA1_ARRIVAL, SCWK_ANSWER ) // 初めてのイベントか？
     IF $SCWK_ANSWER == FALSE THEN 
 	    IF $LWK_D_VERSION == VERSION_B2 THEN
-        _OBJ_ADD_EX( 6, 8, DIR_UP, MMDL_ID_EVENTOBJ_00, BREEDERM, MV_DMY )
+        _OBJ_ADD_EX( 6, 8, DIR_UP, MMDL_ID_EVENTOBJ_00, BACKPACKERM, MV_DMY )
       ELSE
-        _OBJ_ADD_EX( 6, 8, DIR_UP, MMDL_ID_EVENTOBJ_00, BREEDERW, MV_DMY )
+        _OBJ_ADD_EX( 6, 8, DIR_UP, MMDL_ID_EVENTOBJ_00, FIGHTERW, MV_DMY )
       ENDIF
       _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_AREA_ARRIVAL_TUTORIAL )
       _FLAG_SET( FE_INF_AREA1_ARRIVAL )
@@ -1671,9 +1764,9 @@ add_arrival_model:
     _FLAG_CHECK( FE_INF_AREA2_ARRIVAL, SCWK_ANSWER ) // 初めてのイベントか？
     IF $SCWK_ANSWER == FALSE THEN 
  	    IF $LWK_D_VERSION == VERSION_B2 THEN
-        _OBJ_ADD_EX( 6, 8, DIR_UP, MMDL_ID_EVENTOBJ_00, BREEDERW, MV_DMY )
+        _OBJ_ADD_EX( 6, 8, DIR_UP, MMDL_ID_EVENTOBJ_00, ASSISTANTW, MV_DMY )
       ELSE
-        _OBJ_ADD_EX( 6, 8, DIR_UP, MMDL_ID_EVENTOBJ_00, BREEDERM, MV_DMY )
+        _OBJ_ADD_EX( 6, 8, DIR_UP, MMDL_ID_EVENTOBJ_00, MOUNTMAN, MV_DMY )
       ENDIF
       _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_AREA_ARRIVAL_TUTORIAL )
       _FLAG_SET( FE_INF_AREA2_ARRIVAL )
@@ -2087,41 +2180,61 @@ tutorial_event_call:
   // 部屋番号取得
   _INFINITY_DUNGEON_GET_PARAM( SCR_INFDUNGEON_PARAM_ROOM_ID  ,0 ,LWK_ROOM_ID )
 
-  // イベントは部屋ID10で発生する
+  // ROMバージョンとダンジョンのバージョン比較
+  _INFINITY_DUNGEON_GET_VERSION( LWK_D_VERSION )
+  _GET_ROM_VERSION ( LWK_ROM_VERSION )
+  // エリアIDを取得する
+  _INFINITY_DUNGEON_GET_NOW_AREA_NO(LWK_NOW_AREA)
+
+  // 部屋ID5回復トレーナー説明イベント
   IF $LWK_ROOM_ID == 10 THEN
-    // ROMバージョンとダンジョンのバージョン比較
-	  _INFINITY_DUNGEON_GET_VERSION( LWK_D_VERSION )
-    _GET_ROM_VERSION ( LWK_ROM_VERSION )
-
     // ROMとダンジョンのバージョンが同じ場合のみチュートリアルイベントは発生する
-    // エリアIDを取得する
-    _INFINITY_DUNGEON_GET_NOW_AREA_NO(LWK_NOW_AREA)
-
     // エリア1用イベント呼び出し
     _FLAG_CHECK( FE_INFDUNGEON_TUTORIAL_01, SCWK_ANSWER ) // 初めてのイベントか？
     IF $SCWK_ANSWER == FALSE THEN
       IF $LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_1 THEN
         // エリア1用チュートリアル呼び出し
 	      IF $LWK_D_VERSION == VERSION_B2 THEN
-          _OBJ_ADD_EX( 6, -1, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SCWK_TEMP0, MV_DMY )
+          _OBJ_ADD_EX( 6, -1, DIR_LEFT, MMDL_ID_EVENTOBJ_00, BACKPACKERM, MV_DMY )
         ELSE
-          _OBJ_ADD_EX( 6, -1, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SCWK_TEMP0, MV_DMY )
+          _OBJ_ADD_EX( 6, -1, DIR_LEFT, MMDL_ID_EVENTOBJ_00, FIGHTERW, MV_DMY )
         ENDIF
-        _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_AREA1_TUTORIAL )
+        _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_AREA1_TUTORIAL_01 )
         _FLAG_SET( FE_INFDUNGEON_TUTORIAL_01 )  // イベントフラグをセット
       ENDIF
     ENDIF
+  ENDIF
 
+  // 部屋ID5ゲートトレーナー説明イベント
+  IF $LWK_ROOM_ID == 5 THEN
+    // ROMとダンジョンのバージョンが同じ場合のみチュートリアルイベントは発生する
+    // エリア1用イベント呼び出し
+    _FLAG_CHECK( FE_INFDUNGEON_TUTORIAL_04, SCWK_ANSWER ) // 初めてのイベントか？
+    IF $SCWK_ANSWER == FALSE THEN
+      IF $LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_1 THEN
+        // エリア1用チュートリアル呼び出し
+	      IF $LWK_D_VERSION == VERSION_B2 THEN
+          _OBJ_ADD_EX( 6, 7, DIR_LEFT, MMDL_ID_EVENTOBJ_00, BACKPACKERM, MV_DMY )
+        ELSE
+          _OBJ_ADD_EX( 6, 7, DIR_LEFT, MMDL_ID_EVENTOBJ_00, FIGHTERW, MV_DMY )
+        ENDIF
+        _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_AREA1_TUTORIAL_02 )
+        _FLAG_SET( FE_INFDUNGEON_TUTORIAL_04 )  // イベントフラグをセット
+      ENDIF
+    ENDIF
+  ENDIF
+
+  // 部屋ID用6リタイア説明イベント
+  IF $LWK_ROOM_ID == 6 THEN
     // エリア2用イベント呼び出し(フラグは連番で3を使用)
     _FLAG_CHECK( FE_INFDUNGEON_TUTORIAL_03, SCWK_ANSWER ) // 初めてのイベントか？
     IF $SCWK_ANSWER == FALSE THEN 
       IF $LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_2 THEN
         // エリア2用チュートリアル呼び出し
-        _INFINITY_DUNGEON_GET_BOSS_OBJ_CODE(SCWK_TEMP0)
  	      IF $LWK_D_VERSION == VERSION_B2 THEN
-          _OBJ_ADD_EX( -1, 7, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SCWK_TEMP0, MV_DMY )
+          _OBJ_ADD_EX( -1, 7, DIR_LEFT, MMDL_ID_EVENTOBJ_00, ASSISTANTW, MV_DMY )
         ELSE
-          _OBJ_ADD_EX( -1, 7, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SCWK_TEMP0, MV_DMY )
+          _OBJ_ADD_EX( -1, 7, DIR_LEFT, MMDL_ID_EVENTOBJ_00, MOUNTMAN, MV_DMY )
         ENDIF
         _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_AREA2_TUTORIAL )
         _FLAG_SET( FE_INFDUNGEON_TUTORIAL_03 )  // イベントフラグをセット
@@ -2518,6 +2631,13 @@ _ANIME_LABEL	anm_move_up_2
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_move_up_3
 	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 画面外まで移動用
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_down_3
+	_ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
