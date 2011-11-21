@@ -364,6 +364,21 @@ void PALACE_GMK_EffectStart( GAMESYS_WORK *gsys )
   PMSND_PlaySE( SEQ_SE_SW_FES_15 );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ミッション開始のエフェクト開始 2つ目
+ *
+ *	@param	GAMESYS_WORK *gsys 
+ */
+//-----------------------------------------------------------------------------
+void PALACE_GMK_EffectStart2( GAMESYS_WORK *gsys )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  PALACE_GMK_WORK *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GIMMICK_WORK_ASSIGN_ID);
+
+  ANM_EFFECT_04_Play( p_wk );
+}
+
 //==============================================================================
 //  				static関数
 //==============================================================================
