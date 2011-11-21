@@ -543,9 +543,10 @@ static int Subseq_SelectItemHaveExit(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_SelectMarkInit(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_SelectMark(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_SelectMarkExit(BOX_SEARCH_MAIN_WORK *wk, int seq);
-static int Subseq_SearchOn(BOX_SEARCH_MAIN_WORK *wk, int seq);
+//static int Subseq_SearchOn(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_SearchOnEnd( BOX_SEARCH_MAIN_WORK * wk, int seq );
-static int Subseq_SearchOff(BOX_SEARCH_MAIN_WORK *wk, int seq);
+//static int Subseq_SearchOff(BOX_SEARCH_MAIN_WORK *wk, int seq);
+static int Subseq_SearchOffEnd(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_SearchReset(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_AnimeWait(BOX_SEARCH_MAIN_WORK *wk, int seq);
 static int Subseq_FramelistInitWait(BOX_SEARCH_MAIN_WORK *wk, int seq);
@@ -592,16 +593,17 @@ enum{
   SUBSEQ_SELECTMARKINIT,      //30
   SUBSEQ_SELECTMARK,          //
   SUBSEQ_SELECTMARKEXIT,      //
-  SUBSEQ_SEARCHON,            // 33: 検索条件ON
+//  SUBSEQ_SEARCHON,            // 33: 検索条件ON
   SUBSEQ_SEARCHONEND,         // 34: 検索条件ON
-  SUBSEQ_SEARCHOFF,           // 35: 検索条件OFF
-  SUBSEQ_SEARCHRESET,         // 36: 検索条件リセット
+//  SUBSEQ_SEARCHOFF,           // 35: 検索条件OFF
+  SUBSEQ_SEARCHOFFEND,        // 36: 検索条件OFF
+  SUBSEQ_SEARCHRESET,         // 37: 検索条件リセット
   SUBSEQ_ANIMEWAIT,           // 
   SUBSEQ_FRAMELISTINITWAIT,   //
-  SUBSEQ_FRAMELISTSCROLL,		  //
-  SUBSEQ_SEARCHEXIT,          // 40
-	SUBSEQ_BUTTON_ANIME,				// 41: ボタンアニメ終了待ち
-	SUBSEQ_SELECT_SET,					// 42: 各検索条件選択へ
+  SUBSEQ_FRAMELISTSCROLL,		  // 40
+  SUBSEQ_SEARCHEXIT,          // 41
+	SUBSEQ_BUTTON_ANIME,				// 42: ボタンアニメ終了待ち
+	SUBSEQ_SELECT_SET,					// 43: 各検索条件選択へ
 };
 
 //=============================================================================
@@ -644,9 +646,10 @@ static int (* const FuncTable[])(BOX_SEARCH_MAIN_WORK *wk, int seq)={
   Subseq_SelectMarkInit,        // 30
   Subseq_SelectMark,            // 
   Subseq_SelectMarkExit,        // 
-  Subseq_SearchOn,              // 
+//  Subseq_SearchOn,              // 
   Subseq_SearchOnEnd,           // 
-  Subseq_SearchOff,             // 
+//  Subseq_SearchOff,             // 
+	Subseq_SearchOffEnd,
   Subseq_SearchReset,           // 
   Subseq_AnimeWait,             // 
   Subseq_FramelistInitWait,     // 
@@ -1605,13 +1608,25 @@ static int _set_mainmode_function( BOX_SEARCH_MAIN_WORK *wk, int seq, int pos )
 {
   switch(pos){
   case BOXSEARCH_PLATE_ON:
+//		change_search_checkbox( wk, BOXSEARCH_PLATE_ON );
+		CURSORMOVE_Exit( wk->cmwk );
+		PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
+		seq = SetButtonAnime( wk, BOXSEARCH_OBJID_BUTTON_ON, BOXSEARCH_ANM_SEARCHON_DECIDE, SUBSEQ_SEARCHONEND );
+/*
 		PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
 		seq = SetButtonAnime( wk, BOXSEARCH_OBJID_BUTTON_ON, BOXSEARCH_ANM_SEARCHON_DECIDE, SUBSEQ_SEARCHON );
+*/
     break;
 
   case BOXSEARCH_PLATE_OFF:
+//		change_search_checkbox( wk, BOXSEARCH_PLATE_OFF );
+		CURSORMOVE_Exit( wk->cmwk );
+		PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
+		seq = SetButtonAnime( wk, BOXSEARCH_OBJID_BUTTON_OFF, BOXSEARCH_ANM_SEARCHOFF_DECIDE, SUBSEQ_SEARCHOFFEND );
+/*
 		PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
 		seq = SetButtonAnime( wk, BOXSEARCH_OBJID_BUTTON_OFF, BOXSEARCH_ANM_SEARCHOFF_DECIDE, SUBSEQ_SEARCHOFF );
+*/
     break;
 
   case BOXSEARCH_PLATE_0: case BOXSEARCH_PLATE_1: case BOXSEARCH_PLATE_2:
@@ -2735,6 +2750,7 @@ static int Subseq_SelectMarkExit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 }
 
 // 検索条件ON
+/*
 static int Subseq_SearchOn(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
 	change_search_checkbox( wk, BOXSEARCH_PLATE_ON );
@@ -2745,14 +2761,22 @@ static int Subseq_SearchOn(BOX_SEARCH_MAIN_WORK *wk, int seq)
 	}
 	return SUBSEQ_MAIN;
 }
+*/
 // 検索条件をONにして終了
 static int Subseq_SearchOnEnd( BOX_SEARCH_MAIN_WORK * wk, int seq )
 {
-	Subseq_SearchOn( wk, 0 );
+//	Subseq_SearchOn( wk, 0 );
+	change_search_checkbox( wk, BOXSEARCH_PLATE_ON );
+	_set_search_data( wk, SEARCH_DATAID_ON_OFF, TRUE );
+
+	if( CURSORMOVE_CursorOnOffGet( wk->cmwk ) == TRUE ){
+		GFL_CLACT_WK_SetAnmSeq( wk->clwk[BOXSEARCH_OBJID_BUTTON_ON], BOXSEARCH_ANM_SEARCHON_ON );
+	}
 	return SUBSEQ_SEARCHEXIT;
 }
 
 // 検索条件OFF
+/*
 static int Subseq_SearchOff(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
 	change_search_checkbox( wk, BOXSEARCH_PLATE_OFF );
@@ -2762,6 +2786,19 @@ static int Subseq_SearchOff(BOX_SEARCH_MAIN_WORK *wk, int seq)
 		GFL_CLACT_WK_SetAnmSeq( wk->clwk[BOXSEARCH_OBJID_BUTTON_OFF], BOXSEARCH_ANM_SEARCHOFF_ON );
 	}
 	return SUBSEQ_MAIN;
+}
+*/
+// 検索条件をOFFにして終了
+static int Subseq_SearchOffEnd(BOX_SEARCH_MAIN_WORK *wk, int seq)
+{
+//	Subseq_SearchOff( wk, 0 );
+	change_search_checkbox( wk, BOXSEARCH_PLATE_OFF );
+	_set_search_data( wk, SEARCH_DATAID_ON_OFF, FALSE );
+
+	if( CURSORMOVE_CursorOnOffGet( wk->cmwk ) == TRUE ){
+		GFL_CLACT_WK_SetAnmSeq( wk->clwk[BOXSEARCH_OBJID_BUTTON_OFF], BOXSEARCH_ANM_SEARCHOFF_ON );
+	}
+	return SUBSEQ_SEARCHEXIT;
 }
 // 検索条件リセット
 static int Subseq_SearchReset(BOX_SEARCH_MAIN_WORK *wk, int seq)
