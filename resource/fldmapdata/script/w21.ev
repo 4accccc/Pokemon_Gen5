@@ -59,7 +59,7 @@ INIT_EVENT_START	ev_init_w21
     
   //乗船2回目後イベント
   ELSIF $WK_SCENE_W21_01 == 4 && FLAG_OFF(FV_W21_SWRIVAL_01) THEN
-    _OBJ_POS_CHANGE(W21_SWRIVAL_01,794,-5,243,DIR_UP)
+    _OBJ_POS_CHANGE(W21_SWRIVAL_01,795,-5,243,DIR_UP)
   
   //乗船2回目後（D10到着前）
   ELSIF $WK_SCENE_W21_01 == 5 && FLAG_OFF(FV_W21_SWLEADER1_01) THEN
@@ -356,9 +356,6 @@ _ANIME_LABEL	anm_swrival_bye_01
 /************************************************************/
 EVENT_START	ev_reserve_w21_swplazma_end_01
   
-  //【仮】実験
-  _MAP_FADE_IN_MSG_ENABLE( MSG_FADE_BLACK, 1 )
-  
   //暗転復帰
   _MAP_FADE_BLACK_IN()
   _DISP_FADE_END_CHECK()
@@ -437,9 +434,9 @@ EVENT_END
 //	ライバル退場02
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swrival_bye_02
-	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_L_4F,3
+	_ANIME_DATA	AC_WALK_U_4F,1
+	_ANIME_DATA	AC_WALK_L_4F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
