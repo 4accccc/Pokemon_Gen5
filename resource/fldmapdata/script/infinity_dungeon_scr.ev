@@ -77,6 +77,7 @@ DEFINE_LOCAL LWK_DRAW_FLOOR_NO
 DEFINE_LOCAL LWK_DRAW_AREA_NO
 DEFINE_LOCAL LWK_MOVE_ROOM_NUM
 DEFINE_LOCAL LWK_IS_GATE
+DEFINE_LOCAL	LWK_MSG_ID
 
 //----------------------------------------------------------------------------
 //	リタイアイベント
@@ -1133,8 +1134,6 @@ EVENT_END
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_talk_battle_trainer
 {
-  DEFINE_LOCAL	LWK_MSG_ID
-
  _TALK_OBJ_START()
 
   // OBJID=LWK_TRID_POS
@@ -1156,18 +1155,10 @@ EVENT_START  ev_infinity_dungeon_talk_battle_trainer
 
     //視線曲セット
     _TRAINER_BGM_SET_BY_TRTYPE( LWK_TRTYPE )
-  
-    //移動終了前、会話へ
-    IF $LWK_IS_GATE == TRUE THEN
-      // ゲート専用会話メッセージ
-      _INFINITY_DUNGEON_GET_GATE_TR_MSG_ID( TRUE, LWK_MSG_ID )
-	    _EASY_BALLOONWIN_TALKOBJ_MSG( LWK_MSG_ID )
-    ELSE
-      // 通常戦闘前メッセージ
-      _TRAINER_MSG_SET( LWK_TRID, TRMSG_FIGHT_START, SCWK_TARGET_OBJID )
-    ENDIF
-    _BALLOONWIN_CLOSE()
-
+    
+    // トレーナー会話
+    _CALL trainer_talk
+    
     // トレーナーとの戦闘
     _INFINITY_DUNGEON_BATTLE_TRAINER()
 
@@ -1181,9 +1172,9 @@ EVENT_START  ev_infinity_dungeon_talk_battle_trainer
 
       //移動終了後、会話へ
       IF $LWK_IS_GATE == TRUE THEN
-        // ゲート専用会話メッセージ
-        _INFINITY_DUNGEON_GET_GATE_TR_MSG_ID( FALSE, LWK_MSG_ID )
-        _EASY_BALLOONWIN_TALKOBJ_MSG( LWK_MSG_ID )
+        
+        // ゲート開放前会話
+        _CALL gate_open_talk
         
         // ゲート開門
         _BALLOONWIN_CLOSE()
@@ -1217,12 +1208,78 @@ EVENT_START  ev_infinity_dungeon_talk_battle_trainer
 }
 EVENT_END
 
+// トレーナー会話
+trainer_talk:
+{
+  // ダンジョンの状態を取得
+  _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
+
+  // エリアIDを取得する
+  _INFINITY_DUNGEON_GET_NOW_AREA_NO(LWK_NOW_AREA)
+ 
+  // バージョン取得
+  _INFINITY_DUNGEON_GET_VERSION( LWK_D_VERSION )
+ 
+  //移動終了前、会話へ
+  IF $LWK_IS_GATE == TRUE THEN
+
+    // 現在エリア１でかつ未クリア時のみ
+    IF (($LWK_DUNGEON_STATUS == $LWK_NOW_AREA) && ($LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_1)) THEN
+      // バージョンによってメッセージ変化
+      IF $LWK_D_VERSION == VERSION_B2 THEN
+        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_tutorial_gate_start_01_b )
+      ELSE
+        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_tutorial_gate_start_01_w )
+      ENDIF
+
+    ELSE
+      // ゲート専用会話メッセージ
+      _INFINITY_DUNGEON_GET_GATE_TR_MSG_ID( TRUE, LWK_MSG_ID )
+      _BALLOONWIN_OBJMSG( LWK_MSG_ID, SCWK_TARGET_OBJID )
+    ENDIF
+
+  ELSE
+    // 通常戦闘前メッセージ
+    _TRAINER_MSG_SET( LWK_TRID, TRMSG_FIGHT_START, SCWK_TARGET_OBJID )
+
+  ENDIF
+  
+  _BALLOONWIN_CLOSE()
+}
+_RET
+
+// ゲート開放イベント
+gate_open_talk:
+{
+  // ダンジョンの状態を取得
+  _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
+
+  // エリアIDを取得する
+  _INFINITY_DUNGEON_GET_NOW_AREA_NO(LWK_NOW_AREA)
+   
+  // バージョン取得
+  _INFINITY_DUNGEON_GET_VERSION( LWK_D_VERSION )
+
+  // ゲート専用会話メッセージ
+  IF (($LWK_DUNGEON_STATUS == $LWK_NOW_AREA) && ($LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_1)) THEN
+    // バージョンによってメッセージ変化
+    IF $LWK_D_VERSION == VERSION_B2 THEN
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_tutorial_gate_end_01_b )
+    ELSE
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_tutorial_gate_end_01_w )
+    ENDIF
+  ELSE
+    _INFINITY_DUNGEON_GET_GATE_TR_MSG_ID( FALSE, LWK_MSG_ID )
+    _EASY_BALLOONWIN_TALKOBJ_MSG( LWK_MSG_ID )
+  ENDIF
+}
+_RET
+
 //----------------------------------------------------------------------------
 //	トレーナーとの戦闘(視線移動)
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_move_battle_trainer
 {
-  DEFINE_LOCAL	LWK_MSG_ID
 
   // 視線データ取得
   _EYE_TRAINER_ID_GET( SCR_EYE_TR_0, LWK_TRID_POS )
@@ -1251,16 +1308,8 @@ EVENT_START  ev_infinity_dungeon_move_battle_trainer
     //移動終了前、会話へ
     _EYE_TRAINER_OBJ_ID_GET( SCR_EYE_TR_0, LWK_TR_OBJID )
 
-    //移動終了前、会話へ
-    IF $LWK_IS_GATE == TRUE THEN
-      // ゲート専用会話メッセージ
-      _INFINITY_DUNGEON_GET_GATE_TR_MSG_ID( TRUE, LWK_MSG_ID )
-	    _BALLOONWIN_OBJMSG( LWK_MSG_ID, SCWK_TARGET_OBJID )
-    ELSE
-      // 通常戦闘前メッセージ
-      _TRAINER_MSG_SET( LWK_TRID, TRMSG_FIGHT_START, SCWK_TARGET_OBJID )
-    ENDIF
-    _BALLOONWIN_CLOSE()
+    // トレーナー会話
+    _CALL trainer_talk
 
     // トレーナーとの戦闘
     _INFINITY_DUNGEON_BATTLE_TRAINER()
@@ -1275,9 +1324,9 @@ EVENT_START  ev_infinity_dungeon_move_battle_trainer
       
       //移動終了後、会話へ
       IF $LWK_IS_GATE == TRUE THEN
+        
         // ゲート専用会話メッセージ
-        _INFINITY_DUNGEON_GET_GATE_TR_MSG_ID( FALSE, LWK_MSG_ID )
-        _EASY_BALLOONWIN_TALKOBJ_MSG( LWK_MSG_ID )
+        _CALL gate_open_talk
          
         // ゲート開門
         _BALLOONWIN_CLOSE()
@@ -1542,8 +1591,6 @@ EVENT_END
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_area1_tutorial_01
 {
-  DEFINE_LOCAL LWK_MSG_ID
-  
   // 無限ダンジョンのバージョン取得
   _INFINITY_DUNGEON_GET_VERSION( LWK_D_VERSION )
 
@@ -1584,8 +1631,6 @@ EVENT_END
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_area1_tutorial_02
 {
-  DEFINE_LOCAL LWK_MSG_ID
-  
   // 無限ダンジョンのバージョン取得
   _INFINITY_DUNGEON_GET_VERSION( LWK_D_VERSION )
 
@@ -1626,8 +1671,6 @@ EVENT_END
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_area2_tutorial
 {
-  DEFINE_LOCAL LWK_MSG_ID
-  
   // 無限ダンジョンのバージョン取得
   _INFINITY_DUNGEON_GET_VERSION( LWK_D_VERSION )
 
@@ -1668,8 +1711,6 @@ EVENT_END
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_area3_tutorial_boss
 {
-  DEFINE_LOCAL LWK_MSG_ID
-  
   // 無限ダンジョンのバージョン取得
   _INFINITY_DUNGEON_GET_VERSION( LWK_D_VERSION )
 
@@ -2313,6 +2354,9 @@ talk_hint:
   DEFINE_LOCAL  LWK_BOSS_FLOOR
   DEFINE_LOCAL  LWK_GK_ROOM_TR_NUM
 
+  // ダンジョンの状態を取得
+  _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
+
   // ヒントメッセージ
   _INFINITY_DUNGEON_GET_HINT_MSG_ID( LWK_HINT_MSG_ID )
 
@@ -2379,7 +2423,18 @@ talk_hint:
       ENDSWITCH
   ENDIF
 
-  _BALLOONWIN_OBJMSG_POS( LWK_HINT_MSG_ID , SCWK_TARGET_OBJID, POS_DOWN )
+  
+  // ゲート専用会話メッセージ
+  IF (($LWK_DUNGEON_STATUS == $LWK_NOW_AREA) && ($LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_1) && ($LWK_IS_GATE == TRUE)) THEN
+    // バージョンによってメッセージ変化
+    IF $LWK_D_VERSION == VERSION_B2 THEN
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_tutorial_gate_hint_01_b )
+    ELSE
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_tutorial_gate_hint_01_w )
+    ENDIF
+  ELSE
+    _BALLOONWIN_OBJMSG_POS( LWK_HINT_MSG_ID , SCWK_TARGET_OBJID, POS_DOWN )
+  ENDIF
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
 
