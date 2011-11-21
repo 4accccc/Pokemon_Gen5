@@ -28,6 +28,7 @@
 #include "fes_gimmick.h"
 
 #include "../../../resource/fldmapdata/script/field_ev_scr_def.h" // for SCRID_FLD_EV_EFFECT_ENC_ITEM_GET
+#include "arc/fieldmap/zone_id.h"
 
 ///////////////////////////////////////////////////////////////
 //
@@ -94,7 +95,7 @@ static void effect_AddFieldEffect( FIELD_ENCOUNT* enc, EFFECT_ENCOUNT* eff_wk, E
 static void effect_DelFieldEffect( EFFECT_ENCOUNT* eff_wk );
 
 static u16 effitem_GetItemBridge(void);
-static u16 effitem_GetItemCave(void);
+static u16 effitem_GetItemCave(u16 zone_id);
 static GMEVENT* effitem_ItemGetEventSet( FIELD_ENCOUNT* enc, u16 itemno );
 
 #ifdef PM_DEBUG
@@ -374,7 +375,7 @@ GMEVENT* EFFECT_ENC_CheckEventApproch( FIELD_ENCOUNT* enc )
     if( rnd < 400){
       event = FIELD_ENCOUNT_CheckEncount( enc, ENC_TYPE_EFFECT );
     }else{
-      u16 item = effitem_GetItemCave();
+      u16 item = effitem_GetItemCave( ep->zone_id );
       event = effitem_ItemGetEventSet( enc, item );
       GAMEBEACON_Set_FMissionLogAction( FMISSION_LOG_ACT_JEWEL_GET, item );
       ev_no = 1;
@@ -859,11 +860,44 @@ static const u16 DATA_ItemTableStone[ITEM_TBL_STONE_NUM] = {
  ITEM_MEZAMEISI,
  ITEM_MANMARUISI,
 };
+static const u16 DATA_ItemTableKakera[] = {
+ ITEM_AKAIKAKERA, //あかいかけら
+ ITEM_AOIKAKERA,  //あおいかけら
+ ITEM_KIIROIKAKERA, //きいろいかけら
+ ITEM_MIDORINOKAKERA, //みどりのかけら
+};
+#define ITEM_TBL_KAKERA_NUM (NELEMS(DATA_ItemTableKakera))
 
-static u16 effitem_GetItemCave(void)
+//色のカケラが取れるゾーン
+static const u16 DATA_ItemTableKakeraZone[] = {
+ ZONE_ID_D28R0101, //古代のぬけみち
+ ZONE_ID_D28R0201,
+ ZONE_ID_D28R0301, //リバースマウンテン
+ ZONE_ID_D24R0101,
+ ZONE_ID_D24R0201,
+ ZONE_ID_D24R0301,
+ ZONE_ID_D24R0401,
+ ZONE_ID_D24R0501,
+ ZONE_ID_D24R0601,
+ ZONE_ID_D24R0701,
+ ZONE_ID_D24R0801,
+ ZONE_ID_D24R0901,
+ ZONE_ID_D24R1001,
+ ZONE_ID_D24R1101,
+ ZONE_ID_D24R1201,
+};
+
+static u16 effitem_GetItemCave( u16 zone_id )
 {
+  int i;
   u16 rnd = GFUser_GetPublicRand0( 1000 );
-
+  
+  for(i = 0;i < NELEMS(DATA_ItemTableKakeraZone);i++){
+    if( DATA_ItemTableKakeraZone[i] == zone_id ){
+      //色のカケラ抽選
+      return DATA_ItemTableKakera[rnd/(1000/ITEM_TBL_KAKERA_NUM)];
+    }
+  }
   if(rnd < 100){ //石
     rnd = GFUser_GetPublicRand0(ITEM_TBL_STONE_NUM*100) / 100;
     return DATA_ItemTableStone[rnd];
