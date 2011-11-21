@@ -10,7 +10,8 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d29r0701.h"
-  //.include  "d29r0701.h"
+  .include  "d29r0701.h"
+  .include  "d29r0401_def.h"    // SCRID_RESERVE_D29R0401_DOOR_OUT 
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +20,69 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d29r0701
+_EVENT_DATA     ev_pos_d29r0701_door_in
+_EVENT_DATA     ev_reserve_d29r0701_door_out
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/* POS: ドアに入る                                            */
 /**************************************************************/
-//ev_zone_d29r0701:
-//  _END
+EVENT_START   ev_pos_d29r0701_door_in
+
+  // 主人公出る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_door_in )
+
+  // 途中でフェード
+  _TIME_WAIT(4)
+
+  // ブラックアウトフェード
+  _MAP_FADE_BLACK_OUT_SLOW()
+
+  // 一応入れておく
+  _OBJ_ANIME_WAIT()
+  // フェード終了チェック
+  _MAP_FADE_END_CHECK()
+
+	//予約スクリプト
+	_RESERVE_SCRIPT( SCRID_RESERVE_D29R0401_DOOR_OUT )
+
+  // マップチェンジ
+  _MAP_CHANGE_NO_FADE( ZONE_ID_D29R0401, 15, 0, 0, DIR_DOWN )
+
+EVENT_END
+
+//------------------------------------------------------------
+// アニメ:出口に歩く
+//------------------------------------------------------------
+_ANIME_LABEL  anm_door_in
+  _ANIME_DATA AC_WALK_D_16F,1
+  _ANIME_DATA ACMD_END,0
+
 
 /**************************************************************/
-/*                                                            */
+/*  リザーブスクリプト：ドアからでる       */
 /**************************************************************/
-ev_d29r0701:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_reserve_d29r0701_door_out
+
+  // ブラックインフェード
+  _MAP_FADE_BLACK_IN_SLOW()
+
+  // 主人公出る
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_door_out )
+  _OBJ_ANIME_WAIT()
+
+  // フェード終了チェック
+  _MAP_FADE_END_CHECK()
+
+EVENT_END
+
+//------------------------------------------------------------
+// アニメ:ドアから出る
+//------------------------------------------------------------
+_ANIME_LABEL  anm_door_out
+  _ANIME_DATA AC_WALK_U_16F,2
+  _ANIME_DATA ACMD_END,0
+
+
 

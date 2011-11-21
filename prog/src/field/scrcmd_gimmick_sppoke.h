@@ -18,3 +18,8 @@
 */
 //=============================================================================
 
+// レジ３体のギミック
+extern VMCMD_RESULT EvCmdRegiGMK_SetEye( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdRegiGMK_SetDoorState( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdRegiGMK_AnmDoorStart( VMHANDLE *core, void *wk );
+

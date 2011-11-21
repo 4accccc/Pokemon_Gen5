@@ -15,5 +15,9 @@
 #ifndef ZONE_D29R0401_EVB_H
 #define ZONE_D29R0401_EVB_H
 
+#define D29R0401_SWITCH_01                0
+#define D29R0401_SWITCH_04                1
+#define D29R0401_SWITCH_03                2
+#define D29R0401_SWITCH_02                3
 
 #endif //ZONE_D29R0401_EVB_H

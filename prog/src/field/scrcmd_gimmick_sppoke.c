@@ -24,6 +24,7 @@
 
 // mine
 #include "scrcmd_gimmick_sppoke.h"
+#include "field_gimmick_rezi.h"
 
 //=============================================================================
 /**
@@ -48,7 +49,63 @@
  *					外部公開関数
 */
 //=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レジギミック  眼設定
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdRegiGMK_SetEye( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
+  u16 id;
+  id = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
+
+  // 眼の設定
+  REZI_GIMMICK_SetEye( gsys, id );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レジギミック  ドア状態設定
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdRegiGMK_SetDoorState( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  u16 is_open;
+  is_open = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
+
+  // ドア状態の設定
+  REZI_GIMMICK_SetDoorState( gsys, is_open );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レジギミック  ドアアニメ再生
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdRegiGMK_AnmDoorStart( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  u16 is_open;
+  is_open = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
+
+  // ドアアニメ再生
+  REZI_GIMMICK_AnmDoorStart( gsys, is_open );
+
+  return VMCMD_RESULT_CONTINUE;
+}
 
 //=============================================================================
 /**

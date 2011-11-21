@@ -11,6 +11,12 @@
   .include  "scr_seq_def.h"
   .include  "msg_d29r0401.h"
   .include  "d29r0401.h"
+  .include  "d29r0501_def.h"
+  .include  "d29r0601_def.h"
+  .include  "d29r0701_def.h"
+  .include  "d29r0801_def.h"
+  .include  "d29r0901_def.h"
+
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,12 +25,269 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA     ev_pos_d29r0401_door_in
+_EVENT_DATA     ev_reserve_d29r0401_door_out
+_EVENT_DATA     ev_bg_d29r0401_switch
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_d29r0401:
-//  _END
+//------------------------------注意--------------------------------//
+// ローカルワークを使用しています。
+// 
+// LOCALWORK0⇒接続先ID
+//              0:午前の間
+//              1:午後の間
+//              2:岩山の間
+//              3:鉄の間
+//              4:氷山の間
+//
+// LOCALWORK1⇒レジロックのスイッチ
+//              0:押していない
+//              1:押している
+//------------------------------------------------------------------//
+
+
+/************************************************************/
+/*  POS：ドアにはいる       */
+/************************************************************/
+EVENT_START   ev_pos_d29r0401_door_in
+
+  //ローカル変数を定義
+  DEFINE_LOCAL	LWK_HERO_X
+  DEFINE_LOCAL	LWK_HERO_Z
+  //自機の位置取得
+  _PLAYER_POS_GET( LWK_HERO_X,LWK_HERO_Z )
+
+  // 主人公中央へ
+  SWITCH $LWK_HERO_X
+  CASE 13 THEN
+	  _OBJ_ANIME( MMDL_ID_PLAYER, anm_x13 )
+  CASE 14 THEN
+	  _OBJ_ANIME( MMDL_ID_PLAYER, anm_x14 )
+  CASE 16 THEN
+	  _OBJ_ANIME( MMDL_ID_PLAYER, anm_x16 )
+  CASE 17 THEN
+	  _OBJ_ANIME( MMDL_ID_PLAYER, anm_x17 )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
+
+  // ドアが開く
+  _REZI_GMK_SET_DOOR(0)
+  _REZI_GMK_ANM_DOOR(1)
+
+  _TIME_WAIT( 20 )
+
+  // 主人公入る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_door_in )
+
+  _TIME_WAIT( 10 )
+
+  // ブラックアウトフェード
+  _MAP_FADE_BLACK_OUT_SLOW()
+
+  _OBJ_ANIME_WAIT()
+  // フェード終了チェック
+  _MAP_FADE_END_CHECK()
+  
+  // 接続先取得
+  _CALL sub_get_connect_door
+
+  // マップチェンジ
+  SWITCH $LOCALWORK0
+  CASE 0 THEN   // 午前の間
+	  //予約スクリプト
+	  _RESERVE_SCRIPT( SCRID_RESERVE_D29R0501_DOOR_OUT )
+    // マップチェンジ
+    _MAP_CHANGE_NO_FADE( ZONE_ID_D29R0501, 15, 0, 61, DIR_UP )
+
+  CASE 1 THEN   // 午後の間
+	  //予約スクリプト
+	  _RESERVE_SCRIPT( SCRID_RESERVE_D29R0601_DOOR_OUT )
+    // マップチェンジ
+    _MAP_CHANGE_NO_FADE( ZONE_ID_D29R0601, 15, 0, 61, DIR_UP )
+
+  CASE 2 THEN   // 岩山の間
+	  //予約スクリプト
+	  _RESERVE_SCRIPT( SCRID_RESERVE_D29R0701_DOOR_OUT )
+    // マップチェンジ
+    _MAP_CHANGE_NO_FADE( ZONE_ID_D29R0701, 15, 0, 61, DIR_UP )
+
+  CASE 3 THEN   // 鉄の間
+	  //予約スクリプト
+	  _RESERVE_SCRIPT( SCRID_RESERVE_D29R0801_DOOR_OUT )
+    // マップチェンジ
+    _MAP_CHANGE_NO_FADE( ZONE_ID_D29R0801, 15, 0, 61, DIR_UP )
+
+  CASE 4 THEN   // 氷山の間
+	  //予約スクリプト
+	  _RESERVE_SCRIPT( SCRID_RESERVE_D29R0901_DOOR_OUT )
+    // マップチェンジ
+    _MAP_CHANGE_NO_FADE( ZONE_ID_D29R0901, 15, 0, 61, DIR_UP )
+
+  DEFAULT // 午前の間に飛ばすことにする
+	  //予約スクリプト
+	  _RESERVE_SCRIPT( SCRID_RESERVE_D29R0501_DOOR_OUT )
+    // マップチェンジ
+    _MAP_CHANGE_NO_FADE( ZONE_ID_D29R0501, 15, 0, 61, DIR_UP )
+
+  ENDSWITCH
+
+EVENT_END
+
+//------------------------------------------------------------
+// アニメ:ドアに入る
+//------------------------------------------------------------
+_ANIME_LABEL  anm_door_in
+  _ANIME_DATA AC_WALK_U_16F,2
+  _ANIME_DATA ACMD_END,0
+//------------------------------------------------------------
+// アニメ:中央に行く
+//------------------------------------------------------------
+_ANIME_LABEL  anm_x13
+  _ANIME_DATA AC_WALK_R_16F,2
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA ACMD_END,0
+_ANIME_LABEL  anm_x14
+  _ANIME_DATA AC_WALK_R_16F,1
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA ACMD_END,0
+_ANIME_LABEL  anm_x16
+  _ANIME_DATA AC_WALK_L_16F,1
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA ACMD_END,0
+_ANIME_LABEL  anm_x17
+  _ANIME_DATA AC_WALK_L_16F,2
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA ACMD_END,0
+
+
+//------------------------------------------------------------
+//  接続先取得
+//    
+//  LOCALWORK0に接続先IDを格納
+//------------------------------------------------------------
+sub_get_connect_door:
+{
+  DEFINE_LOCAL LWK_KEYSYS_DOOR
+
+  // キーシステムに設定してあるドアを取得
+  _KEYSYS_GET_DOOR( LWK_KEYSYS_DOOR )
+  // 時間の取得
+	_GET_TIME( SCWK_TEMP0, SCWK_TEMP1 )
+
+  // 接続分岐
+  IF $LWK_KEYSYS_DOOR == KEYSYS_DOOR_BLACK THEN
+    // 氷山の間
+    $LOCALWORK0 = 4
+
+  ELSIF $LWK_KEYSYS_DOOR == KEYSYS_DOOR_WHITE THEN
+    // 鉄の間
+    $LOCALWORK0 = 3
+
+  ELSIF $LOCALWORK1 == 1 THEN
+    // 岩山の間
+    $LOCALWORK0 = 2
+
+  ELSIF $SCWK_TEMP0 >= 0 && $SCWK_TEMP0 <12 THEN
+    // 午前の間
+    $LOCALWORK0 = 0
+
+  ELSE
+    // 午後の間
+    $LOCALWORK0 = 1
+
+  ENDIF
+
+  _DEBUG_PRINT_WK( LOCALWORK0 )
+}
+_RET
+
+
+/************************************************************/
+/*  リザーブスクリプト：ドアからでる       */
+/************************************************************/
+EVENT_START   ev_reserve_d29r0401_door_out
+
+  // ドアを閉まった状態に
+  _REZI_GMK_SET_DOOR(1)
+
+  // ブラックインフェード
+  _MAP_FADE_BLACK_IN_SLOW()
+
+  // 主人公出る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_door_out )
+
+  _TIME_WAIT(40)
+
+  // ドアが閉まる
+  _REZI_GMK_ANM_DOOR(0)
+
+  _OBJ_ANIME_WAIT()
+  // フェード終了チェック
+  _MAP_FADE_END_CHECK()
+
+  // ドアが閉まるまで待つ
+  _TIME_WAIT(25)
+
+EVENT_END
+
+//------------------------------------------------------------
+// アニメ:ドアから出る
+//------------------------------------------------------------
+_ANIME_LABEL  anm_door_out
+  _ANIME_DATA AC_WALK_D_16F,4
+  _ANIME_DATA ACMD_END,0
+
+
+/************************************************************/
+/*  BGイベント：レジロックのスイッチ       */
+/************************************************************/
+EVENT_START   ev_bg_d29r0401_switch
+
+  // 押していないときのみ
+  IF $LOCALWORK1 == 0 THEN
+
+	  _TALK_START_SE_PLAY()
+
+    // あしもとに　ふるい　スイッチがある！　ふんでみますか？
+    _PLAINWIN_MSG_DOWN( msg_d29r0401_switch_01 )
+
+    // YES NO
+    _YES_NO_WIN( SCWK_ANSWER )
+  
+    // はい
+    IF $SCWK_ANSWER == SCR_YES THEN
+      DEFINE_LOCAL LWK_KEYSYS_DOOR
+
+      // キーシステムに設定してあるドアを取得
+      _KEYSYS_GET_DOOR( LWK_KEYSYS_DOOR )
+
+      // キーを設定していないときのみ作動する
+      IF $LWK_KEYSYS_DOOR == KEYSYS_DOOR_NORMAL THEN
+
+	      _PLAINWIN_CLOSE()
+
+        // 画面をゆらす
+        _SHAKE_CAMERA( 1, 0, 4, 7, 0, 0, 0, 0)
+
+        // どびらの　むこうがわで　おもおもしい　おとが　ひびいた・・・
+        _PLAINWIN_MSG_DOWN( msg_d29r0401_switch_02 )
+
+        // スイッチ押した
+        $LOCALWORK1 = 1
+
+      ELSE
+        // どうやら　なにも　おこらないようだ
+        _PLAINWIN_MSG_DOWN( msg_d29r0401_switch_03 )
+      ENDIF
+
+      _LAST_KEYWAIT()
+
+    ENDIF
+
+	  _PLAINWIN_CLOSE()
+
+  ENDIF
+
+EVENT_END
 

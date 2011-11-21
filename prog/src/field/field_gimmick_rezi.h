@@ -20,3 +20,7 @@ extern void REZI_GIMMICK_Setup( FIELDMAP_WORK *p_fieldmap );
 extern void REZI_GIMMICK_End( FIELDMAP_WORK *p_fieldmap );
 extern void REZI_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap );
 
+extern void REZI_GIMMICK_SetEye( GAMESYS_WORK *gsys, const u8 id );
+extern void REZI_GIMMICK_SetDoorState( GAMESYS_WORK *gsys, BOOL is_open );
+extern void REZI_GIMMICK_AnmDoorStart( GAMESYS_WORK *gsys, BOOL is_open );
+

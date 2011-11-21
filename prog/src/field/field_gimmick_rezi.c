@@ -48,7 +48,7 @@
 // 眼
 #define EYE_X             (14 * FIELD_CONST_GRID_FX32_SIZE )
 #define EYE_Y             ( 0 )
-#define EYE_Z             ( 6 * FIELD_CONST_GRID_FX32_SIZE )
+#define EYE_Z             ( 7 * FIELD_CONST_GRID_FX32_SIZE )
 
 //=============================================================================
 /**
@@ -84,7 +84,10 @@ enum{
 // OBJインデックス
 enum{
   OBJ_DOOR,             // ドア
-  OBJ_EYE,              // 眼
+  OBJ_EYE_1,            // 眼
+  OBJ_EYE_2,            // 眼
+  OBJ_EYE_3,            // 眼
+  OBJ_EYE_4,            // 眼
 
   OBJ_NUM,
 };
@@ -120,11 +123,35 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     anm_door,         // アニメテーブル(複数指定のため)
     ANM_DOOR_NUM,     // アニメリソース数
   },
-  // OBJ_EYE
+  // OBJ_EYE_1
   {
     RESID_EYE_01_MDL, // モデルリソースID
     0,                // モデルデータID(リソース内部INDEX)
     RESID_EYE_01_MDL, // テクスチャリソースID
+    NULL,             // アニメテーブル(複数指定のため)
+    0,                // アニメリソース数
+  },
+  // OBJ_EYE_2
+  {
+    RESID_EYE_02_MDL, // モデルリソースID
+    0,                // モデルデータID(リソース内部INDEX)
+    RESID_EYE_02_MDL, // テクスチャリソースID
+    NULL,             // アニメテーブル(複数指定のため)
+    0,                // アニメリソース数
+  },
+  // OBJ_EYE_3
+  {
+    RESID_EYE_03_MDL, // モデルリソースID
+    0,                // モデルデータID(リソース内部INDEX)
+    RESID_EYE_03_MDL, // テクスチャリソースID
+    NULL,             // アニメテーブル(複数指定のため)
+    0,                // アニメリソース数
+  },
+  // OBJ_EYE_4
+  {
+    RESID_EYE_04_MDL, // モデルリソースID
+    0,                // モデルデータID(リソース内部INDEX)
+    RESID_EYE_04_MDL, // テクスチャリソースID
     NULL,             // アニメテーブル(複数指定のため)
     0,                // アニメリソース数
   },
@@ -209,10 +236,166 @@ void REZI_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
 {
   REZI_GIMMICK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GIMMICK_TMP_ASSIGN_ID );
 
+
+#ifdef PM_DEBUG
+  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    {
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+      REZI_GIMMICK_SetDoorState( gsys, FALSE );
+      REZI_GIMMICK_AnmDoorStart( gsys, TRUE );
+      OS_Printf("ドア開く\n");
+    }
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+    {
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+      REZI_GIMMICK_SetDoorState( gsys, TRUE );
+      REZI_GIMMICK_AnmDoorStart( gsys, FALSE );
+      OS_Printf("ドア閉まる\n");
+    }
+
+    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+    {
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+      REZI_GIMMICK_SetEye( gsys, 0 );
+      OS_Printf("眼 0\n");
+    }
+    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+    {
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+      REZI_GIMMICK_SetEye( gsys, 1 );
+      OS_Printf("眼 1\n");
+    }
+    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+    {
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+      REZI_GIMMICK_SetEye( gsys, 2 );
+      OS_Printf("眼 2\n");
+    }
+    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+    {
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+      REZI_GIMMICK_SetEye( gsys, 3 );
+      OS_Printf("眼 3\n");
+    }
+  }
+#endif
+
   // EXPOBJアニメメイン
   EXPOBJ_ObjMain( p_wk );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  眼の色設定
+ *
+ *	@param	GAMESYS_WORK *gsys
+ *	@param	u8 id 
+ *	        0:赤
+ *	        1:青
+ *	        2:銀
+ *	        3:灰
+ */
+//-----------------------------------------------------------------------------
+void REZI_GIMMICK_SetEye( GAMESYS_WORK *gsys, const u8 id )
+{
+  GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( gsys );
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  REZI_GIMMICK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GIMMICK_TMP_ASSIGN_ID );
+
+  // 一旦全て非表示
+  FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, OBJ_EYE_1, TRUE );
+  FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, OBJ_EYE_2, TRUE );
+  FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, OBJ_EYE_3, TRUE );
+  FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, OBJ_EYE_4, TRUE );
+
+
+  // 指定したもの表示
+  FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, OBJ_EYE_1 + id, FALSE );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ドアの開閉状態セット
+ *
+ *	@param	GAMESYS_WORK *gsys
+ *	@param	is_open   TRUEで開いている状態
+ *	                  FALSEで閉じている状態
+ */
+//-----------------------------------------------------------------------------
+void REZI_GIMMICK_SetDoorState( GAMESYS_WORK *gsys, BOOL is_open )
+{
+  GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( gsys );
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  REZI_GIMMICK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GIMMICK_TMP_ASSIGN_ID );
+
+  u16 obj_idx = OBJ_DOOR;
+  fx32 last_frame;
+  EXP_OBJ_ANM_CNT_PTR exp_anm;
+  int i;
+
+  for( i=0; i<ANM_DOOR_NUM; i++ )
+  {
+    exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GIMMICK_UNIT_IDX, obj_idx, i );
+    FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GIMMICK_UNIT_IDX, obj_idx, i, TRUE );
+    // 最終フレーム取得
+    last_frame = FLD_EXP_OBJ_GetAnimeLastFrame( exp_anm );
+
+    if( is_open == TRUE )
+    {
+      // ラストフレームにする
+      FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, GIMMICK_UNIT_IDX, obj_idx, i, last_frame );
+    }
+    else
+    {
+      // ０フレームにする
+      FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, GIMMICK_UNIT_IDX, obj_idx, i, 0 );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ドアの開閉アニメ開始
+ *
+ *	@param	GAMESYS_WORK *gsys
+ *	@param	is_open   TRUEで開くアニメ
+ *	                  FALSEで閉じるアニメ
+ */
+//-----------------------------------------------------------------------------
+void REZI_GIMMICK_AnmDoorStart( GAMESYS_WORK *gsys, BOOL is_open )
+{
+  GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( gsys );
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  REZI_GIMMICK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GIMMICK_TMP_ASSIGN_ID );
+
+  u16 obj_idx = OBJ_DOOR;
+  int i;
+
+  for( i=0; i<ANM_DOOR_NUM; i++ )
+  {
+    EXP_OBJ_ANM_CNT_PTR exp_anm;
+    exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GIMMICK_UNIT_IDX, obj_idx, i );
+
+    // 有効化
+    FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GIMMICK_UNIT_IDX, obj_idx, i, TRUE );
+
+    if( is_open == TRUE )
+    {
+      // 順再生
+      FLD_EXP_OBJ_ChgAddFrame( exp_anm, FX32_ONE );
+    }
+    else
+    {
+      // 逆再生
+      FLD_EXP_OBJ_ChgAddFrame( exp_anm, -FX32_ONE );
+    }
+
+    // 1回再生設定
+    FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
+    FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );   // アニメ再生設定
+  }
+}
 
 //=============================================================================
 /**
@@ -233,13 +416,14 @@ void REZI_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
 //-----------------------------------------------------------------------------
 static void EXPOBJ_ObjSet( REZI_GIMMICK_TMP *p_wk )
 {
+  int i;
+
   //必要なリソースの用意
   FLD_EXP_OBJ_AddUnitByHandle( p_wk->exp_obj, &g3Dutil_Setup, GIMMICK_UNIT_IDX);
 
   // OBJ_DOOR
   {
     u16 obj_idx = OBJ_DOOR;
-    int i;
 
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GIMMICK_UNIT_IDX, obj_idx );
     // 座標
@@ -266,8 +450,9 @@ static void EXPOBJ_ObjSet( REZI_GIMMICK_TMP *p_wk )
   }
 
   // OBJ_EYE
+  for( i=OBJ_EYE_1; i<=OBJ_EYE_4; i++ )
   {
-    u16 obj_idx = OBJ_EYE;
+    u16 obj_idx = i;
 
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GIMMICK_UNIT_IDX, obj_idx );
     // 座標
@@ -275,8 +460,15 @@ static void EXPOBJ_ObjSet( REZI_GIMMICK_TMP *p_wk )
 
     // カリング
     FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, GIMMICK_UNIT_IDX, obj_idx, TRUE );
-    // 表示
-    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, obj_idx, FALSE );
+
+    // なしのみひょうじ
+    if( obj_idx == OBJ_EYE_4 ) {
+      // 表示
+      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, obj_idx, FALSE );
+    } else {
+      // 非表示
+      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, obj_idx, TRUE );
+    }
   }
 }
 //----------------------------------------------------------------------------

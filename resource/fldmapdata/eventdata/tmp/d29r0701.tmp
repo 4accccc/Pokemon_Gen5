@@ -1,5 +1,5 @@
 #../data/d29r0701.mev
-../tmp/d29r0701.bin:../data/d29r0701.mev ../../script/sp_d29r0701.bin $(UNIQ_SCRIPTHEADER) ../tmp/d29r0701.h 
+../tmp/d29r0701.bin:../data/d29r0701.mev ../../script/sp_d29r0701.bin $(UNIQ_SCRIPTHEADER) ../tmp/d29r0701.h ../../flagwork/work_define.h ../../../../prog/include/field/eventdata_type.h ../../script/D29R0701_def.h 
 	@echo ../data/d29r0701.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/d29r0701.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/d29r0701.h ../../flagwork/work_define.h ../../../../prog/include/field/eventdata_type.h ../../script/D29R0701_def.h 
 

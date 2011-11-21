@@ -15,5 +15,10 @@
   //スクリプトコマンドテーブル開始
   INIT_OVERLAY_CMD( gimmick_sppoke )
 
+  // レジギミック
+  DEF_CMD( EvCmdRegiGMK_SetEye, EV_SEQ_REZI_GMK_SET_EYE )
+  DEF_CMD( EvCmdRegiGMK_SetDoorState, EV_SEQ_REZI_GMK_SET_DOOR )
+  DEF_CMD( EvCmdRegiGMK_AnmDoorStart, EV_SEQ_REZI_GMK_ANM_DOOR )
+
   END_CMD
   //スクリプトコマンドテーブル終了
