@@ -16588,10 +16588,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>ひとつ　じょげんしてやろう▼
-ゲートトレーナーは　あるいておるぞ</Text>
+ゲートトレーナーは
+あるいておるぞ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:15:30" />
+				Time="2011-11-21T08:29:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -16600,10 +16601,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ひとつ　助言してやろう▼
-ゲートトレーナーは　歩いておるぞ</Text>
+ゲートトレーナーは
+歩いておるぞ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:15:25" />
+				Time="2011-11-21T08:29:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -16632,10 +16634,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>すこし　ヒントを　あげましょう▼
-ゲートトレーナーは　あるいているわよ</Text>
+ゲートトレーナーは
+あるいているわよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:13:27" />
+				Time="2011-11-21T08:29:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -16644,10 +16647,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>すこし　ヒントを　あげましょう▼
-ゲートトレーナーは　歩いているわよ</Text>
+ゲートトレーナーは
+歩いているわよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:15:38" />
+				Time="2011-11-21T08:29:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -16657,374 +16661,6 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Comment>トレーナーヒント
 ゲートトレーナーは歩いている
-老女</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:13:41" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_stop_turn_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>いいことを　おしえてあげるよ▼
-ゲートトレーナーは　そのばで
-まわっているよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:57:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:55:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>いいことを　教えてあげるよ▼
-ゲートトレーナーは　その場で
-回っているよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:11:43" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:08:49" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーはその場で　回っている
-少年</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:14:14" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_stop_turn_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>いいことを　おしえてあげる▼
-ゲートトレーナーは　そのばで
-まわっているわ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:57:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:55:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>いいことを　教えてあげる▼
-ゲートトレーナーは　その場で
-回っているわ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:11:48" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:08:50" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーはその場で　回っている
-少女</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:14:09" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_stop_turn_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>これは　うわさなんだけど▼
-ゲートトレーナーは　そのばで
-まわっているらしいよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:57:46" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:55:19" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>これは　うわさなんだけど▼
-ゲートトレーナーは　その場で
-回っているらしいよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:11:56" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:08:52" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーはその場で　回っている
-成人男性</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:14:05" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_stop_turn_04"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ねえ　ねえ　しってる？▼
-ゲートトレーナーは　そのばで
-まわっているんだって</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:57:53" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:55:19" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ねえ　ねえ　知ってる？▼
-ゲートトレーナーは　その場で
-回っているんだって</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:12:03" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:08:53" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーはその場で　回っている
-成人女性</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:14:01" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_stop_turn_05"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>さっき　たたかったんだけど▼
-ゲートトレーナーは　そのばで
-まわっていたよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:58:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:55:20" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>さっき　戦ったんだけど▼
-ゲートトレーナーは　その場で
-回っていたよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:12:09" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:08:53" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーはその場で　回っている
-中年男性</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:13:56" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_stop_turn_06"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>これは　ひみつなんだけど▼
-ゲートトレーナーは　そのばで
-まわっていたわよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:58:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:55:20" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>これは　秘密なんだけど▼
-ゲートトレーナーは　その場で
-回っていたわよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:12:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:08:54" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーはその場で　回っている
-中年女性</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:13:52" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_stop_turn_07"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ひとつ　じょげんしてやろう▼
-ゲートトレーナーは　そのばで
-まわっておるぞ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:58:37" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:55:21" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ひとつ　助言してやろう▼
-ゲートトレーナーは　その場で
-回っておるぞ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:12:21" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:08:55" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーはその場で　回っている
-老人</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:13:45" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_stop_turn_08"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>すこし　ヒントを　あげましょう▼
-ゲートトレーナーは　そのばで
-まわっているわよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:10:27" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:55:22" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>すこし　ヒントを　あげましょう▼
-ゲートトレーナーは　その場で
-回っているわよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:12:26" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:08:57" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーはその場で　回っている
 老女</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
@@ -17393,374 +17029,6 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Comment>トレーナーヒント
 ゲートトレーナーは歩きながら　回っている
-老女</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:13:41" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_stop_look_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>いいことを　おしえてあげるよ▼
-ゲートトレーナーは　そのばで
-キョロキョロしているよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:41:36" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:41:11" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>いいことを　教えてあげるよ▼
-ゲートトレーナーは　その場で
-キョロキョロしているよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:43:39" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:43:10" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーはその場で　キョロキョロしている
-少年</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:14:14" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_stop_look_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>いいことを　おしえてあげる▼
-ゲートトレーナーは　そのばで
-キョロキョロしているわ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:41:44" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:41:16" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>いいことを　教えてあげる▼
-ゲートトレーナーは　その場で
-キョロキョロしているわ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:44:37" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:43:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーはその場で　キョロキョロしている
-少女</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:14:09" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_stop_look_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>これは　うわさなんだけど▼
-ゲートトレーナーは　そのばで
-キョロキョロしているらしいよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:41:52" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:41:16" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>これは　うわさなんだけど▼
-ゲートトレーナーは　その場で
-キョロキョロしているらしいよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:44:45" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:43:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーはその場で　キョロキョロしている
-成人男性</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:14:05" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_stop_look_04"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ねえ　ねえ　しってる？▼
-ゲートトレーナーは　そのばで
-キョロキョロしているんだって</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:42:00" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:41:17" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ねえ　ねえ　知ってる？▼
-ゲートトレーナーは　その場で
-キョロキョロしているんだって</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:44:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:43:17" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーはその場で　キョロキョロしている
-成人女性</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:14:01" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_stop_look_05"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>さっき　たたかったんだけど▼
-ゲートトレーナーは　そのばで
-キョロキョロしていたよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:42:11" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:25:30" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>さっき　戦ったんだけど▼
-ゲートトレーナーは　その場で
-キョロキョロしていたよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:44:59" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:25:55" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーはその場で　キョロキョロしている
-中年男性</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:13:56" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_stop_look_06"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>これは　ひみつなんだけど▼
-ゲートトレーナーは　そのばで
-キョロキョロしていたわよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:42:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:25:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>これは　秘密なんだけど▼
-ゲートトレーナーは　その場で
-キョロキョロしていたわよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:45:11" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:25:55" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーはその場で　キョロキョロしている
-中年女性</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:13:52" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_stop_look_07"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ひとつ　じょげんしてやろう▼
-ゲートトレーナーは　そのばで
-キョロキョロしておるぞ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:42:25" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:25:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ひとつ　助言してやろう▼
-ゲートトレーナーは　その場で
-キョロキョロしておるぞ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:45:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:25:56" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーはその場で　キョロキョロしている
-老人</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:13:45" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_stop_look_08"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>すこし　ヒントを　あげましょう▼
-ゲートトレーナーは　そのばで
-キョロキョロしているわよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:42:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:41:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>すこし　ヒントを　あげましょう▼
-ゲートトレーナーは　その場で
-キョロキョロしているわよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:42:46" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:41:19" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーはその場で　キョロキョロしている
 老女</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
@@ -26317,11 +25585,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは　[Digit:3digits Idx="0" ]かいに　いるぞ
-さがしてみるんだな</Text>
+			<Text>これからが　ほんばんだ▼
+ボストレーナーは　[Digit:3digits Idx="0" ]かいに　いる
+さがしてごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:44:00" />
+				Time="2011-11-21T07:44:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -26329,11 +25598,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　[Digit:3digits Idx="0" ]階に　いるぞ
-探してみるんだな</Text>
+			<Text>ここからが　本番だ▼
+ボストレーナーは　[Digit:3digits Idx="0" ]階に　いる
+探してごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:44:40" />
+				Time="2011-11-21T07:44:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -26362,11 +25632,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは　[Digit:3digits Idx="0" ]かいに　いるぞ
-さがしてみるんだな</Text>
+			<Text>ここからが　ほんばんよ▼
+ボストレーナーは　[Digit:3digits Idx="0" ]かいに　いるわ
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:44:04" />
+				Time="2011-11-21T07:46:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -26374,11 +25645,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　[Digit:3digits Idx="0" ]階に　いるぞ
-探してみるんだな</Text>
+			<Text>ここからが　本番よ▼
+ボストレーナーは　[Digit:3digits Idx="0" ]階に　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:44:41" />
+				Time="2011-11-21T07:46:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -26407,11 +25679,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは　[Digit:3digits Idx="0" ]かいに　いるぞ
-さがしてみるんだな</Text>
+			<Text>つぎは　ボストレーナーじゃな▼
+ボストレーナーは　[Digit:3digits Idx="0" ]かいに　おるぞ
+さがしてみるんじゃな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:44:05" />
+				Time="2011-11-21T07:46:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -26419,11 +25692,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　[Digit:3digits Idx="0" ]階に　いるぞ
-探してみるんだな</Text>
+			<Text>次は　ボストレーナーじゃな▼
+ボストレーナーは　[Digit:3digits Idx="0" ]階に　おるぞ
+探してみるんじゃな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:44:42" />
+				Time="2011-11-21T07:46:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -26452,11 +25726,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは　[Digit:3digits Idx="0" ]かいに　いるぞ
-さがしてみるんだな</Text>
+			<Text>さあ　ボストレーナーに　ちょうせんね▼
+ボストレーナーは　[Digit:3digits Idx="0" ]かいに　います
+さがしてごらんなさい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:44:07" />
+				Time="2011-11-21T07:47:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -26464,11 +25739,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　[Digit:3digits Idx="0" ]階に　いるぞ
-探してみるんだな</Text>
+			<Text>さあ　ボストレーナーに　挑戦ね▼
+ボストレーナーは　[Digit:3digits Idx="0" ]階に　います
+探してごらんなさい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:44:43" />
+				Time="2011-11-21T07:48:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -26497,11 +25773,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは　このかいに　いるぞ
-さがしてみるんだな</Text>
+			<Text>つぎは　ボストレーナーだね▼
+ボストレーナーは　このかいに　いるよ
+さがしてごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:47:42" />
+				Time="2011-11-21T07:48:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -26509,11 +25786,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　この階に　いるぞ
-探してみるんだな</Text>
+			<Text>次は　ボストレーナーだね▼
+ボストレーナーは　この階に　いるよ
+探してごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:48:57" />
+				Time="2011-11-21T07:50:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -26542,11 +25820,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは　このかいに　いるぞ
-さがしてみるんだな</Text>
+			<Text>つぎは　ボストレーナーね▼
+ボストレーナーは　このかいに　いるわ
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:47:50" />
+				Time="2011-11-21T07:49:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -26554,11 +25833,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　この階に　いるぞ
-探してみるんだな</Text>
+			<Text>次は　ボストレーナーね▼
+ボストレーナーは　この階に　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:49:04" />
+				Time="2011-11-21T07:50:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -26587,11 +25867,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは　このかいに　いるぞ
+			<Text>いよいよ　つぎは　ボストレーナーだな▼
+ボストレーナーは　このかいに　いるぞ
 さがしてみるんだな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:47:51" />
+				Time="2011-11-21T07:49:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -26599,11 +25880,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　この階に　いるぞ
+			<Text>いよいよ　次は　ボストレーナーだな▼
+ボストレーナーは　この階に　いるぞ
 探してみるんだな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:49:05" />
+				Time="2011-11-21T07:50:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -26632,11 +25914,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは　このかいに　いるぞ
-さがしてみるんだな</Text>
+			<Text>いよいよ　つぎは　ボストレーナーよ▼
+ボストレーナーは　このかいに　いるわ
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:47:52" />
+				Time="2011-11-21T07:49:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -26644,11 +25927,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　この階に　いるぞ
-探してみるんだな</Text>
+			<Text>いよいよ　次は　ボストレーナーよ▼
+ボストレーナーは　この階に　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:49:06" />
+				Time="2011-11-21T07:50:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -26677,11 +25961,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは　このかいに　いるぞ
-さがしてみるんだな</Text>
+			<Text>これからが　ほんばんだ▼
+ボストレーナーは　このかいに　いる
+さがしてごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:47:53" />
+				Time="2011-11-21T07:49:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -26689,11 +25974,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　この階に　いるぞ
-探してみるんだな</Text>
+			<Text>ここからが　本番だ▼
+ボストレーナーは　この階に　いる
+探してごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:49:06" />
+				Time="2011-11-21T07:50:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -26722,11 +26008,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは　このかいに　いるぞ
-さがしてみるんだな</Text>
+			<Text>ここからが　ほんばんよ▼
+ボストレーナーは　このかいに　いるわ
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:47:54" />
+				Time="2011-11-21T07:49:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -26734,11 +26021,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　この階に　いるぞ
-探してみるんだな</Text>
+			<Text>ここからが　本番よ▼
+ボストレーナーは　この階に　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:49:07" />
+				Time="2011-11-21T07:50:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -26767,11 +26055,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは　このかいに　いるぞ
-さがしてみるんだな</Text>
+			<Text>つぎは　ボストレーナーじゃな▼
+ボストレーナーは　このかいに　おるぞ
+さがしてみるんじゃな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:47:57" />
+				Time="2011-11-21T07:49:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -26779,11 +26068,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　この階に　いるぞ
-探してみるんだな</Text>
+			<Text>次は　ボストレーナーじゃな▼
+ボストレーナーは　この階に　おるぞ
+探してみるんじゃな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:49:08" />
+				Time="2011-11-21T07:50:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -26812,11 +26102,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは　このかいに　いるぞ
-さがしてみるんだな</Text>
+			<Text>さあ　ボストレーナーに　ちょうせんね▼
+ボストレーナーは　このかいに　います
+さがしてごらんなさい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:47:58" />
+				Time="2011-11-21T07:49:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -26824,11 +26115,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　この階に　いるぞ
-探してみるんだな</Text>
+			<Text>さあ　ボストレーナーに　挑戦ね▼
+ボストレーナーは　この階に　います
+探してごらんなさい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:49:10" />
+				Time="2011-11-21T07:50:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -26857,12 +26149,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-うえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーだね▼
+ボストレーナーは
+うえのほうに　いるよ▼
+さがしてごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:52:34" />
+				Time="2011-11-21T07:52:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -26870,11 +26163,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーだね▼
+ボストレーナーは　上の方に　いるよ
+探してごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:53:02" />
+				Time="2011-11-21T07:54:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -26902,12 +26196,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-うえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーね▼
+ボストレーナーは
+うえのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:53:09" />
+				Time="2011-11-21T07:52:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -26915,11 +26210,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーね▼
+ボストレーナーは　上の方　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:53:18" />
+				Time="2011-11-21T07:54:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -26947,12 +26243,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
+			<Text>いよいよ　つぎは　ボストレーナーだな▼
+ボストレーナーは
 うえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+さがしてみるんだな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:53:10" />
+				Time="2011-11-21T07:53:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -26960,11 +26257,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>いよいよ　次は　ボストレーナーだな▼
+ボストレーナーは　上の方に　いるぞ
+探してみるんだな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:53:18" />
+				Time="2011-11-21T07:54:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -26992,12 +26290,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-うえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>いよいよ　つぎは　ボストレーナーよ▼
+ボストレーナーは
+うえのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:53:10" />
+				Time="2011-11-21T07:53:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27005,11 +26304,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>いよいよ　次は　ボストレーナーよ▼
+ボストレーナーは　上の方に　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:53:19" />
+				Time="2011-11-21T07:55:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -27037,12 +26337,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-うえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>これからが　ほんばんだ▼
+ボストレーナーは
+うえのほうに　いる▼
+さがしてごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:53:11" />
+				Time="2011-11-21T07:52:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27050,11 +26351,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>ここからが　本番だ▼
+ボストレーナーは　上の方に　いる
+探してごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:53:20" />
+				Time="2011-11-21T07:55:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -27082,12 +26384,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-うえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>ここからが　ほんばんよ▼
+ボストレーナーは
+うえのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:53:13" />
+				Time="2011-11-21T07:53:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27095,11 +26398,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>ここからが　本番よ▼
+ボストレーナーは　上の方に　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:53:20" />
+				Time="2011-11-21T07:55:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27127,12 +26431,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-うえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーじゃな▼
+ボストレーナーは
+うえのほうに　おるぞ▼
+さがしてみるんじゃな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:53:14" />
+				Time="2011-11-21T07:53:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27140,11 +26445,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーじゃな▼
+ボストレーナーは　上の方に　おるぞ
+探してみるんじゃな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:53:21" />
+				Time="2011-11-21T07:55:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27172,12 +26478,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-うえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>さあ　ボストレーナーに　ちょうせんね▼
+ボストレーナーは
+うえのほうに　います▼
+さがしてごらんなさい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:53:15" />
+				Time="2011-11-21T07:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27185,11 +26492,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>さあ　ボストレーナーに　挑戦ね▼
+ボストレーナーは　上の方に　います
+探してごらんなさい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:53:22" />
+				Time="2011-11-21T07:55:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -27217,12 +26525,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-したのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーだね▼
+ボストレーナーは
+したのほうに　いるよ▼
+さがしてごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:53:54" />
+				Time="2011-11-21T07:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27230,11 +26539,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーだね▼
+ボストレーナーは　下の方に　いるよ
+探してごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:55:07" />
+				Time="2011-11-21T07:57:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27262,12 +26572,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-したのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーね▼
+ボストレーナーは
+したのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:54:01" />
+				Time="2011-11-21T07:56:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27275,11 +26586,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーね▼
+ボストレーナーは　下の方　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:55:15" />
+				Time="2011-11-21T07:57:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27307,12 +26619,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
+			<Text>いよいよ　つぎは　ボストレーナーだな▼
+ボストレーナーは
 したのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+さがしてみるんだな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:54:01" />
+				Time="2011-11-21T07:56:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27320,11 +26633,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>いよいよ　次は　ボストレーナーだな▼
+ボストレーナーは　下の方に　いるぞ
+探してみるんだな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:55:16" />
+				Time="2011-11-21T07:57:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -27352,12 +26666,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-したのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>いよいよ　つぎは　ボストレーナーよ▼
+ボストレーナーは
+したのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:54:02" />
+				Time="2011-11-21T07:56:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27365,11 +26680,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>いよいよ　次は　ボストレーナーよ▼
+ボストレーナーは　下の方に　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:55:17" />
+				Time="2011-11-21T07:57:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -27397,12 +26713,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-したのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>これからが　ほんばんだ▼
+ボストレーナーは
+したのほうに　いる▼
+さがしてごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:54:03" />
+				Time="2011-11-21T07:56:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27410,11 +26727,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>ここからが　本番だ▼
+ボストレーナーは　下の方に　いる
+探してごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:55:17" />
+				Time="2011-11-21T07:57:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -27442,12 +26760,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-したのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>ここからが　ほんばんよ▼
+ボストレーナーは
+したのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:54:04" />
+				Time="2011-11-21T07:56:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27455,11 +26774,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>ここからが　本番よ▼
+ボストレーナーは　下の方に　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:55:18" />
+				Time="2011-11-21T07:58:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27487,12 +26807,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-したのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーじゃな▼
+ボストレーナーは
+したのほうに　おるぞ▼
+さがしてみるんじゃな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:54:06" />
+				Time="2011-11-21T07:57:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27500,11 +26821,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーじゃな▼
+ボストレーナーは　下の方に　おるぞ
+探してみるんじゃな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:55:19" />
+				Time="2011-11-21T07:58:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27532,12 +26854,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-したのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>さあ　ボストレーナーに　ちょうせんね▼
+ボストレーナーは
+したのほうに　います▼
+さがしてごらんなさい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:54:07" />
+				Time="2011-11-21T07:57:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27545,11 +26868,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>さあ　ボストレーナーに　挑戦ね▼
+ボストレーナーは　下の方に　います
+探してごらんなさい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:55:21" />
+				Time="2011-11-21T07:58:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -27577,24 +26901,26 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-みぎのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーだね▼
+ボストレーナーは
+みぎのほうに　いるよ▼
+さがしてごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:57:28" />
+				Time="2011-11-21T07:58:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:19:35" />
+				Time="2011-11-21T07:59:54" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーだね▼
+ボストレーナーは　右の方に　いるよ
+探してごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:57:41" />
+				Time="2011-11-21T08:00:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27622,24 +26948,26 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-みぎのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーね▼
+ボストレーナーは
+みぎのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:57:46" />
+				Time="2011-11-21T07:58:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:19:35" />
+				Time="2011-11-21T07:59:54" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーね▼
+ボストレーナーは　右の方　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:57:56" />
+				Time="2011-11-21T08:00:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27667,24 +26995,26 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
+			<Text>いよいよ　つぎは　ボストレーナーだな▼
+ボストレーナーは
 みぎのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+さがしてみるんだな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:57:47" />
+				Time="2011-11-21T07:58:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:19:35" />
+				Time="2011-11-21T07:59:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>いよいよ　次は　ボストレーナーだな▼
+ボストレーナーは　右の方に　いるぞ
+探してみるんだな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:57:57" />
+				Time="2011-11-21T08:00:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -27712,24 +27042,26 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-みぎのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>いよいよ　つぎは　ボストレーナーよ▼
+ボストレーナーは
+みぎのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:57:48" />
+				Time="2011-11-21T07:58:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:19:35" />
+				Time="2011-11-21T07:59:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>いよいよ　次は　ボストレーナーよ▼
+ボストレーナーは　右の方に　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:57:57" />
+				Time="2011-11-21T08:00:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -27757,24 +27089,26 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-みぎのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>これからが　ほんばんだ▼
+ボストレーナーは
+みぎのほうに　いる▼
+さがしてごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:57:48" />
+				Time="2011-11-21T07:58:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:19:36" />
+				Time="2011-11-21T07:59:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>ここからが　本番だ▼
+ボストレーナーは　右の方に　いる
+探してごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:57:58" />
+				Time="2011-11-21T08:00:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -27802,24 +27136,26 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-みぎのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>ここからが　ほんばんよ▼
+ボストレーナーは
+みぎのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:57:49" />
+				Time="2011-11-21T07:58:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:19:36" />
+				Time="2011-11-21T07:59:56" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>ここからが　本番よ▼
+ボストレーナーは　右の方に　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:57:59" />
+				Time="2011-11-21T08:01:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27847,24 +27183,26 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-みぎのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーじゃな▼
+ボストレーナーは
+みぎのほうに　おるぞ▼
+さがしてみるんじゃな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:57:51" />
+				Time="2011-11-21T07:58:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:19:36" />
+				Time="2011-11-21T07:59:56" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーじゃな▼
+ボストレーナーは　右の方に　おるぞ
+探してみるんじゃな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:58:00" />
+				Time="2011-11-21T08:01:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27892,24 +27230,26 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-みぎのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>さあ　ボストレーナーに　ちょうせんね▼
+ボストレーナーは
+みぎのほうに　います▼
+さがしてごらんなさい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:57:51" />
+				Time="2011-11-21T07:58:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-22T11:19:36" />
+				Time="2011-11-21T07:59:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>さあ　ボストレーナーに　挑戦ね▼
+ボストレーナーは　右の方に　います
+探してごらんなさい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:58:01" />
+				Time="2011-11-21T08:01:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -27937,12 +27277,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-ひだりのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーだね▼
+ボストレーナーは
+ひだりのほうに　いるよ▼
+さがしてごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:59:45" />
+				Time="2011-11-21T08:01:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27950,11 +27291,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーだね▼
+ボストレーナーは　左の方に　いるよ
+探してごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T12:59:59" />
+				Time="2011-11-21T08:02:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27982,12 +27324,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-ひだりのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーね▼
+ボストレーナーは
+ひだりのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:00:53" />
+				Time="2011-11-21T08:01:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -27995,11 +27338,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーね▼
+ボストレーナーは　左の方　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:01:04" />
+				Time="2011-11-21T08:02:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28027,12 +27371,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
+			<Text>いよいよ　つぎは　ボストレーナーだな▼
+ボストレーナーは
 ひだりのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+さがしてみるんだな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:00:54" />
+				Time="2011-11-21T08:01:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28040,11 +27385,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>いよいよ　次は　ボストレーナーだな▼
+ボストレーナーは　左の方に　いるぞ
+探してみるんだな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:01:05" />
+				Time="2011-11-21T08:02:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -28072,12 +27418,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-ひだりのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>いよいよ　つぎは　ボストレーナーよ▼
+ボストレーナーは
+ひだりのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:00:55" />
+				Time="2011-11-21T08:01:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28085,11 +27432,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>いよいよ　次は　ボストレーナーよ▼
+ボストレーナーは　左の方に　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:01:06" />
+				Time="2011-11-21T08:02:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -28117,12 +27465,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-ひだりのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>これからが　ほんばんだ▼
+ボストレーナーは
+ひだりのほうに　いる▼
+さがしてごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:00:56" />
+				Time="2011-11-21T08:02:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28130,11 +27479,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>ここからが　本番だ▼
+ボストレーナーは　左の方に　いる
+探してごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:01:07" />
+				Time="2011-11-21T08:03:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -28162,12 +27512,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-ひだりのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>ここからが　ほんばんよ▼
+ボストレーナーは
+ひだりのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:00:57" />
+				Time="2011-11-21T08:02:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28175,11 +27526,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>ここからが　本番よ▼
+ボストレーナーは　左の方に　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:01:07" />
+				Time="2011-11-21T08:03:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28207,12 +27559,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-ひだりのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーじゃな▼
+ボストレーナーは
+ひだりのほうに　おるぞ▼
+さがしてみるんじゃな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:00:58" />
+				Time="2011-11-21T08:02:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28220,11 +27573,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーじゃな▼
+ボストレーナーは　左の方に　おるぞ
+探してみるんじゃな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:01:09" />
+				Time="2011-11-21T08:03:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28252,12 +27606,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-ひだりのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>さあ　ボストレーナーに　ちょうせんね▼
+ボストレーナーは
+ひだりのほうに　います▼
+さがしてごらんなさい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:00:59" />
+				Time="2011-11-21T08:02:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28265,11 +27620,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>さあ　ボストレーナーに　挑戦ね▼
+ボストレーナーは　左の方に　います
+探してごらんなさい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:01:10" />
+				Time="2011-11-21T08:03:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -28297,12 +27653,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-みぎうえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーだね▼
+ボストレーナーは
+みぎうえのほうに　いるよ▼
+さがしてごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:02:27" />
+				Time="2011-11-21T08:03:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28310,11 +27667,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーだね▼
+ボストレーナーは　右上の方に　いるよ
+探してごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:03:22" />
+				Time="2011-11-21T08:05:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28342,12 +27700,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-みぎうえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーね▼
+ボストレーナーは
+みぎうえのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:03:28" />
+				Time="2011-11-21T08:03:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28355,11 +27714,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーね▼
+ボストレーナーは　右上の方　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:03:38" />
+				Time="2011-11-21T08:05:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28387,12 +27747,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
+			<Text>いよいよ　つぎは　ボストレーナーだな▼
+ボストレーナーは
 みぎうえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+さがしてみるんだな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:03:29" />
+				Time="2011-11-21T08:04:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28400,11 +27761,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>いよいよ　次は　ボストレーナーだな▼
+ボストレーナーは　右上の方に　いるぞ
+探してみるんだな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:03:39" />
+				Time="2011-11-21T08:05:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -28432,12 +27794,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-みぎうえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>いよいよ　つぎは　ボストレーナーよ▼
+ボストレーナーは
+みぎうえのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:03:30" />
+				Time="2011-11-21T08:04:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28445,11 +27808,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>いよいよ　次は　ボストレーナーよ▼
+ボストレーナーは　右上の方に　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:03:39" />
+				Time="2011-11-21T08:05:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -28477,12 +27841,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-みぎうえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>これからが　ほんばんだ▼
+ボストレーナーは
+みぎうえのほうに　いる▼
+さがしてごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:03:30" />
+				Time="2011-11-21T08:04:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28490,11 +27855,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>ここからが　本番だ▼
+ボストレーナーは　右上の方に　いる
+探してごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:03:40" />
+				Time="2011-11-21T08:05:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -28522,12 +27888,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-みぎうえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>ここからが　ほんばんよ▼
+ボストレーナーは
+みぎうえのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:03:31" />
+				Time="2011-11-21T08:04:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28535,11 +27902,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>ここからが　本番よ▼
+ボストレーナーは　右上の方に　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:03:41" />
+				Time="2011-11-21T08:05:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28567,12 +27935,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-みぎうえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーじゃな▼
+ボストレーナーは
+みぎうえのほうに　おるぞ▼
+さがしてみるんじゃな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:03:32" />
+				Time="2011-11-21T08:04:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28580,11 +27949,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーじゃな▼
+ボストレーナーは　右上の方に　おるぞ
+探してみるんじゃな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:06:10" />
+				Time="2011-11-21T08:05:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28612,12 +27982,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-みぎうえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>さあ　ボストレーナーに　ちょうせんね▼
+ボストレーナーは
+みぎうえのほうに　います▼
+さがしてごらんなさい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:03:33" />
+				Time="2011-11-21T08:04:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28625,11 +27996,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>さあ　ボストレーナーに　挑戦ね▼
+ボストレーナーは　右上の方に　います
+探してごらんなさい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:03:43" />
+				Time="2011-11-21T08:06:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -28657,12 +28029,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-みぎしたのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーだね▼
+ボストレーナーは
+みぎしたのほうに　いるよ▼
+さがしてごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:05:33" />
+				Time="2011-11-21T08:06:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28670,11 +28043,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーだね▼
+ボストレーナーは　右下の方に　いるよ
+探してごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:06:18" />
+				Time="2011-11-21T08:07:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28702,12 +28076,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-みぎしたのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーね▼
+ボストレーナーは
+みぎしたのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:06:53" />
+				Time="2011-11-21T08:06:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28715,11 +28090,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーね▼
+ボストレーナーは　右下の方　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:07:04" />
+				Time="2011-11-21T08:07:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28747,12 +28123,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
+			<Text>いよいよ　つぎは　ボストレーナーだな▼
+ボストレーナーは
 みぎしたのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+さがしてみるんだな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:06:54" />
+				Time="2011-11-21T08:07:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28760,11 +28137,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>いよいよ　次は　ボストレーナーだな▼
+ボストレーナーは　右下の方に　いるぞ
+探してみるんだな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:07:05" />
+				Time="2011-11-21T08:08:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -28792,12 +28170,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-みぎしたのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>いよいよ　つぎは　ボストレーナーよ▼
+ボストレーナーは
+みぎしたのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:06:54" />
+				Time="2011-11-21T08:07:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28805,11 +28184,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>いよいよ　次は　ボストレーナーよ▼
+ボストレーナーは　右下の方に　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:07:05" />
+				Time="2011-11-21T08:08:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -28837,12 +28217,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-みぎしたのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>これからが　ほんばんだ▼
+ボストレーナーは
+みぎしたのほうに　いる▼
+さがしてごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:06:55" />
+				Time="2011-11-21T08:07:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28850,11 +28231,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>ここからが　本番だ▼
+ボストレーナーは　右下の方に　いる
+探してごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:07:06" />
+				Time="2011-11-21T08:09:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -28882,12 +28264,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-みぎしたのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>ここからが　ほんばんよ▼
+ボストレーナーは
+みぎしたのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:06:56" />
+				Time="2011-11-21T08:07:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28895,11 +28278,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>ここからが　本番よ▼
+ボストレーナーは　右下の方に　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:07:07" />
+				Time="2011-11-21T08:09:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28927,12 +28311,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-みぎしたのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーじゃな▼
+ボストレーナーは
+みぎしたのほうに　おるぞ▼
+さがしてみるんじゃな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:06:56" />
+				Time="2011-11-21T08:07:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28940,11 +28325,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーじゃな▼
+ボストレーナーは　右下の方に　おるぞ
+探してみるんじゃな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:07:07" />
+				Time="2011-11-21T08:10:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28972,12 +28358,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-みぎしたのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>さあ　ボストレーナーに　ちょうせんね▼
+ボストレーナーは
+みぎしたのほうに　います▼
+さがしてごらんなさい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:06:58" />
+				Time="2011-11-21T08:07:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -28985,11 +28372,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　右下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>さあ　ボストレーナーに　挑戦ね▼
+ボストレーナーは　右下の方に　います
+探してごらんなさい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:07:09" />
+				Time="2011-11-21T08:10:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -29017,12 +28405,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-ひだりうえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーだね▼
+ボストレーナーは
+ひだりうえのほうに　いるよ▼
+さがしてごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:08:20" />
+				Time="2011-11-21T08:10:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29030,11 +28419,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーだね▼
+ボストレーナーは　左上の方に　いるよ
+探してごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:08:44" />
+				Time="2011-11-21T08:12:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29062,12 +28452,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-ひだりうえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーね▼
+ボストレーナーは
+ひだりうえのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:09:57" />
+				Time="2011-11-21T08:11:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29075,11 +28466,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーね▼
+ボストレーナーは　左上の方　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:10:09" />
+				Time="2011-11-21T08:12:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29107,12 +28499,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
+			<Text>いよいよ　つぎは　ボストレーナーだな▼
+ボストレーナーは
 ひだりうえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+さがしてみるんだな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:09:58" />
+				Time="2011-11-21T08:11:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29120,11 +28513,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>いよいよ　次は　ボストレーナーだな▼
+ボストレーナーは　左上の方に　いるぞ
+探してみるんだな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:10:10" />
+				Time="2011-11-21T08:12:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -29152,12 +28546,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-ひだりうえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>いよいよ　つぎは　ボストレーナーよ▼
+ボストレーナーは
+ひだりうえのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:09:58" />
+				Time="2011-11-21T08:11:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29165,11 +28560,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>いよいよ　次は　ボストレーナーよ▼
+ボストレーナーは　左上の方に　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:10:11" />
+				Time="2011-11-21T08:12:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -29197,12 +28593,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-ひだりうえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>これからが　ほんばんだ▼
+ボストレーナーは
+ひだりうえのほうに　いる▼
+さがしてごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:09:59" />
+				Time="2011-11-21T08:11:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29210,11 +28607,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>ここからが　本番だ▼
+ボストレーナーは　左上の方に　いる
+探してごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:10:11" />
+				Time="2011-11-21T08:12:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -29242,12 +28640,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-ひだりうえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>ここからが　ほんばんよ▼
+ボストレーナーは
+ひだりうえのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:10:00" />
+				Time="2011-11-21T08:11:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29255,11 +28654,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>ここからが　本番よ▼
+ボストレーナーは　左上の方に　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:10:12" />
+				Time="2011-11-21T08:13:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29287,12 +28687,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-ひだりうえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーじゃな▼
+ボストレーナーは
+ひだりうえのほうに　おるぞ▼
+さがしてみるんじゃな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:10:00" />
+				Time="2011-11-21T08:11:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29300,11 +28701,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーじゃな▼
+ボストレーナーは　左上の方に　おるぞ
+探してみるんじゃな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:10:13" />
+				Time="2011-11-21T08:13:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29332,12 +28734,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-ひだりうえのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>さあ　ボストレーナーに　ちょうせんね▼
+ボストレーナーは
+ひだりうえのほうに　います▼
+さがしてごらんなさい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:10:02" />
+				Time="2011-11-21T08:14:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29345,11 +28748,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左上の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>さあ　ボストレーナーに　挑戦ね▼
+ボストレーナーは　左上の方に　います
+探してごらんなさい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:10:14" />
+				Time="2011-11-21T08:13:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -29377,12 +28781,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-ひだりしたのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーだね▼
+ボストレーナーは
+ひだりしたのほうに　いるよ▼
+さがしてごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:11:15" />
+				Time="2011-11-21T08:13:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29390,11 +28795,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーだね▼
+ボストレーナーは　左下の方に　いるよ
+探してごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:11:27" />
+				Time="2011-11-21T08:16:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29422,12 +28828,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-ひだりしたのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーね▼
+ボストレーナーは
+ひだりしたのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:12:06" />
+				Time="2011-11-21T08:13:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29435,11 +28842,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーね▼
+ボストレーナーは　左下の方　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:12:17" />
+				Time="2011-11-21T08:16:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29467,12 +28875,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
+			<Text>いよいよ　つぎは　ボストレーナーだな▼
+ボストレーナーは
 ひだりしたのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+さがしてみるんだな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:12:07" />
+				Time="2011-11-21T08:13:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29480,11 +28889,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>いよいよ　次は　ボストレーナーだな▼
+ボストレーナーは　左下の方に　いるぞ
+探してみるんだな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:12:18" />
+				Time="2011-11-21T08:16:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -29512,12 +28922,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-ひだりしたのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>いよいよ　つぎは　ボストレーナーよ▼
+ボストレーナーは
+ひだりしたのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:12:08" />
+				Time="2011-11-21T08:13:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29525,11 +28936,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>いよいよ　次は　ボストレーナーよ▼
+ボストレーナーは　左下の方に　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:12:18" />
+				Time="2011-11-21T08:16:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -29557,12 +28969,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-ひだりしたのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>これからが　ほんばんだ▼
+ボストレーナーは
+ひだりしたのほうに　いる▼
+さがしてごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:12:09" />
+				Time="2011-11-21T08:14:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29570,11 +28983,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>ここからが　本番だ▼
+ボストレーナーは　左下の方に　いる
+探してごらん</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:12:19" />
+				Time="2011-11-21T08:16:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -29602,12 +29016,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-ひだりしたのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>ここからが　ほんばんよ▼
+ボストレーナーは
+ひだりしたのほうに　いるわ▼
+さがしてみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:12:10" />
+				Time="2011-11-21T08:14:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29615,11 +29030,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>ここからが　本番よ▼
+ボストレーナーは　左下の方に　いるわ
+探してみてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:12:20" />
+				Time="2011-11-21T08:16:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29647,12 +29063,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-ひだりしたのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>つぎは　ボストレーナーじゃな▼
+ボストレーナーは
+ひだりしたのほうに　おるぞ▼
+さがしてみるんじゃな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:12:11" />
+				Time="2011-11-21T08:14:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29660,11 +29077,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>次は　ボストレーナーじゃな▼
+ボストレーナーは　左下の方に　おるぞ
+探してみるんじゃな</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:12:20" />
+				Time="2011-11-21T08:16:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29692,12 +29110,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーは
-ひだりしたのほうに　いるぞ▼
-さがしてみるんだな▼</Text>
+			<Text>さあ　ボストレーナーに　ちょうせんね▼
+ボストレーナーは
+ひだりしたのほう　います▼
+さがしてごらんなさい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:12:12" />
+				Time="2011-11-21T08:14:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -29705,11 +29124,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーは　左下の方に　いるぞ
-探してみるんだな▼</Text>
+			<Text>さあ　ボストレーナーに　挑戦ね▼
+ボストレーナーは　左下の方に　います
+探してごらんなさい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:12:21" />
+				Time="2011-11-21T08:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
