@@ -355,22 +355,15 @@ EVENT_START ev_pos_c12r0101_gameclear
   _OBJ_ANIME( C12R0101_SWMAMA_01, anm_staystep_r)
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l)
   _OBJ_ANIME_WAIT()
-  
-  //アイテム入手：すごいつりざお
-	_ITEM_EVENT_KEYWAIT( ITEM_SUGOITURIZAO, 1 )
 	
-	//ママ：その すごいつりざおは
-  _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_end_06, C12R0101_SWMAMA_01, POS_DEFAULT )
-  
   //ママ：なにをしても
-  _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_end_07, C12R0101_SWMAMA_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_end_06, C12R0101_SWMAMA_01, POS_DEFAULT )
+  _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
   
   //========================================//
   //POSイベント無効
   $WK_SCENE_C12R0101 = 3
-  //すごいつりざお入手フラグセット
-  _FLAG_SET( SYS_FLAG_SUGOI_TSURI_GET )
   //========================================//
 
 EVENT_END
@@ -382,7 +375,7 @@ EVENT_START ev_c12r0101_swmama_01
 
   //クリア後
   IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0101_swmama_end_07 )
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0101_swmama_end_06 )
   
   //まだベルイベントを終えていない
   ELSIF $WK_SCENE_C12_WHITE_MEET < 2 THEN
