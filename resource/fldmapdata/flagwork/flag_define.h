@@ -1275,7 +1275,7 @@
 #define FV_FLD_ITEM_AREA_END              1499 /* 0x05db  */
 
 
-/* flags "" 1520 ～ 2319 */
+/* flags "" 1520 ～ 2339 */
 
 #define TR_FLAG_AREA_START                1520 /* 0x05f0  */
 
@@ -2079,8 +2079,28 @@
 #define TR_FLAG_797                       2317 /* 0x090d 領域確保による自動生成 */
 #define TR_FLAG_798                       2318 /* 0x090e 領域確保による自動生成 */
 #define TR_FLAG_799                       2319 /* 0x090f 領域確保による自動生成 */
+#define TR_FLAG_800                       2320 /* 0x0910 領域確保による自動生成 */
+#define TR_FLAG_801                       2321 /* 0x0911 領域確保による自動生成 */
+#define TR_FLAG_802                       2322 /* 0x0912 領域確保による自動生成 */
+#define TR_FLAG_803                       2323 /* 0x0913 領域確保による自動生成 */
+#define TR_FLAG_804                       2324 /* 0x0914 領域確保による自動生成 */
+#define TR_FLAG_805                       2325 /* 0x0915 領域確保による自動生成 */
+#define TR_FLAG_806                       2326 /* 0x0916 領域確保による自動生成 */
+#define TR_FLAG_807                       2327 /* 0x0917 領域確保による自動生成 */
+#define TR_FLAG_808                       2328 /* 0x0918 領域確保による自動生成 */
+#define TR_FLAG_809                       2329 /* 0x0919 領域確保による自動生成 */
+#define TR_FLAG_810                       2330 /* 0x091a 領域確保による自動生成 */
+#define TR_FLAG_811                       2331 /* 0x091b 領域確保による自動生成 */
+#define TR_FLAG_812                       2332 /* 0x091c 領域確保による自動生成 */
+#define TR_FLAG_813                       2333 /* 0x091d 領域確保による自動生成 */
+#define TR_FLAG_814                       2334 /* 0x091e 領域確保による自動生成 */
+#define TR_FLAG_815                       2335 /* 0x091f 領域確保による自動生成 */
+#define TR_FLAG_816                       2336 /* 0x0920 領域確保による自動生成 */
+#define TR_FLAG_817                       2337 /* 0x0921 領域確保による自動生成 */
+#define TR_FLAG_818                       2338 /* 0x0922 領域確保による自動生成 */
+#define TR_FLAG_819                       2339 /* 0x0923 領域確保による自動生成 */
 
-#define TR_FLAG_AREA_END                  2319 /* 0x090f  */
+#define TR_FLAG_AREA_END                  2339 /* 0x0923  */
 
 
 /* flags "sys_flag.xls" 2400 ～ 2639 */
