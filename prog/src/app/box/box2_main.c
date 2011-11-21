@@ -2228,7 +2228,7 @@ static BOOL PartyMoveCheck( BOX2_SYS_WORK * syswk, u32 get_pos, u32 put_pos )
   if( put_pos >= BOX2OBJ_POKEICON_PUT_MAX ){
 		tray  = MoveBoxGet( syswk, put_pos-BOX2OBJ_POKEICON_PUT_MAX );
 		count = BOXDAT_GetPokeExistCount( syswk->dat->sv_box, tray ) + BOX2MAIN_GetNowSelectMultiPokeNum( syswk->app );
-    if( tray == syswk->tray || count > BOX_MAX_POS ){
+    if( tray == syswk->tray || count >= BOX_MAX_POS ){
       syswk->app->mv_err_code = BOX2MAIN_ERR_CODE_BOXMAX;
       return FALSE;
     }
