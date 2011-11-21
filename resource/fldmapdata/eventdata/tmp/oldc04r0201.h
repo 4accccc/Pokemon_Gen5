@@ -8,6 +8,7 @@
 #ifndef ZONE_OLDC04R0201_EVC_H
 #define ZONE_OLDC04R0201_EVC_H
 
+#define OLDC04R0201_OLD_GENTLEMAN_01       0
 
 #endif //ZONE_OLDC04R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/oldc04r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -8,6 +8,8 @@
 #ifndef ZONE_OLDD06R0101_EVC_H
 #define ZONE_OLDD06R0101_EVC_H
 
+#define OLDD06R0101_OLD_BOSS_01            0
+#define OLDD06R0101_OLD_HAKAIM_01          1
 
 #endif //ZONE_OLDD06R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/oldd06r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

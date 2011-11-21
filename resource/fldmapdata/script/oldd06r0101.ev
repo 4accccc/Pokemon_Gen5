@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_oldd06r0101.h"
-  //.include  "oldd06r0101.h"
+  .include  "oldd06r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_oldd06r0101
+_EVENT_DATA	ev_reserve_oldd06r0101_event_01
 _EVENT_DATA_END
 
 
@@ -30,9 +30,296 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*			過去イベント	Ｎとしたっぱ				  */
 /**************************************************************/
-ev_oldd06r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_reserve_oldd06r0101_event_01
 
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+
+	//カメラ操作　ちょっと上のほうを初期位置にする
+	_CAMERA_MOVE( 9688,0,970752,622592,421888,1277952,1 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_vanish_on )
+	_OBJ_ANIME_WAIT()
+
+	_MAP_FADE_BLACK_IN()
+
+	//カメラ操作　デフォ位置に移動
+	_CAMERA_RECV_MOVE(60)	//カメラ復帰移動
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
+	_MAP_FADE_END_CHECK()
+
+	_TIME_WAIT( 45 )
+
+	_OBJ_ANIME( OLDD06R0101_OLD_BOSS_01, anm_walk_u_16F )
+	_OBJ_ANIME_WAIT()
+
+	//ガントル　バチュル　ギアルに　テッシード
+	_BALLOONWIN_OBJMSG_POS( msg_oldd06r0101_old_boss_01 ,OLDD06R0101_OLD_BOSS_01 ,POS_UP )
+	_MSGWIN_CLOSE()
+	
+	_TIME_WAIT( 30 )
+	
+	//下っ端：その場歩き・……表示
+	_OBJ_ANIME( OLDD06R0101_OLD_HAKAIM_01, anm_stay_r )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( OLDD06R0101_OLD_HAKAIM_01, anm_common_tenten )
+	_OBJ_ANIME_WAIT()
+
+	_TIME_WAIT( 30 )
+
+	_OBJ_ANIME( OLDD06R0101_OLD_HAKAIM_01, anm_walk_u )
+	_OBJ_ANIME_WAIT()
+
+	//Ｎさま　どうして　にがしちゃうんですか？
+	_BALLOONWIN_OBJMSG_POS( msg_oldd06r0101_old_kahaim1_01 ,OLDD06R0101_OLD_HAKAIM_01 ,POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	_TIME_WAIT( 30 )
+
+	//Ｎ：二歩右へ
+	_OBJ_ANIME( OLDD06R0101_OLD_BOSS_01, anm_n_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//したっぱ：眼で追う
+	_OBJ_ANIME( OLDD06R0101_OLD_HAKAIM_01, anm_dir_r )
+	_OBJ_ANIME_WAIT()
+
+	_TIME_WAIT( 30 )
+
+	//ポケモンを……　モンスターボールに
+	_BALLOONWIN_OBJMSG_POS( msg_oldd06r0101_old_boss_02 ,OLDD06R0101_OLD_BOSS_01 ,POS_UP )
+	_MSGWIN_CLOSE()
+	
+	//……でも
+	_BALLOONWIN_OBJMSG_POS( msg_oldd06r0101_old_kahaim1_02 ,OLDD06R0101_OLD_HAKAIM_01 ,POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	//Ｎ：その場歩き→首ふり
+	_OBJ_ANIME( OLDD06R0101_OLD_BOSS_01, anm_stay_d )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( OLDD06R0101_OLD_BOSS_01, anm_n_kubi )
+	_OBJ_ANIME_WAIT()
+
+	//ポケモンを　つかまえ　たたかわせることが
+	_BALLOONWIN_OBJMSG_POS( msg_oldd06r0101_old_boss_03 ,OLDD06R0101_OLD_BOSS_01 ,POS_UP )
+	_MSGWIN_CLOSE()
+	
+	//下っ端：！マーク・その場足ふみ
+	_OBJ_ANIME( OLDD06R0101_OLD_HAKAIM_01, anm_gyoe )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( OLDD06R0101_OLD_HAKAIM_01, anm_hakaim_01 )
+	_OBJ_ANIME_WAIT()
+
+	//たっ　たしかに……
+	_BALLOONWIN_OBJMSG_POS( msg_oldd06r0101_old_kahaim1_03 ,OLDD06R0101_OLD_HAKAIM_01 ,POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//したっぱ：上へ移動
+	_OBJ_ANIME_AUTO( OLDD06R0101_OLD_HAKAIM_01, 9, 17, FORCE_TYPE_NPC, 8, DIR_LR )
+	_OBJ_ANIME_WAIT()
+
+	//Ｎ：左へ歩き→首ふり
+	_OBJ_ANIME( OLDD06R0101_OLD_BOSS_01, anm_n_02 )
+	_OBJ_ANIME_WAIT()
+
+	//まだだ！　まだ　せかいは　かわっていない
+	_BALLOONWIN_OBJMSG_WB( msg_oldd06r0101_old_boss_04w, msg_oldd06r0101_old_boss_04b, OLDD06R0101_OLD_BOSS_01, POS_UP )
+	_MSGWIN_CLOSE()
+
+	//したっぱ：Ｎの方を見て
+	_OBJ_ANIME( OLDD06R0101_OLD_HAKAIM_01, anm_stay_d )
+	_OBJ_ANIME_WAIT()
+
+	//では　さきに　リュウラセン
+	_BALLOONWIN_OBJMSG_POS( msg_oldd06r0101_old_kahaim1_04 ,OLDD06R0101_OLD_HAKAIM_01 ,POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	//したっぱ：退場　Ｎは眼で追う
+	_OBJ_ANIME( OLDD06R0101_OLD_HAKAIM_01, anm_hakaim_02 )
+	_TIME_WAIT( 8 )
+	_OBJ_ANIME( OLDD06R0101_OLD_BOSS_01, anm_stay_u )
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_DEL( OLDD06R0101_OLD_HAKAIM_01 )
+
+	//ボクは　ポケモンと　にんげんを　くぶんし
+	_BALLOONWIN_OBJMSG_POS( msg_oldd06r0101_old_boss_05 ,OLDD06R0101_OLD_BOSS_01 ,POS_UP )
+	_MSGWIN_CLOSE()
+
+	//Ｎ：下へ歩き→首ふり
+	_OBJ_ANIME( OLDD06R0101_OLD_BOSS_01, anm_n_03 )
+	_OBJ_ANIME_WAIT()
+
+	//旧主人公名を代入
+	_DATACONV_SET_NAME(DATACONV_ID_SYSTEM,0)
+
+	//あの　トレーナーの　せいか？
+	_BALLOONWIN_OBJMSG_POS( msg_oldd06r0101_old_boss_06 ,OLDD06R0101_OLD_BOSS_01 ,POS_UP )
+	_MSGWIN_CLOSE()
+
+	//Ｎ：左にその場歩き
+	_OBJ_ANIME( OLDD06R0101_OLD_BOSS_01, anm_n_04 )
+	_OBJ_ANIME_WAIT()
+
+	//あの　へやに　あふれた
+	_BALLOONWIN_OBJMSG_POS( msg_oldd06r0101_old_boss_07 ,OLDD06R0101_OLD_BOSS_01 ,POS_UP )
+	_MSGWIN_CLOSE()
+
+	//Ｎ：退場
+	_OBJ_ANIME_AUTO( OLDD06R0101_OLD_BOSS_01, 16, 13, FORCE_TYPE_NPC, 8, DIR_UD )
+	
+	_CAMERA_MOVE( 9688,0,970752,622592,421888,1277952,60 )
+
+	//画面暗転処理
+	//_MAP_FADE_BLACK_OUT()
+	//_MAP_FADE_END_CHECK()
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_OBJ_ANIME_WAIT()
+	
+	//予約スクリプト
+	//_RESERVE_SCRIPT( SCRID_RESERVE_C01GYM0101_LINK_EVENT_RET )
+
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+
+	//マップチェンジ
+	_MAP_CHANGE( ZONE_ID_D06R0101, 7, 26 , DIR_UP )
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u_16F
+	_ANIME_DATA	AC_WALK_U_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ・はてな
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_tenten
+	_ANIME_DATA	AC_MARK_TENTEN,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_onpu
+	_ANIME_DATA	AC_MARK_ONPU,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：１歩下がる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_back_l
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_L_12F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：非表示
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_vanish_on
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+//-----------------------------------------------------------
+//	☆専用アニメ：Ｎ・プラズマ♂
+//-----------------------------------------------------------
+_ANIME_LABEL	anm_n_kubi
+	_ANIME_DATA	AC_N_ACT1,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_n_01
+	_ANIME_DATA	AC_WALK_R_16F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim_01
+	_ANIME_DATA	AC_STAY_WALK_R_4F,4
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_n_02
+	_ANIME_DATA	AC_WALK_L_16F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_N_ACT1,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim_02
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,7
+	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_n_03
+	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	AC_N_ACT1,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_n_04
+	_ANIME_DATA	AC_WALK_L_16F,1
+	_ANIME_DATA	ACMD_END,0
