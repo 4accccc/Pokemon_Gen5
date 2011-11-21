@@ -78,6 +78,7 @@ struct _POKEWOOD_REC_WORK
   u16 player_tr_type;  ///< プレイヤーはMYSTATUSとして保存するが、トレーナーのタイプがわからなくなるので別に保存する
   u8  audience_num;    ///< スタート時観客動員数
   u8  rental_flag;     ///< レンタルポケモンを使用しているか？（0:使用していない, 1:使用している）
-  GFDATE  save_date;   ///< セーブ日時
+  GFDATE  save_date;   ///< セーブ日付
+  GFTIME  save_time;   ///< セーブ時間
   u32     profit;      ///< 興行収入(=評価)
 };

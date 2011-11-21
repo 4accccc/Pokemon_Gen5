@@ -251,10 +251,14 @@ SAVE_RESULT POKEWOOD_REC_Save( GAMEDATA *p_gamedata, HEAPID heapID, POKEWOOD_LOA
     //日時設定
     {
       RTCDate date;
+      RTCTime time;
       GFDATE  gfdate;
-      GFL_RTC_GetDate( &date );
+      GFTIME  gftime;
+      GFL_RTC_GetDateTime( &date, &time );
       gfdate = GFDATE_RTCDate2GFDate( &date );
+      gftime = GFTIME_RTCTime2GFTime( &time );
       POKEWOOD_REC_SetData( POKEWOOD_REC_PARAM_DATE, gfdate );
+      POKEWOOD_REC_SetData( POKEWOOD_REC_PARAM_TIME, gftime );
     }
 
     //CRC作成
@@ -350,6 +354,8 @@ u32 POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM param, void *dst )
   // 日付
   case POKEWOOD_REC_PARAM_DATE:
     return sp_pokewood_rec_sv->rec.save_date;
+  case POKEWOOD_REC_PARAM_TIME:
+    return sp_pokewood_rec_sv->rec.save_time;
   // 興行収入(=評価）
   case POKEWOOD_REC_PARAM_PROFIT:
     return sp_pokewood_rec_sv->rec.profit;
@@ -362,7 +368,7 @@ u32 POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM param, void *dst )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  値のセッテオ
+ *	@brief  値の設定
  *
  *	@param	POKEWOOD_REC_PARAM
  *	@param	data 
@@ -375,6 +381,9 @@ void POKEWOOD_REC_SetData( POKEWOOD_REC_PARAM param, u32 data )
   {
   case POKEWOOD_REC_PARAM_DATE:
     sp_pokewood_rec_sv->rec.save_date = data;
+    break;
+  case POKEWOOD_REC_PARAM_TIME:
+    sp_pokewood_rec_sv->rec.save_time = data;
     break;
   default:
     GF_ASSERT(0);

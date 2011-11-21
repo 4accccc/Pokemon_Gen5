@@ -57,7 +57,8 @@ typedef enum
   POKEWOOD_REC_PARAM_POKE5,           ///< 自分の手持ち5匹目のPOKEMON_PARAM
   POKEWOOD_REC_PARAM_AUDIENCE_NUM,    ///< 初期観客数
   POKEWOOD_REC_PARAM_RENTAL_FLAG,     ///< レンタルポケモンを使用しているか？
-  POKEWOOD_REC_PARAM_DATE,            ///< 日時
+  POKEWOOD_REC_PARAM_DATE,            ///< 日付
+  POKEWOOD_REC_PARAM_TIME,            ///< 時間
   POKEWOOD_REC_PARAM_PROFIT,          ///< 興行収入
 
 } POKEWOOD_REC_PARAM;
