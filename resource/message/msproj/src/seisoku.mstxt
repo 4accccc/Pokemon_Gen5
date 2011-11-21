@@ -1107,14 +1107,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:Place ]
-釣りざおで　釣れる　ポケモン</Text>
+つりざおで　釣れる　ポケモン</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
 				Time="2011-11-14T03:30:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-10T08:31:05" />
+				User="matsumiya:W00224"
+				Time="2011-11-21T05:20:10" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1150,14 +1150,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:Place ]
-[System:Color name="1" ]春[/System:Color]に　釣りざおで　釣れる　ポケモン</Text>
+[System:Color name="1" ]春[/System:Color]に　つりざおで　釣れる　ポケモン</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-09-05T03:28:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-05T03:21:34" />
+				User="matsumiya:W00224"
+				Time="2011-11-21T05:20:10" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1193,14 +1193,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:Place ]
-[System:Color name="1" ]夏[/System:Color]に　釣りざおで　釣れる　ポケモン</Text>
+[System:Color name="1" ]夏[/System:Color]に　つりざおで　釣れる　ポケモン</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-09-05T03:28:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-05T03:21:34" />
+				User="matsumiya:W00224"
+				Time="2011-11-21T05:20:10" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1236,14 +1236,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:Place ]
-[System:Color name="1" ]秋[/System:Color]に　釣りざおで　釣れる　ポケモン</Text>
+[System:Color name="1" ]秋[/System:Color]に　つりざおで　釣れる　ポケモン</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-09-05T03:29:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-05T03:21:34" />
+				User="matsumiya:W00224"
+				Time="2011-11-21T05:20:10" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1279,14 +1279,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:Place ]
-[System:Color name="1" ]冬[/System:Color]に　釣りざおで　釣れる　ポケモン</Text>
+[System:Color name="1" ]冬[/System:Color]に　つりざおで　釣れる　ポケモン</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-09-05T03:29:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-05T03:21:34" />
+				User="matsumiya:W00224"
+				Time="2011-11-21T05:20:10" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1365,15 +1365,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Place ]の　りくち
+			<Text>[Name:Place ]の　陸地
 [System:Color name="1" ]春[/System:Color]に　生息する　ポケモン</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-09-06T04:33:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-06T04:32:34" />
+				User="matsumiya:W00224"
+				Time="2011-11-21T05:20:26" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1409,15 +1409,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Place ]の　りくち
+			<Text>[Name:Place ]の　陸地
 [System:Color name="1" ]夏[/System:Color]に　生息する　ポケモン</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-09-06T04:34:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-06T04:32:34" />
+				User="matsumiya:W00224"
+				Time="2011-11-21T05:20:26" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1453,15 +1453,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Place ]の　りくち
+			<Text>[Name:Place ]の　陸地
 [System:Color name="1" ]秋[/System:Color]に　生息する　ポケモン</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-09-06T04:34:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-06T04:32:34" />
+				User="matsumiya:W00224"
+				Time="2011-11-21T05:20:26" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1497,15 +1497,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Place ]の　りくち
+			<Text>[Name:Place ]の　陸地
 [System:Color name="1" ]冬[/System:Color]に　生息する　ポケモン</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00227"
 				Time="2011-09-06T04:34:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-06T04:32:34" />
+				User="matsumiya:W00224"
+				Time="2011-11-21T05:20:26" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1756,10 +1756,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:Place ]には
-生息　していません</Text>
+生息していません</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-13T06:45:33" />
+				User="matsumiya:W00224"
+				Time="2011-11-21T05:20:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1977,10 +1977,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>生息　していません</Text>
+			<Text>生息していません</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-08-10T08:35:31" />
+				User="matsumiya:W00224"
+				Time="2011-11-21T05:20:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -2371,13 +2371,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>その場所　全ての　ポケモンが
-図鑑に　登録　されると
+			<Text>その場所　すべての　ポケモンが
+図鑑に　登録されると
 スタンプが　つきます
-目指せ　イッシュ地方　制覇！▼</Text>
+めざせ　イッシュ地方　制覇！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-08T06:02:46" />
+				User="matsumiya:W00224"
+				Time="2011-11-21T05:21:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -2418,13 +2418,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>その場所　全ての　ポケモンを
+			<Text>その場所　すべての　ポケモンを
 捕まえると　モンスターボールの
 スタンプが　つきます
 やったね！　おめでとう！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-08T06:03:57" />
+				User="matsumiya:W00224"
+				Time="2011-11-21T05:21:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -2464,10 +2464,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:Place ]
-全ての　ポケモンを　捕まえました</Text>
+すべての　ポケモンを　捕まえました</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-08T11:56:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-21T05:21:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
