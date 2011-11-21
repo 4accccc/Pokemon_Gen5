@@ -142,7 +142,7 @@ VMCMD_RESULT EvCmdWBTCheckBattleRule( VMHANDLE * core, void * wk )
   WBTSYS * wbtsys = WBT_SCR_getWBTSys( wk );
   const REGULATION * reg = WBTSYS_GetRegulation( wbtsys );
   GAMEDATA* gamedata = SCRCMD_WORK_GetGameData( wk );
-  POKEPARTY * party = GAMEDATA_GetMyPokemon( gamedata );
+  POKEPARTY * party = WBTSYS_GetUsePokeParty( wbtsys, gamedata );
   POKE_REG_RETURN_ENUM result;
 
   result = PokeRegulationMatchPartialPokeParty( reg, party );
