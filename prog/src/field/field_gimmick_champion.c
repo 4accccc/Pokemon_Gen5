@@ -480,26 +480,17 @@ GMEVENT* CHAMPION_HallRoom( GAMESYS_WORK *gsys )
  *	@brief  ビル影OFF
  *
  *	@param	GAMESYS_WORK *gsys 
+ *	@param  obj_id 対象のOBJ_ID
  */
 //-----------------------------------------------------------------------------
-void CHAMPION_LightAttrOFF( GAMESYS_WORK *gsys )
+void CHAMPION_LightAttrOFF( GAMESYS_WORK *gsys, const int obj_id )
 {
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
 
-  // アイリス
   {
     const MMDLSYS *cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
-    MMDL* mmdl = MMDLSYS_SearchOBJID( cp_mmdlsys, C09R0501_SWCHAMPION_01 );  // アイリス
+    MMDL* mmdl = MMDLSYS_SearchOBJID( cp_mmdlsys, obj_id );
     GF_ASSERT( mmdl );
-    // アトリビュートライト無効
-    MMDL_SetStatusLightAttrOFF( mmdl, TRUE );
-  }
-
-  // 主人公
-  {
-    FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
-    MMDL* mmdl = FIELD_PLAYER_GetMMdl( p_player );
-
     // アトリビュートライト無効
     MMDL_SetStatusLightAttrOFF( mmdl, TRUE );
   }
@@ -510,26 +501,17 @@ void CHAMPION_LightAttrOFF( GAMESYS_WORK *gsys )
  *	@brief  ビル影ON
  *
  *	@param	GAMESYS_WORK *gsys 
+ *	@param  obj_id 対象のOBJ_ID
  */
 //-----------------------------------------------------------------------------
-void CHAMPION_LightAttrON( GAMESYS_WORK *gsys )
+void CHAMPION_LightAttrON( GAMESYS_WORK *gsys, const int obj_id )
 {
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
 
-  // アイリス
   {
     const MMDLSYS *cp_mmdlsys = FIELDMAP_GetMMdlSys( p_fieldmap );
-    MMDL* mmdl = MMDLSYS_SearchOBJID( cp_mmdlsys, C09R0501_SWCHAMPION_01 );  // アイリス
+    MMDL* mmdl = MMDLSYS_SearchOBJID( cp_mmdlsys, obj_id );
     GF_ASSERT( mmdl );
-    // アトリビュートライト有効
-    MMDL_SetStatusLightAttrOFF( mmdl, FALSE );
-  }
-
-  // 主人公
-  {
-    FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
-    MMDL* mmdl = FIELD_PLAYER_GetMMdl( p_player );
-
     // アトリビュートライト有効
     MMDL_SetStatusLightAttrOFF( mmdl, FALSE );
   }

@@ -522,7 +522,9 @@ VMCMD_RESULT EvCmdChampion_LightAttrOFF( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  CHAMPION_LightAttrOFF( gsys );
+  int obj_id  = VMGetU16( core );
+
+  CHAMPION_LightAttrOFF( gsys, obj_id );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -537,7 +539,9 @@ VMCMD_RESULT EvCmdChampion_LightAttrON( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  CHAMPION_LightAttrON( gsys );
+  int obj_id  = VMGetU16( core );
+
+  CHAMPION_LightAttrON( gsys, obj_id );
 
   return VMCMD_RESULT_CONTINUE;
 }

@@ -10325,32 +10325,37 @@
 //--------------------------------------------------------------
 /**
  * @def _CHAMPION_LIGHT_ATTR_OFF
- * @brief チャンピオン部屋  主人公とアイリスのビル影をOFF
+ * @brief チャンピオン部屋  OBJのビル影をOFF
+ * @param obj_id 対象OBJ ID
  * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  *
  * @note  通常使用禁止
  */
 //--------------------------------------------------------------
-#define _CHAMPION_LIGHT_ATTR_OFF() _ASM_CHAMPION_LIGHT_ATTR_OFF
+#define _CHAMPION_LIGHT_ATTR_OFF( obj_id ) _ASM_CHAMPION_LIGHT_ATTR_OFF obj_id
 
-  .macro  _ASM_CHAMPION_LIGHT_ATTR_OFF
+  .macro  _ASM_CHAMPION_LIGHT_ATTR_OFF obj_id
   .short  EV_SEQ_CHAMPION_LIGHT_ATTR_OFF
+  .short  \obj_id
   .endm
 
 //--------------------------------------------------------------
 /**
  * @def _CHAMPION_LIGHT_ATTR_ON
- * @brief チャンピオン部屋  主人公とアイリスのビル影をON
+ * @brief チャンピオン部屋  ビル影をON
+ * @param obj_id 対象OBJ ID
  * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
  *
  * @note  通常使用禁止
  */
 //--------------------------------------------------------------
-#define _CHAMPION_LIGHT_ATTR_ON() _ASM_CHAMPION_LIGHT_ATTR_ON
+#define _CHAMPION_LIGHT_ATTR_ON( obj_id ) _ASM_CHAMPION_LIGHT_ATTR_ON obj_id
 
-  .macro  _ASM_CHAMPION_LIGHT_ATTR_ON
+  .macro  _ASM_CHAMPION_LIGHT_ATTR_ON obj_id
   .short  EV_SEQ_CHAMPION_LIGHT_ATTR_ON
+  .short  \obj_id
   .endm
+
 
 
 
