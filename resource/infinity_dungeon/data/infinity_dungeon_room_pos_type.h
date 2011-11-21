@@ -29,5 +29,5 @@
 #define INF_ROOM_POS_TYPE_S_1 (17)
 #define INF_ROOM_POS_TYPE_T_1 (18)
 #define INF_ROOM_POS_TYPE_EX_1 (19)
-#define INF_TR_ROOM_POS_TYPE_NONE (20) // トレーナーを配置しない
-#define INF_TR_ROOM_POS_TYPE_MAX  (20)
+#define INF_ROOM_POS_TYPE_NONE (20) // トレーナーを配置しない
+#define INF_ROOM_POS_TYPE_MAX  (21)

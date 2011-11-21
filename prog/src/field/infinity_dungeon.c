@@ -442,7 +442,7 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
         else
         {
           // フェードアウト
-          GMEVENT_CallEvent( event, EVENT_FieldFadeOut_PlayerDir( p_wk->p_gsys, p_wk->p_field_work ) );
+          GMEVENT_CallEvent( event, EVENT_FieldFadeOut_Black( p_wk->p_gsys, p_wk->p_field_work ,FIELD_FADE_WAIT ) );
         }
       }
 
@@ -517,7 +517,7 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
         }
         else
         {
-          GMEVENT_CallEvent( event, EVENT_FieldFadeIn_PlayerDir( p_wk->p_gsys, p_wk->p_field_work ) );
+          GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Black( p_wk->p_gsys, p_wk->p_field_work ,FIELD_FADE_WAIT ) );
         }
       }
       else
@@ -2703,7 +2703,7 @@ u32 INFINITY_DUNGEON_TrainerCount( const INF_DUNGEON_DATA *p_dungeon_data )
     for( n = 0; n < ROOM_MAX ;n++ )
     {
       u8 tr_pos_type = p_dungeon_data->room_data[i][n].tr_pos_type;
-      if( tr_pos_type != INF_TR_ROOM_POS_TYPE_NONE )
+      if( tr_pos_type != INF_ROOM_POS_TYPE_NONE )
       {
           member_num += INF_TOOL_GetMemberNum(tr_pos_type);
       }

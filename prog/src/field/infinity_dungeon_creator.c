@@ -78,7 +78,7 @@ void INF_DCREATOR_SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no,
         // 初期化
         p_dungeon_data->room_data[i][j].room_id = j;
         p_dungeon_data->room_data[i][j].room_type = ROOM_TYPE_DEFAULT;
-        p_dungeon_data->room_data[i][j].tr_pos_type = INF_TR_ROOM_POS_TYPE_NONE;
+        p_dungeon_data->room_data[i][j].tr_pos_type = INF_ROOM_POS_TYPE_NONE;
 
         // 扉を閉じる
         for( k = 0 ; k < 4 ; k++ )
@@ -96,7 +96,7 @@ void INF_DCREATOR_SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no,
     {
       ROOM_DATA *p_room_data = p_dungeon_data->room_data[i];
       p_room_data[0].room_type    = ROOM_TYPE_ELEVATOR;
-      p_room_data[0].tr_pos_type  = INF_TR_ROOM_POS_TYPE_NONE;
+      p_room_data[0].tr_pos_type  = INF_ROOM_POS_TYPE_NONE;
       // エレベーター位置を格納（穴掘りスタート位置に使用）
       elv_pos[i].x = 0;
       elv_pos[i].y = 0;
@@ -128,7 +128,7 @@ void INF_DCREATOR_SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no,
     room_id = index_array[room_index];
     p_rd= &p_room_data[room_id];
     p_rd->room_type = ROOM_TYPE_BOSS;
-    p_rd->tr_pos_type = INF_TR_ROOM_POS_TYPE_NONE;
+    p_rd->tr_pos_type = INF_ROOM_POS_TYPE_NONE;
 
     // 位置を保存
     boss_pos.x = room_id % ROOM_MAX_X;
@@ -265,11 +265,16 @@ void INF_DCREATOR_SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no,
               // 通常部屋
               const INF_ROOM_SET_TR_PARAM *p_room_param;
               u8 idx = pos_type_id_array[data_index];
-              p_room_param = INF_TOOL_GetRoomTrParam( idx );
-              p_dungeon_data->room_data[i][j].tr_pos_type = idx;
-              p_dungeon_data->room_data[i][j].room_type = p_room_param->room_type;
-              ONOUE_Printf("通常部屋設置:%d max = %d \n",data_index,room_array_max);
-              GF_ASSERT_MSG(data_index<room_array_max,"部屋配列が取得できませんでした。エリアデータを確認してください。\n");
+              
+              // NONEの場合は配置を行わずテーブルのみを進める
+              if( INF_ROOM_POS_TYPE_NONE != idx )
+              {
+                p_room_param = INF_TOOL_GetRoomTrParam( idx );
+                p_dungeon_data->room_data[i][j].tr_pos_type = idx;
+                p_dungeon_data->room_data[i][j].room_type = p_room_param->room_type;
+                ONOUE_Printf("通常部屋設置:%d max = %d \n",data_index,room_array_max);
+                GF_ASSERT_MSG(data_index<room_array_max,"部屋配列が取得できませんでした。エリアデータを確認してください。\n");
+              }
               data_index++;
             }
           }
@@ -298,10 +303,10 @@ static u8 GetRoomTypeArray( int area_no ,u8 floor_no ,u8 version ,u8 *p_pos_type
   int data_index = 0;
   const u8 *p_room_table = INF_TOOL_GetFloorData( area_no ,floor_no ,version );
   // クリア
-  GFL_STD_MemFill(p_pos_type_id_array ,INF_TR_ROOM_POS_TYPE_NONE ,sizeof(u8)*ROOM_MAX );
+  GFL_STD_MemFill(p_pos_type_id_array ,INF_ROOM_POS_TYPE_NONE ,sizeof(u8)*ROOM_MAX );
 
-  // 使用可能な部屋を取得
-  for( i = 0; i < INF_TR_ROOM_POS_TYPE_NONE; i++)
+  // 使用可能な部屋を取得（NONEも含める）
+  for( i = 0; i < INF_ROOM_POS_TYPE_MAX; i++)
   {
     u8 room_num = p_room_table[i];
     while( room_num > 0 )
@@ -334,10 +339,10 @@ static u8 GetDefaultRoomTypeArray( int area_no ,u8 floor_no ,u8 version ,u8 *p_p
   const u8 *p_room_table = INF_TOOL_GetFloorData( area_no ,floor_no ,version );
 
   // クリア
-  GFL_STD_MemFill(p_pos_type_id_array ,INF_TR_ROOM_POS_TYPE_NONE ,sizeof(u8)*ROOM_MAX );
+  GFL_STD_MemFill(p_pos_type_id_array ,INF_ROOM_POS_TYPE_NONE ,sizeof(u8)*ROOM_MAX );
 
-  // 使用可能な部屋を取得
-  for( i = 0; i < INF_TR_ROOM_POS_TYPE_NONE; i++)
+  // 使用可能な部屋を取得(NONEは含めない)
+  for( i = 0; i < INF_ROOM_POS_TYPE_NONE; i++)
   {
     u8 room_num = p_room_table[i];
     if( room_num > 0 )
@@ -406,7 +411,7 @@ static void RemoveTrRoom( INF_DUNGEON_DATA *p_dungeon_data ,const u8 floor_no ,i
   for( i = 0; i< ROOM_MAX; i++ )
   {
     u8 pos_type = p_dungeon_data->room_data[floor_no][i].tr_pos_type;
-    if( pos_type != INF_TR_ROOM_POS_TYPE_NONE )
+    if( pos_type != INF_ROOM_POS_TYPE_NONE )
     {
       index_array[cnt] = i;
       cnt++;
@@ -421,7 +426,7 @@ static void RemoveTrRoom( INF_DUNGEON_DATA *p_dungeon_data ,const u8 floor_no ,i
   {
     pos_type = p_dungeon_data->room_data[floor_no][index_array[i]].tr_pos_type;
     rmv_num -= INF_TOOL_GetMemberNum(pos_type);
-    p_dungeon_data->room_data[floor_no][index_array[i]].tr_pos_type = INF_TR_ROOM_POS_TYPE_NONE;
+    p_dungeon_data->room_data[floor_no][index_array[i]].tr_pos_type = INF_ROOM_POS_TYPE_NONE;
 
     if( rmv_num <= 0 )
     {

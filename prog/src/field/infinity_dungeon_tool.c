@@ -37,6 +37,7 @@ enum{
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_tr_move_type.cdat"
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_tr_move_type.h"
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_room_pos_type.cdat"
+#include "../../../resource/infinity_dungeon/data/infinity_dungeon_room_pos_type.h"
 // トレーナーデータ
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_tr_area_data.cdat"
 // ダンジョン関連データ
@@ -73,6 +74,7 @@ const INF_MMDL_PARAM* INF_TOOL_GetMMDLParam( u16 move_type )
 //-----------------------------------------------------------------------------
 const INF_ROOM_SET_TR_PARAM* INF_TOOL_GetRoomTrParam( u16 tr_pos_type )
 {
+  GF_ASSERT_MSG(tr_pos_type<INF_ROOM_POS_TYPE_NONE,"何も置かない部屋のデータは取得できません。\n");
   return &sc_room_tr_param[tr_pos_type];
 }
 
@@ -115,7 +117,7 @@ u8 INF_TOOL_GetTrainerType( u16 tr_index )
 //-----------------------------------------------------------------------------
 u8 INF_TOOL_GetMemberNum( u8 pos_type )
 {
-  if( pos_type != INF_TR_ROOM_POS_TYPE_NONE )
+  if( pos_type != INF_ROOM_POS_TYPE_NONE )
   {
     return sc_room_tr_param[pos_type].member_num;
   }
@@ -133,7 +135,7 @@ u8 INF_TOOL_GetMemberNum( u8 pos_type )
 //-----------------------------------------------------------------------------
 u8 INF_TOOL_GetRoomType( u8 pos_type )
 {
-  if( pos_type != INF_TR_ROOM_POS_TYPE_NONE )
+  if( pos_type != INF_ROOM_POS_TYPE_NONE )
   {
     return sc_room_tr_param[pos_type].room_type;
   }
@@ -151,7 +153,7 @@ u8 INF_TOOL_GetRoomType( u8 pos_type )
 //-----------------------------------------------------------------------------
 u8 INF_TOOL_GetRoomVersion( u8 pos_type )
 {
-  if( pos_type != INF_TR_ROOM_POS_TYPE_NONE )
+  if( pos_type != INF_ROOM_POS_TYPE_NONE )
   {
     return sc_room_tr_param[pos_type].version;
   }

@@ -175,8 +175,8 @@ room_data_list.each_with_index { |item,i|
 }
 
 max = room_data_list.size
-out_header_file.puts "#define INF_TR_ROOM_POS_TYPE_NONE (%d) // トレーナーを配置しない"%max
-out_header_file.puts "#define INF_TR_ROOM_POS_TYPE_MAX  (%d)"%max
+out_header_file.puts "#define INF_ROOM_POS_TYPE_NONE (%d) // トレーナーを配置しない"%max
+out_header_file.puts "#define INF_ROOM_POS_TYPE_MAX  (%d)"%[max+1]
 
 out_file.close
 out_header_file.close
@@ -205,6 +205,8 @@ out_file.puts header % [file_name]
 room_data_list.each_with_index { |item,i|
   out_file.puts '  "%s" => %d,'%[item.type_name,i]
 }
+# 何も置かない部屋タイプ登録
+out_file.puts '  "NONE" => %d,'%[room_data_list.size]
 out_file.puts "}"
 
 out_file.close
