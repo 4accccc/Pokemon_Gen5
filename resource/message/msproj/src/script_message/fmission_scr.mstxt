@@ -790,12 +790,11 @@
 		Label="msg_fm_npc_trade01_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>きみの　[Name:Item ]と
-わたしの　[Name:Item Idx="1" ]を▽
-こうかん　しないかい？</Text>
+			<Text>きみの　[Name:Item ]を
+[Name:Item Idx="1" ]と　こうかん　しようよ</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-13T05:52:59" />
+				Time="2011-11-20T08:07:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -803,12 +802,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きみの　[Name:Item ]と
-わたしの　[Name:Item Idx="1" ]を▽
-こうかん　しないかい？</Text>
+			<Text>きみの　[Name:Item ]を
+[Name:Item Idx="1" ]と　交換しようよ</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-13T05:54:20" />
+				Time="2011-11-20T08:08:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1596,11 +1594,11 @@ msg_fm_npc_trade01_02へ</Comment>
 		Label="msg_fm_npc_trade02_09">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありがとうございました
+			<Text>うふふ
 それでは　ごきげんよう▼</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-13T06:21:53" />
+				Time="2011-11-20T08:09:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1608,11 +1606,11 @@ msg_fm_npc_trade01_02へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ありがとうございました
+			<Text>うふふ
 それでは　ごきげんよう▼</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-13T06:21:53" />
+				Time="2011-11-20T08:10:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3763,6 +3761,676 @@ msg_fm_npc_trade01_02へ</Comment>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_btl03_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナーの　みちは
+おわりなき　しゅぎょうの　みち……▽
+さあ　おてあわせ　ねがおう！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T11:56:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:08:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナーの　みちは
+おわりなき　しゅぎょうの　みち……▽
+さあ　おてあわせ　ねがおう！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T11:56:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:08:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>★配信ミッション
+ベテラントレーナーと戦闘
+
+→ＹＥＳ／ＮＯ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T11:53:55" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>★配信ミッション
+ベテラントレーナーと戦闘
+
+→ＹＥＳ／ＮＯ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T11:53:59" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_btl03_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ときには　きゅうそくも　ひつようか……</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T11:57:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:08:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ときには　きゅうそくも　ひつようか……</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T11:58:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:08:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＮＯ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:08:18" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ＮＯ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:08:18" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_btl03_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>さあ　ゆくぞ！！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T11:58:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:08:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さあ　ゆくぞ！！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T11:58:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:08:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ＹＥＳ
+
+→戦闘へ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:08:18" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ＹＥＳ
+
+→戦闘へ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:08:18" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_btl03_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>まけてしまう　とはな……
+まだまだ　しゅぎょうが　たりんな▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T12:00:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:08:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まけてしまう　とはな……
+まだまだ　しゅぎょうが　たりんな▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T12:00:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:08:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>勝利後メッセージ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:08:18" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>勝利後メッセージ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:08:18" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_btl03_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナーの　みちは
+おわりなき　しゅぎょうの　みち……▼
+また　どこかで
+であうことも　あるだろう！　さらば！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T12:03:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:08:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナーの　みちは
+おわりなき　しゅぎょうの　みち……▼
+また　どこかで
+であうことも　あるだろう！　さらば！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T12:03:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:08:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>→暗転後、消える</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:08:18" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>→暗転後、消える</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:08:18" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_present01_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>こんにちは！
+ポケモントレーナーの▽
+みなさまに　プレゼントです！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:27:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:27:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こんにちは！
+ポケモントレーナーの▽
+みなさまに　プレゼントです！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:33:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:33:13" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>★配信ミッション
+プレゼントミッション
+
+→アイテム入手処理へ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:33:43" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>★配信ミッション
+プレゼントミッション
+
+→アイテム入手処理へ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:33:46" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_present01_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンも　トレーナーも
+つかれたら　やすむのが　たいせつよ▼
+これからも　ポケモンセンターを
+よろしく　おねがいします！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:35:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:29:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンも　トレーナーも
+つかれたら　やすむのが　たいせつよ▼
+これからも　ポケモンセンターを
+よろしく　おねがいします！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:35:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:33:13" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>→暗転後、消える</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:33:10" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>→暗転後、消える</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:33:13" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_pokequiz01_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモントレーナーの　みなさん
+こんにちは～！▼
+とつぜんですが　もんだいです
+この　ポケモン　しってるかな～？▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:40:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:38:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモントレーナーの　みなさん
+こんにちは～！▼
+とつぜんですが　もんだいです
+この　ポケモン　しってるかな～？▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:54:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:54:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>★配信ミッション
+図鑑クイズミッション
+
+→ポケモン一枚絵表示</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:41:54" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>★配信ミッション
+図鑑クイズミッション
+
+→ポケモン一枚絵表示</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:54:43" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_pokequiz01_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　ポケモンの
+なまえを　こたえて　くださーい▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:41:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:40:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　ポケモンの
+なまえを　こたえて　くださーい▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:54:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:54:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>→文字入力画面へ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:42:03" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>→文字入力画面へ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:54:43" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_pokequiz01_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>ん～～
+ちょーっと　むずかしかった　かな？</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:43:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:42:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ん～～
+ちょーっと　むずかしかった　かな？</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:54:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:54:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>入力キャンセル
+
+→終了</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:43:35" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>入力キャンセル
+
+→終了</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:54:43" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_pokequiz01_false">
+		<LanguageCell
+			Language="JPN">
+			<Text>あーっと　ざんねん！！
+[Name:PokemonName ]じゃ　ありませーん！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:44:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:43:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あーっと　ざんねん！！
+[Name:PokemonName ]じゃ　ありませーん！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:54:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:54:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>不正解
+SE再生：SEQ_SE_FLD_42
+
+→終了</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:54:28" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>不正解
+SE再生：SEQ_SE_FLD_42
+
+→終了</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:54:43" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_pokequiz01_true">
+		<LanguageCell
+			Language="JPN">
+			<Text>せいかーい！！
+なまえは　[Name:PokemonName ]です！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:45:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:45:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>せいかーい！！
+なまえは　[Name:PokemonName ]です！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:54:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:54:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>正解
+SE再生：SEQ_SE_FLD_41</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:54:07" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>正解
+SE再生：SEQ_SE_FLD_41</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:54:43" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_pokequiz01_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>ではまた　どこかで
+おあいしましょう　サヨウナラ～▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:49:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:47:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ではまた　どこかで
+おあいしましょう　サヨウナラ～▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:54:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:54:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>→暗転後、消える</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:51:27" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>→暗転後、消える</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T07:54:43" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
