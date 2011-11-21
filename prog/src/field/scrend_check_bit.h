@@ -13,8 +13,7 @@
 
 #ifdef PM_DEBUG
 
-#if defined(DEBUG_ONLY_FOR_masafumi_saitou) | defined(DEBUG_ONLY_FOR_naoto_murakami) \
-  | defined(DEBUG_ONLY_FOR_suginaka_katsunori) | defined(DEBUG_ONLY_FOR_mai_ando)
+#if defined(DEBUG_ONLY_FOR_tamada) || defined(DEBUG_ONLY_FOR_masafumi_saitou) || defined(DEBUG_ONLY_FOR_mizuguchi_mai) || defined(DEBUG_ONLY_FOR_suginaka_katsunori) || defined(DEBUG_ONLY_FOR_nagihashi_toru) || defined(DEBUG_ONLY_FOR_iwasawa) || defined(DEBUG_ONLY_FOR_ichiraku_katsuhiko) || defined(DEBUG_ONLY_FOR_onoue_masayuki)
 #define SCR_ASSERT_ON
 #endif
 
