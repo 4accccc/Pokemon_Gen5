@@ -356,13 +356,8 @@ static int _branch_card_app( TR_CARD_SYS* wk, TRCARD_CALL_PARAM *pp )
     break;
   }
 
-  // クリアするまでは、トレーナカードの最初をバッジ画面にする
-  if(wk->tcp->TrCardData->Clear_m==0 ){
-    // 自分のデータを参照しているモード
-    if(wk->tcp->TrCardData->PlayTime!=NULL){
-      return BADGE_INIT;
-    }
-  }
+  // スワンではトレーナーカード起動時にバッジ画面に
+  // 行くことは無くなりました。
   
   return CARD_INIT;
 
