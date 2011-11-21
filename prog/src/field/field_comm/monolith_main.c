@@ -22,6 +22,9 @@
 #include "app_menu_common.naix"
 #include "app/app_menu_common.h"
 
+#include "field/script_def.h"
+#include "../../../../resource/fldmapdata/flagwork/work_define.h" //WK_SYS_FES_TUTORIAL
+
 //==============================================================================
 //  定数定義
 //==============================================================================
@@ -80,9 +83,9 @@ static void _Setup_ActorExit(MONOLITH_SETUP *setup);
 static void _Setup_OBJGraphicLoad(MONOLITH_SETUP *setup);
 static void _Setup_OBJGraphicUnload(MONOLITH_SETUP *setup);
 static void _VblankFunc(GFL_TCB *tcb, void *work);
-#if 0
-static void _Setup_MissionListData(MONOLITH_SYSTEM *monosys, MONOLITH_PARENT_WORK *parent);
-#endif
+//
+//static void _Setup_MissionListData(MONOLITH_SYSTEM *monosys, MONOLITH_PARENT_WORK *parent);
+static void chk_event_flag( MONOLITH_PARENT_WORK *parent );
 
 //==============================================================================
 //  データ
@@ -360,6 +363,10 @@ static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk
 static GFL_PROC_RESULT MonolithProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
   MONOLITH_SYSTEM *monosys = mywk;
+  MONOLITH_PARENT_WORK *parent = pwk;
+  
+  // 後処理
+  chk_event_flag( parent );
   
   GFL_PROC_LOCAL_Exit(monosys->procsys_up);
   GFL_PROC_LOCAL_Exit(monosys->procsys_down);
@@ -808,3 +815,40 @@ static void _Setup_MissionListData(MONOLITH_SYSTEM *monosys, MONOLITH_PARENT_WOR
   GFL_HEAP_FreeMemory(mcd);
 }
 #endif
+
+//--------------------------------------------------------------
+/**
+ * デルパワーを初めて登録した時の処理
+ *
+ * @param    MONOLITH_PARENT_WORK *parent
+ */
+//--------------------------------------------------------------
+static void chk_event_flag( MONOLITH_PARENT_WORK *parent )
+{
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( parent->gsys );
+  EVENTWORK	*ev = GAMEDATA_GetEventWork( gamedata );
+  INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( gamedata ) );
+  u16  *adr;
+  s16  flg=0;
+  s32  i;
+  
+  // デルパワーチュートリアル中かどうか
+  adr = EVENTWORK_GetEventWorkAdrs( ev,  WK_SYS_FES_TUTORIAL );
+  if(*adr == SCR_FES_TUTORIAL_GPOWER_1ST_GET){
+    //
+    // GPOWERを1つ以上取得しているかを調べる
+    for(i=0;i<INTRUDE_EQUIP_GPOWER_MAX;i++){
+      if( ISC_SAVE_GetGPowerID( intsave, i ) != GPOWER_ID_NULL ){
+        flg = 1;
+        break;
+      }
+    }
+    // デルパワーチュートリアル中ではじめてGPOWERを取得した
+    // =>直接書き換える
+    if(flg == 1){
+      *adr = SCR_FES_TUTORIAL_GPOWER_EXP_EVENT;
+      OS_Printf("get first gpower");
+    }
+  }
+}
+
