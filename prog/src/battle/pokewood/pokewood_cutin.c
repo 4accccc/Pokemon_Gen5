@@ -30,9 +30,7 @@
 
 
 #ifdef PW_CUTIN_PRINT
-#if defined(DEBUG_ONLY_FOR_nagihashi_toru) || defined(nakatsui)
 #define PW_CUTIN_Printf(...)  OS_TFPrintf(0,__VA_ARGS__)
-#endif
 #endif
 
 #ifndef PW_CUTIN_Printf
