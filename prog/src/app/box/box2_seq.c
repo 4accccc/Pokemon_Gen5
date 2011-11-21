@@ -2491,12 +2491,14 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
     }
 	// 範囲選択中
 	}else if( syswk->poke_get_key == 3 ){
-		ret = BOX2UI_HitCheckContTrayPoke();    // トレイ単位のタッチチェック（ベタ）
-		// タッチ継続
-		if( ret != GFL_UI_TP_HIT_NONE ){
-			BOX2OBJ_SetBox2MultiSelectOutline(
-				syswk, syswk->app->multiselect_outline.start_pos, ret, FALSE );
-			syswk->app->multiselect_outline.end_pos = ret;
+		if( GFL_UI_TP_GetCont() == TRUE ){
+			ret = BOX2UI_HitCheckContTrayPoke();    // トレイ単位のタッチチェック（ベタ）
+			// タッチ継続
+			if( ret != GFL_UI_TP_HIT_NONE ){
+				BOX2OBJ_SetBox2MultiSelectOutline(
+					syswk, syswk->app->multiselect_outline.start_pos, ret, FALSE );
+				syswk->app->multiselect_outline.end_pos = ret;
+			}
 		// 離れたので範囲決定
 		}else{
 			int width, height;
@@ -3364,12 +3366,14 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 		}
 	// 範囲選択中（トレイ）
 	}else if( syswk->poke_get_key == 3 ){
-		ret = BOX2UI_HitCheckContTrayPoke();    // トレイ単位のタッチチェック（ベタ）
-		// タッチ継続
-		if( ret != GFL_UI_TP_HIT_NONE ){
-			BOX2OBJ_SetBox2MultiSelectOutline(
-				syswk, syswk->app->multiselect_outline.start_pos, ret, FALSE );
-			syswk->app->multiselect_outline.end_pos = ret;
+		if( GFL_UI_TP_GetCont() == TRUE ){
+			ret = BOX2UI_HitCheckContTrayPoke();    // トレイ単位のタッチチェック（ベタ）
+			// タッチ継続
+			if( ret != GFL_UI_TP_HIT_NONE ){
+				BOX2OBJ_SetBox2MultiSelectOutline(
+					syswk, syswk->app->multiselect_outline.start_pos, ret, FALSE );
+				syswk->app->multiselect_outline.end_pos = ret;
+			}
 		// 離れたので範囲決定
 		}else{
 			int width, height;
@@ -3403,14 +3407,16 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 		return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_MAIN;
 	// 範囲選択中（手持ち）
 	}else if( syswk->poke_get_key == 4 ){
-		if( BOX2UI_HitCheckPartyFrameRight() == TRUE ){
-			ret = BOX2UI_HitCheckContPartyPokeRight();
-			// タッチ継続
-			if( ret != GFL_UI_TP_HIT_NONE ){
-				ret += BOX2OBJ_POKEICON_TRAY_MAX;
-				BOX2OBJ_SetBox2MultiSelectOutline(
-					syswk, syswk->app->multiselect_outline.start_pos, ret, FALSE );
-				syswk->app->multiselect_outline.end_pos = ret;
+		if( GFL_UI_TP_GetCont() == TRUE ){
+			if( BOX2UI_HitCheckPartyFrameRight() == TRUE ){
+				ret = BOX2UI_HitCheckContPartyPokeRight();
+				// タッチ継続
+				if( ret != GFL_UI_TP_HIT_NONE ){
+					ret += BOX2OBJ_POKEICON_TRAY_MAX;
+					BOX2OBJ_SetBox2MultiSelectOutline(
+						syswk, syswk->app->multiselect_outline.start_pos, ret, FALSE );
+					syswk->app->multiselect_outline.end_pos = ret;
+				}
 			}
 		// 離れたので範囲決定
 		}else{
