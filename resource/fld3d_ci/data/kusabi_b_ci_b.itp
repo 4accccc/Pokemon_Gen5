@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<itp version="1.6.0">
+
+<head>
+	<create user="fuchino_hiroki" host="W00252" date="2011-11-21T15:18:15" source="kusabi_b_ci_a.mb"/>
+	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+</head>
+
+<body>
+
+<tex_pattern_info
+	frame_size="601"
+	tool_start_frame="0"
+	tool_end_frame="600"
+	compress_material="on" material_size="3 3"
+/>
+
+<tex_pattern_list_data image_size="7" palette_size="7">
+	<image_name index="0" name="e_stone.2"/>
+	<image_name index="1" name="kusabi03.1"/>
+	<image_name index="2" name="kusabi03.2"/>
+	<image_name index="3" name="kusabi03.3"/>
+	<image_name index="4" name="kusabi03.4"/>
+	<image_name index="5" name="kusabi03.5"/>
+	<image_name index="6" name="kusabi03.6"/>
+	<palette_name index="0" name="e_stone.2_pl"/>
+	<palette_name index="1" name="kusabi03.1_pl"/>
+	<palette_name index="2" name="kusabi03.2_pl"/>
+	<palette_name index="3" name="kusabi03.3_pl"/>
+	<palette_name index="4" name="kusabi03.4_pl"/>
+	<palette_name index="5" name="kusabi03.5_pl"/>
+	<palette_name index="6" name="kusabi03.6_pl"/>
+</tex_pattern_list_data>
+
+<tex_pattern_data>
+	<frame_idx size="202">
+		0 0 3 6 9 12 15 18 21 24
+		27 30 33 36 39 42 45 48 51 54
+		57 60 63 66 69 72 75 78 81 84
+		87 90 93 96 99 102 105 108 111 114
+		117 120 123 126 129 132 135 138 141 144
+		147 150 153 156 159 162 165 168 171 174
+		177 180 183 186 189 192 195 198 201 204
+		207 210 213 216 219 222 225 228 231 234
+		237 240 243 246 249 252 255 258 261 264
+		267 270 273 276 279 282 285 288 291 294
+		297 300 303 306 309 312 315 318 321 324
+		327 330 333 336 339 342 345 348 351 354
+		357 360 363 366 369 372 375 378 381 384
+		387 390 393 396 399 402 405 408 411 414
+		417 420 423 426 429 432 435 438 441 444
+		447 450 453 456 459 462 465 468 471 474
+		477 480 483 486 489 492 495 498 501 504
+		507 510 513 516 519 522 525 528 531 534
+		537 540 543 546 549 552 555 558 561 564
+		567 570 573 576 579 582 585 588 591 594
+		597 600
+	</frame_idx>
+	<image_idx size="202">
+		0 1 2 3 4 5 6 1 2 3
+		4 5 6 1 2 3 4 5 6 1
+		2 3 4 5 6 1 2 3 4 5
+		6 1 2 3 4 5 6 1 2 3
+		4 5 6 1 2 3 4 5 6 1
+		2 3 4 5 6 1 2 3 4 5
+		6 1 2 3 4 5 6 1 2 3
+		4 5 6 1 2 3 4 5 6 1
+		2 3 4 5 6 1 2 3 4 5
+		6 1 2 3 4 5 6 1 2 3
+		4 5 6 1 2 3 4 5 6 1
+		2 3 4 5 6 1 2 3 4 5
+		6 1 2 3 4 5 6 1 2 3
+		4 5 6 1 2 3 4 5 6 1
+		2 3 4 5 6 1 2 3 4 5
+		6 1 2 3 4 5 6 1 2 3
+		4 5 6 1 2 3 4 5 6 1
+		2 3 4 5 6 1 2 3 4 5
+		6 1 2 3 4 5 6 1 2 3
+		4 5 6 1 2 3 4 5 6 1
+		2 3
+	</image_idx>
+	<palette_idx size="202">
+		0 1 2 3 4 5 6 1 2 3
+		4 5 6 1 2 3 4 5 6 1
+		2 3 4 5 6 1 2 3 4 5
+		6 1 2 3 4 5 6 1 2 3
+		4 5 6 1 2 3 4 5 6 1
+		2 3 4 5 6 1 2 3 4 5
+		6 1 2 3 4 5 6 1 2 3
+		4 5 6 1 2 3 4 5 6 1
+		2 3 4 5 6 1 2 3 4 5
+		6 1 2 3 4 5 6 1 2 3
+		4 5 6 1 2 3 4 5 6 1
+		2 3 4 5 6 1 2 3 4 5
+		6 1 2 3 4 5 6 1 2 3
+		4 5 6 1 2 3 4 5 6 1
+		2 3 4 5 6 1 2 3 4 5
+		6 1 2 3 4 5 6 1 2 3
+		4 5 6 1 2 3 4 5 6 1
+		2 3 4 5 6 1 2 3 4 5
+		6 1 2 3 4 5 6 1 2 3
+		4 5 6 1 2 3 4 5 6 1
+		2 3
+	</palette_idx>
+</tex_pattern_data>
+
+<tex_pattern_anm_array size="2">
+	<tex_pattern_anm index="0" material_name="e_stone_1" data_size="1" data_head="0"/>
+	<tex_pattern_anm index="1" material_name="lambert3" data_size="201" data_head="1"/>
+</tex_pattern_anm_array>
+
+</body>
+
+</itp>

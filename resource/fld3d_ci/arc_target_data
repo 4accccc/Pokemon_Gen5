@@ -261,8 +261,12 @@ ARC_TARGET_DATA = \
 	blizzard_ci_a.nsbmd \
 	blizzard_ci_a.nsbca \
 	kusabi_b_ci_a.nsbmd \
+	kusabi_b_ci_b.nsbmd \
 	kusabi_b_ci_a.nsbca \
 	kusabi_b_ci_a.nsbta \
+	kusabi_b_ci_b.nsbca \
+	kusabi_b_ci_b.nsbta \
+	kusabi_b_ci_b.nsbtp \
 	kusabi_w_ci_a.nsbmd \
 	kusabi_w_ci_a.nsbca \
 	kusabi_w_ci_a.nsbta
