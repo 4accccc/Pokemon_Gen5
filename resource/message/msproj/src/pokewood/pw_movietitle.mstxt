@@ -6319,6 +6319,105 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="pw_select_monitor_000"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:4digits ]/[Digit:2digits Idx="1" ]/[Digit:2digits Idx="2" ]</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-21T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-21T03:40:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:4digits ]/[Digit:2digits Idx="1" ]/[Digit:2digits Idx="2" ]</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-21T03:42:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-21T03:42:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映選択画面</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-21T03:42:27" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_select_monitor_001"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Digit:2digits ]：[Digit:2digits Idx="1" ]</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-21T03:45:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-21T03:44:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Digit:2digits ]：[Digit:2digits Idx="1" ]</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-21T03:45:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-21T03:45:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映選択画面</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-21T03:45:21" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_select_monitor_002"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こうかいび</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-21T03:46:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-21T03:45:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こうかいび</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-21T03:46:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-21T03:46:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映選択画面</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-21T03:46:09" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="pw_moviesubtitle_m_01"
 		Style="Large">
 		<LanguageCell

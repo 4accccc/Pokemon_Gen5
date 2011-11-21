@@ -75,12 +75,12 @@ static const GFL_DISP_VRAM sc_vramSetTable =
 	GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
 	GX_VRAM_OBJ_128_B,					// メイン2DエンジンのOBJ
 	GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-	GX_VRAM_SUB_OBJ_16_I,	      // サブ2DエンジンのOBJ
+	GX_VRAM_SUB_OBJ_128_D,	      // サブ2DエンジンのOBJ
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
-	GX_VRAM_TEX_0_D,						// テクスチャイメージスロット
-	GX_VRAM_TEXPLTT_0_F,				// テクスチャパレットスロット
+	GX_VRAM_TEX_NONE,						// テクスチャイメージスロット
+	GX_VRAM_TEXPLTT_NONE,				// テクスチャパレットスロット
 	GX_OBJVRAMMODE_CHAR_1D_128K,// メイン画面OBJマッピングモード		
-	GX_OBJVRAMMODE_CHAR_1D_32K,// サブ画面OBJマッピングモード
+	GX_OBJVRAMMODE_CHAR_1D_128K,// サブ画面OBJマッピングモード
 };
 
 //=============================================================================
