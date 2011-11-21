@@ -2102,7 +2102,6 @@ tutorial_event_call:
     IF $SCWK_ANSWER == FALSE THEN
       IF $LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_1 THEN
         // エリア1用チュートリアル呼び出し
-        SCWK_TEMP0 = 
 	      IF $LWK_D_VERSION == VERSION_B2 THEN
           _OBJ_ADD_EX( 6, -1, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SCWK_TEMP0, MV_DMY )
         ELSE
