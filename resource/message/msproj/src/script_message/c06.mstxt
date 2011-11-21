@@ -2027,6 +2027,178 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c06_mission_add_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここの　はたけに
+おいしい　やさいが　そだつのは▼
+こだわりの　ひりょうを
+つかって　いるからです▼
+だいしぜんの　エネルギーを
+たくわえた　よい　ひりょうは▽
+とっても　くさい！▼
+こうばしく　それでいて
+はなの　おくまで　しびれるような……▼
+いやあ　おもいだすだけで
+めまいが　する！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:45:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:45:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここの　はたけに
+おいしい　やさいが　そだつのは▼
+こだわりの　ひりょうを
+つかって　いるからです▼
+だいしぜんの　エネルギーを
+たくわえた　よい　ひりょうは▽
+とっても　くさい！▼
+こうばしく　それでいて
+はなの　おくまで　しびれるような……▼
+いやあ　おもいだすだけで
+めまいが　する！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:45:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:45:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・フェス用システムフラグがOFF</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:45:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MOUNTAIN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:45:46" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c06_mission_add_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイリンクに　フェスミッションの
+『こやし　コレクター！』が▽
+ついか　されました</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:45:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:45:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイリンクに　フェスミッションの
+『こやし　コレクター！』が▽
+ついか　されました</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:45:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:45:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・ＳＥ再生
+　デルパワー登録＝SEQ_SE_FLD_133
+・システムフラグをセット</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:45:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:45:53" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c06_mission_add_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おいしい　やさいは
+くさーい　ひりょうで　そだつのさー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:45:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:45:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おいしい　やさいは
+くさーい　ひりょうで　そだつのさー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:45:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:45:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・mission_add_02表示後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:45:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MOUNTAIN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:45:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c06_sign1_01"
 		Style="Large">
 		<LanguageCell

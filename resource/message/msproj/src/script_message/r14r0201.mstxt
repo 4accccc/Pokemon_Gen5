@@ -279,6 +279,172 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_r14r0201_mission_add_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わたしの　ポケモンね
+きのみが　だいすき　なの▼
+だから　きのみを　さがして
+かくちを　あるいてるってわけ▼
+ああ　きのみが　あふれるほど
+あつまる　まちは　ないのかしら▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:44:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:44:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わたしの　ポケモンね
+きのみが　だいすき　なの▼
+だから　きのみを　さがして
+かくちを　あるいてるってわけ▼
+ああ　きのみが　あふれるほど
+あつまる　まちは　ないのかしら▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:44:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:44:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・フェス用システムフラグがOFF</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:43:35" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BACKPACKERW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:43:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r14r0201_mission_add_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイリンクに　フェスミッションの
+『きのみ　だいしゅうかく！』が▽
+ついか　されました</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:43:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:43:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイリンクに　フェスミッションの
+『きのみ　だいしゅうかく！』が▽
+ついか　されました</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:44:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:44:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・ＳＥ再生
+　デルパワー登録＝SEQ_SE_FLD_133
+・システムフラグをセット</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:43:30" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:42:58" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_r14r0201_mission_add_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わたしの　ポケモンが
+すきな　きのみは　ヒメリのみ▼
+わざポイントが　かいふくする
+とっても　べんりな　きのみよね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:43:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:43:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わたしの　ポケモンが
+すきな　きのみは　ヒメリのみ▼
+わざポイントが　かいふくする
+とっても　べんりな　きのみよね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:44:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:44:05" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・mission_add_02表示後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:43:40" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BACKPACKERW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:43:19" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_r14r0201_boy1_01"
 		Style="Large">
 		<LanguageCell

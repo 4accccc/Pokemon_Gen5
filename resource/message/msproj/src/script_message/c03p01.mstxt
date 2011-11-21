@@ -620,845 +620,172 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p01_sightseeing_01"
+		Label="msg_c03p01_mission_add_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こちら　ヒウンシティ
-かんこうあんないじょ　です▼
-ただいま　ヒウンめいしょ　めぐり
-イベントを　かいさい　しております▼
-よろしければ　あなたも
-ヒウンめいしょめぐりに　イベントに▽
-さんか　してみませんか？</Text>
+			<Text>おや　トレーナーさん　じゃな
+おぬし　よいめを　しておるのう！▼
+ワシも　ただひたすら
+ポケモンとの　ちからと　わざを▽
+みがいた　じきが　あったもんじゃ▼
+おぬしに　アドバイスじゃ！
+つよく　なりたければ▼
+たくさんの　トレーナーと　たたかい
+おぬしの　ポケモンを▽
+りかい　するのじゃー！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T03:44:39" />
+				Time="2011-11-21T02:41:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:17:44" />
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こちら　ヒウンシティ
-観光案内所　です▼
-ただいま　ヒウン名所巡り
-イベントを　開催しております▼
-よろしければ　あなたも
-ヒウン名所巡りに　イベントに▽
-参加して　みませんか？</Text>
+			<Text>おや　トレーナーさん　じゃな
+おぬし　よいめを　しておるのう！▼
+ワシも　ただひたすら
+ポケモンとの　ちからと　わざを▽
+みがいた　じきが　あったもんじゃ▼
+おぬしに　アドバイスじゃ！
+つよく　なりたければ▼
+たくさんの　トレーナーと　たたかい
+おぬしの　ポケモンを▽
+りかい　するのじゃー！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T03:44:34" />
+				Time="2011-11-21T02:41:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:17:47" />
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:41:13" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・初回話しかけ
-・はい/いいえの選択肢表示
-　はい　→sightseeing_03
-　いいえ→sightseeing_02</Comment>
+			<Comment>♂
+・フェス用システムフラグがOFF</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:58:29" />
+				Time="2011-11-21T02:41:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>INFORMATIONW</Text>
+			<Text>OLDMAN</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-07-05T02:26:09" />
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:40:45" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p01_sightseeing_02"
+		Label="msg_c03p01_mission_add_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒウンシティ
-かんこう　あんないじょ　は▼
-いつでも　ヒウンめいしょめぐり　への
-さんかを　おまちして　おります！</Text>
+			<Text>ハイリンクに　フェスミッションの
+『かくとうかと　しゅぎょう！』が▽
+ついか　されました</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T03:45:15" />
+				Time="2011-11-21T02:41:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:17:58" />
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:41:21" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒウンシティ
-観光案内所　は▼
-いつでも　ヒウン名所巡りへの
-参加を　お待ちしております！</Text>
+			<Text>ハイリンクに　フェスミッションの
+『かくとうかと　しゅぎょう！』が▽
+ついか　されました</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T03:45:06" />
+				Time="2011-11-21T02:41:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:18:01" />
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:41:24" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・いいえ選択時</Comment>
+			<Comment>システム
+・ＳＥ再生
+　デルパワー登録＝SEQ_SE_FLD_133
+・システムフラグをセット</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:58:34" />
+				Time="2011-11-21T02:42:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>INFORMATIONW</Text>
+			<Text>システム</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-07-05T02:27:38" />
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:40:52" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03p01_sightseeing_03"
+		Label="msg_c03p01_mission_add_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたくしから　ヒウンの　めいしょの
-ヒントを　さしあげます▼
-ヒントの　さししめす　ばしょには
-ヒウンかんこうあんない　の▽
-スタッフが　まちかまえて　おります▼
-そこで　ポケモンしょうぶに　かてば
-きねんひんを　さしあげます！</Text>
+			<Text>ほっほっほ
+つよさを　もとめるなら▽
+まずは　たくさん　たたかうのじゃー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T03:45:50" />
+				Time="2011-11-21T02:41:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:18:14" />
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:41:31" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたくしから　ヒウンの　名所の
-ヒントを　さしあげます▼
-ヒントの　さししめす　場所には
-ヒウン観光案内　の▽
-スタッフが　待ちかまえて　おります▼
-そこで　ポケモン勝負に　勝てば
-記念品を　さしあげます！</Text>
+			<Text>ほっほっほ
+つよさを　もとめるなら▽
+まずは　たくさん　たたかうのじゃー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T03:45:46" />
+				Time="2011-11-21T02:41:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:18:19" />
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:41:34" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・はい選択時</Comment>
+			<Comment>♂
+・mission_add_02表示後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:58:36" />
+				Time="2011-11-21T02:42:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>INFORMATIONW</Text>
+			<Text>OLDMAN</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-07-05T02:27:38" />
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:40:53" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p01_sightseeing_04"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ヒウンめいしょ　の
-ヒントを　さしあげます▼
-げんざい　[Name:TrainerName ]さんの
-ヒウンめいしょめぐり　は▽
-のこり　[Digit:1digit Idx="1" ]かしょ　ですね</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:29:26" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:18:37" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ヒウン名所の
-ヒントを　さしあげます▼
-現在　[Name:TrainerName ]さんの
-ヒウン名所巡り　は▽
-残り　[Digit:1digit Idx="1" ]かしょ　ですね</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:29:32" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:18:39" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・２回目以降クリア前話しかけ
-・0＝主人公名
-・1＝個数</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:05:12" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>INFORMATIONW</Text>
-			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-07-05T02:27:38" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p01_sightseeing_05"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ほそーい</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:04:44" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:19:46" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ほそーい</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:04:45" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:19:49" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>メニュー名1</Comment>
-			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:20:25" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>選択肢</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-21T02:33:11" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p01_sightseeing_06"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>モザイク</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:04:44" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:19:54" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>モザイク</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:04:45" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:19:58" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>メニュー名2</Comment>
-			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:20:26" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>選択肢</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-21T02:33:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p01_sightseeing_07"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ビジネスがい</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:04:44" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:19:58" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ビジネス街</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:04:54" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:20:04" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>メニュー名3</Comment>
-			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:20:27" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>選択肢</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-21T02:33:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p01_sightseeing_08"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>デートスポット</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:04:44" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:20:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>デートスポット</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:04:45" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:20:14" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>メニュー名4</Comment>
-			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:20:29" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>選択肢</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-21T02:33:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p01_sightseeing_09"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>まずココ！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:04:44" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:20:16" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>まずココ！</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:04:45" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:20:21" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>メニュー名5</Comment>
-			<CommentModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:20:30" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>選択肢</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-21T02:33:13" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p01_sightseeing_10"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>いがいな　めいてんが　ある
-ほそーい　ばしょ▽
-さて　どこでしょう？</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:05:34" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:20:58" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>意外な　名店が　ある
-ほそーい　場所▽
-さて　どこでしょう？</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:09:39" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:21:00" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・ヒント1</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-17T03:01:10" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>INFORMATIONW</Text>
-			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-07-05T02:27:41" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p01_sightseeing_11"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>モザイクの　かんばん
-むかいの　はとば▽
-さて　どこでしょう？</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:10:52" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:21:02" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>モザイクの　看板
-向かいの　波止場▽
-さて　どこでしょう？</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:10:47" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:21:07" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・ヒント2</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-17T03:01:14" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>INFORMATIONW</Text>
-			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-07-05T02:27:41" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p01_sightseeing_12"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>はたらく　ひとばかりの　ビジネスがい
-ゲームがいしゃも　ありますね▽
-さて　どこでしょう？</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:08:39" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:21:08" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>働く人ばかりの　ビジネス街
-ゲーム会社も　ありますね▽
-さて　どこでしょう？</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:11:29" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:21:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・ヒント3</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-17T03:01:16" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>INFORMATIONW</Text>
-			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-07-05T02:27:41" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p01_sightseeing_13"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>イッシュいちの　デートスポット！
-ヒウンの　やけいは　ムードまんてん▽
-さて　どこでしょう？</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:09:07" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:21:14" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>イッシュ１の　デートスポット！
-ヒウンの　夜景は　ムード満点▽
-さて　どこでしょう？</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:11:45" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:21:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・ヒント4</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-17T03:01:18" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>INFORMATIONW</Text>
-			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-07-05T02:27:41" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p01_sightseeing_14"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ヒウンシティに　はじめて　きた
-トレーナーは　まず　ココ！▽
-さて　どこでしょう？</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:09:23" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:21:22" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ヒウンシティに　初めて　来た
-トレーナーは　まず　ココ！▽
-さて　どこでしょう？</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:11:55" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:21:27" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・ヒント5</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-17T03:01:19" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>INFORMATIONW</Text>
-			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-07-05T02:27:41" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p01_sightseeing_15"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>！！▼
-なんと　まさか　もしかして……▼
-すべての　ヒウンシティの
-めいしょを　はっけん　しましたか！▼
-コングラッチェレーション　ですー
-きねんに　こちらを　さしあげましょう▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:06:52" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:21:55" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>！！▼
-なんと　まさか　もしかして……▼
-すべての　ヒウンシティの
-名所を　発見しましたか！▼
-コングラッチェレーション　ですー
-記念に　こちらを　さしあげましょう▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:12:07" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:21:55" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・イベントクリア後評価メッセージ
-　（一度だけ）
-・アイテム入手処理
-　No027「なんでもなおし」</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-08T03:43:58" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>INFORMATIONW</Text>
-			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-07-05T02:27:44" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c03p01_sightseeing_16"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>これで　あなたも　ヒウンマニア！
-われわれは　これからも▼
-ヒウンシティの　たようさ　たのしさを
-ひろめていきますー</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:05:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:22:19" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>これで　あなたも　ヒウンマニア！
-われわれは　これからも▼
-ヒウンシティの　多様さ　楽しさを
-ひろめていきますー</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-26T11:12:16" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-05-31T02:22:24" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・イベントクリア後メッセージ</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-17T03:00:54" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>INFORMATIONW</Text>
-			<TextModifiedBy
-				User="mizuguchi_mai:W00226"
-				Time="2011-07-05T02:27:44" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

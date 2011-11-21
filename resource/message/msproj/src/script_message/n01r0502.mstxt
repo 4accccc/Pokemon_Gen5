@@ -1802,7 +1802,7 @@
 そう　つたえる　つもりだよ[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T05:22:37" />
+				Time="2011-11-19T11:37:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1856,10 +1856,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……おどろいた
+まさか　キミが　くるとはね▼
+そうだね　トレーナーが　よりふかく
+わかりあうための　すうしき……▽
+ポケモンしょうぶで　いいよね？[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T02:36:59" />
+				Time="2011-11-19T11:41:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1867,10 +1871,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]……驚いた
+まさか　キミが　来るとはね▼
+そうだね　トレーナーが　より深く
+わかりあうための　数式……▽
+ポケモン勝負で　いいよね？[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T02:37:02" />
+				Time="2011-11-19T11:41:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1879,12 +1887,16 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・出現条件
+　１：クリア後のキュレムと戦闘した
+　２：観覧車で会ったことがある
+　３：1度戦うと次の季節（月）まで出ない
 ・はい/いいえの選択肢表示
-　はい　→
-　いいえ→</Comment>
+　はい　→boss_01_02
+　いいえ→boss_01_05</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T02:35:41" />
+				Time="2011-11-19T11:31:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1907,10 +1919,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ウン……！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T02:37:02" />
+				Time="2011-11-19T11:38:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1918,10 +1930,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ウン……！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T02:37:02" />
+				Time="2011-11-19T11:38:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1957,25 +1969,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>・ゼクロムが教えてくれた
-
-・人間と歩むことで
-　新たな可能性を探ろうとする本能
-　ソレを持つものもいる
-　（＝共鳴、共鳴を求めている）
-
-・同時に
-　野生に生きるものとして
-　誰に頼ることなく
-　自身で能力を
-　高めようとするものも存在する
-
-・その多様な生き方こそが
-　ポケモンの自由
-　ボクたちの自由</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……ゼクロムが
+はなしてくれたことを　おもいだした▼
+ゼクロムと　レシラム
+カレラは　ヒトと　あゆむことで▽
+あらたな　かのうせいを　さぐっている▼
+でも　いっぽうで
+やせいに　いきる　ものとして▼
+ダレに　たよることなく　オノレの
+のうりょくを　たかめようとする▽
+ポケモンを　かずおおく　いる……▼
+その　さまざまな　いきかたこそが
+ポケモンの　じゆう▽
+そして　ボクたちとの　つながり　だと[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T09:29:03" />
+				Time="2011-11-19T11:40:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1983,10 +1992,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……ゼクロムが
+話してくれたことを　おもいだした▼
+ゼクロムと　レシラム
+カレラは　ヒトと　歩むことで▽
+新たな　可能性を　探っている▼
+でも　一方で
+野生に　生きる　ものとして▼
+ダレに　頼ることなく　オノレの
+能力を　高めようとする▽
+ポケモンも　数多く　いる……▼
+その　多様な　生き方こそが
+ポケモンの　自由▽
+そして　ボクたちとの　つながり　だと[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T02:37:03" />
+				Time="2011-11-19T11:40:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1996,10 +2017,11 @@
 			Language="JPN">
 			<Comment>♂
 ・Black2ver
-・トレーナー戦闘後メッセージ</Comment>
+・トレーナー戦闘後メッセージ
+・続けてboss_01_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T02:37:26" />
+				Time="2011-11-19T11:31:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2022,25 +2044,22 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>・レシラムが教えてくれた
-
-・人間と歩むことで
-　新たな可能性を探ろうとする本能
-　ソレを持つものもいる
-　（＝共鳴、共鳴を求めている）
-
-・同時に
-　野生に生きるものとして
-　誰に頼ることなく
-　自身で能力を
-　高めようとするものも存在する
-
-・その多様な生き方こそが
-　ポケモンの自由
-　ボクたちの自由</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……レシラムが
+はなしてくれたことを　おもいだした▼
+レシラムと　ゼクロム
+カレラは　ヒトと　あゆむことで▽
+あらたな　かのうせいを　さぐっている▼
+でも　いっぽうで
+やせいに　いきる　ものとして▼
+ダレに　たよることなく　オノレの
+のうりょくを　たかめようとする▽
+ポケモンを　かずおおく　いる……▼
+その　さまざまな　いきかたこそが
+ポケモンの　じゆう▽
+そして　ボクたちとの　つながり　だと[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T09:28:59" />
+				Time="2011-11-19T11:40:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2048,10 +2067,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]……レシラムが
+話してくれたことを　おもいだした▼
+レシラムと　ゼクロム
+カレラは　ヒトと　歩むことで▽
+新たな　可能性を　探っている▼
+でも　一方で
+野生に　生きる　ものとして▼
+ダレに　頼ることなく　オノレの
+能力を　高めようとする▽
+ポケモンも　数多く　いる……▼
+その　多様な　生き方こそが
+ポケモンの　自由▽
+そして　ボクたちとの　つながり　だと[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T02:37:03" />
+				Time="2011-11-19T11:40:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2061,10 +2092,11 @@
 			Language="JPN">
 			<Comment>♂
 ・White2ver
-・トレーナー戦闘後メッセージ</Comment>
+・トレーナー戦闘後メッセージ
+・続けてboss_01_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T02:37:34" />
+				Time="2011-11-19T11:31:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2087,10 +2119,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクは　また　たびにでる▼
+せかいには　もっと
+はなすべき　ポケモンが　おおくいる▼
+それに　おもいを　つたえたい
+トレーナーが　いるからね……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T02:37:05" />
+				Time="2011-11-19T11:38:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2098,10 +2134,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>no data</Text>
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクは　また　旅にでる▼
+世界には　もっと
+話すべき　ポケモンが　多くいる▼
+それに　想いを　伝えたい
+トレーナーが　いるからね……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T02:37:03" />
+				Time="2011-11-19T11:41:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2109,11 +2149,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・いいえ選択時</Comment>
+			<Comment>・表示後に退場
+　画面外に消えると主人公操作可能に</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T02:36:11" />
+				Time="2011-11-19T11:31:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2122,6 +2162,115 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-08-11T02:37:07" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0502_boss_01_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ウン……！
+それも　キミの　じゆうだ[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T11:38:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T11:30:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]ウン……！
+それも　キミの　自由だ[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T11:41:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T11:30:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T11:30:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T11:27:32" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_n01r0502_boss_01_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミの　ポケモンが　いっている
+ボクの　トモダチと　たたかいたい……▼
+どうする？
+ポケモンしょうぶを　するかい？[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T11:38:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T11:30:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミの　ポケモンが　いっている
+ボクの　トモダチと　戦いたい……▼
+どうする？
+ポケモン勝負を　するかい？[Ctrl2:CtrlSpeed ]</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T11:41:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T11:37:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択後に再度会話
+・はい/いいえの選択肢表示
+　はい　→boss_01_02
+　いいえ→boss_01_05</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T11:31:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-19T11:31:06" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

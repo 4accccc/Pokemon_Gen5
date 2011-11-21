@@ -3866,6 +3866,116 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_t05_mission_add_01b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイリンクに　フェスミッションの
+『エンジョイ　ぶつぶつこうかんＢ』が▽
+ついか　されました</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:47:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:47:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイリンクに　フェスミッションの
+『エンジョイ　ぶつぶつこうかんＢ』が▽
+ついか　されました</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:47:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:47:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・Black2ver
+・ＳＥ再生
+　デルパワー登録＝SEQ_SE_FLD_133
+・システムフラグをセット</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:48:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:47:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t05_mission_add_01w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイリンクに　フェスミッションの
+『エンジョイ　ぶつぶつこうかんＷ』が▽
+ついか　されました</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:48:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:48:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイリンクに　フェスミッションの
+『エンジョイ　ぶつぶつこうかんＷ』が▽
+ついか　されました</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:48:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:48:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・Black2ver
+・ＳＥ再生
+　デルパワー登録＝SEQ_SE_FLD_133
+・システムフラグをセット</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:48:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:48:10" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_t05_trainerw_01"
 		Style="Large">
 		<LanguageCell

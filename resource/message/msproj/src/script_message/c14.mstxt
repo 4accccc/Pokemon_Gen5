@@ -1180,6 +1180,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c14_boy4_02"
@@ -1218,10 +1225,11 @@
 			Language="JPN">
 			<Comment>♂
 ・クリア後
+・フェス用システムフラグがON
 ・移動指定なし</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T08:53:11" />
+				Time="2011-11-21T03:51:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1230,6 +1238,125 @@
 				User="matsumiya:W00224"
 				Time="2011-06-11T08:55:22" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14_mission_add_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンも　ひとも　であいは
+いちご　いちえ……▽
+つぎが　あるとは　かぎらない▼
+その　とき　その　しゅんかん
+ぜんりょくを　つくさないとね……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:51:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:51:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンも　人も
+出会いは　一期一会……▽
+次が　あるとは　かぎらない▼
+その時　その瞬間
+全力を　つくさないとね……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:51:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:51:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・クリア後
+・フェス用システムフラグがOFF
+・続けてmission_add_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:52:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY4</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:51:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14_mission_add_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイリンクに　フェスミッションの
+『きらめく　ハートは　どこに？』が▽
+ついか　されました</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:51:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:51:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイリンクに　フェスミッションの
+『きらめく　ハートは　どこに？』が▽
+ついか　されました</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:51:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:51:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・ＳＥ再生
+　デルパワー登録＝SEQ_SE_FLD_133
+・システムフラグをセット</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:55:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOY4</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:50:54" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c14_man3_01"
@@ -1323,10 +1450,10 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>fighterm_1</Text>
+			<Text>FIGHTERM</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T12:42:55" />
+				Time="2011-11-21T03:49:30" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -1834,6 +1961,172 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14_mission_add_1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふああああ　きょうも
+よい　てんき　じゃな▼
+バカンスに　きてから
+いったい　なんにちが　すぎたのか……▼
+こうも　ゆうがな　まいにちが
+つづくと　あたまが　とけてしまうわ▼
+ちょっとは　しげきのある
+イベントでも　おきないかのー▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:50:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:50:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ふああああ　きょうも
+よい　てんき　じゃな▼
+バカンスに　きてから
+いったい　なんにちが　すぎたのか……▼
+こうも　ゆうがな　まいにちが
+つづくと　あたまが　とけてしまうわ▼
+ちょっとは　しげきのある
+イベントでも　おきないかのー▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:50:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:50:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・フェス用システムフラグがOFF</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:50:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FIGHTERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:49:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14_mission_add_1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイリンクに　フェスミッションの
+『きおくりょく　トレーニング！』が▽
+ついか　されました</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:50:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:50:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイリンクに　フェスミッションの
+『きおくりょく　トレーニング！』が▽
+ついか　されました</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:50:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:50:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・ＳＥ再生
+　デルパワー登録＝SEQ_SE_FLD_133
+・システムフラグをセット</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:50:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:49:52" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c14_mission_add_1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ふああああ　きょうは……
+たしか　にちようび　じゃったかの？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:50:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:50:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ふああああ　きょうは……
+たしか　にちようび　じゃったかの？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:50:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:50:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・mission_add_02表示後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:50:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>FIGHTERM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T03:49:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

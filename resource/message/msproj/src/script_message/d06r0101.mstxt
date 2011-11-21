@@ -597,4 +597,229 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d06r0101_mission_add_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここの　いし
+とっても　きれい！▼
+こんなに　きれいな　いしを
+へやじゅうに　かざることが　できたら……▼
+ああ　なんてことでしょう
+ゆめのような　おへやが　かんせいするわ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:50:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:50:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここの　いし
+とっても　きれい！▼
+こんなに　きれいな　いしを
+へやじゅうに　かざることが　できたら……▼
+ああ　なんてことでしょう
+ゆめのような　おへやが　かんせいするわ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:50:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:50:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・フェス用システムフラグがOFF</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:50:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:49:46" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d06r0101_mission_add_02b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイリンクに　フェスミッションの
+『くらやみに　ひかる　こうせき』が▽
+ついか　されました</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:50:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:50:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイリンクに　フェスミッションの
+『くらやみに　ひかる　こうせき』が▽
+ついか　されました</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:50:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:50:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・Black2ver
+・ＳＥ再生
+　デルパワー登録＝SEQ_SE_FLD_133
+・システムフラグをセット</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:49:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:49:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d06r0101_mission_add_02w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイリンクに　フェスミッションの
+『ひかり　かがやく　こうせき』が▽
+ついか　されました</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:50:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:50:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイリンクに　フェスミッションの
+『ひかり　かがやく　こうせき』が▽
+ついか　されました</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:50:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:50:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システム
+・Black2ver
+・ＳＥ再生
+　デルパワー登録＝SEQ_SE_FLD_133
+・システムフラグをセット</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:49:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>システム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:49:50" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d06r0101_mission_add_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わかった！
+あたし　ここで　くらすわ▽
+きょうから　ここは　あたしのいえ！▼
+きれいな　いしに
+かこまれて　くらすの</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:50:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:50:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わかった！
+あたし　ここで　くらすわ▽
+きょうから　ここは　あたしのいえ！▼
+きれいな　いしに
+かこまれて　くらすの</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:50:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:50:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・mission_add_02b
+　mission_add_02w表示後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:50:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GIRL4</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-21T02:49:51" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
