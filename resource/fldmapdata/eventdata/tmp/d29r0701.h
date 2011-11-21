@@ -8,11 +8,14 @@
 #ifndef ZONE_D29R0701_EVC_H
 #define ZONE_D29R0701_EVC_H
 
+#define D29R0701_REZIROCK                  0
 
 #endif //ZONE_D29R0701_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d29r0701.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_D29R0701_EVB_H
 #define ZONE_D29R0701_EVB_H
 
+#define D29R0701_MONUMENT_01              0
+#define D29R0701_MONUMENT_02              1
 
 #endif //ZONE_D29R0701_EVB_H

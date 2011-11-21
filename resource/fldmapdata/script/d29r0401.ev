@@ -25,9 +25,13 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA     ev_zone_d29r0401
+_EVENT_DATA     ev_init_d29r0401
+_EVENT_DATA     ev_recover_d29r0401
 _EVENT_DATA     ev_pos_d29r0401_door_in
 _EVENT_DATA     ev_reserve_d29r0401_door_out
 _EVENT_DATA     ev_bg_d29r0401_switch
+_EVENT_DATA     ev_d29r0401_espm_01
 _EVENT_DATA_END
 
 
@@ -45,6 +49,56 @@ _EVENT_DATA_END
 //              0:押していない
 //              1:押している
 //------------------------------------------------------------------//
+
+
+/************************************************************/
+/*          ZONE_CHANGE_LABEL                               */
+/************************************************************/
+INIT_EVENT_START  ev_zone_d29r0401
+
+INIT_EVENT_END
+
+/************************************************************/
+/*          FIELD_INIT_LABEL                                */
+/************************************************************/
+INIT_EVENT_START  ev_init_d29r0401
+  // フィールド初期化
+  _CALL sub_field_init
+INIT_EVENT_END
+
+/************************************************************/
+/*          FIELD_RECOVER_LABEL                             */
+/************************************************************/
+INIT_EVENT_START  ev_recover_d29r0401
+  // フィールド初期化
+  _CALL sub_field_init
+INIT_EVENT_END
+
+//------------------------------------------------------------
+//  フィールド初期化
+//------------------------------------------------------------
+sub_field_init:
+{
+  // 接続先取得
+  _CALL sub_get_connect_door
+
+  // 巨人の眼の色を設定
+  SWITCH $LOCALWORK0
+  CASE 0 THEN   // 午前の間
+  CASE 1 THEN   // 午後の間
+    _REZI_GMK_SET_EYE(3)
+  CASE 2 THEN   // 岩山の間
+    _REZI_GMK_SET_EYE(0)
+  CASE 3 THEN   // 鉄の間
+    _REZI_GMK_SET_EYE(2)
+  CASE 4 THEN   // 氷山の間
+    _REZI_GMK_SET_EYE(1)
+  DEFAULT // 午前の間と同じにしておく
+    _REZI_GMK_SET_EYE(3)
+  ENDSWITCH
+
+}
+_RET
 
 
 /************************************************************/
@@ -71,6 +125,12 @@ EVENT_START   ev_pos_d29r0401_door_in
   ENDSWITCH
   _OBJ_ANIME_WAIT()
 
+  // カメラを操作
+  _CAMERA_START()
+  _CAMERA_PURGE()
+  _CAMERA_MOVE( 5720,0,905216,1015808,0,229376, 25 )
+  _CAMERA_WAIT_MOVE()
+
   // ドアが開く
   _REZI_GMK_SET_DOOR(0)
   _REZI_GMK_ANM_DOOR(1)
@@ -89,6 +149,10 @@ EVENT_START   ev_pos_d29r0401_door_in
   // フェード終了チェック
   _MAP_FADE_END_CHECK()
   
+  // カメラ戻し
+  _CAMERA_BIND()	//カメラバインド
+  _CAMERA_END()		//カメラ操作終了
+
   // 接続先取得
   _CALL sub_get_connect_door
 
@@ -176,17 +240,17 @@ sub_get_connect_door:
 	_GET_TIME( SCWK_TEMP0, SCWK_TEMP1 )
 
   // 接続分岐
-  IF $LWK_KEYSYS_DOOR == KEYSYS_DOOR_BLACK THEN
+  IF $LOCALWORK1 == 1 THEN
+    // 岩山の間 最優先
+    $LOCALWORK0 = 2
+
+  ELSIF $LWK_KEYSYS_DOOR == KEYSYS_DOOR_BLACK THEN
     // 氷山の間
     $LOCALWORK0 = 4
 
   ELSIF $LWK_KEYSYS_DOOR == KEYSYS_DOOR_WHITE THEN
     // 鉄の間
     $LOCALWORK0 = 3
-
-  ELSIF $LOCALWORK1 == 1 THEN
-    // 岩山の間
-    $LOCALWORK0 = 2
 
   ELSIF $SCWK_TEMP0 >= 0 && $SCWK_TEMP0 <12 THEN
     // 午前の間
@@ -211,13 +275,19 @@ EVENT_START   ev_reserve_d29r0401_door_out
   // ドアを閉まった状態に
   _REZI_GMK_SET_DOOR(1)
 
+  // カメラ位置を設定しておく
+  _CAMERA_START()
+  _CAMERA_PURGE()
+  _CAMERA_MOVE( 5720,0,905216,1015808,0,229376, 1 )
+  _CAMERA_WAIT_MOVE()
+
   // ブラックインフェード
   _MAP_FADE_BLACK_IN_SLOW()
 
   // 主人公出る
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_door_out )
 
-  _TIME_WAIT(40)
+  _TIME_WAIT(20)
 
   // ドアが閉まる
   _REZI_GMK_ANM_DOOR(0)
@@ -227,7 +297,12 @@ EVENT_START   ev_reserve_d29r0401_door_out
   _MAP_FADE_END_CHECK()
 
   // ドアが閉まるまで待つ
-  _TIME_WAIT(25)
+  _TIME_WAIT(15)
+
+  _CAMERA_DEF_MOVE( 10 )
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()	//カメラバインド
+  _CAMERA_END()		//カメラ操作終了
 
 EVENT_END
 
@@ -235,7 +310,7 @@ EVENT_END
 // アニメ:ドアから出る
 //------------------------------------------------------------
 _ANIME_LABEL  anm_door_out
-  _ANIME_DATA AC_WALK_D_16F,4
+  _ANIME_DATA AC_WALK_D_16F,3
   _ANIME_DATA ACMD_END,0
 
 
@@ -270,6 +345,17 @@ EVENT_START   ev_bg_d29r0401_switch
         // 画面をゆらす
         _SHAKE_CAMERA( 1, 0, 4, 7, 0, 0, 0, 0)
 
+        // 暗転
+        _BLACK_OUT()
+        _DISP_FADE_END_CHECK()
+
+        // 巨人の眼を赤色に変更
+        _REZI_GMK_SET_EYE(0)
+        _TIME_WAIT(10)
+
+        _BLACK_IN()
+        _DISP_FADE_END_CHECK()
+
         // どびらの　むこうがわで　おもおもしい　おとが　ひびいた・・・
         _PLAINWIN_MSG_DOWN( msg_d29r0401_switch_02 )
 
@@ -290,4 +376,23 @@ EVENT_START   ev_bg_d29r0401_switch
   ENDIF
 
 EVENT_END
+
+/************************************************************/
+/* OBJ：サイキッカー                                        */
+/************************************************************/
+EVENT_START   ev_d29r0401_espm_01
+
+  // 時間の取得
+	_GET_TIME( SCWK_TEMP0, SCWK_TEMP1 )
+
+  // 午前
+  IF $SCWK_TEMP0 >= 0 && $SCWK_TEMP0 <12 THEN
+	  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d29r0401_espm_01 )
+  ELSE
+  // 午後
+	  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d29r0401_espm_02 )
+  ENDIF
+
+EVENT_END
+
 

@@ -20,10 +20,27 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA     ev_zone_d29r0701
 _EVENT_DATA     ev_pos_d29r0701_door_in
 _EVENT_DATA     ev_reserve_d29r0701_door_out
+_EVENT_DATA     ev_bg_d29r0701_monument_01
+_EVENT_DATA     ev_bg_d29r0701_monument_02
+_EVENT_DATA     ev_d29r0701_rezirock
 _EVENT_DATA_END
 
+/************************************************************/
+/*          ZONE_CHANGE_LABEL                               */
+/************************************************************/
+INIT_EVENT_START  ev_zone_d29r0701
+
+  // 捕獲していたら非表示
+  IF FLAG_ON( FE_D29R0401_POKE2_GET_01 ) THEN
+    _FLAG_SET( FV_D29R0401_POKE2_01 )
+  ELSE
+    _FLAG_RESET( FV_D29R0401_POKE2_01 )
+  ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
 /* POS: ドアに入る                                            */
@@ -85,4 +102,81 @@ _ANIME_LABEL  anm_door_out
   _ANIME_DATA ACMD_END,0
 
 
+/************************************************************/
+/*  BGイベント：石版1                                       */
+/************************************************************/
+EVENT_START   ev_bg_d29r0701_monument_01
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_d29r0701_monument_01 )
+  _LAST_KEYWAIT()
+  _PLAINWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*  BGイベント：石版2                                       */
+/************************************************************/
+EVENT_START   ev_bg_d29r0701_monument_02
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_d29r0701_monument_02 )
+  _LAST_KEYWAIT()
+  _PLAINWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*  OBJ：レジロック                                       */
+/************************************************************/
+EVENT_START   ev_d29r0701_rezirock
+
+  // いわの　ちからを　かんじさせる
+  _SYSWIN_MSG( msg_d29r0701_poke55_01, POS_DOWN )
+  _SYSWIN_CLOSE()
+
+  _TALK_OBJ_START()
+
+  // 鳴き声
+  _VOICE_PLAY( MONSNO_377, 0 )
+  _GIZAPLAINWIN_MSG_POS( msg_d29r0701_poke55_02, POS_DOWN )
+  _AB_KEYWAIT_MARK()
+  _VOICE_WAIT()
+  _GIZAPLAINWIN_CLOSE()
+
+  // 戦闘
+  _WILD_BTL_SET_LEGEND( MONSNO_377, 40 ) // レジロック
+
+  // 勝敗チェック
+  _WILD_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    // 非表示にする
+    _FLAG_SET( FV_D29R0401_POKE2_01 )
+    _OBJ_DEL( SCWK_TARGET_OBJID )
+    _WILD_WIN()
+  ELSE
+    _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+  ENDIF
+
+  // 捕獲チェック
+  _WILD_RETRY_CHECK( SCWK_ANSWER )
+
+  SWITCH $SCWK_ANSWER
+  CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN
+    //勝利した場合、あるいは逃げた場合
+    _SYSWIN_MSG( msg_d29r0701_poke55_03, POS_DOWN )
+    _LAST_KEYWAIT()
+    _SYSWIN_CLOSE()
+        
+  CASE SCR_WILD_BTL_RET_CAPTURE THEN
+    //捕まえた場合
+    _FLAG_SET( FE_D29R0401_POKE2_GET_01 )
+
+    //キーをゲットする
+	  _GET_ROM_VERSION( SCWK_ANSWER )
+	  IF $SCWK_ANSWER == VERSION_B2 THEN
+      _KEYSYS_CALL_DEMO( KEYSYS_TYPE_DOOR_WHITE )
+    ELSE
+      _KEYSYS_CALL_DEMO( KEYSYS_TYPE_DOOR_BLACK )
+    ENDIF
+
+  ENDSWITCH
+
+EVENT_END
 

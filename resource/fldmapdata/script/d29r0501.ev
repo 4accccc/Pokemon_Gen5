@@ -22,6 +22,10 @@
 //--------------------------------------------------------------
 _EVENT_DATA     ev_pos_d29r0501_door_in
 _EVENT_DATA     ev_reserve_d29r0501_door_out
+_EVENT_DATA     ev_bg_d29r0501_monument_01
+_EVENT_DATA     ev_bg_d29r0501_monument_02
+_EVENT_DATA     ev_bg_d29r0501_monument_03
+_EVENT_DATA     ev_bg_d29r0501_monument_04
 _EVENT_DATA_END
 
 
@@ -84,4 +88,44 @@ _ANIME_LABEL  anm_door_out
   _ANIME_DATA AC_WALK_U_16F,2
   _ANIME_DATA ACMD_END,0
 
+
+/************************************************************/
+/*  BGイベント：石版1                                       */
+/************************************************************/
+EVENT_START   ev_bg_d29r0501_monument_01
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_d29r0501_monument_01 )
+  _LAST_KEYWAIT()
+  _PLAINWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*  BGイベント：石版2                                       */
+/************************************************************/
+EVENT_START   ev_bg_d29r0501_monument_02
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_d29r0501_monument_02 )
+  _LAST_KEYWAIT()
+  _PLAINWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*  BGイベント：石版3                                       */
+/************************************************************/
+EVENT_START   ev_bg_d29r0501_monument_03
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_d29r0501_monument_03 )
+  _LAST_KEYWAIT()
+  _PLAINWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*  BGイベント：石版4                                       */
+/************************************************************/
+EVENT_START   ev_bg_d29r0501_monument_04
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_d29r0501_monument_04 )
+  _LAST_KEYWAIT()
+  _PLAINWIN_CLOSE()
+EVENT_END
 

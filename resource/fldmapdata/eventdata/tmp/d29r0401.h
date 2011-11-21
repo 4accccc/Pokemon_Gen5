@@ -9,6 +9,7 @@
 #ifndef ZONE_D29R0401_EVC_H
 #define ZONE_D29R0401_EVC_H
 
+#define D29R0401_ESPM_01                   0
 
 #endif //ZONE_D29R0401_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d29r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

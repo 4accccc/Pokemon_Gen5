@@ -205,6 +205,7 @@ void REZI_GIMMICK_Setup( FIELDMAP_WORK *p_fieldmap )
 
   // EXPOBJセット
   EXPOBJ_ObjSet( p_wk );
+  OS_Printf("レジギミックセットアップ\n");
 }
 
 //--------------------------------------------------------------
