@@ -327,8 +327,9 @@ typedef struct
   GFL_CLWK              *clwk[BOXSEARCH_OBJ_NUM];
   CURSORMOVE_WORK       *cmwk;
 
-  s16 topword;    // 母音位置
-  s16 nextword;  // 子音位置
+  s16 topword;			// 子音位置
+  s16 nextword;			// 母音位置
+	BOOL prm_select;	// 子音＞母音＞最終決定が行われたか
   
   int subseq;
   int next_subseq;
@@ -462,7 +463,7 @@ static void StrbufLoad( BOX_SEARCH_MAIN_WORK *wk );
 static void StrbufRelease( BOX_SEARCH_MAIN_WORK *wk );
 static void PrintStrbuf( BOX_SEARCH_MAIN_WORK *wk, int bmpid, int strbufID, int y );
 static void PrintMessage( BOX_SEARCH_MAIN_WORK *wk, int bmpid, int msgID, int y );
-static void FrameListInit(BOX_SEARCH_MAIN_WORK *wk, int type);
+static void FrameListInit(BOX_SEARCH_MAIN_WORK *wk, int type, int pos);
 static void FrameListExit(BOX_SEARCH_MAIN_WORK *wk);
 static void FrameListClear( BOX_SEARCH_MAIN_WORK * wk );
 static void FrameListChangeClear( BOX_SEARCH_MAIN_WORK * wk );
@@ -1631,6 +1632,7 @@ static int _set_mainmode_function( BOX_SEARCH_MAIN_WORK *wk, int seq, int pos )
 
   case BOXSEARCH_PLATE_0: case BOXSEARCH_PLATE_1: case BOXSEARCH_PLATE_2:
   case BOXSEARCH_PLATE_3: case BOXSEARCH_PLATE_4: case BOXSEARCH_PLATE_5:
+		wk->topword = 0;
     CURSORMOVE_Exit( wk->cmwk );
 		PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
 		seq = SetButtonAnime( wk, BOXSEARCH_OBJID_PLATE0+pos-BOXSEARCH_PLATE_0, BOXSEARCH_ANM_FRAME_DECIDE, SUBSEQ_SELECT_SET );
@@ -1721,7 +1723,7 @@ static int Subseq_Return(BOX_SEARCH_MAIN_WORK *wk, int seq)
 
 //----------------------------------------------------------------------------------
 /**
- * @brief ポケモン母音選択初期化
+ * @brief ポケモン子音選択初期化
  *
  * @param   wk    
  * @param   seq   
@@ -1733,7 +1735,7 @@ static int Subseq_SelectPokemonInit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
 	ClearMainDisp( wk );
 
-	FrameListInit( wk, BOXSEARCH_LISTID_NAME_TOPWORD );
+	FrameListInit( wk, BOXSEARCH_LISTID_NAME_TOPWORD, wk->topword );
 	SetListPageArrowAnime( wk, FALSE );
 
 	SubTextPrint( wk, SUBSEQ_SELECTPOKEMONINIT );
@@ -1757,7 +1759,7 @@ static int Subseq_SelectPokemonInit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 
 //----------------------------------------------------------------------------------
 /**
- * @brief ポケモン母音選択メイン
+ * @brief ポケモン子音選択メイン
  *
  * @param   wk    
  * @param   seq   
@@ -1778,17 +1780,16 @@ static int Subseq_SelectPokemon1(BOX_SEARCH_MAIN_WORK *wk, int seq)
 	case 5:
 	case 6:
 		{
-			u32	pos = FRAMELIST_GetListPos( wk->frame_list_work );
+			wk->topword = FRAMELIST_GetListPos( wk->frame_list_work );
 			PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
-			if( pos == 0 ){
+			if( wk->topword == 0 ){
 				_set_search_data( wk, SEARCH_DATAID_POKEMON, 0 );
 				PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, 0 );
 				PrintNowSelect( wk, wk->msg, mes_box_search_hyphen_01 );
 			}else{
-				wk->topword = pos;
 				GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0], FALSE );
-				return SUBSEQ_SELECTPOKEMON1EXIT;
 			}
+			return SUBSEQ_SELECTPOKEMON1EXIT;
 		}
 		break;
 
@@ -1822,19 +1823,18 @@ static int Subseq_SelectPokemon1(BOX_SEARCH_MAIN_WORK *wk, int seq)
 		}else{
 			int	ret = HitCheckListBox( wk );
 			if( ret >= 0 && ret <= 6 ){
-				u32	pos = FRAMELIST_GetScrollCount( wk->frame_list_work ) + ret;
+				wk->topword = FRAMELIST_GetScrollCount( wk->frame_list_work ) + ret;
 				PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
-				if( pos == 0 ){
+				if( wk->topword == 0 ){
 					_set_search_data( wk, SEARCH_DATAID_POKEMON, 0 );
 					PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, ret );
 					PrintNowSelect( wk, wk->msg, mes_box_search_hyphen_01 );
 					FRAMELIST_SetCursorPos( wk->frame_list_work, ret );
 				}else{
-					wk->topword = pos;
 					GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0], FALSE );
 					FRAMELIST_SetCursorPos( wk->frame_list_work, ret );
-					return SUBSEQ_SELECTPOKEMON1EXIT;
 				}
+				return SUBSEQ_SELECTPOKEMON1EXIT;
 			}
 		}
 		break;
@@ -1847,7 +1847,7 @@ static int Subseq_SelectPokemon1(BOX_SEARCH_MAIN_WORK *wk, int seq)
 
 //----------------------------------------------------------------------------------
 /**
- * @brief ポケモン母音選択終了
+ * @brief ポケモン子音選択終了
  *
  * @param   wk    
  * @param   seq   
@@ -1859,6 +1859,7 @@ static int Subseq_SelectPokemon1Exit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
 	FRAMELIST_Exit( wk->frame_list_work );
 	if( wk->topword != 0 ){
+		wk->nextword = 0;
 		return SUBSEQ_SELECTPOKEMON2INIT;
 	}
 	return SUBSEQ_START;
@@ -1867,7 +1868,7 @@ static int Subseq_SelectPokemon1Exit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 
 //----------------------------------------------------------------------------------
 /**
- * @brief ポケモン子音選択初期化
+ * @brief ポケモン母音選択初期化
  *
  * @param   wk    
  * @param   seq   
@@ -1879,7 +1880,7 @@ static int Subseq_SelectPokemon2Init(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
 	FrameListChangeClear( wk );
 
-	FrameListInit( wk, BOXSEARCH_LISTID_NAME_NEXTWORD );
+	FrameListInit( wk, BOXSEARCH_LISTID_NAME_NEXTWORD, wk->nextword );
 
 	SubTextPrint( wk, SUBSEQ_SELECTPOKEMON2INIT );
 
@@ -1892,7 +1893,7 @@ static int Subseq_SelectPokemon2Init(BOX_SEARCH_MAIN_WORK *wk, int seq)
 
 //----------------------------------------------------------------------------------
 /**
- * @brief ポケモン子音選択メイン
+ * @brief ポケモン母音選択メイン
  *
  * @param   wk    
  * @param   seq   
@@ -1955,7 +1956,7 @@ static int Subseq_SelectPokemon2(BOX_SEARCH_MAIN_WORK *wk, int seq)
 
 //----------------------------------------------------------------------------------
 /**
- * @brief ポケモン子音選択終了
+ * @brief ポケモン母音選択終了
  *
  * @param   wk    
  * @param   seq   
@@ -1969,7 +1970,8 @@ static int Subseq_SelectPokemon2Exit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 	if( wk->nextword != -1 ){
 		return SUBSEQ_SELECTPOKEMON3INIT;
 	}
-	return SUBSEQ_START;
+//	return SUBSEQ_START;
+	return SUBSEQ_SELECTPOKEMONINIT;
 }
 
 //----------------------------------------------------------------------------------
@@ -1988,7 +1990,7 @@ static int Subseq_SelectPokemon3Init(BOX_SEARCH_MAIN_WORK *wk, int seq)
 
 	FrameListChangeClear( wk );
 
-	FrameListInit( wk, BOXSEARCH_LISTID_POKEMON );
+	FrameListInit( wk, BOXSEARCH_LISTID_POKEMON, 0 );
 
 	SubTextPrint( wk, SUBSEQ_SELECTPOKEMON3INIT );
 
@@ -2044,6 +2046,8 @@ static int Subseq_SelectPokemon3(BOX_SEARCH_MAIN_WORK *wk, int seq)
 			PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, result );
 			PrintNowSelect( wk, wk->mons_msg, wk->param->syswk->search_data.pokemon_id );
 			PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
+			wk->prm_select = TRUE;
+			seq = SUBSEQ_SELECTPOKEMON3EXIT;
 		}
 		break;
 
@@ -2078,6 +2082,7 @@ static int Subseq_SelectPokemon3(BOX_SEARCH_MAIN_WORK *wk, int seq)
 			break;
 		}
 		if( CheckCancelButton( wk ) == TRUE ){
+			wk->prm_select = FALSE;
 			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTPOKEMON3EXIT );
 		}else{
 			int	ret = HitCheckListBox( wk );
@@ -2089,6 +2094,8 @@ static int Subseq_SelectPokemon3(BOX_SEARCH_MAIN_WORK *wk, int seq)
 				PrintNowSelect( wk, wk->mons_msg, wk->param->syswk->search_data.pokemon_id );
 				FRAMELIST_SetCursorPos( wk->frame_list_work, ret );
 				PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
+				wk->prm_select = TRUE;
+				seq = SUBSEQ_SELECTPOKEMON3EXIT;
 			}
 		}
 		break;
@@ -2114,6 +2121,9 @@ static int Subseq_SelectPokemon3(BOX_SEARCH_MAIN_WORK *wk, int seq)
 static int Subseq_SelectPokemon3Exit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
 	FRAMELIST_Exit( wk->frame_list_work );
+	if( wk->prm_select == FALSE ){
+		return SUBSEQ_SELECTPOKEMON2INIT;
+	}
 	return SUBSEQ_START;
 }
 
@@ -2121,7 +2131,7 @@ static int Subseq_SelectSeikakuInit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
 	ClearMainDisp( wk );
 
-	FrameListInit( wk, BOXSEARCH_LISTID_SEIKAKU );
+	FrameListInit( wk, BOXSEARCH_LISTID_SEIKAKU, 0 );
 	SetListPageArrowAnime( wk, FALSE );
 
 	SubTextPrint( wk, SUBSEQ_SELECTSEIKAKUINIT );
@@ -2162,6 +2172,7 @@ static int Subseq_SelectSeikaku(BOX_SEARCH_MAIN_WORK *wk, int seq)
 			PrintNowSelect( wk, wk->seikaku_msg, wk->param->syswk->search_data.seikaku-1 );
 		}
 		PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
+		seq = SUBSEQ_SELECTSEIKAKUEXIT;
 		break;
 
 
@@ -2205,6 +2216,7 @@ static int Subseq_SelectSeikaku(BOX_SEARCH_MAIN_WORK *wk, int seq)
 				}
 				FRAMELIST_SetCursorPos( wk->frame_list_work, ret );
 				PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
+				seq = SUBSEQ_SELECTSEIKAKUEXIT;
 			}
 		}
 		break;
@@ -2224,7 +2236,7 @@ static int Subseq_SelectTokuseiInit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
 	ClearMainDisp( wk );
 
-	FrameListInit( wk, BOXSEARCH_LISTID_TOKUSEI_TOPWORD );
+	FrameListInit( wk, BOXSEARCH_LISTID_TOKUSEI_TOPWORD, wk->topword );
 	SetListPageArrowAnime( wk, FALSE );
 
 	SubTextPrint( wk, SUBSEQ_SELECTTOKUSEIINIT );
@@ -2258,17 +2270,16 @@ static int Subseq_SelectTokusei1(BOX_SEARCH_MAIN_WORK *wk, int seq)
 	case 5:
 	case 6:
 		{
-			u32	pos = FRAMELIST_GetListPos( wk->frame_list_work );
+			wk->topword = FRAMELIST_GetListPos( wk->frame_list_work );
 			PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
-			if( pos == 0 ){
+			if( wk->topword == 0 ){
 				_set_search_data( wk, SEARCH_DATAID_TOKUSEI, 0 );
 				PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, 0 );
 				PrintNowSelect( wk, wk->msg, mes_box_search_hyphen_01 );
 			}else{
-				wk->topword = pos;
 				GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0], FALSE );
-				return SUBSEQ_SELECTTOKUSEI1EXIT;
 			}
+			return SUBSEQ_SELECTTOKUSEI1EXIT;
 		}
 		break;
 
@@ -2302,19 +2313,18 @@ static int Subseq_SelectTokusei1(BOX_SEARCH_MAIN_WORK *wk, int seq)
 		}else{
 			int	ret = HitCheckListBox( wk );
 			if( ret >= 0 && ret <= 6 ){
-				u32	pos = FRAMELIST_GetScrollCount( wk->frame_list_work ) + ret;
+				wk->topword = FRAMELIST_GetScrollCount( wk->frame_list_work ) + ret;
 				PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
-				if( pos == 0 ){
+				if( wk->topword == 0 ){
 					_set_search_data( wk, SEARCH_DATAID_TOKUSEI, 0 );
 					PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, ret );
 					PrintNowSelect( wk, wk->msg, mes_box_search_hyphen_01 );
 					FRAMELIST_SetCursorPos( wk->frame_list_work, ret );
 				}else{
-					wk->topword = pos;
 					GFL_CLACT_WK_SetDrawEnable( wk->clwk[BOXSEARCH_OBJID_CHECK0], FALSE );
 					FRAMELIST_SetCursorPos( wk->frame_list_work, ret );
-					return SUBSEQ_SELECTTOKUSEI1EXIT;
 				}
+				return SUBSEQ_SELECTTOKUSEI1EXIT;
 			}
 		}
 		break;
@@ -2328,6 +2338,7 @@ static int Subseq_SelectTokusei1Exit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
 	FRAMELIST_Exit( wk->frame_list_work );
 	if( wk->topword != 0 ){
+		wk->nextword = 0;
 		return SUBSEQ_SELECTTOKUSEI2INIT;
 	}
 	return SUBSEQ_START;
@@ -2337,7 +2348,7 @@ static int Subseq_SelectTokusei2Init(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
 	FrameListChangeClear( wk );
 
-	FrameListInit( wk, BOXSEARCH_LISTID_TOKUSEI_NEXTWORD );
+	FrameListInit( wk, BOXSEARCH_LISTID_TOKUSEI_NEXTWORD, wk->nextword );
 
 	SubTextPrint( wk, SUBSEQ_SELECTTOKUSEI2INIT );
 
@@ -2404,7 +2415,8 @@ static int Subseq_SelectTokusei2Exit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 	if( wk->nextword != -1 ){
 		return SUBSEQ_SELECTTOKUSEI3INIT;
 	}
-  return SUBSEQ_START;
+//  return SUBSEQ_START;
+	return SUBSEQ_SELECTTOKUSEIINIT;
 }
 
 static int Subseq_SelectTokusei3Init(BOX_SEARCH_MAIN_WORK *wk, int seq)
@@ -2413,7 +2425,7 @@ static int Subseq_SelectTokusei3Init(BOX_SEARCH_MAIN_WORK *wk, int seq)
 
 	FrameListChangeClear( wk );
 
-	FrameListInit( wk, BOXSEARCH_LISTID_TOKUSEI );
+	FrameListInit( wk, BOXSEARCH_LISTID_TOKUSEI, 0 );
 
 	SubTextPrint( wk, SUBSEQ_SELECTTOKUSEI3INIT );
 
@@ -2458,6 +2470,8 @@ static int Subseq_SelectTokusei3(BOX_SEARCH_MAIN_WORK *wk, int seq)
 			PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, result );
 			PrintNowSelect( wk, wk->tokusei_msg, wk->param->syswk->search_data.tokusei );
 			PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
+			wk->prm_select = TRUE;
+			seq = SUBSEQ_SELECTTOKUSEI3EXIT;
 		}
 		break;
 
@@ -2492,6 +2506,7 @@ static int Subseq_SelectTokusei3(BOX_SEARCH_MAIN_WORK *wk, int seq)
 			break;
 		}
 		if( CheckCancelButton( wk ) == TRUE ){
+			wk->prm_select = FALSE;
 			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTTOKUSEI3EXIT );
 		}else{
 			int	ret = HitCheckListBox( wk );
@@ -2503,6 +2518,8 @@ static int Subseq_SelectTokusei3(BOX_SEARCH_MAIN_WORK *wk, int seq)
 				PrintNowSelect( wk, wk->tokusei_msg, wk->param->syswk->search_data.tokusei );
 				FRAMELIST_SetCursorPos( wk->frame_list_work, ret );
 				PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
+				wk->prm_select = TRUE;
+				seq = SUBSEQ_SELECTTOKUSEI3EXIT;
 			}
 		}
 		break;
@@ -2517,6 +2534,9 @@ static int Subseq_SelectTokusei3(BOX_SEARCH_MAIN_WORK *wk, int seq)
 static int Subseq_SelectTokusei3Exit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
 	FRAMELIST_Exit( wk->frame_list_work );
+	if( wk->prm_select == FALSE ){
+		return SUBSEQ_SELECTTOKUSEI2INIT;
+	}
 	return SUBSEQ_START;
 }
 
@@ -2524,7 +2544,7 @@ static int Subseq_SelectSexInit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
 	ClearMainDisp( wk );
 
-	FrameListInit( wk, BOXSEARCH_LISTID_SEIBETU );
+	FrameListInit( wk, BOXSEARCH_LISTID_SEIBETU, 0 );
 	
 	SubTextPrint( wk, SUBSEQ_SELECTSEXINIT );
 
@@ -2555,6 +2575,7 @@ static int Subseq_SelectSex(BOX_SEARCH_MAIN_WORK *wk, int seq)
 			PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, result );
 			PrintNowSelect( wk, wk->msg, sex_msg_tbl[wk->param->syswk->search_data.sex] );
 			PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
+			seq = SUBSEQ_SELECTSEXEXIT;
 		}
 		break;
 
@@ -2577,6 +2598,7 @@ static int Subseq_SelectSex(BOX_SEARCH_MAIN_WORK *wk, int seq)
 				PrintNowSelect( wk, wk->msg, sex_msg_tbl[wk->param->syswk->search_data.sex] );
 				FRAMELIST_SetCursorPos( wk->frame_list_work, ret );
 				PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
+				seq = SUBSEQ_SELECTSEXEXIT;
 			}
 		}
 		break;
@@ -2594,7 +2616,7 @@ static int Subseq_SelectItemHaveInit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 {
 	ClearMainDisp( wk );
 
-	FrameListInit(wk, BOXSEARCH_LISTID_MOTIMONO );
+	FrameListInit(wk, BOXSEARCH_LISTID_MOTIMONO, 0 );
 
 	SubTextPrint( wk, SUBSEQ_SELECTITEMHAVEINIT );
 
@@ -2624,6 +2646,7 @@ static int Subseq_SelectItemHave(BOX_SEARCH_MAIN_WORK *wk, int seq)
 			PutCheckObj( wk, BOXSEARCH_OBJID_CHECK0, result );
 			PrintNowSelect( wk, wk->msg, item_msg_tbl[wk->param->syswk->search_data.item] );
 			PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
+			seq = SUBSEQ_SELECTITEMHAVEEXIT;
 		}
 		break;
 
@@ -2646,6 +2669,7 @@ static int Subseq_SelectItemHave(BOX_SEARCH_MAIN_WORK *wk, int seq)
 				PrintNowSelect( wk, wk->msg, item_msg_tbl[wk->param->syswk->search_data.item] );
 				FRAMELIST_SetCursorPos( wk->frame_list_work, ret );
 				PMSND_PlaySE( SE_BOX2_SEARCH_DECIDE );
+				seq = SUBSEQ_SELECTITEMHAVEEXIT;
 			}
 		}
 		break;
@@ -2665,7 +2689,7 @@ static int Subseq_SelectMarkInit(BOX_SEARCH_MAIN_WORK *wk, int seq)
 
 	ClearMainDisp( wk );
 
-  FrameListInit( wk, BOXSEARCH_LISTID_MARK );
+  FrameListInit( wk, BOXSEARCH_LISTID_MARK, 0 );
 
   SubTextPrint( wk, SUBSEQ_SELECTMARKINIT );
 
@@ -3686,7 +3710,7 @@ static void PrintPokemonInfo( BOX_SEARCH_MAIN_WORK * wk, u32 id )
 }
 
 
-static void FrameListInit(BOX_SEARCH_MAIN_WORK *wk, int type)
+static void FrameListInit(BOX_SEARCH_MAIN_WORK *wk, int type, int pos)
 {
   ARCHANDLE * arc_handle;
   FRAMELIST_HEADER  header = FrameListHeader;
@@ -3752,6 +3776,15 @@ static void FrameListInit(BOX_SEARCH_MAIN_WORK *wk, int type)
 	if( header.itemMax <= 7 ){
 		header.touch   = FrameListTouchNoScrollTbl;
 	}
+
+	if( pos >= wk->flist_pos_max ){
+		header.initScroll = pos - (wk->flist_pos_max-1);
+		header.initPos = pos - header.initScroll;
+	}else{
+		header.initScroll = 0;
+		header.initPos = pos;
+	}
+
   wk->frame_list_work = FRAMELIST_Create( &header, wk->heapID );
 	wk->flist_item_max  = header.itemMax;
 
