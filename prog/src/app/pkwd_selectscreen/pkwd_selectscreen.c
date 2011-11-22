@@ -1766,7 +1766,7 @@ static void _draw_movie_subtitle( PKWD_SELECT_SCREEN_MAIN_WORK *wk, int index )
   int sex = MyStatus_GetMySex(wk->param->mystatus);
   
   // 録画データなし
-  if(wk->load_result[index]==0){
+  if((wk->load_result[index]==0)||(wk->nowpos == -1)){
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->print_util[PKWD_BMP_SUBTITLE_U].win), 0 );
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->print_util[PKWD_BMP_SUBTITLE_D].win), 0 );
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->print_util[PKWD_BMP_SUB_DATE].win),   0 );
@@ -2126,13 +2126,13 @@ static BOOL SubSeq_Main( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 
       // ページ切り替え処理まとめ
       wk->page ^= 1;
-      if( wk->isTouch==TRUE){
+//      if( wk->isTouch==TRUE){
         wk->nowpos = _check_nowpos( wk );
         _draw_titlelist( wk );
         _draw_movie_subtitle( wk, _get_real_pos( wk, wk->nowpos) );
         _blink_palanime_exit( wk );
         _blink_palanime_init( wk );
-      }
+//      }
       PkwdSelectScreen_ListObj_Update( wk, wk->page );
     }
   }
