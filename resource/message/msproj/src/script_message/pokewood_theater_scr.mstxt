@@ -2,7 +2,8 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_pw_theater_menu_01">
+		Label="msg_pw_theater_menu_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>えいがを　みる</Text>
@@ -27,7 +28,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_theater_menu_02">
+		Label="msg_pw_theater_menu_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>せつめいを　きく</Text>
@@ -52,7 +54,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_theater_menu_03">
+		Label="msg_pw_theater_menu_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>やめる</Text>
@@ -77,7 +80,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_theater_01">
+		Label="msg_pw_theater_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケウッド　シアターへ　ようこそ
@@ -127,7 +131,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_theater_02">
+		Label="msg_pw_theater_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>こちらでは　さつえいスタジオで
@@ -175,7 +180,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_theater_03">
+		Label="msg_pw_theater_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>それでは　ごらんに　なりたい
@@ -215,7 +221,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_theater_04">
+		Label="msg_pw_theater_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>もうしわけ　ございません……▼
@@ -261,7 +268,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_theater_05">
+		Label="msg_pw_theater_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>それでは　まもなく　じょうえいです
@@ -298,7 +306,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_theater_06">
+		Label="msg_pw_theater_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>それでは　またの　おこしを
@@ -335,7 +344,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw__monitor_01">
+		Label="msg_pw__monitor_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ただいま　こちらの　モニターは
@@ -371,7 +381,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_starnpc_01">
+		Label="msg_pw_starnpc_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>いやあー　ちょっと！！
@@ -416,7 +427,8 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_starnpc_02">
+		Label="msg_pw_starnpc_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>こんかいの　[Name:TrainerName ]ちゃんの
@@ -463,7 +475,8 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_starnpc_03">
+		Label="msg_pw_starnpc_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>こんかいの　[Name:TrainerName ]ちゃんの
@@ -514,7 +527,8 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_starnpc_04">
+		Label="msg_pw_starnpc_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>こんかいの　[Name:TrainerName ]ちゃんの
@@ -565,7 +579,8 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_starnpc_05">
+		Label="msg_pw_starnpc_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>んー　そうねー
@@ -606,7 +621,8 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_starnpc_06">
+		Label="msg_pw_starnpc_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>じゃーね！　[Name:TrainerName ]ちゃん！！
@@ -641,7 +657,8 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_show_01">
+		Label="msg_pw_tutorial_show_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さあさあ！
@@ -686,7 +703,8 @@ msg_pw_tutorial_show_02</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_show_02">
+		Label="msg_pw_tutorial_show_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>これは　これは
@@ -737,7 +755,8 @@ msg_pw_tutorial_show_03</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_show_03">
+		Label="msg_pw_tutorial_show_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>そうですか！　それは　なにより！▼</Text>
@@ -778,7 +797,8 @@ msg_pw_tutorial_show_04</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_show_04">
+		Label="msg_pw_tutorial_show_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>で？　こちらは　どちらさま？▼</Text>
@@ -820,7 +840,8 @@ msg_pw_tutorial_show_05</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_show_05">
+		Label="msg_pw_tutorial_show_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>こちら　[Name:TrainerName ]さん！▼
@@ -873,7 +894,8 @@ msg_pw_tutorial_show_06</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_show_06">
+		Label="msg_pw_tutorial_show_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>そうですか　むすめを……▼
@@ -933,7 +955,8 @@ msg_pw_tutorial_show_07</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_show_07">
+		Label="msg_pw_tutorial_show_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>それはいい！　[Name:TrainerName ]さん！
@@ -976,7 +999,8 @@ msg_pw_tutorial_show_08</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_show_08">
+		Label="msg_pw_tutorial_show_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>よしよし！　いきましょう！▼</Text>
@@ -1028,7 +1052,80 @@ msg_pw_tutorial_show_09</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_show_09">
+		Label="msg_pw_tutorial_show_08a"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>仮メッセージ
+こちらで　うけつけ　いたします▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-22T10:51:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-22T10:51:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ
+こちらで　うけつけ　いたします▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-22T10:51:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-22T10:51:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀INFORMATIONW</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-22T10:50:25" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_tutorial_show_08b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>仮メッセージ▼
+うけつけ　かんりょう！
+さあ　とくとうせきで　みましょう！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-22T10:53:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-22T10:51:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼
+うけつけ　かんりょう！
+さあ　とくとうせきで　みましょう！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-22T10:53:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-22T10:51:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂PWDADDY</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-22T10:50:17" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pw_tutorial_show_09"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>……　……▼</Text>
@@ -1069,7 +1166,8 @@ msg_pw_tutorial_show_10</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_show_10">
+		Label="msg_pw_tutorial_show_10"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おつかれさまでした！
@@ -1116,7 +1214,8 @@ msg_pw_tutorial_show_11</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_show_11">
+		Label="msg_pw_tutorial_show_11"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>……　……▼</Text>
@@ -1157,7 +1256,8 @@ msg_pw_tutorial_show_12</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_show_12">
+		Label="msg_pw_tutorial_show_12"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ん？　どうしたんです？</Text>
@@ -1199,7 +1299,8 @@ msg_pw_tutorial_show_13</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_show_13">
+		Label="msg_pw_tutorial_show_13"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>フフフッ……▼
@@ -1244,7 +1345,8 @@ msg_pw_tutorial_show_14</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_show_14">
+		Label="msg_pw_tutorial_show_14"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>え……？▼</Text>
@@ -1286,7 +1388,8 @@ msg_pw_tutorial_show_14</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_show_15">
+		Label="msg_pw_tutorial_show_15"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ひとには　むき　ふむきが　ある……
@@ -1345,7 +1448,8 @@ msg_pw_tutorial_show_16</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_show_16">
+		Label="msg_pw_tutorial_show_16"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>そ　その　とおりですね！▼</Text>
@@ -1387,7 +1491,8 @@ msg_pw_tutorial_show_17</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_show_17">
+		Label="msg_pw_tutorial_show_17"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>とはいえ　ひとまず　わたしは
@@ -1440,7 +1545,8 @@ msg_pw_tutorial_show_17</Comment>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_pw_tutorial_show_18">
+		Label="msg_pw_tutorial_show_18"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さてと……

@@ -49,11 +49,10 @@ _EVENT_DATA_END
 /**************************************************************/
 INIT_EVENT_START  ev_init_pkwd_theater
   IF $WK_SCENE_C15_TUTORIAL_01 < 3 THEN
-    _OBJ_POS_CHANGE( C15R0301_PWSTAFF_01, 16, 0, 31, DIR_UP )
-    _OBJ_POS_CHANGE( C15R0301_PWDADDY_01, 12, 0, 23, DIR_DOWN )
+    _OBJ_POS_CHANGE( C15R0301_PWSTAFF_01, 15, 0, 30, DIR_DOWN )
+    _OBJ_POS_CHANGE( C15R0301_PWDADDY_01, 12, 0, 23, DIR_RIGHT )
   ENDIF
 INIT_EVENT_END
-
 
 //==============================================================================
 //
@@ -84,33 +83,57 @@ EVENT_START   ev_reserve_pkwd_theater_tutorial
   //「さあさあ！受付はこちらですよ▼
   _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_01, C15R0301_PWSTAFF_01, POS_DOWN )
   _MSGWIN_CLOSE()
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_tutorial_first_step )
-  _OBJ_ANIME( C15R0301_PWSTAFF_01, anm_tutorial_first_step )
+  
+  _OBJ_ANIME_AUTO( C15R0301_PWSTAFF_01, 15,23, FORCE_TYPE_NOT, 8, DIR_UD )
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 15,24, FORCE_TYPE_NPC, 8, DIR_UD )
   _OBJ_ANIME_WAIT()
-
+  
   //(12,23)あたりに配置
   //「！」表示
   _OBJ_ANIME( C15R0301_PWDADDY_01, anm_tutorial_gyoe )
   _OBJ_ANIME_WAIT()
+  
+  _OBJ_ANIME( C15R0301_PWDADDY_01, anm_walk_r )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  _OBJ_ANIME( C15R0301_PWSTAFF_01, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+
   //「スカウトさんじゃありませんか！
   _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_02, C15R0301_PWDADDY_01, POS_DOWN )
   _MSGWIN_CLOSE()
+  
   //「そうですか！それは　なにより！
-  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_03, C15R0301_PWSTAFF_01, POS_DOWN )
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_03, C15R0301_PWSTAFF_01, POS_UP )
   _MSGWIN_CLOSE()
+  
+  //アニメ：主人公に隣接
+  _OBJ_ANIME( C15R0301_PWDADDY_01, anm_walk_d )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C15R0301_PWDADDY_01, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+
   //「で？　こちらは　どちらさま？
   _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_04, C15R0301_PWDADDY_01, POS_DOWN )
   _MSGWIN_CLOSE()
+  
   //「こちらは～さん！おたくの娘さんにチャレンジしているところを
   _PLAYER_NAME( 0 )
-  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_05, C15R0301_PWSTAFF_01, POS_DOWN )
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_05, C15R0301_PWSTAFF_01, POS_UP )
   _MSGWIN_CLOSE()
+  
   //「そうか娘を…それはたしかにいいウデをしたトレーナーなんでしょうね
   _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_06, C15R0301_PWDADDY_01, POS_DOWN )
   _MSGWIN_CLOSE()
+  
+  //「！」表示
+  _OBJ_ANIME( C15R0301_PWSTAFF_01, anm_tutorial_gyoe )
+  _OBJ_ANIME_WAIT()
+  
   //「それはいい！　～さん！これからの参考になりますよ
-  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_07, C15R0301_PWSTAFF_01, POS_DOWN )
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_07, C15R0301_PWSTAFF_01, POS_UP )
   _MSGWIN_CLOSE()
+  
   //「よしよし！いきましょう！
   _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_08, C15R0301_PWDADDY_01, POS_DOWN )
   _MSGWIN_CLOSE()
@@ -118,45 +141,93 @@ EVENT_START   ev_reserve_pkwd_theater_tutorial
   _CALL ev_pkwd_tutorial_watch_movie
   
   //「……　……
-  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_09, C15R0301_PWDADDY_01, POS_DOWN )
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_09, C15R0301_PWDADDY_01, POS_UP )
   _MSGWIN_CLOSE()
+  
   //スタッフの位置を見えないギリギリに移動する
-  _OBJ_POS_CHANGE( C15R0301_PWSTAFF_01, 16, 0, 17, DIR_UP )
-  _OBJ_ANIME( C15R0301_PWSTAFF_01, anm_tutorial_pwstaff_appear )
+  _OBJ_POS_CHANGE( C15R0301_PWSTAFF_01, 15, 0, 17, DIR_UP )
+  _OBJ_ANIME_AUTO( C15R0301_PWSTAFF_01, 15,13, FORCE_TYPE_NOT, 8, DIR_UD )
   _OBJ_ANIME_WAIT()
+  
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
   //「おつかれさまでした！どうでしたか！映画は？
   _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_10, C15R0301_PWSTAFF_01, POS_DOWN )
   _MSGWIN_CLOSE()
+  
   //「……　……
-  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_11, C15R0301_PWDADDY_01, POS_DOWN )
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_11, C15R0301_PWDADDY_01, POS_UP )
   _MSGWIN_CLOSE()
+  
   //「ん？どうしたんです？
   _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_12, C15R0301_PWSTAFF_01, POS_DOWN )
+  _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
+  
+  //アニメ：左に1歩
+  _OBJ_ANIME( C15R0301_PWDADDY_01, anm_walk_l_16f )
+  _TIME_WAIT( 16 )
+  _OBJ_ANIME( C15R0301_PWSTAFF_01, anm_staystep_l )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+  
   //「フフフッ……あこがれの銀幕に立てたんです…いい夢見せてもらいました…
-  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_13, C15R0301_PWDADDY_01, POS_DOWN )
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_13, C15R0301_PWDADDY_01, POS_UP )
   _MSGWIN_CLOSE()
+  
   //「え……？
   _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_14, C15R0301_PWSTAFF_01, POS_DOWN )
   _MSGWIN_CLOSE()
+
+  //アニメ：下に1歩
+  _OBJ_ANIME( C15R0301_PWDADDY_01, anm_walk_d_16f )
+  _OBJ_ANIME_WAIT()
+
   //「人には向きと不向きがある…そんなのはわかってるんです…
-  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_15, C15R0301_PWDADDY_01, POS_DOWN )
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_15, C15R0301_PWDADDY_01, POS_UP )
   _MSGWIN_CLOSE()
+
   //「そ　その　とおりです！チャレンジすることをあきらめちゃダメですよ！
   _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_16, C15R0301_PWSTAFF_01, POS_DOWN )
   _MSGWIN_CLOSE()
+
+  _OBJ_ANIME( C15R0301_PWDADDY_01, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+
+  _PLAYER_NAME( 0 )
+
   //「とはいえひとまず私は自分の仕事に戻ります
-  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_17, C15R0301_PWDADDY_01, POS_DOWN )
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_17, C15R0301_PWDADDY_01, POS_UP )
   _MSGWIN_CLOSE()
+
   _OBJ_ANIME( C15R0301_PWDADDY_01, anm_tutorial_pwdaddy_disappear )
+  _TIME_WAIT( 10 )
+  _OBJ_ANIME( C15R0301_PWSTAFF_01, anm_staystep_d )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+
+  _TIME_WAIT( 20 )
+
+  _OBJ_ANIME( C15R0301_PWSTAFF_01, anm_staystep_u )
   _OBJ_ANIME_WAIT()
 
   //「さてと……そろそろ　まいりましょうか！
   _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_18, C15R0301_PWSTAFF_01, POS_DOWN )
   _MSGWIN_CLOSE()
 
-  _MAP_CHANGE( ZONE_ID_C15, 45, 18, DIR_DOWN ) 
+  //画面暗転処理
+  _MAP_FADE_BLACK_OUT_SLOW()
+  
+  _OBJ_ANIME_AUTO( C15R0301_PWSTAFF_01, 15,18, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 15,17, FORCE_TYPE_NPC, 8, DIR_UD )
+
+  _MAP_FADE_END_CHECK()
+  _OBJ_ANIME_WAIT()
+  
+  _MAP_CHANGE_NO_FADE( ZONE_ID_C15, 45, 3, 18 , DIR_DOWN )
   //→ev_scene_c15_tutorial_02へ
+
 EVENT_END
 
 _ANIME_LABEL anm_tutorial_first_step
@@ -180,20 +251,44 @@ ev_pkwd_tutorial_watch_movie:
   //フェスミッション強制終了処理
   _FMISSION_END_FORCE()
   
-  //スクリーンに入る
+  //受付にいく
   _OBJ_ANIME( C15R0301_PWDADDY_01, anm_tutorial_pwdaddy_go_theater )
-  _TIME_WAIT( 8 * 2 )
+  _OBJ_ANIME_WAIT()
+
+  _OBJ_ANIME( C15R0301_PWDADDY_01, anm_tutorial_pwdaddy_go_info )
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_tutorial_player_go_info )
+  _OBJ_ANIME( C15R0301_PWSTAFF_01, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+
+  //受付：うけつけする
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_08a ,C15R0301_PKWD_SHOW ,POS_UP )
+  _MSGWIN_CLOSE()
+  
+  _OBJ_ANIME( C15R0301_PWDADDY_01, anm_staystep_l )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+
+  //ホミカ父：さあ　いこう
+  _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_show_08b ,C15R0301_PWDADDY_01 ,POS_UP )
+  _MSGWIN_CLOSE()
+
+  //受付にいく
+  _OBJ_ANIME( C15R0301_PWDADDY_01, anm_tutorial_pwdaddy_go_theater1 )
+  _TIME_WAIT( 8 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_tutorial_player_go_theater )
   _OBJ_ANIME_WAIT()
 
   _PLAYER_POS_GET( LWK_HEROX, LWK_HEROZ )
   $LWK_HEROZ -= 1
-  _BMODEL_ANIME_CREATE( LWK_BM_DOOR_ID, SCR_BMID_DOOR, LWK_HEROX, LWK_HEROZ )
+  _BMODEL_ANIME_CREATE( LWK_BM_DOOR_ID, SCR_BMID_DOOR, 15, 8 )
   _BMODEL_ANIME_SET( LWK_BM_DOOR_ID, SCR_BMANM_DOOR_OPEN )
   _BMODEL_ANIME_WAIT( LWK_BM_DOOR_ID )
 
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_in_theater )
-  _OBJ_ANIME( C15R0301_PWDADDY_01, anm_player_go_in_theater )
+  _OBJ_ANIME( C15R0301_PWDADDY_01, anm_walk_u )
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_u )
   _OBJ_ANIME_WAIT()
 
   _MAP_FADE_BLACK_OUT()
@@ -215,8 +310,8 @@ ev_pkwd_tutorial_watch_movie:
   _MAP_FADE_END_CHECK()
 
   //スクリーンから出てくる
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_out_theater )
-  _OBJ_ANIME( C15R0301_PWDADDY_01, anm_player_go_out_theater )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tutorial_go_out_theater )
+  _OBJ_ANIME( C15R0301_PWDADDY_01, anm_pwdaddy_tutorial_go_out_theater )
   _OBJ_ANIME_WAIT()
 
   //アニメ再開
@@ -226,17 +321,49 @@ ev_pkwd_tutorial_watch_movie:
 _RET
 
 _ANIME_LABEL anm_tutorial_player_go_theater
-  _ANIME_DATA AC_WALK_U_8F, 16
+  _ANIME_DATA AC_WALK_R_8F, 6
+  _ANIME_DATA AC_WALK_U_8F, 1
   _ANIME_DATA ACMD_END, 0
 
 _ANIME_LABEL anm_tutorial_pwdaddy_go_theater
-  _ANIME_DATA AC_WALK_R_8F, 2
-  _ANIME_DATA AC_WALK_U_8F, 14
+  _ANIME_DATA AC_WALK_R_8F, 1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL anm_tutorial_pwdaddy_go_info
+  _ANIME_DATA AC_WALK_U_8F, 11
+  _ANIME_DATA AC_WALK_L_8F, 4
+  _ANIME_DATA AC_WALK_U_8F, 2
+  _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL anm_tutorial_player_go_info
+  _ANIME_DATA AC_WALK_L_8F, 1
+  _ANIME_DATA AC_WALK_U_8F, 11
+  _ANIME_DATA AC_WALK_L_8F, 5
+  _ANIME_DATA AC_WALK_U_8F, 2
+  _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL anm_tutorial_pwdaddy_go_theater1
+  _ANIME_DATA AC_WALK_R_8F, 5
+  _ANIME_DATA AC_WALK_U_8F, 2
   _ANIME_DATA ACMD_END, 0
 
 _ANIME_LABEL anm_tutorial_go_out_theater
   _ANIME_DATA AC_WALK_D_8F, 3
   _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL anm_pwdaddy_tutorial_go_out_theater
+  _ANIME_DATA AC_WALK_D_8F,2
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL anm_player_tutorial_go_out_theater
+  _ANIME_DATA AC_WALK_D_8F,2
+  _ANIME_DATA AC_WAIT_8F,2
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
 
 /**************************************************************/
 //    ポケウッド：上映受付
@@ -672,5 +799,88 @@ EVENT_START   ev_pokewood_monitor
 }
 EVENT_END
 
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l_16f
+	_ANIME_DATA	AC_WALK_L_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_d_16f
+	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+_ANIME_LABEL	anm_stay_l_4
+	_ANIME_DATA	AC_STAY_WALK_L_2F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：はてな
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
 
 

@@ -38,5 +38,10 @@
 #define SCRID_C15_ADULTW_03 (31)
 #define SCRID_C15_VETERANM_01 (32)
 #define SCRID_SCENE_C15_TUTORIAL_02 (33)
+#define SCRID_BG_C15_01 (34)
+#define SCRID_BG_C15_02 (35)
+#define SCRID_BG_C15_03 (36)
+#define SCRID_BG_C15_04 (37)
+#define SCRID_BG_C15_05 (38)
 
 #endif //_C15_DEF_H_

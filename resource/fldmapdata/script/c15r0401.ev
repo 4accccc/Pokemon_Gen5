@@ -25,6 +25,12 @@ _EVENT_DATA    ev_c15r0401_adaltw_01
 _EVENT_DATA    ev_c15r0401_adaltw_02
 _EVENT_DATA    ev_c15r0401_middleman2_01
 _EVENT_DATA    ev_c15r0401_policeman_01
+_EVENT_DATA	ev_bg_c15r0401_01
+_EVENT_DATA	ev_bg_c15r0401_02
+_EVENT_DATA	ev_bg_c15r0401_03
+_EVENT_DATA	ev_bg_c15r0401_04
+_EVENT_DATA	ev_bg_c15r0401_05
+_EVENT_DATA	ev_bg_c15r0401_06
 _EVENT_DATA_END
 
 
@@ -104,3 +110,64 @@ EVENT_START		ev_c15r0401_policeman_01
   _PLAYER_NAME( 0 )
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c15r0401_policeman_01 )
 EVENT_END
+
+/************************************************************/
+/*					BG：ファンレター				*/
+/************************************************************/
+EVENT_START	ev_bg_c15r0401_01
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c15r0401_bg_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*					BG：映画の台本					*/
+/************************************************************/
+EVENT_START	ev_bg_c15r0401_02
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c15r0401_bg_02 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*					BG：かがみ					*/
+/************************************************************/
+EVENT_START	ev_bg_c15r0401_03
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c15r0401_bg_03 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*				BG：メイクの小道具					*/
+/************************************************************/
+EVENT_START	ev_bg_c15r0401_04
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c15r0401_bg_04 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*					BG：衣装						*/
+/************************************************************/
+EVENT_START	ev_bg_c15r0401_05
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c15r0401_bg_05 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*					BG：衣装２					*/
+/************************************************************/
+EVENT_START	ev_bg_c15r0401_06
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c15r0401_bg_06 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+EVENT_END
+

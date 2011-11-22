@@ -42,6 +42,13 @@
 				User="matsumiya:W00224"
 				Time="2011-08-10T12:25:29" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_tutorial_00_01"
@@ -85,6 +92,13 @@ x31,z55辺りに配置
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-04T05:35:01" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_tutorial_00_02"
@@ -126,6 +140,13 @@ x31,z54辺りに配置
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-04T05:36:14" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_tutorial_00_03"
@@ -165,6 +186,13 @@ x31,z54辺りに配置
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-04T05:36:19" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_tutorial_00_04"
@@ -210,6 +238,13 @@ x31,z54辺りに配置
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-04T05:36:22" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_tutorial_00_05"
@@ -261,6 +296,13 @@ x31,z54辺りに配置
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-04T05:36:34" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_tutorial_00_06"
@@ -300,6 +342,13 @@ x31,z54辺りに配置
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-04T05:36:44" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_tutorial_00_07"
@@ -349,6 +398,13 @@ x31,z54辺りに配置
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-04T05:37:15" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_tutorial_01"
@@ -391,6 +447,13 @@ x31,z54辺りに配置
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-07T12:31:03" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_tutorial_02"
@@ -441,6 +504,13 @@ x31,z54辺りに配置
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-04T05:38:48" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_tutorial_03"
@@ -501,6 +571,13 @@ x31,z54辺りに配置
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-04T05:38:51" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_tutorial_04"
@@ -557,6 +634,13 @@ x31,z54辺りに配置
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-04T05:38:53" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_oldman2_01_01"
@@ -608,6 +692,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-11T09:19:35" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_oldman2_01_02"
@@ -618,10 +709,10 @@ msg_c15_oldman1_01_04
 あの　そらの　くもが
 わしの　さくひんの　じゃまだっ！▼
 さつえいが　すすまんから
-いますぐ　どかして　こいっ！▼</Text>
+いますぐ　どかして　こいっ！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T07:06:59" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-22T06:21:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -633,10 +724,10 @@ msg_c15_oldman1_01_04
 あの　空の　雲の　形が
 わしの　イメージと　違うッ！▼
 撮影が　進まんから
-今すぐ　どかして　こいっッ！▼</Text>
+今すぐ　どかして　こいっッ！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T01:46:17" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-22T06:21:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -659,6 +750,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-11T09:19:31" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_oldman2_01_03"
@@ -708,6 +806,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-11T09:19:27" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_oldman2_01_05"
@@ -759,6 +864,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-11T09:19:24" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_oldman2_01_04"
@@ -815,6 +927,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-11T08:03:09" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#00ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_middleman_01"
@@ -861,6 +980,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-11T09:20:22" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_poke30_01"
@@ -896,6 +1022,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-11T09:21:08" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_man1_01_01"
@@ -945,6 +1078,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-09T03:50:52" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_pwmoji_01_01"
@@ -988,6 +1128,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-10-18T10:00:28" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_pwmoji_02_01"
@@ -1022,13 +1169,20 @@ msg_c15_oldman1_01_04
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀PWMOJI
+			<Comment>♂PWMOJI
 
 （X8,Y12）辺りに配置</Comment>
 			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:23:44" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-22T07:51:48" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_pwmoji_03_01"
@@ -1070,6 +1224,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-10-18T10:00:34" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_man1_02_01"
@@ -1111,6 +1272,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-11T09:41:18" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_aduttw01_01"
@@ -1151,6 +1319,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-11T09:25:12" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_aduttw01_02"
@@ -1194,6 +1369,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-11T09:25:08" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_oldman2_02_01"
@@ -1237,6 +1419,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-11T09:25:04" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_oldman2_02_02"
@@ -1282,6 +1471,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-11T09:25:23" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_clown_01"
@@ -1337,6 +1533,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-11T09:25:54" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_clown_02"
@@ -1394,6 +1597,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-11T09:26:06" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_clown_03"
@@ -1448,6 +1658,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-11T09:26:10" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_middlewoman1_01"
@@ -1491,6 +1708,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-11T09:27:07" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_babyboy1_01"
@@ -1535,6 +1759,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-11T09:28:14" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_babyboy1_02"
@@ -1581,6 +1812,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-11T09:28:21" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_badrider_01_01"
@@ -1622,6 +1860,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-11T09:28:46" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_babygirl1_01_01"
@@ -1661,6 +1906,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-11T09:29:34" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_babygirl1_02_01"
@@ -1702,6 +1954,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-11T09:43:19" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_middleman_02"
@@ -1740,6 +1999,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-09-11T09:50:21" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_pwstaff_02"
@@ -1782,6 +2048,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-09T03:53:01" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_middlewoman1_02"
@@ -1825,7 +2098,7 @@ msg_c15_oldman1_01_04
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#ff00ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1871,6 +2144,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-10-18T09:57:41" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_woman3_01"
@@ -1907,6 +2187,13 @@ msg_c15_oldman1_01_04
 				User="nakatsui:DB5YGPBX"
 				Time="2011-10-18T10:08:04" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_pwmoji_04_01"
@@ -1952,6 +2239,13 @@ Buona giornata！</Text>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-10-18T10:34:26" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_babygirl2_01"
@@ -1995,6 +2289,13 @@ are way beyond yours, rookie!</Text>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-10-18T10:09:55" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_adultw_0"
@@ -2044,6 +2345,13 @@ are way beyond yours, rookie!</Text>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-10-21T03:28:54" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_pwmoji_05_01"
@@ -2085,6 +2393,13 @@ Bis  bald.</Text>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-10-21T03:28:42" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_babyboy1_03"
@@ -2122,6 +2437,13 @@ Bis  bald.</Text>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-10-18T10:27:26" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_adultw_02"
@@ -2161,6 +2483,13 @@ Bis  bald.</Text>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-10-18T12:03:00" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff00ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_veteranm_01"
@@ -2202,6 +2531,13 @@ Bis  bald.</Text>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-09T03:56:26" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_end_01"
@@ -2254,6 +2590,13 @@ Bis  bald.</Text>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-10-18T08:35:02" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c15_end_02"
@@ -2511,7 +2854,7 @@ Bis  bald.</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀GENTLEMAN
+			<Comment>♂GENTLEMAN
 
 連れ歩き途中に話しかけられる。x33z15辺りに配置。
 
@@ -2519,8 +2862,8 @@ Bis  bald.</Text>
 
 移動再開し暫くして→msg_pw__end_09</Comment>
 			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:29:01" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-22T06:18:00" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -2816,7 +3159,8 @@ Bis  bald.</Text>
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15_bg01">
+		Label="msg_c15_bg_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケウッドムービースタジオ
@@ -2832,25 +3176,33 @@ Bis  bald.</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケウッドムービースタジオ
-かんけいしゃいがい　たちいりきんし</Text>
+関係者以外　立ち入り禁止</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-21T08:07:44" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-22T02:45:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-21T08:07:44" />
 		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15_bg02">
+		Label="msg_c15_bg_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よく　みると　ベニヤいたで
-つくられた　たてものだ</Text>
+			<Text>ハリボテとは　おもえない　ほど
+こった　つくりの　たてものだ</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-21T08:07:07" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-22T12:03:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2858,19 +3210,27 @@ Bis  bald.</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よく　みると　ベニヤいたで
-つくられた　たてものだ</Text>
+			<Text>ハリボテとは　思えない　ほど
+凝った　つくりの　建物だ</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-21T08:07:44" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-22T12:03:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-21T08:07:44" />
 		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15_bg03">
+		Label="msg_c15_bg_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さつえいようの　こどうぐが
@@ -2885,19 +3245,27 @@ Bis  bald.</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さつえいようの　こどうぐが
+			<Text>撮影用の　小道具が
 いっぱい　はいってる！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-21T08:07:44" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-22T02:45:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-21T08:07:44" />
 		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15_bg04">
+		Label="msg_c15_bg_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さつえいようの　セット▼
@@ -2913,20 +3281,28 @@ Bis  bald.</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さつえいようの　セット▼
-せいこうに　つくられた
+			<Text>撮影用の　セット▼
+精巧に　つくられた
 ロイヤルイッシュごう　だ</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-21T08:08:18" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-22T02:46:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-21T08:07:44" />
 		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15_bg05">
+		Label="msg_c15_bg_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さつえいようの　セット▼
@@ -2942,16 +3318,23 @@ Bis  bald.</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さつえいようの　セット▼
-１４４ぶんの１
+			<Text>撮影用の　セット▼
+１４４分の１
 スカイアローブリッジ</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-21T08:08:48" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-22T02:46:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-21T08:07:44" />
 		</LanguageCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>

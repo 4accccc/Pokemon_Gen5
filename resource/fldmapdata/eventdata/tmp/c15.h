@@ -55,5 +55,50 @@
 #ifndef ZONE_C15_EVB_H
 #define ZONE_C15_EVB_H
 
+#define BG_C15_05A                        0
+#define BG_C15_05B                        1
+#define BG_C15_05C                        2
+#define BG_C15_05D                        3
+#define BG_C15_05E                        4
+#define BG_C15_05F                        5
+#define BG_C15_05G                        6
+#define BG_C15_05H                        7
+#define BG_C15_05I                        8
+#define BG_C15_05J                        9
+#define BG_C15_05K                       10
+#define BG_C15_05L                       11
+#define BG_C15_05M                       12
+#define BG_C15_05N                       13
+#define BG_C15_05O                       14
+#define BG_C15_05P                       15
+#define BG_C15_05Q                       16
+#define BG_C15_05R                       17
+#define BG_C15_04A                       18
+#define BG_C15_04B                       19
+#define BG_C15_04C                       20
+#define BG_C15_04D                       21
+#define BG_C15_04E                       22
+#define BG_C15_04F                       23
+#define BG_C15_04G                       24
+#define BG_C15_04H                       25
+#define BG_C15_04I                       26
+#define BG_C15_04J                       27
+#define BG_C15_04K                       28
+#define BG_C15_04L                       29
+#define BG_C15_04M                       30
+#define BG_C15_04N                       31
+#define BG_C15_04O                       32
+#define BG_C15_04P                       33
+#define BG_C15_03A                       34
+#define BG_C15_03B                       35
+#define BG_C15_02A                       36
+#define BG_C15_02B                       37
+#define BG_C15_02C                       38
+#define BG_C15_02D                       39
+#define BG_C15_02E                       40
+#define BG_C15_02F                       41
+#define BG_C15_02G                       42
+#define BG_C15_01A                       43
+#define BG_C15_01B                       44
 
 #endif //ZONE_C15_EVB_H

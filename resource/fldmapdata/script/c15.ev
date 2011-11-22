@@ -16,6 +16,7 @@
   .include  "pokewood_theater_def.h"
   
   //@author Mizuguchi_Mai
+  //@author suginaka_katsunori //演出調整・NPC配置
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -57,6 +58,11 @@ _EVENT_DATA    ev_c15_babyboy1_03
 _EVENT_DATA    ev_c15_adultw_03
 _EVENT_DATA    ev_c15_veteranm_01
 _EVENT_DATA    ev_scene_c15_tutorial_02
+_EVENT_DATA	ev_bg_c15_01
+_EVENT_DATA	ev_bg_c15_02
+_EVENT_DATA	ev_bg_c15_03
+_EVENT_DATA	ev_bg_c15_04
+_EVENT_DATA	ev_bg_c15_05
 _EVENT_DATA_END
 
 //主人公方向取得変数
@@ -108,13 +114,13 @@ INIT_EVENT_START ev_init_c15
   IF $WK_SCENE_C15_TUTORIAL_01 == 1 THEN
     //チュートリアル開始：初めてC15に入ったタイミング
     //　スタッフ移動
-    _OBJ_POS_CHANGE( C15_PWSTAFF_01, 31, 0, 56, DIR_UP )
+    _OBJ_POS_CHANGE( C15_PWSTAFF_01, 32, 0, 56, DIR_LEFT )
     //　オーナー移動
-    _OBJ_POS_CHANGE( C15_PWOWNER_01, 31, 0, 55, DIR_DOWN )
+    _OBJ_POS_CHANGE( C15_PWOWNER_01, 30, 0, 56, DIR_RIGHT )
   ELSIF $WK_SCENE_C15_TUTORIAL_01 == 2 THEN
     //チュートリアル中：シアターから出てきたタイミング
     //　スタッフ移動
-    _OBJ_POS_CHANGE( C15_PWSTAFF_01, 46, 0, 18, DIR_UP )
+    _OBJ_POS_CHANGE( C15_PWSTAFF_01, 45, 0, 19, DIR_DOWN )
     //　オーナー移動なし（プレイヤーにみえない位置）
   ENDIF
 
@@ -134,42 +140,74 @@ INIT_EVENT_END
 EVENT_START		ev_scene_c15_tutorial_01
 
   //TODO：オーナーとスタッフを中心にするカメラの移動が必要！！！
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+
+  //カメラ操作　ちょっと上のほうを初期位置にする
+  _CAMERA_MOVE( 9688,0,970752,2064384,0,3768320,30 )	//一番最後の引数は移動にかかるフレーム数
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
   //オーナー：「なるほどな…よさそうじゃないか　そのこ…
   _BALLOONWIN_OBJMSG_POS( msg_c15_tutorial_00_01, C15_PWOWNER_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
+
   //スタッフ：「ええ…まもなくみえるとおもうんですが…
   _BALLOONWIN_OBJMSG_POS( msg_c15_tutorial_00_02, C15_PWSTAFF_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
-  //アニメ：スタッフ「！」
+
+  //アニメ：スタッフ「！」・主人公と向かい合う 
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
   _OBJ_ANIME( C15_PWSTAFF_01, anm_common_gyoe )
   _OBJ_ANIME_WAIT()
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( C15_PWOWNER_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+
   //スタッフ：「あ！うわさをすれば！
   _BALLOONWIN_OBJMSG_POS( msg_c15_tutorial_00_03, C15_PWSTAFF_01, POS_DEFAULT )
   //スタッフ：ウェルカムトゥ
   _PLAYER_NAME( 0 )
   _BALLOONWIN_OBJMSG_POS( msg_c15_tutorial_00_04, C15_PWSTAFF_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
-  //オーナー：「ハロー！ハロー！バクはウッドウ！
+
+  //カメラ操作　デフォ位置に移動
+  _CAMERA_RECV_MOVE(15)	//カメラ復帰移動
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  _CAMERA_BIND()		//カメラバインド
+  _CAMERA_END()
+
+  //アニメ：オーナー・主人公向き合う
+  _OBJ_ANIME( C15_PWOWNER_01, anm_walk_r )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C15_PWOWNER_01, anm_staystep_d )
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 31, 58, FORCE_TYPE_NPC, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+
+  //オーナー：「ハロー！ハロー！ボクはウッドウ！
   _BALLOONWIN_OBJMSG_POS( msg_c15_tutorial_00_05, C15_PWOWNER_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   //スタッフ：「ではそれまでの間　案内しましょう！
   _BALLOONWIN_OBJMSG_POS( msg_c15_tutorial_00_06, C15_PWSTAFF_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
+  
+  //アニメ：オーナー・スタッフの方を向く
+  _OBJ_ANIME( C15_PWOWNER_01, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
   //オーナー：「ウンウン！それナイスね！
   _BALLOONWIN_OBJMSG_POS( msg_c15_tutorial_00_07, C15_PWOWNER_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
+
   //オーナー退出アニメ
-  _OBJ_ANIME_AUTO( C15_PWOWNER_01, 31, 40, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_AUTO( C15_PWOWNER_01, 31, 45, FORCE_TYPE_NOT, 8, DIR_UD )
   _OBJ_ANIME_WAIT()
   _OBJ_DEL( C15_PWOWNER_01 )
-
-  //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
-  $LCW_POSZ -= 2
   
   //アニメ：スタッフ接近
-  _OBJ_ANIME_AUTO( C15_PWSTAFF_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_walk_l )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_staystep_d )
   _OBJ_ANIME_WAIT()
   
   //スタッフ：「イエス！ボス！では～さん　わたくしとまいりましょう！」
@@ -181,20 +219,13 @@ EVENT_START		ev_scene_c15_tutorial_01
   _OBJ_ANIME_WAIT()
   
   //アニメ：移動
-  _OBJ_ANIME_AUTO( C15_PWSTAFF_01, 31,40, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_AUTO( C15_PWSTAFF_01, 31,32, FORCE_TYPE_NOT, 8, DIR_LR )
   _TIME_WAIT( 4 )
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
-  IF $LCW_POSX == 30 THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_wolk_center_x30 )
-  ELSIF $LCW_POSX == 31 THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_wolk_center_x31 )
-  ELSE
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_wolk_center_x32 )
-  ENDIF
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 31,33, FORCE_TYPE_NPC, 8, DIR_LR )
   _OBJ_ANIME_WAIT()
   
-  //アニメ：スタッフ左右を見る
-  _OBJ_ANIME( C15_PWSTAFF_01, anm_pwstaff_lr_look )
+  //アニメ：スタッフ・主人公を見る
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_staystep_d )
   _OBJ_ANIME_WAIT()
   
   //スタッフ：「せっかくですからポケウッドについて軽くご紹介しましょう
@@ -210,7 +241,7 @@ EVENT_START		ev_scene_c15_tutorial_01
   //カメラ操作　シアター写す
   _CAMERA_START()		//カメラ操作開始
   _CAMERA_PURGE()		//カメラのバインドを解く
-  _CAMERA_MOVE( 8664,0,970752,2981888,65551,1232896,40 )
+  _CAMERA_MOVE( 5848,0,970752,2981888,241695,1277952,40 )
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   
   //スタッフ：「ここは　シアター！
@@ -224,12 +255,15 @@ EVENT_START		ev_scene_c15_tutorial_01
   _CAMERA_WAIT_MOVE()
   _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
   _CAMERA_END()		//カメラ操作終了
-  
+
+  _OBJ_ANIME_AUTO( C15_PWSTAFF_01, 45,20, FORCE_TYPE_NOT, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
   _OBJ_ANIME( C15_PWSTAFF_01, anm_pwstaff_to_theater_in )
   _TIME_WAIT( 4 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_theater_in )
   _OBJ_ANIME_WAIT()
-  
 
   //==================================//
   //C16誘導イベントその２へ
@@ -238,27 +272,50 @@ EVENT_START		ev_scene_c15_tutorial_01
   //new!!!!!!    ここで　シアター内に遷移！　!!!!!!///
   _MAP_CHANGE( ZONE_ID_C15R0301, 15, 31, DIR_UP )
   _RESERVE_SCRIPT( SCRID_RESERVE_PKWD_THEATER_TUTORIAL )
+  
 EVENT_END
 
 EVENT_START ev_scene_c15_tutorial_02
+
+  _MAP_FADE_BLACK_IN_SLOW()
+
   //アニメ：移動
   _OBJ_ANIME( C15_PWSTAFF_01, anm_pwstaff_theater_out )
+  _TIME_WAIT( 4 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_theater_out )
+
+  _MAP_FADE_END_CHECK()
   _OBJ_ANIME_WAIT()
 
   _OBJ_ANIME( C15_PWSTAFF_01, anm_pwstaff_to_studio )
-  _TIME_WAIT( 8*2 )
+  _TIME_WAIT( 8 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_studio )
   _OBJ_ANIME_WAIT()
+
+  //カメラ操作　スタジオ写す
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_MOVE( 6616,0,1167360,1343488,65551,1110016,40 )
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   
   //スタッフ：さあ！
-  _BALLOONWIN_OBJMSG_POS( msg_c15_tutorial_04,C15_PWSTAFF_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
+  _PLAINWIN_MSG_DOWN( msg_c15_tutorial_04 )
+  _PLAINWIN_CLOSE()
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (40)
+   
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
   
   //アニメ：入場
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_in_studio )
-  _TIME_WAIT( 4 )
   _OBJ_ANIME( C15_PWSTAFF_01, anm_pwstaff_in_studio )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C15_PWSTAFF_01, anm_pwstaff_in_studio2 )
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_in_studio )
   _OBJ_ANIME_WAIT()
   
   //チュートリアル開始
@@ -306,42 +363,44 @@ _ANIME_LABEL	anm_player_wolk_center_x32
 //	主人公：映画館へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_to_theater
-  _ANIME_DATA	AC_WALK_U_8F,11
+  _ANIME_DATA	AC_WALK_U_8F,1
   _ANIME_DATA	AC_WALK_R_8F,4
-  _ANIME_DATA	AC_WALK_U_8F,3
-  _ANIME_DATA	AC_WALK_R_8F,9
-  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+  _ANIME_DATA	AC_WALK_U_8F,5
+  _ANIME_DATA	AC_WALK_R_8F,10
+  _ANIME_DATA	AC_WALK_U_8F,6
   _ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL  anm_player_to_theater_in
-  _ANIME_DATA AC_WALK_U_8F, 9
+  _ANIME_DATA AC_WALK_U_8F,3
   _ANIME_DATA	ACMD_END,0
 //--------------------------------------------------------------------
 //	ガイド：映画館へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_pwstaff_to_theater
-  _ANIME_DATA	AC_WALK_U_8F,10
   _ANIME_DATA	AC_WALK_R_8F,4
-  _ANIME_DATA	AC_WALK_U_8F,3
+  _ANIME_DATA	AC_WALK_U_8F,5
   _ANIME_DATA	AC_WALK_R_8F,10
+  _ANIME_DATA	AC_WALK_U_8F,6
+  _ANIME_DATA	AC_WALK_R_8F,1
   _ANIME_DATA	AC_STAY_WALK_U_8F,1
   _ANIME_DATA	ACMD_END,0
   
 _ANIME_LABEL  anm_pwstaff_to_theater_in
-  _ANIME_DATA AC_WALK_U_8F, 9
+  _ANIME_DATA	AC_WALK_U_8F,2
+  _ANIME_DATA	AC_VANISH_ON,1
   _ANIME_DATA	ACMD_END,0
   //--------------------------------------------------------------------
 //	主人公：スタジオへ（１）
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_player_theater_out
-  _ANIME_DATA AC_WALK_D_8F, 9
+  _ANIME_DATA	AC_WALK_D_8F, 9
+  _ANIME_DATA	AC_STAY_WALK_L_8F,1
   _ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_to_studio
-  _ANIME_DATA	AC_WALK_U_8F,1
   _ANIME_DATA	AC_WALK_L_8F,10
-  _ANIME_DATA	AC_WALK_U_8F,2
-  _ANIME_DATA	AC_WALK_L_8F,14
+  _ANIME_DATA	AC_WALK_U_8F,3
+  _ANIME_DATA	AC_WALK_L_8F,15
   _ANIME_DATA	AC_STAY_WALK_U_8F,1
   _ANIME_DATA	ACMD_END,0
 
@@ -349,14 +408,15 @@ _ANIME_LABEL	anm_player_to_studio
 //	ガイド：スタジオへ（１）
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_pwstaff_theater_out
-  _ANIME_DATA AC_WALK_D_8F, 9
+  _ANIME_DATA	AC_WALK_D_8F,8
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
   _ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_pwstaff_to_studio
-  _ANIME_DATA	AC_WALK_U_8F,1
-  _ANIME_DATA	AC_WALK_L_8F,11
-  _ANIME_DATA	AC_WALK_U_8F,2
-  _ANIME_DATA	AC_WALK_L_8F,15
+  _ANIME_DATA	AC_WALK_L_8F,9
+  _ANIME_DATA	AC_WALK_U_8F,3
+  _ANIME_DATA	AC_WALK_L_8F,16
   _ANIME_DATA	AC_STAY_WALK_U_8F,1
   _ANIME_DATA	ACMD_END,0
 
@@ -371,8 +431,13 @@ _ANIME_LABEL	anm_player_in_studio
 //	ガイド：スタジオへ（２）
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_pwstaff_in_studio
-  _ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,2
+  	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_pwstaff_in_studio2
+  	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -686,7 +751,34 @@ EVENT_END
 /*			一言メッセージ					  */
 /**************************************************************/
 EVENT_START		ev_c15_oldman1_02
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c15_oldman2_02_01 )
+
+  //主人公名格納
+  _PLAYER_NAME( 0 )
+
+  //スターランク取得
+  _PKWD_GET_STAR_RANK( LOCALWORK15 )
+
+  //スターランクが0～2
+  IF $LOCALWORK15 < 3 THEN
+	
+	_TALK_START_TURN_NOT()
+	
+	//そうさねえ……
+	_BALLOONWIN_TALKOBJ_MSG_POS( msg_c15_oldman2_02_01, POS_DEFAULT )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+  ELSE
+  
+	_TALK_START_TURN_NOT()
+	
+	//うむ　いいねえ……
+	_BALLOONWIN_TALKOBJ_MSG_POS( msg_c15_oldman2_02_02, POS_DEFAULT )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+  
+  ENDIF
+
 EVENT_END
 
 
@@ -694,7 +786,6 @@ EVENT_END
 /*			一言メッセージ					  */
 /**************************************************************/
 EVENT_START		ev_c15_poke30_01
-  
   
   _EASY_TALK_POKEVOICE( MONSNO_590, msg_c15_poke30_01 )
   
@@ -771,15 +862,31 @@ EVENT_START		ev_c15_adultw_01
 
   //主人公名格納
   _PLAYER_NAME( 0 )
-  
+
   //スターランク取得
   _PKWD_GET_STAR_RANK( LOCALWORK15 )
 
+  //スターランクが0～2
   IF $LOCALWORK15 < 3 THEN
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c15_aduttw01_01 )
+	
+	_TALK_START_TURN_NOT()
+	
+	//きょうは　なにを　みる？
+	_BALLOONWIN_TALKOBJ_MSG_POS( msg_c15_aduttw01_01, POS_DEFAULT )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
   ELSE
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c15_aduttw01_02 )
+  
+	_TALK_START_TURN_NOT()
+	
+	//きょうは　●●●●の　えいがを
+	_BALLOONWIN_TALKOBJ_MSG_POS( msg_c15_aduttw01_02, POS_DEFAULT )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+  
   ENDIF
+  
 }
 EVENT_END
 
@@ -875,7 +982,14 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c15_pwstaff_02
 
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c15_pwstaff_02 )
+  _TALK_START_TURN_NOT()
+
+  _OBJ_ANIME( C15_PWSTAFF_02, anm_stay_u_4 )
+  _OBJ_ANIME_WAIT()
+  
+  _BALLOONWIN_TALKOBJ_MSG_POS( msg_c15_pwstaff_02, POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
   
 EVENT_END
 
@@ -969,6 +1083,55 @@ EVENT_START		ev_c15_veteranm_01
   
 EVENT_END
 
+/************************************************************/
+/*					BG：スタジオ看板				*/
+/************************************************************/
+EVENT_START	ev_bg_c15_01
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c15_bg_01 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*					BG：建物のセット				*/
+/************************************************************/
+EVENT_START	ev_bg_c15_02
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c15_bg_02 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*					BG：小道具いれ					*/
+/************************************************************/
+EVENT_START	ev_bg_c15_03
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c15_bg_03 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*					BG：船のセット					*/
+/************************************************************/
+EVENT_START	ev_bg_c15_04
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c15_bg_04 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*					BG：橋のセット					*/
+/************************************************************/
+EVENT_START	ev_bg_c15_05
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_c15_bg_05 )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+EVENT_END
 
 //--------------------------------------------------------------------
 //	☆共通処理：1歩歩く
@@ -1025,6 +1188,10 @@ _ANIME_LABEL	anm_staystep_l
 
 _ANIME_LABEL	anm_staystep_r
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_u_4
+	_ANIME_DATA	AC_STAY_WALK_U_8F,4
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
