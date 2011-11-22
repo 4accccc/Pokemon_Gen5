@@ -50,7 +50,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_b1[ROOM_MAX] =
     3,
   },
   {
-    INF_ROOM_POS_TYPE_E_2,
+    INF_ROOM_POS_TYPE_NONE,
     ROOM_TYPE_DEFAULT,
     TRUE,
     FALSE,
@@ -68,7 +68,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_b1[ROOM_MAX] =
     5,
   },
   {
-    INF_ROOM_POS_TYPE_B_1,
+    INF_ROOM_POS_TYPE_A_1,
     ROOM_TYPE_DEFAULT,
     TRUE,
     TRUE,
@@ -95,7 +95,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_b1[ROOM_MAX] =
     8,
   },
   {
-    INF_ROOM_POS_TYPE_E_1,
+    INF_ROOM_POS_TYPE_E_2,
     ROOM_TYPE_DEFAULT,
     TRUE,
     FALSE,
@@ -253,7 +253,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_b2[ROOM_MAX] =
     9,
   },
   {
-    INF_ROOM_POS_TYPE_B_1,
+    INF_ROOM_POS_TYPE_NONE,
     ROOM_TYPE_DEFAULT,
     FALSE,
     FALSE,
@@ -348,7 +348,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_w1[ROOM_MAX] =
     3,
   },
   {
-    INF_ROOM_POS_TYPE_E_2,
+    INF_ROOM_POS_TYPE_NONE,
     ROOM_TYPE_DEFAULT,
     TRUE,
     FALSE,
@@ -366,7 +366,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_w1[ROOM_MAX] =
     5,
   },
   {
-    INF_ROOM_POS_TYPE_B_1,
+    INF_ROOM_POS_TYPE_A_1,
     ROOM_TYPE_DEFAULT,
     TRUE,
     TRUE,
@@ -393,7 +393,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_w1[ROOM_MAX] =
     8,
   },
   {
-    INF_ROOM_POS_TYPE_E_1,
+    INF_ROOM_POS_TYPE_E_2,
     ROOM_TYPE_DEFAULT,
     TRUE,
     FALSE,
@@ -551,7 +551,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_w2[ROOM_MAX] =
     9,
   },
   {
-    INF_ROOM_POS_TYPE_B_1,
+    INF_ROOM_POS_TYPE_NONE,
     ROOM_TYPE_DEFAULT,
     FALSE,
     FALSE,
@@ -611,11 +611,11 @@ static const u16 sc_tutorial_tr_data_b1[INFINITY_DUNGEON_TRID_MAX] =
 {
   57, // 0
   58, // 1
-  31, // 2
-  641, // 3
-  39, // 4
-  626, // 5
-  41, // 6
+  641, // 2
+  31, // 3
+  41, // 4
+  39, // 5
+  1, // 6
   1, // 7
   1, // 8
   1, // 9
@@ -647,8 +647,8 @@ static const u16 sc_tutorial_rectr_data_b1[INFINITY_DUNGEON_TRID_MAX] =
 {
   652, // 0
   652, // 1
-  652, // 2
-  641, // 3
+  641, // 2
+  652, // 3
   652, // 4
   652, // 5
   652, // 6
@@ -689,7 +689,7 @@ static const u16 sc_tutorial_tr_data_b2[INFINITY_DUNGEON_TRID_MAX] =
   642, // 4
   117, // 5
   99, // 6
-  622, // 7
+  1, // 7
   1, // 8
   1, // 9
   1, // 10
@@ -757,11 +757,11 @@ static const u16 sc_tutorial_tr_data_w1[INFINITY_DUNGEON_TRID_MAX] =
 {
   14, // 0
   15, // 1
-  24, // 2
-  651, // 3
+  651, // 2
+  24, // 3
   7, // 4
-  611, // 5
-  19, // 6
+  19, // 5
+  1, // 6
   1, // 7
   1, // 8
   1, // 9
@@ -793,8 +793,8 @@ static const u16 sc_tutorial_rectr_data_w1[INFINITY_DUNGEON_TRID_MAX] =
 {
   652, // 0
   652, // 1
-  652, // 2
-  651, // 3
+  651, // 2
+  652, // 3
   652, // 4
   652, // 5
   652, // 6
@@ -835,7 +835,7 @@ static const u16 sc_tutorial_tr_data_w2[INFINITY_DUNGEON_TRID_MAX] =
   652, // 4
   71, // 5
   81, // 6
-  612, // 7
+  1, // 7
   1, // 8
   1, // 9
   1, // 10

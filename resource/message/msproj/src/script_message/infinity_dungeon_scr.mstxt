@@ -14627,23 +14627,25 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゲートトレーナー？
-それなら　ひとりで　へやに　いたよ</Text>
+			<Text>ゲートトレーナー？▼
+それなら　ひとりで
+へやに　いたよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:36:56" />
+				Time="2011-11-22T11:23:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:18:43" />
+				Time="2011-11-22T11:14:08" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゲートトレーナー？　それなら
-それなら　ひとりで　部屋に　いたよ</Text>
+			<Text>ゲートトレーナー？▼
+それなら　ひとりで
+部屋に　いたよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:40:39" />
+				Time="2011-11-22T11:23:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14656,7 +14658,7 @@ NPC：MUGENBOSS（バンジロウ）
 少年</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:33:08" />
+				Time="2011-11-22T11:16:26" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -14671,23 +14673,25 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゲートトレーナー？
-それなら　ひとりで　へやに　いたわよ</Text>
+			<Text>ゲートトレーナー？▼
+それなら　ひとりで
+へやに　いたわよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:37:08" />
+				Time="2011-11-22T11:24:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:18:43" />
+				Time="2011-11-22T11:14:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゲートトレーナー？　それなら
-それなら　ひとりで　部屋に　いたわよ</Text>
+			<Text>ゲートトレーナー？▼
+それなら　ひとりで
+部屋に　いたわよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:40:51" />
+				Time="2011-11-22T11:24:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14700,7 +14704,7 @@ NPC：MUGENBOSS（バンジロウ）
 少女</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:33:12" />
+				Time="2011-11-22T11:16:26" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -14716,11 +14720,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>ゲートトレーナー？▼
-ひとりで　へやに　いるのを
-みたよ</Text>
+ひとりで　へやに
+いるのを　みたよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:37:40" />
+				Time="2011-11-22T11:24:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14729,11 +14733,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ゲートトレーナー？▼
-ひとりで　部屋に　いるのを
-見たわよ</Text>
+ひとりで　部屋に
+いるのを　見たわよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:41:16" />
+				Time="2011-11-22T11:24:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14746,7 +14750,7 @@ NPC：MUGENBOSS（バンジロウ）
 成人男性</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:33:15" />
+				Time="2011-11-22T11:16:26" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -14761,11 +14765,12 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゲートトレーナーを　さがしているの？
-ひとりで　へやに　いるのを　みたわよ</Text>
+			<Text>ゲートトレーナーを　さがしているの？▼
+ひとりで　へやに
+いるのを　みたわよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:38:24" />
+				Time="2011-11-22T11:24:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14773,11 +14778,12 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゲートトレーナーを　探しているの？
-ひとりで　部屋に　いるのを　見たわよ</Text>
+			<Text>ゲートトレーナーを　探しているの？▼
+ひとりで　部屋に
+いるのを　見たわよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:41:40" />
+				Time="2011-11-22T11:24:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14790,7 +14796,7 @@ NPC：MUGENBOSS（バンジロウ）
 成人女性</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:33:19" />
+				Time="2011-11-22T11:16:26" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -14836,7 +14842,7 @@ NPC：MUGENBOSS（バンジロウ）
 中年男性</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:33:30" />
+				Time="2011-11-22T11:16:26" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -14852,11 +14858,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>ゲートトレーナー？▼
-ひとりで　へやに　いるんじゃ
-ないかしたら</Text>
+ひとりで　へやに
+いるんじゃ　ないかしたら</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:43:16" />
+				Time="2011-11-22T11:25:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14865,11 +14871,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ゲートトレーナー？▼
-ひとりで　部屋に　いるんじゃ
-ないかしら</Text>
+ひとりで　部屋に
+いるんじゃ　ないかしら</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:43:07" />
+				Time="2011-11-22T11:25:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14882,7 +14888,7 @@ NPC：MUGENBOSS（バンジロウ）
 中年女性</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:33:34" />
+				Time="2011-11-22T11:16:26" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -14928,7 +14934,7 @@ NPC：MUGENBOSS（バンジロウ）
 老人</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:33:39" />
+				Time="2011-11-22T11:16:26" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -14944,11 +14950,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>ゲートトレーナーですって？▼
-ひとりで　へやに　いるのを
-みましたわ</Text>
+ひとりで　へやに
+いるのを　みましたわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:40:17" />
+				Time="2011-11-22T11:25:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14957,11 +14963,11 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ゲートトレーナーですって？▼
-ひとりで　部屋に　いるのを
-見ましたわ</Text>
+ひとりで　部屋に
+いるのを　見ましたわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:44:29" />
+				Time="2011-11-22T11:25:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -14971,6 +14977,1110 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Comment>トレーナーヒント
 ゲートトレーナーは、ひとりで部屋にいる
+老女</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:16:26" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_two_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナー？▼
+それなら　ふたりで　へやに
+いたよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:26:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:14:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナー？▼
+それなら　ふたりで　部屋に
+いたよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:26:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:15:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、ふたりで部屋にいる
+少年</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:33:08" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_two_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナー？▼
+それなら　ふたりで　へやに
+いたわよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:26:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:14:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナー？▼
+それなら　ふたりで　部屋に
+いたわよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:26:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:15:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、ふたりで部屋にいる
+少女</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:33:12" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_two_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナー？▼
+ふたりで　へやに
+いるのを　みたよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:26:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:14:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナー？▼
+ふたりで　部屋に
+いるのを　見たわよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:26:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:15:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、ふたりで部屋にいる
+成人男性</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:33:15" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_two_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナーを　さがしているの？▼
+ふたりで　へやに
+いるのを　みたわよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:26:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:14:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナーを　探しているの？▼
+ふたりで　部屋に
+いるのを　見たわよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:27:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:15:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、ふたりで部屋にいる
+成人女性</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:33:19" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_two_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナーかい？▼
+それなら　ふたりで　へやに
+いるのを　みたぞ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:27:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:18:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナーかい？▼
+それなら　ふたりで　部屋に
+いるのを　見たぞ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:27:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:18:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、ふたりで部屋にいる
+中年男性</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:33:30" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_two_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナー？▼
+ふたりで　へやに
+いるんじゃ　ないかしたら</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:27:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:14:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナー？▼
+ふたりで　部屋に
+いるんじゃ　ないかしら</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:27:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:15:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、ふたりで部屋にいる
+中年女性</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:33:34" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_two_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナーじゃと？
+ひみつじゃぞ▼
+ふたりで　へやに　おったぞ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:43:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:14:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナーじゃと？
+秘密じゃぞ▼
+ふたりで　部屋に　おったぞ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:43:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:15:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、ふたりで部屋にいる
+老人</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:33:39" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_two_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナーですって？▼
+ふたりで　へやに
+いるのを　みましたわ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:27:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:14:55" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナーですって？▼
+ふたりで　部屋に
+いるのを　見ましたわ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:27:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:15:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、ふたりで部屋にいる
+老女</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:33:44" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_three_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナー？▼
+それなら　さんにんで　へやに
+いたよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:27:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:18:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナー？▼
+それなら　さんにんで　部屋に
+いたよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:28:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:18:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、さんにんで部屋にいる
+少年</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:33:08" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_three_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナー？▼
+それなら　さんにんで　へやに
+いたわよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:28:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:18:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナー？▼
+それなら　さんにんで　部屋に
+いたわよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:28:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:18:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、さんにんで部屋にいる
+少女</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:33:12" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_three_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナー？▼
+さんにんで　へやに
+いるのを　みたよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:28:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:18:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナー？▼
+さんにんで　部屋に
+いるのを　見たわよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:28:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:18:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、さんにんで部屋にいる
+成人男性</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:33:15" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_three_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナーを　さがしているの？▼
+さんにんで　へやに
+いるのを　みたわよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:28:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:18:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナーを　探しているの？▼
+さんにんで　部屋に
+いるのを　見たわよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:29:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:18:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、さんにんで部屋にいる
+成人女性</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:33:19" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_three_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナーかい？▼
+それなら　さんにんで　へやに
+いるのを　みたぞ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:29:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:18:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナーかい？▼
+それなら　さんにんで　部屋に
+いるのを　見たぞ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:29:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:18:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、さんにんで部屋にいる
+中年男性</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:33:30" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_three_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナー？▼
+さんにんで　へやに
+いるんじゃ　ないかしたら</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:29:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:18:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナー？▼
+さんにんで　部屋に
+いるんじゃ　ないかしら</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:29:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:18:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、さんにんで部屋にいる
+中年女性</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:33:34" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_three_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナーじゃと？
+ひみつじゃぞ▼
+さんにんで　へやに　おったぞ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:43:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:18:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナーじゃと？
+秘密じゃぞ▼
+さんにんで　部屋に　おったぞ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:43:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:18:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、さんにんで部屋にいる
+老人</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:33:39" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_three_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナーですって？▼
+さんにんで　へやに
+いるのを　みましたわ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:29:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:18:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナーですって？▼
+さんにんで　部屋に
+いるのを　見ましたわ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:29:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:18:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、さんにんで部屋にいる
+老女</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:33:44" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_four_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナー？▼
+それなら　よにんで　へやに
+いたよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:30:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:22:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナー？▼
+それなら　よにんで　部屋に
+いたよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:30:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:22:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、よにんで部屋にいる
+少年</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:33:08" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_four_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナー？▼
+それなら　よにんで　へやに
+いたわよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:30:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:22:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナー？▼
+それなら　よにんで　部屋に
+いたわよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:30:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:22:27" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、よにんで部屋にいる
+少女</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:33:12" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_four_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナー？▼
+よにんで　へやに
+いるのを　みたよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:30:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:22:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナー？▼
+よにんで　部屋に
+いるのを　見たわよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:30:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:22:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、よにんで部屋にいる
+成人男性</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:33:15" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_four_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナーを　さがしているの？▼
+よにんで　へやに
+いるのを　みたわよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:30:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:22:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナーを　探しているの？▼
+よにんで　部屋に
+いるのを　見たわよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:31:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:22:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、よにんで部屋にいる
+成人女性</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:33:19" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_four_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナーかい？▼
+それなら　よにんで　へやに
+いるのを　みたぞ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:31:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:22:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナーかい？▼
+それなら　よにんで　部屋に
+いるのを　見たぞ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:31:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:22:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、よにんで部屋にいる
+中年男性</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:33:30" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_four_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナー？▼
+よにんで　へやに
+いるんじゃ　ないかしたら</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:31:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:22:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナー？▼
+よにんで　部屋に
+いるんじゃ　ないかしら</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:31:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:22:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、よにんで部屋にいる
+中年女性</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:33:34" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_four_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナーじゃと？
+ひみつじゃぞ▼
+よにんで　へやに　おったぞ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:43:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:22:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナーじゃと？
+秘密じゃぞ▼
+よにんで　部屋に　おったぞ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:43:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:22:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、よにんで部屋にいる
+老人</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:33:39" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_room_four_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナーですって？▼
+よにんで　へやに
+いるのを　みましたわ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:31:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:22:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナーですって？▼
+よにんで　部屋に
+いるのを　見ましたわ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:31:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T11:22:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、よにんで部屋にいる
 老女</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
@@ -15025,7 +16135,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -15072,7 +16182,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -15119,7 +16229,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -15166,7 +16276,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -15213,7 +16323,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -15260,7 +16370,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -15309,7 +16419,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -15356,7 +16466,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -15503,27 +16613,27 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>いいことを　おしえるわ▼
 ゲートトレーナーは
-だんせいなんらしいわ</Text>
+だんせいらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-19T04:59:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T02:55:17" />
+				Time="2011-11-22T10:51:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いいことを　教えるわ▼
 ゲートトレーナーは
-男性なんらしいわ</Text>
+男性らしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-19T05:03:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T02:55:18" />
+				Time="2011-11-22T10:51:24" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -15863,27 +16973,27 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>いいことを　おしえるわ▼
 ゲートトレーナーは
-じょせいなんらしいわ</Text>
+じょせいらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-19T05:06:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T02:55:18" />
+				Time="2011-11-22T10:51:25" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いいことを　教えるわ▼
 ゲートトレーナーは
-女性なんらしいわ</Text>
+女性らしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-19T05:03:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T02:55:19" />
+				Time="2011-11-22T10:51:25" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -16223,27 +17333,27 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>いいことを　おしえるわ▼
 ゲートトレーナーは
-とまっているんらしいわ</Text>
+とまっているらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-19T05:12:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T02:55:19" />
+				Time="2011-11-22T11:34:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いいことを　教えるわ▼
 ゲートトレーナーは
-止まっているんらしいわ</Text>
+止まっているらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-19T05:14:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T02:55:20" />
+				Time="2011-11-22T11:34:09" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -16583,27 +17693,27 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>いいことを　おしえるわ▼
 ゲートトレーナーは
-あるいているんらしいわ</Text>
+あるいているらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-19T05:12:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T02:55:21" />
+				Time="2011-11-22T11:34:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いいことを　教えるわ▼
 ゲートトレーナーは
-歩いているんらしいわ</Text>
+歩いているらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-19T05:14:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T02:55:21" />
+				Time="2011-11-22T11:34:12" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -16951,27 +18061,27 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>いいことを　おしえるわ▼
 ゲートトレーナーは　あるきながら
-まわっているんらしいわ</Text>
+まわっているらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-21T07:11:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T02:55:22" />
+				Time="2011-11-22T11:34:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いいことを　教えるわ▼
 ゲートトレーナーは　歩きながら
-回っているんらしいわ</Text>
+回っているらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-21T07:12:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T02:55:22" />
+				Time="2011-11-22T11:34:16" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -17319,27 +18429,27 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>いいことを　おしえるわ▼
 ゲートトレーナーは　あるきながら
-キョロキョロしているんらしいわ</Text>
+キョロキョロしているらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-21T06:42:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T02:55:23" />
+				Time="2011-11-22T11:34:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いいことを　教えるわ▼
 ゲートトレーナーは　歩きながら
-キョロキョロしているんらしいわ</Text>
+キョロキョロしているらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-21T06:44:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T02:55:24" />
+				Time="2011-11-22T11:34:18" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -17669,27 +18779,27 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>いいことを　おしえるわ▼
 ボストレーナーは　[Name:PokemonName Idx="1" ]を
-だいじに　しているんらしいわ</Text>
+だいじに　しているらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:48:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T02:55:25" />
+				Time="2011-11-22T11:34:21" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いいことを　教えるわ▼
 ボストレーナーは　[Name:PokemonName Idx="1" ]を
-大事に　しているんらしいわ</Text>
+大事に　しているらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:48:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T02:55:26" />
+				Time="2011-11-22T11:34:21" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
