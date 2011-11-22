@@ -250,12 +250,12 @@ ARC_TARGET_DATA = \
 	zekuromu_a.spa \
 	zekuromu_ci_a.nsbmd \
 	zekuromu_ci_a.nsbca \
-	zekuromu_ci_a.nsbtp \
+	zekuromu_ci_a.nsbta \
 	zekuromu_ci_a.nsbma \
 	resiramu_a.spa \
 	resiramu_ci_a.nsbmd \
 	resiramu_ci_a.nsbca \
-	resiramu_ci_a.nsbtp \
+	resiramu_ci_a.nsbta \
 	resiramu_ci_a.nsbma \
 	blizzard_ci_a.spa \
 	blizzard_ci_a.nsbmd \
