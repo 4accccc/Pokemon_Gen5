@@ -55,12 +55,6 @@
 //======================================================================
 #pragma mark [> enum
 
-// ミニゲーム種類
-typedef enum {
-  CGI_BALLOON1 = 0,   // ミニゲーム1
-  CGI_BALLOON2,       // ミニゲーム2
-}CTVT_GAME_ID;
-
 // ゲーム専用通信フラグ
 typedef enum {
   CCGF_DECIDE_RETRY,      // リトライ決定         子が送信

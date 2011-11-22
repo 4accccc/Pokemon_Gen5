@@ -126,6 +126,16 @@ typedef enum
 #define ROULETTE_TIME (720)     // ルーレットの回るフレーム数 12秒
 #define ROULETTE_DIV  (25)      // 何フレームごとにウェイトが加算されるか
 
+//-------------------------------------
+///	写真撮影時のメッセージテーブル
+//=====================================
+static const u16 capture_msg_id[2][3] = {
+//  1枚目             2枚目             3枚目
+  { COMM_TVT_GAME_08, COMM_TVT_GAME_09, COMM_TVT_GAME_10_01 }, // ミニゲーム1
+  { COMM_TVT_GAME_08, COMM_TVT_GAME_09, COMM_TVT_GAME_10_02 }, // ミニゲーム2
+};
+
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -539,6 +549,7 @@ void CTVT_GAME_CAM_Exit( CTVT_GAME_CAM_WORK *p_wk )
  *
  *	@param	HEAPID heapID ヒープID
  *	@param	isTwl         TWL起動か
+ *	@param  game_id       ミニゲーム種類
  *	@param	*p_cap_buf    受信したキャプチャ保存アドレス
  *	@param	select_chara  選択するキャラクターID
  *	@param	*p_cam_sys    カメラシステムへのポインタ
@@ -546,7 +557,7 @@ void CTVT_GAME_CAM_Exit( CTVT_GAME_CAM_WORK *p_wk )
  *	@return p_param 作成したパラメータ
  */
 //-----------------------------------------------------------------------------
-CTVT_GAME_CAM_PARAM *CTVT_GAME_CAM_AllocParam( HEAPID heapID, BOOL isTwl, u8 select_chara, CTVT_GAME_CAM_MEMBER_WORK p_member[], CAMERA_SYSTEM_WORK *p_cam_sys )
+CTVT_GAME_CAM_PARAM *CTVT_GAME_CAM_AllocParam( HEAPID heapID, BOOL isTwl, CTVT_GAME_ID game_id, u8 select_chara, CTVT_GAME_CAM_MEMBER_WORK p_member[], CAMERA_SYSTEM_WORK *p_cam_sys )
 {
   u8 i, j;
   CTVT_GAME_CAM_PARAM *p_param;
@@ -559,6 +570,7 @@ CTVT_GAME_CAM_PARAM *CTVT_GAME_CAM_AllocParam( HEAPID heapID, BOOL isTwl, u8 sel
 
   p_param = GFL_HEAP_AllocClearMemory( heapID, sizeof(CTVT_GAME_CAM_PARAM) );
   p_param->isTwl        = isTwl;
+  p_param->game_id      = game_id;
   p_param->select_chara = select_chara;
   p_param->p_cam_sys    = p_cam_sys;
 
@@ -2175,9 +2187,11 @@ static void SEQFUNC_TWL_Count( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 static void SEQFUNC_TWL_MsgWait( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 {
   CTVT_GAME_CAM_WORK *p_wk = p_param;
+  // 写真撮影時のメッセージ取得
+  u16 msg_id = capture_msg_id[ p_wk->p_param->game_id ][ p_wk->camera.cnt ];
 
-  // X枚目の写真を撮影します メッセージ
-  PS_Print( &p_wk->ps, &p_wk->msgwnd, SEQFUNC_TWL_Main, (COMM_TVT_GAME_08 + p_wk->camera.cnt), p_wk->heapID );
+  // 写真撮影時メッセージ
+  PS_Print( &p_wk->ps, &p_wk->msgwnd, SEQFUNC_TWL_Main, msg_id, p_wk->heapID );
   SEQ_SetNext( p_seqwk, SEQFUNC_PrintStream );
 }
 

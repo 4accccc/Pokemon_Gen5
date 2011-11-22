@@ -258,6 +258,12 @@ enum{
   CAMERA_SEND_SYNC3               = 34,   // 送信同期 3枚目
 };
 
+// ミニゲーム種類
+typedef enum {
+  CGI_BALLOON1 = 0,   // ミニゲーム1
+  CGI_BALLOON2,       // ミニゲーム2
+}CTVT_GAME_ID;
+
 
 //======================================================================
 //	typedef struct

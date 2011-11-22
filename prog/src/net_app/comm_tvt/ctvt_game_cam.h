@@ -56,6 +56,7 @@ typedef struct {
   void            *p_cap[CAPTURE_NUM]; //[out] TWL起動時自分のキャプチャデータ
   CTVT_GAME_CAM_MEMBER_WORK member[ CTVT_MEMBER_NUM-1 ]; //[out] メンバー情報
   CAMERA_SYSTEM_WORK        *p_cam_sys;//[in]    カメラシステムへのポインタ
+  CTVT_GAME_ID    game_id;      //[in]    ミニゲーム種類
 } CTVT_GAME_CAM_PARAM;
 
 
@@ -71,7 +72,7 @@ BOOL CTVT_GAME_CAM_Main( CTVT_GAME_CAM_WORK *p_wk );
 void CTVT_GAME_CAM_Exit( CTVT_GAME_CAM_WORK *p_wk );
 
 // パラメータ生成
-CTVT_GAME_CAM_PARAM *CTVT_GAME_CAM_AllocParam( HEAPID heapID, BOOL isTwl, u8 select_chara, CTVT_GAME_CAM_MEMBER_WORK p_member[], CAMERA_SYSTEM_WORK *p_cam_sys );
+CTVT_GAME_CAM_PARAM *CTVT_GAME_CAM_AllocParam( HEAPID heapID, BOOL isTwl, CTVT_GAME_ID game_id, u8 select_chara, CTVT_GAME_CAM_MEMBER_WORK p_member[], CAMERA_SYSTEM_WORK *p_cam_sys );
 
 // パラメータ破棄
 void CTVT_GAME_CAM_FreeParam( CTVT_GAME_CAM_PARAM *p_param);

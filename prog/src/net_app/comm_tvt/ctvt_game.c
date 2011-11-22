@@ -698,8 +698,9 @@ void CTVT_GAME_InitMode( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
     CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork(work);
     CAMERA_SYSTEM_WORK *camSys = CTVT_CAMERA_GetCamSys( work, camWork );
     u8  select_chara = CTVT_COMM_GetCharId( work, commWork, selfId );
+    CTVT_GAME_ID const game_id = CTVT_GAME_GetGameID( gameWork );
 
-    gameWork->p_cam_param = CTVT_GAME_CAM_AllocParam( heapID, isTwl, select_chara, gameWork->cam_member, camSys );
+    gameWork->p_cam_param = CTVT_GAME_CAM_AllocParam( heapID, isTwl, game_id, select_chara, gameWork->cam_member, camSys );
   }
 
   // \‘¢‘Ì‰Šú‰»

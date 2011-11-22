@@ -484,6 +484,16 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
     talkWork->recButtonState = CRBT_DISALE;
   }
 
+  // swan追加仕様 11.11.22
+  // 子機だとミニゲームボタンを暗くする
+  {
+    // 子機チェック
+    if( COMM_TVT_GetSelfIdx(work) != 0 )
+    {
+      GFL_CLACT_WK_SetAnmIndex( talkWork->clwkBalloon1, 1 );
+      GFL_CLACT_WK_SetAnmIndex( talkWork->clwkBalloon2, 1 );
+    }
+  }
 }
 
 //--------------------------------------------------------------
