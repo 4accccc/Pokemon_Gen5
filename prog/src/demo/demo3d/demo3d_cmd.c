@@ -619,8 +619,7 @@ static void taskAdd_FlashReq( DEMO3D_CMD_WORK* wk, u8 disp_mask, s8 start, s8 ma
   twk->plane_mask = PLANEMASK_ALL;
   twk->frame_s = frame_s;
   twk->frame_e = frame_e;
-   
-  taskAdd_BrightnessReq( wk, twk->disp_mask, twk->plane_mask, start, max, frame_s, &twk->task_ct );
+  twk->task_ct = 0;
 }
 
 static void tcb_FlashReq( GFL_TCBL *tcb , void* tcb_wk)
@@ -635,20 +634,32 @@ static void tcb_FlashReq( GFL_TCBL *tcb , void* tcb_wk)
   }
 
   switch(twk->seq){
+  // 最初のフェード
   case 0:
+    taskAdd_BrightnessReq( twk->cmd, twk->disp_mask, twk->plane_mask, twk->start, twk->max, twk->frame_s, &twk->task_ct );
+    twk->seq++;
+    break;
+
+  // フェード待ち
+  case 1:
     if(twk->task_ct == 0){
-      taskAdd_BrightnessReq( twk->cmd, twk->disp_mask, twk->plane_mask,twk->max, twk->end, twk->frame_e, &twk->task_ct );
       twk->seq++;
     }
     break;
-  case 1:
-    if(twk->task_ct){
-      return;
+
+  // 次のフェード
+  case 2:
+    taskAdd_BrightnessReq( twk->cmd, twk->disp_mask, twk->plane_mask, twk->max, twk->end, twk->frame_e, &twk->task_ct );
+    twk->seq++;
+    break;
+
+  // フェード待ち
+  case 3:
+    if(twk->task_ct == 0){
+      GFL_TCBL_Delete(tcb);
     }
     break;
   }
-  SetBrightness( twk->end, twk->plane_mask, twk->disp_mask );
-  GFL_TCBL_Delete(tcb);
 }
 
 //-----------------------------------------------------------------------------
