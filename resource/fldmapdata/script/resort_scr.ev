@@ -13,7 +13,6 @@
   .include  "../../../prog/src/field/resonance_resort/resort_people_def.h"
   .include  "resort_scr_define.h"
   .include  "../../../prog/src/field/resonance_resort/resort_const.h"
-  .include  "c16r1501.h"
   .include  "c16_def.h"
 
 //--------------------------------------------------------------
