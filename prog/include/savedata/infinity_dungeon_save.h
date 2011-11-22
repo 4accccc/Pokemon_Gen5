@@ -63,3 +63,6 @@ extern void INFINITYDUNGEON_SAVE_SetRoomID( INFINITYDUNGEON_SAVE *p_save ,u8 roo
 extern u16 INFINITYDUNGEON_SAVE_GetWinTrainerCount( const INFINITYDUNGEON_SAVE *p_save );
 
 extern KEY_SYSTEM_SAVE * INFINITYDUNGEON_SAVE_GetKeySystem( INFINITYDUNGEON_SAVE *p_save );
+extern u32 INFINITYDUNGEON_SAVE_GetDungeonStartGold( const INFINITYDUNGEON_SAVE *p_save );
+extern void INFINITYDUNGEON_SAVE_SetDungeonStartGold( INFINITYDUNGEON_SAVE *p_save ,u32 gold );
+

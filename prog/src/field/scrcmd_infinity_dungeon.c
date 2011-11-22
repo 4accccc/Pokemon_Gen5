@@ -21,6 +21,7 @@
 #include "infinity_dungeon_gimmick.h"
 #include "fld_btl_inst_tool.h"
 #include "script_def.h"   // for SCR_INFDUNGEON_*
+#include "savedata/misc.h"               // for MISC
 
 // グローバル変数
 #ifdef PM_DEBUG
@@ -205,12 +206,21 @@ VMCMD_RESULT EvCmdInfinityDungeonResetSeed( VMHANDLE *p_core, void *p_wk_adrs )
 {
   INFINITYDUNGEON_SAVE  *p_save;
   SCRCMD_WORK *p_wk = p_wk_adrs;
+  MISC *p_misc;
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
   SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
   u32 seed = GFL_STD_MtRand( GFL_STD_RAND_MAX );
+  u32 gold;
   p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
+  p_misc = SaveData_GetMisc( p_save_data );
+
+  // セーブデータの初期化
   INFINITYDUNGEON_SAVE_InitDungeonData( p_save );
+
+  // ダンジョン開始時の所持金を保存しておく
+  gold = MISC_GetGold( p_misc );
+  INFINITYDUNGEON_SAVE_SetDungeonStartGold( p_save ,gold );
 
 #ifdef PM_DEBUG
   if( g_debug_inf_master_seed == 0 )
@@ -999,5 +1009,33 @@ VMCMD_RESULT EvCmdInfinityDungeonGetGateBattleMsgID( VMHANDLE *p_core, void *p_w
   *p_ret_wk = INFINITY_DUNGEON_GetGateBeforeBattleMessage( p_save ,p_dungeon_data ,obj_code ,is_before_battle);
 
   return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ペナルティー時に減算する金額を取得
+ *
+ *	@param	*p_core
+ *	@param	*p_wk_adrs 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdInfinityDungeonGetPenaltyGold( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  u32 gold;
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
+  GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
+  SAVE_CONTROL_WORK *p_save_data = GAMEDATA_GetSaveControlWork(p_gamedata);
+  INFINITYDUNGEON_SAVE  *p_save = SaveData_GetINFINITYDUNGEON( p_save_data );
+  MISC *p_misc = SaveData_GetMisc( p_save_data );
+  u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+
+  u32 now_gold    = MISC_GetGold( p_misc );
+  u32 start_gold  = INFINITYDUNGEON_SAVE_GetDungeonStartGold( p_save );
+
+  // 増えた分を返す
+  (*p_ret_wk) = (now_gold - start_gold);
 }
 

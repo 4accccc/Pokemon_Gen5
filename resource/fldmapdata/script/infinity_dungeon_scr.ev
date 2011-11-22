@@ -726,6 +726,7 @@ _RET
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_comeback
 {
+  DEFINE_LOCAL  LWK_PENALTY_GOLD
   DEFINE_LOCAL  LWK_MAP_STATUS
 
   // エリアIDを取得する
@@ -1009,13 +1010,35 @@ EVENT_START  ev_infinity_dungeon_comeback
     _CAMERA_END()
   ELSE
     
+    // プレイヤー名登録
+    _PLAYER_NAME( 0 )
+  
     // 終了方法によってメッセージを変える
     IF $WK_OTHER_INF_EXIT_TYPE == 1 THEN
+      
       // リタイア
-      IF $LWK_D_VERSION == VERSION_B2 THEN
-        _BALLOONWIN_OBJMSG_POS( msg_info_clear_b_09_00 , LWK_INFOOBJ_ID, POS_DL )
-      ELSE 
-        _BALLOONWIN_OBJMSG_POS( msg_info_clear_w_09_00 , LWK_INFOOBJ_ID, POS_DL )
+      _INFINITY_DUNGEON_GET_PENALTY_GOLD( LWK_PENALTY_GOLD )
+ 
+      // ペナルティー金額を登録
+      _NUMBER( 1 ,LWK_PENALTY_GOLD ,7 )
+
+      IF $LWK_PENALTY_GOLD > 0 THEN
+        // ペナルティー有り
+        IF $LWK_D_VERSION == VERSION_B2 THEN
+          _BALLOONWIN_OBJMSG_POS(msg_info_clear_b_09_00 , LWK_INFOOBJ_ID, POS_DL )
+        ELSE 
+          _BALLOONWIN_OBJMSG_POS(msg_info_clear_w_09_00 , LWK_INFOOBJ_ID, POS_DL )
+        ENDIF
+
+        // 所持金からペナルティー金額を引く
+        _SUBTRACT_GOLD( LWK_PENALTY_GOLD )
+      ELSE
+        // ペナルティーなし
+        IF $LWK_D_VERSION == VERSION_B2 THEN
+          _BALLOONWIN_OBJMSG_POS(msg_info_clear_b_10_00 , LWK_INFOOBJ_ID, POS_DL )
+        ELSE 
+          _BALLOONWIN_OBJMSG_POS(msg_info_clear_w_10_00 , LWK_INFOOBJ_ID, POS_DL )
+        ENDIF
       ENDIF
     ELSE
       // ゲームオーバー
@@ -1035,6 +1058,9 @@ EVENT_START  ev_infinity_dungeon_comeback
 
   // 歩数カウント終了
   _SC_WALK_COUNT_STOP()
+
+  // 手持ち全回復
+  _TEMOTI_POKEMON_KAIFUKU()
 
 }
 EVENT_END

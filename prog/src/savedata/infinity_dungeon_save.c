@@ -505,6 +505,36 @@ u8 INFINITYDUNGEON_SAVE_GetFloorNum( u8 area_id )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  無限ダンジョン開始時の所持金を取得する
+ *
+ *	@param	INFINITYDUNGEON_SAVE *p_save 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u32 INFINITYDUNGEON_SAVE_GetDungeonStartGold( const INFINITYDUNGEON_SAVE *p_save )
+{
+  // ゲーム開始時の所持金
+  return p_save->dungeon_start_gold;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダンジョン開始時の所持金を設定する
+ *
+ *	@param	*p_save 
+ *	@param	gold 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void INFINITYDUNGEON_SAVE_SetDungeonStartGold( INFINITYDUNGEON_SAVE *p_save ,u32 gold )
+{
+  p_save->dungeon_start_gold = gold;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  キーシステムセーブを取得
  *
  *	@param	INFINITYDUNGEON_SAVE *p_save  セーブ

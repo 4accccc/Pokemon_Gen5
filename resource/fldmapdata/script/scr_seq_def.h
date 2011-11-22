@@ -15238,6 +15238,21 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _INFINITY_DUNGEON_GET_PENALTY_GOLD
+ * @brief 無限ダンジョンリタイア時のペナルティー金額
+ * @param ret_wk   ペナルティー金額
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_GET_PENALTY_GOLD( ret_wk ) \
+    _ASM_INFINITY_DUNGEON_GET_PENALTY_GOLD ret_wk
+
+    .macro  _ASM_INFINITY_DUNGEON_GET_PENALTY_GOLD ret_wk
+    .short  EV_SEQ_INFINITY_DUNGEON_GET_PENALTY_GOLD
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @def _WARP_ANIMAL_TRAIL
  * @brief 獣道マップに移動
  * @param animal_trail_id   獣道ID
