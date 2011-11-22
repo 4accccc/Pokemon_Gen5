@@ -24,7 +24,10 @@ targetnpc 		= resort_npc
 targetkutikomi = resort_kutikomi
 targetcity 		= resort_city
 targetpresent = resort_present
-targetpreset = resort_preset
+targetpreset 	= resort_preset
+targetcombo1	= resort_combo_view
+targetcombo2	= resort_combo_shop
+targetcombo3	= resort_combo_next
 
 #------------------------------------------------------------------------------
 #依存するファイル名
@@ -57,6 +60,7 @@ NPCCONV 			= resort_npc_converter.rb
 CITYCONV		= resort_city_converter.rb
 PRESETCONV		= resort_preset_converter.rb
 PRESENTCONV		= resort_present_converter.rb
+COMBOCONV		= resort_combo_converter.rb
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -94,13 +98,13 @@ $(TARGETDIR_PROG)/$(targetpreset).h:	$(targetpreset).h
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetall).narc $(targetall).naix: $(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetinstitution).dat $(targetspot).dat $(targetnpc).dat $(targetkutikomi).dat $(targetcity).dat $(targetpresent).dat $(targetpreset).dat
+$(targetall).narc $(targetall).naix: $(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetinstitution).dat $(targetspot).dat $(targetnpc).dat $(targetkutikomi).dat $(targetcity).dat $(targetpresent).dat $(targetpreset).dat $(targetcombo1).dat $(targetcombo2).dat $(targetcombo3).dat
 	nnsarc -r -l -n -i $(targetall) $^
 	$(NAIXCUT) $(targetall).naix
 	#-rm -f *.dat
 
 #データコンバート
-$(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(targetinstitution).dat $(targetspot).dat $(targetnpc).dat $(targetkutikomi).dat $(targetcity).dat $(targetpresent).dat $(targetshop).h $(targetspot).h $(targetpreset).h $(targetpreset).dat: $(xlsname).xls $(msgfile) $(scriptfile) $(PEOPLECONV) $(DEFINECONV) $(bmodelfile) $(fieldevent) $(landpatch) $(objcode)
+$(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(targetinstitution).dat $(targetspot).dat $(targetnpc).dat $(targetkutikomi).dat $(targetcity).dat $(targetpresent).dat $(targetshop).h $(targetspot).h $(targetpreset).h $(targetpreset).dat $(targetcombo1).dat $(targetcombo2).dat $(targetcombo3).dat: $(xlsname).xls $(msgfile) $(scriptfile) $(PEOPLECONV) $(DEFINECONV) $(bmodelfile) $(fieldevent) $(landpatch) $(objcode)
 	$(XLSCONV) -o $(targetpeople).csv -p 1 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetshop).csv -p 2 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetservice).csv -p 3 -s csv $(xlsname).xls
@@ -112,6 +116,8 @@ $(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(
 	$(XLSCONV) -o $(targetcity).csv -p 9 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetpresent).csv -p 10 -s csv $(xlsname).xls
 	$(XLSCONV) -o $(targetpreset).csv -p 11 -s csv $(xlsname).xls
+	$(XLSCONV) -o $(targetcombo1).csv -p 12 -s csv $(xlsname).xls
+	$(XLSCONV) -o $(targetcombo3).csv -p 13 -s csv $(xlsname).xls
 	-rm -f *.dat
 	ruby $(DEFINECONV) $(targetdefine).csv $(definehash) $(targetpeopleh)
 	ruby $(PEOPLECONV) $(targetpeople).csv $(msgfile) $(scriptfile) $(targetpeople)
@@ -122,6 +128,7 @@ $(targetpeople).dat $(targetshop).dat $(targetservice).dat $(targetpeopleh).h $(
 	ruby $(NPCCONV) $(targetnpc).csv $(targetkutikomi).csv $(msgfile) $(objcode) $(targetnpc) $(targetkutikomi)
 	ruby $(CITYCONV) $(targetcity).csv $(targetpresent).h $(msgfile) $(targetcity)
 	ruby $(PRESETCONV) $(targetpreset).csv $(msgfile) $(objcode) $(targetshop).h $(targetspot).h $(fldtrade) $(targetpreset)
+	ruby $(COMBOCONV) $(targetcombo1).csv $(targetcombo3).csv $(targetcombo1) $(targetcombo2) $(targetcombo3)
 	-rm -f *.csv
 endif
 

@@ -20,7 +20,10 @@ enum {
 	NARC_resonance_resort_data_resort_kutikomi_dat = 6,
 	NARC_resonance_resort_data_resort_city_dat = 7,
 	NARC_resonance_resort_data_resort_present_dat = 8,
-	NARC_resonance_resort_data_resort_preset_dat = 9
+	NARC_resonance_resort_data_resort_preset_dat = 9,
+	NARC_resonance_resort_data_resort_combo_view_dat = 10,
+	NARC_resonance_resort_data_resort_combo_shop_dat = 11,
+	NARC_resonance_resort_data_resort_combo_next_dat = 12
 };
 
 /* NARC_RESONANCE_RESORT_DATA_NAIX_ */
