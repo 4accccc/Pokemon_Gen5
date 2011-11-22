@@ -44173,31 +44173,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すいめんに　うつる　とおいそらを
-みていると　こころが　はれわたる！▼
-この　きれいな　そらの　ように
-きもちのいい　しょうぶを　しようぜ！▼</Text>
+			<Text>つりの　ためなら
+なんでも　どこでも　しらべるぜい！▼
+というわけで　あいて　してもらうよ▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T13:25:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T13:25:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>水面に　うつる　遠い空を
-みていると　心が　晴れ渡る！▼
-この　きれいな　空の　ように
-気持ちの良い　勝負を　しようぜ！▼</Text>
+			<Text>つりの　ためなら
+なんでも　どこでも　調べるぜい！▼
+というわけで　相手してもらうよ▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T13:25:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T13:25:58" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -44212,27 +44210,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ははっ！　まけたか！
-まっ　しょーがねーな！▼</Text>
+			<Text>おまえさんの　ポケモン
+ちょいと　つよいんじゃねえか？</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T13:25:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T13:25:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ははっ！　負けたか！
-まっ　しょーがねーな！▼</Text>
+			<Text>おまえさんの　ポケモン
+ちょいと　強いんじゃねえか？</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T13:25:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T13:25:58" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -44247,27 +44245,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここで　そらを　ずーっと　みてるが
-まったく　あきないんだよな！▼</Text>
+			<Text>そうよ！　つりの　ためなら
+かんばんの　うらだって　しらべるぜい！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T13:25:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T13:25:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここで　水面の空を　ずっと　みてるが
-まったく　飽きないんだよな！▼</Text>
+			<Text>そうよ！　つりの　ためなら
+看板の　裏だって　調べるぜい！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T13:25:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T13:25:58" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
