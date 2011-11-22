@@ -284,14 +284,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わたしの　ポケモンね
-きのみが　だいすき　なの▼
+きのみが　だいすき　なの！▼
 だから　きのみを　さがして
 かくちを　あるいてるってわけ▼
 ああ　きのみが　あふれるほど
 あつまる　まちは　ないのかしら▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T03:44:03" />
+				Time="2011-11-22T13:04:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -300,14 +300,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わたしの　ポケモンね
-きのみが　だいすき　なの▼
-だから　きのみを　さがして
-かくちを　あるいてるってわけ▼
+きのみが　大好き　なの！▼
+だから　きのみを　探して
+各地を　歩いてるってわけ▼
 ああ　きのみが　あふれるほど
-あつまる　まちは　ないのかしら▼</Text>
+集まる　街は　ないのかしら▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T03:44:05" />
+				Time="2011-11-22T13:04:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -356,10 +356,10 @@
 			Language="JPN_KANJI">
 			<Text>ハイリンクに　フェスミッションの
 『きのみ　だいしゅうかく！』が▽
-ついか　されました</Text>
+追加されました</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T03:44:05" />
+				Time="2011-11-22T13:02:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -410,12 +410,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わたしの　ポケモンが
-すきな　きのみは　ヒメリのみ▼
-わざポイントが　かいふくする
-とっても　べんりな　きのみよね</Text>
+好きな　きのみは　ヒメリのみ▼
+技ポイントが　回復する
+とっても　便利な　きのみよね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T03:44:05" />
+				Time="2011-11-22T13:04:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

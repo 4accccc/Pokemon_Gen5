@@ -624,19 +624,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おや　トレーナーさん　じゃな
-おぬし　よいめを　しておるのう！▼
-ワシも　ただひたすら
-ポケモンとの　ちからと　わざを▽
-みがいた　じきが　あったもんじゃ▼
-おぬしに　アドバイスじゃ！
-つよく　なりたければ▼
-たくさんの　トレーナーと　たたかい
-おぬしの　ポケモンを▽
+			<Text>おぬしに　アドバイスじゃ！▼
+つよく　なりたければ
+たくさんの　トレーナーと　たたかい▼
+おぬしの　ポケモンを
 りかい　するのじゃー！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T02:41:11" />
+				Time="2011-11-22T12:57:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -644,19 +639,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おや　トレーナーさん　じゃな
-おぬし　よいめを　しておるのう！▼
-ワシも　ただひたすら
-ポケモンとの　ちからと　わざを▽
-みがいた　じきが　あったもんじゃ▼
-おぬしに　アドバイスじゃ！
-つよく　なりたければ▼
-たくさんの　トレーナーと　たたかい
-おぬしの　ポケモンを▽
-りかい　するのじゃー！▼</Text>
+			<Text>おぬしに　アドバイスじゃ！▼
+強く　なりたければ
+たくさんの　トレーナーと　戦い▼
+おぬしの　ポケモンを
+理解するのじゃー！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T02:41:15" />
+				Time="2011-11-22T12:57:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -705,10 +695,10 @@
 			Language="JPN_KANJI">
 			<Text>ハイリンクに　フェスミッションの
 『かくとうかと　しゅぎょう！』が▽
-ついか　されました</Text>
+追加されました</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T02:41:26" />
+				Time="2011-11-22T12:53:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -744,12 +734,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほっほっほ
-つよさを　もとめるなら▽
-まずは　たくさん　たたかうのじゃー</Text>
+			<Text>ずっと　たたかいつづけていれば
+いつしか　つよく　なっているだろ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T02:41:33" />
+				Time="2011-11-22T12:53:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -757,12 +746,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほっほっほ
-つよさを　もとめるなら▽
-まずは　たくさん　たたかうのじゃー</Text>
+			<Text>ずっと　戦いつづけていれば
+いつしか　強くなっているだろ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T02:41:35" />
+				Time="2011-11-22T12:54:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

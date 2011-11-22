@@ -2031,20 +2031,20 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここの　はたけに
+			<Text>フキヨセの　はたけで
 おいしい　やさいが　そだつのは▼
-こだわりの　ひりょうを
+こだわりの　こやしを
 つかって　いるからです▼
 だいしぜんの　エネルギーを
-たくわえた　よい　ひりょうは▽
+たくわえた　よい　こやしは▽
 とっても　くさい！▼
 こうばしく　それでいて
 はなの　おくまで　しびれるような……▼
 いやあ　おもいだすだけで
-めまいが　する！▼</Text>
+めまいが　しちゃうね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T03:45:37" />
+				Time="2011-11-22T13:05:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2052,20 +2052,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここの　はたけに
-おいしい　やさいが　そだつのは▼
-こだわりの　ひりょうを
-つかって　いるからです▼
-だいしぜんの　エネルギーを
-たくわえた　よい　ひりょうは▽
+			<Text>フキヨセの　畑で
+おいしい　野菜が　育つのは▼
+こだわりの　こやしを
+使って　いるからです▼
+大自然の　エネルギーを
+蓄えた　よい　こやしは▽
 とっても　くさい！▼
-こうばしく　それでいて
-はなの　おくまで　しびれるような……▼
-いやあ　おもいだすだけで
-めまいが　する！▼</Text>
+香ばしく　それでいて
+鼻の　奥まで　しびれるような……▼
+いやあ　思いだすだけで
+めまいが　しちゃうね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T03:45:40" />
+				Time="2011-11-22T13:06:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2114,10 +2114,10 @@
 			Language="JPN_KANJI">
 			<Text>ハイリンクに　フェスミッションの
 『こやし　コレクター！』が▽
-ついか　されました</Text>
+追加されました</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T03:45:40" />
+				Time="2011-11-22T13:04:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

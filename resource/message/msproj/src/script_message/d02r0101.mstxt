@@ -1601,6 +1601,13 @@
 				User="matsumiya:W00224"
 				Time="2011-11-22T12:38:08" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:52:44" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d02r0101_stone_01"

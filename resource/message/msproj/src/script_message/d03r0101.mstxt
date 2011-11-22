@@ -892,14 +892,12 @@
 そう　ちょっかん　した
 あのひから　いちねんが　たちました▼
 いまだ　おたからは　みつかりませんが
-わたしの　きもちは▽
-まだまだ　あのひのまま！▼
-ゆめを　おいかけ　つづける……
-そんな　まいにちが▽
+いまも　ゆめを　おいかけつづける……▼
+そんな　まいにちが
 たのしくて　しかたがないのです！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T02:44:55" />
+				Time="2011-11-22T12:55:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -907,21 +905,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こうだいな　さばく！
-うもれた　おしろ！▼
-ある！　ここには　ぜったい
-おたからが　ある！▼
-そう　ちょっかん　した
-あのひから　いちねんが　たちました▼
-いまだ　おたからは　みつかりませんが
-わたしの　きもちは▽
-まだまだ　あのひのまま！▼
-ゆめを　おいかけ　つづける……
-そんな　まいにちが▽
-たのしくて　しかたがないのです！▼</Text>
+			<Text>広大な　砂漠！
+埋もれた　お城！▼
+ある！　ここには　絶対
+お宝が　ある！▼
+そう　直感した
+あの日から　一年が　経ちました▼
+いまだ　お宝は　みつかりませんが
+いまも　夢を　追いかけつづける……▼
+そんな　毎日が
+楽しくて　しかたがないのです！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T02:44:57" />
+				Time="2011-11-22T12:56:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -970,10 +966,10 @@
 			Language="JPN_KANJI">
 			<Text>ハイリンクに　フェスミッションの
 『いっかくせんきん！』が▽
-ついか　されました</Text>
+追加されました</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T02:44:57" />
+				Time="2011-11-22T12:49:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1009,10 +1005,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おたから　どこだー</Text>
+			<Text>ゆめを　おいかける　まいにち……
+それこそが　わたしの　たから！？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T02:44:43" />
+				Time="2011-11-22T12:51:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1020,10 +1017,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おたから　どこだー</Text>
+			<Text>夢を　追いかける　毎日……
+それこそが　わたしの　宝！？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T02:44:57" />
+				Time="2011-11-22T12:51:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
