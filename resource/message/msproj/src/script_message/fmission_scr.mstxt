@@ -4127,6 +4127,54 @@ msg_fm_npc_trade01_02へ</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_fm_npc_present01_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>あらあら　[Name:Item ]は
+それいじょう　もてないわね！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T02:56:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T02:54:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あらあら　[Name:Item ]は
+それいじょう　もてないわね！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T02:56:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T02:54:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>アイテム入手バッグがいっぱい</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T02:54:40" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>アイテム入手バッグがいっぱい</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T02:54:42" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_fm_npc_pokequiz01_01">
 		<LanguageCell
 			Language="JPN">
