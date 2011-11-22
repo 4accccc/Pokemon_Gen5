@@ -339,6 +339,11 @@ static void SetZukanTextVersionUp( ZUKAN_SAVEDATA * zw, u16 monsno, u32 lang )
 static BOOL check_ZenkokuCompMonsno( u16 monsno )
 {
   int i;
+  /*
+   * このテーブルを編集する場合、同時に
+   * swan/tools/hash/special_mons_tbl.rb->$monsname_maboroshi_tbl
+   * も一緒に編集してください 11.11.18
+   */
   static const u16 cut_check_monsno[] = {
     MONSNO_MYUU,				// ミュウ
     MONSNO_SEREBHI,			// セレビィ
@@ -377,6 +382,11 @@ static BOOL check_ZenkokuCompMonsno( u16 monsno )
 static BOOL check_LocalCompMonsno( u16 monsno )
 {
   int i;
+  /*
+   * このテーブルを編集する場合、同時に
+   * swan/tools/hash/special_mons_tbl.rb->$monsname_maboroshi_loacl_tbl
+   * も一緒に編集してください 11.11.18
+   */
   static const u16 cut_check_monsno[] = {
 		MONSNO_654,			// ケルディオ
 		MONSNO_655,			// メロエッタ
