@@ -873,7 +873,7 @@ VMCMD_RESULT EvCmdInfinityDungeonGetDungeonData( VMHANDLE *p_core, void *p_wk_ad
     {
       u8 room_id = INFINITYDUNGEON_SAVE_GetRoomID( p_save );
       u8 floor_id = INFINITYDUNGEON_SAVE_GetFloorID( p_save );
-      *p_ret_wk = INFINITY_DUNGEON_GetUpPosRoomType( p_dungeon_data,floor_id,room_id );
+      *p_ret_wk = INFINITY_DUNGEON_GetUpPosRoomTypeIsBoss( p_dungeon_data,floor_id,room_id );
     }
     break;
   default:

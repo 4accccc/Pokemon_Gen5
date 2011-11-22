@@ -1293,9 +1293,14 @@ static void SetBUildModel( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p
     // 上
     if( p_room_data->room_type != ROOM_TYPE_ELEVATOR )
     {
-      if( !p_room_data->can_move[INF_MOVE_UP] )
+      // 上の部屋がボス部屋だった場合は設置しない
+      BOOL is_boss = INFINITY_DUNGEON_GetUpPosRoomTypeIsBoss( p_wk->p_dungeon_data ,p_wk->next_floor ,p_wk->next_room) ;
+      if( !is_boss )
       {
-        FIELD_BMODEL_Create_Direct( p_wk->p_bmodel_man, p_bmodel_id_table[INF_MOVE_UP], &status );
+        if( !p_room_data->can_move[INF_MOVE_UP] )
+        {
+          FIELD_BMODEL_Create_Direct( p_wk->p_bmodel_man, p_bmodel_id_table[INF_MOVE_UP], &status );
+        }
       }
     }
 
@@ -1339,7 +1344,15 @@ static void SetDummyObj( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p_r
     // 上(エレベータ部屋には上封鎖オブジェクトを置くことがない)
     if( p_room_data->room_type != ROOM_TYPE_ELEVATOR )
     {
-      if( !p_room_data->can_move[INF_MOVE_UP] )
+      // 上の部屋がボス部屋だった場合は設置しない
+      BOOL is_boss = INFINITY_DUNGEON_GetUpPosRoomTypeIsBoss( p_wk->p_dungeon_data ,p_wk->next_floor ,p_wk->next_room) ;
+      // ボスを倒しているか調べる
+      BOOL is_gate_open = INFINITY_DUNGEON_GetGateOpen( p_wk->p_dungeon_data,p_wk->p_save );
+
+      // ボス部屋に通じる道でかつ、ゲートトレーナーを倒していないときは
+      // 道を封鎖する
+      if( (!p_room_data->can_move[INF_MOVE_UP]) ||
+          ((is_boss == TRUE) && ( is_gate_open==FALSE ) ) )
       {
         // ダミーオブジェクトで封鎖
         const GRID_DATA *p_grid_data = INF_TOOL_GetBmodelPos( version ,p_room_data->room_type ,WARP_DIR_UP );
@@ -2727,7 +2740,7 @@ u32 INFINITY_DUNGEON_TrainerCount( const INF_DUNGEON_DATA *p_dungeon_data )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-BOOL INFINITY_DUNGEON_GetUpPosRoomType( const INF_DUNGEON_DATA *p_dungeon_data ,s32 now_floor ,s32 now_room )
+BOOL INFINITY_DUNGEON_GetUpPosRoomTypeIsBoss( const INF_DUNGEON_DATA *p_dungeon_data ,s32 now_floor ,s32 now_room )
 {
   const ROOM_DATA *p_room;
   // 一つ上の部屋番号を取得
@@ -2746,6 +2759,23 @@ BOOL INFINITY_DUNGEON_GetUpPosRoomType( const INF_DUNGEON_DATA *p_dungeon_data ,
   }
 
   return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief ボス部屋に通じるゲートが開いているか調べる
+ *
+ *	@param	INF_DUNGEON_DATA *p_dungeon_data 
+ *	@param	INFINITYDUNGEON_SAVE *p_save 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+BOOL INFINITY_DUNGEON_GetGateOpen( const INF_DUNGEON_DATA *p_dungeon_data ,const INFINITYDUNGEON_SAVE *p_save )
+{
+  s32 tr_id_pos = p_dungeon_data->gate_trainer_id_pos;
+  s32 floor_id  = p_dungeon_data->gate_trainer_floor;
+  return INFINITYDUNGEON_SAVE_GetTrainerFlag( p_save ,floor_id ,tr_id_pos);
 }
 
 #ifdef PM_DEBUG

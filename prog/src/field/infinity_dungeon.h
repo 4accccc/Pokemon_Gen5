@@ -43,7 +43,8 @@ extern u32 INF_GetDungeonDataSize();
 extern u16 INFINITY_DUNGEON_GetTrIDByIDPos( const INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_id ,u8 id_pos );
 extern u8 INFINITY_DUNGEON_GetDungeonColor( const INF_DUNGEON_DATA *p_wk );
 extern u32 INFINITY_DUNGEON_TrainerCount( const INF_DUNGEON_DATA *p_dungeon_data );
-extern BOOL INFINITY_DUNGEON_GetUpPosRoomType( const INF_DUNGEON_DATA *p_dungeon_data ,s32 now_floor ,s32 now_room );
+extern BOOL INFINITY_DUNGEON_GetUpPosRoomTypeIsBoss( const INF_DUNGEON_DATA *p_dungeon_data ,s32 now_floor ,s32 now_room );
 extern u32 INFINITY_DUNGEON_GetGateBeforeBattleMessage( const INFINITYDUNGEON_SAVE *p_save ,const INF_DUNGEON_DATA *p_dungeon_data ,u16 obj_code ,BOOL is_before_battle);
 extern GMEVENT* INFINITY_DUNGEON_LoseEventCreate( GAMESYS_WORK  *p_gsys );
+extern BOOL INFINITY_DUNGEON_GetGateOpen( const INF_DUNGEON_DATA *p_dungeon_data ,const INFINITYDUNGEON_SAVE *p_save );
 

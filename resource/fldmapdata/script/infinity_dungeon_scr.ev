@@ -1273,9 +1273,9 @@ trainer_talk:
     IF (($LWK_DUNGEON_STATUS == $LWK_NOW_AREA) && ($LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_1)) THEN
       // バージョンによってメッセージ変化
       IF $LWK_D_VERSION == VERSION_B2 THEN
-        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_tutorial_gate_start_01_b )
+        _BALLOONWIN_OBJMSG( msg_tutorial_gate_start_01_b, SCWK_TARGET_OBJID )
       ELSE
-        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_tutorial_gate_start_01_w )
+        _BALLOONWIN_OBJMSG( msg_tutorial_gate_start_01_w, SCWK_TARGET_OBJID )
       ENDIF
 
     ELSE
@@ -1310,13 +1310,13 @@ gate_open_talk:
   IF (($LWK_DUNGEON_STATUS == $LWK_NOW_AREA) && ($LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_1)) THEN
     // バージョンによってメッセージ変化
     IF $LWK_D_VERSION == VERSION_B2 THEN
-      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_tutorial_gate_end_01_b )
+      _BALLOONWIN_OBJMSG( msg_tutorial_gate_end_01_b, SCWK_TARGET_OBJID )
     ELSE
-      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_tutorial_gate_end_01_w )
+      _BALLOONWIN_OBJMSG( msg_tutorial_gate_end_01_w, SCWK_TARGET_OBJID )
     ENDIF
   ELSE
     _INFINITY_DUNGEON_GET_GATE_TR_MSG_ID( FALSE, LWK_MSG_ID )
-    _EASY_BALLOONWIN_TALKOBJ_MSG( LWK_MSG_ID )
+    _BALLOONWIN_OBJMSG( LWK_MSG_ID, SCWK_TARGET_OBJID )
   ENDIF
 }
 _RET
@@ -2474,9 +2474,9 @@ talk_hint:
   IF (($LWK_DUNGEON_STATUS == $LWK_NOW_AREA) && ($LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_1) && ($LWK_IS_GATE == TRUE)) THEN
     // バージョンによってメッセージ変化
     IF $LWK_D_VERSION == VERSION_B2 THEN
-      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_tutorial_gate_hint_01_b )
+      _BALLOONWIN_OBJMSG_POS( msg_tutorial_gate_hint_01_b , SCWK_TARGET_OBJID, POS_DOWN )
     ELSE
-      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_tutorial_gate_hint_01_w )
+      _BALLOONWIN_OBJMSG_POS( msg_tutorial_gate_hint_01_w , SCWK_TARGET_OBJID, POS_DOWN )
     ENDIF
   ELSE
     _BALLOONWIN_OBJMSG_POS( LWK_HINT_MSG_ID , SCWK_TARGET_OBJID, POS_DOWN )
