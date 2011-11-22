@@ -10365,7 +10365,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_gate__up_01"
+		Label="msg_hint_gate_up_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -10409,7 +10409,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_gate__up_02"
+		Label="msg_hint_gate_up_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -10453,7 +10453,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_gate__up_03"
+		Label="msg_hint_gate_up_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -10497,7 +10497,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_gate__up_04"
+		Label="msg_hint_gate_up_04"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -10541,7 +10541,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_gate__up_05"
+		Label="msg_hint_gate_up_05"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -10585,7 +10585,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_gate__up_06"
+		Label="msg_hint_gate_up_06"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -10629,7 +10629,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_gate__up_07"
+		Label="msg_hint_gate_up_07"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -10675,7 +10675,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_gate__up_08"
+		Label="msg_hint_gate_up_08"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -10719,7 +10719,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_gate__down_01"
+		Label="msg_hint_gate_down_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -10763,7 +10763,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_gate__down_02"
+		Label="msg_hint_gate_down_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -10807,7 +10807,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_gate__down_03"
+		Label="msg_hint_gate_down_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -10851,7 +10851,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_gate__down_04"
+		Label="msg_hint_gate_down_04"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -10895,7 +10895,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_gate__down_05"
+		Label="msg_hint_gate_down_05"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -10939,7 +10939,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_gate__down_06"
+		Label="msg_hint_gate_down_06"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -10983,7 +10983,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_gate__down_07"
+		Label="msg_hint_gate_down_07"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -11029,7 +11029,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_gate__down_08"
+		Label="msg_hint_gate_down_08"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -16789,7 +16789,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_hint_gate_gender__man08"
+		Label="msg_hint_gate_gender_man08"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
