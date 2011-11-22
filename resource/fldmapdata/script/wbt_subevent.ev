@@ -61,6 +61,7 @@ EVENT_END
 ev_wbt_leader_main:
   _BALLOONWIN_TALKOBJ_MSG( SCWK_ANSWER )
   _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
   _RET
 
 /**************************************************************/
