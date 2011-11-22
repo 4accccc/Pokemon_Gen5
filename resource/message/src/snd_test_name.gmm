@@ -9505,6 +9505,10 @@
 		<language name="JPN" width="256">SW-GIANTHOLE-09</language>
 		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-09</language>
 	</row>
+	<row id="msg_seq_se_sw_gianthole_10">
+		<language name="JPN" width="256">SW-GIANTHOLE-10</language>
+		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-10</language>
+	</row>
 	<row id="msg_seq_se_sw_ja_exp">
 		<language name="JPN" width="256">SW-JA-EXP</language>
 		<language name="JPN_KANJI" width="256">SW-JA-EXP</language>
@@ -9520,6 +9524,14 @@
 	<row id="msg_seq_se_sw_shizui">
 		<language name="JPN" width="256">SW-SHIZUI</language>
 		<language name="JPN_KANJI" width="256">SW-SHIZUI</language>
+	</row>
+	<row id="msg_seq_se_sw_kobalon_01">
+		<language name="JPN" width="256">SW-KOBALON-01</language>
+		<language name="JPN_KANJI" width="256">SW-KOBALON-01</language>
+	</row>
+	<row id="msg_seq_se_sw_kobalon_02">
+		<language name="JPN" width="256">SW-KOBALON-02</language>
+		<language name="JPN_KANJI" width="256">SW-KOBALON-02</language>
 	</row>
 	<row id="msg_seq_se_dmy_390">
 		<language name="JPN" width="256">DMY-390</language>
