@@ -972,7 +972,7 @@
   DEF_CMD( EvCmdFMissionNpcMemoryQuizParamGetQuestionPoke, EV_SEQ_FMISSION_NPC_MEMORY_QUIZ_PARAM_GET_QPOKE )
   DEF_CMD( EvCmdFMissionNpcMemoryQuizParamGetAnswerPoke, EV_SEQ_FMISSION_NPC_MEMORY_QUIZ_PARAM_GET_APOKE)
   
-  DEF_CMD( EvCmdFMissionStartGmkEffect, EV_SEQ_MISSION_START_GMK_EFFECT )
+  NO_CMD()
   NO_CMD()
   NO_CMD()
   NO_CMD()

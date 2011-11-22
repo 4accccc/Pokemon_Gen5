@@ -58,8 +58,6 @@
 #include "fes_gimmick_local.h"
 #include "fes_gimmick_def.h"
 
-#include "palace_gimmick.h"   // for PALACE_GMK_EffectStart
-
 #include "event_mapchange.h"
 
 //==================================================================
@@ -446,25 +444,6 @@ VMCMD_RESULT EvCmdReturnFromHilink( VMHANDLE * core, void *wk )
   SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
   SCRIPT_CallEvent( scw, EVENT_ChangeMapFromPalace( gsys ) );
-  return VMCMD_RESULT_SUSPEND;
-}
-
-//==================================================================
-/**
- * @brief スクリプトコマンド：ミッション開始のギミックエフェクト開始
- * @date  2011.11.2
- * @author ichiraku
- */
-//==================================================================
-VMCMD_RESULT EvCmdFMissionStartGmkEffect( VMHANDLE * core, void *wk )
-{
-  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
-  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
-
-  // ミッション開始のギミックエフェクト開始
-  PALACE_GMK_EffectStart( gsys );
-
   return VMCMD_RESULT_SUSPEND;
 }
 
