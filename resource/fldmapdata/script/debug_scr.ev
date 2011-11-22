@@ -1878,6 +1878,7 @@ EVENT_START   ev_debug_ichiraku
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_11,  11 ) // 背景真っ黒のままメッセージ
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_12,  12 ) // キュレム合体イベントリセット
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_13,  13 ) // コバルオン入退場
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_14,  14 ) // キュレムデモ 覚醒
 	_BMPMENU_START()
 
   SWITCH $SCWK_ANSWER
@@ -1927,6 +1928,7 @@ EVENT_START   ev_debug_ichiraku
   CASE 8 THEN
     _GLOBAL_CALL  SCRID_TV
   CASE 9 THEN
+    {
     // キュレム戦
     DEFINE_LOCAL LWK_BATTLE_FLAG
     DEFINE_LOCAL LCWK_VERSION
@@ -1956,6 +1958,7 @@ EVENT_START   ev_debug_ichiraku
     ELSE
       _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
     ENDIF
+    }
 
   CASE 10 THEN
     // 観覧車トレーナー
@@ -2012,6 +2015,27 @@ EVENT_START   ev_debug_ichiraku
 
       // コバルオンOBJ削除
       _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+    }
+
+  CASE 14 THEN
+    {
+    DEFINE_LOCAL LCWK_VERSION
+    _GET_ROM_VERSION( LCWK_VERSION )
+
+    // キュレムデモ　覚醒
+	  _DEMO_FADEOUT_BLACK_CALL()
+    _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_00 )
+
+	  //_DEMO_FADEIN_BLACK_CALL()
+
+    //_DEMO_FADEOUT_BLACK_CALL()
+
+	  IF $LCWK_VERSION == VERSION_B2 THEN
+      _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_B_01 )
+    ELSE
+      _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_W_01 )
+    ENDIF
+	  _DEMO_FADEIN_BLACK_CALL()
     }
 
   ENDSWITCH
