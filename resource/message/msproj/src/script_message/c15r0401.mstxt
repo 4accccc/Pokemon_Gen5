@@ -216,4 +216,174 @@
 				Time="2011-10-18T09:49:37" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c15r0401_bg01">
+		<LanguageCell
+			Language="JPN">
+			<Text>たくさんの　ファンレターだ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:49:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:49:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>たくさんの　ファンレターだ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:49:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:49:23" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0401_bg02">
+		<LanguageCell
+			Language="JPN">
+			<Text>むかしの　えいがの
+だいほんが　おいてある……▼
+そして　ラプラスは　ゆく▼
+さらば　ふゆのキャモメ▼
+オダマキはかせの　いじょうな　あいじょう</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:54:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:49:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>むかしの　えいがの
+だいほんが　おいてある……▼
+そして　ラプラスは　ゆく▼
+さらば　ふゆのキャモメ▼
+オダマキはかせの　いじょうな　あいじょう</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:54:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:49:34" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0401_bg03">
+		<LanguageCell
+			Language="JPN">
+			<Text>てんじょうに　とどきそうな
+おおきな　かがみ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:52:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:52:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>てんじょうに　とどきそうな
+おおきな　かがみ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:52:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:52:06" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0401_bg04">
+		<LanguageCell
+			Language="JPN">
+			<Text>あざやかな　いろの　ビン……
+メイクの　こどうぐだ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:52:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:52:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あざやかな　いろの　ビン……
+メイクの　こどうぐだ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:52:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:52:14" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0401_bg05">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライトに　あてると　キラキラ　ひかる
+ラメの　はいった　いしょうだ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:52:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:52:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライトに　あてると　キラキラ　ひかる
+ラメの　はいった　いしょうだ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:52:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:52:24" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15r0401_bg06">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライトに　あてると　キラキラ　ひかる
+ラメの　はいった　いしょうだ！▼
+スワンナの　ぬいぐるみが
+こしに　ついた　ドレスも　ある！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:53:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:52:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライトに　あてると　キラキラ　ひかる
+ラメの　はいった　いしょうだ！▼
+スワンナの　ぬいぐるみが
+こしに　ついた　ドレスも　ある！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:53:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-20T09:52:37" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

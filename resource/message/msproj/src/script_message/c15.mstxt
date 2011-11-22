@@ -308,14 +308,14 @@ x31,z54辺りに配置
 			Language="JPN">
 			<Text>ウンウン！　それ　ナイスね！▼
 えいが！　それは　アメイジング！▼
-その　おどろき　そして　かんどうを
-ていきょうする　このポケウッドを▽
+その　かんどうと　おどろきを
+ていきょうする　この　ポケウッドを▽
 [Name:TrainerName Idx="0" ]ちゃんに▽
-かんじちゃって　もらおう！▼
-じゃあ　また　あとでね！</Text>
+かんじちゃって　もらえるしね！▼
+じゃあ　また　あとで！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T12:30:25" />
+				Time="2011-11-21T07:42:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -328,11 +328,11 @@ x31,z54辺りに配置
 その驚き　そして感動　
 提供する　このポケウッドを▽
 [Name:TrainerName Idx="0" ]ちゃんに▽
-感じちゃって　もらおう！▼
-じゃあ　また　後でね！</Text>
+感じちゃって　もらえるしね！▼
+じゃあ　また　後で！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T12:30:29" />
+				Time="2011-11-21T07:43:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2814,5 +2814,144 @@ Bis  bald.</Text>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-10-18T09:49:37" />
 		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_bg01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケウッドムービースタジオ
+かんけいしゃいがい　たちいりきんし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-21T08:06:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-21T08:06:52" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケウッドムービースタジオ
+かんけいしゃいがい　たちいりきんし</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-21T08:07:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-21T08:07:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_bg02">
+		<LanguageCell
+			Language="JPN">
+			<Text>よく　みると　ベニヤいたで
+つくられた　たてものだ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-21T08:07:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-21T08:07:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>よく　みると　ベニヤいたで
+つくられた　たてものだ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-21T08:07:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-21T08:07:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_bg03">
+		<LanguageCell
+			Language="JPN">
+			<Text>さつえいようの　こどうぐが
+いっぱい　はいってる！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-21T08:07:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-21T08:07:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さつえいようの　こどうぐが
+いっぱい　はいってる！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-21T08:07:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-21T08:07:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_bg04">
+		<LanguageCell
+			Language="JPN">
+			<Text>さつえいようの　セット▼
+せいこうに　つくられた
+ロイヤルイッシュごう　だ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-21T08:08:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-21T08:07:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さつえいようの　セット▼
+せいこうに　つくられた
+ロイヤルイッシュごう　だ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-21T08:08:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-21T08:07:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c15_bg05">
+		<LanguageCell
+			Language="JPN">
+			<Text>さつえいようの　セット▼
+１４４ぶんの１
+スカイアローブリッジ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-21T08:08:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-21T08:07:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さつえいようの　セット▼
+１４４ぶんの１
+スカイアローブリッジ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-21T08:08:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-21T08:07:44" />
+		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

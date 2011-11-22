@@ -2653,11 +2653,11 @@
 		Label="pw_event9_enemy_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>いらいぬし『うははは！
+			<Text>いらいぬし『ウハハハ！
 それは　エネルギーの　けっしょう！！▼
 たいこの　むかし……
 はかいのまじんから　うばったと▽
-いわれる　エネルギーの　かたまり▼
+いわれる　エネルギーの　かたまりです▼
 そして　せきぞうには　まじんの
 エネルギーが　ひとのてに　わたらぬよう▽
 まもりがみが　とりついて　いたのですよ▼
@@ -2667,19 +2667,19 @@
 はが　たちませんでしたから……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2011-11-21T08:10:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2011-11-21T08:10:26" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>依頼主『うははは！
+			<Text>依頼主『ウハハハ！
 それは　エネルギーの　結晶！！▼
 太古の　昔……
 破壊の魔神から　うばったと▽
-いわれる　エネルギーの　塊▼
+いわれる　エネルギーの塊です▼
 そして　石像には　魔神の
 エネルギーが　人の手に　渡らぬよう▽
 守り神が　取りついて　いたのですよ▼
@@ -2689,11 +2689,11 @@
 歯が　立ちませんでしたから……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2011-11-21T08:10:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2011-11-21T08:10:26" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2727,10 +2727,10 @@
 		Label="pw_event9_enemy_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>いらいぬし『オフコース！！
-ふういんを　とけば▽
-このエネルギーの　けっしょうは▽
-はかいのまじんの　もとに　かえります▼
+			<Text>いらいぬし『オフコース！！▼
+まもりがみを　たおし　ふういんを
+とけば　その　エネルギーは▽
+まじんの　もとに　かえります▼
 そして　まじんは　おそろしい　ちからを
 とりもどし　ふっかつ　するのです！▼
 どう？　ワクワクしない？
@@ -2738,18 +2738,18 @@
 ねえ　[Name:TrainerName Idx="1" ]くん……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:50" />
+				Time="2011-11-21T08:10:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:50" />
+				Time="2011-11-21T08:10:26" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>依頼主『オフコース！！
-封印を　解けば▽
-このエネルギーの　結晶は▽
-破壊の魔神の　元に　かえります▼
+			<Text>依頼主『オフコース！！▼
+守り神を　倒し　封印を　解けば▽
+そのエネルギーは▽
+魔神の　元に　かえります▼
 そして　魔神は　恐ろしい　力を
 取り戻し　復活するのです！▼
 どう？　ワクワクしない？
@@ -2757,11 +2757,11 @@
 ねえ　[Name:TrainerName Idx="1" ]くん……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:50" />
+				Time="2011-11-21T08:10:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:50" />
+				Time="2011-11-21T08:10:26" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2856,28 +2856,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アーカム『キミの　おかげで
-まじんの　ふういんは　とけたよ！！▼
-その　ほうせきを　みてごらん！！</Text>
+まじんの　ふういんは　とけた！！▼
+ほうせきを　みてごらん！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:50" />
+				Time="2011-11-21T08:10:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:50" />
+				Time="2011-11-21T08:10:26" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アーカム『キミの　おかげで
 魔神の　封印は　解けたよ！▼
-その　宝石を　見てごらん！</Text>
+宝石を　見てごらん！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:50" />
+				Time="2011-11-21T08:10:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:50" />
+				Time="2011-11-21T08:10:26" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2911,27 +2911,27 @@
 		Label="pw_event9_enemy_5">
 		<LanguageCell
 			Language="JPN">
-			<Text>アーカム『かえっていくのさ！
+			<Text>アーカム『かえっていくんだよ！
 ほんらいの　もちぬしの　もとへね！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:50" />
+				Time="2011-11-21T08:10:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:50" />
+				Time="2011-11-21T08:10:26" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アーカム『帰っていくのさ！
+			<Text>アーカム『帰っていくんだよ！
 本来の　持ち主の　元へね！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:50" />
+				Time="2011-11-21T08:10:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:50" />
+				Time="2011-11-21T08:10:26" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

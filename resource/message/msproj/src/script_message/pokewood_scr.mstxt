@@ -1643,11 +1643,11 @@
 		Label="msg_pw_director_13">
 		<LanguageCell
 			Language="JPN">
-			<Text>あれ？　だいじょうぶ　ですか？
-あきらめて　とりなおしますか？</Text>
+			<Text>おやおや　どうしたんです？
+さつえい　あきらめますか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T06:07:37" />
+				Time="2011-11-20T09:43:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1655,11 +1655,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あれ？　大丈夫ですか？
-あきらめて　撮り直しますかね？</Text>
+			<Text>おやおや　どうしたんです？
+撮影　あきらめますか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-22T06:07:42" />
+				Time="2011-11-20T09:43:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1683,11 +1683,11 @@
 		Label="msg_pw_director_14">
 		<LanguageCell
 			Language="JPN">
-			<Text>どうしたんじゃ？
-ほんとに　さつえいを　あきらめるか？</Text>
+			<Text>おーい　どうしたんじゃ？
+ほんとうに　さつえいを　あきらめるか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:06:54" />
+				Time="2011-11-20T09:44:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1695,11 +1695,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どうしたんじゃ？
-ほんとに　撮影を　あきらめるか？</Text>
+			<Text>おーい　どうしたんじゃ？
+本当に　撮影を　あきらめるか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T10:24:19" />
+				Time="2011-11-20T09:44:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1722,10 +1722,11 @@
 		Label="msg_pw_director_15">
 		<LanguageCell
 			Language="JPN">
-			<Text>ドウシタノ？　アキラメルノ？</Text>
+			<Text>ソレデ　ユー　ハ　イイノネ？
+サツエイ　アキラメルノネ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:34:59" />
+				Time="2011-11-20T09:46:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1733,10 +1734,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ドウシタノ？　アキラメルノ？</Text>
+			<Text>ソレデ　ユー　ハ　イイノネ？
+撮影　アキラメルノネ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:35:07" />
+				Time="2011-11-20T09:46:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2261,15 +2263,15 @@
 			<Text>いやあー！　さつえい　おつかれさまね！
 グッとくる　えんぎ　だったよ！▽
 こりゃ　さくひんが　たのしみだね！▼
-でね！　ここからが　ウチの　すごいとこ！
-たったいま　さつえいした　えいが　がね▽
+でね　ここからが　ウチの　すごいとこ！
+たったいま　さつえいした　えいが　が▽
 あっというまに　かんせいして▽
 シアターで　こうかいされちゃうのよ！▼
 ホラホラ　[Name:TrainerName Idx="0" ]ちゃん！
 シアターに　レッツゴーだよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T13:02:26" />
+				Time="2011-11-21T08:03:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2280,15 +2282,15 @@
 			<Text>いやー！　撮影　お疲れ！
 グッとくる　演技　だったよ！▽
 こりゃ　作品が　楽しみだね！▼
-でね！　ここからが　ウチの　すごいとこ！
-たった今　撮影した　映画がね▽
+でね　ここからが　ウチの　すごいとこ！
+たった今　撮影した　映画が▽
 あっという間に　完成して▽
 シアターで　公開されちゃうのよ！▼
 ホラホラ　[Name:TrainerName Idx="0" ]ちゃん！
 シアターに　レッツゴーだよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T13:02:49" />
+				Time="2011-11-21T08:03:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

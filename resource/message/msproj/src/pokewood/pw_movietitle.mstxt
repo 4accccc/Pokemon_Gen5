@@ -7799,10 +7799,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド</Text>
+			<Text>ＶＳ　せいぎの　ちゅうねん</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T10:43:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-21T08:26:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7810,10 +7810,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＶＳ　[Name:PokemonNickname2 ]キッド</Text>
+			<Text>ＶＳ　正義の　中年</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T10:43:08" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-21T08:26:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -7824,8 +7824,8 @@
 			<Comment>チュートリアルシナリオ作品サブタイトル
 （主人公♂用）</Comment>
 			<CommentModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T10:44:00" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-21T08:25:31" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -9210,10 +9210,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＶＳ　[Name:PokemonNickname2 ]マン</Text>
+			<Text>ＶＳ　せいぎの　ちゅうねん</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-11T03:23:20" />
+				Time="2011-11-21T08:27:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -9221,10 +9221,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＶＳ　[Name:PokemonNickname2 ]マン</Text>
+			<Text>ＶＳ　正義の　中年</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-11T03:23:25" />
+				Time="2011-11-21T08:28:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
