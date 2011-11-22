@@ -791,13 +791,13 @@ static void rare_param_set( DMP_MAINWORK* wk )
 {
   int i;
 
-  wk->boxValue[ INPUTBOX_ID_RARE ] = TRUE;
+  wk->boxValue[ INPUTBOX_ID_RARE ] ^= TRUE;
   {
     u8 form_no = box_getvalue( wk, INPUTBOX_ID_FORM );
     u16 mons_no = box_getvalue( wk, INPUTBOX_ID_POKETYPE );
-    u8 tokusei = box_getvalue( wk, INPUTBOX_ID_TOKUSEI );
+    u8 tokusei = box_getvalue( wk, INPUTBOX_ID_TOKUSEI_SWITCH );
     u8 sex = box_getvalue( wk, INPUTBOX_ID_SEX );
-    u32 personal_rnd = POKETOOL_CalcPersonalRandEx( wk->oyaID, mons_no, form_no, sex, 0, TRUE );
+    u32 personal_rnd = POKETOOL_CalcPersonalRandEx( wk->oyaID, mons_no, form_no, sex, MATH_CLAMP( tokusei, 0, 1 ), wk->boxValue[ INPUTBOX_ID_RARE ] );
 
     wk->boxValue[ INPUTBOX_ID_PER_RND_H ] = personal_rnd>>16;
     wk->boxValue[ INPUTBOX_ID_PER_RND_L ] = personal_rnd&0xFFFF;
@@ -826,14 +826,13 @@ static void update_dst( DMP_MAINWORK* wk )
   tokusei = box_getvalue( wk, INPUTBOX_ID_TOKUSEI );
   level = box_getvalue( wk, INPUTBOX_ID_LEVEL );
 
-  if( box_getvalue( wk, INPUTBOX_ID_RNDFLAG ) == 1 )
   {
     //個体乱数直接
     personal_rnd =  box_getvalue( wk, INPUTBOX_ID_PER_RND_H) << 16;
     personal_rnd |= box_getvalue( wk, INPUTBOX_ID_PER_RND_L);
     sex = POKETOOL_GetSex( mons_no, form_no, personal_rnd );
   }
-  else
+#if 0
   {
     //特性や性別設定優先
     PtlTokuseiSpec tokusei;
@@ -850,6 +849,7 @@ static void update_dst( DMP_MAINWORK* wk )
     sex = box_getvalue( wk, INPUTBOX_ID_SEX );
     personal_rnd = POKETOOL_CalcPersonalRandSpec( wk->oyaID, mons_no, form_no, sex, tokusei, rare_flag );
   }
+#endif
   PP_Get( wk->dst, ID_PARA_nickname, (void*)(wk->strbuf) );
 
   PP_Clear( wk->dst );
@@ -1020,6 +1020,7 @@ static void update_dst( DMP_MAINWORK* wk )
     }
     PP_Put( wk->dst, ID_PARA_get_ball,  getBallID );
   }
+  
   //親の性別
   PP_Put( wk->dst, ID_PARA_oyasex, box_getvalue(wk, INPUTBOX_ID_OYA_SEX) );
 
@@ -1224,10 +1225,6 @@ static void box_setup( DMP_MAINWORK* wk, u32 boxID, const POKEMON_PARAM* pp )
     }
     return;
 #endif
-  case INPUTBOX_ID_RNDFLAG:
-    {
-      value = wk->boxValue[ boxID ];
-    }
   default:
     break;
   }
@@ -1242,29 +1239,34 @@ static void box_setup( DMP_MAINWORK* wk, u32 boxID, const POKEMON_PARAM* pp )
 static void box_update( DMP_MAINWORK* wk, u32 boxID, u32 value )
 {
   const INPUT_BOX_PARAM* p = &InputBoxParams[ boxID ];
-  u32 str_width, str_height, xpos, ypos;
-
-  PRINTSYS_LSB color = box_sub_get_bgcol( p->type );
-  u8 color_bg = PRINTSYS_LSB_GetB( color );
-
-  GFL_BMP_Fill( wk->bmp, p->xpos, p->ypos, p->width, p->height, color_bg );
 
   wk->boxValue[ boxID ] = value;
-  box_getstr( wk, boxID, wk->strbuf );
 
-  str_width = PRINTSYS_GetStrWidth( wk->strbuf, wk->font, 0 );
-  xpos = p->xpos;
-  if( str_width < p->width ){
-    xpos += (p->width - str_width) / 2;
+  if( p->pageNo == wk->pageNo )
+  {
+    u32 str_width, str_height, xpos, ypos;
+
+    PRINTSYS_LSB color = box_sub_get_bgcol( p->type );
+    u8 color_bg = PRINTSYS_LSB_GetB( color );
+
+    GFL_BMP_Fill( wk->bmp, p->xpos, p->ypos, p->width, p->height, color_bg );
+
+    box_getstr( wk, boxID, wk->strbuf );
+
+    str_width = PRINTSYS_GetStrWidth( wk->strbuf, wk->font, 0 );
+    xpos = p->xpos;
+    if( str_width < p->width ){
+      xpos += (p->width - str_width) / 2;
+    }
+
+    str_height = GFL_FONT_GetLineHeight( wk->font );
+    ypos = p->ypos;
+    if( str_height < p->height ){
+      ypos += (p->height - str_height) / 2;
+    }
+
+    PRINT_UTIL_PrintColor( &wk->printUtil, wk->printQue, xpos, ypos, wk->strbuf, wk->font, color );
   }
-
-  str_height = GFL_FONT_GetLineHeight( wk->font );
-  ypos = p->ypos;
-  if( str_height < p->height ){
-    ypos += (p->height - str_height) / 2;
-  }
-
-  PRINT_UTIL_PrintColor( &wk->printUtil, wk->printQue, xpos, ypos, wk->strbuf, wk->font, color );
 }
 static void pp_update( DMP_MAINWORK* wk, u32 boxID, u32 value )
 {
@@ -1278,28 +1280,11 @@ static void pp_update( DMP_MAINWORK* wk, u32 boxID, u32 value )
       u16 mons_no = box_getvalue( wk, INPUTBOX_ID_POKETYPE );
       u8 tokusei = box_getvalue( wk, INPUTBOX_ID_TOKUSEI );
       u8 sex = box_getvalue( wk, INPUTBOX_ID_SEX );
-      u32 personal_rnd = POKETOOL_CalcPersonalRandEx( wk->oyaID, mons_no, form_no, sex, 0, value );
+      u8 rare = box_getvalue( wk, INPUTBOX_ID_RARE );
+      u32 personal_rnd = POKETOOL_CalcPersonalRandEx( wk->oyaID, mons_no, form_no, sex, MATH_CLAMP( tokusei, 0, 1 ), rare );
     }
     update_dst( wk );
     break;
-#if 0
-  case INPUTBOX_ID_RARE:
-    wk->boxValue[ boxID ] = value;
-    {
-      u8 form_no = box_getvalue( wk, INPUTBOX_ID_FORM );
-      u16 mons_no = box_getvalue( wk, INPUTBOX_ID_POKETYPE );
-      u8 tokusei = box_getvalue( wk, INPUTBOX_ID_TOKUSEI );
-      u8 sex = box_getvalue( wk, INPUTBOX_ID_SEX );
-      u32 personal_rnd = POKETOOL_CalcPersonalRandEx( wk->oyaID, mons_no, form_no, sex, 0, value );
-    }
-    update_dst( wk );
-    break;
-  case INPUTBOX_ID_SEX:
-  case INPUTBOX_ID_SEX_FIX:
-    wk->boxValue[ boxID ] = value;
-    update_dst( wk );
-    break;
-#endif
   case INPUTBOX_ID_GET_CASETTE:
     value = casetteVer_local_to_formal( value );
     PP_Put( wk->dst, p->paraID, value );
@@ -1647,7 +1632,6 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
       wk->oyaID = (id_H << 16) | (id_L);
       update_dst( wk );
 
-      box_update( wk, INPUTBOX_ID_RARE, PP_CheckRare( wk->dst ) );
     }
     break;
 
@@ -1655,14 +1639,16 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
     {
       u8 form_no = box_getvalue( wk, INPUTBOX_ID_FORM );
       u16 mons_no = box_getvalue( wk, INPUTBOX_ID_POKETYPE );
-      u8 tokusei = box_getvalue( wk, INPUTBOX_ID_TOKUSEI );
+      u8 tokusei = box_getvalue( wk, INPUTBOX_ID_TOKUSEI_SWITCH );
       u8 sex = box_getvalue( wk, INPUTBOX_ID_SEX_SET );
       u8 rare = box_getvalue( wk, INPUTBOX_ID_RARE );
-      u32 personal_rnd = POKETOOL_CalcPersonalRandEx( wk->oyaID, mons_no, form_no, sex, 0, rare );
+      u32 personal_rnd = POKETOOL_CalcPersonalRandEx( wk->oyaID, mons_no, form_no, sex, MATH_CLAMP( tokusei, 0, 1 ), rare );
+
       box_update( wk, INPUTBOX_ID_PER_RND_L, personal_rnd&0xFFFF );
       box_update( wk, INPUTBOX_ID_PER_RND_H, personal_rnd>>16 );
     }
-    //ブレイクスルー
+    //fallthrogh
+
   case INPUTBOX_ID_PER_RND_H:
   case INPUTBOX_ID_PER_RND_L:
     {
@@ -1675,6 +1661,13 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
       box_update( wk, INPUTBOX_ID_SEX, value );
       box_update( wk, INPUTBOX_ID_SEX_SET, value );
       box_update( wk, INPUTBOX_ID_RARE, PP_CheckRare( wk->dst ) );
+      {
+        u8 tokusei = box_getvalue( wk, INPUTBOX_ID_TOKUSEI_SWITCH );
+        if( tokusei < 2 )
+        {
+          box_update( wk, INPUTBOX_ID_TOKUSEI_SWITCH, PP_GetTokuseiIndex( wk->dst ) );
+        }
+      }
     }
     break;
 
@@ -1705,6 +1698,10 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
           box_getvalue( wk, INPUTBOX_ID_TOKUSEI),
           box_getvalue( wk, INPUTBOX_ID_TOKUSEI_SWITCH),
           box_getvalue( wk, INPUTBOX_ID_TOKUSEI_3RD));
+
+      box_relation( wk, INPUTBOX_ID_SEX_SET );
+      //性別をリレーションさせるのではなく
+      //特性の結果を個体乱数に渡す
     }
     break;
 
