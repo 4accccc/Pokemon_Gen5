@@ -171,6 +171,7 @@ const CI_SE_TBL Tbl27[] = {
 };
 
 const CI_SE_TBL Tbl28[] = {
+	{ SEQ_SE_SW_GIANTHOLE_10, 1 },
 	{ CI_SE_NONE, 0 },
 };
 
