@@ -10213,28 +10213,26 @@
 	</row>
 
 	<row id="TRID_FISHING_22_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">すいめんに　うつる　とおいそらを
-みていると　こころが　はれわたる！▼
-この　きれいな　そらの　ように
-きもちのいい　しょうぶを　しようぜ！▼</language>
-		<language name="JPN_KANJI" width="216">水面に　うつる　遠い空を
-みていると　心が　晴れ渡る！▼
-この　きれいな　空の　ように
-気持ちの良い　勝負を　しようぜ！▼</language>
+		<language name="JPN" width="216">つりの　ためなら
+なんでも　どこでも　しらべるぜい！▼
+というわけで　あいて　してもらうよ▼</language>
+		<language name="JPN_KANJI" width="216">つりの　ためなら
+なんでも　どこでも　調べるぜい！▼
+というわけで　相手してもらうよ▼</language>
 	</row>
 
 	<row id="TRID_FISHING_22_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">ははっ！　まけたか！
-まっ　しょーがねーな！▼</language>
-		<language name="JPN_KANJI" width="216">ははっ！　負けたか！
-まっ　しょーがねーな！▼</language>
+		<language name="JPN" width="216">おまえさんの　ポケモン
+ちょいと　つよいんじゃねえか？</language>
+		<language name="JPN_KANJI" width="216">おまえさんの　ポケモン
+ちょいと　強いんじゃねえか？</language>
 	</row>
 
 	<row id="TRID_FISHING_22_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">ここで　そらを　ずーっと　みてるが
-まったく　あきないんだよな！▼</language>
-		<language name="JPN_KANJI" width="216">ここで　水面の空を　ずっと　みてるが
-まったく　飽きないんだよな！▼</language>
+		<language name="JPN" width="216">そうよ！　つりの　ためなら
+かんばんの　うらだって　しらべるぜい！</language>
+		<language name="JPN_KANJI" width="216">そうよ！　つりの　ためなら
+看板の　裏だって　調べるぜい！</language>
 	</row>
 
 	<row id="TRID_FISHING_23_TRMSG_FIGHT_START">
