@@ -99,6 +99,6 @@ static const u16 zkn_area_zone_group[ZKN_AREA_ZONE_GROUP_MAX] =
   ZONE_ID_D33R0101,  // 538
   ZONE_ID_H06,  // 466
   ZONE_ID_N01R0101,  // 264
-  ZONE_ID_D27,  // 481
+  ZONE_ID_D27R0101,  // 576
   ZONE_ID_D20R0101,  // 241
 };
