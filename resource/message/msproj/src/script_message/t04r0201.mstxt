@@ -51,17 +51,19 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_t04r0201_workman2_01"
+		Label="msg_t04r0201_boy4_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>サザナミの　リゾートを　もっともっと
-はってん　させるべく　こうじスタート！▼
-そしたら　かざんと　つながって
-しぜん　すごいなー　って　ところだわ</Text>
+			<Text>ショッピングモールの
+[Name:ResortTown ]　では▼
+すごうでの　わかい　トレーナーが
+きりもり　しているらしいね▼
+よし！　じぶんも　まけてられないな！
+なんだか　あつく　なってきちゃったよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T02:57:36" />
+				Time="2011-11-22T12:16:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -69,13 +71,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>サザナミの　リゾートを　もっともっと
-発展させるべく　工事スタート！▼
-そしたら　火山と　つながって
-自然　すごいなー　って　ところだわ</Text>
+			<Text>ショッピングモールの
+[Name:ResortTown ]　では▼
+スゴ腕の　若い　トレーナーが
+切り盛り　しているらしいね▼
+よし！　自分も　負けてられないな！
+なんだか　熱く　なってきちゃったよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T02:58:07" />
+				Time="2011-11-22T12:16:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -84,21 +88,22 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・swanで新規作成</Comment>
+・0＝ジョインアベニューの名前
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T13:02:06" />
+				Time="2011-11-22T12:16:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>WORKMAN2</Text>
+			<Text>BOY4</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-04T02:55:30" />
+				Time="2011-11-22T12:14:38" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

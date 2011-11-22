@@ -2153,11 +2153,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おいしい　やさいは
-くさーい　ひりょうで　そだつのさー</Text>
+			<Text>くっさい　くっさい　こやしが
+おいしい　やさいを　そだてるのさ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T03:45:27" />
+				Time="2011-11-22T12:18:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2165,11 +2165,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おいしい　やさいは
-くさーい　ひりょうで　そだつのさー</Text>
+			<Text>くっさい　くっさい　こやしが
+美味しい　野菜を　育てるのさ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T03:45:40" />
+				Time="2011-11-22T12:18:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2197,6 +2197,54 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c06_woman1a_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:ResortTown ]って
+おおどおり　しっている？▼
+とにかく　めずらしい　ショップが
+たくさん　あって　すごいんだから！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:20:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:19:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:ResortTown ]って
+大通り　知っている？▼
+とにかく　珍しい　ショップが
+たくさん　あって　すごいんだから！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:20:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:20:30" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・0＝ジョインアベニューの名前
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:19:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:19:17" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c06_sign1_01"

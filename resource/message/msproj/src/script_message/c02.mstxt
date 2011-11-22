@@ -516,6 +516,58 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c02_middlewoman2a_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:ResortTown ]　では
+ポケモンが　おしょくじ　できる▽
+カフェが　あるって　ウワサ！▼
+カフェソーコと　たべくらべ　するため
+こんど　いってみようかしら？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:13:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:10:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:ResortTown ]　では
+ポケモンが　お食事できる▽
+カフェが　あるって　ウワサ！▼
+カフェソーコと　食べ比べするため
+今度　行ってみようかしら？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:13:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:10:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・カフェソーコの前付近
+・0＝ジョインアベニューの名前
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:16:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MIDDLEWOMAN2
+太ったおばさん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:13:50" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c02_sign1_01"
 		Style="Large">
 		<LanguageCell
