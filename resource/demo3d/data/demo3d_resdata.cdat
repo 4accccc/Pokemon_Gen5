@@ -21,6 +21,7 @@
 #include "plasma_ship_fly.cdat"
 #include "city_plasma_come_b.cdat"
 #include "city_plasma_come_w.cdat"
+#include "kyuremu_union_00.cdat"
 #include "kyuremu_union_b_01.cdat"
 #include "kyuremu_union_b_02.cdat"
 #include "kyuremu_union_w_01.cdat"
@@ -46,6 +47,7 @@ static const DEMO3D_SETUP_DATA c_demo3d_setup_data[ DEMO3D_ID_MAX ] = {
  { &data_plasma_ship_fly_scene, demo3d_cmd_plasma_ship_fly_data, demo3d_cmd_plasma_ship_fly_end_data, res_plasma_ship_fly_scene_unit, NELEMS(res_plasma_ship_fly_scene_unit) },
  { &data_city_plasma_come_b_scene, demo3d_cmd_city_plasma_come_b_data, demo3d_cmd_city_plasma_come_b_end_data, res_city_plasma_come_b_scene_unit, NELEMS(res_city_plasma_come_b_scene_unit) },
  { &data_city_plasma_come_w_scene, demo3d_cmd_city_plasma_come_w_data, demo3d_cmd_city_plasma_come_w_end_data, res_city_plasma_come_w_scene_unit, NELEMS(res_city_plasma_come_w_scene_unit) },
+ { &data_kyuremu_union_00_scene, demo3d_cmd_kyuremu_union_00_data, demo3d_cmd_kyuremu_union_00_end_data, res_kyuremu_union_00_scene_unit, NELEMS(res_kyuremu_union_00_scene_unit) },
  { &data_kyuremu_union_b_01_scene, demo3d_cmd_kyuremu_union_b_01_data, demo3d_cmd_kyuremu_union_b_01_end_data, res_kyuremu_union_b_01_scene_unit, NELEMS(res_kyuremu_union_b_01_scene_unit) },
  { &data_kyuremu_union_b_02_scene, demo3d_cmd_kyuremu_union_b_02_data, demo3d_cmd_kyuremu_union_b_02_end_data, res_kyuremu_union_b_02_scene_unit, NELEMS(res_kyuremu_union_b_02_scene_unit) },
  { &data_kyuremu_union_w_01_scene, demo3d_cmd_kyuremu_union_w_01_data, demo3d_cmd_kyuremu_union_w_01_end_data, res_kyuremu_union_w_01_scene_unit, NELEMS(res_kyuremu_union_w_01_scene_unit) },
