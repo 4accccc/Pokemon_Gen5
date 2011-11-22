@@ -2764,6 +2764,33 @@ static void _exchange_item_and_mail( PLIST_WORK *work, POKEMON_PARAM *srcPoke, P
   GFL_HEAP_FreeMemory( desMail );
   GFL_HEAP_FreeMemory( srcMail );
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	どうぐ変更時のフォルムチェンジ処理
+ *
+ * @param   srcPoke		
+ * @param   desPoke		
+ */
+//----------------------------------------------------------------------------------
+static void _update_poke_form( POKEMON_PARAM *srcPoke, POKEMON_PARAM *desPoke )
+{
+  u16 item[2], i;
+  POKEMON_PARAM *poke[2];
+  
+  poke[0] = srcPoke;
+  poke[1] = desPoke;
+  item[0] = PP_Get( srcPoke, ID_PARA_item, NULL );
+  item[1] = PP_Get( desPoke, ID_PARA_item, NULL );
+
+  for(i=0;i<2;i++){
+    PP_Renew( srcPoke );
+    PLIST_ITEM_CangeAruseusuForm( NULL , poke[i] , item[i] );
+    PLIST_ITEM_CangeInsekutaForm( NULL , poke[i] , item[i] );
+  }
+
+}
+
 static void PLIST_SelectPokeTerm_MoveItem( PLIST_WORK *work)
 {
   if( work->selectState == PSSEL_SELECT )
@@ -2786,14 +2813,18 @@ static void PLIST_SelectPokeTerm_MoveItem( PLIST_WORK *work)
       PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , FALSE );
       GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[1] , FALSE );
       PLIST_MessageWaitInit( work , mes_pokelist_04_59_2 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+    // ギラティナからはっきんだまをはがす事もできない
+    }else if(desPokeNo==MONSNO_GIRATHINA && desItemNo==ITEM_HAKKINDAMA){
+      PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+      PLIST_PLATE_SetActivePlate( work , work->plateWork[work->changeTarget] , FALSE );
+      PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , FALSE );
+      GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[1] , FALSE );
+      PLIST_MessageWaitInit( work , mes_pokelist_04_59_3 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
     }else{
       // 通常移動処理
       if(desItemNo==0){
-//        PLIST_SetPokeItem( work , srcPoke , 0 );
-//        PLIST_SetPokeItem( work , desPoke , srcItemNo );
         _move_item_and_mail( work, srcPoke, desPoke, srcItemNo );
         PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , desPoke );
-       
       }else{
         // 両方道具を持っていたので入れ替え処理になった
         _exchange_item_and_mail( work, srcPoke, desPoke, srcItemNo, desItemNo );
@@ -2801,6 +2832,8 @@ static void PLIST_SelectPokeTerm_MoveItem( PLIST_WORK *work)
         PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 2 , desPoke );
         PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 3 , desItemNo );
       }
+      _update_poke_form( srcPoke, desPoke );  //フォルムチェンジ処理
+
       PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
       PLIST_PLATE_ReDrawParam( work , work->plateWork[work->changeTarget] );
 
@@ -2815,7 +2848,6 @@ static void PLIST_SelectPokeTerm_MoveItem( PLIST_WORK *work)
       }
     }
     PLIST_MSG_DeleteWordSet( work , work->msgWork );
-    
   }else{
 
     PLIST_MSG_CloseWindow( work , work->msgWork );
