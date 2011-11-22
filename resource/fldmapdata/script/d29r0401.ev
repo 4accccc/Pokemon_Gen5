@@ -135,6 +135,9 @@ EVENT_START   ev_pos_d29r0401_door_in
   _REZI_GMK_SET_DOOR(0)
   _REZI_GMK_ANM_DOOR(1)
 
+  // ドアが開くSE
+  _SE_PLAY( SEQ_SE_FLD_144 )
+
   _TIME_WAIT( 20 )
 
   // 主人公入る
@@ -291,6 +294,8 @@ EVENT_START   ev_reserve_d29r0401_door_out
 
   // ドアが閉まる
   _REZI_GMK_ANM_DOOR(0)
+  // ドアが開くSE
+  _SE_PLAY( SEQ_SE_FLD_144 )
 
   _OBJ_ANIME_WAIT()
   // フェード終了チェック
@@ -298,6 +303,8 @@ EVENT_START   ev_reserve_d29r0401_door_out
 
   // ドアが閉まるまで待つ
   _TIME_WAIT(15)
+
+  _SE_STOP()
 
   _CAMERA_DEF_MOVE( 10 )
   _CAMERA_WAIT_MOVE()
@@ -337,6 +344,9 @@ EVENT_START   ev_bg_d29r0401_switch
       // キーシステムに設定してあるドアを取得
       _KEYSYS_GET_DOOR( LWK_KEYSYS_DOOR )
 
+      // スイッチの音
+      _SE_PLAY( SEQ_SE_FLD_44 )
+
       // キーを設定していないときのみ作動する
       IF $LWK_KEYSYS_DOOR == KEYSYS_DOOR_NORMAL THEN
 
@@ -344,6 +354,7 @@ EVENT_START   ev_bg_d29r0401_switch
 
         // 画面をゆらす
         _SHAKE_CAMERA( 1, 0, 4, 7, 0, 0, 0, 0)
+        _SE_PLAY( SEQ_SE_BE_SE_033 )
 
         // 暗転
         _BLACK_OUT()
