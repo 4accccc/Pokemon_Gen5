@@ -63,6 +63,7 @@
 
 #include "../app/local_tvt/local_tvt_call.h"
 
+#include "wbt_system.h" //WBTROM_TRID_MEM_MAX
 //======================================================================
 //======================================================================
 ///項目選択用データの定義
@@ -250,6 +251,8 @@ static u32 DebugGetWBTSaveCounter( GAMESYS_WORK * gsys, GAMEDATA* gdata, u32 par
 static void DebugSetWBTSaveCounter( GAMESYS_WORK * gsys, GAMEDATA* gdata, u32 param, u32 value );
 static u32 DebugGetWBTSaveFlag( GAMESYS_WORK * gsys, GAMEDATA* gdata, u32 param );
 static void DebugSetWBTSaveFlag( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param, u32 value );
+static u32 DebugGetWBTSaveTrID( GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param );
+static void DebugSetWBTSaveTrID( GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
 
 //セピア色調操作
 static u32 DebugGetSepiaColor( GAMESYS_WORK * gsys, GAMEDATA *gdata, u32 param );
@@ -1874,6 +1877,17 @@ static void DebugSetWBTSaveFlag( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param,
   } else {
     WBTSAVE_ResetFlag( wbtsave, param );
   }
+}
+static u32 DebugGetWBTSaveTrID( GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param )
+{
+  WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gdata );
+  return WBTSAVE_GetTrainerID( wbtsave, param );
+}
+static void DebugSetWBTSaveTrID( GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value )
+{
+  WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gdata );
+  if ( value >= WBTROM_TRID_MEM_MAX ) value = WBTROM_TRID_INVALID;
+  WBTSAVE_SetTrainerID( wbtsave, param, value );
 }
 
 //=============================================================================

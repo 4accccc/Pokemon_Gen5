@@ -451,6 +451,10 @@ static const DEBUG_NUMINPUT_PARAM DNI_WBTSaveCounter =
 {
   0, 9999, DebugGetWBTSaveCounter, DebugSetWBTSaveCounter,
 };
+static const DEBUG_NUMINPUT_PARAM DNI_WBTSaveTrainerID =
+{
+  0, WBTROM_TRID_INVALID, DebugGetWBTSaveTrID, DebugSetWBTSaveTrID,
+};
 static const DEBUG_NUMINPUT_LIST DNI_WBTSaveCount[] = {
   //gmm_id, param, dni_param
   { dni_wbtsave_normal,  WBTWIN_COUNT_POKETYPE_NORMAL,   &DNI_WBTSaveCounter },
@@ -483,6 +487,11 @@ static const DEBUG_NUMINPUT_LIST DNI_WBTSaveCount[] = {
   { dni_wbtsave_rentalmaster,  WBTWIN_COUNT_RENTALMASTER,            &DNI_WBTSaveCounter },
   { dni_wbtsave_shuffle,  WBTWIN_COUNT_SHUFFLE,            &DNI_WBTSaveCounter },
   { dni_wbtsave_shufflemaster,  WBTWIN_COUNT_SHUFFLEMASTER,            &DNI_WBTSaveCounter },
+// ロビー出現トレーナー対戦相手ID
+  { dni_wbtsave_trid_01,   0,                              &DNI_WBTSaveTrainerID },
+  { dni_wbtsave_trid_02,   1,                              &DNI_WBTSaveTrainerID },
+  { dni_wbtsave_trid_03,   2,                              &DNI_WBTSaveTrainerID },
+// トレーナー対戦フラグ
   { dni_wbtsave_flag_00,   0,                              &DNI_WBTSaveFlag },
   { dni_wbtsave_flag_01,   1,                              &DNI_WBTSaveFlag },
   { dni_wbtsave_flag_02,   2,                              &DNI_WBTSaveFlag },
