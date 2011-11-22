@@ -175,7 +175,6 @@ enum
 	CLWKID_PANEL_05A,				// パネル
 	CLWKID_PANEL_06A,				// パネル
 	CLWKID_PANEL_07A,				// パネル
-	CLWKID_BOMB,					// 爆発アニメ(未使用)
 	CLWKID_BAR_00,					// バー0(横)
 	CLWKID_BAR_01,					// バー1
 	CLWKID_BAR_02,					// バー2
@@ -222,7 +221,7 @@ enum{
 
 // 最大数
 enum{
-	WBT_OBJ_MAXNUM		= 23,		// obj最大
+	WBT_OBJ_MAXNUM		= CLWKID_MAX, // obj最大
 	WBT_CANVAS_MAXNUM	= 3,		// canvas最大
 	WBT_BMPOAM_MAXNUM	= 8,		// bmpoam最大
 	//
@@ -239,8 +238,6 @@ enum{
 
 // empty
 enum{
-	BOMB_EMPTY_ID		= 24,		// 爆発のempty
-	//
 	L_BMPOAM_EMPTY_ID	= 44,		// 左側、BMPOAMのempty
 	R_BMPOAM_EMPTY_ID	= 45,		// 右側、BMPOAMのempty
 };
@@ -527,7 +524,6 @@ const WBTLIST_OBJ_DATA wbt_obj_tbl[] = {
 	{ 6,	0x40,	1,	1,	0,	0,	21,	0,},		// 右、移動パネル1
 	{ 6,	0x40,	1,	1,	0,	0,	22,	0,},		// 右、移動パネル2
 	{ 6,	0x40,	1,	1,	0,	0,	23,	0,},		// 右、移動パネル3
-	{ 0,	0x30,	0,	0,	2,	1,	24,	0,},		// 爆弾(未使用)
 	{ 8,	0x50,	1,	0,	3,	1,	32,	0,},		// ゲージ00
 	{ 8,	0x50,	1,	0,	3,	5,	35,	0,},		// ゲージ01
 	{ 8,	0x50,	1,	0,	3,	3,	36,	0,},		// ゲージ02
@@ -1836,7 +1832,9 @@ static void wbt_exit_obj( WBTLIST_MAIN_WORK* wk )
 	
 	// OBJ後処理
 	for(i=0;i<WBT_OBJ_MAXNUM;i++){
-		GFL_CLACT_WK_Remove( wk->wk_obj.clwk[i] );
+		if(wk->wk_obj.clwk[i]){
+			GFL_CLACT_WK_Remove( wk->wk_obj.clwk[i] );
+		}
 	}
 	//リソース破棄 
 	GFL_CLGRP_PLTT_Release( wk->wk_obj.res[RESID_OBJ_PLT] );
