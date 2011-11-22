@@ -54,24 +54,36 @@ EVENT_START ev_wbt_hall_01
 	//負けた場合
 	IF $LWK_WIN_OR_LOSE != SCR_WBT_BATTLE_RESULT_WIN THEN
 	
+    //ビーコン発信：WBT敗北
+    _WBT_GET_WBT_CUP( SCWK_ANSWER )
+    _BEACON_SET_REQ_WBT_LOSE( SCWK_ANSWER, 0 )   //0勝＝１回戦敗北
 		//WBT会場　終了処理
 		_CALL ev_wbt_hall_exit
 	
 	//勝った場合
 	ELSE
 		
+    //ビーコン発信：WBT勝利
+    _WBT_GET_WBT_CUP( SCWK_ANSWER )
+    _BEACON_SET_REQ_WBT_WIN( SCWK_ANSWER, 1 )    //１勝＝１回戦突破
 		//２回戦へ
 		_CALL ev_second_game
 	
 		//負けた場合
 		IF $LWK_WIN_OR_LOSE != SCR_WBT_BATTLE_RESULT_WIN THEN
 		
+      //ビーコン発信：WBT敗北
+      _WBT_GET_WBT_CUP( SCWK_ANSWER )
+      _BEACON_SET_REQ_WBT_LOSE( SCWK_ANSWER, 1 ) //１勝=二回戦敗北
 			//WBT会場　終了処理
 			_CALL ev_wbt_hall_exit
 		
 		//勝った場合
 		ELSE
 		
+      //ビーコン発信：WBT勝利
+      _WBT_GET_WBT_CUP( SCWK_ANSWER )
+      _BEACON_SET_REQ_WBT_WIN( SCWK_ANSWER, 2 )  //２勝=二回戦突破
 			//決勝戦へ
 			_CALL ev_final_game
 			
@@ -82,17 +94,22 @@ EVENT_START ev_wbt_hall_01
 				$LWK_WIN_OR_LOSE = SCR_WBT_BATTLE_RESULT_LOSE
 				_CALL ev_final_result
 
+        //ビーコン発信：WBT敗北
+        _WBT_GET_WBT_CUP( SCWK_ANSWER )
+        _BEACON_SET_REQ_WBT_LOSE( SCWK_ANSWER, 2 ) //２勝=決勝で敗北
 			//勝った場合
 			ELSE
 			
 				//プレイヤー勝ち演出のナンバー指定
 				$LWK_WIN_OR_LOSE = SCR_WBT_BATTLE_RESULT_WIN
-				
 				_CALL ev_final_result
 
 				//WBTシステムに状態を通知：勝利！
 				_WBT_SYSTEM_SET_STAGE( SCR_WBT_STAGE_WIN )
 
+        //ビーコン発信：WBT勝利
+        _WBT_GET_WBT_CUP( SCWK_ANSWER )
+        _BEACON_SET_REQ_WBT_WIN( SCWK_ANSWER, 3 )  //３勝=優勝
 			ENDIF
 
 			//WBT会場　終了処理

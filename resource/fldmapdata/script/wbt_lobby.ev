@@ -645,6 +645,8 @@ ev_enter_hall:
 
   //ジョインアベニュー：WBTに参加した状態を通知
   _RESORT_SET_RECORD( RESORT_RECORD_ID_WBT )
+  //ビーコン：WBTへの参戦を通知
+  _BEACON_SET_REQ_WBT_ENTRY( LWK_WBT_SELECT_TOURNAMENT )
   _RET
 
 //--------------------------------------------------------------------
