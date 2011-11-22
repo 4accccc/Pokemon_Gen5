@@ -6320,10 +6320,10 @@
 			<Text>[Name:TrainerName Idx="0" ]さま！
 だいじょうぶですか？▼
 こんかいは　ざんねんでしたが
-つぎは　がんばってくださいね！▼</Text>
+つぎは　がんばってくださいね！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:32:42" />
+				Time="2011-11-22T09:28:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6334,10 +6334,10 @@
 			<Text>[Name:TrainerName Idx="0" ]様！
 大丈夫ですか？▼
 今回は　残念でしたが
-次は　がんばってくださいね！▼</Text>
+次は　がんばってくださいね！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:32:31" />
+				Time="2011-11-22T09:28:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6374,10 +6374,11 @@
 にゅうしゅされました▼
 しょうきん　[Digit:7digits Idx="1" ]えんは
 ぼっしゅうさせて　いただきます▼
-つぎは　がんばってくださいね！▼</Text>
+こんかいは　ざんねんでしたが
+つぎは　がんばってくださいね！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:38:05" />
+				Time="2011-11-22T09:28:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6391,10 +6392,11 @@
 今回の　挑戦で　入手されました▼
 賞金　[Digit:7digits Idx="1" ]円は
 没収させて　いただきます▼
-次は　がんばってくださいね！▼</Text>
+今回は　残念でしたが
+次は　がんばってくださいね！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:37:40" />
+				Time="2011-11-22T09:29:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6411,6 +6413,56 @@
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-19T05:38:28" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_info_clear_b_10_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]さま
+リタイアされたのですね▼
+こんかいは　ざんねんでしたが
+つぎは　がんばってくださいね！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T09:28:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-01T10:04:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]様
+リタイアされたのですね▼
+今回は　残念でしたが
+次は　がんばってくださいね！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T09:29:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-01T10:39:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>黒の摩天楼受付
+受付：INFORMATIONW
+リタイア時（賞金0円時）
+
+・トレーナー名＝プレイヤー名</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T09:23:30" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -7211,10 +7263,10 @@
 			<Text>[Name:TrainerName Idx="0" ]！
 だいじょうぶか？▼
 こんかいは　ざんねんだったな
-つぎは　がんばれよ！▼</Text>
+つぎは　がんばれよ！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:41:52" />
+				Time="2011-11-22T09:32:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -7222,13 +7274,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]様！
+			<Text>[Name:TrainerName Idx="0" ]！
 大丈夫か？▼
 今回は　残念だったな
-次は　がんばれよ！▼</Text>
+次は　がんばれよ！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:41:45" />
+				Time="2011-11-22T09:32:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -7258,16 +7310,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]
+			<Text>[Name:TrainerName Idx="0" ]！
 リタイアしたんだな▼
 わるいが　こんかいの　ちょうせんで
 てにいれた▼
 しょうきん　[Digit:7digits Idx="1" ]えんは
 ぼっしゅうさせて　もらうぞ▼
-つぎは　がんばれよ！▼</Text>
+こんかいは　ざんねんだったな
+つぎは　がんばれよ！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:41:25" />
+				Time="2011-11-22T09:32:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -7275,15 +7328,67 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]
+			<Text>[Name:TrainerName Idx="0" ]！
 リタイアしたんだな▼
 悪いが　今回の　挑戦で　手に入れた▼
 賞金　[Digit:7digits Idx="1" ]円は
 没収させて　もらうぞ▼
-次は　がんばれよ！▼</Text>
+今回は　残念だったな
+次は　がんばれよ！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:42:47" />
+				Time="2011-11-22T09:32:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-01T10:39:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>白の樹洞受付
+受付：INFORMATIONW
+リタイア時
+
+・トレーナー名＝プレイヤー名
+・7桁＝賞金入手金額</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T05:43:28" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_info_clear_w_10_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]
+リタイアしたんだな▼
+こんかいは　ざんねんだったな
+つぎは　がんばれよ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T09:32:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-01T10:04:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]！
+リタイアしたんだな▼
+今回は　残念だったな
+次は　がんばれよ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T09:32:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -7892,16 +7997,17 @@
 もし　キミが　これいじょうの
 ちょうせんは　きけんだと　おもったら▼
 エレベーターで　うけつけに
-もどりなさい▼
+もどって　リタイアしなさい▼
+リタイアすると　このエリアで
+てにいれた　しょうきんは▽
+ぼっしゅうに　なるけど▼
 いちりゅうの　トレーナーは
 ひきぎわも　こころえて　いるものよ▼
-ただし！　このエリアの　ちょうせんは
-しっぱいに　なるから　きをつけてね▼
 キミが　どこまで　がんばれるか
 たのしみに　しているわ▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T06:04:30" />
+				Time="2011-11-22T03:50:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -7918,16 +8024,17 @@
 ここに　エレベーターが　あるわね？▼
 もし　キミが　これ以上の
 挑戦は　危険だと　思ったら▽
-エレベーターで　受付に　戻りなさい▼
+エレベーターで　受付に　戻って
+リタイアしなさい▼
+リタイアすると　この　エリアで
+手に入れた　賞金は　没収になるけど▼
 一流の　トレーナーは
 引き際も　心得て　いるものよ▼
-ただし！　このエリアの　挑戦は
-失敗に　なるから　気をつけてね▼
 キミが　どこまで　がんばれるか
 楽しみに　しているわ▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T06:04:43" />
+				Time="2011-11-22T03:50:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -8328,16 +8435,17 @@ NPC：MUGENBOSS（バンジロウ）
 ここに　エレベーターが　あるだろう？▼
 もし　キミが　これいじょうは
 きけんだと　おもったら▼
-エレベーターで
-うけつけに　もどると　いい▼
-エリアの　ちょうせんは
-しっぱいに　なるが▽
-ときには　ひくことも　だいじだぜ▼
+エレベーターで　うけつけに
+もどって　リタイアするんだ▼
+リタイアすると　このエリアで
+てにいれた　しょうきんは▽
+ぼっしゅうに　なるけど▼
+ときには　ひくことも　だいじだぞ▼
 それじゃ　キミと　たたかえるのを
 たのしみに　しているよ▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T06:07:39" />
+				Time="2011-11-22T06:18:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -8356,13 +8464,15 @@ NPC：MUGENBOSS（バンジロウ）
 エレベーターで
 受付に　戻ると　いい▼
 エリアの　挑戦は
-失敗に　なるが▽
-時には　退くことも　大事だぜ▼
+失敗に　なって▼
+このエリアで　手に入れた
+賞金は　没収に　なるけど▽
+時には　退くことも　大事だぞ▼
 それじゃ　キミと　戦えるのを
 楽しみに　しているよ▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T06:08:19" />
+				Time="2011-11-22T06:59:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -8832,11 +8942,12 @@ Xメニューを　みてみて▼
 とうぜん　リタイアしたら　
 このエリアの　ちょうせんは▽
 しっぱいに　なるから　きをつけてね▼
-それじゃ　キミが　わたしの　ところに
-くるのを　たのしみに　しているわ▼</Text>
+それじゃ　キミが　ゲートトレーナーの
+わたしの　ところに　くるのを▽
+たのしみに　しているわ▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-24T10:06:15" />
+				Time="2011-11-22T03:41:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -8862,11 +8973,12 @@ Xメニューを　みてみて▼
 当然　リタイアしたら
 このエリアの　挑戦は▽
 失敗に　なるから　気をつけてね▼
-それじゃ　キミが　わたしの　ところに
-来るのを　楽しみに　しているわ▼</Text>
+それじゃ　キミが　ゲートトレーナーの
+わたしの　ところに　来るのを▽
+楽しみに　しているわ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T05:22:56" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T03:41:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -9064,11 +9176,13 @@ Xメニューを　みてごらん▼
 とうぜん　リタイアしたら　
 このエリアの　ちょうせんは▽
 しっぱいに　なるけどね▼
-それじゃ　ボクは　ちょうせんしゃを
-またせて　もらうことに　するよ▼</Text>
+それじゃ　ボクは
+ゲートトレーナーとして▼
+ちょうせんしゃを　またせて
+もらうことに　するよ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T05:01:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T03:40:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -9095,11 +9209,13 @@ Xメニューを　みてごらん▼
 当然　リタイアしたら　
 このエリアの　挑戦は▽
 失敗に　なるけどね▼
-それじゃ　ボクは　挑戦者を
-待たせて　もらうことに　するよ▼</Text>
+それじゃ　ボクは
+ゲートトレーナーとして▼
+挑戦者を　待たせて
+もらうことに　するよ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T05:01:23" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T03:40:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
