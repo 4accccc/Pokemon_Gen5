@@ -245,11 +245,16 @@ ev_d02r0101_pairstart_01:
     
   //いいえ
   ELSE
+    
+    //アニメ：チェレン芝居
+    _OBJ_ANIME( D02R0101_SWLEADER1_01, anm_swleader1_act )
+    _OBJ_ANIME_WAIT()
 
     _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_02, D02R0101_SWLEADER1_01, POS_DEFAULT )
     _MSGWIN_CLOSE()
     
     //アニメ：主人公戻す
+    _OBJ_ANIME( D02R0101_SWLEADER1_01, anm_dir_r )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
     _OBJ_ANIME_WAIT()
 
@@ -339,6 +344,13 @@ EVENT_START		ev_bg_d02r0101_sign1_01
 	_EASY_BGWIN_MSG( msg_d02r0101_sign1_01, TYPE_INFO )
   _FLAG_SET( MDL_FLAG_BOARD_D02R0101_01 )
 EVENT_END
+
+//--------------------------------------------------------------------
+//	チェレン：芝居
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader1_act
+  _ANIME_DATA	AC_SWLEADER1_TIPTOE,1
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //	☆共通処理：1歩歩く
