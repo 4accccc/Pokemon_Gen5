@@ -1205,14 +1205,15 @@
 			Language="JPN">
 			<Text>しろのじゅどうに　ようこそ
 しょしんしゃさん▼
-わたしからの　アドバイスよ▼
-この　エリアを　クリアするには
-わたしを　たおす　ひつようが　あるわ▼
-えんりょは　むようよ！
+ぶじに　ゲートトレーナーから
+じつりょくを　みとめられたようね▼
+その　じつりょく
+こんどは　わたしに　みせてみなさい！▼
+えんりょは　むようよ
 さあ　しょうぶ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:39:16" />
+				Time="2011-11-22T03:05:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1222,14 +1223,15 @@
 			Language="JPN_KANJI">
 			<Text>白の樹洞に　ようこそ
 初心者さん▼
-わたしからの　アドバイスよ▼
-この　エリアを　クリアするには
-わたしを　倒す　必要が　あるわ▼
-遠慮は　無用よ！
+無事に　ゲートトレーナーから
+実力を　認められたようね▼
+その　実力
+今度は　わたしに　見せてみなさい！▼
+遠慮は　無用よ
 さあ　勝負！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:39:23" />
+				Time="2011-11-22T03:05:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1265,11 +1267,14 @@
 			Language="JPN">
 			<Text>リタイアせずに　ここまで
 たどりつけたようだね▼
-さあ　エリア２を　クリアして
-しょしんしゃ　そつぎょうを　めざせ！▼</Text>
+ここまでの　がんばりを
+むだに　しないように　ぜんりょくで▽
+かかって　おいで！▼
+エリア２を　クリアして　しょしんしゃ
+そつぎょうを　めざすんだ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:39:33" />
+				Time="2011-11-22T03:09:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1279,11 +1284,14 @@
 			Language="JPN_KANJI">
 			<Text>リタイアせずに　ここまで
 たどり着けたようだね▼
+ここまでの　がんばりを
+無駄に　しないように　全力で▽
+かかって　おいで！▼
 さあ　エリア2を　クリアして
-初心者　卒業を　目指せ！▼</Text>
+初心者　卒業を　目指すんだ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:39:41" />
+				Time="2011-11-22T03:09:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1880,14 +1888,15 @@
 			Language="JPN">
 			<Text>くろのまてんろうに　ようこそ
 しょしんしゃさん▼
-キミへの　アドバイスだ▼
-この　エリアを　クリアするには
-ボクを　たおす　ひつようが　ある▼
-えんりょは　むようだ！
+ぶじに　ゲートトレーナーから
+じつりょくを　みとめられたようだね▼
+その　じつりょく
+こんどは　ボクに　みせてもらおう！▼
+えんりょは　むようだ
 さあ　しょうぶ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:47:36" />
+				Time="2011-11-22T03:07:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1897,14 +1906,15 @@
 			Language="JPN_KANJI">
 			<Text>黒の摩天楼に　ようこそ
 初心者さん▼
-キミへの　アドバイスだ▼
-この　エリアを　クリアするには
-ボクを　倒す　必要が　ある▼
-遠慮は　無用だ！
+無事に　ゲートトレーナーから
+実力を　認められたようだね▼
+その　実力
+今度は　ボクに　見せてもらおう！▼
+遠慮は　無用だ
 さあ　勝負！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:47:59" />
+				Time="2011-11-22T03:07:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1940,12 +1950,15 @@
 			Language="JPN">
 			<Text>リタイアせずに　ここまで
 たどりつけたようね▼
+ここまでの　がんばりを
+むだに　しないように　ぜんりょくで▽
+かかって　きなさい！▼
 さあ　エリア２を　クリアして
 しょしんしゃ　そつぎょうを▽
-めざしなさい！▼</Text>
+めざすのよ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:47:42" />
+				Time="2011-11-22T03:10:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1955,11 +1968,14 @@
 			Language="JPN_KANJI">
 			<Text>リタイアせずに　ここまで
 たどり着けたようね▼
+ここまでの　がんばりを
+無駄に　しないように　全力で▽
+かかって　きなあい！▼
 さあ　エリア2を　クリアして
-初心者　卒業を　目指しなさい！▼</Text>
+初心者　卒業を　目指すのよ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:48:07" />
+				Time="2011-11-22T03:10:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7845,13 +7861,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>黒の摩天楼　エリア1
-ボス：BREEDERM
+ボス：BACKPACKERM
 
 チュートリアルイベント会話
 （エレベーターから出た瞬間）</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:04:39" />
+				Time="2011-11-22T03:15:31" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -7920,13 +7936,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>黒の摩天楼　エリア2
-ボス：BREEDERW
+ボス：ASSISTANTW
 
 チュートリアルイベント会話
 （エレベーターから出た瞬間）</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:04:53" />
+				Time="2011-11-22T03:15:46" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -8283,13 +8299,13 @@ NPC：MUGENBOSS（バンジロウ）
 		<CommentCell
 			Language="JPN">
 			<Comment>白の樹洞　エリア1
-ボス：BREEDERW
+ボス：FIGHTERW
 
 チュートリアルイベント会話
 （エレベーターから出た瞬間）</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:08:06" />
+				Time="2011-11-22T03:16:09" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -8355,13 +8371,13 @@ NPC：MUGENBOSS（バンジロウ）
 		<CommentCell
 			Language="JPN">
 			<Comment>白の樹洞　エリア2
-ボス：BREEDERM
+ボス：MOUNTMAN
 
 チュートリアルイベント会話
 （エレベーターから出た瞬間）</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:08:18" />
+				Time="2011-11-22T03:16:21" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -8705,13 +8721,13 @@ NPC：MUGENBOSS（バンジロウ）
 		<CommentCell
 			Language="JPN">
 			<Comment>黒の摩天楼　エリア1
-ボス：BREEDERM
+ボス：BACKPACKERM
 
 チュートリアルイベント会話
 （エリア途中）</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:09:26" />
+				Time="2011-11-22T03:16:40" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -8777,13 +8793,13 @@ NPC：MUGENBOSS（バンジロウ）
 		<CommentCell
 			Language="JPN">
 			<Comment>黒の摩天楼　エリア1
-ボス：BREEDERM
+ボス：BACKPACKERM
 
 チュートリアルイベント会話
 （エリア途中）</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:09:26" />
+				Time="2011-11-22T03:16:48" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -8859,13 +8875,13 @@ Xメニューを　みてみて▼
 		<CommentCell
 			Language="JPN">
 			<Comment>黒の摩天楼　エリア2
-ボス：BREEDERW
+ボス：ASSISTANTW
 
 チュートリアルイベント会話
 (エリア途中）</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:09:39" />
+				Time="2011-11-22T03:17:01" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -8936,13 +8952,13 @@ Xメニューを　みてみて▼
 		<CommentCell
 			Language="JPN">
 			<Comment>白の樹洞　エリア1
-ボス：BREEDERW
+ボス：FIGHTERW
 
 チュートリアルイベント会話
 （エリア途中）</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:09:53" />
+				Time="2011-11-22T03:18:43" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -9008,13 +9024,13 @@ Xメニューを　みてみて▼
 		<CommentCell
 			Language="JPN">
 			<Comment>白の樹洞　エリア1
-ボス：BREEDERW
+ボス：FIGHTERW
 
 チュートリアルイベント会話
 （エリア途中）</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:09:53" />
+				Time="2011-11-22T03:18:33" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -9092,13 +9108,13 @@ Xメニューを　みてごらん▼
 		<CommentCell
 			Language="JPN">
 			<Comment>白の樹洞　エリア2
-ボス：BREEDERM
+ボス：MOUNTMAN
 
 チュートリアルイベント会話
 （エリア途中）</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:10:05" />
+				Time="2011-11-22T03:17:43" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -15369,29 +15385,29 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねえ　ねえ　しってる？▼
+			<Text>いいことを　おしえるわ▼
 ゲートトレーナーは
-だんせいなんだって</Text>
+だんせいなんらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-19T04:59:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:46:51" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T02:55:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねえ　ねえ　知ってる？▼
+			<Text>いいことを　教えるわ▼
 ゲートトレーナーは
-男性なんだって</Text>
+男性なんらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-19T05:03:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:46:57" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T02:55:18" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -15729,29 +15745,29 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねえ　ねえ　しってる？▼
+			<Text>いいことを　おしえるわ▼
 ゲートトレーナーは
-じょせいなんだって</Text>
+じょせいなんらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-19T05:06:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:46:51" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T02:55:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねえ　ねえ　知ってる？▼
+			<Text>いいことを　教えるわ▼
 ゲートトレーナーは
-女性なんだって</Text>
+女性なんらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-19T05:03:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:07:28" />
+				Time="2011-11-22T02:55:19" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -16089,29 +16105,29 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねえ　ねえ　しってる？▼
+			<Text>いいことを　おしえるわ▼
 ゲートトレーナーは
-とまっているんだって</Text>
+とまっているんらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-19T05:12:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:46:51" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T02:55:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねえ　ねえ　知ってる？▼
+			<Text>いいことを　教えるわ▼
 ゲートトレーナーは
-止まっているんだって</Text>
+止まっているんらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-19T05:14:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:07:28" />
+				Time="2011-11-22T02:55:20" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -16449,29 +16465,29 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねえ　ねえ　しってる？▼
+			<Text>いいことを　おしえるわ▼
 ゲートトレーナーは
-あるいているんだって</Text>
+あるいているんらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-19T05:12:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:17:25" />
+				Time="2011-11-22T02:55:21" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねえ　ねえ　知ってる？▼
+			<Text>いいことを　教えるわ▼
 ゲートトレーナーは
-歩いているんだって</Text>
+歩いているんらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-19T05:14:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:18:00" />
+				Time="2011-11-22T02:55:21" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -16817,29 +16833,29 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねえ　ねえ　しってる？▼
+			<Text>いいことを　おしえるわ▼
 ゲートトレーナーは　あるきながら
-まわっているんだって</Text>
+まわっているんらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-21T07:11:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:10:14" />
+				Time="2011-11-22T02:55:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねえ　ねえ　知ってる？▼
+			<Text>いいことを　教えるわ▼
 ゲートトレーナーは　歩きながら
-回っているんだって</Text>
+回っているんらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-21T07:12:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:09:33" />
+				Time="2011-11-22T02:55:22" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -17185,29 +17201,29 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねえ　ねえ　しってる？▼
+			<Text>いいことを　おしえるわ▼
 ゲートトレーナーは　あるきながら
-キョロキョロしているんだって</Text>
+キョロキョロしているんらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-21T06:42:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:48:08" />
+				Time="2011-11-22T02:55:23" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねえ　ねえ　知ってる？▼
+			<Text>いいことを　教えるわ▼
 ゲートトレーナーは　歩きながら
-キョロキョロしているんだって</Text>
+キョロキョロしているんらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-21T06:44:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-21T06:48:36" />
+				Time="2011-11-22T02:55:24" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -17535,29 +17551,29 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねえ　ねえ　しってる？▼
+			<Text>いいことを　おしえるわ▼
 ボストレーナーは　[Name:PokemonName Idx="1" ]を
-だいじに　しているんだって</Text>
+だいじに　しているんらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:48:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:46:51" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T02:55:25" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねえ　ねえ　知ってる？▼
+			<Text>いいことを　教えるわ▼
 ボストレーナーは　[Name:PokemonName Idx="1" ]を
-大事に　しているんだって</Text>
+大事に　しているんらしいわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T11:48:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:46:57" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-22T02:55:26" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -25297,14 +25313,14 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さあ　ここからが　ほんばんだ▼
+			<Text>ここからが　ほんばんだ▼
 ボストレーナーは　このエリアで
 いちばんの　じつりょくしゃだ▼
 とびらの　あった　へやに　いって
-ぜんりょくで　ちょうせんするんだ▼</Text>
+ぜんりょくで　ちょうせんするんだ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T07:05:30" />
+				Time="2011-11-22T02:59:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -25312,14 +25328,14 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さあ　ここからが　本番だ▼
+			<Text>ここからが　本番だ▼
 ボストレーナーは　このエリアで
 一番の　実力者だ▼
 扉の　あった　部屋に　行って
-全力で　挑戦するんだ▼</Text>
+全力で　挑戦するんだ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T07:05:36" />
+				Time="2011-11-22T02:59:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -25347,14 +25363,14 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さあ　ここからが　ほんばんよ▼
+			<Text>ここからが　ほんばんよ▼
 ボストレーナーは　このエリアで
 いちばんの　じつりょくしゃよ▼
 とびらの　あった　へやに　いって
-ぜんりょくで　ちょうせんしてね▼</Text>
+ぜんりょくで　ちょうせんしてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T07:05:21" />
+				Time="2011-11-22T02:59:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -25362,14 +25378,14 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さあ　ここからが　本番よ▼
+			<Text>ここからが　本番よ▼
 ボストレーナーは　このエリアで
 一番の　実力者よ▼
 扉の　あった　部屋に　行って
-全力で　挑戦してね▼</Text>
+全力で　挑戦してね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T07:06:18" />
+				Time="2011-11-22T02:59:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

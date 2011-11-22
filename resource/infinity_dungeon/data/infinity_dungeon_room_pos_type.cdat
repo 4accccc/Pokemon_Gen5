@@ -11,179 +11,210 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
 static const INF_ROOM_SET_TR_PARAM sc_room_tr_param[] = {
-  { // INF_ROOM_POS_TYPE_B_1
+  { // INF_ROOM_POS_TYPE_A_1
     INF_MULTI_DUNGEON ,1 ,ROOM_TYPE_DEFAULT ,
     { 
       { INF_MOVE_CODE_TYPE_STOP1 ,6 ,7 ,}, 
 
     },
   }, 
-  { // INF_ROOM_POS_TYPE_C_1
+  { // INF_ROOM_POS_TYPE_A_2
+    INF_MULTI_DUNGEON ,2 ,ROOM_TYPE_DEFAULT ,
+    { 
+      { INF_MOVE_CODE_TYPE_STOP1 ,7 ,6 ,}, 
+
+      { INF_MOVE_CODE_TYPE_STOP1 ,5 ,8 ,}, 
+
+    },
+  }, 
+  { // INF_ROOM_POS_TYPE_A_3
+    INF_MULTI_DUNGEON ,3 ,ROOM_TYPE_DEFAULT ,
+    { 
+      { INF_MOVE_CODE_TYPE_STOP1 ,6 ,5 ,}, 
+
+      { INF_MOVE_CODE_TYPE_STOP1 ,4 ,8 ,}, 
+
+      { INF_MOVE_CODE_TYPE_STOP1 ,8 ,8 ,}, 
+
+    },
+  }, 
+  { // INF_ROOM_POS_TYPE_A_4
+    INF_MULTI_DUNGEON ,4 ,ROOM_TYPE_DEFAULT ,
+    { 
+      { INF_MOVE_CODE_TYPE_STOP1 ,7 ,5 ,}, 
+
+      { INF_MOVE_CODE_TYPE_STOP1 ,5 ,9 ,}, 
+
+      { INF_MOVE_CODE_TYPE_STOP1 ,4 ,6 ,}, 
+
+      { INF_MOVE_CODE_TYPE_STOP1 ,8 ,8 ,}, 
+
+    },
+  }, 
+  { // INF_ROOM_POS_TYPE_B_1
     INF_MULTI_DUNGEON ,1 ,ROOM_TYPE_DEFAULT ,
     { 
       { INF_MOVE_CODE_TYPE_RNDDOM1 ,6 ,7 ,}, 
 
     },
   }, 
-  { // INF_ROOM_POS_TYPE_D_1
-    INF_MULTI_DUNGEON ,1 ,ROOM_TYPE_DEFAULT ,
-    { 
-      { INF_MOVE_CODE_TYPE_ROTARY1 ,4 ,5 ,}, 
-
-    },
-  }, 
-  { // INF_ROOM_POS_TYPE_E_1
+  { // INF_ROOM_POS_TYPE_C_1
     INF_MULTI_DUNGEON ,1 ,ROOM_TYPE_DEFAULT ,
     { 
       { INF_MOVE_CODE_TYPE_RNDDOM2 ,6 ,7 ,}, 
 
     },
   }, 
-  { // INF_ROOM_POS_TYPE_F_1
+  { // INF_ROOM_POS_TYPE_D_1
     INF_MULTI_DUNGEON ,1 ,ROOM_TYPE_DEFAULT ,
-    { 
-      { INF_MOVE_CODE_TYPE_ROTARY2 ,4 ,5 ,}, 
-
-    },
-  }, 
-  { // INF_ROOM_POS_TYPE_G_1
-    INF_MULTI_DUNGEON ,2 ,ROOM_TYPE_DEFAULT ,
-    { 
-      { INF_MOVE_CODE_TYPE_ROTARY3 ,4 ,5 ,}, 
-
-      { INF_MOVE_CODE_TYPE_ROTARY4 ,8 ,9 ,}, 
-
-    },
-  }, 
-  { // INF_ROOM_POS_TYPE_H_1
-    INF_MULTI_DUNGEON ,2 ,ROOM_TYPE_DEFAULT ,
-    { 
-      { INF_MOVE_CODE_TYPE_ROUND1 ,4 ,5 ,}, 
-
-      { INF_MOVE_CODE_TYPE_ROUND2 ,8 ,9 ,}, 
-
-    },
-  }, 
-  { // INF_ROOM_POS_TYPE_I_1
-    INF_MULTI_DUNGEON ,2 ,ROOM_TYPE_DEFAULT ,
-    { 
-      { INF_MOVE_CODE_TYPE_ROUND3 ,8 ,5 ,}, 
-
-      { INF_MOVE_CODE_TYPE_ROUND4 ,4 ,9 ,}, 
-
-    },
-  }, 
-  { // INF_ROOM_POS_TYPE_J_1
-    INF_MULTI_DUNGEON ,2 ,ROOM_TYPE_DEFAULT ,
-    { 
-      { INF_MOVE_CODE_TYPE_ROTARY5 ,4 ,5 ,}, 
-
-      { INF_MOVE_CODE_TYPE_ROTARY6 ,8 ,9 ,}, 
-
-    },
-  }, 
-  { // INF_ROOM_POS_TYPE_K_1
-    INF_MULTI_DUNGEON ,3 ,ROOM_TYPE_DEFAULT ,
-    { 
-      { INF_MOVE_CODE_TYPE_STOP2 ,6 ,5 ,}, 
-
-      { INF_MOVE_CODE_TYPE_STOP2 ,9 ,8 ,}, 
-
-      { INF_MOVE_CODE_TYPE_STOP2 ,3 ,8 ,}, 
-
-    },
-  }, 
-  { // INF_ROOM_POS_TYPE_L_1
-    INF_MULTI_DUNGEON ,3 ,ROOM_TYPE_DEFAULT ,
-    { 
-      { INF_MOVE_CODE_TYPE_ROTARY7 ,7 ,6 ,}, 
-
-      { INF_MOVE_CODE_TYPE_ROTARY8 ,9 ,10 ,}, 
-
-      { INF_MOVE_CODE_TYPE_ROTARY8 ,5 ,10 ,}, 
-
-    },
-  }, 
-  { // INF_ROOM_POS_TYPE_M_1
-    INF_MULTI_DUNGEON ,3 ,ROOM_TYPE_DEFAULT ,
-    { 
-      { INF_MOVE_CODE_TYPE_STOP2 ,6 ,7 ,}, 
-
-      { INF_MOVE_CODE_TYPE_ROUND5 ,9 ,4 ,}, 
-
-      { INF_MOVE_CODE_TYPE_ROUND6 ,3 ,10 ,}, 
-
-    },
-  }, 
-  { // INF_ROOM_POS_TYPE_N_1
-    INF_MULTI_DUNGEON ,4 ,ROOM_TYPE_DEFAULT ,
-    { 
-      { INF_MOVE_CODE_TYPE_STOP2 ,7 ,5 ,}, 
-
-      { INF_MOVE_CODE_TYPE_STOP2 ,5 ,9 ,}, 
-
-      { INF_MOVE_CODE_TYPE_STOP2 ,4 ,6 ,}, 
-
-      { INF_MOVE_CODE_TYPE_STOP2 ,8 ,8 ,}, 
-
-    },
-  }, 
-  { // INF_ROOM_POS_TYPE_O_1
-    INF_MULTI_DUNGEON ,4 ,ROOM_TYPE_DEFAULT ,
-    { 
-      { INF_MOVE_CODE_TYPE_ROTARY5 ,4 ,5 ,}, 
-
-      { INF_MOVE_CODE_TYPE_ROTARY6 ,8 ,9 ,}, 
-
-      { INF_MOVE_CODE_TYPE_ROTARY9 ,8 ,5 ,}, 
-
-      { INF_MOVE_CODE_TYPE_ROTARY10 ,4 ,9 ,}, 
-
-    },
-  }, 
-  { // INF_ROOM_POS_TYPE_P_1
-    INF_MULTI_DUNGEON ,4 ,ROOM_TYPE_DEFAULT ,
-    { 
-      { INF_MOVE_CODE_TYPE_ROUND7 ,3 ,9 ,}, 
-
-      { INF_MOVE_CODE_TYPE_ROUND8 ,9 ,5 ,}, 
-
-      { INF_MOVE_CODE_TYPE_ROUND9 ,4 ,4 ,}, 
-
-      { INF_MOVE_CODE_TYPE_ROUND10 ,8 ,10 ,}, 
-
-    },
-  }, 
-  { // INF_ROOM_POS_TYPE_Q_1
-    INF_B2_ONLY_DUNGEON ,1 ,ROOM_TYPE_SPECIAL1 ,
-    { 
-      { INF_MOVE_CODE_TYPE_ROTARY11 ,3 ,4 ,}, 
-
-    },
-  }, 
-  { // INF_ROOM_POS_TYPE_R_1
-    INF_B2_ONLY_DUNGEON ,1 ,ROOM_TYPE_SPECIAL2 ,
-    { 
-      { INF_MOVE_CODE_TYPE_STOP3 ,6 ,7 ,}, 
-
-    },
-  }, 
-  { // INF_ROOM_POS_TYPE_S_1
-    INF_W2_ONLY_DUNGEON ,1 ,ROOM_TYPE_SPECIAL1 ,
-    { 
-      { INF_MOVE_CODE_TYPE_STOP3 ,6 ,7 ,}, 
-
-    },
-  }, 
-  { // INF_ROOM_POS_TYPE_T_1
-    INF_W2_ONLY_DUNGEON ,1 ,ROOM_TYPE_SPECIAL2 ,
     { 
       { INF_MOVE_CODE_TYPE_RNDDOM3 ,6 ,7 ,}, 
 
     },
   }, 
-  { // INF_ROOM_POS_TYPE_EX_1
+  { // INF_ROOM_POS_TYPE_E_1
     INF_MULTI_DUNGEON ,1 ,ROOM_TYPE_DEFAULT ,
+    { 
+      { INF_MOVE_CODE_TYPE_ROTARY1 ,4 ,5 ,}, 
+
+    },
+  }, 
+  { // INF_ROOM_POS_TYPE_E_2
+    INF_MULTI_DUNGEON ,2 ,ROOM_TYPE_DEFAULT ,
+    { 
+      { INF_MOVE_CODE_TYPE_ROTARY1 ,4 ,5 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY2 ,8 ,9 ,}, 
+
+    },
+  }, 
+  { // INF_ROOM_POS_TYPE_F_1
+    INF_MULTI_DUNGEON ,1 ,ROOM_TYPE_DEFAULT ,
+    { 
+      { INF_MOVE_CODE_TYPE_ROTARY5 ,4 ,5 ,}, 
+
+    },
+  }, 
+  { // INF_ROOM_POS_TYPE_F_2
+    INF_MULTI_DUNGEON ,2 ,ROOM_TYPE_DEFAULT ,
+    { 
+      { INF_MOVE_CODE_TYPE_ROTARY5 ,4 ,5 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY6 ,8 ,9 ,}, 
+
+    },
+  }, 
+  { // INF_ROOM_POS_TYPE_G_1
+    INF_MULTI_DUNGEON ,1 ,ROOM_TYPE_DEFAULT ,
+    { 
+      { INF_MOVE_CODE_TYPE_ROTARY9 ,4 ,5 ,}, 
+
+    },
+  }, 
+  { // INF_ROOM_POS_TYPE_G_2
+    INF_MULTI_DUNGEON ,2 ,ROOM_TYPE_DEFAULT ,
+    { 
+      { INF_MOVE_CODE_TYPE_ROTARY9 ,4 ,5 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY10 ,8 ,9 ,}, 
+
+    },
+  }, 
+  { // INF_ROOM_POS_TYPE_H_3
+    INF_MULTI_DUNGEON ,3 ,ROOM_TYPE_DEFAULT ,
+    { 
+      { INF_MOVE_CODE_TYPE_ROTARY13 ,7 ,6 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY13 ,9 ,10 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY13 ,5 ,10 ,}, 
+
+    },
+  }, 
+  { // INF_ROOM_POS_TYPE_I_3
+    INF_MULTI_DUNGEON ,3 ,ROOM_TYPE_DEFAULT ,
+    { 
+      { INF_MOVE_CODE_TYPE_ROTARY14 ,7 ,6 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY14 ,9 ,10 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY14 ,5 ,10 ,}, 
+
+    },
+  }, 
+  { // INF_ROOM_POS_TYPE_J_3
+    INF_MULTI_DUNGEON ,3 ,ROOM_TYPE_DEFAULT ,
+    { 
+      { INF_MOVE_CODE_TYPE_ROTARY15 ,7 ,6 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY16 ,9 ,10 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY16 ,5 ,10 ,}, 
+
+    },
+  }, 
+  { // INF_ROOM_POS_TYPE_K_4
+    INF_MULTI_DUNGEON ,4 ,ROOM_TYPE_DEFAULT ,
+    { 
+      { INF_MOVE_CODE_TYPE_ROTARY1 ,4 ,5 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY2 ,8 ,9 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY3 ,8 ,5 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY4 ,4 ,9 ,}, 
+
+    },
+  }, 
+  { // INF_ROOM_POS_TYPE_L_4
+    INF_MULTI_DUNGEON ,4 ,ROOM_TYPE_DEFAULT ,
+    { 
+      { INF_MOVE_CODE_TYPE_ROTARY5 ,4 ,5 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY6 ,8 ,9 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY7 ,8 ,5 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY8 ,4 ,9 ,}, 
+
+    },
+  }, 
+  { // INF_ROOM_POS_TYPE_M_4
+    INF_MULTI_DUNGEON ,4 ,ROOM_TYPE_DEFAULT ,
+    { 
+      { INF_MOVE_CODE_TYPE_ROTARY9 ,4 ,5 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY10 ,8 ,9 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY11 ,8 ,5 ,}, 
+
+      { INF_MOVE_CODE_TYPE_ROTARY12 ,4 ,9 ,}, 
+
+    },
+  }, 
+  { // INF_ROOM_POS_TYPE_N_1
+    INF_B2_ONLY_DUNGEON ,1 ,ROOM_TYPE_DEFAULT ,
+    { 
+      { INF_MOVE_CODE_TYPE_ROTARY17 ,3 ,4 ,}, 
+
+    },
+  }, 
+  { // INF_ROOM_POS_TYPE_O_1
+    INF_B2_ONLY_DUNGEON ,1 ,ROOM_TYPE_DEFAULT ,
+    { 
+      { INF_MOVE_CODE_TYPE_STOP1 ,6 ,7 ,}, 
+
+    },
+  }, 
+  { // INF_ROOM_POS_TYPE_P_1
+    INF_W2_ONLY_DUNGEON ,1 ,ROOM_TYPE_DEFAULT ,
+    { 
+      { INF_MOVE_CODE_TYPE_STOP1 ,6 ,7 ,}, 
+
+    },
+  }, 
+  { // INF_ROOM_POS_TYPE_Q_1
+    INF_W2_ONLY_DUNGEON ,1 ,ROOM_TYPE_DEFAULT ,
     { 
       { INF_MOVE_CODE_TYPE_STOP1 ,6 ,7 ,}, 
 
