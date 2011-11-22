@@ -5397,22 +5397,6 @@
 		<language name="JPN" width="256">BGM-E-EPILOGUE</language>
 		<language name="JPN_KANJI" width="256">BGM-E-EPILOGUE</language>
 	</row>
-	<row id="msg_seq_bgm_e_impress">
-		<language name="JPN" width="256">BGM-E-IMPRESS</language>
-		<language name="JPN_KANJI" width="256">BGM-E-IMPRESS</language>
-	</row>
-	<row id="msg_seq_bgm_e_congenial">
-		<language name="JPN" width="256">BGM-E-CONGENIAL</language>
-		<language name="JPN_KANJI" width="256">BGM-E-CONGENIAL</language>
-	</row>
-	<row id="msg_seq_bgm_e_strain">
-		<language name="JPN" width="256">BGM-E-STRAIN</language>
-		<language name="JPN_KANJI" width="256">BGM-E-STRAIN</language>
-	</row>
-	<row id="msg_seq_bgm_e_disquieting">
-		<language name="JPN" width="256">BGM-E-DISQUIETING</language>
-		<language name="JPN_KANJI" width="256">BGM-E-DISQUIETING</language>
-	</row>
 	<row id="msg_seq_bgm_eye_dancer">
 		<language name="JPN" width="256">BGM-EYE-DANCER</language>
 		<language name="JPN_KANJI" width="256">BGM-EYE-DANCER</language>
@@ -5517,6 +5501,22 @@
 		<language name="JPN" width="256">BGM-END</language>
 		<language name="JPN_KANJI" width="256">BGM-END</language>
 	</row>
+          <row id="msg_seq_1264">
+          <language name="JPN" width="256">dmy</language>
+          <language name="JPN_KANJI" width="256">dmy</language>
+          </row>
+          <row id="msg_seq_1265">
+          <language name="JPN" width="256">dmy</language>
+          <language name="JPN_KANJI" width="256">dmy</language>
+          </row>
+          <row id="msg_seq_1266">
+          <language name="JPN" width="256">dmy</language>
+          <language name="JPN_KANJI" width="256">dmy</language>
+          </row>
+          <row id="msg_seq_1267">
+          <language name="JPN" width="256">dmy</language>
+          <language name="JPN_KANJI" width="256">dmy</language>
+          </row>
           <row id="msg_seq_1268">
           <language name="JPN" width="256">dmy</language>
           <language name="JPN_KANJI" width="256">dmy</language>
