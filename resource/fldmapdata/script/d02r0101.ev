@@ -29,6 +29,7 @@ _EVENT_DATA		ev_pos_d02r0101_swleader1_01
 _EVENT_DATA		ev_pos_d02r0101_swleader1_02
 _EVENT_DATA		ev_d02r0101_swleader1_03
 _EVENT_DATA		ev_d02r0101_girl4_01
+_EVENT_DATA		ev_d02r0101_man2_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -72,7 +73,7 @@ EVENT_START		ev_pos_d02r0101_swleader1_02
   _OBJ_ANIME_WAIT()
   
   //アスラ：しょあ！
-  _GIZAWIN_OBJMSG_POS( msg_d02r0101_sage5_01 , MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _GIZAWIN_OBJMSG_POS( msg_d02r0101_sage5_01 , MMDL_ID_EVENTOBJ_00, POS_DL )
   _GIZAWIN_CLOSE()
   
   //アニメ：主人公・チェレン振り向き
@@ -81,18 +82,18 @@ EVENT_START		ev_pos_d02r0101_swleader1_02
   _OBJ_ANIME_WAIT()
   
   //アスラ：わしは
-  _BALLOONWIN_OBJMSG_POS( msg_d02r0101_sage5_02, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d02r0101_sage5_02, MMDL_ID_EVENTOBJ_00, POS_DL )
   _MSGWIN_CLOSE()
   
   //チェレン：プラズマ団は
-  _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_14, D02R0101_SWLEADER1_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_14, D02R0101_SWLEADER1_01, POS_UR )
   _MSGWIN_CLOSE()
   
   //アスラ：まてまて！
-  _BALLOONWIN_OBJMSG_POS( msg_d02r0101_sage5_03, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d02r0101_sage5_03, MMDL_ID_EVENTOBJ_00, POS_DL )
   
   //アスラ：あやまちて　あらためざる
-  _BALLOONWIN_OBJMSG_POS( msg_d02r0101_sage5_04, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d02r0101_sage5_04, MMDL_ID_EVENTOBJ_00, POS_DL )
   _MSGWIN_CLOSE()
   
   //アニメ：アスラ退場
@@ -104,7 +105,7 @@ EVENT_START		ev_pos_d02r0101_swleader1_02
   _OBJ_ANIME_WAIT()
   
   //チェレン：……なんだろう
-  _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_15, D02R0101_SWLEADER1_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_15, D02R0101_SWLEADER1_01, POS_UR )
   _MSGWIN_CLOSE()
   
   //アニメ：チェレン主人公を見る
@@ -119,7 +120,7 @@ EVENT_START		ev_pos_d02r0101_swleader1_02
 	_ITEM_EVENT_KEYWAIT(ITEM_APPUGUREEDO, 1)
 	
 	//チェレン：じゃ　また！
-	_BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_17, D02R0101_SWLEADER1_01, POS_DEFAULT )
+	_BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_17, D02R0101_SWLEADER1_01, POS_UR )
   _MSGWIN_CLOSE()
   
   //アニメ：チェレン退場
@@ -129,11 +130,13 @@ EVENT_START		ev_pos_d02r0101_swleader1_02
   //チェレン・アスラ動作モデル削除
   _OBJ_DEL( D02R0101_SWLEADER1_01 )
   _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+  _OBJ_DEL( D02R0101_MAN2_01 )
   
   //==================================//
   //D02R0101 POS無効
   $WK_SCENE_D02R0101_SWLEADER1 = 1
   _FLAG_SET( FV_D02R0101_SWLEADER1_01 )
+  _FLAG_SET( FV_D02R0101_STOPPER_01 )
   //==================================//
   
 EVENT_END
@@ -230,15 +233,15 @@ ev_d02r0101_pairstart_01:
       _OBJ_ANIME_WAIT()
     ENDIF
     
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
+    _OBJ_ANIME_WAIT()
+    
     //連れ歩き開始
     _PAIR_TRAINER_SET( D02R0101_SWLEADER1_01, PAIR_ID_D02R0101_SWLEADER1, PAIR_TYPE_ONE_ZONE, TRID_SWLEADER1_1_02, PAIR_ID_D02R0101_SWLEADER1 )
     //==================================//
     //初回会話完了フラグ
     _FLAG_SET(FE_D02R0101_SWLEADER1_FIRST)
     //==================================//
-    
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
-    _OBJ_ANIME_WAIT()
     
   //いいえ
   ELSE
@@ -303,6 +306,20 @@ ev_d02r0101_pairend_01:
   }
 _RET
 
+/**************************************************************/
+/*  STOPPER                                            */
+/**************************************************************/
+EVENT_START   ev_d02r0101_man2_01
+
+  _TALK_OBJ_START()
+  _BALLOONWIN_TALKOBJ_MSG( msg_d02r0101_stop_01 )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+  
+  _OBJ_ANIME( D02R0101_MAN2_01, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+EVENT_END
 
 /**************************************************************/
 /*	D02R0101	リーフィア進化用の石						  */

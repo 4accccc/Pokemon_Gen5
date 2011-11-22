@@ -35,6 +35,7 @@
 #define FLD_ITEM_61                       22
 #define D03R0101_FIGHTERM_01              23
 #define D03R0101_BACKPACKERM_01           24
+#define D03R0101_RANGERM_01               25
 
 #endif //ZONE_D03R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d03r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

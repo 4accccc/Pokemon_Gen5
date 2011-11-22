@@ -40,6 +40,7 @@ _EVENT_DATA    ev_c14_fighterm_01
 _EVENT_DATA    ev_bg_c14_board_01
 _EVENT_DATA    ev_bg_c14_board_02
 _EVENT_DATA    ev_bg_c14_board_03
+_EVENT_DATA    ev_c14_fighterm_02
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -392,7 +393,32 @@ EVENT_END
 /*  おいかけっこカップル男：話しかけ（後）                    */
 /**************************************************************/
 EVENT_START   ev_c14_boy4_02
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14_boy4_02 )
+  
+    //初回話しかけであったならば
+  IF FLAG_OFF(SYS_FLAG_FES_HEART1) THEN
+  
+    _TALK_OBJ_START()
+    
+    _BALLOONWIN_TALKOBJ_MSG( msg_c14_mission_add_01 )
+    _MSGWIN_CLOSE()
+    
+    //フェスミッションが追加されました
+    _SE_PLAY( SEQ_SE_FLD_133 )
+    _SYSWIN_MSG( msg_c14_mission_add_02, POS_DEFAULT )
+    _SE_WAIT()
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    
+    //==================================//
+    //初回会話終了
+    _FLAG_SET(SYS_FLAG_FES_HEART1)
+    //==================================//
+    
+  //2回目以降
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14_mission_add_01 )
+  ENDIF
+
 EVENT_END
 
 /************************************************************/
@@ -693,4 +719,40 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c14_fighterm_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14_fighterm_01 )
+EVENT_END
+
+/**************************************************************/
+/*  FIGHTERM_02                                            */
+/**************************************************************/
+EVENT_START   ev_c14_fighterm_02
+  
+  //初回話しかけであったならば
+  IF FLAG_OFF(SYS_FLAG_FES_MQUIZ1) THEN
+  
+    _TALK_OBJ_START()
+    
+    _BALLOONWIN_TALKOBJ_MSG( msg_c14_mission_add_1_01 )
+    _MSGWIN_CLOSE()
+    
+    //フェスミッションが追加されました
+    _SE_PLAY( SEQ_SE_FLD_133 )
+    _SYSWIN_MSG( msg_c14_mission_add_1_02, POS_DEFAULT )
+    _SE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+    
+    _BALLOONWIN_TALKOBJ_MSG( msg_c14_mission_add_1_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    
+    //==================================//
+    //初回会話終了
+    _FLAG_SET(SYS_FLAG_FES_MQUIZ1)
+    //==================================//
+    
+  //2回目以降
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14_mission_add_1_03 )
+  ENDIF
+  
 EVENT_END

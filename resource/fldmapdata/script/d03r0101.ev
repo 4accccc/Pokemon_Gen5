@@ -12,6 +12,7 @@
   .include  "d03r0101.h"
 
 //@author suginaka_katsunori
+//@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -30,6 +31,7 @@ _EVENT_DATA		ev_pos_d03r0101_hakase2_01
 _EVENT_DATA		ev_d03r0101_backpackerm_01
 _EVENT_DATA		ev_d03r0101_fighterm_01
 _EVENT_DATA		ev_zone_d03r0101
+_EVENT_DATA		ev_d03r0101_rangerm_01
 _EVENT_DATA_END
 
 //ヒヒダルマの戦闘フラグ指定用ユーザーワークを定義（共通化のためここで定義します）
@@ -409,6 +411,43 @@ sub_btl_flag_set:
 	$LWK_BTL_FLAG = SCR_WILD_BTL_FLAG_WILD_TALK
 	$LWK_BTL_FLAG |= SCR_WILD_BTL_FLAG_SPEABI3
 _RET
+
+/**************************************************************/
+/*  RANGERM                                            */
+/**************************************************************/
+EVENT_START   ev_d03r0101_rangerm_01
+  
+  //初回話しかけであったならば
+  IF FLAG_OFF(SYS_FLAG_FES_TREASURE1) THEN
+  
+    _TALK_OBJ_START()
+    
+    _BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_mission_add_01 )
+    _MSGWIN_CLOSE()
+    
+    //フェスミッションが追加されました
+    _SE_PLAY( SEQ_SE_FLD_133 )
+    _SYSWIN_MSG( msg_d03r0101_mission_add_02, POS_DEFAULT )
+    _SE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+    
+    _BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_mission_add_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    
+    //==================================//
+    //初回会話終了
+    _FLAG_SET(SYS_FLAG_FES_TREASURE1)
+    //==================================//
+    
+  //2回目以降
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_mission_add_03 )
+  ENDIF
+  
+EVENT_END
+
 
 /**************************************************************/
 /*		HAKASE2		D03R0101POSイベント						  */

@@ -20,6 +20,7 @@
 #define TR_FUTAGO_08                       7
 #define TR_FUTAGO_08_2                     8
 #define TR_TANPAN_28                       9
+#define R14R0201_BACKPACKERW_01           10
 
 #endif //ZONE_R14R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r14r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

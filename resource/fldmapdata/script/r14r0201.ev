@@ -19,4 +19,42 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA		ev_r14r0201_backpackerw_01
 _EVENT_DATA_END
+
+/**************************************************************/
+/*  BACKPACKERW                                            */
+/**************************************************************/
+EVENT_START   ev_r14r0201_backpackerw_01
+  
+  //初回話しかけであったならば
+  IF FLAG_OFF(SYS_FLAG_FES_KOYASHI1) THEN
+  
+    _TALK_OBJ_START()
+    
+    _BALLOONWIN_TALKOBJ_MSG( msg_r14r0201_mission_add_01 )
+    _MSGWIN_CLOSE()
+    
+    //フェスミッションが追加されました
+    _SE_PLAY( SEQ_SE_FLD_133 )
+    _SYSWIN_MSG( msg_r14r0201_mission_add_02, POS_DEFAULT )
+    _SE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+    
+    _BALLOONWIN_TALKOBJ_MSG( msg_r14r0201_mission_add_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    
+    //==================================//
+    //初回会話終了
+    _FLAG_SET(SYS_FLAG_FES_KOYASHI1)
+    //==================================//
+    
+  //2回目以降
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r14r0201_mission_add_03 )
+  ENDIF
+  
+EVENT_END
+

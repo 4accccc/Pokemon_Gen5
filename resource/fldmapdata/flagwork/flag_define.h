@@ -900,6 +900,7 @@
 #define FV_T06R0101_MUGENBOSS_01           996 /* 0x03e4 サンギタウン：バンジロウ */
 #define FV_D27R0701_SWPLAZMAM_02B          997 /* 0x03e5 プラズマフリゲート船倉：ブラックverプラズマ団員 */
 #define FV_D27R0701_SWPLAZMAM_02W          998 /* 0x03e6 プラズマフリゲート船倉：ホワイトverプラズマ団員 */
+#define FV_D02R0101_STOPPER_01             999 /* 0x03e7 ヤグルマの森：ストッパー */
 
 #define FV_AREA_END                       1099 /* 0x044b  */
 

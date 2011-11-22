@@ -5,5 +5,6 @@
 #define _R14R0201_DEF_H_
 
 //スクリプトデータID定義
+#define SCRID_R14R0201_BACKPACKERW_01 (1)
 
 #endif //_R14R0201_DEF_H_

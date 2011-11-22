@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/17 17:33:30
+#save date:2011/11/22 22:09:21
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c14.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c14.wms
 #hold event type:
 1
 #hold event number:
-14
+15
 #event number: 0
 #type
 1
@@ -359,7 +359,7 @@ C14_SWIMMERW_02
 #OBJ CODE Number
 SWIMMERW
 #MOVE CODE Number
-MV_RTUR         
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -381,7 +381,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--152 -88 88
+56 -88 -8
 #event number: 12
 #type
 1
@@ -444,6 +444,37 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 248 -56 -136
+#event number: 14
+#type
+1
+#ID name
+C14_FIGHTERM_02
+#OBJ CODE Number
+FIGHTERM
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C14_FIGHTERM_02
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 -56 -184
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

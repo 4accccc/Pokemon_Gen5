@@ -25,6 +25,7 @@
 _EVENT_DATA   ev_bg_c03p01_sign_01
 _EVENT_DATA   ev_bg_c03p01_sign_02
 _EVENT_DATA   ev_pos_c03P01_swboss_01
+_EVENT_DATA   ev_c03P01_oldman1_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -216,12 +217,47 @@ EVENT_START   ev_bg_c03p01_sign_01
 EVENT_END
 
 /**************************************************************/
-/*  看板2                                                     */
+/*  看板2                                            _BALLOONWIN         */
 /**************************************************************/
 EVENT_START   ev_bg_c03p01_sign_02
   _EASY_BGWIN_MSG( msg_c03p01_sign2_01, TYPE_POST)    //簡易メッセージＢＧ用
 EVENT_END
 
+/**************************************************************/
+/*  OLDMAN1                                            */
+/**************************************************************/
+EVENT_START   ev_c03P01_oldman1_01
+  
+  //初回話しかけであったならば
+  IF FLAG_OFF(SYS_FLAG_FES_TRBTL1) THEN
+  
+    _TALK_OBJ_START()
+    
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03p01_mission_add_01 )
+    _MSGWIN_CLOSE()
+    
+    //フェスミッションが追加されました
+    _SE_PLAY( SEQ_SE_FLD_133 )
+    _SYSWIN_MSG( msg_c03p01_mission_add_02, POS_DEFAULT )
+    _SE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+    
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03p01_mission_add_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    
+    //==================================//
+    //初回会話終了
+    _FLAG_SET(SYS_FLAG_FES_TRBTL1)
+    //==================================//
+    
+  //2回目以降
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p01_mission_add_03 )
+  ENDIF
+  
+EVENT_END
 
 //--------------------------------------------------------------------
 //☆アクロマ：「！」の後、主人公の方を向く

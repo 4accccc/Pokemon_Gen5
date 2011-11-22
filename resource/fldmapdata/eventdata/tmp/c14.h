@@ -30,6 +30,7 @@
 #define C14_SWIMMERW_02                   11
 #define C14_GIRL4_02                      12
 #define C14_FIGHTERM_01                   13
+#define C14_FIGHTERM_02                   14
 
 #endif //ZONE_C14_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c14.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
