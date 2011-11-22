@@ -675,7 +675,7 @@ EVENT_START   ev_debug_mizuguchi
       _FLAG_SET(FV_D27R0101_NINJA_01)
       
       //ワーク初期化
-      $WK_SCENE_D27R0101_FIRST_01 = 2
+      $WK_SCENE_D27R0101_FIRST_01 = 4
       
       // ROMバージョン取得
       _GET_ROM_VERSION( LCWK_VERSION )
@@ -697,8 +697,13 @@ EVENT_START   ev_debug_mizuguchi
       $WK_SCENE_D27_SWITCH_02 = 0
       $WK_SCENE_D27_SWITCH_01 = 0
       
+      //W21シズイイベント終了
+      $WK_SCENE_W21_01 = 3
+      //マップ差し替え:W21アジト船タラップ表示
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, FALSE , FALSE )
+      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, TRUE , TRUE )
       //マップ遷移
-      _MAP_CHANGE( ZONE_ID_D27R0101, 11, 31, DIR_RIGHT )
+      _MAP_CHANGE( ZONE_ID_W21, 797, 240, DIR_RIGHT )
       
     ELSIF $SCWK_TEMP2 == 10 THEN
       
@@ -714,7 +719,7 @@ EVENT_START   ev_debug_mizuguchi
       _FLAG_RESET(FV_D27R1201_SWRIVAL_01)
       
       //ワーク初期化
-      $WK_SCENE_D27R0101_FIRST_01 = 2
+      $WK_SCENE_D27R0101_FIRST_01 = 4
       $WK_SCENE_D27R0101_SECONDW_01 = 4
       $WK_SCENE_D27R0101_SECONDB_01 = 4
       
@@ -883,12 +888,30 @@ EVENT_START   ev_debug_mizuguchi
       _MAP_CHANGE( ZONE_ID_D22, 142, 631, DIR_UP )
       */
     ELSIF $SCWK_TEMP2 == 21 THEN
+    
+      //R27R0601イベント初期化
+      _FLAG_RESET( FV_D27R0601_SWSAGE1_01 )
+      _FLAG_SET( FV_D27R0601_NINJA_01 )
+      _FLAG_SET( FV_D27R0601_SWRIVAL_01 )
+      //D27R0701 SCENE_CHANGE有効
+      $WK_SCENE_D27R0601_SWSAGE1_01 = 1
+      //D27R0701 STOPPER無効
+      $WK_SCENE_D27R0601_STOPPER_01 = 0
       
+      /*
+      //D27バリア解説イベント起動
+      $WK_SCENE_D27R0101_SECONDW_01 = 2
+      _FLAG_RESET( FV_D27R1201_SWRIVAL_01 )
+      */
+      
+      /*
       //D27R0501初期化
       $WK_SCENE_D27R0501_SWSAGE7_01 = 1
       _FLAG_SET( FV_D27R0501_SWSAGE7_01 )
       _FLAG_SET( FV_D27R0501_NINJA_01 )
       _MAP_CHANGE( ZONE_ID_D27R0201, 11, 3, DIR_UP )
+      */
+      
       /*
       //D10R0301イベント初期化
       _FLAG_RESET( FV_D10R0301_SWRIVAL_01 )
