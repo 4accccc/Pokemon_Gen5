@@ -244,7 +244,7 @@ static void linkfes_SetMissionResultMedal( LINK_FESTIVAL* wk, LINKFEST_MISSION_R
       egnore = FMISSION_HOST_BLACK;
     }
     for( i = 0;i < FMISSION_ID_MAX; i++ ){
-      if( wk->p_arc_data[i].host == FMISSION_HOST_COMM ||
+      if( wk->p_arc_data[i].host >= FMISSION_HOST_COMM ||
           wk->p_arc_data[i].host == egnore ){
         continue; //自分では開催できないミッションは除く
       }

@@ -38,6 +38,9 @@ struct _LINK_FESTIVAL{
   u16 tmap_root;    //現在のルートゾーンID
   u16 now_score;    //現在のスコア
 
+  //ミッションデータアーカイブハンドル
+  ARCHANDLE *fm_data_h;
+
   //ミッションアーカイブ常駐データ
   FMISSION_ARC_COMMON*  p_arc_data;
 

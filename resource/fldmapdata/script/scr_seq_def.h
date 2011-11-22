@@ -1133,26 +1133,23 @@
 /**
  *  @def  _BALLOONWIN_TALKOBJ_MSG_FES_NPC
  *  @brief  吹き出しウィンドウ描画　NPCオブジェのタイプでメッセージが切り替わる
- *  @param msg_id_1 表示するメッセージID 1
- *  @param msg_id_2 表示するメッセージID 2
+ *  @param msg_id   表示するメッセージIDセットの最初のindex 
+ *  @param msg_num  表示するメッセージ1セットのメッセージ数
  *  @param obj_id 吹き出しを出す対象OBJ ID
  *  @param pos 吹き出しウィンドウ位置 usescript.hのPOS_定義を参照
  */
 //--------------------------------------------------------------
-#define _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_id_1, msg_id_2 ) \
-    _ASM_BALLOONWIN_TALKOBJ_MSG_FES_NPC_POS msg_id_1, msg_id_2, POS_DEFAULT
+#define _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_id, msg_num ) \
+    _ASM_BALLOONWIN_TALKOBJ_MSG_FES_NPC_POS msg_id, msg_num, POS_DEFAULT
 
-#define _BALLOONWIN_TALKOBJ_MSG_FES_NPC_POS( msg_id_1, msg_id_2, pos ) \
-    _ASM_BALLOONWIN_TALKOBJ_MSG_FES_NPC_POS msg_id_1, msg_id_2, pos
+#define _BALLOONWIN_TALKOBJ_MSG_FES_NPC_POS( msg_id, msg_num, pos ) \
+    _ASM_BALLOONWIN_TALKOBJ_MSG_FES_NPC_POS msg_id, msg_num, pos
 
-  .macro _ASM_BALLOONWIN_TALKOBJ_MSG_FES_NPC_POS msg_id_1, msg_id_2, pos
+  .macro _ASM_BALLOONWIN_TALKOBJ_MSG_FES_NPC_POS msg_id, msg_num, pos
   .short  EV_SEQ_BALLOONWIN_OBJMSG_FES_NPC
-  .short 0x0400
-  .short \msg_id_1
-  .short \msg_id_2
-  .short SCWK_TARGET_OBJID
+  .short \msg_id
+  .short \msg_num
   .short \pos
-  .short BALLOONWIN_TYPE_NORMAL
   .endm
 
 //--------------------------------------------------------------
@@ -9794,6 +9791,9 @@
 
 #define _FMISSION_NPC_PARAM_GET_TRID( ret_wk ) \
     _ASM_FMISSION_NPC_PARAM_GET NPC_TRAINER_PARAM_TRID, ret_wk 
+
+#define _FMISSION_NPC_PARAM_GET_POKE_QUIZ_MONSNO( ret_wk ) \
+    _ASM_FMISSION_NPC_PARAM_GET NPC_POKE_QUIZ_PARAM_MONSNO, ret_wk 
 
   .macro  _ASM_FMISSION_NPC_PARAM_GET  prm_idx, ret_wk
   .short  EV_SEQ_FMISSION_NPC_PARAM_GET

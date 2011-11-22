@@ -14,6 +14,7 @@
 #include "fmission_save_local.h"
 
 SDK_COMPILER_ASSERT( FMISSION_ID_MAX <= FMISSION_STATUS_MAX );
+SDK_COMPILER_ASSERT( sizeof(FMISSION_SAVE) == 256 );
 
 //---------------------------------------------------------------------------
 /**
@@ -174,8 +175,7 @@ void FMISSION_SAVE_SetMissionClearNum( FMISSION_SAVE* sv, u32 value )
 //---------------------------------------------------------------------------
 u8 FMISSION_SAVE_GetMissionMaxJoinNum( FMISSION_SAVE* sv )
 {
-  return 0;
-//  return sv->max_join_num; @TODO
+  return sv->max_join_num;
 }
 
 //---------------------------------------------------------------------------
@@ -188,16 +188,13 @@ u8 FMISSION_SAVE_GetMissionMaxJoinNum( FMISSION_SAVE* sv )
 //---------------------------------------------------------------------------
 void FMISSION_SAVE_UpdateMissionMaxJoinNum( FMISSION_SAVE* sv, u8 join_num )
 {
-#if 0 
   if( join_num > LINKFEST_JOIN_MAX ){
     GF_ASSERT(0);
     return;
   }
-  @TODO
   if( sv->max_join_num < join_num ){
     sv->max_join_num = join_num;
   }
-#endif
 }
 
 //---------------------------------------------------------------------------
@@ -208,11 +205,9 @@ void FMISSION_SAVE_UpdateMissionMaxJoinNum( FMISSION_SAVE* sv, u8 join_num )
 //---------------------------------------------------------------------------
 void FMISSION_SAVE_SetMissionMaxJoinNum( FMISSION_SAVE* sv, u16 join_num )
 {
-#if 0 //@TODO
   if( join_num <= LINKFEST_JOIN_MAX ){
     sv->max_join_num = join_num;
   }
-#endif
 }
 
 //---------------------------------------------------------------------------
@@ -223,8 +218,7 @@ void FMISSION_SAVE_SetMissionMaxJoinNum( FMISSION_SAVE* sv, u16 join_num )
 //---------------------------------------------------------------------------
 u32 FMISSION_SAVE_GetMissionTopScoreNum( FMISSION_SAVE* sv )
 {
-  return 0;
-//  return sv->top_score_num; @TODO
+  return sv->top_score_num;
 }
 
 //---------------------------------------------------------------------------
@@ -241,12 +235,9 @@ void FMISSION_SAVE_UpdateMissionTopScoreNum( FMISSION_SAVE* sv, u16 top_num )
     GF_ASSERT(0);
     return;
   }
-#if 0
-  @TODO
   if( sv->top_score_num < top_num ){
     sv->top_score_num = top_num;
   }
-#endif
 }
 
 //---------------------------------------------------------------------------
@@ -257,11 +248,9 @@ void FMISSION_SAVE_UpdateMissionTopScoreNum( FMISSION_SAVE* sv, u16 top_num )
 //---------------------------------------------------------------------------
 void FMISSION_SAVE_SetMissionTopScoreNum( FMISSION_SAVE* sv, u16 top_num )
 {
-#if 0 //@TODO
   if( top_num <= FMISSION_SAVE_TOP_SCORE_NUM_MAX ){
     sv->top_score_num = top_num;
   }
-#endif
 }
 
 //---------------------------------------------------------------------------
@@ -276,7 +265,7 @@ u16 FMISSION_SAVE_GetMissionStatusHighScoreNum( FMISSION_SAVE* sv, FEST_MISSION_
     GF_ASSERT(0);
     return 0;
   }
-  return sv->high_score[id];
+  return sv->status[id].high_score;
 }
 
 //---------------------------------------------------------------------------
@@ -291,8 +280,8 @@ BOOL FMISSION_SAVE_UpdateMissionStatusHighScoreNum( FMISSION_SAVE* sv, FEST_MISS
     GF_ASSERT(0);
     return FALSE;
   }
-  if( sv->high_score[id] < new_score ){
-    sv->high_score[id] = new_score;
+  if( sv->status[id].high_score < new_score ){
+    sv->status[id].high_score = new_score;
     return TRUE;
   }
   return FALSE;
@@ -312,8 +301,8 @@ void FMISSION_SAVE_GetMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSIO
     GF_ASSERT(0);
     return;
   }
-  *sec = sv->high_score[id]%60;
-  *min = sv->high_score[id]/60;
+  *sec = sv->status[id].high_score%60;
+  *min = sv->status[id].high_score/60;
 }
 
 //---------------------------------------------------------------------------
@@ -333,8 +322,8 @@ BOOL FMISSION_SAVE_UpdateMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MIS
   if( rest_time_sec > FMISSION_TIME_MAX ){
     rest_time_sec = FMISSION_TIME_MAX;
   }
-  if( rest_time_sec > sv->high_score[id] ){
-    sv->high_score[id] = rest_time_sec;
+  if( rest_time_sec > sv->status[id].high_score ){
+    sv->status[id].high_score = rest_time_sec;
     return TRUE;
   }
   return FALSE;
@@ -352,7 +341,56 @@ void FMISSION_SAVE_SetMissionStatusHighScore( FMISSION_SAVE* sv, FEST_MISSION_ID
     GF_ASSERT(0);
     return;
   }
-  sv->high_score[id] = score;
+  sv->status[id].high_score = score;
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief ミッションステータス マイレコード<自分のハイスコア(数値)>を返す	
+ * @param	work		ワークへのポインタ
+ */
+//---------------------------------------------------------------------------
+u16 FMISSION_SAVE_GetMissionStatusMyRecord( FMISSION_SAVE* sv, FEST_MISSION_ID id )
+{
+  if( id >= FMISSION_ID_MAX ){
+    GF_ASSERT(0);
+    return 0;
+  }
+  return sv->status[id].my_record;
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief ミッションステータス マイレコード<自分のハイスコア(数値)>をアップデートする	
+ * @param	work		ワークへのポインタ
+ */
+//---------------------------------------------------------------------------
+BOOL FMISSION_SAVE_UpdateMissionStatusMyRecord( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_score )
+{
+  if( id >= FMISSION_ID_MAX || new_score > FMISSION_SAVE_HIGH_SCORE_MAX ){
+    GF_ASSERT(0);
+    return FALSE;
+  }
+  if( sv->status[id].my_record < new_score ){
+    sv->status[id].my_record = new_score;
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief ミッションステータス マイレコード<自分のハイスコア(数値)>をセットする	
+ * @param	work		ワークへのポインタ
+ */
+//---------------------------------------------------------------------------
+void FMISSION_SAVE_SetMissionStatusMyRecord( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 score )
+{
+  if( id >= FMISSION_ID_MAX || score > FMISSION_SAVE_HIGH_SCORE_MAX ){
+    GF_ASSERT(0);
+    return;
+  }
+  sv->status[id].my_record = score;
 }
 
 //---------------------------------------------------------------------------

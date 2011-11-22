@@ -119,6 +119,15 @@ extern void FMISSION_DATA_Release( FMISSION_DATA_MAN* man );
 
 //------------------------------------------------------------
 /*
+ *  @brief  フェスミッション常駐データをアロケートしたメモリに取得する
+ *
+ *  使用後はGFL_HEAP_FreeMemory()で開放してください
+ */
+//------------------------------------------------------------
+extern FMISSION_ARC_COMMON* FMISSION_DATA_AllocArcCommonAllByHandle( ARCHANDLE* handle, HEAPID heapID );
+
+//------------------------------------------------------------
+/*
  *  @brief  フェスミッション常駐データをアロケートしたメモリに取得する(アーカイブをその場で開く)
  *
  *  使用後はGFL_HEAP_FreeMemory()で開放してください

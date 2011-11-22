@@ -212,17 +212,21 @@ void FES_GIMMICK_MissionInitSetup( FES_GIMMICK* wk )
   }
   MI_CpuClear8( LINK_FESTIVAL_GetMissionGimmickWork( wk->fest_sys ), sizeof(FES_GIMMICK_WORK) );
 
-  if( wk->fmwk->arc.m_type == FMISSION_TYPE_MUSHROOM_ENC ){
+  switch( wk->fmwk->arc.m_type ){
+  case FMISSION_TYPE_MUSHROOM_ENC:
     mission_init_mushroom_enc( wk );
-  }
-  else if( wk->fmwk->arc.m_type == FMISSION_TYPE_EVENT ){
+    break;
+  case FMISSION_TYPE_EVENT:
     // 隠し穴調査（特殊ポケモン配置版）用ワークを初期化する
     if( FES_GIMMICK_EVENT_IsExAnimalTrailMission( wk ) )
     {
       FES_GIMMICK_EVENT_ExAnimalTrailMissionWkCreate( wk );
     }
+    break;
+  case FMISSION_TYPE_NPC:
+    FES_GIMMICK_NPC_MissionInitSetup( wk, (FES_GIMMICK_NPC_WORK*)wk->wk_buf );
+    break;
   }
-
 }
 
 /*

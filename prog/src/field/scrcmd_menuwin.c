@@ -35,6 +35,7 @@
 
 #include "tr_tool/ex_trainer_def.h" // for TRID_OFFSET_INFINITY_DUNGEON
 #include "../../../resource/fldmapdata/script/infinity_dungeon_scr_def.h" // for SCRID_INFINITY_DUNGEON_TALK_BATTLE_TRAINER
+#include "../../../resource/fldmapdata/flagwork/work_define.h"  //SCWK_TARGET_OBJID
 
 //======================================================================
 //  define
@@ -1569,7 +1570,7 @@ static VMCMD_RESULT BalloonWinWriteChoice( VMHANDLE *core, SCRCMD_WORK *work, u8
 
 //--------------------------------------------------------------
 /**
- * 吹き出しウィンドウ 描画 フェスNPC用2択メッセージ表示
+ * 吹き出しウィンドウ 描画 フェスNPC用X択メッセージ表示
  * @param  core    仮想マシン制御構造体へのポインタ
  * @return  VMCMD_RESULT
  */
@@ -1577,12 +1578,18 @@ static VMCMD_RESULT BalloonWinWriteChoice( VMHANDLE *core, SCRCMD_WORK *work, u8
 VMCMD_RESULT EvCmdBalloonWinWriteFesNpc( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
+  SCRIPT_WORK * sc = SCRCMD_WORK_GetScriptWork( work );  
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  u8  obj_type = FES_GIMMICK_ObjTypeGetForNpcMission(FIELDMAP_GetFesGimmickSys( fieldmap ));
+  u16 obj_id = SCRIPT_GetEventWorkValue( sc, SCRCMD_WORK_GetGameData( work ), SCWK_TARGET_OBJID );
+  
+  u16 msg_id = SCRCMD_GetVMWorkValue( core, work );
+  u16 msg_num = SCRCMD_GetVMWorkValue( core, work );
+  u16 pos_type = SCRCMD_GetVMWorkValue( core, work );
 
-  u8 msg_idx = FES_GIMMICK_ObjTypeGetForNpcMission(FIELDMAP_GetFesGimmickSys( fieldmap ));
-
-  return BalloonWinWriteChoice( core, wk, msg_idx );
+  msg_id += obj_type*msg_num;
+  return BalloonWinWriteCore( core, work, MSGARC_DEFAULT, msg_id, obj_id, pos_type, TALKMSGWIN_TYPE_NORMAL );
 }
 
 //--------------------------------------------------------------

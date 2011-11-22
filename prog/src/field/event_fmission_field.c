@@ -61,7 +61,7 @@ static GMEVENT_RESULT EVENT_MapChangeFMissionStart(GMEVENT * event, int *seq, vo
   	SEQ_INIT,
     SEQ_PLAYER_POS_RESET,
     SEQ_DISGUISE_INIT,
-    //SEQ_DISGUISE_MAIN,
+    SEQ_EFFECT_WAIT,
   	SEQ_MAP_WARP,
     SEQ_FINISH,
   };
@@ -107,13 +107,22 @@ static GMEVENT_RESULT EVENT_MapChangeFMissionStart(GMEVENT * event, int *seq, vo
       FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
       
       if(FIELDMAP_IsReady(fieldWork) == TRUE){
-        *seq = SEQ_MAP_WARP;
+        *seq = SEQ_EFFECT_WAIT;
       }
     }
     break;
-
+	
+  case SEQ_EFFECT_WAIT:
+    if( (*ev_work)++ < FMISSION_START_EFFECT1_WAIT ){  //エフェクト1待ち
+      break;
+    }
+    // ミッション開始のギミックエフェクト2開始
+    PALACE_GMK_EffectStart2( gsys );
+    *ev_work = 0; //ウェイトリセット
+    (*seq)++;
+    break;
 	case SEQ_MAP_WARP:
-    if( (*ev_work)++ < (30*3) ){  //3秒待ち
+    if( (*ev_work)++ < FMISSION_START_EFFECT2_WAIT ){  //エフェクト2待ち
       break;
     }
   	GMEVENT_CallEvent( event, EVENT_ChangeMapFromPalace(gsys) );

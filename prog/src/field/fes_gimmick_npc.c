@@ -45,6 +45,7 @@
 #include "msg/script/msg_fmission_event.h"
 #include "arc/fieldmap/zone_id.h"
 #include "arc/fieldmap/fldmmdl_objcode.h"
+#include "arc/fmission_data.naix"
 #include "../../../resource/fldmapdata/script/fmission_scr_def.h" //SCRID_～
 
 #include "field/fes_gimmick.h"
@@ -104,6 +105,34 @@ void FES_GIMMICK_NPC_FlagSet( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk, u16
   wk->mmdl_tbl[idx] = NULL;
 }
 
+//----------------------------------------------------------------------
+/*
+ *  @brief  フェス　NPCミッションギミック　ミッション開始時１回のみの初期化処理
+ */
+//----------------------------------------------------------------------
+void FES_GIMMICK_NPC_MissionInitSetup( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk )
+{
+  ARCHANDLE* handle;
+  int id;
+  switch( sys_wk->fmwk->beacon.base_param ){
+  case FMISSION_NPC_TYPE_MEMORY_QUIZ:
+    id = NARC_fmission_data_fmission_quiz_pokelist00_bin+FMISSION_EXP_ZUKAN_QUIZ_LOCAL; //固定で地方図鑑データ
+    break;
+  case FMISSION_NPC_TYPE_POKE_QUIZ:
+    id = NARC_fmission_data_fmission_quiz_pokelist00_bin+sys_wk->fmwk->beacon.ex_param;
+    break;
+  default:
+    return;
+  }
+  handle = LINK_FESTIVAL_GetFMissionDataHandle( sys_wk->fest_sys );
+
+  wk->tmp_data_size = GFL_ARC_GetDataSizeByHandle( handle, id );
+  if( wk->tmp_data_size > FES_GIMMICK_NPC_TMPDATA_BUF_SIZE ){
+    GF_ASSERT(0);
+    wk->tmp_data_size = FES_GIMMICK_NPC_TMPDATA_BUF_SIZE;
+  }
+  GFL_ARC_LoadDataOfsByHandle( handle, id, 0, wk->tmp_data_size, wk->tmp_data_buf );
+}
 
 //----------------------------------------------------------------------
 /*
@@ -113,7 +142,7 @@ void FES_GIMMICK_NPC_FlagSet( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk, u16
 BOOL FES_GIMMICK_NPC_Delete( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk )
 {
   int i, ret = ( wk->data_max > 0 );
-  
+ 
   if( wk->point_max > 0 ){
     for(i = 0;i < FES_GIMMICK_MAX;i++){
       if( wk->mmdl_tbl[i] != NULL ){
@@ -230,7 +259,7 @@ void FES_GIMMICK_NPC_MemoryQuizParamGet( FES_GIMMICK* sys_wk, u16* q_num, u16* q
   int i,answer_max;
   u16 rnd_log[NPC_MEMORY_QUIZ_QUESTION_MAX];
   u8  rnd_idx[NPC_MEMORY_QUIZ_QUESTION_MAX];
-
+  FES_GIMMICK_NPC_WORK* wk = (FES_GIMMICK_NPC_WORK*)sys_wk->wk_buf;
   FES_GIMMICK_NPC_MEMORY_QUIZ_WORK* twk = &(sys_wk->tmp_wk.npc_tmp_wk);
 
   MI_CpuClear8( twk, sizeof(FES_GIMMICK_NPC_MEMORY_QUIZ_WORK) );
@@ -251,10 +280,15 @@ void FES_GIMMICK_NPC_MemoryQuizParamGet( FES_GIMMICK* sys_wk, u16* q_num, u16* q
   }else{
     answer_max = twk->q_num;
   }
-  for( i = 0;i < answer_max; i++ ){
-    rnd_idx[i] = i;   //連番初期化しておく
-    rnd_log[i] = mquiz_LotPoke( MEMORY_QUIZ_POKE_RANGE, rnd_log, i );
-    twk->q_poke[i] = rnd_log[i] + MEMORY_QUIZ_POKE_START;
+  {
+    int range = wk->tmp_data_size/sizeof(u16);
+    u16* poke_list = (u16*)wk->tmp_data_buf;
+
+    for( i = 0;i < answer_max; i++ ){
+      rnd_idx[i] = i;   //連番初期化しておく
+      rnd_log[i] = mquiz_LotPoke( range, rnd_log, i );
+      twk->q_poke[i] = poke_list[ rnd_log[i] ];
+    }
   }
   //出題idxを抽選
   twk->question_idx = GFUser_GetPublicRand( twk->q_num );

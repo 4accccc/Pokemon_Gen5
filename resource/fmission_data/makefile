@@ -30,6 +30,7 @@ data_trail_cdat = fes_gimmick_trail.cdat
 data_trail_hdat = fes_gimmick_trail.h
 msg_data = $(PROJECT_RSCDIR)/message/msproj/src/fest_mission.mstxt
 monsno_def = $(PROJECT_RSCDIR)/personal/monsno_def.h
+quiz_pokelist = fmission_quiz_pokelist
 
 data_narc = $(target_name).narc
 data_naix = $(target_name).naix
@@ -43,6 +44,9 @@ evflag_h = $(PROJECT_RSCDIR)fldmapdata/flagwork/flag_define.h
 msg_id_h = $(PROJECT_PROGDIR)include/msg/msg_fest_mission.h
 poke_name_hash = $(PROJECT_ROOT)/tools/hash/monsno_hash.rb
 item_name_hash = $(PROJECT_ROOT)/tools/hash/item_hash.rb
+special_mons_tbl = $(PROJECT_ROOT)/tools/hash/special_mons_tbl.rb
+monstype_hash = $(PROJECT_ROOT)/tools/hash/monstype_hash.rb
+chihou_zukanno_hash = $(PROJECT_ROOT)/tools/hash/chihou_zukanno_hash.rb
 
 target_narc = $(addprefix $(TARGETDIR),$(notdir $(data_narc)))
 target_naix = $(addprefix $(TARGETDIR),$(notdir $(data_naix)))
@@ -57,6 +61,7 @@ trail_mons_hdat = $(addprefix $(FIELD_S_DIR),$(notdir $(data_trail_hdat)))
 
 BIN_DEPEND_LIST	= $(data_csv) $(data_def_csv) $(evflag_h) $(msg_id_h) $(poke_name_hash) $(item_name_hash) $(msg_data)
 ITEM_DEPEND_LIST	= $(data_item_csv) $(data_trail_csv) $(item_name_hash)
+QUIZ_DEPEND_LIST = $(poke_name_hash) $(special_mons_tbl) $(monstype_hash) $(chihou_zukanno_hash)
 
 #自動削除して欲しくない中間ファイル
 .PRECIOUS: $(data_csv) $(mission_id_h)
@@ -67,6 +72,7 @@ ITEM_DEPEND_LIST	= $(data_item_csv) $(data_trail_csv) $(item_name_hash)
 RUBY_DAT_RES = $(TOOLDIR)fmission_dat_conv.rb
 RUBY_ITEM_RES = $(TOOLDIR)fmission_item_conv.rb
 RUBY_TRAIL_RES = $(TOOLDIR)fmission_trail_conv.rb
+RUBY_QUIZ_RES = $(TOOLDIR)fmission_quiz_conv.rb
 EXCELCONV = ../../tools/exceltool/ExcelSeetConv.exe
 NCGIMDCONV = ../../tools/fld_char2imd/ncg2imd.rb
 CSVCONV = ../../tools/exceltool/xls2xml/tab_out_direct.rb
@@ -134,8 +140,9 @@ $(def_header): $(BIN_DEPEND_LIST)
 	ruby $(RUBY_DAT_DEF) $< $(DATDIR)
 	unix2dos -D $@
 
-$(data_narc): $(data_bin) $(data_common_bin)
-	nnsarc -c -l -n -i $(data_narc) $(data_common_bin) $(data_bin) >arc_result.txt
+$(data_narc): $(data_bin) $(data_common_bin) $(QUIZ_DEPEND_LIST)
+	ruby $(RUBY_QUIZ_RES) $(quiz_pokelist)
+	nnsarc -c -l -n -i $(data_narc) $(data_common_bin) $(data_bin) $(quiz_pokelist)*.bin >arc_result.txt
 	$(NAIXCUT) $(data_naix)
 
 endif
@@ -169,7 +176,9 @@ $(target_narc): $(data_narc)
 #------------------------------------------------------------------------------
 clean:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
+	rm -f *.bin *.cdat *.h *log.txt
 	rm -f $(TMPDIR)*.*
+	rm -f $(data_narc) $(data_naix)
 endif
 	rm -f $(target_narc) $(target_naix)
 	rm -f $(target_mission_id_h)

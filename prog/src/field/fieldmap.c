@@ -1298,13 +1298,18 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 
   // ----------------------top側3D描画処理---------------------------------------
   // これ以降にデータ更新処理を入れないこと。
+#ifdef DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK
+  debug_fieldmap_start_tick = OS_GetTick(); 
   GFL_CLACT_SYS_Main(); // CLSYSメイン
+  debug_fieldmap_end_tick = OS_GetTick();
+#else
+  GFL_CLACT_SYS_Main(); // CLSYSメイン
+#endif
   //↑ 2010.03.05　CLSYSメインをテイルからトップへ移動。この移動で、2Ｄ描画と3Ｄ描画に１シンクのずれが生じます。saito
   SET_CHECK("update_top:DrawTop");
   DrawTop(fieldWork);
   SET_CHECK("update_top:tail");
 #ifdef DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK
-  debug_fieldmap_end_tick = OS_GetTick();
   debug_fieldmap_end_tick -= debug_fieldmap_start_tick;
 
   if( GFL_UI_KEY_GetCont() & DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK_DRAW_KEY )
@@ -1413,6 +1418,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
   debug_fieldmap_end_tick = OS_GetTick();
   debug_fieldmap_end_tick -= debug_fieldmap_start_tick;
 
+#if 0
   if( GFL_UI_KEY_GetCont() & DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK_DRAW_KEY )
   {
     const GFL_D3D_INFO *info = GFL_G3D_GetG3dInfoPtr();
@@ -1427,6 +1433,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
         info->TotalVertexNum
         );
   }
+#endif
 #endif
 #ifdef  DEBUG_FIELDMAP_UPDATETAIL_SPEED_CHECK
   {

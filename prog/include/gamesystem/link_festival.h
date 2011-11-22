@@ -23,7 +23,7 @@
 
   field/fes_gimmik.c で SDK_COMPILER_ASSERT()で必要なサイズが確保されているかチェックしている
  */
-#define FMISSION_WORK_AREA_LEN  (0x400)
+#define FMISSION_WORK_AREA_LEN  (0x700)
 
 #define LINKFEST_LOG_MAX  (99) //フェスミッションログMax(自分含めて100がmax)
 #define LINKFEST_LOG_END  (LINKFEST_LOG_MAX-1) //フェスミッションログEndIndex
@@ -100,6 +100,13 @@ extern BOOL LINK_FESTIVAL_IsMissionEntry( LINK_FESTIVAL* wk );
  */
 //---------------------------------------------------------
 extern FEST_MISSION* LINK_FESTIVAL_GetMissionWork( LINK_FESTIVAL* wk );
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッションデータアーカイブハンドル取得
+ */
+//---------------------------------------------------------
+extern ARCHANDLE* LINK_FESTIVAL_GetFMissionDataHandle( LINK_FESTIVAL* wk );
 
 //---------------------------------------------------------
 /*

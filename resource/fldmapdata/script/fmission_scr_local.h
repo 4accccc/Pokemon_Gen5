@@ -16,3 +16,7 @@
 #define SUBWIN_ID_MINE  (0)
 #define SUBWIN_ID_NPC   (1)
 
+#define FES_NPC_MSGSET_NUM_TRADE      (9)
+#define FES_NPC_MSGSET_NUM_SHOOPING   (6)
+#define FES_NPC_MSGSET_NUM_TR_BATTLE  (5)
+

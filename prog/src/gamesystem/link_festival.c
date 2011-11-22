@@ -59,8 +59,10 @@ LINK_FESTIVAL* LINK_FESTIVAL_Create( HEAPID heapID, GAMESYS_WORK* gsys )
   wk->gsys = gsys;
   wk->gdata = GAMESYSTEM_GetGameData( wk->gsys );
 
+  wk->fm_data_h = GFL_ARC_OpenDataHandle( ARCID_FMISSION_DATA, heapID );
+ 
   //ミッションアーカイブ常駐データ取得
-  wk->p_arc_data = FMISSION_DATA_AllocArcCommonAllDirect( heapID );
+  wk->p_arc_data = FMISSION_DATA_AllocArcCommonAllByHandle( wk->fm_data_h, heapID );
 
   FEST_MISSION_Clear( &wk->mission );
   wk->m_beacon = &wk->mission.beacon;
@@ -86,8 +88,10 @@ LINK_FESTIVAL* LINK_FESTIVAL_Create( HEAPID heapID, GAMESYS_WORK* gsys )
 void LINK_FESTIVAL_Delete( LINK_FESTIVAL* wk )
 {
   LINKFEST_LOG_TOP_SCORE_Delete( wk->top_score );
+
   GFL_HEAP_FreeMemory( wk->p_arc_data );  //ミッションデータアーカイブ開放
-  
+  GFL_ARC_CloseDataHandle( wk->fm_data_h); //ミッションデータアーカイブハンドル開放
+
   MI_CpuClear8(wk,sizeof(LINK_FESTIVAL));
   GFL_HEAP_FreeMemory( wk );
 }
@@ -143,6 +147,16 @@ BOOL LINK_FESTIVAL_IsMissionEntry( LINK_FESTIVAL* wk )
 FEST_MISSION* LINK_FESTIVAL_GetMissionWork( LINK_FESTIVAL* wk )
 {
   return &wk->mission;
+}
+
+//---------------------------------------------------------
+/*
+ * @brief リンクフェスティバル ミッションデータアーカイブハンドル取得
+ */
+//---------------------------------------------------------
+ARCHANDLE* LINK_FESTIVAL_GetFMissionDataHandle( LINK_FESTIVAL* wk )
+{
+  return wk->fm_data_h;
 }
 
 //---------------------------------------------------------

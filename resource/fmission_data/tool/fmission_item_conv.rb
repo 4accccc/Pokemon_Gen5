@@ -38,8 +38,11 @@ TRADE_ITEM_TBL_MAX = 3
 TRADE_ITEM_CATEGORY_MAX = 4
 TRADE_ITEM_RANK_MAX = 6
 
-SHOPPING_ITEM_TYPE_MAX = 3
+SHOPPING_ITEM_TYPE_MAX = 5
 SHOPPING_ITEM_LIST_MAX = 16
+
+GPRESENT_ITEM_TYPE_MAX = 2
+GPRESENT_ITEM_DATA_MAX = 6
 
 TRAINER_SET_NUM = 6
 
@@ -308,6 +311,30 @@ class CItemTbl
   end
 
   def get_npc_pcwoman_item fp,end_key
+    @npc_pcwoman_list = Array.new( GPRESENT_ITEM_TYPE_MAX ).map!{
+      Array.new( GPRESENT_ITEM_DATA_MAX )
+    }
+    for i in 0..( GPRESENT_ITEM_TYPE_MAX-1) do
+      total_per = 0
+      for j in 0..( GPRESENT_ITEM_DATA_MAX-1) do
+        work = line_get( fp )
+        @npc_pcwoman_list[i][j] = $_npc_pcwoman_item.new
+        name = work[1]
+        item = $item_hash.fetch( name, nil )
+        if item == nil then
+          print_err("販売アイテムリスト アイテム名エラー", name )
+        end
+        @npc_pcwoman_list[i][j].item = item
+        @npc_pcwoman_list[i][j].per = work[2].to_i
+        @npc_pcwoman_list[i][j].name = name
+
+        total_per +=  @npc_pcwoman_list[i][j].per
+      end
+      if total_per != 100 then
+        print_err("プレゼントアイテム 確率合計が100にならない", i.to_s )
+      end
+    end
+=begin
     @npc_pcwoman_list = Array.new
     total_per = 0
     while(1)
@@ -329,16 +356,29 @@ class CItemTbl
     if total_per != 100 then
       print_err("プレゼントNPCアイテム 確率合計が100にならない", total_per )
     end
+=end
   end
 
   def output_npc_pcwoman_item fp
     fp.printf("%s = {\n",GPRESENT_ITEM_DATA_NAME)
+    for i in 0..(GPRESENT_ITEM_TYPE_MAX-1) do
+      fp.puts("  {{\n")
+      for j in 0..(GPRESENT_ITEM_DATA_MAX-1) do
+        item = @npc_pcwoman_list[i][j]
+        fp.puts("   { #{item.item}, #{item.per} },  ///<#{item.name}\n")
+      end
+      fp.puts("  }},\n")
+    end
+    fp.puts("};\n\n")
 
+=begin
     for n in @npc_pcwoman_list do
       fp.puts("  { #{n.item}, #{n.per} },  ///<#{n.name}\n")
     end
 
     fp.puts("};\n\n")
+=end
+
   end
 
   def get_npc_trainer_data fp, end_key
@@ -463,7 +503,8 @@ class CItemTbl
       file.printf("#define FES_NITEM_SHOPPING_DATA_MAX   ( %s )\n",SHOPPING_ITEM_TYPE_MAX)
       file.printf("#define FES_NITEM_SHOPPING_LIST_MAX   ( %s )\n\n",SHOPPING_ITEM_LIST_MAX)
 
-      file.printf("#define FES_NITEM_GET_A_PRESENT_DATA_MAX  ( %d )\n\n",@npc_pcwoman_list.length())
+      file.printf("#define FES_NITEM_GET_A_PRESENT_DATA_MAX  ( %d )\n",GPRESENT_ITEM_TYPE_MAX )
+      file.printf("#define FES_NITEM_GET_A_PRESENT_LIST_MAX  ( %d )\n\n",GPRESENT_ITEM_DATA_MAX )
       
       file.printf("#define FES_NPC_TRAINER_SET_NUM   ( %d )\n", TRAINER_SET_NUM )
       file.printf("#define FES_NPC_TRAINER_DATA_MAX  ( %d )\n", @npc_trainer_list.length())
@@ -482,9 +523,13 @@ class CItemTbl
       file.puts("  NITEM_SHOPPING_PARAM  list[FES_NITEM_SHOPPING_LIST_MAX];")
       file.puts("}NITEM_SHOPPING_DATA;")
       file.puts("\n\n")
-      file.puts("typedef struct _NITEM_GET_A_PRESENT_DATA{")
+      file.puts("typedef struct _NITEM_GET_A_PRESENT_PARAM{")
       file.puts("  u16 item;")
       file.puts("  u16 prob;      ///<抽選確率")
+      file.puts("}NITEM_GET_A_PRESENT_PARAM;")
+      file.puts("\n\n")
+      file.puts("typedef struct _NITEM_GET_A_PRESENT_DATA{")
+      file.puts("  NITEM_GET_A_PRESENT_PARAM  list[FES_NITEM_GET_A_PRESENT_LIST_MAX];")
       file.puts("}NITEM_GET_A_PRESENT_DATA;")
       file.puts("\n\n")
       file.puts("extern "+PRESENT_ITEM_DATA_NAME+";\n")

@@ -12,7 +12,27 @@
 
 enum {
 	NARC_fmission_data_fmission_data_common_bin = 0,
-	NARC_fmission_data_fmission_data_bin = 1
+	NARC_fmission_data_fmission_data_bin = 1,
+	NARC_fmission_data_fmission_quiz_pokelist00_bin = 2,
+	NARC_fmission_data_fmission_quiz_pokelist01_bin = 3,
+	NARC_fmission_data_fmission_quiz_pokelist02_bin = 4,
+	NARC_fmission_data_fmission_quiz_pokelist03_bin = 5,
+	NARC_fmission_data_fmission_quiz_pokelist04_bin = 6,
+	NARC_fmission_data_fmission_quiz_pokelist05_bin = 7,
+	NARC_fmission_data_fmission_quiz_pokelist06_bin = 8,
+	NARC_fmission_data_fmission_quiz_pokelist07_bin = 9,
+	NARC_fmission_data_fmission_quiz_pokelist08_bin = 10,
+	NARC_fmission_data_fmission_quiz_pokelist09_bin = 11,
+	NARC_fmission_data_fmission_quiz_pokelist10_bin = 12,
+	NARC_fmission_data_fmission_quiz_pokelist11_bin = 13,
+	NARC_fmission_data_fmission_quiz_pokelist12_bin = 14,
+	NARC_fmission_data_fmission_quiz_pokelist13_bin = 15,
+	NARC_fmission_data_fmission_quiz_pokelist14_bin = 16,
+	NARC_fmission_data_fmission_quiz_pokelist15_bin = 17,
+	NARC_fmission_data_fmission_quiz_pokelist16_bin = 18,
+	NARC_fmission_data_fmission_quiz_pokelist17_bin = 19,
+	NARC_fmission_data_fmission_quiz_pokelist18_bin = 20,
+	NARC_fmission_data_fmission_quiz_pokelist19_bin = 21
 };
 
 /* NARC_FMISSION_DATA_NAIX_ */

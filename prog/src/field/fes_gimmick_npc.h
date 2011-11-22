@@ -9,7 +9,7 @@
 
 #pragma once
 
-#define FES_GIMMICK_NPC_DATA_MAX (10) ///<1ゾーンでmax20箇所候補にできる
+#define FES_GIMMICK_NPC_DATA_MAX (20) ///<1ゾーンでmax20箇所候補にできる
 
 #define FES_GIMMICK_NPC_POINT_LOW_MIN (0)     ///<ポイント抽選数下限 少なめ(街)
 #define FES_GIMMICK_NPC_POINT_LOW_MAX (3)     ///<ポイント抽選数上限 少なめ(街)
@@ -18,11 +18,13 @@
 #define FES_GIMMICK_NPC_POINT_HIGH_MIN (3)  ///<ポイント抽選数下限 中(ダンジョン)
 #define FES_GIMMICK_NPC_POINT_HIGH_MAX (3)  ///<ポイント抽選数上限 中(ダンジョン)
 
-#define FES_GIMMICK_NPC_POINT_MAX (FES_GIMMICK_NPC_POINT_HIGH_MAX) ///<1ゾーンでmax8箇所抽選される
+#define FES_GIMMICK_NPC_POINT_MAX (FES_GIMMICK_NPC_POINT_HIGH_MAX) ///<1ゾーンでmax3箇所抽選される
 
 #define FES_GIMMICK_NPC_FLAG_WORK_NUM  (6)   ///<過去6ゾーン分確保
 
 #define FES_GIMMICK_NPC_POINT_PARAM_MAX (3) //ポイントごとに保存するパラメータ数
+
+#define FES_GIMMICK_NPC_TMPDATA_BUF_SIZE  (0x500) //テンポラリデータ領域500h
 
 ///MMDL ParamNo
 #define NITEM_PRESENT_PARAM_ITEM  (0)
@@ -38,10 +40,13 @@
 
 #define NPC_TRAINER_PARAM_TRID  (0)
 
+#define NPC_POKE_QUIZ_PARAM_MONSNO    (0)
+
 //記憶クイズ出題レンジ
 #define NPC_MEMORY_QUIZ_QUESTION_MIN  (3)   //最小3題
 #define NPC_MEMORY_QUIZ_QUESTION_MAX  (10)  //最大10題
 #define NPC_MEMORY_QUIZ_ANSWER_MAX    (5)   //答え候補数
+
 
 #ifndef __ASM_NO_DEF_
 
@@ -72,6 +77,8 @@ typedef struct _FES_GIMMICK_NPC_MEMORY_QUIZ_WORK{
 
 //フェスアイテムミッションギミックワーク
 typedef struct _FES_GIMMICK_NPC_WORK{
+  LINK_FESTIVAL* fest_sys;
+
   u16 zone_id; ///<現在のゾーンID
 
   u8  data_max;  ///<ゾーンに登録されたデータmax
@@ -80,9 +87,13 @@ typedef struct _FES_GIMMICK_NPC_WORK{
   u8  idx[FES_GIMMICK_NPC_POINT_MAX];  ///<抽選されたデータの参照indexテーブル
   u16 param[FES_GIMMICK_NPC_POINT_MAX][FES_GIMMICK_NPC_POINT_PARAM_MAX]; ///<抽選されたパラメータテーブル
   MMDL* mmdl_tbl[FES_GIMMICK_NPC_POINT_MAX];
+  
 
-  //取得済みログデータバッファへのポインタ
+  //取得済みログデータバッファ
   FES_GIMMICK_NPC_FLAG_WORK flag_wk;
+
+  int   tmp_data_size;  //テンポラリバッファサイズ保持領域
+  u8    tmp_data_buf[FES_GIMMICK_NPC_TMPDATA_BUF_SIZE];
 
 }FES_GIMMICK_NPC_WORK;
 
@@ -96,6 +107,7 @@ extern FES_GIMMICK_NPC_FLAG* FES_GIMMICK_NPC_SUB_FlagTableGet( FES_GIMMICK_NPC_W
 extern void FES_GIMMICK_NPC_MMdlSetup( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk );
 extern void FES_GIMMICK_NPC_FieldRecoverSetup( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk );
 extern void FES_GIMMICK_NPC_FlagSet( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk, u16 zone_id, u16 idx );
+extern void FES_GIMMICK_NPC_MissionInitSetup( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk );
 extern BOOL FES_GIMMICK_NPC_Delete( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk );
 
 extern void FES_GIMMICK_NPC_FesTrainerPartySet( FES_GIMMICK* sys_wk, POKEPARTY* party );

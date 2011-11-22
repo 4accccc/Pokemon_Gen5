@@ -53,7 +53,6 @@ static const u8 DATA_FMissionDataType[FMISSION_TYPE_MAX] = {
   FMISSION_WSET_EVENT,    //TYPE_EVENT
   FMISSION_WSET_ITEMNAME, //TYPE_ITEM
   FMISSION_WSET_ITEMNAME, //TYPE_NPC
-  FMISSION_WSET_ITEMNAME, //TYPE_TRBTL
 };
 
 static void wset_MissionParam( WORDSET* wset, STRBUF* tmp, u8 bufID, FMISSION_WSET type, int value );
@@ -91,6 +90,19 @@ void FMISSION_DATA_Release( FMISSION_DATA_MAN* man )
 
 //------------------------------------------------------------
 /*
+ *  @brief  フェスミッション常駐データをアロケートしたメモリに取得する
+ *
+ *  使用後はGFL_HEAP_FreeMemory()で開放してください
+ */
+//------------------------------------------------------------
+FMISSION_ARC_COMMON* FMISSION_DATA_AllocArcCommonAllByHandle( ARCHANDLE* handle, HEAPID heapID )
+{
+  FMISSION_ARC_COMMON* buf = GFL_ARC_LoadDataAllocByHandle( handle, NARC_fmission_data_fmission_data_common_bin, heapID );
+  return buf;
+}
+
+//------------------------------------------------------------
+/*
  *  @brief  フェスミッション常駐データをアロケートしたメモリに取得する(アーカイブをその場で開く)
  *
  *  使用後はGFL_HEAP_FreeMemory()で開放してください
@@ -99,7 +111,7 @@ void FMISSION_DATA_Release( FMISSION_DATA_MAN* man )
 FMISSION_ARC_COMMON* FMISSION_DATA_AllocArcCommonAllDirect( HEAPID heapID )
 {
   ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_FMISSION_DATA, GFL_HEAP_LOWID(heapID) );
-  FMISSION_ARC_COMMON* buf = GFL_ARC_LoadDataAllocByHandle( handle, NARC_fmission_data_fmission_data_common_bin, heapID );
+  FMISSION_ARC_COMMON* buf = FMISSION_DATA_AllocArcCommonAllByHandle( handle, heapID );
   GFL_ARC_CloseDataHandle( handle );
 
   return buf;

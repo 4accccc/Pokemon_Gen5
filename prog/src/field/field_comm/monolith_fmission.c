@@ -36,7 +36,8 @@
 
 // フラグ
 #include "../../../../resource/fldmapdata/flagwork/flag_define.h"
-
+#include "field/evt_lock.h"	//notwifiです
+#include "savedata/misc.h"
 
 //==============================================================================
 //  定数定義
@@ -2485,7 +2486,9 @@ static BOOL fmission_chk_open( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
 #ifdef PM_DEBUG
   //デバッグ機能、特定操作で無条件ミッション開放
   {
-    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
+    int cont = GFL_UI_KEY_GetCont();
+
+    if( cont & PAD_BUTTON_R ){
       switch(mfw->fmd_arc[id].common.host){
       case FMISSION_HOST_FREE:
         return TRUE;
@@ -2495,6 +2498,10 @@ static BOOL fmission_chk_open( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
       case FMISSION_HOST_BLACK:
         if(GET_VERSION() == VERSION_B2) return TRUE;
         break;
+      }
+    
+      if( cont & PAD_BUTTON_START){
+        return TRUE;  //配信も込みで全ミッション無条件開放
       }
     }
   }
@@ -2522,18 +2529,33 @@ static BOOL fmission_chk_open( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
   // 開催条件を満たしているか
   //---------------------------
   flg = 0;
-  if( mfw->fmd_arc[id].common.host == FMISSION_HOST_FREE){
+  switch( mfw->fmd_arc[id].common.host ){
+  case FMISSION_HOST_FREE:
     flg = 1;
-  }
-  else if(mfw->fmd_arc[id].common.host == FMISSION_HOST_WHITE){
+    break;
+  case FMISSION_HOST_WHITE:
     if(GET_VERSION() == VERSION_W2){
       flg = 1;
     }
-  }
-  else if(mfw->fmd_arc[id].common.host == FMISSION_HOST_BLACK){
+    break;
+  case FMISSION_HOST_BLACK:
     if(GET_VERSION() == VERSION_B2){
       flg = 1;
     }
+    break;
+  case FMISSION_HOST_GIFT1:
+  case FMISSION_HOST_GIFT2:
+  case FMISSION_HOST_GIFT3:
+  case FMISSION_HOST_GIFT4:
+    {
+      MYSTATUS* my = GAMEDATA_GetMyStatus( gamedata );
+      MISC* misc=  SaveData_GetMisc(GAMEDATA_GetSaveControlWork( gamedata ));
+      int key = mfw->fmd_arc[id].common.host-FMISSION_HOST_GIFT1;
+      flg = EVTLOCK_CheckEvtLock( misc , key, my );
+    }
+    break;
+  default:
+    break;
   }
   // 満たしてない
   if(flg == 0){

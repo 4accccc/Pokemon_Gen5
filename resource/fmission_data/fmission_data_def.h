@@ -21,7 +21,6 @@ typedef enum{
   FMISSION_TYPE_EVENT,  ///<指定イベントをクリアする
   FMISSION_TYPE_ITEM,  ///<アイテムミッション
   FMISSION_TYPE_NPC,  ///<NPCミッション
-  FMISSION_TYPE_TRBTL,  ///<トレーナー再戦ミッション
   FMISSION_TYPE_MAX,  ///<
   FMISSION_TYPE_END = FMISSION_TYPE_MAX-1,  ///<
   FMISSION_TYPE_EX_WITHOUT_PARAM = 0xFF,  ///<ログセット処理用の特殊コード。実際のミッションタイプとしては使いません
@@ -79,6 +78,10 @@ typedef enum{
   FMISSION_HOST_WHITE,  ///<ホワイト限定
   FMISSION_HOST_BLACK,  ///<ブラック限定
   FMISSION_HOST_COMM,  ///<配信限定
+  FMISSION_HOST_GIFT1,  ///<不思議な贈り物開放1
+  FMISSION_HOST_GIFT2,  ///<不思議な贈り物開放2
+  FMISSION_HOST_GIFT3,  ///<不思議な贈り物開放3
+  FMISSION_HOST_GIFT4,  ///<不思議な贈り物開放4
   FMISSION_HOST_MAX,  ///<
 }FMISSION_HOST_TYPE;
 
@@ -141,8 +144,79 @@ typedef enum{
   FMISSION_ITEM_SET_HEART,  ///<ハートのうろこ他
   FMISSION_ITEM_SET_KINOMI_D,  ///<きのみ配信
   FMISSION_ITEM_SET_LOST_ITEM_D,  ///<落し物配信
+  FMISSION_ITEM_SET_KINOMI_D2,  ///<きのみ配信2　定時配信パターン
+  FMISSION_ITEM_SET_LOST_ITEM_D2,  ///<落し物配信2
+  FMISSION_ITEM_SET_KINOMI_GIFT,  ///<きのみ配信　不思議な贈り物
   FMISSION_ITEM_SET_MAX,  ///<
 }FMISSION_ITEM_SET;
+
+//=========================================
+///アイテム交換セット名
+//=========================================
+typedef enum{
+  FMISSION_EXP_ITEM_TRADE_SET01,  ///<セット1
+  FMISSION_EXP_ITEM_TRADE_SET02W,  ///<セット2ホワイト
+  FMISSION_EXP_ITEM_TRADE_SET02B,  ///<セット2ブラック
+  FMISSION_EXP_ITEM_TRADE_SET_MAX,  ///<
+}FMISSION_EXP_ITEM_TRADE_SET;
+
+//=========================================
+///ショッピングアイテムセット名
+//=========================================
+typedef enum{
+  FMISSION_EXP_SHOPPING_SET_01,  ///<セット1
+  FMISSION_EXP_SHOPPING_SET_02W,  ///<セット2ホワイト
+  FMISSION_EXP_SHOPPING_SET_02B,  ///<セット2ブラック
+  FMISSION_EXP_SHOPPING_SET_ATTRACTION,  ///<セット3 アトラクション型
+  FMISSION_EXP_SHOPPING_SET_EASY,  ///<セット4 シナリオ用簡単バージョン
+  FMISSION_EXP_SHOPPING_SET_MAX,  ///<
+}FMISSION_EXP_SHOPPING_SET;
+
+//=========================================
+///トレーナー対戦セット名
+//=========================================
+typedef enum{
+  FMISSION_EXP_TRAINER_SET_KARATE,  ///<カラテかセット
+  FMISSION_EXP_TRAINER_SET_ELITEW,  ///<エリートトレーナーWomanセット
+  FMISSION_EXP_TRAINER_SET_ELITEM,  ///<エリートトレーナーManセット
+  FMISSION_EXP_TRAINER_SET_MAX,  ///<
+}FMISSION_EXP_TRAINER_SET;
+
+//=========================================
+///もらうプレゼントアイテムセット名
+//=========================================
+typedef enum{
+  FMISSION_EXP_GET_A_PRESENT_SET_PC,  ///<ポケセン配信
+  FMISSION_EXP_GET_A_PRESENT_SET_FLAG,  ///<フラグ配信(不思議な贈り物配信)
+  FMISSION_EXP_GET_A_PRESENT_SET_MAX,  ///<
+}FMISSION_EXP_PRESENT_SET;
+
+//=========================================
+///プレゼントアイテムセット名
+//=========================================
+typedef enum{
+  FMISSION_EXP_ZUKAN_QUIZ_NORMAL,  ///<ノーマルタイプ
+  FMISSION_EXP_ZUKAN_QUIZ_KAKUTOU,  ///<格闘タイプ
+  FMISSION_EXP_ZUKAN_QUIZ_HIKOU,  ///<飛行タイプ
+  FMISSION_EXP_ZUKAN_QUIZ_DOKU,  ///<毒タイプ
+  FMISSION_EXP_ZUKAN_QUIZ_JIMEN,  ///<地面タイプ
+  FMISSION_EXP_ZUKAN_QUIZ_IWA,  ///<岩タイプ
+  FMISSION_EXP_ZUKAN_QUIZ_MUSHI,  ///<虫タイプ
+  FMISSION_EXP_ZUKAN_QUIZ_GHOST,  ///<ゴーストタイプ
+  FMISSION_EXP_ZUKAN_QUIZ_HAGANE,  ///<鋼タイプ
+  FMISSION_EXP_ZUKAN_QUIZ_HONOO,  ///<炎タイプ
+  FMISSION_EXP_ZUKAN_QUIZ_MIZU,  ///<水タイプ
+  FMISSION_EXP_ZUKAN_QUIZ_KUSA,  ///<草タイプ
+  FMISSION_EXP_ZUKAN_QUIZ_DENKI,  ///<電気タイプ
+  FMISSION_EXP_ZUKAN_QUIZ_ESPER,  ///<エスパータイプ
+  FMISSION_EXP_ZUKAN_QUIZ_KOORI,  ///<氷タイプ
+  FMISSION_EXP_ZUKAN_QUIZ_DRAGON,  ///<ドラゴンタイプ
+  FMISSION_EXP_ZUKAN_QUIZ_AKU,  ///<悪タイプ
+  FMISSION_EXP_ZUKAN_QUIZ_ZENKOKU,  ///<全国図鑑
+  FMISSION_EXP_ZUKAN_QUIZ_LOCAL,  ///<地方図鑑
+  FMISSION_EXP_ZUKAN_QUIZ_LEGEND,  ///<伝説ポケモン
+  FMISSION_EXP_ZUKAN_QUIZ_MAX,  ///<
+}FMISSION_EXP_ZUKAN_QUIZ_SET;
 
 //=========================================
 ///ミッションイベントID
@@ -191,6 +265,13 @@ typedef enum{
 #define  FMISSION_EXP_TRAIL_TORITODON  ( 9 )   ///<トリトドン
 #define  FMISSION_EXP_TRAIL_KYATAPII  ( 10 )   ///<キャタピー
 #define  FMISSION_EXP_TRAIL_MONS_MAX  ( 11 )   ///<
+
+
+//=========================================
+///ミッション開催時エフェクト待ち時間定義
+//=========================================
+#define  FMISSION_START_EFFECT1_WAIT  ( 80 )   ///<パレスギミックエフェクト1ウェイト
+#define  FMISSION_START_EFFECT2_WAIT  ( 20 )   ///<パレスギミックエフェクト2ウェイト
 
 
 

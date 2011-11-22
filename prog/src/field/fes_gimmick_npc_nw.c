@@ -65,16 +65,65 @@ static const u8 DATA_LotTargetNum[][2] = {
 #define LOT_TARGET_NUM_MAX  NELEMS(DATA_LotTargetNum)
 
 //FES_NPCオブジェコードテーブル
-static const u16 DATA_ObjCodeTbl[][2] = {
-  { BABYBOY1, BABYBOY1 },//迷子を捜せ
-  { BOY2, BOY2 },//アイテムをプレゼントする
-  { BACKPACKERM, GIRL4 },//アイテム交換
-  { SHOPM1, SUNGLASSES },//アイテム購入
-  { BABYGIRL2, BABYGIRL2 },//じゃんけん
-  { CLOWN, CLOWN },//記憶クイズ
-  { FIGHTERM, TRAINERW },//バトル
-  { PCWOMAN1, PCWOMAN1 },//アイテムをもらう
-  { ASSISTANTW, ASSISTANTM },//ポケモン図鑑クイズ
+
+#define FES_NPC_PARAM_FIXED  (1) //パラメータ1つで固定
+
+typedef struct FES_NPC_OBJ_PARAM{
+  u16 obj_code;
+  u16 type;
+}FES_NPC_OBJ_PARAM;
+
+typedef struct FES_NPC_PARAM{
+  u32 param_num;
+  const FES_NPC_OBJ_PARAM* p_tbl;
+}FES_NPC_PARAM;
+
+static const FES_NPC_OBJ_PARAM DATA_FesNpcLostChildren[FES_NPC_PARAM_FIXED] = {
+  { BABYBOY1, 0 },
+};
+static const FES_NPC_OBJ_PARAM DATA_FesNpcPresentItem[FES_NPC_PARAM_FIXED] = {
+  { BOY2, 0 },
+};
+static const FES_NPC_OBJ_PARAM DATA_FesNpcItemTrade[FMISSION_EXP_ITEM_TRADE_SET_MAX] = {
+  { BACKPACKERM, 0 },
+  { GIRL4, 1 },
+  { GIRL4, 1 },
+};
+static const FES_NPC_OBJ_PARAM DATA_FesNpcShopping[FMISSION_EXP_SHOPPING_SET_MAX] = {
+  { SHOPM1, 0 },
+  { SUNGLASSES, 1 },
+  { SUNGLASSES, 1 },
+  { SUNGLASSES, 1 },
+  { SUNGLASSES, 1 },
+};
+static const FES_NPC_OBJ_PARAM DATA_FesNpcRPS[FES_NPC_PARAM_FIXED] = {
+  { BABYGIRL2, 0 },
+};
+static const FES_NPC_OBJ_PARAM DATA_FesNpcMemoryQuiz[FES_NPC_PARAM_FIXED] = {
+  { CLOWN, 0 },
+};
+static const FES_NPC_OBJ_PARAM DATA_FesNpcTrBattle[FMISSION_EXP_TRAINER_SET_MAX] = {
+  { FIGHTERM, 0 },
+  { TRAINERW, 1 },
+  { TRAINERM, 2 },
+};
+static const FES_NPC_OBJ_PARAM DATA_FesNpcGetAPresent[FES_NPC_PARAM_FIXED] = {
+  { PCWOMAN1, 0 },
+};
+static const FES_NPC_OBJ_PARAM DATA_FesNpcPokeQuiz[FES_NPC_PARAM_FIXED] = {
+  { ASSISTANTW, 0 },
+};
+
+static const FES_NPC_PARAM DATA_FesNpcParam[FMISSION_NPC_TYPE_MAX] = {
+  { FES_NPC_PARAM_FIXED, DATA_FesNpcLostChildren },//FES_NPC_TYPE_LOST_CHILDREN 迷子を捜せ
+  { FES_NPC_PARAM_FIXED, DATA_FesNpcPresentItem },//FES_NPC_TYPE_PRESENT_ITEM アイテムをプレゼントする
+  { FMISSION_EXP_ITEM_TRADE_SET_MAX, DATA_FesNpcItemTrade },//FES_NPC_TYPE_ITEM_TRADE アイテム交換
+  { FMISSION_EXP_SHOPPING_SET_MAX, DATA_FesNpcShopping },//FES_NPC_TYPE_SHOPPING アイテム購入
+  { FES_NPC_PARAM_FIXED, DATA_FesNpcRPS },//FES_NPC_TYPE_RPS じゃんけん
+  { FES_NPC_PARAM_FIXED, DATA_FesNpcMemoryQuiz },//FES_NPC_TYPE_MEMORY_QUIZ 記憶クイズ
+  { FMISSION_EXP_TRAINER_SET_MAX, DATA_FesNpcTrBattle },//FES_NPC_TYPE_TR_BATTLE バトル
+  { FMISSION_EXP_GET_A_PRESENT_SET_MAX, DATA_FesNpcGetAPresent },//FES_NPC_TYPE_GET_A_PRESENT アイテムをもらう
+  { FES_NPC_PARAM_FIXED, DATA_FesNpcPokeQuiz },//FES_NPC_TYPE_POKE_QUIZ ポケモン図鑑クイズ
 };
 
 #include "field/fes_gimmick_npc.cdat"
@@ -87,6 +136,7 @@ static void sub_LotParamTradeItem( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk,
 static void sub_LotParamShoppingItem( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, u8 idx, GFL_STD_RandContext* rnd_c );
 static void sub_LotParamTrBattle( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, u8 idx, GFL_STD_RandContext* rnd_c, u32* log );
 static void sub_LotParamGetAPresentItem( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, u8 idx, GFL_STD_RandContext* rnd_c );
+static void sub_LotParamPokeQuiz( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, u8 idx, GFL_STD_RandContext* rnd_c, u32* log );
 
 static void sub_FlagTableUpdate( FES_GIMMICK_NPC_WORK* wk, u16 zone_id );
 
@@ -100,6 +150,7 @@ void FES_GIMMICK_NPC_ZoneChangeSetup( FES_GIMMICK_NPC_WORK* wk, GAMESYS_WORK* gs
   GFL_STD_RandContext rnd_c;
 
   //ワーククリア
+  wk->fest_sys = fest_sys;
   wk->zone_id = zone_id;
   wk->data_max = 0;
   wk->point_max = 0;
@@ -122,6 +173,21 @@ void FES_GIMMICK_NPC_ZoneChangeSetup( FES_GIMMICK_NPC_WORK* wk, GAMESYS_WORK* gs
   }
 }
 
+static const FES_NPC_OBJ_PARAM* sub_GetObjParam( const FEST_MISSION* fmwk )
+{
+  const FES_NPC_PARAM* param = &DATA_FesNpcParam[fmwk->beacon.base_param];
+  int idx = fmwk->beacon.ex_param;
+
+  if( param->param_num == FES_NPC_PARAM_FIXED ){
+    idx = 0;
+  }else if( fmwk->beacon.ex_param >= param->param_num ){
+    GF_ASSERT(0);
+    idx = 0;
+  }
+  return &param->p_tbl[idx];
+
+}
+
 //----------------------------------------------------------------------
 /*
  *  @brief  NPCミッションギミック ミッションパラメータからオブジェタイプを求める
@@ -129,7 +195,8 @@ void FES_GIMMICK_NPC_ZoneChangeSetup( FES_GIMMICK_NPC_WORK* wk, GAMESYS_WORK* gs
 //----------------------------------------------------------------------
 u8 FES_GIMMICK_NPC_SUB_GetObjType( const FEST_MISSION* fmwk )
 {
-  return ( fmwk->beacon.ex_param > 0 );
+  const FES_NPC_OBJ_PARAM* param = sub_GetObjParam( fmwk );
+  return param->type;
 }
 
 //----------------------------------------------------------------------
@@ -139,8 +206,8 @@ u8 FES_GIMMICK_NPC_SUB_GetObjType( const FEST_MISSION* fmwk )
 //----------------------------------------------------------------------
 u16 FES_GIMMICK_NPC_SUB_GetObjCode( FES_GIMMICK_NPC_WORK* wk, const FEST_MISSION* fmwk )
 {
-  u8 idx = FES_GIMMICK_NPC_SUB_GetObjType( fmwk );
-  return DATA_ObjCodeTbl[ fmwk->beacon.base_param][idx]; 
+  const FES_NPC_OBJ_PARAM* param = sub_GetObjParam( fmwk );
+  return param->obj_code;
 }
 
 //----------------------------------------------------------------------
@@ -169,7 +236,6 @@ FES_GIMMICK_NPC_FLAG* FES_GIMMICK_NPC_SUB_FlagTableGet( FES_GIMMICK_NPC_WORK* wk
 static void sub_AddMMdl( GAMESYS_WORK* gsys, FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, u16 zone_id )
 {
   int i;
-//  VecFx32 vec;
   MMDL_HEADER head;
   GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
   FES_GIMMICK_NPC_FLAG* f_tbl = FES_GIMMICK_NPC_SUB_FlagTableGet( wk, zone_id );
@@ -307,6 +373,9 @@ static void sub_LotParam( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, u8 idx, 
   case FMISSION_NPC_TYPE_GET_A_PRESENT:
     sub_LotParamGetAPresentItem( wk, fmwk, idx, rnd_c );
     break;
+  case FMISSION_NPC_TYPE_POKE_QUIZ:
+    sub_LotParamPokeQuiz( wk, fmwk, idx, rnd_c, log );
+    break;
   }
 }
 
@@ -412,17 +481,32 @@ static void sub_LotParamGetAPresentItem( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION*
 {
   int no = 0;
   int i,key = 0;
+  const NITEM_GET_A_PRESENT_PARAM* tbl = DATA_NpcItemGetAPresent[fmwk->beacon.ex_param].list;
   u32 rnd = FES_GIMMICK_SUB_RndGet( rnd_c, 100*LOT_PROB_MAG, NULL, 0 );
 
   for( i = 0; i < FES_NITEM_SHOPPING_LIST_MAX; i++ ){
-    key += DATA_NpcItemGetAPresent[i].prob;
+    key += tbl[i].prob;
 
     if( rnd < key ){
       no = i;
       break;
     } 
   }
-  wk->param[idx][NITEM_GPRESENT_PARAM_ITEM] = DATA_NpcItemGetAPresent[no].item;
+  wk->param[idx][NITEM_GPRESENT_PARAM_ITEM] = tbl[no].item;
+}
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  NPCミッションギミック　パラメータ抽選 図鑑クイズ出題抽選
+ */
+//----------------------------------------------------------------------
+static void sub_LotParamPokeQuiz( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION* fmwk, u8 idx, GFL_STD_RandContext* rnd_c, u32* log )
+{
+  u16* list = (u16*)wk->tmp_data_buf;
+
+  u32 rnd = FES_GIMMICK_SUB_RndGet( rnd_c, wk->tmp_data_size/sizeof(u16), log, idx );
+  wk->param[idx][NPC_POKE_QUIZ_PARAM_MONSNO] = list[rnd];
+  log[idx] = rnd;
 }
 
 //----------------------------------------------------------------------

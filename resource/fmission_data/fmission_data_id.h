@@ -49,7 +49,7 @@
 #define  FMISSION_ID_EVENT_FISH_01W  ( 37 )  ///<つり大会Ｗ
 #define  FMISSION_ID_EVENT_TRAIL_01B  ( 38 )  ///<かくしあな大調査Ｂ
 #define  FMISSION_ID_EVENT_TRAIL_01W  ( 39 )  ///<かくしあな大調査Ｗ
-#define  FMISSION_ID_TRBTL_ALL_01  ( 40 )  ///<トレーナーを倒せ！未実装
+#define  FMISSION_ID_NPC_GET_A_PRESENT  ( 40 )  ///<プレゼント取得
 #define  FMISSION_ID_EFFECT_ENC_EMONGA01  ( 41 )  ///<ダミー
 #define  FMISSION_ID_ITEM_KAKERA01  ( 42 )  ///<ダミー
 #define  FMISSION_ID_EVENT_TOWER_OF_HEAVEN  ( 43 )  ///<ダミー

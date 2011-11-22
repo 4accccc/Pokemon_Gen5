@@ -216,6 +216,30 @@ extern void FMISSION_SAVE_SetMissionStatusHighScore( FMISSION_SAVE* sv, FEST_MIS
 
 //---------------------------------------------------------------------------
 /**
+ * @brief ミッションステータス マイレコード<自分のハイスコア(数値)>を返す	
+ * @param	work		ワークへのポインタ
+ */
+//---------------------------------------------------------------------------
+extern u16 FMISSION_SAVE_GetMissionStatusMyRecord( FMISSION_SAVE* sv, FEST_MISSION_ID id );
+
+//---------------------------------------------------------------------------
+/**
+ * @brief ミッションステータス マイレコード<自分のハイスコア(数値)>をアップデートする	
+ * @param	work		ワークへのポインタ
+ */
+//---------------------------------------------------------------------------
+extern BOOL FMISSION_SAVE_UpdateMissionStatusMyRecord( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_score );
+
+//---------------------------------------------------------------------------
+/**
+ * @brief ミッションステータス マイレコード<自分のハイスコア(数値)>をセットする	
+ * @param	work		ワークへのポインタ
+ */
+//---------------------------------------------------------------------------
+extern void FMISSION_SAVE_SetMissionStatusMyRecord( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 score );
+
+//---------------------------------------------------------------------------
+/**
  * @brief ミッションステータス クリアしたレベルを返す	
  * @param	work		ワークへのポインタ
  *
