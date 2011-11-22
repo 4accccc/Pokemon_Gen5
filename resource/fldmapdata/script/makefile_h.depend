@@ -1491,9 +1491,6 @@ c12pc0101_def.h: c12pc0101.ev
 c12gym0101_def.h: c12gym0101.ev
 	$(EV_DEF) c12gym0101.ev $(SCR_OFFS_ID_H)
 
-c12p01_def.h: c12p01.ev
-	$(EV_DEF) c12p01.ev $(SCR_OFFS_ID_H)
-
 r19_def.h: r19.ev
 	$(EV_DEF) r19.ev $(SCR_OFFS_ID_H)
 
@@ -1575,9 +1572,6 @@ d25r0101_def.h: d25r0101.ev
 w21_def.h: w21.ev
 	$(EV_DEF) w21.ev $(SCR_OFFS_ID_H)
 
-w21r0101_def.h: w21r0101.ev
-	$(EV_DEF) w21r0101.ev $(SCR_OFFS_ID_H)
-
 h06_def.h: h06.ev
 	$(EV_DEF) h06.ev $(SCR_OFFS_ID_H)
 
@@ -1611,9 +1605,6 @@ c14gym0101_def.h: c14gym0101.ev
 r22_def.h: r22.ev
 	$(EV_DEF) r22.ev $(SCR_OFFS_ID_H)
 
-r22r0101_def.h: r22r0101.ev
-	$(EV_DEF) r22r0101.ev $(SCR_OFFS_ID_H)
-
 r23_def.h: r23.ev
 	$(EV_DEF) r23.ev $(SCR_OFFS_ID_H)
 
@@ -1622,9 +1613,6 @@ r23r0101_def.h: r23r0101.ev
 
 r23r0201_def.h: r23r0201.ev
 	$(EV_DEF) r23r0201.ev $(SCR_OFFS_ID_H)
-
-d27_def.h: d27.ev
-	$(EV_DEF) d27.ev $(SCR_OFFS_ID_H)
 
 d31r0101_def.h: d31r0101.ev
 	$(EV_DEF) d31r0101.ev $(SCR_OFFS_ID_H)
@@ -1656,9 +1644,6 @@ d31r0901_def.h: d31r0901.ev
 d31r1001_def.h: d31r1001.ev
 	$(EV_DEF) d31r1001.ev $(SCR_OFFS_ID_H)
 
-d26_def.h: d26.ev
-	$(EV_DEF) d26.ev $(SCR_OFFS_ID_H)
-
 c03gym0201_def.h: c03gym0201.ev
 	$(EV_DEF) c03gym0201.ev $(SCR_OFFS_ID_H)
 
@@ -1679,9 +1664,6 @@ d31r1201_def.h: d31r1201.ev
 
 c03r1103_def.h: c03r1103.ev
 	$(EV_DEF) c03r1103.ev $(SCR_OFFS_ID_H)
-
-d22r0201_def.h: d22r0201.ev
-	$(EV_DEF) d22r0201.ev $(SCR_OFFS_ID_H)
 
 d11r0101_def.h: d11r0101.ev
 	$(EV_DEF) d11r0101.ev $(SCR_OFFS_ID_H)
@@ -1724,51 +1706,6 @@ d29r0201_def.h: d29r0201.ev
 
 d29r0301_def.h: d29r0301.ev
 	$(EV_DEF) d29r0301.ev $(SCR_OFFS_ID_H)
-
-c16r0201_def.h: c16r0201.ev
-	$(EV_DEF) c16r0201.ev $(SCR_OFFS_ID_H)
-
-c16r0301_def.h: c16r0301.ev
-	$(EV_DEF) c16r0301.ev $(SCR_OFFS_ID_H)
-
-c16r0401_def.h: c16r0401.ev
-	$(EV_DEF) c16r0401.ev $(SCR_OFFS_ID_H)
-
-c16r0501_def.h: c16r0501.ev
-	$(EV_DEF) c16r0501.ev $(SCR_OFFS_ID_H)
-
-c16r0601_def.h: c16r0601.ev
-	$(EV_DEF) c16r0601.ev $(SCR_OFFS_ID_H)
-
-c16r0701_def.h: c16r0701.ev
-	$(EV_DEF) c16r0701.ev $(SCR_OFFS_ID_H)
-
-c16r0801_def.h: c16r0801.ev
-	$(EV_DEF) c16r0801.ev $(SCR_OFFS_ID_H)
-
-c16r0901_def.h: c16r0901.ev
-	$(EV_DEF) c16r0901.ev $(SCR_OFFS_ID_H)
-
-c16r1001_def.h: c16r1001.ev
-	$(EV_DEF) c16r1001.ev $(SCR_OFFS_ID_H)
-
-c16r1101_def.h: c16r1101.ev
-	$(EV_DEF) c16r1101.ev $(SCR_OFFS_ID_H)
-
-c16r1201_def.h: c16r1201.ev
-	$(EV_DEF) c16r1201.ev $(SCR_OFFS_ID_H)
-
-c16r1301_def.h: c16r1301.ev
-	$(EV_DEF) c16r1301.ev $(SCR_OFFS_ID_H)
-
-c16r1401_def.h: c16r1401.ev
-	$(EV_DEF) c16r1401.ev $(SCR_OFFS_ID_H)
-
-c16r1501_def.h: c16r1501.ev
-	$(EV_DEF) c16r1501.ev $(SCR_OFFS_ID_H)
-
-c16r1601_def.h: c16r1601.ev
-	$(EV_DEF) c16r1601.ev $(SCR_OFFS_ID_H)
 
 d07r0601_def.h: d07r0601.ev
 	$(EV_DEF) d07r0601.ev $(SCR_OFFS_ID_H)
@@ -1872,9 +1809,6 @@ d24r1101_def.h: d24r1101.ev
 d24r1201_def.h: d24r1201.ev
 	$(EV_DEF) d24r1201.ev $(SCR_OFFS_ID_H)
 
-d03r0301_def.h: d03r0301.ev
-	$(EV_DEF) d03r0301.ev $(SCR_OFFS_ID_H)
-
 c05r0102_def.h: c05r0102.ev
 	$(EV_DEF) c05r0102.ev $(SCR_OFFS_ID_H)
 
@@ -1898,12 +1832,6 @@ c05r0402_def.h: c05r0402.ev
 
 c05r0403_def.h: c05r0403.ev
 	$(EV_DEF) c05r0403.ev $(SCR_OFFS_ID_H)
-
-c00r0101_def.h: c00r0101.ev
-	$(EV_DEF) c00r0101.ev $(SCR_OFFS_ID_H)
-
-c00r0201_def.h: c00r0201.ev
-	$(EV_DEF) c00r0201.ev $(SCR_OFFS_ID_H)
 
 r04w_def.h: r04w.ev
 	$(EV_DEF) r04w.ev $(SCR_OFFS_ID_H)
@@ -2057,9 +1985,6 @@ oldt06r0101_def.h: oldt06r0101.ev
 
 oldc08r0101_def.h: oldc08r0101.ev
 	$(EV_DEF) oldc08r0101.ev $(SCR_OFFS_ID_H)
-
-oldt01r0101_def.h: oldt01r0101.ev
-	$(EV_DEF) oldt01r0101.ev $(SCR_OFFS_ID_H)
 
 d26pc0101_def.h: d26pc0101.ev
 	$(EV_DEF) d26pc0101.ev $(SCR_OFFS_ID_H)

@@ -1001,8 +1001,6 @@
 				<ContentItem
 					Name="c12gym0201.mstxt" />
 				<ContentItem
-					Name="c12p01.mstxt" />
-				<ContentItem
 					Name="c12pc0101.mstxt" />
 				<ContentItem
 					Name="c12r0101.mstxt" />
@@ -1069,36 +1067,6 @@
 				<ContentItem
 					Name="c16r0101.mstxt" />
 				<ContentItem
-					Name="c16r0201.mstxt" />
-				<ContentItem
-					Name="c16r0301.mstxt" />
-				<ContentItem
-					Name="c16r0401.mstxt" />
-				<ContentItem
-					Name="c16r0501.mstxt" />
-				<ContentItem
-					Name="c16r0601.mstxt" />
-				<ContentItem
-					Name="c16r0701.mstxt" />
-				<ContentItem
-					Name="c16r0801.mstxt" />
-				<ContentItem
-					Name="c16r0901.mstxt" />
-				<ContentItem
-					Name="c16r1001.mstxt" />
-				<ContentItem
-					Name="c16r1101.mstxt" />
-				<ContentItem
-					Name="c16r1201.mstxt" />
-				<ContentItem
-					Name="c16r1301.mstxt" />
-				<ContentItem
-					Name="c16r1401.mstxt" />
-				<ContentItem
-					Name="c16r1501.mstxt" />
-				<ContentItem
-					Name="c16r1601.mstxt" />
-				<ContentItem
 					Name="c3center_scr.mstxt" />
 				<ContentItem
 					Name="closseum.mstxt" />
@@ -1124,8 +1092,6 @@
 					Name="d03r0101.mstxt" />
 				<ContentItem
 					Name="d03r0201.mstxt" />
-				<ContentItem
-					Name="d03r0301.mstxt" />
 				<ContentItem
 					Name="d04r0101.mstxt" />
 				<ContentItem
@@ -1323,8 +1289,6 @@
 				<ContentItem
 					Name="d22r0101.mstxt" />
 				<ContentItem
-					Name="d22r0201.mstxt" />
-				<ContentItem
 					Name="d23.mstxt" />
 				<ContentItem
 					Name="d23r0101.mstxt" />
@@ -1375,8 +1339,6 @@
 				<ContentItem
 					Name="d25r1001.mstxt" />
 				<ContentItem
-					Name="d26.mstxt" />
-				<ContentItem
 					Name="d26r0101.mstxt" />
 				<ContentItem
 					Name="d26r0201.mstxt" />
@@ -1398,8 +1360,6 @@
 					Name="d26r1001.mstxt" />
 				<ContentItem
 					Name="d26r1101.mstxt" />
-				<ContentItem
-					Name="d27.mstxt" />
 				<ContentItem
 					Name="d27r0101.mstxt" />
 				<ContentItem
@@ -1624,8 +1584,6 @@
 					Name="oldc08r0101.mstxt" />
 				<ContentItem
 					Name="oldd06r0101.mstxt" />
-				<ContentItem
-					Name="oldt01r0101.mstxt" />
 				<ContentItem
 					Name="oldt04r0301.mstxt" />
 				<ContentItem
@@ -1909,8 +1867,6 @@
 				<ContentItem
 					Name="r22.mstxt" />
 				<ContentItem
-					Name="r22r0101.mstxt" />
-				<ContentItem
 					Name="r23.mstxt" />
 				<ContentItem
 					Name="r23r0101.mstxt" />
@@ -2030,8 +1986,6 @@
 					Name="w17.mstxt" />
 				<ContentItem
 					Name="w21.mstxt" />
-				<ContentItem
-					Name="w21r0101.mstxt" />
 				<ContentItem
 					Name="wbt_hall.mstxt" />
 				<ContentItem
