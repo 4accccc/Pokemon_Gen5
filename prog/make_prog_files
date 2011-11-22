@@ -521,7 +521,8 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/scrcmd_h06_gmk.c \
         field/scrcmd_resort_st.c \
         field/scrcmd_pokewood_st.c \
-        field/scrcmd_goout_effect.c
+        field/scrcmd_goout_effect.c \
+        field/scrcmd_infinity_dungeon_nw.c
 
 
 ###########################################################

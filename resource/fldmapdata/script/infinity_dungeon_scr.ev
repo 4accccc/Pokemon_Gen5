@@ -84,7 +84,7 @@ DEFINE_LOCAL	LWK_MSG_ID
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_retire
 {
-  // 内部でフェードが呼ばれるので、後からエレベータ音を鳴らす
+  // フェードを行う
   _INFINITY_DUNGEON_WARP(WARP_INFORMATION,SCR_INFDUNGEON_WARP_FADE,SCR_INFDUNGEON_WARP_NO_FADE)
 
   // エレベータ移動音
@@ -98,10 +98,30 @@ EVENT_START  ev_infinity_dungeon_retire
 EVENT_END
 
 //----------------------------------------------------------------------------
+//	ゲームオーバー
+//-----------------------------------------------------------------------------
+game_over_event:
+{
+  // バトルから帰ってきたときにはフェードインしていない
+  _INFINITY_DUNGEON_WARP(WARP_INFORMATION,SCR_INFDUNGEON_WARP_NO_FADE,SCR_INFDUNGEON_WARP_NO_FADE)
+
+  // エレベータ移動音
+  _CALL play_elevator_move_se
+  _RESERVE_SCRIPT( SCRID_INFINITY_DUNGEON_COMEBACK )
+  _SE_STOP()
+}
+_RET
+
+//----------------------------------------------------------------------------
 //	ゲームオーバーイベント
 //-----------------------------------------------------------------------------
 EVENT_START  ev_infinity_dungeon_gameover
 {
+  
+  // フェード
+  _BLACK_IN()
+  _DISP_FADE_END_CHECK()
+
   // 内部でフェードが呼ばれるので、後からエレベータ音を鳴らす
   _INFINITY_DUNGEON_WARP(WARP_INFORMATION,SCR_INFDUNGEON_WARP_FADE,SCR_INFDUNGEON_WARP_NO_FADE)
 
@@ -1192,8 +1212,8 @@ EVENT_START  ev_infinity_dungeon_talk_battle_trainer
       ENDIF
 
     ELSE
-      _SC_WALK_COUNT_STOP()
-      _TRAINER_LOSE()
+      _INFINITY_DUNGEON_BATTLE_LOSE()
+      _CALL game_over_event
     ENDIF
   ELSE
     //ヒントメッセージ
@@ -1343,8 +1363,8 @@ EVENT_START  ev_infinity_dungeon_move_battle_trainer
         _CALL recover_trainer
       ENDIF
     ELSE
-      _SC_WALK_COUNT_STOP()
-      _TRAINER_LOSE()
+      _INFINITY_DUNGEON_BATTLE_LOSE()
+      _CALL game_over_event
     ENDIF
 
 	ENDIF
@@ -1425,8 +1445,8 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
     // レコードを加算：無限ダンジョントレーナーを倒した数
     _ADD_RECORD( RECID_INF_TRAINER_WIN, 1 )
 	ELSE
-    _SC_WALK_COUNT_STOP()
-	  _TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+    _INFINITY_DUNGEON_BATTLE_LOSE()
+    _CALL game_over_event
 	ENDIF
 
   // 戦闘終了後メッセージ
@@ -1688,9 +1708,9 @@ EVENT_START  ev_infinity_dungeon_area2_tutorial
  
   // メッセージ
   IF $LWK_D_VERSION == VERSION_B2 THEN
-    $LWK_MSG_ID = msg_event_b_01_02_00
+    $LWK_MSG_ID = msg_event_b_02_03_00
   ELSE
-    $LWK_MSG_ID = msg_event_w_01_02_00
+    $LWK_MSG_ID = msg_event_w_02_03_00
   ENDIF
   
   _BALLOONWIN_OBJMSG_POS( LWK_MSG_ID , MMDL_ID_EVENTOBJ_00, POS_DOWN )
@@ -2365,7 +2385,7 @@ talk_hint:
   _NUMBER( 0 , LWK_BOSS_FLOOR , 2 )
 
   // ゲートトレーナー部屋の人数を登録
-  _INFINITY_DUNGEON_GET_GATE_TR_ROOM_TR_NUM( LWK_BOSS_FLOOR )
+  _INFINITY_DUNGEON_GET_GATE_TR_ROOM_TR_NUM( LWK_GK_ROOM_TR_NUM )
   _NUMBER( 2 , LWK_GK_ROOM_TR_NUM , 1 )
 
   // エリアIDを取得する

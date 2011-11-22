@@ -34,6 +34,7 @@
 #include "../../../resource/fldmapdata/eventdata/define/total_header.h"
 #include "infinity_dungeon_creator.h"
 #include "infinity_dungeon_field.h"
+#include "scrcmd_infinity_dungeon_nw.h"
 #include "script_def.h"
 
 #ifdef PM_DEBUG
@@ -142,7 +143,6 @@ static u32 GetRecoverTrainerID( const INF_DUNGEON_DATA *p_dungeon_data ,u32 area
 static void SetRecoverTrainer( INF_DUNGEON_DATA  *p_dungeon_data ,int floor_no ,u32 area_no,const int *room_id_array ,int cnt,const u32 *member_num , GFL_STD_RandContext *rand_context ,u32 *recover_index );
 static BOOL SetTutorialMap( const INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dungeon_data );
 static void SetTutorialTrainerData( const INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dungeon_data );
-static void BGSettingRecover( FIELDMAP_WORK* p_fieldwork );
 static s32 GetGateTrainerSetTrIndexArray( INF_DUNGEON_DATA  *p_dungeon_data ,s32 floor_no ,s32* id_pos_array, s32* room_id_array );
 
 // グリッド
@@ -183,6 +183,7 @@ static u32 gethint_boss_dir( const TRHINT_WK *p_wk );
 
 static u8  GetPosDirID( u8 x1, u8 y1, u8 x2 ,u8 y2 );
 static u32 INFINITY_DUNGEON_GetBossRoom( const INF_DUNGEON_DATA *p_dungeon_data );
+
 
 #ifdef PM_DEBUG
 static void INF_DEBUG_OutPutFloorData( const INF_DUNGEON_DATA *p_wk,const ROOM_DATA *p_room_data ,INFINITYDUNGEON_SAVE *p_save ,FIELDMAP_WORK *p_field_work );
@@ -483,6 +484,8 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
       // ギミックワークのポインタを再取得
       p_wk->p_dungeon_data  = INFINITY_DUNGEON_DataGet( p_wk->p_field_work );
 
+      ONOUE_Printf("ワープ方向%d\n",p_wk->warp_dir);
+
       // 受付の場合は配置モデルを置かない
       if( p_wk->warp_dir != WARP_INFORMATION )
       {
@@ -509,7 +512,7 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
         if( IsMoveElevator( p_wk ) )
         {
           //ＢＧ復帰
-          BGSettingRecover( p_wk->p_field_work );
+          INFINITY_DUNGEON_NW_BGSettingRecover( p_wk->p_field_work );
 
           // 遅いフェードアウト
           GFL_FADE_SetMasterBrightReq(
@@ -523,7 +526,7 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
       else
       {
         //ＢＧ復帰
-        BGSettingRecover( p_wk->p_field_work );
+        INFINITY_DUNGEON_NW_BGSettingRecover( p_wk->p_field_work );
       }
 
       (*seq)++;
@@ -557,6 +560,7 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
 
   return GMEVENT_RES_CONTINUE;
 }
+
 
 //----------------------------------------------------------------------------
 /**
@@ -2742,27 +2746,6 @@ BOOL INFINITY_DUNGEON_GetUpPosRoomType( const INF_DUNGEON_DATA *p_dungeon_data ,
   }
 
   return FALSE;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  BG面の復帰処理
- *
- *	@param	p_fieldwork 
- *
- *	@retval
- *
- *	@note event_field_fade.cを参考に作成
- */
-//-----------------------------------------------------------------------------
-static void BGSettingRecover( FIELDMAP_WORK* p_fieldwork )
-{
-  int MainVisiblePlane = GFL_DISP_GetMainVisible();
-  int	SubVisiblePlane = GFL_DISP_GetSubVisible();
-  FIELDMAP_InitBGMode();
-  GFL_DISP_GX_SetVisibleControlDirect( MainVisiblePlane );
-  GFL_DISP_GXS_SetVisibleControlDirect( SubVisiblePlane );
-  FIELDMAP_InitBG( p_fieldwork );
 }
 
 #ifdef PM_DEBUG

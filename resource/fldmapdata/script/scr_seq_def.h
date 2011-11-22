@@ -15092,6 +15092,19 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _INFINITY_DUNGEON_GET_GATE_TR_ROOM_TR_NUM
+ * @brief 無限ダンジョン内専用バトル負けイベント
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_BATTLE_LOSE() \
+    _ASM_INFINITY_DUNGEON_BATTLE_LOSE 
+
+    .macro  _ASM_INFINITY_DUNGEON_BATTLE_LOSE 
+    .short  EV_SEQ_INFINITY_DUNGEON_BATTLE_LOSE
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @def _INFINITY_DUNGEON_GET_TRTYPE
  * @brief 無限ダンジョン内トレーナーのトレーナータイプ
  * @param ret_wk   トレーナータイプ

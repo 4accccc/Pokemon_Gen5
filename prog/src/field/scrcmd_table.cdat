@@ -1112,7 +1112,7 @@
   
   //無限ダンジョン常駐
   DEF_CMD( EvCmdInfinityDungeonGetStatus, EV_SEQ_INFINITY_DUNGEON_GET_DUNGEON_STATUS )
-  NO_CMD()
+  DEF_CMD( EvCmdInfinityDungeonTrainerLose, EV_SEQ_INFINITY_DUNGEON_BATTLE_LOSE )
 
   //　人物状態３
   DEF_CMD( EvCmdPersonState_GetState, EV_SEQ_PERSON_GET_STATE )

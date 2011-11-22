@@ -21,9 +21,9 @@ static const INF_ROOM_SET_TR_PARAM sc_room_tr_param[] = {
   { // INF_ROOM_POS_TYPE_A_2
     INF_MULTI_DUNGEON ,2 ,ROOM_TYPE_DEFAULT ,
     { 
-      { INF_MOVE_CODE_TYPE_STOP1 ,7 ,6 ,}, 
+      { INF_MOVE_CODE_TYPE_STOP1 ,8 ,5 ,}, 
 
-      { INF_MOVE_CODE_TYPE_STOP1 ,5 ,8 ,}, 
+      { INF_MOVE_CODE_TYPE_STOP1 ,4 ,9 ,}, 
 
     },
   }, 

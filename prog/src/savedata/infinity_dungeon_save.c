@@ -45,10 +45,10 @@ struct _INFINITYDUNGEON_SAVE{
   u8  room_id;
 
   // ダンジョンの状態
-  u8  dungeon_status_w; // 白バージョン用セーブデータ
-  u8  dungeon_status_b; // 黒バージョン用セーブデータ
+  u8  dungeon_status_w;   // 白バージョン用セーブデータ
+  u8  dungeon_status_b;   // 黒バージョン用セーブデータ
 
-  u8  padding[3];       // あまり
+  u32 dungeon_start_gold; // ダンジョン開始時の所持金
 
   u8  key_system_area[KEY_SYSTEM_SAVE_WORK_SIZE];
 };

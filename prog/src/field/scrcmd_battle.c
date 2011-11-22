@@ -27,6 +27,8 @@
 
 #include "scrcmd_battle.h"
 
+#include "scrcmd_infinity_dungeon_nw.h"
+
 //======================================================================
 // トレーナーフラグ関連
 //======================================================================
@@ -232,4 +234,26 @@ VMCMD_RESULT EvCmdGetWheelTrainerTrID( VMHANDLE *core, void *wk )
 	return VMCMD_RESULT_CONTINUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  無限ダンジョン専用トレーナー負けイベント
+ *
+ *	@param	*core
+ *	@param	*wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdInfinityDungeonTrainerLose( VMHANDLE *core, void *wk )
+{
+  GMEVENT *call_event;
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+
+  call_event = INFINITY_DUNGEON_NW_LoseEventCreate( gsys );
+  SCRIPT_CallEvent( sc, call_event );
+  
+  return VMCMD_RESULT_SUSPEND;
+}
 

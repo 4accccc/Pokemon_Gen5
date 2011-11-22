@@ -31,6 +31,8 @@ extern VMCMD_RESULT EvCmdTrainerLoseCheck(VMHANDLE *core,void *wk);
 extern VMCMD_RESULT EvCmdGetWheelTrainerObjID( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGetWheelTrainerTrID( VMHANDLE *core, void *wk );
 
+extern VMCMD_RESULT EvCmdInfinityDungeonTrainerLose( VMHANDLE *core, void *wk );
+
 #if 0
 extern VMCMD_RESULT EvCmdSeacretPokeRetryCheck(VMHANDLE *core,void *wk);
 extern VMCMD_RESULT EvCmdHaifuPokeRetryCheck(VMHANDLE *core,void *wk);
