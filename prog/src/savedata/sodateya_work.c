@@ -38,7 +38,8 @@ typedef struct
 //===========================================================================================
 typedef struct
 {
-  BOOL           valid;  // 有効フラグ
+  BOOL           valid;           // 有効フラグ
+  u64            egg_create_seed; // タマゴ作成時に使用するシード値
 } SODATEYA_EGG_DATA;
 
 //===========================================================================================
@@ -50,6 +51,10 @@ struct _SODATEYA_WORK
   SODATEYA_EGG_DATA  egg;                     // タマゴ
 };
 
+//===========================================================================================
+// ■ ローカル関数
+//===========================================================================================
+static void ResetEggCreateSeed( SODATEYA_WORK* work );
 
 //===========================================================================================
 // ■ ポケモン, タマゴの取得・設定・削除
@@ -66,9 +71,9 @@ void SODATEYA_WORK_SetEgg( SODATEYA_WORK* work )
 {
   if( work->egg.valid == TRUE )
   {
-    OBATA_Printf( "------------------------------------------------\n" );
-    OBATA_Printf( "SODATEYA_WORK_SetEgg: すでにタマゴが存在します。\n" );
-    OBATA_Printf( "------------------------------------------------\n" );
+    ONOUE_Printf( "------------------------------------------------\n" );
+    ONOUE_Printf( "SODATEYA_WORK_SetEgg: すでにタマゴが存在します。\n" );
+    ONOUE_Printf( "------------------------------------------------\n" );
     return;
   }
   work->egg.valid = TRUE;
@@ -89,6 +94,10 @@ void SODATEYA_WORK_ClrEgg( SODATEYA_WORK* work )
     OBATA_Printf( "SODATEYA_WORK_ClrEgg: タマゴがありません。\n" );
     OBATA_Printf( "------------------------------------------\n" );
   }
+
+  // タマゴ生成に使用する乱数シードを初期化する
+  ResetEggCreateSeed( work );
+
   work->egg.valid = FALSE; 
 }
 
@@ -260,6 +269,38 @@ u32 SODATEYA_WORK_GetGrowUpExp( const SODATEYA_WORK* work, int index )
   return work->poke[index].growUpExp;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タマゴ生成用乱数シードを取得する
+ *
+ *	@param	SODATEYA_WORK* work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u64 SODATEYA_WORK_GetEggCreateSeed( const SODATEYA_WORK* work )
+{
+  return work->egg.egg_create_seed;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief タマゴ生成用乱数シードを初期化する
+ *
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void ResetEggCreateSeed( SODATEYA_WORK* work )
+{
+  u64 seed_l,seed_h;
+  seed_h = GFL_STD_MtRand( GFL_STD_RAND_MAX );
+  seed_l = GFL_STD_MtRand( GFL_STD_RAND_MAX );
+  work->egg.egg_create_seed = ((seed_h << 32) | seed_l);
+
+  ONOUE_Printf("タマゴ生成用乱数シードを再設定する\n");
+}
 
 //===========================================================================================
 // ■ 設定関数
@@ -349,6 +390,9 @@ void SODATEYA_WORK_InitWork( void* work )
 {
   SODATEYA_WORK* sodateya = (SODATEYA_WORK*)work;
 	GFL_STD_MemClear( sodateya, sizeof(SODATEYA_WORK) ); 
+
+  // タマゴ生成に使用する乱数シードを初期化する
+  ResetEggCreateSeed( sodateya );
 }
 
 //-------------------------------------------------------------------------------------------

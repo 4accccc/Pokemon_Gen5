@@ -19,11 +19,13 @@
  * @param poke1    親ポケモン1
  * @param poke2    親ポケモン2
  * @param egg      作成したタマゴの格納先
+ * @param rand_context      乱数生成に使用する乱数生成データ
  */
 //---------------------------------------------------------------------------------------- 
 extern void POKEMON_EGG_Create( 
     GAMESYS_WORK* gsys, HEAPID heap_id, const MYSTATUS* mystatus, int memo, 
-    const POKEMON_PARAM* poke1, const POKEMON_PARAM* poke2, POKEMON_PARAM* egg );
+    const POKEMON_PARAM* poke1, const POKEMON_PARAM* poke2, POKEMON_PARAM* egg,
+    GFL_STD_RandContext* rand_context );
 
 
 #ifdef PM_DEBUG

@@ -69,8 +69,8 @@ static void ReverseParent( PARENT* parent );
 // タマゴパラメータの決定
 static void EggCordinate_init( EGG_PARAM* egg );
 static void EggCordinate_MonsNo_basic( const PARENT* parent, EGG_PARAM* egg ); // モンスターNo.
-static void EggCordinate_MonsNo_nidoran( const PARENT* parent, EGG_PARAM* egg );
-static void EggCordinate_MonsNo_barubiito( const PARENT* parent, EGG_PARAM* egg );
+static void EggCordinate_MonsNo_nidoran( const PARENT* parent, EGG_PARAM* egg ,GFL_STD_RandContext* rand_context );
+static void EggCordinate_MonsNo_barubiito( const PARENT* parent, EGG_PARAM* egg ,GFL_STD_RandContext* rand_context );
 static void EggCordinate_MonsNo_fione( const PARENT* parent, EGG_PARAM* egg );
 static void EggCordinate_MonsNo_baby( const PARENT* parent, EGG_PARAM* egg );
 static const POKEMON_PARAM* GetBasePokemon_for_monsno( const PARENT* parent );
@@ -79,13 +79,13 @@ static void EggCordinate_Form_karanakusi( const PARENT* parent, EGG_PARAM* egg )
 static void EggCordinate_Form_minomutti( const PARENT* parent, EGG_PARAM* egg );
 static void EggCordinate_Form_basurao( const PARENT* parent, EGG_PARAM* egg );
 static const POKEMON_PARAM* GetBasePokemon_for_form( const PARENT* parent );
-static void EggCordinate_Seikaku_basic( const PARENT* parent, EGG_PARAM* egg ); // 性格
-static void EggCordinate_Seikaku_kawarazunoisi( const PARENT* parent, EGG_PARAM* egg );
-static void EggCordinate_TokuseiIndex_basic( const PARENT* parent, EGG_PARAM* egg, HEAPID heap_id ); // 特性
-static void EggCordinate_TokuseiIndex_metamon( const PARENT* parent, EGG_PARAM* egg );
+static void EggCordinate_Seikaku_basic( const PARENT* parent, EGG_PARAM* egg ,GFL_STD_RandContext* rand_context ); // 性格
+static void EggCordinate_Seikaku_kawarazunoisi( const PARENT* parent, EGG_PARAM* egg ,GFL_STD_RandContext* rand_context );
+static void EggCordinate_TokuseiIndex_basic( const PARENT* parent, EGG_PARAM* egg, HEAPID heap_id ,GFL_STD_RandContext* rand_context ); // 特性
+static void EggCordinate_TokuseiIndex_metamon( const PARENT* parent, EGG_PARAM* egg ,GFL_STD_RandContext* rand_context );
 static void EggCordinate_Friend( EGG_PARAM* egg, HEAPID heap_id ); // なつき度 ( 孵化カウント )
-static void EggCordinate_AbilityRnd_select_by_item( const PARENT* parent, EGG_PARAM* egg ); // パワー乱数
-static void EggCordinate_AbilityRnd_select_at_random( const PARENT* parent, EGG_PARAM* egg );
+static void EggCordinate_AbilityRnd_select_by_item( const PARENT* parent, EGG_PARAM* egg ,GFL_STD_RandContext* rand_context ); // パワー乱数
+static void EggCordinate_AbilityRnd_select_at_random( const PARENT* parent, EGG_PARAM* egg ,GFL_STD_RandContext* rand_context );
 static void EggCordinate_AbilityRnd_deirve_from_parent( const PARENT* parent, EGG_PARAM* egg );
 static void EggCordinate_ID( const MYSTATUS* mystatus, EGG_PARAM* egg ); // ID
 static void EggCordinate_PersonalRnd_at_random( const PARENT* parent, EGG_PARAM* egg ); // 個性乱数
@@ -125,7 +125,8 @@ static POKEMON_PARAM* CreateDebugEgg( GAMEDATA* gameData, HEAPID heapID, u32 mon
 //---------------------------------------------------------------------------------------- 
 void POKEMON_EGG_Create( 
     GAMESYS_WORK* gsys, HEAPID heap_id, const MYSTATUS* mystatus, int memo, 
-    const POKEMON_PARAM* poke1, const POKEMON_PARAM* poke2, POKEMON_PARAM* egg )
+    const POKEMON_PARAM* poke1, const POKEMON_PARAM* poke2, POKEMON_PARAM* egg,
+    GFL_STD_RandContext* rand_context )
 {
   GAMEDATA    *gdata = GAMESYSTEM_GetGameData( gsys );
   MYITEM_PTR  myitem = GAMEDATA_GetMyItem( gdata );
@@ -143,21 +144,21 @@ void POKEMON_EGG_Create(
   // タマゴのパラメータを決定
   EggCordinate_init( &egg_param );
   EggCordinate_MonsNo_basic( &parent, &egg_param ); // モンスターナンバー
-  EggCordinate_MonsNo_nidoran( &parent, &egg_param );
-  EggCordinate_MonsNo_barubiito( &parent, &egg_param );
+  EggCordinate_MonsNo_nidoran( &parent, &egg_param ,rand_context );
+  EggCordinate_MonsNo_barubiito( &parent, &egg_param ,rand_context );
   EggCordinate_MonsNo_fione( &parent, &egg_param );
   EggCordinate_MonsNo_baby( &parent, &egg_param ); 
   EggCordinate_Form_basic( &parent, &egg_param ); // フォルム
   EggCordinate_Form_karanakusi( &parent, &egg_param ); 
   EggCordinate_Form_minomutti( &parent, &egg_param );
   EggCordinate_Form_basurao( &parent, &egg_param );
-  EggCordinate_Seikaku_basic( &parent, &egg_param ); // 性格
-  EggCordinate_Seikaku_kawarazunoisi( &parent, &egg_param ); 
-  EggCordinate_TokuseiIndex_basic( &parent, &egg_param, heap_id ); // 特性
-  EggCordinate_TokuseiIndex_metamon( &parent, &egg_param );
+  EggCordinate_Seikaku_basic( &parent, &egg_param ,rand_context); // 性格
+  EggCordinate_Seikaku_kawarazunoisi( &parent, &egg_param ,rand_context ); 
+  EggCordinate_TokuseiIndex_basic( &parent, &egg_param, heap_id ,rand_context ); // 特性
+  EggCordinate_TokuseiIndex_metamon( &parent, &egg_param ,rand_context );
   EggCordinate_Friend( &egg_param, heap_id ); // なつき度 ( 孵化カウント )
-  EggCordinate_AbilityRnd_select_by_item( &parent, &egg_param ); // パワー乱数
-  EggCordinate_AbilityRnd_select_at_random( &parent, &egg_param );
+  EggCordinate_AbilityRnd_select_by_item( &parent, &egg_param ,rand_context ); // パワー乱数
+  EggCordinate_AbilityRnd_select_at_random( &parent, &egg_param ,rand_context );
   EggCordinate_AbilityRnd_deirve_from_parent( &parent, &egg_param );
   EggCordinate_ID( mystatus, &egg_param ); // ID
   EggCordinate_PersonalRnd_at_random( &parent, &egg_param ); // 個性乱数
@@ -274,7 +275,7 @@ static void EggCordinate_MonsNo_basic( const PARENT* parent, EGG_PARAM* egg )
  * 　ニドクイン　はタマゴグループが『無生殖』なので, タマゴは発見されない
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_MonsNo_nidoran( const PARENT* parent, EGG_PARAM* egg )
+static void EggCordinate_MonsNo_nidoran( const PARENT* parent, EGG_PARAM* egg ,GFL_STD_RandContext* rand_context )
 {
   const POKEMON_PARAM* base_poke;
   u32 base_monsno;
@@ -286,7 +287,7 @@ static void EggCordinate_MonsNo_nidoran( const PARENT* parent, EGG_PARAM* egg )
       (base_monsno == MONSNO_NIDORAN_M) ||
       (base_monsno == MONSNO_NIDORIINO) ||
       (base_monsno == MONSNO_NIDOKINGU) ) {
-    if( GFUser_GetPublicRand0(2) == 0 ) {
+    if( GFL_STD_Rand( rand_context ,2 ) == 0 ) {
       egg->monsno = MONSNO_NIDORAN_F;
     }
     else {
@@ -303,7 +304,7 @@ static void EggCordinate_MonsNo_nidoran( const PARENT* parent, EGG_PARAM* egg )
  * イルミーゼ からは, バルビート ( 50% ) or イルミーゼ ( 50% ) が産まれる
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_MonsNo_barubiito( const PARENT* parent, EGG_PARAM* egg )
+static void EggCordinate_MonsNo_barubiito( const PARENT* parent, EGG_PARAM* egg ,GFL_STD_RandContext* rand_context )
 {
   const POKEMON_PARAM* base_poke;
   u32 base_monsno;
@@ -313,7 +314,7 @@ static void EggCordinate_MonsNo_barubiito( const PARENT* parent, EGG_PARAM* egg 
 
   if( (base_monsno == MONSNO_BARUBIITO) ||
       (base_monsno == MONSNO_IRUMIIZE) ) {
-    if( GFUser_GetPublicRand0(2) == 0 ) {
+    if( GFL_STD_Rand( rand_context ,2 ) == 0 ) {
       egg->monsno = MONSNO_BARUBIITO;
     }
     else {
@@ -500,17 +501,18 @@ static const POKEMON_PARAM* GetBasePokemon_for_form( const PARENT* parent )
  * @brief タマゴの性格を決定する ( 基本ルール )
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_Seikaku_basic( const PARENT* parent, EGG_PARAM* egg )
+static void EggCordinate_Seikaku_basic( const PARENT* parent, EGG_PARAM* egg ,GFL_STD_RandContext* rand_context )
 {
-  egg->seikaku = GFUser_GetPublicRand0( PTL_SEIKAKU_MAX );
+  egg->seikaku = GFL_STD_Rand( rand_context ,PTL_SEIKAKU_MAX );
 }
 
 //---------------------------------------------------------------------------------------- 
 /**
  * @brief タマゴの性格を決定する ( 例外ケース：かわらずのいし )
+ * @note スワンにて100%どちらかを継承するように変更
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_Seikaku_kawarazunoisi( const PARENT* parent, EGG_PARAM* egg )
+static void EggCordinate_Seikaku_kawarazunoisi( const PARENT* parent, EGG_PARAM* egg ,GFL_STD_RandContext* rand_context )
 {
   BOOL father_have_kawarazunoisi;
   BOOL mother_have_kawarazunoisi;
@@ -523,16 +525,10 @@ static void EggCordinate_Seikaku_kawarazunoisi( const PARENT* parent, EGG_PARAM*
   father_seikaku = PP_Get( parent->father, ID_PARA_seikaku, NULL );
   mother_seikaku = PP_Get( parent->mother, ID_PARA_seikaku, NULL );
 
-  // どちらかが持っていても, 1/2で継承しない
-  if( father_have_kawarazunoisi || mother_have_kawarazunoisi ) {
-    if( GFUser_GetPublicRand0(2) == 0 ) {
-      return;
-    }
-  }
-
   // 継承
   if( father_have_kawarazunoisi && mother_have_kawarazunoisi ) { // 両親とも所持
-    if( GFUser_GetPublicRand0(2) == 0 )  {
+    ONOUE_Printf("かわらずのいし：○\n");
+    if( GFL_STD_Rand( rand_context ,2) == 0 )  {
       egg->seikaku = father_seikaku;
       egg->derive_seikaku_from_father = TRUE;
     }
@@ -542,10 +538,12 @@ static void EggCordinate_Seikaku_kawarazunoisi( const PARENT* parent, EGG_PARAM*
     }
   }
   else if( father_have_kawarazunoisi ) { // 父親のみ所持
+    ONOUE_Printf("かわらずのいし：○\n");
     egg->seikaku = father_seikaku;
     egg->derive_seikaku_from_father = TRUE;
   }
   else if( mother_have_kawarazunoisi ) { // 母親のみ持所
+    ONOUE_Printf("かわらずのいし：○\n");
     egg->seikaku = mother_seikaku;
     egg->derive_seikaku_from_mother = TRUE;
   }
@@ -558,14 +556,14 @@ static void EggCordinate_Seikaku_kawarazunoisi( const PARENT* parent, EGG_PARAM*
  * 母親の特性番号を継承しようとする
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_TokuseiIndex_basic( const PARENT* parent, EGG_PARAM* egg, HEAPID heap_id )
+static void EggCordinate_TokuseiIndex_basic( const PARENT* parent, EGG_PARAM* egg, HEAPID heap_id ,GFL_STD_RandContext* rand_context )
 {
   u32 rnd;
   u32 mother_tokusei_idx;
 
   // 母ポケモンの特性インデックスを取得
   mother_tokusei_idx = PP_GetTokuseiIndex( parent->mother );
-  rnd = GFUser_GetPublicRand0(100);  // 乱数取得[0, 99]
+  rnd = GFL_STD_Rand( rand_context ,100 );  // 乱数取得[0, 99]
 
   // 特性番号を決定
   switch( mother_tokusei_idx ) {
@@ -601,13 +599,13 @@ static void EggCordinate_TokuseiIndex_basic( const PARENT* parent, EGG_PARAM* eg
  * になる
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_TokuseiIndex_metamon( const PARENT* parent, EGG_PARAM* egg )
+static void EggCordinate_TokuseiIndex_metamon( const PARENT* parent, EGG_PARAM* egg ,GFL_STD_RandContext* rand_context )
 {
   u32 father_monsno = PP_Get( parent->father, ID_PARA_monsno, NULL );
   u32 mother_monsno = PP_Get( parent->mother, ID_PARA_monsno, NULL );
 
   if( (father_monsno == MONSNO_METAMON) || (mother_monsno == MONSNO_METAMON) ) {
-    u32 rnd = GFUser_GetPublicRand0(2); // 乱数取得
+    u32 rnd = GFL_STD_Rand( rand_context ,2 ); // 乱数取得
     if( rnd == 0 ) {
       egg->tokusei_idx = 0;
     }
@@ -645,7 +643,7 @@ static void EggCordinate_Friend( EGG_PARAM* egg, HEAPID heap_id )
  * アイテムに対応するパワー乱数を両親から計１つ継承する
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_AbilityRnd_select_by_item( const PARENT* parent, EGG_PARAM* egg )
+static void EggCordinate_AbilityRnd_select_by_item( const PARENT* parent, EGG_PARAM* egg ,GFL_STD_RandContext* rand_context )
 {
   int i;
   BOOL father_have_spitem = FALSE;
@@ -685,7 +683,7 @@ static void EggCordinate_AbilityRnd_select_by_item( const PARENT* parent, EGG_PA
   }
 
   if( father_have_spitem && mother_have_spitem ) { // 両親とも所持
-    if( GFUser_GetPublicRand0(2) == 0 ) { 
+    if( GFL_STD_Rand( rand_context ,2 ) == 0 ) { 
       egg->derive_ability_from_father[ derive_ability_idx_from_father ] = TRUE;
       egg->derive_ability_num++;
     }
@@ -711,13 +709,13 @@ static void EggCordinate_AbilityRnd_select_by_item( const PARENT* parent, EGG_PA
  * 両親から計３つのパワー乱数をランダムに継承する
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_AbilityRnd_select_at_random( const PARENT* parent, EGG_PARAM* egg )
+static void EggCordinate_AbilityRnd_select_at_random( const PARENT* parent, EGG_PARAM* egg ,GFL_STD_RandContext* rand_context )
 {
   while( egg->derive_ability_num < 3 )
   {
-    int derive_ability_idx = GFUser_GetPublicRand0( PTL_ABILITY_MAX );
+    int derive_ability_idx = GFL_STD_Rand( rand_context , PTL_ABILITY_MAX );
 
-    if( GFUser_GetPublicRand0(2) == 0 ) {
+    if( GFL_STD_Rand( rand_context ,2 ) == 0 ) {
       if( (egg->derive_ability_from_father[ derive_ability_idx ] == FALSE) &&
           (egg->derive_ability_from_mother[ derive_ability_idx ] == FALSE) ) {
         egg->derive_ability_from_father[ derive_ability_idx ] = TRUE;

@@ -973,10 +973,15 @@ static void CreateEgg( SODATEYA* sodateya, POKEMON_PARAM* egg )
   MYSTATUS* mystatus = GAMEDATA_GetMyStatus( gdata ); 
   const POKEMON_PARAM* father = SODATEYA_WORK_GetPokemon( sodateya->work, 0 );
   const POKEMON_PARAM* mother = SODATEYA_WORK_GetPokemon( sodateya->work, 1 );
+  u64 egg_create_seed = SODATEYA_WORK_GetEggCreateSeed( sodateya->work );
+  GFL_STD_RandContext rand_context;
+
+  // タマゴ生成に使用する乱数生成ワークを初期化
+  GFL_STD_RandInit( &rand_context ,egg_create_seed );
 
   // タマゴを作成
   POKEMON_EGG_Create( 
-      gsys, sodateya->heapID, mystatus, POKE_MEMO_PERSON_SODATEYA, father, mother, egg );
+      gsys, sodateya->heapID, mystatus, POKE_MEMO_PERSON_SODATEYA, father, mother, egg ,&rand_context );
 }
 
 

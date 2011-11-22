@@ -75,6 +75,8 @@ int SODATEYA_WORK_GetPokemonNum( const SODATEYA_WORK* work );
 // 飼育ポケモンの成長経験値
 u32 SODATEYA_WORK_GetGrowUpExp( const SODATEYA_WORK* work, int index );
 
+// タマゴ生成用乱数シードを取得する
+u64 SODATEYA_WORK_GetEggCreateSeed( const SODATEYA_WORK* work );
 
 //===========================================================================================
 // ■ 設定関数
