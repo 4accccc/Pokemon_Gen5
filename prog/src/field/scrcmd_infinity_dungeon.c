@@ -1037,5 +1037,6 @@ VMCMD_RESULT EvCmdInfinityDungeonGetPenaltyGold( VMHANDLE *p_core, void *p_wk_ad
 
   // ‘‚¦‚½•ª‚ğ•Ô‚·
   (*p_ret_wk) = (now_gold - start_gold);
+  return VMCMD_RESULT_CONTINUE;
 }
 
