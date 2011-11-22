@@ -1304,27 +1304,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　スタジアムに　くるだけで
+			<Text>ビッグスタジアムに　くるだけで
 こうふん　しちゃって！！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　スタジアムに　来るだけで
+			<Text>ビッグスタジアムに　来るだけで
 興奮しちゃって！！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2973,28 +2973,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>しょうぶで　ぐったりの　ポケモンに
-スッと　さわやか　サイコソーダ！▽
+シュワと　さわやか　サイコソーダ！▽
 じどうはんばいきで　かえまーす！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>勝負で　ぐったりの　ポケモンに
-スッと　さわやか　サイコソーダ！▽
+シュワと　さわやか　サイコソーダ！▽
 自動販売機で　買えまーす！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3184,27 +3184,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>パパとママに　かわりに
+			<Text>パパと　ママに　かわりに
 あそんでくれて　ありがとう！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>パパとママに　代わりに
-遊んでくれてありがとう！</Text>
+			<Text>パパと　ママに　代わりに
+遊んでくれて　ありがとう！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -6380,28 +6380,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　げんきが　なくなったら
-げんきのかたまり！▽
-きみも　１つ　もっていきなさい▼</Text>
+げんきのかたまり！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンの　元気が　なくなったら
-げんきのかたまり！▽
-きみも　１つ　持っていきなさい▼</Text>
+げんきのかたまり！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -18098,25 +18096,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わあああ！　なんですのよー！</Text>
+			<Text>わあああ！
+なんですのよー！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わあああ！　なんですのよー！</Text>
+			<Text>わあああ！
+なんですのよー！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -19201,25 +19201,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アタタ……　かっこわるいなぁ……</Text>
+			<Text>アタタ……
+かっこわるいなぁ……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アタタ……　かっこ悪いなぁ……</Text>
+			<Text>アタタ……
+かっこ悪いなぁ……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -21611,26 +21613,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おはん……
-やりおるな！</Text>
+やりおるな！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おはん……
-やりおるな！</Text>
+やりおるな！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -23445,27 +23447,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモン　１ひき　だけ？
-それだと　ポケモン　さみしそう……</Text>
+			<Text>ポケモンさん　１ひき　だけ？
+それだと　さみしそうだよ……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモン　１ひき　だけ？
-それだと　ポケモン　さみしそう……</Text>
+			<Text>ポケモンさん　１ひき　だけ？
+それだと　さみしそうだよ……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -23692,25 +23694,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ああ！　むじょう　なり……</Text>
+			<Text>ああ！
+むじょう　なり……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ああ！　無情なり……</Text>
+			<Text>ああ！
+無情なり……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -26954,26 +26958,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>フットボールを　みたあとは
-じぶんたちも　たたかいたーい！▼</Text>
+じぶんたちも　あばれたーい！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>フットボール観戦後は
-自分たちも　戦いたーい！▼</Text>
+自分たちも　暴れたーい！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -27388,15 +27392,15 @@
 かずおおくの　いろが　あるのは▼
 まざりあって　あたらしい
 いろを　うみだす　ためだ！▼
-ドッカーン！！
+ドッカーン！！▼
 もひとつ　ドッカーン！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -27405,15 +27409,15 @@
 数多くの　色が　あるのは▼
 混ざり合って　新しい
 色を　生みだす　ためだ！▼
-ドッカーン！！
+ドッカーン！！▼
 もひとつ　ドッカーン！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -28289,26 +28293,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>きみは　ノンストップとっきゅう！
-わたしは　かくえきていしゃ！</Text>
+わたしは　かくえきていしゃ……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>きみは　ノンストップ特急！
-わたしは　各駅停車！</Text>
+わたしは　各駅停車……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -28362,27 +28366,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じてんしゃに　のって
-たたかうほうが　つよそうだろ？▼</Text>
+			<Text>じてんしゃに　のってるほうが
+なんとなく　てごわそうだろ？▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じてんしゃに　乗って
-戦う方が　強そうだろ？▼</Text>
+			<Text>じてんしゃに　乗ってる方が
+なんとなく　手強そうだろ？▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -28538,28 +28542,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>じてんしゃに　のると
-いつもより　はやく　ながれる　けしき▽
-いつもと　ちがうって　ワクワクする！</Text>
+はやく　ながれていく　けしき▽
+いつもと　ちがって　ワクワクする！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>じてんしゃに　乗ると
-いつもより　速く　流れる　景色▽
-いつもと　違うって　ワクワクする！</Text>
+速く　流れていく　景色▽
+いつもと　違って　ワクワクする！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -28574,25 +28578,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きみの　ポケモンを　サイエンス！▼</Text>
+			<Text>きみの　ポケモンも　サイエンス！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>君の　ポケモンを　サイエンス！▼</Text>
+			<Text>君の　ポケモンも　サイエンス！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -28607,25 +28611,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はいぼくの　あじを　サイエンス……</Text>
+			<Text>また　はいぼくを　サイエンス……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>敗北の　味を　サイエンス……</Text>
+			<Text>また　敗北を　サイエンス……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -29348,27 +29352,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あら？
+			<Text>あらあらあらあら？
 まいごの　ポケモンかしら？▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あら？
+			<Text>あらあらあらあら？
 迷子の　ポケモンかしら？▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -31218,31 +31222,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたし　ローテーションバトルの
-くんれんを　しているの▼
-あなたに　３ひきいじょう　たたかえる
-ポケモンが　いれば　しょうぶできるわ</Text>
+			<Text>おれは　ローテーションバトルの
+くんれんを　しているのさ▼
+きみに　３ひきいじょう　たたかえる
+ポケモンが　いれば　しょうぶするよ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたし　ローテーションバトルの
-訓練を　しているの▼
-あなたに　３匹以上　戦える
-ポケモンが　いれば　勝負できるわ</Text>
+			<Text>おれは　ローテーションバトルの
+訓練を　しているのさ▼
+きみに　３匹以上　戦える
+ポケモンが　いれば　勝負するよ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -31258,26 +31262,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>どう　たたかえば　こうかてきか
-ためさせて　いただくわね！▼</Text>
+ためさせて　もらうよ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>どう　戦えば　効果的か
-試させて　いただくわね！▼</Text>
+試させて　もらうよ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -31292,27 +31296,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひょっとして　あなた
+			<Text>ひょっとして　きみ
 ローテーションバトルの　てんさい！？</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひょっとして　あなた
+			<Text>ひょっとして　きみ
 ローテーションバトルの　天才！？</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -31327,27 +31331,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よければ　おともだちとも
-ローテーションバトルを　してみてね</Text>
+			<Text>きがむけば　ともだちとも
+ローテーションバトルを　してみなよ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よければ　お友達とも
-ローテーションバトルを　してみてね</Text>
+			<Text>気が向けば　友達とも
+ローテーションバトルを　してみなよ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -35359,27 +35363,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まけちゃったが！
+			<Text>まけちゃったが
 おれは　すべてを　あいしてやる！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>負けちゃったが！
+			<Text>負けちゃったが
 おれは　すべてを　愛してやる！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -35652,26 +35656,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おまえさん！　どんな　すごい
-ポケモンを　つったか　みせてよ！▼</Text>
+ポケモンを　つれているか　みせてよ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おまえさん！　どんな　すごい
-ポケモンを　釣ったか　みせてよ！▼</Text>
+ポケモンを　連れているか　みせてよ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -35721,31 +35725,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひとが　すごい　ポケモンを　つっても
-ちっとも　うらやましく　ないですよ▼
-だって　じぶんの　ポケモンが
-じぶんにとって　いちばん　ですからね</Text>
+			<Text>じぶんの　ポケモンが
+じぶんにとって　いちばん　ですからね▽
+たにんと　くらべたり　しないですよ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>他人が　すごい　ポケモンを　釣っても
-ちっとも　うらやましく　ないですよ▼
-だって　自分の　ポケモンが
-自分にとって　一番　ですからね！</Text>
+			<Text>自分の　ポケモンが
+自分にとって　一番　ですからね！▽
+他人と　比べたり　しないですよ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -42131,25 +42133,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たのむぜッ！！</Text>
+			<Text>たのむッ！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>頼むぜッ！！</Text>
+			<Text>頼むッ！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -42234,25 +42236,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たのむぜッ！！</Text>
+			<Text>たのむッ！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>頼むぜッ！！</Text>
+			<Text>頼むッ！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -42337,25 +42339,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たのむぜッ！！</Text>
+			<Text>たのむッ！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>頼むぜッ！！</Text>
+			<Text>頼むッ！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -42988,31 +42990,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おちばのように
-まっかに　もえる▼
-レンジャーだましい
-みせてあげるよ！▼</Text>
+			<Text>おちばのように　まっかに　もえる
+レンジャーだましい　みせてあげる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T05:49:22" />
+				Time="2011-11-22T04:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T05:49:22" />
+				Time="2011-11-22T04:02:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>落ち葉のように
-真っ赤に　燃える▼
-レンジャー魂
-みせてあげるよ！▼</Text>
+			<Text>落ち葉のように　真っ赤に　燃える
+レンジャー魂　みせてあげる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:58" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -43091,27 +43089,27 @@
 			Language="JPN">
 			<Text>もえるような　じょうねつで
 たきびが　できないか▽
-ためしていた　ところだよ！</Text>
+ためしていた　ところ　なんだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T07:04:21" />
+				Time="2011-11-22T04:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T07:04:21" />
+				Time="2011-11-22T04:02:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>燃えるような　情熱で
 たき火が　できないか▽
-試していた　ところだよ！</Text>
+試していた　ところ　なんだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T07:04:21" />
+				Time="2011-11-22T04:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T07:04:21" />
+				Time="2011-11-22T04:02:58" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -44469,27 +44467,27 @@
 			Language="JPN">
 			<Text>２ねんまえ　カノコタウンの
 トレーナーに　まけてから▽
-ポケモン　そだてまくったのにな！</Text>
+ポケモン　そだてまくったのに！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>２年前　カノコタウンの
 トレーナーに　負けてから▽
-ポケモン　育てまくったのにな！</Text>
+ポケモン　育てまくったのに！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -44579,28 +44577,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アタシね　いろんな　トレーナーと
-ポケモンしょうぶ　して▽
-ポケモンを　そだてるんだ！</Text>
+たくさん　ポケモンしょうぶ　して▽
+ポケモンを　そだてたんだよ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アタシね　いろんな　トレーナーと
-ポケモン勝負　して▽
-ポケモンを　育てるんだ！</Text>
+たくさん　ポケモン勝負して▽
+ポケモンを　育てたんだよ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -45534,30 +45532,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>きょうから　あした……
-ひとと　ポケモンと　せかい……▼
-この　つながっている
-かんかくが　だいすき……</Text>
+ひとと　ポケモンと　せかい……▽
+どれも　つながっているのよね</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>今日から　明日……
-人と　ポケモンと　世界……▼
-この　つながっている
-感覚が　大好き……</Text>
+人と　ポケモンと　世界……▽
+どれも　つながっているのよね</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -53160,26 +53156,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>こんなに　つよい　トレーナーが
-いるとは　きいて　いなかった……</Text>
+いるとは　きいていなかった……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T03:39:18" />
+				Time="2011-11-22T04:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T03:39:18" />
+				Time="2011-11-22T04:02:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>こんなに　強い　トレーナーが
-いるとは　聞いて　いなかった……</Text>
+いるとは　きいていなかった……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T03:39:18" />
+				Time="2011-11-22T04:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T03:39:18" />
+				Time="2011-11-22T04:02:58" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -53195,30 +53191,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>この　トンネルの　ちしつは
-ホウエンちほうに　ある▽
-いせきに　よく　にていると▽
-きいたんだけど……</Text>
+ホウエンちほうの　いせきに▽
+よく　にていると　きいたんだけど……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T03:39:18" />
+				Time="2011-11-22T04:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T03:39:18" />
+				Time="2011-11-22T04:02:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この　トンネルの　地質は
-ホウエン地方に　ある▽
-遺跡に　よく　似ていると▽
-聞いたんだけど……</Text>
+ホウエン地方の　遺跡に▽
+よく　似ていると　きいたんだけど……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T03:39:18" />
+				Time="2011-11-22T04:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T03:39:18" />
+				Time="2011-11-22T04:02:58" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -54677,31 +54671,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　いせきを　ちゅうしんに
-ながい　ねんげつを　かけて▼
-イッシュちほうに
-ひとや　ポケモンが　ふえたってさ</Text>
+			<Text>こだいのしろ……▼
+ここに　ひとや　ポケモンが　つどい
+イッシュは　はってん　したらしいね</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この遺跡を　中心に
-長い　年月を　かけて▼
-イッシュ地方に
-人や　ポケモンが　増えたってさ</Text>
+			<Text>古代の城……▼
+ここに　人や　ポケモンが　集い
+イッシュは　発展したらしいね</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:58" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -63125,27 +63117,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボクのような　エリートには
-プライドが　あるから　まけないんだ！▼</Text>
+			<Text>ポケモンと　オマエが
+どれだけ　できるか　しょうめいしろ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボクのような　エリートには
-プライドが　あるから　負けないんだ！▼</Text>
+			<Text>ポケモンと　オマエが
+どれだけ　できるか　証明しろ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -63160,27 +63152,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プライドを　まもれなかったか
-むねん　だ！</Text>
+			<Text>オレたちよりは　できる！
+それは　しょうめい　されたな！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プライドを　守れなかったか
-無念だ！</Text>
+			<Text>オレたちよりは　できる！
+それは　証明されたな！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -63195,31 +63187,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プライドとは　なにも
-えらそうにする　ことじゃない！▼
-じぶんが　ながねん　きずいたことに
-たいする　ほこりの　ことなんだ！</Text>
+			<Text>つよさの　しょうめい　なんて
+じつは　どうでも　いいんだよ▼
+オレと！　ポケモンが！
+どれだけ　できるか　しってるからな！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プライドとは　なにも
-偉そうにする　ことじゃない！▼
-自分が　長年　築いたことに
-対する　誇りの　ことなんだ！</Text>
+			<Text>強さの　証明なんて
+じつは　どうでも　いいんだよ▼
+オレと！　ポケモンが！
+どれだけ　できるか　知ってるからな！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -63525,30 +63517,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>トレーナーを　みるだけで
-その　つよさ　きはくが　みえる▼
+つよさ！　きはく！　が　わかる▼
 トレーナーとしての　カンなのか
 サイキッカーの　のうりょくなのか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>トレーナーを　みるだけで
-その　強さ　気迫が　みえる▼
+強さ！　気迫！　が　わかる▼
 トレーナーとしての　カンなのか
 サイキッカーの　能力なのか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -63563,31 +63555,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まいったなあ……▼
-あのね　あたしの　ポケモンが
-あたしのこと　じまん　したがってるの▼
-というわけで　はじめましょ！▼</Text>
+			<Text>オレは　ポケモンと　いるだけでは
+まんぞくは　できない！　かちたい！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まいったなあ……▼
-あのね　あたしの　ポケモンが
-あたしのこと　自慢したがってるの▼
-というわけで　始めましょ！▼</Text>
+			<Text>オレは　ポケモンと　いるだけでは
+満足は　できない！　勝ちたい！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -63602,27 +63590,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あっちゃあ！
-じまん　できなかったね</Text>
+			<Text>クッ！　まさかまさかの
+だいはいぼく　だ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あっちゃあ！
-自慢できなかったね</Text>
+			<Text>クッ！　まさかまさかの
+大敗北だ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -63637,31 +63625,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいてを　みとめるからこそ
-かちたい！　と　おもうの！▼
-だから　あたしは　かちたい！　と
-おもわれるように　なりたいの</Text>
+			<Text>オレは　ポケモンと　いるだけでは
+まんぞくは　できない！　かちたい！▼
+だが　ポケモンと　いるだけで
+やすらぐ　ひとが　いるのも　しってるよ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手を　認めるからこそ
-勝ちたい！　と　思うの！▼
-だから　あたしは　勝ちたい！　と
-思われるように　なりたいの</Text>
+			<Text>オレは　ポケモンと　いるだけでは
+満足は　できない！　勝ちたい！▼
+だが　ポケモンと　いるだけで
+安らぐ　人が　いるのも　知ってるよ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -64340,29 +64328,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かつことは　よいことだが
-かつことだけが　すべてではない……▽
-だいじな　ものを　みうしなうなよ！</Text>
+			<Text>しょうりの　しゅんかん
+おまえさんの　ポケモン▽
+いい　かお　してたぜ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>勝つことは　よいことだが
-勝つことだけが　全てではない……▽
-大事な　ものを　見失うなよ！</Text>
+			<Text>勝利の　瞬間
+おまえさんの　ポケモン▽
+いい　表情してたぜ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -64389,15 +64377,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘前
-仮メッセージ</Text>
+			<Text>いいの？　オジサン　強いよ？
+それでも　相手しちゃうの？▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -64424,15 +64412,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘負け
-テストメッセージ</Text>
+			<Text>いいよ……　オジサン　弱いよ……
+なんで　相手しちゃったの……？</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -64447,27 +64435,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうご
-テストメッセージ</Text>
+			<Text>つよさの　げんかいを　みとめたくない
+それだけで　たたかいつづけてるの……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘後
-テストメッセージ</Text>
+			<Text>強さの　限界を　認めたくない
+それだけで　戦いつづけてるの……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -64482,27 +64470,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまえ
-テストメッセージ</Text>
+			<Text>ほんきで　ポケモンと
+ケンカしちゃう　あたしと▽
+ほんきで　むかいあってみない？▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘前
-仮メッセージ</Text>
+			<Text>本気で　ポケモンと
+ケンカしちゃう　あたしと▽
+本気で　向かい合ってみない？▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -64517,27 +64507,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまけ
-テストメッセージ</Text>
+			<Text>ほんきで　ひとと　むかいあえば
+こんなふうに　きずつくよ……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘負け
-テストメッセージ</Text>
+			<Text>本気で　人と　向かい合えば
+こんなふうに　きずつくよ……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -64552,27 +64542,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうご
-テストメッセージ</Text>
+			<Text>ほんきで　ケンカ　しちゃうのは
+ほんきで　つよさを　もとめてるから▼
+ぬるい　やさしさは　つみ　だよ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘後
-テストメッセージ</Text>
+			<Text>本気で　ケンカ　しちゃうのは
+本気で　強さを　求めてるから▼
+ぬるい　優しさは　罪だよ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -64587,29 +64579,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まよっているときに　オレ
-トレーナーに　あう！▽
-そりゃ　こぶし　まじえるっしょ！▼</Text>
+			<Text>よし！　おまえなら　おれの　よわさを
+うきぼりに　してくれそうだな！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>迷っているときに　オレ
-トレーナーに　会う！▽
-そりゃ　こぶし　交えるっしょ！▼</Text>
+			<Text>よし！　おまえなら　おれの　弱さを
+浮き彫りに　してくれそうだな！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -64624,27 +64614,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ムムム……　まよったまま
-たたかうのは　よくないなあ</Text>
+			<Text>おのれの　けってんが　みえた！
+そこを　なおせば　つよくなれる！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ムムム……　迷ったまま
-戦うのは　よくないなあ</Text>
+			<Text>己の　欠点が　みえた！
+そこを　直せば　強くなれる！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -64659,31 +64649,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひとは　まえに　すすむかぎり
-まよったり　とまったりする……▼
-そのときは　ポケモンが
-まえにすすむ　ゆうきを　くれるっしょ</Text>
+			<Text>おのれの　よわさを　うけいれる
+つよくなるには　まず　そこからだな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>人は　前に　進むかぎり
-迷ったり　止まったりする……▼
-そのときは　ポケモンが
-前に進む　勇気を　くれるっしょ</Text>
+			<Text>己の　弱さを　受け入れる
+強くなるには　まず　そこからだな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -64807,27 +64793,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だんがい　ぜっぺき！
-ポケモンと　てっぺん　めざします！▼</Text>
+			<Text>じんせいは　やまを　こえるもの
+あなたは　やまに　なれるかしら？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>だんがい　ぜっぺき！
-ポケモンと　頂上　目指します！▼</Text>
+			<Text>人生は　山を　越えるもの
+あなたは　山に　なれるかしら？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -64842,27 +64828,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなたと　いう　がけを
+			<Text>あなたと　いう　やまを
 こえられなかった……！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T07:04:22" />
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T07:04:22" />
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたと　いう　がけを
+			<Text>あなたと　いう　山を
 越えられなかった……！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T12:34:06" />
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T12:34:06" />
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -64877,29 +64863,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　がけを　のぼれば
-トレーナーの　たかみ▽
+			<Text>やまは　こえなくても
+とおまわり　しても　いいの▼
+ここの　のぼれば　トレーナーの　たかみ
 ポケモンリーグは　もうすぐです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T07:04:22" />
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T07:04:22" />
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　がけを　登れば
-トレーナーの　高み▽
+			<Text>山は　越えなくても
+遠回り　しても　いいの▼
+ここの　登れば　トレーナーの　高み
 ポケモンリーグは　もうすぐです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T12:34:06" />
+				Time="2011-11-22T12:01:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T12:34:06" />
+				Time="2011-11-22T12:01:49" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -65729,27 +65717,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いいの？　オジサン　つよいよ？
-それでも　あいて　しちゃうの？▼</Text>
+			<Text>わざわざ　ここまで　くるとは……▼
+よろしい！　そなたの　くろうに
+ぜんりょくで　こたえると　しよう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いいの？　オジサン　強いよ？
-それでも　相手しちゃうの？▼</Text>
+			<Text>わざわざ　ここまで　来るとは……▼
+よろしい！　そなたの　苦労に
+全力で　応えると　しよう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -65764,27 +65754,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いいよ……　オジサン　よわいよ……
-なんで　あいて　しちゃったの……？</Text>
+			<Text>いい　トレーナーとの　たたかいは
+こころを　あたたかく　みたしてくれる</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いいよ……　オジサン　弱いよ……
-なんで　相手しちゃったの……？</Text>
+			<Text>いい　トレーナーとの　戦いは
+心を　暖かく　満たしてくれる</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -65799,27 +65789,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベテランだからって　みんなが
-タフで　たくましい　わけじゃないよ</Text>
+			<Text>そなたが　ここに　これたのは……▼
+そう！　ひでんわざを　つかい
+はこんでくれた　ポケモンの　おかげだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベテランだからって　みんなが
-タフで　たくましい　わけじゃないよ</Text>
+			<Text>そなたが　ここに　これたのは……▼
+そう！　秘伝技を　使い
+運んでくれた　ポケモンの　おかげだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -65834,27 +65826,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまえ
-テストメッセージ</Text>
+			<Text>ねっ！　せっかく　きたんだ
+おばちゃんの　あいてを　してよ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘前
-仮メッセージ</Text>
+			<Text>ねっ！　せっかく　来たんだ
+おばちゃんの　相手を　してよ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -65869,27 +65861,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまけ
-テストメッセージ</Text>
+			<Text>あんがとね
+たのしかったよ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘負け
-テストメッセージ</Text>
+			<Text>あんがとね
+楽しかったよ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -67104,27 +67096,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまえ
-テストメッセージ</Text>
+			<Text>じぶんの　いばしょを　さがして
+せかいじゅうを　たびしてる……▽
+きみは　どうなんだい？▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘前
-仮メッセージ</Text>
+			<Text>自分の　居場所を　探して
+世界中を　旅してる……▽
+きみは　どうなんだい？▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -67139,27 +67133,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまけ
-テストメッセージ</Text>
+			<Text>まけた……　ここも
+じぶんの　いばしょ　じゃないか……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘負け
-テストメッセージ</Text>
+			<Text>負けた……　ここも
+自分の　居場所じゃないか……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -67174,27 +67168,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうご
-テストメッセージ</Text>
+			<Text>いばしょは　みつける　もんじゃない
+じぶんで　つくりだす　もんなんだ……！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘後
-テストメッセージ</Text>
+			<Text>居場所は　みつける　もんじゃない
+自分で　つくりだす　もんなんだ……！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -67209,27 +67203,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまえ
-テストメッセージ</Text>
+			<Text>バックパックに　なにを　つめるか
+しりたければ　おれに　かってみろ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘前
-仮メッセージ</Text>
+			<Text>バックパックに　なにを　詰めるか
+知りたければ　おれに　勝ってみろ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -67244,27 +67238,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまけ
-テストメッセージ</Text>
+			<Text>おわー
+うもれていくー！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘負け
-テストメッセージ</Text>
+			<Text>おわー
+埋もれていくー！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -67316,27 +67310,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまえ
-テストメッセージ</Text>
+			<Text>さばくって　おおきな　すなばよね！
+ねえねえ　ポケモンを　あそばせようよ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘前
-仮メッセージ</Text>
+			<Text>砂漠って　大きな　砂場よね！
+ねえねえ　ポケモンを　遊ばせようよ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -67351,27 +67345,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまけ
-テストメッセージ</Text>
+			<Text>あそびだから
+たのしんだほうが　かちよね！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘負け
-テストメッセージ</Text>
+			<Text>遊びだから
+楽しんだ方が　勝ちよね！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -67386,27 +67380,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうご
-テストメッセージ</Text>
+			<Text>うもれちゃう　こだいのしろの　かわりに
+おおきな　すなの　しろを　つくろっかな</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘後
-テストメッセージ</Text>
+			<Text>埋もれちゃう　古代の城の　代わりに
+大きな　砂の城を　つくろっかな</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -67421,27 +67415,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまえ
-テストメッセージ</Text>
+			<Text>ひっしに　すなを　すくっても
+ゆびの　すきまから　こぼれおちて……▽
+なんだか　かなしいわね▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘前
-仮メッセージ</Text>
+			<Text>必死に　砂を　すくっても
+指の　すきまから　こぼれ落ちて……▽
+なんだか　悲しいわね▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -67456,27 +67452,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまけ
-テストメッセージ</Text>
+			<Text>こぼれていく……
+そう……　こぼれおちる　すな</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘負け
-テストメッセージ</Text>
+			<Text>こぼれていく……
+そう……　こぼれおちる　砂</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -67491,27 +67487,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうご
-テストメッセージ</Text>
+			<Text>あなたたちに　おくる　ことばだよ！▼
+たびを　おそれずに！
+でも　ちゅういしてね！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘後
-テストメッセージ</Text>
+			<Text>あなたたちに　贈る　言葉だよ！▼
+旅を　おそれずに！
+でも　注意してね！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -68715,27 +68713,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまえ
-テストメッセージ</Text>
+			<Text>ポケシフターで　ポケモンを
+いどう　させてもらう　つもりです▽
+でも　そのまえに……▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘前
-仮メッセージ</Text>
+			<Text>ポケシフターで　ポケモンを
+移動させてもらう　つもりです▽
+でも　その前に……▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -68750,27 +68750,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまけ
-テストメッセージ</Text>
+			<Text>はあ……　あなたの　ポケモン
+とっても　すごいじゃない！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘負け
-テストメッセージ</Text>
+			<Text>はあ……　あなたの　ポケモン
+とっても　すごいじゃない！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -68785,27 +68785,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうご
-テストメッセージ</Text>
+			<Text>ときをこえて　ポケモンと　であう……▼
+あいたい　きもちが
+すごい　はつめいを　うみだすのねえ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘後
-テストメッセージ</Text>
+			<Text>時を超えて　ポケモンと　であう……▼
+会いたい　気持ちが
+すごい　発明を　うみだすのねえ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -68820,27 +68822,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あら？　あなた……
-ポケシフターから　にげた？▼</Text>
+			<Text>あら？　あなたの　ポケモン……
+ポケシフターから　にげたでしょ！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あら？　あなた……
-ポケシフターから　逃げた？▼</Text>
+			<Text>あら？　あなたの　ポケモン……
+ポケシフターから　逃げたでしょ！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -68891,26 +68893,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケシフターは　ポケモンを
-てんそうする　すっごい　そうちです！</Text>
+いどうさせる　すっごい　そうちです！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケシフターは　ポケモンを
-転送する　すっごい　装置です！</Text>
+移動させる　すっごい　装置です！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -68925,27 +68927,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまえ
-テストメッセージ</Text>
+			<Text>たびをすれば　おおくの
+よろこびに　であう……▽
+きみと　たたかえば　どうなるかな？▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘前
-仮メッセージ</Text>
+			<Text>たびをすれば　おおくの
+よろこびに　であう……▽
+きみと　たたかえば　どうなるかな？▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -68960,27 +68964,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまけ
-テストメッセージ</Text>
+			<Text>しょうりの　よろこびも
+まけの　かなしみも　いっしゅん……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘負け
-テストメッセージ</Text>
+			<Text>勝利の　喜びも
+負けの　悲しみも　一瞬……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -68995,27 +68999,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうご
-テストメッセージ</Text>
+			<Text>たびさきで　おしえてもらったんだ▼
+よろこびは　いっしゅん
+しあわせは　ずっと……▽
+ポケモンは　ずっと　いてくれるよね</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘後
-テストメッセージ</Text>
+			<Text>旅先で　教えてもらったんだ▼
+喜びは　いっしゅん
+幸せは　ずっと……▽
+ポケモンは　ずっと　いてくれるよね</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -69030,27 +69038,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまえ
-テストメッセージ</Text>
+			<Text>バックパックの　なかには
+たくさんの　どうぐ！▽
+つかいこなして　しょうり　します！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘前
-仮メッセージ</Text>
+			<Text>バックパックの　中には
+たくさんの　道具！▽
+使いこなして　勝利します！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -69065,27 +69075,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまけ
-テストメッセージ</Text>
+			<Text>わざや　どうぐが　おおいと
+かえって　まよっちゃうのよね……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘負け
-テストメッセージ</Text>
+			<Text>技や　道具が　多いと
+かえって　迷っちゃうのよね……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -69100,27 +69110,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうご
-テストメッセージ</Text>
+			<Text>まよったら　すてる！
+たびをするには　みがるが　いちばん！▽
+ポケモンが　いれば　だいじょうぶ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘後
-テストメッセージ</Text>
+			<Text>まよったら　すてる！
+たびをするには　みがるが　いちばん！▽
+ポケモンが　いれば　だいじょうぶ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -69791,29 +69803,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まいにち　ヤグルマのもりを
+			<Text>ヤグルマのもりを　すみから　すみまで
 パトロールしている　この　オレ！▽
 ここでの　しょうぶは　おてのもの！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>毎日　ヤグルマの森を
+			<Text>ヤグルマの森を　隅から　隅まで
 パトロールしている　この　オレ！▽
 ここでの　勝負は　おてのもの！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -70079,35 +70091,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さあ！　いっしょに
-しんこきゅう　しましょ！▼
-スー　ハー
+			<Text>スー　ハー
 ヒー　フー▼
-はい！　つぎは
+はい！　しんこきゅうの　つぎは
 ポケモンを　たたかわせましょ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さあ！　一緒に
-深呼吸　しましょ！▼
-スー　ハー
+			<Text>スー　ハー
 ヒー　フー▼
-はい！　次は
+はい！　深呼吸の　次は
 ポケモンを　戦わせましょ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -70379,27 +70387,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまえ
-テストメッセージ</Text>
+			<Text>なんとなく　なつかしくてね
+ここに　あしを　はこんだが……▼
+かこを　ふりかえるよりも
+いま　きみと　たたかいたいね！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘前
-仮メッセージ</Text>
+			<Text>なんとなく　懐かしくてね
+ここに　足を　運んだが……▼
+過去を　振り返るよりも
+いま　きみと　戦いたいね！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -70414,27 +70426,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまけ
-テストメッセージ</Text>
+			<Text>そうか　そうだったな
+わたしも　むかしは　ひっしだった</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘負け
-テストメッセージ</Text>
+			<Text>そうか　そうだったな
+わたしも　昔は　必死だった</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -70449,27 +70461,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうご
-テストメッセージ</Text>
+			<Text>こどもの　ころを　おもいだすよ
+むじゃきに　むしポケモンを　おいかけ▼
+ポケモントレーナーとしての　スタートは
+あのひ　このばしょ　だったんだな……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘後
-テストメッセージ</Text>
+			<Text>こどもの　ころを　思いだすよ
+無邪気に　むしポケモンを　追いかけ▼
+ポケモントレーナーとしての　スタートは
+あの日　この場所　だったんだな……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -70484,27 +70500,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまえ
-テストメッセージ</Text>
+			<Text>あたしが　うんめいの　であいをした
+ポケモンたちを　おひろめ　するよ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘前
-仮メッセージ</Text>
+			<Text>あたしが　運命の　であいをした
+ポケモンたちを　お披露目するよ！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -70519,27 +70535,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまけ
-テストメッセージ</Text>
+			<Text>あんたが　であった　ポケモン
+かなり　たくましい　じゃないか！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘負け
-テストメッセージ</Text>
+			<Text>あんたが　であった　ポケモン
+かなり　たくましい　じゃないか！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -70554,27 +70570,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうご
-テストメッセージ</Text>
+			<Text>わかい　こどもたちは　いいね
+いろんな　ポケモンと　であえてさ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘後
-テストメッセージ</Text>
+			<Text>若い　こどもたちは　いいね
+いろんな　ポケモンと　であえてさ！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -70589,27 +70605,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまえ
-テストメッセージ</Text>
+			<Text>たんパンと　ポケモンの　くみあわせ
+これって　さいきょう　だよね！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘前
-仮メッセージ</Text>
+			<Text>たんパンと　ポケモンの　組み合わせ
+これって　最強だよね！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -70624,27 +70640,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうまけ
-テストメッセージ</Text>
+			<Text>ポケモンは　わるくない！
+たんパンも　わるくない！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘負け
-テストメッセージ</Text>
+			<Text>ポケモンは　悪くない！
+たんパンも　悪くない！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -70659,27 +70675,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんとうご
-テストメッセージ</Text>
+			<Text>ひざこぞうを　きたえるため
+たんパン　なんだ！　さわってみる？</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>戦闘後
-テストメッセージ</Text>
+			<Text>ひざこぞうを　鍛えるため
+たんパン　なんだ！　さわってみる？</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -70875,29 +70891,29 @@
 			Language="JPN">
 			<Text>おとなびた　こども……
 こどもっぽい　おとな……▼
-どっちの　あいても　たいへん
+どっちの　あいても　たいへん！
 でも　どっちも　かわいいの</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T14:08:23" />
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T14:08:23" />
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>大人びた　こども……
 こどもっぽい　大人……▼
-どっちの　相手も　大変
+どっちの　相手も　大変！
 でも　どっちも　可愛いの</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T14:08:23" />
+				Time="2011-11-22T06:11:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T14:08:23" />
+				Time="2011-11-22T06:11:05" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -74809,27 +74825,27 @@
 		Label="TRID_TENNIS_13_TRMSG_FIGHT_LOSE">
 		<LanguageCell
 			Language="JPN">
-			<Text>まあ！　あとちょっと
+			<Text>あとちょっと　もうちょっと
 ラリーを　つづけたかったのに！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2011-11-22T01:59:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2011-11-22T01:59:27" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まあ！　あとちょっと
+			<Text>あとちょっと　もうちょっと
 ラリーを　続けたかったのに！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2011-11-22T01:59:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2011-11-22T01:59:27" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -74864,26 +74880,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>テニスの　はげしい　フットワーク！
-わかる？　あたしたち　きたえてるの▼</Text>
+わかる？　あたしたち　タフなの▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>テニスの　激しい　フットワーク！
-わかる？　あたしたち　鍛えてるの▼</Text>
+わかる？　あたしたち　タフなの▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2011-11-22T04:02:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2011-11-22T04:02:59" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -74971,27 +74987,27 @@
 		Label="TRID_BASKET_13_TRMSG_FIGHT_LOSE">
 		<LanguageCell
 			Language="JPN">
-			<Text>しあいしゅうりょう！
+			<Text>ゲームセット！
 きみの　あっしょう　だね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2011-11-22T01:59:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2011-11-22T01:59:27" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>試合終了！
+			<Text>ゲームセット！
 きみの　圧勝だね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2011-11-22T01:59:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T09:51:00" />
+				Time="2011-11-22T01:59:27" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
