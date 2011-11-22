@@ -452,6 +452,9 @@ EVENT_START   ev_pos_r19_champion_02
   _OBJ_ANIME_WAIT()
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち  
   
+  //イベント曲再生
+  _START_EVENT_BGM( SEQ_BGM_E_CHAMPION )
+  
   _TIME_WAIT( 40 )
   
   //自機にカメラを戻す
@@ -527,6 +530,9 @@ EVENT_START   ev_pos_r19_champion_02
   //アニメ：アデク退場
   _OBJ_ANIME( R19_CHAMPION_01,r19_champion_bye )
   _OBJ_ANIME_WAIT()
+  
+  //イベント曲終了
+  _END_EVENT_BGM()
   
   //アデク動作モデル削除
   _OBJ_DEL( R19_CHAMPION_01 )

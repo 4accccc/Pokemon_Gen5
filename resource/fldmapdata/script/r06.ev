@@ -193,7 +193,13 @@ EVENT_START   ev_pos_r06_legend_meet_01
   
   // 登場アニメ
   _EV_MOVEPOKE_START_ANIME( SCR_EV_MOVEPOKE_ANIME_KOBARUON_IN )
+  
+  //SE再生
+  _SE_PLAY( SEQ_SE_SW_KOBALON_01 )
+  
+  //アニメ・SE再生待ち
   _EV_MOVEPOKE_CHECK_ANIME_END()
+  _SE_WAIT()
   
   _TIME_WAIT( 30 )
   
@@ -208,7 +214,12 @@ EVENT_START   ev_pos_r06_legend_meet_01
   
   // 退場アニメ
   _EV_MOVEPOKE_START_ANIME( SCR_EV_MOVEPOKE_ANIME_KOBARUON_OUT )
+  
+  //SE再生
+  _SE_PLAY( SEQ_SE_SW_KOBALON_02 )
+  
   _EV_MOVEPOKE_CHECK_ANIME_END()
+  _SE_WAIT()
 
   // 移動ポケモンアニメ破棄
   _EV_MOVEPOKE_DELETE()

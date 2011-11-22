@@ -25,6 +25,8 @@
 #define FLD_ITEM_103                      11
 #define FLD_ITEM_104                      12
 #define TR_TANPAN_21                      13
+#define R07_FLDMONS_01                    14
+#define R07_FLDMONS_02                    15
 
 #endif //ZONE_R07_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r07.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
