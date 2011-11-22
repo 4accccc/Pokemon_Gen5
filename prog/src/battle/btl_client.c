@@ -55,6 +55,10 @@
 
 #include "msg/msg_pw_director_gentleman.h"
 
+#ifdef PM_DEBUG
+static int s_debug_cutin_cnt = 0;
+#endif
+
 enum {
   PRINT_FLG = FALSE,
 };
@@ -576,6 +580,12 @@ static BOOL scProc_OP_SetDoryoku( BTL_CLIENT* wk, int* seq, const int* args );
 #endif
 
 
+
+#ifdef PM_DEBUG
+static BOOL Debug_SubProc_CheckCutin(BTL_CLIENT *wk, int *seq );
+#endif
+
+
 //=============================================================================================
 /**
  * システム初期化
@@ -961,6 +971,16 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
       {
         BOOL fRecCtrlLock;
         wk->subProc = getSubProc( wk, cmd, &fRecCtrlLock );
+
+#ifdef PM_DEBUG
+        if( cmd != BTL_ACMD_WAIT_SETUP
+            && wk->viewCore != NULL
+            && BTL_MAIN_GetDebugFlag( wk->mainModule, BTL_DEBUGFLAG_POKEWOOD_CUTIN ) )
+        {
+          wk->subProc = Debug_SubProc_CheckCutin;
+        }
+#endif
+
         if( fRecCtrlLock ){
           if( !RecPlayerCtrl_Lock(&wk->recPlayer) ){  // 既にフェード中でロックできない->フェード待ちへ
             wk->myState = SEQ_WAIT_RECPLAY_FADEOUT;
@@ -2360,15 +2380,17 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
     if( BTL_MAIN_GetDebugFlag( wk->mainModule, BTL_DEBUGFLAG_POKEWOOD_CUTIN ) )
     {
       u16 event_no;
-      if( DEBUG_POKEWOOD_CUTIN_GetExitsEventNo( senario, wk->clientTurnCount, &event_no ) )
+      if( DEBUG_POKEWOOD_CUTIN_GetExitsEventNo( senario, s_debug_cutin_cnt, &event_no ) )
       {
+        s_debug_cutin_cnt++;
         wk->pokewoodSeqWork.event_no = event_no;
       }
     }
 #endif
 
     if(wk->pokewoodSeqWork.event_no>=0){
-      if( BTL_MAIN_GetPokewoodMode( wk->mainModule ) == BTL_POKEWOOD_SHOW 
+
+      if( BTL_MAIN_GetPokewoodMode( wk->mainModule ) == BTL_POKEWOOD_SHOW
           && POKEWOOD_CUTIN_IsExits( senario, wk->pokewoodSeqWork.event_no, _get_pokewood_success_flag(wk), BTL_MAIN_GetDebugFlag( wk->mainModule, BTL_DEBUGFLAG_POKEWOOD_CUTIN ) ) )
       {
         wk->pokewoodSeqWork.seq = POKEWOOD_EVENT_SEQ_CUTIN_SETUP;
@@ -11167,4 +11189,58 @@ static BOOL AICtrl_IsMyFase( BTL_CLIENT* wk )
   return FALSE;
 }
 
+#endif
+
+/*============================================================================================*/
+/* デバッグ用カットインすぐ見るためのシステム                                           */
+/*============================================================================================*/
+#ifdef PM_DEBUG
+static BOOL Debug_SubProc_CheckCutin(BTL_CLIENT *wk, int *seq )
+{
+  enum
+  {
+    SEQ_START,
+    SEQ_MAIN,
+    SEQ_END,
+  };
+
+  POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario(wk->mainModule);
+  POKEWOOD_CUTIN   *p_cutin = BTL_MAIN_GetPokewoodCutin( wk->mainModule );
+
+  switch( *seq )
+  {
+  case SEQ_START:
+    {
+      u16 event_no;
+      if( DEBUG_POKEWOOD_CUTIN_GetExitsEventNo( senario, s_debug_cutin_cnt, &event_no ) )
+      {
+        const MYSTATUS*cp_mystatus = BTL_MAIN_GetPlayerStatus( wk->mainModule );
+        POKEWOOD_CUTIN_AttachViewCore( p_cutin, wk->viewCore );
+        POKEWOOD_CUTIN_Start( p_cutin, senario, event_no, _get_pokewood_choice( wk, &wk->pokewoodSeqWork ), MyStatus_GetMySex(cp_mystatus) );
+
+
+        s_debug_cutin_cnt++;
+        (*seq)  = SEQ_MAIN;
+      }
+      else
+      {
+        (*seq)  = SEQ_END;
+      }
+    }
+    break;
+
+  case SEQ_MAIN:
+    POKEWOOD_CUTIN_Main( p_cutin );
+    if( POKEWOOD_CUTIN_IsEnd( p_cutin ) )
+    {
+      (*seq) = SEQ_END;
+    }
+    break;
+
+  case SEQ_END:
+    return TRUE;
+  }
+
+  return FALSE;
+}
 #endif

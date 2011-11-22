@@ -32,6 +32,8 @@
 //#include "message.naix"
 #include "debug_message.naix"
 #include "msg/debug/msg_debug_pokewood.h"
+#include "msg/debug/msg_debug_infinity.h"
+#include "pokewood_system.h"
 
 
 //アプリ
@@ -49,26 +51,36 @@
 #include "event_debug_menu_ov_pokewood.h"
 
 #include "pokewood_setup.h"
+#include "battle/pokewood.h"
 
 //=============================================================================
 //=============================================================================
 #include "event_pokewood.h"
 
+typedef struct _DEBUG_POKEWOOD_WORK DEBUG_POKEWOOD_WORK;
+
+typedef BOOL(*POKEWOOD_FUNC)( DEBUG_POKEWOOD_WORK * );
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-typedef struct {
+struct _DEBUG_POKEWOOD_WORK
+{
   int seq_no;
   HEAPID heapID;
+  FLDSYSWIN * win;
+  GFL_MSGDATA * msgData;
   GAMESYS_WORK *gmSys;
   GMEVENT *gmEvent;
   FIELDMAP_WORK *fieldWork;
+  POKEWOOD_FUNC call_func;
   FLDMENUFUNC *menuFunc;
   u16         result;
-}DEBUG_POKEWOOD_WORK;
+  u16         sub_seq_no;
+  u32         num;
+};
 
 //typedef DEBUG_MENU_EVENT_WORK POKEWOOD_FUNC_WORK;
 typedef DEBUG_POKEWOOD_WORK POKEWOOD_FUNC_WORK;
-typedef BOOL(*POKEWOOD_FUNC)( POKEWOOD_FUNC_WORK * );
 
 static GMEVENT_RESULT debugMenuPokewoodEvent( GMEVENT *event, int *seq, void *wk );
 
@@ -139,6 +151,12 @@ static BOOL debugMenu_series10_ready(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_series11_ready(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_scenario_full_open(POKEWOOD_FUNC_WORK *wk);
 
+static BOOL debugMenu_CutinCheck(POKEWOOD_FUNC_WORK *wk);
+
+
+#define NUMINPUT_NONE (0xFFFF)
+static BOOL NumInputState( POKEWOOD_FUNC_WORK *work, u32 default_num, u32 min, u32 max );
+static void DrawNum( POKEWOOD_FUNC_WORK *work );
 
 //-----------------------------------------------------------------------------
 ///リスト メニューヘッダー
@@ -235,6 +253,7 @@ static const DEBUG_MENU_LIST DebugPokewoodMenuList[] =
   { DEBUG_STRID_SERIES09,        (void*)debugMenu_series09_ready, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_SERIES10,        (void*)debugMenu_series10_ready, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_SERIES11,        (void*)debugMenu_series11_ready, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_CUTIN,           (void*)debugMenu_CutinCheck, GFL_OVERLAY_BLANK_ID },
 };
 
 //-----------------------------------------------------------------------------
@@ -361,14 +380,21 @@ static GMEVENT_RESULT debugMenuPokewoodEvent( GMEVENT *event, int *seq, void *wk
     default:
       {
         BOOL result;
-        POKEWOOD_FUNC call_func = (POKEWOOD_FUNC)ret;
+        work->call_func = (POKEWOOD_FUNC)ret;
         FLDMENUFUNC_DeleteMenu( work->menuFunc );
-        if ( call_func( work ) == TRUE )
-        {
-          return GMEVENT_RES_CONTINUE;
-        }
-        return GMEVENT_RES_FINISH;
+        (*seq)++;
       }
+    }
+    break;
+
+  case 2:
+    if ( work->call_func( work ) == TRUE )
+    {
+      return GMEVENT_RES_CONTINUE;
+    }
+    else
+    {
+      return GMEVENT_RES_FINISH;
     }
     break;
   }
@@ -432,6 +458,32 @@ static BOOL callRecProc( POKEWOOD_FUNC_WORK * wk, PKWD_REC_POS rec_pos, int scen
     return TRUE;
   }
 }
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+static BOOL callCutinProc( POKEWOOD_FUNC_WORK * wk, PKWD_REC_POS rec_pos, int scenario_no )
+{
+  if ( rec_pos >= PKWD_REC_POS_MAX )
+  { //対応するシナリオデータが存在しないときにはなにもせずに戻る
+    PMSND_PlaySE( SEQ_SE_BEEP );
+    return FALSE;
+  }
+  else
+  {
+    GMEVENT *event = wk->gmEvent;
+    FIELDMAP_WORK *fieldWork = wk->fieldWork;
+    GAMESYS_WORK  *gameSys  = wk->gmSys;
+    GMEVENT *next_event;
+    PKWD_REC_EVENT_PARAM rec_param;
+    rec_param.rec_pos       = rec_pos;
+    rec_param.scenario_no = scenario_no;
+    next_event = GMEVENT_CreateOverlayEventCall( gameSys,
+        FS_OVERLAY_ID(notwifi_event_pokewood), DEBUG_POKEWOOD_EVENT_CutinCheck, (void*)&rec_param );
+    GMEVENT_CallEvent( event, next_event );
+
+    return TRUE;
+  }
+}
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_PokewoodRec1( POKEWOOD_FUNC_WORK * wk )
@@ -836,6 +888,171 @@ static BOOL debugMenu_series11_ready(POKEWOOD_FUNC_WORK *wk)
   _set_scenario_done( wk, 36 );
   _set_scenario_done( wk, 37 );
   return FALSE;
+}
+
+
+static BOOL debugMenu_CutinCheck(POKEWOOD_FUNC_WORK *wk)
+{
+  enum
+  {
+    SEQ_INIT,
+    SEQ_NUM,
+    SEQ_CALL,
+    SEQ_EXIT,
+  };
+
+  switch( wk->seq_no )
+  {
+  case SEQ_INIT:
+    {
+      static u16 s_dummy  = 0;
+      GAMEDATA *gamedata = GAMESYSTEM_GetGameData(wk->gmSys);
+      PKWDSYS   ** pkwdsys_work = GAMEDATA_GetPKWDSysPointer( gamedata );
+      GF_ASSERT( *pkwdsys_work == NULL );
+      *pkwdsys_work = PKWDSYS_Create( HEAPID_PROC );
+
+      PKWDSYS_SetScriptAnswerWork( *pkwdsys_work, &s_dummy );
+    }
+    wk->seq_no++;
+    break;
+  case SEQ_NUM:
+    {
+      u32 num = NumInputState( wk, 1, 1, POKEWOOD_SENARIO_MAX );
+      if( num != NUMINPUT_NONE )
+      {
+        wk->seq_no++;
+      }
+    }
+    break;
+  case SEQ_CALL:
+    callCutinProc( wk, PKWD_REC_POS_01, wk->num );
+    wk->seq_no++;
+    break;
+  case SEQ_EXIT:
+    {
+      GAMEDATA *gamedata = GAMESYSTEM_GetGameData(wk->gmSys);
+      PKWDSYS   ** pkwdsys_work = GAMEDATA_GetPKWDSysPointer( gamedata );
+      GF_ASSERT( *pkwdsys_work != NULL );
+      PKWDSYS_Delete( *pkwdsys_work );
+      *pkwdsys_work = NULL;
+    }
+    wk->seq_no = 0;
+    return FALSE;
+  }
+
+
+  return TRUE;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  数値入力ステート
+ *
+ *	@param	p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL NumInputState( POKEWOOD_FUNC_WORK *work, u32 default_num, u32 min, u32 max )
+{
+  enum
+  {
+    SEQ_INIT,
+    SEQ_MAIN,
+  };
+
+  switch( work->sub_seq_no )
+  {
+  case SEQ_INIT:
+    {
+      FLDMSGBG * msgBG;
+      work->num = default_num;
+
+      work->msgData = DEBUGFLDMENU_CreateMSGDATA(work->fieldWork, NARC_debug_message_debug_infinity_dat );
+      msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
+      work->win = FLDSYSWIN_AddEx( msgBG, work->msgData , 1, 1, 30, 2 );
+      DrawNum( work );
+      work->sub_seq_no++;
+    }
+    break;
+  case SEQ_MAIN:
+    {
+      u32 num = work->num;
+
+      //動作
+      if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT
+          || GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
+      {
+        work->num--;
+      }
+      if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT
+          || GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
+      {
+        work->num++;
+      }
+
+      //最大最小値補正
+      if( work->num < min )
+      {
+        work->num = max;
+      }
+      else if( work->num > max )
+      {
+        work->num = min;
+      }
+
+      //値が変更したときだけ描画
+      if( num != work->num )
+      {
+        DrawNum( work );
+      }
+      
+      // 終了判定
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+      {
+        FLDSYSWIN_ClearWindow( work->win );
+        FLDSYSWIN_Delete( work->win );
+        GFL_MSG_Delete( work->msgData );
+
+        work->sub_seq_no = 0;
+        return work->num;
+      }
+      break;
+    }
+  }
+  return NUMINPUT_NONE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  数値入力
+ *
+ *	@param	work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void DrawNum( POKEWOOD_FUNC_WORK *work )
+{
+  STRBUF *str;
+  STRBUF *exp;
+  FLDMSGBG * msgBG;
+  WORDSET * wset;
+
+  str = GFL_MSG_CreateString( work->msgData, DEBUG_STR_INFINITY_NUM );
+  wset = WORDSET_Create( work->heapID );
+  exp  = GFL_STR_CreateBuffer( 128, work->heapID );
+  WORDSET_RegisterNumber( wset, 0, work->num, 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+  WORDSET_ExpandStr( wset, exp, str );
+
+  msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
+  FLDSYSWIN_ClearWindow( work->win );
+  FLDSYSWIN_PrintStrBuf( work->win, 0, 0, exp );
+
+  GFL_STR_DeleteBuffer( str );
+  GFL_STR_DeleteBuffer( exp );
+  WORDSET_Delete( wset );
 }
 
 #endif  //  PM_DEBUG

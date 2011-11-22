@@ -1795,4 +1795,30 @@
 				Time="2011-09-14T12:17:54" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_CUTIN"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カットインチェックバトル</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-21T12:01:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カットインチェックバトル</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-21T12:01:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

@@ -67,6 +67,9 @@
 #include "field_fade.h"
 
 
+#ifdef PM_DEBUG
+static BOOL s_pokewood_cutin_check_flag = FALSE;
+#endif  
 
 //======================================================================
 //  struct
@@ -368,6 +371,18 @@ static BATTLE_SETUP_PARAM * createPokewoodRecBattleParam( GAMESYS_WORK * gsys, F
   OS_Printf("create BSP pokewood senario = %d\n", bsp->pokewoodSenario);
 
   TAMADA_Printf(" POKEWOOD BSP %08x\n", bsp );
+
+#ifdef PM_DEBUG
+  if( s_pokewood_cutin_check_flag )
+  {
+    s_pokewood_cutin_check_flag = FALSE;
+
+    bsp->DebugFlagBit |= 1<<BTL_DEBUGFLAG_POKEWOOD_CUTIN;
+
+    bsp->PokewoodMode = BTL_POKEWOOD_SHOW;
+  }
+#endif
+
   return bsp;
 }
 
@@ -1987,3 +2002,21 @@ static void saveDataConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID )
 
 }
 
+
+#ifdef PM_DEBUG
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カットインチェック用バトルを開始
+ *
+ *	@param	GAMESYS_WORK *gsys
+ *	@param	* param 
+ *
+ *	@return イベント
+ */
+//-----------------------------------------------------------------------------
+GMEVENT * DEBUG_POKEWOOD_EVENT_CutinCheck( GAMESYS_WORK *gsys, void * param )
+{
+  s_pokewood_cutin_check_flag  = TRUE;
+  return POKEWOOD_EVENT_Rec( gsys, param );
+}
+#endif 
