@@ -5493,6 +5493,10 @@
 		<language name="JPN" width="256">BGM-E-PLASMA</language>
 		<language name="JPN_KANJI" width="256">BGM-E-PLASMA</language>
 	</row>
+	<row id="msg_seq_bgm_vs_elite_plasma">
+		<language name="JPN" width="256">BGM-VS-ELITE-PLASMA</language>
+		<language name="JPN_KANJI" width="256">BGM-VS-ELITE-PLASMA</language>
+	</row>
 	<row id="msg_seq_bgm_theend">
 		<language name="JPN" width="256">BGM-THEEND</language>
 		<language name="JPN_KANJI" width="256">BGM-THEEND</language>
@@ -5501,10 +5505,6 @@
 		<language name="JPN" width="256">BGM-END</language>
 		<language name="JPN_KANJI" width="256">BGM-END</language>
 	</row>
-          <row id="msg_seq_1264">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
           <row id="msg_seq_1265">
           <language name="JPN" width="256">dmy</language>
           <language name="JPN_KANJI" width="256">dmy</language>
