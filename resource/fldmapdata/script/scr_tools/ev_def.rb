@@ -208,7 +208,9 @@ file_id.close
 file_ev.close
 
 #なぜかunix行末コード（LF)になっている環境があるため、強制変換
-system("unix2dos -D " + fname_def_h_dummy )
+exec_str = "unix2dos -D " + fname_def_h_dummy + "\n" 
+STDERR.puts exec_str
+system( exec_str )
 
 if FileTest.exist?( fname_def_h ) == false || same_content?( fname_def_h_dummy, fname_def_h ) == false
   File.rename( fname_def_h_dummy, fname_def_h )
