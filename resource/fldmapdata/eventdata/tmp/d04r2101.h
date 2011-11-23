@@ -17,5 +17,6 @@
 #ifndef ZONE_D04R2101_EVB_H
 #define ZONE_D04R2101_EVB_H
 
+#define BG_D04R2101_DUMMY_FES_01          0
 
 #endif //ZONE_D04R2101_EVB_H

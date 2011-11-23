@@ -23,5 +23,11 @@
 #define ZONE_D06R0301_EVB_H
 
 #define HIDE_ITEM_065                     0
+#define BG_D06R0301_DUMMY_FES_01          1
+#define BG_D06R0301_DUMMY_FES_02          2
+#define BG_D06R0301_DUMMY_FES_03          3
+#define BG_D06R0301_DUMMY_FES_04          4
+#define BG_D06R0301_DUMMY_FES_05          5
+#define BG_D06R0301_DUMMY_FES_06          6
 
 #endif //ZONE_D06R0301_EVB_H

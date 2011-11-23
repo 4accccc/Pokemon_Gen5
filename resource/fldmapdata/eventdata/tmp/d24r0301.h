@@ -38,5 +38,25 @@
 #define HIDE_ITEM_090                     2
 #define HIDE_ITEM_091                     3
 #define HIDE_ITEM_092                     4
+#define BG_D24R0301_DUMMY_FES_01          5
+#define BG_D24R0301_DUMMY_FES_02          6
+#define BG_D24R0301_DUMMY_FES_03          7
+#define BG_D24R0301_DUMMY_FES_04          8
+#define BG_D24R0301_DUMMY_FES_05          9
+#define BG_D24R0301_DUMMY_FES_06         10
+#define BG_D24R0301_DUMMY_FES_07         11
+#define BG_D24R0301_DUMMY_FES_08         12
+#define BG_D24R0301_DUMMY_FES_09         13
+#define BG_D24R0301_DUMMY_FES_10         14
+#define BG_D24R0301_DUMMY_FES_11         15
+#define BG_D24R0301_DUMMY_FES_12         16
+#define BG_D24R0301_DUMMY_FES_13         17
+#define BG_D24R0301_DUMMY_FES_14         18
+#define BG_D24R0301_DUMMY_FES_15         19
+#define BG_D24R0301_DUMMY_FES_16         20
+#define BG_D24R0301_DUMMY_FES_17         21
+#define BG_D24R0301_DUMMY_FES_18         22
+#define BG_D24R0301_DUMMY_FES_19         23
+#define BG_D24R0301_DUMMY_FES_20         24
 
 #endif //ZONE_D24R0301_EVB_H

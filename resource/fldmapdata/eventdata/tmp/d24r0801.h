@@ -18,5 +18,8 @@
 #define ZONE_D24R0801_EVB_H
 
 #define HIDE_ITEM_093                     0
+#define BG_D24R0801_DUMMY_FES_01          1
+#define BG_D24R0801_DUMMY_FES_02          2
+#define BG_D24R0801_DUMMY_FES_03          3
 
 #endif //ZONE_D24R0801_EVB_H
