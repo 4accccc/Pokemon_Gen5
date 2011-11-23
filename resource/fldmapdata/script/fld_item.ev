@@ -727,10 +727,10 @@ EVENT_START ev_fld_item_43
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=d280201 X=90 Y=42 ITEM=ひかりのいし FLAG=44
+// MAP=d280201 X=90 Y=42 ITEM=ハイパーボール FLAG=44
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_44
-  _FLD_ITEM_EVENT ITEM_HIKARINOISI,1
+  _FLD_ITEM_EVENT ITEM_HAIPAABOORU,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1119,10 +1119,10 @@ EVENT_START ev_fld_item_99
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=c06 X=72 Y=341 ITEM=おおきなねっこ FLAG=100
+// MAP=c06 X=72 Y=341 ITEM=ゴールドスプレー FLAG=100
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_100
-  _FLD_ITEM_EVENT ITEM_OOKINANEKKO,1
+  _FLD_ITEM_EVENT ITEM_GOORUDOSUPUREE,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -2211,10 +2211,10 @@ EVENT_START ev_fld_item_255
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r14r0201 X=45 Y=24 ITEM=ハイパーボール FLAG=256
+// MAP=r14r0201 X=45 Y=24 ITEM=ひかりのいし FLAG=256
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_256
-  _FLD_ITEM_EVENT ITEM_HAIPAABOORU,1
+  _FLD_ITEM_EVENT ITEM_HIKARINOISI,1
 EVENT_END
 
 //--------------------------------------------------------------
