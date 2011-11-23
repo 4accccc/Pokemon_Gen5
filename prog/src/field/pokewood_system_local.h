@@ -54,8 +54,8 @@ struct _POKEWOOD_SYSTEM {
 
   u16 join_mypoke; ///< 手持ちでポケウッド撮影を行うか？ 
 
-  // ポケウッド上映画面関連
-  u16 play_no;     ///<  セーブデータ何番を上映するか
+  // ポケウッド上映選択画面関連
+  u16 play_no;     ///<  セーブデータ何番か
 
   /// 録画データ バックアップ領域
   void * backup_area;

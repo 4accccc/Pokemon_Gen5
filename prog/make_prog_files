@@ -786,6 +786,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fldeff_fes_kira.c \
         field/event_trainer_eye.c \
         field/scrcmd_trainer.c \
+        field/scrcmd_report.c \
         field/scrcmd_sound.c \
         field/scrcmd_item.c \
         field/scrcmd_word.c \
@@ -1057,7 +1058,8 @@ SRCS_OVERLAY_SCRCMD_INFINITY_DUNGEON  = field/scrcmd_infinity_dungeon.c \
 SRCS_OVERLAY_SCRCMD_POKEWOOD  =  field/scrcmd_pokewood.c \
                             field/scrcmd_pokewood_table.c \
                             field/pokewood_system.c \
-                            field/pokewood_setup.c
+                            field/pokewood_setup.c \
+                            field/event_pokewood_field.c
 
 # スクリプトコマンド並列化  バッジチェックゲート
 #===> GROUP_OVERLAY_DEBUGMENU

@@ -84,7 +84,6 @@ SDK_COMPILER_ASSERT( SCR_PKWD_STAR_RANK_4 == POKEWOOD_STAR_RANK_4 );
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-GMEVENT * PKWB_EVENT_Save( GAMESYS_WORK * gsys, PKWD_REC_POS dst_pos );
 //============================================================================================
 //============================================================================================
 
@@ -812,31 +811,12 @@ VMCMD_RESULT EvCmdPokewoodSaveMovie( VMHANDLE * core, void * wk )
 
   u16 rec_pos = SCRCMD_GetVMWorkValue( core, work );
 
-  // 上映フラグをクリア
-  POKEWOOD_SAVEDATA_SetMovieShowed( pkwdsave, rec_pos, FALSE );
-
-  // 看板を設定
-  PKWDSYS_SetKanban( gamedata, pkwdsys, rec_pos );
-
-  // 興行収入のレコード登録
-  PKWDSYS_RecordSet( gamedata, pkwdsys );
-
-  // メダル取得計算
-  PKWDSYS_CheckPokewoodMedal( gamedata );
-
-  // 成績モニター登録処理
-  PKWDSYS_BoxofficeRecordSet( gamedata, pkwdsys );
-
-  // この2つの関数の順番は入れ替えないこと！(スターポケモンが登録されるのが早くなる)
-  {
-    // シナリオ単位で興行成績データが上回っていれば更新
-    PKWDSYS_RecordSet( gamedata, pkwdsys );
-
-    // 手持ちポケモンを出していた場合はスターポイントを加算
-    PKWDSYS_CalcMyPokeStarPoint( gamedata, pkwdsys );
-  }
   GF_ASSERT( rec_pos < PKWD_REC_POS_MAX );
-  next_event = PKWB_EVENT_Save( gsys, rec_pos );
+  // 録画データ位置をPKWDSYSに通知
+  PKWDSYS_SetPlayNo( pkwdsys, rec_pos );
+
+  //updatePokewoodSaveParams( gamedata, pkwdsave, rec_pos );
+  next_event = PKWB_EVENT_Save( gsys, NULL );
   SCRIPT_CallEvent( scw, next_event );
 
   return VMCMD_RESULT_SUSPEND;
@@ -961,79 +941,4 @@ VMCMD_RESULT EvCmdPokewoodGetBonusItem( VMHANDLE * core, void * wk )
   OS_Printf("EvCmdPokewoodGetBonusItem=%d %d\n", *ret_item_no, *ret_item_num);
   return VMCMD_RESULT_CONTINUE;
 }
-
-//============================================================================================
-//  PKWD　イベント　映画をコピー
-//============================================================================================
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-typedef struct {
-  GAMEDATA * gamedata;
-  PKWDSYS * pkwdsys;
-  PKWD_REC_POS dst_pos;
-  u16 save_tmp;
-}EVENT_POKEWOOD_COPY_MOVE_WORK, EPCMW;
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static GMEVENT_RESULT eventPokewoodSave( GMEVENT * event, int *seq, void * wk )
-{
-  typedef enum {
-    PKWD_COPY_SEQ_INIT = 0,
-    PKWD_COPY_SEQ_SAVE,
-    PKWD_COPY_SEQ_END,
-  }PKWD_COPY_SEQ;
-
-  EPCMW * epcmw = (EPCMW *)wk;
-
-  LOAD_RESULT load_res;
-  SAVE_RESULT save_res;
-  SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( epcmw->gamedata );
-  HEAPID heapID = HEAPID_FIELDMAP;
-
-
-  switch ((PKWD_COPY_SEQ)*seq)
-  {
-  case PKWD_COPY_SEQ_INIT:
-    OS_Printf("POKEWOOD Save Start(%d)\n", epcmw->dst_pos );
-    POKEWOOD_REC_Init( heapID );
-    POKEWOOD_REC_Restore( PKWDSYS_GetBackupArea( epcmw->pkwdsys ) );
-    *seq = PKWD_COPY_SEQ_SAVE;
-    /* FALL THROUGH */
-
-  case PKWD_COPY_SEQ_SAVE:
-    save_res = POKEWOOD_REC_Save( epcmw->gamedata, heapID, epcmw->dst_pos, &epcmw->save_tmp );
-    switch ( save_res )
-    {
-    case SAVE_RESULT_NG:
-      (*seq) = PKWD_COPY_SEQ_END;
-      break;
-    case SAVE_RESULT_OK:
-      (*seq) = PKWD_COPY_SEQ_END;
-      break;
-    }
-    break;
-
-  case PKWD_COPY_SEQ_END:
-    POKEWOOD_REC_Exit();
-    return GMEVENT_RES_FINISH;
-  }
-  return GMEVENT_RES_CONTINUE;
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-GMEVENT * PKWB_EVENT_Save( GAMESYS_WORK * gsys, PKWD_REC_POS dst_pos )
-{
-  GMEVENT * event;
-  EPCMW * epcmw;
-  event = GMEVENT_Create( gsys, NULL, eventPokewoodSave, sizeof(EPCMW) );
-  epcmw = GMEVENT_GetEventWork( event );
-  epcmw->gamedata = GAMESYSTEM_GetGameData( gsys );
-  epcmw->pkwdsys = * ( GAMEDATA_GetPKWDSysPointer( epcmw->gamedata ) );
-  epcmw->dst_pos = dst_pos;
-  epcmw->save_tmp = 0;
-  return event;
-}
-
 
