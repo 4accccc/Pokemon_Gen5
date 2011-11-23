@@ -92066,6 +92066,758 @@ BW♀
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="resort_kutiguse_def_48"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぐびぐびぐび</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぐびぐびぐび</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>クチグセ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_kutiguse_def_49"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>コレがですね…</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>コレがですね…</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>クチグセ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_kutiguse_def_50"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>コラー！笑</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>コラー！笑</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>クチグセ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_kutiguse_def_51"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>スリスリサッサ♪</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>スリスリサッサ♪</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>クチグセ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_kutiguse_def_52"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ワナワナワ…</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ワナワナワ…</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>クチグセ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_kutiguse_def_53"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンすき？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンすき？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>クチグセ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_kutiguse_def_54"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なんですか？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なんですか？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>クチグセ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_kutiguse_def_55"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぶんぶんぶん</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぶんぶんぶん</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>クチグセ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_kutiguse_def_56"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プンプンッ怒</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プンプンッ怒</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>クチグセ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_kutiguse_def_57"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちょっと！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ちょっと！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>クチグセ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_kutiguse_def_58"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おわりかな？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おわりかな？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>クチグセ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_kutiguse_def_59"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うんめいてきな</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>うんめいてきな</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>クチグセ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_kutiguse_def_60"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゴー！ゴー！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゴー！ゴー！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>クチグセ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_kutiguse_def_61"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひー</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ひー</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>クチグセ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_kutiguse_def_62"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ドモドモ</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ドモドモ</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>クチグセ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_kutiguse_def_63"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>とつげき！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>とつげき！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:14:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>クチグセ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="resort_kutiguse_10"
 		Style="Large">
 		<LanguageCell
@@ -94616,6 +95368,758 @@ BW♀
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="resort_thanks_def_48"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プッハー</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プッハー</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_thanks_def_49"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ソレですよ！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ソレですよ！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_thanks_def_50"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ワッハッハ④</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ワッハッハ④</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_thanks_def_51"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>バリンッ！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バリンッ！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_thanks_def_52"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ドカーーン！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ドカーーン！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_thanks_def_53"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>だいすきだよー</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>だいすきだよー</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_thanks_def_54"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あっーなるほど</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あっーなるほど</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_thanks_def_55"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いいきぶん♪</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いいきぶん♪</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_thanks_def_56"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なーにー？②</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なーにー？②</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_thanks_def_57"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しつれい！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しつれい！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_thanks_def_58"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はじまりだよ！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はじまりだよ！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_thanks_def_59"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>であいをした！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>であいをした！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_thanks_def_60"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>イェーイ！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イェーイ！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_thanks_def_61"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゆるしてー</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゆるしてー</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_thanks_def_62"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゃまたー</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゃまたー</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_thanks_def_63"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うおおおおおお！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>うおおおおおお！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:15:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>カンゲキ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:37:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="resort_thanks_10"
 		Style="Large">
 		<LanguageCell
@@ -97132,6 +98636,758 @@ BW♀
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-11-23T14:42:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>あいさつ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:38:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_introduction_def_48"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カンパーイ</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カンパーイ</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>あいさつ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:38:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_introduction_def_49"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なんですってー</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なんですってー</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>あいさつ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:38:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_introduction_def_50"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>およ？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>およ？</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>あいさつ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:38:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_introduction_def_51"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>やばい…</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やばい…</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>あいさつ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:38:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_introduction_def_52"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>カワイイ♥</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>カワイイ♥</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>あいさつ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:38:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_introduction_def_53"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ステキ♥</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ステキ♥</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>あいさつ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:38:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_introduction_def_54"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あるじをよべー</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あるじをよべー</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>あいさつ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:38:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_introduction_def_55"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>フッ①</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フッ①</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>あいさつ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:38:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_introduction_def_56"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いただきまーす</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いただきまーす</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>あいさつ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:38:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_introduction_def_57"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おいしいね</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おいしいね</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>あいさつ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:38:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_introduction_def_58"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>オールライト！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オールライト！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>あいさつ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:38:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_introduction_def_59"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ドンマイ！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ドンマイ！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>あいさつ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:38:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_introduction_def_60"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しあわせだなー</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しあわせだなー</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>あいさつ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:38:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_introduction_def_61"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しかし…</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しかし…</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>あいさつ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:38:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_introduction_def_62"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>がんばってー</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>がんばってー</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>あいさつ</Comment>
+			<CommentModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T07:38:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_introduction_def_63"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぜっこちょう！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぜっこちょう！</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T16:16:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
