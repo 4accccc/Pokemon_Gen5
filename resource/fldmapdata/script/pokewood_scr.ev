@@ -157,12 +157,12 @@ EVENT_START ev_pokewood_rec
       _CALL ev_pkwd_rec_pokelist
 
     CASE PKWD_REC_SEQ_SHOOTING        THEN
-      _REPORT_EVENT_CALL( SCWK_ANSWER )
+      //_REPORT_EVENT_CALL( SCWK_ANSWER )
       IF $SCWK_ANSWER == SCR_REPORT_OK THEN
         //JA履歴への対応：ポケウッドで映画を撮った
         _RESORT_SET_RECORD( RESORT_RECORD_ID_POKEWOOD )
-	//すれちがいログで「●●撮影中」と告知
-	_BEACON_SET_REQ_POKEWOOD_FILMING( LWK_PKWD_SCENARIO )
+        //すれちがいログで「●●撮影中」と告知
+        _BEACON_SET_REQ_POKEWOOD_FILMING( LWK_PKWD_SCENARIO )
         _CALL ev_pkwd_rec_go_studio
         _CALL ev_pkwd_rec_studio
         _CALL ev_pkwd_rec_exit_studio
@@ -540,14 +540,22 @@ ev_pkwd_rec_save:
 
     CASE PKWD_REC_SUBSEQ_REC THEN
       //仮：セーブ中警告
-      _SYSWIN_MSG_ALLPUT( msg_pw_system_01, POS_DOWN )
+      //_SYSWIN_MSG_ALLPUT( msg_pw_system_01, POS_DOWN )
       //セーブ処理を呼び出し
       _DEBUG_PRINT_WK( LWK_PKWD_REC_POS )
-      _PKWD_SAVE_MOVIE( LWK_PKWD_REC_POS )
-      _MSGWIN_CLOSE()
-      _SE_PLAY( SEQ_SE_SAVE )
-      $LWK_PKWD_SUBSEQ_RESULT = TRUE
-      $LWK_PKWD_SUBSEQ = PKWD_REC_SUBSEQ_END
+      _PKWD_SAVE_MOVIE( LWK_PKWD_REC_POS )  //システムに録画データ位置を通知
+      _REPORT_EVENT_CALL( SCWK_ANSWER )
+      IF $SCWK_ANSWER == SCR_REPORT_OK THEN
+        $LWK_PKWD_SUBSEQ_RESULT = TRUE
+        $LWK_PKWD_SUBSEQ = PKWD_REC_SUBSEQ_END
+      ELSE
+        //セーブをキャンセルした場合
+        //$LWK_PKWD_SUBSEQ_RESULT = FALSE
+        //$LWK_PKWD_SUBSEQ = PKWD_REC_SUBSEQ_END
+        $LWK_PKWD_SUBSEQ = PKWD_REC_SUBSEQ_ASK_NOT_PLAY
+      ENDIF
+      //_MSGWIN_CLOSE()
+      //_SE_PLAY( SEQ_SE_SAVE )
 
     DEFAULT
       //万が一の場合に無限ループを防ぐためのコード

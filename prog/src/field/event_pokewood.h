@@ -68,5 +68,5 @@ extern GMEVENT * DEBUG_POKEWOOD_EVENT_CutinCheck( GAMESYS_WORK *gsys, void * par
 //-----------------------------------------------------------------------------
 //  à»â∫ÇÕevent_pokewood_field.cÇ…ë∂ç›ÅiFIELDMAPÇ™ë∂ç›Ç∑ÇÈíÜÇ≈ÇæÇØåƒÇŒÇÍÇÈÅj
 //-----------------------------------------------------------------------------
-extern GMEVENT * PKWB_EVENT_Save( GAMESYS_WORK * gsys, u16 * ret_wk );
+extern GMEVENT * PKWD_EVENT_Save( GAMESYS_WORK * gsys, u16 * ret_wk );
 

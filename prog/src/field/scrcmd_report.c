@@ -27,6 +27,7 @@
 
 #include "field_saveanime.h"
 
+#include "event_pokewood.h"
 
 #include "debug/debug_flg.h" //DEBUG_FLG_～
 
@@ -39,6 +40,7 @@ typedef struct {
   GAMESYS_WORK * gsys;
   FIELD_SAVEANIME * saveanime;
   u16 * ret_wk;
+  BOOL isPokewoodSave;
 }SAVE_COMMON_EVENT_WORK;
 
 //--------------------------------------------------------------
@@ -46,7 +48,8 @@ typedef struct {
 //--------------------------------------------------------------
 enum {
   SAVE_SEQ_INIT,
-  SAVE_SEQ_WAIT,
+  SAVE_SEQ_WAIT_SAVEMAIN,
+  SAVE_SEQ_CHECK_RESULT,
   SAVE_SEQ_WAIT_SUBSCREEN,
   SAVE_SEQ_WAIT_SAVEANIME,
   SAVE_SEQ_FINISH,
@@ -81,12 +84,20 @@ static GMEVENT_RESULT saveCommonEvent( GMEVENT * event, int *seq, void *work )
       RECORD_Inc( rec, RECID_REPORT_COUNT );
     }
     // 分割セーブ開始
-    GAMEDATA_SaveAsyncStart( gamedata );
-    (*seq) = SAVE_SEQ_WAIT;
+    if ( scew->isPokewoodSave == FALSE )
+    {
+      GAMEDATA_SaveAsyncStart( gamedata );
+      (*seq) = SAVE_SEQ_WAIT_SAVEMAIN;
+    }
+    else
+    {
+      GMEVENT_CallEvent( event, PKWD_EVENT_Save( scew->gsys, scew->ret_wk ) );
+      (*seq) = SAVE_SEQ_CHECK_RESULT;
+    }
     break;
 
-  case SAVE_SEQ_WAIT:
-    // 分割セーブ実行
+  case SAVE_SEQ_WAIT_SAVEMAIN:
+    // 通常セーブ：分割セーブ実行
     result = GAMEDATA_SaveAsyncMain( gamedata );
 
     switch( result )
@@ -95,26 +106,26 @@ static GMEVENT_RESULT saveCommonEvent( GMEVENT * event, int *seq, void *work )
     case SAVE_RESULT_CONTINUE:
     case SAVE_RESULT_LAST:
       break;
-
     // 完了
     case SAVE_RESULT_OK:
-      if (scew->ret_wk != NULL)
-      {
-        *scew->ret_wk = TRUE;
-      }
-      (*seq) = SAVE_SEQ_WAIT_SUBSCREEN;
+      *scew->ret_wk = TRUE;
+      *seq = SAVE_SEQ_CHECK_RESULT;
       break;
     case SAVE_RESULT_NG:
-      if (scew->ret_wk != NULL)
-      {
-        *scew->ret_wk = FALSE;
-      }
-      (*seq) = SAVE_SEQ_WAIT_SUBSCREEN;
+      *scew->ret_wk = FALSE;
+      *seq = SAVE_SEQ_CHECK_RESULT;
+      break;
+    }
+    break;
+
+  case SAVE_SEQ_CHECK_RESULT:
+    if ( *scew->ret_wk == FALSE )
+    {
       if( FIELD_SUBSCREEN_GetMode( subscreen ) == FIELD_SUBSCREEN_REPORT ){
         FIELD_SUBSCREEN_SetReportBreak( subscreen );  // 下画面終了
       }
-      break;
     }
+    *seq = SAVE_SEQ_WAIT_SUBSCREEN;
     break;
 
   case SAVE_SEQ_WAIT_SUBSCREEN:
@@ -150,6 +161,16 @@ static GMEVENT * createCommonSaveEvent( GAMESYS_WORK * gsys, u16 * ret_wk )
   scew->gsys = gsys;
   scew->saveanime = NULL;
   scew->ret_wk = ret_wk;
+  GF_ASSERT( ret_wk );
+  scew->isPokewoodSave = FALSE;
+  {
+    GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+    PKWDSYS ** pkwdsys = GAMEDATA_GetPKWDSysPointer( gamedata );
+    if ( pkwdsys != NULL && *pkwdsys != NULL )
+    { //ポケウッドシステムが存在している→ポケウッドのセーブ
+      scew->isPokewoodSave = TRUE;
+    }
+  }
   return event;
 }
 

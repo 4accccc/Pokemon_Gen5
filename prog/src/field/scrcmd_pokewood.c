@@ -816,8 +816,8 @@ VMCMD_RESULT EvCmdPokewoodSaveMovie( VMHANDLE * core, void * wk )
   PKWDSYS_SetPlayNo( pkwdsys, rec_pos );
 
   //updatePokewoodSaveParams( gamedata, pkwdsave, rec_pos );
-  next_event = PKWB_EVENT_Save( gsys, NULL );
-  SCRIPT_CallEvent( scw, next_event );
+  //next_event = PKWD_EVENT_Save( gsys, NULL );
+  //SCRIPT_CallEvent( scw, next_event );
 
   return VMCMD_RESULT_SUSPEND;
 }
