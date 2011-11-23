@@ -295,7 +295,7 @@ EVENT_START ev_scene_c15_tutorial_02
   //カメラ操作　スタジオ写す
   _CAMERA_START()		//カメラ操作開始
   _CAMERA_PURGE()		//カメラのバインドを解く
-  _CAMERA_MOVE( 6616,0,1167360,1343488,65551,1110016,40 )
+  _CAMERA_MOVE( 5592,0,1069056,1343488,196623,1146880,40 )
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   
   //スタッフ：さあ！
