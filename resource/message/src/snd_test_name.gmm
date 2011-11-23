@@ -8989,10 +8989,6 @@
 		<language name="JPN" width="256">SW-MDUN-BL-05</language>
 		<language name="JPN_KANJI" width="256">SW-MDUN-BL-05</language>
 	</row>
-	<row id="msg_seq_se_sw_mdun_bl_07">
-		<language name="JPN" width="256">SW-MDUN-BL-07</language>
-		<language name="JPN_KANJI" width="256">SW-MDUN-BL-07</language>
-	</row>
 	<row id="msg_seq_se_sw_mdun_wh_01">
 		<language name="JPN" width="256">SW-MDUN-WH-01</language>
 		<language name="JPN_KANJI" width="256">SW-MDUN-WH-01</language>
@@ -9012,6 +9008,10 @@
 	<row id="msg_seq_se_sw_mdun_wh_05">
 		<language name="JPN" width="256">SW-MDUN-WH-05</language>
 		<language name="JPN_KANJI" width="256">SW-MDUN-WH-05</language>
+	</row>
+	<row id="msg_seq_se_sw_mdun_bl_07">
+		<language name="JPN" width="256">SW-MDUN-BL-07</language>
+		<language name="JPN_KANJI" width="256">SW-MDUN-BL-07</language>
 	</row>
 	<row id="msg_seq_se_sw_mdun_wh_07">
 		<language name="JPN" width="256">SW-MDUN-WH-07</language>
