@@ -46,7 +46,7 @@
 #include "../../battle/pokewood/pokewood_senario.h"
 
 
-//#define SCROLL_DEBUG    //有効にするとスクロールの数値をプリント
+#define SCROLL_DEBUG    //有効にするとスクロールの数値をプリント
 //==============================================================================
 //  定数定義
 //==============================================================================
@@ -212,7 +212,8 @@ enum{
 };
 
 //  エンドロール関係定義
-#define ENDROLL_SCROLL_ENDLINE  ((tw->CG2d.line_count*8+128))
+#define ENDROLL_SCROLL_ENDLINE     ((tw->CG2d.line_count*8+128))
+#define ENDROLL_SCROLL_ENDLINE_LR  ((tw->CG2d.line_count*8+128+128+64))
 #define ENDROLL_START ( -192 )
 #define ENDROLL_TURN1 (    0 )
 #define ENDROLL_TURN2 (  256 )
@@ -403,8 +404,9 @@ static void initEndrollMsgdata( PKWD_BRIEFING_PARAM *param, G2D_CONTROL* CG2d,  
 static void releaseEndrollMsgdata( G2D_CONTROL* CG2d );
 static void initBriefingMsgdata(G2D_CONTROL* CG2d, int scenario_no, MYSTATUS *mystatus, HEAPID heapID);
 static void releaseBriefingMsgdata(G2D_CONTROL* CG2d);
-static void _BG3Offset_func( G2D_CONTROL* CG2d, int scroll );
+static void _BG3Offset_func( G2D_CONTROL* CG2d, int scroll, int mode, HEAPID heapID );
 static void _endroll_screen_onoff( G2D_CONTROL *CG2d );
+static void _scroll_control( PKWD_BRIEFING_WORK *tw);
 
 static void transBGGraphic( G2D_CONTROL* CG2d, HEAPID heapID, int align );
 
@@ -724,7 +726,7 @@ GFL_PROC_RESULT PkwdEndrollProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 
     tw->seq = SEQ_SETUP;
 
-#if 0
+#ifdef SCROLL_DEBUG
     // エンディング画面のレイアウトを変更する
     if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L){
       tw->mode = 1;
@@ -1196,7 +1198,7 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, int scenario_no, HEAPID heapID)
 }
 
 
-static u32 pokewood_scr_tbl[]={
+static const u32 pokewood_scr_tbl[]={
   NARC_pkwd_announce_gra_pkwd_credit_pokewood_NSCR,
   NARC_pkwd_announce_gra_pkwd_credit_pokewood_l_NSCR,
   NARC_pkwd_announce_gra_pkwd_credit_pokewood_r_NSCR,
@@ -1227,6 +1229,28 @@ static void transBGGraphic( G2D_CONTROL* CG2d, HEAPID heapID, int align )
 
 }
 
+
+static const u32 pokewood_side_end_tbl[]={
+  0,
+  NARC_pkwd_announce_gra_pkwd_credit_end_l_NSCR,
+  NARC_pkwd_announce_gra_pkwd_credit_end_r_NSCR,
+};
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	左右エンディングの時だけ「END」ロゴを転送する
+ *
+ * @param   CG2d		G2D_CONTROL
+ * @param   heapID	HEAPID
+ * @param   align		0:中央（呼ばない）,1:左, 2:右
+ */
+//----------------------------------------------------------------------------------
+static void transSideEndScreen( G2D_CONTROL* CG2d, HEAPID heapID, int align )
+{
+  GFL_ARC_UTIL_TransVramScreen(
+    ARCID_PKWD_ANNOUNCE, pokewood_side_end_tbl[align], FRAME_BKGR, 0, 0, FALSE, heapID);
+  GFL_BG_LoadScreenReq( FRAME_BKGR );
+}
 
 static void _trans_G2DGraphic_End( G2D_CONTROL *CG2d, HEAPID heapID )
 {
@@ -2682,14 +2706,12 @@ static void EndrollFunc( PKWD_BRIEFING_WORK *tw )
     tw->CG2d.scroll++;
     G2_SetBG1Offset( 0, tw->CG2d.scroll );
     G2_SetBG2Offset( 0, (tw->CG2d.scroll)+16 );
-    _BG3Offset_func( &tw->CG2d, tw->CG2d.scroll );
+    _BG3Offset_func( &tw->CG2d, tw->CG2d.scroll, tw->mode, tw->heapID );
     GFL_BG_SetVisible( FRAME_BRIEF2, VISIBLE_ON  );
     GFL_BG_SetVisible( FRAME_BRIEF1, VISIBLE_ON );
 
-    if(tw->CG2d.scroll>=ENDROLL_SCROLL_ENDLINE){
-      tw->blend_seq = BLEND_SEQ_END_PUT;
-      tw->CG2d.wait=0;
-    }
+    // スクロール制御
+    _scroll_control( tw );
     break;
   // 「END」表示
   case BLEND_SEQ_END_PUT:
@@ -2710,6 +2732,22 @@ static void EndrollFunc( PKWD_BRIEFING_WORK *tw )
   }
 }
 
+static void _scroll_control( PKWD_BRIEFING_WORK *tw)
+{
+  // 全面スクロール
+  if(tw->mode==0){
+    if(tw->CG2d.scroll>=ENDROLL_SCROLL_ENDLINE){
+      tw->blend_seq = BLEND_SEQ_END_PUT;
+      tw->CG2d.wait=0;
+    }
+  }else{
+    // 左右分割スクロール
+    if(tw->CG2d.scroll>=ENDROLL_SCROLL_ENDLINE_LR){
+      tw->blend_seq = BLEND_SEQ_END;
+      tw->CG2d.wait=0;
+    }
+  }
+}
 
 
 static void _endroll_screen_onoff( G2D_CONTROL *CG2d )
@@ -2731,6 +2769,9 @@ static void _endroll_screen_onoff( G2D_CONTROL *CG2d )
   case ENDROLL_TURN4:
     mode=6;
     break;
+//  case ENDROLL_TURN5:
+//    mode=6;
+//    break;
   }
 
   if(mode!=0){
@@ -2768,7 +2809,7 @@ static void _endroll_screen_onoff( G2D_CONTROL *CG2d )
     GFL_BG_LoadScreenReq( FRAME_BRIEF2 );
   }
 }
-static void _BG3Offset_func( G2D_CONTROL* CG2d, int scroll )
+static void _BG3Offset_func( G2D_CONTROL* CG2d, int scroll, int align, HEAPID heapID )
 {
   int pokewood_pos = (CG2d->line_count*8-128);
 #ifdef SCROLL_DEBUG
@@ -2780,6 +2821,11 @@ static void _BG3Offset_func( G2D_CONTROL* CG2d, int scroll )
 #endif
     G2_SetBG3Offset( 0, CG2d->scroll- pokewood_pos  );
   }
+  if(scroll==586 && align!=0){
+    transSideEndScreen( CG2d, heapID, align );
+  }
+  
+  
 #ifdef SCROLL_DEBUG
   OS_Printf("\n");
 #endif
