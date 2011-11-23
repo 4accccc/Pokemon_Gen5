@@ -815,8 +815,8 @@
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-09-28T13:17:17" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:55:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1014,13 +1014,13 @@
 ■■■『みんな　ついてこいよー！▼
 司会『それでは　さっそく
 歌って　もらいましょう！▼
-きょくは……▼
+曲は……▼
 Ｃギア　ドリーム▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-28T09:53:36" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:17:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1082,13 +1082,13 @@
 ■■■『みんな　ありがとー！▼
 司会『それでは　さっそく
 歌って　もらいましょう！▼
-きょくは……▼
+曲は……▼
 キミに　クイックボール▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-28T09:54:22" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:17:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1150,13 +1150,13 @@
 ■■■『みんな　いくぞー！▼
 司会『それでは　さっそく
 歌って　もらいましょう！▼
-きょくは……▼
-こいの　マリンチューブ▼
+曲は……▼
+恋の　マリンチューブ▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-28T09:54:27" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:17:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1218,27 +1218,27 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しかい『おしえて　ポケドル！▼
-きょうは　なんと……！▼
-いま　にんきの　ポケドル
+			<Text>司会『おしえて　ポケドル！▼
+今日は　なんと……！▼
+いま　人気の　ポケドル
 ■■■くんに　いろいろと▽
 きいちゃうぞー！▼
 ■■■『ははっ……
-おてやわらかに　おねがいします▼
-しかい『それでは　さっそく
-はなしを　きいちゃおうかな？▼
+おてやわらかに　お願いします▼
+司会『それでは　さっそく
+話しを　きいちゃおうかな？▼
 ■■■くんは
-やすみのひって　なにを　してるの？▼
-■■■『やすみのひ　ですか？▼
-じかんが　あいていたら
+休みの日って　なにを　してるの？▼
+■■■『休みの日　ですか？▼
+時間が　あいていたら
 よく　つりに　でかけますね▼
-おおものが　つれたり　したら
+大物が　つれたり　したら
 つかれなんか　ふっとびますよ！▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-28T11:52:47" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:18:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1296,23 +1296,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しかい『いやー　いい　うた　だね！▼
+			<Text>しかい『いやー　いい　歌だね！▼
 みごとな　ステージ　だったよ！▼
 ■■■くん　だけでなく
-いっしょに　おどっていた▽
+いっしょに　踊っていた▽
 ポケモンたちも　みごと　だったねー▼
 ■■■『ありがとうございます！▼
 このこ　たちは　ぼくの
-だいじな　パートナーなんですよ▼
+大事な　パートナーなんですよ▼
 いつも　みんなと　いっしょに
 レッスンを　がんばって　いるから▽
 ほめられると　うれしいですね▼
-もう　サイコーの　きぶんです！▼
+もう　サイコーの　気分です！▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-28T10:00:59" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:18:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1373,26 +1373,26 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しかい『レッツゴー　ポケドル！▼
-こんかいは　リトルコートに　いる
+			<Text>司会『レッツゴー　ポケドル！▼
+今回は　リトルコートに　いる
 ■■■くんと▽
-ちゅうけいが　つながっています▼
-そちらは　どんな　かんじですか？▼
+中継が　つながっています▼
+そちらは　どんな　感じですか？▼
 ■■■『はーい▼
-こちら　リトルコートに　きている
+こちら　リトルコートに　来ている
 ■■■でーす▼
-いま　せんしゅの　みなさんは
-れんしゅうちゅう　みたいですねー▼
-でも　あいまに　ファンの　みなさんと
+いま　選手の　みなさんは
+練習中みたいですねー▼
+でも　合間に　ファンの　みなさんと
 ポケモンバトルとか　していて▽
-なんだか　とっても　たのしそうでーす▼
-ファンを　だいじにする　しせいを
-ぼくも　みならいたいですねー▼
+なんだか　とっても　楽しそうでーす▼
+ファンを　大事にする　姿勢を
+ぼくも　見習いたいですねー▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-28T10:00:59" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:21:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1434,13 +1434,13 @@
 ポイントが　ばいに　なりますから▽
 さいかいの　■■■くんにも▽
 ぎゃくてんの　かのうせいが　あります▼
-■■■『えっ　ほうとう　ですか？▼
+■■■『えっ　ほんとう　ですか？▼
 ぜったい　ぎゃくてん　してみせます！▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-09-28T12:21:38" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:25:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1448,21 +1448,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しかい『クイズ　ポケドル　Q！▼
-さあ　つぎが
-さいごの　もんだいと　なりました▼
+			<Text>司会『クイズ　ポケドル　Q！▼
+さあ　次が
+最後の　問題と　なりました▼
 なんと！▼
-せいかい　すれば
-ポイントが　ばいに　なりますから▽
-さいかいの　■■■くんにも▽
-ぎゃくてんの　かのうせいが　あります▼
-■■■『えっ　ほうとう　ですか？▼
-ぜったい　ぎゃくてん　してみせます！▼
+正解すれば
+ポイントが　倍に　なりますから▽
+最下位の　■■■くんにも▽
+逆転の　可能性が　あります▼
+■■■『えっ　本当ですか？▼
+絶対　逆転してみせます！▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-09-28T14:59:46" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:25:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1511,14 +1511,14 @@
 ぼくの　ちちの　しゅみが
 サッカー　なんですよ▼
 よく　いっしょに　プレイしたり
-ビッグスタジアムまで　しあいを　みに▽
-いったり　していました▼
+ビッグスタジアムまで　しあいを▽
+みにいったり　していました▼
 おかげで　けっこう　うまいんですよ▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-27T11:03:55" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:26:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1526,29 +1526,29 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しかい『おしえて　ポケドル！▼
-きょうは　なんと……▼
-いま　にんきの　ポケドル
-■■■くんに　いろいろと▽
-きいちゃうぞー！▼
+			<Text>司会『おしえて　ポケドル！▼
+今日は　なんと……▼
+いま　人気の　ポケドル
+■■■くんに▽
+いろいろと　きいちゃうぞー！▼
 ■■■『ははっ……
-おてやわらかに　おねがいします▼
-しかい『それでは　さっそく
-はなしを　きいちゃおうかな？▼
+おてやわらかに　お願いします▼
+司会『それでは　さっそく
+話を　きいちゃおうかな？▼
 ■■■くんの
-すきな　スポーツって　なにかな？▼
+好きな　スポーツって　なにかな？▼
 ■■■『サッカー　ですね！▼
-ぼくの　ちちの　しゅみが
+ぼくの　父の　趣味が
 サッカー　なんですよ▼
 よく　いっしょに　プレイしたり
-ビッグスタジアムまで　しあいを　みに▽
-いったり　していました▼
+ビッグスタジアムまで　試合を▽
+観にいったり　していました▼
 おかげで　けっこう　うまいんですよ▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-28T10:00:59" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:26:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1911,7 +1911,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>しかい『おしえて　ポケドル！▼
-きょうは　なんと…▼
+きょうは　なんと……▼
 いま　にんきの　ポケドル
 ●●●ちゃんに　いろいろと▽
 きいちゃうぞー！▼
@@ -1933,7 +1933,7 @@
 ……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T03:02:18" />
+				Time="2011-11-23T03:31:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1942,7 +1942,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>司会『教えて　ポケドル！▼
-今日は　なんと…▼
+今日は　なんと……▼
 今　人気の　ポケドル
 ●●●ちゃんに　いろいろと▽
 きいちゃうぞー！▼
@@ -1964,7 +1964,7 @@
 ……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T03:02:25" />
+				Time="2011-11-23T03:31:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2000,18 +2000,18 @@
 			Language="JPN">
 			<Text>しかい『■■■くん
 さいきん　ちょうしは　どう？▼
-いそがしすぎて
+ハッスルしすぎて
 たいちょう　とか　くずしてない？▼
 ■■■『そうですね……▼
 さいきんは　ちょっと　いそがしくて
-おやすみも　ないくらい　なんですよ▼
+オフも　ないくらい　なんですよ▼
 でも　しごとは　たのしいから
 ぜんぜん　だいじょうぶ　です▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-09-28T12:41:26" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:27:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2019,20 +2019,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しかい『■■■くん
-さいきん　ちょうしは　どう？▼
-いそがしすぎて
-たいちょう　とか　くずしてない？▼
+			<Text>司会『■■■くん
+最近　調子は　どう？▼
+ハッスルしすぎて
+体調とか　崩してない？▼
 ■■■『そうですね……▼
-さいきんは　ちょっと　いそがしくて
-おやすみも　ないくらい　なんですよ▼
-でも　しごとは　たのしいから
-ぜんぜん　だいじょうぶ　です▼
+最近は　ちょっと　忙しくて
+オフも　ないくらい　なんですよ▼
+でも　仕事は　楽しいから
+ぜんぜん　大丈夫です▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-09-28T15:00:05" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:27:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2074,13 +2074,13 @@
 わかっちゃい　ましたか？▼
 この　あいだ　すごく
 たのしいことが　あったんですよ▼
-でも…▼
+でも……▼
 みんなには　ひみつに　しときます▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-28T11:48:39" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:31:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2088,21 +2088,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しかい『■■■くん
+			<Text>司会『■■■くん
 なんだか　うれしそうだけど…▽
 いい　ことでも　あったの　かな？▼
 ■■■『えっ！▼
 いやだなー▼
 わかっちゃい　ましたか？▼
 この　あいだ　すごく
-たのしいことが　あったんですよ▼
-でも…▼
-みんなには　ひみつに　しときます▼
+楽しいことが　あったんですよ▼
+でも……▼
+みんなには　秘密に　しときます▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-28T11:48:46" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:31:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2154,17 +2154,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しかい『おっ！▼
-きょうも　おなじみの
+			<Text>司会『おっ！▼
+今日も　おなじみの
 ポケモンたちと　いっしょ　だねぇ▼
 ●●●『はい！▼
-きょうも　このこ　たちと　いっしょに
+今日も　このコたちと　いっしょに
 サイコーの　ステージに　してみせます▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-28T11:46:35" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:32:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2218,19 +2218,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しかい『おや？▼
-きょうは　[Name:PokemonName Idx="1" ]が
+			<Text>司会『おや？▼
+今日は　[Name:PokemonName Idx="1" ]が
 いっしょ　なんだねぇ▼
 ●●●『はい！▼
 この　[Name:PokemonName Idx="1" ]は
-たいせつな　ともだちと▽
-こうかんして　もらったんです▼
+大切な　ともだちと▽
+交換して　もらったんです▼
 サイコーに　カッコイイ　でしょ▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-28T10:02:01" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:32:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2368,8 +2368,8 @@
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-27T12:16:42" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:16:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2391,8 +2391,8 @@
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-28T11:45:05" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:16:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2593,15 +2593,15 @@
 わたしの　ははの　しゅみが
 テニス　なんですよ▼
 よく　いっしょに　プレイしたり
-リトルコートまで　しあいを　みに▽
-いったり　していました▼
+リトルコートまで　しあいを▽
+みにいったり　していました▼
 こう　みえて　うんどうしんけいも
 けっこう　いいん　ですから！▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-09-28T12:24:24" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:32:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2624,15 +2624,15 @@
 わたしの　母の　趣味が
 テニス　なんですよ▼
 よく　一緒に　プレイしたり
-リトルコートまで　試合を　観に▽
-行ったり　していました▼
+リトルコートまで　試合を▽
+観にいったり　していました▼
 こう　みえて　運動神経も
 けっこう　いいんですから！▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-09-28T12:24:13" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:32:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2669,8 +2669,8 @@
 			<Text>しかい『おしえて　ポケドル！▼
 きょうは　なんと……▼
 いま　にんきの　ポケドル
-■■■くんに　いろいろと▽
-きいちゃうぞー！▼
+■■■くんに▽
+いろいろと　きいちゃうぞー！▼
 ■■■『ははっ……
 おてやわらかに　おねがいします▼
 しかい『それでは　さっそく
@@ -2690,8 +2690,8 @@
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-27T11:07:20" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:33:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2699,32 +2699,32 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しかい『おしえて　ポケドル！▼
-きょうは　なんと……▼
-いま　にんきの　ポケドル
-■■■くんに　いろいろと▽
-きいちゃうぞー！▼
+			<Text>司会『おしえて　ポケドル！▼
+今日は　なんと……▼
+いま　人気の　ポケドル
+■■■くんに
+いろいろと　きいちゃうぞー！▼
 ■■■『ははっ……
-おてやわらかに　おねがいします▼
-しかい『それでは　さっそく
-はなしを　きいちゃおうかな？▼
+おてやわらかに　お願いします▼
+司会『それでは　さっそく
+話を　きいちゃおうかな？▼
 ■■■くんは
 でんきタイプの　ポケモンが▽
-すきって　ほんとう　なの？▼
+好きって　本当なの？▼
 ■■■『そうですね…▼
 どれか　１つを　あげるなら
 やっぱり　でんきタイプ　ですね！▼
 ボクは　カッコイイ　ポケモンが
-だいすき　なんですよ▼
+大好き　なんですよ▼
 でんきタイプって
-ほかの　タイプよりも▽
+他の　タイプよりも▽
 カッコイイ　ポケモンが▽
-おおいと　おもいませんか？▼
+多いと　思いませんか？▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-28T10:02:48" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:33:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2783,24 +2783,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しかい『いやー　いい　うた　だね！▼
+			<Text>司会『いやー　いい　歌だね！▼
 みごとな　ステージ　だったよ！▼
 ■■■くんの　ステージほど
-うたいてと　ポケモンたちが▽
-いったいに　なっている　ステージは▽
-ほかでは　●●●ちゃんの▽
+歌い手と　ポケモンたちが▽
+一体に　なっている　ステージは▽
+他では　●●●ちゃんの▽
 ステージくらいじゃ　ないかなぁ▼
 ■■■『ありがとうございます▼
 ●●●ちゃんの　ステージは
 いつ　みても　すごいですよね▼
-ぼくの　もくひょう　なんですよ▼
-あの　ステージに　まけないように
+ぼくの　目標なんですよ▼
+あの　ステージに　負けないように
 ぼくも　もっと　がんばらないと▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-28T10:02:48" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:37:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2847,14 +2847,14 @@
 ピカチュウが　みられる　そうなんです▼
 ボクも　みれるんじゃ　ないかって
 すごく　わくわく　していまーす▼
-…って　あれ？▼
+……って　あれ？▼
 あれ　そうなんじゃ　ないかな？▼
 ちょっと　いってみます！▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-27T11:11:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:38:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2862,31 +2862,31 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しかい『レッツゴー　ポケドル！▼
-こんかいは　カントーちほうに　いる
+			<Text>司会『レッツゴー　ポケドル！▼
+今回は　カントー地方に　いる
 ■■■くんと▽
-ちゅうけいが　つながっています▼
-そちらは　どんな　かんじですか？▼
+中継が　つながっています▼
+そちらは　どんな　感じですか？▼
 ■■■『はーい▼
-こちら　カントーちほうの
-トキワのもりに　きている▽
+こちら　カントー地方の
+トキワの森に　きている▽
 ■■■でーす▼
 ここでは　たまに
 ピカチュウが　みられる　そうなんです▼
 ボクも　みれるんじゃ　ないかって
 すごく　わくわく　していまーす▼
-…って　あれ？▼
+……って　あれ？▼
 あれ　そうなんじゃ　ないかな？▼
 ちょっと　いってみます！▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-28T10:02:48" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:38:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:37:38" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -2916,7 +2916,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しかい『……　……　……　……▼
+			<Text>しかい『……　……　……
+……　……　……▼
 はい！　せいかいでーす！▼
 せいかいした　■■■くんは
 ポイントが　ばいに　なるので…▼
@@ -2932,8 +2933,8 @@
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-09-28T14:33:49" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:38:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2941,28 +2942,29 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しかい『……　……　……　……▼
-はい！　せいかいでーす！▼
-せいかいした　■■■くんは
-ポイントが　ばいに　なるので…▼
+			<Text>司会『……　……　……
+……　……　……▼
+はい！　正解でーす！▼
+正解した　■■■くんは
+ポイントが　倍に　なるので…▼
 なんと！▼
-ぎゃくてん　ゆうしょうでーす！▼
+逆転優勝でーす！▼
 ■■■『よしっ！▼
-いじわるな　もんだい　でしたね
+いじわるな　問題でしたね
 あやうく　ひっかかる　ところでしたよ▼
-しかい『ゆうしょう　した　
+司会『優勝した　
 ■■■くんには　こちらの▽
 ダウジングマシンを　さしあげます！▼
 ●●●『……ダウジングマシン？▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-09-28T15:00:20" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:39:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:37:38" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3005,14 +3007,14 @@
 すきな　きせつが▽
 なつって　ほんとう　なの？▼
 ■■■『そうですね▼
-なつは　いちばん　すきな　きせつです▼
-あつい　ひざしの　なかで
-する　つりは　もう　サイコーですね！▼
+なつは　いちばん　すきです▼
+あつい　ひざしの　なかでする
+つりは　もう　サイコーですね！▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-27T11:48:50" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:40:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3020,31 +3022,31 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しかい『おしえて　ポケドル！▼
-きょうは　なんと…▼
-いま　にんきの　ポケドル
+			<Text>司会『おしえて　ポケドル！▼
+今日は　なんと…▼
+いま　人気の　ポケドル
 ■■■くんに　いろいろと▽
 きいちゃうぞー！▼
 ■■■『ははっ……
-おてやわらかに　おねがいします▼
-しかい『それでは　さっそく
-はなしを　きいちゃおうかな？▼
+おてやわらかに　お願いします▼
+司会『それでは　さっそく
+話を　きいちゃおうかな？▼
 ■■■くんの
-すきな　きせつが▽
-なつって　ほんとう　なの？▼
+好きな　季節が▽
+夏って　本当なの？▼
 ■■■『そうですね▼
-なつは　いちばん　すきな　きせつです▼
-あつい　ひざしの　なかで
-する　つりは　もう　サイコーですね！▼
+夏は　一番　好きです▼
+熱い　日差しの　なかでする
+つりは　もう　サイコーですね！▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-28T10:02:48" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:40:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:37:38" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -3216,13 +3218,13 @@
 きょうも　おなじみの
 ポケモンたちと　いっしょ　だねぇ▼
 ●●●『はい！▼
-きょうも　このこ　たちと　いっしょに
+きょうも　このコたちと　いっしょに
 ステージを　もりあげて　いきますよー▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-28T11:45:42" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:40:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3234,13 +3236,13 @@
 今日も　おなじみの
 ポケモンたちと　一緒だねぇ▼
 ●●●『はい！▼
-きょうも　このこ　たちと　一緒に
+きょうも　このコたちと　一緒に
 ステージを　盛りあげて　いきますよー▼
 ……　……　……
 ……　……　……</Text>
 			<TextModifiedBy
-				User="nishino:W00221"
-				Time="2011-10-28T11:45:58" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:40:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5284,10 +5286,12 @@
 アナウンサー『なるほど……
 べんきょうに　なりましたね▼
 それでは　みなさま　また　じかい
-おあいしましょう　さようなら</Text>
+おあいしましょう　さようなら▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:21:47" />
+				Time="2011-11-23T04:10:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5324,10 +5328,12 @@
 アナウンサー『なるほど……
 勉強に　なりましたね▼
 それでは　みなさま　また　次回
-お会いしましょう　さようなら</Text>
+お会いしましょう　さようなら▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:21:47" />
+				Time="2011-11-23T04:10:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5388,10 +5394,12 @@
 アナウンサー『なるほど……
 べんきょうに　なりましたね▼
 それでは　みなさま　また　じかい
-おあいしましょう　さようなら</Text>
+おあいしましょう　さようなら▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:21:47" />
+				Time="2011-11-23T04:10:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5425,10 +5433,12 @@
 アナウンサー『なるほど……
 勉強に　なりましたね▼
 それでは　みなさま　また　次回
-お会いしましょう　さようなら</Text>
+お会いしましょう　さようなら▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:21:47" />
+				Time="2011-11-23T04:10:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5479,10 +5489,12 @@
 すばやさが　あがっちゃうんだよねえ▼
 いやあ　ぼくにも　こんな　とくせいが
 あったら　いいのになあ……▽
-つぎは　どこを　さんぽしようかなあ</Text>
+つぎは　どこを　さんぽしようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:10:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5506,10 +5518,12 @@
 すばやさが　あがっちゃうんだよねえ▼
 いやあ　ぼくにも　こんな　特性が
 あったら　いいのになあ……▽
-次は　どこを　散歩しようかなあ</Text>
+次は　どこを　散歩しようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:10:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5559,10 +5573,12 @@
 つかえなくしちゃうんだよねえ▼
 いやあ　ぼくにも　こんな　とくせいが
 あったら　いいのになあ……▽
-つぎは　どこを　さんぽしようかなあ</Text>
+つぎは　どこを　さんぽしようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:10:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5585,10 +5601,12 @@
 使えなくしちゃうんだよねえ▼
 いやあ　ぼくにも　こんな　特性が
 あったら　いいのになあ……▽
-次は　どこを　散歩しようかなあ</Text>
+次は　どこを　散歩しようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:10:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5637,10 +5655,12 @@
 すばやさは　あがるんだよねえ▼
 いやあ　ぼくにも　こんな　とくせいが
 あったら　いいのになあ……▽
-つぎは　どこを　さんぽしようかなあ</Text>
+つぎは　どこを　さんぽしようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:10:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5662,10 +5682,12 @@
 すばやさは　あがるんだよねえ▼
 いやあ　ぼくにも　こんな　特性が
 あったら　いいのになあ……▽
-次は　どこを　散歩しようかなあ</Text>
+次は　どこを　散歩しようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:10:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5714,10 +5736,12 @@
 どれかの　のうりょくが　さがるんだ▼
 いやあ　ぼくにも　こんな　とくせいが
 あったら　いいのになあ……▽
-つぎは　どこを　さんぽしようかなあ</Text>
+つぎは　どこを　さんぽしようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:10:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5739,10 +5763,12 @@
 どれかの　能力が　さがるんだ▼
 いやあ　ぼくにも　こんな　特性が
 あったら　いいのになあ……▽
-次は　どこを　散歩しようかなあ</Text>
+次は　どこを　散歩しようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:10:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5790,10 +5816,12 @@
 その　わざのいりょくが　アップするよ▼
 いやあ　ぼくにも　こんな　とくせいが
 あったら　いいのになあ……▽
-つぎは　どこを　さんぽしようかなあ</Text>
+つぎは　どこを　さんぽしようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:10:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5814,10 +5842,12 @@
 その技の　威力が　アップするよ▼
 いやあ　ぼくにも　こんな　特性が
 あったら　いいのになあ……▽
-次は　どこを　散歩しようかなあ</Text>
+次は　どこを　散歩しようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:10:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5865,10 +5895,12 @@
 わざを　うけると　すばやさアップ！▼
 いやあ　ぼくにも　こんな　とくせいが
 あったら　いいのになあ……▽
-つぎは　どこを　さんぽしようかなあ</Text>
+つぎは　どこを　さんぽしようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5889,10 +5921,12 @@
 技を　受けると　すばやさアップ！▼
 いやあ　ぼくにも　こんな　特性が
 あったら　いいのになあ……▽
-次は　どこを　散歩しようかなあ</Text>
+次は　どこを　散歩しようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:10:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5940,10 +5974,12 @@
 いちばん　さいしょに　だせるんだ！▼
 いやあ　ぼくにも　こんな　とくせいが
 あったら　いいのになあ……▽
-つぎは　どこを　さんぽしようかなあ</Text>
+つぎは　どこを　さんぽしようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5964,10 +6000,12 @@
 一番　最初に　だせるんだ！▼
 いやあ　ぼくにも　こんな　特性が
 あったら　いいのになあ……▽
-次は　どこを　散歩しようかなあ</Text>
+次は　どこを　散歩しようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6016,10 +6054,12 @@
 わざの　いりょくが　アップします！▼
 いやあ　ぼくにも　こんな　とくせいが
 あったら　いいのになあ……▽
-つぎは　どこを　さんぽしようかなあ</Text>
+つぎは　どこを　さんぽしようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6041,10 +6081,12 @@
 技の　威力が　アップします！▼
 いやあ　ぼくにも　こんな　特性が
 あったら　いいのになあ……▽
-次は　どこを　散歩しようかなあ</Text>
+次は　どこを　散歩しようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6093,10 +6135,12 @@
 わざを　そのまま　はねかえせるよ▼
 いやあ　ぼくにも　こんな　とくせいが
 あったら　いいのになあ……▽
-つぎは　どこを　さんぽしようかなあ</Text>
+つぎは　どこを　さんぽしようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6118,10 +6162,12 @@
 技を　そのまま　はねかえせるよ▼
 いやあ　ぼくにも　こんな　特性が
 あったら　いいのになあ……▽
-次は　どこを　散歩しようかなあ</Text>
+次は　どこを　散歩しようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6171,10 +6217,12 @@
 なあに？　たべほうだい？▼
 いやあ　ぼくにも　こんな　とくせいが
 あったら　いいのになあ……▽
-つぎは　どこを　さんぽしようかなあ</Text>
+つぎは　どこを　さんぽしようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6197,10 +6245,12 @@
 なあに？　食べ放題？▼
 いやあ　ぼくにも　こんな　特性が
 あったら　いいのになあ……▽
-次は　どこを　散歩しようかなあ</Text>
+次は　どこを　散歩しようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6251,10 +6301,12 @@
 ＨＰが　１　のこるんだよねえ▼
 いやあ　ぼくにも　こんな　とくせいが
 あったら　いいのになあ……▽
-つぎは　どこを　さんぽしようかなあ</Text>
+つぎは　どこを　さんぽしようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6276,10 +6328,12 @@
 ＨＰが　１　残るんだよねえ▼
 いやあ　ぼくにも　こんな　特性が
 あったら　いいのになあ……▽
-次は　どこを　散歩しようかなあ</Text>
+次は　どこを　散歩しようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6327,10 +6381,12 @@
 まったく　うけないんですよねえ▼
 いやあ　ぼくにも　こんな　とくせいが
 あったら　いいのになあ……▽
-つぎは　どこを　さんぽしようかなあ</Text>
+つぎは　どこを　さんぽしようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6351,10 +6407,12 @@
 まったく　受けないんですよねえ▼
 いやあ　ぼくにも　こんな　特性が
 あったら　いいのになあ……▽
-次は　どこを　散歩しようかなあ</Text>
+次は　どこを　散歩しようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6404,10 +6462,12 @@
 いろいろ　どうぐを　ひろうんだよね▼
 いやあ　ぼくにも　こんな　とくせいが
 あったら　いいのになあ……▽
-つぎは　どこを　さんぽしようかなあ</Text>
+つぎは　どこを　さんぽしようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6430,10 +6490,12 @@
 いろいろ　道具を　拾うんだよね▼
 いやあ　ぼくにも　こんな　特性が
 あったら　いいのになあ……▽
-次は　どこを　散歩しようかなあ</Text>
+次は　どこを　散歩しようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6483,10 +6545,12 @@
 ちょいと　アップするんだよねえ▼
 いやあ　ぼくにも　こんな　とくせいが
 あったら　いいのになあ……▽
-つぎは　どこを　さんぽしようかなあ</Text>
+つぎは　どこを　さんぽしようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6509,10 +6573,12 @@
 ちょいと　アップするんだよねえ▼
 いやあ　ぼくにも　こんな　特性が
 あったら　いいのになあ……▽
-次は　どこを　散歩しようかなあ</Text>
+次は　どこを　散歩しようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6560,10 +6626,12 @@
 まるっきり　むし　できるんですよ▼
 いやあ　ぼくにも　こんな　とくせいが
 あったら　いいのになあ……▽
-つぎは　どこを　さんぽしようかなあ</Text>
+つぎは　どこを　さんぽしようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6584,10 +6652,12 @@
 まるっきり　無視できるんですよ▼
 いやあ　ぼくにも　こんな　特性が
 あったら　いいのになあ……▽
-次は　どこを　散歩しようかなあ</Text>
+次は　どこを　散歩しようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6637,10 +6707,12 @@
 へっちゃら　ってこと！▼
 いやあ　ぼくにも　こんな　とくせいが
 あったら　いいのになあ……▽
-つぎは　どこを　さんぽしようかなあ</Text>
+つぎは　どこを　さんぽしようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6663,10 +6735,12 @@
 へっちゃら　ってこと！▼
 いやあ　ぼくにも　こんな　特性が
 あったら　いいのになあ……▽
-次は　どこを　散歩しようかなあ</Text>
+次は　どこを　散歩しようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6715,10 +6789,12 @@
 もっていると　わかるんだよねえ▼
 いやあ　ぼくにも　こんな　とくせいが
 あったら　いいのになあ……▽
-つぎは　どこを　さんぽしようかなあ</Text>
+つぎは　どこを　さんぽしようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6740,10 +6816,12 @@
 持っていると　わかるんだよねえ▼
 いやあ　ぼくにも　こんな　特性が
 あったら　いいのになあ……▽
-次は　どこを　散歩しようかなあ</Text>
+次は　どこを　散歩しようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6794,10 +6872,12 @@
 たいりょくが　へっていくんだよね▼
 いやあ　ぼくにも　こんな　とくせいが
 あったら　いいのになあ……▽
-つぎは　どこを　さんぽしようかなあ</Text>
+つぎは　どこを　さんぽしようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6821,10 +6901,12 @@
 ＨＰが　減っていくんだよね▼
 いやあ　ぼくにも　こんな　特性が
 あったら　いいのになあ……▽
-次は　どこを　散歩しようかなあ</Text>
+次は　どこを　散歩しようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6876,10 +6958,12 @@
 じぶんの　とくこうを　アップするんだ▼
 いやあ　ぼくにも　こんな　とくせいが
 あったら　いいのになあ……▽
-つぎは　どこを　さんぽしようかなあ</Text>
+つぎは　どこを　さんぽしようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6904,10 +6988,12 @@
 自分の　特攻を　アップするんだ▼
 いやあ　ぼくにも　こんな　特性が
 あったら　いいのになあ……▽
-次は　どこを　散歩しようかなあ</Text>
+次は　どこを　散歩しようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6955,10 +7041,12 @@
 わざが　つかえなくなるんだよね▼
 いやあ　ぼくにも　こんな　とくせいが
 あったら　いいのになあ……▽
-つぎは　どこを　さんぽしようかなあ</Text>
+つぎは　どこを　さんぽしようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6979,10 +7067,12 @@
 技が　使えなくなるんだよね▼
 いやあ　ぼくにも　こんな　特性が
 あったら　いいのになあ……▽
-次は　どこを　散歩しようかなあ</Text>
+次は　どこを　散歩しようかなあ▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:25:04" />
+				Time="2011-11-23T04:09:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7034,10 +7124,12 @@
 アップするんだよ！　すごいよね！▽
 というわけで　また　あおうね！▼
 ミルホッくん『ギュギュ　グウウグウ！
-（おいおい　かってに　おわったよ！）</Text>
+（おいおい　かってに　おわったよ！）▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:22:44" />
+				Time="2011-11-23T04:08:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7062,10 +7154,12 @@
 アップするんだよ！　すごいよね！▽
 というわけで　また　会おうね！▼
 ミルホッくん『ギュギュ　グウウグウ！
-（おいおい　かってに　おわったよ！）</Text>
+（おいおい　かってに　おわったよ！）▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:22:44" />
+				Time="2011-11-23T04:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7116,10 +7210,12 @@
 というわけで　さっそく
 ミルホッくんに　つけてみよっか！▼
 ミルホッくん『ギュギュ　グウウグウ！
-（おいおい　おれは　スリムだっての）</Text>
+（おいおい　おれは　スリムだっての）▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:22:52" />
+				Time="2011-11-23T04:08:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7143,10 +7239,12 @@
 というわけで　さっそく
 ミルホッくんに　つけてみよっか！▼
 ミルホッくん『ギュギュ　グウウグウ！
-（おいおい　おれは　スリムだっての）</Text>
+（おいおい　おれは　スリムだっての）▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:22:52" />
+				Time="2011-11-23T04:08:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7199,10 +7297,12 @@
 というわけで　おねえさん　かぶるから
 ミルホッくん！　かかってきなさい！▼
 ミルホッくん『ギュギュ　グウウグウ！
-（おいおい　あんた　にんげんだろ？）</Text>
+（おいおい　あんた　にんげんだろ？）▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:23:02" />
+				Time="2011-11-23T04:08:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7228,10 +7328,12 @@
 というわけで　おねえさん　かぶるから
 ミルホッくん！　かかってきなさい！▼
 ミルホッくん『ギュギュ　グウウグウ！
-（おいおい　あんた　にんげんだろ？）</Text>
+（おいおい　あんた　にんげんだろ？）▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:23:02" />
+				Time="2011-11-23T04:08:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7285,10 +7387,12 @@
 われちゃうから　きをつけてね！▽
 って　おねえさん　わっちゃった！！▼
 ミルホッくん『ギュギュ　グウウグウ！
-（おいおい　どれだけ　ドジなのさ！）</Text>
+（おいおい　どれだけ　ドジなのさ！）▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:23:07" />
+				Time="2011-11-23T04:07:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7315,10 +7419,12 @@
 割れちゃうから　気をつけてね！▽
 って　おねえさん　割っちゃった！！▼
 ミルホッくん『ギュギュ　グウウグウ！
-（おいおい　どれだけ　ドジなのさ！）</Text>
+（おいおい　どれだけ　ドジなのさ！）▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:23:07" />
+				Time="2011-11-23T04:07:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7370,10 +7476,12 @@
 ちなみに　あたしも　レッドカードを
 もってるからね　ミルホッくん！▼
 ミルホッくん『ギュギュ　グウウグウ！
-（おいおい　こうげきなんてしないよ！）</Text>
+（おいおい　こうげきなんてしないよ！）▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:23:26" />
+				Time="2011-11-23T04:07:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7398,10 +7506,12 @@
 ちなみに　あたしも　レッドカードを
 持ってるからね　ミルホッくん！▼
 ミルホッくん『ギュギュ　グウウグウ！
-（おいおい　こうげきなんてしないよ！）</Text>
+（おいおい　こうげきなんてしないよ！）▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:23:26" />
+				Time="2011-11-23T04:07:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7453,10 +7563,12 @@
 というわけで　ミルホッくん！
 ねらいのまと　プレゼントするね！▼
 ミルホッくん『ギュギュ　グウウグウ！
-（おいおい　どういう　つもりだよ！）</Text>
+（おいおい　どういう　つもりだよ！）▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:23:26" />
+				Time="2011-11-23T04:06:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7481,10 +7593,12 @@
 というわけで　ミルホッくん！
 ねらいのまと　プレゼントするね！▼
 ミルホッくん『ギュギュ　グウウグウ！
-（おいおい　どういう　つもりだよ！）</Text>
+（おいおい　どういう　つもりだよ！）▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:23:26" />
+				Time="2011-11-23T04:06:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7534,10 +7648,12 @@
 いりょくが　アップするんだよ！▽
 というわけで　また　あおうね！▼
 ミルホッくん『ギュギュ　グウウグウ！
-（おいおい　かってに　おわったよ！）</Text>
+（おいおい　かってに　おわったよ！）▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:23:26" />
+				Time="2011-11-23T04:06:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7560,10 +7676,12 @@
 威力が　アップするんだよ！▽
 というわけで　また　会おうね！▼
 ミルホッくん『ギュギュ　グウウグウ！
-（おいおい　かってに　おわったよ！）</Text>
+（おいおい　かってに　おわったよ！）▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:23:26" />
+				Time="2011-11-23T04:06:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7615,10 +7733,12 @@
 だけど　つかいすて　なのよね
 というわけで　つかったやつ　あげる！▼
 ミルホッくん『ギュギュ　グウウグウ！
-（おいおい　ゴミは　ゴミばこだろ！）</Text>
+（おいおい　ゴミは　ゴミばこだろ！）▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:23:26" />
+				Time="2011-11-23T04:06:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7643,10 +7763,12 @@
 だけど　使い捨て　なのよね
 というわけで　使ったやつ　あげる！▼
 ミルホッくん『ギュギュ　グウウグウ！
-（おいおい　ゴミは　ゴミばこだろ！）</Text>
+（おいおい　ゴミは　ゴミばこだろ！）▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:23:26" />
+				Time="2011-11-23T04:06:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7698,10 +7820,12 @@
 だけど　つかいすて　なのよね
 だから　ミルホッくんに　あげません！▼
 ミルホッくん『ギュギュ　グウウグウ！
-（おいおい　おねだりしてないだろ！）</Text>
+（おいおい　おねだりしてないだろ！）▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:23:33" />
+				Time="2011-11-23T04:06:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7726,10 +7850,12 @@
 だけど　使い捨て　なのよね
 だから　ミルホッくんに　あげません！▼
 ミルホッくん『ギュギュ　グウウグウ！
-（おいおい　おねだりしてないだろ！）</Text>
+（おいおい　おねだりしてないだろ！）▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:23:33" />
+				Time="2011-11-23T04:06:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7781,10 +7907,12 @@
 はぶけるかも　しれないわね！▽
 というわけで　だっしゅつ　しまーす！▼
 ミルホッくん『ギュギュ　グウウグウ！
-（おいおい　どこにいくつもりだよ！）</Text>
+（おいおい　どこにいくつもりだよ！）▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:23:33" />
+				Time="2011-11-23T04:06:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7809,10 +7937,12 @@
 省けるかも　しれないわね！▽
 というわけで　脱出しまーす！▼
 ミルホッくん『ギュギュ　グウウグウ！
-（おいおい　どこにいくつもりだよ！）</Text>
+（おいおい　どこにいくつもりだよ！）▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:23:33" />
+				Time="2011-11-23T04:06:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7868,10 +7998,12 @@
 ユーモラスな　ねいろに
 まわりも　えがおに　なるでしょう！▼
 しかい『ありがとうございました！
-また　おあいしましょう！</Text>
+また　おあいしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:06:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7900,10 +8032,12 @@
 ユーモラスな　音色に
 まわりも　笑顔に　なるでしょう！▼
 司会『ありがとうございました！
-また　お会いしましょう！</Text>
+また　お会いしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:06:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7959,10 +8093,12 @@
 たのしくて　おもいの　こもった
 メールに　みんなも　えがおになるわ！▼
 しかい『ありがとうございました！
-また　おあいしましょう！</Text>
+また　おあいしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:06:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7991,10 +8127,12 @@
 楽しくて　想いの　こもった
 メールに　みんなも　笑顔になるわ！▼
 司会『ありがとうございました！
-また　お会いしましょう！</Text>
+また　お会いしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:06:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8050,10 +8188,12 @@
 やさしくて　たよりになる　オーラに
 まわりも　なっとく　するでしょう！▼
 しかい『ありがとうございました！
-また　おあいしましょう！</Text>
+また　おあいしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:06:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8082,10 +8222,12 @@
 優しくて　頼りになる　オーラに
 まわりも　納得　するでしょう！▼
 司会『ありがとうございました！
-また　お会いしましょう！</Text>
+また　お会いしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:06:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8141,10 +8283,12 @@
 けちらない　やさしさに
 まわりも　なっとく　するでしょう！▼
 しかい『ありがとうございました！
-また　おあいしましょう！</Text>
+また　おあいしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:06:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8173,10 +8317,12 @@
 けちらない　優しさに
 まわりも　納得　するでしょう！▼
 司会『ありがとうございました！
-また　お会いしましょう！</Text>
+また　お会いしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:06:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8232,10 +8378,12 @@
 ガンガン　せめる　ギャップに
 みんなが　びっくり　するわ！▼
 しかい『ありがとうございました！
-また　おあいしましょう！</Text>
+また　おあいしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:06:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8264,10 +8412,12 @@
 ガンガン　攻める　ギャップに
 みんなが　びっくり　するわ！▼
 司会『ありがとうございました！
-また　お会いしましょう！</Text>
+また　お会いしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:06:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8323,10 +8473,12 @@
 じっくり　かんがえる　たたかいで
 みんなを　あっとう　するわ！▼
 しかい『ありがとうございました！
-また　おあいしましょう！</Text>
+また　おあいしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:06:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8355,10 +8507,12 @@
 じっくり　考える　戦いで
 みんなを　圧倒　するわ！▼
 司会『ありがとうございました！
-また　お会いしましょう！</Text>
+また　お会いしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:06:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8414,10 +8568,12 @@
 つぎつぎ　どうぐを　はっけんする
 あなたに　まわりも　びっくりよ！▼
 しかい『ありがとうございました！
-また　おあいしましょう！</Text>
+また　おあいしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:06:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8446,10 +8602,12 @@
 次々　道具を　発見する
 あなたに　まわりも　びっくりよ！▼
 司会『ありがとうございました！
-また　お会いしましょう！</Text>
+また　お会いしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:06:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8506,10 +8664,12 @@
 あげて　つよきで　せめる　スタイルに▽
 まわりも　ほれぼれするわ！▼
 しかい『ありがとうございました！
-また　おあいしましょう！</Text>
+また　おあいしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:06:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8539,10 +8699,12 @@
 上げて　強気で　攻める　スタイルに▽
 まわりも　ほれぼれするわ！▼
 司会『ありがとうございました！
-また　お会いしましょう！</Text>
+また　お会いしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:06:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8598,10 +8760,12 @@
 みんなを　きにかける　あなたに
 まわりも　いやされる　でしょう！▼
 しかい『ありがとうございました！
-また　おあいしましょう！</Text>
+また　おあいしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:05:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8630,10 +8794,12 @@
 みんなを　気にかける　あなたに
 まわりも　癒される　でしょう！▼
 司会『ありがとうございました！
-また　お会いしましょう！</Text>
+また　お会いしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:05:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8689,10 +8855,12 @@
 おしゃれ　かつ　１つの　わざで
 せめる　あなたは　ひかってみえるわ！▼
 しかい『ありがとうございました！
-また　おあいしましょう！</Text>
+また　おあいしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:05:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8721,10 +8889,12 @@
 おしゃれ　かつ　１つの　技で
 攻める　あなたは　光ってみえるわ！▼
 司会『ありがとうございました！
-また　お会いしましょう！</Text>
+また　お会いしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:05:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8781,10 +8951,12 @@
 かもしだす　せいけつかんが▽
 いがいな　みりょくを　うみだすわ！▼
 しかい『ありがとうございました！
-また　おあいしましょう！</Text>
+また　おあいしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:04:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8814,10 +8986,12 @@
 かもしだす　清潔感が▽
 意外な　魅力を　うみだすわ！▼
 司会『ありがとうございました！
-また　お会いしましょう！</Text>
+また　お会いしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:04:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8874,10 +9048,12 @@
 じわじわ　つかまえる　すがたに▽
 まわりの　いんしょうも　かわるはず！▼
 しかい『ありがとうございました！
-また　おあいしましょう！</Text>
+また　おあいしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:04:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8907,10 +9083,12 @@
 じわじわ　捕まえる　姿に▽
 まわりの　印象も　変わるはず！▼
 司会『ありがとうございました！
-また　お会いしましょう！</Text>
+また　お会いしましょう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T12:24:20" />
+				Time="2011-11-23T04:04:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8968,10 +9146,12 @@
 たんじゅんに　まる！▼
 って　してただけじゃないの？▼
 はっけん　ジムリーダー！
-みんなの　おたより　まってるぜ！▼</Text>
+みんなの　おたより　まってるぜ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:55:33" />
+				Time="2011-11-23T04:04:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9002,10 +9182,12 @@
 単純に　まる！▼
 って　してただけじゃないの？▼
 発見　ジムリーダー！
-みんなの　おたより　待ってるぜ！▼</Text>
+みんなの　おたより　待ってるぜ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:56:59" />
+				Time="2011-11-23T04:04:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9067,10 +9249,12 @@
 ライブでの
 すいぶん　ほきゅうは　だいじだぞ！▼
 はっけん　ジムリーダー！
-みんなの　おたより　まってるぜ！▼</Text>
+みんなの　おたより　まってるぜ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:37:22" />
+				Time="2011-11-23T04:04:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9099,10 +9283,12 @@
 ライブでの
 水分　補給は　大事だぞ！▼
 発見　ジムリーダー！
-みんなの　おたより　待ってるぜ！▼</Text>
+みんなの　おたより　待ってるぜ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:38:20" />
+				Time="2011-11-23T04:04:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9161,10 +9347,12 @@
 だけじゃ　ないかなあ……▽
 それは　それで　アレだけど……▼
 はっけん　ジムリーダー！
-みんなの　おたより　まってるぜ！</Text>
+みんなの　おたより　まってるぜ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:07:38" />
+				Time="2011-11-23T04:04:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9190,10 +9378,12 @@
 だけじゃ　ないかなあ……▽
 それは　それで　アレだけど……▼
 発見　ジムリーダー！
-みんなの　おたより　待ってるぜ！</Text>
+みんなの　おたより　待ってるぜ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:07:38" />
+				Time="2011-11-23T04:04:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9250,10 +9440,12 @@
 むりして　かいたっぽい　けど▽
 まあ　いいや▼
 はっけん　ジムリーダー！
-みんなの　おたより　まってるぜ！</Text>
+みんなの　おたより　まってるぜ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:07:38" />
+				Time="2011-11-23T04:04:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9283,10 +9475,12 @@
 無理して　書いたっぽい　けど▽
 まあ　いいや▼
 発見　ジムリーダー！
-みんなの　おたより　待ってるぜ！</Text>
+みんなの　おたより　待ってるぜ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:07:38" />
+				Time="2011-11-23T04:04:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9341,10 +9535,12 @@
 でも　それは　ヤーコンさんの
 かみのけじゃ　ないかなあ……▼
 はっけん　ジムリーダー！
-みんなの　おたより　まってるぜ！</Text>
+みんなの　おたより　まってるぜ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:07:38" />
+				Time="2011-11-23T04:04:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9372,10 +9568,12 @@
 でも　それは　ヤーコンさんの
 髪の毛じゃ　ないかなあ……▼
 発見　ジムリーダー！
-みんなの　おたより　待ってるぜ！</Text>
+みんなの　おたより　待ってるぜ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:07:38" />
+				Time="2011-11-23T04:04:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9429,10 +9627,12 @@
 でも　ジムの　しかけで
 とんでた　だけじゃ　ないかなあ……▼
 はっけん　ジムリーダー！
-みんなの　おたより　まってるぜ！</Text>
+みんなの　おたより　まってるぜ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:28:25" />
+				Time="2011-11-23T04:03:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9459,10 +9659,12 @@
 でも　ジムの　しかけで
 飛んでた　だけじゃ　ないかなあ……▼
 発見　ジムリーダー！
-みんなの　おたより　待ってるぜ！</Text>
+みんなの　おたより　待ってるぜ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:28:18" />
+				Time="2011-11-23T04:03:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9518,10 +9720,12 @@
 うーん……　あのひと
 いま　なんさい　だっけ？▼
 はっけん　ジムリーダー！
-みんなの　おたより　まってるぜ！▼</Text>
+みんなの　おたより　まってるぜ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:27:57" />
+				Time="2011-11-23T04:03:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9550,10 +9754,12 @@
 うーん……　あの人
 いま　何歳だっけ？▼
 発見　ジムリーダー！
-みんなの　おたより　待ってるぜ！▼</Text>
+みんなの　おたより　待ってるぜ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:28:08" />
+				Time="2011-11-23T04:03:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9614,10 +9820,12 @@
 それに　そらを　とんでいても
 およぎって　いえるのか？▼
 はっけん　ジムリーダー！
-みんなの　おたより　まってるぜ！▼</Text>
+みんなの　おたより　まってるぜ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:24:57" />
+				Time="2011-11-23T04:03:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9645,10 +9853,12 @@
 それに　空を　飛んでいても
 泳ぎって　いえるのか？▼
 発見　ジムリーダー！
-みんなの　おたより　待ってるぜ！▼</Text>
+みんなの　おたより　待ってるぜ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:26:40" />
+				Time="2011-11-23T04:03:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9706,10 +9916,12 @@ WASHIZUKAMIね！ YEAH!▼
 せかいで　ポケモン　こうかんって
 ステキですねー　ウフフ！▼
 ハーイ　それじゃ　また　みてねー！
-HAVE A NICE DAY！</Text>
+HAVE A NICE DAY！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:08:17" />
+				Time="2011-11-23T04:03:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9734,10 +9946,12 @@ WASHIZUKAMIね！ YEAH!▼
 世界で　ポケモン　交換って
 ステキですねー　ウフフ！▼
 ハーイ　それじゃ　また　みてねー！
-HAVE A NICE DAY！</Text>
+HAVE A NICE DAY！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:08:17" />
+				Time="2011-11-23T04:03:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9790,10 +10004,12 @@ HAVE A NICE DAY！</Text>
 トークで　もりあがること▽
 まちがいなしね！　キャッ！▼
 ハーイ　それじゃ
-SEE YOU AGAIN！　バイバーイ！</Text>
+SEE YOU AGAIN！　バイバーイ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:08:21" />
+				Time="2011-11-23T04:03:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9818,10 +10034,12 @@ SEE YOU AGAIN！　バイバーイ！</Text>
 トークで　盛り上がること▽
 間違いなしね！　キャッ！▼
 ハーイ　それじゃ
-SEE YOU AGAIN！　バイバーイ！</Text>
+SEE YOU AGAIN！　バイバーイ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:08:21" />
+				Time="2011-11-23T04:03:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9873,10 +10091,12 @@ SEE YOU AGAIN！　バイバーイ！</Text>
 ちなみに　ジョディの　すきな
 ポケモンは　[Name:PokemonName Idx="3" ]よ！▼
 それじゃ　まったねー！
-HAVE A NICE DAY！　ムチュッ！</Text>
+HAVE A NICE DAY！　ムチュッ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:11:09" />
+				Time="2011-11-23T04:03:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9900,10 +10120,12 @@ HAVE A NICE DAY！　ムチュッ！</Text>
 ちなみに　ジョディの　好きな
 ポケモンは　[Name:PokemonName Idx="3" ]よ！▼
 それじゃ　まったねー！
-HAVE A NICE DAY！　ムチュッ！</Text>
+HAVE A NICE DAY！　ムチュッ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:11:37" />
+				Time="2011-11-23T04:03:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9955,10 +10177,12 @@ HAVE A NICE DAY！　ムチュッ！</Text>
 つれてる　トレーナーに▽
 あうと　すかさず　きいちゃうっ！▼
 そんなわけで　またいつか
-あいましょうネ！　ADIOS！</Text>
+あいましょうネ！　ADIOS！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:11:31" />
+				Time="2011-11-23T04:03:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9982,10 +10206,12 @@ HAVE A NICE DAY！　ムチュッ！</Text>
 連れてる　トレーナーに▽
 会うと　すかさず　きいちゃうっ！▼
 そんなわけで　またいつか
-会いましょうネ！　ADIOS！</Text>
+会いましょうネ！　ADIOS！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:11:21" />
+				Time="2011-11-23T04:03:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10035,10 +10261,12 @@ HAVE A NICE DAY！　ムチュッ！</Text>
 がっちり　あくしゅなんて　しながら
 いうと　なお　グッドね！▼
 それじゃ　きょうは　ここまで！
-SEE　YOU　SOON！</Text>
+SEE　YOU　SOON！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:11:48" />
+				Time="2011-11-23T04:03:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10060,10 +10288,12 @@ SEE　YOU　SOON！</Text>
 がっちり　握手なんて　しながら
 いうと　なお　グッドね！▼
 それじゃ　今日は　ここまで！
-SEE　YOU　SOON！</Text>
+SEE　YOU　SOON！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:11:48" />
+				Time="2011-11-23T04:03:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10116,10 +10346,12 @@ SEE　YOU　SOON！</Text>
 はんざいねっ！▼
 というわけで　ジョディは
 きょうも　ミュージカルに▽
-いってきまーす！　SEE YOU！</Text>
+いってきまーす！　SEE YOU！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:24:35" />
+				Time="2011-11-23T04:02:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10144,10 +10376,12 @@ SEE　YOU　SOON！</Text>
 犯罪ねっ！▼
 というわけで　ジョディは
 今日も　ミュージカルに▽
-行ってきまーす！　SEE YOU！</Text>
+行ってきまーす！　SEE YOU！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:24:40" />
+				Time="2011-11-23T04:02:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10198,10 +10432,12 @@ SEE　YOU　SOON！</Text>
 いつも　かいわが　ヒートアップして▽
 とまらなくなるわね！▼
 そんなわけで　きょうは　ここまで！
-SEE YOU AGAIN－！</Text>
+SEE YOU AGAIN－！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:11:56" />
+				Time="2011-11-23T04:02:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10224,10 +10460,12 @@ SEE YOU AGAIN－！</Text>
 いつも　会話が　ヒートアップして▽
 とまらなくなるわね！▼
 そんなわけで　今日は　ここまで！
-SEE YOU AGAIN－！</Text>
+SEE YOU AGAIN－！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:11:56" />
+				Time="2011-11-23T04:02:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10281,10 +10519,12 @@ SEE YOU AGAIN－！</Text>
 つけたまま　あるいてたの！▽
 OOPS！　これは　めだつわね！▼
 ハーイ　きょうは　ここまで！
-また　あいましょうね！　BYEBYE！</Text>
+また　あいましょうね！　BYEBYE！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:26:29" />
+				Time="2011-11-23T04:02:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10310,10 +10550,12 @@ OOPS！　これは　めだつわね！▼
 つけたまま　歩いてたの！▽
 OOPS！　これは　目立つわね！▼
 ハーイ　今日は　ここまで！
-また　会いましょうね！　BYEBYE！</Text>
+また　会いましょうね！　BYEBYE！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:26:35" />
+				Time="2011-11-23T04:02:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10369,10 +10611,12 @@ that Pokémon?』▼
 これで　みかけた　ポケモンを
 つかまえに　いくことが　できるわ！▼
 それじゃ　きょうは　ここまでよ！
-みんなみんな　BYEBYE！</Text>
+みんなみんな　BYEBYE！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:12:07" />
+				Time="2011-11-23T04:02:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10400,10 +10644,12 @@ that Pokémon?』▼
 これで　みかけた　ポケモンを
 つかまえに　いくことが　できるわ！▼
 それじゃ　今日は　ここまでよ！
-みんなみんな　BYEBYE！</Text>
+みんなみんな　BYEBYE！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:12:07" />
+				Time="2011-11-23T04:02:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10455,10 +10701,12 @@ Oh my …… huh? What?▼
 はじまってるの！？▼
 ハッ……　ハーイ　みんな！
 ま……また『TRADE'N TALK』みてね！▽
-グッバーイ！</Text>
+グッバーイ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:12:15" />
+				Time="2011-11-23T04:02:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10482,10 +10730,12 @@ Oh my …… huh? What?▼
 はじまってるの！？▼
 ハッ……　ハーイ　みんな！
 ま……また『TRADE'N TALK』みてね！▽
-グッバーイ！</Text>
+グッバーイ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:12:15" />
+				Time="2011-11-23T04:02:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10538,10 +10788,12 @@ HEYHAAAAY！これで　おたがいの
 ポケモン　みせあったり▽
 できちゃうんじゃなーーい？▼
 それじゃ　こんしゅうも　みてくれて
-ありがとネ！　SEE YOU NEXT TIME！</Text>
+ありがとネ！　SEE YOU NEXT TIME！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:12:22" />
+				Time="2011-11-23T04:02:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10566,10 +10818,12 @@ HEYHAAAAY！　これで　お互いの
 ポケモン　みせ合ったり▽
 でーきちゃうーんじゃなーーい？▼
 それじゃ　今週も　みてくれて
-ありがとネ！　SEE YOU NEXT TIME！</Text>
+ありがとネ！　SEE YOU NEXT TIME！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:12:22" />
+				Time="2011-11-23T04:02:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10622,10 +10876,12 @@ HEYHAAAAY！　これで　お互いの
 ずかんの　みせあいっこが▽
 できるぜ！　うらやましいゼ！▼
 それじゃ　またねー　みんな！
-HAVE A TERRIFIC DAY!</Text>
+HAVE A TERRIFIC DAY！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:12:22" />
+				Time="2011-11-23T04:02:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10650,10 +10906,12 @@ HAVE A TERRIFIC DAY!</Text>
 図鑑の　みせあいっこが▽
 できるぜ！　うらやましいゼ！▼
 それじゃ　またねー　みんな！
-HAVE A TERRIFIC DAY!</Text>
+HAVE A TERRIFIC DAY！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:12:22" />
+				Time="2011-11-23T04:02:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10706,10 +10964,12 @@ HAVE A TERRIFIC DAY!</Text>
 ともだち　そして　ライバルさ！▼
 そんな　わけで　ボブは　きょうも
 ジムに　ちょうせんして　バッジを▽
-あつめるのさ！　SEE YOU AGAIN！</Text>
+あつめるのさ！　SEE YOU AGAIN！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:12:22" />
+				Time="2011-11-23T04:02:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10734,10 +10994,12 @@ HAVE A TERRIFIC DAY!</Text>
 友達　そして　ライバルさ！▼
 そんな　わけで　ボブは　今日も
 ジムに　挑戦して　バッジを▽
-集めるのさ！　SEE YOU AGAIN！</Text>
+集めるのさ！　SEE YOU AGAIN！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:12:22" />
+				Time="2011-11-23T04:02:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10792,10 +11054,12 @@ HAVE A TERRIFIC DAY!</Text>
 これで　きっかけは　ガッチリ！！
 あとは　トークが　はずむだけ！！▼
 そんなわけで　きょうは　ここまで！
-BYE BYE PEOPLE!　またネ！</Text>
+BYE BYE PEOPLE!　またネ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:12:31" />
+				Time="2011-11-23T04:02:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10822,10 +11086,12 @@ BYE BYE PEOPLE!　またネ！</Text>
 これで　きっかけは　ガッチリ！！
 あとは　トークが　はずむだけ！！▼
 そんなわけで　今日は　ここまで！
-BYE BYE PEOPLE!　またネ！</Text>
+BYE BYE PEOPLE!　またネ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:12:31" />
+				Time="2011-11-23T04:02:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10882,10 +11148,12 @@ OHHHH！　バッチリ　おめかしした
 そんなわけで　きょうの
 『TRADE'N TALK』は　ここまで！▼
 そろそろ　ジョディが　ボクに
-くちを　きいてくれると　いいな！</Text>
+くちを　きいてくれると　いいな！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:12:31" />
+				Time="2011-11-23T04:02:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10914,10 +11182,12 @@ OHHHH！　バッチリ　おめかしした
 そんなわけで　今日の
 『TRADE'N TALK』は　ここまで！▼
 そろそろ　ジョディが　ボクに
-口を　きいてくれると　いいな！</Text>
+口を　きいてくれると　いいな！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:12:31" />
+				Time="2011-11-23T04:02:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10968,10 +11238,12 @@ OHHHH！　バッチリ　おめかしした
 きみの　ねついが　つたわって
 きっと　いい　トレードが　できる！▼
 そんなわけで　きょうは　ここまで！
-またね　みんな！　SEE YOU！</Text>
+またね　みんな！　SEE YOU！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:12:36" />
+				Time="2011-11-23T04:02:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10994,10 +11266,12 @@ OHHHH！　バッチリ　おめかしした
 君の　熱意が　伝わって
 きっと　いい　トレードが　できる！▼
 そんなわけで　今日は　ここまで！
-またね　みんな！　SEE YOU！</Text>
+またね　みんな！　SEE YOU！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:12:36" />
+				Time="2011-11-23T04:02:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11052,10 +11326,12 @@ OHHHH！　バッチリ　おめかしした
 まっかに　なってたのさ！▽
 ……ああ　こわかった！▼
 そんなわけで　きょうは　ここまで！
-みんな　SEE YOU AGAIN！</Text>
+みんな　SEE YOU AGAIN！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T06:55:28" />
+				Time="2011-11-23T04:02:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11082,10 +11358,12 @@ OHHHH！　バッチリ　おめかしした
 真っ赤に　なってたのさ！▽
 ……ああ　怖かった！▼
 そんなわけで　今日は　ここまで！
-みんな　SEE YOU AGAIN！</Text>
+みんな　SEE YOU AGAIN！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T06:55:44" />
+				Time="2011-11-23T04:02:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11137,10 +11415,12 @@ OHHHH！　バッチリ　おめかしした
 しょうり　せんげんで
 いかくも　できちゃうぜ！▼
 ということで　きょうは　ここまで！
-また　あおうぜ　SEE YOU！</Text>
+また　あおうぜ　SEE YOU！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:12:44" />
+				Time="2011-11-23T04:01:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11164,10 +11444,12 @@ OHHHH！　バッチリ　おめかしした
 勝利宣言で
 威嚇も　できちゃうぜ！▼
 ということで　今日は　ここまで！
-また　会おうぜ　SEE YOU！</Text>
+また　会おうぜ　SEE YOU！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:12:44" />
+				Time="2011-11-23T04:01:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11220,10 +11502,12 @@ OHHHH！　バッチリ　おめかしした
 ということで　きょうは
 ここまで！▼
 じかいを　おたのしみに！
-SEE YOU NEXT TIME!</Text>
+SEE YOU NEXT TIME！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:12:49" />
+				Time="2011-11-23T04:01:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11248,10 +11532,12 @@ SEE YOU NEXT TIME!</Text>
 ということで　今日は
 ここまで！▼
 次回を　お楽しみに！
-SEE YOU NEXT TIME!</Text>
+SEE YOU NEXT TIME！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:12:49" />
+				Time="2011-11-23T04:01:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11306,10 +11592,12 @@ SEE YOU NEXT TIME!</Text>
 まちがいなしだ！▼
 そんなわけで　きょうは
 ここまでだよ！　また　みてね！▽
-SEE YOU SOON！</Text>
+SEE YOU SOON！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:12:55" />
+				Time="2011-11-23T04:01:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11336,10 +11624,12 @@ SEE YOU SOON！</Text>
 間違いなしだ！▼
 そんなわけで　今日は
 ここまでだよ！　また　みてね！▽
-SEE YOU SOON！</Text>
+SEE YOU SOON！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:12:55" />
+				Time="2011-11-23T04:01:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11404,10 +11694,12 @@ SEE YOU SOON！</Text>
 っと……　ああ！　なっとくの　いかない
 バッフロンせんしゅが　こちらに▽
 とつげき　してまいりました！▽
-ひぇええええええええっ！▼</Text>
+ひぇええええええええっ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:20:45" />
+				Time="2011-11-23T04:01:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11444,10 +11736,12 @@ SEE YOU SOON！</Text>
 っと……　ああ！　納得の　いかない
 バッフロン選手が　こちらに▽
 突撃してまいりました！▽
-ひぇええええええええっ！▼</Text>
+ひぇええええええええっ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:20:40" />
+				Time="2011-11-23T04:01:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11510,10 +11804,12 @@ SEE YOU SOON！</Text>
 これは……ひきわけか！
 なんという　たましいの　ぶつかりあい！▼
 こちら　ポケモンワールドトーナメント
-かいじょうより　おつたえしました！▼</Text>
+かいじょうより　おつたえしました！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T08:28:32" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T04:01:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -11549,10 +11845,12 @@ SEE YOU SOON！</Text>
 これは……引き分けか！
 なんという　魂の　ぶつかりあい！▼
 こちら　ポケモンワールドトーナメント
-会場より　お伝えしました！▼</Text>
+会場より　お伝えしました！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T08:28:43" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T04:01:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -11615,10 +11913,12 @@ SEE YOU SOON！</Text>
 こだいの　ポケモンの　ちからですか！▼
 なお　こだいの　ポケモンに
 きょうみの　あるかたは　ぜひ▽
-シッポウはくぶつかんまで　どうぞ！▼</Text>
+シッポウはくぶつかんまで　どうぞ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T08:55:13" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T04:01:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11654,10 +11954,12 @@ SEE YOU SOON！</Text>
 古代の　ポケモンの　力ですか！▼
 なお　古代の　ポケモンに
 興味の　あるかたは　ぜひ▽
-シッポウ博物館まで　どうぞ！▼</Text>
+シッポウ博物館まで　どうぞ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T08:55:26" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T04:01:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11722,10 +12024,12 @@ SEE YOU SOON！</Text>
 ズルッグせんしゅ　それは　いけません
 はんそく！　はんそくまけだぁ！！▼
 ライモンシティ　ビックスタジアムより
-おつたえいたしました！▼</Text>
+おつたえいたしました！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:16:57" />
+				Time="2011-11-23T04:01:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11764,10 +12068,12 @@ SEE YOU SOON！</Text>
 ズルッグ選手　それは　いけません
 反則！　反則負けだぁ！！▼
 ライモンシティ　ビックスタジアムより
-お伝えいたしました！▼</Text>
+お伝えいたしました！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:17:01" />
+				Time="2011-11-23T04:01:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11826,10 +12132,12 @@ SEE YOU SOON！</Text>
 なんという　ばくはつ　びより！
 わたくしは　ひなんいたします！▼
 ヤマジタウン　かっそうろより
-おつたえしました！！▼</Text>
+おつたえしました！！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T03:22:59" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T04:00:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11861,10 +12169,12 @@ SEE YOU SOON！</Text>
 なんという　爆発日和！
 わたくしは　避難いたします！▼
 ヤマジタウン　滑走路より
-お伝えしました！！▼</Text>
+お伝えしました！！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T03:23:09" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T04:00:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11920,10 +12230,12 @@ SEE YOU SOON！</Text>
 きまりては　もぐりだし……とでも▽
 よべば　いいのでしょうか？▼
 ポケモンワールドトーナメント
-かいじょうより　おつたえしました！▼</Text>
+かいじょうより　おつたえしました！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:17:18" />
+				Time="2011-11-23T04:00:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -11952,10 +12264,12 @@ SEE YOU SOON！</Text>
 決まり手は　もぐり出し……とでも▽
 呼べば　いいのでしょうか？▼
 ポケモンワールドトーナメント
-会場より　お伝えしました！▼</Text>
+会場より　お伝えしました！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T11:15:23" />
+				Time="2011-11-23T04:00:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -12016,10 +12330,12 @@ SEE YOU SOON！</Text>
 これは……　ゴチルゼルせんしゅの
 ゆうしょうです！！▼
 こちら　ビッグスタジアムより
-おおくりしました！　おやすみなさい！▼</Text>
+おおくりしました！　おやすみなさい！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:18:20" />
+				Time="2011-11-23T04:00:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12054,10 +12370,12 @@ SEE YOU SOON！</Text>
 これは……　ゴチルゼル選手の
 優勝です！！▼
 ビッグスタジアム　特設会場より
-お送りしました！　おやすみなさい！▼</Text>
+お送りしました！　おやすみなさい！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:18:13" />
+				Time="2011-11-23T04:00:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12112,10 +12430,12 @@ SEE YOU SOON！</Text>
 みなさんに　とりかこまれて　います▽
 おこって……　いるのでしょうか？▼
 いやぁー！　みんなで　わたしを
-ベロベロしないでくれぇー！▼</Text>
+ベロベロしないでくれぇー！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:18:36" />
+				Time="2011-11-23T04:00:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12144,10 +12464,12 @@ SEE YOU SOON！</Text>
 みなさんに　取り囲まれています▽
 怒って……　いるのでしょうか？▼
 いやぁー！　みんなで　わたしを
-ベロベロしないでくれぇー！▼</Text>
+ベロベロしないでくれぇー！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:18:40" />
+				Time="2011-11-23T04:00:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12209,10 +12531,12 @@ SEE YOU SOON！</Text>
 すごい　すごいぞ　ドテッコツ！
 かいじょうの　ヤグルマのもりは▽
 ドテッコツを　たたえる　ドッコラーの▽
-せいえんで　あふれています！▼</Text>
+せいえんで　あふれています！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:18:53" />
+				Time="2011-11-23T04:00:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12248,10 +12572,12 @@ SEE YOU SOON！</Text>
 すごい　すごいぞ　ドテッコツ！
 会場の　ヤグルマの森は▽
 ドテッコツを　たたえる　ドッコラーの▽
-声援で　あふれています！▼</Text>
+声援で　あふれています！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:18:48" />
+				Time="2011-11-23T04:00:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12315,10 +12641,12 @@ SEE YOU SOON！</Text>
 １１ばんどうろの　はしのうえより
 おおくりいたしました！▼
 きょうから　このどうろの　ボスは
-おまえだ　コマタナ！▼</Text>
+おまえだ　コマタナ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:19:55" />
+				Time="2011-11-23T03:59:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12356,10 +12684,12 @@ SEE YOU SOON！</Text>
 １１番道路の　橋の上より
 お送りいたしました！▼
 今日から　この道路の　ボスは
-おまえだ　コマタナ！▼</Text>
+おまえだ　コマタナ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:19:46" />
+				Time="2011-11-23T03:59:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12401,8 +12731,8 @@ SEE YOU SOON！</Text>
 これを　えいごで　なんという？▼
 もう　ヒントなんて　いりませんね
 あえて　いうなら　『せかいてき』！▼
-ハイッ　そこの　おなじみの
-さんにんぐみ！▼
+ハイッ　そこにいる
+おなじみの　さんにんぐみ！▼
 クルル『ハイッ！　ELECTCHU！』▼
 イルル『ハイッ！　PIKAMOUSE！』▼
 ズルル『ホイッ！　PIKAPIKA！』▼
@@ -12412,10 +12742,12 @@ SEE YOU SOON！</Text>
 せかいの　どこに　いっても
 ピカチュウは　ピカチュウ！▼
 それでは　また　らいしゅう！
-ごきげんよう～</Text>
+ごきげんよう～▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:17:04" />
+				Time="2011-11-23T03:59:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12441,10 +12773,12 @@ SEE YOU SOON！</Text>
 世界の　どこに　いっても
 ピカチュウは　ピカチュウ！▼
 それでは　また　来週！
-ごきげんよう～</Text>
+ごきげんよう～▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:17:04" />
+				Time="2011-11-23T03:59:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12500,10 +12834,12 @@ SEE YOU SOON！</Text>
 いうんですよ▼
 べんきょうに　なりましたね！
 それでは　また　らいしゅう！▽
-ごきげんよう～</Text>
+ごきげんよう～▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:14:29" />
+				Time="2011-11-23T03:59:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12532,10 +12868,12 @@ SEE YOU SOON！</Text>
 いうんですよ▼
 勉強に　なりましたね！
 それでは　また　来週！▽
-ごきげんよう～</Text>
+ごきげんよう～▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:14:29" />
+				Time="2011-11-23T03:59:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12592,10 +12930,12 @@ TONGUEが　した　っていみなんですね！▼
 ぜんめんに　おしだした▽
 わかりやすい　なまえですね！▼
 それでは　また　らいしゅう！
-ごきげんよう～</Text>
+ごきげんよう～▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:14:29" />
+				Time="2011-11-23T03:59:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12625,10 +12965,12 @@ TONGUEが　舌って　意味なんですね！▼
 前面に　押し出した▽
 わかりやすい　名前ですね！▼
 それでは　また　来週！
-ごきげんよう～</Text>
+ごきげんよう～▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:14:29" />
+				Time="2011-11-23T03:59:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12680,10 +13022,12 @@ TONGUEが　舌って　意味なんですね！▼
 せいかいしゃには　イーブイに
 そっくりの　ぬいぐるみを　プレゼント！▼
 ……それでは　また　らいしゅう！
-ごきげんよう～</Text>
+ごきげんよう～▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:14:42" />
+				Time="2011-11-23T03:59:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12708,10 +13052,12 @@ TONGUEが　舌って　意味なんですね！▼
 正解者には　イーブイに
 そっくりの　ぬいぐるみを　プレゼント！▼
 ……それでは　また　来週！
-ごきげんよう～</Text>
+ごきげんよう～▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:14:42" />
+				Time="2011-11-23T03:59:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12761,10 +13107,12 @@ TONGUEが　舌って　意味なんですね！▼
 TWIGは　えだ　といういみですよ▽
 べんきょうに　なりましたか？▼
 それでは　また　らいしゅう！
-ごきげんよう～</Text>
+ごきげんよう～▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:14:42" />
+				Time="2011-11-23T03:59:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12787,10 +13135,12 @@ TWIGは　えだ　といういみですよ▽
 TWIGは　枝　という意味ですよ▽
 勉強に　なりましたか？▼
 それでは　また　来週！
-ごきげんよう～</Text>
+ごきげんよう～▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:14:42" />
+				Time="2011-11-23T03:59:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12844,10 +13194,12 @@ SQUIRTというんですよ▼
 みずをSQUIRTして▽
 キャッキャウフフですね　いいですね▼
 それでは　また　らいしゅう！
-ごきげんよう～</Text>
+ごきげんよう～▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:14:42" />
+				Time="2011-11-23T03:59:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12874,10 +13226,12 @@ SQUIRTというんですよ▼
 水をSQUIRTして▽
 キャッキャウフフですね　いいですね▼
 それでは　また　来週！
-ごきげんよう～</Text>
+ごきげんよう～▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:14:42" />
+				Time="2011-11-23T03:59:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12931,10 +13285,12 @@ DUDEは　やつ　って　いみなんですよ▼
 おにいさんを　さして　GEODUDEなんて▽
 いっては　いけませんよ▼
 それでは　また　らいしゅう！
-ごきげんよう～</Text>
+ごきげんよう～▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:16:02" />
+				Time="2011-11-23T03:59:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12961,10 +13317,12 @@ DUDEは　奴　って意味なんですよ▼
 お兄さんを　さして　GEODUDEなんて▽
 言っては　いけませんよ▼
 それでは　また　来週！
-ごきげんよう～</Text>
+ごきげんよう～▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:16:02" />
+				Time="2011-11-23T03:59:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13018,10 +13376,12 @@ LORDは　きぞくのことを　いうんですよ▼
 おうの　こどくとでも　いいましょうか
 なかなか　こうきな　かんじが　しますね▼
 それでは　また　らいしゅう！
-ごきげんよう～</Text>
+ごきげんよう～▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:17:04" />
+				Time="2011-11-23T03:59:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13048,10 +13408,12 @@ LORDは　貴族のことを　いうんですよ▼
 王の　孤独とでも　いいましょうか
 なかなか　高貴な　感じが　しますね▼
 それでは　また　来週！
-ごきげんよう～</Text>
+ごきげんよう～▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:17:04" />
+				Time="2011-11-23T03:59:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13106,10 +13468,12 @@ MACHOは　マッチョ
 CHOPは　チョップ！▽
 じつに　わかりやすい！▼
 それでは　みなさん
-ごきげんよう！　アチョゥ！</Text>
+ごきげんよう！　アチョゥ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:17:04" />
+				Time="2011-11-23T03:59:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13137,10 +13501,12 @@ MACHOは　マッチョ
 CHOPは　チョップ！▽
 実に　わかりやすい！▼
 それでは　みなさん
-ごきげんよう！　アチョゥ！</Text>
+ごきげんよう！　アチョゥ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:17:04" />
+				Time="2011-11-23T03:59:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13190,10 +13556,12 @@ CHOPは　チョップ！▽
 BEAUTIFULは　うつくしいという　いみ
 なんとも　あざやかじゃ　ありませんか▼
 それでは　また　らいしゅう！
-ごきげんよう～</Text>
+ごきげんよう～▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:17:04" />
+				Time="2011-11-23T03:59:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13216,10 +13584,12 @@ BEAUTIFULは　うつくしいという　いみ
 BEAUTIFULは　美しいという　意味
 なんとも　鮮やかじゃ　ありませんか▼
 それでは　また　来週！
-ごきげんよう～</Text>
+ごきげんよう～▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-01T06:17:04" />
+				Time="2011-11-23T03:59:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13274,10 +13644,12 @@ BEAUTIFULは　美しいという　意味
 きょうどうせいかつは　はじまった！▼
 かみつく　ミネズミ……
 こうはんへ　つづくッ！▽
-じかい　おたのしみに！▼</Text>
+じかい　おたのしみに！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:09:50" />
+				Time="2011-11-23T03:58:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13305,10 +13677,12 @@ BEAUTIFULは　美しいという　意味
 共同生活は　始まった！▼
 かみつく　ミネズミ……
 後半へ　続くッ！▽
-次回　お楽しみに！▼</Text>
+次回　お楽しみに！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T03:41:33" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:58:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13371,10 +13745,12 @@ BEAUTIFULは　美しいという　意味
 おれの　ことを　みている！▼
 ……わかった　……たたかうさ！
 おれが　まもってみせるぞ！▽
-うおおおおおおおおおおっ！！▼</Text>
+うおおおおおおおおおおっ！！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:10:14" />
+				Time="2011-11-23T03:58:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13411,10 +13787,12 @@ BEAUTIFULは　美しいという　意味
 おれの　ことを　みている！▼
 ……わかった　……戦うさ！
 おれが　守ってみせるぞ！▽
-うおおおおおおおおおおっ！！▼</Text>
+うおおおおおおおおおおっ！！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:10:22" />
+				Time="2011-11-23T03:58:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13472,10 +13850,12 @@ BEAUTIFULは　美しいという　意味
 ポールが　とった　こうどうとは！？▼
 あおいうみと　ドッコラー
 こうはんへ　つづく！▽
-じかい　おたのしみに！▼</Text>
+じかい　おたのしみに！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:12:09" />
+				Time="2011-11-23T03:58:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13507,10 +13887,12 @@ BEAUTIFULは　美しいという　意味
 ポールが　とった　行動とは！？▼
 青い海と　ドッコラー
 後半へ　続く！▽
-次回　お楽しみに！▼</Text>
+次回　お楽しみに！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:12:13" />
+				Time="2011-11-23T03:58:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13571,10 +13953,12 @@ BEAUTIFULは　美しいという　意味
 もう　あばれることは　なかった……▼
 ポール『トレーナーの　みんな！
 ポケモンとの　せいしゅんを▽
-まんきつしようぜ！　またな！▼</Text>
+まんきつしようぜ！　またな！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T05:21:22" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:58:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13609,10 +13993,12 @@ BEAUTIFULは　美しいという　意味
 もう　暴れることは　なかった……▼
 ポール『トレーナーの　みんな！
 ポケモンとの　青春を▽
-満喫しようぜ！　またな！▼</Text>
+満喫しようぜ！　またな！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T05:21:34" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:58:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13671,10 +14057,12 @@ BEAUTIFULは　美しいという　意味
 しょうげきの　げんじつとは！？▼
 こいする　マッギョ！
 こうはんへと　つづく！▽
-じかい　おたのしみに！▼</Text>
+じかい　おたのしみに！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:12:27" />
+				Time="2011-11-23T03:58:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13707,10 +14095,12 @@ BEAUTIFULは　美しいという　意味
 衝撃の　現実とは！？▼
 恋する　マッギョ！
 後半へと　続く！▽
-次回　お楽しみに！▼</Text>
+次回　お楽しみに！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:12:30" />
+				Time="2011-11-23T03:58:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13773,10 +14163,12 @@ BEAUTIFULは　美しいという　意味
 ポール『あのときの　あいつ
 さいこうに　かっこうよかったな……▼
 こんかいは　マッギョに　いろいろ
-おしえられちまったよ……▼</Text>
+おしえられちまったよ……▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T05:33:09" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:58:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13813,10 +14205,12 @@ BEAUTIFULは　美しいという　意味
 ポール『あのときの　あいつ
 最高に　かっこうよかったな……▼
 今回は　マッギョに　いろいろ
-教えられちまったよ……▼</Text>
+教えられちまったよ……▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T05:33:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:58:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13875,10 +14269,12 @@ BEAUTIFULは　美しいという　意味
 とんでもない　あやまちを▽
 しでかしてしまう！▼
 タブンネが　ほしいもの……
-じかいへと　つづく！　おたのしみに！▼</Text>
+じかいへと　つづく！　おたのしみに！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T03:40:20" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:57:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13911,10 +14307,12 @@ BEAUTIFULは　美しいという　意味
 とんでもない　あやまちを▽
 しでかしてしまう！▼
 タブンネが　欲しいもの……
-次回へと　つづく！　お楽しみに！▼</Text>
+次回へと　つづく！　お楽しみに！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T03:40:27" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:57:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13974,10 +14372,12 @@ BEAUTIFULは　美しいという　意味
 タブンネが　ほしいもの……
 じかい　かんけつへん！▼
 ポールが　みちびきだした
-かいけつほうとは！▼</Text>
+かいけつほうとは！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T03:40:00" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:57:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14010,10 +14410,12 @@ BEAUTIFULは　美しいという　意味
 伝わるのか……▼
 タブンネが　欲しいもの……
 次回　完結編！▽
-ポールが導きだした　解決法とは！▼</Text>
+ポールが導きだした　解決法とは！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T03:40:06" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:57:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14075,10 +14477,12 @@ BEAUTIFULは　美しいという　意味
 あれば　ことばなんか　なくても▽
 ポケモンは　わかってくれるのさ！▼
 たいせつなのは　きもちだぜ！
-トレーナーの　みんな！▼</Text>
+トレーナーの　みんな！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T03:39:43" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:57:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14114,10 +14518,12 @@ BEAUTIFULは　美しいという　意味
 あれば　言葉なんか　なくても▽
 ポケモンは　わかってくれるのさ！▼
 大切なのは　気持ちだぜ！
-トレーナーの　みんな！▼</Text>
+トレーナーの　みんな！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T10:13:48" />
+				Time="2011-11-23T03:57:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14168,10 +14574,12 @@ BEAUTIFULは　美しいという　意味
 はいってくれるぜ！▼
 オコメズキと　おぼえてくれ！
 おれは　パスタが　すきだけどな！▽
-じゃあ　また　らいしゅう！▼</Text>
+じゃあ　また　らいしゅう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-12T11:00:05" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:58:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14196,10 +14604,12 @@ BEAUTIFULは　美しいという　意味
 入ってくれるぜ！▼
 オコメズキと　覚えてくれ！
 おれは　パスタが　好きだけどな！▽
-じゃあ　また　来週！▼</Text>
+じゃあ　また　来週！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-12T11:01:55" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:58:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14244,14 +14654,16 @@ BEAUTIFULは　美しいという　意味
 おもむろに　ポケモンを　だしてやれ！▼
 そして　おまえの　あついおもいを
 さけんで　つたえてやるんだ！▼
-これだけさ……これを　１にちに
+これだけさ……　これを　１にちに
 ３０かいくらい　やるだけで▽
 あいの　ちからで　せいちょうするぜ！▽
 ……たぶんな！▼
-それじゃ　また　らいしゅう！▼</Text>
+それじゃ　また　らいしゅう！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T02:46:34" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:57:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14270,14 +14682,16 @@ BEAUTIFULは　美しいという　意味
 おもむろに　ポケモンを　出してやれ！▼
 そして　おまえの　熱い想いを
 叫んで　伝えてやるんだ！▼
-これだけさ……これを　１日に
+これだけさ……　これを　１日に
 ３０回くらい　やるだけで▽
 愛の力で　成長するぜ！▽
 ……たぶんな！▼
-それじゃ　また　来週！▼</Text>
+それじゃ　また　来週！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-13T02:47:09" />
+				User="matsumiya:W00224"
+				Time="2011-11-23T03:57:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14325,10 +14739,12 @@ BEAUTIFULは　美しいという　意味
 「はじまりは　ひとめぼれ！
 　メロメロって　わざ　ごぞんじ？」▼
 ところで　さいしょの　ポケモンだけど
-みんな　どうやって　てにいれてるの？</Text>
+みんな　どうやって　てにいれてるの？▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T03:48:36" />
+				Time="2011-11-23T03:56:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14350,10 +14766,12 @@ BEAUTIFULは　美しいという　意味
 「はじまりは　ひとめぼれ！
 　メロメロって　わざ　ごぞんじ？」▼
 ところで　最初の　ポケモンだけど
-みんな　どうやって　手に入れてるの？</Text>
+みんな　どうやって　手に入れてるの？▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T03:51:46" />
+				Time="2011-11-23T03:56:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14402,10 +14820,12 @@ BEAUTIFULは　美しいという　意味
 「こいする　おとめと　コロボーシ！▽
 　ドキドキまほうは　とまらない」▼
 あっ　この　コロボーシ　♀なんだ
-ちょっと　なかよく　なれるかも</Text>
+ちょっと　なかよく　なれるかも▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T03:48:47" />
+				Time="2011-11-23T03:56:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14427,10 +14847,12 @@ BEAUTIFULは　美しいという　意味
 「こいする　おとめと　コロボーシ！▽
 　ドキドキまほうは　とまらない」▼
 あっ　この　コロボーシ　♀なんだ
-ちょっと　仲良く　なれるかも</Text>
+ちょっと　仲良く　なれるかも▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T03:54:55" />
+				Time="2011-11-23T03:56:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14480,10 +14902,12 @@ BEAUTIFULは　美しいという　意味
 「だいじなのは　あいじょう▽
 　よわさは　アイデアで　カバー！」▼
 トレーナーと　ポケモン！
-いっしょに　つよくなるんだから！</Text>
+いっしょに　つよくなるんだから！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T03:48:52" />
+				Time="2011-11-23T03:56:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14506,10 +14930,12 @@ BEAUTIFULは　美しいという　意味
 「だいじなのは　あいじょう▽
 　よわさは　アイデアで　カバー！」▼
 トレーナーと　ポケモン！
-一緒に　強くなるんだから！</Text>
+一緒に　強くなるんだから！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T03:55:41" />
+				Time="2011-11-23T03:56:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14560,10 +14986,12 @@ BEAUTIFULは　美しいという　意味
 「しょうぶは　あいしょうが　きめて▽
 　わざは　きゅうしょに　きめて！」▼
 ほのお・でんき・ひこう・いわ・こおり
-コロボーシ　じゃくてん　おおいよ！</Text>
+コロボーシ　じゃくてん　おおいよ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T03:48:56" />
+				Time="2011-11-23T03:56:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14587,10 +15015,12 @@ BEAUTIFULは　美しいという　意味
 「しょうぶは　あいしょうが　きめて▽
 　わざは　きゅうしょに　きめて！」▼
 ほのお・でんき・ひこう・いわ・こおり
-コロボーシ　弱点　多いよ！</Text>
+コロボーシ　弱点　多いよ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T03:56:47" />
+				Time="2011-11-23T03:56:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14639,10 +15069,12 @@ BEAUTIFULは　美しいという　意味
 「コロボーシは　コロトックに！▽
 　みてて！　あたしも　かわるから！」▼
 そして　しんかキャンセルは　Ｂボタン
-って　さきに　おしえろよ！</Text>
+って　さきに　おしえろよ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T03:48:59" />
+				Time="2011-11-23T03:56:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14664,10 +15096,12 @@ BEAUTIFULは　美しいという　意味
 「コロボーシは　コロトックに！▽
 　みてて！　あたしも　かわるから！」▼
 そして　進化キャンセルは　Ｂボタン
-って　先に　教えろよ！</Text>
+って　先に　教えろよ！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T03:59:58" />
+				Time="2011-11-23T03:56:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14716,10 +15150,12 @@ BEAUTIFULは　美しいという　意味
 「すごいことに　ポケモンジムは▽
 　どこにでも　あるわけじゃない！」▼
 まよう　ひとほど　ちずを　みない！
-みても　じょうげを　いれかえる！</Text>
+みても　じょうげを　いれかえる！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T03:49:02" />
+				Time="2011-11-23T03:56:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14741,10 +15177,12 @@ BEAUTIFULは　美しいという　意味
 「すごいことに　ポケモンジムは▽
 　どこにでも　あるわけじゃない！」▼
 迷う　人ほど　地図を　みない！
-みても　上下を　入れ替える！</Text>
+みても　上下を　入れ替える！▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T04:01:40" />
+				Time="2011-11-23T03:56:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14795,10 +15233,12 @@ BEAUTIFULは　美しいという　意味
 「のこされた　あしあとの　かずだけ▽
 　ちぢまった　キミとの　きょり」▼
 コロトックの　かおを　みるたびに
-すごした　じかん　おもいだすんだけど</Text>
+すごした　じかん　おもいだすんだけど▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T03:49:05" />
+				Time="2011-11-23T03:56:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14822,10 +15262,12 @@ BEAUTIFULは　美しいという　意味
 「のこされた　あしあとの　かずだけ▽
 　ちぢまった　キミとの　きょり」▼
 コロトックの　顔を　みるたびに
-過ごした　時間　思い出すんだけど</Text>
+過ごした　時間　思い出すんだけど▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T04:03:15" />
+				Time="2011-11-23T03:56:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14874,10 +15316,12 @@ BEAUTIFULは　美しいという　意味
 「アタシと　コロトック▽
 　その　きずなは　ほんもの！」▼
 おとめの　きもち　もてあそぶなら
-アタシが　ギガインパクト　かますから</Text>
+アタシが　ギガインパクト　かますから▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T03:49:09" />
+				Time="2011-11-23T03:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14899,10 +15343,12 @@ BEAUTIFULは　美しいという　意味
 「アタシと　コロトック▽
 　その　きずなは　ほんもの！」▼
 乙女の　気持ち　もてあそぶなら
-アタシが　ギガインパクト　かますから</Text>
+アタシが　ギガインパクト　かますから▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T04:03:58" />
+				Time="2011-11-23T03:56:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14954,10 +15400,12 @@ BEAUTIFULは　美しいという　意味
 「やっちゃえ！　コロトック！！▽
 　シンオウのそらに　ぎんいろのかぜ」▼
 アタシが　にせものに　こいして
-さわいでいたのを　わらっていたのね？</Text>
+さわいでいたのを　わらっていたのね？▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T03:49:12" />
+				Time="2011-11-23T03:56:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14982,10 +15430,12 @@ BEAUTIFULは　美しいという　意味
 「やっちゃえ！　コロトック！！▽
 　シンオウのそらに　ぎんいろのかぜ」▼
 アタシが　偽者に　恋して
-騒いでいたのを　笑っていたのね？</Text>
+騒いでいたのを　笑っていたのね？▼
+……　……　……
+……　……　……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T04:05:21" />
+				Time="2011-11-23T03:56:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
