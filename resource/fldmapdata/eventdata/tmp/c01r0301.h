@@ -13,6 +13,7 @@
 #define C01R0301_BOY2_01                   0
 #define C01R0301_MIDDLEWOMAN2_01           1
 #define C01R0301_MAN1_01                   2
+#define C01R0301_GIRL2_01                  3
 
 #endif //ZONE_C01R0301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c01r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

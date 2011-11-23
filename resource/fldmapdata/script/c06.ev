@@ -17,7 +17,7 @@
 
   //@author fujimura_souichirou
   //@author Mizuguchi_Mai（リンクイベント）
-  //@author suginaka_katsunori //演出修正・NPC追加
+  //@author suginaka_katsunori //演出修正・NPC追加・フェスミッション用
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -43,6 +43,7 @@ _EVENT_DATA	ev_c06_rangerw_01
 _EVENT_DATA	ev_c06_workman_01
 _EVENT_DATA	ev_c06_woman1_01
 _EVENT_DATA	ev_c06_workman_01wb
+_EVENT_DATA	ev_c06_backpackerw_01
 _EVENT_DATA_END
 
 //主人公方向取得変数
@@ -752,3 +753,39 @@ _ANIME_LABEL	anm_walk_r
 _ANIME_LABEL	anm_walk_l
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*  C06 BACKPACKERW  一言メッセージ                            */
+/**************************************************************/
+EVENT_START   ev_c06_backpackerw_01
+
+  //初回話しかけであったならば
+  IF FLAG_OFF(SYS_FLAG_FES_KINOMI2) THEN
+  
+    _TALK_OBJ_START()
+    
+    _BALLOONWIN_TALKOBJ_MSG( msg_c06_mission_add_01 )
+    _MSGWIN_CLOSE()
+    
+    //フェスミッションが追加されました
+    _SE_PLAY( SEQ_SE_FLD_133 )
+    _SYSWIN_MSG( msg_c06_mission_add_02, POS_DEFAULT )
+    _SE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+
+    _BALLOONWIN_TALKOBJ_MSG( msg_c06_mission_add_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    
+    //==================================//
+    //初回会話終了
+    _FLAG_SET(SYS_FLAG_FES_KINOMI2)
+    //==================================//
+    
+  //2回目以降
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c06_mission_add_03 )
+  ENDIF
+
+EVENT_END

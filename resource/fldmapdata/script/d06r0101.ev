@@ -13,6 +13,7 @@
   .include  "d06r0101.h"
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori //フェスミッションイベント
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -27,6 +28,7 @@ _EVENT_DATA   ev_pos_d06r0101_swbell_01
 _EVENT_DATA   ev_pos_d06r0101_boss_01
 _EVENT_DATA   ev_d06r0101_swbell_01
 _EVENT_DATA   ev_d06r0101_workman2_01
+_EVENT_DATA	ev_d06r0101_girl4_01
 _EVENT_DATA_END
 
 //主人公座標取得変数
@@ -255,4 +257,46 @@ _ANIME_LABEL  anm_swbell_guide01
   _ANIME_DATA AC_MARK_GYOE,1
   _ANIME_DATA ACMD_END,0
 
-
+/**************************************************************/
+/*  GIRL4                                            */
+/**************************************************************/
+EVENT_START   ev_d06r0101_girl4_01
+  
+  //初回話しかけであったならば
+  IF FLAG_OFF( SYS_FLAG_FES_STONE1BW ) THEN
+  
+    _TALK_OBJ_START()
+    
+    _BALLOONWIN_TALKOBJ_MSG( msg_d06r0101_mission_add_01 )
+    _MSGWIN_CLOSE()
+    
+    //フェスミッションが追加されました
+    _SE_PLAY( SEQ_SE_FLD_133 )
+    
+    _GET_ROM_VERSION( SCWK_ANSWER )
+  
+    //メッセージ分岐
+    IF $SCWK_ANSWER == VERSION_W2 THEN
+         _SYSWIN_MSG( msg_d06r0101_mission_add_02w, POS_DEFAULT )
+    ELSE
+         _SYSWIN_MSG( msg_d06r0101_mission_add_02b, POS_DEFAULT )
+    ENDIF
+    _SE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+    
+    _BALLOONWIN_TALKOBJ_MSG( msg_d06r0101_mission_add_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    
+    //==================================//
+    //初回会話終了
+    _FLAG_SET( SYS_FLAG_FES_STONE1BW )
+    //==================================//
+    
+  //2回目以降
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d06r0101_mission_add_03 )
+  ENDIF
+  
+EVENT_END

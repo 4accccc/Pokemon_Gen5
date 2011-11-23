@@ -28,6 +28,7 @@
 #define D06R0101_WORKMAN2_01              12
 #define D06R0101_SWBELL_01                13
 #define D06R0101_WORKMAN2_02              14
+#define D06R0101_GIRL4_01                 15
 
 #endif //ZONE_D06R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d06r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

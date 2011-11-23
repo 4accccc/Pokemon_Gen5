@@ -20,8 +20,15 @@
 _EVENT_DATA   ev_c01r0301_middlewoman2_01
 _EVENT_DATA   ev_c01r0301_boy2_01
 _EVENT_DATA   ev_c01r0301_man1_01
+_EVENT_DATA	ev_c01r0301_girl2_01
 _EVENT_DATA_END
 
+DEFINE_LOCAL	LWK_POSX1
+DEFINE_LOCAL	LWK_POSZ1
+DEFINE_LOCAL	LWK_POSX2
+DEFINE_LOCAL	LWK_POSZ2
+DEFINE_LOCAL	LWK_HAND1
+DEFINE_LOCAL	LWK_HAND2
 
 /**************************************************************/
 /*  おばさん：話しかけ                                        */
@@ -44,4 +51,97 @@ EVENT_START   ev_c01r0301_man1_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0301_man1_01 )
 EVENT_END
 
+/************************************************************/
+/*	girl2：話しかけ								*/
+/************************************************************/
+EVENT_START	ev_c01r0301_girl2_01
 
+	//初回話しかけか？
+	IF FLAG_OFF( SYS_FLAG_FES_JANKEN1 ) THEN
+	
+		_TALK_OBJ_START()
+		
+		_BALLOONWIN_TALKOBJ_MSG_POS( msg_c01r0301_mission_add_01, POS_DOWN )
+
+		//選択画面作成（Bボタンキャンセル無効）
+		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, SCWK_ANSWER )
+
+		_BMPMENU_MAKE_LIST( msg_c01r0301_mission_add_02, 0 ) //グー
+		_BMPMENU_MAKE_LIST( msg_c01r0301_mission_add_03, 1 ) //チョキ
+		_BMPMENU_MAKE_LIST( msg_c01r0301_mission_add_04, 2 ) //パー
+		
+		_BMPMENU_START()
+		
+		SWITCH $SCWK_ANSWER
+		CASE 0 THEN	//グーの場合
+			$LWK_HAND1 = msg_c01r0301_mission_add_02
+			$LWK_HAND2 = msg_c01r0301_mission_add_03
+		CASE 1 THEN	//チョキの場合
+			$LWK_HAND1 = msg_c01r0301_mission_add_03
+			$LWK_HAND2 = msg_c01r0301_mission_add_04
+		CASE 2 THEN	//パーの場合
+			$LWK_HAND1 = msg_c01r0301_mission_add_04
+			$LWK_HAND2 = msg_c01r0301_mission_add_02
+		ENDSWITCH
+
+		_PLAYER_DIR_GET(SCWK_ANSWER)
+		
+		SWITCH $SCWK_ANSWER
+		CASE DIR_UP THEN	//上方向の場合
+			$LWK_POSX1 = 14
+			$LWK_POSZ1 = 15
+			$LWK_POSX2 = 14
+			$LWK_POSZ2 = 4
+		CASE DIR_RIGHT THEN	//右方向の場合
+			$LWK_POSX1 = 10
+			$LWK_POSZ1 = 6
+			$LWK_POSX2 = 20
+			$LWK_POSZ2 = 13
+		CASE DIR_LEFT THEN	//左方向の場合
+			$LWK_POSX1 = 18
+			$LWK_POSZ1 = 6
+			$LWK_POSX2 = 9
+			$LWK_POSZ2 = 14
+		ENDSWITCH
+		
+		_MSGWIN_CLOSE()
+		
+		_GIZAWIN_OBJMSG_POS( msg_c01r0301_mission_add_05 , C01R0301_GIRL2_01, POS_DOWN )
+		_AB_KEYWAIT_MARK()
+		_MSGWIN_CLOSE()
+			
+		_SUBWIN_MSG( LWK_HAND1, LWK_POSX1, LWK_POSZ1, 1 )
+		_SUBWIN_MSG( LWK_HAND2, LWK_POSX2, LWK_POSZ2, 2 )
+
+		_TIME_WAIT( 60 )
+
+		_SUBWIN_CLOSE( 1 )
+		_SUBWIN_CLOSE( 2 )
+
+		_BALLOONWIN_TALKOBJ_MSG_POS( msg_c01r0301_mission_add_06, POS_DOWN )
+		_MSGWIN_CLOSE()
+		
+		//フェスミッションが追加されました
+		_SE_PLAY( SEQ_SE_FLD_133 )
+		_SYSWIN_MSG( msg_c01r0301_mission_add_07, POS_DEFAULT )
+		_SE_WAIT()
+		_AB_KEYWAIT_MARK()
+		_MSGWIN_CLOSE()
+    
+		_BALLOONWIN_TALKOBJ_MSG_POS( msg_c01r0301_mission_add_08, POS_DOWN )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+
+		//========================================//
+		
+		_FLAG_SET(SYS_FLAG_FES_JANKEN1)
+		
+		//========================================//
+	
+	ELSE
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0301_mission_add_08 )
+	
+	ENDIF
+
+EVENT_END

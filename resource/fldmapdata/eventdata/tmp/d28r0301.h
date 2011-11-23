@@ -15,6 +15,7 @@
 #define TR_BACKPACKERM_27                  2
 #define TR_MOUNT_28                        3
 #define D28R0301_ROCK_01                   4
+#define D28R0301_WORKMAN2_01               5
 
 #endif //ZONE_D28R0301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d28r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

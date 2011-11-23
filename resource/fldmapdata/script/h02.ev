@@ -13,6 +13,7 @@
   .include  "h02.h"
 
   //@author fujimura_souichirou（橋マニアイベント）
+  //@author suginaka_katsunori //フェスミッション追加
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -32,7 +33,33 @@ _EVENT_DATA_END
 /*  H02 MIDDLEMAN1  一言メッセージ                            */
 /**************************************************************/
 EVENT_START   ev_h02_middleman1_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h02_middleman_01 )
+
+  //初回話しかけであったならば
+  IF FLAG_OFF(SYS_FLAG_FES_FEATHER1) THEN
+  
+    _TALK_OBJ_START()
+    
+    _BALLOONWIN_TALKOBJ_MSG( msg_h02_middleman_01 )
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
+    
+    //フェスミッションが追加されました
+    _SE_PLAY( SEQ_SE_FLD_133 )
+    _SYSWIN_MSG( msg_h02_mission_add_02, POS_DEFAULT )
+    _SE_WAIT()
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    
+    //==================================//
+    //初回会話終了
+    _FLAG_SET(SYS_FLAG_FES_FEATHER1)
+    //==================================//
+    
+  //2回目以降
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_h02_middleman_01 )
+  ENDIF
+
 EVENT_END
 
 /**************************************************************/
