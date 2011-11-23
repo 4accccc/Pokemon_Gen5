@@ -2355,10 +2355,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふたりきり　だね……</Text>
+			<Text>ふたりきり　だね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T04:31:20" />
+				Time="2011-11-23T07:47:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2366,10 +2366,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふたりきり　だね……</Text>
+			<Text>ふたりきり　だね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T04:31:44" />
+				Time="2011-11-23T07:47:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2699,11 +2699,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キレイ　だよね
+			<Text>キレイだよね
 イッシュちほう　って　</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T04:32:21" />
+				Time="2011-11-23T07:47:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2711,11 +2711,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キレイ　だよね
+			<Text>キレイだよね
 イッシュ地方　って　</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T04:32:27" />
+				Time="2011-11-23T07:47:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2816,10 +2816,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>もっと　ゆっくりで　いいのに
-この　かんらんしゃ</Text>
+かんらんしゃも　じかんも…･･･</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T04:32:43" />
+				Time="2011-11-23T07:48:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2828,10 +2828,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もっと　ゆっくりで　いいのに
-この　観覧車</Text>
+観覧車も　時間も……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-02T04:32:49" />
+				Time="2011-11-23T07:48:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
