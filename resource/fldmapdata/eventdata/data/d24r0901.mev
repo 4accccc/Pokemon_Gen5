@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/22 11:58:37
+#save date:2011/11/23 16:07:13
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d24r0901.wms
 #SECTION START:OBJ_EVENT
@@ -28,7 +28,7 @@ SCRID_TRID_BATTLEG_20
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
-1
+2
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -90,7 +90,7 @@ SCRID_TRID_KARATE_21
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
-1
+2
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -214,7 +214,7 @@ SCRID_TRID_RANGERM_24
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
-1
+2
 #Parameter 1 Number
 0
 #Parameter 2 Number
