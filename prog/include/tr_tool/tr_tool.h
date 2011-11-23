@@ -76,10 +76,11 @@
 #define TRTYPE_GRP_N              (6) // N
 #define TRTYPE_GRP_PLASMA         (7) // プラズマ団(ネオ)
 #define TRTYPE_GRP_CHAMPION       (8) // チャンピオン
-#define TRTYPE_GRP_SAGE           (9)// ゲーチス
-#define TRTYPE_GRP_INFINITY       (10)// 無限ダンジョンボス
-#define TRTYPE_GRP_BCHAMP         (11) //サブウェイマスター
-#define TRTYPE_GRP_MAX            (12)
+#define TRTYPE_GRP_SAGE1          (9) // ゲーチス
+#define TRTYPE_GRP_SAGE3          (10)// ヴィオ
+#define TRTYPE_GRP_INFINITY       (11)// 無限ダンジョンボス
+#define TRTYPE_GRP_BCHAMP         (12) //サブウェイマスター
+#define TRTYPE_GRP_MAX            (13)
 #define TRTYPE_GRP_NONE           (TRTYPE_GRP_MAX)
 
 /*

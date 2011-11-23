@@ -288,7 +288,7 @@ static void setup_trainer_param( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BT
         dst->musicWin = SEQ_BGM_WIN3;
         break;
 
-      case TRTYPE_GRP_SAGE:       // ゲーチス
+      case TRTYPE_GRP_SAGE1:      // ゲーチス
       case TRTYPE_GRP_N:          // ポケモントレーナーのN
       case TRTYPE_GRP_PLASMA_SWBOSS: // プラズマ団のアクロマ
         dst->musicWin = SEQ_BGM_WIN4;
@@ -300,6 +300,7 @@ static void setup_trainer_param( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BT
         break;
 
       case TRTYPE_GRP_PLASMA:     // プラズマ団
+      case TRTYPE_GRP_SAGE3:      // ヴィオ
         dst->musicWin = SEQ_BGM_WIN6;
         break;
 
