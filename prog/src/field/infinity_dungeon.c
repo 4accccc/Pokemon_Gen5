@@ -2561,16 +2561,7 @@ static u32 gethint_gate_tr_move_type( const TRHINT_WK *p_wk )
     {
       const INF_ROOM_TR_DATA *p_md = &p_tr_room->tr_move_data[n];
       const INF_MMDL_PARAM *p_mmdlp = INF_TOOL_GetMMDLParam(p_md->move_type);
-
-      // @todo 正しいムーブコードでの分岐を記述する
-      // ムーブコードで分岐
-      switch( p_mmdlp->move_code )
-      {
-      case MV_RT2:
-        return msg_hint_gate_move_walk_01 + p_wk->talk_type;
-      default:
-        return msg_hint_gate_move_stay_01 + p_wk->talk_type;
-      }
+      return p_mmdlp->hint_msg_id + p_wk->talk_type;
     }
   }
 
@@ -2768,7 +2759,7 @@ BOOL INFINITY_DUNGEON_GetUpPosRoomTypeIsBoss( const INF_DUNGEON_DATA *p_dungeon_
  *	@param	INF_DUNGEON_DATA *p_dungeon_data 
  *	@param	INFINITYDUNGEON_SAVE *p_save 
  *
- *	@retval
+ *	@retval TRUEの時に開いている
  */
 //-----------------------------------------------------------------------------
 BOOL INFINITY_DUNGEON_GetGateOpen( const INF_DUNGEON_DATA *p_dungeon_data ,const INFINITYDUNGEON_SAVE *p_save )

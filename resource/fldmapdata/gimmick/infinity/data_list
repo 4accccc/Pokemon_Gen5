@@ -11,3 +11,8 @@ DATA_LIST = \
     elevator_w02.nsbmd \
     elevator_w02.nsbta \
     elevator_w02.nsbca \
+    gate_b.nsbmd \
+    gate_b.nsbca \
+    gate_w.nsbmd \
+    gate_w.nsbca \
+    gate_w.nsbta \

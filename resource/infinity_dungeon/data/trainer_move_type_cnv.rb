@@ -21,6 +21,7 @@ PARAMETER_0_COLUMN_INDEX = 5
 PARAMETER_1_COLUMN_INDEX = 6
 LIMIT_X_COLUMN_INDEX = 7
 LIMIT_Z_COLUMN_INDEX = 8
+HINT_MSG_INDEX = 9
 
 def put_value( value ,file )
   file.print value.to_i
@@ -76,6 +77,7 @@ data_csv.each { |item|
   put_value( item[PARAMETER_1_COLUMN_INDEX] ,out_file )
   put_value( item[LIMIT_X_COLUMN_INDEX] ,out_file )
   put_value( item[LIMIT_Z_COLUMN_INDEX] ,out_file )
+  put_str( item[HINT_MSG_INDEX] ,out_file )
   out_file.print "},"
   out_file.puts '  // INF_MOVE_CODE_TYPE_' + item[TYPE_COLUMN_INDEX].to_s 
   def_array.push('#define INF_MOVE_CODE_TYPE_' + item[TYPE_COLUMN_INDEX].to_s + " (%d)"  )

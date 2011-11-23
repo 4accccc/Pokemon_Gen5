@@ -22,7 +22,12 @@ enum {
 	NARC_infinity_dungeon_gmk_elevator_w_nsbca = 8,
 	NARC_infinity_dungeon_gmk_elevator_w02_nsbmd = 9,
 	NARC_infinity_dungeon_gmk_elevator_w02_nsbta = 10,
-	NARC_infinity_dungeon_gmk_elevator_w02_nsbca = 11
+	NARC_infinity_dungeon_gmk_elevator_w02_nsbca = 11,
+	NARC_infinity_dungeon_gmk_gate_b_nsbmd = 12,
+	NARC_infinity_dungeon_gmk_gate_b_nsbca = 13,
+	NARC_infinity_dungeon_gmk_gate_w_nsbmd = 14,
+	NARC_infinity_dungeon_gmk_gate_w_nsbca = 15,
+	NARC_infinity_dungeon_gmk_gate_w_nsbta = 16
 };
 
 /* NARC_INFINITY_DUNGEON_GMK_NAIX_ */

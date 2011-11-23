@@ -41,6 +41,7 @@ typedef enum
   MODELID_ELEVATOR_1,// 通常
   MODELID_ELEVATOR_2,// 通常
   MODELID_ELEVATOR_3,// (右店頭用)
+  MODELID_GATE,       // ゲート
   MODELID_MAX,
 }MODELID;
 
@@ -115,6 +116,9 @@ enum
   MODEL_RESID_ELEVATOR02,     // エレベータ用モデル(点灯用)
   MODEL_RESID_ELEVATOR02_ITA, // エレベータアニメ(点灯用)
   MODEL_RESID_ELEVATOR02_ICA, // エレベータアニメ(点灯用)
+  MODEL_RESID_GATE,           // ゲートIMD
+  MODEL_RESID_GATE_ICA,       // ゲートICA
+  MODEL_RESID_GATE_ITA,       // ゲートITA
   MODEL_RESID_MAX,
 };
 
@@ -155,6 +159,18 @@ static const GFL_G3D_UTIL_RES sc_g3d_util_res_b[MODEL_RESID_MAX] =
   {
     ARCID_INFINITY_DUNGEON_GIMMICK_DATA,
     NARC_infinity_dungeon_gmk_elevator_b02_nsbca, 
+    GFL_G3D_UTIL_RESARC
+  },
+  //MODEL_RESID_GATE->ゲートモデル
+  {
+    ARCID_INFINITY_DUNGEON_GIMMICK_DATA,
+    NARC_infinity_dungeon_gmk_gate_b_nsbmd, 
+    GFL_G3D_UTIL_RESARC
+  },
+  //MODEL_RESID_GATE_ICA->ゲートアニメーション(ICA)
+  {
+    ARCID_INFINITY_DUNGEON_GIMMICK_DATA,
+    NARC_infinity_dungeon_gmk_gate_b_nsbca, 
     GFL_G3D_UTIL_RESARC
   },
 };
@@ -198,6 +214,24 @@ static const GFL_G3D_UTIL_RES sc_g3d_util_res_w[MODEL_RESID_MAX] =
     NARC_infinity_dungeon_gmk_elevator_w02_nsbca, 
     GFL_G3D_UTIL_RESARC
   },
+  //MODEL_RESID_GATE->ゲートモデル
+  {
+    ARCID_INFINITY_DUNGEON_GIMMICK_DATA,
+    NARC_infinity_dungeon_gmk_gate_w_nsbmd, 
+    GFL_G3D_UTIL_RESARC
+  },
+  //MODEL_RESID_GATE_ICA->ゲートアニメーション(ICA)
+  {
+    ARCID_INFINITY_DUNGEON_GIMMICK_DATA,
+    NARC_infinity_dungeon_gmk_gate_w_nsbca, 
+    GFL_G3D_UTIL_RESARC
+  },
+  //MODEL_RESID_GATE_ICA->ゲートアニメーション(ITA)
+  {
+    ARCID_INFINITY_DUNGEON_GIMMICK_DATA,
+    NARC_infinity_dungeon_gmk_gate_w_nsbta, 
+    GFL_G3D_UTIL_RESARC
+  },
 };
 
 // アニメ設定
@@ -216,8 +250,23 @@ static const GFL_G3D_UTIL_ANM sc_g3d_elevator_anm02[] =
 };
 #define ANIMEID_ELEVATOR02_MAX  (NELEMS(sc_g3d_elevator_anm02))
 
-//3Dオブジェクト設定
-static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj[MODELID_MAX] =
+// アニメ設定
+static const GFL_G3D_UTIL_ANM sc_g3d_gate_b[] = 
+{
+  { MODEL_RESID_GATE_ICA, 0 },
+};
+#define ANIMEID_GATE_B_MAX  (NELEMS(sc_g3d_gate_b))
+
+// アニメ設定
+static const GFL_G3D_UTIL_ANM sc_g3d_gate_w[] = 
+{
+  { MODEL_RESID_GATE_ICA, 0 },
+  { MODEL_RESID_GATE_ITA, 0 },
+};
+#define ANIMEID_GATE_W_MAX  (NELEMS(sc_g3d_gate_w))
+
+//3Dオブジェクト設定(ブラック)
+static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj_b[MODELID_MAX] =
 {
   // エレベータ(左)
   {
@@ -243,14 +292,58 @@ static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj[MODELID_MAX] =
 		sc_g3d_elevator_anm02,			    //アニメテーブル(複数指定のため)
 		ANIMEID_ELEVATOR02_MAX,	        //アニメリソース数
   },
+  // ゲート
+  {
+    MODEL_RESID_GATE, 	    //モデルリソースID
+		0, 							        //モデルデータID(リソース内部INDEX)
+		MODEL_RESID_GATE, 	    //テクスチャリソースID
+		sc_g3d_gate_b,			    //アニメテーブル(複数指定のため)
+		ANIMEID_GATE_B_MAX,	        //アニメリソース数
+  },
 };
 
+//3Dオブジェクト設定(ホワイト)
+static const GFL_G3D_UTIL_OBJ sc_g3d_util_obj_w[MODELID_MAX] =
+{
+  // エレベータ(左)
+  {
+    MODEL_RESID_ELEVATOR, 	//モデルリソースID
+		0, 							        //モデルデータID(リソース内部INDEX)
+		MODEL_RESID_ELEVATOR, 	//テクスチャリソースID
+		sc_g3d_elevator_anm,			    //アニメテーブル(複数指定のため)
+		ANIMEID_ELEVATOR_MAX,	        //アニメリソース数
+  },
+  // エレベータ(右)
+  {
+    MODEL_RESID_ELEVATOR, 	//モデルリソースID
+		0, 							        //モデルデータID(リソース内部INDEX)
+		MODEL_RESID_ELEVATOR, 	//テクスチャリソースID
+		sc_g3d_elevator_anm,			    //アニメテーブル(複数指定のため)
+		ANIMEID_ELEVATOR_MAX,	        //アニメリソース数
+  },
+  // エレベータ(右点灯用)
+  {
+    MODEL_RESID_ELEVATOR02, 	//モデルリソースID
+		0, 							        //モデルデータID(リソース内部INDEX)
+		MODEL_RESID_ELEVATOR02, 	//テクスチャリソースID
+		sc_g3d_elevator_anm02,			    //アニメテーブル(複数指定のため)
+		ANIMEID_ELEVATOR02_MAX,	        //アニメリソース数
+  },
+  // ゲート
+  {
+    MODEL_RESID_GATE, 	    //モデルリソースID
+		0, 							        //モデルデータID(リソース内部INDEX)
+		MODEL_RESID_GATE, 	    //テクスチャリソースID
+		sc_g3d_gate_w,			    //アニメテーブル(複数指定のため)
+		ANIMEID_GATE_W_MAX,	        //アニメリソース数
+  },
+};
 // ブラック全情報設定
 static const GFL_G3D_UTIL_SETUP sc_g3d_util_setup_b =
 {
   sc_g3d_util_res_b,  //リソーステーブル
   MODEL_RESID_MAX,  //リソース最大数
-  sc_g3d_util_obj,  //オブジェクトテーブル
+  sc_g3d_util_obj_b,  //オブジェクトテーブル
   MODELID_MAX,      //オブジェクト数
 };
 
@@ -259,7 +352,7 @@ static const GFL_G3D_UTIL_SETUP sc_g3d_util_setup_w =
 {
   sc_g3d_util_res_w,  //リソーステーブル
   MODEL_RESID_MAX,  //リソース最大数
-  sc_g3d_util_obj,  //オブジェクトテーブル
+  sc_g3d_util_obj_w,  //オブジェクトテーブル
   MODELID_MAX,      //オブジェクト数
 };
 
@@ -528,6 +621,59 @@ static void MapModelInit( INF_DUNGEON_DATA  *p_dungeon_data ,INF_ELEVATOR_WK *p_
           MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model_on->modelID, FALSE );
       FLD_EXP_OBJ_SetVanish( p_model_off->p_ex_obj,
           MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model_off->modelID, TRUE );
+    }
+  }
+  else
+  {
+    u8 now_floor  = INFINITYDUNGEON_SAVE_GetFloorID( p_wk->p_save );
+    u8 now_room   = INFINITYDUNGEON_SAVE_GetRoomID( p_wk->p_save );
+    // 受付以外の時に行う
+    BOOL is_boss = INFINITY_DUNGEON_GetUpPosRoomTypeIsBoss( p_dungeon_data ,now_floor ,now_room) ;
+ 
+    // 上の部屋がボス部屋の時のみ表示する
+    if( is_boss )
+    {
+      u8 anm_idx = 0;
+      u8 anm_cnt = 0;
+      MODEL *p_model_gate    = &p_wk->model[MODELID_GATE];
+      BOOL is_open = INFINITY_DUNGEON_GetGateOpen( p_dungeon_data, p_wk->p_save);
+      
+      // アニメーションを有効に
+      FLD_EXP_OBJ_SetVanish( p_model_gate->p_ex_obj,
+          MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model_gate->modelID, FALSE );
+
+      // アニメーション数を取得
+      if( INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data ) == VERSION_B2 )
+      {
+        anm_cnt = ANIMEID_GATE_B_MAX;
+      }
+      else
+      {
+        anm_cnt = ANIMEID_GATE_W_MAX;
+      }
+
+      // アニメーションを初期化
+      for( anm_idx = 0; anm_idx < anm_cnt; anm_idx++ )
+      {
+        fx32 last_frame;
+        EXP_OBJ_ANM_CNT_PTR exobj_anm;
+
+        // アニメーションを有効に
+        FLD_EXP_OBJ_ValidCntAnm(p_model_gate->p_ex_obj,
+            MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model_gate->modelID, anm_idx, TRUE);
+        
+        // アニメーションを停止
+        exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model_gate->p_ex_obj,
+            MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model_gate->modelID, anm_idx );
+        FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
+
+        // 開いている場合は最終フレームに進める
+        if( is_open == TRUE )
+        {
+          last_frame = FLD_EXP_OBJ_GetAnimeLastFrame( exobj_anm );
+          FLD_EXP_OBJ_SetObjAnmFrm( p_model_gate->p_ex_obj, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model_gate->modelID, anm_idx, last_frame );
+        }
+      }
     }
   }
 }

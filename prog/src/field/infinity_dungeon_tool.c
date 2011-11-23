@@ -32,6 +32,9 @@ enum{
   ROOM_TYPE_MAX,
 };
 
+// msg
+#include "msg/script/msg_infinity_dungeon_scr.h"
+
 // 配置データ
 #include "fldmmdl_code.h"
 #include "../../../resource/infinity_dungeon/data/infinity_dungeon_tr_move_type.cdat"

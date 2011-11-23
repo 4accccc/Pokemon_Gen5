@@ -104,6 +104,7 @@ typedef struct {
   u16 param1;
   s32 lim_x;
   s32 lim_z;
+  u16 hint_msg_id;
 }INF_MMDL_PARAM;
 
 //-------------------------------------
