@@ -22,13 +22,13 @@ u32 MedalSortList[] = {
     MDLID_DAYMAX_EXP_LV1,	//‚d‚w‚o‚Ý‚è‚¨‚Ë‚ 
     MDLID_PKWD_SERIES5,	//‚r‚e‚¦‚¢‚ª‚Ü‚¢‚·‚½[
     MDLID_PKWD_SERIES3,	//‚t‚e‚n‚¦‚¢‚ª‚Ü‚·‚½[
+    MDLID_FIELD_DUMMY_04,	//‚ ‚«‚ß‚¾‚é
     MDLID_FIELD_DUMMY_03,	//‚ ‚«‚ß‚¾‚é
-    MDLID_FIELD_DUMMY_01,	//‚ ‚«‚ß‚¾‚é
     MDLID_FIELD_DUMMY_05,	//‚ ‚«‚ß‚¾‚é
     MDLID_FIELD_DUMMY_06,	//‚ ‚«‚ß‚¾‚é
-    MDLID_FIELD_DUMMY_07,	//‚ ‚«‚ß‚¾‚é
-    MDLID_FIELD_DUMMY_04,	//‚ ‚«‚ß‚¾‚é
     MDLID_FIELD_DUMMY_02,	//‚ ‚«‚ß‚¾‚é
+    MDLID_FIELD_DUMMY_07,	//‚ ‚«‚ß‚¾‚é
+    MDLID_FIELD_DUMMY_01,	//‚ ‚«‚ß‚¾‚é
     MDLID_FIELD_DUMMY_08,	//‚ ‚«‚ß‚¾‚é
     MDLID_COMPLETE_AKU,	//‚ ‚­‚±‚ê‚­‚½[
     MDLID_CHAMPION_AKU,	//‚ ‚­‚¿‚á‚ñ‚Õ
