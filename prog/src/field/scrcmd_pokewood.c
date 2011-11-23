@@ -682,6 +682,15 @@ VMCMD_RESULT EvCmdPokewoodCheckNewScenario( VMHANDLE * core, void * wk )
     case PW_OPEN_PROVISION_PROFIT:
       *msg_type = SCR_PKWD_ADDMSG_PROFITS;
       break;
+    case PW_OPEN_PROVISION_ALLGOOD:
+      *msg_type = SCR_PKWD_ADDMSG_ALL_GOOD_END;
+      break;
+    case PW_OPEN_PROVISION_TUTORIAL:
+      *msg_type = SCR_PKWD_ADDMSG_TUTORIAL;
+      break;
+    case PW_OPEN_PROVISION_DUAL:
+      *msg_type = SCR_PKWD_ADDMSG_DUAL;
+      break;
     }
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(notwifi_event_pokewood) );//仮：scrcmd_pokewoodオーバーレイにない
     *ret_wk = TRUE;

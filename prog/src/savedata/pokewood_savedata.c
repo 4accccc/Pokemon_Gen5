@@ -73,14 +73,13 @@ void POKEWOOD_SAVEDATA_Init( POKEWOOD_SAVEDATA * sv )
   POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, 0 ); /// ポケウッド初期状態/ハチクマン/チュートリアル
   POKEWOOD_SAVEDATA_SetPokewoodFlag( sv, PWSV_TYPE_SENARIO_ANNOUNCED, 0 );
 
-  POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, 11 ); /// ポケウッド初期状態/ハチクマン/チュートリアル
-  POKEWOOD_SAVEDATA_SetPokewoodFlag( sv, PWSV_TYPE_SENARIO_ANNOUNCED, 11 );
 #ifdef PM_DEBUG
 //  for(i=35;i<40;i++){
 //    POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( sv, i ); /// 素材確認用シナリオオープン
 //    POKEWOOD_SAVEDATA_SetPokewoodFlag( sv, PWSV_TYPE_SENARIO_ANNOUNCED, i );
 //  }
 #endif
+
   // スターポイント告知済みフラグ設定
   POKEWOOD_SAVEDATA_SetStarRankAnnounced( sv, 0, 1 );
 }

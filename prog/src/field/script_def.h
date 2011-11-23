@@ -866,6 +866,9 @@
 #define   SCR_PKWD_ADDMSG_STARRANK            (2) ///<台本追加MSG:スターランクの上昇
 #define   SCR_PKWD_ADDMSG_PROFITS             (3) ///<台本追加MSG:興行収益
 #define   SCR_PKWD_ADDMSG_ALL_GOOD_END        (4) ///<台本追加MSG:すべての台本のGOODEND
+#define   SCR_PKWD_ADDMSG_TUTORIAL            (5) ///<台本追加MSG:チュートリアルクリア後
+#define   SCR_PKWD_ADDMSG_DUAL                (6) ///<台本追加MSG:2つの条件を満たした(指定シナリオクリア＆クリア）
+
 
 #define   SCR_PKWD_STAR_RANK_0                  (0) ///<スターランク0（最低）
 #define   SCR_PKWD_STAR_RANK_1                  (1) ///<スターランク1
