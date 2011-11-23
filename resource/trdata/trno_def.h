@@ -792,7 +792,11 @@
 #define	TRID_BIGFOUR3_04   ( 779 ) 
 #define	TRID_BIGFOUR4_04   ( 780 ) 
 #define	TRID_SWCHAMPION_04   ( 781 ) 
-#define TRID_MAX  ( 782 )
+#define	TRID_BOSS_03   ( 782 ) 
+#define	TRID_BOSS_04   ( 783 ) 
+#define	TRID_BOSS_05   ( 784 ) 
+#define	TRID_BOSS_06   ( 785 ) 
+#define TRID_MAX  ( 786 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;

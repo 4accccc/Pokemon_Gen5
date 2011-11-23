@@ -4355,6 +4355,26 @@
 		<language name="JPN_KANJI" width="216">アイリス</language>
 	</row>
 
+	<row id="boss_03">
+		<language name="JPN" width="216">Ｎ</language>
+		<language name="JPN_KANJI" width="216">Ｎ</language>
+	</row>
+
+	<row id="boss_04">
+		<language name="JPN" width="216">Ｎ</language>
+		<language name="JPN_KANJI" width="216">Ｎ</language>
+	</row>
+
+	<row id="boss_05">
+		<language name="JPN" width="216">Ｎ</language>
+		<language name="JPN_KANJI" width="216">Ｎ</language>
+	</row>
+
+	<row id="boss_06">
+		<language name="JPN" width="216">Ｎ</language>
+		<language name="JPN_KANJI" width="216">Ｎ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
