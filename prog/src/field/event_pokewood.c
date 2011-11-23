@@ -65,6 +65,7 @@
 #include "gamesystem/game_beacon.h"
 
 #include "field_fade.h"
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
 
 #ifdef PM_DEBUG
@@ -910,14 +911,14 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
         *ret_wk = ( pbew->bp->result != BTL_RESULT_RUN );
         if(*ret_wk){
           PKWDSYS_CheckEnding( pkwdsys, gamedata, pbew->bp->pokewoodSenario, pbew->bp->pokewoodResult );
-          // シナリオオープンチェック
-          PKWD_OpenCheckScenario( ps, pbew->bp->pokewoodSenario, 
-                                  pbew->bp->pokewoodResult, pbew->bp->pokewoodProfit );
           // スターランク計算
           PKWDSYS_CalcStarPoint( gamedata, pkwdsys, pbew->bp->pokewoodResult, prew->rec_id );
           // 観劇フラグを立てる
           POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_THEATERGO, 
                                              pbew->bp->pokewoodSenario );
+          // シナリオオープンチェック
+          PKWD_OpenCheckScenario( ps, gamedata, pbew->bp->pokewoodSenario, 
+                                  pbew->bp->pokewoodResult, pbew->bp->pokewoodProfit );
         }
       }
     }
@@ -1729,6 +1730,15 @@ GMEVENT * PKWD_EVENT_SetSelectPokeList( GAMESYS_WORK * gsys, void * parent_work 
 //--------------------------------------------------------------
 // シナリオオープン条件構造体
 //--------------------------------------------------------------
+static void _debug_open_print( POKEWOOD_SAVEDATA *ps, int no )
+{
+#ifdef PM_DEBUG
+  if(POKEWOOD_SAVEDATA_GetPokewoodFlag( ps, PWSV_TYPE_SENARIO_OPEN, no )){
+    OS_Printf("==========シナリオ%dがオープン===========\n",no);
+  }
+#endif
+}
+
 typedef struct{
   u8 open_provision;  // オープン条件
   u8 target;          // 条件で参照される値
@@ -1736,59 +1746,61 @@ typedef struct{
 
 static const SCENARIO_PROVISION ScenarioProvisionTbl[]={
   { PW_OPEN_PROVISION_BEGINING,    },   // シナリオ1
-  { PW_OPEN_PROVISION_SUCCESS,   0 },   // シナリオ2
+  { PW_OPEN_PROVISION_DUAL,      0 },   // シナリオ2
   { PW_OPEN_PROVISION_SUCCESS,   1 },   // シナリオ3
-  { PW_OPEN_PROVISION_BEGINING,    },   // シナリオ4
+  { PW_OPEN_PROVISION_PROFIT,      },   // シナリオ4
   { PW_OPEN_PROVISION_SUCCESS,   3 },   // シナリオ5
   { PW_OPEN_PROVISION_SUCCESS,   4 },   // シナリオ6
   { PW_OPEN_PROVISION_SUCCESS,   5 },   // シナリオ7
-  { PW_OPEN_PROVISION_SUCCESS,   6 },   // シナリオ8
-  { PW_OPEN_PROVISION_BEGINING,    },   // シナリオ9
+  { PW_OPEN_PROVISION_TUTORIAL,    },   // シナリオ8
+  { PW_OPEN_PROVISION_SUCCESS,   7 },   // シナリオ9
   { PW_OPEN_PROVISION_SUCCESS,   8 },   // シナリオ10
   { PW_OPEN_PROVISION_SUCCESS,   9 },   // シナリオ11
-  { PW_OPEN_PROVISION_BEGINING,    },   // シナリオ12
+  { PW_OPEN_PROVISION_GAMECLEAR,   },   // シナリオ12
   { PW_OPEN_PROVISION_SUCCESS,  11 },   // シナリオ13
   { PW_OPEN_PROVISION_SUCCESS,  12 },   // シナリオ14
   { PW_OPEN_PROVISION_SUCCESS,  13 },   // シナリオ15
-  { PW_OPEN_PROVISION_BEGINING,    },   // シナリオ16
-  { PW_OPEN_PROVISION_BEGINING     },   // シナリオ17
+  { PW_OPEN_PROVISION_TUTORIAL,    },   // シナリオ16
+  { PW_OPEN_PROVISION_SUCCESS,  15 },   // シナリオ17
   { PW_OPEN_PROVISION_SUCCESS,  16 },   // シナリオ18
-  { PW_OPEN_PROVISION_SUCCESS,  17 },   // シナリオ19
+  { PW_OPEN_PROVISION_GAMECLEAR,17 },   // シナリオ19
   { PW_OPEN_PROVISION_SUCCESS,  18 },   // シナリオ20
-  { PW_OPEN_PROVISION_BEGINING,    },   // シナリオ21
-  { PW_OPEN_PROVISION_SUCCESS,  20 },   // シナリオ22
+  { PW_OPEN_PROVISION_SUCCESS,  19 },   // シナリオ21
+  { PW_OPEN_PROVISION_TUTORIAL,    },   // シナリオ22
   { PW_OPEN_PROVISION_SUCCESS,  21 },   // シナリオ23
   { PW_OPEN_PROVISION_SUCCESS,  22 },   // シナリオ24
-  { PW_OPEN_PROVISION_BEGINING,    },   // シナリオ25
+  { PW_OPEN_PROVISION_STARRANK,  2 },   // シナリオ25
   { PW_OPEN_PROVISION_SUCCESS,  24 },   // シナリオ26
   { PW_OPEN_PROVISION_SUCCESS,  25 },   // シナリオ27
-  { PW_OPEN_PROVISION_STARRANK, 3  },   // シナリオ28
-  { PW_OPEN_PROVISION_SUCCESS,  27 },   // シナリオ29
+  { PW_OPEN_PROVISION_SUCCESS,  26 },   // シナリオ28
+  { PW_OPEN_PROVISION_TUTORIAL, 27 },   // シナリオ29
   { PW_OPEN_PROVISION_SUCCESS,  28 },   // シナリオ30
   { PW_OPEN_PROVISION_SUCCESS,  29 },   // シナリオ31
-  { PW_OPEN_PROVISION_SUCCESS,  30 },   // シナリオ32
-  { PW_OPEN_PROVISION_BEGINING,    },   // シナリオ33
+  { PW_OPEN_PROVISION_STARRANK,  3 },   // シナリオ32
+  { PW_OPEN_PROVISION_SUCCESS,     },   // シナリオ33
   { PW_OPEN_PROVISION_SUCCESS,  31 },   // シナリオ34
   { PW_OPEN_PROVISION_SUCCESS,  32 },   // シナリオ35
-  { PW_OPEN_PROVISION_SUCCESS,  33 },   // シナリオ36
-  { PW_OPEN_PROVISION_STARRANK, 2  },   // シナリオ37
+  { PW_OPEN_PROVISION_GAMECLEAR,   },   // シナリオ36
+  { PW_OPEN_PROVISION_SUCCESS,  34 },   // シナリオ37
   { PW_OPEN_PROVISION_SUCCESS,  35 },   // シナリオ38
   { PW_OPEN_PROVISION_SUCCESS,  36 },   // シナリオ39
-  { PW_OPEN_PROVISION_PROFIT,      },   // シナリオ40
+  { PW_OPEN_PROVISION_ALLGOOD,     },   // シナリオ40
 };
 
-
+/// 最終シナリオがオープンするために必要な成功END取得数
+#define PW_LAST_SENARIO_OPEN_NUM  ( 39 )  
 //=============================================================================================
 /**
  * @brief	シナリオが新しくオープンするかチェックする(関数内でオープンも行う）
  *
  * @param   ps		          POKEWOOD_SAVEDATA
+ * @param   gamedata	      GAMEDATA
  * @param   scenario_no		  シナリオNO
  * @param   pokewoodResult	撮影終了時の状態
  * @param   profit		      興行収益
  */
 //=============================================================================================
-void PKWD_OpenCheckScenario( POKEWOOD_SAVEDATA *ps, int scenario_no, int result, int profit )
+void PKWD_OpenCheckScenario( POKEWOOD_SAVEDATA *ps, GAMEDATA *gamedata, int scenario_no, int result, int profit )
 {
   int i;
   OS_Printf("x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-\n");
@@ -1805,6 +1817,7 @@ void PKWD_OpenCheckScenario( POKEWOOD_SAVEDATA *ps, int scenario_no, int result,
       case PW_OPEN_PROVISION_SUCCESS:
         if( scenario_no==ScenarioProvisionTbl[i].target && result==1 ){
           POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_OPEN, i );
+          _debug_open_print( ps, i );
         }
         break;
       // 指定のスターランクに到達した
@@ -1814,6 +1827,7 @@ void PKWD_OpenCheckScenario( POKEWOOD_SAVEDATA *ps, int scenario_no, int result,
           int rank  = POKEWOOD_SAVEDATA_CalcStarPoint2StarRank(point);
           if( rank >= ScenarioProvisionTbl[i].target ){
             POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_OPEN, i );
+            _debug_open_print( ps, i );
           }
         }
         break;
@@ -1822,6 +1836,53 @@ void PKWD_OpenCheckScenario( POKEWOOD_SAVEDATA *ps, int scenario_no, int result,
       case PW_OPEN_PROVISION_PROFIT:
         if(profit>=POKEWOOD_PROVISION_PROFIT){
             POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_OPEN, i );
+            _debug_open_print( ps, i );
+        }
+        break;
+      // ゲームクリア
+      case PW_OPEN_PROVISION_GAMECLEAR:
+        {
+          EVENTWORK *evwork = GAMEDATA_GetEventWork( gamedata );
+          if(EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_GAME_CLEAR)){
+            POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_OPEN, i );
+            _debug_open_print( ps, i );
+          }
+        }
+        break;
+
+      // 条件が２つある
+      case PW_OPEN_PROVISION_DUAL:
+        // 指定シナリオをグッドENDにした事がある上で
+        if( POKEWOOD_SAVEDATA_GetPokewoodFlag( ps, 
+            PWSV_TYPE_SENARIO_SUCCESS, ScenarioProvisionTbl[i].target)){
+          // 殿堂入りしている
+          EVENTWORK *evwork = GAMEDATA_GetEventWork( gamedata );
+          if(EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_GAME_CLEAR)){
+            POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_OPEN, i );
+            _debug_open_print( ps, i );
+          }
+        }
+        break;
+      // ラストシナリオ以外で全てGOODエンドを取得している
+      case PW_OPEN_PROVISION_ALLGOOD:
+        {
+          int j,num=0;
+          // 全てのシナリオの成功END状況を取得する
+          for(j=0;j<PW_LAST_SENARIO_OPEN_NUM;j++){
+            num += POKEWOOD_SAVEDATA_GetPokewoodFlag( ps, PWSV_TYPE_SENARIO_SUCCESS, j );
+          }
+          if(num==PW_LAST_SENARIO_OPEN_NUM){
+            POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_OPEN, i );
+            _debug_open_print( ps, i );
+          }
+        }
+        break;
+        
+      // チュートリアルを終了している
+      case PW_OPEN_PROVISION_TUTORIAL:
+        if(POKEWOOD_SAVEDATA_GetPokewoodFlag(ps, PWSV_TYPE_SENARIO_THEATERGO, 0)){
+          POKEWOOD_SAVEDATA_SetPokewoodFlag( ps, PWSV_TYPE_SENARIO_OPEN, i );
+          _debug_open_print( ps, i );
         }
         break;
       }
@@ -1959,6 +2020,7 @@ static void saveDataConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID )
   enum
   {
     POKEWOOD_CONV_DATA_POKE_NUM = 6,
+    POKEWOOD_DATA_ENEMY_START = 6,
   };
   GFL_MSGDATA *msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
                                          NARC_message_pokewood_name_dat, 
@@ -1973,7 +2035,6 @@ static void saveDataConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID )
     int i,j;
 
     POKEPARTY *p_party = bsp->party[BTL_CLIENT_ENEMY1];
-
     for( i = 0; i < PokeParty_GetPokeCount(p_party); i++ )
     {
       POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer(p_party, i );
@@ -1981,13 +2042,17 @@ static void saveDataConvertRecToShow( BATTLE_SETUP_PARAM* bsp, HEAPID heapID )
       {
         continue;
       }
-      for( j = 0; j < POKEWOOD_CONV_DATA_POKE_NUM; j++ )
+      // MONSNOを書き換え（主にボスポケモン）
       {
-        POKEWOOD_POKE_DATA *poke = &ppd->data[j];
+        POKEWOOD_POKE_DATA *poke = &ppd->data[ppd->party_num[0]+i];
+        // 生成したポケモンパラメータが撮影ポケモンが一致していたら上映ポケモンに変更する
         if( poke->rec_monsno == PP_Get( p_pp, ID_PARA_monsno, NULL ) )
         {
+          OS_Printf("%dを%dに書き換え\n",PP_Get( p_pp, ID_PARA_monsno, NULL ), poke->show_monsno);
           PP_Put( p_pp, ID_PARA_monsno, poke->show_monsno );
           PP_Renew( p_pp );
+
+          // ボスポケモンの場合はニックネームを代入する
           if(poke->show_monsno>=MONSNO_ufo && poke->show_monsno<=MONSNO_KARATEOU){
             STRBUF *strbuf = GFL_MSG_CreateString( msgdata, pw_boss_poke_name_652+(poke->show_monsno-MONSNO_ufo));
             PP_Put( p_pp, ID_PARA_nickname, (u32)strbuf );
