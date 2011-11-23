@@ -14,7 +14,7 @@
 #include "fmission_save_local.h"
 
 SDK_COMPILER_ASSERT( FMISSION_ID_MAX <= FMISSION_STATUS_MAX );
-SDK_COMPILER_ASSERT( sizeof(FMISSION_SAVE) == 256 );
+//SDK_COMPILER_ASSERT( sizeof(FMISSION_SAVE) == 256 );
 
 //---------------------------------------------------------------------------
 /**
