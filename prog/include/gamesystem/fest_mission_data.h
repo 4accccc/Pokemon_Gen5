@@ -69,33 +69,10 @@ typedef struct _FMISSION_ARC_PARAM{
  * この構造体の構成を変えた場合、resource/fmission_data/tool/fmission_dat_conv.rbを
  * 修正する必要があります
  */
-#if 1
 typedef struct _FMISSION_ARCDATA{
   FMISSION_ARC_COMMON common;  ///<コモンパラメータ
   FMISSION_ARC_PARAM  param;    ///<非常駐パラメータ
 }FMISSION_ARCDATA;
-#else
-typedef struct _FMISSION_ARCDATA{
-  u8  m_type;         ///<ミッションタイプ FMISSION_TYPE_ID
-  u8  end_type;       ///<クリアタイプ FMISSION_END_TYPE
-  u8  location;       ///<範囲 FMISSION_LOCATION
-  u8  host;           ///<開催制限 FMISSION_HOST_TYPE
-  
-  u8  unit;           ///<表示単位 FMISSION_UNIT_ID
-  u8  dummy;          ///<パディング
-
-  u16 param;          ///<汎用パラメータ
-  u16 entry_flag_id;  ///<参加条件フラグID
-  u16 item;           ///<報酬アイテム
-
-  u8  time_bonus;     ///<ボーナスタイム FMISSION_TBONUS
-  u8  pay_bonus;      ///<報酬計算式タイプ FMISSION_PAY_BONUS
-  u8  m_title_id;     ///<タイトルメッセージID
-  u8  m_exp_id;       ///<説明文メッセージID
-
-  FMISSION_ARCDATA_LV_PARAM level[FMISSION_LEVEL_MAX];
-}FMISSION_ARCDATA;
-#endif
 
 ///ミッションアーカイブデータマネージャー
 typedef struct _FMISSION_DATA_MAN{

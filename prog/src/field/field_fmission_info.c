@@ -472,7 +472,7 @@ static void panel_Hide( FIELD_FMISSION_INFO* wk )
 //--------------------------------------------------------------
 static BOOL panel_MyScoreViewCheck( FIELD_FMISSION_INFO* wk )
 {
-  return (LINK_FESTIVAL_GetMissionEntryNum( wk->fest_sys ) > 1 );
+  return (LINK_FESTIVAL_GetMissionJoinNum( wk->fest_sys ) > 1 );
 }
 
 //--------------------------------------------------------------

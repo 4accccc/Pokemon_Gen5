@@ -597,7 +597,7 @@ BOOL LINK_FESTIVAL_MissionScoreCalc( GAMESYS_WORK* gsys, FMISSION_LOG_ACTION act
  * @brief リンクフェスティバル ミッション参加人数取得
  */
 //---------------------------------------------------------
-int LINK_FESTIVAL_GetMissionEntryNum( LINK_FESTIVAL* wk )
+int LINK_FESTIVAL_GetMissionJoinNum( LINK_FESTIVAL* wk )
 {
   if( FEST_MISSION_IsEntry( &wk->mission ) == FALSE ){
     return 0;
@@ -725,6 +725,17 @@ void LINK_FESTIVAL_TopScoreUpdate( LINK_FESTIVAL* wk, u16 tr_id, u16 score, STRB
 BOOL LINK_FESTIVAL_TopScoreIsUpdate( LINK_FESTIVAL* wk )
 {
   return wk->top_score_update_f;
+}
+
+//---------------------------------------------------------
+/*
+ *  @brief リンクフェスティバル 今のトップスコアが自分のものかチェック
+ */
+//---------------------------------------------------------
+BOOL LINK_FESTIVAL_TopScoreIsMine( LINK_FESTIVAL* wk )
+{
+  MYSTATUS* my = GAMEDATA_GetMyStatus( wk->gdata );
+  return ( wk->top_score->tr_id == MyStatus_GetID_Low( my ) );
 }
 
 //---------------------------------------------------------

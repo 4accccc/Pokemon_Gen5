@@ -14,7 +14,7 @@
 #include "fmission_save_local.h"
 
 SDK_COMPILER_ASSERT( FMISSION_ID_MAX <= FMISSION_STATUS_MAX );
-//SDK_COMPILER_ASSERT( sizeof(FMISSION_SAVE) == 256 );
+SDK_COMPILER_ASSERT( sizeof(FMISSION_SAVE) == 252 );  //1block 256byteだが4byteはfooter
 
 //---------------------------------------------------------------------------
 /**
@@ -223,21 +223,17 @@ u32 FMISSION_SAVE_GetMissionTopScoreNum( FMISSION_SAVE* sv )
 
 //---------------------------------------------------------------------------
 /**
- * @brief ミッショントップスコアを取った回数をアップデートする	
+ * @brief ミッショントップスコアを取った回数をインクリメントする	
  * @param	work		ワークへのポインタ
- *
- * @param entry_num 参加人数、記録より少なければ更新しない
  */
 //---------------------------------------------------------------------------
-void FMISSION_SAVE_UpdateMissionTopScoreNum( FMISSION_SAVE* sv, u16 top_num )
+void FMISSION_SAVE_IncMissionTopScoreNum( FMISSION_SAVE* sv )
 {
-  if( top_num > FMISSION_SAVE_TOP_SCORE_NUM_MAX ){
+  if( (sv->top_score_num+1) > FMISSION_SAVE_TOP_SCORE_NUM_MAX ){
     GF_ASSERT(0);
     return;
   }
-  if( sv->top_score_num < top_num ){
-    sv->top_score_num = top_num;
-  }
+  ++sv->top_score_num;
 }
 
 //---------------------------------------------------------------------------

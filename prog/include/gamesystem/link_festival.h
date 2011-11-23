@@ -316,7 +316,7 @@ extern BOOL LINK_FESTIVAL_MissionScoreCalc( GAMESYS_WORK* gsys, FMISSION_LOG_ACT
  * @brief リンクフェスティバル ミッション参加人数取得
  */
 //---------------------------------------------------------
-extern int LINK_FESTIVAL_GetMissionEntryNum( LINK_FESTIVAL* wk );
+extern int LINK_FESTIVAL_GetMissionJoinNum( LINK_FESTIVAL* wk );
 
 //---------------------------------------------------------
 /*
@@ -351,6 +351,13 @@ extern void LINK_FESTIVAL_TopScoreUpdate( LINK_FESTIVAL* wk, u16 tr_id, u16 scor
  */
 //---------------------------------------------------------
 extern BOOL LINK_FESTIVAL_TopScoreIsUpdate( LINK_FESTIVAL* wk );
+
+//---------------------------------------------------------
+/*
+ *  @brief リンクフェスティバル 今のトップスコアが自分のものかチェック
+ */
+//---------------------------------------------------------
+extern BOOL LINK_FESTIVAL_TopScoreIsMine( LINK_FESTIVAL* wk );
 
 //---------------------------------------------------------
 /*

@@ -2514,12 +2514,12 @@ static BOOL fmission_chk_open( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
     bflg = EVENTWORK_CheckEventFlag( evwork, fmiss_flag_tbl[0] );
     if(bflg == TRUE){
       // チュートリアルクリア後は、(id=0)は非表示
-      if(id == 0){
+      if(id == FMISSION_ID_ITEM_TUTORIAL_01){
         return( FALSE );
       }
     }else{
       // チュートリアルクリア前は、(id=0)のみ表示
-      if(id != 0){
+      if(id != FMISSION_ID_ITEM_TUTORIAL_01){
         return( FALSE );
       }
     }

@@ -57,24 +57,35 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
 
   pl->clear_f = LINK_FESTIVAL_IsMissionClear( wk, &pl->score );
 
-  //@TODO フェスチュートリアルができるまでの仮処理
   if( wk->m_beacon->m_id == FMISSION_ID_ITEM_TUTORIAL_01 ){
     EVENTWORK* ev = GAMEDATA_GetEventWork( wk->gdata );
     if( !EVENTWORK_CheckEventFlag( ev, SYS_FLAG_FES_TUTORIAL_CLEAR )){
       EVENTWORK_SetEventFlag( ev, SYS_FLAG_FES_TUTORIAL_CLEAR );
+      //イベント起動用ワークを設定
+      *( EVENTWORK_GetEventWorkAdrs( ev, WK_SYS_FES_TUTORIAL ) ) = SCR_FES_TUTORIAL_MISSION_FAILED+pl->clear_f;
     }
-    //イベント起動用ワークを設定
-    *( EVENTWORK_GetEventWorkAdrs( ev, WK_SYS_FES_TUTORIAL ) ) = SCR_FES_TUTORIAL_MISSION_FAILED+pl->clear_f;
   }
 
   if( wk->m_beacon->end_type == FMISSION_ENDTYPE_TIME ){
     //時間依存型の場合、失敗でもハイスコアを更新する
     pl->new_record_score_f = FMISSION_SAVE_UpdateMissionStatusHighScoreNum( f_save, wk->m_beacon->m_id, pl->score );
   }
+  //自分のハイスコアを記録する
+  FMISSION_SAVE_UpdateMissionStatusMyRecord( f_save, wk->m_beacon->m_id, wk->mission.my_score );
+  //最高参加者数を記録する
+  FMISSION_SAVE_UpdateMissionMaxJoinNum( f_save, LINK_FESTIVAL_GetMissionJoinNum( wk ) );
+  
   if( !pl->clear_f ){
     return; //ミッション失敗
   }
+  //以下ミッション成功時のみの処理
+
   FMISSION_SAVE_IncMissionClearNum( f_save ); //ミッション達成回数インクリメント
+
+  //トップスコアを取った回数を記録する
+  if( LINK_FESTIVAL_TopScoreIsMine( wk ) ){
+    FMISSION_SAVE_IncMissionTopScoreNum( f_save );
+  }
 
   //ミッションレベルアップ
   FMISSION_SAVE_SetMissionStatusClearLevel( f_save, wk->m_beacon->m_id, wk->m_beacon->m_level+FMISSION_CLEAR_LEVEL_1 );
@@ -134,24 +145,7 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
     }else{
       now_level = OccupyInfo_GetBlackLevel( occupy_sv );
     }
-#if 0
-    //閾値は現Lv*10(上限100) ミッション未クリア時のレベルは0～なので+1
-    step = (now_level+1)*10;
-    if( step > 100 ){
-      step = 100;
-    }
-    up_level = exp/step;
-    //余りの経験値をセーブに書き戻し
-    FMISSION_SAVE_SetHilinkLevelExp( f_save, wk->m_beacon->version_idx, exp%step );
-  
-    //パレスレベルを上げる
-    pl->hilink_version = wk->m_beacon->version_idx;
-    if( wk->m_beacon->version_idx == FMISSION_VERSION_WHITE ){
-      pl->hilink_level_up = OccupyInfo_LevelUpWhite( occupy_sv, up_level );
-    }else{
-      pl->hilink_level_up = OccupyInfo_LevelUpBlack( occupy_sv, up_level );
-    }
-#else
+    
     IWASAWA_Printf("FMResult exp = %d, n_level = %d\n", exp, now_level );
     up_level = 0;
     do{
@@ -180,7 +174,6 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
     
     //余りの経験値をセーブに書き戻し
     FMISSION_SAVE_SetHilinkLevelExp( f_save, wk->m_beacon->version_idx, exp );
-#endif
   }
 
   //メダルチェック
@@ -201,12 +194,12 @@ static void linkfes_SetMissionResultMedal( LINK_FESTIVAL* wk, LINKFEST_MISSION_R
 {
   MEDALBOX * medalbox = SaveData_GetMedalBox( save );
  
-  { //エントリー数が規定値を越えた際にオープンするメダルチェック
-    int entry_num = LINK_FESTIVAL_GetMissionEntryNum( wk );
+  { //参加者数が規定値を越えた際にオープンするメダルチェック
+    int join_num = LINK_FESTIVAL_GetMissionJoinNum( wk );
 
-    if( entry_num >= 10 ){
+    if( join_num >= 10 ){
       MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_FES_JOIN_NUM_LV1 );
-      if( entry_num >= 30 ){
+      if( join_num >= 30 ){
         MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_FES_JOIN_NUM_LV2 );
       }
     }

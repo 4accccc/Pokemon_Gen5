@@ -156,13 +156,11 @@ extern u32 FMISSION_SAVE_GetMissionTopScoreNum( FMISSION_SAVE* sv );
 
 //---------------------------------------------------------------------------
 /**
- * @brief ミッショントップスコアを取った回数をアップデートする	
+ * @brief ミッショントップスコアを取った回数をインクリメントする	
  * @param	work		ワークへのポインタ
- *
- * @param entry_num 参加人数、記録より少なければ更新しない
  */
 //---------------------------------------------------------------------------
-extern void FMISSION_SAVE_UpdateMissionTopScoreNum( FMISSION_SAVE* sv, u16 top_num );
+extern void FMISSION_SAVE_IncMissionTopScoreNum( FMISSION_SAVE* sv );
 
 //---------------------------------------------------------------------------
 /**

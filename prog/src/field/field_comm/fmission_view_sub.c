@@ -59,7 +59,6 @@ static void print_GetMsgToBuf( FMISSION_VIEW_PTR wk, u8 msg_id );
 static void print_PopupWindow( FMISSION_VIEW_PTR wk, STRBUF* str, int* task_ct );
 
 static void draw_MissionInfo( FMISSION_VIEW_PTR wk );
-static void draw_MissionNowScore( FMISSION_VIEW_PTR wk );
 static void draw_EntryNum( FMISSION_VIEW_PTR wk, int* task_ct );
 static void draw_MenuIconVisibleSet( FMISSION_VIEW_PTR wk, BOOL visible_f );
 
@@ -90,10 +89,6 @@ static void effReq_PopupMsgRetire( FMISSION_VIEW_PTR wk );
 static BOOL effReq_PopupMsgGPower( FMISSION_VIEW_PTR wk,  FMISSION_LOG* pl );
 static BOOL effReq_PopupMsgGPowerSpecial( FMISSION_VIEW_PTR wk, GPOWER_ID gpower_id, STRBUF* name_buf );
 
-#if 0
-static void printReq_FOamPrint( FMISSION_VIEW_PTR wk, PANEL_WORK* pp, PANEL_FOAM_ID id, PRINTSYS_LSB color,int* task_ct );
-#endif
-
 //////////////////////////////////////////////////////////////////
 
 /*
@@ -103,12 +98,7 @@ void FMissionView_InitialDraw( FMISSION_VIEW_PTR wk )
 {
   int i;
 
-#if 0
-  wk->ctrl.fm_my_score = wk->fmwk->beacon.my_score;
-  wk->ctrl.fm_score = LINK_FESTIVAL_GetNowScore( wk->fest_sys );
-  wk->ctrl.fm_sec = wk->fmwk->beacon.life/60;
-#endif
-  wk->ctrl.fm_entry = LINK_FESTIVAL_GetMissionEntryNum( wk->fest_sys );
+  wk->ctrl.fm_join_num = LINK_FESTIVAL_GetMissionJoinNum( wk->fest_sys );
 
   PaletteTrans_AutoSet( wk->pfd, TRUE );
   
@@ -286,10 +276,10 @@ BOOL FMissionView_CheckStack( FMISSION_VIEW_PTR wk )
  */
 void FMissionView_ViewUpdate( FMISSION_VIEW_PTR wk )
 {
-  u8  entry = LINK_FESTIVAL_GetMissionEntryNum( wk->fest_sys );
+  u8  join = LINK_FESTIVAL_GetMissionJoinNum( wk->fest_sys );
   
-  if( (entry > wk->ctrl.fm_entry) && (wk->en_print_task_ct == 0 )){
-    wk->ctrl.fm_entry = entry;
+  if( (join > wk->ctrl.fm_join_num) && (wk->en_print_task_ct == 0 )){
+    wk->ctrl.fm_join_num = join;
     draw_EntryNum( wk, &wk->en_print_task_ct );
   }
 }
@@ -649,43 +639,6 @@ static void draw_MissionInfo( FMISSION_VIEW_PTR wk )
   print_GetMsgToBuf( wk, msg_sys_goal_num00+wk->fmwk->arc.unit );
   BVCPrintReq_BmpwinPrint( &wk->win[WIN_GOAL], wk->str_expand,
       BMP_GOAL_STR_OX, BMP_GOAL_STR_OY, FCOL_TITLE_BASE, FCOL_TITLE, NULL, wk->init_f );
-
-#if 0
-  FEST_MISSION_GetExpStr( wk->wordset, wk->mm_fmission, wk->str_expand, wk->fmwk, wk->heapID );
-  BVCPrintReq_BmpwinPrint( wk, &wk->win[WIN_FMISSION], wk->str_expand, 0, 0, FCOL_LOGNUM_BASE, FCOL_LOGNUM, NULL );
-  
-  FEST_MISSION_WordsetParamAll( wk->wordset, wk->fmwk );
-
-  print_GetMsgToBuf( wk, msg_sys_fmission_reward );
-  BVCPrintReq_BmpwinPrintEx( wk, &wk->win[WIN_FMISSION], wk->str_expand, 0, 32, FCOL_LOGNUM_BASE, FCOL_LOGNUM, NULL, FALSE );
-
-  print_GetMsgToBuf( wk, msg_sys_fmission_score01 );
-  BVCPrintReq_BmpwinPrintEx( wk, &wk->win[WIN_FMSCORE], wk->str_expand, 0, 0, FCOL_LOGNUM_BASE, FCOL_LOGNUM, NULL, TRUE );
-  print_GetMsgToBuf( wk, msg_sys_fmission_score02 );
-  BVCPrintReq_BmpwinPrintEx( wk, &wk->win[WIN_FMSCORE], wk->str_expand, TOTAL_SCORE_PX, 0, FCOL_LOGNUM_BASE, FCOL_LOGNUM, NULL, FALSE );
-  
-  print_GetMsgToBuf( wk, msg_sys_fmission_time );
-  BVCPrintReq_BmpwinPrintEx( wk, &wk->win[WIN_FMTIME], wk->str_expand, 0, 0, FCOL_LOGNUM_BASE, FCOL_LOGNUM, NULL, TRUE );
-#endif
-}
-
-/*
- *  @brief  ミッションスコア表示
- */
-static void draw_MissionNowScore( FMISSION_VIEW_PTR wk )
-{
-#if 0
-  GFL_BMP_Fill( wk->win[WIN_FMSCORE].bmp, MY_SCORE_NUM_PX, 0, SCORE_NUM_SX, SCORE_NUM_SY, FCOL_LOGNUM_BASE );
-  GFL_BMP_Fill( wk->win[WIN_FMSCORE].bmp, TOTAL_SCORE_NUM_PX, 0, SCORE_NUM_SX, SCORE_NUM_SY, FCOL_LOGNUM_BASE );
-
-  WORDSET_RegisterNumber( wk->wordset, 0, wk->ctrl.fm_my_score, 5, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-  print_GetMsgToBuf( wk, msg_sys_fmission_score_num );
-  BVCPrintReq_BmpwinPrintEx( wk, &wk->win[WIN_FMSCORE], wk->str_expand, MY_SCORE_NUM_PX, 0, FCOL_LOGNUM_BASE, FCOL_LOGNUM, &wk->eff_task_ct, FALSE );
-
-  WORDSET_RegisterNumber( wk->wordset, 0, wk->ctrl.fm_score, 5, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-  print_GetMsgToBuf( wk, msg_sys_fmission_score_num );
-  BVCPrintReq_BmpwinPrintEx( wk, &wk->win[WIN_FMSCORE], wk->str_expand, TOTAL_SCORE_NUM_PX, 0, FCOL_LOGNUM_BASE, FCOL_LOGNUM, &wk->eff_task_ct, FALSE );
-#endif
 }
 
 /*
@@ -694,22 +647,11 @@ static void draw_MissionNowScore( FMISSION_VIEW_PTR wk )
 static void draw_EntryNum( FMISSION_VIEW_PTR wk, int* task_ct )
 {
   GFL_BMP_Clear( wk->win[WIN_ENTRY].bmp, FCOL_TITLE_BASE );
-  WORDSET_RegisterNumber( wk->wordset, 0, wk->ctrl.fm_entry, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wordset, 0, wk->ctrl.fm_join_num, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
   
   print_GetMsgToBuf( wk, msg_sys_entry_num );
   BVCPrintReq_BmpwinPrintEx( &wk->win[WIN_ENTRY], wk->str_expand,
       0, 0, FCOL_TITLE_BASE, FCOL_TITLE, task_ct, wk->init_f, FALSE );
-
-#if 0
-  GFL_BMP_Fill( wk->win[WIN_TITLE].bmp,
-    BMP_ENTRY_NUM_OX, BMP_ENTRY_NUM_OY, BMP_ENTRY_NUM_DSX, BMP_ENTRY_NUM_DSY, FCOL_TITLE_BASE );
-
-  WORDSET_RegisterNumber( wk->wordset, 0, wk->ctrl.fm_entry, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-
-  print_GetMsgToBuf( wk, msg_sys_entry_num );
-  BVCPrintReq_BmpwinPrintEx( &wk->win[WIN_TITLE], wk->str_expand,
-      0, BMP_ENTRY_NUM_OY, FCOL_TITLE_BASE, FCOL_TITLE, task_ct, wk->init_f, FALSE );
-#endif
 }
 
 /*

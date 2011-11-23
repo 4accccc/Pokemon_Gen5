@@ -11,8 +11,8 @@
 
 #include "gamesystem/fest_mission_local.h"
 
-//↓FMISSION_ID_MAX分あればいいが、構造体サイズを256byteにし、いざという時のパディング領域を確保するため多めに取っている
-#define FMISSION_STATUS_MAX (FMISSION_ID_MAX)
+//↓FMISSION_ID_MAX分あればいいが、構造体サイズを252byteにし、いざという時のパディング領域を確保するため多めに取っている
+#define FMISSION_STATUS_MAX (60) //(FMISSION_ID_MAX)
 
 #define FMISSION_SAVE_HIGH_SCORE_MAX  ( FMISSION_SCORE_MAX )
 #define FMISSION_SAVE_OPEN_NUM_MAX ( 9999 )
