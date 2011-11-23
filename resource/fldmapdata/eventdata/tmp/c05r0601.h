@@ -14,7 +14,7 @@
 
 #define C05R0601_MAN3_01                   0
 #define C05R0601_WAITRESS_01               1
-#define C05R0601_FLD_ITEM_01               2
+#define FLD_ITEM_375                       2
 #define C05R0601_HAKAIM_01                 3
 #define C05R0601_WOMAN3_01                 4
 #define C05R0601_SUNGLASSES_01             5

@@ -15,12 +15,11 @@
 #define FLD_ITEM_220                       2
 #define FLD_ITEM_221                       3
 #define FLD_ITEM_222                       4
-#define FLD_ITEM_223                       5
-#define TR_TANPAN_29                       6
-#define TR_MINI_22                         7
-#define TR_PARASOL_13                      8
-#define TR_FISHING_26                      9
-#define TR_PARASOL_12                     10
+#define TR_TANPAN_29                       5
+#define TR_MINI_22                         6
+#define TR_PARASOL_13                      7
+#define TR_FISHING_26                      8
+#define TR_PARASOL_12                      9
 
 #endif //ZONE_R08_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r08.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

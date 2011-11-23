@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/14 14:57:47
+#save date:2011/11/23 11:36:04
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d13r0101.wms
 #SECTION START:OBJ_EVENT
@@ -45,7 +45,7 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-D13R0101_FLD_ITEM_01
+FLD_ITEM_377
 #OBJ CODE Number
 MONSTERBALL
 #MOVE CODE Number
@@ -53,9 +53,9 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_FLD_ITEM_286
+FV_FLD_ITEM_377
 #Event Script Name
-SCRID_FLD_ITEM_286
+SCRID_FLD_ITEM_377
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number

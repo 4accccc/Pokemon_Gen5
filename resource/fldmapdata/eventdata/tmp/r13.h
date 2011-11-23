@@ -37,6 +37,7 @@
 #define FLD_ITEM_140                      23
 #define TR_BATTLEG_25                     24
 #define TR_KARATE_.33                     25
+#define FLD_ITEM_373                      26
 
 #endif //ZONE_R13_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r13.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -17,6 +17,7 @@
 #define FLD_ITEM_145                       5
 #define FLD_ITEM_146                       6
 #define FLD_ITEM_147                       7
+#define FLD_ITEM_374                       8
 
 #endif //ZONE_R12_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r12.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

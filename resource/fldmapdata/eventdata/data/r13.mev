@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/01 21:11:55
+#save date:2011/11/23 11:26:48
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r13.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\r13.wms
 #hold event type:
 1
 #hold event number:
-26
+27
 #event number: 0
 #type
 1
@@ -598,7 +598,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-568 0 -216
+584 0 -216
 #event number: 19
 #type
 1
@@ -816,6 +816,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 1544 -80 -1592
+#event number: 26
+#type
+1
+#ID name
+FLD_ITEM_373
+#OBJ CODE Number
+ITEM_GRASS
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_373
+#Event Script Name
+SCRID_FLD_ITEM_373
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+536 0 -312
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

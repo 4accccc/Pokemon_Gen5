@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/24 15:48:37
+#save date:2011/11/23 11:49:06
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d20r0801.wms
 #SECTION START:OBJ_EVENT
@@ -24,7 +24,7 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_FLD_ITEM_369
 #Event Script Name
-SCRID_D20R0801_ITEM_369
+SCRID_FLD_ITEM_369
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number

@@ -10,7 +10,7 @@
 #define ZONE_R09R0202_EVC_H
 
 #define R09R0202_CLEANINGM_01              0
-#define R09R0202_FLD_ITEM_01               1
+#define FLD_ITEM_376                       1
 #define R09R0202_SUNGLASSES_01             2
 
 #endif //ZONE_R09R0202_EVC_H
