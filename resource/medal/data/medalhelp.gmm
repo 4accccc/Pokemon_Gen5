@@ -725,12 +725,8 @@
 	</row>
 
 	<row id="MDL_HINT_FIELD_039">
-		<language name="JPN" width="216">のどが　かわいた　ときは
-べんりな　じどうはんばいきを
-つかってみよう</language>
-		<language name="JPN_KANJI" width="216">のどが　渇いた時は
-便利な　自動販売機を
-使ってみよう</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_FIELD_040">
@@ -739,6 +735,20 @@
 	</row>
 
 	<row id="MDL_HINT_FIELD_041">
+		<language name="JPN" width="216">のどが　かわいた　ときは
+べんりな　じどうはんばいきを
+つかってみよう</language>
+		<language name="JPN_KANJI" width="216">のどが　渇いた時は
+便利な　自動販売機を
+使ってみよう</language>
+	</row>
+
+	<row id="MDL_HINT_FIELD_042">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
+	<row id="MDL_HINT_FIELD_043">
 		<language name="JPN" width="216">カナワタウンの　てんしゃだい
 いったい　なんしゅるいの
 しゃりょうが　あるのだろう？</language>
@@ -747,7 +757,7 @@
 車両が　あるのだろう？</language>
 	</row>
 
-	<row id="MDL_HINT_FIELD_042">
+	<row id="MDL_HINT_FIELD_044">
 		<language name="JPN" width="216">イッシュちほうにある
 すべての　はしを
 わたりつくすことが　できるか！？</language>
@@ -756,7 +766,7 @@
 渡りつくすことが　できるか！？</language>
 	</row>
 
-	<row id="MDL_HINT_FIELD_043">
+	<row id="MDL_HINT_FIELD_045">
 		<language name="JPN" width="216">ポケモンの　なかには
 そだてると　すがたが　かわる
 ものが　いる　らしいぞ！</language>
@@ -765,41 +775,41 @@
 ものが　いる　らしいぞ！</language>
 	</row>
 
-	<row id="MDL_HINT_FIELD_044">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_045">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
 	<row id="MDL_HINT_FIELD_046">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_FIELD_047">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
+	<row id="MDL_HINT_FIELD_048">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
+	<row id="MDL_HINT_FIELD_049">
 		<language name="JPN" width="216">とんで　とんで
 とびまくれ！</language>
 		<language name="JPN_KANJI" width="216">飛んで　飛んで
 飛びまくれ！</language>
 	</row>
 
-	<row id="MDL_HINT_FIELD_048">
+	<row id="MDL_HINT_FIELD_050">
 		<language name="JPN" width="216">じゃまする　いわは　ことごとく
 あなに　おとしてやるのだ！</language>
 		<language name="JPN_KANJI" width="216">邪魔する　岩は　ことごとく
 穴に　落としてやるのだ！</language>
 	</row>
 
-	<row id="MDL_HINT_FIELD_049">
+	<row id="MDL_HINT_FIELD_051">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
-	<row id="MDL_HINT_FIELD_050">
+	<row id="MDL_HINT_FIELD_052">
 		<language name="JPN" width="216">２ほんの　ぼうが　さししめす
 まだみぬ　たからを　さがしもとめて
 みぎへ　ひだりへ　ちゅういを　こらせ！</language>
@@ -808,7 +818,7 @@
 右へ　左へ　注意を　こらせ！</language>
 	</row>
 
-	<row id="MDL_HINT_FIELD_051">
+	<row id="MDL_HINT_FIELD_053">
 		<language name="JPN" width="216">おとくな　けいじばんの
 おとくな　じょうほうを
 たくさん　チェックしよう！</language>
@@ -817,36 +827,18 @@
 たくさん　チェックしよう！</language>
 	</row>
 
-	<row id="MDL_HINT_FIELD_052">
+	<row id="MDL_HINT_FIELD_054">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
-	<row id="MDL_HINT_FIELD_053">
+	<row id="MDL_HINT_FIELD_055">
 		<language name="JPN" width="216">なかまになった　ポケモンに
 じぶんだけの　すてきな　なまえを
 かんがえて　なづけてみよう！</language>
 		<language name="JPN_KANJI" width="216">仲間になった　ポケモンに
 自分だけの　素敵な　名前を
 考えて　名付けてみよう！</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_054">
-		<language name="JPN" width="216">おおむかしの　ポケモンが
-きみの　なかまに　なる
-カセキの　ふしぎを　たいけんしよう</language>
-		<language name="JPN_KANJI" width="216">大昔の　ポケモンが
-君の　仲間に　なる
-カセキの　不思議を　体験しよう</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_055">
-		<language name="JPN" width="216">１にちで　どれだけ　たくさんの
-ポケモンを　つかまえられるか
-ちょうせんだ！</language>
-		<language name="JPN_KANJI" width="216">１日で　どれだけ　たくさんの
-ポケモンを　捕まえられるか
-挑戦だ！</language>
 	</row>
 
 	<row id="MDL_HINT_FIELD_056">
@@ -999,8 +991,12 @@
 	</row>
 
 	<row id="MDL_HINT_FIELD_079">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
+		<language name="JPN" width="216">おおむかしの　ポケモンが
+きみの　なかまに　なる
+カセキの　ふしぎを　たいけんしよう</language>
+		<language name="JPN_KANJI" width="216">大昔の　ポケモンが
+君の　仲間に　なる
+カセキの　不思議を　体験しよう</language>
 	</row>
 
 	<row id="MDL_HINT_FIELD_080">
@@ -1009,12 +1005,8 @@
 	</row>
 
 	<row id="MDL_HINT_FIELD_081">
-		<language name="JPN" width="216">パソコンの　ボックス　ひとつが
-いっぱいに　なる　くらい
-ポケモンを　あつめてみよう！</language>
-		<language name="JPN_KANJI" width="216">パソコンの　ボックス　ひとつが
-いっぱいに　なる　くらい
-ポケモンを　集めてみよう！</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_FIELD_082">
@@ -1028,8 +1020,12 @@
 	</row>
 
 	<row id="MDL_HINT_FIELD_084">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
+		<language name="JPN" width="216">パソコンの　ボックス　ひとつが
+いっぱいに　なる　くらい
+ポケモンを　あつめてみよう！</language>
+		<language name="JPN_KANJI" width="216">パソコンの　ボックス　ひとつが
+いっぱいに　なる　くらい
+ポケモンを　集めてみよう！</language>
 	</row>
 
 	<row id="MDL_HINT_FIELD_085">
@@ -1043,6 +1039,21 @@
 	</row>
 
 	<row id="MDL_HINT_FIELD_087">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
+	<row id="MDL_HINT_FIELD_088">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
+	<row id="MDL_HINT_FIELD_089">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
+	<row id="MDL_HINT_FIELD_090">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
@@ -1203,15 +1214,6 @@
 	</row>
 
 	<row id="MDL_HINT_BATTLE_025">
-		<language name="JPN" width="216">１にちで　どれだけ　たくさんの
-けいけんちを　てにいれられるか
-ちょうせんだ！</language>
-		<language name="JPN_KANJI" width="216">１日で　どれだけ　たくさんの
-経験値を　手に入れられるか
-挑戦だ！</language>
-	</row>
-
-	<row id="MDL_HINT_BATTLE_026">
 		<language name="JPN" width="216">ゆれる　くさむら　つちけむり
 なみたつ　すいめん　おちる　かげ
 そこに　なにかが　いるのかも？</language>
@@ -1220,7 +1222,7 @@
 そこに　何かが　いるのかも？</language>
 	</row>
 
-	<row id="MDL_HINT_BATTLE_027">
+	<row id="MDL_HINT_BATTLE_026">
 		<language name="JPN" width="216">ビッグスタジアムと　リトルコート
 スポーツと　ポケモンしょうぶで
 すさまじく　アツい　スポット！</language>
@@ -1229,7 +1231,7 @@
 すさまじく　熱い　スポット！</language>
 	</row>
 
-	<row id="MDL_HINT_BATTLE_028">
+	<row id="MDL_HINT_BATTLE_027">
 		<language name="JPN" width="216">ロイヤルイッシュごう　それは
 けしきをみるか　しょうぶをするか
 かっとうの　たそがれクルーズ！</language>
@@ -1238,111 +1240,111 @@
 かっとうの　たそがれクルーズ！</language>
 	</row>
 
-	<row id="MDL_HINT_BATTLE_029">
+	<row id="MDL_HINT_BATTLE_028">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
-	<row id="MDL_HINT_BATTLE_030">
-		<language name="JPN" width="216">ＷＢＴ
+	<row id="MDL_HINT_BATTLE_029">
+		<language name="JPN" width="216">ＰＷＴ
 レンタルトーナメントで
 ゆうしょう　しよう！</language>
-		<language name="JPN_KANJI" width="216">ＷＢＴ
+		<language name="JPN_KANJI" width="216">ＰＷＴ
 レンタルトーナメントで
+優勝しよう！</language>
+	</row>
+
+	<row id="MDL_HINT_BATTLE_030">
+		<language name="JPN" width="216">ＰＷＴ
+ミックストーナメントで
+ゆうしょう　しよう！</language>
+		<language name="JPN_KANJI" width="216">ＰＷＴ
+ミックストーナメントで
 優勝しよう！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_031">
-		<language name="JPN" width="216">ＷＢＴ
-ミックストーナメントで
+		<language name="JPN" width="216">ＰＷＴ
+イッシュリーダーズトーナメントで
 ゆうしょう　しよう！</language>
-		<language name="JPN_KANJI" width="216">ＷＢＴ
-ミックストーナメントで
+		<language name="JPN_KANJI" width="216">ＰＷＴ
+イッシュリーダーズトーナメントで
 優勝しよう！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_032">
-		<language name="JPN" width="216">ＷＢＴ
-イッシュリーダーズトーナメントで
+		<language name="JPN" width="216">ＰＷＴ
+カントーリーダーズトーナメントで
 ゆうしょう　しよう！</language>
-		<language name="JPN_KANJI" width="216">ＷＢＴ
-イッシュリーダーズトーナメントで
+		<language name="JPN_KANJI" width="216">ＰＷＴ
+カントーリーダーズトーナメントで
 優勝しよう！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_033">
-		<language name="JPN" width="216">ＷＢＴ
-カントーリーダーズトーナメントで
+		<language name="JPN" width="216">ＰＷＴ
+ジョウトリーダーズトーナメントで
 ゆうしょう　しよう！</language>
-		<language name="JPN_KANJI" width="216">ＷＢＴ
-カントーリーダーズトーナメントで
+		<language name="JPN_KANJI" width="216">ＰＷＴ
+ジョウトリーダーズトーナメントで
 優勝しよう！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_034">
-		<language name="JPN" width="216">ＷＢＴ
-ジョウトリーダーズトーナメントで
+		<language name="JPN" width="216">ＰＷＴ
+ホウエンリーダーズトーナメントで
 ゆうしょう　しよう！</language>
-		<language name="JPN_KANJI" width="216">ＷＢＴ
-ジョウトリーダーズトーナメントで
+		<language name="JPN_KANJI" width="216">ＰＷＴ
+ホウエンリーダーズトーナメントで
 優勝しよう！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_035">
-		<language name="JPN" width="216">ＷＢＴ
-ホウエンリーダーズトーナメントで
+		<language name="JPN" width="216">ＰＷＴ
+シンオウリーダーズトーナメントで
 ゆうしょう　しよう！</language>
-		<language name="JPN_KANJI" width="216">ＷＢＴ
-ホウエンリーダーズトーナメントで
+		<language name="JPN_KANJI" width="216">ＰＷＴ
+シンオウリーダーズトーナメントで
 優勝しよう！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_036">
-		<language name="JPN" width="216">ＷＢＴ
-シンオウリーダーズトーナメントで
+		<language name="JPN" width="216">ＰＷＴ
+ワールドリーダーズトーナメントで
 ゆうしょう　しよう！</language>
-		<language name="JPN_KANJI" width="216">ＷＢＴ
-シンオウリーダーズトーナメントで
+		<language name="JPN_KANJI" width="216">ＰＷＴ
+ワールドリーダーズトーナメントで
 優勝しよう！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_037">
-		<language name="JPN" width="216">ＷＢＴ
-ワールドリーダーズトーナメントで
+		<language name="JPN" width="216">ＰＷＴ
+チャンピオンズトーナメントで
 ゆうしょう　しよう！</language>
-		<language name="JPN_KANJI" width="216">ＷＢＴ
-ワールドリーダーズトーナメントで
+		<language name="JPN_KANJI" width="216">ＰＷＴ
+チャンピオンズトーナメントで
 優勝しよう！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_038">
-		<language name="JPN" width="216">ＷＢＴ
-チャンピオンズトーナメントで
+		<language name="JPN" width="216">ＰＷＴ
+レンタルマスタートーナメントで
 ゆうしょう　しよう！</language>
-		<language name="JPN_KANJI" width="216">ＷＢＴ
-チャンピオンズトーナメントで
+		<language name="JPN_KANJI" width="216">ＰＷＴ
+レンタルマスタートーナメントで
 優勝しよう！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_039">
-		<language name="JPN" width="216">ＷＢＴ
-レンタルマスタートーナメントで
+		<language name="JPN" width="216">ＰＷＴ
+ミックスマスタートーナメントで
 ゆうしょう　しよう！</language>
-		<language name="JPN_KANJI" width="216">ＷＢＴ
-レンタルマスタートーナメントで
+		<language name="JPN_KANJI" width="216">ＰＷＴ
+ミックスマスタートーナメントで
 優勝しよう！</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_040">
-		<language name="JPN" width="216">ＷＢＴ
-ミックスマスタートーナメントで
-ゆうしょう　しよう！</language>
-		<language name="JPN_KANJI" width="216">ＷＢＴ
-ミックスマスタートーナメントで
-優勝しよう！</language>
-	</row>
-
-	<row id="MDL_HINT_BATTLE_041">
 		<language name="JPN" width="216">タイプエキスパートトーナメントの
 すべての　タイプの　トーナメントで
 ゆうしょう　しよう！</language>
@@ -1351,7 +1353,7 @@
 優勝しよう！</language>
 	</row>
 
-	<row id="MDL_HINT_BATTLE_042">
+	<row id="MDL_HINT_BATTLE_041">
 		<language name="JPN" width="216">はてなく　つづく　まてんろう
 じぶんの　ちからで
 すすんで　いこう！</language>
@@ -1360,12 +1362,12 @@
 進んで　いこう！</language>
 	</row>
 
-	<row id="MDL_HINT_BATTLE_043">
+	<row id="MDL_HINT_BATTLE_042">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
-	<row id="MDL_HINT_BATTLE_044">
+	<row id="MDL_HINT_BATTLE_043">
 		<language name="JPN" width="216">はてなく　つづく　たいじゅのなか
 じぶんの　ちからで
 すすんで　いこう！</language>
@@ -1374,18 +1376,23 @@
 進んで　行こう！</language>
 	</row>
 
-	<row id="MDL_HINT_BATTLE_045">
+	<row id="MDL_HINT_BATTLE_044">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
-	<row id="MDL_HINT_BATTLE_046">
+	<row id="MDL_HINT_BATTLE_045">
 		<language name="JPN" width="216">むげんダンジョンで
 たたかいに　かって！
 かって！　かちまくれ！</language>
 		<language name="JPN_KANJI" width="216">無限ダンジョンで
 戦いに　勝って！
 勝って！　勝ちまくれ！</language>
+	</row>
+
+	<row id="MDL_HINT_BATTLE_046">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_BATTLE_047">
@@ -1399,65 +1406,6 @@
 	</row>
 
 	<row id="MDL_HINT_BATTLE_049">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_BATTLE_050">
-		<language name="JPN" width="216">むげんダンジョンの
-エリア２から５の　いずれかで
-すべての　トレーナーを　たおせ！</language>
-		<language name="JPN_KANJI" width="216">無限ダンジョンの
-エリア２から５の　いずれかで
-すべての　トレーナーを　倒せ！</language>
-	</row>
-
-	<row id="MDL_HINT_BATTLE_051">
-		<language name="JPN" width="216">むげんダンジョンの
-エリア６から１０の　いずれかで
-すべての　トレーナーを　たおせ！</language>
-		<language name="JPN_KANJI" width="216">無限ダンジョンの
-エリア６から１０の　いずれかで
-すべての　トレーナーを　倒せ！</language>
-	</row>
-
-	<row id="MDL_HINT_BATTLE_052">
-		<language name="JPN" width="216">むげんダンジョンの
-エリア２から５の　いずれかで
-ボストレーナーだけを　たおせ！</language>
-		<language name="JPN_KANJI" width="216">無限ダンジョンの
-エリア２から５の　いずれかで
-ボストレーナーだけを　倒せ！</language>
-	</row>
-
-	<row id="MDL_HINT_BATTLE_053">
-		<language name="JPN" width="216">むげんダンジョンの
-エリア６から１０の　いずれかで
-ボストレーナーだけを　たおせ！</language>
-		<language name="JPN_KANJI" width="216">無限ダンジョンの
-エリア６から１０の　いずれかで
-ボストレーナーだけを　倒せ！</language>
-	</row>
-
-	<row id="MDL_HINT_BATTLE_054">
-		<language name="JPN" width="216">むげんダンジョンの
-エリア２から５の　いずれかを
-１００ほ　いないに　クリアしろ！</language>
-		<language name="JPN_KANJI" width="216">無限ダンジョンの
-エリア２から５の　いずれかを
-１００歩以内に　クリアしろ！</language>
-	</row>
-
-	<row id="MDL_HINT_BATTLE_055">
-		<language name="JPN" width="216">むげんダンジョンの
-エリア６から１０の　いずれかを
-１０００ほ　いないに　クリアしろ！</language>
-		<language name="JPN_KANJI" width="216">無限ダンジョンの
-エリア６から１０の　いずれかを
-１０００歩以内に　クリアしろ！</language>
-	</row>
-
-	<row id="MDL_HINT_BATTLE_056">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
@@ -1531,12 +1479,8 @@
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_011">
-		<language name="JPN" width="216">ミュージカルに　たくさん
-さんかして　めざせ
-でまちファン　１０にん！</language>
-		<language name="JPN_KANJI" width="216">ミュージカルに　たくさん
-参加して　目指せ
-出待ちファン　１０人！</language>
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_012">
@@ -1545,11 +1489,6 @@
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_013">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_APPLICATION_014">
 		<language name="JPN" width="216">ミュージカルグッズを
 ぜんぶ　あつめて
 オシャレに　なろう！</language>
@@ -1558,13 +1497,18 @@
 オシャレに　なろう！</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_015">
+	<row id="MDL_HINT_APPLICATION_014">
 		<language name="JPN" width="216">ともだちコードを　こうかんすれば
 たいせんも　こうかんも
 さらに　べんりになる！</language>
 		<language name="JPN_KANJI" width="216">ともだちコードを　交換すれば
 通信対戦も　通信交換も
 さらに　便利になる！</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_015">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_016">
@@ -1578,11 +1522,6 @@
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_018">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_APPLICATION_019">
 		<language name="JPN" width="216">ともだちと　ポケモンの
 タマゴを　もちよって
 ぐるぐるまわして　こうかんしよう！</language>
@@ -1591,14 +1530,14 @@
 ぐるぐる回して　交換しよう！</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_020">
+	<row id="MDL_HINT_APPLICATION_019">
 		<language name="JPN" width="216">めと　めが　あったら
 フィーリングチェック！</language>
 		<language name="JPN_KANJI" width="216">目と　目が　合ったら
 フィーリングチェック！</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_021">
+	<row id="MDL_HINT_APPLICATION_020">
 		<language name="JPN" width="216">こうとくてんを　めざして
 いろいろな　ともだちと
 フィーリングチェックを　しよう！</language>
@@ -1607,13 +1546,18 @@
 フィーリングチェックを　しよう！</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_022">
+	<row id="MDL_HINT_APPLICATION_021">
 		<language name="JPN" width="216">ジョインアベニューで
 たくさんの　おきゃくさんを
 あんない　しよう！</language>
 		<language name="JPN_KANJI" width="216">ジョインアベニューで
 たくさんの　お客さんを
 案内しよう！</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_022">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_023">
@@ -1627,17 +1571,17 @@
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_025">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_APPLICATION_026">
 		<language name="JPN" width="216">ジョインアベニューで
 たくさんの　おみせを
 つくってみよう！</language>
 		<language name="JPN_KANJI" width="216">ジョインアベニューで
 たくさんの　お店を
 作ってみよう！</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_026">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_027">
@@ -1651,17 +1595,17 @@
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_029">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_APPLICATION_030">
 		<language name="JPN" width="216">ジョインアベニューで
 おきゃくさんを　まねきいれると
 おみやげが　もらえるかも！</language>
 		<language name="JPN_KANJI" width="216">ジョインアベニューで
 お客さんを　招き入れると
 お土産が　もらえるかも！</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_030">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_031">
@@ -1680,17 +1624,17 @@
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_034">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_APPLICATION_035">
 		<language name="JPN" width="216">ともだちと　あつまって
 ライブキャスターの
 ミニゲームで　あそぼう！</language>
 		<language name="JPN_KANJI" width="216">友達と　集まって
 ライブキャスターの
 ミニゲームで　遊ぼう！</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_035">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_036">
@@ -1704,17 +1648,17 @@
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_038">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_APPLICATION_039">
 		<language name="JPN" width="216">ライブキャスターの
 ミニゲームで　ふうせんを
 バンバン　わろう！</language>
 		<language name="JPN_KANJI" width="216">ライブキャスターの
 ミニゲームで　風船を
 バンバン　割ろう！</language>
+	</row>
+
+	<row id="MDL_HINT_APPLICATION_039">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_040">
@@ -1788,11 +1732,6 @@
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_054">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_APPLICATION_055">
 		<language name="JPN" width="216">ポケウッドで　とることの　できる
 すべての　えいがを
 とりつくせ！</language>
@@ -1801,7 +1740,7 @@
 撮り尽くせ！</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_056">
+	<row id="MDL_HINT_APPLICATION_055">
 		<language name="JPN" width="216">えいがを　とるなら　やっぱり
 うれる　えいが！　
 こうぎょうしゅうにゅうを　かせげ！</language>
@@ -1810,7 +1749,7 @@
 興行収入を　稼げ！</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_057">
+	<row id="MDL_HINT_APPLICATION_056">
 		<language name="JPN" width="216">おうどうの　えいがを
 たくさん　とって　めざせ
 めいさくえいが　かんとく！</language>
@@ -1819,7 +1758,7 @@
 名作映画監督！</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_058">
+	<row id="MDL_HINT_APPLICATION_057">
 		<language name="JPN" width="216">だいほんの　ななめうえを　いく
 ヘンテコな　えいがを　とって
 カルトムービー　デビュー！</language>
@@ -1828,7 +1767,7 @@
 カルトムービー　デビュー！</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_059">
+	<row id="MDL_HINT_APPLICATION_058">
 		<language name="JPN" width="216">ヘンテコな　えいがを
 たくさん　とって　めざせ
 カルトえいが　かんとく！</language>
@@ -1837,31 +1776,31 @@
 カルト映画監督！</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_060">
+	<row id="MDL_HINT_APPLICATION_059">
 		<language name="JPN" width="216">おおにんずうで　あつまって
 フェスミッションに　さんかしよう！</language>
 		<language name="JPN_KANJI" width="216">大人数で　集まって
 フェスミッションに　参加しよう！</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_061">
+	<row id="MDL_HINT_APPLICATION_060">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_062">
+	<row id="MDL_HINT_APPLICATION_061">
 		<language name="JPN" width="216">フェスミッションで
 ハイスコアを　めざそう！</language>
 		<language name="JPN_KANJI" width="216">フェスミッションで
 ハイスコアを　目指そう！</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_063">
+	<row id="MDL_HINT_APPLICATION_062">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_064">
+	<row id="MDL_HINT_APPLICATION_063">
 		<language name="JPN" width="216">ハイリンクへ　いき
 フェスミッションを
 かいさい　しよう！</language>
@@ -1870,12 +1809,12 @@
 開催しよう！</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_065">
+	<row id="MDL_HINT_APPLICATION_064">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_066">
+	<row id="MDL_HINT_APPLICATION_065">
 		<language name="JPN" width="216">かいさい　された
 フェスミッションに
 さんか　しよう！</language>
@@ -1884,12 +1823,12 @@
 参加　しよう！</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_067">
+	<row id="MDL_HINT_APPLICATION_066">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_068">
+	<row id="MDL_HINT_APPLICATION_067">
 		<language name="JPN" width="216">みんなで　きょうりょくして
 フェスミッションを
 クリア　しよう！</language>
@@ -1898,17 +1837,17 @@
 クリア　しよう！</language>
 	</row>
 
+	<row id="MDL_HINT_APPLICATION_068">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
 	<row id="MDL_HINT_APPLICATION_069">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
 	<row id="MDL_HINT_APPLICATION_070">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_APPLICATION_071">
 		<language name="JPN" width="216">ゲームシンク　それは
 ゆめと　げんじつを　つなげる
 すてきな　テクノロジー</language>
@@ -1917,7 +1856,7 @@
 素敵な　テクノロジー</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_072">
+	<row id="MDL_HINT_APPLICATION_071">
 		<language name="JPN" width="216">おもいでリンク　それは
 かこと　みらいを　つなげる
 ふしぎな　ノスタルジー</language>
@@ -1926,17 +1865,44 @@
 不思議な　ノスタルジー</language>
 	</row>
 
+	<row id="MDL_HINT_APPLICATION_072">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
 	<row id="MDL_HINT_APPLICATION_073">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
-	<row id="MDL_HINT_APPLICATION_074">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
+	<row id="MDL_HINT_MISSION_001">
+		<language name="JPN" width="216">１にちの　うちに　５０ひき　もの
+ポケモンを　つかまえられるか
+ちょうせんだ！</language>
+		<language name="JPN_KANJI" width="216">１日の　うちに　５０匹　もの
+ポケモンを　捕まえられるか
+挑戦だ！</language>
 	</row>
 
-	<row id="MDL_HINT_MISSION_001">
+	<row id="MDL_HINT_MISSION_002">
+		<language name="JPN" width="216">１にちの　うちに　１００００００もの
+けいけんちを　てにいれられるか
+ちょうせんだ！</language>
+		<language name="JPN_KANJI" width="216">１日の　うちに　１００００００もの
+経験値を　手に入れられるか
+挑戦だ！</language>
+	</row>
+
+	<row id="MDL_HINT_MISSION_003">
+		<language name="JPN" width="216">ミュージカルに　たくさん
+さんかして　めざせ
+でまちファン　１０にん！</language>
+		<language name="JPN_KANJI" width="216">ミュージカルに　たくさん
+参加して　目指せ
+出待ちファン　１０人！</language>
+	</row>
+
+	<row id="MDL_HINT_MISSION_004">
 		<language name="JPN" width="216">ノーマルタイプの　ポケモンだけで
 チャンピオンに　かち
 でんどういりを　はたせ！</language>
@@ -1945,7 +1911,7 @@
 殿堂入りを　果たせ！</language>
 	</row>
 
-	<row id="MDL_HINT_MISSION_002">
+	<row id="MDL_HINT_MISSION_005">
 		<language name="JPN" width="216">ほのおタイプの　ポケモンだけで
 チャンピオンに　かち
 でんどういりを　はたせ！</language>
@@ -1954,7 +1920,7 @@
 殿堂入りを　果たせ！</language>
 	</row>
 
-	<row id="MDL_HINT_MISSION_003">
+	<row id="MDL_HINT_MISSION_006">
 		<language name="JPN" width="216">みずタイプの　ポケモンだけで
 チャンピオンに　かち
 でんどういりを　はたせ！</language>
@@ -1963,7 +1929,7 @@
 殿堂入りを　果たせ！</language>
 	</row>
 
-	<row id="MDL_HINT_MISSION_004">
+	<row id="MDL_HINT_MISSION_007">
 		<language name="JPN" width="216">でんきタイプの　ポケモンだけで
 チャンピオンに　かち
 でんどういりを　はたせ！</language>
@@ -1972,7 +1938,7 @@
 殿堂入りを　果たせ！</language>
 	</row>
 
-	<row id="MDL_HINT_MISSION_005">
+	<row id="MDL_HINT_MISSION_008">
 		<language name="JPN" width="216">くさタイプの　ポケモンだけで
 チャンピオンに　かち
 でんどういりを　はたせ！</language>
@@ -1981,7 +1947,7 @@
 殿堂入りを　果たせ！</language>
 	</row>
 
-	<row id="MDL_HINT_MISSION_006">
+	<row id="MDL_HINT_MISSION_009">
 		<language name="JPN" width="216">こおりタイプの　ポケモンだけで
 チャンピオンに　かち
 でんどういりを　はたせ！</language>
@@ -1990,7 +1956,7 @@
 殿堂入りを　果たせ！</language>
 	</row>
 
-	<row id="MDL_HINT_MISSION_007">
+	<row id="MDL_HINT_MISSION_010">
 		<language name="JPN" width="216">かくとうタイプの　ポケモンだけで
 チャンピオンに　かち
 でんどういりを　はたせ！</language>
@@ -1999,7 +1965,7 @@
 殿堂入りを　果たせ！</language>
 	</row>
 
-	<row id="MDL_HINT_MISSION_008">
+	<row id="MDL_HINT_MISSION_011">
 		<language name="JPN" width="216">どくタイプの　ポケモンだけで
 チャンピオンに　かち
 でんどういりを　はたせ！</language>
@@ -2008,7 +1974,7 @@
 殿堂入りを　果たせ！</language>
 	</row>
 
-	<row id="MDL_HINT_MISSION_009">
+	<row id="MDL_HINT_MISSION_012">
 		<language name="JPN" width="216">じめんタイプの　ポケモンだけで
 チャンピオンに　かち
 でんどういりを　はたせ！</language>
@@ -2017,7 +1983,7 @@
 殿堂入りを　果たせ！</language>
 	</row>
 
-	<row id="MDL_HINT_MISSION_010">
+	<row id="MDL_HINT_MISSION_013">
 		<language name="JPN" width="216">ひこうタイプの　ポケモンだけで
 チャンピオンに　かち
 でんどういりを　はたせ！</language>
@@ -2026,7 +1992,7 @@
 殿堂入りを　果たせ！</language>
 	</row>
 
-	<row id="MDL_HINT_MISSION_011">
+	<row id="MDL_HINT_MISSION_014">
 		<language name="JPN" width="216">エスパータイプの　ポケモンだけで
 チャンピオンに　かち
 でんどういりを　はたせ！</language>
@@ -2035,7 +2001,7 @@
 殿堂入りを　果たせ！</language>
 	</row>
 
-	<row id="MDL_HINT_MISSION_012">
+	<row id="MDL_HINT_MISSION_015">
 		<language name="JPN" width="216">むしタイプの　ポケモンだけで
 チャンピオンに　かち
 でんどういりを　はたせ！</language>
@@ -2044,7 +2010,7 @@
 殿堂入りを　果たせ！</language>
 	</row>
 
-	<row id="MDL_HINT_MISSION_013">
+	<row id="MDL_HINT_MISSION_016">
 		<language name="JPN" width="216">いわタイプの　ポケモンだけで
 チャンピオンに　かち
 でんどういりを　はたせ！</language>
@@ -2053,7 +2019,7 @@
 殿堂入りを　果たせ！</language>
 	</row>
 
-	<row id="MDL_HINT_MISSION_014">
+	<row id="MDL_HINT_MISSION_017">
 		<language name="JPN" width="216">ゴーストタイプの　ポケモンだけで
 チャンピオンに　かち
 でんどういりを　はたせ！</language>
@@ -2062,7 +2028,7 @@
 殿堂入りを　果たせ！</language>
 	</row>
 
-	<row id="MDL_HINT_MISSION_015">
+	<row id="MDL_HINT_MISSION_018">
 		<language name="JPN" width="216">ドラゴンタイプの　ポケモンだけで
 チャンピオンに　かち
 でんどういりを　はたせ！</language>
@@ -2071,7 +2037,7 @@
 殿堂入りを　果たせ！</language>
 	</row>
 
-	<row id="MDL_HINT_MISSION_016">
+	<row id="MDL_HINT_MISSION_019">
 		<language name="JPN" width="216">あくタイプの　ポケモンだけで
 チャンピオンに　かち
 でんどういりを　はたせ！</language>
@@ -2080,7 +2046,7 @@
 殿堂入りを　果たせ！</language>
 	</row>
 
-	<row id="MDL_HINT_MISSION_017">
+	<row id="MDL_HINT_MISSION_020">
 		<language name="JPN" width="216">はがねタイプの　ポケモンだけで
 チャンピオンに　かち
 でんどういりを　はたせ！</language>
@@ -2089,7 +2055,7 @@
 殿堂入りを　果たせ！</language>
 	</row>
 
-	<row id="MDL_HINT_MISSION_018">
+	<row id="MDL_HINT_MISSION_021">
 		<language name="JPN" width="216">てもちポケモン　１ひきだけで
 チャンピオンに　かち
 でんどういりを　はたせ！</language>
@@ -2098,7 +2064,61 @@
 殿堂入りを　果たせ！</language>
 	</row>
 
-	<row id="MDL_HINT_MISSION_019">
+	<row id="MDL_HINT_MISSION_022">
+		<language name="JPN" width="216">むげんダンジョンの
+エリア２から５の　いずれかで
+すべての　トレーナーを　たおせ！</language>
+		<language name="JPN_KANJI" width="216">無限ダンジョンの
+エリア２から５の　いずれかで
+すべての　トレーナーを　倒せ！</language>
+	</row>
+
+	<row id="MDL_HINT_MISSION_023">
+		<language name="JPN" width="216">むげんダンジョンの
+エリア６から１０の　いずれかで
+すべての　トレーナーを　たおせ！</language>
+		<language name="JPN_KANJI" width="216">無限ダンジョンの
+エリア６から１０の　いずれかで
+すべての　トレーナーを　倒せ！</language>
+	</row>
+
+	<row id="MDL_HINT_MISSION_024">
+		<language name="JPN" width="216">むげんダンジョンの
+エリア２から５の　いずれかを
+せんとう　３かい　いないで　クリア！</language>
+		<language name="JPN_KANJI" width="216">無限ダンジョンの
+エリア２から５の　いずれかを
+戦闘回数　３回以内で　クリアしろ！</language>
+	</row>
+
+	<row id="MDL_HINT_MISSION_025">
+		<language name="JPN" width="216">むげんダンジョンの
+エリア６から１０の　いずれかを
+せんとう　５かい　いないで　クリア！</language>
+		<language name="JPN_KANJI" width="216">無限ダンジョンの
+エリア６から１０の　いずれかを
+戦闘回数　５回以内で　クリアしろ！</language>
+	</row>
+
+	<row id="MDL_HINT_MISSION_026">
+		<language name="JPN" width="216">むげんダンジョンの
+エリア２から５の　いずれかを
+１００ほ　いないに　クリアしろ！</language>
+		<language name="JPN_KANJI" width="216">無限ダンジョンの
+エリア２から５の　いずれかを
+１００歩以内に　クリアしろ！</language>
+	</row>
+
+	<row id="MDL_HINT_MISSION_027">
+		<language name="JPN" width="216">むげんダンジョンの
+エリア６から１０の　いずれかを
+１０００ほ　いないに　クリアしろ！</language>
+		<language name="JPN_KANJI" width="216">無限ダンジョンの
+エリア６から１０の　いずれかを
+１０００歩以内に　クリアしろ！</language>
+	</row>
+
+	<row id="MDL_HINT_MISSION_028">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
@@ -2129,21 +2149,6 @@
 	</row>
 
 	<row id="MDL_HINT_SPECIAL_007">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_088">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_089">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_090">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
@@ -2184,11 +2189,6 @@
 	</row>
 
 	<row id="MDL_HINT_FIELD_098">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_099">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>

@@ -22,18 +22,14 @@ u32 MedalSortList[] = {
     MDLID_DAYMAX_EXP_LV1,	//ＥＸＰみりおねあ
     MDLID_PKWD_SERIES5,	//ＳＦえいがまいすたー
     MDLID_PKWD_SERIES3,	//ＵＦＯえいがますたー
-    MDLID_FIELD_DUMMY_06,	//あきめだる
-    MDLID_FIELD_DUMMY_09,	//あきめだる
-    MDLID_FIELD_DUMMY_07,	//あきめだる
-    MDLID_FIELD_DUMMY_08,	//あきめだる
-    MDLID_FIELD_DUMMY_10,	//あきめだる
-    MDLID_FIELD_DUMMY_11,	//あきめだる
-    MDLID_FIELD_DUMMY_05,	//あきめだる
-    MDLID_FIELD_DUMMY_04,	//あきめだる
     MDLID_FIELD_DUMMY_03,	//あきめだる
-    MDLID_FIELD_DUMMY_02,	//あきめだる
     MDLID_FIELD_DUMMY_01,	//あきめだる
-    MDLID_FIELD_DUMMY_12,	//あきめだる
+    MDLID_FIELD_DUMMY_05,	//あきめだる
+    MDLID_FIELD_DUMMY_06,	//あきめだる
+    MDLID_FIELD_DUMMY_07,	//あきめだる
+    MDLID_FIELD_DUMMY_04,	//あきめだる
+    MDLID_FIELD_DUMMY_02,	//あきめだる
+    MDLID_FIELD_DUMMY_08,	//あきめだる
     MDLID_COMPLETE_AKU,	//あくこれくたー
     MDLID_CHAMPION_AKU,	//あくちゃんぷ
     MDLID_FIELD_COMPLETE,	//あどべんちゃーきんぐ
@@ -45,6 +41,7 @@ u32 MedalSortList[] = {
     MDLID_FISHING_LV2,	//いいつりびと
     MDLID_ISEKI,	//いせきまいすたー
     MDLID_ARRIVAL_ALL,	//いっしゅいっしゅう
+    MDLID_COMPLETE_ISSHU,	//いっしゅこれくたー
     MDLID_WBT_ISSHU,	//いっしゅさいきょう
     MDLID_FISHING_MAX,	//いれぐいふぃっしゃー
     MDLID_COMPLETE_IWA,	//いわこれくたー
@@ -73,6 +70,7 @@ u32 MedalSortList[] = {
     MDLID_FES_HOLD_LV2,	//かいさいＬＶ２
     MDLID_PKWD_SERIES4,	//かいじゅうまいすたー
     MDLID_PREMIUM_BALL_LV1,	//かいものじょうず
+    MDLID_KAODASHI,	//かおだしめもりある
     MDLID_KEMONOMICHI,	//かくしあなのたつじん
     MDLID_COMPLETE_KAKUTOU,	//かくとうこれくたー
     MDLID_CHAMPION_KAKUTOU,	//かくとうちゃんぷ
@@ -87,6 +85,7 @@ u32 MedalSortList[] = {
     MDLID_COMM_TRADE_LV3,	//がっちりとれーど
     MDLID_PKWD_BOXOFFICE,	//がっぽりむーびー
     MDLID_REPORT_MAX,	//きせきのぺんさき
+    MDLID_DAYMAX_CAPTURE_LV1,	//きゃぷちゃーきんぐ
     MDLID_RESORT_GUID_CNT_LV4,	//きんぐおぶがいど
     MDLID_RESORT_SHOP_MAKE_CNT_LV4,	//きんぐおぶしょっぷ
     MDLID_RESORT_SHOP_PRESENT_CNT_LV4,	//きんぐおぶすーべにあ
@@ -131,6 +130,7 @@ u32 MedalSortList[] = {
     MDLID_WBT_CHAMPION,	//せかいさいきょう
     MDLID_REPORT_LV2,	//せかせかれぽーたー
     MDLID_SHOPPING_MONEY_LV1,	//ぜいたくかすたまー
+    MDLID_COMPLETE_ZENKOKU,	//ぜんこくこれくたー
     MDLID_MUGEN_ALL_WIN_LV1,	//ぜんぬきいーじー
     MDLID_MUGEN_ALL_WIN_LV2,	//ぜんぬきますたー
     MDLID_SODATEYA_CNT_LV1,	//そだてやまにあ
@@ -205,6 +205,7 @@ u32 MedalSortList[] = {
     MDLID_CTVT_BALLOON_LV4,	//ばるーんかたすとろふ
     MDLID_PKWD_SERIES12,	//ひーろーだいだんえん
     MDLID_PKWD_SERIES1,	//ひーろーのはながた
+    MDLID_HEAD,	//ひうんばんちょう
     MDLID_COMPLETE_HIKOU,	//ひこうこれくたー
     MDLID_CHAMPION_HIKOU,	//ひこうちゃんぷ
     MDLID_CYCLE_LV1,	//びぎなーつーりんぐ
@@ -265,6 +266,5 @@ u32 MedalSortList[] = {
     MDLID_FRIEND_CODE_LV4,	//わーるどこねくしょん
     MDLID_COMM_TRADE_LV4,	//わらしべちょうじゃ
     MDLID_LONELY_CHAMPION,	//わんあんどおんりー
-    MDLID_DAYMAX_CAPTURE_LV1,	//わんでーきゃぷちゃー
     MDLID_VENDOR_ATARI,	//わんもあどりんく
 };

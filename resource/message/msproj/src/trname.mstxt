@@ -25423,4 +25423,104 @@
 				Time="2011-11-21T04:08:10" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="boss_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-22T01:23:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-22T01:23:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-22T01:23:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-22T01:23:14" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="boss_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-22T12:41:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-22T12:41:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-22T12:41:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-22T12:41:50" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="boss_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-22T12:41:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-22T12:41:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-22T12:41:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-22T12:41:50" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="boss_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-22T12:41:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-22T12:41:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-22T12:41:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-22T12:41:50" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>
