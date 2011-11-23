@@ -54,7 +54,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -118,7 +118,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -191,7 +191,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -262,7 +262,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -330,7 +330,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -393,7 +393,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -475,7 +475,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -546,22 +546,26 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_drill_sel_ans_09">
+		Label="resort_drill_sel_ans_09"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>マーケットでは
 ぼうけんに　やくだつ　しなものを▽
-やすく　かうことが　できます▼</Text>
+やすく　かうことが　できます▼
+なかには　フレンドリィショップでは
+てにはいらない　どうぐを▽
+しいれて　くるなんてことも……？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-15T10:33:09" />
+				Time="2011-11-23T12:41:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -571,10 +575,13 @@
 			Language="JPN_KANJI">
 			<Text>マーケットでは
 ぼうけんに　やくだつ　しなものを▽
-やすく　かうことが　できます▼</Text>
+やすく　かうことが　できます▼
+なかには　フレンドリィショップでは
+てにはいらない　どうぐを▽
+しいれて　くるなんてことも……？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-15T10:36:45" />
+				Time="2011-11-23T12:41:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -587,17 +594,27 @@
 				User="shimoyamada:W00184"
 				Time="2011-11-05T10:39:52" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_drill_sel_ans_10">
+		Label="resort_drill_sel_ans_10"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>くじやでは　１にち　１かいの
 ちゅうせんに　あたると▽
-ごうか　けいひんが　もらえます▼</Text>
+ごうか　けいひんが　もらえます▼
+１とうは　なんと　マスターボールが
+あたります▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-15T10:33:25" />
+				Time="2011-11-23T12:43:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -607,10 +624,12 @@
 			Language="JPN_KANJI">
 			<Text>くじやでは　１にち　１かいの
 ちゅうせんに　あたると▽
-ごうか　けいひんが　もらえます▼</Text>
+ごうか　けいひんが　もらえます▼
+１とうは　なんと　マスターボールが
+あたります▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-15T10:36:45" />
+				Time="2011-11-23T12:43:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -623,16 +642,24 @@
 				User="shimoyamada:W00184"
 				Time="2011-11-05T10:47:20" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_drill_sel_ans_11">
+		Label="resort_drill_sel_ans_11"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>はなや　では
 きのみを　かうことが　できます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-15T10:33:31" />
+				Time="2011-11-23T12:43:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -657,9 +684,17 @@
 				User="shimoyamada:W00184"
 				Time="2011-11-05T10:49:27" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_drill_sel_ans_12">
+		Label="resort_drill_sel_ans_12"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ほいくじょでは
@@ -668,7 +703,7 @@
 ふか　させることが　できます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-15T10:36:03" />
+				Time="2011-11-23T12:44:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -695,9 +730,17 @@
 				User="shimoyamada:W00184"
 				Time="2011-11-05T10:49:33" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_drill_sel_ans_13">
+		Label="resort_drill_sel_ans_13"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>どうじょうでは
@@ -735,9 +778,17 @@
 				User="shimoyamada:W00184"
 				Time="2011-11-05T10:48:30" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_drill_sel_ans_14">
+		Label="resort_drill_sel_ans_14"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ふるどうぐや　では
@@ -773,9 +824,17 @@
 				User="shimoyamada:W00184"
 				Time="2011-11-05T10:48:38" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_drill_sel_ans_15">
+		Label="resort_drill_sel_ans_15"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>カフェ　では
@@ -817,9 +876,17 @@
 				User="shimoyamada:W00184"
 				Time="2011-11-05T10:48:44" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_drill_sel_ans_16">
+		Label="resort_drill_sel_ans_16"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>びようしつ　では
@@ -857,9 +924,17 @@
 				User="shimoyamada:W00184"
 				Time="2011-11-05T10:48:50" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_drill_sel_ans_17">
+		Label="resort_drill_sel_ans_17"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:ResortTown ]で　たてられる
@@ -869,10 +944,13 @@
 おみせが　たてられます▼
 おみせに　ひとを　あんないして
 にんきを　あげると　ランクアップして▽
-おみせは　おおきく　なります▼</Text>
+おみせは　おおきく　なります▼
+また　だい２ひしょに　はなしかけると
+はってん　しやすい　おみせを▽
+アドバイスして　くれますよ▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-15T10:35:01" />
+				Time="2011-11-23T12:34:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -887,10 +965,13 @@
 おみせが　たてられます▼
 おみせに　ひとを　あんないして
 にんきを　あげると　ランクアップして▽
-おみせは　おおきく　なります▼</Text>
+おみせは　おおきく　なります▼
+また　だい２ひしょに　はなしかけると
+はってん　しやすい　おみせを▽
+アドバイスして　くれますよ▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-15T10:36:45" />
+				Time="2011-11-23T12:34:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -906,9 +987,17 @@
 				User="shimoyamada:W00184"
 				Time="2011-11-05T11:46:11" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_drill_sel_ans_19">
+		Label="resort_drill_sel_ans_19"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:ResortTown ]で　たてられる
@@ -918,10 +1007,13 @@
 おみせが　たてられます▼
 おみせに　ひとを　あんないして
 にんきを　あげると　ランクアップして▽
-おみせは　おおきく　なります▼</Text>
+おみせは　おおきく　なります▼
+また　だい２ひしょに　はなしかけると
+はってん　しやすい　おみせを▽
+アドバイスして　くれますよ▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-15T10:35:45" />
+				Time="2011-11-23T12:35:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -936,10 +1028,13 @@
 おみせが　たてられます▼
 おみせに　ひとを　あんないして
 にんきを　あげると　ランクアップして▽
-おみせは　おおきく　なります▼</Text>
+おみせは　おおきく　なります▼
+また　だい２ひしょに　はなしかけると
+はってん　しやすい　おみせを▽
+アドバイスして　くれますよ▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-15T10:36:45" />
+				Time="2011-11-23T12:35:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -955,9 +1050,17 @@
 				User="shimoyamada:W00184"
 				Time="2011-11-05T11:46:23" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_drill_sel_ans_18">
+		Label="resort_drill_sel_ans_18"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おみせに　ついて
@@ -989,6 +1092,13 @@
 				User="shimoyamada:W00184"
 				Time="2011-11-05T11:45:41" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="resort_drill_sel_ans_07"
@@ -1028,7 +1138,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1075,7 +1185,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1122,7 +1232,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1169,7 +1279,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1216,7 +1326,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1263,7 +1373,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1310,7 +1420,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1349,6 +1459,13 @@
 				User="shimoyamada:W00184"
 				Time="2011-11-05T12:11:06" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="resort_drill_sel_08"
@@ -1391,7 +1508,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1438,7 +1555,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1477,6 +1594,13 @@
 				User="shimoyamada:W00184"
 				Time="2011-11-05T12:10:58" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="resort_drill_sel_11"
@@ -1511,6 +1635,13 @@
 				User="shimoyamada:W00184"
 				Time="2011-11-05T12:11:15" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="resort_drill_sel_12"
@@ -1545,6 +1676,13 @@
 				User="shimoyamada:W00184"
 				Time="2011-11-05T12:11:15" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="resort_drill_sel_13"
@@ -1579,6 +1717,13 @@
 				User="shimoyamada:W00184"
 				Time="2011-11-05T12:11:15" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="resort_drill_sel_14"
@@ -1613,6 +1758,13 @@
 				User="shimoyamada:W00184"
 				Time="2011-11-05T12:11:15" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="resort_drill_sel_15"
@@ -1647,6 +1799,13 @@
 				User="shimoyamada:W00184"
 				Time="2011-11-05T12:11:15" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="resort_drill_sel_16"
@@ -1681,6 +1840,13 @@
 				User="shimoyamada:W00184"
 				Time="2011-11-05T12:11:15" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="resort_drill_sel_17"
@@ -1715,6 +1881,13 @@
 				User="shimoyamada:W00184"
 				Time="2011-11-05T12:11:15" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="resort_drill_sel_18"
@@ -1749,6 +1922,13 @@
 				User="shimoyamada:W00184"
 				Time="2011-11-05T12:11:15" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="resort_prize_owner_greet_01"
@@ -1786,7 +1966,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1828,7 +2008,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1870,7 +2050,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1912,7 +2092,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1954,7 +2134,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2003,7 +2183,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2056,7 +2236,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2109,7 +2289,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2183,7 +2363,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2244,7 +2424,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2305,7 +2485,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2378,7 +2558,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2447,7 +2627,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2489,7 +2669,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2531,7 +2711,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2573,7 +2753,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2615,7 +2795,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2657,7 +2837,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2710,7 +2890,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2768,7 +2948,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2781,12 +2961,17 @@
 			Language="JPN">
 			<Text>[Name:ResortGreet Idx="1" ]
 [Name:TrainerName ]です！▼
-パソコンを　てばやく　
-あつかうことが　できます▼
+データ　せいりなら　
+まかせて　ください▼
+パソコンの　ボックスせいり！
+レコードランキング▽
+ひしょの　やくわりの　こうたい▽
+おみせの　ならびかえ▽
+なんでも　せいり　しますので▽
 わたしに　はなしかけて　ださいね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T05:26:24" />
+				User="shimoyamada:W00184"
+				Time="2011-11-23T12:28:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2796,12 +2981,17 @@
 			Language="JPN_KANJI">
 			<Text>[Name:ResortGreet Idx="1" ]
 [Name:TrainerName ]です！▼
-パソコンを　てばやく　
-扱うことが　できます▼
+データ　整理なら　
+まかせて　ください▼
+パソコンの　ボックス整理
+レコードランキング▽
+秘書の　役割の　交代▽
+お店の　並び替え▽
+なんでも　整理　しますので▽
 わたしに　話しかけて　ださいね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T05:26:32" />
+				User="shimoyamada:W00184"
+				Time="2011-11-23T12:30:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2825,7 +3015,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2880,7 +3070,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2935,7 +3125,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2990,7 +3180,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3045,7 +3235,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#0080c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
