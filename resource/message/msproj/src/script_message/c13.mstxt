@@ -63,7 +63,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#008080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -188,7 +188,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#008080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2057,6 +2057,206 @@
 				User="matsumiya:W00224"
 				Time="2011-11-10T05:35:00" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c13_swleader2_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホミカ『ほら！▼
+いちど　しっぱい　したぐらいで
+そんなに　きをおとさない！▼
+せんちょうを　やりつつ
+また　チャレンジすれば　いいでしょ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-23T12:41:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-23T12:40:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホミカ『ほら！▼
+いちど　しっぱい　したぐらいで
+そんなに　きをおとさない！▼
+せんちょうを　やりつつ
+また　チャレンジすれば　いいでしょ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-23T12:45:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-23T12:45:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ポケウッドチュートリアル後
+・posイベント
+　GRIDX＝239、GRIDZ＝669～671</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-23T12:40:56" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER2
+ジムリーダー・ホミカ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-23T12:39:30" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c13_pilot_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんちょう『おや？　きみは
+ぼくの　えいがちょうせんに▽
+はんたい　だったのでは？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-23T12:42:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-23T12:41:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>せんちょう『おや？　きみは
+ぼくの　えいがちょうせんに▽
+はんたい　だったのでは？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-23T12:45:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-23T12:45:57" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>PILOT
+船長</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-23T12:39:37" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c13_swleader2_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホミカ『なんで？▼
+あたしが　おこってたのは
+せんちょうの　しごとを　しないと▽
+こまる　ひとが　いるのに！　ってこと▼
+めいわく　かけないかぎり
+やりたいことを　とめたら　ダメじゃん▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-23T12:44:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-23T12:42:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホミカ『なんで？▼
+あたしが　おこってたのは
+せんちょうの　しごとを　しないと▽
+こまる　ひとが　いるのに！　ってこと▼
+めいわく　かけないかぎり
+やりたいことを　とめたら　ダメじゃん▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-23T12:45:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-23T12:45:57" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER2
+ジムリーダー・ホミカ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-23T12:42:45" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c13_pilot_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんちょう『きみは　すごいな▼
+そうだね　せんちょうとして
+ぜんりょくを　つくしますよ！▼　</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-23T12:45:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-23T12:45:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>せんちょう『きみは　すごいな▼
+そうだね　せんちょうとして
+ぜんりょくを　つくしますよ！▼　</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-23T12:45:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-23T12:45:57" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Character">
+			<Text>PILOT
+船長</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-23T12:45:18" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c13_sign1_01"
