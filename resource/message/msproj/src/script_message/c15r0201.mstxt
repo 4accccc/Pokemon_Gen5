@@ -6,12 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここはな　セレブな　じょゆう
+			<Text>ヘヘヘ………
+ここはなあ　セレブな　じょゆう▽
 せんようの　がくや　なんだぜ▼
-……　……　きに　なるだろ</Text>
+……　……きに　なるだろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:33:45" />
+				Time="2011-11-23T08:47:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -19,12 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここはな　セレブな　女優
+			<Text>へへへ……
+ここはな　セレブな　女優▽
 専用の　楽屋　なんだぜ▼
-……　……　気に　なるだろ</Text>
+……　……気に　なるだろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:33:52" />
+				Time="2011-11-23T08:47:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -55,10 +57,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]さん！
-いつも　おつかれさまです！</Text>
+いつも　おつかれさまです！▼
+わたくしも　しっかり　けいびに
+いそしんで　おります！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T08:13:12" />
+				Time="2011-11-23T08:46:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -67,10 +71,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]さん！
-いつも　お疲れさまです！</Text>
+いつも　お疲れ様です！▼
+わたくしも　しっかり　警備に
+勤しんで　おります！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:34:07" />
+				Time="2011-11-23T08:46:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -343,10 +349,10 @@ msg_c15r0301_middleman2_01</Comment>
 あら……　あなたは……▼
 わたしみたいな　うけつけが
 おぼえてないって　ことは▽
-しんじんさん　かな？</Text>
+しんじん　さん　かな？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:42:04" />
+				Time="2011-11-23T08:43:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -439,11 +445,11 @@ msg_c15r0301_middleman2_01</Comment>
 あら……　あなたは……▼
 [Name:TrainerName ]　でしょ？
 さいきん　ウチの　スタジオでも▽
-あなたの　なまえを　よくきくわ！▽
+あなたの　なまえを　よくきくよ！▽
 フフ！　がんばってるんだね！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-21T05:52:59" />
+				Time="2011-11-23T08:43:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -455,11 +461,11 @@ msg_c15r0301_middleman2_01</Comment>
 あら……　あなたは……▼
 [Name:TrainerName ]でしょ？
 最近　ウチの　スタジオでも▽
-あなたの　名前を　よく聞くわ！▽
+あなたの　名前を　よく聞くよ！▽
 フフ！　がんばってるんだね！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:49:21" />
+				Time="2011-11-23T08:43:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -678,14 +684,14 @@ msg_c15r0301_middleman2_01</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よお！　[Name:TrainerName ]！▼
-あんた　すっかり　うれっこだな！
+			<Text>お！　[Name:TrainerName ]さん　じゃねえか！▼
+いまや　あんたも　スゲー　うれっこだな！
 あんたと　えいがが　つくれることは▽
 おれたち　ポケウッドスタッフも▽
 えいがじんの　みょうりに　つきるぜ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T03:46:55" />
+				Time="2011-11-23T08:45:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -693,14 +699,14 @@ msg_c15r0301_middleman2_01</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よお！　[Name:TrainerName ]！▼
-あんた　すっかり　売れっ子　だな！
+			<Text>お！　[Name:TrainerName ]さん　じゃねえか！▼
+今や　あんたも　スゲー　売れっ子だな！
 あんたと　映画が　つくれることは▽
 おれたち　ポケウッドスタッフも▽
 映画人の　みょうりに　つきるぜ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T09:06:09" />
+				Time="2011-11-23T08:47:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -897,14 +903,14 @@ msg_c15r0201_pwmoji_01_01</Comment>
 しゅつえんしゃと　ポケモンの
 えんぎで　さつえいは　すすむからね▼
 だいほんごとに　しゅつえんする
-ポケモンは　かして　もらえるよ！▼
+ポケモンを　レンタルして　もらえるよ！▼
 しかも　いちど　いい　さくひんを
 かんせい　させることが　できれば▽
 じぶんの　ポケモンだって▽
 えいがに　しゅつえん　させられるよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T06:18:39" />
+				Time="2011-11-23T08:48:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -917,14 +923,14 @@ msg_c15r0201_pwmoji_01_01</Comment>
 出演者と　ポケモンの
 演技で　撮影は　進むからね▼
 台本ごとに　出演する
-ポケモンは　かして　もらえるよ！▼
+ポケモンを　レンタルして　もらえるよ！▼
 しかも　一度　いい　作品を
 完成させることが　できれば▽
 自分の　ポケモンだって▽
 映画に　出演させられるよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T06:18:34" />
+				Time="2011-11-23T08:49:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

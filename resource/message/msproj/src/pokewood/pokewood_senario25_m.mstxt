@@ -377,7 +377,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『ちょっと　ちょっと！
-なんで　そんな　ヘンなもの▽
+何で　そんな　ヘンなもの▽
 買って　きちゃうのよっ！？▼
 そもそも　私ばっかりに
 働かせて　[Name:TrainerName Idx="1" ]は▽
@@ -387,11 +387,11 @@
 許さない！　覚悟してっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:23:09" />
+				Time="2011-11-22T09:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:23:09" />
+				Time="2011-11-22T09:19:02" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -456,16 +456,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『知らないっ！！▼
-わたしは　[Name:TrainerName Idx="1" ]の
+私は　[Name:TrainerName Idx="1" ]の
 ママ　じゃないし　銀行でも▽
 ないんだからねっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:23:09" />
+				Time="2011-11-22T09:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:23:09" />
+				Time="2011-11-22T09:19:02" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -663,15 +663,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『なに　笑ってるのよ！！
+			<Text>モニカ『何で　笑ってるのよ！！
 アンタ　いい加減に　しなさいよ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-22T09:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-22T09:19:02" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1203,18 +1203,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『ちょっと　なに　コレ！？▼
-なんで　モンスターボールが
+			<Text>モニカ『ちょっと　何コレ！？▼
+何で　モンスターボールが
 勝手に　開いてるの！！▼
 ちょっと　[Name:TrainerName Idx="1" ]！
 ヘンな　イタズラは　やめてよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:28" />
+				Time="2011-11-22T09:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:28" />
+				Time="2011-11-22T09:19:02" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1276,15 +1276,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『ちっ　ちょっと！！▼
-なにこれ！　吸い込まれる！！▼
+何これ！　吸い込まれる！！▼
 [Name:TrainerName Idx="1" ]！！　助けてっ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-22T09:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-22T09:19:02" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1995,26 +1995,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『うわ！！　ちょっと！！
-なに　するんだよ！！</Text>
+やめてよ！　なに　するんだよ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-22T09:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-22T09:19:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『うわ！！　ちょっと！！
-なに　するんだよ！！</Text>
+やめてよ！　何するんだよ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-22T09:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-22T09:19:02" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2322,14 +2322,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『キャッー！！
-ボールに　ひきよせられるっ！！</Text>
+ボールに　引き寄せられるっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:28" />
+				Time="2011-11-22T09:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:28" />
+				Time="2011-11-22T09:19:02" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

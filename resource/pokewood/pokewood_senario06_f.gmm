@@ -414,9 +414,9 @@
 兄さんと　特訓してるんだから</language>
 	</row>
 	<row id="pw_event0_hero_2">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『フン！
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『フン！
 こどもの　あそびじゃ　ないんだよ！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『フン！
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『フン！
 子供の　遊びじゃ　ないんだよ！</language>
 	</row>
 	<row id="pw_event0_enemy_2">
@@ -466,8 +466,8 @@
 教わってるんだから！</language>
 	</row>
 	<row id="pw_event1_react_hero_0">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『フーン……</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『フーン……</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『フーン……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『フーン……</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
 		<language name="JPN" width="256">ポリアンナ『バカにしないで！▼
@@ -478,8 +478,8 @@
 どうするんだっけ？</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『かかってきな！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『かかってきな！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『かかってきな！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『かかってきな！</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
 		<language name="JPN" width="256">ポリアンナ『とっくんの　せいか
@@ -516,8 +516,8 @@
 		<language name="JPN_KANJI" width="256">ポリアンナ『そんなの　ウソよ！</language>
 	</row>
 	<row id="pw_event2_react_hero_0">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『それはどうかな？</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『それはどうかな？</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『それはどうかな？</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『それはどうかな？</language>
 	</row>
 	<row id="pw_event2_react_enemy_0">
 		<language name="JPN" width="256">ポリアンナ『にいさんは
@@ -528,8 +528,8 @@
 私が　証明　してみせる！</language>
 	</row>
 	<row id="pw_event2_react_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『フフフ……</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『フフフ……</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『フフフ……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『フフフ……</language>
 	</row>
 	<row id="pw_event2_react_enemy_1">
 		<language name="JPN" width="256">ポリアンナ『な　なんなの
@@ -540,9 +540,9 @@
 ウソだよね　兄さん……</language>
 	</row>
 	<row id="pw_event3_hero_0">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ぎゃあっ！
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ぎゃあっ！
 こんな　おんな　ひとりに……</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『ぎゃあっ！
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『ぎゃあっ！
 こんな　女　ひとりに……</language>
 	</row>
 	<row id="pw_event3_enemy_1">
@@ -583,7 +583,7 @@
 しょうじきものが　バカをみる▽
 そんな　よのなか　だからこそ▽
 アタシは　あくに　てを　そめるのさ</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『そうよ
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]クノイチ『そうよ
 正直者が　バカをみる▽
 そんな　世の中だからこそ▽
 アタシは　悪に　手を染めるのさ</language>

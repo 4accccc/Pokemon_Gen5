@@ -358,10 +358,10 @@
 
 [Ctrl1:xcenter ]かげあるところに　ひかりあり！
 
-[Ctrl1:xcenter ]あのヒロインが　あらわれた！</Text>
+[Ctrl1:xcenter ]あのヒーローが　あらわれた！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-17T04:15:35" />
+				Time="2011-11-23T06:58:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -373,10 +373,10 @@
 
 [Ctrl1:xcenter ]影あるところに　光あり！
 
-[Ctrl1:xcenter ]あのヒロインが　現れた！</Text>
+[Ctrl1:xcenter ]あのヒーローが　現れた！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-17T04:15:41" />
+				Time="2011-11-23T06:58:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -388,12 +388,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]そう！　ヒロインの　なは！
+			<Text>[Ctrl1:xcenter ]そう！　ヒーローの　なは！
 
-[Ctrl1:xcenter ][Name:PokemonNickname ]ガール！！</Text>
+[Ctrl1:xcenter ][Name:PokemonNickname ]マン！！
+</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-17T04:16:19" />
+				Time="2011-11-23T06:58:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -401,12 +402,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]そう！　ヒロインの　名は！
+			<Text>[Ctrl1:xcenter ]そう！　ヒーローの　名は！
 
-[Ctrl1:xcenter ][Name:PokemonNickname ]ガール！！</Text>
+[Ctrl1:xcenter ][Name:PokemonNickname ]マン！！
+</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-17T04:16:22" />
+				Time="2011-11-23T06:58:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

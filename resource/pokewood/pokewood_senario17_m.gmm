@@ -354,10 +354,10 @@
 		<language name="JPN_KANJI" width="256">みらいじん</language>
 	</row>
 	<row id="pw_turn_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ（みらいは
-こんなふうに　なってしまうのか……？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士（未来は
-こんなふうに　なってしまうのか……？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『これは……▼
+（これが……　みらい　なのか……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『……▼
+（これが……　未来　なのか……</language>
 	</row>
 	<row id="pw_turn_enemy_0">
 		<language name="JPN" width="256">レディアン『しかし……
@@ -505,14 +505,14 @@
 大昔から　来たとでも　いうのか？</language>
 	</row>
 	<row id="pw_event1_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ（タイムスリップ
-してきたことを　はなすか？▼
-しんじて　もらえるとは
-おもえないが……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士（タイムスリップ
-してきたことを　話すか？▼
-信じて　もらえるとは
-思えないが……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『むう……▼
+（タイムスリップ　してきたことを
+はなすべきか……？▽
+しんじてもらえるとは　おもえないが……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『むう……▼
+（タイムスリップ　してきたことを
+話すべきか？▽
+信じてもらえるとは　思えないが……</language>
 	</row>
 	<row id="pw_event1_enemy_2">
 		<language name="JPN" width="256">レディアン『それとも　ただの

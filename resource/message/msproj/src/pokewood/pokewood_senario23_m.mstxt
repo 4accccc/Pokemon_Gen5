@@ -3014,34 +3014,34 @@
 			<Text>……もんばん　だった　ぬいぐるみと
 いっしょに　まほうのオリから▽
 ぬけだした　[Name:TrainerName Idx="1" ]おうじ▼
-すこし　やさしさを　おぼえ
+すこしの　やさしさを　おぼえ
 ひとまわり　つよくなった　おうじなら▽
 きっと　さいごの　しれんも▽
 のりこえられる　だろう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:11" />
+				Time="2011-11-22T02:48:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:11" />
+				Time="2011-11-22T02:48:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……門番だった　ぬいぐるみと
 一緒に　魔法のオリから▽
 脱げ出した　[Name:TrainerName Idx="1" ]王子▼
-すこし　優しさを　おぼえ
+少しの　優しさを　覚え
 ひとまわり　強くなった　王子なら▽
 きっと　最後の　試練も▽
 乗り越えられる　だろう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:11" />
+				Time="2011-11-22T02:48:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:11" />
+				Time="2011-11-22T02:48:37" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3133,28 +3133,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]おうじ『……ああ
-この　みがわりの　ぬいぐるみの　ことか▼
+この　みがわりの　ぬいぐるみの　こと？▼
 そういえば　きみに　そっくり　だな</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:32:54" />
+				Time="2011-11-22T02:48:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:32:54" />
+				Time="2011-11-22T02:48:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]王子『……ああ
-この　みがわりの　ぬいぐるみの　ことか▼
+この　みがわりの　ぬいぐるみの　こと？▼
 そういえば　君に　そっくり　だな</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:32:54" />
+				Time="2011-11-22T02:48:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:32:54" />
+				Time="2011-11-22T02:48:37" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3225,28 +3225,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ぬいぐるみ『はは……　まさか▼
-でも　このせかいに　いると　もとの
-じぶんの　きおくが　きえていくから▽
-むかしのことは　おぼえてないからな▼
+でも　このせかいに　いると
+むかしのことは　わすれていくからねー▼
 ちなみに　おにいさんの　なまえは？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:32:54" />
+				Time="2011-11-22T02:48:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:32:54" />
+				Time="2011-11-22T02:48:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぬいぐるみ『はは……　まさか</Text>
+			<Text>ぬいぐるみ『はは……　まさか▼
+でも　この世界に　いると
+昔のことは　忘れていくからねー▼
+ちなみに　お兄さんの　名前は？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:25" />
+				Time="2011-11-22T02:48:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:25" />
+				Time="2011-11-22T02:48:37" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3255,113 +3257,116 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]おうじ『えーと……
 たしか……　けびん……　だったかな？▼
-ちちうえも　ははうえも　にいさんのことは　はなしたがらない　からね……▼
+ちちうえも　ははうえも　にいさんのこと
+はなしたがらない　からねー▼
 こっそり　だいじんに　きいただけで……▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:32:54" />
+				Time="2011-11-22T02:48:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:32:54" />
+				Time="2011-11-22T02:48:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]王子『ふーん▼
-まあ　でも　いつか　元の
-姿に　元に　戻れると　いいな！</Text>
+			<Text>[Name:TrainerName Idx="1" ]王子『えーと……
+確か……　けびん……　だったかな？▼
+父上も　母上も　兄さんのこと
+話したがらない　からねー▼
+こっそり　大臣に　聞いただけで……▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:25" />
+				Time="2011-11-22T02:48:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:25" />
+				Time="2011-11-22T02:48:37" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event10_enemy_4">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぬいぐるみ『まあね……▼
-ボクも　ここから　でられれば
-まほうが　とけるの　かも……</Text>
+			<Text>ぬいぐるみ『けびん……▼
+ふーん……　そうなんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:25" />
+				Time="2011-11-22T02:48:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:25" />
+				Time="2011-11-22T02:48:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぬいぐるみ『まあね……▼
-ボクも　ここから　出られれば
-魔法が　とけるの　かも……</Text>
+			<Text>ぬいぐるみ『けびん……▼
+ふーん……　そうなんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:25" />
+				Time="2011-11-22T02:48:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:25" />
+				Time="2011-11-22T02:48:37" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event10_hero_5">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]おうじ『……▼
-（ほんとの　すがた
-みて　みたいな……）</Text>
+			<Text>[Name:TrainerName Idx="1" ]おうじ『まあ　いいや！▼
+でも　いつか　きみも　もとの　すがたに
+もどれると　いいな！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:25" />
+				Time="2011-11-22T02:48:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:25" />
+				Time="2011-11-22T02:48:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]王子『……▼
-（ほんとの　姿
-見てみたいな……）</Text>
+			<Text>[Name:TrainerName Idx="1" ]王子『まあ　いいや！▼
+でも　いつか　君も　元の　姿に
+戻れると　いいな！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:25" />
+				Time="2011-11-22T02:48:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:25" />
+				Time="2011-11-22T02:48:37" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event10_enemy_5">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぬいぐるみ『……
-（おおきく　なりやがって……）</Text>
+			<Text>ぬいぐるみ『……▼
+（そうか……　[Name:TrainerName Idx="1" ]……
+おおきく　なりやがって……）</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:25" />
+				Time="2011-11-22T02:48:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:25" />
+				Time="2011-11-22T02:48:37" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぬいぐるみ『……
-（大きく　なりやがって……）</Text>
+			<Text>ぬいぐるみ『……▼
+（そうか……　[Name:TrainerName Idx="1" ]……
+大きく　なりやがって……）</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:25" />
+				Time="2011-11-22T02:48:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:25" />
+				Time="2011-11-22T02:48:37" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

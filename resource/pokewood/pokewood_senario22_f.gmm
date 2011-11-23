@@ -358,16 +358,16 @@
 		<language name="JPN_KANJI" width="256">ジュジュベ『まちなさーい……</language>
 	</row>
 	<row id="pw_event0_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『あ　あれ？
-どこよ　ここ？▽
-へんな　くうき……▼
-あの　とびら　いったい
-なんだったのかしら？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『あ　あれ？
-どこよ　ここ？▽
-へんな　空気……▼
-あの　扉　いったい
-なんだったのかしら？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『あ　あれー？
+いったい　どこよ　ここー？▽
+なんだか　へんな　かんじだし……▼
+さっき　あけた　あの　しろいとびらは
+いったい　なんだったんだろう？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『あ　あれー？
+いったい　どこよ　ここー？▽
+何だか　変な　感じだし……▼
+さっき　開けた　あの　白い扉は
+一体　何だったんだろう？</language>
 	</row>
 	<row id="pw_event0_enemy_0">
 		<language name="JPN" width="256">あやしいおんな『あら　あら……▼
@@ -384,16 +384,10 @@
 捕まえて　ドレイに　してやろう</language>
 	</row>
 	<row id="pw_event0_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『きゃああー
-ま　まほうつかいだ！▼
-は……　はやく　さっきの
-とびらまで　ひきかえして▽
-にげださないとっ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『きゃああー
-ま　魔法使いだ！▼
-は……　速く　さっきの
-扉まで　ひきかえして▽
-逃げ出さないとっ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『ん？　だれ？
+こんなとこで　オバサンなにしてんの？▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『ん？　だれ？
+こんなとこで　オバサン何してんの？▼</language>
 	</row>
 	<row id="pw_event0_enemy_1">
 		<language name="JPN" width="256">あやしいおんな『わたしは
@@ -410,22 +404,68 @@
 ふさいで　おしまい！</language>
 	</row>
 	<row id="pw_event0_hero_2">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『なんで　おこるの？▼
+そんなことより　オバサンさあ　わたし
+はやく　ここから　でたいんだよね▼
+わたし　このくにの　おひめさま　なんだよ
+おしろまで　あんない　しなさい</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『何で　怒るの？▼
+そんなことより　オバサンさあ　私
+早く　ここから　出たいんだよね▼
+私　この国の　お姫様　なんだよ
+お城まで　案内しなさい</language>
+	</row>
+	<row id="pw_event0_enemy_2">
+		<language name="JPN" width="256">あやしいおんな『それは　むりね▼
+そして　わたしは　オバサンじゃない
+わたしは　まほうのくにの　クイーン▽
+そのなも　ジュジュベさまよ……</language>
+		<language name="JPN_KANJI" width="256">怪しい女『それは　ムリね▼
+そして　私は　オバサンじゃない
+私は　魔法の国の　クイーン▽
+その名も　ジュジュベ様よ……</language>
+	</row>
+	<row id="pw_event0_hero_3">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『ふーん……
+まほうのくにの　クイーンかあ……▽
+……　……　……　……　……▼
+わああー！！　ま　まほうつかいだ！▼
+は……　はやく　さっきの　とびらまで
+ひきかえして　にげないとっ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『ふーん……
+魔法の国の　クイーンかあ……▽
+……　……　……　……　……▼
+わああー！！　ま　魔法使いだ！▼
+は……　早く　さっきの　扉まで
+引き返して　逃げないとっ！</language>
+	</row>
+	<row id="pw_event0_enemy_3">
+		<language name="JPN" width="256">ジュジュベ『おほほ……　バカねえ
+にがすわけが　ないじゃない……▼
+さあ　しもべたち　あの　とびらを
+ふさいで　おしまい！</language>
+		<language name="JPN_KANJI" width="256">ジュジュベ『おほほ……　バカねえ
+逃がすわけが　ないじゃない……▼
+さあ　僕たち　あの　扉を
+ふさいで　おしまい！</language>
+	</row>
+	<row id="pw_event0_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『やだ！
 とびらが　ポケモンに　ふさがれた！▼
 父上が　いれば　こんなやつ
 ろうやに　いれてやるのに！▼
 でも　いまは　わたし　ひとり……▼
-あのひとに　おいつかれる　まえに
+あいつに　おいつかれる　まえに
 こいつら　ぜんぶ　たおすしかない</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『やだ！
 扉が　ポケモンに　ふさがれた！▼
 父上が　いれば　こんな奴
 ろうやに　入れてやるのに！▼
 でも　今は　私　ひとり……▼
-あの人に　追いつかれる　前に
+あいつに　追いつかれる　前に
 こいつら　全部　倒すしかない</language>
 	</row>
-	<row id="pw_event0_enemy_2">
+	<row id="pw_event0_enemy_4">
 		<language name="JPN" width="256">ジュジュベ『あはは！
 おまえは　どれだけ　つよいの？</language>
 		<language name="JPN_KANJI" width="256">ジュジュベ『あはは！
@@ -454,34 +494,42 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『つかまえよう！</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
-		<language name="JPN" width="256">ジュジュベ『ちょっと！▼
-ひとの　ポケモン
-とったら　どろぼうよ！？</language>
-		<language name="JPN_KANJI" width="256">ジュジュベ『ちょっと！▼
-人の　ポケモン
-取ったら　どろぼうよ！？</language>
+		<language name="JPN" width="256">ジュジュベ『ちょっと　ちょっと！！▼
+ひとの　ポケモン　とったら
+どろぼうよ！？　じょうしきでしょ！？</language>
+		<language name="JPN_KANJI" width="256">ジュジュベ『ちょっと！　ちょっと！▼
+人の　ポケモン　取ったら
+どろぼうよ！？　常識でしょ！？</language>
 	</row>
 	<row id="pw_event1_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『図鑑でチェック！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『図鑑でチェック！</language>
 	</row>
 	<row id="pw_event1_react_enemy_2">
-		<language name="JPN" width="256">ジュジュベ『こうもりポケモンよ！▼
+		<language name="JPN" width="256">ジュジュベ『あのねえ……
+コロモリは　こうもりポケモンよ！▼
 ちなみに　ココロモリは
-きゅうあいポケモンよ！▼
-そんな　ことも　しらないの！？</language>
-		<language name="JPN_KANJI" width="256">ジュジュベ『こうもりポケモンよ！▼
+きゅうあいポケモン　だから！▼
+ったく　あなた　よゆうが　あるの？
+それとも　ただの　バカ？</language>
+		<language name="JPN_KANJI" width="256">ジュジュベ『あのねえ……
+コロモリは　こうもりポケモンよ！▼
 ちなみに　ココロモリは
-きゅうあいポケモンよ！▼
-そんなことも　知らないの！？</language>
+きゅうあいポケモン　だから！▼
+ったく　あなた　余裕が　あるの？
+それとも　ただの　バカ？</language>
 	</row>
 	<row id="pw_event2_enemy_0">
-		<language name="JPN" width="256">ジュジュベ『むだよ……
+		<language name="JPN" width="256">ジュジュベ『むだよ……　むだ……
 この　とびらを　とおったものは▽
-だれも　かえれない……</language>
-		<language name="JPN_KANJI" width="256">ジュジュベ『無駄よ……
+もとのせかいには　かえれない……▼
+あなたは　わたしの　めしつかいに　なる
+うんめいなのよ</language>
+		<language name="JPN_KANJI" width="256">ジュジュベ『無駄よ……　無駄……
 この　扉を　通ったものは▽
-だれも　帰れない……</language>
+元の世界には　帰れない……▼
+あなたは　私の　ドレイに　なる
+運命なのよ</language>
 	</row>
 	<row id="pw_event2_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『さ……
@@ -548,28 +596,27 @@
 こどものくせに　なにいってるの？▼
 ほ　ほしくなんて　ないけどね</language>
 		<language name="JPN_KANJI" width="256">ジュジュベ『はあ？　お金？
-子供のくせに　何いってるの？▼
+子供のくせに　何言ってるの？▼
 ほ　欲しくなんて　ないけどね</language>
 	</row>
 	<row id="pw_event4_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『ああ……
 ちちうえの　いうこと　きいて　おけば▽
-こんなとびらに　はいらなくて▽
-すんだのに▼
-だれも　たすけに　きてくれない
-じぶんで　でないと　いけないのね</language>
+こんなことに　ならなかったのかな▼
+だれも　たすけに　きてくれないし
+じぶんで　どうにかするしかないか……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『ああ……
 父上の　言うこと　きいて　おけば▽
-こんな扉に　入らなくて　済んだのに▼
-だれも　助けに　きてくれない
-自分で　出ないと　いけないのね</language>
+こんなことに　ならなかったのかな▼
+だれも　助けに　きてくれないし
+自分で　どうにかするしかないか……</language>
 	</row>
 	<row id="pw_event4_enemy_0">
-		<language name="JPN" width="256">ジュジュベ『なにを
-ゴチャゴチャ　いってるの？▼
+		<language name="JPN" width="256">ジュジュベ『おほほほ……
+なにを　ゴチャゴチャ　いってるの？▼
 もうすぐ　おいつくわよ！</language>
-		<language name="JPN_KANJI" width="256">ジュジュベ『何を
-ゴチャゴチャ　言ってるの？▼
+		<language name="JPN_KANJI" width="256">ジュジュベ『おほほほ……
+何を　ゴチャゴチャ　言ってるの？▼
 もうすぐ　追いつくわよ！</language>
 	</row>
 	<row id="pw_event5_hero_0">
@@ -581,16 +628,18 @@
 何か　どうでも　よくなってきた……</language>
 	</row>
 	<row id="pw_event5_enemy_0">
-		<language name="JPN" width="256">ジュジュベ『おしえて　あげましょうか
-このせかいの　くうきを　すうと▽
+		<language name="JPN" width="256">ジュジュベ『おほほ　いいかんじ……
+あなたに　おしえて　あげるわ▼
+このせかいの　くうきを　すうと
 どんどん　きりょくが　なくなるのよ▼
-あなたも　あなたのポケモンも
-まだ　がんばれるのかしら？</language>
-		<language name="JPN_KANJI" width="256">ジュジュベ『教えて　あげましょうか
-この世界の　空気を　吸うと▽
+あなたも　あなたの　ポケモンも
+どこまで　がんばれるのかしら？</language>
+		<language name="JPN_KANJI" width="256">ジュジュベ『おほほ　いい感じ……
+あなたに　教えて　あげるわ▼
+この世界の　空気を　吸うと
 どんどん　気力が　なくなるのよ▼
-あなたも　あなたのポケモンも
-まだ　頑張れるのかしら？</language>
+あなたも　あなたの　ポケモンも
+どこまで　頑張れるのかしら？</language>
 	</row>
 	<row id="pw_event5_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『た……
@@ -607,13 +656,14 @@
 お金って　な　何のことよ？</language>
 	</row>
 	<row id="pw_event6_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『あは……
-わたしの　いっしゅうかん　ぶんの▽
-おこづかいよ▽
-あげるから　おしろに　かえしてよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『あは……
-私の　１週間分の　おこづかいよ▽
-これあげるから　帰してよ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『ふふふ……
+ここに　わたしの　１しゅうかん　ぶんの▽
+おこづかいが　あるの▼
+これあげるから　おしろに　かえしてよ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『ふふふ……
+ここに　私の　１週間分の
+お小遣いが　あるの▼
+これあげるから　お城に　帰してよ！</language>
 	</row>
 	<row id="pw_event6_enemy_1">
 		<language name="JPN" width="256">ジュジュベ『え　ええっ！
@@ -627,10 +677,14 @@
 うわっ……　私の財産　少なすぎ！？</language>
 	</row>
 	<row id="pw_event6_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『こういうのが
-わたしの　じつりょく　なのよねー</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『こういうのが
-私の　実力　なのよねー</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『へー
+でも　まあ　しかたないんじゃない？▼
+しょみんと　おうけの　あととりである
+わたしの　かくのさは　あって　とうぜんよ</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『へー
+でも　まあ　仕方ないんじゃない？▼
+庶民と　王家の　子女である
+わたしの　格の差は　あって当然よ</language>
 	</row>
 	<row id="pw_event6_enemy_2">
 		<language name="JPN" width="256">ジュジュベ『ムカッ……！▼
@@ -653,11 +707,11 @@
 わたしまけましたわ……</language>
 	</row>
 	<row id="pw_event7_enemy_1">
-		<language name="JPN" width="256">ジュジュベ『あなた
-もー　ちょっと　しょうぶの▽
-しゅぎょうしたほうが　よくなくて？</language>
-		<language name="JPN_KANJI" width="256">ジュジュベ『あなた
-もー　ちょっと　勝負の▽
+		<language name="JPN" width="256">ジュジュベ『あのさあ……
+あなた　もー　ちょっと　しょうぶの▽
+しゅぎょう　したほうが　よくなくて？</language>
+		<language name="JPN_KANJI" width="256">ジュジュベ『あのさあ……
+あなた　もー　ちょっと　勝負の▽
 修行したほうが　良くなくて？</language>
 	</row>
 	<row id="pw_event7_hero_2">
@@ -667,18 +721,18 @@
 おっしゃる　とおりです……</language>
 	</row>
 	<row id="pw_event7_enemy_2">
-		<language name="JPN" width="256">ジュジュベ『あなたさあ
+		<language name="JPN" width="256">ジュジュベ『やれやれ……
 おしろで　ぬくぬく　くらして　ないで▽
 どっか　たびでも　してきたら？▼
 そうね……　わたしの　しりあいで
-ツルツル　ジイさん　だけど
+ツルツルあたまの　ジイさん　だけど
 すごくつよい　ひとが　いるから▽
 しょうかい　してあげましょうか？</language>
-		<language name="JPN_KANJI" width="256">ジュジュベ『あなたさあ
+		<language name="JPN_KANJI" width="256">ジュジュベ『やれやれ……
 お城で　ぬくぬく　暮らして　ないで▽
 どっか　旅でも　してきたら？▼
 そうね……　わたしの　知り合いで
-ツルツル　ジイさん　だけど
+ツルツル頭の　ジイさん　だけど
 すごく強い　人が　いるから▽
 紹介　してあげましょうか？</language>
 	</row>
@@ -689,21 +743,21 @@
 い　いいんですか？
 ぜひぜひ　お願い　しますっ！▼
 わーい！　わーい！
-おじいちゃん！　ツルツル！！</language>
+ツルツル！！　ダンディー！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]ひめ『えっ！▼
 おじいちゃん！？　しかもツルツル！？
 私好みの　　ダンディーの予感！▼
 い　いいんですか？
 ぜひぜひ　お願い　しますっ！▼
 わーい！　わーい！
-おじいちゃん！　ツルツル！！</language>
+ツルツル！！　ダンディー！！</language>
 	</row>
 	<row id="pw_event7_enemy_3">
 		<language name="JPN" width="256">ジュジュベ『やれやれ▼
-あなたみたいな　こは　わたしの
+あなたみたいな　ガキは　わたしの
 まほうの　せかいには　いらないわ……</language>
 		<language name="JPN_KANJI" width="256">ジュジュベ『やれやれ▼
-あなたみたいな　子は　私の
+あなたみたいな　ガキは　私の
 魔法の　世界には　いらないわ……</language>
 	</row>
 	<row id="pw_event7_hero_4">
@@ -716,7 +770,7 @@
 これで　よかったのかも　しれない……</language>
 		<language name="JPN_KANJI" width="256">こうして　[1:00:トレーナー名:1]姫は
 修行の　旅……▼
-というか　おじいさんに　合うための▽
+というか　おじいさんに　あうための▽
 旅へ　出たのであった……▼
 まあ　結果的に　扉から
 無事に　出られたのだから▽
@@ -737,74 +791,90 @@
 	<row id="pw_event8_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『いやーっ！
 ちちうえ　たすけてーっ！▼
-こ　こんな　ことなら
-いうことを　きいて▽
-よるのさんぽ　しなきゃ　よかった！</language>
+こ　こんなことなら　いいつけを　きいて
+よるのさんぽ　やめときゃ　よかった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『いやーっ！
 父上　助けてーっ！▼
-こ　こんな　ことなら
-言うことを　聞いて▽
-夜の散歩　しなきゃ　良かった！</language>
+こ　こんなことなら　言いつけを　聞いて
+夜の散歩　やめときゃ　良かった！</language>
 	</row>
 	<row id="pw_event8_enemy_1">
 		<language name="JPN" width="256">ジュジュベ『おほほ……
-あなたが　ひめだって▽
-ほんとうは　わかっていたのよ▼
-これで　このくにの　あとつぎも
-いなくなり　あらそいが　おきるわね！</language>
+あなたが　ひめ　だってことは▽
+はじめからは　わかっていたのよ▼
+おやの　いいつけも　まもらず
+よなかに　フラフラ　あそびまわる▽
+どうしようもない　アホおうじ　ってことも▼
+あなたが　ここに　くることも
+おみとおしなのよ……▼
+そして　ここで　このくにの　あとつぎが
+いなくなれば　あらそいが　おきるわね</language>
 		<language name="JPN_KANJI" width="256">ジュジュベ『おほほ……
-あなたが　姫だって　本当は▽
-わかっていたのよ▼
-これで　この国の　跡継ぎも
-いなくなり　争いが　起きるわね！</language>
+あなたが　姫だってことは▽
+初めからは　分かってたのよ▼
+親の　言いつけも　守らず
+夜中に　フラフラ　遊びまわる▽
+どうしようもない　アホ姫　ってことも▼
+あなたが　ここに　来ることも
+お見通しなのよ……▼
+そして　ここで　この国の　跡継ぎが
+いなくなれば　争いが　起きるわね</language>
 	</row>
 	<row id="pw_event8_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『なんですって！？
-そ　そんな……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『なんですって！？
-そ　そんな……</language>
+そ　そんなわけ　ないでしょ！？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『何ですって！？
+そ　そんなわけ　ないでしょ！？</language>
 	</row>
 	<row id="pw_event8_enemy_2">
-		<language name="JPN" width="256">ジュジュベ『あなたの　おとうさまは
+		<language name="JPN" width="256">ジュジュベ『あら……▼
+あなたみたいな　バカとは　いえ
+あとつぎを　まもれないような　おうを▽
+こくみんは　しんらい　するかしら？
+それに　あなたの　おとうさまは
 あなたを　さがしまわって▽
-つかれ　はてて　しまうことでしょう▼
-その　すきを　ついて
-だいじんが　おうさまに　なるのよ！</language>
-		<language name="JPN_KANJI" width="256">ジュジュベ『あなたの　お父様は
+つかれはてて　しまうことでしょうよ▼
+その　すきを　ついて　だいじんが
+おうのざを　いただく　ってわけ</language>
+		<language name="JPN_KANJI" width="256">ジュジュベ『あら……▼
+あなたみたいな　バカとは　いえ
+世継ぎも　守れないような　王を▽
+国民は　信頼するかしら？
+それに　あなたの　お父様は
 あなたを　探し回って▽
-疲れ果ててしまう　ことでしょう▼
-その　すきを　ついて
-大臣が　王様に　なるのよ！</language>
+疲れ果てて　しまうことでしょうよ▼
+そのスキを　ついて　大臣が
+下克上……　それでフィニッシュよ</language>
 	</row>
 	<row id="pw_event8_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『あんた　だいじんに
-やとわれて　いたのね！▼
-うう……っ！　父上ー！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『あんた　大臣に
-やとわれて　いたのね！▼
-うう……っ！　父上ー！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『あなた……
+だいじんに　やとわれて　いたのね！！▼
+くそっ！！　ちちうえ！　ちちうえー！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『あなた……
+大臣に　やとわれて　いたのね！！▼
+くそっ！！　父上！　父上ー！</language>
 	</row>
 	<row id="pw_event8_enemy_3">
 		<language name="JPN" width="256">ジュジュベ『おほほ……
-おとうさまの　しんぱいしている
-ばあいじゃ　ないでしょ▼
-さ！　あなたは　きょうから
-わたしのしたで　ただ　ばたらきよ！▼
+おとうさまの　しんぱい　している
+よゆうなんて　ないと　おもうけど？▼
+あなたは　きょうから　わたしのしたで
+めしつかいとして　えいえんに　はたくの▼
 ほら……　さっさと　あるくんだよ！</language>
 		<language name="JPN_KANJI" width="256">ジュジュベ『おほほ……
-お父様の　心配している
-場合じゃ　ないでしょ▼
-さ！　あなたは　今日から
-私の下で　ただ働きよ！▼
+お父様の　心配を　している
+余裕なんて　ないと　思うけど？▼
+あなたは　今日から　私の下で
+ドレイとして　永遠に　働くの▼
 ほら……　さっさと　歩くんだよ！</language>
 	</row>
 	<row id="pw_event8_hero_4">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめは　それから
+		<language name="JPN" width="256">……とらえられた　[1:00:トレーナー名:1]ひめは
 ジュジュベの　やかたで▽
 しぬまで　はたらかされたと　いう……▼
 よなかに　あやしいとびらを　みつけても
 けっして　あけないほうが　いいのだ……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫は　それから
+		<language name="JPN_KANJI" width="256">……とらえられた　[1:00:トレーナー名:1]姫は
 ジュジュベの　館で▽
 死ぬまで　働かせたと　いう……▼
 夜中に　怪しい扉を　見つけても

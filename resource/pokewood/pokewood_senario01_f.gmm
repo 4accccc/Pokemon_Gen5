@@ -427,10 +427,10 @@
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『望むところよ！</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
-		<language name="JPN" width="256">ハチクマン『いいだろう！▼
+		<language name="JPN" width="256">ハチクマン『よかろうっ！！▼
 わがはいの　あくのおうぎ！
 くらうが　よいわーっ！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『いいだろう！▼
+		<language name="JPN_KANJI" width="256">ハチクマン『よかろうっ！！▼
 我輩の　悪の奥義！
 くらうが　よいわーっ！</language>
 	</row>

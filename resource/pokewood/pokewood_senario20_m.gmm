@@ -358,11 +358,13 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そ　そんなあ……</language>
 	</row>
 	<row id="pw_turn_enemy_0">
-		<language name="JPN" width="256">バルバラ（かくごなさい
+		<language name="JPN" width="256">バルバラ『ふふふ……▼
+（さあ　かくごなさい
 もっと　へコませて　あげますわ▼
 ワタクシに　こくはく　したことを
 こうかい　するほどに……ですわ</language>
-		<language name="JPN_KANJI" width="256">バルバラ（覚悟なさい
+		<language name="JPN_KANJI" width="256">バルバラ『ふふふ……▼
+（さあ　覚悟なさい
 もっと　へコませて　あげますわ▼
 ワタクシに　告白　したことを
 後悔　するほどに……ですわ</language>
@@ -424,10 +426,12 @@
 答えて　もらうまで　帰りません！</language>
 	</row>
 	<row id="pw_event0_enemy_2">
-		<language name="JPN" width="256">バルバラ（ぼうやのクセに　なまいきね
+		<language name="JPN" width="256">バルバラ『ふうん……▼
+（ぼうやのクセに　なまいきね
 こうなったら　てっていてきに▽
 イジメぬいて　さしあげますことよ</language>
-		<language name="JPN_KANJI" width="256">バルバラ（坊やのクセに　生意気ね
+		<language name="JPN_KANJI" width="256">バルバラ『ふうん……▼
+（坊やのクセに　生意気ね
 こうなったら　徹底的に▽
 イジメぬいて　さしあげますことよ</language>
 	</row>
@@ -446,11 +450,13 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『は　はい！　やります！</language>
 	</row>
 	<row id="pw_event0_enemy_4">
-		<language name="JPN" width="256">バルバラ（たのしみだわ……
+		<language name="JPN" width="256">バルバラ『あら　いい　へんじね▼
+（フフフ……　たのしみだわ……
 ワタクシ　とのがたが▽
 おちこむ　すがたを　みるのが▽
 たまらなく　すきでしてよ</language>
-		<language name="JPN_KANJI" width="256">バルバラ（楽しみだわ……
+		<language name="JPN_KANJI" width="256">バルバラ『あら　いい　返事ね▼
+（フフフ……　楽しみだわ……
 ワタクシ　殿方が▽
 落ち込む　姿を　みるのが▽
 たまらなく　好きでしてよ</language>
@@ -460,7 +466,8 @@
 		<language name="JPN_KANJI" width="256">ドーブル『ブルッ　ブルルフ……</language>
 	</row>
 	<row id="pw_event0_enemy_6">
-		<language name="JPN" width="256">バルバラ（ドーブルちゃんも
+		<language name="JPN" width="256">バルバラ『では　はじめますわよ！▼
+（ドーブルちゃんも
 やるきマンマン　ですわ▼
 いままで　ワタクシに
 こくはくしてきた　とのがた……▼
@@ -468,7 +475,8 @@
 プライドを　へしおってきましたのよ▼
 ぼうやは　どれだけ
 たえられる　かしら……</language>
-		<language name="JPN_KANJI" width="256">バルバラ（ドーブルちゃんも
+		<language name="JPN_KANJI" width="256">バルバラ『では　はじめますわよ！▼
+（ドーブルちゃんも
 やる気マンマン　ですわ▼
 今まで　ワタクシに
 告白してきた　殿方……▼
@@ -479,9 +487,11 @@
 	</row>
 	<row id="pw_event0_hero_7">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『バ　バルバラさん！
+はじめるまえに　ひとつだけ▽
 おねがいが　あります！▽
 もし　ぼくが　かったら……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『バ　バルバラさん！
+始める前に　ひとつだけ▽
 お願いが　あります！▽
 もし　僕が　勝ったら……</language>
 	</row>
@@ -540,10 +550,12 @@
 あなたは　素晴らしい　人だ！</language>
 	</row>
 	<row id="pw_event1_enemy_1">
-		<language name="JPN" width="256">バルバラ（なんてこと……
+		<language name="JPN" width="256">バルバラ『そっ　そうかしら……▼
+（なんてこと……
 ぼうや　タフなのね……▽
 じゃあ　てかげんは　なしですわ</language>
-		<language name="JPN_KANJI" width="256">バルバラ（なんてこと……
+		<language name="JPN_KANJI" width="256">バルバラ『そっ　そうかしら……▼
+（なんてこと……
 坊や　タフなのね……▽
 じゃあ　手加減は　無しですわ</language>
 	</row>
@@ -608,12 +620,14 @@
 ちっとも　うれしくなんか……</language>
 	</row>
 	<row id="pw_event2_enemy_1">
-		<language name="JPN" width="256">バルバラ（へんね……　なぜかしら
+		<language name="JPN" width="256">バルバラ『……▼
+（へんね……　なぜかしら
 わるい　きは　しないわ……▼
 ぼうや　ワタクシの　ポケモンの
 こうげきを　すべて　うけいれて……▼
 なんて　こころの　ひろい　ひと……</language>
-		<language name="JPN_KANJI" width="256">バルバラ（変ね……　なぜかしら
+		<language name="JPN_KANJI" width="256">バルバラ『……▼
+（変ね……　なぜかしら
 悪い気は　しないわ……▼
 坊や　ワタクシの　ポケモンの
 攻撃を　すべて　受け入れて……▼
@@ -624,12 +638,14 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『えへへ</language>
 	</row>
 	<row id="pw_event2_enemy_2">
-		<language name="JPN" width="256">バルバラ（ああ……
+		<language name="JPN" width="256">バルバラ『……▼
+（ああ……
 どんなに　きびしい　ことを　いっても▽
 ヘラヘラしている　あの　えがお……▼
 ハッ！　ワタクシ　いつのまにか
 あの　ひとの　ことを……</language>
-		<language name="JPN_KANJI" width="256">バルバラ（ああ……
+		<language name="JPN_KANJI" width="256">バルバラ『……▼
+（ああ……
 どんなに　厳しい事を　いっても▽
 ヘラヘラしている　あの　笑顔……▼
 ハッ！　ワタクシ　いつの間にか
@@ -648,11 +664,13 @@
 付き合ってあげても　良くってよ！</language>
 	</row>
 	<row id="pw_event2_enemy_4">
-		<language name="JPN" width="256">バルバラ（なにかしら……　ふしぎ
+		<language name="JPN" width="256">バルバラ『ふう……▼
+（なにかしら……　ふしぎ
 いっしょにいて　やすらかな▽
 きもちになれる　とのがた……▼
 こんなの　はじめて……ですわ……</language>
-		<language name="JPN_KANJI" width="256">バルバラ（何かしら……　不思議
+		<language name="JPN_KANJI" width="256">バルバラ『ふう……▼
+（何かしら……　不思議
 一緒にいて　安らかな▽
 気持ちになれる　殿方……▼
 こんなの　初めて……ですわ……</language>

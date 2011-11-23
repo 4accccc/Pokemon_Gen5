@@ -153,41 +153,43 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いらいぬし『この　せきぞうは
+			<Text>いらいぬし『いいですか？
+この　せきぞうは　ですねえ▽
 こだいぶんめいの　なぞを▽
 ときあかす　だいはっけん　なんです▼
 どうか　のりうつっている　ヤツを
 おいはらって　くださいませんか▼
 いろいろ　かたりかけて　きますが
-しんちょうに　おねがいします▼
-こたえに　まちがえると
-えらいめに　あいますから</Text>
+しんちょうに　おねがいしますよ▼
+ヤツめ　きにいらない　へんじを　すると
+エラいめに　あわせてきますから</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T12:25:48" />
+				Time="2011-11-23T09:29:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T12:25:48" />
+				Time="2011-11-23T09:29:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>依頼主『この　石像は
+			<Text>依頼主『いいですか？
+この　石像は　ですねえ▽
 古代文明の　なぞを▽
 解き明かせる　大発見　なんです▼
 どうか　のりうつっている　ヤツを
 追い払って　くださいませんか▼
 いろいろ　語りかけて　きますが
-慎重に　お願いします▼
-間違えると　えらい目に
-合いますから</Text>
+慎重に　お願いしますよ▼
+ヤツめ　気にいらない　返事を　すると
+エラい目に　あわせてきますから</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T12:25:48" />
+				Time="2011-11-23T09:29:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T12:25:48" />
+				Time="2011-11-23T09:29:41" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -202,29 +204,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じょしゅA『わたしなんて
+			<Text>わかい　じょしゅ『わたし　なんて
 おこらせて　ボコボコに　なりました……▽
-おきを　つけください</Text>
+どうか　おきを　つけて</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:53" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-23T09:29:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:53" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-23T09:29:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>助手A『わたしなんて
+			<Text>若い　助手『私　なんて
 怒らせて　ボコボコに　なりました……▽
-おきを　つけください</Text>
+どうか　お気を　つけて</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:53" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-23T09:29:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:53" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-23T09:29:41" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -238,56 +240,56 @@
 		Label="pw_event0_enemy_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>じょしゅB『わたし　なんて
-けいかい　されてしまい▽
-こうげき　できませんでした……▽
-どうか　おきを　つけて</Text>
+			<Text>おいた　じょしゅ『フガガ……
+ワシは　けいかい　されてしまい▽
+こうげきすら　できんかったよ▽
+どうか　きを　つけてなあ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T12:25:48" />
+				Time="2011-11-23T09:29:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T12:25:48" />
+				Time="2011-11-23T09:29:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>助手B『私　なんて
-警戒されて　しまい▽
-攻撃できませんでした……▽
-どうか　お気を　つけて</Text>
+			<Text>老いた　助手『フガガ……
+ワシは　警戒されてしまい▽
+攻撃すら　出来んかったよ▽
+どうか　気を　つけてなあ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T12:25:48" />
+				Time="2011-11-23T09:29:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T12:25:48" />
+				Time="2011-11-23T09:29:41" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event0_hero_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『やってみます！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『やって　みましょう</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:53" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-23T09:29:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:53" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-23T09:29:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『やってみます！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『やってみましょう</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:53" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-23T09:29:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-10T12:04:53" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-23T09:29:41" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -523,14 +525,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『あなたを　消しさるもの！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『あなたを　消しさる者の！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-14T15:46:15" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-23T05:32:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-14T15:46:15" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-23T05:32:18" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -579,14 +581,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『あなたを　とむらうもの！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『あなたを　とむらう者！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-14T15:46:15" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-23T05:32:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-14T15:46:15" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-23T05:32:18" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1228,29 +1230,29 @@
 			Language="JPN">
 			<Text>こえ『われは　つよきもの　なり
 それ　いがい　きおく　なし……▼
-ただ　たたかいの　さなかで　のみ▽
+ただ　たたかいの　さなかで　のみ
 ありし　ひの　きおく　よみがえるのだ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:55:18" />
+				Time="2011-11-23T05:32:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:55:18" />
+				Time="2011-11-23T05:32:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>声『我は　強き者　なり
 それ以外　記憶　なし……▼
-ただ　戦いの　最中で　のみ▽
+ただ　戦いの　最中で　のみ
 在りし日の　記憶　よみがえるのだ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:55:18" />
+				Time="2011-11-23T05:32:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:55:18" />
+				Time="2011-11-23T05:32:18" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1705,62 +1707,62 @@
 		Label="pw_event6_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『うっ……
-なんて　つよさなの……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『くっ……　ダメ……
+かなわないわ　これは……</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-09T08:32:10" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-23T05:32:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-09T08:32:10" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-23T05:32:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『うっ……
-なんて　つよさなの……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『くっ……　ダメだ……
+かなわないわ　これは……</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-09T08:32:10" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-23T05:32:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-09T08:32:10" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-23T05:32:18" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event6_enemy_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>こえ『われは
-ちからを　つかいすぎた　ようだ……▼
-よわきものよ
-おぬしの　ちからを　いただくぞ▼
+			<Text>こえ『われは　ちからを　つかいすぎた
+されど　きえるわけには　いかぬ▼
+ちから　よわき　ものよ……
+きさまの　たましいを　くらおう▼
 ……　……　……　……　……　……　
 ……　……　……　……　……　……</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-14T15:46:15" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-23T05:32:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-14T15:46:15" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-23T05:32:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>声『我は
-力を　使いすぎた　ようだ……▼
-弱き者よ
-お主の　力を　頂くぞ▼
+			<Text>声『我は　力を　使い果たした
+されど　消えるわけには　いかぬ▼
+力　弱き　者よ……
+貴様の　たましいを　くらおう▼
 ……　……　……　……　……　……　
 ……　……　……　……　……　……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:49" />
+				Time="2011-11-23T05:32:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:49" />
+				Time="2011-11-23T05:32:18" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

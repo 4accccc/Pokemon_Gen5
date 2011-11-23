@@ -416,7 +416,7 @@
 もう　きょうと　いう　きょうは
 ゆるさない！　かくごしてっ！！</language>
 		<language name="JPN_KANJI" width="256">モニカ『ちょっと　ちょっと！
-なんで　そんな　ヘンなもの▽
+何で　そんな　ヘンなもの▽
 買って　きちゃうのよっ！？▼
 そもそも　私ばっかりに
 働かせて　[1:00:トレーナー名:1]は▽
@@ -437,7 +437,7 @@
 ママ　じゃないし　ぎんこうでも▽
 ないんだからねっ！</language>
 		<language name="JPN_KANJI" width="256">モニカ『知らないっ！！▼
-わたしは　[1:00:トレーナー名:1]の
+私は　[1:00:トレーナー名:1]の
 ママ　じゃないし　銀行でも▽
 ないんだからねっ！</language>
 	</row>
@@ -470,7 +470,7 @@
 	<row id="pw_event1_react_enemy_2">
 		<language name="JPN" width="256">モニカ『なに　わらってるのよ！！
 アンタ　いいかげんに　しなさいよ！</language>
-		<language name="JPN_KANJI" width="256">モニカ『なに　笑ってるのよ！！
+		<language name="JPN_KANJI" width="256">モニカ『何で　笑ってるのよ！！
 アンタ　いい加減に　しなさいよ！</language>
 	</row>
 	<row id="pw_event2_hero_0">
@@ -544,10 +544,10 @@
 わたしに　ちょうだい！▼
 そうしたら　ゆるしてあげても　いいわ</language>
 		<language name="JPN_KANJI" width="256">モニカ『ハアッ……▼
-じゃあ　さっき　かってきた
-へんな　モンスターボールを▽
-わたしに　ちょうだい！▼
-そうしたら　ゆるしてあげても　いいわ</language>
+じゃあ　さっき　買ってきた
+変な　モンスターボールを▽
+私に　ちょうだい！▼
+そうしたら許してあげても　いいわ</language>
 	</row>
 	<row id="pw_event3_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんなあ……</language>
@@ -575,29 +575,29 @@
 かってに　ひらいてるの！！▼
 ちょっと　[1:00:トレーナー名:1]！
 ヘンな　イタズラは　やめてよ！</language>
-		<language name="JPN_KANJI" width="256">モニカ『ちょっと　なに　コレ！？▼
-なんで　モンスターボールが
+		<language name="JPN_KANJI" width="256">モニカ『ちょっと　何コレ！？▼
+何で　モンスターボールが
 勝手に　開いてるの！！▼
 ちょっと　[1:00:トレーナー名:1]！
 ヘンな　イタズラは　やめてよ！</language>
 	</row>
 	<row id="pw_event3_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『なに　いってんの……？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なに　いってんの……？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『何　言ってんの……？</language>
 	</row>
 	<row id="pw_event3_enemy_4">
 		<language name="JPN" width="256">モニカ『ちっ　ちょっと！！▼
 なにこれ！　すいこまれる！！▼
 [1:00:トレーナー名:1]！！　たすけてっ！！</language>
 		<language name="JPN_KANJI" width="256">モニカ『ちっ　ちょっと！！▼
-なにこれ！　吸い込まれる！！▼
+何これ！　吸い込まれる！！▼
 [1:00:トレーナー名:1]！！　助けてっ！！</language>
 	</row>
 	<row id="pw_event3_hero_5">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『しらないよ……
 ボクは　なにも……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『知らないよ……
-アタシは　なにも……</language>
+アタシは　何も……</language>
 	</row>
 	<row id="pw_event3_enemy_5">
 		<language name="JPN" width="256">モニカ『キャーッ！！</language>
@@ -743,9 +743,9 @@
 	</row>
 	<row id="pw_event5_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『うわ！！　ちょっと！！
-なに　するのよ！！</language>
+やめてよ！　何するの！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『うわ！！　ちょっと！！
-なに　するのよ！！</language>
+やめてよ！　何するの！！</language>
 	</row>
 	<row id="pw_event5_enemy_2">
 		<language name="JPN" width="256">モニカ『こんなもの……</language>
@@ -777,9 +777,9 @@
 開いていくのよっ！！</language>
 	</row>
 	<row id="pw_event5_hero_5">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ちょっと！　なにしてるの！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ちょっと！　おねえちゃん！
 ボールを　ひらいちゃ　ダメっ！！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ちょっと！　なにしてるの！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ちょっと！　お姉ちゃん！
 ボールを　開いちゃ　ダメっ！！</language>
 	</row>
 	<row id="pw_event5_enemy_5">
@@ -798,7 +798,7 @@
 		<language name="JPN" width="256">モニカ『キャッー！！
 ボールに　ひきよせられるっ！！</language>
 		<language name="JPN_KANJI" width="256">モニカ『キャッー！！
-ボールに　ひきよせられるっ！！</language>
+ボールに　引き寄せられるっ！！</language>
 	</row>
 	<row id="pw_event5_enemy_7">
 		<language name="JPN" width="256">モニカ『キャーーッ！！</language>

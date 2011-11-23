@@ -20076,10 +20076,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName ]キッド</Text>
+			<Text>[Name:PokemonName ]マン</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T10:49:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-23T07:00:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -20087,10 +20087,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName ]キッド</Text>
+			<Text>[Name:PokemonName ]マン</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T10:49:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-23T07:00:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -20120,10 +20120,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName ]ガール</Text>
+			<Text>[Name:PokemonName ]マン</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-11-08T10:49:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-23T07:00:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

@@ -407,15 +407,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『ゆけ！　我が　ポケモン！
-波止場で　暴れまわるのだ！
+波止場で　暴れまわるのだ！▼
 その　すきに　我輩は……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T03:40:32" />
+				Time="2011-11-22T07:04:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T03:40:32" />
+				Time="2011-11-22T07:04:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2057,15 +2057,15 @@
 			Language="JPN_KANJI">
 			<Text>ハチクマン『ファー　ファファファ！
 我輩は　忙しいのだ！！▼
-テキパキと　片を　つけるのが
+テキパキと　カタを　つけるのが
 デキる　怪人　なのだよ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T03:40:32" />
+				Time="2011-11-22T07:04:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T03:40:32" />
+				Time="2011-11-22T07:04:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

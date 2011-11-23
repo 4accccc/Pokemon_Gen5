@@ -72,27 +72,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]はかせ（みらいは
-こんなふうに　なってしまうのか……？</Text>
+			<Text>[Name:TrainerName Idx="1" ]はかせ『これは……▼
+（これが……　みらい　なのか……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-22T10:30:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-22T10:30:40" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]博士（未来は
-こんなふうに　なってしまうのか……？</Text>
+			<Text>[Name:TrainerName Idx="1" ]博士『……▼
+（これが……　未来　なのか……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-22T10:30:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-22T10:30:40" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -774,31 +774,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]はかせ（タイムスリップ
-してきたことを　はなすか？▼
-しんじて　もらえるとは
-おもえないが……</Text>
+			<Text>[Name:TrainerName Idx="1" ]はかせ『むう……▼
+（タイムスリップ　してきたことを
+はなすべきか……？▽
+しんじてもらえるとは　おもえないが……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-22T10:30:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-22T10:30:40" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]博士（タイムスリップ
-してきたことを　話すか？▼
-信じて　もらえるとは
-思えないが……</Text>
+			<Text>[Name:TrainerName Idx="1" ]博士『むう……▼
+（タイムスリップ　してきたことを
+話すべきか？▽
+信じてもらえるとは　思えないが……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-22T10:30:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-22T10:30:40" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

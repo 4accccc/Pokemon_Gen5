@@ -1408,28 +1408,28 @@ Eからの　連絡は　まだか！！</Text>
 			<Text>つうしん『……そうか▼
 ……　……　……　……▼
 にんげんの　かんじょう……
-おろかなものだ……</Text>
+おろかとしか　いえんな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:04" />
+				Time="2011-11-22T09:56:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:04" />
+				Time="2011-11-22T09:56:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信『……そうか▼
 ……　……　……　……▼
 人間の　感情……
-おろかな　ものだ……</Text>
+おろかなとしか　言えんな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:04" />
+				Time="2011-11-22T09:56:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:04" />
+				Time="2011-11-22T09:56:32" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2298,14 +2298,14 @@ Eは　力尽きた……▼
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『E　か……▼
 す……　すまない……
-俺は……　もう　動けない……</Text>
+オレは……　もう　動けない……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:04" />
+				Time="2011-11-22T09:56:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:04" />
+				Time="2011-11-22T09:56:32" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2322,7 +2322,7 @@ Eは　力尽きた……▼
 			Language="JPN">
 			<Text>つうしん『なるほど……▼
 ……では　のこりの　さくせんは
-わたし　ひとりで　すすめる▼
+わたし　ひとりで　すすめる……▼
 ……まもなく　マザーシップが
 じょうくうに　あらわれるだろう……▼
 だが　わたしの　ちからでは
@@ -2334,17 +2334,17 @@ Eは　力尽きた……▼
 はかい　するのだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:04" />
+				Time="2011-11-22T09:56:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:04" />
+				Time="2011-11-22T09:56:32" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信『なるほど……▼
 ……では　残りの　作戦は
-私　ひとりで　進める▼
+私　ひとりで　遂行する……▼
 ……まもなく　マザーシップが
 上空に　現れるだろう……▼
 だが　私の　力では
@@ -2356,11 +2356,11 @@ Eは　力尽きた……▼
 破壊　するのだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:04" />
+				Time="2011-11-22T09:56:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:04" />
+				Time="2011-11-22T09:56:32" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

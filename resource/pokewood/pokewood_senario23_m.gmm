@@ -1095,14 +1095,14 @@
 		<language name="JPN" width="256">……もんばん　だった　ぬいぐるみと
 いっしょに　まほうのオリから▽
 ぬけだした　[1:00:トレーナー名:1]おうじ▼
-すこし　やさしさを　おぼえ
+すこしの　やさしさを　おぼえ
 ひとまわり　つよくなった　おうじなら▽
 きっと　さいごの　しれんも▽
 のりこえられる　だろう……</language>
 		<language name="JPN_KANJI" width="256">……門番だった　ぬいぐるみと
 一緒に　魔法のオリから▽
 脱げ出した　[1:00:トレーナー名:1]王子▼
-すこし　優しさを　おぼえ
+少しの　優しさを　覚え
 ひとまわり　強くなった　王子なら▽
 きっと　最後の　試練も▽
 乗り越えられる　だろう……</language>
@@ -1123,10 +1123,10 @@
 	</row>
 	<row id="pw_event10_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『……ああ
-この　みがわりの　ぬいぐるみの　ことか▼
+この　みがわりの　ぬいぐるみの　こと？▼
 そういえば　きみに　そっくり　だな</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『……ああ
-この　みがわりの　ぬいぐるみの　ことか▼
+この　みがわりの　ぬいぐるみの　こと？▼
 そういえば　君に　そっくり　だな</language>
 	</row>
 	<row id="pw_event10_enemy_2">
@@ -1152,42 +1152,47 @@
 	</row>
 	<row id="pw_event10_enemy_3">
 		<language name="JPN" width="256">ぬいぐるみ『はは……　まさか▼
-でも　このせかいに　いると　もとの
-じぶんの　きおくが　きえていくから▽
-むかしのことは　おぼえてないからな▼
+でも　このせかいに　いると
+むかしのことは　わすれていくからねー▼
 ちなみに　おにいさんの　なまえは？</language>
-		<language name="JPN_KANJI" width="256">ぬいぐるみ『はは……　まさか</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『はは……　まさか▼
+でも　この世界に　いると
+昔のことは　忘れていくからねー▼
+ちなみに　お兄さんの　名前は？</language>
 	</row>
 	<row id="pw_event10_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『えーと……
 たしか……　けびん……　だったかな？▼
-ちちうえも　ははうえも　にいさんのことは　はなしたがらない　からね……▼
+ちちうえも　ははうえも　にいさんのこと
+はなしたがらない　からねー▼
 こっそり　だいじんに　きいただけで……▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ふーん▼
-まあ　でも　いつか　元の
-姿に　元に　戻れると　いいな！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『えーと……
+確か……　けびん……　だったかな？▼
+父上も　母上も　兄さんのこと
+話したがらない　からねー▼
+こっそり　大臣に　聞いただけで……▼</language>
 	</row>
 	<row id="pw_event10_enemy_4">
-		<language name="JPN" width="256">ぬいぐるみ『まあね……▼
-ボクも　ここから　でられれば
-まほうが　とけるの　かも……</language>
-		<language name="JPN_KANJI" width="256">ぬいぐるみ『まあね……▼
-ボクも　ここから　出られれば
-魔法が　とけるの　かも……</language>
+		<language name="JPN" width="256">ぬいぐるみ『けびん……▼
+ふーん……　そうなんだ……</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『けびん……▼
+ふーん……　そうなんだ……</language>
 	</row>
 	<row id="pw_event10_hero_5">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『……▼
-（ほんとの　すがた
-みて　みたいな……）</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『……▼
-（ほんとの　姿
-見てみたいな……）</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『まあ　いいや！▼
+でも　いつか　きみも　もとの　すがたに
+もどれると　いいな！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『まあ　いいや！▼
+でも　いつか　君も　元の　姿に
+戻れると　いいな！</language>
 	</row>
 	<row id="pw_event10_enemy_5">
-		<language name="JPN" width="256">ぬいぐるみ『……
-（おおきく　なりやがって……）</language>
-		<language name="JPN_KANJI" width="256">ぬいぐるみ『……
-（大きく　なりやがって……）</language>
+		<language name="JPN" width="256">ぬいぐるみ『……▼
+（そうか……　[1:00:トレーナー名:1]……
+おおきく　なりやがって……）</language>
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『……▼
+（そうか……　[1:00:トレーナー名:1]……
+大きく　なりやがって……）</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

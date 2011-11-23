@@ -625,11 +625,11 @@ Eからの　連絡は　まだなの……</language>
 		<language name="JPN" width="256">つうしん『……そうか▼
 ……　……　……　……▼
 にんげんの　かんじょう……
-おろかなものだ……</language>
+おろかとしか　いえんな……</language>
 		<language name="JPN_KANJI" width="256">通信『……そうか▼
 ……　……　……　……▼
 人間の　感情……
-おろかな　ものだ……</language>
+おろかなとしか　言えんな……</language>
 	</row>
 	<row id="pw_event1_react_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ほんきで　いってるの？</language>
@@ -814,15 +814,15 @@ Eは　力尽きた……▼
 	<row id="pw_event4_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『E　か……▼
 す……　すまない……
-オレは……　もう　うごけない……</language>
+私は……　もう　うごけない……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『E　か……▼
 す……　すまない……
-俺は……　もう　動けない……</language>
+私は……　もう　動けない……</language>
 	</row>
 	<row id="pw_event4_hero_2">
 		<language name="JPN" width="256">つうしん『なるほど……▼
 ……では　のこりの　さくせんは
-わたし　ひとりで　すすめる▼
+わたし　ひとりで　すすめる……▼
 ……まもなく　マザーシップが
 じょうくうに　あらわれるだろう……▼
 だが　わたしの　ちからでは
@@ -834,7 +834,7 @@ Eは　力尽きた……▼
 はかい　するのだ……</language>
 		<language name="JPN_KANJI" width="256">通信『なるほど……▼
 ……では　残りの　作戦は
-私　ひとりで　進める▼
+私　ひとりで　遂行する……▼
 ……まもなく　マザーシップが
 上空に　現れるだろう……▼
 だが　私の　力では

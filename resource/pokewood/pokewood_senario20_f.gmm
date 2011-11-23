@@ -358,11 +358,13 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そ　そんなあ……</language>
 	</row>
 	<row id="pw_turn_enemy_0">
-		<language name="JPN" width="256">カミロ（かくごしな
+		<language name="JPN" width="256">カミロ『フッ……▼
+（さあさあ　かくごしな
 もっと　へコませて　やるぜ▼
 オレに　こくはく　したことを
 こうかい　するほどに……だぜ</language>
-		<language name="JPN_KANJI" width="256">カミロ（覚悟しな
+		<language name="JPN_KANJI" width="256">カミロ『フッ……▼
+（さあさあ　覚悟しな
 もっと　へコませて　やるぜ▼
 オレに　告白　したことを
 後悔　するほどに……だぜ</language>
@@ -424,9 +426,11 @@
 答えて　もらうまで　帰りません！</language>
 	</row>
 	<row id="pw_event0_enemy_2">
-		<language name="JPN" width="256">カミロ（ませた　おじょうさんだぜ
+		<language name="JPN" width="256">カミロ『ふっ……▼
+（まったく　ませた　おじょうさんだぜ
 ちょっとばかり　イジメたく　なってきた</language>
-		<language name="JPN_KANJI" width="256">カミロ（ませた　おじょうさんだぜ
+		<language name="JPN_KANJI" width="256">カミロ『ふっ……▼
+（まったく　ませた　お嬢さんだぜ
 ちょっとばかり　イジメたく　なってきた</language>
 	</row>
 	<row id="pw_event0_enemy_3">
@@ -444,11 +448,13 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『は　はい！　やります！</language>
 	</row>
 	<row id="pw_event0_enemy_4">
-		<language name="JPN" width="256">カミロ（たのしみだな……
+		<language name="JPN" width="256">カミロ『フッ……　いいんだね！▼
+（ヘヘヘ……　たのしみだな……
 オレ　じつは　おんなのコが▽
 なみだを　こらえる　すがたに▽
 グッと　きちまう　しょうぶんなのさ</language>
-		<language name="JPN_KANJI" width="256">カミロ（楽しみだな……
+		<language name="JPN_KANJI" width="256">カミロ『フッ……　いいんだね！▼
+（ヘヘヘ……　楽しみだな……
 オレ　実は　女のコが▽
 涙を　こらえる　姿に▽
 グッと　きちまう　性分なのさ</language>
@@ -458,14 +464,16 @@
 		<language name="JPN_KANJI" width="256">ドーブル『ブルッ　ブルルフ……</language>
 	</row>
 	<row id="pw_event0_enemy_6">
-		<language name="JPN" width="256">カミロ（ドーブルちゃんも
+		<language name="JPN" width="256">カミロ『よーし　いくぜッ！▼
+（ドーブルちゃんも
 やるきマンマン　だぜ▼
 いままで　オレに
 こくはくしてきた　おんなのコたち……▼
 なかせた　かずは　ほしのかず
 それでも　みつからないぜ▽
 マイ　スイートハニー……</language>
-		<language name="JPN_KANJI" width="256">カミロ（ドーブルちゃんも
+		<language name="JPN_KANJI" width="256">カミロ『よーし　いくぜッ！▼
+（ドーブルちゃんも
 やる気マンマン　だぜ▼
 今まで　オレに
 告白してきた　女のコたち……▼
@@ -475,9 +483,11 @@
 	</row>
 	<row id="pw_event0_hero_7">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『カ　カミロさん！
+はじめるまえに　ひとつだけ▽
 おねがいが　あります！▽
 もし　わたしが　かったら……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『カ　カミロさん！
+始める前に　ひとつだけ▽
 お願いが　あります！▽
 もし　僕が　勝ったら……</language>
 	</row>
@@ -536,10 +546,12 @@
 あなたは　素晴らしい　人です！</language>
 	</row>
 	<row id="pw_event1_enemy_1">
-		<language name="JPN" width="256">カミロ（マジかよ……
+		<language name="JPN" width="256">カミロ『そっ　そうか……▼
+（マジかよ……
 このコ　タフなんだな……▽
 じゃあ　てかげんは　しないぜ</language>
-		<language name="JPN_KANJI" width="256">カミロ（マジかよ……
+		<language name="JPN_KANJI" width="256">カミロ『そっ　そうか……▼
+（マジかよ……
 このコ　タフなんだな……▽
 じゃあ　手加減は　しないぜ</language>
 	</row>
@@ -604,12 +616,14 @@
 ちっとも　うれしくなんか……</language>
 	</row>
 	<row id="pw_event2_enemy_1">
-		<language name="JPN" width="256">カミロ（へんだな……　なぜだろう
+		<language name="JPN" width="256">カミロ『……▼
+（へんだな……　なぜだろう
 わるい　きは　しない……▼
 あのコ　オレの　ポケモンの
 こうげきを　すべて　うけいれて……▼
 なんて　こころの　ひろい　コだ……</language>
-		<language name="JPN_KANJI" width="256">カミロ（変だな……　なぜだろう
+		<language name="JPN_KANJI" width="256">カミロ『……▼
+（変だな……　なぜだろう
 悪い気は　しない……▼
 あのコ　オレの　ポケモンの
 攻撃を　すべて　受け入れて……▼
@@ -620,12 +634,14 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『えへへ</language>
 	</row>
 	<row id="pw_event2_enemy_2">
-		<language name="JPN" width="256">カミロ（はあ……
+		<language name="JPN" width="256">カミロ『……▼
+（はあ……
 どんなに　きびしい　ことを　いっても▽
 ニコニコしている　あの　えがお……▼
 ハッ！　オレ　いつのまにか
 あのコの　ことを……</language>
-		<language name="JPN_KANJI" width="256">カミロ（はあ……
+		<language name="JPN_KANJI" width="256">カミロ『……▼
+（はあ……
 どんなに　厳しい事を　いっても▽
 ニコニコしている　あの　笑顔……▼
 ハッ！　オレ　いつのまにか
@@ -644,11 +660,13 @@
 付き合ってやっても　いいぜ！</language>
 	</row>
 	<row id="pw_event2_enemy_4">
-		<language name="JPN" width="256">カミロ（なんだろう……　ふしぎだ
+		<language name="JPN" width="256">カミロ『ふう……▼
+（なんだろう……　ふしぎだ
 いっしょにいて　やすらかな▽
 きもちになれる　おんなのコ……▼
 マイ　スイートハニー……！？</language>
-		<language name="JPN_KANJI" width="256">カミロ（何だろう……　不思議だ
+		<language name="JPN_KANJI" width="256">カミロ『ふう……▼
+（何だろう……　不思議だ
 一緒にいて　安らかな▽
 気持ちになれる　女のコ……▼
 マイ　スイートハニー……！？</language>

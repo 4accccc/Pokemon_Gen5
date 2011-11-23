@@ -372,46 +372,48 @@
 [1:00:トレーナー名:1]さーん</language>
 	</row>
 	<row id="pw_event0_enemy_0">
-		<language name="JPN" width="256">いらいぬし『この　せきぞうは
+		<language name="JPN" width="256">いらいぬし『いいですか？
+この　せきぞうは　ですねえ▽
 こだいぶんめいの　なぞを▽
 ときあかす　だいはっけん　なんです▼
 どうか　のりうつっている　ヤツを
 おいはらって　くださいませんか▼
 いろいろ　かたりかけて　きますが
-しんちょうに　おねがいします▼
-こたえに　まちがえると
-えらいめに　あいますから</language>
-		<language name="JPN_KANJI" width="256">依頼主『この　石像は
+しんちょうに　おねがいしますよ▼
+ヤツめ　きにいらない　へんじを　すると
+エラいめに　あわせてきますから</language>
+		<language name="JPN_KANJI" width="256">依頼主『いいですか？
+この　石像は　ですねえ▽
 古代文明の　なぞを▽
 解き明かせる　大発見　なんです▼
 どうか　のりうつっている　ヤツを
 追い払って　くださいませんか▼
 いろいろ　語りかけて　きますが
-慎重に　お願いします▼
-間違えると　えらい目に
-合いますから</language>
+慎重に　お願いしますよ▼
+ヤツめ　気にいらない　返事を　すると
+エラい目に　あわせてきますから</language>
 	</row>
 	<row id="pw_event0_enemy_1">
-		<language name="JPN" width="256">じょしゅA『わたしなんて
+		<language name="JPN" width="256">わかい　じょしゅ『わたし　なんて
 おこらせて　ボコボコに　なりました……▽
-おきを　つけください</language>
-		<language name="JPN_KANJI" width="256">助手A『わたしなんて
-怒らせて　ボコボコに　なりました……▽
-おきを　つけください</language>
-	</row>
-	<row id="pw_event0_enemy_2">
-		<language name="JPN" width="256">じょしゅB『わたし　なんて
-けいかい　されてしまい▽
-こうげき　できませんでした……▽
 どうか　おきを　つけて</language>
-		<language name="JPN_KANJI" width="256">助手B『私　なんて
-警戒されて　しまい▽
-攻撃できませんでした……▽
+		<language name="JPN_KANJI" width="256">若い　助手『私　なんて
+怒らせて　ボコボコに　なりました……▽
 どうか　お気を　つけて</language>
 	</row>
+	<row id="pw_event0_enemy_2">
+		<language name="JPN" width="256">おいた　じょしゅ『フガガ……
+ワシは　けいかい　されてしまい▽
+こうげきすら　できんかったよ▽
+どうか　きを　つけてなあ……</language>
+		<language name="JPN_KANJI" width="256">老いた　助手『フガガ……
+ワシは　警戒されてしまい▽
+攻撃すら　出来んかったよ▽
+どうか　気を　つけてなあ……</language>
+	</row>
 	<row id="pw_event0_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『やってみます！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『やってみます！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『やって　みましょう</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『やってみましょう</language>
 	</row>
 	<row id="pw_event0_enemy_3">
 		<language name="JPN" width="256">こえ『わが　ねむりを　さますもの
@@ -457,7 +459,7 @@
 	</row>
 	<row id="pw_event1_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『あなたを　けしさるもの！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あなたを　消しさるもの！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あなたを　消しさる者の！</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
 		<language name="JPN" width="256">こえ『われを　けすだと……
@@ -471,7 +473,7 @@
 	</row>
 	<row id="pw_event1_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『あなたを　とむらうもの！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あなたを　とむらうもの！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あなたを　とむらう者！</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
 		<language name="JPN" width="256">こえ『ほう……</language>
@@ -602,11 +604,11 @@
 	<row id="pw_event4_enemy_1">
 		<language name="JPN" width="256">こえ『われは　つよきもの　なり
 それ　いがい　きおく　なし……▼
-ただ　たたかいの　さなかで　のみ▽
+ただ　たたかいの　さなかで　のみ
 ありし　ひの　きおく　よみがえるのだ</language>
 		<language name="JPN_KANJI" width="256">声『我は　強き者　なり
 それ以外　記憶　なし……▼
-ただ　戦いの　最中で　のみ▽
+ただ　戦いの　最中で　のみ
 在りし日の　記憶　よみがえるのだ</language>
 	</row>
 	<row id="pw_event4_hero_2">
@@ -724,22 +726,22 @@
 さあ　最後の　一撃を　与えん！</language>
 	</row>
 	<row id="pw_event6_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『うっ……
-なんて　つよさなの……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『うっ……
-なんて　つよさなの……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『くっ……　ダメ……
+かなわないわ　これは……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『くっ……　ダメだ……
+かなわないわ　これは……</language>
 	</row>
 	<row id="pw_event6_enemy_0">
-		<language name="JPN" width="256">こえ『われは
-ちからを　つかいすぎた　ようだ……▼
-よわきものよ
-おぬしの　ちからを　いただくぞ▼
+		<language name="JPN" width="256">こえ『われは　ちからを　つかいすぎた
+されど　きえるわけには　いかぬ▼
+ちから　よわき　ものよ……
+きさまの　たましいを　くらおう▼
 ……　……　……　……　……　……　
 ……　……　……　……　……　……</language>
-		<language name="JPN_KANJI" width="256">声『我は
-力を　使いすぎた　ようだ……▼
-弱き者よ
-お主の　力を　頂くぞ▼
+		<language name="JPN_KANJI" width="256">声『我は　力を　使い果たした
+されど　消えるわけには　いかぬ▼
+力　弱き　者よ……
+貴様の　たましいを　くらおう▼
 ……　……　……　……　……　……　
 ……　……　……　……　……　……</language>
 	</row>

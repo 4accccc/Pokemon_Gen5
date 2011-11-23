@@ -2634,29 +2634,27 @@ UFOの　テストと　偽り
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『ウウッ……▼
 ……　くそっ！　……　……
-……　……　もう……▼
-……　……　……</Text>
+……　……　もう……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-22T09:30:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-22T09:30:35" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ウウッ……▼
 ……　くそっ！　……　……
-……　……　もう……▼
-……　……　……</Text>
+……　……　もう……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-22T09:30:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-22T09:30:35" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

@@ -379,8 +379,8 @@
 すべてを　破壊　しつくせっ！</language>
 	</row>
 	<row id="pw_event0_hero_1">
-		<language name="JPN" width="256">？？？『まってください！！</language>
-		<language name="JPN_KANJI" width="256">？？？『待ってください！！</language>
+		<language name="JPN" width="256">？？？『おまちなさいー！！</language>
+		<language name="JPN_KANJI" width="256">？？？『お待ちなさいー！！</language>
 	</row>
 	<row id="pw_event0_enemy_2">
 		<language name="JPN" width="256">ハチクマン『ヌ……　なにものだ！
@@ -390,14 +390,13 @@
 	</row>
 	<row id="pw_event0_hero_3">
 		<language name="JPN" width="256">？？？『しんじつと　りそうの　ししゃ
-[1:02:ポケモンニックネーム:0]マン　とうじょうです！▼
-おいおい！　ハチクマンくん！
-わるさは　ゆるしませんよー！</language>
+[1:02:ポケモンニックネーム:0]マンの　とうじょうです！▼
+おーい　おいおい！　ハチクマンくん！
+キミねえ　わるさは　いけませんよー！</language>
 		<language name="JPN_KANJI" width="256">？？？『真実と　理想の　使者
-[1:02:ポケモンニックネーム:0]マン　参上！▼
-おい！　ハチクマン！▼
-おいおい！　ハチクマン君！
-悪さは　許しませんよー！</language>
+[1:02:ポケモンニックネーム:0]マンの　参上です！▼
+おーい　おいおい！　ハチクマン君！
+キミねえ　悪さは　いけませんよー！</language>
 	</row>
 	<row id="pw_event1_hero_0">
 		<language name="JPN" width="256">ゆうえんちのきゃく『わー！　なんだ！
@@ -414,7 +413,7 @@
 きさまを　ひざまづかせて　やろう！▼
 さあ！　かくごは　よいかッ！！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『我輩の　ポケモンを
-たったの　一撃で……▽
+たったの　一撃だと……▽
 やるではないか！　[1:02:ポケモンニックネーム:0]マン！▼
 だが　しかし！　だが　しかし！▼
 我輩の　悪の奥義で
@@ -423,7 +422,7 @@
 	</row>
 	<row id="pw_event1_react_hero_0">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]マン『のぞむところです！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]マン『望むところだ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]マン『望むところです！</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
 		<language name="JPN" width="256">ハチクマン『いいだろう！▼
@@ -704,10 +703,10 @@
 	<row id="pw_event6_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]マン『ひいい……▼
 やはり　わたしに　ヒーローなんて
-むり　だったんですね……</language>
+むり　だったんですねえ……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]マン『ひいい……▼
 やはり　私に　ヒーローなんて
-無理　だったんですね……</language>
+無理　だったんですねえ……</language>
 	</row>
 	<row id="pw_event6_enemy_1">
 		<language name="JPN" width="256">ハチクマン『ファー　ファファファ！！</language>
@@ -720,7 +719,7 @@
 ……しかし▼
 おびえながらも　ひっしに
 たたかった　おとこの　ゆうしを▽
-わすれる　ものは　いないだろう……▼
+わすれるものは　いないだろう……▼
 ありがとう！
 [1:02:ポケモンニックネーム:0]マン！▼
 さらば！
