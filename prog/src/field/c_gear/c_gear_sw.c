@@ -169,7 +169,6 @@ enum{
 #define RING_COLOR_SET_NUM_ALL  ( RING_COLOR_SET_NUM*3 ) //1セット3色
 #define RING_COLOR_DEF_NO 　    ( 0 )  //リングカラーのデフォルト
 #define RING_COLOR_BASE_NO      ( RING_COLOR_MAX-1 )  //リングの地味カラーNo
-//#define RING_COLOR_BOOT_NO       ( RING_COLOR_MAX-1 ) //リングのBOOT時のカラーNo
 
 #define FRAME_COLOR_TRANS_POS_BG_PALNO  (0) //フレームカラー転送場所のパレットNo
 #define RING_COLOR_TRANS_POS_BG_PALNO   (1) //リングカラー転送場所のパレットNo
@@ -432,7 +431,7 @@ enum{
   //↑Ring4に属してる(ACT_LOGO以外)
   ACT_CROSS,
   ACT_CONNECT,
-  //↑Ring1に属してる
+  //↑Ring0に属してる
   ACT_IR,
   ACT_IR_RING,
   ACT_WIRELESS,
@@ -3148,7 +3147,7 @@ static void ring2_FesInfoAnmCore( C_GEAR_WORK* pWork, u8 evy )
 {
   //リングベースの3色に適用
   SoftFadePfd( pWork->pfade_ptr, FADE_SUB_BG,
-     RING_1*RING_COLOR_SET_NUM+RING_COLOR_TRANS_POS_BG_START, RING_COLOR_SET_NUM, evy, 0x7FFF );
+     RING_0*RING_COLOR_SET_NUM+RING_COLOR_TRANS_POS_BG_START, RING_COLOR_SET_NUM, evy, 0x7FFF );
 }
 
 /*
@@ -3403,7 +3402,7 @@ static void _gearRingObjVisibleSet(C_GEAR_WORK* pWork, u8 ring_id, BOOL visible_
 
   //関連づいたOBJの表示制御
   switch( ring_id ){
-  case RING_1: //内から2番目
+  case RING_0: //内から1番目
     if( pWork->power_flag ){
       GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[ACT_CROSS], visible_f );
       if( pWork->connect_flag ){ //一人も通信バッファにいない時は、CONNECT表示は強制Off
