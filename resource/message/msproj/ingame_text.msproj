@@ -3842,6 +3842,102 @@
 					</WidthCalcInfo>
 				</Default>
 			</Tag>
+			<Tag
+				TagName="FesMissionName"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<Japanese>フェスミッション名</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>ハイリンクフェスミッション名
+（日本15文字、海外30文字）</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+					<ListItem
+						Name="NewItem">
+						<MultilingualName />
+					</ListItem>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="d545ff2d-63d0-43a4-b954-eba129dc7381">
+						<Pixels>195</Pixels>
+						<AffectedMagnification>True</AffectedMagnification>
+					</WidthCalcInfo>
+				</Default>
+			</Tag>
+			<Tag
+				TagName="ResortType"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<Japanese>リゾート種類名</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>ジョインアベニュー（旧レゾナンスリゾート）　種類名
+（日本８文字、海外16文字）</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+					<ListItem
+						Name="NewItem">
+						<MultilingualName />
+					</ListItem>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="d545ff2d-63d0-43a4-b954-eba129dc7381">
+						<Pixels>104</Pixels>
+						<AffectedMagnification>True</AffectedMagnification>
+					</WidthCalcInfo>
+				</Default>
+			</Tag>
+			<Tag
+				TagName="ResortTitle"
+				HasInside="False"
+				CompareError="Strict">
+				<MultilingualName>
+					<Japanese>リゾート肩書き</Japanese>
+				</MultilingualName>
+				<Comment>
+					<Japanese>ジョインアベニュー（旧レゾナンスリゾート）の肩書き
+（日本16文字、海外32文字）</Japanese>
+				</Comment>
+				<Parameter
+					Name="Idx"
+					Type="UInt8"
+					Default="0"
+					LimitType="None">
+					<MultilingualName>
+						<Japanese>番号</Japanese>
+					</MultilingualName>
+					<ListItem
+						Name="NewItem">
+						<MultilingualName />
+					</ListItem>
+				</Parameter>
+				<Default>
+					<WidthCalcInfo
+						Calculator="d545ff2d-63d0-43a4-b954-eba129dc7381">
+						<Pixels>208</Pixels>
+						<AffectedMagnification>True</AffectedMagnification>
+					</WidthCalcInfo>
+				</Default>
+			</Tag>
 		</TagGroup>
 		<TagGroup
 			GroupName="Digit">
