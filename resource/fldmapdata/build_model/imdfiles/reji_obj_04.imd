@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="shiiyama_yukiko" host="W00229" date="2011-11-23T19:02:34" source="reji_obj_04.mb"/>
+	<create user="shiiyama_yukiko" host="W00229" date="2011-11-24T21:12:14" source="reji_obj_04_s.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="shiiyama_yukiko" host="W00229" date="2011-11-23T19:02:34" source="reji_obj_04.mb"/>
+<original_create user="shiiyama_yukiko" host="W00229" date="2011-11-24T21:12:14" source="reji_obj_04_s.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -186,39 +186,39 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="reji_obj2b_pl"
-		path="C:/home/swan_data3d/build_model/indoor/reji_obj_01/tex/reji_obj2b.tga"
+		path="C:/home/swan_data3d/build_model/indoor/reji_obj_04/tex/reji_obj2b.tga"
 	>
 		<bitmap size="256">
 			1111 1111 1111 1111 1111 1111 1111 1111
 			1111 1111 1111 1111 1111 1111 1111 1111
 			1111 1111 1111 1111 1111 1111 1111 1111
-			2222 2222 2222 2222 3332 3333 3333 2233
-			2225 2222 2222 2222 3332 3333 3333 5233
-			6656 6666 6666 6666 3336 3333 3333 6533
-			6656 6666 6666 6666 3b46 0440 4443 6533
-			9656 9999 9999 9999 0b48 ca00 aa03 6544
-			9656 9999 9999 9999 bc48 aa30 aa30 65cb
-			9656 8899 9998 9999 3c48 0a30 aa33 65cb
-			9856 8999 9898 9999 bc48 c7cc aacc 65cb
-			8856 9998 8899 8888 c488 77aa aaa7 65cb
-			9856 9999 c489 bbbb c488 77aa aaa7 65cb
-			9656 9999 c489 ba0b c488 37aa aaa7 65cb
-			9656 9999 ab48 a330 4884 30ac aa37 65cb
-			9856 8899 ab48 a0c3 484c 33ab aa33 65cb
-			8856 9899 ab48 33b0 94ba 03c4 aa3b 65cb
-			8656 8988 cc48 cc7c 84ba ccc4 aacc 65cb
-			8656 8988 7ac4 7777 4b77 bc45 aaaa 65cb
-			8656 8899 0ac4 3377 4770 bc45 aaaa 65cb
-			8656 8988 0ac4 0073 4770 a455 aaaa 65cb
-			5556 5555 0ac4 c370 4a73 4555 aaaa 65cb
-			5556 4555 03ac 7033 aa73 4554 aaac 65cb
-			5556 4555 b3ab cc03 ba73 4554 aaab 65cb
-			2256 4222 baac cbcb ccac 224c aac4 65cb
-			2256 4222 aaab aaaa aaaa 224b aab4 65cb
-			2256 c422 aaab aaaa aaaa 224b ab42 65cb
-			2256 c422 bbbb bbbb bbbb 224b bb42 65cb
-			3356 c433 cccc cccc cccc 333c c333 65cc
-			6556 6666 6666 6666 6666 6666 6666 6556
+			2222 2222 2222 2222 3332 3333 3331 2233
+			2225 2222 2222 2222 3332 3333 3331 5233
+			9257 6666 6666 6666 3426 3333 3331 7533
+			9257 6699 6666 6666 b266 144b 4443 7533
+			9257 7677 6777 7766 2666 1cbc bc05 7544
+			7257 a7a7 7aaa 7776 6777 51c2 bbc0 75dc
+			7257 aaa7 7aaa 7aa6 7777 0526 bbbc 75dc
+			7257 aaaa 77aa aaa7 7777 3567 bbdd 75dc
+			a257 aaaa 77aa aaa7 aaaa 2677 bbb8 75dc
+			a257 aaaa 777a aaa7 aaaa c67a bbb8 75dc
+			a257 aaaa 777a aaa7 aaaa 37aa bccc 75dc
+			a257 aaaa a77a aaaa aaaa 27aa c222 75dc
+			a257 aaaa aa77 aaaa aaaa 67aa 2666 75dc
+			a257 a777 aa77 aaaa 777a 777a 6666 75d2
+			7257 7777 aa77 aaaa 7777 6677 6666 7526
+			7257 7aa7 7777 7aaa 7777 6667 6666 7556
+			a257 aa77 7777 7a77 6777 6666 6666 7556
+			7257 77aa 5557 7777 6667 6666 6666 7556
+			6257 6676 cc25 7652 6666 6666 6666 7556
+			2257 6662 bc25 552c 6625 5666 5566 7555
+			5257 6625 bc25 52c8 6255 2556 5255 75dc
+			2257 5552 bc22 2c88 5552 5225 b522 75dc
+			2257 2222 bc22 4cbb 2222 2222 b222 75dc
+			2257 2222 bcc4 dcbb 2224 2222 bc22 75dc
+			2257 4222 cccc dccc 2224 2222 cc42 75dc
+			3357 d433 dddd dddd 3334 3333 d443 75dd
+			7557 7777 7777 7777 7777 7777 7777 7557
 			5555 5555 5555 5555 5555 5555 5555 5555
 			5555 5555 5555 5555 5555 5555 5555 5555
 		</bitmap>
@@ -270,7 +270,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="reji_obj3b_pl"
-		path="C:/home/swan_data3d/build_model/indoor/reji_obj_01/tex/reji_obj3b.tga"
+		path="C:/home/swan_data3d/build_model/indoor/reji_obj_04/tex/reji_obj3b.tga"
 	>
 		<bitmap size="64">
 			1225 1136 3121 6455 3776 3764 4aa6 8732
@@ -294,8 +294,8 @@
 		254b 254c 256d 298e 298f 29af 2dd1 31f3
 	</tex_palette>
 	<tex_palette index="2" name="reji_obj2b_pl" color_size="16">
-		18c6 18c7 18e9 1ce7 2108 212a 214c 2529
-		254c 256d 294a 2d6b 318c 7fff 7fff 7fff
+		18c6 18c7 18e9 1ce7 2108 212a 212b 214c
+		2529 254b 256d 294a 2d6b 318c 7fff 7fff
 	</tex_palette>
 	<tex_palette index="3" name="reji_obj3_pl" color_size="16">
 		216e 258f 2590 25b0 298f 29af 29b0 29b1
