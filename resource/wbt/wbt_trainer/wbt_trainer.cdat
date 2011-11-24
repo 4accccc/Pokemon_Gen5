@@ -19,7 +19,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		507, //切り札ポケモン
 	},
 	{ //001 ホミカ
 		POKETYPE_DOKU, //どく
@@ -41,7 +41,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		545, //切り札ポケモン
 	},
 	{ //002 アーティ
 		POKETYPE_MUSHI, //むし
@@ -173,7 +173,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 0, //AI
 		SEQ_BGM_VS_GYMLEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
-		0, //切り札ポケモン
+		593, //切り札ポケモン
 	},
 	{ //008 ベル
 		POKETYPE_MAX, //オールマイティ
