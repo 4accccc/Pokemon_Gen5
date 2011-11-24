@@ -46,7 +46,7 @@
 #include "../../battle/pokewood/pokewood_senario.h"
 
 
-#define SCROLL_DEBUG    //有効にするとスクロールの数値をプリント
+//#define SCROLL_DEBUG    //有効にするとスクロールの数値をプリント
 //==============================================================================
 //  定数定義
 //==============================================================================
@@ -733,11 +733,11 @@ GFL_PROC_RESULT PkwdEndrollProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     }else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
       tw->mode = 2;
     }
-#endif
+#else
     // ランダムでエンディングのパターンを切り替える
     // todo:ランダム切り替え仕様を詰める必要アリ
     tw->mode = GFUser_GetPublicRand(3);
-
+#endif
     break;
 
   case SEQ_SETUP:
