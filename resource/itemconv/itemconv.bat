@@ -18,6 +18,7 @@ itemconv_wb.exe wb_item.csv >itemconv_wb.err
 itemcnv_gmm.exe wb_item.csv >itemcnv_gmm.err
 ruby makelist_sort_by_abc.rb
 ruby makelist_sort_pocket.rb
+ruby makelist_onlyone_item.rb
 rem notepad itemconv_dp.err
 rem notepad itemcnv_gmm.err
 

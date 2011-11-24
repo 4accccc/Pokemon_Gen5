@@ -16,11 +16,13 @@ targetname = item_data
 targetname2 = item_battle_pocket
 
 POCKET_DATA = item_pocket_data.cdat
+ONLYONE_DATA = item_onlyone_flags.cdat
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
 TARGETDIR = $(PROJECT_ARCDIR)
+TARGETDIR_CDAT = $(PROJECT_PROGDIR)src/item
 
 #------------------------------------------------------------------------------
 #※gmm -> mstxt 変換関係
@@ -62,7 +64,7 @@ HASHDIR	= $(PROJECT_ROOT)/tools/hash/
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc $(MSPROJDIR)$(ITEMNAME_MSTXT) $(MSPROJDIR)$(ITEMINFO_MSTXT)
+do-build:	subdir $(TARGETDIR)/$(targetname).narc $(MSPROJDIR)$(ITEMNAME_MSTXT) $(MSPROJDIR)$(ITEMINFO_MSTXT) $(TARGETDIR_CDAT)/$(ONLYONE_DATA)
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -72,6 +74,9 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) item_hash.rb $(HASHDIR)
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR)
+
+$(TARGETDIR_CDAT)/$(ONLYONE_DATA):$(ONLYONE_DATA)
+	$(COPY) $(ONLYONE_DATA) $(TARGETDIR_CDAT)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
@@ -109,10 +114,11 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.naix
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
+	rm -f $(ONLYONE_DATA)
 endif
 	rm -f $(TARGETDIR)/$(targetname).narc
 	rm -f $(TARGETDIR)/$(targetname).naix
 	rm -f $(PROJECT_PROGDIR)src/app/bag/itemsort_absolute_def.cdat 
 	rm -f $(PROJECT_PROGDIR)src/app/bag/itemsort_jp_def.cdat 
-
+	rm -f $(TARGETDIR_CDAT)/$(ONLYONE_DATA)
 

@@ -19,6 +19,7 @@
 #include "msg\msg_itemname.h"
 #include "msg\msg_iteminfo.h"
 
+#include "item_onlyone_flags.cdat"
 
 //============================================================================================
 //  定数定義
@@ -967,6 +968,46 @@ BALL_ID ITEM_GetBallID( u16 item )
 u16 ITEM_BallID2ItemID( BALL_ID ballID )
 {
   return item_ConvBallItemID( ballID, 1);
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * アイテムNoから、そのアイテムがゲーム内で1つしか手に入らないアイテムかをチェック
+ *
+ * @param   item  アイテムID
+ * @retval  TRUE  条件合致(たいせつなもの|技マシン)
+ * @retval  FALSE 条件に合わない
+ *
+ * @com ゲーム内で1つしか手に入らない==大切なもの(分類：イベント)or技マシン(分類：技マシン)
+ */
+//--------------------------------------------------------------------------------------------
+BOOL ITEM_IsOnlyOneItem( u16 item )
+{
+  if( item > ITEM_DATA_MAX ){
+    GF_ASSERT(0);
+    return FALSE;
+  }
+  return DATA_ItemOnlyOneFlagTbl[item/32] & (0x00000001<<(item%32));
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * アイテムNoから、そのアイテムがデータ未設定の無効アイテムかをチェック
+ *
+ * @param   item  アイテムID
+ * @retval  TRUE  条件合致(無効アイテム)
+ * @retval  FALSE 条件に合わない
+ *
+ * @com 未設定の無効アイテム==ITEM_DUMMY_DATA or 管理表のアイコンキャラNoが"icon_dumy"であるもの
+ */
+//--------------------------------------------------------------------------------------------
+BOOL ITEM_IsDisableItem( u16 item )
+{
+  if( item > ITEM_DATA_MAX ){
+    GF_ASSERT(0);
+    return TRUE;  //無効アイテムとして処理
+  }
+  return DATA_ItemDisableFlagTbl[item/32] & (0x00000001<<(item%32));
 }
 
 
