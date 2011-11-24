@@ -1902,6 +1902,7 @@ EVENT_START   ev_debug_ichiraku
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_12,  12 ) // キュレム合体イベントリセット
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_13,  13 ) // コバルオン入退場
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_14,  14 ) // キュレムデモ 覚醒
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_15,  15 ) // キュレムデモ 登場
 	_BMPMENU_START()
 
   SWITCH $SCWK_ANSWER
@@ -2049,16 +2050,30 @@ EVENT_START   ev_debug_ichiraku
 	  _DEMO_FADEOUT_BLACK_CALL()
     _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_00 )
 
-	  //_DEMO_FADEIN_BLACK_CALL()
-
-    //_DEMO_FADEOUT_BLACK_CALL()
-
 	  IF $LCWK_VERSION == VERSION_B2 THEN
       _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_B_01 )
     ELSE
       _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_W_01 )
     ENDIF
 	  _DEMO_FADEIN_BLACK_CALL()
+    }
+  CASE 15 THEN
+    {
+      DEFINE_LOCAL LCWK_VERSION
+
+      _GET_ROM_VERSION( LCWK_VERSION )
+
+      // キュレムデモ　登場
+	    _DEMO_FADEOUT_BLACK_CALL()
+
+	    IF $LCWK_VERSION == VERSION_B2 THEN
+        _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_B_02 )
+        _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_B_03 )
+      ELSE
+        _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_W_02 )
+        _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_W_03 )
+      ENDIF
+	    _DEMO_FADEIN_BLACK_CALL()
     }
 
   ENDSWITCH

@@ -18,8 +18,10 @@ DEMO_LIST =	c_cruiser.xls \
             kyuremu_union_00.xls \
             kyuremu_union_b_01.xls \
             kyuremu_union_b_02.xls \
+            kyuremu_union_b_03.xls \
             kyuremu_union_w_01.xls \
             kyuremu_union_w_02.xls \
+            kyuremu_union_w_03.xls \
             tachiwaki_ship.xls \
             plane_take_off.xls
 

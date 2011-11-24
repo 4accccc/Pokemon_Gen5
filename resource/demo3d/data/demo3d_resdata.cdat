@@ -24,8 +24,10 @@
 #include "kyuremu_union_00.cdat"
 #include "kyuremu_union_b_01.cdat"
 #include "kyuremu_union_b_02.cdat"
+#include "kyuremu_union_b_03.cdat"
 #include "kyuremu_union_w_01.cdat"
 #include "kyuremu_union_w_02.cdat"
+#include "kyuremu_union_w_03.cdat"
 #include "tachiwaki_ship.cdat"
 #include "plane_take_off.cdat"
 
@@ -50,8 +52,10 @@ static const DEMO3D_SETUP_DATA c_demo3d_setup_data[ DEMO3D_ID_MAX ] = {
  { &data_kyuremu_union_00_scene, demo3d_cmd_kyuremu_union_00_data, demo3d_cmd_kyuremu_union_00_end_data, res_kyuremu_union_00_scene_unit, NELEMS(res_kyuremu_union_00_scene_unit) },
  { &data_kyuremu_union_b_01_scene, demo3d_cmd_kyuremu_union_b_01_data, demo3d_cmd_kyuremu_union_b_01_end_data, res_kyuremu_union_b_01_scene_unit, NELEMS(res_kyuremu_union_b_01_scene_unit) },
  { &data_kyuremu_union_b_02_scene, demo3d_cmd_kyuremu_union_b_02_data, demo3d_cmd_kyuremu_union_b_02_end_data, res_kyuremu_union_b_02_scene_unit, NELEMS(res_kyuremu_union_b_02_scene_unit) },
+ { &data_kyuremu_union_b_03_scene, demo3d_cmd_kyuremu_union_b_03_data, demo3d_cmd_kyuremu_union_b_03_end_data, res_kyuremu_union_b_03_scene_unit, NELEMS(res_kyuremu_union_b_03_scene_unit) },
  { &data_kyuremu_union_w_01_scene, demo3d_cmd_kyuremu_union_w_01_data, demo3d_cmd_kyuremu_union_w_01_end_data, res_kyuremu_union_w_01_scene_unit, NELEMS(res_kyuremu_union_w_01_scene_unit) },
  { &data_kyuremu_union_w_02_scene, demo3d_cmd_kyuremu_union_w_02_data, demo3d_cmd_kyuremu_union_w_02_end_data, res_kyuremu_union_w_02_scene_unit, NELEMS(res_kyuremu_union_w_02_scene_unit) },
+ { &data_kyuremu_union_w_03_scene, demo3d_cmd_kyuremu_union_w_03_data, demo3d_cmd_kyuremu_union_w_03_end_data, res_kyuremu_union_w_03_scene_unit, NELEMS(res_kyuremu_union_w_03_scene_unit) },
  { &data_tachiwaki_ship_scene, demo3d_cmd_tachiwaki_ship_data, demo3d_cmd_tachiwaki_ship_end_data, res_tachiwaki_ship_scene_unit, NELEMS(res_tachiwaki_ship_scene_unit) },
  { &data_plane_take_off_scene, demo3d_cmd_plane_take_off_data, demo3d_cmd_plane_take_off_end_data, res_plane_take_off_scene_unit, NELEMS(res_plane_take_off_scene_unit) },
 };
