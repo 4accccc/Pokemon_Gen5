@@ -64,6 +64,7 @@ static GFL_STD_RandContext gRandContext = {0};
 
 #define CTVT_UNIT_IDX_MAX       (5)     // 3Dユニットの数   
 #define CTVT_GAME_TIME_LIMIT    (60)    // 制限時間 (秒)
+#define CTVT_GAME_TIME_LASTSPURT  (20)  // 制限時間 ラストスパート(秒)
 #define CTVT_GAME_TIME_RETRY    (5)     // リトライがでるまでの時間 (秒)
 #define CTVT_GAME_TIME_RETRY_NO (30)    // 自動で「いいえ」を選択する時間 (秒)
 
@@ -322,8 +323,6 @@ struct _CTVT_GAME_WORK
   u8            balloon_z_cnt;                // 風船出現調整
   u8            balloon_tbl_idx;              // 風船出現にどのテーブルを使用するか
   u8            balloon_tbl_cnt;              // テーブルの要素カウンタ
-  u16           bonus_tbl[CTVT_MEMBER_NUM][5]; // ボーナス風船の出現フレームのテーブル
-  u8            bonus_tbl_idx[CTVT_MEMBER_NUM];
 
   // 2つ目  本来は1つ目と2つ目でワークにわけてやるべきだが、
   // 今変えると変更点が多すぎるのでここに2つ目のものも書く
@@ -1175,21 +1174,8 @@ BOOL CTVT_GAME_BalloonAppear( CTVT_GAME_WORK *p_wk )
         // 風船出現
         balloon_set( p_wk, &p_wk->balloon_wk[i], p_wk->unit_idx[idx] );
         p_wk->balloon_wk[i].parent_g3dUtil = p_wk->g3dUtil;
-        // ボーナス風船判定
-        {
-          if( p_wk->bonus_tbl[idx][ p_wk->bonus_tbl_idx[idx] ] > p_wk->timeLimit )
-          {
-            p_wk->balloon_wk[i].type = BALLOON_BONUS;
-            p_wk->bonus_tbl[idx][ p_wk->bonus_tbl_idx[idx] ] = 0;
-            p_wk->bonus_tbl_idx[idx]++;
-            p_wk->bonus_tbl_idx[idx] %= 5;
-            //ICHI_Printf("ボーナス風船出現 %d \n", idx);
-          }
-          else
-          {
-            p_wk->balloon_wk[i].type = BALLOON_NORMAL;
-          }
-        }
+        // 通常風船
+        p_wk->balloon_wk[i].type = BALLOON_NORMAL;
 
         // 出現した風船が他の風船と重なっているかチェック
         {
@@ -1323,15 +1309,17 @@ void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, u16 idx, u8 netId )
   // ポイント加算
   if( p_wk->balloon_wk[ idx ].unit_idx == netId )
   {
-    if( p_wk->balloon_wk[ idx ].type == BALLOON_BONUS )
+    if( p_wk->timeLimit <= CTVT_GAME_TIME_LASTSPURT )
     {
-      // ボーナス風船
+      // 制限時間20秒を切ると得点2倍
       p_wk->score[ netId ] += 4;
+      p_wk->balloon_wk[ idx ].point_type = BALLOON_POINT_OK_4PT;
     }
     else
     {
       // 通常風船
       p_wk->score[ netId ] += 2;
+      p_wk->balloon_wk[ idx ].point_type = BALLOON_POINT_OK_2PT;
     }
     // 自分だけ鳴らす
     if( selfId == netId )
@@ -1346,15 +1334,17 @@ void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, u16 idx, u8 netId )
   // ポイント減算
   else
   {
-    if( p_wk->balloon_wk[ idx ].type == BALLOON_BONUS )
+    if( p_wk->timeLimit <= CTVT_GAME_TIME_LASTSPURT )
     {
-      // ボーナス風船
+      // 制限時間20秒を切ると得点2倍
       p_wk->score[ netId ] -= 2;
+      p_wk->balloon_wk[ idx ].point_type = BALLOON_POINT_NG_4PT;
     }
     else
     {
       // 通常風船
       p_wk->score[ netId ] -= 1;
+      p_wk->balloon_wk[ idx ].point_type = BALLOON_POINT_NG_2PT;
     }
     // マイナスにはならないようになった
     if( p_wk->score[ netId ] < 0 ){ p_wk->score[ netId] = 0; }
@@ -1373,12 +1363,22 @@ void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, u16 idx, u8 netId )
   // プレートの得点更新
   GAME_PLATE_SetPoint( p_wk, netId, p_wk->score[ netId ] );
 
-  // タスク消去
-  //CTVT_BALLOON_Destroy( &p_wk->balloon_wk[ idx ] );
   // 風船をHit時に変える -> 消去まで自動で行う
-  p_wk->balloon_wk[ idx ].type = BALLOON_HIT;
-  p_wk->balloon_wk[ idx ].anm_flg = TRUE;
+  // 相手のか自分のか
+  if( p_wk->balloon_wk[ idx ].unit_idx == netId )
+  {
+    p_wk->balloon_wk[ idx ].type = BALLOON_SMILE;
+  }
+  else
+  {
+    p_wk->balloon_wk[ idx ].type = BALLOON_BAD;
+  }
 
+  // エフェクトを出すのは自分だけ
+  if( selfId == netId )
+  {
+    p_wk->balloon_wk[ idx ].anm_flg = TRUE;
+  }
 }
 
 
@@ -1434,7 +1434,7 @@ void CTVT_GAME_CommDataSet_Touch( CTVT_COMM_WORK *commWork, CTVT_GAME_WORK *p_wk
       add = 2;
     }
     // 残り時間20秒以下でポイント倍
-    if( p_wk->timeLimit <= 20 )
+    if( p_wk->timeLimit <= CTVT_GAME_TIME_LASTSPURT )
     {
       add *= 2;
     }
@@ -2728,24 +2728,6 @@ static void game_update_seq_init_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     }
   }
 
-  // ボーナス風船をいつ出すかきめる
-  for( i=0; i<CTVT_MEMBER_NUM; i++ )
-  {
-    ICHI_Printf("player %d ");
-
-    gameWork->bonus_tbl_idx[i] = 0;
-    gameWork->bonus_tbl[i][0] = ( get_rand(10) + 40 ); // 50～40
-    gameWork->bonus_tbl[i][1] = ( get_rand(10) + 30 ); // 40～30
-    gameWork->bonus_tbl[i][2] = ( get_rand(5) + 15 );  // 20～10
-    gameWork->bonus_tbl[i][3] = ( get_rand(5) + 10 );  // 10～5
-    gameWork->bonus_tbl[i][4] = ( get_rand(5) + 5 );   // 5～0
-
-    ICHI_Printf("%d ", gameWork->bonus_tbl[i][0]);
-    ICHI_Printf("%d ", gameWork->bonus_tbl[i][1]);
-    ICHI_Printf("%d ", gameWork->bonus_tbl[i][2]);
-    ICHI_Printf("%d ", gameWork->bonus_tbl[i][3]);
-    ICHI_Printf("%d \n", gameWork->bonus_tbl[i][4]);
-  }
 
 #ifdef PM_DEBUG
   gameWork->debug_r    = 0x45;    // 半径計算用 サイズに掛ける割合 0x45は目安
@@ -3336,17 +3318,17 @@ static BOOL game_update_seq_main_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     GAME_PLATE_SetMovePlate( gameWork, FALSE );
   }
   // ラストスパート
-  if( gameWork->timeLimit == 20 && gameWork->plate_move == FALSE )
+  if( gameWork->timeLimit == CTVT_GAME_TIME_LASTSPURT && gameWork->plate_move == FALSE )
   {
     gameWork->plate_move = TRUE;
     GAME_PLATE_SetMovePlate( gameWork, TRUE );
   }
-  if( gameWork->timeLimit <20 && gameWork->plate_move == FALSE )
+  if( gameWork->timeLimit<CTVT_GAME_TIME_LASTSPURT && gameWork->plate_move == FALSE )
   {
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkLast, TRUE );
   }
 
-  if( gameWork->timeLimit == 20 )
+  if( gameWork->timeLimit == CTVT_GAME_TIME_LASTSPURT )
   {
     // 元々のテンポをratio/256倍する
     PMSND_SetStatusBGM( 285, 85, PMSND_NOEFFECT );
@@ -3395,7 +3377,7 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   }
 
   // 残り時間でタッチボタンを変更
-  if( gameWork->timeLimit <= 20 )
+  if( gameWork->timeLimit <= CTVT_GAME_TIME_LASTSPURT )
   {
     anmseq_stay   = CGOAM_BUTTON_LAST_STAY;
     anmseq_touch  = CGOAM_BUTTON_LAST_TOUCH;
@@ -3588,17 +3570,17 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     GAME_PLATE_SetMovePlate( gameWork, FALSE );
   }
   // ラストスパート
-  if( gameWork->timeLimit == 20 && gameWork->plate_move == FALSE )
+  if( gameWork->timeLimit == CTVT_GAME_TIME_LASTSPURT && gameWork->plate_move == FALSE )
   {
     gameWork->plate_move = TRUE;
     GAME_PLATE_SetMovePlate( gameWork, TRUE );
   }
-  if( gameWork->timeLimit <20 && gameWork->plate_move == FALSE )
+  if( gameWork->timeLimit<CTVT_GAME_TIME_LASTSPURT && gameWork->plate_move == FALSE )
   {
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkLast, TRUE );
   }
 
-  if( gameWork->timeLimit == 20 )
+  if( gameWork->timeLimit == CTVT_GAME_TIME_LASTSPURT )
   {
     // 元々のテンポをratio/256倍する
     PMSND_SetStatusBGM( 285, 85, PMSND_NOEFFECT );
@@ -5020,6 +5002,7 @@ static const GFL_G3D_UTIL_RES res_3d_table1[] =
   { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon1_nsbmd, GFL_G3D_UTIL_RESARC },  // ボーナス
   { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon1_nsbca, GFL_G3D_UTIL_RESARC },  // アニメ
   { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon1_nsbtp, GFL_G3D_UTIL_RESARC },  // アニメ
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon_capture_nsbca, GFL_G3D_UTIL_RESARC },  // アニメ
 };
 // プレイヤー2
 static const GFL_G3D_UTIL_RES res_3d_table2[] =
@@ -5029,6 +5012,7 @@ static const GFL_G3D_UTIL_RES res_3d_table2[] =
   { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon2_nsbmd, GFL_G3D_UTIL_RESARC },  // ボーナス
   { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon2_nsbca, GFL_G3D_UTIL_RESARC },  // アニメ
   { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon2_nsbtp, GFL_G3D_UTIL_RESARC },  // アニメ
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon_capture_nsbca, GFL_G3D_UTIL_RESARC },  // アニメ
 };
 // プレイヤー3
 static const GFL_G3D_UTIL_RES res_3d_table3[] =
@@ -5038,6 +5022,7 @@ static const GFL_G3D_UTIL_RES res_3d_table3[] =
   { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon3_nsbmd, GFL_G3D_UTIL_RESARC },  // ボーナス
   { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon3_nsbca, GFL_G3D_UTIL_RESARC },  // アニメ
   { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon3_nsbtp, GFL_G3D_UTIL_RESARC },  // アニメ
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon_capture_nsbca, GFL_G3D_UTIL_RESARC },  // アニメ
 };
 // プレイヤー4
 static const GFL_G3D_UTIL_RES res_3d_table4[] =
@@ -5047,6 +5032,7 @@ static const GFL_G3D_UTIL_RES res_3d_table4[] =
   { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon4_nsbmd, GFL_G3D_UTIL_RESARC },  // ボーナス
   { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon4_nsbca, GFL_G3D_UTIL_RESARC },  // アニメ
   { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon4_nsbtp, GFL_G3D_UTIL_RESARC },  // アニメ
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_balloon_capture_nsbca, GFL_G3D_UTIL_RESARC },  // アニメ
 };
 // エフェクト
 static const GFL_G3D_UTIL_RES res_3d_table5[] =
@@ -5055,11 +5041,31 @@ static const GFL_G3D_UTIL_RES res_3d_table5[] =
   { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_nsbca, GFL_G3D_UTIL_RESARC },
 };
 
+// 追加エフェクト
+// 得点表示
+static const GFL_G3D_UTIL_RES res_3d_table6[] =
+{
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ok_2pt_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ok_2pt_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ok_2pt_nsbma, GFL_G3D_UTIL_RESARC },
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ok_4pt_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ok_4pt_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ok_4pt_nsbma, GFL_G3D_UTIL_RESARC },
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ng_2pt_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ng_2pt_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ng_2pt_nsbma, GFL_G3D_UTIL_RESARC },
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ng_4pt_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ng_4pt_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ng_4pt_nsbma, GFL_G3D_UTIL_RESARC },
+};
+
+
 // ANIME 風船
 static const GFL_G3D_UTIL_ANM anm_3d_table[] =
 {
   { 3, 0 }, // nsbmp
   { 4, 0 }, // nsbtp
+  { 5, 0 }, // nsbca  // キャッチアニメ
 };
 
 // ANIME エフェクト
@@ -5067,6 +5073,29 @@ static const GFL_G3D_UTIL_ANM anm_3d_table2[] =
 {
   { 1, 0 },
 };
+
+// 追加エフェクト
+static const GFL_G3D_UTIL_ANM anm_3d_table6_1[] =
+{
+  { 1, 0 },
+  { 2, 0 },
+};
+static const GFL_G3D_UTIL_ANM anm_3d_table6_2[] =
+{
+  { 4, 0 },
+  { 5, 0 },
+};
+static const GFL_G3D_UTIL_ANM anm_3d_table6_3[] =
+{
+  { 7, 0 },
+  { 8, 0 },
+};
+static const GFL_G3D_UTIL_ANM anm_3d_table6_4[] =
+{
+  { 10, 0 },
+  { 11, 0 },
+};
+
 
 // OBJ
 static const GFL_G3D_UTIL_OBJ obj_3d_table[] = 
@@ -5101,6 +5130,38 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table2[] =
     0,      // テクスチャリソースID
     anm_3d_table2,   // アニメテーブル(複数指定のため)
     NELEMS(anm_3d_table2),      // アニメリソース数
+  },
+};
+// 追加エフェクト
+static const GFL_G3D_UTIL_OBJ obj_3d_table3[] = 
+{
+  {
+    0,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    0,      // テクスチャリソースID
+    anm_3d_table6_1,          // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table6_1),  // アニメリソース数
+  },
+  {
+    3,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    3,      // テクスチャリソースID
+    anm_3d_table6_2,          // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table6_2),  // アニメリソース数
+  },
+  {
+    6,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    6,      // テクスチャリソースID
+    anm_3d_table6_3,          // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table6_3),  // アニメリソース数
+  },
+  {
+    9,      // モデルリソースID
+    0,      // モデルデータID(リソース内部INDEX)
+    9,      // テクスチャリソースID
+    anm_3d_table6_4,          // アニメテーブル(複数指定のため)
+    NELEMS(anm_3d_table6_4),  // アニメリソース数
   },
 };
 
@@ -5247,8 +5308,8 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table_score[] =
   },
 };
 
-#define CTVT_UNIT_RES_MAX (22)    // 3種 * 4人 + アニメ2種*4 +エフェクト2
-#define CTVT_UNIT_OBJ_MAX (13)    // 3種 * 4 + エフェクト1
+#define CTVT_UNIT_RES_MAX (36)    // 3種 * 4人 + アニメ3種*4 +エフェクト12
+#define CTVT_UNIT_OBJ_MAX (16)    // 3種 * 4 + エフェクト4
 
 // セットアップデータ
 // 覚書
@@ -5264,7 +5325,7 @@ static const GFL_G3D_UTIL_SETUP G3DUtilSetup[] =
   { res_3d_table2, NELEMS(res_3d_table2), obj_3d_table, NELEMS(obj_3d_table) },
   { res_3d_table3, NELEMS(res_3d_table3), obj_3d_table, NELEMS(obj_3d_table) },
   { res_3d_table4, NELEMS(res_3d_table4), obj_3d_table, NELEMS(obj_3d_table) },
-  { res_3d_table5, NELEMS(res_3d_table5), obj_3d_table2, NELEMS(obj_3d_table2) },
+  { res_3d_table6, NELEMS(res_3d_table6), obj_3d_table3, NELEMS(obj_3d_table3) },
 };
 
 static const GFL_G3D_UTIL_SETUP G3DUtilSetup_2[] =
@@ -5340,15 +5401,23 @@ static void RESOURCE_Init_Part1( CTVT_GAME_WORK* p_wk, HEAPID heapID, ARCHANDLE*
           GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( p_wk->g3dUtil, obj_idx );
           GFL_G3D_OBJECT_EnableAnime( obj, 0 ); // ica
           GFL_G3D_OBJECT_EnableAnime( obj, 1 ); // itp
+          // キャッチのアニメ
+          GFL_G3D_OBJECT_EnableAnime( obj, 2 ); // ica
         }
       }
 
       // エフェクトのアニメーション有効化
+      // ゲーム1だけ12種ある
       {
         u16 head_obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( p_wk->g3dUtil, CTVT_UNIT_IDX_EFFECT );
         u16 obj_idx = head_obj_idx;
-        GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( p_wk->g3dUtil, obj_idx );
-        GFL_G3D_OBJECT_EnableAnime( obj, 0 );
+
+        for( i=0; i<4; i++ )
+        {
+          GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( p_wk->g3dUtil, obj_idx+i );
+          GFL_G3D_OBJECT_EnableAnime( obj, 0 );
+          GFL_G3D_OBJECT_EnableAnime( obj, 1 );
+        }
       }
     }
   }
@@ -5591,7 +5660,7 @@ static void draw_timebar( CTVT_GAME_WORK* p_wk )
   u8 len = def * p_wk->timeLimit; // 何ドットベース色になるか
   u8 col;
 
-  if( p_wk->timeLimit < 20 )
+  if( p_wk->timeLimit < CTVT_GAME_TIME_LASTSPURT )
   {
     col = TIME_BAR_COL_R;
   }
@@ -5832,7 +5901,7 @@ static void balloon_set( CTVT_GAME_WORK *p_game_wk, BALLOON_WORK*  p_wk, u16  un
     VEC_Normalize( &p_wk->vec, &p_wk->vec );
 
     // 残り20秒ではやくなる
-    if( p_game_wk->timeLimit <= 20 )
+    if( p_game_wk->timeLimit <= CTVT_GAME_TIME_LASTSPURT )
     {
 #ifdef PM_DEBUG
       vy += p_game_wk->debug_v;
@@ -6007,7 +6076,7 @@ static BOOL balloon_hit_check( CTVT_GAME_WORK* p_wk, u32 tpx, u32 tpy, u16 *ret_
   {
     BOOL  b_hit = FALSE;
 
-    if( p_wk->balloon_wk[i].visible == FALSE || p_wk->balloon_wk[i].type == BALLOON_HIT )
+    if( p_wk->balloon_wk[i].visible == FALSE || p_wk->balloon_wk[i].type != BALLOON_NORMAL )
     {
       // 表示されていないならスキップ
       continue;
@@ -6077,7 +6146,7 @@ static void balloon_collision_check( CTVT_GAME_WORK *p_wk )
 
     // 表示していない風船はスキップ
     // 割れている風船もスキップ
-    if( p_wk->balloon_wk[i].visible == FALSE || p_wk->balloon_wk[i].type == BALLOON_HIT )
+    if( p_wk->balloon_wk[i].visible == FALSE || p_wk->balloon_wk[i].type != BALLOON_NORMAL )
     {
       continue;
     }
@@ -6086,7 +6155,7 @@ static void balloon_collision_check( CTVT_GAME_WORK *p_wk )
     {
       // 風船同士のサイズが同じ かつ 対象の風船も表示している
       if( p_wk->balloon_wk[i].size == p_wk->balloon_wk[j].size
-          && p_wk->balloon_wk[j].visible == TRUE && p_wk->balloon_wk[j].type != BALLOON_HIT )
+          && p_wk->balloon_wk[j].visible == TRUE && p_wk->balloon_wk[j].type == BALLOON_NORMAL )
       {
         // 壁判定
         collision_vec( 

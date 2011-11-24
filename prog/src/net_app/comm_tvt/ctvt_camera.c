@@ -933,8 +933,10 @@ void CTVT_CAMERA_PlayStartSe( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
 {
   if( COMM_TVT_CanUseCamera() == TRUE )
   {
+#ifndef DEBUG_ONLY_FOR_ichiraku_katsuhiko
     CAMERA_SYS_PlayStartSe( camWork->camSys );
     camWork->isPlayStartSe = TRUE;
+#endif
   }
 }
 void CTVT_CAMERA_PlayStopSe( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )

@@ -25,9 +25,20 @@
 //=====================================
 typedef enum {
   BALLOON_NORMAL,   // 通常顔
-  BALLOON_HIT,      // 驚き顔 = HIT時
-  BALLOON_BONUS,    // ボーナス顔
+  BALLOON_SMILE,    // 笑い顔
+  BALLOON_BAD,      // 困り顔
 } BALLOON_TYPE;
+
+//-------------------------------------
+///	得点の種類
+//  これによりエフェクトが変わる
+//=====================================
+typedef enum {
+  BALLOON_POINT_OK_2PT,
+  BALLOON_POINT_OK_4PT,
+  BALLOON_POINT_NG_2PT,
+  BALLOON_POINT_NG_4PT,
+} BALLOON_POINT_TYPE;
 
 
 //-------------------------------------
@@ -70,6 +81,7 @@ typedef struct {
   fx32              anm_frm;          // アニメフレームカウンタ
   BOOL              anm_flg;          // エフェクトON/OFFフラグ
   fx32              scale;            // 拡大率
+  BALLOON_POINT_TYPE  point_type;     // 得点種類
 
   //========================
   // 風船の動きに関するもの

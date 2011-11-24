@@ -98,6 +98,7 @@ void CTVT_BALLOON_Init( BALLOON_WORK* p_wk )
   p_wk->anm_frm = 0;
   p_wk->anm_flg = FALSE;
   p_wk->scale   = 0;
+  p_wk->point_type = BALLOON_POINT_OK_2PT;
 
   // タスクは必ずNULL
   p_wk->tcb = NULL;
@@ -137,25 +138,29 @@ void CTVT_BALLOON_Update( BALLOON_WORK*  p_wk )
 {
 
   // HIT時は移動しない
-  if( p_wk->type == BALLOON_HIT )
+  if( p_wk->type != BALLOON_NORMAL )
   {
-    VecFx32 scale_tmp;
-
-    // 風船を徐々に拡大する
-    if( p_wk->scale < SCALE_MAX )
+    if( p_wk->alpha == 31 )
     {
-      p_wk->scale += SCALE_ADD;
-      if( p_wk->scale > SCALE_MAX )
+      GFL_G3D_OBJ*    obj;
+      u16             head_obj_idx;
+      BOOL            anm_end;
+
+      head_obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( p_wk->parent_g3dUtil, p_wk->unit_idx );
+      // 3つあるからどれ使うかtypeで指定
+      obj = GFL_G3D_UTIL_GetObjHandle( p_wk->parent_g3dUtil, head_obj_idx + p_wk->type);
+
+      // キャッチのアニメを再生
+      anm_end = GFL_G3D_OBJECT_LoopAnimeFrame( obj, 2, FX32_ONE );  // ica
+
+      // アニメ終了チェック
+      if( anm_end == FALSE )
       {
-        p_wk->scale = SCALE_MAX;
+        p_wk->alpha -= 3;
       }
-
-      VEC_Set( &scale_tmp, SCALE_ADD, SCALE_ADD, SCALE_ADD );
-      VEC_Add( &p_wk->status.scale, &scale_tmp, &p_wk->status.scale );
     }
-
-    // 拡大したら、αフェードして消える
-    if( p_wk->scale == SCALE_MAX )
+    // アニメ終了したら、αフェードして消える
+    else
     {
       p_wk->alpha -= 3;
       if( p_wk->alpha <= 0 )
@@ -218,16 +223,20 @@ void CTVT_BALLOON_Draw( BALLOON_WORK*  p_wk )
   if( p_wk->visible == TRUE )
   {
     // エフェクトアニメーション描画&更新
-    if( p_wk->type == BALLOON_HIT && p_wk->anm_flg == TRUE )
+    if( p_wk->type != BALLOON_NORMAL && p_wk->anm_flg == TRUE )
     {
       int  tmp_frm;
       GFL_G3D_OBJSTATUS tmp_status;
 
       head_obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( p_wk->parent_g3dUtil, CTVT_UNIT_IDX_EFFECT );
+
+      // 4種類のポイント別エフェクト
+      head_obj_idx += p_wk->point_type;
       obj = GFL_G3D_UTIL_GetObjHandle( p_wk->parent_g3dUtil, head_obj_idx );
 
       // 手動でアニメフレーム数設定
       GFL_G3D_OBJECT_SetAnimeFrame( obj, 0, (int*)&p_wk->anm_frm );
+      GFL_G3D_OBJECT_SetAnimeFrame( obj, 1, (int*)&p_wk->anm_frm );
       p_wk->anm_frm += FX32_ONE;
       GFL_G3D_OBJECT_GetAnimeFrameMax( obj, 0, &tmp_frm );
 
@@ -463,13 +472,13 @@ void CTVT_BALLOON2_Update( BALLOON2_WORK *p_wk )
 
         // 写真を変える
         switch( p_wk->type ){
-        case BALLOON_NORMAL:    // 普通
-          p_wk->type = BALLOON_BONUS;
+        case BALLOON_NORMAL:    // 通常顔
+          p_wk->type = BALLOON_SMILE;
           break;
-        case BALLOON_BONUS:     // 笑顔
-          p_wk->type = BALLOON_HIT;
+        case BALLOON_SMILE:     // 笑い顔
+          p_wk->type = BALLOON_BAD;
           break;
-        case BALLOON_HIT:       // 驚き顔
+        case BALLOON_BAD:       // 困り顔
           //ここで変更はしない
           //p_wk->type = BALLOON_NORMAL;
           break;

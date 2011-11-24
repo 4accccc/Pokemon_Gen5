@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-02-16T15:31:35" source="livecaster_test_003.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-11-17T14:11:36" source="livecaster_test_003.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2011-02-16T15:31:35" source="livecaster_test_003.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2011-11-17T14:11:36" source="livecaster_test_003.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -34,7 +34,7 @@
 		width="16" height="16" original_width="16" original_height="16"
 		format="a5i3"
 		palette_name="highlight1_pl"
-		path="C:/livecaster_TEST/tex/highlight1.tga"
+		path="C:/00_swan2d/localLC_2D/localLC_3D/tex/highlight1.tga"
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -58,517 +58,517 @@
 	<tex_image index="1" name="live_001_001"
 		width="64" height="64" original_width="64" original_height="64"
 		format="direct"
-		path="C:/livecaster_TEST/tex/live_001_001.tga"
+		path="C:/00_swan2d/localLC_2D/localLC_3D/tex/live_001_001.tga"
 	>
 		<bitmap size="4096">
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff fbde fbde fbde
-			fbde fbde fbde fbde ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
-			eb9f e33d b5df b5df b5df b5df b5df b5df
-			b5df b5df b5df b5df b5df b5df ad97 d2d8
-			b5df e33d e33d eb9f ffff ffff ffff fbde
-			fbde ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff e33d b5df b5df b5df
-			b5df b5df b5df b5df b5df b5df b5df b5df
-			b5df b5df b5df b5df b5df ad97 a94c a94c
-			a94c a94c ad97 b5df b5df b5df b5df b5df
-			b5df b5df b5df e33d e33d fbde ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff d2d8 b5df b5df b5df b5df
-			b5df b5df b5df b5df b5df b5df b5df b5df
-			b5df b5df b5df b5df b5df a94c a94c a94c
-			a94c a94c ad97 b5df b5df b5df b5df b5df
-			b5df b5df b5df b5df b5df b5df b5df e33d
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff d2d8 b5df b5df b5df b5df b5df
-			b5df b5df b5df b5df b5df b5df b5df b5df
-			b5df ad97 a94c ad97 b5df b5df ad97 a94c
-			ad97 ad97 b5df ad97 a94c ad97 b5df b5df
-			b5df b5df b5df b5df b5df b5df b5df b5df
-			b5df e33d ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff fbde d2d8 b5df b5df b5df b5df b5df
-			b5df b5df b5df b5df b5df b5df b5df b5df
-			ad97 a94c a94c a94c ad97 b5df b5df b5df
-			b5df b5df ad97 a94c a94c a94c b5df b5df
-			b5df b5df b5df b5df b5df b5df b5df b5df
-			b5df b5df e33d ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ef7b d2d8 b5df b5df b5df b5df b5df
-			b5df b5df b5df b5df b5df b5df b5df b5df
-			ad97 a94c a94c a94c a94c a94c a94c ad97
-			a94c a94c a94c a94c a94c a94c b5df b5df
-			b5df b5df b5df b5df b5df b5df b5df b5df
-			b5df b5df b5df fbde ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff e319 e33d b5df b5df b5df b5df b5df
-			b5df b5df b5df b5df b5df b5df b5df b5df
-			ad97 ad97 a94c a94c a94c a94c a94c a94c
-			a94c a94c a94c a94c a94c b5df b5df b5df
-			b5df b5df b5df b5df b5df b5df b5df b5df
-			b5df b5df b5df e33d ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff c212 e33d b5df b5df b5df b5df b5df
-			b5df b5df b5df b5df b5df b5df b5df b5df
-			b5df b5df ad97 ad97 a94c a94c a94c a94c
-			a94c a94c a94c ad97 b5df b5df b5df b5df
-			b5df b5df b5df b5df b5df b5df b5df b5df
-			b5df b5df b5df b5df ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff a94c fbde b5df b5df b5df b5df b5df
-			b5df b5df b5df b5df b5df b5df b5df b5df
-			b5df b5df b5df b5df b5df b5df b5df b5df
-			b5df ad97 b5df b5df b5df b5df b5df b5df
-			b5df b5df b5df b5df b5df b5df b5df b5df
-			b5df b5df b5df b5df fbde ef7b ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff d2d8 fbde ad97 b5df b5df b5df b5df
-			b5df b5df b5df b5df b5df b5df b5df b5df
-			b5df b5df b5df b5df b5df ad97 ad97 ad97
-			ad97 b5df b5df b5df b5df b5df b5df b5df
-			b5df b5df b5df b5df b5df b5df b5df b5df
-			b5df b5df b5df b5df ef7b ef7b ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
-			fbde e319 ffff ad97 b5df b5df b5df b5df
-			b5df b5df b5df b5df b5df b5df b5df b5df
-			b5df b5df ad97 a94c 94c7 a94c a94c a94c
-			a94c a94c a94c ad97 b5df b5df b5df b5df
-			b5df b5df b5df b5df b5df b5df b5df b5df
-			b5df b5df b5df b5df e319 ef7b ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
-			fbde e319 ffff ad97 b5df b5df b5df b5df
-			b5df b5df b5df b5df b5df b5df b5df ad97
-			a94c a94c a94c a94c a94c a94c a94c a94c
-			a94c a94c a94c a94c a94c ad97 ad97 b5df
-			b5df b5df b5df b5df b5df b5df b5df b5df
-			b5df b5df b5df e319 e319 ef7b ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff e319 ffff ad97 b5df b5df b5df b5df
-			b5df b5df b5df b5df b5df ad97 a94c a94c
-			a94c a94c a94c a94c a94c a94c a94c a94c
-			a94c a94c a94c a94c a94c a94c a94c a94c
-			ad97 b5df b5df b5df b5df b5df b5df b5df
-			b5df b5df ad97 ef7b e319 fbde ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			fbde e319 ffff d2d8 b5df b5df b5df b5df
-			b5df b5df b5df ad97 a94c a94c a94c a94c
-			a94c a94c a94c a94c a94c a94c a94c a94c
-			a94c a94c a94c a94c a94c a94c a94c a94c
-			a94c a94c a94c ad97 b5df b5df b5df b5df
-			b5df b5df ad97 fbde d2d8 ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff d2d8 ffff d2d8 b5df b5df b5df b5df
-			b5df a94c a94c a94c a94c a94c a94c a94c
-			a94c a94c a94c a94c a94c a94c a94c a94c
-			a94c a94c a94c a94c a94c a94c a94c a94c
-			a94c a94c a94c a94c a94c ad97 b5df b5df
-			b5df b5df ad97 ffff c212 ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff c212 ffff d2d8 b5df b5df ad97 a94c
-			a94c a94c a94c a94c a94c a94c a94c a94c
-			a94c a94c a94c a94c a94c a94c a94c a94c
-			a94c a94c a94c 94c7 94c7 a94c a94c a94c
-			a94c a94c a94c a94c a94c a94c a94c ad97
-			ad97 b5df ad97 ffff c212 ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff c212 ffff ef7b ad97 a94c a94c a94c
-			a94c a94c a94c a94c a94c a94c a94c a94c
-			a94c a94c a94c a94c a94c a94c 94c7 94c7
-			94c7 94c7 94c7 a94c a94c a94c a94c 94c7
-			a94c a94c a94c a94c a94c a94c a94c a94c
-			a94c b5df b5df fbde d2d8 ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff c212 ef7b c212 a94c a94c a94c a94c
-			a94c a94c a94c a94c a94c a94c a94c 94c7
-			a94c a94c c212 c212 d2d8 d2d8 d2d8 e319
-			d2d8 d2d8 c212 a94c a94c 94c7 94c7 94c7
-			a94c a94c 94c7 a94c a94c a94c a94c a94c
-			a94c a94c d2d8 ef7b fbde ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff d2d8 e319 a94c a94c a94c a94c a94c
-			a94c a94c a94c 94c7 94c7 a94c c212 d2d8
-			d2d8 e319 d2d8 d2d8 d2d8 d2d8 d2d8 d2d8
-			d2d8 d2d8 d2d8 e319 d2d8 d2d8 c212 c212
-			a94c 94c7 94c7 a94c 94c7 a94c a94c a94c
-			a94c a94c a94c d2d8 ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff e319 e319 94c7 a94c a94c a94c 94c7
-			a94c 94c7 a94c 94c7 a94c 94c7 94c7 a94c
-			d2d8 d2d8 d2d8 e33d d2d8 d2d8 e319 d2d8
-			e33d d2d8 e33d d2d8 d2d8 d2d8 d2d8 94c7
-			a94c 94c7 c212 a94c 94c7 94c7 94c7 a94c
-			a94c a94c a94c 94c7 fbde ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff c212 94c7 94c7 a94c a94c 94c7
-			c212 c212 94c7 d2d8 c212 a94c a94c 94c7
-			a94c d2d8 d2d8 d2d8 d2d8 d2d8 d2d8 d2d8
-			d2d8 d2d8 d2d8 d2d8 d2d8 c212 94c7 a94c
-			ef7b e319 94c7 d2d8 d2d8 c212 94c7 a94c
-			a94c 94c7 a94c 94c7 d2d8 ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff e319 a94c a94c 94c7 94c7 94c7 d2d8
-			d2d8 a94c eef5 d2d8 d2d8 c212 a94c a94c
-			94c7 c212 d2d8 d2d8 d2d8 d2d8 e33d d2d8
-			d2d8 d2d8 d2d8 d2d8 d2d8 94c7 a94c c212
-			a94c c212 ef7b 94c7 d2d8 d2d8 c212 94c7
-			a94c a94c a94c 94c7 d2d8 ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			fbde a94c a94c ad97 a94c a94c a94c d2d8
-			d2d8 a94c fbde c212 a94c 94c7 a94c a94c
-			ef7b a94c e33d e33d e33d e33d e33d e33d
-			e33d e33d e33d e33d c212 a94c c212 c212
-			a94c a94c ffff c212 d2d8 d2d8 c212 94c7
-			ad97 a94c a94c a94c a94c a94c c212 e319
-			fbde ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ef7b
-			a94c a94c a94c a94c a94c ad97 94c7 d2d8
-			d2d8 d2d8 ffff a94c a94c 94c7 94c7 a94c
-			e33d e33d eb9f eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f eb9f d2d8 c212 94c7 94c7
-			94c7 a94c ef7b fbde c212 d2d8 c212 a94c
-			a94c a94c ad97 a94c a94c a94c a94c a94c
-			94c7 a94c e319 ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff e319 c212 a94c
-			a94c ad97 a94c ad97 a94c a94c ad97 d2d8
-			e33d e33d ffff a94c a94c 94c7 94c7 a94c
-			e319 eb9f eb9f eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f eb9f eb9f a94c a94c 94c7
-			94c7 a94c e319 ffff e33d e33d c212 a94c
-			a94c a94c a94c ad97 a94c ad97 a94c a94c
-			ad97 a94c e319 ffff ffff ffff ffff ffff
-			ffff ffff ffff e319 a94c a94c a94c ad97
-			a94c a94c a94c a94c ad97 a94c a94c d2d8
-			eb9f eb9f ffff c212 a94c 94c7 94c7 a94c
-			d2d8 eb9f eb9f eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f eb9f fbde a94c a94c 94c7
-			94c7 a94c e319 ffff eb9f eb9f a94c a94c
-			a94c ad97 a94c a94c a94c a94c ad97 a94c
-			a94c c212 ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff c212 a94c a94c ad97 a94c
-			a94c a94c ad97 a94c a94c a94c a94c a94c
-			eb9f eb9f fbde c212 a94c 94c7 a94c a94c
-			d2d8 eb9f eb9f eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f eb9f eb9f a94c a94c 94c7
-			a94c a94c e319 ffff eb9f eb9f a94c a94c
-			ad97 a94c a94c ad97 a94c ad97 a94c a94c
-			c212 ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ef7b c212 a94c a94c
-			a94c a94c a94c a94c a94c ad97 a94c a94c
-			d2d8 eb9f eb9f ef7b 94c7 ad97 a94c 94c7
-			eb9f eb9f eb9f eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f eb9f eb9f c212 a94c a94c
-			a94c 94c7 eb9f eb9f eb9f eb9f a94c ad97
-			a94c a94c a94c a94c a94c a94c a94c d2d8
-			fbde ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff fbde e33d
-			d2d8 c212 a94c ad97 94c7 a94c ad97 a94c
-			c212 eb9f eb9f e33d a94c 94c7 94c7 ad97
-			eb9f eb9f eb9f eb9f eb9f e33d e319 eb9f
-			eb9f eb9f eb9f eb9f eb9f e33d 94c7 a94c
-			94c7 ad97 fbde eb9f eb9f d2d8 a94c a94c
-			a94c a94c a94c a94c a94c d2d8 eb9f ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff e33d a94c a94c a94c 94c7 a94c a94c
-			94c7 eb9f eb9f e33d d2d8 d2d8 d2d8 eb9f
-			eb9f eb9f eb9f eb9f eb9f e33d c212 eb9f
-			eb9f eb9f eb9f eb9f eb9f eb9f d2d8 a94c
-			c212 c212 eb9f eb9f eb9f ad97 a94c ad97
-			94c7 a94c a94c a94c d2d8 fbde ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			fbde c212 a94c a94c 94c7 94c7 94c7 ad97
-			a94c c212 eb9f eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f eb9f eb9f e33d c212 eb9f
-			eb9f eb9f eb9f eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f eb9f d2d8 a94c a94c 94c7
-			94c7 ad97 a94c a94c a94c fbde ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff fbde eb9f c212 a94c 94c7 94c7
-			a94c a94c e33d eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f eb9f eb9f d2d8 d2d8 eb9f
-			eb9f eb9f eb9f eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f eb9f a94c a94c a94c 94c7
-			a94c ad97 e319 eb9f ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff a94c a94c a94c 94c7
-			94c7 a94c 94c7 eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f e319 94c7 a94c a94c a94c
-			a94c d2d8 ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff eb9f 94c7 a94c 94c7 94c7
-			94c7 c212 a94c c212 eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f a94c a94c 94c7 a94c ad97
-			a94c d2d8 ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff d2d8 94c7 94c7 94c7 94c7
-			94c7 c212 eb9f d2d8 e33d eb9f eb9f eb9f
-			eb9f eb9f eb9f eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f d2d8 d2d8 e33d 94c7 ad97 a94c
-			a94c a94c fbde ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff fbde 94c7 94c7 94c7 94c7 94c7
-			94c7 a94c eb9f eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f eb9f d2d8 a94c a94c a94c
-			ad97 a94c c212 ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff a94c 94c7 94c7 94c7 94c7 94c7
-			94c7 94c7 e33d eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f e33d d2d8 e33d eb9f eb9f eb9f
-			eb9f eb9f eb9f e33d d2d8 d2d8 eb9f eb9f
-			eb9f eb9f eb9f eb9f c212 94c7 94c7 a94c
-			a94c a94c a94c ef7b ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff c212 94c7 94c7 a94c c212 a94c 94c7
-			94c7 94c7 94c7 d2d8 eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f d2d8 d2d8 e33d eb9f eb9f
-			e319 d2d8 d2d8 d2d8 e319 eb9f eb9f eb9f
-			eb9f eb9f eb9f d2d8 94c7 94c7 94c7 a94c
-			d2d8 ad97 a94c c212 fbde ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
-			fbde ffff ffff ffff ffff d2d8 94c7 a94c
-			d2d8 c212 94c7 94c7 a94c e33d eb9f eb9f
-			eb9f eb9f eb9f eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f c212 a94c fbde d2d8 94c7 94c7
-			ef7b fbde ffff fbde ef7b ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff fbde e319 fbde ffff
-			ffff c212 94c7 94c7 94c7 94c7 c212 eb9f
-			eb9f eb9f eb9f eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f eb9f eb9f eb9f eb9f eb9f
-			d2d8 a94c 94c7 c212 ffff ffff ef7b c212
-			d2d8 fbde ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff e319 c212 d2d8 e319 94c7 94c7 94c7
-			d2d8 eb9f eb9f eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f eb9f eb9f eb9f eb9f c212
-			94c7 94c7 94c7 a94c ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff fbde ffff fbde a94c 94c7
-			94c7 a94c e33d eb9f eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f eb9f eb9f d2d8 94c7 94c7
-			94c7 94c7 94c7 94c7 ef7b ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ef7b a94c
-			94c7 94c7 c212 c212 eb9f eb9f eb9f eb9f
-			eb9f eb9f eb9f eb9f c212 c212 94c7 94c7
-			c212 ef7b c212 c212 e319 ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff e319 a94c 94c7 bd47
-			94c7 94c7 c212 d2d8 a94c eb9f eb9f eb9f
-			eb9f eb9f e33d a94c d2d8 d2d8 94c7 94c7
-			94c7 94c7 a94c c212 ef7b fbde ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff fbde c212 bd47 94c7 bd47 bd47 bd47
-			bd47 94c7 d2d8 d2d8 d2d8 c212 d2d8 e33d
-			e33d d2d8 c212 d2d8 d2d8 d2d8 94c7 bd47
-			bd47 bd47 bd47 94c7 94c7 94c7 c212 e319
-			fbde ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			fbde c212 bd47 bd47 bd47 bd47 bd47 bd47
-			bd47 94c7 c212 d2d8 d2d8 d2d8 d2d8 c212
-			c212 c212 d2d8 d2d8 d2d8 c212 94c7 bd47
-			bd47 bd47 bd47 bd47 bd47 bd47 bd47 bd47
-			a94c ef7b ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff bd47 bd47 bd47 bd47 94c7 94c7 bd47
-			bd47 94c7 c212 e33d e319 d2d8 d2d8 d2d8
-			e33d d2d8 d2d8 e319 d2d8 d2d8 94c7 bd47
-			94c7 bd47 bd47 94c7 94c7 bd47 bd47 e20b
-			bd47 e319 ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff bd47 e20b e20b e20b e20b bd47 94c7
-			94c7 94c7 c212 d2d8 d2d8 d2d8 e319 d2d8
-			d2d8 d2d8 e33d d2d8 d2d8 c212 94c7 bd47
-			bd47 bd47 94c7 94c7 bd47 e20b e20b e20b
-			bd47 d2d8 ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff a94c e20b e20b e20b e20b e20b e20b
-			bd47 bd47 bd47 d2d8 d2d8 e33d d2d8 d2d8
-			d2d8 d2d8 d2d8 d2d8 e33d c212 bd47 94c7
-			94c7 bd47 bd47 e20b e20b e20b e20b e20b
-			bd47 d2d8 fbde ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff e319
-			eef5 94c7 bd47 e20b e20b e20b e20b e20b
-			e20b e20b e20b bd47 bd47 a94c d2d8 d2d8
-			d2d8 d2d8 d2d8 d2d8 c212 bd47 94c7 bd47
-			e20b e20b e20b e20b e20b e20b e20b e20b
-			bd47 c212 e319 fbde ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ef7b c212 a94c 94c7
-			94c7 94c7 bd47 e20b e20b e20b e20b e20b
-			e20b e20b e20b e20b e66f bd47 e319 c212
-			e33d c212 d2d8 bd47 e20b e20b e20b e20b
-			e20b e20b e20b e20b e20b e20b e20b e20b
-			e20b e20b e20b bd47 e20b c212 ef7b ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff fbde d2d8 a94c a94c a94c a94c a94c
-			a94c a94c bd47 e20b e20b e20b e20b e20b
-			e20b e20b e20b e20b e20b e20b e319 c212
-			d2d8 c212 d2d8 e20b e20b e20b e20b e20b
-			e20b e20b e20b e20b e20b e20b e20b e20b
-			e20b e20b e20b e20b e20b e20b e20b c212
-			eef5 ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ef7b d2d8
-			c212 94c7 a94c a94c a94c a94c a94c a94c
-			a94c a94c 94c7 bd47 bd47 e20b e20b e20b
-			e20b e20b e20b e20b e20b e20b c212 c212
-			d2d8 c212 c212 e20b e20b e20b e20b e20b
-			e20b e20b e20b e20b e20b e20b bd47 bd47
-			e20b e20b e20b e20b e20b e20b e20b e20b
-			e20b e66f fbde ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff e319 94c7 a94c
-			a94c a94c a94c a94c a94c a94c a94c a94c
-			a94c a94c 94c7 e20b e20b bd47 bd47 bd47
-			e20b e20b e20b e20b e20b e20b bd47 c212
-			d2d8 a94c e20b e20b e20b e20b e20b e20b
-			e20b e20b e20b e20b bd47 bd47 e20b e20b
-			e20b e20b e20b e20b e20b e20b e20b e20b
-			e20b e20b eef5 ef7b ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff c212 a94c a94c
-			a94c a94c a94c a94c a94c a94c a94c a94c
-			a94c a94c a94c bd47 e20b e20b e20b e20b
-			bd47 bd47 e20b e20b e20b e20b e20b bd47
-			d2d8 bd47 bd47 e20b e20b e20b e20b e20b
-			e20b e20b bd47 e20b e20b e20b e20b e20b
-			e20b e20b e20b e20b e20b e20b e20b e20b
-			e20b e20b eef5 ef7b e319 ffff ffff ffff
-			ffff ffff ffff ffff fbde d2d8 94c7 a94c
-			a94c a94c a94c a94c a94c a94c a94c a94c
-			a94c a94c a94c 94c7 bd47 e20b e20b e20b
-			e20b e20b bd47 bd47 bd47 e20b e20b a94c
-			d2d8 a94c bd47 e20b e20b e20b e20b bd47
-			bd47 e20b e20b e20b e20b e20b e20b e20b
-			e20b e20b e20b e20b e20b e20b e20b e20b
-			e20b e20b e20b ef7b ffff ffff ffff ffff
-			ffff ffff ffff ffff c212 fbde c212 a94c
-			a94c a94c a94c a94c a94c a94c a94c a94c
-			a94c a94c a94c a94c e20b e20b e20b e20b
-			e20b e20b e20b e20b e20b e20b e20b e20b
-			c212 e20b e20b e20b bd47 e20b bd47 e20b
-			e20b e20b e20b e20b e20b e20b e20b e20b
-			e20b e20b e20b e20b e20b e20b e20b e20b
-			e20b e20b e66f ffff ffff e319 ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff 94c7
-			a94c a94c a94c a94c a94c a94c a94c a94c
-			a94c a94c a94c a94c c212 e20b e20b e20b
-			e20b e20b e20b e20b e20b e20b e20b c212
-			fbde c212 e20b e20b e20b e20b e20b e20b
-			e20b e20b e20b e20b e20b e20b e20b e20b
-			e20b e20b e20b e20b e66f eef5 e20b e20b
-			eef5 eef5 ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff d2d8
-			a94c a94c a94c a94c a94c a94c a94c a94c
-			a94c a94c a94c a94c a94c e319 e20b e20b
-			e20b e20b e20b e20b e20b e20b e20b eef5
-			ffff eef5 e20b e20b e20b e20b e20b e20b
-			e20b e20b e20b e20b e20b e20b e20b e20b
-			e66f e20b e20b eef5 ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			d2d8 a94c a94c a94c a94c a94c a94c a94c
-			a94c a94c a94c c212 c212 fbde ef7b e20b
-			e20b e20b e20b e20b e20b e20b e20b eef5
-			ffff eef5 e20b e20b e20b e20b e20b e20b
-			e20b e66f e20b e20b e20b e20b eef5 fbde
-			ef7b eef5 fbde ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff c212 d2d8 e319 d2d8 ef7b fbde e319
-			ef7b ffff ffff ffff ffff ffff ffff eef5
-			e20b e20b e66f e20b e20b e20b e20b eef5
-			ffff ef7b eef5 eef5 e66f e66f fbde ffff
-			fbde ffff ffff eef5 eef5 ef7b ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			eef5 eef5 ffff e66f e66f e20b e20b eef5
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ef7b fbde ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
@@ -580,7 +580,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="x_himo.1_pl"
-		path="C:/livecaster_TEST/tex/x_himo.1.tga"
+		path="C:/00_swan2d/localLC_2D/localLC_3D/tex/x_himo.1.tga"
 	>
 		<bitmap size="64">
 			d000 0003 d000 0003 d000 0003 d000 000b
@@ -598,7 +598,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="x_himo.2_pl"
-		path="C:/livecaster_TEST/tex/x_himo.2.tga"
+		path="C:/00_swan2d/localLC_2D/localLC_3D/tex/x_himo.2.tga"
 	>
 		<bitmap size="64">
 			d000 0003 d000 0003 d000 0003 e000 000b
@@ -616,7 +616,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="x_himo.3_pl"
-		path="C:/livecaster_TEST/tex/x_himo.3.tga"
+		path="C:/00_swan2d/localLC_2D/localLC_3D/tex/x_himo.3.tga"
 	>
 		<bitmap size="64">
 			e000 0007 e000 0007 e000 0007 e000 0007
@@ -634,7 +634,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="x_himo.4_pl"
-		path="C:/livecaster_TEST/tex/x_himo.4.tga"
+		path="C:/00_swan2d/localLC_2D/localLC_3D/tex/x_himo.4.tga"
 	>
 		<bitmap size="64">
 			c000 0007 c000 0007 c000 0007 e000 0007
@@ -652,7 +652,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="x_himo.5_pl"
-		path="C:/livecaster_TEST/tex/x_himo.5.tga"
+		path="C:/00_swan2d/localLC_2D/localLC_3D/tex/x_himo.5.tga"
 	>
 		<bitmap size="64">
 			c000 0007 c000 0007 c000 0007 e000 000b
@@ -670,7 +670,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="x_himo.6_pl"
-		path="C:/livecaster_TEST/tex/x_himo.6.tga"
+		path="C:/00_swan2d/localLC_2D/localLC_3D/tex/x_himo.6.tga"
 	>
 		<bitmap size="64">
 			d000 000b d000 000b d000 000b d000 000b
