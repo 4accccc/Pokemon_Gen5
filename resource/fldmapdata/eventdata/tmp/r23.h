@@ -47,6 +47,10 @@
 #define R23_TREE_06                       32
 #define FLD_ITEM_197                      33
 #define TR_RANGERM_21                     34
+#define FLD_ITEM_372                      35
+#define R23_FLDMONS_11                    36
+#define R23_FLDMONS_12                    37
+#define R23_FLDMONS_10                    38
 
 #endif //ZONE_R23_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r23.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
