@@ -519,7 +519,7 @@ enum{
   AUDIENCE_CHAR_PALSIZE = 0x20*12, // 12パレット分(4色単位)
   AUDIENCE_SEAT_PALSIZE = 0x20*15, // 15パレット分(5色単位)
   //
-  AUDIENCE_TIMER   = 2,       // パターン切り替え時間
+  AUDIENCE_TIMER   = 4,       // パターン切り替え時間
 };
 
 // パレットチェンジ

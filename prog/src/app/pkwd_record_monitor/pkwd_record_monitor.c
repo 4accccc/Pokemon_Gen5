@@ -774,7 +774,7 @@ static const FRAMELIST_TOUCH_DATA pwm_list_tp2_tbl[] =
   { { GFL_UI_TP_HIT_END, 0, 0, 0 }, 0 },
 };
 
-//#include "../pkwd_book/pokewood_category.cdat"
+#include "../pkwd_book/pokewood_category.cdat"
 
 static const FRAMELIST_HEADER pwm_frame_list_header = {
   GFL_BG_FRAME2_S,			// 上
@@ -3051,7 +3051,7 @@ static void pwm_chk_flag( PKWD_RECORD_MONITOR_MAIN_WORK *wk )
 			}
 			// colorチェック
 			// カラーは変更しない
-			// wk->FlagBuffer[j].color = PokewoodCategoryData[i]&0x03;
+			wk->FlagBuffer[j].color = PokewoodCategoryData[i]&0x03;
 			//
 			j++;
 		}

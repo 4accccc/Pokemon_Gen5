@@ -1734,7 +1734,7 @@ static int _get_director_msg( BTL_CLIENT *wk )
     }
   }
   
-  GF_ASSERT(result<pw_director_4_firstturn_02); //監督メッセージのラベル最大を超えていないかチェック
+  GF_ASSERT(result<=pw_director_4_firstturn_02); //監督メッセージのラベル最大を超えていないかチェック
   return result;
 }
 

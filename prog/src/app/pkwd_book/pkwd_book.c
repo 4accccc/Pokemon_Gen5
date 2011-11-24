@@ -130,6 +130,7 @@ enum{
 	// 何本目か(bg)
 	PLTID_MAIN_BASE			= 0,
 	PLTID_MAIN_FONT2		= 5,		// font2
+	PLTID_MAIN_LOGO			= 9,		// logo
 	PLTID_MAIN_FONT			= 10,		// font
 	//
 	PLTID_SUB_BG_BASE		= 6,		// 通常bg
@@ -540,6 +541,44 @@ typedef struct{
 	u8				palnum;			///< パレット番号
 }PKWD_BOOK_CANVAS_DATA;
 
+
+//--------------------------------------------------------------------
+//--------------------------------------------------------------------
+//-----------------------------------------
+// BGPALの定義(cdat用)
+//------------------------------------------
+typedef struct{
+	u8				type;			///< タイプ(0xffの場合は終了判定)
+	u8				arcid;		///< id
+	u8				offset;		///< オフセット
+	u8				size;			///< サイズ(*0x20)
+}PKWD_COUNT_BGPAL_DATA;
+
+//-----------------------------------------
+// BGCHRの定義(cdat用)
+//------------------------------------------
+typedef struct{
+	u8				frmnumber;	///< frame(0xffの場合は終了判定)
+	u8				arcid;			///< id
+	u8				offset;			///< オフセット
+	u8				pad;
+}PKWD_COUNT_BGCHR_DATA;
+
+//-----------------------------------------
+// BGSCNの定義(cdat用)
+//------------------------------------------
+typedef struct{
+	u8				frmnumber;	///< frame(0xffの場合は終了判定)
+	u8				arcid;			///< id
+	u8				offset;			///< オフセット
+	u8				poff;			  ///< パレットのオフセット
+}PKWD_COUNT_BGSCN_DATA;
+
+// (cdat用)
+enum{
+	PLTID_MAIN_BG_TITLE = 4,
+};
+
 //=============================================================================
 /**
  *							データ定義(要整理)
@@ -551,6 +590,7 @@ typedef struct{
 // BGPAL
 static const PKWD_BOOK_BGPAL_DATA pwc_bgpal_tbl[] = {
 	{ PALTYPE_MAIN_BG,	NARC_b_scenario_gra_pkwd_scenario2_u4_NCLR,	0,	0,},	// 上
+	{ PALTYPE_MAIN_BG,	NARC_b_scenario_gra_pkwd_title_logo_m_NCLR,	9,	1,},	// 上(logo)
 	{ PALTYPE_SUB_BG,	NARC_b_scenario_gra_pkwd_scenario2_d_NCLR,	6,	2,},	// 下
 
 	{ 0xff, 0, 0, 0,}, // end code
@@ -571,6 +611,46 @@ static const PKWD_BOOK_BGSCN_DATA pwc_bgscn_tbl[] = {
 
 	{ 0xff, 0, 0, 0,}, // end code
 };
+
+// BGCHR(logo)
+static const PKWD_BOOK_BGCHR_DATA pwc_bgchr_logo_tbl[] = {
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title00m_logo_NCGR, 0,	0,},	// 00
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title01m_logo_NCGR, 0,	0,},	// 01
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title02m_logo_NCGR, 0,	0,},	// 02
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title03m_logo_NCGR, 0,	0,},	// 03
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title04m_logo_NCGR, 0,	0,},	// 04
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title05m_logo_NCGR, 0,	0,},	// 05
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title06m_logo_NCGR, 0,	0,},	// 06
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title07m_logo_NCGR, 0,	0,},	// 07
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title08m_logo_NCGR, 0,	0,},	// 08
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title09m_logo_NCGR, 0,	0,},	// 09
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title10m_logo_NCGR, 0,	0,},	// 10
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title11m_logo_NCGR, 0,	0,},	// 11
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title12m_logo_NCGR, 0,	0,},	// 12
+
+	{ 0xff, 0, 0, 0,}, // end code
+};
+
+// BGSCN(logo)
+static const PKWD_BOOK_BGSCN_DATA pwc_bgscn_logo_tbl[] = {
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title00m_NSCR,	0,	0,},		// 00
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title01m_NSCR,	0,	0,},		// 01
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title02m_NSCR,	0,	0,},		// 02
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title03m_NSCR,	0,	0,},		// 03
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title04m_NSCR,	0,	0,},		// 04
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title05m_NSCR,	0,	0,},		// 05
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title06m_NSCR,	0,	0,},		// 06
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title07m_NSCR,	0,	0,},		// 07
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title08m_NSCR,	0,	0,},		// 08
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title09m_NSCR,	0,	0,},		// 09
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title10m_NSCR,	0,	0,},		// 10
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title11m_NSCR,	0,	0,},		// 11
+	{ GFL_BG_FRAME2_M,	NARC_b_scenario_gra_pkwd_title12m_NSCR,	0,	0,},		// 12
+
+	{ 0xff, 0, 0, 0,}, // end code
+};
+
+
 
 //------------------
 // OBJの情報(cmn)
@@ -954,6 +1034,9 @@ static const FRAMELIST_TOUCH_DATA pwb_list_tp2_tbl[] =
 };
 
 #include "pokewood_category.cdat"
+//
+#include "pkwd_announce_gra.naix"
+#include "../pkwd_announce/pkwd_movie_title.cdat"		// scenario_logo_tblを使用
 
 static const FRAMELIST_HEADER pwb_frame_list_header = {
   GFL_BG_FRAME2_S,			// 上
@@ -1086,6 +1169,7 @@ static s16  pwb_get_empty( PKWD_BOOK_MAIN_WORK *wk, const s32 num );
 // bgの設定
 static void pwb_init_bg( PKWD_BOOK_MAIN_WORK* wk );
 static void pwb_init_bg2( PKWD_BOOK_MAIN_WORK* wk, const s32 type, const s32 pnum );
+static void pwb_chg_bglogo( PKWD_BOOK_MAIN_WORK* wk, const s32 num );
 //
 // objの設定
 static void pwb_init_obj_res_font( PKWD_BOOK_MAIN_WORK* wk, const s32 drawtype );
@@ -1214,6 +1298,8 @@ static void pwb_scroll_newmark( PKWD_BOOK_MAIN_WORK * wk, const s8 rate );
 //
 static void pwb_set_name( PKWD_BOOK_MAIN_WORK * wk );
 static void pwb_delete_name( PKWD_BOOK_MAIN_WORK * wk );
+//
+static u8 pwb_get_title_no( PKWD_BOOK_MAIN_WORK* wk, const s32 id );
 
 // debug
 static void pwb_debug( PKWD_BOOK_MAIN_WORK *wk );
@@ -1547,6 +1633,7 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	//---------------
 	pwb_init_bg(  wk );
 	pwb_init_bg2( wk, GFL_BG_FRAME1_S, PLTID_SUB_BG_CMN );
+	pwb_chg_bglogo( wk, 0 );
 	
 	//------------------------
 	// フォントパレットセット
@@ -1613,6 +1700,11 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_NONE,
 		GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
 		8, 3 );
+	//
+	// 上画面
+	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2,
+		GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
+		4, 8);
 }
 
 //-----------------------------------------------------------------------------
@@ -1888,6 +1980,43 @@ static void pwb_init_bg2( PKWD_BOOK_MAIN_WORK* wk, const s32 type, const s32 pnu
 	//
 	// 背景色をセット
 //	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0 );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  LOGOの表示
+ *
+ *	@param	PKWD_BOOK_MAIN_WORK* wk
+ *	@param	const s32			(番号)
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void pwb_chg_bglogo( PKWD_BOOK_MAIN_WORK* wk, const s32 num )
+{
+	u16		*adr;
+	const PKWD_BOOK_BGCHR_DATA	*cadr = &pwc_bgchr_logo_tbl[0];
+	const PKWD_BOOK_BGSCN_DATA	*sadr = &pwc_bgscn_logo_tbl[0];
+	//
+	ARCHANDLE		*handle;
+	//
+	handle	= GFL_ARC_OpenDataHandle( ARCID_B_SCENARIO_GRA, wk->heapID );
+	//
+	// キャラ転送
+	cadr += num;
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, cadr->arcid, cadr->frmnumber, cadr->offset, 0, 0, wk->heapID );
+	// スクリーン転送
+	sadr += num;
+	GFL_ARCHDL_UTIL_TransVramScreen( handle, sadr->arcid, sadr->frmnumber, sadr->offset, 0, 0, wk->heapID );
+	//
+	// 終了
+	GFL_ARC_CloseDataHandle( handle );
+	//
+	//--------------------
+	// スクリーンの書き換え
+	//--------------------
+	GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_M, 0, 0, 32, 24, PLTID_MAIN_LOGO );
+	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
 }
 
 //-----------------------------------------------------------------------------
@@ -3267,6 +3396,10 @@ static void pwb_key_book( PKWD_BOOK_MAIN_WORK * wk )
 		// カラーの変更
 		tmp = wk->FlagBuffer[wk->ScenarioCurPos].color;
 		pwb_chg_up_pal( wk, tmp );
+		//
+		// ロゴ表示
+		tmp = pwb_get_title_no( wk, wk->FlagBuffer[wk->ScenarioCurPos].openid );
+		pwb_chg_bglogo( wk, tmp );
 	}
 	//
 	// スクロールバー処理(要検討)
@@ -4451,13 +4584,15 @@ static void pwb_disp_up_bg( PKWD_BOOK_MAIN_WORK * wk, const s32 smode )
 		if(mode == GFL_APP_END_TOUCH){
 			vflg = VISIBLE_OFF;
 		}
-		// フォント面のみを考慮にいれる
+		// フォント面(+logo)のみを考慮にいれる
 		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, vflg );
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG2, vflg );
 	}
 	// 表示
 	else{
-		// フォント面のみを考慮にいれる
+		// フォント面(+logo)のみを考慮にいれる
 		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, vflg );
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG2, vflg );
 	}
 }
 
@@ -5216,6 +5351,23 @@ static void pwb_delete_name( PKWD_BOOK_MAIN_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	(BG表示で必要な)タイトル番号を取得(cdatテーブルを使用)
+ *
+ * @param	PKWD_BOOK_MAIN_WORK* 			wk
+ * @param	const s32						(id)
+ *
+ * @return  u8								タイトル番号
+ */
+//--------------------------------------------------------------------------------------------
+static u8 pwb_get_title_no( PKWD_BOOK_MAIN_WORK* wk, const s32 id )
+{
+	// テーブルから取得
+	return( scenario_logo_tbl[id] );
+}
+
+
 //-------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------
@@ -5231,7 +5383,8 @@ static void pwb_delete_name( PKWD_BOOK_MAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void pwb_debug( PKWD_BOOK_MAIN_WORK *wk )
 {
-#ifdef PM_DEBUG
+//#ifdef PM_DEBUG
+#if 0
 	s32		tmp;
 	
 	// Y:NEW
@@ -5241,6 +5394,13 @@ static void pwb_debug( PKWD_BOOK_MAIN_WORK *wk )
 		//
 		OS_Printf("*** scenario [%d] played ***\n",tmp);
 	}
+	// X
+//	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_X) ){
+//		G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2,
+//			GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
+//			wk->Alpha[0], wk->Alpha[1]);
+//		OS_Printf("*** %d,%d ***\n",wk->Alpha[0],wk->Alpha[1]);
+//	}
 #endif
 }
 

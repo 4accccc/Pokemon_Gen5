@@ -571,6 +571,8 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Init( GFL_PROC *proc, int *seq, void
   // VBlankFunc登録
   wk->vblank_task = GFUser_VIntr_CreateTCB( VBlankFunc, wk, 1 );
 
+  // 16dot上にずらしセンタリングする
+  GFL_BG_SetScroll( GFL_BG_FRAME2_S, GFL_BG_SCROLL_Y_SET, 16 );
 
 	//@todo	フェードシーケンスがないので
 //	GX_SetMasterBrightness(0);
@@ -1392,7 +1394,7 @@ static BOOL PrintTool_MainFunc( PKWD_SELECT_SCREEN_MAIN_WORK * wk )
 #define SUBTITLE_WIN1_W ( 26 )  /// 上画面サブタイトル文字列の幅
 #define SUBTITLE_WIN1_H (  3 )  /// 
 #define SUBTITLE_WIN2_W ( 26 )  /// 上画面サブタイトル文字列の幅２（使ってる？）
-#define SUBTITLE_WIN2_H (  4 )  /// 
+#define SUBTITLE_WIN2_H (  5 )  /// 
 #define MSGWIN_W        ( 28 )  /// 下画面メッセージウインドウの幅
 #define MSGWIN_H        (  4 )  /// 
 #define INFORMATION_W   ( 28 )  /// 下画面情報ウインドウの幅
@@ -1779,14 +1781,14 @@ static void _draw_movie_subtitle( PKWD_SELECT_SCREEN_MAIN_WORK *wk, int index )
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->print_util[PKWD_BMP_SUBTITLE_U].win), 0 );
     GFL_MSG_GetString( wk->msg, pw_title_00+wk->scenario_no[index], strbuf );
     _centering_print( &wk->print_util[PKWD_BMP_SUBTITLE_U], wk->print_que, 
-                      strbuf, 6, wk->font, PRINTSYS_LSB_Make( 15, 14, 0 ) );
+                      strbuf, 8, wk->font, PRINTSYS_LSB_Make( 13, 12, 0 ) );
     
     // 下部を描画
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->print_util[PKWD_BMP_SUBTITLE_D].win), 0 );
     GFL_MSG_GetString( wk->msg, pkwd_subtitle_tbl[wk->scenario_no[index]][sex], strbuf );
     WORDSET_ExpandStr( wk->wordset[index], expandbuf, strbuf );
     _centering_print( &wk->print_util[PKWD_BMP_SUBTITLE_D], wk->print_que,
-                      expandbuf, 0, wk->font, PRINTSYS_LSB_Make( 13, 12, 0 ) );
+                      expandbuf, 6, wk->font, PRINTSYS_LSB_Make( 13, 12, 0 ) );
     //
     // 公開日
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->print_util[PKWD_BMP_SUB_DATE].win), 0 );

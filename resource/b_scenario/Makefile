@@ -31,6 +31,9 @@ lsources:=$(wildcard *.ncl)
 gsources:=$(wildcard *.ncg)
 csources:=$(wildcard *.nsc)
 esources:=$(wildcard *.nce)
+t_lsources:=$(wildcard title_files/*.ncl)
+t_gsources:=$(wildcard title_files/*.ncg)
+t_csources:=$(wildcard title_files/*.nsc)
 xlsources:=$(wildcard *.xls)
 
 # リソースが吐き出すファイルを自動でつくる
@@ -39,6 +42,9 @@ gobjects = $(subst .ncg,.NCGR,$(gsources))
 cobjects = $(subst .nsc,.NSCR,$(csources))
 eobjects = $(subst .nce,.NCER,$(esources))
 aobjects = $(subst .nce,.NANR,$(esources))
+t_lobjects = $(subst .ncl,.NCLR,$(t_lsources))
+t_gobjects = $(subst .ncg,.NCGR,$(t_gsources))
+t_cobjects = $(subst .nsc,.NSCR,$(t_csources))
 xlsobjs = $(subst .xls,.tblbin,$(xlsources))
 
 XLS2TAB		= ruby $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out_sheet.rb -c
@@ -83,7 +89,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects) $(xlsobjs)
+$(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects) $(xlsobjs) $(t_lobjects) $(t_gobjects) $(t_cobjects)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 endif
@@ -100,6 +106,9 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.NSCR
 	rm -f *.NCGR
 	rm -f *.NCLR
+	rm -f title_files/*.NSCR
+	rm -f title_files/*.NCGR
+	rm -f title_files/*.NCLR
 	rm -f *.narc
 	rm -f *.naix
 	rm -f *.tblbin
