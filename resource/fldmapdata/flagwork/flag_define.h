@@ -2292,6 +2292,7 @@
 #define SYS_FLAG_ARRIVE_D29R0101          2544 /* 0x09f0 到着フラグ：D29R0101 */
 #define SYS_FLAG_BGM_C16_PARADE           2545 /* 0x09f1 BGM変更フラグ：ジョインアベニュー */
 #define SYS_FLAG_BGM_C08_PLAZMA           2546 /* 0x09f2 BGM変更フラグ：氷漬けプラズマ団 */
+#define SYS_FLAG_POKEWOOD_DISABLE_REC     2547 /* 0x09f3 ポケウッド：撮影を一時的に行わない状態 */
 
 #define SYS_FLAG_AREA_END                 2639 /* 0x0a4f  */
 
