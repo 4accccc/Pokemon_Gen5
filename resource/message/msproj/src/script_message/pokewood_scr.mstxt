@@ -41,7 +41,7 @@
 		Label="msg_pw_studio_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヘイ！　[Name:TrainerName ]じゃないか！！
+			<Text>ヘイ！　[Name:TrainerName ]！！
 まえに　キミが　しゅつえんした▽
 えいがは　だいヒット　しただろ！▼
 おかげで　ライターが　ぞくへんの
@@ -52,7 +52,7 @@
 だいヒットを　とばしてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:31:25" />
+				Time="2011-11-24T05:42:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -803,7 +803,7 @@
 		Label="msg_pw_studio_19">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヘイ！　[Name:TrainerName ]じゃないか！！
+			<Text>ヘイ！　[Name:TrainerName ]！！
 ビックニュース　だぜ！▼
 キミの　しゅつえんした　えいがが
 れきだいの　こうぎょうせいせきを▽
@@ -817,7 +817,7 @@
 だいヒットを　とばしてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T09:10:29" />
+				Time="2011-11-24T05:42:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -860,7 +860,7 @@
 		Label="msg_pw_studio_20">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヘイ！　[Name:TrainerName ]じゃないか！！▼
+			<Text>ヘイ！　[Name:TrainerName ]！！▼
 さいきん　キミの　にんきが　すごくてさ！
 キミだからこそ　できる　さくひんの▽
 せいさくが　けってい　したんだぜ！▼
@@ -870,7 +870,7 @@
 だいヒットを　とばしてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T09:10:32" />
+				Time="2011-11-24T05:42:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -910,7 +910,7 @@
 		Label="msg_pw_studio_21">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヘイ！　[Name:TrainerName ]じゃないか！！▼
+			<Text>ヘイ！　[Name:TrainerName ]！！▼
 キミの　ポケウッドの　キャリアも
 けっこう　ながく　なってきたよな！▼
 そんな　ベテラン　まぢかの
@@ -922,7 +922,7 @@
 だいヒットを　とばしてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T09:10:36" />
+				Time="2011-11-24T05:42:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -963,16 +963,15 @@
 		Label="msg_pw_studio_22">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヘイ！　[Name:TrainerName ]じゃないか！！▼
-きょうは　あたらしい　だいほんの
-プレゼントが　あるぜっ！▼
-その　タイトルは　ズバリ
-[System:Color name="1" ][Name:PokewoodScenarioName Idx="1" ][/System:Color]▼
-ぜひ　チャレンジして　こんども
-だいヒットを　とばしてくれよな！▼</Text>
+			<Text>ヘイ！　[Name:TrainerName ]！！▼
+さいきん　キミは　わだい　みたいだな！
+キミに　ぜひ　しゅつえん　してほしいって▽
+だいほんが　いくつか　とどいてるぜ！▼
+まあ　くわしくは　チャレンジのときに
+チェックして　みてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T09:10:40" />
+				Time="2011-11-24T06:10:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -981,15 +980,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｈｅｙ！　[Name:TrainerName ]じゃないか！！▼
-きょうは　新しい　台本の
-プレゼントが　あるぜっ！▼
-その　タイトルは　ズバリ
-[System:Color name="1" ][Name:PokewoodScenarioName Idx="1" ][/System:Color]▼
-ぜひ　チャレンジして　今度も
-大ヒットを　飛ばしてくれよな！▼</Text>
+最近　キミは　話題みたいだな！
+キミに　ぜひ　出演して　欲しいって▽
+いくつか　届いてるぜ！▼
+まあ　詳しくは　チャレンジのときに
+チェックして　みてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:33:26" />
+				Time="2011-11-24T06:11:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1053,16 +1051,18 @@
 		Label="msg_pw_studio_24">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヘイ！　[Name:TrainerName ]じゃないか！！▼
-きょうは　あたらしい　だいほんの
-プレゼントが　あるぜっ！▼
-その　タイトルは　ズバリ
-[System:Color name="1" ][Name:PokewoodScenarioName Idx="1" ][/System:Color]▼
-ぜひ　チャレンジして　こんども
-だいヒットを　とばしてくれよな！▼</Text>
+			<Text>ヘイ！　[Name:TrainerName ]！！
+デビューさくの　できは　どうだった？▼
+すくなくとも　ボスの　ウッドウさんは
+だいまんぞく　だったみたいだぜ！▼
+なぜなら　キミの　ポケウッドデビューを
+きねんして　あたらしい　だいほんを▽
+もってきたんだからさ！▼
+まあ　くわしくは　チャレンジのときに
+チェックして　みてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T10:05:40" />
+				Time="2011-11-23T10:43:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1070,16 +1070,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｈｅｙ！　[Name:TrainerName ]じゃないか！！▼
-きょうは　新しい　台本の
-プレゼントが　あるぜっ！▼
-その　タイトルは　ズバリ
-[System:Color name="1" ][Name:PokewoodScenarioName Idx="1" ][/System:Color]▼
-ぜひ　チャレンジして　今度も
-大ヒットを　飛ばしてくれよな！▼</Text>
+			<Text>ヘイ！　[Name:TrainerName ]！！
+デビュー作の　出来は　どうだった？▼
+少なくとも　ボスの　ウッドウさんは
+大満足　だったみたいだぜ！▼
+なぜなら　キミの　ポケウッドデビューを
+記念して　新しい　台本を▽
+持って来たんだからさ！▼
+まあ　詳しくは　チャレンジの時に
+チェックして　みてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T10:05:40" />
+				Time="2011-11-23T10:43:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1106,11 +1108,14 @@
 プレゼントが　あるぜっ！▼
 その　タイトルは　ズバリ
 [System:Color name="1" ][Name:PokewoodScenarioName Idx="1" ][/System:Color]▼
+タイトルのとおり　キミと　ハチクさんが
+きょうえんを　まちのぞむ　こえが▽
+おおくて　かかれたみたいだぜ！▼
 ぜひ　チャレンジして　こんども
 だいヒットを　とばしてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T10:06:08" />
+				Time="2011-11-23T10:45:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1123,11 +1128,14 @@
 プレゼントが　あるぜっ！▼
 その　タイトルは　ズバリ
 [System:Color name="1" ][Name:PokewoodScenarioName Idx="1" ][/System:Color]▼
+タイトルの通り　キミと　ハチクさんが
+共演を　待ち望む　声が▽
+多くて　書かれたみたいだぜ！▼
 ぜひ　チャレンジして　今度も
 大ヒットを　飛ばしてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T10:06:26" />
+				Time="2011-11-23T10:46:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1909,14 +1917,14 @@
 ……なんとなく　わかると　おもうけど
 キミにね　ここポケウッドの　えいがに▽
 しゅつえんして　ほしいんだよー！▼
-ぼくの　スカウトマンからさ　キミから
+スカウトマンからさ　キミから
 スターの　かのうせいが▽
 にじみでてるって　きいてたけど▽
 ボクも　さっき　キミを　みたとき▽
 ズギューンと　きちゃったんだよね！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T07:24:54" />
+				Time="2011-11-24T05:28:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2008,7 +2016,7 @@
 		Label="msg_pw_tutorial_rec_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>うん　うん▼
+			<Text>だよねー　だよねー▼
 ボクも　[Name:TrainerName ]ちゃん　だったら
 ぜったい　ステキな　やくしゃさんに▽
 なれると　おもうんだよー▼
@@ -2018,7 +2026,7 @@
 よんであるしさ！！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T07:27:13" />
+				Time="2011-11-24T05:29:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2026,7 +2034,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うん　うん▼
+			<Text>だよねー　だよねー▼
 ボクも　[Name:TrainerName ]ちゃん　だったら
 絶対　ステキな　役者さんに▽
 なれると　確信してるんだよー▼
@@ -2036,7 +2044,7 @@
 呼んであるしさ！！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T07:27:09" />
+				Time="2011-11-24T05:29:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

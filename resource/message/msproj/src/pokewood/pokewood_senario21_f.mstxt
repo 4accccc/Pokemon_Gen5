@@ -511,21 +511,21 @@
 べつに　おかしく　ないっしょ？▼
 というかね　こっちも　じかんないし
 ほんだいに　はいりますからね▼
-えーとね　オレ　アントニオさんから
+えーとね　オレ　アントニオから
 アンタが　トレーナーとして▽
 イケてる　って　きいてるんすよ▼
 んで　そうだん　なんすけど　オレと
-マリアさんと　しょうぶして　くださいよ！▼
+アントニオと　しょうぶして　くださいよ！▼
 アンタの　イカした　すがた　みたら
-アントニオさんの　きおくも　ぜったい▽
+アントニオの　きおくも　ぜったい▽
 よみがえると　おもうんすよねー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-24T03:08:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-24T03:08:30" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -535,21 +535,21 @@
 別に　おかしく　ないっしょ？▼
 というかね　こっちも　時間ないし
 本題に　入りますからね▼
-えーとね　オレ　アントニオさんから
+えーとね　オレ　アントニオから
 アンタが　トレーナーとして▽
 イケてる　って　聞いてるんすよ▼
 んで　相談　なんすけど　オレと
-マリアさんと　勝負して　くださいよ！▼
+アントニオと　勝負して　くださいよ！▼
 アンタの　イカした姿　見たら
-アントニオさんの　記憶も　ぜってー▽
+アントニオの　記憶も　ぜってー▽
 よみがえると　思うんすよねー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-24T03:08:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-24T03:08:30" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1425,27 +1425,27 @@
 		Label="pw_event4_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]ねえねえ　どうしたの？
+			<Text>[Name:TrainerName Idx="1" ]『ねえねえ　どうしたの？
 わたしよ　[Name:TrainerName Idx="1" ]だよー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2011-11-24T03:08:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2011-11-24T03:08:30" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]ねえねえ　どうしたの？
+			<Text>[Name:TrainerName Idx="1" ]『ねえねえ　どうしたの？
 わたしよ　[Name:TrainerName Idx="1" ]だよー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2011-11-24T03:08:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2011-11-24T03:08:30" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1533,33 +1533,33 @@
 		Label="pw_event4_hero_4">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……　……うそよ▼
+			<Text>[Name:TrainerName Idx="1" ]『……　……ウソよ▼
 あなたのこと　きらいに　なるなんて
 ぜったいに　むりなの……▼
 そんなこと　できるはず　ないわ！
 わたしは　あなたが　だいすきなの！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-24T03:08:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-24T03:08:30" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……　……うそよ▼
+			<Text>[Name:TrainerName Idx="1" ]『……　……ウソよ▼
 あなたのこと　嫌いに　なるなんて
 絶対に　無理　なの……▼
 そんなこと　出来るはず　ないわ！
 わたしは　あなたが　大好きなの！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-24T03:08:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-24T03:08:30" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1907,7 +1907,7 @@
 			Language="JPN">
 			<Text>ドーブル『あー　そりゃ　ムリっす！▼
 このせかいに　ながい　あいだ
-とどまっていると　アントニオさんの▽
+とどまっていると　アントニオの▽
 からだが　ゆきのように　ガンガン▽
 とけて　きえて　しまうんすよ！▼
 なんで　きょうは　ここで　おわりっす！
@@ -1915,17 +1915,17 @@
 そんとき　がんばって　くださいよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-24T03:08:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-24T03:08:30" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ドーブル『あー　そりゃ　ムリっす！▼
 この世界に　長い時間
-留まってると　アントニオさんの▽
+留まってると　アントニオの▽
 身体が　雪のように　ガンガン▽
 溶けて　消えて　しまうんすよね！▼
 なんで　今日は　ここで　終わりっす！
@@ -1933,11 +1933,11 @@
 そんとき　頑張って　くださいよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-24T03:08:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-24T03:08:30" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2071,7 +2071,7 @@
 			<Text>ドーブル『あー　すんませんー
 ざんねんながら　それは　ムリっす！▼
 このせかいに　ながい　あいだ
-とどまっていると　アントニオさんの▽
+とどまっていると　アントニオの▽
 きおくが　ゆきのように　ガンガン▽
 とけて　きえて　しまうんすよね！▼
 なんで　きょうは　ここで　おわりっす！
@@ -2079,18 +2079,18 @@
 つぎは　がんばって　くださいよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-24T03:08:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-24T03:08:30" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ドーブル『あー　すんませんー▼
 残念ながら　それは　ムリっす！▼
 この世界に　長い時間
-留まってると　アントニオさんの▽
+留まってると　アントニオの▽
 記憶が　雪のように　ガンガン▽
 溶けて　消えて　しまうんすよね！▼
 なんで　今日は　ここで　終わりっす！
@@ -2098,11 +2098,11 @@
 次は　頑張って　くださいよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-24T03:08:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-24T03:08:30" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2234,38 +2234,38 @@
 			<Text>ドーブル『そうすよ！
 これは　アンタの　みてる　ゆめ！▼
 げんじつの　せかいでは
-アンタは　アントニオさんと▽
+アンタは　アントニオと▽
 なかよく　くらして　いるんすから▼
 あ！　ほら　ねぼう　しそうだから
-アントニオさんが　おこしにくるっすよ！▼
+アントニオが　おこしにくるっすよ！▼
 ……　……　……　……　……　……
 ……　……　……　……　……　……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2011-11-24T03:08:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2011-11-24T03:08:30" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ドーブル『そうすよ！
 これは　アンタの　見てる夢！▼
 現実の　世界では
-アンタは　アントニオさんと▽
+アンタは　アントニオと▽
 仲良く　暮らして　いるんすから▼
 あ！　ほら　寝坊　しそうだから
-アントニオさんが　起こしに来るっすよ！▼
+アントニオが　起こしに来るっすよ！▼
 ……　……　……　……　……　……
 ……　……　……　……　……　……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2011-11-24T03:08:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2011-11-24T03:08:30" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2472,7 +2472,7 @@
 		Label="pw_event9_enemy_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>アントニオ『……あなたに　あうため
+			<Text>アントニオ『……きみに　あうため
 この　せかいに　もどってきたんだ……▼
 でも　きみの　かわりはてた
 すがたを　みたら　ショックで……▼
@@ -2481,11 +2481,11 @@
 あんなことに　なっているなんて……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2011-11-24T03:08:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2011-11-24T03:08:30" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2543,16 +2543,16 @@
 ひょっとして　アンタも
 さいきんの　きおくが▽
 まっしろじゃ　ないっすか？▼
-アントニオさんとの　おもいでが　ある
+アントニオとの　おもいでが　ある
 ゆうえんちに　いった　きおくが▽
 ぼんやりと　ある　くらいで……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2011-11-24T03:08:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2011-11-24T03:08:30" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2561,16 +2561,16 @@
 ひょっとして　アンタも
 最近の　記憶が▽
 真っ白じゃ　ないっすか？▼
-アントニオさんとの　思い出が　ある
-遊園地に　いった　きおくが▽
+アントニオとの　思い出が　ある
+遊園地に　いった　記憶が▽
 ぼんやりと　ある　くらいで……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2011-11-24T03:08:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2011-11-24T03:08:30" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2681,8 +2681,7 @@
 			<Text>ドーブル『そーなんすよ！▼
 アンタは　とっくに　しんでいるのに
 コッチのせかいに　のこってるんす！▼
-なんか　こころのこり　とか　あるっしょ？▼
-だから　たのしかった　おもいでが
+たのしかった　おもいでが
 つまった　ゆうえんちの　なかを▽
 きおくも　ないまま　ウロウロ▽
 さまよい　つづけちゃってるんすよねー▼
@@ -2693,19 +2692,18 @@
 アンタは　アンタで　なくなっちゃうっす</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-23T11:17:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-23T11:17:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ドーブル『そーなんすよ！▼
 アンタは　とっくに　死んでいるのに
 コッチの世界に　残ってるんす！▼
-何か　心残りとか　あるっしょ？▼
-だから　楽しかった　思い出が
+楽しかった　思い出が
 つまった　遊園地の　中を▽
 記憶も　ないまま　ウロウロ▽
 さまよい　続けちゃってんすよねー▼
@@ -2716,11 +2714,11 @@
 アンタは　アンタで　なくなっちゃうっす</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-23T11:17:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-23T11:17:43" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2758,45 +2756,45 @@
 		Label="pw_event9_enemy_5">
 		<LanguageCell
 			Language="JPN">
-			<Text>ドーブル『オレはー　アントニオさんに
+			<Text>ドーブル『オレはー　アントニオに
 たのまれて　アンタを　たすけにきたの▼
 でも　きけんだって　いうのに　ついてきた
-マリアさんは　かわりはてた　アンタを▽
+アントニオは　かわりはてた　アンタを▽
 みたら　なきくずれて　そのまんま▽
 きおく　うしなっちゃって……▼
 まあ　でも　アンタは　アンタで
-アントニオさんを　みた　しゅんかんに▽
+アントニオを　みた　しゅんかんに▽
 かなり　きおくが　もどったんすよね……▼
 ……まあ　あいのちから　というか
 おにあいのふたり　ってことすかねー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-24T03:08:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-24T03:08:30" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ドーブル『オレはー　アントニオさんに
+			<Text>ドーブル『オレはー　アントニオに
 頼まれて　アンタを　助けに　来たの▼
 でも　危険だって　いうのに　ついてきた
-マリアさんは　変わり果てた　アンタを▽
+アントニオは　変わり果てた　アンタを▽
 見たら　泣き崩れちゃって　そのまんま▽
 記憶　うしなっちゃって……▼
 でも　アンタは　アンタで
-アントニオさんを　見た　瞬間に▽
+アントニオを　見た　瞬間に▽
 かなり　記憶が　戻ったんすよね……▼
 ……まあ　愛の力　というか
 お似合いのふたり　ってことすかねー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-24T03:08:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:04" />
+				Time="2011-11-24T03:08:30" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2830,31 +2828,31 @@
 		Label="pw_event9_enemy_6">
 		<LanguageCell
 			Language="JPN">
-			<Text>マリア『[Name:TrainerName Idx="1" ]……
-わたしと　いっしょに　いこ……▼
+			<Text>アントニオ『[Name:TrainerName Idx="1" ]……
+わたしと　いっしょに　いこう……▼
 このせかいは　もう　わたしたちが
-いるべき　ばしょ　じゃないもの……</Text>
+いるべき　ばしょ　じゃない……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2011-11-23T11:17:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2011-11-23T11:17:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>マリア『[Name:TrainerName Idx="1" ]……
-私と　一緒に　行こ……▼
+			<Text>アントニオ『[Name:TrainerName Idx="1" ]……
+私と　一緒に　行こう……▼
 この世界は　もう　私たちが
-いるべき　場所じゃない　もの……</Text>
+いるべき　場所じゃない……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2011-11-23T11:17:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2011-11-23T11:17:43" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2958,27 +2956,27 @@
 			Language="JPN">
 			<Text>ドーブル『ふっふっふっ！
 さあ！　おにあいの　おふたりさん！▼
-ちゃっちゃと　いくっすよ……</Text>
+ちゃっちゃと　いくっすよー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2011-11-23T11:17:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2011-11-23T11:17:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ドーブル『ふっふっふっ！
 さあ！　お似合いの　おふたりさん！▼
-ちゃっちゃと　行くっすよ……</Text>
+ちゃっちゃと　行くっすよー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2011-11-23T11:17:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:54" />
+				Time="2011-11-23T11:17:43" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

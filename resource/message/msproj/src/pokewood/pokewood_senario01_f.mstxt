@@ -331,7 +331,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハチクマン『わがはいの　ポケモンを
-たったの　一撃だと……▽
+たったの　いちげきだと……▽
 やるな！　[Name:PokemonNickname Idx="0" ]ガール！▼
 だが　しかし！　だが　しかし！▼
 わがはいの　あくのおうぎで
@@ -339,11 +339,11 @@
 さあ！　かくごは　よいかッ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T09:00:36" />
+				Time="2011-11-24T05:32:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T09:00:36" />
+				Time="2011-11-24T05:32:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">

@@ -414,36 +414,36 @@
 			<Text>ぬいぐるみ『あのさー
 ボクは　ここの　もんばん　なんだよ▽
 キミを　みはるのが　しごとなの▼
-そんなことしたら　ジュジュベさまに▽
+そんなことしたら　ジュジュベさまに
 おこられちゃうでしょ　それに……▼
 ボクだってさ　むかし　とびらを
 あけようと　したけど　ダメだったの▽
 しっぱい　したんだよね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-21T10:56:41" />
+				Time="2011-11-23T11:27:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-21T10:56:41" />
+				Time="2011-11-23T11:27:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ぬいぐるみ『あのさー
 ボクは　ここの門番　なんだよ▽
 キミを　見張るのが　仕事なの▼
-そんなことしたら　ジュジュベ様に▽
+そんなことしたら　ジュジュベ様に
 怒られちゃうでしょ　それに……▼
 ボクだってさ　昔に　扉を
 開けようと　したけど　ダメだったの▽
 失敗　したんだよね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-21T10:56:41" />
+				Time="2011-11-23T11:27:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-21T10:56:41" />
+				Time="2011-11-23T11:27:36" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -805,7 +805,7 @@
 		Label="pw_event2_enemy_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぬいぐるみ『わかんないかな？▼
+			<Text>ぬいぐるみ『わかんないかな？
 こんなふうに　とびらを▽
 こわしちゃ　ダメって　ことさ▼
 まほうで　つくられた　ものを
@@ -821,11 +821,11 @@
 おいしい　ダシが　でそうだなー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2011-11-23T11:27:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2011-11-23T11:27:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1067,17 +1067,17 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]ひめ『うるさい！
 ほめられても　うれしくないよーっ！！▼
-もー　ここから　出たいのー！！
+もー　ここから　でたいのー！！
 ちちうえー！　ははうえー！！
 だいじんー！！　けらいどもー！！
 だれでも　いいから　たすけてー！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2011-11-24T03:08:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T01:14:10" />
+				Time="2011-11-24T03:08:44" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
