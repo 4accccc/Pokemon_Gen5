@@ -2761,13 +2761,14 @@
 			Language="JPN">
 			<Text>そうだ！　あなたに　さしあげる
 グッズケースは　コレにしよう！▼
-かつての　スーパースターが
+かつての　スーパースター
+[Name:TrainerName ]さんが▽
 つかっていた　グッズと▼
 おなじ　ものが　はいっている
 グッズケース　です！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-20T06:51:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-24T06:37:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -2777,13 +2778,14 @@
 			Language="JPN_KANJI">
 			<Text>そうだ！　あなたに　さしあげる
 グッズケースは　コレにしよう！▼
-かつての　スーパースターが
+かつての　スーパースター
+[Name:TrainerName ]さんが▽
 使っていた　グッズと▼
 同じ　ものが　入っている
 グッズケース　です！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-20T06:51:12" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-24T06:38:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
@@ -2795,10 +2797,12 @@
 ●データコンバート時
 ・メッセージ表示後
 　グッズケース入手処理
-・続けてowner_demo_swan_03a</Comment>
+・続けてowner_demo_swan_03a
+
+0=コンバート元プレイヤー名</Comment>
 			<CommentModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-05-24T13:58:11" />
+				Time="2011-11-24T06:38:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2890,12 +2894,13 @@
 とある　スーパースターと▽
 よく　にた　オーラを　かんじます！▼
 そこで　わたしから　プレゼント！▼
-これは　かつての　スーパースターが
+これは　かつての　スーパースター
+[Name:TrainerName ]さんが▽
 つかっていた　ものと▽
 おなじ　グッズの　つめあわせです▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-08-01T07:27:01" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-24T06:39:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2909,11 +2914,12 @@
 よく　似た　オーラを　感じます！▼
 そこで　わたしから　プレゼント！▼
 これは　かつての　スーパースターが
+[Name:TrainerName ]さんが▽
 使っていた　ものと▽
 同じ　グッズの　つめあわせです▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-21T10:21:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-24T06:39:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2921,10 +2927,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanで追加</Comment>
+			<Comment>※swanで追加
+
+0=コンバート元プレイヤー名</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-08-01T07:49:43" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-24T06:39:32" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2989,10 +2997,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]は
-グッズの　つめあわせを　もらった！▼</Text>
+グッズの　セットを　もらった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-08-01T11:16:45" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-24T06:33:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3001,10 +3009,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]は
-グッズの　つめあわせを　もらった！▼</Text>
+グッズの　セットを　もらった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-08-01T11:16:49" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-24T06:33:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3013,10 +3021,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>※swanで追加
-</Comment>
+
+0=プレイヤー名</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-08-01T07:49:43" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-24T07:02:12" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -3025,6 +3034,43 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r0201_goods_get_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]は　[Name:Item Idx="1" ]と
+グッズの　セットを　てにいれた！▼</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-24T07:01:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-24T06:53:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]は　[Name:Item Idx="1" ]と
+グッズの　セットを　手に入れた！▼</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-24T07:01:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-24T06:53:24" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで追加
+
+0=プレイヤー名
+1=どうぐ名（グッズケース）</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-24T07:02:27" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c04r0201_owner_swan_03"
@@ -3271,5 +3317,81 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r0201_confirm_00">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]さんと　おそろいの
+グッズの　セットを　うけとりますか？</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-24T06:40:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-24T06:40:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]さんと　おそろいの
+グッズの　セットを　受け取りますか？</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-24T06:41:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-24T06:40:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムメッセージ
+コンバート確認
+
+この後はい／いいえ選択肢表示
+
+0=コンバート元プレイヤー名</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-24T06:42:18" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r0201_confirm_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>グッズの　セットの　うけとりは
+１どしか　できませんが　よいですか？</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-24T06:41:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-24T06:41:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>グッズの　セットの　受け取りは
+１度しか　できませんが　良いですか？</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-24T06:41:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-24T06:41:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>システムメッセージ
+コンバート確認　念押し
+
+この後はい／いいえ選択肢表示</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-24T06:42:27" />
+		</CommentCell>
 	</TextRow>
 </MessageStudioText>
