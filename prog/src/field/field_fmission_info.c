@@ -98,7 +98,10 @@ typedef enum{
 #define SCORE_UP_VIEW_TIME  (60)
 #define TIME_BONUS_VIEW_TIME  (60)
 
-#define FMINFO_SE_SCOREUP (SEQ_SE_SW_FES_04)
+#define FMINFO_SE_SCOREUP (SEQ_SE_SW_FES_04)    //スコアアップSE
+#define FMINFO_SE_COUNT_DOWN  (SEQ_SE_DECIDE5)  //カウントダウンSE
+
+#define FMINFO_COUNT_DOWN_START (10)  //残り10秒からカウントダウン開始
 
 #include "field_fmission_info_def.h"
 
@@ -121,7 +124,7 @@ struct _FIELD_FMISSION_INFO{
   u8              t_tbonus_f:1;   //タイムボーナスタスクが生きているか？
   u8              score_up_ct;
   u8              time_bonus_ct;
-  int             old_sec;
+  u16             old_sec;
 
 	// OBJ
 	BMPOAM_SYS_PTR  bmpOamSys;               // BMPOAMシステム
@@ -531,7 +534,13 @@ static void panel_TimeUpdate( FIELD_FMISSION_INFO* wk, BOOL force_f )
   }
   panel_NumberDraw( wk, min%60, ACT_TIMEN_PLACE_NUM, ACT_TIMEN01, TRUE );
   panel_NumberDraw( wk, sec%60, ACT_TIMEN_PLACE_NUM, ACT_TIMEN03, TRUE );
-  wk->old_sec = sec; 
+  wk->old_sec = sec;
+
+  if( force_f ) return;
+  
+  if( sec > 0 && sec <= FMINFO_COUNT_DOWN_START ){
+    PMSND_PlaySE( FMINFO_SE_COUNT_DOWN );
+  }
 }
 
 //--------------------------------------------------------------

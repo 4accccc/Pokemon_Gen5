@@ -16,6 +16,7 @@ typedef enum{
   FMISSION_START_FOUL_NULL,  //エラー無し
   FMISSION_START_FOUL_TIMEUP_JOIN,  //参加しようとしたけどタイムアップ
   FMISSION_START_FOUL_TIMEUP_CHECK, //ミッションパラメータをチェックしようとしたけどタイムアップ
+  FMISSION_START_FOUL_ENTRY, //参加しようとしたけどエントリー条件を満たしていない
 }FMISSION_START_FOUL_CODE;
 
 typedef struct _FMISSION_EFFECT_PARAM{

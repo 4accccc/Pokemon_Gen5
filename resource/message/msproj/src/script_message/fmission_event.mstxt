@@ -203,7 +203,7 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fmission_start_failed01">
+		Label="msg_fmission_start_failed_timeout01">
 		<LanguageCell
 			Language="JPN">
 			<Text>さんかに　しっぱい　しました▼
@@ -240,7 +240,7 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fmission_start_failed02">
+		Label="msg_fmission_start_failed_timeout02">
 		<LanguageCell
 			Language="JPN">
 			<Text>さんか　できない　ミッションでした▼
@@ -274,6 +274,48 @@
 			<CommentModifiedBy
 				User="iwasawa:W00270"
 				Time="2011-10-28T08:33:53" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_start_failed_entry01">
+		<LanguageCell
+			Language="JPN">
+			<Text>このミッションには
+まだ　さんか　できません▼
+ぼうけんを　すすめることで
+あそべる　ミッションが　ふえます！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-11-24T08:43:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-11-24T08:40:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>このミッションには
+まだ　参加　できません▼
+冒険を　進めることで
+遊べる　ミッションが　増えます！</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-11-24T08:45:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-11-24T08:40:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>フェスミッション開始失敗メッセージ
+エントリー条件を満たしてない
+(参加しようとした時)
+
+※内容確認はできる</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-11-24T08:44:38" />
 		</CommentCell>
 	</TextRow>
 	<TextRow

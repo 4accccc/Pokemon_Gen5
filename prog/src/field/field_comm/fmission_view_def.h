@@ -181,10 +181,16 @@ typedef enum{
 #define FVIEW_SE_CANCEL (SEQ_SE_CANCEL1)
 #define FVIEW_SE_UPDOWN (SEQ_SE_SELECT4)
 #define FVIEW_SE_NORMAL_LOG (SEQ_SE_SYS_11)
-#define FVIEW_SE_NEW_PLAYER (SEQ_SE_SW_FES_01)
-#define FVIEW_SE_FREEWORD   (SEQ_SE_SW_FES_02)
-#define FVIEW_SE_SCOREUP    (SEQ_SE_SW_FES_03)
-#define FVIEW_SE_ICON   (SEQ_SE_SELECT2)
+
+#define FVIEW_SE_NEW_PLAYER         (SEQ_SE_SW_FES_11)  //10人未満ならこっち
+#define FVIEW_SE_NEW_PLAYER_OVER10  (SEQ_SE_SW_FES_12)  //10人以上ならこっち
+#define FVIEW_SE_FREEWORD           (SEQ_SE_SW_FES_02)  //フリーワード時(通常)
+#define FVIEW_SE_FREEWORD_GREETING  (SEQ_SE_SW_FES_08)  //フリーワード時(挨拶)
+#define FVIEW_SE_FREEWORD_THANKS    (SEQ_SE_SW_FES_09)  //フリーワード時(お礼)
+#define FVIEW_SE_FREEWORD_BOAST     (SEQ_SE_SW_FES_10)  //フリーワード時(自慢)
+#define FVIEW_SE_SCOREUP            (SEQ_SE_SW_FES_03)  //スコアアップ時
+
+#define FVIEW_NEW_PLAYER_SE_CHANGE_JOIN_NUM  (10)  //10人超えたらSEを変える
 
 ///////////////////////////////////////////////////
 //BMP関連

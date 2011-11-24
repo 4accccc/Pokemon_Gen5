@@ -185,6 +185,7 @@ GMEVENT* EVENT_FMissionStartFailed( GAMESYS_WORK * gsys, void* work )
   sub_InitFMissionWork( wk, gsys, fieldmap );
 
   //パラメータ取得
+  wk->mission = param->mission; 
   wk->foul_code = param->foul_code;
 
   //ミッションエントリースタックテーブルから削除
@@ -511,10 +512,15 @@ static GMEVENT_RESULT event_FMissionStartFailedMain(GMEVENT * event, int *  seq,
 
   switch (*seq) {
   case 0:
-    evcall_MsgPrintEx( wk->gsys, event, wk->fmb, wk->msgData, msg_fmission_start_failed01+(wk->foul_code-1), MSGPRINT_MODE_LAST );
+    evcall_MsgPrintEx( wk->gsys, event, wk->fmb, wk->msgData, msg_fmission_start_failed_timeout01+(wk->foul_code-1), MSGPRINT_MODE_LAST );
     (*seq)++;
     break;
   case 1:
+    //ミッションエントリースタックテーブルから削除
+    FMISSION_ENTRY_TBL_DeleteData( wk->fest_sys, (const FEST_MISSION*)&wk->mission );
+    //無視ミッション登録しておく
+    LINK_FESTIVAL_EgnoreLogStore( wk->fest_sys, (const FEST_MISSION*)&wk->mission );
+
     sub_ReleaseFMissionWork( wk );
     return GMEVENT_RES_FINISH;
   }

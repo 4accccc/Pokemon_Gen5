@@ -21,7 +21,7 @@
 #include "field/fmission_view.h"
 #include "print\printsys.h"
 #include "message.naix"
-
+#include "app/name_input.h"
 #include "field/research_team_def.h"
 #include "beacon_status.naix"
 #include "wifi_unionobj.naix"
@@ -385,6 +385,13 @@ void FMissionView_PanelUpdate( FMISSION_VIEW_PTR wk )
  */
 BOOL FMissionView_SubSeqLogEntry( FMISSION_VIEW_PTR wk )
 {
+  static const u16 DATA_FreeWordSE[NAMEIN_SHORTCUT_RET_MAX] = {
+    FVIEW_SE_FREEWORD,
+    FVIEW_SE_FREEWORD_GREETING,
+    FVIEW_SE_FREEWORD_THANKS,
+    FVIEW_SE_FREEWORD_BOAST,
+  };
+
   if( wk->eff_task_ct ){
     return FALSE;
   }
@@ -399,10 +406,14 @@ BOOL FMissionView_SubSeqLogEntry( FMISSION_VIEW_PTR wk )
  
       switch( action ){
       case FMISSION_LOG_ACT_FREEWORD:
-        BVCSound_PlaySE( FVIEW_SE_FREEWORD );
+        BVCSound_PlaySE( DATA_FreeWordSE[ FMISSION_LOG_GetActionParam( wk->newLog )&0x03 ] );
         break;
       case FMISSION_LOG_ACT_NEW_ENTRY:
-        BVCSound_PlaySE( FVIEW_SE_NEW_PLAYER );
+        if( wk->ctrl.fm_join_num < FVIEW_NEW_PLAYER_SE_CHANGE_JOIN_NUM ){
+          BVCSound_PlaySE( FVIEW_SE_NEW_PLAYER );
+        }else{
+          BVCSound_PlaySE( FVIEW_SE_NEW_PLAYER_OVER10 );
+        }
         break;
       default:
         if( FEST_MISSION_IsScoreUp( wk->fmwk, action, FMISSION_LOG_GetActionParam( wk->newLog ))){
@@ -440,28 +451,6 @@ BOOL FMissionView_SubSeqLogEntry( FMISSION_VIEW_PTR wk )
     return TRUE;
   }
   return FALSE;
-#if 0
-  switch( wk->sub_seq ){
-  case 0:
-    {
-      BOOL popup_f;
-
-      //ポップアップリクエスト
-      popup_f = effReq_PopupMsg( wk, wk->newLogInfo, wk->first_entry_f );
-
-      //新規でない時はスクロール無し
-      if(popup_f){
-        BVC_MenuBarViewSet( wk, MENU_ALL, MENU_ST_OFF );
-        BVCSound_PlaySE( BVIEW_SE_ICON );
-      }
-      if( wk->first_entry_f ){
-        BVCDraw_MenuWindow( wk, msg_sys_now_record, &wk->eff_task_ct );
-      }
-      return TRUE;
-    }
-    break;
-  }
-#endif
 }
 
 ///////////////////////////////////////////////////////////////////

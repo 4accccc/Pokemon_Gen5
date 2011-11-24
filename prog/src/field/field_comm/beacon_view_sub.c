@@ -2290,7 +2290,8 @@ static void tcb_WinFMissionEntryCheck( GFL_TCBL *tcb , void* tcb_wk)
           //ミッション内容を覚えておく
           bvp->ctrl.mission = twk->mission;
           bvp->ctrl.menu_mode = twk->ret;
-          if( foul == FMISSION_START_FOUL_NULL ){
+          if( foul == FMISSION_START_FOUL_NULL ||
+              foul == FMISSION_START_FOUL_ENTRY ){  //エントリー条件を満たしてない時は確認はしていい
             BVSEvent_Reserve( bvp, EV_FMISSION_CHECK );
             twk->seq = 3;
           }else{
@@ -2363,6 +2364,8 @@ static void tcb_WinFMissionEntryCheck( GFL_TCBL *tcb , void* tcb_wk)
 //----------------------------------------------------------------------
 static FMISSION_START_FOUL_CODE winFMission_CheckEntry( BEACON_VIEW_PTR wk, const FEST_MISSION* fmwk, u8 menu_mode )
 {
+  EVENTWORK* ev = GAMEDATA_GetEventWork( wk->gdata );
+
   if( FEST_MISSION_IsLifeLeftForEntry( fmwk ) == FALSE ){
     //十分な寿命がない
     if( menu_mode == TMENU_CYN_CHECK ){
@@ -2370,6 +2373,11 @@ static FMISSION_START_FOUL_CODE winFMission_CheckEntry( BEACON_VIEW_PTR wk, cons
     }else{
       return FMISSION_START_FOUL_TIMEUP_JOIN;
     }
+  }
+  //エントリー条件チェック
+  if( fmwk->arc.entry_flag_id != 0 &&
+      EVENTWORK_CheckEventFlag( ev, fmwk->arc.entry_flag_id ) == FALSE ){
+    return FMISSION_START_FOUL_ENTRY;
   }
   return FMISSION_START_FOUL_NULL;
 }
