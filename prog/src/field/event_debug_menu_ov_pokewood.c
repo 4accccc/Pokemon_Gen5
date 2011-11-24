@@ -917,7 +917,7 @@ static BOOL debugMenu_CutinCheck(POKEWOOD_FUNC_WORK *wk)
     break;
   case SEQ_NUM:
     {
-      u32 num = NumInputState( wk, 1, 1, POKEWOOD_SENARIO_MAX );
+      u32 num = NumInputState( wk, 0, 0, POKEWOOD_SENARIO_MAX );
       if( num != NUMINPUT_NONE )
       {
         wk->seq_no++;
