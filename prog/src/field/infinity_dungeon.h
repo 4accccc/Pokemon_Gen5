@@ -47,4 +47,4 @@ extern BOOL INFINITY_DUNGEON_GetUpPosRoomTypeIsBoss( const INF_DUNGEON_DATA *p_d
 extern u32 INFINITY_DUNGEON_GetGateBeforeBattleMessage( const INFINITYDUNGEON_SAVE *p_save ,const INF_DUNGEON_DATA *p_dungeon_data ,u16 obj_code ,BOOL is_before_battle);
 extern GMEVENT* INFINITY_DUNGEON_LoseEventCreate( GAMESYS_WORK  *p_gsys );
 extern BOOL INFINITY_DUNGEON_GetGateOpen( const INF_DUNGEON_DATA *p_dungeon_data ,const INFINITYDUNGEON_SAVE *p_save );
-
+extern const BMODEL_ID* INFINITY_DUNGEON_GetBModelIdTable( const INF_DUNGEON_DATA *p_dungeon_data );

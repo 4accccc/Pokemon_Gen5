@@ -46,4 +46,5 @@ extern VMCMD_RESULT EvCmdInfinityDungeonGetIsGateTrainer( VMHANDLE *p_core, void
 extern VMCMD_RESULT EvCmdInfinityDungeonGetGateBattleMsgID( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdInfinityDungeonGetGateTrainerRoomTrNum( VMHANDLE *p_core, void *p_wk_adrs );
 extern VMCMD_RESULT EvCmdInfinityDungeonGetPenaltyGold( VMHANDLE *p_core, void *p_wk_adrs );
+extern VMCMD_RESULT EvCmdInfinityDungeonOpenGate( VMHANDLE *p_core, void *p_wk_adrs );
 

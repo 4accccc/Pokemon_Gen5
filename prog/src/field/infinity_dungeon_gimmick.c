@@ -20,6 +20,8 @@
 #include "field_g3d_mapper.h"
 #include "fieldmap/zone_id.h"
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
+#include "event_field_fade.h" // for FIELD_FADE_SLOW_WAIT
+#include "infinity_dungeon_creator.h" // for INF_MOVE_MAX
 
 //=============================================================================
 /**
@@ -44,6 +46,20 @@ typedef enum
   MODELID_GATE,       // ゲート
   MODELID_MAX,
 }MODELID;
+
+//-------------------------------------
+///	ゲートオープンシーケンス
+//=====================================
+typedef enum
+{
+  GATE_OPEN_SEQ_FADE_OUT,
+  GATE_OPEN_SEQ_SETUP,
+  GATE_OPEN_SEQ_ANM_START,
+  GATE_OPEN_SEQ_ANM_END,
+  GATE_OPEN_SEQ_RESET,
+  GATE_OPEN_SEQ_CAM_RESET,
+  GATE_OPEN_SEQ_END,
+} GATE_OPEN_SEQ;
 
 //-------------------------------------
 // エレベータ配置データ
@@ -400,10 +416,11 @@ typedef struct {
 //-------------------------------------
 ///	ギミックワーク
 //=====================================
-typedef struct {
+struct _INF_GIMMICK_WK{
   INF_ELEVATOR_WK       elev_wk;
   INF_DUNGEON_DATA      *p_dungeon_data;
-}INF_GIMMICK_WK;
+  FIELD_BMODEL *p_door_mdl[INF_MOVE_MAX];
+};
 
 //-------------------------------------
 ///	エレベータ開閉イベントワーク
@@ -423,6 +440,15 @@ typedef struct {
   INF_GIMMICK_WK  *p_gimmick_wk;
 }INF_ELEVTER_LIFTBAN_EVENT_WK;
 
+//-------------------------------------
+///	ゲートオープンイベントワーク
+//=====================================
+typedef struct {
+  FIELDMAP_WORK   *p_fieldmap;
+  INF_GIMMICK_WK  *p_gimmick_wk;
+  u32             cam_type_tmp;
+}INF_GATE_EVENT_WK;
+
 //=============================================================================
 /**
  *					プロトタイプ宣言
@@ -433,6 +459,15 @@ static void MapModelInit( INF_DUNGEON_DATA  *p_dungeon_data ,INF_ELEVATOR_WK *p_
 static const ELEVATOR_SET_DATA* GetElevatorTable( INF_ELEVATOR_WK *p_wk );
 static GMEVENT_RESULT ElevatorOpenEvent( GMEVENT *p_event, int *seq, void *wk );
 static GMEVENT_RESULT ElevatorLiftBanEvent( GMEVENT *p_event, int *seq, void *wk );
+static GMEVENT_RESULT GateOpenEvent( GMEVENT *p_event, int *seq, void *wk );
+static MODEL* GetGimmickMdl( INF_GIMMICK_WK  *p_gimmick_wk,s32 mdl_id );
+static void SetupGateOpenAnm( INF_GATE_EVENT_WK *p_wk );
+static void StartGateOpenAnm( INF_GATE_EVENT_WK *p_wk );
+static BOOL CheckEndGateOpenAnm( INF_GATE_EVENT_WK *p_wk );
+static u8 GetGateAnmCnt( INF_DUNGEON_DATA *p_dungeon_data );
+static void SetAllMmdlVanishFlag( INF_GATE_EVENT_WK *p_wk ,BOOL flg );
+static void DeleteDoorBModel( INF_GIMMICK_WK *p_wk );
+static void ExitGateOpenAnm( INF_GATE_EVENT_WK *p_wk );
 
 //----------------------------------------------------------------------------
 /**
@@ -457,7 +492,10 @@ void INFINITY_DUNGEON_Setup( FIELDMAP_WORK *p_fieldmap )
   //汎用ワーク確保
   p_gmk_wk = GMK_TMP_WK_AllocWork(p_fieldmap, INF_GIMMICK_WORK_ASSIGN_ID, 
       heapID, sizeof(INF_GIMMICK_WK));
-  
+
+  // 初期化
+  GFL_STD_MemFill(p_gmk_wk, 0, sizeof(INF_GIMMICK_WK) );
+ 
   // 無限ダンジョンのデータを取得
   p_save = GAMEDATA_GetSaveControlWork( p_gdata );
   p_inf_save  = SaveData_GetINFINITYDUNGEON( p_save );
@@ -527,6 +565,15 @@ void INFINITY_DUNGEON_Move( FIELDMAP_WORK *p_fieldmap )
 
   //通常のギミックモデル
   FLD_EXP_OBJ_PlayAnime( p_wk->elev_wk.p_ex_obj );
+
+#ifdef PM_DEBUG
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG )
+  {
+    GAMESYS_WORK *p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+    GMEVENT *event = INFINITY_DUNGEON_EVENT_GateOpen( p_gsys ,p_fieldmap );
+    GAMESYSTEM_SetEvent( p_gsys ,event );
+  }
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -643,14 +690,7 @@ static void MapModelInit( INF_DUNGEON_DATA  *p_dungeon_data ,INF_ELEVATOR_WK *p_
           MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model_gate->modelID, FALSE );
 
       // アニメーション数を取得
-      if( INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data ) == VERSION_B2 )
-      {
-        anm_cnt = ANIMEID_GATE_B_MAX;
-      }
-      else
-      {
-        anm_cnt = ANIMEID_GATE_W_MAX;
-      }
+      anm_cnt = GetGateAnmCnt( p_dungeon_data );
 
       // アニメーションを初期化
       for( anm_idx = 0; anm_idx < anm_cnt; anm_idx++ )
@@ -867,7 +907,7 @@ static GMEVENT_RESULT ElevatorOpenEvent( GMEVENT *p_event, int *seq, void *wk )
   case 1:
     {
       frame = FLD_EXP_OBJ_GetObjAnmFrm(p_model->p_ex_obj, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model->modelID, 0 );
-      if( frame >= end_frame && (PMSND_CheckPlaySE()))
+      if( frame >= end_frame )
       {
         for( n = 0; n < ANIMEID_ELEVATOR_MAX; n ++ )
         {
@@ -877,6 +917,7 @@ static GMEVENT_RESULT ElevatorOpenEvent( GMEVENT *p_event, int *seq, void *wk )
           // アニメーション停止
           FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
         }
+        (*seq)++;
         return GMEVENT_RES_FINISH;
       }
     }
@@ -942,15 +983,448 @@ static GMEVENT_RESULT ElevatorLiftBanEvent( GMEVENT *p_event, int *seq, void *wk
     {
       // アニメーションの取得
       exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model_off->p_ex_obj, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model_off->modelID, 0 );
-      if( (FLD_EXP_OBJ_ChkAnmEnd( exobj_anm ) == TRUE) && (PMSND_CheckPlaySE()))
+      if( FLD_EXP_OBJ_ChkAnmEnd( exobj_anm ) == TRUE )
       {
         FLD_EXP_OBJ_SetVanish( p_model_off->p_ex_obj,  p_model_off->unitID, p_model_off->modelID, TRUE );
         FLD_EXP_OBJ_SetVanish( p_model_on->p_ex_obj,  p_model_on->unitID, p_model_on->modelID, FALSE );
+        (*seq)++;
         return GMEVENT_RES_FINISH;
       }
     }
     break;
   }
   return GMEVENT_RES_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  無限ダンジョンのゲートギミック起動
+ *
+ *	@param	*p_gsys
+ *	@param	*p_fieldmap 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+GMEVENT * INFINITY_DUNGEON_EVENT_GateOpen(GAMESYS_WORK *p_gsys, FIELDMAP_WORK *p_fieldmap )
+{
+  GMEVENT   *event;
+  INF_GATE_EVENT_WK *p_wk;
+
+  // イベント作成
+  event = GMEVENT_Create(
+      p_gsys, NULL, GateOpenEvent, sizeof(INF_GATE_EVENT_WK) );
+
+  // ワークに値をセット
+	p_wk = GMEVENT_GetEventWork( event );
+  p_wk->p_fieldmap = p_fieldmap;
+  p_wk->p_gimmick_wk = GMK_TMP_WK_GetWork(p_fieldmap, INF_GIMMICK_WORK_ASSIGN_ID);
+
+  return( event );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲート開放イベント
+ *
+ *	@param	*p_event
+ *	@param	*seq
+ *	@param	*wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT GateOpenEvent( GMEVENT *p_event, int *seq, void *wk )
+{
+  INF_GATE_EVENT_WK *p_wk = wk;
+
+  switch( (*seq) )
+  {
+  case GATE_OPEN_SEQ_FADE_OUT:
+    {
+      // 遅いフェードアウト
+      FIELD_CAMERA *p_cam = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
+      GFL_FADE_SetMasterBrightReq(
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, FIELD_FADE_SLOW_WAIT );
+
+      // カメラデータの保存
+      FIELD_CAMERA_SetRecvCamParam(p_cam);
+      // トレース終了リクエスト
+      FIELD_CAMERA_StopTraceRequest(p_cam);
+      (*seq)++;
+    }
+    break;
+  case GATE_OPEN_SEQ_SETUP:
+    {
+      FIELD_CAMERA *p_cam = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
+
+      // トレース終了待ち
+      if ( !FIELD_CAMERA_CheckTrace(p_cam) )
+      {
+        // フェードチェック
+        if( !GFL_FADE_CheckFade() )
+        {
+          // 動作モデルを非表示に
+          SetAllMmdlVanishFlag( p_wk ,TRUE );
+
+          // ゲート開放アニメーションセットアップ
+          SetupGateOpenAnm( p_wk );
+
+          // 配置モデルを削除する
+          DeleteDoorBModel( p_wk->p_gimmick_wk );
+
+          // 遅いフェードアウト
+          GFL_FADE_SetMasterBrightReq(
+              GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FIELD_FADE_SLOW_WAIT );
+
+          // 演出用カメラに切り替える
+          p_wk->cam_type_tmp = FIELD_CAMERA_GetCameraType( p_cam );
+          FIELD_CAMERA_FreeTarget(p_cam);
+
+          // 位置指定
+          {
+            FLD_CAM_MV_PARAM param;
+            param.Core.AnglePitch = 5976;
+            param.Core.AngleYaw   = 0;
+            param.Core.Distance   = 741376;
+            param.Core.TrgtPos.x  = 434176;
+            param.Core.TrgtPos.y  = 69632;
+            param.Core.TrgtPos.z  = 114688;
+
+            param.Chk.Shift       = FALSE;
+            param.Chk.Pitch       = TRUE;
+            param.Chk.Yaw         = TRUE;
+            param.Chk.Dist        = TRUE;
+            param.Chk.Fovy        = FALSE;
+            param.Chk.Pos         = TRUE;
+            FIELD_CAMERA_SetLinerParam(p_cam, &param, 1 );
+          }
+          (*seq)++;
+        }
+      }
+    }
+    break;
+  case GATE_OPEN_SEQ_ANM_START:
+    {
+      FIELD_CAMERA *p_cam = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
+
+      // カメラ移動中チェック
+      if( !FIELD_CAMERA_CheckMvFunc( p_cam ) )
+      {
+        // フェードチェック
+        if( !GFL_FADE_CheckFade() )
+        {
+          // アニメーション開始
+          StartGateOpenAnm( p_wk );
+
+          // 開閉音再生開始
+          if( INFINITY_DUNGEON_GetDungeonColor( p_wk->p_gimmick_wk->p_dungeon_data ) == VERSION_B2 )
+          {
+            PMSND_PlaySE( SEQ_SE_SW_MDUN_BL_07 );
+          }
+          else
+          {
+            PMSND_PlaySE( SEQ_SE_SW_MDUN_WH_07 );
+          }
+
+          (*seq)++;
+        }
+      }
+    }
+    break;
+  case GATE_OPEN_SEQ_ANM_END:
+    {
+      // アニメーション終了チェック
+      if( CheckEndGateOpenAnm( p_wk ) && (!PMSND_CheckPlaySE()) )
+      {
+        // 遅いフェードアウト
+        GFL_FADE_SetMasterBrightReq(
+            GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, FIELD_FADE_SLOW_WAIT );
+        (*seq)++;
+      }
+    }
+    break;
+  case GATE_OPEN_SEQ_RESET:
+    {
+      // フェードチェック
+      if( !GFL_FADE_CheckFade() )
+      {
+        // 動作モデルを表示状態に
+        SetAllMmdlVanishFlag( p_wk ,FALSE );
+        
+        // ゲート開放アニメーションセットアップ
+        ExitGateOpenAnm( p_wk );
+
+        // 配置モデルを再配置する
+        {
+          GAMESYS_WORK  *p_gsys = FIELDMAP_GetGameSysWork( p_wk->p_fieldmap );
+          INF_DUNGEON_DATA *p_dungeon_data  = p_wk->p_gimmick_wk->p_dungeon_data;
+          INFINITY_DUNGEON_Recovery( p_gsys ,p_dungeon_data );
+        }
+
+        //際バインド
+        {
+          FIELD_CAMERA *p_cam = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
+          FIELD_CAMERA_RecvLinerParamDefault( p_cam, 1);
+          FIELD_CAMERA_ClearRecvCamParam(p_cam);
+          FIELD_CAMERA_RestartTrace(p_cam);
+          FIELD_CAMERA_BindDefaultTarget(p_cam);
+        }
+        (*seq)++;
+      }
+    }
+    break;
+  case GATE_OPEN_SEQ_CAM_RESET:
+    {
+      FIELD_CAMERA *p_cam = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
+      // カメラ移動中チェック
+      if( !FIELD_CAMERA_CheckMvFunc( p_cam ) )
+      {
+        // 遅いフェードアウト
+        GFL_FADE_SetMasterBrightReq(
+            GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FIELD_FADE_SLOW_WAIT );
+        (*seq)++;
+      }
+    }
+    break;
+  case GATE_OPEN_SEQ_END:
+    {
+      // フェードチェック
+      if( !GFL_FADE_CheckFade() )
+      {
+        return GMEVENT_RES_FINISH;
+      }
+    }
+    break;
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲートアニメーションを再生開始する
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetupGateOpenAnm( INF_GATE_EVENT_WK *p_wk )
+{
+  u8 anm_idx = 0;
+  u8 anm_cnt = 0;
+  MODEL *p_model_gate = GetGimmickMdl( p_wk->p_gimmick_wk ,MODELID_GATE );
+  INF_DUNGEON_DATA *p_dungeon_data  = p_wk->p_gimmick_wk->p_dungeon_data;
+
+  // 見える状態に
+  FLD_EXP_OBJ_SetVanish( p_model_gate->p_ex_obj,
+      MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model_gate->modelID, FALSE );
+
+  // アニメーション数を取得
+  anm_cnt = GetGateAnmCnt( p_dungeon_data );
+
+  // アニメーションを初期化
+  for( anm_idx = 0; anm_idx < anm_cnt; anm_idx++ )
+  {
+    EXP_OBJ_ANM_CNT_PTR exobj_anm;
+
+    // アニメーションを有効に
+    FLD_EXP_OBJ_ValidCntAnm(p_model_gate->p_ex_obj,
+        MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model_gate->modelID, anm_idx, TRUE);
+
+    // アニメーションを再生状態に
+    exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model_gate->p_ex_obj,
+        MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model_gate->modelID, anm_idx );
+    FLD_EXP_OBJ_SetObjAnmFrm( p_model_gate->p_ex_obj, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model_gate->modelID, anm_idx, 0 );
+    FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
+    FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm, FALSE );
+
+  }
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲートの終了処理
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void ExitGateOpenAnm( INF_GATE_EVENT_WK *p_wk )
+{
+  MODEL *p_model_gate = GetGimmickMdl( p_wk->p_gimmick_wk ,MODELID_GATE );
+
+  // 非表示に
+  FLD_EXP_OBJ_SetVanish( p_model_gate->p_ex_obj,
+      MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model_gate->modelID, TRUE );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲートアニメを再生する
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void StartGateOpenAnm( INF_GATE_EVENT_WK *p_wk )
+{
+  u8 anm_idx = 0;
+  u8 anm_cnt = 0;
+  MODEL *p_model_gate = GetGimmickMdl( p_wk->p_gimmick_wk ,MODELID_GATE );
+  INF_DUNGEON_DATA *p_dungeon_data  = p_wk->p_gimmick_wk->p_dungeon_data;
+
+  // 見える状態に
+  FLD_EXP_OBJ_SetVanish( p_model_gate->p_ex_obj,
+      MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model_gate->modelID, FALSE );
+
+  // アニメーション数を取得
+  anm_cnt = GetGateAnmCnt( p_dungeon_data );
+
+  // アニメーションを再生
+  for( anm_idx = 0; anm_idx < anm_cnt; anm_idx++ )
+  {
+    EXP_OBJ_ANM_CNT_PTR exobj_anm;
+
+    // アニメーションを再生状態に
+    exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model_gate->p_ex_obj,
+        MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model_gate->modelID, anm_idx );
+    FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲートオープンアニメーション終了チェック
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CheckEndGateOpenAnm( INF_GATE_EVENT_WK *p_wk )
+{
+  u8 anm_idx = 0;
+  u8 anm_cnt = 0;
+  MODEL *p_model_gate = GetGimmickMdl( p_wk->p_gimmick_wk ,MODELID_GATE );
+  INF_DUNGEON_DATA *p_dungeon_data  = p_wk->p_gimmick_wk->p_dungeon_data;
+
+  // アニメーション数を取得
+  anm_cnt = GetGateAnmCnt( p_dungeon_data );
+  for( anm_idx = 0; anm_idx < anm_cnt; anm_idx++ )
+  {
+    EXP_OBJ_ANM_CNT_PTR exobj_anm;
+    exobj_anm = FLD_EXP_OBJ_GetAnmCnt( p_model_gate->p_ex_obj,
+        MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID, p_model_gate->modelID, anm_idx );
+    if( FLD_EXP_OBJ_ChkAnmEnd( exobj_anm ) == FALSE )
+    {
+      return FALSE;
+    }
+  }
+  
+  // 全て終了
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ギミックワークからモデルを取得する
+ *
+ *	@param	*p_gimmick_wk
+ *	@param	mdl_id 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static MODEL* GetGimmickMdl( INF_GIMMICK_WK *p_gimmick_wk,s32 mdl_id )
+{
+  return &p_gimmick_wk->elev_wk.model[MODELID_GATE];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゲートのアニメーション数を取得する
+ *
+ *	@param	*p_gimmick_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static u8 GetGateAnmCnt( INF_DUNGEON_DATA *p_dungeon_data )
+{
+  if( INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data ) == VERSION_B2 )
+  {
+    return ANIMEID_GATE_B_MAX;
+  }
+  else
+  {
+    return ANIMEID_GATE_W_MAX;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  全ての動作モデルの表示状態を設定する
+ *
+ *	@param	*p_wk 
+ *	@param	flg 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetAllMmdlVanishFlag( INF_GATE_EVENT_WK *p_wk ,BOOL flg )
+{
+  MMDLSYS *p_mmdlsys;     //動作モデル
+  MMDL    *p_mmdl;
+  u32     no=0;
+
+  // 全ての動作モデルに行う
+  p_mmdlsys   = FIELDMAP_GetMMdlSys( p_wk->p_fieldmap );
+  while( MMDLSYS_SearchUseMMdl(p_mmdlsys,&p_mmdl,&no) == TRUE ){
+    MMDL_SetStatusBitVanish( p_mmdl ,flg );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  配置モデルの表示状態を設定する
+ *
+ *	@param	*p_wk 
+ *	@param	flg 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void DeleteDoorBModel( INF_GIMMICK_WK *p_wk )
+{
+  int i;
+  for( i = 0; i < INF_MOVE_MAX; i++ )
+  {
+    // 存在するものを削除する
+    if( p_wk->p_door_mdl[i] != NULL )
+    {
+      FIELD_BMODEL_Delete( p_wk->p_door_mdl[i] );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ドア配置モデルのポインタを設定
+ *
+ *	@param	*p_wk
+ *	@param	* bmodel 
+ *	@param	dir 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void INFINITY_DUNGEON_GMK_SetBModelData( INF_GIMMICK_WK *p_wk, FIELD_BMODEL * bmodel ,u8 dir )
+{
+  p_wk->p_door_mdl[dir] = bmodel;
 }
 

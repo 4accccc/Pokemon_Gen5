@@ -516,7 +516,7 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
 
           // 遅いフェードアウト
           GFL_FADE_SetMasterBrightReq(
-              GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, FIELD_FADE_SLOW_WAIT );
+              GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FIELD_FADE_SLOW_WAIT );
         }
         else
         {
@@ -1238,15 +1238,17 @@ static int GetSetTrainerIDTable( const INF_DUNGEON_DATA *p_dungeon_data ,u32 are
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  配置モデルで通行禁止の場所をふさぐ
+ *	@brief  モデルIDテーブルを取得
  *
- *	@param	*p_wk
+ *	@param	INF_DUNGEON_DATA *p_dungeon_data 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void SetBUildModel( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p_room_data)
+const BMODEL_ID* INFINITY_DUNGEON_GetBModelIdTable( const INF_DUNGEON_DATA *p_dungeon_data )
 {
+  u8 version = INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data );
+
   //-------------------------------------
   // 封鎖用モデルOBJ(黒)
   //=====================================
@@ -1266,9 +1268,36 @@ static void SetBUildModel( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p
     NARC_output_buildmodel_indoor_mugenobj07_nsbmd, // 左
   };
 
+  
+  // モデルテーブル差し替え
+  if( version == VERSION_B2 )
+  {
+    return sc_black_bmodel_table;
+  }
+  else
+  {
+    return sc_white_bmodel_table;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  配置モデルで通行禁止の場所をふさぐ
+ *
+ *	@param	*p_wk
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetBUildModel( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p_room_data)
+{
+
+  FIELD_BMODEL *p_bmdl;
+  INF_GIMMICK_WK *p_gmk_wk;
   GFL_G3D_OBJSTATUS status;
-  const BMODEL_ID *p_bmodel_id_table;
-  u8 version = INFINITY_DUNGEON_GetDungeonColor( p_wk->p_dungeon_data );
+  const BMODEL_ID *p_bmodel_id_table = INFINITY_DUNGEON_GetBModelIdTable( p_wk->p_dungeon_data );
+  
+  p_gmk_wk = GMK_TMP_WK_GetWork(p_wk->p_field_work, INF_GIMMICK_WORK_ASSIGN_ID);
 
   // 表示座標を初期化
   status.trans.x = 0;
@@ -1277,15 +1306,6 @@ static void SetBUildModel( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p
   VEC_Set( &status.scale, FX32_ONE, FX32_ONE, FX32_ONE );
   GFL_CALC3D_MTX_CreateRot( 0, 0, 0, &status.rotate );
 
-  // モデルテーブル差し替え
-  if( version == VERSION_B2 )
-  {
-    p_bmodel_id_table = sc_black_bmodel_table;
-  }
-  else
-  {
-    p_bmodel_id_table = sc_white_bmodel_table;
-  }
   
   // 配置
   if( p_room_data->room_type != ROOM_TYPE_BOSS )
@@ -1299,7 +1319,9 @@ static void SetBUildModel( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p
       {
         if( !p_room_data->can_move[INF_MOVE_UP] )
         {
-          FIELD_BMODEL_Create_Direct( p_wk->p_bmodel_man, p_bmodel_id_table[INF_MOVE_UP], &status );
+          p_bmdl = FIELD_BMODEL_Create_Direct( p_wk->p_bmodel_man, p_bmodel_id_table[INF_MOVE_UP], &status );
+          // ギミックワークに生成した配置モデルを保存しておく
+          INFINITY_DUNGEON_GMK_SetBModelData( p_gmk_wk,p_bmdl,INF_MOVE_UP);
         }
       }
     }
@@ -1307,19 +1329,25 @@ static void SetBUildModel( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p
     // 下
     if( !p_room_data->can_move[INF_MOVE_DOWN] )
     {
-      FIELD_BMODEL_Create_Direct( p_wk->p_bmodel_man, p_bmodel_id_table[INF_MOVE_DOWN], &status );
+      p_bmdl = FIELD_BMODEL_Create_Direct( p_wk->p_bmodel_man, p_bmodel_id_table[INF_MOVE_DOWN], &status );
+      // ギミックワークに生成した配置モデルを保存しておく
+      INFINITY_DUNGEON_GMK_SetBModelData( p_gmk_wk,p_bmdl,INF_MOVE_DOWN);
     }
 
     // 左
     if( !p_room_data->can_move[INF_MOVE_LEFT]  )
     {
-      FIELD_BMODEL_Create_Direct( p_wk->p_bmodel_man, p_bmodel_id_table[INF_MOVE_LEFT], &status );
+      p_bmdl = FIELD_BMODEL_Create_Direct( p_wk->p_bmodel_man, p_bmodel_id_table[INF_MOVE_LEFT], &status );
+      // ギミックワークに生成した配置モデルを保存しておく
+      INFINITY_DUNGEON_GMK_SetBModelData( p_gmk_wk,p_bmdl,INF_MOVE_LEFT);
     }
 
     // 右
     if( !p_room_data->can_move[INF_MOVE_RIGHT] )
     {
-      FIELD_BMODEL_Create_Direct( p_wk->p_bmodel_man, p_bmodel_id_table[INF_MOVE_RIGHT], &status );
+      p_bmdl = FIELD_BMODEL_Create_Direct( p_wk->p_bmodel_man, p_bmodel_id_table[INF_MOVE_RIGHT], &status );
+      // ギミックワークに生成した配置モデルを保存しておく
+      INFINITY_DUNGEON_GMK_SetBModelData( p_gmk_wk,p_bmdl,INF_MOVE_RIGHT);
     }
   }
 }
@@ -2475,16 +2503,9 @@ static u32 gethint_gate_tr_room_tr_num( const TRHINT_WK *p_wk )
 
   // 0人のはありえない
   GF_ASSERT( member_num > 0 );
-
-  // 一人もしくは複数人
-  if( member_num == 1 )
-  {
-    return msg_hint_gate_room_one_01 + p_wk->talk_type;
-  }
-  else
-  {
-    return msg_hint_gate_room_plural_01 + p_wk->talk_type;
-  }
+  // 4人以上はありえない
+  GF_ASSERT( member_num < 4 );
+  return msg_hint_gate_room_one_01 + (member_num-1);
 
 }
 
