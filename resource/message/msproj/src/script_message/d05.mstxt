@@ -375,10 +375,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さがしてる　ポケモンが
-いるかも　しれないんだよ！▼</Text>
+いるかも　しれないんだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T05:39:21" />
+				Time="2011-11-24T06:11:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -387,10 +387,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『探してる　ポケモンが
-いるかも　しれないんだよ！▼</Text>
+いるかも　しれないんだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T05:39:27" />
+				Time="2011-11-24T06:11:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -619,13 +619,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『いまの？
-かってに　うごかされたよな！？▼
+			<Text>[Name:TrainerName Idx="1" ]『いまの　やつら？
+なんだったんだ！？▼
 いいや！　それよりも　きえた
 プラズマだんを　さがさないと！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:19:03" />
+				Time="2011-11-24T06:12:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -633,13 +633,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『いまの？
-勝手に　動かされたよな！？▼
+			<Text>[Name:TrainerName Idx="1" ]『いまの　やつら？
+なんだったんだ！？▼
 いいや！　それよりも　消えた
 プラズマ団を　探さないと！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:18:57" />
+				Time="2011-11-24T06:12:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -683,16 +683,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『あんなことが　できるのは
-まさか……！？▽
-それに　さっきの　ことば……▼
+			<Text>チェレン『さっきの　ことば……▼
 「われわれは　いまいちど
 でんせつの　ドラゴンポケモンを▽
-したがえ　イッシュを　しはいする！」▼
-どういうこと　なんだろう？▼</Text>
+したがえ　イッシュを　しはいする！」▽
+って　どういうこと？▼
+でんせつの　ドラゴンポケモン
+レシラムも　ゼクロムも▽
+イッシュには　いないはず……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T11:31:27" />
+				Time="2011-11-24T06:15:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -700,16 +701,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『あんなことが　できるのは
-まさか……！？▽
-それに　さっきの　言葉……▼
-「われわれは　今一度
+			<Text>チェレン『さっきの　言葉……▼
+「われわれは　いまいちど
 伝説の　ドラゴンポケモンを▽
-従え　イッシュを　支配する！」▼
-どういうこと　なんだろう？▼</Text>
+従え　イッシュを　支配する！」▽
+って　どういうこと？▼
+伝説の　ドラゴンポケモン
+レシラムも　ゼクロムも▽
+イッシュには　いないはず……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T11:31:29" />
+				Time="2011-11-24T06:15:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
