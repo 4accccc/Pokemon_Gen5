@@ -493,6 +493,7 @@
 #define FE_T01R0401_TALK_02                477 /* 0x01dd アララギポケモン研究所：許可証話　会話フラグ */
 #define FE_T01R0401_TALK_03                478 /* 0x01de アララギポケモン研究所：まるいおまもり話　会話フラグ */
 #define FE_T01R0401_TALK_04                479 /* 0x01df アララギポケモン研究所：ひかるおまもり話　会話フラグ */
+#define FE_D08R0901_BOSS_TALK              480 /* 0x01e0 リュウラセンの塔・最上階：Ｎイベントフラグ */
 
 #define FE_AREA_END                        599 /* 0x0257  */
 
@@ -890,7 +891,7 @@
 #define FV_T04R101_STOPPER_02              986 /* 0x03da サザナミタウンゲート：ストッパー（解除後） */
 #define FV_R19_SWBELL_01                   987 /* 0x03db 19番道路：ベル */
 #define FV_R04_WORKMAN_01                  988 /* 0x03dc 4番道路：作業員 */
-		/* not used   989(0x03dd) */
+#define FV_PC_OMOIDELINK                   989 /* 0x03dd PC：おもいでリンク起動NPC */
 		/* not used   990(0x03de) */
 #define FV_D05R0101_TRAINERW_01            991 /* 0x03df WBTロビー：クリア後に出現するエリートトレーナー♀ */
 #define FV_C02R0101_FUN_01                 992 /* 0x03e0 シッポウ倉庫：シタンのファン */
