@@ -2504,7 +2504,7 @@ static u32 gethint_gate_tr_room_tr_num( const TRHINT_WK *p_wk )
   // 0êlÇÃÇÕÇ†ÇËÇ¶Ç»Ç¢
   GF_ASSERT( member_num > 0 );
   // 4êlà»è„ÇÕÇ†ÇËÇ¶Ç»Ç¢
-  GF_ASSERT( member_num < 4 );
+  GF_ASSERT( member_num <= 4 );
   return msg_hint_gate_room_one_01 + (member_num-1);
 
 }
