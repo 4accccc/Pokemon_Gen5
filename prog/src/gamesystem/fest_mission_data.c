@@ -218,6 +218,12 @@ void FMISSION_DATA_GetMissionParamByHandle( ARCHANDLE* handle, FEST_MISSION_ID i
 
   //アーカイブコモンデータセット
   fmwk->arc = dat.common;
+
+#ifdef PM_DEBUG
+  if( fmwk->arc.host == FMISSION_HOST_COMM ){
+    beacon->distribution_f = TRUE;
+  }
+#endif
 }
 
 //------------------------------------------------------------

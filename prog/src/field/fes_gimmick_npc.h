@@ -99,6 +99,7 @@ typedef struct _FES_GIMMICK_NPC_WORK{
 
 //NOTWIFI
 extern void FES_GIMMICK_NPC_ZoneChangeSetup( FES_GIMMICK_NPC_WORK* wk, GAMESYS_WORK* gsys, LINK_FESTIVAL* fest_sys, FEST_MISSION* fmwk, u16 zone_id );
+extern void FES_GIMMICK_NPC_MissionInitSetup( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk );
 extern u8 FES_GIMMICK_NPC_SUB_GetObjType( const FEST_MISSION* fmwk );
 extern u16 FES_GIMMICK_NPC_SUB_GetObjCode( FES_GIMMICK_NPC_WORK* wk, const FEST_MISSION* fmwk );
 extern FES_GIMMICK_NPC_FLAG* FES_GIMMICK_NPC_SUB_FlagTableGet( FES_GIMMICK_NPC_WORK* wk, u16 zone_id );
@@ -107,7 +108,6 @@ extern FES_GIMMICK_NPC_FLAG* FES_GIMMICK_NPC_SUB_FlagTableGet( FES_GIMMICK_NPC_W
 extern void FES_GIMMICK_NPC_MMdlSetup( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk );
 extern void FES_GIMMICK_NPC_FieldRecoverSetup( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk );
 extern void FES_GIMMICK_NPC_FlagSet( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk, u16 zone_id, u16 idx );
-extern void FES_GIMMICK_NPC_MissionInitSetup( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk );
 extern BOOL FES_GIMMICK_NPC_Delete( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk );
 
 extern void FES_GIMMICK_NPC_FesTrainerPartySet( FES_GIMMICK* sys_wk, POKEPARTY* party );

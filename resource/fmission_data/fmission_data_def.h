@@ -101,6 +101,7 @@ typedef enum{
   FMISSION_PAY_BONUS_NONE,  ///<ボーナス無し
   FMISSION_PAY_BONUS_TIME,  ///<タイムボーナス
   FMISSION_PAY_BONUS_SCORE,  ///<スコアボーナス
+  FMISSION_PAY_BONUS_MAX,  ///<
 }FMISSION_PAY_BONUS;
 
 //=========================================
@@ -195,28 +196,28 @@ typedef enum{
 ///プレゼントアイテムセット名
 //=========================================
 typedef enum{
-  FMISSION_EXP_ZUKAN_QUIZ_NORMAL,  ///<ノーマルタイプ
-  FMISSION_EXP_ZUKAN_QUIZ_KAKUTOU,  ///<格闘タイプ
-  FMISSION_EXP_ZUKAN_QUIZ_HIKOU,  ///<飛行タイプ
-  FMISSION_EXP_ZUKAN_QUIZ_DOKU,  ///<毒タイプ
-  FMISSION_EXP_ZUKAN_QUIZ_JIMEN,  ///<地面タイプ
-  FMISSION_EXP_ZUKAN_QUIZ_IWA,  ///<岩タイプ
-  FMISSION_EXP_ZUKAN_QUIZ_MUSHI,  ///<虫タイプ
-  FMISSION_EXP_ZUKAN_QUIZ_GHOST,  ///<ゴーストタイプ
-  FMISSION_EXP_ZUKAN_QUIZ_HAGANE,  ///<鋼タイプ
-  FMISSION_EXP_ZUKAN_QUIZ_HONOO,  ///<炎タイプ
-  FMISSION_EXP_ZUKAN_QUIZ_MIZU,  ///<水タイプ
-  FMISSION_EXP_ZUKAN_QUIZ_KUSA,  ///<草タイプ
-  FMISSION_EXP_ZUKAN_QUIZ_DENKI,  ///<電気タイプ
-  FMISSION_EXP_ZUKAN_QUIZ_ESPER,  ///<エスパータイプ
-  FMISSION_EXP_ZUKAN_QUIZ_KOORI,  ///<氷タイプ
-  FMISSION_EXP_ZUKAN_QUIZ_DRAGON,  ///<ドラゴンタイプ
-  FMISSION_EXP_ZUKAN_QUIZ_AKU,  ///<悪タイプ
-  FMISSION_EXP_ZUKAN_QUIZ_ZENKOKU,  ///<全国図鑑
-  FMISSION_EXP_ZUKAN_QUIZ_LOCAL,  ///<地方図鑑
-  FMISSION_EXP_ZUKAN_QUIZ_LEGEND,  ///<伝説ポケモン
-  FMISSION_EXP_ZUKAN_QUIZ_MAX,  ///<
-}FMISSION_EXP_ZUKAN_QUIZ_SET;
+  FMISSION_EXP_POKE_QUIZ_NORMAL,  ///<ノーマルタイプ
+  FMISSION_EXP_POKE_QUIZ_KAKUTOU,  ///<格闘タイプ
+  FMISSION_EXP_POKE_QUIZ_HIKOU,  ///<飛行タイプ
+  FMISSION_EXP_POKE_QUIZ_DOKU,  ///<毒タイプ
+  FMISSION_EXP_POKE_QUIZ_JIMEN,  ///<地面タイプ
+  FMISSION_EXP_POKE_QUIZ_IWA,  ///<岩タイプ
+  FMISSION_EXP_POKE_QUIZ_MUSHI,  ///<虫タイプ
+  FMISSION_EXP_POKE_QUIZ_GHOST,  ///<ゴーストタイプ
+  FMISSION_EXP_POKE_QUIZ_HAGANE,  ///<鋼タイプ
+  FMISSION_EXP_POKE_QUIZ_HONOO,  ///<炎タイプ
+  FMISSION_EXP_POKE_QUIZ_MIZU,  ///<水タイプ
+  FMISSION_EXP_POKE_QUIZ_KUSA,  ///<草タイプ
+  FMISSION_EXP_POKE_QUIZ_DENKI,  ///<電気タイプ
+  FMISSION_EXP_POKE_QUIZ_ESPER,  ///<エスパータイプ
+  FMISSION_EXP_POKE_QUIZ_KOORI,  ///<氷タイプ
+  FMISSION_EXP_POKE_QUIZ_DRAGON,  ///<ドラゴンタイプ
+  FMISSION_EXP_POKE_QUIZ_AKU,  ///<悪タイプ
+  FMISSION_EXP_POKE_QUIZ_ZENKOKU,  ///<全国図鑑
+  FMISSION_EXP_POKE_QUIZ_LOCAL,  ///<地方図鑑
+  FMISSION_EXP_POKE_QUIZ_LEGEND,  ///<伝説ポケモン
+  FMISSION_EXP_POKE_QUIZ_MAX,  ///<
+}FMISSION_EXP_POKE_QUIZ_SET;
 
 //=========================================
 ///ミッションイベントID
@@ -272,6 +273,14 @@ typedef enum{
 //=========================================
 #define  FMISSION_START_EFFECT1_WAIT  ( 80 )   ///<パレスギミックエフェクト1ウェイト
 #define  FMISSION_START_EFFECT2_WAIT  ( 20 )   ///<パレスギミックエフェクト2ウェイト
+
+
+//=========================================
+///ミッション報酬基礎値MAX定義
+//=========================================
+#define  FMISSION_PAY_NUM_BASE_MAX  ( 100 )   ///<通常報酬数MAX値定義
+#define  FMISSION_PAY_NUM_SP_MAX  ( 50 )   ///<ダブルスコア報酬数MAX値定義
+#define  FMISSION_PAY_NUM_BONUS_MAX  ( 99 )   ///<ボーナスとして加算される報酬数MAX
 
 
 

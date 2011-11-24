@@ -45,7 +45,6 @@
 #include "msg/script/msg_fmission_event.h"
 #include "arc/fieldmap/zone_id.h"
 #include "arc/fieldmap/fldmmdl_objcode.h"
-#include "arc/fmission_data.naix"
 #include "../../../resource/fldmapdata/script/fmission_scr_def.h" //SCRID_～
 
 #include "field/fes_gimmick.h"
@@ -105,34 +104,6 @@ void FES_GIMMICK_NPC_FlagSet( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk, u16
   wk->mmdl_tbl[idx] = NULL;
 }
 
-//----------------------------------------------------------------------
-/*
- *  @brief  フェス　NPCミッションギミック　ミッション開始時１回のみの初期化処理
- */
-//----------------------------------------------------------------------
-void FES_GIMMICK_NPC_MissionInitSetup( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk )
-{
-  ARCHANDLE* handle;
-  int id;
-  switch( sys_wk->fmwk->beacon.base_param ){
-  case FMISSION_NPC_TYPE_MEMORY_QUIZ:
-    id = NARC_fmission_data_fmission_quiz_pokelist00_bin+FMISSION_EXP_ZUKAN_QUIZ_LOCAL; //固定で地方図鑑データ
-    break;
-  case FMISSION_NPC_TYPE_POKE_QUIZ:
-    id = NARC_fmission_data_fmission_quiz_pokelist00_bin+sys_wk->fmwk->beacon.ex_param;
-    break;
-  default:
-    return;
-  }
-  handle = LINK_FESTIVAL_GetFMissionDataHandle( sys_wk->fest_sys );
-
-  wk->tmp_data_size = GFL_ARC_GetDataSizeByHandle( handle, id );
-  if( wk->tmp_data_size > FES_GIMMICK_NPC_TMPDATA_BUF_SIZE ){
-    GF_ASSERT(0);
-    wk->tmp_data_size = FES_GIMMICK_NPC_TMPDATA_BUF_SIZE;
-  }
-  GFL_ARC_LoadDataOfsByHandle( handle, id, 0, wk->tmp_data_size, wk->tmp_data_buf );
-}
 
 //----------------------------------------------------------------------
 /*

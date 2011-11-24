@@ -93,6 +93,7 @@ NETWORKSRC =  net/net_icondata.c \
 				net_app/pdw_account/pdwacc_mainproc.c \
         net_app/gds/gds_main.c \
         gamesystem/g_power.c \
+				gamesystem/game_beacon_accessor.c \
         gamesystem/link_festival.c \
         gamesystem/link_festival_log.c \
         gamesystem/fest_mission.c \
@@ -459,7 +460,6 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/scrcmd_faceup.c \
         field/field_comm/game_beacon_search.c \
 				gamesystem/game_beacon_nw.c \
-				gamesystem/game_beacon_accessor.c \
 				gamesystem/game_beacon_debug.c \
 				savedata/symbol_save_field.c \
         field/symbol_map.c \

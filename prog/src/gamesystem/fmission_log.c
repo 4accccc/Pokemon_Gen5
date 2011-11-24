@@ -29,7 +29,7 @@
 #include "field/zonedata.h"
 #include "savedata/resonance_resort_sv.h"
 #include "savedata/mystatus.h"
-
+#include "item/itemsym.h"
 #include "game_beacon_local.h"
 #include "gamesystem/game_beacon_accessor.h"
 #include "debug/debug_flg.h"
@@ -44,9 +44,26 @@ typedef enum{
   ENTRY_NONE,   //積まない
 }ENTRY_CHECK;
 
+typedef BOOL (*FMISSION_BEACON_CHECK_FUNC)( const FEST_BEACON* beacon );
+
 static FMISSION_LOG_ACTION log_GetLogActionFromBeacon( const GAMEBEACON_INFO *info, FMISSION_LOG_SET_MODE mode );
 static BOOL log_MakeLogFromBeacon( FMISSION_LOG* p_log, const GAMEBEACON_INFO *info, int score, FMISSION_LOG_SET_MODE mode, BOOL mine_f );
 static ENTRY_CHECK entry_CheckStock( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *info );
+
+static BOOL sub_BeaconCheckEffectEnc( const FEST_BEACON*  beacon );
+static BOOL sub_BeaconCheckMushroomEnc( const FEST_BEACON*  beacon );
+static BOOL sub_BeaconCheckEvent( const FEST_BEACON*  beacon );
+static BOOL sub_BeaconCheckItem( const FEST_BEACON*  beacon );
+static BOOL sub_BeaconCheckNpc( const FEST_BEACON*  beacon );
+
+static const FMISSION_BEACON_CHECK_FUNC DATA_FMissionBeaconCheckFuncTbl[FMISSION_TYPE_MAX] = {
+  NULL,
+  sub_BeaconCheckEffectEnc,
+  sub_BeaconCheckMushroomEnc,
+  sub_BeaconCheckEvent,
+  sub_BeaconCheckItem,
+  sub_BeaconCheckNpc,
+};
 
 //==================================================================
 /**
@@ -258,19 +275,6 @@ BOOL FMISSION_GPOWER_TBL_Set( FMISSION_GPOWER_TBL* tbl, const GAMEBEACON_INFO *i
   default:
     return FALSE;
   }
-#if 0
-  {
-    POWER_CONV_DATA* gpower_data = GPOWER_PowerData_LoadAlloc( GFL_HEAP_LOWID(GFL_HEAPID_APP ) );
-    GPOWER_ID ret_id = GPOWER_Check_OccurID( id, gpower_data );
-
-    GPOWER_PowerData_Unload( gpower_data );
-
-    //現在進行形で発動中のパワーは受け取らない
-    if( ret_id == id ){
-      return FALSE; //同じパワー発動中は捨てる
-    }
-  }
-#endif
   //名前(info->nameはEOM抜き)
   GFL_STD_MemCopy16( info->name, power.name, PERSON_NAME_SIZE*sizeof(STRCODE));
   power.gpower_id = id;
@@ -436,6 +440,151 @@ void FMISSION_ENTRY_TBL_DeleteData( LINK_FESTIVAL* fest_sys, const FEST_MISSION*
   }
 }
 
+//------------------------------------------------------------------
+/*
+ *  フェスミッションビーコン エラーチェック
+ *  
+ *  @param  info cosnt GAMEBEACON_INFO*
+ *
+ *  @retval TRUE  エラーがある
+ *  @retval FALSE エラーなし
+ */
+//------------------------------------------------------------------
+BOOL FMISSION_BeaconErrorCheck( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *info )
+{
+  int i,end;
+  FEST_MISSION  m_data;
+  FEST_BEACON*  beacon;
+  FMISSION_ARC_COMMON* arc;
+
+  FMISSION_GetBeaconParam( &m_data, info );
+
+  beacon = &m_data.beacon;
+  arc = &m_data.arc;
+
+  if( beacon->m_id >= FMISSION_ID_MAX ||        //ミッションIDチェック
+      beacon->m_level >= FMISSION_LEVEL_MAX ||  //ミッションレベルチェック
+      m_data.my_score > FMISSION_SCORE_MAX      //スコア上限チェック
+  ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  //コモンアーカイブ取得
+  LINK_FESTIVAL_GetMissionArcCommonData( fest_sys, beacon->m_id, &m_data.arc );
+  
+  //配信限定ミッションなのに、配信フラグが立ってないのは不正
+  if( arc->host == FMISSION_HOST_COMM && !beacon->distribution_f ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  //base_param/ex_paramの各ミッションタイプごとのチェック
+  if( DATA_FMissionBeaconCheckFuncTbl[arc->m_type]( beacon ) ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  //フリーワード以外のビーコンなら以下のパラメータチェックはスルー
+  if(GAMEBEACON_Check_FestMissionWithParam(info)){
+    return FALSE;
+  }
+
+  if(
+      beacon->time > FMISSION_TIME_MAX ||       //残り時間上限チェック
+      beacon->goal > FMISSION_SCORE_MAX ||      //達成目標上限チェック
+      beacon->pay_bonus >= FMISSION_PAY_BONUS_MAX ||  //ボーナス計算式タイプチェック
+      beacon->time_bonus >= FMISSION_TBONUS_MAX ||    //タイムボーナス設定値
+      beacon->pay > FMISSION_PAY_NUM_BASE_MAX ||      //報酬基礎値チェック
+      beacon->sp_pay > FMISSION_PAY_NUM_SP_MAX        //ダブルスコア報酬基礎値チェック
+  ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+
+  //報酬として設定しているアイテムNoチェック
+  if( beacon->item == ITEM_DUMMY_DATA ||    //通常報酬が0はおかしい
+      beacon->item == ITEM_MASUTAABOORU ||  //マスターボールは無し
+      beacon->item > ITEM_DATA_MAX ||       //アイテムNoが上限超えてる
+      beacon->sp_item > ITEM_DATA_MAX       //sp_itemは無いこともあるし、マスターボールも許可
+  ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  //ゲーム内で1つしか入手不可能なアイテム(大切なもの、技マシン)は不可
+
+  return FALSE;
+}
+
+//エフェクトエンカウントタイプ エラーチェック
+static BOOL sub_BeaconCheckEffectEnc( const FEST_BEACON*  beacon )
+{
+  if( beacon->base_param > MONSNO_END ||
+      beacon->ex_param != 0 ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  return FALSE;
+}
+//きのこエンカウントタイプ エラーチェック
+static BOOL sub_BeaconCheckMushroomEnc( const FEST_BEACON*  beacon )
+{
+  if(  beacon->base_param != 0 &&
+      (beacon->base_param != MONSNO_TAMAGETAKE || beacon->base_param != MONSNO_MOROBARERU) ){
+    //識別なしか、タマゲタケかモロバレル以外有り得ない
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  if( beacon->ex_param != 0 ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  return FALSE;
+}
+//イベントタイプ エラーチェック
+static BOOL sub_BeaconCheckEvent( const FEST_BEACON*  beacon )
+{
+  if( beacon->base_param >= FMISSION_EVID_MAX ||
+      beacon->ex_param != 0 ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  return FALSE;
+}
+//アイテムタイプ エラーチェック
+static BOOL sub_BeaconCheckItem( const FEST_BEACON*  beacon )
+{
+  if( beacon->base_param >= FMISSION_ITEM_SET_MAX ||
+      beacon->ex_param != 0 ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  return FALSE;
+}
+//NPCタイプ エラーチェック
+static BOOL sub_BeaconCheckNpc( const FEST_BEACON*  beacon )
+{
+  static const u16 ex_max_tbl[FMISSION_NPC_TYPE_MAX] = {
+    0,  //TYPE_LOST_CHILDREN
+    0,  //TYPE_PRESENT_ITEM
+    FMISSION_EXP_ITEM_TRADE_SET_MAX,  //TYPE_ITEM_TRADE
+    FMISSION_EXP_SHOPPING_SET_MAX,    //TYPE_SHOPPING
+    0,  //TYPE_RPS
+    0,  //TYPE_MEMORY_QUIZ
+    FMISSION_EXP_TRAINER_SET_MAX,       //TYPE_TR_BATTLE
+    FMISSION_EXP_GET_A_PRESENT_SET_MAX, //TYPE_GET_A_PRESENT
+    FMISSION_EXP_POKE_QUIZ_MAX,         //TYPE_POKE_QUIZ
+  };
+
+  if( beacon->base_param >= FMISSION_NPC_TYPE_MAX ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  if( 0 != ex_max_tbl[beacon->base_param] &&
+      beacon->ex_param >= ex_max_tbl[beacon->base_param] ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  return FALSE;
+}
+
 //=================================================================================
 ///サブルーチン
 //=================================================================================
@@ -520,10 +669,6 @@ static ENTRY_CHECK entry_CheckStock( LINK_FESTIVAL* fest_sys, const GAMEBEACON_I
   FEST_MISSION  m_data;
   FMISSION_ENTRY_TBL* tbl = &fest_sys->mlog_entry_tbl;
 
-  //アクションチェック
-  if(GAMEBEACON_Check_FestMissionWithParam(info) == FALSE){
-    return ENTRY_NONE;
-  }
   FMISSION_GetBeaconParam( &m_data, info );
 
   //スタックにすでに積まれているミッションと同一なら無視か上書き

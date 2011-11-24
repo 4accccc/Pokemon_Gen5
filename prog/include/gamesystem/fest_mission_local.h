@@ -47,7 +47,7 @@ struct _FEST_BEACON{
       u32  pay:7;            ///<報酬の基礎値(127)
       u32  goal:14;          ///<達成目標(max9999)
 
-      u32  pay_bonus:2;      ///<報酬の計算式タイプ(0-2) FMISSION_END_TYPE
+      u32  pay_bonus:2;      ///<報酬の計算式タイプ(0-2) FMISSION_PAY_BONUS
       u32  time_bonus:4;     ///<スコアアップ時のタイムボーナス FMISSION_TBONUS
       u32  item:10;          ///<報酬のアイテムNo(1023)
       u32  sp_item:10;       ///<スペシャル報酬のアイテムNo(1023)

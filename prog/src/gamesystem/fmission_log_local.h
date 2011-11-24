@@ -211,3 +211,15 @@ extern void FMISSION_ENTRY_TBL_Update( LINK_FESTIVAL* fest_sys );
 //------------------------------------------------------------------
 extern void FMISSION_ENTRY_TBL_DeleteData( LINK_FESTIVAL* fest_sys, const FEST_MISSION* fmwk );
 
+//------------------------------------------------------------------
+/*
+ *  フェスミッションビーコン エラーチェック
+ *  
+ *  @param  info cosnt GAMEBEACON_INFO*
+ *
+ *  @retval TRUE  エラーがある
+ *  @retval FALSE エラーなし
+ */
+//------------------------------------------------------------------
+extern BOOL FMISSION_BeaconErrorCheck( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *info );
+

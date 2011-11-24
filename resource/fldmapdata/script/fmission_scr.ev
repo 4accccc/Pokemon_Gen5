@@ -775,7 +775,7 @@ sub_npc_get_a_present_main:
   _MSGWIN_CLOSE()
   
   //à√ì]ïúãAÇ≈NPCè¡Ç∑
-  _FMISSION_LOG_ACTION( FMISSION_LOG_ACT_HELP_CHILD )
+  _FMISSION_LOG_ACTION_EX( FMISSION_LOG_ACT_GET_A_PRESENT, i_item )
   _CALL	sub_fmission_npc_vanish
 }
 _RET
@@ -833,7 +833,7 @@ sub_npc_poke_quiz_main:
   _MSGWIN_CLOSE()
   
   //à√ì]ïúãAÇ≈NPCè¡Ç∑
-  _FMISSION_LOG_ACTION( FMISSION_LOG_ACT_HELP_CHILD )
+  _FMISSION_LOG_ACTION( FMISSION_LOG_ACT_POKE_QUIZ_CLEAR )
   _CALL	sub_fmission_npc_vanish
 }
 _RET

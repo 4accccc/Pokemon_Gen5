@@ -52,6 +52,7 @@
 #include "field/fes_gimmick_local.h"
 
 #include "field/fes_gimmick_npc_dat.h"
+#include "arc/fmission_data.naix"
 
 #define LOT_PROB_MAG (1000)  ///<乱数精度を高めるため、100(%)に倍率をかけた値で抽選する->1%=1000
 #define NPC_MISSION_EXPARAM_MAX (3) //拡張パラメータ許容値
@@ -171,6 +172,35 @@ void FES_GIMMICK_NPC_ZoneChangeSetup( FES_GIMMICK_NPC_WORK* wk, GAMESYS_WORK* gs
   if( wk->point_max ){
     sub_AddMMdl( gsys, wk, fmwk, zone_id );
   }
+}
+
+//----------------------------------------------------------------------
+/*
+ *  @brief  フェス　NPCミッションギミック　ミッション開始時１回のみの初期化処理
+ */
+//----------------------------------------------------------------------
+void FES_GIMMICK_NPC_MissionInitSetup( FES_GIMMICK* sys_wk, FES_GIMMICK_NPC_WORK* wk )
+{
+  ARCHANDLE* handle;
+  int id;
+  switch( sys_wk->fmwk->beacon.base_param ){
+  case FMISSION_NPC_TYPE_MEMORY_QUIZ:
+    id = NARC_fmission_data_fmission_quiz_pokelist00_bin+FMISSION_EXP_POKE_QUIZ_LOCAL; //固定で地方図鑑データ
+    break;
+  case FMISSION_NPC_TYPE_POKE_QUIZ:
+    id = NARC_fmission_data_fmission_quiz_pokelist00_bin+sys_wk->fmwk->beacon.ex_param;
+    break;
+  default:
+    return;
+  }
+  handle = LINK_FESTIVAL_GetFMissionDataHandle( sys_wk->fest_sys );
+
+  wk->tmp_data_size = GFL_ARC_GetDataSizeByHandle( handle, id );
+  if( wk->tmp_data_size > FES_GIMMICK_NPC_TMPDATA_BUF_SIZE ){
+    GF_ASSERT(0);
+    wk->tmp_data_size = FES_GIMMICK_NPC_TMPDATA_BUF_SIZE;
+  }
+  GFL_ARC_LoadDataOfsByHandle( handle, id, 0, wk->tmp_data_size, wk->tmp_data_buf );
 }
 
 static const FES_NPC_OBJ_PARAM* sub_GetObjParam( const FEST_MISSION* fmwk )

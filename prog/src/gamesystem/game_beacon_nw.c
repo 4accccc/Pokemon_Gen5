@@ -40,13 +40,13 @@
 //==================================================================
 void GAMEBEACON_Set_BattlePokeStart(u16 monsno)
 {
-  if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_POKE_ENCOUNT, monsno ) ){
-    GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_POKE_ENCOUNT, monsno );
-    return;
-  }
   if( GAMEBEACON_SUB_PokeBeaconTypeIsSpecial( monsno )){
     GAMEBEACON_Set_BattleSpPokeStart(monsno);
   }else{
+    if( GAMEBEACON_SUB_FMissionCheckScore( FMISSION_LOG_ACT_POKE_ENCOUNT, monsno ) ){
+      GAMEBEACON_SUB_SendBeaconSetCommonForFMission( &GameBeaconSys->send, GAMEBEACON_ACTION_FMISSION_POKE_ENCOUNT, monsno );
+      return;
+    }
     GAMEBEACON_Set_BattleWildPokeStart(monsno);
   }
 }

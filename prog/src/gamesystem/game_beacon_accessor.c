@@ -4,9 +4,6 @@
  * @brief   ビーコン情報の値取得の為のアクセサ
  * @author  matsuda
  * @date    2010.01.19(火)
- *
- * すれ違いログ画面でしか使用しないはずなので、常駐削減の為
- * アクセサをこのファイルに集めFIELDMAPオーバーレイに配置する
  */
 //==============================================================================
 #include <gflib.h>
@@ -539,13 +536,6 @@ BOOL GAMEBEACON_Check_Error(const GAMEBEACON_INFO *info)
   if( info->suretigai_count > 99999 || info->thanks_recv_count > 99999 ){
     return TRUE;
   }
-#if 0
-  //メダルIDとイチオシメダルは0-255まですべて有効値でu8なのでエラーチェック不要
-  //メダルIDチェック
-  if( info->medal_count > MDLID_MAX ){
-    return TRUE;
-  }
-#endif
   //アクション詳細データチェック
   if( (DATA_ErrorCheckFuncTbl[GAMEBEACON_GetActionDataType(info->action.action_no )])(info) ){
     return TRUE;

@@ -30,9 +30,6 @@
 #include "../../../resource/fldmapdata/flagwork/work_define.h"
 #include "field/script_def.h"
 
-#define PAY_BONUS_MAX (99)  //スコア&タイムボーナスのmax値は99
-
-
 static void linkfes_SetMissionResultMedal( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT* pl, SAVE_CONTROL_WORK* save, FMISSION_SAVE* f_save );
 
 
@@ -119,8 +116,8 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
        sp_bonus = ( (wk->m_beacon->m_level >= FMISSION_LEVEL_3) && (pl->score >= (wk->m_beacon->goal*2)));
        break;
     }
-    if( pl->bonus_num > PAY_BONUS_MAX ){
-      pl->bonus_num = PAY_BONUS_MAX;  //ボーナスには上限がある
+    if( pl->bonus_num > FMISSION_PAY_NUM_BONUS_MAX ){
+      pl->bonus_num = FMISSION_PAY_NUM_BONUS_MAX;  //ボーナスには上限がある
     }
     if( sp_bonus ){
       pl->sp_item = wk->m_beacon->sp_item;

@@ -15,6 +15,7 @@
 #include "gamesystem/fest_mission.h"
 #include "gamesystem/fmission_log_local.h"
 #include "gamesystem/link_festival_log.h"
+#include "gamesystem/game_beacon_accessor.h"
 #include "msg/msg_beacon_status.h"
 #include "savedata/encount_sv.h"
 #include "savedata/misc.h"
@@ -629,7 +630,10 @@ static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEAC
   if( GAMEBEACON_Check_FestMission( info ) == FALSE ){
     return;
   }
-
+  //エラーチェック
+  if( FMISSION_BeaconErrorCheck( fest_sys, info ) ){
+    return;
+  }
   //エントリーデータストック
   FMISSION_ENTRY_TBL_Set( fest_sys, info );
   
@@ -727,6 +731,10 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
 
   if(info->action.action_no == GAMEBEACON_ACTION_THANKYOU
       && GameBeaconSys->send.info.trainer_id != info->action.thanks.target_trainer_id){
+    return FALSE;
+  }
+  //ビーコンデータの整合性チェック
+  if( GAMEBEACON_Check_Error( info ) ){
     return FALSE;
   }
   
@@ -1661,13 +1669,12 @@ void GAMEBEACON_SendDataUpdate_PushMedal( MedalID push_medal )
 //==================================================================
 void GAMEBEACON_Set_PokemonGet( u16 monsno, BOOL eff_enc_f, BOOL mushroom_enc_f )
 {
-  if( GAMEBEACON_Set_FMissionWildPokemonGet( monsno, eff_enc_f, mushroom_enc_f ) ){
-    return;
-  }
-
   if( GAMEBEACON_SUB_PokeBeaconTypeIsSpecial( monsno )){
     GAMEBEACON_Set_SpecialPokemonGet(monsno);
   }else{
+    if( GAMEBEACON_Set_FMissionWildPokemonGet( monsno, eff_enc_f, mushroom_enc_f ) ){
+      return;
+    }
     GAMEBEACON_Set_WildPokemonGet(monsno);
   }
 }
