@@ -229,6 +229,8 @@ EVENT_START		ev_pos_c07_ninja
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_gyoe )
 	_OBJ_ANIME_WAIT()
 
+	_START_EVENT_BGM( SEQ_BGM_DARK_TRINITY )
+
 	IF FLAG_OFF( FE_C07_NINJA_FIRSTTALK ) THEN
 		//ニンジャ１：オマエか　よかったな
 		_BALLOONWIN_OBJMSG( msg_c07_ninja1_01 , C07_NINJA_01 )
@@ -522,6 +524,8 @@ EVENT_START		ev_pos_c07_ninja
 		_OBJ_ANIME_WAIT()
 		
 	ENDIF
+
+	_END_EVENT_BGM()
 
 EVENT_END
 
