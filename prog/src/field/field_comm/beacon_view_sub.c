@@ -2259,7 +2259,7 @@ static void tcb_WinFMissionEntryCheck( GFL_TCBL *tcb , void* tcb_wk)
 
   switch( twk->seq ){
   case 0:
-    print_GetMsgToBuf( bvp, msg_sys_fmission_check );
+    print_GetMsgToBuf( bvp, msg_sys_fmission_check01+twk->mission.beacon.distribution_f );
     print_PopupWindow( bvp, bvp->str_expand, &twk->child_task );
     twk->seq++;
     return;

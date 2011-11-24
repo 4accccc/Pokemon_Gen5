@@ -664,7 +664,7 @@ static GMEVENT_RESULT event_FMissionRetireMain(GMEVENT * event, int *  seq, void
 static void sub_FMissionParamDraw( FMISSION_EVWORK* wk, STRBUF* str, u8 px, u8 line )
 {
   WORDSET_ExpandStr( wk->wset, wk->s_tmp, str );
-  FLDSYSWIN_PrintStrBuf( wk->win, px, CWIN_STR_OY*line, wk->s_tmp );
+  FLDSYSWIN_PrintStrBuf( wk->win, px, CWIN_STR_OY*line+8, wk->s_tmp );  //+8は統一オフセット
 }
 
 //-----------------------------------------------------------------
@@ -689,8 +689,8 @@ static void sub_FMissionParamDrawCommon( FMISSION_EVWORK* wk )
   sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX01, 2 );
   
   //パラメータWordset
-  WORDSET_RegisterItemName(wk->wset, 0, wk->mission.beacon.item );
-  WORDSET_RegisterNumber( wk->wset, 1, wk->mission.beacon.pay, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+//  WORDSET_RegisterItemName(wk->wset, 0, wk->mission.beacon.item );
+//  WORDSET_RegisterNumber( wk->wset, 1, wk->mission.beacon.pay, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   WORDSET_RegisterNumber( wk->wset, 2, sec/60, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   WORDSET_RegisterNumber( wk->wset, 3, sec%60, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   WORDSET_RegisterNumber( wk->wset, 4, wk->mission.beacon.goal, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
@@ -707,6 +707,7 @@ static void sub_FMissionParamDrawCommon( FMISSION_EVWORK* wk )
   GFL_MSG_GetString( wk->msgData, msg_fmission_goal01+wk->mission.arc.unit, wk->s_buf );
   sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX02, 8 );
 
+#if 0
   //報酬
   if( wk->mission.beacon.pay_bonus == FMISSION_PAY_BONUS_NONE ){
     GFL_MSG_GetString( wk->msgData, msg_fmission_reward01, wk->s_buf );
@@ -714,6 +715,7 @@ static void sub_FMissionParamDrawCommon( FMISSION_EVWORK* wk )
     GFL_MSG_GetString( wk->msgData, msg_fmission_reward02, wk->s_buf );
   }
   sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX02, 9 );
+#endif
 }
 
 //-----------------------------------------------------------------
@@ -723,11 +725,6 @@ static void sub_FMissionParamDrawCommon( FMISSION_EVWORK* wk )
 //-----------------------------------------------------------------
 static void sub_FMissionStartParamDraw( FMISSION_EVWORK* wk )
 {
-#if 0
-  //タイトル
-  FMISSION_DATA_GetTitleStr( wk->fm_data_man, wk->s_buf, &wk->mission, wk->heapID );
-  FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX01, CWIN_STR_OY*0, wk->s_buf );
-#endif
   sub_FMissionParamDrawCommon( wk );
 }
 
