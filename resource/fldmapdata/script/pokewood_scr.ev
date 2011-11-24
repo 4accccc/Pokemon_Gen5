@@ -35,17 +35,15 @@ _EVENT_DATA   ev_reserve_pkwd_entrance_tutorial
 _EVENT_DATA   ev_pkwd_tutorial_pwowner_01
 _EVENT_DATA   ev_pkwd_tutorial_pwstaff_02
 _EVENT_DATA   ev_pkwd_tutorial_hachiku_01
+_EVENT_DATA   ev_pkwd_tutorial_go_theater
 _EVENT_DATA_END
 
 //==============================================================================
 //
 /*
-  C15R0301:シアターでのローカルワーク使途
-    LOCALWORK0  1のとき初上映でのオーナー出現イベント発生
-    LOCALWORK1  上記イベントでの上映データ位置を記録
-
   C15R0201:撮影スタジオエントランスでのローカルワーク使途
     LOCALWORK0  1のときチュートリアルイベントでのストッパー発生
+    LOCALWORK1  1のときチュートリアル終了イベントの発生
 */
 //==============================================================================
 
@@ -75,6 +73,15 @@ INIT_EVENT_END
 /**************************************************************/
 INIT_EVENT_START  ev_init_pkwd_entrance
   IF FLAG_ON( SYS_FLAG_POKEWOOD_TUTORIAL ) THEN
+    {
+      //チュートリアル中で出現位置が21以上＝C15から入ってきたタイミング
+      DEFINE_LOCAL LWK_HEROX
+      DEFINE_LOCAL LWK_HEROZ
+      _PLAYER_POS_GET( LWK_HEROX, LWK_HEROZ )
+      IF $LWK_HEROZ >= 21 THEN
+        _OBJ_POS_CHANGE( C15R0201_PWSTAFF_02, 14, 0, 20, DIR_UP )
+      ENDIF
+    }
     $LOCALWORK0 = 1
   ELSE
     $LOCALWORK0 = 0
@@ -115,25 +122,38 @@ EVENT_START ev_pokewood_rec
 
   _TALK_OBJ_START()
 
-  //TODO:初めて撮影したムービーを鑑賞するまでは再度撮影させない
-  //msg_pkwd_studio_23を話し続けて、終了させる
+  IF FLAG_OFF(SYS_FLAG_POKEWOOD_TUTORIAL) && FLAG_ON(SYS_FLAG_POKEWOOD_DISABLE_REC) THEN
+    _BALLOONWIN_OBJMSG_POS( msg_pw_studio_23, SCWK_TARGET_OBJID, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+  ELSE
+    _CALL ev_pokewood_rec_main
+  ENDIF
 
+  _PKWD_SYSTEM_END()
+
+EVENT_END
+
+
+ev_pokewood_rec_main:
   //ようこそ！
   _BALLOONWIN_OBJMSG_POS( msg_pw_studio_01, SCWK_TARGET_OBJID, POS_DOWN )
 
-  //スターランクが上がったかどうか
-  _PKWD_CHECK_NEW_STAR_RANK( SCWK_ANSWER )
-  IF $SCWK_ANSWER == FALSE THEN
-    //「ヘイ！最近キミは役者らしいイイかおになってきたねー」
-    _PLAYER_NAME( 0 )
-    _BALLOONWIN_OBJMSG_POS( msg_pw_studio_14, SCWK_TARGET_OBJID, POS_DOWN )
-    _ME_PLAY(	SEQ_ME_KEYITEM )  //仮：
-    _ME_WAIT()
-    _AB_KEYWAIT_MARK()
-  ENDIF
+  IF FLAG_OFF( SYS_FLAG_POKEWOOD_TUTORIAL ) THEN
+    //スターランクが上がったかどうか
+    _PKWD_CHECK_NEW_STAR_RANK( SCWK_ANSWER )
+    IF $SCWK_ANSWER == FALSE THEN
+      //「ヘイ！最近キミは役者らしいイイかおになってきたねー」
+      _PLAYER_NAME( 0 )
+      _BALLOONWIN_OBJMSG_POS( msg_pw_studio_14, SCWK_TARGET_OBJID, POS_DOWN )
+      _ME_PLAY(	SEQ_ME_KEYITEM )  //仮：
+      _ME_WAIT()
+      _AB_KEYWAIT_MARK()
+    ENDIF
 
-  //新着シナリオチェック：それにあわせてメッセージ
-  _CALL ev_pkwd_check_new_scenario
+    //新着シナリオチェック：それにあわせてメッセージ
+    _CALL ev_pkwd_check_new_scenario
+  ENDIF
 
 
   WHILE $LWK_PKWD_SEQ != PKWD_REC_SEQ_END
@@ -158,7 +178,7 @@ EVENT_START ev_pokewood_rec
 
     CASE PKWD_REC_SEQ_SHOOTING        THEN
       //_REPORT_EVENT_CALL( SCWK_ANSWER )
-      IF $SCWK_ANSWER == SCR_REPORT_OK THEN
+      //IF $SCWK_ANSWER == SCR_REPORT_OK THEN
         //JA履歴への対応：ポケウッドで映画を撮った
         _RESORT_SET_RECORD( RESORT_RECORD_ID_POKEWOOD )
         //すれちがいログで「●●撮影中」と告知
@@ -166,9 +186,9 @@ EVENT_START ev_pokewood_rec
         _CALL ev_pkwd_rec_go_studio
         _CALL ev_pkwd_rec_studio
         _CALL ev_pkwd_rec_exit_studio
-      ELSE
-        $LWK_PKWD_SEQ = PKWD_REC_SEQ_GOODBYE
-      ENDIF
+      //ELSE
+      //  $LWK_PKWD_SEQ = PKWD_REC_SEQ_GOODBYE
+      //ENDIF
 
     CASE PKWD_REC_SEQ_AFTER           THEN
       _CALL ev_pkwd_after_rec
@@ -176,15 +196,8 @@ EVENT_START ev_pokewood_rec
     CASE PKWD_REC_SEQ_ASK_GO_THEATER  THEN
       IF FLAG_ON( SYS_FLAG_POKEWOOD_TUTORIAL ) THEN
         //強制的にここからシアター前イベント→シアター内のイベントへ
-        _CALL ev_pkwd_tutorial_go_theater
-        //チュートリアルモードのフラグをOFFにする
-        _FLAG_RESET( SYS_FLAG_POKEWOOD_TUTORIAL )
-        //メダルヒント開示：すべての映画を撮った
-        _SET_MEDAL_HINT_ACHIEVE( MDLID_PKWD_SERIES_ALL )
-        //メダルヒント開示：興行収入が一定以上
-        _SET_MEDAL_HINT_ACHIEVE( MDLID_PKWD_BOXOFFICE )
-        //メダルヒント開示：初めてストレンジエンドをとった
-        _SET_MEDAL_HINT_ACHIEVE( MDLID_PKWD_STRANGE_FIRST )
+        //シーンイベントによりev_pkwd_tutorial_go_theaterを呼び出す
+        $LOCALWORK1 = 1
         //イベント全体終了へ
         $LWK_PKWD_SEQ = PKWD_REC_SEQ_END
       ELSE
@@ -207,9 +220,7 @@ EVENT_START ev_pokewood_rec
 
   ENDWHILE
 
-  _PKWD_SYSTEM_END()
-
-EVENT_END
+_RET
 
 
 /**************************************************************/
@@ -289,6 +300,13 @@ _RET
 ev_pkwd_after_rec:
   $SCWK_TARGET_OBJID = C15R0201_PWSTAFF_01
 
+  IF FLAG_ON(SYS_FLAG_POKEWOOD_TUTORIAL) THEN
+    //セーブ直後に電源を切られてもシーンイベントで
+    //オーナーの退場イベントが起動するように
+    //LOCALWORK1の値を変化させてからセーブする
+    $LOCALWORK1 = 1 
+  ENDIF
+
   //公開するかどうかの処理フロー
   _CALL ev_pkwd_rec_save
 
@@ -298,6 +316,11 @@ ev_pkwd_after_rec:
   ELSE
     //→公開しない（セーブしなかった）：終了
     $LWK_PKWD_SEQ = PKWD_REC_SEQ_GOODBYE
+    IF FLAG_ON( SYS_FLAG_POKEWOOD_TUTORIAL ) THEN
+      //チュートリアル中のセーブをキャンセルした場合は
+      //オーナーの退場イベントの発生もキャンセルする
+      $LOCALWORK1 = 0
+    ENDIF
   ENDIF
 
 _RET
@@ -406,8 +429,8 @@ ev_pkwd_rec_go_studio:
   _FMISSION_END_FORCE()
 
   //「OK!じゃあ撮影を始めようか！」
-  _BALLOONWIN_OBJMSG_POS( msg_pw_studio_12, SCWK_TARGET_OBJID, POS_DOWN )
-  _MSGWIN_CLOSE()
+  //_BALLOONWIN_OBJMSG_POS( msg_pw_studio_12, SCWK_TARGET_OBJID, POS_DOWN )
+  //_MSGWIN_CLOSE()
 
   _PLAYER_POS_GET( LWK_HEROX, LWK_HEROZ )
   SWITCH $LWK_HEROX
@@ -649,7 +672,7 @@ EVENT_START ev_reserve_pkwd_entrance_tutorial
 
   _TIME_WAIT( 10 )
 
-  _OBJ_ANIME( C15R0201_PWSTAFF_02, anm_dir_up )
+  //_OBJ_ANIME( C15R0201_PWSTAFF_02, anm_dir_up )
   _PLAYER_NAME( 0 )
   //「ヘイ！ボス！　～さんをお連れしました！
   _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_rec_01, C15R0201_PWSTAFF_02, POS_DOWN )
@@ -657,6 +680,10 @@ EVENT_START ev_reserve_pkwd_entrance_tutorial
 
   //オーナー、プレイヤーのほうを向く
   _OBJ_ANIME( C15R0201_PWOWNER_01, anm_dir_down )
+  _OBJ_ANIME_WAIT()
+  //スタッフ脇に
+  _OBJ_ANIME( C15R0201_PWSTAFF_02, anm_pwstaff_move_side )
+  _OBJ_ANIME_WAIT()
   //プレイヤー前に進む
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_up )
   _OBJ_ANIME_WAIT()
@@ -710,6 +737,11 @@ EVENT_START ev_reserve_pkwd_entrance_tutorial
 
 EVENT_END
 
+_ANIME_LABEL  anm_pwstaff_move_side
+  _ANIME_DATA AC_WALK_L_8F, 1
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA ACMD_END, 0
+
 _ANIME_LABEL  anm_player_up
   _ANIME_DATA AC_WALK_U_8F, 3
   _ANIME_DATA ACMD_END, 0
@@ -736,12 +768,13 @@ EVENT_START   ev_pos_pkwd_entrance_tutorial_stopper
   _PLAYER_NAME( 0 )
   _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_rec_10, C15R0201_PWSTAFF_02, POS_DOWN )
   _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
   _OBJ_ANIME_WAIT()
 EVENT_END
 
 _ANIME_LABEL anm_player_back
-  _ANIME_DATA AC_WALK_U_8F, 1
+  _ANIME_DATA AC_DIR_R, 1
   _ANIME_DATA ACMD_END, 0
 
 /**************************************************************/
@@ -771,7 +804,7 @@ EVENT_END
 /**************************************************************/
 //  チュートリアル：撮影完了フロー
 /**************************************************************/
-ev_pkwd_tutorial_go_theater:
+EVENT_START ev_pkwd_tutorial_go_theater
 
 //シーン：撮影所エントランス
 
@@ -784,10 +817,39 @@ ev_pkwd_tutorial_go_theater:
   _BALLOONWIN_OBJMSG_POS( msg_pw_tutorial_rec_11, C15R0201_PWOWNER_01, POS_DOWN )
   _MSGWIN_CLOSE()
 
-_RET
+  //オーナー、プレイヤーから離れていく
+  _OBJ_ANIME( C15R0201_PWOWNER_01, anm_powner_leave_player )
+  _OBJ_ANIME_WAIT()
+
+  //入り口のスタッフとオーナーを消す
+  _FLAG_SET( FV_PKWD_STAFF_TUTORIAL01 )
+  _FLAG_SET( FV_PKWD_STAFF_TUTORIAL02 )
+  _OBJ_DEL( C15R0201_PWOWNER_01 )
+  _OBJ_DEL( C15R0201_PWSTAFF_02 )
+
+  //チュートリアルモードのフラグをOFFにする
+  _FLAG_RESET( SYS_FLAG_POKEWOOD_TUTORIAL )
+  //上映を終えるまで撮影をできないようにする
+  _FLAG_SET( SYS_FLAG_POKEWOOD_DISABLE_REC )
+  //メダルヒント開示：すべての映画を撮った
+  _SET_MEDAL_HINT_ACHIEVE( MDLID_PKWD_SERIES_ALL )
+  //メダルヒント開示：興行収入が一定以上
+  _SET_MEDAL_HINT_ACHIEVE( MDLID_PKWD_BOXOFFICE )
+  //メダルヒント開示：初めてストレンジエンドをとった
+  _SET_MEDAL_HINT_ACHIEVE( MDLID_PKWD_STRANGE_FIRST )
+
+  //チュートリアルイベントを無効にする
+  $LOCALWORK0 = 0
+  $LOCALWORK1 = 0
+
+EVENT_END
 
 _ANIME_LABEL  anm_powner_approach_to_player
   _ANIME_DATA AC_WALK_U_8F, 3
+  _ANIME_DATA ACMD_END, 0
+
+_ANIME_LABEL anm_powner_leave_player
+  _ANIME_DATA AC_WALK_D_8F, 8
   _ANIME_DATA ACMD_END, 0
 
 

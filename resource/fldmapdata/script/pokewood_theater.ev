@@ -394,6 +394,8 @@ EVENT_START ev_pokewood_show
       _CALL ev_pkwd_show_select_movie
 
     CASE PKWD_SHOW_SEQ_WATCH_MOVIE  THEN
+      //ˆê“x‚Å‚àŒ©‚½‚çŽB‰e‚Å‚«‚é‚æ‚¤‚É‚È‚é
+      _FLAG_RESET( SYS_FLAG_POKEWOOD_DISABLE_REC )
       _CALL ev_pkwd_show_watch_movie
 
     CASE PKWD_SHOW_SEQ_AFTER        THEN
