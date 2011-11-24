@@ -334,6 +334,7 @@ enum{
 // 文字色
 // 上画面
 #define TEXT_COL_MAIN   ( PRINTSYS_LSB_Make(13, 12, 11 ) )   // 黒文字
+#define TEXT_COL_FIX    ( PRINTSYS_LSB_Make( 1,  2,  0 ) )   // 固定文字
 
 //=============================================================================
 /**
@@ -642,9 +643,9 @@ const PKWD_RECORD_MONITOR_OBJ_DATA pwm_obj_up_tbl[] = {
 //---------------
 // 上画面
 static const PKWD_RECORD_MONITOR_CANVAS_DATA pwm_canvas_00_tbl[] = {
-	{ GFL_BG_FRAME0_M,	2,	1,	27,	2,	10,},		// 「上映作品の最高記録」
-	{ GFL_BG_FRAME0_M,	2, 11,	28,	2,	10,},		//「興行成績記録」
-	{ GFL_BG_FRAME0_M,  2, 17,	18,	2,	10,},		//「主な出演キャスト」
+	{ GFL_BG_FRAME0_M,	2,	1,	27,	2,	 1,},		// 「上映作品の最高記録」
+	{ GFL_BG_FRAME0_M,	2, 11,	28,	2,	 2,},		//「興行成績記録」
+	{ GFL_BG_FRAME0_M,  2, 17,	18,	2,	 3,},		//「主な出演キャスト」
 	{ GFL_BG_FRAME0_M,	3,	4,	27,	2,	10,},		// 映画のメインタイトル
 	{ GFL_BG_FRAME0_M,	3,	6,	27,	4,	10,},		// 映画のサブタイトル
 	{ GFL_BG_FRAME0_M,  9, 14,	21,	2,	10,},		//「XXXX億円」
@@ -2303,11 +2304,11 @@ static void pwm_disp_fix_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 t
     if( buf[0] == MES_ID_TOP_01 )
     {
       // 中央揃え
-      pwm_disp_string( wk, type, buf[1], 0, 0, strbuf, 2, TEXT_COL_MAIN );
+      pwm_disp_string( wk, type, buf[1], 0, 0, strbuf, 2, TEXT_COL_FIX );
     }
     else
     {
-      pwm_disp_string( wk, type, buf[1], 0, 0, strbuf, 0, TEXT_COL_MAIN );
+      pwm_disp_string( wk, type, buf[1], 0, 0, strbuf, 0, TEXT_COL_FIX );
     }
 		
 		GFL_STR_DeleteBuffer( strbuf );
