@@ -254,7 +254,7 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
     param.p_proxy_buff    = RESONANCE_RESORT_SV_GetProxyBuff(p_resort_sv);
     param.p_city_data     = RESONANCE_RESORT_SV_GetCityData(p_resort_sv);
 
-    p_wk->p_sys = RESORT_SYSTEM_Init( &param, heapID );
+    p_wk->p_sys = RESORT_SYSTEM_Init( &param, p_resort_wk, heapID );
   }
 
   //l•¨’Ç‰Áƒtƒ‰ƒOæ“¾

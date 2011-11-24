@@ -38,6 +38,8 @@ struct _RESORT_SYSTEM
   RESORT_ABSTRUCT_MANAGER *p_abstruct;
 
   RESORT_DATA_MANAGER *p_manager;
+
+  RESORT_WORK *p_work;
 };
 
 //=============================================================================
@@ -67,10 +69,11 @@ struct _RESORT_SYSTEM
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-RESORT_SYSTEM * RESORT_SYSTEM_Init( const RESORT_ALL_DATA_PARAM *cp_param, HEAPID heapID )
+RESORT_SYSTEM * RESORT_SYSTEM_Init( const RESORT_ALL_DATA_PARAM *cp_param, RESORT_WORK *p_work, HEAPID heapID )
 {
   RESORT_SYSTEM *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_SYSTEM) );
   p_wk->param = *cp_param;
+  p_wk->p_work  = p_work;
 
   //バイナリ情報
   p_wk->p_binary_shop = RESORT_BINARY_SHOP_Init( heapID );
@@ -283,4 +286,18 @@ RESORT_PROXY_BUFF * RESORT_SYSTEM_GetProxyBuff( RESORT_SYSTEM *p_wk )
 RESORT_CITY_DATA * RESORT_SYSTEM_GetCityData( RESORT_SYSTEM *p_wk )
 {
   return p_wk->param.p_city_data;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ワーク
+ *
+ *	@param	RESORT_SYSTEM *p_wk システム
+ *
+ *	@return 常駐ワーク
+ */
+//-----------------------------------------------------------------------------
+RESORT_WORK * RESORT_SYSTEM_GetWork( RESORT_SYSTEM *p_wk )
+{
+  return p_wk->p_work;
 }

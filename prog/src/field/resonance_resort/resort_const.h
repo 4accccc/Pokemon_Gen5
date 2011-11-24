@@ -87,6 +87,50 @@
  *
  */
 #define RESORT_CONST_LEVEL_CAP    (50)
+
+/*
+ *  コンボ  調子どう？で確率がわかる文
+ *  ショップ確率＋トレーナー確率が下記値より↑だったら
+ *  確率最大時のメッセージresort_resident_lv_04_mがでます。
+ *    確率最大
+ *
+ */
+#define RESORT_CONST_COMBO_RND_MSG_00    (20)
+/*
+ *  コンボ  調子どう？で確率がわかる文
+ *  ショップ確率＋トレーナー確率が下記値より↑だったら
+ *  確率最大時のメッセージresort_resident_lv_03_mがでます。
+ *    確率中確率
+ *
+ */
+#define RESORT_CONST_COMBO_RND_MSG_01    (10)
+/*
+ *  コンボ  調子どう？で確率がわかる文
+ *  ショップ確率＋トレーナー確率が下記値より↑だったら
+ *  確率最大時のメッセージresort_resident_lv_02_mがでます。
+ *  この値より下回ったら何もでません。
+ *    確率普通
+ *
+ */
+#define RESORT_CONST_COMBO_RND_MSG_02    (5)
+
+/*
+ *  コンボ  コンボ経験値補正
+ *  計算式は以下です
+ *
+ *  ( 1 + RESORT_CONST_COMBO_ADD_RATE * コンボ回数 ) * 経験値
+ *
+ */
+#define RESORT_CONST_COMBO_ADD_RATE    (0.1)
+
+
+/*
+ *  コンボ  オススメされた先のお店で、気に入らなかった確率です
+ *  分母は１００
+ *
+ */
+#define RESORT_CONST_COMBO_SHOP_RESULT_RATE    (95)
+
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /*
  *  お店を建てたときのカメラ

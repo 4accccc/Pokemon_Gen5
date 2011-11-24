@@ -14725,15 +14725,17 @@
 
 //--------------------------------------------------------------
 /**
- * @brief リゾート用  オススメお店を取得
+ * @brief リゾート用  コンボ系
  */
 //--------------------------------------------------------------
-#define _RESORT_GET_RECOMMEND( idx, ret_idx ) \
-      _ASM_RESORT_GET_RECOMMEND idx, ret_idx
+#define _RESORT_COMBO( idx, param, ret, ret_idx ) \
+      _ASM_RESORT_COMBO idx, param, ret, ret_idx
 
-  .macro _ASM_RESORT_GET_RECOMMEND idx, ret_idx
-  .short EV_SEQ_RESORT_GET_RECOMMEND
+  .macro _ASM_RESORT_COMBO idx, param, ret, ret_idx
+  .short EV_SEQ_RESORT_COMBO
   .short \idx
+  .short \param
+  .short \ret
   .short \ret_idx
   .endm
 

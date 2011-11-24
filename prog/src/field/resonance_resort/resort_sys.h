@@ -14,6 +14,7 @@
 #include "resort_binary.h"
 #include "resort_data_manager.h"
 #include "savedata/resonance_resort_sv.h"
+#include "field/resort_work.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -36,7 +37,7 @@ typedef struct _RESORT_SYSTEM RESORT_SYSTEM;
 */
 //=============================================================================
 //システム作成・破棄
-extern RESORT_SYSTEM * RESORT_SYSTEM_Init( const RESORT_ALL_DATA_PARAM *cp_param, HEAPID heapID );
+extern RESORT_SYSTEM * RESORT_SYSTEM_Init( const RESORT_ALL_DATA_PARAM *cp_param, RESORT_WORK *p_work, HEAPID heapID );
 extern void RESORT_SYSTEM_Exit( RESORT_SYSTEM *p_wk );
 
 //個別システム取得
@@ -56,3 +57,4 @@ extern RESORT_RECV_BUFF * RESORT_SYSTEM_GetRecvBuff( RESORT_SYSTEM *p_wk );
 extern RESORT_RECV_BUFF * RESORT_SYSTEN_GetRecvTmpBuff( RESORT_SYSTEM *p_wk );
 extern RESORT_PROXY_BUFF * RESORT_SYSTEM_GetProxyBuff( RESORT_SYSTEM *p_wk );
 extern RESORT_CITY_DATA * RESORT_SYSTEM_GetCityData( RESORT_SYSTEM *p_wk );
+extern RESORT_WORK * RESORT_SYSTEM_GetWork( RESORT_SYSTEM *p_wk );

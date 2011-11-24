@@ -55,8 +55,6 @@
 #define RESORT_GET_PARAM_CELEB_TRADE_NO       (39)
 #define RESORT_GET_PARAM_INDEX                (40)
 #define RESORT_GET_PARAM_PEOPLE_TYPE          (41)
-#define RESORT_GET_PARAM_RECOMMENDED_SHOP     (42)
-#define RESORT_GET_PARAM_RECOMMENDED_REASON   (43)
 #define RESORT_GET_PARAM_OBJID_RESIDENT_00    (44)
 #define RESORT_GET_PARAM_OBJID_RESIDENT_01    (45)
 #define RESORT_GET_PARAM_OBJID_RESIDENT_02    (46)
@@ -163,6 +161,7 @@
 #define RESORT_LIST_SORT_INSTATITUTION  (1)
 
 //_RESORT_GET_MSGID用
+#define RESORT_MSGID_NONE      (0)  //返り値チェク０ならなし
   //特殊MSG
 #define RESORT_MSGID_RECENT_00      (0)  //できごと文
 #define RESORT_MSGID_RECENT_01      (1)  //できごと文
@@ -196,6 +195,7 @@
 #define RESORT_TOURIST_BYE_MSGID          (58) //またね
 #define RESORT_TOURIST_JOY_MSGID          (59) //招待喜び
 #define RESORT_TOURIST_SHOP_GREET_MSGID   (60) //案内でお店に来たときに挨拶文
+#define RESORT_TOURIST_SPOT_GRADE_NG      (61)  //評価NG文
   //住人
 #define RESORT_RESIDENT_GREET_MSGID           (80)  //挨拶
 #define RESORT_RESIDENT_BYE_MSGID             (81)  //またね
@@ -205,7 +205,16 @@
 #define RESORT_RESIDENT_CHANGE_NG_MSGID       (85)  //転職NGこのままやります
 #define RESORT_RESIDENT_LV_MSGID              (86)  //お店LV
 #define RESORT_RESIDENT_FEVER_MSGID           (87)  //フィーバー
-#define RESORT_RESIDENT_RANK_MSGID           (88)  //ランキング１番！
+#define RESORT_RESIDENT_RANK_MSGID            (88)  //ランキング１番！
+#define RESORT_RESIDENT_COMBO_RECOMMEND_MSGID (89)  //コンボおすすめ文
+#define RESORT_RESIDENT_COMBO_TEACH_MSGID     (90)  //コンボ紹介した文
+#define RESORT_RESIDENT_COMBO_OK_MSGID        (91)  //コンボ行ってみたい文
+#define RESORT_RESIDENT_COMBO_NG_MSGID        (92)  //コンボまたこんど文
+#define RESORT_RESIDENT_COMBO_EFF_MSGID_RARE  (93)  //コンボ期待文
+#define RESORT_RESIDENT_COMBO_EFF_MSGID_HIGH  (94)  //コンボ期待文
+#define RESORT_RESIDENT_COMBO_EFF_MSGID_LOW   (95)  //コンボ期待文
+#define RESORT_RESIDENT_COMBO_RND_MSGID       (96)  //コンボ確率文
+
   //秘書
 #define RESORT_SECRETARY_GREET_MSGID          (100) //挨拶
 #define RESORT_SECRETARY_BYE_MSGID            (101) //またね
@@ -418,6 +427,7 @@
 #define RESORT_SCENE_VISIBLE_OFF_CROWDPEOPLE      (0) //話しかけてる以外の歩行者
 #define RESORT_SCENE_VISIBLE_OFF_ALL_CROWDPEOPLE  (1) //全歩行者
 #define RESORT_SCENE_VISIBLE_DEFAULT              (2) //通常に戻す
+#define RESORT_SCENE_VISIBLE_OFF_ALL_PEOPLE       (3) //全ての人
 
 //リゾート用レコードID
 #define  RESORT_RECORD_ID_NONE        ( 0)//なにもない
@@ -456,4 +466,15 @@
 #define  RESORT_RECORD_ID_MAX         (33)//最大数
 
 
-#define  RESORT_RECOMMENDEDSHOP_NONE  (8)
+//_RESORT_GET_COMBO
+#define  RESORT_COMBO_PARAM_RECOMMEND  (0) //コンボおすすめ取得
+#define  RESORT_COMBO_PARAM_EXP        (1) //コンボ経験値
+#define  RESORT_COMBO_PARAM_SHOPRESULT (2) //コンボお店にきてどうだったか
+#define  RESORT_COMBO_PARAM_GRADE_MSGID (3) //コンボお店評価文
+#define  RESORT_COMBO_PARAM_INIT        (4) //コンボ初期化
+#define  RESORT_COMBO_PARAM_DECIDE      (5) //コンボ確定
+
+//RESORT_COMBO_PARAM_RECOMMENDの結果
+#define  RESORT_COMBO_RESULT_SUCSESS  (0) //いってきませんか？いってみます！
+#define  RESORT_COMBO_RESULT_FAILER   (1) //いってきませんかすらでない
+#define  RESORT_COMBO_RESULT_PITY     (2) //いってきませんか？まだ今度！

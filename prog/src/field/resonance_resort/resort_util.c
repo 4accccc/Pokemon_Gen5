@@ -10,6 +10,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 //system
 #include <gflib.h>
+#include "system/main.h"
 #include "system/vm_cmd.h"
 #include "../fieldmap.h"
 #include "../scrcmd_work.h"
@@ -19,6 +20,7 @@
 #include "src/field/ev_time.h"
 #include "savedata/medalbox.h"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
+#include "net_app/union/union_beacon_tool.h"
 
 //アーカイブ
 #include "msg/script/msg_resort_scr.h"
@@ -90,12 +92,18 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
   u32 type  = 0;
   u32 sex = PM_MALE;
   u16 people_type = 0;
+  BOOL is_celeb = FALSE;
   
   if( p_abstruct )
   {
     sex = RESORT_ABSTRUCT_DATA_GetData(p_abstruct,RESORT_DATA_PARAM_SEX,NULL);
     people_type = RESORT_ABSTRUCT_DATA_GetPeopleType(p_abstruct);
     type = RESORT_ABSTRUCT_DATA_GetData(p_abstruct, RESORT_DATA_PARAM_TYPE,NULL);
+
+    if( people_type == RESORT_PEOPLE_TYPE_PROXY && type == RESORT_PROXY_TYPE_CELEB )
+    {
+      is_celeb = TRUE;
+    }
   }
 
   switch( param )
@@ -548,6 +556,42 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
         return msgID + rank[rnd];
       }
     }
+  case RESORT_RESIDENT_COMBO_RECOMMEND_MSGID:
+    return SexGetMsgID( sex, resort_resident_combo_00_m, resort_resident_combo_00_f );
+  case RESORT_RESIDENT_COMBO_TEACH_MSGID:
+    return SexGetMsgID( sex, resort_resident_combo_01_m, resort_resident_combo_01_f );
+  case RESORT_RESIDENT_COMBO_OK_MSGID:   
+    return SexGetMsgID( sex, resort_resident_combo_02_m, resort_resident_combo_02_f );
+  case RESORT_RESIDENT_COMBO_NG_MSGID:
+    return SexGetMsgID( sex, resort_resident_combo_03_m, resort_resident_combo_03_f );
+  case RESORT_RESIDENT_COMBO_EFF_MSGID_LOW:
+    return SexGetMsgID( sex, resort_resident_combo_04_m, resort_resident_combo_04_f );
+  case RESORT_RESIDENT_COMBO_EFF_MSGID_HIGH:
+    return SexGetMsgID( sex, resort_resident_combo_05_m, resort_resident_combo_05_f );
+  case RESORT_RESIDENT_COMBO_EFF_MSGID_RARE:
+    return SexGetMsgID( sex, resort_resident_combo_06_m, resort_resident_combo_06_f );
+  case RESORT_RESIDENT_COMBO_RND_MSGID:
+    {
+      u32 rnd = RESORT_UTIL_GetComboInitRnd( p_sys, p_abstruct );
+      if( rnd >= RESORT_CONST_COMBO_RND_MSG_00 )
+      {
+        return SexGetMsgID( sex, resort_resident_lv_02_m, resort_resident_lv_02_f );
+      }
+      else if( rnd >= RESORT_CONST_COMBO_RND_MSG_01 )
+      {
+        return SexGetMsgID( sex, resort_resident_lv_03_m, resort_resident_lv_03_f );
+      }
+      else if( rnd >= RESORT_CONST_COMBO_RND_MSG_02 )
+      {
+        return SexGetMsgID( sex, resort_resident_lv_04_m, resort_resident_lv_04_f );
+      }
+      else
+      {
+        return RESORT_MSGID_NONE;
+      }
+    }
+
+
   }
 
   GF_ASSERT(0);
@@ -2043,6 +2087,7 @@ void RESORT_UTIL_SetSceneVisible( RESORT_PEOPLE_SYS *p_sys, RESORT_NPC_SYS *p_np
   sc_visible_type[] =
   {
     { RESORT_PEOPLE_TYPE_TOURIST, RESORT_PEOPLE_TYPE_PROXY, RESORT_PEOPLE_TYPE_MAX },
+    { RESORT_PEOPLE_TYPE_RESIDENT, RESORT_PEOPLE_TYPE_TOURIST, RESORT_PEOPLE_TYPE_PROXY, RESORT_PEOPLE_TYPE_MAX },
   };
 
   int i;
@@ -2706,162 +2751,323 @@ void RESORT_UTIL_SetPresetPeople( RESORT_SYSTEM *p_sys, const MYSTATUS *cp_mysta
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  コンボシステム初期化
+ *
+ *	@param	RESORT_SYSTEM *p_sys 
+ */
+//-----------------------------------------------------------------------------
+void RESORT_UTIL_InitCombo( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct )
+{
+  const RESORT_CITY_DATA *cp_city = RESORT_SYSTEM_GetCityData(p_sys);
+
+  RESORT_WORK *p_work = RESORT_SYSTEM_GetWork( p_sys );
+
+  u32 tbl_idx = 0xFFFF;
+
+  //連続抽選テーブルを引く
+  {
+    int i;
+    u32 rnd = RESORT_CITY_DATA_GetRnd( cp_city, RESORT_RND_ID_CITY_COMBO_TBL, 100 );
+    u32 per = 0;
+
+    RESORT_BINARY_COMBO_NEXT  *p_binary = RESORT_BINARY_COMBO_NEXT_Init( HEAPID_PROC );
+    for( i = 0; i < RESORT_BINARY_GetMax(p_binary); i++ )
+    {
+      per += RESORT_BINARY_COMBO_NEXT_GetData( p_binary, i, RESORT_BINARY_COMBO_NEXT_PARAM_TBLRND );
+      if( rnd < per )
+      {
+        tbl_idx = i;
+        break;
+      }
+    }
+    if( tbl_idx > RESORT_BINARY_GetMax(p_binary)  )
+    {
+      GF_ASSERT(0);
+      tbl_idx = 0;
+    }
+    RESORT_BINARY_COMBO_NEXT_Exit( p_binary );
+  }
+
+  //テーブル
+  RESORT_WORK_SetData( p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_TBL, tbl_idx );
+
+  //回数初期化
+  RESORT_WORK_SetData( p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_CNT, 0 );
+
+  //使用配列初期化
+  {
+
+    int i;
+    for( i = RESORT_WORK_GET_PARAM_RECOMMENDED_INDEX_00; i <= RESORT_WORK_GET_PARAM_RECOMMENDED_INDEX_07; i++ )
+    {
+      RESORT_WORK_SetData( p_work, i, 0 );
+    }
+  }
+
+  //初期値にはいかない
+  {
+    u16 now_pos = RESORT_ABSTRUCT_DATA_GetBufferIndex( p_abstruct );
+    RESORT_WORK_SetData( p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_INDEX_00+now_pos, 0 );
+  }
+}
+
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  オススメのお店を取得
+ *	@brief  次の住民インデックス取得
+ *
+ *	@param	RESORT_SYSTEM *p_sys  システム
+ *	@param	*p_abstruct 住民データ
+ *	@param	*p_index    次のインデックス
+ *
+ *	@return TRUE次がある  FALSEない
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_UTIL_GetComboNextIndex( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct, u32 *p_index )
+{
+  //自分のとなりが空いているか
+  static const struct
+  {
+    s8 in[8];
+    s8 out[8];
+  }sc_data[8]  =
+  {
+    //0番のとなり
+    {
+      {1,2,-1},
+      {3,4,5,6,7,-1},
+    },
+    //1番のとなり
+    {
+      {0,2,3,-1},
+      {4,5,6,7,-1},
+    },
+    //2番のとなり
+    {
+      {0,1,3,4,-1},
+      {5,6,7,-1},
+    },
+    //3番のとなり
+    {
+      {1,2,4,5,-1},
+      {0,6,7,-1},
+    },
+    //4番のとなり
+    {
+      {2,3,5,6,-1},
+      {0,1,7,-1},
+    },
+    //5番のとなり
+    {
+      {3,4,6,7,-1},
+      {0,1,2,-1},
+    },
+    //6番のとなり
+    {
+      {4,5,6,-1},
+      {0,1,2,3,-1},
+    },
+    //7番のとなり
+    {
+      {5,6,-1},
+      {0,1,2,3,4,-1},
+    },
+  };
+  RESORT_WORK *p_work = RESORT_SYSTEM_GetWork( p_sys );
+  const RESORT_CITY_DATA *cp_city = RESORT_SYSTEM_GetCityData(p_sys);
+
+  u16 now_pos = RESORT_ABSTRUCT_DATA_GetBufferIndex( p_abstruct );
+
+
+  int i;
+  int cnt;
+  int rnd;
+
+  //何個内側が空いてるか、数を確認。
+  cnt = 0;
+  for( i = 0; sc_data[now_pos].in[i] != -1; i++ )
+  {
+    u8 pos = sc_data[now_pos].in[i];
+    if( RESORT_WORK_GetData( p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_INDEX_00+pos ) == FALSE )
+    {
+      cnt++;
+    }
+  }
+
+  if( cnt > 0 )
+  {
+    //乱数で引く
+    cnt = 0;
+    rnd = RESORT_CITY_DATA_GetRnd( cp_city, RESORT_RND_ID_CITY_COMBO_IN_INDEX, cnt );
+    for( i = 0; sc_data[now_pos].in[i] != -1; i++ )
+    {
+      u8 pos = sc_data[now_pos].in[i];
+      if( RESORT_WORK_GetData( p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_INDEX_00+pos ) == FALSE )
+      {
+        if( cnt == rnd )
+        {
+          *p_index  = i;
+          return TRUE;
+        }
+        cnt++;
+      }
+    }
+  }
+
+
+  //何個外側が空いてるか、数を確認。
+  cnt = 0;
+  for( i = 0; sc_data[now_pos].out[i] != -1; i++ )
+  {
+    u8 pos = sc_data[now_pos].out[i];
+    if( RESORT_WORK_GetData( p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_INDEX_00+pos ) == FALSE )
+    {
+      cnt++;
+    }
+  }
+
+  if( cnt > 0 )
+  {
+    //乱数で引く
+    cnt = 0;
+    rnd = RESORT_CITY_DATA_GetRnd( cp_city, RESORT_RND_ID_CITY_COMBO_OUT_INDEX, cnt );
+    for( i = 0; sc_data[now_pos].out[i] != -1; i++ )
+    {
+      u8 pos = sc_data[now_pos].out[i];
+      if( RESORT_WORK_GetData( p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_INDEX_00+pos ) == FALSE )
+      {
+        if( cnt == rnd )
+        {
+          *p_index  = i;
+          return TRUE;
+        }
+        cnt++;
+      }
+    }
+  }
+
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  初回コンボ確率取得
+ *
+ *	@param	RESORT_SYSTEM *p_sys  システム
+ *	@param	*p_abstruct お店
+ *
+ *	@return 乱数  （ret/100）
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_UTIL_GetComboInitRnd( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct )
+{
+  const RESORT_BINARY_SHOP *cp_shop  = RESORT_SYSTEM_GetBinaryShop(p_sys);
+  RESORT_CITY_DATA  *p_city_data = RESORT_SYSTEM_GetCityData(p_sys);
+  RESORT_WORK       *p_work = RESORT_SYSTEM_GetWork(p_sys);
+
+  u32 neon = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_TEX, NULL );
+  u16 shop_type;
+  RTCDate date;
+  u8 trainer_view;
+
+  u32 rnd = 0;
+
+  //日時取得
+  GFL_RTC_GetDate( &date );
+
+  //自分のお店タイプを取得
+  GF_ASSERT( RESORT_ABSTRUCT_DATA_GetPeopleType(p_abstruct) == RESORT_PEOPLE_TYPE_RESIDENT );
+  {
+    RESORT_INSTITUTION_DATA *p_insti = RESORT_ABSTRUCT_DATA_GetDataAdrs( p_abstruct );
+    u16 shopID = RESORT_INSTITUTION_DATA_GetData( p_insti, RESORT_INSTITUTION_DATA_PARAM_ID );
+    const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_GetData( cp_shop, shopID );
+    shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
+  }
+
+  //ユニオン見た目取得
+  {
+    u8 objcode = RESORT_ABSTRUCT_DATA_GetData(p_abstruct,RESORT_DATA_PARAM_OBJCODE,NULL);
+    trainer_view = UnionView_Objcode_to_Index(objcode);
+  }
+
+  //見た目確率
+  {
+    RESORT_BINARY_COMBO_VIEW  *p_binary = RESORT_BINARY_COMBO_VIEW_Init(HEAPID_PROC);
+    rnd += RESORT_BINARY_COMBO_VIEW_GetData(p_binary, trainer_view, date.week );
+    RESORT_BINARY_COMBO_VIEW_Exit(p_binary);
+  }
+
+  //お店確率
+  {
+    RESORT_BINARY_COMBO_SHOP  *p_binary = RESORT_BINARY_COMBO_SHOP_Init(HEAPID_PROC);
+
+    rnd += RESORT_BINARY_COMBO_SHOP_GetData(p_binary,shop_type,neon,date.week);
+    RESORT_BINARY_COMBO_SHOP_Exit(p_binary);
+  }
+  return rnd;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  連続コンボ確率を取得
+ *
+ *	@param	RESORT_SYSTEM *p_sys  システム
+ *	@param	*p_abstruct   人物
+ *
+ *	@return 連続抽選確率
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_UTIL_GetComboNextRnd( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct )
+{
+  RESORT_WORK *p_work = RESORT_SYSTEM_GetWork(p_sys);
+
+  //初回確率
+  u32 init_rnd = RESORT_UTIL_GetComboInitRnd( p_sys, p_abstruct );
+  u32 next_rnd;
+
+
+
+  {
+    u32 cnt = RESORT_WORK_GetData(p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_CNT);
+    u32 tbl_idx = RESORT_WORK_GetData( p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_TBL);
+
+    RESORT_BINARY_COMBO_NEXT  *p_binary = RESORT_BINARY_COMBO_NEXT_Init( HEAPID_PROC );
+
+    GF_ASSERT( cnt + RESORT_BINARY_COMBO_NEXT_PARAM_EXTENDED_01 <= RESORT_BINARY_COMBO_NEXT_PARAM_EXTENDED_07 );
+    next_rnd = RESORT_BINARY_COMBO_NEXT_GetData( p_binary, tbl_idx, cnt );
+
+    RESORT_BINARY_COMBO_NEXT_Exit( p_binary );
+  }
+
+
+  return init_rnd + next_rnd;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  コンボ成功
  *
  *	@param	RESORT_SYSTEM *p_sys
  *	@param	*p_abstruct 
- *
- *	@return RESIDENT_DATAインデックス   RESORT_RESIDENT_DATA_NUMであればオススメなし
  */
 //-----------------------------------------------------------------------------
-u32 RESORT_UTIL_GetRecommendedShop( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct, u32 *p_reason )
+void RESORT_UTIL_SuccessCombo( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct )
 {
-  enum
+  RESORT_WORK *p_work = RESORT_SYSTEM_GetWork(p_sys);
+  u32 next_index;
+  BOOL is_next = RESORT_UTIL_GetComboNextIndex( p_sys, p_abstruct, &next_index );
+
+  //次のお店は行ったフラグを立てる
+  if( is_next )
   {
-    RECOMMENDED_TYPE_EXT1_1,  //拡張１  図鑑の数が１５０以上
-    RECOMMENDED_TYPE_EXT2_1,  //拡張２  通信交換が10回以上
-    RECOMMENDED_TYPE_EXT3_1,  //拡張３  捕まえたポケモンの数が１００以上
-    RECOMMENDED_TYPE_EXT4_1,  //拡張４  噂に答えた数１０以上
-    RECOMMENDED_TYPE_EXT5_1,  //拡張５  最近レコードを追加している１日
-    RECOMMENDED_TYPE_MAX,
-  };
-  int i;
-  RESORT_PEOPLE_ALL_DATA *p_people_all = RESORT_SYSTEM_GetPeopleAllData(p_sys);
-  u32 id = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_TRAINER_ID, NULL );
-  u32 reason  = id%RECOMMENDED_TYPE_MAX;
-  RESORT_RESIDENT_DATA *p_my  = RESORT_ABSTRUCT_DATA_GetDataAdrs( p_abstruct );
-
-  GF_ASSERT( RESORT_ABSTRUCT_DATA_GetPeopleType(p_abstruct) == RESORT_PEOPLE_TYPE_RESIDENT );
-
-  if( p_reason )
-  {
-    *p_reason = reason;
-  }
-  
-  return RESORT_RESIDENT_DATA_NUM;
-
-#ifdef PM_DEBUG
-  {
-    int next_idx = (RESORT_ABSTRUCT_DATA_GetBufferIndex(p_abstruct)+1);
-    
-    if( next_idx >= RESORT_RESIDENT_DATA_NUM )
-    {
-      return  RESORT_RESIDENT_DATA_NUM;
-    }
-    else
-    {
-      RESORT_RESIDENT_DATA *p_resi = RESORT_PEOPLE_ALL_DATA_GetResident( p_people_all, next_idx );
-      if( !RESORT_RESIDENT_DATA_IsEmpty(p_resi) )
-      {
-        return next_idx;
-      }
-      else
-      {
-        return  RESORT_RESIDENT_DATA_NUM;
-      }
-    }
-  }
-#endif
-
-  for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
-  {
-
-    RESORT_RESIDENT_DATA *p_resi = RESORT_PEOPLE_ALL_DATA_GetResident( p_people_all, i );
-    BOOL is_ok  = FALSE;
-
-    //もし空か自分と同じならミない
-    if( RESORT_RESIDENT_DATA_IsEmpty(p_resi) || (p_my!=p_resi) )
-    {
-      continue;
-    }
-
-    //自分の好みによって分岐
-    switch( reason )
-    {
-    case RECOMMENDED_TYPE_EXT1_1:  //拡張１  図鑑の数が１５０以上
-      {
-        u32 num = RESORT_RESIDENT_DATA_GetData(p_resi,RESORT_DATA_PARAM_EXT1_ZUKAN,NULL);
-        if( num >= 100 )
-        {
-          is_ok = TRUE;
-        }
-      }
-      break;
-    case RECOMMENDED_TYPE_EXT2_1:  //拡張２  通信交換が10回以上
-      {
-        u32 num = RESORT_RESIDENT_DATA_GetData(p_resi,RESORT_DATA_PARAM_EXT2_RANK_00,NULL);
-        if( num >= 10 )
-        {
-          is_ok = TRUE;
-        }
-      }
-      break;
-    case RECOMMENDED_TYPE_EXT3_1:  //拡張３  捕まえたポケモンの数が１００以上
-      {
-        u32 num = RESORT_RESIDENT_DATA_GetData(p_resi,RESORT_DATA_PARAM_EXT3_RANK_06,NULL);
-        if( num >= 100 )
-        {
-          is_ok = TRUE;
-        }
-      }
-      break;
-    case RECOMMENDED_TYPE_EXT4_1:  //拡張４  噂に答えた数１０以上
-      {
-        int j;
-        u32 cnt = 0;
-        for( j = RESORT_DATA_PARAM_EXT4_GOSSIP_00; j <= RESORT_DATA_PARAM_EXT4_GOSSIP_15; j++ )
-        {
-          u32 num = RESORT_RESIDENT_DATA_GetData(p_resi,RESORT_DATA_PARAM_EXT4_GOSSIP_00+j,NULL);
-          if( num > 0 )
-          {
-            cnt++;
-          }
-        }
-        if( cnt >= 10 )
-        {
-          is_ok = TRUE;
-        }
-      }
-      break;
-    case RECOMMENDED_TYPE_EXT5_1:  //拡張５  最近レコードを追加している（３日以内）
-      {
-        int j;
-        u32 cnt = 0;
-        s32 days1, days2;
-        RTCDate now;
-        RTCDate date;
-        GFL_RTC_GetDate( &now );
-        days1 = RTC_ConvertDateToDay( &now );
-
-        for( j = 0; j < 4; j++ )
-        {
-          u32 id = RESORT_RESIDENT_DATA_GetData(p_resi,RESORT_DATA_PARAM_EXT5_RECORD_00+j,NULL);
-          RESORT_DATE r_date = RESORT_RESIDENT_DATA_GetData(p_resi,RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+j,NULL);
-          if( id != RESORT_RECORD_ID_NONE )
-          {
-            RESORT_DATA_DateToRtc( r_date, &date );
-            days2 = RTC_ConvertDateToDay( &date );
-            if( MATH_IAbs(days1 - days2) <= 3 )
-            {
-              is_ok = TRUE;
-              break;
-            }
-          }
-        }
-      }
-      break;
-    default:
-      GF_ASSERT(0);
-    }
-
-    if( is_ok )
-    {
-      return i;
-    }
+    RESORT_WORK_SetData( p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_INDEX_00+next_index, TRUE );
   }
 
-  return RESORT_RESIDENT_DATA_NUM;
+  //回数を増やす
+  {
+    u32 cnt = RESORT_WORK_GetData(p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_CNT);
+    RESORT_WORK_SetData(p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_CNT, ++cnt);
+  }
 }

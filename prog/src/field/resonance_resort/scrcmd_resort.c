@@ -30,6 +30,7 @@
 #include "savedata/resonance_resort_sv.h"
 #include "resort_shop.h"
 #include "resort_util.h"
+#include "resort_const.h"
 
 //outer
 #include "scrcmd_resort.h"
@@ -571,16 +572,6 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
     break;
   case RESORT_GET_PARAM_PEOPLE_TYPE:
     *p_ret_wk = RESORT_PEOPLE_GetPeopleData(p_people,RESORT_PEOPLE_DATA_PARAM_TYPE);
-    break;
-  case RESORT_GET_PARAM_RECOMMENDED_SHOP:
-    *p_ret_wk = RESORT_UTIL_GetRecommendedShop(p_sys, p_abstruct, NULL );
-    break;
-  case RESORT_GET_PARAM_RECOMMENDED_REASON:
-    {
-      u32 reason;
-      RESORT_UTIL_GetRecommendedShop(p_sys, p_abstruct, &reason );
-      *p_ret_wk = reason;
-    }
     break;
   case RESORT_GET_PARAM_OBJID_RESIDENT_00:
   case RESORT_GET_PARAM_OBJID_RESIDENT_01:
@@ -1392,6 +1383,9 @@ VMCMD_RESULT EvCmdResortSetSeceneVisible( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_SCENE_VISIBLE_OFF_ALL_CROWDPEOPLE:
     RESORT_UTIL_SetSceneVisible( p_people_sys, p_npc_sys, NULL, RESORT_UTIL_VISIBLE_OFF_CROWDPEOPLE );
     break;
+  case RESORT_SCENE_VISIBLE_OFF_ALL_PEOPLE:
+    RESORT_UTIL_SetSceneVisible( p_people_sys, p_npc_sys, NULL, RESORT_UTIL_VISIBLE_OFF_ALLPEOPLE );
+    break;
   case RESORT_SCENE_VISIBLE_DEFAULT:
     RESORT_PEOPLE_SYS_ReturnMasterVisibleAll( p_people_sys);
     RESORT_NPC_SYS_SetVisibleAll( p_npc_sys, TRUE );
@@ -1405,7 +1399,7 @@ VMCMD_RESULT EvCmdResortSetSeceneVisible( VMHANDLE *p_core, void *p_wk_adrs )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  場面にあった表示設定を行う
+ *	@brief  コンボお店
  *
  *	@param	VMHANDLE *p_core 仮想マシンハンドル
  *	@param	*p_wk_adrs       スクリプトコマンドワーク
@@ -1413,27 +1407,173 @@ VMCMD_RESULT EvCmdResortSetSeceneVisible( VMHANDLE *p_core, void *p_wk_adrs )
  *	@return 終了コード
  */
 //-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdResortGetRecommendedShop( VMHANDLE *p_core, void *p_wk_adrs )
+VMCMD_RESULT EvCmdResortCombo( VMHANDLE *p_core, void *p_wk_adrs )
 {
   SCRCMD_WORK *p_wk = p_wk_adrs;
   SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
   RESORT_SYSTEM *p_sys = RESORT_UTIL_GetSystem( p_field );
+  RESORT_CITY_DATA *p_city = RESORT_SYSTEM_GetCityData( p_sys );
+  RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
+  RESORT_PEOPLE* p_people = RESORT_UTIL_GetFrontPeople( p_wk, p_people_sys );
+
+  RESORT_WORK *p_reso_wk = RESORT_SYSTEM_GetWork( p_sys );
+
+  RESORT_BINARY_PRESET *p_set = RESORT_SYSTEM_GetBinaryPreset(p_sys);
 
   RESORT_ABSTRUCT_MANAGER * p_man = RESORT_SYSTEM_GetAbstructManager( p_sys );
 
-  u16 idx = SCRCMD_GetVMWorkValue(p_core, p_wk );
+  u16 data = SCRCMD_GetVMWorkValue(p_core, p_wk );
+  u16 param = SCRCMD_GetVMWorkValue(p_core, p_wk );
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
+  u16 *p_ret_idx	= SCRCMD_GetVMWork( p_core, p_wk );
 
-  RESORT_ABSTRUCT_DATA *p_abstruct = RESORT_ABSTRUCT_MANAGER_GetDataByIndex( p_man, RESORT_DATA_BUFFER_TYPE_RESIDENT, idx );
 
-  GF_ASSERT( !RESORT_ABSTRUCT_DATA_IsEmpty(p_abstruct) );
+  switch( param )
+  {
+  case RESORT_COMBO_PARAM_RECOMMEND:
+    {
+      RESORT_ABSTRUCT_DATA *p_abstruct = RESORT_ABSTRUCT_MANAGER_GetDataByIndex( p_man, RESORT_DATA_BUFFER_TYPE_RESIDENT, data );
 
-  *p_ret_wk = RESORT_UTIL_GetRecommendedShop(p_sys, p_abstruct, NULL );
+      RESORT_WORK *p_reso_wk = RESORT_SYSTEM_GetWork( p_sys );
+      u16 cnt = RESORT_WORK_GetData( p_reso_wk, RESORT_WORK_GET_PARAM_RECOMMENDED_CNT );
+
+      RESORT_PEOPLE_ALL_DATA *p_all_people = RESORT_SYSTEM_GetPeopleAllData( p_sys );
+
+      u32 next_index;
+
+      u32 rnd = RESORT_CITY_DATA_GetRnd( p_city, RESORT_RND_ID_CITY_COMBO_RND, 100 );
+      u32 percent;
+
+      //もし住民が８人いないとコンボはやらない
+      if( RESORT_PEOPLE_ALL_DATA_GetResidentCount( p_all_people ) != RESORT_RESIDENT_DATA_NUM )
+      {
+        *p_ret_wk = RESORT_COMBO_RESULT_FAILER;
+        return VMCMD_RESULT_CONTINUE;
+      }
+
+      GF_ASSERT( !RESORT_ABSTRUCT_DATA_IsEmpty(p_abstruct) );
+
+      //もし全部やったなら終わり
+      if( !RESORT_UTIL_GetComboNextIndex( p_sys, p_abstruct, &next_index ) )
+      {
+        *p_ret_wk = RESORT_COMBO_RESULT_FAILER;
+        return VMCMD_RESULT_CONTINUE;
+      }
+
+      //確率抽選
+      if( cnt == 0 )
+      {
+        //初回確率
+        percent = RESORT_UTIL_GetComboInitRnd( p_sys, p_abstruct );
+      }
+      else
+      {
+        //継続確率
+        percent = RESORT_UTIL_GetComboNextRnd( p_sys, p_abstruct );
+      }
+
+      if( rnd < percent )
+      {
+        *p_ret_wk   = RESORT_COMBO_RESULT_SUCSESS;
+      }
+      else if ( rnd+rnd/2 < percent )
+      {
+        *p_ret_wk   = RESORT_COMBO_RESULT_PITY;
+      }
+      else
+      {
+        *p_ret_wk   = RESORT_COMBO_RESULT_FAILER;
+      }
+      *p_ret_idx  = next_index;
+
+    }
+    break;
+
+  case RESORT_COMBO_PARAM_EXP:
+    {
+      u16 cnt = RESORT_WORK_GetData( p_reso_wk, RESORT_WORK_GET_PARAM_RECOMMENDED_CNT );
+      *p_ret_wk = FX_Whole( data * ( FX32_ONE + FX32_CONST(RESORT_CONST_COMBO_ADD_RATE) * cnt ) );
+    }
+    break;
+
+  case RESORT_COMBO_PARAM_SHOPRESULT:
+    {
+      u32 rnd = RESORT_CITY_DATA_GetRnd( p_city, RESORT_RND_ID_CITY_COMBO_SHOPRESULT, 100 );
+      *p_ret_wk = RESORT_CONST_COMBO_SHOP_RESULT_RATE < rnd;
+    }
+
+    break;
+
+  case RESORT_COMBO_PARAM_GRADE_MSGID:
+    {
+      RESORT_ABSTRUCT_DATA *p_abstruct = RESORT_PEOPLE_GetAbstructData( p_people );
+      u16 people_type = RESORT_ABSTRUCT_DATA_GetPeopleType( p_abstruct );
+      u16 type = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_TYPE, NULL );
+      u16 visitor_sex = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_SEX, NULL );
+      BOOL is_celeb = FALSE;
+
+      if( people_type == RESORT_PEOPLE_TYPE_PROXY && type == RESORT_PROXY_TYPE_CELEB )
+      {
+        is_celeb = TRUE;
+      }
+
+      if( data )
+      {
+        //よい場合
+        if( is_celeb )
+        {
+          *p_ret_wk = RESORT_UTIL_GetCelebData( p_set, p_abstruct, RESORT_BINARY_PRESET_PARAM_CELEB_SHOP_OK ); 
+        }
+        else
+        {
+          *p_ret_wk = resort_sys_05;
+        }
+      }
+      else
+      {
+        //悪い場合
+        if( is_celeb )
+        {
+          *p_ret_wk = RESORT_UTIL_GetCelebData( p_set, p_abstruct, RESORT_BINARY_PRESET_PARAM_CELEB_SHOP_NG ); 
+        }
+        else
+        {
+          if( visitor_sex == PM_MALE )
+          {
+            *p_ret_wk  = resort_sys_08_m;
+          }
+          else
+          {
+            *p_ret_wk  = resort_sys_08_f;
+          }
+        }
+      }
+    }
+    break;
+  case RESORT_COMBO_PARAM_INIT:
+    {
+      RESORT_ABSTRUCT_DATA *p_abstruct = RESORT_ABSTRUCT_MANAGER_GetDataByIndex( p_man, RESORT_DATA_BUFFER_TYPE_RESIDENT, data );
+      RESORT_UTIL_InitCombo( p_sys, p_abstruct );
+    }
+    break;
+
+  case RESORT_COMBO_PARAM_DECIDE:
+    {
+      RESORT_ABSTRUCT_DATA *p_abstruct = RESORT_ABSTRUCT_MANAGER_GetDataByIndex( p_man, RESORT_DATA_BUFFER_TYPE_RESIDENT, data );
+      RESORT_UTIL_SuccessCombo( p_sys, p_abstruct );
+    }
+    break;
+
+  default:
+    GF_ASSERT(0);
+  }
+
 
   return VMCMD_RESULT_CONTINUE;
 }
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  街の名前を登録

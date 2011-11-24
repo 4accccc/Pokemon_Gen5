@@ -15,6 +15,7 @@
 #include "resort_shop.h"
 #include "resort_spot.h"
 #include "resort_preset.h"
+#include "net_app/union/union_beacon_tool.h"
 
 //=============================================================================
 /**
@@ -504,3 +505,89 @@ typedef enum
 #define RESORT_BINARY_PRESET_Init(x) RESORT_BINARY_Init(NARC_resonance_resort_data_resort_preset_dat,RESORT_BINARY_PRESET_PARAM_MAX,x)
 #define RESORT_BINARY_PRESET_Exit(x) RESORT_BINARY_Exit(x)
 #define RESORT_BINARY_PRESET_GetData(x,y,z) RESORT_BINARY_GetData(x,y,z)
+
+
+//=============================================================================
+/**
+ *					コンボデータ  見た目
+*/
+//=============================================================================
+//-------------------------------------
+///	ワーク
+//=====================================
+typedef RESORT_BINARY RESORT_BINARY_COMBO_VIEW;
+
+//-------------------------------------
+///	取得データ
+//=====================================
+enum
+{
+  RESORT_BINARY_COMBO_VIEW_PARAM_MAX = RTC_WEEK_MAX,
+};
+
+//-------------------------------------
+///	PUBLIC
+//=====================================
+#define RESORT_BINARY_COMBO_VIEW_Init(x) RESORT_BINARY_Init(NARC_resonance_resort_data_resort_combo_view_dat,RESORT_BINARY_COMBO_VIEW_PARAM_MAX,x)
+#define RESORT_BINARY_COMBO_VIEW_Exit(x) RESORT_BINARY_Exit(x)
+#define RESORT_BINARY_COMBO_VIEW_GetData(x,y,z) RESORT_BINARY_GetData(x,y,z)
+
+//=============================================================================
+/**
+ *					コンボデータ  お店
+*/
+//=============================================================================
+//-------------------------------------
+///	ワーク
+//=====================================
+typedef RESORT_BINARY RESORT_BINARY_COMBO_SHOP;
+
+//-------------------------------------
+///	取得データ
+//=====================================
+enum
+{
+  RESORT_BINARY_COMBO_SHOP_PARAM_MAX = RTC_WEEK_MAX,
+};
+
+//-------------------------------------
+///	PUBLIC
+//=====================================
+#define RESORT_BINARY_COMBO_SHOP_Init(x) RESORT_BINARY_Init(NARC_resonance_resort_data_resort_combo_shop_dat,RESORT_BINARY_COMBO_SHOP_PARAM_MAX,x)
+#define RESORT_BINARY_COMBO_SHOP_Exit(x) RESORT_BINARY_Exit(x)
+//y1はお店種類y2はネオン種類zは週です。
+#define RESORT_BINARY_COMBO_SHOP_GetData(x,y1,y2,z) RESORT_BINARY_GetData(x,y1*4+y2,z)
+
+//=============================================================================
+/**
+ *					コンボデータ  連続
+*/
+//=============================================================================
+//-------------------------------------
+///	ワーク
+//=====================================
+typedef RESORT_BINARY RESORT_BINARY_COMBO_NEXT;
+
+//-------------------------------------
+///	取得データ
+//=====================================
+typedef enum
+{
+  RESORT_BINARY_COMBO_NEXT_PARAM_TBLRND,
+  RESORT_BINARY_COMBO_NEXT_PARAM_EXTENDED_01,
+  RESORT_BINARY_COMBO_NEXT_PARAM_EXTENDED_02,
+  RESORT_BINARY_COMBO_NEXT_PARAM_EXTENDED_03,
+  RESORT_BINARY_COMBO_NEXT_PARAM_EXTENDED_04,
+  RESORT_BINARY_COMBO_NEXT_PARAM_EXTENDED_05,
+  RESORT_BINARY_COMBO_NEXT_PARAM_EXTENDED_06,
+  RESORT_BINARY_COMBO_NEXT_PARAM_EXTENDED_07,
+  RESORT_BINARY_COMBO_NEXT_PARAM_MAX,
+}RESORT_BINARY_NEXT_PARAM;
+
+//-------------------------------------
+///	PUBLIC
+//=====================================
+#define RESORT_BINARY_COMBO_NEXT_Init(x) RESORT_BINARY_Init(NARC_resonance_resort_data_resort_combo_next_dat,RESORT_BINARY_COMBO_NEXT_PARAM_MAX,x)
+#define RESORT_BINARY_COMBO_NEXT_Exit(x) RESORT_BINARY_Exit(x)
+//y1はお店種類y2はネオン種類zは週です。
+#define RESORT_BINARY_COMBO_NEXT_GetData(x,y,z) RESORT_BINARY_GetData(x,y,z)

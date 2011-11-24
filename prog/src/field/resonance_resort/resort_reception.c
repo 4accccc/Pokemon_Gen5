@@ -85,6 +85,7 @@ void RESORT_RECEPTION_Setup( FIELDMAP_WORK *p_fieldmap )
   GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork(p_fieldmap) );
   SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gamedata );
   RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( p_sv );
+  RESORT_WORK *p_resort_wk = GAMEDATA_GetReosrtWork(p_gamedata);
 
   BOOL is_people_add = TRUE;
 
@@ -108,7 +109,7 @@ void RESORT_RECEPTION_Setup( FIELDMAP_WORK *p_fieldmap )
     param.p_proxy_buff    = RESONANCE_RESORT_SV_GetProxyBuff(p_resort_sv);
     param.p_city_data     = RESONANCE_RESORT_SV_GetCityData(p_resort_sv);
 
-    p_wk->p_sys = RESORT_SYSTEM_Init( &param, heapID );
+    p_wk->p_sys = RESORT_SYSTEM_Init( &param, p_resort_wk, heapID );
   }
 
   //l•¨’Ç‰Áƒtƒ‰ƒOæ“¾

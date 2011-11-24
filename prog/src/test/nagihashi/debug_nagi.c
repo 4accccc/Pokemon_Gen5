@@ -1512,11 +1512,11 @@ static void LISTDATA_CallKeySys( DEBUG_NAGI_MAIN_WORK *p_wk )
 {
   p_wk->key_sys_param.mode = KEY_SYSTEM_MODE_GET;
   p_wk->key_sys_param.p_gamedata = p_wk->p_gamedata;
-  p_wk->key_sys_param.get_key = 4;
+  p_wk->key_sys_param.get_key = 0;
 
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y )
   {
-    p_wk->key_sys_param.get_key = 3;
+    p_wk->key_sys_param.get_key = KEY_SYSTEM_TYPE_CITY_WFBC;
   }
 
   DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(key_system), &KEY_SYSTEM_ProcData, &p_wk->key_sys_param );
