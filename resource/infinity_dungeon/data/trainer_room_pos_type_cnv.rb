@@ -211,3 +211,30 @@ out_file.puts "}"
 
 out_file.close
 
+# チェック用データ出力
+header =  <<EOS
+#/[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+#**
+#*
+#*	@file		%s
+#*	@brief  無限ダンジョン内部屋人数ハッシュファイル
+#*	@author	Masayuki Onoue
+#*	@date		2011.11.18
+#*  @note   コンバータによって出力されたファイルです
+#*
+#*/
+#/]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+
+$room_member_hash = {
+EOS
+file_name = "room_member_num_hash.rb"
+out_file = open( file_name ,"w" )
+out_file.puts header % [file_name]
+
+room_data_list.each { |item|
+  out_file.puts '  "%s" => %d,'%[item.type_name,item.member_num]
+}
+# 何も置かない部屋タイプ登録
+out_file.puts '  "NONE" => 0,'
+out_file.puts "}"
+ 

@@ -74,7 +74,7 @@ endif
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 #パーソナルデータ生成
-do-build: $(POS_CSV_FILE) $(ROOM_CSV_FILE) $(TR_DATA_CSV_FILE) $(ROOM_DATA_CSV_FILE) $(POS_FILE) $(ROOM_FILE) $(TR_DATA_FILE) $(TUTORIAL_FILE) $(W_AREA_CSV_FILE) $(B_AREA_CSV_FILE) $(AREA_DATA_FILE)
+do-build: $(POS_CSV_FILE) $(ROOM_CSV_FILE) $(TR_DATA_CSV_FILE) $(ROOM_DATA_CSV_FILE) $(POS_FILE) $(ROOM_FILE) $(TUTORIAL_FILE) $(W_AREA_CSV_FILE) $(B_AREA_CSV_FILE) $(AREA_DATA_FILE) $(TR_DATA_FILE)
 
 $(POS_CSV_FILE): $(XLS_FILE) trainer_move_type_cnv.rb
 	@ruby $(EXCELCONV) $(XLS_FILE) -n 0 -s > $(POS_CSV_FILE)

@@ -12,6 +12,10 @@
 require "csv"
 require File.dirname(__FILE__) + '/../../../tools/hash/trtype_hash.rb'
 require File.dirname(__FILE__) + '/../../../tools/btl_subway/bts_tr_arr.rb'
+require File.dirname(__FILE__) + '/area_tr_member_num.rb'
+
+# トレーナー配置データ
+$STrData = Struct.new("TR_DATA", :tr_type_idx, :s_area, :e_area, :is_w , :is_b)
 
 START_AREA_COLUMN_INDEX = 1
 END_AREA_COLUMN_INDEX = 2
@@ -50,23 +54,58 @@ def get_tr_cnt_data( data_csv,tr_cnt_array )
       raise "不明なトレーナータイプ指定%s\n"%[line[0]]
     end
   }
+
   return tr_type_cnt
 end
 
 # カウントしたデータを出力する
-def out_put_tr_cnt_data( tr_cnt_file ,tr_cnt_array ,tr_type_list )
+def out_put_tr_cnt_data( tr_cnt_file ,tr_cnt_array ,tr_type_list ,tr_num_array ,tr_data_array ,is_w)
   10.times{|i|
     tr_cnt_file.print "  { // エリア%d\n"%[i+1]
     tr_cnt_file.printf "    "
 
     # 全データ出力
+    tr_sum = 0
     tr_type_list.each_with_index{|tr_type,cnt|
       if tr_cnt_array[i].key?(tr_type) then
         tr_cnt_file.printf "%3d,"%[tr_cnt_array[i][tr_type].to_i]
+        tr_sum += tr_cnt_array[i][tr_type].to_i
+
+        # 人数チェック
+        check_num = tr_cnt_array[i][tr_type].to_i
+        data_num = 0
+        tr_data_array.each{|data|
+          # エリアチェック
+          if ((data.s_area.to_i <= i)&&(data.e_area.to_i >= i)) then
+            if data.tr_type_idx == tr_type then
+              if ((data.is_w == is_w) || (data.is_b != is_w)) then
+                data_num+=1
+              end
+            end
+          end
+        }
+        if check_num > data_num then
+          puts "以下のトレーナータイプが不足しています！"
+          puts "エリア：%d"%(i+1)
+          puts "必要人数：%d"%check_num
+          puts "設定人数：%d"%data_num
+          puts "バージョンホワイト：%s"%is_w
+          $trtype_hash.keys.each{|key|
+            # トレーナータイプ出力
+            if $trtype_hash[key] == tr_type then
+              puts "トレーナータイプ："+key
+            end
+          }
+          raise "area_data.xlsエラー"
+        end
       end
       # 改行
       if ((1+cnt)%5 == 0 ) then tr_cnt_file.printf "\n    " end
     }
+    # 配置人数チェック
+    if tr_num_array[i] != tr_sum then
+      raise "エリア%d:配置に必要な人数（%d）と実際に配置している人数（%d）が異なっています"%[i+1,tr_num_array[i],tr_sum]
+    end
     tr_cnt_file.puts "  },"
   }
   tr_cnt_file.puts "};"
@@ -139,6 +178,9 @@ data_csv = CSV.open( CSV_FILE ,"r")
 # データの読み飛ばし
 data_csv.shift
 
+# 解析データ
+tr_data_array = Array.new
+
 header =  <<EOS
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
@@ -158,17 +200,28 @@ out_file.puts header % [OUT_FILE]
 
 index_max = 0
 data_csv.each_with_index { |item,index|
+
+  tr_data = $STrData.new
   out_file.printf " { "
   put_value( item[START_AREA_COLUMN_INDEX].to_i-1  ,out_file)
   put_value( item[END_AREA_COLUMN_INDEX].to_i-1  ,out_file)
+
+  tr_data.s_area = item[START_AREA_COLUMN_INDEX].to_i-1
+  tr_data.e_area = item[END_AREA_COLUMN_INDEX].to_i-1
+  tr_data.is_w = false
+  tr_data.is_b = false
 
   version = ""
   # Version判定
   if item[VERSION_COLUMN_INDEX] == B2_ONLY then
     version = "VERSION_B2"
+    tr_data.is_b = true
   elsif item[VERSION_COLUMN_INDEX] == W2_ONLY then
     version = "VERSION_W2"
+    tr_data.is_w = true
   elsif item[VERSION_COLUMN_INDEX] == WW2_BOTH then
+    tr_data.is_b = true
+    tr_data.is_w = true
     version = "0"
   else
     puts item[VERSION_COLUMN_INDEX]
@@ -183,9 +236,19 @@ data_csv.each_with_index { |item,index|
     raise "トレーナータイプが発見できませんでした。:No%d\n"%[index+1]
   end
   put_value( out_index ,out_file)
-
+  tr_data.tr_type_idx = tr_type_list[out_index]
+  
   index_max = index + 1
   out_file.printf "},\n"
+ 
+#  $trtype_hash.each_key {|key|
+#    if $trtype_hash[key] == tr_data.tr_type_idx then
+#      puts key
+#    end
+#  }
+
+  # リストに追加
+  tr_data_array << tr_data
 
 }
 out_file.printf "};\n"
@@ -238,7 +301,7 @@ static const u8 sc_inf_tr_setdata_w[10][INF_TR_TYPE_MAX] =
 EOS
 tr_cnt_file = open( OUT_TR_CNT_FILE ,"w" )
 tr_cnt_file.puts header % [OUT_HEADER_FILE]
-out_put_tr_cnt_data( tr_cnt_file ,tr_cnt_array_w ,tr_type_list)
+out_put_tr_cnt_data( tr_cnt_file ,tr_cnt_array_w ,tr_type_list ,$area_tr_member_num_w,tr_data_array,true)
 
 header =  <<EOS
 
@@ -247,7 +310,7 @@ static const u8 sc_inf_tr_setdata_b[10][INF_TR_TYPE_MAX] =
 {
 EOS
 tr_cnt_file.puts header
-out_put_tr_cnt_data( tr_cnt_file ,tr_cnt_array_b ,tr_type_list)
+out_put_tr_cnt_data( tr_cnt_file ,tr_cnt_array_b ,tr_type_list,$area_tr_member_num_b ,tr_data_array,false)
 
 tr_cnt_file.close
 
