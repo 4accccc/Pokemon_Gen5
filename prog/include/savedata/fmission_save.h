@@ -172,37 +172,19 @@ extern void FMISSION_SAVE_SetMissionTopScoreNum( FMISSION_SAVE* sv, u16 top_num 
 
 //---------------------------------------------------------------------------
 /**
- * @brief ミッションステータス ハイスコア(数値)を返す	
+ * @brief ミッションステータス ハイスコアを返す	
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-extern u16 FMISSION_SAVE_GetMissionStatusHighScoreNum( FMISSION_SAVE* sv, FEST_MISSION_ID id );
+extern u16 FMISSION_SAVE_GetMissionStatusHighScore( FMISSION_SAVE* sv, FEST_MISSION_ID id );
 
 //---------------------------------------------------------------------------
 /**
- * @brief ミッションステータス ハイスコア(数値)をアップデートする	
+ * @brief ミッションステータス ハイスコアをアップデートする	
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-extern BOOL FMISSION_SAVE_UpdateMissionStatusHighScoreNum( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_score );
-
-//---------------------------------------------------------------------------
-/**
- * @brief ミッションステータス ハイスコア(時間)を返す	
- * @param	work		ワークへのポインタ
- */
-//---------------------------------------------------------------------------
-extern void FMISSION_SAVE_GetMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSION_ID id, u8* min, u8* sec );
-
-//---------------------------------------------------------------------------
-/**
- * @brief ミッションステータス ハイスコア(数値)をアップデートする	
- * @param	work		ワークへのポインタ
- * @param id      ミッションID
- * @param rest_time_sec 残り時間(秒)
- */
-//---------------------------------------------------------------------------
-extern BOOL FMISSION_SAVE_UpdateMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 rest_time_sec );
+extern BOOL FMISSION_SAVE_UpdateMissionStatusHighScore( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_score );
 
 //---------------------------------------------------------------------------
 /**
@@ -214,27 +196,27 @@ extern void FMISSION_SAVE_SetMissionStatusHighScore( FMISSION_SAVE* sv, FEST_MIS
 
 //---------------------------------------------------------------------------
 /**
- * @brief ミッションステータス マイレコード<自分のハイスコア(数値)>を返す	
+ * @brief ミッションステータス 自分のハイスコアを返す	
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-extern u16 FMISSION_SAVE_GetMissionStatusMyRecord( FMISSION_SAVE* sv, FEST_MISSION_ID id );
+extern u16 FMISSION_SAVE_GetMissionStatusHighScoreMine( FMISSION_SAVE* sv, FEST_MISSION_ID id );
 
 //---------------------------------------------------------------------------
 /**
- * @brief ミッションステータス マイレコード<自分のハイスコア(数値)>をアップデートする	
+ * @brief ミッションステータス 自分のハイスコアをアップデートする	
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-extern BOOL FMISSION_SAVE_UpdateMissionStatusMyRecord( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_score );
+extern BOOL FMISSION_SAVE_UpdateMissionStatusHighScoreMine( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_score );
 
 //---------------------------------------------------------------------------
 /**
- * @brief ミッションステータス マイレコード<自分のハイスコア(数値)>をセットする	
+ * @brief ミッションステータス 自分のハイスコアをセットする	
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-extern void FMISSION_SAVE_SetMissionStatusMyRecord( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 score );
+extern void FMISSION_SAVE_SetMissionStatusHighScoreMine( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 score );
 
 //---------------------------------------------------------------------------
 /**

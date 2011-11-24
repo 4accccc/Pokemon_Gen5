@@ -63,12 +63,11 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
     }
   }
 
-  if( wk->m_beacon->end_type == FMISSION_ENDTYPE_TIME ){
-    //時間依存型の場合、失敗でもハイスコアを更新する
-    pl->new_record_score_f = FMISSION_SAVE_UpdateMissionStatusHighScoreNum( f_save, wk->m_beacon->m_id, pl->score );
-  }
+  //時間依存型の場合、失敗でもハイスコアを更新する
+  pl->new_record_score_f = FMISSION_SAVE_UpdateMissionStatusHighScore( f_save, wk->m_beacon->m_id, pl->score );
+  
   //自分のハイスコアを記録する
-  FMISSION_SAVE_UpdateMissionStatusMyRecord( f_save, wk->m_beacon->m_id, wk->mission.my_score );
+  FMISSION_SAVE_UpdateMissionStatusHighScoreMine( f_save, wk->m_beacon->m_id, wk->mission.my_score );
   //最高参加者数を記録する
   FMISSION_SAVE_UpdateMissionMaxJoinNum( f_save, LINK_FESTIVAL_GetMissionJoinNum( wk ) );
   
@@ -86,11 +85,6 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
 
   //ミッションレベルアップ
   FMISSION_SAVE_SetMissionStatusClearLevel( f_save, wk->m_beacon->m_id, wk->m_beacon->m_level+FMISSION_CLEAR_LEVEL_1 );
-
-  //スコア依存型のハイスコアは成功時のみしか更新されないのでここで
-  if( wk->m_beacon->end_type == FMISSION_ENDTYPE_SCORE ){
-    pl->new_record_time_f = FMISSION_SAVE_UpdateMissionStatusHighScoreTime( f_save, wk->m_beacon->m_id, wk->m_beacon->time );
-  }
 
   //ご褒美
   {

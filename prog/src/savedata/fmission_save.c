@@ -255,7 +255,7 @@ void FMISSION_SAVE_SetMissionTopScoreNum( FMISSION_SAVE* sv, u16 top_num )
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-u16 FMISSION_SAVE_GetMissionStatusHighScoreNum( FMISSION_SAVE* sv, FEST_MISSION_ID id )
+u16 FMISSION_SAVE_GetMissionStatusHighScore( FMISSION_SAVE* sv, FEST_MISSION_ID id )
 {
   if( id >= FMISSION_ID_MAX ){
     GF_ASSERT(0);
@@ -266,11 +266,11 @@ u16 FMISSION_SAVE_GetMissionStatusHighScoreNum( FMISSION_SAVE* sv, FEST_MISSION_
 
 //---------------------------------------------------------------------------
 /**
- * @brief ミッションステータス ハイスコア(数値)をアップデートする	
+ * @brief ミッションステータス ハイスコアをアップデートする	
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-BOOL FMISSION_SAVE_UpdateMissionStatusHighScoreNum( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_score )
+BOOL FMISSION_SAVE_UpdateMissionStatusHighScore( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_score )
 {
   if( id >= FMISSION_ID_MAX || new_score > FMISSION_SAVE_HIGH_SCORE_MAX ){
     GF_ASSERT(0);
@@ -278,48 +278,6 @@ BOOL FMISSION_SAVE_UpdateMissionStatusHighScoreNum( FMISSION_SAVE* sv, FEST_MISS
   }
   if( sv->status[id].high_score < new_score ){
     sv->status[id].high_score = new_score;
-    return TRUE;
-  }
-  return FALSE;
-}
-
-//---------------------------------------------------------------------------
-/**
- * @brief ミッションステータス ハイスコア(時間)を返す	
- * @param	work		ワークへのポインタ
- */
-//---------------------------------------------------------------------------
-void FMISSION_SAVE_GetMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSION_ID id, u8* min, u8* sec )
-{
-  if( id >= FMISSION_ID_MAX ){
-    *min = 0;
-    *sec = 0;
-    GF_ASSERT(0);
-    return;
-  }
-  *sec = sv->status[id].high_score%60;
-  *min = sv->status[id].high_score/60;
-}
-
-//---------------------------------------------------------------------------
-/**
- * @brief ミッションステータス ハイスコア(数値)をアップデートする	
- * @param	work		ワークへのポインタ
- * @param id      ミッションID
- * @param rest_time_sec 残り時間(秒)
- */
-//---------------------------------------------------------------------------
-BOOL FMISSION_SAVE_UpdateMissionStatusHighScoreTime( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 rest_time_sec )
-{
-  if( id >= FMISSION_ID_MAX ){
-    GF_ASSERT(0);
-    return FALSE;
-  }
-  if( rest_time_sec > FMISSION_TIME_MAX ){
-    rest_time_sec = FMISSION_TIME_MAX;
-  }
-  if( rest_time_sec > sv->status[id].high_score ){
-    sv->status[id].high_score = rest_time_sec;
     return TRUE;
   }
   return FALSE;
@@ -342,33 +300,33 @@ void FMISSION_SAVE_SetMissionStatusHighScore( FMISSION_SAVE* sv, FEST_MISSION_ID
 
 //---------------------------------------------------------------------------
 /**
- * @brief ミッションステータス マイレコード<自分のハイスコア(数値)>を返す	
+ * @brief ミッションステータス <自分のハイスコアを返す	
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-u16 FMISSION_SAVE_GetMissionStatusMyRecord( FMISSION_SAVE* sv, FEST_MISSION_ID id )
+u16 FMISSION_SAVE_GetMissionStatusHighScoreMine( FMISSION_SAVE* sv, FEST_MISSION_ID id )
 {
   if( id >= FMISSION_ID_MAX ){
     GF_ASSERT(0);
     return 0;
   }
-  return sv->status[id].my_record;
+  return sv->status[id].high_score_mine;
 }
 
 //---------------------------------------------------------------------------
 /**
- * @brief ミッションステータス マイレコード<自分のハイスコア(数値)>をアップデートする	
+ * @brief ミッションステータス 自分のハイスコアをアップデートする	
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-BOOL FMISSION_SAVE_UpdateMissionStatusMyRecord( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_score )
+BOOL FMISSION_SAVE_UpdateMissionStatusHighScoreMine( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 new_score )
 {
   if( id >= FMISSION_ID_MAX || new_score > FMISSION_SAVE_HIGH_SCORE_MAX ){
     GF_ASSERT(0);
     return FALSE;
   }
-  if( sv->status[id].my_record < new_score ){
-    sv->status[id].my_record = new_score;
+  if( sv->status[id].high_score_mine < new_score ){
+    sv->status[id].high_score_mine = new_score;
     return TRUE;
   }
   return FALSE;
@@ -376,17 +334,17 @@ BOOL FMISSION_SAVE_UpdateMissionStatusMyRecord( FMISSION_SAVE* sv, FEST_MISSION_
 
 //---------------------------------------------------------------------------
 /**
- * @brief ミッションステータス マイレコード<自分のハイスコア(数値)>をセットする	
+ * @brief ミッションステータス 自分のハイスコアをセットする	
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-void FMISSION_SAVE_SetMissionStatusMyRecord( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 score )
+void FMISSION_SAVE_SetMissionStatusHighScoreMine( FMISSION_SAVE* sv, FEST_MISSION_ID id, u32 score )
 {
   if( id >= FMISSION_ID_MAX || score > FMISSION_SAVE_HIGH_SCORE_MAX ){
     GF_ASSERT(0);
     return;
   }
-  sv->status[id].my_record = score;
+  sv->status[id].high_score_mine = score;
 }
 
 //---------------------------------------------------------------------------

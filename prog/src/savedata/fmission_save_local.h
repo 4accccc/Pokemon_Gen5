@@ -21,8 +21,8 @@
 #define FMISSION_SAVE_TOP_SCORE_NUM_MAX ( 9999 )
 
 typedef struct _FMISSION_STATUS{
-  u32 high_score:14;///<参加者合計のハイスコア記録(ミッションタイプによって、スコアの場合と時間の場合がある)
-  u32 my_record:14; ///<自分のハイスコア記録
+  u32 high_score:14;///<参加者合計のハイスコア記録
+  u32 high_score_mine:14; ///<自分のハイスコア記録
   u32 level:3;      ///<クリアしているミッションレベル(max3bit)
   u32 new_f:1;      ///<新着フラグ(max1bit)
 }FMISSION_STATUS;

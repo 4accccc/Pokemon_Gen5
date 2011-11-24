@@ -648,7 +648,7 @@ static void fmission_highscore( MONOLITH_APP_PARENT *appwk, MONOLITH_UP_WORK *wk
   if(fmwk.beacon.end_type == FMISSION_ENDTYPE_TIME){
     // 時間優先=>スコアを表示
     flg = 0;
-    num = FMISSION_SAVE_GetMissionStatusHighScoreNum( fsave, id );
+    num = FMISSION_SAVE_GetMissionStatusHighScore( fsave, id );
     if(num == 0){
       dflg = 1;
     }
@@ -656,7 +656,12 @@ static void fmission_highscore( MONOLITH_APP_PARENT *appwk, MONOLITH_UP_WORK *wk
   else if(fmwk.beacon.end_type == FMISSION_ENDTYPE_SCORE){
     // スコア優先 => 時間を表示
     flg = 1;
+#if 0
+    //111124 iwasawa 時間用関数がなくなるので一旦コメントアウトしました
     FMISSION_SAVE_GetMissionStatusHighScoreTime( fsave, id, &buf[0], &buf[1] );
+#else
+    buf[0] = buf[1] = 0;
+#endif
     if((buf[0] == 0)&&(buf[1] == 0)){
       dflg = 1;
     }
