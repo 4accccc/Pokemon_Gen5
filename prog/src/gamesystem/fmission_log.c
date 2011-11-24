@@ -29,6 +29,7 @@
 #include "field/zonedata.h"
 #include "savedata/resonance_resort_sv.h"
 #include "savedata/mystatus.h"
+#include "item/item.h"
 #include "item/itemsym.h"
 #include "game_beacon_local.h"
 #include "gamesystem/game_beacon_accessor.h"
@@ -483,7 +484,7 @@ BOOL FMISSION_BeaconErrorCheck( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *
     return TRUE;
   }
   //フリーワード以外のビーコンなら以下のパラメータチェックはスルー
-  if(GAMEBEACON_Check_FestMissionWithParam(info)){
+  if(!GAMEBEACON_Check_FestMissionWithParam(info)){
     return FALSE;
   }
 
@@ -499,17 +500,19 @@ BOOL FMISSION_BeaconErrorCheck( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *
     return TRUE;
   }
 
-  //報酬として設定しているアイテムNoチェック
-  if( beacon->item == ITEM_DUMMY_DATA ||    //通常報酬が0はおかしい
-      beacon->item == ITEM_MASUTAABOORU ||  //マスターボールは無し
-      beacon->item > ITEM_DATA_MAX ||       //アイテムNoが上限超えてる
-      beacon->sp_item > ITEM_DATA_MAX       //sp_itemは無いこともあるし、マスターボールも許可
-  ){
-    GF_ASSERT(0);
+  //ゲーム内で1つしか入手不可能なアイテム(大切なもの、技マシン)or無効アイテムorマスターボール不可
+  if( ITEM_IsDisableItem(beacon->item) ||
+      ITEM_IsOnlyOneItem(beacon->item) ||
+      beacon->item == ITEM_MASUTAABOORU ){
+    GF_ASSERT_MSG(0,"%d\n",beacon->item);
     return TRUE;
   }
-  //ゲーム内で1つしか入手不可能なアイテム(大切なもの、技マシン)は不可
-
+  //ゲーム内で1つしか入手不可能なアイテム(大切なもの、技マシン)or無効アイテムは不可(マスターボール可)
+  if( ITEM_IsDisableItem(beacon->sp_item) ||
+      ITEM_IsOnlyOneItem(beacon->sp_item) ){
+    GF_ASSERT_MSG(0,"%d\n",beacon->sp_item);
+    return TRUE;
+  }
   return FALSE;
 }
 
