@@ -42,5 +42,11 @@
 #define BGID_RESORT_BOARD_CITY_FRONT2    16
 #define BGID_RESORT_BOARD_CITY_FRONT4    17
 #define BGID_RESORT_BOARD_CITY_FRONT5    18
+#define BG_C16_DUMMY_FES_01              19
+#define BG_C16_DUMMY_FES_02              20
+#define BG_C16_DUMMY_FES_03              21
+#define BG_C16_DUMMY_FES_04              22
+#define BG_C16_DUMMY_FES_05              23
+#define BG_C16_DUMMY_FES_06              24
 
 #endif //ZONE_C16_EVB_H

@@ -31,5 +31,17 @@
 #define BG_R16_BOARD_01                   0
 #define BG_R16_BOARD_02                   1
 #define HIDE_ITEM_183                     2
+#define BG_R16_DUMMY_FES_01               3
+#define BG_R16_DUMMY_FES_02               4
+#define BG_R16_DUMMY_FES_03               5
+#define BG_R16_DUMMY_FES_04               6
+#define BG_R16_DUMMY_FES_05               7
+#define BG_R16_DUMMY_FES_06               8
+#define BG_R16_DUMMY_FES_07               9
+#define BG_R16_DUMMY_FES_08              10
+#define BG_R16_DUMMY_FES_09              11
+#define BG_R16_DUMMY_FES_10              12
+#define BG_R16_DUMMY_FES_11              13
+#define BG_R16_DUMMY_FES_12              14
 
 #endif //ZONE_R16_EVB_H

@@ -34,5 +34,17 @@
 #define BG_R09_SIGN4_01                   3
 #define BGID_R09_ANIMAL_TRAIL_01_1        4
 #define HIDE_ITEM_164                     5
+#define BG_R09_DUMMY_FES_01               6
+#define BG_R09_DUMMY_FES_02               7
+#define BG_R09_DUMMY_FES_03               8
+#define BG_R09_DUMMY_FES_04               9
+#define BG_R09_DUMMY_FES_05              10
+#define BG_R09_DUMMY_FES_06              11
+#define BG_R09_DUMMY_FES_07              12
+#define BG_R09_DUMMY_FES_08              13
+#define BG_R09_DUMMY_FES_09              14
+#define BG_R09_DUMMY_FES_10              15
+#define BG_R09_DUMMY_FES_11              16
+#define BG_R09_DUMMY_FES_12              17
 
 #endif //ZONE_R09_EVB_H

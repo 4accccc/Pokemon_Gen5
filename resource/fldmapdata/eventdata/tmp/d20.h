@@ -25,5 +25,10 @@
 #define ZONE_D20_EVB_H
 
 #define D20_HIDE_ITEM_083                 0
+#define BG_D20_DUMMY_FES_01               1
+#define BG_D20_DUMMY_FES_02               2
+#define BG_D20_DUMMY_FES_03               3
+#define BG_D20_DUMMY_FES_04               4
+#define BG_D20_DUMMY_FES_05               5
 
 #endif //ZONE_D20_EVB_H

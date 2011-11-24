@@ -100,5 +100,6 @@
 #define BG_C15_02G                       42
 #define BG_C15_01A                       43
 #define BG_C15_01B                       44
+#define BG_C15_DUMMY_FES_01              45
 
 #endif //ZONE_C15_EVB_H
