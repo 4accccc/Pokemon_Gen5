@@ -28,7 +28,7 @@ _EVENT_DATA   ev_d08r0901_poke_01
 _EVENT_DATA_END
 
 //バージョン取得
-DEFINE_LOCAL LCWK_VERSION
+DEFINE_LOCAL LWK_VERSION
 
 
 /**************************************************************/
@@ -37,11 +37,11 @@ DEFINE_LOCAL LCWK_VERSION
 INIT_EVENT_START  ev_zone_d08r0901
 
   //バージョンを取得してOBJを変化させる
-  _GET_ROM_VERSION( LCWK_VERSION )
+  _GET_ROM_VERSION( LWK_VERSION )
 
   IF FLAG_OFF( FV_D08R0901_PACKAGE_POKE ) THEN
 
-    IF $LCWK_VERSION == VERSION_B2 THEN
+    IF $LWK_VERSION == VERSION_B2 THEN
       $OBJCHRWORK0 = MU_B //ゼクロム
     ELSE
       $OBJCHRWORK0 = SHIN_B //レシラム
@@ -57,10 +57,10 @@ INIT_EVENT_END
 EVENT_START   ev_pos_d08r0901_stone_01
 
   //バージョンを取得してメッセージを変化
-  _GET_ROM_VERSION( LCWK_VERSION )
+  _GET_ROM_VERSION( LWK_VERSION )
 
   //B2:ゼクロム復活
-  IF $LCWK_VERSION == VERSION_B2 THEN
+  IF $LWK_VERSION == VERSION_B2 THEN
     //システム：ダークストーンが　うごめいている！？▼
     _SYSWIN_MSG( msg_d08r0901_dstone_01, POS_DOWN )
 
@@ -98,7 +98,7 @@ EVENT_START   ev_pos_d08r0901_stone_01
       _MSGWIN_CLOSE()
 
       //アニメ：主人公一歩後ろに下がる
-      _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_d )
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_back_d )
       _OBJ_ANIME_WAIT()
 
       _TIME_WAIT ( 8 )
@@ -178,10 +178,8 @@ EVENT_START    ev_d08r0901_poke_01
 _TALK_START_SE_PLAY()
 {
   DEFINE_LOCAL  LWK_DIR
-  //自機：一歩前に戻る
   _PLAYER_DIR_GET( LWK_DIR )
   SWITCH $LWK_DIR
-  CASE DIR_UP THEN
   CASE DIR_DOWN THEN
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_last6_d )
   CASE DIR_RIGHT THEN
@@ -202,8 +200,8 @@ _TALK_START_SE_PLAY()
   $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_LEGEND
   $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_NO_RARE
 
-  _GET_ROM_VERSION( LCWK_VERSION )
-  IF $LCWK_VERSION == VERSION_B2 THEN
+  _GET_ROM_VERSION( LWK_VERSION )
+  IF $LWK_VERSION == VERSION_B2 THEN
 
     _VOICE_PLAY( MONSNO_651, 0 )
     //ゼクロム：ババリバリッシュ！！
@@ -258,8 +256,8 @@ _TALK_START_SE_PLAY()
 
   CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN    //勝利した場合、あるいは逃げた場合
 
-    _GET_ROM_VERSION( LCWK_VERSION )
-    IF $LCWK_VERSION == VERSION_B2 THEN
+    _GET_ROM_VERSION( LWK_VERSION )
+    IF $LWK_VERSION == VERSION_B2 THEN
       //システム：ゼクロムは　どこかに
       _SYSWIN_MSG( msg_d08r0901_poke8_02, POS_DOWN )
       _LAST_KEYWAIT()
@@ -273,7 +271,81 @@ _TALK_START_SE_PLAY()
 
   ENDSWITCH
 
+  //初回か？
+  IF FLAG_OFF( FE_D08R0901_BOSS_TALK ) THEN
+  
+  	_CALL ev_n_come
+  
+  ENDIF
+
 EVENT_END
+
+ev_n_come:
+
+//Ｎ表示
+_OBJ_ADD_EX( 16, 20, DIR_UP, MMDL_ID_EVENTOBJ_00, BOSS, MV_DMY )
+
+//アニメ：主人公に近づく
+_OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 16, 14, FORCE_TYPE_NOT, 8, DIR_UD )
+_OBJ_ANIME_WAIT()
+
+_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_down )
+_OBJ_ANIME_WAIT()
+
+//バージョン取得
+_GET_ROM_VERSION( LWK_VERSION )
+
+SWITCH $SCWK_ANSWER
+CASE SCR_WILD_BTL_RET_CAPTURE THEN		//捕まえた場合
+
+	IF $LWK_VERSION == VERSION_B2 THEN
+		_BALLOONWIN_OBJMSG_POS( msg_d08r0901_boss_01b ,MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+	ELSE
+		_BALLOONWIN_OBJMSG_POS( msg_d08r0901_boss_01w ,MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+	ENDIF
+
+CASE SCR_WILD_BTL_RET_WIN THEN		//勝利した場合
+
+	IF $LWK_VERSION == VERSION_B2 THEN
+		_BALLOONWIN_OBJMSG_POS( msg_d08r0901_boss_02b ,MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+	ELSE
+		_BALLOONWIN_OBJMSG_POS( msg_d08r0901_boss_02w ,MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+	ENDIF
+
+CASE SCR_WILD_BTL_RET_ESCAPE THEN		//逃げた場合
+
+	IF $LWK_VERSION == VERSION_B2 THEN
+		_BALLOONWIN_OBJMSG_POS( msg_d08r0901_boss_03b ,MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+	ELSE
+		_BALLOONWIN_OBJMSG_POS( msg_d08r0901_boss_03w ,MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+	ENDIF
+
+ENDSWITCH
+
+//キミに　つたえることが　ある
+_BALLOONWIN_OBJMSG_POS( msg_d08r0901_boss_04 ,MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+
+//主人公名前格納
+_PLAYER_NAME( 0 )
+
+//キミが　のぞむ　ポケモンとの　せかい
+_BALLOONWIN_OBJMSG_POS( msg_d08r0901_boss_05 ,MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+_MSGWIN_CLOSE()
+
+//アニメ：Ｎ退場
+_OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 16, 20, FORCE_TYPE_NOT, 8, DIR_UD )
+_OBJ_ANIME_WAIT()
+
+_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+
+//========================================//
+
+//Ｎのイベントを見たセット
+_FLAG_SET(FE_D08R0901_BOSS_TALK)
+
+//========================================//
+
+_RET
 
 
 //--------------------------------------------------------------------
@@ -355,4 +427,12 @@ _ANIME_LABEL  anm_common_turn_left
   _ANIME_DATA AC_STAY_WALK_L_8F,1
   _ANIME_DATA ACMD_END,0
 
-
+//--------------------------------------------------------------------
+//☆共通処理：後ろに戻される
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_back_d
+  _ANIME_DATA AC_STAY_WALK_U_4F,2
+  _ANIME_DATA AC_DIR_PAUSE_ON,1
+  _ANIME_DATA AC_WALK_D_4F,1
+  _ANIME_DATA AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA ACMD_END,0

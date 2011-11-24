@@ -10,6 +10,9 @@
 #define ZONE_D26PC0101_EVC_H
 
 #define D26PC0101_MEDALOYAJI               0
+#define D26PC0101_PCWOMAN                  1
+#define D26PC0101_SHOPM_01                 2
+#define D26PC0101_SHOPM_02                 3
 
 #endif //ZONE_D26PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d26pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
