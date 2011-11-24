@@ -3766,8 +3766,8 @@
 	</row>
 
 	<row id="backpackerw_24">
-		<language name="JPN" width="216">ハルカ</language>
-		<language name="JPN_KANJI" width="216">ハルカ</language>
+		<language name="JPN" width="216">ハルコ</language>
+		<language name="JPN_KANJI" width="216">ハルコ</language>
 	</row>
 
 	<row id="backpackerw_25">
@@ -4006,63 +4006,63 @@
 	</row>
 
 	<row id="karate_27">
-		<language name="JPN" width="216">フェス１</language>
-		<language name="JPN_KANJI" width="216">フェス１</language>
+		<language name="JPN" width="216">ロドリゴ</language>
+		<language name="JPN_KANJI" width="216">ロドリゴ</language>
 	</row>
 
 	<row id="karate_28">
-		<language name="JPN" width="216">フェス２</language>
-		<language name="JPN_KANJI" width="216">フェス２</language>
+		<language name="JPN" width="216">ガナハ</language>
+		<language name="JPN_KANJI" width="216">ガナハ</language>
 	</row>
 
 	<row id="karate_29">
-		<language name="JPN" width="216">フェス３</language>
-		<language name="JPN_KANJI" width="216">フェス３</language>
+		<language name="JPN" width="216">セルゲイ</language>
+		<language name="JPN_KANJI" width="216">セルゲイ</language>
 	</row>
 
 	<row id="karate_30">
-		<language name="JPN" width="216">フェス４</language>
-		<language name="JPN_KANJI" width="216">フェス４</language>
+		<language name="JPN" width="216">アザマ</language>
+		<language name="JPN_KANJI" width="216">アザマ</language>
 	</row>
 
 	<row id="karate_31">
-		<language name="JPN" width="216">フェス５</language>
-		<language name="JPN_KANJI" width="216">フェス５</language>
+		<language name="JPN" width="216">ドニー</language>
+		<language name="JPN_KANJI" width="216">ドニー</language>
 	</row>
 
 	<row id="karate_32">
-		<language name="JPN" width="216">フェス６</language>
-		<language name="JPN_KANJI" width="216">フェス６</language>
+		<language name="JPN" width="216">マシアス</language>
+		<language name="JPN_KANJI" width="216">マシアス</language>
 	</row>
 
 	<row id="elitew_44">
-		<language name="JPN" width="216">フェス１</language>
-		<language name="JPN_KANJI" width="216">フェス１</language>
+		<language name="JPN" width="216">ナターシャ</language>
+		<language name="JPN_KANJI" width="216">ナターシャ</language>
 	</row>
 
 	<row id="elitew_45">
-		<language name="JPN" width="216">フェス２</language>
-		<language name="JPN_KANJI" width="216">フェス２</language>
+		<language name="JPN" width="216">ニーナ</language>
+		<language name="JPN_KANJI" width="216">ニーナ</language>
 	</row>
 
 	<row id="elitew_46">
-		<language name="JPN" width="216">フェス３</language>
-		<language name="JPN_KANJI" width="216">フェス３</language>
+		<language name="JPN" width="216">エルメラ</language>
+		<language name="JPN_KANJI" width="216">エルメラ</language>
 	</row>
 
 	<row id="elitew_47">
-		<language name="JPN" width="216">フェス４</language>
-		<language name="JPN_KANJI" width="216">フェス４</language>
+		<language name="JPN" width="216">ツルヒメ</language>
+		<language name="JPN_KANJI" width="216">ツルヒメ</language>
 	</row>
 
 	<row id="elitew_48">
-		<language name="JPN" width="216">フェス５</language>
-		<language name="JPN_KANJI" width="216">フェス５</language>
+		<language name="JPN" width="216">ジェリコ</language>
+		<language name="JPN_KANJI" width="216">ジェリコ</language>
 	</row>
 
 	<row id="elitew_49">
-		<language name="JPN" width="216">フェス６</language>
-		<language name="JPN_KANJI" width="216">フェス６</language>
+		<language name="JPN" width="216">ミヤ</language>
+		<language name="JPN_KANJI" width="216">ミヤ</language>
 	</row>
 
 	<row id="swplazmam_36">
@@ -4231,33 +4231,33 @@
 	</row>
 
 	<row id="veteranm_22">
-		<language name="JPN" width="216">フェス１</language>
-		<language name="JPN_KANJI" width="216">フェス１</language>
+		<language name="JPN" width="216">アルバレス</language>
+		<language name="JPN_KANJI" width="216">アルバレス</language>
 	</row>
 
 	<row id="veteranm_23">
-		<language name="JPN" width="216">フェス２</language>
-		<language name="JPN_KANJI" width="216">フェス２</language>
+		<language name="JPN" width="216">イーライ</language>
+		<language name="JPN_KANJI" width="216">イーライ</language>
 	</row>
 
 	<row id="veteranm_24">
-		<language name="JPN" width="216">フェス３</language>
-		<language name="JPN_KANJI" width="216">フェス３</language>
+		<language name="JPN" width="216">ダイゴロウ</language>
+		<language name="JPN_KANJI" width="216">ダイゴロウ</language>
 	</row>
 
 	<row id="veteranm_25">
-		<language name="JPN" width="216">フェス４</language>
-		<language name="JPN_KANJI" width="216">フェス４</language>
+		<language name="JPN" width="216">シゲマツ</language>
+		<language name="JPN_KANJI" width="216">シゲマツ</language>
 	</row>
 
 	<row id="veteranm_26">
-		<language name="JPN" width="216">フェス５</language>
-		<language name="JPN_KANJI" width="216">フェス５</language>
+		<language name="JPN" width="216">ジョー</language>
+		<language name="JPN_KANJI" width="216">ジョー</language>
 	</row>
 
 	<row id="veteranm_27">
-		<language name="JPN" width="216">フェス６</language>
-		<language name="JPN_KANJI" width="216">フェス６</language>
+		<language name="JPN" width="216">クラーク</language>
+		<language name="JPN_KANJI" width="216">クラーク</language>
 	</row>
 
 	<row id="swplazmaw_13">
