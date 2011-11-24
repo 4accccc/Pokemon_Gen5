@@ -3378,6 +3378,10 @@ static void btlv_set_palchg( BTLV_INPUT_WORK *biw, const s32 num )
 //----------------------------------------------------------------------------------
 static void btlv_main_palchg( BTLV_INPUT_WORK *biw )
 {
+  // Ä¶’†‚Ì‚Ý(”O‚Ì‚½‚ß)
+  if(biw->pokewood != BTL_POKEWOOD_SHOW){
+    return;
+  }
 #if 1	// debug
   // Lƒ{ƒ^ƒ“‚ð‰Ÿ‚µ‚È‚ª‚ç..
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
