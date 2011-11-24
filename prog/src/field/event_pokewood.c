@@ -1763,7 +1763,7 @@ static const SCENARIO_PROVISION ScenarioProvisionTbl[]={
   { PW_OPEN_PROVISION_TUTORIAL,    },   // シナリオ16
   { PW_OPEN_PROVISION_SUCCESS,  15 },   // シナリオ17
   { PW_OPEN_PROVISION_SUCCESS,  16 },   // シナリオ18
-  { PW_OPEN_PROVISION_GAMECLEAR,17 },   // シナリオ19
+  { PW_OPEN_PROVISION_GAMECLEAR,   },   // シナリオ19
   { PW_OPEN_PROVISION_SUCCESS,  18 },   // シナリオ20
   { PW_OPEN_PROVISION_SUCCESS,  19 },   // シナリオ21
   { PW_OPEN_PROVISION_TUTORIAL,    },   // シナリオ22
@@ -1777,13 +1777,13 @@ static const SCENARIO_PROVISION ScenarioProvisionTbl[]={
   { PW_OPEN_PROVISION_SUCCESS,  28 },   // シナリオ30
   { PW_OPEN_PROVISION_SUCCESS,  29 },   // シナリオ31
   { PW_OPEN_PROVISION_STARRANK,  3 },   // シナリオ32
-  { PW_OPEN_PROVISION_SUCCESS,     },   // シナリオ33
-  { PW_OPEN_PROVISION_SUCCESS,  31 },   // シナリオ34
-  { PW_OPEN_PROVISION_SUCCESS,  32 },   // シナリオ35
+  { PW_OPEN_PROVISION_SUCCESS,  31 },   // シナリオ33
+  { PW_OPEN_PROVISION_SUCCESS,  32 },   // シナリオ34
+  { PW_OPEN_PROVISION_SUCCESS,  33 },   // シナリオ35
   { PW_OPEN_PROVISION_GAMECLEAR,   },   // シナリオ36
-  { PW_OPEN_PROVISION_SUCCESS,  34 },   // シナリオ37
-  { PW_OPEN_PROVISION_SUCCESS,  35 },   // シナリオ38
-  { PW_OPEN_PROVISION_SUCCESS,  36 },   // シナリオ39
+  { PW_OPEN_PROVISION_SUCCESS,  35 },   // シナリオ37
+  { PW_OPEN_PROVISION_SUCCESS,  36 },   // シナリオ38
+  { PW_OPEN_PROVISION_SUCCESS,  37 },   // シナリオ39
   { PW_OPEN_PROVISION_ALLGOOD,     },   // シナリオ40
 };
 
