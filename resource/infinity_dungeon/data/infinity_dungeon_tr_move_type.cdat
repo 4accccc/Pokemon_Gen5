@@ -11,26 +11,26 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
 static const INF_MMDL_PARAM sc_mmdl_param[] = {
-    { MV_DIR_RND ,EV_TYPE_TRAINER ,DIR_DOWN ,2 ,0 ,0 ,0 ,msg_hint_gate_move_walk_01 ,},  // INF_MOVE_CODE_TYPE_STOP1
+    { MV_DIR_RND ,EV_TYPE_TRAINER ,DIR_DOWN ,2 ,0 ,0 ,0 ,msg_hint_gate_move_stay_01 ,},  // INF_MOVE_CODE_TYPE_STOP1
     { MV_RND ,EV_TYPE_TRAINER ,DIR_DOWN ,2 ,2 ,2 ,2 ,msg_hint_gate_move_walk_01 ,},  // INF_MOVE_CODE_TYPE_RNDDOM1
-    { MV_RND ,EV_TYPE_TRAINER_KYORO ,DIR_DOWN ,2 ,2 ,2 ,2 ,msg_hint_gate_move_walk_01 ,},  // INF_MOVE_CODE_TYPE_RNDDOM2
-    { MV_RND ,EV_TYPE_TRAINER_SPIN_STOP_L ,DIR_DOWN ,2 ,3 ,2 ,2 ,msg_hint_gate_move_walk_01 ,},  // INF_MOVE_CODE_TYPE_RNDDOM3
+    { MV_RND ,EV_TYPE_TRAINER_KYORO ,DIR_DOWN ,2 ,2 ,2 ,2 ,msg_hint_gate_move_look_01 ,},  // INF_MOVE_CODE_TYPE_RNDDOM2
+    { MV_RND ,EV_TYPE_TRAINER_SPIN_STOP_L ,DIR_DOWN ,2 ,3 ,2 ,2 ,msg_hint_gate_move_turn_01 ,},  // INF_MOVE_CODE_TYPE_RNDDOM3
     { MV_RTRD ,EV_TYPE_TRAINER ,DIR_RIGHT ,2 ,0 ,4 ,4 ,msg_hint_gate_move_walk_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY1
     { MV_RTLU ,EV_TYPE_TRAINER ,DIR_LEFT ,2 ,0 ,4 ,4 ,msg_hint_gate_move_walk_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY2
     { MV_RTDL ,EV_TYPE_TRAINER ,DIR_DOWN ,2 ,0 ,4 ,4 ,msg_hint_gate_move_walk_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY3
-    { MV_RTUR ,EV_TYPE_TRAINER ,DIR_UP ,2 ,0 ,4 ,4 ,msg_hint_gate_move_walk_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY4
-    { MV_RTRD ,EV_TYPE_TRAINER_KYORO ,DIR_RIGHT ,2 ,2 ,4 ,4 ,msg_hint_gate_move_walk_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY5
-    { MV_RTLU ,EV_TYPE_TRAINER_KYORO ,DIR_LEFT ,2 ,2 ,4 ,4 ,msg_hint_gate_move_walk_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY6
-    { MV_RTLU ,EV_TYPE_TRAINER_KYORO ,DIR_DOWN ,2 ,2 ,4 ,4 ,msg_hint_gate_move_walk_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY7
-    { MV_RTDL ,EV_TYPE_TRAINER_KYORO ,DIR_UP ,2 ,2 ,4 ,4 ,msg_hint_gate_move_walk_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY8
-    { MV_RTRD ,EV_TYPE_TRAINER_SPIN_STOP_L ,DIR_RIGHT ,2 ,3 ,4 ,4 ,msg_hint_gate_move_walk_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY9
-    { MV_RTLU ,EV_TYPE_TRAINER_SPIN_STOP_R ,DIR_LEFT ,2 ,3 ,4 ,4 ,msg_hint_gate_move_walk_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY10
-    { MV_RTLU ,EV_TYPE_TRAINER_SPIN_STOP_L ,DIR_DOWN ,2 ,3 ,4 ,4 ,msg_hint_gate_move_walk_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY11
-    { MV_RTDL ,EV_TYPE_TRAINER_SPIN_STOP_R ,DIR_UP ,2 ,3 ,4 ,4 ,msg_hint_gate_move_walk_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY12
+    { MV_RTLU ,EV_TYPE_TRAINER ,DIR_UP ,2 ,0 ,4 ,4 ,msg_hint_gate_move_walk_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY4
+    { MV_RTRD ,EV_TYPE_TRAINER_KYORO ,DIR_RIGHT ,2 ,2 ,4 ,4 ,msg_hint_gate_move_look_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY5
+    { MV_RTLU ,EV_TYPE_TRAINER_KYORO ,DIR_LEFT ,2 ,2 ,4 ,4 ,msg_hint_gate_move_look_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY6
+    { MV_RTDL ,EV_TYPE_TRAINER_KYORO ,DIR_DOWN ,2 ,2 ,4 ,4 ,msg_hint_gate_move_look_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY7
+    { MV_RTLU ,EV_TYPE_TRAINER_KYORO ,DIR_UP ,2 ,2 ,4 ,4 ,msg_hint_gate_move_look_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY8
+    { MV_RTRD ,EV_TYPE_TRAINER_SPIN_STOP_L ,DIR_RIGHT ,2 ,3 ,4 ,4 ,msg_hint_gate_move_turn_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY9
+    { MV_RTLU ,EV_TYPE_TRAINER_SPIN_STOP_R ,DIR_LEFT ,2 ,3 ,4 ,4 ,msg_hint_gate_move_turn_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY10
+    { MV_RTDL ,EV_TYPE_TRAINER_SPIN_STOP_L ,DIR_DOWN ,2 ,3 ,4 ,4 ,msg_hint_gate_move_turn_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY11
+    { MV_RTLU ,EV_TYPE_TRAINER_SPIN_STOP_R ,DIR_UP ,2 ,3 ,4 ,4 ,msg_hint_gate_move_turn_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY12
     { MV_RTLU ,EV_TYPE_TRAINER ,DIR_LEFT ,2 ,0 ,2 ,2 ,msg_hint_gate_move_walk_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY13
-    { MV_RTLU ,EV_TYPE_TRAINER_KYORO ,DIR_LEFT ,2 ,2 ,2 ,2 ,msg_hint_gate_move_walk_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY14
-    { MV_RTLU ,EV_TYPE_TRAINER_SPIN_STOP_L ,DIR_LEFT ,2 ,3 ,2 ,2 ,msg_hint_gate_move_walk_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY15
-    { MV_RTLU ,EV_TYPE_TRAINER_SPIN_STOP_R ,DIR_LEFT ,2 ,3 ,2 ,2 ,msg_hint_gate_move_walk_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY16
-    { MV_RTRD ,EV_TYPE_TRAINER_KYORO ,DIR_RIGHT ,2 ,2 ,6 ,6 ,msg_hint_gate_move_walk_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY17
+    { MV_RTLU ,EV_TYPE_TRAINER_KYORO ,DIR_LEFT ,2 ,2 ,2 ,2 ,msg_hint_gate_move_look_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY14
+    { MV_RTLU ,EV_TYPE_TRAINER_SPIN_STOP_L ,DIR_LEFT ,2 ,3 ,2 ,2 ,msg_hint_gate_move_turn_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY15
+    { MV_RTLU ,EV_TYPE_TRAINER_SPIN_STOP_R ,DIR_LEFT ,2 ,3 ,2 ,2 ,msg_hint_gate_move_turn_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY16
+    { MV_RTRD ,EV_TYPE_TRAINER_KYORO ,DIR_RIGHT ,2 ,2 ,6 ,6 ,msg_hint_gate_move_look_01 ,},  // INF_MOVE_CODE_TYPE_ROTARY17
 };
 

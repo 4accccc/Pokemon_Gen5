@@ -8186,6 +8186,13 @@ NPC：ASSISTANTM
 				User="nakamura_akira:W00280"
 				Time="2011-09-07T04:06:15" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_b_01_05_00"
@@ -8277,6 +8284,13 @@ NPC：ASSISTANTM
 				User="nakamura_akira:W00280"
 				Time="2011-10-25T01:45:31" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_b_01_06_00"
@@ -8620,6 +8634,13 @@ NPC：FIGHTERM
 				User="nakamura_akira:W00280"
 				Time="2011-09-07T04:08:53" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_w_01_05_00"
@@ -8701,6 +8722,13 @@ NPC：FIGHTERM
 				User="nakamura_akira:W00280"
 				Time="2011-10-25T01:47:47" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_event_w_01_06_00"
