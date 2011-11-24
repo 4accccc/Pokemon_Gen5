@@ -18,6 +18,8 @@
 #define TR_BREEDERW_05                     4
 #define TR_RANGERM_16                      5
 #define TR_RANGERW_16                      6
+#define R11_FLDMONS_06                     7
+#define R11_FLDMONS_07                     8
 
 #endif //ZONE_R11_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r11.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
