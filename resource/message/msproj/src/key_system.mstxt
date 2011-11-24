@@ -84,10 +84,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ロック　リスト</Text>
+			<Text>キーせってい</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:43:23" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:49:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -95,10 +95,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ロック　リスト</Text>
+			<Text>キー設定</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:43:28" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:49:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -596,10 +596,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>モードを　かえることが　できます
-ただいま　アシストモード　です</Text>
+ただいま　アシストモード　です
+トレーナーとの　ポケモンしょうぶが
+すこし　やさしく　なっています</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-09T02:13:47" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T10:42:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -608,10 +610,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モードを　変えることが　できます
-ただいま アシストモード　です</Text>
+ただいま アシストモード　です
+トレーナーとの　ポケモン勝負が
+少し　やさしく　なっています</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-09T02:13:49" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T10:42:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -652,10 +656,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>モードを　かえることが　できます
-ただいま　チャレンジモード　です</Text>
+ただいま　チャレンジモード　です
+トレーナーとの　ポケモンしょうぶが
+てごわく　なっています</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-09T02:13:56" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T10:42:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -664,10 +670,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モードを　変えることが　できます
-ただいま　チャレンジモード　です</Text>
+ただいま　チャレンジモード　です
+トレーナーとの　ポケモン勝負が
+てごわく　なっています</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-09T02:13:58" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T10:42:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2664,11 +2672,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひみつの　ドアを　あけることができます
-げんざいは　とじています</Text>
+			<Text>ちていいせき　の　ひみつのドアの
+さきの　へやを　かえることができます
+げんざいは　いわやまのま　です</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-09T02:20:18" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T12:00:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2676,11 +2685,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>秘密の　ドアを　開けることができます
-現在は　閉じています</Text>
+			<Text>地底遺跡　の　秘密のドアの　先の
+部屋を　変えることができます
+現在は　岩山の間　です</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-09T02:20:19" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T12:01:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2699,11 +2709,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひみつの　ドアを　あけることができます
-げんざいは　くろの　ドアを　あけています</Text>
+			<Text>ちていいせき　の　ひみつのドアの
+さきの　へやを　かえることができます
+げんざいは　くろがねのま　です</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-09T02:21:13" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T12:01:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2711,11 +2722,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>秘密の　ドアを　開けることができます
-現在は　黒の　ドアを　開けています</Text>
+			<Text>地底遺跡　の　秘密のドアの　先の
+部屋を　変えることができます
+現在は　鉄の間　です</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-29T07:57:27" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T12:01:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2734,11 +2746,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひみつの　ドアを　あけることができます
-げんざいは　しろの　ドアを　あけています</Text>
+			<Text>ちていいせき　の　ひみつのドアの
+さきの　へやを　かえることができます
+げんざいは　ひょうざんのま　です</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-29T07:57:36" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T12:01:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2746,11 +2759,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>秘密の　ドアを　開けることができます
-現在は　白の　ドアを　開けています</Text>
+			<Text>地底遺跡　の　秘密のドアの　先の
+部屋を　変えることができます
+現在は　氷山の間　です</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-29T07:57:43" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T12:01:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2872,10 +2886,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とじている</Text>
+			<Text>いわやまのま</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-29T08:08:40" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T09:58:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2883,10 +2897,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>閉じている</Text>
+			<Text>岩山の間</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-29T08:08:44" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T09:59:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2905,10 +2919,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くろのドア</Text>
+			<Text>くろがねのま</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-29T08:08:57" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T09:59:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2916,10 +2930,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>黒のドア</Text>
+			<Text>鉄の間</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-29T08:09:07" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T09:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2938,10 +2952,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しろのドア</Text>
+			<Text>ひょうざんのま</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-29T08:09:12" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T09:59:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2949,10 +2963,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>白のドア</Text>
+			<Text>氷山の間</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-10-29T08:09:15" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T09:59:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2973,13 +2987,13 @@
 			Language="JPN">
 			<Text>くろがねのカギ　を
 てにいれました▼
-ひみつのドア「くろのドア」が
+ひみつのドア「くろがねのま」が
 えらべるように　なりました▼
 キーは　つうしんで　ひとと
 うけわたし　することが　できます▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-09T02:21:27" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T10:01:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2989,13 +3003,13 @@
 			Language="JPN_KANJI">
 			<Text>くろがねのカギ　を
 入手しました▼
-ひみつのドア「黒のドア」が
+ひみつのドア「鉄の間」が
 選択できるように　なりました▼
 キーは　通信で　人に
 受け渡し　することが　できます▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-09T02:21:24" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T10:02:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3016,13 +3030,13 @@
 			Language="JPN">
 			<Text>ひょうざんのカギ　を
 てにいれました▼
-ひみつのドア「しろのドア」が
+ひみつのドア「ひょうざんのま」が
 えらべるように　なりました▼
 キーは　つうしんで　ひとと
 うけわたし　することが　できます▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-09T02:21:32" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T10:02:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3032,13 +3046,13 @@
 			Language="JPN_KANJI">
 			<Text>ひょうざんのカギ　を
 入手しました▼
-ひみつのドア「白のドア」が
+ひみつのドア「氷山の間」が
 選択できるように　なりました▼
 キーは　通信で　人に
 受け渡し　することが　できます▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-09T02:21:30" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T10:02:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3117,6 +3131,275 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_SETTING_MES_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>アシストモードに
+せっていを　へんこうしました▼
+トレーナーとの　ポケモンしょうぶが
+すこし　やさしくなります▼</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:39:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:39:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アシストモードに
+設定を　変更しました▼
+トレーナーとの　ポケモン勝負が
+少し　やさしくなります▼</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:39:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:39:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>キー設定後
+インフォメーションメッセージ</Comment>
+			<CommentModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:38:34" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_SETTING_MES_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ノーマルモードに
+せっていを　へんこうしました▼
+トレーナーとの　ポケモンしょうぶが
+ふつうの　つよさに　なります</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:39:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:39:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ノーマルモードに
+設定を　変更しました▼
+トレーナーとの　ポケモン勝負が
+普通の　つよさに　なります</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:39:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:39:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>キー設定後
+インフォメーションメッセージ</Comment>
+			<CommentModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:39:20" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_SETTING_MES_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>チャレンジモードに
+せっていを　へんこうしました▼
+トレーナーとの　ポケモンしょうぶが
+てごわく　なります</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:39:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:39:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チャレンジモードに
+設定を　変更しました▼
+トレーナーとの　ポケモン勝負が
+てごわく　なります</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:39:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:39:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>キー設定後
+インフォメーションメッセージ</Comment>
+			<CommentModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:39:20" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_SETTING_MES_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>ブラックシティに
+せっていを　へんこうしました▼</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:39:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:39:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホワイトシティに
+せっていを　へんこうしました▼</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:40:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:40:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>キー設定後
+インフォメーションメッセージ</Comment>
+			<CommentModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:39:20" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_SETTING_MES_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>いわやまのま　に
+せっていを　へんこうしました▼
+ちていいせきの　ひみつのドアを
+くぐり　いわやまのまに　いこう▼</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:40:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:40:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>岩山の間　に
+設定を　変更しました▼
+地底遺跡の　秘密のドアを
+くぐり　岩山の間に　行こう▼</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:40:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:40:14" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>キー設定後
+インフォメーションメッセージ</Comment>
+			<CommentModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:39:20" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_SETTING_MES_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>くろがねのま　に
+せっていを　へんこうしました▼
+ちていいせきの　ひみつのドアを
+くぐり　くろがねのまに　いこう▼</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:40:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:40:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>鉄の間　に
+設定を　変更しました▼
+地底遺跡の　ひみつのドアを
+くぐり　鉄の間に　行こう▼</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:40:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:40:29" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>キー設定後
+インフォメーションメッセージ</Comment>
+			<CommentModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:39:20" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_SETTING_MES_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>ひょうざんのま　に
+せっていを　へんこうしました▼
+ちていいせきの　ひみつのドアを
+くぐり　ひょうざんのまに　いこう▼</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:40:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:40:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>氷山の間　に
+設定を　変更しました▼
+地底遺跡の　ひみつのドアを
+くぐり　氷山の間に　行こう▼</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:40:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:40:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>キー設定後
+インフォメーションメッセージ</Comment>
+			<CommentModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:39:20" />
+		</CommentCell>
 	</TextRow>
 	<TextRow
 		Label="DATACONV_ROM_TITLE"
