@@ -2420,8 +2420,8 @@ static u32 gethint_gate_tr_dir( const TRHINT_WK *p_wk )
   const ROOM_DATA *p_room_data = p_wk->p_dungeon_data->room_data[now_floor];
 
 
-  ONOUE_Printf("現在のフロア：%u,ゲートトレーナーのフロア%u\n",now_floor ,now_floor );
-  ONOUE_Printf("現在の部屋番号：%u,ゲートトレーナーの部屋番号%u\n",now_floor ,gate_tr_room );
+  ONOUE_Printf("現在のフロア：%u,ゲートトレーナーのフロア%u\n",now_floor ,p_wk->p_dungeon_data->gate_trainer_floor );
+  ONOUE_Printf("現在の部屋番号：%u,ゲートトレーナーの部屋番号%u\n",now_room ,gate_tr_room );
 
   // 違う階にいるときはとぼける
   if( p_wk->p_dungeon_data->gate_trainer_floor != now_floor )

@@ -60,6 +60,7 @@ SUBDIRS	=	wmi \
 			fld3d_ci_effect \
 			fld3d_ci \
 			fmission_data \
+			infinity_dungeon \
 			fldmapdata\
 			pokegra\
 			net_err\
@@ -176,7 +177,6 @@ SUBDIRS	=	wmi \
 			cross_comm \
 			dendou_pc \
 			btl_subway \
-			infinity_dungeon \
 			habitat_list \
 			dendou_demo \
 			profanity_word \
