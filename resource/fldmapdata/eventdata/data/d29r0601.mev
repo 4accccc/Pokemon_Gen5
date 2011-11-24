@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/21 18:32:39
+#save date:2011/11/24 13:06:42
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d29r0601.wms
 #SECTION START:OBJ_EVENT
@@ -58,7 +58,7 @@ SCRID_BG_D29R0601_MONUMENT_03
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--56 0 -40
+168 0 -24
 #event number: 3
 #Bg Event Label
 D29R0601_MONUMENT_04

@@ -17,6 +17,8 @@
   .include  "d29r0801_def.h"
   .include  "d29r0901_def.h"
 
+	//@author ichiraku_katsuhiko //仕組作成
+	//@author suginaka_katsunori //演出修正
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -127,8 +129,8 @@ EVENT_START   ev_pos_d29r0401_door_in
 
   // カメラを操作
   _CAMERA_START()
-  _CAMERA_PURGE()
-  _CAMERA_MOVE( 5720,0,905216,1015808,0,229376, 25 )
+  _CAMERA_PURGE()//
+  _CAMERA_MOVE( 5720,0,970752,1015808,0,86016, 40 )
   _CAMERA_WAIT_MOVE()
 
   // ドアが開く
@@ -211,19 +213,19 @@ _ANIME_LABEL  anm_door_in
 // アニメ:中央に行く
 //------------------------------------------------------------
 _ANIME_LABEL  anm_x13
-  _ANIME_DATA AC_WALK_R_16F,2
+  _ANIME_DATA AC_WALK_R_8F,2
   _ANIME_DATA AC_DIR_U,1
   _ANIME_DATA ACMD_END,0
 _ANIME_LABEL  anm_x14
-  _ANIME_DATA AC_WALK_R_16F,1
+  _ANIME_DATA AC_WALK_R_8F,1
   _ANIME_DATA AC_DIR_U,1
   _ANIME_DATA ACMD_END,0
 _ANIME_LABEL  anm_x16
-  _ANIME_DATA AC_WALK_L_16F,1
+  _ANIME_DATA AC_WALK_L_8F,1
   _ANIME_DATA AC_DIR_U,1
   _ANIME_DATA ACMD_END,0
 _ANIME_LABEL  anm_x17
-  _ANIME_DATA AC_WALK_L_16F,2
+  _ANIME_DATA AC_WALK_L_8F,2
   _ANIME_DATA AC_DIR_U,1
   _ANIME_DATA ACMD_END,0
 
@@ -281,7 +283,7 @@ EVENT_START   ev_reserve_d29r0401_door_out
   // カメラ位置を設定しておく
   _CAMERA_START()
   _CAMERA_PURGE()
-  _CAMERA_MOVE( 5720,0,905216,1015808,0,229376, 1 )
+  _CAMERA_MOVE( 5720,0,970752,1015808,0,86016, 1 )
   _CAMERA_WAIT_MOVE()
 
   // ブラックインフェード
@@ -350,21 +352,21 @@ EVENT_START   ev_bg_d29r0401_switch
       // キーを設定していないときのみ作動する
       IF $LWK_KEYSYS_DOOR == KEYSYS_DOOR_NORMAL THEN
 
-	      _PLAINWIN_CLOSE()
-
+	   _PLAINWIN_CLOSE()
+	   
         // 画面をゆらす
-        _SHAKE_CAMERA( 1, 0, 4, 7, 0, 0, 0, 0)
         _SE_PLAY( SEQ_SE_BE_SE_033 )
+        _SHAKE_CAMERA( 6, 0, 3, 10, 1, 0, 1, 3)
 
         // 暗転
-        _BLACK_OUT()
+        _BLACK_OUT_SLOW()
         _DISP_FADE_END_CHECK()
 
         // 巨人の眼を赤色に変更
         _REZI_GMK_SET_EYE(0)
-        _TIME_WAIT(10)
+        _TIME_WAIT(60)
 
-        _BLACK_IN()
+        _BLACK_IN_SLOW()
         _DISP_FADE_END_CHECK()
 
         // どびらの　むこうがわで　おもおもしい　おとが　ひびいた・・・

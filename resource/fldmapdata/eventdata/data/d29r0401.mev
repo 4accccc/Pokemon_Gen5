@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/21 22:29:06
+#save date:2011/11/24 13:06:27
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d29r0401.wms
 #SECTION START:OBJ_EVENT
@@ -26,7 +26,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_D29R0401_ESPM_01
 #Direction Type Number
-DIR_DOWN
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--40 0 56
+-40 0 88
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
