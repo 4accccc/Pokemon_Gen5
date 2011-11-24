@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-11-24T21:25:04" source="kusabi_b_ci_a.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-11-24T22:18:54" source="kusabi_b_ci_a.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2011-11-24T21:25:04" source="kusabi_b_ci_a.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2011-11-24T22:18:54" source="kusabi_b_ci_a.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -3106,34 +3106,34 @@
 			c0e0 b890 50b8 8070 30b0 0008 0000 0000
 			0010 0000 1000 8030 90c8 d880 a0c8 f0c0
 			d0f0 d8b0 90b0 c8b8 2068 0818 1008 0008
-			1000 1828 1818 7028 e8b8 d0d0 c0f0 f8c8
-			d8f8 e8d8 e8b0 90e8 3848 4040 1028 0000
-			0000 3810 5860 5060 e890 d8f0 e8e8 f8d0
-			d8f8 d8f0 f0f0 80d0 9090 4880 0010 0000
-			0000 1000 8030 b8b0 b0b0 f0f0 e8e0 f8d8
-			e8f8 e8f0 d8f0 d8d0 98c8 1840 0008 0000
-			0000 1800 5030 b880 e8d8 e8d8 f0f0 f8e0
-			f0f8 f0f0 e8e0 c8f0 5888 3040 0010 0000
+			1000 1828 1818 7028 e8b8 d0d0 c0f0 f0c8
+			d8f0 e8d8 e8b0 90e8 3848 4040 1028 0000
+			0000 3810 5860 5060 e890 d8f0 e8e8 f0d0
+			d8f0 d8f0 f0f0 80d0 9090 4880 0010 0000
+			0000 1000 8030 b8b0 b0b0 f0f0 e8e0 f0d8
+			e8f0 e8f0 d8f0 d8d0 98c8 1840 0008 0000
+			0000 1800 5030 b880 e8d8 e8d8 f0f0 f0e0
+			f0f0 f0f0 e8e0 c8f0 5888 3040 0010 0000
 			0000 1008 4028 9070 d8b0 f0f0 f0f0 f0f0
-			f0f8 f0f0 e8e8 a0c0 6090 1838 0008 0000
-			0000 2810 8058 c0a0 d8d0 e8d8 f0f0 f8f0
-			f0f8 e0f0 d0d8 c0c8 88b0 4868 1020 0000
-			0000 3010 9058 e0c0 f8f0 f8f8 f8f8 f8f8
-			f8f8 f8f0 f8f8 f0f8 c0e0 5890 1030 0000
-			0000 3010 9058 e0c0 f8f0 f8f8 f0f8 f8f8
-			f8f8 f8f8 f8f8 f0f8 c0e0 5890 1030 0000
-			0000 2010 6848 b088 c8c0 d8d0 f0e0 f8f0
-			f0f8 f0f0 d8e8 d0d8 a0c0 5880 1028 0000
-			0000 0800 3818 9060 c0a0 e8e8 f0f0 f8f0
+			f0f0 f0f0 e8e8 a0c0 6090 1838 0008 0000
+			0000 2810 8058 c0a0 d8d0 e8d8 f0f0 f0f0
+			f0f0 e0f0 d0d8 c0c8 88b0 4868 1020 0000
+			0000 3010 9058 e0c0 f0f0 f0f0 f0f0 f0f0
+			f0f0 f0f0 f0f0 f0f0 c0e0 5890 1030 0000
+			0000 3010 9058 e0c0 f0f0 f0f0 f0f0 f0f0
+			f0f0 f0f0 f0f0 f0f0 c0e0 5890 1030 0000
+			0000 2010 6848 b088 c8c0 d8d0 f0e0 f0f0
+			f0f0 f0f0 d8e8 d0d8 a0c0 5880 1028 0000
+			0000 0800 3818 9060 c0a0 e8e8 f0f0 f0f0
 			f0f0 f0f0 f0f0 b0d8 7090 2840 0810 0000
-			0000 1000 4030 8858 f0c8 e0e8 f0f0 f8f0
-			e0f8 f0f0 d8e8 d8e8 80b8 3050 0018 0000
-			0000 0800 4018 c898 d0d8 f0d8 f0e8 f8e8
-			d8f8 e0e8 f0f0 b0b0 b0b8 3080 0010 0000
-			0000 1000 8048 9090 d080 f0f0 f0d8 f8d8
-			d0f8 e8e8 f0d8 90e8 6050 6058 1038 0000
-			0000 2810 4040 4838 e890 b0e8 d8e8 f8d8
-			c8f8 f0c0 d0d0 b8e8 2870 1818 2818 0010
+			0000 1000 4030 8858 f0c8 e0e8 f0f0 f0f0
+			e0f0 f0f0 d8e8 d8e8 80b8 3050 0018 0000
+			0000 0800 4018 c898 d0d8 f0d8 f0e8 f0e8
+			d8f0 e0e8 f0f0 b0b0 b0b8 3080 0010 0000
+			0000 1000 8048 9090 d080 f0f0 f0d8 f0d8
+			d0f0 e8e8 f0d8 90e8 6050 6058 1038 0000
+			0000 2810 4040 4838 e890 b0e8 d8e8 f0d8
+			c8f0 f0c0 d0d0 b8e8 2870 1818 2818 0010
 			0800 0810 1808 6820 b8c8 b090 b0d8 f0d0
 			c0f0 c8a0 80d8 c890 3080 0010 0000 1000
 			0000 0000 0800 b030 7080 b850 90b8 e0c0
@@ -3672,9 +3672,9 @@
 	<polygon index="4" name="polygon4"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-0.156250 -0.142334 -0.031250"
-		volume_max="0.156250 0.142334 -0.031250"
-		volume_r="0.213623"
+		volume_min="-0.112305 -0.120117 -0.031250"
+		volume_max="0.112305 0.120117 -0.031250"
+		volume_r="0.167480"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -3685,13 +3685,13 @@
 					<mtx idx="0"/>
 					<tex st="0.000000 0.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_xyz xyz="-0.156250 0.142334 -0.031250"/>
+					<pos_xyz xyz="-0.112305 0.120117 -0.031250"/>
 					<tex st="0.000000 32.000000"/>
-					<pos_xy xy="-0.156250 -0.142334"/>
+					<pos_xy xy="-0.112305 -0.120117"/>
 					<tex st="32.000000 32.000000"/>
-					<pos_xy xy="0.156250 -0.142334"/>
+					<pos_xy xy="0.112305 -0.120117"/>
 					<tex st="32.000000 0.000000"/>
-					<pos_xy xy="0.156250 0.142334"/>
+					<pos_xy xy="0.112305 0.120117"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -3911,9 +3911,9 @@
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-0.156250 -0.142334 -0.031250"
-		volume_max="0.156250 0.142334 -0.031250"
-		volume_r="0.213623"
+		volume_min="-0.112305 -0.120117 -0.031250"
+		volume_max="0.112305 0.120117 -0.031250"
+		volume_r="0.167480"
 	>
 		<display index="0" material="2" polygon="4" priority="0"/>
 	</node>
