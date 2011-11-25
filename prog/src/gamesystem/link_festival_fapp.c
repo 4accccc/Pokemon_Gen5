@@ -67,7 +67,8 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
   pl->new_record_score_f = FMISSION_SAVE_UpdateMissionStatusHighScore( f_save, wk->m_beacon->m_id, pl->score );
   
   //自分のハイスコアを記録する
-  FMISSION_SAVE_UpdateMissionStatusHighScoreMine( f_save, wk->m_beacon->m_id, wk->mission.my_score );
+  pl->new_record_my_score_f = FMISSION_SAVE_UpdateMissionStatusHighScoreMine( f_save, wk->m_beacon->m_id, wk->mission.my_score );
+  
   //最高参加者数を記録する
   FMISSION_SAVE_UpdateMissionMaxJoinNum( f_save, LINK_FESTIVAL_GetMissionJoinNum( wk ) );
   
