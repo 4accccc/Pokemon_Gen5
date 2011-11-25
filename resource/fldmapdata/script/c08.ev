@@ -689,7 +689,7 @@ ev_c08_ninja_comming:
 	_OBJ_ANIME_WAIT()
 	
 	//イベント曲再生
-	_START_EVENT_BGM( SEQ_BGM_E_SAGE )
+  _START_EVENT_BGM( SEQ_BGM_DARK_TRINITY )
 	
 	//アニメ：シャガ・主人公「！」
 	_OBJ_ANIME( MMDL_ID_PLAYER , anm_look_ninja_gyoe )
@@ -804,6 +804,9 @@ EVENT_START   ev_pos_c08_ninja_01
   //ハイリンク通信ブロック処理
   _DISABLE_NETWORK_IN_IMPORTANT_EVENT()
   
+  //イベント曲再生
+  _START_EVENT_BGM( SEQ_BGM_DARK_TRINITY )
+  
   //プレイヤー座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
   
@@ -851,6 +854,9 @@ EVENT_START   ev_pos_c08_ninja_01
 	_OBJ_ANIME_WAIT()
 	//ダークトリニティ動作OBJ削除
 	_OBJ_DEL( C08_NINJA_01 )
+	
+	//イベント曲終了
+  _END_EVENT_BGM()
 	
 	//プレイヤー座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
