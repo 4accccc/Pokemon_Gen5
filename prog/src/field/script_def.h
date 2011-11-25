@@ -416,6 +416,7 @@
 #define SCR_POSTMAN_TYPE_NORMAL_ITEM    (3) ///<贈り物の種類：アイテム
 #define SCR_POSTMAN_TYPE_LIBERTY_TICKET (4) ///<贈り物の種類：大事なアイテム（リバティチケット）
 #define SCR_POSTMAN_TYPE_GPOWER         (5) ///<贈り物の種類：Gパワー
+#define SCR_POSTMAN_TYPE_FMISSION       (6) ///<贈り物の種類：フェスミッション
 
 //--------------------------------------------------------------
 //  PDW配達員

@@ -43,6 +43,7 @@
 #include "evt_lock.h" //EVTLOCK_SetEvtLock
 #include "item/itemsym.h" //ITEM_RIBATHITIKETTO
 
+#include "src/net_app/mystery/mystery_inline.h"
 //======================================================================
 //======================================================================
 //--------------------------------------------------------------
@@ -595,6 +596,103 @@ static u16  PFuncSetFailureGPowerWords( WORDSET * wordset, GIFT_PACK_DATA * gpd,
 }
 
 //======================================================================
+/// フェスミッション取得用関数
+//======================================================================
+//--------------------------------------------------------------
+/// 受け取れるフェスミッションと、それに対応したEVTLOCK定義のテーブル
+//--------------------------------------------------------------
+static const u8 fmission_to_lock_table[] = {
+  //データは仮
+  FMISSION_ID_NPC_POKEQUIZ_GIFT,  EVT_LOCK_NO_FMISSION_00,  //図鑑クイズ_おくりもの
+  FMISSION_ID_NPC_TRBTL_GIFT,     EVT_LOCK_NO_FMISSION_01,  //戦闘_おくりもの
+  FMISSION_ID_NPC_PRESENT_GIFT,   EVT_LOCK_NO_FMISSION_02,  //プレゼント_おくりもの
+  FMISSION_ID_ITEM_KINOMI_GIFT,   EVT_LOCK_NO_FMISSION_03,  //きのみ_おくりもの
+};
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static FEST_MISSION_ID createFMission( const GIFT_PACK_DATA * gpd )
+{
+  return Mystery_CreateFMission( gpd );
+}
+//--------------------------------------------------------------
+/// フェスミッション取得出来るか？チェック
+//--------------------------------------------------------------
+static BOOL PFuncCheckFMission( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd )
+{
+  //アイテム同様、受け取れないと不正データが消せなくなるため
+  //フェスミッションは無条件に取得する
+  return TRUE;
+}
+
+//--------------------------------------------------------------
+/** 
+ * @brief フェスミッション取得
+ */
+//--------------------------------------------------------------
+static void PFuncAddFMission( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd )
+{
+  int i;
+  MYSTATUS * mystatus = GAMEDATA_GetMyStatus( gamedata );
+  MISC * misc = GAMEDATA_GetMiscWork( gamedata );
+  FEST_MISSION_ID fmission_id = createFMission( gpd );
+
+  for ( i = 0; i < NELEMS(fmission_to_lock_table); i += 2 )
+  {
+    if ( fmission_to_lock_table[i] == fmission_id )
+    {
+      EVTLOCK_SetEvtLock( misc, fmission_to_lock_table[i+1], mystatus );
+      return;
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/// フェスミッション取得
+//--------------------------------------------------------------
+static u16 PFuncGetTypeFMission(SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd )
+{
+  return SCR_POSTMAN_TYPE_FMISSION;
+}
+
+//--------------------------------------------------------------
+/// フェスミッション取得：成功メッセージ
+//--------------------------------------------------------------
+static u16  PFuncSetSuccessFMissionWords( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work )
+{
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
+  MYSTATUS * mystatus = GAMEDATA_GetMyStatus( gamedata );
+  HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
+  FEST_MISSION_ID fmission_id = createFMission( gpd );
+  WORDSET_RegisterPlayerName( wordset, 0, mystatus );
+  {
+    STRBUF * strbuf;
+    FEST_MISSION fmwk;
+    FMISSION_DATA_MAN * fmdata_man = FMISSION_DATA_Init( heapID );
+    FMISSION_DATA_GetMissionParam( fmdata_man, fmission_id, FMISSION_LEVEL_1, &fmwk );
+    strbuf = GFL_STR_CreateBuffer( BUFLEN_FMISSION_TITLE, heapID );
+    FMISSION_DATA_GetTitleStr( fmdata_man, strbuf, &fmwk, heapID );
+    WORDSET_RegisterWord( wordset, 1, strbuf, 0, TRUE, PM_LANG );
+    GFL_STR_DeleteBuffer( strbuf );
+    FMISSION_DATA_Release( fmdata_man );
+  }
+  return msg_postman_13;
+}
+
+//--------------------------------------------------------------
+/// フェスミッション取得：失敗
+//--------------------------------------------------------------
+static u16  PFuncSetFailureFMissionWords( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work )
+{
+  //このメッセージを表示することはないはず
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
+  MYSTATUS * mystatus = GAMEDATA_GetMyStatus( gamedata );
+  FEST_MISSION_ID fmission_id = createFMission( gpd );
+  WORDSET_RegisterPlayerName( wordset, 0, mystatus );
+  WORDSET_RegisterGPowerName( wordset, 1, fmission_id );
+  return msg_postman_14;
+}
+
+//======================================================================
 //
 //
 //
@@ -634,6 +732,14 @@ static const POSTMAN_FUNC_TABLE PostmanFuncTable[ MYSTERYGIFT_TYPE_MAX ] = {
     PFuncGetTypeGPower,
     PFuncSetSuccessGPowerWords, //msg_postman_10
     PFuncSetFailureGPowerWords, //msg_postman_11
+  },
+  { 
+    MYSTERYGIFT_TYPE_FMISSON,
+    PFuncCheckFMission,
+    PFuncAddFMission,
+    PFuncGetTypeFMission,
+    PFuncSetSuccessFMissionWords, //msg_postman_13
+    PFuncSetFailureFMissionWords, //msg_postman_14
   },
 };
 

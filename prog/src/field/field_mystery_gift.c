@@ -37,7 +37,7 @@ static GIFT_PACK_DATA * getEnableGiftData( MYSTERY_DATA * fd, int index, GIFT_PA
   }
   if ( gpd->gift_type == MYSTERYGIFT_TYPE_NONE ) return NULL;
   //¡‚Ì‚Æ‚±‚ë‘Î‰ž‚·‚éƒf[ƒ^‚ÍGPower‚Ü‚Å
-  if ( gpd->gift_type > MYSTERYGIFT_TYPE_POWER ) return NULL;
+  if ( gpd->gift_type >= MYSTERYGIFT_TYPE_MAX ) return NULL;
 
   return gpd;
 }

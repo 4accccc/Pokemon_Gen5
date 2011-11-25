@@ -153,11 +153,6 @@ sub_postman_main:
 //サブルーチン：取得したものによってMEや演出、MSGの分岐
 /********************************************************************/
 sub_postman_receive:
-//      _POSTMAN_REQUEST( SCR_POSTMAN_REQ_OK_MSG, POSTMAN_MSGID )
-//      _SYSWIN_MSG( POSTMAN_MSGID , POS_DOWN )
-//      _ME_PLAY( SEQ_ME_LVUP )
-//      _AB_KEYWAIT()
-//      _ME_WAIT()
   _POSTMAN_REQUEST( SCR_POSTMAN_REQ_OK_MSG, POSTMAN_MSGID )
   _POSTMAN_REQUEST( SCR_POSTMAN_REQ_TYPE, SCWK_ANSWER )
 
@@ -185,6 +180,11 @@ sub_postman_receive:
 
   CASE  SCR_POSTMAN_TYPE_GPOWER         THEN
     _SE_PLAY( SEQ_SE_FLD_133 )
+    _SYSWIN_MSG( POSTMAN_MSGID, POS_DEFAULT )
+    _SE_WAIT()
+
+  CASE  SCR_POSTMAN_TYPE_FMISSION       THEN
+    _SE_PLAY( SEQ_SE_FLD_133 )  //デルパワーと一緒
     _SYSWIN_MSG( POSTMAN_MSGID, POS_DEFAULT )
     _SE_WAIT()
 
