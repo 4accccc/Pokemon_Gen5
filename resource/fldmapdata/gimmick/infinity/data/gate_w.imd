@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="swan_3dcg01" host="W00300" date="2011-11-24T13:23:09" source="gate_w.mb"/>
+	<create user="swan_3dcg01" host="W00300" date="2011-11-25T12:22:05" source="gate_w_test.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="swan_3dcg01" host="W00300" date="2011-11-24T13:23:09" source="gate_w.mb"/>
+<original_create user="swan_3dcg01" host="W00300" date="2011-11-25T12:22:05" source="gate_w_test.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -69,14 +69,14 @@
 		path="C:/home/swan_data3d/gimmick/infinity/gate/tex/gatew_02.tga"
 	>
 		<bitmap size="64">
-			1111 0111 3342 3333 3333 3333 3342 3333
-			5555 5555 3355 3333 aaaa aaaa 337a 3333
-			9999 9999 337a 3333 6666 9666 337a 3333
-			6666 9666 337a 3333 aaaa aaaa 337a 3333
-			8888 6888 3379 3333 6666 9666 337a 3333
-			9999 9999 337a 3333 aaaa aaaa 337a 3333
-			1111 0111 3342 3333 3333 3333 3342 3333
-			3333 3333 3342 3333 5555 5555 3355 3333
+			8888 2888 1134 1111 1111 1111 1134 1111
+			6666 6666 1166 1111 cccc cccc 11dc 1111
+			aaaa aaaa 11dc 1111 9999 a999 11dc 0751
+			9999 a999 11dc 0751 cccc cccc 11dc 0751
+			bbbb 9bbb 11da 0751 9999 a999 11dc 0751
+			aaaa aaaa 11dc 0751 cccc cccc 11dc 0751
+			8888 2888 1134 0751 1111 1111 1134 7751
+			1111 1111 1134 1151 6666 6666 1166 5551
 		</bitmap>
 	</tex_image>
 	<tex_image index="3" name="gatew_chain"
@@ -102,8 +102,8 @@
 		1cc5 2d27 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="2" name="gatew_02_pl" color_size="16">
-		3528 3949 28e6 2d07 20c5 1ca4 1d4b 10c7
-		216d 190a 14e9 7fff 7fff 7fff 7fff 7fff
+		4dcd 3528 3949 24c5 2d07 24e6 1ca4 3d69
+		418a 156e 112c 1db1 0cea 0ca7 7fff 7fff
 	</tex_palette>
 	<tex_palette index="3" name="gatew_chain_pl" color_size="8">
 		3c1c 0442 212b 296e 14a7 0c64 14a5 7fff
@@ -230,22 +230,22 @@
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="6">
 					<mtx idx="0"/>
-					<tex st="10.000000 0.125000"/>
+					<tex st="15.875000 15.875000"/>
 					<clr rgb="22 22 22"/>
 					<pos_s xyz="0.375000 0.656250 0.031250"/>
-					<tex st="10.000000 2.812500"/>
+					<tex st="13.125000 15.875000"/>
 					<clr rgb="21 21 21"/>
 					<pos_xz xz="0.375000 -0.062500"/>
-					<tex st="0.000000 0.125000"/>
+					<tex st="15.875000 6.125000"/>
 					<clr rgb="31 31 31"/>
 					<pos_xz xz="0.000000 0.031250"/>
-					<tex st="0.000000 2.812500"/>
+					<tex st="13.125000 6.125000"/>
 					<clr rgb="26 26 26"/>
 					<pos_xz xz="0.000000 -0.062500"/>
-					<tex st="-10.000000 0.125000"/>
+					<tex st="15.875000 15.875000"/>
 					<clr rgb="23 23 23"/>
 					<pos_xz xz="-0.375000 0.031250"/>
-					<tex st="-10.000000 2.812500"/>
+					<tex st="13.125000 15.875000"/>
 					<clr rgb="22 22 22"/>
 					<pos_xz xz="-0.375000 -0.062500"/>
 				</primitive>
@@ -315,22 +315,22 @@
 			<primitive_array size="4">
 				<primitive index="0" type="quad_strip" vertex_size="6">
 					<mtx idx="0"/>
-					<tex st="10.000000 0.125000"/>
+					<tex st="15.875000 15.875000"/>
 					<clr rgb="22 22 22"/>
 					<pos_s xyz="0.375000 0.656250 0.062500"/>
-					<tex st="10.000000 2.812500"/>
+					<tex st="13.125000 15.875000"/>
 					<clr rgb="21 21 21"/>
 					<pos_xz xz="0.375000 -0.031250"/>
-					<tex st="0.000000 0.125000"/>
+					<tex st="15.875000 6.125000"/>
 					<clr rgb="29 29 29"/>
 					<pos_xz xz="0.000000 0.062500"/>
-					<tex st="0.000000 2.812500"/>
+					<tex st="13.125000 6.125000"/>
 					<clr rgb="25 25 25"/>
 					<pos_xz xz="0.000000 -0.031250"/>
-					<tex st="-10.000000 0.125000"/>
+					<tex st="15.875000 15.875000"/>
 					<clr rgb="23 23 23"/>
 					<pos_xz xz="-0.375000 0.062500"/>
-					<tex st="-10.000000 2.812500"/>
+					<tex st="13.125000 15.875000"/>
 					<clr rgb="22 22 22"/>
 					<pos_xz xz="-0.375000 -0.031250"/>
 				</primitive>
