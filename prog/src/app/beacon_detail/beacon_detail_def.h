@@ -201,7 +201,6 @@ enum{
 enum{
  ACT_ICON_TR,
  ACT_ICON_EV,
- ACT_ICON_IO,
  ACT_MAX
 };
 

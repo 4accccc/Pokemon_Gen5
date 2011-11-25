@@ -622,7 +622,6 @@ static void draw_UpdateUnderView( BEACON_DETAIL_WORK* wk )
       wk->icon_x = wk->icon_y = 0;
       GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_ICON_TR], FALSE );
       GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_ICON_EV], FALSE );
-      act_AnmStart( wk->pAct[ACT_ICON_IO], ACTANM_OUTSIDE );
     }else{
       wk->icon_enable_f = TRUE;
   	  
@@ -648,12 +647,6 @@ static void draw_UpdateUnderView( BEACON_DETAIL_WORK* wk )
         act_AnmStart( wk->pAct[ACT_ICON_EV], ACTANM_ICON_TR + (pd->icon-1) );
       }
       GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_ICON_EV], (pd->icon != 0) );
-
-      {
-        u8 type = ZONEDATA_GetMapChangeType( zone );
-        
-        act_AnmStart( wk->pAct[ACT_ICON_IO], ACTANM_OUTSIDE + (type==MC_TYPE_FIELD || type==MC_TYPE_BRIDGE ) );
-      }
     }
   }
   //ポップアップメッセージ描画
@@ -690,9 +683,7 @@ typedef struct _TASKWK_MSG_UPDOWN{
   u8  ct;
   s8  y;
   s8  diff;
-  u8  icon_y;
 
-  GFL_CLWK* act_icon;
   int* task_ct;
 }TASKWK_MSG_UPDOWN;
 
@@ -712,15 +703,12 @@ static void taskAdd_MsgUpdown( BEACON_DETAIL_WORK* wk, u8 dir, int* task_ct )
   twk = GFL_TCBL_GetWork(tcb);
   MI_CpuClear8( twk, sizeof( TASKWK_MSG_UPDOWN ));
 
-  twk->act_icon = wk->pAct[ACT_ICON_IO];
   twk->dir = dir;
   if( twk->dir == SCROLL_UP ){
     twk->y = 0;
-    twk->icon_y = ACT_INOUT_PY_D;
     twk->diff = POPUP_DIFF;
   }else{
     twk->y = POPUP_HEIGHT;
-    twk->icon_y = ACT_INOUT_PY_U;
     twk->diff = -POPUP_DIFF;
   }
   twk->frame = POPUP_COUNT;
@@ -737,9 +725,7 @@ static void tcb_MsgUpdown( GFL_TCBL *tcb , void* tcb_wk)
  
   if( twk->ct++ < twk->frame ){
     twk->y += twk->diff;
-    twk->icon_y -= twk->diff;
     GFL_BG_SetScroll( BG_FRAME_POPUP_M, GFL_BG_SCROLL_Y_SET, twk->y );
-    act_SetPosition( twk->act_icon, ACT_INOUT_PX, twk->icon_y, ACT_SF_MAIN );
 //    IWASAWA_Printf("Popup %d\n",twk->y);
     return;
   }

@@ -879,8 +879,6 @@ static void _sub_ActorCreate(BEACON_DETAIL_WORK* wk)
   wk->pAct[ACT_ICON_EV] = act_Add( wk, clunit, &wk->objResNormal,
                     128-32, 120, 0, 2, ACT_ICON_BGPRI, ACT_SF_MAIN );
   
-  wk->pAct[ACT_ICON_IO] = act_Add( wk, clunit, &wk->objResNormal,
-                    ACT_INOUT_PX, ACT_INOUT_PY_D, ACTANM_OUTSIDE, 0, ACT_INOUT_BGPRI, ACT_SF_MAIN );
 }
 
 //--------------------------------------------------------------
