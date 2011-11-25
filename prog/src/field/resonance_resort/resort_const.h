@@ -374,7 +374,7 @@
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 #define RESORT_CAM_CITY_PITCH   (64037)
 #define RESORT_CAM_CITY_YAW     (0)
-#define RESORT_CAM_CITY_DIST    (921600
+#define RESORT_CAM_CITY_DIST    (921600)
 #define RESORT_CAM_CITY_X       (1015808)
 #define RESORT_CAM_CITY_Y       (147456)
 #define RESORT_CAM_CITY_Z       (2387968)
