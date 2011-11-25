@@ -53,6 +53,16 @@ typedef enum{
   KYUREMU_ITEM_SWAP_PERGE,  ///分離実行時の処理 
 }KYUREMU_ITEM_SWAP;
 
+// 保管バックソートタイプ
+typedef enum{
+  REPOSITORY_SORTTYPE_FULL,
+  REPOSITORY_SORTTYPE_NORMAL,
+  REPOSITORY_SORTTYPE_DRUG,
+  REPOSITORY_SORTTYPE_WAZA,
+  REPOSITORY_SORTTYPE_NUTS,
+  REPOSITORY_SORTTYPE_EVENT,
+}REPOSITORY_SORTTYPE;
+
 //==============================================================================
 //  型定義
 //==============================================================================
@@ -143,6 +153,8 @@ extern u16 MYITEM_GetItemAddPocket( MYITEM_PTR myitem, u16 id );
 extern BOOL MYITEM_CheckInRepository( MYITEM_PTR myitem, u16 item_no );
 extern void MYITEM_GetExistanceTable( MYITEM_PTR p_myitem, u8 *p_dest );
 extern const ITEM_ST* MYITEM_MyPocketDataGet( MYITEM_PTR myitem ,s32 pocket ,u32 * max);
+extern REPOSITORY_SORTTYPE MYITEM_GetRepositorySortType( BAG_CURSOR * wk );
+extern void MYITEM_SetRepositorySortType( BAG_CURSOR * wk ,REPOSITORY_SORTTYPE sort_type);
 
 
 #ifdef CREATE_INDEX

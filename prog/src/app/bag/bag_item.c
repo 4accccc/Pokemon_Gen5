@@ -69,7 +69,7 @@ static s32 QSort_Num( void * elem1, void * elem2 )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void BAGITEM_InitData(BAGITEM_WORK* p_wk,MYITEM_PTR p_myitem , HEAPID heapID)
+void BAGITEM_InitData(BAGITEM_WORK* p_wk,MYITEM_PTR p_myitem ,REPOSITORY_SORTTYPE rep_sort_mode , HEAPID heapID)
 {
   int item_id;
   int count;
@@ -117,7 +117,7 @@ void BAGITEM_InitData(BAGITEM_WORK* p_wk,MYITEM_PTR p_myitem , HEAPID heapID)
   p_wk->dummy.id = 0;
   p_wk->dummy.no = 0;
 
-  BAGITEM_SortRepositoryItem( p_wk , REPOSITORY_SORTTYPE_FULL );
+  BAGITEM_SortRepositoryItem( p_wk , rep_sort_mode );
 }
 
 //----------------------------------------------------------------------------

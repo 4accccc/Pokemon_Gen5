@@ -54,11 +54,12 @@ BAG_PARAM* BAG_CreateParam( GAMEDATA* gmData, const ITEMCHECK_WORK* icwk, BAG_MO
 
   bag = GFL_HEAP_AllocClearMemory( heap_id, sizeof(BAG_PARAM));
 
-  bag->p_gamedata   = gmData;
-  bag->p_config     = SaveData_GetConfig( saveControl );
-  bag->p_mystatus   = GAMEDATA_GetMyStatus( gmData );
-  bag->p_bagcursor  = GAMEDATA_GetBagCursor( gmData );
-  bag->p_myitem     = GAMEDATA_GetMyItem( gmData );
+  bag->p_gamedata           = gmData;
+  bag->p_config             = SaveData_GetConfig( saveControl );
+  bag->p_mystatus           = GAMEDATA_GetMyStatus( gmData );
+  bag->p_bagcursor          = GAMEDATA_GetBagCursor( gmData );
+  bag->p_myitem             = GAMEDATA_GetMyItem( gmData );
+  bag->repository_sort_type = MYITEM_GetRepositorySortType( bag->p_bagcursor );
   
   if( icwk != NULL){
     GFL_STD_MemCopy(icwk , &bag->icwk, sizeof(ITEMCHECK_WORK));

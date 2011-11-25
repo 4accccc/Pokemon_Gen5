@@ -35,6 +35,7 @@ typedef enum {
   BAG_MODE_COLOSSEUM,
   BAG_MODE_SELL,				// 「うる」シーケンス
 	BAG_MODE_SELECT,			// 選択のみ
+	BAG_MODE_MAX,
 } BAG_MODE;
 
 
@@ -55,6 +56,7 @@ typedef struct {
   CONFIG            * p_config;    
   MYSTATUS          * p_mystatus;
   BAG_CURSOR        * p_bagcursor;
+  REPOSITORY_SORTTYPE repository_sort_type; // 保管ポケットのソート状態
   MYITEM_PTR          p_myitem;
   ITEMCHECK_WORK      icwk;         ///< アイテムチェックワーク FMENU_EVENT_WORKからコピー。「つかう」が出ない状態であれば不必要
   BAG_MODE            mode;         ///< バッグ呼び出しモード

@@ -241,6 +241,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   gd->fldstatus = FIELD_STATUS_Create( heapID );
 
   gd->bagcursor = MYITEM_BagCursorAlloc( heapID );
+  MYITEM_SetRepositorySortType(gd->bagcursor,REPOSITORY_SORTTYPE_FULL);
   gd->myitem = SaveControl_DataPtrGet(gd->sv_control_ptr, GMDATA_ID_MYITEM);
   gd->my_pokeparty = SaveControl_DataPtrGet(gd->sv_control_ptr, GMDATA_ID_MYPOKE);
   gd->config  = SaveData_GetConfig( gd->sv_control_ptr );

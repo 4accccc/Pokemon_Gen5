@@ -39,24 +39,13 @@ typedef struct{
   u8  item_existence_table[ITEM_DATA_MAX+1];
 }BAGITEM_WORK;
 
-// 保管バックソートタイプ
-enum
-{
-  REPOSITORY_SORTTYPE_FULL,
-  REPOSITORY_SORTTYPE_NORMAL,
-  REPOSITORY_SORTTYPE_DRUG,
-  REPOSITORY_SORTTYPE_WAZA,
-  REPOSITORY_SORTTYPE_NUTS,
-  REPOSITORY_SORTTYPE_EVENT,
-};
-
 //=============================================================================
 /**
  *					プロトタイプ宣言
 */
 //=============================================================================
 
-extern void BAGITEM_InitData(BAGITEM_WORK* p_wk,MYITEM_PTR p_myitem , HEAPID heapID);
+extern void BAGITEM_InitData(BAGITEM_WORK* p_wk,MYITEM_PTR p_myitem ,REPOSITORY_SORTTYPE rep_sort_mode , HEAPID heapID);
 extern void BAGITEM_DeleteData(BAGITEM_WORK* p_wk);
 extern ITEM_ST * BAGITEM_PosItemGet( BAGITEM_WORK *p_wk, u16 pocket, u16 pos );
 extern void BAGITEM_DeleteRepositoryItem( BAGITEM_WORK *p_wk ,u16 pos ,BOOL is_rm_rep_flag );

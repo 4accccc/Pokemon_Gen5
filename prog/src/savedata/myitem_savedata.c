@@ -22,8 +22,9 @@
 typedef struct {
 	s16	scr[BAG_POKE_MAX];  //12
 	s16	pos[BAG_POKE_MAX];  //24
-	u16	pocket;             //25
-	u8	dummy[3];           //28byte
+	u16	pocket;             //26
+  u8  bag_repository_sort_type; ///< バッグ:保管ポケットのソートモード 27
+	u8	dummy[2];           //29byte
 }FLDBAG_CURSOR;
 
 // 戦闘のバッグのカーソル位置
@@ -1499,6 +1500,34 @@ void MYITEM_BattleBagLastItemSet( BAG_CURSOR * wk, u16 item, u16 page )
 {
 	wk->btl.item = item;
 	wk->btl.page = page;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief   バッグ保管ポケットのソート状態を取得
+ *
+ *	@param	* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+REPOSITORY_SORTTYPE MYITEM_GetRepositorySortType( BAG_CURSOR * wk )
+{
+  return wk->fld.bag_repository_sort_type;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief   バッグ保管ポケットのソート状態を取得
+ *
+ *	@param	* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void MYITEM_SetRepositorySortType( BAG_CURSOR * wk ,REPOSITORY_SORTTYPE sort_type)
+{
+  wk->fld.bag_repository_sort_type = sort_type;
 }
 
 //----------------------------------------------------------------------------

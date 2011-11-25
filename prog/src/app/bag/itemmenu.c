@@ -203,6 +203,7 @@ static void _itemRepositorySortSelectWait(FIELD_ITEMMENU_WORK* pWork);
 static void ItemSortRepositoryMenuMake( FIELD_ITEMMENU_WORK * pWork );
 static void ItemSortRepositoryTableMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl );
 static void _RepositorySortEndMessageSet( FIELD_ITEMMENU_WORK * pWork );
+static void _SaveRepositorySortType( BAG_CURSOR *pBagCursor  ,BAG_MODE bagmode ,BAG_NEXTPROC_ENUM exitmode,REPOSITORY_SORTTYPE repository_sort_mode);
 
 
 //------------------------------------------------------------------------------
@@ -4250,12 +4251,13 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   pWork->icwk       = &pParam->icwk;
   pWork->mode       = pParam->mode;
   pWork->cycle_flg  = pParam->cycle_flg;
+  pWork->repository_sort_mode  = pParam->repository_sort_type;
 
   // アイテム破損データを修復
   MYITEM_CheckSafety( pWork->pMyItem );
 
   // バッグ用アイテム初期化
-  BAGITEM_InitData( &pWork->bag_item , pParam->p_myitem ,pWork->heapID );
+  BAGITEM_InitData( &pWork->bag_item , pParam->p_myitem ,pWork->repository_sort_mode ,pWork->heapID );
 
   HOSAKA_Printf("bag mode =%d \n", pWork->mode );
 
@@ -4558,6 +4560,9 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
     // デバッグ情報出力
     DEBGU_OutputExitMode( pParam->mode ,pParam->next_proc );
 #endif //PM_DEBUG
+
+    // 保管ポケットの状態を設定
+    _SaveRepositorySortType( pWork->pBagCursor ,pParam->mode ,pParam->next_proc ,pWork->repository_sort_mode );
   }
 
   GFL_UI_KEY_SetRepeatSpeed( pWork->key_repeat_speed, pWork->key_repeat_wait );
@@ -5445,5 +5450,54 @@ static void _itemPocketChange( FIELD_ITEMMENU_WORK * wk )
 */
 
   ChangeStateItemKindSelectItemMenu( wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  現在のバッグ状態に応じて、保管ポケットのソート状態を保存する
+ *
+ *	@param	*gamedata  
+ *	@param	bagmode 
+ *	@param	exitmode
+ *	@param	repository_sort_mode
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _SaveRepositorySortType( BAG_CURSOR *pBagCursor  ,BAG_MODE bagmode ,BAG_NEXTPROC_ENUM exitmode,REPOSITORY_SORTTYPE repository_sort_mode)
+{
+  // 0=ありあえない、1=リセット、2＝保持
+  const u8 repository_reset_table[BAG_MODE_MAX][BAG_NEXTPROC_MAX] =
+  {
+    {1,2,2,2,2,2,2,2,2,1,1,1,2,0,1,1,1,2,2,2,1,2,1},
+    {1,2,2,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1},
+    {1,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+  };
+  u8 type = repository_reset_table[bagmode][exitmode];
+
+  switch(type)
+  {
+  case 0:
+    // ありあえないパターン
+    GF_ASSERT_MSG(0,"ソートモードのリセット方が正しく記述されていません\n");
+    break;
+  case 1:
+    // 保管ポケットの状態をリセット
+    MYITEM_SetRepositorySortType( pBagCursor ,REPOSITORY_SORTTYPE_FULL );
+    OS_Printf("保管ポケット：ソートモードをリセット\n");
+    break;
+  case 2:
+    // 保管ポケットの状態を保存
+    MYITEM_SetRepositorySortType( pBagCursor ,repository_sort_mode );
+    OS_Printf("保管ポケット：ソートモードを保存\n");
+    break;
+  default:
+    // ありえないパターン
+    GF_ASSERT_MSG(0,"ソートモードのリセット方が正しく記述されていません\n");
+    break;
+  }
 }
 

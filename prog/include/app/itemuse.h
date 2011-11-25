@@ -44,6 +44,7 @@ typedef enum
   BAG_NEXTPROC_DOWSINGMACHINE,// ダウジングマシン
   BAG_NEXTPROC_LIVECASTER,    // ライブキャスター
   BAG_NEXTPROC_MEDALBOX,      // メダルボックス
+  BAG_NEXTPROC_MAX, 
 }BAG_NEXTPROC_ENUM;
 
 // フィールドで使用・不使用チェックの収集に使用するID
