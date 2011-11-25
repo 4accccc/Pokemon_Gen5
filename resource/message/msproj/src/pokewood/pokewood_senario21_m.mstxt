@@ -445,33 +445,33 @@
 		Label="pw_event0_enemy_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>ドーブル『そうなんすよ！▼
-でも　ゆうれいの　マリアさんは
+			<Text>ドーブル『しんだっす！▼
+でも　ゆうれいに　なって　マリアさんは
 アンタに　あいに　きたんす！▼
 ただねー　ちょっとした　アクシデントで
 きおくを　うしなっちゃったんすよねー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:55" />
+				Time="2011-11-24T10:10:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:55" />
+				Time="2011-11-24T10:10:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ドーブル『そうなんすよ！▼
-でも　幽霊の　マリアさんは
-アンタに　合いに　来たんす！▼
+			<Text>ドーブル『死んだっす！▼
+でも　幽霊に　なって　マリアさんは
+アンタに　あいに　来たんす！▼
 ただねー　ちょっとした　アクシデントで
 記憶を　失っちゃったんすねー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:55" />
+				Time="2011-11-24T10:10:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T11:05:55" />
+				Time="2011-11-24T10:10:07" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2755,44 +2755,44 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ドーブル『オレはー　マリアさんに
-たのまれて　アンタを　たすけにきたんす▼
-でも　きけんだって　いうのに　ついてきた
+たのまれて　アンタを　たすけにきたの▼
+それで　いっしょに　ついてきた
 マリアさんは　かわりはてた　アンタを▽
 みたら　なきくずれて　そのまんま▽
 きおく　うしなっちゃって……▼
-まあ　でも　アンタは　アンタで
-マリアさんに　あった　しゅんかんに▽
+んで　アンタは　ぎゃくに　マリアさんと
+さいかいした　しゅんかんに▽
 かなり　きおくが　もどったんすよね……▼
 ……まあ　あいのちから　というか
 おにあいのふたり　ってことすかねー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:05" />
+				Time="2011-11-24T10:10:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:05" />
+				Time="2011-11-24T10:10:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ドーブル『オレはー　マリアさんに
-頼まれて　アンタを　助けに　来たんす▼
-でも　危険だって　いうのに　ついてきた
+頼まれて　アンタを　助けに　来たの▼
+それで　一緒に　付いて来た
 マリアさんは　変わり果てた　アンタを▽
 見たら　泣き崩れちゃって　そのまんま▽
 記憶　うしなっちゃって……▼
-まあ　でも　アンタは　アンタで
-マリアさんに　あった　瞬間に▽
+んで　アンタは　逆に　マリアさんと
+再会した　瞬間に▽
 かなり　記憶が　戻ったんすよね……▼
 ……まあ　愛の力　というか
 お似合いのふたり　ってことすかねー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:05" />
+				Time="2011-11-24T10:10:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T13:22:05" />
+				Time="2011-11-24T10:10:07" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

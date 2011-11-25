@@ -1009,40 +1009,48 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>モニカ『なんだって　いうのよっ！！▼
-どうせ　わたしは　このまま　いっしょう
-この　おおきな　からだの　ままで▽
-いきていくんでしょっ！？▼
-こんな　からだじゃ
-もう　およめにも　いけないっ！！▼
-[Name:TrainerName Idx="1" ]　だって
-こんな　デカい　おんなと▽
-いっしょに　いたくないんでしょ！！</Text>
+どうせ　わたしは　このまま　ずーっと
+この　おおきな　からだの　まんま……▽
+かいぶつの　まんま　なんでしょっ！？▼
+ただ……　ただ　だいすきな　ひとに
+ふれようと　しただけで　あいてを▽
+にぎりつぶすことに　なっちゃう▽
+あわれな　かいぶつ　なんでしょ！！▼
+こんな　からだに　なったら
+もう　およめにだって　いけないっ！！▼
+そうよ！　[Name:TrainerName Idx="1" ]　だってさ
+こんな　デカくなった　おんなと▽
+いっしょに　いたくないでしょ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T04:51:05" />
+				Time="2011-11-25T13:41:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T04:51:05" />
+				Time="2011-11-25T13:41:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『何だって　いうのよっ！！▼
-どうせ　私は　このまま　一生
-この　大きな　身体の　ままで▽
-生きていくんでしょっ！？▼
-こんな　身体じゃ
-もう　お嫁にも　いけないっ！！▼
-[Name:TrainerName Idx="1" ]　だって
-こんな　デカい　女と▽
-一緒に　いたくないんでしょ！！</Text>
+どうせ　私は　このまま　ずーっと
+この　デカい　身体の　まんま……▽
+怪物の　まんま　なんでしょっ！？▼
+ただ……　ただ　大好きな　人に
+触れようと　しただけで　相手を▽
+にぎりつぶすことに　なっちゃう▽
+あわれな　怪物　なんでしょ！！▼
+こんな　身体に　なったら
+もう　お嫁にだって　行けないっ！！▼
+そうよ！　[Name:TrainerName Idx="1" ]　だってさ
+こんな　デカくなった　女と▽
+一緒に　いたくないでしょ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T05:11:38" />
+				Time="2011-11-25T13:41:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T05:11:38" />
+				Time="2011-11-25T13:41:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1103,25 +1111,25 @@
 		Label="pw_event4_react_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『べつに　かわらないのに…</Text>
+			<Text>[Name:TrainerName Idx="1" ]『いいかげんに　しろよ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T12:07:20" />
+				Time="2011-11-25T13:41:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T12:07:20" />
+				Time="2011-11-25T13:41:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『別に　変わらないのに…</Text>
+			<Text>[Name:TrainerName Idx="1" ]『いい加減に　しろよ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T12:07:20" />
+				Time="2011-11-25T13:41:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T12:07:20" />
+				Time="2011-11-25T13:41:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1153,60 +1161,62 @@
 		Label="pw_event5_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『モニカ……
-ぼくは　なにも　かわらないよ……▼
+			<Text>[Name:TrainerName Idx="1" ]『いいかい　モニカ！！
+ぼくは　なにも　かわらないよ！！▼
 たとえ　キミが　これから　ずっと
-おおきいままでも　かわらない▼
-いままで　おんなじさ……
-キミのそばに　いるよ……</Text>
+おおきいままでも　かわらないんだ！！▼
+……いままでと
+いままでと　おんなじ　なんだ……▽
+ぼくは　ずっと　キミのそばに　いる……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:49" />
+				Time="2011-11-25T13:41:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:49" />
+				Time="2011-11-25T13:41:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『モニカ……
-ボクは　何も　変わらないよ……▼
+			<Text>[Name:TrainerName Idx="1" ]『いいかい　モニカ！！
+ボクは　何も　変わらないよ！！▼
 たとえ　キミが　これから　ずっと
-大きいままでも　変わらない▼
-今までと　同じさ……
-キミの側に　いるよ……</Text>
+大きいままでも　変わらないんだ！！▼
+……今までと
+今までと　同じ　なんだ……▽
+僕は　ずっと　キミの側に　いる……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T04:51:05" />
+				Time="2011-11-25T13:41:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T04:51:05" />
+				Time="2011-11-25T13:41:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event5_enemy_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『[Name:TrainerName Idx="1" ]……</Text>
+			<Text>モニカ『[Name:TrainerName Idx="1" ]……　ゴメン</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-11-25T13:41:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-11-25T13:41:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『[Name:TrainerName Idx="1" ]……</Text>
+			<Text>モニカ『[Name:TrainerName Idx="1" ]……　ゴメン</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-11-25T13:41:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T06:30:02" />
+				Time="2011-11-25T13:41:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1300,22 +1310,22 @@
 			Language="JPN">
 			<Text>……　……　……　……▼
 それから　ひとつ　きせつが　めぐるたび
-モニカは　ほんの　わずかづつ
+モニカは　ほんの　わずかづつ▽
 ちいさくなって　いった……▼
-おおきな　モニカとの　せいかつには
+……おおきな　モニカとの　くらしには
 こまることも　まま　あったけど▽
 つらいと　おもうことは　なかった……▼
-やがて　ぼくが　おじいさん……
+……やがて　ぼくが　おじいさんに
 モニカが　おばあさんに　なったころ▽
 ふたりの　しんちょうは　ようやく▽
 かわらなくなったんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T06:09:00" />
+				Time="2011-11-25T13:41:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T06:09:00" />
+				Time="2011-11-25T13:41:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1323,20 +1333,20 @@
 それから　ひとつ　季節が　巡るたび
 モニカは　ほんの　わずかづつ▽
 小さくなって　いった……▼
-大きな　モニカとの　生活は
+……大きな　モニカとの　暮らしには
 困ることも　まま　あったけど▽
 辛いと　思うことは　なかった……▼
-やがて　僕が　おじいさん……
-モニカが　おばあさんに　なったころ▽
+……やがて　モニカと　僕の
+髪の毛が　すべて　白くなったころ▽
 二人の　身長は　ようやく▽
 変わらなくなったんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T06:09:00" />
+				Time="2011-11-25T13:41:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T06:09:00" />
+				Time="2011-11-25T13:41:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

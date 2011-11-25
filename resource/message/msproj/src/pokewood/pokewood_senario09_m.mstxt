@@ -1701,18 +1701,19 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>なぞの　かがくしゃ　Ｅに
-みはなされたことも　きがつかずに▽　[Name:TrainerName Idx="1" ]は　ヨダレを　タラタラ▽
+みはなされたことも　きがつかずに▽
+[Name:TrainerName Idx="1" ]は　ヨダレを　タラタラ▽
 ねむりこける……▼
 そして　この　すうじゅうじかんご……
 たいりょうの　ＵＦＯに　おそわれ▽
 じんるいは　めつぼう　するのだった</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:08:12" />
+				Time="2011-11-24T10:09:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:08:12" />
+				Time="2011-11-24T10:09:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">

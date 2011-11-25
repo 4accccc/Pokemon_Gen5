@@ -629,8 +629,8 @@ UFOの　テストと　偽り
 	<row id="pw_event2_hero_1">
 		<language name="JPN" width="256">E『ん……　　なに……？
 空が　ゆれて……</language>
-		<language name="JPN_KANJI" width="256">E『ん……　　何……？
-空が　ゆれて……</language>
+		<language name="JPN_KANJI" width="256">E『ん……　　なんだ……？
+そらが　ゆれて……</language>
 	</row>
 	<row id="pw_event2_enemy_1">
 		<language name="JPN" width="256">E『……　……おまえが　UFOを
@@ -696,13 +696,13 @@ UFOの　テストと　偽り
 そして　ポケモンが▽
 いっしょに　いきる……▼
 そんな　ほうほうを　わたしたちと
-さがせば　いいじゃない！</language>
+さがせば　いいじゃない？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……あなたたちや
 私たち　人間……▽
 そして　ポケモンが▽
 一緒に　生きる……▼
 そんな　方法を　私たちと
-探せば　いいじゃない！</language>
+探せば　いいじゃない？</language>
 	</row>
 	<row id="pw_event2_enemy_4">
 		<language name="JPN" width="256">E『そうか……▼

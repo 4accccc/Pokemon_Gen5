@@ -629,8 +629,8 @@ UFOの　テストと　偽り
 	<row id="pw_event2_hero_1">
 		<language name="JPN" width="256">E『ん……　　なんだ……？
 そらが　ゆれている……</language>
-		<language name="JPN_KANJI" width="256">E『ん……　　何だ……？
-空が　ゆれている……</language>
+		<language name="JPN_KANJI" width="256">E『ん……　　なんだ……？
+そらが　ゆれている……</language>
 	</row>
 	<row id="pw_event2_enemy_1">
 		<language name="JPN" width="256">E『……　……おまえが　UFOを

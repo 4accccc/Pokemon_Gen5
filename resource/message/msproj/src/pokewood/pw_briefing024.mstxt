@@ -6,15 +6,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ぬいぐるみの　じょげんも　あって
+			<Text>[Ctrl1:xcenter ]ぬいぐるみの　アドバイスも　あって
 [Ctrl1:xcenter ]なんとか　とびらを　たおした
 [Ctrl1:xcenter ][Name:TrainerName Idx="1" ]おうじ
 
 [Ctrl1:xcenter ]ぬいぐるみを　ポケットに　かくし
-[Ctrl1:xcenter ]オリのそとに　とびだした……</Text>
+[Ctrl1:xcenter ]オリのそとに　とびだしました……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-14T13:35:58" />
+				Time="2011-11-24T13:26:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22,15 +22,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ぬいぐるみの　助言も　あって
+			<Text>[Ctrl1:xcenter ]ぬいぐるみの　アドバイスも　あって
 [Ctrl1:xcenter ]なんとか　扉を　倒した
 [Ctrl1:xcenter ][Name:TrainerName Idx="1" ]王子
 
 [Ctrl1:xcenter ]ぬいぐるみを　ポケットに　隠し
-[Ctrl1:xcenter ]オリの外に　飛び出した……</Text>
+[Ctrl1:xcenter ]オリの外に　飛び出しました……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-15T02:14:08" />
+				Time="2011-11-24T13:27:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -123,10 +123,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]はたして　おうじは　ジュジュベから
-[Ctrl1:xcenter ]にげのびることは　できるのか！？</Text>
+[Ctrl1:xcenter ]にげのびて　もとのせかいへ
+[Ctrl1:xcenter ]かえることは　できるのでしょうか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-15T02:17:16" />
+				Time="2011-11-24T13:28:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -135,10 +136,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]果たして　王子は　ジュジュベから
-[Ctrl1:xcenter ]逃げのびることは　できるのか！？</Text>
+[Ctrl1:xcenter ]逃げのびて　元の世界へと
+[Ctrl1:xcenter ]帰ることは　出来るのでしょうか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-15T02:21:07" />
+				Time="2011-11-24T13:29:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -306,15 +308,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ぬいぐるみの　じょげんも　あって
+			<Text>[Ctrl1:xcenter ]ぬいぐるみの　アドバイスも　あって
 [Ctrl1:xcenter ]なんとか　とびらを　たおした
 [Ctrl1:xcenter ][Name:TrainerName Idx="1" ]ひめ
 
 [Ctrl1:xcenter ]ぬいぐるみを　ポケットに　かくし
-[Ctrl1:xcenter ]オリのそとに　とびだした……</Text>
+[Ctrl1:xcenter ]オリのそとに　とびだしました……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-15T02:18:41" />
+				Time="2011-11-24T13:29:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -322,15 +324,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ぬいぐるみの　助言も　あって
+			<Text>[Ctrl1:xcenter ]ぬいぐるみの　アドバイスも　あって
 [Ctrl1:xcenter ]なんとか　扉を　倒した
 [Ctrl1:xcenter ][Name:TrainerName Idx="1" ]姫
 
 [Ctrl1:xcenter ]ぬいぐるみを　ポケットに　隠し
-[Ctrl1:xcenter ]オリの外に　飛び出した……</Text>
+[Ctrl1:xcenter ]オリの外に　飛び出しました……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-15T02:18:46" />
+				Time="2011-11-24T13:29:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -355,10 +357,10 @@
 [Ctrl1:xcenter ]かわりばえしない　こうけい……
 
 [Ctrl1:xcenter ]そして　ひめを　にらみつける
-[Ctrl1:xcenter ]ジュジュベの　すがた　だった……</Text>
+[Ctrl1:xcenter ]ジュジュベの　すがた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-15T02:19:02" />
+				Time="2011-11-24T13:30:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -372,10 +374,10 @@
 [Ctrl1:xcenter ]代わり映えのしない　光景……
 
 [Ctrl1:xcenter ]そして　姫を　にらみつける
-[Ctrl1:xcenter ]ジュジュベの姿　だった……</Text>
+[Ctrl1:xcenter ]ジュジュベの姿……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-15T02:19:06" />
+				Time="2011-11-24T13:30:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -416,10 +418,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]はたして　ひめは　ジュジュベから
-[Ctrl1:xcenter ]にげのびることは　できるのか！？</Text>
+[Ctrl1:xcenter ]にげのびて　もとのせかいへ
+[Ctrl1:xcenter ]かえることは　できるのでしょうか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-15T02:21:58" />
+				Time="2011-11-24T13:30:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -428,10 +431,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]果たして　姫は　ジュジュベから
-[Ctrl1:xcenter ]逃げのびることは　できるのか！？</Text>
+[Ctrl1:xcenter ]逃げのびて　元の世界へと
+[Ctrl1:xcenter ]帰ることは　出来るのでしょうか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-15T02:21:29" />
+				Time="2011-11-24T13:30:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
