@@ -28,8 +28,8 @@ static const GFL_BBDACT_ANM DATA_BlActSpPoke_StopU[] = {
   {  4, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<ƒŒƒVƒ[ƒN(SPPOKE01_RE/SPPOKE02_ZE)‚Ì‚Ý
   {  5, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
   {  6, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
-  {  5, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
   {  7, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
+  {  5, ANMFLIP_OFF, ANMFLIP_OFF,  7 },  ///<
   { GFL_BBDACT_ANMCOM_JMP,0,0, 0 },
 };
 
