@@ -8,9 +8,35 @@
   .include  "scr_seq_def.h"
   .include  "msg_pokecen_scr.h"
   //.include  "pokecen_scr.h"
+  
+  //おもいでリンク用インクルード
+  .include  "c01pc0101.h"
+  .include  "c02pc0101.h"
+  .include  "c03pc0101.h"
+  .include  "c04pc0101.h"
+  .include  "c05pc0101.h"
+  .include  "c06pc0101.h"
+  .include  "c07pc0101.h"
+  .include  "c08pc0101.h"
+  .include  "c09r0701.h"
+  .include  "bc10pcr0101.h"
+  .include  "wc10pcr0101.h"
+  .include  "c12pc0101.h"
+  .include  "c13pc0101.h"
+  .include  "c14pc0101.h"
+  .include  "t02pc0101.h"
+  .include  "t03pc0101.h"
+  .include  "t04pc0101.h"
+  .include  "t06pc0101.h"
+  .include  "t07pc0101.h"
+
+  .include  "oldd06r0101.h"
+  .include  "oldd06r0101_def.h"
 
   .include  "../../../prog/include/system/timezone.h" //時間帯定義
   .include  "../../../prog/src/field/scrcmd_rndmatch.h"
+
+//@author Mizuguchi_Mai（リンクイベント）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -28,13 +54,32 @@ _EVENT_DATA    ev_pokecen_elevator_in
 _EVENT_DATA    ev_pokecen_elevator_out
 _EVENT_DATA    ev_pokecen_elevator_out_continue
 _EVENT_DATA    ev_geonet
+_EVENT_DATA    ev_omoidelink_pc
+_EVENT_DATA    ev_reserve_omoidelink_end_pc
 _EVENT_DATA_END
 
 /**************************************************************/
 /*            特殊スクリプト：ゾーン切り替えタイミング  　    */
 /**************************************************************/
 INIT_EVENT_START ev_zone_pokecen
-
+  {
+  //データコンバートフラグチェック
+  _DATACONV_GET_FLAG( DATACONV_FLAG_GAME_CLEAR, LOCALWORK15 )
+  
+  _DEBUG_PRINT_WK( 80 )
+  
+  //ゲームクリア状態でリンクイベント起動ならBREEDERMを表示
+  IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_08 == 0 THEN
+    
+    _DEBUG_PRINT_WK( 99 )
+    
+    //========================================//
+    //BREEDERM表示
+    _FLAG_RESET( FV_PC_OMOIDELINK )
+    $LOCALWORK15 = 0
+    //========================================//
+  ENDIF
+  }
 INIT_EVENT_END
 
 
@@ -670,6 +715,125 @@ EVENT_START    ev_geonet
     _PLAINWIN_CLOSE()
   ENDIF
 EVENT_END
+
+/**************************************************************/
+/*    おもいでリンク起動                                      */
+/**************************************************************/
+EVENT_START    ev_omoidelink_pc
+  
+  IF $WK_SYS_LINK_EVENT_08 == 0 THEN
+    _TALK_OBJ_START()
+    
+    //起動メッセージ
+    _BALLOONWIN_TALKOBJ_MSG( msg_pc_memory_01 )
+    _MSGWIN_CLOSE()
+    
+    //========================================//
+    //現在のゾーンIDを格納
+    _GET_ZONE_ID( WK_OTHER_LINKEVENT_ZONE )
+    //========================================//
+    
+    //暗転
+    _MAP_FADE_BLACK_OUT_SLOW()
+    
+    //過去イベント・電気石のほらあな起動
+    _RESERVE_SCRIPT( SCRID_RESERVE_OLDD06R0101_EVENT_01 )
+    _MAP_FADE_END_CHECK()
+    //マップチェンジ
+    _MAP_CHANGE_NO_FADE( ZONE_ID_OLDD06R0101, 9, 0, 19, DIR_DOWN )
+  
+  //2回目以降
+  ELSE
+    
+    //【仮】メッセージラベル
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_pc_memory_01 )
+    
+  ENDIF
+EVENT_END
+
+/**************************************************************/
+/*    おもいでリンク終了                                      */
+/**************************************************************/
+EVENT_START    ev_reserve_omoidelink_end_pc
+
+  //ブラックイン
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+  
+  SWITCH  $WK_OTHER_LINKEVENT_ZONE
+  CASE 8 THEN
+    //C01
+    _BALLOONWIN_OBJMSG_POS( msg_pc_memory_01 , C01PC0101_BREEDERM_01 , POS_DEFAULT)
+  CASE 20 THEN
+    //C02
+    _BALLOONWIN_OBJMSG_POS( msg_pc_memory_01 , C02PC0101_BREEDERM_01 , POS_DEFAULT)
+  CASE 41 THEN
+    //C03
+    _BALLOONWIN_OBJMSG_POS( msg_pc_memory_01 , C03PC0101_BREEDERM_01 , POS_DEFAULT)
+  CASE 65 THEN
+    //C04
+    _BALLOONWIN_OBJMSG_POS( msg_pc_memory_01 , C04PC0101_BREEDERM_01 , POS_DEFAULT)
+  CASE 99 THEN
+    //C05
+    _BALLOONWIN_OBJMSG_POS( msg_pc_memory_01 , C05PC0101_BREEDERM_01 , POS_DEFAULT)
+  CASE 109 THEN
+    //C06
+    _BALLOONWIN_OBJMSG_POS( msg_pc_memory_01 , C06PC0101_BREEDERM_01 , POS_DEFAULT)
+  CASE 115 THEN
+    //C07
+    _BALLOONWIN_OBJMSG_POS( msg_pc_memory_01 , C07PC0101_BREEDERM_01 , POS_DEFAULT)
+  CASE 122 THEN
+    //C08
+    _BALLOONWIN_OBJMSG_POS( msg_pc_memory_01 , C08PC0101_BREEDERM_01 , POS_DEFAULT)
+  CASE 146 THEN
+    //C09
+    _BALLOONWIN_OBJMSG_POS( msg_pc_memory_01 , C09R0701_BREEDERM_01 , POS_DEFAULT)
+  CASE 1 THEN
+    //BC10
+    _BALLOONWIN_OBJMSG_POS( msg_pc_memory_01 , BC10PC0101_BREEDERM_01 , POS_DEFAULT)
+  CASE 425 THEN
+    //WC10
+    _BALLOONWIN_OBJMSG_POS( msg_pc_memory_01 , WC10PC0101_BREEDERM_01 , POS_DEFAULT)
+  CASE 435 THEN
+    //C12
+    _BALLOONWIN_OBJMSG_POS( msg_pc_memory_01 , C12PC0101_BREEDERM_01 , POS_DEFAULT)
+  CASE 454 THEN
+    //C13
+    _BALLOONWIN_OBJMSG_POS( msg_pc_memory_01 , C13PC0101_BREEDERM_01 , POS_DEFAULT)
+  CASE 472 THEN
+    //C14
+    _BALLOONWIN_OBJMSG_POS( msg_pc_memory_01 , C14PC0101_BREEDERM_01 , POS_DEFAULT)
+  CASE 398 THEN
+    //T02
+    _BALLOONWIN_OBJMSG_POS( msg_pc_memory_01 , T02PC0101_BREEDERM_01 , POS_DEFAULT)
+  CASE 407 THEN
+    //T03
+    _BALLOONWIN_OBJMSG_POS( msg_pc_memory_01 , T03PC0101_BREEDERM_01 , POS_DEFAULT)
+  CASE 413 THEN
+    //T04
+    _BALLOONWIN_OBJMSG_POS( msg_pc_memory_01 , T04PC0101_BREEDERM_01 , POS_DEFAULT)
+  CASE 443 THEN
+    //T06
+    _BALLOONWIN_OBJMSG_POS( msg_pc_memory_01 , T06PC0101_BREEDERM_01 , POS_DEFAULT)
+  CASE 460 THEN
+    //T07
+    _BALLOONWIN_OBJMSG_POS( msg_pc_memory_01 , T07PC0101_BREEDERM_01 , POS_DEFAULT)
+  ENDSWITCH
+  _MSGWIN_CLOSE()
+  
+  //========================================//
+  //リンクイベント終了
+  $WK_SYS_LINK_EVENT_08 = 1
+  //イベント起動ゾーンを初期化
+  $WK_OTHER_LINKEVENT_ZONE = 0
+  //おもいでリンクトリガー人を非表示に
+  _FLAG_SET( FV_PC_OMOIDELINK )
+  //システムフラグでNポケモン起動フラグ設定
+  _FLAG_SET(SYS_FLAG_NPOKE_OPEN)
+  //========================================//
+  
+EVENT_END
+
 
 //==============================================================
 //サブルーチン：ランダムマッチからの戻り

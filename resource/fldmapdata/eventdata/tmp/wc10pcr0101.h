@@ -18,6 +18,7 @@
 #define WC10PC0101_SHOPM1_02               6
 #define WC10PC0101_BACKPACKERM_01          7
 #define WC10PC0101_MEDALOYAJI              8
+#define WC10PC0101_BREEDERM_01             9
 
 #endif //ZONE_WC10PCR0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/wc10pcr0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

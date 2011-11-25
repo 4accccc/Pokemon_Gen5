@@ -21,6 +21,7 @@
 #define C08PC0101_MAN3_01                  9
 #define C08PC0101_BOY2_01                 10
 #define C08PC0101_LADY_01                 11
+#define C08PC0101_BREEDERM_01             12
 
 #endif //ZONE_C08PC0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c08pc0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

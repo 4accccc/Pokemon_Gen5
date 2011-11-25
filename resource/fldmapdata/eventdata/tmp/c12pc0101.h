@@ -20,6 +20,7 @@
 #define C12PC0101_SWBELL_01                8
 #define C12PC0101_WOMAN1_01                9
 #define C12PC0101_MIDDLEMAN2_01           10
+#define C12PC0101_BREEDERM_01             11
 
 #endif //ZONE_C12PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c12pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

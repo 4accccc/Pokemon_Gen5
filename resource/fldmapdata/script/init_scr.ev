@@ -32,6 +32,10 @@ INIT_EVENT_END
 
 init_flags:
 {
+  
+  //PC：BREEDERM（リンクイベント起動）
+  _FLAG_SET( FV_PC_OMOIDELINK )
+  
 	//R03道路：育て屋じいさん
 	_FLAG_SET( FV_R03_SODATEYA_01 )
 

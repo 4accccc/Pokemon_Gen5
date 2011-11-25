@@ -20,6 +20,7 @@
 #define C02PC0101_BACKPACKERM_01           8
 #define C02PC0101_GIRL2_01                 9
 #define C02PC0101_BOY1_01                 10
+#define C02PC0101_BREEDERM_01             11
 
 #endif //ZONE_C02PC0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c02pc0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

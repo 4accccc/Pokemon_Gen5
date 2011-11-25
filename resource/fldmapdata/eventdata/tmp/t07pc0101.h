@@ -20,6 +20,7 @@
 #define T07PC0101_SHOPM1_02                8
 #define T07PC0101_MEDALOYAJI               9
 #define T07PC0101_DELIVERY                10
+#define T07PC0101_BREEDERM_01             11
 
 #endif //ZONE_T07PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t07pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

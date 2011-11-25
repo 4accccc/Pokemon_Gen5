@@ -13,6 +13,7 @@
   .include  "c06pc0101_def.h"
   .include  "postman_scr_def.h"
   .include  "medal_scr_def.h"
+  .include  "pokecen_scr_def.h"
   
 //--------------------------------------------------------------
 //              特殊スクリプト
@@ -21,4 +22,5 @@ _FIELD_INIT_LABEL SCRID_INIT_MEDAL_OYAJI
 _FIELD_INIT_LABEL SCRID_INIT_POSTMAN
 _FIELD_RECOVER_LABEL SCRID_RECOVER_MEDAL_OYAJI
 _FIELD_RECOVER_LABEL SCRID_RECOVER_POSTMAN
+_ZONE_CHANGE_LABEL    SCRID_ZONE_POKECEN
 _SP_EVENT_DATA_END

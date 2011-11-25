@@ -20,6 +20,7 @@
 #define C13PC0101_GIRL1_01                 8
 #define C13PC0101_MEDALOYAJI               9
 #define C13PC0101_DELIVERY                10
+#define C13PC0101_BREEDERM_01             11
 
 #endif //ZONE_C13PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c13pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -19,6 +19,7 @@
 #define C05PC0101_MEDALOYAJI               7
 #define C05PC0101_MIDDLEWOMAN1_01          8
 #define C05PC0101_GIRL1_01                 9
+#define C05PC0101_BREEDERM_01             10
 
 #endif //ZONE_C05PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c05pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

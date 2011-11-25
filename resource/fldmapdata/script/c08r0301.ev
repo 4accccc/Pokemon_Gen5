@@ -40,7 +40,7 @@ EVENT_START   ev_c08r0301_gentleman_01
   _PLAYER_NAME( 1 )
 
   //グッズケースを持っている
-  IF $WK_SCENE_C04R0201 == 1 THEN
+  IF $WK_SCENE_C04R0201 == 2 THEN
 
     //グッズを全て収集している
     IF $WK_SCENE_C08R0301 == 4 THEN

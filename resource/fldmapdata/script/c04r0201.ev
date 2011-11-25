@@ -13,9 +13,14 @@
   .include  "c04r0201.h"
   .include  "musical_scr_def.h"
   .include  "musical_scr_local.h" //ミュージカルの定義が入っています
+  
+  //リンクイベント用インクルード
+  .include  "oldc04r0201.h"
+  .include  "oldc04r0201_def.h"
 
   //@author fujimura_souichirou(ライモンラリー)
   //@author nagihashi_toru(ミュージカルチュートリアルイベント)
+  //@author Mizuguchi_Mai(リンクイベント接続)
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -42,6 +47,8 @@ _EVENT_DATA    ev_bg_c04r0201_statue_01
 _EVENT_DATA    ev_c04r0201_policeman_01
 _EVENT_DATA    ev_c04r0201_clown_01
 _EVENT_DATA    ev_c04r0201_conv_girl_01
+_EVENT_DATA    ev_reserve_c04r0201_link_event_ret01
+_EVENT_DATA    ev_reserve_c04r0201_link_event_ret02
 _EVENT_DATA_END
 
 
@@ -54,7 +61,9 @@ INIT_EVENT_START  ev_c04R0201_init
   IF $WK_SCENE_C04R0201 == 0 THEN
     //オーナーの位置を変更
     _OBJ_POS_CHANGE( C04R0201_OWNER_01, 14, 0, 13, DIR_UP )
-
+  ELSIF $WK_SCENE_C04R0201 == 1 THEN
+    //オーナーの位置を変更
+    _OBJ_POS_CHANGE( C04R0201_OWNER_01, 14, 0, 14, DIR_DOWN )
   ENDIF
 
 INIT_EVENT_END
@@ -110,28 +119,59 @@ EVENT_START		ev_scene_c04r0201_musical_first
 		_TIME_WAIT( 16 )
 		_OBJ_ANIME( C04R0201_OWNER_01, anm_mark_gyoe )
 		_OBJ_ANIME_WAIT()
+		
+    //過去主人公名を代入
+    _DATACONV_SET_NAME( DATACONV_ID_MUSICAL, 0 )
 
     //そうだ！　あなたに　さしあげる
 	  _BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_swan_02d, C04R0201_OWNER_01 )
 	  _MSGWIN_CLOSE()
-
-	  //オーナー：グッズケースを渡す
-	  _OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_move_02 )
-	  _OBJ_ANIME_WAIT()
-
-	  //グッズケース入手
-	  _ITEM_EVENT_KEYWAIT( ITEM_GUZZUKEESU, 1 )
-
-	  //オーナー：一歩さがる
-	  _OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_move_03 )
-	  _OBJ_ANIME_WAIT()
-
-    //グッズコンバート
-    _DATACONV_CONV_MUSICAL( LWK_GET_ITEM )
+	  
+	  //システム：（コンバート名）とおそろいのグッズをうけとりますか？
+	  _SYSWIN_MSG( msg_c04r0201_confirm_00 , POS_DEFAULT )
+    _YES_NO_WIN( SCWK_ANSWER )
     
-    //あなたなら　きっと　しんせだいの
-	  _BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_swan_03a, C04R0201_OWNER_01 )
-	  _MSGWIN_CLOSE()
+    //はい
+    IF $SCWK_ANSWER == SCR_YES THEN
+      
+      //システム：一回しか受け取れませんが よいですか？
+      _SYSWIN_MSG( msg_c04r0201_confirm_01 , POS_DEFAULT )
+      _YES_NO_WIN( SCWK_ANSWER )
+      
+      //はい
+      IF $SCWK_ANSWER == SCR_YES THEN
+        _MSGWIN_CLOSE()
+        
+        //========================================//
+        //チュートリアルイベント中断
+      	$WK_SCENE_C04R0201 = 1
+        //========================================//
+        
+        //【仮】おもいでリンク起動メッセージ
+        _BALLOONWIN_OBJMSG( msg_c04r0201_memory_01, C04R0201_OWNER_01 )
+        _MSGWIN_CLOSE()
+        
+        //暗転
+        _MAP_FADE_BLACK_OUT_SLOW()
+        //過去イベント・ミュージカルホール起動
+        _RESERVE_SCRIPT( SCRID_RESERVE_OLDC04R0201_EVENT_01 )
+        _MAP_FADE_END_CHECK()
+        //マップチェンジ
+        _MAP_CHANGE_NO_FADE( ZONE_ID_OLDC04R0201, 14, 0, 15, DIR_DOWN )
+        
+      //いいえ
+      ELSE
+        _MSGWIN_CLOSE()
+        _CALL ev_first_convert_no
+        _CALL ev_scene_c04r0201_musical_first_02
+      ENDIF
+    
+    //いいえ
+    ELSE
+        _MSGWIN_CLOSE()
+        _CALL ev_first_convert_no
+        _CALL ev_scene_c04r0201_musical_first_02
+    ENDIF
 
   ELSE
     //コンバート用データない
@@ -163,9 +203,19 @@ EVENT_START		ev_scene_c04r0201_musical_first
 	  //そのグッズケースの中に
 	  _BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_03, C04R0201_OWNER_01 )
 	  _MSGWIN_CLOSE()
+	  
+	  _CALL ev_scene_c04r0201_musical_first_02
 
   ENDIF
-	
+  
+}
+EVENT_END
+
+/************************************************************/
+/*		CALL：チュートリアル後半処理				*/
+/************************************************************/
+ev_scene_c04r0201_musical_first_02:
+
   _MUSICAL_TOOLS( MUSICAL_TOOL_INIT, 0,0,0 )
 	{
 	DEFINE_LOCAL LWK_ENT_CHK
@@ -205,17 +255,42 @@ EVENT_START		ev_scene_c04r0201_musical_first
 	//オーナーを元の位置へ配置
 	_OBJ_POS_CHANGE( C04R0201_OWNER_01, 17, 6, 3, DIR_DOWN )
 
-
   //========================================//
   //初回話しかけイベント無効
-	$WK_SCENE_C04R0201 = 1
+	$WK_SCENE_C04R0201 = 2
   //========================================//
-	
-}
-EVENT_END
+_RET
 
+/************************************************************/
+/*		CALL：初回コンバートありで「いいえ」処理				*/
+/************************************************************/
+ev_first_convert_no:
 
-//ドレスアップ参加フロー
+  //あらあら　そうですか！
+  _BALLOONWIN_OBJMSG( msg_c04r0201_goods_get_reject_00, C04R0201_OWNER_01 )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //オーナー：グッズケースを渡す
+  _OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_move_02 )
+  _OBJ_ANIME_WAIT()
+
+  //グッズケース入手
+  _ITEM_EVENT_KEYWAIT( ITEM_GUZZUKEESU, 1 )
+
+  //オーナー：一歩さがる
+  _OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_move_03 )
+  _OBJ_ANIME_WAIT()
+
+  //あなたなら　きっと　しんせだいの
+  _BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_03, C04R0201_OWNER_01 )
+  _MSGWIN_CLOSE()
+
+_RET
+
+/************************************************************/
+/*		CALL：ドレスアップ参加フロー				*/
+/************************************************************/
 ev_fitting_entry:
 	
 	{
@@ -267,6 +342,45 @@ ev_fitting_entry:
 	}
 	
 _RET
+
+/************************************************************/
+/*		RESERVE：チュートリアルからおもいでリンク復帰処理				*/
+/************************************************************/
+EVENT_START		ev_reserve_c04r0201_link_event_ret01
+{
+  DEFINE_LOCAL LWK_GET_ITEM
+  
+  //ブラックイン
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+
+  //オーナー：グッズケースを渡す
+  _OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_move_02 )
+  _OBJ_ANIME_WAIT()
+
+  //グッズケース入手
+  _ITEM_EVENT_KEYWAIT( ITEM_GUZZUKEESU, 1 )
+  
+  //オーナー：一歩さがる
+  _OBJ_ANIME( C04R0201_OWNER_01, anm_first_owner_move_03 )
+  _OBJ_ANIME_WAIT()
+  
+  //グッズコンバート
+  _DATACONV_CONV_MUSICAL( LWK_GET_ITEM )
+  
+  //あなたなら　きっと　しんせだいの
+  _BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_swan_03a, C04R0201_OWNER_01 )
+  _MSGWIN_CLOSE()
+  
+  //========================================//
+  //リンクイベント終了
+  $WK_SYS_LINK_EVENT_07 = 1
+  //========================================//
+  
+  //チュートリアル後半処理
+  _CALL ev_scene_c04r0201_musical_first_02
+}
+EVENT_END
 
 //--------------------------------------------------------------------
 //！マーク
@@ -465,46 +579,108 @@ EVENT_START		ev_c04r0201_owner_01
 
   //すでに何かイベントを行ったか？
   _TALK_OBJ_START()
-
-
+  
   _DATACONV_IS_EXIST( DATACONV_ID_MUSICAL, LWK_IS_EXIST )
   _DATACONV_IS_CONV_MUSICAL( LWK_IS_CONV )
 
   IF $LWK_IS_EXIST == TRUE && $LWK_IS_CONV == FALSE THEN
     //受け取っていない
-
+    
+    //過去主人公名を代入
+    _DATACONV_SET_NAME( DATACONV_ID_MUSICAL, 0 )
+    
     //ふーむ！　やはり　あなたには
 	  _BALLOONWIN_OBJMSG( msg_c04r0201_owner_swan_01, C04R0201_OWNER_01 )
 	  _MSGWIN_CLOSE()
-
-    //グッズコンバート
-    _DATACONV_CONV_MUSICAL( LWK_GET_ITEM )
-
-    IF $LWK_GET_ITEM == TRUE THEN
-
-      //プレイヤー名　は　グッズの　つめあわせを　もらった
-      _PLAYER_NAME( 0 )
-      _ME_PLAY(	SEQ_ME_KEYITEM )
-      _SYSWIN_MSG( msg_c04r0201_goods_get_00, POS_DEFAULT )
-      _ME_WAIT()
-      _SYSWIN_CLOSE()
-
-      //あなたなら　きっと　それらの　グッズ
-	    _BALLOONWIN_OBJMSG( msg_c04r0201_owner_swan_02, C04R0201_OWNER_01 )
-
+	  
+	  //システム：（コンバート名）とおそろいのグッズをうけとりますか？
+	  _SYSWIN_MSG( msg_c04r0201_confirm_00 , POS_DEFAULT )
+    _YES_NO_WIN( SCWK_ANSWER )
+    
+    //はい
+    IF $SCWK_ANSWER == SCR_YES THEN
+    
+      //システム：一回しか受け取れませんが よいですか？
+      _SYSWIN_MSG( msg_c04r0201_confirm_01 , POS_DEFAULT )
+      _YES_NO_WIN( SCWK_ANSWER )
+      
+      //はい
+      IF $SCWK_ANSWER == SCR_YES THEN
+      
+        _MSGWIN_CLOSE()
+        
+        //【仮】おもいでリンク起動メッセージ
+        _BALLOONWIN_OBJMSG( msg_c04r0201_memory_01, C04R0201_OWNER_01 )
+        _MSGWIN_CLOSE()
+        
+        //暗転
+        _MAP_FADE_BLACK_OUT_SLOW()
+        //過去イベント・ミュージカルホール起動
+        _RESERVE_SCRIPT( SCRID_RESERVE_OLDC04R0201_EVENT_01 )
+        _MAP_FADE_END_CHECK()
+        //マップチェンジ
+        _MAP_CHANGE_NO_FADE( ZONE_ID_OLDC04R0201, 14, 0, 15, DIR_DOWN )
+      
+      //いいえ
+      ELSE
+        _MSGWIN_CLOSE()
+        //あらあら　そうですか！
+        _BALLOONWIN_OBJMSG( msg_c04r0201_goods_get_reject_00, C04R0201_OWNER_01 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
+        
+      ENDIF
+    
+    //いいえ
     ELSE
-
-      //おやおや？　すでにおもちの
-	    _BALLOONWIN_OBJMSG( msg_c04r0201_owner_swan_03, C04R0201_OWNER_01 )
+      _MSGWIN_CLOSE()
+      //あらあら　そうですか！
+      _BALLOONWIN_OBJMSG( msg_c04r0201_goods_get_reject_00, C04R0201_OWNER_01 )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
     ENDIF
-
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
 
   ELSE
     //受け取っているなら通常のイベントアイテム入手処理へ
     _CALL ev_owner_normal
   ENDIF
+}
+EVENT_END
+
+/************************************************************/
+/*		RESERVE：チュートリアルからおもいでリンク復帰処理				*/
+/************************************************************/
+EVENT_START		ev_reserve_c04r0201_link_event_ret02
+{
+  DEFINE_LOCAL LWK_GET_ITEM
+  //グッズコンバート
+  _DATACONV_CONV_MUSICAL( LWK_GET_ITEM )
+
+  IF $LWK_GET_ITEM == TRUE THEN
+
+    //プレイヤー名　は　グッズの　つめあわせを　もらった
+    _PLAYER_NAME( 0 )
+    _ME_PLAY(	SEQ_ME_KEYITEM )
+    _SYSWIN_MSG( msg_c04r0201_goods_get_00, POS_DEFAULT )
+    _ME_WAIT()
+    _SYSWIN_CLOSE()
+
+    //あなたなら　きっと　それらの　グッズ
+    _BALLOONWIN_OBJMSG( msg_c04r0201_owner_swan_02, C04R0201_OWNER_01 )
+
+  ELSE
+
+    //おやおや？　すでにおもちの
+    _BALLOONWIN_OBJMSG( msg_c04r0201_owner_swan_03, C04R0201_OWNER_01 )
+  ENDIF
+
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+  //========================================//
+  //リンクイベント終了
+  $WK_SYS_LINK_EVENT_07 = 1
+  //========================================//
 }
 EVENT_END
 

@@ -22,6 +22,7 @@
 #define C06PC0101_PILOT_01                 8
 #define C06PC0101_POKE41_01                9
 #define C06PC0101_GIRL3_01                10
+#define C06PC0101_BREEDERM_01             11
 
 #endif //ZONE_C06PC0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c06pc0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

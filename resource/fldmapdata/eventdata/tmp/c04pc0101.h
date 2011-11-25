@@ -20,6 +20,7 @@
 #define C04PC0101_GIRL4_01                 8
 #define C04PC0101_POKE19_01                9
 #define C04PC0101_GENTLEMAN_01            10
+#define C04PC0101_BREEDERM_01             11
 
 #endif //ZONE_C04PC0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04pc0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

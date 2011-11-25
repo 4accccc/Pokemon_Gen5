@@ -21,6 +21,7 @@
 #define C03PC0101_POKE36_01                9
 #define C03PC0101_WOMAN1_01               10
 #define C03PC0101_BUSINESSMAN_01          11
+#define C03PC0101_BREEDERM_01             12
 
 #endif //ZONE_C03PC0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03pc0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

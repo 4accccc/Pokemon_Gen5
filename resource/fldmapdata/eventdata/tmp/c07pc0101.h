@@ -22,6 +22,7 @@
 #define C07PC0101_MEDALOYAJI               8
 #define C07PC0101_FIGHTERW_01              9
 #define C07PC0101_POKE44_01               10
+#define C07PC0101_BREEDERM_01             11
 
 #endif //ZONE_C07PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c07pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

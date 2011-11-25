@@ -19,6 +19,7 @@
 #define C14PC0101_RANGERM_01               7
 #define C14PC0101_MEDALOYAJI               8
 #define C14PC0101_DELIVERY                 9
+#define C14PC0101_BREEDERM_01             10
 
 #endif //ZONE_C14PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c14pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
