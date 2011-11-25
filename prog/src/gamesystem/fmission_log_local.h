@@ -16,6 +16,16 @@ typedef enum{
   FMISSION_LOG_SET_MAX,
 }FMISSION_LOG_SET_MODE;
 
+typedef enum{
+  FMISSION_LOG_WSET_NULL,
+  FMISSION_LOG_WSET_ITEM,
+  FMISSION_LOG_WSET_PLACENAME,
+  FMISSION_LOG_WSET_WAZA,
+  FMISSION_LOG_WSET_FREEWORD,
+  FMISSION_LOG_WSET_GPOWER,
+  FMISSION_LOG_WSET_MONSNAME,
+}FMISSION_LOG_WSET_TYPE;
+
 ///ミッションログデータ
 struct _FMISSION_LOG{
   STRCODE name[PERSON_NAME_SIZE+EOM_SIZE];  //7+EOM 16byte
@@ -210,6 +220,16 @@ extern void FMISSION_ENTRY_TBL_Update( LINK_FESTIVAL* fest_sys );
  */
 //------------------------------------------------------------------
 extern void FMISSION_ENTRY_TBL_DeleteData( LINK_FESTIVAL* fest_sys, const FEST_MISSION* fmwk );
+
+//==================================================================
+/**
+ * @brief フェスミッションログアクションの ワードセットタイプを取得
+ * @param   log_action  フェスミッションログアクション
+ *
+ * @retval  FMISSION_LOG_WSEET_TYPE 
+ */
+//==================================================================
+extern FMISSION_LOG_WSET_TYPE  FMISSION_GetLogActionWordsetType( u8 log_action );
 
 //------------------------------------------------------------------
 /*

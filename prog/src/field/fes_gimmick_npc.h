@@ -21,6 +21,7 @@
 #define FES_GIMMICK_NPC_POINT_MAX (FES_GIMMICK_NPC_POINT_HIGH_MAX) ///<1ゾーンでmax3箇所抽選される
 
 #define FES_GIMMICK_NPC_FLAG_WORK_NUM  (6)   ///<過去6ゾーン分確保
+#define FES_GIMMICK_NPC_FLAG_WORK_END  (FES_GIMMICK_NPC_FLAG_WORK_NUM-1)   ///<過去6ゾーン分確保
 
 #define FES_GIMMICK_NPC_POINT_PARAM_MAX (3) //ポイントごとに保存するパラメータ数
 

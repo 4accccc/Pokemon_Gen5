@@ -209,12 +209,40 @@ static u16 sub_LotItem( FES_GIMMICK_ITEM_WORK* wk, FEST_MISSION* fmwk, GFL_STD_R
 
 //----------------------------------------------------------------------
 /*
+ *  @brief  アイテムミッションギミック 直近のテーブルのフラグ状態をチェックし、
+ *          新規テーブルを登録するか、上書きするか決める
+ *
+ *  @retval TRUE  1つ以上フラグが立っている
+ *  @retval FALSE 1つもフラグが立っていない
+ */
+//----------------------------------------------------------------------
+static BOOL sub_FlagTableIsChange( FES_GIMMICK_ITEM_WORK* wk )
+{
+  int i, idx;
+  
+  if( wk->flag_wk.tbl_num == 0 ){
+    return TRUE;  //最初の一個は必ず登録する
+  }else{
+    idx = wk->flag_wk.tbl_num-1;
+  }
+  //直近テーブルのゾーンのフラグが1つでも立っているかチェック
+  for(i = 0;i < FES_GIMMICK_ITEM_POINT_MAX; i++ ){
+    if( wk->flag_wk.tbl[idx].flag[i] ){
+      return TRUE;  //立っているフラグを見つけた
+    }
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------
+/*
  *  @brief  アイテムミッションギミック ゾーンチェンジ時のフラグ初期化
  */
 //----------------------------------------------------------------------
 static void sub_FlagTableUpdate( FES_GIMMICK_ITEM_WORK* wk, u16 zone_id )
 {
   int i,idx = 0;
+  BOOL new_entry = FALSE;
 
   //データの無いゾーンなら何もしない
   if( wk->data_max == 0 ){
@@ -222,17 +250,39 @@ static void sub_FlagTableUpdate( FES_GIMMICK_ITEM_WORK* wk, u16 zone_id )
   }
   //すでにテーブルに登録済みなら何もしない
   for( i = 0;i < wk->flag_wk.tbl_num;i++){
-   if( wk->flag_wk.tbl[i].zone_id == zone_id ){
+    if( wk->flag_wk.tbl[i].zone_id == zone_id ){
      return;
-   }
+    }
   }
-  if( wk->flag_wk.tbl_num < FES_GIMMICK_ITEM_FLAG_WORK_NUM ){  //新しい場所に登録
-    idx = wk->flag_wk.tbl_num++;
-  }else{  //一番古いテーブルを押し出し
-    idx = FES_GIMMICK_ITEM_FLAG_WORK_NUM-1;
-    MI_CpuCopy8( &wk->flag_wk.tbl[1], &(wk->flag_wk.tbl[0]), sizeof(FES_GIMMICK_ITEM_FLAG)*(FES_GIMMICK_ITEM_FLAG_WORK_NUM-1)); 
+  //直近のテーブルのフラグが更新されていなければ、領域は上書きされる
+  new_entry = sub_FlagTableIsChange( wk );
+
+  if( new_entry ){  //新規登録
+    if( wk->flag_wk.tbl_num < FES_GIMMICK_ITEM_FLAG_WORK_NUM ){  //新しい場所に登録
+      idx = wk->flag_wk.tbl_num++;
+    }else{  //一番古いテーブルを押し出し
+      idx = FES_GIMMICK_ITEM_FLAG_WORK_END;
+      MI_CpuCopy8( &wk->flag_wk.tbl[1], &(wk->flag_wk.tbl[0]), sizeof(FES_GIMMICK_ITEM_FLAG)*FES_GIMMICK_ITEM_FLAG_WORK_END); 
+    }
+  }else{  //上書き登録
+    if( wk->flag_wk.tbl_num == 0 ){
+      idx  = 0;
+    }else{
+      idx = wk->flag_wk.tbl_num-1;
+    }
   }
   MI_CpuClear8( &wk->flag_wk.tbl[ idx ], sizeof(FES_GIMMICK_ITEM_FLAG));
   wk->flag_wk.tbl[ idx ].zone_id = zone_id;
+
+#if defined(DEBUG_ONLY_FOR_iwasawa) || defined(DEBUG_ONLY_FOR_masafumi_saitou)
+  {
+    int i;
+    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"zone_flag_tbl = %d -> ", wk->flag_wk.tbl_num );
+    for( i = 0; i < wk->flag_wk.tbl_num; i++ ){
+      OS_FPrintf(OSPRINT_LINKFEST_PAGE,"%d, ", wk->flag_wk.tbl[i].zone_id );
+    }
+    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"\n");
+  }
+#endif
 }
 

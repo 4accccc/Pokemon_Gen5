@@ -24,6 +24,7 @@
 #define FES_GIMMICK_ITEM_POINT_MAX (FES_GIMMICK_ITEM_POINT_HIGH_MAX) ///<1ゾーンでmax8箇所抽選される
 
 #define FES_GIMMICK_ITEM_FLAG_WORK_NUM  (6)   ///<過去6ゾーン分確保
+#define FES_GIMMICK_ITEM_FLAG_WORK_END  (FES_GIMMICK_ITEM_FLAG_WORK_NUM-1)   ///<過去6ゾーン分確保
 
 //フェスミッションアイテムギミックフラグ
 typedef struct _FES_GIMMICK_ITEM_FLAG{

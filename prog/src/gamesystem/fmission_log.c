@@ -31,8 +31,10 @@
 #include "savedata/mystatus.h"
 #include "item/item.h"
 #include "item/itemsym.h"
+#include "waza_tool/wazano_def.h"
 #include "game_beacon_local.h"
 #include "gamesystem/game_beacon_accessor.h"
+#include "gamesystem/g_power.h"
 #include "debug/debug_flg.h"
 
 #include "link_festival_local.h"
@@ -65,6 +67,61 @@ static const FMISSION_BEACON_CHECK_FUNC DATA_FMissionBeaconCheckFuncTbl[FMISSION
   sub_BeaconCheckItem,
   sub_BeaconCheckNpc,
 };
+
+static const u8 DATA_LogWordsetTypeTbl[] = {
+  FMISSION_LOG_WSET_NULL,  //NULL = 0,          ///<NULL
+  FMISSION_LOG_WSET_NULL,  //OPEN = 1,          ///<開催
+  FMISSION_LOG_WSET_NULL,  //NEW_ENTRY = 2,     ///<新規参加
+  FMISSION_LOG_WSET_PLACENAME,  //MAP_CHANGE = 3,    ///<マップチェンジ
+  //With Param
+  FMISSION_LOG_WSET_MONSNAME,  //POKE_ENCOUNT = 4,  ///<[ポケモン名]とエンカウントした
+  FMISSION_LOG_WSET_MONSNAME,  //POKE_WIN = 5,      ///<[ポケモン名]を倒した
+  FMISSION_LOG_WSET_MONSNAME,  //POKE_CAPTURE = 6,  ///<[ポケモン名]を捕まえた
+  FMISSION_LOG_WSET_MONSNAME,  //POKE_ESCAPE = 7,   ///<[ポケモン名]に逃げられたor逃げた
+  FMISSION_LOG_WSET_NULL,  //TR_ENCOUNT = 8,    ///<トレーナー戦開始
+  FMISSION_LOG_WSET_NULL,  //TR_WIN = 9,        ///<トレーナー戦勝利
+  FMISSION_LOG_WSET_NULL,  //GAMEOVER = 10,      ///<全滅した
+  FMISSION_LOG_WSET_ITEM,  //ITEM_USE = 11,     ///<[アイテム名]を使用した
+  FMISSION_LOG_WSET_ITEM,  //ITEM_GET = 12,     ///<[アイテム名]を手に入れた
+  FMISSION_LOG_WSET_WAZA,  //FIELD_SKILL = 13,  ///<[フィールド技]を使った
+  FMISSION_LOG_WSET_NULL,  //SHOPPING = 14,      ///<買い物中
+  FMISSION_LOG_WSET_NULL,  //GPOWER = 15,       ///<デルパワーを使った
+  FMISSION_LOG_WSET_NULL,  //FERRIS_WHEEL = 16, ///<観覧車に乗った
+  FMISSION_LOG_WSET_NULL,  //WATCH_SIGNBOARD = 17,    ///<看板を調べている
+  FMISSION_LOG_WSET_NULL,  //SODATEYA_EGG = 18,       ///<タマゴを受け取った
+
+  FMISSION_LOG_WSET_MONSNAME,  //EFF_ENC_WIN = 19,         ///<[ポケモン名]を倒した(揺れ草)
+  FMISSION_LOG_WSET_MONSNAME,  //EFF_ENC_CAPTURE = 20,     ///<[ポケモン名]を捕まえた(揺れ草)
+  FMISSION_LOG_WSET_MONSNAME,  //MUSHROOM_WIN = 21,          ///<[ポケモン名]を倒した(キノコエンカウント)
+  FMISSION_LOG_WSET_MONSNAME,  //MUSHROOM_CAPTURE = 22,      ///<[ポケモン名]を捕まえた(キノコエンカウント)
+  FMISSION_LOG_WSET_ITEM,      //KIRA_ITEM_GET = 23,       ///<[アイテム名]を見つけた(エフェクトアイテム)
+
+  FMISSION_LOG_WSET_NULL,  //TOWER_OF_HEAVEN = 24,       ///<鐘を鳴らした
+  FMISSION_LOG_WSET_ITEM,  //FEATHER_GET = 25,           ///<[アイテム名]を見つけた(羽)
+  FMISSION_LOG_WSET_ITEM,  //JEWEL_GET = 26,             ///<[アイテム名]を見つけた(ジュエル)
+  FMISSION_LOG_WSET_MONSNAME,  //EGG_HATCH = 27,             ///<[ポケモン名]が生まれた
+  FMISSION_LOG_WSET_MONSNAME,  //FISHING_ENCOUNT = 28,       ///<[ポケモン名]を釣り上げた
+  FMISSION_LOG_WSET_MONSNAME,  //ANIMAL_TRAIL_ENCOUNT = 29,  ///<[ポケモン名]を見つけた(獣道)
+
+  FMISSION_LOG_WSET_NULL,  //HELP_CHILD = 30,         ///<まいごを助けた
+  FMISSION_LOG_WSET_ITEM,  //PRESENT_ITEM = 31,       ///<[アイテム名]を渡した
+  FMISSION_LOG_WSET_NULL,  //ITEM_TRADE = 32,         ///<道具交換成功
+  FMISSION_LOG_WSET_ITEM,  //ITEM_BUY = 33,           ///<[アイテム名]を買った
+  FMISSION_LOG_WSET_NULL,  //RPS_WIN = 34,            ///<じゃんけんに買った
+  FMISSION_LOG_WSET_NULL,  //MEMORY_QUIZ_CLEAR = 35,  ///<記憶クイズに正解した
+  FMISSION_LOG_WSET_ITEM,  //GET_A_PRESENT = 36,      ///<[アイテム名]をもらった
+  FMISSION_LOG_WSET_NULL,  //TR_BATTLE_WIN = 37,      ///<トレーナーを倒した
+  FMISSION_LOG_WSET_NULL,  //MEMORY_QUIZ_CLEAR = 38,  ///<ポケモン図鑑クイズに正解した
+  FMISSION_LOG_WSET_NULL,  //RUN_OUT_OF_MONEY = 39,   ///<お金が足りない
+  FMISSION_LOG_WSET_NULL,  //RPS_LOSE = 40,           ///<じゃんけんに負けた
+
+  FMISSION_LOG_WSET_MONSNAME,  //POKE_DOWN = 41,        ///<[ポケモン名]が瀕死
+  FMISSION_LOG_WSET_MONSNAME,  //POKE_HP_LITTLE = 42,   ///<[ポケモン名]のHPが少ない
+  FMISSION_LOG_WSET_MONSNAME,  //POKE_PP_LITTLE = 43,   ///<[ポケモン名]のPPが少ない
+  //Haven't MissionParam
+  FMISSION_LOG_WSET_FREEWORD,       //FREEWORD = 44,         ///<一言メッセージ
+};
+
 
 //==================================================================
 /**
@@ -441,6 +498,23 @@ void FMISSION_ENTRY_TBL_DeleteData( LINK_FESTIVAL* fest_sys, const FEST_MISSION*
   }
 }
 
+//==================================================================
+/**
+ * @brief フェスミッションログアクションの ワードセットタイプを取得
+ * @param   log_action  フェスミッションログアクション
+ *
+ * @retval  FMISSION_LOG_WSEET_TYPE 
+ */
+//==================================================================
+FMISSION_LOG_WSET_TYPE  FMISSION_GetLogActionWordsetType( u8 log_action )
+{
+  if( log_action >= FMISSION_LOG_ACT_MAX ){
+    GF_ASSERT(0);
+    return FMISSION_LOG_WSET_NULL;
+  }
+  return DATA_LogWordsetTypeTbl[log_action];
+}
+
 //------------------------------------------------------------------
 /*
  *  フェスミッションビーコン エラーチェック
@@ -513,6 +587,54 @@ BOOL FMISSION_BeaconErrorCheck( LINK_FESTIVAL* fest_sys, const GAMEBEACON_INFO *
     GF_ASSERT_MSG(0,"%d\n",beacon->sp_item);
     return TRUE;
   }
+  //アクションパラメータチェック
+  {
+    FMISSION_LOG_WSET_TYPE type;
+    u8 log_action = log_GetLogActionFromBeacon( info, FMISSION_LOG_SET_NORMAL );
+
+    if( log_action == FMISSION_LOG_ACT_NULL ){
+      return FALSE; //アクションパラメータは関係ないビーコンだったのでチェックしなくていい
+    }
+    type = FMISSION_GetLogActionWordsetType( log_action );
+  
+    switch( type ){
+    case FMISSION_LOG_WSET_NULL:
+      break;  //チェック無し
+    case FMISSION_LOG_WSET_ITEM:
+      if( ITEM_IsDisableItem( beacon->act_param ) ){
+        GF_ASSERT_MSG(0,"%d\n",beacon->act_param);
+        return TRUE;
+      }
+      break;
+    case FMISSION_LOG_WSET_WAZA:
+      if( beacon->act_param == WAZANO_NULL ||
+          beacon->act_param >= WAZANO_MAX ){
+        GF_ASSERT_MSG(0,"%d\n",beacon->act_param);
+        return TRUE;
+      }
+      break;
+    case FMISSION_LOG_WSET_GPOWER:
+      if( !GPOWER_IsEnableID( beacon->act_param ) ){
+        GF_ASSERT_MSG(0,"%d\n",beacon->act_param);
+        return TRUE;
+      }
+      break;
+    case FMISSION_LOG_WSET_MONSNAME:
+      if( beacon->act_param == 0 ||
+          beacon->act_param > MONSNO_END ){
+        GF_ASSERT_MSG(0,"%d\n",beacon->act_param);
+        return TRUE;
+      }
+      break;
+    case FMISSION_LOG_WSET_FREEWORD:
+    case FMISSION_LOG_WSET_PLACENAME:
+    default:
+      //ここにはこないハズ
+      GF_ASSERT(0);
+      break;
+    }
+  }
+
   return FALSE;
 }
 
