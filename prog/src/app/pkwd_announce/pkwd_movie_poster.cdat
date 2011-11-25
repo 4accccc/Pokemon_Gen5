@@ -1,0 +1,84 @@
+//=============================================================================
+/**
+ *
+ *	@file		pkwd_movie_poster.cdat
+ *	@brief  ポケウッドタイトルロゴナンバー定義（ポスターも共用）
+ *	@author Akito Mori
+ *	@date	2011.11.25
+ *
+ */
+//=============================================================================
+
+// タイトルロゴ・ポスター用定義
+enum{
+  PW_POSTER_HATIKUMAN=0,                // 00 ハチクマン
+  PW_POSTER_FULL_METAL_COP,             // 01 Full Metal Cop
+  PW_POSTER_INVADOR,                    // 02 侵略者
+  PW_POSTER_BIG_SAURUS,                 // 03 大怪獣
+  PW_POSTER_TIMEGATE_TRAVELER,          // 04 Timegate Traveler
+  PW_POSTER_TRAINER_AND_LOVE,           // 05 Amor a primera vista
+  PW_POSTER_MAGICAL_DOOR,               // 06 Die Pforten des Zauberreichs
+  PW_POSTER_GIANT_OL,                   // 07 The Giant Woman!
+  PW_POSTER_TERROR_FOG,                 // 08 La nebbia rossa
+  PW_POSTER_NEVER_DEL_MEMORY,           // 09 Un souvenir inoubliable
+  PW_POSTER_GHOST_ERASER,               // 10 Ghost Eraser
+  PW_POSTER_HATIKUMAN_REVENGE,          // 11 ハチクマンの逆襲
+  PW_POSTER_HATIKUMAN_REVENGE_FINAL,    // 12 ハチクマンの逆襲FINAL
+  PW_POSTER_MAX,
+};
+
+// シナリオに対応したタイトルロゴ・ポスター定義
+static const u8 scenario_logo_tbl[]={
+  PW_POSTER_HATIKUMAN,               // シナリオ1
+  PW_POSTER_HATIKUMAN_REVENGE,       // シナリオ2
+  PW_POSTER_HATIKUMAN_REVENGE,       // シナリオ3
+
+  PW_POSTER_FULL_METAL_COP,          // シナリオ4
+  PW_POSTER_FULL_METAL_COP,          // シナリオ5
+  PW_POSTER_FULL_METAL_COP,          // シナリオ6
+  PW_POSTER_FULL_METAL_COP,          // シナリオ7
+
+  PW_POSTER_INVADOR,                 // シナリオ8
+  PW_POSTER_INVADOR,                 // シナリオ9
+  PW_POSTER_INVADOR,                 // シナリオ10
+  PW_POSTER_INVADOR,                 // シナリオ11
+
+  PW_POSTER_BIG_SAURUS,              // シナリオ12
+  PW_POSTER_BIG_SAURUS,              // シナリオ13
+  PW_POSTER_BIG_SAURUS,              // シナリオ14
+  PW_POSTER_BIG_SAURUS,              // シナリオ15
+
+  PW_POSTER_TIMEGATE_TRAVELER,       // シナリオ16
+  PW_POSTER_TIMEGATE_TRAVELER,       // シナリオ17
+  PW_POSTER_TIMEGATE_TRAVELER,       // シナリオ18
+
+  PW_POSTER_TRAINER_AND_LOVE,        // シナリオ19
+  PW_POSTER_TRAINER_AND_LOVE,        // シナリオ20
+  PW_POSTER_TRAINER_AND_LOVE,        // シナリオ21
+
+  PW_POSTER_MAGICAL_DOOR,            // シナリオ22
+  PW_POSTER_MAGICAL_DOOR,            // シナリオ23
+  PW_POSTER_MAGICAL_DOOR,            // シナリオ24
+
+  PW_POSTER_GIANT_OL,                // シナリオ25
+  PW_POSTER_GIANT_OL,                // シナリオ26
+  PW_POSTER_GIANT_OL,                // シナリオ27
+  PW_POSTER_GIANT_OL,                // シナリオ28
+
+  PW_POSTER_TERROR_FOG,              // シナリオ29
+  PW_POSTER_TERROR_FOG,              // シナリオ30
+  PW_POSTER_TERROR_FOG,              // シナリオ31
+
+  PW_POSTER_NEVER_DEL_MEMORY,        // シナリオ32
+  PW_POSTER_NEVER_DEL_MEMORY,        // シナリオ33
+  PW_POSTER_NEVER_DEL_MEMORY,        // シナリオ34
+  PW_POSTER_NEVER_DEL_MEMORY,        // シナリオ35
+
+  PW_POSTER_GHOST_ERASER,            // シナリオ36
+  PW_POSTER_GHOST_ERASER,            // シナリオ37
+  PW_POSTER_GHOST_ERASER,            // シナリオ38
+  PW_POSTER_GHOST_ERASER,            // シナリオ39
+
+  PW_POSTER_HATIKUMAN_REVENGE_FINAL, // シナリオ40
+  PW_POSTER_HATIKUMAN,               // シナリオ41
+};

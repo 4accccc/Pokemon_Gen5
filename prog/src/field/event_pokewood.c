@@ -379,6 +379,7 @@ static BATTLE_SETUP_PARAM * createPokewoodRecBattleParam( GAMESYS_WORK * gsys, F
     s_pokewood_cutin_check_flag = FALSE;
 
     bsp->DebugFlagBit |= 1<<BTL_DEBUGFLAG_POKEWOOD_CUTIN;
+    bsp->DebugFlagBit |= 1<<BTL_DEBUGFLAG_SKIP_BTLIN;
 
     bsp->PokewoodMode = BTL_POKEWOOD_SHOW;
   }

@@ -15,8 +15,8 @@
 #define PW_OPEN_PROVISION_GAMECLEAR ( 2 )   // ゲームクリア
 #define PW_OPEN_PROVISION_STARRANK  ( 3 )   // スターランク
 #define PW_OPEN_PROVISION_PROFIT    ( 4 )   // 興行収入
-#define PW_OPEN_PROVISION_TUTORIAL  ( 5 )   // チュートリアルクリア後
-#define PW_OPEN_PROVISION_ALLGOOD   ( 6 )   // 全作品GOODエンド
+#define PW_OPEN_PROVISION_ALLGOOD   ( 5 )   // 全作品GOODエンド
+#define PW_OPEN_PROVISION_TUTORIAL  ( 6 )   // チュートリアルクリア後
 #define PW_OPEN_PROVISION_DUAL      ( 7 )   // 2つの条件を持っている(指定シナリオクリア＆クリア）
 
 // シナリオがオープンするための興行収入額

@@ -325,18 +325,18 @@ void PKWDSYS_CheckEnding( PKWDSYS *pkwdsys, GAMEDATA * gamedata, int scenario_no
 // ポケウッド連続シナリオ定義
 //=================================================
 static const u8 series_tbl[][5]={
-  {  0,  1,  2,     PW_SERIES_END },   // シリーズ1
-  {  3,  4,  5,  6, PW_SERIES_END },   // シリーズ2
-  {  7,  8,  9, 10, PW_SERIES_END },   // シリーズ3
-  { 11, 12, 13, 14, PW_SERIES_END },   // シリーズ4
-  { 15, 16, 17,     PW_SERIES_END },   // シリーズ5
-  { 18, 19, 20,     PW_SERIES_END },   // シリーズ6
-  { 21, 22, 23,     PW_SERIES_END },   // シリーズ7
-  { 24, 25, 26, 27, PW_SERIES_END },   // シリーズ8
-  { 28, 29, 30,     PW_SERIES_END },   // シリーズ9
-  { 31, 32, 33, 34, PW_SERIES_END },   // シリーズ10
-  { 35, 36, 37, 38, PW_SERIES_END },   // シリーズ11
-//  { 39,             PW_SERIES_END },   // シリーズ12
+  {  0,  1,  2,     PW_SERIES_END, },   // シリーズ1
+  {  3,  4,  5,  6, PW_SERIES_END, },   // シリーズ2
+  {  7,  8,  9, 10, PW_SERIES_END, },   // シリーズ3
+  { 11, 12, 13, 14, PW_SERIES_END, },   // シリーズ4
+  { 15, 16, 17,     PW_SERIES_END, },   // シリーズ5
+  { 18, 19, 20,     PW_SERIES_END, },   // シリーズ6
+  { 21, 22, 23,     PW_SERIES_END, },   // シリーズ7
+  { 24, 25, 26, 27, PW_SERIES_END, },   // シリーズ8
+  { 28, 29, 30,     PW_SERIES_END, },   // シリーズ9
+  { 31, 32, 33, 34, PW_SERIES_END, },   // シリーズ10
+  { 35, 36, 37, 38, PW_SERIES_END, },   // シリーズ11
+  { 39,             PW_SERIES_END, },   // シリーズ12
 };
 
 /*
@@ -588,20 +588,8 @@ void PKWDSYS_CalcMyPokeStarPoint( GAMEDATA * gamedata, PKWDSYS *pkwdsys )
   }
 }
 
-// todo:pkwd_movie_title.cdatにも存在しているので、
-// 共通アクセスにすべき
-static const u8 scenario_logo_tbl[]={
-  1,  1,  1,  1,  //  1 -  4本目  
-  0,  0,  0,  0,  //  5 -  8本目
-  0,  0,  0,  2,  //  9 - 12本目  
-  2,  2,  2,  3,  // 13 - 16本目
-  4,  4,  4,  4,  // 17 - 20本目  
-  5,  5,  5,  5,  // 21 - 24本目
-  6,  6,  6,  6,  // 25 - 28本目  
-  7,  7,  7,  7,  // 29 - 32本目
-  8,  8,  8,  8,  // 33 - 36本目  
-  9,  9,  9,  9,  // 37 - 40本目
-};
+// シナリオ毎に使用するポスター定義
+#include "../app/pkwd_announce/pkwd_movie_poster.cdat"
 
 //=============================================================================================
 /**
@@ -616,5 +604,8 @@ void PKWDSYS_SetKanban( GAMEDATA * gamedata, PKWDSYS *pkwdsys, int rec_pos )
 {
   POKEWOOD_SAVEDATA *ps  = GAMEDATA_GetPokewoodSavedata(gamedata);
 
-  POKEWOOD_SAVEDATA_SetKanbanNo( ps, rec_pos, scenario_logo_tbl[pkwdsys->scenario_no] );
+  if(pkwdsys->scenario_no<POKEWOOD_PLAY_MAX){
+    // 看板の扱いは0=無しなので、＋１して渡す
+    POKEWOOD_SAVEDATA_SetKanbanNo( ps, rec_pos, scenario_logo_tbl[pkwdsys->scenario_no]+1 );
+  }
 }
