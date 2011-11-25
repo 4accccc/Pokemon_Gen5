@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-11-17T18:11:01" source="effect1_ng_2pt.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-11-25T16:06:43" source="effect1_ng_1pt.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2011-11-17T18:11:01" source="effect1_ng_2pt.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2011-11-25T16:06:43" source="effect1_ng_1pt.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -20,17 +20,58 @@
 	magnify="1.000000"
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="4 3"
+	compress_node="merge" node_size="5 4"
 	compress_material="on" material_size="2 2"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="off"
 />
 
-<box_test pos_scale="5" xyz="-1.000000 -5.250000 0.187500" whd="2.497559 4.842529 1.312500"/>
+<box_test pos_scale="5" xyz="-2.042480 -1.592773 0.000000" whd="4.084473 2.620117 1.500000"/>
 
-<tex_image_array size="1">
-	<tex_image index="0" name="effect_ng"
+<tex_image_array size="2">
+	<tex_image index="0" name="effect"
+		width="16" height="32" original_width="16" original_height="32"
+		format="a3i5"
+		palette_name="effect_pl"
+		path="C:/00_swan2d/ライブキャスターミニゲーム_3D/tex/effect.tga"
+	>
+		<bitmap size="256">
+			0101 0000 0000 0000 0000 0000 0000 0000
+			0101 0101 0000 0000 0000 0000 0000 0000
+			0202 0202 0101 0080 0000 0000 0000 0000
+			0404 0204 e202 0141 0000 0000 0000 0000
+			0505 0405 e2e4 0102 0001 0000 0000 0000
+			0607 e506 84e5 0203 0101 8000 0000 0000
+			0708 e6e7 85e6 0404 8102 00e1 0000 0000
+			0909 e888 e6e7 8585 e2e3 0041 0000 0000
+			0a0a e909 e7e8 e5e6 82e4 0102 0000 0000
+			0b0b 8a0a e8e9 e6e7 04e5 0102 0000 0000
+			0c0d 0b0b e9ea e7e8 0485 0202 0001 0000
+			0d0e 0b0c e9ea e7e8 0586 0204 0001 0000
+			0e0f 0c0d ea8b e7e9 0586 0204 0101 0000
+			0f10 0d0e ea8b e8e9 45e7 0204 0101 0000
+			1011 0d0e ea4c e8e9 e5e7 4284 0101 0000
+			1011 0d0e eb4c e8e9 e5e7 e2e4 4181 0000
+			1011 0d0e ea4c e8e9 e5e7 4284 0101 0000
+			0e10 0c0d ea8b e8e9 45e6 0204 0101 0000
+			0d0e 0c0d ea8b e7e9 0586 0204 0001 0000
+			0d0d 0b0c e9ea e7e8 0586 0203 0001 0000
+			0c0c 0a0b e8e9 e6e7 0485 0102 0001 0000
+			0b0b 890a e8e8 e6e7 03e5 0102 0000 0000
+			090a e809 e7e7 e5e6 82e4 0101 0000 0000
+			0809 e788 e6e6 8485 e2e2 0041 0000 0000
+			0707 e6e7 85e5 0204 8102 00e1 0000 0000
+			0606 e505 84e5 0202 0101 8000 0000 0000
+			0505 0404 e2e2 0102 0001 0000 0000 0000
+			0304 0202 e102 0041 0000 0000 0000 0000
+			0202 0102 0101 0080 0000 0000 0000 0000
+			0101 0101 0000 0000 0000 0000 0000 0000
+			0101 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="effect_ng"
 		width="32" height="64" original_width="32" original_height="64"
 		format="palette16"
 		color0_mode="transparency"
@@ -39,81 +80,87 @@
 	>
 		<bitmap size="512">
 			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 4000 0044 0000
+			0000 0000 0000 0000 4000 7864 0477 0000
+			0000 0000 0046 0000 6400 7777 4677 0000
+			0000 0000 0476 0000 7740 7777 6877 0004
+			0000 0000 8774 0044 7764 7777 6877 0046
+			0000 0000 7760 6477 7786 7777 6687 0046
+			0000 0000 8840 6877 7866 7777 6668 0046
+			0000 0000 6400 6666 7776 6887 6666 0004
+			0000 0000 0000 6644 7778 6668 4666 0000
+			0000 0000 0000 6400 8786 6666 0446 0000
+			0000 0000 0000 6400 6666 6666 0046 0000
+			0000 0000 0000 4000 6444 6666 0004 0000
+			0000 0000 0000 0000 4000 4444 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			4000 4444 0000 0000 0000 0000 0000 0000
+			6400 8778 0046 0000 0000 0000 0000 0000
+			7640 7777 0477 0000 0000 0000 0000 0000
+			7840 7777 4777 0000 0000 0000 0000 0000
+			8664 8777 6778 0000 0000 0000 0000 0000
+			6664 8888 7786 0446 0000 0000 0000 0000
+			8664 8778 7766 6777 0044 0000 0000 0000
+			8864 7777 7768 7777 0487 4000 4004 0066
+			7664 7777 7867 7777 4777 6400 7467 0047
+			6640 7777 7866 7777 7777 7644 6777 0004
+			6640 6886 8666 7777 7777 7788 4677 0000
+			6400 6666 6466 7776 6877 7766 0447 0000
+			4000 6664 6444 8866 6668 8666 0006 0000
+			0000 4440 4000 6666 6666 6644 0004 0000
+			0000 0000 0000 6664 4466 4440 0000 0000
+			0000 0000 0000 4440 0044 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 3000 0033 0000 0000 3300 0003 0000
-			0000 2100 0312 0000 0000 2130 0012 0000
-			0000 2230 1222 0000 0000 2221 0322 0000
-			0000 2230 2222 0001 1000 2222 0322 0000
-			0000 2130 2222 0012 2100 2222 0312 0000
-			0000 2300 2222 0122 2210 2222 0032 0000
-			0000 1000 2222 1222 2221 2222 0001 0000
-			0000 0000 2221 2222 2222 1222 0000 0000
-			0000 0000 2210 2222 2222 0122 0000 0000
-			0000 0000 2100 2222 2222 0012 0000 0000
-			0000 0000 1000 2222 2222 0001 0000 0000
-			0000 0000 1000 2222 2222 0001 0000 0000
-			0000 0000 2100 2222 2222 0012 0000 0000
-			0000 0000 2210 2222 2222 0122 0000 0000
-			0000 0000 2221 2222 2222 1222 0000 0000
-			0000 1000 2222 1222 2221 2222 0001 0000
-			0000 2300 2222 0122 2210 2222 0032 0000
-			0000 2130 2222 0012 2100 2222 0312 0000
-			0000 2230 2222 0001 1000 2222 0322 0000
-			0000 2230 1222 0000 0000 2221 0322 0000
-			0000 2100 0312 0000 0000 2130 0012 0000
-			0000 3000 0033 0000 0000 3300 0003 0000
+			0000 0000 0000 1200 0023 0000 0000 0000
+			0000 0000 0000 5551 0135 0000 0000 0000
+			0000 0000 0000 5555 0355 0000 0000 0000
+			0000 0000 0000 5553 0555 0000 0000 0000
+			0000 0000 0000 5530 0555 0000 0000 0000
+			3100 1333 0000 5000 0155 0000 0000 0000
+			5510 5555 0001 5000 0255 0000 0000 0000
+			5510 5555 0001 5200 0035 0000 0000 0000
+			3100 1333 0000 5300 0035 0000 0000 0000
+			0000 0000 0000 5500 0055 0000 0000 0000
+			0000 0000 0000 5530 0055 0000 0000 0000
+			0000 0000 0000 5530 0025 0000 0000 0000
+			0000 0000 0000 5500 0003 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 5540 0004 0000 0000 0000
-			0000 0000 4000 7775 0467 0000 0000 0000
-			0000 0000 5000 7777 0577 0000 0000 0000
-			0000 0000 7400 5677 5777 0000 0000 0000
-			0000 0000 6400 4467 5775 0000 0000 0000
-			5400 4555 4000 4445 4776 0000 0000 0000
-			7750 7777 0005 7540 0577 0000 0000 0000
-			7750 7777 0005 7764 0067 0000 0000 0000
-			5400 4555 4000 7776 0046 0000 0000 0000
-			0000 0000 5000 4777 0455 0000 0000 0000
-			0000 0000 7400 7777 4777 0000 0000 0000
-			0000 0000 6400 7777 4777 0000 0000 0000
-			0000 0000 4000 5555 0455 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 5400 0004 0000 0000 0000
-			0000 0000 0000 7750 0046 0000 0000 0000
-			0000 0000 0000 7774 0047 0000 0000 0000
-			0000 0000 4000 7777 0057 0000 0000 0000
-			0000 0000 5000 7577 0057 0000 0000 0000
-			5400 4555 6400 7567 0467 0000 0000 0000
-			7750 7777 7505 7457 4777 0000 0000 0000
-			7750 7777 7505 7777 4777 0000 0000 0000
-			5400 4555 7400 7777 0567 0000 0000 0000
-			0000 0000 4000 7655 0057 0000 0000 0000
-			0000 0000 0000 7500 0057 0000 0000 0000
-			0000 0000 0000 7400 0047 0000 0000 0000
-			0000 0000 0000 4000 0004 0000 0000 0000
+			0000 0000 0000 3320 0003 0000 0000 0000
+			0000 0000 0000 5553 0255 0000 0000 0000
+			0000 0000 2000 5555 2555 0000 0000 0000
+			0000 0000 5200 2255 3555 0000 0000 0000
+			0000 0000 5200 0035 3552 0000 0000 0000
+			3100 1333 5000 2023 2555 0000 0000 0000
+			5510 5555 0001 3000 0255 0000 0000 0000
+			5510 5555 0001 5320 0025 0000 0000 0000
+			3100 1333 0000 5552 0002 0000 0000 0000
+			0000 0000 2000 3555 0000 0000 0000 0000
+			0000 0000 3000 2555 2332 0000 0000 0000
+			0000 0000 5000 5555 3555 0000 0000 0000
+			0000 0000 2000 5555 2555 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="1">
-	<tex_palette index="0" name="effect_ng_pl" color_size="8">
-		7263 5d46 4ce3 71c9 7f2d 7f96 7fdb 7fff
+<tex_palette_array size="2">
+	<tex_palette index="0" name="effect_ng_pl" color_size="16">
+		7263 51eb 5a0a 45cb 5e8f 39ab 6715 7799
+		6b58 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="1" name="effect_pl" color_size="24">
+		27bf 2bbf 2fbf 33bf 33df 37df 3bdf 3fdf
+		43df 47df 4bdf 4fdf 53df 57df 5bdf 5bff
+		5fff 63ff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
 <material_array size="2">
-	<material index="0" name="effect_ok"
+	<material index="0" name="effect"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -130,17 +177,17 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="0" tex_palette_idx="0"
+		tex_image_idx="0" tex_palette_idx="1"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="lambert4"
+	<material index="1" name="effect_ng"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="31"
+		alpha="0"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="0"
@@ -154,7 +201,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="0" tex_palette_idx="0"
+		tex_image_idx="1" tex_palette_idx="0"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -163,18 +210,19 @@
 	/>
 </material_array>
 
-<matrix_array size="2">
+<matrix_array size="3">
 	<matrix index="0" mtx_weight="1" node_idx="1"/>
 	<matrix index="1" mtx_weight="1" node_idx="2"/>
+	<matrix index="2" mtx_weight="1" node_idx="3"/>
 </matrix_array>
 
-<polygon_array size="2">
+<polygon_array size="3">
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.203857 -4.203857 0.000000"
-		volume_max="4.203857 4.203857 0.000000"
-		volume_r="5.656738"
+		volume_min="-3.759521 -7.832520 0.000000"
+		volume_max="3.759521 7.832520 0.000000"
+		volume_r="8.688232"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -183,20 +231,47 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="32.000000 32.000000"/>
+					<tex st="0.750000 30.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_xyz xyz="3.785156 4.203857 0.000000"/>
-					<tex st="32.000000 0.000000"/>
-					<pos_xy xy="-4.203857 3.785156"/>
-					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-3.785156 -4.203857"/>
-					<tex st="0.000000 32.000000"/>
-					<pos_xy xy="4.203857 -3.785156"/>
+					<pos_xyz xyz="-3.759521 -7.832520 0.000000"/>
+					<tex st="14.375000 30.000000"/>
+					<pos_xy xy="3.759521 -7.832520"/>
+					<tex st="14.375000 0.812500"/>
+					<pos_xy xy="3.759521 7.832520"/>
+					<tex st="0.750000 0.812500"/>
+					<pos_xy xy="-3.759521 7.832520"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
 	</polygon>
 	<polygon index="1" name="polygon1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-3.759521 -7.832520 0.000000"
+		volume_max="3.759521 7.832520 0.000000"
+		volume_r="8.688232"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">1</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="14.375000 30.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_xyz xyz="-3.759521 -7.832520 0.000000"/>
+					<tex st="0.750000 30.000000"/>
+					<pos_xy xy="3.759521 -7.832520"/>
+					<tex st="0.750000 0.812500"/>
+					<pos_xy xy="3.759521 7.832520"/>
+					<tex st="14.375000 0.812500"/>
+					<pos_xy xy="-3.759521 7.832520"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="2" name="polygon2"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
 		volume_min="-4.740723 -2.370361 0.000000"
@@ -206,18 +281,18 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">1</mtx_list>
+			<mtx_list size="1">2</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="22.750000 47.250000"/>
+					<tex st="22.750000 63.375000"/>
 					<clr rgb="31 31 31"/>
 					<pos_xyz xyz="4.740723 -2.370361 0.000000"/>
-					<tex st="22.750000 33.687500"/>
+					<tex st="22.750000 49.812500"/>
 					<pos_xy xy="4.740723 2.370361"/>
-					<tex st="-1.500000 33.687500"/>
+					<tex st="-1.500000 49.812500"/>
 					<pos_xy xy="-4.740723 2.370361"/>
-					<tex st="-1.500000 47.250000"/>
+					<tex st="-1.500000 63.375000"/>
 					<pos_xy xy="-4.740723 -2.370361"/>
 				</primitive>
 			</primitive_array>
@@ -225,7 +300,7 @@
 	</polygon>
 </polygon_array>
 
-<node_array size="3">
+<node_array size="4">
 	<node index="0" name="world_root" kind="null"
 		parent="-1"
 		child="1"
@@ -240,31 +315,51 @@
 		display_size="0"
 	>
 	</node>
-	<node index="1" name="pPlane3" kind="mesh"
+	<node index="1" name="effect1:pPlane1" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="2"
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 -93.000000"
-		translate="0.000000 -136.000000 6.000000"
+		scale="0.506348 0.506348 0.506348"
+		rotate="0.000000 0.000000 0.000000"
+		translate="50.126221 1.159180 0.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.203857 -4.203857 0.000000"
-		volume_max="4.203857 4.203857 0.000000"
-		volume_r="5.656738"
+		volume_min="-3.759521 -7.832520 0.000000"
+		volume_max="3.759521 7.832520 0.000000"
+		volume_r="8.688232"
 	>
-		<display index="0" material="1" polygon="0" priority="0"/>
+		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
-	<node index="2" name="pPlane4" kind="mesh"
+	<node index="2" name="effect1:pPlane2" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="3"
+		brother_prev="1"
+		draw_mtx="on"
+		billboard="off"
+		scale="0.506348 0.506348 0.506348"
+		rotate="0.000000 0.000000 0.000000"
+		translate="-50.125977 1.159180 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-3.759521 -7.832520 0.000000"
+		volume_max="3.759521 7.832520 0.000000"
+		volume_r="8.688232"
+	>
+		<display index="0" material="0" polygon="1" priority="0"/>
+	</node>
+	<node index="3" name="pPlane4" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="-1"
-		brother_prev="1"
+		brother_prev="2"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -278,12 +373,12 @@
 		volume_max="4.740723 2.370361 0.000000"
 		volume_r="5.300293"
 	>
-		<display index="0" material="0" polygon="1" priority="0"/>
+		<display index="0" material="1" polygon="2" priority="0"/>
 	</node>
 </node_array>
 
-<output_info vertex_size="8" polygon_size="2"
-	triangle_size="0" quad_size="2"/>
+<output_info vertex_size="12" polygon_size="3"
+	triangle_size="0" quad_size="3"/>
 
 </body>
 
