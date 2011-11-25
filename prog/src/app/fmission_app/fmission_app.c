@@ -1133,10 +1133,6 @@ static void fma_init_result( FMISSION_APP_WORK* wk )
 	// クリアタイム(スコア達成型の場合のみ表示)の判定
 	if(wk->Param->fmwk->beacon.end_type == FMISSION_ENDTYPE_SCORE){
 		wk->Flag |= FLG_FMA_CLEAR_TIME;
-		// クリアタイムのNEW
-		if(wk->MissionResult.new_record_time_f == TRUE){
-			wk->Flag |= FLG_FMA_NEW_CT;
-		}
 	}
 	// トータルスコアの判定
 	if(wk->MissionResult.new_record_score_f == TRUE){
@@ -1147,8 +1143,9 @@ static void fma_init_result( FMISSION_APP_WORK* wk )
 		wk->Flag |= FLG_FMA_HILINK;
 	}
 	// マイスコアの判定
-	wk->Flag |= FLG_FMA_NEW_RD;
-	
+	if(wk->MissionResult.new_record_my_score_f == TRUE){
+		wk->Flag |= FLG_FMA_NEW_RD;
+	}
 	//
 #ifdef PM_DEBUG
 	// debug
@@ -1443,14 +1440,6 @@ static void fma_update_up_result( FMISSION_APP_WORK* wk )
 			FmaCmn_set_obj_visible( wk, FMA_CLWKMODE_NORMAL, FMAR_CLWK_RECORD_00, TRUE );
 			flg = 1;
 		}
-		//
-#if 0
-		// クリアタイム(NEW)
-		if(wk->Flag & FLG_FMA_NEW_CT){
-			FmaCmn_set_obj_visible( wk, FMA_CLWKMODE_NORMAL, FMAR_CLWK_RECORD_01, TRUE );
-			flg = 1;
-		}
-#endif
 		// SE
 		if(flg == 0){		// 通常
 			PMSND_PlaySE( SND_FMA_RESULT );
@@ -1744,27 +1733,13 @@ static void fma_disp_highscore( FMISSION_APP_WORK *wk )
 	//
 	id = wk->Param->fmwk->beacon.m_id;
 	//
-	if(wk->Param->fmwk->beacon.end_type == FMISSION_ENDTYPE_TIME){
-		// 時間優先=>スコアを表示
-		flg = 0;
-		num = FMISSION_SAVE_GetMissionStatusHighScore( fsave, id );
-		if(num == 0){
-			dflg = 1;
-		}
+	// 仕様変更によりスコアを表示
+	flg = 0;
+	num = FMISSION_SAVE_GetMissionStatusHighScore( fsave, id );
+	if(num == 0){
+		dflg = 1;
 	}
-	else if(wk->Param->fmwk->beacon.end_type == FMISSION_ENDTYPE_SCORE){
-		// スコア優先 => 時間を表示
-		flg = 1;
-#if 0
-    //111124 iwasawa 時間用関数がなくなるので一旦コメントアウトしました
-		FMISSION_SAVE_GetMissionStatusHighScoreTime( fsave, id, &buf[0], &buf[1] );
-#else
-    buf[0] = buf[1] = 0;
-#endif
-		if((buf[0] == 0)&&(buf[1] == 0)){
-			dflg = 1;
-		}
-	}
+	//
 	// 一旦クリア
 	FmaCmn_clear_canvas( wk, FMAI_CANVAS_DOWN_HIGH_L );
 	FmaCmn_clear_canvas( wk, FMAI_CANVAS_DOWN_HIGH_R );
@@ -1775,21 +1750,10 @@ static void fma_disp_highscore( FMISSION_APP_WORK *wk )
 		FmaCmn_disp_string( wk, FMAI_CANVAS_DOWN_HIGH_L, 0, 0, str, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
 		GFL_STR_DeleteBuffer( str );
 		//
-		if(flg == 0){		// スコア
-			WORDSET_RegisterNumber(wk->Wordset, 0, num, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-//			str = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_03_tbl[0] );
-			buf[1] = wk->ArcData[id].common.unit;
-			str = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_01_tbl[4*buf[1]+1] );
-		}else{			// 時間
-			if(buf[1] == 0){     // 分のみ
-				WORDSET_RegisterNumber(wk->Wordset, 0, buf[0], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-				str = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_03_tbl[2] );
-			}else{               // 秒こみ
-				WORDSET_RegisterNumber(wk->Wordset, 0, buf[0], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-				WORDSET_RegisterNumber(wk->Wordset, 1, buf[1], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-				str = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_03_tbl[1] );
-			}
-		}
+		WORDSET_RegisterNumber(wk->Wordset, 0, num, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+		buf[1] = wk->ArcData[id].common.unit;
+		str = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_01_tbl[4*buf[1]+1] );
+		//
 		expbuf = GFL_STR_CreateBuffer( 64, wk->heapID );
 		WORDSET_ExpandStr( wk->Wordset, expbuf, str );
 		// 表示
