@@ -229,6 +229,7 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
   work->isSusspendDraw = FALSE;
   work->isReqFinish = FALSE;
   work->isReqDispWarn = FALSE;
+  work->isUseSelfBUffer = FALSE;
   work->isGame = FALSE; // add ichiraku
 
   if( DS_SYSTEM_IsRestrictPhotoExchange() == TRUE )

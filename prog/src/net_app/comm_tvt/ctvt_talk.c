@@ -486,9 +486,11 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
 
   // swan追加仕様 11.11.22
   // 子機だとミニゲームボタンを暗くする
+  // +WiFiクラブだと暗くする
   {
     // 子機チェック
-    if( COMM_TVT_GetSelfIdx(work) != 0 )
+    if( COMM_TVT_GetSelfIdx(work) != 0 
+        || COMM_TVT_IsWifi( work ) == TRUE )
     {
       GFL_CLACT_WK_SetAnmIndex( talkWork->clwkBalloon1, 1 );
       GFL_CLACT_WK_SetAnmIndex( talkWork->clwkBalloon2, 1 );
@@ -1424,6 +1426,7 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
     // 親しか押せない
     // ミニゲーム1
     if( COMM_TVT_GetSelfIdx(work) == 0 && 
+        COMM_TVT_IsWifi(work) == FALSE &&
         GFL_UI_TP_HitTrg( CTVT_TALK_HitBalloonButton1 ) != GFL_UI_TP_HIT_NONE &&
         talkWork->isConnectVersion == FALSE )
     {
@@ -1439,6 +1442,7 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
     }
     // ミニゲーム2
     if( COMM_TVT_GetSelfIdx(work) == 0 && 
+        COMM_TVT_IsWifi(work) == FALSE &&
         GFL_UI_TP_HitTrg( CTVT_TALK_HitBalloonButton2 ) != GFL_UI_TP_HIT_NONE &&
         talkWork->isConnectVersion == FALSE )
     {
