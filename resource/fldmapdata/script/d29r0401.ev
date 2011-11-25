@@ -140,7 +140,7 @@ EVENT_START   ev_pos_d29r0401_door_in
   // ドアが開くSE
   _SE_PLAY( SEQ_SE_FLD_144 )
 
-  _TIME_WAIT( 20 )
+  _TIME_WAIT( 30 )
 
   // 主人公入る
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_door_in )
@@ -348,6 +348,7 @@ EVENT_START   ev_bg_d29r0401_switch
 
       // スイッチの音
       _SE_PLAY( SEQ_SE_FLD_44 )
+      _SE_WAIT()
 
       // キーを設定していないときのみ作動する
       IF $LWK_KEYSYS_DOOR == KEYSYS_DOOR_NORMAL THEN

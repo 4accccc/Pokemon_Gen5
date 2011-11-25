@@ -17,7 +17,7 @@
   
   //@author Mizuguchi_Mai
   //@author fujimura_souichirou（クリア後・ライバルの妹イベント）
-  //@author suginaka_katsunori //演出調整
+  //@author suginaka_katsunori //演出調整・スクリプト修正
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -97,7 +97,9 @@ _DEBUG_PRINT_WK(1)
     //_OBJ_POS_CHANGE( C12_SWRIVAL_01, 37, 8, 717, DIR_UP )
    //ポケセン案内後ならベルの位置を移動
    ELSIF $WK_SCENE_C12_WHITE_MEET == 5 THEN
-    _OBJ_POS_CHANGE( C12_SWBELL_01, 49, 1, 740, DIR_DOWN )
+    _OBJ_POS_CHANGE( C12_SWBELL_01, 49, 1, 740, DIR_LEFT )
+    _OBJ_POS_CHANGE( C12_SWMAMA_01, 38, 1, 740, DIR_RIGHT )
+    _OBJ_POS_CHANGE( C12_SWSISTER_01, 38, 1, 741, DIR_RIGHT )
   ENDIF
   
   //ジムストッパー（ジム開放まで）
@@ -130,8 +132,6 @@ INIT_EVENT_END
 /*  ライバルはなしかけ                         */
 /**************************************************************/
 EVENT_START ev_c12_swrival_01
-
-  _DEBUG_PRINT_WK( 2 )
     
   _TALK_OBJ_START()
   
@@ -140,12 +140,14 @@ EVENT_START ev_c12_swrival_01
     _RIVAL_NAME( 1 )
     //メッセージ
     _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_12,C12_SWRIVAL_01, POS_DEFAULT )
+    _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
   ELSIF $WK_SCENE_C12_WHITE_MEET == 3 THEN
     //ライバル名代入
     _RIVAL_NAME( 1 )
     //メッセージ
     _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_20,C12_SWRIVAL_01, POS_DEFAULT )
+    _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
   //ライバル戦分岐
   ELSE
@@ -213,7 +215,7 @@ bell_firsttalk:
   //ベル曲再生
   _START_EVENT_BGM( SEQ_BGM_E_BERU )
 
-  _OBJ_ANIME( C12_SWBELL_01, anm_swbell_walk )
+  _OBJ_ANIME( C12_SWBELL_01, anm_walk_u )
   _OBJ_ANIME_WAIT()
 
   //ベル：きれい　だよねえ！
@@ -222,9 +224,6 @@ bell_firsttalk:
   
   //アニメ：ベル左右をきょろきょろする
   _OBJ_ANIME( C12_SWBELL_01, anm_swbell_kyoro )
-  _OBJ_ANIME_WAIT()
-
-  _OBJ_ANIME( C12_SWBELL_01, anm_walk_d )
   _OBJ_ANIME_WAIT()
 
   //ベル：ねえねえ　そうおもうでしょ？
@@ -244,15 +243,25 @@ bell_firsttalk:
   //いいえ
   IF $SCWK_ANSWER == SCR_NO THEN
     _MSGWIN_CLOSE()
+    
+    //アニメ：「！」
+    _OBJ_ANIME( C12_SWRIVAL_01, anm_common_gyoe )
+    _OBJ_ANIME_WAIT()
+        
     _PLAYER_NAME( 0 )
     //ライバル名代入
     _RIVAL_NAME( 1 )
     //ライバル：なにいってるんだ
-    _BALLOONWIN_OBJMSG_POS(msg_c12_swrival_14,C12_SWRIVAL_01, POS_DEFAULT )
+    _PLAINWIN_MSG_UP( msg_c12_swrival_14 )
+    //_BALLOONWIN_OBJMSG_POS(msg_c12_swrival_14,C12_SWRIVAL_01, POS_UP )
+    _AB_KEYWAIT_MARK()
+    _PLAINWIN_CLOSE()
+  ELSE
+  	_MSGWIN_CLOSE()
   ENDIF
   }
 
-  _MSGWIN_CLOSE()
+
 
   //ベル芝居
   _OBJ_ANIME( C12_SWBELL_01, anm_swbell_anime )
@@ -273,6 +282,13 @@ bell_firsttalk:
     $ans_yes = SCR_NO
 
     WHILE $ans_yes == SCR_NO
+    
+     _OBJ_ANIME( C12_SWBELL_01, anm_swbell_back )
+     _OBJ_ANIME_WAIT()
+     _TIME_WAIT( 15 )
+     _OBJ_ANIME( C12_SWBELL_01, anm_walk_d )
+     _OBJ_ANIME_WAIT()
+
      //メッセージ：そ、そんなあ
      _BALLOONWIN_OBJMSG_POS( msg_c12_white_31,C12_SWBELL_01, POS_DEFAULT )
      _YES_NO_WIN( ans_yes )
@@ -314,6 +330,11 @@ _ANIME_LABEL	anm_swbell_kyoro
   _ANIME_DATA	AC_STAY_WALK_D_8F,1
   _ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_swbell_back
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1	//方向固定
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1	//固定OFF
+	_ANIME_DATA	ACMD_END,0
 
 
 /************************************************************/
@@ -405,11 +426,14 @@ bell_secondtalk:
 	ENDIF
   
   _MSGWIN_CLOSE()
-  
+
+  _OBJ_ANIME( C12_SWRIVAL_01, anm_walk_u )
+  _OBJ_ANIME_WAIT()
+
   //ライバル名代入
   _RIVAL_NAME( 1 )
   //ライバル：そいつが
-  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_15 , C12_SWRIVAL_01 , POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_15 , C12_SWRIVAL_01 , POS_UP )
   _MSGWIN_CLOSE()
   
   //ベル：ポケモンのつぎは
@@ -459,7 +483,7 @@ bell_secondtalk:
   _RIVAL_NAME( 1 )
    
   //ライバル：それあまってたら
-  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_16 , C12_SWRIVAL_01 , POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_16 , C12_SWRIVAL_01 , POS_UP )
   _MSGWIN_CLOSE()
 
   _OBJ_ANIME( C12_SWBELL_01, anm_walk_l )
@@ -473,21 +497,16 @@ bell_secondtalk:
   _BALLOONWIN_OBJMSG_POS( msg_c12_white_13 , C12_SWBELL_01 , POS_DEFAULT )
   _MSGWIN_CLOSE()
 
-  _OBJ_ANIME( C12_SWRIVAL_01, anm_walk_u )
-  _OBJ_ANIME_WAIT()
-
   //ライバル名代入
   _RIVAL_NAME( 1 )
 
   //ライバル：オレは
-  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_22 , C12_SWRIVAL_01 , POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_22 , C12_SWRIVAL_01 , POS_UP )
   _MSGWIN_CLOSE()
   
    //ベル：うん　いいよ！
   _BALLOONWIN_OBJMSG_POS( msg_c12_white_14 , C12_SWBELL_01 , POS_DEFAULT )
   _MSGWIN_CLOSE()
-
-
 
   //========================================//
   //POSイベント無効
@@ -606,6 +625,91 @@ EVENT_START ev_c12_swsister_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12_white_20 )
 EVENT_END
 
+/************************************************************/
+/*		ライバル：展望台　連れ歩き解除				*/
+/************************************************************/
+//連れ歩き解除
+EVENT_START ev_pos_c12_rival_pair_return_01
+{
+
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
+   
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_11, PAIR_TRAINER_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //========================================//
+  //ライバルを表示
+  _FLAG_RESET(FV_C12_SWRIVAL)
+  //========================================//
+  
+  //ライバル動作モデル生成
+  _OBJ_ADD( C12_SWRIVAL_01 )
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  _OBJ_POS_CHANGE( C12_SWRIVAL_01, LCW_POSX, 9, 716, DIR_UP )
+  
+  //連れ歩き解除
+  _PAIR_TRAINER_FREE( SCRID_C12_SWRIVAL_01, MV_DMY )
+  
+  //連れ歩き動作モデル削除
+  _OBJ_DEL( PAIR_TRAINER_01 )
+  
+  //アニメ：定位置に行く
+  SWITCH $LCW_POSX
+  CASE 36 THEN
+  	_OBJ_ANIME( C12_SWRIVAL_01, anm_walk_r )
+  CASE 37 THEN
+  	_OBJ_ANIME( C12_SWRIVAL_01, anm_walk_l )
+  CASE 38 THEN
+  	_OBJ_ANIME( C12_SWRIVAL_01, anm_walk_l )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
+  
+  _OBJ_ANIME_AUTO( C12_SWRIVAL_01, 35, 714, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_u )
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, LCW_POSX, 714, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+
+  //========================================//
+  //POSイベント無効
+  $WK_SCENE_C12_WHITE_MEET = 2
+  //========================================//
+}
+EVENT_END
+
+//連れ歩き中話しかけスクリプト
+EVENT_START ev_c12_rival_pair_01
+
+  //ライバル名代入
+  _RIVAL_NAME( 1 )
+
+  //話しかけるごとに0～2のセリフを順番に表示
+  
+  IF $WK_OTHER_C12_RIVAL_PAIR == 3 THEN
+	$WK_OTHER_C12_RIVAL_PAIR = 0
+  ENDIF
+  _TALK_OBJ_START()
+  
+  SWITCH $WK_OTHER_C12_RIVAL_PAIR
+  CASE 0 THEN
+	_BALLOONWIN_OBJMSG( msg_c12_swrival_05, PAIR_TRAINER_01 )
+  CASE 1 THEN
+	_BALLOONWIN_OBJMSG( msg_c12_swrival_06, PAIR_TRAINER_01 )
+  CASE 2 THEN
+	_BALLOONWIN_OBJMSG( msg_c12_swrival_07, PAIR_TRAINER_01 )
+  ENDSWITCH
+
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+  $WK_OTHER_C12_RIVAL_PAIR += 1
+  _DEBUG_PRINT_WK( WK_OTHER_C12_RIVAL_PAIR )
+  
+EVENT_END
+
 /**************************************************************/
 /*  POS：ベルと出会う（ストッパー）                         */
 /**************************************************************/
@@ -639,8 +743,10 @@ EVENT_START ev_pos_c12_swbell_meet_stop_01a
   //ライバル名代入
   _RIVAL_NAME( 1 )
   //ライバル：あのひとが　ベルか
-  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_13,C12_SWRIVAL_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
+  _PLAINWIN_MSG_UP( msg_c12_swrival_13 )
+  _PLAINWIN_CLOSE()
+  //_BALLOONWIN_OBJMSG_POS( msg_c12_swrival_13,C12_SWRIVAL_01, POS_UP )
+  //_MSGWIN_CLOSE()
   //1歩戻る
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_d )
   _OBJ_ANIME_WAIT()
@@ -676,9 +782,13 @@ EVENT_START ev_pos_c12_swbell_meet_stop_02a
 
   //ライバル名代入
   _RIVAL_NAME( 1 )
+  
   //ライバル：なにしてんだよ
-  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_21,C12_SWRIVAL_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
+  _PLAINWIN_MSG_UP( msg_c12_swrival_21 )
+  _PLAINWIN_CLOSE()
+
+  //_BALLOONWIN_OBJMSG_POS( msg_c12_swrival_21,C12_SWRIVAL_01, POS_UP )
+  //_MSGWIN_CLOSE()
   //1歩戻る
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_d )
   _OBJ_ANIME_WAIT()
@@ -689,6 +799,10 @@ EVENT_END
 /*  POS：ライバルと戦闘								  */
 /**************************************************************/
 EVENT_START ev_pos_c12_swbell_meet_btl
+
+  //！マーク
+  _OBJ_ANIME( C12_SWRIVAL_01, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
 
   //ライバル曲再生
   _START_EVENT_BGM( SEQ_BGM_E_HUE )
@@ -768,7 +882,7 @@ ev_vs_rival:
 	_TIME_WAIT( 24 )
 
 	//アニメ：ベル・主人公、ライバル見送る
-	_OBJ_ANIME( C12_SWBELL_01, anm_staystep_d )
+	_OBJ_ANIME( C12_SWBELL_01, anm_dir_d )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
 	
 	//ライバル曲停止
@@ -776,27 +890,16 @@ ev_vs_rival:
 	
 	//アニメ待ち
 	_OBJ_ANIME_WAIT()
-	
-	//プレイヤーの座標取得
-	_PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
-	
-	//POS起動の場合はベルを動かす
-	SWITCH $LCW_POSZ
-	CASE 717 THEN
-		$LCW_POSX += 1
-		_OBJ_ANIME_AUTO( C12_SWBELL_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
-		_OBJ_ANIME_WAIT()
-	ENDSWITCH
 
-	//ベル：どっちのポケモンも
-	_BALLOONWIN_OBJMSG_POS( msg_c12_white_15 , C12_SWBELL_01 , POS_DEFAULT )
-	_MSGWIN_CLOSE()
-	
 	//プレイヤーの座標取得
 	_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
 	
 	//ベルの座標指定
 	SWITCH $LCW_POSX
+	CASE 34 THEN
+		$LCW_POSX += 1
+	CASE 35 THEN
+		$LCW_POSX += 1
 	CASE 36 THEN
 		$LCW_POSX += 1
 	CASE 37 THEN
@@ -808,11 +911,23 @@ ev_vs_rival:
 	_OBJ_ANIME_AUTO( C12_SWBELL_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
 	_OBJ_ANIME_WAIT()
 
+	//ベル：どっちのポケモンも
+	_BALLOONWIN_OBJMSG_POS( msg_c12_white_15 , C12_SWBELL_01 , POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
 	//プレイヤーの座標取得
 	_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
 
 	//ベルとプレイヤー向かい合う
 	SWITCH $LCW_POSX
+	CASE 34 THEN
+		_OBJ_ANIME( C12_SWBELL_01, anm_staystep_l )
+		_TIME_WAIT( 8 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+	CASE 35 THEN
+		_OBJ_ANIME( C12_SWBELL_01, anm_staystep_l )
+		_TIME_WAIT( 8 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
 	CASE 36 THEN
 		_OBJ_ANIME( C12_SWBELL_01, anm_staystep_l )
 		_TIME_WAIT( 8 )
@@ -935,30 +1050,37 @@ _ANIME_LABEL	anm_sp_walk
 /**************************************************************/
 EVENT_START		ev_scene_c12_townmap_01
 
-_DEBUG_PRINT_WK(2)
+  //最初に選択した三匹で台詞内にセットする名前を変える
+  IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
+  //最初の３匹で草タイプを選択した時の処理
+			
+	//0に選択ポケモンの名前をセット
+	_MONS_NAME(2,MONSNO_551)
+	//1に有効ポケモンの名前をセット
+				
+  ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN	
+	//最初の３匹で炎タイプを選択した時の処理
+			
+	//0に選択ポケモンの名前をセット
+	_MONS_NAME(2,MONSNO_554)
+			
+  ELSE
+	//最初の３匹で水タイプを選択した時の処理
+			
+	//0に選択ポケモンの名前をセット
+	_MONS_NAME(2,MONSNO_557)
+				
+  ENDIF
 
-  	//最初に選択した三匹で台詞内にセットする名前を変える
-		IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
-			//最初の３匹で草タイプを選択した時の処理
-			
-			//0に選択ポケモンの名前をセット
-			_MONS_NAME(2,MONSNO_551)
-			//1に有効ポケモンの名前をセット
-				
-		ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN	
-			//最初の３匹で炎タイプを選択した時の処理
-			
-			//0に選択ポケモンの名前をセット
-			_MONS_NAME(2,MONSNO_554)
-			
-		ELSE
-			//最初の３匹で水タイプを選択した時の処理
-			
-			//0に選択ポケモンの名前をセット
-			_MONS_NAME(2,MONSNO_557)
-				
-		ENDIF
-		
+  _OBJ_ANIME_AUTO( C12_SWMAMA_01, 46, 740, FORCE_TYPE_NPC, 8, DIR_LR)
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME_AUTO( C12_SWSISTER_01, 46, 741, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+
+  _OBJ_ANIME( C12_SWBELL_01, anm_staystep_l )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+
   //ママ：よっ！
   _PLAYER_NAME( 0 )
   _BALLOONWIN_OBJMSG_POS( msg_c12_swmama_01,C12_SWMAMA_01, POS_DEFAULT )
@@ -973,9 +1095,7 @@ _DEBUG_PRINT_WK(2)
   _MSGWIN_CLOSE()
   
   //アニメ：ママ主人公に隣接
-  _OBJ_ANIME_AUTO( C12_SWMAMA_01, 48, 741, FORCE_TYPE_NPC, 8, DIR_UD)
-  _TIME_WAIT( 8 )
-  _OBJ_ANIME( C12_SWBELL_01, anm_staystep_l )
+  _OBJ_ANIME_AUTO( C12_SWMAMA_01, 47, 740, FORCE_TYPE_NPC, 8, DIR_LR)
   _OBJ_ANIME_WAIT()
 	
   //ME鳴らす
@@ -992,11 +1112,11 @@ _DEBUG_PRINT_WK(2)
   _MSGWIN_CLOSE()
   
   //アニメ：いもうと主人公に隣接
-  _OBJ_ANIME_AUTO( C12_SWSISTER_01, 47, 740, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( C12_SWSISTER_01, 48, 741, FORCE_TYPE_NPC, 8, DIR_LR)
   _OBJ_ANIME_WAIT()
-  _OBJ_ANIME( C12_SWSISTER_01, anm_staystep_r )
+  _OBJ_ANIME( C12_SWSISTER_01, anm_staystep_u )
   _TIME_WAIT( 8 )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
   _OBJ_ANIME_WAIT()
 	
   //ライバル名代入
@@ -1045,9 +1165,9 @@ _DEBUG_PRINT_WK(2)
   _OBJ_ANIME( C12_SWSISTER_01, anm_staystep_r )
   _OBJ_ANIME_WAIT()
 
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_d )
-  _OBJ_ANIME( C12_SWMAMA_01, anm_staystep_u )
-  _OBJ_ANIME( C12_SWSISTER_01, anm_dir_r )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+  _OBJ_ANIME( C12_SWMAMA_01, anm_staystep_r )
+  _OBJ_ANIME( C12_SWSISTER_01, anm_dir_u )
   _OBJ_ANIME_WAIT()
 	
   //ママ：いってらっしゃい！
@@ -1055,7 +1175,7 @@ _DEBUG_PRINT_WK(2)
   _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
 
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_d )
   _OBJ_ANIME_WAIT()
 
   //妹：いってらっしゃい！
@@ -1559,86 +1679,6 @@ EVENT_START ev_pos_c12_rival_pair_01
   //========================================//
 
 }
-EVENT_END
-
-/************************************************************/
-/*		ライバル：展望台　連れ歩き解除				*/
-/************************************************************/
-//連れ歩き解除
-EVENT_START ev_pos_c12_rival_pair_return_01
-{
-
-  //ライバル名代入
-  _RIVAL_NAME( 1 )
-   
-  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_11, PAIR_TRAINER_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  //========================================//
-  //ライバルを表示
-  _FLAG_RESET(FV_C12_SWRIVAL)
-  //========================================//
-  
-  //ライバル動作モデル生成
-  _OBJ_ADD( C12_SWRIVAL_01 )
-  
-  //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-  _OBJ_POS_CHANGE( C12_SWRIVAL_01, LCW_POSX, 7, 718, DIR_UP )
-  
-  //連れ歩き解除
-  _PAIR_TRAINER_FREE( SCRID_C12_SWRIVAL_01, MV_DMY )
-  
-  //連れ歩き動作モデル削除
-  _OBJ_DEL( PAIR_TRAINER_01 )
-  
-  //アニメ：定位置に行く
-  SWITCH $LCW_POSX
-  CASE 36 THEN
-  	_OBJ_ANIME( C12_SWRIVAL_01, anm_walk_r )
-  CASE 37 THEN
-  	_OBJ_ANIME( C12_SWRIVAL_01, anm_walk_l )
-  CASE 38 THEN
-  	_OBJ_ANIME( C12_SWRIVAL_01, anm_walk_l )
-  ENDSWITCH
-  _OBJ_ANIME_WAIT()
-  
-  _OBJ_ANIME_AUTO( C12_SWRIVAL_01, 36, 716, FORCE_TYPE_NPC, 8, DIR_UD)
-  _OBJ_ANIME_WAIT()
-  _OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_u )
-  //_OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 37, 716, FORCE_TYPE_NPC, 8, DIR_LR)
-  _OBJ_ANIME_WAIT()
-
-  //========================================//
-  //POSイベント無効
-  $WK_SCENE_C12_WHITE_MEET = 2
-  //========================================//
-}
-EVENT_END
-
-//連れ歩き中話しかけスクリプト
-EVENT_START ev_c12_rival_pair_01
-
-  //ライバル名代入
-  _RIVAL_NAME( 1 )
-
-  //話しかけるごとに0～2のセリフを順番に表示
-  
-  IF $WK_OTHER_C12_RIVAL_PAIR == 3 THEN
-	$WK_OTHER_C12_RIVAL_PAIR = 0
-  ENDIF
-  
-  $SCWK_TEMP0 = msg_c12_swrival_05
-  $SCWK_TEMP0 += $WK_OTHER_C12_RIVAL_PAIR
-  
-  _TALK_OBJ_START()
-  _BALLOONWIN_OBJMSG( SCWK_TEMP0, PAIR_TRAINER_01 )
-  _LAST_KEYWAIT()
-  _MSGWIN_CLOSE()
-  
-  $WK_OTHER_C12_RIVAL_PAIR += 1
-  _DEBUG_PRINT_WK( WK_OTHER_C12_RIVAL_PAIR )
-  
 EVENT_END
 
 /**************************************************************/

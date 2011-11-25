@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/12 16:43:10
+#save date:2011/11/25 16:58:55
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c12.wms
 #SECTION START:OBJ_EVENT
@@ -57,7 +57,7 @@ FV_C12_SWMAMA
 #Event Script Name
 SCRID_C12_SWMAMA_01
 #Direction Type Number
-DIR_UP
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -71,7 +71,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-8 16 -360
+-24 16 -328
 #event number: 2
 #type
 1
@@ -102,7 +102,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--168 144 88
+-184 144 136
 #event number: 3
 #type
 1
@@ -119,7 +119,7 @@ FV_C12_SWRIVAL_SISTER
 #Event Script Name
 SCRID_C12_SWSISTER_01
 #Direction Type Number
-DIR_UP
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -133,7 +133,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 16 -360
+-40 16 -328
 #event number: 4
 #type
 1
@@ -754,7 +754,7 @@ WK_SCENE_C12_WHITE_MEET
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--184 120 24
+-184 144 56
 #size
 3 1
 #event number: 3
@@ -771,7 +771,7 @@ WK_SCENE_C12_WHITE_MEET
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--184 136 40
+-184 144 72
 #size
 3 1
 #event number: 4
@@ -788,7 +788,7 @@ WK_SCENE_C12_WHITE_MEET
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--184 120 24
+-184 144 56
 #size
 3 1
 #event number: 5
@@ -805,7 +805,7 @@ WK_SCENE_C12_WHITE_MEET
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--184 120 24
+-184 144 56
 #size
 3 1
 #event number: 6
@@ -873,9 +873,9 @@ WK_SCENE_C12_WHITE_MEET
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--184 144 88
+-232 144 136
 #size
-3 1
+6 1
 #event number: 10
 #Pos Event Label
 POS_C12_SWBELL_MEET_STOP_02A
@@ -890,9 +890,9 @@ WK_SCENE_C12_WHITE_MEET
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--184 144 88
+-232 144 136
 #size
-3 1
+6 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
