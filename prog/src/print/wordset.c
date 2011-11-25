@@ -17,6 +17,7 @@
 #include "savedata/medalbox_rank_def.h" // for MEDALBOX_RANK_xxxx
 #include "battle/pokewood.h"
 #include "savedata/wbt_save.h"
+#include "gamesystem/g_power.h"
 
 #ifndef MULTI_BOOT_MAKE  //’ÊíŽžˆ—
 #include "field/wbt_tool.h"
@@ -785,8 +786,9 @@ void WORDSET_RegisterBoxName( WORDSET* wordset, u32 bufID, const BOX_MANAGER* bo
 //------------------------------------------------------------------
 void WORDSET_RegisterGPowerName( WORDSET* wordset, u32 bufID, GPOWER_ID g_power )
 {
-  if( g_power >= GPOWER_ID_MAX ){
-    GF_ASSERT( g_power < GPOWER_ID_MAX );
+//if( g_power >= GPOWER_ID_MAX ){
+  if( !GPOWER_IsEnableID( g_power ) ){
+    GF_ASSERT_MSG( 0, "%d\n",g_power );
     g_power = 0;
   }
   RegisterWordFormMsgArc( wordset, bufID, NARC_message_power_dat, g_power );
