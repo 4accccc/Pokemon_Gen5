@@ -142,21 +142,58 @@ void CTVT_BALLOON_Update( BALLOON_WORK*  p_wk )
   {
     if( p_wk->alpha == 31 )
     {
-      GFL_G3D_OBJ*    obj;
-      u16             head_obj_idx;
-      BOOL            anm_end;
 
-      head_obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( p_wk->parent_g3dUtil, p_wk->unit_idx );
-      // 3つあるからどれ使うかtypeで指定
-      obj = GFL_G3D_UTIL_GetObjHandle( p_wk->parent_g3dUtil, head_obj_idx + p_wk->type);
+      // 得点がプラスとマイナスで演出を分ける
+      switch( p_wk->point_type ){
+      case BALLOON_POINT_OK_2PT:
+      case BALLOON_POINT_OK_4PT:
+        {
+          GFL_G3D_OBJ*    obj;
+          u16             head_obj_idx;
+          BOOL            anm_end;
 
-      // キャッチのアニメを再生
-      anm_end = GFL_G3D_OBJECT_LoopAnimeFrame( obj, 2, FX32_ONE );  // ica
+          head_obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( p_wk->parent_g3dUtil, p_wk->unit_idx );
+          // 3つあるからどれ使うかtypeで指定
+          obj = GFL_G3D_UTIL_GetObjHandle( p_wk->parent_g3dUtil, head_obj_idx + p_wk->type);
 
-      // アニメ終了チェック
-      if( anm_end == FALSE )
-      {
-        p_wk->alpha -= 3;
+          // キャッチのアニメを再生
+          anm_end = GFL_G3D_OBJECT_LoopAnimeFrame( obj, 2, FX32_ONE );  // ica
+
+          // アニメ終了チェック
+          if( anm_end == FALSE )
+          {
+            p_wk->alpha -= 3;
+          }
+        }
+        break;
+
+      case BALLOON_POINT_NG_1PT:
+      case BALLOON_POINT_NG_2PT:
+        {
+          VecFx32 scale_tmp;
+
+          // 風船を徐々に拡大する
+          if( p_wk->scale < SCALE_MAX )
+          {
+            p_wk->scale += SCALE_ADD;
+            if( p_wk->scale > SCALE_MAX )
+            {
+              p_wk->scale = SCALE_MAX;
+            }
+
+            VEC_Set( &scale_tmp, SCALE_ADD, SCALE_ADD, SCALE_ADD );
+            VEC_Add( &p_wk->status.scale, &scale_tmp, &p_wk->status.scale );
+          }
+
+          if( p_wk->scale == SCALE_MAX )
+          {
+            p_wk->alpha -= 3;
+          }
+        }
+        break;
+
+      default:
+        GF_ASSERT(0);
       }
     }
     // アニメ終了したら、αフェードして消える

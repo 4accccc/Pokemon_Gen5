@@ -204,12 +204,15 @@ typedef enum {
   CGOAM_POMP_HANDLE,  // ポンプ取っ手
   CGOAM_R_BUTTON_TOUCH,   // 右側タッチするところ
   CGOAM_L_BUTTON_TOUCH,   // 左側タッチするところ
+  CGOAM_BUTTON_TOUCH_OFF, // タッチするところがOFF
   CGOAM_R_BUTTON_LAST_TOUCH,  // 右側タッチするところ
   CGOAM_L_BUTTON_LAST_TOUCH,  // 左側タッチするところ
+  CGOAM_BUTTON_LAST_TOUCH_OFF,// タッチするところがOFF
   CGOAM_POMP_HANDLE_LAST,  // ポンプ取っ手 残り時間20秒板
   CGOAM_PEN1,               // ペンタッチアニメ
   CGOAM_PEN2,               // ペンタッチアニメ
-  CGOAM_PINPOINT_EFFECT,    // ピンポイントタッチエフェクト
+  CGOAM_PINPOINT_EFFECT_L,  // ピンポイントタッチエフェクト
+  CGOAM_PINPOINT_EFFECT_R,  // ピンポイントタッチエフェクト
 } CTVT_GAME_OBJ_ANM_MAIN;
 
 // PLATE task seq
@@ -336,6 +339,7 @@ struct _CTVT_GAME_WORK
   u8            swing_interval;               // 風船揺れのインターバル
   u8            pinpoint_effect_cnt_r;        // ピンポイントタッチエフェクトの同時再生用
   u8            pinpoint_effect_cnt_l;        // ピンポイントタッチエフェクトの同時再生用
+  u16           touch_anmseq;
 
   // 制限時間管理
   u16           timeLimit;      // 制限時間 (秒)
@@ -2844,13 +2848,13 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     // タイトル
     cellInitData.pos_x = 128;
     cellInitData.pos_y = 96;
-    cellInitData.softpri = 1;
+    cellInitData.softpri = 4;
     cellInitData.bgpri = 1;
 
     for( i=0; i<2; i++ )
     {
       cellInitData.anmseq = CGOAS_TITLE1 + i;
-      cellInitData.softpri = i;
+      cellInitData.softpri = i+4;
 
       gameWork->clwkTitle[i] = GFL_CLACT_WK_Create( gameWork->cellUnit,
           gameWork->cellResIdx[CGOR_UPPER_PLT],
@@ -2862,7 +2866,7 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     }
     // part2の虹
     cellInitData.anmseq = CGOAS_RAINBOW2;
-    cellInitData.softpri = 3;
+    cellInitData.softpri = 6;
     gameWork->clwkTitle[2] = GFL_CLACT_WK_Create( gameWork->cellUnit,
         gameWork->cellResIdx[CGOR_UPPER_PLT],
         gameWork->cellResIdx[CGOR_UPPER_NCG],
@@ -2872,7 +2876,7 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkTitle[2] , TRUE );
     // part2の「2」
     cellInitData.anmseq = CGOAS_PART2;
-    cellInitData.softpri = 3;
+    cellInitData.softpri = 6;
     gameWork->clwkTitle[3] = GFL_CLACT_WK_Create( gameWork->cellUnit,
         gameWork->cellResIdx[CGOR_UPPER_PLT],
         gameWork->cellResIdx[CGOR_UPPER_NCG],
@@ -2884,7 +2888,7 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     // タッチするボタン
     cellInitData.pos_x = 128;
     cellInitData.pos_y = 96;
-    cellInitData.softpri = 1;
+    cellInitData.softpri = 4;
     cellInitData.bgpri = 1;
     cellInitData.anmseq = CGOAM_L_BUTTON_TOUCH;
     gameWork->clwkTouch = GFL_CLACT_WK_Create( gameWork->cellUnit,
@@ -2897,7 +2901,7 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     // 空気入れ土台
     cellInitData.pos_x = 128;
     cellInitData.pos_y = 96;
-    cellInitData.softpri = 2;
+    cellInitData.softpri = 5;
     cellInitData.bgpri = 1;
     cellInitData.anmseq = CGOAM_POMP_BASE;
     gameWork->clwkPompBase = GFL_CLACT_WK_Create( gameWork->cellUnit,
@@ -2910,7 +2914,7 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     // 空気入れ取っ手
     cellInitData.pos_x = 128;
     cellInitData.pos_y = 96;
-    cellInitData.softpri = 3;
+    cellInitData.softpri = 6;
     cellInitData.bgpri = 1;
     cellInitData.anmseq = CGOAM_POMP_HANDLE;
     gameWork->clwkPompHandle = GFL_CLACT_WK_Create( gameWork->cellUnit,
@@ -2924,7 +2928,7 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     // ペンタッチアニメ
     cellInitData.pos_x = 65;
     cellInitData.pos_y = 122;
-    cellInitData.softpri = 0;
+    cellInitData.softpri = 3;
     cellInitData.bgpri = 1;
     cellInitData.anmseq = CGOAM_PEN1;
     gameWork->clwkPenAnm = GFL_CLACT_WK_Create( gameWork->cellUnit,
@@ -2939,7 +2943,7 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     cellInitData.pos_y = 170;
     cellInitData.softpri = 0;
     cellInitData.bgpri = 1;
-    cellInitData.anmseq = CGOAM_PINPOINT_EFFECT;
+    cellInitData.anmseq = CGOAM_PINPOINT_EFFECT_R;
     for( i=0; i<PINPOINT_EFFECT_NUM; i++ )
     {
       gameWork->clwkPinPointEffectR[i] = GFL_CLACT_WK_Create( gameWork->cellUnit,
@@ -2953,6 +2957,7 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
 
     cellInitData.pos_x = 20;
     cellInitData.pos_y = 170;
+    cellInitData.anmseq = CGOAM_PINPOINT_EFFECT_L;
     for( i=0; i<PINPOINT_EFFECT_NUM; i++ )
     {
       gameWork->clwkPinPointEffectL[i] = GFL_CLACT_WK_Create( gameWork->cellUnit,
@@ -3022,6 +3027,7 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   gameWork->swing_interval = 0;
   gameWork->pinpoint_effect_cnt_l = 0;
   gameWork->pinpoint_effect_cnt_r = 0;
+  gameWork->touch_anmseq = CGOAM_L_BUTTON_TOUCH;
 
   // サウンド
   {
@@ -3463,6 +3469,7 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   u16   anmseq_r;
   u16   anmseq_l;
+  u16   anmseq_off;
   u8 i;
 
   // 残り時間でタッチボタンを変更
@@ -3470,21 +3477,23 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
   {
     anmseq_r  = CGOAM_R_BUTTON_LAST_TOUCH;
     anmseq_l  = CGOAM_L_BUTTON_LAST_TOUCH;
+    anmseq_off= CGOAM_BUTTON_LAST_TOUCH_OFF;
 
     // 変わってない時は変更する
     if( GFL_CLACT_WK_GetAnmSeq( gameWork->clwkTouch ) == CGOAM_R_BUTTON_TOUCH )
     {
-      GFL_CLACT_WK_SetAnmSeq( gameWork->clwkTouch, CGOAM_R_BUTTON_LAST_TOUCH );
+      gameWork->touch_anmseq = CGOAM_R_BUTTON_LAST_TOUCH;
     }
     if( GFL_CLACT_WK_GetAnmSeq( gameWork->clwkTouch ) == CGOAM_L_BUTTON_TOUCH )
     {
-      GFL_CLACT_WK_SetAnmSeq( gameWork->clwkTouch, CGOAM_L_BUTTON_LAST_TOUCH );
+      gameWork->touch_anmseq = CGOAM_L_BUTTON_LAST_TOUCH;
     }
   }
   else
   {
     anmseq_r  = CGOAM_R_BUTTON_TOUCH;
     anmseq_l  = CGOAM_L_BUTTON_TOUCH;
+    anmseq_off= CGOAM_BUTTON_TOUCH_OFF;
   }
 
   // 風船がアクティブの時のみタッチ判定
@@ -3581,13 +3590,19 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
       // タッチ中のアニメシーケンスに変更
       if( GFL_CLACT_WK_GetAnmSeq( gameWork->clwkTouch ) == anmseq_r )
       {
-        GFL_CLACT_WK_SetAnmSeq( gameWork->clwkTouch, anmseq_l );
+        // 左を押せるボタンに変更
+        gameWork->touch_anmseq = anmseq_l;
 
         // ピンポイントタッチならエフェクト再生
         if( retTrg == 2 )
         {
           GFL_CLACT_WK_SetDrawEnable( gameWork->clwkPinPointEffectR[gameWork->pinpoint_effect_cnt_r], TRUE );
           GFL_CLACT_WK_ResetAnm( gameWork->clwkPinPointEffectR[gameWork->pinpoint_effect_cnt_r] );
+
+          // 優先順位を表示した順にする
+          GFL_CLACT_WK_SetSoftPri( gameWork->clwkPinPointEffectR[ gameWork->pinpoint_effect_cnt_r ], 0 );
+          GFL_CLACT_WK_SetSoftPri( gameWork->clwkPinPointEffectR[ ((gameWork->pinpoint_effect_cnt_r+1)%PINPOINT_EFFECT_NUM) ], 1 );
+          GFL_CLACT_WK_SetSoftPri( gameWork->clwkPinPointEffectR[ ((gameWork->pinpoint_effect_cnt_r+2)%PINPOINT_EFFECT_NUM) ], 2 );
 
           // 次のセルでエフェクトを再生するようにする
           gameWork->pinpoint_effect_cnt_r++;
@@ -3599,13 +3614,19 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
       }
       else
       {
-        GFL_CLACT_WK_SetAnmSeq( gameWork->clwkTouch, anmseq_r );
+        // 右を押せるボタンに変更
+        gameWork->touch_anmseq = anmseq_r;
 
         // ピンポイントタッチならエフェクト再生
         if( retTrg == 0 )
         {
           GFL_CLACT_WK_SetDrawEnable( gameWork->clwkPinPointEffectL[gameWork->pinpoint_effect_cnt_l], TRUE );
           GFL_CLACT_WK_ResetAnm( gameWork->clwkPinPointEffectL[gameWork->pinpoint_effect_cnt_l] );
+
+          // 優先順位を表示した順にする
+          GFL_CLACT_WK_SetSoftPri( gameWork->clwkPinPointEffectL[ gameWork->pinpoint_effect_cnt_l ], 0 );
+          GFL_CLACT_WK_SetSoftPri( gameWork->clwkPinPointEffectL[ ((gameWork->pinpoint_effect_cnt_l+1)%PINPOINT_EFFECT_NUM) ], 1 );
+          GFL_CLACT_WK_SetSoftPri( gameWork->clwkPinPointEffectL[ ((gameWork->pinpoint_effect_cnt_l+2)%PINPOINT_EFFECT_NUM) ], 2 );
 
           // 次のセルでエフェクトを再生するようにする
           gameWork->pinpoint_effect_cnt_l++;
@@ -3615,27 +3636,20 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
           }
         }
       }
-#if 0
-      if( GFL_CLACT_WK_CheckAnmActive(gameWork->clwkTouch) == FALSE )
-      {
-        GFL_CLACT_WK_ResetAnm( gameWork->clwkTouch );
-      }
-#endif
     }
+    //↑↑↑↑↑↑↑↑↑↑↑↑
+    //ここまででタッチのアニメシーケンスが決まる
+    GFL_CLACT_WK_SetAnmSeq( gameWork->clwkTouch, gameWork->touch_anmseq );
+    // 例外は↓のタッチできないときのみ
+  }
+  // 風船補充中はタッチできない
+  else
+  {
+    GFL_CLACT_WK_SetAnmSeq( gameWork->clwkTouch, anmseq_off );
   }
 
-#if 0
-  // タッチしていない時にタッチボタンを戻す
-  if( GFL_CLACT_WK_GetAnmSeq( gameWork->clwkTouch ) != anmseq_stay )
-  {
-    if( GFL_CLACT_WK_CheckAnmActive(gameWork->clwkTouch) == FALSE )
-    {
-      GFL_CLACT_WK_SetAnmSeq( gameWork->clwkTouch, anmseq_stay );
-      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkTouch, TRUE );
-    }
-  }
-#endif
- 
+
+
   // インターバル
   if( gameWork->swing_interval > 0 )
   {
