@@ -4429,6 +4429,51 @@ static GFL_PROC_RESULT FieldItemMenuProc_Main( GFL_PROC * proc, int * seq, void 
 
 }
 
+#ifdef PM_DEBUG
+static void DEBGU_OutputExitMode( BAG_MODE bagmode ,BAG_NEXTPROC_ENUM exitmode )
+{
+  const char* next_proc_str[] =
+  {
+    "BAG_NEXTPROC_EXIT            = 終了",
+    "BAG_NEXTPROC_RETURN          = 手前に戻る",
+    "BAG_NEXTPROC_HAVE            = ポケモンにアイテムをもたせる",
+    "BAG_NEXTPROC_ITEMEQUIP       = ポケモンリストのアイテム装備に戻る",
+    "BAG_NEXTPROC_ITEMHAVE_RET    = ポケモンリストのアイテム装備に戻るが、キャンセルのとき",
+    "BAG_NEXTPROC_ITEMUSE         = 使う",
+    "BAG_NEXTPROC_WAZASET         = 技セット",
+    "BAG_NEXTPROC_TOWNMAP         = タウンマップ",
+    "BAG_NEXTPROC_FRIENDNOTE      = ともだち手帳",
+    "BAG_NEXTPROC_EXITEM          = 終了",
+    "BAG_NEXTPROC_RIDECYCLE       = 乗る"
+    "BAG_NEXTPROC_DROPCYCLE       = おりる",
+    "BAG_NEXTPROC_EVOLUTION       = しんか",
+    "BAG_NEXTPROC_PALACEJUMP      = パレス移動",
+    "BAG_NEXTPROC_ANANUKENOHIMO   = あなぬけのひも",
+    "BAG_NEXTPROC_AMAIMITU        = あまいミツ",
+    "BAG_NEXTPROC_TURIZAO         = つりざお",
+    "BAG_NEXTPROC_BATTLERECORDER  = バトルレコーダー",
+    "BAG_NEXTPROC_MAILSET         = メール作成",
+    "BAG_NEXTPROC_MAILVIEW        = メール閲覧",
+    "BAG_NEXTPROC_DOWSINGMACHINE  = ダウジングマシン",
+    "BAG_NEXTPROC_LIVECASTER      = ライブキャスター",
+    "BAG_NEXTPROC_MEDALBOX        = メダルボックス",
+  };
+  const char* bag_mode_str[] =
+  {
+    "BAG_MODE_FIELD               = 通常バッグ",
+    "BAG_MODE_UNION               = ユニオンバッグ",
+    "BAG_MODE_POKELIST            = ポケモンリスト",
+    "BAG_MODE_COLOSSEUM           = コロシアム",
+    "BAG_MODE_SELL                = 「うる」シーケンス",
+    "BAG_MODE_SELECT              = 選択のみ",
+  };
+  OS_Printf("バッグモード :%s\n",bag_mode_str[bagmode]);
+  OS_Printf("終了モード   :%s\n",next_proc_str[exitmode]);
+}
+#endif //PM_DEBUG
+
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   プロセスEnd
@@ -4508,6 +4553,11 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
 
     pParam->next_proc = pWork->ret_code;
     pParam->ret_item  = pWork->ret_item;
+
+#ifdef PM_DEBUG
+    // デバッグ情報出力
+    DEBGU_OutputExitMode( pParam->mode ,pParam->next_proc );
+#endif //PM_DEBUG
   }
 
   GFL_UI_KEY_SetRepeatSpeed( pWork->key_repeat_speed, pWork->key_repeat_wait );
