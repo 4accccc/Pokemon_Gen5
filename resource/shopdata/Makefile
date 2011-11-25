@@ -86,7 +86,7 @@ $(targetname_waza): waza_oshie.xls
 
 $(targetname)_list.narc $(targetname)_num.narc : fs_item.xls
 	ruby $(CSVCVTR) -c fs_item.xls >fs_item.csv
-	ruby shopdata.rb fs_item.csv itemsym.h $(targetname) $(targetname)_index.h
+	ruby -Ks shopdata.rb fs_item.csv itemsym.h $(targetname) $(targetname)_index.h
 	find dat -name "*.dat" > $(list_file)
 	perl $(PROJECT_ROOT)tools/arc_list_make.pl $(list_file)
 	nnsarc -r -l -n -i $(targetname)_list -S $(list_file)

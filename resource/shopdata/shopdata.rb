@@ -18,7 +18,8 @@ ITEMSYM_H_START_LINE = 10
 FIXSHOP_START_LINE	 = 7
 
 # 文字コード指定
-$KCODE = 'SJIS'
+# $KCODE = 'SJIS'
+# コマンドラインで指定した
 
 #CSV読み込み
 require "csv"
@@ -65,6 +66,7 @@ reader.each { |row|
   end
   outbuf_data = []
 	namelist << row[1].to_s
+
 
 	# どうぐデータ出力
   cnt = 0
