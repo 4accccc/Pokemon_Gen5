@@ -3073,6 +3073,50 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c04r0201_goods_get_reject_00">
+		<LanguageCell
+			Language="JPN">
+			<Text>あらあら　そうですか！▼
+では　[Name:TrainerName ]さんと
+おそろいの　グッズの　セットを▽
+うけとりたく　なったときは　わたしに▽
+はなしかけて　くださいませ！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-25T07:42:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-25T07:33:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あらあら　そうですか！▼
+では　[Name:TrainerName ]さんと
+おそろいの　グッズの　セットを▽
+受け取りたく　なった時は　わたしに▽
+話しかけて　くださいませ！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-25T07:42:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-25T07:36:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>※swanで追加
+
+コンバートするかの選択肢を断ったとき
+
+0=コンバート元プレイヤー名</Comment>
+			<CommentModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-25T07:38:59" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c04r0201_owner_swan_03"
 		Style="Large">
 		<LanguageCell
