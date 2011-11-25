@@ -15,6 +15,7 @@
   
   //@author Mizuguchi_Mai
   //@author fujimura_souichirou
+  //@author suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -65,6 +66,8 @@ EVENT_START   ev_c12r0201_woman3_01
   _TALK_OBJ_START()
   //ライバル母：主人公くん▼（主人公が女の子の場合は台詞が変わる）
   _BALLOONWIN_OBJMSG_MF( msg_c12r0201_woman3_01, msg_c12r0201_woman3_02, C12R0201_WOMAN3_01, POS_DOWN )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 
 EVENT_END
 

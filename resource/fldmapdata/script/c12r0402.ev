@@ -15,6 +15,7 @@
   
   //@author Mizuguchi_Mai
   //@author fujimura_souichirou
+  //@author suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -56,6 +57,7 @@ EVENT_START   ev_c12r0402_woman2_01
 
       //女性：ハイパーボールは
       _BALLOONWIN_TALKOBJ_MSG( msg_c12r0402_woman2_03 )
+      _LAST_KEYWAIT()
       _MSGWIN_CLOSE()
 
       //========================================/
@@ -67,6 +69,7 @@ EVENT_START   ev_c12r0402_woman2_01
 
       //女性：となりまちに　いくのも
       _BALLOONWIN_TALKOBJ_MSG( msg_c12r0402_woman2_01 )
+      _LAST_KEYWAIT()
       _MSGWIN_CLOSE()
 
     ENDIF
@@ -76,6 +79,7 @@ EVENT_START   ev_c12r0402_woman2_01
 
     //女性：ハイパーボールは
     _BALLOONWIN_TALKOBJ_MSG( msg_c12r0402_woman2_03 )
+    _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
 
   ENDIF
