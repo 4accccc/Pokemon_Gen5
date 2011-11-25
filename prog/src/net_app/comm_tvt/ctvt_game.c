@@ -1347,13 +1347,13 @@ void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, u16 idx, u8 netId )
     {
       // 制限時間20秒を切ると得点2倍
       p_wk->score[ netId ] -= 2;
-      p_wk->balloon_wk[ idx ].point_type = BALLOON_POINT_NG_4PT;
+      p_wk->balloon_wk[ idx ].point_type = BALLOON_POINT_NG_2PT;
     }
     else
     {
       // 通常風船
       p_wk->score[ netId ] -= 1;
-      p_wk->balloon_wk[ idx ].point_type = BALLOON_POINT_NG_2PT;
+      p_wk->balloon_wk[ idx ].point_type = BALLOON_POINT_NG_1PT;
     }
     // マイナスにはならないようになった
     if( p_wk->score[ netId ] < 0 ){ p_wk->score[ netId] = 0; }
@@ -5205,12 +5205,12 @@ static const GFL_G3D_UTIL_RES res_3d_table6[] =
   { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ok_4pt_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ok_4pt_nsbca, GFL_G3D_UTIL_RESARC },
   { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ok_4pt_nsbma, GFL_G3D_UTIL_RESARC },
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ng_1pt_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ng_1pt_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ng_1pt_nsbma, GFL_G3D_UTIL_RESARC },
   { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ng_2pt_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ng_2pt_nsbca, GFL_G3D_UTIL_RESARC },
   { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ng_2pt_nsbma, GFL_G3D_UTIL_RESARC },
-  { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ng_4pt_nsbmd, GFL_G3D_UTIL_RESARC },
-  { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ng_4pt_nsbca, GFL_G3D_UTIL_RESARC },
-  { ARCID_TVT_BALLOON, NARC_tvt_balloon_effect1_ng_4pt_nsbma, GFL_G3D_UTIL_RESARC },
 };
 
 
