@@ -50,15 +50,15 @@
 #define  FMISSION_ID_EVENT_TRAIL_01B  ( 38 )  ///<かくしあな大調査Ｂ
 #define  FMISSION_ID_EVENT_TRAIL_01W  ( 39 )  ///<かくしあな大調査Ｗ
 #define  FMISSION_ID_NPC_GET_A_PRESENT  ( 40 )  ///<プレゼント取得
-#define  FMISSION_ID_EFFECT_ENC_EMONGA01  ( 41 )  ///<ダミー
-#define  FMISSION_ID_ITEM_KAKERA01  ( 42 )  ///<ダミー
-#define  FMISSION_ID_EVENT_TOWER_OF_HEAVEN  ( 43 )  ///<ダミー
-#define  FMISSION_ID_EFFECT_ENC_POKEBTL_FREE_01  ( 44 )  ///<ダミー
-#define  FMISSION_ID_ITEM_ITEM_KAKERA_02  ( 45 )  ///<ダミー
-#define  FMISSION_ID_EFFECT_ENC_POKEBTL_FREE_02  ( 46 )  ///<ダミー
-#define  FMISSION_ID_EFFECT_ENC_POKEBTL_FREE_03  ( 47 )  ///<ダミー
-#define  FMISSION_ID_NPC_POKEQUIZ_01  ( 48 )  ///<図鑑クイズ１
-#define  FMISSION_ID_NPC_POKEQUIZ_02  ( 49 )  ///<図鑑クイズ２
+#define  FMISSION_ID_EFFECT_ENC_EMONGA01  ( 41 )  ///<図鑑クイズ_配信
+#define  FMISSION_ID_ITEM_KAKERA01  ( 42 )  ///<きのみ_配信
+#define  FMISSION_ID_EVENT_TOWER_OF_HEAVEN  ( 43 )  ///<宝探し_配信
+#define  FMISSION_ID_EFFECT_ENC_POKEBTL_FREE_01  ( 44 )  ///<ショッキング_配信
+#define  FMISSION_ID_NPC_DUMMY_00  ( 45 )  ///<プレゼント_配信
+#define  FMISSION_ID_NPC_POKEQUIZ_GIFT  ( 46 )  ///<図鑑クイズ_おくりもの
+#define  FMISSION_ID_NPC_TRBTL_GIFT  ( 47 )  ///<戦闘_おくりもの
+#define  FMISSION_ID_NPC_PRESENT_GIFT  ( 48 )  ///<プレゼント_おくりもの
+#define  FMISSION_ID_ITEM_KINOMI_GIFT  ( 49 )  ///<きのみ_おくりもの
 #define  FMISSION_ID_MAX  ( 50 )
 #define  FMISSION_ID_END  ( FMISSION_ID_MAX-1 )
 #define  FMISSION_ID_NULL ( 0x7F )
