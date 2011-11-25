@@ -1387,28 +1387,30 @@ void BEACONINFO_Set_JoinAvenueShopping(GAMEBEACON_INFO *info )
 /**
  * 送信ビーコンセット：無限ダンジョンのエリアXに挑戦中
  *
- * @param senario_no 
+ * @param area_no 
+ * @param zone_id 
  */
 //==================================================================
-void GAMEBEACON_Set_InfinityDungeonEntry( u8 area_no )
+void GAMEBEACON_Set_InfinityDungeonEntry( u8 area_no, u16 zone_id )
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_INFINITY_DUNGEON_ENTRY ) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommonSwan(&GameBeaconSys->send);
-  BEACONINFO_Set_Pokewood(&GameBeaconSys->send.info, area_no, GAMEBEACON_ACTION_INFINITY_DUNGEON_ENTRY );
+  BEACONINFO_Set_InfinityDungeon(&GameBeaconSys->send.info, area_no, zone_id, GAMEBEACON_ACTION_INFINITY_DUNGEON_ENTRY );
 }
 
 //==================================================================
 /**
  * 送信ビーコンセット：無限ダンジョンのエリアXをクリアした
  *
- * @param senario_no 
+ * @param area_no 
+ * @param zone_id 
  */
 //==================================================================
-void GAMEBEACON_Set_InfinityDungeonClear( u8 area_no )
+void GAMEBEACON_Set_InfinityDungeonClear( u8 area_no, u16 zone_id )
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_INFINITY_DUNGEON_CLEAR ) == FALSE){ return; };
   GAMEBEACON_SUB_SendBeaconSetCommonSwan(&GameBeaconSys->send);
-  BEACONINFO_Set_Pokewood(&GameBeaconSys->send.info, area_no, GAMEBEACON_ACTION_INFINITY_DUNGEON_CLEAR );
+  BEACONINFO_Set_InfinityDungeon(&GameBeaconSys->send.info, area_no, zone_id, GAMEBEACON_ACTION_INFINITY_DUNGEON_CLEAR );
 }
 
 //==================================================================
@@ -1416,10 +1418,11 @@ void GAMEBEACON_Set_InfinityDungeonClear( u8 area_no )
  * ビーコンセット：無限ダンジョン詳細セット
  */
 //==================================================================
-void BEACONINFO_Set_InfinityDungeon(GAMEBEACON_INFO *info, u8 area_no, GAMEBEACON_ACTION action )
+void BEACONINFO_Set_InfinityDungeon(GAMEBEACON_INFO *info, u8 area_no, u16 zone_id, GAMEBEACON_ACTION action )
 {
   info->action.action_no = action;
-  info->action.infinity_dungeon_area_no = area_no;
+  info->action.inf_dungeon.zone_id = zone_id;
+  info->action.inf_dungeon.area_no = area_no;
 
   BEACONINFO_Set_Details_Walk(info);
 }

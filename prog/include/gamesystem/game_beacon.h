@@ -296,8 +296,8 @@ extern void GAMEBEACON_Set_WBTEntry( WBTCUP tournament_id );
 extern void GAMEBEACON_Set_WBTWin( WBTCUP tournament_id, u8 round );
 extern void GAMEBEACON_Set_WBTLose( WBTCUP tournament_id, u8 round );
 extern void GAMEBEACON_Set_JoinAvenueShopping( void );
-extern void GAMEBEACON_Set_InfinityDungeonEntry( u8 area_no );
-extern void GAMEBEACON_Set_InfinityDungeonClear( u8 area_no );
+extern void GAMEBEACON_Set_InfinityDungeonEntry( u8 area_no, u16 zone_id );
+extern void GAMEBEACON_Set_InfinityDungeonClear( u8 area_no, u16 zone_id );
 extern void GAMEBEACON_Set_GameOver( void );
 
 extern void GAMEBEACON_Set_FestMission( void );

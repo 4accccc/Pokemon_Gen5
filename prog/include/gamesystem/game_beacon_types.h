@@ -88,7 +88,6 @@ typedef struct{
     u8 trial_house_rank;                    ///<トライアルハウスのランク
     u16 gpower_id;                          ///<GパワーID
     u8  pokewood_senario_no;                ///<[SWAN追加]ポケウッドシナリオNo
-    u8  infinity_dungeon_area_no;           ///<[SWAN追加]無限ダンジョンエリアNo
     struct{ //通常
       STRCODE nickname[MONS_NAME_SIZE];       ///<ポケモン名(ニックネーム) !! EOM除く !!
     }normal;
@@ -110,6 +109,10 @@ typedef struct{
       u8  tournament_id;  ///<WBTトーナメントID
       u8  round;          ///<何回戦か？
     }wbt;
+    struct{ //[SWAN追加]無限ダンジョン
+      u16  zone_id;  ///<無限ダンジョン受付ゾーンID
+      u8   area_no;  ///<無限ダンジョンエリアNo
+    }inf_dungeon;
     FEST_BEACON  fest_beacon;
     u8 extend_buff[20];   ///<２０バイトのフリーエリア  リゾートで使用
   };

@@ -1291,14 +1291,16 @@ void GAMEBEACON_Get_Action_WBTParam(const GAMEBEACON_INFO *info, u8* tournament_
  * @retval  u8		  無限ダンジョンエリアNo
  */
 //==================================================================
-u8 GAMEBEACON_Get_Action_InfinityDungeonAreaNo(const GAMEBEACON_INFO *info)
+u8 GAMEBEACON_Get_Action_InfinityDungeonParam(const GAMEBEACON_INFO *info, u16* zone_id )
 {
   switch(info->action.action_no){
   case GAMEBEACON_ACTION_INFINITY_DUNGEON_ENTRY:
   case GAMEBEACON_ACTION_INFINITY_DUNGEON_CLEAR:
-    return info->action.infinity_dungeon_area_no+1; //0オリジンなので+1して返す
+    *zone_id = info->action.inf_dungeon.zone_id;
+    return info->action.inf_dungeon.area_no+1; //0オリジンなので+1して返す
   }
   GF_ASSERT(0);
+  *zone_id = 0;
   return 0; //当たり障りないNo
 }
 
@@ -1423,8 +1425,12 @@ void GAMEBEACON_InfoWordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPI
     }
     break;
   case BEACON_WSET_INFINITY_DUNGEON:  //SWAN追加
-    WORDSET_RegisterPlaceName( wordset, 1, ZONEDATA_GetPlaceNameID(GAMEBEACON_Get_ZoneID(info)) );
-    WORDSET_RegisterNumber( wordset, 2, GAMEBEACON_Get_Action_InfinityDungeonAreaNo(info),2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    {
+      u16 zone_id;
+      u8  area_no = GAMEBEACON_Get_Action_InfinityDungeonParam(info, &zone_id );
+      WORDSET_RegisterPlaceName( wordset, 1, ZONEDATA_GetPlaceNameID(zone_id) );
+      WORDSET_RegisterNumber( wordset, 2, area_no, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    }
     break;
   case BEACON_WSET_HAIHU_GPOWER:
   case BEACON_WSET_DEFAULT:
@@ -1615,12 +1621,12 @@ static BOOL errchk_action_wbt(const GAMEBEACON_INFO* info )
 //エラーチェック 無限ダンジョンタイプ 
 static BOOL errchk_action_infinity_dungeon(const GAMEBEACON_INFO* info )
 {
-  if( info->zone_id != ZONE_ID_D31R0101 && info->zone_id != ZONE_ID_D31R0201 ){
-    GF_ASSERT_MSG(0,"i_dun zone %d\n", info->zone_id );
+  if( info->action.inf_dungeon.zone_id != ZONE_ID_D31R0101 && info->action.inf_dungeon.zone_id != ZONE_ID_D31R0201 ){
+    GF_ASSERT_MSG(0,"i_dun zone %d\n", info->action.inf_dungeon.zone_id );
     return TRUE;
   }
-  if( info->action.infinity_dungeon_area_no >= INFINITY_DUNGEON_AREA_ID_MAX ){
-    GF_ASSERT_MSG(0,"%d\n", info->action.infinity_dungeon_area_no );
+  if( info->action.inf_dungeon.area_no >= INFINITY_DUNGEON_AREA_ID_MAX ){
+    GF_ASSERT_MSG(0,"%d\n", info->action.inf_dungeon.area_no );
     return TRUE;
   }
   return FALSE;

@@ -236,7 +236,7 @@ void BEACONINFO_Set_SuretigaiCount(GAMEBEACON_INFO *info, u32 count);
 void BEACONINFO_Set_Pokewood(GAMEBEACON_INFO *info, u8 scenario_no, GAMEBEACON_ACTION action );
 void BEACONINFO_Set_WBT(GAMEBEACON_INFO *info, WBTCUP tournament_id, u8 round, GAMEBEACON_ACTION action );
 void BEACONINFO_Set_JoinAvenueShopping(GAMEBEACON_INFO *info );
-void BEACONINFO_Set_InfinityDungeon(GAMEBEACON_INFO *info, u8 area_no, GAMEBEACON_ACTION action );
+void BEACONINFO_Set_InfinityDungeon(GAMEBEACON_INFO *info, u8 area_no, u16 zone_id, GAMEBEACON_ACTION action );
 
 void BEACONINFO_Set_FMissionEventClear(GAMEBEACON_INFO *info, u16 ev_id );
 

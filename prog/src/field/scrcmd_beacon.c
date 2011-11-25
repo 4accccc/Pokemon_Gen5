@@ -44,6 +44,7 @@ VMCMD_RESULT EvCmdBeaconSetRequest( VMHANDLE* core, void* wk )
   GAMEDATA*      gamedata = GAMESYSTEM_GetGameData( gsys );
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   SCRIPT_WORK*   sc       = SCRCMD_WORK_GetScriptWork( work );
+  u16            zone_id  = SCRCMD_WORK_GetZoneID( work );
 
   switch( beacon_id ){
   case SCR_BEACON_SET_REQ_ITEM_GET: //アイテム拾った
@@ -83,10 +84,10 @@ VMCMD_RESULT EvCmdBeaconSetRequest( VMHANDLE* core, void* wk )
     GAMEBEACON_Set_WBTLose( (WBTCUP)value1, (u8)value2 );
     break;
   case SCR_BEACON_SET_REQ_INF_DUNGEON_ENTRY: ///<無限ダンジョン挑戦
-    GAMEBEACON_Set_InfinityDungeonEntry( (u8)value1 );
+    GAMEBEACON_Set_InfinityDungeonEntry( (u8)value1, zone_id );
     break;
   case SCR_BEACON_SET_REQ_INF_DUNGEON_CLEAR:  ///<無限ダンジョンクリア
-    GAMEBEACON_Set_InfinityDungeonClear( (u8)value1 );
+    GAMEBEACON_Set_InfinityDungeonClear( (u8)value1, zone_id );
     break;
   case SCR_BEACON_SET_REQ_POKEWOOD_FILMING:  ///<ポケウッド撮影開始
     GAMEBEACON_Set_PokewoodFilming( (u8)value1 );
