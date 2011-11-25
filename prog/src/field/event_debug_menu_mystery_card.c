@@ -37,6 +37,7 @@ static BOOL debugMenuCallProc_MakeMysteryCardItem( DEBUG_MENU_EVENT_WORK *p_wk )
 static BOOL debugMenuCallProc_MakeMysteryCardGPower( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_MakeMysteryCardGLiberty( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_MakeMysteryCardEgg( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_MakeMysteryCardFMission( DEBUG_MENU_EVENT_WORK *p_wk );
 //#define MYSTERY_DLDATA_DEBUG_PRINT
 static const DEBUG_MENU_LIST DATA_SubMysteryCardMakeList[] =
 {
@@ -45,6 +46,7 @@ static const DEBUG_MENU_LIST DATA_SubMysteryCardMakeList[] =
   { DEBUG_FIELD_MYSTERY_03, debugMenuCallProc_MakeMysteryCardGPower, GFL_OVERLAY_BLANK_ID },              //Gパワー作成
   { DEBUG_FIELD_MYSTERY_04, debugMenuCallProc_MakeMysteryCardGLiberty, GFL_OVERLAY_BLANK_ID },              //リバティ作成
   { DEBUG_FIELD_MYSTERY_05, debugMenuCallProc_MakeMysteryCardEgg, GFL_OVERLAY_BLANK_ID },              //タマゴ作成
+  { DEBUG_FIELD_MYSTERY_06, debugMenuCallProc_MakeMysteryCardFMission, GFL_OVERLAY_BLANK_ID },              //フェスミッション
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSubMysteryCardMakeData = {
@@ -340,6 +342,36 @@ static BOOL debugMenuCallProc_MakeMysteryCardEgg( DEBUG_MENU_EVENT_WORK *p_wk )
         }
       }
 #endif
+      OS_TPrintf( "ふしぎなカードをセットしました イベントID=[%d]\n", i );
+      break;
+    }
+  }
+
+  MYSTERY_DATA_UnLoad( p_mystery_sv );
+
+  return FALSE;
+}
+static BOOL debugMenuCallProc_MakeMysteryCardFMission( DEBUG_MENU_EVENT_WORK *p_wk )
+{
+  DOWNLOAD_GIFT_DATA  dl_data;
+  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
+  MYSTERY_DATA *p_mystery_sv  = MYSTERY_DATA_Load( pSave, MYSTERYDATA_LOADTYPE_NORMAL,GFL_HEAPID_APP );
+  GIFT_PACK_DATA  data;
+  int i;
+
+  GFL_STD_MemClear( &dl_data, sizeof(DOWNLOAD_GIFT_DATA) );
+
+  for( i = 1; i < 2048; i++ )
+  {
+    if( !MYSTERYDATA_IsEventRecvFlag(p_mystery_sv, i) )
+    {
+      DEBUG_MYSTERY_SetGiftCommonData( &data, i, FALSE );
+      DEBUG_MYSTERY_SetGiftFMissionData( &data );
+      MYSTERYDATA_SetCardData( p_mystery_sv, &data );
+
+      DEBUG_MYSTERY_SetDownLoadData( &dl_data, 0xFFFFFFFF, LANG_JAPAN );
+      dl_data.data  = data;
+
       OS_TPrintf( "ふしぎなカードをセットしました イベントID=[%d]\n", i );
       break;
     }

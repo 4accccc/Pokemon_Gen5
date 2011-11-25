@@ -32,6 +32,8 @@
 #include "resort_util.h"
 #include "resort_const.h"
 
+#include "resort_debug.h"
+
 //outer
 #include "scrcmd_resort.h"
 
@@ -604,6 +606,14 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
       const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_GetData( p_shop, shopID );
 
       *p_ret_wk = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_GRADE );
+    }
+    break;
+  case RESORT_GET_PARAM_IS_CELEB:
+    {
+      u16 people_type = RESORT_ABSTRUCT_DATA_GetPeopleType( p_abstruct );
+      u16 type = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_TYPE, NULL );
+
+      *p_ret_wk = ( people_type == RESORT_PEOPLE_TYPE_PROXY && type == RESORT_PROXY_TYPE_CELEB );
     }
     break;
   default:
@@ -1366,6 +1376,8 @@ VMCMD_RESULT EvCmdResortSetMergeLock( VMHANDLE *p_core, void *p_wk_adrs )
 //-----------------------------------------------------------------------------
 VMCMD_RESULT EvCmdResortSetSeceneVisible( VMHANDLE *p_core, void *p_wk_adrs )
 {
+  static BOOL s_scene_visible_use = FALSE;
+
   SCRCMD_WORK *p_wk = p_wk_adrs;
   SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
@@ -1375,20 +1387,43 @@ VMCMD_RESULT EvCmdResortSetSeceneVisible( VMHANDLE *p_core, void *p_wk_adrs )
   RESORT_PEOPLE* p_people = RESORT_UTIL_GetFrontPeople( p_wk, p_people_sys );
   u16 mode = SCRCMD_GetVMWorkValue( p_core, p_wk );
 
+
   switch( mode )
   {
   case RESORT_SCENE_VISIBLE_OFF_CROWDPEOPLE:
+    if( s_scene_visible_use )
+    {
+      RESORT_PEOPLE_SYS_ReturnMasterVisibleAll( p_people_sys);
+      RESORT_NPC_SYS_SetVisibleAll( p_npc_sys, TRUE );
+    }
     RESORT_UTIL_SetSceneVisible( p_people_sys, p_npc_sys, p_people, RESORT_UTIL_VISIBLE_OFF_CROWDPEOPLE );
+
+    s_scene_visible_use = TRUE;
     break;
   case RESORT_SCENE_VISIBLE_OFF_ALL_CROWDPEOPLE:
+    if( s_scene_visible_use )
+    {
+      RESORT_PEOPLE_SYS_ReturnMasterVisibleAll( p_people_sys);
+      RESORT_NPC_SYS_SetVisibleAll( p_npc_sys, TRUE );
+    }
     RESORT_UTIL_SetSceneVisible( p_people_sys, p_npc_sys, NULL, RESORT_UTIL_VISIBLE_OFF_CROWDPEOPLE );
+
+    s_scene_visible_use = TRUE;
     break;
   case RESORT_SCENE_VISIBLE_OFF_ALL_PEOPLE:
+    if( s_scene_visible_use )
+    {
+      RESORT_PEOPLE_SYS_ReturnMasterVisibleAll( p_people_sys);
+      RESORT_NPC_SYS_SetVisibleAll( p_npc_sys, TRUE );
+    }
     RESORT_UTIL_SetSceneVisible( p_people_sys, p_npc_sys, NULL, RESORT_UTIL_VISIBLE_OFF_ALLPEOPLE );
+
+    s_scene_visible_use = TRUE;
     break;
   case RESORT_SCENE_VISIBLE_DEFAULT:
     RESORT_PEOPLE_SYS_ReturnMasterVisibleAll( p_people_sys);
     RESORT_NPC_SYS_SetVisibleAll( p_npc_sys, TRUE );
+    s_scene_visible_use = FALSE;
     break;
   default:
     GF_ASSERT(0);
@@ -1430,6 +1465,16 @@ VMCMD_RESULT EvCmdResortCombo( VMHANDLE *p_core, void *p_wk_adrs )
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
   u16 *p_ret_idx	= SCRCMD_GetVMWork( p_core, p_wk );
 
+  u16 people_type = RESORT_ABSTRUCT_DATA_GetPeopleType( p_rnd );
+  u16 type = RESORT_ABSTRUCT_DATA_GetData( p_rnd, RESORT_DATA_PARAM_TYPE, NULL );
+
+  BOOL is_celeb = FALSE;
+
+  if( people_type == RESORT_PEOPLE_TYPE_PROXY && type == RESORT_PROXY_TYPE_CELEB )
+  {
+    is_celeb = TRUE;
+  }
+
 
   switch( param )
   {
@@ -1447,7 +1492,22 @@ VMCMD_RESULT EvCmdResortCombo( VMHANDLE *p_core, void *p_wk_adrs )
       u32 rnd = RESORT_ABSTRUCT_DATA_GetRndDouble( p_abstruct, p_rnd, RESORT_RND_ID_COMBO_RND, 100 );
       u32 percent;
 
-      //もし住民が８人いないとコンボはやらない
+      //ペナルティ時間中はコンボしない
+      if( EVTIME_IsPenaltyMode( GAMESYSTEM_GetGameData(p_gamesys) ) )
+      {
+        *p_ret_wk = RESORT_COMBO_RESULT_FAILER;
+        return VMCMD_RESULT_CONTINUE;
+      }
+
+      //セレブはコンボしない
+      if( is_celeb )
+      {
+        *p_ret_wk = RESORT_COMBO_RESULT_FAILER;
+        OS_TPrintf( "セレブはコンボしない\n" );
+        return VMCMD_RESULT_CONTINUE;
+      }
+
+      //住民が８人いないとコンボはやらない
       if( RESORT_PEOPLE_ALL_DATA_GetResidentCount( p_all_people ) != RESORT_RESIDENT_DATA_NUM )
       {
         *p_ret_wk = RESORT_COMBO_RESULT_FAILER;
@@ -1469,12 +1529,26 @@ VMCMD_RESULT EvCmdResortCombo( VMHANDLE *p_core, void *p_wk_adrs )
         //初回確率
         percent = RESORT_UTIL_GetComboInitRnd( p_sys, p_abstruct );
 
+#ifdef PM_DEBUG
+        if( RESORT_DEBUG_FLAG_Get(RESORT_DEBUG_FLAG_FORCE_INIT_COMBO) )
+        {
+          percent = 100;
+        }
+#endif 
         OS_TPrintf( "合計　初回確率%d% 抽選%d%\n", percent, rnd );
+
       }
       else
       {
         //継続確率
         percent = RESORT_UTIL_GetComboNextRnd( p_sys, p_abstruct );
+
+#ifdef PM_DEBUG
+        if( RESORT_DEBUG_FLAG_Get(RESORT_DEBUG_FLAG_FORCE_COMBO_MAX) )
+        {
+          percent = 100;
+        }
+#endif 
 
         OS_TPrintf( "合計　継続確率%d% 抽選%d%\n", percent, rnd );
       }
@@ -1506,29 +1580,27 @@ VMCMD_RESULT EvCmdResortCombo( VMHANDLE *p_core, void *p_wk_adrs )
     {
       u32 rnd = RESORT_ABSTRUCT_DATA_GetRnd( p_rnd, RESORT_RND_ID_COMBO_SHOPRESULT, 100 );
       *p_ret_wk = rnd < RESORT_CONST_COMBO_SHOP_RESULT_RATE;
+
+#ifdef PM_DEBUG
+        if( RESORT_DEBUG_FLAG_Get(RESORT_DEBUG_FLAG_FORCE_COMBO_MAX) )
+        {
+          *p_ret_wk = TRUE;
+        }
+#endif 
     }
 
     break;
 
   case RESORT_COMBO_PARAM_GRADE_MSGID:
     {
-      RESORT_ABSTRUCT_DATA *p_abstruct = RESORT_PEOPLE_GetAbstructData( p_people );
-      u16 people_type = RESORT_ABSTRUCT_DATA_GetPeopleType( p_abstruct );
-      u16 type = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_TYPE, NULL );
-      u16 visitor_sex = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_SEX, NULL );
-      BOOL is_celeb = FALSE;
-
-      if( people_type == RESORT_PEOPLE_TYPE_PROXY && type == RESORT_PROXY_TYPE_CELEB )
-      {
-        is_celeb = TRUE;
-      }
+      u16 visitor_sex = RESORT_ABSTRUCT_DATA_GetData( p_rnd, RESORT_DATA_PARAM_SEX, NULL );
 
       if( data )
       {
         //よい場合
         if( is_celeb )
         {
-          *p_ret_wk = RESORT_UTIL_GetCelebData( p_set, p_abstruct, RESORT_BINARY_PRESET_PARAM_CELEB_SHOP_OK ); 
+          *p_ret_wk = RESORT_UTIL_GetCelebData( p_set, p_rnd, RESORT_BINARY_PRESET_PARAM_CELEB_SHOP_OK ); 
         }
         else
         {
@@ -1540,7 +1612,7 @@ VMCMD_RESULT EvCmdResortCombo( VMHANDLE *p_core, void *p_wk_adrs )
         //悪い場合
         if( is_celeb )
         {
-          *p_ret_wk = RESORT_UTIL_GetCelebData( p_set, p_abstruct, RESORT_BINARY_PRESET_PARAM_CELEB_SHOP_NG ); 
+          *p_ret_wk = RESORT_UTIL_GetCelebData( p_set, p_rnd, RESORT_BINARY_PRESET_PARAM_CELEB_SHOP_NG ); 
         }
         else
         {

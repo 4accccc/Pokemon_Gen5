@@ -9,7 +9,7 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #ifdef PM_DEBUG
-
+#include <gflib.h>
 #include "resort_debug.h"
 //=============================================================================
 /**
@@ -33,6 +33,18 @@
 
 static u8  s_debug_flag[ RESORT_DEBUG_BIT_ARRAY_LEN ] = {0};
 static u32 s_debug_work[ RESORT_DEBUG_WORK_MAX ]  = {0};
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デバッグフラグ初期化
+ */
+//-----------------------------------------------------------------------------
+void RESORT_DEBUG_FLAGWORK_Init( void )
+{
+  GFL_STD_MemClear( s_debug_flag, sizeof(u8)*RESORT_DEBUG_BIT_ARRAY_LEN );
+  GFL_STD_MemFill32( s_debug_work, RESORT_DEBUG_WORK_DEFAULT, sizeof(u32)*RESORT_DEBUG_WORK_MAX );
+}
 
 //----------------------------------------------------------------------------
 /**

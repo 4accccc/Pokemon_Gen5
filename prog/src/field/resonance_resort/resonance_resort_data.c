@@ -38,6 +38,9 @@
 #include "field/resonance_resort/resort_shop.h"
 #include "field/resonance_resort/scrcmd_resort_def.h"
 
+//debug
+#include "resort_debug.h"
+
 //ŠO•”ŒöŠJ
 #include "field/resonance_resort_data.h"
 
@@ -4976,6 +4979,10 @@ void RESORT_DATA_Boot( const SAVE_CONTROL_WORK* ctrl )
   RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( (SAVE_CONTROL_WORK*)ctrl );
   sp_city_data = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
   sp_people_all_data  = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
+
+#ifdef PM_DEBUG
+  RESORT_DEBUG_FLAGWORK_Init();
+#endif
 }
 
 
@@ -5002,6 +5009,17 @@ u32 RESORT_DATA_GetRnd( u32 seed, RESORT_RND_ID id, u32 range )
     {
       rnd = GFL_STD_Rand( &context, range );
     }
+
+#ifdef PM_DEBUG
+    {
+      u32 ret = RESORT_DEBUG_WORK_Get(RESORT_DEBUG_WORK_FORCE_RND);
+      if( ret != RESORT_DEBUG_WORK_DEFAULT )
+      {
+        return MATH_CLAMP( ret, 0, range-1 );
+      }
+    }
+#endif
+
     return rnd;
   }
 }

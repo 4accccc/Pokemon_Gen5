@@ -151,7 +151,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
         RESORT_ABSTRUCT_DATA_SetData( p_abstruct, RESORT_DATA_PARAM_WANT_SPOT, spot );
       }
 #ifdef PM_DEBUG
-    if( RESORT_DEBUG_WORK_Get(RESORT_DEBUG_WORK_FORCE_SPOT) != 0 )
+    if( RESORT_DEBUG_WORK_Get(RESORT_DEBUG_WORK_FORCE_SPOT) != RESORT_DEBUG_WORK_DEFAULT )
     {
       spot = RESORT_DEBUG_WORK_Get(RESORT_DEBUG_WORK_FORCE_SPOT);
     }
@@ -3051,10 +3051,8 @@ u32 RESORT_UTIL_GetComboNextRnd( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_a
   RESORT_WORK *p_work = RESORT_SYSTEM_GetWork(p_sys);
 
   //èââÒämó¶
-  u32 init_rnd = RESORT_UTIL_GetComboInitRnd( p_sys, p_abstruct );
+  s16 init_rnd = RESORT_UTIL_GetComboInitRnd( p_sys, p_abstruct );
   s16 next_rnd;
-
-
 
   {
     u32 cnt = RESORT_WORK_GetData(p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_CNT);
@@ -3070,7 +3068,7 @@ u32 RESORT_UTIL_GetComboNextRnd( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_a
 
 
   RESORT_Printf( "òAë±ämó¶%d\n", next_rnd );
-  return init_rnd + next_rnd;
+  return MATH_CLAMP( init_rnd + next_rnd, 0, 100 );
 }
 
 //----------------------------------------------------------------------------
