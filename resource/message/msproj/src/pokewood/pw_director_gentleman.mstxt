@@ -480,11 +480,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『まずは　だいほんを
-よーく　かくにん　するんじゃ！</Text>
+			<Text>カントク『まずは　だいほん　つまり
+シナリオを　かくにん　するんじゃ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-26T12:33:31" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:40:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -492,11 +492,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カントク『まずは　台本を
-よーく　確認するんじゃ！</Text>
+			<Text>カントク『まずは　台本　つまり
+シナリオを　確認するんじゃ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-26T12:35:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:40:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

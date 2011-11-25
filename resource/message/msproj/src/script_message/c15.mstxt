@@ -586,13 +586,13 @@ x31,z54辺りに配置
 		<LanguageCell
 			Language="JPN">
 			<Text>さあ　ここが　さつえいスタジオです！▼
-ここから　ポケウッドの　えいがは
-うまれるのです！▼
+ここから　ポケウッドの
+えいがは　うまれるのです！▼
 さあ　なかへ　どうぞ！
 ウッドウさんが　まってるはずです！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T07:19:20" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:20:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -601,13 +601,13 @@ x31,z54辺りに配置
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>さあ　ここが　撮影スタジオです！▼
-ここで　ポケウッドの　映画は
-生まれるのです！▼
+ここで　ポケウッドの
+映画は　生まれるのです！▼
 さあ　中へ　どうぞ！
 ウッドウさんが　待ってるはずです！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T12:34:05" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:20:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

@@ -345,14 +345,16 @@ msg_c15r0301_middleman2_01</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ようこそ　さつえいスタジオへ
-あら……　あなたは……▼
-わたしみたいな　うけつけが
-おぼえてないって　ことは▽
+			<Text>ようこそ！
+さつえいスタジオへ▼
+あら……
+あなたは……▼
+わたしの　ような　できる
+うけつけが　おぼえてないって　ことは▽
 しんじん　さん　かな？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:43:17" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:31:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -360,14 +362,16 @@ msg_c15r0301_middleman2_01</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ようこそ　撮影スタジオへ
-あら……　あなたは……▼
-私みたいな　受付が
-覚えていないって　ことは▽
+			<Text>ようこそ！
+撮影スタジオへ▼
+あら……
+あなたは……▼
+わたしの　ような　できる
+受付が　覚えていないって　ことは▽
 新人さん　かな？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:42:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:31:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -393,14 +397,16 @@ msg_c15r0301_middleman2_01</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ようこそ　さつえいスタジオへ
-あら……　あなたは……▼
+			<Text>ようこそ！
+さつえいスタジオへ▼
+あら……
+あなたは……▼
 さいきん　ここに　でいり　してる　こね
 キミの　えいがって　おもしろいの？▼
 フフ！　こんど　みてみようかな！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:45:14" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:31:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -408,14 +414,16 @@ msg_c15r0301_middleman2_01</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ようこそ　撮影スタジオへ
-あら……　あなたは……▼
+			<Text>ようこそ！
+撮影スタジオへ▼
+あら……
+あなたは……▼
 最近　ここに　出入りしてる　子ね
 キミの　映画って　面白いの？▼
 フフ！　今度　見てみようかな！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:43:07" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:31:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -441,15 +449,17 @@ msg_c15r0301_middleman2_01</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ようこそ　さつえいスタジオへ
-あら……　あなたは……▼
+			<Text>ようこそ！
+さつえいスタジオへ▼
+あら……
+あなたは……▼
 [Name:TrainerName ]　でしょ？
 さいきん　ウチの　スタジオでも▽
 あなたの　なまえを　よくきくよ！▽
 フフ！　がんばってるんだね！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:43:39" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:30:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -457,15 +467,17 @@ msg_c15r0301_middleman2_01</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ようこそ　撮影スタジオへ
-あら……　あなたは……▼
+			<Text>ようこそ！
+撮影スタジオへ▼
+あら……
+あなたは……▼
 [Name:TrainerName ]でしょ？
 最近　ウチの　スタジオでも▽
 あなたの　名前を　よく聞くよ！▽
 フフ！　がんばってるんだね！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:43:42" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:32:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -490,16 +502,18 @@ msg_c15r0301_middleman2_01</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ようこそ　さつえいスタジオへ
-あら……　[Name:TrainerName ]さん▼
+			<Text>ようこそ！
+さつえいスタジオへ▼
+あら……
+[Name:TrainerName ]さん▼
 さいきんは　あなたの　えいがが
 こうかいすると　シアターが▽
 まんいん　なんですってね！▼
 ウフフ！　いつのまにか　あなたも
 えいがスターの　なかまいりね！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:49:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:31:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -507,8 +521,10 @@ msg_c15r0301_middleman2_01</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ようこそ　撮影スタジオへ
-あら……　[Name:TrainerName ]さん▼
+			<Text>ようこそ！
+撮影スタジオへ▼
+あら……
+[Name:TrainerName ]さん▼
 最近は　あなたの　映画が
 公開すると　シアターが▽
 満員なんですってね！▼
@@ -516,7 +532,7 @@ msg_c15r0301_middleman2_01</Comment>
 映画スターの　仲間入りね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T02:56:32" />
+				Time="2011-11-25T05:32:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -541,14 +557,16 @@ msg_c15r0301_middleman2_01</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ようこそ　さつえいスタジオへ
-あら　[Name:TrainerName ]さん　おつかれさまです▼　
+			<Text>ようこそ！
+さつえいスタジオへ▼
+あら
+[Name:TrainerName ]さん　おつかれさまです▼　
 ウフフ……▼
 まさか　キミが　こんなに
 ゆうめいに　なるなんてな……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:46:31" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:31:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -556,14 +574,16 @@ msg_c15r0301_middleman2_01</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ようこそ　撮影スタジオへ
-あら　[Name:TrainerName ]さん　お疲れさまです▼　
+			<Text>ようこそ！
+撮影スタジオへ▼
+あら
+[Name:TrainerName ]さん　おつかれさまです▼　
 ウフフ……▼
 まさか　あなたが　こんなに
 有名に　なるなんてな……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:46:46" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:32:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -603,8 +623,8 @@ msg_c15r0301_middleman2_01</Comment>
 ハチクさん　みてえな　ビックスターに
 なれるよう　がんばんなよ！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-21T05:55:42" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:31:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

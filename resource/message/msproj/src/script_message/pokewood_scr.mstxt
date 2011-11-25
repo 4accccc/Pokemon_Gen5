@@ -1917,7 +1917,7 @@
 わざわざ　ここに　きてもらったのはさ▽
 だいじな　おねがい　あるからなの！▼
 ……なんとなく　わかると　おもうけど
-キミにね　ここポケウッドの　えいがに▽
+キミにね　ポケウッドの　えいがに▽
 しゅつえんして　ほしいんだよー！▼
 スカウトマンからさ　キミから
 スターの　かのうせいが▽
@@ -1926,7 +1926,7 @@
 ズギューンと　きちゃったんだよね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T03:19:10" />
+				Time="2011-11-25T05:21:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1942,7 +1942,7 @@
 わざわざ　ここに　来てもらったのはさ▽
 大事な　お願い　あるからなの！▼
 ……何となく　わかると　思うけど
-キミにね　ここポケウッドの　映画に▽
+キミにね　ポケウッドの　映画に▽
 出演して　欲しいんだよー！▼
 スカウトマンからさ　キミから
 スターの　可能性が▽
@@ -1951,7 +1951,7 @@
 ズギューンと　きちゃったんだよね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T03:19:04" />
+				Time="2011-11-25T05:21:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2070,10 +2070,11 @@
 		Label="msg_pw_tutorial_rec_04_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>オーイ！　ハチクくーん！！▼</Text>
+			<Text>オーイ！
+ハチクくーん！！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:09:44" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:22:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2081,10 +2082,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オーイ！　ハチクくーん！！▼</Text>
+			<Text>オーイ！
+ハチクくーん！！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:09:46" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:22:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2109,12 +2111,11 @@
 		Label="msg_pw_tutorial_rec_05">
 		<LanguageCell
 			Language="JPN">
-			<Text>……ふむ▼
-ハチクだ……
+			<Text>ハチクだ……
 よろしく　たのむ……▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:09:49" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:22:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2122,12 +2123,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……ふむ▼
-ハチクだ……
+			<Text>ハチクだ……
 よろしく　頼む……▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:09:50" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:22:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2196,11 +2196,11 @@
 		Label="msg_pw_tutorial_rec_07">
 		<LanguageCell
 			Language="JPN">
-			<Text>いい　めだ……
+			<Text>その　め……
 きょうえんが　たのしみだな……▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:10:24" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:23:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2208,11 +2208,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いい　目だ……
+			<Text>その　め……
 共演が　楽しみだな……▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:10:22" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:23:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2523,11 +2523,12 @@
 ボク　じかんに　なっちゃったよー！▼
 [Name:TrainerName Idx="0" ]ちゃんは　シアターで
 デビューさくを　チェックしてみたら？▼
-じゃあ　またね！　ポケウッドは　いつでも
+じゃあ　またね！
+ポケウッドは　いつでも▽
 [Name:TrainerName Idx="0" ]ちゃんを　まってるよ！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:28:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:26:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2538,12 +2539,13 @@
 			<Text>わーん　ごめんー　[Name:TrainerName Idx="0" ]ちゃん！
 ボク　時間に　なっちゃったよー！▼
 [Name:TrainerName Idx="0" ]ちゃんは　シアターで
-デビューさくを　チェックしてみたら？▼
-じゃあ　またね！　ポケウッドは　いつでも
+デビュー作を　チェックしてみたら？▼
+じゃあ　またね！
+ポケウッドは　いつでも▽
 [Name:TrainerName Idx="0" ]ちゃんを　待ってるよ！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:28:13" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:26:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2573,10 +2575,10 @@
 ここは　えらばれた　トレーナーのみが
 チャレンジできる　ゆめの　ぶたい……▼
 いりぐちの　おとこと　さつえいの
-てつづきを　すませてくるのだ……</Text>
+てつづきを　すませてきなさい……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T12:59:32" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:25:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2588,10 +2590,10 @@
 ここは　選ばれた　トレーナーのみが
 チャレンジできる　夢の　舞台……▼
 入り口の　男と　撮影の
-手続きを　済ませてくるのだ……</Text>
+手続きを　済ませてきなさい……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T12:59:34" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T05:25:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
