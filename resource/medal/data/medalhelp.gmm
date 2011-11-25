@@ -2153,6 +2153,11 @@
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>
 
+	<row id="MDL_HINT_APPLICATION_075">
+		<language name="JPN" width="216">なし</language>
+		<language name="JPN_KANJI" width="216">なし</language>
+	</row>
+
 	<row id="MDL_HINT_FIELD_092">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
@@ -2184,11 +2189,6 @@
 	</row>
 
 	<row id="MDL_HINT_FIELD_098">
-		<language name="JPN" width="216">なし</language>
-		<language name="JPN_KANJI" width="216">なし</language>
-	</row>
-
-	<row id="MDL_HINT_FIELD_099">
 		<language name="JPN" width="216">なし</language>
 		<language name="JPN_KANJI" width="216">なし</language>
 	</row>

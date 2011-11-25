@@ -129,4 +129,5 @@ MDLACHIEVEPROC sc_achieve_proc[] = {
   NULL,
   NULL,
   NULL,
+  NULL,
 };

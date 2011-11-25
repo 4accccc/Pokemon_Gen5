@@ -258,7 +258,7 @@
 #define MDLID_RANK_GOLD	(244)	// マスターメダリスト
 #define MDLID_RANK_BW	(245)	// レジェンドメダリスト
 #define MDLID_ALL_COMPLETE	(246)	// キングオブメダリスト
-#define MDLID_FIELD_DUMMY_01	(247)	// あきメダル
+#define MDLID_PKWD_SERIES0	(247)	// ヒーローのしんじん
 #define MDLID_FIELD_DUMMY_02	(248)	// あきメダル
 #define MDLID_FIELD_DUMMY_03	(249)	// あきメダル
 #define MDLID_FIELD_DUMMY_04	(250)	// あきメダル

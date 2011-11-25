@@ -8562,6 +8562,31 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="MDL_HINT_APPLICATION_075">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-25T11:24:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-25T11:24:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-25T11:24:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-25T11:24:23" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="MDL_HINT_FIELD_092"
 		Style="Large">
 		<LanguageCell
@@ -8791,30 +8816,5 @@
 				User="ichiraku_katsuhiko:W00271"
 				Time="2011-10-12T14:08:08" />
 		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="MDL_HINT_FIELD_099">
-		<LanguageCell
-			Language="JPN">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
-		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

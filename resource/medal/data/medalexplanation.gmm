@@ -2148,11 +2148,11 @@
 
 	<row id="MDL_EXP_APPLICATION_043">
 		<language name="JPN" width="216">ポケウッドの　えいが
-ハチクマン　ぜんシリーズ
-こうかい　きねん　メダル。</language>
+ハチクマンの　ぎゃくしゅう
+ぜんさく　こうかい　きねん　メダル。</language>
 		<language name="JPN_KANJI" width="216">ポケウッドの　映画
-ハチクマン　全シリーズ
-公開記念メダル。</language>
+ハチクマンの　逆襲
+全作　公開記念メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_044">
@@ -2160,7 +2160,7 @@
 フルメタルコップ　ぜんシリーズ
 こうかい　きねん　メダル。</language>
 		<language name="JPN_KANJI" width="216">ポケウッドの　映画
-フルメタルコップ　全シリーズ
+Ｆｕｌｌ　Ｍｅｔａｌ　Ｃｏｐ　全シリーズ
 公開記念メダル。</language>
 	</row>
 
@@ -2214,7 +2214,7 @@
 ＯＬ・ザ・ジャイアント！！
 ぜんさく　こうかい　きねん　メダル。</language>
 		<language name="JPN_KANJI" width="216">ポケウッドの　映画
-ＯＬ・ザ・ジャイアント！！
+ＯＬ　Ｔｈｅ　Ｇｉａｎｔ！！
 全作　公開記念メダル。</language>
 	</row>
 
@@ -2232,25 +2232,25 @@
 わすれえぬ　きおく　ぜんシリーズ
 こうかい　きねん　メダル。</language>
 		<language name="JPN_KANJI" width="216">ポケウッドの　映画
-忘れえぬ記憶　全シリーズ
+忘れえぬ　記憶　全シリーズ
 公開記念メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_053">
 		<language name="JPN" width="216">ポケウッドの　えいが
-ゴーストハンター　ぜんシリーズ
+ゴーストイレイザー　ぜんシリーズ
 こうかい　きねん　メダル。</language>
 		<language name="JPN_KANJI" width="216">ポケウッドの　映画
-ゴーストハンター　全シリーズ
+ゴーストイレイザー　全シリーズ
 公開記念メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_054">
 		<language name="JPN" width="216">ポケウッドの　えいが
-ハチクマンのぎゃくしゅう
+ハチクマンのぎゃくしゅうリターンズ
 こうかい　きねん　メダル。</language>
 		<language name="JPN_KANJI" width="216">ポケウッドの　映画
-ハチクマンの逆襲
+ハチクマンの逆襲　Ｒｅｔｕｒｎｓ
 公開記念メダル。</language>
 	</row>
 
@@ -2653,6 +2653,15 @@
 栄誉の　証しの　メダル。</language>
 	</row>
 
+	<row id="MDL_EXP_APPLICATION_075">
+		<language name="JPN" width="216">ポケウッドでの　デビューさく　
+えいが　ハチクマン
+こうかい　きねん　メダル。</language>
+		<language name="JPN_KANJI" width="216">ポケウッドでの　デビュー作
+映画　ハチクマン
+公開記念メダル。</language>
+	</row>
+
 	<row id="MDL_EXP_FIELD_092">
 		<language name="JPN" width="216">あき</language>
 		<language name="JPN_KANJI" width="216">空き</language>
@@ -2684,11 +2693,6 @@
 	</row>
 
 	<row id="MDL_EXP_FIELD_098">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_099">
 		<language name="JPN" width="216">あき</language>
 		<language name="JPN_KANJI" width="216">空き</language>
 	</row>

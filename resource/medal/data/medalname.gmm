@@ -1680,6 +1680,11 @@
 		<language name="JPN_KANJI" width="216">キングオブメダリスト</language>
 	</row>
 
+	<row id="MDL_NAME_APPLICATION_075">
+		<language name="JPN" width="216">ヒーローのしんじん</language>
+		<language name="JPN_KANJI" width="216">ヒーローのしんじん</language>
+	</row>
+
 	<row id="MDL_NAME_FIELD_092">
 		<language name="JPN" width="216">あきメダル</language>
 		<language name="JPN_KANJI" width="216">あきメダル</language>
@@ -1711,11 +1716,6 @@
 	</row>
 
 	<row id="MDL_NAME_FIELD_098">
-		<language name="JPN" width="216">あきメダル</language>
-		<language name="JPN_KANJI" width="216">あきメダル</language>
-	</row>
-
-	<row id="MDL_NAME_FIELD_099">
 		<language name="JPN" width="216">あきメダル</language>
 		<language name="JPN_KANJI" width="216">あきメダル</language>
 	</row>

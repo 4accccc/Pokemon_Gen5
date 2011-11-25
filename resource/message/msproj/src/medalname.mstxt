@@ -8097,6 +8097,31 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="MDL_NAME_APPLICATION_075">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヒーローのしんじん</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-25T11:24:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-25T11:24:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヒーローのしんじん</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-25T11:24:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-25T11:24:20" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="MDL_NAME_FIELD_092"
 		Style="Large">
 		<LanguageCell
@@ -8326,31 +8351,6 @@
 				User="ichiraku_katsuhiko:W00271"
 				Time="2011-10-12T13:36:13" />
 		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="MDL_NAME_FIELD_099">
-		<LanguageCell
-			Language="JPN">
-			<Text>あきメダル</Text>
-			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:11" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:11" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>あきメダル</Text>
-			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:11" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:11" />
-		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="MDL_NAME_HINT_000"

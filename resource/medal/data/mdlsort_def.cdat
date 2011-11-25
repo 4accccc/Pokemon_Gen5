@@ -22,14 +22,13 @@ u32 MedalSortList[] = {
     MDLID_DAYMAX_EXP_LV1,	//ＥＸＰみりおねあ
     MDLID_PKWD_SERIES5,	//ＳＦえいがまいすたー
     MDLID_PKWD_SERIES3,	//ＵＦＯえいがますたー
-    MDLID_FIELD_DUMMY_04,	//あきめだる
-    MDLID_FIELD_DUMMY_03,	//あきめだる
-    MDLID_FIELD_DUMMY_05,	//あきめだる
-    MDLID_FIELD_DUMMY_06,	//あきめだる
-    MDLID_FIELD_DUMMY_02,	//あきめだる
-    MDLID_FIELD_DUMMY_07,	//あきめだる
-    MDLID_FIELD_DUMMY_01,	//あきめだる
     MDLID_FIELD_DUMMY_08,	//あきめだる
+    MDLID_FIELD_DUMMY_06,	//あきめだる
+    MDLID_FIELD_DUMMY_04,	//あきめだる
+    MDLID_FIELD_DUMMY_05,	//あきめだる
+    MDLID_FIELD_DUMMY_02,	//あきめだる
+    MDLID_FIELD_DUMMY_03,	//あきめだる
+    MDLID_FIELD_DUMMY_07,	//あきめだる
     MDLID_COMPLETE_AKU,	//あくこれくたー
     MDLID_CHAMPION_AKU,	//あくちゃんぷ
     MDLID_FIELD_COMPLETE,	//あどべんちゃーきんぐ
@@ -204,6 +203,7 @@ u32 MedalSortList[] = {
     MDLID_SAISEN_LV1,	//ばとるりぴーたー
     MDLID_CTVT_BALLOON_LV4,	//ばるーんかたすとろふ
     MDLID_PKWD_SERIES12,	//ひーろーだいだんえん
+    MDLID_PKWD_SERIES0,	//ひーろーのしんじん
     MDLID_PKWD_SERIES1,	//ひーろーのはながた
     MDLID_HEAD,	//ひうんばんちょう
     MDLID_COMPLETE_HIKOU,	//ひこうこれくたー
