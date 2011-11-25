@@ -56,8 +56,17 @@
 #include "msg/msg_pw_director_gentleman.h"
 
 #ifdef PM_DEBUG
-static int s_debug_cutin_cnt = 0;
+static int s_debug_cutin_cnt = 0;    /// カットインデバッグ確認用ワーク
+
+static s8  debug_force_end      = -1; /// サウンドデバッグ用にエンディングを指定できるようにする
+static s8  debug_force_audience = 0; /// サウンドデバッグ用に観客の反応を指定できるようにする
+
+#if (defined(DEBUG_ONLY_FOR_ichinose) | defined(DEBUG_ONLY_FOR_sato_hitomi) | defined(DEBUG_ONLY_FOR_sound_special02) | defined(DEBUG_ONLY_FOR_mori))
+#define DEBUG_SE_BGM  //サウンド確認用操作
 #endif
+
+#endif
+
 
 enum {
   PRINT_FLG = FALSE,
@@ -103,7 +112,7 @@ enum {
  *  観客リアクションの定義
  */
 enum {
-  POKEWOOD_AUDIENCE_NOMOVE,   ///< 無反応(座っている）
+  POKEWOOD_AUDIENCE_NOMOVE=0, ///< 無反応(座っている）
   POKEWOOD_AUDIENCE_JOY,      ///< 喜び
   POKEWOOD_AUDIENCE_CRY,      ///< 泣き
   POKEWOOD_AUDIENCE_DOKIDOKI, ///< ドキドキ
@@ -573,6 +582,7 @@ static int _check_event_choice( POKEWOOD_SENARIO *senario, POKEWOOD_SEQ_WORK *se
 static void _set_audience_ending_reaction( BTLV_CORE *viewCore, POKEWOOD_SEQ_WORK *psw );
 static void _clear_pokewood_event_provision( POKEWOOD_SEQ_WORK *psw );
 static void _bgm_change_pokewood_show( BTL_MAIN_MODULE *mainModule );
+static void _sound_debug( BTL_CLIENT *wk );
 
 
 #ifdef BUGFIX_AF_GFBTS2028_101007
@@ -1097,6 +1107,7 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
 
   // ポケウッド上映用観客管理
   AudienceFunc( wk );
+  _sound_debug( wk );
 
   return FALSE;
 }
@@ -11038,6 +11049,13 @@ static void AddSerifPoint( BTL_CLIENT *wk, POKEWOOD_ESTIMATE_WORK *pew, int even
     emotion = bias2select[senario->event[event_no].bias][2];
     _set_director_msg_reserve( wk, 2 ); // 監督セリフセット:普通
   }
+#ifdef DEBUG_SE_BGM
+  // サウンドデバッグ用に観客リアクションを上書きする
+  if(debug_force_audience){
+    emotion = debug_force_audience;
+  }
+#endif
+
   _set_audience_reaction( wk->viewCore, &wk->pokewoodSeqWork, emotion );
   OS_Printf("event=%d, situation=%d, point=%d, emotion=%d\n", 
             event_no, senario->event[event_no].bias, point, emotion);
@@ -11096,6 +11114,13 @@ static void AudienceFunc( BTL_CLIENT *wk )
 {
   int i;
   
+  if( BTL_MAIN_GetPokewoodMode( wk->mainModule ) != BTL_POKEWOOD_SHOW ){
+    return;
+  }
+  if(wk->myID!=0){
+    return;
+  }
+  
   for(i=0;i<POKEWOOD_AUDIENCE_MAX;i++){
     if(wk->pokewoodSeqWork.Audience.timer[i]!=0){
       wk->pokewoodSeqWork.Audience.timer[i]--;
@@ -11116,11 +11141,22 @@ static void AudienceFunc( BTL_CLIENT *wk )
 static void _bgm_change_pokewood_show( BTL_MAIN_MODULE *mainModule )
 {
   const BATTLE_SETUP_PARAM *bsp = BTL_MAIN_GetBSPConst( mainModule );
-  if(bsp->pokewoodResult==BTL_POKEWOOD_RESULT_BAD){
+  int result = bsp->pokewoodResult;
+
+#ifdef DEBUG_SE_BGM
+  // エンディングのBGMだけ書き換える（算出結果は変化しない）
+  if(debug_force_end>=0){
+    result = debug_force_end;
+  }
+#endif
+
+  if(result==BTL_POKEWOOD_RESULT_BAD){
     BTLV_EFFECT_SwitchBGM( BTL_MAIN_GetLoseBGMNo( mainModule ) );
-  }else if(bsp->pokewoodResult==BTL_POKEWOOD_RESULT_SUCCESS){
+  }
+  else if(result==BTL_POKEWOOD_RESULT_SUCCESS){
     BTLV_EFFECT_SwitchBGM( BTL_MAIN_GetWinBGMNo( mainModule ) );
-  }else if(bsp->pokewoodResult==BTL_POKEWOOD_RESULT_STRANGE){
+  }
+  else if(result==BTL_POKEWOOD_RESULT_STRANGE){
     BTLV_EFFECT_SwitchBGM( BTL_MAIN_GetStrangeEndBGMNo( mainModule ) );
   }
 }
@@ -11242,5 +11278,46 @@ static BOOL Debug_SubProc_CheckCutin(BTL_CLIENT *wk, int *seq )
   }
 
   return FALSE;
+}
+
+static const char *d_end_string[]={
+  "グッドエンドです",
+  "バッドエンドです",
+  "ストレンジエンドです",
+};
+
+static const char *d_audience_string[]={
+  "観客：無反応",
+  "観客：喜び",
+  "観客：泣き",
+  "観客：ドキドキ",
+  "観客：笑い",
+  "観客：？",
+  "観客：寝る",
+  "観客：驚き",
+  "観客：拍手",
+  "観客：怒って離席",
+};
+
+static void _sound_debug(BTL_CLIENT *wk){
+  if(wk->myID!=0){
+    return;
+  }
+
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
+    debug_force_end++;
+    if(debug_force_end>=BTL_POKEWOOD_RESULT_MAX){
+      debug_force_end=0;
+    }
+    OS_TPrintf("%s\n", d_end_string[debug_force_end]);
+  }
+
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+    debug_force_audience++;
+    if(debug_force_audience>=POKEWOOD_AUDIENCE_LEAVE){
+      debug_force_audience=POKEWOOD_AUDIENCE_JOY;
+    }
+    OS_TPrintf("%s\n", d_audience_string[debug_force_audience]);
+  }
 }
 #endif
