@@ -687,7 +687,7 @@ static const u16 sc_tutorial_tr_data_b2[INFINITY_DUNGEON_TRID_MAX] =
   116, // 2
   93, // 3
   98, // 4
-  116, // 5
+  117, // 5
   641, // 6
   1, // 7
   1, // 8

@@ -1950,17 +1950,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リタイアせずに　ここまで
+			<Text>ゲートトレーナーを　みつけだし
+リタイアせずに　ここまで▽
 たどりつけたようね▼
 ここまでの　がんばりを
-むだに　しないように　ぜんりょくで▽
-かかって　きなさい！▼
-さあ　エリア２を　クリアして
-しょしんしゃ　そつぎょうを▽
-めざすのよ！▼</Text>
+むだに　しないように▽
+ぜんりょくで　かかって　きなさい！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T03:10:18" />
+				Time="2011-11-25T08:39:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1968,16 +1966,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リタイアせずに　ここまで
+			<Text>ゲートトレーナーを　見つけ出し
+リタイアせずに　ここまで▽
 たどり着けたようね▼
 ここまでの　がんばりを
-無駄に　しないように　全力で▽
-かかって　きなあい！▼
-さあ　エリア2を　クリアして
-初心者　卒業を　目指すのよ！▼</Text>
+無駄に　しないように▽
+全力で　かかって　きなさい！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T03:10:59" />
+				Time="2011-11-25T08:39:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3933,14 +3930,16 @@
 エリア２　クリアの　きねんに
 エリア３の　ヒントを　すこしあげるわ▼
 エリア３からは　エリアが
-いまより　ひろくなるわ▼
+いまより　ひろくなるから▼
+ゲートトレーナーを　さがすのが
+いまより　むずかしくなるわ▼
 トレーナーから　ヒントを　よくきいて
 ゲートトレーナーを　さがしなさい▼
 さきは　ながいわよ
 つぎの　エリアも　がんばってね▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:51:03" />
+				Time="2011-11-25T08:40:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3953,14 +3952,16 @@
 エリア2　クリアの　きねんに
 エリア3の　ヒントを　少しあげるわ▼
 エリア3からは　エリアが
-今より　広くなるわ▼
+今より　広くなるから▼
+ゲートトレーナーを　探すのが
+今より　難しくなるわ▼
 トレーナーから　ヒントを　よく聞いて
 ゲートトレーナーを　探しなさい▼
 先は　長いわよ
 次の　エリアも　がんばってね▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-19T05:52:30" />
+				Time="2011-11-25T08:41:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -25224,14 +25225,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>とぼける</Comment>
+			<Comment>トレーナーヒント
+ゲートトレーナーを撃破後の汎用メッセージ
+少年</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-14T08:27:14" />
+				Time="2011-11-25T08:11:07" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -25266,14 +25269,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>とぼける</Comment>
+			<Comment>トレーナーヒント
+ゲートトレーナーを撃破後の汎用メッセージ
+少女</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-14T08:27:47" />
+				Time="2011-11-25T08:11:14" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -25308,14 +25313,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>とぼける</Comment>
+			<Comment>トレーナーヒント
+ゲートトレーナーを撃破後の汎用メッセージ
+成人男性</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-14T08:27:48" />
+				Time="2011-11-25T08:11:18" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -25350,14 +25357,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>とぼける</Comment>
+			<Comment>トレーナーヒント
+ゲートトレーナーを撃破後の汎用メッセージ
+成人女性</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-14T08:27:50" />
+				Time="2011-11-25T08:11:21" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -25392,14 +25401,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>とぼける</Comment>
+			<Comment>トレーナーヒント
+ゲートトレーナーを撃破後の汎用メッセージ
+中年男性</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-14T08:27:51" />
+				Time="2011-11-25T08:11:27" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -25434,14 +25445,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>とぼける</Comment>
+			<Comment>トレーナーヒント
+ゲートトレーナーを撃破後の汎用メッセージ
+中年女性</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-14T08:27:53" />
+				Time="2011-11-25T08:11:30" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -25476,14 +25489,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>とぼける</Comment>
+			<Comment>トレーナーヒント
+ゲートトレーナーを撃破後の汎用メッセージ
+老人</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-14T08:27:54" />
+				Time="2011-11-25T08:11:33" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -25518,14 +25533,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>とぼける</Comment>
+			<Comment>トレーナーヒント
+ゲートトレーナーを撃破後の汎用メッセージ
+老女</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-14T08:27:56" />
+				Time="2011-11-25T08:11:36" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -25536,11 +25553,11 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しろのじゅどう
-エリア[Digit:2digits ]　　[Digit:2digits Idx="1" ]かい</Text>
+			<Text>[Ctrl1:xcenter ]しろのじゅどう
+[Ctrl1:xcenter ]エリア[Digit:2digits ]　　[Digit:2digits Idx="1" ]かい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-09T09:31:53" />
+				Time="2011-11-25T08:09:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -25548,11 +25565,11 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>白の樹洞
-エリア[Digit:2digits ]　　[Digit:2digits Idx="1" ]かい</Text>
+			<Text>[Ctrl1:xcenter ]白の樹洞
+[Ctrl1:xcenter ]エリア[Digit:2digits ]　　[Digit:2digits Idx="1" ]かい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-09T09:32:06" />
+				Time="2011-11-25T08:09:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -25571,11 +25588,11 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くろのまてんろう
-エリア[Digit:2digits ]　　[Digit:2digits Idx="1" ]かい</Text>
+			<Text>[Ctrl1:xcenter ]くろのまてんろう
+[Ctrl1:xcenter ]エリア[Digit:2digits ]　　[Digit:2digits Idx="1" ]かい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-09T09:31:59" />
+				Time="2011-11-25T08:09:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -25583,11 +25600,11 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>黒の摩天楼
-エリア[Digit:2digits ]　　[Digit:2digits Idx="1" ]かい</Text>
+			<Text>[Ctrl1:xcenter ]黒の摩天楼
+[Ctrl1:xcenter ]エリア[Digit:2digits ]　　[Digit:2digits Idx="1" ]かい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-09T09:32:11" />
+				Time="2011-11-25T08:09:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -25868,7 +25885,7 @@ NPC：MUGENBOSS（バンジロウ）
 ためしてあげるわ！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:16:59" />
+				Time="2011-11-25T08:30:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -25876,14 +25893,14 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしを　見つけるは
+			<Text>わたしを　見つけるとは
 なかなかやるわね！▼
 次は　ボストレーナーに
 挑戦する　実力が　あるか▽
 試してあげるわ！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:16:57" />
+				Time="2011-11-25T08:28:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -26290,12 +26307,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やるじゃないか▼
+			<Text>こんなに　つよいトレーナーは
+ひさしぶりだよ▼
 じつりょくは　じゅうぶんだな
 ゲートを　かいほうしよう！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:28:51" />
+				Time="2011-11-25T08:34:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -26303,12 +26321,13 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やるじゃないか▼
+			<Text>こんなに　強いトレーナーは
+久しぶりだよ▼
 実力は　十分だな
 ゲートを　開放しよう！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:28:55" />
+				Time="2011-11-25T08:34:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -26335,12 +26354,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やるわね▼
+			<Text>あなたが　こんなに　つよいなんて
+ひとは　みかけに　よらないわね▼
 じつりょくは　じゅうぶんのようね
 ゲートを　かいほうするわ！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:29:14" />
+				Time="2011-11-25T08:34:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -26348,12 +26368,13 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やるわね▼
-実力は　十分のよね
+			<Text>あなたが　こんなに　強いなんて
+ひとは　見かけに　よらないわね▼
+実力は　十分のようね
 ゲートを　開放するわ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:29:25" />
+				Time="2011-11-25T08:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
