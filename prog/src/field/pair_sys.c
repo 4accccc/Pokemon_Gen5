@@ -197,6 +197,7 @@ void PAIRSYS_PairMapChangeRecover( GAMEDATA* gdata, PAIR_RECOVER_TYPE type )
     MMDL_SetEventID( mmdl, wk->event_id );
     MMDL_SetStatusBitNotZoneDelete( mmdl, TRUE );
     MMDL_SetStatusBitVanish( mmdl, vanish );
+    MMDL_SetStatusBitTalkOFF( mmdl, vanish ); //バニッシュ状態と同期して話しかけ可不可を決める
   }
 }
 
@@ -233,6 +234,7 @@ void PAIRSYS_PairViewRecover( GAMEDATA* gdata )
     MMDL_InitGridPosition( pair, pos.gx, pos.gy, pos.gz, MMDL_GetDirDisp( player ) );
 
     MMDL_SetStatusBitVanish( pair, FALSE );
+    MMDL_SetStatusBitTalkOFF( pair, FALSE ); //バニッシュ状態と同期して話しかけ可不可を決める
   }
 }
 
