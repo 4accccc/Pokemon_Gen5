@@ -4478,4 +4478,37 @@
 				Time="2011-09-07T09:02:06" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="msg_fmission_str_42"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>クリアもくひょう</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-25T07:06:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-25T07:06:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>クリアもくひょう</Text>
+			<TextModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-25T07:06:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-25T07:06:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>詳細、評価</Comment>
+			<CommentModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-25T07:06:43" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>

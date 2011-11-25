@@ -51,8 +51,9 @@ enum{
 	FMA_BG_SUB_WIN_PAL	= 4,
 	FMA_BG_SUB_FONT_PAL	= 8,
 	//
-	// (obj)(0:cmn、14:net)
+	// (obj)(0:cmn、2-4:obj、14:net)
 	FMA_OBJ_BASE_PAL	= 0,
+	FMA_OBJ_MAIN_PAL	= 2,
 	//
 	// (sub)(0-1:base)
 	FMA_OBJ_SUB_BASE_PAL = 0,
@@ -192,15 +193,14 @@ static const FMA_BGSCN_DATA fma_bgscn_tbl[] = {
 const FMA_CANVAS_DATA fma_canvas_00_tbl[] = {
   { GFL_BG_FRAME0_S,	1,	0,	24,	3,	FMA_BG_SUB_FONT_PAL,},		// タイトル
   //
-  { GFL_BG_FRAME0_S,	5,	5,	12,	2,	FMA_BG_SUB_FONT_PAL,},		// のこり時間(左)
-  { GFL_BG_FRAME0_S,	5,	8,	12,	2,	FMA_BG_SUB_FONT_PAL,},		// 参加人数(左)
-  { GFL_BG_FRAME0_S,	3,	11,	20,	2,	FMA_BG_SUB_FONT_PAL,},		// クリア目標(左)
-  { GFL_BG_FRAME0_S,	3,	14,	12,	2,	FMA_BG_SUB_FONT_PAL,},		// トータルスコア(左)
-  { GFL_BG_FRAME0_S,	3,	17,	12,	2,	FMA_BG_SUB_FONT_PAL,},		// 報酬(左)
+  { GFL_BG_FRAME0_S,	5,	 5+2,	12,	2,	FMA_BG_SUB_FONT_PAL,},		// のこり時間(左)
+  { GFL_BG_FRAME0_S,	5,	 8+2,	12,	2,	FMA_BG_SUB_FONT_PAL,},		// 参加人数(左)
+  { GFL_BG_FRAME0_S,	3,	11+2,	20,	2,	FMA_BG_SUB_FONT_PAL,},		// クリア目標(左)
+  { GFL_BG_FRAME0_S,	3,	14+2,	12,	2,	FMA_BG_SUB_FONT_PAL,},		// トータルスコア(左)
   //
-  { GFL_BG_FRAME0_S,   23,	 8,	 6,	2,	FMA_BG_SUB_FONT_PAL,},		// 参加人数(右)
-  { GFL_BG_FRAME0_S,   23,	14,	 6,	2,	FMA_BG_SUB_FONT_PAL,},		// トータルスコア(右)
-  { GFL_BG_FRAME0_S,   13,	17,	16,	2,	FMA_BG_SUB_FONT_PAL,},		// 報酬(右)
+  { GFL_BG_FRAME0_S,   23,	 8+2,	 6,	2,	FMA_BG_SUB_FONT_PAL,},		// 参加人数(右)
+  { GFL_BG_FRAME0_S,   23,	11+2,	 6,	2,	FMA_BG_SUB_FONT_PAL,},		// クリア目標(右)
+  { GFL_BG_FRAME0_S,   23,	14+2,	 6,	2,	FMA_BG_SUB_FONT_PAL,},		// トータルスコア(右)
   //
   //
   { GFL_BG_FRAME0_M,	3,	1,	8,	2,	FMA_BG_FONT_PAL,},			// マイスコア(左)
@@ -234,6 +234,7 @@ const FMA_CANVAS_DATA fma_canvas_01_tbl[] = {
   { GFL_BG_FRAME0_S,	3,	14,	12,	2,	FMA_BG_SUB_FONT_PAL,},		// クリアタイム(左)
   //
   { GFL_BG_FRAME0_S,   23,	 5,	 6,	2,	FMA_BG_SUB_FONT_PAL,},		// 参加人数(右)
+  { GFL_BG_FRAME0_S,   23,	 8,	 6,	2,	FMA_BG_SUB_FONT_PAL,},		// クリア目標(右)
   { GFL_BG_FRAME0_S,   23,	11,	 6,	2,	FMA_BG_SUB_FONT_PAL,},		// トータルスコア(右)
   //
   //
@@ -280,6 +281,15 @@ static const s16 fma_obj_main_info_tbl[] = {
 	NARC_fmission_app_fmapp_obj_nanr, 	-1, 0, 0,			// NAR?
 };
 
+// 下画面(RD)
+// narc, resid, paloffset, palnum
+static const s16 fma_obj_rd_info_tbl[] = {
+	NARC_fmission_app_fmapp_obj_nclr,    FMA_RESID_RD_OBJ_PLT, 0x20*2, 3,	// NCL
+	NARC_fmission_app_fmapp_obj_lz_ncgr, FMA_RESID_RD_OBJ_CHR, 0, 0,	// NCG
+	NARC_fmission_app_fmapp_obj_ncer,    FMA_RESID_RD_OBJ_CEL, 0, 0,	// NCE
+	NARC_fmission_app_fmapp_obj_nanr, 	-1, 0, 0,			// NAR?
+};
+
 // 情報
 static const s16 fma_obj_main_itbl[] = {
 	FMA_RESID_OBJ_PLT,
@@ -288,6 +298,16 @@ static const s16 fma_obj_main_itbl[] = {
 	//
 	FMA_OBJ_MAXNUM,
 	FMA_CLWKMODE_NORMAL,
+};
+
+// 情報(RD)
+static const s16 fma_obj_rd_itbl[] = {
+	FMA_RESID_RD_OBJ_PLT,
+	FMA_RESID_RD_OBJ_CHR,
+	FMA_RESID_RD_OBJ_CEL,
+	//
+	FMA_OBJ_RD_MAXNUM,
+	FMA_CLWKMODE_RD,
 };
 
 // OBJのテーブルデータ(詳細)
@@ -327,10 +347,18 @@ static const FMA_OBJ_DATA fma_obj_result_tbl[] = {
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
 
+// OBJのテーブルデータ(RD)
+static const FMA_OBJ_DATA fma_obj_rd_tbl[] = {
+	{ 8,	0x40,	1,	0,	0,	1, 12,	0,},		// レコード(クリアタイム)
+	//
+	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
+};
+
 // OBJのテーブルデータまとめ
 static const FMA_OBJ_DATA *fma_obj_tbl[] = {
 	fma_obj_info_tbl,			// 詳細
 	fma_obj_result_tbl,			// 結果
+	fma_obj_rd_tbl,				// 結果(RD)
 };
 
 //-----------
@@ -732,6 +760,9 @@ static void fma_init_obj_clwk( FMISSION_APP_WORK* wk, const s32 drawtype, const 
 	else if(buf[4] == FMA_CLWKMODE_CMN){		// cmn
 		clwk = &wk->wk_obj.cmn_clwk[0];
 	}
+	else if(buf[4] == FMA_CLWKMODE_RD){		// rd
+		clwk = &wk->wk_obj.rd_clwk[0];
+	}
 	
 	for(i=0;i<buf[3];i++){
 		// 終了判定
@@ -859,11 +890,20 @@ static void fma_init_obj( FMISSION_APP_WORK* wk )
 	fma_init_obj_res( wk, CLSYS_DRAW_SUB, &fma_obj_main_info_tbl[0] );
 	// リソース読み込み(cmn)
 	fma_init_obj_res_cmn( wk, CLSYS_DRAW_MAIN );
+	//
 	// CLWK登録(通常)
 	fma_init_obj_clwk( wk, CLSYS_DRAW_SUB, adr, &fma_obj_main_itbl[0] );
 	// CLWK登録(cmn)
 	fma_init_obj_clwk( wk, CLSYS_DRAW_MAIN, &fma_obj_cmn_info_tbl[0], &fma_obj_cmn_itbl[0] );
 	//
+	// 結果表示の場合
+	if(wk->Mode == FMISSION_APP_MODE_RESULT){
+		// リソース読み込み(RD)
+		fma_init_obj_res( wk, CLSYS_DRAW_MAIN, &fma_obj_rd_info_tbl[0] );
+		// CLWK登録(RD)
+		adr = fma_obj_tbl[2];
+		fma_init_obj_clwk( wk, CLSYS_DRAW_MAIN, adr, &fma_obj_rd_itbl[0] );
+	}
 	// 通信アイコンセット(下画面)
 	GFL_NET_ReloadIconTopOrBottom( FALSE, wk->heapID );
 }
@@ -894,6 +934,12 @@ static void fma_exit_obj( FMISSION_APP_WORK* wk )
 			wk->wk_obj.cmn_clwk[i] = 0;
 		}
 	}
+	for(i=0;i<FMA_OBJ_RD_MAXNUM;i++){
+		if(wk->wk_obj.rd_clwk[i]){
+			GFL_CLACT_WK_Remove( wk->wk_obj.rd_clwk[i] );
+			wk->wk_obj.rd_clwk[i] = 0;
+		}
+	}
 	//リソース破棄 
 	GFL_CLGRP_PLTT_Release( wk->wk_obj.res[FMA_RESID_OBJ_PLT] );
 	GFL_CLGRP_CGR_Release(  wk->wk_obj.res[FMA_RESID_OBJ_CHR] );
@@ -902,6 +948,13 @@ static void fma_exit_obj( FMISSION_APP_WORK* wk )
 	GFL_CLGRP_PLTT_Release( wk->wk_obj.res[FMA_RESID_CMN_OBJ_PLT] );
 	GFL_CLGRP_CGR_Release(  wk->wk_obj.res[FMA_RESID_CMN_OBJ_CHR] );
 	GFL_CLGRP_CELLANIM_Release( wk->wk_obj.res[FMA_RESID_CMN_OBJ_CEL] );
+	//
+	// 結果表示の場合
+	if(wk->Mode == FMISSION_APP_MODE_RESULT){
+		GFL_CLGRP_PLTT_Release( wk->wk_obj.res[FMA_RESID_RD_OBJ_PLT] );
+		GFL_CLGRP_CGR_Release(  wk->wk_obj.res[FMA_RESID_RD_OBJ_CHR] );
+		GFL_CLGRP_CELLANIM_Release( wk->wk_obj.res[FMA_RESID_RD_OBJ_CEL] );
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -920,20 +973,16 @@ void FmaCmn_chg_objseq( FMISSION_APP_WORK *wk, const s32 wmode, const s32 wnum, 
 {
 	// 切り替え
 	if(wmode == FMA_CLWKMODE_NORMAL){			// 通常
-//		if(wnum >= FMA_CLWKID_MAX){
-//			OS_Printf("obj max error:%d\n",wnum);
-//			return;
-//		}
 		GFL_CLACT_WK_SetAnmSeq( wk->wk_obj.clwk[wnum], seq );
 		GFL_CLACT_WK_SetAutoAnmFlag( wk->wk_obj.clwk[wnum], TRUE );
 	}
 	else if(wmode == FMA_CLWKMODE_CMN){			// 共通
-//		if(wnum >= T_DOWNLOAD_CLWKID_CMN_MAX){
-//			OS_Printf("cmn obj max error:%d\n",wnum);
-//			return;
-//		}
 		GFL_CLACT_WK_SetAnmSeq( wk->wk_obj.cmn_clwk[wnum], seq );
 		GFL_CLACT_WK_SetAutoAnmFlag( wk->wk_obj.cmn_clwk[wnum], TRUE );
+	}
+	else if(wmode == FMA_CLWKMODE_RD){			// RD
+		GFL_CLACT_WK_SetAnmSeq( wk->wk_obj.rd_clwk[wnum], seq );
+		GFL_CLACT_WK_SetAutoAnmFlag( wk->wk_obj.rd_clwk[wnum], TRUE );
 	}
 }
 
@@ -953,18 +1002,13 @@ void FmaCmn_set_obj_visible( FMISSION_APP_WORK *wk, const s32 wmode, const s32 w
 {
 	// 表示/非表示
 	if(wmode == FMA_CLWKMODE_NORMAL){		// 通常
-//		if(wnum >= T_DOWNLOAD_CLWKID_MAX){
-//			OS_Printf("obj max error:%d\n",wnum);
-//			return;
-//		}
 		GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk[wnum], bflg );
 	}
 	else if(wmode == FMA_CLWKMODE_CMN){		// 共通
-//		if(wnum >= T_DOWNLOAD_CLWKID_CMN_MAX){
-//			OS_Printf("cmn obj max error:%d\n",wnum);
-//			return;
-//		}
 		GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.cmn_clwk[wnum], bflg );
+	}
+	else if(wmode == FMA_CLWKMODE_RD){		// RD
+		GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.rd_clwk[wnum], bflg );
 	}
 }
 
@@ -985,20 +1029,17 @@ BOOL FmaCmn_is_anime_end( FMISSION_APP_WORK *wk, const s32 wmode, const s32 wnum
 	
 	// 終了判定らしい
 	if(wmode == FMA_CLWKMODE_NORMAL){		// 通常
-//		if(wnum >= T_DOWNLOAD_CLWKID_MAX){
-//			OS_Printf("obj max error:%d\n",wnum);
-//			return( FALSE );
-//		}
 		if( GFL_CLACT_WK_CheckAnmActive( wk->wk_obj.clwk[wnum] ) == FALSE ){
 			bflg = FALSE;
 		}
 	}
 	else if(wmode == FMA_CLWKMODE_CMN){		// 共通
-//		if(wnum >= T_DOWNLOAD_CLWKID_CMN_MAX){
-//			OS_Printf("cmn obj max error:%d\n",wnum);
-//			return( FALSE );
-//		}
 		if( GFL_CLACT_WK_CheckAnmActive( wk->wk_obj.cmn_clwk[wnum] ) == FALSE ){
+			bflg = FALSE;
+		}
+	}
+	else if(wmode == FMA_CLWKMODE_RD){		// RD
+		if( GFL_CLACT_WK_CheckAnmActive( wk->wk_obj.rd_clwk[wnum] ) == FALSE ){
 			bflg = FALSE;
 		}
 	}
@@ -1007,7 +1048,7 @@ BOOL FmaCmn_is_anime_end( FMISSION_APP_WORK *wk, const s32 wmode, const s32 wnum
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  objのシーケンスの切り替え
+ *	@brief  objのパレットの切り替え
  *
  *	@param	FMISSION_APP_WORK* wk
  *	@param	const s32			(0:通常、1:共通)
@@ -1022,18 +1063,13 @@ void FmaCmn_chg_pal( FMISSION_APP_WORK *wk, const s32 wmode, const s32 wnum, con
 {
 	// 切り替え
 	if(wmode == FMA_CLWKMODE_NORMAL){			// 通常
-//		if(wnum >= FMA_CLWKID_MAX){
-//			OS_Printf("obj max error:%d\n",wnum);
-//			return;
-//		}
 		GFL_CLACT_WK_SetPlttOffs( wk->wk_obj.clwk[wnum], cnum, CLWK_PLTTOFFS_MODE_PLTT_TOP );
 	}
 	else if(wmode == FMA_CLWKMODE_CMN){			// 共通
-//		if(wnum >= T_DOWNLOAD_CLWKID_CMN_MAX){
-//			OS_Printf("cmn obj max error:%d\n",wnum);
-//			return;
-//		}
 		GFL_CLACT_WK_SetPlttOffs( wk->wk_obj.cmn_clwk[wnum], cnum, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+	}
+	else if(wmode == FMA_CLWKMODE_RD){			// RD
+		GFL_CLACT_WK_SetPlttOffs( wk->wk_obj.rd_clwk[wnum], cnum, CLWK_PLTTOFFS_MODE_PLTT_TOP );
 	}
 }
 

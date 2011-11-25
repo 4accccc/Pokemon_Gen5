@@ -46,6 +46,7 @@ enum{
 	FMA_CANVAS_MAXNUM 	= 30,		// canvas最大数
 	FMA_OBJ_MAXNUM		= 20,		// obj最大数
 	FMA_CMN_OBJ_MAXNUM	= 2,		// obj最大数
+	FMA_OBJ_RD_MAXNUM	= 1,	// obj(result)
 };
 
 // フラグ(Flag)
@@ -67,14 +68,16 @@ enum{
 	//
 	FLG_FMA_NEW_TS		= (1<<12),	// トータルスコア(NEWマーク)
 	FLG_FMA_NEW_CT		= (1<<13),	// クリアタイム(NEWマーク)
+	FLG_FMA_NEW_RD		= (1<<14),	// マイスコア(NEWマーク)
 	//
 	FLG_FMA_LEVEL0		= (1<<16),	// レベル0
 	FLG_FMA_LEVEL1		= (1<<17),	// レベル1
 	FLG_FMA_LEVEL2		= (1<<18),	// レベル2
 	FLG_FMA_LEVEL3		= (1<<19),	// レベル3
 	//
-	FLG_FMA_ME_WAIT		= (1<<20),	// ME待ち
-	FLG_FMA_ME_MES		= (1<<21),	// MEのメッセージ待ち
+	FLG_FMA_LEVEL4		= (1<<20),	// レベル4
+	FLG_FMA_ME_WAIT		= (1<<21),	// ME待ち
+	FLG_FMA_ME_MES		= (1<<22),	// MEのメッセージ待ち
 	//
 	FLG_FMA_MSG_00		= (1<<24),	// 成功or失敗
 	FLG_FMA_MSG_01		= (1<<25),	// 手に入れたor失敗
@@ -98,11 +101,10 @@ enum{
 	FMAI_CANVAS_UP_JOIN_L,
 	FMAI_CANVAS_UP_CLEAR_L,
 	FMAI_CANVAS_UP_SCORE_L,
-	FMAI_CANVAS_UP_GAIN_L,
 	//
 	FMAI_CANVAS_UP_JOIN_R,
+	FMAI_CANVAS_UP_CLEAR_R,
 	FMAI_CANVAS_UP_SCORE_R,
-	FMAI_CANVAS_UP_GAIN_R,
 	//
 	// 下画面
 	FMAI_CANVAS_DOWN_MYSCORE_L,
@@ -135,6 +137,7 @@ enum{
 	FMAR_CANVAS_UP_TIME_L,
 	//
 	FMAR_CANVAS_UP_JOIN_R,
+	FMAR_CANVAS_UP_CLEAR_R,
 	FMAR_CANVAS_UP_SCORE_R,
 	//
 	// 下画面
@@ -168,6 +171,10 @@ enum{
 	FMA_RESID_CMN_OBJ_PLT,		// パレット
 	FMA_RESID_CMN_OBJ_CHR,		// キャラ
 	FMA_RESID_CMN_OBJ_CEL,		// セルアニメ
+	// 通常(main)
+	FMA_RESID_RD_OBJ_PLT,		// パレット
+	FMA_RESID_RD_OBJ_CHR,		// キャラ
+	FMA_RESID_RD_OBJ_CEL,		// セルアニメ
 	//
 	FMA_RESID_OBJ_MAX,
 };
@@ -178,6 +185,7 @@ enum{
 enum{
 	FMA_CLWKMODE_NORMAL = 0,	// 通常
 	FMA_CLWKMODE_CMN,			// 共通
+	FMA_CLWKMODE_RD,			// 結果
 };
 
 //-------------------
@@ -222,6 +230,13 @@ enum{
 //-------------------
 enum{
 	FMA_CLWK_CMN_BACK = 0,		// 戻るアイコン
+};
+
+//-------------------
+// clwkのid(result)
+//-------------------
+enum{
+	FMA_CLWK_RESULT_RECORD = 0,	// レコード
 };
 
 //-------------------
@@ -273,6 +288,8 @@ typedef struct
 	GFL_CLWK	*cmn_clwk[FMA_CMN_OBJ_MAXNUM];		// CLWK(common)
 	// 通常
 	GFL_CLWK	*clwk[FMA_OBJ_MAXNUM];				// CLWK
+	// 結果
+	GFL_CLWK	*rd_clwk[FMA_OBJ_RD_MAXNUM];		// CLWK(result down)
 } FMISSION_APP_OBJ_WORK;
 
 //--------------------------------------------------------------
