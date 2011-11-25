@@ -2505,8 +2505,22 @@ static u32 gethint_gate_tr_room_tr_num( const TRHINT_WK *p_wk )
   GF_ASSERT( member_num > 0 );
   // 4人以上はありえない
   GF_ASSERT( member_num <= 4 );
-  return msg_hint_gate_room_one_01 + (member_num-1);
 
+  // メンバー数によって分岐
+  switch( member_num )
+  {
+  case 1:
+      return msg_hint_gate_room_one_01 + p_wk->talk_type;
+  case 2:
+      return msg_hint_gate_room_two_01 + p_wk->talk_type;
+  case 3:
+      return msg_hint_gate_room_three_01 + p_wk->talk_type;
+  case 4:
+      return msg_hint_gate_room_four_01 + p_wk->talk_type;
+  default:
+      GF_ASSERT_MSG(0,"ありえない人数の場所にゲートトレーナーが存在しています\n");
+      break;
+  }
 }
 
 //----------------------------------------------------------------------------
