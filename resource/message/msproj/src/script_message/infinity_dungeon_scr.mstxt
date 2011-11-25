@@ -1325,16 +1325,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いたたた……
-さいきんの　こどもは　ようしゃないわね▼
-それにしても　あれだけの　そしつを
+			<Text>いたたた……▼
+あのこが　うわさの
+バンジロウだったのね▼
+あれだけの　そしつを
 もっているこは　はじめて　みたわ▼
 あのこは　すえ　おそろしいわね……▼
 さあ　つぎは　キミの　ばんよ
 ぜんりょくで　ぶつかって　きなさい！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T04:02:41" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-25T03:13:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1342,16 +1343,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>痛たたた……
-最近の　子供は　容赦ないわね▼
-それにしても　あれだけの　素質を
+			<Text>痛たたた……▼
+あの子が　うわさの
+バンジロウだったのね▼
+あれだけの　素質を
 持っている子は　はじめて　みたわ▼
 あの子は　末恐ろしいわね……▼
 さあ　次は　キミの　番よ
 全力で　ぶつかって　来なさい！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T04:02:47" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-25T03:14:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2009,16 +2011,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いたたた……
-さいきんの　こどもは　ようしゃないな▼
-それにしても　あれだけの　そしつを
+			<Text>いたたた……▼
+あのこが　うわさの
+バンジロウだったのか▼
+あれだけの　そしつを
 もっているこは　はじめて　みたよ▼
 あのこは　すえ　おそろしいな……▼
 さあ　つぎは　キミの　ばんだ
 ぜんりょくで　ぶつかって　来い！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T04:05:30" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-25T03:15:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2026,16 +2029,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>痛たたた……
-最近の　子供は　容赦ないな▼
-それにしても　あれだけの　素質を
+			<Text>痛たたた……▼
+あの子が　うわさの
+バンジロウだったのか▼
+あれだけの　素質を
 持っている子は　はじめて　みたよ▼
 あの子は　末恐ろしいな……▼
 さあ　次は　キミの　番だ
 全力で　ぶつかって　来い！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T04:05:34" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-25T03:15:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -26570,11 +26574,11 @@ NPC：MUGENBOSS（バンジロウ）
 			<Text>ここからが　ほんばんだ▼
 ボストレーナーは　このエリアで
 いちばんの　じつりょくしゃだ▼
-とびらの　あった　へやに　いって
+ゲートの　さきに　すすんで
 ぜんりょくで　ちょうせんするんだ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T02:59:48" />
+				Time="2011-11-25T03:48:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -26585,11 +26589,11 @@ NPC：MUGENBOSS（バンジロウ）
 			<Text>ここからが　本番だ▼
 ボストレーナーは　このエリアで
 一番の　実力者だ▼
-扉の　あった　部屋に　行って
+ゲートの　先に　進んで
 全力で　挑戦するんだ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T02:59:52" />
+				Time="2011-11-25T03:49:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -26620,11 +26624,11 @@ NPC：MUGENBOSS（バンジロウ）
 			<Text>ここからが　ほんばんよ▼
 ボストレーナーは　このエリアで
 いちばんの　じつりょくしゃよ▼
-とびらの　あった　へやに　いって
+ゲートの　さきに　すすんで
 ぜんりょくで　ちょうせんしてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T02:59:44" />
+				Time="2011-11-25T03:48:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -26635,11 +26639,11 @@ NPC：MUGENBOSS（バンジロウ）
 			<Text>ここからが　本番よ▼
 ボストレーナーは　このエリアで
 一番の　実力者よ▼
-扉の　あった　部屋に　行って
+ゲートの　先に　進んで
 全力で　挑戦してね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T02:59:44" />
+				Time="2011-11-25T03:48:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
