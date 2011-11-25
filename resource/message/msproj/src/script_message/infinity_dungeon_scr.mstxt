@@ -25629,10 +25629,10 @@ NPC：MUGENBOSS（バンジロウ）
 さっき　おしえたね？▼
 さあ　キミが　ボストレーナーに
 ちょうせんする　じつりょくが　あるか▽
-ためしてみよう！</Text>
+ためしてみよう！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T07:10:57" />
+				Time="2011-11-25T12:35:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -25646,10 +25646,10 @@ NPC：MUGENBOSS（バンジロウ）
 さっき　教えたね？▼
 さあ　キミが　ボストレーナーに
 挑戦する　実力が　あるか▽
-試してみよう！</Text>
+試してみよう！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T07:10:37" />
+				Time="2011-11-25T12:37:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -25683,10 +25683,10 @@ NPC：MUGENBOSS（バンジロウ）
 さっき　おしえたわね？▼
 さあ　キミが　ボストレーナーに
 ちょうせんする　じつりょくが　あるか▽
-ためしてあげる！</Text>
+ためしてあげる！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T07:11:06" />
+				Time="2011-11-25T12:35:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -25700,10 +25700,10 @@ NPC：MUGENBOSS（バンジロウ）
 さっき　教えたたわね？▼
 さあ　キミが　ボストレーナーに
 挑戦する　実力が　あるか▽
-試してあげる！</Text>
+試してあげる！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T07:10:46" />
+				Time="2011-11-25T12:45:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -25737,10 +25737,10 @@ NPC：MUGENBOSS（バンジロウ）
 でも　キミが　ボストレーナーに
 ちょうせんする　しかくは　あるかな？▼
 さあ　キミが　どれぐらい
-つよいのか　しょうぶだ！</Text>
+つよいのか　しょうぶだ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T08:56:31" />
+				Time="2011-11-25T12:35:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -25748,16 +25748,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼくを　このエリアの
+			<Text>ぼくが　このエリアの
 ゲートトレーナーだよ▽
 よく　見つけられたね▼
 でも　キミが　ボストレーナーに
 挑戦する　資格は　あるかな？▼
 さあ　キミが　どれぐらい
-強いのか　勝負だ！</Text>
+強いのか　勝負だ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T08:56:29" />
+				Time="2011-11-25T12:36:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -25790,10 +25790,10 @@ NPC：MUGENBOSS（バンジロウ）
 でも　あなたは　ボストレーナーに
 ちょうせんする　しかくは　あるかしら？▼
 あなたが　どれぐらい　つよいのか
-しょうぶよ！</Text>
+しょうぶよ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T08:56:52" />
+				Time="2011-11-25T12:35:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -25807,10 +25807,10 @@ NPC：MUGENBOSS（バンジロウ）
 でも　あなたは　ボストレーナーに
 挑戦する　資格は　あるかしら？▼
 あなたが　どれぐらい　強いのか
-勝負よ！</Text>
+勝負よ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T08:57:21" />
+				Time="2011-11-25T12:46:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -25842,10 +25842,10 @@ NPC：MUGENBOSS（バンジロウ）
 なかなかやるな！▼
 つぎは　ボストレーナーに
 ちょうせんする　じつりょくが　あるか▽
-ためしてやろう！</Text>
+ためしてやろう！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T08:58:00" />
+				Time="2011-11-25T12:36:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -25858,10 +25858,10 @@ NPC：MUGENBOSS（バンジロウ）
 なかなかやるな！▼
 次は　ボストレーナーに
 挑戦する　実力が　あるか▽
-試してやろう！</Text>
+試してやろう！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T08:58:14" />
+				Time="2011-11-25T12:46:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -25893,10 +25893,10 @@ NPC：MUGENBOSS（バンジロウ）
 なかなかやるわね！▼
 つぎは　ボストレーナーに
 ちょうせんする　じつりょくが　あるか▽
-ためしてあげるわ！</Text>
+ためしてあげるわ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T08:58:27" />
+				Time="2011-11-25T12:36:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -25909,10 +25909,10 @@ NPC：MUGENBOSS（バンジロウ）
 なかなかやるわね！▼
 次は　ボストレーナーに
 挑戦する　実力が　あるか▽
-試してあげるわ！</Text>
+試してあげるわ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T08:58:39" />
+				Time="2011-11-25T12:46:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -25944,10 +25944,10 @@ NPC：MUGENBOSS（バンジロウ）
 みつけられた　ごほうびだ▼
 キミの　じつりょくが
 ボストレーナーに　つうようするか▽
-ためしてあげよう！</Text>
+ためしてあげよう！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T08:59:20" />
+				Time="2011-11-25T12:36:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -25960,10 +25960,10 @@ NPC：MUGENBOSS（バンジロウ）
 見つけられた　ご褒美だ▼
 キミの　実力が
 ボストレーナーに　通用するか▽
-試してあげよう！</Text>
+試してあげよう！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T08:59:37" />
+				Time="2011-11-25T12:46:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -25995,10 +25995,10 @@ NPC：MUGENBOSS（バンジロウ）
 それじゃ　ごほうびね▼
 あなたが　ボストレーナーに
 ちょうせんする　じつりょくが　あるか▽
-ためしてあげるわ！</Text>
+ためしてあげるわ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T08:59:49" />
+				Time="2011-11-25T12:36:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -26011,10 +26011,10 @@ NPC：MUGENBOSS（バンジロウ）
 それじゃ　ご褒美ね▼
 あなたが　ボストレーナーに
 挑戦する　実力が　あるか▽
-試してあげるわ！</Text>
+試してあげるわ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T09:00:03" />
+				Time="2011-11-25T12:46:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -26046,10 +26046,10 @@ NPC：MUGENBOSS（バンジロウ）
 わしが　ゲートトレーナーじゃ▼
 さあ　おまえさんの　ちからが
 どれほどのものか▽
-みせてもらおうか！</Text>
+みせてもらおうか！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T09:00:29" />
+				Time="2011-11-25T12:36:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -26062,10 +26062,10 @@ NPC：MUGENBOSS（バンジロウ）
 わしが　ゲートトレーナーじゃ▼
 さあ　おまえさんの　力が
 どれほどのものか▽
-見せてもらおうか！</Text>
+見せてもらおうか！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T09:00:54" />
+				Time="2011-11-25T12:46:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -26096,10 +26096,10 @@ NPC：MUGENBOSS（バンジロウ）
 わたしが　ゲートトレーナーです▼
 さあ　あなたの　ちからが
 どれほどのものか▽
-わたしに　おみせなさい！</Text>
+わたしに　おみせなさい！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T09:01:21" />
+				Time="2011-11-25T12:36:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -26111,10 +26111,10 @@ NPC：MUGENBOSS（バンジロウ）
 わたしが　ゲートトレーナーです▼
 さあ　あなたの　力が
 どれほどのものか▽
-わたしに　お見せなさい！</Text>
+わたしに　お見せなさい！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T09:01:41" />
+				Time="2011-11-25T12:46:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
