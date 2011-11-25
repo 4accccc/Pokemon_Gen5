@@ -281,8 +281,13 @@ enum {
 	NARC_fld3d_ci_kusabi_b_ci_b_nsbma = 267,
 	NARC_fld3d_ci_kusabi_b_ci_b_nsbtp = 268,
 	NARC_fld3d_ci_kusabi_w_ci_a_nsbmd = 269,
-	NARC_fld3d_ci_kusabi_w_ci_a_nsbca = 270,
-	NARC_fld3d_ci_kusabi_w_ci_a_nsbta = 271
+	NARC_fld3d_ci_kusabi_w_ci_b_nsbmd = 270,
+	NARC_fld3d_ci_kusabi_w_ci_a_nsbca = 271,
+	NARC_fld3d_ci_kusabi_w_ci_a_nsbta = 272,
+	NARC_fld3d_ci_kusabi_w_ci_a_nsbma = 273,
+	NARC_fld3d_ci_kusabi_w_ci_b_nsbca = 274,
+	NARC_fld3d_ci_kusabi_w_ci_b_nsbma = 275,
+	NARC_fld3d_ci_kusabi_w_ci_b_nsbtp = 276
 };
 
 /* NARC_FLD3D_CI_NAIX_ */
