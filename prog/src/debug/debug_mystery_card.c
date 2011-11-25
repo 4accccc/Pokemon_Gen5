@@ -15,6 +15,7 @@
 #include "poke_tool/monsno_def.h"
 #include "item/itemsym.h"
 #include "field/gpower_id.h"
+#include "gamesystem/fmission_data_id.h"
 
 //セーブデータ
 #include "savedata/mystery_data.h"
@@ -116,13 +117,20 @@ void DEBUG_MYSTERY_SetGiftGPowerData( GIFT_PACK_DATA *p_data )
   }
   p_data->gift_type     = MYSTERYGIFT_TYPE_POWER;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェスミッション入りのデータを作成
+ *
+ *	@param	GIFT_PACK_DATA *p_data  データ 
+ */
+//-----------------------------------------------------------------------------
 void DEBUG_MYSTERY_SetGiftFMissionData( GIFT_PACK_DATA *p_data )
 { 
   GFL_STD_MemClear( p_data, sizeof(GIFT_PACK_DATA) );
   //道具作成
   { 
     GIFT_PRESENT_FMISSION  *p_fmission = &p_data->data.fmission;
-    p_fmission->no = 1;
+    p_fmission->no = FMISSION_ID_NPC_POKEQUIZ_GIFT;
   }
   p_data->gift_type     = MYSTERYGIFT_TYPE_FMISSON;
 
