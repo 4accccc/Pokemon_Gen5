@@ -6,13 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヘヘヘ………
-ここはなあ　セレブな　じょゆう▽
+			<Text>ヘヘヘ………▼
+ここはな　セレブな　じょゆう
 せんようの　がくや　なんだぜ▼
-……　……きに　なるだろ</Text>
+……きに　なるだろ</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:47:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:55:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -20,13 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>へへへ……
-ここはな　セレブな　女優▽
+			<Text>へへへ……▼
+ここはな　セレブな　女優
 専用の　楽屋　なんだぜ▼
-……　……気に　なるだろ</Text>
+……気に　なるだろ</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:47:19" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:54:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -115,11 +115,11 @@
 			Language="JPN_KANJI">
 			<Text>ここはさ　ウチの　ボスが　認めた
 特別なスター　しか　はいれない▽
-スペシャルな　楽屋　なの▼
+スペシャルな　楽屋なの▼
 ホラ　帰った！　帰った！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:35:30" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:56:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -511,12 +511,12 @@ msg_c15r0301_middleman2_01</Comment>
 あら……　[Name:TrainerName ]さん▼
 最近は　あなたの　映画が
 公開すると　シアターが▽
-満員　なんですってね！▼
+満員なんですってね！▼
 ウフフ！　いつの間にか　あなたも
 映画スターの　仲間入りね！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:49:14" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:56:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -658,10 +658,10 @@ msg_c15r0301_middleman2_01</Comment>
 			Language="JPN_KANJI">
 			<Text>よお！　あんた　[Name:TrainerName ]だろ？▼
 最近　けっこう　あんたの
-名前　聞くように　なってきたぜ！</Text>
+名前　きくように　なってきたぜ！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:49:32" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:56:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -684,14 +684,14 @@ msg_c15r0301_middleman2_01</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>お！　[Name:TrainerName ]さん　じゃねえか！▼
-いまや　あんたも　スゲー　うれっこだな！
-あんたと　えいがが　つくれることは▽
+			<Text>お！　[Name:TrainerName ]さん　じゃねえか！
+いまや　あんたも　スゲー　うれっこだな！▼
+あんたと　えいがが　つくれることは
 おれたち　ポケウッドスタッフも▽
 えいがじんの　みょうりに　つきるぜ！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:45:06" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:57:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -699,14 +699,14 @@ msg_c15r0301_middleman2_01</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お！　[Name:TrainerName ]さん　じゃねえか！▼
-今や　あんたも　スゲー　売れっ子だな！
-あんたと　映画が　つくれることは▽
+			<Text>お！　[Name:TrainerName ]さん　じゃねえか！
+今や　あんたも　スゲー　売れっ子だな！▼
+あんたと　映画が　つくれることは
 おれたち　ポケウッドスタッフも▽
 映画人の　みょうりに　つきるぜ！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:47:45" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:56:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -862,18 +862,18 @@ msg_c15r0301_middleman2_01</Comment>
 台本は　映画を　つくる
 基本に　なるものなんだ！▼
 台本には　撮影を
-成功　させる　条件や▽
+成功させる　条件や▽
 共演者に　ついての▽
 情報が　書かれてるよ！▼
-撮影中にも　見られるから
+撮影中にも　みられるから
 困ったときは　要チェックさ！▼
 チャレンジできる　台本は
 キミが　つくった　映画の　内容や▽
-興行成績の　結果　などで▽
+興行成績の　結果などで▽
 少しずつ　増えていくよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T06:24:29" />
+				Time="2011-11-25T02:57:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -905,12 +905,12 @@ msg_c15r0201_pwmoji_01_01</Comment>
 だいほんごとに　しゅつえんする
 ポケモンを　レンタルして　もらえるよ！▼
 しかも　いちど　いい　さくひんを
-かんせい　させることが　できれば▽
-じぶんの　ポケモンだって▽
+かんせい　させることが　できれば▼
+じぶんの　ポケモンだって
 えいがに　しゅつえん　させられるよ！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:48:59" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:58:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -925,12 +925,12 @@ msg_c15r0201_pwmoji_01_01</Comment>
 台本ごとに　出演する
 ポケモンを　レンタルして　もらえるよ！▼
 しかも　一度　いい　作品を
-完成させることが　できれば▽
-自分の　ポケモンだって▽
+完成させることが　できれば▼
+自分の　ポケモンだって
 映画に　出演させられるよ！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:49:20" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:57:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -978,12 +978,12 @@ msg_c15r0201_pwmoji_01_01</Comment>
 でも　勝負じゃないから
 相手に　勝つこと　ばかりが▽
 大事な　わけじゃないよ！▼
-台本に　その辺りの　ヒントが
-書いて　あるから▽
+台本に　その辺りの
+ヒントが　書いてあるから▽
 よーく　参考に　してね！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T06:19:03" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:58:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1011,14 +1011,14 @@ msg_c15r0201_pwmoji_01_01</Comment>
 			<Text>さつえいを　すすめていると
 セリフが　えらべることが　あるよ！▼
 じぶんが　これはイイ！　って
-おもうセリフを　えらんでね！▼
+おもう　セリフを　えらんでね！▼
 きみが　どんな　セリフを　えらぶかで
 きょうえんしゃの　えんぎや▽
-できあがる　えいがの　おはなしが▽
-かわっていくよ！▼</Text>
+できあがる　えいがの▽
+おはなしが　かわっていくよ！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T06:19:14" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:58:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1032,11 +1032,11 @@ msg_c15r0201_pwmoji_01_01</Comment>
 思う　セリフを　選んでね！▼
 君が　どんな　セリフを　選ぶかで
 共演者の　演技や▽
-出来上がる　映画の▽
+できあがる　映画の▽
 ストーリーが　変わっていくよ！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T06:19:34" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:58:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

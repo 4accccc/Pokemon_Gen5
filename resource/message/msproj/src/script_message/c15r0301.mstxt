@@ -2,7 +2,8 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_c15r0301_cleaningm_01">
+		Label="msg_c15r0301_cleaningm_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>いやあー　えいがって
@@ -38,7 +39,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c15r0301_girl02_01">
+		Label="msg_c15r0301_girl02_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ここにある　ボードには
@@ -76,7 +78,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_01_01">
+		Label="pwfun_01_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あ！　[Name:TrainerName ]さん！▼
@@ -114,15 +117,16 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_01_02">
+		Label="pwfun_01_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>いま　こうかいしてる　えいがも
-[Name:TrainerName ]　さん　じゃないと▽
+[Name:TrainerName ]さん　じゃないと▽
 ありえないっスよ！　さすがっス！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T12:22:28" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:45:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -131,11 +135,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>今　公開してる　映画も
-[Name:TrainerName ]　さん　じゃないと▽
+[Name:TrainerName ]さん　じゃないと▽
 ありえないっスよ！　さすがっス！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T12:22:48" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:45:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -155,7 +159,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_01_03">
+		Label="pwfun_01_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>やー！　さっきのも　おもしろかった！▼
@@ -195,15 +200,16 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_01_04">
+		Label="pwfun_01_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんかいの　さくひん　なんスけど……
-[Name:TrainerName ]さんが　でてなきゃ▽
+			<Text>こんかいの　さくひん　なんスけど……▼
+[Name:TrainerName ]さんが　でてなきゃ
 みてないかも　しれないっス……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T12:23:55" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:45:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -211,12 +217,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今回の　作品　なんスけど……
-[Name:TrainerName ]さんが　出てなきゃ▽
-見てないかも　しれないっス……</Text>
+			<Text>今回の　作品なんスけど……▼
+[Name:TrainerName ]さんが　でてなきゃ
+観てないかも　しれないっス……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T12:24:00" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:49:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -235,7 +241,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_01_05">
+		Label="pwfun_01_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>いつも　おつかれさまっス！
@@ -250,11 +257,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いつも　お疲れ様っス！
+			<Text>いつも　おつかれさまっス！
 これ　受け取ってくださいよ！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T12:24:30" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:46:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -278,7 +285,8 @@ pwfun_01_02～pwfun_01_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_01_06">
+		Label="pwfun_01_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>もちものが　いっぱいッスね……</Text>
@@ -316,7 +324,8 @@ pwfun_01_02～pwfun_01_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_02_01">
+		Label="pwfun_02_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん　ですよね！？
@@ -332,10 +341,10 @@ pwfun_01_02～pwfun_01_04の
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さん　ですよね！？
-いつも　応援　してます！</Text>
+いつも　応援してます！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T12:24:40" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:49:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -352,15 +361,16 @@ pwfun_01_02～pwfun_01_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_02_02">
+		Label="pwfun_02_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんかいの　えいがも　すごかった！！
-[Name:TrainerName ]さん　って▽
+			<Text>こんかいの　えいがも　すごかった！！▼
+[Name:TrainerName ]さん　って
 やっぱり　てんさい　ですよ！！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T09:49:00" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:50:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -368,12 +378,12 @@ pwfun_01_02～pwfun_01_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今回の　映画も　すごかった！！
-[Name:TrainerName ]さん　って▽
+			<Text>今回の　映画も　すごかった！！▼
+[Name:TrainerName ]さん　って
 やっぱり　天才　ですよ！！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T12:24:59" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:50:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -393,7 +403,8 @@ pwfun_01_02～pwfun_01_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_02_03">
+		Label="pwfun_02_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>こんかいの　さくひんも　サイコー！！
@@ -433,7 +444,8 @@ pwfun_01_02～pwfun_01_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_02_04">
+		Label="pwfun_02_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん！！▼
@@ -475,7 +487,8 @@ pwfun_01_02～pwfun_01_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_02_05">
+		Label="pwfun_02_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あの！　これ　さしいれです！
@@ -518,7 +531,8 @@ pwfun_02_02～pwfun_02_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_02_06">
+		Label="pwfun_02_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ああーん！
@@ -558,7 +572,8 @@ pwfun_02_02～pwfun_02_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_03_01">
+		Label="pwfun_03_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>スッゲー！　[Name:TrainerName ]さんだ！
@@ -594,7 +609,8 @@ pwfun_02_02～pwfun_02_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_03_02">
+		Label="pwfun_03_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが　すごかったです！
@@ -633,7 +649,8 @@ pwfun_02_02～pwfun_02_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_03_03">
+		Label="pwfun_03_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが　よかったです！
@@ -671,7 +688,8 @@ pwfun_02_02～pwfun_02_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_03_04">
+		Label="pwfun_03_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが……
@@ -709,7 +727,8 @@ pwfun_02_02～pwfun_02_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_03_05">
+		Label="pwfun_03_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あの！
@@ -754,7 +773,8 @@ pwfun_03_02～pwfun_03_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_03_06">
+		Label="pwfun_03_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あれ？　[Name:TrainerName ]さん！
@@ -794,7 +814,8 @@ pwfun_03_02～pwfun_03_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_04_01">
+		Label="pwfun_04_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヒュー！　[Name:TrainerName ]　じゃん！
@@ -830,7 +851,8 @@ pwfun_03_02～pwfun_03_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_04_02">
+		Label="pwfun_04_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>こんかいの　えいが　シビレたわー！
@@ -869,7 +891,8 @@ pwfun_03_02～pwfun_03_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_04_03">
+		Label="pwfun_04_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>こんかいのも　バリバリきたわ！！
@@ -907,7 +930,8 @@ pwfun_03_02～pwfun_03_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_04_04">
+		Label="pwfun_04_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>まー　こんかいの　さくひんは
@@ -945,7 +969,8 @@ pwfun_03_02～pwfun_03_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_04_05">
+		Label="pwfun_04_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>いつも　シビれる　えいがを
@@ -961,10 +986,10 @@ pwfun_03_02～pwfun_03_04の
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いつも　シビれる　映画を
-見せてくれる　アンタに！　ホラ！</Text>
+みせてくれる　アンタに！　ホラ！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T12:31:03" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:50:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -988,7 +1013,8 @@ pwfun_04_02～pwfun_04_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_04_06">
+		Label="pwfun_04_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あれー？
@@ -1028,7 +1054,8 @@ pwfun_04_02～pwfun_04_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_05_01">
+		Label="pwfun_05_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おわっ！　ち　ちょっと！　あなたはっ！
@@ -1064,7 +1091,8 @@ pwfun_04_02～pwfun_04_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_05_02">
+		Label="pwfun_05_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あなたの　こんかいの　さくひんっ！！
@@ -1105,7 +1133,8 @@ pwfun_04_02～pwfun_04_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_05_03">
+		Label="pwfun_05_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>こんかいのえいがも　さいこう　ですな！
@@ -1143,7 +1172,8 @@ pwfun_04_02～pwfun_04_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_05_04">
+		Label="pwfun_05_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>なに！？　こんかいの　さくひんはっ！▼
@@ -1183,7 +1213,8 @@ pwfun_04_02～pwfun_04_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_05_05">
+		Label="pwfun_05_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かんげきの　ほんかんから　コレを！
@@ -1226,7 +1257,8 @@ pwfun_05_02～pwfun_05_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_05_06">
+		Label="pwfun_05_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>そんな！　そんな！
@@ -1266,7 +1298,8 @@ pwfun_05_02～pwfun_05_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_06_01">
+		Label="pwfun_06_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん　ですよね！？
@@ -1302,15 +1335,16 @@ pwfun_05_02～pwfun_05_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_06_02">
+		Label="pwfun_06_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんかいの　えいがも　すごかった！！
-[Name:TrainerName ]さん　って▽
+			<Text>こんかいの　えいがも　すごかった！！▼
+[Name:TrainerName ]さん　って
 やっぱり　えんぎのてんさい　ですよ！！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T09:40:06" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:46:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1318,12 +1352,12 @@ pwfun_05_02～pwfun_05_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今回の　映画も　すごかった！！
-[Name:TrainerName ]さん　って▽
+			<Text>今回の　映画も　すごかった！！▼
+[Name:TrainerName ]さん　って
 やっぱり　演技の天才　ですよ！！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T09:40:22" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:46:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1343,15 +1377,16 @@ pwfun_05_02～pwfun_05_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_06_03">
+		Label="pwfun_06_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんかいの　さくひんも　サイコー！！
-つぎの　えいがも▽
+			<Text>こんかいの　さくひんも　サイコー！！▼
+つぎの　えいがも
 たのしみに　まってますね！！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T09:40:54" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:51:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1359,12 +1394,12 @@ pwfun_05_02～pwfun_05_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今回の　作品も　サイコー！！
-次の　映画も▽
+			<Text>今回の　作品も　サイコー！！▼
+次の　映画も
 楽しみに　待ってますね！！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-04T03:54:42" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:51:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1383,7 +1418,8 @@ pwfun_05_02～pwfun_05_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_06_04">
+		Label="pwfun_06_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん！！▼
@@ -1425,7 +1461,8 @@ pwfun_05_02～pwfun_05_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_06_05">
+		Label="pwfun_06_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あの！　これ　さしいれです！
@@ -1468,7 +1505,8 @@ pwfun_06_02～pwfun_06_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_06_06">
+		Label="pwfun_06_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ああーん！
@@ -1508,7 +1546,8 @@ pwfun_06_02～pwfun_06_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_07_01">
+		Label="pwfun_07_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>わー　ほんものの　[Name:TrainerName ]　だー
@@ -1544,7 +1583,8 @@ pwfun_06_02～pwfun_06_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_07_02">
+		Label="pwfun_07_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが　すごかったぞー
@@ -1583,7 +1623,8 @@ pwfun_06_02～pwfun_06_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_07_03">
+		Label="pwfun_07_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが　おもしろかったぞー
@@ -1621,7 +1662,8 @@ pwfun_06_02～pwfun_06_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_07_04">
+		Label="pwfun_07_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが　よく　わかんないー
@@ -1659,7 +1701,8 @@ pwfun_06_02～pwfun_06_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_07_05">
+		Label="pwfun_07_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>これ　[Name:TrainerName ]に　やるー！
@@ -1702,7 +1745,8 @@ pwfun_07_02～pwfun_07_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_07_06">
+		Label="pwfun_07_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>もー　　なんだよー
@@ -1742,7 +1786,8 @@ pwfun_07_02～pwfun_07_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_08_01">
+		Label="pwfun_08_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>キャッ！　もしかして　[Name:TrainerName ]？
@@ -1778,7 +1823,8 @@ pwfun_07_02～pwfun_07_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_08_02">
+		Label="pwfun_08_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいがの　[Name:TrainerName ]！
@@ -1817,7 +1863,8 @@ pwfun_07_02～pwfun_07_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_08_03">
+		Label="pwfun_08_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいがの　[Name:TrainerName ]！
@@ -1855,7 +1902,8 @@ pwfun_07_02～pwfun_07_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_08_04">
+		Label="pwfun_08_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいがの　[Name:TrainerName ]！
@@ -1893,7 +1941,8 @@ pwfun_07_02～pwfun_07_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_08_05">
+		Label="pwfun_08_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>がんばってる　[Name:TrainerName ]に
@@ -1936,7 +1985,8 @@ pwfun_08_02～pwfun_08_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_08_06">
+		Label="pwfun_08_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>まあ　しょうがないわねー
@@ -1976,7 +2026,8 @@ pwfun_08_02～pwfun_08_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_09_01">
+		Label="pwfun_09_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>オマエの　ファンの　ものだ
@@ -1992,10 +2043,10 @@ pwfun_08_02～pwfun_08_04の
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オマエの　ファンの　ものだ
-あくしゅ　してくれないか？</Text>
+握手してくれないか？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T09:46:01" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:47:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2012,7 +2063,8 @@ pwfun_08_02～pwfun_08_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_09_02">
+		Label="pwfun_09_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　さくひんだが　どうしたら
@@ -2050,7 +2102,8 @@ pwfun_08_02～pwfun_08_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_09_03">
+		Label="pwfun_09_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　さくひん　だがな
@@ -2089,7 +2142,8 @@ pwfun_08_02～pwfun_08_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_09_04">
+		Label="pwfun_09_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　さくひんだがな　わるいのは
@@ -2128,7 +2182,8 @@ pwfun_08_02～pwfun_08_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_09_05">
+		Label="pwfun_09_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>わずかながらの　オレの　きもちだ
@@ -2144,10 +2199,10 @@ pwfun_08_02～pwfun_08_04の
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わずかながらの　オレの　気持ちだ
-遠慮　しつつ　受け取ってくれ</Text>
+遠慮しつつ　受け取ってくれ</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T09:50:54" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:47:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2171,7 +2226,8 @@ pwfun_09_02～pwfun_09_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_09_06">
+		Label="pwfun_09_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>チッ……　なんてことだ
@@ -2211,7 +2267,8 @@ pwfun_09_02～pwfun_09_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_10_01">
+		Label="pwfun_10_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん　ですよね！？
@@ -2247,15 +2304,16 @@ pwfun_09_02～pwfun_09_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_10_02">
+		Label="pwfun_10_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんかいの　えいがも　すごかった！！
-[Name:TrainerName ]さん　って▽
+			<Text>こんかいの　えいがも　すごかった！！▼
+[Name:TrainerName ]さん　って
 やっぱり　てんさい　ですよ！！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T10:57:52" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:47:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2263,12 +2321,12 @@ pwfun_09_02～pwfun_09_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今回の　映画も　すごかった！！
-[Name:TrainerName ]さん　って▽
+			<Text>今回の　映画も　すごかった！！▼
+[Name:TrainerName ]さん　って
 やっぱり　天才　ですよ！！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T12:46:22" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:47:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2288,15 +2346,16 @@ pwfun_09_02～pwfun_09_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_10_03">
+		Label="pwfun_10_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんかいの　さくひんも　サイコー！！
-つぎの　えいがも▽
+			<Text>こんかいの　さくひんも　サイコー！！▼
+つぎの　えいがも
 たのしみに　まってますね！！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-04T03:54:56" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:51:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2304,12 +2363,12 @@ pwfun_09_02～pwfun_09_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今回の　作品も　サイコー！！
-次の　映画も▽
+			<Text>今回の　作品も　サイコー！！▼
+次の　映画も
 楽しみに　待ってますね！！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-04T03:55:00" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:51:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2328,7 +2387,8 @@ pwfun_09_02～pwfun_09_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_10_04">
+		Label="pwfun_10_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん！！▼
@@ -2370,7 +2430,8 @@ pwfun_09_02～pwfun_09_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_10_05">
+		Label="pwfun_10_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あの！　これ　さしいれです！
@@ -2413,7 +2474,8 @@ pwfun_10_02～pwfun_10_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_10_06">
+		Label="pwfun_10_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ああーん！
@@ -2453,7 +2515,8 @@ pwfun_10_02～pwfun_10_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_11_01">
+		Label="pwfun_11_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>スゲー！　[Name:TrainerName ]さんだ！
@@ -2489,7 +2552,8 @@ pwfun_10_02～pwfun_10_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_11_02">
+		Label="pwfun_11_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが　すごかったです！
@@ -2528,7 +2592,8 @@ pwfun_10_02～pwfun_10_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_11_03">
+		Label="pwfun_11_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが　よかったです！
@@ -2566,7 +2631,8 @@ pwfun_10_02～pwfun_10_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_11_04">
+		Label="pwfun_11_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが……
@@ -2604,7 +2670,8 @@ pwfun_10_02～pwfun_10_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_11_05">
+		Label="pwfun_11_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あの！
@@ -2649,7 +2716,8 @@ pwfun_11_02～pwfun_11_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_11_06">
+		Label="pwfun_11_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あれ？　[Name:TrainerName ]さん！
@@ -2689,7 +2757,8 @@ pwfun_11_02～pwfun_11_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_12_01">
+		Label="pwfun_12_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>はわわ……　スターじゃ……
@@ -2725,7 +2794,8 @@ pwfun_11_02～pwfun_11_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_12_02">
+		Label="pwfun_12_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　さくひんで　おどろきすぎて
@@ -2740,11 +2810,11 @@ pwfun_11_02～pwfun_11_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さっきの　作品で　おどろきすぎて
+			<Text>さっきの　作品で　驚きすぎて
 腰が　治ったんじゃ……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T12:48:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:52:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2764,7 +2834,8 @@ pwfun_11_02～pwfun_11_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_12_03">
+		Label="pwfun_12_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　さくひんで　わらいすぎて
@@ -2802,7 +2873,8 @@ pwfun_11_02～pwfun_11_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_12_04">
+		Label="pwfun_12_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　さくひんが　むずかしくて
@@ -2817,11 +2889,11 @@ pwfun_11_02～pwfun_11_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さっきの　作品が　むずかしくて
-ぐっすり　ねむれたんじゃ……</Text>
+			<Text>さっきの　作品が　難しくて
+ぐっすり　眠れたんじゃ……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T12:48:41" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:52:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2840,7 +2912,8 @@ pwfun_11_02～pwfun_11_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_12_05">
+		Label="pwfun_12_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>スターには　ものたらんかも　しれんが
@@ -2883,7 +2956,8 @@ pwfun_12_02～pwfun_12_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_12_06">
+		Label="pwfun_12_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さすがは　スターじゃ……
@@ -2923,7 +2997,8 @@ pwfun_12_02～pwfun_12_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_13_01">
+		Label="pwfun_13_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>スゲー！　[Name:TrainerName ]さんだ！
@@ -2959,7 +3034,8 @@ pwfun_12_02～pwfun_12_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_13_02">
+		Label="pwfun_13_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが　すごかったです！
@@ -2998,7 +3074,8 @@ pwfun_12_02～pwfun_12_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_13_03">
+		Label="pwfun_13_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが　よかったです！
@@ -3036,7 +3113,8 @@ pwfun_12_02～pwfun_12_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_13_04">
+		Label="pwfun_13_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが……
@@ -3074,7 +3152,8 @@ pwfun_12_02～pwfun_12_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_13_05">
+		Label="pwfun_13_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あの！
@@ -3119,7 +3198,8 @@ pwfun_13_02～pwfun_13_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_13_06">
+		Label="pwfun_13_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あれ？　[Name:TrainerName ]さん！
@@ -3159,7 +3239,8 @@ pwfun_13_02～pwfun_13_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_14_01">
+		Label="pwfun_14_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ちょっと　アンタ　[Name:TrainerName ]やろ！？
@@ -3195,7 +3276,8 @@ pwfun_13_02～pwfun_13_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_14_02">
+		Label="pwfun_14_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが　ゴツかったわー！
@@ -3235,7 +3317,8 @@ pwfun_13_02～pwfun_13_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_14_03">
+		Label="pwfun_14_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが　おもろかったー！
@@ -3273,7 +3356,8 @@ pwfun_13_02～pwfun_13_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_14_04">
+		Label="pwfun_14_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいがって　どうなん？
@@ -3311,7 +3395,8 @@ pwfun_13_02～pwfun_13_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_14_05">
+		Label="pwfun_14_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>これな　ウチからの　さしいれ！
@@ -3354,13 +3439,15 @@ pwfun_14_02～pwfun_14_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_14_06">
+		Label="pwfun_14_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>え？　もちものが　いっぱい　なん？</Text>
+			<Text>え？　
+もちものが　いっぱい　なん？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T11:41:01" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:48:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3368,10 +3455,11 @@ pwfun_14_02～pwfun_14_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>え？　もちものが　いっぱい　なん？</Text>
+			<Text>え？　
+もちものが　いっぱい　なん？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T12:19:58" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3392,7 +3480,8 @@ pwfun_14_02～pwfun_14_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_15_01">
+		Label="pwfun_15_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>スゲー！　[Name:TrainerName ]さんだ！
@@ -3431,7 +3520,8 @@ pwfun_14_02～pwfun_14_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_15_02">
+		Label="pwfun_15_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが　すごかったです！
@@ -3470,7 +3560,8 @@ pwfun_14_02～pwfun_14_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_15_03">
+		Label="pwfun_15_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが　よかったです！
@@ -3508,7 +3599,8 @@ pwfun_14_02～pwfun_14_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_15_04">
+		Label="pwfun_15_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが……
@@ -3546,7 +3638,8 @@ pwfun_14_02～pwfun_14_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_15_05">
+		Label="pwfun_15_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あの！
@@ -3591,7 +3684,8 @@ pwfun_15_02～pwfun_15_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_15_06">
+		Label="pwfun_15_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あれ？　[Name:TrainerName ]さん！
@@ -3631,7 +3725,8 @@ pwfun_15_02～pwfun_15_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_16_01">
+		Label="pwfun_16_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん　ですよね！？
@@ -3647,10 +3742,10 @@ pwfun_15_02～pwfun_15_04の
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さん　ですよね！？
-いつも　応援　してます！</Text>
+いつも　応援してます！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T12:54:23" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:52:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3667,15 +3762,16 @@ pwfun_15_02～pwfun_15_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_16_02">
+		Label="pwfun_16_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんかいの　えいがも　すごかった！！
-[Name:TrainerName ]さん　って▽
+			<Text>こんかいの　えいがも　すごかった！！▼
+[Name:TrainerName ]さん　って
 やっぱり　てんさい　ですよ！！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T11:44:24" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:48:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3683,12 +3779,12 @@ pwfun_15_02～pwfun_15_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今回の　映画も　すごかった！！
-[Name:TrainerName ]さん　って▽
+			<Text>今回の　映画も　すごかった！！▼
+[Name:TrainerName ]さん　って
 やっぱり　天才　ですよ！！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T12:54:23" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:48:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3708,15 +3804,16 @@ pwfun_15_02～pwfun_15_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_16_03">
+		Label="pwfun_16_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんかいの　さくひんも　サイコー！！
-つぎの　えいがも▽
+			<Text>こんかいの　さくひんも　サイコー！！▼
+つぎの　えいがも
 たのしみに　まってますね！！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-04T03:55:17" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:52:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3724,12 +3821,12 @@ pwfun_15_02～pwfun_15_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今回の　作品も　サイコー！！
-次の　映画も▽
+			<Text>今回の　作品も　サイコー！！▼
+次の　映画も
 楽しみに　待ってますね！！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-04T03:55:20" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:52:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3748,7 +3845,8 @@ pwfun_15_02～pwfun_15_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_16_04">
+		Label="pwfun_16_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん！！▼
@@ -3790,7 +3888,8 @@ pwfun_15_02～pwfun_15_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_16_05">
+		Label="pwfun_16_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あの！　これ　さしいれです！
@@ -3833,7 +3932,8 @@ pwfun_16_02～pwfun_16_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_16_06">
+		Label="pwfun_16_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ああーん！
@@ -3873,7 +3973,8 @@ pwfun_16_02～pwfun_16_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_17_01">
+		Label="pwfun_17_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あ！　えいがのなかの　ひとだ！
@@ -3909,7 +4010,8 @@ pwfun_16_02～pwfun_16_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_17_02">
+		Label="pwfun_17_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが　すごかったよ！
@@ -3948,7 +4050,8 @@ pwfun_16_02～pwfun_16_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_17_03">
+		Label="pwfun_17_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが　おもしろかった！
@@ -3986,7 +4089,8 @@ pwfun_16_02～pwfun_16_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_17_04">
+		Label="pwfun_17_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが　ねむたかった！
@@ -4024,7 +4128,8 @@ pwfun_16_02～pwfun_16_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_17_05">
+		Label="pwfun_17_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ねえねえ　えいがのなかの　ひと！
@@ -4066,13 +4171,15 @@ pwfun_17_02～pwfun_17_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_17_06">
+		Label="pwfun_17_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あれ？　もちものが　いっぱいなの？</Text>
+			<Text>あれ？
+もちものが　いっぱいなの？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T11:54:17" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:53:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4080,10 +4187,11 @@ pwfun_17_02～pwfun_17_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あれ？　もちものが　いっぱいなの？</Text>
+			<Text>あれ？
+もちものが　いっぱいなの？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T12:19:58" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:53:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4104,7 +4212,8 @@ pwfun_17_02～pwfun_17_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_18_01">
+		Label="pwfun_18_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん　ですよね！？
@@ -4120,10 +4229,10 @@ pwfun_17_02～pwfun_17_04の
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さん　ですよね！？
-いつも　応援　してます！</Text>
+いつも　応援してます！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T12:56:21" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:53:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4140,15 +4249,16 @@ pwfun_17_02～pwfun_17_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_18_02">
+		Label="pwfun_18_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんかいの　えいがも　すごかった！！
-[Name:TrainerName ]さん　って▽
+			<Text>こんかいの　えいがも　すごかった！！▼
+[Name:TrainerName ]さん　って
 やっぱり　てんさい　ですよ！！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T11:54:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:53:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4156,12 +4266,12 @@ pwfun_17_02～pwfun_17_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今回の　映画も　すごかった！！
-[Name:TrainerName ]さん　って▽
+			<Text>今回の　映画も　すごかった！！▼
+[Name:TrainerName ]さん　って
 やっぱり　天才　ですよ！！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T12:56:21" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:53:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4181,15 +4291,16 @@ pwfun_17_02～pwfun_17_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_18_03">
+		Label="pwfun_18_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんかいの　さくひんも　サイコー！！
-つぎの　えいがも▽
+			<Text>こんかいの　さくひんも　サイコー！！▼
+つぎの　えいがも
 たのしみに　まってますね！！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-04T03:55:32" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:53:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4197,12 +4308,12 @@ pwfun_17_02～pwfun_17_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今回の　作品も　サイコー！！
-次の　映画も▽
+			<Text>今回の　作品も　サイコー！！▼
+次の　映画も
 楽しみに　待ってますね！！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-04T03:55:36" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:53:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4221,7 +4332,8 @@ pwfun_17_02～pwfun_17_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_18_04">
+		Label="pwfun_18_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん！！▼
@@ -4263,7 +4375,8 @@ pwfun_17_02～pwfun_17_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_18_05">
+		Label="pwfun_18_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あの！　これ　さしいれです！
@@ -4306,7 +4419,8 @@ pwfun_18_02～pwfun_18_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_18_06">
+		Label="pwfun_18_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ああーん！
@@ -4346,7 +4460,8 @@ pwfun_18_02～pwfun_18_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_19_01">
+		Label="pwfun_19_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>スゲー！　[Name:TrainerName ]さんだ！
@@ -4385,7 +4500,8 @@ pwfun_18_02～pwfun_18_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_19_02">
+		Label="pwfun_19_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが　すごかったです！
@@ -4424,7 +4540,8 @@ pwfun_18_02～pwfun_18_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_19_03">
+		Label="pwfun_19_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが　よかったです！
@@ -4462,7 +4579,8 @@ pwfun_18_02～pwfun_18_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_19_04">
+		Label="pwfun_19_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　えいが……
@@ -4500,7 +4618,8 @@ pwfun_18_02～pwfun_18_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_19_05">
+		Label="pwfun_19_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あの！
@@ -4545,7 +4664,8 @@ pwfun_19_02～pwfun_19_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_19_06">
+		Label="pwfun_19_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あれ？　[Name:TrainerName ]さん！
@@ -4585,7 +4705,8 @@ pwfun_19_02～pwfun_19_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_20_01">
+		Label="pwfun_20_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん　ですよね！？
@@ -4621,15 +4742,16 @@ pwfun_19_02～pwfun_19_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_20_02">
+		Label="pwfun_20_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんかいの　えいがも　すごかった！！
-[Name:TrainerName ]さん　って▽
+			<Text>こんかいの　えいがも　すごかった！！▼
+[Name:TrainerName ]さん　って
 やっぱり　てんさい　ですよ！！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T11:57:27" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:48:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4637,12 +4759,12 @@ pwfun_19_02～pwfun_19_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今回の　映画も　すごかった！！
-[Name:TrainerName ]さん　って▽
+			<Text>今回の　映画も　すごかった！！▼
+[Name:TrainerName ]さん　って
 やっぱり　天才　ですよ！！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T12:57:57" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:48:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4662,15 +4784,16 @@ pwfun_19_02～pwfun_19_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_20_03">
+		Label="pwfun_20_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんかいの　さくひんも　サイコー！！
-つぎの　えいがも▽
+			<Text>こんかいの　さくひんも　サイコー！！▼
+つぎの　えいがも
 たのしみに　まってますね！！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-04T03:55:52" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:53:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4678,12 +4801,12 @@ pwfun_19_02～pwfun_19_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今回の　作品も　サイコー！！
-次の　映画も▽
+			<Text>今回の　作品も　サイコー！！▼
+次の　映画も
 楽しみに　待ってますね！！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-04T03:55:56" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:53:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4702,7 +4825,8 @@ pwfun_19_02～pwfun_19_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_20_04">
+		Label="pwfun_20_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん！！▼
@@ -4710,8 +4834,8 @@ pwfun_19_02～pwfun_19_04の
 [Name:TrainerName ]さんを▽
 おうえん　してますから！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T11:57:27" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:53:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4744,7 +4868,8 @@ pwfun_19_02～pwfun_19_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_20_05">
+		Label="pwfun_20_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>あの！　これ　さしいれです！
@@ -4787,7 +4912,8 @@ pwfun_20_02～pwfun_20_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_20_06">
+		Label="pwfun_20_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ああーん！
@@ -4827,7 +4953,8 @@ pwfun_20_02～pwfun_20_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_21_01">
+		Label="pwfun_21_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>マジか！　スターの　[Name:TrainerName ]だっ！
@@ -4863,7 +4990,8 @@ pwfun_20_02～pwfun_20_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_21_02">
+		Label="pwfun_21_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　さくひん！　オドロキだぜ！
@@ -4879,10 +5007,10 @@ pwfun_20_02～pwfun_20_04の
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>さっきの　作品！　オドロキだぜ！
-あんな　映画は　見たことねえよ！</Text>
+あんな　映画は　観たことねえよ！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-10T07:50:17" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:54:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4902,7 +5030,8 @@ pwfun_20_02～pwfun_20_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_21_03">
+		Label="pwfun_21_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　さくひん！　ゴキゲンだぜ！
@@ -4940,7 +5069,8 @@ pwfun_20_02～pwfun_20_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_21_04">
+		Label="pwfun_21_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さっきの　さくひん！　ありゃ　いけねえ！
@@ -4978,7 +5108,8 @@ pwfun_20_02～pwfun_20_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_21_05">
+		Label="pwfun_21_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>プラズマだん　だったときの　もんだ！
@@ -4993,11 +5124,11 @@ pwfun_20_02～pwfun_20_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団　だったときの　もんだ！
+			<Text>プラズマ団だったときの　もんだ！
 いいから　受け取って　くんな！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T13:00:42" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:49:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -5021,7 +5152,8 @@ pwfun_21_02～pwfun_21_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_21_06">
+		Label="pwfun_21_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>オーイ　オイオイ！
@@ -5061,7 +5193,8 @@ pwfun_21_02～pwfun_21_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_22_01">
+		Label="pwfun_22_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>アタイさ　アンタの　ファンなの……
@@ -5077,10 +5210,10 @@ pwfun_21_02～pwfun_21_04の
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アタイさ　アンタの　ファンなの……
-べつに　ファンだって　イイわよね？</Text>
+別に　ファンだって　イイわよね？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-05T12:19:58" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:49:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -5097,7 +5230,8 @@ pwfun_21_02～pwfun_21_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_22_02">
+		Label="pwfun_22_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>いまの　さくひん　だけどさ……
@@ -5112,11 +5246,11 @@ pwfun_21_02～pwfun_21_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今の　作品　だけどさ……
+			<Text>今の　作品だけどさ……
 アンタの　演技は　ミラクルよ……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T09:42:02" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:49:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -5136,7 +5270,8 @@ pwfun_21_02～pwfun_21_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_22_03">
+		Label="pwfun_22_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>いまの　えいが　だけどさ……
@@ -5151,11 +5286,11 @@ pwfun_21_02～pwfun_21_04の
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今の　映画　だけどさ……
+			<Text>今の　映画だけどさ……
 アンタの　演技が　ヤバかったわ……</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-10T07:49:28" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:49:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -5174,7 +5309,8 @@ pwfun_21_02～pwfun_21_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_22_04">
+		Label="pwfun_22_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>いまの　えいが　だけどさ……▼
@@ -5212,7 +5348,8 @@ pwfun_21_02～pwfun_21_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_22_05">
+		Label="pwfun_22_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>これを　うけとって……
@@ -5255,7 +5392,8 @@ pwfun_22_02～pwfun_22_04の
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="pwfun_22_06">
+		Label="pwfun_22_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>もちものが　いっぱい……</Text>

@@ -141,8 +141,8 @@
 			<Text>ここ　ポケウッドでは　えいがを
 つくることが　できるんだ！▼
 だいほんで　きめられた
-きょうえんしゃと　えんぎを　して▽
-さくひんの　かんせいに▽
+きょうえんしゃと　えんぎを　して▼
+さくひんの　かんせいに
 ひつような　じょうけんを▽
 みたせば　クランク　アップ！▼
 さいしんの　ＶＦＸぎじゅつで
@@ -156,8 +156,8 @@
 シアターで　じょうえい　されるから▽
 チェック　してくれよな！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-15T09:10:09" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:15:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -168,13 +168,13 @@
 			<Text>ここ　ポケウッドでは　映画を
 つくることが　できるんだ！▼
 台本で　決められた
-共演者と　演技を　して▽
-作品の　完成に▽
+共演者と　演技を　して▼
+作品の　完成に
 必要な　条件を▽
 満たせば　クランク　アップ！▼
 最新鋭の　ＶＦＸ技術で
 あっという　間に　映画が▽
-完成　するのさ！▼
+完成するのさ！▼
 イイ　作品の　完成に　必要な
 条件は　台本に　よって▽
 気を　つけてくれよ！▼
@@ -182,8 +182,8 @@
 シアターで　上映　されるから▽
 チェック　してくれよな！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:04:33" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:16:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -296,8 +296,8 @@
 さくひんの　だいほんを▽
 えらんで　くれよ！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:45:47" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:16:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -385,12 +385,12 @@
 		Label="msg_pw_studio_09">
 		<LanguageCell
 			Language="JPN">
-			<Text>オーケー！　オーケー！
-じゃあ　さくひんに　しゅつえんさせる▽
+			<Text>オーケー！　オーケー！▼
+じゃあ　さくひんに　しゅつえんさせる
 ポケモンを　きめてくれよ！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:46:26" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:16:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -441,10 +441,10 @@
 			Language="JPN_KANJI">
 			<Text>ＯＫ！　ＯＫ！▼
 じゃあ　この　作品に　ピッタリの
-ポケモンを　手配　しとくぜ！▼</Text>
+ポケモンを　手配しとくぜ！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-10T09:50:59" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:16:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -481,12 +481,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>そうか！
-じゃあ　また　来て　くれよな！▼
+じゃあ　また　来てくれよな！▼
 銀幕は　いつだって
 キミを　待ってるぜ！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T07:48:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:16:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -560,13 +560,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やー　撮影　お疲れ！▼
+			<Text>やー　撮影　おつかれ！▼
 今回　撮影した　作品を
 映画にして　シアターで▽
-公開　するかい？</Text>
+公開するかい？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T07:59:57" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:17:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -832,14 +832,14 @@
 ぬりかえちまったんだっ！▼
 ウッドウさんも　大喜び　でさ
 記念作品を　つくることが▽
-決定　したんだ！▼
+決定したんだ！▼
 その　タイトルは　ずばり
 [System:Color name="1" ][Name:PokewoodScenarioName Idx="1" ][/System:Color]▼
 ぜひ　チャレンジして　今度も
 大ヒットを　飛ばしてくれよな！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:32:47" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:17:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1491,10 +1491,11 @@
 		Label="msg_pw_director_06">
 		<LanguageCell
 			Language="JPN">
-			<Text>よし……　クランクアップだ……▼</Text>
+			<Text>よし……
+クランクアップだ……▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:09:01" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:18:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1502,10 +1503,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よし……　クランクアップだ……▼</Text>
+			<Text>よし……
+クランクアップだ……▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:09:03" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:18:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1610,11 +1612,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>みんな　お疲れじゃの！
+			<Text>みんな　おつかれじゃの！
 これにて　撮影終了じゃ！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:09:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:18:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1919,12 +1921,12 @@
 しゅつえんして　ほしいんだよー！▼
 スカウトマンからさ　キミから
 スターの　かのうせいが▽
-にじみでてるって　きいてたけど▽
-ボクも　さっき　キミを　みたとき▽
+にじみでてるって　きいてたけど▼
+ボクも　さっき　キミを　みたとき
 ズギューンと　きちゃったんだよね！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T05:28:59" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:19:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1932,24 +1934,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いやあー　お疲れさまね！▼
+			<Text>いやあー　おつかれさまね！▼
 まずは　改めて　自己紹介！
 ボクの　名前はね　ウッドウ！▽
 ここ　ポケウッドの　オーナーなのよ！▼
 でね　[Name:TrainerName Idx="0" ]ちゃんに　
 わざわざ　ここに　来てもらったのはさ▽
 大事な　お願い　あるからなの！▼
-……何となく　分かると　思うけど
+……何となく　わかると　思うけど
 キミにね　ここポケウッドの　映画に▽
 出演して　欲しいんだよー！▼
 スカウトマンからさ　キミから
 スターの　可能性が▽
-にじみ出てるって　聞いてたけど▽
-ボクも　さっき　キミを　みたとき▽
+にじみでてるって　きいてたけど▼
+ボクも　さっき　キミを　みたとき
 ズギューンと　きちゃったんだよね！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T07:25:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:19:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2235,14 +2237,15 @@
 		Label="msg_pw_tutorial_rec_08">
 		<LanguageCell
 			Language="JPN">
-			<Text>んー！　あいかわらず　クールねー！▼
+			<Text>んー！
+あいかわらず　クールねー！▼
 じゃあさ　そういう　わけ　だから！▼
 そこの　スタッフに　はなしかければ
 さつえいに　チャレンジできるしさ！▽
 ドーンと　いってみよー！</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-20T04:19:32" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:21:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2250,14 +2253,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>んー！　相変わらず　クールねー！▼
+			<Text>んー！
+相変わらず　クールねー！▼
 じゃあさ　そういう　わけ　だから！▼
 そこの　スタッフに　話しかければ
 撮影に　チャレンジできるしさ！▽
 ドーンと　いってみよー！</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-20T04:19:35" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:21:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2370,15 +2374,16 @@
 			<Text>いやあー！　おつかれさまね！
 グッとくる　えんぎ　だったよー！▽
 こりゃ　さくひんが　たのしみだね！▼
-でね　ここからが　ウチの　スゴイとこよ！
-たったいま　さつえいした　えいが　が▽
+でね　ここからが
+ウチの　スゴイとこよ！▼
+たったいま　さつえいした　えいが　が
 あっというまに　かんせいして▽
 シアターで　こうかいされちゃうのよ！▼
 ホラホラ　[Name:TrainerName Idx="0" ]ちゃん！
 いっしょに　シアターに　レッツゴー！！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T07:40:27" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:23:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2386,18 +2391,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いやー！　お疲れ様ね！
+			<Text>いやー！　おつかれさまね！
 グッとくる　演技　だったよー！▽
 こりゃ　作品が　楽しみだね！▼
-でね　ここからが　ウチの　スゴイとこよ！
-たった今　撮影した　映画が▽
+でね　ここからが
+ウチの　スゴイとこよ！▼
+たった今　撮影した　映画が
 あっという間に　完成して▽
 シアターで　公開されちゃうのよ！▼
 ホラホラ　[Name:TrainerName Idx="0" ]ちゃん！
 一緒に　シアターに　レッツゴー！！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T07:40:35" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:23:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2469,10 +2475,11 @@
 		Label="msg_pw_tutorial_rec_11_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>そうだったな……　わかった……▼</Text>
+			<Text>そうだったな……
+わかった……▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:28:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:22:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2480,10 +2487,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そうだったな……　分かった……▼</Text>
+			<Text>そうだったな……
+わかった……▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:28:31" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:23:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

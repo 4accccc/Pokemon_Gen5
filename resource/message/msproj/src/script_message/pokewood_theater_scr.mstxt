@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>映画を　見る</Text>
+			<Text>映画を観る</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T13:24:09" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:29:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -43,10 +43,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>説明を　聞く</Text>
+			<Text>説明をきく</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T13:24:40" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:29:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -97,10 +97,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケウッド　シアターへ　ようこそ
-どのような　ご用件　でしょうか？</Text>
+どのような　ご用件でしょうか？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T10:04:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:29:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -154,14 +154,14 @@
 			Language="JPN_KANJI">
 			<Text>こちらでは　撮影スタジオで
 製作された　映画を▽
-公開　しております▼
+公開しております▼
 また　シアター内に　あります
 モニターでは　公開された▽
 映画に　関する　記録を▽
 ご覧いただくことが　できます▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T14:00:38" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:29:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -197,10 +197,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>それでは　ご覧に　なりたい
-作品を　選んで　ください▼</Text>
+作品を　選んでください▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:20:30" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:29:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -362,11 +362,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ただいま　こちらの　モニターは
-調整中　です……
+調整中です……
 </Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T02:57:09" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:29:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -447,13 +447,13 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>今回の　[Name:TrainerName ]ちゃんの
-作品　だけどね……▼
+作品だけどね……▼
 ハッキリいって　コケちゃったけど
 なかなか　オリジナリティが　あって▽
 良かったと思うの　ボクはさ！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T12:44:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:29:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -497,15 +497,15 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>今回の　[Name:TrainerName ]ちゃんの
-作品　だけどね……▼
+作品だけどね……▼
 予想を　裏切る　作品だって
 ちまたで　話題に　なってんのよー▼
 こんな作品　撮っちゃったら
 お客さんにも　スタッフにも▽
 一目　置かれちゃうよ！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T12:44:27" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:30:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -537,10 +537,10 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 さすが　[Name:TrainerName ]ちゃん　だよー▼
 こうやって　イイさくひんに　でてれば
 おきゃくさんにも　スタッフにも▽
-あいされて　いくとおもうよー▼</Text>
+あいされていく　とおもうよー▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:19:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:30:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -549,15 +549,15 @@ BAD ENDの場合→msg_pw_starnpc_03</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>今回の　[Name:TrainerName ]ちゃんの
-作品　だけど　さあ……▼
+作品だけど　さあ……▼
 これが　大ヒットなのよ　もうー▼
 さすが　[Name:TrainerName ]ちゃん　だよー▼
 こうやって　イイ作品に　でてれば
 お客さんにも　スタッフにも▽
-愛されて　いくと思うよー▼</Text>
+愛されていくと　思うよー▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:19:07" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:30:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -723,11 +723,11 @@ msg_pw_tutorial_show_02</Comment>
 			Language="JPN_KANJI">
 			<Text>これは　これは
 スカウトさんじゃ　ありませんか！▼
-おかげ様で　私も　念願の
+おかげさまで　わたしも　念願の
 スクリーンデビューが　できました！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T06:25:23" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:47:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -759,10 +759,11 @@ msg_pw_tutorial_show_03</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そうですか！　それは　なにより！▼</Text>
+			<Text>そうですか！
+それは　なにより！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T03:58:03" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:30:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -770,10 +771,11 @@ msg_pw_tutorial_show_03</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そうですか！　それは　なにより！▼</Text>
+			<Text>そうですか！
+それは　なにより！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T03:58:07" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:30:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -801,10 +803,11 @@ msg_pw_tutorial_show_04</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>で？　こちらさまは　どちらさま？▼</Text>
+			<Text>で？
+こちらさまは　どちらさま？▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T06:25:46" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:30:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -812,10 +815,11 @@ msg_pw_tutorial_show_04</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>で？　こちら様は　どちら様？▼</Text>
+			<Text>で？
+こちらさまは　どちらさま？▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T06:26:32" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:30:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -849,11 +853,11 @@ msg_pw_tutorial_show_05</Comment>
 チャレンジしている　ところを▽
 はいけん　してたんですが▽
 これが　スジが　よくて！▼
-そこで　ぜひ　ポケウッド　にと
+そこで　ぜひ　ポケウッドにと
 スカウトしたところ　なんです▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T06:27:13" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:33:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -864,13 +868,13 @@ msg_pw_tutorial_show_05</Comment>
 			<Text>こちら　[Name:TrainerName ]さんです！▼
 お宅の　娘さんに
 チャレンジしている　ところを▽
-拝見　してたんですが▽
+拝見してたんですが▽
 これが　スジが　良くて！▼
-そこで　ぜひ　ポケウッド　にと
+そこで　ぜひ　ポケウッドにと
 スカウトしたところ　なんです▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T06:27:10" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:33:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -898,8 +902,8 @@ msg_pw_tutorial_show_06</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なるほど　むすめを……▼
-それは　たしかに　いいウデを　おもちの
+			<Text>なるほど　ホミカを……▼
+それは　いいウデを　おもちの
 トレーナーさん　なのでしょうね▼
 おお　そうです！▼
 いまから　わたしの　しゅつえんした
@@ -909,8 +913,8 @@ msg_pw_tutorial_show_06</Comment>
 でしたら　せんぱいである　わたしの
 さくひんを　みていくべき　でしょう！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T06:31:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:58:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -918,19 +922,19 @@ msg_pw_tutorial_show_06</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なるほど　娘を……▼
-それは　確かに　いい腕を　お持ちの
+			<Text>なるほど　ホミカを……▼
+それは　いい腕を　お持ちの
 トレーナーさん　なのでしょうね▼
 おお　そうです！▼
-今から　私の　出演した
+今から　わたしの　出演した
 映画が　初公開　されるのですよ！▼
 キミも　ポケウッド　デビューを
 考えて　いるのでしょう？▼
-でしたら　先輩である　私の
-デビュー作を　見ていくべき　でしょう！▼</Text>
+でしたら　先輩である　わたしの
+デビュー作を　観ていくべきでしょう！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T06:31:33" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:46:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1003,10 +1007,11 @@ msg_pw_tutorial_show_08</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よしよし！　いきましょう！▼</Text>
+			<Text>よしよし！
+いきましょう！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T06:34:18" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:33:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1014,10 +1019,11 @@ msg_pw_tutorial_show_08</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よしよし！　行きましょう！▼</Text>
+			<Text>よしよし！
+行きましょう！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T06:34:33" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:33:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1091,15 +1097,17 @@ msg_pw_tutorial_show_09</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここで　みたい　えいがを　えらぶのですよ▼
+			<Text>ここで　みたい
+えいがを　えらぶのですよ▼
 ポケウッドには　スクリーンが　８つ！
 なかなか　リッチですよねえ▼
 しかし　はて……▼
-わたしの　デビューさくひんは　とくべつな
-スクリーンで　じょうえい　されるようだ▼</Text>
+わたしの　デビューさくひんは
+とくべつな　スクリーンで▽
+じょうえい　されるようです▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:54:05" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:59:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -1107,15 +1115,16 @@ msg_pw_tutorial_show_09</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここで　観たい映画を　選ぶのですよ▼
+			<Text>ここで　観たい
+映画を　選ぶのですよ▼
 ポケウッドには　スクリーンが　８つ！
 なかなか　リッチですよねえ▼
 しかし　はて……▼
-私の　デビュー作品は　特別な
-スクリーンで　上映されるようだ▼</Text>
+わたしの　デビュー作品は　特別な
+スクリーンで　上映されるようです▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T06:57:05" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:59:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -1134,10 +1143,11 @@ msg_pw_tutorial_show_09</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……　……▼</Text>
+			<Text>……　……　……
+……　……　……▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T12:17:02" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:33:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1145,10 +1155,11 @@ msg_pw_tutorial_show_09</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……　……▼</Text>
+			<Text>……　……　……
+……　……　……▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T12:17:01" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:34:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1188,11 +1199,11 @@ msg_pw_tutorial_show_10</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お疲れさまでした！
+			<Text>おつかれさまでした！
 どうでしたか！　映画は！？▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T12:38:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:34:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1224,10 +1235,11 @@ msg_pw_tutorial_show_11</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……　……▼</Text>
+			<Text>……　……　……
+……　……　……▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T12:17:31" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:34:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1235,10 +1247,11 @@ msg_pw_tutorial_show_11</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……　……▼</Text>
+			<Text>……　……　……
+……　……　……▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T12:17:31" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:34:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1266,10 +1279,11 @@ msg_pw_tutorial_show_12</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ん？　どうしたんです？</Text>
+			<Text>ん？
+どうしたんです？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T07:47:02" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:34:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1277,10 +1291,11 @@ msg_pw_tutorial_show_12</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ん？　どうしたんです？</Text>
+			<Text>ん？
+どうしたんです？</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T07:47:04" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:34:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1310,11 +1325,11 @@ msg_pw_tutorial_show_13</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>フフフッ……▼
-あこがれの　ぎんまくに　たてたのです
+あこがれの　ぎんまくデビュー……
 いいゆめ　みさせて　もらいました……▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T07:03:56" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T04:02:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1323,11 +1338,11 @@ msg_pw_tutorial_show_13</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>フフフッ……▼
-あこがれの　銀幕に　立てたのです
+あこがれの　銀幕デビュー……
 いい夢　みさせて　もらいました……▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T07:04:08" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T04:02:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1392,6 +1407,13 @@ msg_pw_tutorial_show_14</Comment>
 				User="nakatsui:DB5YGPBX"
 				Time="2011-11-07T12:15:43" />
 		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_pw_tutorial_show_15"
@@ -1420,19 +1442,19 @@ msg_pw_tutorial_show_14</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>人には　向き　不向きが　ある……
-そんなことは　分かってるのです▼
+そんなことは　わかってるのです▼
 ……ですがね
 責任ある　ジムリーダーと▽
 本人の　夢である　バンドの▽
 両立に　チャレンジする▽
 娘が　いるのです……▼
-父である　私も　長年の
+父である　わたしも　長年の
 夢に　チャレンジしたかった……▼
 だって　人間　挑戦することを
 やめたら　そこで　終わりでしょ？▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:57:08" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T04:05:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1460,10 +1482,11 @@ msg_pw_tutorial_show_16</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……　……▼</Text>
+			<Text>……　……　……
+……　……　……▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T07:12:36" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T04:03:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1471,10 +1494,11 @@ msg_pw_tutorial_show_16</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……　……▼</Text>
+			<Text>……　……　……
+……　……　……▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T07:12:38" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T04:03:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1504,14 +1528,14 @@ msg_pw_tutorial_show_17</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>……ひとまず　わたしは
-じぶんの　しごとに　もどりますよ▼
+じぶんの　しごとに　もどります▼
 そして　また　いつの　ひか
 スクリーンに　かえりざくのです！▼
-それまでの　あいだは　[Name:TrainerName ]くん！
-スターのざは　あずけて　おきますから！▼</Text>
+それまでの　あいだは　きみに
+スターのざは　あずけて　おきます！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T07:14:00" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T04:03:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1519,15 +1543,15 @@ msg_pw_tutorial_show_17</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……ひとまず　私は
-自分の　本業に　戻りますよ▼
+			<Text>……ひとまず　わたしは
+自分の　本業に　戻ります▼
 そして　また　いつの日か
 スクリーンに　返り咲くのです！▼
-それまでの　あいだは　[Name:TrainerName ]くん！
-スターの座は　預けて　おきますから！▼</Text>
+それまでの　あいだは　きみに
+スターの座は　預けて　おきます！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T07:14:22" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T04:04:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1560,10 +1584,10 @@ msg_pw_tutorial_show_17</Comment>
 			<Text>……さてと
 そろそろ　まいりましょうか！▼
 ウッドウさんの　じゅんびも
-もう　おわってると　おもいます！▼</Text>
+もう　おわっているでしょう！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T07:15:38" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T04:04:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1574,10 +1598,10 @@ msg_pw_tutorial_show_17</Comment>
 			<Text>……さてと
 そろそろ　参りましょうか！▼
 ウッドウさんの　準備も
-もう　終わっていると　思います！▼</Text>
+もう　終わっているでしょう！▼</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T07:15:41" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T04:04:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

@@ -555,7 +555,6 @@ x31,z54辺りに配置
 			Language="JPN">
 			<Comment>♂　pwstaff
 
-
 ！チュートリアルイベント修正
 
 チュートリアルイベントキャラ
@@ -570,8 +569,8 @@ x31,z54辺りに配置
 ↓
 →pokewood_scr.mstxtのmsg_pw_tutorial_00_01へ</Comment>
 			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T05:38:51" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:03:46" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -618,7 +617,6 @@ x31,z54辺りに配置
 			Language="JPN">
 			<Comment>♂　pwstaff
 
-
 ！チュートリアルイベント修正
 
 チュートリアルイベントキャラ
@@ -633,8 +631,8 @@ x31,z54辺りに配置
 ↓
 →pokewood_scr.mstxtのmsg_msg_pw_tutorial_01へ</Comment>
 			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T05:38:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:03:45" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1559,8 +1557,8 @@ msg_c15_oldman1_01_04
 さいきんに　にゅうか　はじめたけど▽
 うりあげは　まあ　そこそこ　だねえ</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T03:35:38" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T02:59:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2609,10 +2607,10 @@ Bis  bald.</Text>
 きょうは　あなたと　ポケウッドの
 きねん　すべき　いちにち　ね！▼
 あなたとの　おしばいは
-わたしの　たからものよ！　</Text>
+わたしの　たからものよ！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T08:35:02" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:00:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2622,10 +2620,12 @@ Bis  bald.</Text>
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]　おめでとう！▼
 今日は　あなたと　ポケウッドの
-記念すべき　一日ね！　</Text>
+記念すべき　一日ね！▼
+あなたとの　お芝居は
+わたしの　宝物よ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T06:13:21" />
+				Time="2011-11-25T03:00:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2652,12 +2652,12 @@ Bis  bald.</Text>
 			<Text>やあ！　[Name:TrainerName ]！▼
 キミと　きょうえん　できたこと
 じつに　こうえいに　おもってるよ！▼
-え？　ボクのこと　おぼえてない？
-ヒドいな！　ＵＦＯを▽
+え？　ボクのこと　おぼえてない？▼
+ヒドいな！　ＵＦＯを
 えんじてるのは　ボクなんだぜ！　</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T08:35:02" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:00:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2668,12 +2668,12 @@ Bis  bald.</Text>
 			<Text>やあ！　[Name:TrainerName ]！▼
 キミと　共演できたこと
 実に　光栄に　思ってるよ！▼
-え？　ボクのこと　覚えてない？
-ヒドいな！　ＵＦＯを▽
+え？　ボクのこと　覚えてない？▼
+ヒドいな！　ＵＦＯを
 演じてるのは　ボクなんだぜ！　</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T08:35:02" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:00:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2755,11 +2755,11 @@ Bis  bald.</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あなたとの　共演……▼
-面白かったし　なかなか
+おもしろかったし　なかなか
 いい　経験に　なったわ</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T08:35:02" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:01:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2873,10 +2873,11 @@ Bis  bald.</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヘイ！　ボス！　おつれしました！</Text>
+			<Text>ヘイ！　ボス！
+おつれしました！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T09:49:37" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:01:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2884,10 +2885,11 @@ Bis  bald.</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヘイ！　ボス！　お連れしました！</Text>
+			<Text>ヘイ！　ボス！
+お連れしました！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T09:49:37" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:01:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2899,11 +2901,10 @@ Bis  bald.</Text>
 
 Ｘ３１Ｙ１３辺りで停止し左（Ｘ３0Ｙ１３）に移動
 
-
 暫く移動後→msg_pw__end_10</Comment>
 			<CommentModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T09:49:37" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:01:14" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -3087,12 +3088,11 @@ Bis  bald.</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……ということで
-[Name:TrainerName ]ちゃんに▽
+			<Text>……ということで　[Name:TrainerName ]ちゃんに
 ボクから　ささやかな　プレゼントだよ！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T13:15:55" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:01:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3100,12 +3100,11 @@ Bis  bald.</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……ということで
-[Name:TrainerName ]ちゃんに▽
+			<Text>……ということで　[Name:TrainerName ]ちゃんに
 ボクから　ささやかな　プレゼントだよ！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T13:15:51" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:02:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3285,10 +3284,10 @@ Bis  bald.</Text>
 			Language="JPN_KANJI">
 			<Text>撮影用の　セット▼
 精巧に　つくられた
-ロイヤルイッシュごう　だ</Text>
+ロイヤルイッシュ号　だ</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-22T02:46:06" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T03:02:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
