@@ -1417,6 +1417,7 @@ VMCMD_RESULT EvCmdResortCombo( VMHANDLE *p_core, void *p_wk_adrs )
   RESORT_CITY_DATA *p_city = RESORT_SYSTEM_GetCityData( p_sys );
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_PEOPLE* p_people = RESORT_UTIL_GetFrontPeople( p_wk, p_people_sys );
+  RESORT_ABSTRUCT_DATA *p_rnd = RESORT_PEOPLE_GetAbstructData( p_people );
 
   RESORT_WORK *p_reso_wk = RESORT_SYSTEM_GetWork( p_sys );
 
@@ -1443,7 +1444,7 @@ VMCMD_RESULT EvCmdResortCombo( VMHANDLE *p_core, void *p_wk_adrs )
 
       u32 next_index;
 
-      u32 rnd = RESORT_CITY_DATA_GetRnd( p_city, RESORT_RND_ID_CITY_COMBO_RND, 100 );
+      u32 rnd = RESORT_ABSTRUCT_DATA_GetRndDouble( p_abstruct, p_rnd, RESORT_RND_ID_COMBO_RND, 100 );
       u32 percent;
 
       //もし住民が８人いないとコンボはやらない
@@ -1456,7 +1457,7 @@ VMCMD_RESULT EvCmdResortCombo( VMHANDLE *p_core, void *p_wk_adrs )
       GF_ASSERT( !RESORT_ABSTRUCT_DATA_IsEmpty(p_abstruct) );
 
       //もし全部やったなら終わり
-      if( !RESORT_UTIL_GetComboNextIndex( p_sys, p_abstruct, &next_index ) )
+      if( !RESORT_UTIL_GetComboNextIndex( p_sys, p_abstruct, p_rnd, &next_index ) )
       {
         *p_ret_wk = RESORT_COMBO_RESULT_FAILER;
         return VMCMD_RESULT_CONTINUE;
@@ -1467,13 +1468,16 @@ VMCMD_RESULT EvCmdResortCombo( VMHANDLE *p_core, void *p_wk_adrs )
       {
         //初回確率
         percent = RESORT_UTIL_GetComboInitRnd( p_sys, p_abstruct );
+
+        OS_TPrintf( "合計　初回確率%d% 抽選%d%\n", percent, rnd );
       }
       else
       {
         //継続確率
         percent = RESORT_UTIL_GetComboNextRnd( p_sys, p_abstruct );
-      }
 
+        OS_TPrintf( "合計　継続確率%d% 抽選%d%\n", percent, rnd );
+      }
       if( rnd < percent )
       {
         *p_ret_wk   = RESORT_COMBO_RESULT_SUCSESS;
@@ -1487,7 +1491,7 @@ VMCMD_RESULT EvCmdResortCombo( VMHANDLE *p_core, void *p_wk_adrs )
         *p_ret_wk   = RESORT_COMBO_RESULT_FAILER;
       }
       *p_ret_idx  = next_index;
-
+      return VMCMD_RESULT_CONTINUE;
     }
     break;
 
@@ -1500,8 +1504,8 @@ VMCMD_RESULT EvCmdResortCombo( VMHANDLE *p_core, void *p_wk_adrs )
 
   case RESORT_COMBO_PARAM_SHOPRESULT:
     {
-      u32 rnd = RESORT_CITY_DATA_GetRnd( p_city, RESORT_RND_ID_CITY_COMBO_SHOPRESULT, 100 );
-      *p_ret_wk = RESORT_CONST_COMBO_SHOP_RESULT_RATE < rnd;
+      u32 rnd = RESORT_ABSTRUCT_DATA_GetRnd( p_rnd, RESORT_RND_ID_COMBO_SHOPRESULT, 100 );
+      *p_ret_wk = rnd < RESORT_CONST_COMBO_SHOP_RESULT_RATE;
     }
 
     break;
@@ -1555,14 +1559,14 @@ VMCMD_RESULT EvCmdResortCombo( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_COMBO_PARAM_INIT:
     {
       RESORT_ABSTRUCT_DATA *p_abstruct = RESORT_ABSTRUCT_MANAGER_GetDataByIndex( p_man, RESORT_DATA_BUFFER_TYPE_RESIDENT, data );
-      RESORT_UTIL_InitCombo( p_sys, p_abstruct );
+      RESORT_UTIL_InitCombo( p_sys, p_abstruct, p_rnd );
     }
     break;
 
   case RESORT_COMBO_PARAM_DECIDE:
     {
       RESORT_ABSTRUCT_DATA *p_abstruct = RESORT_ABSTRUCT_MANAGER_GetDataByIndex( p_man, RESORT_DATA_BUFFER_TYPE_RESIDENT, data );
-      RESORT_UTIL_SuccessCombo( p_sys, p_abstruct );
+      RESORT_UTIL_SuccessCombo( p_sys, p_abstruct, data );
     }
     break;
 

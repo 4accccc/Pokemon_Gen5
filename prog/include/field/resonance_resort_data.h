@@ -45,6 +45,10 @@ typedef enum
   RESORT_ADD_RESULT_DISABLE, //セット可能かつ不許可
 }RESORT_ADD_RESULT;
 
+#define RESORT_PHRASE_DEFAULT_NUM (64)
+#define RESORT_THANKS_DEFAULT_NUM (64)
+#define RESORT_INTRODUCTION_DEFAULT_NUM (64)
+
 //=============================================================================
 /**
  *  データ初期化
@@ -349,11 +353,11 @@ typedef enum
   RESORT_RND_ID_SHOP_LIST_15,
   RESORT_RND_ID_CITY_CELEV,
   RESORT_RND_ID_CITY_PRESET,
-  RESORT_RND_ID_CITY_COMBO_IN_INDEX,
-  RESORT_RND_ID_CITY_COMBO_OUT_INDEX,
-  RESORT_RND_ID_CITY_COMBO_TBL,
-  RESORT_RND_ID_CITY_COMBO_SHOPRESULT,
-  RESORT_RND_ID_CITY_COMBO_RND,
+  RESORT_RND_ID_COMBO_IN_INDEX,
+  RESORT_RND_ID_COMBO_OUT_INDEX,
+  RESORT_RND_ID_COMBO_TBL,
+  RESORT_RND_ID_COMBO_SHOPRESULT,
+  RESORT_RND_ID_COMBO_RND,
   RESORT_RND_ID_MAX
 } RESORT_RND_ID;
 
@@ -712,6 +716,8 @@ extern void RESORT_CITY_DATA_UpdateDay( RESORT_CITY_DATA *p_wk );
 extern void RESORT_CITY_DATA_AddTrainerID( RESORT_CITY_DATA *p_wk, u32 trainerID );
 extern BOOL RESORT_CITY_DATA_CheckTrainerID( const RESORT_CITY_DATA *cp_wk, u32 trainerID );
 extern u32 RESORT_CITY_DATA_GetRnd( const RESORT_CITY_DATA *cp_wk, RESORT_RND_ID id, u32 range );
+
+extern u32 RESORT_DATA_GetRnd( u32 seed, RESORT_RND_ID id, u32 range );
 
 //=============================================================================
 /**

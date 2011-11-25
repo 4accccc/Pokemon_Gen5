@@ -4847,12 +4847,12 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName ]『[Name:ResortGreet Idx="1" ]▼
-[Name:TrainerName Idx="2" ]さん　おすすめの　おみせが　あるんですが
-いってみませんか？</Text>
+			<Text>[Name:TrainerName ]『[Name:ResortGreet Idx="2" ]
+[Name:TrainerName Idx="1" ]さん　おすすめの　おみせが▽
+あるんですが　いってみませんか？▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-24T07:42:44" />
+				Time="2011-11-25T01:52:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -4860,12 +4860,12 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]『[Name:ResortGreet Idx="1" ]▼
-[Name:TrainerName Idx="2" ]さん　おすすめの　おみせが　あるんですが
-いってみませんか？</Text>
+			<Text>[Name:TrainerName ]『[Name:ResortGreet Idx="2" ]
+[Name:TrainerName Idx="1" ]さん　おすすめの　おみせが▽
+あるんですが　いってみませんか？▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-24T07:44:03" />
+				Time="2011-11-25T01:52:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -4963,11 +4963,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『[Name:TrainerName Idx="2" ]！
+			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="3" ]！
 …………　いってみたいです▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-24T07:45:04" />
+				Time="2011-11-25T03:06:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -4975,11 +4975,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『[Name:TrainerName Idx="2" ]！
+			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="3" ]！
 …………　いってみたいです▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-24T07:45:06" />
+				Time="2011-11-25T03:06:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5020,11 +5020,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『[Name:TrainerName Idx="2" ]！
+			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="3" ]！
 …………　またに　します▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-24T07:45:17" />
+				Time="2011-11-25T03:06:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5032,11 +5032,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『[Name:TrainerName Idx="2" ]！
+			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="3" ]！
 …………　またに　します▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-24T07:45:19" />
+				Time="2011-11-25T03:06:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5101,10 +5101,10 @@ BW♀
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>確定</Comment>
+			<Comment>高確率</Comment>
 			<CommentModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-24T07:48:18" />
+				Time="2011-11-25T03:45:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5158,10 +5158,10 @@ BW♀
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>高確率</Comment>
+			<Comment>中確率</Comment>
 			<CommentModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-24T07:48:22" />
+				Time="2011-11-25T03:45:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -5248,12 +5248,12 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName ]『[Name:ResortGreet Idx="2" ]▼
-[Name:TrainerName Idx="1" ]さん　おすすめの　おみせが　あるんですが
-いってみませんか？</Text>
+			<Text>[Name:TrainerName ]『[Name:ResortGreet Idx="2" ]
+[Name:TrainerName Idx="1" ]さん　おすすめの　おみせが▽
+あるんですが　いってみませんか？▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-24T08:39:00" />
+				Time="2011-11-25T01:52:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5261,12 +5261,12 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]『[Name:ResortGreet Idx="2" ]▼
-[Name:TrainerName Idx="1" ]さん　おすすめの　おみせが　あるんですが
-いってみませんか？</Text>
+			<Text>[Name:TrainerName ]『[Name:ResortGreet Idx="2" ]
+[Name:TrainerName Idx="1" ]さん　おすすめの　おみせが▽
+あるんですが　いってみませんか？▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-24T08:39:03" />
+				Time="2011-11-25T01:52:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5364,11 +5364,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『[Name:TrainerName Idx="2" ]！
+			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="3" ]！
 …………　いってみたいです▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-24T08:07:41" />
+				Time="2011-11-25T03:07:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5376,11 +5376,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『[Name:TrainerName Idx="2" ]！
+			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="3" ]！
 …………　いってみたいです▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-24T08:07:41" />
+				Time="2011-11-25T03:07:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5421,11 +5421,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『[Name:TrainerName Idx="2" ]！
+			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="3" ]！
 …………　またに　します▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-24T08:07:41" />
+				Time="2011-11-25T03:07:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5433,11 +5433,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『[Name:TrainerName Idx="2" ]！
+			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="3" ]！
 …………　またに　します▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-24T08:07:41" />
+				Time="2011-11-25T03:07:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -76129,10 +76129,10 @@ BW♀
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『
 [Name:ResortShop Idx="1" ]……！▽
-おすすめされて　きたけど　ステキな　ところ！▼</Text>
+おすすめされて　きたけど　ステキ！▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-24T09:46:40" />
+				Time="2011-11-25T01:06:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -76142,10 +76142,10 @@ BW♀
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『
 [Name:ResortShop Idx="1" ]……！▽
-おすすめされて　きたけど　ステキな　ところ！▼</Text>
+おすすめされて　きたけど　ステキ！▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-24T09:46:43" />
+				Time="2011-11-25T01:06:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

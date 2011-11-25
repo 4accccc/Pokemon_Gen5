@@ -39,6 +39,15 @@
 //outer
 #include "resort_util.h"
 
+#ifdef PM_DEBUG
+#define DEBUG_RESORT_PRINT_ON
+#endif
+
+#if defined(DEBUG_RESORT_PRINT_ON)
+#define RESORT_Printf(...)  OS_TFPrintf(0,__VA_ARGS__)
+#else
+#define RESORT_Printf(...)  /* */
+#endif
 
 //=============================================================================
 /**
@@ -2758,7 +2767,7 @@ void RESORT_UTIL_SetPresetPeople( RESORT_SYSTEM *p_sys, const MYSTATUS *cp_mysta
  *	@param	RESORT_SYSTEM *p_sys 
  */
 //-----------------------------------------------------------------------------
-void RESORT_UTIL_InitCombo( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct )
+void RESORT_UTIL_InitCombo( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct, RESORT_ABSTRUCT_DATA *p_rnd )
 {
   const RESORT_CITY_DATA *cp_city = RESORT_SYSTEM_GetCityData(p_sys);
 
@@ -2769,7 +2778,7 @@ void RESORT_UTIL_InitCombo( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstru
   //連続抽選テーブルを引く
   {
     int i;
-    u32 rnd = RESORT_CITY_DATA_GetRnd( cp_city, RESORT_RND_ID_CITY_COMBO_TBL, 100 );
+    u32 rnd = RESORT_ABSTRUCT_DATA_GetRndDouble( p_abstruct, p_rnd, RESORT_RND_ID_COMBO_TBL, 100 );
     u32 per = 0;
 
     RESORT_BINARY_COMBO_NEXT  *p_binary = RESORT_BINARY_COMBO_NEXT_Init( HEAPID_PROC );
@@ -2789,7 +2798,7 @@ void RESORT_UTIL_InitCombo( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstru
     }
     RESORT_BINARY_COMBO_NEXT_Exit( p_binary );
   }
-
+  RESORT_Printf( "継続テーブル%d\n", tbl_idx );
   //テーブル
   RESORT_WORK_SetData( p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_TBL, tbl_idx );
 
@@ -2802,14 +2811,14 @@ void RESORT_UTIL_InitCombo( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstru
     int i;
     for( i = RESORT_WORK_GET_PARAM_RECOMMENDED_INDEX_00; i <= RESORT_WORK_GET_PARAM_RECOMMENDED_INDEX_07; i++ )
     {
-      RESORT_WORK_SetData( p_work, i, 0 );
+      RESORT_WORK_SetData( p_work, i, FALSE );
     }
   }
 
   //初期値にはいかない
   {
     u16 now_pos = RESORT_ABSTRUCT_DATA_GetBufferIndex( p_abstruct );
-    RESORT_WORK_SetData( p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_INDEX_00+now_pos, 0 );
+    RESORT_WORK_SetData( p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_INDEX_00+now_pos, TRUE );
   }
 }
 
@@ -2825,7 +2834,7 @@ void RESORT_UTIL_InitCombo( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstru
  *	@return TRUE次がある  FALSEない
  */
 //-----------------------------------------------------------------------------
-BOOL RESORT_UTIL_GetComboNextIndex( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct, u32 *p_index )
+BOOL RESORT_UTIL_GetComboNextIndex( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct, RESORT_ABSTRUCT_DATA *p_rnd, u32 *p_index )
 {
   //自分のとなりが空いているか
   static const struct
@@ -2866,7 +2875,7 @@ BOOL RESORT_UTIL_GetComboNextIndex( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *
     },
     //6番のとなり
     {
-      {4,5,6,-1},
+      {4,5,7,-1},
       {0,1,2,3,-1},
     },
     //7番のとなり
@@ -2887,20 +2896,28 @@ BOOL RESORT_UTIL_GetComboNextIndex( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *
 
   //何個内側が空いてるか、数を確認。
   cnt = 0;
+  RESORT_Printf( "コンボ内側空きテーブル\n" );
   for( i = 0; sc_data[now_pos].in[i] != -1; i++ )
   {
     u8 pos = sc_data[now_pos].in[i];
     if( RESORT_WORK_GetData( p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_INDEX_00+pos ) == FALSE )
     {
+
+      RESORT_Printf( "[%d]=空　", pos );
       cnt++;
     }
+    else
+    {
+      RESORT_Printf( "[%d]=満　", pos );
+    }
+      RESORT_Printf( "\n" );
   }
 
   if( cnt > 0 )
   {
     //乱数で引く
+    rnd = RESORT_ABSTRUCT_DATA_GetRndDouble( p_abstruct, p_rnd, RESORT_RND_ID_COMBO_IN_INDEX, cnt );
     cnt = 0;
-    rnd = RESORT_CITY_DATA_GetRnd( cp_city, RESORT_RND_ID_CITY_COMBO_IN_INDEX, cnt );
     for( i = 0; sc_data[now_pos].in[i] != -1; i++ )
     {
       u8 pos = sc_data[now_pos].in[i];
@@ -2908,7 +2925,7 @@ BOOL RESORT_UTIL_GetComboNextIndex( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *
       {
         if( cnt == rnd )
         {
-          *p_index  = i;
+          *p_index  = pos;
           return TRUE;
         }
         cnt++;
@@ -2919,20 +2936,26 @@ BOOL RESORT_UTIL_GetComboNextIndex( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *
 
   //何個外側が空いてるか、数を確認。
   cnt = 0;
+  RESORT_Printf( "コンボ外側空きテーブル\n" );
   for( i = 0; sc_data[now_pos].out[i] != -1; i++ )
   {
     u8 pos = sc_data[now_pos].out[i];
     if( RESORT_WORK_GetData( p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_INDEX_00+pos ) == FALSE )
     {
+      RESORT_Printf( "[%d]=空　", pos );
       cnt++;
+    }
+    else
+    {
+      RESORT_Printf( "[%d]=満　", pos );
     }
   }
 
   if( cnt > 0 )
   {
     //乱数で引く
+    rnd = RESORT_ABSTRUCT_DATA_GetRndDouble( p_abstruct, p_rnd, RESORT_RND_ID_COMBO_OUT_INDEX, cnt );
     cnt = 0;
-    rnd = RESORT_CITY_DATA_GetRnd( cp_city, RESORT_RND_ID_CITY_COMBO_OUT_INDEX, cnt );
     for( i = 0; sc_data[now_pos].out[i] != -1; i++ )
     {
       u8 pos = sc_data[now_pos].out[i];
@@ -2940,7 +2963,7 @@ BOOL RESORT_UTIL_GetComboNextIndex( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *
       {
         if( cnt == rnd )
         {
-          *p_index  = i;
+          *p_index  = pos;
           return TRUE;
         }
         cnt++;
@@ -2972,7 +2995,8 @@ u32 RESORT_UTIL_GetComboInitRnd( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_a
   RTCDate date;
   u8 trainer_view;
 
-  u32 rnd = 0;
+  u32 rnd_view = 0;
+  u32 rnd_shop = 0;
 
   //日時取得
   GFL_RTC_GetDate( &date );
@@ -2995,7 +3019,7 @@ u32 RESORT_UTIL_GetComboInitRnd( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_a
   //見た目確率
   {
     RESORT_BINARY_COMBO_VIEW  *p_binary = RESORT_BINARY_COMBO_VIEW_Init(HEAPID_PROC);
-    rnd += RESORT_BINARY_COMBO_VIEW_GetData(p_binary, trainer_view, date.week );
+    rnd_view = RESORT_BINARY_COMBO_VIEW_GetData(p_binary, trainer_view, date.week );
     RESORT_BINARY_COMBO_VIEW_Exit(p_binary);
   }
 
@@ -3003,10 +3027,13 @@ u32 RESORT_UTIL_GetComboInitRnd( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_a
   {
     RESORT_BINARY_COMBO_SHOP  *p_binary = RESORT_BINARY_COMBO_SHOP_Init(HEAPID_PROC);
 
-    rnd += RESORT_BINARY_COMBO_SHOP_GetData(p_binary,shop_type,neon,date.week);
+    rnd_shop = RESORT_BINARY_COMBO_SHOP_GetData(p_binary,shop_type,neon,date.week);
     RESORT_BINARY_COMBO_SHOP_Exit(p_binary);
   }
-  return rnd;
+
+  RESORT_Printf( "見た目確率%d お店確率%d\n", rnd_view, rnd_shop );
+
+  return rnd_view + rnd_shop;
 }
 
 //----------------------------------------------------------------------------
@@ -3025,7 +3052,7 @@ u32 RESORT_UTIL_GetComboNextRnd( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_a
 
   //初回確率
   u32 init_rnd = RESORT_UTIL_GetComboInitRnd( p_sys, p_abstruct );
-  u32 next_rnd;
+  s16 next_rnd;
 
 
 
@@ -3042,6 +3069,7 @@ u32 RESORT_UTIL_GetComboNextRnd( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_a
   }
 
 
+  RESORT_Printf( "連続確率%d\n", next_rnd );
   return init_rnd + next_rnd;
 }
 
@@ -3053,17 +3081,12 @@ u32 RESORT_UTIL_GetComboNextRnd( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_a
  *	@param	*p_abstruct 
  */
 //-----------------------------------------------------------------------------
-void RESORT_UTIL_SuccessCombo( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct )
+void RESORT_UTIL_SuccessCombo( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct, u32 next_index )
 {
   RESORT_WORK *p_work = RESORT_SYSTEM_GetWork(p_sys);
-  u32 next_index;
-  BOOL is_next = RESORT_UTIL_GetComboNextIndex( p_sys, p_abstruct, &next_index );
 
   //次のお店は行ったフラグを立てる
-  if( is_next )
-  {
-    RESORT_WORK_SetData( p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_INDEX_00+next_index, TRUE );
-  }
+  RESORT_WORK_SetData( p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_INDEX_00+next_index, TRUE );
 
   //回数を増やす
   {

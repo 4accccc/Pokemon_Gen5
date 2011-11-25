@@ -80,17 +80,17 @@ static inline void Debug_Resort_SetRecv( RESORT_RECV_DATA *p_wk, GAMEDATA *p_gam
   {
     GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(HEAPID_PROC) );
     {
-      STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, resort_introduction_def_00+trainerID%32 );
+      STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, resort_introduction_def_00+trainerID%RESORT_INTRODUCTION_DEFAULT_NUM );
       RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_INTRODUCTION, (u32)GFL_STR_GetStringCodePointer(p_strbuf) );
       GFL_STR_DeleteBuffer( p_strbuf );
     }
     {
-      STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, resort_kutiguse_def_00+trainerID%32 );
+      STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, resort_kutiguse_def_00+trainerID%RESORT_PHRASE_DEFAULT_NUM );
       RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_EXT6_PHRASE, (u32)GFL_STR_GetStringCodePointer(p_strbuf) );
       GFL_STR_DeleteBuffer( p_strbuf );
     }
     {
-      STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, resort_thanks_def_00+trainerID%32 );
+      STRBUF *p_strbuf = GFL_MSG_CreateString(p_msg, resort_thanks_def_00+trainerID%RESORT_THANKS_DEFAULT_NUM );
       RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_EXT7_THANKS, (u32)GFL_STR_GetStringCodePointer(p_strbuf) );
       GFL_STR_DeleteBuffer( p_strbuf );
     }

@@ -585,6 +585,24 @@ u32 RESORT_ABSTRUCT_DATA_GetRnd( const RESORT_ABSTRUCT_DATA *cp_wk, RESORT_RND_I
 {
   return cp_wk->cp_func->GetRnd( cp_wk->p_data_adrs, id, range );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ２種類の種を足しあわせた乱数を取得
+ *
+ *	@param	const RESORT_ABSTRUCT_DATA *cp_wk1  ワーク１
+ *	@param	RESORT_ABSTRUCT_DATA *cp_wk2  ワーク２
+ *	@param	id  乱数使用ID
+ *	@param	range 範囲
+ *
+ *	@return 乱数
+ */
+//-----------------------------------------------------------------------------
+u32 RESORT_ABSTRUCT_DATA_GetRndDouble( const RESORT_ABSTRUCT_DATA *cp_wk1, const RESORT_ABSTRUCT_DATA *cp_wk2, RESORT_RND_ID id, u32 range )
+{
+  u32 seed1 = RESORT_ABSTRUCT_DATA_GetData( cp_wk1, RESORT_DATA_PARAM_RND_SEED, NULL );
+  u32 seed2 = RESORT_ABSTRUCT_DATA_GetData( cp_wk2, RESORT_DATA_PARAM_RND_SEED, NULL );
+  return RESORT_DATA_GetRnd( seed1+seed2, id, range );
+}
 
 //=============================================================================
 /**

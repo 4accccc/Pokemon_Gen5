@@ -85,8 +85,8 @@ extern void RESORT_UTIL_SetProxyPreset( RESORT_SYSTEM *p_sys, RESORT_PROXY_DATA 
 extern void RESORT_UTIL_SetPresetPeople( RESORT_SYSTEM *p_sys, const MYSTATUS *cp_mystatus, u16 people_type, u16 preset_type, HEAPID heapID );
 
 //コンボシステム
-extern void RESORT_UTIL_InitCombo( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct );
-extern BOOL RESORT_UTIL_GetComboNextIndex( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct, u32 *p_index );
+extern void RESORT_UTIL_InitCombo( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct, RESORT_ABSTRUCT_DATA *p_rnd );
+extern BOOL RESORT_UTIL_GetComboNextIndex( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct, RESORT_ABSTRUCT_DATA *p_rnd, u32 *p_index );
 extern u32 RESORT_UTIL_GetComboInitRnd( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct );
 extern u32 RESORT_UTIL_GetComboNextRnd( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct );
-extern void RESORT_UTIL_SuccessCombo( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct );
+extern void RESORT_UTIL_SuccessCombo( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct, u32 next_index );
