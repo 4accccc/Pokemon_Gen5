@@ -364,6 +364,7 @@ static void fmission_chg_bgpal( MONOLITH_FMSELECT_WORK *mfw );
 //
 static void fmission_chk_secret( MONOLITH_FMSELECT_WORK *mfw );
 static void fmission_init_mode( MONOLITH_FMSELECT_WORK *mfw, const s32 mode );
+static void fmission_disp_startmes( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw );
 //
 static void fmission_debug( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw );
 
@@ -823,7 +824,8 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
   case SEQ_YESNO_STREAM:
     if(MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_BG) != PANEL_COLORMODE_FLASH
         && MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_OBJ) != PANEL_COLORMODE_FLASH){
-      _Set_MsgStream(mfw, appwk->setup, msg_mono_fmission_003);
+//      _Set_MsgStream(mfw, appwk->setup, msg_mono_fmission_003);
+      fmission_disp_startmes( appwk, mfw );
       (*seq)++;
     }
     break;
@@ -2817,6 +2819,35 @@ static void fmission_init_mode( MONOLITH_FMSELECT_WORK *mfw, const s32 mode )
       fmission_disp_level( mfw, i, FALSE );
     }
   }
+}
+
+//==================================================================
+/**
+ * 開始メッセージ表示
+ *
+ * @param   MONOLITH_FMSELECT_WORK	*mfw
+ */
+//==================================================================
+static void fmission_disp_startmes( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw )
+{
+  s32  num;
+  STRBUF *str;
+  FEST_MISSION  mission;
+  //
+  str = GFL_STR_CreateBuffer(32, HEAPID_MONOLITH);
+  // 名前のセット
+  FMISSION_DATA_GetMissionParam( mfw->fmd_man, mfw->fess_mission_id[mfw->cursor_pos], 0, &mission );
+  FMISSION_DATA_GetTitleStr( mfw->fmd_man, str, &mission, GFL_HEAP_LOWID(HEAPID_MONOLITH) );
+  WORDSET_RegisterWord( appwk->setup->wordset, 0, str, 0, TRUE, PM_LANG );
+  GFL_STR_DeleteBuffer( str );
+  // レベル
+  num = mfw->Level+1;
+  if(mfw->Flag & FLG_FMISS_SECRET){
+    num = FMISS_LV4+1;
+  }
+  WORDSET_RegisterNumber( appwk->setup->wordset, 1, num, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+  // 表示
+  _Set_MsgStreamExpand(mfw, appwk->setup, msg_mono_fmission_003);
 }
 
 //==================================================================
