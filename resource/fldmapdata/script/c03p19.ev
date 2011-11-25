@@ -218,7 +218,8 @@ ev_c03p19_trbtl_03:
   _OBJ_ANIME( C03P19_GUITARW_01, anm_guiterw_ret )
   _OBJ_ANIME_WAIT()
   
-  //【仮】メダル入手処理
+  //メダル達成処理
+  _SET_MEDAL_ACHIVE( MDLID_HEAD )
   
   //========================================//
   //イベント終了

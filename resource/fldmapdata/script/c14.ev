@@ -545,6 +545,9 @@ EVENT_START   ev_pos_c14_kaodasi_01
     _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 
     _TIME_WAIT( 16 )   //砂浜の足跡が消えるまで待ち
+    
+    //メダル入手条件達成
+    _SET_MEDAL_ACHIVE( MDLID_KAODASHI )
 
     //==================================//
     //カメラマン非表示

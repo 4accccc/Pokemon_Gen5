@@ -37,7 +37,7 @@
 #define C05_TRAINERM_01                   12
 #define C05_RANGERW_01                    13
 #define C05_BOY2_01                       14
-#define C05_MOUNTAIN_01                   15
+#define C05_BADMAN_02                     15
 #define C05_BADMAN                        16
 #define C05_BABYGIRL1                     17
 #define C05_BACKPACKERW_01                18

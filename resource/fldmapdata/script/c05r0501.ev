@@ -209,6 +209,16 @@ EVENT_START ev_reserve_c05r0501_sage6_01
   _BALLOONWIN_OBJMSG_POS( msg_c05r0501_swrival_05,MMDL_ID_EVENTOBJ_00, POS_DEFAULT ) 
   _MSGWIN_CLOSE()
   
+  //アニメ：主人公・ライバル向き合う
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_staystep_r )
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：（主人公名）！オレは
+  _BALLOONWIN_OBJMSG_POS( msg_c05r0501_swrival_06,MMDL_ID_EVENTOBJ_00, POS_DEFAULT ) 
+  _MSGWIN_CLOSE()
+  
   //アニメ：ライバル退場
   _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 6, 25, FORCE_TYPE_NPC, 8, DIR_LR)
   _TIME_WAIT(8)
@@ -317,6 +327,10 @@ ev_c05r0501_poke22_get:
   //手持ちに空きがある
   ELSE
   
+    //アニメ：ロット、ゾロアを見る
+    _OBJ_ANIME( C05R0501_SAGE6_01, anm_staystep_r)
+    _OBJ_ANIME_WAIT()
+  
     //おお！たのむぞ！
     _BALLOONWIN_OBJMSG_POS( msg_c05r0501_sage6_09,C05R0501_SAGE6_01, POS_UL ) 
     _MSGWIN_CLOSE()
@@ -342,6 +356,17 @@ ev_c05r0501_poke22_get:
     
     //自機座標取得
     _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+    
+    //ロット：主人公のほうを向く
+    IF $LCW_POSX == 6 && $LCW_POSZ == 18 THEN
+      _OBJ_ANIME( C05R0501_SAGE6_01, anm_staystep_l)
+    ELSIF $LCW_POSX == 7 && $LCW_POSZ == 17 THEN
+      _OBJ_ANIME( C05R0501_SAGE6_01, anm_staystep_u)
+    ELSIF $LCW_POSX == 7 && $LCW_POSZ == 19 THEN
+      _OBJ_ANIME( C05R0501_SAGE6_01, anm_staystep_d)
+    ELSE
+      _OBJ_ANIME( C05R0501_SAGE6_01, anm_staystep_d)
+    ENDIF
     
     //アニメ：主人公とゾロア向き合う
     

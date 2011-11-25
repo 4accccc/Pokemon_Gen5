@@ -46,12 +46,11 @@ _EVENT_DATA    ev_c05_badman
 _EVENT_DATA    ev_c05_workman
 _EVENT_DATA    ev_c05_boy2_01
 _EVENT_DATA    ev_c05_rangerw_01
-_EVENT_DATA    ev_c05_mountain_01
+_EVENT_DATA    ev_c05_badman_02
 _EVENT_DATA    ev_c05_man2_01
 _EVENT_DATA    ev_bg_c05_board_06
 _EVENT_DATA    ev_c05_poke20_01
 _EVENT_DATA    ev_c05_stopper_01
-_EVENT_DATA    ev_pos_c05_stopper_01
 _EVENT_DATA    ev_pos_c05_sage6_01
 _EVENT_DATA_END
 
@@ -224,8 +223,11 @@ EVENT_START		ev_pos_c05_hakaim_01
   //アニメ：移動
   _OBJ_ANIME_AUTO( C05_SWPLAZMAM_01, 218, 432, FORCE_TYPE_NPC, 4, DIR_UD)
   _TIME_WAIT( 7 )
+  //SE再生
+  _SE_PLAY( SEQ_SE_FLD_04 )
   _OBJ_ANIME( C05_HAKAIM_01, anm_hakaim_backstep)
   _OBJ_ANIME_WAIT()
+  _SE_WAIT()
   
   //ネオプラズマM01：おれたちの
   _BALLOONWIN_OBJMSG_POS( msg_c05_swplazmam_04,C05_SWPLAZMAM_01, POS_UL )
@@ -284,7 +286,7 @@ EVENT_START		ev_pos_c05_hakaim_01
   _MSGWIN_CLOSE()
   
   //アニメ：プラズマ団移動
-  _OBJ_ANIME_AUTO( C05_SWPLAZMAM_01, 229, 431, FORCE_TYPE_NPC, 4, DIR_UD)
+  _OBJ_ANIME_AUTO( C05_SWPLAZMAM_01, 212, 432, FORCE_TYPE_NPC, 4, DIR_UD)
   
   _TIME_WAIT(18)
   
@@ -304,7 +306,7 @@ EVENT_START		ev_pos_c05_hakaim_01
   _MSGWIN_CLOSE()
   
   //ライバル：追いかける
-  _OBJ_ANIME_AUTO( C05_SWRIVAL_01, 229, 432, FORCE_TYPE_NPC, 4, DIR_LR)
+  _OBJ_ANIME_AUTO( C05_SWRIVAL_01, 212, 432, FORCE_TYPE_NPC, 4, DIR_LR)
   _OBJ_ANIME_WAIT()
   
   //ネオプラズマ団・ライバル動作OBJ非表示
@@ -512,7 +514,6 @@ ev_c05_sage6_btl:
   
   //ロット：ではまいるぞ
   _BALLOONWIN_OBJMSG_POS( msg_c05_sage6_03,C05_SAGE6_01, POS_UL ) 
-  _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
   
   //戦闘処理（トレーナーIDが仮）
@@ -979,7 +980,7 @@ EVENT_END
 /**************************************************************/
 /*  C05 MOUNTAINの会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c05_mountain_01
+EVENT_START   ev_c05_badman_02
   _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_mountain_01)
 EVENT_END
 
@@ -995,42 +996,6 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c05_stopper_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05_stop_01 )
-EVENT_END
-
-/**************************************************************/
-/* 			ストッパー：POS起動			  */
-/**************************************************************/
-EVENT_START		ev_pos_c05_stopper_01
-
-  //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-  
-  //主人公にふりむき
-  IF $LCW_POSZ == 397 THEN
-    _OBJ_ANIME( C05_STOPPER_01, anm_stopper_lookpleyer_u )
-    _TIME_WAIT(16)
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
-    _OBJ_ANIME_WAIT()
-  
-  ELSE
-  
-    _OBJ_ANIME( C05_STOPPER_01, anm_stopper_lookpleyer_d )
-    _TIME_WAIT(16)
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
-    _OBJ_ANIME_WAIT()
-    
-  ENDIF
-  
-  //ストッパー：ジムバッジを
-  _BALLOONWIN_OBJMSG_POS( msg_c05_stop_02,C05_STOPPER_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  //主人公1歩戻る
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
-  _TIME_WAIT( 8 )
-  _OBJ_ANIME( C05_STOPPER_01 , anm_staystep_r )
-  _OBJ_ANIME_WAIT()
-  
 EVENT_END
 
 //--------------------------------------------------------------------

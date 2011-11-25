@@ -80,6 +80,9 @@ EVENT_START   ev_c03r0402_director_01
         _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_02a )
         _LAST_KEYWAIT()
         _MSGWIN_CLOSE()
+        
+        //メダル入手条件達成
+        _SET_MEDAL_ACHIVE( MDLID_COMPLETE_ISSHU )
 
         //========================================/
         //フラグ操作
@@ -117,6 +120,9 @@ EVENT_START   ev_c03r0402_director_01
           _BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_04a )
           _LAST_KEYWAIT()
           _MSGWIN_CLOSE()
+          
+          //メダル入手条件達成
+          _SET_MEDAL_ACHIVE( MDLID_COMPLETE_ZENKOKU )
 
           //========================================/
           //フラグ操作

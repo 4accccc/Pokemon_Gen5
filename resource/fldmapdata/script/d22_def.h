@@ -6,7 +6,5 @@
 
 //スクリプトデータID定義
 #define SCRID_BG_D22_BOARD_01 (1)
-#define SCRID_D22_BOY2_01 (2)
-#define SCRID_POS_D22_BOY2_01 (3)
 
 #endif //_D22_DEF_H_

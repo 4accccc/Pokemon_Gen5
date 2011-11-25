@@ -205,7 +205,7 @@ EVENT_START  ev_pos_r04w_swboss_02
   _MSGWIN_CLOSE()
   
   //どうぐ入手処理：いのちのたま
-	_ITEM_EVENT_KEYWAIT(ITEM_INOTINOTAMA, 1)
+	_ITEM_EVENT_KEYWAIT(ITEM_TAURIN, 1)
 	
 	//アクロマ：くやしい！
 	_PLAYER_NAME( 0 )

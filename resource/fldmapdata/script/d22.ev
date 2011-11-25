@@ -20,8 +20,6 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_bg_d22_board_01
-_EVENT_DATA    ev_d22_boy2_01
-_EVENT_DATA    ev_pos_d22_boy2_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -30,64 +28,6 @@ _EVENT_DATA_END
 EVENT_START		ev_bg_d22_board_01
   _EASY_BGWIN_MSG( msg_d22_sign1_01, TYPE_POST )
 EVENT_END
-
-/**************************************************************/
-/*			話しかけ：BOY2					  */
-/**************************************************************/
-EVENT_START		ev_d22_boy2_01
-  
-  //ライバル名格納
-  _RIVAL_NAME( 1 )
-  
-  //迷子イベントクリア後
-  IF $WK_SCENE_D22R0101 == 5 THEN
-   _EASY_BALLOONWIN_TALKOBJ_MSG(msg_d22_boy2_03)
-  //クリア前
-  ELSE
-    _EASY_BALLOONWIN_TALKOBJ_MSG(msg_d22_boy2_01)
-    //========================================//
-    //POS無効
-    $WK_SCENE_D22_BOY2 = 1
-    //========================================//
-  ENDIF
-
-EVENT_END
-
-/**************************************************************/
-/*			POS：BOY2					  */
-/**************************************************************/
-EVENT_START		ev_pos_d22_boy2_01
-  
-  //ライバル名格納
-  _RIVAL_NAME( 1 )
-  
-  //アニメ：BOY2ふりむく
-  _OBJ_ANIME( D22_BOY2_01, anm_boy2_look_player )
-  _TIME_WAIT( 8 )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
-  _OBJ_ANIME_WAIT()
-  
-  //BOY2：さっき ライバルってやつに
-  _BALLOONWIN_OBJMSG_POS( msg_d22_boy2_02, D22_BOY2_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  //BOY2：下を向く
-  _OBJ_ANIME( D22_BOY2_01, anm_staystep_d )
-  _OBJ_ANIME_WAIT()
-  
-  //========================================//
-  //POS無効
-  $WK_SCENE_D22_BOY2 = 1
-  //========================================//
-EVENT_END
-
-//--------------------------------------------------------------------
-//	BOY2：「！」振り向く
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_boy2_look_player
-  _ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
-	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //	☆共通処理：1歩歩く

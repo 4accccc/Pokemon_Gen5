@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/18 11:54:22
+#save date:2011/11/25 19:00:36
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c03.wms
 #SECTION START:OBJ_EVENT
@@ -16,7 +16,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c03.wms
 #ID name
 C03_SWCHAMPION_01
 #OBJ CODE Number
-SWCHAMPION
+SWIRIS
 #MOVE CODE Number
 MV_RAIL_DMY
 #EVENT TYPE Number
