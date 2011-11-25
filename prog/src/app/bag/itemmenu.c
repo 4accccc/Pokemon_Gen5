@@ -3422,7 +3422,8 @@ static void SORT_ModeReset( FIELD_ITEMMENU_WORK* pWork )
   // 保管ポケットのソート状態初期化
   if( pWork->pocketno == BAG_POKE_REPOSITORY )
   {
-    SORT_Repository_Data( pWork , REPOSITORY_SORTTYPE_FULL );
+    // 保管ポケット内のならびをソート
+    BAGITEM_SortRepositoryItem( &pWork->bag_item , REPOSITORY_SORTTYPE_FULL );
   }
 
   ITEMDISP_ChangeSortButton( pWork );
@@ -4446,7 +4447,7 @@ static void DEBGU_OutputExitMode( BAG_MODE bagmode ,BAG_NEXTPROC_ENUM exitmode )
     "BAG_NEXTPROC_TOWNMAP         = タウンマップ",
     "BAG_NEXTPROC_FRIENDNOTE      = ともだち手帳",
     "BAG_NEXTPROC_EXITEM          = 終了",
-    "BAG_NEXTPROC_RIDECYCLE       = 乗る"
+    "BAG_NEXTPROC_RIDECYCLE       = 乗る",
     "BAG_NEXTPROC_DROPCYCLE       = おりる",
     "BAG_NEXTPROC_EVOLUTION       = しんか",
     "BAG_NEXTPROC_PALACEJUMP      = パレス移動",
