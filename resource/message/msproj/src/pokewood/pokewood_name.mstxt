@@ -7896,4 +7896,39 @@ MONSNO_KARATEOUの
 				Time="2011-10-27T07:40:30" />
 		</CommentCell>
 	</TextRow>
+	<TextRow
+		Label="pw_tutorial_myname"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホミカパパ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-24T10:20:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T07:40:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホミカパパ</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-11-24T10:21:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T07:40:26" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>"ポケウッド用ボスポケモン
+MONSNO_KARATEOUの
+上映時ニックネーム"</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-10-27T07:40:30" />
+		</CommentCell>
+	</TextRow>
 </MessageStudioText>

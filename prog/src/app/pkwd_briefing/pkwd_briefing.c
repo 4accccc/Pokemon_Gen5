@@ -252,6 +252,7 @@ typedef struct{
   int             wait;
 
   int             scroll;
+  int             bg3_scroll_direct;
   int             bmpwin_num;
   int             screen_flag;
   int             line_count;
@@ -265,6 +266,7 @@ typedef struct{
   int             briefing_index;
 
   u8              linage_pool[BRIEFING_PAGE_MAX];
+  int             exchange_result;    /// 敵トレーナーと順番を入れ替えたか？TRUE=はい
 }G2D_CONTROL;
 
 typedef struct{
@@ -359,7 +361,7 @@ static void initIO(void);
 static void initVRAM(void);
 
 static void setupBriefingSystem(SYS_CONTROL* CSys, PKWD_BRIEFING_WORK *tw, HEAPID heapID);
-static void setupEndrollSystem(SYS_CONTROL* CSys, HEAPID heapID);
+static void setupEndrollSystem(SYS_CONTROL* CSys, PKWD_BRIEFING_WORK *tw, HEAPID heapID);
 static void mainSystem(SYS_CONTROL* CSys, HEAPID heapID);
 static void releaseSystem(SYS_CONTROL* CSys);
 
@@ -666,13 +668,19 @@ static void initWork( PKWD_BRIEFING_WORK* tw )
   }
 #ifdef PM_DEBUG
   else{
-    int i;
+    int i,num;
     tw->CG2d.myparty    = PokeParty_AllocPartyWork(tw->heapID);
     PokeParty_Init( tw->CG2d.myparty, 6 );
     tw->CG2d.enemyparty = PokeParty_AllocPartyWork(tw->heapID);
     PokeParty_Init( tw->CG2d.enemyparty, 6 );
     
-    for(i=0;i<4;i++){
+    if(GFL_UI_KEY_GetCont()&PAD_BUTTON_Y){
+      num = 1;
+    }else{
+      num = 6;
+    }
+    
+    for(i=0;i<num;i++){
       POKEMON_PARAM *pp1 = PP_Create( 1+i, 10, 0, tw->heapID );
       POKEMON_PARAM *pp2 = PP_Create( 400+i, 10, 0, tw->heapID );
       PokeParty_Add( tw->CG2d.myparty,    pp1);
@@ -689,7 +697,8 @@ static void releaseWork( PKWD_BRIEFING_WORK* tw )
 #ifdef PM_DEBUG  
   int i;
   if(tw->param->bsp==NULL){
-    for(i=0;i<4;i++){
+    int num = PokeParty_GetPokeCount( tw->CG2d.myparty );
+    for(i=0;i<num;i++){
       PokeParty_Delete( tw->CG2d.myparty, 0 );
       PokeParty_Delete( tw->CG2d.enemyparty, 0 );
     }
@@ -723,6 +732,11 @@ GFL_PROC_RESULT PkwdEndrollProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     initVRAM();
     initLcdWindow();
 //    initLcdWindow2(0);
+#ifdef PM_DEBUG
+    if(GFL_UI_KEY_GetCont()&PAD_BUTTON_X){
+      tw->param->scenario_no = 40;
+    }
+#endif
 
     tw->seq = SEQ_SETUP;
 
@@ -743,7 +757,7 @@ GFL_PROC_RESULT PkwdEndrollProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
   case SEQ_SETUP:
     // セットアップ
     initWork( tw );
-    setupEndrollSystem(&tw->CSys, tw->heapID);
+    setupEndrollSystem(&tw->CSys, tw, tw->heapID);
     setupG2Dcontrol(&tw->CG2d, tw->param->scenario_no, tw->heapID);
     setupG3Dcontrol(&tw->CG3d, tw->heapID, tw->param->scenario_no);
     setupOAMcontrol(&tw->COam, tw->heapID);
@@ -761,8 +775,6 @@ GFL_PROC_RESULT PkwdEndrollProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 
     tw->CG2d.scroll = ENDROLL_START;
     _endroll_screen_onoff( &tw->CG2d );
-    G2_SetBG1Offset( 0, tw->CG2d.scroll );
-    G2_SetBG2Offset( 0, tw->CG2d.scroll+16 );
     if((tw->CG2d.now_page&1)==0){
       GFL_BG_SetVisible( FRAME_BRIEF1, VISIBLE_ON );
       GFL_BG_SetVisible( FRAME_BRIEF2, VISIBLE_OFF );
@@ -1026,7 +1038,14 @@ static void VintrBriefingFunc(GFL_TCB *tcb, void *work)
 //----------------------------------------------------------------------------------
 static void VintrEndrollFunc(GFL_TCB *tcb, void *work)
 {
-  SYS_CONTROL *CSys = work;
+  PKWD_BRIEFING_WORK *tw = work;
+  G2D_CONTROL *CG2d = &tw->CG2d;
+
+  if(CG2d->bg3_scroll_direct){
+    G2_SetBG3Offset( 0, CG2d->bg3_scroll_direct  );
+  }
+  G2_SetBG1Offset( 0, tw->CG2d.scroll );
+  G2_SetBG2Offset( 0, tw->CG2d.scroll+16 );
 
   GFL_CLACT_SYS_VBlankFunc();
 
@@ -1080,7 +1099,7 @@ static void setupBriefingSystem(SYS_CONTROL* CSys, PKWD_BRIEFING_WORK *tw, HEAPI
  * @param   heapID  
  */
 //----------------------------------------------------------------------------------
-static void setupEndrollSystem(SYS_CONTROL* CSys, HEAPID heapID)
+static void setupEndrollSystem(SYS_CONTROL* CSys, PKWD_BRIEFING_WORK *tw, HEAPID heapID)
 {
   GFL_BG_Init( heapID );
   GFL_BMPWIN_Init( heapID );
@@ -1090,7 +1109,7 @@ static void setupEndrollSystem(SYS_CONTROL* CSys, HEAPID heapID)
   GFL_FONTSYS_Init();   // 初期化のみリリースなし
 
   CSys->tcbl = GFL_TCBL_Init( heapID, heapID, 4, 32 );
-  CSys->vintr_tcb = GFUser_VIntr_CreateTCB(VintrEndrollFunc, CSys, 5);
+  CSys->vintr_tcb = GFUser_VIntr_CreateTCB( VintrEndrollFunc, tw, 5);
 
   // 上下画面設定
   GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
@@ -1330,7 +1349,36 @@ static void exchange_endroll_strbuf( G2D_CONTROL *CG2d, int my_rank, int enemy_r
     _swap_pointer( CG2d, ENDROLL_STR_P1_MONSNAME4, ENDROLL_STR_P2_MONSNAME4 );
     _swap_pointer( CG2d, ENDROLL_STR_P1_MONSNAME5, ENDROLL_STR_P2_MONSNAME5 );
     _swap_pointer( CG2d, ENDROLL_STR_P1_MONSNAME6, ENDROLL_STR_P2_MONSNAME6 );
+    CG2d->exchange_result = TRUE;  // 入れ替えた
+  }else{
+    CG2d->exchange_result = FALSE; // 入れ替えなし
   }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	自分の名前を取得する
+ *
+ * @param   param		アプリ起動時パラメータ
+ * @param   CG2d		G2D_CONTROL
+ * @param   heapID	HEAPID
+ * @param   strbuf	代入先文字列
+ */
+//----------------------------------------------------------------------------------
+static STRBUF *_get_myname_string( PKWD_BRIEFING_PARAM *param, HEAPID heapID )
+{
+  STRBUF *strbuf;
+  // 0～39のシナリオは自分の名前を
+  if(param->scenario_no < POKEWOOD_PLAY_MAX){
+    strbuf = MyStatus_CreateNameString( param->mystatus, heapID );
+  }else{
+    // それ以外はチュートリアルなので、ホミカパパの名前を代入
+    GFL_MSGDATA *msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+                                           NARC_message_pokewood_name_dat, GFL_HEAP_LOWID(heapID) );
+    strbuf = GFL_MSG_CreateString( msgdata, pw_tutorial_myname );
+    GFL_MSG_Delete(msgdata);
+  }
+  return strbuf;
 }
 
 
@@ -1372,7 +1420,8 @@ static void initEndrollMsgdata( PKWD_BRIEFING_PARAM *param, G2D_CONTROL* CG2d,  
   // 性別に依存する文字列を取得
   CG2d->endrol_str[ENDROLL_STR_MYROLE] = GFL_MSG_CreateString( CG2d->mm, 
                                             pw_er_my_role_m_01+ENDROLL_STR_1BLOCK_NUM*scenario_no+mysex );
-  CG2d->endrol_str[ENDROLL_STR_MYNAME] = MyStatus_CreateNameString( param->mystatus, heapID );
+  CG2d->endrol_str[ENDROLL_STR_MYNAME] = _get_myname_string( param, heapID );
+  
 
   // 敵の役名・役者名をシナリオ毎に取得
   {
@@ -1435,6 +1484,13 @@ static void initEndrollMsgdata( PKWD_BRIEFING_PARAM *param, G2D_CONTROL* CG2d,  
   }
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	エンドロール用メッセージデータ解放
+ *
+ * @param   CG2d		
+ */
+//----------------------------------------------------------------------------------
 static void releaseEndrollMsgdata( G2D_CONTROL* CG2d )
 {
   int i;
@@ -1478,6 +1534,13 @@ static void initBriefingBmpwin( G2D_CONTROL *CG2d, HEAPID heapID )
 }
 
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	あらすじ用BMPデータ解放
+ *
+ * @param   CG2d		
+ */
+//----------------------------------------------------------------------------------
 static void releaseBriefingBmpwin( G2D_CONTROL* CG2d )
 {
   GFL_BMPWIN_Delete(CG2d->bmpwin[1]);
@@ -1495,7 +1558,7 @@ typedef struct {
   u8 align;
 } ENDROLL_LINE;
 
-// エンドロール配置1
+// エンドロール配置1（全面文字列）
 static const ENDROLL_LINE endroll_tbl1[]={
   { ENDROL_TITLE_PLAYER1       ,  1,   0,   ALIGN_RIGHT },
   { ENDROL_PLAYER1_ACT         , 17,   3,   ALIGN_LEFT  },
@@ -1536,6 +1599,8 @@ static const ENDROLL_LINE endroll_tbl1[]={
   { ENDROL_DIRECTOR            , 17,   2,   ALIGN_LEFT  },
   { ENDROL_END                 ,},
 };
+
+// エンドロール配置2（左半分が文字列）
 static const ENDROLL_LINE endroll_tbl2[]={
   { ENDROL_TITLE_PLAYER1       ,  1,   2,   ALIGN_LEFT },
   { ENDROL_PLAYER1_ACT         ,  2,   3,   ALIGN_LEFT  },
@@ -1578,6 +1643,7 @@ static const ENDROLL_LINE endroll_tbl2[]={
 };
 
 
+// エンドロール配置3（右半分が文字列）
 static const ENDROLL_LINE endroll_tbl3[]={
   { ENDROL_TITLE_PLAYER1       ,  16,   2,   ALIGN_LEFT },
   { ENDROL_PLAYER1_ACT         ,  17,   3,   ALIGN_LEFT  },
@@ -1619,53 +1685,13 @@ static const ENDROLL_LINE endroll_tbl3[]={
   { ENDROL_END                 ,},
 };
 
-#if 0
-// エンドロール配置2
-static const ENDROLL_LINE endroll_tbl2[]={
-  { ENDROL_TITLE_ENEMY      ,  1, 22, 1, ALIGN_LEFT  },
-  { ENDROL_ENEMY_ACT        ,  2, 22, 1, ALIGN_RIGHT },
-  { ENDROL_TITLE_ENEMY_PARTY,  1, 25, 1, ALIGN_LEFT  },
-  { ENDROL_ENEMY_PARTY      ,  2, 25, 6, ALIGN_RIGHT },
-  { ENDROL_TITLE_MINE       ,  1, 39, 1, ALIGN_LEFT  },
-  { ENDROL_MYNAME           ,  2, 39, 1, ALIGN_RIGHT },
-  { ENDROL_TITLE_MYPARTY    ,  1, 43, 6, ALIGN_LEFT  },
-  { ENDROL_MYPARTY          ,  2, 43, 1, ALIGN_RIGHT },
-  { ENDROL_END ,},
-};
-
-// エンドロール配置3
-static const ENDROLL_LINE endroll_tbl3[]={
-  { ENDROL_TITLE_ENEMY      ,  9, 22, 1, ALIGN_CENTER },
-  { ENDROL_ENEMY_ACT        ,  9, 22, 1, ALIGN_CENTER },
-  { ENDROL_TITLE_ENEMY_PARTY,  9, 25, 1, ALIGN_CENTER },
-  { ENDROL_ENEMY_PARTY      ,  9, 25, 6, ALIGN_CENTER },
-  { ENDROL_TITLE_MINE       ,  9, 39, 1, ALIGN_CENTER },
-  { ENDROL_MYNAME           ,  9, 39, 1, ALIGN_CENTER },
-  { ENDROL_TITLE_MYPARTY    ,  9, 43, 6, ALIGN_CENTER },
-  { ENDROL_MYPARTY          ,  9, 43, 1, ALIGN_CENTER },
-  { ENDROL_END ,},
-};
-
-// エンドロール配置4
-static const ENDROLL_LINE endroll_tbl4[]={
-  { ENDROL_TITLE_ENEMY      ,  8, 22, 1, ALIGN_LEFT },
-  { ENDROL_ENEMY_ACT        ,  9, 22, 1, ALIGN_LEFT },
-  { ENDROL_TITLE_ENEMY_PARTY,  8, 25, 1, ALIGN_LEFT },
-  { ENDROL_ENEMY_PARTY      ,  9, 25, 6, ALIGN_LEFT },
-  { ENDROL_TITLE_MINE       ,  8, 39, 1, ALIGN_LEFT },
-  { ENDROL_MYNAME           ,  9, 39, 1, ALIGN_LEFT },
-  { ENDROL_TITLE_MYPARTY    ,  8, 43, 6, ALIGN_LEFT },
-  { ENDROL_MYPARTY          ,  9, 43, 1, ALIGN_LEFT },
-  { ENDROL_END ,},
-};
-#endif
-
 
 enum{
   ENDROL_F_PLAYER1 =30,
   ENDROL_F_PLAYER1_ACT,
   ENDROL_F_PLAYER2,
   ENDROL_F_PLAYER2_ACT,
+  ENDROL_F_WRITER_MYNAME,
   ENDROL_F_PLAYER1_PARTY1,
   ENDROL_F_PLAYER1_PARTY2,
   ENDROL_F_PLAYER1_PARTY3,
@@ -1682,44 +1708,54 @@ enum{
 
 
 static const u32 endroll_strtbl[]={
-  ENDROL_F_PLAYER1,         /// ENDROL_TITLE_PLAYER1         // 「役名１」
-  ENDROLL_STR_MY_PARTY,     /// ENDROL_TITLE_PLAYER1_PARTY  // 「役名１のパーティ名」
-  ENDROL_F_PLAYER2,         /// ENDROL_TITLE_PLAYER2        // 「役名２」
-  ENDROLL_STR_ENEMY_PARTY,  /// ENDROL_TITLE_PLAYER2_PARTY  // 「役名２のパーティ名」
-  ENDROLL_STR_EXTRA1,       /// ENDROL_TITLE_EXTRA1         // 「エキストラ名」
-  ENDROLL_STR_EXTRA2,       /// ENDROL_TITLE_EXTRA2         // 「エキストラ名」
-  ENDROLL_STR_EXTRA3,       /// ENDROL_TITLE_EXTRA3         // 「エキストラ名」
-  ENDROLL_STR_EXTRA4,       /// ENDROL_TITLE_EXTRA4         // 「エキストラ名」
-  ENDROLL_STR_EXTRA5,       /// ENDROL_TITLE_EXTRA5         // 「エキストラ名」
-  ENDROLL_STR_VFX,          /// ENDROL_TITLE_VFX            // 「VFX」
-  ENDROLL_STR_WRITER,       /// ENDROL_TITLE_SCENARIO       // 「シナリオライター」
-  ENDROLL_STR_DIRECTOR,     /// ENDROL_TITLE_DIRECTOR       // 「かんとく」
-  ENDROL_F_PLAYER1_ACT,     /// ENDROL_PLAYER1_ACT          // 役名１の役者
-  ENDROL_F_PLAYER1_PARTY1,  /// ENDROL_PLAYER1_PARTY1        // 役名１のパーティ
-  ENDROL_F_PLAYER1_PARTY2,  /// ENDROL_PLAYER1_PARTY2        // 役名１のパーティ
-  ENDROL_F_PLAYER1_PARTY3,  /// ENDROL_PLAYER1_PARTY3        // 役名１のパーティ
-  ENDROL_F_PLAYER1_PARTY4,  /// ENDROL_PLAYER1_PARTY4        // 役名１のパーティ
-  ENDROL_F_PLAYER1_PARTY5,  /// ENDROL_PLAYER1_PARTY5        // 役名１のパーティ
-  ENDROL_F_PLAYER1_PARTY6,  /// ENDROL_PLAYER1_PARTY6        // 役名１のパーティ
-  ENDROL_F_PLAYER2_ACT,     /// ENDROL_PLAYER2_ACT           // 役名２の役者
-  ENDROL_F_PLAYER2_PARTY1,  /// ENDROL_PLAYER2_PARTY1        // 役名２のパーティ
-  ENDROL_F_PLAYER2_PARTY2,  /// ENDROL_PLAYER2_PARTY2        // 役名２のパーティ
-  ENDROL_F_PLAYER2_PARTY3,  /// ENDROL_PLAYER2_PARTY3        // 役名２のパーティ
-  ENDROL_F_PLAYER2_PARTY4,  /// ENDROL_PLAYER2_PARTY4        // 役名２のパーティ
-  ENDROL_F_PLAYER2_PARTY5,  /// ENDROL_PLAYER2_PARTY5        // 役名２のパーティ
-  ENDROL_F_PLAYER2_PARTY6,  /// ENDROL_PLAYER2_PARTY6        // 役名２のパーティ
-  ENDROLL_STR_EXTRA_ACTOR1, /// ENDROL_EXTRA_ACT1            // エキストラの役者
-  ENDROLL_STR_EXTRA_ACTOR2, /// ENDROL_EXTRA_ACT2            // エキストラの役者
-  ENDROLL_STR_EXTRA_ACTOR3, /// ENDROL_EXTRA_ACT3            // エキストラの役者
-  ENDROLL_STR_EXTRA_ACTOR4, /// ENDROL_EXTRA_ACT4            // エキストラの役者
-  ENDROLL_STR_EXTRA_ACTOR5, /// ENDROL_EXTRA_ACT5            // エキストラの役者
-  ENDROLL_STR_VFX_TEAM,     /// ENDROL_VFX                  // VFXスタッフ
-  ENDROLL_STR_WRITER_NAME,  /// ENDROL_SCENARIO1            // シナリオライターの名前
-  ENDROL_F_PLAYER1_ACT,     /// ENDROL_SCENARIO2            // 自分の名前
-  ENDROLL_STR_DIRECTOR_NAME,/// ENDROL_DIRECTOR             // 監督名
+  ENDROL_F_PLAYER1,         /// ENDROL_TITLE_PLAYER1        「役名１」
+  ENDROLL_STR_MY_PARTY,     /// ENDROL_TITLE_PLAYER1_PARTY  「役名１のパーティ名」
+  ENDROL_F_PLAYER2,         /// ENDROL_TITLE_PLAYER2        「役名２」
+  ENDROLL_STR_ENEMY_PARTY,  /// ENDROL_TITLE_PLAYER2_PARTY  「役名２のパーティ名」
+  ENDROLL_STR_EXTRA1,       /// ENDROL_TITLE_EXTRA1         「エキストラ名」
+  ENDROLL_STR_EXTRA2,       /// ENDROL_TITLE_EXTRA2         「エキストラ名」
+  ENDROLL_STR_EXTRA3,       /// ENDROL_TITLE_EXTRA3         「エキストラ名」
+  ENDROLL_STR_EXTRA4,       /// ENDROL_TITLE_EXTRA4         「エキストラ名」
+  ENDROLL_STR_EXTRA5,       /// ENDROL_TITLE_EXTRA5         「エキストラ名」
+  ENDROLL_STR_VFX,          /// ENDROL_TITLE_VFX            「VFX」
+  ENDROLL_STR_WRITER,       /// ENDROL_TITLE_SCENARIO       「シナリオライター」
+  ENDROLL_STR_DIRECTOR,     /// ENDROL_TITLE_DIRECTOR       「かんとく」
+  ENDROL_F_PLAYER1_ACT,     /// ENDROL_PLAYER1_ACT          役名１の役者
+  ENDROL_F_PLAYER1_PARTY1,  /// ENDROL_PLAYER1_PARTY1       役名１のパーティ
+  ENDROL_F_PLAYER1_PARTY2,  /// ENDROL_PLAYER1_PARTY2       役名１のパーティ
+  ENDROL_F_PLAYER1_PARTY3,  /// ENDROL_PLAYER1_PARTY3       役名１のパーティ
+  ENDROL_F_PLAYER1_PARTY4,  /// ENDROL_PLAYER1_PARTY4       役名１のパーティ
+  ENDROL_F_PLAYER1_PARTY5,  /// ENDROL_PLAYER1_PARTY5       役名１のパーティ
+  ENDROL_F_PLAYER1_PARTY6,  /// ENDROL_PLAYER1_PARTY6       役名１のパーティ
+  ENDROL_F_PLAYER2_ACT,     /// ENDROL_PLAYER2_ACT          役名２の役者
+  ENDROL_F_PLAYER2_PARTY1,  /// ENDROL_PLAYER2_PARTY1       役名２のパーティ
+  ENDROL_F_PLAYER2_PARTY2,  /// ENDROL_PLAYER2_PARTY2       役名２のパーティ
+  ENDROL_F_PLAYER2_PARTY3,  /// ENDROL_PLAYER2_PARTY3       役名２のパーティ
+  ENDROL_F_PLAYER2_PARTY4,  /// ENDROL_PLAYER2_PARTY4       役名２のパーティ
+  ENDROL_F_PLAYER2_PARTY5,  /// ENDROL_PLAYER2_PARTY5       役名２のパーティ
+  ENDROL_F_PLAYER2_PARTY6,  /// ENDROL_PLAYER2_PARTY6       役名２のパーティ
+  ENDROLL_STR_EXTRA_ACTOR1, /// ENDROL_EXTRA_ACT1           エキストラの役者
+  ENDROLL_STR_EXTRA_ACTOR2, /// ENDROL_EXTRA_ACT2           エキストラの役者
+  ENDROLL_STR_EXTRA_ACTOR3, /// ENDROL_EXTRA_ACT3           エキストラの役者
+  ENDROLL_STR_EXTRA_ACTOR4, /// ENDROL_EXTRA_ACT4           エキストラの役者
+  ENDROLL_STR_EXTRA_ACTOR5, /// ENDROL_EXTRA_ACT5           エキストラの役者
+  ENDROLL_STR_VFX_TEAM,     /// ENDROL_VFX                  VFXスタッフ
+  ENDROLL_STR_WRITER_NAME,  /// ENDROL_SCENARIO1            シナリオライターの名前
+  ENDROL_F_WRITER_MYNAME,   /// ENDROL_SCENARIO2            自分の名前
+  ENDROLL_STR_DIRECTOR_NAME,/// ENDROL_DIRECTOR             監督名
 };
 
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	文字列描画
+ *
+ * @param   CG2d		G2D_CONTROL
+ * @param   index		BMPWINの添え字指定
+ * @param   strbuf	文字列
+ * @param   align		ALIGN_LEFT:左から描画、ALIGN_RIGHT:右端から描画
+ */
+//----------------------------------------------------------------------------------
 static void _str_print( G2D_CONTROL *CG2d, int index, const STRBUF *strbuf, int align )
 {
   int x = 0;
@@ -1732,6 +1768,16 @@ static void _str_print( G2D_CONTROL *CG2d, int index, const STRBUF *strbuf, int 
 
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	エンドロール描画時に指定の文字列を取得するための仕組み
+ *
+ * @param   CG2d		G2D_CONTROL
+ * @param   type		文字列の種類(人名・固定文字列など）
+ *
+ * @retval  STRBUF *		文字列
+ */
+//----------------------------------------------------------------------------------
 static STRBUF *_get_Endroll_strbuf_pointer( G2D_CONTROL *CG2d, int type )
 {
   STRBUF *strbuf = NULL;
@@ -1767,6 +1813,13 @@ static STRBUF *_get_Endroll_strbuf_pointer( G2D_CONTROL *CG2d, int type )
     n = endroll_strtbl[type]-ENDROL_F_PLAYER2_PARTY1;
     strbuf = CG2d->endrol_str[ENDROLL_STR_P2_MONSNAME1+n];
     break;
+  case ENDROL_F_WRITER_MYNAME:
+    if(CG2d->exchange_result){
+      strbuf = CG2d->endrol_str[ENDROLL_STR_ENEMYNAME];
+    }else{
+      strbuf = CG2d->endrol_str[ENDROLL_STR_MYNAME];
+    }
+    break;
   default:
     strbuf = CG2d->endrol_str[endroll_strtbl[type]];
     // 文字列が「なし」だったら使用しない
@@ -1778,6 +1831,17 @@ static STRBUF *_get_Endroll_strbuf_pointer( G2D_CONTROL *CG2d, int type )
   return strbuf;
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	エンドロール用文字列描画
+ *
+ * @param   CG2d		G2D_CONTROL
+ * @param   index		BMPWINの添え字
+ * @param   type		文字列の種類(人名・固定文字列など）
+ * @param   align		ALIGN_LEFT or ALIGN_RIGHT
+ * @param   heapID		HEAPID
+ */
+//----------------------------------------------------------------------------------
 static void _Endroll_StrPrint( G2D_CONTROL *CG2d, int index, int type, int align, HEAPID heapID )
 {
   const STRBUF *strbuf = _get_Endroll_strbuf_pointer( CG2d, type );
@@ -1848,6 +1912,13 @@ static void initEndrollBmpwin( G2D_CONTROL *CG2d, HEAPID heapID, int align )
 }
 
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	エンドロール描画用BMPWIN解放
+ *
+ * @param   CG2d		
+ */
+//----------------------------------------------------------------------------------
 static void releaseEndrollBmpwin( G2D_CONTROL* CG2d )
 {
   int i;
@@ -2704,8 +2775,8 @@ static void EndrollFunc( PKWD_BRIEFING_WORK *tw )
 
     _endroll_screen_onoff( &tw->CG2d );
     tw->CG2d.scroll++;
-    G2_SetBG1Offset( 0, tw->CG2d.scroll );
-    G2_SetBG2Offset( 0, (tw->CG2d.scroll)+16 );
+//    G2_SetBG1Offset( 0, tw->CG2d.scroll );
+//    G2_SetBG2Offset( 0, (tw->CG2d.scroll)+16 );
     _BG3Offset_func( &tw->CG2d, tw->CG2d.scroll, tw->mode, tw->heapID );
     GFL_BG_SetVisible( FRAME_BRIEF2, VISIBLE_ON  );
     GFL_BG_SetVisible( FRAME_BRIEF1, VISIBLE_ON );
@@ -2809,19 +2880,34 @@ static void _endroll_screen_onoff( G2D_CONTROL *CG2d )
     GFL_BG_LoadScreenReq( FRAME_BRIEF2 );
   }
 }
+
+
+#define POKEWOOD_CREDIT_HALF_HEIGHT  ( 128 )  ///< エンドクレジット文字列が途切れる場所
+#define POKEWOOD_LOG_SCREEN_HEIGHT   ( 234 )  ///< ポケウッドロゴとENDを差し替えるのに都合のいい場所
+//----------------------------------------------------------------------------------
+/**
+ * @brief	BG3面のスクロール設定
+ *
+ * @param   CG2d		
+ * @param   scroll		
+ * @param   align		
+ * @param   heapID		
+ */
+//----------------------------------------------------------------------------------
 static void _BG3Offset_func( G2D_CONTROL* CG2d, int scroll, int align, HEAPID heapID )
 {
-  int pokewood_pos = (CG2d->line_count*8-128);
+  int pokewood_pos = (CG2d->line_count*8-POKEWOOD_CREDIT_HALF_HEIGHT);
 #ifdef SCROLL_DEBUG
-  OS_Printf( "now=%d,", scroll);
+  OS_Printf( "now=%d, line_calc=%d", scroll,CG2d->line_count*8-128);
 #endif
   if(scroll > pokewood_pos){
 #ifdef SCROLL_DEBUG
     OS_Printf("limit=%d,  bg3pos=%d", pokewood_pos,  CG2d->scroll- pokewood_pos );
 #endif
-    G2_SetBG3Offset( 0, CG2d->scroll- pokewood_pos  );
+    // この値が0以外になるとvblankFuncでスクロール設定が行われる
+    CG2d->bg3_scroll_direct = CG2d->scroll- pokewood_pos;
   }
-  if(scroll==586 && align!=0){
+  if(scroll==(pokewood_pos+POKEWOOD_LOG_SCREEN_HEIGHT) && align!=0){
     transSideEndScreen( CG2d, heapID, align );
   }
   
