@@ -1,7 +1,7 @@
 //============================================================================================
 /**
  * @file  wbt_party.c
- * @brief
+ * @brief WBT：自分＆相手の手持ちポケモン生成関連
  * @author  tamada GAMEFREAK inc.
  * @date  2011.08.20
  *
@@ -36,6 +36,7 @@
 
 
 //============================================================================================
+//    定義
 //============================================================================================
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -47,6 +48,25 @@ enum {
 enum {
   NG_POKE_MAX = 12,
   NG_ITEM_MAX = 12,
+  NG_INDEX_MAX = 12,
+};
+
+enum {
+  NG_INDEX_NULL = 0xffff, ///< u16の最大値を無効値として使用する
+};
+
+//--------------------------------------------------------------
+/// ポケモン抽選処理でのNGポケモン情報
+//--------------------------------------------------------------
+struct _WBT_NGPMINFO
+{
+  BOOL disableMonsCheck;  ///<ポケモンNoのチェック無効
+  u16 ng_mons_max;        ///<NGポケモンNo.の最大数
+  u16 ng_item_max;        ///<NGアイテムNo.の最大数
+  u16 ng_index_max;       ///<NGインデックスの最大数
+  u16 * ng_mons_no;       ///<NGポケモンNo.の配列
+  u16 * ng_item_no;       ///<NGアイテムNo.の配列
+  u16 * ng_index_no;      ///<NGインデックスの配列
 };
 
 //--------------------------------------------------------------
@@ -107,8 +127,11 @@ WBT_NGPMINFO * NGINFO_Create( HEAPID heapID, WBTCUP wbtcup )
   }
   ng_info->ng_mons_max = NG_POKE_MAX;
   ng_info->ng_item_max = NG_ITEM_MAX;
+  ng_info->ng_index_max = NG_INDEX_MAX;
   ng_info->ng_mons_no = GFL_HEAP_AllocClearMemory( heapID, sizeof(u16) * NG_POKE_MAX );
   ng_info->ng_item_no = GFL_HEAP_AllocClearMemory( heapID, sizeof(u16) * NG_ITEM_MAX );
+  ng_info->ng_index_no = GFL_HEAP_AllocMemory( heapID, sizeof(u16) * NG_INDEX_MAX );
+  GFL_STD_MemFill16( ng_info->ng_index_no, NG_INDEX_NULL, sizeof(u16) * NG_INDEX_MAX );
   return ng_info;
 }
 
@@ -121,6 +144,7 @@ void WBT_NGINFO_Delete( WBT_NGPMINFO * ng_info )
 {
   GFL_HEAP_FreeMemory( ng_info->ng_mons_no );
   GFL_HEAP_FreeMemory( ng_info->ng_item_no );
+  GFL_HEAP_FreeMemory( ng_info->ng_index_no );
   GFL_HEAP_FreeMemory( ng_info );
 }
 //--------------------------------------------------------------
@@ -168,15 +192,38 @@ void WBT_NGINFO_AddNGMons( WBT_NGPMINFO * ng_info, u16 mons_no )
 
 //--------------------------------------------------------------
 /**
+ * @brief NG登録：index No.
+ * @param[in/out] ng_info
+ * @param[in]     ng_index
+ */
+//--------------------------------------------------------------
+void WBT_NGINFO_AddNGIndex( WBT_NGPMINFO * ng_info, s16 ng_index )
+{
+  int i;
+  for ( i = 0; i < ng_info->ng_index_max; i ++ )
+  {
+    if (ng_info->ng_index_no[ i ] == NG_INDEX_NULL )
+    {
+      ng_info->ng_index_no[ i ] = ng_index;
+      TAMADA_Printf("NG index(%d)\n", ng_index );
+      return;
+    }
+  }
+  GF_ASSERT(0);
+}
+
+//--------------------------------------------------------------
+/**
  * @brief NG情報との照合チェック
  * @param[in]   ng_info
  * @param[in]   mons_no
  * @param[in]   item_no
+ * @param[in]   index_no
  * @retval  TRUE  問題あり（NGのものと一致した）
  * @retval  FALSE 問題ない
  */
 //--------------------------------------------------------------
-static BOOL WBT_NGINFO_Check( const WBT_NGPMINFO * ng_info, u16 mons_no, u16 item_no )
+static BOOL WBT_NGINFO_Check( const WBT_NGPMINFO * ng_info, u16 mons_no, u16 item_no, s16 index_no )
 {
   int i;
   //データ無し→チェックOKする
@@ -193,6 +240,10 @@ static BOOL WBT_NGINFO_Check( const WBT_NGPMINFO * ng_info, u16 mons_no, u16 ite
   {
     if ( item_no != 0 && item_no == ng_info->ng_item_no[i] ) return TRUE;
   }
+  for ( i = 0; i < ng_info->ng_index_max; i ++ )
+  {
+    if ( index_no != NG_INDEX_NULL && index_no == ng_info->ng_index_no[i] ) return TRUE;
+  }
   return FALSE;
 }
 
@@ -201,6 +252,7 @@ static BOOL WBT_NGINFO_Check( const WBT_NGPMINFO * ng_info, u16 mons_no, u16 ite
 //============================================================================================
 //--------------------------------------------------------------
 /**
+ * @brief   候補データオブジェクトの生成
  * @param[in]     heapID        使用するヒープID
  * @param[in]     poke_arc_id   ポケモンデータが格納されているアーカイブID
  * @param[in]     use_poke_cnt
@@ -233,13 +285,25 @@ static POKECANDIDATE * POKECANDIDATE_Create(
   return pcan;
 }
 //--------------------------------------------------------------
+/**
+ * @brief 候補データオブジェクトの破棄
+ */
 //--------------------------------------------------------------
 static void POKECANDIDATE_Delete( POKECANDIDATE * pcan )
 {
   GFL_HEAP_FreeMemory( pcan->array );
   GFL_HEAP_FreeMemory( pcan );
 }
+
 //--------------------------------------------------------------
+/**
+ * @brief 候補データの利用可能状況を更新する
+ * @param[in,out] pcan    候補ポケモンデータ
+ * @param[in]     ng_info NGデータ
+ * @return  u16   選択可能な候補数
+ *
+ * NGデータと候補データのマッチングを行い、候補データを使えるかどうかの状態を更新している
+ */
 //--------------------------------------------------------------
 static u16 POKECANDIDATE_updateNG( POKECANDIDATE * pcan, const WBT_NGPMINFO * ng_info )
 {
@@ -248,7 +312,8 @@ static u16 POKECANDIDATE_updateNG( POKECANDIDATE * pcan, const WBT_NGPMINFO * ng
   for ( i = 0; i < pcan->num; i ++ )
   {
     CANDIDATE_DATA * candidate = &pcan->array[i];
-    if ( WBT_NGINFO_Check( ng_info, candidate->prd.mons_no, candidate->prd.item_no ) == TRUE )
+    if ( WBT_NGINFO_Check( ng_info,
+          candidate->prd.mons_no, candidate->prd.item_no, candidate->index_no ) == TRUE )
     { //NGのものは使用できないようにする
       candidate->available = FALSE;
     }
@@ -256,29 +321,13 @@ static u16 POKECANDIDATE_updateNG( POKECANDIDATE * pcan, const WBT_NGPMINFO * ng
   }
   return available_count;
 }
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static void POKECANDIDATE_setNG( POKECANDIDATE * pcan, WBT_NGPMINFO * ng_info,
-    u16 mons_no, u16 item_no )
-{
-  int i;
-  //同一のポケモンを含むデータは使えなくなる
-  WBT_NGINFO_AddNGMons( ng_info, mons_no );
-  //同一のアイテムを持つデータは使えなくなる
-  WBT_NGINFO_AddNGItem( ng_info, item_no );
-  //今回登録したポケモン・アイテムと重複する場合は使えないようにする
-  for ( i = 0; i < pcan->num; i ++ )
-  {
-    BSUBWAY_POKEMON_ROM_DATA * prd = &pcan->array[i].prd;
-    if ( (mons_no != 0 && prd->mons_no == mons_no) || ( item_no != 0 && prd->item_no == item_no ) )
-    {
-      pcan->array[i].available = FALSE;
-    }
-  }
-}
 
 //--------------------------------------------------------------
 /**
+ * @brief   候補データへのインデックスを取得する
+ * @param[in,out] pcan    候補ポケモンデータ
+ * @param[in]     choice  選択可能数の中での番号
+ * @return  u16   選択した候補データへのインデックス
  */
 //--------------------------------------------------------------
 static u16 POKECANDIDATE_CountAvailableIndex( const POKECANDIDATE * pcan, u32 choice )
@@ -296,6 +345,11 @@ static u16 POKECANDIDATE_CountAvailableIndex( const POKECANDIDATE * pcan, u32 ch
   return poke_index;
 }
 //--------------------------------------------------------------
+/**
+ * @brief 指定した候補データを利用できない状態にする
+ * @param[in,out] pcan    候補ポケモンデータ
+ * @param[in,out] ng_info NGデータ
+ */
 //--------------------------------------------------------------
 static void POKECANDIDATE_MarkSelected( POKECANDIDATE * pcan, WBT_NGPMINFO * ng_info, u32 index )
 {
@@ -339,9 +393,10 @@ static void DEBUG_POKECANDIDATE_dump( const POKECANDIDATE * pcan )
  *
  * @todo  異常なデータに対するリカバリ処理が必要
  *
- * (2)arrCandidate中のNG登録のアイテム、ポケモンを含むデータを使用できないようにする
- * (3)arrCandidateの利用可能なものをランダムに選択、同じポケモン・アイテムをNGINFOに登録
- * (4)　(2)～(3)を必要なだけ繰り返し、完了
+ * (1)pcan中のNG登録のアイテム、ポケモンを含むデータを使用できないようにする
+ * (2)pcanの利用可能なものからランダムで選択
+ * (3)(2)で選択したのと同じポケモン・アイテムをNGINFOに登録
+ * (4)　(1)～(3)を必要なだけ繰り返し、完了
  */
 //--------------------------------------------------------------
 static void choiceBSubwayData(
@@ -354,7 +409,6 @@ static void choiceBSubwayData(
   u8 selected[TEMOTI_POKEMAX];
 
   GFL_STD_MemClear( selected, sizeof(u8) * TEMOTI_POKEMAX );
-  //GFL_STD_MemClear( index_array, sizeof(u16) * TEMOTI_POKEMAX );
 
   for( set_count = 0; set_count != cnt; set_count ++ )
   {
@@ -362,7 +416,7 @@ static void choiceBSubwayData(
     u32 available_count;
     u32 choice;
 
-    //NGなデータを更新し、抽選可能な対象を数える
+    //(1)NGなデータを更新し、抽選可能な対象を数える
     available_count = POKECANDIDATE_updateNG( pcan, ng_info );
 #ifdef  PM_DEBUG
 //    DEBUG_POKECANDIDATE_dump( pcan );
@@ -370,12 +424,14 @@ static void choiceBSubwayData(
     //抽選対象が必要な数に満たない場合Assert
     GF_ASSERT( available_count >= cnt - set_count );
 
+    //(2)利用可能なものからランダムで選択
     choice = GetRand( rand_context ) % available_count;
     TAMADA_Printf("need = %d,", cnt - set_count );
     TAMADA_Printf(" choose range(0-%d), choice = %d\n", ( available_count - 1 ), choice );
     poke_index = POKECANDIDATE_CountAvailableIndex( pcan, choice );
     TAMADA_Printf(" get index = %3d\n", poke_index );
 
+    //(3)(2)で選択したデータと同じポケモン・アイテムをNGINFOに登録
     POKECANDIDATE_MarkSelected( pcan, ng_info, poke_index );
 
     selected[ set_count ] = poke_index;

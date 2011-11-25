@@ -717,6 +717,8 @@ static void makeRomTrainerData(
 
     WBT_NGINFO_AddNGMons( ng_info, btpwd->mons_no );
     WBT_NGINFO_AddNGItem( ng_info, btpwd->item_no );
+    //切り札ポケモンとして選ばれたポケモンは抽選されないようにする
+    WBT_NGINFO_AddNGIndex( ng_info, index_no );
     btpwd ++;
     poke_num --;
     GFL_HEAP_FreeMemory( trd );

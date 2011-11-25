@@ -238,6 +238,7 @@ extern WBT_NGPMINFO * NGINFO_Create( HEAPID heapID, WBTCUP wbtcup );
 extern void WBT_NGINFO_Delete( WBT_NGPMINFO * ng_info );
 extern void WBT_NGINFO_AddNGItem( WBT_NGPMINFO * ng_info, u16 item_no );
 extern void WBT_NGINFO_AddNGMons( WBT_NGPMINFO * ng_info, u16 mons_no );
+extern void WBT_NGINFO_AddNGIndex( WBT_NGPMINFO * ng_info, s16 ng_index );
 
 //------------------------------------------------------------------
 //  in wbt_calc_result.c
