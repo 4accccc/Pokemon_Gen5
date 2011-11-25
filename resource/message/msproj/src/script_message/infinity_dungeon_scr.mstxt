@@ -8002,16 +8002,15 @@
 ちょうせんは　きけんだと　おもったら▼
 エレベーターで　うけつけに
 もどって　リタイアしなさい▼
-リタイアすると　このエリアで
-てにいれた　しょうきんは▽
-ぼっしゅうに　なるけど▼
+このエリアで　てにいれた
+しょうきんは　ぼっしゅうに　なるけど▼
 いちりゅうの　トレーナーは
 ひきぎわも　こころえて　いるものよ▼
-キミが　どこまで　がんばれるか
-たのしみに　しているわ▼</Text>
+げんかいに　ちょうせんするのも
+いいけど　むりは　しないでね▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T03:50:19" />
+				Time="2011-11-25T06:53:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -8027,18 +8026,18 @@
 キミに　アドバイス　してあげる▼
 ここに　エレベーターが　あるわね？▼
 もし　キミが　これ以上の
-挑戦は　危険だと　思ったら▽
+挑戦は　危険だと　思ったら▼
 エレベーターで　受付に　戻って
 リタイアしなさい▼
-リタイアすると　この　エリアで
-手に入れた　賞金は　没収になるけど▼
+この　エリアで　手に入れた
+賞金は　没収になるけど▼
 一流の　トレーナーは
-引き際も　心得て　いるものよ▼
-キミが　どこまで　がんばれるか
-楽しみに　しているわ▼</Text>
+退き際も　心得て　いるものよ▼
+限界に　挑戦するのも
+いいけど　無理は　しないでね▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T03:50:34" />
+				Time="2011-11-25T06:57:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -8455,15 +8454,14 @@ NPC：MUGENBOSS（バンジロウ）
 きけんだと　おもったら▼
 エレベーターで　うけつけに
 もどって　リタイアするんだ▼
-リタイアすると　このエリアで
-てにいれた　しょうきんは▽
-ぼっしゅうに　なるけど▼
+このエリアで　てにいれた
+しょうきんは　ぼっしゅうに　なるけど▼
 ときには　ひくことも　だいじだぞ▼
-それじゃ　キミと　たたかえるのを
-たのしみに　しているよ▼</Text>
+げんかいに　ちょうせんするのも
+いいが　むりは　するなよ▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T06:18:58" />
+				Time="2011-11-25T06:55:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -8478,19 +8476,18 @@ NPC：MUGENBOSS（バンジロウ）
 いいことを　教えて　あげよう▼
 ここに　エレベーターが　あるだろう？▼
 もし　キミが　これ以上は
-危険だと　思ったら▼
-エレベーターで
-受付に　戻ると　いい▼
-エリアの　挑戦は
-失敗に　なって▼
+危険だと　思ったらら▼
+エレベーターで　受付に　戻って
+リタイアするんだ▼
 このエリアで　手に入れた
-賞金は　没収に　なるけど▽
-時には　退くことも　大事だぞ▼
-それじゃ　キミと　戦えるのを
-楽しみに　しているよ▼</Text>
+賞金は　没収に　なるけど▼
+ときには　退くことも　大事だぞ▼
+限界に　挑戦するのも
+いいが　無理は　するなよ▼
+</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T06:59:20" />
+				Time="2011-11-25T06:57:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -25611,14 +25608,14 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>しょしんしゃさん　
 やっと　みつけてくれたね　まってたよ▼
-あの　とびらを　あけるほうほうを
+あの　ゲートを　あけるほうほうは
 さっき　おしえたね？▼
 さあ　キミが　ボストレーナーに
 ちょうせんする　じつりょくが　あるか▽
 ためしてみよう！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:13:41" />
+				Time="2011-11-25T07:10:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -25628,14 +25625,14 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>初心者さん
 やっと　見つけてくれたね　待ってたよ▼
-あの　扉を　開ける方法を
+あの　ゲートを　開ける方法は
 さっき　教えたね？▼
 さあ　キミが　ボストレーナーに
 挑戦する　実力が　あるか▽
 試してみよう！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:13:45" />
+				Time="2011-11-25T07:10:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -25665,14 +25662,14 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>しょしんしゃさん
 やっと　みつけてくれわね　まってたわ▼
-あの　とびらを　あけるほうほうを
+あの　ゲートを　あけるほうほうは
 さっき　おしえたわね？▼
 さあ　キミが　ボストレーナーに
 ちょうせんする　じつりょくが　あるか▽
 ためしてあげる！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:13:50" />
+				Time="2011-11-25T07:11:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -25682,14 +25679,14 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>初心者さん
 やっと　見つけてくれわね　待ってたわ▼
-あの　扉を　開ける方法を
+あの　ゲートを　開ける方法は
 さっき　教えたたわね？▼
 さあ　キミが　ボストレーナーに
 挑戦する　実力が　あるか▽
 試してあげる！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:13:53" />
+				Time="2011-11-25T07:10:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -26107,13 +26104,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんだ　キミ　すごい　つよいじゃないか▼
+			<Text>まけたよ　キミ　つよいじゃないか▼
 それだけの　じつりょくが　あれば
 じゅうぶんだね▼
 さあ　ゲートを　かいほうするよ！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:26:57" />
+				Time="2011-11-25T07:34:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -26121,13 +26118,13 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なんだ　キミ　すごい　強いじゃないか▼
+			<Text>負けたよ　キミ　強いじゃないか▼
 それだけの　実力が　あれば
 十分だね▼
 さあ　ゲートを　開放するよ！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:27:08" />
+				Time="2011-11-25T07:34:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -26155,13 +26152,13 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まいったわ　キミ　すごい　つよいじゃない▼
+			<Text>まいったわ　キミ　つよいじゃない▼
 それだけの　じつりょくが　あれば
 じゅうぶんね▼
 さあ　ゲートを　かいほうするわ！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:27:04" />
+				Time="2011-11-25T07:34:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -26169,13 +26166,13 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まいったわ　キミ　すごい　強いじゃない▼
+			<Text>まいったわ　キミ　強いじゃない▼
 それだけの　実力が　あれば
 十分ね▼
 さあ　ゲートを　開放するわ！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-21T07:27:11" />
+				Time="2011-11-25T07:34:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
