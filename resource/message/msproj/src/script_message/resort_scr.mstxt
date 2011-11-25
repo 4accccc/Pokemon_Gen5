@@ -4726,7 +4726,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4781,7 +4781,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4836,7 +4836,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4847,12 +4847,13 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName ]『[Name:ResortGreet Idx="2" ]
-[Name:TrainerName Idx="1" ]さん　おすすめの　おみせが▽
+			<Text>[Name:TrainerName ]『[Name:ResortGreet Idx="2" ]！
+[Name:TrainerName Idx="1" ]さん……！▼
+わたしの　とっておきの　おみせが
 あるんですが　いってみませんか？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-25T01:52:29" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T14:02:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -4860,12 +4861,13 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]『[Name:ResortGreet Idx="2" ]
-[Name:TrainerName Idx="1" ]さん　おすすめの　おみせが▽
+			<Text>[Name:TrainerName ]『[Name:ResortGreet Idx="2" ]！
+[Name:TrainerName Idx="1" ]さん……！▼
+わたしの　とっておきの　おみせが
 あるんですが　いってみませんか？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-25T01:52:30" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T14:02:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -4895,7 +4897,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4907,10 +4909,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]は[Name:TrainerName Idx="1" ]に
-[Name:ResortShop Idx="2" ]を　おしえた！▼</Text>
+[Name:ResortShop Idx="2" ]を▽
+こっそり　おしえた！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-24T07:43:56" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T14:04:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -4919,10 +4922,11 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]は[Name:TrainerName Idx="1" ]に
-[Name:ResortShop Idx="2" ]を　おしえた！▼</Text>
+[Name:ResortShop Idx="2" ]を▽
+こっそり　おしえた！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-24T07:43:59" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T14:04:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -4952,7 +4956,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4964,10 +4968,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="3" ]！
-…………　いってみたいです▼</Text>
+……　……　……　……　……　……▽
+……　……　いってみたいです▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-25T03:06:42" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T13:10:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -4976,10 +4981,11 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="3" ]！
-…………　いってみたいです▼</Text>
+……　……　……　……　……　……▽
+……　……　いってみたいです▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-25T03:06:45" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T13:10:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5009,7 +5015,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5021,10 +5027,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="3" ]！
+……　……　……　……　……　……▽
 …………　またに　します▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-25T03:06:50" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T13:11:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5033,10 +5040,11 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="3" ]！
+……　……　……　……　……　……▽
 …………　またに　します▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-25T03:06:53" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T13:11:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5066,7 +5074,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5080,8 +5088,8 @@ BW♀
 			<Text>[Name:TrainerName ]は
 まんめんの　えみを　みせている！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-24T07:59:48" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T13:56:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5092,8 +5100,8 @@ BW♀
 			<Text>[Name:TrainerName ]は
 まんめんの　えみを　みせている！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-24T07:59:49" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T13:56:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5123,7 +5131,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5137,8 +5145,8 @@ BW♀
 			<Text>[Name:TrainerName ]は
 にこにこ　している▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-24T07:59:54" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T13:56:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5149,8 +5157,8 @@ BW♀
 			<Text>[Name:TrainerName ]は
 にこにこ　している▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-24T07:59:55" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T13:56:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5180,7 +5188,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5194,8 +5202,8 @@ BW♀
 			<Text>えがおで　[Name:TrainerName ]の
 まえばが　キラっと　ひかった！！！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-24T08:00:02" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T13:56:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5206,8 +5214,8 @@ BW♀
 			<Text>えがおで　[Name:TrainerName ]の
 まえばが　キラっと　ひかった！！！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-24T08:00:04" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T13:56:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5237,7 +5245,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5248,12 +5256,13 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName ]『[Name:ResortGreet Idx="2" ]
-[Name:TrainerName Idx="1" ]さん　おすすめの　おみせが▽
+			<Text>[Name:TrainerName ]『[Name:ResortGreet Idx="2" ]！
+[Name:TrainerName Idx="1" ]さん……！▼
+わたしの　とっておきの　おみせが
 あるんですが　いってみませんか？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-25T01:52:16" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T14:03:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5261,12 +5270,13 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]『[Name:ResortGreet Idx="2" ]
-[Name:TrainerName Idx="1" ]さん　おすすめの　おみせが▽
+			<Text>[Name:TrainerName ]『[Name:ResortGreet Idx="2" ]！
+[Name:TrainerName Idx="1" ]さん……！▼
+わたしの　とっておきの　おみせが
 あるんですが　いってみませんか？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-25T01:52:20" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T14:03:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5296,7 +5306,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5308,10 +5318,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]は[Name:TrainerName Idx="1" ]に
-[Name:ResortShop Idx="2" ]を　おしえた！▼</Text>
+[Name:ResortShop Idx="2" ]を▽
+こっそり　おしえた！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-24T08:07:41" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T14:03:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5320,10 +5331,11 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]は[Name:TrainerName Idx="1" ]に
-[Name:ResortShop Idx="2" ]を　おしえた！▼</Text>
+[Name:ResortShop Idx="2" ]を▽
+こっそり　おしえた！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-24T08:07:41" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T14:04:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5353,7 +5365,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5365,10 +5377,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="3" ]！
-…………　いってみたいです▼</Text>
+……　……　……　……　……　……▽
+……　……　いってみたいです▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-25T03:07:04" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T13:58:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5377,10 +5390,11 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="3" ]！
-…………　いってみたいです▼</Text>
+……　……　……　……　……　……▽
+……　……　いってみたいです▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-25T03:07:04" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T13:58:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5410,7 +5424,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5422,10 +5436,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="3" ]！
+……　……　……　……　……　……▽
 …………　またに　します▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-25T03:07:04" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T13:14:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5434,10 +5449,11 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="3" ]！
+……　……　……　……　……　……▽
 …………　またに　します▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-25T03:07:04" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T13:14:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5467,7 +5483,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5481,8 +5497,8 @@ BW♀
 			<Text>[Name:TrainerName ]は
 まんめんの　えみを　みせている！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-24T08:07:41" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T13:55:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5493,8 +5509,8 @@ BW♀
 			<Text>[Name:TrainerName ]は
 まんめんの　えみを　みせている！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-24T08:07:41" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T13:55:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5524,7 +5540,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5538,8 +5554,8 @@ BW♀
 			<Text>[Name:TrainerName ]は
 にこにこ　している▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-24T08:07:41" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T13:55:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5550,8 +5566,8 @@ BW♀
 			<Text>[Name:TrainerName ]は
 にこにこ　している▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-24T08:07:41" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T13:55:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5581,7 +5597,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5595,8 +5611,8 @@ BW♀
 			<Text>えがおで　[Name:TrainerName ]の
 まえばが　キラっと　ひかった！！！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-24T08:00:02" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T13:55:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5607,8 +5623,8 @@ BW♀
 			<Text>えがおで　[Name:TrainerName ]の
 まえばが　キラっと　ひかった！！！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-24T08:00:04" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T13:55:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5638,7 +5654,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -16018,10 +16034,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バー　[Name:TrainerName Idx="0" ]</Text>
+			<Text>バー[Name:TrainerName Idx="0" ]さん</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-21T13:45:36" />
+				Time="2011-11-25T14:01:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -16029,10 +16045,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バー　[Name:TrainerName Idx="0" ]</Text>
+			<Text>バー[Name:TrainerName Idx="0" ]さん</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-21T13:45:44" />
+				Time="2011-11-25T14:01:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17012,11 +17028,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたるもハッケ　あたらぬもハッケ
+			<Text>１とうは　なんと　マスターボール！
 『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:54:52" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T14:02:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -17024,11 +17040,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>当たるもハッケ　当たらぬもハッケ
+			<Text>1等は　なんと　マスターボール！
 『[Name:ResortShop Idx="0" ]』へ　ようこそ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:54:52" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T14:02:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -76129,10 +76145,10 @@ BW♀
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『
 [Name:ResortShop Idx="1" ]……！▽
-おすすめされて　きたけど　ステキ！▼</Text>
+なんだか　とっても　ステキ！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-25T01:06:08" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T14:25:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -76142,10 +76158,10 @@ BW♀
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『
 [Name:ResortShop Idx="1" ]……！▽
-おすすめされて　きたけど　ステキ！▼</Text>
+なんだか　とっても　ステキ！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-25T01:06:10" />
+				User="shimoyamada:W00184"
+				Time="2011-11-25T14:25:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -92537,10 +92553,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いやだ！</Text>
+			<Text>やだやだやだ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:43:03" />
+				Time="2011-11-25T13:36:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -92548,10 +92564,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いやだ！</Text>
+			<Text>やだやだやだ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:43:05" />
+				Time="2011-11-25T13:37:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -92584,10 +92600,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だいきらい！</Text>
+			<Text>きらいじゃない！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:43:03" />
+				Time="2011-11-25T13:36:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -92595,10 +92611,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>だいきらい！</Text>
+			<Text>きらいじゃない！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:43:05" />
+				Time="2011-11-25T13:37:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -92631,10 +92647,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きみって…</Text>
+			<Text>クスクス</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:43:03" />
+				Time="2011-11-25T13:36:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -92642,10 +92658,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きみって…</Text>
+			<Text>クスクス</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:43:05" />
+				Time="2011-11-25T13:37:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -92866,10 +92882,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちょっとまって</Text>
+			<Text>ちょっとまって！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:43:03" />
+				Time="2011-11-25T13:36:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -92877,10 +92893,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちょっとまって</Text>
+			<Text>ちょっとまって！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:43:05" />
+				Time="2011-11-25T13:37:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -92913,10 +92929,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひょっとして…</Text>
+			<Text>フフフフフッ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:43:03" />
+				Time="2011-11-25T13:36:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -92924,10 +92940,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひょっとして…</Text>
+			<Text>フフフフフッ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:43:05" />
+				Time="2011-11-25T13:37:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -92960,10 +92976,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハァーーイ</Text>
+			<Text>ハァーーイ♥</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:43:03" />
+				Time="2011-11-25T13:36:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -92971,10 +92987,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハァーーイ</Text>
+			<Text>ハァーーイ♥</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:43:05" />
+				Time="2011-11-25T13:37:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -93007,10 +93023,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おねがいします</Text>
+			<Text>ヘルプミー♥</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:43:03" />
+				Time="2011-11-25T13:36:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -93018,10 +93034,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おねがいします</Text>
+			<Text>ヘルプミー♥</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:43:05" />
+				Time="2011-11-25T13:37:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -93054,10 +93070,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ようするに…</Text>
+			<Text>はて…？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:43:03" />
+				Time="2011-11-25T13:36:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -93065,10 +93081,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ようするに…</Text>
+			<Text>はて…？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:43:05" />
+				Time="2011-11-25T13:37:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -93101,10 +93117,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つまりですね…</Text>
+			<Text>らららららら♪</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:43:03" />
+				Time="2011-11-25T13:36:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -93112,10 +93128,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>つまりですね…</Text>
+			<Text>らららららら♪</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:43:05" />
+				Time="2011-11-25T13:37:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -93289,10 +93305,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>コレがですね…</Text>
+			<Text>あわわわわ……</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:14:05" />
+				Time="2011-11-25T13:36:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -93300,10 +93316,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>コレがですね…</Text>
+			<Text>あわわわわ……</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:14:07" />
+				Time="2011-11-25T13:37:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -93336,10 +93352,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>コラー！笑</Text>
+			<Text>コラー！②</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:14:05" />
+				Time="2011-11-25T13:36:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -93347,10 +93363,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>コラー！笑</Text>
+			<Text>コラー！②</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:14:07" />
+				Time="2011-11-25T13:37:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -93383,10 +93399,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>スリスリサッサ♪</Text>
+			<Text>ヒュー♪ヒュー♪</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:14:05" />
+				Time="2011-11-25T13:36:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -93394,10 +93410,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>スリスリサッサ♪</Text>
+			<Text>ヒュー♪ヒュー♪</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:14:07" />
+				Time="2011-11-25T13:37:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -93618,10 +93634,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プンプンッ怒</Text>
+			<Text>プンプンッ②</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:14:05" />
+				Time="2011-11-25T13:36:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -93629,10 +93645,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プンプンッ怒</Text>
+			<Text>プンプンッ②</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:14:07" />
+				Time="2011-11-25T13:37:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -93947,10 +93963,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とつげき！</Text>
+			<Text>とつげきします！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:14:05" />
+				Time="2011-11-25T13:36:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -93958,10 +93974,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とつげき！</Text>
+			<Text>とつげきします！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:14:07" />
+				Time="2011-11-25T13:37:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -95933,10 +95949,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マーベラス！</Text>
+			<Text>ゲラゲラ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:42:37" />
+				Time="2011-11-25T13:37:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -95944,10 +95960,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>マーベラス！</Text>
+			<Text>ゲラゲラ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:42:38" />
+				Time="2011-11-25T13:37:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -96215,10 +96231,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちがうなー</Text>
+			<Text>フンフンフンッ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:42:37" />
+				Time="2011-11-25T13:37:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -96226,10 +96242,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちがうなー</Text>
+			<Text>フンフンフンッ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:42:38" />
+				Time="2011-11-25T13:37:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -96262,10 +96278,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バァーーイ</Text>
+			<Text>バァーーイ♥</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:42:37" />
+				Time="2011-11-25T13:37:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -96273,10 +96289,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バァーーイ</Text>
+			<Text>バァーーイ♥</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:42:38" />
+				Time="2011-11-25T13:37:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -96309,10 +96325,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>サンキューです</Text>
+			<Text>センキュー♥</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:42:37" />
+				Time="2011-11-25T13:37:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -96320,10 +96336,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>サンキューです</Text>
+			<Text>センキュー♥</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:42:38" />
+				Time="2011-11-25T13:37:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -96356,10 +96372,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アレなわけです</Text>
+			<Text>なんだっけー？？？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:42:37" />
+				Time="2011-11-25T13:37:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -96367,10 +96383,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アレなわけです</Text>
+			<Text>なんだっけー？？？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:42:38" />
+				Time="2011-11-25T13:37:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -96403,10 +96419,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>…というわけです</Text>
+			<Text>ヤッター！ヤッター！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:42:37" />
+				Time="2011-11-25T13:37:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -96414,10 +96430,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>…というわけです</Text>
+			<Text>ヤッター！ヤッター！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:42:38" />
+				Time="2011-11-25T13:37:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -96591,10 +96607,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ソレですよ！</Text>
+			<Text>たいへんだーー！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:15:08" />
+				Time="2011-11-25T13:37:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -96602,10 +96618,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ソレですよ！</Text>
+			<Text>たいへんだーー！</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:15:17" />
+				Time="2011-11-25T13:37:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -96638,10 +96654,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ワッハッハ④</Text>
+			<Text>ワッハッハ③</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:15:08" />
+				Time="2011-11-25T13:37:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -96649,10 +96665,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ワッハッハ④</Text>
+			<Text>ワッハッハ③</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:15:17" />
+				Time="2011-11-25T13:37:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -96685,10 +96701,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バリンッ！</Text>
+			<Text>ヒーヒー</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:15:08" />
+				Time="2011-11-25T13:37:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -96696,10 +96712,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バリンッ！</Text>
+			<Text>ヒーヒー</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:15:17" />
+				Time="2011-11-25T13:37:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -96920,10 +96936,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なーにー？②</Text>
+			<Text>なーにー？③</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:15:08" />
+				Time="2011-11-25T13:37:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -96931,10 +96947,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なーにー？②</Text>
+			<Text>なーにー？③</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:15:17" />
+				Time="2011-11-25T13:37:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -99323,10 +99339,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいしてる</Text>
+			<Text>やばいよ…</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:42:13" />
+				Time="2011-11-25T13:38:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -99334,10 +99350,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あいしてる</Text>
+			<Text>やばいよ…</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T14:42:16" />
+				Time="2011-11-25T13:38:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -99981,10 +99997,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やばい…</Text>
+			<Text>アイラブユー♥</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:16:03" />
+				Time="2011-11-25T13:38:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -99992,10 +100008,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やばい…</Text>
+			<Text>アイラブユー♥</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:16:07" />
+				Time="2011-11-25T13:38:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -100688,10 +100704,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いらっしゃいませ</Text>
+			<Text>よろしくー</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T08:21:43" />
+				Time="2011-11-25T13:38:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -100699,10 +100715,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いらっしゃいませ</Text>
+			<Text>よろしくー</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T08:21:48" />
+				Time="2011-11-25T13:38:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -100736,10 +100752,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いらっしゃいませ</Text>
+			<Text>ありがとう</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T08:21:43" />
+				Time="2011-11-25T13:38:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -100747,10 +100763,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いらっしゃいませ</Text>
+			<Text>ありがとう</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T08:21:48" />
+				Time="2011-11-25T13:39:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -100784,10 +100800,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いらっしゃいませ</Text>
+			<Text>おまちしてます</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T08:21:43" />
+				Time="2011-11-25T13:39:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -100795,10 +100811,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いらっしゃいませ</Text>
+			<Text>おまちしてます</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T08:21:48" />
+				Time="2011-11-25T13:39:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -100832,10 +100848,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いらっしゃいませ</Text>
+			<Text>バイバイー</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T08:21:43" />
+				Time="2011-11-25T13:39:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -100843,10 +100859,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いらっしゃいませ</Text>
+			<Text>バイバイー</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T08:21:48" />
+				Time="2011-11-25T13:39:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
