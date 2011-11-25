@@ -11039,8 +11039,8 @@ static void AddSerifPoint( BTL_CLIENT *wk, POKEWOOD_ESTIMATE_WORK *pew, int even
     _set_director_msg_reserve( wk, 2 ); // 監督セリフセット:普通
   }
   _set_audience_reaction( wk->viewCore, &wk->pokewoodSeqWork, emotion );
-  
-  
+  OS_Printf("event=%d, situation=%d, point=%d, emotion=%d\n", 
+            event_no, senario->event[event_no].bias, point, emotion);
 
   OS_TFPrintf(1,"serif:select=%d, serif_point=%d\n", select, pew->serif_point );
 
