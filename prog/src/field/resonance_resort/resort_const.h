@@ -198,6 +198,7 @@
  *  Ç®ìXÇ…àƒì‡Ç∑ÇÈÇ∆Ç´ÇÃÉJÉÅÉâ
  */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+
 //Ç®ìXÇP  íiäKÇP
 #define RESORT_SCAM1_SHOP1_PITCH   (6821)
 #define RESORT_SCAM1_SHOP1_YAW     (53376)
@@ -366,6 +367,7 @@
 #define RESORT_SCAM3_SHOP8_X       (753664)
 #define RESORT_SCAM3_SHOP8_Y       (180224)
 #define RESORT_SCAM3_SHOP8_Z       (974848)
+
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /*
