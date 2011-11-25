@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="swan_3dcg02" host="W00193" date="2011-11-15T14:55:13" source="kyuremu_union_w_01.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-11-25T15:23:09" source="kyuremu_union_w_01_003.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="swan_3dcg02" host="W00193" date="2011-11-15T14:55:13" source="kyuremu_union_w_01.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-11-25T15:23:09" source="kyuremu_union_w_01_003.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -20,7 +20,7 @@
 	magnify="1.000000"
 	tool_start_frame="1"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="47 29"
+	compress_node="merge" node_size="48 29"
 	compress_material="on" material_size="9 9"
 	output_texture="used"
 	force_full_weight="off"
@@ -4059,86 +4059,14 @@
 </tex_palette_array>
 
 <material_array size="9">
-	<material index="0" name="shin_bod"
-		light0="off" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="20"
-		fog_flag="off"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="0 0 0"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="1" tex_palette_idx="1"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="1" name="shin_bod_tail"
-		light0="off" light1="off" light2="off" light3="off"
-		face="both"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="20"
-		fog_flag="off"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="0 0 0"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="1" tex_palette_idx="1"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="2" name="shin_eye"
-		light0="off" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="20"
-		fog_flag="off"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="0 0 0"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="2" tex_palette_idx="2"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="3" name="shin_glow"
+	<material index="0" name="glow_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="both"
 		alpha="0"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="63"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -4155,14 +4083,86 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="4" name="shin_head"
+	<material index="1" name="shin_bod_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="20"
-		fog_flag="off"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="1" tex_palette_idx="1"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="2" name="shin_bod_2"
+		light0="off" light1="off" light2="off" light3="off"
+		face="both"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="20"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="1" tex_palette_idx="1"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="3" name="shin_eye_1"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="20"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="2" tex_palette_idx="2"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="4" name="shin_head_1"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="20"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -4179,14 +4179,14 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="5" name="shin_mouth"
+	<material index="5" name="shin_mouth_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="20"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -4203,38 +4203,14 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="6" name="shin_tooth"
-		light0="off" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="20"
-		fog_flag="off"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="0 0 0"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="7" tex_palette_idx="7"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="7" name="shintail_r1"
+	<material index="6" name="shin_tail_r_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="0"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="21"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -4251,14 +4227,14 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="8" name="shintail_w1"
+	<material index="7" name="shin_tail_w_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="21"
-		fog_flag="off"
+		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -4269,6 +4245,30 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="6" tex_palette_idx="6"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="8" name="shin_teeth_1"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="20"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="7" tex_palette_idx="7"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -11232,7 +11232,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="-90.000000 -55.723145 90.000000"
 		translate="0.000000 18.645020 -5.209473"
-		visibility="on"
+		visibility="off"
 		display_size="8"
 		vertex_size="2654" polygon_size="1302"
 		triangle_size="886" quad_size="416"
@@ -11240,14 +11240,14 @@
 		volume_max="14.961670 14.448242 5.601807"
 		volume_r="17.020752"
 	>
-		<display index="0" material="0" polygon="1" priority="0"/>
-		<display index="1" material="1" polygon="8" priority="0"/>
-		<display index="2" material="2" polygon="5" priority="0"/>
-		<display index="3" material="3" polygon="4" priority="0"/>
+		<display index="0" material="0" polygon="4" priority="0"/>
+		<display index="1" material="1" polygon="1" priority="0"/>
+		<display index="2" material="2" polygon="8" priority="0"/>
+		<display index="3" material="3" polygon="5" priority="0"/>
 		<display index="4" material="4" polygon="6" priority="0"/>
 		<display index="5" material="5" polygon="7" priority="0"/>
-		<display index="6" material="6" polygon="2" priority="0"/>
-		<display index="7" material="8" polygon="3" priority="0"/>
+		<display index="6" material="7" polygon="3" priority="0"/>
+		<display index="7" material="8" polygon="2" priority="0"/>
 	</node>
 	<node index="1" name="chest" kind="joint"
 		parent="0"
@@ -11260,7 +11260,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 34.075684"
 		translate="11.385742 -1.874512 0.000000"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11275,7 +11275,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 -88.006836 111.647461"
 		translate="8.320068 1.210205 -5.292725"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11290,7 +11290,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 -6.048584 0.000000"
 		translate="-22.003906 -1.104736 0.255371"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11305,7 +11305,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="3.451660 -34.509521 -6.254883"
 		translate="-13.896484 0.000000 0.946289"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11320,7 +11320,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 7.705566"
 		translate="11.940186 0.000000 0.000000"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11335,7 +11335,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 -0.620605"
 		translate="6.919922 0.064209 0.000000"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11350,7 +11350,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 7.753662"
 		translate="6.160645 0.143799 0.000000"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11365,7 +11365,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 -86.935791"
 		translate="1.604004 -4.797607 0.000000"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11380,7 +11380,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="180.000000 0.000000 140.978760"
 		translate="4.260010 2.476563 0.000000"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11395,7 +11395,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 36.981201"
 		translate="10.524414 0.048828 0.000000"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11410,7 +11410,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 13.806641"
 		translate="10.458252 -0.087158 0.000000"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11425,7 +11425,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 -88.006836 -68.352539"
 		translate="8.320313 1.210205 5.292725"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11440,7 +11440,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 -6.048584 0.000000"
 		translate="22.391113 1.104736 -0.241943"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11455,7 +11455,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="3.451660 -34.509521 -6.254883"
 		translate="14.651123 0.000000 -0.999756"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11470,7 +11470,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="179.964844 16.600586 101.495117"
 		translate="4.927734 1.936768 -10.129150"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11485,7 +11485,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.043701 -0.009033 -117.151855"
 		translate="5.203857 -1.342773 -9.615234"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11500,7 +11500,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="180.000000 0.000000 -34.112793"
 		translate="7.963379 -1.222168 0.000000"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11515,7 +11515,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="180.000000 0.000000 -34.977295"
 		translate="4.161621 -0.701172 0.000000"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11530,7 +11530,7 @@
 		scale="4.716064 4.716064 4.716064"
 		rotate="175.439209 89.955322 -102.550049"
 		translate="4.235107 -0.406494 0.000000"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11545,7 +11545,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="180.000000 16.560059 -78.494873"
 		translate="4.927246 1.937012 10.127197"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11560,7 +11560,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.012451 -0.002686 62.848145"
 		translate="5.203857 -1.342773 9.615234"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11575,7 +11575,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="-180.000000 0.000000 -34.112793"
 		translate="-7.963379 1.222168 0.000000"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11590,7 +11590,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="180.000000 0.000000 -34.977295"
 		translate="-4.161621 0.701172 0.000000"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11605,7 +11605,7 @@
 		scale="4.680420 4.680420 4.680420"
 		rotate="-4.559570 89.987305 -102.549072"
 		translate="-4.235107 0.406494 0.000000"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11620,7 +11620,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="180.000000 0.000000 145.723145"
 		translate="-7.032227 3.514160 0.000000"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11635,7 +11635,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 -90.000000 0.000000"
 		translate="0.979492 0.203613 0.000000"
-		visibility="on"
+		visibility="off"
 		display_size="1"
 		vertex_size="52" polygon_size="24"
 		triangle_size="8" quad_size="16"
@@ -11643,7 +11643,7 @@
 		volume_max="1.470703 1.439453 -0.008057"
 		volume_r="4.524658"
 	>
-		<display index="0" material="7" polygon="0" priority="0"/>
+		<display index="0" material="6" polygon="0" priority="0"/>
 	</node>
 	<node index="27" name="tail2" kind="joint"
 		parent="25"
@@ -11656,7 +11656,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 54.500977"
 		translate="33.305420 0.000000 0.000000"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>
@@ -11671,7 +11671,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 -36.092773"
 		translate="10.771729 0.885254 0.000000"
-		visibility="on"
+		visibility="off"
 		display_size="0"
 	>
 	</node>

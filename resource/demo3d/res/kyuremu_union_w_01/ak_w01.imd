@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="swan_3dcg02" host="W00193" date="2011-11-15T14:53:54" source="kyuremu_union_w_01.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-11-25T15:47:26" source="kyuremu_union_w_01_003.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="swan_3dcg02" host="W00193" date="2011-11-15T14:53:54" source="kyuremu_union_w_01.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-11-25T15:47:26" source="kyuremu_union_w_01_003.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -20,7 +20,7 @@
 	magnify="1.000000"
 	tool_start_frame="1"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="39 29"
+	compress_node="merge" node_size="40 29"
 	compress_material="on" material_size="9 8"
 	output_texture="used"
 	force_full_weight="off"
@@ -12804,7 +12804,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="-90.000000 -85.426025 90.000000"
 		translate="0.000000 23.163086 2.369629"
-		visibility="off"
+		visibility="on"
 		display_size="8"
 		vertex_size="2876" polygon_size="1536"
 		triangle_size="1214" quad_size="322"
@@ -12832,7 +12832,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 -4.736572"
 		translate="6.034668 0.000000 0.000000"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -12847,7 +12847,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="-62.437500 57.876465 -58.191406"
 		translate="6.601074 -1.555664 -2.512451"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -12862,7 +12862,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="12.206543 10.732666 49.276123"
 		translate="1.072021 11.314453 1.006592"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -12877,7 +12877,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 -20.000000"
 		translate="3.500000 0.000000 0.000000"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -12892,7 +12892,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
 		translate="5.500000 0.000000 0.000000"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -12907,7 +12907,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
 		translate="5.500000 0.000000 0.000000"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -12922,7 +12922,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 -8.682129 3.963623"
 		translate="6.349609 0.000000 0.000000"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -12937,7 +12937,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 -38.347168 -45.093262"
 		translate="4.061768 0.000000 0.000000"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -12952,7 +12952,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 -13.416992"
 		translate="14.299072 0.000000 0.000000"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -12967,7 +12967,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 4.906006"
 		translate="6.000000 0.000000 0.000000"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -12982,7 +12982,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 9.493408"
 		translate="6.586670 0.000000 0.000000"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -12997,7 +12997,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
 		translate="9.260986 0.000000 0.000000"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -13012,7 +13012,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="-62.437500 57.876465 121.808594"
 		translate="6.601074 -1.555664 2.512451"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -13027,7 +13027,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="12.206543 10.732666 49.276123"
 		translate="-1.072021 -11.314209 -1.006592"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -13042,7 +13042,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 -20.000000"
 		translate="-3.500000 0.000000 0.000000"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -13057,7 +13057,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
 		translate="-5.500000 0.000000 0.000000"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -13072,7 +13072,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
 		translate="-5.500000 0.000000 0.000000"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -13087,7 +13087,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 -8.682129 3.963623"
 		translate="-6.349609 0.000000 0.000000"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -13102,7 +13102,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 -38.347168 -45.093262"
 		translate="-4.061768 0.000000 0.000000"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -13117,7 +13117,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.067871 -0.014404 -78.397705"
 		translate="0.253906 0.933838 -9.578613"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -13132,7 +13132,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 180.000000 66.646484"
 		translate="13.901367 0.000000 0.000000"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -13147,7 +13147,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 180.000000 56.129883"
 		translate="6.933594 0.000000 0.000000"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -13162,7 +13162,7 @@
 		scale="5.000000 5.000000 5.000000"
 		rotate="-63.307129 90.000000 0.000000"
 		translate="10.209717 0.000000 0.000000"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -13177,7 +13177,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.068848 -0.014648 101.602295"
 		translate="0.253906 0.933838 9.578613"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -13192,7 +13192,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="180.000000 0.000000 -113.353516"
 		translate="-13.901367 0.000000 0.000000"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -13207,7 +13207,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="180.000000 0.000000 -123.870117"
 		translate="-6.933594 0.000000 0.000000"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -13222,7 +13222,7 @@
 		scale="5.000000 5.000000 5.000000"
 		rotate="-13.010010 90.000000 50.297119"
 		translate="-10.209717 0.000000 0.000000"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
@@ -13237,7 +13237,7 @@
 		scale="1.000000 1.000000 1.000000"
 		rotate="-180.000000 0.000000 174.499512"
 		translate="-10.697510 0.241211 0.000000"
-		visibility="off"
+		visibility="on"
 		display_size="0"
 	>
 	</node>
