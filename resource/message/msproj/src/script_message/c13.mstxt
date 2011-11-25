@@ -48,11 +48,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>PILOT
-船長</Text>
+			<Text>PWDADDY
+ホミカパパ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T06:41:29" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -173,11 +173,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>PILOT
-船長</Text>
+			<Text>PWDADDY
+ホミカパパ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-25T06:41:29" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -2063,14 +2063,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホミカ『ほら！▼
-いちど　しっぱい　したぐらいで
-そんなに　きをおとさない！▼
-せんちょうを　やりつつ
-また　チャレンジすれば　いいでしょ！▼</Text>
+			<Text>ホミカ『……あの　えいが
+あたしは　おもしろかったけどね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T12:41:48" />
+				Time="2011-11-25T06:04:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2078,14 +2075,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホミカ『ほら！▼
-いちど　しっぱい　したぐらいで
-そんなに　きをおとさない！▼
-せんちょうを　やりつつ
-また　チャレンジすれば　いいでしょ！▼</Text>
+			<Text>ホミカ『……あの　映画
+あたしは　おもしろかったけどね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T12:45:57" />
+				Time="2011-11-25T06:16:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2096,10 +2090,13 @@
 			<Comment>♀
 ・ポケウッドチュートリアル後
 ・posイベント
-　GRIDX＝239、GRIDZ＝669～671</Comment>
+　GRIDX＝210、GRIDZ＝649
+　GRIDX＝213～220、GRIDZ＝649
+・ホミカ　GRIDX＝210、GRIDZ＝649
+　船長　GRIDX＝210、GRIDZ＝649</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T12:40:56" />
+				Time="2011-11-25T06:15:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2122,12 +2119,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんちょう『おや？　きみは
-ぼくの　えいがちょうせんに▽
-はんたい　だったのでは？▼</Text>
+			<Text>せんちょう『……みたのですか▼
+あの　えいがは
+かんぜんに　しっぱい　ですよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T12:42:40" />
+				Time="2011-11-25T06:17:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2135,24 +2132,32 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せんちょう『おや？　きみは
-ぼくの　えいがちょうせんに▽
-はんたい　だったのでは？▼</Text>
+			<Text>船長『……観たのですか▼
+あの　映画は
+完全に　失敗ですよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T12:45:57" />
+				Time="2011-11-25T06:17:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-23T12:45:57" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてswleader2_08</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-25T06:15:40" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>PILOT
-船長</Text>
+			<Text>PWDADDY
+ホミカパパ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T12:39:37" />
+				Time="2011-11-25T06:41:34" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2167,15 +2172,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホミカ『なんで？▼
-あたしが　おこってたのは
-せんちょうの　しごとを　しないと▽
-こまる　ひとが　いるのに！　ってこと▼
-めいわく　かけないかぎり
-やりたいことを　とめたら　ダメじゃん▼</Text>
+			<Text>ホミカ『ほら！
+そんなに　きをおとさない！▼
+せんちょうを　やりつつ
+また　チャレンジすれば　いいでしょ！▼
+めいわく　かけなきゃ
+あたしだって　おこらないよーだ！▼▼
+もっとも　ポケウッドの　ひとは
+どうおもってるか　しらないけどね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T12:44:33" />
+				Time="2011-11-25T06:17:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2183,20 +2190,31 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホミカ『なんで？▼
-あたしが　おこってたのは
-せんちょうの　しごとを　しないと▽
-こまる　ひとが　いるのに！　ってこと▼
-めいわく　かけないかぎり
-やりたいことを　とめたら　ダメじゃん▼</Text>
+			<Text>ホミカ『ほら！
+そんなに　気を落とさない！▼
+船長を　やりつつ
+また　チャレンジすれば　いいでしょ！▼
+迷惑かけなきゃ
+あたしだって　怒らないよーだ！▼
+もっとも　ポケウッドの　人は
+どう思ってるか　知らないけどね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T12:45:57" />
+				Time="2011-11-25T06:18:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-23T12:45:57" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・メッセージ表示後、画面左→下に移動
+・続けてpilot_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-25T06:15:37" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>SWLEADER2
@@ -2218,37 +2236,46 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんちょう『きみは　すごいな▼
-そうだね　せんちょうとして
-ぜんりょくを　つくしますよ！▼　</Text>
+			<Text>せんちょう『つよい　ひとだな▼
+さて　しばらく　ぶらついたら
+せんちょうとして　がんばりますか▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T12:45:53" />
+				Time="2011-11-25T06:13:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T12:45:21" />
+				Time="2011-11-25T06:07:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せんちょう『きみは　すごいな▼
-そうだね　せんちょうとして
-ぜんりょくを　つくしますよ！▼　</Text>
+			<Text>船長『強い　人だな▼
+さて　しばらく　ぶらついたら
+船長として　がんばりますか▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T12:45:57" />
+				Time="2011-11-25T06:18:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T12:45:57" />
+				Time="2011-11-25T06:07:16" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・メッセージ表示後、画面右に移動
+・主人公、操作可能に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-25T06:15:21" />
+		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>PILOT
-船長</Text>
+			<Text>PWDADDY
+ホミカパパ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T12:45:18" />
+				Time="2011-11-25T06:41:35" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

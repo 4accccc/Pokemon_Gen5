@@ -1767,11 +1767,11 @@
 ハーデリアを　おいかけていたら
 こんなところに　まよいこむし……▽
 こどもに　みつかってしまうし……▼
-しかたない！
-ここは　ひとまず　たいさん！▼</Text>
+ぜんぶ　おまえの　せいだ！
+これでも　くらえ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T13:46:15" />
+				Time="2011-11-25T06:36:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1786,15 +1786,68 @@
 ハーデリアを　追いかけていたら
 こんなところに　迷いこむし……▽
 こどもに　みつかってしまうし……▼
-しかたない！
-ここは　ひとまず　退散！▼</Text>
+全部　おまえの　せいだ！
+これでも　くらえ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T13:46:17" />
+				Time="2011-11-25T06:36:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-10-19T12:10:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アイテム入手処理
+　No348「わざマシン２１」（やつあたり）
+・swplazmam2_05</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-25T06:38:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-10-19T12:10:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d22r0101_swplazmam2_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>よし！
+ひとまず　たいさん！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-25T06:35:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-25T06:35:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>よし！
+ひとまず　退散！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-25T06:39:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-25T06:35:56" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1804,7 +1857,7 @@
 ・続けてpoke_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T12:28:25" />
+				Time="2011-11-25T06:38:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1812,7 +1865,7 @@
 プラズマ団♂</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T12:10:57" />
+				Time="2011-11-25T06:39:31" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

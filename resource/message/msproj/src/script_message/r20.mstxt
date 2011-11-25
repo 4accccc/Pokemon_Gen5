@@ -773,11 +773,11 @@ ID：mount_14</Text>
 まずは　タチワキシティの
 ポケモンジムに　挑戦するため▽
 相棒たちを　鍛える！▼
-おまえは　ポケモン図鑑　だよな
+おまえは　ポケモン図鑑　だろ
 人の　頼み事　だもんな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T12:13:28" />
+				Time="2011-11-25T06:31:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -891,10 +891,10 @@ ID：mount_14</Text>
 　ここに出現
 ・GRIDX＝155、GRIDZ＝667辺り
 　その場でキョロキョロ
-・会話後、トレーナー戦闘（予定）</Comment>
+・会話後、トレーナー戦闘</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T11:48:40" />
+				Time="2011-11-25T06:28:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -967,12 +967,11 @@ ID：mount_14</Text>
 			<Text>[Name:TrainerName Idx="1" ]『……オレも　にげられた▼
 どうやら　アイツら　ふねで
 いどう　しているらしいな……▼
-うーん
-ヒウンシティを　さがすか……▼
-オマエも　きがむいたら　こいよ▼</Text>
+うーん　ここから　ふねで
+いくなら　ヒウンシティ　か……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T12:04:33" />
+				Time="2011-11-25T06:29:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -980,15 +979,14 @@ ID：mount_14</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……オレも　にげられた▼
+			<Text>[Name:TrainerName Idx="1" ]『……オレも　逃げられた▼
 どうやら　アイツら　船で
 移動している　らしいな……▼
-うーん
-ヒウンシティを　さがすか……▼
-オマエも　気がむいたら　来いよ▼</Text>
+うーん　ここから　船で
+移動するなら　ヒウンシティ　か……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T12:04:29" />
+				Time="2011-11-25T06:29:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
