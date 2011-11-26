@@ -197,10 +197,10 @@
 #define MDLID_CTVT_GAME_PLAY_LV2	(183)	// ミニゲームマニア
 #define MDLID_CTVT_GAME_PLAY_LV3	(184)	// ミニゲームめいじん
 #define MDLID_CTVT_GAME_PLAY_LV4	(185)	// ベストミニゲーマー
-#define MDLID_CTVT_BALLOON_LV1	(186)	// ふうせんバスター
-#define MDLID_CTVT_BALLOON_LV2	(187)	// ふうせんブレイカー
-#define MDLID_CTVT_BALLOON_LV3	(188)	// ふうせんクラッシャー
-#define MDLID_CTVT_BALLOON_LV4	(189)	// バルーンカタストロフ
+#define MDLID_CTVT_BALLOON_LV1	(186)	// ふうせんルーキー
+#define MDLID_CTVT_BALLOON_LV2	(187)	// ふうせんテクニシャン
+#define MDLID_CTVT_BALLOON_LV3	(188)	// ふうせんエキスパート
+#define MDLID_CTVT_BALLOON_LV4	(189)	// キングオブバルーン
 #define MDLID_PKWD_SERIES1	(190)	// ヒーローのはながた
 #define MDLID_PKWD_SERIES2	(191)	// ポリスえいがマスター
 #define MDLID_PKWD_SERIES3	(192)	// ＵＦＯえいがマスター

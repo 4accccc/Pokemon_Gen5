@@ -22,13 +22,13 @@ u32 MedalSortList[] = {
     MDLID_DAYMAX_EXP_LV1,	//ＥＸＰみりおねあ
     MDLID_PKWD_SERIES5,	//ＳＦえいがまいすたー
     MDLID_PKWD_SERIES3,	//ＵＦＯえいがますたー
-    MDLID_FIELD_DUMMY_08,	//あきめだる
     MDLID_FIELD_DUMMY_06,	//あきめだる
-    MDLID_FIELD_DUMMY_04,	//あきめだる
+    MDLID_FIELD_DUMMY_07,	//あきめだる
+    MDLID_FIELD_DUMMY_08,	//あきめだる
     MDLID_FIELD_DUMMY_05,	//あきめだる
     MDLID_FIELD_DUMMY_02,	//あきめだる
+    MDLID_FIELD_DUMMY_04,	//あきめだる
     MDLID_FIELD_DUMMY_03,	//あきめだる
-    MDLID_FIELD_DUMMY_07,	//あきめだる
     MDLID_COMPLETE_AKU,	//あくこれくたー
     MDLID_CHAMPION_AKU,	//あくちゃんぷ
     MDLID_FIELD_COMPLETE,	//あどべんちゃーきんぐ
@@ -88,6 +88,7 @@ u32 MedalSortList[] = {
     MDLID_RESORT_GUID_CNT_LV4,	//きんぐおぶがいど
     MDLID_RESORT_SHOP_MAKE_CNT_LV4,	//きんぐおぶしょっぷ
     MDLID_RESORT_SHOP_PRESENT_CNT_LV4,	//きんぐおぶすーべにあ
+    MDLID_CTVT_BALLOON_LV4,	//きんぐおぶばるーん
     MDLID_ALL_COMPLETE,	//きんぐおぶめだりすと
     MDLID_COMPLETE_KUSA,	//くさこれくたー
     MDLID_CHAMPION_KUSA,	//くさちゃんぷ
@@ -201,7 +202,6 @@ u32 MedalSortList[] = {
     MDLID_SUBWAY_CHALLENGE_LV1,	//ばとるにゅーとらる
     MDLID_ALL_BATTLE_LV1,	//ばとるもんかせい
     MDLID_SAISEN_LV1,	//ばとるりぴーたー
-    MDLID_CTVT_BALLOON_LV4,	//ばるーんかたすとろふ
     MDLID_PKWD_SERIES12,	//ひーろーだいだんえん
     MDLID_PKWD_SERIES0,	//ひーろーのしんじん
     MDLID_PKWD_SERIES1,	//ひーろーのはながた
@@ -212,9 +212,9 @@ u32 MedalSortList[] = {
     MDLID_NPOKE,	//ぴゅあ＆いのせんと
     MDLID_PKWD_SERIES7,	//ふぁんたじーますたー
     MDLID_AFFINITY_CHECK_LV1,	//ふぃーりんぐますたー
-    MDLID_CTVT_BALLOON_LV3,	//ふうせんくらっしゃー
-    MDLID_CTVT_BALLOON_LV1,	//ふうせんばすたー
-    MDLID_CTVT_BALLOON_LV2,	//ふうせんぶれいかー
+    MDLID_CTVT_BALLOON_LV3,	//ふうせんえきすぱーと
+    MDLID_CTVT_BALLOON_LV2,	//ふうせんてくにしゃん
+    MDLID_CTVT_BALLOON_LV1,	//ふうせんるーきー
     MDLID_FES_CLEAR_ALL,	//ふぇすこんぷりーと
     MDLID_BRIDGE_ALL,	//ぶりっじまにあ
     MDLID_WALK_LV3,	//へびーうぉーかー

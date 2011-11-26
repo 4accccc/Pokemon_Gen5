@@ -581,28 +581,28 @@
 	</row>
 
 	<row id="MDL_EXP_FIELD_015">
-		<language name="JPN" width="216">じてんしゃに　２０かい　のった
+		<language name="JPN" width="216">じてんしゃに　３０かい　のった
 さっそうとした　じてんしゃのりに
 おくられる　メダル。</language>
-		<language name="JPN_KANJI" width="216">じてんしゃに　２０回　乗った
+		<language name="JPN_KANJI" width="216">じてんしゃに　３０回　乗った
 さっそうとした　自転車乗りに
 贈られる　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_016">
-		<language name="JPN" width="216">じてんしゃに　５０かい　のった
+		<language name="JPN" width="216">じてんしゃに　１００かい　のった
 のりに　のっている　じてんしゃのりに
 おくられる　メダル。</language>
-		<language name="JPN_KANJI" width="216">じてんしゃに　５０回　乗った
+		<language name="JPN_KANJI" width="216">じてんしゃに　１００回　乗った
 のりに　のっている　自転車乗りに
 贈られる　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_017">
-		<language name="JPN" width="216">じてんしゃに　１００かい　のった
+		<language name="JPN" width="216">じてんしゃに　５００かい　のった
 てんちをゆるがす　じてんしゃのりに
 おくられる　おくられる　メダル。</language>
-		<language name="JPN_KANJI" width="216">じてんしゃに　１００回　乗った
+		<language name="JPN_KANJI" width="216">じてんしゃに　５００回　乗った
 天地を揺るがす　自転車乗りに
 贈られる　メダル。</language>
 	</row>
@@ -2111,39 +2111,39 @@
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_039">
-		<language name="JPN" width="216">ライブキャスターの　ミニゲームで
-ふうせんを　３０コ　わった
-ささやかな　はかいの　メダル。</language>
-		<language name="JPN_KANJI" width="216">ライブキャスターの　ミニゲームで
-風船を　３０個　割った
-ささやかな　破壊の　メダル。</language>
+		<language name="JPN" width="216">ライブキャスターの　ミニゲームの
+とくてんが　３０てんに　たっした
+ささやかな　きろくの　メダル。</language>
+		<language name="JPN_KANJI" width="216">ライブキャスターの　ミニゲームの
+合計得点が　３０点に　達した
+ささやかな　記録の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_040">
-		<language name="JPN" width="216">ライブキャスターの　ミニゲームで
-ふうせんを　１００コ　わった
-はげしい　はかいの　メダル。</language>
-		<language name="JPN_KANJI" width="216">ライブキャスターの　ミニゲームで
-風船を　１００個　割った
-激しい　破壊の　メダル。</language>
+		<language name="JPN" width="216">ライブキャスターの　ミニゲームの
+とくてんが　１００てんに　たっした
+はげしい　きろくの　メダル。</language>
+		<language name="JPN_KANJI" width="216">ライブキャスターの　ミニゲームの
+合計得点が　１００点に　達した
+激しい　記録の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_041">
-		<language name="JPN" width="216">ライブキャスターの　ミニゲームで
-ふうせんを　５００コ　わった
-ごうかいな　はかいの　メダル。</language>
-		<language name="JPN_KANJI" width="216">ライブキャスターの　ミニゲームで
-風船を　５００個　割った
-豪快な　破壊の　メダル。</language>
+		<language name="JPN" width="216">ライブキャスターの　ミニゲームの
+とくてんが　５００てんに　たっした
+ごうかいな　きろくの　メダル。</language>
+		<language name="JPN_KANJI" width="216">ライブキャスターの　ミニゲームの
+合計得点が　５００点に　達した
+豪快な　記録の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_042">
-		<language name="JPN" width="216">ライブキャスターの　ミニゲームで
-ふうせんを　１０００コ　わった
-きゅうきょくの　はかいの　メダル。</language>
-		<language name="JPN_KANJI" width="216">ライブキャスターの　ミニゲームで
-風船を　１０００個　割った
-究極の　破壊の　メダル。</language>
+		<language name="JPN" width="216">ライブキャスターの　ミニゲームの
+とくてんが　１０００てんに　たっした
+きゅうきょくの　きろくの　メダル。</language>
+		<language name="JPN_KANJI" width="216">ライブキャスターの　ミニゲームの
+合計得点が　１０００点に　達した
+究極の　記録の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_043">
