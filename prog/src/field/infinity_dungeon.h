@@ -40,8 +40,6 @@ extern void INF_ReCalcDungeonData( INF_DUNGEON_DATA *p_wk,INFINITYDUNGEON_SAVE *
 extern u32 INFINITY_DUNGEON_GetRecoverFlgPos( const INF_DUNGEON_DATA *p_dungeon_data ,u16 tr_id );
 extern u32 INFINITY_DUNGEON_GetBossFloor( const INF_DUNGEON_DATA *p_dungeon_data );
 extern u32 INF_GetDungeonDataSize();
-extern u16 INFINITY_DUNGEON_GetTrIDByIDPos( const INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_id ,u8 id_pos );
-extern u8 INFINITY_DUNGEON_GetDungeonColor( const INF_DUNGEON_DATA *p_wk );
 extern u32 INFINITY_DUNGEON_TrainerCount( const INF_DUNGEON_DATA *p_dungeon_data );
 extern BOOL INFINITY_DUNGEON_GetUpPosRoomTypeIsBoss( const INF_DUNGEON_DATA *p_dungeon_data ,s32 now_floor ,s32 now_room );
 extern u32 INFINITY_DUNGEON_GetGateBeforeBattleMessage( const INFINITYDUNGEON_SAVE *p_save ,const INF_DUNGEON_DATA *p_dungeon_data ,u16 obj_code ,BOOL is_before_battle);

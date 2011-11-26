@@ -232,4 +232,7 @@ extern const u8* INF_TOOL_GetFloorData( u16 area_no ,u16 floor_no ,u8 version );
 extern const u8* INF_TOOL_GetTrTypeCntTable( u16 area_no ,u8 version);
 extern u8 INF_TOOL_GetTrainerType( u16 tr_index );
 extern BOOL INF_TOOL_DUNGEON_GetIsGateTrainer( const INF_DUNGEON_DATA *p_wk ,u8 floor_no, u8 id_pos );
+extern u8 INF_TOOL_DUNGEON_GetDungeonColor( const INF_DUNGEON_DATA *p_wk );
+extern int INF_TOOL_DUNGEON_GetRoomTrainerIDPos( const INF_DUNGEON_DATA *p_dungeon_data ,u32 floor_id ,u32 room_id,u8 room_tr_no);
+extern u16 INF_TOOL_DUNGEON_GetTrIDByIDPos( const INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_id ,u8 id_pos );
 

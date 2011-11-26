@@ -512,3 +512,70 @@ BOOL INF_TOOL_DUNGEON_GetIsGateTrainer( const INF_DUNGEON_DATA *p_wk ,u8 floor_n
   return FALSE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  現在のダンジョンバージョンを返す
+ *
+ *	@param	*p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u8 INF_TOOL_DUNGEON_GetDungeonColor( const INF_DUNGEON_DATA *p_wk )
+{
+  return p_wk->version;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  指定部屋IDのトレーナーID格納位置取得
+ *
+ *	@param	*p_dungeon_data フロアデータ
+ *	@param	floor_id      フロアID
+ *	@param	room_id       部屋ID
+ *	@param	room_tr_no    部屋内の相対ID（0～4）
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+int INF_TOOL_DUNGEON_GetRoomTrainerIDPos( const INF_DUNGEON_DATA *p_dungeon_data ,u32 floor_id ,u32 room_id,u8 room_tr_no)
+{
+  int i;
+  u32 tr_num = 0;
+
+  for( i = 0; i<ROOM_MAX; i++ )
+  {
+    u32 tr_pos_type = p_dungeon_data->room_data[floor_id][i].tr_pos_type;
+    
+    // 指定の部屋まで移動した場合は終了する
+    if( room_id <= i )
+    {
+      break;
+    }
+
+    // 人数加算
+    if( INF_TOOL_GetMemberNum( tr_pos_type ) > 0 )
+    {
+      tr_num+=INF_TOOL_GetMemberNum( tr_pos_type );
+    }
+  }
+
+  return tr_num+room_tr_no;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  無限ダンジョンのIDの場所からトレーナーIDを取得
+ *
+ *	@param	*p_dungeon_data 
+ *	@param	floor_id 
+ *	@param	id_pos 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+u16 INF_TOOL_DUNGEON_GetTrIDByIDPos( const INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_id ,u8 id_pos )
+{
+  return p_dungeon_data->tr_data[floor_id].tr_id[id_pos];
+}
+

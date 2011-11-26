@@ -800,7 +800,7 @@ VMCMD_RESULT EvCmdInfinityDungeonGetTrIDByIDPos( VMHANDLE *p_core, void *p_wk_ad
       
   p_save    = SaveData_GetINFINITYDUNGEON( p_save_data );
   floor_id  = INFINITYDUNGEON_SAVE_GetFloorID( p_save );
-  *p_ret_wk = INFINITY_DUNGEON_GetTrIDByIDPos( p_dungeon_data ,floor_id ,id_pos );
+  *p_ret_wk = INF_TOOL_DUNGEON_GetTrIDByIDPos( p_dungeon_data ,floor_id ,id_pos );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -825,7 +825,7 @@ VMCMD_RESULT EvCmdInfinityDungeonGetVersion( VMHANDLE *p_core, void *p_wk_adrs )
   u16 *p_ret_wk	= SCRCMD_GetVMWork( p_core, p_wk );
   
   // バージョンを設定する
-  *p_ret_wk = INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data );
+  *p_ret_wk = INF_TOOL_DUNGEON_GetDungeonColor( p_dungeon_data );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -942,7 +942,7 @@ static const INF_BOSS_DATA* GetBossData( SCRCMD_WORK *p_wk )
 
   // バージョン指定
   rom_version = GET_VERSION();
-  dungeon_version = INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data );
+  dungeon_version = INF_TOOL_DUNGEON_GetDungeonColor( p_dungeon_data );
 
   // バージョンごとにテーブルを取得
   if( dungeon_version == VERSION_B2 )

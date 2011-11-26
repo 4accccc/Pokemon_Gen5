@@ -588,7 +588,7 @@ void INFINITY_DUNGEON_Move( FIELDMAP_WORK *p_fieldmap )
 static void MapModelInit( INF_DUNGEON_DATA  *p_dungeon_data ,INF_ELEVATOR_WK *p_wk )
 {
   //読込み
-  if( INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data ) == VERSION_B2 )
+  if( INF_TOOL_DUNGEON_GetDungeonColor( p_dungeon_data ) == VERSION_B2 )
   {
     FLD_EXP_OBJ_AddUnitByHandle(p_wk->p_ex_obj, &sc_g3d_util_setup_b, MODEL_MANAGER_FLD_EXP_OBJ_UNIT_ID );
   }
@@ -857,7 +857,7 @@ static GMEVENT_RESULT ElevatorOpenEvent( GMEVENT *p_event, int *seq, void *wk )
     start_frame = ELEVATOR_START_FRAME_OPEN << FX32_SHIFT;
     end_frame = ELEVATOR_END_FRAME_OPEN << FX32_SHIFT;
 
-    if( INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data ) == VERSION_B2 )
+    if( INF_TOOL_DUNGEON_GetDungeonColor( p_dungeon_data ) == VERSION_B2 )
     {
       sound_id = SEQ_SE_SW_MDUN_BL_01;  //エレベータの開く音
     }
@@ -871,7 +871,7 @@ static GMEVENT_RESULT ElevatorOpenEvent( GMEVENT *p_event, int *seq, void *wk )
     start_frame = ELEVATOR_START_FRAME_CLOSE << FX32_SHIFT;
     end_frame = ELEVATOR_END_FRAME_CLOSE << FX32_SHIFT;
     
-    if( INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data ) == VERSION_B2 )
+    if( INF_TOOL_DUNGEON_GetDungeonColor( p_dungeon_data ) == VERSION_B2 )
     {
       sound_id = SEQ_SE_SW_MDUN_BL_02;  //エレベータのしまる音
     }
@@ -948,7 +948,7 @@ static GMEVENT_RESULT ElevatorLiftBanEvent( GMEVENT *p_event, int *seq, void *wk
   u32 sound_id; 
 
 
-  if( INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data ) == VERSION_B2 )
+  if( INF_TOOL_DUNGEON_GetDungeonColor( p_dungeon_data ) == VERSION_B2 )
   {
     sound_id = SEQ_SE_SW_MDUN_BL_02;  //エレベータのしまる音
   }
@@ -1118,7 +1118,7 @@ static GMEVENT_RESULT GateOpenEvent( GMEVENT *p_event, int *seq, void *wk )
           StartGateOpenAnm( p_wk );
 
           // 開閉音再生開始
-          if( INFINITY_DUNGEON_GetDungeonColor( p_wk->p_gimmick_wk->p_dungeon_data ) == VERSION_B2 )
+          if( INF_TOOL_DUNGEON_GetDungeonColor( p_wk->p_gimmick_wk->p_dungeon_data ) == VERSION_B2 )
           {
             PMSND_PlaySE( SEQ_SE_SW_MDUN_BL_07 );
           }
@@ -1356,7 +1356,7 @@ static MODEL* GetGimmickMdl( INF_GIMMICK_WK *p_gimmick_wk,s32 mdl_id )
 //-----------------------------------------------------------------------------
 static u8 GetGateAnmCnt( INF_DUNGEON_DATA *p_dungeon_data )
 {
-  if( INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data ) == VERSION_B2 )
+  if( INF_TOOL_DUNGEON_GetDungeonColor( p_dungeon_data ) == VERSION_B2 )
   {
     return ANIMEID_GATE_B_MAX;
   }

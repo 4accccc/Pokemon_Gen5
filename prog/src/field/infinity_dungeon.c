@@ -124,7 +124,6 @@ static void InitWorkData( MAP_CHAGE_EVENT_WORK *p_wk ,GAMESYS_WORK *p_gsys);
 static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk );
 static void SetReceptionWarpData( MAP_CHAGE_EVENT_WORK *p_wk );
 static void GetFloorData( const INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dungeon_data );
-static int GetSetTrainerIDTable( const INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,u32 *p_trid_array ,GFL_STD_RandContext *rand_context);
 static u8 GetDungeonFloorFromArea( u8 now_floor ,u8 now_area );
 
 // ゾーン依存
@@ -139,11 +138,8 @@ static const ROOM_DATA* GetNowRoomData( const MAP_CHAGE_EVENT_WORK *p_wk );
 static void SetBUildModel( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p_room_data);
 static void AddDummyObj( const MAP_CHAGE_EVENT_WORK *p_wk , const GRID_DATA *p_grid_data);
 static void SetDummyObj( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p_room_data);
-static u32 GetRecoverTrainerID( const INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,GFL_STD_RandContext *rand_context );
-static void SetRecoverTrainer( INF_DUNGEON_DATA  *p_dungeon_data ,int floor_no ,u32 area_no,const int *room_id_array ,int cnt,const u32 *member_num , GFL_STD_RandContext *rand_context ,u32 *recover_index );
 static BOOL SetTutorialMap( const INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dungeon_data );
 static void SetTutorialTrainerData( const INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dungeon_data );
-static s32 GetGateTrainerSetTrIndexArray( INF_DUNGEON_DATA  *p_dungeon_data ,s32 floor_no ,s32* id_pos_array, s32* room_id_array );
 
 // グリッド
 static void SetGridPos( VecFx32 *vec ,s32 x ,s32 y ,s32 z );
@@ -158,11 +154,8 @@ static void SetElevatorPos( MAP_CHAGE_EVENT_WORK *p_wk );
 static void SetReceptionElevatorPos( MAP_CHAGE_EVENT_WORK *p_wk );
 
 // ダンジョン内トレーナー
-static int GetRoomTrainerIDPos( const INF_DUNGEON_DATA *p_dungeon_data ,u32 floor_id ,u32 room_id,u8 room_tr_no);
-static void SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no , u32 seed );
 static void SetTrainer( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p_room_data);
 static u32 GetTrSeed( const INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_id ,u32 tr_id_pos );
-static s32 GetRecoverTrainerSetRoomIdArray( INF_DUNGEON_DATA  *p_dungeon_data ,int floor_no ,int *room_id_array ,u32 *member_num );
 
 // フロア生成 
 static BOOL IsMoveElevator( const MAP_CHAGE_EVENT_WORK *p_wk );
@@ -383,7 +376,7 @@ static u8 GetDungeonFloorFromArea( u8 now_floor ,u8 now_area )
 //-----------------------------------------------------------------------------
 static void InitWorkData( MAP_CHAGE_EVENT_WORK *p_wk ,GAMESYS_WORK *p_gsys)
 {
-  u8 version = INFINITY_DUNGEON_GetDungeonColor( p_wk->p_dungeon_data );
+  u8 version = INF_TOOL_DUNGEON_GetDungeonColor( p_wk->p_dungeon_data );
   SAVE_CONTROL_WORK* p_save_data;
   p_wk->heapID        = HEAPID_FIELDMAP;
   p_wk->p_gsys        = p_gsys;
@@ -750,7 +743,7 @@ static void SetNextPos( MAP_CHAGE_EVENT_WORK *p_wk )
   const GRID_DATA   *p_pos;
   const ROOM_DATA   *p_room_data;
   u32               room_type;
-  u8 version        = INFINITY_DUNGEON_GetDungeonColor( p_wk->p_dungeon_data );
+  u8 version        = INF_TOOL_DUNGEON_GetDungeonColor( p_wk->p_dungeon_data );
   
   // 部屋タイプの取得
   p_room_data = GetNextRoomData( p_wk );
@@ -790,7 +783,7 @@ static void SetReceptionWarpData( MAP_CHAGE_EVENT_WORK *p_wk )
 static void SetElevatorPos( MAP_CHAGE_EVENT_WORK *p_wk )
 {
   NEXT_MAP_DATA *p_next_map_data = &p_wk->next_map_data;
-  u8 version = INFINITY_DUNGEON_GetDungeonColor( p_wk->p_dungeon_data );
+  u8 version = INF_TOOL_DUNGEON_GetDungeonColor( p_wk->p_dungeon_data );
   const GRID_DATA *p_pos = INF_TOOL_GetElevatorPos( version );
 
   SetGridPos( &p_next_map_data->warp_pos ,p_pos->x , p_pos->y , p_pos->z);
@@ -844,400 +837,6 @@ static void SetGridPos( VecFx32 *vec ,s32 x ,s32 y ,s32 z )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  現在のダンジョンバージョンを返す
- *
- *	@param	*p_wk 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-u8 INFINITY_DUNGEON_GetDungeonColor( const INF_DUNGEON_DATA *p_wk )
-{
-  return p_wk->version;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  トレーナーデータ
- *
- *	@param	*p_dungeon_data フロアデータ
- *	@param	area_no         エリア番号
- *	@param	seed            生成用シード
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no , u32 seed )
-{
-  int i,n;
-  int tr_cnt = 0;
-  u32 trid_array[INF_DUNGEON_TR_DATA_MAX];
-  GFL_STD_RandContext rand_context;
-  
-  // 乱数を作成
-  GFL_STD_RandInit( &rand_context, seed );
-  
-  // トレーナーIDテーブル取得
-  tr_cnt = GetSetTrainerIDTable( p_dungeon_data , area_no ,trid_array, &rand_context  );
-
-  // トレーナーIDのランダムデータを生成
-  for( n = 0; n<INFINITYDUNGEON_FLOOR_MAX; n++)
-  {
-    // トレーナーデータ配列をランダム化
-    INF_TOOL_RndArray( trid_array ,tr_cnt ,&rand_context);
-
-    // 必要な数だけトレーナーIDを保存
-    for( i = 0; i<INFINITY_DUNGEON_TRID_MAX; i++)
-    {
-      p_dungeon_data->tr_data[n].tr_id[i] = trid_array[i];
-    }
-
-    // 回復トレーナー部屋IDリストを初期化
-    p_dungeon_data->recover_room_id[n] = ROOM_MAX;
-  }
-
-  // 回復トレーナー配置位置を決める
-  {
-    s32 cnt = 0;
-    int room_id_array[ROOM_MAX];
-    u32 member_num[ROOM_MAX];
-    u32 recover_index = 0;
-    u8 top_floor = INFINITYDUNGEON_SAVE_GetFloorNum( area_no );
-
-    // 全フロアに配置する
-    for( n = 0; n<top_floor; n++)
-    {
-      GFL_STD_MemFill(room_id_array, 0, sizeof(room_id_array) );
-      GFL_STD_MemFill(member_num, 0, sizeof(member_num) );
-
-      // 設置可能な部屋IDをリストにして返す
-      cnt = GetRecoverTrainerSetRoomIdArray( p_dungeon_data ,n ,room_id_array, member_num );
-
-      // 配置不能な場合対処
-      GF_ASSERT_MSG(cnt!=0,"回復トレーナーが置ける場所がありません\n");
-      if( cnt <= 0 ){ return; }
-
-      SetRecoverTrainer( p_dungeon_data ,n,area_no ,room_id_array ,cnt ,member_num ,&rand_context ,&recover_index);
-    }
-  }
-
-  // ゲートレーナーを配置する
-  {
-    s32 id_pos_array[INFINITY_DUNGEON_TRID_MAX];
-    s32 room_id_array[INFINITY_DUNGEON_TRID_MAX];
-
-    u8 top_floor = INFINITYDUNGEON_SAVE_GetFloorNum( area_no );
-    s32 data_cnt = 0;
-    u8 index_rand;
-    
-    // 配置階を決める
-    p_dungeon_data->gate_trainer_floor = GFL_STD_Rand( &rand_context ,top_floor );
-
-    // 設置可能な部屋IDをリストにして返す
-    data_cnt = GetGateTrainerSetTrIndexArray( p_dungeon_data ,p_dungeon_data->gate_trainer_floor ,id_pos_array ,room_id_array );
-    
-    // 配置不能な場合対処
-    GF_ASSERT_MSG(data_cnt!=0,"ゲートトレーナーが置ける場所がありません\n");
-    if( data_cnt <= 0 ){ return; }
-    
-    // 配列から実際のトレーナー位置をひとつに決定
-    index_rand = GFL_STD_Rand( &rand_context ,data_cnt );
-    p_dungeon_data->gate_trainer_room_id = room_id_array[ index_rand ];
-    p_dungeon_data->gate_trainer_id_pos = id_pos_array[ index_rand ];
-  }
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  ゲートトレーナーに上書きできるトレーナーリストを作成する（トレーナーデータインデックス配列で返す）
- *
- *	@param	*p_dungeon_data 
- *	@param	floor_no 
- *	@param	id_pos_array 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static s32 GetGateTrainerSetTrIndexArray( INF_DUNGEON_DATA  *p_dungeon_data ,s32 floor_no ,s32* id_pos_array, s32* room_id_array )
-{
-  s32 i;
-  s32 room_id;
-  s32 cnt = 0;
-  s32 boss_room_id = -1;
-
-  for( room_id = 0; room_id<ROOM_MAX; room_id++)
-  {
-    u8 room_type = p_dungeon_data->room_data[floor_no][room_id].room_type;
-    u8 pos_type = p_dungeon_data->room_data[floor_no][room_id].tr_pos_type;
-    
-    // ボス部屋には置けない、またボス部屋の位置も覚えておく
-    if( room_type ==  ROOM_TYPE_BOSS){ 
-      boss_room_id = room_id;
-      continue;
-    }
-
-    // 通常部屋以外には配置しない
-    if( room_type !=  ROOM_TYPE_DEFAULT){ continue; }
-
-    // ボス部屋が見つかったときは、ボス部屋の下の部屋には置かない
-    if( ( boss_room_id != -1 ) &&
-        boss_room_id == (room_id + ROOM_MAX_X) ){ continue; }
-
-    // トレーナーIDを保存する
-    {
-      u8 member_num = INF_TOOL_GetMemberNum(pos_type);
-
-      // トレーナーインデックスを取得
-      while( member_num > 0 )
-      {
-        BOOL is_recover = FALSE;
-        s32 id_pos;
-        u16 tr_id;
-        member_num--;
-        id_pos = GetRoomTrainerIDPos( p_dungeon_data ,floor_no ,room_id ,member_num );
-        tr_id = INFINITY_DUNGEON_GetTrIDByIDPos( p_dungeon_data,floor_no ,id_pos );
-
-        // 回復トレーナー以外が配置対象
-        for( i = 0; i < INFINITY_DUNGEON_RECOVERTR_MAX; i++ )
-        {
-          if( p_dungeon_data->recover_data[i] == tr_id)
-          {
-            is_recover = TRUE;
-            break;
-          }
-        }
-
-        // 回復トレーナーでない場合は保存
-        if( is_recover == FALSE )
-        {
-          id_pos_array[ cnt ] = id_pos;
-          room_id_array[ cnt ] = room_id;
-          cnt ++;
-          GF_ASSERT_MSG(cnt<INFINITY_DUNGEON_TRID_MAX,"配置人数が多すぎます(%d<%d)\n",cnt,INFINITY_DUNGEON_TRID_MAX);
-        }
-      }
-    }
-  }
-
-  return cnt;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  回復トレーナーの設置可能な部屋IDを返す
- *
- *	@param	*p_dungeon_data 
- *	@param	floor_no 
- *	@param	*room_id_array 
- *	@param	*member_num 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static s32 GetRecoverTrainerSetRoomIdArray( INF_DUNGEON_DATA  *p_dungeon_data ,int floor_no ,int *room_id_array ,u32 *member_num )
-{
-  int i;
-  s32 cnt = 0;
-  for( i = 0; i<ROOM_MAX; i++)
-  {
-    u8 pos_type = p_dungeon_data->room_data[floor_no][i].tr_pos_type;
-    if( INF_TOOL_GetMemberNum(pos_type) > 0 )
-    {
-      room_id_array[cnt] = i;
-      member_num[cnt] = INF_TOOL_GetMemberNum(pos_type);
-      cnt++;
-    }
-  }
-
-  return cnt;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  回復トレーナー設置
- *
- *	@param	*p_dungeon_data ダンジョンデータ
- *	@param	floor_no        設置フロア
- *	@param	*room_id_array  配置可能部屋リスト
- *	@param	cnt             配置可能部屋数
- *	@param	*member_num     トレーナー数配列
- *	@param	*rand_context   
- *	@param	*recover_index  回復トレーナーインデックス
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void SetRecoverTrainer( INF_DUNGEON_DATA  *p_dungeon_data ,int floor_no ,u32 area_no,const int *room_id_array ,int cnt,const u32 *member_num , GFL_STD_RandContext *rand_context ,u32 *recover_index )
-{
-  int id_pos = 0;
-  u16 tr_id;
-  u32 room_id_index;
-  u32 member_index;
-
-  room_id_index = GFL_STD_Rand( rand_context ,cnt);
-  member_index = GFL_STD_Rand( rand_context ,member_num[room_id_index]);
-  id_pos = GetRoomTrainerIDPos( p_dungeon_data ,floor_no ,room_id_array[room_id_index] ,member_index);
-
-  // エリア番号から、適切な回復トレーナーを抽選
-  tr_id = GetRecoverTrainerID( p_dungeon_data ,area_no ,rand_context);
-
-  p_dungeon_data->tr_data[floor_no].tr_id[id_pos] = tr_id;
-  p_dungeon_data->recover_data[(*recover_index)] = tr_id;
-  (*recover_index)++;
-  p_dungeon_data->recover_room_id[floor_no] = room_id_array[room_id_index];
-  OS_Printf("回復トレーナー部屋NO：%u\n",room_id_array[room_id_index]);
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  エリアごとの回復トレーナーID取得
- *
- *	@param	*p_dungeon_data 
- *	@param	*rand_context 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static u32 GetRecoverTrainerID( const INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,GFL_STD_RandContext *rand_context )
-{
-  const u32 dungeon_color = INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data );
-  u32 start_trid = INF_TRID_START_RECOVERY;
-  u32 trid_ofs   = GFL_STD_Rand( rand_context ,INF_TRID_RECOVERY_AREA_NUM);
-
-  // 現在のエリアによって分岐
-  switch( area_no )
-  {
-  case INFINITY_DUNGEON_AREA_ID_1:
-  case INFINITY_DUNGEON_AREA_ID_2:
-  case INFINITY_DUNGEON_AREA_ID_3:
-  case INFINITY_DUNGEON_AREA_ID_4:
-  case INFINITY_DUNGEON_AREA_ID_5:
-    {
-      if( dungeon_color == VERSION_B2 )
-      {
-        start_trid = INF_TRID_RECOVERY_START_AREA1_5_B;
-      }
-      else
-      {
-        start_trid = INF_TRID_RECOVERY_START_AREA1_5_W;
-      }
-    }
-    break;
-  case INFINITY_DUNGEON_AREA_ID_6:
-  case INFINITY_DUNGEON_AREA_ID_7:
-  case INFINITY_DUNGEON_AREA_ID_8:
-  case INFINITY_DUNGEON_AREA_ID_9:
-  case INFINITY_DUNGEON_AREA_ID_10:
-    {
-      if( dungeon_color == VERSION_B2 )
-      {
-        start_trid = INF_TRID_RECOVERY_START_AREA6_10_B;
-      }
-      else
-      {
-        start_trid = INF_TRID_RECOVERY_START_AREA6_10_W;
-      }
-    }
-    break;
-  default:
-    GF_ASSERT(0);
-    start_trid = INF_TRID_RECOVERY_START_AREA1_5_B;
-    break;
-  }
-
-  // 回復トレーナーID
-  start_trid += trid_ofs;
-
-  return start_trid;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  ブラック用トレーナーIDテーブルを取得
- *
- *	@param	*p_trid_array 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static int GetSetTrainerIDTable( const INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,u32 *p_trid_array ,GFL_STD_RandContext *rand_context)
-{
-  int i;
-  u16 tr_id = 0;
-  int cnt = 0;
-  u8 version = INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data );
-  u32 trid_array[INF_DUNGEON_TR_DATA_MAX];
-  u32 tmp_trid_array[INF_DUNGEON_TR_DATA_MAX];
-  u32 add_data_num = 0;
-
-  // メモリをクリーン
-  GFL_STD_MemFill( trid_array ,0 , sizeof(trid_array));
-
-  // 使用できるトレーナーデータを決定
-  for( i = 0 ; i < INF_TR_AREA_DATA_MAX; i++ )
-  {
-    const INF_TR_AREA_DATA* sc_tr_area_data = INF_TOOL_GetTrainerParam( i );
-    GF_ASSERT_MSG(cnt<INF_DUNGEON_TR_DATA_MAX,"無限ダンジョンのトレーナー抽選に使用するトレーナー数が多すぎます(%d<%d)\n",cnt,INF_DUNGEON_TR_DATA_MAX);
-
-    if( (area_no >= sc_tr_area_data->start_area ) &&
-        (area_no <= sc_tr_area_data->end_area ) )
-    {
-      // バージョン指定なし=0
-      if( (sc_tr_area_data->version == version) ||
-          (sc_tr_area_data->version == 0) )
-      {
-        trid_array[add_data_num] = i;
-        add_data_num++;
-      }
-    }
-  }
-
-  // トレーナータイプごとに抽選データを取得する
-  {
-    u8 tr_type;
-    const u8 *p_trtype_cnt = INF_TOOL_GetTrTypeCntTable(area_no,version); 
-
-    for( tr_type = 0; tr_type < INF_TR_TYPE_MAX; tr_type++ )
-    {
-      // 配置人数が0の場合のみテーブルに追加する作業を行う
-      if( p_trtype_cnt[tr_type] > 0 )
-      {
-        int add_index = 0;
-        int add_cnt = p_trtype_cnt[tr_type];
-        int tmp_data_cnt = 0;
-        GFL_STD_MemFill( tmp_trid_array ,0 , sizeof(tmp_trid_array));
-
-        // タイプを絞り込んだテーブルを作成
-        for( i = 0; i < add_data_num; i++ )
-        {
-          if( INF_TOOL_GetTrainerType( trid_array[i] ) == tr_type )
-          {
-            // トレーナーIDを一時保存
-            tmp_trid_array[tmp_data_cnt] = trid_array[i];
-            tmp_data_cnt++;
-          }
-        }
-        // テーブル内をランダムにする
-        INF_TOOL_RndArray( tmp_trid_array, tmp_data_cnt, rand_context );
-
-        // テーブルに追加
-        while( add_cnt > 0 )
-        {
-          p_trid_array[cnt] = tmp_trid_array[add_index];
-          add_cnt--;    // 追加する数
-          add_index++;  // 追加した位置
-          cnt++;        // 出力トレーナー数
-          GF_ASSERT_MSG(add_index<=tmp_data_cnt,"トレーナータイプ数の指定が間違っています[タイプインデックス->%dのトレーナーが足りない]\n",tr_type);
-          ONOUE_Printf("tr_type => %u add\n",tr_type);
-        }
-      }
-    }
-  }
-  
-  return cnt;
-}
-
-//----------------------------------------------------------------------------
-/**
  *	@brief  モデルIDテーブルを取得
  *
  *	@param	INF_DUNGEON_DATA *p_dungeon_data 
@@ -1247,7 +846,7 @@ static int GetSetTrainerIDTable( const INF_DUNGEON_DATA *p_dungeon_data ,u32 are
 //-----------------------------------------------------------------------------
 const BMODEL_ID* INFINITY_DUNGEON_GetBModelIdTable( const INF_DUNGEON_DATA *p_dungeon_data )
 {
-  u8 version = INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data );
+  u8 version = INF_TOOL_DUNGEON_GetDungeonColor( p_dungeon_data );
 
   //-------------------------------------
   // 封鎖用モデルOBJ(黒)
@@ -1364,7 +963,7 @@ static void SetBUildModel( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p
 static void SetDummyObj( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p_room_data)
 {
   // バージョン取得
-  u8 version = INFINITY_DUNGEON_GetDungeonColor( p_wk->p_dungeon_data );
+  u8 version = INF_TOOL_DUNGEON_GetDungeonColor( p_wk->p_dungeon_data );
 
   // ボス部屋は封鎖しない
   if( p_room_data->room_type != ROOM_TYPE_BOSS )
@@ -1533,8 +1132,8 @@ static void SetTrainer( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p_ro
       u16 tr_id;
       u8  id_pos;
 
-      id_pos = GetRoomTrainerIDPos( p_wk->p_dungeon_data,p_wk->now_floor, p_room_data->room_id ,i );
-      tr_id = INFINITY_DUNGEON_GetTrIDByIDPos( p_wk->p_dungeon_data,p_wk->now_floor ,id_pos );
+      id_pos = INF_TOOL_DUNGEON_GetRoomTrainerIDPos( p_wk->p_dungeon_data,p_wk->now_floor, p_room_data->room_id ,i );
+      tr_id = INF_TOOL_DUNGEON_GetTrIDByIDPos( p_wk->p_dungeon_data,p_wk->now_floor ,id_pos );
       if( tr_id != INF_DUNGEON_TR_ID_MAX )
       {
         u16 obj_code = FBI_TOOL_GetOBJCode( ARCID_INFINITY_DUGENON_TR , tr_id ,p_wk->heapID);
@@ -1551,43 +1150,6 @@ static void SetTrainer( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p_ro
       }
     }
   }
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  指定部屋IDのトレーナーID格納位置取得
- *
- *	@param	*p_dungeon_data フロアデータ
- *	@param	floor_id      フロアID
- *	@param	room_id       部屋ID
- *	@param	room_tr_no    部屋内の相対ID（0～4）
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static int GetRoomTrainerIDPos( const INF_DUNGEON_DATA *p_dungeon_data ,u32 floor_id ,u32 room_id,u8 room_tr_no)
-{
-  int i;
-  u32 tr_num = 0;
-
-  for( i = 0; i<ROOM_MAX; i++ )
-  {
-    u32 tr_pos_type = p_dungeon_data->room_data[floor_id][i].tr_pos_type;
-    
-    // 指定の部屋まで移動した場合は終了する
-    if( room_id <= i )
-    {
-      break;
-    }
-
-    // 人数加算
-    if( INF_TOOL_GetMemberNum( tr_pos_type ) > 0 )
-    {
-      tr_num+=INF_TOOL_GetMemberNum( tr_pos_type );
-    }
-  }
-
-  return tr_num+room_tr_no;
 }
 
 //----------------------------------------------------------------------------
@@ -1635,9 +1197,9 @@ GMEVENT * INFINITY_DUNGEON_EVENT_TrainerBattle(GAMESYS_WORK *gsys, FIELDMAP_WORK
   tr_seed         = GetTrSeed( p_dungeon_data ,floor_id ,id_pos );
 
   // トレーナーID
-  tr_id = INFINITY_DUNGEON_GetTrIDByIDPos( p_dungeon_data ,floor_id ,id_pos );
+  tr_id = INF_TOOL_DUNGEON_GetTrIDByIDPos( p_dungeon_data ,floor_id ,id_pos );
 
-  version = INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data );
+  version = INF_TOOL_DUNGEON_GetDungeonColor( p_dungeon_data );
 
   // 乱数を作成
   GFL_STD_RandInit( &rand_context, tr_seed );
@@ -1710,13 +1272,15 @@ static void GetFloorData( const INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *
   // チュートリアルMAPをセットしなかったときは、ダンジョンを自動生成
   if( is_tutorial == FALSE )
   {
+    u8 top_floor;
     s32 fs_x,fs_y;
     // ダンジョンの広さを取得する
     INF_TOOL_GetFloorSize( area_no ,&fs_x ,&fs_y);
+    top_floor = INFINITYDUNGEON_SAVE_GetFloorNum( area_no );
     // ダンジョンデータを生成(エリアに対応したサイズで生成する)
     INF_DCREATOR_SetDungeonData( p_dungeon_data ,area_no ,p_seed->dungeon_data_seed ,fs_x ,fs_y);
     // トレーナーデータをセット
-    SetTrainerData( p_dungeon_data ,area_no ,p_seed->tr_data_seed );
+    INF_DCREATOR_SetTrainerData( p_dungeon_data ,area_no ,p_seed->tr_data_seed ,top_floor);
   }
   else
   {
@@ -1890,7 +1454,7 @@ static void SetTutorialTrainerData( const INFINITYDUNGEON_SAVE *p_save ,INF_DUNG
         {
           u16 tr_id;
           s32 id_pos;
-          id_pos = GetRoomTrainerIDPos( p_dungeon_data,0, p_room_data->room_id ,n );
+          id_pos = INF_TOOL_DUNGEON_GetRoomTrainerIDPos( p_dungeon_data,0, p_room_data->room_id ,n );
           tr_id = p_dungeon_data->tr_data[0].tr_id[id_pos];
           if( (tr_id >= INF_TRID_START_RECOVERY) 
               && (tr_id < (INF_TRID_START_RECOVERY+INF_TRID_CNT_RECOVERY)) )
@@ -2089,7 +1653,7 @@ static u32 gethint_gate_tr_is_up_down( const TRHINT_WK *p_wk )
 
   if( now_floor < boss_floor )
   {
-    if( INFINITY_DUNGEON_GetDungeonColor( p_wk->p_dungeon_data ) == VERSION_B2 )
+    if( INF_TOOL_DUNGEON_GetDungeonColor( p_wk->p_dungeon_data ) == VERSION_B2 )
     {
       ONOUE_Printf("上にいる\n");
       msg_id = msg_hint_up_01;
@@ -2102,7 +1666,7 @@ static u32 gethint_gate_tr_is_up_down( const TRHINT_WK *p_wk )
   }
   else if( now_floor > boss_floor )
   {
-    if( INFINITY_DUNGEON_GetDungeonColor( p_wk->p_dungeon_data ) == VERSION_B2 )
+    if( INF_TOOL_DUNGEON_GetDungeonColor( p_wk->p_dungeon_data ) == VERSION_B2 )
     {
       ONOUE_Printf("下にいる\n");
       msg_id = msg_hint_down_01;
@@ -2521,6 +2085,7 @@ static u32 gethint_gate_tr_room_tr_num( const TRHINT_WK *p_wk )
       GF_ASSERT_MSG(0,"ありえない人数の場所にゲートトレーナーが存在しています\n");
       break;
   }
+  return msg_hint_unknown_01 + p_wk->talk_type;
 }
 
 //----------------------------------------------------------------------------
@@ -2537,7 +2102,7 @@ static u32 gethint_gate_tr_sex( const TRHINT_WK *p_wk )
   // トレーナータイプ取得
   u8 floor_id = p_wk->p_dungeon_data->gate_trainer_floor;
   u8 id_pos = p_wk->p_dungeon_data->gate_trainer_id_pos;
-  u16 tr_id = INFINITY_DUNGEON_GetTrIDByIDPos( p_wk->p_dungeon_data ,floor_id, id_pos );
+  u16 tr_id = INF_TOOL_DUNGEON_GetTrIDByIDPos( p_wk->p_dungeon_data ,floor_id, id_pos );
   
 	u16	tr_type;		//トレーナータイプ
   BSUBWAY_PARTNER_DATA tr_data;
@@ -2588,7 +2153,7 @@ static u32 gethint_gate_tr_move_type( const TRHINT_WK *p_wk )
   for( n= 0; n<INF_TOOL_GetMemberNum(p_room_data->tr_pos_type); n++ )
   {
     // 部屋のどの位置か調べる
-    s32 id_pos = GetRoomTrainerIDPos( p_wk->p_dungeon_data ,floor_id ,room_id ,n );
+    s32 id_pos = INF_TOOL_DUNGEON_GetRoomTrainerIDPos( p_wk->p_dungeon_data ,floor_id ,room_id ,n );
     BOOL is_gate = INF_TOOL_DUNGEON_GetIsGateTrainer( p_wk->p_dungeon_data ,floor_id,id_pos );
 
     // ゲートトレーナーが見つかった場合
@@ -2643,22 +2208,6 @@ static u32 gethint_boss_info( const TRHINT_WK *p_wk )
 static u32 gethint_no_hint( const TRHINT_WK *p_wk )
 {
   return msg_hint_unknown_01 + p_wk->talk_type;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  無限ダンジョンのIDの場所からトレーナーIDを取得
- *
- *	@param	*p_dungeon_data 
- *	@param	floor_id 
- *	@param	id_pos 
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-u16 INFINITY_DUNGEON_GetTrIDByIDPos( const INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_id ,u8 id_pos )
-{
-  return p_dungeon_data->tr_data[floor_id].tr_id[id_pos];
 }
 
 //----------------------------------------------------------------------------
@@ -2897,7 +2446,7 @@ static void INF_DEBUG_OutPutFloorData( const INF_DUNGEON_DATA *p_wk,const ROOM_D
             // ゲートトレーナーがいるか調べる
             for( n= 0; n<INF_TOOL_GetMemberNum(p_room_data[room_id].tr_pos_type); n++ )
             {
-              s32 id_pos = GetRoomTrainerIDPos( p_wk ,now_floor ,room_id ,n );
+              s32 id_pos = INF_TOOL_DUNGEON_GetRoomTrainerIDPos( p_wk ,now_floor ,room_id ,n );
               is_gate = INF_TOOL_DUNGEON_GetIsGateTrainer( p_wk ,now_floor,id_pos );
               if( is_gate == TRUE ){break;}
             }

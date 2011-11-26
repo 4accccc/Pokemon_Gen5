@@ -70,6 +70,7 @@
 
 #include "savedata/infinity_dungeon_save.h"
 #include "infinity_dungeon_gimmick.h"
+#include "infinity_dungeon_creator.h"
 
 FS_EXTERN_OVERLAY(amprotect);
 
@@ -418,7 +419,7 @@ GMEVENT * EVENT_TrainerBattle(
       INFINITYDUNGEON_SAVE *p_save = SaveData_GetINFINITYDUNGEON( p_scw );
       u8 dungeon_area = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_save );
       INF_DUNGEON_DATA *p_dungeon_data = INFINITY_DUNGEON_DataGet(fieldmap);
-      u8 dungeon_version = INFINITY_DUNGEON_GetDungeonColor( p_dungeon_data );
+      u8 dungeon_version = INF_TOOL_DUNGEON_GetDungeonColor( p_dungeon_data );
       if( dungeon_version == VERSION_B2 )
       {
         bp->fieldSituation.bgAttr = BATTLE_BG_ATTR_MUGEN_B;
