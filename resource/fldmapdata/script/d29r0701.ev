@@ -141,7 +141,7 @@ EVENT_START   ev_d29r0701_rezirock
   _GIZAPLAINWIN_CLOSE()
 
   // 戦闘
-  _WILD_BTL_SET_LEGEND( MONSNO_377, 40 ) // レジロック
+  _WILD_BTL_SET_LEGEND( MONSNO_377, 65 ) // レジロック
 
   // 勝敗チェック
   _WILD_LOSE_CHECK( SCWK_ANSWER )

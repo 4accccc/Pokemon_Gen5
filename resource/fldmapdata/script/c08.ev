@@ -65,7 +65,7 @@ _EVENT_DATA_END
 DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
-
+DEFINE_LOCAL  LCW_VERSION
 //------------------------------注意--------------------------------//
 //
 //  LOCALWORK15をリンクイベントで使用。
@@ -628,7 +628,7 @@ ev_c08_ninja_comming:
   _OBJ_ANIME_WAIT()
 
   //シャガ：さすがだな
-  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_13 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_13 , C08_SWLEADER7_01 , POS_UR)
   _MSGWIN_CLOSE()
   
   //【仮】回復処理（メッセージが必要かも）
@@ -638,12 +638,20 @@ ev_c08_ninja_comming:
 	_TEMOTI_POKEMON_KAIFUKU()
 	
 	//シャガ：ここで
-	_BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_14 , C08_SWLEADER7_01 , POS_DEFAULT)
+	_BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_14 , C08_SWLEADER7_01 , POS_UR)
   _MSGWIN_CLOSE()
   
+  //バージョンを取得
+  _GET_ROM_VERSION( LCW_VERSION )
+  
   //アニメ：シャガジム方面へ移動
-  _OBJ_ANIME( C08_SWLEADER7_01, anm_swleader7_go_gym)
-  _TIME_WAIT(8)
+  IF $LCW_VERSION == VERSION_B2 THEN
+    _OBJ_ANIME( C08_SWLEADER7_01, anm_swleader7_go_gym_b)
+  ELSE
+    _OBJ_ANIME( C08_SWLEADER7_01, anm_swleader7_go_gym_w)
+  ENDIF
+  
+  _TIME_WAIT(4)
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u)
   _OBJ_ANIME_WAIT()
   
@@ -660,8 +668,13 @@ ev_c08_ninja_comming:
   _SE_WAIT()
   
   //アニメ：シャガジム方面から戻る
-  _OBJ_ANIME( C08_SWLEADER7_01, anm_swleader7_return_gym)
-  _TIME_WAIT(4*3)
+  IF $LCW_VERSION == VERSION_B2 THEN
+    _OBJ_ANIME( C08_SWLEADER7_01, anm_swleader7_return_gym_b)
+  ELSE
+    _OBJ_ANIME( C08_SWLEADER7_01, anm_swleader7_return_gym_w)
+  ENDIF
+
+  _TIME_WAIT(4)
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r)
   _OBJ_ANIME_WAIT()
   
@@ -669,23 +682,31 @@ ev_c08_ninja_comming:
   _PLAYER_NAME( 0 )
   
   //シャガ：ふむ…！
-	_BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_15 , C08_SWLEADER7_01 , POS_DEFAULT)
+	_BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_15 , C08_SWLEADER7_01 , POS_UR)
 	
 	//シャガ：いいか主人公
-	_BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_15a , C08_SWLEADER7_01 , POS_DEFAULT)
+	_BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_15a , C08_SWLEADER7_01 , POS_UR)
 	
   //_MSGWIN_CLOSE()
   
   //【仮】いでんしのくさびデモ
   
   //シャガ：これがあいつら
-  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_16 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_16 , C08_SWLEADER7_01 , POS_UR)
   _MSGWIN_CLOSE()
   
   //ダークトリニティ登場
 	_OBJ_ADD( C08_NINJA_01 )
+	
+  //ダークトリニティ配置
+  IF $LCW_VERSION == VERSION_B2 THEN
+    _OBJ_POS_CHANGE( C08_NINJA_01, 403, 0, 147, DIR_DOWN )
+  ELSE
+    _OBJ_POS_CHANGE( C08_NINJA_01, 404, 0, 148, DIR_DOWN )
+  ENDIF
+	
 	//登場アニメーション
-	_OBJ_ANIME( C08_NINJA_01 , anm_c07_ninja_coming_01 )
+	_OBJ_ANIME( C08_NINJA_01 , anm_c08_ninja_coming_01 )
 	_OBJ_ANIME_WAIT()
 	
 	//イベント曲再生
@@ -697,31 +718,48 @@ ev_c08_ninja_comming:
 	_OBJ_ANIME_WAIT()
 	
 	//？？？：ジムがかくしばしょか
-  _BALLOONWIN_OBJMSG_POS( msg_c08_ninja_01 , C08_NINJA_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_ninja_01 , C08_NINJA_01 , POS_DL)
   _MSGWIN_CLOSE()
   
   //シャガ：まさか
-  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_17 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_17 , C08_SWLEADER7_01 , POS_UR)
   _MSGWIN_CLOSE()
   
   //？？？：おっしゃるとおり
-  _BALLOONWIN_OBJMSG_POS( msg_c08_ninja_02 , C08_NINJA_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_ninja_02 , C08_NINJA_01 , POS_DL)
   _MSGWIN_CLOSE()
   
   //ダークトリニティ2～3登場
 	_OBJ_ADD( C08_NINJA_02 )
 	_OBJ_ADD( C08_NINJA_03 )
+
+  //ダークトリニティ配置
+  IF $LCW_VERSION == VERSION_B2 THEN
+    _OBJ_POS_CHANGE( C08_NINJA_02, 406, 0, 145, DIR_LEFT )
+    _OBJ_POS_CHANGE( C08_NINJA_03, 406, 0, 146, DIR_LEFT )
+  ELSE
+    _OBJ_POS_CHANGE( C08_NINJA_02, 402, 0, 147, DIR_RIGHT )
+    _OBJ_POS_CHANGE( C08_NINJA_03, 407, 0, 147, DIR_LEFT )
+  ENDIF
+
 	//登場アニメーション
-	_OBJ_ANIME( C08_NINJA_02 , anm_c07_ninja_coming_01 )
-	_OBJ_ANIME( C08_NINJA_03 , anm_c07_ninja_coming_01 )
+	_OBJ_ANIME( C08_NINJA_02 , anm_c08_ninja_coming_01 )
+	_OBJ_ANIME( C08_NINJA_03 , anm_c08_ninja_coming_01 )
 	_OBJ_ANIME_WAIT()
 	
 	_TIME_WAIT( 8*5 )
 	
-	//【仮】ダークトリニティ移動
-  _OBJ_ANIME_AUTO( C08_NINJA_01, 418, 146, FORCE_TYPE_ALL, 4, DIR_UD)
-  _OBJ_ANIME_AUTO( C08_NINJA_02, 403, 155, FORCE_TYPE_ALL, 4, DIR_UD)
-  _OBJ_ANIME_AUTO( C08_NINJA_03, 407, 155, FORCE_TYPE_ALL, 4, DIR_UD)
+  //アニメ：ダークトリニティ退場
+  IF $LCW_VERSION == VERSION_B2 THEN
+    _OBJ_ANIME( C08_NINJA_01 , anm_c08_ninja_escape_01b )
+    _OBJ_ANIME( C08_NINJA_02 , anm_c08_ninja_escape_02b )
+    _OBJ_ANIME( C08_NINJA_03 , anm_c08_ninja_escape_03b )
+  ELSE
+    _OBJ_ANIME( C08_NINJA_01 , anm_c08_ninja_escape_01w )
+    _OBJ_ANIME( C08_NINJA_02 , anm_c08_ninja_escape_02w )
+    _OBJ_ANIME( C08_NINJA_03 , anm_c08_ninja_escape_03w )
+  ENDIF
+
 	_OBJ_ANIME_WAIT()
 	
 	//ダークトリニティ2～3削除
@@ -731,11 +769,15 @@ ev_c08_ninja_comming:
 	_OBJ_ANIME_WAIT()
 	
 	//シャガ：うばわれたら
-  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_18 , C08_SWLEADER7_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_18 , C08_SWLEADER7_01 , POS_UR)
   _MSGWIN_CLOSE()
 	
 	//アニメ：シャガ追いかける
-	_OBJ_ANIME_AUTO( C08_SWLEADER7_01, 403, 155, FORCE_TYPE_NOT, 4, DIR_UD)
+  IF $LCW_VERSION == VERSION_B2 THEN
+    _OBJ_ANIME( C08_SWLEADER7_01 , anm_c08_swleader7_run_b )
+  ELSE
+    _OBJ_ANIME( C08_SWLEADER7_01 , anm_c08_swleader7_run_w )
+  ENDIF
   _OBJ_ANIME_WAIT()
   
   //シャガ・ダークトリニティ配置変更
@@ -756,22 +798,34 @@ ev_c08_ninja_comming:
 _RET
 
 //--------------------------------------------------------------------
-//	シャガ：ジムに入る
+//	シャガ：ジムに入るW
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_swleader7_go_gym
+_ANIME_LABEL	anm_swleader7_go_gym_w
 	_ANIME_DATA	AC_WALK_U_4F,1
-	_ANIME_DATA	AC_WALK_L_4F,1
-	_ANIME_DATA	AC_WALK_U_4F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//	シャガ：ジムに入る
+//	シャガ：ジムから出るW
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_swleader7_return_gym
-	_ANIME_DATA	AC_WALK_D_4F,1
-	_ANIME_DATA	AC_WALK_R_4F,1
+_ANIME_LABEL	anm_swleader7_return_gym_w
 	_ANIME_DATA	AC_WALK_D_4F,1
 	_ANIME_DATA	AC_STAY_WALK_L_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	シャガ：ジムに入るB
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader7_go_gym_b
+	_ANIME_DATA	AC_WALK_R_4F,1
+	_ANIME_DATA	AC_WALK_U_4F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	シャガ：ジムから出るB
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swleader7_return_gym_b
+	_ANIME_DATA	AC_WALK_D_4F,1
+	_ANIME_DATA	AC_WALK_L_4F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -785,18 +839,138 @@ _ANIME_LABEL	anm_look_ninja_gyoe
 //--------------------------------------------------------------
 //	C07　リュウラセンイベント開始：ダークトリニティ登場
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_c07_ninja_coming_01
+_ANIME_LABEL	anm_c08_ninja_coming_01
+  _ANIME_DATA	AC_VANISH_OFF,1
 	_ANIME_DATA	AC_NINJA_ACT0,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	C07　リュウラセンイベント開始：ダークトリニティ退場
+//	ダークトリニティ：退場
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_c07_ninja_bye_01
+_ANIME_LABEL	anm_ninja_bye_01
 	_ANIME_DATA	AC_NINJA_ACT1,1
 	_ANIME_DATA	AC_VANISH_ON,1
 	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------
+//	ダークトリニティ逃走01W
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_ninja_escape_01w
+  _ANIME_DATA	AC_WALK_D_4F,2
+  _ANIME_DATA	AC_DIR_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_D_4F,1
+  _ANIME_DATA	AC_ANM_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_D_4F,2
+  _ANIME_DATA	AC_ANM_PAUSE_OFF,1
+  _ANIME_DATA	AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA	AC_DIR_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_L_4F,1
+  _ANIME_DATA	AC_ANM_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_L_4F,1
+  _ANIME_DATA	AC_ANM_PAUSE_OFF,1
+  _ANIME_DATA	AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA	AC_WALK_D_4F,5
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ダークトリニティ逃走02W
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_ninja_escape_02w
+  _ANIME_DATA	AC_WALK_D_4F,9
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ダークトリニティ逃走03W
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_ninja_escape_03w
+  _ANIME_DATA	AC_WALK_R_4F,6
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	シャガ追いかけるW
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_swleader7_run_w
+  _ANIME_DATA	AC_WALK_D_4F,5
+  _ANIME_DATA	AC_WALK_L_4F,3
+  _ANIME_DATA	AC_WALK_D_4F,4
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ダークトリニティ逃走01B
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_ninja_escape_01b
+  _ANIME_DATA	AC_DIR_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_D_4F,1
+  _ANIME_DATA	AC_ANM_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_D_4F,1
+  _ANIME_DATA	AC_ANM_PAUSE_OFF,1
+  _ANIME_DATA	AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA	AC_DIR_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_R_4F,1
+  _ANIME_DATA	AC_ANM_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_R_4F,3
+  _ANIME_DATA	AC_ANM_PAUSE_OFF,1
+  _ANIME_DATA	AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA	AC_WALK_D_4F,3
+  _ANIME_DATA	AC_DIR_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_D_4F,1
+  _ANIME_DATA	AC_ANM_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_D_4F,1
+  _ANIME_DATA	AC_ANM_PAUSE_OFF,1
+  _ANIME_DATA	AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ダークトリニティ逃走02B
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_ninja_escape_02b
+  _ANIME_DATA	AC_WALK_R_4F,3
+  _ANIME_DATA	AC_DIR_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_R_4F,1
+  _ANIME_DATA	AC_ANM_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_R_4F,1
+  _ANIME_DATA	AC_ANM_PAUSE_OFF,1
+  _ANIME_DATA	AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA	AC_WALK_R_4F,3
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ダークトリニティ逃走03B
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_ninja_escape_03b
+  _ANIME_DATA	AC_WALK_R_4F,3
+  _ANIME_DATA	AC_DIR_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_R_4F,1
+  _ANIME_DATA	AC_ANM_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_R_4F,2
+  _ANIME_DATA	AC_ANM_PAUSE_OFF,1
+  _ANIME_DATA	AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA	AC_WALK_R_4F,2
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	シャガ追いかけるB
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_swleader7_run_b
+  _ANIME_DATA	AC_WALK_D_4F,4
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA	AC_DIR_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_R_4F,1
+  _ANIME_DATA	AC_ANM_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_R_4F,2
+  _ANIME_DATA	AC_ANM_PAUSE_OFF,1
+  _ANIME_DATA	AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA	AC_WALK_D_4F,3
+  _ANIME_DATA	AC_DIR_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_D_4F,1
+  _ANIME_DATA	AC_ANM_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_D_4F,2
+  _ANIME_DATA	AC_ANM_PAUSE_OFF,1
+  _ANIME_DATA	AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA	ACMD_END,0
+  
 /**************************************************************/
 /*  POS：ダークトリニティ戦                                  */
 /**************************************************************/
@@ -834,24 +1008,38 @@ EVENT_START   ev_pos_c08_ninja_01
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
   
   //シャガ近くに配置
-  _OBJ_POS_CHANGE( C08_SWLEADER7_01, 431, 0, 175, DIR_LEFT )
-  _MOVE_CODE_CHANGE( C08_SWLEADER7_01, MV_DMY )
-  
-  //プレイヤー座標で隣接位置を分岐
   IF $LCW_POSZ == 177 THEN
-    $LCW_POSZ -= 1
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 431, 0, 176, DIR_RIGHT )
   ELSE
-    $LCW_POSZ += 1
+     $LCW_POSZ += 1
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 431, 0, LCW_POSZ, DIR_RIGHT )
   ENDIF
   
-  //シャガ隣接
-  _OBJ_ANIME_AUTO( C08_SWLEADER7_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_ALL, 4, DIR_UD)
+  _MOVE_CODE_CHANGE( C08_SWLEADER7_01, MV_DMY )
   
-  _TIME_WAIT( 16)
+  //プレイヤー座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
+  
+  //シャガ隣接
+  SWITCH  $LCW_POSZ
+  CASE 173 THEN
+    _OBJ_ANIME( C08_SWLEADER7_01,anm_c08_swleader7_arrive_z173 )
+  CASE 174 THEN
+    _OBJ_ANIME( C08_SWLEADER7_01,anm_c08_swleader7_arrive_z174 )
+  CASE 175 THEN
+    _OBJ_ANIME( C08_SWLEADER7_01,anm_c08_swleader7_arrive_z175 )
+  CASE 176 THEN
+    _OBJ_ANIME( C08_SWLEADER7_01,anm_c08_swleader7_arrive_z176 )
+  CASE 177 THEN
+    _OBJ_ANIME( C08_SWLEADER7_01,anm_c08_swleader7_arrive_z175 )
+  ENDSWITCH
+  
+  _TIME_WAIT(16)
   
   //アニメ：ダークトリニティ退場
-	_OBJ_ANIME( C08_NINJA_01 , anm_c07_ninja_bye_01 )
+	_OBJ_ANIME( C08_NINJA_01 , anm_ninja_bye_01 )
 	_OBJ_ANIME_WAIT()
+	
 	//ダークトリニティ動作OBJ削除
 	_OBJ_DEL( C08_NINJA_01 )
 	
@@ -906,18 +1094,11 @@ EVENT_START   ev_pos_c08_ninja_01
   _START_EVENT_BGM( SEQ_BGM_E_CHEREN )
   
   //フィールド上にチェレン配置
-  IF $LCW_POSZ == 173 THEN
-    _OBJ_ADD_EX( 446, 174, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SWLEADER1, MV_DMY )
+  _OBJ_ADD_EX( 446, 175, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SWLEADER1, MV_DMY )
   
-  ELSIF  $LCW_POSZ == 177 THEN
-    _OBJ_ADD_EX( 446, 176, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SWLEADER1, MV_DMY )
-    
-  ELSE
-    _OBJ_ADD_EX( 446, LCW_POSZ, DIR_LEFT, MMDL_ID_EVENTOBJ_00, SWLEADER1, MV_DMY )
-  ENDIF
-  
-  
-  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 442, LCW_POSZ, FORCE_TYPE_ALL, 4, DIR_UD)
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 442, LCW_POSZ, FORCE_TYPE_ALL, 4, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_staystep_l )
   _OBJ_ANIME_WAIT()
   
   //プレイヤー・ライバル名代入
@@ -1039,6 +1220,58 @@ EVENT_START   ev_pos_c08_ninja_01
   _ENABLE_NETWORK_IN_IMPORTANT_EVENT()
 EVENT_END
 
+//--------------------------------------------------------------
+//	シャガ到着
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_swleader7_arrive_z173
+  _ANIME_DATA	AC_DIR_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_R_4F,1
+  _ANIME_DATA	AC_ANM_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_R_4F,1
+  _ANIME_DATA	AC_ANM_PAUSE_OFF,1
+  _ANIME_DATA	AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA	AC_WALK_R_4F,7
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	シャガ到着
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_swleader7_arrive_z174
+  _ANIME_DATA	AC_DIR_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_R_4F,1
+  _ANIME_DATA	AC_ANM_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_R_4F,4
+  _ANIME_DATA	AC_ANM_PAUSE_OFF,1
+  _ANIME_DATA	AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA	AC_WALK_R_4F,4
+  _ANIME_DATA	ACMD_END,0
+ 
+//--------------------------------------------------------------
+//	シャガ到着
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_swleader7_arrive_z175
+  _ANIME_DATA	AC_DIR_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_R_4F,1
+  _ANIME_DATA	AC_ANM_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_R_4F,5
+  _ANIME_DATA	AC_ANM_PAUSE_OFF,1
+  _ANIME_DATA	AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA	AC_WALK_R_4F,3
+  _ANIME_DATA	ACMD_END,0
+
+ //--------------------------------------------------------------
+//	シャガ到着
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_swleader7_arrive_z176
+  _ANIME_DATA	AC_DIR_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_R_4F,1
+  _ANIME_DATA	AC_ANM_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_R_4F,6
+  _ANIME_DATA	AC_ANM_PAUSE_OFF,1
+  _ANIME_DATA	AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA	AC_WALK_R_4F,2
+  _ANIME_DATA	ACMD_END,0
+
 /**************************************************************/
 /*  シャガ：話しかけ                                  */
 /**************************************************************/
@@ -1098,14 +1331,22 @@ EVENT_START   ev_c08_swsage7_01
     _BALLOONWIN_OBJMSG( msg_c08_sage7_06 , C08_SWSAGE7_01 )
     _BALLOONWIN_CLOSE()
     
+    //バージョンを取得
+    _GET_ROM_VERSION( LCW_VERSION )
+    
     //暗転処理
     _BLACK_OUT_SLOW()
     _DISP_FADE_END_CHECK()
     
-    //シャガ配置変更
-    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 406, 0, 146, DIR_DOWN )
-    _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 405, 0, 146, DIR_DOWN )
-    
+     //シャガ・主人公配置変更
+    IF $LCW_VERSION == VERSION_B2 THEN
+      _OBJ_POS_CHANGE( C08_SWLEADER7_01, 404, 0, 145, DIR_DOWN )
+      _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 403, 0, 145, DIR_DOWN )
+    ELSE
+      _OBJ_POS_CHANGE( C08_SWLEADER7_01, 405, 0, 145, DIR_DOWN )
+      _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 404, 0, 145, DIR_DOWN )
+    ENDIF
+
     //========================================//
     //プラズマ団動作OBJ削除
     _OBJ_DEL(C08_SWSAGE7_01)
@@ -1150,6 +1391,9 @@ EVENT_START   ev_c08_swplazmam_01
   
   //まだ勝利していない
   IF $SCWK_ANSWER ==  FALSE THEN
+    
+    //トレーナー曲再生
+    _TRAINER_BGM_SET(  TRID_SWPLAZMAM_32 )
 
     //戦闘前メッセージ
     _BALLOONWIN_OBJMSG( msg_d27r0101_swplazmam1_01 , C08_SWPLAZMAM_01 )
@@ -1209,6 +1453,9 @@ EVENT_START   ev_c08_swplazmam_02
   //まだ勝利していない
   IF $SCWK_ANSWER ==  FALSE THEN
 
+    //トレーナー曲再生
+    _TRAINER_BGM_SET(  TRID_SWPLAZMAM_33 )
+
     //戦闘前メッセージ
     _BALLOONWIN_OBJMSG( msg_d27r0101_swplazmam2_01 , C08_SWPLAZMAM_02 )
     _BALLOONWIN_CLOSE()
@@ -1266,6 +1513,9 @@ EVENT_START   ev_c08_swplazmaw_01
   
   //まだ勝利していない
   IF $SCWK_ANSWER ==  FALSE THEN
+   
+    //トレーナー曲再生
+    _TRAINER_BGM_SET(  TRID_SWPLAZMAW_11 )
 
     //戦闘前メッセージ
     _BALLOONWIN_OBJMSG( msg_d27r0101_swplazmaw1_01 , C08_SWPLAZMAW_01 )
@@ -1555,7 +1805,7 @@ EVENT_END
 /* 町看板                                                       */
 /**************************************************************/
 EVENT_START   ev_bg_c08_board_01
-	_EASY_BGWIN_MSG( msg_c08_sign1_01, TYPE_TOWN )
+  _EASY_BGWIN_MSG( msg_c08_sign1_01, TYPE_TOWN )
 EVENT_END
 
 /**************************************************************/

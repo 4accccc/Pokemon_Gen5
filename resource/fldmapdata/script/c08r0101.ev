@@ -54,6 +54,7 @@ INIT_EVENT_END
 /**************************************************************/
 EVENT_START   ev_scene_c08r0101_legend_01
   
+  
   //アニメ：主人公シャガの前に移動
   _OBJ_ANIME( MMDL_ID_PLAYER,anm_player_to_swleader8 )
   _TIME_WAIT(8*4)
@@ -122,6 +123,7 @@ EVENT_START   ev_scene_c08r0101_legend_01
   //アニメ：主人公シャガの前に移動
   _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 9, 14, FORCE_TYPE_NOT, 8, DIR_LR)
   _OBJ_ANIME_WAIT()
+  
   
   //========================================//
   //C08R0101伝説解説イベント終了

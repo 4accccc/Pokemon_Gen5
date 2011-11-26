@@ -99,7 +99,7 @@ EVENT_START   ev_r22_poke5_01
 		DEFINE_LOCAL flag
 		$flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
 		$flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
-		_WILD_BTL_SET_EX( MONSNO_646, 40, flag ) // Lv.40 テラキオン
+		_WILD_BTL_SET_EX( MONSNO_646, 45, flag ) // Lv.45 テラキオン
 		}
 		
 	ELSE
@@ -109,7 +109,7 @@ EVENT_START   ev_r22_poke5_01
 		DEFINE_LOCAL flag
 		$flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
 		$flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
-		_WILD_BTL_SET_EX( MONSNO_646, 60, flag ) // Lv.60 テラキオン
+		_WILD_BTL_SET_EX( MONSNO_646, 65, flag ) // Lv.65 テラキオン
 		}
 
 	ENDIF

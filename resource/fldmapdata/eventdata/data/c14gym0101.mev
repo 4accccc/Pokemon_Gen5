@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/16 15:54:17
+#save date:2011/11/26 12:21:56
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c14gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -22,7 +22,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C14GYM0101_SWLEADER8_01
 #Event Script Name
 SCRID_C14GYM0101_SWLEADER8_01
 #Direction Type Number

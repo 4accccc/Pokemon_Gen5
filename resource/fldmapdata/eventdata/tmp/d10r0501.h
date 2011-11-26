@@ -16,6 +16,8 @@
 #define D10R0501_BOSS_01                   4
 #define D10R0501_SWSAGE1_02                5
 #define D10R0501_WAND_01                   6
+#define D10R0501_KUSABI_01                 7
+#define D10R0501_KYUREMU_01                8
 
 #endif //ZONE_D10R0501_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d10r0501.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

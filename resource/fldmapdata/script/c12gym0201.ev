@@ -263,10 +263,25 @@ ev_leader1_btl:
 	//メッセージ：きみとってはじめての
 	_BALLOONWIN_TALKOBJ_MSG( msg_c12gym0201_swleader1_06 )
 	_BALLOONWIN_CLOSE()
+{
+  //難易度取得ワーク定義
+  DEFINE_LOCAL  LCW_DIFFICULTY
+  
+  //現在の難易度を取得
+  _KEYSYS_GET_DIFFICULTY( LCW_DIFFICULTY )
+  
+  //トレーナー戦呼び出し
+  
+  //むずかしい
+  IF $LCW_DIFFICULTY == 2 THEN
+    _TRAINER_BTL_SET( TRID_SWLEADER1_02, 0 )
+  
+  //ふつう・かんたん
+  ELSE
+    _TRAINER_BTL_SET( TRID_SWLEADER1_01, 0 )
+  ENDIF
 
-	//トレーナー戦呼び出し
-	_TRAINER_BTL_SET( TRID_SWLEADER1_01, 0 )
-	
+}
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	

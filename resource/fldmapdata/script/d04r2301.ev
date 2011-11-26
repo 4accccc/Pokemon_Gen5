@@ -47,13 +47,13 @@ EVENT_START   ev_d04r2301_poke13_01
     _FLAG_SET( FE_D04R2301_POKE13_MEET_01 )
     //==================================//
 
-    // Lv.40 ウルガモス
-    _WILD_BTL_SET_LEGEND( MONSNO_644, 40 )
+    // Lv.35 ウルガモス
+    _WILD_BTL_SET_LEGEND( MONSNO_644, 35 )
 
   ELSE
 
-    // Lv.60 ウルガモス
-    _WILD_BTL_SET_LEGEND( MONSNO_644, 60 )
+    // Lv.65 ウルガモス
+    _WILD_BTL_SET_LEGEND( MONSNO_644, 65 )
 
   ENDIF
 

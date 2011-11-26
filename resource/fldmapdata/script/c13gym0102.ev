@@ -201,9 +201,26 @@ ev_leader2_btl:
   _GIZAWIN_OBJMSG_POS( msg_c13gym0102_swleader2_01, C13GYM0102_SWLEADER2ISS_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
 
-	//トレーナー戦呼び出し
-	_TRAINER_BTL_SET( TRID_SWLEADER2_01, 0 )
-	
+{
+  //難易度取得ワーク定義
+  DEFINE_LOCAL  LCW_DIFFICULTY
+  
+  //現在の難易度を取得
+  _KEYSYS_GET_DIFFICULTY( LCW_DIFFICULTY )
+  
+  //トレーナー戦呼び出し
+  
+  //むずかしい
+  IF $LCW_DIFFICULTY == 2 THEN
+    _TRAINER_BTL_SET( TRID_SWLEADER2_02, 0 )
+  
+  //ふつう・かんたん
+  ELSE
+    _TRAINER_BTL_SET( TRID_SWLEADER2_01, 0 )
+  ENDIF
+
+}
+
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	

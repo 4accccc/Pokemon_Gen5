@@ -557,8 +557,25 @@ EVENT_START ev_tr_c08gym0101_swleader7
   ENDIF
   _BALLOONWIN_CLOSE()
 
-    //戦闘処理
-		_TRAINER_BTL_SET( TRID_SWLEADER7_01, 0 )
+  {
+    //難易度取得ワーク定義
+    DEFINE_LOCAL  LCW_DIFFICULTY
+    
+    //現在の難易度を取得
+    _KEYSYS_GET_DIFFICULTY( LCW_DIFFICULTY )
+    
+    //トレーナー戦呼び出し
+    
+    //むずかしい
+    IF $LCW_DIFFICULTY == 2 THEN
+      _TRAINER_BTL_SET( TRID_SWLEADER7_02, 0 )
+    
+    //ふつう・かんたん
+    ELSE
+      _TRAINER_BTL_SET( TRID_SWLEADER7_01, 0 )
+    ENDIF
+
+  }
 
 		//結果チェック
 		_TRAINER_LOSE_CHECK( SCWK_ANSWER )

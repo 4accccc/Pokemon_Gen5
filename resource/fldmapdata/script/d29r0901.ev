@@ -141,7 +141,7 @@ EVENT_START   ev_d29r0901_rezisteel
   _GIZAPLAINWIN_CLOSE()
 
   // 戦闘
-  _WILD_BTL_SET_LEGEND( MONSNO_379, 40 ) // レジアイス
+  _WILD_BTL_SET_LEGEND( MONSNO_379, 65 ) // レジアイス
 
   // 勝敗チェック
   _WILD_LOSE_CHECK( SCWK_ANSWER )

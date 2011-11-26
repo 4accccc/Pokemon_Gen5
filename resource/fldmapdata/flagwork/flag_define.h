@@ -494,6 +494,7 @@
 #define FE_T01R0401_TALK_03                478 /* 0x01de アララギポケモン研究所：まるいおまもり話　会話フラグ */
 #define FE_T01R0401_TALK_04                479 /* 0x01df アララギポケモン研究所：ひかるおまもり話　会話フラグ */
 #define FE_D08R0901_BOSS_TALK              480 /* 0x01e0 リュウラセンの塔・最上階：Ｎイベントフラグ */
+#define FE_D10R0501_KUSABI_GET             481 /* 0x01e1 ジャイアントホール：いでんしのくさび入手フラグ */
 
 #define FE_AREA_END                        599 /* 0x0257  */
 
@@ -902,6 +903,11 @@
 #define FV_D27R0701_SWPLAZMAM_02B          997 /* 0x03e5 プラズマフリゲート船倉：ブラックverプラズマ団員 */
 #define FV_D27R0701_SWPLAZMAM_02W          998 /* 0x03e6 プラズマフリゲート船倉：ホワイトverプラズマ団員 */
 #define FV_D02R0101_STOPPER_01             999 /* 0x03e7 ヤグルマの森：ストッパー */
+#define FV_C12GYM0201_SWLEADER1_01        1000 /* 0x03e8 ノーマルジム：チェレン */
+#define FV_C05GYM0101_SWLEADER5_01        1001 /* 0x03e9 じめんジム：ヤーコン */
+#define FV_C14GYM0101_SWLEADER8_01        1002 /* 0x03ea みずジム：シズイ */
+#define FV_D10R0501_IDENSHINO_KUSABI      1003 /* 0x03eb ジャイアントホール：いでんしのくさび */
+#define FV_D10R0501_KYUREMU               1004 /* 0x03ec ジャイアントホール：クリア後キュレム */
 
 #define FV_AREA_END                       1099 /* 0x044b  */
 

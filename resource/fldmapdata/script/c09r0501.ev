@@ -137,9 +137,26 @@ IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
 	_OBJ_ANIME( C09R0501_SWCHAMPION_01, anm_walk_l )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
 	_OBJ_ANIME_WAIT()
-	
-	//トレーナー戦呼び出し
-	_TRAINER_BTL_SET( TRID_SWCHAMPION_01, 0 )
+
+{
+  //難易度取得ワーク定義
+  DEFINE_LOCAL  LCW_DIFFICULTY
+  
+  //現在の難易度を取得
+  _KEYSYS_GET_DIFFICULTY( LCW_DIFFICULTY )
+  
+  //トレーナー戦呼び出し
+  
+  //むずかしい
+  IF $LCW_DIFFICULTY == 2 THEN
+    _TRAINER_BTL_SET( TRID_SWCHAMPION_03, 0 )
+  
+  //ふつう・かんたん
+  ELSE
+    _TRAINER_BTL_SET( TRID_SWCHAMPION_01, 0 )
+  ENDIF
+
+}
 	
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
@@ -161,8 +178,26 @@ ELSE
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
 	_OBJ_ANIME_WAIT()
 
-	//トレーナー戦呼び出し
-	_TRAINER_BTL_SET( TRID_SWCHAMPION_02, 0 )
+{
+  //難易度取得ワーク定義
+  DEFINE_LOCAL  LCW_DIFFICULTY
+  
+  //現在の難易度を取得
+  _KEYSYS_GET_DIFFICULTY( LCW_DIFFICULTY )
+  
+  //トレーナー戦呼び出し
+  
+  //むずかしい
+  IF $LCW_DIFFICULTY == 2 THEN
+    _TRAINER_BTL_SET( TRID_SWCHAMPION_04, 0 )
+  
+  //ふつう・かんたん
+  ELSE
+    _TRAINER_BTL_SET( TRID_SWCHAMPION_02, 0 )
+  ENDIF
+
+}
+
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
