@@ -51,6 +51,9 @@ EVENT_START	ev_tamagetake_enc
 		_FLAG_SET( SCWK_ANSWER )
 		_OBJ_DEL( SCWK_TARGET_OBJID )
 		_WILD_WIN()
+		
+		_CALL	sub_fesmission_check
+		
 	ELSE
 		_WILD_LOSE()
 	ENDIF
@@ -86,12 +89,25 @@ EVENT_START	ev_morobareru_enc
 		_FLAG_SET( SCWK_ANSWER )
 		_OBJ_DEL( SCWK_TARGET_OBJID )
 		_WILD_WIN()
+		
+		_CALL	sub_fesmission_check
+		
 	ELSE
 		_WILD_LOSE()
 	ENDIF
 
 }
 EVENT_END
+
+//初回時にフェスミッションを追加
+sub_fesmission_check:
+	IF FLAG_OFF( SYS_FLAG_FES_KINOKO1 ) THEN
+		//========================================//
+		//フェスミッション追加（きのことかくれんぼ）
+		_FLAG_SET( SYS_FLAG_FES_KINOKO1 )
+		//========================================//
+	ENDIF
+_RET
 
 //--------------------------------------------------------------------
 //ジャンプ演出（共通）-> d34r010.evにも同じ定義があるので注意
