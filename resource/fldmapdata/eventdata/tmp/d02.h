@@ -36,5 +36,20 @@
 #define HIDE_ITEM_044                     7
 #define HIDE_ITEM_045                     8
 #define BG_D02_BOARD_01                   9
+#define BG_D02_DUMMY_FES_01              10
+#define BG_D02_DUMMY_FES_02              11
+#define BG_D02_DUMMY_FES_03              12
+#define BG_D02_DUMMY_FES_04              13
+#define BG_D02_DUMMY_FES_05              14
+#define BG_D02_DUMMY_FES_06              15
+#define BG_D02_DUMMY_FES_07              16
+#define BG_D02_DUMMY_FES_08              17
+#define BG_D02_DUMMY_FES_09              18
+#define BG_D02_DUMMY_FES_10              19
+#define BG_D02_DUMMY_FES_11              20
+#define BG_D02_DUMMY_FES_12              21
+#define BG_D02_DUMMY_FES_13              22
+#define BG_D02_DUMMY_FES_14              23
+#define BG_D02_DUMMY_FES_15              24
 
 #endif //ZONE_D02_EVB_H

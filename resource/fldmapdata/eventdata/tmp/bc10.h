@@ -28,5 +28,9 @@
 #ifndef ZONE_BC10_EVB_H
 #define ZONE_BC10_EVB_H
 
+#define BG_BC10_DUMMY_FES_01              0
+#define BG_BC10_DUMMY_FES_02              1
+#define BG_BC10_DUMMY_FES_03              2
+#define BG_BC10_DUMMY_FES_04              3
 
 #endif //ZONE_BC10_EVB_H

@@ -17,5 +17,10 @@
 #define ZONE_D07_EVB_H
 
 #define D07_BOARD_01                      0
+#define BG_D07_DUMMY_FES_01               1
+#define BG_D07_DUMMY_FES_02               2
+#define BG_D07_DUMMY_FES_03               3
+#define BG_D07_DUMMY_FES_04               4
+#define BG_D07_DUMMY_FES_05               5
 
 #endif //ZONE_D07_EVB_H

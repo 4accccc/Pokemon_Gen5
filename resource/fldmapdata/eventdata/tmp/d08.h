@@ -16,5 +16,10 @@
 #ifndef ZONE_D08_EVB_H
 #define ZONE_D08_EVB_H
 
+#define BG_D08_DUMMY_FES_01               0
+#define BG_H03_DUMMY_FES_02               1
+#define BG_H03_DUMMY_FES_03               2
+#define BG_H03_DUMMY_FES_04               3
+#define BG_H03_DUMMY_FES_05               4
 
 #endif //ZONE_D08_EVB_H

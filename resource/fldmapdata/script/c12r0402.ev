@@ -40,6 +40,12 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START   ev_c12r0402_woman2_01
 
+IF FLAG_ON( SYS_FLAG_PAIR ) THEN
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0402_woman2_00 )
+
+ELSE
+
   _TALK_OBJ_START()
 
   //アイテム入手前か
@@ -84,13 +90,25 @@ EVENT_START   ev_c12r0402_woman2_01
 
   ENDIF
 
+ENDIF
+
 EVENT_END
 
 /**************************************************************/
 /*  男の子：話しかけ                                          */
 /**************************************************************/
 EVENT_START   ev_c12r0402_boy1_01
+
+IF FLAG_ON( SYS_FLAG_PAIR ) THEN
+
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0402_boy1_01 )
+
+ELSE
+
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0402_boy1_02 )
+
+ENDIF
+
 EVENT_END
 
 

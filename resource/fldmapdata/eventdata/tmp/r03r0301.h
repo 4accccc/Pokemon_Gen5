@@ -20,5 +20,9 @@
 #ifndef ZONE_R03R0301_EVB_H
 #define ZONE_R03R0301_EVB_H
 
+#define BG_R03R0301_DUMMY_FES_01          0
+#define BG_R03R0301_DUMMY_FES_02          1
+#define BG_R03R0301_DUMMY_FES_03          2
+#define BG_R03R0301_DUMMY_FES_04          3
 
 #endif //ZONE_R03R0301_EVB_H

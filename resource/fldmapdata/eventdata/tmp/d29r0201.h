@@ -28,5 +28,7 @@
 
 #define HIDE_ITEM_119                     0
 #define HIDE_ITEM_120                     1
+#define BG_D29R0201_DUMMY_FES_01          2
+#define BG_D29R0201_DUMMY_FES_02          3
 
 #endif //ZONE_D29R0201_EVB_H

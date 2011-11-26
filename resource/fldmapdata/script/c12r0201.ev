@@ -46,9 +46,22 @@ EVENT_START   ev_c12r0201_fighterm_01
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0201_fighterm_02 )
 
   ELSE
-    //ライバル父：むすこはね
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0201_fighterm_01 )
-
+    
+     //連れ歩き中の場合
+  	IF FLAG_ON( SYS_FLAG_PAIR ) THEN
+  		
+  		_RIVAL_NAME(1)
+  		
+  		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0201_fighterm_00 )
+  	
+  	//それ以外
+  	ELSE
+  	
+		//ライバル父：むすこはね
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0201_fighterm_01 )
+  	
+  	ENDIF
+  
   ENDIF
 
 EVENT_END
@@ -63,11 +76,20 @@ EVENT_START   ev_c12r0201_woman3_01
   //ライバル名代入
   _RIVAL_NAME( 1 )
 
-  _TALK_OBJ_START()
-  //ライバル母：主人公くん▼（主人公が女の子の場合は台詞が変わる）
-  _BALLOONWIN_OBJMSG_MF( msg_c12r0201_woman3_01, msg_c12r0201_woman3_02, C12R0201_WOMAN3_01, POS_DOWN )
-  _LAST_KEYWAIT()
-  _MSGWIN_CLOSE()
+     //連れ歩き中の場合
+  	IF FLAG_ON( SYS_FLAG_PAIR ) THEN
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0201_woman3_00 )
+	
+	ELSE
+	
+		_TALK_OBJ_START()
+		//ライバル母：主人公くん▼（主人公が女の子の場合は台詞が変わる）
+		_BALLOONWIN_OBJMSG_MF( msg_c12r0201_woman3_01, msg_c12r0201_woman3_02, C12R0201_WOMAN3_01, POS_DOWN )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ENDIF
 
 EVENT_END
 

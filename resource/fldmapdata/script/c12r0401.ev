@@ -39,7 +39,17 @@ _EVENT_DATA_END
 /*  èóê´ÅFòbÇµÇ©ÇØ                                            */
 /**************************************************************/
 EVENT_START   ev_c12r0401_woman1_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0401_woman1_01 )
+
+	IF FLAG_ON( SYS_FLAG_PAIR ) THEN
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0401_woman1_01 )
+	
+	ELSE
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0401_woman1_02 )
+	
+	ENDIF
+
 EVENT_END
 
 /**************************************************************/

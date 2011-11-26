@@ -35,5 +35,13 @@
 
 #define HIDE_ITEM_121                     0
 #define HIDE_ITEM_122                     1
+#define BG_D29R0301_DUMMY_FES_01          2
+#define BG_D29R0301_DUMMY_FES_02          3
+#define BG_D29R0301_DUMMY_FES_03          4
+#define BG_D29R0301_DUMMY_FES_04          5
+#define BG_D29R0301_DUMMY_FES_05          6
+#define BG_D29R0301_DUMMY_FES_06          7
+#define BG_D29R0301_DUMMY_FES_07          8
+#define BG_D29R0301_DUMMY_FES_08          9
 
 #endif //ZONE_D29R0301_EVB_H

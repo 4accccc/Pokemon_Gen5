@@ -17,5 +17,8 @@
 #ifndef ZONE_D08R0601_EVB_H
 #define ZONE_D08R0601_EVB_H
 
+#define BG_D08R0601_DUMMY_FES_01          0
+#define BG_D08R0601_DUMMY_FES_02          1
+#define BG_D08R0601_DUMMY_FES_03          2
 
 #endif //ZONE_D08R0601_EVB_H
