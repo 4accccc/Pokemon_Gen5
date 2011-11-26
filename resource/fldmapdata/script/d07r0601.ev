@@ -13,6 +13,7 @@
   .include  "d07r0601.h"
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -22,6 +23,9 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA   ev_d07r0601_poke4_01
+_EVENT_DATA	ev_bg_d07r0601_monument_01
+_EVENT_DATA	ev_bg_d07r0601_monument_02
+_EVENT_DATA	ev_bg_d07r0601_monument_03
 _EVENT_DATA_END
 
 
@@ -120,3 +124,33 @@ ev_gigasu_01:
   ENDSWITCH
 
 _RET
+
+/************************************************************/
+/*  BGイベント：レジロックの石像                            */
+/************************************************************/
+EVENT_START   ev_bg_d07r0601_monument_01
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_d07r0601_poke4_05 )
+  _LAST_KEYWAIT()
+  _PLAINWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*  BGイベント：レジアイスの石像                            */
+/************************************************************/
+EVENT_START   ev_bg_d07r0601_monument_02
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_d07r0601_poke4_06 )
+  _LAST_KEYWAIT()
+  _PLAINWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*  BGイベント：レジスチルの石像                            */
+/************************************************************/
+EVENT_START   ev_bg_d07r0601_monument_03
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_d07r0601_poke4_07 )
+  _LAST_KEYWAIT()
+  _PLAINWIN_CLOSE()
+EVENT_END

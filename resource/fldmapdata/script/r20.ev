@@ -471,9 +471,12 @@ EVENT_START   ev_r20_swplazmaw_01
   _FLAG_SET( FV_R20_SWRIVAL_01 )
   //SWPLAZMAW非表示
   _FLAG_SET( FV_R20_SWPLAZMA_01 )
-  //C13船舶所にライバルと船長を表示
-  _FLAG_RESET(FV_C13R0401_SWRIVAL)
-  _FLAG_RESET(FV_C13R0401_PILOT)
+
+  //ホミカ・父を表示
+  _FLAG_RESET(FV_C13_SWLEADER2_MEET)
+  //ホミカ・父イベント開始
+  $WK_SCENE_C13 = 6
+  
   //==================================//
   
 EVENT_END

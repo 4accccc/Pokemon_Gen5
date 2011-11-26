@@ -19,5 +19,8 @@
 #ifndef ZONE_D07R0601_EVB_H
 #define ZONE_D07R0601_EVB_H
 
+#define BG_D07R0601_MONUMENT_01           0
+#define BG_D07R0601_MONUMENT_02           1
+#define BG_D07R0601_MONUMENT_03           2
 
 #endif //ZONE_D07R0601_EVB_H

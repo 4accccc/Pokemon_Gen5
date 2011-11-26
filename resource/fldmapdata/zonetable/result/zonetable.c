@@ -6907,9 +6907,9 @@ static const ZONEDATA ZoneData[] = {
 		MATRIX_ID_WB, // camera_area
 		19,   // padding > placeicon
     3,
-		178,
+		197,
 		0,
-		454,
+		469,
 	},
 	{//ZONE_ID_D05R0101 = 192
 		RSC_GRID_NOSCROLL,
@@ -16771,9 +16771,9 @@ static const ZONEDATA ZoneData[] = {
 		MATRIX_ID_WB, // camera_area
 		15,   // padding > placeicon
     4,
-		783,
+		775,
 		0,
-		171,
+		178,
 	},
 	{//ZONE_ID_C14R0101 = 466
 		RSC_GRID_NOSCROLL,

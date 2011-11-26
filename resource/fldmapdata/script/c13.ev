@@ -44,8 +44,13 @@ _EVENT_DATA	ev_c13_woman2a_01
 _EVENT_DATA	ev_c13_man3_01
 _EVENT_DATA	ev_c13_man3a_01
 _EVENT_DATA	ev_c13_boy2_01
+_EVENT_DATA   ev_pos_c13_swleader2_meet_02
 _EVENT_DATA_END
 
+
+//座標取得用の変数を定義
+DEFINE_LOCAL	LWK_POSX
+DEFINE_LOCAL	LWK_POSZ
 
 /************************************************************/
 /*  FIELD_INIT_SCRIPT                                       */
@@ -53,8 +58,14 @@ _EVENT_DATA_END
 INIT_EVENT_START ev_init_c13
 
   //ネオプラズマ団イベント起動後なら
-  IF $WK_SCENE_C13 == 6 THEN
-    _OBJ_POS_CHANGE( C13_SWRIVAL_01, 239, 0, 671, DIR_RIGHT )
+  IF $WK_SCENE_C13 == 5 THEN
+	_OBJ_POS_CHANGE( C13_SWRIVAL_01, 239, 0, 671, DIR_RIGHT )
+  
+  ELSIF $WK_SCENE_C13 == 6 THEN
+  
+	_OBJ_POS_CHANGE( C13_SWLEADER2_01, 241, 0, 670, DIR_RIGHT )
+  	_OBJ_POS_CHANGE( C13_PILOT_01, 243, 0, 670, DIR_LEFT )
+  
   ENDIF
 
 INIT_EVENT_END
@@ -221,11 +232,24 @@ _ANIME_LABEL	anm_staystep_r
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
-//	☆共通処理：ギョエ
+//	☆共通処理：ギョエ・？・…
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_gyoe
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_tenten
+	_ANIME_DATA	AC_MARK_TENTEN,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_onpu
+	_ANIME_DATA	AC_MARK_ONPU,1
+	_ANIME_DATA	ACMD_END,0
+
 
 /**************************************************************/
 /*  C13 BADMAN：一言メッセージ                                */
@@ -276,10 +300,6 @@ EVENT_END
 /*			ポケウッドのストッパー					  */
 /**************************************************************/
 EVENT_START		ev_pos_c13_sunglasses_stop
-
-	//座標取得用の変数を定義
-	DEFINE_LOCAL	LWK_POSX
-	DEFINE_LOCAL	LWK_POSZ
 	
 	//座標取得
 	_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
@@ -444,7 +464,7 @@ ev_swplazma:
 	//========================================/
 	
 	//ネオプラズマ団イベント終了
-	$WK_SCENE_C13 = 6
+	$WK_SCENE_C13 = 5
 	
 	//========================================/
 
@@ -644,7 +664,7 @@ _TALK_OBJ_START()
 		_BALLOONWIN_OBJMSG( msg_c13_swrival_05 , C13_SWRIVAL_01 )
 		_MSGWIN_CLOSE()
 	
-		//ライバル：船舶所の中へ
+		//ライバル：２０番道路へ
 		_OBJ_ANIME_AUTO( C13_SWRIVAL_01, 228, 670, FORCE_TYPE_NOT, 4, DIR_LR )
 		_TIME_WAIT( 8 )
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
@@ -657,7 +677,7 @@ _TALK_OBJ_START()
 		//========================================/
 		
 		//ネオプラズマ団イベント終了
-		$WK_SCENE_C13 = 7
+		$WK_SCENE_C13 = 5
 		
 		//イベントOBJのバニシュフラグをセット
 		_FLAG_SET(FV_C13_SWPLAZMA)
@@ -820,3 +840,140 @@ EVENT_END
 EVENT_START	ev_c13_boy2_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c13_boy2_01 )
 EVENT_END
+
+/************************************************************/
+/*	C13	ホミカ・父ＰＯＳイベント２					*/
+/************************************************************/
+EVENT_START	ev_pos_c13_swleader2_meet_02
+
+	//カメラ移動
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//対象物とカメラのバインドを解く
+	//カメラ操作
+	_CAMERA_MOVE( 9688,0,970752,15826944,0,43941888,20 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	
+	
+	//……あの　えいが
+	_BALLOONWIN_OBJMSG_POS( msg_c13_swleader2_07 ,C13_SWLEADER2_01 ,POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	//アニメ：……マーク
+	_OBJ_ANIME( C13_PILOT_01, anm_common_tenten )
+	_OBJ_ANIME_WAIT()
+
+	//……みたのですか
+	_BALLOONWIN_OBJMSG_POS( msg_c13_pilot_03 ,C13_PILOT_01 ,POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	//ほら！　きを　おとさない！
+	_BALLOONWIN_OBJMSG_POS( msg_c13_swleader2_08 ,C13_SWLEADER2_01 ,POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	//アニメ：左を向く・！マーク
+	_OBJ_ANIME( C13_SWLEADER2_01, anm_staystep_l )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( C13_SWLEADER2_01, anm_common_gyoe )
+	_OBJ_ANIME_WAIT()
+
+	//自機座標取得
+	_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+
+	//Ｚ座標で分岐
+	SWITCH $LWK_POSZ
+	CASE 669 THEN
+		$LWK_POSZ = 670
+	CASE 670 THEN
+		$LWK_POSX = 240
+	CASE 671 THEN
+		$LWK_POSZ = 670
+	ENDSWITCH
+	
+	//アニメ：プレイヤーの前へくる
+	_OBJ_ANIME_AUTO( C13_SWLEADER2_01, LWK_POSX, LWK_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+	_OBJ_ANIME_WAIT()
+	
+	//自機座標取得
+	_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+
+	//Ｚ座標で分岐
+	SWITCH $LWK_POSZ
+	CASE 669 THEN
+		_OBJ_ANIME( C13_SWLEADER2_01, anm_staystep_u )
+		_TIME_WAIT( 8 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+		_OBJ_ANIME_WAIT()
+	CASE 670 THEN
+		//アニメなし
+	CASE 671 THEN
+		_OBJ_ANIME( C13_SWLEADER2_01, anm_staystep_d )
+		_TIME_WAIT( 8 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+
+	//ライバル名代入
+	_RIVAL_NAME(1)
+	
+	//プラズマだんを　おいはらったって！
+	_BALLOONWIN_OBJMSG_POS( msg_c13_swleader2_09 ,C13_SWLEADER2_01 ,POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	//自機座標取得
+	_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+
+	//Ｚ座標で分岐
+	SWITCH $LWK_POSZ
+	CASE 669 THEN
+		$LWK_POSZ = 670
+	CASE 670 THEN
+		$LWK_POSZ = 669
+	CASE 671 THEN
+		$LWK_POSZ = 670
+	ENDSWITCH
+
+	//アニメ：ホミカ退場
+	_OBJ_ANIME_AUTO( C13_SWLEADER2_01, 228, LWK_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+	_TIME_WAIT( 12 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_DEL( C13_SWLEADER2_01 )
+
+	//よし！　わたしは
+	_BALLOONWIN_OBJMSG_POS( msg_c13_pilot_04 ,C13_PILOT_01 ,POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+	_OBJ_ANIME_AUTO( C13_PILOT_01, 242, 669, FORCE_TYPE_NPC, 8, DIR_LR )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( C13_PILOT_01, anm_walk_u )
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_OBJ_ANIME_WAIT()
+	_OBJ_DEL( C13_PILOT_01 )
+	_SE_WAIT()
+	
+	 //自機にカメラを戻す
+	_CAMERA_DEF_MOVE (20)
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+
+	//========================================//
+	
+	//ホミカ・父のバニシュフラグをセット
+	_FLAG_SET(FV_C13_SWLEADER2_MEET)
+	
+	//ジムのホミカ表示
+	_FLAG_RESET( FV_C13GYM0102_SWLEADER2ISS )
+	
+	//ホミカ・父イベント終了
+	$WK_SCENE_C13 = 7
+
+	//C13船舶所にライバルと船長を表示
+	_FLAG_RESET(FV_C13R0401_SWRIVAL)
+	_FLAG_RESET(FV_C13R0401_PILOT)
+
+	//========================================//
+
+EVENT_END
+ 

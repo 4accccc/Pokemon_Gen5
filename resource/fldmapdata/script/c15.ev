@@ -328,12 +328,10 @@ EVENT_START ev_scene_c15_tutorial_02
   $WK_SCENE_C15_TUTORIAL_01 = 3
   
   //C13プラズマ団イベント開始
-  $WK_SCENE_C13 = 5
+  $WK_SCENE_C13 = 4
   //C13プラズマ団員表示
   _FLAG_RESET( FV_C13_SWPLAZMA )
-  
-  //ジムのホミカ表示
-  _FLAG_RESET( FV_C13GYM0102_SWLEADER2ISS )
+ 
   //==================================//
   
   

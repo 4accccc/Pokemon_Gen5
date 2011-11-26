@@ -263,12 +263,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>BGメッセージ
-・0＝トレーナー名
-※未対応</Comment>
+			<Comment>レジロックの石像
+
+BGメッセージ
+・0＝トレーナー名</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-21T02:37:12" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-26T06:23:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -276,6 +277,110 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-28T13:02:46" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0601_poke4_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>仮メッセージ[Name:TrainerName ]は
+かかれている　もじを　よんだ……</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-26T06:23:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-26T06:22:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ[Name:TrainerName ]は
+かかれている　もじを　よんだ……</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-26T06:23:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-26T06:22:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>レジアイスの石像
+
+BGメッセージ
+・0＝トレーナー名</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-26T06:23:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>壁に刻まれた文字</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-26T06:22:47" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d07r0601_poke4_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>仮メッセージ[Name:TrainerName ]は
+かかれている　もじを　よんだ……</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-26T06:23:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-26T06:22:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ[Name:TrainerName ]は
+かかれている　もじを　よんだ……</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-26T06:23:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-26T06:22:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>レジスチルの石像
+
+BGメッセージ
+・0＝トレーナー名</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-26T06:24:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>壁に刻まれた文字</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-26T06:22:49" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

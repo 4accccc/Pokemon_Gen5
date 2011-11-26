@@ -790,7 +790,7 @@ EVENT_START   ev_pos_pkwd_entrance_tutorial_stopper
 EVENT_END
 
 _ANIME_LABEL anm_player_back
-  _ANIME_DATA AC_DIR_R, 1
+  _ANIME_DATA AC_WALK_U_8F, 1
   _ANIME_DATA ACMD_END, 0
 
 /**************************************************************/
