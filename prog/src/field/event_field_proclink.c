@@ -239,6 +239,11 @@ static void FMenuEvent_Retire( PROCLINK_WORK* wk, u32 param );
 //呼び出しワークが単純な構造体だった時の共通解放処理
 static void FMenuReleaseProc_ReleaseSimpleWork( void *param_adrs );
 
+// プロセスの終了方法から、プロックリンクの終了方法を設定する
+static void SetProcLinkParamResult( RETURNFUNC_RESULT result ,EVENT_PROCLINK_RESULT *param_result );
+
+// バッグポケットのソート状態リセット
+static void ReseBagSortType( PROCLINK_WORK *wk );
 
 
 //-------------------------------------
@@ -523,13 +528,7 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
     break;
 
   case SEQ_JUNCTION:
-    if( wk->result == RETURNFUNC_RESULT_RETURN ||
-        wk->result == RETURNFUNC_RESULT_EXIT )
-    {
-      //終了の場合
-      *seq  = SEQ_END;
-    }
-    else if( wk->result == RETURNFUNC_RESULT_NEXT )
+    if( wk->result == RETURNFUNC_RESULT_NEXT )
     { 
       NAGI_Printf( "now_type  %d\n", wk->now_type );
       //次に行く場合
@@ -542,35 +541,37 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
         *seq  = SEQ_EVENT_CALL;
       }
     }
-    else if( wk->result == RETURNFUNC_RESULT_USE_ITEM )
-    { 
-      //アイテムが選択された場合
-      wk->param->result = EVENT_PROCLINK_RESULT_ITEM;
-      *seq  = SEQ_END;
-    }
-    else if( wk->result == RETURNFUNC_RESULT_USE_SKILL )
-    { 
-      //技が選択された場合
-      wk->param->result = EVENT_PROCLINK_RESULT_SKILL;
-      *seq  = SEQ_END;
-    }
-    else if( wk->result == RETURNFUNC_RESULT_RETIRE )
-    { 
-      //リタイアが選択された場合
-      wk->param->result = EVENT_PROCLINK_RESULT_RETIRE;
+    else
+    {
       *seq  = SEQ_END;
     }
     break;
 
   case SEQ_END:
-    if( wk->result == RETURNFUNC_RESULT_RETURN )
+    
+    // SetProcLinkParamResultにwk->param->resultの値を設定する箇所をまとめるにあたって、
+    // 以前設定されていたものとの食い違いがあった場合のみアサートを設定する
+    if( wk->result == RETURNFUNC_RESULT_USE_ITEM )
     { 
-      wk->param->result = EVENT_PROCLINK_RESULT_RETURN;
+      GF_ASSERT( wk->param->result == EVENT_PROCLINK_RESULT_ITEM );
+    }
+    else if( wk->result == RETURNFUNC_RESULT_USE_SKILL )
+    { 
+      GF_ASSERT( wk->param->result == EVENT_PROCLINK_RESULT_SKILL );
+    }
+    else if( wk->result == RETURNFUNC_RESULT_RETIRE )
+    { 
+      GF_ASSERT( wk->param->result == EVENT_PROCLINK_RESULT_RETIRE );
+    }
+    else if( wk->result == RETURNFUNC_RESULT_RETURN )
+    { 
+      GF_ASSERT( wk->param->result == EVENT_PROCLINK_RESULT_RETURN );
     }
     else if( wk->result == RETURNFUNC_RESULT_EXIT )
     { 
-      wk->param->result = EVENT_PROCLINK_RESULT_EXIT;
+      GF_ASSERT( wk->param->result == EVENT_PROCLINK_RESULT_EXIT );
     }
+
     //アイテムと技とリタイアはもう入っている
     return GMEVENT_RES_FINISH;
 
@@ -708,30 +709,8 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
     GF_ASSERT( wk->now_type < EVENT_PROCLINK_CALL_MAX );
     wk->result  = ProcLinkData[ wk->now_type ].return_func( wk, wk->proc_param );
 
-    //引数へ代入
-    if( wk->result == RETURNFUNC_RESULT_RETURN )
-    { 
-      wk->param->result = EVENT_PROCLINK_RESULT_RETURN;
-    }
-    else if( wk->result == RETURNFUNC_RESULT_EXIT )
-    { 
-      wk->param->result = EVENT_PROCLINK_RESULT_EXIT;
-    }
-    else if( wk->result == RETURNFUNC_RESULT_USE_ITEM )
-    { 
-      //アイテムが選択された場合
-      wk->param->result = EVENT_PROCLINK_RESULT_ITEM;
-    }
-    else if( wk->result == RETURNFUNC_RESULT_USE_SKILL )
-    { 
-      //技が選択された場合
-      wk->param->result = EVENT_PROCLINK_RESULT_SKILL;
-    }
-    else if( wk->result == RETURNFUNC_RESULT_RETIRE )
-    { 
-      //リタイアが選択された場合
-      wk->param->result = EVENT_PROCLINK_RESULT_RETIRE;
-    }
+    // プロセスの終了方法から、プロックリンクの終了方法を設定する
+    SetProcLinkParamResult( wk->result ,&wk->param->result );
 
     //次へ
     if( wk->result == RETURNFUNC_RESULT_NEXT )
@@ -745,6 +724,9 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
     }
     else
     { 
+      // バッグのソート状態をリセット
+      ReseBagSortType( wk );
+
       //終了するので、解放し終了状態によって外部へ設定
       if( wk->proc_param )
       { 
@@ -760,6 +742,67 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
 
   return GMEVENT_RES_CONTINUE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プロセスの終了方法から、プロックリンクの終了方法を設定する
+ *
+ *	@param	result 
+ *	@param	*param_result 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetProcLinkParamResult( RETURNFUNC_RESULT result ,EVENT_PROCLINK_RESULT *param_result )
+{
+  switch( result )
+  {
+  case RETURNFUNC_RESULT_RETURN:
+    // メニューに戻る
+    (*param_result) = EVENT_PROCLINK_RESULT_RETURN;
+    break;
+  case RETURNFUNC_RESULT_EXIT :
+    // メニューも抜けて歩ける状態まで戻る
+    (*param_result) = EVENT_PROCLINK_RESULT_EXIT;
+    break;
+  case RETURNFUNC_RESULT_USE_ITEM:
+    //アイテムが選択された場合
+    (*param_result) = EVENT_PROCLINK_RESULT_ITEM;
+    break;
+  case RETURNFUNC_RESULT_USE_SKILL:
+    //技が選択された場合
+    (*param_result) = EVENT_PROCLINK_RESULT_SKILL;
+    break;
+  case RETURNFUNC_RESULT_RETIRE:
+    //リタイアが選択された場合
+    (*param_result) = EVENT_PROCLINK_RESULT_RETIRE;
+    break;
+  case RETURNFUNC_RESULT_NEXT:
+    // 次のプロセスへ移動
+    break;
+  default:
+    GF_ASSERT(0);
+    break;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バッグ：保管ポケットのソート状態をリセット
+ *
+ *	@param	*wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void ReseBagSortType( PROCLINK_WORK *wk )
+{
+  // バッグのソート状態をリセット
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( wk->param->gsys );
+  BAG_CURSOR *pBag = GAMEDATA_GetBagCursor( gdata );
+  MYITEM_SetRepositorySortType( pBag, REPOSITORY_SORTTYPE_FULL );
+}
+
 //=============================================================================
 /**
  *  CALL関数とRETURN関数

@@ -169,6 +169,7 @@ static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* pWork);
 static void _BttnCallBack( u32 bttnid, u32 event, void* p_work );
 static void _VBlank( GFL_TCB *tcb, void *work );
 static void _startState(FIELD_ITEMMENU_WORK* pWork);
+static void _RepositoryItemSort( FIELD_ITEMMENU_WORK* p_wk , s32 sort_mode );
 
 #ifdef PM_DEBUG
 #define   _CHANGE_STATE(pWork, state)  _changeStateDebug(pWork ,state, __LINE__)
@@ -3390,10 +3391,8 @@ static void SORT_Repository_Data( FIELD_ITEMMENU_WORK* p_wk , s32 sort_mode )
 {
   if( p_wk->repository_sort_mode != sort_mode )
   {
-    p_wk->repository_sort_mode = sort_mode;
-
-    // 保管ポケット内のならびをソート
-    BAGITEM_SortRepositoryItem( &p_wk->bag_item , p_wk->repository_sort_mode );
+    // データをソート
+    _RepositoryItemSort( p_wk ,sort_mode);
 
     // カーソルは一番上に表示
     p_wk->curpos = 0;
@@ -3402,6 +3401,25 @@ static void SORT_Repository_Data( FIELD_ITEMMENU_WORK* p_wk , s32 sort_mode )
     p_wk->bCursorChange = 1;
     ITEMDISP_ScrollCursorChangePos( p_wk ); // カーソル位置を即時反映
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  保管ポケットのソートと同時に、ソートモードをセットする
+ *
+ *	@param	p_wk 
+ *	@param	sort_mode 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _RepositoryItemSort( FIELD_ITEMMENU_WORK* p_wk , s32 sort_mode )
+{
+  // ソート状態を保存
+  p_wk->repository_sort_mode = sort_mode;
+
+  // 保管ポケット内のならびをソート
+  BAGITEM_SortRepositoryItem( &p_wk->bag_item , p_wk->repository_sort_mode );
 }
 
 //-----------------------------------------------------------------------------
@@ -3423,7 +3441,7 @@ static void SORT_ModeReset( FIELD_ITEMMENU_WORK* pWork )
   if( pWork->pocketno == BAG_POKE_REPOSITORY )
   {
     // 保管ポケット内のならびをソート
-    BAGITEM_SortRepositoryItem( &pWork->bag_item , REPOSITORY_SORTTYPE_FULL );
+    _RepositoryItemSort( pWork ,REPOSITORY_SORTTYPE_FULL);
   }
 
   ITEMDISP_ChangeSortButton( pWork );
@@ -5470,10 +5488,10 @@ static void _SaveRepositorySortType( BAG_CURSOR *pBagCursor  ,BAG_MODE bagmode ,
   // 0=ありあえない、1=リセット、2＝保持
   const u8 repository_reset_table[BAG_MODE_MAX][BAG_NEXTPROC_MAX] =
   {
-    {1,2,2,2,2,2,2,2,2,1,1,1,2,0,1,1,1,2,2,2,1,2,1},
-    {1,2,2,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1},
-    {1,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+    {1,1,2,2,0,2,2,2,2,0,1,1,2,0,1,1,1,2,2,2,1,2,1},
+    {1,1,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0},
+    {1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0},
+    {1,1,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0},
     {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
     {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
   };
