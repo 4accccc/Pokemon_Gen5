@@ -73,6 +73,7 @@ enum {
 #include "../../../prog/src/field/map_change_type.h" //マップ切り替えタイプ定義ファイル
 #include "../mm_list/mmlist_def.h" //動作モデル登録定義ファイル
 #include "../../../prog/include/field/weather_no.h" // 天気
+#include "../../../prog/include/gamesystem/fmission_data_def.h" //フェスミッションデータ定義ファイル
 
 enum {
 	enc_dummy = 0x1fff, //13bit ここを変えたらsrc/field/encount_data.h->ENC_DATA_INVALID_IDも変えてください
