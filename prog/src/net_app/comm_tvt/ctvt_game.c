@@ -1339,9 +1339,6 @@ void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, u16 idx, u8 netId )
     {
       // SE再生
       PMSND_PlaySystemSE( SEQ_SE_LCG_05 );
-
-      // 風船割った数レコード追加
-      RECORD_Inc( p_wk->record, RECID_CTVT_BALLOON );
     }
   }
   // ポイント減算
@@ -1367,9 +1364,6 @@ void CTVT_GAME_BalloonDestroy( CTVT_GAME_WORK *p_wk, u16 idx, u8 netId )
     {
       // SE再生
       PMSND_PlaySystemSE( SEQ_SE_LCG_02 );
-
-      // 風船割った数レコード追加
-      RECORD_Inc( p_wk->record, RECID_CTVT_BALLOON );
     }
   }
 
@@ -1533,10 +1527,6 @@ void CTVT_GAME_CommBalloonBurst( CTVT_GAME_WORK *p_wk, u8 netIdBit )
         if( ret == TRUE )
         {
           PMSND_PlaySystemSE( SEQ_SE_LCG_01 );    // 割れたSE
-
-          // 風船割った数レコード追加
-          RECORD_Inc( p_wk->record, RECID_CTVT_BALLOON );
-
         }
         else
         {
@@ -2081,6 +2071,10 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
   case SEQ_SCORE_MAIN:       // スコアメイン
     if( game_update_seq_score( work, gameWork ) == TRUE )
     {
+      const u8 selfId = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+      // 得点をレコード追加
+      RECORD_Add( gameWork->record, RECID_CTVT_BALLOON, gameWork->p_plate[selfId]->point);
+
       gameWork->seq = SEQ_RETRY_INIT;
     }
     break;

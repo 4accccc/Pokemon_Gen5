@@ -140,7 +140,7 @@ extern void RECORD_DebugSet( RECORD *rec );
 #define RECID_WEAK_ATTACK     ( LARGE_REC_START+46 )   ///< @効果がバツグンのわざが命中した回数。（野性戦・フィールド上トレーナー戦）
 #define RECID_BSUB_CHALLENGE  ( LARGE_REC_START+47 )   ///< @バトルサブウェイに挑戦した回数
 #define RECID_INF_TRAINER_WIN ( LARGE_REC_START+48 )   ///< @無限ダンジョンでトレーナーを倒した数
-#define RECID_CTVT_BALLOON    ( LARGE_REC_START+49 )   ///< @ライブキャスターミニゲームで風船を割った数
+#define RECID_CTVT_BALLOON    ( LARGE_REC_START+49 )   ///< @ライブキャスターミニゲームで入手した合計得点
 
 #define RECID_POKEWOOD_HIGH   ( LARGE_REC_START+50 )   ///< ポケウッド最高興行収入
 #define RECID_POKEWOOD_TOTAL  ( LARGE_REC_START+51 )   ///< ポケウッド累計興行収入
@@ -337,7 +337,7 @@ extern void RECORD_DebugSet( RECORD *rec );
 #define RECID_WEAK_ATTACK_FLAG      ( 0 )   ///< @効果がバツグンのわざが命中した回数。（野性戦・フィールド上トレーナー戦） 999,999,999
 #define RECID_BSUB_CHALLENGE_FLAG   ( 0 )   ///< @バトルサブウェイに挑戦した回数 999,999,999
 #define RECID_INF_TRAINER_WIN_FLAG  ( 0 )   ///< @無限ダンジョンでトレーナーを倒した数 999,999,999
-#define RECID_CTVT_BALLOON_FLAG     ( 0 )   ///< @ライブキャスターミニゲームで風船を割った数 999,999,999
+#define RECID_CTVT_BALLOON_FLAG     ( 0 )   ///< @ライブキャスターミニゲームで入手した合計得点 999,999,999
 
 #define RECID_POKEWOOD_HIGH_FLAG    ( 3 )   ///< ポケウッド最高興行収入 9,999
 #define RECID_POKEWOOD_TOTAL_FLAG   ( 0 )   ///< ポケウッド累計興行収入 999,999,999

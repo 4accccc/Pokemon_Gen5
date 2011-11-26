@@ -5301,10 +5301,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ライブキャスターミニゲームで風船を割った数</Text>
+			<Text>ライブキャスターミニゲームで入手した合計得点</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-07-22T03:51:25" />
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-26T06:07:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -5312,10 +5312,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ライブキャスターミニゲームで風船を割った数</Text>
+			<Text>ライブキャスターミニゲームで入手した合計得点</Text>
 			<TextModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-07-22T03:51:26" />
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-11-26T06:07:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
