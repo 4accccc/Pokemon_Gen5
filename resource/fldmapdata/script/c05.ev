@@ -171,8 +171,14 @@ EVENT_START		ev_scene_c05_swleader5_01
   //ヤーコンを非表示に
   _FLAG_SET( FV_C05_SWLEADER5_01 )
   
+  //C05ヤーコン非表示
+  _FLAG_SET( FV_C05_SWLEADER5_01 )
+  
   //C05R0701ストッパーを非表示
   _FLAG_SET( FV_C05R0701_STOPPER_01 )
+  
+  //C05GYM0101ヤーコン非表示
+  _FLAG_SET( FV_C05GYM0101_SWLEADER5_01 )
   
   //C05R0701ストッパーPOSを無効
   $WK_SCENE_C05R0701_STOPPER_01 = 1

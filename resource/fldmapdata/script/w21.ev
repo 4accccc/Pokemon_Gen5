@@ -312,6 +312,8 @@ EVENT_START	ev_reserve_w21_swleader8_01
   _FLAG_RESET(FV_D27R0101_SWPLAZMA_02)
   _FLAG_SET(FV_D27R0101_SWPLAZMA_01)
   _FLAG_SET(FV_D27R0101_SWLEADER1_01)
+  //C14GYM0101 シズイ表示
+  _FLAG_RESET( FV_C14GYM0101_SWLEADER8_01 )
   //========================================//
   
   // ROMバージョン取得

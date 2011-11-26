@@ -176,6 +176,8 @@ ev_leader8_btl:
   //R22テラキオンイベント起動
   $WK_SCENE_R22_POKE5 = 1
   _FLAG_RESET( FV_R22_POKE5_01 )
+  //C14GYM0101 シズイ非表示
+  _FLAG_SET( FV_C14GYM0101_SWLEADER8_01 )
   //================================================//
   
   //主人公方向取得

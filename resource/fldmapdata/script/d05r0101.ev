@@ -262,6 +262,8 @@ EVENT_START   ev_reserve_d05r0101_tutorial_02
   $WK_SYS_HIDE_SHIP_PLACE = SCR_HIDE_SHIP_PLACE_C05
   //WBTチュートリアルモードを解除
   _FLAG_RESET( SYS_FLAG_WBT_TUTORIAL )
+  //C05GYM0101ヤーコン表示
+  _FLAG_RESET( FV_C05GYM0101_SWLEADER5_01 )
   //========================================//
 
 EVENT_END

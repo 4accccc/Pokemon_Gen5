@@ -163,6 +163,8 @@ EVENT_START		ev_pos_d05_swleader5_01
   _FLAG_SET( FV_D05_SWRIVAL_01 )
   //D05ヤーコン非表示
   _FLAG_SET( FV_D05_SWLEADER5_01 )
+  //C12GYM0101チェレン非表示
+  _FLAG_SET( FV_C12GYM0201_SWLEADER1_01 )
   //========================================//
 
   //予約スクリプト(WBTチュートリアルイベント開始）
