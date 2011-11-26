@@ -136,6 +136,47 @@ VMCMD_RESULT EvCmdGianthole_NPokeAnmStart( VMHANDLE *core, void *wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ジャイアントホール　OBJのオフセット設定
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdGianthole_ObjOffsetSet( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  int obj_id, offset_x, offset_z;
+  MMDL *mmdl;
+
+  obj_id    = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
+  offset_x  = SCRCMD_GetVMWorkValue( core, work );  // コマンド第2引数
+  offset_z  = SCRCMD_GetVMWorkValue( core, work );  // コマンド第3引数
+
+  // 動作モデル取得
+  {
+    MMDLSYS*  mmdlsys  = SCRCMD_WORK_GetMMdlSys( work );
+    mmdl = MMDLSYS_SearchOBJID( mmdlsys, obj_id );  // 
+    // 指定されたOBJIDは存在しない
+    if( mmdl == NULL ) {
+      GF_ASSERT(0);
+      return VMCMD_RESULT_CONTINUE;
+    }
+  }
+
+  // 動作モデルの描画オフセット設定
+  {
+    VecFx32 offset = {0};
+
+    offset.x = offset_x << FX32_SHIFT;
+    offset.z = offset_z << FX32_SHIFT;
+
+    MMDL_SetVectorDrawOffsetPos( mmdl, &offset );
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  物語開始デモ  花びらアニメ再生
  */
 //-----------------------------------------------------------------------------

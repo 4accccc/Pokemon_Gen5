@@ -120,7 +120,7 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   _OBJ_POS_CHANGE( D10R0501_SWSAGE1_01, 17, 0, 16, DIR_DOWN)
 
   // ホワイトイン
-  _WHITE_IN()
+  _DISP_FADE_START(DISP_FADE_WHITEOUT,16,0,1) // フェード早くする
   _DISP_FADE_END_CHECK()
 
   //キュレム：ヒュラララ！
@@ -247,6 +247,15 @@ EVENT_START ev_pos_d10r0501_swsage1_01
     _OBJ_POS_CHANGE( D10R0501_SWSAGE1_01, 17, 0, 16, DIR_DOWN)
     //_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 15, 0, 20, DIR_UP)
     //=======================================
+    // 背面レシゼクのオフセット調整
+    IF $LCWK_VERSION == VERSION_B2 THEN
+      // ゼクロム
+      _DEMO_GIMMICK_GIANTHOLE_OBJ_OFFSET_SET( D10R0501_NPOKE_01, 0, 9 )
+    ELSE
+      // レシラム
+      _DEMO_GIMMICK_GIANTHOLE_OBJ_OFFSET_SET( D10R0501_NPOKE_01, 0, 9 )
+    ENDIF
+    //=======================================
 
     _MAP_FADE_BLACK_IN()
     _MAP_FADE_END_CHECK()
@@ -307,7 +316,9 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   ENDIF
   
   // デモ呼び出し
+  // ※デモを2つに分けたので連続で呼び出している
 	_DEMO_FADEOUT_BLACK_CALL()
+  _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_00 )
 	IF $LCWK_VERSION == VERSION_B2 THEN
     _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_B_01 )
   ELSE
@@ -378,10 +389,13 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 	_CAMERA_END()		//カメラ操作終了
   //========================================//
   
+  // ※デモを2つに分けたので連続で呼び出している
 	IF $LCWK_VERSION == VERSION_B2 THEN
     _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_B_02 )
+    _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_B_03 )
   ELSE
     _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_W_02 )
+    _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_W_03 )
   ENDIF
 
   //========================================//

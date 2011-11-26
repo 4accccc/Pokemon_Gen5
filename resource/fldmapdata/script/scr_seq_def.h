@@ -16484,6 +16484,29 @@
   .short  EV_SEQ_DEMO_GIMMICK_GIANTHOLE_NPOKE_ANM_START
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def   _DEMO_GIMMICK_GIANTHOLE_OBJ_OFFSET_SET
+ * @brief OBJのオフセット位置設定
+ * @param obj_id    設定するOBJ ID
+ * @param offset_x  オフセットX
+ * @param offset_z  オフセットZ
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ *
+ *        ※他で使用する箇所がある場合は常駐に移してもいいかもしれない
+ */
+//--------------------------------------------------------------
+#define _DEMO_GIMMICK_GIANTHOLE_OBJ_OFFSET_SET( obj_id, offset_x, offset_z ) \
+    _ASM_DEMO_GIMMICK_GIANTHOLE_OBJ_OFFSET_SET obj_id, offset_x, offset_z 
+
+  .macro  _ASM_DEMO_GIMMICK_GIANTHOLE_OBJ_OFFSET_SET obj_id, offset_x, offset_z 
+  .short  EV_SEQ_DEMO_GIMMICK_GIANTHOLE_OBJ_OFFSET_SET
+  .short  \obj_id
+  .short  \offset_x
+  .short  \offset_z
+  .endm
+
+
 
 //--------------------------------------------------------------
 /**
