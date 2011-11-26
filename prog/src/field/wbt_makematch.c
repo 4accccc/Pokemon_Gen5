@@ -90,19 +90,20 @@ static void mew_Delete( MAKE_ENTRY_WORK * mew )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-static void mew_SetEntryResult( const MAKE_ENTRY_WORK * mew, u16 * tr_list )
+static void mew_SetEntryResult( const MAKE_ENTRY_WORK * mew, WBT_TRCODE * tr_list )
 {
   //選択された結果を戻り値テーブルに反映する
   u32 tr_pos = 0;
   u32 i;
-  tr_list[tr_pos ++ ] = WBT_TRCODE_PLAYER;  //プレイヤーは登録する
+  tr_list[tr_pos ++ ].code = WBT_TRCODE_PLAYER;  //プレイヤーは登録する
   for ( i = 0; i < mew->cond->rom_trainer_num; i ++ )
   {
     if ( mew->entry_table[i] == ENTRY_DECIDE )
     {
       if ( tr_pos < WBT_TRAINER_NUM )
       {
-        tr_list[ tr_pos ] = i;
+        tr_list[ tr_pos ].type = WBT_TRCODE_TYPE_ROM;
+        tr_list[ tr_pos ].tr_id = i;
         tr_pos ++;
       }
       else
@@ -301,14 +302,17 @@ static void makeEntryTable( MAKE_ENTRY_WORK * mew, const WBTSAVE * wbtsave )
 }
 
 //-----------------------------------------------------------------------------
+/**
+ * @brief 参戦トレーナー選別：ダウンロードトーナメント
+ */
 //-----------------------------------------------------------------------------
 static void entryDownloadTournament(
-    const WBTDL_MATCH * wbtdl_match, MAKE_ENTRY_WORK * mew, u16 * tr_list )
+    const WBTDL_MATCH * wbtdl_match, MAKE_ENTRY_WORK * mew, WBT_TRCODE * tr_list )
 {
   int index = 0;
 
-  GFL_STD_MemClear( tr_list, sizeof(u16) * WBT_TRAINER_NUM );
-  tr_list[ index ++ ] = WBT_TRCODE_PLAYER;
+  GFL_STD_MemClear( tr_list, sizeof(WBT_TRCODE) * WBT_TRAINER_NUM );
+  tr_list[ index ++ ].code = WBT_TRCODE_PLAYER;
   for ( ; index < WBT_TRAINER_NUM; index ++ )
   {
     int rom_index = index - 1;
@@ -321,37 +325,40 @@ static void entryDownloadTournament(
       /* FALL THROUGH */
     case WBTDL_MATCH_TRAINER_RND:
     case WBTDL_MATCH_TRAINER_RND_DMY:
-      //仮：実際は戦わないモブがあたるはず
-      tr_list[ index ] = 72 + GFUser_GetPublicRand0( 10 );
+      //戦わないモブがあたるはず
+      tr_list[ index ].type = WBT_TRCODE_TYPE_ROM;
+      tr_list[ index ].tr_id = WBTROM_TRID_NOBATTLE_MOB_START + GFUser_GetPublicRand0( 10 );
       break;
     case WBTDL_MATCH_TRAINER_ROM:
-      tr_list[ index ] = match->id;
+      tr_list[ index ].type = WBT_TRCODE_TYPE_ROM;
+      tr_list[ index ].tr_id = match->id;
       break;
     case WBTDL_MATCH_TRAINER_DATA:
-      tr_list[ index ] = WBT_TRCODE_DL1 + rom_index;  //match->id;
+      tr_list[ index ].type = WBT_TRCODE_TYPE_DL1 + rom_index;
+      tr_list[ index ].tr_id = match->id;
       break;
     }
   }
 }
 //-----------------------------------------------------------------------------
 /**
- * @brief チャンピオントーナメント出場者選出
- * @todo  前作主人公の扱いが未実装
+ * @brief 参戦トレーナー選別：チャンピオントーナメント
  */
 //-----------------------------------------------------------------------------
-static void entryChampTournament(MAKE_ENTRY_WORK * mew, u16 * tr_list )
+static void entryChampTournament(MAKE_ENTRY_WORK * mew, WBT_TRCODE * tr_list )
 {
   int tr_idx, j;
 
-  GFL_STD_MemClear( tr_list, sizeof(u16) * WBT_TRAINER_NUM );
-  tr_list[0] = WBT_TRCODE_PLAYER;
-  tr_list[1] = WBT_TRCODE_WBHERO;
+  GFL_STD_MemClear( tr_list, sizeof(WBT_TRCODE) * WBT_TRAINER_NUM );
+  tr_list[0].code = WBT_TRCODE_PLAYER;
+  tr_list[1].code = WBT_TRCODE_WBHERO;
 
   for ( j = 0, tr_idx = 2; j < mew->cond->rom_trainer_num; j ++ )
   {
     const WBT_TRDATA * rom_data = &mew->cond->rom_trainer_data[ j ];
     if ( rom_data->region_tournament_id != WBTCUP_CHAMPION ) continue;
-    tr_list[tr_idx] = j;
+    tr_list[tr_idx].type = WBT_TRCODE_TYPE_ROM;
+    tr_list[tr_idx].tr_id = j;
     tr_idx ++;
     if ( tr_idx >= WBT_TRAINER_NUM )
     {
@@ -366,7 +373,7 @@ static void entryChampTournament(MAKE_ENTRY_WORK * mew, u16 * tr_list )
  * @brief 参戦トレーナー選別：ワールドトーナメント
  */
 //-----------------------------------------------------------------------------
-static void entryWorldTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
+static void entryWorldTournament( MAKE_ENTRY_WORK * mew, WBT_TRCODE * tr_list )
 {
   mew_SelectPerson( mew, WBT_TRPRI_LEADER, 7 );
 
@@ -377,7 +384,7 @@ static void entryWorldTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
  * @brief 参戦トレーナー選別：リーダーズトーナメント
  */
 //-----------------------------------------------------------------------------
-static void entryRegionTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
+static void entryRegionTournament( MAKE_ENTRY_WORK * mew, WBT_TRCODE * tr_list )
 {
   mew_SelectPerson( mew, WBT_TRPRI_LEADER, 7 );
 
@@ -389,7 +396,7 @@ static void entryRegionTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
  * @brief 参戦トレーナー選別：ホドモエトーナメント
  */
 //-----------------------------------------------------------------------------
-static void entryHodomoeTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
+static void entryHodomoeTournament( MAKE_ENTRY_WORK * mew, WBT_TRCODE * tr_list )
 {
   mew_SelectPerson( mew, WBT_TRPRI_LEADER, 2 );
   mew_SelectPerson( mew, WBT_TRPRI_MOB, 1 );
@@ -403,7 +410,7 @@ static void entryHodomoeTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
  * @brief 参戦トレーナー選別：ホドモエトーナメント（イベント）
  */
 //-----------------------------------------------------------------------------
-static void entryHodomoeEventTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
+static void entryHodomoeEventTournament( MAKE_ENTRY_WORK * mew, WBT_TRCODE * tr_list )
 {
   mew_SelectPerson( mew, WBT_TRPRI_SPECIAL, 1 ); //アクロマ
   mew_SelectPerson( mew, WBT_TRPRI_CHAMP, 1 );   //チェレン
@@ -418,7 +425,7 @@ static void entryHodomoeEventTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
  * @brief 参戦トレーナー選別：レンタルトーナメント
  */
 //-----------------------------------------------------------------------------
-static void entryRentalTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
+static void entryRentalTournament( MAKE_ENTRY_WORK * mew, WBT_TRCODE * tr_list )
 {
   mew_SelectPerson( mew, WBT_TRPRI_LEADER, 2 );
   mew_SelectPerson( mew, WBT_TRPRI_MOB, 2 );
@@ -432,7 +439,7 @@ static void entryRentalTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
  * @brief 参戦トレーナー選別：レンタルトーナメント
  */
 //-----------------------------------------------------------------------------
-static void entryMixTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
+static void entryMixTournament( MAKE_ENTRY_WORK * mew, WBT_TRCODE * tr_list )
 {
   mew_SelectPerson( mew, WBT_TRPRI_LEADER, 2 );
   mew_SelectPerson( mew, WBT_TRPRI_MOB, 2 );
@@ -446,7 +453,7 @@ static void entryMixTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
  * @brief 参戦トレーナー選別：レンタルトーナメント
  */
 //-----------------------------------------------------------------------------
-static void entryRentalMasterTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
+static void entryRentalMasterTournament( MAKE_ENTRY_WORK * mew, WBT_TRCODE * tr_list )
 {
   mew_SelectPerson( mew, WBT_TRPRI_LEADER, 7 );
 
@@ -458,7 +465,7 @@ static void entryRentalMasterTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
  * @brief 参戦トレーナー選別：レンタルトーナメント
  */
 //-----------------------------------------------------------------------------
-static void entryMixMasterTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
+static void entryMixMasterTournament( MAKE_ENTRY_WORK * mew, WBT_TRCODE * tr_list )
 {
   mew_SelectPerson( mew, WBT_TRPRI_LEADER, 7 );
 
@@ -467,10 +474,10 @@ static void entryMixMasterTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
 
 //-----------------------------------------------------------------------------
 /**
- * @brief タイプトーナメント出場者選出
+ * @brief 参戦トレーナー選別：タイプトーナメント
  */
 //-----------------------------------------------------------------------------
-static void entryTypeTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
+static void entryTypeTournament( MAKE_ENTRY_WORK * mew, WBT_TRCODE * tr_list )
 {
   int i;
   int candidate_count = 0;
@@ -506,7 +513,7 @@ static void entryTypeTournament( MAKE_ENTRY_WORK * mew, u16 * tr_list )
  * @param[out]  tr_list
  */
 //-----------------------------------------------------------------------------
-void WBTSYS_MakeEntryList( GAMEDATA * gamedata, const WBT_MATCH_CONDITION * cond, u16 * tr_list )
+void WBTSYS_MakeEntryList( GAMEDATA * gamedata, const WBT_MATCH_CONDITION * cond, WBT_TRCODE * tr_list )
 {
   const WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
   MAKE_ENTRY_WORK * mew = mew_Create( cond->heapID, wbtsave, cond );

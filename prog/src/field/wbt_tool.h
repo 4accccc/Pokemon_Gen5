@@ -21,12 +21,22 @@
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 enum {
-  WBT_TRCODE_PLAYER = 0xffff,
-  WBT_TRCODE_WBHERO = 0xfffe,
-  WBT_TRCODE_DL1    = 0xfff1,
-  WBT_TRCODE_DL2    = 0xfff2,
-  WBT_TRCODE_DL3    = 0xfff3,
-  WBT_TRCODE_DL4    = 0xfff4,
+  WBT_TRCODE_TYPE_PLAYER = 0xff,
+  WBT_TRCODE_TYPE_WBHERO = 0xfe,
+  WBT_TRCODE_TYPE_DL1    = 0xf1,
+  WBT_TRCODE_TYPE_DL2    = 0xf2,
+  WBT_TRCODE_TYPE_DL3    = 0xf3,
+  WBT_TRCODE_TYPE_DL4    = 0xf4,
+  WBT_TRCODE_TYPE_ROM    = 0x00,
+};
+
+enum {
+  WBT_TRCODE_PLAYER = WBT_TRCODE_TYPE_PLAYER << 8,
+  WBT_TRCODE_WBHERO = WBT_TRCODE_TYPE_WBHERO << 8,
+  WBT_TRCODE_DL1    = WBT_TRCODE_TYPE_DL1 << 8,
+  WBT_TRCODE_DL2    = WBT_TRCODE_TYPE_DL2 << 8,
+  WBT_TRCODE_DL3    = WBT_TRCODE_TYPE_DL3 << 8,
+  WBT_TRCODE_DL4    = WBT_TRCODE_TYPE_DL4 << 8,
 };
 
 //------------------------------------------------------------------

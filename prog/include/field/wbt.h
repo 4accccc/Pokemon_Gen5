@@ -114,22 +114,32 @@ typedef enum {
 /// WBTのトレーナー分類
 //------------------------------------------------------------------
 typedef enum {
-  WBT_TRTYPE_ROM = 0, ///<ロムに存在するトレーナー
-  WBT_TRTYPE_DL,      ///<ダウンロードデータのトレーナー
-  WBT_TRTYPE_SAVE,    ///<WB（データ引継ぎ）のトレーナー
-  WBT_TRTYPE_PLAYER,  ///<プレイヤー
+  WBT_TRTYPE_DEFAULT = 0,
+  WBT_TRTYPE_ROM = WBT_TRTYPE_DEFAULT,  ///<ロムに存在するトレーナー
+  WBT_TRTYPE_DL,                        ///<ダウンロードデータのトレーナー
+  WBT_TRTYPE_DLHYBRID,                  ///<ロム＋ダウンロードデータのトレーナー
+  WBT_TRTYPE_PLAYER,                    ///<プレイヤー
+  
+  WBT_TRTYPE_MAX,
 }WBT_TRTYPE;
 
 //-----------------------------------------------------------------------------
 /// WBTトレーナーの優先順位定義
 //-----------------------------------------------------------------------------
 typedef enum {
-  WBT_TRPRI_NULL = 0,     ///<未定義
-  WBT_TRPRI_WEAK_MOB = 1, ///<戦わないモブ
-  WBT_TRPRI_MOB,          ///<戦うモブ
-  WBT_TRPRI_LEADER,       ///<ジムリーダー
-  WBT_TRPRI_CHAMP,        ///<チャンピオン
-  WBT_TRPRI_SPECIAL,      ///<特殊（ダウンロードなど）
+  WBT_TRPRI_NULL      = 0,  ///<未定義
+  WBT_TRPRI_1,
+  WBT_TRPRI_2,
+  WBT_TRPRI_3,
+  WBT_TRPRI_4,
+  WBT_TRPRI_5,
+  WBT_TRPRI_MAX,
+
+  WBT_TRPRI_WEAK_MOB  = WBT_TRPRI_1,  ///<戦わないモブ
+  WBT_TRPRI_MOB       = WBT_TRPRI_2,  ///<戦うモブ
+  WBT_TRPRI_LEADER    = WBT_TRPRI_3,  ///<ジムリーダー
+  WBT_TRPRI_CHAMP     = WBT_TRPRI_4,  ///<チャンピオン
+  WBT_TRPRI_SPECIAL   = WBT_TRPRI_5,  ///<特殊（ダウンロードなど）
 }WBT_TRPRI;
 
 //------------------------------------------------------------------

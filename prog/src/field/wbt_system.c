@@ -356,6 +356,12 @@ u8 WBTTRAINER_GetPowerRnd( const WBTTRAINER * wbt_tr )
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
+u8 WBTTRAINER_GetDLID( const WBTTRAINER * wbt_tr )
+{
+  return wbt_tr->dl_tr_id;
+}
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 u8 WBTTRAINER_GetID( const WBTTRAINER * wbt_tr )
 {
   return wbt_tr->tr_id;

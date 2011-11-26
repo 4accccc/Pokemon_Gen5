@@ -37,6 +37,11 @@ typedef struct _WBTRESULT WBTRESULT;
 typedef struct _WBT_MATCH_CONDITION WBT_MATCH_CONDITION;
 
 //------------------------------------------------------------------
+///
+//------------------------------------------------------------------
+typedef struct _WBT_TRCODE WBT_TRCODE;
+
+//------------------------------------------------------------------
 /// ポケモン抽選用NG指定オブジェクトの不完全型
 //------------------------------------------------------------------
 typedef struct _WBT_NGPMINFO WBT_NGPMINFO;
@@ -72,7 +77,7 @@ typedef enum {
 //------------------------------------------------------------------
 //  WBT対戦相手用のメッセージオフセット
 //------------------------------------------------------------------
-enum {
+typedef enum {
   WBT_TRMSG_1ST_FIGHT_START = 0,  ///<バトル前、対戦相手の1回戦時
   WBT_TRMSG_2ND_FIGHT_START,      ///<バトル前、対戦相手の2回戦時
   WBT_TRMSG_3RD_FIGHT_START,      ///<バトル前、対戦相手の決勝戦時
@@ -83,7 +88,7 @@ enum {
   WBT_TRMSG_ANNOUNCE,             ///<バトル前、決勝戦の前口上
 
   WBT_TRMSG_TYPE_NUM,
-};
+}WBT_TRMSG;
 
 //------------------------------------------------------------------
 //  WBT対戦相手のビット指定
@@ -111,9 +116,14 @@ enum { WBT_AUDIENCE_TYPE_MAX = 4 };
 #define BUFLEN_TOURNAMENT_NAME  ( (18 * GLOBAL_MSGLEN) + BUFLEN_EOM_SIZE )	// 16 -> 18
 
 //------------------------------------------------------------------
-///  対戦したかどうかが記録されるWBTROMトレーナーの数
 //------------------------------------------------------------------
-enum { WBTROM_TRID_MEM_MAX = 55 };
+enum {
+  ///  対戦したかどうかが記録されるWBTROMトレーナーの数
+  WBTROM_TRID_MEM_MAX = 55,
+  WBTROM_TRID_WEAK_MOB_START = 58,
+  WBTROM_TRID_STRONG_MOB_START = 68,
+  WBTROM_TRID_NOBATTLE_MOB_START = 78,
+};
 
 //============================================================================================
 //============================================================================================
@@ -176,6 +186,7 @@ extern const WBTTRAINER * WBTSYS_GetPlayerTrainer( const WBTSYS * wbtsys );
 //  WBTTRAINER関連
 //------------------------------------------------------------------
 extern u8 WBTTRAINER_GetID( const WBTTRAINER * wbt_tr );
+extern u8 WBTTRAINER_GetDLID( const WBTTRAINER * wbt_tr );
 extern u8 WBTTRAINER_GetPriority( const WBTTRAINER * wbt_tr );
 extern u8 WBTTRAINER_GetPowerRnd( const WBTTRAINER * wbt_tr );
 extern u16 WBTTRAINER_GetBattleTrainerType( const WBTTRAINER * wbt_tr );
@@ -202,7 +213,7 @@ extern void WBTSYS_DEBUG_PrintRegulationEx( const REGULATIONEX * reg_ex );
 //  in wbt_system_lobby.c
 //------------------------------------------------------------------
 extern void WBTSYS_MakeMatch( WBTSYS * wbtsys, GAMEDATA * gamedata );
-extern void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const u16 * tr_list );
+extern void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const WBT_TRCODE * tr_list );
 
 extern POKEPARTY * WBTSYS_GetUsePokeParty( WBTSYS * wbtsys, GAMEDATA * gamedata );
 extern u8 WBTSYS_GetRewardCount( const WBTSYS * wbtsys );
@@ -220,7 +231,8 @@ extern void WBTSYS_SetupMyParty( WBTSYS * wbtsys, GAMEDATA * gamedata );
 //------------------------------------------------------------------
 //  in wbt_makematch.c
 //------------------------------------------------------------------
-extern void WBTSYS_MakeEntryList( GAMEDATA * gamedata, const WBT_MATCH_CONDITION * cond, u16 * tr_list );
+extern void WBTSYS_MakeEntryList(
+    GAMEDATA * gamedata, const WBT_MATCH_CONDITION * cond, WBT_TRCODE * tr_list );
 extern void WBTSYS_SortTrainer( WBTTRAINER * wbt_tr_array, u64 seed64, HEAPID heapID );
 
 //------------------------------------------------------------------
@@ -250,7 +262,7 @@ extern void WBTSYS_CalcResult( WBTSYS * wbtsys, GFL_STD_RandContext * context );
 //------------------------------------------------------------------
 //  in wbt_battle.c
 //------------------------------------------------------------------
-extern void WBTSYS_GetTrainerMsg( const WBTSYS * wbtsys, u32 type, STRBUF * strbuf );
+extern void WBTSYS_GetTrainerMsg( const WBTSYS * wbtsys, WBT_TRMSG msg_type, STRBUF * strbuf );
 extern void WBTSYS_GetOpponentName( const WBTSYS * wbtsys, STRBUF * strbuf );
 extern u8 WBTSYS_GetOpponentSex( const WBTSYS * wbtsys );
 extern u16 WBTSYS_GetOpponentMMdlObjCode( const WBTSYS * wbtsys );
