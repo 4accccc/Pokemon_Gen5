@@ -10,15 +10,7 @@
 #pragma once
 
 #define FES_GIMMICK_NPC_DATA_MAX (20) ///<1ゾーンでmax20箇所候補にできる
-
-#define FES_GIMMICK_NPC_POINT_LOW_MIN (0)     ///<ポイント抽選数下限 少なめ(街)
-#define FES_GIMMICK_NPC_POINT_LOW_MAX (3)     ///<ポイント抽選数上限 少なめ(街)
-#define FES_GIMMICK_NPC_POINT_MIDDLE_MIN (1)  ///<ポイント抽選数下限 中(道路)
-#define FES_GIMMICK_NPC_POINT_MIDDLE_MAX (3)  ///<ポイント抽選数上限 中(道路)
-#define FES_GIMMICK_NPC_POINT_HIGH_MIN (3)  ///<ポイント抽選数下限 中(ダンジョン)
-#define FES_GIMMICK_NPC_POINT_HIGH_MAX (3)  ///<ポイント抽選数上限 中(ダンジョン)
-
-#define FES_GIMMICK_NPC_POINT_MAX (FES_GIMMICK_NPC_POINT_HIGH_MAX) ///<1ゾーンでmax3箇所抽選される
+#define FES_GIMMICK_NPC_POINT_MAX (4) ///<1ゾーンでmax4箇所抽選される
 
 #define FES_GIMMICK_NPC_FLAG_WORK_NUM  (6)   ///<過去6ゾーン分確保
 #define FES_GIMMICK_NPC_FLAG_WORK_END  (FES_GIMMICK_NPC_FLAG_WORK_NUM-1)   ///<過去6ゾーン分確保

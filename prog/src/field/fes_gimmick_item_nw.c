@@ -54,6 +54,7 @@
 #include "field/fes_gimmick_item_dat.h"
 
 #define LOT_ITEM_PROB_MAG (1000)  ///<乱数精度を高めるため、100(%)に倍率をかけた値で抽選する->1%=1000
+#define ITEM_MISSION_POINT_NUM_VALUE (8)  //ポイント数バリエーション
 
 typedef struct _FES_ITEM_PARAM{
   u16 item;
@@ -64,13 +65,16 @@ typedef struct _FES_ITEM_SET{
   FES_ITEM_PARAM prm[FES_KIRA_ITEM_PARAM_NUM];
 }FES_ITEM_SET;
 
-//抽選数の下限と上限
-static const u8 DATA_LotTargetNum[][2] = {
-  { FES_GIMMICK_ITEM_POINT_LOW_MIN, FES_GIMMICK_ITEM_POINT_LOW_MAX }, 
-  { FES_GIMMICK_ITEM_POINT_MIDDLE_MIN, FES_GIMMICK_ITEM_POINT_MIDDLE_MAX }, 
-  { FES_GIMMICK_ITEM_POINT_HIGH_MIN, FES_GIMMICK_ITEM_POINT_HIGH_MAX }, 
+//ポイント出現パターンテーブル
+static const u8 DATA_FesItemPointNumTbl[FMISSION_POINT_PAT_MAX][ITEM_MISSION_POINT_NUM_VALUE] = {
+  { 0, 0, 0, 0, 0, 0, 0, 0 }, ///<FMISSION_POINT_PAT_NONE
+  { 0, 0, 0, 0, 0, 0, 1, 2 }, ///<FMISSION_POINT_PAT_RARE
+  { 0, 0, 0, 1, 1, 1, 2, 2 }, ///<FMISSION_POINT_PAT_LOW
+  { 1, 2, 2, 3, 3, 3, 4, 4 }, ///<FMISSION_POINT_PAT_MIDDLE
+  { 4, 4, 5, 5, 5, 6, 7, 8 }, ///<FMISSION_POINT_PAT_HIGH
+  { 6, 6, 7, 7, 7, 7, 8, 8 }, ///<FMISSION_POINT_PAT_MAXIMUM
+  { 0, 0, 0, 0, 0, 0, 8, 8 }, ///<FMISSION_POINT_PAT_LUNK
 };
-#define LOT_TARGET_NUM_MAX  NELEMS(DATA_LotTargetNum)
 
 //抽選アイテムセットテーブル
 #include "fes_gimmick_item.cdat"
@@ -140,21 +144,17 @@ static BOOL sub_SetPosByLot( GAMESYS_WORK* gsys, FES_GIMMICK_ITEM_WORK* wk, FEST
 
   //抽選するポイント数を決定
   {
-    u8 min,max; 
-    u8 param = ZONEDATA_GetFesParam( wk->zone_id );
-    param = 2;
-    if( param == 0 ){
-      return FALSE; //ポイント抽選なし
-    }
-    if( param > LOT_TARGET_NUM_MAX ){
-      GF_ASSERT(0);
-      return FALSE; //パラメータが不正なので何もしない
-    }
-    min = DATA_LotTargetNum[--param][0];
-    max = DATA_LotTargetNum[param][1];
+    FMISSION_MAP_ATTR map_attr = ZONEDATA_GetFesMapAttr( wk->zone_id );
+    int bit_ofs = map_attr*FMISSION_POINT_PATTERN_BIT_NUM;
+    u8 pat_idx = (fmwk->beacon.pattern >> bit_ofs ) & FMISSION_POINT_PATTERN_BIT_MASK;
+    int rnd = FES_GIMMICK_SUB_RndGet( rnd_c, ITEM_MISSION_POINT_NUM_VALUE, NULL, 0 );
 
-    wk->point_max = FES_GIMMICK_SUB_RndGet( rnd_c, (max-min)+1, NULL, 0 ) + min;
+    wk->point_max = DATA_FesItemPointNumTbl[pat_idx][rnd];
 
+#if defined(DEBUG_ONLY_FOR_iwasawa) || defined(DEBUG_ONLY_FOR_masafumi_saitou)
+    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"zone-%d mattr=%d, pat=%08x, ofs=%d, idx=%d, rnd=%d, point=%d\n", 
+        wk->zone_id, map_attr, fmwk->beacon.pattern, bit_ofs, pat_idx, rnd, wk->point_max );
+#endif
     if( wk->point_max > wk->data_max ){
       wk->point_max = wk->data_max;
     }

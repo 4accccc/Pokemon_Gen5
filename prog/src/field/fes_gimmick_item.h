@@ -13,15 +13,7 @@
 #include "field/eventdata_type.h"
 
 #define FES_GIMMICK_ITEM_DATA_MAX (20) ///<1ゾーンでmax20箇所候補にできる
-
-#define FES_GIMMICK_ITEM_POINT_LOW_MIN (0)     ///<ポイント抽選数下限 少なめ(街)
-#define FES_GIMMICK_ITEM_POINT_LOW_MAX (4)     ///<ポイント抽選数上限 少なめ(街)
-#define FES_GIMMICK_ITEM_POINT_MIDDLE_MIN (2)  ///<ポイント抽選数下限 中(道路)
-#define FES_GIMMICK_ITEM_POINT_MIDDLE_MAX (6)  ///<ポイント抽選数上限 中(道路)
-#define FES_GIMMICK_ITEM_POINT_HIGH_MIN (4)  ///<ポイント抽選数下限 中(ダンジョン)
-#define FES_GIMMICK_ITEM_POINT_HIGH_MAX (8)  ///<ポイント抽選数上限 中(ダンジョン)
-
-#define FES_GIMMICK_ITEM_POINT_MAX (FES_GIMMICK_ITEM_POINT_HIGH_MAX) ///<1ゾーンでmax8箇所抽選される
+#define FES_GIMMICK_ITEM_POINT_MAX (8) ///<1ゾーンでmax8箇所抽選される
 
 #define FES_GIMMICK_ITEM_FLAG_WORK_NUM  (6)   ///<過去6ゾーン分確保
 #define FES_GIMMICK_ITEM_FLAG_WORK_END  (FES_GIMMICK_ITEM_FLAG_WORK_NUM-1)   ///<過去6ゾーン分確保

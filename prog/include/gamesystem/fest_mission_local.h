@@ -66,7 +66,7 @@ struct _FEST_BEACON{
       u32  goal:14;          ///<達成目標(max9999)
       u32  end_type:1;       ///<ミッション終了条件タイプ FMISSION_END_TYPE
       
-      u32  pattern:18;       ///<出現パターン3bit*6パターン
+      u32  pattern:18;       ///<出現パターン18bit FMISSION_POINT_PATTERN_BIT_NUM*FMISSION_POINT_PAT_MAX(3bit*6パターン)
       u32  entry_flag_id:12; ///<参加条件フラグID
       u32  pay_bonus:2;      ///<報酬の計算式タイプ(0-2) FMISSION_PAY_BONUS
       

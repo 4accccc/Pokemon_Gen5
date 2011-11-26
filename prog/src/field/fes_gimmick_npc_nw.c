@@ -56,17 +56,9 @@
 
 #define LOT_PROB_MAG (1000)  ///<乱数精度を高めるため、100(%)に倍率をかけた値で抽選する->1%=1000
 #define NPC_MISSION_EXPARAM_MAX (3) //拡張パラメータ許容値
-
-//抽選数の下限と上限
-static const u8 DATA_LotTargetNum[][2] = {
-  { FES_GIMMICK_NPC_POINT_LOW_MIN, FES_GIMMICK_NPC_POINT_LOW_MAX }, 
-  { FES_GIMMICK_NPC_POINT_MIDDLE_MIN, FES_GIMMICK_NPC_POINT_MIDDLE_MAX }, 
-  { FES_GIMMICK_NPC_POINT_HIGH_MIN, FES_GIMMICK_NPC_POINT_HIGH_MAX }, 
-};
-#define LOT_TARGET_NUM_MAX  NELEMS(DATA_LotTargetNum)
+#define NPC_MISSION_POINT_NUM_VALUE (8)  //ポイント数バリエーション
 
 //FES_NPCオブジェコードテーブル
-
 #define FES_NPC_PARAM_FIXED  (1) //パラメータ1つで固定
 
 typedef struct FES_NPC_OBJ_PARAM{
@@ -125,6 +117,18 @@ static const FES_NPC_PARAM DATA_FesNpcParam[FMISSION_NPC_TYPE_MAX] = {
   { FMISSION_EXP_TRAINER_SET_MAX, DATA_FesNpcTrBattle },//FES_NPC_TYPE_TR_BATTLE バトル
   { FMISSION_EXP_GET_A_PRESENT_SET_MAX, DATA_FesNpcGetAPresent },//FES_NPC_TYPE_GET_A_PRESENT アイテムをもらう
   { FES_NPC_PARAM_FIXED, DATA_FesNpcPokeQuiz },//FES_NPC_TYPE_POKE_QUIZ ポケモン図鑑クイズ
+};
+
+/////////////////////////////////////////////////////////////////////
+//ポイント出現パターンテーブル
+static const u8 DATA_FesNpcPointNumTbl[FMISSION_POINT_PAT_MAX][NPC_MISSION_POINT_NUM_VALUE] = {
+  { 0, 0, 0, 0, 0, 0, 0, 0 }, ///<FMISSION_POINT_PAT_NONE
+  { 0, 0, 0, 0, 0, 0, 1, 1 }, ///<FMISSION_POINT_PAT_RARE
+  { 0, 0, 1, 1, 1, 1, 1, 2 }, ///<FMISSION_POINT_PAT_LOW
+  { 1, 1, 1, 1, 2, 2, 2, 2 }, ///<FMISSION_POINT_PAT_MIDDLE
+  { 1, 1, 2, 2, 2, 3, 3, 3 }, ///<FMISSION_POINT_PAT_HIGH
+  { 1, 2, 2, 3, 3, 3, 4, 4 }, ///<FMISSION_POINT_PAT_MAXIMUM
+  { 0, 0, 0, 0, 0, 0, 4, 4 }, ///<FMISSION_POINT_PAT_LUNK
 };
 
 #include "field/fes_gimmick_npc.cdat"
@@ -343,20 +347,16 @@ static BOOL sub_SetPosByLot( GAMESYS_WORK* gsys, FES_GIMMICK_NPC_WORK* wk, FEST_
 
   //抽選するポイント数を決定
   {
-    u8 min,max; 
-    u8 param = ZONEDATA_GetFesParam( wk->zone_id );
-    param = 2;
-    if( param == 0 ){
-      return FALSE; //ポイント抽選なし
-    }
-    if( param > LOT_TARGET_NUM_MAX ){
-      GF_ASSERT(0);
-      return FALSE; //パラメータが不正なので何もしない
-    }
-    min = DATA_LotTargetNum[--param][0];
-    max = DATA_LotTargetNum[param][1];
+    FMISSION_MAP_ATTR map_attr = ZONEDATA_GetFesMapAttr( wk->zone_id );
+    int bit_ofs = map_attr*FMISSION_POINT_PATTERN_BIT_NUM;
+    u8 pat_idx = (fmwk->beacon.pattern >> bit_ofs ) & FMISSION_POINT_PATTERN_BIT_MASK;
+    int rnd = FES_GIMMICK_SUB_RndGet( rnd_c, NPC_MISSION_POINT_NUM_VALUE, NULL, 0 );
 
-    wk->point_max = FES_GIMMICK_SUB_RndGet( rnd_c, (max-min)+1, NULL, 0 ) + min;
+    wk->point_max = DATA_FesNpcPointNumTbl[pat_idx][rnd];
+#if defined(DEBUG_ONLY_FOR_iwasawa) || defined(DEBUG_ONLY_FOR_masafumi_saitou)
+    OS_FPrintf(OSPRINT_LINKFEST_PAGE,"zone-%d mattr=%d, pat=%08x, ofs=%d, idx=%d, rnd=%d, point=%d\n", 
+        wk->zone_id, map_attr, fmwk->beacon.pattern, bit_ofs, pat_idx, rnd, wk->point_max );
+#endif
 
     if( wk->point_max > wk->data_max ){
       wk->point_max = wk->data_max;

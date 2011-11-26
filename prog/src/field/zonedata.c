@@ -1211,9 +1211,11 @@ u16 ZONEDATA_GetEncountDataID(u16 zone_id)
 /**
  * @brief 指定ゾーンのフェスパラメータを取得
  * @param  zone_id 判定するゾーンのID
+ *
+ * @retval  フェスマップ属性パラメータ FMISSION_MAP_ATTR型
  */
 //------------------------------------------------------------------
-u8 ZONEDATA_GetFesParam(u16 zone_id)
+FMISSION_MAP_ATTR ZONEDATA_GetFesMapAttr(u16 zone_id)
 {
   ZONEDATA* zoneData;
   zoneData = loadZoneData( zone_id );

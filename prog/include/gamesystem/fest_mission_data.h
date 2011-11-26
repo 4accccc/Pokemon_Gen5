@@ -13,6 +13,9 @@
 #include "gamesystem/fmission_data_id.h"
 #include "gamesystem/fmission_data_def.h"
 
+#define FMISSION_POINT_PATTERN_BIT_NUM  (3)  //ポイント数パターンFMISSION_POINT_PAT_MAX=6なので3bitでOK
+#define FMISSION_POINT_PATTERN_BIT_MASK  (0x7) //ポイント数パターン3bitマスク
+
 ///<ミッションアーカイブデータ 目標値と報酬
 typedef struct _FMISSION_ARCDATA_LV_PARAM{
   u16 time;   ///<制限時間
@@ -71,7 +74,7 @@ typedef struct _FMISSION_ARC_PARAM{
   u16  item;           ///<報酬アイテム
   u16  open_flag_id;   ///<ミッションの開放条件フラグID
   u16  entry_flag_id;  ///<参加条件フラグID
-  u32  pattern;        ///<出現パターン(3bit*6パターン)
+  u32  pattern;        ///<出現パターン18bit FMISSION_POINT_PATTERN_BIT_NUM*FMISSION_POINT_PAT_MAX(3bit*6パターン)
   FMISSION_ARCDATA_LV_PARAM level[FMISSION_LEVEL_MAX];
 }FMISSION_ARC_PARAM;
 
