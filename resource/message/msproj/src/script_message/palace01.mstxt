@@ -105,1697 +105,6 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_oldman1_01_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>フェスミッションを　うけてみましたか？▼
-ハイルツリーに　はなしかければ
-かんたんに　うけることが　できますよ▼
-あとは　「すれちがいログ」に
-フェスミッションの　おさそいが▽
-くることも　あるわ……▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-18T13:21:50" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>だれかの世界　に
-行って　みたかな？▼
-島に架かる　架け橋から
-だれかの世界に　行けるはずだ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ハイリンクの老人：初回メッセージ</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1：
-このあと「デルダマ」
-５つ入手</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_oldman1_01_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ハイリンクについて
-ききたいことは　ありますか？</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-15T07:32:44" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ハイリンクについて
-ききたいことは　ありますか？</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-15T08:27:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ハイリンクの老人：分岐メッセージ
-選択肢表示、plc_oldman1_01_07,8,9</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_oldman1_01_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ハイリンクは
-すこしずつ　せいちょうしていくの▼
-わたしたちの　こころと
-きょうめい　するかのように……</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-15T07:38:40" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ハイリンクは
-すこしずつ　せいちょうしていくの▼
-わたしたちの　こころと
-きょうめい　するかのように……</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-15T08:27:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ハイリンクの老人：会話終了</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_oldman1_01_04"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>だれかのせかいに　はいりこみ
-おおくのひとを　たすけるのだ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>だれかのせかいに　はいりこみ
-おおくのひとを　たすけるのだ</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-15T08:27:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ハイリンクの老人：２回目メッセージ</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_oldman1_01_05"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ぼうけんしゃたちの　ちからを
-ためす　しれん　といえます▼
-ミッションに　クリアすることで
-デルダマや　デルパワーといった▽
-おおきな　ちからを　えることができます▼
-ハイルツリーに　はなしかけて
-ミッションを　かいさい　するか▼
-Ｃギアの　「すれちがいログ」から
-だれかが　かいさいした　ミッションに▽
-さんか　することも　できます▼
-ちかくにいる　ぼうけんしゃと
-きょうりょく　すれば▽
-よりおおきな　ちからを　えるでしょう▼</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-15T08:05:33" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ぼうけんしゃたちの　ちからを
-ためす　しれん　といえます▼
-ミッションに　クリアすることで
-デルダマや　デルパワーといった▽
-おおきな　ちからを　えることができます▼
-ハイルツリーに　はなしかけて
-ミッションを　かいさい　するか▼
-Ｃギアの　「すれちがいログ」から
-だれかが　かいさいした　ミッションに▽
-さんか　することも　できます▼
-ちかくにいる　ぼうけんしゃと
-きょうりょく　すれば▽
-よりおおきな　ちからを　えるでしょう▼</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-15T08:27:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ハイリンクの老人：ツリーとは？</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_oldman1_01_06"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>このきが　もっている　パワーを
-デルパワーと　よんでいます▼
-デルパワーは　３つだけ
-Ｃギアに　とうろく　することができ▼
-Ｃギアの
-「すれちがいログ」から▽
-すれちがった　あいてにむけて▽
-つかうことが　できます▼
-いいですか？　デルパワーを　つかうには
-デルダマが　ひつようです▼
-ミッションを　おこない
-デルダマを　あつめてください▼</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-15T07:40:57" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>このきが　もっている　パワーを
-デルパワーと　よんでいます▼
-デルパワーは　３つだけ
-Ｃギアに　とうろく　することができ▼
-Ｃギアの
-「すれちがいログ」から▽
-すれちがった　あいてにむけて▽
-つかうことが　できます▼
-いいですか？　デルパワーを　つかうには
-デルダマが　ひつようです▼
-ミッションを　おこない
-デルダマを　あつめてください▼</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-15T08:27:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ハイリンクの老人：デルパワーとは？</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_oldman1_01_07"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>フェスミッション　とは？</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-15T07:41:45" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>フェスミッション　とは？</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-15T08:27:16" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ハイリンクの老人：ツリーとは？選択肢</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_oldman1_01_08"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>デルパワー　とは？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>デルパワー　とは？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ハイリンクの老人：デルパワーとは？選択肢</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_oldman1_01_09"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>やめる</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>やめる</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ハイリンクの老人：やめる、選択肢</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_oldman1_01_10"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ようこそ　ハイリンクへ▼
-……　……　……
-……あら？▼
-そのようすだと　ここが　どこか
-わからない　ようですね▼</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-15T07:13:48" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ようこそ　ハイリンクへ▼
-……　……　……
-……あら？▼
-そのようすだと　ここが　どこか
-わからない　ようですね▼</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-15T08:27:21" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_oldman1_01_11"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ここは　ハイリンク……
-イッシュの　ちゅうしんにある　しま▼
-ハイリンクには　ひとびとの
-おもいが　あつまる……▼
-ひとりひとりの　おもいが
-あつまり　ひびき　きょうめいする▼
-そうして　うまれた　パワーが
-せかいじゅうの　ぼうけんしゃに▽
-ふしぎな　ちからを　あたえている……▼</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-15T07:13:57" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ここは　ハイリンク……
-イッシュの　ちゅうしんにある　しま▼
-ハイリンクには　ひとびとの
-おもいが　あつまる……▼
-ひとりひとりの　おもいが
-あつまり　ひびき　きょうめいする▼
-そうして　うまれた　パワーが
-せかいじゅうの　ぼうけんしゃに▽
-ふしぎな　ちからを　あたえている……▼</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-15T08:27:21" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_oldman1_01_12"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>そう　いわれているわ▼
-……　……　……
-……そうね！▼
-あなたも　ぼうけんしゃ　なら
-ちからを　うけとると　いいわ！▼</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-14T14:16:56" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>そう　いわれているわ▼
-……　……　……
-……そうね！▼
-あなたも　ぼうけんしゃ　なら
-ちからを　うけとると　いいわ！▼</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-15T08:27:21" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_oldman1_01_13">
-		<LanguageCell
-			Language="JPN">
-			<Text>まずは　この　ハイルツリーに
-はなしかけて　ミッションを　うけなさい▼
-そして　あなたの　おもいを
-ハイルツリーに　とどけるのよ！</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-14T14:18:30" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-14T14:17:08" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>まずは　この　ハイルツリーに
-はなしかけて　ミッションを　うけなさい▼
-そして　あなたの　おもいを
-ハイルツリーに　とどけるのよ！</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-14T14:23:59" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-14T14:23:59" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="plc_girl4_01_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>この　かけはしは
-だれかのせかいと　つながります▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>この　架け橋は
-だれかの世界と　つながります▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>双子娘１：初期メッセージ</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>GIRL4</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_girl4_01_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>かけはしの　せつぞくに　ついて
-しりたいことは　ありますか？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>架け橋の　接続に　ついて
-知りたいことは　ありますか？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>双子娘１：分岐メッセージ
-plc_girl4_01_06,7,8</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>GIRL4</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_girl4_01_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>かけはしの　うえにのると
-はしを　せつぞくする　あいてを▽
-さがし　はじめます▼
-あいてを　みつけ
-はしが　せつぞく　できれば▽
-はしを　わたり　あいてのせかいへ▽
-いくことが　できるでしょう▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>架け橋の　上に乗ると
-橋を　接続する　相手を▽
-探しはじめます▼
-相手を　見つけ
-橋が　接続　できれば▽
-橋を　わたり　相手の世界へ▽
-行くことが　できるでしょう▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>双子娘１：モノリスとは？</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>GIRL4</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_girl4_01_04"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>この　かけはしは
-ハイリンクの　まわりにある▽
-まちや　どうろで▽
-ぼうけんを　つづけている▽
-あいてと　つながります▼
-はしを　わたれば　そのあいてを
-たすけることが　できます▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>この　架け橋は
-ハイリンクの　周りにある▽
-街や　道路で▽
-冒険を　続けている▽
-相手と　つながります▼
-橋を　わたれば　その相手を
-助けることが　できます▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>双子娘１：ミッションとは？</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>GIRL4</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_girl4_01_05"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>さあ　かけはしの　うえに
-のって　ください▼
-しばらくして　あいてと　つながれば
-はしを　わたることが　できます</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>さあ　架け橋の上に
-乗って　ください▼
-しばらくして　相手と　つながれば
-橋を　わたることが　できます</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>双子娘１：会話終了</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>GIRL4</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_girl4_01_06"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>せつぞくの　しかたは？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>接続の　仕方は？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>双子娘１：モノリスとは？選択肢</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>GIRL4</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_girl4_01_07"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>だれと　つながる？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>だれと　つながる？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>双子娘１：ミッションとは？選択肢</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>GIRL4</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_girl4_01_08"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>やめる</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>やめる</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>双子娘１：やめる、選択肢</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>GIRL4</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_girl4_02_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>この　かけはしは
-だれかのせかいと　つながります▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>この　架け橋は
-だれかの世界と　つながります▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>双子娘2：初期メッセージ</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>GIRL4</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_girl4_02_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>かけはしの　せつぞくに　ついて
-しりたいことは　ありますか？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>架け橋の　接続に　ついて
-知りたいことは　ありますか？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>双子娘2：分岐メッセージ
-plc_girl4_02_06,7,8</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>GIRL4</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_girl4_02_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>かけはしの　うえにのると
-はしを　せつぞくする　あいてを▽
-さがし　はじめます▼
-あいてを　みつけ
-はしが　せつぞく　できれば▽
-はしを　わたり　あいてのせかいへ▽
-いくことが　できるでしょう▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>架け橋の　上に乗ると
-橋を　接続する　相手を▽
-探し　はじめます▼
-相手を　見つけ
-橋が　接続　できれば▽
-橋を　わたり　相手の世界へ▽
-行くことが　できるでしょう▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>双子娘2：かけはしは？</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>GIRL4</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_girl4_02_04"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>この　かけはしは
-ハイリンクの　まわりにある▽
-まちや　どうろで▽
-ぼうけんを　つづけている▽
-あいてと　つながります▼
-はしを　わたれば　そのあいてを
-たすけることが　できます▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>この　架け橋は
-ハイリンクの　周りにある▽
-街や　道路で▽
-冒険を　続けている▽
-相手と　つながります▼
-橋を　わたれば　その相手を
-助けることが　できます▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>双子娘2：ミッションとは？</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>GIRL4</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_girl4_02_05"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>さあ　かけはしの　うえに
-のって　ください▼
-しばらくして　あいてと　つながれば
-はしを　わたることが　できます</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>さあ　架け橋の上に
-乗って　ください▼
-しばらくして　相手と　つながれば
-橋を　わたることが　できます</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>双子娘2：会話終了</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>GIRL4</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_girl4_02_06"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>せつぞくの　しかたは？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>接続の　仕方は？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>双子娘2：かけはしは？選択肢</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>GIRL4</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_girl4_02_07"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>だれと　つながる？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>だれと　つながる？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>双子娘2：ミッションとは？選択肢</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>GIRL4</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_girl4_02_08"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>やめる</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>やめる</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>双子娘2：やめる、選択肢</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>GIRL4</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
 		Label="plc_girl4_03_01"
 		Style="Large">
 		<LanguageCell
@@ -1849,7 +158,7 @@ plc_girl4_02_06,7,8</Comment>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1906,7 +215,7 @@ plc_girl4_03_06,7,8</Comment>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1972,7 +281,7 @@ plc_girl4_03_06,7,8</Comment>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2046,7 +355,7 @@ plc_girl4_03_06,7,8</Comment>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2102,7 +411,7 @@ plc_girl4_03_06,7,8</Comment>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2156,7 +465,7 @@ plc_girl4_03_06,7,8</Comment>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2210,7 +519,7 @@ plc_girl4_03_06,7,8</Comment>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2264,7 +573,7 @@ plc_girl4_03_06,7,8</Comment>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2326,907 +635,7 @@ plc_girl4_03_06,7,8</Comment>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_oldman1_02_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>……
-ようこそ　だれかのせかいへ▼
-おぬしは　ここで
-このせかいの　ぼうけんしゃを▽
-たすけることが　できる▼
-さあ　このきに　ふれ
-ミッションを　うけるのだ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>……
-ようこそ　だれかの世界へ▼
-おぬしは　ここで
-この世界の　冒険者を▽
-助けることが　できる▼
-さあ　この木に　ふれ
-ミッションを　受けるのだ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ハイリンクの老人2：初回メッセージ</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1：
-(侵入先）</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_oldman1_02_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>……さて　なにか
-ききたいことは　あるかな？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>……さて　なにか
-聞きたいことは　あるかな？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ハイリンクの老人2：分岐メッセージ
-選択肢表示、plc_oldman1_02_07,8,9</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1：
-(侵入先）</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_oldman1_02_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>さあ　ミッションを　うけ
-ぼうけんしゃを　たすけるのだ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>さあ　ミッションを　受け
-冒険者を　助けるのだ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ハイリンクの老人2：会話終了</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1：
-(侵入先）</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_oldman1_02_04"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>このせかいで　たびをする
-ぼうけんしゃを　たすけるため▼
-このきに　ふれ
-ミッションを　うけるのだ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>この世界で　旅をする
-冒険者を　助けるため▼
-この木に　ふれ
-ミッションを　受けるのだ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ハイリンクの老人2：２回目メッセージ</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1：
-(侵入先）</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_oldman1_02_05"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ミッション　とは
-このせかいの　ぼうけんしゃを▽
-たすける　ほうほうだ▼
-このきを　しらべれば
-ミッションを　うけることが　できる▼
-さあ　ミッションをうけ
-ぼうけんしゃのもとへ　いくのだ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ミッション　とは
-この世界の　冒険者を▽
-助ける　方法だ▼
-この木を　調べれば
-ミッションを　受けることが　できる▼
-さあ　ミッションを　受け
-冒険者のもとへ　行くのだ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ハイリンクの老人2：ツリーとは？</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1：
-(侵入先）</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_oldman1_02_06"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ここ　だれかのせかい　では
-じゆうに　ワープすることができる▼
-……このせかいは　おぬしの
-ゆめで　できているのだ▼
-おぬしが　イメージすれば
-そこに　ワープすることが　できる▼
-さあ　ミッションを　うけ
-ぼうけんしゃの　もとへいくのだ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ここ　だれかの世界　では
-自由に　ワープすることができる▼
-……この世界は　おぬしの
-夢で　できているのだ▼
-おぬしが　イメージすれば
-そこに　ワープすることが　できる▼
-さあ　ミッションを　受け
-冒険者の　もとへ行くのだ▼</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ハイリンクの老人2：デルパワーとは？</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1：
-(侵入先）</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_oldman1_02_07"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ミッション　とは？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ミッション　とは？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ハイリンクの老人2：ツリーとは？選択肢</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1：
-(侵入先）</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_oldman1_02_08"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ワープ　とは？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ワープ　とは？</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ハイリンクの老人2：デルパワーとは？選択肢</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1：
-(侵入先）</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_oldman1_02_09"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>やめる</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>やめる</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ハイリンクの老人2：やめる、選択肢</Comment>
-			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDMAN1：
-(侵入先）</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_help_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>まずは　この　ハイルツリーに
-はなしかけて　ミッションを　うけなさい▼
-そして　あなたの　おもいを
-ハイルツリーに　とどけるのよ！</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-15T08:26:23" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>まずは　この　ハイルツリーに
-はなしかけて　ミッションを　うけなさい▼
-そして　あなたの　おもいを
-ハイルツリーに　とどけるのよ！</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-15T08:26:30" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Character">
-			<Text>チュートリアル
-メッセージ１</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_help_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>おお！
-ミッションを　えらんだか！▽
-さあ　ミッションを　たっせいするため▽
-ぼうけんしゃの　もとへいくのだ！▼
-ぼうけんしゃの　いばしょは
-したの　ちずに　のっている▼
-ちずを　タッチすれば
-そこまで　ワープできるはずだ▼
-ちずを　たよりに
-ぼうけんしゃに　であい▽
-ミッションを　たっせいするのだ！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>おお！
-ミッションを　選んだか！▽
-さあ　ミッションを　達成するため▽
-冒険者の　もとへ行くのだ！▼
-冒険者の　居場所は
-下の　地図に　のっている▼
-地図を　タッチすれば
-そこまで　ワープできるはずだ▼
-地図を　たよりに
-冒険者に　出会い▽
-ミッションを　達成するのだ！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Character">
-			<Text>チュートリアル
-メッセージ２</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_help_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>……おお
-すばらしい！▽
-ミッションを　たっせいしたな！▽
-ここまで　やるとはな……▼
-……これで
-ハイリンクに　しあわせが　あつまり▽
-きがすこし　せいちょうした▼
-このきは　おおきく
-せいちょう　することで▽
-ふしぎな　パワーが▽
-あつまって　くるのだ▼
-……うむ　もしかしたら
-おぬしは　そのパワーを▽
-うけとれる　かもしれない▼
-このきを　しらべて
-その　ふしぎな　パワー……▽
-デルパワーを　うけとって　みなさい</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>……おお
-すばらしい！▽
-ミッションを　達成したな！▽
-ここまで　やるとはな……▼
-……これで
-ハイリンクに　幸せが　集まり▽
-木が　少し生長した▼
-この木は　大きく
-生長することで▽
-不思議な　パワーが▽
-あつまって　くるのだ▼
-……うむ　もしかしたら
-おぬしは　そのパワーを▽
-受け取れる　かもしれない▼
-この木を　調べて
-その　不思議な　パワー……▽
-デルパワーを　受け取って　みなさい</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Character">
-			<Text>チュートリアル
-メッセージ３</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_help_04"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>うむ　ミッションを
-しっぱい　したな▼
-……なにごとにも
-しっぱいは　つきものだ▼
-また　はしをわたり　もういちど
-チャレンジ　すればよい▼
-ちずを　よくみて　ぼうけんしゃを
-さがすのが　コツだ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>うむ　ミッションを
-失敗　したな▼
-……なにごとにも
-失敗は　つきものだ▼
-また　橋をわたり　もう一度
-チャレンジ　すればよい▼
-地図を　よくみて　冒険者を
-探すのが　コツだ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Character">
-			<Text>チュートリアル
-メッセージ４</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="plc_help_05"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>おおぉ！
-デルパワーを　うけとったか！▽
-その　パワーを　もらえるとは……▽
-……すばらしい▽
-じつに　すばらしい！▼
-その　デルパワーは
-すれちがった　あいてを▽
-たすけることができる　パワーだ▼
-あとで　Ｃギアの
-「すれちがいログ」を　みるといい▼
-……　……　……
-……　……　……▼
-……さて　これで
-おしえられることは　なくなった▼
-ハイリンクで　おおくの
-ぼうけんしゃを　たすけ▽
-たくさんの　しあわせを　あつめるのだ▼
-……　……　……
-……　……　……▼
-この　ハイリンクの　パワーは
-すべて　おぬしの　ものだ▼
-たくさんの　しあわせを　あつめ
-すべての　パワーを　てにいれるのだ！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>おおぉ！
-デルパワーを　受け取ったか！▽
-その　パワーを　もらえるとは……▽
-……すばらしい▽
-実に　すばらしい！▼
-その　デルパワーは
-すれ違った　相手を▽
-助けることができる　パワーだ▼
-あとで　Ｃ－ＧＥＡＲの
-「すれ違いログ」を　見るといい▼
-……　……　……
-……　……　……▼
-……さて　これで
-教えられることは　なくなった▼
-ハイリンクで　多くの
-冒険者を　助け▽
-たくさんの　幸せを　集めるのだ▼
-……　……　……
-……　……　……▼
-この　ハイリンクの　パワーは
-全て　おぬしの　ものだ▼
-たくさんの　幸せを　集め
-全ての　パワーを　手に入れるのだ！</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Character">
-			<Text>チュートリアル
-メッセージ５</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#0080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3288,11 +697,10 @@ plc_girl4_03_06,7,8</Comment>
 			Language="JPN">
 			<Text>ここからは　もとのせかいに
 もどることが　できます▼
-もとのせかい　に
-もどりますか？</Text>
+もとのせかいに　もどりますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:41:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3302,11 +710,10 @@ plc_girl4_03_06,7,8</Comment>
 			Language="JPN_KANJI">
 			<Text>ここからは　元の世界に
 戻ることが　できます▼
-元の世界に
-戻りますか？</Text>
+元の世界に　戻りますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:41:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3371,6 +778,1902 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_tutorial_firststep_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ようこそ　ハイリンクへ▼
+……　……　……
+……おや？▼
+そのようすだと　ここが　どこか
+わからない　ようじゃな▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-06T13:15:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-06T13:02:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ようこそ　ハイリンクへ▼
+……　……　……
+……おや？▼
+そのようすだと　ここが　どこか
+わからない　ようじゃな▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-06T13:21:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-06T13:21:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>●初回訪問イベント
+初めてハイリンクに来た時に起動
+！マーク出してから</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:13:39" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment />
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-06T13:21:45" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_tutorial_firststep_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ここは　ハイリンク……
+ひとと　ひとを　つなぐ▽
+ふしぎな　ばしょじゃ▼
+ちかくにいる　ぼうけんしゃと
+きょうりょくし　たすけあう　ために▽
+ちからを　みがく　ばしょ　でもある▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-06T13:45:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-06T13:02:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ここは　ハイリンク……
+ひとと　ひとを　つなぐ▽
+ふしぎな　ばしょじゃ▼
+ちかくにいる　ぼうけんしゃと
+きょうりょくし　たすけあう　ために▽
+ちからを　みがく　ばしょ　でもある▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T11:56:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-06T13:21:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>●初回訪問イベント
+爺さん下を向いてから</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-06T13:40:41" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment />
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-06T13:21:45" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_tutorial_firststep_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>……　……ふむ
+ことばでは　つたわらない　であろう▼
+おぬしも　ぼうけんしゃ　なら
+ちからを　みがくのが　よいな……▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-06T13:46:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-06T13:02:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……　……ふむ
+ことばでは　つたわらない　であろう▼
+おぬしも　ぼうけんしゃ　なら
+ちからを　みがくのが　よいな……▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T11:56:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-06T13:21:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>●初回訪問イベント
+主人公を見てから</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-06T13:42:38" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment />
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-06T13:21:45" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_tutorial_firststep_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>まずは　この　ハイルツリーに
+はなしかけて　ミッションを　うけるのじゃ▼
+そして　ハイルツリーに
+おぬしの　ちからを　とどけてみせよ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-06T13:47:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-06T13:02:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まずは　この　ハイルツリーに
+はなしかけて　ミッションを　うけるのじゃ▼
+そして　ハイルツリーに
+おぬしの　ちからを　とどけてみせよ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T11:56:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-06T13:21:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>●初回訪問イベント
+上を向いてから
+
+
+→メッセージ送り後、フリームーブ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-06T13:42:46" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment />
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-06T13:21:45" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_tutorial_mission_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>うむ　ミッションを
+うけることが　できたようじゃな▼
+まずは　きのみさがし　か……
+はじめての　おまえさんには▽
+ちょうどよい　ミッションじゃ▼
+よいか　まちや　みちに
+ひかる　ばしょが　あるはずだ▼
+そこに　きのみが　おちている
+よおく　さがすのだぞ▼
+ミッションが　おわったら
+また　もどってくるがよい▽
+あたらしい　ちからを　さずけよう……▼
+はなしは　おわりだ
+さあゆけ！　いってくるのだ！！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:11:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-06T13:39:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>うむ　ミッションを
+うけることが　できたようじゃな▼
+まずは　きのみさがし　か……
+はじめての　おまえさんには▽
+ちょうどよい　ミッションじゃ▼
+よいか　まちや　みちに
+ひかる　ばしょが　あるはずだ▼
+そこに　きのみが　おちている
+よおく　さがすのだぞ▼
+ミッションが　おわったら
+また　もどってくるがよい▽
+あたらしい　ちからを　さずけよう……▼
+はなしは　おわりだ
+さあゆけ！　いってくるのだ！！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:35:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:00:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>●チュートリアルミッション開始前イベント
+
+→メッセージ送り後、ミッション開始</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:02:54" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment />
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:02:58" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_tutorial_mission_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>おお　もどってきたか……▼
+……　むむ
+すばらしい　すばらしいぞ！▽
+ミッションを　せいこう　させたな！▼
+よしよし　やくそく　どおり
+あたらしい　ちからを　さずけよう……▼
+とは　いってもな
+わしが　あたえるのでは　ない▽
+ハイルツリーから　うけとるのだ▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:21:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:12:53" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おお　もどってきたか……▼
+……　むむ
+すばらしい　すばらしいぞ！▽
+ミッションを　せいこう　させたな！▼
+よしよし　やくそく　どおり
+あたらしい　ちからを　さずけよう……▼
+とは　いってもな
+わしが　あたえるのでは　ない▽
+ハイルツリーから　うけとるのだ▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:35:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:35:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>●チュートリアルミッション成功して戻ってきた
+！マーク出してから
+
+→plc_tutorial_mission_05</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:33:49" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_tutorial_mission_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>おお　もどってきたか……▼
+……　むむ
+ざんねん　だったな▽
+ミッションは　しっぱい　だったか……▼
+さいしょは　むずかしい　だろうが
+なんども　ちょうせん　してみるがよい▽
+すこしずつ　うまく　なるじゃろう▼
+よし　がんばった　おぬしに
+これを　やろう！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:33:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:25:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おお　もどってきたか……▼
+……　むむ
+ざんねん　だったな▽
+ミッションは　しっぱい　だったか……▼
+さいしょは　むずかしい　だろうが
+なんども　ちょうせん　してみるがよい▽
+すこしずつ　うまく　なるじゃろう▼
+よし　がんばった　おぬしに
+これを　やろう！▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:35:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:35:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>●チュートリアルミッション失敗して戻ってきた
+！マーク出してから
+
+→デルダマ入手処理（10個）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:33:49" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_tutorial_mission_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>さて　やくそく　どおり
+あたらしい　ちからを　さずけよう……▼
+とは　いってもな
+わしが　あたえるのでは　ない▽
+ハイルツリーから　うけとるのだ▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:33:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:30:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さて　やくそく　どおり
+あたらしい　ちからを　さずけよう……▼
+とは　いってもな
+わしが　あたえるのでは　ない▽
+ハイルツリーから　うけとるのだ▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:35:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:35:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>●チュートリアルミッション失敗して戻ってきた
+デルダマ入手後
+
+→plc_tutorial_mission_05</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:33:51" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_tutorial_mission_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイルツリーには　ひとびとの
+おもいが　あつまる▼
+そのおもいが　きょうめいし
+ぼうけんしゃを　たすける▽
+デルパワー　となるのじゃ▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:34:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:21:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイルツリーには　ひとびとの
+おもいが　あつまる▼
+そのおもいが　きょうめいし
+ぼうけんしゃを　たすける▽
+デルパワー　となるのじゃ▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:35:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:35:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>●チュートリアルミッションから戻ってきた
+上を向いてから
+
+→plc_tutorial_mission_06</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:34:39" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_tutorial_mission_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>まあ　うけとってみれば　わかるだろう
+さあ　ハイルツリーに　はなしかけて▽
+デルパワーを　うけとるのじゃ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:48:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:34:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まあ　うけとってみれば　わかるだろう
+さあ　ハイルツリーに　はなしかけて▽
+デルパワーを　うけとるのじゃ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:48:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:35:03" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>●チュートリアルミッションから戻ってきた
+主人公を見てから
+
+→メッセージ送り後、フリームーブ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:34:51" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_tutorial_power_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>デルパワーを　うけとれた　ようじゃな▼
+これで　おぬしも
+りっぱな　ぼうけんしゃ　じゃ▼
+デルパワーを　つかえば
+ちかくにいる　ぼうけんしゃを▽
+たすけることが　できるのじゃ！▼
+ただし　デルパワーを　つかうには
+デルダマが　ひつよう　じゃぞ▼
+ときどき　ミッションを　うけて
+デルダマを　あつめるのが　よいだろう▼
+……　さてさて
+おしえられるのも　ここまでじゃ▼
+あとは　おぬしが　かんがえ
+こうどうして　おぼえる　のじゃ▼
+すばらしい　ぼうけんの
+たびに　なることを　いのろう……▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:49:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:36:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デルパワーを　うけとれた　ようじゃな▼
+これで　おぬしも
+りっぱな　ぼうけんしゃ　じゃ▼
+デルパワーを　つかえば
+ちかくにいる　ぼうけんしゃを▽
+たすけることが　できるのじゃ！▼
+ただし　デルパワーを　つかうには
+デルダマが　ひつよう　じゃぞ▼
+ときどき　ミッションを　うけて
+デルダマを　あつめるのが　よいだろう▼
+……　さてさて
+おしえられるのも　ここまでじゃ▼
+あとは　おぬしが　かんがえ
+こうどうして　おぼえる　のじゃ▼
+すばらしい　ぼうけんの
+たびに　なることを　いのろう……▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:49:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:47:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>●デルパワーを登録して戻ってきた
+上を向いてから
+
+→plc_tutorial_power_02</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:49:28" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_tutorial_power_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>デルパワーは　Cギアの
+すれちがいログから　つかえます▼
+すれちがいログの　がめんにある
+みどりいろの　さんかくマークを▽
+おしてみて　ください</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-25T14:35:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:49:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デルパワーは　Cギアの
+すれちがいログから　つかえます▼
+すれちがいログの　がめんにある
+みどりいろの　さんかくマークを▽
+おしてみて　ください</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-25T14:35:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:51:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>●デルパワーを登録して戻ってきた
+システムウインドウで
+
+→メッセージ送り後、フリームーブ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:49:54" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment />
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:51:36" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_sw_oldman_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイリンクについて
+ききたいことは　あるかな？</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T13:36:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T13:36:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイリンクについて
+ききたいことは　あるかな？</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:03:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:03:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>爺さんの普段メッセージ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:52:13" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>爺さんの普段メッセージ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:03:57" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_sw_oldman_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>フェスミッション　とは</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:49:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T13:36:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フェスミッション　とは</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:49:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:03:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢１</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T13:36:44" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>選択肢１</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:03:57" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_sw_oldman_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>デルパワー　とは</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:49:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T13:36:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デルパワー　とは</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:49:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:03:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢２</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T13:36:50" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>選択肢２</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:03:57" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_sw_oldman_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T13:36:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T13:36:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:03:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:03:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢３</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T13:36:52" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>選択肢３</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:03:57" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_sw_oldman_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイリンクは　ぼうけんしゃを
+つなぐ　ふしぎな　しま……▼
+おおくの　ぼうけんしゃと　であい
+おのれを　みがくのじゃ</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:10:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T13:37:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイリンクは　ぼうけんしゃを
+つなぐ　ふしぎな　しま……▼
+おおくの　ぼうけんしゃと　であい
+おのれを　みがくのじゃ</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:11:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:03:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>終了メッセージ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T13:37:03" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>終了メッセージ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:03:57" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_sw_oldman_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぼうけんしゃたちの　ちからを
+ためす　しれん　といえるだろう▼
+ミッションに　クリアすることで
+デルダマや　デルパワーといった▽
+おおきな　ちからを　えるのじゃ▼
+ハイルツリーに　はなしかけて
+ミッションを　かいさい　するか▼
+Ｃギアの　「すれちがいログ」から
+だれかが　かいさいした　ミッションに▽
+さんか　することも　できる▼
+ちかくにいる　ぼうけんしゃと
+きょうりょく　すれば▽
+よりおおきな　ちからを　えるであろう▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T05:56:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T13:37:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぼうけんしゃたちの　ちからを
+ためす　しれん　といえるだろう▼
+ミッションに　クリアすることで
+デルダマや　デルパワーといった▽
+おおきな　ちからを　えるのじゃ▼
+ハイルツリーに　はなしかけて
+ミッションを　かいさい　するか▼
+Ｃギアの　「すれちがいログ」から
+だれかが　かいさいした　ミッションに▽
+さんか　することも　できる▼
+ちかくにいる　ぼうけんしゃと
+きょうりょく　すれば▽
+よりおおきな　ちからを　えるであろう▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T05:57:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:03:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>フェスミッションとは</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T13:37:09" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>フェスミッションとは</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:03:57" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_sw_oldman_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぼうけんしゃを　たすける
+ふしぎな　ちから　じゃな▼
+Ｃギアに　３つまで
+とうろく　することが　できるのじゃ▼
+Ｃギアの
+「すれちがいログ」から▽
+すれちがった　あいてにむけて▽
+つかうことが　できる▼
+デルパワーを　つかうには
+デルダマが　ひつよう　じゃ▼
+ミッションを　うけて
+デルダマを　あつめるのが　よかろう▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T05:53:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T13:37:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぼうけんしゃを　たすける
+ふしぎな　ちから　じゃな▼
+Ｃギアに　３つまで
+とうろく　することが　できるのじゃ▼
+Ｃギアの
+「すれちがいログ」から▽
+すれちがった　あいてにむけて▽
+つかうことが　できる▼
+デルパワーを　つかうには
+デルダマが　ひつよう　じゃ▼
+ミッションを　うけて
+デルダマを　あつめるのが　よかろう▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T05:54:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:03:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>デルパワーとは</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T13:37:12" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>デルパワーとは</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:03:57" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_sw_oldman_08">
+		<LanguageCell
+			Language="JPN">
+			<Text>まずは　ハイルツリーに　はなしかけて
+ミッションを　うけるのじゃ▼
+そして　おぬしの　おもいを
+ハイルツリーに　とどけるのじゃ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:53:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-13T12:52:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まずは　ハイルツリーに　はなしかけて
+ミッションを　うけるのじゃ▼
+そして　おぬしの　おもいを
+ハイルツリーに　とどけるのじゃ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:03:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:03:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッションチュートリアル中</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:00:28" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッションチュートリアル中</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:03:57" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_sw_oldman_09">
+		<LanguageCell
+			Language="JPN">
+			<Text>さあ　ハイルツリーから
+デルパワーを　うけとるのじゃ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:01:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:00:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さあ　ハイルツリーから
+デルパワーを　うけとるのじゃ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:03:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:03:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>デルパワーチュートリアル中</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:00:38" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>デルパワーチュートリアル中</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:03:57" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff80c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_sw_girl4_r_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイルツリーについて
+しりたいことは　ありますか？</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:14:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:07:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイルツリーについて
+しりたいことは　ありますか？</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:18:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:18:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>●ハイリンク強化説明</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:02:50" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_sw_girl4_r_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>ミッションの　しゅるい</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:04:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:07:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ミッションの　しゅるい</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:18:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:18:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢１</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:18:59" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>選択肢１</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:19:12" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_sw_girl4_r_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>デルパワーの　しゅるい</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:04:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:07:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デルパワーの　しゅるい</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:18:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:18:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢２</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:19:04" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>選択肢２</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:19:12" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_sw_girl4_r_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T06:57:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:07:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:18:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:18:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢３</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:19:09" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>選択肢３</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:19:12" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_sw_girl4_r_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイルツリーから　うける
+フェスミッションは▼
+ぼうけんを　すすめることで
+しゅるいが　ふえて　いきます▼
+ぼうけんの　なかで
+であった　ひとに　はなしかけたり▼
+トレーナーと　たたかう　ことで
+ミッションが　ふえて　いくでしょう▼
+ひとびとの　おもいに
+みみを　かたむけて　ください▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:19:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:07:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイルツリーから　うける
+フェスミッションは▼
+ぼうけんを　すすめることで
+しゅるいが　ふえて　いきます▼
+ぼうけんの　なかで
+であった　ひとに　はなしかけたり▼
+トレーナーと　たたかう　ことで
+ミッションが　ふえて　いくでしょう▼
+ひとびとの　おもいに
+みみを　かたむけて　ください▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:19:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:18:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッションの　しゅるい</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:14:13" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッションの　しゅるい</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:33:59" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_sw_girl4_r_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイリンクレベルを　あげることで
+あたらしい　デルパワーを▽
+うけとる　ことが　できます▼
+ハイリンクレベルは
+フェスミッションを　クリアしたときに▽
+あがることが　あります▼
+スコアが　おおいほど
+レベルが　あがりやすい　ようです▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:33:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:07:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイリンクレベルを　あげることで
+あたらしい　デルパワーを▽
+うけとる　ことが　できます▼
+ハイリンクレベルは
+フェスミッションを　クリアしたときに▽
+あがることが　あります▼
+スコアが　おおいほど
+レベルが　あがりやすい　ようです▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:33:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:33:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>デルパワーの　しゅるい</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:01:55" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>デルパワーの　しゅるい</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:33:54" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_sw_girl4_r_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイルツリーは　すこしずつ
+せいちょう　しています▼
+まるで　ひとびとの
+おもいに　こたえるかの　ように</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:33:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:07:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイルツリーは　すこしずつ
+せいちょう　しています▼
+まるで　ひとびとの
+おもいに　こたえるかの　ように</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:33:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:33:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>終了メッセージ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:14:18" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>終了メッセージ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:33:54" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_sw_girl4_l_01">
+		<LanguageCell
+			Language="JPN">
+			<Text>さんかしゃ　について
+しりたいことは　ありますか？</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:55:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:11:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さんかしゃ　について
+しりたいことは　ありますか？</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:28:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:28:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>●ハイリンク通信説明</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:02:59" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>●ハイリンク通信説明</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:28:44" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_sw_girl4_l_02">
+		<LanguageCell
+			Language="JPN">
+			<Text>さんかしゃ　とは</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:56:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:11:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さんかしゃ　とは</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:28:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:28:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢１</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:28:58" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>選択肢１</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:29:07" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_sw_girl4_l_03">
+		<LanguageCell
+			Language="JPN">
+			<Text>きょうりょく　とは</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:34:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:11:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きょうりょく　とは</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:28:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:28:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢２</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:29:03" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>選択肢２</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:29:07" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_sw_girl4_l_04">
+		<LanguageCell
+			Language="JPN">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:34:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:11:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やめる</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:28:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:28:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>選択肢３</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:29:05" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>選択肢３</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:29:07" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_sw_girl4_l_05">
+		<LanguageCell
+			Language="JPN">
+			<Text>フェスミッションを　かいさい　すると
+ちかくにいる　ぼうけんしゃは▼
+Ｃギアの　「すれちがいログ」から
+おなじミッションに　さんか　できるわ▼
+ミッションの　おさそいが
+とどくまで　じかんが▽
+かかることも　あるけど▼
+「すれちがいログ」を　みて
+しばらく　まっていれば　だいじょうぶよ▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:30:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:11:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>フェスミッションを　かいさい　すると
+ちかくにいる　ぼうけんしゃは▼
+Ｃギアの　「すれちがいログ」から
+おなじミッションに　さんか　できるわ▼
+ミッションの　おさそいが
+とどくまで　じかんが▽
+かかることも　あるけど▼
+「すれちがいログ」を　みて
+しばらく　まっていれば　だいじょうぶよ▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:30:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:04:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>さんかしゃ　とは</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:04:16" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>きょうりょくしゃ　とは</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:04:01" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_sw_girl4_l_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>おなじ　フェスミッションに
+さんか　しているなら▼
+じぶん　だけでなく
+さんかしゃの　こうどうも▽
+スコアとして　カウント　されるわ▼
+それとね　ミッションで
+さがす　どうぐは▼
+だれの　せかいでも
+おなじ　ばしょで　みつかるの▼
+こえを　かけあえば
+クリアも　かんたんに▽
+なるんじゃ　ないかしら？▼
+そうそう　スコアは　たまにね
+とどかない　ことも　あるわ▼
+おたがいの　せかいが
+うまいこと　きょうめい▽
+しないときも　あるのね▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:26:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:11:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おなじ　フェスミッションに
+さんか　しているなら▼
+じぶん　だけでなく
+さんかしゃの　こうどうも▽
+スコアとして　カウント　されるわ▼
+それとね　ミッションで
+さがす　どうぐは▼
+だれの　せかいでも
+おなじ　ばしょで　みつかるの▼
+こえを　かけあえば
+クリアも　かんたんに▽
+なるんじゃ　ないかしら？▼
+そうそう　スコアは　たまにね
+とどかない　ことも　あるわ▼
+おたがいの　せかいが
+うまいこと　きょうめい▽
+しないときも　あるのね▼</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:26:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:26:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>きょうりょく　とは</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T07:49:20" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>きょうりょく　とは</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:26:43" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="plc_sw_girl4_l_07">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぼうけんしゃが　ちからを
+あわせれば　ハイリンクに▼
+より　おおきな　ちからが
+あつまると　おもうわ</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:31:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-22T14:11:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぼうけんしゃが　ちからを
+あわせれば　ハイリンクに▼
+より　おおきな　ちからが
+あつまると　おもうわ</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:31:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:31:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>終了メッセージ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:31:45" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>終了メッセージ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-26T08:31:47" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

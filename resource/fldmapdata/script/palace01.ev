@@ -28,11 +28,11 @@ _EVENT_DATA    ev_palace01_oldman1_01		//パレスじいさん
 _EVENT_DATA    ev_palace01_girl4_01			//パレス４姉妹（左の橋）
 _EVENT_DATA    ev_palace01_girl4_02			//パレス４姉妹（右の橋）
 _EVENT_DATA    ev_scene_palace01_1stguide	//パレス初回誘導イベント
-_EVENT_DATA    ev_palace01_oldman1_02		//侵入先のパレスじいさん
 _EVENT_DATA    ev_palace01_girl4_03			//パレス４姉妹
 _EVENT_DATA    ev_palace01_girl4_04			//パレス４姉妹
-_EVENT_DATA    ev_palace01_oldman_mission_first_clear
-_EVENT_DATA    ev_palace01_oldman_mission_first_fail
+_EVENT_DATA    ev_scene_palace01_mission_clear		//初回ミッション終了後イベント（成功した）
+_EVENT_DATA    ev_scene_palace01_mission_fail		//初回ミッション終了後イベント（失敗した）
+_EVENT_DATA    ev_scene_palace01_power_tutorial		//デルパワー登録後イベント
 _EVENT_DATA    ev_palace01_warp_point
 _EVENT_DATA_END
 
@@ -119,8 +119,6 @@ sub_monolith_swan_main:
     _RET
   ENDSWITCH
 
-  //Gパワーチュートリアルチェック
-  _CALL sub_monolith_tutorial_first_gpower
 }
 _RET
 
@@ -130,6 +128,12 @@ _RET
 //--------------------------------------------------------------
 sub_monolith_fest_mission_entry:
 {
+
+  //初回時のみチュートリアルイベントをはさむ
+  IF FLAG_OFF( SYS_FLAG_FES_TUTORIAL_CLEAR ) THEN
+    _CALL  sub_monolith_tutorial_first_mission
+  ENDIF
+
   // ギミックエフェクトスタート
 //  _MISSION_START_GMK_EFFECT()
 
@@ -144,38 +148,21 @@ _RET
 
 
 //--------------------------------------------------------------
-///モノリス　デルパワー初回取得時
+///モノリス　初回ミッション開催時
 //--------------------------------------------------------------
-sub_monolith_tutorial_first_gpower:
-{
-  IF FLAG_ON( SYS_FLAG_PALACE_DPOWER ) THEN
-    _RET  //デルパワーチュートリアルは済んでいる
-  ENDIF
+sub_monolith_tutorial_first_mission:
+  _OBJ_ANIME( PALACE01_OLDMAN1_01, anm_stay_walk_u )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_d )
+  _OBJ_ANIME_WAIT()
   
-  _CHECK_EQP_GPOWER( SCWK_ANSWER )
-  IF $SCWK_ANSWER == TRUE THEN
-    _FLAG_SET( SYS_FLAG_PALACE_DPOWER )
+  _BALLOONWIN_OBJMSG( plc_tutorial_mission_01, PALACE01_OLDMAN1_01 )
+  _MSGWIN_CLOSE()
 
-    _CALL sub_get_area_oldman_objid
-    	    
-    //パレスじじい：主人公を見て
-    _OBJ_ANIME( area_oldman_objid, anm_stay_dir_r )
-    _OBJ_ANIME_WAIT()
-
-    //主人公：じじいを見る
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
-    _OBJ_ANIME_WAIT()
-        	
-    //「それはすれ違いで使えるのだ！」
-    _BALLOONWIN_OBJMSG( plc_help_05, area_oldman_objid )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
-  ENDIF
-}
 _RET
 
 /**************************************************************/
-/*  初回誘導イベント [100314斉藤マ]                           */
+/*  初回誘導イベント                                          */
 /**************************************************************/
 EVENT_START ev_scene_palace01_1stguide
 	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_oldman1_look_01 )
@@ -190,7 +177,7 @@ EVENT_START ev_scene_palace01_1stguide
 	_OBJ_ANIME_WAIT()
 	
 	//あらあら誰かしら
-	_BALLOONWIN_OBJMSG( plc_oldman1_01_10, PALACE01_OLDMAN1_01 )
+	_BALLOONWIN_OBJMSG( plc_tutorial_firststep_01, PALACE01_OLDMAN1_01 )
 	_MSGWIN_CLOSE()
 	
 	//パレスじじい：下を向いて
@@ -198,12 +185,12 @@ EVENT_START ev_scene_palace01_1stguide
 	_OBJ_ANIME_WAIT()
 	
 	//ここはイッシュの中心にある…
-	_BALLOONWIN_OBJMSG( plc_oldman1_01_11, PALACE01_OLDMAN1_01 )
+	_BALLOONWIN_OBJMSG( plc_tutorial_firststep_02, PALACE01_OLDMAN1_01 )
 	
 	//パレスじじい：主人公を見て
 	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_stay_walk_r )
 	//そう言われているわ
-	_BALLOONWIN_OBJMSG( plc_oldman1_01_12, PALACE01_OLDMAN1_01 )
+	_BALLOONWIN_OBJMSG( plc_tutorial_firststep_03, PALACE01_OLDMAN1_01 )
 	_OBJ_ANIME_WAIT()
 	_MSGWIN_CLOSE()
 	
@@ -212,7 +199,7 @@ EVENT_START ev_scene_palace01_1stguide
 	_OBJ_ANIME_WAIT()
 	
 	//ミッションを受けなさい！
-	_BALLOONWIN_OBJMSG( plc_oldman1_01_13, PALACE01_OLDMAN1_01 )
+	_BALLOONWIN_OBJMSG( plc_tutorial_firststep_04, PALACE01_OLDMAN1_01 )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
@@ -225,10 +212,13 @@ EVENT_START ev_scene_palace01_1stguide
 	
 	//========================================//
 	//初回誘導イベントを無効
-	$WK_SCENE_PALACE01 = 1
+	//$WK_SCENE_PALACE01 = 1
+	
+	//初回誘導イベントを無効
+	$WK_SYS_FES_TUTORIAL = 1
 	
 	//ハイルツリーを使えるように【仮】
-	_FLAG_SET( SYS_FLAG_PALACE_MISSION_CLEAR )
+	//_FLAG_SET( SYS_FLAG_PALACE_MISSION_CLEAR )
 	
 	//フェスミッションを全て選択できるように【仮】
 	//_FLAG_SET( SYS_FLAG_FES_TUTORIAL_CLEAR )
@@ -287,31 +277,151 @@ _ANIME_LABEL	anm_oldman1_move_01
 
 
 /**************************************************************/
-/*  パレスじいさん 話しかけ [100213斉藤マ]                    */
+/*  ミッション成功イベント                                    */
+/**************************************************************/
+EVENT_START ev_scene_palace01_mission_clear
+	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_oldman1_look_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//パレスじじい：主人公横へ
+	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_oldman1_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//主人公：じじいを見る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
+	_OBJ_ANIME_WAIT()
+	
+	//おお成功じゃったか
+	_BALLOONWIN_OBJMSG( plc_tutorial_mission_02, PALACE01_OLDMAN1_01 )
+	_MSGWIN_CLOSE()
+	
+	//パレスじじい：ハイルツリーをみて
+	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_stay_walk_u )
+	_OBJ_ANIME_WAIT()
+	
+	//ハイルツリーには人々の思いが集まる
+	_BALLOONWIN_OBJMSG( plc_tutorial_mission_05, PALACE01_OLDMAN1_01 )
+	_MSGWIN_CLOSE()
+	
+	//パレスじじい：主人公をみて
+	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_stay_walk_r )
+	_OBJ_ANIME_WAIT()
+	
+	//さあ受け取るのじゃ！
+	_BALLOONWIN_OBJMSG( plc_tutorial_mission_06, PALACE01_OLDMAN1_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+	//========================================//
+	//ミッション終了後イベントを無効
+	$WK_SYS_FES_TUTORIAL = 4
+	//========================================//
+	
+EVENT_END
+
+
+/**************************************************************/
+/*  ミッション失敗イベント                                    */
+/**************************************************************/
+EVENT_START ev_scene_palace01_mission_fail
+	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_oldman1_look_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//パレスじじい：主人公横へ
+	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_oldman1_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//主人公：じじいを見る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
+	_OBJ_ANIME_WAIT()
+	
+	//むむ失敗じゃったか
+	_BALLOONWIN_OBJMSG( plc_tutorial_mission_03, PALACE01_OLDMAN1_01 )
+	_MSGWIN_CLOSE()
+	
+	//デルダマ入手
+	_ITEM_EVENT_KEYWAIT( ITEM_DERUDAMA, 10 )
+	
+	//さて約束どおり
+	_BALLOONWIN_OBJMSG( plc_tutorial_mission_04, PALACE01_OLDMAN1_01 )
+	_MSGWIN_CLOSE()
+	
+	//パレスじじい：ハイルツリーをみて
+	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_stay_walk_u )
+	_OBJ_ANIME_WAIT()
+	
+	//ハイルツリーには人々の思いが集まる
+	_BALLOONWIN_OBJMSG( plc_tutorial_mission_05, PALACE01_OLDMAN1_01 )
+	_MSGWIN_CLOSE()
+	
+	//パレスじじい：主人公をみて
+	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_stay_walk_r )
+	_OBJ_ANIME_WAIT()
+	
+	//さあ受け取るのじゃ！
+	_BALLOONWIN_OBJMSG( plc_tutorial_mission_06, PALACE01_OLDMAN1_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+	//========================================//
+	//ミッション終了後イベントを無効
+	$WK_SYS_FES_TUTORIAL = 4
+	//========================================//
+	
+EVENT_END
+
+
+/**************************************************************/
+/*  デルパワー登録後イベント                                  */
+/**************************************************************/
+EVENT_START ev_scene_palace01_power_tutorial
+	//パレスじじい：ハイルツリーをみて
+	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_stay_walk_u )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+	
+	//デルパワーと受け取れたようじゃな
+	_BALLOONWIN_OBJMSG( plc_tutorial_power_01, PALACE01_OLDMAN1_01 )
+	_MSGWIN_CLOSE()
+	
+	//デルパワーは…
+	_SYSWIN_MSG( plc_tutorial_power_02, POS_DEFAULT )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+	//========================================//
+	//ハイリンクチュートリアル完了
+	$WK_SYS_FES_TUTORIAL = 6
+	//========================================//
+	
+EVENT_END
+
+
+/**************************************************************/
+/*  じいさん 話しかけ                                         */
 /**************************************************************/
 EVENT_START ev_palace01_oldman1_01
 	_TALK_OBJ_START()
 	
-	//イベント進行状況で分岐
-	IF FLAG_OFF( SYS_FLAG_PALACE_MISSION_START ) THEN
-		//ミッション受けていない
-		_BALLOONWIN_OBJMSG_POS( plc_help_01, PALACE01_OLDMAN1_01, POS_DOWN )
-		_LAST_KEYWAIT()
-		_MSGWIN_CLOSE()
+	//チュートリアルイベントの進行状況で分岐
+	IF $WK_SYS_FES_TUTORIAL == 1 THEN
+		//チュートリアルミッション受けるまで
+		_BALLOONWIN_OBJMSG_POS( plc_sw_oldman_08, PALACE01_OLDMAN1_01, POS_DOWN )
+	ELSIF $WK_SYS_FES_TUTORIAL == 4 THEN
+		//デルパワーチュートリアル中
+		_BALLOONWIN_OBJMSG_POS( plc_sw_oldman_09, PALACE01_OLDMAN1_01, POS_DOWN )
 	ELSE
-		//ミッションを受けたことがある
-		
-		//だれか世界に入り込み……
-//		_BALLOONWIN_OBJMSG_POS( plc_oldman1_01_04, PALACE01_OLDMAN1_01, POS_DOWN )
-		
-		//パレス質問メニューへ
+		//チュートリアル完了後：質問メニューへ
 		_CALL	ev_oldman1_guide
 	ENDIF
-
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
 EVENT_END
 
 
-//パレス質問メニュー（共通）
+//パレス質問メニュー
 ev_oldman1_guide:
 	{
 	DEFINE_LOCAL  lwk_loop
@@ -320,27 +430,22 @@ ev_oldman1_guide:
 	WHILE $lwk_loop != 555
 	
 		//パレスに興味があるのか？
-		_BALLOONWIN_OBJMSG_POS( plc_oldman1_01_02, PALACE01_OLDMAN1_01, POS_DOWN )
+		_BALLOONWIN_OBJMSG_POS( plc_sw_oldman_01, PALACE01_OLDMAN1_01, POS_DOWN )
 	
 		//メニュー作成
 		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, lwk_bmpans )
-		//リスト追加
-		_BMPMENU_MAKE_LIST( plc_oldman1_01_07, 0 )	//ハイリンクとは
-		IF FLAG_ON( SYS_FLAG_PALACE_MISSION_CLEAR ) THEN
-			//ミッションをクリアしたことがあるならリスト追加
-			_BMPMENU_MAKE_LIST( plc_oldman1_01_08, 1 )	//デルパワーとは
-		ENDIF
-		_BMPMENU_MAKE_LIST( plc_oldman1_01_09, 10 )	//やめる
-		//メニュー表示
+		_BMPMENU_MAKE_LIST( plc_sw_oldman_02, 0 )	//フェスミッションとは
+		_BMPMENU_MAKE_LIST( plc_sw_oldman_03, 1 )	//デルパワーとは
+		_BMPMENU_MAKE_LIST( plc_sw_oldman_04, 10 )	//やめる
 		_BMPMENU_START()
 		
 		SWITCH $lwk_bmpans
 		CASE 0 THEN
-			//パレスとは
-			_BALLOONWIN_OBJMSG_POS( plc_oldman1_01_05, PALACE01_OLDMAN1_01, POS_DOWN )
+			//フェスミッションとは
+			_BALLOONWIN_OBJMSG_POS( plc_sw_oldman_06, PALACE01_OLDMAN1_01, POS_DOWN )
 		CASE 1 THEN
-			//アクセスとは
-			_BALLOONWIN_OBJMSG_POS( plc_oldman1_01_06, PALACE01_OLDMAN1_01, POS_DOWN )
+			//デルパワーとは
+			_BALLOONWIN_OBJMSG_POS( plc_sw_oldman_07, PALACE01_OLDMAN1_01, POS_DOWN )
 		DEFAULT
 			//やめる
 			$lwk_loop = 555
@@ -351,20 +456,16 @@ ev_oldman1_guide:
 	}
 	
 	//終了メッセージ
-	_BALLOONWIN_OBJMSG_POS( plc_oldman1_01_03, PALACE01_OLDMAN1_01, POS_DOWN )
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_POS( plc_sw_oldman_05, PALACE01_OLDMAN1_01, POS_DOWN )
 	
 _RET
 
+
 /**************************************************************/
-/*  パレス双子１ [100213斉藤マ]                               */
+/*  パレス双子１（左）                                        */
 /**************************************************************/
 EVENT_START ev_palace01_girl4_01
 	_TALK_OBJ_START()
-	
-	//私たちはパレスを見守るもの
-	_BALLOONWIN_OBJMSG_POS( plc_girl4_01_01, PALACE01_GIRL4_01, POS_DOWN )
 	
 	{
 	DEFINE_LOCAL  lwk_loop
@@ -373,25 +474,25 @@ EVENT_START ev_palace01_girl4_01
 	//パレス質問メニュー（やめる選択までループ）
 	WHILE $lwk_loop != 555
 		
-		//パレスについて知りたい？
-		_BALLOONWIN_OBJMSG_POS( plc_girl4_01_02, PALACE01_GIRL4_01, POS_DOWN )
+		//参加者について知りたい？
+		_BALLOONWIN_OBJMSG_POS( plc_sw_girl4_l_01, PALACE01_GIRL4_01, POS_DOWN )
 		
 		//メニュー作成
 		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, lwk_bmpans )
 		//リスト追加
-		_BMPMENU_MAKE_LIST( plc_girl4_01_06, 0 )	//このかけはしは？
-		_BMPMENU_MAKE_LIST( plc_girl4_01_07, 1 )	//つながる相手は？
-		_BMPMENU_MAKE_LIST( plc_girl4_01_08, 10 )	//やめる
+		_BMPMENU_MAKE_LIST( plc_sw_girl4_l_02, 0 )	//参加者とは
+		_BMPMENU_MAKE_LIST( plc_sw_girl4_l_03, 1 )	//協力とは
+		_BMPMENU_MAKE_LIST( plc_sw_girl4_l_04, 10 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
 		
 		SWITCH $lwk_bmpans
 		CASE 0 THEN
-			//リンクブリッジとは
-			_BALLOONWIN_OBJMSG_POS( plc_girl4_01_03, PALACE01_GIRL4_01, POS_DOWN )
+			//参加者とは
+			_BALLOONWIN_OBJMSG_POS( plc_sw_girl4_l_05, PALACE01_GIRL4_01, POS_DOWN )
 		CASE 1 THEN
-			//リンクブリッジとは
-			_BALLOONWIN_OBJMSG_POS( plc_girl4_01_04, PALACE01_GIRL4_01, POS_DOWN )
+			//協力とは
+			_BALLOONWIN_OBJMSG_POS( plc_sw_girl4_l_06, PALACE01_GIRL4_01, POS_DOWN )
 		DEFAULT
 			//やめる
 			$lwk_loop = 555
@@ -402,7 +503,7 @@ EVENT_START ev_palace01_girl4_01
 	}
 	
 	//終了メッセージ
-	_BALLOONWIN_OBJMSG_POS( plc_girl4_01_05 ,PALACE01_GIRL4_01, POS_DOWN )
+	_BALLOONWIN_OBJMSG_POS( plc_sw_girl4_l_07 ,PALACE01_GIRL4_01, POS_DOWN )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
@@ -410,13 +511,10 @@ EVENT_END
 
 
 /**************************************************************/
-/*  パレス双子２ [100213斉藤マ]                               */
+/*  パレス双子２（右）                                        */
 /**************************************************************/
 EVENT_START ev_palace01_girl4_02
 	_TALK_OBJ_START()
-	
-	//私たちはパレスを見守るもの
-	_BALLOONWIN_OBJMSG_POS( plc_girl4_02_01, PALACE01_GIRL4_02, POS_DOWN )
 	
 	{
 	DEFINE_LOCAL  lwk_loop
@@ -425,25 +523,25 @@ EVENT_START ev_palace01_girl4_02
 	//パレス質問メニュー（やめる選択までループ）
 	WHILE $lwk_loop != 555
 		
-		//パレスについて知りたい？
-		_BALLOONWIN_OBJMSG_POS( plc_girl4_02_02, PALACE01_GIRL4_02, POS_DOWN )
+		//ハイルツリーについて知りたい？
+		_BALLOONWIN_OBJMSG_POS( plc_sw_girl4_r_01, PALACE01_GIRL4_02, POS_DOWN )
 		
 		//メニュー作成
 		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, lwk_bmpans )
 		//リスト追加
-		_BMPMENU_MAKE_LIST( plc_girl4_02_06, 0 )	//このかけはしは？
-		_BMPMENU_MAKE_LIST( plc_girl4_02_07, 1 )	//つながる相手は？
-		_BMPMENU_MAKE_LIST( plc_girl4_02_08, 10 )	//やめる
+		_BMPMENU_MAKE_LIST( plc_sw_girl4_r_02, 0 )	//ミッション種類
+		_BMPMENU_MAKE_LIST( plc_sw_girl4_r_03, 1 )	//デルパワー種類
+		_BMPMENU_MAKE_LIST( plc_sw_girl4_r_04, 10 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
 		
 		SWITCH $lwk_bmpans
 		CASE 0 THEN
-			//このかけはしは？
-			_BALLOONWIN_OBJMSG_POS( plc_girl4_02_03, PALACE01_GIRL4_02, POS_DOWN )
+			//ミッションの種類
+			_BALLOONWIN_OBJMSG_POS( plc_sw_girl4_r_05, PALACE01_GIRL4_02, POS_DOWN )
 		CASE 1 THEN
-			//このかけはしは？
-			_BALLOONWIN_OBJMSG_POS( plc_girl4_02_04, PALACE01_GIRL4_02, POS_DOWN )
+			//デルパワーの種類
+			_BALLOONWIN_OBJMSG_POS( plc_sw_girl4_r_06, PALACE01_GIRL4_02, POS_DOWN )
 		DEFAULT
 			//やめる
 			$lwk_loop = 555
@@ -454,7 +552,7 @@ EVENT_START ev_palace01_girl4_02
 	}
 	
 	//終了メッセージ
-	_BALLOONWIN_OBJMSG_POS( plc_girl4_02_05, PALACE01_GIRL4_02, POS_DOWN )
+	_BALLOONWIN_OBJMSG_POS( plc_sw_girl4_r_07, PALACE01_GIRL4_02, POS_DOWN )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
@@ -520,144 +618,10 @@ EVENT_START ev_palace01_girl4_04
 	_EASY_BALLOONWIN_TALKOBJ_MSG( plc_girl4_04_01 )
 EVENT_END
 
-/**************************************************************/
-/*  パレス裏おやじ [100419斉藤マ]                             */
-/**************************************************************/
-//進入先でのチュートリアルおやじ
-//OBJ_IDはプログラム配置のためsub_get_area_oldman_objidで動的に取得
-EVENT_START ev_palace01_oldman1_02
-	_CALL sub_get_area_oldman_objid
-	
-	_TALK_OBJ_START()
-	
-	//初回会話分岐
-	IF FLAG_OFF( FE_PALACE01_OLDMANTALK2 ) THEN
-		//初回時
-		
-		_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_01, area_oldman_objid, POS_DOWN )
-		
-		//初回会話フラグをセット
-		//========================================//
-		_FLAG_SET( FE_PALACE01_OLDMANTALK2 )
-		//========================================//
-		
-	ELSE
-		//２回目以降
-		
-		_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_04, area_oldman_objid, POS_DOWN )
-		
-	ENDIF
-	
-	{
-	DEFINE_LOCAL  lwk_loop
-	DEFINE_LOCAL  lwk_bmpans
-	
-	//パレス質問メニュー（やめる選択までループ）
-	WHILE $lwk_loop != 555
-		
-		_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_02, area_oldman_objid, POS_DOWN )
-		
-		//選択肢表示
-		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, lwk_bmpans )
-		//リスト追加
-		_BMPMENU_MAKE_LIST( plc_oldman1_02_07, 0 )	//ミッションとは
-		IF FLAG_ON( SYS_FLAG_PALACE_MISSION_START ) THEN
-			//ミッション受けたことがあるなら
-			_BMPMENU_MAKE_LIST( plc_oldman1_02_08, 1 )	//ワープとは
-		ENDIF
-		_BMPMENU_MAKE_LIST( plc_oldman1_02_09, 10 )	//やめる
-		//メニュー表示
-		_BMPMENU_START()
-		
-		SWITCH $lwk_bmpans
-		CASE 0 THEN
-			//ミッションとは
-			_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_05, area_oldman_objid, POS_DOWN )
-		CASE 1 THEN
-			//ワープとは
-			_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_06, area_oldman_objid, POS_DOWN )
-		DEFAULT
-			//やめる
-			$lwk_loop = 555
-		ENDSWITCH
-	
-	ENDWHILE
-	}
-	
-	//終了メッセージ
-	_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_03, area_oldman_objid, POS_DOWN )
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
-	
-EVENT_END
 
 
 /**************************************************************/
-/*  パレス裏おやじ：チュートリアル：初めてミッション成功
-/**************************************************************/
-EVENT_START ev_palace01_oldman_mission_first_clear
-	
-	_FLAG_SET(SYS_FLAG_PALACE_MISSION_CLEAR)
-
-	//パレスじじい：主人公を見る
-	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_stay_dir_r )
-	_OBJ_ANIME_WAIT()
-
-	//主人公：じじいを見る
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
-	_OBJ_ANIME_WAIT()
-	
-	_BALLOONWIN_OBJMSG_POS( plc_help_03, PALACE01_OLDMAN1_01, POS_DOWN )
-	
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
-
-EVENT_END
-
-/**************************************************************/
-/*  パレス裏おやじ：チュートリアル：ミッション失敗(クリアしたこともまだ無い)
-/**************************************************************/
-EVENT_START ev_palace01_oldman_mission_first_fail
-	
-	//パレスじじい：主人公を見る
-	_OBJ_ANIME( PALACE01_OLDMAN1_01, anm_stay_dir_r )
-	_OBJ_ANIME_WAIT()
-	
-	//主人公：じじいを見る
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
-	_OBJ_ANIME_WAIT()
-	
-	_BALLOONWIN_OBJMSG_POS( plc_help_04, PALACE01_OLDMAN1_01, POS_DOWN )
-	
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
-
-EVENT_END
-
-
-//==============================================================
-//サブルーチン：パレスエリア毎の爺さんのOBJID取得
-//==============================================================
-sub_get_area_oldman_objid:
-{
-    //swanには侵入先の爺さんはいない。自分のところのみ。
-    $area_oldman_objid = PALACE01_OLDMAN1_01
-//  DEFINE_LOCAL area_offset
-  
-//  _GET_PALACE_AREA_OFFSET( area_offset )
-//  IF $area_offset == 0 THEN
-//    $area_oldman_objid = PALACE01_OLDMAN1_01
-//  ELSIF $area_offset == 1 THEN
-//    $area_oldman_objid = OBJID_PALACE_OLDMAN1
-//  ELSE
-//    $area_oldman_objid = OBJID_PALACE_OLDMAN2
-//  ENDIF
-}
-_RET
-
-
-
-/**************************************************************/
+/*  ワープポイント                                            */
 /**************************************************************/
 EVENT_START    ev_palace01_warp_point
   _SYSWIN_MSG( plc_warp_point_01, POS_DOWN )
