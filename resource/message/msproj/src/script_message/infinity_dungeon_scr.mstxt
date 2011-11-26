@@ -5800,121 +5800,6 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_info_attention_b_01_00"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]さま！▼
-しつれいですが　おつれの
-[Name:PokemonNickname Idx="1" ]では▼
-エリア[Digit:2digits Idx="2" ]に　ちょうせんするには
-しょうしょう　じつりょくが　たりません▼
-エリア[Digit:2digits Idx="2" ]には
-レベル[Digit:2digits Idx="3" ]いじょうの　ポケモンで▽
-ちょうせん　してください▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T05:46:28" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T04:11:19" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]様！▼
-失礼ですが　お連れの
-[Name:PokemonNickname Idx="1" ]では▼
-エリア[Digit:2digits Idx="2" ]に　挑戦するには
-少々　実力が　足りません▼
-エリア[Digit:2digits Idx="2" ]には
-レベル[Digit:2digits Idx="3" ]以上の　ポケモンで▽
-挑戦してください▼</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:00:49" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-01T10:26:32" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>黒の摩天楼受付
-受付：INFORMATIONW
-
-・トレーナー名＝プレイヤー名
-・ニックネーム＝ポケモン名
-・2桁＝エリアの数字</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:00:47" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_info_attention_b_02_00"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]さま！▼
-タマゴを　おもちの　ばあい
-エリア[Digit:2digits Idx="1" ]に▽
-ちょうせん　することは　できません▼
-もうしわけ　ありませんが
-タマゴを　おあずけに　なってから▽
-ちょうせん　してください▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T05:46:50" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T04:10:57" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]様！▼
-タマゴを　お持ちの　場合
-エリア[Digit:2digits Idx="1" ]に▽
-挑戦することは　できません▼
-申し訳ありませんが
-タマゴを　お預けに　なってから▽
-挑戦してください▼</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T04:49:29" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-01T10:26:32" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>黒の摩天楼受付
-受付：INFORMATIONW
-
-・トレーナー名＝プレイヤー名
-・2桁＝エリアの数字</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:00:50" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
 		Label="msg_info_b_cancel_00"
 		Style="Large">
 		<LanguageCell
@@ -6740,119 +6625,6 @@
 				User="nakamura_akira:W00280"
 				Time="2011-09-07T04:02:00" />
 		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_info_attention_w_01_00"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]！▼
-ちょっとまて！　つれている
-[Name:PokemonNickname Idx="1" ]じゃ▼
-エリア[Digit:2digits Idx="2" ]に　ちょうせん　するには
-じつりょくぶそく　だな▼
-エリア[Digit:2digits Idx="2" ]には
-レベル[Digit:2digits Idx="3" ]いじょうの　ポケモンで▽
-ちょうせん　してくれ▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T05:14:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:43:24" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]！▼
-ちょっと待て！　連れている
-[Name:PokemonNickname Idx="1" ]じゃ▼
-エリア[Digit:2digits Idx="2" ]に　挑戦するには
-実力不足だな▼
-エリア[Digit:2digits Idx="2" ]には
-レベル[Digit:2digits Idx="3" ]以上の　ポケモンで▽
-挑戦してくれ▼</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-04T05:15:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-01T10:45:23" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>白の樹洞受付
-受付：WORKMAN2
-
-・トレーナー名＝プレイヤー名
-・ニックネーム＝ポケモン名
-・2桁＝エリアの数字</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:02:03" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_info_attention_w_02_00"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]！▼
-タマゴを　もっているときは
-エリア[Digit:2digits Idx="1" ]に
-ちょうせんは　できないぞ▼
-わいが　タマゴを　あすけてから
-ちょうせん　してくれ▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T05:14:42" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T04:10:57" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]！▼
-タマゴを　持っているときは
-エリア[Digit:2digits Idx="1" ]に
-挑戦は　できないぞ▼
-悪いが　タマゴを　預けてから
-挑戦してくれ▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T05:14:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-08-01T10:45:23" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>白の樹洞受付
-受付：WORKMAN2
-
-・トレーナー名＝プレイヤー名
-・2桁＝エリアの数字</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-07T04:02:06" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_info_w_cancel_00"
@@ -10433,6 +10205,366 @@ NPC：MUGENBOSS（バンジロウ）
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-26T06:42:05" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_floor_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナーが　みつからないの？
+[Digit:3digits Idx="0" ]かいにいたよ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:33:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:18:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナーが　みつからないの？
+[Digit:3digits Idx="0" ]階にいたよ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-14T08:15:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:18:16" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、何階にいる
+少年
+・2桁＝階層の数字</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:31:46" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_floor_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナーが　いないの？
+[Digit:3digits Idx="0" ]かいで　みたわよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:34:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:18:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナーが　いないの？
+[Digit:3digits Idx="0" ]階で　みたわよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-14T08:15:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:18:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、何階にいる
+少女
+・2桁＝階層の数字</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:31:54" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_floor_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナー？
+[Digit:3digits Idx="0" ]かいに　いると　おもうよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:34:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:18:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナー？
+[Digit:3digits Idx="0" ]階に　いると　思うよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-14T08:15:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:18:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、何階にいる
+成人男性
+・2桁＝階層の数字</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:32:04" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_floor_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナー？
+[Digit:3digits Idx="0" ]かいで　みかけたわよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:34:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:18:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナー？
+[Digit:3digits Idx="0" ]階で　みかけたわよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-14T08:15:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:18:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、何階にいる
+成人女性
+・2桁＝階層の数字</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:32:15" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_floor_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナー？
+それなら　[Digit:3digits Idx="0" ]かいに　いたぞ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:34:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:18:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナー？
+それなら　[Digit:3digits Idx="0" ]階に　いたぞ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-14T08:15:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:18:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、何階にいる
+中年男性
+・2桁＝階層の数字</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:32:24" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_floor_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナー？
+それなら　[Digit:3digits Idx="0" ]かいに　いたわよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:34:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:18:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナー？
+それなら　[Digit:3digits Idx="0" ]階に　いたわよ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-14T08:15:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:18:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、何階にいる
+中年女性
+・2桁＝階層の数字</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:32:31" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_floor_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナーじゃと？
+ああ　[Digit:3digits Idx="0" ]かいで　みかけたぞ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:34:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:18:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナーじゃと？
+ああ　[Digit:3digits Idx="0" ]階で　みかけたぞ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-14T08:15:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:18:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、何階にいる
+老人
+・2桁＝階層の数字</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:32:41" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hint_gate_floor_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲートトレーナですって？　それなら
+[Digit:3digits Idx="0" ]かいに　いってごらんなさい</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:10:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:18:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲートトレーナですって？　それなら
+[Digit:3digits Idx="0" ]階に　行ってごらんなさい</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-19T04:11:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-08-05T09:36:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>トレーナーヒント
+ゲートトレーナーは、何階にいる
+老女
+・2桁＝階層の数字</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-11-18T13:32:51" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -14745,384 +14877,6 @@ NPC：MUGENBOSS（バンジロウ）
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff78ff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_room_plural_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ゲートトレーナー？▼
-それなら　　[Digit:1digit Idx="2" ]にんいる
-へやに　いたよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T03:40:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:18:43" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ゲートトレーナー？▼
-それなら　　[Digit:1digit Idx="1" ]人いる
-部屋に　いたよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:50:21" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:18:43" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーは、複数人の部屋にいる
-少年
-・1桁＝人数の数字</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:34:47" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_room_plural_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ゲートトレーナー？
-それなら　　[Digit:1digit Idx="2" ]にんいる
-へやに　いたわよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T03:40:19" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:18:43" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ゲートトレーナー？
-それなら　　[Digit:1digit Idx="1" ]人いる
-部屋に　いたわよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:50:31" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:18:44" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーは、複数人の部屋にいる
-少女
-・1桁＝人数の数字</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:36:33" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_room_plural_03"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ゲートトレーナー？▼
-[Digit:1digit Idx="2" ]にんいる　へやに
-いるのを　みたよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T03:40:27" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:18:44" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ゲートトレーナー？▼
-[Digit:1digit Idx="1" ]人いる　部屋に
-いるのを　見たよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:50:47" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:18:44" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーは、複数人の部屋にいる
-成人男性
-・1桁＝人数の数字</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:36:25" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_room_plural_04"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ゲートトレーナーを　さがしているの？
-[Digit:1digit Idx="2" ]にんいる　へやに
-いるのを　みたわよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T03:42:02" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:18:45" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ゲートトレーナーを　探しているの？
-[Digit:1digit Idx="1" ]人いる　部屋に
-いるのを　見たわよ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:51:01" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:52:29" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーは、複数人の部屋にいる
-成人女性
-・1桁＝人数の数字</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:36:18" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_room_plural_05"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ゲートトレーナーかい？▼
-それなら　[Digit:1digit Idx="2" ]にんいる
-へやに　いるのを　みたぞ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T03:42:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:18:46" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ゲートトレーナーかい？▼
-それなら　[Digit:1digit Idx="1" ]人いる
-部屋に　いるのを　見たぞ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:51:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:18:47" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーは、複数人の部屋にいる
-中年男性
-・1桁＝人数の数字</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:36:10" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_room_plural_06"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ゲートトレーナー？▼
-[Digit:1digit Idx="2" ]にんいる　へやに
-いるんじゃ　ないかしたら</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T03:42:18" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:18:47" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ゲートトレーナー？▼
-[Digit:1digit Idx="1" ]人いる　部屋に
-いるんじゃ　ないかしたら</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:51:22" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:18:48" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーは、複数人の部屋にいる
-中年女性
-・1桁＝人数の数字</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:36:04" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_room_plural_07"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ゲートトレーナーじゃと？
-ひみつじゃぞ▼
-[Digit:1digit Idx="2" ]にんいる　へやに
-おったぞ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T03:44:40" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:18:48" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ゲートトレーナーじゃと？
-秘密じゃぞ▼
-[Digit:1digit Idx="1" ]人いる　部屋に
-おったぞ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:51:39" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:18:48" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーは、複数人の部屋にいる
-老人
-・1桁＝人数の数字</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:35:06" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_hint_gate_room_plural_08"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ゲートトレーナーですって？▼
-[Digit:1digit Idx="2" ]にんいる　へやに
-いるのを　みましたわ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-21T03:44:48" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:18:49" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ゲートトレーナーですって？▼
-[Digit:1digit Idx="1" ]人いる　部屋に
-いるのを　見ましたわ</Text>
-			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:51:53" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:18:49" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>トレーナーヒント
-ゲートトレーナーは、複数人の部屋にいる
-老女
-・1桁＝人数の数字</Comment>
-			<CommentModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-19T04:35:01" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
