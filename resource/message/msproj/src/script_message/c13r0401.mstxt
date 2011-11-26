@@ -31,7 +31,7 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・c13でのイベント後、出現
+・r20のプラズマ団♀との戦闘後
 　カウンター前に配置
 ・はい/いいえの選択肢表示
 　はい　→swrival_02
@@ -39,7 +39,7 @@
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T04:06:23" />
+				Time="2011-11-26T06:30:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -267,14 +267,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・ポケウッドでのチュートリアル後
-　ここに出現（詳細未定）
+・r20のプラズマ団♀との戦闘後に出現
 ・はい/いいえの選択肢表示
 　はい　→pilot_02
 　いいえ→pilot_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:48:21" />
+				Time="2011-11-26T06:31:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

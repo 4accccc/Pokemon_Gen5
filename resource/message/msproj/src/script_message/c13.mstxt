@@ -1456,7 +1456,7 @@
 これ　つかいなよ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T11:26:20" />
+				Time="2011-11-26T06:38:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2088,15 +2088,14 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・ポケウッドチュートリアル後
+・r20のプラズマ団♀との戦闘後
 ・posイベント
-　GRIDX＝210、GRIDZ＝649
-　GRIDX＝213～220、GRIDZ＝649
-・ホミカ　GRIDX＝210、GRIDZ＝649
-　船長　GRIDX＝210、GRIDZ＝649</Comment>
+　GRIDX＝238、GRIDZ＝669～671
+・ホミカ　GRIDX＝240、GRIDZ＝670
+　船長　GRIDX＝242、GRIDZ＝670</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T06:15:03" />
+				Time="2011-11-26T06:30:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2119,12 +2118,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんちょう『……みたのですか▼
+			<Text>ホミカパパ『……みたのですか▼
 あの　えいがは
 かんぜんに　しっぱい　ですよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T06:17:03" />
+				Time="2011-11-26T06:33:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2132,12 +2131,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>船長『……観たのですか▼
+			<Text>ホミカパパ『……観たのですか▼
 あの　映画は
 完全に　失敗ですよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T06:17:18" />
+				Time="2011-11-26T06:33:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2173,16 +2172,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ホミカ『ほら！
-そんなに　きをおとさない！▼
+きを　おとさない！▼
 せんちょうを　やりつつ
 また　チャレンジすれば　いいでしょ！▼
 めいわく　かけなきゃ
-あたしだって　おこらないよーだ！▼▼
+あたしだって　おこらないよーだ！▼
 もっとも　ポケウッドの　ひとは
 どうおもってるか　しらないけどね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T06:17:59" />
+				Time="2011-11-26T06:29:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2191,7 +2190,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ホミカ『ほら！
-そんなに　気を落とさない！▼
+気を　落とさない！▼
 船長を　やりつつ
 また　チャレンジすれば　いいでしょ！▼
 迷惑かけなきゃ
@@ -2200,7 +2199,7 @@
 どう思ってるか　知らないけどね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T06:18:09" />
+				Time="2011-11-26T06:29:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2209,11 +2208,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・メッセージ表示後、画面左→下に移動
+・メッセージ表示後、画面左に移動
 ・続けてpilot_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T06:15:37" />
+				Time="2011-11-26T06:29:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2232,16 +2231,74 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c13_swleader2_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]に　きいたよ
+プラズマだんを　おいはらったって！▼
+アリガト▼
+あんたなら　やりたいこと
+なんでもできる！　そんな　きがするよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-26T06:39:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-26T06:28:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]に　きいたよ
+プラズマ団を　追い払ったって！▼
+アリガト▼
+あんたなら　やりたいこと
+なんでもできる！　そんな　気がするよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-26T06:40:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-26T06:39:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・！マーク→メッセージ表示
+・続けてpilot_04
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-26T06:40:15" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER2
+ジムリーダー・ホミカ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-26T06:28:25" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c13_pilot_04"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せんちょう『つよい　ひとだな▼
-さて　しばらく　ぶらついたら
-せんちょうとして　がんばりますか▼</Text>
+			<Text>ホミカパパ『よし！　わたしは
+せんちょうとして　がんばりましょう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T06:13:05" />
+				Time="2011-11-26T06:33:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2249,12 +2306,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>船長『強い　人だな▼
-さて　しばらく　ぶらついたら
-船長として　がんばりますか▼</Text>
+			<Text>ホミカパパ『よし！わたしは
+船長として　がんばりましょう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T06:18:32" />
+				Time="2011-11-26T06:33:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2263,11 +2319,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・メッセージ表示後、画面右に移動
+・ホミカが去ったあとにメッセージ表示
+・メッセージ表示後、c13r0401に移動
 ・主人公、操作可能に</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T06:15:21" />
+				Time="2011-11-26T06:40:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
