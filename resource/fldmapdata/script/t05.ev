@@ -404,6 +404,12 @@ EVENT_START ev_t05_itemtrader_01
       _CALL ev_trade_msg
       //交換後メッセージ
       _BALLOONWIN_TALKOBJ_MSG( msg_t05_backpackerm_05 )
+      
+      //フェスミッションが追加されていないなら
+      IF FLAG_OFF( SYS_FLAG_FES_TRADE1BW ) THEN
+        _CALL ev_fes_add_check
+      ENDIF
+      
     ENDSWITCH
 
   ELSE
@@ -602,6 +608,32 @@ EVENT_START ev_t05_itemtrader_03
   _MSGWIN_CLOSE()
 
 EVENT_END
+
+//フェスミッション追加チェック
+ev_fes_add_check:
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+  
+  DEFINE_LOCAL LCWK_VERSION
+  _GET_ROM_VERSION( LCWK_VERSION )
+  
+  _SE_PLAY( SEQ_SE_FLD_133 )
+  
+  //フェスミッションが追加されました
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _SYSWIN_MSG( msg_t05_mission_add_01b, POS_DEFAULT )
+  ELSE
+    _SYSWIN_MSG( msg_t05_mission_add_01w, POS_DEFAULT )
+  ENDIF
+//  _SE_PLAY( SEQ_SE_FLD_133 )
+  _SE_WAIT()
+  
+  //========================================//
+  _FLAG_SET( SYS_FLAG_FES_TRADE1BW )
+  //========================================//
+  
+_RET
+
 
 /************************************************************/
 /*  ISS：フルート吹き                                       */
