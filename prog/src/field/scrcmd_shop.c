@@ -1278,11 +1278,12 @@ static void shop_item_set( SHOP_BUY_APP_WORK *wk, int type, int id, int badge )
   u16 *shop_data_table;
 
   // 変動ショップ
-  if(type==SCR_SHOPID_NULL)
+  switch(type)
   {
+  case SCR_SHOPID_NULL:
     offset = normal_shop_offset[badge];
-  // 固定リストショップ
-  } else {
+    break;
+  default:
     offset = id+FIXSHOP_START_NUMBER;
   }
 
@@ -1460,32 +1461,31 @@ static void wfbc_shop_item_set( SHOP_BUY_APP_WORK *wk, int type )
 
   int id = 0;
   int rank = 0;
+  int shop_data = 0;
 
   //ランクをチェック
   {
     int i;
     if( SCR_SHOPID_BLACK_CITY0 <= type && type <=  SCR_SHOPID_BLACK_CITY3 )
     {
-      //TODO
       rank = INFINITYDUNGEON_SAVE_GetDungeonStatus( wk->infinityDungeonSave ,FIELD_WFBC_CORE_TYPE_BLACK_CITY );
-      OS_TPrintf( "BCSHOP" );
+      OS_TPrintf( "BCSHOP %d\n", rank );
     }
     else
     {
-      //TODO
       rank = INFINITYDUNGEON_SAVE_GetDungeonStatus( wk->infinityDungeonSave ,FIELD_WFBC_CORE_TYPE_WHITE_FOREST );
-      OS_TPrintf( "WFSHOP" );
+      OS_TPrintf( "WFSHOP %d\n", rank );
     }
     
     for( i = 0; i < NELEMS(sc_rank_clear_area); i++ )
     {
       if( rank >= sc_rank_clear_area[i] )
       {
-        rank = i;
+        shop_data = i;
       }
     }
 
-    GF_ASSERT( rank < WFBC_SHOP_RANK_MAX );
+    GF_ASSERT( shop_data < WFBC_SHOP_RANK_MAX );
   }
 
   //タイプを検索
@@ -1495,7 +1495,7 @@ static void wfbc_shop_item_set( SHOP_BUY_APP_WORK *wk, int type )
     {
       if( sc_wfbc_shop_data[i].type == type )
       {
-        id = sc_wfbc_shop_data[i].rank[rank];
+        id = sc_wfbc_shop_data[i].rank[shop_data];
         break;
       }
     }
@@ -1503,7 +1503,7 @@ static void wfbc_shop_item_set( SHOP_BUY_APP_WORK *wk, int type )
 
   GF_ASSERT( id != 0 );
 
-  OS_TPrintf( "rank=%d id=%d type=%d\n", rank, id, type );
+  OS_TPrintf( "rank=%d data=%d id=%d type=%d\n", rank, shop_data, id, type );
 
   //通常のお店と同じ
   shop_item_set( wk, type, id, 8 );
