@@ -1,3 +1,100 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_d26pc0101_veteranm_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>パートナーの　おかげで
+ジムバッジを　８つ　あつめた▼
+おれの　ふがいなさで
+チャンピオンロードで　あしどめさ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-25T13:33:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-25T13:33:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>パートナーの　おかげで
+ジムバッジを　８つ　集めた▼
+おれの　ふがいなさで
+チャンピオンロードで　足止めさ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-25T13:42:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-25T13:33:47" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-25T13:33:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>VETERANM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-25T13:32:15" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d26pc0101_trainerw_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まず　ポケモンリーグを　ぬける▼
+つぎに　してんのうを　ひとりずつで
+いいから　たおせるように　なる▼
+そうやって　できることを　ふやして
+かなえたい　ゆめである▽
+チャンピオンに　ちかづいて　いくのよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-25T13:42:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-25T13:36:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まず　ポケモンリーグを　抜ける▼
+次に　四天王を　一人ずつで
+いいから　倒せるように　なる▼
+そうやって　できることを　増やして
+かなえたい　夢である▽
+チャンピオンに　近づいて　いくのよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-25T13:43:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-25T13:37:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-25T13:35:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>TRAINERW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-25T13:35:19" />
+		</AttributeCell>
+	</TextRow>
+</MessageStudioText>
