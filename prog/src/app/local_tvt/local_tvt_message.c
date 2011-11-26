@@ -444,11 +444,11 @@ void LOCAL_TVT_MESSAGE_PrintPokeStatus( LOCAL_TVT_MESSAGE *p_wk, GFL_BMPWIN *p_b
     {
     case PTL_SEX_MALE:
       GFL_MSG_GetString( p_wk->p_msgdata_pokelist, mes_pokelist_01_28, p_wk->p_str );
-      PRINTSYS_PrintQueColor( p_wk->p_que, GFL_BMPWIN_GetBmp(p_bmpwin), 12*8, 8, p_wk->p_str, p_wk->p_font, LOCAL_TVT_MSG_COLOR_BLUE );
+      PRINTSYS_PrintQueColor( p_wk->p_que, GFL_BMPWIN_GetBmp(p_bmpwin), 12*8, 8, p_wk->p_str, p_wk->p_font, LOCAL_TVT_MSG_COLOR_RED );
       break;
     case PTL_SEX_FEMALE:
       GFL_MSG_GetString( p_wk->p_msgdata_pokelist, mes_pokelist_01_29, p_wk->p_str );
-      PRINTSYS_PrintQueColor( p_wk->p_que, GFL_BMPWIN_GetBmp(p_bmpwin), 12*8, 8, p_wk->p_str, p_wk->p_font, LOCAL_TVT_MSG_COLOR_RED );
+      PRINTSYS_PrintQueColor( p_wk->p_que, GFL_BMPWIN_GetBmp(p_bmpwin), 12*8, 8, p_wk->p_str, p_wk->p_font, LOCAL_TVT_MSG_COLOR_BLUE );
       break;
     }
   }
