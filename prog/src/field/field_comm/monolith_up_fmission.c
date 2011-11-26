@@ -580,7 +580,7 @@ static void fmission_string( MONOLITH_SETUP *setup, MONOLITH_UP_WORK *wk, const 
     // 目標取得
     buf[0] = wk->ArcData[wk->Id].param.level[wk->Level].goal;
     // 単位
-    buf[1] = wk->ArcData[wk->Id].common.unit;
+    buf[1] = wk->ArcData[wk->Id].param.unit;
     //
     WORDSET_RegisterNumber(setup->wordset, 0, buf[0], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
     expbuf = GFL_STR_CreateBuffer( 64, HEAPID_MONOLITH );
@@ -671,7 +671,7 @@ static void fmission_highscore( MONOLITH_APP_PARENT *appwk, MONOLITH_UP_WORK *wk
     //----------------
     // 仕様変更により、必ずスコアを表示
     WORDSET_RegisterNumber(appwk->setup->wordset, 0, time[1], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-    lv = wk->ArcData[wk->Id].common.unit;
+    lv = wk->ArcData[wk->Id].param.unit;
     str = GFL_MSG_CreateString( appwk->setup->mm_monolith, mono_mes_clear_tbl[lv] );
     expbuf = GFL_STR_CreateBuffer( 64, HEAPID_MONOLITH );
     WORDSET_ExpandStr( appwk->setup->wordset, expbuf, str );

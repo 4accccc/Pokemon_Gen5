@@ -1421,7 +1421,7 @@ static void fma_update_up_result( FMISSION_APP_WORK* wk )
 		//
 		// トータル(単位)
 		id = wk->Param->fmwk->beacon.m_id;
-		buf[0] = wk->ArcData[id].common.unit;
+		buf[0] = wk->ArcData[id].param.unit;
 		strbuf = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_01_tbl[4*buf[0]+1] );
 		FmaCmn_disp_string( wk, FMAR_CANVAS_UP_SCORE_R, 48, 0, strbuf, PRINTTOOL_MODE_RIGHT, PRINTSYS_LSB_Make(15,2,0));
 		GFL_STR_DeleteBuffer( strbuf );
@@ -1579,7 +1579,7 @@ static void fma_disp_fes_string( FMISSION_APP_WORK *wk, const s32 mode, const s3
 		// 目標取得
 		buf[0] = wk->ArcData[id].param.level[lv].goal;
 		// 単位
-		buf[1] = wk->ArcData[id].common.unit;
+		buf[1] = wk->ArcData[id].param.unit;
 		WORDSET_RegisterNumber( wk->Wordset, 0, buf[0], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 		str = GFL_STR_CreateBuffer( 64, wk->heapID );
 		str_tmp = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_01_tbl[4*buf[1]+1] );
@@ -1634,7 +1634,7 @@ static void fma_disp_fes_string( FMISSION_APP_WORK *wk, const s32 mode, const s3
 		// 自分のスコア
 		buf[0] = wk->MissionStatus.my_score;
 		// 単位
-		buf[1] = wk->ArcData[id].common.unit;
+		buf[1] = wk->ArcData[id].param.unit;
 		WORDSET_RegisterNumber( wk->Wordset, 0, buf[0], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
 		str = GFL_STR_CreateBuffer( 128, wk->heapID );
 		str_tmp = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_01_tbl[4*buf[1]+1] );
@@ -1650,7 +1650,7 @@ static void fma_disp_fes_string( FMISSION_APP_WORK *wk, const s32 mode, const s3
 		}
 		buf[0] = wk->TopScore->score;
 		// 単位
-		buf[1] = wk->ArcData[id].common.unit;
+		buf[1] = wk->ArcData[id].param.unit;
 		WORDSET_RegisterNumber( wk->Wordset, 0, buf[0], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
 		str = GFL_STR_CreateBuffer( 128, wk->heapID );
 		str_tmp = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_01_tbl[4*buf[1]+1] );
@@ -1670,7 +1670,7 @@ static void fma_disp_fes_string( FMISSION_APP_WORK *wk, const s32 mode, const s3
 	}
 	else if(mode == FMA_MES_TOTAL_SCORE){	// トータルスコア
 		// 単位
-		buf[0] = wk->ArcData[id].common.unit;
+		buf[0] = wk->ArcData[id].param.unit;
 		str = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_01_tbl[4*buf[0]+1] );
 	}
 	else if(mode == FMA_MES_GAIN_RESULT){		// 報酬(結果)
@@ -1751,7 +1751,7 @@ static void fma_disp_highscore( FMISSION_APP_WORK *wk )
 		GFL_STR_DeleteBuffer( str );
 		//
 		WORDSET_RegisterNumber(wk->Wordset, 0, num, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-		buf[1] = wk->ArcData[id].common.unit;
+		buf[1] = wk->ArcData[id].param.unit;
 		str = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_01_tbl[4*buf[1]+1] );
 		//
 		expbuf = GFL_STR_CreateBuffer( 64, wk->heapID );
@@ -1780,7 +1780,7 @@ static void fma_disp_total_score( FMISSION_APP_WORK *wk, const s32 mode )
 	
 	// 単位
 	id = wk->Param->fmwk->beacon.m_id;
-	buf[0] = wk->ArcData[id].common.unit;
+	buf[0] = wk->ArcData[id].param.unit;
 	str = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_01_tbl[4*buf[0]+1] );
 	// 単位の長さを求める(基準を24dotの「ひき」としてobjを配置)
 	len = PRINTSYS_GetStrWidth( str, wk->font, 0 );
@@ -1825,7 +1825,7 @@ static void fma_disp_scroll_info( FMISSION_APP_WORK *wk, const s32 num )
 	BOOL		bflg;
 	
 	id = wk->Param->fmwk->beacon.m_id;
-	buf[0] = wk->ArcData[id].common.unit;
+	buf[0] = wk->ArcData[id].param.unit;
 	
 	// データがなにもない
 	if(wk->LatestLocal.num == 0){

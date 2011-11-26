@@ -2576,8 +2576,8 @@ static BOOL fmission_chk_open( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
   //--------------------------------------
   // ミッションの参加条件を満たしているか
   //--------------------------------------
-  if(mfw->fmd_arc[id].common.entry_flag_id != 0){
-    bflg = EVENTWORK_CheckEventFlag( evwork, mfw->fmd_arc[id].common.entry_flag_id );
+  if(mfw->fmd_arc[id].param.entry_flag_id != 0){
+    bflg = EVENTWORK_CheckEventFlag( evwork, mfw->fmd_arc[id].param.entry_flag_id );
     if(bflg == FALSE){
       return( FALSE );
     }

@@ -32,6 +32,7 @@ typedef struct _FMISSION_ARCDATA_LV_PARAM{
  * この構造体の構成を変えた場合、resource/fmission_data/tool/fmission_dat_conv.rbを
  * 修正する必要があります
  */
+#if 0
 typedef struct _FMISSION_ARC_COMMON{
   u8   m_type;         ///<ミッションタイプ FMISSION_TYPE_ID
   u8   unit:4;         ///<表示単位 FMISSION_UNIT_ID
@@ -39,8 +40,15 @@ typedef struct _FMISSION_ARC_COMMON{
   u8   m_title_id;     ///<タイトルメッセージID
   u8   m_exp_id;       ///<説明文メッセージID
   u16  entry_flag_id;  ///<参加条件フラグID
+  u16  clear_flag_id;  ///<ミッションクリア時に立てるフラグID
 }FMISSION_ARC_COMMON;
-
+#else
+typedef struct _FMISSION_ARC_COMMON{
+  u8   m_type;         ///<ミッションタイプ FMISSION_TYPE_ID
+  u8   host;           ///<開催制限 FMISSION_HOST_TYPE
+  u16  clear_flag_id;  ///<ミッションクリア時に立てるフラグID
+}FMISSION_ARC_COMMON;
+#endif
 /*
  * @brief ミッションアーカイブ 非常駐データフォーマット
  *
@@ -53,13 +61,17 @@ typedef struct _FMISSION_ARC_PARAM{
   u8  time_bonus;     ///<ボーナスタイム FMISSION_TBONUS
   u8  pay_bonus;      ///<報酬計算式タイプ FMISSION_END_TYPE
   u8  sp_pay;         ///<ダブルスコアのスペシャルボーナス数
-  u8  dummy;          ///<パディング
+  u8  unit;           ///<表示単位 FMISSION_UNIT_ID
+  u8  m_title_id;     ///<タイトルメッセージID
+  u8  m_exp_id;       ///<説明文メッセージID
 
-  u16 sp_item;        ///<ダブルスコアのスペシャルボーナスアイテム
-  u16 base_param;     ///<汎用パラメータベース
-  u16 ex_param;       ///<汎用パラメータ拡張
-  u16 item;           ///<報酬アイテム
-  u16 open_flag_id;   ///<ミッションの開放条件フラグID
+  u16  sp_item;        ///<ダブルスコアのスペシャルボーナスアイテム
+  u16  base_param;     ///<汎用パラメータベース
+  u16  ex_param;       ///<汎用パラメータ拡張
+  u16  item;           ///<報酬アイテム
+  u16  open_flag_id;   ///<ミッションの開放条件フラグID
+  u16  entry_flag_id;  ///<参加条件フラグID
+  u32  pattern;        ///<出現パターン(3bit*6パターン)
   FMISSION_ARCDATA_LV_PARAM level[FMISSION_LEVEL_MAX];
 }FMISSION_ARC_PARAM;
 

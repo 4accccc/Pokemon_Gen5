@@ -625,7 +625,7 @@ static void draw_MissionInfo( FMISSION_VIEW_PTR wk )
 
   //–Ú•W’l•`‰æ
   WORDSET_RegisterNumber( wk->wordset, 0, wk->fmwk->beacon.goal, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-  print_GetMsgToBuf( wk, msg_sys_goal_num00+wk->fmwk->arc.unit );
+  print_GetMsgToBuf( wk, msg_sys_goal_num00+wk->fmwk->beacon.unit );
   BVCPrintReq_BmpwinPrint( &wk->win[WIN_GOAL], wk->str_expand,
       BMP_GOAL_STR_OX, BMP_GOAL_STR_OY, FCOL_TITLE_BASE, FCOL_TITLE, NULL, wk->init_f );
 }

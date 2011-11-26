@@ -49,13 +49,13 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
   BOOL ret;
   SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( wk->gdata );
   FMISSION_SAVE* f_save = SAVEDATA_GetFMissionSave( save );
+  EVENTWORK* ev = GAMEDATA_GetEventWork( wk->gdata );
 
   MI_CpuClear8( pl, sizeof(LINKFEST_MISSION_RESULT));
 
   pl->clear_f = LINK_FESTIVAL_IsMissionClear( wk, &pl->score );
 
   if( wk->m_beacon->m_id == FMISSION_ID_ITEM_TUTORIAL_01 ){
-    EVENTWORK* ev = GAMEDATA_GetEventWork( wk->gdata );
     if( !EVENTWORK_CheckEventFlag( ev, SYS_FLAG_FES_TUTORIAL_CLEAR )){
       EVENTWORK_SetEventFlag( ev, SYS_FLAG_FES_TUTORIAL_CLEAR );
       //イベント起動用ワークを設定
@@ -87,6 +87,10 @@ void LINK_FESTIVAL_GetMissionResult( LINK_FESTIVAL* wk, LINKFEST_MISSION_RESULT*
   //ミッションレベルアップ
   FMISSION_SAVE_SetMissionStatusClearLevel( f_save, wk->m_beacon->m_id, wk->m_beacon->m_level+FMISSION_CLEAR_LEVEL_1 );
 
+  //クリアフラグが設定されていたら、設定されたフラグをOnにする
+  if( wk->m_arc->clear_flag_id != 0 ){
+    EVENTWORK_SetEventFlag( ev, wk->m_arc->clear_flag_id );
+  }
   //ご褒美
   {
     BOOL sp_bonus = FALSE;

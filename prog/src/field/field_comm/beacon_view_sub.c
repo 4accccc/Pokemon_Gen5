@@ -2375,8 +2375,8 @@ static FMISSION_START_FOUL_CODE winFMission_CheckEntry( BEACON_VIEW_PTR wk, cons
     }
   }
   //エントリー条件チェック
-  if( fmwk->arc.entry_flag_id != 0 &&
-      EVENTWORK_CheckEventFlag( ev, fmwk->arc.entry_flag_id ) == FALSE ){
+  if( fmwk->beacon.entry_flag_id != 0 &&
+      EVENTWORK_CheckEventFlag( ev, fmwk->beacon.entry_flag_id ) == FALSE ){
     return FMISSION_START_FOUL_ENTRY;
   }
   return FMISSION_START_FOUL_NULL;

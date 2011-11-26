@@ -41,6 +41,7 @@ struct _FEST_BEACON{
   FEST_BEACON_ID;        ///<ビーコンIdentityパラメータ(メンバを直接参照したいので敢えて名無し)
 
   union{
+#if 0
     struct{
       u32  act_param:10;     ///<アクションパラメータ
       u32  end_type:1;       ///<ミッション終了条件タイプ FMISSION_END_TYPE
@@ -58,6 +59,30 @@ struct _FEST_BEACON{
 
       u32  dummy;            ///<パディング
     };
+#else
+    struct{
+      u32  item:10;          ///<報酬のアイテムNo(1023)
+      u32  pay:7;            ///<報酬の基礎値(127)
+      u32  goal:14;          ///<達成目標(max9999)
+      u32  end_type:1;       ///<ミッション終了条件タイプ FMISSION_END_TYPE
+      
+      u32  pattern:18;       ///<出現パターン3bit*6パターン
+      u32  entry_flag_id:12; ///<参加条件フラグID
+      u32  pay_bonus:2;      ///<報酬の計算式タイプ(0-2) FMISSION_PAY_BONUS
+      
+      u32  act_param:10;     ///<アクションパラメータ
+      u32  time:12;          ///<ミッションの制限時間(sec max=FMISSION_TIME_MAX=3599)
+      u32  sp_item:10;       ///<スペシャル報酬のアイテムNo(1023)
+
+      u16  sp_pay:6;         ///<スペシャル報酬の基礎値(max50)
+      u16  unit:3;           ///<表示単位 FMISSION_UNIT_ID
+      u16  time_bonus:2;     ///<スコアアップ時のタイムボーナス FMISSION_TBONUS
+      u16  dummy:5;
+
+      u8   m_title_id;       ///<タイトルメッセージID
+      u8   m_exp_id;         ///<説明文メッセージID
+    };
+#endif
     STRCODE fword[FMISSION_FWORD_MESSAGE_LEN];  ///<フリーワードビーコン用(_EOM無し8文字)
   };
 };

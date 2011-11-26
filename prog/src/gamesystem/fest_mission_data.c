@@ -56,7 +56,7 @@ static const u8 DATA_FMissionDataType[FMISSION_TYPE_MAX] = {
 };
 
 static void wset_MissionParam( WORDSET* wset, STRBUF* tmp, u8 bufID, FMISSION_WSET type, int value );
-SDK_COMPILER_ASSERT( sizeof(FMISSION_ARC_COMMON) <= 6); //フェスミッションコモン構造体型サイズは6byte
+//SDK_COMPILER_ASSERT( sizeof(FMISSION_ARC_COMMON) <= 6); //フェスミッションコモン構造体型サイズは6byte
 
 //------------------------------------------------------------
 /*
@@ -195,27 +195,40 @@ void FMISSION_DATA_GetMissionParamByHandle( ARCHANDLE* handle, FEST_MISSION_ID i
   beacon = &fmwk->beacon;
   pp = &dat.param;
 
+  //照合フィールドデータ
   beacon->m_id = id;
   beacon->m_level = level;
   beacon->base_param = pp->base_param;
   beacon->ex_param = pp->ex_param;
+  beacon->distribution_f = FALSE;
   
-  beacon->goal = pp->level[level].goal;
-  beacon->pay = pp->level[level].pay;
-  beacon->item = pp->item;
-  beacon->end_type = pp->end_type;
-  beacon->time_bonus = pp->time_bonus;
-  beacon->pay_bonus = pp->pay_bonus;
-  beacon->sp_item = pp->sp_item;
-  beacon->sp_pay = pp->sp_pay;
   if( GET_VERSION() == VERSION_W2 ){
     beacon->version_idx = FMISSION_VERSION_WHITE;
   }else{
     beacon->version_idx = FMISSION_VERSION_BLACK;
   }
- 
-  beacon->time = pp->level[level].time;
 
+  //各種パラメータ
+  beacon->item = pp->item;
+  beacon->pay = pp->level[level].pay;
+  beacon->goal = pp->level[level].goal;
+  beacon->end_type = pp->end_type;
+  
+  beacon->pattern = pp->pattern;
+  beacon->entry_flag_id = pp->entry_flag_id;
+  beacon->pay_bonus = pp->pay_bonus;
+
+  beacon->act_param = 0;
+  beacon->time = pp->level[level].time;
+  beacon->sp_item = pp->sp_item;
+  
+  beacon->sp_pay = pp->sp_pay;
+  beacon->unit = pp->unit;
+  beacon->time_bonus = pp->time_bonus;
+
+  beacon->m_title_id = pp->m_title_id;
+  beacon->m_exp_id = pp->m_exp_id;
+  
   //アーカイブコモンデータセット
   fmwk->arc = dat.common;
 
@@ -270,7 +283,7 @@ void FMISSION_DATA_GetTitleStr( FMISSION_DATA_MAN* man, STRBUF* str, const FEST_
   //目標
   WORDSET_RegisterNumber( wset, 1, beacon->goal, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   
-  GFL_MSG_GetString( man->msg, arc->m_title_id, tmp );
+  GFL_MSG_GetString( man->msg, beacon->m_title_id, tmp );
   WORDSET_ExpandStr( wset, str, tmp );
 
   GFL_STR_DeleteBuffer( tmp );
@@ -297,7 +310,7 @@ void FMISSION_DATA_GetExpStr( FMISSION_DATA_MAN* man, STRBUF* str, const FEST_MI
   //目標
   WORDSET_RegisterNumber( wset, 1, beacon->goal, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 
-  GFL_MSG_GetString( man->msg, arc->m_exp_id, tmp );
+  GFL_MSG_GetString( man->msg, beacon->m_exp_id, tmp );
   WORDSET_ExpandStr( wset, str, tmp );
 
   GFL_STR_DeleteBuffer( tmp );

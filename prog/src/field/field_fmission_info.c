@@ -577,7 +577,7 @@ static void tscore_GetDrawPosX( FMISSION_UNIT_ID unit, u16 score, u16* pos_unit,
 
 static void panel_TotalScoreUpdate( FIELD_FMISSION_INFO* wk )
 {
-  FMISSION_UNIT_ID unit = wk->fmwk->arc.unit;
+  FMISSION_UNIT_ID unit = wk->fmwk->beacon.unit;
   u16 score = LINK_FESTIVAL_FInfoTotalScoreGet( wk->fest_sys );
 
   panel_NumberDraw( wk, score, ACT_SCOREN_PLACE_NUM, ACT_TSN01, FALSE );

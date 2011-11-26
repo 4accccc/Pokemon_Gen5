@@ -704,7 +704,7 @@ static void sub_FMissionParamDrawCommon( FMISSION_EVWORK* wk )
   sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX02, 7 );
  
   //–Ú•W
-  GFL_MSG_GetString( wk->msgData, msg_fmission_goal01+wk->mission.arc.unit, wk->s_buf );
+  GFL_MSG_GetString( wk->msgData, msg_fmission_goal01+wk->mission.beacon.unit, wk->s_buf );
   sub_FMissionParamDraw( wk, wk->s_buf, CWIN_STR_OX02, 8 );
 
 #if 0

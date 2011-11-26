@@ -50,25 +50,39 @@ COLUMN_TBONUS = 8
 COLUMN_PAY_BONUS = 9
 COLUMN_OPEN_FLAG = 10 
 COLUMN_ENTRY_FLAG = 11 
-COLUMN_LOCATION = 12
-COLUMN_HOST = 13
-COLUMN_LV1_TIME = 14
-COLUMN_LV1_GOAL = 15
-COLUMN_LV1_NUM = 16
-COLUMN_LV2_TIME = 17
-COLUMN_LV2_GOAL = 18
-COLUMN_LV2_NUM = 19
-COLUMN_LV3_TIME = 20
-COLUMN_LV3_GOAL = 21
-COLUMN_LV3_NUM = 22
-COLUMN_LV4_TIME = 23
-COLUMN_LV4_GOAL = 24
-COLUMN_LV4_NUM = 25
-COLUMN_ITEM = 26
-COLUMN_DSCORE_ITEM = 27
-COLUMN_DSCORE_PAY = 28
-COLUMN_TITLE = 29
-COLUMN_EXP = 30
+COLUMN_CLEAR_FLAG = 12
+COLUMN_LOCATION = 13
+COLUMN_HOST = 14
+COLUMN_LV1_TIME = 15
+COLUMN_LV1_GOAL = 16
+COLUMN_LV1_NUM = 17
+COLUMN_LV2_TIME = 18
+COLUMN_LV2_GOAL = 19
+COLUMN_LV2_NUM = 20
+COLUMN_LV3_TIME = 21
+COLUMN_LV3_GOAL = 22
+COLUMN_LV3_NUM = 23
+COLUMN_LV4_TIME = 24
+COLUMN_LV4_GOAL = 25
+COLUMN_LV4_NUM = 26
+COLUMN_ITEM = 27
+COLUMN_DSCORE_ITEM = 28
+COLUMN_DSCORE_PAY = 29
+COLUMN_POINT01 = 30
+COLUMN_POINT02 = 31
+COLUMN_POINT03 = 32
+COLUMN_POINT04 = 33
+COLUMN_POINT05 = 34
+COLUMN_POINT06 = 35
+COLUMN_TITLE = 36
+COLUMN_EXP = 37
+
+LEVEL_PARAM_NUM_MAX = 4
+LEVEL_PARAM_NUM_END = LEVEL_PARAM_NUM_MAX-1
+LEVEL_PARAM_SET  = 3  #1つにつきパラメータ3個
+POINT_PATTERN_NUM_MAX = 6
+POINT_PATTERN_NUM_END = POINT_PATTERN_NUM_MAX-1
+POINT_PATTERN_BIT = 3
 
 arg = $*
 
@@ -287,16 +301,13 @@ class CMission
   def print_common_bin fp
     buf = Array.new
 
-    #u8*4 ミッションタイプ、表示単位、開催制限、タイトルMsgID、説明文MsgID
+    #u8*2 ミッションタイプ、開催制限
     buf[0] = @type
-    buf[1] = @unit
-    buf[1] |= (@host<<4)
-    buf[2] = @title
-    buf[3] = @exp
-    fp.write( buf.pack("C4") )
+    buf[1] = @host
+    fp.write( buf.pack("C2") )
 
-    #u16*1 参加条件フラグID
-    buf[0] = @entry_flag_id
+    #u16*1 参加条件フラグID、クリアした時立てるフラグID
+    buf[0] = @clear_flag_id
     fp.write( buf.pack("S1"))
 
   end
@@ -305,23 +316,33 @@ class CMission
   def print_bin fp
     buf = Array.new
 
-    #u8*4  クリアタイプ、範囲、タイムボーナス、報酬ボーナス、ダブルスコア報酬数
+    #u8*8  クリアタイプ、範囲、タイムボーナス、報酬ボーナス、ダブルスコア報酬数、表示単位、タイトルMsgID、説明文MsgID
     buf[0] = @end_type
     buf[1] = @location
     buf[2] = @time_bonus
     buf[3] = @pay_bonus
     buf[4] = @ds_pay
-    buf[5] = 0
-    fp.write( buf.pack("C6") )
+    buf[5] = @unit
+    buf[6] = @title
+    buf[7] = @exp
+    fp.write( buf.pack("C8") )
 
-    #u16*4 ダブルスコアアイテム、汎用パラメータ、報酬アイテム、ミッションの開放条件フラグID
+    #u16*4 ダブルスコアアイテム、汎用パラメータ、報酬アイテム、ミッションの開放条件フラグID、ミッションの参加条件フラグID
     buf[0] = @ds_item
     buf[1] = @base_param
     buf[2] = @ex_param
     buf[3] = @item
     buf[4] = @open_flag_id 
-    print("mission_param = #{@base_param}, #{@ex_param}, #{@item}, #{@ds_item}, #{@open_flag_id}\n")
-    fp.write( buf.pack("S5"))
+    buf[5] = @entry_flag_id 
+    print("mission_param = #{@base_param}, #{@ex_param}, #{@item}, #{@ds_item}, #{@open_flag_id}, #{@entry_flag_id}\n")
+    fp.write( buf.pack("S6"))
+
+    #u32*1 出現パターン 3bit*6
+    buf[0] = 0
+    for i in 0..POINT_PATTERN_NUM_END do
+      buf[0] |= (@pattern[i]<<(POINT_PATTERN_BIT*i))
+    end
+    fp.write( buf.pack("I1"))
 
     #(u16,u8,u8) * 4 レベルごとの制限時間と目標と報酬数
     fp.write( @level.pack("SCCSCCSCCSCC") )
@@ -402,14 +423,24 @@ class CMission
         print_err("参加条件イベントフラグが不正です", ev_flag )
       end
     end
+    ev_flag = work[COLUMN_CLEAR_FLAG]
+    if ev_flag == '0' then
+      @clear_flag_id = 0
+    else
+      @clear_flag_id = c_evflag_list.searchID( ev_flag )
+      if @clear_flag_id == nil then
+        print_err("クリアイベントフラグが不正です", ev_flag )
+      end
+    end
     @location = c_def_list.search( work[COLUMN_LOCATION], "FMISSION_", "範囲" )
     @host = c_def_list.search( work[COLUMN_HOST], "FMISSION_HOST_", "開催制限" )
 
     @level = Array.new
-    for i in 0..4 do
-      @level[i*3+0] = work[COLUMN_LV1_TIME+(i*3)].to_i
-      @level[i*3+1] = work[COLUMN_LV1_GOAL+(i*3)].to_i
-      @level[i*3+2] = work[COLUMN_LV1_NUM+(i*3)].to_i
+    for i in 0..LEVEL_PARAM_NUM_END do
+      ofs = i*LEVEL_PARAM_SET
+      @level[ofs+0] = work[COLUMN_LV1_TIME+ofs].to_i
+      @level[ofs+1] = work[COLUMN_LV1_GOAL+ofs].to_i
+      @level[ofs+2] = work[COLUMN_LV1_NUM+ofs].to_i
     end
 
     @item = $item_hash.fetch(work[COLUMN_ITEM],nil)
@@ -423,6 +454,11 @@ class CMission
     end
     
     @ds_pay = work[COLUMN_DSCORE_PAY].to_i
+
+    @pattern = Array.new
+    for i in 0..POINT_PATTERN_NUM_END do
+      @pattern << c_def_list.search( work[COLUMN_POINT01+i],"FMISSION_POINT_PAT_","ポイント出現パターン")
+    end
 
     @title = c_msg_list.searchID( work[COLUMN_TITLE] )
     if @title == nil then

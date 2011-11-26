@@ -34,9 +34,6 @@ typedef enum{
   FMISSION_TBONUS_10,  ///<10秒
   FMISSION_TBONUS_20,  ///<20秒
   FMISSION_TBONUS_30,  ///<30秒
-  FMISSION_TBONUS_40,  ///<40秒
-  FMISSION_TBONUS_50,  ///<50秒
-  FMISSION_TBONUS_60,  ///<60秒
   FMISSION_TBONUS_MAX,  ///<
 }FMISSION_TBONUS;
 
@@ -126,6 +123,33 @@ typedef enum{
   FMISSION_CLEAR_LEVEL_4,  ///<level4
   FMISSION_CLEAR_LEVEL_MAX,  ///<
 }FMISSION_CLEAR_LEVEL;
+
+//=========================================
+///フェスミッションマップ属性
+//=========================================
+typedef enum{
+  FMISSION_MAP_ATTR_TOWN,  ///<街
+  FMISSION_MAP_ATTR_ROAD,  ///<道
+  FMISSION_MAP_ATTR_CAVE,  ///<洞穴
+  FMISSION_MAP_ATTR_FOREST,  ///<森
+  FMISSION_MAP_ATTR_SP_HIGH,  ///<特殊高
+  FMISSION_MAP_ATTR_SP_LOW,  ///<特殊低
+  FMISSION_MAP_ATTR_MAX,  ///<
+}FMISSION_MAP_ATTR;
+
+//=========================================
+///ポイント出現パターン
+//=========================================
+typedef enum{
+  FMISSION_POINT_PAT_NONE,  ///<無し
+  FMISSION_POINT_PAT_RARE,  ///<レア
+  FMISSION_POINT_PAT_LOW,  ///<低
+  FMISSION_POINT_PAT_MIDDLE,  ///<中
+  FMISSION_POINT_PAT_HIGH,  ///<高
+  FMISSION_POINT_PAT_MAXIMUM,  ///<最高
+  FMISSION_POINT_PAT_LUNK,  ///<運
+  FMISSION_POINT_PAT_MAX,  ///<
+}FMISSION_POINT_PATTERN;
 
 //=========================================
 ///アイテムミッション　セット名定義
