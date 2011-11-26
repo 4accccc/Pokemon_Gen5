@@ -236,6 +236,19 @@ typedef struct
 	int dummy;
 } PKWD_SELECT_SCREEN_BG_WORK;
 
+/// 録画セーブデータが取り出した情報を保持するワーク
+typedef struct{
+  int         slot_no;      ///< 録画データスロットNO
+  LOAD_RESULT load_result;  ///< 録画データロード結果
+  int         scenario_no;  ///< シナリオNO
+  int         profit;       ///< 収益
+  int         success;      ///< 評価
+  u32         date;         ///< 日付
+  u32         time;         ///< 時間
+  u16         my_monsno[PKWD_POKEMON_MAX];  ///< 手持ちポケモンの種族NO
+  WORDSET     *wordset;     ///< 文字列展開バッファ
+
+}PW_SVDATA;
 
 //--------------------------------------------------------------
 ///	メインワーク
@@ -264,7 +277,6 @@ typedef struct
 
 	//フォント
 	GFL_FONT									*font;
-  WORDSET                   *wordset[LOAD_SAVEDATA_MAX];
   WORDSET                   *UpWordset;
 
 	//プリントキュー
@@ -278,8 +290,8 @@ typedef struct
   int subseq;
 
   // VBLANK 処理
-  GFL_TCB    *vblank_task;
-  int        bgLogoRequest; // VBlank内BG転送リクエストフラグ
+  GFL_TCB    *vblank_task;  ///< VblankFunc登録タスク
+  int        bgLogoRequest; ///< VBlank内BG転送リクエストフラグ
 
 #ifdef PKWD_SELECT_SCREEN_TASKMENU
 	//タスクメニュー
@@ -312,14 +324,11 @@ typedef struct
   BLINKPALANM_WORK *blinkWork[4];
   int page;
 
-  // セーブデータ確認
-  LOAD_RESULT load_result[LOAD_SAVEDATA_MAX];
-  int         scenario_no[LOAD_SAVEDATA_MAX];
-  int         profit     [LOAD_SAVEDATA_MAX];
-  int         success    [LOAD_SAVEDATA_MAX];   // 評価
-  u32         date       [LOAD_SAVEDATA_MAX];   // 日付
-  u32         time       [LOAD_SAVEDATA_MAX];   // 時間
-  u16         my_monsno  [LOAD_SAVEDATA_MAX][PKWD_POKEMON_MAX];
+  // セーブデータ分必要な情報
+  PW_SVDATA   svdata[LOAD_SAVEDATA_MAX];       ///< 外部データから取得した情報実体
+  PW_SVDATA   *valid_list[LOAD_SAVEDATA_MAX];  ///< 実際に表示する有効リスト
+                                               ///< 外部セーブデータなので個別に破損が起き得るため
+                                               ///< ロードに成功したデータを詰めて表示する
 
 } PKWD_SELECT_SCREEN_MAIN_WORK;
 
@@ -327,19 +336,19 @@ typedef struct
 // BGPALの定義
 //------------------------------------------
 typedef struct{
-	u8				type;			// タイプ(0xffの場合は終了判定)
-	u8				arcid;			// id
-	u8				offset;			// オフセット
-	u8				size;			// サイズ(*0x20)
+	u8				type;			///< タイプ(0xffの場合は終了判定)
+	u8				arcid;		///< id
+	u8				offset;		///< オフセット
+	u8				size;			///< サイズ(*0x20)
 }PKWD_COUNT_BGPAL_DATA;
 
 //-----------------------------------------
 // BGCHRの定義
 //------------------------------------------
 typedef struct{
-	u8				frmnumber;		// frame(0xffの場合は終了判定)
-	u8				arcid;			// id
-	u8				offset;			// オフセット
+	u8				frmnumber;	///< frame(0xffの場合は終了判定)
+	u8				arcid;			///< id
+	u8				offset;			///< オフセット
 	u8				pad;
 }PKWD_COUNT_BGCHR_DATA;
 
@@ -347,10 +356,10 @@ typedef struct{
 // BGSCNの定義
 //------------------------------------------
 typedef struct{
-	u8				frmnumber;		// frame(0xffの場合は終了判定)
-	u8				arcid;			// id
-	u8				offset;			// オフセット
-	u8				poff;			// パレットのオフセット
+	u8				frmnumber;	///< frame(0xffの場合は終了判定)
+	u8				arcid;			///< id
+	u8				offset;			///< オフセット
+	u8				poff;			  ///< パレットのオフセット
 }PKWD_COUNT_BGSCN_DATA;
 
 #define PLTID_MAIN_BG_TITLE ( 0 ) // 下のテーブル読み込みのための定義
@@ -610,8 +619,8 @@ static void _blink_palanime_init( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
   for(i=0;i<PKWD_TITLE_LIST_NUM;i++){
     // セーブされているシナリオNOからカテゴリーを取得
     int category,index=i+wk->page*PKWD_TITLE_LIST_NUM;
-    if(wk->load_result[index]){
-      category = PokewoodCategoryData[wk->scenario_no[index]];
+    if(wk->valid_list[index]->load_result){
+      category = PokewoodCategoryData[wk->valid_list[index]->scenario_no];
     }else{
       category = 4;
     }
@@ -790,7 +799,10 @@ static void VBlankFunc( GFL_TCB *tcb, void * work )
 
   //上画面タイトルロゴ転送
   if( wk->bgLogoRequest){
-    PkwdSelectScreen_LOGO_u_LoadResource( &wk->wk_bg, wk->scenario_no[wk->nowpos+wk->page*4], wk->nowpos );
+    int pos = _get_real_pos(wk, wk->nowpos);
+    PkwdSelectScreen_LOGO_u_LoadResource( &wk->wk_bg, 
+                                          wk->valid_list[pos]->scenario_no, 
+                                          wk->nowpos );
     wk->bgLogoRequest = 0;
   }
 }
@@ -1218,7 +1230,7 @@ static void PkwdSelectScreen_ListObj_Update( PKWD_SELECT_SCREEN_MAIN_WORK *wk, i
   for(i=0;i<LIST_OBJ_MAX;i++){
     int index = i + page*PKWD_TITLE_LIST_NUM;
     if(POKEWOOD_SAVEDATA_GetMovieShowed( wk->param->pokewood_sv, index )==0){
-      GFL_CLACT_WK_SetDrawEnable( wk->clwk_pkwdObj[i], wk->load_result[index] );
+      GFL_CLACT_WK_SetDrawEnable( wk->clwk_pkwdObj[i], wk->valid_list[index]->load_result );
     }else{
       GFL_CLACT_WK_SetDrawEnable( wk->clwk_pkwdObj[i], FALSE );
     }
@@ -1505,7 +1517,7 @@ static void PrintTool_PrintHP( PKWD_SELECT_SCREEN_MAIN_WORK * wk )
 //----------------------------------------------------------------------------------
 static void  _load_pokewood_rec_data( PKWD_SELECT_SCREEN_MAIN_WORK *wk, PKWD_SELECT_SCREEN_PARAM *param )
 {
-  int i,j;
+  int i,j,ok_count=0,ng_count=LOAD_SAVEDATA_MAX-1;
 
   BattleRec_LoadToolModule(); //gimmickのオーバーレイと干渉するので注意
   
@@ -1513,40 +1525,52 @@ static void  _load_pokewood_rec_data( PKWD_SELECT_SCREEN_MAIN_WORK *wk, PKWD_SEL
   POKEWOOD_REC_Init( HEAPID_PKWD_SELSCR );
 
   for(i=0;i<LOAD_SAVEDATA_MAX;i++){
-    wk->load_result[i] = POKEWOOD_REC_Load( param->sv, HEAPID_PKWD_SELSCR, i );
-    OS_Printf("%d:load result=%d\n", i , wk->load_result[i]);
+    wk->svdata[i].slot_no     = i;
+    wk->svdata[i].load_result = POKEWOOD_REC_Load( param->sv, HEAPID_PKWD_SELSCR, i );
+    OS_Printf("%d:load result=%d\n", i , wk->svdata[i].load_result);
 
     // 読み込んで各種情報を取得したい場合はココで確保
-    if(wk->load_result[i]==RECLOAD_RESULT_OK){
+    if(wk->svdata[i].load_result==RECLOAD_RESULT_OK){
       POKEMON_PARAM *pp = GFL_HEAP_AllocMemory( HEAPID_PKWD_SELSCR, POKETOOL_GetWorkSize());
 
       // シナリオＮＯ取得
-      wk->scenario_no[i] = POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_SENARIO, NULL);
+      wk->svdata[i].scenario_no = POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_SENARIO, NULL);
       // 興行収入取得
-      wk->profit[i]      = POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_PROFIT, NULL);
+      wk->svdata[i].profit      = POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_PROFIT, NULL);
       // 評価取得
-      wk->success[i]     = POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_SUCCESS, NULL);
+      wk->svdata[i].success     = POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_SUCCESS, NULL);
       // 公開日取得
-      wk->date[i]        = POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_DATE, NULL);
+      wk->svdata[i].date        = POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_DATE, NULL);
       // 公開時間取得
-      wk->time[i]        = POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_TIME, NULL);
+      wk->svdata[i].time        = POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_TIME, NULL);
       
       // 手持ちポケモンNO取得
       for(j=0;j<PKWD_POKEMON_MAX;j++){
         POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_POKE0+j, pp );
-        wk->my_monsno[i][j] = PP_Get( pp, ID_PARA_monsno, NULL);
+        wk->svdata[i].my_monsno[j] = PP_Get( pp, ID_PARA_monsno, NULL);
       }
 
       // 先頭手持ちポケモン名取得
       POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_POKE0, pp );
-      WORDSET_RegisterPokeMonsName( wk->wordset[i], 0, pp );
+      WORDSET_RegisterPokeMonsName( wk->svdata[i].wordset, 0, pp );
 
-      OS_Printf("%d: senario_no=%d\n", i , wk->scenario_no[i]);
-      for(j=0;j<PKWD_POKEMON_MAX;j++){ OS_Printf( "PP%d=%d, ",j,wk->my_monsno[i][j] ); }
+      OS_Printf("%d: senario_no=%d\n", i , wk->svdata[i].scenario_no);
+      for(j=0;j<PKWD_POKEMON_MAX;j++){ OS_Printf( "PP%d=%d, ",j,wk->svdata[i].my_monsno[j] ); }
        OS_Printf( "\n");
       GFL_HEAP_FreeMemory( pp );
     }else{
-      wk->scenario_no[i] = -1;
+      wk->svdata[i].scenario_no = -1;
+    }
+  }
+
+  // 有効データだけを詰めたポインタリストを作成する
+  for(i=0;i<LOAD_SAVEDATA_MAX;i++){
+    if(wk->svdata[i].load_result==RECLOAD_RESULT_OK){
+      wk->valid_list[ok_count] = &wk->svdata[i];
+      ok_count++;
+    }else{
+      wk->valid_list[ng_count] = &wk->svdata[i];
+      ng_count--;
     }
   }
 
@@ -1577,7 +1601,7 @@ static int _touch_input( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 {
   int result = GFL_UI_TP_HitTrg( tp_data );
   if( result!=GFL_UI_TP_HIT_NONE ){
-    if(wk->load_result[_get_real_pos(wk,result)]){
+    if(wk->valid_list[_get_real_pos(wk,result)]->load_result){
       wk->isTouch = TRUE;
       wk->nowpos = result;
       wk->bgLogoRequest=TRUE;
@@ -1599,14 +1623,14 @@ static int _key_input( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
     
     if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
       if(wk->nowpos!=0){
-        if(wk->load_result[_get_real_pos(wk,wk->nowpos)-1]){
+        if(wk->valid_list[_get_real_pos(wk,wk->nowpos)-1]->load_result){
           PMSND_PlaySE( SE_PKWDSELECT_MOVE );
           wk->nowpos--;
         }
       }
     }else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
       if(wk->nowpos<3){
-        if(wk->load_result[_get_real_pos(wk,wk->nowpos)+1]){
+        if(wk->valid_list[_get_real_pos(wk,wk->nowpos)+1]->load_result){
           PMSND_PlaySE( SE_PKWDSELECT_MOVE );
           wk->nowpos++;
         }
@@ -1645,7 +1669,7 @@ static void PrintInit( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 
   // WORDSET(リストの数だけ作成）
   for(i=0;i<LOAD_SAVEDATA_MAX;i++){
-    wk->wordset[i] = WORDSET_Create( HEAPID_PKWD_SELSCR );
+    wk->svdata[i].wordset = WORDSET_Create( HEAPID_PKWD_SELSCR );
   }
   // 上画面用
   wk->UpWordset = WORDSET_Create( HEAPID_PKWD_SELSCR );
@@ -1684,7 +1708,7 @@ static void PrintExit( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 
   // WORDSET解放
   for(i=0;i<LOAD_SAVEDATA_MAX;i++){
-    WORDSET_Delete( wk->wordset[i] );
+    WORDSET_Delete( wk->valid_list[i]->wordset );
   }
   WORDSET_Delete( wk->UpWordset );
 }
@@ -1704,17 +1728,17 @@ static void _draw_titlelist( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
   for(i=0;i<PKWD_TITLE_LIST_NUM;i++){
     int index = i + (wk->page*PKWD_TITLE_LIST_NUM);
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->print_util[i].win ), 0 );
-    if(wk->load_result[index]){
+    if(wk->valid_list[index]->load_result){
       OS_Printf("strID = %d\n", pw_screen_01+index);
       GFL_MSG_GetString( wk->msg, pw_screen_01+index, strbuf );
       PRINT_UTIL_PrintColor( &wk->print_util[i], wk->print_que, 0, 4, strbuf, 
                              wk->font, PRINTSYS_LSB_Make( 1, 5, 0 ) );
-      GFL_MSG_GetString( wk->msg, pw_title_00+wk->scenario_no[index], strbuf );
+      GFL_MSG_GetString( wk->msg, pw_title_00+wk->valid_list[index]->scenario_no, strbuf );
       PRINT_UTIL_PrintColor( &wk->print_util[i], wk->print_que, 0, 4+16, strbuf, 
                              wk->font, PRINTSYS_LSB_Make( 1, 5, 0 ) );
     }
     PrintTool_ScreenTrans( wk, i );		// スクリーン転送
-    OS_Printf("%d:=%d\n", index, wk->load_result[index]);
+    OS_Printf("%d:=%d\n", index, wk->valid_list[index]->load_result);
   }
 
   GFL_STR_DeleteBuffer(strbuf);
@@ -1768,7 +1792,7 @@ static void _draw_movie_subtitle( PKWD_SELECT_SCREEN_MAIN_WORK *wk, int index )
   int sex = MyStatus_GetMySex(wk->param->mystatus);
   
   // 録画データなし
-  if((wk->load_result[index]==0)||(wk->nowpos == -1)){
+  if((wk->valid_list[index]->load_result==0)||(wk->nowpos == -1)){
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->print_util[PKWD_BMP_SUBTITLE_U].win), 0 );
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->print_util[PKWD_BMP_SUBTITLE_D].win), 0 );
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->print_util[PKWD_BMP_SUB_DATE].win),   0 );
@@ -1779,14 +1803,14 @@ static void _draw_movie_subtitle( PKWD_SELECT_SCREEN_MAIN_WORK *wk, int index )
   }else{
     // サブタイトル上部を描画
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->print_util[PKWD_BMP_SUBTITLE_U].win), 0 );
-    GFL_MSG_GetString( wk->msg, pw_title_00+wk->scenario_no[index], strbuf );
+    GFL_MSG_GetString( wk->msg, pw_title_00+wk->valid_list[index]->scenario_no, strbuf );
     _centering_print( &wk->print_util[PKWD_BMP_SUBTITLE_U], wk->print_que, 
                       strbuf, 8, wk->font, PRINTSYS_LSB_Make( 13, 12, 0 ) );
     
     // 下部を描画
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->print_util[PKWD_BMP_SUBTITLE_D].win), 0 );
-    GFL_MSG_GetString( wk->msg, pkwd_subtitle_tbl[wk->scenario_no[index]][sex], strbuf );
-    WORDSET_ExpandStr( wk->wordset[index], expandbuf, strbuf );
+    GFL_MSG_GetString( wk->msg, pkwd_subtitle_tbl[wk->valid_list[index]->scenario_no][sex], strbuf );
+    WORDSET_ExpandStr( wk->valid_list[index]->wordset, expandbuf, strbuf );
     _centering_print( &wk->print_util[PKWD_BMP_SUBTITLE_D], wk->print_que,
                       expandbuf, 6, wk->font, PRINTSYS_LSB_Make( 13, 12, 0 ) );
     //
@@ -1795,25 +1819,29 @@ static void _draw_movie_subtitle( PKWD_SELECT_SCREEN_MAIN_WORK *wk, int index )
     GFL_MSG_GetString( wk->msg, up_msg_tbl[2], strbuf );
     PRINT_UTIL_PrintColor( &wk->print_util[PKWD_BMP_SUB_DATE], wk->print_que,
                        0, 0, strbuf, wk->font, PRINTSYS_LSB_Make( 15, 14, 0 ) );
-    // ○/○/○
+    // 日付○/○/○
     GFL_MSG_GetString( wk->msg, up_msg_tbl[0], strbuf );
-    WORDSET_RegisterNumber( wk->UpWordset, 0, 2000+GFDATE_GetYear( wk->date[index] ), 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterNumber( wk->UpWordset, 1, GFDATE_GetMonth(wk->date[index] ), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterNumber( wk->UpWordset, 2, GFDATE_GetDay(wk->date[index] ),   2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wk->UpWordset, 0, 2000+GFDATE_GetYear( wk->valid_list[index]->date ), 
+                            4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wk->UpWordset, 1, GFDATE_GetMonth(wk->valid_list[index]->date ), 
+                            2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wk->UpWordset, 2, GFDATE_GetDay(wk->valid_list[index]->date ), 
+                            2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
     WORDSET_ExpandStr( wk->UpWordset, expandbuf, strbuf );
     PRINT_UTIL_PrintColor( &wk->print_util[PKWD_BMP_SUB_DATE], wk->print_que,
                        12*8, 0, expandbuf, wk->font, PRINTSYS_LSB_Make( 15, 14, 0 ) );
-    // ○:○
-    // とりあえず00:00としておく
+    // 時刻○:○
     GFL_MSG_GetString( wk->msg, up_msg_tbl[1], strbuf );
-    WORDSET_RegisterNumber( wk->UpWordset, 0, GFTIME_GetHour(  wk->time[index]), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterNumber( wk->UpWordset, 1, GFTIME_GetMinute(wk->time[index]), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wk->UpWordset, 0, GFTIME_GetHour(  wk->valid_list[index]->time), 
+                            2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wk->UpWordset, 1, GFTIME_GetMinute(wk->valid_list[index]->time), 
+                            2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
     WORDSET_ExpandStr( wk->UpWordset, expandbuf, strbuf );
     PRINT_UTIL_PrintColor( &wk->print_util[PKWD_BMP_SUB_DATE], wk->print_que,
                        23*8, 0, expandbuf, wk->font, PRINTSYS_LSB_Make( 15, 14, 0 ) );
     //
     // 評価マーク表示
-    PkwdSelectScreen_SubObj_ChgSeq(  wk, SUB_OBJ_MARK, up_seq_tbl[ wk->success[index] ]);
+    PkwdSelectScreen_SubObj_ChgSeq(  wk, SUB_OBJ_MARK, up_seq_tbl[ wk->valid_list[index]->success ]);
     PkwdSelectScreen_SubObj_Visible( wk, SUB_OBJ_MARK, TRUE );
     //
     wk->bgLogoRequest = TRUE;
@@ -1955,21 +1983,21 @@ static void _print_movie_information( PKWD_SELECT_SCREEN_MAIN_WORK *wk, int inde
     PRINT_UTIL_Print( &wk->print_util[PKWD_BMP_INFORMATION], wk->print_que, 4, 10*8, brief_str, wk->font );
 
     // あらすじの内容
-    plot_str     = GFL_MSG_CreateString( wk->msg, pw_plot_000+wk->scenario_no[index] );
+    plot_str     = GFL_MSG_CreateString( wk->msg, pw_plot_000+wk->valid_list[index]->scenario_no );
     PRINT_UTIL_Print( &wk->print_util[PKWD_BMP_INFORMATION], wk->print_que, 8, 12*8, plot_str, wk->font );
 
     // 興行収入の実際の数値＋「おく円」
     money_str    = GFL_MSG_CreateString( wk->msg, pw_record_monitor_03 );
-    WORDSET_RegisterNumber( wk->wordset[index], 2, wk->profit[index], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-    WORDSET_ExpandStr( wk->wordset[index], wk->strbuf, money_str );
+    WORDSET_RegisterNumber( wk->valid_list[index]->wordset, 2, wk->valid_list[index]->profit, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    WORDSET_ExpandStr( wk->valid_list[index]->wordset, wk->strbuf, money_str );
     length = PRINTSYS_GetStrWidth( wk->strbuf, wk->font, 0 );
     x = 8*INFORMATION_W - length-8;
     PRINT_UTIL_Print( &wk->print_util[PKWD_BMP_INFORMATION], wk->print_que, x, 7*8, wk->strbuf, wk->font );
 
     // ポケモン名描画
     for(i=0;i<PKWD_POKEMON_MAX;i++){
-      if(wk->my_monsno[index][i]!=0){
-        monsname = GFL_MSG_CreateString( GlobalMsg_PokeName, wk->my_monsno[index][i] );
+      if(wk->valid_list[index]->my_monsno[i]!=0){
+        monsname = GFL_MSG_CreateString( GlobalMsg_PokeName, wk->valid_list[index]->my_monsno[i] );
         PRINT_UTIL_Print( &wk->print_util[PKWD_BMP_INFORMATION], wk->print_que, 
                           monsname_pos[i][0], monsname_pos[i][1], monsname, wk->font );
         GFL_STR_DeleteBuffer( monsname   );
@@ -2085,7 +2113,7 @@ static int _check_nowpos( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
   int i;
   // ロードが成功しているカーソル位置を探す
   for(i=wk->nowpos;i>=0;i--){
-    if(wk->load_result[_get_real_pos(wk, i)]==TRUE){
+    if(wk->valid_list[_get_real_pos(wk, i)]->load_result==TRUE){
       break;
     }
   }
@@ -2264,7 +2292,7 @@ static BOOL SubSeq_Select_WatchWait( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
     // 「みる」
     if(result==0){
       wk->seq = MENU_FADEOUT;
-      *wk->param->result = _get_real_pos(wk, wk->nowpos);
+      *wk->param->result = wk->valid_list[_get_real_pos(wk, wk->nowpos)]->slot_no;
     // 「じょうほう」
     }else if(result==1){
       wk->seq = MENU_PUT_INFORMATION;
@@ -2353,7 +2381,7 @@ static BOOL SubSeq_Yesno_Delete2Wait( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
   if((result=_menuselect_wait(wk))>=0){
     if(result==0){
         wk->seq = MENU_FADEOUT;
-        *wk->param->result = _get_real_pos(wk, wk->nowpos);
+        *wk->param->result = wk->valid_list[_get_real_pos(wk, wk->nowpos)]->slot_no;
     }else{
       wk->seq   = MENU_START;
       _set_cursor_blink( wk, wk->nowpos );
@@ -2447,7 +2475,7 @@ static BOOL SubSeq_PutInformationWait( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 //----------------------------------------------------------------------------------
 static void _touchbar_button_refresh( PKWD_SELECT_SCREEN_MAIN_WORK *wk, BOOL flag )
 {
-  if(wk->load_result[4]==FALSE){
+  if(wk->valid_list[4]->load_result==FALSE){
     // ４個以内なら表示しない
     flag = FALSE;
   }
