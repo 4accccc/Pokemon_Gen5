@@ -912,6 +912,8 @@ static void KeySys_Seq_App_Difficulty( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, voi
     SEQ_MAIN,
 
     SEQ_SAVE,
+    SEQ_CONFIRM_MSG_START,
+    SEQ_CONFIRM_MSG_WAIT,
     SEQ_RET_START,
     SEQ_RET_WAIT,
 
@@ -954,6 +956,19 @@ static void KeySys_Seq_App_Difficulty( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, voi
     KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_Save );
     (*p_seq)++;
     break;
+
+  case SEQ_CONFIRM_MSG_START:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_SETTING_MES_01+KEY_SYSTEM_SAVE_GetDifficult(p_wk->p_key_sv), KEYSYS_TEXT_TYPE_STREAM );
+    (*p_seq)++;
+    break;
+
+  case SEQ_CONFIRM_MSG_WAIT:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+
   case SEQ_RET_START:
     KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KeySys_Mes_GetDifficultInfoMessage(p_wk->p_key_sv), KEYSYS_TEXT_TYPE_QUE );
     (*p_seq)++;
@@ -1017,6 +1032,8 @@ static void KeySys_Seq_App_Wfbc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     SEQ_MAIN,
 
     SEQ_SAVE,
+    SEQ_CONFIRM_MSG_START,
+    SEQ_CONFIRM_MSG_WAIT,
     SEQ_RET_START,
     SEQ_RET_WAIT,
 
@@ -1059,6 +1076,19 @@ static void KeySys_Seq_App_Wfbc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_Save );
     (*p_seq)++;
     break;
+
+  case SEQ_CONFIRM_MSG_START:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_SETTING_MES_04+KEY_SYSTEM_SAVE_GetWfbc(p_wk->p_key_sv), KEYSYS_TEXT_TYPE_STREAM );
+    (*p_seq)++;
+    break;
+
+  case SEQ_CONFIRM_MSG_WAIT:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+
   case SEQ_RET_START:
     KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KeySys_Mes_GetWfbcInfoMessage(p_wk->p_key_sv ), KEYSYS_TEXT_TYPE_QUE );
     (*p_seq)++;
@@ -1133,6 +1163,8 @@ static void KeySys_Seq_App_Door( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     SEQ_MAIN,
 
     SEQ_SAVE,
+    SEQ_CONFIRM_MSG_START,
+    SEQ_CONFIRM_MSG_WAIT,
     SEQ_RET_START,
     SEQ_RET_WAIT,
 
@@ -1175,6 +1207,19 @@ static void KeySys_Seq_App_Door( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_Save );
     (*p_seq)++;
     break;
+
+  case SEQ_CONFIRM_MSG_START:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_SETTING_MES_05+KEY_SYSTEM_SAVE_GetDoor(p_wk->p_key_sv), KEYSYS_TEXT_TYPE_STREAM );
+    (*p_seq)++;
+    break;
+
+  case SEQ_CONFIRM_MSG_WAIT:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+
   case SEQ_RET_START:
     KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KeySys_Mes_GetDoorInfoMessage(p_wk->p_key_sv), KEYSYS_TEXT_TYPE_QUE );
     (*p_seq)++;
@@ -1549,8 +1594,15 @@ static void KeySys_Seq_Save( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
   case SEQ_COMPLETE_MSG_START:
     if( p_wk->cnt++ > KEYSYS_SAVE_MSG_SYNC )
     {
+      KEYSYS_TEXT_TYPE type = KEYSYS_TEXT_TYPE_STREAM;
+
+      if( GFL_NET_IsInit() )
+      {
+        type = KEYSYS_TEXT_TYPE_STREAM_FIX;
+      }
+
       p_wk->cnt = 0;
-      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_45, KEYSYS_TEXT_TYPE_STREAM_FIX );
+      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_45, type );
     (*p_seq)++;
     }
     break;

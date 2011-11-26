@@ -3180,10 +3180,10 @@
 			<Text>ノーマルモードに
 せっていを　へんこうしました▼
 トレーナーとの　ポケモンしょうぶが
-ふつうの　つよさに　なります</Text>
+ふつうの　つよさに　なります▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-24T11:39:27" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-26T08:03:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -3194,10 +3194,10 @@
 			<Text>ノーマルモードに
 設定を　変更しました▼
 トレーナーとの　ポケモン勝負が
-普通の　つよさに　なります</Text>
+普通の　つよさに　なります▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-24T11:39:35" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-26T08:03:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -3220,10 +3220,10 @@
 			<Text>チャレンジモードに
 せっていを　へんこうしました▼
 トレーナーとの　ポケモンしょうぶが
-てごわく　なります</Text>
+てごわく　なります▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-24T11:39:42" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-26T08:02:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -3234,10 +3234,10 @@
 			<Text>チャレンジモードに
 設定を　変更しました▼
 トレーナーとの　ポケモン勝負が
-てごわく　なります</Text>
+てごわく　なります▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-24T11:39:48" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-26T08:02:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -3254,6 +3254,42 @@
 	</TextRow>
 	<TextRow
 		Label="KEYSYS_SETTING_MES_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ブラックシティに
+せっていを　へんこうしました▼</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:39:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:39:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホワイトシティに
+せっていを　へんこうしました▼</Text>
+			<TextModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:40:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:40:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>キー設定後
+インフォメーションメッセージ</Comment>
+			<CommentModifiedBy
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-24T11:39:20" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="KEYSYS_SETTING_MES_04_2"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
