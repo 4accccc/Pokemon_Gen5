@@ -23,6 +23,8 @@
 //--------------------------------------------------------------
 _EVENT_DATA		ev_d26pc0101_shop
 _EVENT_DATA		ev_d26pc0101_fix_shop
+_EVENT_DATA		ev_d26pc0101_veteranm_01
+_EVENT_DATA		ev_d26pc0101_trainerw_01
 _EVENT_DATA_END
 
 
@@ -48,3 +50,16 @@ EVENT_START ev_d26pc0101_fix_shop
   _FIX_SHOP_CALL( D26_FS )
 EVENT_END
 
+/************************************************************/
+/*	ベテラントレーナー　一言会話						*/
+/************************************************************/
+EVENT_START	ev_d26pc0101_veteranm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d26pc0101_veteranm_01 )
+EVENT_END
+
+/************************************************************/
+/*	エリートトレーナー　一言会話						*/
+/************************************************************/
+EVENT_START	ev_d26pc0101_trainerw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d26pc0101_trainerw_01 )
+EVENT_END
