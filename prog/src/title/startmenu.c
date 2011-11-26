@@ -388,14 +388,21 @@ static const u8 BmpWinData[][6] =
 		BMPWIN_REPORT_FRM, BMPWIN_WFBC_PX, BMPWIN_WFBC_PY,
 		BMPWIN_WFBC_SX, BMPWIN_WFBC_SY, BMPWIN_LIST_PAL
 	},
+	{	// キーシステム
+		BMPWIN_REPORT_FRM, BMPWIN_DOOR_PX, BMPWIN_DOOR_PY,
+		BMPWIN_DOOR_SX, BMPWIN_DOOR_SY, BMPWIN_LIST_PAL
+	},
 };
 
 // OBJ
 static const GFL_CLWK_DATA PlayerObjData = { PLAYER_OBJ_PX, PLAYER_OBJ_PY, 1, 0, 1 };
 static const GFL_CLWK_DATA NewObjData = { NEW_OBJ_PX, 0, 0, 0, 1 };
 static const GFL_CLWK_DATA WiconObjData = { WICON_OBJ_PX, 0, 1, 0, 1 };
-static const GFL_CLWK_DATA KeyObjData00 = { KEY_00_OBJ_PX, KEY_00_OBJ_PY, 0, 0, 0 };
-static const GFL_CLWK_DATA KeyObjData01 = { KEY_01_OBJ_PX, KEY_01_OBJ_PY, 0, 0, 0 };
+static const GFL_CLWK_DATA KeyObjData[] = {
+    { KEY_00_OBJ_PX, KEY_00_OBJ_PY, 0, 0, 0 },
+    { KEY_01_OBJ_PX, KEY_01_OBJ_PY, 0, 0, 0 },
+    { KEY_02_OBJ_PX, KEY_02_OBJ_PY, 0, 0, 0 },
+};
 
 #define	SAVE_BREAK_MESSAGE_MAX		( 11 )		// セーブデータ破損メッセージ数
 
@@ -1758,7 +1765,7 @@ static void InitBmp( START_MENU_WORK * wk )
 	PRINT_UTIL_PrintColor( &wk->util[BMPWIN_KEYINFO], wk->que, 0, 4, str, wk->font, FCOL_WP05WN );
 	GFL_STR_DeleteBuffer( str );
   {
-    PRINT_UTIL  *p_wfbc_util = &wk->util[BMPWIN_WFBC];
+    u32 key_bmpwin = BMPWIN_DIFFICULTY;
 	  //　なんいど
 	  {
 	    KEY_SYSTEM_DIFFICULT diffcult = KEY_SYSTEM_SAVE_GetDifficult( wk->keysys );
@@ -1771,16 +1778,13 @@ static void InitBmp( START_MENU_WORK * wk )
 	    {
 	      strID = START_MENU_STR_ITEM_01_14;
 	    }
-	    else
-	    {
-        p_wfbc_util = &wk->util[BMPWIN_DIFFICULTY];
-	    }
 
       if( strID != 0 )
       {
 		    str = GFL_MSG_CreateString( wk->mman, strID );
-		    PRINT_UTIL_PrintColor( &wk->util[BMPWIN_DIFFICULTY], wk->que, 0, 0, str, wk->font, FCOL_WP05WN );
+		    PRINT_UTIL_PrintColor( &wk->util[key_bmpwin], wk->que, 0, 0, str, wk->font, FCOL_WP05WN );
 		    GFL_STR_DeleteBuffer( str );
+        ++key_bmpwin;
       }
 	  }
 	  //　まち設定
@@ -1788,18 +1792,7 @@ static void InitBmp( START_MENU_WORK * wk )
 	    KEY_SYSTEM_WFBC wfbc = KEY_SYSTEM_SAVE_GetWfbc( wk->keysys );
 	    int strID = 0;
 	
-	    if( wfbc == KEY_SYSTEM_WFBC_SELF )
-	    {
-	      if( GET_VERSION() == VERSION_W2 )
-	      {
-	        strID = START_MENU_STR_ITEM_01_15;
-	      }
-	      else
-	      {
-	        strID = START_MENU_STR_ITEM_01_16;
-	      }
-	    }
-	    else
+	    if( wfbc != KEY_SYSTEM_WFBC_SELF )
 	    {
 	      if( GET_VERSION() == VERSION_W2 )
 	      {
@@ -1811,9 +1804,34 @@ static void InitBmp( START_MENU_WORK * wk )
 	      }
 	    }
 	
-		  str = GFL_MSG_CreateString( wk->mman, strID );
-		  PRINT_UTIL_PrintColor( p_wfbc_util, wk->que, 0, 0, str, wk->font, FCOL_WP05WN );
-		  GFL_STR_DeleteBuffer( str );
+      if( strID != 0 )
+      {
+        str = GFL_MSG_CreateString( wk->mman, strID );
+        PRINT_UTIL_PrintColor( &wk->util[key_bmpwin], wk->que, 0, 0, str, wk->font, FCOL_WP05WN );
+        GFL_STR_DeleteBuffer( str );
+        ++key_bmpwin;
+      }
+    }
+	  ///ドア
+	  {
+	    KEY_SYSTEM_DOOR door = KEY_SYSTEM_SAVE_GetDoor( wk->keysys );
+	    int strID = 0;
+	    if( door == KEY_SYSTEM_DOOR_BLACK )
+	    {
+	      strID = START_MENU_STR_ITEM_01_18;
+	    }
+	    else if( door == KEY_SYSTEM_DOOR_WHITE )
+	    {
+	      strID = START_MENU_STR_ITEM_01_19;
+	    }
+
+      if( strID != 0 )
+      {
+		    str = GFL_MSG_CreateString( wk->mman, strID );
+		    PRINT_UTIL_PrintColor( &wk->util[key_bmpwin], wk->que, 0, 0, str, wk->font, FCOL_WP05WN );
+		    GFL_STR_DeleteBuffer( str );
+        ++key_bmpwin;
+      }
 	  }
   }
 
@@ -2006,20 +2024,15 @@ static void InitObj( START_MENU_WORK * wk )
 															wk->celRes[CELRES_WICON],
 															&WiconObjData, CLSYS_DRAW_MAIN, HEAPID_STARTMENU );
 
-		wk->clwk[OBJ_ID_KEY_00] = GFL_CLACT_WK_Create(
-															wk->clunit,
-															wk->chrRes[CHRRES_OBJ_D],
-															wk->palRes[PALRES_OBJ_D],
-															wk->celRes[CELRES_OBJ_D],
-															&KeyObjData00, CLSYS_DRAW_SUB, HEAPID_STARTMENU );
-		wk->clwk[OBJ_ID_KEY_01] = GFL_CLACT_WK_Create(
-															wk->clunit,
-															wk->chrRes[CHRRES_OBJ_D],
-															wk->palRes[PALRES_OBJ_D],
-															wk->celRes[CELRES_OBJ_D],
-															&KeyObjData01, CLSYS_DRAW_SUB, HEAPID_STARTMENU );
-    GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_KEY_00], FALSE );
-    GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_KEY_01], FALSE );
+    for( i = OBJ_ID_KEY_00; i <= OBJ_ID_KEY_02; i++ ){
+      wk->clwk[i] = GFL_CLACT_WK_Create(
+          wk->clunit,
+          wk->chrRes[CHRRES_OBJ_D],
+          wk->palRes[PALRES_OBJ_D],
+          wk->celRes[CELRES_OBJ_D],
+          &KeyObjData[i-OBJ_ID_KEY_00], CLSYS_DRAW_SUB, HEAPID_STARTMENU );
+      GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], FALSE );
+    }
   }
 
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );		// MAIN DISP OBJ ON
@@ -2401,6 +2414,8 @@ static void PutReportInfo( START_MENU_WORK * wk )
   {
     int i;
     BOOL is_change = FALSE;
+    u32 key_mark  = OBJ_ID_KEY_00;
+    u32 key_bmpwin  = BMPWIN_DIFFICULTY;
 
     for( i = BMPWIN_REPORT; i <= BMPWIN_BADGE; i++ )
     {
@@ -2409,24 +2424,29 @@ static void PutReportInfo( START_MENU_WORK * wk )
 
     if( KEY_SYSTEM_DIFFICULT_NORMAL != KEY_SYSTEM_SAVE_GetDifficult( wk->keysys ) )
     {
-	    GFL_BMPWIN_MakeScreen( wk->util[BMPWIN_DIFFICULTY].win );
-      GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_KEY_00], TRUE );
+	    GFL_BMPWIN_MakeScreen( wk->util[key_bmpwin].win );
+      GFL_CLACT_WK_SetDrawEnable( wk->clwk[key_mark], TRUE );
       is_change = TRUE;
+      ++key_mark;
+      ++key_bmpwin;
     }
 
     if( KEY_SYSTEM_SAVE_GetWfbc( wk->keysys ) == KEY_SYSTEM_WFBC_REVERSE )
     {
-      if( is_change )
-      {
-        GFL_BMPWIN_MakeScreen( wk->util[BMPWIN_WFBC].win );
-        GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_KEY_01], TRUE );
-      }
-      else
-      {
-	      GFL_BMPWIN_MakeScreen( wk->util[BMPWIN_DIFFICULTY].win );
-        GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_KEY_00], TRUE );
-      }
+      GFL_BMPWIN_MakeScreen( wk->util[key_bmpwin].win );
+      GFL_CLACT_WK_SetDrawEnable( wk->clwk[key_mark], TRUE );
+      ++key_mark;
+      ++key_bmpwin;
       is_change = TRUE;
+    }
+
+    if( KEY_SYSTEM_SAVE_GetDoor( wk->keysys ) != KEY_SYSTEM_DOOR_NORMAL )
+    {
+      GFL_BMPWIN_MakeScreen( wk->util[key_bmpwin].win );
+      GFL_CLACT_WK_SetDrawEnable( wk->clwk[key_mark], TRUE );
+      is_change = TRUE;
+      ++key_mark;
+      ++key_bmpwin;
     }
 
     if( is_change )
@@ -2460,7 +2480,7 @@ static void ClearReportInfo( START_MENU_WORK * wk )
   {
     int i;
 
-    for( i = BMPWIN_REPORT; i <= BMPWIN_WFBC; i++ )
+    for( i = BMPWIN_REPORT; i <= BMPWIN_DOOR; i++ )
     {
 	    GFL_BMPWIN_ClearScreen( wk->util[i].win );
     }
@@ -2468,6 +2488,7 @@ static void ClearReportInfo( START_MENU_WORK * wk )
 
   GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_KEY_00], FALSE );
   GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_KEY_01], FALSE );
+  GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_KEY_02], FALSE );
   GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_PLAYER], FALSE );
   GFL_BG_LoadScreenV_Req( BMPWIN_REPORT_FRM );
   GFL_BG_ClearScreenCodeVReq(GFL_BG_FRAME1_S,0);

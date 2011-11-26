@@ -50,6 +50,7 @@ enum {
   BMPWIN_KEYINFO,
   BMPWIN_DIFFICULTY,
   BMPWIN_WFBC,
+  BMPWIN_DOOR,
 
 	BMPWIN_MAX
 };
@@ -118,6 +119,11 @@ enum {
 #define	BMPWIN_WFBC_PY			( 20 )
 #define	BMPWIN_WFBC_SX			( 19 )
 #define	BMPWIN_WFBC_SY			( 2 )
+//DOOR
+#define	BMPWIN_DOOR_PX			( 7 )
+#define	BMPWIN_DOOR_PY			( 22 )
+#define	BMPWIN_DOOR_SX			( 19 )
+#define	BMPWIN_DOOR_SY			( 2 )
 //Åuç≈èâÇ©ÇÁénÇﬂÇÈÅv
 #define	BMPWIN_START_PX			( 2 )
 #define	BMPWIN_START_PY			( 0 )
@@ -257,6 +263,7 @@ enum {
 	OBJ_ID_PLAYER = OBJ_ID_SCROLL_OBJ_MAX,
   OBJ_ID_KEY_00,
   OBJ_ID_KEY_01,
+  OBJ_ID_KEY_02,
 	OBJ_ID_MAX
 };
 
@@ -303,3 +310,5 @@ enum {
 #define	KEY_00_OBJ_PY		( 152 )
 #define	KEY_01_OBJ_PX		( 48 )
 #define	KEY_01_OBJ_PY		( 168 )
+#define	KEY_02_OBJ_PX		( 48 )
+#define	KEY_02_OBJ_PY		( 184 )
