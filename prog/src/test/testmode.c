@@ -175,6 +175,7 @@ static BOOL TESTMODE_ITEM_SelectFuncMori( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncNakamura( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncHosaka( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncKawada( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectFuncPGL( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncNCL( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_BackTopMenu( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncRTCEdit( TESTMODE_WORK *work , const int idx );
@@ -270,6 +271,7 @@ static TESTMODE_MENU_LIST topMenu[] =
   {L"Ç»Ç©ÇﬁÇÁÅ@Ç–ÇÎÇ‰Ç´"  ,TESTMODE_ITEM_SelectFuncNakamura},
   {L"ÇŸÇ≥Ç©Å@Ç∞ÇÒÇ‚"      ,TESTMODE_ITEM_SelectFuncHosaka},
   {L"Ç©ÇÌÇæÅ@Ç±Ç§Ç∂"      ,TESTMODE_ITEM_SelectFuncKawada},
+  {L"PGL"                 ,TESTMODE_ITEM_SelectFuncPGL},
   {L"Ç…ÇÒÇƒÇÒÇ«Ç§"        ,TESTMODE_ITEM_SelectFuncNCL},
 };
 
@@ -1141,6 +1143,15 @@ extern const GFL_PROC_DATA DebugKawadaMainProcData;
 static BOOL TESTMODE_ITEM_SelectFuncKawada( TESTMODE_WORK *work , const int idx )
 {
   TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(kawada_debug), &DebugKawadaMainProcData, NULL);
+  return TRUE;
+}
+
+// PGL
+FS_EXTERN_OVERLAY(pgl_debug);
+extern const GFL_PROC_DATA DebugPGLProcData;
+static BOOL TESTMODE_ITEM_SelectFuncPGL( TESTMODE_WORK *work , const int idx )
+{
+  TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(pgl_debug), &DebugPGLProcData, NULL);
   return TRUE;
 }
 
