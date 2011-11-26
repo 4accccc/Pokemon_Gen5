@@ -3420,7 +3420,7 @@ static GMEVENT_RESULT EVENT_MapChangePalace( GMEVENT* event, int* seq, void* wk 
       //ＳＥ
       PMSND_PlaySE( SEQ_SE_FLD_131 );
       //エフェクトコール
-      GMEVENT_CallEvent( event, EVENT_FieldFadeOut_White( gameSystem, fieldmap, FIELD_FADE_WAIT ) );
+      GMEVENT_CallEvent( event, EVENT_FieldFadeOut_WhiteEx( gameSystem, fieldmap, FIELD_FADE_WAIT, FIELD_FADE_SLOW_WAIT ) );
     }else{
       //ＳＥ
       PMSND_PlaySE( SEQ_SE_FLD_131 );

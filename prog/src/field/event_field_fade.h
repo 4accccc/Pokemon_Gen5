@@ -95,13 +95,18 @@ extern FIELD_FADE_TYPE FIELD_FADE_GetFadeInType( u16 prevZoneID, u16 nextZoneID 
  * @param	fieldmap
  * @param	fadeType		       フェードの種類指定
  * @param fadeFinishWaitFlag フェード完了を待つかどうか(輝度フェード時のみ有効)
+ * @param fadeSpeed           フェード速度 FIELD_FADE_DEFAULT_WAIT他(輝度フェード時のみ有効)
  *
  * @return 生成したイベント
  */
 //----------------------------------------------------------------------------------
 extern GMEVENT* EVENT_FieldFadeOut( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, 
                                     FIELD_FADE_TYPE fadeType, 
-                                    FIELD_FADE_WAIT_FLAG fadeFinishWaitFlag ); 
+                                    FIELD_FADE_WAIT_FLAG fadeFinishWaitFlag );
+extern GMEVENT* EVENT_FieldFadeOutEx( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, 
+                                      FIELD_FADE_TYPE fadeType, 
+                                      FIELD_FADE_WAIT_FLAG fadeFinishWaitFlag,
+                                      int fadeSpeed );
 // クロスフェード
 #define EVENT_FieldFadeOut_Cross( gsys, fieldmap ) \
         EVENT_FieldFadeOut( gsys, fieldmap, FIELD_FADE_CROSS, 0 )
@@ -111,6 +116,12 @@ extern GMEVENT* EVENT_FieldFadeOut( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fie
 // 輝度フェード(ホワイト)
 #define EVENT_FieldFadeOut_White( gsys, fieldmap, wait ) \
         EVENT_FieldFadeOut( gsys, fieldmap, FIELD_FADE_WHITE, wait )
+// 輝度フェード(ブラック) フェード速度指定可
+#define EVENT_FieldFadeOut_BlackEx( gsys, fieldmap, wait, speed ) \
+        EVENT_FieldFadeOutEx( gsys, fieldmap, FIELD_FADE_BLACK, wait, speed )
+// 輝度フェード(ホワイト) フェード速度指定可
+#define EVENT_FieldFadeOut_WhiteEx( gsys, fieldmap, wait, speed ) \
+        EVENT_FieldFadeOutEx( gsys, fieldmap, FIELD_FADE_WHITE, wait, speed )
 // 季節フェード
 #define EVENT_FieldFadeOut_Season( gsys, fieldmap, wait ) \
         EVENT_FieldFadeOut( gsys, fieldmap, FIELD_FADE_BLACK, wait )

@@ -46,7 +46,7 @@ static void InitFieldBG( FIELDMAP_WORK* fieldmap );
 // □イベント生成関数
 //--------------------------------------------------------------------------------------------
 static GMEVENT* EVENT_BrightOut( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,                   // 輝度フェードアウト 
-                                 FIELD_FADE_TYPE fadeType, FIELD_FADE_WAIT_FLAG fadeFinishWaitFlag ); //
+                                 FIELD_FADE_TYPE fadeType, FIELD_FADE_WAIT_FLAG fadeFinishWaitFlag, int fadeSpeed ); //
 static GMEVENT* EVENT_BrightIn( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, // 輝度フェードイン
                                  FIELD_FADE_TYPE fadeType,                         // 
                                  FIELD_FADE_WAIT_FLAG fadeFinishWaitFlag,          // 
@@ -101,7 +101,7 @@ typedef struct
 
   // 輝度フェード
   int                     brightFadeMode;      // フェードモード
-  int                     FadeSpeed;
+  int                     FadeSpeed;           // フェード速度指定 FIELD_FADE_DEFAULT_WAIT他
   FIELD_FADE_WAIT_FLAG    fadeFinishWaitFlag;  // フェード処理の完了を待つかどうか
   FIELD_FADE_BG_INIT_FLAG BGInitFlag;          // BG面の初期化を行うかどうか
 
@@ -177,6 +177,7 @@ extern FIELD_FADE_TYPE FIELD_FADE_GetFadeInType( u16 prevZoneID, u16 nextZoneID 
  * @param	fieldmap
  * @param	fadeType		       フェードの種類指定
  * @param fadeFinishWaitFlag フェード完了を待つかどうか(輝度フェード時のみ有効)
+ * @param fadeSpeed           フェード速度 FIELD_FADE_DEFAULT_WAIT他(輝度フェード時のみ有効)
  *
  * @return 生成したイベント
  */
@@ -184,6 +185,14 @@ extern FIELD_FADE_TYPE FIELD_FADE_GetFadeInType( u16 prevZoneID, u16 nextZoneID 
 GMEVENT* EVENT_FieldFadeOut( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, 
                              FIELD_FADE_TYPE fadeType, 
                              FIELD_FADE_WAIT_FLAG fadeFinishWaitFlag ) 
+{
+  return EVENT_FieldFadeOutEx( gameSystem, fieldmap, fadeType, fadeFinishWaitFlag, FIELD_FADE_DEFAULT_WAIT );
+}
+
+GMEVENT* EVENT_FieldFadeOutEx( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, 
+                             FIELD_FADE_TYPE fadeType, 
+                             FIELD_FADE_WAIT_FLAG fadeFinishWaitFlag,
+                             int fadeSpeed ) 
 { 
   GMEVENT* event;
 
@@ -196,7 +205,7 @@ GMEVENT* EVENT_FieldFadeOut( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
   case FIELD_FADE_BLACK:  // 輝度フェード(ブラック)
   case FIELD_FADE_WHITE:  // 輝度フェード(ホワイト)
   case FIELD_FADE_SEASON: // 季節フェード
-    event = EVENT_BrightOut( gameSystem, fieldmap, fadeType, fadeFinishWaitFlag );
+    event = EVENT_BrightOut( gameSystem, fieldmap, fadeType, fadeFinishWaitFlag, fadeSpeed );
     break;
   case FIELD_FADE_HOLE: // ホールアウト
     event = EVENT_HoleOut( gameSystem, fieldmap );
@@ -533,6 +542,7 @@ static FIELD_FADE_TYPE GetFadeInType_byMapChangeType( MC_TYPE prevMapChangeType,
  * @param	fieldmap
  * @param	fadeType		        フェードの種類指定 ( FIELD_FADE_BLACK or FIELD_FADE_WHITE )
  * @param fadeFinishWaitFlag  フェード完了を待つかどうか
+ * @param fadeSpeed           フェード速度 FIELD_FADE_DEFAULT_WAIT他
  *
  * @return 生成したイベント
  */
@@ -540,7 +550,8 @@ static FIELD_FADE_TYPE GetFadeInType_byMapChangeType( MC_TYPE prevMapChangeType,
 static GMEVENT* EVENT_BrightOut( GAMESYS_WORK* gameSystem, 
                                       FIELDMAP_WORK* fieldmap, 
                                       FIELD_FADE_TYPE fadeType, 
-                                      FIELD_FADE_WAIT_FLAG fadeFinishWaitFlag )
+                                      FIELD_FADE_WAIT_FLAG fadeFinishWaitFlag,
+                                      int fadeSpeed )
 {
 	GMEVENT* event;
 	FADE_EVENT_WORK* work;
@@ -553,6 +564,7 @@ static GMEVENT* EVENT_BrightOut( GAMESYS_WORK* gameSystem,
   work->fieldmap           = fieldmap;
   work->fadeType           = fadeType;
   work->fadeFinishWaitFlag = fadeFinishWaitFlag;
+  work->FadeSpeed          = fadeSpeed;
   work->brightFadeMode     = GetBrightFadeMode( fadeType );
 
 	return event;
@@ -1017,7 +1029,7 @@ static GMEVENT_RESULT BrightOutEvent( GMEVENT* event, int* seq, void* wk )
 	switch( *seq ) {
 	case 0:
     // フェード開始
-    GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 0, 16, FIELD_FADE_DEFAULT_WAIT );
+    GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 0, 16, work->FadeSpeed );
     //室外表現演出開始
     {
       FIELD_GOOUT_EFFECT *p_goout = FIELDMAP_GetGooutEffect( work->fieldmap );
