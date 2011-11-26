@@ -29,7 +29,6 @@
  *					プロトタイプ宣言
 */
 //=============================================================================
-static u8 GetFloorNum( u8 area_id );
 static void RemoveTrRoom( INF_DUNGEON_DATA *p_dungeon_data ,const u8 floor_no ,int rmv_num ,GFL_STD_RandContext *rand_context );
 static int GetBossRoomSetArray( ROOM_DATA *p_room_data ,int *p_index_array ,int fs_x ,int fs_y);
 static int GetElevatorSetArray( ROOM_DATA *p_room_data ,int *p_index_array ,int fs_x ,int fs_y);
@@ -57,7 +56,7 @@ static u8 GetDefaultRoomTypeArray( int area_no ,u8 floor_no ,u8 version ,u8 *p_p
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void INF_DCREATOR_SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no, u32 seed ,int fs_x ,int fs_y)
+void INF_DCREATOR_SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no, u32 seed ,int fs_x ,int fs_y,u8 top_floor)
 {
   int i,j,k;
   DIG_POS elv_pos[INFINITYDUNGEON_FLOOR_MAX];
@@ -108,14 +107,12 @@ void INF_DCREATOR_SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no,
     ROOM_DATA *p_rd;
     ROOM_DATA *p_room_data;
     int floor_no;
-    u8 top_floor;
     int max;
     int room_index;
     int index_array[ROOM_MAX];
     u8 room_id;
 
     // 階数を決定
-    top_floor = GetFloorNum( area_no );
     floor_no = GFL_STD_Rand( &rand_context ,top_floor);
     p_room_data = p_dungeon_data->room_data[floor_no];
 
@@ -140,7 +137,6 @@ void INF_DCREATOR_SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no,
   //ランダム
   {
     int floor_no;
-    u8 top_floor = GetFloorNum( area_no );
     for( floor_no = 0; floor_no < top_floor; floor_no++ )
     {
       ROOM_DATA *p_room_data = p_dungeon_data->room_data[floor_no];
@@ -222,7 +218,6 @@ void INF_DCREATOR_SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no,
 
   // 部屋タイプ取得部分はVSプロジェクト移植対象外です
   {
-    u8 top_floor = GetFloorNum( area_no );
     for( i = 0; i<top_floor; i++ )
     {
       // 配置する部屋を取得
@@ -352,38 +347,6 @@ static u8 GetDefaultRoomTypeArray( int area_no ,u8 floor_no ,u8 version ,u8 *p_p
   }
   return data_index;
 
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  指定フロアが何回あるかを返す
- *
- *	@param	now_area 
- *
- *	@retval
- *
- *	@note	 無限ダンジョンセーブにも同じ機能があるが、
- *	       この機能のみVSプロジェクトに載せる
- */
-//-----------------------------------------------------------------------------
-static u8 GetFloorNum( u8 area_id )
-{
-  // フロアごとのスタート回数
-  const u8 floor_num_table[ INFINITY_DUNGEON_AREA_ID_MAX ] =
-  {
-    INFINITYDUNGEON_FLOOR_AREA1_MAX,
-    INFINITYDUNGEON_FLOOR_AREA2_MAX,
-    INFINITYDUNGEON_FLOOR_AREA3_MAX,
-    INFINITYDUNGEON_FLOOR_AREA4_MAX,
-    INFINITYDUNGEON_FLOOR_AREA5_MAX,
-    INFINITYDUNGEON_FLOOR_AREA6_MAX,
-    INFINITYDUNGEON_FLOOR_AREA7_MAX,
-    INFINITYDUNGEON_FLOOR_AREA8_MAX,
-    INFINITYDUNGEON_FLOOR_AREA9_MAX,
-    INFINITYDUNGEON_FLOOR_AREA10_MAX,
-  };
-
-  return floor_num_table[ area_id ];
 }
 
 //----------------------------------------------------------------------------

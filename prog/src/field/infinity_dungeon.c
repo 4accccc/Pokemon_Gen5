@@ -135,7 +135,7 @@ static const ROOM_DATA* GetNextRoomData( const MAP_CHAGE_EVENT_WORK *p_wk );
 static const ROOM_DATA* GetNowRoomData( const MAP_CHAGE_EVENT_WORK *p_wk );
 
 // ダンジョン生成
-static void SetBUildModel( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p_room_data);
+static void SetBUildModel( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p_room_data ,s32 set_floor ,s32 set_room );
 static void AddDummyObj( const MAP_CHAGE_EVENT_WORK *p_wk , const GRID_DATA *p_grid_data);
 static void SetDummyObj( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p_room_data);
 static BOOL SetTutorialMap( const INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *p_dungeon_data );
@@ -488,7 +488,7 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
         if( (p_next_room->room_type != ROOM_TYPE_BOSS) )
         {
           // 配置モデルを配置
-          SetBUildModel(p_wk,p_next_room);
+          SetBUildModel(p_wk,p_next_room,p_wk->next_floor,p_wk->next_room);
 
           // 封鎖用OBJ配置
           SetDummyObj(p_wk,p_next_room);
@@ -888,7 +888,7 @@ const BMODEL_ID* INFINITY_DUNGEON_GetBModelIdTable( const INF_DUNGEON_DATA *p_du
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void SetBUildModel( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p_room_data)
+static void SetBUildModel( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p_room_data ,s32 set_floor ,s32 set_room )
 {
 
   FIELD_BMODEL *p_bmdl;
@@ -913,7 +913,7 @@ static void SetBUildModel( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p
     if( p_room_data->room_type != ROOM_TYPE_ELEVATOR )
     {
       // 上の部屋がボス部屋だった場合は設置しない
-      BOOL is_boss = INFINITY_DUNGEON_GetUpPosRoomTypeIsBoss( p_wk->p_dungeon_data ,p_wk->next_floor ,p_wk->next_room) ;
+      BOOL is_boss = INFINITY_DUNGEON_GetUpPosRoomTypeIsBoss( p_wk->p_dungeon_data ,set_floor ,set_room) ;
       if( !is_boss )
       {
         if( !p_room_data->can_move[INF_MOVE_UP] )
@@ -956,6 +956,7 @@ static void SetBUildModel( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p
  *
  *	@param	*p_wk 
  *	@param	p_room_data
+ *	@note   次の部屋を参照するときのみ使用できます
  *
  *	@retval
  */
@@ -1061,7 +1062,7 @@ void INFINITY_DUNGEON_Recovery( GAMESYS_WORK *p_gsys ,const INF_DUNGEON_DATA  *p
   const ROOM_DATA       *p_room_data;
 
   // ワーク確保
-  p_wk = GFL_HEAP_AllocMemoryLo( HEAPID_FIELDMAP, sizeof( MAP_CHAGE_EVENT_WORK ) );
+  p_wk = GFL_HEAP_AllocClearMemoryLo( HEAPID_FIELDMAP, sizeof( MAP_CHAGE_EVENT_WORK ) );
 
   // ダンジョンデータの設定
   p_wk->p_dungeon_data = p_dungeon_data;
@@ -1071,7 +1072,7 @@ void INFINITY_DUNGEON_Recovery( GAMESYS_WORK *p_gsys ,const INF_DUNGEON_DATA  *p
 
   // 配置モデルを配置
   p_room_data = GetNowRoomData( p_wk );
-  SetBUildModel(p_wk,p_room_data);
+  SetBUildModel(p_wk,p_room_data ,p_wk->now_floor ,p_wk->now_room );
  
   GFL_HEAP_FreeMemory( p_wk );
 }
@@ -1113,6 +1114,7 @@ static u16 GetFieldDir( u16 warp_dir )
  *	@param	p_room_data
  *
  *	@retval
+ *	@note   次の部屋を参照するときのみ使用できます
  */
 //-----------------------------------------------------------------------------
 static void SetTrainer( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p_room_data)
@@ -1278,7 +1280,7 @@ static void GetFloorData( const INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *
     INF_TOOL_GetFloorSize( area_no ,&fs_x ,&fs_y);
     top_floor = INFINITYDUNGEON_SAVE_GetFloorNum( area_no );
     // ダンジョンデータを生成(エリアに対応したサイズで生成する)
-    INF_DCREATOR_SetDungeonData( p_dungeon_data ,area_no ,p_seed->dungeon_data_seed ,fs_x ,fs_y);
+    INF_DCREATOR_SetDungeonData( p_dungeon_data ,area_no ,p_seed->dungeon_data_seed ,fs_x ,fs_y,top_floor);
     // トレーナーデータをセット
     INF_DCREATOR_SetTrainerData( p_dungeon_data ,area_no ,p_seed->tr_data_seed ,top_floor);
   }
@@ -1679,6 +1681,8 @@ static u32 gethint_gate_tr_is_up_down( const TRHINT_WK *p_wk )
   }
   else
   {
+    // メッセージを取得
+    msg_id = msg_hint_updown_unknown_01;
     ONOUE_Printf("同じ階にいる\n");
   }
 
