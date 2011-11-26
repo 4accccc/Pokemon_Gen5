@@ -1217,7 +1217,7 @@ u8 ZONEDATA_GetFesParam(u16 zone_id)
 {
   ZONEDATA* zoneData;
   zoneData = loadZoneData( zone_id );
-  return (zoneData->fes_param);
+  return (zoneData->fes_map_attr);
 }
 
 //------------------------------------------------------------------

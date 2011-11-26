@@ -10,7 +10,7 @@
 
 #include "field/encount_data_ex_def.h"  //Ｎポケモン用定義
 
-#define ENC_DATA_INVALID_ID (0x3FFF)  ///<無効エンカウトデータID(14bit) ここを変えたらfldmapdata/zonetable/header/dummy_header.h enc_dummy定義も変えてください
+#define ENC_DATA_INVALID_ID (0x1FFF)  ///<無効エンカウトデータID(13bit) ここを変えたらfldmapdata/zonetable/header/dummy_header.h enc_dummy定義も変えてください
 
 #define ENC_MONS_NUM_GROUND_L   (12)   ///<通常エンカウント(ロークラス)
 #define ENC_MONS_NUM_GROUND_H   (12)   ///<通常エンカウント２(ハイクラス)

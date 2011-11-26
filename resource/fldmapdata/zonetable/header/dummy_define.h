@@ -75,7 +75,7 @@ enum {
 #include "../../../prog/include/field/weather_no.h" // “V‹C
 
 enum {
-	enc_dummy = 0x3fff, //14bit ‚±‚±‚ð•Ï‚¦‚½‚çsrc/field/encount_data.h->ENC_DATA_INVALID_ID‚à•Ï‚¦‚Ä‚­‚¾‚³‚¢
+	enc_dummy = 0x1fff, //13bit ‚±‚±‚ð•Ï‚¦‚½‚çsrc/field/encount_data.h->ENC_DATA_INVALID_ID‚à•Ï‚¦‚Ä‚­‚¾‚³‚¢
 
 	camera_area_dummy = 0xffff,
 };

@@ -351,7 +351,7 @@ class ZoneDataFile < OutputFile
       exit(1)
     end
     
-    fes_param = column[@cl.cFES_PARAM]
+    fes_param = 1 #column[@cl.cFES_PARAM]
     if !( 0 <= fes_param.to_i && fes_param.to_i <= 3) then
       STDERR.puts "FES_PARAM‚Ì”ÍˆÍ‚ª‚¨‚©‚µ‚¢(0-3)#{fes_param}"
       exit(1)

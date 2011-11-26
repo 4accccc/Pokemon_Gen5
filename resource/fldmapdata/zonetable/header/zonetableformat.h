@@ -25,8 +25,8 @@ typedef struct{
 	u16 bgm_summer_id;					///<BGM指定（夏）のID
 	u16 bgm_autumn_id;					///<BGM指定（秋）のID
 	u16 bgm_winter_id;					///<BGM指定（冬）のID
-	u16 enc_data_id:14;					///<エンカウント指定
-	u16 fes_param:2;	  				///<フェスパラメータ指定
+	u16 enc_data_id:13;					///<エンカウント指定
+	u16 fes_map_attr:3;	        ///<フェスマップ属性指定
 	u16 event_data_id;					///<イベントデータファイルのアーカイブID
   u16 zone_group;           ///<タウンマップ上での表示位置用グループ指定
 
