@@ -51,6 +51,9 @@
 static void updatePokewoodSaveParams(
     PKWDSYS * pkwdsys, GAMEDATA * gamedata, POKEWOOD_SAVEDATA * pkwdsave, PKWD_REC_POS rec_pos )
 {
+  // 指定シナリオの撮影済みフラグを立てる
+  POKEWOOD_SAVEDATA_SetPokewoodPlayedFlag( pkwdsave, PKWDSYS_GetScenarioNo( pkwdsys ) );
+
   // 上映フラグをクリア
   POKEWOOD_SAVEDATA_SetMovieShowed( pkwdsave, rec_pos, FALSE );
 

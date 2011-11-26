@@ -303,9 +303,6 @@ void PKWDSYS_CheckEnding( PKWDSYS *pkwdsys, GAMEDATA * gamedata, int scenario_no
 {
   POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata(gamedata);
 
-  // 指定シナリオのプレイ済みフラグを立てる
-  POKEWOOD_SAVEDATA_SetPokewoodPlayedFlag( ps, scenario_no );  // シナリオ撮影済みフラグを立てる
-
   // 映画のエンディング３パターン（成功・失敗・ストレンジ）を
   // シナリオ毎のセーブデータに反映させる
   if(result==BTL_POKEWOOD_RESULT_SUCCESS){
@@ -319,24 +316,26 @@ void PKWDSYS_CheckEnding( PKWDSYS *pkwdsys, GAMEDATA * gamedata, int scenario_no
 
 
 #define PW_SERIES_END       (0xff)
-#define PW_SERIES_MEDAL_MAX ( 11 )
-
 //=================================================
 // ポケウッド連続シナリオ定義
 //=================================================
-static const u8 series_tbl[][5]={
-  {  0,  1,  2,     PW_SERIES_END, },   // シリーズ1
-  {  3,  4,  5,  6, PW_SERIES_END, },   // シリーズ2
-  {  7,  8,  9, 10, PW_SERIES_END, },   // シリーズ3
-  { 11, 12, 13, 14, PW_SERIES_END, },   // シリーズ4
-  { 15, 16, 17,     PW_SERIES_END, },   // シリーズ5
-  { 18, 19, 20,     PW_SERIES_END, },   // シリーズ6
-  { 21, 22, 23,     PW_SERIES_END, },   // シリーズ7
-  { 24, 25, 26, 27, PW_SERIES_END, },   // シリーズ8
-  { 28, 29, 30,     PW_SERIES_END, },   // シリーズ9
-  { 31, 32, 33, 34, PW_SERIES_END, },   // シリーズ10
-  { 35, 36, 37, 38, PW_SERIES_END, },   // シリーズ11
-  { 39,             PW_SERIES_END, },   // シリーズ12
+static const struct PWS_MEDAL_REF{
+  u8 tbl[5];
+  u8 medal_id;
+} series_medal_tbl[]={
+  {{  0,             PW_SERIES_END, }, MDLID_PKWD_SERIES0 }, // シリーズ0
+  {{  1,  2,         PW_SERIES_END, }, MDLID_PKWD_SERIES1 }, // シリーズ1
+  {{  3,  4,  5,  6, PW_SERIES_END, }, MDLID_PKWD_SERIES2 }, // シリーズ2
+  {{  7,  8,  9, 10, PW_SERIES_END, }, MDLID_PKWD_SERIES3 }, // シリーズ3
+  {{ 11, 12, 13, 14, PW_SERIES_END, }, MDLID_PKWD_SERIES4 }, // シリーズ4
+  {{ 15, 16, 17,     PW_SERIES_END, }, MDLID_PKWD_SERIES5 }, // シリーズ5
+  {{ 18, 19, 20,     PW_SERIES_END, }, MDLID_PKWD_SERIES6 }, // シリーズ6
+  {{ 21, 22, 23,     PW_SERIES_END, }, MDLID_PKWD_SERIES7 }, // シリーズ7
+  {{ 24, 25, 26, 27, PW_SERIES_END, }, MDLID_PKWD_SERIES8 }, // シリーズ8
+  {{ 28, 29, 30,     PW_SERIES_END, }, MDLID_PKWD_SERIES9 }, // シリーズ9
+  {{ 31, 32, 33, 34, PW_SERIES_END, }, MDLID_PKWD_SERIES10 }, // シリーズ10
+  {{ 35, 36, 37, 38, PW_SERIES_END, }, MDLID_PKWD_SERIES11 }, // シリーズ11
+  {{ 39,             PW_SERIES_END, }, MDLID_PKWD_SERIES12 }, // シリーズ12
 };
 
 /*
@@ -357,6 +356,7 @@ MDLID_PKWD_BOXOFFICE	// がっぽりムービー
 MDLID_PKWD_GOODEND	// めいさくディレクター
 MDLID_PKWD_STRANGE_FIRST	// はじめてのカルト
 MDLID_PKWD_STRANGE_ALL	// カルトディレクター
+MDLID_PKWD_SERIES0	 // シリーズかんけつ0
 */
 //----------------------------------------------------------------------------------
 /**
@@ -371,13 +371,15 @@ MDLID_PKWD_STRANGE_ALL	// カルトディレクター
 static BOOL _check_pokewoodseries_played( POKEWOOD_SAVEDATA *ps, int index )
 {
   int i;
-  for(i=0;series_tbl[index][i]!=PW_SERIES_END;i++){
-    if(POKEWOOD_SAVEDATA_GetPokewoodFlag( ps, PWSV_TYPE_SENARIO_PLAYED, series_tbl[index][i] )==0){
+  //シリーズの対象になるシナリオが全て上映済みか？
+  for(i=0;series_medal_tbl[index].tbl[i]!=PW_SERIES_END;i++){
+    if(POKEWOOD_SAVEDATA_GetPokewoodFlag( ps, PWSV_TYPE_SENARIO_PLAYED, 
+                                          series_medal_tbl[index].tbl[i] )==0){
       break;
     }
   }
-  
-  if(series_tbl[index][i]==PW_SERIES_END){
+  // 抜けてきた値が番兵ならシリーズ達成
+  if(series_medal_tbl[index].tbl[i]==PW_SERIES_END){
     return TRUE;
   }
   return FALSE;
@@ -400,9 +402,10 @@ void PKWDSYS_CheckPokewoodMedal( GAMEDATA * gamedata )
 
 
   // ポケウッドシリーズメダル取得処理
-  for(i=0;i<PW_SERIES_MEDAL_MAX;i++){
+  for(i=0;i<NELEMS(series_medal_tbl);i++){
     if(_check_pokewoodseries_played( ps, i )){
-      MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_PKWD_SERIES1+i );
+      MEDALBOX_SetTitleMedalAchive( medalbox, series_medal_tbl[i].medal_id );
+      OS_Printf("シリーズメダル%dがオープン\n",i);
     }
   }
 
