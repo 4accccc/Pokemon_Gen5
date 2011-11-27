@@ -149,7 +149,7 @@ typedef struct {
 
   //エンカウントエフェクトナンバー
   int EncEffNo;
-
+  u32 flags;  //戦闘呼び出し時に指定したフラグ
 }BATTLE_EVENT_WORK;
 
 //======================================================================
@@ -373,6 +373,7 @@ GMEVENT * EVENT_TrainerBattle(
       gsys, NULL, fieldBattleEvent, sizeof(BATTLE_EVENT_WORK) );
 
   bew = GMEVENT_GetEventWork(event);
+  bew->flags = flags;
 
   {
     FIELD_ENCOUNT* enc = FIELDMAP_GetEncount(fieldmap);
@@ -1057,7 +1058,8 @@ static void BeaconReq_BattleEnd( BATTLE_EVENT_WORK* bew )
     }
     break;
   case BTL_COMPETITOR_TRAINER:
-    if( bp->result == BTL_RESULT_WIN ){
+    if( (bp->result == BTL_RESULT_WIN ) &&
+        ((bew->flags & SCR_BATTLE_MODE_FES_TRAINER) == FALSE) ){
       BeaconReq_BtlTrainer( bp->tr_data[BTL_CLIENT_ENEMY1]->tr_id, BTL_BEACON_ST_WIN );
     }
     break;
