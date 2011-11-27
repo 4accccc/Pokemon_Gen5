@@ -198,15 +198,17 @@ int GAMEBEACON_Stack_Update(GAMEBEACON_INFO_TBL *stack_infotbl)
   
   GFL_RTC_GetTime(&recv_time);
   time = (recv_time.hour << 8) | recv_time.minute;
-  
+   
   do{
+    GAMEBEACON_RECV_CLOCK clock;
+
     update_logno = GAMEBEACON_Get_UpdateLogNo(&start_log_no);
     if(update_logno == GAMEBEACON_SYSTEM_LOG_MAX){
       break;  //ビーコンログ無し
     }
-    update_info = GAMEBEACON_Get_BeaconLogDirect(update_logno);
+    update_info = GAMEBEACON_Get_BeaconLogDirect(update_logno, &clock );
     if(GAMEBEACON_InfoTbl_SetBeacon(
-        stack_infotbl, update_info, time, FALSE) == GAMEBEACON_INFO_TBL_MAX){
+        stack_infotbl, update_info, clock.clock /*time*/, FALSE) == GAMEBEACON_INFO_TBL_MAX){
       break;  //スタックテーブルがいっぱいになった
     }
     GAMEBEACON_Reset_UpdateFlag(update_logno);

@@ -28,7 +28,7 @@ typedef enum{
 typedef struct{
   GAMEBEACON_INFO info;
   u16 time;                           ///<最新のデータを受け取ってから経過しているフレーム数
-  u16 padding;
+  GAMEBEACON_RECV_CLOCK clock;        ///<ビーコンの受信時間
 }GAMEBEACON_LOG;
 
 ///送信ビーコン管理

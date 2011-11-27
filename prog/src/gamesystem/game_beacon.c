@@ -94,7 +94,7 @@ static BOOL SendBeacon_Update(GAMEBEACON_SEND_MANAGER *send);
 static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info);
 static void BeaconInfo_BeaconTypeOverwrite( GAMEBEACON_INFO *info, GAMEBEACON_TYPE type );
 static void BeaconInfo_SetFestMissionLog(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info);
-static GAMEBEACON_INFO * BeaconInfo_GetDirect(GAMEBEACON_SYSTEM *bsys, int log_no);
+static GAMEBEACON_INFO * BeaconInfo_GetDirect(GAMEBEACON_SYSTEM *bsys, int log_no, GAMEBEACON_RECV_CLOCK* clock);
 static GAMEBEACON_INFO * BeaconInfo_Get(GAMEBEACON_SYSTEM *bsys, int log_no);
 static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata);
 static BOOL BeaconInfo_RecvResortDataStart( GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info, RESORT_COMM_TYPE comm_type );
@@ -554,12 +554,19 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
   }
 #endif
   //ログにセット
-  GFL_STD_MemClear(setlog, sizeof(GAMEBEACON_LOG));
-  setlog->info = *info;
-  setlog->time = 0;
-  bsys->update_log |= 1 << bsys->end_log;
-  if(bsys->log_num < GAMEBEACON_SYSTEM_LOG_MAX){
-    bsys->log_num++;
+  {
+    RTCTime recv_time;
+    GFL_RTC_GetTime(&recv_time);
+    GFL_STD_MemClear(setlog, sizeof(GAMEBEACON_LOG));
+  
+    setlog->info = *info;
+    setlog->time = 0;
+    setlog->clock.hour = recv_time.hour;
+    setlog->clock.min = recv_time.minute;
+    bsys->update_log |= 1 << bsys->end_log;
+    if(bsys->log_num < GAMEBEACON_SYSTEM_LOG_MAX){
+      bsys->log_num++;
+    }
   }
 }
 
@@ -856,10 +863,17 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
 
   BeaconInfo_SetFestMissionLog( bsys, info );
   BeaconInfo_CheckCGearInfo( bsys, info, !same_player );
- 
+
+  //受信データをログバッファにセット
   if(same_player == TRUE){
+    RTCTime recv_time;
+    GFL_RTC_GetTime(&recv_time);
+
     bsys->log[i].info = *info;
-    bsys->log[i].time = 0;
+    bsys->log[i].time = 0;  //タイムカウントリセット
+    bsys->log[i].clock.hour = recv_time.hour;
+    bsys->log[i].clock.min = recv_time.minute;
+
     bsys->update_log |= 1 << i;
     MATSUDA_Printf("sameBeacon %d件目\n", i);
   }
@@ -883,12 +897,15 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
  * @retval  GAMEBEACON_INFO *		NULLの場合はデータ無し
  */
 //--------------------------------------------------------------
-static GAMEBEACON_INFO * BeaconInfo_GetDirect(GAMEBEACON_SYSTEM *bsys, int log_no)
+static GAMEBEACON_INFO * BeaconInfo_GetDirect(GAMEBEACON_SYSTEM *bsys, int log_no, GAMEBEACON_RECV_CLOCK* clock )
 {
   if(bsys->log_num == 0 || bsys->log_num - log_no <= 0){
+    clock->hour = 0;
+    clock->min = 0;
     return NULL;  //データ無し
   }
-  
+ 
+  *clock = bsys->log[log_no].clock;
   return &bsys->log[log_no].info;
 }
 
@@ -897,13 +914,13 @@ static GAMEBEACON_INFO * BeaconInfo_GetDirect(GAMEBEACON_SYSTEM *bsys, int log_n
  * ログからビーコン情報を取得する
  *
  * @param   log_no  ログのバッファ番号
- *
+ * @param   clock   GAMEBEACON_RECV_CLOCK* 受信日時を取得するワークポインタ
  * @retval  GAMEBEACON_INFO *		NULLの場合はデータ無し
  */
 //==================================================================
-const GAMEBEACON_INFO * GAMEBEACON_Get_BeaconLogDirect(int log_no)
+const GAMEBEACON_INFO * GAMEBEACON_Get_BeaconLogDirect(int log_no, GAMEBEACON_RECV_CLOCK* clock )
 {
-  return BeaconInfo_GetDirect(GameBeaconSys, log_no);
+  return BeaconInfo_GetDirect(GameBeaconSys, log_no, clock );
 }
 
 //--------------------------------------------------------------

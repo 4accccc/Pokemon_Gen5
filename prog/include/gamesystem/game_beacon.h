@@ -196,6 +196,14 @@ typedef enum{
 //==============================================================================
 //  型定義
 //==============================================================================
+typedef union _GAMEBEACON_RECV_CLOCK{
+  struct{
+    u8  min;
+    u8  hour;
+  };
+  u16 clock;
+}GAMEBEACON_RECV_CLOCK;
+
 ///送受信されるビーコンパラメータ
 typedef struct _GAMEBEACON_INFO GAMEBEACON_INFO;
 
@@ -222,7 +230,7 @@ extern BOOL GAMEBEACON_GetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_FLAG flag );
 //  ビーコン情報取得
 //--------------------------------------------------------------
 extern BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info);
-extern const GAMEBEACON_INFO * GAMEBEACON_Get_BeaconLogDirect(int log_no);
+extern const GAMEBEACON_INFO * GAMEBEACON_Get_BeaconLogDirect(int log_no, GAMEBEACON_RECV_CLOCK* clock );
 extern const GAMEBEACON_INFO * GAMEBEACON_Get_BeaconLog(int log_no);
 extern u32 GAMEBEACON_Get_LogCount(void);
 extern int GAMEBEACON_Get_UpdateLogNo(int *start_log_no);
