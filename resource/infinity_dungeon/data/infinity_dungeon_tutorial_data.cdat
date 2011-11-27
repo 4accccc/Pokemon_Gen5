@@ -32,7 +32,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_b1[ROOM_MAX] =
     1,
   },
   {
-    INF_ROOM_POS_TYPE_A_2,
+    INF_ROOM_POS_TYPE_A_1,
     ROOM_TYPE_DEFAULT,
     FALSE,
     TRUE,
@@ -181,7 +181,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_b2[ROOM_MAX] =
     1,
   },
   {
-    INF_ROOM_POS_TYPE_F_2,
+    INF_ROOM_POS_TYPE_E_2,
     ROOM_TYPE_DEFAULT,
     FALSE,
     TRUE,
@@ -244,7 +244,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_b2[ROOM_MAX] =
     8,
   },
   {
-    INF_ROOM_POS_TYPE_G_2,
+    INF_ROOM_POS_TYPE_A_2,
     ROOM_TYPE_DEFAULT,
     TRUE,
     FALSE,
@@ -330,7 +330,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_w1[ROOM_MAX] =
     1,
   },
   {
-    INF_ROOM_POS_TYPE_A_2,
+    INF_ROOM_POS_TYPE_A_1,
     ROOM_TYPE_DEFAULT,
     FALSE,
     TRUE,
@@ -479,7 +479,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_w2[ROOM_MAX] =
     1,
   },
   {
-    INF_ROOM_POS_TYPE_F_2,
+    INF_ROOM_POS_TYPE_E_2,
     ROOM_TYPE_DEFAULT,
     FALSE,
     TRUE,
@@ -542,7 +542,7 @@ static const ROOM_DATA sc_tutorial_rooo_data_w2[ROOM_MAX] =
     8,
   },
   {
-    INF_ROOM_POS_TYPE_G_2,
+    INF_ROOM_POS_TYPE_A_2,
     ROOM_TYPE_DEFAULT,
     TRUE,
     FALSE,
@@ -610,12 +610,12 @@ static const ROOM_DATA sc_tutorial_rooo_data_w2[ROOM_MAX] =
 static const u16 sc_tutorial_tr_data_b1[INFINITY_DUNGEON_TRID_MAX] =
 {
   56, // 0
-  57, // 1
-  625, // 2
-  640, // 3
-  30, // 4
-  40, // 5
-  38, // 6
+  625, // 1
+  640, // 2
+  30, // 3
+  40, // 4
+  38, // 5
+  1, // 6
   1, // 7
   1, // 8
   1, // 9
@@ -756,12 +756,12 @@ static const u16 sc_tutorial_rectr_data_b2[INFINITY_DUNGEON_TRID_MAX] =
 static const u16 sc_tutorial_tr_data_w1[INFINITY_DUNGEON_TRID_MAX] =
 {
   13, // 0
-  14, // 1
-  610, // 2
-  650, // 3
-  23, // 4
-  6, // 5
-  18, // 6
+  610, // 1
+  650, // 2
+  23, // 3
+  6, // 4
+  18, // 5
+  1, // 6
   1, // 7
   1, // 8
   1, // 9

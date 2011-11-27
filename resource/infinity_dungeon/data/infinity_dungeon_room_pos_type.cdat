@@ -38,19 +38,6 @@ static const INF_ROOM_SET_TR_PARAM sc_room_tr_param[] = {
 
     },
   }, 
-  { // INF_ROOM_POS_TYPE_A_4
-    INF_MULTI_DUNGEON ,4 ,ROOM_TYPE_DEFAULT ,
-    { 
-      { INF_MOVE_CODE_TYPE_STOP1 ,7 ,5 ,}, 
-
-      { INF_MOVE_CODE_TYPE_STOP1 ,5 ,9 ,}, 
-
-      { INF_MOVE_CODE_TYPE_STOP1 ,4 ,6 ,}, 
-
-      { INF_MOVE_CODE_TYPE_STOP1 ,8 ,8 ,}, 
-
-    },
-  }, 
   { // INF_ROOM_POS_TYPE_B_1
     INF_MULTI_DUNGEON ,1 ,ROOM_TYPE_DEFAULT ,
     { 
@@ -150,45 +137,6 @@ static const INF_ROOM_SET_TR_PARAM sc_room_tr_param[] = {
       { INF_MOVE_CODE_TYPE_ROTARY16 ,9 ,10 ,}, 
 
       { INF_MOVE_CODE_TYPE_ROTARY16 ,5 ,10 ,}, 
-
-    },
-  }, 
-  { // INF_ROOM_POS_TYPE_K_4
-    INF_MULTI_DUNGEON ,4 ,ROOM_TYPE_DEFAULT ,
-    { 
-      { INF_MOVE_CODE_TYPE_ROTARY1 ,4 ,5 ,}, 
-
-      { INF_MOVE_CODE_TYPE_ROTARY2 ,8 ,9 ,}, 
-
-      { INF_MOVE_CODE_TYPE_ROTARY3 ,8 ,5 ,}, 
-
-      { INF_MOVE_CODE_TYPE_ROTARY4 ,4 ,9 ,}, 
-
-    },
-  }, 
-  { // INF_ROOM_POS_TYPE_L_4
-    INF_MULTI_DUNGEON ,4 ,ROOM_TYPE_DEFAULT ,
-    { 
-      { INF_MOVE_CODE_TYPE_ROTARY5 ,4 ,5 ,}, 
-
-      { INF_MOVE_CODE_TYPE_ROTARY6 ,8 ,9 ,}, 
-
-      { INF_MOVE_CODE_TYPE_ROTARY7 ,8 ,5 ,}, 
-
-      { INF_MOVE_CODE_TYPE_ROTARY8 ,4 ,9 ,}, 
-
-    },
-  }, 
-  { // INF_ROOM_POS_TYPE_M_4
-    INF_MULTI_DUNGEON ,4 ,ROOM_TYPE_DEFAULT ,
-    { 
-      { INF_MOVE_CODE_TYPE_ROTARY9 ,4 ,5 ,}, 
-
-      { INF_MOVE_CODE_TYPE_ROTARY10 ,8 ,9 ,}, 
-
-      { INF_MOVE_CODE_TYPE_ROTARY11 ,8 ,5 ,}, 
-
-      { INF_MOVE_CODE_TYPE_ROTARY12 ,4 ,9 ,}, 
 
     },
   }, 

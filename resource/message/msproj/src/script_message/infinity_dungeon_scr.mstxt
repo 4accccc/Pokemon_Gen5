@@ -6260,7 +6260,7 @@
 			<Text>[Name:TrainerName Idx="0" ]さま
 リタイアされたのですね▼
 もうしわけありませんが
-こんかいの　ちょうせんで
+こんかいの　ちょうせんで▽
 にゅうしゅされました▼
 しょうきん　[Digit:7digits Idx="1" ]えんは
 ぼっしゅうさせて　いただきます▼
@@ -6268,7 +6268,7 @@
 つぎは　がんばってくださいね！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T09:28:52" />
+				Time="2011-11-27T09:05:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -23267,14 +23267,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>上下どの階にいるか知らない</Comment>
+			<Comment>トレーナーヒント
+ゲートトレーナーと同じ部屋にいるとき
+少年</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:16:46" />
+				Time="2011-11-27T07:30:08" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -23309,14 +23311,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>上下どの階にいるか知らない</Comment>
+			<Comment>トレーナーヒント
+ゲートトレーナーと同じ部屋にいるとき
+少女</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:16:46" />
+				Time="2011-11-27T07:30:17" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -23351,14 +23355,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>上下どの階にいるか知らない</Comment>
+			<Comment>トレーナーヒント
+ゲートトレーナーと同じ部屋にいるとき
+成人男性</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:16:46" />
+				Time="2011-11-27T07:30:26" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -23393,14 +23399,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>上下どの階にいるか知らない</Comment>
+			<Comment>トレーナーヒント
+ゲートトレーナーと同じ部屋にいるとき
+成人女性</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:16:46" />
+				Time="2011-11-27T07:30:31" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -23435,14 +23443,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>上下どの階にいるか知らない</Comment>
+			<Comment>トレーナーヒント
+ゲートトレーナーと同じ部屋にいるとき
+中年男性</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:16:46" />
+				Time="2011-11-27T07:30:36" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -23477,14 +23487,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>上下どの階にいるか知らない</Comment>
+			<Comment>トレーナーヒント
+ゲートトレーナーと同じ部屋にいるとき
+中年女性</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:16:46" />
+				Time="2011-11-27T07:30:44" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -23519,14 +23531,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>上下どの階にいるか知らない</Comment>
+			<Comment>トレーナーヒント
+ゲートトレーナーと同じ部屋にいるとき
+老人</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:16:46" />
+				Time="2011-11-27T07:30:48" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -23563,14 +23577,16 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>上下どの階にいるか知らない</Comment>
+			<Comment>トレーナーヒント
+ゲートトレーナーと同じ部屋にいるとき
+老女</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-22T12:16:46" />
+				Time="2011-11-27T07:30:52" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -24004,7 +24020,7 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>しょしんしゃさん　
-やっと　みつけてくれたね　まってたよ▼
+やっと　きてくれたね　まってたよ▼
 あの　ゲートを　あけるほうほうは
 さっき　おしえたね？▼
 さあ　キミが　ボストレーナーに
@@ -24012,7 +24028,7 @@ NPC：MUGENBOSS（バンジロウ）
 ためしてみよう！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T12:35:36" />
+				Time="2011-11-27T06:56:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -24021,7 +24037,7 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>初心者さん
-やっと　見つけてくれたね　待ってたよ▼
+やっと　来てくれたね　待ってたよ▼
 あの　ゲートを　開ける方法は
 さっき　教えたね？▼
 さあ　キミが　ボストレーナーに
@@ -24029,7 +24045,7 @@ NPC：MUGENBOSS（バンジロウ）
 試してみよう！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T12:37:08" />
+				Time="2011-11-27T06:56:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -24058,7 +24074,7 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>しょしんしゃさん
-やっと　みつけてくれわね　まってたわ▼
+やっと　きてくれたわね　まってたわ▼
 あの　ゲートを　あけるほうほうは
 さっき　おしえたわね？▼
 さあ　キミが　ボストレーナーに
@@ -24066,7 +24082,7 @@ NPC：MUGENBOSS（バンジロウ）
 ためしてあげる！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T12:35:43" />
+				Time="2011-11-27T06:57:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -24075,7 +24091,7 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>初心者さん
-やっと　見つけてくれわね　待ってたわ▼
+やっと　来てくれたわね　待ってたわ▼
 あの　ゲートを　開ける方法は
 さっき　教えたたわね？▼
 さあ　キミが　ボストレーナーに
@@ -24083,7 +24099,7 @@ NPC：MUGENBOSS（バンジロウ）
 試してあげる！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T12:45:51" />
+				Time="2011-11-27T06:57:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -24113,14 +24129,13 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>ぼくが　このエリアの
 ゲートトレーナーだよ▽
-よく　みつけられたね▼
-でも　キミが　ボストレーナーに
+キミは　ボストレーナーに
 ちょうせんする　しかくは　あるかな？▼
 さあ　キミが　どれぐらい
 つよいのか　しょうぶだ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T12:35:51" />
+				Time="2011-11-27T06:58:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -24130,14 +24145,13 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>ぼくが　このエリアの
 ゲートトレーナーだよ▽
-よく　見つけられたね▼
-でも　キミが　ボストレーナーに
+キミは　ボストレーナーに
 挑戦する　資格は　あるかな？▼
 さあ　キミが　どれぐらい
 強いのか　勝負だ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T12:36:55" />
+				Time="2011-11-27T06:59:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -24165,15 +24179,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>わたしが　このエリアの
-ゲートトレーナーよ
-よく　みつけられたわね▼
-でも　あなたは　ボストレーナーに
+ゲートトレーナーよ▼
+あなたは　ボストレーナーに
 ちょうせんする　しかくは　あるかしら？▼
 あなたが　どれぐらい　つよいのか
 しょうぶよ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T12:35:57" />
+				Time="2011-11-27T06:59:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -24182,15 +24195,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わたしが　このエリアの
-ゲートトレーナーよ▽
-よく　見つけられたわね▼
-でも　あなたは　ボストレーナーに
+ゲートトレーナーよ▼
+あなたは　ボストレーナーに
 挑戦する　資格は　あるかしら？▼
 あなたが　どれぐらい　強いのか
 勝負よ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T12:46:04" />
+				Time="2011-11-27T06:59:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -24217,15 +24229,14 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしが　ゲートトレーナーさ▼
-わたしを　みつけられるとは
-なかなかやるな！▼
+			<Text>ここまで　おつかれさま
+わたしが　ゲートトレーナーだ▼
 つぎは　ボストレーナーに
 ちょうせんする　じつりょくが　あるか▽
 ためしてやろう！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T12:36:05" />
+				Time="2011-11-27T07:00:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -24233,15 +24244,14 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしが　ゲートトレーナーさ▼
-わたしを　見つけられるとは
-なかなかやるな！▼
+			<Text>ここまで　お疲れ様
+わたしが　ゲートトレーナーだ▼
 次は　ボストレーナーに
 挑戦する　実力が　あるか▽
 試してやろう！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T12:46:15" />
+				Time="2011-11-27T07:01:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -24268,15 +24278,14 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わたしが　ゲートトレーナーよ▼
-わたしを　みつけるとは
-なかなかやるわね！▼
+			<Text>ここまで　よく　これたわね
+わたしが　ゲートトレーナーよ▼
 つぎは　ボストレーナーに
 ちょうせんする　じつりょくが　あるか▽
 ためしてあげるわ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T12:36:12" />
+				Time="2011-11-27T07:02:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -24284,15 +24293,14 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしが　ゲートトレーナーよ▼
-わたしを　見つけるとは
-なかなかやるわね！▼
+			<Text>ここまで　よく　来れたわね
+わたしが　ゲートトレーナーよ▼
 次は　ボストレーナーに
 挑戦する　実力が　あるか▽
 試してあげるわ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T12:46:22" />
+				Time="2011-11-27T07:02:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -24319,15 +24327,14 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おっと　みつかって　しまったね
+			<Text>よく　ここまで　これたな
 わたしが　ゲートトレーナーだ▼
-みつけられた　ごほうびだ▼
-キミの　じつりょくが
+さあ　キミの　じつりょくが
 ボストレーナーに　つうようするか▽
 ためしてあげよう！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T12:36:19" />
+				Time="2011-11-27T07:06:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -24335,15 +24342,14 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おっと　見つかって　しまったね
+			<Text>よく　ここまで　来れたな
 わたしが　ゲートトレーナーだ▼
-見つけられた　ご褒美だ▼
-キミの　実力が
+さあ　キミの　実力が
 ボストレーナーに　通用するか▽
 試してあげよう！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T12:46:29" />
+				Time="2011-11-27T07:06:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -24370,15 +24376,14 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あら　みつかったみたいね
+			<Text>あら　ここまで　きてたのね
 わたしが　ゲートトレーナーよ▼
-それじゃ　ごほうびね▼
-あなたが　ボストレーナーに
+さて　あなたが　ボストレーナーに
 ちょうせんする　じつりょくが　あるか▽
 ためしてあげるわ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T12:36:25" />
+				Time="2011-11-27T07:05:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -24386,15 +24391,14 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あら　見つかったみたいね
+			<Text>あら　ここまで　来てたのね
 わたしが　ゲートトレーナーよ▼
-それじゃ　ご褒美ね▼
-あなたが　ボストレーナーに
+さて　あなたが　ボストレーナーに
 挑戦する　実力が　あるか▽
 試してあげるわ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T12:46:36" />
+				Time="2011-11-27T07:05:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -24421,15 +24425,15 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほお　みつけられるとは
-おもわなかったわい▼
+			<Text>ほお　ここまで　くるとは
+なかなか　やるようじゃな▼
 わしが　ゲートトレーナーじゃ▼
 さあ　おまえさんの　ちからが
 どれほどのものか▽
 みせてもらおうか！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T12:36:32" />
+				Time="2011-11-27T07:08:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -24437,15 +24441,15 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ほお　見つけられるとは
-思わなかったわい▼
+			<Text>ほお　ここまで　来るとは
+なかなか　やるようじゃな▼
 わしが　ゲートトレーナーじゃ▼
 さあ　おまえさんの　力が
 どれほどのものか▽
 見せてもらおうか！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T12:46:42" />
+				Time="2011-11-27T07:08:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -24472,14 +24476,14 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あら　みつかってしまいましたわ▼
+			<Text>こんな　とおくまで　ごくろうさま
 わたしが　ゲートトレーナーです▼
 さあ　あなたの　ちからが
 どれほどのものか▽
 わたしに　おみせなさい！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T12:36:39" />
+				Time="2011-11-27T07:08:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -24487,14 +24491,14 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あら　見つかってしまいましたわ▼
+			<Text>こんな　遠くまで　ご苦労様
 わたしが　ゲートトレーナーです▼
 さあ　あなたの　力が
 どれほどのものか▽
 わたしに　お見せなさい！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T12:46:51" />
+				Time="2011-11-27T07:08:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
