@@ -2314,7 +2314,7 @@ void RESORT_BEACON_DATA_SetBeaconInfo( RESORT_BEACON_DATA *p_wk, const GAMEBEACO
   }
 
 
-  //OS_TFPrintf(2,"extend=%d\n",p_wk->extend_type );
+//  OS_TFPrintf(2,"extend=%d\n",p_wk->extend_type );
 }
 
 //----------------------------------------------------------------------------

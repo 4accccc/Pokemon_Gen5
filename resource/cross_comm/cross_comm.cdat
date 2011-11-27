@@ -394,7 +394,7 @@ static const struct{
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//97  NPC探しミッション：道具購入イベントで金額不足で買えなかった時に発生。赤ログ(GAMEBEACON_ACTION_FMISSION_RUN_OUT_OF_MONEY)
+	{	//97  NPC探しミッション：道具購入イベントで金額不足で買えなかった時に発生。(GAMEBEACON_ACTION_FMISSION_RUN_OUT_OF_MONEY)
 		5,		//priority
 		20 * 60,		//life
 	},
@@ -402,19 +402,23 @@ static const struct{
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//99  手持ちの先頭ポケモンが瀕死になった時に発生。(GAMEBEACON_ACTION_FMISSION_POKE_DOWN)
+	{	//99  NPC探しミッション：記憶・図鑑クイズを間違えた時に発生(GAMEBEACON_ACTION_FMISSION_QUIZ_WRONG_ANSWER)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//100  手持ちの先頭ポケモンのHPが残り少ない時に発生。(GAMEBEACON_ACTION_FMISSION_POKE_HP_LITTLE)
+	{	//100  手持ちの先頭ポケモンが瀕死になった時に発生。(GAMEBEACON_ACTION_FMISSION_POKE_DOWN)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//101  手持ちの先頭ポケモンのPPが残り少ない時に発生。(GAMEBEACON_ACTION_FMISSION_POKE_PP_LITTLE)
+	{	//101  手持ちの先頭ポケモンのHPが残り少ない時に発生。(GAMEBEACON_ACTION_FMISSION_POKE_HP_LITTLE)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//102  フェス中にフリーワードで発言した時に発生。(GAMEBEACON_ACTION_FMISSION_FREEWORD)
+	{	//102  手持ちの先頭ポケモンのPPが残り少ない時に発生。(GAMEBEACON_ACTION_FMISSION_POKE_PP_LITTLE)
+		5,		//priority
+		20 * 60,		//life
+	},
+	{	//103  フェス中にフリーワードで発言した時に発生。(GAMEBEACON_ACTION_FMISSION_FREEWORD)
 		5,		//priority
 		20 * 60,		//life
 	},

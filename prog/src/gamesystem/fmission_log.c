@@ -114,12 +114,13 @@ static const u8 DATA_LogWordsetTypeTbl[] = {
   FMISSION_LOG_WSET_NULL,  //MEMORY_QUIZ_CLEAR = 38,  ///<ポケモン図鑑クイズに正解した
   FMISSION_LOG_WSET_NULL,  //RUN_OUT_OF_MONEY = 39,   ///<お金が足りない
   FMISSION_LOG_WSET_NULL,  //RPS_LOSE = 40,           ///<じゃんけんに負けた
+  FMISSION_LOG_WSET_NULL,  //QUIZ_WRONG_ANSWER = 41,  ///<クイズに不正解だった(記憶・図鑑クイズ共用)
 
-  FMISSION_LOG_WSET_MONSNAME,  //POKE_DOWN = 41,        ///<[ポケモン名]が瀕死
-  FMISSION_LOG_WSET_MONSNAME,  //POKE_HP_LITTLE = 42,   ///<[ポケモン名]のHPが少ない
-  FMISSION_LOG_WSET_MONSNAME,  //POKE_PP_LITTLE = 43,   ///<[ポケモン名]のPPが少ない
+  FMISSION_LOG_WSET_MONSNAME,  //POKE_DOWN = 42,        ///<[ポケモン名]が瀕死
+  FMISSION_LOG_WSET_MONSNAME,  //POKE_HP_LITTLE = 43,   ///<[ポケモン名]のHPが少ない
+  FMISSION_LOG_WSET_MONSNAME,  //POKE_PP_LITTLE = 44,   ///<[ポケモン名]のPPが少ない
   //Haven't MissionParam
-  FMISSION_LOG_WSET_FREEWORD,       //FREEWORD = 44,         ///<一言メッセージ
+  FMISSION_LOG_WSET_FREEWORD,       //FREEWORD = 45,         ///<一言メッセージ
 };
 
 

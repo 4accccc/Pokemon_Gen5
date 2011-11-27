@@ -653,204 +653,6 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_sys_fmission_reward"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ほうしゅう　[Ctrl1:xright value="8" ][Name:Item Idx="3" ][Digit:4digits Idx="4" ]こ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>ほうしゅう　[Ctrl1:xright value="0" ][Name:Item Idx="3" ][Digit:4digits Idx="4" ]こ</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_sys_fmission_score01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>じぶんのスコア</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>自分のスコア</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_sys_fmission_score02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>ごうけい</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>合計</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_sys_fmission_score_num"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Digit:5digits Idx="0" ]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Digit:5digits Idx="0" ]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_sys_fmission_time"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>のこりじかん</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>残り時間</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="msg_sys_fmission_time_num"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Digit:2digits Idx="0" ]:[Digit:2digits Idx="1" ]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0" ]:[Digit:2digits Idx="1" ]</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:20" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
 		Label="msg_sys_tmenu_yesno_01"
 		Style="Large">
 		<LanguageCell
@@ -3009,10 +2811,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName ]が　ひんしです</Text>
+			<Text>クイズに　まちがえた！</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-11-12T11:24:21" />
+				Time="2011-11-27T13:11:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3020,10 +2822,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName ]が　ひんしです</Text>
+			<Text>クイズに　まちがえた！</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-11-12T11:24:32" />
+				Time="2011-11-27T13:11:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3039,10 +2841,10 @@
 		<CommentCell
 			Language="JPN_KANJI">
 			<Comment>ログ用
-0：ポケモン種族名</Comment>
+</Comment>
 			<CommentModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-11-12T11:25:49" />
+				Time="2011-11-27T13:11:40" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -3050,10 +2852,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName ]のHPが　すくない！</Text>
+			<Text>[Name:PokemonName ]が　ひんしです</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-11-12T11:24:47" />
+				Time="2011-11-27T13:11:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3061,10 +2863,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName ]のHPが　少ない！</Text>
+			<Text>[Name:PokemonName ]が　ひんしです</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-11-12T11:24:58" />
+				Time="2011-11-27T13:11:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3091,10 +2893,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName ]のPPが　すくない！</Text>
+			<Text>[Name:PokemonName ]のHPが　すくない！</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-11-12T11:25:08" />
+				Time="2011-11-27T13:11:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3102,10 +2904,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName ]のPPが　少ない！</Text>
+			<Text>[Name:PokemonName ]のHPが　少ない！</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-11-12T11:25:19" />
+				Time="2011-11-27T13:11:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3131,10 +2933,10 @@
 		Label="msg_fmission_log_act44">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PMS Idx="0" ]</Text>
+			<Text>[Name:PokemonName ]のPPが　すくない！</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-13T09:25:12" />
+				Time="2011-11-27T13:11:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -3142,10 +2944,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PMS Idx="0" ]</Text>
+			<Text>[Name:PokemonName ]のPPが　少ない！</Text>
 			<TextModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-13T09:25:12" />
+				Time="2011-11-27T13:11:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -3153,10 +2955,50 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
+			<Comment>ログ用</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-11-27T13:11:17" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ログ用
+0：ポケモン種族名</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-11-27T13:11:17" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fmission_log_act45">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PMS Idx="0" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-11-27T13:11:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-11-27T13:11:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PMS Idx="0" ]</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-11-27T13:11:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-11-27T13:11:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
 			<Comment>ログ用（フリーワード）</Comment>
 			<CommentModifiedBy
 				User="iwasawa:W00270"
-				Time="2011-09-13T09:25:12" />
+				Time="2011-11-27T13:11:17" />
 		</CommentCell>
 	</TextRow>
 	<TextRow

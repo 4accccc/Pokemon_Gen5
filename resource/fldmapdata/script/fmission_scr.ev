@@ -666,6 +666,7 @@ sub_npc_memory_quiz_main:
   //ê≥åÎîªíË
   IF $i_ret != $i_answer_idx THEN
     //ÇÕÇ∏ÇÍ
+    _FMISSION_LOG_ACTION( FMISSION_LOG_ACT_QUIZ_WRONG_ANSWER )
     _BALLOONWIN_TALKOBJ_MSG_POS( msg_fm_npc_mquiz01_03, POS_DOWN )
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
@@ -808,6 +809,7 @@ sub_npc_poke_quiz_main:
   _FES_NPC_QUIZ_NAME_INPUT( i_monsno, 0, SCWK_ANSWER )
  
   IF $SCWK_ANSWER != SCR_FES_ANSWER_YES THEN
+    _FMISSION_LOG_ACTION( FMISSION_LOG_ACT_QUIZ_WRONG_ANSWER )
     //ïsê≥â
     IF $SCWK_ANSWER == SCR_FES_ANSWER_CANCEL THEN
       //ìÔÇµÇ¢ÇÊÇÀ

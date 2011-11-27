@@ -175,12 +175,13 @@ typedef enum{
   GAMEBEACON_ACTION_FMISSION_POKE_QUIZ_CLEAR,    ///<フェスミッション 図鑑クイズに正解した 96
   GAMEBEACON_ACTION_FMISSION_RUN_OUT_OF_MONEY,   ///<フェスミッション お金が足りない 97
   GAMEBEACON_ACTION_FMISSION_RPS_LOSE,           ///<フェスミッション じゃんけんに負けた 98
+  GAMEBEACON_ACTION_FMISSION_QUIZ_WRONG_ANSWER,  ///<フェスミッション クイズに不正解(記憶・図鑑クイズ共用) 99
 
-  GAMEBEACON_ACTION_FMISSION_POKE_DOWN,        ///<フェスミッション [ポケモン名]が瀕死 99
-  GAMEBEACON_ACTION_FMISSION_POKE_HP_LITTLE,   ///<フェスミッション [ポケモン名]のHPが少ない 100
-  GAMEBEACON_ACTION_FMISSION_POKE_PP_LITTLE,   ///<フェスミッション [ポケモン名]のPPが少ない 101
+  GAMEBEACON_ACTION_FMISSION_POKE_DOWN,        ///<フェスミッション [ポケモン名]が瀕死 100
+  GAMEBEACON_ACTION_FMISSION_POKE_HP_LITTLE,   ///<フェスミッション [ポケモン名]のHPが少ない 101
+  GAMEBEACON_ACTION_FMISSION_POKE_PP_LITTLE,   ///<フェスミッション [ポケモン名]のPPが少ない 102
   //Haven't MissionParam
-  GAMEBEACON_ACTION_FMISSION_FREEWORD,         ///<フェスミッション 一言メッセージ 102
+  GAMEBEACON_ACTION_FMISSION_FREEWORD,         ///<フェスミッション 一言メッセージ 103
 
   GAMEBEACON_ACTION_MAX, ///<103
 }GAMEBEACON_ACTION;
