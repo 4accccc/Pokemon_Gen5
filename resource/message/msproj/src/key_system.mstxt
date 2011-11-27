@@ -69,10 +69,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キーの　通信</Text>
+			<Text>キーの通信</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:43:10" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:04:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -173,10 +173,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>街の　変更</Text>
+			<Text>街の変更</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:44:36" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:04:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -598,10 +598,10 @@
 			<Text>モードを　かえることが　できます
 ただいま　アシストモード　です
 トレーナーとの　ポケモンしょうぶが
-すこし　やさしく　なっています</Text>
+やさしく　なっています</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T02:09:27" />
+				Time="2011-11-27T04:12:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -612,10 +612,10 @@
 			<Text>モードを　変えることが　できます
 ただいま アシストモード　です
 トレーナーとの　ポケモン勝負が
-少し　やさしく　なっています</Text>
+やさしく　なっています</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-24T10:42:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:12:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -687,11 +687,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まちを　かえることが　できます
+			<Text>ブラックシティと
+ホワイトフォレストを
+へんこうすることが　できます
 げんざいは　ブラックシティ　です</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:14:09" />
+				Time="2011-11-27T04:31:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -699,11 +701,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>街を　変えることが　できます
+			<Text>ブラックシティと
+ホワイトフォレストを
+変更することが　できます
 現在は　ブラックシティ　です</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:14:13" />
+				Time="2011-11-27T04:30:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -715,11 +719,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まちを　かえることが　できます
+			<Text>ブラックシティと
+ホワイトフォレストを
+へんこうすることが　できます
 げんざいは　ホワイトフォレスト　です</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:14:19" />
+				Time="2011-11-27T04:31:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -727,11 +733,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>街を　変えることが　できます
+			<Text>ブラックシティと
+ホワイトフォレストを
+変更することが　できます
 現在は　ホワイトフォレスト　です</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:14:22" />
+				Time="2011-11-27T04:31:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2672,12 +2680,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちていいせき　の　ひみつのドアの
-さきの　へやを　かえることができます
-げんざいは　いわやまのま　です</Text>
+			<Text>ちていいせきの　ひみつのドア　から
+つながる　へやを　へんこうできます
+げんざいは
+いわやまのまに　つながっています</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-24T12:00:57" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:22:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2685,12 +2694,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>地底遺跡　の　秘密のドアの　先の
-部屋を　変えることができます
-現在は　岩山の間　です</Text>
+			<Text>地底遺跡にある　ひみつのドアの
+つながる　先を　変更できます
+現在は
+岩山の間に　つながっています</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-24T12:01:02" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:24:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2709,12 +2719,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちていいせき　の　ひみつのドアの
-さきの　へやを　かえることができます
-げんざいは　くろがねのま　です</Text>
+			<Text>ちていいせきの　ひみつのドア　から
+つながる　へやを　へんこうできます
+げんざいは
+くろがねのまに　つながっています</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-24T12:01:10" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:23:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2722,12 +2733,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>地底遺跡　の　秘密のドアの　先の
-部屋を　変えることができます
-現在は　鉄の間　です</Text>
+			<Text>地底遺跡にある　ひみつのドアの
+つながる　先を　変更できます
+現在は
+鉄の間に　つながっています</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-24T12:01:17" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:24:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2746,12 +2758,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちていいせき　の　ひみつのドアの
-さきの　へやを　かえることができます
-げんざいは　ひょうざんのま　です</Text>
+			<Text>ちていいせきの　ひみつのドア　から
+つながる　へやを　へんこうできます
+げんざいは
+ひょうざんのまに　つながっています</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-24T12:01:23" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:23:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2759,12 +2772,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>地底遺跡　の　秘密のドアの　先の
-部屋を　変えることができます
-現在は　氷山の間　です</Text>
+			<Text>地底遺跡にある　ひみつのドアの
+つながる　先を　変更できます
+現在は
+氷山の間に　つながっています</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-24T12:01:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:24:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3139,11 +3153,11 @@
 			Language="JPN">
 			<Text>アシストモードに
 せっていを　へんこうしました▼
-トレーナーとの　ポケモンしょうぶが
-すこし　やさしくなります▼</Text>
+トレーナーの　くりだす　ポケモンは
+いつもより　ひくいレベルに　なります▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-24T11:39:05" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:35:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -3153,11 +3167,11 @@
 			Language="JPN_KANJI">
 			<Text>アシストモードに
 設定を　変更しました▼
-トレーナーとの　ポケモン勝負が
-少し　やさしくなります▼</Text>
+トレーナーの　くりだす　ポケモンは
+いつもより　低いレベルに　なります▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-24T11:39:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:35:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -3179,11 +3193,11 @@
 			Language="JPN">
 			<Text>ノーマルモードに
 せっていを　へんこうしました▼
-トレーナーとの　ポケモンしょうぶが
-ふつうの　つよさに　なります▼</Text>
+トレーナーの　くりだす　ポケモンは
+いつもの　レベルに　なります▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-26T08:03:01" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:34:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -3193,11 +3207,11 @@
 			Language="JPN_KANJI">
 			<Text>ノーマルモードに
 設定を　変更しました▼
-トレーナーとの　ポケモン勝負が
-普通の　つよさに　なります▼</Text>
+トレーナーの　くりだす　ポケモンは
+いつもの　レベルに　なります▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-26T08:03:01" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:34:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -3219,11 +3233,11 @@
 			Language="JPN">
 			<Text>チャレンジモードに
 せっていを　へんこうしました▼
-トレーナーとの　ポケモンしょうぶが
-てごわく　なります▼</Text>
+トレーナーの　くりだす　ポケモンは
+いつもより　たかいレベルに　なります▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-26T08:02:56" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:35:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -3233,11 +3247,11 @@
 			Language="JPN_KANJI">
 			<Text>チャレンジモードに
 設定を　変更しました▼
-トレーナーとの　ポケモン勝負が
-てごわく　なります▼</Text>
+トレーナーの　くりだす　ポケモンは
+いつもより　高いレベルに　なります▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-26T08:02:56" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:35:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -3269,11 +3283,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホワイトシティに
-せっていを　へんこうしました▼</Text>
+			<Text>ブラックシティに
+設定を　変更しました▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-24T11:40:00" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:25:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -3293,11 +3307,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブラックシティに
+			<Text>ホワイトシティに
 せっていを　へんこうしました▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-24T11:39:54" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:25:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -3306,10 +3320,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ホワイトシティに
-せっていを　へんこうしました▼</Text>
+設定を　変更しました▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-24T11:40:00" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:25:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -3330,12 +3344,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>いわやまのま　に
-せっていを　へんこうしました▼
-ちていいせきの　ひみつのドアを
-くぐり　いわやまのまに　いこう▼</Text>
+せっていを　へんこう　しました▼
+ちていいせきの　ひみつのドアを　ぬけ
+いわやまのまに　いきましょう！▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-24T11:40:07" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:28:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -3345,11 +3359,11 @@
 			Language="JPN_KANJI">
 			<Text>岩山の間　に
 設定を　変更しました▼
-地底遺跡の　秘密のドアを
-くぐり　岩山の間に　行こう▼</Text>
+地底遺跡の　ひみつのドアを　ぬけ
+岩山の間に　行きましょう！▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-24T11:40:14" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:28:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -3370,12 +3384,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>くろがねのま　に
-せっていを　へんこうしました▼
-ちていいせきの　ひみつのドアを
-くぐり　くろがねのまに　いこう▼</Text>
+せっていを　へんこう　しました▼
+ちていいせきの　ひみつのドアを　ぬけ
+くろがねのまに　いきましょう！▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-24T11:40:22" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:28:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -3385,11 +3399,11 @@
 			Language="JPN_KANJI">
 			<Text>鉄の間　に
 設定を　変更しました▼
-地底遺跡の　ひみつのドアを
-くぐり　鉄の間に　行こう▼</Text>
+地底遺跡の　ひみつのドアを　ぬけ
+鉄の間に　行きましょう！▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-24T11:40:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:28:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -3410,12 +3424,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ひょうざんのま　に
-せっていを　へんこうしました▼
-ちていいせきの　ひみつのドアを
-くぐり　ひょうざんのまに　いこう▼</Text>
+せっていを　へんこう　しました▼
+ちていいせきの　ひみつのドアを　ぬけ
+ひょうざんのまに　いきましょう！▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-24T11:40:36" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:28:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -3425,11 +3439,11 @@
 			Language="JPN_KANJI">
 			<Text>氷山の間　に
 設定を　変更しました▼
-地底遺跡の　ひみつのドアを
-くぐり　氷山の間に　行こう▼</Text>
+地底遺跡の　ひみつのドアを　ぬけ
+氷山の間に　行きましょう！▼</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-24T11:40:44" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:28:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -5240,11 +5254,10 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN">
 			<Text>ライモンの　ミュージカルで
-オーナーが　かこを　なつかしんでいる▼
-みじっそう▼</Text>
+オーナーが　かこを　なつかしんでいる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T03:09:26" />
+				Time="2011-11-27T04:29:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -5253,11 +5266,10 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ライモンの　ミュージカルで
-オーナーが　過去を　懐かしんでいる▼
-みじっそう▼</Text>
+オーナーが　過去を　懐かしんでいる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T03:09:37" />
+				Time="2011-11-27T04:29:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -5291,13 +5303,11 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンセンターで
-パソコンを　みながら▼
-ポケモンの　ことを　かんがえている
-ポケモンブリーダーが　いる▼
-みじっそう▼</Text>
+ポケモンの　ことを　かんがえている▽
+ブリーダーが　いる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:36:59" />
+				Time="2011-11-27T04:29:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -5306,13 +5316,11 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンセンターで
-パソコンを　みながら▼
-ポケモンの　ことを　かんがえている
-ポケモンブリーダーが　いる▼
-みじっそう▼</Text>
+ポケモンの　ことを　考えている▽
+ブリーダーが　いる▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T02:37:04" />
+				Time="2011-11-27T04:29:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"

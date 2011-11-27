@@ -1657,7 +1657,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなたが　たびの　パートナーとなる
+			<Text>あなたが　パートナーとなる
 ポケモンを　えらんだ　そのときから▼
 あなただけの
 たびものがたりが　はじまります▼
@@ -1676,8 +1676,8 @@
 それでは　いきましょう！
 ポケットモンスターの　せかいへ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:04:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1685,7 +1685,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたが　旅の　パートナーとなる
+			<Text>あなたが　パートナーとなる
 ポケモンを　選んだ　その瞬間から▼
 あなただけの
 旅物語が　始まります▼
@@ -1693,7 +1693,7 @@
 数多くの　ポケモン▽
 いろんな　考えの　人と▽
 出会い　触れ合うでしょう！▼
-その　様々な　出会いから
+その　さまざまな　出会いから
 あなただけの　大切な　ものを▽
 ぜひ　みつけてほしい……▼
 そう！　たくさんの　人々や
@@ -1704,8 +1704,8 @@
 それでは　行きましょう！
 ポケットモンスターの　世界へ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:21" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T04:04:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
