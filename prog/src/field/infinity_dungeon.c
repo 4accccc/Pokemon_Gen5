@@ -1583,6 +1583,23 @@ u32 INFINITY_DUNGEON_GetHintMessage( const INFINITYDUNGEON_SAVE *p_save ,const I
     gethint_no_hint,
   };
 
+  // ゲートが開いているとき専用処理
+  HINTMSGPROC hint_msg_proc_table_is_gate_open[ INFTR_HINT_TYPE_MAX ] =
+  {
+    gethint_no_hint,
+    gethint_no_hint,
+    gethint_no_hint,
+    gethint_no_hint,
+    gethint_no_hint,
+    gethint_medic_dir,
+    gethint_boss_monster,
+    gethint_boss_info,
+    gethint_no_hint,
+  };
+
+  // ボスを倒しているか調べる
+  BOOL is_gate_open = INFINITY_DUNGEON_GetGateOpen( p_dungeon_data,p_save );
+
   // OBJコードから会話パターンを選択
   talk_type = INF_TOOL_GetTrainerTalkType( obj_code );
   hint_type = INF_TOOL_GetTrainerHintType( p_dungeon_data, obj_code ,now_floor,id_pos);
@@ -1594,8 +1611,17 @@ u32 INFINITY_DUNGEON_GetHintMessage( const INFINITYDUNGEON_SAVE *p_save ,const I
     trhint_wk.p_save = p_save;
   }
 
-  // ヒントメッセージ取得
-  return hint_msg_proc_table[hint_type]( &trhint_wk );
+  // ゲートの開放状態でメッセージを切り替える
+  if( is_gate_open == FALSE )
+  {
+    // ゲート未開放時
+    return hint_msg_proc_table[hint_type]( &trhint_wk );
+  }
+  else
+  {
+    // ゲートオープン時
+    return hint_msg_proc_table_is_gate_open[hint_type]( &trhint_wk );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -1882,6 +1908,8 @@ static u32 gethint_boss_monster( const TRHINT_WK *p_wk )
 //-----------------------------------------------------------------------------
 static u32 gethint_medic_dir( const TRHINT_WK *p_wk )
 {
+  const u32 *p_msg_table;
+
   // 現在のフロア
   u8 now_floor = INFINITYDUNGEON_SAVE_GetFloorID( p_wk->p_save );
   // 主人公のいる部屋ID
@@ -1889,6 +1917,9 @@ static u32 gethint_medic_dir( const TRHINT_WK *p_wk )
 
   // 回復トレーナーのいる部屋ID
   u8 medic_room = p_wk->p_dungeon_data->recover_room_id[now_floor];
+ 
+  // バージョン
+  u8 version = INF_TOOL_DUNGEON_GetDungeonColor( p_wk->p_dungeon_data );
 
   // メッセージを取得
   u32 msg_id = msg_hint_dir_unknown_01;
@@ -1897,6 +1928,42 @@ static u32 gethint_medic_dir( const TRHINT_WK *p_wk )
   u8 y1 = 0;
   u8 x2 = 0;
   u8 y2 = 0;
+
+  // ブラック用テーブル
+  const u32 msg_table_b[INFTR_DIR_MAX] =
+  {
+    msg_hint_nurse_dir_u_01,
+    msg_hint_nurse_dir_d_01,
+    msg_hint_nurse_dir_l_01,
+    msg_hint_nurse_dir_r_01,
+    msg_hint_nurse_dir_lu_01,
+    msg_hint_nurse_dir_ru_01,
+    msg_hint_nurse_dir_ld_01,
+    msg_hint_nurse_dir_rd_01,
+  };
+
+  // ブラック用テーブル
+  const u32 msg_table_w[INFTR_DIR_MAX] =
+  {
+    msg_hint_doctor_dir_u_01,
+    msg_hint_doctor_dir_d_01,
+    msg_hint_doctor_dir_l_01,
+    msg_hint_doctor_dir_r_01,
+    msg_hint_doctor_dir_lu_01,
+    msg_hint_doctor_dir_ru_01,
+    msg_hint_doctor_dir_ld_01,
+    msg_hint_doctor_dir_rd_01,
+  };
+
+  // 使用するテーブル取得
+  if( version == VERSION_B2 )
+  {
+    p_msg_table = msg_table_b;
+  }
+  else
+  {
+    p_msg_table = msg_table_w;
+  }
 
   ONOUE_Printf("現在のフロア：%u,回復トレーナーのフロア%u\n",now_floor ,now_floor );
   ONOUE_Printf("現在の部屋番号：%u,回復トレーナーの部屋番号%u\n",now_floor ,medic_room );
@@ -1921,38 +1988,11 @@ static u32 gethint_medic_dir( const TRHINT_WK *p_wk )
 
   GF_ASSERT( medic_room != ROOM_MAX );
 
+  // 方向取得
   dir = GetPosDirID( x1, y1, x2, y2 );
-  switch( dir )
-  {
-  case INFTR_DIR_U:  // 上
-    msg_id = msg_hint_nurse_dir_u_01;
-    break;
-  case INFTR_DIR_D:  // 下
-    msg_id = msg_hint_nurse_dir_d_01;
-    break;
-  case INFTR_DIR_L:  // 左
-    msg_id = msg_hint_nurse_dir_l_01;
-    break;
-  case INFTR_DIR_R:  // 右
-    msg_id = msg_hint_nurse_dir_r_01;
-    break;
-  case INFTR_DIR_LU:  // 上左
-    msg_id = msg_hint_nurse_dir_lu_01;
-    break;
-  case INFTR_DIR_RU:  // 上右
-    msg_id = msg_hint_nurse_dir_ru_01;
-    break;
-  case INFTR_DIR_LD:  // 下左
-    msg_id = msg_hint_nurse_dir_ld_01;
-    break;
-  case INFTR_DIR_RD:  // 下右
-    msg_id = msg_hint_nurse_dir_rd_01;
-    break;
-  default:
-    GF_ASSERT(0);
-    msg_id = msg_hint_nurse_dir_u_01;
-    break;
-  }
+
+  // メッセージテーブルから返答メッセージを取得
+  msg_id = p_msg_table[ dir ];
 
   return msg_id + p_wk->talk_type;
 }
