@@ -1010,4 +1010,20 @@ BOOL ITEM_IsDisableItem( u16 item )
   return DATA_ItemDisableFlagTbl[item/32] & (0x00000001<<(item%32));
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * アイテムNoから、そのアイテムがスワンで新規追加されたアイテムかをチェック
+ *
+ * @param   item  アイテムID
+ * @retval  TRUE  条件合致(SWANで新規追加されたBWは知らないアイテム)
+ */
+//--------------------------------------------------------------------------------------------
+BOOL ITEM_IsSwanNewItem( u16 item )
+{
+  if( item >= ITEM_MEDARUBOKKUSU ){ //メダルボックスより後ろが全てSWAN新規追加
+    return TRUE;
+  }
+  return FALSE;
+}
+
 
