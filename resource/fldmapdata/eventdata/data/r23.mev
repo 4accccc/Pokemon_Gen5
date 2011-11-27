@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/24 16:41:15
+#save date:2011/11/27 15:10:24
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r23.wms
 #SECTION START:OBJ_EVENT
@@ -795,7 +795,7 @@ MOUNTMAN
 #MOVE CODE Number
 MV_RT2
 #EVENT TYPE Number
-EV_TYPE_TR_D_KYORO
+EV_TYPE_TRAINER_KYORO
 #Flag Name
 0
 #Event Script Name
