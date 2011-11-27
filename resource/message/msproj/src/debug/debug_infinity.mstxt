@@ -600,4 +600,60 @@
 				Time="2011-10-19T07:04:23" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="DEBUG_STR_INFINITY_SEED_CHECK"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シード確認</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-11-27T07:33:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-11-27T07:33:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シード確認</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-11-27T07:33:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-11-27T07:33:44" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STR_INFINITY_SEED_CHECK_NUM"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シード
+10進数：[Digit:10digits ]
+16進数：[Digit:8digits Idx="1" ]</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-11-27T09:17:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-11-27T08:33:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シード
+10進数：[Digit:10digits ]
+16進数：[Digit:8digits Idx="1" ]</Text>
+			<TextModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-11-27T09:18:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="onoue_masayuki:W00272"
+				Time="2011-11-27T08:33:55" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

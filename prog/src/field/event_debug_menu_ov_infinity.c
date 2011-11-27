@@ -55,6 +55,7 @@ typedef struct {
   INFINITYDUNGEON_SAVE  *p_save;
   GAMEDATA *p_gamedata;
   int num;
+  u32 seed;
   u32 num_input_type;
 } INFDUN_WORK;
 
@@ -93,6 +94,7 @@ static const DEBUG_MENU_LIST MenuList[] =
   { DEBUG_STR_INFINITY_WHITE_VERSION , (void*)DEBUG_STR_INFINITY_WHITE_VERSION , GFL_OVERLAY_BLANK_ID },  // ジャンプ
   { DEBUG_STR_INFINITY_AUTO_MAP , (void*)DEBUG_STR_INFINITY_AUTO_MAP , GFL_OVERLAY_BLANK_ID },  // ジャンプ
   { DEBUG_STR_INFINITY_TRDATA_CHECK , (void*)DEBUG_STR_INFINITY_TRDATA_CHECK , GFL_OVERLAY_BLANK_ID },  // トレーナーデータチェック
+  { DEBUG_STR_INFINITY_SEED_CHECK , (void*)DEBUG_STR_INFINITY_SEED_CHECK , GFL_OVERLAY_BLANK_ID },  // シード確認
 };
 
 ///リスト メニューヘッダー
@@ -301,6 +303,71 @@ static BOOL NumInputState( INFDUN_WORK* p_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  数値表示のみの
+ *
+ *	@param	p_wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL DrawNumState( INFDUN_WORK* p_wk )
+{
+  switch( p_wk->sub_seq_no )
+  {
+  case 0:
+    {
+      FLDMSGBG * msgBG;
+      // 数値の初期化
+      FIELD_WFBC_CORE_TYPE wfbc_type = GAMEDATA_GetMyWFBCType( p_wk->p_gamedata );
+      p_wk->num = INFINITYDUNGEON_SAVE_GetDungeonStatus( p_wk->p_save ,wfbc_type );
+      p_wk->msgData = DEBUGFLDMENU_CreateMSGDATA(p_wk->fieldWork, DebugMenuInfDunImitializer.msg_dat_id );
+      msgBG = FIELDMAP_GetFldMsgBG( p_wk->fieldWork );
+      p_wk->win = FLDSYSWIN_AddEx( msgBG, p_wk->msgData , 1, 1, 30, 6 );
+      p_wk->sub_seq_no++;
+    }
+    break;
+  case 1:
+    {
+      STRBUF *str;
+      STRBUF *exp;
+      FLDMSGBG * msgBG;
+      WORDSET * wset;
+
+      str = GFL_MSG_CreateString( p_wk->msgData, DEBUG_STR_INFINITY_SEED_CHECK_NUM );
+      wset = WORDSET_Create( p_wk->heapID );
+      exp  = GFL_STR_CreateBuffer( 128, p_wk->heapID );
+      WORDSET_RegisterNumber( wset, 0, p_wk->seed, 10, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterHexNumber( wset, 1, p_wk->seed, 8, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+      WORDSET_ExpandStr( wset, exp, str );
+
+      msgBG = FIELDMAP_GetFldMsgBG( p_wk->fieldWork );
+      FLDSYSWIN_ClearWindow( p_wk->win );
+      FLDSYSWIN_PrintStrBuf( p_wk->win, 0, 0, exp );
+
+      GFL_STR_DeleteBuffer( str );
+      GFL_STR_DeleteBuffer( exp );
+      WORDSET_Delete( wset );
+      p_wk->sub_seq_no++;
+    }
+    break;
+  case 2:
+    {
+      // 終了判定
+      if( GFL_UI_KEY_GetTrg() )
+      {
+        FLDSYSWIN_ClearWindow( p_wk->win );
+        FLDSYSWIN_Delete( p_wk->win );
+        GFL_MSG_Delete( p_wk->msgData );
+        return FALSE;
+      }
+      break;
+    }
+  }
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  メニュー選択
  *
  *	@param	*event
@@ -397,6 +464,14 @@ static GMEVENT_RESULT debugMenuMedalInfinityDungeon( GMEVENT *event, int *seq, v
       }
       return GMEVENT_RES_FINISH;
 
+    case DEBUG_STR_INFINITY_SEED_CHECK:
+      {
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+        work->seed = INFINITYDUNGEON_SAVE_GetRandomSeed( work->p_save );
+        (*seq) = 4;
+      }
+      break;
+
       // ジャンプ
     case DEBUG_STR_INFINITY_JUMP_1: JumpZone(work,ZONE_ID_D31R0201); (*seq)=3; break;
     case DEBUG_STR_INFINITY_JUMP_2: JumpZone(work,ZONE_ID_D31R0101); (*seq)=3; break;
@@ -423,6 +498,14 @@ static GMEVENT_RESULT debugMenuMedalInfinityDungeon( GMEVENT *event, int *seq, v
     break;
   case 3:
     return GMEVENT_RES_FINISH;
+  case 4:
+    {
+      if( !DrawNumState( work ) )
+      {
+        return GMEVENT_RES_FINISH;
+      }
+      break;
+    }
   }
 
   return( GMEVENT_RES_CONTINUE );

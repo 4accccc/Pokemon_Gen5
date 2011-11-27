@@ -224,6 +224,9 @@ void INF_MakeDungeonData( INF_DUNGEON_DATA *p_wk,GAMEDATA *p_gdata, HEAPID heapI
 
   // シードを生成
   master_seed = INFINITYDUNGEON_SAVE_GetRandomSeed( p_inf_save );
+  
+  OS_Printf("無限ダンジョン生成シード:%u=%x\n",master_seed,master_seed);
+
   INF_TOOL_SetDungeonSeed(&p_wk->seed ,master_seed);
 
   // フロアデータの生成
