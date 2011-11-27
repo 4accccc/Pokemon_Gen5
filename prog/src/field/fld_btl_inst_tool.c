@@ -690,7 +690,7 @@ BATTLE_SETUP_PARAM * FBI_TOOL_INFINITY_DUNGEON_CreateBattleParam(
     EntryAITrainer( play_mode ,dst->tr_data[client]->tr_id + trid_offset ,bsw_trainer ,dst->tr_data[client] ,0x00000087 ,TRUE,FALSE );
      
     //敵ポケモンセット
-    level = GetRand( rand_context )%(level_max-level_min) + level_min;
+    level = GetRand( rand_context )%((level_max-level_min)+1) + level_min;
     SetPokeParty( bsw_partner ,dst->party[client] ,level ,inEnemyMemNum ,heapID );
   }
 

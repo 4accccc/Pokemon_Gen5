@@ -157,8 +157,8 @@ typedef struct {
 ///	レベルデータ
 //=====================================
 typedef struct {
-  u16 level_max;
   u16 level_min;
+  u16 level_max;
 }INF_LEVEL_TABLE_PARAM;
 
 //-------------------------------------
