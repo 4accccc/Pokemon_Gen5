@@ -22,5 +22,13 @@
 #ifndef ZONE_R07R0102_EVB_H
 #define ZONE_R07R0102_EVB_H
 
+#define BG_R07R0102_DUMMY_FES_01          0
+#define BG_R07R0102_DUMMY_FES_02          1
+#define BG_R07R0102_DUMMY_FES_03          2
+#define BG_R07R0102_DUMMY_FES_04          3
+#define BG_R07R0102_DUMMY_FES_05          4
+#define BG_R07R0102_DUMMY_FES_06          5
+#define BG_R07R0102_DUMMY_FES_07          6
+#define BG_R07R0102_DUMMY_FES_08          7
 
 #endif //ZONE_R07R0102_EVB_H

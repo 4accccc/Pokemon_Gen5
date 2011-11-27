@@ -28,5 +28,16 @@
 #define HIDE_ITEM_206                     1
 #define HIDE_ITEM_207                     2
 #define BG_W17_SIGN1_01                   3
+#define BG_W17_DUMMY_FES_01               4
+#define BG_W17_DUMMY_FES_02               5
+#define BG_W17_DUMMY_FES_03               6
+#define BG_W17_DUMMY_FES_04               7
+#define BG_W17_DUMMY_FES_05               8
+#define BG_W17_DUMMY_FES_06               9
+#define BG_W17_DUMMY_FES_07              10
+#define BG_W17_DUMMY_FES_08              11
+#define BG_W17_DUMMY_FES_09              12
+#define BG_W17_DUMMY_FES_10              13
+#define BG_W17_DUMMY_FES_11              14
 
 #endif //ZONE_W17_EVB_H

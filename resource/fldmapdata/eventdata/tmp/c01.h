@@ -51,5 +51,23 @@
 #define BGID_C01_GYMSIGN_02               4
 #define HIDE_ITEM_000                     5
 #define HIDE_ITEM_209                     6
+#define BG_C01_DUMMY_FES_01               7
+#define BG_C01_DUMMY_FES_02               8
+#define BG_C01_DUMMY_FES_03               9
+#define BG_C01_DUMMY_FES_04              10
+#define BG_C01_DUMMY_FES_05              11
+#define BG_C01_DUMMY_FES_06              12
+#define BG_C01_DUMMY_FES_07              13
+#define BG_C01_DUMMY_FES_08              14
+#define BG_C01_DUMMY_FES_09              15
+#define BG_C01_DUMMY_FES_10              16
+#define BG_C01_DUMMY_FES_11              17
+#define BG_C01_DUMMY_FES_12              18
+#define BG_C01_DUMMY_FES_13              19
+#define BG_C01_DUMMY_FES_14              20
+#define BG_C01_DUMMY_FES_15              21
+#define BG_C01_DUMMY_FES_16              22
+#define BG_C01_DUMMY_FES_17              23
+#define BG_C01_DUMMY_FES_18              24
 
 #endif //ZONE_C01_EVB_H

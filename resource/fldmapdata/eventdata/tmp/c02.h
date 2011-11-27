@@ -41,5 +41,21 @@
 #define BG_C02_SIGN3_01                   4
 #define BG_C02_SIGN3_02                   5
 #define BG_C02_SIGN4_01                   6
+#define BG_C02_DUMMY_FES_01               7
+#define BG_C02_DUMMY_FES_02               8
+#define BG_C02_DUMMY_FES_03               9
+#define BG_C02_DUMMY_FES_04              10
+#define BG_C02_DUMMY_FES_05              11
+#define BG_C02_DUMMY_FES_06              12
+#define BG_C02_DUMMY_FES_07              13
+#define BG_C02_DUMMY_FES_08              14
+#define BG_C02_DUMMY_FES_09              15
+#define BG_C02_DUMMY_FES_10              16
+#define BG_C02_DUMMY_FES_11              17
+#define BG_C02_DUMMY_FES_12              18
+#define BG_C02_DUMMY_FES_13              19
+#define BG_C02_DUMMY_FES_14              20
+#define BG_C02_DUMMY_FES_15              21
+#define BG_C02_DUMMY_FES_16              22
 
 #endif //ZONE_C02_EVB_H
