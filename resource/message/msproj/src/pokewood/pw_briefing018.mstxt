@@ -50,13 +50,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]みらいじん　レディアンの
-[Ctrl1:xcenter ]きょうりょくの　もと
-[Ctrl1:xcenter ]じかんを　さかのぼる　てんそうきが
-[Ctrl1:xcenter ]ついに　かんせい　した</Text>
+			<Text>[Ctrl1:xcenter ]れいこくな　みらいじん
+[Ctrl1:xcenter ]レディアンに　おそわれ
+[Ctrl1:xcenter ]じかん　てんそうきの　カプセルを
+[Ctrl1:xcenter ]うばわれて　しまった</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-27T12:07:57" />
+				Time="2011-11-27T12:26:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -64,13 +64,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]未来人　レディアンの
-[Ctrl1:xcenter ]協力の　もと
-[Ctrl1:xcenter ]時間を　さかのぼる　転送機が
-[Ctrl1:xcenter ]ついに　完成　した</Text>
+			<Text>[Ctrl1:xcenter ]冷酷な　未来人
+[Ctrl1:xcenter ]レディアンに　襲われ
+[Ctrl1:xcenter ]時間転送機の　カプセルを
+[Ctrl1:xcenter ]奪われて　しまった</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-27T12:08:26" />
+				Time="2011-11-27T12:26:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -82,13 +82,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]しかし　かこへ　しゅっぱつする
-[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]はかせの　まえに
-[Ctrl1:xcenter ]ふたたび　レディアンが
-[Ctrl1:xcenter ]たちふさがる……</Text>
+			<Text>[Ctrl1:xcenter ]くちふうじに　[Name:TrainerName Idx="1" ]はかせを
+[Ctrl1:xcenter ]くじょ　する　と　せまる　レディアン
+[Ctrl1:xcenter ]はたして　[Name:TrainerName Idx="1" ]はかせは　ぶじ
+[Ctrl1:xcenter ]もとの　じだいへ　かえれるのか！？</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T05:53:05" />
+				Time="2011-11-27T12:28:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -96,13 +96,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]しかし　過去へ　出発する
-[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]博士の　前に
-[Ctrl1:xcenter ]再び　レディアンが
-[Ctrl1:xcenter ]立ちふさがる……</Text>
+			<Text>[Ctrl1:xcenter ]口封じに　[Name:TrainerName Idx="1" ]博士を
+[Ctrl1:xcenter ]駆除すると　迫る　レディアン
+[Ctrl1:xcenter ]果たして　[Name:TrainerName Idx="1" ]博士は　無事
+[Ctrl1:xcenter ]元の　時代へ　帰れるのか！？</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T05:53:08" />
+				Time="2011-11-27T12:28:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -333,13 +333,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]みらいじん　レディアンの
-[Ctrl1:xcenter ]きょうりょくの　もと
-[Ctrl1:xcenter ]じかんを　さかのぼる　てんそうきが
-[Ctrl1:xcenter ]ついに　かんせい　した</Text>
+			<Text>[Ctrl1:xcenter ]れいこくな　みらいじん
+[Ctrl1:xcenter ]レディアンに　おそわれ
+[Ctrl1:xcenter ]じかん　てんそうきの　カプセルを
+[Ctrl1:xcenter ]うばわれて　しまった</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-27T12:11:06" />
+				Time="2011-11-27T12:29:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -347,13 +347,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]未来人　レディアンの
-[Ctrl1:xcenter ]協力の　もと
-[Ctrl1:xcenter ]時間を　さかのぼる　転送機が
-[Ctrl1:xcenter ]ついに　完成　した</Text>
+			<Text>[Ctrl1:xcenter ]冷酷な　未来人
+[Ctrl1:xcenter ]レディアンに　襲われ
+[Ctrl1:xcenter ]時間転送機の　カプセルを
+[Ctrl1:xcenter ]奪われて　しまった</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-09-27T12:11:06" />
+				Time="2011-11-27T12:29:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -365,13 +365,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]しかし　かこへ　しゅっぱつする
-[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]はかせの　まえに
-[Ctrl1:xcenter ]ふたたび　レディアンが
-[Ctrl1:xcenter ]たちふさがる……</Text>
+			<Text>[Ctrl1:xcenter ]くちふうじに　[Name:TrainerName Idx="1" ]はかせを
+[Ctrl1:xcenter ]くじょ　する　と　せまる　レディアン
+[Ctrl1:xcenter ]はたして　[Name:TrainerName Idx="1" ]はかせは　ぶじ
+[Ctrl1:xcenter ]もとの　じだいへ　かえれるのか！？</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T05:54:04" />
+				Time="2011-11-27T12:29:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -379,13 +379,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]しかし　過去へ　出発する
-[Ctrl1:xcenter ][Name:TrainerName Idx="1" ]博士の　前に
-[Ctrl1:xcenter ]再び　レディアンが
-[Ctrl1:xcenter ]立ちふさがる……</Text>
+			<Text>[Ctrl1:xcenter ]口封じに　[Name:TrainerName Idx="1" ]博士を
+[Ctrl1:xcenter ]駆除すると　迫る　レディアン
+[Ctrl1:xcenter ]果たして　[Name:TrainerName Idx="1" ]博士は　無事
+[Ctrl1:xcenter ]元の　時代へ　帰れるのか！？</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-10T05:54:04" />
+				Time="2011-11-27T12:29:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

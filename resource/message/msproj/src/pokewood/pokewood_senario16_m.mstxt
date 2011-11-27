@@ -1423,28 +1423,30 @@
 			<Text>[Name:TrainerName Idx="1" ]はかせ『よし！▼
 では　わたしは　みらいの
 せかいへと　たびだつ！▼
-いってくるぞ！！</Text>
+みらいからの　おみやげを
+たのしみに　して　くれたまえ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-27T12:10:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-27T12:10:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]博士『よし！▼
 では　わたしは　未来の
 世界へと　旅立つ！▼
-行ってくるぞ！！</Text>
+未来からの　お土産を
+楽しみに　して　くれたまえ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-27T12:10:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-27T12:10:02" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2044,17 +2046,17 @@
 いきもの　の　すがたに……▼
 じかん　てんそうきから　もれだした
 エネルギーの　えいきょう　だろうか▼
-けんきゅうしつに　いた　ポケモンと
-わたしは　ひとつに　なった……▼
+わたしは [Name:PokemonNickname Idx="0" ]と
+ひとつに　なって　しまった……▼
 こうして　わたしの　けんきゅうは
 おわったのだ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-27T12:10:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-27T12:10:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2065,17 +2067,17 @@
 いきもの　の　姿に……▼
 時間転送機から　もれ出した
 エネルギーの　影響　だろうか▼
-研究室に　いた　ポケモンと
-わたしは　一体化　していた……▼
+わたしは [Name:PokemonNickname Idx="0" ]と
+一体化　してしまった……▼
 こうして　わたしの　研究は
 終わったのだ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-27T12:10:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="ito_hiroto:W00178"
+				Time="2011-11-27T12:10:02" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

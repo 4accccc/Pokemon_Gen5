@@ -360,16 +360,14 @@
 （これが……　未来　なの……</language>
 	</row>
 	<row id="pw_turn_enemy_0">
-		<language name="JPN" width="256">レディアン『しかし……
-みなれない　ニンゲンだな▼
-ケンキューインに　にているが
-めずらしい　しゅるいだ▽
-つかまえて　やろう！</language>
-		<language name="JPN_KANJI" width="256">レディアン『しかし……
-見慣れない　ニンゲンだな▼
-ケンキューインに　似ているが
-珍しい　種類だ▽
-捕まえて　やろう！</language>
+		<language name="JPN" width="256">レディアン『ふうん
+みなれない　ニンゲン▼
+ケンキューインに　にているけど
+めずらしい　しゅるい</language>
+		<language name="JPN_KANJI" width="256">レディアン『ふうん
+見慣れない　ニンゲン▼
+ケンキューインに　似ているけど
+珍しい　種類</language>
 	</row>
 	<row id="pw_turn_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『あいては　にんげん
@@ -377,21 +375,19 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『相手は　人間
 傷つける　わけには　いかない……</language>
 	</row>
-	<row id="pw_turn_enemy_1">
-		<language name="JPN" width="256">おとこのニンゲン『わー！
-ポケモンだー！　にげろー！</language>
-		<language name="JPN_KANJI" width="256">男のニンゲン『わー！
-ポケモンだー！　逃げろー！</language>
-	</row>
 	<row id="pw_turn_enemy_2">
 		<language name="JPN" width="256">レディアン『あの　ニンゲン
-ためらって　いるのか……？▼
+ためらって　いるのね▼
 おなじ　ニンゲンを
-きずつける　ことを……</language>
+きずつける　ことを▼
+よわい　いきものに
+よくある　しゅうせい</language>
 		<language name="JPN_KANJI" width="256">レディアン『あの　ニンゲン
-ためらって　いるのか……？▼
+ためらって　いるのね▼
 同じ　ニンゲンを
-傷つける　ことを……</language>
+傷つける　ことを▼
+弱い　生き物に
+よくある　習性</language>
 	</row>
 	<row id="pw_turn_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『あなたは
@@ -404,10 +400,12 @@
 傷つける　ことが！</language>
 	</row>
 	<row id="pw_turn_enemy_3">
-		<language name="JPN" width="256">レディアン『ニンゲンに　したがう
-ポケモンなど　みとめん……！</language>
-		<language name="JPN_KANJI" width="256">レディアン『ニンゲンに　したがう
-ポケモンなど　認めん……！</language>
+		<language name="JPN" width="256">レディアン『ニンゲンに　したがう……
+ポケモンの　つらよごし▽
+まとめて　くじょ　たいしょう</language>
+		<language name="JPN_KANJI" width="256">レディアン『ニンゲンに　したがう……
+ポケモンの　面汚し▽
+まとめて　駆除対象</language>
 	</row>
 	<row id="pw_turn_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『きみの
@@ -418,42 +416,34 @@
 ポケモンを　守り抜く！</language>
 	</row>
 	<row id="pw_turn_enemy_4">
-		<language name="JPN" width="256">レディアン『くちさき　だけの
-ニンゲンが　えらそうに！</language>
-		<language name="JPN_KANJI" width="256">レディアン『口先だけの
-ニンゲンが　えらそうに！</language>
+		<language name="JPN" width="256">レディアン『くちさきさんずん……▼
+ケンキューインの　とくせい
+こうか　はつどう　かしら</language>
+		<language name="JPN_KANJI" width="256">レディアン『口先三寸……▼
+ケンキューインの　特性
+効果発動　かしら</language>
 	</row>
-	<row id="pw_turn_hero_5">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『こんな　みらい
-まちがっている！▼
-ポケモンと　ニンゲンが
-あらそうなんて……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『こんな　未来
-間違っている！▼
-ポケモンと　人間が
-争うなんて……</language>
+	<row id="pw_event0_enemy_0">
+		<language name="JPN" width="256">レディアン『まちなさい
+そこの　のらニンゲン</language>
+		<language name="JPN_KANJI" width="256">レディアン『待ちなさい
+そこの　野良ニンゲン</language>
 	</row>
-	<row id="pw_turn_enemy_5">
-		<language name="JPN" width="256">レディアン『たとえ
-まちがっているとしても▽
-まぎれもない　じじつだ！</language>
-		<language name="JPN_KANJI" width="256">レディアン『たとえ
-間違っているとしても▽
-まぎれもない　事実だ！</language>
-	</row>
-	<row id="pw_event0_hero_0">
+	<row id="pw_event0_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『ポケモン！？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『ポケモン！？</language>
 	</row>
-	<row id="pw_event0_enemy_0">
-		<language name="JPN" width="256">レディアン『やせいの　ニンゲンか
-わが　ポケモン　カラテオーで▽
-あいてを　してやろう！</language>
-		<language name="JPN_KANJI" width="256">レディアン『野性の　ニンゲンか
-わが　ポケモン　カラテオーで▽
-相手を　してやろう！</language>
+	<row id="pw_event0_enemy_1">
+		<language name="JPN" width="256">レディアン『のらニンゲンが
+まちに　あらわれる　なんて▼
+ヤバンだわ　キケンだわ
+すぐに　くじょ　しないと</language>
+		<language name="JPN_KANJI" width="256">レディアン『野良ニンゲンが
+都市部に　出現するなんて▼
+ヤバンだわ　キケンだわ
+早急に　駆除　しないと</language>
 	</row>
-	<row id="pw_event0_hero_1">
+	<row id="pw_event0_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『ポ　ポケモンが
 ことばを　しゃべっている……！？▽
 しかも　にんげんを　ボールから▽
@@ -465,13 +455,13 @@
 くりだす　なんて……▼
 まるで　あべこべ　じゃないの！</language>
 	</row>
-	<row id="pw_event0_enemy_1">
-		<language name="JPN" width="256">レディアン『なに……？
-ポケモンを　つかう　ニンゲン？▽
-まるで　あべこべ　だな……！</language>
-		<language name="JPN_KANJI" width="256">レディアン『なに……？
-ポケモンを　使う　ニンゲン？▽
-まるで　あべこべ　だな……！</language>
+	<row id="pw_event0_enemy_2">
+		<language name="JPN" width="256">レディアン『…………？
+ニンゲンが　ポケモンを　つかう▽
+わけが　わからないわ</language>
+		<language name="JPN_KANJI" width="256">レディアン『…………？
+ニンゲンが　ポケモンを　使う▽
+訳が　分からないわ</language>
 	</row>
 	<row id="pw_event1_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『まって！
@@ -482,10 +472,14 @@
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">レディアン『きさまら　ニンゲンは
 この　ヒューマンボールに　はいり▽
-ポケモンのために　はたらくのだ！</language>
+ポケモンのために　はたらく！▼
+ボールに　はいらぬ　のらニンゲンは
+くじょ！　くじょ　よ！</language>
 		<language name="JPN_KANJI" width="256">レディアン『きさまら　ニンゲンは
 この　ヒューマンボールに　入り▽
-ポケモンのために　働くのだ！</language>
+ポケモンのために　働く！▼
+ボールに　入らぬ　野良ニンゲンは
+駆除！　駆除よ！</language>
 	</row>
 	<row id="pw_event1_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『なに！？
@@ -498,11 +492,10 @@
 捕まえるの？</language>
 	</row>
 	<row id="pw_event1_enemy_1">
-		<language name="JPN" width="256">レディアン『みらい　だと……？▼
-おおむかしから
-きたとでも　いうのか？</language>
-		<language name="JPN_KANJI" width="256">レディアン『未来　だと……？
-大昔から　来たとでも　いうのか？</language>
+		<language name="JPN" width="256">レディアン『みらい……？
+おおむかしから　きたとでも？</language>
+		<language name="JPN_KANJI" width="256">レディアン『未来……？
+大昔から　来たとでも？</language>
 	</row>
 	<row id="pw_event1_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『さて……▼
@@ -516,71 +509,63 @@
 	</row>
 	<row id="pw_event1_enemy_2">
 		<language name="JPN" width="256">レディアン『それとも　ただの
-うそつきの　ニンゲンか？▼
-こたえ　しだいでは
-この　せんし　レディアン▽
-ゆるしは　しないぞ！</language>
+うそつきの　ニンゲン？▼
+うそつきは　ヒレツだわ
+ヒレツは　つみ……　くじょ　しないと</language>
 		<language name="JPN_KANJI" width="256">レディアン『それとも　ただの
-うそつきの　ニンゲンか？▼
-答え次第では
-この　戦士　レディアン▽
-許しは　しないぞ！</language>
+うそつきの　ニンゲン？▼
+うそつきは　ヒレツだわ
+ヒレツは　罪……　駆除しないと</language>
 	</row>
 	<row id="pw_event1_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『たすけて！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『助けて！</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
-		<language name="JPN" width="256">レディアン『フン！　いのちごいか
-おもしろい　ニンゲンだと　おもったが▽
-きたいはずれ　だな……▼
-カラテオーよ！
-ヤツの　うごきを　ふうじろ！</language>
-		<language name="JPN_KANJI" width="256">レディアン『フン！　命ごいか
-面白い　ニンゲンだと　思ったが▽
-期待外れ　だな……▼
-カラテオーよ！
-ヤツの　動きを　封じろ！</language>
+		<language name="JPN" width="256">レディアン『いのちごい？
+おくびょうものの　ニンゲンは▽
+くじょ　する　まえに▽
+いたぶって　やるわ▼
+わが　しもべ　カラテオー
+ヤツの　うごきを　とめなさい</language>
+		<language name="JPN_KANJI" width="256">レディアン『命ごい？
+おくびょうものの　ニンゲンは▽
+駆除　する　前に▽
+いたぶって　やるわ▼
+わが　しもべ　カラテオー
+ヤツの　動きを　止めなさい</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『はなしを　したい！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『話を　したい！</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
-		<language name="JPN" width="256">レディアン『なるほど　あらそいは
-したくないか……　おもしろい！▼
-しかし　わたしとて　ほこりたかき
-ポケモンの　せんし！▼
-かたるなら　たたかいの　なかで！
-ゆくぞ　カラテオー！</language>
-		<language name="JPN_KANJI" width="256">レディアン『なるほど　争いは
-したくないか……　面白い！▼
-しかし　わたしとて　誇り高き
-ポケモンの　戦士！▼
-語るなら　戦いの　中で！
-ゆくぞ　カラテオー！</language>
+		<language name="JPN" width="256">レディアン『なに　それ？
+ニンゲンの　くせに　ポケモンと▽
+たいとうに　はなそう　なんて▽
+ひじょうしきにも　ほどがある</language>
+		<language name="JPN_KANJI" width="256">レディアン『なに　それ？
+ニンゲンの　くせに　ポケモンと▽
+対等に　話そう　なんて▽
+非常識にも　ほどがある</language>
 	</row>
 	<row id="pw_event1_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『かこ　から　きた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『過去から　来た！</language>
 	</row>
 	<row id="pw_event1_react_enemy_2">
-		<language name="JPN" width="256">レディアン『みえすいた　ウソを！▼
-いまや　われわれ　ポケモンが
-せかいの　あるじだ！▼
-みのほどを　わからせてやる！
-しとめろ　カラテオー！</language>
-		<language name="JPN_KANJI" width="256">レディアン『見えすいた　ウソを！▼
-今や　我々　ポケモンが
-世界の　主だ！▼
-身の程を　分からせてやる！
-仕留めろ　カラテオー！</language>
+		<language name="JPN" width="256">レディアン『うそつきは　つみ……
+くじょ　だわ　くじょ　しか　ない▽
+カラテオー　しとめなさい</language>
+		<language name="JPN_KANJI" width="256">レディアン『うそつきは　罪……
+駆除だわ　駆除しか　ない▽
+カラテオー　仕留めなさい</language>
 	</row>
 	<row id="pw_event2_enemy_0">
-		<language name="JPN" width="256">レディアン『フハハハ！
-ても　あしも　でまい！</language>
-		<language name="JPN_KANJI" width="256">レディアン『フハハハ！
-手も　足も　出まい！</language>
+		<language name="JPN" width="256">レディアン『ても　あしも
+でない　のね</language>
+		<language name="JPN_KANJI" width="256">レディアン『手も　足も
+出ない　のね</language>
 	</row>
 	<row id="pw_event2_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『やめて！
@@ -589,26 +574,26 @@
 戦いたくない！</language>
 	</row>
 	<row id="pw_event2_enemy_1">
-		<language name="JPN" width="256">レディアン『フン！　ならば
-キサマが　つかっている▽
-その　ポケモンを　はなせ！</language>
-		<language name="JPN_KANJI" width="256">レディアン『フン！　ならば
-キサマが　使っている▽
-その　ポケモンを　放せ！</language>
+		<language name="JPN" width="256">レディアン『だったら
+[1:02:ポケモンニックネーム:0]を　にがしなさい</language>
+		<language name="JPN_KANJI" width="256">レディアン『だったら
+[1:02:ポケモンニックネーム:0]を　逃がしなさい</language>
 	</row>
 	<row id="pw_event2_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『そ　それは……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『そ　それは……</language>
 	</row>
 	<row id="pw_event2_enemy_2">
-		<language name="JPN" width="256">レディアン『みを　まもるため
-あくまで　ポケモンは　はなさない▼
-ポケモンを　モノあつかい　している
-なによりの　しょうめいだ！</language>
-		<language name="JPN_KANJI" width="256">レディアン『身を　守るため
-あくまで　ポケモンは　放さない▼
-ポケモンを　モノ扱い　している
-なによりの　証明だ！</language>
+		<language name="JPN" width="256">レディアン『ポケモンが　いないと
+みを　まもれない　ものね▼
+そらも　とべないし
+うでも　２ほんしか　ない▽
+よわい　ニンゲンは</language>
+		<language name="JPN_KANJI" width="256">レディアン『ポケモンが　いないと
+身を　守れない　ものね▼
+空も　飛べないし
+腕も　２本しか　ない▽
+弱い　ニンゲンは</language>
 	</row>
 	<row id="pw_event2_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『ちがう……！
@@ -619,110 +604,104 @@
 大事な　仲間よ！</language>
 	</row>
 	<row id="pw_event2_enemy_3">
-		<language name="JPN" width="256">レディアン『つごうのいいヤツだ！
-ヤバンで　ヒレツな　ニンゲンめ▽
-たおす　かちもない！</language>
-		<language name="JPN_KANJI" width="256">レディアン『都合のいいヤツだ！
-ヤバンで　ヒレツな　ニンゲンめ▽
-倒す　価値もない！</language>
+		<language name="JPN" width="256">レディアン『あら　そう　でも
+ポケモンに　とって　ニンゲン　なんて▼
+かわりに　しごとを　させる　どうぐ
+たたかわせて　あそぶ　オモチャ▼
+ダメになっても　かわりなんて
+いくらでも　いるわ</language>
+		<language name="JPN_KANJI" width="256">レディアン『あら　そう　でも
+ポケモンに　とって　ニンゲン　なんて▼
+代わりに　仕事を　させる　道具
+戦わせて　遊ぶ　オモチャ▼
+ダメになっても　代わりなんて
+いくらでも　いるわ</language>
+	</row>
+	<row id="pw_event2_hero_4">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『ひどい……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]はかせ『ひどい……</language>
 	</row>
 	<row id="pw_event3_enemy_0">
-		<language name="JPN" width="256">レディアン『やせいの　ニンゲンよ！
-おまえは　ゆうきがあり　つよい！▼
-わたしの　なかまになれ！</language>
-		<language name="JPN_KANJI" width="256">レディアン『野性の　ニンゲンよ！
-おまえは　勇気があり　強い！▼
-わたしの　仲間になれ！</language>
+		<language name="JPN" width="256">カラテオー『ポケモン　ツカウ
+ニンゲン……▽
+オレノ　コエ　ワカル……　カ？</language>
+		<language name="JPN_KANJI" width="256">カラテオー『ポケモン　使ウ
+ニンゲン……▽
+オレノ　声　分カル……　カ？</language>
 	</row>
 	<row id="pw_event3_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『なかま？
-ボールに　とじこめ▽
-たたかわせる　ことが？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『仲間？
-ボールに　閉じ込め▽
-戦わせる　ことが？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『あなた……！
+しゃべれるんですか？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『あなた……！
+しゃべれるんですか？</language>
 	</row>
 	<row id="pw_event3_enemy_1">
-		<language name="JPN" width="256">レディアン『なにを　いまさら
-ポケモンと　ニンゲンとは▽
-そういうもの　だろう？</language>
-		<language name="JPN_KANJI" width="256">レディアン『なにを　今さら
-ポケモンと　ニンゲンとは▽
-そういうもの　だろう？</language>
+		<language name="JPN" width="256">カラテオー『ボールニ　イレラレ
+モノ　アツカイ　サレ……▼
+ニンゲンノ　ココロ
+モウスグ　キエル　カモ……▼
+ソノ　マエニ　イイタイ　コト　アル
+アンタ……　カコ　カラ　キタ▽
+オレ　アンタ　シンジル……</language>
+		<language name="JPN_KANJI" width="256">カラテオー『ボールニ　入レラレ
+モノ　扱イ　サレ……▼
+ニンゲンノ　心
+モウスグ　消エル　カモ……▼
+ソノ　前ニ　イイタイ　コト　アル
+アンタ……　過去　カラ　来タ▽
+オレ　アンタ　信ジル……</language>
 	</row>
 	<row id="pw_event3_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『ウッ……
-たしかに　わたしがいた　じだいも▽
-にんげんと　ポケモンの　かんけいは▽
-おなじ　なのかも　しれない……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『ウッ……
-確かに　わたしがいた　時代も▽
-人間と　ポケモンの　関係は▽
-同じ　なのかも　しれない……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『ええ……
+ありがとう……　うれしいわ</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『ええ……
+ありがとう……　うれしいわ</language>
 	</row>
 	<row id="pw_event3_enemy_2">
-		<language name="JPN" width="256">レディアン『よわいものが
-つよいものに　したがう▼
-それが　なかま　という
-ことばの　いみさ</language>
-		<language name="JPN_KANJI" width="256">レディアン『弱いものが
-強いものに　したがう▼
-それが　仲間　という
-言葉の　意味さ</language>
+		<language name="JPN" width="256">カラテオー『ムシポケモン
+ツヨクナリ　ハンラン　オコシタ▼
+ニンゲン　タクサン　クジョ　シタ
+ゲンイン……　チョウシンカノイシ……</language>
+		<language name="JPN_KANJI" width="256">カラテオー『ムシポケモン
+強クナリ　反乱　起コシタ▼
+ニンゲン　タクサン　駆除　シタ
+原因……　超進化ノ石……</language>
 	</row>
 	<row id="pw_event3_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『いや……ちがう！
-トレーナーを　しんらい　しなければ▽
-ポケモンは　いうことを　きかない！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『いや……違う！
-トレーナーを　信頼　しなければ▽
-ポケモンは　いうことを　聞かない！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『……！
+ちょうしんかのいし？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『……！
+超進化の石？</language>
 	</row>
 	<row id="pw_event3_enemy_3">
-		<language name="JPN" width="256">レディアン『だが　ニンゲンは
-おまえのいう　しんらいを▽
-わすれてしまったのだ！</language>
-		<language name="JPN_KANJI" width="256">レディアン『だが　ニンゲンは
-おまえのいう　信頼を▽
-忘れてしまったのだ！</language>
+		<language name="JPN" width="256">カラテオー『チョウシンカノイシ
+ムシポケモン　チノウ　タカク　スル▼
+ポケモン　チカラ　アリ　カシコイ
+ニンゲン　カナワナカッタ……</language>
+		<language name="JPN_KANJI" width="256">カラテオー『超進化ノ石
+ムシポケモン　知能　高ク　スル▼
+ポケモン　チカラアリ　賢イ
+ニンゲン　敵ワナカッタ……</language>
 	</row>
 	<row id="pw_event3_hero_4">
-		<language name="JPN" width="256">おとこのニンゲン『うわー！
-ポケモンが　こっちにくるぞ！▼
-おんなのニンゲン『きゃー！
-つかまえないで！　おねがい！▼
-ニンゲンのこども『たすけてー！</language>
-		<language name="JPN_KANJI" width="256">男のニンゲン『うわー！
-ポケモンが　こっちに来るぞ！▼
-女のニンゲン『きゃー！
-捕まえないで！　お願い！▼
-ニンゲンの子供『助けてー！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『まさか
+そんなことが……　みらいに……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『まさか
+そんなことが……　未来に……</language>
 	</row>
 	<row id="pw_event3_enemy_4">
-		<language name="JPN" width="256">レディアン『みろ……！
-これが　ニンゲンと▽
-ポケモンの　かんけいだ……▼
-おとなしく　つかまったほうが
-あんしんして　いきていけるぞ</language>
-		<language name="JPN_KANJI" width="256">レディアン『見ろ……！
-これが　ニンゲンと▽
-ポケモンの　関係だ……▼
-おとなしく　捕まった方が▽
-安心して　生きていけるぞ</language>
-	</row>
-	<row id="pw_event3_hero_5">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『そんな……！
-みらいは　こんなにも▽
-さつばつとした　ものなの……？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『そんな……！
-未来は　こんなにも▽
-殺伐とした　ものなの……？</language>
-	</row>
-	<row id="pw_event3_enemy_5">
-		<language name="JPN" width="256">レディアン（しんらい　か……
-ふるい　じだいの　ことばだ……</language>
-		<language name="JPN_KANJI" width="256">レディアン（信頼　か……
-古い　時代の　言葉だ……</language>
+		<language name="JPN" width="256">レディアン『カラテオー　きさま
+さっきから　その　ニンゲンと▽
+なにを　はなしている……▼
+どうぐは　どうぐらしく　だまって
+めいれいに　したがいなさい▽
+ほぞんしょくに　するわよ</language>
+		<language name="JPN_KANJI" width="256">レディアン『カラテオー　貴様
+さっきから　その　ニンゲンと▽
+何を　話している……▼
+道具は　道具らしく　だまって
+命令に　したがいなさい▽
+保存食に　するわよ</language>
 	</row>
 	<row id="pw_event4_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『ほんとう　なの！
@@ -731,14 +710,16 @@
 信じて！　お願い！</language>
 	</row>
 	<row id="pw_event4_enemy_0">
-		<language name="JPN" width="256">レディアン『おいおい……
-かこから　きた　などという▽
-めちゃくちゃな　はなし……▽
-しんじたくても　しんじられんな</language>
-		<language name="JPN_KANJI" width="256">レディアン『おいおい……
-過去から　来た　などという▽
-滅茶苦茶な　話……▽
-信じたくても　信じられんな</language>
+		<language name="JPN" width="256">レディアン『むしポケモンの
+かがく　ぎじゅつでも▽
+じかんてんそうは　ふかのう▼
+ニンゲン　ごときに
+じつげん　できる　わけが　ない</language>
+		<language name="JPN_KANJI" width="256">レディアン『むしポケモンの
+科学技術でも▽
+時間転送は　不可能▼
+ニンゲン　ごときに
+実現できる　訳が　ない</language>
 	</row>
 	<row id="pw_event4_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『じぶんで　つくった
@@ -751,223 +732,204 @@
 	<row id="pw_event4_enemy_1">
 		<language name="JPN" width="256">レディアン『じぶんの
 みを　まもる　ためなら▽
-いくらでも　ウソをつく……▽
-ずるがしこい　ニンゲンだ</language>
+いくらでも　ウソをつく▼
+おろかな　くせに　ずるがしこい
+やはり　くじょ　しないと</language>
 		<language name="JPN_KANJI" width="256">レディアン『自分の
 身を　守る　ためなら▽
-いくらでも　ウソをつく……▽
-ずるがしこい　ニンゲンだ</language>
+いくらでも　ウソをつく……▼
+愚かな　くせに　ずる賢い
+やはり　駆除しないと</language>
 	</row>
 	<row id="pw_event4_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『そ　そんなあ……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『そ　そんなあ……</language>
 	</row>
 	<row id="pw_event4_enemy_2">
-		<language name="JPN" width="256">レディアン『さっきまでは　キサマを
-つかまえようかと　おもったが▽
-ウソつきの　ニンゲンなど　いらん▽
-カラテオー！　やってしまえ！</language>
-		<language name="JPN_KANJI" width="256">レディアン『さっきまでは　キサマを
-捕まえようかと　思ったが▽
-ウソつきの　ニンゲンなど　いらん▽
-カラテオー！　やってしまえ！</language>
+		<language name="JPN" width="256">レディアン『カラテオー
+さっさと　くじょ　なさい▼
+こんな　ニンゲンを　あいてに
+さいている　じかんなど　ない</language>
+		<language name="JPN_KANJI" width="256">レディアン『カラテオー
+さっさと　駆除なさい▼
+こんな　ニンゲンを　相手に
+割いている　時間など　ない</language>
 	</row>
 	<row id="pw_event5_enemy_0">
-		<language name="JPN" width="256">レディアン『なに……！
-わたしの　ニンゲンを　たおさずに▽
+		<language name="JPN" width="256">レディアン『…………！？
+カラテオーを　たおさずに▽
 じぶんの　ポケモンを▽
-まもりぬいた……！？</language>
-		<language name="JPN_KANJI" width="256">レディアン『何……！
-わたしの　ニンゲンを　倒さずに▽
+まもりぬいた……▼
+…………▼
+おもしろい　ニンゲンね
+くじょは　やめるわ▼
+そして　かこから　きた　ということも
+しんじて　あげる……　でも</language>
+		<language name="JPN_KANJI" width="256">レディアン『…………！？
+私の　ニンゲンを　倒さずに▽
 自分の　ポケモンを▽
-守り抜いた……！？</language>
+守り抜いた……
+…………▼
+面白い　ニンゲンね
+駆除は　やめるわ▼
+そして　過去から　来た　ということも
+信じて　あげる……　でも</language>
 	</row>
 	<row id="pw_event5_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『おねがい！
-はなしを　きいて……そして▽
-この　じだいの　ことを▽
-おしえて……！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『お願い！
-話を　聞いて……そして▽
-この　時代の　ことを▽
-教えて……！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『い　いと！？
+やめて！　いとを　ほどいて！▽
+はなしてちょうだい！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『い　糸！？
+やめて！　糸を　解いて！▽
+放してちょうだい！</language>
 	</row>
 	<row id="pw_event5_hero_2">
-		<language name="JPN" width="256">わたしは　すべてを　はなした
-うたがわれる　ことを　おそれずに……▼
-そして　レディアンが　わたしに
-かたった　おどろくべき　かこ▼
-わたしに　してみれば
-みらいの　できごと……</language>
-		<language name="JPN_KANJI" width="256">わたしは　すべてを　話した
-疑われる　ことを　恐れずに……▼
-そして　レディアンが　わたしに
-語った　驚くべき　過去▼
-わたしに　してみれば
-未来の　出来事……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ（ウッ……
+もがけば　もがくほど▽
+からだに　くいこむ……▼
+さすが　むしポケモンの　いと……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士（ウッ……
+もがけば　もがくほど▽
+身体に　食い込む……▼
+さすが　むしポケモンの　糸……</language>
 	</row>
 	<row id="pw_event5_hero_3">
-		<language name="JPN" width="256">にんげんから　モノのように
-あつかわれていた　ポケモンたちは▽
-にんげんに　たいして▽
-はんらんを　おこした……▼
-その　はんらんに　よって
-ポケモンと　にんげんの　たちばが▽
-ぎゃくてんしたのだという……</language>
-		<language name="JPN_KANJI" width="256">人間から　モノのように
-扱われていた　ポケモンたちは▽
-人間に　対して▽
-反乱を　起こした……▼
-その　反乱によって
-ポケモンと　人間の　立場が▽
-逆転したのだという……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『おねがい！
+きみたちに　きがいは　くわえないわ▼
+もう　ようは　すんだから
+もとの　じだいに　かえる　だけなの！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『お願い！
+きみたちに　危害は　加えないわ▼
+もう　用は　済んだから
+元の　時代に　帰る　だけなの！</language>
 	</row>
 	<row id="pw_event5_enemy_3">
-		<language name="JPN" width="256">レディアン『しかし
-かこから　きたなど……▽
-しんじて　いいものか……</language>
-		<language name="JPN_KANJI" width="256">レディアン『しかし
-過去から　来たなど……▽
-信じて　いいものか……</language>
+		<language name="JPN" width="256">レディアン『こっちの　ようは
+まだ　すんでない</language>
+		<language name="JPN_KANJI" width="256">レディアン『こっちの　用は
+まだ　済んでない</language>
 	</row>
 	<row id="pw_event5_hero_4">
-		<language name="JPN" width="256">カラテオー『わが　あるじよ
-きいてください……</language>
-		<language name="JPN_KANJI" width="256">カラテオー『わが　主よ
-聞いてください……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『よう……
+どういうこと……？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『用……
+どういうこと……？</language>
 	</row>
 	<row id="pw_event5_enemy_4">
-		<language name="JPN" width="256">レディアン『どうした？　カラテオーよ▼
-カラテオー『われわれ　ニンゲンの
-いいつたえに　あるのです……▼
-ポケモンも　ニンゲンも
-わけへだてなく　まもる▽
-しろい　ふくを　まとった▽
-かこから　きたと　いう　おんな……</language>
-		<language name="JPN_KANJI" width="256">レディアン『どうした？　カラテオーよ▼
-カラテオー『我々　ニンゲンの
-言い伝えに　あるのです……▼
-ポケモンも　ニンゲンも
-わけへだてなく　守る▽
-白い　服を　まとった▽
-過去から　来たと　いう　女……</language>
+		<language name="JPN" width="256">レディアン（われわれ　むしポケモンが
+つくれなかった　じかん　てんそうき▼
+それを　てにいれれば
+わたしは　えいゆう……</language>
+		<language name="JPN_KANJI" width="256">レディアン（我々　むしポケモンが
+作れなかった　時間転送機▼
+それを　手に入れれば
+私は　英雄……</language>
 	</row>
 	<row id="pw_event5_hero_5">
-		<language name="JPN" width="256">レディアン『かこから　きた
-おんな……　だと？</language>
-		<language name="JPN_KANJI" width="256">レディアン『過去から　来た
-女……　だと？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『ねえ……
+なにか　いってよ……！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]はかせ『ねえ……
+何か　いってよ……！</language>
 	</row>
 	<row id="pw_event5_enemy_5">
-		<language name="JPN" width="256">カラテオー『その　おとこは
-ポケモンと　ニンゲンの　れきしを▽
-やりなおす　ことが　できると……▼
-レディアン『やりなおす？
-あの　はんらん　さえもか……！？</language>
-		<language name="JPN_KANJI" width="256">カラテオー『その　男は
-ポケモンと　ニンゲンの　歴史を▽
-やり直す　ことが　できると……▼
-レディアン『やり直す？
-あの　革命　さえもか……！？</language>
+		<language name="JPN" width="256">レディアン（あらゆる　じだいの
+ニンゲンどもを　とらえれば▼
+むしポケモンは
+いま　いじょうに　さかえる</language>
+		<language name="JPN_KANJI" width="256">レディアン（あらゆる　時間軸の
+ニンゲン共を　捕らえれば▼
+労働力　エネルギー　食料
+多くの　社会問題が　解決する</language>
 	</row>
 	<row id="pw_event5_hero_6">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『たしかに……
-のってきた　てんそうきを▽
-かいぞうすれば　かこに　もどれる！▼
-ポケモンと　にんげんが
-あらそう　よのなか……▽
-そんな　みらいは　イヤよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『確かに……
-乗ってきた　時間転送機を▽
-改造すれば　過去に　もどれる！▼
-ポケモンと　人間が
-争う　世の中……▽
-そんな　未来は　イヤよ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『やめて！
+カバンに　てを　ださないで！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『やめて！
+カバンに　手を　出さないで！</language>
 	</row>
 	<row id="pw_event5_enemy_6">
-		<language name="JPN" width="256">レディアン『われわれ　ポケモンも
-いまの　よのなかが▽
-ただしい　とは　おもわない▼
-ポケモンと　ニンゲンが
-きょうぞんする　せかい……▽
-じつげん　できれば……！</language>
-		<language name="JPN_KANJI" width="256">レディアン『我々　ポケモンも
-今の　世の中が▽
-正しいとは　思わない▼
-ポケモンと　ニンゲンが
-共存する　世界……▽
-実現　できれば……</language>
+		<language name="JPN" width="256">レディアン『なんだ　きさま……
+つちに　いし……　しょくぶつの　タネ▽
+ロクなものを　もっていないな▼
+ん……　これは
+ヒューマンボール？▼
+いや　ちがう
+なるほど　これが……</language>
+		<language name="JPN_KANJI" width="256">レディアン『なんだ　貴様……
+土に　石……　植物の　タネ▽
+ロクなものを　持っていないな▼
+ん……　これは
+ヒューマンボール？▼
+いや　違う
+なるほど　これが……</language>
 	</row>
 	<row id="pw_event5_hero_7">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『……▼
-きょうりょく……
-して くれるの！？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『……▼
-協力……
-して くれるの！？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『クッ……
+みつかった……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『クッ……
+見つかった……</language>
 	</row>
 	<row id="pw_event5_enemy_7">
-		<language name="JPN" width="256">レディアン『やせいの　ニンゲン
-いや　[1:00:トレーナー名:1]　おまえと▽
-ニンゲンに　つたわる▽
-いいつたえに　かけよう！</language>
-		<language name="JPN_KANJI" width="256">レディアン『野性の　ニンゲン
-いや　[1:00:トレーナー名:1]　おまえと▽
-ニンゲンに　伝わる▽
-言い伝えに　かけよう！</language>
+		<language name="JPN" width="256">レディアン『やはりね
+これが　じかん　てんそうき▼
+ずいぶんと　ちいさい　カプセルに
+おさめた　ものだ</language>
+		<language name="JPN_KANJI" width="256">レディアン『やはりね
+これが　時間転送機▼
+ずいぶんと　小さい　カプセルに
+収納した　ものだ</language>
 	</row>
 	<row id="pw_event5_hero_8">
-		<language name="JPN" width="256">レディアンは　まさしく
-ほこりたかき　せんしだった▼
-かなしい　かこを　かえるため
-じかん　てんそうきの　かいぞうに▽
-きょうりょくして　くれたのだ▼
-かこに　もどり　れきしを
-かえる　さいごの　しゅだん▽
-じかん　てんそうきの▽
-かんせいは　ちかい……</language>
-		<language name="JPN_KANJI" width="256">レディアンは　まさしく
-誇り高き　戦士だった▼
-残酷な　過去を　変えるため
-時間転送機の　改造に▽
-協力して　くれたのだ▼
-過去に　戻り　歴史を
-変える　最後の　手段▽
-時間転送機の　完成は　近い……</language>
+		<language name="JPN" width="256">かくして　わたしは
+てんそうきを　うばわれ▽
+レディアンに　とらえられた▼
+しかし　あきらめは　しない
+きちょうな　けんきゅう　サンプルを▽
+もとの　じだいに　もちかえり▽
+ちょうさする……　それまでは</language>
+		<language name="JPN_KANJI" width="256">かくして　わたしは
+転送機を　奪われ▽
+レディアンに　捕らえられた▼
+しかし　あきらめは　しない
+貴重な　研究　サンプルを▽
+元の　時代に　持ち帰り▽
+調査する……　それまでは</language>
 	</row>
 	<row id="pw_event6_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『う……ぐ……！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『う……ぐ……！</language>
 	</row>
 	<row id="pw_event6_enemy_0">
-		<language name="JPN" width="256">レディアン『フン！
-すこしは　ほねのある　やつかと▽
-おもったが　ただの　ニンゲンか……▼
-よわい　ニンゲンに　きょうみは　ない
-たちされ！　どこへでも　にげるがいい</language>
-		<language name="JPN_KANJI" width="256">レディアン『フン！
-少しは　骨のある　やつかと▽
-思ったが　ただの　ニンゲンか……▼
-弱い　ニンゲンに　興味は　ない
-立ち去れ！　どこへでも　逃げるがいい</language>
+		<language name="JPN" width="256">レディアン『おろかで　みじめ
+むりょくな　ニンゲン……▼
+あまりに　かわいそうだから
+みのがして　あげる▼
+ぶざまに　にげる　すがたで
+わたしを　たのしませてよ</language>
+		<language name="JPN_KANJI" width="256">レディアン『愚かで　惨め
+無力な　ニンゲン……▼
+あまりに　可哀相だから
+見逃して　あげる▼
+無様に　逃げる　姿で
+私を　楽しませてよ</language>
 	</row>
 	<row id="pw_event6_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『ヒィ……！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『ヒィ……！</language>
 	</row>
 	<row id="pw_event6_enemy_1">
-		<language name="JPN" width="256">レディアン『やはり……
-ニンゲンのような　よわく▽
-ずるがしこい　いきものは▼
-われわれ　ポケモンが
-しはい　しなければ　いつか▽
-ふたたび　まちがいを　おかす……！</language>
-		<language name="JPN_KANJI" width="256">レディアン『やはり……
-ニンゲンのような　弱く▽
-ずるがしこい　生き物は▼
-我々　ポケモンが
-支配しなければ　いつか▽
-再び　間違いを　犯す……！</language>
+		<language name="JPN" width="256">レディアン『くじょ　する　だけじゃ
+たいくつ　だから　たまには▽
+こういう　あそびかたも　しないと▽
+オモチャなんて　あきてしまうもの▼
+あんなに　ほそい　からだでは
+ひじょうしょくにも　ならないし</language>
+		<language name="JPN_KANJI" width="256">レディアン『駆除する　だけじゃ
+退屈　だから　たまには▽
+こういう　遊び方も　しないと▽
+オモチャなんて　飽きてしまうもの▼
+あんなに　細い　身体では
+非常食にも　ならないし</language>
 	</row>
 	<row id="pw_event6_hero_2">
 		<language name="JPN" width="256">いのちからがら　にげのびた　わたしは
@@ -1010,16 +972,14 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『しまった！</language>
 	</row>
 	<row id="pw_event7_enemy_0">
-		<language name="JPN" width="256">レディアン『カラテオー！▼
-カラテオー『レ　レディアンさま……
-もうしわけ……　ございません……▼
-うぐう……▼
-……</language>
-		<language name="JPN_KANJI" width="256">レディアン『カラテオー！▼
-カラテオー『レ　レディアン様……
-申し訳……　ございません……▼
-うぐう……▼
-……</language>
+		<language name="JPN" width="256">レディアン『あら
+カラテオーが　こわれてしまったわ▼
+また　あたらしい　ニンゲンを
+つかまえないと</language>
+		<language name="JPN_KANJI" width="256">レディアン『あら
+カラテオーが　壊れてしまったわ▼
+また　新しい　ニンゲンを
+捕まえないと</language>
 	</row>
 	<row id="pw_event7_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『ああ……
@@ -1032,86 +992,78 @@
 なんて　ことを……</language>
 	</row>
 	<row id="pw_event7_enemy_1">
-		<language name="JPN" width="256">レディアン『くっ……！
-わたしの　カラテオーが！▼
-おのれ　ニンゲンめ
-ぜったいに　とらえてやる！</language>
-		<language name="JPN_KANJI" width="256">レディアン『くっ……！
-わたしの　カラテオーが！▼
-おのれ　ニンゲンめ
-絶対に　捕らえてやる！</language>
+		<language name="JPN" width="256">レディアン『チャンスね
+ヒューマンボールを　なげるわ</language>
+		<language name="JPN_KANJI" width="256">レディアン『チャンスね
+ヒューマンボールを　投げるわ</language>
 	</row>
 	<row id="pw_event7_hero_2">
 		<language name="JPN" width="256">おなじ　にんげんを　たおしてしまった
 ショックで　きをうしなった　わたしは▽
 レディアンに　つかまえられ▽
-かれの　てもちニンゲンとなった▼
+かのじょの　てもちニンゲンとなった▼
 そして……</language>
 		<language name="JPN_KANJI" width="256">同じ　人間を　倒してしまった
 ショックで　気を失った　わたしは▽
 レディアンに　捕まえられ▽
-彼の　手持ちニンゲンとなった▼
+彼女の　手持ちニンゲンとなった▼
 そして……</language>
 	</row>
 	<row id="pw_event7_enemy_2">
-		<language name="JPN" width="256">レディアン『[1:00:トレーナー名:1]よ！
+		<language name="JPN" width="256">レディアン『[1:00:トレーナー名:1]
 こんどは　あのニンゲンを▽
-しとめろ！　ゆけっ！</language>
-		<language name="JPN_KANJI" width="256">レディアン『[1:00:トレーナー名:1]よ！
+くじょ　なさい</language>
+		<language name="JPN_KANJI" width="256">レディアン『[1:00:トレーナー名:1]
 今度は　あのニンゲンを▽
-仕留めろ！　ゆけっ！</language>
+駆除なさい</language>
 	</row>
 	<row id="pw_event7_hero_3">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『おおせのとおりに！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『おおせの通りに！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]はかせ『グワーオ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]博士『グワーオ！</language>
 	</row>
 	<row id="pw_event7_enemy_3">
-		<language name="JPN" width="256">レディアン『よしよし……
-よくやったぞ　[1:00:トレーナー名:1]▼
-おまえは　じつに　ゆうしゅうな
-わたしの　パートナー　ニンゲンだ！▼
-これからも　たのんだぞ！</language>
-		<language name="JPN_KANJI" width="256">レディアン『よしよし……
-よくやったぞ　[1:00:トレーナー名:1]▼
-おまえは　実に　優秀な
-わたしの　パートナー　ニンゲンだ！▼
-これからも　頼んだぞ！</language>
+		<language name="JPN" width="256">レディアン『ごくろう　[1:00:トレーナー名:1]▼
+きさま　なかなか
+たのもしく　なったわね▼
+きょうは　とくべつに
+けづくろい　して　あげるわ</language>
+		<language name="JPN_KANJI" width="256">レディアン『ご苦労　[1:00:トレーナー名:1]▼
+貴様　なかなか
+頼もしく　なったわね▼
+今日は　特別に
+毛づくろい　して　あげるわ</language>
 	</row>
 	<row id="pw_event7_hero_4">
-		<language name="JPN" width="256">レディアンは　じぶんの
-ニンゲンには　やさしい▽
-ニンゲントレーナーであった▼
-そして　わたしは　かれの
-てもちとして　ニンゲンどうしの▽
-たたかいを　つづけるにつれて▽
-にんげんらしい　こころを▽
-うしないつつあった</language>
-		<language name="JPN_KANJI" width="256">レディアンは　自分の
-ニンゲンには　優しい▽
-ニンゲントレーナーであった▼
-そして　わたしは　彼の
-手持ちとして　ニンゲン同士の▽
-戦いを　続けるにつれて▽
-人間らしい　心を▽
-失いつつあった</language>
+		<language name="JPN" width="256">レディアンは　れいこくだったが
+ゆうしゅうな　ニンゲンには▽
+やさしい　いちめんも　あった▼
+いつしか　わたしは
+そんな　かのじょの▽
+ちからに　なりたい　と▽
+おもうように　なっていた……</language>
+		<language name="JPN_KANJI" width="256">レディアンは　冷酷だったが
+優秀な　ニンゲンには▽
+優しい　一面も　あった▼
+いつしか　わたしは
+そんな　彼女の▽
+力に　なりたい　と▽
+思うように　なっていた……</language>
 	</row>
 	<row id="pw_event7_hero_5">
 		<language name="JPN" width="256">しかし　これが
 じだいの　ながれなら▽
 しかたがない……▼
 そういえば　わたしが　つれていた
-ポケモンは　どうなっているのか？▼
-せめて　かれらも　レディアンのように
-やさしい　ニンゲントレーナーで▽
-あることを　いのる……</language>
+[1:02:ポケモンニックネーム:0]は　どうなった　だろうか？▼
+どこかで　ニンゲントレーナーとして
+ぼうけんを　しているかも……</language>
 		<language name="JPN_KANJI" width="256">しかし　これが
 時代の　流れなら▽
 仕方がない……▼
 そういえば　わたしが　連れていた
-ポケモンは　どうなっているのか？▼
-せめて　彼らも　レディアンのように
-優しい　ニンゲントレーナーで▽
-あることを　祈る……</language>
+[1:02:ポケモンニックネーム:0]は　どうなった　だろうか？▼
+どこかで　ニンゲントレーナーとして
+冒険を　しているかも……</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
