@@ -140,6 +140,20 @@ BOOL GPOWER_IsEnableID( GPOWER_ID gpower_id )
   return TRUE;
 }
 
+
+//==================================================================
+/**
+ * BWでも発動可能な有効IDかチェック
+ */
+//==================================================================
+BOOL GPOWER_IsEnableID_BW( GPOWER_ID gpower_id )
+{
+  if( GPOWER_IsEnableID( gpower_id ) == FALSE ){
+    return FALSE;
+  }
+  return ( gpower_id >= GPOWER_ID_DUMMY_START );
+}
+
 //==================================================================
 /**
  * 配布パワーに割り振られた連番IDを取得

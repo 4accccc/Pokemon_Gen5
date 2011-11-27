@@ -62,6 +62,7 @@ extern void GPOWER_SYSTEM_Update(void);
 extern void GPOWER_Clear_AllPower(void);
 extern BOOL GPOWER_IsErrorID( GPOWER_ID gpower_id );
 extern BOOL GPOWER_IsEnableID( GPOWER_ID gpower_id );
+extern BOOL GPOWER_IsEnableID_BW( GPOWER_ID gpower_id );
 extern u8 GPOWER_GetDistributionPowerID( GPOWER_ID gpower_id );
 extern void GPOWER_Set_OccurID(GPOWER_ID gpower_id, const POWER_CONV_DATA *powerdata, BOOL my_power);
 extern GPOWER_ID GPOWER_Check_OccurID(GPOWER_ID gpower_id, const POWER_CONV_DATA *powerdata);

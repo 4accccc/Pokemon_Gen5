@@ -65,13 +65,17 @@ static  void  _set_sound_mode( CONFIG *config );
 static void DEBUG_StackOverCheck(void);
 static void DEBUG_UI_AutoKey(void);
 
-#if defined(DEBUG_ONLY_FOR_shimoyamada) || defined(DEBUG_ONLY_FOR_nagihashi_toru)
+#if defined(DEBUG_ONLY_FOR_shimoyamada) || defined(DEBUG_ONLY_FOR_nagihashi_toru) || defined(DEBUG_ONLY_FOR_iwasawa)
 #define DEBUG_TIME_Printf(...) OS_TFPrintf(3,__VA_ARGS__)
 #endif  //defined
 #endif //PM_DEBUG
 
 #ifndef DEBUG_TIME_Printf
 #define DEBUG_TIME_Printf(...) /*  */
+#endif
+
+#ifdef PM_DEBUG
+//#define DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
 #endif
 
 //------------------------------------------------------------------
@@ -547,9 +551,11 @@ static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
   DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count ++;
   if( now_time > 16000 ){
     DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount ++;
+#if 0
     DEBUG_TIME_Printf( " update %d", DEBUG_MAIN_UPDATE_TYPE );
     DEBUG_TIME_Printf( " over tick %ld", now_time );
     DEBUG_TIME_Printf( " ave tick %d\n", (DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave / DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count) );
+#endif
   }
   if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max < now_time ){
     DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max = now_time;
@@ -575,4 +581,4 @@ static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
 
 }
 
-#endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+#endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_O
