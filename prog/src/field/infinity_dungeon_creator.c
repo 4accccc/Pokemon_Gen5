@@ -215,8 +215,8 @@ void INF_DCREATOR_SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no,
       }
     }
   }
-
-  // 部屋タイプ取得部分はVSプロジェクト移植対象外です
+// 部屋タイプ取得部分はVSプロジェクト移植対象外にするか
+//#ifndef VS_PROJECT
   {
     for( i = 0; i<top_floor; i++ )
     {
@@ -274,6 +274,8 @@ void INF_DCREATOR_SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no,
       }
     }
   }
+//#endif
+
 }
 
 //----------------------------------------------------------------------------
@@ -908,13 +910,19 @@ void INF_DCREATOR_SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no 
   
   // 乱数を作成
   GFL_STD_RandInit( &rand_context, seed );
-  
+ 
+  // メモリをクリーン
+  GFL_STD_MemFill( trid_array ,INFTRID_DUMMY , sizeof(u32)*INF_DUNGEON_TR_DATA_MAX);
+ 
   // トレーナーIDテーブル取得
   tr_cnt = GetSetTrainerIDTable( p_dungeon_data , area_no ,trid_array, &rand_context  );
 
   // トレーナーIDのランダムデータを生成
-  for( n = 0; n<INFINITYDUNGEON_FLOOR_MAX; n++)
+  for( n = 0; n<top_floor; n++)
   {
+    // データ初期化
+    GFL_STD_MemFill(p_dungeon_data->tr_data[n].tr_id, INFTRID_DUMMY, sizeof(u16)*INFINITY_DUNGEON_TRID_MAX );
+    
     // トレーナーデータ配列をランダム化
     INF_TOOL_RndArray( trid_array ,tr_cnt ,&rand_context);
 
@@ -950,6 +958,8 @@ void INF_DCREATOR_SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no 
 
       SetRecoverTrainer( p_dungeon_data ,n,area_no ,room_id_array ,cnt ,member_num ,&rand_context ,&recover_index);
     }
+
+    GF_ASSERT_MSG(recover_index==top_floor,"回復トレーナーが正しく設置できていません\n");
   }
 
   // ゲートレーナーを配置する

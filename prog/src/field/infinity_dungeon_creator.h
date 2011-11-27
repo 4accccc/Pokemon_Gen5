@@ -22,6 +22,8 @@
 #define INF_MAX_SEARC_CNT             (100)          
 // トレーナーが配置されている部屋数の際少数
 #define INFINITY_DUNGEON_TR_ROOM_MIN  (5)
+// トレーナーデータダミーID
+#define INFTRID_DUMMY (0xffff)
 
 //-------------------------------------
 //	部屋タイプ
