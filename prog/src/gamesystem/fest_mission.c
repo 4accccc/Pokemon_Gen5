@@ -54,6 +54,19 @@ static const MISSION_SCORE_CALC_PARAM DATA_ScoreCalcParamTbl[] = {
 
 //---------------------------------------------------------
 /*
+ * @brief FEST_MISSION型ワークを生成
+ */
+//---------------------------------------------------------
+FEST_MISSION* FEST_MISSION_AllocWork( HEAPID heapID )
+{
+  FEST_MISSION* fmwk = GFL_HEAP_AllocClearMemory( heapID, sizeof(FEST_MISSION) );
+
+  FEST_MISSION_Clear( fmwk );
+  return fmwk;
+}
+
+//---------------------------------------------------------
+/*
  * @brief ミッション管理領域クリア
  */
 //---------------------------------------------------------
