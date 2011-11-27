@@ -279,8 +279,8 @@ typedef enum{
 ///拡張パラメータ（隠し穴大調査用ポケモンINDEX）
 //=========================================
 #define  FMISSION_EXP_TRAIL_DUMMY  ( 0 )   ///<ダミーデータ
-#define  FMISSION_EXP_TRAIL_HUSIGIDANE  ( 1 )   ///<フシギダネ
-#define  FMISSION_EXP_TRAIL_HUSIGISOU  ( 2 )   ///<フシギソウ
+#define  FMISSION_EXP_TRAIL_ROKON  ( 1 )   ///<ロコン
+#define  FMISSION_EXP_TRAIL_NYOROMO  ( 2 )   ///<ニョロモ
 #define  FMISSION_EXP_TRAIL_HUSIGIBANA  ( 3 )   ///<フシギバナ
 #define  FMISSION_EXP_TRAIL_HITOKAGE  ( 4 )   ///<ヒトカゲ
 #define  FMISSION_EXP_TRAIL_RIZAADO  ( 5 )   ///<リザード
@@ -295,8 +295,8 @@ typedef enum{
 //=========================================
 ///ミッション開催時エフェクト待ち時間定義
 //=========================================
-#define  FMISSION_START_EFFECT1_WAIT  ( 80 )   ///<パレスギミックエフェクト1ウェイト
-#define  FMISSION_START_EFFECT2_WAIT  ( 20 )   ///<パレスギミックエフェクト2ウェイト
+#define  FMISSION_START_EFFECT1_WAIT  ( 70 )   ///<パレスギミックエフェクト1ウェイト
+#define  FMISSION_START_EFFECT2_WAIT  ( 30 )   ///<パレスギミックエフェクト2ウェイト
 
 
 //=========================================

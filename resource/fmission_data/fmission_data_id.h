@@ -12,8 +12,8 @@
 #define  FMISSION_ID_ITEM_TUTORIAL_01  ( 0 )  ///<初めてのミッション
 #define  FMISSION_ID_ITEM_KAKERA_01  ( 1 )  ///<かけら１
 #define  FMISSION_ID_ITEM_KAKERA_02  ( 2 )  ///<宝探し１
-#define  FMISSION_ID_ITEM_KAKERA_03B  ( 3 )  ///<かけらＢ
-#define  FMISSION_ID_ITEM_KAKERA_03W  ( 4 )  ///<かけらＷ
+#define  FMISSION_ID_ITEM_KAKERA_03B  ( 3 )  ///<やみのいし
+#define  FMISSION_ID_ITEM_KAKERA_03W  ( 4 )  ///<ひかりのいし
 #define  FMISSION_ID_ITEM_KINOMI_01  ( 5 )  ///<きのみ１
 #define  FMISSION_ID_ITEM_KINOMI_02  ( 6 )  ///<きのみ２
 #define  FMISSION_ID_ITEM_LOST_01  ( 7 )  ///<落し物１
@@ -30,8 +30,8 @@
 #define  FMISSION_ID_NPC_TRADE_02B  ( 18 )  ///<物々交換Ｂ
 #define  FMISSION_ID_NPC_TRADE_02W  ( 19 )  ///<物々交換Ｗ
 #define  FMISSION_ID_NPC_SHOPPING_01  ( 20 )  ///<ショッピング１
-#define  FMISSION_ID_NPC_SHOPPING_02B  ( 21 )  ///<ショッピングＢ
-#define  FMISSION_ID_NPC_SHOPPING_02W  ( 22 )  ///<ショッピングＷ
+#define  FMISSION_ID_NPC_SHOCKSHOP_02B  ( 21 )  ///<ショッキングＢ
+#define  FMISSION_ID_NPC_SHOCKSHOP_02W  ( 22 )  ///<ショッキングＷ
 #define  FMISSION_ID_NPC_QUIZ_01  ( 23 )  ///<記憶クイズ１
 #define  FMISSION_ID_NPC_JANKEN_01  ( 24 )  ///<じゃんけん１
 #define  FMISSION_ID_EFFECT_ENC_GLASS_01  ( 25 )  ///<揺れ草を探せ
@@ -45,21 +45,27 @@
 #define  FMISSION_ID_EVENT_FEATHER_01  ( 33 )  ///<ホドモエの羽
 #define  FMISSION_ID_EVENT_JEWEL_01  ( 34 )  ///<ジュエル採掘
 #define  FMISSION_ID_EVENT_EGG_01  ( 35 )  ///<タマゴ孵化
-#define  FMISSION_ID_EVENT_FISH_01B  ( 36 )  ///<つり大会Ｂ
-#define  FMISSION_ID_EVENT_FISH_01W  ( 37 )  ///<つり大会Ｗ
-#define  FMISSION_ID_EVENT_TRAIL_01B  ( 38 )  ///<かくしあな大調査Ｂ
-#define  FMISSION_ID_EVENT_TRAIL_01W  ( 39 )  ///<かくしあな大調査Ｗ
-#define  FMISSION_ID_NPC_GET_A_PRESENT  ( 40 )  ///<プレゼント取得
-#define  FMISSION_ID_EFFECT_ENC_EMONGA01  ( 41 )  ///<図鑑クイズ_配信
-#define  FMISSION_ID_ITEM_KAKERA01  ( 42 )  ///<きのみ_配信
-#define  FMISSION_ID_EVENT_TOWER_OF_HEAVEN  ( 43 )  ///<宝探し_配信
-#define  FMISSION_ID_EFFECT_ENC_POKEBTL_FREE_01  ( 44 )  ///<ショッキング_配信
-#define  FMISSION_ID_NPC_DUMMY_00  ( 45 )  ///<プレゼント_配信
-#define  FMISSION_ID_NPC_POKEQUIZ_GIFT  ( 46 )  ///<図鑑クイズ_おくりもの
-#define  FMISSION_ID_NPC_TRBTL_GIFT  ( 47 )  ///<戦闘_おくりもの
-#define  FMISSION_ID_NPC_PRESENT_GIFT  ( 48 )  ///<プレゼント_おくりもの
-#define  FMISSION_ID_ITEM_KINOMI_GIFT  ( 49 )  ///<きのみ_おくりもの
-#define  FMISSION_ID_MAX  ( 50 )
+#define  FMISSION_ID_EVENT_FISH_01B  ( 36 )  ///<つり大会
+#define  FMISSION_ID_EVENT_TRAIL_01  ( 37 )  ///<かくしあな調査
+#define  FMISSION_ID_EVENT_TRAIL_02B  ( 38 )  ///<かくしあな大調査Ｂ
+#define  FMISSION_ID_EVENT_TRAIL_02W  ( 39 )  ///<かくしあな大調査Ｗ
+#define  FMISSION_ID_NPC_SHOCKSHOP_01  ( 40 )  ///<ショッキング１
+#define  FMISSION_ID_ITEM_DUMMY_02  ( 41 )  ///<ダミー
+#define  FMISSION_ID_ITEM_DUMMY_03  ( 42 )  ///<ダミー
+#define  FMISSION_ID_ITEM_DUMMY_04  ( 43 )  ///<ダミー
+#define  FMISSION_ID_ITEM_DUMMY_05  ( 44 )  ///<ダミー
+#define  FMISSION_ID_ITEM_DUMMY_06  ( 45 )  ///<ダミー
+#define  FMISSION_ID_EVENT_TRAIL_SP1  ( 46 )  ///<かくしあな_配信
+#define  FMISSION_ID_NPC_POKEQUIZ_SP1  ( 47 )  ///<図鑑クイズ_配信
+#define  FMISSION_ID_ITEM_KINOMI_SP1  ( 48 )  ///<きのみ_配信
+#define  FMISSION_ID_ITEM_TREASURE_SP1  ( 49 )  ///<宝探し_配信
+#define  FMISSION_ID_NPC_SHOCKSHOP_SP1  ( 50 )  ///<ショッキング_配信
+#define  FMISSION_ID_NPC_PRESENT_SP1  ( 51 )  ///<プレゼント_配信
+#define  FMISSION_ID_NPC_POKEQUIZ_GIFT  ( 52 )  ///<図鑑クイズ_おくりもの
+#define  FMISSION_ID_NPC_TRBTL_GIFT  ( 53 )  ///<戦闘_おくりもの
+#define  FMISSION_ID_NPC_PRESENT_GIFT  ( 54 )  ///<プレゼント_おくりもの
+#define  FMISSION_ID_ITEM_KINOMI_GIFT  ( 55 )  ///<きのみ_おくりもの
+#define  FMISSION_ID_MAX  ( 56 )
 #define  FMISSION_ID_END  ( FMISSION_ID_MAX-1 )
 #define  FMISSION_ID_NULL ( 0x7F )
 
