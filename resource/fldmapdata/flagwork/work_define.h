@@ -321,7 +321,6 @@
 #define WK_SCENE_C08GYM0101_GUIDE        16709 /* 0x4145 ドラゴンジム：ジムガイドイベント用 */
 #define WK_SCENE_T04_D20_TVT             16710 /* 0x4146 サザナミタウン・サザナミ湾：ライブキャスターPOS制御ワーク */
 #define WK_SCENE_C03P19                  16711 /* 0x4147 ヒウンシティはじまりの場所：ワルそうなチームイベント進行制御ワーク */
-#define WK_SCENE_C16_NEON                16712 /* 0x4148 ジョインアベニュー：ネオン */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 
@@ -381,6 +380,7 @@
 #define WK_OTHER_INF_ELEVATOR_UP_MOVE    16784 /* 0x4190 無限ダンジョン内のエレベーター移動方向 */
 #define WK_OTHER_INF_EXIT_TYPE           16785 /* 0x4191 無限ダンジョン内の終了方法 */
 #define WK_OTHER_LINKEVENT_ZONE          16786 /* 0x4192 PC：おもいでリンク起動箇所 */
+#define WK_OTHER_C16_NEON_SELECT         16787 /* 0x4193 ジョインアベニュー　ネオン最終確認 */
 
 #define WK_AREA_END                      16815 /* 0x41af  */
 
