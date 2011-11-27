@@ -12,6 +12,8 @@
 #include "gamesystem/game_beacon_types.h"
 #include "msg/msg_beacon_status.h"
 #include "gamesystem/fest_mission.h"
+#include "gamesystem/g_power.h"
+#include "item/item.h"
 #include "savedata/encount_sv.h"
 #include "savedata/misc.h"
 #include "net/net_whpipe.h"
@@ -462,7 +464,11 @@ void GAMEBEACON_Set_GPower(GPOWER_ID g_power_id)
     return;
   }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_GPOWER) == FALSE){ return; };
-  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  if( GPOWER_IsEnableID_BW( g_power_id ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  }else{
+    GAMEBEACON_SUB_SendBeaconSetCommonSwan(&GameBeaconSys->send);
+  }
   BEACONINFO_Set_GPower(&GameBeaconSys->send.info, g_power_id);
 }
 
@@ -495,7 +501,12 @@ void GAMEBEACON_Set_SpItemGet(u16 item)
     return;
   }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_SP_ITEM_GET) == FALSE){ return; };
-  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  
+  if( ITEM_IsSwanNewItem( item ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonSwan(&GameBeaconSys->send);
+  }else{
+    GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  }
   BEACONINFO_Set_SpItemGet(&GameBeaconSys->send.info, item);
 }
 
@@ -1117,7 +1128,11 @@ void BEACONINFO_Set_Musical(GAMEBEACON_INFO *info, const STRBUF *nickname)
 void GAMEBEACON_Set_OtherGPowerUse(GPOWER_ID gpower_id)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_OTHER_GPOWER_USE) == FALSE){ return; };
-  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  if( GPOWER_IsEnableID_BW( gpower_id ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  }else{
+    GAMEBEACON_SUB_SendBeaconSetCommonSwan(&GameBeaconSys->send);
+  }
   BEACONINFO_Set_OtherGPowerUse(&GameBeaconSys->send.info, gpower_id);
 }
 

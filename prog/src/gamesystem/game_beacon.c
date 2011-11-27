@@ -16,6 +16,8 @@
 #include "gamesystem/fmission_log_local.h"
 #include "gamesystem/link_festival_log.h"
 #include "gamesystem/game_beacon_accessor.h"
+#include "gamesystem/g_power.h"
+#include "item/item.h"
 #include "msg/msg_beacon_status.h"
 #include "savedata/encount_sv.h"
 #include "savedata/misc.h"
@@ -34,6 +36,7 @@
 #include "field/research_team.h"
 #include "savedata/resonance_resort_sv.h"
 #include "net/network_define.h"
+#include "arc/fieldmap/zone_id.h"
 
 #include "game_beacon_local.h"
 #include "debug/debug_flg.h"
@@ -572,6 +575,35 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
 
 //--------------------------------------------------------------
 /**
+ * ビーコンの中身を見て、BWが受け取って意味のあるビーコンかチェックする
+ *
+ * @param   info		
+ * @param   type  GAMEBEACON_TYPE(GAMEBEACON_TYPE_COMMONならBW互換、TYPE_SWAN_ONLYならSwan専用)
+ *
+ * ゾーンIDやアイテムNoがBWが知らないNoだった場合に、スワン専用で送る
+ */
+//--------------------------------------------------------------
+static BOOL BeaconInfo_BeaconSwanOnlyCheck( GAMEBEACON_INFO *info, GAMEBEACON_TYPE type )
+{
+  //BW互換のビーコンとswan専用ビーコンを切り替えるためにデータを改変
+  if( type == GAMEBEACON_TYPE_SWAN_ONLY || (info->version_bit==GAMEBEACON_RECV_VERSION_SWAN)){
+    return TRUE;
+  }
+
+  //BWから存在するゾーンか？
+  if( info->zone_id >= ZONE_ID_C12 || info->townmap_root_zone_id >= ZONE_ID_C12 ){
+    return TRUE;  //C12以降はスワンで新規追加された
+  }
+  //BWが知っているデルパワーか？
+  if( info->g_power_id != GPOWER_ID_NULL &&
+      GPOWER_IsEnableID_BW( info->g_power_id ) == FALSE ){
+    return TRUE;  //BWでは発動できないパワーだった
+  }
+  return FALSE; //BWのすれ違いログが受け取れる
+}
+
+//--------------------------------------------------------------
+/**
  * 受信ビーコンのタイプを切り替えるために、ビーコン情報を上書きする
  *
  * @param   info		
@@ -586,7 +618,7 @@ static void BeaconInfo_BeaconTypeOverwrite( GAMEBEACON_INFO *info, GAMEBEACON_TY
   int i;
 
   //BW互換のビーコンとswan専用ビーコンを切り替えるためにデータを改変
-  if( type == GAMEBEACON_TYPE_SWAN_ONLY || (info->version_bit==GAMEBEACON_RECV_VERSION_SWAN)){
+  if( BeaconInfo_BeaconSwanOnlyCheck( info, type ) ){
     //スワン専用ビーコンなので、BW受信可フラグを強制Off
     info->version_bit = GAMEBEACON_RECV_VERSION_SWAN;
   }else{
@@ -1947,7 +1979,11 @@ void BEACONINFO_Set_DistributionPoke(GAMEBEACON_INFO *info, u16 monsno)
 void GAMEBEACON_Set_DistributionItem(u16 item)
 {
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_DISTRIBUTION_ITEM) == FALSE){ return; };
-  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  if( ITEM_IsSwanNewItem( item ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonSwan(&GameBeaconSys->send);
+  }else{
+    GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  }
   BEACONINFO_Set_DistributionItem(&GameBeaconSys->send.info, item);
 }
 
@@ -2097,7 +2133,11 @@ void GAMEBEACON_Set_UseItem(u16 item_no)
     return;
   }
   if(GAMEBEACON_SUB_CheckPriority(GAMEBEACON_ACTION_USE_ITEM) == FALSE){ return; };
-  GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  if( ITEM_IsSwanNewItem( item_no ) ){
+    GAMEBEACON_SUB_SendBeaconSetCommonSwan(&GameBeaconSys->send);
+  }else{
+    GAMEBEACON_SUB_SendBeaconSetCommon(&GameBeaconSys->send);
+  }
   BEACONINFO_Set_UseItem(&GameBeaconSys->send.info, item_no);
 }
 
