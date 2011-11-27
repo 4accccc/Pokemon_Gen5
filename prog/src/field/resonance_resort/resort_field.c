@@ -52,7 +52,7 @@
 
 #ifdef PM_DEBUG
 #define DEBUG_RESORT_FIELD_PRINT_ON
-#define DEBUG_EFFECT_MOVE
+//#define DEBUG_EFFECT_MOVE
 #endif
 
 #if defined(DEBUG_RESORT_FIELD_PRINT_ON) && ( defined(DEBUG_ONLY_FOR_nagihashi_toru) || defined(DEBUG_ONLY_FOR_shimoyamada) )

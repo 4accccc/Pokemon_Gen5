@@ -76,6 +76,7 @@ CITY_COL_PRE_LIST   = 7     #列：おみやげリスト
 CITY_COL_PRE_PER    = 8     #列：受け取り確率
 CITY_COL_PRIZE      = 9     #列：街ご褒美
 CITY_COL_CELEB      = 10    #列：セレブ抽選確率
+CITY_COL_ITEM       = 11    #列：ご褒美アイテム
 
 def convertCity( csv, data, msg_h, pre_h )
   
@@ -99,6 +100,7 @@ def convertCity( csv, data, msg_h, pre_h )
     per       = csv.get( row, CITY_COL_PRE_PER )
     prize     = csv.get( row, CITY_COL_PRIZE )
     celeb     = csv.get( row, CITY_COL_CELEB )
+    item      = csv.get( row, CITY_COL_ITEM )
 
     data.write_u16( lv_l )
     data.write_u16( lv_h )
@@ -126,6 +128,12 @@ def convertCity( csv, data, msg_h, pre_h )
     data.write_u16( per )
     data.write_u16( $define_hash[prize] )
     data.write_u16( celeb )
+    if $item_hash.has_key?(item) == false
+      puts "アイテム名がおかしいです#{item}"
+      exit(1)
+    end
+    data.write_u16( $item_hash[item] )
+    data.write_u16( 0 ) #ダミー
 
   end
 end

@@ -3404,7 +3404,23 @@ static u32 ResortShop_CalcPlace( SHOP_BUY_APP_WORK *p_wk, u32 price )
     city_lv--;
   }
 
-  return price - FX_Whole(price * city_lv * fever_num * RESORT_CONST_PRICE_COEFFEICENT );
+  price = price - FX_Whole(price * city_lv * fever_num * RESORT_CONST_PRICE_COEFFEICENT );
+
+  //ŽlŽÌŒÜ“ü
+  if( price %10 != 0 )
+  {
+    u32 v = price % 10; //1~4 5~6
+    if( v >= 5 )
+    {
+      price += (10-v);
+    }
+    else
+    {
+      price -= v;
+    }
+  }
+
+  return price;
 }
 
 

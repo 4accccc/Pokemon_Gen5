@@ -34,7 +34,7 @@ _EVENT_DATA    ev_resort_board_room
 _EVENT_DATA    ev_resort_board_city_front
 _EVENT_DATA    ev_resort_board_city_back
 _EVENT_DATA    ev_scene_c16_parade
-_EVENT_DATA    ev_scene_c16_neon
+_EVENT_DATA    ev_reserve_c16_neon
 _EVENT_DATA_END
 
 //バージョン取得
@@ -125,6 +125,7 @@ INIT_EVENT_START ev_init_c16
     //紙吹雪ON
     _RESORT_START_EFFECT( RESORT_EFFECT_PARADE )
   ENDIF
+
 }
 INIT_EVENT_END
 
@@ -677,6 +678,7 @@ EVENT_START ev_scene_c16_parade
     $LWK_TMP  += RESORT_GET_PARAM_OBJID_RESIDENT_00
     _RESORT_GET_DATA( LWK_TMP, LWK_OBJID_SHOP )
     _OBJ_ANIME( LWK_OBJID_SHOP, anm_first_dir_down )
+    $LWK_INDEX += 1
   ENDWHILE
   _OBJ_ANIME_WAIT()
 
@@ -698,8 +700,6 @@ EVENT_START ev_scene_c16_parade
   _RESORT_SET_WORD( RESORT_WORD_CITY_LV, RESORT_WORD_PARAM_NONE, 0, 1 )
   _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, RESORT_WORD_PARAM_NONE, 0, 2 )
 
-  _AB_KEYWAIT()
-
   _SE_PLAY( SEQ_SE_SW_JA_01 )
   _SE_PLAY( SEQ_SE_SW_JA_02 )
 	_SYSWIN_MSG( msg_c16_parade_03, POS_UP )
@@ -710,6 +710,11 @@ EVENT_START ev_scene_c16_parade
   //フェード
   _MAP_FADE_WHITE_OUT_SLOW()
   _MAP_FADE_END_CHECK()
+
+	_CAMERA_DEF_MOVE (1) 
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
 
   _RESORT_END_EFFECT( RESORT_EFFECT_PARADE )
 
@@ -745,7 +750,7 @@ _ANIME_LABEL	anm_walk_parade_end
 /**************************************************************/
 /*            ネオン変更確認                                  */
 /**************************************************************/
-EVENT_START ev_scene_c16_neon
+EVENT_START ev_reserve_c16_neon
 {
 }
 EVENT_END

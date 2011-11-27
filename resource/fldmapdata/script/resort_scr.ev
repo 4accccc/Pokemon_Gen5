@@ -521,7 +521,8 @@ sub_tourist_spot:
       //評価文取得
       _RESORT_COMBO( LWK_SPOT_RESULT, RESORT_COMBO_PARAM_GRADE_MSGID, LWK_MSGID, LWK_RET )
 
-      $LWK_MSGID2 = resort_go_eff_combo_00
+      
+      _RESORT_GET_MSGID( RESORT_TOURIST_COMBO_EFF_MSGID, LWK_MSGID2 )
 
       //コンボの経験値取得
       _RESORT_COMBO( LWK_MAIN_EXP, RESORT_COMBO_PARAM_EXP, LWK_EXP, LWK_RET )
@@ -533,6 +534,7 @@ sub_tourist_spot:
 
     //街へ経験値加算
     IF $LWK_CITY == TRUE THEN
+      $LWK_EXP = $LWK_MAIN_EXP
       _CALL sub_city_app_exp
       _SYSWIN_CLOSE()
     ENDIF
@@ -716,6 +718,7 @@ sub_come_shop:
 
       _NUMBER( 5, LWK_EXP, 5 )
       _SYSWIN_MSG( resort_sys_16, POS_DOWN )
+      _SE_WAIT()
       _SE_PLAY( SEQ_SE_SW_JA_EXP )
       _SE_WAIT()
 
@@ -848,6 +851,7 @@ sub_city_app_exp:
     _NUMBER( 7, LWK_EXP, 5 )
 
     _SYSWIN_MSG( resort_sys_17, POS_DOWN )
+    _SE_WAIT()
     _SE_PLAY( SEQ_SE_SW_JA_EXP )
     _SE_WAIT()
 
@@ -1971,6 +1975,18 @@ EVENT_START    ev_resort_secretary_work
     CASE SEQ_SECRETARY_WORK_AUTHERTHANKS THEN //自分感謝
        _BALLOONWIN_CLOSE()
        _RESORT_INPUT_AUTHERTHANKS( TRUE )
+    
+    CASE SEQ_SECRETARY_WORK_PARADE THEN //パレード
+      _RESORT_GET_MSGID( RESORT_SECRETARY_SEL_PARADE, LWK_MSGID )
+	    _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+ 	    _YES_NO_WIN( LWK_YESNO )
+      IF $LWK_YESNO == SCR_YES THEN
+        _BALLOONWIN_CLOSE()
+        $WK_SCENE_C16_PARADE = 1
+        _FLAG_SET( SYS_FLAG_BGM_C16_PARADE )
+        _MAP_CHANGE( ZONE_ID_C16, 15, 70, DIR_UP )
+        $LWK_MENU_LOOP = FALSE
+      ENDIF
 
     CASE SEQ_SECRETARY_WORK_BYE THEN          //またね
       _RESORT_GET_MSGID( RESORT_SECRETARY_BYE_MSGID, LWK_MSGID )
@@ -2012,6 +2028,12 @@ sub_secretary_work_main_menu:
   _BMPMENU_MAKE_LIST( resort_sys_select_32, SEQ_SECRETARY_WORK_AUTHERNAME )	//自分の呼び名
   _BMPMENU_MAKE_LIST( resort_sys_select_33, SEQ_SECRETARY_WORK_AUTHERPHRASE )	//くちぐせ
   _BMPMENU_MAKE_LIST( resort_sys_select_39, SEQ_SECRETARY_WORK_AUTHERTHANKS )	//かんげき
+
+  _RESORT_GET_DATA( RESORT_GET_PARAM_IS_PARADE, LWK_RET )
+  IF $LWK_RET == TRUE THEN
+    _BMPMENU_MAKE_LIST( resort_sys_select_52, SEQ_SECRETARY_WORK_PARADE )	//パレード
+  ENDIF
+
   _BMPMENU_MAKE_LIST( resort_sys_select_10, SEQ_SECRETARY_WORK_BYE )	//またね
 
 	//メニュー表示

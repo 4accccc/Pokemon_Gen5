@@ -155,6 +155,7 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
   RESORT_PEOPLE_ALL_DATA *p_all_people = RESORT_SYSTEM_GetPeopleAllData( p_sys );
   RESORT_PEOPLE_SYS *p_people_sys = Resort_Scrcmd_GetPeopleSys( p_field );
   RESORT_BINARY_SHOP *p_shop = RESORT_SYSTEM_GetBinaryShop( p_sys );
+  RESORT_BINARY_CITY *p_city_binary = RESORT_SYSTEM_GetBinaryCity( p_sys );
   RESORT_PEOPLE* p_people = RESORT_UTIL_GetFrontPeople( p_wk, p_people_sys );
   RESORT_ABSTRUCT_DATA *p_abstruct = NULL;
   GAMEDATA *p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
@@ -498,7 +499,7 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
     *p_ret_wk = RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_PARAM_PRIZE_NEON,NULL);
     break;
   case RESORT_GET_PARAM_IS_CITYNAME:
-    *p_ret_wk = RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_PARAM_PRIZE_CITYNAME,NULL);
+    *p_ret_wk = RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_PARAM_PRIZE_PARADE,NULL);
     break;
   case RESORT_GET_PARAM_CITYNAME_SEC_SEX:
     {
@@ -615,6 +616,17 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
 
       *p_ret_wk = ( people_type == RESORT_PEOPLE_TYPE_PROXY && type == RESORT_PROXY_TYPE_CELEB );
     }
+    break;
+  case RESORT_GET_PARAM_CITY_ITEM:
+    {
+      u32 lv = RESORT_CITY_DATA_GetData(p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
+      u32 index = RESORT_BINARY_CITY_GetIndexByCityLv( p_city_binary, lv );
+
+      *p_ret_wk = RESORT_BINARY_CITY_GetData( p_city_binary, index, RESORT_BINARY_CITY_PARAM_ITEM);
+    }
+    break;
+  case RESORT_GET_PARAM_IS_PARADE:
+    *p_ret_wk = RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_PARAM_PRIZE_PARADE,NULL);
     break;
   default:
     GF_ASSERT_MSG(0, "%d", param);

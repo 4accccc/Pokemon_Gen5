@@ -329,6 +329,10 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
       return resort_sys_23;
     }
     break;
+  case RESORT_TOURIST_COMBO_EFF_MSGID:
+    return SexGetMsgID( sex, resort_go_eff_combo_00_m, resort_go_eff_combo_00_f );
+    break;
+
   case RESORT_RESIDENT_GREET_MSGID:
     return SexGetMsgID( sex, resort_resident_greet_00_m, resort_resident_greet_00_f );
     break;
@@ -415,6 +419,9 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
     break;
   case RESORT_SECRETARY_SEL_MANY:
     return SexGetMsgID( sex, resort_secretary_talk_02_m, resort_secretary_talk_02_f );
+    break;
+  case RESORT_SECRETARY_SEL_PARADE:
+    return SexGetMsgID( sex, resort_secretary_talk_15_m, resort_secretary_talk_15_f );
     break;
   case RESORT_RESIDENT_LV_MSGID:
     GF_ASSERT( people_type == RESORT_PEOPLE_TYPE_RESIDENT );
@@ -540,7 +547,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
     {
       //ÇPà Ç™ï°êîÇ†Ç¡ÇΩèÍçáÇÕÉâÉìÉ_ÉÄÇ≈åæÇ§
       int i;
-      u32 rank[8];
+      u32 rank[8] = {0};
       u32 msgID;
       u32 rnd;
       u32 cnt = 0;
@@ -551,6 +558,10 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
         {
           rank[cnt] = i;
           cnt++;
+        }
+        else
+        {
+          rank[cnt] = 0;
         }
       }
 
@@ -953,6 +964,8 @@ u32 RESORT_UTIL_AddExpCity( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, u16 add_
         u32 next_prize =  RESORT_BINARY_CITY_GetData( p_city, city_next_idx, RESORT_BINARY_CITY_PARAM_PRIZE );
         u32 next_rank =  RESORT_BINARY_CITY_GetData( p_city, city_next_idx, RESORT_BINARY_CITY_PARAM_RANK );
 
+        BOOL is_item = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_PRIZE_ITEM, NULL );
+
         //å®èëÇ´Ç…ç∑Ç™Ç†ÇÈÇ©
         if( prev_rank != next_rank )
         {
@@ -963,14 +976,17 @@ u32 RESORT_UTIL_AddExpCity( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, u16 add_
           is_rank = FALSE;
         }
 
-        //ç°âÒÇ≤ñJî¸Ç™Ç†ÇÈÇ©
-        if( next_prize != RESORT_CITYPRIZE_TYPE_NONE
-            && prev_prize != next_prize
+        //ç°âÒÇ≤ñJî¸Ç™Ç†ÇÈÇ©ÅAÇ‡ÇµÇ≠ÇÕÇ≤ñJî¸ìπãÔÇ™ONÇ©ÅH
+        if( (next_prize != RESORT_CITYPRIZE_TYPE_NONE
+            && prev_prize != next_prize)
+            || is_item
+
           )
         {
           BOOL is_ok  = TRUE;
 
-          //ìaì∞âï˙ÇæÇØìaì∞ì¸ÇËå„
+
+          //ìaì∞âï˙ÇÕìaì∞ì¸ÇËå„
           if( next_prize == RESORT_CITYPRIZE_TYPE_DENDOU )
           {
             EVENTWORK *p_evwork = GAMEDATA_GetEventWork( p_gamedata );
@@ -980,11 +996,29 @@ u32 RESORT_UTIL_AddExpCity( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, u16 add_
               is_ok = FALSE;
             }
           }
+          //ÉpÉåÅ[ÉhÇÕÇ®ìXÇWÇ¬Ç»Ç¢Ç∆Ç¢ÇØÇ»Ç¢
+          if( next_prize == RESORT_CITYPRIZE_TYPE_PARADE )
+          {
+            RESORT_PEOPLE_ALL_DATA *p_people_all = RESORT_SYSTEM_GetPeopleAllData(p_sys);
+            if( RESORT_PEOPLE_ALL_DATA_GetResidentCount(p_people_all) != RESORT_RESIDENT_DATA_NUM )
+            {
+              RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_EV_PRIZE_PARADE, TRUE );
+              is_ok = FALSE;
+            }
+          }
 
+          //Ç‡Ç§àÍìxÉAÉCÉeÉÄì¸éËÉCÉxÉìÉgÇãNÇ±Ç∑
+          if( is_item )
+          {
+            RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_EV_PRIZE_ITEM, TRUE );
+          }
 
           if(is_ok)
           {
-            RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC03+next_prize-1, TRUE );
+            if( next_prize != RESORT_CITYPRIZE_TYPE_NONE )
+            {
+              RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC03+next_prize-1, TRUE );
+            }
             is_prize = TRUE;
           }
           else
@@ -1932,9 +1966,14 @@ u32 RESORT_UTIL_GetPrizeEv( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata )
       RESORT_CITY_DATA_PARAM_EV_PRIZE_DENDOU,
       RESORT_CITYPRIZE_TYPE_DENDOU,
     },
+    {
+      RESORT_CITY_DATA_PARAM_EV_PRIZE_ITEM,
+      RESORT_CITYPRIZE_TYPE_ITEM,
+    },
   };
 
   EVENTWORK *p_evwork = GAMEDATA_GetEventWork( p_gamedata );
+  RESORT_PEOPLE_ALL_DATA *p_people_all = RESORT_SYSTEM_GetPeopleAllData(p_sys);
   RESORT_CITY_DATA *p_city = RESORT_SYSTEM_GetCityData(p_sys);
 
   int i;
@@ -1943,6 +1982,12 @@ u32 RESORT_UTIL_GetPrizeEv( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata )
   {
     if( (sc_param_to_prize[i].param == RESORT_CITY_DATA_PARAM_EV_PRIZE_DENDOU)
       && (EVENTWORK_CheckEventFlag( p_evwork, SYS_FLAG_GAME_CLEAR ) == FALSE) )
+    {
+      continue;
+    }
+
+    if( (sc_param_to_prize[i].param == RESORT_CITY_DATA_PARAM_EV_PRIZE_DENDOU)
+      && (RESORT_PEOPLE_ALL_DATA_GetResidentCount(p_people_all) != RESORT_RESIDENT_DATA_NUM) )
     {
       continue;
     }

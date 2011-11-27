@@ -229,6 +229,10 @@ EVENT_START ev_scene_c16r0101_prize
     _CALL sub_prize_scout
   CASE RESORT_CITYPRIZE_TYPE_DENDOU THEN
     _CALL sub_prize_dendou
+  CASE RESORT_CITYPRIZE_TYPE_PARADE THEN
+    _CALL sub_prize_parade
+  CASE RESORT_CITYPRIZE_TYPE_ITEM THEN
+    _CALL sub_prize_item
   ENDSWITCH
 
   //シーン終了
@@ -464,6 +468,64 @@ sub_prize_dendou:
 
   //フラグON
   _RESORT_SET_MY_DATA( RESORT_MY_PARAM_EV_PRIZE_END, RESORT_CITYPRIZE_TYPE_DENDOU )
+
+  //オーナー帰る
+  _CALL sub_prize_goout_owner
+}
+_RET
+
+//==============================================================
+//サブルーチン：ご褒美イベント７：パレード
+//==============================================================
+sub_prize_parade:
+{
+  //プレイヤー近づく
+  _CALL sub_prize_come_player
+
+  //挨拶
+  _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, RESORT_WORD_PARAM_NONE, 0, 0 )
+  _BALLOONWIN_OBJMSG_POS( resort_prize_owner_greet_07, C16R0101_OWNER, POS_DEFAULT )
+
+  //説明
+  _BALLOONWIN_OBJMSG_POS( resort_prize_owner_info_07, C16R0101_OWNER, POS_DEFAULT )
+
+  //フラグON
+  _RESORT_SET_MY_DATA( RESORT_MY_PARAM_EV_PRIZE_END, RESORT_CITYPRIZE_TYPE_PARADE )
+    
+  //パレード実行
+  _BALLOONWIN_CLOSE()
+  $WK_SCENE_C16_PARADE = 1
+  _FLAG_SET( SYS_FLAG_BGM_C16_PARADE )
+  _MAP_CHANGE( ZONE_ID_C16, 15, 70, DIR_UP )
+}
+_RET
+
+//==============================================================
+//サブルーチン：ご褒美イベント８：クリアアイテム
+//==============================================================
+sub_prize_item:
+{
+  //プレイヤー近づく
+  _CALL sub_prize_come_player
+
+  //挨拶
+  _RESORT_SET_WORD( RESORT_WORD_FREE_NAME, RESORT_WORD_PARAM_NONE, 0, 0 )
+  _BALLOONWIN_OBJMSG_POS( resort_prize_owner_greet_08, C16R0101_OWNER, POS_DEFAULT )
+
+  //説明
+  _BALLOONWIN_OBJMSG_POS( resort_prize_owner_info_08, C16R0101_OWNER, POS_DEFAULT )
+  _BALLOONWIN_CLOSE()
+
+  //アイテムゲット
+  _RESORT_GET_DATA( RESORT_GET_PARAM_CITY_ITEM, LWK_RET )
+  _ITEM_EVENT_KEYWAIT( LWK_RET, 1 )
+
+  //退出
+  _BALLOONWIN_OBJMSG_POS( resort_prize_owner_bye_08, C16R0101_OWNER, POS_DEFAULT )
+  _BALLOONWIN_CLOSE()
+
+  //フラグON
+  _RESORT_SET_MY_DATA( RESORT_MY_PARAM_EV_PRIZE_END, RESORT_CITYPRIZE_TYPE_ITEM )
 
   //オーナー帰る
   _CALL sub_prize_goout_owner

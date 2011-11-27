@@ -7025,10 +7025,10 @@ BW♀
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
 [Name:ResortGreet Idx="3" ]▼
 [Name:ResortMayor Idx="2" ]！
-ごようけんは　ありますか？▼</Text>
+ごようけんは　ありますか？</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-16T02:18:57" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-27T11:19:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7039,10 +7039,10 @@ BW♀
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
 [Name:ResortGreet Idx="3" ]▼
 [Name:ResortMayor Idx="2" ]！
-ご用件は　ありますか？▼</Text>
+ご用件は　ありますか？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:41:19" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-27T11:19:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7092,10 +7092,10 @@ BW♀
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
 [Name:ResortGreet Idx="3" ]▼
 [Name:ResortMayor Idx="2" ]！
-ごようけんは　ありますか？▼</Text>
+ごようけんは　ありますか？</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-16T02:19:44" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-27T11:19:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7106,10 +7106,10 @@ BW♀
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
 [Name:ResortGreet Idx="3" ]▼
 [Name:ResortMayor Idx="2" ]！
-ご用件は　ありますか？▼</Text>
+ご用件は　ありますか？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:41:24" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-27T11:19:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7293,10 +7293,10 @@ BW♀
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
 [Name:ResortGreet Idx="3" ]▼
 [Name:ResortMayor Idx="2" ]！
-ごようけんは　ありますか？▼</Text>
+ごようけんは　ありますか？</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-16T02:19:44" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-27T11:19:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7307,10 +7307,10 @@ BW♀
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]！
 [Name:ResortGreet Idx="3" ]▼
 [Name:ResortMayor Idx="2" ]！
-ご用件は　ありますか？▼</Text>
+ご用件は　ありますか？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:41:44" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-27T11:19:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8526,6 +8526,53 @@ BW♀
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="resort_secretary_talk_15_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>みんなに　あいさつを　おこないますか？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-27T09:04:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>みんなに　あいさつを　おこないますか？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-27T09:04:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-23T13:12:53" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>パレード実行？</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-27T09:04:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="resort_secretary_talk_00_f"
 		Style="Large">
 		<LanguageCell
@@ -9190,6 +9237,46 @@ BW♀
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-11-23T13:13:08" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_secretary_talk_15_f"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>みんなに　あいさつを　おこないますか？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-27T09:04:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T08:03:42" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>みんなに　あいさつを　おこないますか？</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-27T09:04:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-09-16T08:03:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>パレード実行？</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-27T09:04:56" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -11419,6 +11506,53 @@ BW♀
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-11-23T13:04:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_sys_select_52"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>みんなに　あいさつ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-27T08:59:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>みんなに　あいさつ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-27T08:59:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>パレード</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-27T08:59:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -45288,10 +45422,10 @@ BW♀
 			Language="JPN">
 			<Text>かたそうな　つちと　すなで
 おおかわた　かたまり。
-かんていすると　なかみが　わかる。</Text>
+とても　おもい……。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-26T06:46:31" />
+				Time="2011-09-28T04:39:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -45301,10 +45435,10 @@ BW♀
 			Language="JPN_KANJI">
 			<Text>かたそうな　つちと　すなで
 おおかわた　かたまり。
-かんてい　すると　なかみが　わかる。</Text>
+とても　おもい……。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-26T06:47:24" />
+				Time="2011-09-28T04:39:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -76139,7 +76273,51 @@ BW♀
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_go_eff_combo_00"
+		Label="resort_go_eff_combo_00_m"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="0" ]『
+[Name:ResortShop Idx="1" ]……！▽
+なんだか　とっても　ステキ！▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-25T14:25:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="0" ]『
+[Name:ResortShop Idx="1" ]……！▽
+なんだか　とっても　ステキ！▼</Text>
+			<TextModifiedBy
+				User="shimoyamada:W00184"
+				Time="2011-11-25T14:25:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#c0c0c0</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="resort_go_eff_combo_00_f"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">

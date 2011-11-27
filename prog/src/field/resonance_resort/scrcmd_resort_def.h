@@ -72,6 +72,8 @@
 #define RESORT_GET_PARAM_GRADE_RESIDENT_06    (58)
 #define RESORT_GET_PARAM_GRADE_RESIDENT_07    (59)
 #define RESORT_GET_PARAM_IS_CELEB             (60)
+#define RESORT_GET_PARAM_CITY_ITEM            (61)
+#define RESORT_GET_PARAM_IS_PARADE            (62)
 
 //RESORT_GET_PARAM_CHECK_SCOUTの戻り値
 #define RESORT_CHECK_SCOUT_YES          (0) //いいよ
@@ -197,6 +199,7 @@
 #define RESORT_TOURIST_JOY_MSGID          (59) //招待喜び
 #define RESORT_TOURIST_SHOP_GREET_MSGID   (60) //案内でお店に来たときに挨拶文
 #define RESORT_TOURIST_SPOT_GRADE_NG      (61)  //評価NG文
+#define RESORT_TOURIST_COMBO_EFF_MSGID      (62)  //コンボ用案内演出文
   //住人
 #define RESORT_RESIDENT_GREET_MSGID           (80)  //挨拶
 #define RESORT_RESIDENT_BYE_MSGID             (81)  //またね
@@ -229,6 +232,7 @@
 #define RESORT_SECRETARY_SEL_SELECT           (112) //なにがしたいですか？
 #define RESORT_SECRETARY_SEL_ONE              (113) //１つだけ
 #define RESORT_SECRETARY_SEL_MANY             (114) //複数
+#define RESORT_SECRETARY_SEL_PARADE           (115) //パレードを行いますか？
 
   //ファン
 #define RESORT_FUN_GREET_MSGID                (120) //挨拶
