@@ -18,6 +18,8 @@
 #include "battle/pokewood.h"
 #include "savedata/wbt_save.h"
 #include "gamesystem/g_power.h"
+#include "gamesystem/fest_mission.h"
+#include "gamesystem/fest_mission_data.h"
 
 #ifndef MULTI_BOOT_MAKE  //通常時処理
 #include "field/wbt_tool.h"
@@ -973,6 +975,43 @@ void WORDSET_RegisterWBTTournamentName( WORDSET* wordset, u32 bufID, u32 tournam
   RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
 }
 #endif  //MULTI_BOOT_MAKE
+
+//------------------------------------------------------------------
+/**
+ * @brief 指定バッファにフェスミッションタイトル名を登録
+ *
+ * @param bufID   バッファID
+ * @param id      フェスミッションID
+ * @param level   レベル(目標値展開値が変化します)
+ *
+ * フェスミッションのアーカイブデータを元にデータ生成します
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterFMissionTitle( WORDSET* wordset, u32 bufID, FEST_MISSION_ID id, FMISSION_LEVEL level )
+{
+  // ミッションIDエラー
+  if( id >= FMISSION_ID_MAX )
+  {
+    GF_ASSERT(0);
+    ClearBuffer( wordset, bufID );
+    return;
+  }
+  if( level >= FMISSION_LEVEL_MAX ){
+    GF_ASSERT(0);
+    level = FMISSION_LEVEL_1;
+  }
+  {
+    FEST_MISSION* fmwk = FEST_MISSION_AllocWork( GFL_HEAP_LOWID( wordset->heapID ) );
+    FMISSION_DATA_MAN* man = FMISSION_DATA_Init( GFL_HEAP_LOWID( wordset->heapID ) );
+
+    FMISSION_DATA_GetMissionParamByHandle( man->data_h, id, level, fmwk );
+    FMISSION_DATA_GetTitleStr( man, wordset->tmpBuf, fmwk, GFL_HEAP_LOWID( wordset->heapID ) );
+    RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+
+    FMISSION_DATA_Release( man );
+    GFL_HEAP_FreeMemory( fmwk );
+  }
+}
 
 //======================================================================================================
 // 文字列展開

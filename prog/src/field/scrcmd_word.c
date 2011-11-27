@@ -656,3 +656,21 @@ VMCMD_RESULT EvCmdSeikakuName( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------------
+/**
+ * @brief フェスミッションID名をバッファにセットする
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdFMissionName( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET *wordset    = SCRIPT_GetWordSet( sc );
+ 	u8 idx = VMGetU8( core );
+	u16 fmission_id = SCRCMD_GetVMWorkValue( core, work );
+	u16 fmission_level = SCRCMD_GetVMWorkValue( core, work );
+
+  WORDSET_RegisterFMissionTitle( wordset, idx, fmission_id, fmission_level );
+  return VMCMD_RESULT_CONTINUE;
+}
+

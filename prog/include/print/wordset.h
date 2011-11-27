@@ -19,6 +19,8 @@
 #include "tr_tool/trno_def.h"
 #include "savedata/box_savedata.h"
 #include "field/gpower_id.h"
+#include "gamesystem/fmission_data_id.h"
+#include "gamesystem/fmission_data_def.h"
 
 typedef struct _WORDSET  WORDSET;
 
@@ -71,6 +73,7 @@ extern void WORDSET_RegisterMedalRankName( WORDSET* wordset, u32 bufID, u8 rankI
 extern void WORDSET_RegisterMedalCategoryName( WORDSET* wordset, u32 bufID, u8 catID );
 extern void WORDSET_RegisterPokewoodMovieTitle( WORDSET* wordset, u32 bufID, u32 senarioID );
 extern void WORDSET_RegisterWBTTournamentName( WORDSET* wordset, u32 bufID, u32 tournamentID );
+extern void WORDSET_RegisterFMissionTitle( WORDSET* wordset, u32 bufID, FEST_MISSION_ID id, FMISSION_LEVEL level );
 
 extern void WORDSET_ExpandStr( const WORDSET* wordset, STRBUF* dstbuf, const STRBUF* srcbuf );
 extern void WORDSET_ClearAllBuffer( WORDSET* wordset );

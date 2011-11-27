@@ -160,6 +160,7 @@
 #include "../../../prog/include/app/mdlid_def.h"
 
 //フェスミッションログアクションID
+#include "../../../prog/include/gamesystem/fmission_data_id.h"
 #include "../../../prog/include/gamesystem/fmission_log_id.h"
 #include "../../../prog/src/field/fes_gimmick_npc.h"
 

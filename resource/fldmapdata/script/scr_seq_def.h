@@ -9740,6 +9740,23 @@
 
 //--------------------------------------------------------------
 /**
+ * フェスミッション系コマンド ログアクションリクエスト　
+ *
+ * @param ev_id フェスミッションID FEST_MISSION_ID型
+ * @param level フェスミッションレベル FMISSION_LEVEL型だけど、enum定義が参照できないので(0-3)で指定してください
+ */
+//--------------------------------------------------------------
+#define _FMISSION_NAME( idx, fmission_id, level )  \
+    _ASM_FMISSION_NAME idx, fmission_id, level
+    .macro  _ASM_FMISSION_NAME idx, fmission_id, level
+    .short  EV_SEQ_FMISSION_NAME
+    .byte   \idx
+    .short  \fmission_id
+    .short  \level
+    .endm
+
+//--------------------------------------------------------------
+/**
  * フェスミッション系コマンド 各種受付用ミッション強制終了コマンド　
  */
 //--------------------------------------------------------------
