@@ -86,7 +86,7 @@ static void EggCordinate_TokuseiIndex_metamon( const PARENT* parent, EGG_PARAM* 
 static void EggCordinate_Friend( EGG_PARAM* egg, HEAPID heap_id ); // なつき度 ( 孵化カウント )
 static void EggCordinate_AbilityRnd_select_by_item( const PARENT* parent, EGG_PARAM* egg ,GFL_STD_RandContext* rand_context ); // パワー乱数
 static void EggCordinate_AbilityRnd_select_at_random( const PARENT* parent, EGG_PARAM* egg ,GFL_STD_RandContext* rand_context );
-static void EggCordinate_AbilityRnd_deirve_from_parent( const PARENT* parent, EGG_PARAM* egg );
+static void EggCordinate_AbilityRnd_deirve_from_parent( const PARENT* parent, EGG_PARAM* egg ,GFL_STD_RandContext* rand_context);
 static void EggCordinate_ID( const MYSTATUS* mystatus, EGG_PARAM* egg ); // ID
 static void EggCordinate_PersonalRnd_at_random( const PARENT* parent, EGG_PARAM* egg ); // 個性乱数
 static void EggCordinate_PersonalRnd_for_rare( const PARENT* parent, EGG_PARAM* egg, const BOOL rare_item );
@@ -159,7 +159,7 @@ void POKEMON_EGG_Create(
   EggCordinate_Friend( &egg_param, heap_id ); // なつき度 ( 孵化カウント )
   EggCordinate_AbilityRnd_select_by_item( &parent, &egg_param ,rand_context ); // パワー乱数
   EggCordinate_AbilityRnd_select_at_random( &parent, &egg_param ,rand_context );
-  EggCordinate_AbilityRnd_deirve_from_parent( &parent, &egg_param );
+  EggCordinate_AbilityRnd_deirve_from_parent( &parent, &egg_param ,rand_context );
   EggCordinate_ID( mystatus, &egg_param ); // ID
   EggCordinate_PersonalRnd_at_random( &parent, &egg_param ); // 個性乱数
   EggCordinate_PersonalRnd_for_rare( &parent, &egg_param, rare_item ); 
@@ -735,9 +735,10 @@ static void EggCordinate_AbilityRnd_select_at_random( const PARENT* parent, EGG_
 //---------------------------------------------------------------------------------------- 
 /**
  * @brief タマゴのパワー乱数を決定する
+ * @note  継承を行わなかったパワー乱数はランダム値を設定する
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_AbilityRnd_deirve_from_parent( const PARENT* parent, EGG_PARAM* egg )
+static void EggCordinate_AbilityRnd_deirve_from_parent( const PARENT* parent, EGG_PARAM* egg ,GFL_STD_RandContext* rand_context)
 {
   int i;
   u32 param_id[ PTL_ABILITY_MAX ] =
@@ -752,11 +753,20 @@ static void EggCordinate_AbilityRnd_deirve_from_parent( const PARENT* parent, EG
 
   for( i=0; i<PTL_ABILITY_MAX; i++ )
   {
+    BOOL is_derive = FALSE;
     if( egg->derive_ability_from_father[i] ) { 
       egg->ability_rnd[i] = PP_Get( parent->father, param_id[i], NULL );
+      is_derive = TRUE;
     }
     if( egg->derive_ability_from_mother[i] ) {
       egg->ability_rnd[i] = PP_Get( parent->mother, param_id[i], NULL );
+      is_derive = TRUE;
+    }
+
+    // 継承を行わなかったときは、ランダムで入れる
+    if( is_derive == FALSE )
+    {
+      egg->ability_rnd[i] = GFL_STD_Rand( rand_context ,32 );
     }
   } 
 }
@@ -1104,10 +1114,8 @@ static void MakeEgg(
   // パワー乱数
   for( i=0; i<PTL_ABILITY_MAX; i++ )
   {
-    if( egg_param->derive_ability_from_father[i] || 
-        egg_param->derive_ability_from_mother[i] ) {
-      PP_Put( egg, ability_rnd_param_id[i], egg_param->ability_rnd[i] ); 
-    }
+    // 親から継承しなかった場合以外は事前に決定した値を使用するように変更
+    PP_Put( egg, ability_rnd_param_id[i], egg_param->ability_rnd[i] ); 
   }
 
   // 技
