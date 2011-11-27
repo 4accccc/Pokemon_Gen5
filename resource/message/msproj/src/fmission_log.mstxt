@@ -2807,10 +2807,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エリートトレーナーを　たおした</Text>
+			<Text>しゅぎょうを　てつだった！</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-13T09:24:18" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-27T11:59:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2818,10 +2818,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>エリートトレーナーを　倒した</Text>
+			<Text>修行を　手伝った！</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-13T09:24:18" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-27T11:56:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"

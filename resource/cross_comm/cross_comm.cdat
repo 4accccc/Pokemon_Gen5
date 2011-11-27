@@ -246,175 +246,175 @@ static const struct{
 		0,		//priority
 		10 * 60,		//life
 	},
-	{	//60  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION)
-		2,		//priority
-		5 * 60,		//life
+	{	//60  フェス中に定期的に送信される(何もしていなくてもスコアを更新する)(GAMEBEACON_ACTION_FMISSION)
+		1,		//priority
+		10 * 60,		//life
 	},
-	{	//61  フェスタミッション配布(GAMEBEACON_ACTION_DISTRIBUTION_FMISSION)
+	{	//61  フェスミッション配信(参加者に含まれない）(GAMEBEACON_ACTION_DISTRIBUTION_FMISSION)
 		255,		//priority
 		20 * 60,		//life
 	},
-	{	//62  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_ENCOUNT)
+	{	//62  野生ポケモンとの戦闘に入った時に発生。(GAMEBEACON_ACTION_FMISSION_POKE_ENCOUNT)
+		1,		//priority
+		20 * 60,		//life
+	},
+	{	//63  野生ポケモンを倒した時に発生。(GAMEBEACON_ACTION_FMISSION_POKE_WIN)
+		1,		//priority
+		20 * 60,		//life
+	},
+	{	//64  野生ポケモンを捕まえた時に発生。(GAMEBEACON_ACTION_FMISSION_POKE_CAPTURE)
+		1,		//priority
+		20 * 60,		//life
+	},
+	{	//65  野性ポケモンから逃げたor逃げられた時に発生。(GAMEBEACON_ACTION_FMISSION_POKE_ESCAPE)
+		1,		//priority
+		20 * 60,		//life
+	},
+	{	//66  トレーナーとの戦闘に入った時に発生。(GAMEBEACON_ACTION_FMISSION_TR_ENCOUNT)
+		1,		//priority
+		20 * 60,		//life
+	},
+	{	//67  トレーナーを倒した時に発生。(GAMEBEACON_ACTION_FMISSION_TR_WIN)
+		1,		//priority
+		20 * 60,		//life
+	},
+	{	//68  全滅した時に発生。(GAMEBEACON_ACTION_FMISSION_GAMEOVER)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//63  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_WIN)
+	{	//69  どうぐを使用した時に発生。(GAMEBEACON_ACTION_FMISSION_ITEM_USE)
+		1,		//priority
+		20 * 60,		//life
+	},
+	{	//70  フィールドアイテムor隠しアイテムを拾った時に発生。(GAMEBEACON_ACTION_FMISSION_ITEM_GET)
+		1,		//priority
+		20 * 60,		//life
+	},
+	{	//71  フィールド技を使った時に発生。(GAMEBEACON_ACTION_FMISSION_FIELD_SKILL)
+		1,		//priority
+		20 * 60,		//life
+	},
+	{	//72  フレンドリィショップの店員に話しかけた時に発生。(GAMEBEACON_ACTION_FMISSION_SHOPING)
+		2,		//priority
+		20 * 60,		//life
+	},
+	{	//73  デルパワー使用時に発生。(GAMEBEACON_ACTION_FMISSION_GPOWER_USE)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//64  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_CAPTURE)
+	{	//74  観覧車デモが再生された時に発生。(GAMEBEACON_ACTION_FMISSION_FERRIS_WHEEL)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//65  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_ESCAPE)
+	{	//75  看板に話しかけた時に発生。(GAMEBEACON_ACTION_FMISSION_WATCH_SIGNBOARD)
+		2,		//priority
+		20 * 60,		//life
+	},
+	{	//76  育て屋からタマゴを受け取った時に発生。(GAMEBEACON_ACTION_FMISSION_SODATEYA_EGG)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//66  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_TR_ENCOUNT)
+	{	//77  ポケモン探しミッション：倒してスコアアップした時に発生。赤ログ(GAMEBEACON_ACTION_FMISSION_EFF_ENC_WIN)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//67  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_TR_WIN)
+	{	//78  ポケモン探しミッション：捕まえてスコアアップした時に発生。赤ログ(GAMEBEACON_ACTION_FMISSION_EFF_ENC_CAPTURE)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//68  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_GAMEOVER)
+	{	//79  タマゲタケ探しミッション：倒してスコアアップ。赤ログ(GAMEBEACON_ACTION_FMISSION_MUSHROOM_WIN)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//69  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_ITEM_USE)
+	{	//80  タマゲタケ探しミッション：捕まえてスコアアップ。赤ログ(GAMEBEACON_ACTION_FMISSION_MUSHROOM_CAPTURE)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//70  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_ITEM_GET)
+	{	//81  道具探しミッション：キラキラエフェクトを踏んだ時に発生。赤ログ(GAMEBEACON_ACTION_FMISSION_KIRA_ITEM_GET)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//71  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_FIELD_SKILL)
+	{	//82  タワーオブヘブンで鐘を鳴らした時に発生。(GAMEBEACON_ACTION_FMISSION_TOWER_OF_HEAVEN)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//72  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_SHOPING)
+	{	//83  イベントミッション：羽入手時に発生。赤ログ(GAMEBEACON_ACTION_FMISSION_FEATHER_GET)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//73  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_GPOWER_USE)
+	{	//84  イベントミッション：ジュエル等の土煙で道具入手時に発生。赤ログ(GAMEBEACON_ACTION_FMISSION_JEWEL_GET)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//74  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_FERRIS_WHEEL)
+	{	//85  ポケモンが孵化した時に発生。(GAMEBEACON_ACTION_FMISSION_EGG_HATCH)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//75  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_WATCH_SIGNBOARD)
+	{	//86  ポケモンを釣った時に発生。(GAMEBEACON_ACTION_FMISSION_FISHING_ENCOUNT)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//76  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_SODATEYA_EGG)
+	{	//87  かくしあなにいたポケモンと戦闘に入った時に発生。(GAMEBEACON_ACTION_FMISSION_ANIMAL_TRAIL_ENCOUNT)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//77  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_EFF_ENC_WIN)
+	{	//88  NPC探しミッション：迷子イベントでスコアアップした時に発生。赤ログ(GAMEBEACON_ACTION_FMISSION_HELP_CHILD)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//78  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_EFF_ENC_CAPTURE)
+	{	//89  NPC探しミッション：道具頂戴イベントでスコアアップした時に発生。赤ログ(GAMEBEACON_ACTION_FMISSION_PRESENT_ITEM)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//79  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_MUSHROOM_WIN)
+	{	//90  NPC探しミッション：道具交換イベントでスコアアップした時に発生。赤ログ(GAMEBEACON_ACTION_FMISSION_ITEM_TRADE)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//80  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_MUSHROOM_CAPTURE)
+	{	//91  NPC探しミッション：道具購入イベントでスコアアップした時に発生。赤ログ(GAMEBEACON_ACTION_FMISSION_ITEM_BUY)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//81  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_KIRA_ITEM_GET)
+	{	//92  NPC探しミッション：じゃんけんイベントでスコアアップした時に発生。赤ログ(GAMEBEACON_ACTION_FMISSION_RPS_WIN)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//82  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_TOWER_OF_HEAVEN)
+	{	//93  NPC探しミッション：記憶クイズイベントでスコアアップした時に発生。赤ログ(GAMEBEACON_ACTION_FMISSION_MEMORY_QUIZ_CLEAR)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//83  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_FEATHER_GET)
+	{	//94  NPC探しミッション：戦闘イベントでスコアアップした時に発生。赤ログ(GAMEBEACON_ACTION_FMISSION_TR_BATTLE_WIN)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//84  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_JEWEL_GET)
+	{	//95  NPC探しミッション：プレゼントイベントでスコアアップした時に発生。赤ログ(GAMEBEACON_ACTION_FMISSION_GET_A_PRESENT)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//85  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_EGG_HATCH)
+	{	//96  NPC探しミッション：図鑑クイズイベントでスコアアップした時に発生。赤ログ(GAMEBEACON_ACTION_FMISSION_ZUKAN_QUIZ_CLEAR)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//86  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_FISHING_ENCOUNT)
+	{	//97  NPC探しミッション：道具購入イベントで金額不足で買えなかった時に発生。赤ログ(GAMEBEACON_ACTION_FMISSION_RUN_OUT_OF_MONEY)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//87  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_ANIMAL_TRAIL_ENCOUNT)
-		6,		//priority
-		20 * 60,		//life
-	},
-	{	//88  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_HELP_CHILD)
+	{	//98  NPC探しミッション：じゃんけんイベントで負けた時に発生。(GAMEBEACON_ACTION_FMISSION_RPS_LOSE)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//89  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_PRESENT_ITEM)
+	{	//99  手持ちの先頭ポケモンが瀕死になった時に発生。(GAMEBEACON_ACTION_FMISSION_POKE_DOWN)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//90  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_ITEM_TRADE)
+	{	//100  手持ちの先頭ポケモンのHPが残り少ない時に発生。(GAMEBEACON_ACTION_FMISSION_POKE_HP_LITTLE)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//91  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_ITEM_BUY)
+	{	//101  手持ちの先頭ポケモンのPPが残り少ない時に発生。(GAMEBEACON_ACTION_FMISSION_POKE_PP_LITTLE)
 		5,		//priority
 		20 * 60,		//life
 	},
-	{	//92  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_RPS_WIN)
-		5,		//priority
-		20 * 60,		//life
-	},
-	{	//93  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_MEMORY_QUIZ_CLEAR)
-		5,		//priority
-		20 * 60,		//life
-	},
-	{	//94  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_TR_BATTLE_WIN)
-		5,		//priority
-		20 * 60,		//life
-	},
-	{	//95  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_GET_A_PRESENT)
-		5,		//priority
-		20 * 60,		//life
-	},
-	{	//96  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_ZUKAN_QUIZ_CLEAR)
-		5,		//priority
-		20 * 60,		//life
-	},
-	{	//97  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_RUN_OUT_OF_MONEY)
-		5,		//priority
-		20 * 60,		//life
-	},
-	{	//98  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_RPS_LOSE)
-		5,		//priority
-		20 * 60,		//life
-	},
-	{	//99  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_DOWN)
-		5,		//priority
-		20 * 60,		//life
-	},
-	{	//100  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_HP_LITTLE)
-		5,		//priority
-		20 * 60,		//life
-	},
-	{	//101  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_POKE_PP_LITTLE)
-		5,		//priority
-		20 * 60,		//life
-	},
-	{	//102  フェスタミッション配布(GAMEBEACON_ACTION_FMISSION_FREEWORD)
+	{	//102  フェス中にフリーワードで発言した時に発生。(GAMEBEACON_ACTION_FMISSION_FREEWORD)
 		5,		//priority
 		20 * 60,		//life
 	},
