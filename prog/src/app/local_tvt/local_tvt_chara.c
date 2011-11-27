@@ -1171,14 +1171,18 @@ static void LOCAL_TVT_CHARA_DispName( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHAR
     GFL_FONT  *fontHandle = LOCAL_TVT_MESSAGE_GetFont( sys->param.message );
     PRINT_QUE *printQue   = LOCAL_TVT_MESSAGE_GetPrintQue( sys->param.message );
     if( charaWork->charaType == LTCT_PLAYER_M ||
-        charaWork->charaType == LTCT_PLAYER_F )
+        charaWork->charaType == LTCT_PLAYER_F ||
+        charaWork->charaType == LTCT_RIVAL )
     {
       WORDSET *wordSet;
       STRBUF *msgWorkStr = GFL_STR_CreateBuffer( 128 , heapID );
       MYSTATUS *mystatus = sys->param.mystatus;
+      ETC_SAVE_WORK *etcsave = sys->param.etcsave;
       wordSet = WORDSET_Create( heapID );
       
       WORDSET_RegisterPlayerName( wordSet , 0 , mystatus );
+      WORDSET_RegisterRivalName( wordSet, 1, EtcSave_GetRivalName( etcsave ) );
+
       WORDSET_ExpandStr( wordSet , msgWorkStr , str );
       GFL_STR_DeleteBuffer( str );
       

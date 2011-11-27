@@ -12,6 +12,7 @@
 
 #include "local_tvt_message.h"
 #include "local_tvt_util.h"
+#include "savedata/etc_save.h"
 #include "local_tvt_type_def.h"
 //======================================================================
 //	define
@@ -54,6 +55,7 @@ typedef struct
 {
   GFL_CLUNIT          *cellUnit;
   MYSTATUS            *mystatus;
+  ETC_SAVE_WORK       *etcsave;
   LOCAL_TVT_MESSAGE   *message;
   LOCAL_TVT_TIME_ZONE timeZone;
 }LOCAL_TVT_CHARA_SYS_PARAM;

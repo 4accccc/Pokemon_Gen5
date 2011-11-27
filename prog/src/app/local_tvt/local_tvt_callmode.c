@@ -219,9 +219,10 @@ static void Local_Tvt_Call_SetMode( LOCAL_TVT_CALL *p_wk, LOCAL_TVT_CALL_MODE mo
 static void Local_Tvt_SetCallSelect( LOCAL_TVT_CALL *p_wk, LOCAL_TVT_CALLSELECT_PARAM *p_param )
 {
   GFL_STD_MemClear( p_param, sizeof(LOCAL_TVT_CALLSELECT_PARAM));
-  p_param->p_message = p_wk->param.p_message;
-  p_param->p_clunit  = p_wk->param.p_clunit;
-  p_param->p_msgdata = LOCAL_TVT_MESSAGE_GetSystemMsgData(p_wk->param.p_message);
+  p_param->p_etc_save = SaveData_GetEtc( GAMEDATA_GetSaveControlWork(p_wk->param.p_gamedata) );
+  p_param->p_message  = p_wk->param.p_message;
+  p_param->p_clunit   = p_wk->param.p_clunit;
+  p_param->p_msgdata  = LOCAL_TVT_MESSAGE_GetSystemMsgData(p_wk->param.p_message);
 
   //‚»‚ê‚¼‚ê‚ÌŒÄ‚Ño‚µİ’è
   {

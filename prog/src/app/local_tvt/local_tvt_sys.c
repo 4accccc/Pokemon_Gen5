@@ -147,6 +147,7 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcInit( GFL_PROC * proc, int * seq , void *pw
 
     param.cellUnit  = LOCAL_TVT_GRAPHIC_GetClunit( work->graphic );
     param.mystatus  = GAMEDATA_GetMyStatus( initWork->gameData );
+    param.etcsave   = SaveData_GetEtc( GAMEDATA_GetSaveControlWork(initWork->gameData ) );
     param.message   = work->message;
     param.timeZone  = LOCAL_TVT_UTIL_GetTimeZone( initWork->gameData );
     work->chara_sys = LOCAL_TVT_CHARA_SYS_Init( &param, work->heapId );

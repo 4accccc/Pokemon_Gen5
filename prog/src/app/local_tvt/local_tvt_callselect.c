@@ -536,13 +536,28 @@ static void BARSET_Init( BARSET *p_wk, const LOCAL_TVT_CALLSELECT *cp_sys, HEAPI
   //決定の初期化
   DECIDE_Init( &p_wk->decide, cp_sys, heapID );
 
-  //バーの初期化処理
-  for( i = 0; i < p_wk->max; i++ )
   {
-    STRBUF  *p_str  = GFL_MSG_CreateString( cp_sys->param.p_msgdata, cp_sys->param.msgID[i] );
-    BAR_Init( &p_wk->bar[i], cp_sys, cp_sys->param.p_clunit, i, p_str, cp_sys->param.p_message, !cp_sys->param.is_select[i], heapID );
-    GFL_STR_DeleteBuffer( p_str );
+    
+    WORDSET *p_word = WORDSET_Create( heapID );
+    //ライバル等の単語登録
+    WORDSET_RegisterRivalName( p_word, 1, EtcSave_GetRivalName( cp_sys->param.p_etc_save ) );
+    //バーの初期化処理
+    for( i = 0; i < p_wk->max; i++ )
+    {
+      STRBUF  *p_src  = GFL_MSG_CreateString( cp_sys->param.p_msgdata, cp_sys->param.msgID[i] );
+      STRBUF  *p_dst  = GFL_STR_CreateBuffer( 64, heapID );
+
+      WORDSET_ExpandStr( p_word, p_dst, p_src );
+
+
+      BAR_Init( &p_wk->bar[i], cp_sys, cp_sys->param.p_clunit, i, p_dst, cp_sys->param.p_message, !cp_sys->param.is_select[i], heapID );
+      GFL_STR_DeleteBuffer( p_src );
+      GFL_STR_DeleteBuffer( p_dst );
+    }
+
+    WORDSET_Delete( p_word );
   }
+
   //文字面の設定
   GFL_BG_SetScrollReq( LTVT_FRAME_SUB_MISC , GFL_BG_SCROLL_Y_SET , p_wk->scroll_ofs );
 }

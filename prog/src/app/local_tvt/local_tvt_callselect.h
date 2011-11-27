@@ -10,6 +10,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
+#include "savedata/etc_save.h"
 #include "local_tvt_message.h"
 //=============================================================================
 /**
@@ -43,6 +44,7 @@ typedef struct _LOCAL_TVT_CALLSELECT LOCAL_TVT_CALLSELECT;
 //=====================================
 typedef struct
 {
+  ETC_SAVE_WORK     *p_etc_save;
   LOCAL_TVT_MESSAGE *p_message;
   GFL_CLUNIT        *p_clunit;
   const GFL_MSGDATA *p_msgdata;
