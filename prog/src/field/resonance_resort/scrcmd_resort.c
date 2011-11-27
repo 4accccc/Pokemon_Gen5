@@ -526,7 +526,7 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
       {
         RESORT_SECRETARY_DATA *p_sec = RESORT_PEOPLE_ALL_DATA_GetSecretary( p_all_people, i );
         if( !RESORT_SECRETARY_DATA_IsEmpty(p_sec)
-          && RESORT_SECRETARY_DATA_GetData(p_sec, RESORT_DATA_PARAM_TYPE, NULL) == RESORT_SECRETARY_TYPE_WORK )
+          && RESORT_SECRETARY_DATA_GetData(p_sec, RESORT_DATA_PARAM_TYPE, NULL) == RESORT_SECRETARY_TYPE_ARRANGE )
         {
           sex = RESORT_SECRETARY_DATA_GetData(p_sec, RESORT_DATA_PARAM_SEX, NULL);
           break;
@@ -558,7 +558,7 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
       {
         RESORT_SECRETARY_DATA *p_sec = RESORT_PEOPLE_ALL_DATA_GetSecretary( p_all_people, i );
         if( !RESORT_SECRETARY_DATA_IsEmpty(p_sec)
-          && RESORT_SECRETARY_DATA_GetData(p_sec, RESORT_DATA_PARAM_TYPE, NULL) == RESORT_SECRETARY_TYPE_WORK )
+          && RESORT_SECRETARY_DATA_GetData(p_sec, RESORT_DATA_PARAM_TYPE, NULL) == RESORT_SECRETARY_TYPE_ARRANGE )
         {
           *p_ret_wk = i;
           break;
