@@ -61,6 +61,7 @@
 #include "event_debug_livecomm.h"
 #include "event_debug_linkfest.h"
 #include "event_fmission.h"
+#include "script_def.h"
 
 //======================================================================
 //
@@ -794,14 +795,18 @@ static void dmenu_TutorialClear( DMENU_LINK_FEST* wk )
 {
   EVENTWORK * ev = GAMEDATA_GetEventWork( wk->gdata );
 
-#if 1
+#if 0
   EVENTWORK_SetEventFlag( ev, SYS_FLAG_PALACE_MISSION_START );
   EVENTWORK_SetEventFlag( ev, SYS_FLAG_PALACE_MISSION_CLEAR );
-#endif
   EVENTWORK_SetEventFlag( ev, SYS_FLAG_PALACE_DPOWER );
   EVENTWORK_SetEventFlag( ev, SYS_FLAG_FES_TUTORIAL_CLEAR );
 
   *( EVENTWORK_GetEventWorkAdrs( ev, WK_SCENE_PALACE01 ) ) = 1;
+#else
+  EVENTWORK_SetEventFlag( ev, SYS_FLAG_FES_TUTORIAL_CLEAR );
+
+  *( EVENTWORK_GetEventWorkAdrs( ev, WK_SYS_FES_TUTORIAL ) ) = SCR_FES_TUTORIAL_END;
+#endif
 }
 
 //-----------------------------------------------------------------
