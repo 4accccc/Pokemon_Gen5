@@ -548,7 +548,9 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
     break;
 
   case SEQ_END:
-    
+ 
+// SEQ_EVENT_CALLからきた場合にここではチェックできない
+#if 0
     // SetProcLinkParamResultにwk->param->resultの値を設定する箇所をまとめるにあたって、
     // 以前設定されていたものとの食い違いがあった場合のみアサートを設定する
     if( wk->result == RETURNFUNC_RESULT_USE_ITEM )
@@ -571,6 +573,7 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
     { 
       GF_ASSERT( wk->param->result == EVENT_PROCLINK_RESULT_EXIT );
     }
+#endif
 
     //アイテムと技とリタイアはもう入っている
     return GMEVENT_RES_FINISH;
