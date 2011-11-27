@@ -28,6 +28,7 @@
 #include "local_tvt_scriptmode.h"
 #include "local_tvt_graphic.h"
 #include "local_tvt_calldata.h"
+#include "local_tvt_person_secret.h"
 
 #include "test/ariizumi/ari_debug.h"
 
@@ -163,6 +164,9 @@ LOCAL_TVT_SCRIPT* LOCAL_TVT_SCRIPT_Init( HEAPID heapID, GAMESYS_WORK *gamesystem
     for( i = 0; i < LTM_4_MEMBER; i++ )
     {
       ZONEID  zoneID  = work->scriptHead->back[i];
+
+      chara_param[i].nameCharaType = LTCT_NONE;
+
       switch( work->scriptHead->chara[i] )
       {
       case LTCT_SECRET_M:
@@ -184,6 +188,11 @@ LOCAL_TVT_SCRIPT* LOCAL_TVT_SCRIPT_Init( HEAPID heapID, GAMESYS_WORK *gamesystem
         {
           chara_param[i].charaType  = LTCT_SECRET_F_MASK;
         }
+        break;
+
+      case LTCT_SOUNDONLY:
+        chara_param[i].charaType  = work->scriptHead->chara[i];
+        chara_param[i].nameCharaType = LOCAL_TVT_SECRET_GetDispName( p_data );
         break;
       default:
         chara_param[i].charaType  = work->scriptHead->chara[i];

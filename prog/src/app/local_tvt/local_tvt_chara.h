@@ -49,7 +49,7 @@ typedef struct
   u16 charaType;    //LOCAL_TVT_CHARA_TYPE
   u16 bgType;
   u16 weatherType;  //LOCAL_TVT_WEATHER
-  u16 dummy;
+  u16 nameCharaType;   //LOCAL_TVT_CHARA_TYPE –¼‘O•\Ž¦—pLTCT_NONE‚È‚ç‰½‚à‚µ‚È‚¢
 }LOCAL_TVT_CHARA_PARAM;
 typedef struct
 {

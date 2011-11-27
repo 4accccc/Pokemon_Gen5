@@ -199,6 +199,35 @@ LOCAL_TVT_CHARA_TYPE LOCAL_TVT_SECRET_GetFace( const LOCAL_TVT_CALLDATA *cp_data
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	const LOCAL_TVT_CALLDATA *cp_data 
+ *
+ *	@return TRUE？？？  FALSE通常の名前
+ */
+//-----------------------------------------------------------------------------
+u16 LOCAL_TVT_SECRET_GetDispName( const LOCAL_TVT_CALLDATA *cp_data )
+{
+  u32 sex   = LOCAL_TVT_CALLDATA_GetSecretSex( cp_data );
+  if( LOCAL_TVT_CALLDATA_IsFirst( cp_data ) )
+  {
+    return LTCT_SOUNDONLY;
+  }
+  else
+  {
+    if( sex == PM_MALE )
+    {
+      return LTCT_SECRET_M_MASK;
+    }
+    else
+    {
+      return LTCT_SECRET_F_MASK;
+    }
+  }
+}
+
 //=============================================================================
 /**
  *					プライベート

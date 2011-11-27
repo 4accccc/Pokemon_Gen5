@@ -64,3 +64,4 @@ extern void LOCAL_TVT_CALLDATA_SetSecretOnceDate( LOCAL_TVT_CALLDATA *p_wk );
 extern BOOL LOCAL_TVT_CALLDATA_GetSecretOnceDate( const LOCAL_TVT_CALLDATA *cp_wk );
 
 extern void LOCAL_TVT_CALLDATA_ResetSecretDate( LOCAL_TVT_CALLDATA *p_wk );
+extern BOOL LOCAL_TVT_CALLDATA_IsFirst( const LOCAL_TVT_CALLDATA *cp_wk );

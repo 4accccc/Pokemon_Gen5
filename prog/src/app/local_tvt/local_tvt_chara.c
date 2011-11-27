@@ -138,7 +138,9 @@ struct _LOCAL_TVT_CHARA
   u8 anmCnt;
   u8 nameLen;
 
-  u32 weatherType;
+  u16 nameCharaType;
+
+  u16 weatherType;
   
   LOCAL_TVT_CHARA_TRANS_STATE state;
 
@@ -263,7 +265,7 @@ static const struct
 //======================================================================
 #pragma mark [> proto
 
-static LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_CHARA_SYS *sys, u8 charaType, u8 bgType, LOCAL_TVT_WEATHER weather, LOCAL_TVT_CHARA_POS pos, HEAPID heapID );
+static LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_CHARA_SYS *sys, const LOCAL_TVT_CHARA_PARAM *cp_param, LOCAL_TVT_CHARA_POS pos, HEAPID heapID );
 static void LOCAL_TVT_CHARA_Term( LOCAL_TVT_CHARA_SYS *sys, LOCAL_TVT_CHARA *charaWork );
 static void LOCAL_TVT_CHARA_Main( LOCAL_TVT_CHARA *charaWork );
 static const BOOL LOCAL_TVT_CHARA_isFinishTrans( LOCAL_TVT_CHARA *charaWork );
@@ -425,7 +427,7 @@ void LOCAL_TVT_CHARA_SYS_Main( LOCAL_TVT_CHARA_SYS *sys )
         if( chara_param->charaType != LTCT_NONE )
         {
           GF_ASSERT( sys->charaWork[charaNo] == NULL );
-          sys->charaWork[charaNo] = LOCAL_TVT_CHARA_Init( sys,  chara_param->charaType, chara_param->bgType, chara_param->weatherType, charaNo, sys->heapID );
+          sys->charaWork[charaNo] = LOCAL_TVT_CHARA_Init( sys, chara_param, charaNo, sys->heapID );
         }
         sys->transState++;
       }
@@ -786,7 +788,7 @@ void LOCAL_TVT_CHARA_LipSyncAll( LOCAL_TVT_CHARA_SYS *sys, BOOL is_on )
 //--------------------------------------------------------------
 //	初期化
 //--------------------------------------------------------------
-static LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_CHARA_SYS *sys, u8 charaType, u8 bgType, LOCAL_TVT_WEATHER weather, LOCAL_TVT_CHARA_POS pos, HEAPID heapID )
+static LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_CHARA_SYS *sys, const LOCAL_TVT_CHARA_PARAM *cp_param, LOCAL_TVT_CHARA_POS pos, HEAPID heapID )
 {
   {
     LOCAL_TVT_CHARA *charaWork = GFL_HEAP_AllocClearMemory( heapID, sizeof( LOCAL_TVT_CHARA ) );
@@ -794,9 +796,10 @@ static LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_CHARA_SYS *sys, u8 chara
     charaWork->sys    = sys;
     charaWork->heapID = heapID;
     charaWork->charaIdx = pos;
-    charaWork->charaType = charaType;
-    charaWork->bgType = bgType;
-    charaWork->weatherType  = weather;
+    charaWork->charaType = cp_param->charaType;
+    charaWork->bgType = cp_param->bgType;
+    charaWork->weatherType  = cp_param->weatherType;
+    charaWork->nameCharaType = cp_param->nameCharaType;
     charaWork->charaAnmIdx = 0;
     charaWork->bgAnmIdx = 0;
     charaWork->isUpdateQue = FALSE;
@@ -821,7 +824,7 @@ static LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_CHARA_SYS *sys, u8 chara
     LOCAL_TVT_CHARA_LoadCommonResource( charaWork, sys, heapID );
 
     LOCAL_TVT_CHARA_DispName( charaWork, sys, heapID );
-    LOCAL_TVT_CHARA_LoadWeather( charaWork, sys, weather, sys->member, heapID );
+    LOCAL_TVT_CHARA_LoadWeather( charaWork, sys, cp_param->weatherType, sys->member, heapID );
     
     charaWork->state = LTCTS_WAIT_REQ;
     charaWork->resData = NULL;
@@ -1167,12 +1170,21 @@ static void LOCAL_TVT_CHARA_DispName( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHAR
   
   {
     //名前書く
-    STRBUF *str = GFL_MSG_CreateString( sys->msgHandle , charaWork->charaType );
+    u16 name_msg  = charaWork->charaType;
     GFL_FONT  *fontHandle = LOCAL_TVT_MESSAGE_GetFont( sys->param.message );
     PRINT_QUE *printQue   = LOCAL_TVT_MESSAGE_GetPrintQue( sys->param.message );
-    if( charaWork->charaType == LTCT_PLAYER_M ||
-        charaWork->charaType == LTCT_PLAYER_F ||
-        charaWork->charaType == LTCT_RIVAL )
+    STRBUF *str;
+    
+    //もし音声ならば、初回行こうは隠しキャラの名前を出す
+    if( charaWork->nameCharaType != LTCT_NONE )
+    {
+      name_msg = charaWork->nameCharaType;
+    }
+    str = GFL_MSG_CreateString( sys->msgHandle , name_msg );
+
+    if( name_msg == LTCT_PLAYER_M ||
+        name_msg == LTCT_PLAYER_F ||
+        name_msg == LTCT_RIVAL )
     {
       WORDSET *wordSet;
       STRBUF *msgWorkStr = GFL_STR_CreateBuffer( 128 , heapID );
@@ -1190,6 +1202,7 @@ static void LOCAL_TVT_CHARA_DispName( LOCAL_TVT_CHARA *charaWork, LOCAL_TVT_CHAR
       
       str = msgWorkStr;
     }
+
     charaWork->nameLen = PRINTSYS_GetStrWidth( str , fontHandle , 0 );
 
     PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( charaWork->nameWin ) ,

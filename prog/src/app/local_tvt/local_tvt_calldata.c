@@ -542,3 +542,16 @@ void LOCAL_TVT_CALLDATA_ResetSecretDate( LOCAL_TVT_CALLDATA *p_wk )
     PERSON_STATE_SetDateEndFlag( p_wk->p_person_state, FALSE );
   }
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ‰‰ñ‚©‚Ç‚¤‚©
+ *
+ *	@param	const LOCAL_TVT_CALLDATA *cp_wk   ƒ[ƒN
+ *
+ *	@return TRUE‰‰ñ  FASLEˆá‚¤
+ */
+//-----------------------------------------------------------------------------
+BOOL LOCAL_TVT_CALLDATA_IsFirst( const LOCAL_TVT_CALLDATA *cp_wk )
+{
+  return !PERSON_STATE_GetLocalTvtCall( cp_wk->p_person_state, LOCAL_TVT_PERSON_SECRET );
+}

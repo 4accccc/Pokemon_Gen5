@@ -310,6 +310,13 @@ static void Local_Tvt_SetPerson( LOCAL_TVT_CALL *p_wk, LOCAL_TVT_PERSON *p_perso
   //自分の絵の設定
   GFL_STD_MemClear( p_person, sizeof(LOCAL_TVT_PERSON) );
   {
+    int i;
+    for( i = 0; i < LTM_4_MEMBER; i++ )
+    {
+      param[i].nameCharaType = LTCT_NONE;
+    }
+  }
+  {
 
     PLAYER_WORK *p_player = GAMEDATA_GetMyPlayerWork( p_wk->param.p_gamedata );
     u16 zoneID    = PLAYERWORK_getZoneID(p_player);
@@ -358,6 +365,9 @@ static void Local_Tvt_SetPerson( LOCAL_TVT_CALL *p_wk, LOCAL_TVT_PERSON *p_perso
     param[0].charaType    = LOCAL_TVT_SECRET_GetFace( p_wk->p_data );
     param[0].bgType       = LOCAL_TVT_CALLDATA_GetBack( p_wk->p_data, LOCAL_TVT_PERSON_SECRET );
     param[0].weatherType  = LOCAL_TVT_CALLDATA_GetWeather( p_wk->p_data, LOCAL_TVT_PERSON_SECRET );
+
+    //初回だけ？？？、後は隠しキャラのなまえになるので、隠しキャラだけ受け取る
+    param[0].nameCharaType = LOCAL_TVT_SECRET_GetDispName( p_wk->p_data );
 
     {
       LOCAL_TVT_SECRET_MODE mode  = LOCAL_TVT_SECRET_MODE_RECIVE;
