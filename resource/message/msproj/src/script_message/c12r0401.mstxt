@@ -7,14 +7,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ヒオウギは　イッシュちほうの
-はずれで　ポケモンしょうぶも▽
+はじっこで　ポケモンしょうぶも▽
 そんなに　さかん　じゃないのよね▼
 イッシュの　ちゅうしんなら
 ポケモンしょうぶする　ひと▽
 ポケモントレーナーも　おおいけれど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T07:35:37" />
+				Time="2011-11-27T05:32:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23,14 +23,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヒオウギは　イッシュ地方の
-外れで　ポケモン勝負も▽
+はじっこで　ポケモン勝負も▽
 そんなに　盛んじゃないのよね▼
 イッシュの　中心なら
 ポケモン勝負する　人……▽
 ポケモントレーナーも　多いけれど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T07:35:37" />
+				Time="2011-11-27T05:32:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67,10 +67,10 @@
 			<Text>ポケモンジムが　できることで
 みんな　かわるのかしら？▼
 だって　ともだちが　つよくなれば
-じぶんも　つよくなりたいもの！</Text>
+じぶんも　つよくなりたいでしょ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T07:36:10" />
+				Time="2011-11-27T05:33:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -81,10 +81,10 @@
 			<Text>ポケモンジムが　できることで
 みんな　変わるのかしら？▼
 だって　友達が　強くなれば
-自分も　強くなりたいもの！</Text>
+自分も　強くなりたいでしょ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T07:36:32" />
+				Time="2011-11-27T05:33:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -112,12 +112,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あたしの　ポケモン
-たたかわせないから　よわいまま……▼
-だって　しょうぶとか　すると
-ポケモン　きずついちゃうもん！</Text>
+たたかわせないから　よわいまま……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T07:36:40" />
+				Time="2011-11-27T05:32:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -126,12 +124,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あたしの　ポケモン
-たたかわせないから　よわいまま……▼
-だって　しょうぶとか　すると
-ポケモン　きずついちゃうもん！</Text>
+戦わせないから　弱いまま……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T07:36:40" />
+				Time="2011-11-27T05:32:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -187,12 +183,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あたしの　ポケモン
-たたかわせて　みるの……▼
-きずつくのが　こわいからって
-なにもしないと　よわいままだから</Text>
+戦わせて　みるの……▼
+傷つくのが　怖いからって
+なにもしないと　弱いままだから</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T07:37:47" />
+				Time="2011-11-27T05:32:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

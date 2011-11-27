@@ -130,11 +130,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンの　かいふくって
-こんな　かんじ　です！▼</Text>
+			<Text>ポケモンの　かいふくを　するから
+ボールを　ちょっと　かして▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T02:51:17" />
+				Time="2011-11-27T05:47:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -142,11 +142,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　回復って
-こんな　感じ　です！▼</Text>
+			<Text>ポケモンの　回復を　するから
+ボールを　ちょっと　貸して▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T02:51:21" />
+				Time="2011-11-27T05:47:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

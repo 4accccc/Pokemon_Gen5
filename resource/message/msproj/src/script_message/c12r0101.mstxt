@@ -592,7 +592,7 @@
 			Language="JPN">
 			<Text>[Name:TrainerName ]！　あなたの
 やるべきことが　きまったわ！▼
-この　まちに
+あなたに　あうために
 ベルと　いう　おんなのこが　きます▼
 アララギはかせの　じょしゅで
 おおきなぼうしが　めじるし　だって！▼
@@ -602,7 +602,7 @@
 ポケモンずかんを　うけとるのです！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T05:48:52" />
+				Time="2011-11-27T05:00:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -612,7 +612,7 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]！　あなたの
 やるべきことが　決まったわ！▼
-この街に
+あなたに　会うために
 ベルと　いう　女の子が　来ます▼
 アララギ博士の　助手で
 大きな帽子が　目印だって！▼
@@ -622,7 +622,7 @@
 ポケモン図鑑を　受け取るのです！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T05:49:08" />
+				Time="2011-11-27T05:00:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -657,7 +657,7 @@
 			Language="JPN">
 			<Text>[Name:TrainerName ]！　あなたの
 やるべきことが　きまったわ！▼
-この　まちに
+あなたに　あうために
 ベルと　いう　おんなのこが　きます▼
 アララギはかせの　じょしゅで
 おおきなぼうしが　めじるし　だって！▼
@@ -672,7 +672,7 @@
 バッグの　あけかたは　わかる？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T05:49:02" />
+				Time="2011-11-27T05:34:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -682,7 +682,7 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]！　あなたの
 やるべきことが　決まったわ！▼
-この街に
+あなたに　会うために
 ベルと　いう　女の子が　来ます▼
 アララギ博士の　助手で
 大きな帽子が　目印だって！▼
@@ -697,7 +697,7 @@
 バッグの　開け方は　わかる？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T05:49:14" />
+				Time="2011-11-27T05:00:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -790,8 +790,8 @@
 まよっているかも　しれないし▽
 あなた　さがしてあげてね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T05:19:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -805,8 +805,8 @@
 迷っているかも　しれないし▽
 あなた　探してあげてね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T05:19:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -844,10 +844,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あら？　ふたり　なかよく
-ベルちゃんを　さがしてるんだ！</Text>
+ベルちゃんを　さがしてるんだ！▼
+ベルちゃん　みつかってないの？
+おおきな　ぼうしが　めじるしだって</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-22T12:40:45" />
+				Time="2011-11-27T05:20:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -856,10 +858,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あら？　二人　仲良く
-ベルちゃんを　探してるんだ！</Text>
+ベルちゃんを　探してるんだ！▼
+ベルちゃん　みつかってないの？
+おおきな　帽子が　目印だって</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-22T12:40:56" />
+				Time="2011-11-27T05:19:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1951,7 +1955,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おまえさん！　世界には　まだまだ
-おおくの　ポケモンが　いる▼
+多くの　ポケモンが　いる▼
 それらの　ポケモンは
 ときとして　食べるために　襲ったり▼
 かと思えば　助けあったり　して
@@ -1960,7 +1964,7 @@
 考えてもらえると　うれしいね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T05:40:22" />
+				Time="2011-11-27T05:01:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

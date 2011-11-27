@@ -32,11 +32,10 @@
 ・pos（local　9～13.18）を踏んだとき
 　画面左から登場してメッセージ表示
 ・続けてswrival_01
-
 ※ライバルと妹は一緒</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T05:14:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -72,11 +71,10 @@ GIRL2</Text>
 ……　……　……
 ……　……　……▼
 ベルって　ひとが
-ポケモンを　くれる！？▽
-それは　すごいな▼</Text>
+ポケモンを　くれる？　ほんとかよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T09:17:54" />
+				Time="2011-11-27T05:14:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -90,11 +88,10 @@ GIRL2</Text>
 ……　……　……
 ……　……　……▼
 ベルって　人が
-ポケモンを　くれる！？▽
-それは　すごいな▼</Text>
+ポケモンを　くれる？　ほんとかよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T09:17:57" />
+				Time="2011-11-27T05:14:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -193,14 +190,14 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……そうだよな▼
-それにしても　オレも　うれしいぜ▼
+ほんとなら　オレも　うれしいぜ▼
 ようやく　うでだめしを　する
 あいてが　できるって　ことだからな▼
-よし！　オレも　てつだってやる！
+よし！　オレも　てつだってやるよ！
 ベルって　ひとを　さがせばいいんだろ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T07:21:50" />
+				Time="2011-11-27T05:15:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -209,14 +206,14 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……そうだよな▼
-それにしても　オレも　うれしいぜ▼
+ほんとなら　オレも　うれしいぜ▼
 ようやく　腕試しを　する
 相手が　できるって　ことだからな▼
-よし！　オレも　手伝ってやる！
+よし！　オレも　手伝ってやるよ！
 ベルって　人を　探せばいいんだろ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T07:48:06" />
+				Time="2011-11-27T05:15:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -369,11 +366,11 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さてと▼
-ベルって　人を　探すんだな
-どこから　探すか　決めてくれよ</Text>
+ベルって　ひとを　さがすんだな
+どこから　さがすか　オマエが　きめろよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-28T05:54:19" />
+				Time="2011-11-27T05:18:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -383,10 +380,10 @@ GIRL2</Text>
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さてと▼
 ベルって　人を　探すんだな
-どこから　探すか　決めてくれよ</Text>
+どこから　探すか　オマエが　決めろよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-28T05:54:26" />
+				Time="2011-11-27T05:18:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -980,11 +977,10 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さ
-ベルって　ひと　さがすぜ</Text>
+			<Text>[Name:TrainerName Idx="1" ]『さ　いくぜ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T11:24:57" />
+				Time="2011-11-27T05:37:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -992,11 +988,10 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さ
-ベルって　人　捜すぜ</Text>
+			<Text>[Name:TrainerName Idx="1" ]『さ　いくぜ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T11:25:02" />
+				Time="2011-11-27T05:37:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1005,11 +1000,10 @@ GIRL2</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・再度合流時
-・1＝ライバル名</Comment>
+・再度合流時</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T07:19:55" />
+				Time="2011-11-27T05:37:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1021,7 +1015,7 @@ GIRL2</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3122,10 +3116,10 @@ GIRL2</Text>
 オレは　イッシュちほうを　たびして
 みつけなきゃ　いけないものが　ある！▼
 それには　ポケモンずかんが
-あったほうが　なにかと　いいから……▼</Text>
+あったほうが　なにかと　いいだろ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T10:52:48" />
+				Time="2011-11-27T05:41:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3141,10 +3135,10 @@ GIRL2</Text>
 オレは　イッシュ地方を　旅して
 みつけなきゃ　いけないものが　ある！▼
 それには　ポケモン図鑑が
-あったほうが　なにかと　いいから……▼</Text>
+あったほうが　なにかと　いいだろ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T10:52:42" />
+				Time="2011-11-27T05:41:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3173,7 +3167,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『うん　いいよ！▼
+			<Text>ベル『うん　そうだね！▼
 どんな　りゆうか　わからないけど
 たびに でることは　いいことだもの！▼
 ちょうど　もうひとつ
@@ -3183,7 +3177,7 @@ GIRL2</Text>
 みんなで　しらべたほうが　いいもんね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T08:15:44" />
+				Time="2011-11-27T05:42:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3191,7 +3185,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『うん　いいよ！▼
+			<Text>ベル『うん　そうだね！▼
 どんな　理由か　わからないけど
 旅に でることは　いいことだもの！▼
 ちょうど　もうひとつ
@@ -3201,7 +3195,7 @@ GIRL2</Text>
 みんなで　調べたほうが　いいもんね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T08:22:52" />
+				Time="2011-11-27T05:42:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3682,13 +3676,15 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ママ『よっ！　[Name:TrainerName Idx="0" ]
-ベルちゃんと　であえたみたいね▼
-あら？　[Name:PokemonName Idx="2" ]を　えらんだんだ
-フフ　なんだか　いいかんじ！▼</Text>
+			<Text>ママ『あっ！
+あなたが　ベルちゃんね！▼
+で　[Name:TrainerName Idx="0" ]は
+[Name:PokemonName Idx="2" ]を　えらんだんだ▼
+フフ
+なんだか　いい　かんじ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T05:54:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3696,13 +3692,15 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ママ『よっ！　[Name:TrainerName Idx="0" ]
-ベルちゃんと　出会えたみたいね▼
-あら？　[Name:PokemonName Idx="2" ]を　選んだんだ
-フフ　なんだか　いい感じ！▼</Text>
+			<Text>ママ『あっ！
+あなたが　ベルちゃんね！▼
+で　[Name:TrainerName Idx="0" ]は
+[Name:PokemonName Idx="2" ]を　選んだんだ▼
+フフ
+なんだか　いい感じ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T05:54:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3850,15 +3848,15 @@ GIRL2</Text>
 			<Text>ママ『おっ！　にあってるじゃない！
 じゃ　せつめいしょを　よむわね▼
 「ランニングシューズは
- Ｂボタンを　おすことで　いままでより▽
- はやく　はしれるように　なります！▼
- ランニングシューズを　はいて
- おもいっきり　はしりまくろう！」▼
+　Ｂボタンを　おすことで　いままでより▽
+　はやく　はしれるように　なります！▼
+　ランニングシューズを　はいて
+　おもいっきり　はしりまくろう！」▼
 これで　あなたと　[Name:PokemonName Idx="2" ]
 どこまでも　かけぬけられるわね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T05:55:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3869,15 +3867,15 @@ GIRL2</Text>
 			<Text>ママ『おっ！　にあってるじゃない！
 じゃ　取扱説明書を　読むわね▼
 「ランニングシューズは
- Ｂボタンを　押すことで　今までより▽
- 速く　走れるように　なります！▼
- ランニングシューズを　履いて
- おもいっきり　走りまくろう！」▼
+　Ｂボタンを　押すことで　今までより▽
+　速く　走れるように　なります！▼
+　ランニングシューズを　履いて
+　おもいっきり　走りまくろう！」▼
 これで　あなたと　[Name:PokemonName Idx="2" ]
 どこまでも　駆けぬけられるわね！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T05:55:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4020,11 +4018,11 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『その　タウンマップ
+			<Text>ベル『ねえねえ　タウンマップだけど
 どうして　２つも　あるの？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T05:59:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4032,11 +4030,11 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『その　タウンマップ
+			<Text>ベル『ねえねえ　タウンマップだけど
 どうして　２つも　あるの？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-27T05:59:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5940,10 +5938,10 @@ TVトランシーバー</Text>
 がめんが　あらわれたでしょ！▼
 その　がめんの　みぎしたに　ある
 ？マークに　タッチすれば▽
-Ｃギアの　せつめいが　よめるよ▼</Text>
+Ｃギアの　せつめいが　よめるよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T12:19:44" />
+				Time="2011-11-27T08:18:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -5955,10 +5953,10 @@ TVトランシーバー</Text>
 画面が　あらわれたでしょ！▼
 その　画面の　右下に　ある
 ？マークに　タッチすれば▽
-Ｃ－ＧＥＡＲの　説明が　読めるよ▼</Text>
+Ｃ－ＧＥＡＲの　説明が　読めるよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T12:19:48" />
+				Time="2011-11-27T08:18:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6001,10 +5999,10 @@ TVトランシーバー</Text>
 そして　でんげんを　いれたあとは
 がめんの　みぎしたに　ある▽
 ？マークに　タッチすれば▽
-Ｃギアの　せつめいが　よめるよ！▼</Text>
+Ｃギアの　せつめいが　よめるよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T12:20:16" />
+				Time="2011-11-27T08:18:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6018,10 +6016,10 @@ TVトランシーバー</Text>
 そして　電源を　入れたあとは
 画面　右下に　表示される▽
 ？マークに　タッチすれば▽
-Ｃ－ＧＥＡＲの　説明が　読めるよ▼</Text>
+Ｃ－ＧＥＡＲの　説明が　読めるよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T12:20:22" />
+				Time="2011-11-27T08:18:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

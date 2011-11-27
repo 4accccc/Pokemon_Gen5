@@ -6,11 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジムリーダーさん　ねっしんね！
-おくで　ポケモンを　おしえているわよ</Text>
+			<Text>サンギタウンの　アデクさんに
+せんせいを　おねがい　してたの▼
+だけど　わかいひとに　まかせたほうが
+いいからって　ことわられたのよね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T03:50:10" />
+				Time="2011-11-27T08:11:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18,11 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジムリーダーさん　熱心ね！
-奥で　ポケモンを　教えているわよ</Text>
+			<Text>サンギタウンの　アデクさんに
+先生を　お願い　してたの▼
+だけど　若い人に　任せたほうが
+いいからって　辞退なされたのよね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T03:50:19" />
+				Time="2011-11-27T08:10:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -187,7 +191,7 @@
 　ポケモンは　おどろき　しんかをやめる」</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-28T08:33:39" />
+				Time="2011-11-27T08:11:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

@@ -249,13 +249,12 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０ばんどうろの
-こころのくうどう……▼
+			<Text>ゾロアーク……▼
 どうして　あんな
 ゆめを　みるのかなぁ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T05:35:48" />
+				Time="2011-11-27T05:25:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -263,13 +262,12 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０ばんどうろの
-こころのくうどう……▼
+			<Text>ゾロアーク……▼
 どうして　あんな
 ゆめを　みるのかなぁ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T05:35:51" />
+				Time="2011-11-27T05:25:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -278,10 +276,10 @@ GIRL2</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・クリア後＋心の空洞イベント前</Comment>
+・クリア後＋Nの城でNと戦闘する前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T04:52:39" />
+				Time="2011-11-27T05:25:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -336,10 +334,10 @@ GIRL2</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・殿堂入り10回</Comment>
+・殿堂入り５回</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T05:36:02" />
+				Time="2011-11-27T05:25:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
