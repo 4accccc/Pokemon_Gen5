@@ -60,11 +60,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Place ]の　草むらに
+			<Text>[Name:Place ]の　草むら
 [System:Color name="1" ]春[/System:Color]に　生息する　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-05T03:24:46" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T06:43:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -104,11 +104,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Place ]の　草むらに
+			<Text>[Name:Place ]の　草むら
 [System:Color name="1" ]夏[/System:Color]に　生息する　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-05T03:24:54" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T06:43:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -147,11 +147,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Place ]の　草むらに
+			<Text>[Name:Place ]の　草むら
 [System:Color name="1" ]秋[/System:Color]に　生息する　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-05T03:25:02" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T06:43:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -190,11 +190,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Place ]の　草むらに
+			<Text>[Name:Place ]の　草むら
 [System:Color name="1" ]冬[/System:Color]に　生息する　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-05T03:25:11" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T06:44:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -280,8 +280,8 @@
 			<Text>[Name:Place ]の　砂地
 [System:Color name="1" ]春[/System:Color]に　生息する　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-05T03:25:22" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T06:44:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -1107,10 +1107,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:Place ]
-つりざおで　釣れる　ポケモン</Text>
+つりざおで　つれる　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-14T03:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T06:44:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1150,10 +1150,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:Place ]
-[System:Color name="1" ]春[/System:Color]に　つりざおで　釣れる　ポケモン</Text>
+[System:Color name="1" ]春[/System:Color]に　つりざおで　つれる　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-05T03:28:33" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T06:44:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1193,10 +1193,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:Place ]
-[System:Color name="1" ]夏[/System:Color]に　つりざおで　釣れる　ポケモン</Text>
+[System:Color name="1" ]夏[/System:Color]に　つりざおで　つれる　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-05T03:28:51" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T06:44:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1236,10 +1236,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:Place ]
-[System:Color name="1" ]秋[/System:Color]に　つりざおで　釣れる　ポケモン</Text>
+[System:Color name="1" ]秋[/System:Color]に　つりざおで　つれる　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-05T03:29:02" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T06:44:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1279,10 +1279,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:Place ]
-[System:Color name="1" ]冬[/System:Color]に　つりざおで　釣れる　ポケモン</Text>
+[System:Color name="1" ]冬[/System:Color]に　つりざおで　つれる　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-05T03:29:22" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T06:44:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1324,8 +1324,8 @@
 			<Text>[Name:Place ]の　陸地に
 生息する　ポケモン</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-06T04:32:14" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T06:44:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
