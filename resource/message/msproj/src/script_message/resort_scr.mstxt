@@ -3622,12 +3622,12 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんど　[Name:ResortShop Idx="0" ]を
+			<Text>こんど　[Name:ResortType ]を
 やりたいと　おもっているんです▼
 かえても　いいですか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:30:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3635,12 +3635,12 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今度　[Name:ResortShop Idx="0" ]を
+			<Text>今度　[Name:ResortType ]を
 やりたいと　思っているんです▼
 変えても　いいですか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:31:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3680,12 +3680,12 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんど　[Name:ResortShop Idx="0" ]を
+			<Text>こんど　[Name:ResortType ]を
 やりたいと　おもっているんです▼
 かえても　いいですか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:31:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3693,12 +3693,12 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今度　[Name:ResortShop Idx="0" ]を
+			<Text>今度　[Name:ResortType ]を
 やりたいと　思っているんです▼
 変えても　いいですか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:31:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7865,13 +7865,13 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ズバリ！
-[Name:ResortShop ]です▼
-[Name:ResortShop ]を
+[Name:ResortType ]です▼
+[Name:ResortType ]を
 [Name:ResortTown Idx="1" ]にひらいたら▽
 あっというまに　にんきに　なるでしょう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-02T09:30:25" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:32:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7880,13 +7880,13 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ズバリ！
-[Name:ResortShop ]です▼
-[Name:ResortShop ]を
+[Name:ResortType ]です▼
+[Name:ResortType ]を
 [Name:ResortTown Idx="1" ]に　ひらいたら▽
 あっというまに　人気に　なるでしょう▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:42:20" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:32:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7920,14 +7920,14 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortShop ]！
-すばらしい▼
-[Name:ResortShop ]を
+			<Text>ズバリ！
+[Name:ResortType ]です▼
+[Name:ResortType ]を
 [Name:ResortTown Idx="1" ]にひらいたら▽
-きっと　ゆうめいに　なります▼</Text>
+あっというまに　にんきに　なるでしょう▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T07:01:34" />
+				Time="2011-11-28T09:33:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7935,14 +7935,14 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortShop ]！
-すばらしい▼
-[Name:ResortShop ]を
+			<Text>ズバリ！
+[Name:ResortType ]です▼
+[Name:ResortType ]を
 [Name:ResortTown Idx="1" ]に　ひらいたら▽
-きっと　有名に　なります▼</Text>
+あっというまに　人気に　なるでしょう▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:42:41" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:33:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8628,13 +8628,13 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ズバリ！
-[Name:ResortShop ]です▼
-[Name:ResortShop ]を
+[Name:ResortType ]です▼
+[Name:ResortType ]を
 [Name:ResortTown Idx="1" ]にひらいたら▽
 あっというまに　にんきに　なるでしょう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-02T09:30:51" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:33:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8643,13 +8643,13 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ズバリ！
-[Name:ResortShop ]です▼
-[Name:ResortShop ]を
+[Name:ResortType ]です▼
+[Name:ResortType ]を
 [Name:ResortTown Idx="1" ]に　ひらいたら▽
 あっというまに　人気に　なるでしょう▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:43:50" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:33:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8683,14 +8683,14 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortShop ]！
-すばらしい▼
-[Name:ResortShop ]を
+			<Text>ズバリ！
+[Name:ResortType ]です▼
+[Name:ResortType ]を
 [Name:ResortTown Idx="1" ]にひらいたら▽
-きっと　ゆうめいに　なります▼</Text>
+あっというまに　にんきに　なるでしょう▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T07:05:17" />
+				Time="2011-11-28T09:33:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8698,14 +8698,14 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortShop ]！
-すばらしい▼
-[Name:ResortShop ]を
-[Name:ResortTown Idx="1" ]にひらいたら▽
-きっと　有名に　なります▼</Text>
+			<Text>ズバリ！
+[Name:ResortType ]です▼
+[Name:ResortType ]を
+[Name:ResortTown Idx="1" ]に　ひらいたら▽
+あっというまに　人気に　なるでしょう▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:43:42" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:33:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12460,12 +12460,12 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortShop Idx="0" ]
+			<Text>[Name:ResortType ]
 『[Name:ResortShop Idx="1" ]』が　できた！
 </Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-14T12:59:24" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:34:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12473,11 +12473,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortShop Idx="0" ]
+			<Text>[Name:ResortType ]
 『[Name:ResortShop Idx="1" ]』が　できた！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-14T12:59:26" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:34:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -91340,10 +91340,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortShop Idx="1" ]が　[Digit:1digit Idx="2" ]けん▼</Text>
+			<Text>[Name:ResortType Idx="1" ]が　[Digit:1digit Idx="2" ]けん▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T09:19:13" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:42:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -91351,10 +91351,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortShop Idx="1" ]が　[Digit:1digit Idx="2" ]件▼</Text>
+			<Text>[Name:ResortType Idx="1" ]が　[Digit:1digit Idx="2" ]件▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T09:19:10" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:42:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -91387,10 +91387,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortShop Idx="1" ]が　[Digit:1digit Idx="2" ]けん▼</Text>
+			<Text>[Name:ResortType Idx="1" ]が　[Digit:1digit Idx="2" ]けん▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-21T12:28:33" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:42:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -91398,10 +91398,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortShop Idx="1" ]が　[Digit:1digit Idx="2" ]件▼</Text>
+			<Text>[Name:ResortType Idx="1" ]が　[Digit:1digit Idx="2" ]件▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T09:19:14" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:42:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
