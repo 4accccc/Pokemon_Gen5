@@ -42,7 +42,6 @@
 #include "event_debug_menu.h"
 #include "field_debug.h" 
 
-#include "event_debug_mobiclip.h"
 #include "demo/demo3d.h"
 #include "event_demo3d.h"
 
@@ -262,22 +261,6 @@ BOOL debugMenuCallProc_IntroDemo( DEBUG_MENU_EVENT_WORK* wk )
   LOCATION_SetGameStart(&work->loc_req);
 
   //ゲーム開始イベントの生成
-  GMEVENT_ChangeEvent( wk->gmEvent, event );
-
-  return TRUE;
-}
-
-//-----------------------------------------------------------------------------
-/**
- * @brief Mobiclip再生
- */
-//-----------------------------------------------------------------------------
-FS_EXTERN_OVERLAY( debug_mobiclip );
-BOOL debugMenuCallProc_Mobiclip( DEBUG_MENU_EVENT_WORK* wk )
-{
-  GMEVENT * event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
-      FS_OVERLAY_ID( debug_mobiclip ), DEBUG_EVENT_FLDMENU_MobiclipSelect, NULL );
-
   GMEVENT_ChangeEvent( wk->gmEvent, event );
 
   return TRUE;

@@ -192,7 +192,6 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR44, debugMenuCallProc_UITemplate, FS_OVERLAY_ID(debugmenu_app) },        //UIテンプレート
   { DEBUG_FIELD_DEMO3D,   debugMenuCallProc_Demo3d, FS_OVERLAY_ID(debugmenu_app) },             //３Dデモ
   { DEBUG_FIELD_WBT,      debugMenuCallProc_WBT, FS_OVERLAY_ID(debugmenu_wbt) },      //WBT
-  { DEBUG_FIELD_MOBICLIP, debugMenuCallProc_Mobiclip, FS_OVERLAY_ID(debugmenu_app) }, //Mobiclip
   { DEBUG_FIELD_POKEWOOD, debugMenuCallProc_Pokewood, FS_OVERLAY_ID(debugmenu_app) }, //ポケウッド
 
   //event_debug_menu_ov_staff.c
@@ -211,9 +210,6 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_INFINITY , debugMenuCallProc_InfinityDungeon , FS_OVERLAY_ID(debugmenu_infinity) },    // 無限ダンジョン
   { DEBUG_FIELD_ANIMAL_TRAIL , debugMenuCallProc_AnimalTrail , FS_OVERLAY_ID(debugmenu_animal_trail) },    // けものみち
   { DEBUG_FIELD_INTRO_DEMO, debugMenuCallProc_IntroDemo, FS_OVERLAY_ID(debugmenu_app) },    // 物語開始デモ
-  // ためしにデバック機能追加してみた
-  { DEBUG_FIELD_TEST_ICHI, debugMenuCallProc_DebugTest_Ichi, FS_OVERLAY_ID(debugmenu_staff) },    // いちらくテスト
-  { DEBUG_FIELD_TEST_ONOUE, debugMenuCallProc_DebugTest_Onoue, FS_OVERLAY_ID(debugmenu_staff) },    // おのうえテスト
 };
 
 //------------------------------------------------------------------------
@@ -258,7 +254,7 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
 #define QuickJumpStart   DEBUG_FIELD_INFINITY
 #define QuickJumpSelect  DEBUG_FIELD_INFINITY
 #elif defined DEBUG_ONLY_FOR_ichiraku_katsuhiko
-#define QuickJumpStart   DEBUG_FIELD_MOBICLIP
+#define QuickJumpStart   DEBUG_FIELD_WBT
 #define QuickJumpSelect  DEBUG_FIELD_WBT
 #elif defined DEBUG_ONLY_FOR_tsuruta_saya
 #define QuickJumpStart   DEBUG_FIELD_WBT
