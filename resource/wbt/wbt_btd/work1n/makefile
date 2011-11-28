@@ -65,7 +65,6 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 do-build: out_end narc
 
 out_end : $(TDM_FILE) $(PDM_FILE)
-	ruby $(PROJECT_TOOLSDIR)/btl_subway/bts_trainer_arr.rb $(PROJECT_TOOLSDIR)/btl_subway/trainer.txt > $(PROJECT_TOOLSDIR)/btl_subway/bts_tr_arr.rb
 	echo $(PDM_FILE) > pd_list.txt
 	ruby $(PROJECT_TOOLSDIR)/btl_subway/btl_subway_conv.rb pd_list.txt $(TDM_FILE) $(PROJECT_RSCDIR)/message/template.gmm $(HEAD_STR)
 
