@@ -1449,15 +1449,17 @@
 			Language="JPN">
 			<Text>きょうは　ちょうせんしゃが
 たくさん　くるわね▼
-さっきの　しょうねんも　つよかったけど
-キミは　どうかしら？▼
+さいきんは　バンジロウのような
+つよい　トレーナーが　すくないわね▼
+キミは　わたしを
+たのしませて　くれるかしら？▼
 わたしは　つよい　トレーナーと
 たたかうために　ここにいるの▼
 さあ　キミの　じつりょくを
 ためさせて　もらうわよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-28T02:43:30" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-28T10:29:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1467,15 +1469,17 @@
 			Language="JPN_KANJI">
 			<Text>今日は　挑戦者が
 たくさん　来るわね▼
-さっきの　少年も　強かったけど
-キミは　どうかしら？▼
+最近は　バンジロウのような
+強い　トレーナーが　少ないわね▼
+キミは　わたしを
+楽しませて　くれるかしら？▼
 わたしは　強い　トレーナーと
 戦うために　ここにいるの▼
 さあ　キミの　実力を
 試させて　もらうわよ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T04:04:05" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-28T10:30:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2128,15 +2132,17 @@
 			Language="JPN">
 			<Text>きょうは　ちょうせんしゃが
 たくさん　くる　ひだな▼
-さっきの　しょうねんも　つよかったが
-キミは　どうかな？▼
+さいきんは　バンジロウのような
+つよい　トレーナーが　すくないからな▼
+キミは　わたしを
+たのしませて　くれるかな？▼
 つよい　トレーナーと　たたかうのが
 わたしの　よろこびだ▼
 さあ　キミの　じつりょくを
 ためさせて　もらおう！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-28T02:46:05" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-28T10:27:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2146,15 +2152,17 @@
 			Language="JPN_KANJI">
 			<Text>今日は　挑戦者が
 たくさん　来る日だな▼
-さっきの　少年も　強かったが
-キミは　どうかな？▼
+最近は　バンジロウのような
+強い　トレーナーが　少ないからな▼
+キミは　わたしを
+楽しませて　くれるかな？▼
 強い　トレーナーと　戦うのが
 わたしの　喜びだ▼
 さあ　キミの　実力を
 試させて　もらおう！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T04:05:43" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-28T10:28:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6052,8 +6060,8 @@
 			<Text>それに　エリア６いこうは
 エリアないの▽
 かいそうが　ふえるそうです▼
-いまいる　かいそうで
-ボストレーナーを　みつけられないなら▼
+いまいる　かいそうで　もくてきの
+トレーナーが　みつからないときは▼
 べつの　かいそうを
 さがして　みてください▼
 べつの　かいそうには
@@ -6063,8 +6071,8 @@
 ポケモンを　じゅうぶんに　そだててから
 ちょうせんを　おすすめします▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-28T03:00:28" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-28T10:25:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6074,9 +6082,10 @@
 			Language="JPN_KANJI">
 			<Text>それに　エリア６以降は
 エリア内の　階層が　増えるそうです▼
-今いる　階層で　ボストレーナーを
-みつけられないときなどは▽
-別の　階層を　探してみてください▼
+今いる　階層で　目的の
+トレーナーを　みつけられないときは▼
+別の　階層を
+探してみてください▼
 別の　階層には
 エレベーターで　移動してくださいね▼
 とにかく　エリア６以降の　
@@ -6084,8 +6093,8 @@
 ポケモンを　十分に　育ててから
 挑戦を　お勧めします▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-28T03:14:43" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-28T10:25:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6872,7 +6881,7 @@
 エリアないの▽
 かいそうが　ふえるらしいぞ▼
 いま　いる　かいそうで
-ボストレーナーを　みつけられないなら▽
+おめあての　トレーナーが　いないなら▽
 べつの　かいそうに　いってみな▼
 べつの　かいそうには
 エレベーターで　いどうしてくれよ▼
@@ -6881,8 +6890,8 @@
 ポケモンを　じゅうぶんに　
 そだててから　ちょうせん　するんだな▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-28T02:59:15" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-28T10:23:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -6893,7 +6902,7 @@
 			<Text>それに　エリア６以降は　エリア内の
 階層が　増えるらしいぞ▼
 今いる　階層で
-ボストレーナーを　みつけられないなら▽
+お目当ての　トレーナーが　いないなら▽
 別の　階層に　行ってみな▼
 別の　階層には
 エレベーターで　移動してくれよ▼
@@ -6902,8 +6911,8 @@
 ポケモンを　十分に　育ててから
 挑戦するんだな▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-28T02:59:41" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-28T10:23:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
