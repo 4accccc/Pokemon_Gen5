@@ -21,12 +21,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おら！　ここは　おれたちの
-ひみつの　ばしょだ！▼
-よそものが　おいそれと
-きて　いい　ばしょ　じゃねーぞ！▼</Text>
+秘密の　場所だ！▼
+余所者が　おいそれと
+来て　いい　場所じゃねーぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T05:57:49" />
+				Time="2011-11-28T06:27:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -86,11 +86,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よそものの　くせに……
-つよい　ヤツは　きらいじゃないぜ</Text>
+			<Text>余所者の　くせに……
+強い　ヤツは　きらいじゃないぜ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:12:25" />
+				Time="2011-11-28T06:27:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -138,11 +138,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おれたち　３にんに　かてたら
-なかまに　いれてやっても　いいぞ</Text>
+			<Text>おれたち　３人に　勝てたら
+仲間に　いれてやっても　いいぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:14:29" />
+				Time="2011-11-28T06:27:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -189,11 +189,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレは　つよい　やつを　みとめる
-つまり　あんたは　なかまだ！</Text>
+			<Text>オレは　強い　やつを　認める
+つまり　あんたは　仲間だ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:03:33" />
+				Time="2011-11-28T06:28:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -242,13 +242,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんな　うらびれた　ばしょでも
+			<Text>こんな　うらびれた　場所でも
 おいらたちの　パラダイス！▼
-なにも　しらない　おまえなんかに
-あらされて　たまるかよ！▼</Text>
+なにも　知らない　おまえなんかに
+荒らされて　たまるかよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:04:29" />
+				Time="2011-11-28T06:28:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -287,11 +287,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>なんだよ　おまえ！
-いい　リズムで　たたかうんだな！▽
-おもわず　ノッっちまったぞ</Text>
+いい　リズムで　ファイトするんだな！▽
+おもわず　ノッちまったぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:13:07" />
+				Time="2011-11-28T06:28:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -300,11 +300,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なんだよ　おまえ！
-いい　リズムで　たたかうんだな！▽
-おもわず　ノッっちまったぞ</Text>
+いい　リズムで　ファイトするんだな！▽
+おもわず　ノッちまったぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:13:08" />
+				Time="2011-11-28T06:28:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -352,11 +352,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここで　かたよせあって　いきてきた
-いまさら　だれかを　しんじないぜ！</Text>
+			<Text>ここで　肩寄せあって　生きてきた
+いまさら　だれかを　信じないぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:14:55" />
+				Time="2011-11-28T06:28:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -406,10 +406,10 @@
 			Language="JPN_KANJI">
 			<Text>あんたが　リーダー！
 アネゴは　サブリーダー！▽
-さあ！　みんなで　おどろうぜ！</Text>
+さあ！　みんなで　踊ろうぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:05:30" />
+				Time="2011-11-28T06:28:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -438,12 +438,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あたいの　かわいい　こぶんを
-かなしい　きもちを　させやがって▼
+かなしい　キモチに　させやがって▼
 ばいがえしで　あんたを　もっともっと
-かなしい　きもちに　させるよ！！▼</Text>
+かなしい　キモチに　させるよ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:07:26" />
+				Time="2011-11-28T06:29:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -451,13 +451,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたいの　かわいい　こぶんを
-かなしい　きもちを　させやがって▼
-ばいがえしで　あんたを　もっともっと
-かなしい　きもちに　させるよ！！▼</Text>
+			<Text>あたいの　可愛い　子分を
+悲しい　キモチに　させやがって▼
+倍返しで　あんたを　もっともっと
+悲しい　キモチに　させるよ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:07:28" />
+				Time="2011-11-28T06:29:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -510,11 +510,11 @@
 			Language="JPN_KANJI">
 			<Text>まったく　あんたって　やつは……
 メダルに　ふさわしいね▼
-きめたよ！
+決めたよ！
 あんたが　ここの　リーダーさ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:06:46" />
+				Time="2011-11-28T06:29:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -564,13 +564,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたらしい　ビルが　たって
-ふるい　ばしょは　うもれていく▼
+			<Text>新しい　ビルが　建って
+古い　場所は　埋もれていく▼
 いいかい？　おなじ　ヒウンでも
-おもてと　うらが　あるんだよ</Text>
+表と　裏が　あるんだよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-15T13:16:19" />
+				Time="2011-11-28T06:30:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -621,7 +621,7 @@
 ダンサーに　勝つことだね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T04:05:29" />
+				Time="2011-11-28T06:30:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
