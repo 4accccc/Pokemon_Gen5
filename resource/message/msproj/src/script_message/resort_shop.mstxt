@@ -2025,12 +2025,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【[Name:ResortShop Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
+			<Text>【[Name:ResortType Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
 どきどき　わくわく　ラッキーくじ
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T04:40:06" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:14:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2038,12 +2038,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【[Name:ResortShop Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
+			<Text>【[Name:ResortType Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
 どきどき　わくわく　ラッキーくじ
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T04:40:07" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:15:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2070,12 +2070,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【[Name:ResortShop Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
+			<Text>【[Name:ResortType Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
 ポケモンを　つよく　します
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T10:35:09" />
+				Time="2011-11-28T09:15:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2083,12 +2083,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【[Name:ResortShop Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
+			<Text>【[Name:ResortType Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
 ポケモンを　つよく　します
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T10:35:16" />
+				Time="2011-11-28T09:15:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2123,12 +2123,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【[Name:ResortShop Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
+			<Text>【[Name:ResortType Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
 いいものを　やすく　うります
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T04:40:18" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:16:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2136,12 +2136,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【[Name:ResortShop Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
+			<Text>【[Name:ResortType Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
 いいものを　やすく　うります
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T04:40:20" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:16:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2167,13 +2167,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【[Name:ResortShop Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
+			<Text>【[Name:ResortType Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
 きのみを　うります
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]
 </Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T04:40:34" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:16:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2181,13 +2181,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【[Name:ResortShop Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
+			<Text>【[Name:ResortType Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
 きのみを　うります
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]
 </Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T04:40:37" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:16:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2213,13 +2213,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【[Name:ResortShop Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
+			<Text>【[Name:ResortType Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
 ポケモンを　つよくします
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]
 </Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T04:40:50" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:16:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2227,13 +2227,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【[Name:ResortShop Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
+			<Text>【[Name:ResortType Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
 ポケモンを　つよくします
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]
 </Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T04:40:52" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:16:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2259,13 +2259,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【[Name:ResortShop Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
+			<Text>【[Name:ResortType Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
 タマゴを　ふか　させます
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]
 </Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T04:41:02" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:16:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2273,13 +2273,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【[Name:ResortShop Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
+			<Text>【[Name:ResortType Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
 タマゴを　ふか　させます
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]
 </Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T04:41:05" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:16:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2305,13 +2305,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【[Name:ResortShop Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
+			<Text>【[Name:ResortType Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
 ほりだしもの　うっています
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]
 </Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T04:41:14" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:16:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2319,13 +2319,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【[Name:ResortShop Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
+			<Text>【[Name:ResortType Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
 ほりだしもの　うっています
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]
 </Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T04:41:18" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:16:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2351,13 +2351,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>【[Name:ResortShop Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
+			<Text>【[Name:ResortType Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
 ポケモンを　まんぞく　させます
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]
 </Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T04:41:26" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:17:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2365,13 +2365,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>【[Name:ResortShop Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
+			<Text>【[Name:ResortType Idx="1" ]　　ランク[Digit:2digits Idx="2" ]】
 ポケモンを　まんぞく　させます
 であったひ：　２０[Digit:2digits Idx="4" ]／[Digit:2digits Idx="5" ]／[Digit:2digits Idx="6" ]
 </Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T04:41:31" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:17:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2988,14 +2988,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="2" ]は
+			<Text>[Name:Item Idx="2" ]の　なかみは
 [Name:Item ]でした！
 まいど　ありがとう　ございます[Ctrl2:CallBackOne arg="1" ]▼
 [Name:Item Idx="0" ]を
 [Name:Pocket Idx="1" ]ポケットに　しまった▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-09T04:58:19" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:11:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3003,14 +3003,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="2" ]は
+			<Text>[Name:Item Idx="2" ]の　中身は
 [Name:Item ]でした！
 毎度　ありがとう　ございます[Ctrl2:CallBackOne arg="1" ]▼
 [Name:Item Idx="0" ]を
 [Name:Pocket Idx="1" ]ポケットに　しまった▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T12:26:15" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3036,14 +3036,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:Item Idx="2" ]　は
-[Name:Item ]　でしたね
+			<Text>[Name:Item Idx="2" ]の　なかみは
+[Name:Item ]でした
 まいど　ありがとう　ございます[Ctrl2:CallBackOne arg="1" ]▼
 [Name:Item Idx="0" ]を
 [Name:Pocket Idx="1" ]ポケットに　しまった▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T11:01:24" />
+				Time="2011-11-28T09:11:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3051,14 +3051,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="2" ]　は
-[Name:Item ]　でしたね
+			<Text>[Name:Item Idx="2" ]の　なかみは
+[Name:Item ]でした
 毎度　ありがとう　ございます[Ctrl2:CallBackOne arg="1" ]▼
 [Name:Item Idx="0" ]を
 [Name:Pocket Idx="1" ]ポケットに　しまった▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T12:26:19" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T09:11:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
