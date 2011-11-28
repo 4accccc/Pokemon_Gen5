@@ -247,7 +247,7 @@ typedef struct{
   u32         time;         ///< 時間
   u16         my_monsno[PKWD_POKEMON_MAX];  ///< 手持ちポケモンの種族NO
   WORDSET     *wordset;     ///< 文字列展開バッファ
-
+  int         watched;      ///< 既に鑑賞済みか？
 }PW_SVDATA;
 
 //--------------------------------------------------------------
@@ -802,7 +802,7 @@ static void VBlankFunc( GFL_TCB *tcb, void * work )
     int pos = _get_real_pos(wk, wk->nowpos);
     PkwdSelectScreen_LOGO_u_LoadResource( &wk->wk_bg, 
                                           wk->valid_list[pos]->scenario_no, 
-                                          wk->nowpos );
+                                          pos );
     wk->bgLogoRequest = 0;
   }
 }
@@ -1543,13 +1543,15 @@ static void  _load_pokewood_rec_data( PKWD_SELECT_SCREEN_MAIN_WORK *wk, PKWD_SEL
       wk->svdata[i].date        = POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_DATE, NULL);
       // 公開時間取得
       wk->svdata[i].time        = POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_TIME, NULL);
-      
+      // 鑑賞済みか？
+      wk->svdata[i].watched     = POKEWOOD_SAVEDATA_GetMovieShowed( param->pokewood_sv, i );
       // 手持ちポケモンNO取得
       for(j=0;j<PKWD_POKEMON_MAX;j++){
         POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_POKE0+j, pp );
         wk->svdata[i].my_monsno[j] = PP_Get( pp, ID_PARA_monsno, NULL);
       }
-
+      
+    
       // 先頭手持ちポケモン名取得
       POKEWOOD_REC_GetData( POKEWOOD_REC_PARAM_POKE0, pp );
       WORDSET_RegisterPokeMonsName( wk->svdata[i].wordset, 0, pp );
@@ -1842,7 +1844,11 @@ static void _draw_movie_subtitle( PKWD_SELECT_SCREEN_MAIN_WORK *wk, int index )
     //
     // 評価マーク表示
     PkwdSelectScreen_SubObj_ChgSeq(  wk, SUB_OBJ_MARK, up_seq_tbl[ wk->valid_list[index]->success ]);
-    PkwdSelectScreen_SubObj_Visible( wk, SUB_OBJ_MARK, TRUE );
+    if(wk->valid_list[index]->watched==TRUE){
+      PkwdSelectScreen_SubObj_Visible( wk, SUB_OBJ_MARK, TRUE );
+    }else{
+      PkwdSelectScreen_SubObj_Visible( wk, SUB_OBJ_MARK, FALSE );
+    }
     //
     wk->bgLogoRequest = TRUE;
   }
