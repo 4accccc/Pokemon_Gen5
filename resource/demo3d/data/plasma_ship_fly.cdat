@@ -17,13 +17,13 @@ static const DEMO3D_SCENE_DATA data_plasma_ship_fly_scene = {
 	ZONE_ID_T01,	///<ゾーンID
 	DEMO3D_FRAME_RATE_30FPS,	///<フレームレート定義
 	TRUE,	///<2画面連結
-	TRUE,FALSE,	///<αブレンドOn/Off,アンチエイリアスOn/Off
+	TRUE,TRUE,	///<αブレンドOn/Off,アンチエイリアスOn/Off
 	FALSE,FALSE,	///<1dotポリゴン描画、フォグOn/Off,エッジマーキングOn/Off
 	GX_SORTMODE_AUTO,GX_BUFFERMODE_W,	///<SwapBuf αソートモード,バッファモード
 	FALSE,16,	///<αテストOn/Off,αテスト敷居値
 	FX32_CONST(28.0),FX32_CONST(28.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
 	FX32_CONST(0.100 ),FX32_CONST(2048.000 ),	///<near,far
-	FX32_CONST(1.0 ),	///<ScaleW
+	FX32_CONST(0.1 ),	///<ScaleW
 	149,-142,	///<2画面main_ofs,2画面sub_ofs
 	FX32_CONST(0),	///<1dotポリゴン表示境界デプス
 	GX_RGB(0,0,0),31,	///<クリアカラーRGB,A
@@ -33,7 +33,7 @@ static const DEMO3D_SCENE_DATA data_plasma_ship_fly_scene = {
 	{ 0,0,0,0,0,0,0,0, }, 	///<フォグ濃度テーブル
 	{ GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),	///<エッジマーキングカラーテーブル
 	  GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0), },
-	DEMO3D_FADE_BLACK, 30,	///<フェードイン
+	DEMO3D_FADE_WHITE, 30,	///<フェードイン
 	DEMO3D_FADE_BLACK, 0,	///<フェードアウト
 };
 
@@ -42,9 +42,11 @@ static const DEMO3D_SCENE_DATA data_plasma_ship_fly_scene = {
 //============================================
 
 static const DEMO3D_CMD_DATA demo3d_cmd_plasma_ship_fly_data[] = {
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 120, { MASK_MAIN_DISPLAY, 10, 0, 16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 140, { MASK_MAIN_DISPLAY, 20, 16, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 1050-60, { MASK_MAIN_DISPLAY, 60, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 255, { MASK_MAIN_DISPLAY, 5, 0, 16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 265, { MASK_MAIN_DISPLAY, 5, 16, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 930, { MASK_MAIN_DISPLAY, 5, 0, 13, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 945, { MASK_MAIN_DISPLAY, 5, 13, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 1260-60, { MASK_MAIN_DISPLAY, 60, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_END, 0, { DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
 };
 
@@ -80,32 +82,47 @@ static const DEMO3D_FILE_UNIT res_plasma_ship_fly_file_unit_plasma_ship_fly_01[]
 /// sky Unit File Resource
 
 static const u16 res_plasma_ship_fly_file_sky_morning[] = {
- NARC_data_demo3d_sora_nsbmd,
- NARC_data_demo3d_sora_d_nsbtp,
+ NARC_data_demo3d_sora_day_nsbmd,
+ NARC_data_demo3d_sora_day_nsbta,
+ NARC_data_demo3d_sora_day_nsbca,
+ NARC_data_demo3d_sora_day_nsbma,
+ NARC_data_demo3d_sora_day_nsbva,
 };
 static const u16 res_plasma_ship_fly_file_sky_noon[] = {
- NARC_data_demo3d_sora_nsbmd,
- NARC_data_demo3d_sora_d_nsbtp,
+ NARC_data_demo3d_sora_day_nsbmd,
+ NARC_data_demo3d_sora_day_nsbta,
+ NARC_data_demo3d_sora_day_nsbca,
+ NARC_data_demo3d_sora_day_nsbma,
+ NARC_data_demo3d_sora_day_nsbva,
 };
 static const u16 res_plasma_ship_fly_file_sky_evening[] = {
- NARC_data_demo3d_sora_nsbmd,
- NARC_data_demo3d_sora_e_nsbtp,
+ NARC_data_demo3d_sora_eve_nsbmd,
+ NARC_data_demo3d_sora_eve_nsbta,
+ NARC_data_demo3d_sora_eve_nsbca,
+ NARC_data_demo3d_sora_eve_nsbma,
+ NARC_data_demo3d_sora_eve_nsbva,
 };
 static const u16 res_plasma_ship_fly_file_sky_night[] = {
- NARC_data_demo3d_sora_nsbmd,
- NARC_data_demo3d_sora_n_nsbtp,
+ NARC_data_demo3d_sora_night_nsbmd,
+ NARC_data_demo3d_sora_night_nsbta,
+ NARC_data_demo3d_sora_night_nsbca,
+ NARC_data_demo3d_sora_night_nsbma,
+ NARC_data_demo3d_sora_night_nsbva,
 };
 static const u16 res_plasma_ship_fly_file_sky_midnight[] = {
- NARC_data_demo3d_sora_nsbmd,
- NARC_data_demo3d_sora_n_nsbtp,
+ NARC_data_demo3d_sora_night_nsbmd,
+ NARC_data_demo3d_sora_night_nsbta,
+ NARC_data_demo3d_sora_night_nsbca,
+ NARC_data_demo3d_sora_night_nsbma,
+ NARC_data_demo3d_sora_night_nsbva,
 };
 
 static const DEMO3D_FILE_UNIT res_plasma_ship_fly_file_unit_sky[] = {
- { res_plasma_ship_fly_file_sky_morning, 2 },
- { res_plasma_ship_fly_file_sky_noon, 2 },
- { res_plasma_ship_fly_file_sky_evening, 2 },
- { res_plasma_ship_fly_file_sky_night, 2 },
- { res_plasma_ship_fly_file_sky_midnight, 2 },
+ { res_plasma_ship_fly_file_sky_morning, 5 },
+ { res_plasma_ship_fly_file_sky_noon, 5 },
+ { res_plasma_ship_fly_file_sky_evening, 5 },
+ { res_plasma_ship_fly_file_sky_night, 5 },
+ { res_plasma_ship_fly_file_sky_midnight, 5 },
 };
 
 ///========================================================
