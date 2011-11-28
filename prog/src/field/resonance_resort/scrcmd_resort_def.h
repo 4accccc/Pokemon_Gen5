@@ -74,6 +74,7 @@
 #define RESORT_GET_PARAM_IS_CELEB             (60)
 #define RESORT_GET_PARAM_CITY_ITEM            (61)
 #define RESORT_GET_PARAM_IS_PARADE            (62)
+#define RESORT_GET_PARAM_CITY_RANK_NUM        (63)
 
 //RESORT_GET_PARAM_CHECK_SCOUT‚Ì–ß‚è’l
 #define RESORT_CHECK_SCOUT_YES          (0) //‚¢‚¢‚æ

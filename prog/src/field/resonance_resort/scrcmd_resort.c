@@ -472,6 +472,15 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
   case RESORT_GET_PARAM_IS_PARADE:
     *p_ret_wk = RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_PARAM_PRIZE_PARADE,NULL);
     break;
+  case RESORT_GET_PARAM_CITY_RANK_NUM:
+    {
+      u32 lv = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
+      u32 city_idx = RESORT_BINARY_CITY_GetIndexByCityLv( p_city_binary, lv );
+      s32 rank = RESORT_BINARY_CITY_GetData( p_city_binary, city_idx, RESORT_BINARY_CITY_PARAM_RANK);
+      GF_ASSERT( (rank-resort_city_rank_00) > 0 );
+      *p_ret_wk = rank-resort_city_rank_00;
+    }
+    break;
   default:
     GF_ASSERT_MSG(0, "%d", param);
   }

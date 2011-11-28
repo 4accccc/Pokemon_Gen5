@@ -1769,11 +1769,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:ResortTown ]　ランク　[Digit:3digits Idx="1" ]
-[Name:ResortMayor Idx="2" ]</Text>
+			<Text>[Name:ResortMayor Idx="2" ]の　まち
+[Name:ResortTown ]　ランク　[Digit:3digits Idx="1" ]</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-18T06:45:02" />
+				Time="2011-11-28T16:05:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1781,11 +1781,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortTown ]　ランク　[Digit:3digits Idx="1" ]
-[Name:ResortMayor Idx="2" ]</Text>
+			<Text>[Name:ResortMayor Idx="2" ]の　街
+[Name:ResortTown ]　ランク　[Digit:3digits Idx="1" ]</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-18T06:45:02" />
+				Time="2011-11-28T16:05:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1798,6 +1798,975 @@
 			<CommentModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-10-07T01:30:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_parade_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おみせに　あんないしたひとの　ごうけい　[Digit:7digits ]
+まちに　しょうたいしたひとの　ごうけい　[Digit:7digits Idx="1" ]▼
+まちの　ひょうばん　[Name:ResortTitle Idx="2" ]▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T16:23:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>お店に　案内した人の　合計　[Digit:7digits ]
+街に　招待した人の　合計　[Digit:7digits Idx="1" ]▼
+街の　評判　[Name:ResortTitle Idx="2" ]▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T16:23:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>
+</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-07T01:30:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_parade_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>だい[Digit:1digit Idx="4" ]ひしょ　[Name:TrainerName ]
+であったひ：２０[Digit:2digits Idx="1" ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T16:13:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>だい[Digit:1digit Idx="4" ]ひしょ　[Name:TrainerName ]
+出会った日：２０[Digit:2digits Idx="1" ]年[Digit:2digits Idx="2" ]月[Digit:2digits Idx="3" ]日</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T16:13:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>
+</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-10-07T01:30:28" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_parade_city_rank_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+にんきは　イッシュちほうに　しれわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:54:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+人気は　イッシュ地方に　知れわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:55:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>できたてのアベニュー</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:23:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_parade_city_rank_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+にんきは　イッシュちほうに　しれわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:54:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+人気は　イッシュ地方に　知れわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:55:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>かけだしのアベニュー</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:23:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_parade_city_rank_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+にんきは　イッシュちほうに　しれわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:54:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+人気は　イッシュ地方に　知れわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:55:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ふつうのアベニュー</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:23:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_parade_city_rank_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+にんきは　イッシュちほうに　しれわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:54:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+人気は　イッシュ地方に　知れわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:55:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>あなばのアベニュー</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:23:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_parade_city_rank_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+にんきは　イッシュちほうに　しれわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:54:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+人気は　イッシュ地方に　知れわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:55:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>そこそこのアベニュー</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:23:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_parade_city_rank_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+にんきは　イッシュちほうに　しれわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:54:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+人気は　イッシュ地方に　知れわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:55:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>なのしれたアベニュー</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:23:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_parade_city_rank_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+にんきは　イッシュちほうに　しれわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:54:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+人気は　イッシュ地方に　知れわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:55:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>すごいアベニュー</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:23:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_parade_city_rank_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+にんきは　イッシュちほうに　しれわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:54:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+人気は　イッシュ地方に　知れわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:55:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>みんなのアベニュー</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:23:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_parade_city_rank_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+にんきは　イッシュちほうに　しれわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:54:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+人気は　イッシュ地方に　知れわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:55:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>あこがれのアベニュー</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:23:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_parade_city_rank_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+にんきは　イッシュちほうに　しれわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:54:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+人気は　イッシュ地方に　知れわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:55:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ものすごいアベニュー</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:23:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_parade_city_rank_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+にんきは　イッシュちほうに　しれわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:54:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+人気は　イッシュ地方に　知れわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:55:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>セレブのアベニュー</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:23:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_parade_city_rank_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+にんきは　イッシュちほうに　しれわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:55:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+人気は　イッシュ地方に　知れわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:55:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>イッシュいちのアベニュー</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:23:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_parade_city_rank_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+にんきは　イッシュちほうに　しれわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:55:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+人気は　イッシュ地方に　知れわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:55:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>でんどういりアベニュー</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:23:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_parade_city_rank_13"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+にんきは　イッシュちほうに　しれわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:55:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おめでとう！▼
+[Name:ResortTown ]の
+人気は　イッシュ地方に　知れわたった！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:55:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>せかいいちのアベニュー</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:23:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_parade_city_rank_14"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おめでとう！▼
+いだいなる　[Name:ResortTown ]を
+しらないものは　いない！！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T16:01:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おめでとう！▼
+偉大なる　[Name:ResortTown ]を
+知らないものは　いない！！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T16:01:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>いだいなるアベニュー</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:23:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_parade_city_rank_15"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おめでとう！▼
+いだいなる　[Name:ResortTown ]を
+しらないものは　いない！！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T16:01:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おめでとう！▼
+偉大なる　[Name:ResortTown ]を
+知らないものは　いない！！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T16:01:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>せかいいちのアベニュー</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:23:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c16_parade_city_rank_16"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おめでとう！▼
+いだいなる　[Name:ResortTown ]を
+しらないものは　いない！！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T16:01:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おめでとう！▼
+偉大なる　[Name:ResortTown ]を
+知らないものは　いない！！▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T16:01:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-08-10T12:25:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>いだいなるアベニュー</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T15:23:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
