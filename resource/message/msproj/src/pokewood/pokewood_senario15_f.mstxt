@@ -1049,14 +1049,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『くっ……
-ぼうがいの　電波 　か……</Text>
+妨害の　電波 　か……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T10:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T10:56:29" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1452,33 +1452,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『わしだ……
+			<Text>？？？『ワシだ……
 だいバンギラスだ……▼
 さいごの　ちからを　つかい……
 おぬしの……　いしきに……▽
-かたりかけて　おる……</Text>
+ちょくせつ　かたりかけて　おる……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T10:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T10:56:29" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『わしだ……
+			<Text>？？？『ワシだ……
 大バンギラスだ……▼
 最期の　力を　使い……
-おぬしの……　意識に……▽
-語りかけて　おる……</Text>
+お主の……　意識に……▽
+直接　語りかけて　おる……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T10:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T10:56:29" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1565,27 +1565,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『とくせいか……▼
-わかった　だいバンギラス……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『とくせい……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T10:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T10:56:29" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『とくせいか……▼
-分かった　大バンギラス……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『とくせい……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T10:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T10:56:29" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1601,30 +1599,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>たのむぞ……　[Name:TrainerName Idx="1" ]……
-わしに　かわり……▼
+ワシに　かわり……▼
 この　だいちを……　まもって……▼
 ……　……　……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T10:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T10:56:29" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>頼むぞ……　[Name:TrainerName Idx="1" ]……
-わしに　代わり……▼
+ワシに　代わり……▼
 この　大地を……　守って……▼
 ……　……　……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T10:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T10:56:29" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2098,29 +2096,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>セリザワ『もう　たたかいは
-いいだろう　[Name:TrainerName Idx="1" ]くん……▼
+			<Text>セリザワ『……もう　たたかいは
+いいだろう　[Name:TrainerName Idx="1" ]くん▼
 それよりも　はなしを　しないかね……？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T10:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T10:56:29" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>セリザワ『もう　戦いは
-いいだろう　[Name:TrainerName Idx="1" ]くん……▼
+			<Text>セリザワ『……もう　戦いは
+いいだろう　[Name:TrainerName Idx="1" ]くん▼
 それよりも　話を　しないかね……？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T10:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T10:56:29" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2170,7 +2168,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>セリザワ『スカウト　さ……▼
+			<Text>セリザワ『スカウトさ……▼
 キミの　もつ　そのパワー……
 まもるためだけに　つかうのは▽
 あまりに　おしい……▼
@@ -2178,16 +2176,16 @@
 わたしの　もとで　はたらいては
 いただけないかね……？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T10:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T10:56:29" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>セリザワ『スカウト　さ……▼
+			<Text>セリザワ『スカウトさ……▼
 キミの　持つ　そのパワー……
 守るためだけに　使うのは▽
 あまりに　おしい……▼
@@ -2195,12 +2193,12 @@
 私の　元で　働いては
 頂けないかね……？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T10:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T10:56:29" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2866,23 +2864,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>通信『問題　ない！▼
+			<Text>通信『問題ない！▼
 お前の　無線から　届く
-音声に　よって　彼の悪事は▽
-証明された！▼
-まもなく　彼は　たいほ　される！
-財産も　すべて　没収され▽
+音声によって　彼の悪事は▽
+すべて　証明された！▼
+間もなく　彼は　逮捕される！
+財産すべてを　没収され▽
 二度と　Ｍ・Ｂを　手に　入れることも▽
 できない　だろう！▼
 ご苦労だった！　[Name:TrainerName Idx="1" ]！！　
 本部に　帰ってくるんだ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:24" />
+				Time="2011-11-28T10:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:24" />
+				Time="2011-11-28T10:56:29" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

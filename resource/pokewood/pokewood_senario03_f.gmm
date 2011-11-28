@@ -442,12 +442,12 @@
 ハチクほう　ですって……？▼
 ……っていうか　けっきょく　およいで
 ごうかきゃくせんから　ブラックダイアを▽
-ぬすみだしたんだ……　バカみたい……</language>
+ぬすみだしたんだ　バカみたい……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『……
 ハチク砲　ですって……？▼
 ……っていうか　結局　泳いで
 豪華客船から　ブラックダイアを▽
-盗みだしたの……　バカみたい……</language>
+盗みだしたんだ　バカみたい……</language>
 	</row>
 	<row id="pw_event0_enemy_1">
 		<language name="JPN" width="256">ハチクマン『ハチクほうは
@@ -467,9 +467,9 @@
 	</row>
 	<row id="pw_event0_hero_2">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『もう……
-なんて　バカみたいな　ものを……</language>
+なんて　ふざけた　ものを……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『もう……
-何て　バカみたいな　ものを……</language>
+何て　ふざけた　ものを……</language>
 	</row>
 	<row id="pw_event0_enemy_2">
 		<language name="JPN" width="256">ハチクマン『ファファファ！！▼

@@ -969,11 +969,11 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『え……？</language>
 	</row>
 	<row id="pw_event6_enemy_3">
-		<language name="JPN" width="256">Ｅ『いいか……▼
-その　わざは　ＵＦＯには
+		<language name="JPN" width="256">Ｅ『いいか　[1:00:トレーナー名:1]……▼
+そのわざは　ＵＦＯには
 ぜったいに　つかうんじゃないぞ</language>
-		<language name="JPN_KANJI" width="256">Ｅ『いいか……▼
-その　わざは　ＵＦＯには
+		<language name="JPN_KANJI" width="256">Ｅ『いいか　[1:00:トレーナー名:1]……▼
+そのわざは　ＵＦＯには
 絶対に　使うんじゃないぞ</language>
 	</row>
 	<row id="pw_event6_hero_4">

@@ -567,7 +567,7 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『くっ……
 ぼうがい　でんぱ　か……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『くっ……
-ぼうがいの　電波 　か……</language>
+妨害の　電波 　か……</language>
 	</row>
 	<row id="pw_event2_enemy_4">
 		<language name="JPN" width="256">セリザワ『ハハハ……
@@ -632,16 +632,16 @@
 この　声は……</language>
 	</row>
 	<row id="pw_event3_hero_3">
-		<language name="JPN" width="256">？？？『わしだ……
+		<language name="JPN" width="256">？？？『ワシだ……
 だいバンギラスだ……▼
 さいごの　ちからを　つかい……
 おぬしの……　いしきに……▽
-かたりかけて　おる……</language>
-		<language name="JPN_KANJI" width="256">？？？『わしだ……
+ちょくせつ　かたりかけて　おる……</language>
+		<language name="JPN_KANJI" width="256">？？？『ワシだ……
 大バンギラスだ……▼
 最期の　力を　使い……
-おぬしの……　意識に……▽
-語りかけて　おる……</language>
+お主の……　意識に……▽
+直接　語りかけて　おる……</language>
 	</row>
 	<row id="pw_event3_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……　……</language>
@@ -658,18 +658,16 @@
 その　とくせいを　うばえ……</language>
 	</row>
 	<row id="pw_event3_hero_6">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『とくせいか……▼
-わかった　だいバンギラス……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『とくせいか……▼
-分かった　大バンギラス……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『とくせい……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『とくせい……</language>
 	</row>
 	<row id="pw_event3_hero_7">
 		<language name="JPN" width="256">たのむぞ……　[1:00:トレーナー名:1]……
-わしに　かわり……▼
+ワシに　かわり……▼
 この　だいちを……　まもって……▼
 ……　……　……</language>
 		<language name="JPN_KANJI" width="256">頼むぞ……　[1:00:トレーナー名:1]……
-わしに　代わり……▼
+ワシに　代わり……▼
 この　大地を……　守って……▼
 ……　……　……</language>
 	</row>
@@ -756,11 +754,11 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ハアッ……　ハアッ……</language>
 	</row>
 	<row id="pw_event5_enemy_0">
-		<language name="JPN" width="256">セリザワ『もう　たたかいは
-いいだろう　[1:00:トレーナー名:1]くん……▼
+		<language name="JPN" width="256">セリザワ『……もう　たたかいは
+いいだろう　[1:00:トレーナー名:1]くん▼
 それよりも　はなしを　しないかね……？</language>
-		<language name="JPN_KANJI" width="256">セリザワ『もう　戦いは
-いいだろう　[1:00:トレーナー名:1]くん……▼
+		<language name="JPN_KANJI" width="256">セリザワ『……もう　戦いは
+いいだろう　[1:00:トレーナー名:1]くん▼
 それよりも　話を　しないかね……？</language>
 	</row>
 	<row id="pw_event5_hero_1">
@@ -770,14 +768,14 @@
 何の……　話だ……</language>
 	</row>
 	<row id="pw_event5_enemy_1">
-		<language name="JPN" width="256">セリザワ『スカウト　さ……▼
+		<language name="JPN" width="256">セリザワ『スカウトさ……▼
 キミの　もつ　そのパワー……
 まもるためだけに　つかうのは▽
 あまりに　おしい……▼
 どうだね……？▼
 わたしの　もとで　はたらいては
 いただけないかね……？</language>
-		<language name="JPN_KANJI" width="256">セリザワ『スカウト　さ……▼
+		<language name="JPN_KANJI" width="256">セリザワ『スカウトさ……▼
 キミの　持つ　そのパワー……
 守るためだけに　使うのは▽
 あまりに　おしい……▼
@@ -934,12 +932,12 @@
 できない　だろう！▼
 ごくろうだった！　[1:00:トレーナー名:1]！！　
 ほんぶに　かえってくるんだ！</language>
-		<language name="JPN_KANJI" width="256">通信『問題　ない！▼
+		<language name="JPN_KANJI" width="256">通信『問題ない！▼
 お前の　無線から　届く
-音声に　よって　彼の悪事は▽
-証明された！▼
-まもなく　彼は　たいほ　される！
-財産も　すべて　没収され▽
+音声によって　彼の悪事は▽
+すべて　証明された！▼
+間もなく　彼は　逮捕される！
+財産すべてを　没収され▽
 二度と　Ｍ・Ｂを　手に　入れることも▽
 できない　だろう！▼
 ご苦労だった！　[1:00:トレーナー名:1]！！　

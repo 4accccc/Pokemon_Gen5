@@ -2863,29 +2863,29 @@
 		Label="pw_event6_enemy_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｅ『いいか……▼
-その　わざは　ＵＦＯには
+			<Text>Ｅ『いいか　[Name:TrainerName Idx="1" ]……▼
+そのわざは　ＵＦＯには
 ぜったいに　つかうんじゃないぞ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:08:11" />
+				Time="2011-11-28T10:03:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:08:11" />
+				Time="2011-11-28T10:03:34" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｅ『いいか……▼
-その　わざは　ＵＦＯには
+			<Text>Ｅ『いいか　[Name:TrainerName Idx="1" ]……▼
+そのわざは　ＵＦＯには
 絶対に　使うんじゃないぞ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:08:11" />
+				Time="2011-11-28T10:03:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:08:11" />
+				Time="2011-11-28T10:03:34" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

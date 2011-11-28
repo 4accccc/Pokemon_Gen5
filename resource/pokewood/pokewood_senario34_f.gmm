@@ -777,7 +777,7 @@
 この　ラボを　たてなおすんだっ！！</language>
 		<language name="JPN_KANJI" width="256">助手『いいか！　[1:00:トレーナー名:1]！！
 オマエが　悪いんだからな！！▼
-さっさと　Ｆー００を　うりさばいて
+さっさと　Ｆー００を　売りさばいて
 この　ラボを　立て直すんだっ！！</language>
 	</row>
 	<row id="pw_event5_hero_1">
@@ -1012,10 +1012,10 @@
 	</row>
 	<row id="pw_event8_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ダメか……▼
-でんきを　きゅうしゅうする
+エネルギーを　きゅうしゅうする
 システムまで　くるっている……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ダメか……▼
-でんきを　吸収する
+エネルギーを　吸収する
 システムまで　狂っている……</language>
 	</row>
 	<row id="pw_event8_enemy_1">
@@ -1046,7 +1046,7 @@
 だれにでも　りかいできる▽
 かんたんな　しょりに　けいさんを▽
 かきかえた……　それだけだ……</language>
-		<language name="JPN_KANJI" width="256">じょしゅ『……　……▼
+		<language name="JPN_KANJI" width="256">助手『……　……▼
 正直　オマエの　書いていた
 プログラムコードは　サッパリだった▼
 特に　あの　Ｋから　始まる

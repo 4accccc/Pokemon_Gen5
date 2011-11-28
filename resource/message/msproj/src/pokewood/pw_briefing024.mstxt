@@ -94,11 +94,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]おいつめられた
+			<Text>[Ctrl1:xcenter ]おいつめられて　しまった
 [Ctrl1:xcenter ][Name:TrainerName Idx="1" ]おうじ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-14T13:40:13" />
+				Time="2011-11-28T13:13:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -106,11 +106,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]追いつめられた
+			<Text>[Ctrl1:xcenter ]追いつめられて　しまった
 [Ctrl1:xcenter ][Name:TrainerName Idx="1" ]王子……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T12:16:37" />
+				Time="2011-11-28T13:13:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -389,11 +389,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]おいつめられた
+			<Text>[Ctrl1:xcenter ]おいつめられて　しまった
 [Ctrl1:xcenter ][Name:TrainerName Idx="1" ]ひめ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-15T02:19:18" />
+				Time="2011-11-28T13:13:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -401,11 +401,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]追いつめられた
+			<Text>[Ctrl1:xcenter ]追いつめられて　しまった
 [Ctrl1:xcenter ][Name:TrainerName Idx="1" ]姫……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-15T02:19:47" />
+				Time="2011-11-28T13:13:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

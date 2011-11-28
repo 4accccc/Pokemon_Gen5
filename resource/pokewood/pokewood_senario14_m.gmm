@@ -361,7 +361,7 @@
 		<language name="JPN" width="256">？？？『グロロロ……
 なかなかの　ちから　じゃ……</language>
 		<language name="JPN_KANJI" width="256">？？？『グロロロ……
-なかなかの　力　じゃ……</language>
+なかなかの　力じゃ……</language>
 	</row>
 	<row id="pw_turn_enemy_8">
 		<language name="JPN" width="256">？？？『グロロロ……
@@ -373,13 +373,13 @@
 		<language name="JPN" width="256">？？？『グロロロ……
 たいりょく　だけが　じまんか？</language>
 		<language name="JPN_KANJI" width="256">？？？『グロロロ……
-体力　だけが　自慢か？</language>
+体力だけが　自慢か？</language>
 	</row>
 	<row id="pw_turn_enemy_14">
 		<language name="JPN" width="256">？？？『グロロロ……
 そろそろ　よいかのう……</language>
 		<language name="JPN_KANJI" width="256">？？？『グロロロ……
-そろそろ　よいかのう……</language>
+そろそろ　良いかのう……</language>
 	</row>
 	<row id="pw_event0_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]！『あっ！！
@@ -465,7 +465,7 @@
 		<language name="JPN" width="256">？？？『グロロロ……▼
 いまは……　おぬしだけで　よい……</language>
 		<language name="JPN_KANJI" width="256">？？？『グロロロ……▼
-今は……　おぬしだけで　よい……</language>
+今は……　お主だけで　よい……</language>
 	</row>
 	<row id="pw_event0_hero_8">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『い　いったい……
@@ -476,10 +476,10 @@
 	<row id="pw_event0_enemy_8">
 		<language name="JPN" width="256">？？？『グロロロロ……▼
 のこされた　ときは　わずか……
-そのちから……　わしに　しめせ……</language>
+そのちから……　ワシに　しめせ……</language>
 		<language name="JPN_KANJI" width="256">？？？『グロロロロ……▼
 残された　時は　わずか……
-その力……　わしに　示せ……</language>
+その力……　ワシに　示せ……</language>
 	</row>
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">？？？『グロロロ……▼
@@ -502,11 +502,11 @@
 	<row id="pw_event1_enemy_1">
 		<language name="JPN" width="256">？？？『グロロロ……
 それを　しりたくば……▽
-バンギラスの　はなつ▽
+ワシのバンギラスが　はなつ▽
 いちげきを　こらえてみせよ……</language>
 		<language name="JPN_KANJI" width="256">？？？『グロロロ……
 それを　知りたくば……▽
-バンギラスの　放つ▽
+ワシのバンギラスの　放つ▽
 一撃を　こらえてみせよ……</language>
 	</row>
 	<row id="pw_event1_hero_5">
@@ -523,12 +523,12 @@
 	</row>
 	<row id="pw_event1_react_enemy_0">
 		<language name="JPN" width="256">？？？『グロロロ……
-わしの　ことばが　わからぬか……▼
+ワシの　ことばが　わからぬか……▼
 では　わが　しんどうにて
 そのあたま　おこすが　よい……</language>
 		<language name="JPN_KANJI" width="256">？？？『グロロロ……
-わしの　言葉が　分からぬか……▼
-では　わが　震動にて
+ワシの　言葉が　分からぬか……▼
+では　我が　震動にて
 その頭　目覚めさせるがよい……</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
@@ -537,10 +537,10 @@
 	</row>
 	<row id="pw_event1_react_enemy_1">
 		<language name="JPN" width="256">？？？『グロロ……　よろしい……▼
-わが　はかいのひかりを　あびて
+わが　ひかりを　あびて
 いっそうの　かくごを　きめよ……</language>
 		<language name="JPN_KANJI" width="256">？？？『グロロ……　よろしい……▼
-我が　破壊の光を　浴びて
+我が光を　浴びて
 一層の　覚悟を　決めよ……</language>
 	</row>
 	<row id="pw_event1_react_hero_2">
@@ -549,11 +549,11 @@
 	</row>
 	<row id="pw_event1_react_enemy_2">
 		<language name="JPN" width="256">？？？『グロロロ……
-いせいは　よいな……▼
-だが　その　いせいが　ときに
+けっこうな　いせいだな……▼
+だが　そのいせいが　ときに
 いかりを　かうことを　しれ……</language>
 		<language name="JPN_KANJI" width="256">？？？『グロロロ……
-威勢は　よいな……▼
+結構な　威勢だな……▼
 だが　その威勢が　時に
 怒りを　買うことを　知れ……</language>
 	</row>
@@ -575,9 +575,9 @@
 	</row>
 	<row id="pw_event2_enemy_0">
 		<language name="JPN" width="256">？？？『グロロロ……
-よき　かな……　よき　かな……</language>
+よきかな……　よきかな……</language>
 		<language name="JPN_KANJI" width="256">？？？『グロロロ……
-よき　かな……　よき　かな……</language>
+良きかな……　良きかな……</language>
 	</row>
 	<row id="pw_event2_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『さあ！▼
@@ -589,23 +589,23 @@
 	</row>
 	<row id="pw_event2_enemy_1">
 		<language name="JPN" width="256">？？？『よかろう……▼
-……わしは
+……ワシの　しょうたいは
 いま　おぬしが　たたかっておる
-だいバンギラスたち……▽
+だいバンギラスども……▽
 その　おう　なのじゃ……▼
-わが　にくたいは　すでに　なく
-やむなく　このにんげんの▽
-おなごの　からだを　かり▽
+わがにくたいは　すでに　なく
+やむなく　このにんげんの　おなごの
+にくたいを　かりうけて▽
 おぬしに　かたりかけておる……</language>
 		<language name="JPN_KANJI" width="256">？？？『よかろう……▼
-……わしは
-今　おぬしが　戦っておる▽
-大バンギラスたち……▽
-その　王　じゃ……▼
-我が　肉体は　すでに　滅び
-やむなく　この人間の▽
-女子の　身体を　借り▽
-おぬしに　語りかけておる……</language>
+……ワシの　正体は
+今　お主が　戦っておる▽
+大バンギラスども……▽
+その　王じゃ……▼
+我が肉体は　すでに　滅び
+やむなく　この人間の女子の
+身体を　借り受けて▽
+お主に　語りかけておる……</language>
 	</row>
 	<row id="pw_event2_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『なんだって！？▼
@@ -618,24 +618,24 @@
 	<row id="pw_event2_enemy_2">
 		<language name="JPN" width="256">？？？『グロロロ……▼
 しんじるも　しんじぬも　じゆう……▼
-されど　わしに　これいじょうの
+されど　ワシに　これいじょうの
 つづける　ことばは　ない……</language>
 		<language name="JPN_KANJI" width="256">？？？『グロロロ……▼
 信じるも　信じぬも　自由……▼
-されど　わしに　これ以上の
-続ける　言葉は　ない……</language>
+されど　ワシに　これ以上の
+続ける言葉は　ない……</language>
 	</row>
 	<row id="pw_event2_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……　……▼
 ……　……わかったよ▼
 いまは　あなたを　しんじよう▼
-でも　あなたの　もくてきは？▼
+それで　あなたの　もくてきは？▼
 オレの　ちからを　ためして
 どうする　つもりだ？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……　……▼
 ……　……分かった▼
 今は　あなたを　信じよう▼
-でも　あなたの　目的は？▼
+それで　あなたの　目的は？▼
 オレの　力を　試して
 どうする　つもりだ？</language>
 	</row>
@@ -656,10 +656,10 @@
 だったら　こっちも　本気で　いくぞ！</language>
 	</row>
 	<row id="pw_event2_enemy_4">
-		<language name="JPN" width="256">？？？『たのもしい……
-わしの　みたては　ただしかったか……　</language>
-		<language name="JPN_KANJI" width="256">？？？『頼もしい……
-わしの　見立ては　正しかったか……　</language>
+		<language name="JPN" width="256">？？？『たのもしいことよ……
+ワシの　みたては　ただしかったか……　</language>
+		<language name="JPN_KANJI" width="256">？？？『頼もしいことよ……
+ワシの　見立ては　正しかったか……　</language>
 	</row>
 	<row id="pw_event3_enemy_0">
 		<language name="JPN" width="256">？？？『グロロロ……
@@ -677,11 +677,11 @@
 	</row>
 	<row id="pw_event3_enemy_1">
 		<language name="JPN" width="256">？？？『よかろう……
-わしの　もくてきを　つげよう……▽　
-それは　おぬしじゃ　[1:00:トレーナー名:1]……</language>
+ワシの　もくてきを　つげよう……▽　
+それはな　おぬしじゃ　[1:00:トレーナー名:1]……</language>
 		<language name="JPN_KANJI" width="256">？？？『よかろう……
-わしの　目的を　告げよう……▽　
-それは　おぬしじゃ　[1:00:トレーナー名:1]……</language>
+ワシの　目的を　告げよう……▽　
+それはな　お主じゃ　[1:00:トレーナー名:1]……</language>
 	</row>
 	<row id="pw_event3_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ぼく……？</language>
@@ -693,7 +693,7 @@
 おぬしも　しっておろう……</language>
 		<language name="JPN_KANJI" width="256">？？？『……　……
 カラクリじかけの　バンギラス……▽
-おぬしも　知っておろう……</language>
+お主も　知っておろう……</language>
 	</row>
 	<row id="pw_event3_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『カラクリじかけの……
@@ -705,33 +705,33 @@
 	</row>
 	<row id="pw_event3_enemy_3">
 		<language name="JPN" width="256">？？？『さよう……▼
-あれは　このよに　あっては
-ならぬ　きけんな　しろもの……▼
-しかし　あの　カラクリのちからで
+あれは　このよに　あっては　ならぬ
+きけんな　しろもの……▼
+しかし　あの　カラクリを　もちいて
 あしきことを　かんがている▽
-ものが　おるのじゃ……</language>
+ふとどきものが　おる……</language>
 		<language name="JPN_KANJI" width="256">？？？『左様……▼
-あれは　この世に　あっては
-ならぬ　危険な　代物……▼
-しかし　あの　カラクリの力で
+あれは　この世に　あっては　ならぬ
+危険な　代物……▼
+しかし　あの　カラクリを　用いて
 悪しきことを　企てている▽
-者が　おるのじゃ……</language>
+不届き者が　おる……</language>
 	</row>
 	<row id="pw_event3_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『なんだって……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『何だって……</language>
 	</row>
 	<row id="pw_event3_enemy_4">
-		<language name="JPN" width="256">？？？『……わしは　そのものの
+		<language name="JPN" width="256">？？？『……ワシは　そのものの
 たくらみを　とめることの　できる▽
 つよき　ちからを　さがした……▼
 そして　みつけた……▼
 [1:00:トレーナー名:1]……　おぬしじゃ……</language>
-		<language name="JPN_KANJI" width="256">？？？『……わしは　その者の
+		<language name="JPN_KANJI" width="256">？？？『……ワシは　その者の
 企みを　止めることの　できる▽
 強き　力を　探した……▼
 そして　見つけた……▼
-[1:00:トレーナー名:1]……　おぬしじゃ……</language>
+[1:00:トレーナー名:1]……　お主じゃ……</language>
 	</row>
 	<row id="pw_event3_hero_5">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ぼくが……　なぜ……</language>
@@ -744,22 +744,22 @@
 カラクリの　バンギラス……▼
 そして　あのおとこを　とめねば
 この　だいちに　おおいなる
-わざわいが　おとずれる……▼
+わざわいが　おとずれるで　あろう……▼
 [1:00:トレーナー名:1]よ……▼
-としおいた　わしに　かわり……
-おぬしの　ちからで▽
-あのおとこを　とめてくれ……</language>
+としおいた　ワシに　かわり……
+おぬしの　ちからを　もって▽
+あのおとこを　とめてくれぬか……</language>
 		<language name="JPN_KANJI" width="256">？？？『グロロロ……
-おぬしの　持つ　力は　今の▽
+お主の　持つ　力は　今の▽
 戦いで　証明された……▼
 カラクリの　バンギラス……▼
 そして　あの男を　止めねば
 この　大地に　大いなる▽
-災いが　訪れる……▼
+災いが　訪れることは　必至……▼
 [1:00:トレーナー名:1]よ……▼
-年老いた　わしに　代わり……
-おぬしの　力で▽
-あの男を　止めてくれ……</language>
+年老いた　ワシに　代わり……
+お主の　力を　もって▽
+あの男を　止めてくれぬか……</language>
 	</row>
 	<row id="pw_event3_hero_6">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……　……▼
@@ -771,27 +771,27 @@
 	</row>
 	<row id="pw_event3_enemy_6">
 		<language name="JPN" width="256">？？？『グロロロ……
-ときは　つぎの　まんげつのばん▼
-ばしょは　いぜんと　おなじ……
-そこに　おとこは　あらわる……▼
-[1:00:トレーナー名:1]よ……
+ときは　つぎの　まんげつのばん……▽
+ばしょは　いぜんと　おなじ……▽
+そこに　おとこは　あらわるであろう……▼
+たのむ　[1:00:トレーナー名:1]よ……
 このだいちを……　まもってくれ……</language>
 		<language name="JPN_KANJI" width="256">？？？『グロロロ……
-時は　次の　満月の晩▼
-場所は　以前と　同じ……
-そこに　男は　現れる……▼
-[1:00:トレーナー名:1]よ……
+時は　次の　満月の晩……▽
+場所は　以前と　同じ……▽
+そこに　男は　現れるであろう……▼
+頼む　[1:00:トレーナー名:1]よ……
 この大地を……　守ってくれ……</language>
 	</row>
 	<row id="pw_event3_hero_7">
-		<language name="JPN" width="256">……そこまでを　ぼくに　つげると
+		<language name="JPN" width="256">……そこまでを　オレに　つげると
 だいバンギラスの　おうを　なのる▽
 おんなは　そらへと　きえた……▼
 ……つぎの　まんげつ　までは
 あと　４か……▼
 ……はたして　その　おとこは
 ほんとうに　あらわれるだろうか……</language>
-		<language name="JPN_KANJI" width="256">……そこまでを　私に　告げると
+		<language name="JPN_KANJI" width="256">……そこまでを　オレに　告げると
 大バンギラスの　王を　名乗る▽
 女は　空へと　消えた……▼
 ……次の　満月までは
@@ -807,24 +807,22 @@
 	</row>
 	<row id="pw_event4_enemy_0">
 		<language name="JPN" width="256">？？？『グロロロ……▼
-ふがいない……
-わしの　目が　くもって　おったか……</language>
+おお　なんと　ふがいない……
+ワシの　めが　くもって　おったか……</language>
 		<language name="JPN_KANJI" width="256">？？？『グロロロ……▼
-ふがいない……
-わしの　目が　くもって　おったか……</language>
+おお　なんと　ふがいない……
+ワシの　目が　くもって　おったか……</language>
 	</row>
 	<row id="pw_event4_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ちくしょう……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ちくしょう……</language>
 	</row>
 	<row id="pw_event4_enemy_1">
-		<language name="JPN" width="256">？？？『おぬしの　ごとき
-かぼそき　ちからでは▽
+		<language name="JPN" width="256">？？？『その　かぼそき　ちからでは
 あのおとこを　くいとめるなど▽
 ゆめの　また　ゆめ……</language>
-		<language name="JPN_KANJI" width="256">？？？『おぬしの　ごとき
-か細き　力では▽
-あの男を　くい止めるなど
+		<language name="JPN_KANJI" width="256">？？？『お主の　か細き　力では
+あの男を　くい止めるなど▽
 夢の　また　夢……</language>
 	</row>
 	<row id="pw_event4_hero_2">
@@ -841,11 +839,10 @@
 もどるが　よい……▼
 そして　なかまに　つたえよ……
 この　だいちから　にげよ　と……</language>
-		<language name="JPN_KANJI" width="256">？？？『グロロロ……▼
-力なき　者よ……
-戻るが　よい……▼
+		<language name="JPN_KANJI" width="256">？？？『グロロロ……
+力なき者よ……　戻るが　よい……▼
 そして　仲間たちに　伝えよ……
-この　大地から　逃げよ　と……</language>
+この大地から　逃げよ　と……</language>
 	</row>
 	<row id="pw_event4_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ウワッ！　なんだっ！？
@@ -903,16 +900,16 @@
 	</row>
 	<row id="pw_event5_enemy_1">
 		<language name="JPN" width="256">？？？『グロロロ……
-わしの　もくてきが　しりたいと
+ワシの　もくてきが　しりたいと
 いって　おったな……▼
-それは……
+おしえてやろう　それは……
 この　おなごに　かわる▽　
 あたらしい　からだ　じゃ……</language>
 		<language name="JPN_KANJI" width="256">？？？『グロロロ……
-わしの　目的が　知りたいと
+ワシの　目的が　知りたいと
 言って　おったな……▼
-それは……
-この　女子に　代わる▽　
+教えてやろう　それは……
+この女子に　代わる▽　
 新しい　身体じゃ……</language>
 	</row>
 	<row id="pw_event5_hero_2">
@@ -925,26 +922,26 @@
 		<language name="JPN" width="256">？？？『グロロロ……
 かよわき　おなごの　からだは▽
 だいバンギラスの　おう　である▽
-このわしに　ふさわしくない……▼
+このワシに　ふさわしくない……▼
 [1:00:トレーナー名:1]……▼
 わかく　たくましい　そのからだ……
-この　わしが　もらおう……▼
+このワシが　もらおう……▼
 グロロ……　グロロロロロッ！！</language>
 		<language name="JPN_KANJI" width="256">？？？『グロロロ……
 か弱き　この女子の　身体は▽
 大バンギラスの　王　である▽
-このわしに　ふさわしくない……▼
+このワシに　相応しくない……▼
 [1:00:トレーナー名:1]……▼
 若く　たくましい　その身体……
-この　わしが　もらおう……▼
+このワシが　もらおう……▼
 グロロ……　グロロロロロッ！！</language>
 	</row>
 	<row id="pw_event5_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『グッ！　グギギギ……！▼
-あっ　あたまがっ！！▼
+クソッ！！　あっ　あたまがっ！！▼
 あたまが　われるように　いたいっ！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『グッ！　グギギギ……！▼
-あっ　頭がっ！▼
+クソッ！！　あっ　頭がっ！▼
 頭が　割れるように　痛いっ！！</language>
 	</row>
 	<row id="pw_event5_enemy_3">
@@ -964,12 +961,12 @@
 [1:00:トレーナー名:1]……
 おぬしの　からだ　いただいた……▼
 この　にくたいを　つかって
-わしは　まだまだ　いきながらえる……</language>
+ワシは　まだまだ　いきながらえる……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]？『グロロロ……▼
 [1:00:トレーナー名:1]……
-おぬしの　身体　頂いた……▼
-この　肉体を　つかって
-わしは　まだまだ　生きながらえる……</language>
+お主の　身体　頂いた……▼
+この肉体を　使い
+ワシは　まだまだ　生きながらえる……</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

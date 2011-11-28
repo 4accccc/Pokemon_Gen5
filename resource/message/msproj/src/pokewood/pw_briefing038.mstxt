@@ -6,14 +6,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]『　ゴーストイレイザー　ほうこくしょ
+			<Text>[Ctrl1:xcenter ]ゴーストイレイザー……
 
-[Ctrl1:xcenter ]ファイル　Ｎｏ．００３
+[Ctrl1:xcenter ]うでききの　かれらの　もとには
+[Ctrl1:xcenter ]おおくの　いらいが　まいこむ……
 
-[Ctrl1:xcenter ]　コードネーム：[Name:PokemonNickname ]　』</Text>
+[Ctrl1:xcenter ]しかし　かれらに　とっては
+[Ctrl1:xcenter ]ビジネスが　すべて……
+
+[Ctrl1:xcenter ]たがくのギャラと　ひきかえでなければ
+[Ctrl1:xcenter ]かれらの　たすけは　えられない……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:53:42" />
+				Time="2011-11-28T12:32:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21,14 +26,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]『　ゴーストイレイザー　報告書
+			<Text>[Ctrl1:xcenter ]ゴーストイレイザー……
 
-[Ctrl1:xcenter ]ファイルＮｏ．００３
+[Ctrl1:xcenter ]腕利きの　彼らの　元には
+[Ctrl1:xcenter ]多くの　依頼が　舞い込む……
 
-[Ctrl1:xcenter ]　コードネーム：[Name:PokemonNickname ]　』</Text>
+[Ctrl1:xcenter ]しかし　彼らに　とっては
+[Ctrl1:xcenter ]ビジネスが　すべて……
+
+[Ctrl1:xcenter ]多額のギャラと　引き換えでなければ
+[Ctrl1:xcenter ]彼らの　助けは　得られない……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:53:53" />
+				Time="2011-11-28T12:32:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -54,14 +64,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ある　こうこがくしゃ　からの
+			<Text>[Ctrl1:xcenter ]『　ゴーストイレイザー　ほうこくしょ
 
-[Ctrl1:xcenter ]のろわれた　ひほうに
+[Ctrl1:xcenter ]ファイル　Ｎｏ．００３
 
-[Ctrl1:xcenter ]かんする　ちょうさ　いらい</Text>
+[Ctrl1:xcenter ]　コードネーム：[Name:PokemonNickname ]　』</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:53:59" />
+				Time="2011-11-28T12:21:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -69,14 +79,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ある　考古学者からの
+			<Text>[Ctrl1:xcenter ]『　ゴーストイレイザー　報告書
 
-[Ctrl1:xcenter ]のろわれた　秘宝に
+[Ctrl1:xcenter ]ファイルＮｏ．００３
 
-[Ctrl1:xcenter ]関する　調査依頼</Text>
+[Ctrl1:xcenter ]　コードネーム：[Name:PokemonNickname ]　』</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:54:00" />
+				Time="2011-11-28T12:21:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -88,14 +98,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]いせきで　はっくつした　せきぞうが
+			<Text>[Ctrl1:xcenter ]ある　こうこがくしゃ　からの
 
-[Ctrl1:xcenter ]まよなか　いのちを　やどして
+[Ctrl1:xcenter ]のろわれた　ひほうに
 
-[Ctrl1:xcenter ]おそってくる　という</Text>
+[Ctrl1:xcenter ]かんする　ちょうさ　いらい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:54:02" />
+				Time="2011-11-28T12:21:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -103,14 +113,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]遺跡で　発掘した　石像が
+			<Text>[Ctrl1:xcenter ]ある　考古学者からの
 
-[Ctrl1:xcenter ]真夜中　命を　宿して
+[Ctrl1:xcenter ]のろわれた　秘宝に
 
-[Ctrl1:xcenter ]襲ってくる　らしい</Text>
+[Ctrl1:xcenter ]関する　調査依頼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:54:16" />
+				Time="2011-11-28T12:21:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -122,14 +132,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]なお　この　せきぞうは
+			<Text>[Ctrl1:xcenter ]いせきで　はっくつした　せきぞうが
 
-[Ctrl1:xcenter ]はかいのまじんを　あがめる
+[Ctrl1:xcenter ]まよなか　いのちを　やどして
 
-[Ctrl1:xcenter ]いちぞくが　つくったと　される</Text>
+[Ctrl1:xcenter ]おそってくる　という</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:54:20" />
+				Time="2011-11-28T12:21:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -137,14 +147,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]なお　この　石像は
+			<Text>[Ctrl1:xcenter ]遺跡で　発掘した　石像が
 
-[Ctrl1:xcenter ]破壊の魔神を　あがめる
+[Ctrl1:xcenter ]真夜中　命を　宿して
 
-[Ctrl1:xcenter ]一族が　作ったと　される</Text>
+[Ctrl1:xcenter ]襲ってくる　らしい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:54:21" />
+				Time="2011-11-28T12:21:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -156,12 +166,46 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
+			<Text>[Ctrl1:xcenter ]なお　この　せきぞうは
+
+[Ctrl1:xcenter ]はかいのまじんを　あがめる
+
+[Ctrl1:xcenter ]いちぞくが　つくったと　される</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T12:21:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-02T11:01:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl1:xcenter ]なお　この　石像は
+
+[Ctrl1:xcenter ]破壊の魔神を　あがめる
+
+[Ctrl1:xcenter ]一族が　作ったと　される</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T12:21:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-02T11:01:12" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_briefing_006"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
 			<Text>[Ctrl1:xcenter ]これより　ちょうさの　ため
 
 [Ctrl1:xcenter ]せっしょくを　こころみる</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:54:26" />
+				Time="2011-11-28T12:21:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -174,33 +218,7 @@
 [Ctrl1:xcenter ]接触を　試みる</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:54:30" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:12" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="pw_briefing_006"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:11" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:11" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:12" />
+				Time="2011-11-28T12:21:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -316,14 +334,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]『　ゴーストイレイザー　ほうこくしょ
+			<Text>[Ctrl1:xcenter ]ゴーストイレイザー……
 
-[Ctrl1:xcenter ]ファイル　Ｎｏ．００３
+[Ctrl1:xcenter ]うでききの　かのじょらの　もとには
+[Ctrl1:xcenter ]おおくの　いらいが　まいこむ……
 
-[Ctrl1:xcenter ]　コードネーム：[Name:PokemonNickname ]　』</Text>
+[Ctrl1:xcenter ]しかし　かのじょに　とっては
+[Ctrl1:xcenter ]ビジネスが　すべて……
+
+[Ctrl1:xcenter ]たがくのギャラと　ひきかえでなければ
+[Ctrl1:xcenter ]かのじょらの　たすけは　えられない……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:54:37" />
+				Time="2011-11-28T12:33:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -331,14 +354,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]『　ゴーストイレイザー　報告書
+			<Text>[Ctrl1:xcenter ]ゴーストイレイザー……
 
-[Ctrl1:xcenter ]ファイルＮｏ．００３
+[Ctrl1:xcenter ]腕利きの　彼女らの　元には
+[Ctrl1:xcenter ]多くの　依頼が　舞い込む……
 
-[Ctrl1:xcenter ]　コードネーム：[Name:PokemonNickname ]　』</Text>
+[Ctrl1:xcenter ]しかし　彼女らに　とっては
+[Ctrl1:xcenter ]ビジネスが　すべて……
+
+[Ctrl1:xcenter ]多額のギャラと　引き換えでなければ
+[Ctrl1:xcenter ]彼女らの　助けは　得られない……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:54:41" />
+				Time="2011-11-28T12:34:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -357,6 +385,40 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
+			<Text>[Ctrl1:xcenter ]『　ゴーストイレイザー　ほうこくしょ
+
+[Ctrl1:xcenter ]ファイル　Ｎｏ．００３
+
+[Ctrl1:xcenter ]　コードネーム：[Name:PokemonNickname ]　』</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T12:32:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-02T11:01:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl1:xcenter ]『　ゴーストイレイザー　報告書
+
+[Ctrl1:xcenter ]ファイルＮｏ．００３
+
+[Ctrl1:xcenter ]　コードネーム：[Name:PokemonNickname ]　』</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T12:32:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-02T11:01:36" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_briefing_f_003"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
 			<Text>[Ctrl1:xcenter ]ある　こうこがくしゃ　からの
 
 [Ctrl1:xcenter ]のろわれた　ひほうに
@@ -364,7 +426,7 @@
 [Ctrl1:xcenter ]かんする　ちょうさ　いらい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:54:37" />
+				Time="2011-11-28T12:32:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -379,41 +441,7 @@
 [Ctrl1:xcenter ]関する　調査依頼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:54:41" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="pw_briefing_f_003"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Ctrl1:xcenter ]いせきで　はっくつした　せきぞうが
-
-[Ctrl1:xcenter ]まよなか　いのちを　やどして
-
-[Ctrl1:xcenter ]おそってくる　という</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:54:37" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]遺跡で　発掘した　石像が
-
-[Ctrl1:xcenter ]真夜中　命を　宿して
-
-[Ctrl1:xcenter ]襲ってくる　らしい</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:54:41" />
+				Time="2011-11-28T12:32:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -425,6 +453,40 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
+			<Text>[Ctrl1:xcenter ]いせきで　はっくつした　せきぞうが
+
+[Ctrl1:xcenter ]まよなか　いのちを　やどして
+
+[Ctrl1:xcenter ]おそってくる　という</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T12:32:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-02T11:01:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl1:xcenter ]遺跡で　発掘した　石像が
+
+[Ctrl1:xcenter ]真夜中　命を　宿して
+
+[Ctrl1:xcenter ]襲ってくる　らしい</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T12:32:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-02T11:01:36" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_briefing_f_005"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
 			<Text>[Ctrl1:xcenter ]なお　この　せきぞうは
 
 [Ctrl1:xcenter ]はかいのまじんを　あがめる
@@ -432,7 +494,7 @@
 [Ctrl1:xcenter ]いちぞくが　つくったと　される</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:54:37" />
+				Time="2011-11-28T12:32:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -447,7 +509,7 @@
 [Ctrl1:xcenter ]一族が　作ったと　される</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:54:41" />
+				Time="2011-11-28T12:32:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -455,7 +517,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="pw_briefing_f_005"
+		Label="pw_briefing_f_006"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -464,7 +526,7 @@
 [Ctrl1:xcenter ]せっしょくを　こころみる</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:54:37" />
+				Time="2011-11-28T12:32:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -477,33 +539,7 @@
 [Ctrl1:xcenter ]接触を　試みる</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:54:41" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="pw_briefing_f_006"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:40" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:40" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				Time="2011-11-28T12:32:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

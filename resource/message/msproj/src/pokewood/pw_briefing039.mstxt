@@ -6,15 +6,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ゴーストイレイサー　ほうこくしょ
+			<Text>[Ctrl1:xcenter ]ゴーストイレイザー……
 
-[Ctrl1:xcenter ]ファイル　Ｎｏ．００４
+[Ctrl1:xcenter ]かれらは　おたがいを
+[Ctrl1:xcenter ]コードネームで　よびあう……
 
-[Ctrl1:xcenter ]コードネーム：　[Name:PokemonNickname ]
-</Text>
+[Ctrl1:xcenter ]きけんな　いらいや　うらぎりも　おおい
+[Ctrl1:xcenter ]かれらにとって　ほんみょうは
+[Ctrl1:xcenter ]あしかせに　しか　ならないのだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:52:15" />
+				Time="2011-11-28T12:40:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22,15 +24,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ゴーストイレイサー　報告書
+			<Text>[Ctrl1:xcenter ]ゴーストイレイザー……
 
-[Ctrl1:xcenter ]ファイル　Ｎｏ．００４
+[Ctrl1:xcenter ]彼らは　お互いを
+[Ctrl1:xcenter ]コードネームで　呼び合う……
 
-[Ctrl1:xcenter ]コードネーム　[Name:PokemonNickname ]
-</Text>
+[Ctrl1:xcenter ]危険な依頼や　裏切りも　多い
+[Ctrl1:xcenter ]彼らに　とって　本名など
+[Ctrl1:xcenter ]足かせに　しか　ならないのだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:52:29" />
+				Time="2011-11-28T12:40:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -56,12 +60,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ついに　はかいのまじんが
+			<Text>[Ctrl1:xcenter ]ゴーストイレイサー　ほうこくしょ
 
-[Ctrl1:xcenter ]ふっかつ　した</Text>
+[Ctrl1:xcenter ]ファイル　Ｎｏ．００４
+
+[Ctrl1:xcenter ]コードネーム：　[Name:PokemonNickname ]
+</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:52:37" />
+				Time="2011-11-28T12:34:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -69,12 +76,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ついに　破壊の魔神が
+			<Text>[Ctrl1:xcenter ]ゴーストイレイサー　報告書
 
-[Ctrl1:xcenter ]復活した</Text>
+[Ctrl1:xcenter ]ファイル　Ｎｏ．００４
+
+[Ctrl1:xcenter ]コードネーム　[Name:PokemonNickname ]
+</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:52:38" />
+				Time="2011-11-28T12:34:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -86,14 +96,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]まじんが　とおったあとの
+			<Text>[Ctrl1:xcenter ]ついに　はかいのまじんが
 
-[Ctrl1:xcenter ]とちは　あとかたも　なく
-
-[Ctrl1:xcenter ]きえていると　いう</Text>
+[Ctrl1:xcenter ]ふっかつ　した</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:02:01" />
+				Time="2011-11-28T12:34:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -101,14 +109,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]魔神が　通った後
+			<Text>[Ctrl1:xcenter ]ついに　破壊の魔神が
 
-[Ctrl1:xcenter ]土地は　あとかたも　なく
-
-[Ctrl1:xcenter ]消えていると　いう</Text>
+[Ctrl1:xcenter ]復活した</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:02:04" />
+				Time="2011-11-28T12:34:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -120,12 +126,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]これより　まじんを　たおすため
+			<Text>[Ctrl1:xcenter ]まじんが　とおったあとの
 
-[Ctrl1:xcenter ]せっしょくを　こころみる</Text>
+[Ctrl1:xcenter ]とちは　あとかたも　なく
+
+[Ctrl1:xcenter ]きえていると　いう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:52:52" />
+				Time="2011-11-28T12:34:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -133,12 +141,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]これより　魔神を　倒すため
+			<Text>[Ctrl1:xcenter ]魔神が　通った後
 
-[Ctrl1:xcenter ]接触を　試みる</Text>
+[Ctrl1:xcenter ]土地は　あとかたも　なく
+
+[Ctrl1:xcenter ]消えていると　いう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:52:56" />
+				Time="2011-11-28T12:34:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -150,10 +160,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]これより　まじんを　たおすため
+
+[Ctrl1:xcenter ]せっしょくを　こころみる</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T12:34:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -161,10 +173,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>[Ctrl1:xcenter ]これより　魔神を　倒すため
+
+[Ctrl1:xcenter ]接触を　試みる</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:12" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T12:34:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -306,15 +320,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ゴーストイレイサー　ほうこくしょ
+			<Text>[Ctrl1:xcenter ]ゴーストイレイザー……
 
-[Ctrl1:xcenter ]ファイル　Ｎｏ．００４
+[Ctrl1:xcenter ]かのじょらは　おたがいを
+[Ctrl1:xcenter ]コードネームで　よびあう……
 
-[Ctrl1:xcenter ]コードネーム：　[Name:PokemonNickname ]
-</Text>
+[Ctrl1:xcenter ]きけんな　いらいや　うらぎりも　おおい
+[Ctrl1:xcenter ]かのじょらに　とって　ほんみょうは
+[Ctrl1:xcenter ]あしかせに　しか　ならないのだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:53:02" />
+				Time="2011-11-28T12:40:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -322,15 +338,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]ゴーストイレイサー　報告書
+			<Text>[Ctrl1:xcenter ]ゴーストイレイザー……
 
-[Ctrl1:xcenter ]ファイル　Ｎｏ．００４
+[Ctrl1:xcenter ]彼女らは　お互いを
+[Ctrl1:xcenter ]コードネームで　呼び合う……
 
-[Ctrl1:xcenter ]コードネーム　[Name:PokemonNickname ]
-</Text>
+[Ctrl1:xcenter ]危険な依頼や　裏切りも　多い
+[Ctrl1:xcenter ]彼女らに　とって　本名など
+[Ctrl1:xcenter ]足かせにしか　ならないのだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:53:06" />
+				Time="2011-11-28T12:41:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -349,12 +367,48 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
+			<Text>[Ctrl1:xcenter ]ゴーストイレイサー　ほうこくしょ
+
+[Ctrl1:xcenter ]ファイル　Ｎｏ．００４
+
+[Ctrl1:xcenter ]コードネーム：　[Name:PokemonNickname ]
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T12:40:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-02T11:01:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl1:xcenter ]ゴーストイレイサー　報告書
+
+[Ctrl1:xcenter ]ファイル　Ｎｏ．００４
+
+[Ctrl1:xcenter ]コードネーム　[Name:PokemonNickname ]
+</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T12:40:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-02T11:01:36" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_briefing_f_003"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
 			<Text>[Ctrl1:xcenter ]ついに　はかいのまじんが
 
 [Ctrl1:xcenter ]ふっかつ　した</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:53:02" />
+				Time="2011-11-28T12:40:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -367,41 +421,7 @@
 [Ctrl1:xcenter ]復活した</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:53:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="pw_briefing_f_003"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Ctrl1:xcenter ]まじんが　とおったあとの
-
-[Ctrl1:xcenter ]とちは　あとかたも　なく
-
-[Ctrl1:xcenter ]きえていると　いう</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:02:12" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:31" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]魔神が　通った後
-
-[Ctrl1:xcenter ]土地は　あとかたも　なく
-
-[Ctrl1:xcenter ]消えていると　いう</Text>
-			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:02:12" />
+				Time="2011-11-28T12:40:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -413,12 +433,46 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
+			<Text>[Ctrl1:xcenter ]まじんが　とおったあとの
+
+[Ctrl1:xcenter ]とちは　あとかたも　なく
+
+[Ctrl1:xcenter ]きえていると　いう</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T12:40:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-02T11:01:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl1:xcenter ]魔神が　通った後
+
+[Ctrl1:xcenter ]土地は　あとかたも　なく
+
+[Ctrl1:xcenter ]消えていると　いう</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T12:40:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-08-02T11:01:36" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_briefing_f_005"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
 			<Text>[Ctrl1:xcenter ]これより　まじんを　たおすため
 
 [Ctrl1:xcenter ]せっしょくを　こころみる</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:53:02" />
+				Time="2011-11-28T12:40:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -431,33 +485,7 @@
 [Ctrl1:xcenter ]接触を　試みる</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:53:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="pw_briefing_f_005"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:40" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:40" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-02T11:01:36" />
+				Time="2011-11-28T12:40:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

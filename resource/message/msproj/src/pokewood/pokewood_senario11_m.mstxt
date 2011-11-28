@@ -1036,18 +1036,18 @@ UFOの　テストと　偽り
 			Language="JPN">
 			<Text>E『にんげんと　ポケモンだ……▼
 それらで　このほしで　いきられる
-せいめいの　かずは▽
-もうすでに　げんかい　なのだ……▼
+せいめいたいの　かずは▽
+すでに　げんかい　なのだ……▼
 ……よって　われわれが　ここで
-いきるためには　それらの　せいめいを
+いきるためには　ひとも　ポケモンも▽
 ほろぼす　ひつようが　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T10:47:58" />
+				Time="2011-11-28T08:56:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T10:47:58" />
+				Time="2011-11-28T08:56:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1055,15 +1055,15 @@ UFOの　テストと　偽り
 それらで　この星で　生きられる
 生命の　総数は　すでに　限界……▼
 ……よって　我々が　ここで
-生きるためには　それらの　生命を
-滅ぼす必要が　ある……</Text>
+生きるためには　それらの　生命を▽
+滅ぼす　必要が　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T10:47:58" />
+				Time="2011-11-28T08:56:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T10:47:58" />
+				Time="2011-11-28T08:56:01" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

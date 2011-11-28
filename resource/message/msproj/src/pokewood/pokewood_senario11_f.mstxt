@@ -1034,35 +1034,36 @@ UFOの　テストと　偽り
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>E『にんげんと　ポケモン……▼
-それらで　このほしは　すでに
-げんかいを　こえている……▼
-よって　われわれが　ここで
-いきるためには　それらを▽
-ほろぼさねば　ならない……</Text>
+			<Text>E『にんげんと　ポケモンだ……▼
+それらで　このほしで　いきられる
+せいめいたいの　かずは▽
+すでに　げんかい　なのだ……▼
+……よって　われわれが　ここで
+いきるためには　ひとも　ポケモンも▽
+ほろぼす　ひつようが　ある……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T08:56:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-28T08:56:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>E『人間と　ポケモン……▼
-それらで　この星は　すでに
-限界を　超えている……▼
-よって　我々が　ここで
+			<Text>E『人間と　ポケモンだ……▼
+それらで　この星で　生きられる
+生命の　総数は　すでに　限界……▼
+……よって　我々が　ここで
 生きるためには　それらの　生命を▽
-滅ぼす必要が　ある……</Text>
+滅ぼす　必要が　ある……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T10:47:57" />
+				Time="2011-11-28T08:56:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T10:47:57" />
+				Time="2011-11-28T08:56:00" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

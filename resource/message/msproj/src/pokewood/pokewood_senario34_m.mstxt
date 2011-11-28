@@ -2160,15 +2160,15 @@
 			Language="JPN_KANJI">
 			<Text>助手『いいか！　[Name:TrainerName Idx="1" ]！！
 オマエが　悪いんだからな！！▼
-さっさと　Ｆー００を　うりさばいて
+さっさと　Ｆー００を　売りさばいて
 この　ラボを　立て直すんだっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:26:10" />
+				Time="2011-11-28T09:52:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:26:10" />
+				Time="2011-11-28T09:52:43" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3192,28 +3192,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『やはり　ダメか……▼
-でんきを　きゅうしゅうする
+エネルギーを　きゅうしゅうする
 システムまで　くるっている……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T12:44:57" />
+				Time="2011-11-28T09:52:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T12:44:57" />
+				Time="2011-11-28T09:52:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『やはり　ダメか……▼
-でんきを　吸収する
+エネルギーを　吸収する
 システムまで　狂っている……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T12:44:57" />
+				Time="2011-11-28T09:52:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T12:44:57" />
+				Time="2011-11-28T09:52:43" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3320,7 +3320,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じょしゅ『……　……▼
+			<Text>助手『……　……▼
 正直　オマエの　書いていた
 プログラムコードは　サッパリだった▼
 特に　あの　Ｋから　始まる
@@ -3333,11 +3333,11 @@
 書き換えた……　それだけだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T12:44:57" />
+				Time="2011-11-28T09:52:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T12:44:57" />
+				Time="2011-11-28T09:52:43" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
