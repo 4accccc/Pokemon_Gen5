@@ -865,13 +865,32 @@ ev_vs_rival:
 	_MSGWIN_CLOSE()
 
 
-	//自機座標取得
-	//アニメ：ライバル退場
+	//プレイヤーの座標取得
 	_PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-	IF $LCW_POSX == 37 THEN
-		_OBJ_ANIME_AUTO( C12_SWRIVAL_01, 36, 724, FORCE_TYPE_NPC, 8, DIR_LR)
+
+	//アニメ：ライバル退場
+	IF $LCW_POSX != 716 THEN
+	
+		IF $LCW_POSX == 36 THEN
+			
+			_OBJ_ANIME( C12_SWRIVAL_01, anm_walk_d )
+			_OBJ_ANIME_WAIT()
+			_OBJ_ANIME_AUTO( C12_SWRIVAL_01, 36, 724, FORCE_TYPE_NPC, 8, DIR_LR )
+		
+		ELSE
+		
+			_OBJ_ANIME_AUTO( C12_SWRIVAL_01, 36, 724, FORCE_TYPE_NPC, 8, DIR_LR )
+		
+		ENDIF
+	
 	ELSE
-		_OBJ_ANIME_AUTO( C12_SWRIVAL_01, 37, 724, FORCE_TYPE_NPC, 8, DIR_LR)
+	
+		IF $LCW_POSX == 37 THEN
+			_OBJ_ANIME_AUTO( C12_SWRIVAL_01, 36, 724, FORCE_TYPE_NPC, 8, DIR_LR )
+		ELSE
+			_OBJ_ANIME_AUTO( C12_SWRIVAL_01, 37, 724, FORCE_TYPE_NPC, 8, DIR_LR )
+		ENDIF
+	
 	ENDIF
 	
 	//========================================//
@@ -883,7 +902,7 @@ ev_vs_rival:
 
 	//アニメ：ベル・主人公、ライバル見送る
 	_OBJ_ANIME( C12_SWBELL_01, anm_dir_d )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_d )
 	
 	//ライバル曲停止
 	_END_EVENT_BGM()
