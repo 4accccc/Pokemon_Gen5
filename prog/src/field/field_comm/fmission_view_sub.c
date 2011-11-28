@@ -87,7 +87,7 @@ static void effReq_PopupMsgSys( FMISSION_VIEW_PTR wk, u8 msg_id );
 static void effReq_PopupMsgRetire( FMISSION_VIEW_PTR wk );
 
 static BOOL effReq_PopupMsgGPower( FMISSION_VIEW_PTR wk,  FMISSION_LOG* pl );
-static BOOL effReq_PopupMsgGPowerSpecial( FMISSION_VIEW_PTR wk, GPOWER_ID gpower_id, STRBUF* name_buf );
+static BOOL effReq_PopupMsgGPowerSpecial( FMISSION_VIEW_PTR wk, GPOWER_ID gpower_id, STRBUF* name_buf, BOOL spot_f );
 
 //////////////////////////////////////////////////////////////////
 
@@ -228,7 +228,7 @@ BOOL FMissionView_CheckSpecialGPower( FMISSION_VIEW_PTR wk )
     return FALSE; //ストックがない
   }
   //ポップアップをリクエスト
-  return effReq_PopupMsgGPowerSpecial( wk, gpower_id, wk->str_tmp );
+  return effReq_PopupMsgGPowerSpecial( wk, gpower_id, wk->str_tmp, spot_f );
 }
 
 /*
@@ -1422,48 +1422,30 @@ typedef struct _TASKWK_WIN_GPOWER{
   int child_task;
 
   GPOWER_ID  g_power;
-  u16 item_num;
-  u16 item_use;
-  u16 mypower_use;
-  u16 mypower_min;
-  u16 mypower_sec;
+  BOOL  spot_f; //スポット配信パワーか？
   FMISSION_VIEW_PTR fvp;
   int* task_ct;
 }TASKWK_WIN_GPOWER;
 
-static const u8 DATA_GPowerUseMsg[GPOWER_USE_MAX] = {
- msg_sys_gpower_use00,
- msg_sys_gpower_use01,
- msg_sys_gpower_use02,
-};
-
 static BOOL taskAdd_WinGPower( FMISSION_VIEW_PTR wk, GPOWER_ID gpower_id, BOOL spot_f, int* task_ct );
 static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* work);
-static void tcb_WinGPowerCheck( GFL_TCBL *tcb , void* work);
 
 static BOOL effReq_PopupMsgGPower( FMISSION_VIEW_PTR wk,  FMISSION_LOG* pl )
 {
   GPOWER_ID gpower_id;
-  
-  if( FMISSION_LOG_IsPlayerLog( pl ) ||
-      FMISSION_LOG_GetAction( pl ) != FMISSION_LOG_ACT_GPOWER ){
-    return FALSE;
-  }
-  gpower_id = FMISSION_LOG_GetActionParam( pl );
-  
+ 
+  //使えなかった時対策でストックに一度いれておく
+  gpower_id = FMISSION_GPOWER_TBL_SetFromLog( wk->logGPower, pl );
+
   FMISSION_LOG_ActionWordset( pl,  wk->wordset, wk->heap_sID );
   return taskAdd_WinGPower( wk, gpower_id, FALSE, &wk->eff_task_ct);
 }
-static void effReq_PopupMsgGPowerMine( FMISSION_VIEW_PTR wk )
-{
-  taskAdd_WinGPower( wk,
-      wk->my_data.power, GPOWER_USE_MINE, &wk->eff_task_ct );
-}
-static BOOL effReq_PopupMsgGPowerSpecial( FMISSION_VIEW_PTR wk, GPOWER_ID gpower_id, STRBUF* name_buf )
+
+static BOOL effReq_PopupMsgGPowerSpecial( FMISSION_VIEW_PTR wk, GPOWER_ID gpower_id, STRBUF* name_buf, BOOL spot_f )
 {
   WORDSET_RegisterWord( wk->wordset, 0, name_buf, PM_NEUTRAL, TRUE, PM_LANG);
 
-  return taskAdd_WinGPower( wk, gpower_id, TRUE, &wk->eff_task_ct );
+  return taskAdd_WinGPower( wk, gpower_id, spot_f, &wk->eff_task_ct );
 }
 
 /*
@@ -1477,6 +1459,7 @@ static BOOL taskAdd_WinGPower( FMISSION_VIEW_PTR wk, GPOWER_ID gpower_id, BOOL s
   //セキュリティ
   if( GPOWER_IsEnableID( gpower_id ) == FALSE ){
     GF_ASSERT(0);
+    FMISSION_GPOWER_TBL_DelData( wk->logGPower, spot_f );
     return FALSE;
   }
 
@@ -1496,6 +1479,7 @@ static BOOL taskAdd_WinGPower( FMISSION_VIEW_PTR wk, GPOWER_ID gpower_id, BOOL s
   twk->fvp = wk;
   twk->wait = POPUP_WAIT;
   twk->g_power = gpower_id;
+  twk->spot_f = spot_f;
 
   WORDSET_RegisterGPowerName( wk->wordset, 1, twk->g_power );
 
@@ -1555,6 +1539,7 @@ static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* tcb_wk)
         twk->seq = 4;
         break;
       case TMENU_CYN_NO:
+        FMISSION_GPOWER_TBL_DelData( fvp->logGPower, twk->spot_f );
         twk->seq = 5;
         break;
       }
@@ -1567,6 +1552,7 @@ static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* tcb_wk)
       twk->seq = 3;
     }else{
       //正常に使えていれば、メニューを終了させる
+      FMISSION_GPOWER_TBL_DelData( fvp->logGPower, twk->spot_f );
       BVCTMenu_End( fvp->tmenu );
       twk->seq = 6;
     }

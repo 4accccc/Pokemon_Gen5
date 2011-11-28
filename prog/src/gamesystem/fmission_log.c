@@ -298,6 +298,8 @@ void FMISSION_GPOWER_TBL_Clear( FMISSION_GPOWER_TBL* tbl )
 {
   int i;
 
+  FMISSION_GPOWER_Clear( &tbl->log_power );
+
   for(i = 0;i < FMISSION_GPOWER_TBL_MAX;i++){
     FMISSION_GPOWER_Clear( &tbl->power[i] );
   }
@@ -306,7 +308,7 @@ void FMISSION_GPOWER_TBL_Clear( FMISSION_GPOWER_TBL* tbl )
 
 //------------------------------------------------------------------
 /*
- *  デルパワースタック データセット
+ *  デルパワースタック データセット ビーコンから
  *
  *  @param  tbl   FMISSION_GPOWER_TBL型構造体へのポインタ
  *  @param  info  セットするビーコン情報
@@ -319,6 +321,7 @@ BOOL FMISSION_GPOWER_TBL_Set( FMISSION_GPOWER_TBL* tbl, const GAMEBEACON_INFO *i
 {
   FMISSION_GPOWER power;
   GPOWER_ID id;
+  int i;
 
   if( tbl->entry_num == FMISSION_GPOWER_TBL_MAX ){
     return FALSE; //いっぱいなら積まない
@@ -334,6 +337,11 @@ BOOL FMISSION_GPOWER_TBL_Set( FMISSION_GPOWER_TBL* tbl, const GAMEBEACON_INFO *i
   default:
     return FALSE;
   }
+  //同じパワーが積まれているかどうかをチェック
+  for( i = 0;i < tbl->entry_num;i++){
+    if( tbl->power[i].gpower_id == id ) return FALSE; //同じパワーは2つ積まない
+  }
+
   //名前(info->nameはEOM抜き)
   GFL_STD_MemCopy16( info->name, power.name, PERSON_NAME_SIZE*sizeof(STRCODE));
   power.gpower_id = id;
@@ -341,6 +349,28 @@ BOOL FMISSION_GPOWER_TBL_Set( FMISSION_GPOWER_TBL* tbl, const GAMEBEACON_INFO *i
   tbl->power[tbl->entry_num++] = power;
 
   return TRUE;
+}
+
+//------------------------------------------------------------------
+/*
+ *  デルパワースタック データセット ミッションログから
+ *
+ *  @param  tbl   FMISSION_GPOWER_TBL型構造体へのポインタ
+ *  @param  log   デルパワー情報を抜き出すフェスミッションログ構造体情報
+ *  @return セットしたデルパワーID
+ */
+//------------------------------------------------------------------
+GPOWER_ID FMISSION_GPOWER_TBL_SetFromLog( FMISSION_GPOWER_TBL* tbl, const FMISSION_LOG* log )
+{
+  FMISSION_GPOWER_Clear( &tbl->log_power );
+
+  tbl->log_power.gpower_id = log->param;
+  tbl->log_power.spot_f = FALSE;
+
+  //名前
+  GFL_STD_MemCopy16( log->name, tbl->log_power.name, PERSON_NAME_SIZE*sizeof(STRCODE));
+ 
+  return tbl->log_power.gpower_id;
 }
 
 //------------------------------------------------------------------

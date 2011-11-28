@@ -257,6 +257,7 @@ enum{
 ///アイコンポップタイム
 #define ICON_POP_TIME (30*3)
 
+#if 0
 //Gパワーポップアップタイプ
 enum{
  GPOWER_USE_MINE, //自分
@@ -264,6 +265,7 @@ enum{
  GPOWER_USE_SPECIAL, //特殊デルパワー
  GPOWER_USE_MAX,
 };
+#endif
 
 ////////////////////////////////////////////////////
 //アクター関連定義

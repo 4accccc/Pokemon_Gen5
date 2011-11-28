@@ -70,11 +70,8 @@ LINK_FESTIVAL* LINK_FESTIVAL_Create( HEAPID heapID, GAMESYS_WORK* gsys )
   
   wk->top_score = LINKFEST_LOG_TOP_SCORE_Create( heapID );
 
-  //スコアログ領域クリア
+  //ログ領域クリア
   log_ClearAll( wk );
-  //ミッションログ領域クリア
-  FMISSION_LOG_TBL_Clear( &wk->mlog_stack_tbl );
-  FMISSION_LOG_TBL_Clear( &wk->mlog_view_tbl );
   
   wk->beacon_wait = 10*60;
   return wk;
@@ -326,8 +323,6 @@ void LINK_FESTIVAL_MissionStart( LINK_FESTIVAL* wk, const FEST_MISSION* m_src, B
 {
   //ログ領域クリア
   log_ClearAll( wk );
-  FMISSION_LOG_TBL_Clear( &wk->mlog_stack_tbl );
-  FMISSION_LOG_TBL_Clear( &wk->mlog_view_tbl );
 
   FEST_MISSION_Start( &wk->mission, m_src, succeed_f );
   wk->live_f = FALSE;
@@ -402,8 +397,6 @@ u32 LINK_FESTIVAL_MissionEnd( LINK_FESTIVAL* wk )
   GameCommSys_SetPalaceNotConnectFlagForFMission(GAMESYSTEM_GetGameCommSysPtr(wk->gsys), FALSE );
 
   log_ClearAll( wk );
-  FMISSION_LOG_TBL_Clear( &wk->mlog_stack_tbl );
-  FMISSION_LOG_TBL_Clear( &wk->mlog_view_tbl );
 
   if( FSND_GetLastBGM( wk->gdata ) != SEQ_BGM_FES ){
     return FES_BGM_RECOVER_NONE;
@@ -861,6 +854,7 @@ static void log_ClearAll( LINK_FESTIVAL* wk )
   for(i = 0;i < LINKFEST_LOG_MAX;i++){
     LINKFEST_LOG_Clear( &wk->log[i]);
   }
+
   wk->log_num = 0;
   wk->log_idx = 0;
   wk->beacon_timer = 0; 
@@ -872,6 +866,11 @@ static void log_ClearAll( LINK_FESTIVAL* wk )
   MI_CpuClear8( wk->m_gmk_work, sizeof(u8)*FMISSION_WORK_AREA_LEN);
 
   wk->top_score_update_f = FALSE;
+  
+  //ミッションログ領域クリア
+  FMISSION_LOG_TBL_Clear( &wk->mlog_stack_tbl );
+  FMISSION_LOG_TBL_Clear( &wk->mlog_view_tbl );
+  FMISSION_GPOWER_TBL_Clear( &wk->mlog_gpower_tbl );
 
 #ifdef PM_DEBUG
   wk->deb_time_stop_f = FALSE;

@@ -10,6 +10,7 @@
 #pragma once
 
 #include "fmission_log_id.h"
+#include "field/gpower_id.h"
 
 typedef u8 FMISSION_LOG_ACTION; //FMISSION_LOG_ACT_NULL etc
 
@@ -57,6 +58,16 @@ typedef struct _FMISSION_LOG_LATEST{
 //------------------------------------------------------------------
 extern void FMISSION_LOG_GetName( FMISSION_LOG* log, STRBUF* s_buf );
 
+//------------------------------------------------------------------
+/*
+ *  デルパワースタック データセット ミッションログから
+ *
+ *  @param  tbl   FMISSION_GPOWER_TBL型構造体へのポインタ
+ *  @param  log   デルパワー情報を抜き出すフェスミッションログ構造体情報
+ *  @return データをセットしたデルパワーID
+ */
+//------------------------------------------------------------------
+extern GPOWER_ID FMISSION_GPOWER_TBL_SetFromLog( FMISSION_GPOWER_TBL* tbl, const FMISSION_LOG* log );
 
 //他関数のextern宣言は src/gamesystem/fmission_log_local.h
 

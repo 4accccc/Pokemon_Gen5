@@ -59,9 +59,10 @@ struct _FMISSION_GPOWER{
 
 ///ミッションログ　デルパワーテーブル(いっぱいになったら押し出さない)
 struct _FMISSION_GPOWER_TBL{
-  struct _FMISSION_GPOWER power[FMISSION_GPOWER_TBL_MAX];
+  struct _FMISSION_GPOWER log_power;  //<フェスミッションログで使い損ねたパワーのストック
+  struct _FMISSION_GPOWER power[FMISSION_GPOWER_TBL_MAX]; //配信パワーストック場所
 
-  int  entry_num;
+  int  entry_num; //配信パワーストック数
 };
 
 ///フェスミッションお誘いログデータ

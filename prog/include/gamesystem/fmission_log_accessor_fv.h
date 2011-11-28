@@ -116,6 +116,16 @@ extern BOOL FMISSION_LOG_ViewTbl_GetLog( FMISSION_LOG_TBL *tbl, FMISSION_LOG* p_
 extern GPOWER_ID FMISSION_GPOWER_TBL_GetData( FMISSION_GPOWER_TBL* tbl, STRBUF* name_buf, BOOL* spot_f );
 
 //------------------------------------------------------------------
+/*
+ *  Gパワーテーブル ストックデータクリア
+ *
+ *  @param  tbl       FMISSION_GPOWER_TBL型構造体へのポインタ
+ *  @param  spot_f    配布(パワースポット)のデータかどうか？ 配布ならTRUE
+ */
+//------------------------------------------------------------------
+extern void FMISSION_GPOWER_TBL_DelData( FMISSION_GPOWER_TBL* tbl, BOOL spot_f );
+
+//------------------------------------------------------------------
 /**
  * ログパラメータ取得　一言メッセージ
  *

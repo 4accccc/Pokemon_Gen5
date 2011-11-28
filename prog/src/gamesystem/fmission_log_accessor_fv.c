@@ -206,19 +206,50 @@ GPOWER_ID FMISSION_GPOWER_TBL_GetData( FMISSION_GPOWER_TBL* tbl, STRBUF* name_bu
 {
   GPOWER_ID id;
 
+  //ログストックパワーのほうが優先
+  if( tbl->log_power.gpower_id != GPOWER_ID_NULL ){
+    GFL_STR_SetStringCodeOrderLength( name_buf, tbl->log_power.name, PERSON_NAME_SIZE+EOM_SIZE );
+    *spot_f = tbl->log_power.spot_f;
+    return tbl->log_power.gpower_id;
+  }
+  //配布パワーストックをチェック
   if( tbl->entry_num == 0 ){
     return GPOWER_ID_NULL;
   }
   GFL_STR_SetStringCodeOrderLength( name_buf, tbl->power[0].name, PERSON_NAME_SIZE+EOM_SIZE );
   *spot_f = tbl->power[0].spot_f;
   id = tbl->power[0].gpower_id;
-
+  /*
   //テーブル前詰め
   GFL_STD_MemCopy( &tbl->power[1], &tbl->power[0], sizeof(FMISSION_GPOWER)*FMISSION_GPOWER_TBL_END);
   FMISSION_GPOWER_Clear( &tbl->power[FMISSION_GPOWER_TBL_END] );
   --tbl->entry_num;
-
+  */
   return id;
+}
+
+//------------------------------------------------------------------
+/*
+ *  Gパワーテーブル ストックデータクリア
+ *
+ *  @param  tbl       FMISSION_GPOWER_TBL型構造体へのポインタ
+ *  @param  spot_f    配布(パワースポット)のデータかどうか？ 配布ならTRUE
+ */
+//------------------------------------------------------------------
+void FMISSION_GPOWER_TBL_DelData( FMISSION_GPOWER_TBL* tbl, BOOL spot_f )
+{
+  GPOWER_ID id;
+
+  if( spot_f ){
+    if( tbl->entry_num == 0 ) return;
+
+    //テーブル前詰め
+    GFL_STD_MemCopy( &tbl->power[1], &tbl->power[0], sizeof(FMISSION_GPOWER)*FMISSION_GPOWER_TBL_END);
+    FMISSION_GPOWER_Clear( &tbl->power[FMISSION_GPOWER_TBL_END] );
+    --tbl->entry_num;
+  }else{
+    FMISSION_GPOWER_Clear( &tbl->log_power );
+  }
 }
 
 //------------------------------------------------------------------
