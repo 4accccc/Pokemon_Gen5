@@ -758,13 +758,43 @@ static void _delete_pkwd_briefing_param( PKWD_BRIEFING_PARAM *param )
   return;
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	フィールドBGMの復帰（上映用）
+ *
+ * @param   gsys		  GAMESYS_WORK
+ * @param   gamedata	GAMEDATA
+ * @param   fieldmap	FIELDMAP_WORK
+ * @param   fsnd		  FIELD_SOUND
+ *
+ * 上映はフィールドBGMをPUSHしないので、zoneIDからBGMを算出して再生し直す
+ */
+//----------------------------------------------------------------------------------
+static void restoreFieldBGM( GAMESYS_WORK *gsys, GAMEDATA *gamedata, 
+                             GMEVENT *event, FIELDMAP_WORK *fieldmap, FIELD_SOUND *fsnd )
+{
+  GMEVENT* ev;
+  u8 seasonID;
+  u16 zoneID;
+  u32 soundIdx;
+  
+  seasonID = GAMEDATA_GetSeasonID( gamedata );
+  zoneID   = FIELDMAP_GetZoneID( fieldmap );
+  soundIdx = FSND_GetFieldBGM( gamedata, zoneID, seasonID );
+  
+  ev = EVENT_FSND_ChangeBGM( gsys, soundIdx, FSND_FADE_SHORT, FSND_FADE_NORMAL );
+  
+  GMEVENT_CallEvent( event, ev );
+  FSND_RePlayEnvSE( fsnd, FSND_ENVSE_PAUSE_BGM_CHANGE ); // 環境音復帰
+  
+}
+
 //============================================================================================
 //============================================================================================
 
 
 enum{
   PW_SHOW_SEQ_START=0,
-  PW_SHOW_SEQ_ENCOUNT_EFFECT,
   PW_SHOW_SEQ_FIELDMAP_EXIT,
   PW_SHOW_SEQ_TITLE_APP,
   PW_SHOW_SEQ_TITLE_APP_END,
@@ -772,10 +802,8 @@ enum{
   PW_SHOW_SEQ_BRIEFING_APP_END,
   PW_SHOW_SEQ_CALL_BATTLE,
   PW_SHOW_SEQ_CALL_ENDROLL,
-  PW_SHOW_SEQ_FIELD_BGM_PLAY,
   PW_SHOW_SEQ_FIELD_OPEN,
   PW_SHOW_SEQ_FIELD_BGM_WAIT,
-  PW_SHOW_SEQ_FADEIN,
   PW_SHOW_SEQ_FREE_BSP,
   PW_SHOW_SEQ_END,
 };
@@ -802,16 +830,8 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
   case PW_SHOW_SEQ_START:
     // BATTLE_SETUP_PARAM生成
     pbew->bp = createPokewoodBSP( prew, gsys, gamedata, fieldmap, prew->heapID );
-    // プレイヤーボリュームをフェードアウト
-    FIELD_SOUND_ChangePlayerVolume( fsnd, 0, 20 );  
-    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayBattleBGM(gsys, pbew->bp->musicDefault));
-    (*seq)++;
-    break;
-
-  //エンカウントエフェクト
-  case PW_SHOW_SEQ_ENCOUNT_EFFECT:
-    //GMEVENT_CallEvent(event, EVENT_FieldFadeOut_Black(gsys,fieldmap,FIELD_FADE_WAIT) );
-    //ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(fieldmap), event, prew->EncEffNo);
+    // 一旦無音曲にフェードアウト
+    GMEVENT_CallEvent(event, EVENT_FSND_PlayEventBGMSilent( gsys, 20 ));
     (*seq)++;
     break;
 
@@ -858,7 +878,7 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
   // バトル呼び出し
   case PW_SHOW_SEQ_CALL_BATTLE:
     // BGM切り替え
-    FIELD_SOUND_ChangePlayerVolume( fsnd, MAX_VOLUME, 1 );  
+    PMSND_PlayBGM( pbew->bp->musicDefault );
     //バトルプロセス呼び出し：プロセスが終了したらこのイベントに復帰する
     GMEVENT_CallProc( event, FS_OVERLAY_ID(battle), &BtlProcData, pbew->bp );
     (*seq)++;
@@ -873,27 +893,15 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
     }
     (*seq)++;
     break;
-  // フィールドBGMを復帰
-  case PW_SHOW_SEQ_FIELD_BGM_PLAY:
-    GMEVENT_CallEvent( event, EVENT_FSND_PopPlayBGM_fromBattle( gsys ) );
-    (*seq) ++;
-    break;
-
   case PW_SHOW_SEQ_FIELD_OPEN: 
-    //勝ち負け判定
+    // フィールド復帰
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     (*seq) ++;
     break;
 
-  // BGMの復帰待ち
+  // BGMの復帰
   case PW_SHOW_SEQ_FIELD_BGM_WAIT:
-    GMEVENT_CallEvent( event, EVENT_FSND_WaitBGMPop( gsys ) );
-    (*seq) ++;
-    break;
-
-  // フェードイン処理
-  case PW_SHOW_SEQ_FADEIN:
-    //GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Black( gsys, fieldmap, FIELD_FADE_WAIT ) );
+    restoreFieldBGM( gsys, gamedata, event, fieldmap, fsnd );  // popじゃないFIELDBGM復帰
     (*seq) ++;
     break;
 
@@ -965,8 +973,6 @@ static GMEVENT_RESULT pokewoodRecBattleEvent( GMEVENT * event, int *seq, void * 
   case PW_REC_SEQ_START:
     // BATTLE_SETUP_PARAM生成
     pbew->bp = createPokewoodBSP( prew, gsys, gamedata, fieldmap, prew->heapID );
-    // プレイヤーボリュームをフェードアウト
-    FIELD_SOUND_ChangePlayerVolume( fsnd, 0, 20 );  
     GMEVENT_CallEvent(event, EVENT_FSND_PushPlayBattleBGM(gsys, pbew->bp->musicDefault));
     (*seq)++;
     break;

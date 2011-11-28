@@ -6418,6 +6418,10 @@ void POKEWOOD_Init( BTL_MAIN_MODULE* wk, int senario_no )
   // ポケウッドカットイン処理を初期化
   wk->pokewood_cutin = POKEWOOD_CUTIN_Init( HEAPID_BTL_SYSTEM );
 
+  // バトル終了時のBGMフェードアウト機能が動作しないようにする
+  if(BTL_MAIN_GetPokewoodMode(wk)==BTL_POKEWOOD_SHOW){
+    BTL_MAIN_BGMFadeOutDisable( wk );
+  }
 }
 
 //=============================================================================================
