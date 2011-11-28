@@ -117,7 +117,7 @@ typedef enum{
 #define BEACON_TIMEOUT_FRAME  (3*60*60) //60sec*3
 
 ///表示するログ件数
-#define VIEW_LOG_MAX    (4)
+#define VIEW_LOG_MAX    (BEACON_VIEW_PANEL_NUM_MAX)
 
 #define BS_LOG_MAX  (30)  //ログ管理数
 #define PANEL_MAX   (5)   //同時描画されるパネル数

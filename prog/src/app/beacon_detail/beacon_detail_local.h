@@ -106,9 +106,10 @@ typedef struct
   u8                    flip_sw;
   u8                    list_max;
   u8                    list_top;
+  u8                    list_top_ini;
   u8                    list[GAMEBEACON_INFO_TBL_MAX];
 
-  u8                    msg_spd;
+//  u8                    msg_spd;
 
 	//ï`âÊê›íË
 	BEACON_DETAIL_GRAPHIC_WORK	*graphic;

@@ -449,7 +449,10 @@ static void _sub_DataSetup(BEACON_DETAIL_WORK* wk)
     wk->data_error_f = TRUE;
     GF_ASSERT(0);
   }
+  //最初のtopを憶えておく
+  wk->list_top_ini = wk->list[wk->list_top];
 
+#if 0
   //メッセージスピード取得
   /*
    *  アフターマスター ローカライズ版に向けてのコメント
@@ -460,6 +463,7 @@ static void _sub_DataSetup(BEACON_DETAIL_WORK* wk)
    *  by iwasawa 20100806
   */
   wk->msg_spd  = MSGSPEED_GetWait();
+#endif
 
 	//メモリ上にタウンマップデータ展開
 	wk->tmap = TOWNMAP_DATA_Alloc( wk->heapID );
@@ -474,6 +478,22 @@ static void _sub_DataSetup(BEACON_DETAIL_WORK* wk)
 //--------------------------------------------------------------
 static void _sub_DataExit(BEACON_DETAIL_WORK* wk)
 {
+  int new_top = wk->list[wk->list_top];
+  int max = GAMEBEACON_InfoTblRing_GetEntryNum( wk->infoLog );
+
+  {
+    //すれ違いログ画面で最後に見えていた範囲を計算
+    int view_top = wk->list_top_ini-wk->param->view_ofs;
+    int view_bottom = wk->list_top_ini+((BEACON_VIEW_PANEL_NUM_MAX-1)-wk->param->view_ofs);
+  
+    if( new_top < view_top || new_top > view_bottom ){
+      if( (max-new_top) < BEACON_VIEW_PANEL_NUM_MAX ){  //見える範囲には制限がある
+        new_top = max-BEACON_VIEW_PANEL_NUM_MAX;
+      }
+      BEACON_STATUS_SetViewTopOffset( wk->b_status, new_top );
+    }
+  }
+
 	//メモリ上のデータ破棄
 	TOWNMAP_DATA_Free( wk->tmap );
   

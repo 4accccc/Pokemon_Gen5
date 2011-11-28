@@ -51,6 +51,7 @@ typedef struct {
   SAVE_CONTROL_WORK *save;
   BEACON_DETAIL_PARAM prm;
   u8 target;
+  u8 view_ofs;
 } EVENT_BEACON_DETAIL_WORK;
 
 //============================================================================================
@@ -87,6 +88,7 @@ static GMEVENT_RESULT EVENT_BeaconDetailMain(GMEVENT * event, int *  seq, void *
     bdw->prm.gsys = bdw->gsys;
     bdw->prm.gdata = bdw->gdata;
     bdw->prm.target = bdw->target;
+    bdw->prm.view_ofs = bdw->view_ofs;
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(beacon_detail), &BeaconDetailProcData, &bdw->prm);
     (*seq)++;
     break;
@@ -141,7 +143,8 @@ GMEVENT* EVENT_BeaconDetail(GAMESYS_WORK * gsys, void* work )
   bdw->gdata = GAMESYSTEM_GetGameData(gsys);
   bdw->save = GAMEDATA_GetSaveControlWork(bdw->gdata);
   bdw->gsys = gsys;
-  bdw->target = target;
+  bdw->target = target&0xFFFF;
+  bdw->view_ofs = (target>>16)&0xFFFF;
 
   IWASAWA_Printf("BeaconDetail Target = %d\n",target);
   return event;

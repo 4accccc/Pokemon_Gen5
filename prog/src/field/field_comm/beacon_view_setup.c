@@ -181,6 +181,7 @@ GMEVENT* BVSEvent_CheckCommon( BEACON_VIEW_PTR wk, BOOL bEvReqOK )
   case EV_CALL_DETAIL_VIEW:
     {
       u32 target = wk->ctrl.target+wk->ctrl.view_top;
+      target |= wk->ctrl.target<<16;
       call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
           FS_OVERLAY_ID( notwifi_event_beacon_detail ), EVENT_BeaconDetail, &target );
     }

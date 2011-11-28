@@ -20,6 +20,8 @@ typedef enum{
   SP_GPOWER_REQ_MAX = SP_GPOWER_REQ_CAPTURE_UP,
 }SP_GPOWER_REQ;
 
+#define BEACON_VIEW_PANEL_NUM_MAX  (4) //すれ違いログ画面の一度に表示される最大パネル数
+
 typedef struct _TAG_BEACON_STATUS BEACON_STATUS;
 
 //--------------------------------------------------------------
