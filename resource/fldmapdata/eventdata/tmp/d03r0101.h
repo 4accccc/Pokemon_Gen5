@@ -11,31 +11,26 @@
 #define ZONE_D03R0101_EVC_H
 
 #define D03R0101_SUNGLASSES_01             0
-#define D03R0101_DARUMA_01                 1
-#define D03R0101_DARUMA_02                 2
-#define D03R0101_DARUMA_03                 3
-#define D03R0101_DARUMA_04                 4
-#define D03R0101_DARUMA_05                 5
-#define TR_BACKPACKERW_24                  6
-#define TR_RANGERW_30                      7
-#define TR_RANGERM_30                      8
-#define TR_NURSE_03                        9
-#define TR_ESPM_15                        10
-#define TR_ESPW_14                        11
-#define TR_BACKPACKERM_29                 12
-#define TR_BACKPACKERM_30                 13
-#define TR_BACKPACKERW_25                 14
-#define FLD_ITEM_54                       15
-#define FLD_ITEM_55                       16
-#define FLD_ITEM_56                       17
-#define FLD_ITEM_57                       18
-#define FLD_ITEM_58                       19
-#define FLD_ITEM_59                       20
-#define FLD_ITEM_60                       21
-#define FLD_ITEM_61                       22
-#define D03R0101_FIGHTERM_01              23
-#define D03R0101_BACKPACKERM_01           24
-#define D03R0101_RANGERM_01               25
+#define TR_ESPM_15                         1
+#define TR_BACKPACKERW_24                  2
+#define TR_RANGERW_30                      3
+#define TR_RANGERM_30                      4
+#define TR_NURSE_03                        5
+#define TR_ESPW_14                         6
+#define TR_BACKPACKERM_29                  7
+#define TR_BACKPACKERM_30                  8
+#define TR_BACKPACKERW_25                  9
+#define FLD_ITEM_54                       10
+#define FLD_ITEM_55                       11
+#define FLD_ITEM_56                       12
+#define FLD_ITEM_57                       13
+#define FLD_ITEM_58                       14
+#define FLD_ITEM_59                       15
+#define FLD_ITEM_60                       16
+#define FLD_ITEM_61                       17
+#define D03R0101_FIGHTERM_01              18
+#define D03R0101_BACKPACKERM_01           19
+#define D03R0101_RANGERM_01               20
 
 #endif //ZONE_D03R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d03r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

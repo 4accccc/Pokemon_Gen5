@@ -2090,11 +2090,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハイリンクに　フェスミッションの
-『きのみ　だいしゅうかく！』が▽
+『[Name:FesMissionName ]』が▽
 ついか　されました</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-28T05:56:29" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-28T08:34:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2103,11 +2103,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハイリンクに　フェスミッションの
-『きのみ　だいしゅうかく！』が▽
+『[Name:FesMissionName ]』が▽
 追加されました</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-28T05:56:29" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-28T08:34:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

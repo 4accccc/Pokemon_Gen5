@@ -277,8 +277,16 @@ EVENT_START   ev_d06r0101_girl4_01
   
     //メッセージ分岐
     IF $SCWK_ANSWER == VERSION_W2 THEN
+    		
+    	    //フェスミッション名格納
+    	    _FMISSION_NAME( 0, FMISSION_ID_ITEM_KAKERA_03W, 0 )
+    
          _SYSWIN_MSG( msg_d06r0101_mission_add_02w, POS_DEFAULT )
     ELSE
+    
+    	    //フェスミッション名格納
+    	    _FMISSION_NAME( 0, FMISSION_ID_ITEM_KAKERA_03B, 0 )
+    
          _SYSWIN_MSG( msg_d06r0101_mission_add_02b, POS_DEFAULT )
     ENDIF
     _SE_WAIT()

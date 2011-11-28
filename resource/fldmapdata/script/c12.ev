@@ -2035,8 +2035,6 @@ EVENT_START   ev_c12_game_start
 
   _TIME_WAIT(60)
   
-  _TIME_WAIT( 30 )
-  
   //ママ・電話に出る
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_game_start_03 )
   _OBJ_ANIME_WAIT()

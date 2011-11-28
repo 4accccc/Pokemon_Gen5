@@ -120,7 +120,10 @@ EVENT_START	ev_c01r0301_girl2_01
 
 		_BALLOONWIN_TALKOBJ_MSG_POS( msg_c01r0301_mission_add_06, POS_DOWN )
 		_MSGWIN_CLOSE()
-		
+
+		//フェスミッション名格納
+		_FMISSION_NAME( 0, FMISSION_ID_NPC_JANKEN_01, 0 )
+
 		//フェスミッションが追加されました
 		_SE_PLAY( SEQ_SE_FLD_133 )
 		_SYSWIN_MSG( msg_c01r0301_mission_add_07, POS_DEFAULT )

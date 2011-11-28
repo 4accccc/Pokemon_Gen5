@@ -657,11 +657,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハイリンクに　フェスミッションの
-『くらやみに　ひかる　こうせき』が▽
+『[Name:FesMissionName ]』が▽
 ついか　されました</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-21T02:50:40" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-28T08:30:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -670,11 +670,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハイリンクに　フェスミッションの
-『くらやみに　ひかる　こうせき』が▽
+『[Name:FesMissionName ]』が▽
 追加されました</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-22T12:57:48" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-28T08:31:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -712,11 +712,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハイリンクに　フェスミッションの
-『ひかり　かがやく　こうせき』が▽
+『[Name:FesMissionName ]』が▽
 ついか　されました</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-21T02:50:44" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-28T08:31:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -725,11 +725,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハイリンクに　フェスミッションの
-『ひかり　かがやく　こうせき』が▽
+『[Name:FesMissionName ]』が▽
 追加されました</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-22T12:57:51" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-11-28T08:31:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
