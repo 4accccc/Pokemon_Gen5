@@ -6824,28 +6824,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ライブキャスターの　ミニゲームの
-とくてんが　３０てんに　たっした
+とくてんが　５０てんに　たっした
 ささやかな　きろくの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-26T06:23:51" />
+				Time="2011-11-28T03:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-26T06:23:51" />
+				Time="2011-11-28T03:48:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ライブキャスターの　ミニゲームの
-合計得点が　３０点に　達した
+合計得点が　５０点に　達した
 ささやかな　記録の　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-26T06:23:51" />
+				Time="2011-11-28T03:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-26T06:23:51" />
+				Time="2011-11-28T03:48:07" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -6861,28 +6861,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ライブキャスターの　ミニゲームの
-とくてんが　１００てんに　たっした
+とくてんが　２００てんに　たっした
 はげしい　きろくの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-26T06:23:51" />
+				Time="2011-11-28T03:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-26T06:23:51" />
+				Time="2011-11-28T03:48:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ライブキャスターの　ミニゲームの
-合計得点が　１００点に　達した
+合計得点が　２００点に　達した
 激しい　記録の　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-26T06:23:51" />
+				Time="2011-11-28T03:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-26T06:23:51" />
+				Time="2011-11-28T03:48:07" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

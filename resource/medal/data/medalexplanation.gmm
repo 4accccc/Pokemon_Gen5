@@ -2112,19 +2112,19 @@
 
 	<row id="MDL_EXP_APPLICATION_039">
 		<language name="JPN" width="216">ライブキャスターの　ミニゲームの
-とくてんが　３０てんに　たっした
+とくてんが　５０てんに　たっした
 ささやかな　きろくの　メダル。</language>
 		<language name="JPN_KANJI" width="216">ライブキャスターの　ミニゲームの
-合計得点が　３０点に　達した
+合計得点が　５０点に　達した
 ささやかな　記録の　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_040">
 		<language name="JPN" width="216">ライブキャスターの　ミニゲームの
-とくてんが　１００てんに　たっした
+とくてんが　２００てんに　たっした
 はげしい　きろくの　メダル。</language>
 		<language name="JPN_KANJI" width="216">ライブキャスターの　ミニゲームの
-合計得点が　１００点に　達した
+合計得点が　２００点に　達した
 激しい　記録の　メダル。</language>
 	</row>
 
