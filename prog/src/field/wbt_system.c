@@ -322,16 +322,18 @@ u8 WBTSYS_GetPartyMax( WBTSYS * wbtsys )
 static void WBTTRAINER_Init( WBTTRAINER * wbt_tr, HEAPID heapID )
 {
   wbt_tr->wbt_tr_type = WBT_TRTYPE_ROM;
-  wbt_tr->sex = PM_MALE;
-  wbt_tr->pri = 1;
-  wbt_tr->tr_id = 0;
-  wbt_tr->poketype = POKETYPE_NORMAL;
-  wbt_tr->pow_rnd = 0;
-  wbt_tr->mmdl_id = SWHERO;
+  wbt_tr->sex         = PM_MALE;
+  wbt_tr->pri         = 1;
+  wbt_tr->has_ace     = FALSE;
+  wbt_tr->poketype    = POKETYPE_NORMAL;
+  wbt_tr->tr_id       = 0;
+  wbt_tr->pow_rnd     = 0;
+  wbt_tr->dl_tr_id    = 0;
+  wbt_tr->mmdl_id     = SWHERO;
   wbt_tr->btl_tr_type = TRTYPE_HERO;
-  wbt_tr->ai_bit = WBT_AI_BIT_BASIC;  //‰¼
-  wbt_tr->name = GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, heapID );
-  wbt_tr->title = GFL_STR_CreateBuffer( WBTDL_TRAINER_TITLE_LEN, heapID );
+  wbt_tr->ai_bit      = WBT_AI_BIT_BASIC;
+  wbt_tr->name        = GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, heapID );
+  wbt_tr->title       = GFL_STR_CreateBuffer( WBTDL_TRAINER_TITLE_LEN, heapID );
 }
 
 //------------------------------------------------------------------

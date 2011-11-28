@@ -78,8 +78,8 @@ struct _WBTTRAINER{
 /// WBT結果データ
 //------------------------------------------------------------------
 struct _WBTRESULT {
-  u8 upside_win;
-  u8 msg_id;
+  u8 upside_win;      ///<どちら側が勝ったか
+  u8 msg_id;          ///<寸評メッセージ指定
 };
 
 //------------------------------------------------------------------
@@ -97,17 +97,22 @@ struct _WBT_MATCH_CONDITION{
 
   u64 seed64;
 
-  const WBTDL_MATCH * wbtdl_match;
+  const WBTDL_MATCH * wbtdl_match;  ///<DLトーナメント用：トレーナー管理データ
 };
 //------------------------------------------------------------------
-///
+/**
+ * トレーナー抽選用データ
+ * @note
+ * この形式のデータ配列としてトーナメント参戦トレーナーのデータを抽選、ソートする。
+ * 最終的にその配列から実際のトレーナーデータWBTTRAINERを生成している。
+ */
 //------------------------------------------------------------------
-typedef struct _WBT_TRCODE{
+struct _WBT_TRCODE{
   union {
-    u16 code;
+    u16 code;       ///<一括指定用コード（WBT_TRCODE_～）
     struct {
-      u8 tr_id;
-      u8 type;
+      u8 tr_id;     ///<トレーナーID（ROMトレーナー、DLHYBRIDトレーナーのみ）
+      u8 type;      ///<WBT_TRCODE_TYPE_～の指定
     };
   };
 };
