@@ -528,8 +528,9 @@ enum{
   AUDIENCE_START,            // 再開
 };
 
+// 観客のパレットチェンジ(test)
 #define __AUDIENCE_PALCHG__
-//#undef  __AUDIENCE_PALCHG__
+#undef  __AUDIENCE_PALCHG__
 
 //============================================================================================
 /**
