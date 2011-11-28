@@ -2031,20 +2031,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フキヨセの　はたけで
-おいしい　やさいが　そだつのは▼
-こだわりの　こやしを
-つかって　いるからです▼
-だいしぜんの　エネルギーを
-たくわえた　よい　こやしは▽
-とっても　くさい！▼
-こうばしく　それでいて
-はなの　おくまで　しびれるような……▼
-いやあ　おもいだすだけで
-めまいが　しちゃうね！▼</Text>
+			<Text>わたしの　ポケモンね
+きのみが　だいすき　なの！▼
+だから　きのみを　さがして
+かくちを　あるいてるってわけ▼
+ああ　きのみが　あふれるほど
+あつまる　まちは　ないのかしら▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-22T13:05:58" />
+				Time="2011-11-28T05:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2052,20 +2047,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フキヨセの　畑で
-おいしい　野菜が　育つのは▼
-こだわりの　こやしを
-使って　いるからです▼
-大自然の　エネルギーを
-蓄えた　よい　こやしは▽
-とっても　くさい！▼
-香ばしく　それでいて
-鼻の　奥まで　しびれるような……▼
-いやあ　思いだすだけで
-めまいが　しちゃうね！▼</Text>
+			<Text>わたしの　ポケモンね
+きのみが　大好き　なの！▼
+だから　きのみを　探して
+各地を　歩いてるってわけ▼
+ああ　きのみが　あふれるほど
+集まる　街は　ないのかしら▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-22T13:06:55" />
+				Time="2011-11-28T05:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2073,18 +2063,18 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♀
 ・フェス用システムフラグがOFF</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T03:45:59" />
+				Time="2011-11-28T05:56:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MOUNTAIN</Text>
+			<Text>BACKPACKERW</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T03:45:46" />
+				Time="2011-11-28T05:56:29" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2100,11 +2090,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハイリンクに　フェスミッションの
-『こやし　コレクター！』が▽
+『きのみ　だいしゅうかく！』が▽
 ついか　されました</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T03:45:31" />
+				Time="2011-11-28T05:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2113,11 +2103,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハイリンクに　フェスミッションの
-『こやし　コレクター！』が▽
+『きのみ　だいしゅうかく！』が▽
 追加されました</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-22T13:04:48" />
+				Time="2011-11-28T05:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2131,7 +2121,7 @@
 ・システムフラグをセット</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T03:45:59" />
+				Time="2011-11-28T05:56:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2153,11 +2143,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くっさい　くっさい　こやしが
-おいしい　やさいを　そだてるのさ！</Text>
+			<Text>わたしの　ポケモンが
+すきな　きのみは　ヒメリのみ▼
+わざポイントが　かいふくする
+とっても　べんりな　きのみよね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-22T12:18:11" />
+				Time="2011-11-28T05:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2165,11 +2157,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くっさい　くっさい　こやしが
-美味しい　野菜を　育てるのさ！</Text>
+			<Text>わたしの　ポケモンが
+好きな　きのみは　ヒメリのみ▼
+技ポイントが　回復する
+とっても　便利な　きのみよね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-22T12:18:22" />
+				Time="2011-11-28T05:56:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2177,18 +2171,18 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♀
 ・mission_add_02表示後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T03:45:59" />
+				Time="2011-11-28T05:56:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>MOUNTAIN</Text>
+			<Text>BACKPACKERW</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T03:45:47" />
+				Time="2011-11-28T05:56:29" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
