@@ -46,7 +46,7 @@
 #include "../../battle/pokewood/pokewood_senario.h"
 
 
-//#define SCROLL_DEBUG    //有効にするとスクロールの数値をプリント
+#define SCROLL_DEBUG    //有効にするとスクロールの数値をプリント
 //==============================================================================
 //  定数定義
 //==============================================================================
@@ -401,14 +401,16 @@ static void initBriefingBmpwin( G2D_CONTROL *CG2d, HEAPID heapID );
 static void releaseBriefingBmpwin( G2D_CONTROL* CG2d );
 static void initEndrollBmpwin( G2D_CONTROL *CG2d, HEAPID heapID, int align );
 static void releaseEndrollBmpwin( G2D_CONTROL* CG2d );
+static void SetAudienceCondition_atEnd( AUDIENCE_CONTROL *AOam, int mode, u32 audienceBit );
+static void setAudienceReaction( PKWD_BRIEFING_WORK *tw, BATTLE_SETUP_PARAM *bsp );
 
 static void initEndrollMsgdata( PKWD_BRIEFING_PARAM *param, G2D_CONTROL* CG2d,  int scenario_no, HEAPID heapID );
 static void releaseEndrollMsgdata( G2D_CONTROL* CG2d );
 static void initBriefingMsgdata(G2D_CONTROL* CG2d, int scenario_no, MYSTATUS *mystatus, HEAPID heapID);
 static void releaseBriefingMsgdata(G2D_CONTROL* CG2d);
-static void _BG3Offset_func( G2D_CONTROL* CG2d, int scroll, int mode, HEAPID heapID );
+static void _BG3Offset_func( PKWD_BRIEFING_WORK *tw, int scroll, int mode, HEAPID heapID );
 static void _endroll_screen_onoff( G2D_CONTROL *CG2d );
-static void _scroll_control( PKWD_BRIEFING_WORK *tw);
+static void _scroll_control( PKWD_BRIEFING_WORK *tw );
 
 static void transBGGraphic( G2D_CONTROL* CG2d, HEAPID heapID, int align );
 
@@ -459,9 +461,6 @@ static void _key_check( PKWD_BRIEFING_WORK *tw )
   if(  GFL_UI_KEY_GetTrg() & NEXT_PROC_MASK){
     tw->seq  = SEQ_VOICE_PLAY;
     GFL_BG_SetVisible(FRAME_INFOWIN, VISIBLE_ON);
-    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
-//    PMSND_FadeOutBGM( 4 );
-
     return;
   }
 
@@ -673,6 +672,8 @@ static void initWork( PKWD_BRIEFING_WORK* tw )
     PokeParty_Init( tw->CG2d.myparty, 6 );
     tw->CG2d.enemyparty = PokeParty_AllocPartyWork(tw->heapID);
     PokeParty_Init( tw->CG2d.enemyparty, 6 );
+    tw->param->audienceNum = 10;
+    tw->param->audienceBit = 0x000003ff;
     
     if(GFL_UI_KEY_GetCont()&PAD_BUTTON_Y){
       num = 1;
@@ -731,7 +732,6 @@ GFL_PROC_RESULT PkwdEndrollProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     initIO();
     initVRAM();
     initLcdWindow();
-//    initLcdWindow2(0);
 #ifdef PM_DEBUG
     if(GFL_UI_KEY_GetCont()&PAD_BUTTON_X){
       tw->param->scenario_no = 40;
@@ -746,6 +746,10 @@ GFL_PROC_RESULT PkwdEndrollProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
       tw->mode = 1;
     }else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
       tw->mode = 2;
+    }else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_X){
+      tw->mode = 0;
+    }else{
+      tw->mode = GFUser_GetPublicRand(3);
     }
 #else
     // ランダムでエンディングのパターンを切り替える
@@ -1783,19 +1787,19 @@ static STRBUF *_get_Endroll_strbuf_pointer( G2D_CONTROL *CG2d, int type )
   STRBUF *strbuf = NULL;
   int n=0;
   switch( endroll_strtbl[type] ){
-  case ENDROL_F_PLAYER1:
+  case ENDROL_F_PLAYER1:  // 役名
     strbuf = CG2d->endrol_str[ENDROLL_STR_MYROLE];
     break;
-  case ENDROL_F_PLAYER1_ACT:
+  case ENDROL_F_PLAYER1_ACT:  // 役者名
     strbuf = CG2d->endrol_str[ENDROLL_STR_MYNAME];
     break;
-  case ENDROL_F_PLAYER2:
+  case ENDROL_F_PLAYER2:  // 役名
     strbuf = CG2d->endrol_str[ENDROLL_STR_ENEMYROLE];
     break;
-  case ENDROL_F_PLAYER2_ACT:
+  case ENDROL_F_PLAYER2_ACT:  // 役者名
     strbuf = CG2d->endrol_str[ENDROLL_STR_ENEMYNAME];
     break;
-  case ENDROL_F_PLAYER1_PARTY1:
+  case ENDROL_F_PLAYER1_PARTY1: // 手持ちポケモン
   case ENDROL_F_PLAYER1_PARTY2:
   case ENDROL_F_PLAYER1_PARTY3:
   case ENDROL_F_PLAYER1_PARTY4:
@@ -1804,7 +1808,7 @@ static STRBUF *_get_Endroll_strbuf_pointer( G2D_CONTROL *CG2d, int type )
     n = endroll_strtbl[type]-ENDROL_F_PLAYER1_PARTY1;
     strbuf = CG2d->endrol_str[ENDROLL_STR_P1_MONSNAME1+n];
     break;
-  case ENDROL_F_PLAYER2_PARTY1:
+  case ENDROL_F_PLAYER2_PARTY1: // 手持ちポケモン
   case ENDROL_F_PLAYER2_PARTY2:
   case ENDROL_F_PLAYER2_PARTY3:
   case ENDROL_F_PLAYER2_PARTY4:
@@ -1813,13 +1817,14 @@ static STRBUF *_get_Endroll_strbuf_pointer( G2D_CONTROL *CG2d, int type )
     n = endroll_strtbl[type]-ENDROL_F_PLAYER2_PARTY1;
     strbuf = CG2d->endrol_str[ENDROLL_STR_P2_MONSNAME1+n];
     break;
-  case ENDROL_F_WRITER_MYNAME:
+  case ENDROL_F_WRITER_MYNAME:  // 脚本家(常にユーザーの名前になるように）
     if(CG2d->exchange_result){
       strbuf = CG2d->endrol_str[ENDROLL_STR_ENEMYNAME];
     }else{
       strbuf = CG2d->endrol_str[ENDROLL_STR_MYNAME];
     }
     break;
+  // 上の定義以外の文字列はそのままmstxtから表示する
   default:
     strbuf = CG2d->endrol_str[endroll_strtbl[type]];
     // 文字列が「なし」だったら使用しない
@@ -2513,12 +2518,12 @@ static  void  BTLV_INPUT_DeleteAudienceObj( AUDIENCE_CONTROL *AOam )
   GFL_ARC_CloseDataHandle( AOam->aHandle );
 }
 
-
+/// 観客bitから指定の番号に観客は存在しているか取得
 static int _get_audienceBit( u32 work, int index )
 {
   return (work>>index)&1;
 }
-
+/// 観客が存在しているかを観客bitに反映させる
 static void _set_audienceBit( u32 *work, int index )
 {
   *work |= (1<<index);
@@ -2688,6 +2693,72 @@ static void debug_btlv_audience( AUDIENCE_CONTROL *AOam )
   }
 }
 
+/// 観客OBJの状態指定用の定義（ btlv_input.cには全て記述されています）
+#define  AUDIENCE_SEQ_QUESTION  ( 5 )  // 「?」
+#define  AUDIENCE_SEQ_SURPRISE  ( 7 )  // 驚き
+#define  AUDIENCE_SEQ_APPLAUSE  ( 8 )  // 拍手
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	観客全員の状態を変更する
+ *
+ * @param   AOam		AUDIENCE_CONTROL
+ * @param   mode		
+ * @param   audienceBit		
+ */
+//----------------------------------------------------------------------------------
+static void SetAudienceCondition_atEnd( AUDIENCE_CONTROL *AOam, int mode, u32 audienceBit )
+{
+  int i;
+  
+  for(i=0;i<BTLV_INPUT_AUDIENCE_MAX;i++){
+    if(_get_audienceBit(audienceBit, i)){
+      SetAudienceCondition( AOam, i, mode );
+    }
+  }
+}
+
+// 観客リアクションのならびに対応したＳＥのテーブル
+// [0]=少ない観客のとき、[1]=多い観客のとき
+static const u32 audience_se_tbl[][2]={
+  { 0,0, }, // 無反応
+  { SEQ_SE_SW_PKWOOD_AUD_03, SEQ_SE_SW_PKWOOD_AUD_03 }, //喜び
+  { SEQ_SE_SW_PKWOOD_AUD_07, SEQ_SE_SW_PKWOOD_AUD_08 }, //泣き
+  { SEQ_SE_SW_PKWOOD_AUD_09, SEQ_SE_SW_PKWOOD_AUD_10 }, //ドキドキ
+  { SEQ_SE_SW_PKWOOD_AUD_11, SEQ_SE_SW_PKWOOD_AUD_12 }, //笑い
+  { SEQ_SE_SW_PKWOOD_AUD_01, SEQ_SE_SW_PKWOOD_AUD_02 }, //？
+  { SEQ_SE_SW_PKWOOD_AUD_05, SEQ_SE_SW_PKWOOD_AUD_06 }, //寝る
+  { SEQ_SE_SW_PKWOOD_AUD_13, SEQ_SE_SW_PKWOOD_AUD_14 }, //驚き
+  { SEQ_SE_SW_PKWOOD_AUD_15, SEQ_SE_SW_PKWOOD_AUD_16 }, //拍手
+};
+
+//この人数以下なら少な目のＳＥを超えてたら大きいＳＥを
+#define SE_SWITCH_AUDIENCE_NUM  ( 12 )    
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	観客のリアクションに対応してSEを鳴らす
+ *
+ * @param   audienceNum 観客の人数
+ * @param   type	      観客のリアクションタイプ
+ */
+//----------------------------------------------------------------------------------
+static void _playSE_audience_reaction( u32 audienceNum, int type )
+{
+  if( audienceNum<SE_SWITCH_AUDIENCE_NUM ){
+    if(audience_se_tbl[type][0]!=0){
+      PMSND_PlaySE( audience_se_tbl[type][0] );
+    }
+  }else{
+    if(audience_se_tbl[type][1]!=0){
+      PMSND_PlaySE( audience_se_tbl[type][1] );
+    }
+  }
+}
+
+
+
 //=============================================================================================
 //=============================================================================================
 //=============================================================================================
@@ -2760,7 +2831,9 @@ static void EndrollFunc( PKWD_BRIEFING_WORK *tw )
     break;
   // 文字列フェード
   case BLEND_SEQ_FADEIN:
-    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2,GX_BLEND_PLANEMASK_BG0 |GX_BLEND_PLANEMASK_BG2,  tw->CG2d.blend_work, 8 );
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2,
+                      GX_BLEND_PLANEMASK_BG0 |GX_BLEND_PLANEMASK_BG2,  
+                      tw->CG2d.blend_work, 8 );
     tw->CG2d.blend_work++;
     if(tw->CG2d.blend_work==16){
       tw->blend_seq = BLEND_SEQ_WAIT;
@@ -2768,16 +2841,9 @@ static void EndrollFunc( PKWD_BRIEFING_WORK *tw )
     break;
   // スクロール処理
   case BLEND_SEQ_WAIT:
-//    if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_A || ++tw->CG2d.wait>BRIEFING_MSG_WAIT){
-//      tw->blend_seq = BLEND_SEQ_FADEOUT;
-//      tw->CG2d.wait=0;
-//    }
-
     _endroll_screen_onoff( &tw->CG2d );
     tw->CG2d.scroll++;
-//    G2_SetBG1Offset( 0, tw->CG2d.scroll );
-//    G2_SetBG2Offset( 0, (tw->CG2d.scroll)+16 );
-    _BG3Offset_func( &tw->CG2d, tw->CG2d.scroll, tw->mode, tw->heapID );
+    _BG3Offset_func( tw, tw->CG2d.scroll, tw->mode, tw->heapID );
     GFL_BG_SetVisible( FRAME_BRIEF2, VISIBLE_ON  );
     GFL_BG_SetVisible( FRAME_BRIEF1, VISIBLE_ON );
 
@@ -2786,6 +2852,7 @@ static void EndrollFunc( PKWD_BRIEFING_WORK *tw )
     break;
   // 「END」表示
   case BLEND_SEQ_END_PUT:
+    setAudienceReaction( tw, tw->param->bsp );
     _trans_G2DGraphic_End( &tw->CG2d, tw->heapID );
     GX_SetVisibleWnd( GX_WNDMASK_W1 );
     G2_SetBG3Offset( 0, 0 );
@@ -2803,6 +2870,55 @@ static void EndrollFunc( PKWD_BRIEFING_WORK *tw )
   }
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	観客リアクション設定
+ *
+ * @param   AOam		
+ * @param   result		
+ */
+//----------------------------------------------------------------------------------
+static void setAudienceReaction( PKWD_BRIEFING_WORK *tw, BATTLE_SETUP_PARAM *bsp )
+{
+  int result = 0;
+  if(bsp!=NULL){
+    result = bsp->pokewoodResult;
+  }
+#ifdef PM_DEBUG
+  else{
+    if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L){
+      result = 1;
+    }else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
+      result = 2;
+    }
+  }
+#endif
+
+  switch(result){
+  case BTL_POKEWOOD_RESULT_BAD:
+    SetAudienceCondition_atEnd( &tw->AOam, AUDIENCE_SEQ_QUESTION, tw->param->audienceBit );  
+    _playSE_audience_reaction( tw->param->audienceNum, AUDIENCE_SEQ_QUESTION );
+    break;
+  case BTL_POKEWOOD_RESULT_SUCCESS:
+    SetAudienceCondition_atEnd( &tw->AOam, AUDIENCE_SEQ_APPLAUSE, tw->param->audienceBit );  
+    _playSE_audience_reaction( tw->param->audienceNum, AUDIENCE_SEQ_APPLAUSE );
+    break;
+  case BTL_POKEWOOD_RESULT_STRANGE:
+    SetAudienceCondition_atEnd( &tw->AOam, AUDIENCE_SEQ_SURPRISE, tw->param->audienceBit );  
+    _playSE_audience_reaction( tw->param->audienceNum, AUDIENCE_SEQ_SURPRISE );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	スクロールコントロール
+ *
+ * @param   tw		
+ */
+//----------------------------------------------------------------------------------
 static void _scroll_control( PKWD_BRIEFING_WORK *tw)
 {
   // 全面スクロール
@@ -2821,6 +2937,13 @@ static void _scroll_control( PKWD_BRIEFING_WORK *tw)
 }
 
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	スクロールに合わせてBG面のON/OFF設定管理
+ *
+ * @param   CG2d		
+ */
+//----------------------------------------------------------------------------------
 static void _endroll_screen_onoff( G2D_CONTROL *CG2d )
 {
   int mode=0;
@@ -2884,6 +3007,7 @@ static void _endroll_screen_onoff( G2D_CONTROL *CG2d )
 
 #define POKEWOOD_CREDIT_HALF_HEIGHT  ( 128 )  ///< エンドクレジット文字列が途切れる場所
 #define POKEWOOD_LOG_SCREEN_HEIGHT   ( 234 )  ///< ポケウッドロゴとENDを差し替えるのに都合のいい場所
+#define POKEWOOD_SCROLL_AUDIENCE_ON  ( POKEWOOD_LOG_SCREEN_HEIGHT+64 )  ///< 観客リアクションのタイミング
 //----------------------------------------------------------------------------------
 /**
  * @brief	BG3面のスクロール設定
@@ -2894,24 +3018,29 @@ static void _endroll_screen_onoff( G2D_CONTROL *CG2d )
  * @param   heapID		
  */
 //----------------------------------------------------------------------------------
-static void _BG3Offset_func( G2D_CONTROL* CG2d, int scroll, int align, HEAPID heapID )
+static void _BG3Offset_func( PKWD_BRIEFING_WORK *tw, int scroll, int align, HEAPID heapID )
 {
-  int pokewood_pos = (CG2d->line_count*8-POKEWOOD_CREDIT_HALF_HEIGHT);
+  int pokewood_pos = (tw->CG2d.line_count*8-POKEWOOD_CREDIT_HALF_HEIGHT);
 #ifdef SCROLL_DEBUG
-  OS_Printf( "now=%d, line_calc=%d", scroll,CG2d->line_count*8-128);
+  OS_Printf( "now=%d, line_calc=%d", scroll,tw->CG2d.line_count*8-128);
 #endif
   if(scroll > pokewood_pos){
 #ifdef SCROLL_DEBUG
-    OS_Printf("limit=%d,  bg3pos=%d", pokewood_pos,  CG2d->scroll- pokewood_pos );
+    OS_Printf("limit=%d,  bg3pos=%d", pokewood_pos,  tw->CG2d.scroll- pokewood_pos );
 #endif
     // この値が0以外になるとvblankFuncでスクロール設定が行われる
-    CG2d->bg3_scroll_direct = CG2d->scroll- pokewood_pos;
+    tw->CG2d.bg3_scroll_direct = tw->CG2d.scroll- pokewood_pos;
   }
+  
+  // 左右分割のときだけ「END」スクリーンを転送する
   if(scroll==(pokewood_pos+POKEWOOD_LOG_SCREEN_HEIGHT) && align!=0){
-    transSideEndScreen( CG2d, heapID, align );
+    transSideEndScreen( &tw->CG2d, heapID, align );
   }
   
-  
+  // 左右分割の時の「END」スクリーン登場にあわせた観客リアクション
+  if(scroll==(pokewood_pos+POKEWOOD_SCROLL_AUDIENCE_ON) && align!=0){
+    setAudienceReaction( tw, tw->param->bsp );
+  }
 #ifdef SCROLL_DEBUG
   OS_Printf("\n");
 #endif
