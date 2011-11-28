@@ -6442,28 +6442,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ライブキャスターの
-ミニゲームで　ふうせんを
-バンバン　わろう！</Text>
+ミニゲームを　あそんで
+とくてんを　かさねよう！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-11-26T06:23:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-11-26T06:23:52" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ライブキャスターの
-ミニゲームで　風船を
-バンバン　割ろう！</Text>
+ミニゲームを　遊んで
+得点を　重ねよう！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-11-26T06:23:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-11-26T06:23:52" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
