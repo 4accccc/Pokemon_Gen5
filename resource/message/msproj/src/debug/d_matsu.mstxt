@@ -2088,6 +2088,84 @@ B面はかい</Text>
 		</LanguageCell>
 	</TextRow>
 	<TextRow
+		Label="DM_MSG_EXSAVE_022"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケウッド０５（ミラー無）[Name:TrainerName Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T02:22:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-02T09:19:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケウッド０５（ミラー無）[Name:TrainerName Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T02:22:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-02T09:19:53" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DM_MSG_EXSAVE_023"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケウッド０６（ミラー無）[Name:TrainerName Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T02:22:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-02T09:19:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケウッド０６（ミラー無）[Name:TrainerName Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T02:22:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-02T09:19:53" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DM_MSG_EXSAVE_024"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケウッド０７（ミラー無）[Name:TrainerName Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T02:22:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-02T09:19:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケウッド０７（ミラー無）[Name:TrainerName Idx="0" ]</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T02:22:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-02T09:19:53" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
 		Label="DM_MSG_EXSAVE_014"
 		Style="Large">
 		<LanguageCell
