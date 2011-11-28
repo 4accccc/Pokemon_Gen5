@@ -216,10 +216,10 @@
 		Label="msg_fm_title_item_02_s">
 		<LanguageCell
 			Language="JPN">
-			<Text>きえた　[Digit:4digits Idx="1" ]つの　おたから</Text>
+			<Text>きえた　[Digit:4digits Idx="1" ]この　ざいほう</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-28T06:13:07" />
+				Time="2011-11-28T08:37:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -227,10 +227,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>消えた　[Digit:4digits Idx="1" ]つの　財宝</Text>
+			<Text>消えた　[Digit:4digits Idx="1" ]この　財宝</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-28T06:13:25" />
+				Time="2011-11-28T08:40:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1044,10 +1044,10 @@
 		Label="msg_fm_title_npc_05">
 		<LanguageCell
 			Language="JPN">
-			<Text>エンジョイ　ぶつぶつこうかん！</Text>
+			<Text>めざせ　わらしべちょうじゃ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T08:39:54" />
+				Time="2011-11-28T08:21:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1055,10 +1055,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>エンジョイ　物々交換！</Text>
+			<Text>目指せ　わらしべ長者！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-27T03:42:41" />
+				Time="2011-11-28T08:21:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1090,10 +1090,10 @@
 		Label="msg_fm_title_npc_06b">
 		<LanguageCell
 			Language="JPN">
-			<Text>めざせ　わらしべちょうじゃ！</Text>
+			<Text>ドキドキ　ぶつぶつこうかん！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T08:40:05" />
+				Time="2011-11-28T08:36:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1101,10 +1101,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>目指せ　わらしべ長者！</Text>
+			<Text>ドキドキ　物々交換！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-27T03:42:55" />
+				Time="2011-11-28T08:36:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1136,10 +1136,10 @@
 		Label="msg_fm_title_npc_06w">
 		<LanguageCell
 			Language="JPN">
-			<Text>めざせ　わらしべちょうじゃ！</Text>
+			<Text>ウキウキ　ぶつぶつこうかん！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T08:42:18" />
+				Time="2011-11-28T08:36:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1147,10 +1147,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>目指せ　わらしべ長者！</Text>
+			<Text>ウキウキ　物々交換！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-27T03:43:19" />
+				Time="2011-11-28T08:36:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1366,10 +1366,10 @@
 		Label="msg_fm_title_npc_09">
 		<LanguageCell
 			Language="JPN">
-			<Text>きおくりょく　トレーニング！</Text>
+			<Text>きおくの　げんかいへ…</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T09:39:21" />
+				Time="2011-11-28T14:49:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1377,10 +1377,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>記憶力トレーニング！</Text>
+			<Text>記憶の　限界へ…</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-27T03:44:35" />
+				Time="2011-11-28T14:49:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1412,10 +1412,10 @@
 		Label="msg_fm_title_npc_09_s">
 		<LanguageCell
 			Language="JPN">
-			<Text>きおくの　げんかいへ…</Text>
+			<Text>きおくりょく　トレーニング！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-28T06:08:52" />
+				Time="2011-11-28T14:49:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1423,10 +1423,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>記憶の　限界へ…</Text>
+			<Text>記憶力トレーニング！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-28T06:09:03" />
+				Time="2011-11-28T14:49:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3411,11 +3411,11 @@
 			Language="JPN">
 			<Text>[Digit:4digits Idx="1" ]にんいじょうと
 どうぐを　こうかんしよう！
-せかいの　かくちを　たびする
-バックパッカーに　はなしかけよう！</Text>
+まちや　みちにいる
+おじょうさまに　はなしかけよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:31:30" />
+				Time="2011-11-28T08:22:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3425,11 +3425,11 @@
 			Language="JPN_KANJI">
 			<Text>[Digit:4digits Idx="1" ]にん以上と
 道具を　交換しよう！
-世界の　各地を　旅する
-バックパッカーに　話しかけよう！</Text>
+街や　道にいる
+お嬢様に　話しかけよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:31:36" />
+				Time="2011-11-28T08:22:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3463,11 +3463,11 @@
 			Language="JPN">
 			<Text>[Digit:4digits Idx="1" ]にんいじょうと
 どうぐを　こうかんしよう！
-まちや　みちにいる
-おじょうさまに　はなしかけよう！</Text>
+せかいの　かくちを　たびする
+バックパッカーに　はなしかけよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-21T14:15:32" />
+				Time="2011-11-28T08:22:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3477,11 +3477,11 @@
 			Language="JPN_KANJI">
 			<Text>[Digit:4digits Idx="1" ]にん以上と
 道具を　交換しよう！
-街や　道にいる
-お嬢様に　話しかけよう！</Text>
+世界の　各地を　旅する
+バックパッカーに　話しかけよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:27:48" />
+				Time="2011-11-28T08:22:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3515,11 +3515,11 @@
 			Language="JPN">
 			<Text>[Digit:4digits Idx="1" ]にんいじょうと
 どうぐを　こうかんしよう！
-まちや　みちにいる
-おじょうさまに　はなしかけよう！</Text>
+せかいの　かくちを　たびする
+バックパッカーに　はなしかけよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-21T14:16:09" />
+				Time="2011-11-28T08:23:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3529,11 +3529,11 @@
 			Language="JPN_KANJI">
 			<Text>[Digit:4digits Idx="1" ]にん以上と
 道具を　交換しよう！
-街や　道にいる
-お嬢様に　話しかけよう！</Text>
+世界の　各地を　旅する
+バックパッカーに　話しかけよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:27:52" />
+				Time="2011-11-28T08:23:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
