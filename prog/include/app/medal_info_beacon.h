@@ -32,5 +32,6 @@ typedef struct
 	GAMEDATA				*gdata;	//[in]ゲームシステム
   u8              target; //リストのトップに表示する
   u8              ret_mode; //TRUEならCギアに戻る
+  u8              view_ofs; //詳細画面コール時のターゲットのすれ違いログのViewオフセット
 }BEACON_MEDALINFO_INIT_PARAM;
 
