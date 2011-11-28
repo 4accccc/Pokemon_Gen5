@@ -234,6 +234,9 @@ EVENT_START ev_pos_c12r0101_startevents
   //========================================//
   //POSƒCƒxƒ“ƒg–³Œø
   $WK_SCENE_C12R0101 = 1
+  
+  _PERSON_TVT_CALL_SET_MOTHER()
+  
   //========================================//
 
 EVENT_END
