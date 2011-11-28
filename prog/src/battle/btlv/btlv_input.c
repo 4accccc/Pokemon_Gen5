@@ -28,6 +28,7 @@
 
 #include "arc_def.h"
 #include "battle/battgra_wb.naix"
+#include "font/font.naix"
 
 #include "pm_define.h"
 
@@ -3247,7 +3248,12 @@ static void btlv_init_audience_disp( BTLV_INPUT_WORK *biw )
   GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_pkwd_movie02_c_NSCR,	// test
                                           GFL_BG_FRAME1_S, 0, 0, FALSE, biw->heapID );
   GFL_ARCHDL_UTIL_TransVramPalette( biw->handle, NARC_battgra_wb_pkwd_movie_c_NCLR,
-                                          PALTYPE_SUB_BG, 0, 14*0x20, biw->heapID );
+                                          PALTYPE_SUB_BG, 0, 5*0x20, biw->heapID );
+  // フォントのパレットを転送
+  // (文字色、影色、抜き色の指定が(1,2,0)となっているのでsystemwinを使用した)
+//    GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, 0x0d * 32, 32, biw->heapID );
+    GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_systemwin_nclr, PALTYPE_SUB_BG, 0x0d * 32, 32, biw->heapID );
+  
   // BGのパレット
   PaletteWorkSet_VramCopy( biw->pfd, FADE_SUB_BG, 0, 0x20*15 );
   // 念のため
