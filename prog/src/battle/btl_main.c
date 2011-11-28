@@ -2837,7 +2837,11 @@ GAMEDATA* BTL_MAIN_GetGameData( const BTL_MAIN_MODULE* wk )
 void BTL_MAIN_RegisterZukanSeeFlag( const BTL_MAIN_MODULE* wk, u8 clientID, const BTL_POKEPARAM* bpp )
 {
   BtlCompetitor competitor = BTL_MAIN_GetCompetitor( wk );
+  int           pokewood   = BTL_MAIN_GetPokewoodMode( wk );
+
+  // 野生戦とトレーナー戦では図鑑登録をするが、ポケウッド中はしない
   if( ((competitor == BTL_COMPETITOR_WILD) || (competitor == BTL_COMPETITOR_TRAINER))
+  &&  pokewood == BTL_POKEWOOD_NONE
   ){
     if( clientID != BTL_CLIENT_PLAYER )
     {
@@ -6402,12 +6406,16 @@ extern const BATTLE_SETUP_PARAM *BTL_MAIN_GetBSPConst( const BTL_MAIN_MODULE *wk
 //=============================================================================================
 void POKEWOOD_Init( BTL_MAIN_MODULE* wk, int senario_no )
 {
+  // シナリオデータを読み込む
   wk->pokewood_senario = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD, senario_no, HEAPID_BTL_SYSTEM);
   wk->pokewood_work = GFL_HEAP_AllocMemory( HEAPID_BTL_SYSTEM, sizeof(POKEWOOD_WORK) );
   OS_Printf("pokewood senario no=%d, size=%d\n", senario_no, sizeof(POKEWOOD_SENARIO));
   _print_pokewood_senario( wk->pokewood_senario );
+
+  // 技AIワークを初期化
   wk->pokewood_work->enemy_waza[0]=-1;
 
+  // ポケウッドカットイン処理を初期化
   wk->pokewood_cutin = POKEWOOD_CUTIN_Init( HEAPID_BTL_SYSTEM );
 
 }
