@@ -256,6 +256,8 @@ EVENT_START ev_pos_d10r0501_swsage1_01
       // レシラム
       _DEMO_GIMMICK_GIANTHOLE_OBJ_OFFSET_SET( D10R0501_NPOKE_01, 0, 9 )
     ENDIF
+    // Nも少し右にずらす
+    _DEMO_GIMMICK_GIANTHOLE_OBJ_OFFSET_SET( D10R0501_BOSS_01, 4, 0 )
     //=======================================
 
     _MAP_FADE_BLACK_IN()
@@ -344,6 +346,9 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   // 解放キュレムはXに+1する
   _OBJ_POS_CHANGE( D10R0501_POKE1_01, 15, 0, 16, DIR_DOWN )
   //_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 15, 0, 20, DIR_UP)
+
+  // Nをずらしていたのを元にもどす
+  _DEMO_GIMMICK_GIANTHOLE_OBJ_OFFSET_SET( D10R0501_BOSS_01, -4, 0 )
   //=======================================
 
 
@@ -357,6 +362,7 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   ELSE
     _OBJ_ADD_EX( 15, 18, DIR_DOWN, MMDL_ID_EVENTOBJ_00, WHITESTONE, MV_DMY )
   ENDIF
+  _DEMO_GIMMICK_GIANTHOLE_OBJ_OFFSET_SET( MMDL_ID_EVENTOBJ_00, 0, 8 )
   //=======================================
 
   //ストーン状態のゼクロム(レシラム)をふわふわさせる

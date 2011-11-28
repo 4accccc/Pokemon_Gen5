@@ -144,7 +144,9 @@ VMCMD_RESULT EvCmdGianthole_ObjOffsetSet( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  int obj_id, offset_x, offset_z;
+  int obj_id;
+  s16 offset_x;
+  s16 offset_z;
   MMDL *mmdl;
 
   obj_id    = SCRCMD_GetVMWorkValue( core, work );  // ÉRÉ}ÉìÉhëÊ1à¯êî
@@ -166,10 +168,12 @@ VMCMD_RESULT EvCmdGianthole_ObjOffsetSet( VMHANDLE *core, void *wk )
   {
     VecFx32 offset = {0};
 
-    offset.x = offset_x << FX32_SHIFT;
-    offset.z = offset_z << FX32_SHIFT;
+    MMDL_GetVectorPos( mmdl, &offset );
 
-    MMDL_SetVectorDrawOffsetPos( mmdl, &offset );
+    offset.x += offset_x << FX32_SHIFT;
+    offset.z += offset_z << FX32_SHIFT;
+
+    MMDL_SetVectorPos( mmdl, &offset );
   }
 
   return VMCMD_RESULT_CONTINUE;
