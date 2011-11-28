@@ -638,12 +638,6 @@ SRCS_OVERLAY_DEV_WIRELESS   =   net/net_devwireless.c \
 SRCS_OVERLAY_DEV_IRC    =   net/net_devirc.c \
                 net/net_irc.c
 
-#wifi設定画面
-#===> SRCS_OVERLAY_DEV_WIFI
-#LIB=>          libdwcutil.$HYB.thumb.a
-SRCS_OVERLAY_WIFI_UTIL  = net/dwc_raputil.c
-
-
 #Wi-Fiユーザー情報破壊による警告画面
 #===> SRCS_OVERLAY_DEV_WIFI
 SRCS_OVERLAY_WIFI_BREAK = system/wifi_info_break.c
@@ -1756,6 +1750,11 @@ SRCS_OVERLAY_MULTIBOOT = multiboot/parent/mb_parent_sys.c \
         multiboot/capture/mb_cap_demo.c \
         multiboot/parent/mb_parent_dataconv_sys.c
 
+#wifi設定画面
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_MULTIBOOT
+#LIB=>          libdwcutil.$HYB.thumb.a
+SRCS_OVERLAY_WIFI_UTIL  = net/dwc_raputil.c
 
 
 # 大野デバッグ
