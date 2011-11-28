@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/19 20:09:29
+#save date:2011/11/28 13:04:29
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c15r0301.wms
 #SECTION START:OBJ_EVENT
@@ -545,7 +545,7 @@ C15R0301_BABYBOY1_01
 #OBJ CODE Number
 BABYBOY1
 #MOVE CODE Number
-MV_DMY
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -561,13 +561,13 @@ DIR_LEFT
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+1
 #Move Limit Z Number
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-184 48 -104
+200 48 -104
 #event number: 18
 #type
 1
@@ -576,7 +576,7 @@ C15R0301_WOMAN2_05
 #OBJ CODE Number
 WOMAN2
 #MOVE CODE Number
-MV_DMY
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -594,7 +594,7 @@ DIR_LEFT
 #Move Limit X Number
 0
 #Move Limit Z Number
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -691,7 +691,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--24 0 -56
+88 0 -136
 #event number: 22
 #type
 1
