@@ -946,10 +946,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName ]『やるぞ！　[Name:TrainerName Idx="1" ]！！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『やるぞ！　[Name:TrainerName ]『！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:34:08" />
+				Time="2011-11-28T12:24:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -957,10 +957,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]『やるぞ！　[Name:TrainerName Idx="1" ]！！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『やるぞ！　[Name:TrainerName ]『！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:34:08" />
+				Time="2011-11-28T12:24:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1893,5 +1893,95 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d11r0101_man2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちょっと　まって！▼
+ここで　おとしものを　したんだ
+みつかるまで　ちょっと　まってて！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-28T11:52:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-28T11:50:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ちょっと　待って！▼
+ここで　落し物を　したんだ
+みつかるまで　ちょっと　待ってて！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-28T11:52:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-28T11:51:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・連れ歩き時のストッパー
+・GRIDX＝55、GRIDZ＝19
+　msg_d11r0101_swleader3_06表示後
+　マップチェンジすると削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-28T11:50:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MAN2</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-28T11:49:30" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d11r0101_man2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ちょっと　まって！▼
+ここで　おとしものを　したんだ
+みつかるまで　ちょっと　まってて！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-28T11:52:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-28T11:51:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ちょっと　待って！▼
+ここで　落し物を　したんだ
+みつかるまで　ちょっと　待ってて！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-28T11:52:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-28T11:51:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・連れ歩き時のストッパー
+・GRIDX＝55、GRIDZ＝19
+　msg_d11r0101_swleader3_06表示後
+　マップチェンジすると削除
+・pos用</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-28T11:52:46" />
+		</CommentCell>
 	</TextRow>
 </MessageStudioText>

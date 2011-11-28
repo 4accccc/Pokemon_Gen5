@@ -2442,7 +2442,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_power_s_49">
+		Label="plc_power_s_49"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ダミー</Text>
@@ -2484,7 +2485,7 @@ BWと揃えた無効ID
 	</TextRow>
 	<TextRow
 		Label="plc_power_s_50"
-		Style="">
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ゆれる　くさむらや　つちけむりが
@@ -2501,11 +2502,11 @@ BWと揃えた無効ID
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>揺れる　草むらや　洞穴の　土煙が
-少しだけ　見つけやすく　なります
-こうかは　３ふん　です</Text>
+少しだけ　みつけやすく　なります
+効果は　３分　です</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-10-26T03:10:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T07:03:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2528,7 +2529,7 @@ BWと揃えた無効ID
 	</TextRow>
 	<TextRow
 		Label="plc_power_s_51"
-		Style="">
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ゆれる　くさむらや　つちけむりが
@@ -2545,11 +2546,11 @@ BWと揃えた無効ID
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>揺れる　草むらや　洞穴の　土煙が
-とても　見つけやすく　なります
-こうかは　３ふん　です</Text>
+とても　みつけやすく　なります
+効果は　３分　です</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-10-26T03:10:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T07:03:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2572,7 +2573,7 @@ BWと揃えた無効ID
 	</TextRow>
 	<TextRow
 		Label="plc_power_s_52"
-		Style="">
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ゆれる　くさむらや　つちけむりが
@@ -2589,11 +2590,11 @@ BWと揃えた無効ID
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>揺れる　草むらや　洞穴の　土煙が
-かなり　見つけやすく　なります
-こうかは　３ふん　です</Text>
+かなり　みつけやすく　なります
+効果は　３分　です</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-10-26T03:10:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T07:03:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2616,7 +2617,7 @@ BWと揃えた無効ID
 	</TextRow>
 	<TextRow
 		Label="plc_power_s_53"
-		Style="">
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かくしあなで　ポケモンと
@@ -2632,12 +2633,12 @@ BWと揃えた無効ID
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かくしあなで　ポケモンと
+			<Text>隠し穴で　ポケモンと
 少し　出会いやすく　なります
 効果は　３分　です</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-10-26T03:10:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T07:03:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2660,7 +2661,7 @@ BWと揃えた無効ID
 	</TextRow>
 	<TextRow
 		Label="plc_power_s_54"
-		Style="">
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かくしあなで　ポケモンと
@@ -2676,12 +2677,12 @@ BWと揃えた無効ID
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かくしあなで　ポケモンと
+			<Text>隠し穴で　ポケモンと
 とても　出会いやすく　なります
 効果は　３分　です</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-10-26T03:10:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T07:03:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2704,7 +2705,7 @@ BWと揃えた無効ID
 	</TextRow>
 	<TextRow
 		Label="plc_power_s_55"
-		Style="">
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かくしあなで　ポケモンと
@@ -2720,12 +2721,12 @@ BWと揃えた無効ID
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かくしあなで　ポケモンと
+			<Text>隠し穴で　ポケモンと
 かなり　出会いやすく　なります
 効果は　３分　です</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-10-26T03:10:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T07:03:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2748,7 +2749,7 @@ BWと揃えた無効ID
 	</TextRow>
 	<TextRow
 		Label="plc_power_s_56"
-		Style="">
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>めずらしい　ポケモンと
@@ -2792,7 +2793,7 @@ BWと揃えた無効ID
 	</TextRow>
 	<TextRow
 		Label="plc_power_s_57"
-		Style="">
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>めずらしい　ポケモンと
@@ -2836,7 +2837,7 @@ BWと揃えた無効ID
 	</TextRow>
 	<TextRow
 		Label="plc_power_s_58"
-		Style="">
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>めずらしい　ポケモンと
@@ -2880,7 +2881,7 @@ BWと揃えた無効ID
 	</TextRow>
 	<TextRow
 		Label="plc_power_s_59"
-		Style="">
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ゆれる　くさむらや　つちけむりが
@@ -2897,11 +2898,11 @@ BWと揃えた無効ID
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>揺れる　草むらや　洞穴の　土煙が
-かなり　見つけやすく　なります
-こうかは　１０ふん　です</Text>
+かなり　みつけやすく　なります
+効果は　１０分　です</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-10-26T03:10:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T07:03:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2924,7 +2925,7 @@ BWと揃えた無効ID
 	</TextRow>
 	<TextRow
 		Label="plc_power_s_60"
-		Style="">
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ゆれる　くさむらや　つちけむりが
@@ -2941,11 +2942,11 @@ BWと揃えた無効ID
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>揺れる　草むらや　洞穴の　土煙が
-かなり　見つけやすく　なります
-こうかは　３０ふん　です</Text>
+かなり　みつけやすく　なります
+効果は　３０分　です</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-10-26T03:10:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T07:03:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2968,7 +2969,7 @@ BWと揃えた無効ID
 	</TextRow>
 	<TextRow
 		Label="plc_power_s_61"
-		Style="">
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かくしあなで　ポケモンと
@@ -2984,12 +2985,12 @@ BWと揃えた無効ID
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かくしあなで　ポケモンと
+			<Text>隠し穴で　ポケモンと
 かなり　出会いやすく　なります
 効果は　３０分　です</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-10-26T03:10:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T07:03:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -3012,7 +3013,7 @@ BWと揃えた無効ID
 	</TextRow>
 	<TextRow
 		Label="plc_power_s_62"
-		Style="">
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かくしあなで　ポケモンと
@@ -3028,12 +3029,12 @@ BWと揃えた無効ID
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かくしあなで　ポケモンと
+			<Text>隠し穴で　ポケモンと
 かなり　出会いやすく　なります
 効果は　６０分　です</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-10-26T03:10:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T07:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -3056,7 +3057,7 @@ BWと揃えた無効ID
 	</TextRow>
 	<TextRow
 		Label="plc_power_s_63"
-		Style="">
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>めずらしい　ポケモンと
@@ -3100,7 +3101,7 @@ BWと揃えた無効ID
 	</TextRow>
 	<TextRow
 		Label="plc_power_s_64"
-		Style="">
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>めずらしい　ポケモンと
@@ -3120,8 +3121,8 @@ BWと揃えた無効ID
 出会いやすく　なります
 効果は　６０分　です</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-10-26T03:10:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T07:04:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
