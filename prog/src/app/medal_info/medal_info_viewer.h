@@ -55,6 +55,7 @@ typedef struct {
   u8      get_year;     // 取得年
   u8      get_month;    // 取得月
   u8      get_day;      // 取得日
+  u16     beacon_log_index;   // すれ違いログ用インデックス
 } MEDAL_INFO;
 
 //-------------------------------------
@@ -66,6 +67,7 @@ typedef struct MEDALVIEWER_INITPARAM_tag{
   u32         list_size;
   u32         target;
   MEDALVIEWER_CALL_MODE call_mode;  // 呼び出しモード
+  u32         last_data_index;
 }MEDALVIEWER_INITPARAM;
 
 extern MEDALVIEWER_WK* MEDALVIEWER_Setup( MEDALVIEWER_INITPARAM *p_init_param );

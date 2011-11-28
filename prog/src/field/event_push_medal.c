@@ -51,6 +51,7 @@ typedef struct {
   SAVE_CONTROL_WORK *save;
   BEACON_MEDALINFO_INIT_PARAM prm;
   u8 target;
+  u8 view_ofs;
 } EVWORK_PUSH_MEDAL;
 
 //============================================================================================
@@ -87,6 +88,7 @@ static GMEVENT_RESULT EVENT_PushMedalMain(GMEVENT * event, int *  seq, void * wo
     bdw->prm.gsys = bdw->gsys;
     bdw->prm.gdata = bdw->gdata;
     bdw->prm.target = bdw->target;
+    bdw->prm.view_ofs = bdw->view_ofs;
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(medalinfo), &beacon_medalInfo_ProcData, &bdw->prm);
     (*seq)++;
     break;
@@ -141,7 +143,10 @@ GMEVENT* EVENT_PushMedal(GAMESYS_WORK * gsys, void* work )
   bdw->gdata = GAMESYSTEM_GetGameData(gsys);
   bdw->save = GAMEDATA_GetSaveControlWork(bdw->gdata);
   bdw->gsys = gsys;
-  bdw->target = target;
+
+  // ビューオフセットは上位16ビットに格納されている
+  bdw->target = target&0xFFFF;
+  bdw->view_ofs = (target>>16)&0xFFFF;
 
   IWASAWA_Printf("PushMedal Target = %d\n",target);
   return event;

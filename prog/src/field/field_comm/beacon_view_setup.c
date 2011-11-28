@@ -189,7 +189,9 @@ GMEVENT* BVSEvent_CheckCommon( BEACON_VIEW_PTR wk, BOOL bEvReqOK )
     break;
   case EV_CALL_MEDAL_VIEW:
     {
+      // ビューオフセットは上位16ビットに格納されている
       u32 target = wk->ctrl.target+wk->ctrl.view_top;
+      target |= wk->ctrl.target<<16;
       call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
           FS_OVERLAY_ID( notwifi_event_push_medal ), EVENT_PushMedal, &target );
     }

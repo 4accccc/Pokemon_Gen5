@@ -252,6 +252,7 @@ GFL_PROC_RESULT MEDALVIEWER_Main( MEDALVIEWER_WK *p_wk )
     break;
   case SEQ_EXIT:
     {
+      p_wk->p_init_param->last_data_index = p_wk->data_index;
       proc_ret = GFL_PROC_RES_FINISH;
     }
     break;

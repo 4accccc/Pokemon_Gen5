@@ -36,6 +36,7 @@ typedef struct {
   BEACON_MEDALINFO_INIT_PARAM   *p_param;     // アプリ初期化用パラメータ
   MEDALVIEWER_INITPARAM         init_param;   // 描画モジュール初期化用パラメータ
   MEDALVIEWER_WK                *p_viewer_wk; // ビューワーク
+  u8                            view_ofs;     //詳細画面コール時のターゲットのすれ違いログのViewオフセット
 }BEACON_MEDALINFO_WK;
 
 //=============================================================================
@@ -169,6 +170,37 @@ static GFL_PROC_RESULT BEACON_MEDALINFO_ProcTerm( GFL_PROC * p_proc, int * seq ,
     p_wk->p_param->ret_mode = TRUE;
   }
 
+  {
+    BEACON_STATUS *b_status = GAMEDATA_GetBeaconStatus( p_wk->p_param->gdata );
+    GAMEBEACON_INFO_TBL *infoLog = BEACON_STATUS_GetInfoTbl( b_status );
+    u32 last_data_index = p_wk->init_param.last_data_index;
+    u32 target_data_index      = p_wk->init_param.target;
+    MEDAL_INFO *p_start_info = &p_wk->init_param.p_info_list[target_data_index];
+    MEDAL_INFO *p_new_info = &p_wk->init_param.p_info_list[last_data_index];
+    int list_top_ini  = p_start_info->beacon_log_index;
+    int new_top       = p_new_info->beacon_log_index;
+    int max = GAMEBEACON_InfoTblRing_GetEntryNum( infoLog );
+    int view_ofs = p_wk->p_param->view_ofs;
+
+    ONOUE_Printf("開始インデックス：%d\n",list_top_ini);
+    ONOUE_Printf("終了インデックス：%d\n",new_top);
+    ONOUE_Printf("ビューオフセット：%d\n",view_ofs);
+
+    {
+      //すれ違いログ画面で最後に見えていた範囲を計算
+      int view_top = list_top_ini-view_ofs;
+      int view_bottom = list_top_ini+((BEACON_VIEW_PANEL_NUM_MAX-1)-view_ofs);
+
+      if( new_top < view_top || new_top > view_bottom ){
+        if( (max-new_top) < BEACON_VIEW_PANEL_NUM_MAX ){  //見える範囲には制限がある
+          new_top = max-BEACON_VIEW_PANEL_NUM_MAX;
+        }
+        ONOUE_Printf("設定インデックス：%d\n",new_top);
+        BEACON_STATUS_SetViewTopOffset( b_status, new_top );
+      }
+    }
+  }
+
   // 名前データを開放
   for( i = 0; i < p_wk->init_param.list_size; i++ )
   {
@@ -247,7 +279,7 @@ static void BEACON_MEDALINFO_SetupMedalData( BEACON_MEDALINFO_WK* p_wk )
   {
     s32 data_lng = p_wk->init_param.list_size;
     p_wk->init_param.p_info_list = 
-      GFL_HEAP_AllocClearMemory( p_wk->heapID, sizeof(GAMEBEACON_INFO)*data_lng);
+      GFL_HEAP_AllocClearMemory( p_wk->heapID, sizeof(MEDAL_INFO)*data_lng);
     ONOUE_Printf("データ確保数[%d]\n",data_lng);
   }
  
@@ -270,7 +302,7 @@ static void BEACON_MEDALINFO_SetupMedalData( BEACON_MEDALINFO_WK* p_wk )
     // メダル詳細画面用インデックス
     if( p_wk->p_param->target == i )
     {
-      p_wk->init_param.target = data_index;
+      p_wk->init_param.target = data_index; 
     }
 
     
@@ -288,9 +320,10 @@ static void BEACON_MEDALINFO_SetupMedalData( BEACON_MEDALINFO_WK* p_wk )
     ONOUE_Printf("名前生成[%d]\n",data_index);
 
     GAMEBEACON_Get_PlayerNameToBuf( tmpInfo , p_info->p_trainer_name );
-    p_info->medal_id  = GAMEBEACON_Get_PushMedal( tmpInfo );
-    p_info->medal_cnt = GAMEBEACON_Get_MedalCount( tmpInfo );
-    p_info->box_rank  = 0;
+    p_info->medal_id          = GAMEBEACON_Get_PushMedal( tmpInfo );
+    p_info->medal_cnt         = GAMEBEACON_Get_MedalCount( tmpInfo );
+    p_info->box_rank          = 0;
+    p_info->beacon_log_index  = i;
 
     // データインデックスを進める
     data_index ++;
