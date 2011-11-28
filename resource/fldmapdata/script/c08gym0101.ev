@@ -455,7 +455,7 @@ EVENT_START   ev_pos_c08gym0101_guide_01
   _PLAINWIN_MSG_DOWN( msg_c08gym0101_glasses_02 )
   _CALL move_camera_end
   _AB_KEYWAIT_MARK()
-  _BALLOONWIN_CLOSE()
+  _PLAINWIN_CLOSE()
   
   IF $LCW_POSX != 25 THEN
     //アニメ：ダンペイ元の位置に
