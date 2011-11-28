@@ -8534,10 +8534,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>みんなに　あいさつを　おこないますか？</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T16:38:41" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T18:20:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8545,10 +8545,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>みんなに　あいさつを　おこないますか？</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T16:38:43" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T18:20:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -8556,10 +8556,10 @@ BW♀
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>エラーになるので追加</Comment>
+			<Comment>パレード実行？</Comment>
 			<CommentModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T16:38:55" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T18:21:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -9255,10 +9255,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ごようけんは　ありますか？▼</Text>
+			<Text>みんなに　あいさつを　おこないますか？</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T02:36:31" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T18:30:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -9266,10 +9266,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ご用件は　ありますか？▼</Text>
+			<Text>みんなに　あいさつを　おこないますか？</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T02:36:43" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T18:30:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -9277,10 +9277,10 @@ BW♀
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment />
+			<Comment>パレード実行？</Comment>
 			<CommentModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T02:37:03" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T18:30:01" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -11571,10 +11571,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やめる</Text>
+			<Text>みんなに　あいさつ</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-23T13:03:38" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T18:21:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11582,10 +11582,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やめる</Text>
+			<Text>みんなに　あいさつ</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-23T13:03:43" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T18:21:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11593,10 +11593,10 @@ BW♀
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>エラーになるので入れた</Comment>
+			<Comment>パレード</Comment>
 			<CommentModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T16:27:20" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T18:22:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">

@@ -3866,7 +3866,7 @@ static RESORT_FIELD_EFFECT * RESORT_FIELD_EFFECT_Init( HEAPID heapID, FLD_EXP_OB
   FLD_EXP_OBJ_AddUnit( p_wk->p_exp_obj, &sc_util_setup, RESORT_FIELD_EFFECT_UNIT );
 
 #ifdef DEBUG_EFFECT_MOVE
-  RESORT_FIELD_EFFECT_Start( p_wk, RESORT_FIELD_EFFECT_ID_PARADE );
+  RESORT_FIELD_EFFECT_Start( p_wk, RESORT_FIELD_EFFECT_ID_CONFETTI );
 #endif
 
   return p_wk;
@@ -3974,8 +3974,7 @@ static void Resort_Field_Effect_StartConfetti( RESORT_FIELD_EFFECT *p_wk )
 
     p_start_st->trans.x = FX32_CONST(127);
     p_start_st->trans.z = FX32_CONST(500);
-    p_loop_st->trans.x = FX32_CONST(127);
-    p_loop_st->trans.z = FX32_CONST(500);
+    p_loop_st->trans = p_start_st->trans;
   }
 
   // •\Ž¦
@@ -4043,7 +4042,7 @@ static BOOL Resort_Field_Effect_UpdateConfetti( RESORT_FIELD_EFFECT *p_wk )
     GFL_G3D_CAMERA_GetPos( FIELD_CAMERA_GetCameraPtr(p_wk->p_camera), &cam_pos );
 
     p_start_st->trans.x = cam_pos.x-FX32_CONST(121);
-    p_start_st->trans.z = cam_pos.z-FX32_CONST(297);
+    p_start_st->trans.z = cam_pos.z-FX32_CONST(257);  //297
     p_loop_st->trans  = p_start_st->trans;
   }
 
@@ -4155,6 +4154,7 @@ static void Resort_Field_Effect_StartParade( RESORT_FIELD_EFFECT *p_wk )
                             RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_LOOP );
 
     static const u16 sc_rot = 0xdd00;
+
     MTX_RotX33(&p_start_st->rotate, FX_SinIdx(sc_rot), FX_CosIdx(sc_rot));
     MTX_RotX33(&p_loop_st->rotate, FX_SinIdx(sc_rot), FX_CosIdx(sc_rot));
   }
