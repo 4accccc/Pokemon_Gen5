@@ -36,6 +36,7 @@
 #include "infinity_dungeon_field.h"
 #include "scrcmd_infinity_dungeon_nw.h"
 #include "script_def.h"
+#include "item/itemsym.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h" // for SCRID_DUMMY
 
@@ -178,6 +179,7 @@ static u32 gethint_boss_dir( const TRHINT_WK *p_wk );
 
 static u8  GetPosDirID( u8 x1, u8 y1, u8 x2 ,u8 y2 );
 static u32 INFINITY_DUNGEON_GetBossRoom( const INF_DUNGEON_DATA *p_dungeon_data );
+static void SetRewardItem( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,u32 seed );
 
 
 #ifdef PM_DEBUG
@@ -1272,7 +1274,6 @@ static void GetFloorData( const INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *
   u8 area_no = INFINITYDUNGEON_SAVE_GetDungeonAreaID( p_save );
   const INF_DUNGEON_SEED *p_seed = &p_dungeon_data->seed;
   
-  // @todo チュートリアルかどうか判定を分ける
   // チュートリアルMAPをセットする
   BOOL is_tutorial = SetTutorialMap( p_save ,p_dungeon_data );
   
@@ -1294,7 +1295,9 @@ static void GetFloorData( const INFINITYDUNGEON_SAVE *p_save ,INF_DUNGEON_DATA *
     // チュートリアル用トレーナーデータをセットする
     SetTutorialTrainerData( p_save ,p_dungeon_data );
   }
-
+  
+  // 報酬を設定する
+  SetRewardItem( p_dungeon_data ,area_no ,p_seed->reward_item_seed);
 }
 
 //----------------------------------------------------------------------------
@@ -2400,6 +2403,149 @@ BOOL INFINITY_DUNGEON_GetGateOpen( const INF_DUNGEON_DATA *p_dungeon_data ,const
   s32 tr_id_pos = p_dungeon_data->gate_trainer_id_pos;
   s32 floor_id  = p_dungeon_data->gate_trainer_floor;
   return INFINITYDUNGEON_SAVE_GetTrainerFlag( p_save ,floor_id ,tr_id_pos);
+}
+
+// エリア1~2報酬アイテムテーブル
+static const u16 item_table_1_2[] =
+{
+   ITEM_TAURIN,
+   ITEM_BUROMUHEKISIN,
+   ITEM_RIZOTIUMU,
+   ITEM_KITOSAN,
+   ITEM_INDOMETASIN,
+   ITEM_MAKKUSUAPPU,
+};
+
+// エリア1~2報酬アイテム確率テーブル
+static const u16 item_prob_table_1_2[] = { 17, 17, 17, 17, 16 , 16 };
+
+// エリア3~5報酬アイテムテーブル
+static const u16 item_table_3_5[] =
+{
+  ITEM_TAURIN,
+  ITEM_BUROMUHEKISIN,
+  ITEM_RIZOTIUMU,
+  ITEM_KITOSAN,
+  ITEM_INDOMETASIN,
+  ITEM_MAKKUSUAPPU,
+};
+
+// エリア3~5報酬アイテム確率テーブル
+static const u16 item_prob_table_3_5[] = { 17, 17, 17, 17, 16 , 16 };
+
+// エリア6~8報酬アイテムテーブル
+static const u16 item_table_6_8[] =
+{
+  ITEM_ZAROKUNOMI,
+  ITEM_NEKOBUNOMI,
+  ITEM_TAPORUNOMI,
+  ITEM_ROMENOMI,
+  ITEM_UBUNOMI,
+  ITEM_MATOMANOMI,
+  ITEM_HUSIGINAAME,
+};
+
+// エリア6~8報酬アイテム確率テーブル
+static const u16 item_prob_table_6_8[] = { 15, 15, 15, 15, 15, 15 ,10 };
+
+// エリア9~10報酬アイテムテーブル
+static const u16 item_table_9_10[] =
+{
+  ITEM_ZAROKUNOMI,
+  ITEM_NEKOBUNOMI,
+  ITEM_TAPORUNOMI,
+  ITEM_ROMENOMI,
+  ITEM_UBUNOMI,
+  ITEM_MATOMANOMI,
+  ITEM_HUSIGINAAME,
+};
+
+// エリア6~8報酬アイテム確率テーブル
+static const u16 item_prob_table_9_10[] = { 15, 15, 15, 15, 15, 15 ,10 };
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  報酬アイテムを抽選する
+ *
+ *	@param	*p_dungeon_data 
+ *	@param	seed 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void SetRewardItem( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,u32 seed )
+{
+  int i;
+  u8 rnd_num;
+  u8 prob_sum = 0;
+  GFL_STD_RandContext rand_context;
+
+  // エリアごとの入手個数テーブル
+  const u8 item_num_table[INFINITY_DUNGEON_AREA_ID_MAX] = {1,1,2,2,2,1,1,1,2,2};
+
+  // アイテム入手テーブル
+  const u16 *p_item_table[INFINITY_DUNGEON_AREA_ID_MAX] =
+  {
+    item_table_1_2, // エリア1
+    item_table_1_2, // エリア2
+    item_table_3_5, // エリア3
+    item_table_3_5, // エリア4
+    item_table_3_5, // エリア5
+    item_table_6_8, // エリア6
+    item_table_6_8, // エリア7
+    item_table_6_8, // エリア8
+    item_table_9_10, // エリア9
+    item_table_9_10, // エリア10
+  };
+
+  // アイテム入手確率テーブル
+  const u16 *p_item_prob_table[INFINITY_DUNGEON_AREA_ID_MAX] =
+  {
+    item_prob_table_1_2, // エリア1
+    item_prob_table_1_2, // エリア2
+    item_prob_table_3_5, // エリア3
+    item_prob_table_3_5, // エリア4
+    item_prob_table_3_5, // エリア5
+    item_prob_table_6_8, // エリア6
+    item_prob_table_6_8, // エリア7
+    item_prob_table_6_8, // エリア8
+    item_prob_table_9_10, // エリア9
+    item_prob_table_9_10, // エリア10
+  };
+
+  // アイテム種類数テーブル
+  const u16 item_type_num_table[INFINITY_DUNGEON_AREA_ID_MAX] =
+  {
+    NELEMS(item_prob_table_1_2), // エリア1
+    NELEMS(item_prob_table_1_2), // エリア2
+    NELEMS(item_prob_table_3_5), // エリア3
+    NELEMS(item_prob_table_3_5), // エリア4
+    NELEMS(item_prob_table_3_5), // エリア5
+    NELEMS(item_prob_table_6_8), // エリア6
+    NELEMS(item_prob_table_6_8), // エリア7
+    NELEMS(item_prob_table_6_8), // エリア8
+    NELEMS(item_prob_table_9_10), // エリア9
+    NELEMS(item_prob_table_9_10), // エリア10
+  };
+
+  // 乱数を作成
+  GFL_STD_RandInit( &rand_context, seed );
+
+  rnd_num = GFL_STD_Rand( &rand_context, 100 )+1;
+
+  // アイテム抽選処理
+  for( i = 0; i < item_type_num_table[area_no] ;i++ )
+  {
+    prob_sum += p_item_prob_table[area_no][i];
+    if( rnd_num <= prob_sum )
+    {
+      p_dungeon_data->reward_item_id = p_item_table[area_no][i];
+      break;
+    }
+  }
+
+  // アイテム個数設定
+  p_dungeon_data->reward_item_num = item_num_table[area_no];
 }
 
 #ifdef PM_DEBUG

@@ -457,6 +457,7 @@ void INF_TOOL_SetDungeonSeed( INF_DUNGEON_SEED *p_seed ,u32 master_seed )
   // 子シードを生成
   p_seed->tr_data_seed = GFL_STD_Rand( &rand_context, GFL_STD_RAND_MAX);
   p_seed->dungeon_data_seed = GFL_STD_Rand( &rand_context, GFL_STD_RAND_MAX);
+  p_seed->reward_item_seed = GFL_STD_Rand( &rand_context, GFL_STD_RAND_MAX);
 
   // トレーナーシード
   for( i = 0; i < INFINITYDUNGEON_FLOOR_MAX ;i++ )

@@ -900,6 +900,16 @@ VMCMD_RESULT EvCmdInfinityDungeonGetDungeonData( VMHANDLE *p_core, void *p_wk_ad
       *p_ret_wk = INFINITY_DUNGEON_GetUpPosRoomTypeIsBoss( p_dungeon_data,floor_id,room_id );
     }
     break;
+  case SCR_INFDUNGEON_PARAM_REWARD_ITEM:
+    {
+      *p_ret_wk = p_dungeon_data->reward_item_id;
+    }
+    break;
+  case SCR_INFDUNGEON_PARAM_REWARD_NUM:
+    {
+      *p_ret_wk = p_dungeon_data->reward_item_num;
+    }
+    break;
   default:
     {
       GF_ASSERT(0);

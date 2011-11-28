@@ -889,8 +889,10 @@
 #define SCR_INFDUNGEON_PARAM_WIN_TRAINER_COUNT  (4) ///<無限ダンジョン：ダンジョン内のトレーナー人数
 #define SCR_INFDUNGEON_PARAM_CHECK_UP_ROOMTYPE_BOSS (5) ///<無限ダンジョン：上の部屋がボス部屋かどうか
 #define SCR_INFDUNGEON_PARAM_NOW_LOCAL_FLOOR_ID (6) ///<無限ダンジョン：上の部屋がボス部屋かどうか
-#define SCR_INFDUNGEON_WARP_NO_FADE (7) ///<無限ダンジョン：フェードなしワープ
-#define SCR_INFDUNGEON_WARP_FADE    (8) ///<無限ダンジョン：フェード有りワープ
+#define SCR_INFDUNGEON_WARP_NO_FADE             (7) ///<無限ダンジョン：フェードなしワープ
+#define SCR_INFDUNGEON_WARP_FADE                (8) ///<無限ダンジョン：フェード有りワープ
+#define SCR_INFDUNGEON_PARAM_REWARD_ITEM        (9) ///<無限ダンジョン：報酬アイテムID
+#define SCR_INFDUNGEON_PARAM_REWARD_NUM         (10) ///<無限ダンジョン：報酬アイテム個数
 
 //--------------------------------------------------------------
 //  アジト船の位置をタウンマップに通知するための定義

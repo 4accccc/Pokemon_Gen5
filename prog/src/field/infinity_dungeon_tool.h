@@ -186,6 +186,7 @@ typedef struct
   s32 master_seed;
   s32 tr_data_seed;
   s32 dungeon_data_seed;
+  s32 reward_item_seed;
   u16 tr_seed[INFINITYDUNGEON_FLOOR_MAX][INFINITY_DUNGEON_TRID_MAX]; // トレーナーシード
 }INF_DUNGEON_SEED;
 
@@ -201,6 +202,8 @@ typedef struct {
   u8                gate_trainer_floor;
   u8                gate_trainer_room_id;
   u8                gate_trainer_id_pos;
+  u16               reward_item_id;
+  u8                reward_item_num;
   u8                version;
 }INF_DUNGEON_DATA;
 
