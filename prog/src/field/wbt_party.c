@@ -581,28 +581,28 @@ static void WBTSYS_SetupRentalParty(
     use_poke_table = createRangeTable( wbtsys->wbtcup, FALSE, tempHeapID, &use_poke_cnt );
     WBTSYS_ChooseBSubwayData( index_array, ng_info, tempHeapID,
         use_poke_cnt, use_poke_table,
-        ARCID_BSW_PD, num, NULL );
+        ARCID_WBT_RENT_PD, num, NULL );
     GFL_HEAP_FreeMemory( use_poke_table );
     break;
   case WBTRENT_TYPE_STRONG:
     use_poke_table = createRangeTable( wbtsys->wbtcup, TRUE, tempHeapID, &use_poke_cnt );
     WBTSYS_ChooseBSubwayData( index_array, ng_info, tempHeapID,
         use_poke_cnt, use_poke_table,
-        ARCID_BSW_PD, num, NULL );
+        ARCID_WBT_RENT_PD, num, NULL );
     GFL_HEAP_FreeMemory( use_poke_table );
     break;
   case WBTRENT_TYPE_ALL:
     use_poke_table = createRangeTable( wbtsys->wbtcup, TRUE, tempHeapID, &use_poke_cnt );
     WBTSYS_ChooseBSubwayData( index_array, ng_info, tempHeapID,
         use_poke_cnt, use_poke_table,
-        ARCID_BSW_PD, 3, NULL );
+        ARCID_WBT_RENT_PD, 3, NULL );
     GFL_HEAP_FreeMemory( use_poke_table );
     if ( num > 3 )
     {
       use_poke_table = createRangeTable( wbtsys->wbtcup, FALSE, tempHeapID, &use_poke_cnt );
       WBTSYS_ChooseBSubwayData( index_array + 3, ng_info, tempHeapID,
           use_poke_cnt, use_poke_table,
-          ARCID_BSW_PD, num - 3, NULL );
+          ARCID_WBT_RENT_PD, num - 3, NULL );
       GFL_HEAP_FreeMemory( use_poke_table );
     }
     break;
@@ -616,7 +616,7 @@ static void WBTSYS_SetupRentalParty(
     for(i = 0; i < num; i++)
     {
       u32 index_no = index_array[ i ];
-      FBI_TOOL_MakePokemonParam( &(btpwd[i]), ARCID_BSW_PD,
+      FBI_TOOL_MakePokemonParam( &(btpwd[i]), ARCID_WBT_RENT_PD,
         index_no, tr_id, 0, pow_rnd, i, FALSE, tempHeapID);
     }
     FBI_TOOL_WBT_SetPokemon( party, btpwd, DUMMY_LEVEL_VALUE, num, tempHeapID );

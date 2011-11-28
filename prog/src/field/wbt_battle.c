@@ -712,7 +712,7 @@ static void makeRomTrainerData(
     //Ø‚èŽDƒ|ƒPƒ‚ƒ“‚Í‚P‘Ì‚¾‚¯‚È‚Ì‚Å‚O”ÔŒˆ‚ß‚¤‚¿‚ÅŽæ“¾
     index_no = trd->use_poke_table[0];
     FBI_TOOL_MakePokemonParam( btpwd,
-        base_arc_id + WBTBTD_ARCOFS_PM_NORMAL, index_no, tr_id, 0, pow_rnd, 0, FALSE, tempHeapID  );
+        base_arc_id + WBTBTD_ARCOFS_PM, index_no, tr_id, 0, pow_rnd, 0, FALSE, tempHeapID  );
 
     WBT_NGINFO_AddNGMons( ng_info, btpwd->mons_no );
     WBT_NGINFO_AddNGItem( ng_info, btpwd->item_no );
@@ -737,13 +737,13 @@ static void makeRomTrainerData(
     GF_ASSERT( trd->use_poke_cnt < ROM_POKE_MAX );
     WBTSYS_ChooseBSubwayData( index_array, ng_info,
         tempHeapID , trd->use_poke_cnt, trd->use_poke_table,
-        base_arc_id + WBTBTD_ARCOFS_PM_NORMAL, poke_num, NULL );
+        base_arc_id + WBTBTD_ARCOFS_PM, poke_num, NULL );
 
     for(i = 0; i < poke_num; i++)
     {
       u32 index_no = index_array[ i ];
       FBI_TOOL_MakePokemonParam( &(btpwd[i]),
-        base_arc_id + WBTBTD_ARCOFS_PM_NORMAL, index_no, tr_id, 0, pow_rnd, i, FALSE, tempHeapID );
+        base_arc_id + WBTBTD_ARCOFS_PM, index_no, tr_id, 0, pow_rnd, i, FALSE, tempHeapID );
     }
 
     GFL_HEAP_FreeMemory( trd );

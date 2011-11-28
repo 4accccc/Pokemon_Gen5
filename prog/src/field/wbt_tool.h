@@ -67,9 +67,8 @@ typedef enum {
 //------------------------------------------------------------------
 typedef enum {
   WBTBTD_ARCOFS_TR_ACE = 0,
-  WBTBTD_ARCOFS_PM_ACE,
   WBTBTD_ARCOFS_TR_NORMAL,
-  WBTBTD_ARCOFS_PM_NORMAL,
+  WBTBTD_ARCOFS_PM,
 }WBTBTD_ARCOFS;
 
 //------------------------------------------------------------------
