@@ -621,8 +621,16 @@ ev_fes_add_check:
   
   //フェスミッションが追加されました
   IF $LCWK_VERSION == VERSION_B2 THEN
+    
+    //フェスミッション名代入
+    _FMISSION_NAME( 0, FMISSION_ID_NPC_TRADE_02B, 0 )
+    
     _SYSWIN_MSG( msg_t05_mission_add_01b, POS_DEFAULT )
   ELSE
+  
+    //フェスミッション名代入
+    _FMISSION_NAME( 0, FMISSION_ID_NPC_TRADE_02W, 0 )
+    
     _SYSWIN_MSG( msg_t05_mission_add_01w, POS_DEFAULT )
   ENDIF
 //  _SE_PLAY( SEQ_SE_FLD_133 )

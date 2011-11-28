@@ -1129,20 +1129,31 @@ EVENT_START	ev_pos_d27r0101_second_w_01
   
   //ハッチ前
   ELSE
-  
+    
+    //主人公方向取得
+    _PLAYER_DIR_GET( LWK_DIR )
+    
     //ハッチ手前にライバルを移動
-    _OBJ_POS_CHANGE(D27R0101_SWRIVAL_01,13,0,35,DIR_DOWN)
+    _OBJ_POS_CHANGE(D27R0101_SWRIVAL_01,23,0,35,DIR_DOWN)
     //アニメ：ライバル隣接
-    _OBJ_ANIME_AUTO( D27R0101_SWRIVAL_01 , 17, 45, FORCE_TYPE_NPC, 4, DIR_UD)
+    _OBJ_ANIME_AUTO( D27R0101_SWRIVAL_01 , 20, 44, FORCE_TYPE_NPC, 4, DIR_UD)
     _OBJ_ANIME_WAIT()
+    
+    //アニメ：主人公振り向き
+    IF $LWK_DIR != DIR_RIGHT THEN
+      _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_r )
+      _OBJ_ANIME_WAIT()
+    ENDIF
     
     //ライバル：おい！こっちだ！
     _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swrival_02_04 , D27R0101_SWRIVAL_01 ,POS_DEFAULT )
     _MSGWIN_CLOSE()
     
-    //アニメ：主人公中央へ
-    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 18, 45, FORCE_TYPE_ALL, 8, DIR_LR)
-    _OBJ_ANIME_WAIT()
+    IF $LCW_POSX != 19 THEN
+      //アニメ：主人公ライバルに隣接
+      _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 19, 44, FORCE_TYPE_ALL, 8, DIR_LR)
+      _OBJ_ANIME_WAIT()
+    ENDIF
     
     //アニメ：主人公・ライバル連れ立って
     _OBJ_ANIME( D27R0101_SWRIVAL_01 , anm_rival_to_r1201_01 )
@@ -1173,28 +1184,31 @@ EVENT_START	ev_pos_d27r0101_second_w_01
   _RESERVE_SCRIPT( SCRID_RESERVE_D27R1201_RIVAL_01 )
   //マップチェンジ
   _MAP_CHANGE( ZONE_ID_D27R1201, 11, 15, DIR_DOWN )
-
-
+  
 EVENT_END
 
 //--------------------------------------------------------------------
 //	ライバル・主人公：船首楼前へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_to_r1201_01
-	_ANIME_DATA	AC_WALK_R_8F,4
-	_ANIME_DATA	AC_WAIT_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,29
-	_ANIME_DATA	AC_WALK_L_8F,4
-	_ANIME_DATA	ACMD_END,0
+  _ANIME_DATA	AC_WALK_R_8F,4
+  _ANIME_DATA	AC_WALK_U_8F,24
+  _ANIME_DATA	AC_WALK_L_8F,2
+  _ANIME_DATA	AC_WALK_U_8F,4
+  _ANIME_DATA	AC_WALK_L_8F,3
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //	ライバル：船首楼内へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_rival_to_r1201_01
-	_ANIME_DATA	AC_WALK_R_8F,5
-	_ANIME_DATA	AC_WALK_U_8F,30
-	_ANIME_DATA	AC_WALK_L_8F,4
-	_ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_WALK_R_8F,3
+  _ANIME_DATA	AC_WALK_U_8F,24
+  _ANIME_DATA	AC_WALK_L_8F,2
+  _ANIME_DATA	AC_WALK_U_8F,4
+  _ANIME_DATA	AC_WALK_L_8F,3
+  _ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/

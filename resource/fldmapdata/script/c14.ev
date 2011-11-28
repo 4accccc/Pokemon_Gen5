@@ -402,6 +402,9 @@ EVENT_START   ev_c14_boy4_02
     _BALLOONWIN_TALKOBJ_MSG( msg_c14_mission_add_01 )
     _MSGWIN_CLOSE()
     
+    //フェスミッション名代入
+    _FMISSION_NAME( 0, FMISSION_ID_ITEM_HEART_01, 0 )
+    
     //フェスミッションが追加されました
     _SE_PLAY( SEQ_SE_FLD_133 )
     _SYSWIN_MSG( msg_c14_mission_add_02, POS_DEFAULT )
@@ -736,6 +739,9 @@ EVENT_START   ev_c14_fighterm_02
     
     _BALLOONWIN_TALKOBJ_MSG( msg_c14_mission_add_1_01 )
     _MSGWIN_CLOSE()
+    
+    //フェスミッション名代入
+    _FMISSION_NAME( 0, FMISSION_ID_NPC_MEMORYQUIZ_01S, 0 )
     
     //フェスミッションが追加されました
     _SE_PLAY( SEQ_SE_FLD_133 )

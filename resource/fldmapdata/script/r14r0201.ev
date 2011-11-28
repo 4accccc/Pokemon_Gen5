@@ -35,6 +35,9 @@ EVENT_START   ev_r14r0201_backpackerw_01
     _BALLOONWIN_TALKOBJ_MSG( msg_r14r0201_mission_add_01 )
     _MSGWIN_CLOSE()
     
+    //フェスミッション名代入
+    _FMISSION_NAME( 0, FMISSION_ID_ITEM_KOYASHI_01, 0 )
+    
     //フェスミッションが追加されました
     _SE_PLAY( SEQ_SE_FLD_133 )
     _SYSWIN_MSG( msg_r14r0201_mission_add_02, POS_DEFAULT )

@@ -59,6 +59,9 @@ EVENT_START   ev_r09r0202_sunglasses_01
     
     _MSGWIN_CLOSE()
     
+    //フェスミッション名代入
+    _FMISSION_NAME( 0, FMISSION_ID_NPC_SHOCKSHOP_01, 0 )
+    
     //フェスミッションが追加されました
     _SE_PLAY( SEQ_SE_FLD_133 )
     _SYSWIN_MSG( msg_r09r0202_mission_add_04, POS_DEFAULT )
