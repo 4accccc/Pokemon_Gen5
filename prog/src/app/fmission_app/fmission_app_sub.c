@@ -207,13 +207,13 @@ const FMA_CANVAS_DATA fma_canvas_00_tbl[] = {
   { GFL_BG_FRAME0_M,	3,	4,	7,	2,	FMA_BG_FONT_PAL,},			// 順位(左)
   { GFL_BG_FRAME0_M,	3,	7, 10,	2,	FMA_BG_FONT_PAL,},			// トップスコア(左)
   { GFL_BG_FRAME0_M,   13,  7,	8,	2,	FMA_BG_FONT_PAL,},			// 名前(左)
-  { GFL_BG_FRAME0_M,	3, 10,	8,	2,	FMA_BG_FONT_PAL,},			// ハイスコア(左)
+//  { GFL_BG_FRAME0_M,	3, 10,	8,	2,	FMA_BG_FONT_PAL,},			// ハイスコア(左)
   { GFL_BG_FRAME0_M,	3, 13, 28,	8,	FMA_BG_FONT_PAL,},			// 説明文(左)
   //
   { GFL_BG_FRAME0_M,   21,	1,	8,	2,	FMA_BG_FONT_PAL,},			// マイスコア(右)
   { GFL_BG_FRAME0_M,   10,	4, 19,	2,	FMA_BG_FONT_PAL,},			// 順位(右)
   { GFL_BG_FRAME0_M,   21,	7,  8,	2,	FMA_BG_FONT_PAL,},			// トップスコア(右)
-  { GFL_BG_FRAME0_M,   21, 10,	8,	2,	FMA_BG_FONT_PAL,},			// ハイスコア(右)
+//  { GFL_BG_FRAME0_M,   21, 10,	8,	2,	FMA_BG_FONT_PAL,},			// ハイスコア(右)
   //
   //
   { GFL_BG_FRAME1_S,    2, 21, 28,	2,	FMA_BG_FONT_PAL,},			// スクロール

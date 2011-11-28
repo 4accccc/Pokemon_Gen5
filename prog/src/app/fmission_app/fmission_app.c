@@ -337,8 +337,13 @@ static GFL_PROC_RESULT FMissionAppProc_Init( GFL_PROC *proc, int *seq, void *pwk
 	G2S_SetBlendAlpha(GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG3, 15, 15);
 	
 	// ワイプ
-	WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN,
+	if(wk->Mode == FMISSION_APP_MODE_INFO){		// 詳細(黒で入り)
+		WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN,
 					WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapID );
+	}else{										// 結果(白で入り)
+		WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN,
+					WIPE_FADE_WHITE, WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapID );
+	}
 	//
 	return GFL_PROC_RES_FINISH;
 }
@@ -453,8 +458,13 @@ static GFL_PROC_RESULT FMissionAppProc_Main( GFL_PROC *proc, int *seq, void *pwk
 			}
 			break;
 		case 2:
-			WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
+			if(wk->Mode == FMISSION_APP_MODE_INFO){		// 詳細(黒で終了)
+				WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
+							WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapID );
+			}else{										// 結果(白で終了)
+				WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
 							WIPE_FADE_WHITE, WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapID );
+			}
 			(*seq) ++;
 			break;
 		//
@@ -853,7 +863,7 @@ static void fma_update_up_info( FMISSION_APP_WORK* wk )
 //-----------------------------------------------------------------------------
 static void fma_update_down_info( FMISSION_APP_WORK* wk )
 {
-	STRBUF		*strbuf;
+	STRBUF		*strbuf; 
 	
 	// 1回目のみ
 	if(!(wk->Flag & FLG_FMA_DISP_1ST)){
@@ -866,7 +876,7 @@ static void fma_update_down_info( FMISSION_APP_WORK* wk )
 		//------------
 		// ハイスコア
 		//------------
-		fma_disp_highscore( wk );
+//		fma_disp_highscore( wk );
 	}
 	
 	//---------------------------------------
@@ -1721,6 +1731,7 @@ static void fma_disp_fes_string( FMISSION_APP_WORK *wk, const s32 mode, const s3
 //--------------------------------------------------------------
 static void fma_disp_highscore( FMISSION_APP_WORK *wk )
 {
+#if 0
 	u8			buf[2];
 	s32			id;
 	s32			flg=0;
@@ -1761,6 +1772,7 @@ static void fma_disp_highscore( FMISSION_APP_WORK *wk )
 		GFL_STR_DeleteBuffer(str);
 		GFL_STR_DeleteBuffer(expbuf);
 	}
+#endif
 }
 
 //--------------------------------------------------------------
