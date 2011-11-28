@@ -3986,16 +3986,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いたたた……▼
-ほんとうに　さいきんの　こどもは
-ようしゃないんだな▼
-キミの　つよさも　よくわかったよ
+			<Text>いたたた……
+キミの　つよさも　よくわかったよ▼
+キミなら　バンジロウとも
+いいしょうぶが　できるんじゃないかな▼
 これで　エリア３も　クリアだ▼
 キミが　どこまで　いけるのか
 たのしみに　しているよ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T04:09:06" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-28T08:25:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4003,16 +4003,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>痛たたた……▼
-本当に　最近の　子供は
-容赦ないんだな▼
-キミの　強さも　よくわかったよ
+			<Text>痛たたた……
+キミの　強さも　よくわかったよ▼
+キミなら　バンジロウとも
+いい勝負が　できるんじゃないかな▼
 これで　エリア３も　クリアだ▼
 キミが　どこまで　行けるのか
 楽しみに　しているよ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T04:09:11" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-28T08:35:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4676,16 +4676,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いたたた……▼
-ほんとうに　さいきんの　こどもは
-ようしゃないわね▼
-キミの　つよさも　よくわかったわ
+			<Text>いたたた……
+キミの　つよさも　よくわかったわ▼
+キミなら　バンジロウとも
+いいしょうぶが　できると　おもうわ▼
 これで　エリア３も　クリアよ▼
 キミが　どこまで　いけるのか
 たのしみに　しているわ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-28T02:49:04" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-28T08:38:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4693,16 +4693,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>痛たたた……▼
-本当に　最近の　子供は
-容赦ないわね▼
-キミの　強さも　よくわかったわ
+			<Text>痛たたた……
+キミの　強さも　よくわかったわ▼
+キミなら　バンジロウとも
+いい勝負が　できるんと　思うわ▼
 これで　エリア3も　クリアよ▼
 キミが　どこまで　行けるのか
 楽しみに　しているわ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-28T02:49:07" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-28T08:38:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9005,7 +9005,7 @@ Xメニューを　みてごらん▼
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_event_w_03_01_00"
+		Label="msg_event_b_03_01_00"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -9060,7 +9060,7 @@ NPC：MUGENBOSS（バンジロウ）
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_event_b_03_01_00"
+		Label="msg_event_w_03_01_00"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
