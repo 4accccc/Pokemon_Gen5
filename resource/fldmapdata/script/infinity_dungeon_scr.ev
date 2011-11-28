@@ -2020,6 +2020,23 @@ item_get:
 }
 _RET
 
+// 全クリア時用アイテム入手（メッセージなし）
+all_clear_item_get:
+{
+  DEFINE_LOCAL LWK_ITEM_ID
+  DEFINE_LOCAL LWK_ITEM_NUM
+
+  // 入手するアイテムIDを取得
+  _INFINITY_DUNGEON_GET_PARAM( SCR_INFDUNGEON_PARAM_REWARD_ITEM  ,0 ,LWK_ITEM_ID )
+  
+  // 個数を取得
+  _INFINITY_DUNGEON_GET_PARAM( SCR_INFDUNGEON_PARAM_REWARD_NUM  ,0 ,LWK_ITEM_NUM )
+
+  // アイテム入手処理
+  _ITEM_EVENT_KEYWAIT( LWK_ITEM_ID , LWK_ITEM_NUM  )
+}
+_RET
+
 //--------------------------------------------------------------------
 // 全エリアクリア
 //--------------------------------------------------------------------
@@ -2039,13 +2056,13 @@ all_area_clear:
     IF $LWK_D_VERSION == VERSION_B2 THEN
       _BALLOONWIN_OBJMSG_POS( msg_info_clear_b_06_00 , LWK_INFOOBJ_ID, POS_DOWN )
       _BALLOONWIN_CLOSE()
-      _ITEM_EVENT_KEYWAIT( ITEM_HUSIGINAAME , 1  )
+      _CALL all_clear_item_get
       _BALLOONWIN_OBJMSG_POS( msg_info_clear_b_07_00 , LWK_INFOOBJ_ID, POS_DOWN )
       _BALLOONWIN_OBJMSG_POS( msg_info_b_cancel_00 , LWK_INFOOBJ_ID, POS_DL )
     ELSE 
       _BALLOONWIN_OBJMSG_POS( msg_info_clear_w_06_00 , LWK_INFOOBJ_ID, POS_DOWN )
       _BALLOONWIN_CLOSE()
-      _ITEM_EVENT_KEYWAIT( ITEM_HUSIGINAAME , 1  )
+      _CALL all_clear_item_get
       _BALLOONWIN_OBJMSG_POS( msg_info_clear_w_07_00 , LWK_INFOOBJ_ID, POS_DOWN )
       _BALLOONWIN_OBJMSG_POS( msg_info_w_cancel_00 , LWK_INFOOBJ_ID, POS_DL )
     ENDIF
