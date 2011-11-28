@@ -68,7 +68,7 @@
  *  基礎数
  *
  */
-#define RESORT_CONST_PRICE_COEFFEICENT  FX32_CONST(0.02f)
+#define RESORT_CONST_PRICE_COEFFEICENT  FX32_CONST(0.01f)
 /*
  *  お店の品物・サービスの価格
  *  フィーバー状態ではない場合のMAX係数
