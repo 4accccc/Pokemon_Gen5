@@ -875,9 +875,9 @@ EVENT_START ev_d22r0101_swrival_01
   IF $WK_SCENE_D22R0101 == 1 THEN
     _EASY_BALLOONWIN_TALKOBJ_MSG(msg_d22r0101_swrival_14)
   ELSIF $WK_SCENE_D22R0101 == 2 THEN
-    _EASY_BALLOONWIN_TALKOBJ_MSG(msg_d22r0101_swrival_18)
-  ELSIF $WK_SCENE_D22R0101 == 3 THEN
     _EASY_BALLOONWIN_TALKOBJ_MSG(msg_d22r0101_swrival_08)
+  ELSIF $WK_SCENE_D22R0101 == 3 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG(msg_d22r0101_swrival_18)
   ELSIF $WK_SCENE_D22R0101 == 4 THEN
     _EASY_BALLOONWIN_TALKOBJ_MSG(msg_d22r0101_swrival_11)
   ENDIF
@@ -985,9 +985,16 @@ EVENT_START  ev_d22r0101_breederw_01
 EVENT_END
 
 /**************************************************************/
-/* 話しかけ：ハーデリア（迷子じゃないほう）                         */
+/* 話しかけ：ハーデリア（迷子）                     */
 /**************************************************************/
 EVENT_START ev_d22r0101_poke31_01
+  _EASY_TALK_POKEVOICE( MONSNO_591, msg_d22r0101_poke_04 )
+EVENT_END
+
+/**************************************************************/
+/* 話しかけ：ハーデリア（迷子じゃないほう）                             */
+/**************************************************************/
+EVENT_START ev_d22r0101_poke31_02
   //迷子イベントクリア後
   IF $WK_SCENE_D22R0101 == 5 THEN
    _EASY_TALK_POKEVOICE( MONSNO_591, msg_d22r0101_poke31_02 )
@@ -995,13 +1002,6 @@ EVENT_START ev_d22r0101_poke31_01
   ELSE
     _EASY_TALK_POKEVOICE( MONSNO_591, msg_d22r0101_poke31_01 )
   ENDIF
-EVENT_END
-
-/**************************************************************/
-/* 話しかけ：ハーデリア（迷子）                         */
-/**************************************************************/
-EVENT_START ev_d22r0101_poke31_02
-  _EASY_TALK_POKEVOICE( MONSNO_591, msg_d22r0101_poke_04 )
 EVENT_END
 
 /**************************************************************/
