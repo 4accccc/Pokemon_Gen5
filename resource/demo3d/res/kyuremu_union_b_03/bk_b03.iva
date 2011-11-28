@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<iva version="1.6.0">
+
+<head>
+	<create user="swan_3dcg02" host="W00193" date="2011-11-28T11:21:52" source="kyuremu_union_b_03_v00.mb"/>
+	<title>Visibility Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+</head>
+
+<body>
+
+<visibility_info
+	frame_size="1040"
+	tool_start_frame="1"
+	tool_end_frame="1040"
+	compress_node="merge" node_size="33 28"
+/>
+
+<visibility_data>
+	<frame_idx size="1">
+		0
+	</frame_idx>
+	<visibility size="1">
+		1
+	</visibility>
+</visibility_data>
+
+<visibility_anm_array size="28">
+	<visibility_anm index="0" data_size="1" data_head="0"/>
+	<visibility_anm index="1" data_size="1" data_head="0"/>
+	<visibility_anm index="2" data_size="1" data_head="0"/>
+	<visibility_anm index="3" data_size="1" data_head="0"/>
+	<visibility_anm index="4" data_size="1" data_head="0"/>
+	<visibility_anm index="5" data_size="1" data_head="0"/>
+	<visibility_anm index="6" data_size="1" data_head="0"/>
+	<visibility_anm index="7" data_size="1" data_head="0"/>
+	<visibility_anm index="8" data_size="1" data_head="0"/>
+	<visibility_anm index="9" data_size="1" data_head="0"/>
+	<visibility_anm index="10" data_size="1" data_head="0"/>
+	<visibility_anm index="11" data_size="1" data_head="0"/>
+	<visibility_anm index="12" data_size="1" data_head="0"/>
+	<visibility_anm index="13" data_size="1" data_head="0"/>
+	<visibility_anm index="14" data_size="1" data_head="0"/>
+	<visibility_anm index="15" data_size="1" data_head="0"/>
+	<visibility_anm index="16" data_size="1" data_head="0"/>
+	<visibility_anm index="17" data_size="1" data_head="0"/>
+	<visibility_anm index="18" data_size="1" data_head="0"/>
+	<visibility_anm index="19" data_size="1" data_head="0"/>
+	<visibility_anm index="20" data_size="1" data_head="0"/>
+	<visibility_anm index="21" data_size="1" data_head="0"/>
+	<visibility_anm index="22" data_size="1" data_head="0"/>
+	<visibility_anm index="23" data_size="1" data_head="0"/>
+	<visibility_anm index="24" data_size="1" data_head="0"/>
+	<visibility_anm index="25" data_size="1" data_head="0"/>
+	<visibility_anm index="26" data_size="1" data_head="0"/>
+	<visibility_anm index="27" data_size="1" data_head="0"/>
+</visibility_anm_array>
+
+</body>
+
+</iva>
