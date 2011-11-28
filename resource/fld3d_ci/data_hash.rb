@@ -112,6 +112,8 @@ $cutin_id_array = [
   "FLDCIID_BLIZZARD",
   "FLDCIID_KUSABI_B",
   "FLDCIID_KUSABI_W",
+  "FLDCIID_GET2_24",
+  "FLDCIID_GET2_25",
 ]
 $cutin_ncg_hash = {
   "medal_icon.ncg" => "replace_tex/medal/",
