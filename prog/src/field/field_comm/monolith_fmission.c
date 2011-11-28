@@ -2584,7 +2584,7 @@ static BOOL fmission_chk_open( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
       MYSTATUS* my = GAMEDATA_GetMyStatus( gamedata );
       MISC* misc=  SaveData_GetMisc(GAMEDATA_GetSaveControlWork( gamedata ));
       int key = mfw->fmd_arc[id].common.host-FMISSION_HOST_GIFT1;
-      flg = EVTLOCK_CheckEvtLock( misc , key, my );
+      flg = EVTLOCK_CheckEvtLock( misc , EVT_LOCK_NO_FMISSION_00+key, my );
     }
     break;
   default:
