@@ -321,8 +321,8 @@ static void _Clear_MsgStream(MONOLITH_FMSELECT_WORK *mfw);
 static void _Setup_ScreenClear(MONOLITH_FMSELECT_WORK *mfw);
 static void _Setup_PowerNameBMPCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw, MONOLITH_SETUP *setup);
 static void _Setup_PowerNameBMPDelete(MONOLITH_FMSELECT_WORK *mfw);
-//static BOOL _MissionNameBMPDraw(MONOLITH_FMSELECT_WORK *mfw, MONOLITH_SETUP *setup);
 static BOOL _MissionNameBMPDraw(MONOLITH_FMSELECT_WORK *mfw, MONOLITH_SETUP *setup, const s32 maxnum);
+static void _MissionNameBMPDraw2( MONOLITH_FMSELECT_WORK *mfw, MONOLITH_SETUP *setup, const s32 level );
 static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw);
 static void _ScrollBeforeUpdate(MONOLITH_FMSELECT_WORK *mfw);
 static BOOL _SetCursorPos(MONOLITH_FMSELECT_WORK *mfw, s32 cursor_pos, _SET_CURSOR_MODE mode);
@@ -358,7 +358,7 @@ static BOOL fmission_chk_open( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
 //
 static void fmission_chk_savedata( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw, const s32 count, const s32 id );
 static void fmission_clear_newflag( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw, const s32 id );
-static void fmission_chg_level( MONOLITH_FMSELECT_WORK *mfw, const s32 mode );
+static void fmission_chg_level( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw, const s32 mode );
 //
 static void fmission_chg_bgpal( MONOLITH_FMSELECT_WORK *mfw );
 //
@@ -1423,7 +1423,6 @@ static void _Setup_PowerNameBMPDelete(MONOLITH_FMSELECT_WORK *mfw)
  * TRUEが返るまで毎フレーム呼び続けてください
  */
 //--------------------------------------------------------------
-//static BOOL _MissionNameBMPDraw(MONOLITH_FMSELECT_WORK *mfw, MONOLITH_SETUP *setup)
 static BOOL _MissionNameBMPDraw(MONOLITH_FMSELECT_WORK *mfw, MONOLITH_SETUP *setup,const s32 maxnum)
 {
   int i, count = 0;
@@ -1452,6 +1451,38 @@ static BOOL _MissionNameBMPDraw(MONOLITH_FMSELECT_WORK *mfw, MONOLITH_SETUP *set
     return FALSE;
   }
   return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * Gパワー名をBMP描画(レベル対応)
+ *
+ * @param   MONOLITH_FMSELECT_WORK *mfw
+ * @param   MONOLITH_SETUP         *setup
+ * @param   const s32              (レベル)
+ *
+ */
+//--------------------------------------------------------------
+static void _MissionNameBMPDraw2( MONOLITH_FMSELECT_WORK *mfw, MONOLITH_SETUP *setup, const s32 level )
+{
+  STRBUF *str;
+  FEST_MISSION  mission;
+  
+  // bmpを一旦クリア
+  GFL_BMP_Clear( mfw->bmp_fess_mission_name[mfw->cursor_pos], 0 );
+  //
+  str = GFL_STR_CreateBuffer(32, HEAPID_MONOLITH);
+  // パラメータの取得(レベル対応)
+  FMISSION_DATA_GetMissionParam( mfw->fmd_man, mfw->fess_mission_id[mfw->cursor_pos], level, &mission );
+  FMISSION_DATA_GetTitleStr( mfw->fmd_man, str, &mission, GFL_HEAP_LOWID(HEAPID_MONOLITH) );
+  // 名前のセット
+  PRINTSYS_PrintColor( mfw->bmp_fess_mission_name[mfw->cursor_pos], 0, 0, str, setup->font_handle, PRINTSYS_MACRO_LSB(0xf, 2, 0) );
+  GFL_STR_DeleteBuffer( str );
+  //
+  // 名前のコピー(本当は必要なものだけでよいはず)
+  _ScrollPos_NameOamReflection( mfw );
+  // 実際の転送
+  mfw->scroll_update = TRUE;
 }
 
 //--------------------------------------------------------------
@@ -1708,7 +1739,7 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
         if(mfw->cursor_pos < check_topno){
           mfw->one_speed = -(POWER_LIST_SPACE << 8);
         }
-        fmission_chg_level( mfw, 0 );
+        fmission_chg_level( appwk, mfw, 0 );
         return FALSE;
       }
       else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
@@ -1723,11 +1754,11 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
         if(mfw->cursor_pos >= check_bottomno){
           mfw->one_speed = POWER_LIST_SPACE << 8;
         }
-        fmission_chg_level( mfw, 0 );
+        fmission_chg_level( appwk, mfw, 0 );
         return FALSE;
       }
       else if(GFL_UI_KEY_GetRepeat() & (PAD_KEY_LEFT|PAD_KEY_RIGHT)){
-        fmission_chg_level( mfw, 2 );
+        fmission_chg_level( appwk, mfw, 2 );
         return FALSE;
       }
     }
@@ -1763,7 +1794,7 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
       }
       else{
         // レベルをタッチ
-        fmission_chg_level( mfw, 1 );
+        fmission_chg_level( appwk, mfw, 1 );
       }
     }
     else if(mfw->speed != 0){ //減速
@@ -1811,7 +1842,7 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
     mfw->speed = 0;
     _SetCursorPos(mfw, cursor_pos, _SET_CURSOR_MODE_TP);
     // タッチペン用
-    fmission_chg_level( mfw, 0 );
+    fmission_chg_level( appwk, mfw, 0 );
   }
   
   return decide_on;
@@ -2654,7 +2685,7 @@ static void fmission_clear_newflag( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELEC
  * @param   const s32				(0:初期化、1:tp、2:trg)
  */
 //==================================================================
-static void fmission_chg_level( MONOLITH_FMSELECT_WORK *mfw, const s32 mode )
+static void fmission_chg_level( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw, const s32 mode )
 {
   s16  i;
   s16  lv;
@@ -2729,7 +2760,10 @@ static void fmission_chg_level( MONOLITH_FMSELECT_WORK *mfw, const s32 mode )
     // 新を変更
     // (色自体は1番と同じだが、1番は決定時にアニメとして使用されているため別とした)
     GFL_CLACT_WK_SetPlttOffs( mfw->clwk[FMISS_CLWK_LV1+mfw->Level], FMISS_LV_OBJ_COLOR, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+    //
   }
+  // カーソル位置のミッション名を書き換える処理
+  _MissionNameBMPDraw2( mfw, appwk->setup, mfw->Level );
 }
 
 //==================================================================
@@ -2831,12 +2865,20 @@ static void fmission_init_mode( MONOLITH_FMSELECT_WORK *mfw, const s32 mode )
 static void fmission_disp_startmes( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw )
 {
   s32  num;
+  s32  level;
   STRBUF *str;
   FEST_MISSION  mission;
   //
+  // レベル
+  level = mfw->Level;
+  if(mfw->Flag & FLG_FMISS_SECRET){
+    level = FMISS_LV4;
+  }
+  //
   str = GFL_STR_CreateBuffer(32, HEAPID_MONOLITH);
   // 名前のセット
-  FMISSION_DATA_GetMissionParam( mfw->fmd_man, mfw->fess_mission_id[mfw->cursor_pos], 0, &mission );
+//  FMISSION_DATA_GetMissionParam( mfw->fmd_man, mfw->fess_mission_id[mfw->cursor_pos], 0, &mission );
+  FMISSION_DATA_GetMissionParam( mfw->fmd_man, mfw->fess_mission_id[mfw->cursor_pos], level, &mission );
   FMISSION_DATA_GetTitleStr( mfw->fmd_man, str, &mission, GFL_HEAP_LOWID(HEAPID_MONOLITH) );
   WORDSET_RegisterWord( appwk->setup->wordset, 0, str, 0, TRUE, PM_LANG );
   GFL_STR_DeleteBuffer( str );
