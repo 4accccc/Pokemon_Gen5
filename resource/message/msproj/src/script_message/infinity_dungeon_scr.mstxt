@@ -1447,10 +1447,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　ちょうせんしゃが
-たくさん　くるわね▼
+			<Text>キミが　つぎの　ちょうせんしゃね▼
 さいきんは　バンジロウのような
-つよい　トレーナーが　すくないわね▼
+つよい　トレーナーが　すくないのよ▼
 キミは　わたしを
 たのしませて　くれるかしら？▼
 わたしは　つよい　トレーナーと
@@ -1459,7 +1458,7 @@
 ためさせて　もらうわよ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-28T10:29:24" />
+				Time="2011-11-28T13:31:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1467,10 +1466,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今日は　挑戦者が
-たくさん　来るわね▼
+			<Text>キミが　次の　挑戦者ね▼
 最近は　バンジロウのような
-強い　トレーナーが　少ないわね▼
+強い　トレーナーが　少ないのよ▼
 キミは　わたしを
 楽しませて　くれるかしら？▼
 わたしは　強い　トレーナーと
@@ -1479,7 +1477,7 @@
 試させて　もらうわよ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-28T10:30:52" />
+				Time="2011-11-28T13:31:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2130,8 +2128,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうは　ちょうせんしゃが
-たくさん　くる　ひだな▼
+			<Text>キミが　つぎの　ちょうせんしゃか▼
 さいきんは　バンジロウのような
 つよい　トレーナーが　すくないからな▼
 キミは　わたしを
@@ -2142,7 +2139,7 @@
 ためさせて　もらおう！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-28T10:27:51" />
+				Time="2011-11-28T13:32:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2150,8 +2147,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今日は　挑戦者が
-たくさん　来る日だな▼
+			<Text>キミが　次の　挑戦者か▼
 最近は　バンジロウのような
 強い　トレーナーが　少ないからな▼
 キミは　わたしを
@@ -2162,7 +2158,7 @@
 試させて　もらおう！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-28T10:28:36" />
+				Time="2011-11-28T13:33:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4110,17 +4106,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さっきの　しょうねんと　どうとう
-いや　それいじょうの　つよさだな▼
+			<Text>つよいな　キミは▼
+バンジロウと　おなじ
+いや　それいじょうの　なにかを▽
+キミには　かんじるよ▼
 キミが　ここで　たたかいつづければ
-あのしょうねんと　たたかう　ひが▽
+バンジロウと　たたかうひが▽
 くるかもしれないな▼
 キミたちの　たたかい……
 みてみたいものだ▼
 では　また　たたかおう▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T04:09:23" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-28T13:35:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4128,17 +4126,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さっきの　少年と　同等
-いや　それ以上の　強さだな▼
+			<Text>強いな　キミは▼
+バンジロウと　同じ
+いや　それ以上の　なにかを▽
+キミには　感じるよ▼
 キミが　ここで　戦い続ければ
-あの少年と　戦う日が▽
+バンジロウと　戦う日が▽
 来るかもしれないな▼
 キミたちの　戦い……
 みてみたいものだ▼
 では　また　戦おう▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T04:09:25" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-28T13:35:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4800,17 +4800,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さっきの　しょうねんと　どうとう
-いや　それいじょうの　つよさね▼
+			<Text>つよいわね　キミ▼
+バンジロウと　おなじ
+いや　それいじょうの　なにかを▽
+キミには　かんじるわ▼
 キミが　ここで　たたかいつづければ
-あのしょうねんと　たたかうひが▽
+バンジロウと　たたかうひが▽
 くるかもしれないわね▼
 キミたちの　たたかい……
 きょうみぶかいわ▼
 それじゃ　また　たたかいましょうね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-28T02:49:13" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-28T13:37:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4818,17 +4820,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さっきの　少年と　同等
-いや　それ以上の　強さね▼
+			<Text>強いわね　キミ▼
+バンジロウと　同じ
+いや　それ以上の　何かを▽
+キミには　感じるわ▼
 キミが　ここで　戦い続ければ
-あの少年と　戦う日が▽
+バンジロウと　戦う日が▽
 来るかもしれないわね▼
 キミたちの　戦い……
 興味深いわ▼
 それじゃ　また　戦いましょうね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-28T02:49:16" />
+				User="nakamura_akira:W00280"
+				Time="2011-11-28T13:38:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
