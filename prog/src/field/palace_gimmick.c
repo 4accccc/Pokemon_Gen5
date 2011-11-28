@@ -377,6 +377,9 @@ void PALACE_GMK_EffectStart2( GAMESYS_WORK *gsys )
   PALACE_GMK_WORK *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GIMMICK_WORK_ASSIGN_ID);
 
   ANM_EFFECT_04_Play( p_wk );
+
+  // SE
+  PMSND_PlaySE( SEQ_SE_SW_FES_16 );
 }
 
 //==============================================================================
