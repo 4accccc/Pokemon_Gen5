@@ -166,9 +166,18 @@ u8 GPOWER_GetDistributionPowerID( GPOWER_ID gpower_id )
   if( gpower_id >= GPOWER_ID_DISTRIBUTION_START && gpower_id <= GPOWER_ID_DISTRIBUTION_END ){
     return gpower_id - GPOWER_ID_DISTRIBUTION_START;
   }
+  /*
+   *  111128に一度SWANには配布パワーは無いことになったが
+   *  やっぱりやりたい！と言われた時のためにindefによる分岐でソースを残しておく
+   *
+   *  管理表でSWAN配布パワーが設定されなければ、GPOWER_ID_DISTRIBUTION_START_SWは定義されない
+   *  by iwasawa
+   */
+#ifdef GPOWER_ID_DISTRIBUTION_START_SW
   if( gpower_id >= GPOWER_ID_DISTRIBUTION_START_SW && gpower_id <= GPOWER_ID_DISTRIBUTION_END_SW ){
     return ((gpower_id - GPOWER_ID_DISTRIBUTION_START)+GPOWER_DISTRIBUTION_POWER_NUM_BW );
   }
+#endif
   return GPOWER_DISTRIBUTION_ID_NULL;
 }
 

@@ -186,6 +186,11 @@ def DataConv()
         exit(200);
       end
 =end
+      if( $DistributionEndNo != -1 )
+        print "BW配布より後に配布が設定されている\n"
+        exit(200);
+      end
+
       if(distribution_start == 0)
         $DistributionStartNo = i;
         distribution_start = 1;
@@ -291,10 +296,12 @@ def DataFileOutput()
     file.printf("\n");
     file.printf("\tGPOWER_ID_DISTRIBUTION_START = %d,\t\t//配布Gパワー開始ID(このIDを含む)\n", $DistributionStartNo);
     file.printf("\tGPOWER_ID_DISTRIBUTION_END = %d,\t\t//配布Gパワー終了ID(このIDを含む)\n\n", $DistributionEndNo);
-    file.printf("\tGPOWER_ID_DISTRIBUTION_START_SW = %d,\t\t//SWAN配布Gパワー開始ID(このIDを含む)\n", $DistributionStartNoSw);
-    file.printf("\tGPOWER_ID_DISTRIBUTION_END_SW = %d,\t\t//SWAN配布Gパワー終了ID(このIDを含む)\n\n", $DistributionEndNoSw);
-    file.printf("\tGPOWER_ID_PALACE_START = %d,\t\t//パレスGパワー開始ID(このIDを含む)\n", $PalaceStartNo);
-    file.printf("\tGPOWER_ID_PALACE_END = %d,\t\t//パレスGパワー終了ID(このIDを含む)\n\n", $PalaceEndNo);
+    if $DistributionStgartNoSw == 0 then
+      file.printf("\tGPOWER_ID_DISTRIBUTION_START_SW = %d,\t\t//SWAN配布Gパワー開始ID(このIDを含む)\n", $DistributionStartNoSw);
+      file.printf("\tGPOWER_ID_DISTRIBUTION_END_SW = %d,\t\t//SWAN配布Gパワー終了ID(このIDを含む)\n\n", $DistributionEndNoSw);
+    end
+#   file.printf("\tGPOWER_ID_PALACE_START = %d,\t\t//パレスGパワー開始ID(このIDを含む)\n", $PalaceStartNo); #この定義は未使用なので削除111128
+#   file.printf("\tGPOWER_ID_PALACE_END = %d,\t\t//パレスGパワー終了ID(このIDを含む)\n\n", $PalaceEndNo); #この定義は未使用なので削除11128
     file.printf("\tGPOWER_ID_DUMMY_START = %d,\t\t//BWの未実装パワー開始ID(このIDを含む)\n", $DummyStartNo);
     file.printf("\tGPOWER_ID_DUMMY_END = %d,\t\t//BWの未実装パワー終了ID(このIDを含む)\n\n", $DummyEndNo);
     file.printf("\tGPOWER_ID_MAX = %d,\t\t//Gパワー最大数\n", PowerData.size);
