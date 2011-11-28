@@ -68,7 +68,7 @@
  *  基礎数
  *
  */
-#define RESORT_CONST_PRICE_COEFFEICENT  FX32_CONST(0.002f)
+#define RESORT_CONST_PRICE_COEFFEICENT  FX32_CONST(0.02f)
 /*
  *  お店の品物・サービスの価格
  *  フィーバー状態ではない場合のMAX係数
@@ -80,13 +80,13 @@
  *  フィーバー状態のときのMAX係数
  *
  */
-#define RESORT_CONST_FEVER_EXIST_COEFFEICENT    (2)
+#define RESORT_CONST_FEVER_EXIST_COEFFEICENT    (1.5f)
 /*
  *  お店の品物・サービスの価格
  *  レベルキャップ
  *
  */
-#define RESORT_CONST_LEVEL_CAP    (50)
+#define RESORT_CONST_LEVEL_CAP    (40)
 
 /*
  *  コンボ  調子どう？で確率がわかる文
@@ -121,7 +121,7 @@
  *  ( 1 + RESORT_CONST_COMBO_ADD_RATE * コンボ回数 ) * 経験値
  *
  */
-#define RESORT_CONST_COMBO_ADD_RATE    (0.1)
+#define RESORT_CONST_COMBO_ADD_RATE    (0.25)
 
 
 /*
