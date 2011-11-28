@@ -73,9 +73,20 @@ _GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
 IF $SCWK_TEMP0 == 0 THEN
 	//バッジ入手前なら
 	_PLAINWIN_MSG_DOWN( msg_c12gym0101_statue_01 )
+
+//バッジ入手後
 ELSE
-	//バッジ入手後
-    _PLAINWIN_MSG_DOWN( msg_c12gym0101_statue_02  )
+
+	IF $WK_SCENE_R20 >= 3 THEN
+	
+		_PLAINWIN_MSG_DOWN( msg_c12gym0101_statue_03  )
+	
+	ELSE
+		
+		_PLAINWIN_MSG_DOWN( msg_c12gym0101_statue_02  )
+	
+	ENDIF
+
 ENDIF
 
 _LAST_KEYWAIT()
