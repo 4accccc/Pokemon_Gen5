@@ -1310,11 +1310,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハイリンクに　フェスミッションの
-『きらめく　ハートは　どこに？』が▽
+『[Name:FesMissionName ]』が▽
 ついか　されました</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-21T03:51:57" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-28T08:36:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1323,11 +1323,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハイリンクに　フェスミッションの
-『きらめく　ハートは　どこに？』が▽
+『[Name:FesMissionName ]』が▽
 追加されました</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-22T13:08:35" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-28T08:37:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2034,11 +2034,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハイリンクに　フェスミッションの
-『きおくりょく　トレーニング！』が▽
+『[Name:FesMissionName ]』が▽
 ついか　されました</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-21T03:50:15" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-28T08:36:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2047,11 +2047,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハイリンクに　フェスミッションの
-『きおくりょく　トレーニング！』が▽
+『[Name:FesMissionName ]』が▽
 追加されました</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-22T13:08:51" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-28T08:36:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -236,11 +236,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハイリンクに　フェスミッションの
-『ショッキング　ショッピング！』が▽
+『[Name:FesMissionName ]』が▽
 ついか　されました</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-21T03:48:25" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-28T08:35:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -249,11 +249,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハイリンクに　フェスミッションの
-『ショッキング　ショッピング！』が▽
+『[Name:FesMissionName ]』が▽
 追加されました</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-22T13:08:10" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-28T08:35:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -3871,11 +3871,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハイリンクに　フェスミッションの
-『エンジョイ　ぶつぶつこうかんＢ』が▽
+『[Name:FesMissionName ]』が▽
 ついか　されました</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-21T02:47:38" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-28T08:31:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3884,11 +3884,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハイリンクに　フェスミッションの
-『エンジョイ　ぶつぶつこうかんＢ』が▽
+『[Name:FesMissionName ]』が▽
 追加されました</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-22T12:48:56" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-28T08:32:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3926,11 +3926,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハイリンクに　フェスミッションの
-『エンジョイ　ぶつぶつこうかんＷ』が▽
+『[Name:FesMissionName ]』が▽
 ついか　されました</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-21T02:48:30" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-28T08:32:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3939,11 +3939,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハイリンクに　フェスミッションの
-『エンジョイ　ぶつぶつこうかんＷ』が▽
+『[Name:FesMissionName ]』が▽
 追加されました</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-22T12:48:52" />
+				User="mizuguchi_mai:W00293"
+				Time="2011-11-28T08:32:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
