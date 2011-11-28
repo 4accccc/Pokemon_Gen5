@@ -674,10 +674,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アキト</Text>
+			<Text>ＭＩＹＵＫＩ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:44:32" />
+				Time="2011-11-27T11:10:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -685,10 +685,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アキト</Text>
+			<Text>ＭＩＹＵＫＩ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T05:44:35" />
+				Time="2011-11-27T11:10:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3739,10 +3739,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>メグミ</Text>
+			<Text>ＭＡＹＯ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T06:37:50" />
+				Time="2011-11-27T11:11:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -3750,10 +3750,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>メグミ</Text>
+			<Text>ＭＡＹＯ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T06:37:53" />
+				Time="2011-11-27T11:11:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -6505,10 +6505,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だいバンギラスのしもべ</Text>
+			<Text>だいバンギラスのぶか</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T12:49:54" />
+				Time="2011-11-27T11:12:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -6516,10 +6516,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>大バンギラスの僕</Text>
+			<Text>大バンギラスの部下</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T04:00:17" />
+				Time="2011-11-27T11:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -10006,10 +10006,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しゃべる　ドーブル</Text>
+			<Text>しゃべるドーブル</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:39:21" />
+				Time="2011-11-27T11:13:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -10017,10 +10017,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>しゃべる　ドーブル</Text>
+			<Text>しゃべるドーブル</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:39:44" />
+				Time="2011-11-27T11:13:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -10078,7 +10078,7 @@
 			<Text>エリートトレーナー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:39:21" />
+				Time="2011-11-27T11:13:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -10089,7 +10089,7 @@
 			<Text>エリートトレーナー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:39:44" />
+				Time="2011-11-27T11:13:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -10111,7 +10111,7 @@
 			<Text>エリートトレーナー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:39:21" />
+				Time="2011-11-27T11:13:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -11006,10 +11006,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちかろうの　とびら</Text>
+			<Text>まほうの　とびら</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-22T04:37:56" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T11:14:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -11017,10 +11017,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>地下ろうの　扉</Text>
+			<Text>魔法の　扉</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-11T04:10:05" />
+				Time="2011-11-27T11:14:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -11041,10 +11041,10 @@
 		Style="">
 		<LanguageCell
 			Language="JPN">
-			<Text>おとも　ポケモン</Text>
+			<Text>おともポケモン</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-22T04:38:41" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T11:14:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -11052,10 +11052,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お供　ポケモン</Text>
+			<Text>お供ポケモン</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-22T04:38:41" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T11:14:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -11541,10 +11541,10 @@
 		Style="">
 		<LanguageCell
 			Language="JPN">
-			<Text>おとも　ポケモン</Text>
+			<Text>おともポケモン</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-22T04:39:52" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T11:14:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -11552,10 +11552,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お供　ポケモン</Text>
+			<Text>お供ポケモン</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-22T04:39:52" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T11:15:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -20518,10 +20518,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きゃくほん</Text>
+			<Text>脚本</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-16T12:12:28" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T06:23:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -20552,10 +20552,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かんとく</Text>
+			<Text>監督</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-09-16T13:20:02" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T06:22:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

@@ -482,8 +482,8 @@ UFOの　テストと　偽り
 もらいうける……</language>
 	</row>
 	<row id="pw_event1_enemy_0">
-		<language name="JPN" width="256">E『くるぞ……
-はは　なる　マザーシップが……</language>
+		<language name="JPN" width="256">E『さあ……　くるぞ……
+ははなる　マザーシップが……</language>
 		<language name="JPN_KANJI" width="256">E『来るぞ……
 母なる　マザーシップが……</language>
 	</row>
@@ -492,23 +492,22 @@ UFOの　テストと　偽り
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『くっ……　</language>
 	</row>
 	<row id="pw_event1_enemy_1">
-		<language name="JPN" width="256">E『われわれの　ながい　たびも
-ようやく　おわる……</language>
-		<language name="JPN_KANJI" width="256">E『我々の　長い　旅
-ようやく　終わる……</language>
+		<language name="JPN" width="256">E『やっと　これで……
+われわれの　たびも　おわる……</language>
+		<language name="JPN_KANJI" width="256">E『やっと　これで……
+我々の旅も　終わる……</language>
 	</row>
 	<row id="pw_event1_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……どういう　こと？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……どういう　こと？</language>
 	</row>
 	<row id="pw_event1_enemy_2">
-		<language name="JPN" width="256">E『……　こきょう　である
+		<language name="JPN" width="256">E『……こきょうで　ある
 わくせいを　うしなった▽
 われわれは　ながい　あいだ▽
 うちゅうを　さまよって　きた……</language>
-		<language name="JPN_KANJI" width="256">E『……　故郷たる
-惑星を　失った▽
-我々は　長い　年月▽
+		<language name="JPN_KANJI" width="256">E『……故郷たる　惑星を失った
+我々は　長い　長い　年月を▽
 宇宙を　さ迷って　きた……</language>
 	</row>
 	<row id="pw_event1_hero_3">
@@ -516,13 +515,13 @@ UFOの　テストと　偽り
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……</language>
 	</row>
 	<row id="pw_event1_enemy_3">
-		<language name="JPN" width="256">E『ながい　たびの　はてで
+		<language name="JPN" width="256">E『ながいたびの　はてで
 みつけた　この　ほし……▼
 このほしは　われわれが
 いきるための　じょうけんを▽
 みたしていた……▼
 わずかな　もんだいを　のぞいて……</language>
-		<language name="JPN_KANJI" width="256">E『長い　旅の　果てで
+		<language name="JPN_KANJI" width="256">E『長い旅の　果てで
 見つけた　この星……▼
 この星は　我々が
 生きるための　条件を▽
@@ -530,8 +529,8 @@ UFOの　テストと　偽り
 わずかな　問題を　のぞいて……</language>
 	</row>
 	<row id="pw_event1_hero_4">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『……？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『もんだい……？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『問題……？</language>
 	</row>
 	<row id="pw_event1_enemy_4">
 		<language name="JPN" width="256">E『にんげんと　ポケモン……▼
@@ -544,8 +543,8 @@ UFOの　テストと　偽り
 それらで　この星は　すでに
 限界を　超えている……▼
 よって　我々が　ここで
-生きるためには　それらを▽
-滅ぼす　必要が　ある……</language>
+生きるためには　それらの　生命を▽
+滅ぼす必要が　ある……</language>
 	</row>
 	<row id="pw_event1_hero_5">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……つまり
@@ -554,21 +553,23 @@ UFOの　テストと　偽り
 この星を　侵略　するの？</language>
 	</row>
 	<row id="pw_event1_enemy_5">
-		<language name="JPN" width="256">E『……しんりゃく　だと？▼
-ひとや　ポケモンは　ここで　きえ
-ゆうしゅうな　われわれが▽
-ここで　いきる……▼
-その　なにが　わるい？</language>
-		<language name="JPN_KANJI" width="256">E『……侵略　だと？▼
-進化の　過程で　滅びる
-生物が　存在する　ように▽
-人や　ポケモンは　ここで　消え▽
-我々が　生き残る……▼
+		<language name="JPN" width="256">E『……しんりゃく　だと？
+ひとや　ポケモンは　ここで　きえ▽
+せいめいとして　より　ゆうしゅうな▽
+われわれが　ここで　いきる……▽
+いったい　その　なにが　わるい？</language>
+		<language name="JPN_KANJI" width="256">E『……侵略　だと？
+それは　貴様らの　おごりだ▽
+生存競争と　考えるべきではないか▼
+進化のプロセスで　滅びる
+生物が　存在するように▽
+人間や　ポケモンが　消え▽
+代わって　我々が　生き残る……▽
 それだけでは　ないか……</language>
 	</row>
 	<row id="pw_event1_react_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『たしかに　そうか……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『なるほど……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なるほど……</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
 		<language name="JPN" width="256">E『……りかいが　できたならば
@@ -595,14 +596,14 @@ UFOの　テストと　偽り
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『他に　方法がある！</language>
 	</row>
 	<row id="pw_event1_react_enemy_2">
-		<language name="JPN" width="256">E『りそうを　かたるか……
-だが　おまえたちの　ような▽
+		<language name="JPN" width="256">E『りそうを　かたるのは　いい……▼
+だが　おまえたちの　ように▽
 おろかで　かとうな　せいぶつに▽
-りそうが　じつげん　できるのか？</language>
-		<language name="JPN_KANJI" width="256">E『理想を　語るか……
+りそうが　じつげんできるのか？</language>
+		<language name="JPN_KANJI" width="256">E『理想を　語るのは　いい……
 だが　お前たちの　ような▽
 おろかで　下等な　生物に▽
-理想が　実現　できるのか？</language>
+理想が　実現できるのか？</language>
 	</row>
 	<row id="pw_event1_react_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ひとは　ゆうしゅうよ！</language>
@@ -638,53 +639,54 @@ UFOの　テストと　偽り
 このほしに　きけんを　かんじ▽
 うちゅうへ　もどり　はじめたのだ▼
 ……　われわれは　ふたたび
-こどくな　うちゅうを　あてなく▽
+こどくな　うちゅうを　あてもなく▽
 さまようことに　なる……</language>
 		<language name="JPN_KANJI" width="256">E『……　……お前が　UFOを
-倒したでこと　マザーシップが▽
+倒したことで　マザーシップが▽
 この星に　危険を　感じ▽
 宇宙へ　戻り始めたのだ▼
 ……　我々は　再び
-孤独な　宇宙を　当てなく▽
+孤独な　宇宙を　当てもなく▽
 さ迷うことに　なる……</language>
 	</row>
 	<row id="pw_event2_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『……▼
-このほしには　たくさんの
-にんげんと　ポケモンが　いる……▼
-だけど　まだ　だれも　しらない
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『E……▼
+あなたが　いうように　このほしには
+すでに　たくさんの　にんげん……
+そしてポケモンが　くらしている……▼
+……だけどさ　まだ　だれも　しらない
 あたらしい　せいぶつが　うまれる▽
-かのうせいだって　ある……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……▼
-この星には　たくさんの
-人間と　ポケモンが　いる……▼
-だけど　まだ　だれも　知らない
+かのうせいだって　あるでしょ……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『E……▼
+あなたの　言うように　この星には
+すでに　たくさんの　人間と
+ポケモンが　暮らしている……▼
+……だけどさ　まだ　だれも　知らない
 新しい　生命が　生まれる▽
-可能性だって　ある……</language>
+可能性だって　あるでしょ……</language>
 	</row>
 	<row id="pw_event2_enemy_2">
-		<language name="JPN" width="256">E『なにが　いいたい……</language>
-		<language name="JPN_KANJI" width="256">E『なにが　いいたい……</language>
+		<language name="JPN" width="256">E『どういうことだ……</language>
+		<language name="JPN_KANJI" width="256">E『どういうことだ……</language>
 	</row>
 	<row id="pw_event2_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『だから……
 いままで　このほしに　いなかった▽
-あなたたちが　ここを　えらび▽
-ここで　いきようとする　ことは▽
-わるいこと　じゃない……▼
-……でも　じぶんたちの　ために
+あなたたちが　ここで　いきていこうと▽
+することは　わるくないわ……▼
+……でも　じぶんたちの　りゆうだけで
 ほかの　せいぶつを　みんな▽
 ほろぼしてしまう　なんて▽
-みとめるわけには　いかないよ</language>
+みとめるわけには　いかないの</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『だから……
 今まで　この星に　いなかった▽
-あなたたちが　ここを　選び▽
-ここで　生きようとする　ことを▽
-否定する　つもりは　ない……▼
-……でも　自分たちの　ために
-他の　生物を　みんな▽
-滅ぼしてしまう　なんて▽
-認めるわけには　いかないよ</language>
+君たちが　ここを　選ぶ権利▽
+ここで　生きる権利を▽
+持ってても　おかしくない……▼
+……でも　自分たちの　都合だけで
+他の　生物たちを　すべて▽
+滅ぼしてしまおう　なんて▽
+認めるわけには　いかないの</language>
 	</row>
 	<row id="pw_event2_enemy_3">
 		<language name="JPN" width="256">E『……では　どうすると　いうのだ？</language>
@@ -692,26 +694,22 @@ UFOの　テストと　偽り
 	</row>
 	<row id="pw_event2_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……あなたたちや
-わたしたち　にんげん……▽
-そして　ポケモンが▽
-いっしょに　いきる……▼
-そんな　ほうほうを　わたしたちと
-さがせば　いいじゃない？</language>
+にんげん……　そして　ポケモンが▽
+いっしょに　いきる　ほうほう……▽
+わたしたちと　さがせば　いいじゃない？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……あなたたちや
-私たち　人間……▽
-そして　ポケモンが▽
-一緒に　生きる……▼
-そんな　方法を　私たちと
-探せば　いいじゃない？</language>
+人間……　そしてポケモンが▽
+一緒に　生きる　方法……▽
+私たちと　探せば　いいじゃない？</language>
 	</row>
 	<row id="pw_event2_enemy_4">
 		<language name="JPN" width="256">E『そうか……▼
-だが　その　ていあんは　ことわる……▼
-わたしたちも　マザーシップと　ともに
+だが　その　ていあんは　ことわる……
+わたしたちも　マザーシップと　ともに▽
 このほしを　さらねば　ならない……</language>
 		<language name="JPN_KANJI" width="256">E『そうか……▼
-だが　その提案は　断る……▼
-私たちも　マザーシップと　ともに
+だが　その提案は　断る……
+私たちも　マザーシップと　ともに▽
 この星を　去らねば　ならない……</language>
 	</row>
 	<row id="pw_event2_hero_5">
@@ -720,14 +718,14 @@ UFOの　テストと　偽り
 	</row>
 	<row id="pw_event2_enemy_5">
 		<language name="JPN" width="256">E『……ふたたび　はじまる
-ながい　うちゅうの　たび……▼
+ながい　ながい　うちゅうの　たび……▼
 その　たびの　なかで
-おまえの　いった　ほうほうを▽
+おまえの　いうような　ほうほうを▽
 われわれなりに　さがすか……</language>
 		<language name="JPN_KANJI" width="256">E『……再び　始まる
-長い　宇宙の　旅……▼
-その　旅路の　中で
-お前の　言った　方法を▽
+長い　長い　宇宙の　旅……▼
+その旅路の　中で
+お前の　言うような　方法を▽
 我々なりに　探すか……</language>
 	</row>
 	<row id="pw_event2_hero_6">
@@ -739,18 +737,18 @@ UFOの　テストと　偽り
 たたかいは　おわった……▼
 マザーシップと　ともに　このほしの
 すべての　ＵＦＯと　エイリアンは▽
-うちゅうへと　とびさった……▼
-よろこびあう　ひとびとの　なか
-[1:00:トレーナー名:1]は　ひとり▽
-ほしぞらを　ながめていた……</language>
+うちゅうへと　とびさっていった……▼
+てを　とり　よろこびあう　ひとびと……
+そのなかで　[1:00:トレーナー名:1]は▽
+ひとり　ほしぞらを　ながめていた……</language>
 		<language name="JPN_KANJI" width="256">……人類の　未来を　かけた
 戦いは　終わった……▼
 マザーシップと　共に　この星の
-すべての　ＵＦＯと　エイリアンは▽
+すべてのＵＦＯと　エイリアンは▽
 宇宙へと　飛び去った……▼
-歓喜する　人々の　中
-[1:00:トレーナー名:1]は　ひとり▽
-星空を　眺めていた……</language>
+手を　取り合い　歓喜する人々……
+その中で　[1:00:トレーナー名:1]は▽
+ひとり　星空を　眺めていた……</language>
 	</row>
 	<row id="pw_event3_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『しまった……▼

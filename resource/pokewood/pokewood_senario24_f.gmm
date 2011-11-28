@@ -786,12 +786,12 @@
 はあ……　う……▼
 ぬいぐるみ『ど　どうしたんだ？▼
 [1:00:トレーナー名:1]ひめ『なんか……
-わたし　くるしいの……</language>
+わたし……　くるしいの……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『はあ……
 はあ……　う……▼
 ぬいぐるみ『ど　どうしたんだ？▼
 [1:00:トレーナー名:1]姫『なんか……
-私　苦しいの……</language>
+私……　苦しいの……</language>
 	</row>
 	<row id="pw_event5_enemy_0">
 		<language name="JPN" width="256">ジュジュベ『ふふふ……
@@ -1224,8 +1224,8 @@
 魔法のオリでも　いずれ　慣れるわよ！</language>
 	</row>
 	<row id="pw_event9_react_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『まだまだ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『まだまだ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『まだまだ！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『まだまだ！！</language>
 	</row>
 	<row id="pw_event9_react_enemy_1">
 		<language name="JPN" width="256">ジュジュベ『かんべんしてよ　もう……

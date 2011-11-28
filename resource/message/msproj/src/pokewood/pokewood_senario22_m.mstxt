@@ -264,32 +264,32 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]おうじ『なんで　おこるの？▼
-そんなことより　オバサンさあ　ぼくは
+そんなことより　オバサンさあ　ボクは
 はやく　ここから　でたいんだよね▼
 ぼくはさ　このくにの　おうじさま　なんだよ
 おしろまで　あんない　してくれたまえ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T02:48:30" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T02:48:30" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]王子『何で　怒るの？▼
-そんなことより　オバサンさあ　ぼくは
+そんなことより　オバサンさあ　ボクは
 早く　ここから　出たいんだよね▼
 ぼくはさ　この国の　王子様　なんだよ
 お城まで　案内してくれたまえ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T02:48:30" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T02:48:30" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -467,30 +467,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]おうじ『そうだ……
-いまは　ぼく　ひとり　なんだ……▼
-あのおんなに　つかまらないためには
-じぶんで　たたかうしか　ないんだ……</Text>
+いまは　ボクひとり　なんだ……▼
+あいつに　つかまらないためには
+じぶんで　たたかうしか　ないのか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T11:53:33" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T11:53:33" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]王子『そうだ……
-今は　僕　ひとり　なんだ……▼
-あの女に　捕まらないためには
+今は　ボクひとり　なんだ……▼
+あいつに　捕まらないためには
 自分で　戦うしか　ないんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T11:53:33" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T11:53:33" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -498,29 +498,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]おうじ『やばい！
+			<Text>[Name:TrainerName Idx="1" ]おうじ『わー　やばい！
 だんだん　こっちに　ちかづいてくる！▼
 このコロモリたちを　いそいで……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T11:53:33" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T11:53:33" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]王子『やばい！
+			<Text>[Name:TrainerName Idx="1" ]王子『わー　やばい！
 だんだん　こっちに　近づいて来る！▼
 このコロモリたちを　急いで……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T11:53:33" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T11:53:33" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -744,29 +744,29 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]おうじ『さ……
 さっきより　ちかづいて　きてる！▼
-めしつかいなんて　ぜったい　いやだ！
-ぼくは　おうじ　なんだから！</Text>
+めしつかいなんて　ぜったい　イヤだ！
+ひとに　つかえるなんて　ゴメンだぜ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:18" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:18" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]王子『さ……
 さっきより　近づいて来てる！▼
-ドレイなんて　絶対　いやだ！
-ぼくは　王子　なんだから！</Text>
+ドレイなんて　絶対　イヤだ！
+人に　仕えるなんて　ゴメンだぜ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:18" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:18" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1073,31 +1073,31 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]おうじ『ああ……
 ちちうえの　いうこと　きいて　おけば▽
-こんなことに　ならなかったのかな▼
+こんなことに　ならなかったのかなー▼
 だれも　たすけに　きてくれないし
 じぶんで　どうにかするしかないか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T03:37:39" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T03:37:39" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]王子『ああ……
 父上の　言うこと　きいて　おけば▽
-こんなことに　ならなかったのかな▼
+こんなことに　ならなかったのかなー▼
 だれも　助けに　きてくれないし
 自分で　どうにかするしかないか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T03:37:39" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T03:37:39" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1150,28 +1150,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]おうじ『あーあ
-これ　かてんのかなー？▼
+ボク　こいつに　かてんのかなー？▼
 なんか　どうでも　よくなってきた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:18" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:18" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]王子『あーあ
-これ　勝てんのかなー？▼
+ボク　こいつに　勝てんのかなー？▼
 何か　どうでも　よくなってきた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:18" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:18" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1229,27 +1229,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]おうじ『た……
-たおさ……　ないと……</Text>
+			<Text>[Name:TrainerName Idx="1" ]おうじ『めんどくさいけど……
+たおさ……　ないと……
+めしつかいに　される……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-28T11:05:24" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-28T11:05:24" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]王子『た……
-たおさ……　ないと……</Text>
+			<Text>[Name:TrainerName Idx="1" ]王子『面倒くさいけど……
+倒さな……　ないと……
+ドレイに　される……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-28T11:05:24" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-28T11:05:24" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1301,31 +1303,35 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]おうじ『フハハハ……
-ここに　ぼくの　１しゅうかん　ぶんの▽
-こづかいが　あるのだよ！▼
-これやるから　おしろに　かえしなさい！</Text>
+			<Text>[Name:TrainerName Idx="1" ]おうじ『ガハハハ！
+ここに　ボクの　１しゅうかん　ぶんの▽
+こづかいが　あるんだかねぇ！▼
+チミは　これが　ほしくないかね？
+めぐんで　ほしければ　ただちに▽
+ボクを　おしろに　かえしたまえよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T10:10:13" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T10:10:13" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]王子『フハハ……
-ここに　ぼくの　１週間分の▽
-小遣いが　あるのだよ！▼
-これやるから　お城に　帰しなさい！</Text>
+			<Text>[Name:TrainerName Idx="1" ]王子『ガハハハ！
+ここに　ボクの　１週間分の▽
+小遣いが　あるんだがねぇ！▼
+チミは　これが　欲しくないかね？
+恵んで　欲しければ　直ちに▽
+ボクを　お城に　帰したまえよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T10:10:13" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T10:10:13" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1380,31 +1386,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]おうじ『へー
-でも　まあ　しかたないんじゃない？▼
-しょみんと　おうけの　あととりである
-ぼくとの　かくのさは　あって　とうぜんさ</Text>
+			<Text>[Name:TrainerName Idx="1" ]おうじ『フハハハ！
+しょみんと　おうけの　あととり　である▽
+ボクとの　かくのさは　あって　とうぜんさ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T03:37:39" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T03:37:39" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]王子『へー
-でも　まあ　仕方ないんじゃない？▼
-庶民と　王家の　子息である
-ぼくとの　格の差は　あって当然さ</Text>
+			<Text>[Name:TrainerName Idx="1" ]王子『フハハハ！
+庶民と　王家の　子息である▽
+ボクとの　格の差は　あって当然さ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T03:37:39" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T03:37:39" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1492,26 +1496,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]おうじ『まけました……
-わたしまけましたわ……</Text>
+わたし　まけましたわ……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-28T11:05:24" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-28T11:05:24" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]王子『まけました……
-わたしまけましたわ……</Text>
+			<Text>[Name:TrainerName Idx="1" ]王子『負けました……
+わたし　まけましたわ……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-28T11:05:24" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-28T11:05:24" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1563,27 +1567,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]おうじ『ハイ……
-おっしゃる　とおりです……</Text>
+			<Text>[Name:TrainerName Idx="1" ]おうじ『ええ　はい
+まったく　おっしゃる　とおりです……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-28T11:05:24" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-28T11:05:24" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]王子『ハイ……
-おっしゃる　とおりです……</Text>
+			<Text>[Name:TrainerName Idx="1" ]王子『ええ　ハイ
+まったく　仰るとおりです……</Text>
 			<TextModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-28T11:05:24" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="sato_hitomi:W00231"
-				Time="2011-10-28T11:05:24" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1643,7 +1647,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]おうじ『えっ！▼
+			<Text>[Name:TrainerName Idx="1" ]おうじ『なんですと！▼
 くろかみ！？　びじん！？
 そのうえ　おねーさん　ですって！！▼
 い　いいんですか？
@@ -1652,15 +1656,15 @@
 くろかみ！　びじん！　おねーさん！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:18" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:18" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]王子『えっ！▼
+			<Text>[Name:TrainerName Idx="1" ]王子『何ですと！▼
 黒髪！？　美人！？
 そのうえ　おねーさん　ですって！！▼
 い　いいんですか？
@@ -1669,11 +1673,11 @@
 黒髪！　美人！　おねーさん！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:18" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:18" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1827,28 +1831,28 @@
 			<Text>[Name:TrainerName Idx="1" ]おうじ『うわーっ！
 ちちうえ　たすけてーっ！▼
 こ　こんなことなら　いいつけを　きいて
-よるのさんぽ　やめときゃ　よかった！</Text>
+おとなしくしてれば　よかったよー！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T03:37:39" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T03:37:39" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]王子『うわーっ！
 父上　助けてーっ！▼
 こ　こんなことなら　言いつけを　聞いて
-夜の散歩　やめときゃ　良かった！</Text>
+大人しくしてれば　良かったよー！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T03:37:39" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T03:37:39" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1918,27 +1922,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]おうじ『なんだって！？
-そ　そんなわけ　ないだろ？</Text>
+			<Text>[Name:TrainerName Idx="1" ]おうじ『なんだよソレ！
+うちの　くにに　かぎって▽
+そんなこと　あるわけ　ないだろ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:32:14" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:32:14" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]王子『何だって！？
-そ　そんなわけ　ないだろ！？</Text>
+			<Text>[Name:TrainerName Idx="1" ]王子『何だよソレ！？
+うちの　国に　限って▽
+そんなこと　あるわけ　ないだろ！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:32:14" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:32:14" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1953,7 +1959,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジュジュベ『あら……▼
+			<Text>ジュジュベ『どうかしらねえ……▼
 あなたみたいな　バカとは　いえ
 あとつぎも　まもれない　おうを▽
 こくみんは　しんらい　するかしら？▼
@@ -1964,15 +1970,15 @@
 おうのざを　いただく　ってわけ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T03:08:38" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T03:08:38" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジュジュベ『あら……▼
+			<Text>ジュジュベ『どうかしらねえ……▼
 あなたみたいな　バカとは　いえ
 世継ぎも　守れないような　王を▽
 国民は　信頼するかしら？▼
@@ -1983,11 +1989,11 @@
 下克上……　それでフィニッシュよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T03:08:38" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T03:08:38" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2004,27 +2010,29 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]おうじ『おまえ……
 だいじんに　やとわれて　いたのか！！▼
-くそっ！！　ちちうえ！　ちちうえー！</Text>
+ちちうえ！　ちちうえー！
+[Name:TrainerName Idx="1" ]は　ここに　いますー！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:32:14" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:32:14" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]王子『おまえ……
 大臣に　やとわれて　いたのか！！▼
-くそっ！！　父上！　父上ー！</Text>
+くそっ！！　父上！　父上ー！
+[Name:TrainerName Idx="1" ]は　ここに　いますー！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:32:14" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:32:14" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2039,35 +2047,35 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジュジュベ『おほほ……
-おとうさまの　しんぱい　している▽
-よゆうなんて　ないと　おもうけど？▼
-あなたは　きょうから　わたしのしたで
-めしつかいとして　えいえんに　はたくの▼
+			<Text>ジュジュベ『ムダ　ムダ……
+それに　あなたに　おとうさまを▽
+しんぱいする　よゆうは　ないわよ？▼
+きょうから　あなたは　わたしの
+めしつかいに　なるんだから！▼
 ほら……　さっさと　あるくんだよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T03:08:38" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T03:08:38" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジュジュベ『おほほ……
-お父様の　心配を　している▽
-余裕なんて　ないと　思うけど？▼
-あなたは　今日から　私の下で
-ドレイとして　永遠に　働くの▼
+			<Text>ジュジュベ『ムダ　ムダ……
+それに　あなたに　お父様を▽
+心配する　余裕は　ないわよ？▼
+今日から　あなたは　私の
+ドレイに　なるんだから！▼
 ほら……　さっさと　歩くんだよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T03:08:38" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T03:08:38" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2085,34 +2093,32 @@
 			<Text>……とらえられた　[Name:TrainerName Idx="1" ]おうじは
 ジュジュベの　やかたで　しぬまで▽
 はたらかされたと　いいます……▼
-それからと　いうもの　このくにでは
-よなかに　なったら　とびらを　あけず▽
-おとなしく　いえで　すごすのが▽
-しゅうかんと　なったのです……</Text>
+そして　ジュジュベの　ことばどおり
+おうは　そのざを　だいじんに▽
+うばわれ　くには　ほろんだのでした……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T02:36:41" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T02:36:41" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……とらえられた　[Name:TrainerName Idx="1" ]王子は
 ジュジュベの館で　死ぬまで▽
 働かされたと　いいます……▼
-それからと　いうもの　この国では
-夜中に　なったら　扉を　開けず▽
-大人しく　家で　過ごすのが▽
-習慣と　なったのです……</Text>
+そして　ジュジュベの　言葉どおり
+王は　その座を　大臣に▽
+うばわれ　国は　滅んだのでした……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T02:36:41" />
+				Time="2011-11-27T04:04:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T02:36:41" />
+				Time="2011-11-27T04:04:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

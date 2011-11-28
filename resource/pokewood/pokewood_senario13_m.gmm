@@ -559,7 +559,7 @@
 	</row>
 	<row id="pw_event3_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『しんちょうに　いくか……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『しんちょうに　いくか……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『慎重に　いくか……</language>
 	</row>
 	<row id="pw_event3_react_enemy_1">
 		<language name="JPN" width="256">Ｍ・Ｂ『グゴゴ……</language>
@@ -575,7 +575,7 @@
 	</row>
 	<row id="pw_event3_react_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『こわい……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『こわい……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『怖い……</language>
 	</row>
 	<row id="pw_event3_react_enemy_3">
 		<language name="JPN" width="256">Ｍ・Ｂ『グゴゴ……</language>

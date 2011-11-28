@@ -60,7 +60,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｈｅｙ！　[Name:TrainerName ]じゃないか！！
+			<Text>Ｈｅｙ！　[Name:TrainerName ]！！
 前に　キミが　出演した▽
 映画は　大ヒット　しただろ！▼
 おかげで　ライターが　続編の
@@ -71,7 +71,7 @@
 大ヒットを　飛ばしてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:31:42" />
+				Time="2011-11-27T09:00:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -519,10 +519,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ＯＫ！
-じゃあ　撮影を　はじめようか！▼</Text>
+じゃあ　撮影を　始めようか！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-10T11:20:23" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T09:27:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -560,13 +560,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やー　撮影　おつかれ！▼
+			<Text>やー　撮影　お疲れ！▼
 今回　撮影した　作品を
 映画にして　シアターで▽
 公開するかい？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T03:17:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T09:21:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -649,12 +649,12 @@
 			Language="JPN_KANJI">
 			<Text>ＳＯＲＲＹ！▼
 [Name:TrainerName ]の　ポケモンは
-たしかに　イカしてると　思うぜ！▼
+確かに　イカしてると　思うぜ！▼
 ただ　まずは　ポケウッドの　ポケモンで
 作品を　撮ってくれないか！？▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-10T09:50:31" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T09:21:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -777,10 +777,10 @@
 [Name:TrainerName ]も
 完成した　作品の　出来が▽
 気に　なるだろ？▼
-いますぐ　シアターに　行くかい？</Text>
+今すぐ　シアターに　行くかい？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T09:24:35" />
+				Time="2011-11-27T11:39:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -825,7 +825,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｈｅｙ！　[Name:TrainerName ]じゃないか！！
+			<Text>Ｈｅｙ！　[Name:TrainerName ]！！
 ビックニュース　だぜ！▼
 キミの　出演した　映画が
 歴代の　興行成績を▽
@@ -838,8 +838,8 @@
 ぜひ　チャレンジして　今度も
 大ヒットを　飛ばしてくれよな！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T03:17:34" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T11:38:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -878,7 +878,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｈｅｙ！　[Name:TrainerName ]じゃないか！！▼
+			<Text>Ｈｅｙ！　[Name:TrainerName ]！！▼
 最近　キミの　人気が　すごくてさ！
 キミだからこそ　できる　作品の▽
 制作が　決定　したんだぜ！▼
@@ -888,7 +888,7 @@
 大ヒットを　飛ばしてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:33:01" />
+				Time="2011-11-27T11:38:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -930,7 +930,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｈｅｙ！　[Name:TrainerName ]じゃないか！！▼
+			<Text>Ｈｅｙ！　[Name:TrainerName ]！！▼
 キミの　ポケウッドの　キャリアも
 けっこう　長く　なってきたよな！▼
 そんな　ベテラン　間近の
@@ -942,7 +942,7 @@
 大ヒットを　飛ばしてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:33:13" />
+				Time="2011-11-27T11:38:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -979,7 +979,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｈｅｙ！　[Name:TrainerName ]じゃないか！！▼
+			<Text>Ｈｅｙ！　[Name:TrainerName ]！！▼
 最近　キミは　話題みたいだな！
 キミに　ぜひ　出演して　欲しいって▽
 いくつか　届いてるぜ！▼
@@ -987,7 +987,7 @@
 チェックして　みてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T06:11:22" />
+				Time="2011-11-27T11:38:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1103,7 +1103,7 @@
 		Label="msg_pw_studio_25">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヘイ！　[Name:TrainerName ]じゃないか！！▼
+			<Text>ヘイ！　[Name:TrainerName ]！！▼
 きょうは　あたらしい　だいほんの
 プレゼントが　あるぜっ！▼
 その　タイトルは　ズバリ
@@ -1115,7 +1115,7 @@
 だいヒットを　とばしてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T10:45:49" />
+				Time="2011-11-27T11:39:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1123,7 +1123,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｈｅｙ！　[Name:TrainerName ]じゃないか！！▼
+			<Text>Ｈｅｙ！　[Name:TrainerName ]！！▼
 きょうは　新しい　台本の
 プレゼントが　あるぜっ！▼
 その　タイトルは　ズバリ
@@ -1135,7 +1135,7 @@
 大ヒットを　飛ばしてくれよな！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T10:46:43" />
+				Time="2011-11-27T11:39:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1541,10 +1541,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>よーし！　クランクアップだっ！
-さあ　てっしゅうだっ！！▼</Text>
+さあ　撤収だっ！！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:09:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T09:31:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1565,10 +1565,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>これにて　クランクアップです！
-みなさん　おつかれさまで　ございます▼</Text>
+みなさん　ごくろうでしたね！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:09:10" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T09:32:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1577,10 +1577,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>これにて　クランクアップです！
-みなさん　おつかれさまで　ございます▼</Text>
+みなさん　ご苦労でしたね！▼</Text>
 			<TextModifiedBy
-				User="tamada:W00253"
-				Time="2011-09-17T10:09:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T09:33:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1612,11 +1612,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>みんな　おつかれじゃの！
+			<Text>みんな　お疲れじゃの！
 これにて　撮影終了じゃ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T03:18:32" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T09:33:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

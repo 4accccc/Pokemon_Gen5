@@ -7,12 +7,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘヘヘ………▼
-ここはな　セレブな　じょゆう
-せんようの　がくや　なんだぜ▼
+ここさ　なんとか　って　ちほうで
+スカウトされた　スゲー　びじんさんが▽
+つかってる　がくや　なんだぜ▼
 ……きに　なるだろ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T02:55:03" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T08:25:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -20,13 +21,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>へへへ……▼
-ここはな　セレブな　女優
-専用の　楽屋　なんだぜ▼
+			<Text>ヘヘヘ………▼
+ここさ　何とか　って　地方で
+スカウトされた　スゲー　美人さんが▽
+使ってる　楽屋なんだぜ▼
 ……気に　なるだろ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T02:54:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T08:25:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -56,13 +58,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]さん！
-いつも　おつかれさまです！▼
-わたくしも　しっかり　けいびに
-いそしんで　おります！</Text>
+			<Text>わっ！　[Name:TrainerName Idx="0" ]さん！▼
+いつも　おつかれさまです！
+わたくしも　バチュル　いっぴき▽
+とおさぬよう　ぜんしんぜんれいで▽
+けいびに　いそしんで　おります！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:46:08" />
+				Time="2011-11-27T08:20:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -70,13 +73,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]さん！
-いつも　お疲れ様です！▼
-わたくしも　しっかり　警備に
-勤しんで　おります！</Text>
+			<Text>わっ！　[Name:TrainerName Idx="0" ]さん！▼
+いつも　お疲れ様です！
+わたくしも　バチュル　一匹▽
+通さぬよう　全身全霊で▽
+警備に　勤しんで　おります！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T08:46:32" />
+				Time="2011-11-27T08:20:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -99,13 +103,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここはさ　ウチの　ボスが　みとめた
+			<Text>ここはよ　ウチの　ボスが　みとめた
 とくべつなスター　しか　はいれない▽
 スペシャルな　がくや　なの▼
+ガキには　ようの　ないとこだぜ
 ホラ　かえった！　かえった！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:34:55" />
+				Time="2011-11-27T08:17:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -113,13 +118,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここはさ　ウチの　ボスが　認めた
+			<Text>ここはよ　ウチの　ボスが　認めた
 特別なスター　しか　はいれない▽
 スペシャルな　楽屋なの▼
+ガキには　用の　ないとこだぜ
 ホラ　帰った！　帰った！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T02:56:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T08:17:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -151,12 +157,12 @@
 			Language="JPN">
 			<Text>お　おつかれさまですっ！
 ウッドウさんから　うかがっております！▼
-[Name:TrainerName ]さん！
-こちらの　がくやを　ごじゆうに▽
-ごりよう　くださいませっ！</Text>
+さあさあ　[Name:TrainerName ]さま！
+こちらの　がくやで　ごじゆうに▽
+おくつろぎ　くださいませっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:36:04" />
+				Time="2011-11-27T08:18:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -166,12 +172,12 @@
 			Language="JPN_KANJI">
 			<Text>お　お疲れさまですっ！
 ウッドウさんから　うかがっております！▼
-[Name:TrainerName ]さん！
-こちらの　楽屋を　ご自由に▽
-ご利用　くださいませっ！</Text>
+さあさあ　[Name:TrainerName ]様！
+こちらの　楽屋で　ご自由に▽
+おくつろぎ　くださいませっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:36:07" />
+				Time="2011-11-27T08:18:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -264,14 +270,14 @@ msg_c15r0301_middleman2_01</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>いちど　レンタルポケモンで
-チャレンジした　えいがを▽
-こうかいすれば　ＯＫらしいぜ！▼
+チャレンジして　その　えいがを▽
+せいこうさせれば　ＯＫらしいぜ！▼
 だから　オレは　この　マッギョと
-スターを　めざすぜっ！▼
+スターを　めざすのさっ！▼
 なっ！？　マッギョ！？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-16T06:23:55" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T08:26:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -280,14 +286,14 @@ msg_c15r0301_middleman2_01</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いちど　レンタルポケモンで
-チャレンジした　映画を▽
-公開すれば　ＯＫらしいぜ！▼
+チャレンジして　その映画を▽
+成功させれば　ＯＫらしいぜ！▼
 だからオレは　自分の　マッギョと
-スターを　目指すぜっ！▼
+スターを　目指すのさっ！▼
 なっ！？　マッギョ！？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-16T06:23:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T08:26:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -313,7 +319,7 @@ msg_c15r0301_middleman2_01</Comment>
 			<Text>……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-08T04:50:49" />
+				Time="2011-11-27T08:27:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -616,15 +622,14 @@ msg_c15r0301_middleman2_01</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よお！　あんた　しんじんだろ？▼
-いいえいがを　つくるためには
-まずは　さつえいちゅうの▽
-だいほん　かくにんは　おこたるな！▼
+			<Text>よお！　おまえさん　しんじんだろ？▼
+いいか？　やくしゃだったらな
+だいほんの　かくにんは　おこたるなよ▼
 ハチクさん　みてえな　ビックスターに
 なれるよう　がんばんなよ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T05:31:31" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T08:29:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -632,15 +637,14 @@ msg_c15r0301_middleman2_01</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よお！　あんた　新人だろ？▼
-いい映画を　つくるためには
-まずは　撮影中の▽
-台本　確認は　おこたるな！▼
+			<Text>よお！　オマエさん　新人だろ？▼
+いいか？　役者だったらな
+台本　確認は　おこたるなよ▼
 ハチクさん　みてえな　ビックスターに
 なれるよう　がんばんなよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-21T05:56:16" />
+				Time="2011-11-27T08:29:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -663,12 +667,14 @@ msg_c15r0301_middleman2_01</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よお！　あんた　[Name:TrainerName ]だろ？▼
-さいきん　けっこう　あんたの
-なまえ　きくように　なってきたぜ！</Text>
+			<Text>よお！　オマエさん　[Name:TrainerName ]だろ？▼
+さいきん　ちょいちょい
+なまえ　きくように　なってきたぜ！▽
+オマエさん　メインの　だいほんも▽
+できてる　らしいじゃねーか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T06:49:28" />
+				Time="2011-11-27T08:34:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -676,12 +682,14 @@ msg_c15r0301_middleman2_01</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よお！　あんた　[Name:TrainerName ]だろ？▼
-最近　けっこう　あんたの
-名前　きくように　なってきたぜ！</Text>
+			<Text>よお！　オマエさん　[Name:TrainerName ]だろ？▼
+さいきん　ちょいちょい
+名前　聞くように　なってきたぜ！▽
+オマエさん　メインの　台本も▽
+出来てる　らしいじゃねーか？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T02:56:45" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T08:34:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -704,14 +712,13 @@ msg_c15r0301_middleman2_01</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>お！　[Name:TrainerName ]さん　じゃねえか！
-いまや　あんたも　スゲー　うれっこだな！▼
-あんたと　えいがが　つくれることは
-おれたち　ポケウッドスタッフも▽
-えいがじんの　みょうりに　つきるぜ！</Text>
+			<Text>お！　[Name:TrainerName ]　じゃねえか！
+いまや　オマエさんも　うれっこだな！▼
+オレたち　ポケウッドスタッフも
+なかまとして　はなが　たかいぜ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T02:57:02" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T08:35:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -719,14 +726,13 @@ msg_c15r0301_middleman2_01</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お！　[Name:TrainerName ]さん　じゃねえか！
-今や　あんたも　スゲー　売れっ子だな！▼
-あんたと　映画が　つくれることは
-おれたち　ポケウッドスタッフも▽
-映画人の　みょうりに　つきるぜ！</Text>
+			<Text>お！　[Name:TrainerName ]　じゃねえか！
+今や　オマエさんも　売れっ子だな！▼
+オレたち　ポケウッドスタッフも▽
+仲間として　鼻が　高いぜ！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T02:56:56" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T08:35:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -750,14 +756,14 @@ msg_c15r0301_middleman2_01</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ボク　ＶＦＸの　スペシャリスト！▼
-スタジオに　みどりいろの
-はいけいが　あるでしょ？▼
-あそこで　さつえいした　えいぞうを
+スタジオにさあ　みどりいろした
+いたが　おいてあるでしょ？▼
+あのまえで　さつえいした　えいぞうを
 コンピュータで　だいはくりょくの▽
-えいがに　かえちゃうのだ！</Text>
+えいがに　かえちゃうのだよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T02:54:37" />
+				Time="2011-11-27T08:37:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -766,14 +772,14 @@ msg_c15r0301_middleman2_01</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ボク　ＶＦＸの　スペシャリスト！▼
-スタジオに　緑色の
-背景が　あるでしょ！▼
-あそこで　撮影した　映像を
+スタジオにさあ　緑色した
+板が　置いてあるでしょ！▼
+あの前で　撮影した　映像を
 コンピュータで　大迫力の▽
-映画に　変えちゃうのだ！　</Text>
+映画に　変えちゃうのだよ！　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T02:52:38" />
+				Time="2011-11-27T08:37:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -982,10 +988,12 @@ msg_c15r0201_pwmoji_01_01</Comment>
 だいじな　わけじゃないよ！▼
 だいほんに　そのあたりの
 ヒントが　かいて　あるから▽
-よーく　さんこうに　してね！▼</Text>
+よーく　さんこうに　してね！▼
+あとは　カントクが　いってることも
+なんとなく　さんこうに　なるかもね▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-28T06:18:59" />
+				Time="2011-11-27T06:40:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1000,10 +1008,12 @@ msg_c15r0201_pwmoji_01_01</Comment>
 大事な　わけじゃないよ！▼
 台本に　その辺りの
 ヒントが　書いてあるから▽
-よーく　参考に　してね！▼</Text>
+よーく　参考に　してね！▼
+あと　監督が　言ってることも
+なんとなく　参考になるかもね▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T02:58:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T06:40:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1139,10 +1149,10 @@ msg_c15r0201_pwmoji_01_01</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じゃあ　がんばってね！</Text>
+			<Text>じゃあ　頑張ってね！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T05:44:24" />
+				Time="2011-11-27T08:58:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

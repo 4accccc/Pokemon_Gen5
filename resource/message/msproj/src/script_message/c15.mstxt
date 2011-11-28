@@ -940,7 +940,7 @@ msg_c15_oldman1_01_04
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あーあ　カントクが
+			<Text>あーあ　あのカントク
 またムチャクチャ　いってる……▼
 たしかに　あのひとの　さくひん
 すばらしいんだけどね……▼
@@ -948,7 +948,7 @@ msg_c15_oldman1_01_04
 かみひとえ　だよね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T07:31:46" />
+				Time="2011-11-27T06:38:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -956,7 +956,7 @@ msg_c15_oldman1_01_04
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あーあ　カントクが
+			<Text>あーあ　あの監督
 またムチャクチャ　いってる……▼
 たしかに　あの人の　作品
 素晴らしいんだけどね……▼
@@ -964,7 +964,7 @@ msg_c15_oldman1_01_04
 紙一重　だよね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T08:50:25" />
+				Time="2011-11-27T06:37:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1037,15 +1037,15 @@ msg_c15_oldman1_01_04
 			Language="JPN">
 			<Text>ぼくは　ＡＤ▼
 えいがは　だいすきだけど
-つくる　さいのうは　まだまださ▼
+つくりてと　しては　まだまださ▼
 いつも　きびしい カントクに
 おこられて　ばかりだし……▼
-だけどね▼
+……だけどね▼
 あのひとの　したで　はたらくと
 すごく　べんきょうに　なるんだ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-11T07:39:46" />
+				Time="2011-11-27T06:37:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1055,15 +1055,15 @@ msg_c15_oldman1_01_04
 			Language="JPN_KANJI">
 			<Text>ぼくは　ＡＤ▼
 映画は　大好きだけど
-つくる　才能は　まだまださ▼
-いつも　きびしい カントクに
+作り手としては　まだまださ▼
+いつも　きびしい 監督に
 怒られて　ばかりだし……▼
-だけどね▼
+……だけどね▼
 あの人の　下で　働くと
 すごく　勉強に　なるんだ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T08:51:21" />
+				Time="2011-11-27T06:37:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2018,7 +2018,7 @@ msg_c15_oldman1_01_04
 メイクが　おわるんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-16T07:48:43" />
+				Time="2011-11-27T06:36:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

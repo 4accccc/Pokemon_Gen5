@@ -383,29 +383,27 @@
 	</row>
 	<row id="pw_event0_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『なんとかするよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なんとかするよ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『何とかするよ！</language>
 	</row>
 	<row id="pw_event0_react_enemy_1">
-		<language name="JPN" width="256">モニカ『だったら　はやくなんとかしてっ！
+		<language name="JPN" width="256">モニカ『だったら　はやくしてよっ！
 こんな　はずかしい　すがたじゃ▽
-わたし　いきてられないわっ！！</language>
-		<language name="JPN_KANJI" width="256">モニカ『だったら　早くなんとかしてっ！
+わたし　いきてられないよっ！！</language>
+		<language name="JPN_KANJI" width="256">モニカ『だったら　早くしてよっ！
 こんな　恥ずかしい　姿じゃ▽
-私　生きてられないわっ！！</language>
+私　生きてられないよっ！！</language>
 	</row>
 	<row id="pw_event0_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『まずは　おちついて！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『まずは　落ち着いて！</language>
 	</row>
 	<row id="pw_event0_react_enemy_2">
-		<language name="JPN" width="256">モニカ『しってるわよ！▼
-でも　どうしたら　いいのか
-わかんないんだもんっ！！▽
+		<language name="JPN" width="256">モニカ『わかってるよ！▼
+でも　ふあんで　しかたないのよ！▽
 じぶんが　こわいんだもん！！</language>
-		<language name="JPN_KANJI" width="256">モニカ『知ってるわよ！▼
-でも　どうしたら　いいのか
-わかんないんだもんっ！！▽
-自分が　こわいんだもん！！</language>
+		<language name="JPN_KANJI" width="256">モニカ『分かってるよ！▼
+でも　不安で　仕方ないのよ！▽
+自分が　怖いんだもん！！</language>
 	</row>
 	<row id="pw_event1_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『グアイさん……▼
@@ -443,15 +441,15 @@
 とても　つよい　きもち……▽
 つよい　あいを　つたえられたら……▼
 だが……▼
-それは　[1:00:トレーナー名:1]くん……
-キミにしか　できないことだな……</language>
+それは　[1:00:トレーナー名:1]……
+キミにしか　できないことかもな……</language>
 		<language name="JPN_KANJI" width="256">グアイ『そうだ……▼
 例えば　彼女に　対する
 とても　強い　気持ち……▽
 強い　愛を　伝えられたら……▼
 だが……▼
-それは　[1:00:トレーナー名:1]くん……
-キミにしか　できないことだな……</language>
+それは　[1:00:トレーナー名:1]……
+キミにしか　出来ないことかもな……</language>
 	</row>
 	<row id="pw_event1_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……　……</language>
@@ -536,7 +534,7 @@
 けっきょく　[1:00:トレーナー名:1]は
 こんなふうに　なった　わたしのこと▽
 ただ　めんどくさがってるんでしょ！？</language>
-		<language name="JPN_KANJI" width="256">モニカ『なによ　仕方ないって……▼
+		<language name="JPN_KANJI" width="256">モニカ『何よ　仕方ないって……▼
 結局　[1:00:トレーナー名:1]は
 こんな風に　なった　私のこと▽
 ただ　面倒くさがってるんでしょ！？</language>
@@ -601,28 +599,28 @@
 		<language name="JPN" width="256">モニカ『なんだって　いうのよっ！！▼
 どうせ　わたしは　このまま　ずーっと
 この　おおきな　からだの　まんま……▽
-かいぶつの　まんま　なんでしょっ！？▼
+バケモノの　まんま　なんでしょっ！？▼
 ただ……　ただ　だいすきな　ひとに
 ふれようと　しただけで　あいてを▽
 にぎりつぶすことに　なっちゃう▽
-あわれな　かいぶつ　なんでしょ！！▼
+あわれな　バケモノが　わたしよ！！▼
 こんな　からだに　なったら
 もう　およめにだって　いけないっ！！▼
 そうよ！　[1:00:トレーナー名:1]　だってさ
-こんな　デカくなった　おんなと▽
+こんな　バケモノおんなと▽
 いっしょに　いたくないでしょ！！</language>
 		<language name="JPN_KANJI" width="256">モニカ『何だって　いうのよっ！！▼
 どうせ　私は　このまま　ずーっと
 この　デカい　身体の　まんま……▽
-怪物の　まんま　なんでしょっ！？▼
+バケモノの　まんま　なんでしょっ！？▼
 ただ……　ただ　大好きな　人に
 触れようと　しただけで　相手を▽
 にぎりつぶすことに　なっちゃう▽
-あわれな　怪物　なんでしょ！！▼
+あわれな　バケモノが　私よ！！▼
 こんな　身体に　なったら
 もう　お嫁にだって　行けないっ！！▼
 そうよ！　[1:00:トレーナー名:1]　だってさ
-こんな　デカくなった　女と▽
+こんな　バケモノ女と▽
 一緒に　いたくないでしょ！！</language>
 	</row>
 	<row id="pw_event4_react_hero_0">

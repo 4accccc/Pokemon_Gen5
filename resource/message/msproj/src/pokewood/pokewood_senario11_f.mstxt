@@ -751,15 +751,15 @@ UFOの　テストと　偽り
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>E『くるぞ……
-はは　なる　マザーシップが……</Text>
+			<Text>E『さあ……　くるぞ……
+ははなる　マザーシップが……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -819,27 +819,27 @@ UFOの　テストと　偽り
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>E『われわれの　ながい　たびも
-ようやく　おわる……</Text>
+			<Text>E『やっと　これで……
+われわれの　たびも　おわる……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>E『我々の　長い　旅
-ようやく　終わる……</Text>
+			<Text>E『やっと　これで……
+我々の旅も　終わる……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -887,31 +887,30 @@ UFOの　テストと　偽り
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>E『……　こきょう　である
+			<Text>E『……こきょうで　ある
 わくせいを　うしなった▽
 われわれは　ながい　あいだ▽
 うちゅうを　さまよって　きた……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>E『……　故郷たる
-惑星を　失った▽
-我々は　長い　年月▽
+			<Text>E『……故郷たる　惑星を失った
+我々は　長い　長い　年月を▽
 宇宙を　さ迷って　きた……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -959,35 +958,35 @@ UFOの　テストと　偽り
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>E『ながい　たびの　はてで
+			<Text>E『ながいたびの　はてで
 みつけた　この　ほし……▼
 このほしは　われわれが
 いきるための　じょうけんを▽
 みたしていた……▼
 わずかな　もんだいを　のぞいて……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>E『長い　旅の　果てで
+			<Text>E『長い旅の　果てで
 見つけた　この星……▼
 この星は　我々が
 生きるための　条件を▽
 満たしていた……▼
 わずかな　問題を　のぞいて……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1002,25 +1001,25 @@ UFOの　テストと　偽り
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『もんだい……？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『問題……？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1055,15 +1054,15 @@ UFOの　テストと　偽り
 それらで　この星は　すでに
 限界を　超えている……▼
 よって　我々が　ここで
-生きるためには　それらを▽
-滅ぼす　必要が　ある……</Text>
+生きるためには　それらの　生命を▽
+滅ぼす必要が　ある……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1113,34 +1112,36 @@ UFOの　テストと　偽り
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>E『……しんりゃく　だと？▼
-ひとや　ポケモンは　ここで　きえ
-ゆうしゅうな　われわれが▽
-ここで　いきる……▼
-その　なにが　わるい？</Text>
+			<Text>E『……しんりゃく　だと？
+ひとや　ポケモンは　ここで　きえ▽
+せいめいとして　より　ゆうしゅうな▽
+われわれが　ここで　いきる……▽
+いったい　その　なにが　わるい？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>E『……侵略　だと？▼
-進化の　過程で　滅びる
-生物が　存在する　ように▽
-人や　ポケモンは　ここで　消え▽
-我々が　生き残る……▼
+			<Text>E『……侵略　だと？
+それは　貴様らの　おごりだ▽
+生存競争と　考えるべきではないか▼
+進化のプロセスで　滅びる
+生物が　存在するように▽
+人間や　ポケモンが　消え▽
+代わって　我々が　生き残る……▽
 それだけでは　ないか……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1155,25 +1156,25 @@ UFOの　テストと　偽り
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『そんな……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『なるほど……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『たしかに　そうか……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『なるほど……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1328,31 +1329,31 @@ UFOの　テストと　偽り
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>E『りそうを　かたるか……
-だが　おまえたちの　ような▽
+			<Text>E『りそうを　かたるのは　いい……▼
+だが　おまえたちの　ように▽
 おろかで　かとうな　せいぶつに▽
-りそうが　じつげん　できるのか？</Text>
+りそうが　じつげんできるのか？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>E『理想を　語るか……
+			<Text>E『理想を　語るのは　いい……
 だが　お前たちの　ような▽
 おろかで　下等な　生物に▽
-理想が　実現　できるのか？</Text>
+理想が　実現できるのか？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1545,32 +1546,32 @@ UFOの　テストと　偽り
 このほしに　きけんを　かんじ▽
 うちゅうへ　もどり　はじめたのだ▼
 ……　われわれは　ふたたび
-こどくな　うちゅうを　あてなく▽
+こどくな　うちゅうを　あてもなく▽
 さまようことに　なる……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>E『……　……お前が　UFOを
-倒したでこと　マザーシップが▽
+倒したことで　マザーシップが▽
 この星に　危険を　感じ▽
 宇宙へ　戻り始めたのだ▼
 ……　我々は　再び
-孤独な　宇宙を　当てなく▽
+孤独な　宇宙を　当てもなく▽
 さ迷うことに　なる……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1585,35 +1586,37 @@ UFOの　テストと　偽り
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……▼
-このほしには　たくさんの
-にんげんと　ポケモンが　いる……▼
-だけど　まだ　だれも　しらない
+			<Text>[Name:TrainerName Idx="1" ]『E……▼
+あなたが　いうように　このほしには
+すでに　たくさんの　にんげん……
+そしてポケモンが　くらしている……▼
+……だけどさ　まだ　だれも　しらない
 あたらしい　せいぶつが　うまれる▽
-かのうせいだって　ある……</Text>
+かのうせいだって　あるでしょ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:26:51" />
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:26:51" />
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……▼
-この星には　たくさんの
-人間と　ポケモンが　いる……▼
-だけど　まだ　だれも　知らない
+			<Text>[Name:TrainerName Idx="1" ]『E……▼
+あなたの　言うように　この星には
+すでに　たくさんの　人間と
+ポケモンが　暮らしている……▼
+……だけどさ　まだ　だれも　知らない
 新しい　生命が　生まれる▽
-可能性だって　ある……</Text>
+可能性だって　あるでしょ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T13:41:48" />
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T13:41:48" />
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1628,25 +1631,25 @@ UFOの　テストと　偽り
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>E『なにが　いいたい……</Text>
+			<Text>E『どういうことだ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>E『なにが　いいたい……</Text>
+			<Text>E『どういうことだ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1663,39 +1666,38 @@ UFOの　テストと　偽り
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『だから……
 いままで　このほしに　いなかった▽
-あなたたちが　ここを　えらび▽
-ここで　いきようとする　ことは▽
-わるいこと　じゃない……▼
-……でも　じぶんたちの　ために
+あなたたちが　ここで　いきていこうと▽
+することは　わるくないわ……▼
+……でも　じぶんたちの　りゆうだけで
 ほかの　せいぶつを　みんな▽
 ほろぼしてしまう　なんて▽
-みとめるわけには　いかないよ</Text>
+みとめるわけには　いかないの</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『だから……
 今まで　この星に　いなかった▽
-あなたたちが　ここを　選び▽
-ここで　生きようとする　ことを▽
-否定する　つもりは　ない……▼
-……でも　自分たちの　ために
-他の　生物を　みんな▽
-滅ぼしてしまう　なんて▽
-認めるわけには　いかないよ</Text>
+君たちが　ここを　選ぶ権利▽
+ここで　生きる権利を▽
+持ってても　おかしくない……▼
+……でも　自分たちの　都合だけで
+他の　生物たちを　すべて▽
+滅ぼしてしまおう　なんて▽
+認めるわけには　いかないの</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1744,34 +1746,30 @@ UFOの　テストと　偽り
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……あなたたちや
-わたしたち　にんげん……▽
-そして　ポケモンが▽
-いっしょに　いきる……▼
-そんな　ほうほうを　わたしたちと
-さがせば　いいじゃない？</Text>
+にんげん……　そして　ポケモンが▽
+いっしょに　いきる　ほうほう……▽
+わたしたちと　さがせば　いいじゃない？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T10:09:59" />
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T10:09:59" />
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……あなたたちや
-私たち　人間……▽
-そして　ポケモンが▽
-一緒に　生きる……▼
-そんな　方法を　私たちと
-探せば　いいじゃない？</Text>
+人間……　そしてポケモンが▽
+一緒に　生きる　方法……▽
+私たちと　探せば　いいじゃない？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T10:09:59" />
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T10:09:59" />
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1787,30 +1785,30 @@ UFOの　テストと　偽り
 		<LanguageCell
 			Language="JPN">
 			<Text>E『そうか……▼
-だが　その　ていあんは　ことわる……▼
-わたしたちも　マザーシップと　ともに
+だが　その　ていあんは　ことわる……
+わたしたちも　マザーシップと　ともに▽
 このほしを　さらねば　ならない……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>E『そうか……▼
-だが　その提案は　断る……▼
-私たちも　マザーシップと　ともに
+だが　その提案は　断る……
+私たちも　マザーシップと　ともに▽
 この星を　去らねば　ならない……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1859,32 +1857,32 @@ UFOの　テストと　偽り
 		<LanguageCell
 			Language="JPN">
 			<Text>E『……ふたたび　はじまる
-ながい　うちゅうの　たび……▼
+ながい　ながい　うちゅうの　たび……▼
 その　たびの　なかで
-おまえの　いった　ほうほうを▽
+おまえの　いうような　ほうほうを▽
 われわれなりに　さがすか……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>E『……再び　始まる
-長い　宇宙の　旅……▼
-その　旅路の　中で
-お前の　言った　方法を▽
+長い　長い　宇宙の　旅……▼
+その旅路の　中で
+お前の　言うような　方法を▽
 我々なりに　探すか……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1936,35 +1934,35 @@ UFOの　テストと　偽り
 たたかいは　おわった……▼
 マザーシップと　ともに　このほしの
 すべての　ＵＦＯと　エイリアンは▽
-うちゅうへと　とびさった……▼
-よろこびあう　ひとびとの　なか
-[Name:TrainerName Idx="1" ]は　ひとり▽
-ほしぞらを　ながめていた……</Text>
+うちゅうへと　とびさっていった……▼
+てを　とり　よろこびあう　ひとびと……
+そのなかで　[Name:TrainerName Idx="1" ]は▽
+ひとり　ほしぞらを　ながめていた……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……人類の　未来を　かけた
 戦いは　終わった……▼
 マザーシップと　共に　この星の
-すべての　ＵＦＯと　エイリアンは▽
+すべてのＵＦＯと　エイリアンは▽
 宇宙へと　飛び去った……▼
-歓喜する　人々の　中
-[Name:TrainerName Idx="1" ]は　ひとり▽
-星空を　眺めていた……</Text>
+手を　取り合い　歓喜する人々……
+その中で　[Name:TrainerName Idx="1" ]は▽
+ひとり　星空を　眺めていた……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-27T10:47:57" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

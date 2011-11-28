@@ -1645,14 +1645,14 @@
 はあ……　う……▼
 ぬいぐるみ『ど　どうしたんだ？▼
 [Name:TrainerName Idx="1" ]ひめ『なんか……
-わたし　くるしいの……</Text>
+わたし……　くるしいの……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:30" />
+				Time="2011-11-27T04:04:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:30" />
+				Time="2011-11-27T04:04:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1660,14 +1660,14 @@
 はあ……　う……▼
 ぬいぐるみ『ど　どうしたんだ？▼
 [Name:TrainerName Idx="1" ]姫『なんか……
-私　苦しいの……</Text>
+私……　苦しいの……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:30" />
+				Time="2011-11-27T04:04:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:30" />
+				Time="2011-11-27T04:04:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3394,25 +3394,25 @@
 		Label="pw_event9_react_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]ひめ『まだまだ！</Text>
+			<Text>[Name:TrainerName Idx="1" ]ひめ『まだまだ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:30" />
+				Time="2011-11-27T04:04:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:30" />
+				Time="2011-11-27T04:04:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]姫『まだまだ！</Text>
+			<Text>[Name:TrainerName Idx="1" ]姫『まだまだ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:30" />
+				Time="2011-11-27T04:04:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:30" />
+				Time="2011-11-27T04:04:18" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

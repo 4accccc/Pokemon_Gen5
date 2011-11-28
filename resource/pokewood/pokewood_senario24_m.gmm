@@ -377,7 +377,7 @@
 	</row>
 	<row id="pw_event0_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ああ！　あいつなら
-ぼくが　ちょっと　なぐったら▽
+ボクが　ちょっと　なぐったら▽
 なきながら　にげだしちゃったぜ！▼
 ぬいぐるみ『ちょ　ちょっと……
 ボクの　イメージが……▼
@@ -386,7 +386,7 @@
 [1:00:トレーナー名:1]おうじ『とにかく
 もとの　せかいに　かえしてもらうよ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ああ！　あいつなら
-僕が　ちょっと　殴ったら▽
+ボクが　ちょっと　殴ったら▽
 泣きながら　逃げ出しちゃったぜ！▼
 ぬいぐるみ『ちょ　ちょっと……
 ボクの　イメージが……▼
@@ -415,11 +415,11 @@
 	</row>
 	<row id="pw_event0_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『えー　また　とびら？▼
-でも　ぼくが　はいってきた
+でも　ボクが　はいってきた
 とびら　ってことは……▽
 かったら　でられる　チャンスだよな！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『えー！　また扉？▼
-でも　僕が　入ってきた
+でも　ボクが　入ってきた
 扉　ってことは……▽
 勝ったら　出られる　チャンスよね！</language>
 	</row>
@@ -510,9 +510,9 @@
 	<row id="pw_event2_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『くっそー！！
 あらためて　いっておくぞ！▼
-ぜったい　ぼくの　ほうが
+ぜったい　ボクの　ほうが
 カッコイイに　きまってるからな！▼
-だって　ぼくは　おうじさま　だよ？
+だって　ボク　おうじさま　だよ？
 おまえとは　うまれも　そだちも　ちがう
 うまれつきの　エリートだもん！▼
 しょくじも　きょういくも　パンだって
@@ -521,9 +521,9 @@
 そもそも　グレードが　ちがうんだ！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『くっそー！！
 あらためて　言っておく！▼
-絶対　ぼくの　ほうが
+絶対　ボクの　ほうが
 カッコイイに　決まってるだろ！▼
-だって　ぼくは　王子様　だよ？▼
+だって　ボク　王子様　だよ？▼
 お前とは　生まれも　育ちも
 違う　生粋の　エリートだもん！▼
 服も　食事も　教育だって
@@ -782,12 +782,12 @@
 はあ……　う……▼
 もんばん『ど　どうしたんだ？▼
 [1:00:トレーナー名:1]おうじ『なんか……
-ぼく　くるしくて……</language>
+ボク……　くるしくて……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『はあ……
 はあ……　う……▼
 もんばん『ど　どうしたんだ？▼
 [1:00:トレーナー名:1]王子『なんか……
-僕　苦しくて……</language>
+ボク……　苦しくて……</language>
 	</row>
 	<row id="pw_event5_enemy_0">
 		<language name="JPN" width="256">ジュジュベ『ふふふ……
@@ -832,14 +832,14 @@
 		<language name="JPN_KANJI" width="256">ジュジュベ『……！？</language>
 	</row>
 	<row id="pw_event5_hero_4">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ぼく……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ボク……
 ずっと　たたかってるうちに▽
 あなたを　すきに　なったんです……！▼
-ぬいぐるみ『えーっ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『僕……
+ぬいぐるみ『はあっ！？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ボク……
 ずっと　戦ってるうちに
 あなたを　好きに　なったんです……！▼
-ぬいぐるみ『えーっ！</language>
+ぬいぐるみ『はあっ！？</language>
 	</row>
 	<row id="pw_event5_enemy_4">
 		<language name="JPN" width="256">ジュジュベ『え……
@@ -849,14 +849,14 @@
 	</row>
 	<row id="pw_event5_hero_5">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ジュジュベさん……
-ぼく　ここで　ずっと　くらします！▼
+ボク　ずっと　ここで　くらします！▼
 いや　あなたと　ずっと　ここに　いたい！
-ぼくの　おもい　うけとってください！！▼
+ボクの　おもい　うけとってください！！▼
 ジュジュベさん！　あいしてます！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ジュジュベさん……
-ぼく　ここで　ずっと　暮らします！▼
+ボク　ずっと　ここで　暮らします！▼
 いや　あなたと　ずっと　ここに　いたい！
-ぼくの　思い　受け取ってください！！▼
+ボクの　思い　受け取ってください！！▼
 ジュジュベさん！　愛してます！</language>
 	</row>
 	<row id="pw_event5_enemy_5">
@@ -877,7 +877,7 @@
 もう少しで　オバサンだもの……▼
 結婚も　意識する　歳だし
 若い　あなたと　話題だって▽
-合うか　どうか　心配だし……▼</language>
+合うか　どうか　心配だし……</language>
 	</row>
 	<row id="pw_event5_hero_6">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『かんけいなーい！
@@ -1060,7 +1060,7 @@
 こくみんのために　おうは　いる！
 おうのための　こくみんは　いない　と！▼
 おまえとは　ぜんぜん　ちがうさ！▼
-……ぼくも　いま　はじめて
+……ボクも　いま　はじめて
 ちちうえの　ことばの　いみに▽
 きが　ついたけど……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『違う！▼
@@ -1069,7 +1069,7 @@
 国民のために　王は　いる！
 王のための　国民は　いない　と！▼
 お前とは　全然　違うさ！▼
-……僕も　今　初めて
+……ボクも　今　初めて
 父上の　言葉の意味に▽
 気が　ついたけど……</language>
 	</row>
@@ -1086,8 +1086,8 @@
 父上……！</language>
 	</row>
 	<row id="pw_event7_react_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ぼく　やるよ！！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME王子1『ぼく　やるよ！！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ボク　やるよ！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『ボク　やるよ！！</language>
 	</row>
 	<row id="pw_event7_react_enemy_0">
 		<language name="JPN" width="256">ジュジュベ『まだ　あきらめないの？
@@ -1213,7 +1213,7 @@
 	</row>
 	<row id="pw_event9_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『うーん……</language>
-		<language name="JPN_KANJI" width="256">%MYNAME王子1『うーん……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『うーん……</language>
 	</row>
 	<row id="pw_event9_react_enemy_0">
 		<language name="JPN" width="256">ジュジュベ『もう　いいじゃない……
@@ -1226,8 +1226,8 @@
 魔法のオリでも　いずれ　慣れるわよ！</language>
 	</row>
 	<row id="pw_event9_react_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『まだまだ！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME王子1『まだまだ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『まだまだ！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『まだまだ！！</language>
 	</row>
 	<row id="pw_event9_react_enemy_1">
 		<language name="JPN" width="256">ジュジュベ『かんべんしてよ　もう……
@@ -1245,7 +1245,7 @@
 	</row>
 	<row id="pw_event9_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『そっちこそ！</language>
-		<language name="JPN_KANJI" width="256">%MYNAME王子1『そっちこそ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]王子『そっちこそ！</language>
 	</row>
 	<row id="pw_event9_react_enemy_2">
 		<language name="JPN" width="256">ジュジュベ『ざんねん　ながら
