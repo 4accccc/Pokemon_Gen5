@@ -1639,12 +1639,17 @@ static void MOVE_Event_UpdateTrainerPosCalc( TRACE_MOVE_DATA *p_md )
       vec.x += sc_mdl_offset_table[p_md->model_id].x;
       vec.y += sc_mdl_offset_table[p_md->model_id].y;
       vec.z += sc_mdl_offset_table[p_md->model_id].z;
-      MMDL_SetVectorPos( p_md->p_mmdl ,&vec );
 
-      // グリッド座標の設定
-      MMDL_SetGridPosX( p_md->p_mmdl ,FX32_TO_GRID(vec.x) );
-      MMDL_SetGridPosY( p_md->p_mmdl ,FX32_TO_GRID(vec.y) );
-      MMDL_SetGridPosZ( p_md->p_mmdl ,FX32_TO_GRID(vec.z) );
+      // 存在するときのみセット
+      if( p_md->p_mmdl != NULL )
+      {
+        MMDL_SetVectorPos( p_md->p_mmdl ,&vec );
+
+        // グリッド座標の設定
+        MMDL_SetGridPosX( p_md->p_mmdl ,FX32_TO_GRID(vec.x) );
+        MMDL_SetGridPosY( p_md->p_mmdl ,FX32_TO_GRID(vec.y) );
+        MMDL_SetGridPosZ( p_md->p_mmdl ,FX32_TO_GRID(vec.z) );
+      }
 
       // フレームの更新
       UpdateFrame( p_md );
