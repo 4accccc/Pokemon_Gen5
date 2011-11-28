@@ -516,7 +516,7 @@
 	</row>
 	<row id="pw_event0_react_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『にげようかな……</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『にげようかな……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『逃げようかな……</language>
 	</row>
 	<row id="pw_event0_react_enemy_3">
 		<language name="JPN" width="256">ハチクマン『ファファファ！！
@@ -561,14 +561,14 @@
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『……?</language>
 	</row>
 	<row id="pw_event1_enemy_2">
-		<language name="JPN" width="256">ハチクマン『グフッ！！▼
-ゴフッ！！　ゴフッ！！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『グフッ！！▼
-ゴフッ！！　ゴフッ！！</language>
+		<language name="JPN" width="256">ハチクマン『グハッ！！
+ゴフッ！　ゴフッ！！　ゴフーッ！！</language>
+		<language name="JPN_KANJI" width="256">ハチクマン『グハッ！！
+ゴフッ！　ゴフッ！！　ゴフーッ！！</language>
 	</row>
 	<row id="pw_event1_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『なんだ……？</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『なんだ……？</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『何だ……？</language>
 	</row>
 	<row id="pw_event1_enemy_3">
 		<language name="JPN" width="256">ハチクマン『グムム……　もしや……</language>
@@ -662,7 +662,7 @@
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『そんな……
 まて……　やめろ……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『そんな……
-まて……　やめろ……</language>
+待て……　やめろ……</language>
 	</row>
 	<row id="pw_event2_enemy_3">
 		<language name="JPN" width="256">ハチクマン『ファファファ！！
@@ -683,7 +683,7 @@
 さらばだ！！　[1:02:ポケモンニックネーム:0]キッド！</language>
 	</row>
 	<row id="pw_event2_hero_5">
-		<language name="JPN" width="256">ハチクかんに　そうび　された
+		<language name="JPN" width="256">……ハチクかんに　そうび　された
 ハチクほうに　よって▽
 そらの　かなたへと　ちった▽
 [1:02:ポケモンニックネーム:0]キッド！！▼
@@ -694,7 +694,7 @@
 [1:02:ポケモンニックネーム:0]キッド！！▼
 ありがとう！
 [1:02:ポケモンニックネーム:0]キッド！！▼</language>
-		<language name="JPN_KANJI" width="256">ハチクかんに　装備された
+		<language name="JPN_KANJI" width="256">……ハチク艦に　装備された
 ハチク砲に　よって▽
 空の　彼方へと　散った▽
 [1:02:ポケモンニックネーム:0]キッド！！▼
@@ -954,8 +954,7 @@
 しかし　[1:02:ポケモンニックネーム:0]キッドの　むねには
 いつまでも　かれの　わらいごえが▽
 こだま　するの　だった……▼
-さらば！　あくの　かいじん
-ハチクマン！</language>
+さらば！　あくのかいじん　ハチクマン！</language>
 		<language name="JPN_KANJI" width="256">自らの　敗北を　受け入れた
 ハチクマンは　ハチク砲に▽
 よって　夜空に　散った……▼
@@ -963,8 +962,7 @@
 しかし　[1:02:ポケモンニックネーム:0]キッドの　胸には
 いつまでも　彼の　笑い声が▽
 こだま　するの　だった……▼
-さらば！　悪の　怪人
-ハチクマン！</language>
+さらば！　悪の怪人　ハチクマン！</language>
 	</row>
 	<row id="pw_event5_enemy_0">
 		<language name="JPN" width="256">ハチクマン『ファファファ……▼
@@ -978,7 +976,7 @@
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『なにがわるい！▼
 ぼくは　せいぎの　ためなら
 しゅだんは　えらばないぞ！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『なにが悪い！▼
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『何が悪い！▼
 僕は　正義の　ためなら
 手段は　選ばないぞ！</language>
 	</row>
