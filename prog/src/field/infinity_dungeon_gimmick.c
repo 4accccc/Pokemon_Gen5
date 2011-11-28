@@ -988,6 +988,14 @@ static GMEVENT_RESULT ElevatorLiftBanEvent( GMEVENT *p_event, int *seq, void *wk
         FLD_EXP_OBJ_SetVanish( p_model_off->p_ex_obj,  p_model_off->unitID, p_model_off->modelID, TRUE );
         FLD_EXP_OBJ_SetVanish( p_model_on->p_ex_obj,  p_model_on->unitID, p_model_on->modelID, FALSE );
         (*seq)++;
+      }
+    }
+    break;
+  case 2:
+    {
+      // SEèIóπë“Çø
+      if( !PMSND_CheckPlaySE() )
+      {
         return GMEVENT_RES_FINISH;
       }
     }
