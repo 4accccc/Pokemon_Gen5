@@ -90,7 +90,6 @@ typedef struct {
   EVENTWORK           *p_event_wk;
 
   // data
-  BADGE_GATE_SV_WORK  *p_sv_work;
   MODEL model[BADGEGATE_MDLID_MAX];       // モデル
   MODEL model_off[BADGEGATE_MDLID_OFF_MAX];   // モデル
   MODEL model_on[BADGEGATE_MDLID_ON_MAX];    // モデル
@@ -192,7 +191,6 @@ void BADGEGATE_Setup( FIELDMAP_WORK *p_fieldmap )
   // パラメータの初期化
   p_wk->heapID          = HEAPID_FIELDMAP;
   p_wk->p_fld_wk        = p_fieldmap;
-  p_wk->p_sv_work       = GIMMICKWORK_Get( p_gmkwork, FLD_GIMMICK_D26R0101 );
   p_wk->p_ex_obj        = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
   p_wk->p_event_wk      = GAMEDATA_GetEventWork( p_gamedata );
   p_wk->seq             = 0;
