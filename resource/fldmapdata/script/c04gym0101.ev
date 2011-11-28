@@ -669,6 +669,8 @@ EVENT_START	ev_pos_c04gym0101_show3
 
 	//カミツレショーアップ演出
 	_CALL	ev_swleader04_show
+
+  _CLEAR_ENVSE_EVENT_BGMPLAY_PAUSE()
 	
 	//========================================//
 	//このPOSの起動をさせなくする
@@ -1075,7 +1077,7 @@ ev_swleader04_show:
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
 	//BGM再生
-	_START_EVENT_BGM( SEQ_BGM_ERECTRIC_GYM_02 )
+	_BGM_PLAY( SEQ_BGM_ERECTRIC_GYM_02 )
 	
 	//カミツレにスポットライトが当たる
 	_GYM_ELEC_SET_SPOTLIGHT( TRUE , C04GYM0101_LEADER4_01, GYM_ELEC_SPOTLIGHT_CENTER )
