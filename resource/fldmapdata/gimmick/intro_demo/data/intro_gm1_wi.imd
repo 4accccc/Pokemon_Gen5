@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-11-16T14:21:40" source="intro_gm1_wi.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-11-28T16:10:22" source="intro_gm1_wi.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2011-11-16T14:21:40" source="intro_gm1_wi.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2011-11-28T16:10:22" source="intro_gm1_wi.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -39,9 +39,9 @@
 	>
 		<bitmap size="32">
 			0000 0000 0000 0000 8000 0000 e000 0002
-			d800 0009 9000 0001 7480 0087 9d60 025d
-			e6f8 0be6 9d60 025d 7480 0087 9000 0001
-			d800 0009 e000 0002 8000 0000 0000 0000
+			d900 0019 9150 0151 77d0 01f7 1d40 005d
+			0440 0044 1d40 005d 77d0 01f7 9150 0151
+			d900 0019 e000 0002 8000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="intro_wi02"
@@ -67,22 +67,22 @@
 	>
 		<bitmap size="32">
 			0000 0000 0000 0000 8000 0000 e000 0002
-			d800 0009 9000 0001 7480 0087 9d60 025d
-			e6f8 0be6 9d60 025d 7480 0087 9000 0001
-			d800 0009 e000 0002 8000 0000 0000 0000
+			d900 0019 9150 0151 77d0 01f7 1d40 005d
+			0440 0044 1d40 005d 77d0 01f7 9150 0151
+			d900 0019 e000 0002 8000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="3">
 	<tex_palette index="0" name="intro_wi01_pl" color_size="4">
-		0000 7ff3 7ff8 7fff
+		0000 7ffb 7ffc 7fff
 	</tex_palette>
 	<tex_palette index="1" name="intro_wi02_pl" color_size="4">
-		0000 7ff3 7ff8 7fff
+		0000 7ffb 7ffc 7fff
 	</tex_palette>
 	<tex_palette index="2" name="intro_wi03_pl" color_size="4">
-		0000 7ff3 7ff8 7fff
+		0000 7ffb 7ffc 7fff
 	</tex_palette>
 </tex_palette_array>
 
