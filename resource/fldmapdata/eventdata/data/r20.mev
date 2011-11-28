@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/17 12:27:21
+#save date:2011/11/28 17:10:38
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r20.wms
 #SECTION START:OBJ_EVENT
@@ -158,7 +158,7 @@ DIR_LEFT
 #Parameter 2 Number
 0
 #Move Limit X Number
-5
+3
 #Move Limit Z Number
 0
 #Pos Type
