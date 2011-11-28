@@ -119,19 +119,6 @@ VMCMD_RESULT EvCmdResortTalkEnd( VMHANDLE *p_core, void *p_wk_adrs )
   return VMCMD_RESULT_CONTINUE;
 }
 
-static BOOL CheckMedalID( MEDALBOX *p_mdl, const MedalID medal_tbl[], u32 tbl_len )
-{
-  int i;
-  for( i = 0; i < tbl_len; i++ )
-  {
-    if( MEDALBOX_GetMedalState( p_mdl, medal_tbl[i] ) == MEDAL_STATE_TITLE_GET )
-    {
-      return TRUE;
-    }
-  }
-  return FALSE;
-}
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  データ取得
@@ -144,6 +131,7 @@ static BOOL CheckMedalID( MEDALBOX *p_mdl, const MedalID medal_tbl[], u32 tbl_le
 //-----------------------------------------------------------------------------
 VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
 {
+
   SCRCMD_WORK *p_wk = p_wk_adrs;
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
   FIELDMAP_WORK *p_field = GAMESYSTEM_GetFieldMapWork(p_gamesys);
@@ -314,172 +302,28 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
     }
     break;
   case RESORT_GET_PARAM_SELECT_LOT:
-    {
-      static const MedalID sc_lot_medal_tbl[] =
-      {
-        MDLID_VENDOR_ATARI,
-        MDLID_NPOKE,
-        MDLID_IROCHIGAI,
-        MDLID_POKERUS,
-      };
-      BOOL is_mdl = CheckMedalID( p_mdl, sc_lot_medal_tbl, NELEMS(sc_lot_medal_tbl) );
-      u32 id = MyStatus_GetID_Low( p_mystatus ) % 10;
-      *p_ret_wk = is_mdl || (id==1) || (id==5);
-    }
+    *p_ret_wk = RESORT_UTIL_GetReleaseMyShop( p_sys, p_gamedata, RESORT_RESIDENT_TYPE_LOT );
     break;
   case RESORT_GET_PARAM_SELECT_PARLOR:
-    if( GET_VERSION() == VERSION_W2 )
-    {
-      u32 lv = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
-      *p_ret_wk = (lv>=20);
-    }
-    else
-    {
-      *p_ret_wk = FALSE;
-    }
+    *p_ret_wk = RESORT_UTIL_GetReleaseMyShop( p_sys, p_gamedata, RESORT_RESIDENT_TYPE_PARLOR );
     break;
   case RESORT_GET_PARAM_SELECT_FLORIST:
-    {
-      static const MedalID sc_flor_medal_tbl[] =
-      {
-				MDLID_MORI_CAPTURE_LV1,
-				MDLID_MORI_CAPTURE_LV2,
-				MDLID_MORI_CAPTURE_LV3,
-				MDLID_MORI_CAPTURE_MAX,
-				MDLID_MUSICALWIN_MAX,
-				MDLID_MUSICALGOODS,
-				MDLID_MUSICAL_TOTAL_POINT,
-				MDLID_GAMESYNC,
-      };
-      BOOL is_mdl = CheckMedalID( p_mdl, sc_flor_medal_tbl, NELEMS(sc_flor_medal_tbl) );
-      u32 id = MyStatus_GetID_Low( p_mystatus ) % 10;
-      *p_ret_wk = is_mdl || (id==4) || (id==9);
-    }
+    *p_ret_wk = RESORT_UTIL_GetReleaseMyShop( p_sys, p_gamedata, RESORT_RESIDENT_TYPE_FLORIST );
     break;
   case RESORT_GET_PARAM_SELECT_MARKET:
-    {
-      static const MedalID sc_mar_medal_tbl[] =
-      {
-				MDLID_SHOPPING_CNT_LV1,
-				MDLID_SHOPPING_MONEY_LV1,
-				MDLID_PREMIUM_BALL_LV1,
-      };
-      BOOL is_mdl = CheckMedalID( p_mdl, sc_mar_medal_tbl, NELEMS(sc_mar_medal_tbl) );
-      u32 id = MyStatus_GetID_Low( p_mystatus ) % 10;
-      *p_ret_wk = is_mdl || (id==3) || (id==8);
-    }
+    *p_ret_wk = RESORT_UTIL_GetReleaseMyShop( p_sys, p_gamedata, RESORT_RESIDENT_TYPE_MARKET );
     break;
   case RESORT_GET_PARAM_SELECT_EXERCICE:
-    {
-      static const MedalID sc_exer_medal_tbl[] =
-      {
-				MDLID_ALL_BATTLE_LV4,
-				MDLID_COMM_BATTLE_LV4,
-				MDLID_SUBWAY_SINGLE_LV1,
-				MDLID_SUBWAY_DOUBLE_LV1,
-				MDLID_SUBWAY_MULTI_LV1,
-				MDLID_SUBWAY_CHALLENGE_LV1,
-				MDLID_SUBWAY_CHALLENGE_LV4,
-				MDLID_TRIALHOUSE_LV4,
-				MDLID_WIN_BP_LV1,
-				MDLID_DAYMAX_EXP_LV1,
-				MDLID_SAISEN_LV1,
-				MDLID_WBT_HODOMOE,
-				MDLID_WBT_RENTAL,
-				MDLID_WBT_MIX,
-				MDLID_WBT_ISSHU,
-				MDLID_WBT_KANTO,
-				MDLID_WBT_JOUTO,
-				MDLID_WBT_HOUEN,
-				MDLID_WBT_SHINNOU,
-				MDLID_WBT_LEADER,
-				MDLID_WBT_CHAMPION,
-				MDLID_WBT_RENTAL_MASTER,
-				MDLID_WBT_MIX_MASTER,
-				MDLID_WBT_TYPE_ALL,
-				MDLID_MUGEN_AREA_B_LV1,
-				MDLID_MUGEN_AREA_B_LV2,
-				MDLID_MUGEN_AREA_W_LV1,
-				MDLID_MUGEN_AREA_W_LV2,
-				MDLID_MUGEN_WIN_LV1,
-				MDLID_MUGEN_WIN_LV2,
-				MDLID_MUGEN_WIN_LV3,
-				MDLID_MUGEN_WIN_LV4,
-				MDLID_MUGEN_ALL_WIN_LV1,
-				MDLID_MUGEN_ALL_WIN_LV2,
-				MDLID_MUGEN_BOSS_ONLY_LV1,
-				MDLID_MUGEN_BOSS_ONLY_LV2,
-				MDLID_MUGEN_SPEEDY_LV1,
-				MDLID_MUGEN_SPEEDY_LV2,
-				MDLID_BATTLE_COMPLETE,
-				MDLID_CHAMPION_NORMAL,
-				MDLID_CHAMPION_HONOO,
-				MDLID_CHAMPION_MIZU,
-				MDLID_CHAMPION_DENKI,
-				MDLID_CHAMPION_KUSA,
-				MDLID_CHAMPION_KOORI,
-				MDLID_CHAMPION_KAKUTOU,
-				MDLID_CHAMPION_DOKU,
-				MDLID_CHAMPION_JIMEN,
-				MDLID_CHAMPION_HIKOU,
-				MDLID_CHAMPION_ESPER,
-				MDLID_CHAMPION_MUSHI,
-				MDLID_CHAMPION_IWA,
-				MDLID_CHAMPION_GHOST,
-				MDLID_CHAMPION_DRAGON,
-				MDLID_CHAMPION_AKU,
-				MDLID_CHAMPION_HAGANE,
-				MDLID_LONELY_CHAMPION,
-      };
-      BOOL is_mdl = CheckMedalID( p_mdl, sc_exer_medal_tbl, NELEMS(sc_exer_medal_tbl) );
-      u32 id = MyStatus_GetID_Low( p_mystatus ) % 10;
-      *p_ret_wk = is_mdl || (id==2) || (id==7);
-    }
+    *p_ret_wk = RESORT_UTIL_GetReleaseMyShop( p_sys, p_gamedata, RESORT_RESIDENT_TYPE_EXERCICE );
     break;
   case RESORT_GET_PARAM_SELECT_NURSERY:
-    {
-      static const MedalID sc_nur_medal_tbl[] =
-      {
-				MDLID_TAMAGO_LV2,
-				MDLID_TAMAGO_LV3,
-				MDLID_TAMAGO_MAX,
-				MDLID_EVOLUTION_LV1,
-				MDLID_EVOLUTION_LV2,
-				MDLID_EVOLUTION_LV3,
-				MDLID_EVOLUTION_MAX,
-				MDLID_SODATEYA_CNT_LV1,
-      };
-      BOOL is_mdl = CheckMedalID( p_mdl, sc_nur_medal_tbl, NELEMS(sc_nur_medal_tbl) );
-      BOOL is_dendou = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_PRIZE_DENDOU, NULL );
-      *p_ret_wk = (is_mdl && is_dendou);
-    }
+    *p_ret_wk = RESORT_UTIL_GetReleaseMyShop( p_sys, p_gamedata, RESORT_RESIDENT_TYPE_NURSERY );
     break;
   case RESORT_GET_PARAM_SELECT_ANTIQUE:
-    {
-      static const MedalID sc_ant_medal_tbl[] =
-      {
-				MDLID_GOMIBAKO_LV1,
-				MDLID_DOWSING_LV1,
-				MDLID_BILLBOARD_COUNT_LV1,
-				MDLID_BILLBOARD_BACK,
-				MDLID_FOSSILE_LV1,
-				MDLID_KEMONOMICHI,
-      };
-      BOOL is_mdl = CheckMedalID( p_mdl, sc_ant_medal_tbl, NELEMS(sc_ant_medal_tbl) );
-      u32 id = MyStatus_GetID_Low( p_mystatus ) % 10;
-      *p_ret_wk = is_mdl || (id==0) || (id==6);
-    }
+    *p_ret_wk = RESORT_UTIL_GetReleaseMyShop( p_sys, p_gamedata, RESORT_RESIDENT_TYPE_ANTIQUE );
     break;
   case RESORT_GET_PARAM_SELECT_CAFE:
-    if( GET_VERSION() == VERSION_B2 )
-    {
-      u32 lv = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
-      *p_ret_wk = (lv>=20);
-    }
-    else
-    {
-      *p_ret_wk = FALSE;
-    }
+    *p_ret_wk = RESORT_UTIL_GetReleaseMyShop( p_sys, p_gamedata, RESORT_RESIDENT_TYPE_CAFE );
     break;
   case RESORT_GET_PARAM_CHECK_RESIDENT_00:
   case RESORT_GET_PARAM_CHECK_RESIDENT_01:
@@ -2385,6 +2229,13 @@ VMCMD_RESULT EvCmdResortSetMyData( VMHANDLE *p_core, void *p_wk_adrs )
     }
     break;
 
+  case RESORT_MY_PARAM_MAPCHANGE_MMDL:
+    {
+      MMDL *p_target = MMDLSYS_SearchOBJID( GAMEDATA_GetMMdlSys(p_gamedata), data ); 
+      SCRIPT_SetTargetObj( p_script, p_target );
+    }
+    break;
+
   default:
     GF_ASSERT(0);
   }
@@ -2453,6 +2304,9 @@ VMCMD_RESULT EvCmdResortGetMyData( VMHANDLE *p_core, void *p_wk_adrs )
     *p_ret_wk = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_PRIZE_DENDOU, NULL );
     break;
 
+  case RESORT_MY_PARAM_TEX:
+    *p_ret_wk = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_TEX, NULL );
+    break;
   default:
     GF_ASSERT_MSG(0,"%d\n",param);
   }
@@ -2900,6 +2754,7 @@ static s32 PrmExp_Up( s32 exp, s32 other, s32 up )
   enum
   {
     PRMEXP_ONE_MAX  = 255,
+    PRMEXP_REVISION_MAX  = 252,
     PRMEXP_MAX      = 510,
 
     ITEM_PRMEXP_MAX = 100, //アップする努力値の最大
@@ -2917,6 +2772,18 @@ static s32 PrmExp_Up( s32 exp, s32 other, s32 up )
   }*/
   if( (exp+other) >= PRMEXP_MAX && up > 0 ){
     return -1;
+  }
+
+  //JA特別補正252ならば振らない
+  if( exp >= PRMEXP_REVISION_MAX )
+  {
+    return -1;
+  }
+
+  //JA特別補正252以上はふらない
+  if( (exp + up) >= PRMEXP_REVISION_MAX )
+  {
+    up = PRMEXP_REVISION_MAX - exp;
   }
 
   exp += up;

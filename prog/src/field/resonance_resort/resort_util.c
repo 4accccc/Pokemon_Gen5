@@ -35,6 +35,7 @@
 #include "resort_util.h"
 #include "resort_const.h"
 #include "resort_debug.h"
+#include "resort_shop_release.cdat"
 
 //outer
 #include "resort_util.h"
@@ -3135,5 +3136,55 @@ void RESORT_UTIL_SuccessCombo( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abs
   {
     u32 cnt = RESORT_WORK_GetData(p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_CNT);
     RESORT_WORK_SetData(p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_CNT, ++cnt);
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自分のお店の開放を取得
+ *
+ *	@param	RESORT_SYSTEM *p_sys  システム
+ *	@param	shop_type   お店の種類
+ *
+ *	@return TRUE開放  FALSE開放していない
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_UTIL_GetReleaseMyShop( const RESORT_SYSTEM *cp_sys, const GAMEDATA *cp_gamedata, u16 shop_type )
+{
+
+  RESORT_CITY_DATA *p_city = RESORT_SYSTEM_GetCityData( (RESORT_SYSTEM *)cp_sys );
+
+  
+  if( shop_type == RESORT_RESIDENT_TYPE_NURSERY )
+  {
+    return RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_PRIZE_DENDOU, NULL );
+  }
+  else
+  {
+    const MYSTATUS *cp_mystatus = GAMEDATA_GetMyStatus( (GAMEDATA *)cp_gamedata );
+    u32 id = MyStatus_GetID_Low( cp_mystatus ) % 10;
+    u32 lv = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
+
+    //LVが制限外ならば全部開放してる
+    if( lv >= NELEMS( sc_resort_institution_release_rank ) )
+    {
+      return TRUE;
+    }
+    else
+    {
+      int i;
+
+      for( i = 0; i < lv; i++ )
+      {
+        u32 v = sc_resort_institution_release_rank[ i ];
+        if( sc_resort_institution_release_tbl[id][ v ] == shop_type )
+        {
+          return TRUE;
+        }
+      }
+
+      return FALSE;
+    }
   }
 }

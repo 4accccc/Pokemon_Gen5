@@ -90,3 +90,6 @@ extern BOOL RESORT_UTIL_GetComboNextIndex( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT
 extern u32 RESORT_UTIL_GetComboInitRnd( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct );
 extern u32 RESORT_UTIL_GetComboNextRnd( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct );
 extern void RESORT_UTIL_SuccessCombo( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct, u32 next_index );
+
+//Ž©•ª‚Ì‚¨“X
+extern BOOL RESORT_UTIL_GetReleaseMyShop( const RESORT_SYSTEM *cp_sys, const GAMEDATA *cp_gamedata, u16 shop_type );

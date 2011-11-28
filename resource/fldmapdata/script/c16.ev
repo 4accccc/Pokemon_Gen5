@@ -265,6 +265,7 @@ EVENT_START		ev_pos_c16_tutorial_01
 	_OBJ_ANIME( C16_OWNER_01, anm_first_owner_goaway_01 )
   _OBJ_ANIME( C16_SECRETARY_03, anm_first_sec03_goaway )
   _OBJ_ANIME( C16_SECRETARY_04, anm_first_sec04_goaway )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_first_player_bye_owner )
 	_OBJ_ANIME_WAIT()
   _OBJ_DEL( C16_OWNER_01 )
   _OBJ_DEL( C16_SECRETARY_03 )
@@ -277,6 +278,10 @@ EVENT_START		ev_pos_c16_tutorial_01
   //秘書前に
   _OBJ_ANIME( C16_SECRETARY_01, anm_first_sec01_come )
   _OBJ_ANIME( C16_SECRETARY_02, anm_first_sec02_come )
+	_OBJ_ANIME_WAIT()
+
+  //秘書の方を向く
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_first_dir_up )
 	_OBJ_ANIME_WAIT()
 
   //始めまして
@@ -364,6 +369,14 @@ _ANIME_LABEL	anm_first_owner_goaway_01
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,9
   _ANIME_DATA AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：オーナーを送る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_first_player_bye_owner
+	_ANIME_DATA	AC_WAIT_8F,2
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -606,8 +619,16 @@ EVENT_START ev_scene_c16_parade
       //右か左を向く
       IF $LWK_INDEX == 0 || $LWK_INDEX == 2 || $LWK_INDEX == 4 || $LWK_INDEX == 6 THEN
 	      _OBJ_ANIME( MMDL_ID_PLAYER, anm_first_dir_right )
+	      _OBJ_ANIME( LWK_OBJID_REC1, anm_first_dir_right )
+	      _OBJ_ANIME( LWK_OBJID_REC2, anm_first_dir_right )
+	      _OBJ_ANIME( LWK_OBJID_REC3, anm_first_dir_right )
+	      _OBJ_ANIME( LWK_OBJID_REC4, anm_first_dir_right )
       ELSE
 	      _OBJ_ANIME( MMDL_ID_PLAYER, anm_first_dir_left )
+	      _OBJ_ANIME( LWK_OBJID_REC1, anm_first_dir_left )
+	      _OBJ_ANIME( LWK_OBJID_REC2, anm_first_dir_left )
+	      _OBJ_ANIME( LWK_OBJID_REC3, anm_first_dir_left )
+	      _OBJ_ANIME( LWK_OBJID_REC4, anm_first_dir_left )
       ENDIF
 	    _OBJ_ANIME_WAIT()
 

@@ -37,6 +37,7 @@
 #include "field/resonance_resort/resort_map.h"
 #include "field/resonance_resort/resort_shop.h"
 #include "field/resonance_resort/scrcmd_resort_def.h"
+#include "resort_shop_release.cdat"
 
 //debug
 #include "resort_debug.h"
@@ -4342,12 +4343,16 @@ u32 RESORT_DATA_GetDefaultWantJob( u16 want_job, u16 id, u16 ver )
 {
   if( want_job == RESORT_SHOP_ID_NULL )
   {
-    switch( id % 10 )
+    u32 shop_type = sc_resort_institution_release_tbl[id%10][0];
+
+    switch( shop_type )
     {
+    case RESORT_RESIDENT_TYPE_NURSERY:
+      // èâä˙Ç®ìXÇ∆ÇµÇƒÇ±Ç»Ç¢ÇÕÇ∏
+      GF_ASSERT(0);
     default:
       GF_ASSERT(0);
-    case 1:
-    case 5:
+    case RESORT_RESIDENT_TYPE_LOT:
       switch( ver )
       {
       case VERSION_BLACK:
@@ -4361,8 +4366,7 @@ u32 RESORT_DATA_GetDefaultWantJob( u16 want_job, u16 id, u16 ver )
       case VERSION_W2:
         return RESORT_SHOP_ID_LOT_00_W2;
       }
-    case 2:
-    case 7:
+    case RESORT_RESIDENT_TYPE_EXERCICE:
       switch( ver )
       {
       case VERSION_BLACK:
@@ -4376,8 +4380,7 @@ u32 RESORT_DATA_GetDefaultWantJob( u16 want_job, u16 id, u16 ver )
       case VERSION_W2:
         return RESORT_SHOP_ID_EXERCICE_00_W2;
       }
-    case 3:
-    case 8:
+    case RESORT_RESIDENT_TYPE_MARKET:
       switch( ver )
       {
       case VERSION_BLACK:
@@ -4391,8 +4394,7 @@ u32 RESORT_DATA_GetDefaultWantJob( u16 want_job, u16 id, u16 ver )
       case VERSION_W2:
         return RESORT_SHOP_ID_MARKET_00_W2;
       }
-    case 4:
-    case 9:
+    case RESORT_RESIDENT_TYPE_FLORIST:
       switch( ver )
       {
       case VERSION_BLACK:
@@ -4406,8 +4408,7 @@ u32 RESORT_DATA_GetDefaultWantJob( u16 want_job, u16 id, u16 ver )
       case VERSION_W2:
         return RESORT_SHOP_ID_FLORIST_00_W2;
       }
-    case 0:
-    case 6:
+    case RESORT_RESIDENT_TYPE_ANTIQUE:
       switch( ver )
       {
       case VERSION_BLACK:
@@ -4420,6 +4421,34 @@ u32 RESORT_DATA_GetDefaultWantJob( u16 want_job, u16 id, u16 ver )
         GF_ASSERT(0);
       case VERSION_W2:
         return RESORT_SHOP_ID_ANTIQUE_00_W2;
+      }
+    case RESORT_RESIDENT_TYPE_PARLOR:
+      switch( ver )
+      {
+      case VERSION_BLACK:
+        return RESORT_SHOP_ID_PARLOR_00_B;
+      case VERSION_WHITE:
+        return RESORT_SHOP_ID_PARLOR_00_W;
+      case VERSION_B2:
+        return RESORT_SHOP_ID_PARLOR_00_B2;
+      default:
+        GF_ASSERT(0);
+      case VERSION_W2:
+        return RESORT_SHOP_ID_PARLOR_00_W2;
+      }
+    case RESORT_RESIDENT_TYPE_CAFE:
+      switch( ver )
+      {
+      case VERSION_BLACK:
+        return RESORT_SHOP_ID_CAFE_00_B;
+      case VERSION_WHITE:
+        return RESORT_SHOP_ID_CAFE_00_W;
+      case VERSION_B2:
+        return RESORT_SHOP_ID_CAFE_00_B2;
+      default:
+        GF_ASSERT(0);
+      case VERSION_W2:
+        return RESORT_SHOP_ID_CAFE_00_W2;
       }
     }
   }

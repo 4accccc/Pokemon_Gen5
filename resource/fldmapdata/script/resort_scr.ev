@@ -461,8 +461,8 @@ _RET
 //==============================================================
 sub_tourist_spot:
 {
-  DEFINE_LOCAL  LWK_LOOP
   DEFINE_LOCAL  LWK_MAIN_EXP
+  DEFINE_LOCAL  LWK_CITY_EXP
   DEFINE_LOCAL  LWK_CITY
 
   $LWK_FUNCTION_RETURN  = FALSE
@@ -493,6 +493,8 @@ sub_tourist_spot:
     //おすすめスポットをチェック
     _RESORT_SET_SPOT( LWK_LIST_RET_IDX, LWK_SPOT_RESULT, LWK_MSGID, LWK_MSGID2, LWK_MAIN_EXP )
     $LWK_EXP  = $LWK_MAIN_EXP
+
+    $LWK_CITY_EXP = $LWK_MAIN_EXP
     
     //フェードアウト
     _BLACK_OUT()
@@ -527,6 +529,8 @@ sub_tourist_spot:
       //コンボの経験値取得
       _RESORT_COMBO( LWK_MAIN_EXP, RESORT_COMBO_PARAM_EXP, LWK_EXP, LWK_RET )
 
+      $LWK_CITY_EXP += $LWK_EXP
+
       //コンボ確定！
       _RESORT_COMBO( LWK_COMBO_IDX, RESORT_COMBO_PARAM_DECIDE, LWK_RET, LWK_RET )
       _CALL sub_come_shop
@@ -534,7 +538,7 @@ sub_tourist_spot:
 
     //街へ経験値加算
     IF $LWK_CITY == TRUE THEN
-      $LWK_EXP = $LWK_MAIN_EXP
+      $LWK_EXP = $LWK_CITY_EXP
       _CALL sub_city_app_exp
       _SYSWIN_CLOSE()
     ENDIF
@@ -2050,31 +2054,105 @@ _RET
 //==============================================================
 sub_secretary_neon:
 {
-  //どうしますか？
-  _RESORT_GET_MSGID( RESORT_SECRETARY_NEON_SEL_MSGID, LWK_MSGID )
-	_BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+  DEFINE_LOCAL LWK_X
+  DEFINE_LOCAL LWK_Z
+  DEFINE_LOCAL LWK_DEFAULT
 
-	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_MENU_RET )
-	_BMPMENU_MAKE_LIST( resort_sys_select_42, SEQ_SECRETARY_NEON_COOL      )	//かっこいい
-  _BMPMENU_MAKE_LIST( resort_sys_select_43, SEQ_SECRETARY_NEON_BEAUTIFUL )	//きれい
-  _BMPMENU_MAKE_LIST( resort_sys_select_44, SEQ_SECRETARY_NEON_CUTE      )	//かわいい
-  _BMPMENU_MAKE_LIST( resort_sys_select_45, SEQ_SECRETARY_NEON_RICH      )	//ごうか
-  _BMPMENU_MAKE_LIST( resort_sys_select_46, SEQ_SECRETARY_NEON_BYE       )	//やめる
+  _RESORT_GET_MY_DATA( RESORT_MY_PARAM_TEX, LWK_DEFAULT )
 
-	//メニュー表示
-	_BMPMENU_START()
+  $LWK_MENU_SUBLOOP = TRUE
+  WHILE $LWK_MENU_SUBLOOP == TRUE
+    //どうしますか？
+    _RESORT_GET_MSGID( RESORT_SECRETARY_NEON_SEL_MSGID, LWK_MSGID )
+  	_BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+  
+  	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_MENU_RET )
+  	_BMPMENU_MAKE_LIST( resort_sys_select_42, SEQ_SECRETARY_NEON_COOL      )	//かっこいい
+    _BMPMENU_MAKE_LIST( resort_sys_select_43, SEQ_SECRETARY_NEON_BEAUTIFUL )	//きれい
+    _BMPMENU_MAKE_LIST( resort_sys_select_44, SEQ_SECRETARY_NEON_CUTE      )	//かわいい
+    _BMPMENU_MAKE_LIST( resort_sys_select_45, SEQ_SECRETARY_NEON_RICH      )	//ごうか
+    _BMPMENU_MAKE_LIST( resort_sys_select_46, SEQ_SECRETARY_NEON_BYE       )	//やめる
+  
+  	//メニュー表示
+  	_BMPMENU_START()
 
-  IF $LWK_MENU_RET == EV_WIN_B_CANCEL THEN
-    $LWK_MENU_RET = SEQ_SECRETARY_WORK_BYE
-  ENDIF
+    IF $LWK_MENU_RET == EV_WIN_B_CANCEL THEN
+      $LWK_MENU_RET = SEQ_SECRETARY_NEON_BYE
+    ENDIF
+  
+    IF $LWK_MENU_RET == SEQ_SECRETARY_NEON_BYE THEN
 
-  IF $LWK_MENU_RET != SEQ_SECRETARY_WORK_BYE THEN
-    _RESORT_GET_MSGID( RESORT_SECRETARY_NEON_OK_MSGID, LWK_MSGID )
-	  _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+      //見るために変えていたのをもとに戻す
+      _RESORT_SET_MY_DATA( RESORT_MY_PARAM_TEX, LWK_DEFAULT )
+      $LWK_MENU_SUBLOOP  = FALSE
+    ELSE
+      _BALLOONWIN_CLOSE()
+  
+      //見るために変える
+      _RESORT_SET_MY_DATA( RESORT_MY_PARAM_TEX, LWK_MENU_RET )
+ 
+      //確認させにZONE移動
+      _MAP_FADE_BLACK_OUT()
+      _MAP_FADE_END_CHECK()
+  
+      _PLAYER_POS_GET( LWK_X, LWK_Z )
+      _MAP_CHANGE_NO_FADE( ZONE_ID_C16, 0, 0, 0, DIR_UP )
+  
+  		_CAMERA_START()		//カメラ操作開始
+  		_CAMERA_PURGE()		//カメラのバインドを解く
+      _CALL sub_city_camera
+  
+      _MAP_FADE_BLACK_IN()
+      _MAP_FADE_END_CHECK()
+  
+  
+      //選択肢
+      $LWK_MSGID  = $LWK_MENU_RET
+      $LWK_MSGID += resort_secretary_talk_11_m
+  	  _SYSWIN_MSG( LWK_MSGID, POS_DOWN )
+   	  _YES_NO_WIN( LWK_YESNO )
+      _SYSWIN_CLOSE()
+  
+      //確認させにZONE移動　戻ってくる
+      _MAP_FADE_BLACK_OUT()
+      _MAP_FADE_END_CHECK()
+  
+  	  _CAMERA_BIND()		//カメラバインド
+  	  _CAMERA_END()		//カメラ操作終了
+  
+      //位置によって飛び先が違う
+      IF $LWK_Z == 11 THEN
+        IF $LWK_X == 10 THEN
+          _MAP_CHANGE_NO_FADE( ZONE_ID_C16R0101, 10, 0, 11, DIR_RIGHT )
+        ELSE
+          _MAP_CHANGE_NO_FADE( ZONE_ID_C16R0101, 12, 0, 11, DIR_LEFT )
+        ENDIF
+      ELSE
+        IF $LWK_Z == 10 THEN
+          _MAP_CHANGE_NO_FADE( ZONE_ID_C16R0101, 11, 0, 10, DIR_DOWN )
+        ELSE
+          _MAP_CHANGE_NO_FADE( ZONE_ID_C16R0101, 11, 0, 12, DIR_UP )
+        ENDIF
+      ENDIF
 
-    _RESORT_SET_MY_DATA( RESORT_MY_PARAM_TEX, LWK_MENU_RET )
-    
-  ENDIF
+
+      //戻ってくるとMMDLが破棄されているので再度入れて上げる
+      _GET_OBJID( LWK_OBJID, LWK_RET, 11, 0, 11 )
+      _RESORT_SET_MY_DATA( RESORT_MY_PARAM_MAPCHANGE_MMDL, LWK_OBJID )
+  
+      _TURN_HERO_SITE()
+
+      _MAP_FADE_BLACK_IN()
+      _MAP_FADE_END_CHECK()
+  
+      IF $LWK_YESNO == SCR_YES THEN
+        //変える
+        _RESORT_GET_MSGID( RESORT_SECRETARY_NEON_OK_MSGID, LWK_MSGID )
+  	    _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+        $LWK_MENU_SUBLOOP  = FALSE
+      ENDIF
+    ENDIF
+  ENDWHILE
 }
 _RET
 
