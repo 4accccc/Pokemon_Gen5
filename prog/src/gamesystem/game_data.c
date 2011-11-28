@@ -65,9 +65,18 @@
 #include "field/pokewood.h"
 #include "fieldmap/zone_id.h"
 #include "field/field_goout_data.h"
+#include "app/local_tvt/local_tvt_secret_zone.cdat"// for sc_ltvt_secret_zoneID
 
 //============================================================================================
 //============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief 定義
+ */
+//------------------------------------------------------------------
+#define GAMEDATA_LIVECASTER_SECRET_ZONEID_NUM (3)
+
+
 //------------------------------------------------------------------
 /**
  * @brief ゲームデータ内容定義
@@ -150,7 +159,7 @@ struct _GAMEDATA{
   PAIR_SYSTEM_WORK* pairSystem; ///<連れ歩きシステムワーク
   u32 scriptCommandOverlayID; ///<フィールドスクリプトコマンド用オーバーレイID
 
-  u32   ltvt_secret_call_zoneID;  ///<隠しキャラに電話できる場所のゾーンIDのの
+  u32   ltvt_secret_call_zoneID[GAMEDATA_LIVECASTER_SECRET_ZONEID_NUM];  ///<隠しキャラに電話できる場所のゾーンIDのの
   u32   goout_effect_id;    ///<室外演出エフェクトID
   u8    goout_effect_req;   ///<室外演出強制リクエストフラグ
   u8    top_medal_id;  ///< メダルボックスを開いた時に最初に表示されるメダルID
@@ -2202,26 +2211,61 @@ void GAMEDATA_SetFieldScriptCommandOverlayID( GAMEDATA *gamedata, u32 scrCmdID )
 //-----------------------------------------------------------------------------
 void GAMEDATA_SetLiveCasterSecretCallZoneID( GAMEDATA *gamedata )
 {
-  static const u32 sc_enable_zoneID[] =
+  int cnt = 0;
+
+  GFL_STD_MemClear( gamedata->ltvt_secret_call_zoneID, sizeof(u32)*GAMEDATA_LIVECASTER_SECRET_ZONEID_NUM );
+
+  while(TRUE)
   {
-    ZONE_ID_C04,
-    ZONE_ID_C05,
-    ZONE_ID_C06,
-    ZONE_ID_T03,
-    ZONE_ID_T04,
-    ZONE_ID_T07,
-    ZONE_ID_R05,
-    ZONE_ID_R06,
-    ZONE_ID_R07,
-    ZONE_ID_R09,
-    ZONE_ID_R11,
-    ZONE_ID_R12,
-    ZONE_ID_R13,
-    ZONE_ID_R14,
-    ZONE_ID_R16,
-  };
-  
-  gamedata->ltvt_secret_call_zoneID = sc_enable_zoneID[ GFUser_GetPublicRand(NELEMS(sc_enable_zoneID))];
+    //ZONEID抽選
+    {
+      int i;
+      for( i = 0; i < GAMEDATA_LIVECASTER_SECRET_ZONEID_NUM; i++ )
+      {
+        gamedata->ltvt_secret_call_zoneID[i] = sc_ltvt_secret_zoneID[ GFUser_GetPublicRand(NELEMS(sc_ltvt_secret_zoneID))];
+      }
+    }
+
+    //3つとも違うものならば終了
+    {
+      int i, j;
+      BOOL is_end = TRUE;
+      for( i = 0; i < GAMEDATA_LIVECASTER_SECRET_ZONEID_NUM; i++ )
+      {
+        for( j = 0; j < GAMEDATA_LIVECASTER_SECRET_ZONEID_NUM; j++ )
+        {
+          if( i != j
+            && gamedata->ltvt_secret_call_zoneID[i] == gamedata->ltvt_secret_call_zoneID[j])
+          {
+            is_end = FALSE;
+          }
+        }
+      }
+      if( is_end )
+      {
+        break;
+      }
+    }
+
+
+    //念のため100回挑戦して無理なら諦める
+    if( cnt++ > 100 )
+    {
+      GF_ASSERT(0);
+      break;
+    }
+  }
+#ifdef PM_DEBUG
+  {
+    int i;
+    OS_TPrintf( "隠しキャラZONEID抽選\n" );
+    for( i = 0; i < GAMEDATA_LIVECASTER_SECRET_ZONEID_NUM; i++ )
+    {
+      OS_TPrintf( "%d ", gamedata->ltvt_secret_call_zoneID[i] );
+    }
+    OS_TPrintf( "\n" );
+  }
+#endif
 }
 //----------------------------------------------------------------------------
 /**
@@ -2232,9 +2276,17 @@ void GAMEDATA_SetLiveCasterSecretCallZoneID( GAMEDATA *gamedata )
  *	@return ライブキャスターの隠しキャラに電話をかけられるゾーンID
  */
 //-----------------------------------------------------------------------------
-u32 GAMEDATA_GetLiveCasterSecretCallZoneID( const GAMEDATA *gamedata )
+BOOL GAMEDATA_GetLiveCasterSecretCallZoneID( const GAMEDATA *gamedata, u16 zoneID )
 {
-  return gamedata->ltvt_secret_call_zoneID;
+  int i;
+  for( i = 0; i < GAMEDATA_LIVECASTER_SECRET_ZONEID_NUM; i++ )
+  {
+    if( zoneID == gamedata->ltvt_secret_call_zoneID[i] )
+    {
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 //----------------------------------------------------------------------------
 /**
