@@ -8969,6 +8969,10 @@
 		<language name="JPN" width="256">SW-FES-15</language>
 		<language name="JPN_KANJI" width="256">SW-FES-15</language>
 	</row>
+	<row id="msg_seq_se_sw_fes_16">
+		<language name="JPN" width="256">SW-FES-16</language>
+		<language name="JPN_KANJI" width="256">SW-FES-16</language>
+	</row>
 	<row id="msg_seq_se_sw_mdun_bl_01">
 		<language name="JPN" width="256">SW-MDUN-BL-01</language>
 		<language name="JPN_KANJI" width="256">SW-MDUN-BL-01</language>
