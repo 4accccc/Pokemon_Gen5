@@ -362,7 +362,7 @@ static void fmission_chg_level( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WO
 //
 static void fmission_chg_bgpal( MONOLITH_FMSELECT_WORK *mfw );
 //
-static void fmission_chk_secret( MONOLITH_FMSELECT_WORK *mfw );
+static void fmission_chk_secret( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw );
 static void fmission_init_mode( MONOLITH_FMSELECT_WORK *mfw, const s32 mode );
 static void fmission_disp_startmes( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw );
 //
@@ -811,7 +811,7 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
     // パラメータの受け渡し用
     fmission_set_up_curpos( appwk, mfw );
     // 隠しコマンド用
-    fmission_chk_secret( mfw );
+    fmission_chk_secret( appwk, mfw );
     // debug
     fmission_debug( appwk, mfw );
     
@@ -2696,6 +2696,11 @@ static void fmission_chg_level( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WO
   
   // SECRETになったら処理しない
   if(mfw->Flag & FLG_FMISS_SECRET){
+    // カーソル位置のミッション名を書き換える処理
+    // SECRETになった時は処理が必要
+    if(mfw->cursor_pos != _CURSOR_POS_NONE){
+      _MissionNameBMPDraw2( mfw, appwk->setup, FMISS_LV4 );
+    }
     return;
   }
   
@@ -2787,7 +2792,7 @@ static void fmission_chg_bgpal( MONOLITH_FMSELECT_WORK *mfw )
  * @param   MONOLITH_FMSELECT_WORK *mfw
  */
 //==================================================================
-static void fmission_chk_secret( MONOLITH_FMSELECT_WORK *mfw )
+static void fmission_chk_secret( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw )
 {
   u16	trg;
   
@@ -2817,6 +2822,8 @@ static void fmission_chk_secret( MONOLITH_FMSELECT_WORK *mfw )
         PMSND_PlaySE( MONOLITH_SE_SECRET_COMMAND );
         // パレットチェンジ
         fmission_chg_bgpal( mfw );
+        // レベルに対応したタイトル
+        fmission_chg_level( appwk, mfw, 0 );
       }
     }
     // 違った場合
