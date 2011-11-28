@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/27 12:11:38
+#save date:2011/11/28 10:47:27
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\t06.wms
 #SECTION START:OBJ_EVENT
@@ -57,7 +57,7 @@ FV_T06_SUNGLASSES_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
-DIR_UP
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number

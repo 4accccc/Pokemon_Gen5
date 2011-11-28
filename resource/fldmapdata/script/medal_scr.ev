@@ -115,6 +115,8 @@ EVENT_START ev_scene_medal_oyaji_intro
   _OBJ_ANIME_WAIT()
 
   //アニメ：メダルおやじ「！」隣接
+  _OBJ_ANIME( T06_SUNGLASSES_01,anm_oyaji_coming )
+  _OBJ_ANIME_WAIT()
   _OBJ_ANIME_AUTO( T06_SUNGLASSES_01, 107, 664, FORCE_TYPE_NPC, 8, DIR_UD)
   _OBJ_ANIME_WAIT()
 
@@ -238,6 +240,14 @@ sub_medaloyaji_intro:
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
   _RET
+
+//--------------------------------------------------------------------
+//	メダルおやじ；「！」
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_oyaji_coming
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //	メダルおやじ退場

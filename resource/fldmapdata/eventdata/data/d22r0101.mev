@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/17 18:28:43
+#save date:2011/11/28 11:11:00
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d22r0101.wms
 #SECTION START:OBJ_EVENT
@@ -359,7 +359,7 @@ D22R0101_MELEEP_01
 #OBJ CODE Number
 TPOKE_0179
 #MOVE CODE Number
-MV_SPIN_R
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -381,7 +381,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-184 36 -648
+-72 32 -440
 #event number: 12
 #type
 1
@@ -412,7 +412,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-136 40 -616
+136 40 -632
 #event number: 13
 #type
 1
@@ -443,7 +443,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-168 32 -584
+168 36 -600
 #event number: 14
 #type
 1
@@ -468,13 +468,13 @@ DIR_LEFT
 #Parameter 2 Number
 0
 #Move Limit X Number
-3
+2
 #Move Limit Z Number
-3
+2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-232 32 -600
+24 32 -344
 #event number: 15
 #type
 1
@@ -483,7 +483,7 @@ D22R0101_MELEEP_05
 #OBJ CODE Number
 TPOKE_0179
 #MOVE CODE Number
-MV_SPIN_L
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -499,13 +499,13 @@ DIR_RIGHT
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+3
 #Move Limit Z Number
-0
+3
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-168 32 -664
+-72 32 -648
 #event number: 16
 #type
 1

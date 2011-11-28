@@ -103,6 +103,8 @@ EVENT_START   ev_pos_r19_pokeget_01
   
   //ベル：いまのポイントを
   _BALLOONWIN_OBJMSG_POS( msg_r19_white_04, R19_SWBELL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
   _BALLOONWIN_OBJMSG_POS( msg_r19_white_05, R19_SWBELL_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
