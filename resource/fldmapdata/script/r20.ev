@@ -158,9 +158,6 @@ EVENT_START   ev_pos_r20_mountman_02
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
   
-  //ライバル移動
-  _OBJ_POS_CHANGE( R20_SWRIVAL_01, 161, -3, 662, DIR_UP )
-  
   //==================================//
   //R20 POS無効
   $WK_SCENE_R20 = 2
@@ -187,7 +184,7 @@ _ANIME_LABEL	anm_mountain_topl_z646
 /*POS：山男ストッパーはなしかけ                     */
 /**************************************************************/
 EVENT_START   ev_r20_mountman_01
-  IF  $WK_SCENE_R20 >= 3 THEN
+  IF  $WK_SCENE_R20 >= 2 THEN
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r20_mountman_04 )
   ELSE
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r20_mountman_01 )

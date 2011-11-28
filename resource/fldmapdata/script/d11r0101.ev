@@ -27,6 +27,8 @@ _EVENT_DATA		ev_zone_d11r0101
 _EVENT_DATA		ev_init_d11r0101
 _EVENT_DATA		ev_pos_d11r0101_plasma_01
 _EVENT_DATA		ev_pos_d11r0101_swrival_01
+_EVENT_DATA		ev_pos_d11r0101_stopper_01
+_EVENT_DATA		ev_d11r0101_man2_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -462,18 +464,22 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _PAIR_TRAINER_FREE( SCRID_DUMMY, MV_DMY )
   
   //プラズマ団イベント関連の動作モデル削除
-  _OBJ_DEL( D11R0101_SWRIVAL_01 )
+  _OBJ_DEL( PAIR_TRAINER_01 )
   _OBJ_DEL( D11R0101_SWBOSS_01 )
   _OBJ_DEL( D11R0101_SWLEADER3_01 )
+
+  //ストッパー非表示
+  _OBJ_DEL( D11R0101_MAN2_01 )
   
   //==================================//
   //下水道クリア
   $WK_SCENE_D11R0101 = 1
   $WK_SCENE_C03P17 = 3
   
-  //プラズマ団・ライバルを非表示に
+  //プラズマ団・ライバル・ストッパーを非表示に
   _FLAG_SET( FV_D11R0101_SWRIVAL_01 )
   _FLAG_SET( FV_D11R0101_SWPLAZMA_01 )
+  _FLAG_SET( FV_D11R0101_STOPPER_01 )
   
   //C03P07サングラスを非表示に
   _FLAG_SET( FV_C03P07_SUNGLASSES_01 )
@@ -481,6 +487,43 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   //==================================//
 
 EVENT_END
+
+/**************************************************************/
+/*		POS：ストッパー
+/**************************************************************/
+EVENT_START		ev_pos_d11r0101_stopper_01
+
+  //アニメ：MAN2「！」
+  _OBJ_ANIME( D11R0101_MAN2_01, anm_stopper_gyoe_01 )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  //メッセージ
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_man2_01, D11R0101_MAN2_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：主人公戻す
+  _OBJ_ANIME( D11R0101_MAN2_01, anm_staystep_r )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
+  _OBJ_ANIME_WAIT()
+  
+EVENT_END
+
+/**************************************************************/
+/*		MAN2
+/**************************************************************/
+EVENT_START		ev_d11r0101_man2_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d11r0101_man2_02 )
+EVENT_END
+
+//--------------------------------------------------------------------
+//	ストッパー隣接：z20
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stopper_gyoe_01
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //	プラズマ団左：退場

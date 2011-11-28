@@ -37,6 +37,7 @@
 #define TR_CLEANING_05                    18
 #define D11R0101_SWBOSS_01                19
 #define D11R0101_SWLEADER3_01             20
+#define D11R0101_MAN2_01                  21
 
 #endif //ZONE_D11R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d11r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
