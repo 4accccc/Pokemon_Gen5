@@ -24090,14 +24090,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>ぼくが　このエリアの
-ゲートトレーナーだよ▽
+ゲートトレーナーだよ▼
 キミは　ボストレーナーに
 ちょうせんする　しかくは　あるかな？▼
 さあ　キミが　どれぐらい
 つよいのか　しょうぶだ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-27T06:58:59" />
+				Time="2011-11-28T07:35:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -24106,14 +24106,14 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ぼくが　このエリアの
-ゲートトレーナーだよ▽
+ゲートトレーナーだよ▼
 キミは　ボストレーナーに
 挑戦する　資格は　あるかな？▼
 さあ　キミが　どれぐらい
 強いのか　勝負だ！▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-27T06:59:11" />
+				Time="2011-11-28T07:36:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
