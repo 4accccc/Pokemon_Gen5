@@ -21456,10 +21456,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たまご</Text>
+			<Text>タマゴ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:45:44" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T02:07:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ichiraku_katsuhiko:W00271"
@@ -21467,10 +21467,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たまご</Text>
+			<Text>タマゴ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:45:44" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T02:07:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ichiraku_katsuhiko:W00271"
@@ -21491,8 +21491,8 @@
 			Language="JPN">
 			<Text>だめたまご</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:45:44" />
+				User="matsumiya:W00224"
+				Time="2011-11-28T02:07:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ichiraku_katsuhiko:W00271"
