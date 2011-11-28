@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="toyama" host="W00153" date="2011-09-27T19:55:47" source="batt_field05_all.mb"/>
+	<create user="toyama" host="W00153" date="2011-11-26T15:46:30" source="batt_field05_all.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="toyama" host="W00153" date="2011-09-27T19:55:47" source="batt_field05_all.mb"/>
+<original_create user="toyama" host="W00153" date="2011-11-26T15:46:30" source="batt_field05_all.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="1" xyz="-2.739502 0.053223 -2.748535" whd="5.478760 0.504639 5.478760"/>
+<box_test pos_scale="1" xyz="-2.739502 0.053223 -2.735840" whd="5.478760 0.504639 5.478760"/>
 
 <tex_image_array size="5">
 	<tex_image index="0" name="batt_bk05"
@@ -76,22 +76,22 @@
 		path="C:/home/swan_data2d/battle_3d/mayadata/tex/batt_stage05.tga"
 	>
 		<bitmap size="128">
-			2525 2525 2525 2525 2525 2525 2525 2525
-			2525 2525 2525 2325 2524 2525 2525 2525
-			2323 2323 2323 2323 2323 2423 2323 2323
-			2323 2323 2323 2323 2323 2323 2323 2323
-			2121 2322 2323 2323 1f20 2323 2223 2223
-			1e1f 1f1e 1f1f 1f1f 2123 1f22 1f1f 1f1f
-			1d1d 1d1d 1e1e 1e1e 1e1e 1d1e 1c1c 1d1d
-			1c1c 1b1c 1c1c 1c1c 1b1a 1c1c 1c1b 1c1c
-			1919 191a 1919 191a 1919 1819 1919 1919
-			1818 1519 1413 1515 1517 1515 1615 1515
-			1413 1313 1310 1414 1314 1413 1313 1313
-			0e0d 100e 100f 1310 1313 1213 1010 1211
-			0807 0b0b 0b0b 0e0c 0e0e 0d0e 0b0d 0a0b
-			0705 0808 0808 0a08 090a 0707 0607 0506
-			0503 0505 0505 0405 0303 0503 0403 0303
-			0101 0101 0001 0101 0101 0201 0101 0102
+			2121 2121 2121 2121 2121 2121 2121 2121
+			2020 2020 2020 2020 2020 2020 2020 2020
+			2020 2020 2020 2020 2020 2020 2020 2020
+			201f 2020 201f 1f1f 1e1e 1f1f 1f1f 1f1f
+			1e1e 1e1e 1e1e 1e1e 1e1e 1e1e 1e1e 1e1e
+			1c1c 1c1c 1d1d 1e1d 1e1e 1d1e 1d1d 1d1d
+			1b1b 1b1b 1c1b 1c1c 1b1b 1b1c 1a1a 1b1b
+			1818 1818 1818 1819 1717 1818 1818 1818
+			1616 1616 1614 1616 1516 1414 1616 1516
+			1414 1314 1212 1414 1414 1313 1414 1414
+			1212 1112 1211 1212 1212 1212 1212 1212
+			0e0d 100e 100f 1210 1212 1212 1010 1111
+			0807 0b0b 0b0b 0e0c 0e0e 0d0e 0b0c 0a0b
+			0706 0808 0808 0a08 090a 0807 0707 0506
+			0402 0404 0404 0304 0202 0403 0302 0202
+			0101 0101 0001 0000 0101 0101 0101 0101
 		</bitmap>
 	</tex_image>
 	<tex_image index="3" name="batt_stone05"
@@ -127,15 +127,15 @@
 		1087 1088 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="batt_rock05_pl" color_size="16">
-		190c 190d 1d2e 1d4f 2150 2170 2571 2572
-		2593 29d4 2df5 2df6 2e16 3216 7fff 7fff
+		1d29 212a 214b 256c 296d 298d 2d8e 2dae
+		2dcf 31f0 3611 3a11 3a31 3a32 7fff 7fff
 	</tex_palette>
 	<tex_palette index="2" name="batt_stage05_pl" color_size="40">
-		150e 152e 152f 1550 1950 1971 1972 1992
-		1993 1d93 1db3 1db4 1dd4 1dd5 21d5 21d6
-		21f6 21f7 2217 2617 2618 2638 2639 2a38
-		2a39 2a59 2a5a 2e7a 2e7b 2e9c 329c 32bd
-		32be 36bd 36be 36de 36df 36ff 7fff 7fff
+		192c 192d 1d4e 1d4f 1d6f 216f 2170 2190
+		2191 2591 25b1 25b2 25d2 25d3 29d3 29f3
+		29f4 2df4 2e15 2e36 3236 3237 3257 3658
+		3678 3679 3a79 3a99 3a9a 3eba 3ebb 42db
+		42dc 42fc 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="3" name="batt_stone05_pl" color_size="24">
 		0000 0001 0021 0422 0442 0443 0843 0864
@@ -150,31 +150,7 @@
 </tex_palette_array>
 
 <material_array size="5">
-	<material index="0" name="file13Material"
-		light0="off" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="8"
-		fog_flag="off"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="31 31 31"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="2" tex_palette_idx="2"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="1" name="file14Material"
+	<material index="0" name="batt_bk05_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -198,7 +174,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="rock01"
+	<material index="1" name="batt_rock05_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -222,7 +198,31 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="stone"
+	<material index="2" name="batt_stage05_1"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="8"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="2" tex_palette_idx="2"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="3" name="batt_stone05_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -246,7 +246,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="4" name="stoneb"
+	<material index="4" name="batt_stoneb05_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1164,7 +1164,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 -0.199951 -5.028564"
+		translate="0.000000 -0.199951 -5.002930"
 		visibility="on"
 		display_size="5"
 		vertex_size="385" polygon_size="127"
@@ -1173,9 +1173,9 @@
 		volume_max="2.739502 0.657959 5.244385"
 		volume_r="5.248535"
 	>
-		<display index="0" material="0" polygon="0" priority="0"/>
-		<display index="1" material="1" polygon="1" priority="0"/>
-		<display index="2" material="2" polygon="4" priority="0"/>
+		<display index="0" material="0" polygon="1" priority="0"/>
+		<display index="1" material="1" polygon="4" priority="0"/>
+		<display index="2" material="2" polygon="0" priority="0"/>
 		<display index="3" material="3" polygon="2" priority="0"/>
 		<display index="4" material="4" polygon="3" priority="0"/>
 	</node>

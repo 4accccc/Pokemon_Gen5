@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="toyama" host="W00153" date="2011-10-31T19:03:18" source="pkwd_field01a_all.mb"/>
+	<create user="toyama" host="W00153" date="2011-11-28T13:58:53" source="pkwd_field01a_all.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="toyama" host="W00153" date="2011-10-31T19:03:18" source="pkwd_field01a_all.mb"/>
+<original_create user="toyama" host="W00153" date="2011-11-28T13:58:53" source="pkwd_field01a_all.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -1752,9 +1752,9 @@
 	<polygon index="8" name="polygon8"
 		vertex_size="16" polygon_size="4"
 		triangle_size="0" quad_size="4"
-		volume_min="-3.629150 -1.182617 -7.425293"
-		volume_max="3.136230 -1.009766 3.203369"
-		volume_r="8.349121"
+		volume_min="-6.224609 -1.182617 -7.425293"
+		volume_max="5.731689 -1.009766 3.203369"
+		volume_r="9.761230"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -1776,10 +1776,10 @@
 					<clr rgb="6 7 9"/>
 					<pos_xyz xyz="-0.169678 -1.182617 3.203369"/>
 					<tex st="13.625000 17.937500"/>
-					<pos_xy xy="3.136230 -1.182617"/>
+					<pos_xy xy="5.731689 -1.182617"/>
 					<tex st="13.625000 14.062500"/>
 					<clr rgb="20 25 31"/>
-					<pos_xz xz="3.136230 -7.425293"/>
+					<pos_xz xz="5.731689 -7.425293"/>
 					<tex st="13.437500 14.062500"/>
 					<pos_xy xy="-0.228271 -1.182617"/>
 					<tex st="-0.312500 904.750000"/>
@@ -1794,14 +1794,14 @@
 					<pos_xy xy="-0.262207 -1.182617"/>
 					<tex st="13.125000 17.937500"/>
 					<clr rgb="6 7 9"/>
-					<pos_xz xz="-3.629150 3.203369"/>
+					<pos_xz xz="-6.224609 3.203369"/>
 					<tex st="13.312500 17.937500"/>
 					<pos_xy xy="-0.864746 -1.182617"/>
 					<tex st="13.312500 14.062500"/>
 					<clr rgb="20 25 31"/>
 					<pos_xz xz="-0.262207 -7.425293"/>
 					<tex st="13.125000 14.062500"/>
-					<pos_xy xy="-3.629150 -1.182617"/>
+					<pos_xy xy="-6.224609 -1.182617"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -3692,9 +3692,9 @@
 		display_size="4"
 		vertex_size="98" polygon_size="25"
 		triangle_size="0" quad_size="25"
-		volume_min="-3.629150 -1.182861 -7.425293"
-		volume_max="3.136230 -0.915039 3.203369"
-		volume_r="8.349121"
+		volume_min="-6.224609 -1.182861 -7.425293"
+		volume_max="5.731689 -0.915039 3.203369"
+		volume_r="9.761230"
 	>
 		<display index="0" material="4" polygon="10" priority="0"/>
 		<display index="1" material="5" polygon="11" priority="0"/>
