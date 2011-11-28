@@ -495,6 +495,7 @@
 #define FE_T01R0401_TALK_04                479 /* 0x01df アララギポケモン研究所：ひかるおまもり話　会話フラグ */
 #define FE_D08R0901_BOSS_TALK              480 /* 0x01e0 リュウラセンの塔・最上階：Ｎイベントフラグ */
 #define FE_D10R0501_KUSABI_GET             481 /* 0x01e1 ジャイアントホール：いでんしのくさび入手フラグ */
+#define FE_D22R0101_BREEEDERM_01           482 /* 0x01e2 サンギぼくじょう：クリア後会話フラグ */
 
 #define FE_AREA_END                        599 /* 0x0257  */
 

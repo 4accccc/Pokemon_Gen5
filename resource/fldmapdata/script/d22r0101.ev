@@ -875,7 +875,7 @@ EVENT_START ev_d22r0101_swrival_01
   IF $WK_SCENE_D22R0101 == 1 THEN
     _EASY_BALLOONWIN_TALKOBJ_MSG(msg_d22r0101_swrival_14)
   ELSIF $WK_SCENE_D22R0101 == 2 THEN
-    _EASY_BALLOONWIN_TALKOBJ_MSG(msg_d22r0101_swrival_07)
+    _EASY_BALLOONWIN_TALKOBJ_MSG(msg_d22r0101_swrival_18)
   ELSIF $WK_SCENE_D22R0101 == 3 THEN
     _EASY_BALLOONWIN_TALKOBJ_MSG(msg_d22r0101_swrival_08)
   ELSIF $WK_SCENE_D22R0101 == 4 THEN
@@ -888,9 +888,16 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_d22r0101_breederm_01
   
-  //迷子イベントクリア後
-  IF $WK_SCENE_D22R0101 == 5 THEN
-   _EASY_BALLOONWIN_TALKOBJ_MSG(msg_d22r0101_breederm_08)
+  //迷子イベントクリア後初回話しかけ
+  IF $WK_SCENE_D22R0101 == 5 && FLAG_OFF( FE_D22R0101_BREEEDERM_01 ) THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG(msg_d22r0101_breederm_07)
+    //========================================//
+    //クリア後メッセージ表示終了
+    _FLAG_SET(FE_D22R0101_BREEEDERM_01)
+    //========================================//
+  //迷子イベントクリア後二回目話しかけ
+  ELSIF $WK_SCENE_D22R0101 == 5 && FLAG_ON( FE_D22R0101_BREEEDERM_01 ) THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG(msg_d22r0101_breederm_08)
   //クリア前
   ELSE
     _EASY_BALLOONWIN_TALKOBJ_MSG(msg_d22r0101_breederm_09)
