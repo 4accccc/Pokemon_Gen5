@@ -102,8 +102,8 @@ EVENT_START   ev_pos_d09r1401_swrival_01
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_walk_l )
   _OBJ_ANIME_WAIT()
 
-  //わざマシン２５入手
-  _ITEM_EVENT_NOWAIT( ITEM_WAZAMASIN25, 1 )
+  //わざマシン２４（10まんボルト）入手
+  _ITEM_EVENT_NOWAIT( ITEM_WAZAMASIN24, 1 )
 
   //ライバル：オレじしん　これから　どうするか
   _BALLOONWIN_OBJMSG_POS( msg_d09r1401_swrival_04, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )

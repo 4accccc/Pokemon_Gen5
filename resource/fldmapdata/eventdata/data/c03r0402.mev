@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/21 13:06:19
+#save date:2011/11/28 12:53:36
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c03r0402.wms
 #SECTION START:OBJ_EVENT
@@ -47,7 +47,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C03R0402_DIRECTOR_01
 #OBJ CODE Number
-MAN2
+ASSISTANTM
 #MOVE CODE Number
 MV_DOWN
 #EVENT TYPE Number
@@ -78,7 +78,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C03R0402_ASSISTANTM_01
 #OBJ CODE Number
-ASSISTANTM
+MAN2
 #MOVE CODE Number
 MV_RIGHT
 #EVENT TYPE Number

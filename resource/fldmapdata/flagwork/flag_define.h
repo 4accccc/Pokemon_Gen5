@@ -2301,6 +2301,10 @@
 #define SYS_FLAG_BGM_C16_PARADE           2545 /* 0x09f1 BGM変更フラグ：ジョインアベニュー */
 #define SYS_FLAG_BGM_C08_PLAZMA           2546 /* 0x09f2 BGM変更フラグ：氷漬けプラズマ団 */
 #define SYS_FLAG_POKEWOOD_DISABLE_REC     2547 /* 0x09f3 ポケウッド：撮影を一時的に行わない状態 */
+#define SYS_FLAG_FES_OPEN_20              2548 /* 0x09f4 フェスミッションのオープンフラグその20 */
+#define SYS_FLAG_FES_OPEN_21              2549 /* 0x09f5 フェスミッションのオープンフラグその21 */
+#define SYS_FLAG_FES_OPEN_22              2550 /* 0x09f6 フェスミッションのオープンフラグその22 */
+#define SYS_FLAG_FES_OPEN_23              2551 /* 0x09f7 フェスミッションのオープンフラグその23 */
 
 #define SYS_FLAG_AREA_END                 2639 /* 0x0a4f  */
 
