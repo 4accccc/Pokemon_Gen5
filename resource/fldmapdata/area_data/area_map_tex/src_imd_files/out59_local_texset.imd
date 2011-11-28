@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="swan_3dcg01" host="W00300" date="2011-11-02T18:21:26" source="out59_local_texset.mb"/>
+	<create user="swan_3dcg01" host="W00300" date="2011-11-28T21:24:25" source="out59_local_texset.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="swan_3dcg01" host="W00300" date="2011-11-02T18:21:26" source="out59_local_texset.mb"/>
+<original_create user="swan_3dcg01" host="W00300" date="2011-11-28T21:24:25" source="out59_local_texset.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -337,64 +337,64 @@
 		path="C:/home/swan_data3d/field/out59/chip/tex/out59_blak03.tga"
 	>
 		<bitmap size="512">
-			eeee eeee eeee eeee eeee eeee eeee eeee
-			eeee eeee 9999 aaa9 aaaa aaaa 11aa 0111
-			cccd cccc cccc cccc cccc cccc cccc cccc
-			cccc cccc 6666 7776 7777 7777 0077 0000
-			ddde dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd 6666 7776 7777 7777 0077 0000
-			ddde dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd 6666 7776 7777 7777 0077 0000
-			ddde dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd 6666 7776 7777 7777 0077 0000
-			ddde dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd 6666 7776 7777 7777 0077 0000
-			ddde dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd 6666 7776 7777 7777 0077 0000
-			ddde dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd 6666 7776 7777 7777 0077 0000
-			ddde dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd 6666 7776 7777 7777 0077 0000
-			ddde dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd 6666 7776 7777 7777 0077 0000
-			ddde dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd 6666 7776 7777 7777 0077 0000
-			cccd cccc cccc cccc cccc cccc cccc cccc
-			cccc cccc 9999 aaa9 aaaa aaaa 11aa 0111
-			cccd cccc cccc cccc cccc cccc cccc cccc
-			cccc cccc b888 bbbb bbbb bbbb 22bb 3222
-			ddde dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd 5444 5555 5555 5555 3355 3333
-			ddde dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd 5444 5555 5555 5555 3355 3333
-			ddde dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd 5444 5555 5555 5555 3355 3333
-			eeee eeee eeee eeee eeee eeee eeee eeee
-			eeee eeee 5444 5555 5555 5555 3355 3333
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff 5444 5555 5555 5555 3355 3333
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff 5444 5555 5555 5555 3355 3333
+			ee75 eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee 8888 9998 9999
+			cc95 cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc 1111 0001 0000
+			d395 dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd 1111 0001 0000
+			d395 dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd 1111 0001 0000
+			d395 dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd 1111 0001 0000
+			d395 dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd 1111 0001 0000
+			d395 dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd 1111 0001 0000
+			d395 dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd 1111 0001 0000
+			d395 dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd 1111 0001 0000
+			d395 dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd 1111 0001 0000
+			d395 dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd 1111 0001 0000
+			cc95 cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc 8888 9998 9999
+			cc95 cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc abbb aaaa aaaa
+			d335 dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd 2444 2222 2222
+			d335 dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd 2444 2222 2222
+			d335 dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd 2444 2222 2222
+			ee75 eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee 2444 2222 2222
+			ff65 ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff 2444 2222 2222
+			ff65 ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff 2444 2222 2222
+			cc95 cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc 2444 2222 2222
+			d395 dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd 2444 2222 2222
+			d395 dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd 2444 2222 2222
+			d395 dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd 2444 2222 2222
+			ee75 eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee abbb aaaa aaaa
 			cccc cccc cccc cccc cccc cccc cccc cccc
-			cccc cccc 5444 5555 5555 5555 3355 3333
+			5555 5555 5555 5555 5555 5555 5555 5555
 			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd 5444 5555 5555 5555 3355 3333
+			9999 9999 9999 9999 9999 9999 9999 9999
+			3333 3333 3333 3333 3333 3333 3333 3333
+			3333 3333 3333 3333 3333 3333 3333 3333
+			9999 9999 9999 9999 9999 9999 9999 9999
 			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd 5444 5555 5555 5555 3355 3333
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd 5444 5555 5555 5555 3355 3333
+			5555 5555 5555 5555 5555 5555 5555 5555
 			eeee eeee eeee eeee eeee eeee eeee eeee
-			eeee eeee b888 bbbb bbbb bbbb 22bb 3222
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
-			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
 			ffff ffff ffff ffff ffff ffff ffff ffff
@@ -1472,8 +1472,8 @@
 		18c6 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="6" name="out59_blak03_pl" color_size="16">
-		2d66 3187 31a8 2d87 256b 298c 254a 296b
-		35ce 2d8d 31ae 39f0 2d6b 2529 2108 18c6
+		296b 254a 298c 296b 256b 298e 1d09 254b
+		2d8d 31ae 39f0 35ce 2d6b 2529 2108 18c6
 	</tex_palette>
 	<tex_palette index="7" name="out59_brk01_pl" color_size="8">
 		2e74 116c 3296 2a33 198e 21f1 7fff 7fff
