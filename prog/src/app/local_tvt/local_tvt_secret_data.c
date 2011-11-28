@@ -213,3 +213,17 @@ u32 LTVT_SECREAT_DATA_GetCallSECnt( u32 index )
 {
   return sc_secreat_data[index].call_se_cnt;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自分からかけられるようになった初回かチェック
+ *
+ *	@param	u32 index   インデックス
+ *
+ *	@return 初回フェーズ
+ */
+//-----------------------------------------------------------------------------
+LTVT_SECREAT_PHASE LTVT_SECREAT_DATA_GetCallFirst( u32 index )
+{
+  return LOCAL_TVT_SECRET_PHASE_2_START;
+}

@@ -22,6 +22,7 @@
 //アーカイブ
 #include "arc_def.h"
 #include "local_tvt_call.naix"
+#include "app/local_tvt/local_tvt_secret_zone.cdat"// for sc_ltvt_secret_zoneID
 
 //外部
 #include "local_tvt_calldata.h"
@@ -281,18 +282,33 @@ BOOL LOCAL_TVT_CALLDATA_IsCall( const LOCAL_TVT_CALLDATA *cp_wk, u16 person )
     BOOL is_player_call = LTVT_SECREAT_DATA_IsPlayerCall( index );
     PLAYER_WORK *p_player =  GAMEDATA_GetMyPlayerWork(cp_wk->p_gamedata);
     ZONEID now_zoneID = PLAYERWORK_getZoneID(p_player);
-    ZONEID target_zoneID = GAMEDATA_GetLiveCasterSecretCallZoneID( cp_wk->p_gamedata );
+    BOOL is_zoneID = GAMEDATA_GetLiveCasterSecretCallZoneID( cp_wk->p_gamedata, now_zoneID );
+
+    //自分から駆けられるようになった初回１回はゾーンに左右されない
+    if( state == LTVT_SECREAT_DATA_GetCallFirst(index) )
+    {
+      int i;
+      for( i = 0; i < NELEMS(sc_ltvt_secret_zoneID); i++ )
+      {
+        if( sc_ltvt_secret_zoneID[i] == now_zoneID )
+        {
+          is_zoneID = TRUE;
+          break;
+        }
+      }
+    }
+
 #ifdef PM_DEBUG
     if( DEBUG_FLG_GetFlg( DEBUG_FLG_LTvtSecretNotRnd ) )
     {
-      now_zoneID  = target_zoneID;
+      is_zoneID = TRUE;
     }
 #endif
     //かけられる条件
     //・デートを約束していない
     //・設定データでかけてよい状態になっている
     //・こちらからかけるときは場所を指定
-    if( is_date && is_data && (now_zoneID==target_zoneID) && is_player_call )
+    if( is_date && is_data && is_zoneID && is_player_call )
     {
       return TRUE;
     }

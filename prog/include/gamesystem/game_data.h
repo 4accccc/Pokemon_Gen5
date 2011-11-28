@@ -906,10 +906,10 @@ extern void GAMEDATA_SetLiveCasterSecretCallZoneID( GAMEDATA *gamedata );
  *
  *	@param	const GAMEDATA *gamedata  ゲームデータ
  *
- *	@return ライブキャスターの隠しキャラに電話をかけられるゾーンID
+ *	@return TRUEライブキャスターの隠しキャラに電話をかけられる FALSEかけられない
  */
 //-----------------------------------------------------------------------------
-extern u32 GAMEDATA_GetLiveCasterSecretCallZoneID( const GAMEDATA *gamedata );
+extern BOOL GAMEDATA_GetLiveCasterSecretCallZoneID( const GAMEDATA *gamedata, u16 zoneID );
 //----------------------------------------------------------------------------
 /**
  *	@brief  室外演出で使用する室外表現エフェクトIDを取得

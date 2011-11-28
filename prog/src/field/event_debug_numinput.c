@@ -1768,7 +1768,9 @@ static void DebugLtvt_SetTradeMosno(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 p
 
 static u32 DebugGetLtvt_GetCallZoneID( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
 {
-  return GAMEDATA_GetLiveCasterSecretCallZoneID( gdata);
+  PLAYER_WORK *p_player =  GAMEDATA_GetMyPlayerWork(gdata);
+  ZONEID now_zoneID = PLAYERWORK_getZoneID(p_player);
+  return GAMEDATA_GetLiveCasterSecretCallZoneID( gdata, now_zoneID);
 }
 static void DebugGetLtvt_SetCallZoneID(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value )
 {
