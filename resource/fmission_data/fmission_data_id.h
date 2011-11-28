@@ -11,7 +11,7 @@
 
 #define  FMISSION_ID_ITEM_TUTORIAL_01  ( 0 )  ///<‰‚ß‚Ä‚Ìƒ~ƒbƒVƒ‡ƒ“
 #define  FMISSION_ID_ITEM_KAKERA_01  ( 1 )  ///<‚©‚¯‚ç‚P
-#define  FMISSION_ID_ITEM_KAKERA_02  ( 2 )  ///<•ó’T‚µ‚P
+#define  FMISSION_ID_ITEM_KAKERA_02  ( 2 )  ///<•ó’T‚µ‚P‚a
 #define  FMISSION_ID_ITEM_KAKERA_03B  ( 3 )  ///<‚â‚Ý‚Ì‚¢‚µ
 #define  FMISSION_ID_ITEM_KAKERA_03W  ( 4 )  ///<‚Ð‚©‚è‚Ì‚¢‚µ
 #define  FMISSION_ID_ITEM_KINOMI_01  ( 5 )  ///<‚«‚Ì‚Ý‚P
@@ -32,29 +32,29 @@
 #define  FMISSION_ID_NPC_SHOPPING_01  ( 20 )  ///<ƒVƒ‡ƒbƒsƒ“ƒO‚P
 #define  FMISSION_ID_NPC_SHOCKSHOP_02B  ( 21 )  ///<ƒVƒ‡ƒbƒLƒ“ƒO‚a
 #define  FMISSION_ID_NPC_SHOCKSHOP_02W  ( 22 )  ///<ƒVƒ‡ƒbƒLƒ“ƒO‚v
-#define  FMISSION_ID_NPC_QUIZ_01  ( 23 )  ///<‹L‰¯ƒNƒCƒY‚P
+#define  FMISSION_ID_NPC_MEMORYQUIZ_01  ( 23 )  ///<‹L‰¯ƒNƒCƒY‚P
 #define  FMISSION_ID_NPC_JANKEN_01  ( 24 )  ///<‚¶‚á‚ñ‚¯‚ñ‚P
 #define  FMISSION_ID_EFFECT_ENC_GLASS_01  ( 25 )  ///<—h‚ê‘‚ð’T‚¹
 #define  FMISSION_ID_EFFECT_ENC_TARGET_01  ( 26 )  ///<(ƒ|ƒPƒ‚ƒ“–¼)‚ð’T‚¹‚P
 #define  FMISSION_ID_EFFECT_ENC_TARGET_02  ( 27 )  ///<(ƒ|ƒPƒ‚ƒ“–¼)‚ð’T‚¹‚Q
 #define  FMISSION_ID_EFFECT_ENC_TARGET_03  ( 28 )  ///<(ƒ|ƒPƒ‚ƒ“–¼)‚ð’T‚¹‚R
 #define  FMISSION_ID_EFFECT_ENC_TARGET_04  ( 29 )  ///<(ƒ|ƒPƒ‚ƒ“–¼)‚ð’T‚¹‚S
-#define  FMISSION_ID_EFFECT_ENC_TARGET_05  ( 30 )  ///<(ƒ|ƒPƒ‚ƒ“–¼)‚ð’T‚¹‚T
+#define  FMISSION_ID_MUSHROOM_ENC_KINOKO_01  ( 30 )  ///<‚«‚Ì‚±‘åŽûŠn
 #define  FMISSION_ID_EVENT_TOH_01  ( 31 )  ///<TOH‚Ìà‚ð–Â‚ç‚·
-#define  FMISSION_ID_MUSHROOM_ENC_KINOKO_01  ( 32 )  ///<‚«‚Ì‚±‘åŽûŠn
-#define  FMISSION_ID_EVENT_FEATHER_01  ( 33 )  ///<ƒzƒhƒ‚ƒG‚Ì‰H
-#define  FMISSION_ID_EVENT_JEWEL_01  ( 34 )  ///<ƒWƒ…ƒGƒ‹ÌŒ@
-#define  FMISSION_ID_EVENT_EGG_01  ( 35 )  ///<ƒ^ƒ}ƒS›z‰»
-#define  FMISSION_ID_EVENT_FISH_01B  ( 36 )  ///<‚Â‚è‘å‰ï
-#define  FMISSION_ID_EVENT_TRAIL_01  ( 37 )  ///<‚©‚­‚µ‚ ‚È’²¸
-#define  FMISSION_ID_EVENT_TRAIL_02B  ( 38 )  ///<‚©‚­‚µ‚ ‚È‘å’²¸‚a
-#define  FMISSION_ID_EVENT_TRAIL_02W  ( 39 )  ///<‚©‚­‚µ‚ ‚È‘å’²¸‚v
-#define  FMISSION_ID_NPC_SHOCKSHOP_01  ( 40 )  ///<ƒVƒ‡ƒbƒLƒ“ƒO‚P
-#define  FMISSION_ID_ITEM_DUMMY_02  ( 41 )  ///<ƒ_ƒ~[
-#define  FMISSION_ID_ITEM_DUMMY_03  ( 42 )  ///<ƒ_ƒ~[
-#define  FMISSION_ID_ITEM_DUMMY_04  ( 43 )  ///<ƒ_ƒ~[
-#define  FMISSION_ID_ITEM_DUMMY_05  ( 44 )  ///<ƒ_ƒ~[
-#define  FMISSION_ID_ITEM_DUMMY_06  ( 45 )  ///<ƒ_ƒ~[
+#define  FMISSION_ID_EVENT_FEATHER_01  ( 32 )  ///<ƒzƒhƒ‚ƒG‚Ì‰H
+#define  FMISSION_ID_EVENT_JEWEL_01  ( 33 )  ///<ƒWƒ…ƒGƒ‹ÌŒ@
+#define  FMISSION_ID_EVENT_EGG_01  ( 34 )  ///<ƒ^ƒ}ƒS›z‰»
+#define  FMISSION_ID_EVENT_FISH_01B  ( 35 )  ///<‚Â‚è‘å‰ï
+#define  FMISSION_ID_EVENT_TRAIL_01  ( 36 )  ///<‚©‚­‚µ‚ ‚È’²¸
+#define  FMISSION_ID_EVENT_TRAIL_02B  ( 37 )  ///<‚©‚­‚µ‚ ‚È‘å’²¸‚a
+#define  FMISSION_ID_EVENT_TRAIL_02W  ( 38 )  ///<‚©‚­‚µ‚ ‚È‘å’²¸‚v
+#define  FMISSION_ID_NPC_SHOCKSHOP_01  ( 39 )  ///<ƒVƒ‡ƒbƒLƒ“ƒO‚P
+#define  FMISSION_ID_NPC_BTLNPC_01S  ( 40 )  ///<100l‘gŽè
+#define  FMISSION_ID_NPC_MEMORYQUIZ_01S  ( 41 )  ///<‹L‰¯ƒNƒCƒY‚PƒXƒRƒA
+#define  FMISSION_ID_EVENT_TOH_01S  ( 42 )  ///<“o’¸ƒ}ƒ‰ƒ\ƒ“
+#define  FMISSION_ID_EFFECT_ENC_GLASS_01S  ( 43 )  ///<ƒ|ƒPƒ‚ƒ“‚ð’Ç‚¢‚©‚¯‚Ä
+#define  FMISSION_ID_ITEM_KAKERA_02W  ( 44 )  ///<–¢Žg—p
+#define  FMISSION_ID_ITEM_KAKERA_02S  ( 45 )  ///<‚Å‚ñ‚¹‚Â‚Ì@‚¢‚Á‚Ò‚ñ
 #define  FMISSION_ID_EVENT_TRAIL_SP1  ( 46 )  ///<‚©‚­‚µ‚ ‚È_”zM
 #define  FMISSION_ID_NPC_POKEQUIZ_SP1  ( 47 )  ///<}ŠÓƒNƒCƒY_”zM
 #define  FMISSION_ID_ITEM_KINOMI_SP1  ( 48 )  ///<‚«‚Ì‚Ý_”zM
