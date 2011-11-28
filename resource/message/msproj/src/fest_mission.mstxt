@@ -1894,71 +1894,21 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ミッション名
-※どちらか未使用になる予定</Comment>
+			<Comment>ミッション名</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T09:58:36" />
+				Time="2011-11-28T00:55:35" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ミッション名
-※どちらか未使用になる予定</Comment>
+			<Comment>ミッション名</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-27T03:48:25" />
+				Time="2011-11-28T00:55:37" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff0000</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_fm_title_evt_06w">
-		<LanguageCell
-			Language="JPN">
-			<Text>つり　たいかい！</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-20T09:58:51" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-08-26T09:41:12" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>釣り大会！</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-27T03:48:11" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-08-26T09:41:12" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ミッション名
-※どちらか未使用になる予定</Comment>
-			<CommentModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-27T03:48:24" />
-		</CommentCell>
-		<CommentCell
-			Language="JPN_KANJI">
-			<Comment>ミッション名
-※どちらか未使用になる予定</Comment>
-			<CommentModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-27T03:48:25" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff0000</CellData>
+			<CellData>#ff8000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2302,13 +2252,12 @@
 		Label="msg_fm_explain_item_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>まちや　みちに　おちている
-どうぐを　ひろい　あつめろ！！
-たかねで　うれる　どうぐが
-おちている　かも？</Text>
+			<Text>ほらあなや　みちに　おちている
+どうぐを　ひろい　あつめろ！
+おたからが　みつかるかも！？</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T11:24:04" />
+				Time="2011-11-27T14:09:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2316,13 +2265,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まちや　みちに　おちている
-どうぐを　ひろい　あつめろ！！
-たかねで　うれる　どうぐが
-おちている　かも？？</Text>
+			<Text>洞穴や道に　落ちている
+道具を　拾い　集めろ！
+お宝が　見つかるかも！？</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-28T14:33:53" />
+				Time="2011-11-27T14:08:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2354,13 +2302,13 @@
 		Label="msg_fm_explain_item_03b">
 		<LanguageCell
 			Language="JPN">
-			<Text>せいげんじかんないに　かけらを
-[Digit:4digits Idx="1" ]こいじょう　あつめよう！
-まちや　みちの　キラキラひかる
-ばしょを　さがせ！</Text>
+			<Text>キラキラひかる　こうせきを　さがせ！
+ほらあなや　みちを　さがして
+おちている　どうぐを
+[Digit:4digits Idx="1" ]こいじょう　あつめよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T10:26:38" />
+				Time="2011-11-27T14:14:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2368,13 +2316,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せいげんじかんないに　かけらを
-[Digit:4digits Idx="1" ]こいじょう　あつめよう！
-まちや　みちの　キラキラひかる
-ばしょを　さがせ！</Text>
+			<Text>キラキラと　光る鉱石を　探せ！
+洞穴や道を　探して
+落ちている　道具を
+[Digit:4digits Idx="1" ]こ以上　集めよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-27T14:15:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2406,13 +2354,13 @@
 		Label="msg_fm_explain_item_03w">
 		<LanguageCell
 			Language="JPN">
-			<Text>せいげんじかんないに　かけらを
-[Digit:4digits Idx="1" ]こいじょう　あつめよう！
-まちや　みちの　キラキラひかる
-ばしょを　さがせ！</Text>
+			<Text>キラキラひかる　こうせきを　さがせ！
+ほらあなや　みちを　さがして
+おちている　どうぐを
+[Digit:4digits Idx="1" ]こいじょう　あつめよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T10:27:13" />
+				Time="2011-11-27T14:16:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2420,13 +2368,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せいげんじかんないに　かけらを
-[Digit:4digits Idx="1" ]こいじょう　あつめよう！
-まちや　みちの　キラキラひかる
-ばしょを　さがせ！</Text>
+			<Text>キラキラと　光る鉱石を　探せ！
+洞穴や道を　探して
+落ちている　道具を
+[Digit:4digits Idx="1" ]こ以上　集めよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-27T14:16:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2464,7 +2412,7 @@
 ばしょを　さがせ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T10:27:33" />
+				Time="2011-11-27T14:43:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2472,13 +2420,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せいげんじかんないに　きのみを
-[Digit:4digits Idx="1" ]こいじょう　あつめよう！
-まちや　みちの　キラキラひかる
-ばしょを　さがせ！</Text>
+			<Text>制限時間内に　きのみを
+[Digit:4digits Idx="1" ]こ以上　集めよう！
+街や道の　キラキラ光る
+場所を　探せ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-27T14:42:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2512,11 +2460,11 @@
 			Language="JPN">
 			<Text>せいげんじかんないに　きのみを
 [Digit:4digits Idx="1" ]こいじょう　あつめよう！
-まちや　みちの　キラキラひかる
-ばしょを　さがせ！</Text>
+もりや　みちで
+たくさん　みつかるらしい！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T10:28:03" />
+				Time="2011-11-27T14:41:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2524,13 +2472,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せいげんじかんないに　きのみを
-[Digit:4digits Idx="1" ]こいじょう　あつめよう！
-まちや　みちの　キラキラひかる
-ばしょを　さがせ！</Text>
+			<Text>制限時間内に　きのみを
+[Digit:4digits Idx="1" ]こ以上　集めよう！
+森や道で　たくさん　見つかるらしい！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-27T14:41:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2564,11 +2511,10 @@
 			Language="JPN">
 			<Text>せいげんじかんないに　おとしものを
 [Digit:4digits Idx="1" ]こいじょう　あつめよう！
-まちや　みちの　キラキラひかる
-ばしょを　さがせ！</Text>
+まちや　みちで　おおく　みつかるぞ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T10:28:18" />
+				Time="2011-11-27T14:36:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2576,13 +2522,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せいげんじかんないに　おとしものを
-[Digit:4digits Idx="1" ]こいじょう　あつめよう！
-まちや　みちの　キラキラひかる
-ばしょを　さがせ！</Text>
+			<Text>制限時間内に　落し物を
+[Digit:4digits Idx="1" ]こ以上　集めよう！
+街や道で　多く　見つかるぞ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-27T14:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2616,11 +2561,10 @@
 			Language="JPN">
 			<Text>せいげんじかんないに　おとしものを
 [Digit:4digits Idx="1" ]こいじょう　あつめよう！
-まちや　みちの　キラキラひかる
-ばしょを　さがせ！</Text>
+まちや　みちで　おおく　みつかるぞ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T10:28:28" />
+				Time="2011-11-27T14:49:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2628,13 +2572,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せいげんじかんないに　おとしものを
-[Digit:4digits Idx="1" ]こいじょう　あつめよう！
-まちや　みちの　キラキラひかる
-ばしょを　さがせ！</Text>
+			<Text>制限時間内に　落し物を
+[Digit:4digits Idx="1" ]こ以上　集めよう！
+街や道で　多く　見つかるぞ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-27T14:49:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2668,11 +2611,10 @@
 			Language="JPN">
 			<Text>せいげんじかんないに　おとしものを
 [Digit:4digits Idx="1" ]こいじょう　あつめよう！
-まちや　みちの　キラキラひかる
-ばしょを　さがせ！</Text>
+まちや　みちで　おおく　みつかるぞ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T10:28:47" />
+				Time="2011-11-27T14:44:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2680,13 +2622,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せいげんじかんないに　おとしものを
-[Digit:4digits Idx="1" ]こいじょう　あつめよう！
-まちや　みちの　キラキラひかる
-ばしょを　さがせ！</Text>
+			<Text>制限時間内に　落し物を
+[Digit:4digits Idx="1" ]こ以上　集めよう！
+街や道で　多く　見つかるぞ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-27T14:44:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2718,13 +2659,12 @@
 		Label="msg_fm_explain_item_08">
 		<LanguageCell
 			Language="JPN">
-			<Text>せいげんじかんないに　かんぽうを
+			<Text>せいげんじかんないに　おとしものを
 [Digit:4digits Idx="1" ]こいじょう　あつめよう！
-まちや　みちの　キラキラひかる
-ばしょを　さがせ！</Text>
+まちや　みちで　おおく　みつかるぞ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T10:29:05" />
+				Time="2011-11-27T14:49:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2732,13 +2672,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せいげんじかんないに　かんぽうを
-[Digit:4digits Idx="1" ]こいじょう　あつめよう！
-まちや　みちの　キラキラひかる
-ばしょを　さがせ！</Text>
+			<Text>制限時間内に　落し物を
+[Digit:4digits Idx="1" ]こ以上　集めよう！
+街や道で　多く　見つかるぞ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-27T14:49:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2772,11 +2711,11 @@
 			Language="JPN">
 			<Text>せいげんじかんないに　こやしを
 [Digit:4digits Idx="1" ]こいじょう　あつめよう！
-まちや　みちの　キラキラひかる
+ほらあなや　もりの　キラキラひかる
 ばしょを　さがせ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T10:29:20" />
+				Time="2011-11-28T00:13:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2784,13 +2723,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せいげんじかんないに　こやしを
-[Digit:4digits Idx="1" ]こいじょう　あつめよう！
-まちや　みちの　キラキラひかる
-ばしょを　さがせ！</Text>
+			<Text>制限時間内に　こやしを
+[Digit:4digits Idx="1" ]こ以上　集めよう！
+洞穴や　森の　キラキラ光る
+場所を　探せ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-28T00:14:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2822,13 +2761,12 @@
 		Label="msg_fm_explain_item_10">
 		<LanguageCell
 			Language="JPN">
-			<Text>せいげんじかんないに　ハートを
+			<Text>まちや　みちに　おちている　どうぐを
 [Digit:4digits Idx="1" ]こいじょう　あつめよう！
-まちや　みちの　キラキラひかる
-ばしょを　さがせ！</Text>
+キラキラひかる　ばしょを　さがせ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T10:29:27" />
+				Time="2011-11-28T00:18:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2836,13 +2774,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せいげんじかんないに　ハートを
-[Digit:4digits Idx="1" ]こいじょう　あつめよう！
-まちや　みちの　キラキラひかる
-ばしょを　さがせ！</Text>
+			<Text>街や　道に　落ちている　
+道具を　[Digit:4digits Idx="1" ]こ以上　集めよう！
+キラキラ光る　場所を　探せ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-28T00:18:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2875,12 +2812,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>まぼろしの　きのみが　みつかった！
-まちや　みちの　キラキラひかる
+もりや　ほらあなの　キラキラひかる
 ばしょを　さがして
 きのみを　あつめよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T11:32:21" />
+				Time="2011-11-28T00:19:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2888,13 +2825,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まぼろしの　きのみが　みつかった！
-まちや　みちの　キラキラひかる
-ばしょを　さがして
-きのみを　あつめよう！</Text>
+			<Text>幻の　きのみが　見つかった！
+森や　洞穴の　キラキラ光る
+場所を　探して
+きのみを　集めよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T11:33:19" />
+				Time="2011-11-28T00:20:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2926,13 +2863,13 @@
 		Label="msg_fm_explain_item_12">
 		<LanguageCell
 			Language="JPN">
-			<Text>３０００ねんもの　むかしに
-つくられた　どうぐが　あるという……
-みちや　どうくつを　さがして
-きちょうな　どうぐを　てにいれろ！</Text>
+			<Text>おおむかしに　つくられた　という
+きちょうな　どうぐを　てにいれろ！
+ほらあなや　みちの　キラキラひかる
+ばしょを　さがせ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T11:30:59" />
+				Time="2011-11-28T00:22:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2940,13 +2877,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>３０００ねんもの　むかしに
-つくられた　どうぐが　あるという……
-みちや　どうくつを　さがして
-きちょうな　どうぐを　てにいれろ！</Text>
+			<Text>大昔に　作られたという
+貴重な　道具を　手に入れろ！
+洞穴や道の　キラキラ光る
+場所を　探せ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T11:31:22" />
+				Time="2011-11-28T00:22:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2992,13 +2929,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せいげんじかんないに　まいごを
-[Digit:4digits Idx="1" ]にんいじょう　さがせ！
-まちや　みちにいる
-おとこのこに　はなしかけよう！</Text>
+			<Text>制限時間内に　迷子を
+[Digit:4digits Idx="1" ]にん以上　探せ！
+街や道にいる　男の子に
+話しかて　助けてあげよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-28T00:25:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3044,13 +2981,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どうぐを　なくして　こまっている
-たんパンこぞうを　さがせ！
-せいげんじかんないに
-[Digit:4digits Idx="1" ]にんいじょう　たすけよう！</Text>
+			<Text>道具を　なくして　困っている
+たんパンこぞうを　探せ！
+制限時間内に
+[Digit:4digits Idx="1" ]にん以上　助けよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-28T00:25:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3096,13 +3033,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かけだしの　かくとうかと　たたかい
-しゅぎょうの　おてつだいを　しよう！
-せいげんじかんないに
-[Digit:4digits Idx="1" ]にんいじょう　たおせ！</Text>
+			<Text>かけ出しの　格闘家と　戦い
+修行の　お手伝いを　しよう！
+制限時間内に
+[Digit:4digits Idx="1" ]にん以上　倒せ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-28T00:26:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3149,12 +3086,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>エリートトレーナーの
-しゅぎょうの　あいてを　しよう！
-せいげんじかんないに
-[Digit:4digits Idx="1" ]にんいじょう　たおせ！</Text>
+修行の　相手をしよう！
+制限時間内に
+[Digit:4digits Idx="1" ]にん以上　倒せ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-11T04:38:12" />
+				Time="2011-11-28T00:26:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3188,11 +3125,11 @@
 			Language="JPN">
 			<Text>[Digit:4digits Idx="1" ]にんいじょうと
 どうぐを　こうかんしよう！
-まちや　みちにいる
+せかいの　かくちを　たびする
 バックパッカーに　はなしかけよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T11:08:38" />
+				Time="2011-11-28T00:31:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3200,13 +3137,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:4digits Idx="1" ]にんいじょうと
-どうぐを　こうかんしよう！
-まちや　みちにいる
-バックパッカーに　はなしかけよう！</Text>
+			<Text>[Digit:4digits Idx="1" ]にん以上と
+道具を　交換しよう！
+世界の　各地を　旅する
+バックパッカーに　話しかけよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-28T00:31:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3252,13 +3189,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:4digits Idx="1" ]にんいじょうと
-どうぐを　こうかんしよう！
-まちや　みちにいる
-おじょうさまに　はなしかけよう！</Text>
+			<Text>[Digit:4digits Idx="1" ]にん以上と
+道具を　交換しよう！
+街や　道にいる
+お嬢様に　話しかけよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-21T14:15:37" />
+				Time="2011-11-28T00:27:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3304,13 +3241,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:4digits Idx="1" ]にんいじょうと
-どうぐを　こうかんしよう！
-まちや　みちにいる
-おじょうさまに　はなしかけよう！</Text>
+			<Text>[Digit:4digits Idx="1" ]にん以上と
+道具を　交換しよう！
+街や　道にいる
+お嬢様に　話しかけよう！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-21T14:16:11" />
+				Time="2011-11-28T00:27:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3356,13 +3293,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おかいどくな　ねだんで　ショッピング！
-まちや　みちにいる
-ショップてんいんに　はなしかけて
-[Digit:4digits Idx="1" ]かいいじょう　こうにゅう！</Text>
+			<Text>お買い得な　値段で　ショッピング！
+街や道にいる
+ショップ店員に　話しかけて
+[Digit:4digits Idx="1" ]かい以上　購入！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-28T00:32:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3391,7 +3328,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_08b">
+		Label="msg_fm_explain_npc_08">
 		<LanguageCell
 			Language="JPN">
 			<Text>くろいふくの　おとこに　はなしかけて
@@ -3408,13 +3345,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くろいふくの　おとこに　はなしかけて
-きちょうな　どうぐを　かってみよう！
-はなすたびに　ねだんが　かわる
-だまされないように　ちゅういしろ！</Text>
+			<Text>黒い服の　男に　話しかけて
+貴重な　道具を　買ってみよう！
+話しかける　たびに　値段が　変わる
+だまされないように　注意しろ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T11:47:30" />
+				Time="2011-11-28T00:33:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3423,22 +3360,76 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ミッション説明文
-
-※１つにまとめる</Comment>
+簡易版</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T11:47:49" />
+				Time="2011-11-28T00:53:58" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ミッション説明文</Comment>
+			<Comment>ミッション説明文
+簡易版</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-28T00:54:07" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff0000</CellData>
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_explain_npc_08b">
+		<LanguageCell
+			Language="JPN">
+			<Text>くろいふくの　おとこに　はなしかけて
+きちょうな　どうぐを　かってみよう！
+はなすたびに　ねだんが　かわる
+だまされないように　ちゅういしろ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-20T11:47:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-26T11:34:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>黒い服の　男に　話しかけて
+貴重な　道具を　買ってみよう！
+話しかける　たびに　値段が　変わる
+だまされないように　注意しろ！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-28T00:34:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-08-26T12:42:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション説明文
+ブラック版</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-28T00:54:02" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション説明文
+ブラック版</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-11-28T00:54:07" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3462,13 +3453,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くろいふくの　おとこに　はなしかけて
-きちょうな　どうぐを　かってみよう！
-はなすたびに　ねだんが　かわる
-だまされないように　ちゅういしろ！</Text>
+			<Text>黒い服の　男に　話しかけて
+貴重な　道具を　買ってみよう！
+話しかける　たびに　値段が　変わる
+だまされないように　注意しろ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T11:47:24" />
+				Time="2011-11-28T00:34:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3476,21 +3467,23 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ミッション説明文</Comment>
+			<Comment>ミッション説明文
+ホワイト版</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T11:34:56" />
+				Time="2011-11-28T00:54:05" />
 		</CommentCell>
 		<CommentCell
 			Language="JPN_KANJI">
-			<Comment>ミッション説明文</Comment>
+			<Comment>ミッション説明文
+ホワイト版</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-28T00:54:07" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff0000</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3514,13 +3507,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まちや　みちにいる　ピエロに
-はなしかけて　クイズに　こたえよう！
-[Digit:4digits Idx="1" ]かいいじょう
-せいかい　すれば　クリアだ！</Text>
+			<Text>街や道にいる　ピエロに
+話しかけて　クイズに　答えよう！
+[Digit:4digits Idx="1" ]かい以上
+正解すれば　クリアだ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-24T06:32:08" />
+				Time="2011-11-28T00:36:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3552,13 +3545,13 @@
 		Label="msg_fm_explain_npc_10">
 		<LanguageCell
 			Language="JPN">
-			<Text>まちや　みちにいる
-ようちえんじを　さがして
+			<Text>ようちえんじを　さがして
 じゃんけん　しょうぶを　しよう！
-[Digit:4digits Idx="1" ]にんいじょうに　かて！</Text>
+[Digit:4digits Idx="1" ]にんいじょうに　かて！
+こううんに　めぐまれるのは　だれ！？</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T11:52:07" />
+				Time="2011-11-28T00:39:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3566,13 +3559,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まちや　みちにいる
-ようちえんじを　さがして
-じゃんけん　しょうぶを　しよう！
-[Digit:4digits Idx="1" ]にんいじょうに　かて！</Text>
+			<Text>ようちえんじを　探して
+じゃんけん　勝負をしよう！
+[Digit:4digits Idx="1" ]にん以上に　勝て！
+幸運に　恵まれるのは　誰だ！？</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-28T00:39:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3618,13 +3611,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まちや　みちにいる
-ポケモンセンターの　おねえさんに
-はなしかけて　みよう！
+			<Text>街や道にいる
+ポケモンセンターの　お姉さんに
+話しかけて　みよう！
 ステキな　プレゼントが　あるかも？？</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-28T00:40:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3670,13 +3663,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まちや　みちにいる
-けんきゅういんに　はなしかけて
-ポケモンクイズに　こたえよう！
-トレーナーの　ちしきが　ためされる！</Text>
+			<Text>街や道にいる
+けんきゅういんに　話しかけて
+ポケモンクイズに　答えよう！
+トレーナーの　知識が　試される！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T11:38:13" />
+				Time="2011-11-28T00:40:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3722,13 +3715,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くろふくの　おとこ　ふたたび！
-とっても　きちょうな　どうぐを
-かって　かって　かいまくれ！
-ただし　ねだんには　ちゅうい！</Text>
+			<Text>黒い服の男　再び！
+とっても　貴重な　道具を
+買って　買って　買いまくれ！
+ただし　値段には　注意！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T11:46:38" />
+				Time="2011-11-28T00:41:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3760,13 +3753,13 @@
 		Label="msg_fm_explain_npc_14">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベテラントレーナーと
-たたかい！　かちつづけろ！
+			<Text>ベテラントレーナーとの
+おわりなき　しゅぎょうに　いどめ！
 せいげんじかんないに
 [Digit:4digits Idx="1" ]にんいじょう　たおせ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T11:53:13" />
+				Time="2011-11-28T00:43:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3774,13 +3767,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベテラントレーナーと
-たたかい！　かちつづけろ！
-せいげんじかんないに
-[Digit:4digits Idx="1" ]にんいじょう　たおせ！</Text>
+			<Text>ベテラントレーナーとの
+終わり無き　修行に　挑め！
+制限時間内に
+[Digit:4digits Idx="1" ]にん以上　倒せ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T11:53:19" />
+				Time="2011-11-28T00:43:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3826,13 +3819,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゆれる　くさむらにいる
-ポケモンを　さがしてみよう！
-せいげんじかんないに
-[Digit:4digits Idx="1" ]ひきいじょう　たおせ！</Text>
+			<Text>揺れる　草むらにいる
+ポケモンを　探してみよう！
+制限時間内に
+[Digit:4digits Idx="1" ]ひき以上　倒せ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-28T00:44:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3878,13 +3871,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゆれる　くさむらにいる
-[Name:PokemonName ]を　さがしてみよう！
-せいげんじかんないに
-[Digit:4digits Idx="1" ]ひきいじょう　たおせ！</Text>
+			<Text>揺れる　草むらにいる
+[Name:PokemonName ]を　探してみよう！
+制限時間内に
+[Digit:4digits Idx="1" ]ひき以上　倒せ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-10T05:52:39" />
+				Time="2011-11-28T00:45:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3919,11 +3912,11 @@
 			Language="JPN">
 			<Text>ゆれる　くさむらにいる
 [Name:PokemonName ]を　さがしてみよう！
-５ばんどうろに　いるらしい
-とくせいを　うまく　りようして！</Text>
+５ばんどうろで　であえる　らしい
+とくせいを　うまく　りようしろ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T12:29:06" />
+				Time="2011-11-28T00:47:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3931,12 +3924,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゆれる　くさむらにいる
-[Name:PokemonName ]を　さがしてみよう！
-５ばんどうろに　いるらしい？</Text>
+			<Text>揺れる　草むらにいる
+[Name:PokemonName ]を　探してみよう！
+５番道路で　出会える　らしい？
+特性を　うまく　利用しろ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T12:26:19" />
+				Time="2011-11-28T00:47:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3971,10 +3965,11 @@
 			Language="JPN">
 			<Text>ゆれる　くさむらにいる
 [Name:PokemonName ]を　さがしてみよう！
-どこかに　いるのか　いないのか……</Text>
+どこかに　いるのか　いないのか……
+デルパワーの　ちからを　かりるべきか</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T12:31:27" />
+				Time="2011-11-28T00:48:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3982,12 +3977,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゆれる　くさむらにいる
-[Name:PokemonName ]を　さがしてみよう！
-どこかに　いるのか　いないのか……</Text>
+			<Text>揺れる　草むらにいる
+[Name:PokemonName ]を　探してみよう！
+どこかに　いるのか　いないのか……
+デルパワーの　ちから　かりるべきか</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T12:31:28" />
+				Time="2011-11-28T00:48:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4034,13 +4030,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゆれる　くさむらにいる
-[Name:PokemonName ]を　さがしてみよう！
+			<Text>揺れる　草むらにいる
+[Name:PokemonName ]を　探してみよう！
 ジャイアントホールにて
-はっけん　ほうこくアリ！</Text>
+発見　報告アリ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T12:30:40" />
+				Time="2011-11-28T00:46:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4086,12 +4082,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゆれる　くさむらにいる
-[Name:PokemonName ]を　さがしてみよう！
-５ばんどうろに　いるかも？？</Text>
+			<Text>揺れる　草むらにいる
+[Name:PokemonName ]を　探してみよう！
+５番道路に　いるかも？？</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T12:31:40" />
+				Time="2011-11-28T00:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4138,13 +4134,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タワーオブヘブンの　てっぺんにある
-かねを　ならせ！
-いりぐちから　やりなおせば
-なんどでも　カウント！</Text>
+			<Text>タワーオブヘブンの　頂上にある
+鐘を　鳴らせ！
+入り口から　やりなおせば
+何度でも　カウント！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-21T14:18:26" />
+				Time="2011-11-28T00:48:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4190,13 +4186,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くさむらに　かくれている
-タマゲタケを　さがせ！
+			<Text>草むらに　隠れている
+タマゲタケを　探せ！
 モンスターボールのような
-みためを　しているぞ！</Text>
+見た目を　しているぞ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-28T00:49:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4230,11 +4226,11 @@
 			Language="JPN">
 			<Text>ホドモエのはねばしに
 おちている　はねを　あつめよう！
-とりポケモンの　はばたく　おとが
+ポケモンの　はばたく　おとが
 きこえたら　そのちかくを　さがせ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:36:09" />
+				Time="2011-11-28T00:49:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4242,13 +4238,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホドモエのはねばしに
-おちている　はねを　あつめよう！
-とりポケモンの　はばたく　おとが
-きこえたら　そのちかくを　さがせ！</Text>
+			<Text>ホドモエの跳ね橋に
+落ちている　羽を　集めよう！
+ポケモンの　はばたく　音が
+聞こえたら　その近くを　探せ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-28T00:49:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4294,13 +4290,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かくちの　ほらあなで
-みつかる　おたからを　あつめよう！
-ボコボコと　つちけむりの
-あがる　ばしょを　さがせ！</Text>
+			<Text>各地の　洞穴で
+見つかる　お宝を　集めよう！
+ボコボコと　土煙のあがる
+場所を　探せ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-24T06:33:24" />
+				Time="2011-11-28T00:50:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4332,12 +4328,13 @@
 		Label="msg_fm_explain_evt_05">
 		<LanguageCell
 			Language="JPN">
-			<Text>たくさん　あるいて
-ポケモンの　タマゴを
-ふか　させよう！</Text>
+			<Text>ポケモンの　タマゴを
+ふか　させよう！
+たくさん　あるいて！
+たくさん　はしって！！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-09-10T08:47:34" />
+				Time="2011-11-28T00:51:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4345,12 +4342,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たくさん　あるいて
-ポケモンの　タマゴを
-ふか　させよう！</Text>
+			<Text>ポケモンの　タマゴを
+孵化させよう！
+たくさん　歩いて！
+たくさん　走って！！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:44:43" />
+				Time="2011-11-28T00:51:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4379,14 +4377,14 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_evt_06b">
+		Label="msg_fm_explain_evt_06">
 		<LanguageCell
 			Language="JPN">
-			<Text>つりざおを　つかって
+			<Text>すごいつりざおを　つかって
 ポケモンを　つりあげろ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:39:51" />
+				Time="2011-11-28T00:52:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4394,11 +4392,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>つりざおを　つかって
-ポケモンを　つりあげろ！</Text>
+			<Text>すごいつりざおを　使って
+ポケモンを　釣り上げろ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-28T00:51:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4417,54 +4415,6 @@
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
 				Time="2011-08-26T12:42:00" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff8000</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_fm_explain_evt_06w">
-		<LanguageCell
-			Language="JPN">
-			<Text>つりざおを　つかって
-ポケモンを　つりあげろ！</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:47" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:47" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>つりざおを　つかって
-ポケモンを　つりあげろ！</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:47" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:47" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ミッション説明文</Comment>
-			<CommentModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:47" />
-		</CommentCell>
-		<CommentCell
-			Language="JPN_KANJI">
-			<Comment>ミッション説明文</Comment>
-			<CommentModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:47" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -4492,13 +4442,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かくちの　かくしあなを　めぐって
-ポケモンを　さがせ！
-[Digit:4digits Idx="1" ]ひきいじょう
-であうことが　できれば　せいこう！</Text>
+			<Text>各地の　かくしあなを　めぐって
+ポケモンを　探せ！
+[Digit:4digits Idx="1" ]ひき以上
+出会うことが　できれば　成功！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T12:17:32" />
+				Time="2011-11-28T00:58:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4533,10 +4483,10 @@
 			<Text>かくちの　かくしあなを　めぐって
 ポケモンを　さがせ！
 めずらしい　ポケモンに
-であえるかも？？</Text>
+であえる　かも？？</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:40:47" />
+				Time="2011-11-28T00:58:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4544,13 +4494,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かくちの　かくしあなを　めぐって
-ポケモンを　さがせ！
-めずらしい　ポケモンに
-であえるかも？？</Text>
+			<Text>各地の　かくしあなを　めぐって
+ポケモンを　探せ！
+珍しい　ポケモンに
+出会える　かも？？</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-28T00:58:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4596,13 +4546,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かくちの　かくしあなを　めぐって
-ポケモンを　さがせ！
-めずらしい　ポケモンに
-であえるかも？？</Text>
+			<Text>各地の　かくしあなを　めぐって
+ポケモンを　探せ！
+珍しい　ポケモンに
+出会える　かも？？</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-08-26T12:42:00" />
+				Time="2011-11-28T00:58:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4648,13 +4598,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>めずらしい　ポケモンの
-はっけん　ほうこくが　あった！
-かくちの　かくしあなを　めぐって
-ポケモンを　さがせ！</Text>
+			<Text>珍しい　ポケモンの
+発見　報告があった！
+各地の　かくしあなを　めぐって
+ポケモンを　探せ！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-11-20T12:20:15" />
+				Time="2011-11-28T00:59:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4677,52 +4627,6 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#ff8000</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_fm_explain_tr_01">
-		<LanguageCell
-			Language="JPN">
-			<Text>トレーナーを　たおせ！</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-10T05:55:37" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-10T05:55:35" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>トレーナーを　倒せ！</Text>
-			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-10T05:55:53" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-10T05:55:43" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>ミッション説明文</Comment>
-			<CommentModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-10T05:55:43" />
-		</CommentCell>
-		<CommentCell
-			Language="JPN_KANJI">
-			<Comment>ミッション説明文</Comment>
-			<CommentModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-09-10T05:55:43" />
-		</CommentCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
