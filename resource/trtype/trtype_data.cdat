@@ -87,19 +87,19 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		 19,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.020 LEADER3♂ジムリーダー
+	{ // No.020 LEADER3♂no data
 		 20,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.021 LEADER4♀ジムリーダー
+	{ // No.021 LEADER4♀no data
 		 21,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.022 LEADER5♂ジムリーダー
+	{ // No.022 LEADER5♂no data
 		 22,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.023 LEADER6♀ジムリーダー
+	{ // No.023 LEADER6♀no data
 		 23,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
@@ -155,7 +155,7 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		 36,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_08
 	},
-	{ // No.037 RIVAL♂ポケモントレーナー
+	{ // No.037 RIVAL♂no data
 		 37,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
@@ -163,7 +163,7 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		 38,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.039 HAKAIM1♂プラズマだん
+	{ // No.039 HAKAIM1♂no data
 		 39,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
@@ -195,7 +195,7 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		 46,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_09
 	},
-	{ // No.047 BOSS_1♂プラズマだん
+	{ // No.047 BOSS_1♂no data
 		 40,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
@@ -227,11 +227,11 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		 53,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.055 LEADER8A♀ジムリーダー
+	{ // No.055 LEADER8A♀no data
 		 54,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.056 LEADER8B♂ジムリーダー
+	{ // No.056 LEADER8B♂no data
 		 55,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
@@ -315,7 +315,7 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		 75,PTL_SEX_MALE,
 		SEQ_BGM_EYE_13
 	},
-	{ // No.077 HAKAIW1♀プラズマだん
+	{ // No.077 HAKAIW1♀no data
 		 76,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
@@ -335,7 +335,7 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		 80,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.082 SAGE1♂プラズマだん
+	{ // No.082 SAGE1♂no data
 		 81,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
@@ -379,19 +379,19 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		 71,PTL_SEX_MALE,
 		SEQ_BGM_EYE_08
 	},
-	{ // No.093 SCHOOLB_1♂ブルジョワールけ
+	{ // No.093 SCHOOLB_1♂no data
 		  4,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.094 VETERANW_1♀ブルジョワールけ
+	{ // No.094 VETERANW_1♀no data
 		 70,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.095 MADAM_1♀ブルジョワールけ
+	{ // No.095 MADAM_1♀no data
 		 74,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.096 GENTLE_1♂ブルジョワールけ
+	{ // No.096 GENTLE_1♂no data
 		 75,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
@@ -399,11 +399,11 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		 69,PTL_SEX_MALE,
 		SEQ_BGM_EYE_04
 	},
-	{ // No.098 PRINCESS_1♀ブルジョワールけ
+	{ // No.098 PRINCESS_1♀no data
 		 42,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.099 PRINCE_1♂ブルジョワールけ
+	{ // No.099 PRINCE_1♂no data
 		 41,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
@@ -419,7 +419,7 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		 92,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.103 LEADER1♂ジムリーダー
+	{ // No.103 LEADER1♂no data
 		 93,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
@@ -631,7 +631,7 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		 87,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.156 BCHAMP_2♂ボストレーナー
+	{ // No.156 BCHAMP_2♂no data
 		 87,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
@@ -671,7 +671,7 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		 92,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
-	{ // No.166 BCHAMP2_2♂ボストレーナー
+	{ // No.166 BCHAMP2_2♂no data
 		 92,PTL_SEX_MALE,
 		SEQ_BGM_EYE_01
 	},
@@ -931,7 +931,7 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		 46,PTL_SEX_FEMALE,
 		SEQ_BGM_EYE_09
 	},
-	{ // No.231 PILOT_1♂ヒウンマニア
+	{ // No.231 PILOT_1♂no data
 		 43,PTL_SEX_MALE,
 		SEQ_BGM_EYE_12
 	},

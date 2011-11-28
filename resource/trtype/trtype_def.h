@@ -30,10 +30,10 @@
 #define	TRTYPE_BREEDERM    ( 17 )    //BREEDERM♂ポケモンブリーダー
 #define	TRTYPE_BREEDERW    ( 18 )    //BREEDERW♀ポケモンブリーダー
 #define	TRTYPE_LEADER2    ( 19 )    //LEADER2♀アロエ
-#define	TRTYPE_LEADER3    ( 20 )    //LEADER3♂ジムリーダー
-#define	TRTYPE_LEADER4    ( 21 )    //LEADER4♀ジムリーダー
-#define	TRTYPE_LEADER5    ( 22 )    //LEADER5♂ジムリーダー
-#define	TRTYPE_LEADER6    ( 23 )    //LEADER6♀ジムリーダー
+#define	TRTYPE_LEADER3    ( 20 )    //LEADER3♂no data
+#define	TRTYPE_LEADER4    ( 21 )    //LEADER4♀no data
+#define	TRTYPE_LEADER5    ( 22 )    //LEADER5♂no data
+#define	TRTYPE_LEADER6    ( 23 )    //LEADER6♀no data
 #define	TRTYPE_RANGERM    ( 24 )    //RANGERM♂ポケモンレンジャー
 #define	TRTYPE_RANGERW    ( 25 )    //RANGERW♀ポケモンレンジャー
 #define	TRTYPE_WORKER2    ( 26 )    //WORKER2♂さぎょういん
@@ -47,9 +47,9 @@
 #define	TRTYPE_BAKER    ( 34 )    //BAKER♀ベーカリー
 #define	TRTYPE_ESPM    ( 35 )    //ESPM♂サイキッカー
 #define	TRTYPE_ESPW    ( 36 )    //ESPW♀サイキッカー
-#define	TRTYPE_RIVAL    ( 37 )    //RIVAL♂ポケモントレーナー
+#define	TRTYPE_RIVAL    ( 37 )    //RIVAL♂no data
 #define	TRTYPE_SUPPORT    ( 38 )    //SUPPORT♀ポケモントレーナー
-#define	TRTYPE_HAKAIM1    ( 39 )    //HAKAIM1♂プラズマだん
+#define	TRTYPE_HAKAIM1    ( 39 )    //HAKAIM1♂no data
 #define	TRTYPE_BOSS    ( 40 )    //BOSS♂ポケモントレーナー
 #define	TRTYPE_PRINCE    ( 41 )    //PRINCE♂おぼっちゃま
 #define	TRTYPE_PRINCESS    ( 42 )    //PRINCESS♀おじょうさま
@@ -57,7 +57,7 @@
 #define	TRTYPE_WORKER1    ( 44 )    //WORKER1♂さぎょういん
 #define	TRTYPE_BASKET    ( 45 )    //BASKET♂バスケせんしゅ
 #define	TRTYPE_SCIENTISTW    ( 46 )    //SCIENTISTW♀けんきゅういん
-#define	TRTYPE_BOSS_1    ( 47 )    //BOSS_1♂プラズマだん
+#define	TRTYPE_BOSS_1    ( 47 )    //BOSS_1♂no data
 #define	TRTYPE_OL    ( 48 )    //OL♀ＯＬ
 #define	TRTYPE_ELITEW    ( 49 )    //ELITEW♀エリートトレーナー
 #define	TRTYPE_ELITEM    ( 50 )    //ELITEM♂エリートトレーナー
@@ -65,8 +65,8 @@
 #define	TRTYPE_SCIENTISTM    ( 52 )    //SCIENTISTM♂けんきゅういん
 #define	TRTYPE_SOCCER    ( 53 )    //SOCCER♂サッカーせんしゅ
 #define	TRTYPE_LEADER7    ( 54 )    //LEADER7♂ハチク
-#define	TRTYPE_LEADER8A    ( 55 )    //LEADER8A♀ジムリーダー
-#define	TRTYPE_LEADER8B    ( 56 )    //LEADER8B♂ジムリーダー
+#define	TRTYPE_LEADER8A    ( 55 )    //LEADER8A♀no data
+#define	TRTYPE_LEADER8B    ( 56 )    //LEADER8B♂no data
 #define	TRTYPE_HEADS    ( 57 )    //HEADS♂スキンヘッズ
 #define	TRTYPE_CLEANING    ( 58 )    //CLEANING♂せいそういん
 #define	TRTYPE_DAISUKIM    ( 59 )    //DAISUKIM♂だいすきクラブ
@@ -87,12 +87,12 @@
 #define	TRTYPE_MOUNT    ( 74 )    //MOUNT♂やまおとこ
 #define	TRTYPE_MADAM    ( 75 )    //MADAM♀マダム
 #define	TRTYPE_GENTLE    ( 76 )    //GENTLE♂ジェントルマン
-#define	TRTYPE_HAKAIW1    ( 77 )    //HAKAIW1♀プラズマだん
+#define	TRTYPE_HAKAIW1    ( 77 )    //HAKAIW1♀no data
 #define	TRTYPE_BIGFOUR1    ( 78 )    //BIGFOUR1♀してんのう
 #define	TRTYPE_BIGFOUR3    ( 79 )    //BIGFOUR3♂してんのう
 #define	TRTYPE_BIGFOUR2    ( 80 )    //BIGFOUR2♂してんのう
 #define	TRTYPE_BIGFOUR4    ( 81 )    //BIGFOUR4♀してんのう
-#define	TRTYPE_SAGE1    ( 82 )    //SAGE1♂プラズマだん
+#define	TRTYPE_SAGE1    ( 82 )    //SAGE1♂no data
 #define	TRTYPE_RAIL    ( 83 )    //RAIL♂てつどういん
 #define	TRTYPE_SWIMMERM    ( 84 )    //SWIMMERM♂かいパンやろう
 #define	TRTYPE_SWIMMERW    ( 85 )    //SWIMMERW♀ビキニのおねえさん
@@ -103,17 +103,17 @@
 #define	TRTYPE_CYCLINGM    ( 90 )    //CYCLINGM♂サイクリング
 #define	TRTYPE_CYCLINGW    ( 91 )    //CYCLINGW♀サイクリング
 #define	TRTYPE_BADRIDER_01    ( 92 )    //BADRIDER_01♂バイクずき
-#define	TRTYPE_SCHOOLB_1    ( 93 )    //SCHOOLB_1♂ブルジョワールけ
-#define	TRTYPE_VETERANW_1    ( 94 )    //VETERANW_1♀ブルジョワールけ
-#define	TRTYPE_MADAM_1    ( 95 )    //MADAM_1♀ブルジョワールけ
-#define	TRTYPE_GENTLE_1    ( 96 )    //GENTLE_1♂ブルジョワールけ
+#define	TRTYPE_SCHOOLB_1    ( 93 )    //SCHOOLB_1♂no data
+#define	TRTYPE_VETERANW_1    ( 94 )    //VETERANW_1♀no data
+#define	TRTYPE_MADAM_1    ( 95 )    //MADAM_1♀no data
+#define	TRTYPE_GENTLE_1    ( 96 )    //GENTLE_1♂no data
 #define	TRTYPE_VETERANM_1    ( 97 )    //VETERANM_1♂ゲームフリーク
-#define	TRTYPE_PRINCESS_1    ( 98 )    //PRINCESS_1♀ブルジョワールけ
-#define	TRTYPE_PRINCE_1    ( 99 )    //PRINCE_1♂ブルジョワールけ
+#define	TRTYPE_PRINCESS_1    ( 98 )    //PRINCESS_1♀no data
+#define	TRTYPE_PRINCE_1    ( 99 )    //PRINCE_1♂no data
 #define	TRTYPE_DPCHAMPION    ( 100 )    //DPCHAMPION♀ポケモントレーナー
 #define	TRTYPE_BOSS_2    ( 101 )    //BOSS_2♂プラズマだん
 #define	TRTYPE_BCHAMP2    ( 102 )    //BCHAMP2♂サブウェイマスター
-#define	TRTYPE_LEADER1    ( 103 )    //LEADER1♂ジムリーダー
+#define	TRTYPE_LEADER1    ( 103 )    //LEADER1♂no data
 #define	TRTYPE_SCIENTISTM_1    ( 104 )    //SCIENTISTM_1♂ポケモントレーナー
 #define	TRTYPE_MOUNT_1    ( 105 )    //MOUNT_1♂ポケモントレーナー
 #define	TRTYPE_ESPM_1    ( 106 )    //ESPM_1♂ポケモントレーナー
@@ -166,7 +166,7 @@
 #define	TRTYPE_RANGERW_1    ( 153 )    //RANGERW_1♀ボストレーナー
 #define	TRTYPE_RANGERW_2    ( 154 )    //RANGERW_2♀ボストレーナー
 #define	TRTYPE_BCHAMP_1    ( 155 )    //BCHAMP_1♂サブウェイマスター
-#define	TRTYPE_BCHAMP_2    ( 156 )    //BCHAMP_2♂ボストレーナー
+#define	TRTYPE_BCHAMP_2    ( 156 )    //BCHAMP_2♂no data
 #define	TRTYPE_ELITEM_2    ( 157 )    //ELITEM_2♂ボストレーナー
 #define	TRTYPE_ELITEM_3    ( 158 )    //ELITEM_3♂ボストレーナー
 #define	TRTYPE_ELITEW_2    ( 159 )    //ELITEW_2♀ボストレーナー
@@ -176,7 +176,7 @@
 #define	TRTYPE_VETERANW_3    ( 163 )    //VETERANW_3♀ボストレーナー
 #define	TRTYPE_VETERANW_4    ( 164 )    //VETERANW_4♀ボストレーナー
 #define	TRTYPE_BCHAMP2_1    ( 165 )    //BCHAMP2_1♂サブウェイマスター
-#define	TRTYPE_BCHAMP2_2    ( 166 )    //BCHAMP2_2♂ボストレーナー
+#define	TRTYPE_BCHAMP2_2    ( 166 )    //BCHAMP2_2♂no data
 #define	TRTYPE_DPLEADER1    ( 167 )    //DPLEADER1♂ヒョウタ
 #define	TRTYPE_DPLEADER2    ( 168 )    //DPLEADER2♀ナタネ
 #define	TRTYPE_DPLEADER3    ( 169 )    //DPLEADER3♀メリッサ
@@ -241,7 +241,7 @@
 #define	TRTYPE_KARATE_1    ( 228 )    //KARATE_1♂ポケモントレーナー
 #define	TRTYPE_BATTLEG_1    ( 229 )    //BATTLEG_1♀ポケモントレーナー
 #define	TRTYPE_SCIENTISTW_1    ( 230 )    //SCIENTISTW_1♀ポケモントレーナー
-#define	TRTYPE_PILOT_1    ( 231 )    //PILOT_1♂ヒウンマニア
+#define	TRTYPE_PILOT_1    ( 231 )    //PILOT_1♂no data
 #define	TRTYPE_PKWD_LADYBUG    ( 232 )    //PKWD_LADYBUG♂みらいじん
 #define	TRTYPE_JUGGLING_1    ( 233 )    //JUGGLING_1♂クラウン
 #define	TRTYPE_MAX	( 234 )

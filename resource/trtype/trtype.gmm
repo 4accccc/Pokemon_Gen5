@@ -546,23 +546,23 @@
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER3">
-		<language name="JPN" width="216">ジムリーダー</language>
-		<language name="JPN_KANJI" width="216">ジムリーダー</language>
+		<language name="JPN" width="216">no data</language>
+		<language name="JPN_KANJI" width="216">no data</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER4">
-		<language name="JPN" width="216">ジムリーダー</language>
-		<language name="JPN_KANJI" width="216">ジムリーダー</language>
+		<language name="JPN" width="216">no data</language>
+		<language name="JPN_KANJI" width="216">no data</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER5">
-		<language name="JPN" width="216">ジムリーダー</language>
-		<language name="JPN_KANJI" width="216">ジムリーダー</language>
+		<language name="JPN" width="216">no data</language>
+		<language name="JPN_KANJI" width="216">no data</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER6">
-		<language name="JPN" width="216">ジムリーダー</language>
-		<language name="JPN_KANJI" width="216">ジムリーダー</language>
+		<language name="JPN" width="216">no data</language>
+		<language name="JPN_KANJI" width="216">no data</language>
 	</row>
 
 	<row id="MSG_TRTYPE_RANGERM">
@@ -631,8 +631,8 @@
 	</row>
 
 	<row id="MSG_TRTYPE_RIVAL">
-		<language name="JPN" width="216">ポケモントレーナー</language>
-		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
+		<language name="JPN" width="216">no data</language>
+		<language name="JPN_KANJI" width="216">no data</language>
 	</row>
 
 	<row id="MSG_TRTYPE_SUPPORT">
@@ -641,8 +641,8 @@
 	</row>
 
 	<row id="MSG_TRTYPE_HAKAIM1">
-		<language name="JPN" width="216">プラズマだん</language>
-		<language name="JPN_KANJI" width="216">プラズマだん</language>
+		<language name="JPN" width="216">no data</language>
+		<language name="JPN_KANJI" width="216">no data</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BOSS">
@@ -681,8 +681,8 @@
 	</row>
 
 	<row id="MSG_TRTYPE_BOSS_1">
-		<language name="JPN" width="216">プラズマだん</language>
-		<language name="JPN_KANJI" width="216">プラズマだん</language>
+		<language name="JPN" width="216">no data</language>
+		<language name="JPN_KANJI" width="216">no data</language>
 	</row>
 
 	<row id="MSG_TRTYPE_OL">
@@ -721,13 +721,13 @@
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER8A">
-		<language name="JPN" width="216">ジムリーダー</language>
-		<language name="JPN_KANJI" width="216">ジムリーダー</language>
+		<language name="JPN" width="216">no data</language>
+		<language name="JPN_KANJI" width="216">no data</language>
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER8B">
-		<language name="JPN" width="216">ジムリーダー</language>
-		<language name="JPN_KANJI" width="216">ジムリーダー</language>
+		<language name="JPN" width="216">no data</language>
+		<language name="JPN_KANJI" width="216">no data</language>
 	</row>
 
 	<row id="MSG_TRTYPE_HEADS">
@@ -831,8 +831,8 @@
 	</row>
 
 	<row id="MSG_TRTYPE_HAKAIW1">
-		<language name="JPN" width="216">プラズマだん</language>
-		<language name="JPN_KANJI" width="216">プラズマだん</language>
+		<language name="JPN" width="216">no data</language>
+		<language name="JPN_KANJI" width="216">no data</language>
 	</row>
 
 	<row id="MSG_TRTYPE_BIGFOUR1">
@@ -856,8 +856,8 @@
 	</row>
 
 	<row id="MSG_TRTYPE_SAGE1">
-		<language name="JPN" width="216">プラズマだん</language>
-		<language name="JPN_KANJI" width="216">プラズマだん</language>
+		<language name="JPN" width="216">no data</language>
+		<language name="JPN_KANJI" width="216">no data</language>
 	</row>
 
 	<row id="MSG_TRTYPE_RAIL">
@@ -911,23 +911,23 @@
 	</row>
 
 	<row id="MSG_TRTYPE_SCHOOLB_1">
-		<language name="JPN" width="216">ブルジョワールけ</language>
-		<language name="JPN_KANJI" width="216">ブルジョワールけ</language>
+		<language name="JPN" width="216">no data</language>
+		<language name="JPN_KANJI" width="216">no data</language>
 	</row>
 
 	<row id="MSG_TRTYPE_VETERANW_1">
-		<language name="JPN" width="216">ブルジョワールけ</language>
-		<language name="JPN_KANJI" width="216">ブルジョワールけ</language>
+		<language name="JPN" width="216">no data</language>
+		<language name="JPN_KANJI" width="216">no data</language>
 	</row>
 
 	<row id="MSG_TRTYPE_MADAM_1">
-		<language name="JPN" width="216">ブルジョワールけ</language>
-		<language name="JPN_KANJI" width="216">ブルジョワールけ</language>
+		<language name="JPN" width="216">no data</language>
+		<language name="JPN_KANJI" width="216">no data</language>
 	</row>
 
 	<row id="MSG_TRTYPE_GENTLE_1">
-		<language name="JPN" width="216">ブルジョワールけ</language>
-		<language name="JPN_KANJI" width="216">ブルジョワールけ</language>
+		<language name="JPN" width="216">no data</language>
+		<language name="JPN_KANJI" width="216">no data</language>
 	</row>
 
 	<row id="MSG_TRTYPE_VETERANM_1">
@@ -936,13 +936,13 @@
 	</row>
 
 	<row id="MSG_TRTYPE_PRINCESS_1">
-		<language name="JPN" width="216">ブルジョワールけ</language>
-		<language name="JPN_KANJI" width="216">ブルジョワールけ</language>
+		<language name="JPN" width="216">no data</language>
+		<language name="JPN_KANJI" width="216">no data</language>
 	</row>
 
 	<row id="MSG_TRTYPE_PRINCE_1">
-		<language name="JPN" width="216">ブルジョワールけ</language>
-		<language name="JPN_KANJI" width="216">ブルジョワールけ</language>
+		<language name="JPN" width="216">no data</language>
+		<language name="JPN_KANJI" width="216">no data</language>
 	</row>
 
 	<row id="MSG_TRTYPE_DPCHAMPION">
@@ -961,8 +961,8 @@
 	</row>
 
 	<row id="MSG_TRTYPE_LEADER1">
-		<language name="JPN" width="216">ジムリーダー</language>
-		<language name="JPN_KANJI" width="216">ジムリーダー</language>
+		<language name="JPN" width="216">no data</language>
+		<language name="JPN_KANJI" width="216">no data</language>
 	</row>
 
 	<row id="MSG_TRTYPE_SCIENTISTM_1">
@@ -1226,8 +1226,8 @@
 	</row>
 
 	<row id="MSG_TRTYPE_BCHAMP_2">
-		<language name="JPN" width="216">ボストレーナー</language>
-		<language name="JPN_KANJI" width="216">ボストレーナー</language>
+		<language name="JPN" width="216">no data</language>
+		<language name="JPN_KANJI" width="216">no data</language>
 	</row>
 
 	<row id="MSG_TRTYPE_ELITEM_2">
@@ -1276,8 +1276,8 @@
 	</row>
 
 	<row id="MSG_TRTYPE_BCHAMP2_2">
-		<language name="JPN" width="216">ボストレーナー</language>
-		<language name="JPN_KANJI" width="216">ボストレーナー</language>
+		<language name="JPN" width="216">no data</language>
+		<language name="JPN_KANJI" width="216">no data</language>
 	</row>
 
 	<row id="MSG_TRTYPE_DPLEADER1">
@@ -1601,8 +1601,8 @@
 	</row>
 
 	<row id="MSG_TRTYPE_PILOT_1">
-		<language name="JPN" width="216">ヒウンマニア</language>
-		<language name="JPN_KANJI" width="216">ヒウンマニア</language>
+		<language name="JPN" width="216">no data</language>
+		<language name="JPN_KANJI" width="216">no data</language>
 	</row>
 
 	<row id="MSG_TRTYPE_PKWD_LADYBUG">
