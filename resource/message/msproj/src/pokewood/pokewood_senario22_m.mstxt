@@ -2273,35 +2273,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジュジュベ『あばれないでよ▼
-あなた　しょうぶも　そこそこ　つよいし
-ほんとうの　とびらを　さがされても▽
-めんどう　だわね……▼
+			<Text>ジュジュベ『やれやれ　うるさいわね
+あばれられて　ほんとうの　とびらを▽
+みつけられても　めんどう　だし……▼
 とりあえず　まほうのオリに
-とじこめちまいましょう</Text>
+とじこめちまいましょうかね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:18" />
+				Time="2011-11-28T08:10:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:18" />
+				Time="2011-11-28T08:10:50" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジュジュベ『暴れないでよ▼
-あなた　勝負も　そこそこ　強いし
-本当の　扉を　探されても▽
-面倒だわね……▼
+			<Text>ジュジュベ『やれやれ　うるさいわね
+暴れられて　本当の　扉を▽
+見つけられても　面倒だし……▼
 とりあえず　魔法のオリに
-閉じ込めちまいましょう</Text>
+閉じ込めちまいましょうかね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:18" />
+				Time="2011-11-28T08:10:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:18" />
+				Time="2011-11-28T08:10:50" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

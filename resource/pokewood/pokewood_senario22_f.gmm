@@ -927,18 +927,16 @@
 一体　どういう　ことよー！</language>
 	</row>
 	<row id="pw_event9_enemy_2">
-		<language name="JPN" width="256">ジュジュベ『あばれないでよ▼
-あなた　しょうぶも　そこそこ　つよいし
-ほんとうの　とびらを　さがされても▽
-めんどう　だわね……▼
+		<language name="JPN" width="256">ジュジュベ『やれやれ　うるさいわね
+あばれられて　ほんとうの　とびらを▽
+みつけられても　めんどう　だし……▼
 とりあえず　まほうのオリに
-とじこめちまいましょう</language>
-		<language name="JPN_KANJI" width="256">ジュジュベ『暴れないでよ▼
-あなた　勝負も　そこそこ　強いし
-本当の　扉を　探されても▽
-面倒だわね……▼
+とじこめちまいましょうかね</language>
+		<language name="JPN_KANJI" width="256">ジュジュベ『やれやれ　うるさいわね
+暴れられて　本当の　扉を▽
+見つけられても　面倒だし……▼
 とりあえず　魔法のオリに
-閉じ込めちまいましょう</language>
+閉じ込めちまいましょうかね</language>
 	</row>
 	<row id="pw_event9_hero_3">
 		<language name="JPN" width="256">まほうのオリ『ガシャーン！▼
