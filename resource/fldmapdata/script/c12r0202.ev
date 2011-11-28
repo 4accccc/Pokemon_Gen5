@@ -98,16 +98,19 @@ EVENT_START   ev_c12r0202_rivalsister_01
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_03 )
 
   //ÉNÉäÉAå„
-  ELSIF FLAG_ON( SYS_FLAG_GAME_CLEAR ) && $LOCALWORK15 < 10 THEN
-
-    //ÉâÉCÉoÉãñÖÅF
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_04 )
-  
-  //ìaì∞ì¸ÇË10âÒå„
   ELSIF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+  	
+  	//ìaì∞ì¸ÇËÇ™ÇPÇOâÒà»è„Ç©ÅH
+  	IF $LOCALWORK15 >= 10 THEN
+  	
+  		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_05 )
+  	
+  	ELSE
+  	
+  		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_04 )
+  	
+  	ENDIF
   
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_05 )
-    
   ENDIF
 }
 EVENT_END
