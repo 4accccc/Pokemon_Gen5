@@ -9255,10 +9255,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text />
+			<Text>ごようけんは　ありますか？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T16:39:08" />
+				Time="2011-11-28T02:36:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -9266,10 +9266,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text />
+			<Text>ご用件は　ありますか？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T16:39:10" />
+				Time="2011-11-28T02:36:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -9277,10 +9277,10 @@ BW♀
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>エラーになるので追加</Comment>
+			<Comment />
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T16:39:19" />
+				Time="2011-11-28T02:37:03" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -36245,7 +36245,7 @@ BW♀
 たいりょくの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:42:19" />
+				Time="2011-11-28T03:37:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -36253,7 +36253,7 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　体力を　鍛えて
+			<Text>ポケモンの　たいりょくを　鍛えて
 ちょっぴり　強くする。
 たいりょくの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
@@ -36261,8 +36261,8 @@ BW♀
 				Time="2011-11-27T17:42:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:53" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:29:35" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -36311,7 +36311,7 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　体力を　鍛えて
+			<Text>ポケモンの　たいりょくを　鍛えて
 すこし　強くする。
 たいりょくの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
@@ -36319,8 +36319,8 @@ BW♀
 				Time="2011-11-27T17:44:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:53" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:29:36" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -36357,11 +36357,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　たいりょくを　きたえて
-かなり　つよくする。
+つよくする。
 たいりょくの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:43:24" />
+				Time="2011-11-28T03:33:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -36369,16 +36369,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　体力を　鍛えて
-かなり　強くする。
+			<Text>ポケモンの　たいりょくを　鍛えて
+強くする。
 たいりょくの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:44:31" />
+				Time="2011-11-28T03:33:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:53" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:29:36" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -36427,7 +36427,7 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　体力を　鍛えて
+			<Text>ポケモンの　たいりょくを　鍛えて
 かなり　強くする。
 たいりょくの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
@@ -36435,8 +36435,8 @@ BW♀
 				Time="2011-11-27T17:44:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:53" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:29:36" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -36473,11 +36473,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　たいりょくを　きたえて
-かなり　つよくする。
+すごく　つよくする。
 たいりょくの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:43:46" />
+				Time="2011-11-28T03:51:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -36485,16 +36485,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　体力を　鍛えて
-かなり　強くする。
+			<Text>ポケモンの　たいりょくを　鍛えて
+すごく　強くする。
 たいりょくの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:44:43" />
+				Time="2011-11-28T03:51:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:53" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:29:36" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -36531,11 +36531,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　たいりょくを　きたえて
-かなり　つよくする。
+ものすごく　つよくする。
 たいりょくの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:43:54" />
+				Time="2011-11-28T03:42:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -36543,16 +36543,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　体力を　鍛えて
-かなり　強くする。
+			<Text>ポケモンの　たいりょくを　鍛えて
+ものすごく　強くする。
 たいりょくの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:44:48" />
+				Time="2011-11-28T03:42:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:53" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:29:37" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -36589,28 +36589,28 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　たいりょくを　きたえて
-かなり　つよくする。
+とてつもなく　つよくする。
 たいりょくの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:44:01" />
+				Time="2011-11-28T03:42:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:50:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　体力を　鍛えて
-かなり　強くする。
+			<Text>ポケモンの　たいりょくを　鍛えて
+とてつもなく　強くする。
 たいりょくの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:44:53" />
+				Time="2011-11-28T03:42:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:53" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:50:58" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -36659,7 +36659,7 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　攻撃を　鍛えて
+			<Text>ポケモンの　こうげきを　鍛えて
 ちょっぴり　強くする。
 こうげきの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
@@ -36667,8 +36667,8 @@ BW♀
 				Time="2011-11-27T17:45:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:42" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:30:31" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -36717,7 +36717,7 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　攻撃を　鍛えて
+			<Text>ポケモンの　こうげきを　鍛えて
 すこし　強くする。
 こうげきの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
@@ -36725,8 +36725,8 @@ BW♀
 				Time="2011-11-27T17:45:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:42" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:30:31" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -36763,11 +36763,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　こうげきを　きたえて
-かなり　つよくする。
+つよくする。
 こうげきの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:45:37" />
+				Time="2011-11-28T03:42:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -36775,16 +36775,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　攻撃を　鍛えて
-かなり　強くする。
+			<Text>ポケモンの　こうげきを　鍛えて
+強くする。
 こうげきの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:45:39" />
+				Time="2011-11-28T03:42:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:42" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:30:31" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -36833,7 +36833,7 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　攻撃を　鍛えて
+			<Text>ポケモンの　こうげきを　鍛えて
 かなり　強くする。
 こうげきの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
@@ -36841,8 +36841,8 @@ BW♀
 				Time="2011-11-27T17:45:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:42" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:30:32" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -36879,28 +36879,28 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　こうげきを　きたえて
-かなり　つよくする。
+すごく　つよくする。
 こうげきの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:45:51" />
+				Time="2011-11-28T03:50:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:43:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　攻撃を　鍛えて
-かなり　強くする。
+			<Text>ポケモンの　こうげきを　鍛えて
+すごく　強くする。
 こうげきの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:45:54" />
+				Time="2011-11-28T03:50:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:42" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:43:01" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -36937,11 +36937,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　こうげきを　きたえて
-かなり　つよくする。
+ものすごく　つよくする。
 こうげきの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:45:59" />
+				Time="2011-11-28T03:43:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -36949,16 +36949,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　攻撃を　鍛えて
-かなり　強くする。
+			<Text>ポケモンの　こうげきを　鍛えて
+ものすごく　強くする。
 こうげきの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:46:01" />
+				Time="2011-11-28T03:43:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:42" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:30:32" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -36995,28 +36995,28 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　こうげきを　きたえて
-かなり　つよくする。
+とてつもなく　つよくする。
 こうげきの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:46:07" />
+				Time="2011-11-28T03:43:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:50:40" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　攻撃を　鍛えて
-かなり　強くする。
+			<Text>ポケモンの　こうげきを　鍛えて
+とてつもなく　強くする。
 こうげきの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:46:09" />
+				Time="2011-11-28T03:43:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:42" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:50:40" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37065,7 +37065,7 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　防御を　鍛えて
+			<Text>ポケモンの　ぼうぎょを　鍛えて
 ちょっぴり　強くする。
 こうげきの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
@@ -37073,8 +37073,8 @@ BW♀
 				Time="2011-11-27T17:46:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:32" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:30:51" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37115,7 +37115,7 @@ BW♀
 ぼうぎょの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:46:40" />
+				Time="2011-11-28T03:43:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -37123,16 +37123,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　防御を　鍛えて
+			<Text>ポケモンの　ぼうぎょを　鍛えて
 すこし　強くする。
 ぼうぎょの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:46:47" />
+				Time="2011-11-28T03:43:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:32" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:30:51" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37169,11 +37169,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　ぼうぎょを　きたえて
-かなり　つよくする。
+つよくする。
 ぼうぎょの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:46:52" />
+				Time="2011-11-28T03:44:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -37181,16 +37181,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　防御を　鍛えて
-かなり　強くする。
+			<Text>ポケモンの　ぼうぎょを　鍛えて
+強くする。
 ぼうぎょの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:46:55" />
+				Time="2011-11-28T03:44:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:32" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:30:51" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37227,11 +37227,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　ぼうぎょを　きたえて
-ちょっぴり　つよくする。
+かなり　つよくする。
 ぼうぎょの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:47:00" />
+				Time="2011-11-28T03:44:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -37239,16 +37239,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　防御を　鍛えて
-ちょっぴり　強くする。
+			<Text>ポケモンの　ぼうぎょを　鍛えて
+かなり　強くする。
 ぼうぎょの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:47:03" />
+				Time="2011-11-28T03:44:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:32" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:30:51" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37285,11 +37285,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　ぼうぎょを　きたえて
-すこし　つよくする。
+すごく　つよくする。
 ぼうぎょの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:47:07" />
+				Time="2011-11-28T03:50:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -37297,16 +37297,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　防御を　鍛えて
-すこし　強くする。
+			<Text>ポケモンの　ぼうぎょを　鍛えて
+すごく　強くする。
 ぼうぎょの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:47:09" />
+				Time="2011-11-28T03:50:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:32" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:30:51" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37343,11 +37343,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　ぼうぎょを　きたえて
-かなり　つよくする。
+ものすごく　つよくする。
 ぼうぎょの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:47:15" />
+				Time="2011-11-28T03:44:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -37355,16 +37355,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　防御を　鍛えて
-かなり　強くする。
+			<Text>ポケモンの　ぼうぎょを　鍛えて
+ものすごく　強くする。
 ぼうぎょの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:47:17" />
+				Time="2011-11-28T03:44:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:32" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:30:51" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37401,28 +37401,28 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　ぼうぎょを　きたえて
-かなり　つよくする。
+とてつもなく　つよくする。
 ぼうぎょの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:47:24" />
+				Time="2011-11-28T03:44:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:50:15" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　防御を　鍛えて
-かなり　強くする。
+			<Text>ポケモンの　ぼうぎょを　鍛えて
+とてつもなく　強くする。
 ぼうぎょの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:47:26" />
+				Time="2011-11-28T03:44:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:32" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:50:15" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37471,7 +37471,7 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　特攻を　鍛えて
+			<Text>ポケモンの　とくこうを　鍛えて
 ちょっぴり　強くする。
 とくこうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
@@ -37479,8 +37479,8 @@ BW♀
 				Time="2011-11-27T17:47:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:22" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:31:13" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37529,7 +37529,7 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　特攻を　鍛えて
+			<Text>ポケモンの　とくこうを　鍛えて
 すこし　強くする。
 とくこうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
@@ -37537,8 +37537,8 @@ BW♀
 				Time="2011-11-27T17:48:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:22" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:31:13" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37575,11 +37575,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　とくこうを　きたえて
-かなり　つよくする。
+つよくする。
 とくこうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:48:07" />
+				Time="2011-11-28T03:45:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -37587,16 +37587,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　特攻を　鍛えて
-かなり　強くする。
+			<Text>ポケモンの　とくこうを　鍛えて
+強くする。
 とくこうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:48:09" />
+				Time="2011-11-28T03:45:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:22" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:31:14" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37633,11 +37633,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　とくこうを　きたえて
-ちょっぴり　つよくする。
+かなり　つよくする。
 とくこうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:48:16" />
+				Time="2011-11-28T03:45:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -37645,16 +37645,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　特攻を　鍛えて
-ちょっぴり　強くする。
+			<Text>ポケモンの　とくこうを　鍛えて
+かなり　強くする。
 とくこうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:48:19" />
+				Time="2011-11-28T03:45:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:22" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:31:14" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37691,11 +37691,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　とくこうを　きたえて
-すこし　つよくする。
+すごく　つよくする。
 とくこうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:48:23" />
+				Time="2011-11-28T03:49:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -37703,16 +37703,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　特攻を　鍛えて
-すこし　強くする。
+			<Text>ポケモンの　とくこうを　鍛えて
+すごく　強くする。
 とくこうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:48:25" />
+				Time="2011-11-28T03:50:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:22" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:31:14" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37749,11 +37749,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　とくこうを　きたえて
-かなり　つよくする。
+ものすごく　つよくする。
 とくこうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:48:30" />
+				Time="2011-11-28T03:45:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -37761,16 +37761,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　特攻を　鍛えて
-かなり　強くする。
+			<Text>ポケモンの　とくこうを　鍛えて
+ものすごく　強くする。
 とくこうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:48:33" />
+				Time="2011-11-28T03:45:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:22" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:31:14" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37807,28 +37807,28 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　とくこうを　きたえて
-かなり　つよくする。
+とてつもなく　つよくする。
 とくこうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:48:39" />
+				Time="2011-11-28T03:45:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:49:50" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　特攻を　鍛えて
-かなり　強くする。
+			<Text>ポケモンの　とくこうを　鍛えて
+とてつもなく　強くする。
 とくこうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:48:41" />
+				Time="2011-11-28T03:45:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:22" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:49:50" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37877,7 +37877,7 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　特防を　鍛えて
+			<Text>ポケモンの　とくぼうを　鍛えて
 ちょっぴり　強くする。
 とくぼうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
@@ -37885,8 +37885,8 @@ BW♀
 				Time="2011-11-27T17:49:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:01" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:31:37" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37935,7 +37935,7 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　特防を　鍛えて
+			<Text>ポケモンの　とくぼうを　鍛えて
 すこし　強くする。
 とくぼうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
@@ -37943,8 +37943,8 @@ BW♀
 				Time="2011-11-27T17:49:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:01" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:31:37" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -37981,11 +37981,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　とくぼうを　きたえて
-かなり　つよくする。
+つよくする。
 とくぼうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:49:16" />
+				Time="2011-11-28T03:46:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -37993,16 +37993,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　特防を　鍛えて
-かなり　強くする。
+			<Text>ポケモンの　とくぼうを　鍛えて
+強くする。
 とくぼうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:49:19" />
+				Time="2011-11-28T03:46:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:01" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:31:37" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38039,11 +38039,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　とくぼうを　きたえて
-ちょっぴり　つよくする。
+かなり　つよくする。
 とくぼうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:49:23" />
+				Time="2011-11-28T03:46:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -38051,16 +38051,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　特防を　鍛えて
-ちょっぴり　強くする。
+			<Text>ポケモンの　とくぼうを　鍛えて
+かなり　強くする。
 とくぼうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:49:26" />
+				Time="2011-11-28T03:46:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:01" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:31:37" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38097,11 +38097,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　とくぼうを　きたえて
-すこし　つよくする。
+すごく　つよくする。
 とくぼうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:49:44" />
+				Time="2011-11-28T03:49:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -38109,16 +38109,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　特防を　鍛えて
-すこし　強くする。
+			<Text>ポケモンの　とくぼうを　鍛えて
+すごく　強くする。
 とくぼうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:49:46" />
+				Time="2011-11-28T03:49:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:01" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:31:37" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38155,11 +38155,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　とくぼうを　きたえて
-かなり　つよくする。
+ものすごく　つよくする。
 とくぼうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:49:51" />
+				Time="2011-11-28T03:46:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -38167,16 +38167,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　特防を　鍛えて
-かなり　強くする。
+			<Text>ポケモンの　とくぼうを　鍛えて
+ものすごく　強くする。
 とくぼうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:49:53" />
+				Time="2011-11-28T03:46:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:01" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:31:37" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38213,28 +38213,28 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　とくぼうを　きたえて
-かなり　つよくする。
+とてつもなく　つよくする。
 とくぼうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:49:57" />
+				Time="2011-11-28T03:46:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:49:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　特防を　鍛えて
-かなり　強くする。
+			<Text>ポケモンの　とくぼうを　鍛えて
+とてつもなく　強くする。
 とくぼうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:49:59" />
+				Time="2011-11-28T03:46:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:01" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:49:24" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38272,10 +38272,10 @@ BW♀
 			Language="JPN">
 			<Text>ポケモンの　すばやさを　きたえて
 ちょっぴり　つよくする。
-とくぼうの　きそポイントが　あがる。</Text>
+すばやさの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:50:04" />
+				Time="2011-11-28T03:47:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -38283,16 +38283,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　素早さを　鍛えて
+			<Text>ポケモンの　すばやさを　鍛えて
 ちょっぴり　強くする。
-とくぼうの　きそポイントが　あがる。</Text>
+すばやさの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:50:06" />
+				Time="2011-11-28T03:47:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:01" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:31:56" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38329,11 +38329,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　すばやさを　きたえて
-ちょっぴり　つよくする。
-すばやさの　きそポイントが　あがる。</Text>
+すこし　つよくする。
+とくぼうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:50:21" />
+				Time="2011-11-28T03:47:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -38341,16 +38341,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　素早さを　鍛えて
-ちょっぴり　強くする。
-すばやさの　きそポイントが　あがる。</Text>
+			<Text>ポケモンの　すばやさを　鍛えて
+すこし　強くする。
+とくぼうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:50:26" />
+				Time="2011-11-28T03:47:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:01" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:31:56" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38387,11 +38387,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　すばやさを　きたえて
-ちょっぴり　つよくする。
-すばやさの　きそポイントが　あがる。</Text>
+つよくする。
+とくぼうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:50:32" />
+				Time="2011-11-28T03:47:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -38399,16 +38399,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　素早さを　鍛えて
-ちょっぴり　強くする。
-すばやさの　きそポイントが　あがる。</Text>
+			<Text>ポケモンの　すばやさを　鍛えて
+強くする。
+とくぼうの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:50:34" />
+				Time="2011-11-28T03:47:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:33:34" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:31:56" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38445,11 +38445,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　すばやさを　きたえて
-ちょっぴり　つよくする。
+かなり　つよくする。
 すばやさの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:50:39" />
+				Time="2011-11-28T03:47:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -38457,16 +38457,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　素早さを　鍛えて
-ちょっぴり　強くする。
+			<Text>ポケモンの　すばやさを　鍛えて
+かなり　強くする。
 すばやさの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:50:41" />
+				Time="2011-11-28T03:47:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:01" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:31:56" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38503,11 +38503,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　すばやさを　きたえて
-ちょっぴり　つよくする。
+すごく　つよくする。
 すばやさの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:50:47" />
+				Time="2011-11-28T03:49:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -38515,16 +38515,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　素早さを　鍛えて
-ちょっぴり　強くする。
+			<Text>ポケモンの　すばやさを　鍛えて
+すごく　強くする。
 すばやさの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:50:49" />
+				Time="2011-11-28T03:49:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:34:01" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:31:56" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38561,11 +38561,11 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　すばやさを　きたえて
-ちょっぴり　つよくする。
+ものすごく　つよくする。
 すばやさの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:50:54" />
+				Time="2011-11-28T03:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -38573,16 +38573,16 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　素早さを　鍛えて
-ちょっぴり　強くする。
+			<Text>ポケモンの　すばやさを　鍛えて
+ものすごく　強くする。
 すばやさの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:50:57" />
+				Time="2011-11-28T03:47:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:33:34" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:31:56" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -38619,28 +38619,28 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　すばやさを　きたえて
-ちょっぴり　つよくする。
+とてつもなく　つよくする。
 すばやさの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:51:02" />
+				Time="2011-11-28T03:47:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:48:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　素早さを　鍛えて
-ちょっぴり　強くする。
+			<Text>ポケモンの　すばやさを　鍛えて
+とてつもなく　強くする。
 すばやさの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:51:05" />
+				Time="2011-11-28T03:47:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:33:34" />
+				User="shimoyamada:W00184"
+				Time="2011-11-28T03:48:48" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -43932,10 +43932,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なにかのかたまりC</Text>
+			<Text>かたまりCランク</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T14:31:20" />
+				Time="2011-11-28T04:10:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -43943,10 +43943,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なにかのかたまりC</Text>
+			<Text>かたまりCランク</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T14:31:23" />
+				Time="2011-11-28T04:08:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -43986,10 +43986,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なにかのかたまりB</Text>
+			<Text>かたまりBランク</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T14:31:29" />
+				Time="2011-11-28T04:10:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -43997,10 +43997,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なにかのかたまりB</Text>
+			<Text>かたまりBランク</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T14:31:32" />
+				Time="2011-11-28T04:10:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44040,10 +44040,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なにかのかたまりA</Text>
+			<Text>かたまりAランク</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T14:31:38" />
+				Time="2011-11-28T04:09:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44051,10 +44051,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なにかのかたまりA</Text>
+			<Text>かたまりAランク</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T14:31:41" />
+				Time="2011-11-28T04:09:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44094,10 +44094,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なにかのかたまりS</Text>
+			<Text>かたまりSランク</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T14:31:46" />
+				Time="2011-11-28T04:09:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44105,10 +44105,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なにかのかたまりS</Text>
+			<Text>かたまりSランク</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T14:31:49" />
+				Time="2011-11-28T04:09:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44364,10 +44364,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とくだいのはこ</Text>
+			<Text>とげとげのいわ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:34:30" />
+				Time="2011-11-28T04:43:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44375,10 +44375,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とくだいのはこ</Text>
+			<Text>とげとげのいわ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:34:34" />
+				Time="2011-11-28T04:42:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44418,10 +44418,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おおきなはこ</Text>
+			<Text>ごつごつのいわ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:34:40" />
+				Time="2011-11-28T04:43:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44429,10 +44429,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おおきなはこ</Text>
+			<Text>ごつごつのいわ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:34:44" />
+				Time="2011-11-28T04:42:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44472,10 +44472,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふつうのはこ</Text>
+			<Text>ざらざらのいわ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:35:37" />
+				Time="2011-11-28T04:43:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44483,10 +44483,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふつうのはこ</Text>
+			<Text>ざらざらのいわ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:35:40" />
+				Time="2011-11-28T04:42:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44526,10 +44526,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちいさなはこ</Text>
+			<Text>すべすべのいわ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:35:49" />
+				Time="2011-11-28T04:43:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44537,10 +44537,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちいさなはこ</Text>
+			<Text>すべすべのいわ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:35:54" />
+				Time="2011-11-28T04:42:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44580,10 +44580,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とげとげのいわ</Text>
+			<Text>とくだいのはこ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:43:02" />
+				Time="2011-11-28T04:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44591,10 +44591,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とげとげのいわ</Text>
+			<Text>とくだいのはこ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:43:09" />
+				Time="2011-11-28T04:43:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44634,10 +44634,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ごつごつのいわ</Text>
+			<Text>おおきなはこ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:43:05" />
+				Time="2011-11-28T04:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44645,10 +44645,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ごつごつのいわ</Text>
+			<Text>おおきなはこ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:41:35" />
+				Time="2011-11-28T04:43:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44688,10 +44688,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ざらざらのいわ</Text>
+			<Text>ふつうのはこ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:38:13" />
+				Time="2011-11-28T04:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44699,10 +44699,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ざらざらのいわ</Text>
+			<Text>ふつうのはこ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:41:35" />
+				Time="2011-11-28T04:43:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44742,10 +44742,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すべすべのいわ</Text>
+			<Text>ちいさなはこ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:38:13" />
+				Time="2011-11-28T04:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44753,10 +44753,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すべすべのいわ</Text>
+			<Text>ちいさなはこ</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:41:35" />
+				Time="2011-11-28T04:43:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46300,12 +46300,12 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つちと　すなで　おおわれた　かたまり。
+			<Text>つちで　おおわれた　かたまり。
 おたからが　ねむっているかも……？
 かんていすると　なかみが　わかる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:23:08" />
+				Time="2011-11-28T04:10:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46313,12 +46313,12 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>つちと　すなで　おおわれた　かたまり。
+			<Text>つちで　おおわれた　かたまり。
 おたからが　ねむっているかも……？
 かんていすると　なかみが　わかる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:23:20" />
+				Time="2011-11-28T04:10:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46358,12 +46358,12 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つちと　すなで　おおわれた　かたまり。
+			<Text>つちで　おおわれた　かたまり。
 おたからが　ねむっているかも……？
 かんていすると　なかみが　わかる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:23:16" />
+				Time="2011-11-28T04:11:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46371,12 +46371,12 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>つちと　すなで　おおわれた　かたまり。
+			<Text>つちで　おおわれた　かたまり。
 おたからが　ねむっているかも……？
 かんていすると　なかみが　わかる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:23:20" />
+				Time="2011-11-28T04:11:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46416,12 +46416,12 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つちと　すなで　おおわれた　かたまり。
+			<Text>つちで　おおわれた　かたまり。
 おたからが　ねむっているかも……？
 かんていすると　なかみが　わかる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:23:16" />
+				Time="2011-11-28T04:11:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46429,12 +46429,12 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>つちと　すなで　おおわれた　かたまり。
+			<Text>つちで　おおわれた　かたまり。
 おたからが　ねむっているかも……？
 かんていすると　なかみが　わかる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:23:20" />
+				Time="2011-11-28T04:11:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46474,12 +46474,12 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つちと　すなで　おおわれた　かたまり。
+			<Text>つちで　おおわれた　かたまり。
 おたからが　ねむっているかも……？
 かんていすると　なかみが　わかる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:23:16" />
+				Time="2011-11-28T04:11:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -46487,12 +46487,12 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>つちと　すなで　おおわれた　かたまり。
+			<Text>つちで　おおわれた　かたまり。
 おたからが　ねむっているかも……？
 かんていすると　なかみが　わかる。</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T18:23:20" />
+				Time="2011-11-28T04:11:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -95264,10 +95264,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うんめいてきな</Text>
+			<Text>うんめい？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:14:05" />
+				Time="2011-11-28T04:04:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -95275,10 +95275,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うんめいてきな</Text>
+			<Text>うんめい？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:14:07" />
+				Time="2011-11-28T04:04:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -98566,10 +98566,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>であいをした！</Text>
+			<Text>じんせいだよねー</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:15:08" />
+				Time="2011-11-28T04:05:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -98577,10 +98577,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>であいをした！</Text>
+			<Text>じんせいだよねー</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T16:15:17" />
+				Time="2011-11-28T04:05:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
