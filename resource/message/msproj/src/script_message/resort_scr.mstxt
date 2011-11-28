@@ -8142,10 +8142,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やねの　ネオンを　へんこう　します▼</Text>
+			<Text>やねの　ネオンを　へんこう　しました▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-02T12:11:25" />
+				Time="2011-11-28T09:15:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8153,10 +8153,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>屋根の　ネオンを　変更します▼</Text>
+			<Text>屋根の　ネオンを　変更しました▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:43:13" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-28T09:15:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
