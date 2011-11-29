@@ -2670,7 +2670,7 @@ static void line_callback_rest(BMPMENULIST_WORK * wk, u32 param, u8 y )
   // 「やめる」以外には値段を表示
   if(param!=BMPMENULIST_CANCEL){
     // もう売ってしまった
-    if(RESORT_INSTITUTION_DATA_IsBit(sbw->p_institution, param)){
+    if(RESORT_INSTITUTION_DATA_IsBit(sbw->p_institution, sbw->lineup[param].id)){
       int length,bmp_w;
       length = PRINTSYS_GetStrWidth( sbw->HaveStr, sbw->font, 0 );
       bmp_w  = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp( sbw->win[SHOP_BUY_BMPWIN_LIST]) );
