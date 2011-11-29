@@ -302,37 +302,41 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まじん『おお！
-そなたは　[Name:TrainerName Idx="1" ]　じゃな！！▼
-アーカムから　きいてるでごじゃる！▼
-オイラの　ふっかつために　ちからを
+			<Text>まじん『おおー！
+そなたは　[Name:PokemonNickname Idx="0" ]！▽
+いや……　ほんとうの　なは▽
+ズバリ　[Name:TrainerName Idx="1" ]　じゃろ！？▼
+アーカムから　きいてるでごじゃる！
+オイラの　ふっかつのために　ちからを▽
 かしてくれたので　ごじゃるな！▼
-たすけてくれて　どうも
+やー　たすけてくれて　どうも
 ありがとうで　ごじゃるるる♪</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:56" />
+				Time="2011-11-29T01:35:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:56" />
+				Time="2011-11-29T01:35:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>魔神『おお！
-そなたは　[Name:TrainerName Idx="1" ]　じゃな！！▼
-アーカムから　聞いてるでごじゃる！▼
-オイラの　復活ために　力を
+			<Text>魔神『おおー！
+そなたは　[Name:PokemonNickname Idx="0" ]！▽
+いや……　本当の　名は▽
+ズバリ　[Name:TrainerName Idx="1" ]　じゃろ！？▼
+アーカムから　聞いてるでごじゃる！
+オイラの　復活のために　力を▽
 かしてくれた　ごじゃるな！▼
-助けてくれて　どうも
+やー　助けてくれて　どうも
 ありがとうで　ごじゃるるる♪</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:56" />
+				Time="2011-11-29T01:35:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:56" />
+				Time="2011-11-29T01:35:39" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -346,25 +350,29 @@
 		Label="pw_event0_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]『なんなの　こいつ……</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『なぜ　わたしの　なを……
+しかも　この　かるい　ノリ……▽
+いったい　なんなの　こいつ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T01:35:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T01:35:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]『なんなの　こいつ……</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『なぜ　私の　名を……
+しかも　この　軽いノリ……▽
+一体　何なの　こいつ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T01:35:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T01:35:39" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -477,37 +485,39 @@
 		Label="pw_event0_enemy_4">
 		<LanguageCell
 			Language="JPN">
-			<Text>アーカム『どうだい？
+			<Text>アーカム『やあ！　どうだい？
 はかいの　まじんは？▼
 なかなか　れいぎ　ただしいでしょ？▼
-それに　ひとなつっこくて　とっても
+それに　ひとなつっこくてね　とっても
 ゆかいなヤツ　なんだよー▼
-キミは　まじんを　とめに　きたんだろ？
-さてさて　かれを　とめられるかな？</Text>
+ええと　あれだよね？　たしか　キミは
+まじんを　けしさりに　きたんだっけ？▽
+ククッ……　そんなこと　できるの？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:58" />
+				Time="2011-11-29T01:44:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:58" />
+				Time="2011-11-29T01:44:54" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アーカム『どうだい？
+			<Text>アーカム『やあ！　どうだい？
 破壊の　魔神は？▼
 なかなか　礼儀正しい　でしょ？▼
-それに　人なつっこくて　とっても
+それに　人なつっこくてね　とっても
 ゆかいなヤツ　なんだよー▼
-キミは　魔神を　止めに来たんだろ？
-さてさて　彼を　止められるかな？</Text>
+ええと　あれだよね？　確か　キミは
+魔神を　消し去りに　来たんだっけ？▽
+ククッ……　そんなこと　出来るの？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:58" />
+				Time="2011-11-29T01:44:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:58" />
+				Time="2011-11-29T01:44:54" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -621,15 +631,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あせる　人々『みんな！　見ろっ！
+			<Text>あせる人々『みんな！　見ろっ！
 あのバケモンが　街を　壊すんだ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:58" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:58" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -758,25 +768,25 @@
 		Label="pw_event1_react_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]『ウソ？</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『……ウソ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]『ウソ？</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『……ウソ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -816,25 +826,25 @@
 		Label="pw_event1_react_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]『たいくつ？</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『……たいくつ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]『退屈？</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『……退屈？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -874,25 +884,25 @@
 		Label="pw_event1_react_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]『よいこと？</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『……よいこと？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]『良いこと？</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『……良いこと？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -928,25 +938,25 @@
 		Label="pw_event1_react_hero_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]『しらない！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『……しらない！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]『知らない！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『……知らない！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1050,25 +1060,25 @@
 		Label="pw_event2_react_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]『こわすこと！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『こわす　ことね！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]『壊すこと！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『壊す　ことね！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1108,25 +1118,25 @@
 		Label="pw_event2_react_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]『ねること！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『ねる　こと？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]『寝ること！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『寝ること？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1166,25 +1176,25 @@
 		Label="pw_event2_react_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]『かんがえること！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『かんがえることね！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]『考えること！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『考えることね！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1222,25 +1232,25 @@
 		Label="pw_event2_react_hero_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]『おどること！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『ダンス……？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]『踊ること！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『ダンス……？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1352,25 +1362,25 @@
 		Label="pw_event3_react_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]『ステキ！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『ダンディね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]『ステキ！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『ダンディね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1404,25 +1414,25 @@
 		Label="pw_event3_react_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]『さみしがり！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『さみしがりね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]『寂しがり！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『寂しがりね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1456,25 +1466,25 @@
 		Label="pw_event3_react_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]『あばれもの！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『らんぼうものかな</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]『暴れ者！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『乱暴者かな</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1516,25 +1526,25 @@
 		Label="pw_event3_react_hero_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]『こせいてき！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『こせいてきね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]『個性的！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『個性的ね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:32" />
+				Time="2011-11-29T03:19:02" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2036,15 +2046,14 @@
 じぶんで　じぶんを　けすなんて▽
 やっちゃいけないんだぞぉぉぉぉぉ！！▼
 だから　かわりに　オイラが　せかいを
-ブチこわして　けせばいいぞおぉぉぉ！！
-</Text>
+ブチこわして　けせばいいぞおぉぉぉ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T09:15:18" />
+				Time="2011-11-29T01:57:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T09:15:18" />
+				Time="2011-11-29T01:57:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2789,39 +2798,41 @@
 そなたは　タフで　ごじゃる！▽
 やっぱり　きにいったで　ごじゃる！▼
 ……るるるーん♪▼
-そうで　ごじゃる！！▼
+ん　んん！　ひらめいたで　ごじゃる！▼
 オイラ　こんどは　せかいを　こわさず
-そなたと　まもるで　ごじゃる！！▼
-や　まもるというより　せかいは　もはや
-オイラと　そなたの　ふたりの▽
+まもって　あそぶで　ごじゃる！！▼
+せいかくには　まもる　ってより
+この　せかいの　すべては▽
+そなたと　オイラ　ふたりの▽
 てのひらの　なかで　ごじゃる！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T13:49:21" />
+				Time="2011-11-29T01:57:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T13:49:21" />
+				Time="2011-11-29T01:57:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>魔神『るるるーん♪
 そなたは　タフで　ごじゃる！▽
-やっぱり　気に入ったで　ごじゃる！▼
+やっぱり　気にいったで　ごじゃる！▼
 ……るるるーん♪▼
-そうで　ごじゃる！！▼
+ん　んん！　ひらめいたで　ごじゃる！▼
 オイラ　今度は　世界を　壊さず
-そなたと　守るで　ごじゃる！！▼　
-や　守るというより　世界は　もはや
-オイラと　そなたの　ふたりの▽
+守って　遊ぶで　ごじゃる！！▼
+正確には　守る　ってより
+この　世界の　すべては▽
+そなたと　オイラ　ふたりの▽
 手のひらの　中で　ごじゃる！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T13:49:21" />
+				Time="2011-11-29T01:57:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T13:49:21" />
+				Time="2011-11-29T01:57:20" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2854,30 +2865,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アーカム『まてよ！　まじん！！
-なにを　いってんだよ！！▼
-はかいこそ　すべて　でしょ！！
+なにを　いってんだよー！！▼
+はかいこそ　すべて　でしょ！？
 さっさと　みんな　ブッこわそうよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T13:11:59" />
+				Time="2011-11-29T01:57:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T13:11:59" />
+				Time="2011-11-29T01:57:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アーカム『待てよ！　魔神！！
-何を　言ってんだよ！！▼
-破壊こそ　すべて　でしょ？
+何を　言ってんだよー！！▼
+破壊こそ　すべて　でしょ！？
 さっさと　みんな　ブッ壊そうよ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:58" />
+				Time="2011-11-29T01:57:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:56:58" />
+				Time="2011-11-29T01:57:20" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2902,15 +2913,15 @@
 			<Text>魔神『おい　アーカム……
 そなたは　頭が　カチカチで▽
 面白くない　やつで　ごじゃる！▼
-ワンパターンな　やつは
+ワンパターンな　ロートルは
 さっさと　消えろで　ごじゃる！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T13:49:21" />
+				Time="2011-11-29T01:57:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T13:49:21" />
+				Time="2011-11-29T01:57:20" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

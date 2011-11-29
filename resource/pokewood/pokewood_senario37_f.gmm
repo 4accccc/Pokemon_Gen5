@@ -747,7 +747,7 @@
 	</row>
 	<row id="pw_event5_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『あわわわ……
-カラダが　いうことを　きかない……▽
+からだが　いうことを　きかない……▽
 ちからが　はいらない……▽
 やめろ……　やめ……ろ</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『あわわわ……
@@ -829,9 +829,9 @@
 	</row>
 	<row id="pw_event6_hero_2">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『あのねえ……
-さいしょから　おみとおし　です！！</language>
+はじめから　おみとおしです！！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『あのねえ……
-最初から　お見通し　です！！</language>
+初めから　お見通しです！！</language>
 	</row>
 	<row id="pw_event6_enemy_2">
 		<language name="JPN" width="256">しょうじょ『えー！　ホンマ！？▼
@@ -868,14 +868,16 @@
 	<row id="pw_event6_hero_4">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『ハイ　ないても　ムダ！
 それに　こども　だからって▽
-こんなイタズラ　ゆるしません！▼
-パパとママ　つれて　さんにんで
-ウチの　じむしょまで　きてください！</language>
+イタズラでは　すまないのよ！▼
+いますぐ　りょうしんを　よびなさい
+つづきは　ウチの　じむしょで▽
+じっくり　はなすと　しましょう！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『ハイ　泣いても　ムダ！
 それに　子供　だからって▽
-こんなイタズラ　許しません！▼
-パパと　ママと　三人で
-ウチの事務所に　来てください！</language>
+イタズラでは　すまないのよ！▼
+今すぐ　両親を　呼びなさい
+続きは　ウチの　事務所で▽
+ジックリ　話すと　しましょう！</language>
 	</row>
 	<row id="pw_event6_enemy_4">
 		<language name="JPN" width="256">しょうじょ『わーん！　きびしー！

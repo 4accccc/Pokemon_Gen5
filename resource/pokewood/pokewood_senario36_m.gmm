@@ -356,10 +356,10 @@
 	<row id="pw_turn_hero_0">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『まずは　あのおとこが
 けしかけてくる　ポケモンを▽
-なんとか　しなければ……</language>
+なんとか　するか……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『まずは　あの男が
 けしかけて来る　ポケモンを▽
-何とか　しなければ……</language>
+何とか　するか……</language>
 	</row>
 	<row id="pw_turn_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『くうきが　おもたい……
@@ -373,10 +373,10 @@
 	</row>
 	<row id="pw_turn_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『うう……
-カラダが……！
+からだが……！
 </language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『うう……
-カラダが……！
+からだが……！
 </language>
 	</row>
 	<row id="pw_event0_hero_0">
@@ -460,7 +460,7 @@
 それは　おそらく……）</language>
 	</row>
 	<row id="pw_event1_react_hero_0">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『なにかこわいのか？</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『なにか　こわいのか？</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『何か　怖いのか？</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
@@ -469,7 +469,7 @@
 	</row>
 	<row id="pw_event1_react_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『おこっているのか？</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『怒っている？</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『怒っているのか？</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
 		<language name="JPN" width="256">カダス『ウググ……
@@ -500,8 +500,8 @@
 た……　た……　助け……</language>
 	</row>
 	<row id="pw_event2_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『？？？</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『？？？</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『どうしたんだ……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『どうしたんだ……</language>
 	</row>
 	<row id="pw_event2_enemy_1">
 		<language name="JPN" width="256">カダス『た……
@@ -618,11 +618,11 @@
 	<row id="pw_event3_hero_2">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『ゆうれいに
 とりつかれた　ひとが　いる……？▽
-そのひとを　たすけたいのか……？
+そいつを　たすけたいのか……？
 </language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『幽霊に
 取りつかれた　人が　いる……？▽
-その人を　助けたいのか……？
+そいつを　助けたいのか……？
 </language>
 	</row>
 	<row id="pw_event3_enemy_2">
@@ -663,13 +663,13 @@
 	</row>
 	<row id="pw_event4_hero_0">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『しまった！……
-なにかに　とりつかれた▼
+なにかに　とりつかれた！！▼
 くっ……！
-カラダが　うごかない……！</language>
+からだが　うごかない……！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『しまった！……
-何かに　取りつかれた▼
+何かに　取りつかれた！！▼
 くっ……！
-カラダが　動かない……！</language>
+体が　動かない……！</language>
 	</row>
 	<row id="pw_event4_enemy_0">
 		<language name="JPN" width="256">カダス『オマエノ　カラダ　ジョウブ▼
@@ -728,14 +728,14 @@
 消息は　依然　不明……</language>
 	</row>
 	<row id="pw_event5_hero_0">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『しまった！
-なにかに　とりつかれた▼
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『しまった！……
+なにかに　とりつかれた！！▼
 くっ……！
-カラダが　うごかない……！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『しまった！
-何かに　取りつかれた▼
+からだが　うごかない……！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『しまった！……
+何かに　取りつかれた！！▼
 くっ……！
-カラダが　動かない……！</language>
+体が　動かない……！</language>
 	</row>
 	<row id="pw_event5_enemy_0">
 		<language name="JPN" width="256">カダス『オマエノ　カラダ　ジョウブ▼
@@ -805,12 +805,12 @@
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『ちょっと　あんた！
 もう　ウソは　バレバレだよ▽
 そんな　こしばい　やめなさい▼
-あなた　とりつかれて
+あなたは　べつに　とりつかれて
 なんか　いないでしょう？</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『ちょっと　あなた！
 もう　ウソは　バレバレだよ▽
 そんな　小芝居　止めなさい▼
-あなた　取りつかれて
+あなたは　別に　取りつかれて
 なんか　いないでしょう？</language>
 	</row>
 	<row id="pw_event6_enemy_1">
@@ -872,18 +872,18 @@
 </language>
 	</row>
 	<row id="pw_event6_hero_4">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『あなた　ねえ
-なきついても　ゆるしませんよ！▼
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『……あなた　ねえ
+なききついても　ゆるしませんよ！▼
 はずかしく　ないんですか？
 これから　おくさんと　ふたりで▽
-ウチの　じむしょ　きてください！▽
-みっちり　おせっきょう　しますんで！</language>
+ウチの　じむしょ　きてもらおう！▽
+おせっきょうだけじゃ　すみませんよ！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『あなたねえ
 泣きついても　許しませんよ！▼
 恥ずかしく　ないんですか？
 これから　奥さんと　二人で▽
-ウチの　事務所　来てください！▽
-みっちり　お説教　しますんで！</language>
+ウチの　事務所　来てもらおう！▽
+お説教だけじゃ　すみませんよ！</language>
 	</row>
 	<row id="pw_event6_enemy_4">
 		<language name="JPN" width="256">カダス『うおおおおーん！

@@ -158,18 +158,18 @@
 こだいぶんめいの　なぞを▽
 ときあかす　だいはっけん　なんです▼
 どうか　のりうつっている　ヤツを
-おいはらって　くださいませんか▼
+おいはらって　ください！！▼
 いろいろ　かたりかけて　きますが
 しんちょうに　おねがいしますよ▼
 ヤツめ　きにいらない　へんじを　すると
 エラいめに　あわせてきますから</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T09:29:42" />
+				Time="2011-11-29T03:18:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T09:29:42" />
+				Time="2011-11-29T03:18:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -271,25 +271,29 @@
 		Label="pw_event0_hero_3">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]『やって　みましょう</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『そうですか……
+けっこうなギャラも　いただきましたし▽
+いいでしょう　やって　みましょう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:25" />
+				Time="2011-11-29T03:47:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:25" />
+				Time="2011-11-29T03:47:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]『やってみましょう</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『そうですか……
+結構なギャラも　頂きましたし▽
+いいでしょう　やって　みましょう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:25" />
+				Time="2011-11-29T03:47:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:25" />
+				Time="2011-11-29T03:47:00" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
