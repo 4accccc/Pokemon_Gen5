@@ -2373,7 +2373,7 @@ BOOL INFINITY_DUNGEON_GetUpPosRoomTypeIsBoss( const INF_DUNGEON_DATA *p_dungeon_
   // ˆê‚Âã‚Ì•”‰®”Ô†‚ðŽæ“¾
   s32 next_room = now_room - ROOM_MAX_X;
 
-  if( now_room < 0 )
+  if( next_room < 0 )
   {
     return FALSE;
   }
