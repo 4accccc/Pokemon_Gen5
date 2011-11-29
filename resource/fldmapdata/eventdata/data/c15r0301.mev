@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/28 13:04:29
+#save date:2011/11/29 16:57:59
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c15r0301.wms
 #SECTION START:OBJ_EVENT
@@ -49,7 +49,7 @@ C15R0301_BACKPACKERM_01
 #OBJ CODE Number
 BACKPACKERM
 #MOVE CODE Number
-MV_DMY
+MV_DIR_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -88,7 +88,7 @@ FV_C15R0301_BONUS_1
 #Event Script Name
 SCRID_C15R0301_WOMAN2_01
 #Direction Type Number
-DIR_RIGHT
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -111,7 +111,7 @@ C15R0301_MAN3_01
 #OBJ CODE Number
 MAN3
 #MOVE CODE Number
-MV_DMY
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -129,7 +129,7 @@ DIR_RIGHT
 #Move Limit X Number
 0
 #Move Limit Z Number
-0
+2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -142,7 +142,7 @@ C15R0301_MUSICIANW_01
 #OBJ CODE Number
 MUSICIANW
 #MOVE CODE Number
-MV_DMY
+MV_RND_ULR
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -173,7 +173,7 @@ C15R0301_POLICEMAN_01
 #OBJ CODE Number
 POLICEMAN
 #MOVE CODE Number
-MV_DMY
+MV_RND_UDR
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -204,7 +204,7 @@ C15R0301_WOMAN2_03
 #OBJ CODE Number
 WOMAN2
 #MOVE CODE Number
-MV_DMY
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -220,13 +220,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+2
 #Move Limit Z Number
 0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-72 48 184
+72 48 152
 #event number: 7
 #type
 1
@@ -235,7 +235,7 @@ C15R0301_BABYBOY2_01
 #OBJ CODE Number
 BABYBOY2
 #MOVE CODE Number
-MV_DMY
+MV_RTDR         
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -243,7 +243,7 @@ FV_C15R0301_BONUS_2
 #Event Script Name
 SCRID_C15R0301_BABYBOY2_01
 #Direction Type Number
-DIR_UP
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -251,9 +251,9 @@ DIR_UP
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+2
 #Move Limit Z Number
-0
+2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -266,7 +266,7 @@ C15R0301_NURSE_01
 #OBJ CODE Number
 NURSE
 #MOVE CODE Number
-MV_DMY
+MV_RND_DLR
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -328,7 +328,7 @@ C15R0301_WOMAN2_02
 #OBJ CODE Number
 WOMAN2
 #MOVE CODE Number
-MV_DMY
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -346,7 +346,7 @@ DIR_LEFT
 #Move Limit X Number
 0
 #Move Limit Z Number
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -359,7 +359,7 @@ C15R0301_MAN3_02
 #OBJ CODE Number
 MAN2
 #MOVE CODE Number
-MV_DMY
+MV_RND_UDL
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -390,7 +390,7 @@ C15R0301_OLDWOMAN1_01
 #OBJ CODE Number
 OLDWOMAN1
 #MOVE CODE Number
-MV_DMY
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -406,9 +406,9 @@ DIR_RIGHT
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+1
 #Move Limit Z Number
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -421,7 +421,7 @@ C15R0301_MAN3_03
 #OBJ CODE Number
 MAN3
 #MOVE CODE Number
-MV_DMY
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -437,9 +437,9 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+1
 #Move Limit Z Number
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -452,7 +452,7 @@ C15R0301_TENNISW_01
 #OBJ CODE Number
 TENNISW
 #MOVE CODE Number
-MV_DMY
+MV_RND_ULR
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -483,7 +483,7 @@ C15R0301_MAN3_04
 #OBJ CODE Number
 MAN3
 #MOVE CODE Number
-MV_DMY
+MV_RND_UDR
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -514,7 +514,7 @@ C15R0301_WOMAN2_04
 #OBJ CODE Number
 WOMAN2
 #MOVE CODE Number
-MV_DMY
+MV_RND_ULR
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -607,7 +607,7 @@ C15R0301_MAN3_05
 #OBJ CODE Number
 MAN2
 #MOVE CODE Number
-MV_DMY
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -623,9 +623,9 @@ DIR_LEFT
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+1
 #Move Limit Z Number
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -638,7 +638,7 @@ C15R0301_WOMAN2_06
 #OBJ CODE Number
 WOMAN2
 #MOVE CODE Number
-MV_DMY
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -656,7 +656,7 @@ DIR_DOWN
 #Move Limit X Number
 0
 #Move Limit Z Number
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -677,7 +677,7 @@ FV_C15R0301_BONUS_4
 #Event Script Name
 SCRID_C15R0301_HAKAIM_01
 #Direction Type Number
-DIR_DOWN
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -691,7 +691,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 0 -136
+120 0 -136
 #event number: 22
 #type
 1
@@ -700,7 +700,7 @@ C15R0301_SWPLAZMAW_01
 #OBJ CODE Number
 SWPLAZMAW
 #MOVE CODE Number
-MV_DMY
+MV_RND_DLR
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
