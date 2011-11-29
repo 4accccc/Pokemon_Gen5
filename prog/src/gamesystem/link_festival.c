@@ -219,6 +219,10 @@ void LINK_FESTIVAL_GetMissionStatus( LINK_FESTIVAL* wk, LINKFEST_MISSION_STATUS*
   sp->my_score = wk->mission.my_score;
   sp->total_score = LINK_FESTIVAL_GetNowScore( wk );
  
+  if( wk->log_num == 0 ){
+    sp->my_ranking = 1; //自分ひとりなので必ず一位
+    return;
+  }
   //自分のスコアのランキングを取得
   for( i = 0;i < wk->log_num; i++ ){
     idx[i] = i; 
