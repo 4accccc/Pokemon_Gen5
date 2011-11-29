@@ -2923,6 +2923,35 @@ enum{
   PWEND_REC_SEQ_END,
 
 };
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	終了イベントの監督メッセージを設定する
+ *
+ * @param   wk		  
+ * @param   senario	
+ */
+//----------------------------------------------------------------------------------
+static u32 _set_director_end_msg( BTL_CLIENT *wk, POKEWOOD_SENARIO *senario, const BATTLE_SETUP_PARAM *bsp )
+{
+  int event_no, point, rank_offset, msg;
+  event_no    = _check_pokewood_event(senario, &wk->pokewoodSeqWork, wk->clientTurnCount,
+                                   BTL_MAIN_GetPokewoodFailReason(wk->mainModule));
+  point       = senario->event[event_no].point;
+  rank_offset = rank_tbl[bsp->player_star_rank];
+
+  // イベントの獲得点数で監督のメッセージを設定する
+  if(point>100){
+    msg = pw_director_0_STRANGEEND + PW_DIRECTOR_1RANK_MSG_MAX * rank_offset;
+  }else if(point>=0){
+    msg = pw_director_0_GOODEND    + PW_DIRECTOR_1RANK_MSG_MAX * rank_offset;
+  }else if(point<0){
+    msg = pw_director_0_BADEND     + PW_DIRECTOR_1RANK_MSG_MAX * rank_offset;
+  }
+
+  return msg;
+}
+
 //----------------------------------------------------------------------------------
 /**
  * @brief	ポケウッド撮影終了時に条件達成か失敗かを伝えるシーケンス処理
@@ -2937,24 +2966,16 @@ static BOOL SubSeq_POKEWOOD_RecEnd_Sequence( BTL_CLIENT *wk )
   switch(wk->pokewoodSeqWork.seq){
   case PWEND_REC_SEQ_INIT:
     {
-      const BATTLE_SETUP_PARAM *bsp   = BTL_MAIN_GetBSPConst( wk->mainModule );
+      const BATTLE_SETUP_PARAM *bsp = BTL_MAIN_GetBSPConst( wk->mainModule );
       POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario( wk->mainModule );
       BtlResult resultCode = expandServerResult( wk );
-      if(resultCode==BTL_RESULT_WIN){     // 条件を達成
-        wk->pokewoodSeqWork.my_msg = pw_director_0_GOODEND + PW_DIRECTOR_1RANK_MSG_MAX*rank_tbl[bsp->player_star_rank];
+      if(resultCode==BTL_RESULT_WIN){ // 条件を達成
         wk->clientTurnCount=100;
-      }else{                              // 条件を未達成
-        int event_no;
-        wk->clientTurnCount=101;  // 失敗イベント発動
-
-        event_no = _check_pokewood_event(senario, &wk->pokewoodSeqWork, wk->clientTurnCount,
-                                         BTL_MAIN_GetPokewoodFailReason(wk->mainModule));
-        if(senario->event[event_no].point<0){
-          wk->pokewoodSeqWork.my_msg = pw_director_0_BADEND + PW_DIRECTOR_1RANK_MSG_MAX*rank_tbl[bsp->player_star_rank];
-        }else{
-          wk->pokewoodSeqWork.my_msg = pw_director_0_STRANGEEND + PW_DIRECTOR_1RANK_MSG_MAX*rank_tbl[bsp->player_star_rank];
-        }
+      }else{                          // 条件を未達成
+        wk->clientTurnCount=101;
       }
+      // 監督メッセージを設定する
+      wk->pokewoodSeqWork.my_msg = _set_director_end_msg( wk, senario, bsp );
     }
     wk->pokewoodSeqWork.seq =PWEND_REC_SEQ_CLAPPER_BOARD;
     break;
