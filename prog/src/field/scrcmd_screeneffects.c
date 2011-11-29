@@ -48,7 +48,8 @@
 #include "system/brightness.h" // for
 
 // フェード面定義
-#define FADE_PLANEMASK  (GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD)
+#define FADE_PLANEMASK      (GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD)
+#define FADE_PLANEMASK_ALL  (GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD) // 文字もフェードする
 
 static BOOL EvWaitDispFade( VMHANDLE *core, void *wk );
 static BOOL EvWaitMapFade( VMHANDLE *core, void *wk );
@@ -629,7 +630,13 @@ static GMEVENT_RESULT Fade_MsgEnableEvent( GMEVENT* event, int* seq, void* wk )
             BRIGHTNESS_WHITE, // フェード終了時の輝度
             BRIGHTNESS_NORMAL,// フェード開始時の輝度
             FADE_PLANEMASK,   // フェードが反映されるBG面
-            MASK_DOUBLE_DISPLAY );      // フェードが反映されるLCD
+            MASK_MAIN_DISPLAY );      // フェードが反映されるLCD
+        ChangeBrightnessRequest( 
+            4,       // フェードするのにかかるSync数
+            BRIGHTNESS_WHITE, // フェード終了時の輝度
+            BRIGHTNESS_NORMAL,// フェード開始時の輝度
+            FADE_PLANEMASK_ALL,   // フェードが反映されるBG面
+            MASK_SUB_DISPLAY );      // フェードが反映されるLCD
       }
       (*seq) = SEQ_FADE_END;
     }
@@ -655,7 +662,13 @@ static GMEVENT_RESULT Fade_MsgEnableEvent( GMEVENT* event, int* seq, void* wk )
             BRIGHTNESS_NORMAL, // フェード終了時の輝度
             BRIGHTNESS_WHITE,// フェード開始時の輝度
             FADE_PLANEMASK,   // フェードが反映されるBG面
-            MASK_DOUBLE_DISPLAY );
+            MASK_MAIN_DISPLAY );
+        ChangeBrightnessRequest( 
+            6,       // フェードするのにかかるSync数
+            BRIGHTNESS_NORMAL, // フェード終了時の輝度
+            BRIGHTNESS_WHITE,// フェード開始時の輝度
+            FADE_PLANEMASK_ALL,   // フェードが反映されるBG面
+            MASK_SUB_DISPLAY );
       }
       (*seq) = SEQ_FADE_END;
     }
