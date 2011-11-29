@@ -2212,14 +2212,16 @@ static void _check_pokewood_success( BTL_CLIENT *wk, POKEWOOD_SENARIO *senario, 
 {
   // 撮影モードで
   if( BTL_MAIN_GetPokewoodMode( wk->mainModule ) == BTL_POKEWOOD_REC){ 
-    // 成功イヴェントの起動が行われたら
+    // 成功イベントの起動が行われたら
     if(senario->success_event==event_no){
       _set_pokewood_success_flag( wk, BTL_POKEWOOD_RESULT_SUCCESS );    // 成功フラグを立てる
     }else{
-      if(senario->event[event_no].point <= 0 ){
-        _set_pokewood_success_flag( wk, BTL_POKEWOOD_RESULT_BAD );      // エンディング点数が低かったらBAD
-      }else if(senario->event[event_no].point > 100){
+      // 100点以上だったらストレンジEND
+      if(senario->event[event_no].point >= 100){
         _set_pokewood_success_flag( wk, BTL_POKEWOOD_RESULT_STRANGE );  // 100以上の場合はストレンジEND
+      // それ以外は「クリア」だろうと「失敗」だろうとサクセスENDでなければ全てBAD
+      }else{
+        _set_pokewood_success_flag( wk, BTL_POKEWOOD_RESULT_BAD );      // それ以外は全てBAD
       }
     }
     OS_Printf("success check event_no=%d, pokewoodResult = %d\n", event_no, _get_pokewood_success_flag(wk));
