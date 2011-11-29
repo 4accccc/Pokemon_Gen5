@@ -107,6 +107,13 @@ enum{
   INFO_FLAG_FMISSION = GAMEBEACON_CGEAR_INFO_FMISSION,
   INFO_FLAG_MAX = GAMEBEACON_CGEAR_INFO_MAX,
 };
+//CONNECT表示ステータス
+typedef enum{
+  CGEAR_CONNECT_STATUS_OFF,      //<誰ともすれ違ってない表示
+  CGEAR_CONNECT_STATUS_NORMAL,   //<誰かとすれ違ったが、新着はない時の表示
+  CGEAR_CONNECT_STATUS_HOT,      //<新着ビーコンのお知らせがある時の表示
+  CGEAR_CONNECT_STATUS_FMISSION, //<フェスのお誘いがある時の表示
+}CGEAR_CONNECT_STATUS;
 
 enum{
   // パレットタイプ
@@ -1010,6 +1017,8 @@ static void _gearStartUpAnimeEnd(C_GEAR_WORK* pWork);
 static BOOL _gearStartUpMainBoot(C_GEAR_WORK* pWork);
 static BOOL _gearStartUpMainWakeUp(C_GEAR_WORK* pWork);
 static void _taskAdd_StartUpRingAnm( C_GEAR_WORK* pWork, u8 mode, u8 ring_id, u8 ring_col, u8 wait, int* task_ct );
+static void _taskAdd_FesInfoRingAnm( C_GEAR_WORK* pWork );
+static void _taskDel_FesInfoRingAnm( C_GEAR_WORK* pWork );
 
 static void _gearFrameColorChange(C_GEAR_WORK* pWork, u8 col_no );
 static void _gearRingColorChangeCore(C_GEAR_WORK* pWork, u8 ring_id, u8 col_no );
@@ -1112,6 +1121,7 @@ static GMEVENT_RESULT EVENT_ButtonEffectWait( GMEVENT *event, int *seq, void *wk
 static void _cgear_SleepCheck( C_GEAR_WORK* pWork, BOOL bAction );
 static void _cgear_CheckMissionPartner( C_GEAR_WORK* pWork, INTRUDE_CONNECT intrude_status );
 static void _cgear_CheckTVTStatus( C_GEAR_WORK* pWork, INTRUDE_CONNECT intrude_status );
+static void _cgear_ConnectInfoStatusSet( C_GEAR_WORK* pWork, CGEAR_CONNECT_STATUS status );
 static void _cgear_CheckBeaconInfo( C_GEAR_WORK* pWork );
 
 #ifdef _NET_DEBUG
@@ -1140,7 +1150,11 @@ static void _changeState(C_GEAR_WORK* pWork,StateFunc state)
 //ステートが通常ループかどうか？(起動演出ステートなどでないかチェック)
 static BOOL _checkStateIsNormal(C_GEAR_WORK* pWork)
 {
-  return ( pWork->state == _modeSelectMenuWait );
+  if( pWork->GetOpenTrg==_CGEAR_SLEEP_NONE && 
+      pWork->state == _modeSelectMenuWait ){
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //------------------------------------------------------------------------------
@@ -2944,6 +2958,7 @@ static void _gearStartUpAnimeStart(C_GEAR_WORK* pWork)
 static void _gearStartUpAnimeEnd(C_GEAR_WORK* pWork)
 {
   //生きてるタスクがあれば全て殺す
+  _cgear_ConnectInfoStatusSet( pWork, CGEAR_CONNECT_STATUS_NORMAL );
   GFL_TCBL_DeleteAll( pWork->tcbsys );
 
   _gearAllObjDrawEnable( pWork, TRUE );
@@ -3160,6 +3175,7 @@ static void _taskAdd_FesInfoRingAnm( C_GEAR_WORK* pWork )
 
   if( pWork->p_tcbl_fesinfo != NULL ){
     GF_ASSERT(0);
+    pWork->info_flag[INFO_FLAG_FMISSION] = TRUE;
     return;
   }
   tcb = GFL_TCBL_Create( pWork->tcbsys, tcb_FesInfoRingAnm, sizeof(TASKWK_FESINFO_RINGANM), 0 );
@@ -3173,14 +3189,17 @@ static void _taskAdd_FesInfoRingAnm( C_GEAR_WORK* pWork )
   twk->evy = 0;
   twk->end_evy = 10;
   twk->dif = 1;
-//  ring2_FesInfoAnmCore( pWork, twk->evy );
 
-  pWork->p_tcbl_fesinfo = tcb;  //TCBのポインタを憶えておく  
+  pWork->p_tcbl_fesinfo = tcb;  //TCBのポインタを憶えておく
+
+  //お知らせフラグの整合性を取る
+  pWork->info_flag[INFO_FLAG_FMISSION] = TRUE;
 }
 
 static void _taskDel_FesInfoRingAnm( C_GEAR_WORK* pWork )
 {
   if( pWork->p_tcbl_fesinfo == NULL ){
+    pWork->info_flag[INFO_FLAG_FMISSION] = FALSE;
     return;
   }
   //元の色に戻す
@@ -3188,6 +3207,9 @@ static void _taskDel_FesInfoRingAnm( C_GEAR_WORK* pWork )
 
   GFL_TCBL_Delete( pWork->p_tcbl_fesinfo );
   pWork->p_tcbl_fesinfo = NULL;
+
+  //お知らせフラグの整合性を取る
+  pWork->info_flag[INFO_FLAG_FMISSION] = FALSE;
 }
 
 static void tcb_FesInfoRingAnm( GFL_TCBL *tcb , void* tcb_wk)
@@ -3989,6 +4011,8 @@ static void _SLEEPGO_FUNC(void* pWk)
 {
   C_GEAR_WORK* pWork = pWk;
   
+  //CONNECT表示を一旦ノーマルに戻す
+  _cgear_ConnectInfoStatusSet( pWork, CGEAR_CONNECT_STATUS_NORMAL );
   //生きてるタスクがあれば全て殺す
   GFL_TCBL_DeleteAll( pWork->tcbsys );
 
@@ -4261,7 +4285,7 @@ void CGEAR_SW_Main( C_GEAR_WORK* pWork,BOOL bAction )
     _cgear_CheckBeaconInfo( pWork );
 
 #ifdef PM_DEBUG
-    _debSetAlpha( pWork );
+//    _debSetAlpha( pWork );
 #endif
   }
 
@@ -4897,7 +4921,7 @@ static GMEVENT_RESULT EVENT_ButtonEffectWait( GMEVENT *event, int *seq, void *wk
           FS_OVERLAY_ID( notwifi_event_research_radar ), EVENT_ResearchRadar, (void*)fieldWork );
     break;
   case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW:
-    GAMEBEACON_ResetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_HOT );
+    GAMEBEACON_ResetCGearInfoFlag( INFO_FLAG_HOT );
 
     p_cevent= EVENT_ChangeSubScreen(pWork->pGameSys, fieldWork, FIELD_SUBSCREEN_BeaconViewCheck(pWork->subscreen));
     break;
@@ -5089,6 +5113,44 @@ static void _cgear_CheckTVTStatus( C_GEAR_WORK* pWork, INTRUDE_CONNECT intrude_s
     }
   }
 }
+//------------------------------------------------------------------------------
+/**
+ * @brief   CONNECT表示のステータスセット
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _cgear_ConnectInfoStatusSet( C_GEAR_WORK* pWork, CGEAR_CONNECT_STATUS status )
+{
+  switch( status ){
+  case CGEAR_CONNECT_STATUS_OFF:
+    //誰ともすれ違っていない表示(プレイ開始の最初しかありえない)
+    break;
+  case CGEAR_CONNECT_STATUS_NORMAL:
+    //誰かとすれ違ったが新着はない表示
+    _taskDel_FesInfoRingAnm( pWork );  //INFO_FLAG_FMISSIONの制御はこの中
+    
+    //通常CONNECTアニメに移行
+    pWork->info_flag[INFO_FLAG_HOT] = FALSE;
+    _gearObjSetAnmSeq( pWork->cellCursor[ACT_CONNECT], ACTANM_CONNECT );
+    break;
+  case CGEAR_CONNECT_STATUS_HOT:
+    //新着のすれ違いを受信した表示
+    _taskDel_FesInfoRingAnm( pWork );  //INFO_FLAG_FMISSIONの制御はこの中
+    
+    //新規ビーコン受信お知らせアニメに移行
+    pWork->info_flag[INFO_FLAG_HOT] = TRUE;
+    _gearObjSetAnmSeq( pWork->cellCursor[ACT_CONNECT], ACTANM_CONNECT_INFO );
+    break;
+  case CGEAR_CONNECT_STATUS_FMISSION:
+    //フェスミッションのお誘いが来ている表示
+    _taskAdd_FesInfoRingAnm( pWork ); //INFO_FLAG_FMISSIONフラグの制御はこの中
+
+    //フェスミッション受信お知らせアニメに移行
+    pWork->info_flag[INFO_FLAG_HOT] = FALSE;
+    _gearObjSetAnmSeq( pWork->cellCursor[ACT_CONNECT], ACTANM_FMISSION );
+    break;
+  }  
+}
 
 //------------------------------------------------------------------------------
 /**
@@ -5151,10 +5213,13 @@ static void _cgear_CheckBeaconInfo( C_GEAR_WORK* pWork )
   //フェスミッション
   if( GAMEBEACON_GetCGearInfoFlag( INFO_FLAG_FMISSION ) ){
     if( !pWork->info_flag[INFO_FLAG_FMISSION] ){
-      _gearObjSetAnmSeq( pWork->cellCursor[ACT_CONNECT], ACTANM_FMISSION );
-      pWork->info_flag[INFO_FLAG_FMISSION] = TRUE;
+      _cgear_ConnectInfoStatusSet( pWork, CGEAR_CONNECT_STATUS_FMISSION );
+#if 0
+      _taskAdd_FesInfoRingAnm( pWork ); //info_flag[]の制御はこの中
+      
       pWork->info_flag[INFO_FLAG_HOT] = FALSE;
-      _taskAdd_FesInfoRingAnm( pWork );
+      _gearObjSetAnmSeq( pWork->cellCursor[ACT_CONNECT], ACTANM_FMISSION );
+#endif
     }
     return;
   }
@@ -5163,19 +5228,27 @@ static void _cgear_CheckBeaconInfo( C_GEAR_WORK* pWork )
   //新規ビーコン＆デルパワー
   if( GAMEBEACON_GetCGearInfoFlag( INFO_FLAG_HOT ) ){
     if( !pWork->info_flag[INFO_FLAG_HOT] ){
-      _gearObjSetAnmSeq( pWork->cellCursor[ACT_CONNECT], ACTANM_CONNECT_INFO );
+      _cgear_ConnectInfoStatusSet( pWork, CGEAR_CONNECT_STATUS_HOT );
+#if 0
+      _taskDel_FesInfoRingAnm( pWork );  //INFO_FLAG_FMISSIONの制御はこの中
+
+      //新規ビーコン受信お知らせアニメに移行
       pWork->info_flag[INFO_FLAG_HOT] = TRUE;
-      pWork->info_flag[INFO_FLAG_FMISSION] = FALSE;
-      _taskDel_FesInfoRingAnm( pWork );
+      _gearObjSetAnmSeq( pWork->cellCursor[ACT_CONNECT], ACTANM_CONNECT_INFO );
+#endif
     }
     return;
   }
-  //ホットビーコンフラグOffでまだInfo表示だったら元に戻す
+  //ホットビーコンフラグOffもフェスミッションフラグもOffで、まだInfo表示だったら元に戻す
   if( pWork->info_flag[INFO_FLAG_HOT] || pWork->info_flag[INFO_FLAG_FMISSION]){
-    _gearObjSetAnmSeq( pWork->cellCursor[ACT_CONNECT], ACTANM_CONNECT );
+    _cgear_ConnectInfoStatusSet( pWork, CGEAR_CONNECT_STATUS_NORMAL );
+#if 0
+    _taskDel_FesInfoRingAnm( pWork );  //INFO_FLAG_FMISSIONの制御はこの中
+
+    //通常のコネクトアニメ表示に移行
     pWork->info_flag[INFO_FLAG_HOT] = FALSE;
-    pWork->info_flag[INFO_FLAG_FMISSION] = FALSE;
-    _taskDel_FesInfoRingAnm( pWork );
+    _gearObjSetAnmSeq( pWork->cellCursor[ACT_CONNECT], ACTANM_CONNECT );
+#endif
   }
 }
 
