@@ -51,9 +51,9 @@
 #define  FMISSION_ID_ITEM_HEART_01  ( 39 )  ///<ƒn[ƒg
 #define  FMISSION_ID_NPC_JANKEN_01  ( 40 )  ///<‚¶‚á‚ñ‚¯‚ñ‚P
 #define  FMISSION_ID_EVENT_EGG_01  ( 41 )  ///<ƒ^ƒ}ƒS›z‰»
-#define  FMISSION_ID_EFFECT_ENC_TARGET_02  ( 42 )  ///<(ƒ|ƒPƒ‚ƒ“–¼)‚ð’T‚¹‚Q
-#define  FMISSION_ID_EFFECT_ENC_TARGET_03  ( 43 )  ///<(ƒ|ƒPƒ‚ƒ“–¼)‚ð’T‚¹‚R
-#define  FMISSION_ID_EFFECT_ENC_TARGET_04  ( 44 )  ///<(ƒ|ƒPƒ‚ƒ“–¼)‚ð’T‚¹‚S
+#define  FMISSION_ID_EFFECT_ENC_TARGET_03  ( 42 )  ///<(ƒ|ƒPƒ‚ƒ“–¼)‚ð’T‚¹‚R
+#define  FMISSION_ID_EFFECT_ENC_TARGET_04  ( 43 )  ///<(ƒ|ƒPƒ‚ƒ“–¼)‚ð’T‚¹‚S
+#define  FMISSION_ID_EFFECT_ENC_TARGET_02  ( 44 )  ///<(ƒ|ƒPƒ‚ƒ“–¼)‚ð’T‚¹‚Q
 #define  FMISSION_ID_ITEM_DUMMY_01  ( 45 )  ///<–¢Žg—pi—\”õj
 #define  FMISSION_ID_EVENT_TRAIL_SP1  ( 46 )  ///<‚©‚­‚µ‚ ‚È_”zM
 #define  FMISSION_ID_NPC_POKEQUIZ_SP1  ( 47 )  ///<}ŠÓƒNƒCƒY_”zM
