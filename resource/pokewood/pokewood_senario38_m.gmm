@@ -707,7 +707,7 @@
 	</row>
 	<row id="pw_event5_react_hero_2">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『わからない！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『わからない！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『分からない！</language>
 	</row>
 	<row id="pw_event5_react_enemy_2">
 		<language name="JPN" width="256">こえ『そうか……　そのとおり……▼
