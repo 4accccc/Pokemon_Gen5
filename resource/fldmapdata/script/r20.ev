@@ -56,6 +56,10 @@ INIT_EVENT_START   ev_zone_r20
   ELSE
     _FLAG_RESET( FV_R20_RANGER_01 )
   ENDIF
+  
+  IF $WK_SCENE_R20 == 3 THEN
+    _SXY_MOVE_NPC_POS( R20_SWRIVAL_01, DIR_DOWN , 162, -3, 668 )
+  ENDIF
 }
 INIT_EVENT_END
 
@@ -63,9 +67,7 @@ INIT_EVENT_END
 /*					FIELD_INIT_SCRIPT						*/
 /************************************************************/
 INIT_EVENT_START ev_init_r20
-  IF $WK_SCENE_R20 == 3 THEN
-    _OBJ_POS_CHANGE( R20_SWRIVAL_01 , 162, -3, 668, DIR_DOWN )
-  ENDIF
+  
 
 INIT_EVENT_END
 
