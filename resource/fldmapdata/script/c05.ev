@@ -336,6 +336,8 @@ EVENT_START		ev_pos_c05_hakaim_01
   _FLAG_SET(FV_C05_SWPLAZMAM_01)
   //ポケモンハウス前POS有効
   $WK_SCENE_C05 = 1
+  //C05到着フラグセット
+  _FLAG_SET(SYS_FLAG_ARRIVE_C05)
   //========================================//
   
   

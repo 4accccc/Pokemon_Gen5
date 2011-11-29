@@ -238,6 +238,8 @@ EVENT_START   ev_pos_c08_swchampion_01
   $WK_SCENE_C08_SWCHAMPION = 1
   //C08アイリス非表示
   _FLAG_SET( FV_C08_SWCHAMPION_01 )
+  //C08到着フラグセット
+  _FLAG_SET(SYS_FLAG_ARRIVE_C08)
   //========================================//
   
   //ハイリンク通信ブロック処理終了
