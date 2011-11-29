@@ -687,7 +687,8 @@ VMCMD_RESULT EvCmdResonanceResortName( VMHANDLE * core, void *wk )
   WORDSET *wordset    = SCRIPT_GetWordSet( sc );
   GAMEDATA*          gameData = SCRCMD_WORK_GetGameData( work );
   SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
-  RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData( save );
+  RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( save );
+  RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData( p_resort_sv );
 
   HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
  	u8 idx = VMGetU8( core );
