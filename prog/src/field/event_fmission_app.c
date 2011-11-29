@@ -50,7 +50,8 @@ typedef struct {
   GAMEDATA * gdata;
   SAVE_CONTROL_WORK *save;
   FMISSION_APP_PARAM prm;
-  FMISSION_APP_MODE mode;
+  FMISSION_APP_MODE  mode;
+  BOOL               comm_f;  //常時通信中が正常に機能中か？
 } EVENT_FMISSION_APP_WORK;
 
 extern void sub_AppCallWorkInit( FMISSION_APP_PARAM* prm, GAMESYS_WORK * gsys, GAMEDATA* gdata, FMISSION_APP_MODE mode );
@@ -78,8 +79,10 @@ static GMEVENT_RESULT EVENT_FMissionAppMain(GMEVENT * event, int *  seq, void * 
       }
       GMEVENT_CallEvent(event, fade_event);
     }
-    //ビーコンの子→親切り替えをストップ(子の状態で固定リクエスト)
-    GFL_NET_WL_PauseBeaconSend( TRUE );
+    if( faw->comm_f ){
+      //ビーコンの子→親切り替えをストップ(子の状態で固定リクエスト)
+      GFL_NET_WL_PauseBeaconSend( TRUE );
+    }
     (*seq)++;
     break;
   case _FIELD_FADE_CLOSE:
@@ -141,8 +144,10 @@ static GMEVENT_RESULT EVENT_FMissionAppMain(GMEVENT * event, int *  seq, void * 
     (*seq) ++;
     break;
   case _FIELD_END: 
-    //ビーコンの子→親切り替えを再開
-    GFL_NET_WL_PauseBeaconSend( FALSE );
+    if( faw->comm_f ){
+      //ビーコンの子→親切り替えを再開
+      GFL_NET_WL_PauseBeaconSend( FALSE );
+    }
     return GMEVENT_RES_FINISH;
   default:
     GF_ASSERT(0);
@@ -170,6 +175,17 @@ GMEVENT* EVENT_FMissionApp(GAMESYS_WORK * gsys, void* work )
   faw->save = GAMEDATA_GetSaveControlWork(faw->gdata);
   faw->gsys = gsys;
   faw->mode = mode;
+
+  //このイベントが呼び出された時点での通信状態を取得
+  {
+    GAME_COMM_SYS_PTR comm_sys = GAMESYSTEM_GetGameCommSysPtr(gsys);
+    if( ( FIELDCOMM_CheckCommNo( comm_sys ) == GAME_COMM_NO_FIELD_BEACON_SEARCH ) &&
+        ( GameCommSys_CheckSystemWaiting( comm_sys ) == FALSE )){
+      faw->comm_f = TRUE;
+    }else{
+      faw->comm_f = FALSE;
+    }
+  }
 
   return event;
 }
