@@ -158,8 +158,8 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl27[] = {
 };
 //ÉrÉãâÆè„Ç`Å[ÇT
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl28[] = {
-  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01d_NSBMD, GFL_G3D_UTIL_RESARC },
-  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01d_NSBCA, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01e_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01e_NSBCA, GFL_G3D_UTIL_RESARC },
 };
 
 //=======================================================

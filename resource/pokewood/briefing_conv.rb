@@ -21,7 +21,7 @@ NOFILE_STRING     = "%s‚Æ‚¢‚¤ƒtƒ@ƒCƒ‹‚ª‚ ‚è‚Ü‚¹‚ñ\n"
 
 # batt_bg_tbl.xls‚©‚ç“±‚©‚ê‚éƒe[ƒuƒ‹
 $field_hash    = {
-  "ƒrƒ‹‰®ã‚`"=>"field01a", "ƒrƒ‹‰®ã‚`[‚P"=>"field01a", "ƒrƒ‹‰®ã‚`[‚Q"=>"field01b","ƒrƒ‹‰®ã‚`[‚R"=>"field01c","ƒrƒ‹‰®ã‚`[‚S"=>3,"ƒrƒ‹‰®ã‚`[‚T"=>"field01d",
+  "ƒrƒ‹‰®ã‚`"=>"field01a", "ƒrƒ‹‰®ã‚`[‚P"=>"field01a", "ƒrƒ‹‰®ã‚`[‚Q"=>"field01b","ƒrƒ‹‰®ã‚`[‚R"=>"field01c","ƒrƒ‹‰®ã‚`[‚S"=>"field01d","ƒrƒ‹‰®ã‚`[‚T"=>"field01e",
   "—V‰€’n‚`"=>"field02a", "—V‰€’n‚`[‚P"=>"field02a","—V‰€’n‚`[‚Q"=>"field02b","—V‰€’n‚`[‚R"=>"field02c","—V‰€’n‚`[‚S"=>"field02d","—V‰€’n‚`[‚T"=>"field02e",
   "“s‰ïEŽG“¥"=>"field03a", "“s‰ïEŽG“¥[‚P"=>"field03a", "“s‰ïEŽG“¥[‚Q"=>"field03b", "“s‰ïEŽG“¥[‚R"=>"field03c", "“s‰ïEŽG“¥[‚S"=>"field03d", "“s‰ïEŽG“¥[‚T"=>"field03d", 
   "–¢—ˆ“sŽs"=>"field04a", "–¢—ˆ“sŽs[‚P"=>"field04a", "–¢—ˆ“sŽs[‚Q"=>"field04b", 

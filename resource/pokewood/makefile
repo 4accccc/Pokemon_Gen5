@@ -106,6 +106,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	-rm -f *_f.gmm
 	-rm -f *_m.gmm
 	-rm -f bgm_hash.rb
+	-rm -f pkwd_briefing_model.cdat
 endif
 	-rm -f $(TARGETDIR)/$(targetname).narc
 	-rm -f $(TARGETDIR)/$(targetname).naix
