@@ -86,8 +86,11 @@ INIT_EVENT_START ev_init_c05
   
   //元プラズマ団イベント後
   IF $WK_SCENE_C05 == 1 THEN
+    _OBJ_POS_CHANGE( C05_HAKAIM_01, 198, 2, 396, DIR_LEFT )
+    _OBJ_POS_CHANGE( C05_SAGE6_01, 197, 2, 396, DIR_RIGHT )
+  ELSIF $WK_SCENE_C05 == 2 THEN
     _OBJ_POS_CHANGE( C05_HAKAIM_01, 198, 2, 396, DIR_DOWN )
-    _OBJ_POS_CHANGE( C05_HAKAIM_01, 197, 2, 396, DIR_DOWN )
+    _OBJ_POS_CHANGE( C05_SAGE6_01, 197, 2, 396, DIR_DOWN )
   ELSIF $WK_SCENE_C05 == 3 THEN
     _OBJ_POS_CHANGE( C05_SWRIVAL_01, 211, 0, 403, DIR_DOWN )
   //ジムクリア後
@@ -293,13 +296,6 @@ EVENT_START		ev_pos_c05_hakaim_01
   
   //アニメ：プラズマ団移動
   _OBJ_ANIME_AUTO( C05_SWPLAZMAM_01, 212, 432, FORCE_TYPE_NPC, 4, DIR_UD)
-  
-  _TIME_WAIT(18)
-  
-  //アニメ：全員見送る
-  _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_r )
-  _OBJ_ANIME( C05_SWRIVAL_01,anm_staystep_r )
-  _OBJ_ANIME( C05_HAKAIM_01,anm_staystep_r )
   _OBJ_ANIME_WAIT()
   
   //ライバル名タグに代入
@@ -321,7 +317,6 @@ EVENT_START		ev_pos_c05_hakaim_01
   
   //アニメ：元プラズマ団隣接
   _OBJ_ANIME_AUTO( C05_HAKAIM_01, 219, 433, FORCE_TYPE_NPC, 8, DIR_UD)
-  _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_l )
   _OBJ_ANIME_WAIT()
   
   //元プラズマ団：助かりました
