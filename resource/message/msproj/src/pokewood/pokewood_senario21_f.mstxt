@@ -505,51 +505,45 @@
 		Label="pw_event0_enemy_4">
 		<LanguageCell
 			Language="JPN">
-			<Text>ドーブル『だからさー　いまのよのなか
+			<Text>ドーブル『いいすか？
 ポケモンが　しゃべるくらい　なんすよ！▼
 ゆうれいが　きおくを　なくしたって
 べつに　おかしく　ないっしょ？▼
 というかね　じかんも　ないし
 ほんだいに　はいりますからね▼
-えーとね　オレ　アンタが
-トレーナーとして　イケてるって▽
-きいてるんすよ▼
-んで　そうだん　なんすけど　オレと
-アントニオと　しょうぶして　くださいよ！▼
+オレと　アントニオと
+しょうぶして　くださいよ！▼
 アンタの　イカした　すがた　みたら
 アントニオの　きおくも　ぜったい▽
 よみがえると　おもうんすよねー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T10:37:26" />
+				Time="2011-11-29T12:15:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T10:37:26" />
+				Time="2011-11-29T12:15:08" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ドーブル『だからさー　今の世の中
+			<Text>ドーブル『いいすか？
 ポケモンが　しゃべるくらい　なんすよ！▼
 幽霊が　記憶を　なくしたって
 別に　おかしく　ないっしょ？▼
 というかね　時間も　ないし
 本題に　入りますからね▼
-えーとね　オレ　アントニオから
-アンタが　トレーナーとして▽
-イケてる　って　聞いてるんすよ▼
-んで　相談　なんすけど　オレと
-アントニオと　勝負して　くださいよ！▼
+オレと　アントニオと
+勝負して　くださいよ！▼
 アンタの　イカした姿　見たら
 アントニオの　記憶も　ぜってー▽
 よみがえると　思うんすよねー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T10:37:26" />
+				Time="2011-11-29T12:15:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T10:37:26" />
+				Time="2011-11-29T12:15:08" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -585,15 +579,15 @@
 あいのこくはくも　おわすなく！▼
 あまい　ことばで　メロメロしちゃえば
 きっと　アントニオの　きおくも▽
-はやく　よみがえりますって！！▽
+はやく　よみがえりますって！▽
 さあさあ　しょうぶ　しましょう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T11:29:21" />
+				Time="2011-11-29T12:00:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T11:29:21" />
+				Time="2011-11-29T12:00:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -601,15 +595,15 @@
 愛の告白も　お忘れなく！▼
 甘い　言葉で　メロメロしちゃえば
 きっと　アントニオの　記憶も▽
-早く　よみがえりますって！！▽
+早く　よみがえりますって！▽
 さあさあ　勝負を　はじめましょう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T11:29:21" />
+				Time="2011-11-29T12:00:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T11:29:21" />
+				Time="2011-11-29T12:00:09" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
