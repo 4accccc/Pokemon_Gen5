@@ -5,6 +5,7 @@
 # @author  tamada GAMEFREAK inc.
 # @date     2011.09.22
 #------------------------------------------------------------------------------
+require 'Date'
 
 PROJECT_ROOT = ENV["PROJECT_ROOT"]
 require PROJECT_ROOT + 'tools/constant'
@@ -57,7 +58,8 @@ raw_data.each{|column|
 }
 
 File.open(ARGV[1],"w"){|writefile|
-  writefile.puts("//TEST")
+  writefile.puts "//#{DateTime.now.to_s}"
+  writefile.puts("//ポケウッド：撮影時トレーナータイプ→動作モデル指定変換テーブル")
   writefile.puts("//このファイルはコンバータで自動生成しています")
   writefile.puts("//#{ARGV[0]} --> #{ARGV[1]}")
 

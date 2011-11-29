@@ -92,7 +92,7 @@ SDK_COMPILER_ASSERT( SCR_PKWD_STAR_RANK_4 == POKEWOOD_STAR_RANK_4 );
 
 //--------------------------------------------------------------
 /**
- * @todo  テーブルを完成させる
+ * @brief ポケウッド用トレーナータイプ→動作モデル変換
  */
 //--------------------------------------------------------------
 static const u16 ActorTRType2MMdlID( u16 trtype )
@@ -105,11 +105,15 @@ static const u16 ActorTRType2MMdlID( u16 trtype )
       return TrType2MMdl[i][1];
     }
   }
-  //仮：テーブルから見つけられなかった場合はBOY2にする
+  GF_ASSERT( 0 );
+  //error対処：テーブルから見つけられなかった場合はBOY2にする
   return BOY2;
 }
 
 //--------------------------------------------------------------
+/**
+ * @brief 監督の指定→動作モデル変換
+ */
 //--------------------------------------------------------------
 static const u16 DirectorIDtoMMdlID( u8 director_id )
 {
@@ -121,7 +125,11 @@ static const u16 DirectorIDtoMMdlID( u8 director_id )
     ADULTW,
   };
 
-  GF_ASSERT( director_id < 5 );
+  if ( director_id >= NELEMS(mmdl_table) )
+  {
+    GF_ASSERT( 0 );
+    director_id = 0;  //error対処
+  }
   return mmdl_table[director_id];
 }
 
