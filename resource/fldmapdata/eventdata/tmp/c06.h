@@ -31,6 +31,7 @@
 #define C06_WORKMAN_01                    14
 #define C06_WORKMAN_01WB                  15
 #define C06_BACKPACKERW_01                16
+#define C06_WOMAN1A_01                    17
 
 #endif //ZONE_C06_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c06.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

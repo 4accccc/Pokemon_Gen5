@@ -37,6 +37,7 @@ _EVENT_DATA		ev_c02_girl3a_01
 _EVENT_DATA		ev_c02_girl3b_01
 _EVENT_DATA	ev_bg_c02_sign3_01
 _EVENT_DATA	ev_bg_c02_sign4_01
+_EVENT_DATA	ev_c02_middlewoman2a_01
 _EVENT_DATA_END
 
 //éÂêlåˆï˚å¸éÊìæïœêî
@@ -306,4 +307,12 @@ EVENT_START	ev_bg_c02_sign4_01
   _PLAINWIN_MSG_DOWN( msg_c02_sign4_01 )
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
+EVENT_END
+
+/************************************************************/
+/*	C02ÅFMIDDLEWOMAN2A								*/
+/************************************************************/
+EVENT_START	ev_c02_middlewoman2a_01
+	_RRESORT_NAME( 0 )
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02_middlewoman2a_01 )
 EVENT_END

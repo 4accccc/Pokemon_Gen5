@@ -44,6 +44,7 @@ _EVENT_DATA	ev_c06_workman_01
 _EVENT_DATA	ev_c06_woman1_01
 _EVENT_DATA	ev_c06_workman_01wb
 _EVENT_DATA	ev_c06_backpackerw_01
+_EVENT_DATA	ev_c06_woman1a_01
 _EVENT_DATA_END
 
 //éÂêlåˆï˚å¸éÊìæïœêî
@@ -793,4 +794,12 @@ EVENT_START   ev_c06_backpackerw_01
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c06_mission_add_03 )
   ENDIF
 
+EVENT_END
+
+/************************************************************/
+/*	C06ÅFWOMAN1A									*/
+/************************************************************/
+EVENT_START	ev_c06_woman1a_01
+	_RRESORT_NAME( 0 )
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c06_woman1a_01 )
 EVENT_END

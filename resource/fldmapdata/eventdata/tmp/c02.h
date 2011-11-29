@@ -28,6 +28,7 @@
 #define C02_BACKPACKERW_01                 5
 #define C02_GIRL3A_01                      6
 #define C02_GIRL3B_01                      7
+#define C02_MIDDLEWOMAN2A_01               8
 
 #endif //ZONE_C02_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c02.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
