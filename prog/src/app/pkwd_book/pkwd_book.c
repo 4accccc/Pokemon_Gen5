@@ -468,7 +468,8 @@ typedef struct
     //
 	void					*FontPalBuf[PKWD_BOOK_COLOR_NUM];	  ///< フォント上画面パレット(4本分)(こちらを破棄)
 	NNSG2dPaletteData		*FontPalBufData[PKWD_BOOK_COLOR_NUM]; ///< フォント上画面パレット(4本分)
-	
+	//
+	s32						Alpha[2];		// debug用として残しておく
 } PKWD_BOOK_MAIN_WORK;
 
 //-----------------------------------------
@@ -1701,10 +1702,13 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 		GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
 		8, 3 );
 	//
+	// (4,8) -> (3,15)
+	wk->Alpha[0] = 3;
+	wk->Alpha[1] = 15;
 	// 上画面
 	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2,
 		GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
-		4, 8);
+		wk->Alpha[0], wk->Alpha[1] );
 }
 
 //-----------------------------------------------------------------------------
@@ -5395,12 +5399,12 @@ static void pwb_debug( PKWD_BOOK_MAIN_WORK *wk )
 		OS_Printf("*** scenario [%d] played ***\n",tmp);
 	}
 	// X
-//	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_X) ){
-//		G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2,
-//			GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
-//			wk->Alpha[0], wk->Alpha[1]);
-//		OS_Printf("*** %d,%d ***\n",wk->Alpha[0],wk->Alpha[1]);
-//	}
+	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_X) ){
+		G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2,
+			GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
+			wk->Alpha[0], wk->Alpha[1]);
+		OS_Printf("*** %d,%d ***\n",wk->Alpha[0],wk->Alpha[1]);
+	}
 #endif
 }
 
