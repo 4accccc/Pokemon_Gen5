@@ -17,11 +17,11 @@
 #include "savedata/medalbox_rank_def.h" // for MEDALBOX_RANK_xxxx
 #include "battle/pokewood.h"
 #include "savedata/wbt_save.h"
-#include "gamesystem/g_power.h"
 #include "gamesystem/fest_mission.h"
 #include "gamesystem/fest_mission_data.h"
 
 #ifndef MULTI_BOOT_MAKE  //通常時処理
+#include "gamesystem/g_power.h"
 #include "field/wbt_tool.h"
 #endif //MULTI_BOOT_MAKE
 #include "../../../resource/research_radar/data/hobby_id.h"  // for HOBBY_ID_xxxx
@@ -778,6 +778,7 @@ void WORDSET_RegisterBoxName( WORDSET* wordset, u32 bufID, const BOX_MANAGER* bo
   RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
 }
 
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 //------------------------------------------------------------------
 /**
  * @brief 指定バッファにGパワー名を登録
@@ -795,6 +796,7 @@ void WORDSET_RegisterGPowerName( WORDSET* wordset, u32 bufID, GPOWER_ID g_power 
   }
   RegisterWordFormMsgArc( wordset, bufID, NARC_message_power_dat, g_power );
 }
+#endif //MULTI_BOOT_MAKE
 
 //------------------------------------------------------------------
 /**
@@ -974,7 +976,6 @@ void WORDSET_RegisterWBTTournamentName( WORDSET* wordset, u32 bufID, u32 tournam
   WBTTOOL_GetTournamentName( wordset->heapID, tournamentID, wordset->tmpBuf );
   RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
 }
-#endif  //MULTI_BOOT_MAKE
 
 //------------------------------------------------------------------
 /**
@@ -1012,6 +1013,8 @@ void WORDSET_RegisterFMissionTitle( WORDSET* wordset, u32 bufID, FEST_MISSION_ID
     GFL_HEAP_FreeMemory( fmwk );
   }
 }
+
+#endif  //MULTI_BOOT_MAKE
 
 //======================================================================================================
 // 文字列展開
