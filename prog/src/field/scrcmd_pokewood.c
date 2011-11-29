@@ -214,11 +214,18 @@ VMCMD_RESULT EvCmdPokewoodSystemStart( VMHANDLE * core, void * wk )
   SCRCMD_WORK* work     = (SCRCMD_WORK*)wk;
   GAMEDATA   * gamedata = SCRCMD_WORK_GetGameData( work );
   PKWDSYS   ** pkwdsys_work;
-
+  POKEWOOD_SAVEDATA * pkwdsave = GAMEDATA_GetPokewoodSavedata( gamedata );
+  
   MORI_Printf("EvCmdPKWDSystemStart\n");
   pkwdsys_work = GAMEDATA_GetPKWDSysPointer( gamedata );
   GF_ASSERT( *pkwdsys_work == NULL );
   *pkwdsys_work = PKWDSYS_Create( HEAPID_PROC );
+
+  // シナリオオープン条件チェック(ゲームクリア後などオープンに使う）
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(notwifi_event_pokewood) );  
+  PKWD_OpenCheckScenario( pkwdsave, gamedata, 0, 0, 0 );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(notwifi_event_pokewood) );
+
 
   return VMCMD_RESULT_CONTINUE;
 }
