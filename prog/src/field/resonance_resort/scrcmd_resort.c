@@ -1254,7 +1254,6 @@ VMCMD_RESULT EvCmdResortSetSeceneVisible( VMHANDLE *p_core, void *p_wk_adrs )
   switch( mode )
   {
   case RESORT_SCENE_VISIBLE_OFF_CROWDPEOPLE:
-    GF_ASSERT( p_people );
     RESORT_UTIL_SetSceneVisible( p_people_sys, p_npc_sys, p_people, RESORT_UTIL_VISIBLE_OFF_CROWDPEOPLE );
     break;
   case RESORT_SCENE_VISIBLE_OFF_ALL_CROWDPEOPLE:
