@@ -1819,12 +1819,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おみせに　あんないしたひとの　ごうけい　[Digit:7digits ]
-まちに　しょうたいしたひとの　ごうけい　[Digit:7digits Idx="1" ]▼
-まちの　ひょうばん　[Name:ResortTitle Idx="2" ]▼</Text>
+			<Text>おみせに　あんないしたひと　[Digit:7digits ]
+まちに　しょうたいしたひと　[Digit:7digits Idx="1" ]▼
+まちの　ひょうばん
+[Name:ResortTitle Idx="2" ]▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-28T16:23:28" />
+				Time="2011-11-29T03:37:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1832,12 +1833,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お店に　案内した人の　合計　[Digit:7digits ]
-街に　招待した人の　合計　[Digit:7digits Idx="1" ]▼
-街の　評判　[Name:ResortTitle Idx="2" ]▼</Text>
+			<Text>お店に　案内した人　[Digit:7digits ]
+街に　招待した人　[Digit:7digits Idx="1" ]▼
+街の　評判
+[Name:ResortTitle Idx="2" ]▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-28T16:23:59" />
+				Time="2011-11-29T03:37:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
