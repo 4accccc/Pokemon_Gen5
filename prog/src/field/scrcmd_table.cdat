@@ -1015,7 +1015,7 @@
   DEF_CMD( EvCmdMedalCategoryName,    EV_SEQ_MEDAL_CATEGORY_NAME )
   DEF_CMD( EvCmdTokuseiName,          EV_SEQ_TOKUSEI_NAME )
   DEF_CMD( EvCmdSeikakuName,          EV_SEQ_SEIKAKU_NAME )
-  NO_CMD()
+  DEF_CMD( EvCmdResonanceResortName, EV_SEQ_RRESORT_NAME )
 
   NO_CMD()
   NO_CMD()

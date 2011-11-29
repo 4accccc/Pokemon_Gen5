@@ -38,6 +38,7 @@
 #include "print/str_tool.h"
 
 #include "savedata/misc.h" 
+#include "savedata/resonance_resort_sv.h"
 
 //======================================================================
 //  define
@@ -671,6 +672,38 @@ VMCMD_RESULT EvCmdFMissionName( VMHANDLE * core, void *wk )
 	u16 fmission_level = SCRCMD_GetVMWorkValue( core, work );
 
   WORDSET_RegisterFMissionTitle( wordset, idx, fmission_id, fmission_level );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------------
+/**
+ * @brief JA名をバッファにセットする
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdResonanceResortName( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET *wordset    = SCRIPT_GetWordSet( sc );
+  GAMEDATA*          gameData = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
+  RESORT_CITY_DATA *p_city = RESONANCE_RESORT_SV_GetCityData( save );
+
+  HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
+ 	u8 idx = VMGetU8( core );
+
+  STRBUF *p_strbuf;
+
+  STRCODE name[RESORT_CITY_NAME_BUFF_MAX+EOM_SIZE];
+
+  RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_CITY_NAME, name );
+  p_strbuf = GFL_STR_CreateBuffer( RESORT_CITY_NAME_BUFF_MAX+EOM_SIZE, heapID );
+  GFL_STR_SetStringCode( p_strbuf, name );
+
+  WORDSET_RegisterWord( wordset, idx, p_strbuf, PM_NEUTRAL, TRUE, PM_LANG );
+  GFL_STR_DeleteBuffer( p_strbuf );
+
+
   return VMCMD_RESULT_CONTINUE;
 }
 

@@ -663,7 +663,7 @@ static const CMD_CHECK_DATA cmd_check_data[] = {
   { TRUE, TRUE, TRUE }, // NO_DATA_660 (660)
   { TRUE, TRUE, TRUE }, // NO_DATA_661 (661)
   { TRUE, FALSE, FALSE }, // _SEIKAKU_NAME (662)
-  { FALSE, FALSE, FALSE }, // NO_CMD (663)
+  { TRUE, FALSE, FALSE }, // _RRESORT_NAME (663)
   { FALSE, FALSE, FALSE }, // NO_CMD (664)
   { FALSE, FALSE, FALSE }, // NO_CMD (665)
   { TRUE, FALSE, FALSE }, // _GET_MEDAL_CIID (666)

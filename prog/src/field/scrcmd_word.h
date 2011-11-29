@@ -38,5 +38,5 @@ extern VMCMD_RESULT EvCmdMedalCategoryName( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdTokuseiName( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdSeikakuName( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdFMissionName( VMHANDLE * core, void *wk );
-
+extern VMCMD_RESULT EvCmdResonanceResortName( VMHANDLE * core, void *wk );
 
