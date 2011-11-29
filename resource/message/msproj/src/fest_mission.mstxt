@@ -89,7 +89,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_tutorial">
+		Label="msg_fm_title_tutorial"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>はじめての　きのみ　さがし！</Text>
@@ -121,7 +122,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_item_01">
+		Label="msg_fm_title_item_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かけらを　さがせ！</Text>
@@ -167,7 +169,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_item_02">
+		Label="msg_fm_title_item_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>いっかく　せんきん！</Text>
@@ -213,7 +216,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_item_02_s">
+		Label="msg_fm_title_item_02_s"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>きえた　[Digit:4digits Idx="1" ]この　ざいほう</Text>
@@ -259,7 +263,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_item_03b">
+		Label="msg_fm_title_item_03b"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>なぞの　こうせきを　さがせ！</Text>
@@ -305,7 +310,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_item_03w">
+		Label="msg_fm_title_item_03w"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ひかる　こうせきを　さがせ！</Text>
@@ -351,7 +357,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_item_04">
+		Label="msg_fm_title_item_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>きのみを　あつめろ！</Text>
@@ -397,7 +404,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_item_05">
+		Label="msg_fm_title_item_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>きのみ　だいしゅうかく！</Text>
@@ -443,7 +451,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_item_06">
+		Label="msg_fm_title_item_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おとしものを　さがせ！</Text>
@@ -489,7 +498,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_item_07b">
+		Label="msg_fm_title_item_07b"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>わすれられた　おとしもの</Text>
@@ -535,7 +545,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_item_07w">
+		Label="msg_fm_title_item_07w"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>みつからない　おとしもの</Text>
@@ -581,7 +592,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_item_08">
+		Label="msg_fm_title_item_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かんぽうやくを　さがせ！</Text>
@@ -627,7 +639,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_item_09">
+		Label="msg_fm_title_item_09"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>こやし　コレクター！</Text>
@@ -673,7 +686,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_item_10">
+		Label="msg_fm_title_item_10"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ときめく　ハートは　どこに？</Text>
@@ -719,7 +733,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_item_11">
+		Label="msg_fm_title_item_11"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>まぼろしの　きのみを　さがせ！</Text>
@@ -765,7 +780,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_item_12">
+		Label="msg_fm_title_item_12"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>まぼろしの　いっぴん！</Text>
@@ -811,7 +827,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_npc_01">
+		Label="msg_fm_title_npc_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>まいごの　しょうねんを　さがせ</Text>
@@ -857,7 +874,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_npc_02">
+		Label="msg_fm_title_npc_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>どうぐ　ちょうだいな！</Text>
@@ -903,7 +921,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_npc_03">
+		Label="msg_fm_title_npc_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かくとうかと　しゅぎょう！</Text>
@@ -949,7 +968,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_npc_03_s">
+		Label="msg_fm_title_npc_03_s"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Digit:4digits Idx="1" ]にん　くみて！</Text>
@@ -995,7 +1015,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_npc_04">
+		Label="msg_fm_title_npc_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>エリートへの　みちのり！</Text>
@@ -1041,7 +1062,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_npc_05">
+		Label="msg_fm_title_npc_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>めざせ　わらしべちょうじゃ！</Text>
@@ -1087,7 +1109,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_npc_06b">
+		Label="msg_fm_title_npc_06b"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ドキドキ　ぶつぶつこうかん！</Text>
@@ -1133,7 +1156,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_npc_06w">
+		Label="msg_fm_title_npc_06w"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ウキウキ　ぶつぶつこうかん！</Text>
@@ -1179,7 +1203,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_npc_07">
+		Label="msg_fm_title_npc_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>エンジョイ　ショッピング！</Text>
@@ -1225,7 +1250,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_npc_08">
+		Label="msg_fm_title_npc_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ショッキング　ショッピング！</Text>
@@ -1271,13 +1297,14 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_npc_08b">
+		Label="msg_fm_title_npc_08b"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>りそうの　おねだんは…？</Text>
+			<Text>りそうの　おねだんは……？</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-20T12:24:31" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:48:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1285,10 +1312,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>理想の　お値段は…？</Text>
+			<Text>理想の　お値段は……？</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-27T03:43:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:48:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1317,13 +1344,14 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_npc_08w">
+		Label="msg_fm_title_npc_08w"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ほんとうの　おねだんは…？</Text>
+			<Text>ほんとうの　おねだんは……？</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-20T12:24:43" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:48:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1331,10 +1359,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホントの　お値段は…？</Text>
+			<Text>ホントの　お値段は……？</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-27T03:44:01" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:48:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1363,13 +1391,14 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_npc_09">
+		Label="msg_fm_title_npc_09"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きおくの　げんかいへ…</Text>
+			<Text>きおくの　げんかいへ……</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T14:49:47" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:48:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1377,10 +1406,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>記憶の　限界へ…</Text>
+			<Text>記憶の　限界へ……</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T14:49:47" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:48:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1409,7 +1438,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_npc_09_s">
+		Label="msg_fm_title_npc_09_s"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>きおくりょく　トレーニング！</Text>
@@ -1455,7 +1485,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_npc_10">
+		Label="msg_fm_title_npc_10"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>じゃんけん　たいかい！</Text>
@@ -1501,7 +1532,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_npc_11">
+		Label="msg_fm_title_npc_11"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンセンターの　おねえさん</Text>
@@ -1547,7 +1579,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_npc_12">
+		Label="msg_fm_title_npc_12"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモン　ずかんクイズ！</Text>
@@ -1593,7 +1626,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_npc_13">
+		Label="msg_fm_title_npc_13"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おかいもの　だいさくせん！</Text>
@@ -1639,13 +1673,14 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_npc_14">
+		Label="msg_fm_title_npc_14"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おわりなき　たたかい…！</Text>
+			<Text>おわりなき　たたかい……！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-20T09:56:27" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:48:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1653,10 +1688,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>終わりなき　戦い…！</Text>
+			<Text>終わりなき　戦い……！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-27T03:45:26" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:48:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1685,7 +1720,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_poke_01">
+		Label="msg_fm_title_poke_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ゆれる　くさむらを　さがせ！</Text>
@@ -1731,7 +1767,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_poke_01_s">
+		Label="msg_fm_title_poke_01_s"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンサーチ[Digit:4digits Idx="1" ]！</Text>
@@ -1777,7 +1814,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_poke_02">
+		Label="msg_fm_title_poke_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonName ]を　さがせ！</Text>
@@ -1823,13 +1861,14 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_evt_01">
+		Label="msg_fm_title_evt_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かねを　ならして…</Text>
+			<Text>かねを　ならして……</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-20T09:59:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:48:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1837,10 +1876,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>鐘を　鳴らして…</Text>
+			<Text>鐘を　鳴らして……</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-27T03:45:51" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:48:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1869,7 +1908,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_evt_01_s">
+		Label="msg_fm_title_evt_01_s"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Digit:4digits Idx="1" ]かい　なりひびく　かね</Text>
@@ -1883,10 +1923,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:4digits Idx="1" ]かい　鳴り響く　鐘</Text>
+			<Text>[Digit:4digits Idx="1" ]回　鳴り響く　鐘</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T07:11:04" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:49:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1915,7 +1955,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_evt_02">
+		Label="msg_fm_title_evt_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>きのこの　かくれんぼ！</Text>
@@ -1961,7 +2002,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_evt_03">
+		Label="msg_fm_title_evt_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>はねばしに　まいおちる　ハネ</Text>
@@ -2007,7 +2049,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_evt_04">
+		Label="msg_fm_title_evt_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おたから　はっくつ！</Text>
@@ -2053,7 +2096,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_evt_05">
+		Label="msg_fm_title_evt_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>タマゴと　おさんぽ！</Text>
@@ -2099,7 +2143,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_evt_06">
+		Label="msg_fm_title_evt_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>つり　たいかい！</Text>
@@ -2145,7 +2190,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_evt_07">
+		Label="msg_fm_title_evt_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かくしあなを　さぐれ！</Text>
@@ -2191,7 +2237,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_evt_07b">
+		Label="msg_fm_title_evt_07b"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ざわめきの　かくしあな！</Text>
@@ -2237,7 +2284,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_evt_07w">
+		Label="msg_fm_title_evt_07w"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>しずかなる　かくしあな！</Text>
@@ -2283,7 +2331,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_title_evt_08">
+		Label="msg_fm_title_evt_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かくしあな　だいちょうさ！</Text>
@@ -2329,7 +2378,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_tutorial">
+		Label="msg_fm_explain_tutorial"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>せいげんじかんないに　きのみを
@@ -2381,7 +2431,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_item_01">
+		Label="msg_fm_explain_item_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>せいげんじかんないに　かけらを
@@ -2433,7 +2484,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_item_02">
+		Label="msg_fm_explain_item_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ほらあなや　みちに　おちている
@@ -2451,10 +2503,10 @@
 			Language="JPN_KANJI">
 			<Text>洞穴や道に　落ちている
 道具を　拾い　集めろ！
-お宝が　見つかるかも！？</Text>
+お宝が　みつかるかも！？</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-27T14:08:54" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:49:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2483,7 +2535,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_item_02_s">
+		Label="msg_fm_explain_item_02_s"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>うしなわれた　こだいの
@@ -2535,7 +2588,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_item_03b">
+		Label="msg_fm_explain_item_03b"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>キラキラひかる　こうせきを　さがせ！
@@ -2587,7 +2641,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_item_03w">
+		Label="msg_fm_explain_item_03w"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>キラキラひかる　こうせきを　さがせ！
@@ -2609,8 +2664,8 @@
 落ちている　道具を
 [Digit:4digits Idx="1" ]こ以上　集めよう！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-27T14:16:48" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:48:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2639,7 +2694,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_item_04">
+		Label="msg_fm_explain_item_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>せいげんじかんないに　きのみを
@@ -2691,7 +2747,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_item_05">
+		Label="msg_fm_explain_item_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>せいげんじかんないに　きのみを
@@ -2710,10 +2767,10 @@
 			Language="JPN_KANJI">
 			<Text>制限時間内に　きのみを
 [Digit:4digits Idx="1" ]こ以上　集めよう！
-森や道で　たくさん　見つかるらしい！</Text>
+森や道で　たくさん　みつかるらしい！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-27T14:41:06" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:48:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2742,7 +2799,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_item_06">
+		Label="msg_fm_explain_item_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>せいげんじかんないに　おとしものを
@@ -2760,10 +2818,10 @@
 			Language="JPN_KANJI">
 			<Text>制限時間内に　落し物を
 [Digit:4digits Idx="1" ]こ以上　集めよう！
-街や道で　多く　見つかるぞ！</Text>
+街や道で　多く　みつかるぞ！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-27T14:33:55" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:48:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2792,7 +2850,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_item_07b">
+		Label="msg_fm_explain_item_07b"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>せいげんじかんないに　おとしものを
@@ -2810,10 +2869,10 @@
 			Language="JPN_KANJI">
 			<Text>制限時間内に　落し物を
 [Digit:4digits Idx="1" ]こ以上　集めよう！
-街や道で　多く　見つかるぞ！</Text>
+街や道で　多く　みつかるぞ！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-27T14:49:35" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:47:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2842,7 +2901,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_item_07w">
+		Label="msg_fm_explain_item_07w"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>せいげんじかんないに　おとしものを
@@ -2860,10 +2920,10 @@
 			Language="JPN_KANJI">
 			<Text>制限時間内に　落し物を
 [Digit:4digits Idx="1" ]こ以上　集めよう！
-街や道で　多く　見つかるぞ！</Text>
+街や道で　多く　みつかるぞ！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-27T14:44:04" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:47:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2892,7 +2952,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_item_08">
+		Label="msg_fm_explain_item_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>せいげんじかんないに　おとしものを
@@ -2910,10 +2971,10 @@
 			Language="JPN_KANJI">
 			<Text>制限時間内に　落し物を
 [Digit:4digits Idx="1" ]こ以上　集めよう！
-街や道で　多く　見つかるぞ！</Text>
+街や道で　多く　みつかるぞ！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-27T14:49:42" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:47:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2942,7 +3003,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_item_09">
+		Label="msg_fm_explain_item_09"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>せいげんじかんないに　こやしを
@@ -2994,7 +3056,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_item_10">
+		Label="msg_fm_explain_item_10"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>まちや　みちに　おちている　どうぐを
@@ -3044,7 +3107,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_item_11">
+		Label="msg_fm_explain_item_11"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>まぼろしの　きのみが　みつかった！
@@ -3061,13 +3125,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>幻の　きのみが　見つかった！
+			<Text>幻の　きのみが　みつかった！
 森や　洞穴の　キラキラ光る
 場所を　探して
 きのみを　集めよう！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:20:15" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:47:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3096,7 +3160,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_item_12">
+		Label="msg_fm_explain_item_12"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おおむかしに　つくられた　という
@@ -3148,7 +3213,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_01">
+		Label="msg_fm_explain_npc_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>せいげんじかんないに　まいごを
@@ -3166,12 +3232,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>制限時間内に　迷子を
-[Digit:4digits Idx="1" ]にん以上　探せ！
+[Digit:4digits Idx="1" ]人以上　探せ！
 街や道にいる　男の子に
 話しかて　助けてあげよう！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:25:03" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:47:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3200,7 +3266,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_02">
+		Label="msg_fm_explain_npc_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>どうぐを　なくして　こまっている
@@ -3220,10 +3287,10 @@
 			<Text>道具を　なくして　困っている
 たんパンこぞうを　探せ！
 制限時間内に
-[Digit:4digits Idx="1" ]にん以上　助けよう！</Text>
+[Digit:4digits Idx="1" ]人以上　助けよう！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:25:41" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:47:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3252,7 +3319,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_03">
+		Label="msg_fm_explain_npc_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かけだしの　かくとうかと　たたかい
@@ -3272,10 +3340,10 @@
 			<Text>かけ出しの　格闘家と　戦い
 修行の　お手伝いを　しよう！
 制限時間内に
-[Digit:4digits Idx="1" ]にん以上　倒せ！</Text>
+[Digit:4digits Idx="1" ]人以上　倒せ！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:26:25" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:47:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3304,7 +3372,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_03_s">
+		Label="msg_fm_explain_npc_03_s"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かけだしの　かくとうかと　たたかい
@@ -3322,10 +3391,10 @@
 			Language="JPN_KANJI">
 			<Text>かけ出しの　格闘家と　戦い
 修行の　お手伝いを　しよう！
-[Digit:4digits Idx="1" ]にん　倒せば　成功！</Text>
+[Digit:4digits Idx="1" ]人　倒せば　成功！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T02:07:37" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:47:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3354,7 +3423,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_04">
+		Label="msg_fm_explain_npc_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>エリートトレーナーの
@@ -3374,10 +3444,10 @@
 			<Text>エリートトレーナーの
 修行の　相手をしよう！
 制限時間内に
-[Digit:4digits Idx="1" ]にん以上　倒せ！</Text>
+[Digit:4digits Idx="1" ]人以上　倒せ！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:26:55" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:47:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3406,7 +3476,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_05">
+		Label="msg_fm_explain_npc_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Digit:4digits Idx="1" ]にんいじょうと
@@ -3423,13 +3494,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:4digits Idx="1" ]にん以上と
+			<Text>[Digit:4digits Idx="1" ]人以上と
 道具を　交換しよう！
 街や　道にいる
 お嬢様に　話しかけよう！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T08:22:56" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:47:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3458,7 +3529,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_06b">
+		Label="msg_fm_explain_npc_06b"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Digit:4digits Idx="1" ]にんいじょうと
@@ -3475,13 +3547,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:4digits Idx="1" ]にん以上と
+			<Text>[Digit:4digits Idx="1" ]人以上と
 道具を　交換しよう！
 世界の　各地を　旅する
 バックパッカーに　話しかけよう！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T08:22:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:47:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3510,7 +3582,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_06w">
+		Label="msg_fm_explain_npc_06w"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Digit:4digits Idx="1" ]にんいじょうと
@@ -3527,13 +3600,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:4digits Idx="1" ]にん以上と
+			<Text>[Digit:4digits Idx="1" ]人以上と
 道具を　交換しよう！
 世界の　各地を　旅する
 バックパッカーに　話しかけよう！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T08:23:00" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:47:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3562,7 +3635,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_07">
+		Label="msg_fm_explain_npc_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おかいどくな　ねだんで　ショッピング！
@@ -3582,10 +3656,10 @@
 			<Text>お買い得な　値段で　ショッピング！
 街や道にいる
 ショップ店員に　話しかけて
-[Digit:4digits Idx="1" ]かい以上　購入！</Text>
+[Digit:4digits Idx="1" ]回以上　購入！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:32:48" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:47:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3614,7 +3688,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_08">
+		Label="msg_fm_explain_npc_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>くろいふくの　おとこに　はなしかけて
@@ -3668,7 +3743,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_08b">
+		Label="msg_fm_explain_npc_08b"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>くろいふくの　おとこに　はなしかけて
@@ -3722,7 +3798,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_08w">
+		Label="msg_fm_explain_npc_08w"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>くろいふくの　おとこに　はなしかけて
@@ -3776,7 +3853,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_09">
+		Label="msg_fm_explain_npc_09"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>まちや　みちにいる　ピエロに
@@ -3828,7 +3906,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_09_s">
+		Label="msg_fm_explain_npc_09_s"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>まちや　みちにいる　ピエロに
@@ -3847,11 +3926,11 @@
 			Language="JPN_KANJI">
 			<Text>街や道にいる　ピエロに
 話しかけて　クイズに　答えよう！
-[Digit:4digits Idx="1" ]かい　正解したら
+[Digit:4digits Idx="1" ]回　正解したら
 ミッション　達成だ！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T06:17:58" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:46:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3880,7 +3959,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_10">
+		Label="msg_fm_explain_npc_10"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ようちえんじを　さがして
@@ -3899,11 +3979,11 @@
 			Language="JPN_KANJI">
 			<Text>ようちえんじを　探して
 じゃんけん　勝負をしよう！
-[Digit:4digits Idx="1" ]にん以上に　勝て！
-幸運に　恵まれるのは　誰だ！？</Text>
+[Digit:4digits Idx="1" ]人以上に　勝て！
+幸運に　恵まれるのは　だれだ！？</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:39:06" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:46:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3932,7 +4012,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_11">
+		Label="msg_fm_explain_npc_11"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>まちや　みちにいる
@@ -3984,7 +4065,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_12">
+		Label="msg_fm_explain_npc_12"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>まちや　みちにいる
@@ -4036,7 +4118,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_13">
+		Label="msg_fm_explain_npc_13"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>くろふくの　おとこ　ふたたび！
@@ -4088,7 +4171,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_npc_14">
+		Label="msg_fm_explain_npc_14"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ベテラントレーナーとの
@@ -4106,12 +4190,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ベテラントレーナーとの
-終わり無き　修行に　挑め！
+終わりなき　修行に　挑め！
 制限時間内に
-[Digit:4digits Idx="1" ]にん以上　倒せ！</Text>
+[Digit:4digits Idx="1" ]人以上　倒せ！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:43:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:46:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4140,7 +4224,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_poke_01">
+		Label="msg_fm_explain_poke_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ゆれる　くさむらにいる
@@ -4160,10 +4245,10 @@
 			<Text>揺れる　草むらにいる
 ポケモンを　探してみよう！
 制限時間内に
-[Digit:4digits Idx="1" ]ひき以上　倒せ！</Text>
+[Digit:4digits Idx="1" ]匹以上　倒せ！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:44:22" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:46:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4192,7 +4277,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_poke_01_s">
+		Label="msg_fm_explain_poke_01_s"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ゆれる　くさむらにいる
@@ -4210,10 +4296,10 @@
 			Language="JPN_KANJI">
 			<Text>揺れる　草むらにいる
 ポケモンを　探せ！
-[Digit:4digits Idx="1" ]ひき　探せば　クリア！</Text>
+[Digit:4digits Idx="1" ]匹　探せば　クリア！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T06:37:53" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:46:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4242,7 +4328,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_poke_02">
+		Label="msg_fm_explain_poke_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ゆれる　くさむらにいる
@@ -4262,10 +4349,10 @@
 			<Text>揺れる　草むらにいる
 [Name:PokemonName ]を　探してみよう！
 制限時間内に
-[Digit:4digits Idx="1" ]ひき以上　倒せ！</Text>
+[Digit:4digits Idx="1" ]匹以上　倒せ！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:45:06" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:46:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4295,7 +4382,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_poke_03">
+		Label="msg_fm_explain_poke_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ゆれる　くさむらにいる
@@ -4348,7 +4436,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_poke_04">
+		Label="msg_fm_explain_poke_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ゆれる　くさむらにいる
@@ -4368,10 +4457,10 @@
 			<Text>揺れる　草むらにいる
 [Name:PokemonName ]を　探してみよう！
 どこかに　いるのか　いないのか……
-デルパワーの　ちから　かりるべきか</Text>
+デルパワーの　力　借りるべきか</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:48:19" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:46:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4401,7 +4490,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_poke_05">
+		Label="msg_fm_explain_poke_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ゆれる　くさむらにいる
@@ -4454,7 +4544,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_poke_06">
+		Label="msg_fm_explain_poke_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ゆれる　くさむらにいる
@@ -4505,7 +4596,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_evt_01">
+		Label="msg_fm_explain_evt_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>タワーオブヘブンの　てっぺんにある
@@ -4557,7 +4649,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_evt_01_s">
+		Label="msg_fm_explain_evt_01_s"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>タワーオブヘブンの　てっぺんにある
@@ -4575,10 +4668,10 @@
 			Language="JPN_KANJI">
 			<Text>タワーオブヘブンの　頂上にある
 鐘を　鳴らせ！
-[Digit:4digits Idx="1" ]かい　鳴らせば　クリア！</Text>
+[Digit:4digits Idx="1" ]回　鳴らせば　クリア！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T06:34:03" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:45:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4607,7 +4700,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_evt_02">
+		Label="msg_fm_explain_evt_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>くさむらに　かくれている
@@ -4659,7 +4753,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_evt_03">
+		Label="msg_fm_explain_evt_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ホドモエのはねばしに
@@ -4679,10 +4774,10 @@
 			<Text>ホドモエの跳ね橋に
 落ちている　羽を　集めよう！
 ポケモンの　はばたく　音が
-聞こえたら　その近くを　探せ！</Text>
+きこえたら　その近くを　探せ！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:49:51" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:45:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4711,7 +4806,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_evt_04">
+		Label="msg_fm_explain_evt_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かくちの　ほらあなで
@@ -4729,12 +4825,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>各地の　洞穴で
-見つかる　お宝を　集めよう！
+みつかる　お宝を　集めよう！
 ボコボコと　土煙のあがる
 場所を　探せ！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:50:31" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:45:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4763,7 +4859,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_evt_05">
+		Label="msg_fm_explain_evt_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　タマゴを
@@ -4815,7 +4912,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_evt_06">
+		Label="msg_fm_explain_evt_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>すごいつりざおを　つかって
@@ -4831,10 +4929,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>すごいつりざおを　使って
-ポケモンを　釣り上げろ！</Text>
+ポケモンを　つりあげろ！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:51:57" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:45:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4863,7 +4961,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_evt_07">
+		Label="msg_fm_explain_evt_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かくちの　かくしあなを　めぐって
@@ -4880,13 +4979,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>各地の　かくしあなを　めぐって
+			<Text>各地の　隠し穴を　巡って
 ポケモンを　探せ！
-[Digit:4digits Idx="1" ]ひき以上
+[Digit:4digits Idx="1" ]匹以上
 出会うことが　できれば　成功！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:58:07" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:45:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4915,7 +5014,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_evt_07b">
+		Label="msg_fm_explain_evt_07b"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かくちの　かくしあなを　めぐって
@@ -4932,13 +5032,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>各地の　かくしあなを　めぐって
+			<Text>各地の　隠し穴を　巡って
 ポケモンを　探せ！
 珍しい　ポケモンに
 出会える　かも？？</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:58:36" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:45:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4967,7 +5067,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_evt_07w">
+		Label="msg_fm_explain_evt_07w"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かくちの　かくしあなを　めぐって
@@ -4984,13 +5085,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>各地の　かくしあなを　めぐって
+			<Text>各地の　隠し穴を　巡って
 ポケモンを　探せ！
 珍しい　ポケモンに
 出会える　かも？？</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:58:56" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T03:45:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5019,7 +5120,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fm_explain_evt_08">
+		Label="msg_fm_explain_evt_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>めずらしい　ポケモンの
