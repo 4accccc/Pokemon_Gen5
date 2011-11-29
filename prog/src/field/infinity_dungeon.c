@@ -998,6 +998,17 @@ static void SetDummyObj( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p_r
         gd.x = (*p_grid_data).x - 1;
         AddDummyObj( p_wk , &gd );  // 右
       }
+      // ボス部屋に通じる道の場合で開いているときは、左右のグリッドは踏めないようにする
+      else if( (is_boss == TRUE) && ( is_gate_open==TRUE ) )
+      {
+        // ダミーオブジェクトで封鎖（真ん中のグリッドは通れる）
+        const GRID_DATA *p_grid_data = INF_TOOL_GetBmodelPos( version ,p_room_data->room_type ,WARP_DIR_UP );
+        GRID_DATA gd = *p_grid_data;
+        gd.x = (*p_grid_data).x + 1;
+        AddDummyObj( p_wk , &gd );  // 左
+        gd.x = (*p_grid_data).x - 1;
+        AddDummyObj( p_wk , &gd );  // 右
+      }
     }
 
     // 下
