@@ -471,7 +471,7 @@ class STR_CHECKER
     file.close
   end
 
-  def check( str )
+  def checkFont( str )
     match_word = @buffer.split(//)
     check_word = str.split(//)
 
@@ -485,10 +485,18 @@ class STR_CHECKER
         end
       }
       if ok == 0 then
-        puts "『#{str}』の中の『#{c}』の文字は使えません！\n"
+        puts "#{ARGV[0]}の『#{str}』の中の『#{c}』の文字は使えません！\n"
         return 0
       end
     }
+    return 1
+  end
+
+  def checkLength( str )
+    if str.size > 480 then
+      puts "#{ARGV[0]}の『#{str}』の文字が480を超えて『#{str.size}』文字です\n"
+      return 0
+    end
     return 1
   end
 end
@@ -512,7 +520,14 @@ class MAKE_GMM
       return -1
     end
 
-    if @str_check.check( str_kanji ) == 0 then
+    if @str_check.checkFont( str_kanji ) == 0 then
+      exit(1)
+    end
+
+    if @str_check.checkLength( str_kana ) == 0 then
+      exit(1)
+    end
+    if @str_check.checkLength( str_kanji ) == 0 then
       exit(1)
     end
 
