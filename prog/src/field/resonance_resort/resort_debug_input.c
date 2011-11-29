@@ -37,6 +37,7 @@
 #include "net_app/union/union_beacon_tool.h"
 #include "resort_debug_inline.h"
 #include "resort_debug.h"
+#include "resort_people.h"
 
 #define PROC_HEAP_SIZE  (0x40000)
 #define PRINT_FRAME (GFL_BG_FRAME1_M)

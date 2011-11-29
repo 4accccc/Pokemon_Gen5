@@ -1241,8 +1241,6 @@ VMCMD_RESULT EvCmdResortSetMergeLock( VMHANDLE *p_core, void *p_wk_adrs )
 //-----------------------------------------------------------------------------
 VMCMD_RESULT EvCmdResortSetSeceneVisible( VMHANDLE *p_core, void *p_wk_adrs )
 {
-  static BOOL s_scene_visible_use = FALSE;
-
   SCRCMD_WORK *p_wk = p_wk_adrs;
   SCRIPT_WORK *p_script = SCRCMD_WORK_GetScriptWork( p_wk );
   GAMESYS_WORK *p_gamesys = SCRCMD_WORK_GetGameSysWork( p_wk );
@@ -1256,39 +1254,18 @@ VMCMD_RESULT EvCmdResortSetSeceneVisible( VMHANDLE *p_core, void *p_wk_adrs )
   switch( mode )
   {
   case RESORT_SCENE_VISIBLE_OFF_CROWDPEOPLE:
-    if( s_scene_visible_use )
-    {
-      RESORT_PEOPLE_SYS_ReturnMasterVisibleAll( p_people_sys);
-      RESORT_NPC_SYS_SetVisibleAll( p_npc_sys, TRUE );
-    }
+    GF_ASSERT( p_people );
     RESORT_UTIL_SetSceneVisible( p_people_sys, p_npc_sys, p_people, RESORT_UTIL_VISIBLE_OFF_CROWDPEOPLE );
-
-    s_scene_visible_use = TRUE;
     break;
   case RESORT_SCENE_VISIBLE_OFF_ALL_CROWDPEOPLE:
-    if( s_scene_visible_use )
-    {
-      RESORT_PEOPLE_SYS_ReturnMasterVisibleAll( p_people_sys);
-      RESORT_NPC_SYS_SetVisibleAll( p_npc_sys, TRUE );
-    }
     RESORT_UTIL_SetSceneVisible( p_people_sys, p_npc_sys, NULL, RESORT_UTIL_VISIBLE_OFF_CROWDPEOPLE );
-
-    s_scene_visible_use = TRUE;
     break;
   case RESORT_SCENE_VISIBLE_OFF_ALL_PEOPLE:
-    if( s_scene_visible_use )
-    {
-      RESORT_PEOPLE_SYS_ReturnMasterVisibleAll( p_people_sys);
-      RESORT_NPC_SYS_SetVisibleAll( p_npc_sys, TRUE );
-    }
     RESORT_UTIL_SetSceneVisible( p_people_sys, p_npc_sys, NULL, RESORT_UTIL_VISIBLE_OFF_ALLPEOPLE );
-
-    s_scene_visible_use = TRUE;
     break;
   case RESORT_SCENE_VISIBLE_DEFAULT:
     RESORT_PEOPLE_SYS_ReturnMasterVisibleAll( p_people_sys);
     RESORT_NPC_SYS_SetVisibleAll( p_npc_sys, TRUE );
-    s_scene_visible_use = FALSE;
     break;
   default:
     GF_ASSERT(0);
