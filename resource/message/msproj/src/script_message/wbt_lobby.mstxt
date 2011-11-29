@@ -4031,8 +4031,8 @@ msg_wbt_info_11へ</Comment>
 参加受付は　完了です▽
 では　こちらへ！▼</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-08-05T08:03:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T05:15:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4265,10 +4265,10 @@ msg_wbt_info_11へ</Comment>
 			<Text>ただいま　スペシャルな
 トーナメントを　じゅんびちゅうです▼
 じかんが　かかりそうなので
-きながに　おまちくださいませ！▼</Text>
+きながに　おまちくださいませ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T09:46:43" />
+				Time="2011-11-29T05:10:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -4279,10 +4279,10 @@ msg_wbt_info_11へ</Comment>
 			<Text>ただいま　スペシャルな
 トーナメントを　準備中です▼
 時間が　かかりそうなので
-気長に　お待ちくださいませ！▼</Text>
+気長に　お待ちくださいませ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T09:46:32" />
+				Time="2011-11-29T05:10:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"

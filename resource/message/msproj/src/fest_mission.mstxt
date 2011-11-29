@@ -186,8 +186,8 @@
 			Language="JPN_KANJI">
 			<Text>いっかく　せんきん！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-27T03:34:16" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T05:21:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -278,10 +278,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>謎の　鉱石を　探せ！</Text>
+			<Text>なぞの　鉱石を　探せ！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-27T03:34:31" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T05:18:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -560,10 +560,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>見つからない　落し物</Text>
+			<Text>みつからない　落し物</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-27T03:39:24" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T05:21:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -983,10 +983,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:4digits Idx="1" ]にん組手！</Text>
+			<Text>[Digit:4digits Idx="1" ]人組手！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T01:52:26" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T05:22:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2301,8 +2301,8 @@
 			Language="JPN_KANJI">
 			<Text>静かなる　隠し穴！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-27T03:50:00" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T05:23:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2909,8 +2909,8 @@
 [Digit:4digits Idx="1" ]こいじょう　あつめよう！
 まちや　みちで　おおく　みつかるぞ！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-27T14:44:07" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T05:09:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2956,12 +2956,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せいげんじかんないに　おとしものを
+			<Text>せいげんじかんないに　かんぽうやくを
 [Digit:4digits Idx="1" ]こいじょう　あつめよう！
-まちや　みちで　おおく　みつかるぞ！</Text>
+もりや　ほらあなで　おおく　みつかるらしい</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-27T14:49:42" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T05:09:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2969,12 +2969,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>制限時間内に　落し物を
+			<Text>制限時間内に　かんぽうやくを
 [Digit:4digits Idx="1" ]こ以上　集めよう！
-街や道で　多く　みつかるぞ！</Text>
+森や洞穴で　多く　みつかるらしい</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-29T03:47:50" />
+				Time="2011-11-29T05:09:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3290,7 +3290,7 @@
 [Digit:4digits Idx="1" ]人以上　助けよう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-29T03:47:30" />
+				Time="2011-11-29T05:22:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4878,12 +4878,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンの　タマゴを
-孵化させよう！
+ふ化させよう！
 たくさん　歩いて！
 たくさん　走って！！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:51:12" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T05:22:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -5140,11 +5140,11 @@
 			Language="JPN_KANJI">
 			<Text>珍しい　ポケモンの
 発見　報告があった！
-各地の　かくしあなを　めぐって
+各地の　隠し穴を　巡って
 ポケモンを　探せ！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-28T00:59:22" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T05:23:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
