@@ -439,6 +439,7 @@ static void VBlankFunc( GFL_TCB *tcb, void * work );
 
 static BOOL SubSeqFunc( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
 
+static BOOL SubSeq_FadeinStart( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
 static BOOL SubSeq_FadeinWait( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
 static BOOL SubSeq_Start( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
 static BOOL SubSeq_Main( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
@@ -572,7 +573,6 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Init( GFL_PROC *proc, int *seq, void
     _draw_movie_subtitle( wk, _get_real_pos( wk, wk->nowpos) );
     wk->isTouch = FALSE;
   }
-  wk->bgLogoRequest=TRUE;
 
   // ワーク初期化
   wk->seq = 0;
@@ -582,11 +582,6 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Init( GFL_PROC *proc, int *seq, void
 
   // 16dot上にずらしセンタリングする
   GFL_BG_SetScroll( GFL_BG_FRAME2_S, GFL_BG_SCROLL_Y_SET, 16 );
-
-	//@todo	フェードシーケンスがないので
-//	GX_SetMasterBrightness(0);
-//	GXS_SetMasterBrightness(0);
-  WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, 0, 8, 1, HEAPID_PKWD_SELSCR);
 
   GFL_NET_ReloadIconTopOrBottom( FALSE, HEAPID_PKWD_SELSCR);
   
@@ -741,14 +736,6 @@ static GFL_PROC_RESULT PkwdSelectScreenProc_Main( GFL_PROC *proc, int *seq, void
     return GFL_PROC_RES_FINISH;
   }
 
-  // デバッグボタンでアプリ終了
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
-  {
-//    return GFL_PROC_RES_FINISH;
-    wk->param->mode ^= 1;
-  }
-
-//  PrintTool_MainFunc( wk );
 #ifdef PKWD_SELECT_SCREEN_TOUCHBAR
 	//タッチバーメイン処理
 	PkwdSelectScreen_TOUCHBAR_Main( wk->touchbar );
@@ -800,9 +787,15 @@ static void VBlankFunc( GFL_TCB *tcb, void * work )
   //上画面タイトルロゴ転送
   if( wk->bgLogoRequest){
     int pos = _get_real_pos(wk, wk->nowpos);
-    PkwdSelectScreen_LOGO_u_LoadResource( &wk->wk_bg, 
+    if(pos<0){
+      PkwdSelectScreen_LOGO_u_LoadResource( &wk->wk_bg, -1, -1 );
+    
+    }else{
+      OS_Printf("scenario_no=%d, pos=%d, nowpos=%d\n", wk->valid_list[pos]->scenario_no, pos, wk->nowpos);
+      PkwdSelectScreen_LOGO_u_LoadResource( &wk->wk_bg, 
                                           wk->valid_list[pos]->scenario_no, 
-                                          pos );
+                                          wk->nowpos );
+    }
     wk->bgLogoRequest = 0;
   }
 }
@@ -2024,7 +2017,8 @@ static void _print_movie_information( PKWD_SELECT_SCREEN_MAIN_WORK *wk, int inde
 // サブシーケンス定義
 //===========================================================
 enum{
-  MENU_FADEIN_WAIT=0,      // フェードイン待ち
+  MENU_FADEIN_START=0,
+  MENU_FADEIN_WAIT,        // フェードイン待ち
   MENU_START,              // 開始
   MENU_MAIN,               // メイン処理
   MENU_DECIDE_WAIT,        // 決定アニメ待ち
@@ -2047,7 +2041,8 @@ enum{
 // サブシーケンス関数テーブル
 //===========================================================
 static BOOL (*SubSeqFuncTbl[])( PKWD_SELECT_SCREEN_MAIN_WORK *wk )={
-  SubSeq_FadeinWait,         // MENU_FADEIN_WAIT=0
+  SubSeq_FadeinStart,        // MENU_FADEIN_START=0
+  SubSeq_FadeinWait,         // MENU_FADEIN_WAIT
   SubSeq_Start,              // MENU_START,
   SubSeq_Main,               // MENU_MAIN,
   SubSeq_DecideWait,         // MENU_DECIDE_WAIT,
@@ -2081,6 +2076,22 @@ static BOOL SubSeqFunc( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 }
 
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	サブシーケンス開始。フェードイン開始
+ *
+ * @param   wk    PKWD_SELECT_SCREEN_MAIN_WORK
+ *
+ * @retval  BOOL  TRUE:サブシーケンス終了 FALSE:継続
+ */
+//----------------------------------------------------------------------------------
+static BOOL SubSeq_FadeinStart( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
+{
+  wk->bgLogoRequest=TRUE;
+  WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, 0, 8, 1, HEAPID_PKWD_SELSCR);
+  wk->seq = MENU_FADEIN_WAIT;
+  return FALSE;
+}
 //----------------------------------------------------------------------------------
 /**
  * @brief	フェードイン待ち
