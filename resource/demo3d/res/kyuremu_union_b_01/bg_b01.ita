@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-11-23T20:53:19" source="kyuremu_union_b_01_013.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-11-29T11:21:12" source="kyuremu_union_b_01_020_test.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -16,7 +16,7 @@
 	tool_end_frame="1085"
 	interpolation="frame"
 	tex_matrix_mode="maya"
-	compress_material="off" material_size="10 10"
+	compress_material="off" material_size="4 4"
 	frame_step_mode="1"
 	tolerance_tex_scale="0.100000"
 	tolerance_tex_rotate="0.100000"
@@ -31,7 +31,7 @@
 	0.000000
 </tex_rotate_data>
 
-<tex_translate_data size="1087">
+<tex_translate_data size="1086">
 	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
 	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
 	0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
@@ -140,30 +140,16 @@
 	-128.987305 -129.028076 -129.067871 -129.106689 -129.144531 -129.181396 -129.217041 -129.251709 -129.285156 -129.317871
 	-129.349121 -129.379395 -129.408691 -129.436768 -129.463623 -129.489502 -129.514160 -129.537598 -129.560059 -129.581055
 	-129.601074 -129.619873 -129.637207 -129.653564 -129.668701 -129.682373 -129.694824 -129.706055 -129.716064 -129.724854
-	-129.732178 -129.738281 -129.742920 -129.746338 -129.748291 -129.749023 -1.000000
+	-129.732178 -129.738281 -129.742920 -129.746338 -129.748291 -129.749023
 </tex_translate_data>
 
-<tex_srt_anm_array size="3">
+<tex_srt_anm_array size="1">
 	<tex_srt_anm index="0" material_name="tenzyou_1">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="1085" data_head="1"/>
-	</tex_srt_anm>
-	<tex_srt_anm index="1" material_name="d0_miz2_1">
-		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
-		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="1" data_head="1086"/>
-		<tex_translate_t frame_step="1" data_size="1" data_head="1086"/>
-	</tex_srt_anm>
-	<tex_srt_anm index="2" material_name="d0_mizgiwa_1">
-		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
-		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="1" data_head="1086"/>
-		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
 	</tex_srt_anm>
 </tex_srt_anm_array>
 
