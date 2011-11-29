@@ -687,13 +687,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブラックシティと
-ホワイトフォレストを
-へんこうすることが　できます
+			<Text>ホワイトフォレストと
+ブラックシティを　へんこう　できます
 げんざいは　ブラックシティ　です</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T04:31:04" />
+				Time="2011-11-29T03:32:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -701,13 +700,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブラックシティと
-ホワイトフォレストを
-変更することが　できます
+			<Text>ホワイトフォレストと
+ブラックシティを　変更できます
 現在は　ブラックシティ　です</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T04:30:56" />
+				Time="2011-11-29T03:32:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -719,13 +717,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブラックシティと
-ホワイトフォレストを
-へんこうすることが　できます
+			<Text>ホワイトフォレストと
+ブラックシティを　へんこう　できます
 げんざいは　ホワイトフォレスト　です</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T04:31:24" />
+				Time="2011-11-29T03:32:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -733,13 +730,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブラックシティと
-ホワイトフォレストを
-変更することが　できます
+			<Text>ホワイトフォレストと
+ブラックシティを　変更できます
 現在は　ホワイトフォレスト　です</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T04:31:16" />
+				Time="2011-11-29T03:33:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2231,12 +2227,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｗｉ－Ｆｉけいゆ　で
+			<Text>Ｗｉ－Ｆｉを　つうじて
 ポケモングローバルリンクから▽
 うけつぎます</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-29T07:19:19" />
+				Time="2011-11-29T03:30:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3307,11 +3303,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホワイトシティに
+			<Text>ホワイトフォレストに
 せっていを　へんこうしました▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T04:25:11" />
+				Time="2011-11-29T03:28:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
@@ -3319,11 +3315,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホワイトシティに
+			<Text>ホワイトフォレストに
 設定を　変更しました▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T04:25:28" />
+				Time="2011-11-29T03:28:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mizuguchi_mai:W00293"
