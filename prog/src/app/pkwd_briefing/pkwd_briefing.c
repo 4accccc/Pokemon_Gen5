@@ -2852,6 +2852,7 @@ static void EndrollFunc( PKWD_BRIEFING_WORK *tw )
     break;
   // 「END」表示
   case BLEND_SEQ_END_PUT:
+    PMSND_PlayNextBGM( SEQ_BGM_SILENCE_FIELD, 20, 5 );
     setAudienceReaction( tw, tw->param->bsp );
     _trans_G2DGraphic_End( &tw->CG2d, tw->heapID );
     GX_SetVisibleWnd( GX_WNDMASK_W1 );
@@ -3013,9 +3014,9 @@ static void _endroll_screen_onoff( G2D_CONTROL *CG2d )
  * @brief	BG3面のスクロール設定
  *
  * @param   CG2d		
- * @param   scroll		
+ * @param   scroll	
  * @param   align		
- * @param   heapID		
+ * @param   heapID	
  */
 //----------------------------------------------------------------------------------
 static void _BG3Offset_func( PKWD_BRIEFING_WORK *tw, int scroll, int align, HEAPID heapID )
@@ -3035,6 +3036,7 @@ static void _BG3Offset_func( PKWD_BRIEFING_WORK *tw, int scroll, int align, HEAP
   // 左右分割のときだけ「END」スクリーンを転送する
   if(scroll==(pokewood_pos+POKEWOOD_LOG_SCREEN_HEIGHT) && align!=0){
     transSideEndScreen( &tw->CG2d, heapID, align );
+    PMSND_PlayNextBGM( SEQ_BGM_SILENCE_FIELD, 20, 5 );
   }
   
   // 左右分割の時の「END」スクリーン登場にあわせた観客リアクション
