@@ -18214,11 +18214,10 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>[Digit:2digits ]とう
-[Name:Item Idx="1" ]が　あたりました！▼
-おめでとうございます！▼</Text>
+[Name:Item Idx="1" ]が　あたりました！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T13:59:48" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-29T02:53:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18227,11 +18226,10 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Digit:2digits ]等
-[Name:Item Idx="1" ]が　当たりました！▼
-おめでとうございます！▼</Text>
+[Name:Item Idx="1" ]が　当たりました！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T14:00:05" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-29T02:53:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18265,10 +18263,10 @@ BW♀
 		<LanguageCell
 			Language="JPN">
 			<Text>ほんじつの　くじは　
-しゅうりょうです▼</Text>
+しゅうりょうです</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-29T02:40:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18277,10 +18275,10 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>本日の　くじは　
-終了です▼</Text>
+終了です</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:55:46" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-29T02:40:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18350,12 +18348,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１とう
-[Name:Item Idx="1" ]が　あたりました！▼
-おめでとうございます！▼</Text>
+			<Text>おめでとうございます！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T14:00:49" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-29T02:53:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18363,12 +18359,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１等
-[Name:Item Idx="1" ]が　当たりました！▼
-おめでとうございます！▼</Text>
+			<Text>おめでとうございます！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T14:00:42" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-29T02:53:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18376,10 +18370,11 @@ BW♀
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ME</Comment>
+			<Comment>1等
+</Comment>
 			<CommentModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-14T13:09:15" />
+				Time="2011-11-29T02:53:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -18476,11 +18471,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Digit:2digits Idx="0" ]とうが　あたりました！
-しょうひんは　こちらです！</Text>
+			<Text>[Digit:2digits ]とう
+[Name:Item Idx="1" ]が　あたりました！</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-08T11:21:27" />
+				Time="2011-11-29T02:53:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -18488,16 +18483,23 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Digit:2digits Idx="0" ]とうが　あたりました！
-しょうひんは　こちらです！</Text>
+			<Text>[Digit:2digits ]等
+[Name:Item Idx="1" ]が　当たりました！</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-08T11:21:27" />
+				Time="2011-11-29T02:53:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-09-08T11:21:27" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ME</Comment>
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-11-29T02:53:27" />
+		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#00ffff</CellData>
@@ -18583,12 +18585,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１とう
-[Name:Item Idx="1" ]が　あたりました！▼
-おめでとうございます！▼</Text>
+			<Text>おめでとうございます！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T14:01:34" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-29T02:53:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -18596,12 +18596,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１等
-[Name:Item Idx="1" ]が　当たりました！▼
-おめでとうございます！▼</Text>
+			<Text>おめでとうございます！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T14:01:34" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-29T02:53:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -18609,10 +18607,11 @@ BW♀
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ME</Comment>
+			<Comment>1等
+</Comment>
 			<CommentModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T14:01:34" />
+				User="nagihashi_toru:W00268"
+				Time="2011-11-29T02:53:46" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

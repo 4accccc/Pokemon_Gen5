@@ -568,7 +568,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
 
       if( cnt == 0 )
       {
-        return 0;
+        return RESORT_MSGID_NONE;
       }
       else
       {
@@ -719,17 +719,17 @@ BOOL RESORT_UTIL_CheckSpot( u16 want_spot, RESORT_RESIDENT_DATA *p_resident, RES
 	      }
 	      else
 	      {
-	        if( type < 8 )
+	        if( type == 8 )
 	        {
-	          u32 num = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_EXT2_RANK_00 + type, NULL );
+	          u32 num = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_EXT1_MEDAL_NUM, NULL );
 	          if( num > data )
 	          {
 	            is_good = TRUE;
 	          }
 	        }
-	        else if( type == 8 )
+          else if( type < 8 )
 	        {
-	          u32 num = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_EXT1_MEDAL_NUM, NULL );
+	          u32 num = RESORT_RESIDENT_DATA_GetData( p_resident, RESORT_DATA_PARAM_EXT2_RANK_00 + type, NULL );
 	          if( num > data )
 	          {
 	            is_good = TRUE;
@@ -2024,6 +2024,8 @@ u32 RESORT_UTIL_CalcRankingNum( RESORT_PEOPLE_ALL_DATA *p_people_all, RESORT_RES
   int i, j;
   int cnt = 0;
 
+  GF_ASSERT( param <= 8 );
+
   //ƒ‰ƒ“ƒLƒ“ƒOì¬
 
   //‹ó‚É
@@ -2040,18 +2042,18 @@ u32 RESORT_UTIL_CalcRankingNum( RESORT_PEOPLE_ALL_DATA *p_people_all, RESORT_RES
     RESORT_RESIDENT_DATA *p_data = RESORT_PEOPLE_ALL_DATA_GetResident( p_people_all, i );
     if( !RESORT_RESIDENT_DATA_IsEmpty(p_data) )
     {
-      if( (RESORT_RECV_DATA_IsExtend(p_data,RESORT_EXTEND_TYPE_02) && param < 4)
-        || (RESORT_RECV_DATA_IsExtend(p_data,RESORT_EXTEND_TYPE_03) && param >= 4)
+      if( (RESORT_RECV_DATA_IsExtend(p_data,RESORT_EXTEND_TYPE_02) && 0 <= param && param < 4)
+        || (RESORT_RECV_DATA_IsExtend(p_data,RESORT_EXTEND_TYPE_03) && 4 <= param && param < 8 )
         || (RESORT_RECV_DATA_IsExtend(p_data,RESORT_EXTEND_TYPE_01) && param == 8) )
       {
         rnkdata[cnt].index  = i;
-        if( param < 8 )
+        if( param == 8 )
         {
-          rnkdata[cnt].value  = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT2_RANK_00 + param, NULL );
+          rnkdata[cnt].value  = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_MEDAL_NUM, NULL );
         }
         else
         {
-          rnkdata[cnt].value  = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_MEDAL_NUM, NULL );
+          rnkdata[cnt].value  = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT2_RANK_00 + param, NULL );
         }
 
         if( p_resident == p_data )
@@ -2085,16 +2087,18 @@ u32 RESORT_UTIL_CalcRankingNum( RESORT_PEOPLE_ALL_DATA *p_people_all, RESORT_RES
   {
     if( rnkdata[i].is_mark )
     {
-      break;
+      if( rnkdata[i].value == 0 )
+      {
+        return 8; //’l‚ª‚È‚¢ê‡‚Í‹­§‚WˆÊ
+      }
+      else
+      {
+        return i;
+      }
     }
   }
 
-  if( rnkdata[i].value == 0 )
-  {
-    return 8;
-  }
-
-  return i;
+  return 8;
 }
 //----------------------------------------------------------------------------
 /**
