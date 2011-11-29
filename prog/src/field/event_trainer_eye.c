@@ -143,9 +143,20 @@ GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap )
   if( treye_CheckEyeMeet(fieldMap,NULL,&hit0) == TRUE )
   {
     TRAINER_HITDATA hit1;
-    BtlRule btl_rule = SCRIPT_GetTrainerBtlRule( hit0.tr_id );
+    BtlRule btl_rule;
     u32 enable_member = FIELD_EVENT_CountBattleMember( FIELDMAP_GetGameSysWork(fieldMap) );
-    
+    BOOL  is_inf_trainer = TRAINER_MMDL_CheckInfinityDungeonTrainer( hit0.mmdl );
+
+    // 無限ダンジョントレーナーの場合はシングル戦固定
+    if( is_inf_trainer == TRUE )
+    {
+      btl_rule = BTL_RULE_SINGLE;
+    }
+    else
+    {
+      btl_rule  = SCRIPT_GetTrainerBtlRule( hit0.tr_id );
+    }
+
     if( btl_rule == BTL_RULE_SINGLE ) //シングル
     {
       // マルチ戦チェック (下の関数の内部で連れ歩きしているかのチェックもしている)

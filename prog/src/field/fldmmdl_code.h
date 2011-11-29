@@ -57,19 +57,14 @@
 // けものみちで配置されるOBJID
 #define MMDL_ID_ANIMAL_TRAIL_OBJ (0xE0)  
 
-// 無限ダンジョン内で使用するOBJID
-#define MMDL_ID_INF_OBJ_01 (0xE1)
-#define MMDL_ID_INF_OBJ_02 (0xE2)
-#define MMDL_ID_INF_OBJ_03 (0xE3)
-#define MMDL_ID_INF_OBJ_04 (0xE4)
-#define MMDL_ID_INF_OBJ_05 (0xE5)
-
+// 無限トレーナー用IDオフセット(0xB0~0xE2(32個)使用、無限ダンジョン内のみで配置される）
+#define MMDL_ID_INF_OBJ_01 (0xB0)
+// 無限ダンジョン内で使用するOBJID（0xD1~0xDB(10個)無限ダンジョン内のみで配置される）
+#define MMDL_ID_INF_OBJ_02 (0xD1)
+// 無限ダンジョン内のみ
+#define INFINITY_DUNGEON_TR_OBJ_ID_OFS  (MMDL_ID_INF_OBJ_01)
 // 封鎖に使用する動作モデルID
-#define INFINITY_DUNGEON_BLOCK_OBJ_ID   (MMDL_ID_INF_OBJ_01)
-
-// 無限トレーナー用IDオフセット(0xE2~0xE5まで使用)
-#define INFINITY_DUNGEON_TR_OBJ_ID_OFS  (MMDL_ID_INF_OBJ_02)    
-
+#define INFINITY_DUNGEON_BLOCK_OBJ_ID   (MMDL_ID_INF_OBJ_02)
 
 // レゾナンスリゾートで配置されるOBJID  
 // ZONE_ID_C16及びZONE_ID_C16R0101で以下の範囲内をすべて使っています
