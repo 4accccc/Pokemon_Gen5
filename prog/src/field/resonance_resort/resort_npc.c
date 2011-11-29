@@ -59,15 +59,19 @@ static void Resort_Npc_Sys_PauseAll( RESORT_NPC_SYS *p_wk, BOOL is_pause );
 //-----------------------------------------------------------------------------
 RESORT_NPC_SYS * RESORT_NPC_SYS_Init( const RESORT_NPC_SYS_PARAM *cp_param, HEAPID heapID )
 {
-  RESORT_NPC_SYS *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_NPC_SYS) );
-  p_wk->param = *cp_param;
-  p_wk->p_binary_npc        = RESORT_BINARY_NPC_Init( heapID );
-  p_wk->p_binary_offreco    = NULL;
-  p_wk->p_binary_mouthcomm  = RESORT_BINARY_MOUTHCOMM_Init( heapID );
 
-  Resort_Npc_Sys_AddAll( p_wk );
+  GF_ASSERT( cp_param->max < RESORT_NPC_MAX_CREATE_NUM );
+  {
+    RESORT_NPC_SYS *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_NPC_SYS) );
+    p_wk->param = *cp_param;
+    p_wk->p_binary_npc        = RESORT_BINARY_NPC_Init( heapID );
+    p_wk->p_binary_offreco    = NULL;
+    p_wk->p_binary_mouthcomm  = RESORT_BINARY_MOUTHCOMM_Init( heapID );
 
-  return p_wk;
+    Resort_Npc_Sys_AddAll( p_wk );
+
+    return p_wk;
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -161,8 +165,7 @@ void RESORT_NPC_SYS_SetVisibleAll( RESORT_NPC_SYS *p_wk, BOOL is_visible )
 
   while( MMDLSYS_SearchUseMMdl(p_wk->param.p_mmdlsys,&p_mmdl,&no) == TRUE )
   {
-    if( (MMDL_GetOBJID(p_mmdl) >= RESORT_NPC_MMDLID_OFS)
-        && MMDL_GetOBJID(p_mmdl) < (RESORT_NPC_MMDLID_OFS + RESORT_BINARY_NPC_GetMax( p_wk->p_binary_npc ))
+    if( RESORT_NPC_TOOL_IsObjID( MMDL_GetOBJID(p_mmdl) ) 
         && MMDL_GetZoneID(p_mmdl) == RESORT_MAP_PlaceIDToZoneID(p_wk->param.placeID) )
     {
       MMDL_SetStatusBitVanish( p_mmdl, !is_visible );
@@ -245,6 +248,9 @@ static void Resort_Npc_Sys_AddAll( RESORT_NPC_SYS *p_wk )
 
       GFL_STD_MemClear( &header, sizeof(MMDL_HEADER) );
       header.id = RESORT_NPC_INDEX_TO_MMDLID(i);
+
+      GF_ASSERT( RESORT_NPC_TOOL_IsObjID(header.id) );
+
       header.obj_code = RESORT_BINARY_NPC_GetData(p_wk->p_binary_npc, i, RESORT_BINARY_NPC_PARAM_VIEW);
       header.move_code = RESORT_BINARY_NPC_GetData(p_wk->p_binary_npc, i, RESORT_BINARY_NPC_PARAM_MOVE_CODE);
       header.dir = DIR_DOWN;
@@ -284,8 +290,7 @@ static void Resort_Npc_Sys_PauseAll( RESORT_NPC_SYS *p_wk, BOOL is_pause )
   MMDL *p_mmdl;
   while( MMDLSYS_SearchUseMMdl(p_wk->param.p_mmdlsys,&p_mmdl,&no) == TRUE )
   {
-    if( (MMDL_GetOBJID(p_mmdl) >= RESORT_NPC_MMDLID_OFS)
-        && MMDL_GetOBJID(p_mmdl) < (RESORT_NPC_MMDLID_OFS + RESORT_BINARY_NPC_GetMax( p_wk->p_binary_npc ))
+    if( RESORT_NPC_TOOL_IsObjID( MMDL_GetOBJID(p_mmdl) )
         && MMDL_GetZoneID(p_mmdl) == RESORT_MAP_PlaceIDToZoneID(p_wk->param.placeID) )
     {
       if( is_pause )
@@ -355,4 +360,19 @@ u32 RESORT_NPC_SYS_CalcOffrecoGroupMax( const RESORT_NPC_SYS *cp_wk )
 u32 RESORT_NPC_SYS_GetOffrecoIndexByType( const RESORT_NPC_SYS *cp_wk, u32 type )
 {
   return 0;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  OBJIDがNPCかチェック
+ *
+ *	@param	int objid   チェックするOBJID
+ *
+ *	@return TRUE NPCのOBJID FALSE違う
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_NPC_TOOL_IsObjID( int objid )
+{
+  return RESORT_NPC_MMDLID_OFS_S <= objid && objid  < RESORT_NPC_MMDLID_OFS_E;
 }

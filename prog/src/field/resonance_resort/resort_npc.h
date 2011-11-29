@@ -13,6 +13,8 @@
 #include "resort_binary.h"
 #include "field/resonance_resort_data.h"
 #include "../fldmmdl.h"
+#include "field/fldmmdl_code.h"
+#include "resort_people.h"
 
 //=============================================================================
 /**
@@ -22,9 +24,12 @@
 //-------------------------------------
 ///	NPCíËã`
 //=====================================
-#define RESORT_NPC_MMDLID_OFS (192)
-#define RESORT_NPC_MMDLID_TO_INDEX(x) (x-RESORT_NPC_MMDLID_OFS)
-#define RESORT_NPC_INDEX_TO_MMDLID(x) (x+RESORT_NPC_MMDLID_OFS)
+#define RESORT_NPC_MAX_CREATE_NUM (18)
+
+#define RESORT_NPC_MMDLID_OFS_S (RESORT_PEOPLE_MMDLID_OFS_S)
+#define RESORT_NPC_MMDLID_OFS_E (RESORT_NPC_MMDLID_OFS_S+RESORT_NPC_MAX_CREATE_NUM)
+#define RESORT_NPC_MMDLID_TO_INDEX(x) (x-RESORT_NPC_MMDLID_OFS_S)
+#define RESORT_NPC_INDEX_TO_MMDLID(x) (x+RESORT_NPC_MMDLID_OFS_S)
 //-------------------------------------
 ///	NPCä«óùÉèÅ[ÉN
 //=====================================
@@ -57,3 +62,5 @@ extern u32 RESORT_NPC_SYS_GetOffRecoMax( const RESORT_NPC_SYS *cp_wk );
 extern u32 RESORT_NPC_SYS_GetParam( const RESORT_NPC_SYS *cp_wk, u32 index );
 extern u32 RESORT_NPC_SYS_CalcOffrecoGroupMax( const RESORT_NPC_SYS *cp_wk );
 extern u32 RESORT_NPC_SYS_GetOffrecoIndexByType( const RESORT_NPC_SYS *cp_wk, u32 type );
+
+extern BOOL RESORT_NPC_TOOL_IsObjID( int objid );

@@ -599,14 +599,17 @@ static void Resort_People_Sys_SetInitParam( const RESORT_PEOPLE_SYS *cp_wk, cons
 //-----------------------------------------------------------------------------
 RESORT_PEOPLE_SYS * RESORT_PEOPLE_SYS_Init( const RESORT_PEOPLE_SYS_PARAM *cp_param, HEAPID heapID )
 {
-  u32 work_size = sizeof(RESORT_PEOPLE_SYS)+sizeof(RESORT_PEOPLE *)*cp_param->max;
-  RESORT_PEOPLE_SYS *p_wk = GFL_HEAP_AllocClearMemory(heapID, work_size );
-  p_wk->param  = *cp_param;
-  p_wk->heapID = heapID;
+  GF_ASSERT( cp_param->max < RESORT_PEOPLE_MAX_CREATE_NUM );
+  {
+    u32 work_size = sizeof(RESORT_PEOPLE_SYS)+sizeof(RESORT_PEOPLE *)*cp_param->max;
+    RESORT_PEOPLE_SYS *p_wk = GFL_HEAP_AllocClearMemory(heapID, work_size );
+    p_wk->param  = *cp_param;
+    p_wk->heapID = heapID;
 
-  p_wk->p_binary = RESORT_BINARY_PEOPLE_Init( heapID );
+    p_wk->p_binary = RESORT_BINARY_PEOPLE_Init( heapID );
 
-  return p_wk;
+    return p_wk;
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -851,7 +854,7 @@ void RESORT_PEOPLE_SYS_EraseMMdl( RESORT_PEOPLE_SYS *p_wk )
   MMDL *mmdl;
 
   while( MMDLSYS_SearchUseMMdl(p_wk->param.p_mmdlsys,&mmdl,&no) == TRUE ){
-    if( MMDL_GetOBJID(mmdl) >= RESORT_PEOPLE_MMDLID_OFS
+    if( RESORT_PEOPLE_TOOL_IsObjID( MMDL_GetOBJID(mmdl) )
         && MMDL_GetZoneID(mmdl) == RESORT_MAP_PlaceIDToZoneID(p_wk->param.placeID) )
     {
       MMDL_Delete( mmdl );
@@ -1040,7 +1043,7 @@ static void Resort_People_DeleteNotBideMMdl( RESORT_PEOPLE_SYS *p_wk )
     MMDL *p_mmdl;
     u32 no  = 0;
     while( MMDLSYS_SearchUseMMdl(p_wk->param.p_mmdlsys,&p_mmdl,&no) == TRUE ){
-      if( MMDL_GetOBJID(p_mmdl) >= RESORT_PEOPLE_MMDLID_OFS
+      if( RESORT_PEOPLE_TOOL_IsObjID( MMDL_GetOBJID(p_mmdl) )
           && MMDL_GetZoneID(p_mmdl) == RESORT_MAP_PlaceIDToZoneID(p_wk->param.placeID)
           && RESORT_PEOPLE_SYS_GetPeopleByMmdl(p_wk,p_mmdl) == NULL )
       {
@@ -1067,4 +1070,19 @@ static void Resort_People_Sys_SetInitParam( const RESORT_PEOPLE_SYS *cp_wk, cons
   p_param->p_mmdlsys    = cp_wk->param.p_mmdlsys;
   p_param->cp_shop      = cp_wk->param.cp_shop;
   p_param->cp_institution = cp_wk->param.cp_institution;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief
+ *
+ *	@param	int objid 
+ *
+ *	@return TRUE ÉäÉ]Å[Égêlï®IDÇ≈Ç†ÇÈ FALSE 
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_PEOPLE_TOOL_IsObjID( int objid )
+{
+  return RESORT_PEOPLE_MMDLID_OFS_S <= objid  &&  objid < RESORT_PEOPLE_MMDLID_OFS_E;
 }

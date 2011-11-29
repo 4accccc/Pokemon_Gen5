@@ -48,8 +48,8 @@
  *          êlï®ä«óù
  */
 //=============================================================================
-#define RECEPTION_PEOPLE_MAX      (32)
-#define RESORT_RECEPTION_NPC_MAX  (32)
+#define RECEPTION_PEOPLE_MAX      (16)
+#define RESORT_RECEPTION_NPC_MAX  (16)
 //=============================================================================
 /**
  *          å}ïoäŸ

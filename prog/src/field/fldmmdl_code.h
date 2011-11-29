@@ -70,6 +70,12 @@
 // 無限トレーナー用IDオフセット(0xE2~0xE5まで使用)
 #define INFINITY_DUNGEON_TR_OBJ_ID_OFS  (MMDL_ID_INF_OBJ_02)    
 
+
+// レゾナンスリゾートで配置されるOBJID  
+// ZONE_ID_C16及びZONE_ID_C16R0101で以下の範囲内をすべて使っています
+#define MMDL_ID_RRESORT_START   (0x50)
+#define MMDL_ID_RRESORT_END     (0xAF)
+
 //--------------------------------------------------------------
 //  エイリアスID 元:PL script_def.h
 //--------------------------------------------------------------

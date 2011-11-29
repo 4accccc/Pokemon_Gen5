@@ -15,6 +15,7 @@
 #include "../fldmmdl.h"
 #include "../field_player.h"
 #include "resort_data_manager.h"
+#include "field/fldmmdl_code.h"
 
 //=============================================================================
 /**
@@ -85,10 +86,14 @@ extern RESORT_INSTITUTION_DATA * RESORT_PEOPLE_GetInstitution( RESORT_PEOPLE *p_
 //人物管理ワークでMMDLに登録するIDの開始値
 //ただし、0ofsは無効値としているので、
 //実質129～
-#define RESORT_PEOPLE_MMDLID_OFS (128)
+
+#define RESORT_PEOPLE_MAX_CREATE_NUM  (68)
+
+#define RESORT_PEOPLE_MMDLID_OFS_S (MMDL_ID_RRESORT_START)
+#define RESORT_PEOPLE_MMDLID_OFS_E (RESORT_PEOPLE_MMDLID_OFS_S+RESORT_PEOPLE_MAX_CREATE_NUM)
 //peopleIDは場所内インデックス
-#define RESORT_PEOPLE_MMDLID_TO_PEOPLEID(x) (x-RESORT_PEOPLE_MMDLID_OFS)
-#define RESORT_PEOPLE_PEOPLEID_TO_MMDLID(x) (x+RESORT_PEOPLE_MMDLID_OFS)
+#define RESORT_PEOPLE_MMDLID_TO_PEOPLEID(x) (x-RESORT_PEOPLE_MMDLID_OFS_S)
+#define RESORT_PEOPLE_PEOPLEID_TO_MMDLID(x) (x+RESORT_PEOPLE_MMDLID_OFS_S)
 
 //-------------------------------------
 ///	人物管理ワーク
@@ -148,3 +153,5 @@ extern RESORT_PEOPLE * RESORT_PEOPLE_SYS_GetPeopleByMmdl( RESORT_PEOPLE_SYS *p_w
 extern RESORT_PEOPLE * RESORT_PEOPLE_SYS_GetPeopleByData( RESORT_PEOPLE_SYS *p_wk, const void *cp_data_adrs );
 extern RESORT_PEOPLE * RESORT_PEOPLE_SYS_GetPeopleByIndex( RESORT_PEOPLE_SYS *p_wk, u32 idx );
 extern RESORT_PEOPLE * RESORT_PEOPLE_SYS_GetPeopleByAbstruct( RESORT_PEOPLE_SYS *p_wk, const RESORT_ABSTRUCT_DATA *cp_abstruct );
+
+extern BOOL RESORT_PEOPLE_TOOL_IsObjID( int objid );
