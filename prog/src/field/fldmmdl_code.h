@@ -41,12 +41,12 @@
 
 //スクリプト配置は原則禁止
 #define MMDL_ID_EVENTOBJ_01 (0xfa) ///<スクリプトイベント内で追加されるOBJID
-#define MMDL_ID_EVENTOBJ_02 (0xf0) ///<スクリプトイベント内で追加されるOBJID
+#define MMDL_ID_EVENTOBJ_02 (0xf9) ///<スクリプトイベント内で追加されるOBJID
 
-#define MMDL_ID_FMISSION_OBJ_01 (0xBC)    ///<フェスミッション用OBJID
-#define MMDL_ID_FMISSION_OBJ_02 (0xBD)  
-#define MMDL_ID_FMISSION_OBJ_03 (0xBE)  
-#define MMDL_ID_FMISSION_OBJ_04 (0xBF)  
+#define MMDL_ID_FMISSION_OBJ_01 (0xEC)    ///<フェスミッション用OBJID
+#define MMDL_ID_FMISSION_OBJ_02 (0xED)  
+#define MMDL_ID_FMISSION_OBJ_03 (0xEE)  
+#define MMDL_ID_FMISSION_OBJ_04 (0xEF)  
 
 #define MMDL_ID_FMISSION_OBJ_NUM  (4) ///フェスミッション用OBJは最大4個i
 
@@ -55,7 +55,7 @@
 #define MMDL_ID_T01_R01_SUPPORT (MMDL_ID_EVENTOBJ_02)
 
 // けものみちで配置されるOBJID
-#define MMDL_ID_ANIMAL_TRAIL_OBJ (0xBC)  
+#define MMDL_ID_ANIMAL_TRAIL_OBJ (0xE0)  
 
 //--------------------------------------------------------------
 //  エイリアスID 元:PL script_def.h
