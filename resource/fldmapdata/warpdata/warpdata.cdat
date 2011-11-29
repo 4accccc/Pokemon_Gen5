@@ -45,7 +45,7 @@ static const WARPDATA WarpData[] = {
 	},
 	{
 		SYS_FLAG_ARRIVE_C05,
-		TRUE ,TRUE ,
+		TRUE ,FALSE,
 		ZONE_ID_C05PC0101   ,   7,  12,
 		ZONE_ID_C05         ,1231, 238,
 		ZONE_ID_C05         ,1231, 238,
@@ -66,14 +66,14 @@ static const WARPDATA WarpData[] = {
 	},
 	{
 		SYS_FLAG_ARRIVE_C08,
-		TRUE ,TRUE ,
+		TRUE ,FALSE,
 		ZONE_ID_C08PC0101   ,   7,  12,
 		ZONE_ID_C08         ,1209, 440,
 		ZONE_ID_C08         ,1209, 440,
 	},
 	{
 		SYS_FLAG_ARRIVE_T03,
-		TRUE ,TRUE ,
+		TRUE ,FALSE,
 		ZONE_ID_T03PC0101   ,   7,  12,
 		ZONE_ID_T03         ,1032, 263,
 		ZONE_ID_T03         ,1032, 263,
@@ -150,7 +150,7 @@ static const WARPDATA WarpData[] = {
 	},
 	{
 		SYS_FLAG_ARRIVE_C13,
-		TRUE ,TRUE ,
+		TRUE ,FALSE,
 		ZONE_ID_C13PC0101   ,   7,  12,
 		ZONE_ID_C13         ,   0,   0,
 		ZONE_ID_C13         ,   0,   0,

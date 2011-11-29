@@ -61,7 +61,7 @@ INIT_EVENT_START ev_init_c13
   IF $WK_SCENE_C13 == 5 THEN
 	_OBJ_POS_CHANGE( C13_SWRIVAL_01, 239, 0, 671, DIR_RIGHT )
   
-  ELSIF $WK_SCENE_C13 == 6 THEN
+  ELSIF $WK_SCENE_C13 == 7 THEN
   
 	_OBJ_POS_CHANGE( C13_SWLEADER2_01, 241, 0, 670, DIR_RIGHT )
   	_OBJ_POS_CHANGE( C13_PILOT_01, 243, 0, 670, DIR_LEFT )
@@ -140,6 +140,9 @@ EVENT_START		ev_pos_c13_swleader2_meet_01
 	
 	//ホミカとホミカ父を非表示
 	_FLAG_SET(FV_C13_SWLEADER2_MEET)
+	
+	//到着フラグセット
+	_FLAG_SET( SYS_FLAG_ARRIVE_C13 )
 	
 	//========================================/
 
@@ -475,7 +478,7 @@ _RET
 /**************************************************************/
 EVENT_START		ev_c13_swleader2_02
 
-	//ネオプラズマ団イベント前か？
+	//ネオプラズマ団ＰＯＳイベント中か？
 	IF $WK_SCENE_C13 == 5 THEN
 		//プレイヤーの名前をセット
 		_PLAYER_NAME( 0 )
@@ -507,7 +510,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c13_swrival_01
 
-	//ネオプラズマ団イベント中か？
+	//ネオプラズマ団ＰＯＳイベント中か？
 	IF $WK_SCENE_C13 == 5 THEN
 		//プレイヤーの名前をセット
 		_PLAYER_NAME( 0 )
@@ -677,7 +680,7 @@ _TALK_OBJ_START()
 		//========================================/
 		
 		//ネオプラズマ団イベント終了
-		$WK_SCENE_C13 = 5
+		$WK_SCENE_C13 = 6
 		
 		//イベントOBJのバニシュフラグをセット
 		_FLAG_SET(FV_C13_SWPLAZMA)
@@ -967,7 +970,7 @@ EVENT_START	ev_pos_c13_swleader2_meet_02
 	_FLAG_RESET( FV_C13GYM0102_SWLEADER2ISS )
 	
 	//ホミカ・父イベント終了
-	$WK_SCENE_C13 = 7
+	$WK_SCENE_C13 = 8
 
 	//C13船舶所にライバルと船長を表示
 	_FLAG_RESET(FV_C13R0401_SWRIVAL)

@@ -487,7 +487,7 @@ EVENT_START   ev_r20_swplazmaw_01
   //ホミカ・父を表示
   _FLAG_RESET(FV_C13_SWLEADER2_MEET)
   //ホミカ・父イベント開始
-  $WK_SCENE_C13 = 6
+  $WK_SCENE_C13 = 7
   
   //==================================//
   
