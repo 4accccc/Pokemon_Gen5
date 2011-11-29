@@ -515,7 +515,7 @@ static void sub_LotParamGetAPresentItem( FES_GIMMICK_NPC_WORK* wk, FEST_MISSION*
   u32 rnd = FES_GIMMICK_SUB_RndGet( rnd_c, 100*LOT_PROB_MAG, NULL, 0 );
 
   for( i = 0; i < FES_NITEM_SHOPPING_LIST_MAX; i++ ){
-    key += tbl[i].prob;
+    key += (tbl[i].prob*LOT_PROB_MAG);
 
     if( rnd < key ){
       no = i;
