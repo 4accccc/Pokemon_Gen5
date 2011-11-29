@@ -1408,6 +1408,9 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
   DEFINE_LOCAL	LWK_TR_END_MSG_ID
   DEFINE_LOCAL	LWK_BOSS_TRNO
  
+  // ROMバージョン
+  _GET_ROM_VERSION ( LWK_ROM_VERSION )
+ 
   _TALK_OBJ_START()
  
   // ダンジョンの状態を取得
@@ -1447,7 +1450,7 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
 
   // 最上階のバージョン違いボスの場合のみ、メッセージIDをプラス１
   IF $LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_10 THEN
-    IF $LWK_NOW_AREA != $LWK_DUNGEON_STATUS THEN
+	  IF $LWK_D_VERSION != $LWK_ROM_VERSION THEN
       $LWK_TR_START_MSG_ID  += 1
       $LWK_TR_END_MSG_ID    += 1
     ENDIF
