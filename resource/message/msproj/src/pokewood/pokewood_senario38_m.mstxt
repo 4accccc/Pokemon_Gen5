@@ -1614,14 +1614,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]『わからない！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『分からない！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:25" />
+				Time="2011-11-29T10:03:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:25" />
+				Time="2011-11-29T10:03:11" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

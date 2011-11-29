@@ -13,10 +13,10 @@
 
 [Ctrl1:xcenter ]きけんな　いらいや　うらぎりも　おおい
 [Ctrl1:xcenter ]かれらにとって　ほんみょうは
-[Ctrl1:xcenter ]あしかせに　しか　ならないのだ……</Text>
+[Ctrl1:xcenter ]あしかせにしか　ならないのだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:40:21" />
+				Time="2011-11-29T10:28:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -31,10 +31,10 @@
 
 [Ctrl1:xcenter ]危険な依頼や　裏切りも　多い
 [Ctrl1:xcenter ]彼らに　とって　本名など
-[Ctrl1:xcenter ]足かせに　しか　ならないのだ……</Text>
+[Ctrl1:xcenter ]足かせにしか　ならないのだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:40:08" />
+				Time="2011-11-29T10:28:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -141,14 +141,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]魔神が　通った後
+			<Text>[Ctrl1:xcenter ]魔神が　通った後の
 
 [Ctrl1:xcenter ]土地は　あとかたも　なく
 
 [Ctrl1:xcenter ]消えていると　いう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:34:41" />
+				Time="2011-11-29T10:28:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -327,10 +327,10 @@
 
 [Ctrl1:xcenter ]きけんな　いらいや　うらぎりも　おおい
 [Ctrl1:xcenter ]かのじょらに　とって　ほんみょうは
-[Ctrl1:xcenter ]あしかせに　しか　ならないのだ……</Text>
+[Ctrl1:xcenter ]あしかせにしか　ならないのだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:40:59" />
+				Time="2011-11-29T10:28:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -448,14 +448,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]魔神が　通った後
+			<Text>[Ctrl1:xcenter ]魔神が　通った後の
 
 [Ctrl1:xcenter ]土地は　あとかたも　なく
 
 [Ctrl1:xcenter ]消えていると　いう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:40:36" />
+				Time="2011-11-29T10:28:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

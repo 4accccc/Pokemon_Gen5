@@ -357,26 +357,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カダス『オマエ　テキ……
-オマエニ　ノロイヲ　カケル！</Text>
+オマエニ　ノロイ　ヲ　カケル！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:44" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-29T09:54:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:44" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-29T09:54:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カダス『オマエ　敵……
-オ前ニ　ノロイヲ　カケル！</Text>
+オ前ニ　ノロイ　ヲ　カケル！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-29T09:54:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-29T09:54:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -459,28 +459,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カダス『ウググ……　オマエ……
-ヨワソウ……▽
-スグ　オトシテ　ヤル…</Text>
+トテモ　ヨワソウ……▽
+スグ　オトシテ　ヤル……</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-11T11:22:40" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-29T09:54:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-11T11:22:40" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-29T09:54:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カダス『ウググ……　オ前……
-弱ソウ……▽
-スグ　倒シテヤル…</Text>
+トテモ　弱ソウ……▽
+スグ　倒シテヤル……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-29T09:54:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-29T09:54:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -824,27 +824,29 @@
 		Label="pw_event2_hero_2">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]『（とりつかれた　ひとの
+			<Text>[Name:PokemonNickname Idx="0" ]『……▼
+（とりつかれた　にんげんの
 いしきが　もどった……？）</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:12" />
+				Time="2011-11-29T10:03:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:12" />
+				Time="2011-11-29T10:03:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]『（取りつかれた　人の
+			<Text>[Name:PokemonNickname Idx="0" ]『……▼
+（取りつかれた　人間の
 意識が　戻った……？）</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:12" />
+				Time="2011-11-29T10:03:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:12" />
+				Time="2011-11-29T10:03:04" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -940,27 +942,27 @@
 			Language="JPN">
 			<Text>カダス『たのむ　たのむグググ……
 グガアアアアウオア……▽
-ウググ……　カエリウチシテヤル</Text>
+ウググ……　カエリウチニ　シテヤル</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:44" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-29T09:54:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-31T04:22:44" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-29T09:54:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カダス『頼む　たのむグググ……
 グガアアアアウオア……▽
-ウググ……　カエリウチシテヤル</Text>
+ウググ……　返リ討チニ　シテヤル</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:46" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-29T09:54:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-03T11:23:46" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-29T09:54:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1223,18 +1225,18 @@
 			<Text>カダス『コノ　男ノ　娘……
 不思議ナ　パワー　アル……▽
 オレタチノ　コト　分カル……▼
-ダカラ　トテモ　優シイ……▼
+ソシテ　トテモ　優シイ……▼
 オレタチノ　墓　ヲ　イツモ
 キレイニ　シテクレル▼
 イツモ　オレタチニ
 優シク　声ヲ　カケテクレル……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:05" />
+				Time="2011-11-29T09:54:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:05" />
+				Time="2011-11-29T09:54:01" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1285,37 +1287,37 @@
 トリツカレテ　シマッタ……▼
 ソイツハ　オソロシイ　ヤツ……▼
 ワレワレ　デハ　カナワナイ
-ダカラ　サワギヲ　オコシタ▽
+ダカラ　サワギヲ　オコシタ……▽
 ツヨイ　ヤツヲ　ヨボウ　ト　シタ……▼
 ……　……　……　……　……　……　
 ……　……　……　……　……　……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-29T09:54:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-29T09:54:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カダス『娘ノ　パワー
 ダレカニ　目ヲ　ツケラレタ……▼
-得体ノ　知レナイ　者　ニ
+得体ノ　知レナイ　者ニ
 取リツカレテ　シマッタ……▼
 ソイツハ　恐ロシイ　ヤツ……▼
 我々　デハ　カナワナイ
-ダカラ　騒ギヲ　起シタ▽
+ダカラ　騒ギヲ　起シタ……▽
 強イ　ヤツヲ　呼ボウ　ト　シタ……▼
 ……　……　……　……　……　……　
 ……　……　……　……　……　……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-29T09:54:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-29T09:54:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1414,16 +1416,16 @@
 			Language="JPN_KANJI">
 			<Text>カダス『オ前ノ　身体　丈夫▼
 オレノ　器ニ　シテヤル
-オ前ノ　タマシイ　ハ　イラナイ▼
+オ前ノ　魂ハ　イラナイ▼
 ……　……　……　……　……　……　
 ……　……　……　……　……　……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:05" />
+				Time="2011-11-29T09:54:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:05" />
+				Time="2011-11-29T09:54:01" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1535,17 +1537,17 @@
 			Language="JPN_KANJI">
 			<Text>『ゴーストイレイザー　報告書
 ファイル№００１への　追記』▼
-ファイル№００１を　さいごに
-コードネーム　[Name:PokemonNickname Idx="0" ]　からの▽
+ファイル№００１を　最後に
+コードネーム　[Name:PokemonNickname Idx="0" ]からの▽
 連絡が　途絶える▼
 消息は　依然　不明……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-29T09:54:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:39" />
+				Time="2011-11-29T09:54:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1601,16 +1603,16 @@
 			Language="JPN_KANJI">
 			<Text>カダス『オ前ノ　身体　丈夫▼
 オレノ　器ニ　シテヤル
-オ前ノ　タマシイ　モ　残シテ　ヤル▼
+オ前ノ　魂モ　残シテ　ヤル▼
 ……　……　……　……　……　……
 ……　……　……　……　……　……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:05" />
+				Time="2011-11-29T09:54:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:05" />
+				Time="2011-11-29T09:54:01" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1959,9 +1961,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カダス『いや……
-これは　うちの　ワイフがね▽
+これにはですな　ふかーい▽
+じじょうが　あるんですわ▼
+うちの　ワイフがね▽
 このむらの　かんこうじむしょに▽
-つとめとるんですがね……▼
+つとめとるんですが……▼
 ここんとこ　パッせん　むらを
 せんでん　するためや！　って▽
 ビービー　なきよるんですよ▼
@@ -1974,21 +1978,23 @@
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:09:05" />
+				Time="2011-11-29T09:54:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:09:05" />
+				Time="2011-11-29T09:54:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カダス『いや……
-これは　うちの　ワイフがね▽
+これにはですな　ふかーい▽
+事情が　あるんですわ▼
+うちの　ワイフがね▽
 この村の　観光事務所に▽
-勤めとるんですがね……▼
+勤めとるんですが……▼
 ここんとこ　パッと　せん　村を
 ピーアール　するためや！　って▽
-ビービー　なきよるんですよ▼
+ビービー　泣きよるんですよ▼
 幽霊騒動で　お客さんを
 いっぱい　呼ぶんや！　ってねえ▼
 そりゃ　えらく　コーフンして
@@ -1998,11 +2004,11 @@
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:09:05" />
+				Time="2011-11-29T09:54:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:09:05" />
+				Time="2011-11-29T09:54:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
