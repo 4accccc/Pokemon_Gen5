@@ -60,13 +60,8 @@ get_sodateya_state:
   // 初回会話フラグ
   _FLAG_CHECK( FE_SODATEYA_FIRSTTALK, first_talk )
 
-  // 預けポケ最大数
-  _FLAG_CHECK( FE_SODATEYAOLDMAN_OPEN, scenario_flag )
-  IF $scenario_flag == TRUE THEN
-    $sodateya_poke_max = 2
-  ELSE
-    $sodateya_poke_max = 1
-  ENDIF
+  // 預けポケ最大数 [111129saito:SWANでは最初から２匹預けられるので分岐処理を削除しました]
+  $sodateya_poke_max = 2
 }
 _RET
 
