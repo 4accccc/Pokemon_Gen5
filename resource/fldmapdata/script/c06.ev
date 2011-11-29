@@ -487,6 +487,8 @@ EVENT_START   ev_scene_c06_swleader6_01
   //フウロ、アララギを非表示
   _FLAG_SET( FV_C06_SWLEADER6_01 )
   _FLAG_SET( FV_C06_HAKASE2_01 )
+  //C06GYM0101フウロ非表示
+  _FLAG_SET( FV_C06GYM0101_LEADER6_01 )
   //========================================//
   //POSイベント進行
   $WK_SCENE_C06GYM = 2

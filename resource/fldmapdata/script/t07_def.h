@@ -13,5 +13,6 @@
 #define SCRID_T07_POKE20_01 (6)
 #define SCRID_BG_T07_SIGN_01 (7)
 #define SCRID_T07_INFORMATIONW_01 (8)
+#define SCRID_RESERVE_T07_END (9)
 
 #endif //_T07_DEF_H_

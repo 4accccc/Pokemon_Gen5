@@ -12,7 +12,7 @@
   .include  "../../message/dst/script/msg_c06r0201.h"
   .include  "c06r0201.h"
   
-  .include  "t07r0101_def.h"
+  .include  "t07_def.h"
 
   //@author fujimura_souichirou（ヤマジタウンへ行くまで、エースメダル見せイベント、カーゴサービス）
   //@author suginaka_katsunori //スクリプト調整・NPC配置・タイプ見せイベント作成
@@ -204,7 +204,7 @@ EVENT_START   ev_c06r0201_swleader6_01
       _MSGWIN_CLOSE()
 
         //ヤマジタウンへ
-        _CALL ev_map_change_t07
+        _CALL ev_map_change_t07_hakase
 
       //========================================//
       //暗転中にフウロ、博士、ベルを非表示
@@ -214,6 +214,9 @@ EVENT_START   ev_c06r0201_swleader6_01
       
       //電気石の洞穴のベルを非表示
       _FLAG_SET( FV_D06R0201_SWBELL_01 )
+      
+      //C06GYM0101フウロ表示
+      _FLAG_RESET( FV_C06GYM0101_LEADER6_01 )
       
       //========================================//
 	 $WK_SCENE_T07 = 1 //イベント発生
@@ -447,6 +450,21 @@ EVENT_START   ev_c06r0201_informationw_01
 
 EVENT_END
 
+//フキヨセカーゴ・ヤマジタウンへ（アララギイベント専用）
+ev_map_change_t07_hakase:
+
+  //３Ｄデモコール
+  _DEMO_FADEOUT_BLACK_CALL_SINGLE()
+  _CALL_3D_DEMO( DEMO3D_ID_PLANE_TAKE_OFF )
+
+  //リザーブスクリプト
+  _RESERVE_SCRIPT( SCRID_RESERVE_T07_END )
+
+  //マップチェンジ
+  _MAP_CHANGE_NO_FADE( ZONE_ID_T07, 625, -5, 305, DIR_LEFT )
+  
+_RET
+
 
 //フキヨセカーゴ・ヤマジタウンへ
 ev_map_change_t07:
@@ -456,10 +474,10 @@ ev_map_change_t07:
   _CALL_3D_DEMO( DEMO3D_ID_PLANE_TAKE_OFF )
 
   //リザーブスクリプト
-  _RESERVE_SCRIPT( SCRID_RESERVE_T07R0101_END )
+  _RESERVE_SCRIPT( SCRID_RESERVE_T07_END )
 
   //マップチェンジ
-  _MAP_CHANGE_NO_FADE( ZONE_ID_T07R0101, 6, 0, 4, DIR_DOWN )
+  _MAP_CHANGE_NO_FADE( ZONE_ID_T07, 616, -5, 305, DIR_DOWN )
   
 _RET
 

@@ -910,6 +910,7 @@
 #define FV_D10R0501_IDENSHINO_KUSABI      1003 /* 0x03eb ジャイアントホール：いでんしのくさび */
 #define FV_D10R0501_KYUREMU               1004 /* 0x03ec ジャイアントホール：クリア後キュレム */
 #define FV_D11R0101_STOPPER_01            1005 /* 0x03ed ヒウン下水道：連れ歩き時ストッパー配置 */
+#define FV_C06GYM0101_LEADER6_01          1006 /* 0x03ee ひこうジム：フウロ */
 
 #define FV_AREA_END                       1099 /* 0x044b  */
 

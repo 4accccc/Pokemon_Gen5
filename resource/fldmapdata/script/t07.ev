@@ -29,6 +29,7 @@ _EVENT_DATA    ev_t07_woman1_01
 _EVENT_DATA    ev_t07_poke20_01
 _EVENT_DATA    ev_bg_t07_sign_01
 _EVENT_DATA    ev_t07_informationw_01
+_EVENT_DATA    ev_reserve_t07_end
 _EVENT_DATA_END
 
 
@@ -39,14 +40,28 @@ _EVENT_DATA_END
 //  _END
 
 /************************************************************/
+/*		飛行機降りた後のリザーブ						*/
+/************************************************************/
+EVENT_START	ev_reserve_t07_end
+
+	//暗転復帰
+	_MAP_FADE_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+	
+EVENT_END
+
+
+/************************************************************/
 /*  SCENE_CHANGE：博士イベント                              */
 /************************************************************/
 EVENT_START   ev_scene_t07_hakase2_01
 {
-
+  
+  /*
   //アニメ：主人公移動
   _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 625, 305, FORCE_TYPE_NPC, 8, DIR_UD )
   _OBJ_ANIME_WAIT()
+  */
 
   //アララギ：さて　あなたを
   _BALLOONWIN_OBJMSG_POS( msg_t07_hakase2_01, T07_HAKASE2_01, POS_DEFAULT )
