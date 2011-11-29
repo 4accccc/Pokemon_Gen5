@@ -476,7 +476,7 @@ _RET
 EVENT_START		ev_c13_swleader2_02
 
 	//ネオプラズマ団イベント前か？
-	IF $WK_SCENE_C13 == 6 THEN
+	IF $WK_SCENE_C13 == 5 THEN
 		//プレイヤーの名前をセット
 		_PLAYER_NAME( 0 )
 		
@@ -507,8 +507,8 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c13_swrival_01
 
-	//ネオプラズマ団イベント前か？
-	IF $WK_SCENE_C13 == 6 THEN
+	//ネオプラズマ団イベント中か？
+	IF $WK_SCENE_C13 == 5 THEN
 		//プレイヤーの名前をセット
 		_PLAYER_NAME( 0 )
 		
