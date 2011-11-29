@@ -92,9 +92,9 @@ sub_field_init:
   CASE 2 THEN   // ŠâŽR‚ÌŠÔ
     _REZI_GMK_SET_EYE(0)
   CASE 3 THEN   // “S‚ÌŠÔ
-    _REZI_GMK_SET_EYE(2)
-  CASE 4 THEN   // •XŽR‚ÌŠÔ
     _REZI_GMK_SET_EYE(1)
+  CASE 4 THEN   // •XŽR‚ÌŠÔ
+    _REZI_GMK_SET_EYE(2)
   DEFAULT // Œß‘O‚ÌŠÔ‚Æ“¯‚¶‚É‚µ‚Ä‚¨‚­
     _REZI_GMK_SET_EYE(3)
   ENDSWITCH
