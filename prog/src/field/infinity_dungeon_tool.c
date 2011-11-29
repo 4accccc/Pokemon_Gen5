@@ -534,7 +534,7 @@ u8 INF_TOOL_DUNGEON_GetDungeonColor( const INF_DUNGEON_DATA *p_wk )
  *	@param	*p_dungeon_data フロアデータ
  *	@param	floor_id      フロアID
  *	@param	room_id       部屋ID
- *	@param	room_tr_no    部屋内の相対ID（0～4）
+ *	@param	room_tr_no    部屋内の相対ID（0～3）
  *
  *	@retval
  */

@@ -16,7 +16,6 @@
 //
 //=============================================================================
 #define INFINITY_DUNGEON_TRDATA_MAX (320)    // 無限ダンジョン内トレーナーデータMAX
-#define INFINITY_DUNGEON_BLOCK_OBJ_ID     (0xB0)     // 封鎖に使用する動作モデルID
 
 #define INF_TRAINER_SETLV_1 (100)       // 配置レベル1のトレーナーの出現率
 #define INF_TRAINER_SETLV_2 (30)        // 配置レベル2のトレーナーの出現率

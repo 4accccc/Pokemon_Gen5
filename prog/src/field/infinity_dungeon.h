@@ -16,6 +16,7 @@
 #include "field/infinity_dungeon_def.h"
 #include "savedata/infinity_dungeon_save.h"
 #include "infinity_dungeon_tool.h"
+#include "fldmmdl_code.h"
 
 //=============================================================================
 //
@@ -23,7 +24,6 @@
 //
 //=============================================================================
 #define INF_TUTORIAL_DATA_CNT (2)                       // チュートリアルデータ数
-#define INFINITY_DUNGEON_TR_OBJ_ID_OFS     (0xB4)       // トレーナー用IDオフセット
 
 //=============================================================================
 //
