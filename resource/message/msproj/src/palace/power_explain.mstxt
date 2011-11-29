@@ -2930,10 +2930,10 @@ BWと揃えた無効ID
 			Language="JPN">
 			<Text>ゆれる　くさむらや　つちけむりが
 かなり　みつけやすく　なります
-こうかは　３０ふん　です</Text>
+こうかは　６０ふん　です</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-10-26T03:10:53" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-29T01:59:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2974,10 +2974,10 @@ BWと揃えた無効ID
 			Language="JPN">
 			<Text>かくしあなで　ポケモンと
 かなり　であいやすく　なります
-こうかは　３０ふん　です</Text>
+こうかは　２０ふん　です</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-10-26T03:10:53" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-29T01:59:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -3062,10 +3062,10 @@ BWと揃えた無効ID
 			Language="JPN">
 			<Text>めずらしい　ポケモンと
 であいやすく　なります
-こうかは　３０ふん　です</Text>
+こうかは　１０ふん　です</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-10-26T03:10:53" />
+				User="masafumi_saitou:W00225"
+				Time="2011-11-29T01:59:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
