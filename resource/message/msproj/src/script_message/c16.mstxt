@@ -1822,10 +1822,10 @@
 			<Text>おみせに　あんないしたひと　[Digit:7digits ]
 まちに　しょうたいしたひと　[Digit:7digits Idx="1" ]▼
 まちの　ひょうばん
-[Name:ResortTitle Idx="2" ]▼</Text>
+『[Name:ResortTitle Idx="2" ]』▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-29T03:37:24" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:08:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1836,10 +1836,10 @@
 			<Text>お店に　案内した人　[Digit:7digits ]
 街に　招待した人　[Digit:7digits Idx="1" ]▼
 街の　評判
-[Name:ResortTitle Idx="2" ]▼</Text>
+『[Name:ResortTitle Idx="2" ]』▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-29T03:37:34" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:08:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1924,11 +1924,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-にんきは　イッシュちほうに　しれわたった！▼</Text>
+[Name:ResortTown ]の　にんきは
+イッシュちほうに　しれわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:54:39" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:04:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1937,11 +1937,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-人気は　イッシュ地方に　知れわたった！▼</Text>
+[Name:ResortTown ]の　人気は
+イッシュ地方に　知れわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:55:17" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:04:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1975,11 +1975,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-にんきは　イッシュちほうに　しれわたった！▼</Text>
+[Name:ResortTown ]の　にんきは
+イッシュちほうに　しれわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:54:53" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1988,11 +1988,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-人気は　イッシュ地方に　知れわたった！▼</Text>
+[Name:ResortTown ]の　人気は
+イッシュ地方に　知れわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:55:27" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2026,11 +2026,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-にんきは　イッシュちほうに　しれわたった！▼</Text>
+[Name:ResortTown ]の　にんきは
+イッシュちほうに　しれわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:54:53" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2039,11 +2039,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-人気は　イッシュ地方に　知れわたった！▼</Text>
+[Name:ResortTown ]の　人気は
+イッシュ地方に　知れわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:55:28" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2077,11 +2077,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-にんきは　イッシュちほうに　しれわたった！▼</Text>
+[Name:ResortTown ]の　にんきは
+イッシュちほうに　しれわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:54:54" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2090,11 +2090,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-人気は　イッシュ地方に　知れわたった！▼</Text>
+[Name:ResortTown ]の　人気は
+イッシュ地方に　知れわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:55:28" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2128,11 +2128,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-にんきは　イッシュちほうに　しれわたった！▼</Text>
+[Name:ResortTown ]の　にんきは
+イッシュちほうに　しれわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:54:55" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2141,11 +2141,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-人気は　イッシュ地方に　知れわたった！▼</Text>
+[Name:ResortTown ]の　人気は
+イッシュ地方に　知れわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:55:29" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2179,11 +2179,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-にんきは　イッシュちほうに　しれわたった！▼</Text>
+[Name:ResortTown ]の　にんきは
+イッシュちほうに　しれわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:54:56" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2192,11 +2192,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-人気は　イッシュ地方に　知れわたった！▼</Text>
+[Name:ResortTown ]の　人気は
+イッシュ地方に　知れわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:55:29" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2230,11 +2230,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-にんきは　イッシュちほうに　しれわたった！▼</Text>
+[Name:ResortTown ]の　にんきは
+イッシュちほうに　しれわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:54:56" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2243,11 +2243,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-人気は　イッシュ地方に　知れわたった！▼</Text>
+[Name:ResortTown ]の　人気は
+イッシュ地方に　知れわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:55:30" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2281,11 +2281,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-にんきは　イッシュちほうに　しれわたった！▼</Text>
+[Name:ResortTown ]の　にんきは
+イッシュちほうに　しれわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:54:57" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2294,11 +2294,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-人気は　イッシュ地方に　知れわたった！▼</Text>
+[Name:ResortTown ]の　人気は
+イッシュ地方に　知れわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:55:30" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2332,11 +2332,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-にんきは　イッシュちほうに　しれわたった！▼</Text>
+[Name:ResortTown ]の　にんきは
+イッシュちほうに　しれわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:54:57" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2345,11 +2345,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-人気は　イッシュ地方に　知れわたった！▼</Text>
+[Name:ResortTown ]の　人気は
+イッシュ地方に　知れわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:55:31" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2383,11 +2383,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-にんきは　イッシュちほうに　しれわたった！▼</Text>
+[Name:ResortTown ]の　にんきは
+イッシュちほうに　しれわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:54:58" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2396,11 +2396,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-人気は　イッシュ地方に　知れわたった！▼</Text>
+[Name:ResortTown ]の　人気は
+イッシュ地方に　知れわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:55:32" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2434,11 +2434,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-にんきは　イッシュちほうに　しれわたった！▼</Text>
+[Name:ResortTown ]の　にんきは
+イッシュちほうに　しれわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:54:59" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2447,11 +2447,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-人気は　イッシュ地方に　知れわたった！▼</Text>
+[Name:ResortTown ]の　人気は
+イッシュ地方に　知れわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:55:32" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2485,11 +2485,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-にんきは　イッシュちほうに　しれわたった！▼</Text>
+[Name:ResortTown ]の　にんきは
+イッシュちほうに　しれわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:55:00" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2498,11 +2498,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-人気は　イッシュ地方に　知れわたった！▼</Text>
+[Name:ResortTown ]の　人気は
+イッシュ地方に　知れわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:55:33" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2536,11 +2536,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-にんきは　イッシュちほうに　しれわたった！▼</Text>
+[Name:ResortTown ]の　にんきは
+イッシュちほうに　しれわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:55:00" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2549,11 +2549,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-人気は　イッシュ地方に　知れわたった！▼</Text>
+[Name:ResortTown ]の　人気は
+イッシュ地方に　知れわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:55:34" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2587,11 +2587,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-にんきは　イッシュちほうに　しれわたった！▼</Text>
+[Name:ResortTown ]の　にんきは
+イッシュちほうに　しれわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:55:00" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2600,11 +2600,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おめでとう！▼
-[Name:ResortTown ]の
-人気は　イッシュ地方に　知れわたった！▼</Text>
+[Name:ResortTown ]の　人気は
+イッシュ地方に　知れわたった！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T15:55:34" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:05:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2641,8 +2641,8 @@
 いだいなる　[Name:ResortTown ]を
 しらないものは　いない！！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T16:01:40" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:07:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2654,8 +2654,8 @@
 偉大なる　[Name:ResortTown ]を
 知らないものは　いない！！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T16:01:47" />
+				User="shimoyamada:W00184"
+				Time="2011-11-29T04:07:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
