@@ -1293,7 +1293,7 @@ static void PkwdSelectScreen_SubObj_UnloadResource( PKWD_SELECT_SCREEN_MAIN_WORK
  */
 //----------------------------------------------------------------------------------
 static const u8 subobj_pos_tbl[][2]={
-  { 224,  144 },	// マーク
+  { 240,  152 },	// マーク
 };
 
 static void PkwdSelectScreen_SubObj_Add( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
