@@ -192,7 +192,11 @@ sub_tourist_main_menu:
   _RESORT_GET_DATA( RESORT_GET_PARAM_PEOPLE_TYPE, LWK_PEOPLE_TYPE )
 
   IF $LWK_PEOPLE_TYPE != RESORT_PEOPLE_TYPE_PROXY THEN
-	  _BMPMENU_MAKE_LIST_EX( resort_sys_select_04, resort_sys_select_info_04, SEQ_TOURIST_DOING )	      //さいきんどう？
+    _RESORT_GET_DATA( RESORT_GET_PARAM_HAS_RECORD, LWK_RET )
+    _RESORT_GET_DATA( RESORT_GET_PARAM_HAS_MEDAL, LWK_YESNO )
+    IF $LWK_RET == TRUE || $LWK_YESNO == TRUE THEN
+	    _BMPMENU_MAKE_LIST_EX( resort_sys_select_04, resort_sys_select_info_04, SEQ_TOURIST_DOING )	      //さいきんどう？
+    ENDIF
   ENDIF
 
 	_BMPMENU_MAKE_LIST_EX( resort_sys_select_10, resort_sys_select_info_10, SEQ_TOURIST_BYE )	        //またね
@@ -389,8 +393,14 @@ sub_recent_doing:
 	  _SYSWIN_MSG( resort_sys_19, POS_DOWN )
 		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_MENU_RET )
 	
-	  _BMPMENU_MAKE_LIST( resort_sys_select_37, SEQ_RECENT_RECORD )	  //できごとをきく
-		_BMPMENU_MAKE_LIST( resort_sys_select_38, SEQ_RECENT_MEDAL )	  //メダルをきく
+    _RESORT_GET_DATA( RESORT_GET_PARAM_HAS_RECORD, LWK_RET )
+    IF $LWK_RET == TRUE THEN
+	    _BMPMENU_MAKE_LIST( resort_sys_select_37, SEQ_RECENT_RECORD )	  //できごとをきく
+    ENDIF
+    _RESORT_GET_DATA( RESORT_GET_PARAM_HAS_MEDAL, LWK_RET )
+    IF $LWK_RET == TRUE THEN
+		  _BMPMENU_MAKE_LIST( resort_sys_select_38, SEQ_RECENT_MEDAL )	  //メダルをきく
+    ENDIF
 		_BMPMENU_MAKE_LIST( resort_sys_select_49, SEQ_RECENT_BYE )	    //もどる
 		_BMPMENU_START()
 	
@@ -528,7 +538,9 @@ sub_tourist_spot:
       //コンボの経験値取得
       _RESORT_COMBO( LWK_MAIN_EXP, RESORT_COMBO_PARAM_EXP, LWK_EXP, LWK_RET )
 
-      $LWK_CITY_EXP += $LWK_EXP
+      IF $LWK_SPOT_RESULT == TRUE THEN
+        $LWK_CITY_EXP += $LWK_EXP
+      ENDIF
 
       //コンボ確定！
       _RESORT_COMBO( LWK_COMBO_IDX, RESORT_COMBO_PARAM_DECIDE, LWK_RET, LWK_RET )
@@ -724,7 +736,7 @@ sub_come_shop:
       _SE_PLAY( SEQ_SE_SW_JA_EXP )
       _SE_WAIT()
 
-      _NUMBER( 6, LWK_LV, 1 )
+      _NUMBER( 6, LWK_LV, 2 )
       //施設レベルアップ
       SWITCH $LWK_RET
       CASE RESORT_SET_SPOT_SHOP_LVUP THEN
@@ -1240,7 +1252,12 @@ sub_resident_main_menu:
   _RESORT_SET_WORD( RESORT_WORD_SHOP_LABEL, RESORT_WORD_PARAM_FRONT, 0, 0 )
 	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, LWK_MENU_RET )
   _BMPMENU_MAKE_LIST( resort_sys_select_29, SEQ_RESIDENT_INSTITUTION )	//買うとか
-	_BMPMENU_MAKE_LIST( resort_sys_select_04, SEQ_RESIDENT_DOING )	      //最近どう？
+
+  _RESORT_GET_DATA( RESORT_GET_PARAM_HAS_RECORD, LWK_RET )
+  _RESORT_GET_DATA( RESORT_GET_PARAM_HAS_MEDAL, LWK_YESNO )
+  IF $LWK_RET == TRUE || $LWK_YESNO == TRUE THEN
+	  _BMPMENU_MAKE_LIST( resort_sys_select_04, SEQ_RESIDENT_DOING )	      //最近どう？
+  ENDIF
 	_BMPMENU_MAKE_LIST( resort_sys_select_09, SEQ_RESIDENT_CHECKEXP )	    //最近どう？
 
   IF $LWK_MERGE == TRUE THEN
@@ -2818,6 +2835,7 @@ sub_npc_mouthcomm_hear:
     //とくにうわさはない…
     _RESORT_GET_NPC_DATA( LWK_OBJID, RESORT_NPC_DATA_MOUTHCOMM_MSG_04, LWK_MSGID )
     _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+    _LAST_KEYWAIT()
   ELSE
     //噂をいう
     _CALL sub_npc_mouthcomm_hear_core
@@ -2910,6 +2928,7 @@ sub_npc_mouthcomm_question:
   //そうなんだー
   _RESORT_GET_NPC_DATA( LWK_OBJID, RESORT_NPC_DATA_MOUTHCOMM_MSG_02, LWK_MSGID )
   _BALLOONWIN_OBJMSG_POS( LWK_MSGID, LWK_OBJID, POS_DOWN )
+  _LAST_KEYWAIT()
 
   //回答を設定
   $LWK_TMP = $LWK_INDEX
@@ -3095,9 +3114,6 @@ sub_resident_select_menu:
 
 	//メニュー表示
 	_BMPMENU_START()
-
-  //どうしますか？を閉じる
-	_BALLOONWIN_CLOSE()
 }
 _RET
 

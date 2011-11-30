@@ -157,11 +157,12 @@ sub_infomation_shop_menu:
 	  _BMPMENU_MAKE_LIST( resort_drill_sel_10, SEQ_INFOMATION_SHOP_00 )
 	  _BMPMENU_MAKE_LIST( resort_drill_sel_11, SEQ_INFOMATION_SHOP_01 )
 
-	  IF $LWK_RET == TRUE THEN
-	    _BMPMENU_MAKE_LIST( resort_drill_sel_12, SEQ_INFOMATION_SHOP_02 )
-	  ENDIF
+	  _BMPMENU_MAKE_LIST( resort_drill_sel_12, SEQ_INFOMATION_SHOP_02 )
 	  _BMPMENU_MAKE_LIST( resort_drill_sel_13, SEQ_INFOMATION_SHOP_03 )
-	  _BMPMENU_MAKE_LIST( resort_drill_sel_14, SEQ_INFOMATION_SHOP_04 )
+
+	  IF $LWK_RET == TRUE THEN
+	    _BMPMENU_MAKE_LIST( resort_drill_sel_14, SEQ_INFOMATION_SHOP_04 )
+    ENDIF
 	  _BMPMENU_MAKE_LIST( resort_drill_sel_15, SEQ_INFOMATION_SHOP_05 )
 	  _BMPMENU_MAKE_LIST( resort_drill_sel_16, SEQ_INFOMATION_SHOP_06 )
 	  _BMPMENU_MAKE_LIST( resort_drill_sel_17, SEQ_INFOMATION_SHOP_07 )
@@ -271,6 +272,9 @@ sub_prize_add_sec03:
   _BALLOONWIN_OBJMSG_POS( resort_prize_sec_01, LWK_OBJID, POS_DEFAULT )
   _BALLOONWIN_CLOSE()
 
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_turn_up )
+  _OBJ_ANIME_WAIT()
+
   //退出
   _BALLOONWIN_OBJMSG_POS( resort_prize_owner_bye_01, C16R0101_OWNER, POS_DEFAULT )
   _BALLOONWIN_CLOSE()
@@ -311,6 +315,9 @@ sub_prize_add_sec04:
   _BALLOONWIN_OBJMSG_POS( resort_prize_sec_02, LWK_OBJID, POS_DEFAULT )
   _BALLOONWIN_CLOSE()
 
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_turn_up )
+  _OBJ_ANIME_WAIT()
+
   //退出
   _BALLOONWIN_OBJMSG_POS( resort_prize_owner_bye_02, C16R0101_OWNER, POS_DEFAULT )
   _BALLOONWIN_CLOSE()
@@ -349,6 +356,13 @@ sub_prize_cityname:
   _BALLOONWIN_OBJMSG_POS( resort_prize_owner_info_03_01, C16R0101_OWNER, POS_DEFAULT )
   _BALLOONWIN_CLOSE()
 
+  //カメラ移動
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_MOVE(9688,0,970752,954368,0,360448, 60)
+  _CAMERA_WAIT_MOVE()
+
+
   //性別で台詞が違う
   _GET_OBJID( LWK_OBJID, LWK_RET, 13, 0, 5 )
   _RESORT_GET_DATA( RESORT_GET_PARAM_CITYNAME_SEC_SEX, LWK_RET )
@@ -356,12 +370,28 @@ sub_prize_cityname:
 
   _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_PEOPLE_TYPE_SECRETARY, LWK_INDEX, 0 )
   _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, RESORT_PEOPLE_TYPE_SECRETARY, LWK_INDEX, 1 )
+
+  //主人公右向く
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_turn_right )
+  _OBJ_ANIME( LWK_OBJID, anm_turn_left )
+	_OBJ_ANIME_WAIT()
+
   IF $LWK_RET == 0 THEN
     _BALLOONWIN_OBJMSG_POS( resort_prize_sec_03_m, LWK_OBJID, POS_DEFAULT )
   ELSE
     _BALLOONWIN_OBJMSG_POS( resort_prize_sec_03_f, LWK_OBJID, POS_DEFAULT )
   ENDIF
   _BALLOONWIN_CLOSE()
+
+  //カメラ戻る
+  _CAMERA_RECV_MOVE( 60 )
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()
+  _CAMERA_END()
+
+  //主人公上
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_turn_up )
+	_OBJ_ANIME_WAIT()
 
   //退出
   _BALLOONWIN_OBJMSG_POS( resort_prize_owner_bye_03, C16R0101_OWNER, POS_DEFAULT )
@@ -394,6 +424,12 @@ sub_prize_neon:
   _BALLOONWIN_OBJMSG_POS( resort_prize_owner_info_04, C16R0101_OWNER, POS_DEFAULT )
   _BALLOONWIN_CLOSE()
 
+  //カメラ移動
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_MOVE(9688,0,970752,745472,0,671744, 60)
+  _CAMERA_WAIT_MOVE()
+
   //性別で台詞が違う
   _GET_OBJID( LWK_OBJID, LWK_RET, 11, 0, 11 )
   _RESORT_GET_DATA( RESORT_GET_PARAM_NEON_SEC_SEX, LWK_RET )
@@ -401,12 +437,27 @@ sub_prize_neon:
 
   _RESORT_SET_WORD( RESORT_WORD_PEOPLE, RESORT_PEOPLE_TYPE_SECRETARY, LWK_INDEX, 0 )
   _RESORT_SET_WORD( RESORT_WORD_FREE_PHRASE, RESORT_PEOPLE_TYPE_SECRETARY, LWK_INDEX, 1 )
+
+  //主人公下向く
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_turn_down )
+  _OBJ_ANIME( LWK_OBJID, anm_turn_up )
+	_OBJ_ANIME_WAIT()
+
   IF $LWK_RET == 0 THEN
     _BALLOONWIN_OBJMSG_POS( resort_prize_sec_04_m, LWK_OBJID, POS_DEFAULT )
   ELSE
     _BALLOONWIN_OBJMSG_POS( resort_prize_sec_04_f, LWK_OBJID, POS_DEFAULT )
   ENDIF
   _BALLOONWIN_CLOSE()
+
+  _CAMERA_RECV_MOVE( 60 )
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()
+  _CAMERA_END()
+
+  //主人公上
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_turn_up )
+	_OBJ_ANIME_WAIT()
 
   //退出
   _BALLOONWIN_OBJMSG_POS( resort_prize_owner_bye_04, C16R0101_OWNER, POS_DEFAULT )
@@ -603,13 +654,13 @@ _ANIME_LABEL	anm_sec02_goout
   _ANIME_DATA AC_VANISH_ON,1
 	_ANIME_DATA	ACMD_END,0
 
-
 //==============================================================
 //サブルーチン：ご褒美イベント：秘書３出てくる
 //==============================================================
 sub_prize_sec03_come:
 {
   _OBJ_ANIME( LWK_OBJID, anm_sec03_come )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_come_look )
   _OBJ_ANIME_WAIT()
 }
 _RET
@@ -621,4 +672,40 @@ _RET
 _ANIME_LABEL	anm_sec03_come
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//汎用：出てくるのをみる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_come_look
+  _ANIME_DATA AC_WAIT_8F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//汎用：左向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_turn_left
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//汎用：上向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_turn_up
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//汎用：右向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_turn_right
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//汎用：下向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_turn_down
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0

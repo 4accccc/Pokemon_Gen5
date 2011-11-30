@@ -3438,8 +3438,11 @@ static void getMMdlObjCodeParam( ARCHANDLE * handle, u16 mmdl_id, u8 * anm_id, u
 static u32 ResortShop_CalcPlace( SHOP_BUY_APP_WORK *p_wk, u32 price )
 {
   BOOL is_fever = RESORT_UTIL_IsFever( p_wk->p_resort_sys );
-  u32 fever_num = is_fever ? RESORT_CONST_FEVER_EXIST_COEFFEICENT: RESORT_CONST_FEVER_NONE_COEFFEICENT;
+  fx32 fever_num = is_fever ? RESORT_CONST_FEVER_EXIST_COEFFEICENT: RESORT_CONST_FEVER_NONE_COEFFEICENT;
   u32 city_lv = RESORT_CITY_DATA_GetData( p_wk->p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
+
+  fx32 v;
+
   GF_ASSERT( city_lv != 0 );
 
   city_lv = MATH_CLAMP( city_lv, 0, RESORT_CONST_LEVEL_CAP );
@@ -3449,7 +3452,8 @@ static u32 ResortShop_CalcPlace( SHOP_BUY_APP_WORK *p_wk, u32 price )
     city_lv--;
   }
 
-  price = price - FX_Whole(price * city_lv * fever_num * RESORT_CONST_PRICE_COEFFEICENT );
+  v = FX_Mul( fever_num, RESORT_CONST_PRICE_COEFFEICENT );
+  price = price - FX_Whole(price * city_lv * v );
 
   //ŽlŽÌŒÜ“ü
   if( price %10 != 0 )

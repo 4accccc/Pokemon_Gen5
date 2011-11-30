@@ -1397,7 +1397,7 @@ VMCMD_RESULT EvCmdResortCombo( VMHANDLE *p_core, void *p_wk_adrs )
       {
         *p_ret_wk   = RESORT_COMBO_RESULT_SUCSESS;
       }
-      else if ( rnd+rnd/2 < percent )
+      else if ( rnd < percent + percent/2 )
       {
         *p_ret_wk   = RESORT_COMBO_RESULT_PITY;
       }
