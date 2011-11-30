@@ -24049,26 +24049,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>もちろん　おあいて　するわ
-おきにいりの　ブビィでね！！▼</Text>
+おきにいりの　コロモリでね！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T12:15:27" />
+				Time="2011-11-29T12:22:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T12:15:27" />
+				Time="2011-11-29T12:22:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>もちろん　お相手　するわ
-おきにいりの　ブビィでね！！▼</Text>
+おきにいりの　コロモリでね！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T12:15:27" />
+				Time="2011-11-29T12:22:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T12:15:27" />
+				Time="2011-11-29T12:22:10" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -43425,15 +43425,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ローテーションバトルは　ポケモン
+			<Text>トリプルバトルは　ポケモン
 ３びきでの　ポケモンしょうぶ　だよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -43460,27 +43460,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ローテーションバトル！
-みぎにまわすか　ひだりにまわすか！▼</Text>
+			<Text>トリプルバトルを　きわめた
+ぼくの　つよさを　みなさい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ローテーションバトル！
-右にまわすか　左にまわすか！▼</Text>
+			<Text>トリプルバトルを　極めた
+ぼくの　つよさを　みなさい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -43495,27 +43495,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どちらに　まわすか　まようのは
-けいけんが　たりないからかな？</Text>
+			<Text>そんな……
+きわめたはず　なのに……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どちらに　まわすか　迷うのは
-経験が　たりないからかな？</Text>
+			<Text>そんな……
+極めたはず　なのに……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -43530,31 +43530,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たりない　けいけんは
-ちしき　かんがえで　おぎないます▼
-でないと　せんぱいトレーナーに
-いつまでも　かてないですよね</Text>
+			<Text>きわめるために　トリプルバトルむきの
+わざとか　とくせいを　しらべなきゃ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たりない　経験は
-知識　考えで　補います▼
-でないと　先輩トレーナーに
-いつまでも　勝てないですよね</Text>
+			<Text>極めるために　トリプルバトル向きの
+技とか　特性を　調べなきゃ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -43569,27 +43565,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トリプルバトルは　ポケモン
+			<Text>ローテーションは　ポケモン
 ３びきで　たたかう　しょうぶ　です！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トリプルバトルは　ポケモン
+			<Text>ローテーションバトルは　ポケモン
 ３匹で　戦う　勝負です！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -43604,27 +43600,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トリプルバトルを　きわめた
-あたしの　つよさを　みなさいな！▼</Text>
+			<Text>ローテーションバトル！
+みぎにまわす？　ひだりにまわす？▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T12:22:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T12:22:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トリプルバトルを　極めた
-あたしの　強さを　みなさいな！▼</Text>
+			<Text>ローテーションバトル！
+右にまわす？　左にまわす？▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T12:22:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-11-29T12:22:10" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -43639,27 +43635,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そんな……
-きわめたはず　なのに……</Text>
+			<Text>どちらに　まわすか　まようのは
+けいけんが　たりないからなの？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そんな……
-極めたはず　なのに……</Text>
+			<Text>どちらに　まわすか　迷うのは
+経験が　足りないからなの？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -43674,27 +43670,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きわめるために　トリプルバトルむきの
-わざとか　とくせいを　しらべなきゃ！</Text>
+			<Text>たりない　けいけんは
+ちしき　かんがえで　おぎないます▼
+でないと　せんぱいトレーナーに
+いつまでも　かてないもの</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>極めるために　トリプルバトル向きの
-技とか　特性を　調べなきゃ！</Text>
+			<Text>たりない　経験は
+知識　考えで　補います▼
+でないと　先輩トレーナーに
+いつまでも　勝てないものね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T08:01:03" />
+				Time="2011-11-29T12:22:10" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
