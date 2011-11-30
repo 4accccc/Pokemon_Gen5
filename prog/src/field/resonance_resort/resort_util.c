@@ -3054,7 +3054,8 @@ u32 RESORT_UTIL_GetComboInitRnd( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_a
   //Ž©•ª‚Ì‚¨“Xƒ^ƒCƒv‚ðŽæ“¾
   GF_ASSERT( RESORT_ABSTRUCT_DATA_GetPeopleType(p_abstruct) == RESORT_PEOPLE_TYPE_RESIDENT );
   {
-    RESORT_INSTITUTION_DATA *p_insti = RESORT_ABSTRUCT_DATA_GetDataAdrs( p_abstruct );
+    RESORT_RESIDENT_DATA *p_resi =RESORT_ABSTRUCT_DATA_GetDataAdrs( p_abstruct );
+    RESORT_INSTITUTION_DATA *p_insti = RESORT_RESIDENT_DATA_GetInstitution(p_resi);
     u16 shopID = RESORT_INSTITUTION_DATA_GetData( p_insti, RESORT_INSTITUTION_DATA_PARAM_ID );
     const RESORT_BINARY_SHOP_DATA *cp_shop_data = RESORT_BINARY_SHOP_GetData( cp_shop, shopID );
     shop_type = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
