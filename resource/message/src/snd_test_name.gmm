@@ -9537,6 +9537,50 @@
 		<language name="JPN" width="256">SW-KOBALON-02</language>
 		<language name="JPN_KANJI" width="256">SW-KOBALON-02</language>
 	</row>
+	<row id="msg_seq_se_sw_ci_vschamp_01">
+		<language name="JPN" width="256">SW-CI-VSCHAMP-01</language>
+		<language name="JPN_KANJI" width="256">SW-CI-VSCHAMP-01</language>
+	</row>
+	<row id="msg_seq_se_sw_ci_vschamp_02">
+		<language name="JPN" width="256">SW-CI-VSCHAMP-02</language>
+		<language name="JPN_KANJI" width="256">SW-CI-VSCHAMP-02</language>
+	</row>
+	<row id="msg_seq_se_sw_ci_vschamp_03">
+		<language name="JPN" width="256">SW-CI-VSCHAMP-03</language>
+		<language name="JPN_KANJI" width="256">SW-CI-VSCHAMP-03</language>
+	</row>
+	<row id="msg_seq_se_sw_ci_vschamp_04">
+		<language name="JPN" width="256">SW-CI-VSCHAMP-04</language>
+		<language name="JPN_KANJI" width="256">SW-CI-VSCHAMP-04</language>
+	</row>
+	<row id="msg_seq_se_sw_ci_wbt_01">
+		<language name="JPN" width="256">SW-CI-WBT-01</language>
+		<language name="JPN_KANJI" width="256">SW-CI-WBT-01</language>
+	</row>
+	<row id="msg_seq_se_sw_ci_wbt_02">
+		<language name="JPN" width="256">SW-CI-WBT-02</language>
+		<language name="JPN_KANJI" width="256">SW-CI-WBT-02</language>
+	</row>
+	<row id="msg_seq_se_sw_ci_wbt_03">
+		<language name="JPN" width="256">SW-CI-WBT-03</language>
+		<language name="JPN_KANJI" width="256">SW-CI-WBT-03</language>
+	</row>
+	<row id="msg_seq_se_sw_ci_wbt_04">
+		<language name="JPN" width="256">SW-CI-WBT-04</language>
+		<language name="JPN_KANJI" width="256">SW-CI-WBT-04</language>
+	</row>
+	<row id="msg_seq_se_sw_ci_pkwood_01">
+		<language name="JPN" width="256">SW-CI-PKWOOD-01</language>
+		<language name="JPN_KANJI" width="256">SW-CI-PKWOOD-01</language>
+	</row>
+	<row id="msg_seq_se_sw_ci_pkwood_02">
+		<language name="JPN" width="256">SW-CI-PKWOOD-02</language>
+		<language name="JPN_KANJI" width="256">SW-CI-PKWOOD-02</language>
+	</row>
+	<row id="msg_seq_se_sw_ci_pkwood_03">
+		<language name="JPN" width="256">SW-CI-PKWOOD-03</language>
+		<language name="JPN_KANJI" width="256">SW-CI-PKWOOD-03</language>
+	</row>
 	<row id="msg_seq_se_dmy_390">
 		<language name="JPN" width="256">DMY-390</language>
 		<language name="JPN_KANJI" width="256">DMY-390</language>
