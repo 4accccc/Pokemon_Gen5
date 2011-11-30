@@ -5754,9 +5754,9 @@
 
 	<row id="TRID_MINI_26_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">もちろん　おあいて　するわ
-おきにいりの　ブビィでね！！▼</language>
+おきにいりの　コロモリでね！！▼</language>
 		<language name="JPN_KANJI" width="216">もちろん　お相手　するわ
-おきにいりの　ブビィでね！！▼</language>
+おきにいりの　コロモリでね！！▼</language>
 	</row>
 
 	<row id="TRID_MINI_26_TRMSG_FIGHT_LOSE">
@@ -10025,63 +10025,63 @@
 	</row>
 
 	<row id="TRID_SCHOOLB_13_TRMSG_POKE_UNDER_TWO">
-		<language name="JPN" width="216">ローテーションバトルは　ポケモン
+		<language name="JPN" width="216">トリプルバトルは　ポケモン
 ３びきでの　ポケモンしょうぶ　だよ！</language>
 		<language name="JPN_KANJI" width="216">ローテーションバトルは　ポケモン
 ３匹での　ポケモン勝負だよ！</language>
 	</row>
 
 	<row id="TRID_SCHOOLB_13_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">ローテーションバトル！
-みぎにまわすか　ひだりにまわすか！▼</language>
-		<language name="JPN_KANJI" width="216">ローテーションバトル！
-右にまわすか　左にまわすか！▼</language>
+		<language name="JPN" width="216">トリプルバトルを　きわめた
+ぼくの　つよさを　みなさい！▼</language>
+		<language name="JPN_KANJI" width="216">トリプルバトルを　極めた
+ぼくの　つよさを　みなさい！▼</language>
 	</row>
 
 	<row id="TRID_SCHOOLB_13_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">どちらに　まわすか　まようのは
-けいけんが　たりないからかな？</language>
-		<language name="JPN_KANJI" width="216">どちらに　まわすか　迷うのは
-経験が　たりないからかな？</language>
-	</row>
-
-	<row id="TRID_SCHOOLB_13_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">たりない　けいけんは
-ちしき　かんがえで　おぎないます▼
-でないと　せんぱいトレーナーに
-いつまでも　かてないですよね</language>
-		<language name="JPN_KANJI" width="216">たりない　経験は
-知識　考えで　補います▼
-でないと　先輩トレーナーに
-いつまでも　勝てないですよね</language>
-	</row>
-
-	<row id="TRID_SCHOOLG_11_TRMSG_POKE_UNDER_TWO">
-		<language name="JPN" width="216">トリプルバトルは　ポケモン
-３びきで　たたかう　しょうぶ　です！</language>
-		<language name="JPN_KANJI" width="216">トリプルバトルは　ポケモン
-３匹で　戦う　勝負です！</language>
-	</row>
-
-	<row id="TRID_SCHOOLG_11_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">トリプルバトルを　きわめた
-あたしの　つよさを　みなさいな！▼</language>
-		<language name="JPN_KANJI" width="216">トリプルバトルを　極めた
-あたしの　強さを　みなさいな！▼</language>
-	</row>
-
-	<row id="TRID_SCHOOLG_11_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">そんな……
 きわめたはず　なのに……</language>
 		<language name="JPN_KANJI" width="216">そんな……
 極めたはず　なのに……</language>
 	</row>
 
-	<row id="TRID_SCHOOLG_11_TRMSG_FIGHT_AFTER">
+	<row id="TRID_SCHOOLB_13_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">きわめるために　トリプルバトルむきの
 わざとか　とくせいを　しらべなきゃ！</language>
 		<language name="JPN_KANJI" width="216">極めるために　トリプルバトル向きの
 技とか　特性を　調べなきゃ！</language>
+	</row>
+
+	<row id="TRID_SCHOOLG_11_TRMSG_POKE_UNDER_TWO">
+		<language name="JPN" width="216">ローテーションは　ポケモン
+３びきで　たたかう　しょうぶ　です！</language>
+		<language name="JPN_KANJI" width="216">ローテーションバトルは　ポケモン
+３匹で　戦う　勝負です！</language>
+	</row>
+
+	<row id="TRID_SCHOOLG_11_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">ローテーションバトル！
+みぎにまわす？　ひだりにまわす？▼</language>
+		<language name="JPN_KANJI" width="216">ローテーションバトル！
+右にまわす？　左にまわす？▼</language>
+	</row>
+
+	<row id="TRID_SCHOOLG_11_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">どちらに　まわすか　まようのは
+けいけんが　たりないからなの？</language>
+		<language name="JPN_KANJI" width="216">どちらに　まわすか　迷うのは
+経験が　足りないからなの？</language>
+	</row>
+
+	<row id="TRID_SCHOOLG_11_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">たりない　けいけんは
+ちしき　かんがえで　おぎないます▼
+でないと　せんぱいトレーナーに
+いつまでも　かてないもの</language>
+		<language name="JPN_KANJI" width="216">たりない　経験は
+知識　考えで　補います▼
+でないと　先輩トレーナーに
+いつまでも　勝てないものね</language>
 	</row>
 
 	<row id="TRID_CHILDCARE_07_TRMSG_FIGHT_START">
