@@ -4375,6 +4375,26 @@
 		<language name="JPN_KANJI" width="216">Ｎ</language>
 	</row>
 
+	<row id="elitem_45">
+		<language name="JPN" width="216">ゲンヤ</language>
+		<language name="JPN_KANJI" width="216">ゲンヤ</language>
+	</row>
+
+	<row id="elitew_50">
+		<language name="JPN" width="216">チフユ</language>
+		<language name="JPN_KANJI" width="216">チフユ</language>
+	</row>
+
+	<row id="backpackerm_31">
+		<language name="JPN" width="216">ノブヒコ</language>
+		<language name="JPN_KANJI" width="216">ノブヒコ</language>
+	</row>
+
+	<row id="backpackerw_26">
+		<language name="JPN" width="216">クミコ</language>
+		<language name="JPN_KANJI" width="216">クミコ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
