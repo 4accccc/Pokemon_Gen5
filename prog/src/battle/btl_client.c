@@ -582,7 +582,6 @@ static int _check_event_choice( POKEWOOD_SENARIO *senario, POKEWOOD_SEQ_WORK *se
 static void _set_audience_ending_reaction( BTLV_CORE *viewCore, POKEWOOD_SEQ_WORK *psw );
 static void _clear_pokewood_event_provision( POKEWOOD_SEQ_WORK *psw );
 static void _bgm_change_pokewood_show( BTL_MAIN_MODULE *mainModule );
-static void _sound_debug( BTL_CLIENT *wk );
 
 
 #ifdef BUGFIX_AF_GFBTS2028_101007
@@ -593,6 +592,7 @@ static BOOL scProc_OP_SetDoryoku( BTL_CLIENT* wk, int* seq, const int* args );
 
 #ifdef PM_DEBUG
 static BOOL Debug_SubProc_CheckCutin(BTL_CLIENT *wk, int *seq );
+static void _sound_debug( BTL_CLIENT *wk );
 #endif
 
 
@@ -1107,7 +1107,9 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
 
   // ポケウッド上映用観客管理
   AudienceFunc( wk );
+#ifdef PM_DEBGU
   _sound_debug( wk );
+#endif
 
   return FALSE;
 }
