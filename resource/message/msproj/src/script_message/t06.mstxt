@@ -1111,10 +1111,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いまは　ならない　とけいだい……</Text>
+			<Text>ふるい　とけいだい……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T12:45:29" />
+				Time="2011-11-29T11:19:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1122,10 +1122,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今は　鳴らない　時計台……</Text>
+			<Text>古い　時計台……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T12:45:44" />
+				Time="2011-11-29T11:19:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -1109,13 +1109,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いまも　ゲーチスさまを　したうもの
-おのれの　みちを　ゆく　もの……▼
-わたしたち　しちけんじんも
-いまでは　バラバラです</Text>
+			<Text>Ｎさまは　ポケモンの　こころが
+わかる　ちからに　すぐれた　おかた▼
+はんめん　ひとの　きもちや　こころを
+りかいする　ちからは　まだまだ▽
+そだって　おられなかったのだろう……▼
+とはいえ　プラズマだんの
+おう　として　イッシュを　さわがせた▼
+その　つみを　つぐなえるよう
+でんせつの　ポケモンとの　たびで▽
+せいちょう　なされると　いいのだが</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T07:11:54" />
+				Time="2011-11-29T10:10:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1123,13 +1129,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いまも　ゲーチスさまを　慕う者
-己の　道を　往く　者……▼
-わたしたち　七賢人も
-いまでは　バラバラです</Text>
+			<Text>Ｎさまは　ポケモンの　心が　わかる
+力に　優れた　お方▼
+反面　人の　気持ちや　心を
+理解する　力は　まだまだ▽
+未成育だったのだろう……▼
+とはいえ　プラズマ団の
+王として　イッシュを　さわがせた▼
+その罪を　つぐなえるよう
+伝説の　ポケモンとの　旅で▽
+成長なされると　いいのだが</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T07:11:59" />
+				Time="2011-11-29T10:10:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1245,12 +1257,12 @@
 			<Text>Ｎも　わかったのでしょうか▼
 トレーナーが　たたかうのは
 ポケモンを　きずつけるため　ではなく▼
-ポケモンと　トレーナが
+ポケモンと　トレーナーが
 おたがい　わかりあうための▽
 もっとも　シンプルな　しゅだん　だと</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T08:54:21" />
+				Time="2011-11-29T09:44:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1261,12 +1273,12 @@
 			<Text>Ｎも　わかったのでしょうか▼
 トレーナーが　戦うのは
 ポケモンを　傷つけるため　ではなく▼
-ポケモンと　トレーナが
+ポケモンと　トレーナーが
 お互い　わかりあうための▽
 もっとも　シンプルな　手段だと</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T08:54:37" />
+				Time="2011-11-29T09:44:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1312,7 +1324,7 @@
 			<Text>Ｎは　みなしご　でした▼
 なんでも　うまれて　すぐ
 ポケモンたちと　はなせるような▽
-そぶりをみせ　きみわるがられて……▼
+そぶりをみせ　きみわるがられ……▼
 もりのなか　ヒヒダルマや　ゾロアと
 いっしょに　くらしていたところ▼
 ゲーチスに　ひろわれた　とのことです▼
@@ -1320,7 +1332,7 @@
 あつめられた　みなしご　なのです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T06:40:06" />
+				Time="2011-11-29T10:11:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1331,7 +1343,7 @@
 			<Text>Ｎは　みなしご　でした▼
 なんでも　生まれて　すぐ
 ポケモンたちと　話せるような▽
-素振りをみせ　気味悪がられて……▼
+素振りをみせ　気味悪がられ……▼
 森の中　ヒヒダルマや　ゾロアと
 一緒に　暮らしていたところ▼
 ゲーチスに　拾われた　とのことです▼
@@ -1339,7 +1351,7 @@
 集められた　みなしご　なのです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T08:42:05" />
+				Time="2011-11-29T10:11:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2149,11 +2161,11 @@ Nの　気持ちは　わかりません▼
 こいつらみたいに　なにをいわれても
 しんねんを　つらぬくのも　つよさ　か▼
 [Name:TrainerName ]！
-よければ　あした　また　こいよ▽
+あした　また　こいよ▽
 あいて　してやるから！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T09:20:27" />
+				Time="2011-11-29T10:12:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2168,11 +2180,11 @@ Nの　気持ちは　わかりません▼
 こいつらみたいに　なにをいわれても
 信念を　貫くのも　強さ　か▼
 [Name:TrainerName ]！
-よければ　明日　また　来いよ▽
+明日　また　来いよ▽
 相手してやるから！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T10:02:58" />
+				Time="2011-11-29T10:12:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
