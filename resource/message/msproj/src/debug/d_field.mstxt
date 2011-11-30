@@ -13997,4 +13997,29 @@ LR→補完"</Text>
 				Time="2011-11-10T02:50:13" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="DEBUG_FIELD_SYACHI_COMPATIBLE">
+		<LanguageCell
+			Language="JPN">
+			<Text>デバッグＢＷ通信ＯＫ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-11-30T01:58:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-11-30T01:57:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>デバッグＢＷ通信ＯＫ</Text>
+			<TextModifiedBy
+				User="tamada:W00253"
+				Time="2011-11-30T01:58:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tamada:W00253"
+				Time="2011-11-30T01:58:15" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

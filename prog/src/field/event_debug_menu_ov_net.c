@@ -20,6 +20,7 @@
 #include "arc_def.h"
 #include "system/main.h" //for HEAPID_FIELDMAP
 #include "font/font.naix"
+#include "net/net_whpipe.h"
 
 //フィールド
 #include "fieldmap.h"
@@ -454,6 +455,22 @@ BOOL debugMenu_Resort( DEBUG_MENU_EVENT_WORK * wk )
 
   GMEVENT_ChangeEvent( wk->gmEvent, event );
   return TRUE;
+}
+
+extern u8 DebugAloneTest;
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー　syachi通信互換
+ */
+//--------------------------------------------------------------
+BOOL debugMenu_SyachiCompatible( DEBUG_MENU_EVENT_WORK * wk )
+{
+  DebugAloneTest = 124; // デバッグBWロムの最終デバッグ通信バージョン
+
+  //通信が有効なら、設定値を即時反映
+  if(GFL_NET_IsInit() == TRUE){
+    DEBUG_GFL_NET_AloneTestCodeReflect();
+  }
 }
 
 #endif  //  PM_DEBUG

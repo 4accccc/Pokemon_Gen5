@@ -172,6 +172,7 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
 
   //event_debug_menu_ov_net.c
   { DEBUG_FIELD_TITLE_06, (void*)BMPMENULIST_LABEL, FS_OVERLAY_ID(debugmenu_net) },       //○つうしん
+  { DEBUG_FIELD_SYACHI_COMPATIBLE, debugMenu_SyachiCompatible, FS_OVERLAY_ID(debugmenu_net) },  //syachi通信互換
   { DEBUG_FIELD_STR19, debugMenuCallProc_OpenClubMenu, FS_OVERLAY_ID(debugmenu_net) },      //WIFIクラブ
   { DEBUG_FIELD_GPOWER, debugMenuCallProc_GPowerList, FS_OVERLAY_ID(debugmenu_net)},      //Gパワー
   { DEBUG_FIELD_STR49, debugMenuCallProc_BeaconFriendCode, FS_OVERLAY_ID(debugmenu_net) },  //ともだちコード配信
@@ -278,6 +279,11 @@ static const DEBUG_MENU_LIST DATA_DebugMenuList[] =
 #elif defined DEBUG_ONLY_FOR_fuchino_hiroki
 #define QuickJumpStart   DEBUG_FIELD_INTRO_DEMO
 #define QuickJumpSelect  DEBUG_FIELD_INTRO_DEMO
+
+#else
+//それ以外の場合（提出ロム等）
+#define QuickJumpStart  DEBUG_FIELD_STR41
+#define QuickJumpSelect DEBUG_FIELD_SYACHI_COMPATIBLE
 #endif
 
 //--------------------------------------------------------------

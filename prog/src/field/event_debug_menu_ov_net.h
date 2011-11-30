@@ -28,3 +28,4 @@ extern BOOL debugMenu_MissionReset( DEBUG_MENU_EVENT_WORK *wk );
 extern BOOL debugMenu_Intrude( DEBUG_MENU_EVENT_WORK * wk );
 extern BOOL debugMenu_WriteWifiNote( DEBUG_MENU_EVENT_WORK *wk );
 extern BOOL debugMenu_Resort( DEBUG_MENU_EVENT_WORK * wk );
+extern BOOL debugMenu_SyachiCompatible( DEBUG_MENU_EVENT_WORK * wk );
