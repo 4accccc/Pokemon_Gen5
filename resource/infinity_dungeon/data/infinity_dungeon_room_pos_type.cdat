@@ -23,18 +23,18 @@ static const INF_ROOM_SET_TR_PARAM sc_room_tr_param[] = {
     { 
       { INF_MOVE_CODE_TYPE_STOP1 ,8 ,5 ,}, 
 
-      { INF_MOVE_CODE_TYPE_STOP1 ,4 ,9 ,}, 
+      { INF_MOVE_CODE_TYPE_STOP2 ,4 ,9 ,}, 
 
     },
   }, 
   { // INF_ROOM_POS_TYPE_A_3
     INF_MULTI_DUNGEON ,3 ,ROOM_TYPE_DEFAULT ,
     { 
-      { INF_MOVE_CODE_TYPE_STOP1 ,6 ,5 ,}, 
-
-      { INF_MOVE_CODE_TYPE_STOP1 ,4 ,8 ,}, 
-
       { INF_MOVE_CODE_TYPE_STOP1 ,8 ,8 ,}, 
+
+      { INF_MOVE_CODE_TYPE_STOP2 ,4 ,8 ,}, 
+
+      { INF_MOVE_CODE_TYPE_STOP3 ,6 ,5 ,}, 
 
     },
   }, 
@@ -150,21 +150,21 @@ static const INF_ROOM_SET_TR_PARAM sc_room_tr_param[] = {
   { // INF_ROOM_POS_TYPE_O_1
     INF_B2_ONLY_DUNGEON ,1 ,ROOM_TYPE_SPECIAL2 ,
     { 
-      { INF_MOVE_CODE_TYPE_STOP1 ,6 ,7 ,}, 
+      { INF_MOVE_CODE_TYPE_STOP4 ,6 ,7 ,}, 
 
     },
   }, 
   { // INF_ROOM_POS_TYPE_P_1
     INF_W2_ONLY_DUNGEON ,1 ,ROOM_TYPE_SPECIAL1 ,
     { 
-      { INF_MOVE_CODE_TYPE_STOP1 ,6 ,7 ,}, 
+      { INF_MOVE_CODE_TYPE_STOP4 ,6 ,7 ,}, 
 
     },
   }, 
   { // INF_ROOM_POS_TYPE_Q_1
     INF_W2_ONLY_DUNGEON ,1 ,ROOM_TYPE_SPECIAL2 ,
     { 
-      { INF_MOVE_CODE_TYPE_STOP1 ,6 ,7 ,}, 
+      { INF_MOVE_CODE_TYPE_STOP4 ,6 ,7 ,}, 
 
     },
   }, 

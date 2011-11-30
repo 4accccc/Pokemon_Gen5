@@ -11,7 +11,10 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
 static const INF_MMDL_PARAM sc_mmdl_param[] = {
-    { MV_DIR_RND ,EV_TYPE_TRAINER ,DIR_DOWN ,2 ,0 ,0 ,0 ,msg_hint_gate_move_stay_01 ,},  // INF_MOVE_CODE_TYPE_STOP1
+    { MV_SPIN_L ,EV_TYPE_TRAINER ,DIR_LEFT ,2 ,0 ,0 ,0 ,msg_hint_gate_move_stay_01 ,},  // INF_MOVE_CODE_TYPE_STOP1
+    { MV_SPIN_R ,EV_TYPE_TRAINER ,DIR_RIGHT ,2 ,0 ,0 ,0 ,msg_hint_gate_move_stay_01 ,},  // INF_MOVE_CODE_TYPE_STOP2
+    { MV_DIR_RND ,EV_TYPE_TRAINER ,DIR_DOWN ,2 ,0 ,0 ,0 ,msg_hint_gate_move_stay_01 ,},  // INF_MOVE_CODE_TYPE_STOP3
+    { MV_DIR_RND ,EV_TYPE_TRAINER ,DIR_DOWN ,1 ,0 ,0 ,0 ,msg_hint_gate_move_stay_01 ,},  // INF_MOVE_CODE_TYPE_STOP4
     { MV_RND ,EV_TYPE_TRAINER ,DIR_DOWN ,2 ,2 ,2 ,2 ,msg_hint_gate_move_walk_01 ,},  // INF_MOVE_CODE_TYPE_RNDDOM1
     { MV_RND ,EV_TYPE_TRAINER_KYORO ,DIR_DOWN ,2 ,2 ,2 ,2 ,msg_hint_gate_move_look_01 ,},  // INF_MOVE_CODE_TYPE_RNDDOM2
     { MV_RND ,EV_TYPE_TRAINER_SPIN_STOP_L ,DIR_DOWN ,2 ,3 ,2 ,2 ,msg_hint_gate_move_turn_01 ,},  // INF_MOVE_CODE_TYPE_RNDDOM3
