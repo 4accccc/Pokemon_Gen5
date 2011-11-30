@@ -800,7 +800,11 @@
 #define	TRID_ELITEW_50   ( 787 ) 
 #define	TRID_BACKPACKERM_31   ( 788 ) 
 #define	TRID_BACKPACKERW_26   ( 789 ) 
-#define TRID_MAX  ( 790 )
+#define	TRID_CHILDCARE_11   ( 790 ) 
+#define	TRID_KINDERGARTENM_12   ( 791 ) 
+#define	TRID_TANPAN_35   ( 792 ) 
+#define	TRID_MINI_27   ( 793 ) 
+#define TRID_MAX  ( 794 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
