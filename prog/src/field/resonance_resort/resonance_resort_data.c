@@ -136,11 +136,12 @@ static RESORT_PEOPLE_ALL_DATA *sp_people_all_data = NULL;
 //=====================================
 struct _RESORT_INSTITUTION_DATA 
 {
-  u8  institutionID;
+  u8  dummy;
   u8  lv;
   u16 exp;
   u32 bit;
-  u16 work[2];
+  u16 institutionID;
+  u16 work;
 };
 
 SDK_COMPILER_ASSERT( sizeof(RESORT_INSTITUTION_DATA) == RESORT_INSTITUTION_DATA_SIZE );
@@ -220,9 +221,6 @@ u32 RESORT_INSTITUTION_DATA_GetData( const RESORT_INSTITUTION_DATA *cp_wk, RESOR
     return cp_wk->lv;
   case RESORT_INSTITUTION_DATA_PARAM_EXP:
     return cp_wk->exp;
-  case RESORT_INSTITUTION_DATA_PARAM_WORK_00:
-  case RESORT_INSTITUTION_DATA_PARAM_WORK_01:
-    return cp_wk->work[ param - RESORT_INSTITUTION_DATA_PARAM_WORK_00];
   case RESORT_INSTITUTION_DATA_PARAM_BIT:
     return cp_wk->bit;
   default:
@@ -251,10 +249,6 @@ void RESORT_INSTITUTION_DATA_SetData( RESORT_INSTITUTION_DATA *p_wk, RESORT_INST
     break;
   case RESORT_INSTITUTION_DATA_PARAM_EXP:
     p_wk->exp = data;
-    break;
-  case RESORT_INSTITUTION_DATA_PARAM_WORK_00:
-  case RESORT_INSTITUTION_DATA_PARAM_WORK_01:
-    p_wk->work[ param - RESORT_INSTITUTION_DATA_PARAM_WORK_00]  = data;
     break;
   case RESORT_INSTITUTION_DATA_PARAM_BIT:
     p_wk->bit = data;
@@ -601,9 +595,8 @@ typedef struct
   u8  special_deliverly :1;
   u8  city_lv           :5;
   u8  dummy             :2;
-  u8  want_job;       //‚È‚è‚½‚¢Ž{ÝID‚ª“ü‚Á‚Ä‚¢‚é
   u8  dummy2;
-  u8  dummy3;
+  u16 want_job;       //‚È‚è‚½‚¢Ž{ÝID‚ª“ü‚Á‚Ä‚¢‚é
 }RESORT_BASIC2_DATA;
 
 SDK_COMPILER_ASSERT( sizeof(RESORT_BASIC2_DATA) == RESORT_BASIC2_DATA_SIZE );
@@ -1204,7 +1197,6 @@ struct _RESORT_PROXY_DATA
   u8    present_bit;
   u16   pokemon;
   u16   want_spot;
-  u8    want_job;
   u8    placeID;
   u8    peopleID;
   u8    comm_type;  //RESORT_COMM_TYPE
@@ -1212,7 +1204,7 @@ struct _RESORT_PROXY_DATA
   u8                  meet_year;
   u8                  meet_month;
   u8                  meet_day;
-  u8                  dummy;
+  u16                 want_job;
   u32                 rnd_seed;     //—”ƒV[ƒh
 };
 
@@ -4033,7 +4025,7 @@ void RESORT_PEOPLE_ALL_DATA_InitInstance( RESORT_PEOPLE_ALL_DATA *p_wk )
 
   RESORT_RESIDENT_DATA_InitInstance(&p_wk->owner );
   {
-    RESORT_RESIDENT_DATA_GetData( &p_wk->owner, RESORT_DATA_PARAM_WANT_JOB, RESORT_SHOP_ID_NULL );
+    RESORT_RESIDENT_DATA_SetData( &p_wk->owner, RESORT_DATA_PARAM_WANT_JOB, RESORT_SHOP_ID_NULL );
   }
 }
 //----------------------------------------------------------------------------
