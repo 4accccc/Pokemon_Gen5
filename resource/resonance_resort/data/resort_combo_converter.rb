@@ -61,14 +61,14 @@ end
 #-------------------------------------
 # 見た目データコンバート
 #=====================================
-VIEW_ROW_START    = 1     #行開始位置
+VIEW_ROW_START    = 2     #行開始位置
 VIEW_COL_START    = 2     #列開始位置
 VIEW_COL_NUM      = 7     #列の個数
 VIEW_COL_END      = VIEW_COL_START + VIEW_COL_NUM
 
 def convertViewRnd( csv, data )
 
-  for row in VIEW_ROW_START...csv.row_length-2
+  for row in VIEW_ROW_START...csv.row_length-1
     for col in VIEW_COL_START...VIEW_COL_END
       value = csv.get( row, col )
       data.write_u16( value )
@@ -80,14 +80,14 @@ end
 #-------------------------------------
 # お店データコンバート
 #=====================================
-SHOP_ROW_START    = 1     #行開始位置
+SHOP_ROW_START    = 2     #行開始位置
 SHOP_COL_START    = 2     #列開始位置
 SHOP_COL_NUM      = 7     #列の個数
 SHOP_COL_END      = SHOP_COL_START + SHOP_COL_NUM
 
 def convertShopRnd( csv, data )
 
-  for row in SHOP_ROW_START...csv.row_length-2
+  for row in SHOP_ROW_START...csv.row_length-1
     for col in SHOP_COL_START...SHOP_COL_END
       value = csv.get( row, col )
       data.write_u16( value )
