@@ -1992,30 +1992,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……いくぞォ！！
-マルマイン！！▼
-マタドガス！！▼
+マルマイン！！▽
+マタドガス！！▽
 どうじに　だいばくはつ　だっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……いくぞォ！！
-マルマイン！！▼
-マタドガス！！▼
+マルマイン！！▽
+マタドガス！！▽
 同時に　だいばくはつ　だっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:05" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2168,7 +2168,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>セリザワ『スカウトさ……▼
+			<Text>セリザワ『スカウトさ……三角
 キミの　もつ　そのパワー……
 まもるためだけに　つかうのは▽
 あまりに　おしい……▼
@@ -2177,11 +2177,11 @@
 いただけないかね……？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3028,33 +3028,33 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『クッ……▼
 Ｍ・Ｂいじょうに　きょうりょくだな……
-しかし　こんな　きけん　ものを▽
+しかし　こんな　きけんなものを▽
 どうやって　てに　いれたんだ……▼
 まさか……　じぶんで　Ｍ・Ｂを
 かいはつ　したとでも　いうのか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『クッ……▼
 Ｍ・Ｂ以上に　強力だな……
-しかし　こんな危険な　ものを▽
+しかし　こんな　危険な　物を▽
 どうやって　手に　入れたんだ……▼
 まさか……　自分で　Ｍ・Ｂを
 開発したとでも　いうのか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3107,14 +3107,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『なんだって……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『何だって……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3122,63 +3122,61 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>セリザワ『ん？　いがい　かね？
-このＭ・Ｂは　うりもの　なのだよ▼
+このＭ・Ｂは　うりもの　なのだよ▽
 シリーズか　も　されている▽
 にんきしょうひん　なんだがねェ▼
 かねと　ちょっとしたコネさえ　あれば
 かんたんに　てに　いれられるさ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>セリザワ『ん？　意外かね？
-このＭ・Ｂは　売り物　なのだよ▼
+このＭ・Ｂは　売り物　なのだよ▽
 シリーズ化も　されている▽
 大人気商品　なんだがねェ▼
 金と　ちょっとしたコネさえ　あれば
 簡単に　手に　入れられるのさ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event8_hero_4">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『そんな……▼
-いったい　だれが　なんのために
-こんな　きけんな　ものを　つくるんだ……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『そんな……
+いったい　だれが　なんのために……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:05" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『そんな……▼
-いったい　だれが　なんのために
-こんな　危険な物を　造るんだ……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『そんな……
+一体　だれが　何のために……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:05" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

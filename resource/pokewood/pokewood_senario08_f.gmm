@@ -388,7 +388,7 @@
 ＵＦＯ　なんかに　つかまって▽
 たまるかよ！！</language>
 		<language name="JPN_KANJI" width="256">あわてる　男『くそーっ！！
-ＵＦＯ　なんかに　つかまって▽
+ＵＦＯ　なんかに　捕まって▽
 たまるかよ！！</language>
 	</row>
 	<row id="pw_turn_hero_6">
@@ -403,7 +403,7 @@
 じょうきょうを　ほうこく　しろ！</language>
 		<language name="JPN_KANJI" width="256">通信『おい！　聞こえるか！？
 応答せよ！　[1:00:トレーナー名:1]！▽
-状況を　報告　せよ！</language>
+状況を　報告せよ！</language>
 	</row>
 	<row id="pw_event0_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『りょうかい！▼
@@ -422,16 +422,16 @@
 おちいって　います！</language>
 	</row>
 	<row id="pw_event0_hero_2">
-		<language name="JPN" width="256">つうしん『りょうかいだ！▼
+		<language name="JPN" width="256">つうしん『よし　りょうかいだ！▼
 まずは　しみんの　あんぜんの
 かくほを　さいゆうせんに　しろ！▼
 おそわれている　しみんを　たすけ
 あんぜんな　ばしょ　まで▽
 ゆうどうしろ！　いいな！</language>
 		<language name="JPN_KANJI" width="256">通信『了解！▼
-まずは　市民の　安全の
-確保を　最優先に　しろ！▼
-襲われている　市民を　助け
+いいか？　まずは　市民たちの
+安全の確保を　最優先にしろ！▼
+襲われている人々を　助け
 安全な　場所　まで▽
 誘導しろ！　いいな！</language>
 	</row>
@@ -453,13 +453,13 @@
 	</row>
 	<row id="pw_event1_hero_2">
 		<language name="JPN" width="256">にげおくれた　おんな『ええ！
-でも　あなたも　きを　つけて！▼
-さっき　UFOが　人や　ポケモンを
-つれさっていく　ところを　みたわ！</language>
+あなたも　きを　つけてね！▼
+さっき　UFOが　ひとや　ポケモンを
+つれさっていくのを　みたわ！</language>
 		<language name="JPN_KANJI" width="256">逃げ遅れた　女『ええ！
-でも　あなたも　気を　つけて！▼
+あなたも　気を　つけてね！▼
 さっき　UFOが　人や　ポケモンを
-連れ去っていく　所を　見たわ！</language>
+連れ去っていくのを　見たわ！</language>
 	</row>
 	<row id="pw_event1_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『なんですって……</language>
@@ -528,16 +528,16 @@ UFOの　全身が　少しずつ▽
 	<row id="pw_event2_hero_6">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『くっ　どうする……
 いま　ここを　はなれると▽
-この　ひとに　きけんが……</language>
+このひとに　きけんが……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どうしよう……
 今　ここを　はなれると▽
-この　人に　危険が……</language>
+この人に　危険が……</language>
 	</row>
 	<row id="pw_event2_hero_7">
-		<language name="JPN" width="256">おとしより『これまで　じゃ……
+		<language name="JPN" width="256">おとしより『これまでじゃ……
 ああ……　じいさん　や……▽
 いま　あいに　いきますぞ……</language>
-		<language name="JPN_KANJI" width="256">老人『これまで　じゃ……
+		<language name="JPN_KANJI" width="256">老人『これまでじゃ……
 ああ……　じいさん　や……▽
 いま　あいに　行きますぞ……</language>
 	</row>
@@ -580,7 +580,7 @@ UFOに　つかまったのね……▼
 のこったのは　わたしだけか……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『くっ……
 ほとんどの　市民が▽
-UFOに　つかまったのね……▼
+UFOに　捕まったのね……▼
 残ったのは　私だけか……</language>
 	</row>
 	<row id="pw_event3_enemy_2">
@@ -608,12 +608,12 @@ UFOから　光が……▼
 状況を　報告　しろ！</language>
 	</row>
 	<row id="pw_event3_hero_5">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『た……　いちょう……▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『キ……　キャップ……▼
 ああ……　ダメです……
 UFOの……　ひかりが……▼
 うう……　なんだか　きもちいい……▼
 ねむく……　なって……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『た……　いちょう……▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『キ……　キャップ……▼
 ああ……　ダメです……
 UFOの……　光が……▼
 うう……　なんだか　気持いい……▼
@@ -625,17 +625,17 @@ UFOの……　光が……▼
 	</row>
 	<row id="pw_event3_hero_6">
 		<language name="JPN" width="256">つうしん『おい！　[1:00:トレーナー名:1]！▼
-しっかりしろ！　[1:00:トレーナー名:1]！
-[1:00:トレーナー名:1]！　　[1:00:トレーナー名:1]！</language>
+しっかりするんだ！　[1:00:トレーナー名:1]！
+[1:00:トレーナー名:1]！　[1:00:トレーナー名:1]！</language>
 		<language name="JPN_KANJI" width="256">通信『おい！　[1:00:トレーナー名:1]！▼
-しっかりしろ！　[1:00:トレーナー名:1]！
-[1:00:トレーナー名:1]！　　[1:00:トレーナー名:1]！</language>
+しっかりするんだ！　[1:00:トレーナー名:1]！
+[1:00:トレーナー名:1]！　[1:00:トレーナー名:1]！</language>
 	</row>
 	<row id="pw_event4_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『くっ！　ここまでね！▼
-こうなったら　ほんぶに
-きゅえんを　たのむしか……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『くっ！　ここまでね！▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『チッ　ここまでね！▼
+しかたない……　ほんぶに
+きゅうえんを　たのむしか……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『チッ　ここまでね！▼
 こうなったら　本部に
 救援を　頼むしか……</language>
 	</row>
@@ -646,18 +646,17 @@ UFOの……　光が……▼
 応答せよ……　[1:00:トレーナー名:1]</language>
 	</row>
 	<row id="pw_event4_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『たいちょう！！
-もうしわけ　ありません！▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『キャップ！！
+もうしわけありません！▼
 UFOたちに　やられ　ポケモンが
-ぜんめつ　してしまいました！▼
-ただちに　こちらに　きゅうえんを
+ぜんめつして　しまいました！▽
+いそぎ　こちらに　きゅうえんを▽
 おねがいします！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『隊長！！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『キャップ！！
 申し訳　ありません！▼
 UFOたちに　やられ　ポケモンが
-全滅　してしまいました！▼
-ただちに　こちらに　救援を
-お願いします！</language>
+全滅してしまいました！▽
+こちらに　救援を　お願いします！</language>
 	</row>
 	<row id="pw_event4_hero_3">
 		<language name="JPN" width="256">つうしん『[1:00:トレーナー名:1]……
@@ -670,10 +669,10 @@ UFOたちに　やられ　ポケモンが
 	<row id="pw_event4_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『なぜですか！？
 ポケモンさえ　いれば▽
-じぶんは　まだ　たたかえます！</language>
+じぶんは　まだまだ　たたかえます！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なぜですか！？
 ポケモンさえ　いれば▽
-自分は　まだ　戦えます！</language>
+自分は　まだまだ　戦えます！</language>
 	</row>
 	<row id="pw_event4_hero_5">
 		<language name="JPN" width="256">つうしん『[1:00:トレーナー名:1]……▼
@@ -695,13 +694,15 @@ UFOたちに　やられ　ポケモンが
 	</row>
 	<row id="pw_event4_hero_6">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『まさか　そんな……
-じんるいの　みらいは　おわるの……</language>
+イッシュぼうえいたいが▽
+かいめつ　なんて……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『まさか　そんな……
-人類の　未来は　終わるの……</language>
+イッシュ防衛隊が▽
+壊滅　なんて……</language>
 	</row>
 	<row id="pw_event5_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『やれやれ……
-ザコどもは　かたづけたし
+ザコどもは　かたづけたし▽
 ここまで　にげれば▽
 UFOも　おって　こないよね……▼
 ……まったく　あんな　あいてと
@@ -724,9 +725,9 @@ UFOも　追って　こないだろう……▼
 		<language name="JPN_KANJI" width="256">ＵＦＯ『……　……</language>
 	</row>
 	<row id="pw_event5_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『……　……▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『……　……
 こうなったら……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……　……▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……　……
 こうなったら……</language>
 	</row>
 	<row id="pw_event5_hero_3">
@@ -740,18 +741,18 @@ UFOも　追って　こないだろう……▼
 		<language name="JPN_KANJI" width="256">ＵＦＯ『……　……</language>
 	</row>
 	<row id="pw_event5_hero_4">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ねえねえ！
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ねえ　UFOさん！
 あなたたちの　もくてきは　なに？▼
-もしかして　この　ほしの
+もしかしてさあ　このほしの
 せいふくでも　かんがえてるの？▼
 だったら　わたしも　ちからに　なるわ！
 きょうりょく　させて？　ね？▼
 だから　そのかわり……　
 どうか　わたしだけは▽
 みのがしてよ！　おねがいっ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ねえねえ！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ねえ　UFOさん！
 あなたたちの　目的は　なに？▼
-もしかして　この星の
+もしかしてさあ　この星の
 征服でも　考えてるの？▼
 だったら　私も　力になるわ！
 協力　させて？　ね？▼
@@ -764,19 +765,19 @@ UFOも　追って　こないだろう……▼
 		<language name="JPN_KANJI" width="256">ＵＦＯ『……　……</language>
 	</row>
 	<row id="pw_event5_hero_5">
-		<language name="JPN" width="256">じんるいを　おそう　UFO……▼
+		<language name="JPN" width="256">……じんるいを　おそう　UFO▼
 その　きょうふの　まえに
 [1:00:トレーナー名:1]は　にんげんを▽
 うらぎって　しまった……▼
-そのご　ＵＦＯの　てさき　として
+そのご　ＵＦＯのてさき　として
 あらわれた　[1:00:トレーナー名:1]……▼
-その　すがたは　にんげんとは　まるで
+そのすがたは　にんげんとは　まるで
 ことなる　おそろしいもの　だった……</language>
-		<language name="JPN_KANJI" width="256">人類を　おそう　UFO……▼
-その　恐怖の　前に
+		<language name="JPN_KANJI" width="256">……人類を　襲う　UFO▼
+その　恐怖に　屈した
 [1:00:トレーナー名:1]は　人類を▽
 裏切って　しまった……▼
-その後　ＵＦＯの　手先　として
+その後　ＵＦＯの手先　として
 現れた　[1:00:トレーナー名:1]……▼
 その姿は　人間とは　まるで
 異なる　恐ろしいもの　だった……</language>
@@ -784,11 +785,11 @@ UFOも　追って　こないだろう……▼
 	<row id="pw_event6_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『よし……
 すべての　しみんの　ひなんは▽
-かんりょう　した　みたいね……▼
-あとは　ＵＦＯだけか……</language>
+かんりょうした　みたいね……▼
+あとは　ＵＦＯか……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『よし……
-全ての　市民の　ひなんは▽
-完了　した　みたいね……▼
+全ての　市民の　避難は▽
+完了した　みたいね……▼
 後は　ＵＦＯか……</language>
 	</row>
 	<row id="pw_event6_enemy_1">
@@ -819,21 +820,21 @@ UFOが　空へ　上っていく……</language>
 なぞの　UFO……▼
 そのきょうふから　しみんを
 まもった　[1:00:トレーナー名:1]……▼
-かのじょの　まえに　あらわた
+かのじょのまえに　あらわた
 ひとりの　じんぶつ……▼
-じんるいの　そんぼうを　かけた
-たたかいは　こうして　まくを▽
-あけたの　だった……</language>
+じんるいのそんぼうを　かけた
+たたかいは　こうして▽
+まくを　あけたの　だった……</language>
 		<language name="JPN_KANJI" width="256">……突然　現れ
-人類の　ほかくを　始めた▽
-なぞの　UFO……▼
+人類の　捕獲を　始めた▽
+なぞの飛行物体　UFO……▼
 その恐怖から　市民を
 守った　[1:00:トレーナー名:1]……▼
-彼女の　前に　現れた
-ひとりの　人物……▼
-人類の　存亡を　かけた
+彼女の前に　現れた
+ひとりの人物……▼
+人類の存亡を　かけた
 戦いは　こうして　幕を▽
-開けたの　だった……</language>
+開けたのだった……</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

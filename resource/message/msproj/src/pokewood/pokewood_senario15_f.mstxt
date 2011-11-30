@@ -1992,30 +1992,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……いくわよォ！！
-マルマイン！！▼
-マタドガス！！▼
+マルマイン！！▽
+マタドガス！！▽
 どうじに　だいばくはつ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……いくわよォ！！
-マルマイン！！▼
-マタドガス！！▼
+マルマイン！！▽
+マタドガス！！▽
 同時に　だいばくはつ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3028,33 +3028,33 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『クッ……▼
 Ｍ・Ｂいじょうに　きょうりょく　ね……
-しかし　こんな　きけん　ものを▽
+しかし　こんな　きけんな　ものを▽
 どうやって　てに　いれたんだろう……▼
 まさか……　じぶんで　Ｍ・Ｂを
 かいはつ　したとでも　いうの？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『クッ……▼
 Ｍ・Ｂ以上に　強力ね……
-しかし　こんな危険な　ものを▽
+しかし　こんな　危険な物を▽
 どうやって　手に　入れたんだろう……▼
 まさか……　自分で　Ｍ・Ｂを
 開発したとでも　いうの？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:04" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3107,14 +3107,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『なんだって……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『何ですって……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:04" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3122,63 +3122,61 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>セリザワ『ん？　いがい　かね？
-このＭ・Ｂは　うりもの　なのだよ▼
+このＭ・Ｂは　うりもの　なのだよ▽
 シリーズか　も　されている▽
 にんきしょうひん　なんだがねェ▼
 かねと　ちょっとしたコネさえ　あれば
 かんたんに　てに　いれられるさ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>セリザワ『ん？　意外かね？
-このＭ・Ｂは　売り物　なのだよ▼
+このＭ・Ｂは　売り物　なのだよ▽
 シリーズ化も　されている▽
 大人気商品　なんだがねェ▼
 金と　ちょっとしたコネさえ　あれば
 簡単に　手に　入れられるのさ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:04" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="pw_event8_hero_4">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『そんな……▼
-いったい　だれが　なんのために
-こんな　きけんな　ものを　つくるの……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『そんな……
+いったい　だれが　なんのために……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『そんな……▼
-いったい　だれが　なんのために
-こんな　危険な物を　造るの……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『そんな……
+一体　だれが　何のために……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T12:10:57" />
+				Time="2011-11-30T10:08:04" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

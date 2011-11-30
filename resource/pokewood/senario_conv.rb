@@ -493,8 +493,20 @@ class STR_CHECKER
   end
 
   def checkLength( str )
-    if str.size > 480 then
-      puts "#{ARGV[0]}の『#{str}』の文字が480を超えて『#{str.size}』文字です\n"
+    sankaku_num = 0
+    str = str.gsub(/%MYNAME0/,"主人公００")
+    str = str.gsub(/%MYNAME1/,"主人公０１")
+    str = str.gsub(/%MYPOKE0/,"ポケモン０")
+    str = str.gsub(/%MYPOKE1/,"ポケモン１")
+    num = str.split(//).length
+    temp = str.split(//)
+    temp.each{|word|
+      if (word=="▼" || word=="▽") then
+        sankaku_num+=2
+      end
+    }
+    if (num+sankaku_num) > 249 then
+      puts "#{ARGV[0]}の『#{str}』の文字が249を超えて『#{num+sankaku_num}』文字です（#{num},#{sankaku_num}\n"
       return 0
     end
     return 1

@@ -702,27 +702,27 @@
 			Language="JPN">
 			<Text>つうしん『……りょうかい▼
 ひとの　つぎは　ポケモンか……
-やつら　なにを　たくらんでる……</Text>
+やつら……　なにを　たくらんでる？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T10:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T10:24:52" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信『……了解▼
 人の　次は　ポケモンか……
-やつら　何を　企んでる……</Text>
+やつら……　何を　企んでる？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T10:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T10:24:52" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -738,30 +738,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……じぶんは
-ＵＦＯと　たたかいつつ　Ｅが▽
+ＵＦＯと　たたかいながら　Ｅが▽
 デコイＵＦＯで　マザーシップを▽
 おびきよせるのを　まちます！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……自分は
-ＵＦＯと　戦いつつ　Ｅが▽
+ＵＦＯと　戦いながら　Ｅが▽
 デコイＵＦＯで　マザーシップを▽
 おびき寄せるのを　待ちます！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -776,33 +776,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つうしん『りょうかいだ……▼
+			<Text>つうしん『りょうかいだ▼
 しかしな……　　[Name:TrainerName Idx="1" ]……
 Ｅと　なのる　あのおんな……▼
 ほんとうに　しんよう　しても
 だいじょうぶなのか……？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>通信『了解だ……▼
+			<Text>通信『了解だ▼
 しかしな……　　[Name:TrainerName Idx="1" ]……
 Ｅと　名乗る　あの女……▼
 本当に　信用　しても
 大丈夫なのか……？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1102,38 +1102,38 @@ Eからの　連絡は　まだなの……</Text>
 			<Text>つうしん『……まもなく
 デコイＵＦＯと　ともに▽
 そちらに　とうちゃくする……▼
-しかし……
+ただ……
 よそういじょうに　にげおくれた▽
-しみんの　かずが　おおい……▼
+しみんのかずが　おおい……▼
 このまま　そちらに　むかって
-マザーシップが　あらわれれば▽
-かれらに　きけんが　およぶな……</Text>
+マザーシップが　あらわれると▽
+かれらに　きけんが　およぶだろう……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T10:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T10:24:52" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信『……間もなく
 デコイＵＦＯと　ともに▽
 そちらに　到着する……▼
-しかし……
+ただ……
 予想以上に　逃げ遅れた▽
-市民の　数が　多い……▼
+市民の数が　多い……▼
 このまま　そちらに　向かって
 マザーシップが　現れれば▽
-彼らに　危険が　及ぶな……</Text>
+彼らに　危険が　及ぶだろう……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T10:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T10:24:52" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1185,31 +1185,31 @@ Eからの　連絡は　まだなの……</Text>
 			Language="JPN">
 			<Text>つうしん『しらん……▼
 わたしは　わたしの　さくせんを
-かくじつに　じっこう　するだけだ……▼
-もくてきの　ためならば　たしょうの
+かくじつに　じっこうする……▼
+もくてきのため　ならば　たしょうの
 ぎせいは　うけいれるしかない……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信『知らん……▼
 私は　私の　作戦を
-確実に　実行するだけだ……▼
-目的の　ためならば　多少の
+確実に　実行する……▼
+目的のため　ならば　多少の
 ぎせいは　受け入れるしかない……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1333,31 +1333,31 @@ Eからの　連絡は　まだなの……</Text>
 			Language="JPN">
 			<Text>つうしん『……あたりまえだ▼
 ……うちゅうに　ほうそく　という
-ぜったいの　ルールが　あるように▽
+ぜったいのルールが　あるように▽
 ものごとには　かえることの　できない▽
 ゆうせん　じゅんいが　ある……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T10:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T10:24:52" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信『……当たり前だ▼
 ……宇宙に　法則という
-不変の　ルールが　あるように▽
+不変のルールが　あるように▽
 物事には　変えること　できない▽
 優先順位が　ある……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T10:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T10:24:52" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1583,26 +1583,26 @@ Eからの　連絡は　まだなの……</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしん『[Name:TrainerName Idx="1" ]……
-わたしだ……</Text>
+きこえているな　わたしだ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T10:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T10:24:52" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信『[Name:TrainerName Idx="1" ]……
-私だ……</Text>
+聞こえているな　私だ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T10:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T10:24:52" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1617,31 +1617,31 @@ Eからの　連絡は　まだなの……</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『Eかっ！！
+			<Text>[Name:TrainerName Idx="1" ]『Eねっ！！
 こちらは　ＵＦＯから　しみんたちを▽
-まもることに　せいこう　した！▼
+まもることに　せいこう　したわ！▼
 そちらの　じょうきょうは！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『Eかっ！！
+			<Text>[Name:TrainerName Idx="1" ]『Eねっ！！
 こちらは　ＵＦＯから　市民たちを▽
-守ることに　成功した！▼
+守ることに　成功したわ！▼
 そちらの　状況は！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1656,31 +1656,31 @@ Eからの　連絡は　まだなの……</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つうしん『[Name:TrainerName Idx="1" ]……▼
+			<Text>つうしん『[Name:TrainerName Idx="1" ]……
 よろこべ……　さくせんどおりだ▼
 まもなく　マザーシップが
 このほしに　おりてくるぞ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>通信『[Name:TrainerName Idx="1" ]……▼
+			<Text>通信『[Name:TrainerName Idx="1" ]……
 喜べ……　作戦通りだ▼
 間もなく　マザーシップが
 この星に　降りてくるぞ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1730,33 +1730,33 @@ Eからの　連絡は　まだなの……</Text>
 			Language="JPN">
 			<Text>つうしん『フフフ……▼
 マザーシップが　ちじょうに
-あらわれれば　ＵＦＯの　のうりょくは▽
+おりれば　ＵＦＯの　パワーは▽
 なんばいにも　ぞうふくされる……▼
-にんげんを　ほろぼすのも
+……にんげんを　ほろぼすのも
 いっそう　たやすくなるだろうな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信『……　……▼
 マザーシップが　地上に
-現れれば　ＵＦＯの　能力は▽
+降りてくれば　ＵＦＯの　能力は▽
 何倍にも　増幅される……▼
-人間を　滅ぼすのも
+……人間を　滅ぼすのも
 一層　容易くなるだろうな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1878,35 +1878,35 @@ Eからの　連絡は　まだなの……</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じっこうされる　デコイさくせん
+			<Text>……じっこうされる　デコイさくせん
 マザーシップの　しゅつげん……▽
-そして　Ｅの　へんか……▼
+そして　Ｅのへんか……▼
 ……じんるいと　ＵＦＯの
-みらいをかけた　たたかいは▽
-さいごの　きょくめんを　むかえる……</Text>
+みらいを　かけた　たたかいは▽
+さいしゅうきょくめんを　むかえる……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>実行される　デコイ作戦
+			<Text>……実行される　デコイ作戦
 マザーシップの　出現……▽
-そして　Ｅの　変化……▼
+そして　Ｅの変化……▼
 ……人類と　ＵＦＯの
 未来をかけた　戦いは▽
-最期の　局面を　迎える……</Text>
+最終局面を　迎える……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:03" />
+				Time="2011-11-30T10:24:52" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

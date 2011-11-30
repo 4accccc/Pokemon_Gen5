@@ -217,28 +217,28 @@
 			<Text>[Name:TrainerName Idx="1" ]『……なんで
 あなたが　ＵＦＯを……？▼
 しかも　こんな　ばしょで
-なにを　はじめるんですか？</Text>
+いったい　なにを　はじめるんですか？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……何で
 あなたが　ＵＦＯを……？▼
-しかも　こんな　場所で
-何を　始めるんですか？</Text>
+しかも　こんな場所で
+一体　何を　始めるんですか？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -254,30 +254,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｅ『……いまから　わたしが
-かいはつ　した　デコイＵＦＯの▽
+かいはつした　デコイＵＦＯの▽
 のうりょくを　テストする……▼
-じゅんび　いいな？　[Name:TrainerName Idx="1" ]？</Text>
+じゅんびは　いいな？　[Name:TrainerName Idx="1" ]？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｅ『……今から　私が
-開発　した　デコイＵＦＯの▽
-能力を　テストする……▼
-準備　いいな？　[Name:TrainerName Idx="1" ]？</Text>
+開発した　デコイＵＦＯの▽
+能力テストを　開始する……▼
+準備は　いいな？　[Name:TrainerName Idx="1" ]？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -294,27 +294,27 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『え……？▼
 テストって……？
-デコイＵＦＯって……？</Text>
+デコイＵＦＯ　って……？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『え……？▼
 テストって……？
-デコイＵＦＯって……？</Text>
+デコイＵＦＯ　って……？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -345,15 +345,15 @@
 			Language="JPN_KANJI">
 			<Text>Ｅ『質問は　後に　しろ……▼
 お前は　私が　指示に
-従って　いればいい……▼
+従っていればいい……▼
 ポケモンは　持っているな？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -404,28 +404,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｅ『そのとおり……
-ＵＦＯは　バトルプログラムによって▽
-おまえを　こうげき　しつづけるぞ</Text>
+ＵＦＯは　プログラムに　よって▽
+おまえたちを　こうげき　しつづける</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｅ『その通り……
-ＵＦＯは　バトルプログラムによって▽
-お前を　攻撃　し続けるぞ</Text>
+ＵＦＯは　プログラムに　よって▽
+お前たちを　攻撃　し続ける</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -475,39 +475,41 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｅ『それも　テストの　うちだ……▼
+			<Text>Ｅ『あるに　きまっているだろう
+それも　テストの　うちだ……▼
 ああ……
 それと　ちゅういが　ひとつ……▼
-このＵＦＯは　まだ　ボディの
+このＵＦＯは　まだ　ボディぶぶんの
 コーティングが　ふかんぜんだ……▼
 でんじほう　いがいの　ダメージを
-うけると　こわれてしまうからな▽
-ちゅうい　してくれ……　</Text>
+うけると　こわれて　しまうからな▽
+くれぐれも　ちゅういしろよ……　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T06:52:12" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T06:52:12" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｅ『それも　テストの　うちだ……▼
+			<Text>Ｅ『あるに　決まっているだろう
+それも　テストの　うちだ……▼
 ああ……
 それと　注意が　ひとつ……▼
-このＵＦＯは　まだ　ボディの
+このＵＦＯは　まだ　ボディ面の
 コーティングが　不完全だ……▼
 でんじほう　以外の　ダメージを
 受けると　壊れてしまうからな▽
-注意　してくれ……　</Text>
+くれぐれも　注意しろよ……　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T06:52:12" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T06:52:12" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -606,15 +608,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『うーん……▼
-見れば見るほど　よくできてる……
+みればみるほど　よく出来てる……
 まるで　本当の　ＵＦＯみたい……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -629,33 +631,35 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｅ『では　バリアシステムの
-テストに　はいるぞ……▼
+			<Text>Ｅ『ボヤボヤ　するな……
+つづいて　バリアシステムの▽
+さどうテストに　はいるぞ……▼
 できるだけ　きょうりょくな
 ポケモンの　エネルギーを▽
 ＵＦＯに　あたえるんだ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｅ『では　バリアシステムの
-テストに　入るぞ……▼
-できるだけ　強力な
+			<Text>Ｅ『ボヤボヤ　するな……
+続いて　バリアシステムの▽
+作動テストに　入るぞ……▼
+出来るだけ　強力な
 ポケモンの　エネルギーを▽
 ＵＦＯに　与えるんだ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -703,27 +707,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｅ『いい　へんじだ……
+			<Text>Ｅ『いい　へんじ　だな……
 さあ　はやく　エネルギーを　おくれ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T04:10:35" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T04:10:35" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｅ『いい　返事だ……
+			<Text>Ｅ『いい　返事だな……
 さあ　早く　エネルギーを　送れ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T04:10:35" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T04:10:35" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -771,25 +775,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｅ『おい……　はやく　しろ！</Text>
+			<Text>Ｅ『なにを　グズグズしている？
+はやく　いわれた　とおりに　しろ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｅ『おい……　早く　しろ！</Text>
+			<Text>Ｅ『何を　グズグズしている？
+早く　言われた　通りに　しろ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -907,33 +913,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『やれやれ……▼
-これは　いったい　どんな　もくてきの
+			<Text>[Name:TrainerName Idx="1" ]『やれやれ……
+いったい　どんな　もくてきの▽
 テスト　だったんですか？▼
-それに　さっき　あなたが
-いってた　デコイって？</Text>
+あと　さっき　あなたが　いってた
+デコイって　なんですか？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『やれやれ……▼
-これは　一体　どんな　目的の
+一体　どんな　目的の
 テスト　だったんですか？▼
-それに　さっき　あなたが
-言ってた　デコイって？</Text>
+あと　さっき　あなたが　言ってた
+デコイって　なんですか？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -953,16 +959,16 @@
 そのばしょに　あつまってくる▽
 しゅうせいを　もっている……▼
 ……その　しゅうせいを　りようし
-せいぶつに　あつめるときに▽
-つかう　おとり……▼
-それが　デコイだ……</Text>
+せいぶつを　あつめる　さいに▽
+つかわれる　おとり……▼
+それを　デコイと　よぶ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -970,17 +976,17 @@
 一部は　仲間を　見つけると▽
 その場所に　集まってくる▽
 習性を　持っている……▼
-……その　習性を　利用し
-生物に　集めるときに▽
-つかう　おとり……▼
-それが　デコイだ……</Text>
+……その習性を　利用し
+生物を　集める際に▽
+使われる　おとり……▼
+それを　デコイと　呼ぶ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -995,27 +1001,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『はあ……▼
+			<Text>[Name:TrainerName Idx="1" ]『はあ……
 でも　それが……？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『はあ……▼
+			<Text>[Name:TrainerName Idx="1" ]『はあ……
 でも　それが……？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1031,30 +1037,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｅ『……わたしは　けんきゅう　から
-ＵＦＯが　なかまが　いる　ばしょに▽
-あつまってくる　しゅうせいを▽
-もつことを　つきとめた……</Text>
+ＵＦＯは　なかまの　いるばしょに▽
+あつまってくる　という　しゅうせいを▽
+もつことを　はっけん　したのだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｅ『……私は　独自の研究から
-ＵＦＯが　仲間が　いる場所に▽
-集まってくる　習性を▽
-持つことを　つきとめた……</Text>
+ＵＦＯは　仲間の　いる場所に▽
+集まってくる　という　習性を▽
+持つことを　発見したのだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1071,29 +1077,29 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……では
 デコイＵＦＯが　いる　ばしょに▽
-ほんとうの　ＵＦＯたちが▽
+ほんものの　ＵＦＯたちも▽
 あつまってくると　いうことですか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……では
 デコイＵＦＯが　いる　場所に▽
-本当の　ＵＦＯたちが▽
+本物の　ＵＦＯたちも▽
 集まってくると　いうことですか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1109,32 +1115,32 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｅ『イエス……▼
-しかし　わたしが　デコイＵＦＯで
-ねらっているのは▽
-ただの　ＵＦＯではない……▼
+だが　わたしが　デコイＵＦＯで
+ねらっている　エモノは▽
+ただの　ＵＦＯでは　ない……▼
 やつらの　マザーシップだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｅ『イエス……▼
-しかし　私が　デコイＵＦＯで
-ねらっているのは▽
-ただの　ＵＦＯではない……▼
+だが　私が　デコイＵＦＯで
+ねらっている　エモノは▽
+ただの　ＵＦＯでは　ない……▼
 やつらの　マザーシップだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1182,39 +1188,39 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｅ『そう……▼
+			<Text>Ｅ『ああ……　そうだ……▼
 わたしの　もくてきは　やつらの
-ボスである　マザーシップを▽
+ボスで　ある　マザーシップを▽
 おびきよせることに　ある……▼
 そして……
 マザーシップを　はかい　すれば▽
 ほかの　ＵＦＯたちは　われわれを▽
-おそれて　にげだすだろう……</Text>
+おそれて　にげていくだろう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｅ『そう……▼
+			<Text>Ｅ『ああ……　そうだ……▼
 私の　目的は　やつらの
-ボスである　マザーシップを▽
+ボスで　ある　マザーシップを▽
 おびき寄せることに　ある……▼
 そして……
 マザーシップを　破壊　すれば▽
 他の　ＵＦＯたちは　我々を▽
-恐れて　逃げ出すだろう……</Text>
+恐れて　逃げていくだろう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1266,32 +1272,32 @@
 			Language="JPN">
 			<Text>Ｅ『……[Name:TrainerName Idx="1" ]▼
 マザーシップの　はかいは
-イッシュぼうえいたいで　ある▽
-おまえに　まかせる　つもりだ▼
+イッシュぼうえいたい　である▽
+おまえに　まかせるぞ▼
 わたしの　かんがえた
 さくせんに　きょうりょくしろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｅ『……[Name:TrainerName Idx="1" ]▼
 マザーシップの　破壊は
-イッシュ防衛隊で　ある▽
-お前に　任せる　つもりだ▼
+イッシュ防衛隊　である▽
+お前に　任せるぞ▼
 私の　考えた　作戦に　協力しろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1306,33 +1312,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……　……
-……　……わかりました▼
-しかし……▼
-あなたは　なぜ　そこまで
+			<Text>[Name:TrainerName Idx="1" ]『……わかりました▼
+しかし……
+あなたは　なぜ　そこまで▽
 ＵＦＯに　くわしいのですか？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……　……
-……　……分かりました▼
-しかし……▼
-あなたは　なぜ　そこまで
+			<Text>[Name:TrainerName Idx="1" ]『……分かりました▼
+しかし……
+あなたは　なぜ　そこまで▽
 ＵＦＯに　詳しいのですか？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1350,32 +1354,32 @@
 			<Text>Ｅ『……[Name:TrainerName Idx="1" ]▼
 それを　おまえに　はなす　りゆうも
 おまえが　しる　ひつようも　ない▼
-……いまは　この　さくせんを
+……いまは　わたしの　さくせんを
 せいこう　させることだけ▽
-かんがえていろ……</Text>
+かんがえて　いろ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｅ『……[Name:TrainerName Idx="1" ]▼
 それを　お前に　話す理由も
-お前がが　知る必要も　ない▼
-今は　この作戦を
+お前が　知る必要も　ない▼
+……今は　私の作戦を
 成功　させることだけ▽
-考えていろ……</Text>
+考えて　いろ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1390,33 +1394,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なぞのかがくしゃ　Ｅに　よる
+			<Text>……なぞのかがくしゃ　Ｅに　よる
 おどろきの　ＵＦＯ　ぶんせき……▼
 [Name:TrainerName Idx="1" ]と　Eに　よって
 じんるいの　ぎゃくてんを　かけた▽
-さくせんが　けっこう　される……</Text>
+だいさくせんが　けっこう　される……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なぞの科学者　Ｅに　よる
-おどろきの　ＵＦＯ　分析……▼
+			<Text>……なぞの科学者　Ｅに　よる
+驚きの　ＵＦＯ分析……▼
 [Name:TrainerName Idx="1" ]と　Eに　よって
 人類の　逆転を　かけた▽
-作戦が　決行　される……</Text>
+大作戦が　決行される……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1458,27 +1462,27 @@
 			Language="JPN">
 			<Text>Ｅ『どうした　[Name:TrainerName Idx="1" ]……
 テストは　まだ　おわっていない▼
-さっさと　たつんだ……</Text>
+さあ　さっさと　たつんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:26:38" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:26:38" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｅ『どうした　[Name:TrainerName Idx="1" ]……
 テストは　まだ　終わっていない▼
-さっさと　立つんだ……</Text>
+さあ　さっさと　立つんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:26:38" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-19T05:26:38" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1493,39 +1497,39 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『まって　くださいよー
+			<Text>[Name:TrainerName Idx="1" ]『まって　くださいよ
 もう　わたし　ヘトヘトですよー▼
 べつに　このほしの　きき　って
 きまったわけでも　ないんでしょ？▼
 ちょっとくらい　やすんだって
-だいじょうぶでしょ　きっとー▼
+だいじょうぶでしょ　きっと▼
 あー　もー　つかれた！
 おなかも　へったし　みず　のみたいなー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T03:33:20" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T03:33:20" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『待ってくださいよー
+			<Text>[Name:TrainerName Idx="1" ]『待ってくださいよ
 もう　私　ヘトヘトですよー▼
 別に　この星の　危機　って
 決まったわけでも　ないんでしょ？▼
 ちょっとくらい　休んだって
-大丈夫でしょ　きっとー▼
+大丈夫でしょ　きっと▼
 あー　もー　疲れた！
 お腹も　減ったし　水　飲みたいなー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T03:33:20" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T03:33:20" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1579,29 +1583,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『やだなー
+			<Text>[Name:TrainerName Idx="1" ]『もう　やだなー
 そんな　イヤミな　いいかた▽
 しなくても　いいじゃないですかー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T03:33:20" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T03:33:20" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『やだなー
+			<Text>[Name:TrainerName Idx="1" ]『もう　やだなー
 そんな　イヤミな　言いかた▽
 しなくても　いいじゃないですかー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:08:11" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:08:11" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1616,33 +1620,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｅ『いいか……▼
+			<Text>Ｅ『もう　いい……▼
 じんるいに　のこされた　じかんは
-あと　わずか　なのだ▼
+あと　わずかしか　ないのだ▼
 わたしは　ただちに　あたらしい
 じんざいを　さがしに　いく……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T03:33:20" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T03:33:20" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｅ『いいか……▼
+			<Text>Ｅ『もう　いい……▼
 人類に　残された　時間は
-あと　わずか　なのだ▼
+あと　わずかしか　ないのだ▼
 私は　ただちに　新しい
 人材を　探しに　行く……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:08:11" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:08:11" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1657,35 +1661,35 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『いっちゃった……▼
+			<Text>[Name:TrainerName Idx="1" ]『あーあ　いっちゃった……▼
 まあいいか　どうせ　わたしより
-つよい　トレーナーなんて　いないし▽
+つよいトレーナーなんて　いないし▽
 Ｅも　そのうち　かえってくるでしょ▼
 あーあ▼
 つかれたし　ちょっと　やすむか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:08:11" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:08:11" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『行っちゃった……▼
+			<Text>[Name:TrainerName Idx="1" ]『あーあ　行っちゃった……▼
 まあいいか　どうせ　オレより
-強い　トレーナーなんて　いないし▽
+強いトレーナーなんて　いないし▽
 Ｅも　そのうち　帰ってくるでしょ▼
 あーあ▼
 疲れたし　ちょっと　休むか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:08:11" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:08:11" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1700,37 +1704,37 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なぞの　かがくしゃ　Ｅに
+			<Text>……なぞの　かがくしゃ　Ｅに
 みはなされたことも　きがつかずに▽
 [Name:TrainerName Idx="1" ]は　ヨダレを　タラタラ▽
-ねむりこける……▼
+ねむりこけるのだった……▼
 そして　この　すうじゅうじかんご……
 たいりょうの　ＵＦＯに　おそわれ▽
-じんるいは　めつぼう　するのだった</Text>
+じんるいは　めつぼう　する……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T10:09:52" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T10:09:52" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なぞの科学者　Ｅに
+			<Text>……なぞの科学者　Ｅに
 見放されたことも　気がつかず▽
 [Name:TrainerName Idx="1" ]は　ヨダレを　タラタラ▽
-眠りこける……▼
+眠りこけるのだった……▼
 そして　この　数十時間後……
 大量の　ＵＦＯが　襲われ▽
-人類は　滅亡するのだった</Text>
+人類は　滅亡するのだった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:08:11" />
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:08:11" />
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1770,27 +1774,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｅ『どうした……
+			<Text>Ｅ『どうしたんだ……
 テストは　まだ　おわっていないぞ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｅ『どうした……
+			<Text>Ｅ『どうしたんだ……
 テストは　まだ　終わっていないぞ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:19" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1843,28 +1847,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｅ『しかたない……▼
-では　[Name:TrainerName Idx="1" ]
+では　[Name:TrainerName Idx="1" ]よ
 おまえが　ＵＦＯと　たたかえ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｅ『仕方ない……▼
-では　[Name:TrainerName Idx="1" ]
+では　[Name:TrainerName Idx="1" ]よ
 お前が　ＵＦＯと　戦え</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:19" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1912,29 +1916,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｅ『やれば　できる……
+			<Text>Ｅ『にんげん　やれば　できる……
 というか　やるしかない……▼
 さあ　ＵＦＯに　こうげきしてみろ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｅ『やれば　出来る……
+			<Text>Ｅ『人間　やれば　できる……
 というか　やるしかない……▼
 さあ　ＵＦＯに　攻撃してみろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T09:25:57" />
+				Time="2011-11-30T08:50:19" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1984,27 +1988,27 @@
 			Language="JPN">
 			<Text>Ｅ『さっさと　はじめるぞ……▼
 ただしい　データが　とれるまで
-かえさんからな……</Text>
+ぜったいに　かえさんからな……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｅ『さっさと　始めるぞ……▼
 正確な　データが　取れるまで
-帰さんからな……</Text>
+絶対　帰さんからな……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T08:50:19" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2025,18 +2029,18 @@
 しかし　しょせん　[Name:TrainerName Idx="1" ]は
 なまみの　にんげん　である……▼
 Ｅの　のぞむ　テストの　けっかは
-なかなか　えられない……▼
+なかなか　えられなかった……▼
 ……ふたりが　なんども　テストを
 くりかえしている　うちに▽
-じんるいと　ＵＦＯの▽
-けっせんは　はじまっていた……　</Text>
+たいりょうの　ＵＦＯが　しゅうらい▽
+じんるいは　めつぼうしていた……　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:08:11" />
+				Time="2011-11-30T08:50:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:08:11" />
+				Time="2011-11-30T08:50:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2044,20 +2048,20 @@
 ポケモンに　代わって▽
 ＵＦＯの　テストを　始めた……▼
 しかし　しょせん　[Name:TrainerName Idx="1" ]は
-生身の　人間である……▼
+生身の　人間　である……▼
 Ｅの　望む　テストの　結果は
-なかなか　得られない……▼
+なかなか　得られなかった……▼
 ……ふたりが　何度も　テストを
 繰り返している　うちに▽
-人類と　ＵＦＯの▽
-決戦は　始まっていた……　</Text>
+大量の　ＵＦＯが　襲来▽
+人類は　滅亡していた……　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:08:11" />
+				Time="2011-11-30T08:50:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:08:11" />
+				Time="2011-11-30T08:50:19" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2692,35 +2696,35 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なぞの　かがくしゃ　Ｅが
+			<Text>……なぞの　かがくしゃ　Ｅが
 かいはつした　ＵＦＯを▽
 こわしてしまった　[Name:TrainerName Idx="1" ]……▼
-はらいきれない　しゃっきんと
-Ｅの　したで　こきつかわれる▽
+はらいきれない　しゃっきんを　かかえ
+Ｅのしたで　こきつかわれる▽
 じんせいが　はじまりを　つげた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:03:40" />
+				Time="2011-11-30T08:50:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:03:40" />
+				Time="2011-11-30T08:50:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なぞの　科学者　Ｅが
+			<Text>……なぞの　科学者　Ｅが
 開発した　ＵＦＯを▽
 壊してしまった　[Name:TrainerName Idx="1" ]……▼
-払いきれない　借金と
-Ｅの　下で　こき使われる▽
+払いきれない　借金を　抱え
+Ｅの下で　こき使われる▽
 人生が　始まりを　告げた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:03:40" />
+				Time="2011-11-30T08:50:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:03:40" />
+				Time="2011-11-30T08:50:19" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2771,15 +2775,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『なんだろう……
-ＵＦＯの　ようすが　へんね……</Text>
+			<Text>[Name:TrainerName Idx="1" ]『何だろう……
+ＵＦＯの様子が　変ね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:30:28" />
+				Time="2011-11-30T08:50:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:30:28" />
+				Time="2011-11-30T08:50:19" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2864,28 +2868,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｅ『いいか　[Name:TrainerName Idx="1" ]……▼
-そのわざは　ＵＦＯには
-ぜったいに　つかうんじゃないぞ</Text>
+そのわざは　ＵＦＯに
+ぜったいに　つかうんじゃないぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:03:34" />
+				Time="2011-11-30T08:50:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:03:34" />
+				Time="2011-11-30T08:50:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｅ『いいか　[Name:TrainerName Idx="1" ]……▼
-そのわざは　ＵＦＯには
-絶対に　使うんじゃないぞ</Text>
+そのわざは　ＵＦＯに
+絶対に　使うんじゃないぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:03:34" />
+				Time="2011-11-30T08:50:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:03:34" />
+				Time="2011-11-30T08:50:19" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

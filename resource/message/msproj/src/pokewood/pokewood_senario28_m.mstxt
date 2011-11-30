@@ -1928,21 +1928,14 @@
 みすごして　しまったのだ……▼
 ……わたしは　この　じけんの
 せきにんを　とって▽
-ひみつけいさつを　やめた……▼
-……あれから　１０ねんいじょうの
-つきひが　ながれた……▼
-しかし　あのひから　いちども
-あの　きょだいな　ＯＬの▽
-もくげきほうこくは　なかった……▼
-はたして　あの　ふたりは
-どうなったのだろう……</Text>
+ひみつけいさつを　やめた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:53" />
+				Time="2011-11-30T10:18:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:53" />
+				Time="2011-11-30T10:18:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1954,8 +1947,38 @@
 見過ごして　しまったのだ……▼
 ……私は　この件の
 責任を　取って▽
-秘密警察を　辞めた……▼
-……あれから　１０年以上の
+秘密警察を　辞めた……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T10:18:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T10:18:24" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_enemy_8">
+		<LanguageCell
+			Language="JPN">
+			<Text>……あれから　１０ねんいじょうの
+つきひが　ながれた……▼
+しかし　あのひから　いちども
+あの　きょだいな　ＯＬの▽
+もくげきほうこくは　なかった……▼
+はたして　あの　ふたりは
+どうなったのだろう……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T10:18:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-11-30T10:18:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……あれから　１０年以上の
 月日が　流れた……▼
 しかし　あの日から　一度も
 あの　巨大な　ＯＬの▽
@@ -1964,11 +1987,11 @@
 どうなったのだろう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:53" />
+				Time="2011-11-30T10:18:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:53" />
+				Time="2011-11-30T10:18:24" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

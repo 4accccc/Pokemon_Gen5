@@ -405,11 +405,11 @@
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『……！
 にんげんの　けいかんだ！▼
 ぜんしんを　メカで
-きょうか　して　いるのか！？</language>
+きょうか　しているのか！？</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ニンジャ『……！
 人間の　警官だ！▼
 全身を　メカで
-強化　して　いるのか！？</language>
+強化　しているのか！？</language>
 	</row>
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">メカポリス『ていこう　したな……

@@ -737,12 +737,12 @@
 	</row>
 	<row id="pw_event4_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……いくわよォ！！
-マルマイン！！▼
-マタドガス！！▼
+マルマイン！！▽
+マタドガス！！▽
 どうじに　だいばくはつ！！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……いくわよォ！！
-マルマイン！！▼
-マタドガス！！▼
+マルマイン！！▽
+マタドガス！！▽
 同時に　だいばくはつ！！</language>
 	</row>
 	<row id="pw_event4_enemy_4">
@@ -978,13 +978,13 @@
 	<row id="pw_event8_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『クッ……▼
 Ｍ・Ｂいじょうに　きょうりょく　ね……
-しかし　こんな　きけん　ものを▽
+しかし　こんな　きけんな　ものを▽
 どうやって　てに　いれたんだろう……▼
 まさか……　じぶんで　Ｍ・Ｂを
 かいはつ　したとでも　いうの？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『クッ……▼
 Ｍ・Ｂ以上に　強力ね……
-しかし　こんな危険な　ものを▽
+しかし　こんな　危険な物を▽
 どうやって　手に　入れたんだろう……▼
 まさか……　自分で　Ｍ・Ｂを
 開発したとでも　いうの？</language>
@@ -1005,29 +1005,27 @@
 	</row>
 	<row id="pw_event8_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『なんですって……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なんだって……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『何ですって……</language>
 	</row>
 	<row id="pw_event8_enemy_3">
 		<language name="JPN" width="256">セリザワ『ん？　いがい　かね？
-このＭ・Ｂは　うりもの　なのだよ▼
+このＭ・Ｂは　うりもの　なのだよ▽
 シリーズか　も　されている▽
 にんきしょうひん　なんだがねェ▼
 かねと　ちょっとしたコネさえ　あれば
 かんたんに　てに　いれられるさ</language>
 		<language name="JPN_KANJI" width="256">セリザワ『ん？　意外かね？
-このＭ・Ｂは　売り物　なのだよ▼
+このＭ・Ｂは　売り物　なのだよ▽
 シリーズ化も　されている▽
 大人気商品　なんだがねェ▼
 金と　ちょっとしたコネさえ　あれば
 簡単に　手に　入れられるのさ</language>
 	</row>
 	<row id="pw_event8_hero_4">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな……▼
-いったい　だれが　なんのために
-こんな　きけんな　ものを　つくるの……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな……▼
-いったい　だれが　なんのために
-こんな　危険な物を　造るの……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな……
+いったい　だれが　なんのために……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな……
+一体　だれが　何のために……</language>
 	</row>
 	<row id="pw_event8_enemy_4">
 		<language name="JPN" width="256">セリザワ『そうだねェ……▼
