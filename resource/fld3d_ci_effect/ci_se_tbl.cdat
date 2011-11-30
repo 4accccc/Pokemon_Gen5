@@ -43,9 +43,11 @@ const CI_SE_TBL Tbl5[] = {
 
 const CI_SE_TBL Tbl6[] = {
 	{ SEQ_SE_TDEMO_003, 25 },
-	{ SEQ_SE_SHDEMO_04, 55 },
-	{ SEQ_SE_SHDEMO_04, 65 },
-	{ SEQ_SE_ROTATION_B, 90 },
+	{ SEQ_SE_SW_CI_VSCHAMP_01, 54 },
+	{ SEQ_SE_SW_CI_VSCHAMP_02, 55 },
+	{ SEQ_SE_SW_CI_VSCHAMP_02, 65 },
+	{ SEQ_SE_SW_CI_VSCHAMP_03, 89 },
+	{ SEQ_SE_SW_CI_VSCHAMP_04, 90 },
 	{ SEQ_SE_W009_01, 150 },
 	{ CI_SE_NONE, 0 },
 };
@@ -176,10 +178,17 @@ const CI_SE_TBL Tbl28[] = {
 };
 
 const CI_SE_TBL Tbl29[] = {
+	{ SEQ_SE_SW_CI_WBT_01, 1 },
+	{ SEQ_SE_SW_CI_WBT_02, 10 },
+	{ SEQ_SE_SW_CI_WBT_03, 25 },
+	{ SEQ_SE_SW_CI_WBT_04, 26 },
 	{ CI_SE_NONE, 0 },
 };
 
 const CI_SE_TBL Tbl30[] = {
+	{ SEQ_SE_SW_CI_PKWOOD_01, 6 },
+	{ SEQ_SE_SW_CI_PKWOOD_02, 27 },
+	{ SEQ_SE_SW_CI_PKWOOD_03, 28 },
 	{ CI_SE_NONE, 0 },
 };
 
