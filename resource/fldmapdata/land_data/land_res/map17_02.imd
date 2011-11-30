@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="swan_3dcg01" host="W00300" date="2011-11-08T17:23:20" source="map17_02.mb"/>
+	<create user="swan_3dcg01" host="W00300" date="2011-11-30T14:33:17" source="map17_02.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="swan_3dcg01" host="W00300" date="2011-11-08T17:23:20" source="map17_02.mb"/>
+<original_create user="swan_3dcg01" host="W00300" date="2011-11-30T14:33:17" source="map17_02.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="7" xyz="-2.000000 0.250000 -2.000000" whd="4.000000 1.625000 4.000000"/>
+<box_test pos_scale="7" xyz="-2.000000 0.187500 -2.000000" whd="4.000000 1.687500 4.000000"/>
 
 <tex_image_array size="20">
 	<tex_image index="0" name="dansa01a"
@@ -90,15 +90,15 @@
 	<tex_image index="3" name="gake1_1"
 		width="16" height="8" original_width="16" original_height="8"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="gake1_1_pl"
 		path="C:/home/swan_data3d/field/out00/chip/tex_spring/gake1_1.tga"
 	>
 		<bitmap size="32">
-			4433 4334 4433 3434 3022 2203 3026 2260
-			1622 6621 2165 6656 6566 7566 6657 5555
-			5775 c955 559c 8587 9997 cc99 99cc 7999
-			bc99 bbbb cccb 9999 abc9 aaaa ccba 999c
+			5544 5445 5544 4545 4133 3314 4137 3371
+			2733 7732 3276 7767 7677 8677 7768 6666
+			6886 cb66 66bc 9698 bbb8 ccaa baac 8bbb
+			dcbb eeee cccd bbba edcb eeee ccde bbac
 		</bitmap>
 	</tex_image>
 	<tex_image index="4" name="gake_futa"
@@ -825,8 +825,8 @@
 		1e14 1df3 2236 2a78 2e99 2215 2a57 7fff
 	</tex_palette>
 	<tex_palette index="3" name="gake1_1_pl" color_size="16">
-		4792 4351 3f32 4394 43d5 29ed 36b2 29ef
-		2dad 2612 2eda 2a98 2a55 7fff 7fff 7fff
+		7fff 4792 4351 3f32 4394 43d5 29ed 36b2
+		29ef 2dad 2612 1df2 2634 2a56 2a78 7fff
 	</tex_palette>
 	<tex_palette index="4" name="gake_futa_pl" color_size="8">
 		19d1 19f4 1e15 1dd2 2a78 2636 2a57 1dd3
@@ -1452,9 +1452,9 @@
 	<polygon index="1" name="polygon1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-1.250000 0.500000 1.000000"
-		volume_max="3.250000 0.500000 4.000000"
-		volume_r="5.177979"
+		volume_min="-1.250000 0.375000 1.000000"
+		volume_max="3.250000 0.375000 4.000000"
+		volume_r="5.167480"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -1465,13 +1465,13 @@
 					<mtx idx="0"/>
 					<tex st="-40.000000 448.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_s xyz="-1.250000 0.500000 4.000000"/>
+					<pos_s xyz="-1.250000 0.375000 4.000000"/>
 					<tex st="104.000000 448.000000"/>
-					<pos_xy xy="3.250000 0.500000"/>
+					<pos_xy xy="3.250000 0.375000"/>
 					<tex st="104.000000 352.000000"/>
 					<pos_xz xz="3.250000 1.000000"/>
 					<tex st="-40.000000 352.000000"/>
-					<pos_xy xy="-1.250000 0.500000"/>
+					<pos_xy xy="-1.250000 0.375000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -6892,7 +6892,7 @@
 		display_size="21"
 		vertex_size="2229" polygon_size="634"
 		triangle_size="129" quad_size="505"
-		volume_min="-4.000000 0.500000 -4.000000"
+		volume_min="-4.000000 0.375000 -4.000000"
 		volume_max="4.000000 3.750000 4.000000"
 		volume_r="6.537354"
 	>
