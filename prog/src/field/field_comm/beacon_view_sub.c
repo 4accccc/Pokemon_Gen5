@@ -1109,7 +1109,7 @@ static void panel_VisibleSet( PANEL_WORK* pp, BOOL visible_f )
   GFL_CLACT_WK_SetDrawEnable( pp->cUnion, visible_f );
   GFL_CLACT_WK_SetDrawEnable( pp->cPanel, visible_f );
 
-  if( pp->push_medal != PANEL_MEDAL_NONE ){
+  if( !visible_f || pp->push_medal != PANEL_MEDAL_NONE ){  //‰B‚µ‚½‚¢Žž‚Í•K‚¸ŽÀs
     panel_MedalVisibleSet( pp, visible_f );
   }
   if( !visible_f ){ //‰B‚µ‚½‚¢Žž‚¾‚¯‹­§
@@ -1834,6 +1834,7 @@ static void list_JumpReq( BEACON_VIEW_PTR wk, u8 new_top )
   }
 
   wk->ctrl.view_top = new_top;
+  BEACON_STATUS_SetViewTopOffset( wk->b_status, wk->ctrl.view_top );
 
   BVC_PrintQueLimmitUpSet( wk->printQue, TRUE );
   obj_UpDownViewSet( wk );

@@ -257,7 +257,7 @@ enum{
 #define BEACON_VIEW_OBJ_MAX (64) ///<画面内に表示するOBJの登録max数
 
 #define PANEL_NUM_ACTMAX    (3)           ///<パネルに表示するメダル数OBJの数
-#define PANEL_MEDAL_NONE    (0xFFFFFFFF)  ///<BWなのでメダルがない場合の特殊ID
+#define PANEL_MEDAL_NONE    (0xFFFF)      ///<BWなのでメダルがない場合の特殊ID
 
 ///OBJ BGプライオリティ
 #define OBJ_BG_PRI (3)
