@@ -242,9 +242,15 @@ void POKEWOOD_SAVEDATA_SetBoxOfficeData( POKEWOOD_SAVEDATA *sv, int no, POKEWOOD
 {
   // ‹»sŽû“ü‚ªã‰ñ‚Á‚Ä‚¢‚éê‡‚Íƒ‰ƒ“ƒLƒ“ƒO‚ÉŽc‚·
   if(data->profits >= sv->boxoffice_record[no].profits){
-    sv->boxoffice_record[no]             = *data;
-    sv->boxoffice_record[no].new_flag    = 0;
-    sv->boxoffice_record[no].update_flag = 1;
+    // ‰‰ñ“o˜^
+    if(sv->boxoffice_record[no].new_flag==0){
+      sv->boxoffice_record[no]             = *data;
+    // ‹»sŽû“ü‚ªã‰ñ‚Á‚½Žž‚Ì“o˜^
+    }else{
+      sv->boxoffice_record[no]             = *data;
+      sv->boxoffice_record[no].update_flag = 1;
+      sv->boxoffice_record[no].new_flag    = 1;
+    }
   }
 }
 
