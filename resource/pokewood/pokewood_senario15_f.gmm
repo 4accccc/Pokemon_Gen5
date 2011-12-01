@@ -374,24 +374,24 @@
 そこで　何を　しているっ！？</language>
 	</row>
 	<row id="pw_event0_enemy_2">
-		<language name="JPN" width="256">おとこ『わたしは　セリザワ……▼
+		<language name="JPN" width="256">おとこ『わたしは　セリザワ
 この　とちの　オーナーだ……▼
-わたしが　なにを　していようと
+ここで　なにを　していようと
 かまわんだろう……？▼
 それよりも　なんだね？　キミは？</language>
-		<language name="JPN_KANJI" width="256">男『私は　セリザワ……▼
-この　土地の　オーナーだ……▼
-私が　何を　していようと
+		<language name="JPN_KANJI" width="256">男『私は　セリザワ
+この土地の　オーナーだ……▼
+ここで　何を　していようと
 構わんだろう……？▼
 それよりも　だれだね？　キミは？</language>
 	</row>
 	<row id="pw_event0_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『わたしは　[1:00:トレーナー名:1]！
-イッシュぼうえいたい　です！▼
+イッシュぼうえいたい　クルーです！▼
 セリザワさんと　いいましたね……
 そのＭ・Ｂは　あなたのもの　ですか？　</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『私は　[1:00:トレーナー名:1]！
-イッシュ防衛隊　です！▼
+イッシュ防衛隊　クルーです！▼
 セリザワさんと　言いましたね……
 そのＭ・Ｂは　あなたのもの　ですか？　</language>
 	</row>
@@ -455,7 +455,7 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『以前に　現れた
 Ｍ・Ｂも　あなたの　仕業ね……▼
 街の　破壊なんて……
-一体　何の　ために……</language>
+一体　何のために……</language>
 	</row>
 	<row id="pw_event1_enemy_2">
 		<language name="JPN" width="256">セリザワ『ハハハ　そうだな……▼
@@ -484,23 +484,23 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『なるほど……</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
-		<language name="JPN" width="256">セリザワ『……わかるかね？▼
-だったら　キミも　わたしの
-えじき　なって　くれたまえ！</language>
-		<language name="JPN_KANJI" width="256">セリザワ『……分かるかね？▼
-だったら　キミも　私の
-えじき　なって　くれたまえ！</language>
+		<language name="JPN" width="256">セリザワ『……わかるかね？
+だったら　キミも　わたしの▽
+エジキに　なってくれたまえ！</language>
+		<language name="JPN_KANJI" width="256">セリザワ『……分かるかね？
+だったら　キミも　私の▽
+エジキに　なってくれたまえ！</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『おなじ　じゃない！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『同じじゃない！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『同じ　じゃない！</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
 		<language name="JPN" width="256">セリザワ『では　なにが　ちがう？▼
-キミの　やっている　ことも
+キミの　やっていることも
 わたしと　かわらんと　おもうがねェ</language>
 		<language name="JPN_KANJI" width="256">セリザワ『では　何が　違う？▼
-キミの　やっている　ことも
+キミの　やっていることも
 私と　変わらんと　思うがねェ</language>
 	</row>
 	<row id="pw_event1_react_hero_2">
@@ -511,11 +511,11 @@
 		<language name="JPN" width="256">セリザワ『ハハハ……
 なにも　いいかえせないのかい……▼
 それは　わたしの　かんがえと
-おなじと　いうことなのかねェ？</language>
+おなじと　いう　いみ　なのかねェ？</language>
 		<language name="JPN_KANJI" width="256">セリザワ『ハハハ……
 何も　言い返せないのかい……▼
 それは　私の　考えと
-同じと　いうことなのかねェ？</language>
+同じと　いう　意味なのかねェ？</language>
 	</row>
 	<row id="pw_event2_hero_0">
 		<language name="JPN" width="256">つうしん『きこえるか！　[1:00:トレーナー名:1]！！</language>
@@ -603,7 +603,7 @@
 		<language name="JPN" width="256">セリザワ『いかんじゃないか？
 そんな　きたないことばを　つかっては？</language>
 		<language name="JPN_KANJI" width="256">セリザワ『いかんじゃないか？
-そんな　きたない言葉を　つかっては？</language>
+そんな　きたない言葉を　使っては？</language>
 	</row>
 	<row id="pw_event3_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『……ほんぶ　との
@@ -780,7 +780,7 @@
 守るためだけに　使うのは▽
 あまりに　おしい……▼
 どうだね……？▼
-私の　元で　働いては
+わたしの　元で　働いては
 頂けないかね……？</language>
 	</row>
 	<row id="pw_event5_hero_2">
@@ -867,9 +867,9 @@
 ……私には　ありあまる　富と
 財産が　あるのだッ……▼
 こんな　ポンコツよりも
-さらに　優れたＭ・Ｂを▽
+さらに　優れた　Ｍ・Ｂを▽
 手に　入れることなど▽
-造作も　ないこと　なんだぞッ！</language>
+造作も　ないんだぞッ！</language>
 	</row>
 	<row id="pw_event6_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『なんて　やつ……</language>
@@ -948,12 +948,12 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ラジャー！！</language>
 	</row>
 	<row id="pw_event6_hero_9">
-		<language name="JPN" width="256">だいバンギラスの　おうよ……▼
+		<language name="JPN" width="256">……だいバンギラスの　おうよ▼
 あなたの　おかげで
 イッシュは　すくわれました……▼
 あなたは　イッシュの　しゅごしゃ
 だったのですね……</language>
-		<language name="JPN_KANJI" width="256">大バンギラスの　王よ……▼
+		<language name="JPN_KANJI" width="256">……大バンギラスの　王よ▼
 あなたの　おかげで
 イッシュは　救われました……▼
 あなたは　イッシュの　守護者

@@ -371,7 +371,7 @@
 		<language name="JPN_KANJI" width="256">通信『おい！　聞こえるか！？
 応答せよ！　[1:00:トレーナー名:1]！▼
 ボヤボヤ　していないで
-状況を　報告　しろ！</language>
+状況を　報告しろ！</language>
 	</row>
 	<row id="pw_event0_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『はっ　はい！▼
@@ -397,8 +397,7 @@
 大バンギラスと　呼称する！▼
 いいか！　[1:00:トレーナー名:1]！
 何としても　大バンギラスが▽
-街に　入るのを　防いでくれ！
-</language>
+街に　入るのを　防いでくれ！</language>
 	</row>
 	<row id="pw_event0_hero_5">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ラジャー！</language>
@@ -416,17 +415,17 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『やはり　こいつは
 ただの　バンギラスじゃない……▼
 あしどめすると　いっても
-まとも　たたかった　ところで▽
-あいつに　かてそうもないし……▼
-まずは　しみんを
-ここから　ひなんさせるか……</language>
+しょうめんから　たたかっても▽
+あいつに　かてそうもないな……▼
+まずは　しみんの　ひなんを
+ゆうせんする　べきか……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『やはり　こいつは
 ただの　バンギラスじゃない……▼
 足止めすると　いっても
-まともに　戦った　ところで▽
-あいつには　勝てそうもないし……▼
-まずは　市民を
-ここから　避難させるか……</language>
+正面から　戦っても▽
+あいつには　勝てそうもないな……▼
+まずは　市民の　避難を
+優先する　べきか……</language>
 	</row>
 	<row id="pw_event1_enemy_1">
 		<language name="JPN" width="256">にげおくれた　しみん『ひぃー！！</language>
@@ -437,11 +436,11 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『みなさん！　こっちへ！</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
-		<language name="JPN" width="256">にげおくれた　しみん『やった！！▼
-イッシュぼうえいたいが
+		<language name="JPN" width="256">にげおくれた　しみん『やった！！
+イッシュぼうえいたいが▽
 たすけに　きてくれたぞ！</language>
-		<language name="JPN_KANJI" width="256">逃げ遅れた　市民『やった！！▼
-イッシュ防衛隊が
+		<language name="JPN_KANJI" width="256">逃げ遅れた　市民『やった！！
+イッシュ防衛隊が▽
 助けに　きてくれたぞ！</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
@@ -472,11 +471,11 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『どうしたんだろ……
 わたしを　みたまま　うごかない……▼
 ……よーし　こうなったら
-はなしかけて　みようか……▼</language>
+はなしかけて　みようか……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どうしたんだろ……
 私を　見たまま　動かない……▼
 ……よーし　こうなったら
-話しかけて　みようか……▼</language>
+話しかけて　みようか……</language>
 	</row>
 	<row id="pw_event2_enemy_1">
 		<language name="JPN" width="256">だいバンギラス『グロロロ……　</language>
@@ -502,15 +501,15 @@
 トラブルが　はっせいするわ！▼
 ……だから　いまは　おとなしく
 じぶんの　すんでいた　ところへ▽
-もどって　くれない？</language>
+もどって　くれない　かしら？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『この先には
 人間の　暮らす　街が　ある！▼
 君のように　巨大な　ポケモンが
 街に　いけば　きっと　何かの▽
 トラブルが　発生するわ！▼
-……だから　今は　おとなしく
-自分の　すんでいた　所へ▽
-戻って　くれない？</language>
+……だから　今は　大人しく
+自分の　暮らしていた　場所に▽
+戻ってくれない　かしら？</language>
 	</row>
 	<row id="pw_event2_enemy_3">
 		<language name="JPN" width="256">だいバンギラス『グロロローンッ！</language>
@@ -529,10 +528,10 @@
 	<row id="pw_event2_hero_5">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『まただ……
 なんだ？　このひかりは……？▼
-まるで　ひと　みたい……</language>
+まるで　にんげん　みたい……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『まただ……
 何だ？　この光は……？▼
-まるで　人　みたい……</language>
+まるで　人みたい……</language>
 	</row>
 	<row id="pw_event2_enemy_5">
 		<language name="JPN" width="256">だいバンギラス『グロロローンッ！</language>
@@ -562,15 +561,13 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『でも……▼
 なぜ　みずのにがてな　バンギラスが
 うみのそばに　あらわれたんだろ？▼
-……それに　さっき　みた
-ふしぎな　ひかり……▽
+……それに　さっきの　ひかり……
 あれは　いったい……？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『でも……▼
 なぜ　水の苦手な　バンギラスが
 海の側に　現れたんだろ？▼
-……それに　さっき　見た
-ふしぎな　ひかり……▽
-あれは　いったい……？</language>
+……それに　さっきの　光……
+あれは　一体……？</language>
 	</row>
 	<row id="pw_event3_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ダメ……
@@ -587,12 +584,12 @@
 直ちに　状況を　報告しろ！</language>
 	</row>
 	<row id="pw_event3_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『もうしわけ　ありません！
-さくせんは　しっぱい　です！！▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『もうしわけ　ありません……
+さくせんは　しっぱいです……▼
 こちらの　てもちポケモンは
-ぜんめつ　しました！▼
+ぜんめつ　しました……▼
 だいバンギラスは　このまま
-まちに　しんにゅう　してしまいます！</language>
+まちに　しんにゅう　してしまいます……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『申し訳ありません……
 作戦は　失敗です……▼
 こちらの　手持ちポケモンは
@@ -614,9 +611,9 @@
 	</row>
 	<row id="pw_event4_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『キャハ！　やったー！
-だいバンギラスを　たおしたっ！</language>
+だいバンギラスを　たおしたわっ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『キャハ！　やったー！
-大バンギラスを　倒したっ！</language>
+大バンギラスを　倒したわっ！</language>
 	</row>
 	<row id="pw_event4_enemy_0">
 		<language name="JPN" width="256">だいバンギラス『……　……</language>
@@ -642,12 +639,12 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『キャハ！　キャハハッ！
 これで　わたしも　ゆうめいじん！！▼
 もう　こんな　あぶない　しごとで
-くろうする　ひつようも　ないっ！▼
+くろうする　ひつようもないっ！▽
 いっしょう　あそんで　いきていけるわ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『キャハ！　キャハハッ！
 これで　私も　有名人！！▼
 もう　こんな　危ない　仕事で
-苦労する　必要も　ないっ！▼
+苦労する　必要もないっ！▽
 一生　遊んで　生きて行けるわ！</language>
 	</row>
 	<row id="pw_event4_enemy_2">
@@ -665,7 +662,7 @@
 きさまの　ような　にんげんには
 おもい　つみを　あたえよう……</language>
 		<language name="JPN_KANJI" width="256">？？？『おろかな……▼
-貴様の　ような　人間には
+貴様のような　人間には
 厳罰を　与えよう……</language>
 	</row>
 	<row id="pw_event4_enemy_5">
@@ -678,10 +675,10 @@
 	</row>
 	<row id="pw_event4_hero_7">
 		<language name="JPN" width="256">つうしん『おい！　どうした！！
-[1:00:トレーナー名:1]！　おうとう　せよ！▼
+[1:00:トレーナー名:1]！　おうとうせよ！▼
 [1:00:トレーナー名:1]！！　[1:00:トレーナー名:1]！！</language>
 		<language name="JPN_KANJI" width="256">通信『おい！　どうした！！
-[1:00:トレーナー名:1]！　応答　せよ！▼
+[1:00:トレーナー名:1]！　応答せよ！▼
 [1:00:トレーナー名:1]！！　[1:00:トレーナー名:1]！！</language>
 	</row>
 ﻿	<flowchart-group-list>

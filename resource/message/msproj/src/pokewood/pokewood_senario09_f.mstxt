@@ -1211,16 +1211,16 @@
 ボスで　ある　マザーシップを▽
 おびき寄せることに　ある……▼
 そして……
-マザーシップを　破壊　すれば▽
-他の　ＵＦＯたちは　我々を▽
+マザーシップを　破壊すれば▽
+他のＵＦＯたちは　我々を▽
 恐れて　逃げていくだろう……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T08:50:18" />
+				Time="2011-12-01T06:22:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T08:50:18" />
+				Time="2011-12-01T06:22:36" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2315,31 +2315,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｅ『……この　ＵＦＯには
+			<Text>Ｅ『……この　ＵＦＯにはな
 じんるいの　うんめいが▽
 かかっているのだ……▼
 ……あやまれば　すむのか？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:22:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:22:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｅ『……この　ＵＦＯには
+			<Text>Ｅ『……この　ＵＦＯにはな
 人類の　運命が▽
 かかっているのだ……▼
 ……あやまれば　すむのか？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:22:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:22:36" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2520,30 +2520,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｅ『……では　ＵＦＯを
-しゅうりする　ひよう　として▽
+しゅうりするための　ひよう　として▽
 １０００００００００円　ほど▽
 はらって　もらおうか？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:22:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:22:36" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｅ『……では　ＵＦＯを
-修復する　費用　として▽
+			<Text>Ｅ『……では　ＵＦＯの
+修復費用　として▽
 １０００００００００円　ほど▽
 払って　もらおうか？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:22:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:22:36" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

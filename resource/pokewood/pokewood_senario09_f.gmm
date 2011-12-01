@@ -613,8 +613,8 @@
 ボスで　ある　マザーシップを▽
 おびき寄せることに　ある……▼
 そして……
-マザーシップを　破壊　すれば▽
-他の　ＵＦＯたちは　我々を▽
+マザーシップを　破壊すれば▽
+他のＵＦＯたちは　我々を▽
 恐れて　逃げていくだろう……</language>
 	</row>
 	<row id="pw_event2_hero_5">
@@ -873,11 +873,11 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『……すいません</language>
 	</row>
 	<row id="pw_event5_enemy_3">
-		<language name="JPN" width="256">Ｅ『……この　ＵＦＯには
+		<language name="JPN" width="256">Ｅ『……この　ＵＦＯにはな
 じんるいの　うんめいが▽
 かかっているのだ……▼
 ……あやまれば　すむのか？</language>
-		<language name="JPN_KANJI" width="256">Ｅ『……この　ＵＦＯには
+		<language name="JPN_KANJI" width="256">Ｅ『……この　ＵＦＯにはな
 人類の　運命が▽
 かかっているのだ……▼
 ……あやまれば　すむのか？</language>
@@ -904,11 +904,11 @@
 	</row>
 	<row id="pw_event5_enemy_6">
 		<language name="JPN" width="256">Ｅ『……では　ＵＦＯを
-しゅうりする　ひよう　として▽
+しゅうりするための　ひよう　として▽
 １０００００００００円　ほど▽
 はらって　もらおうか？</language>
-		<language name="JPN_KANJI" width="256">Ｅ『……では　ＵＦＯを
-修復する　費用　として▽
+		<language name="JPN_KANJI" width="256">Ｅ『……では　ＵＦＯの
+修復費用　として▽
 １０００００００００円　ほど▽
 払って　もらおうか？</language>
 	</row>

@@ -1700,29 +1700,29 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『エリートの　かたと
 トレーニング　できるなんて▽
-とても　こうえいですが……▼　
+とても　こうえいですが……▼
 ぼくなんかが　いいんですか……？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:00" />
+				Time="2011-12-01T07:01:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:00" />
+				Time="2011-12-01T07:01:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『エリートの方と
 トレーニング　できるなんて▽
-とても　光栄ですが……▼　
+とても　光栄ですが……▼
 僕なんかが　いいんですか……？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:00" />
+				Time="2011-12-01T07:01:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:00" />
+				Time="2011-12-01T07:01:04" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2964,30 +2964,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ペネロペ『えっ！？　ここで　このわざ……？▼
-（マジで！？
+（ちょっと　ちょっと　マジで！？
 アタシが　ドーブルに　もたせてる▽
 どうぐに　きが　ついてないのかしら……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T12:36:42" />
+				Time="2011-12-01T06:54:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T12:36:42" />
+				Time="2011-12-01T06:54:40" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ペネロペ『えっ！？　ここで　このわざ……？▼
-（マジで！？
+（ちょっと　ちょっと　マジで！？
 アタシが　ドーブルに　持たせてる▽
 どうぐに　気が　ついてないのかしら……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T12:36:42" />
+				Time="2011-12-01T06:54:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T12:36:42" />
+				Time="2011-12-01T06:54:40" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3027,17 +3027,17 @@
 これが　さくせんだなんて　まさか……▼
 あ……　ああ……　ああッ！！
 もしかして　このわざ……▼
-ドーブルに　むけてじゃなくて　わたしへの
+ドーブルにじゃなくて　わたしへの
 かくれた　メッセージ　なんじゃあ……▼
 ということは　かれと　わたしは……
 ウフ　ウヘ……　ウへヘヘ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-09T01:56:08" />
+				Time="2011-12-01T07:22:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-09T01:56:08" />
+				Time="2011-12-01T07:22:28" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3047,17 +3047,17 @@
 これが　作戦だなんて　まさか……▼
 あ……　ああ……　ああッ！！
 もしかして　このわざ……▼
-ドーブルに　向けてじゃなくて　私への
+ドーブルにじゃなくて　私への
 隠れた　メッセージ　なんじゃあ……▼
 ということは　彼と　私は……
 ウフ　ウヘ……　ウへヘヘ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-09T01:56:08" />
+				Time="2011-12-01T07:22:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-09T01:56:08" />
+				Time="2011-12-01T07:22:28" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

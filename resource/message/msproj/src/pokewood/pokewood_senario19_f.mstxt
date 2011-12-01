@@ -1705,30 +1705,28 @@
 			<Text>[Name:TrainerName Idx="1" ]『いいんですか……▼
 わたしは　エリートの　かたと
 トレーニング　できるなんて▽
-とても　こうえい　ですけど……　
-</Text>
+とても　こうえい　ですけど……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-12-01T07:01:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-12-01T07:01:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『いいんですか……▼
 わたしは　エリートの　方と
 トレーニング　できるなんて▽
-とても　光栄　ですけど……　
-</Text>
+とても　光栄　ですけど……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-12-01T07:01:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-12-01T07:01:03" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2970,30 +2968,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ミゲル『えっ！？　ここで　このわざ……？▼
-（マジかよ！？
+（あれー！？　マジかよ！？
 オレが　ドーブルに　もたせてる▽
 どうぐに　きが　ついてないのか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T12:36:41" />
+				Time="2011-12-01T06:54:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T12:36:41" />
+				Time="2011-12-01T06:54:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ミゲル『えっ！？　ここで　このわざ……？▼
-（マジかよ！？
+（あれー！？　マジかよ！？
 オレが　ドーブルに　持たせてる▽
 どうぐに　気が　ついてないのか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T12:13:58" />
+				Time="2011-12-01T06:54:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T12:13:58" />
+				Time="2011-12-01T06:54:39" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3029,41 +3027,41 @@
 			Language="JPN">
 			<Text>ミゲル『や……　やるじゃないか！！
 こちらも　ゆだんして　いられないな！▼
-（んー　たかが　メロメロ　だろ？
-これが　どこが　さくせん　なんだよ？▼
+（んー　たかが　メロメロだろ？
+その　どこが　さくせん　なんだよ？▼
 あ……　ああ……　ああッ！！
 もしかして　このわざ……▼
-ドーブルに　むけてじゃなくて　オレへの
-かくれた　メッセージって　ことか……！？▼
+ドーブルにじゃなくて　オレへの
+かくれた　メッセージって　ことか！？▼
 ということは　かのじょと　オレは……
 グフ　グフフ……　グヘヘヘ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T12:36:41" />
+				Time="2011-12-01T07:22:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T12:36:41" />
+				Time="2011-12-01T07:22:27" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ミゲル『や……　やるじゃないか！！
 こちらも　油断して　いられないな！▼
-（んー　たかが　メロメロ　だろ？
-これが　どこが　作戦　なんだよ？▼
+（んー　たかが　メロメロだろ？
+その　どこが　作戦なんだよ？▼
 あ……　ああ……　ああッ！！
 もしかして　このわざ……▼
-ドーブルに　向けてじゃなくて　オレへの
-隠れた　メッセージって　ことか……！？▼
+ドーブルにじゃなくて　オレへの
+隠れた　メッセージって　ことか！？▼
 ということは　彼女と　オレは……
 グフ　グフフ……　グヘヘヘ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T12:36:41" />
+				Time="2011-12-01T07:22:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T12:36:41" />
+				Time="2011-12-01T07:22:27" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

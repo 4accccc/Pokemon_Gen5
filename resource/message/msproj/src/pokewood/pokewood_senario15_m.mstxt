@@ -208,33 +208,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おとこ『わたしは　セリザワ……▼
+			<Text>おとこ『わたしは　セリザワ
 この　とちの　オーナーだ……▼
-わたしが　なにを　していようと
+ここで　なにを　していようと
 かまわんだろう……？▼
 それよりも　なんだね？　キミは？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:45:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>男『私は　セリザワ……▼
-この　土地の　オーナーだ……▼
-私が　何を　していようと
+			<Text>男『私は　セリザワ
+この土地の　オーナーだ……▼
+ここで　何を　していようと
 構わんだろう……？▼
 それよりも　だれだね？　キミは？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T13:41:56" />
+				Time="2011-12-01T06:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T13:41:56" />
+				Time="2011-12-01T06:45:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -250,30 +250,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『オレは　[Name:TrainerName Idx="1" ]！
-イッシュぼうえいたい　です！▼
+イッシュぼうえいたい　クルーです！▼
 セリザワさんと　いいましたね……
-そのＭ・Ｂは　あなたのもの　ですか？　</Text>
+そのＭ・Ｂは　あなたの物　ですか？　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:09:00" />
+				Time="2011-12-01T06:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:09:00" />
+				Time="2011-12-01T06:45:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『オレは　[Name:TrainerName Idx="1" ]！
-イッシュ防衛隊　です！▼
+イッシュ防衛隊　クルーです！▼
 セリザワさんと　言いましたね……
-そのＭ・Ｂは　あなたのもの　ですか？　</Text>
+そのＭ・Ｂは　あなたの物　ですか？　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:09:00" />
+				Time="2011-12-01T06:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-20T08:09:00" />
+				Time="2011-12-01T06:45:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -531,14 +531,14 @@
 			<Text>[Name:TrainerName Idx="1" ]『以前に　現れた
 Ｍ・Ｂも　あなたの　仕業か……▼
 街の　破壊なんて……
-一体　何の　ために……</Text>
+一体　何のために……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:25" />
+				Time="2011-12-01T06:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:25" />
+				Time="2011-12-01T06:45:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -637,29 +637,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>セリザワ『……わかるかね？▼
-だったら　キミも　わたしの
-えじき　なって　くれたまえ！</Text>
+			<Text>セリザワ『……わかるかね？
+だったら　キミも　わたしの▽
+エジキに　なってくれたまえ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:45:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>セリザワ『……分かるかね？▼
-だったら　キミも　私の
-えじき　なって　くれたまえ！</Text>
+			<Text>セリザワ『……分かるかね？
+だったら　キミも　私の▽
+エジキに　なってくれたまえ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:45:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -685,14 +685,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『同じじゃない！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『同じ　じゃない！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:45:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -708,28 +708,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>セリザワ『では　なにが　ちがう？▼
-キミの　やっている　ことも
+キミの　やっていることも
 わたしと　かわらんと　おもうがねェ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:45:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>セリザワ『では　何が　違う？▼
-キミの　やっている　ことも
+キミの　やっていることも
 私と　変わらんと　思うがねェ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:45:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -780,28 +780,28 @@
 			<Text>セリザワ『ハハハ……
 なにも　いいかえせないのかい……▼
 それは　わたしの　かんがえと
-おなじと　いうことなのかねェ？</Text>
+おなじと　いう　いみ　なのかねェ？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:45:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>セリザワ『ハハハ……
 何も　言い返せないのかい……▼
 それは　私の　考えと
-同じと　いうことなのかねェ？</Text>
+同じと　いう　意味なのかねェ？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:45:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1288,14 +1288,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>セリザワ『いかんじゃないか？
-そんな　きたない言葉を　つかっては？</Text>
+そんな　きたない言葉を　使っては？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:45:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2190,15 +2190,15 @@
 守るためだけに　使うのは▽
 あまりに　おしい……▼
 どうだね……？▼
-私の　元で　働いては
+わたしの　元で　働いては
 頂けないかね……？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:56:30" />
+				Time="2011-12-01T06:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:56:30" />
+				Time="2011-12-01T06:45:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2567,16 +2567,16 @@
 ……私には　ありあまる　富と
 財産が　あるのだッ……▼
 こんな　ポンコツよりも
-さらに　優れたＭ・Ｂを▽
+さらに　優れた　Ｍ・Ｂを▽
 手に　入れることなど▽
-造作も　ないこと　なんだぞッ！</Text>
+造作も　ないんだぞッ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:33" />
+				Time="2011-12-01T06:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:33" />
+				Time="2011-12-01T06:45:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2928,33 +2928,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だいバンギラスの　おうよ……▼
+			<Text>……だいバンギラスの　おうよ▼
 あなたの　おかげで
 イッシュは　すくわれました……▼
 あなたは　イッシュの　しゅごしゃ
 だったのですね……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:45:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>大バンギラスの　王よ……▼
+			<Text>……大バンギラスの　王よ▼
 あなたの　おかげで
 イッシュは　救われました……▼
 あなたは　イッシュの　守護者
 だったのですね……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-01T06:45:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
