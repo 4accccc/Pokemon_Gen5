@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/23 21:19:33
+#save date:2011/12/01 17:24:32
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d24r0901.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d24r0901.wms
 #hold event type:
 1
 #hold event number:
-14
+16
 #event number: 0
 #type
 1
@@ -45,19 +45,19 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-TR_MOUNT_21
+TR_BACKPACKERM_31
 #OBJ CODE Number
-MOUNTMAN
+BACKPACKERM
 #MOVE CODE Number
-MV_RND
+MV_RIGHT
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_TRID_MOUNT_21
+SCRID_TRID_BACKPACKERM_31
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 5
 #Parameter 1 Number
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--136 32 -456
+-184 32 -328
 #event number: 2
 #type
 1
@@ -98,20 +98,20 @@ DIR_DOWN
 #Move Limit X Number
 2
 #Move Limit Z Number
-9
+15
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-696 32 -504
+696 32 -264
 #event number: 3
 #type
 1
 #ID name
-TR_MOUNT_22
+TR_MOUNT_22W
 #OBJ CODE Number
 MOUNTMAN
 #MOVE CODE Number
-MV_RND_DR
+MV_LEFT
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -119,7 +119,7 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_MOUNT_22
 #Direction Type Number
-DIR_DOWN
+DIR_LEFT
 #Parameter 0 Number
 5
 #Parameter 1 Number
@@ -133,14 +133,14 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-680 32 -56
+-88 32 -328
 #event number: 4
 #type
 1
 #ID name
-TR_ELITEM_34
+TR_RANGERM_24
 #OBJ CODE Number
-TRAINERM
+RANGERM
 #MOVE CODE Number
 MV_RT2
 #EVENT TYPE Number
@@ -148,7 +148,7 @@ EV_TYPE_TRAINER_KYORO
 #Flag Name
 0
 #Event Script Name
-SCRID_TRID_ELITEM_34
+SCRID_TRID_RANGERM_24
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
@@ -169,19 +169,19 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-TR_BACKPACKERW_19
+TR_ELITEW_50
 #OBJ CODE Number
-BACKPACKERW
+TRAINERW
 #MOVE CODE Number
-MV_RND
+MV_LEFT
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_TRID_BACKPACKERW_19
+SCRID_TRID_ELITEW_50
 #Direction Type Number
-DIR_DOWN
+DIR_LEFT
 #Parameter 0 Number
 4
 #Parameter 1 Number
@@ -195,28 +195,28 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-856 32 -392
+856 32 56
 #event number: 6
 #type
 1
 #ID name
-TR_RANGERM_24
+TR_ELITEM_34
 #OBJ CODE Number
-RANGERM
+TRAINERM
 #MOVE CODE Number
-MV_RTDL         
+MV_RTDR         
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_TRID_RANGERM_24
+SCRID_TRID_ELITEM_34
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
-2
+4
 #Parameter 1 Number
-0
+3
 #Parameter 2 Number
 0
 #Move Limit X Number
@@ -226,7 +226,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-840 32 104
+744 32 104
 #event number: 7
 #type
 1
@@ -444,6 +444,68 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 -120 0 104
+#event number: 14
+#type
+1
+#ID name
+TR_BACKPACKERW_19
+#OBJ CODE Number
+BACKPACKERW
+#MOVE CODE Number
+MV_RND_UL
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_BACKPACKERW_19
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+5
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+888 32 -424
+#event number: 15
+#type
+1
+#ID name
+TR_MOUNT_21W
+#OBJ CODE Number
+MOUNTMAN
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_MOUNT_21
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+5
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+840 32 -344
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

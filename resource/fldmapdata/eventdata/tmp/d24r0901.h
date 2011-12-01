@@ -14,12 +14,12 @@
 #define ZONE_D24R0901_EVC_H
 
 #define TR_BATTLEG_20W                     0
-#define TR_MOUNT_21                        1
+#define TR_BACKPACKERM_31                  1
 #define TR_KARATE_21W                      2
-#define TR_MOUNT_22                        3
-#define TR_ELITEM_34                       4
-#define TR_BACKPACKERW_19                  5
-#define TR_RANGERM_24                      6
+#define TR_MOUNT_22W                       3
+#define TR_RANGERM_24                      4
+#define TR_ELITEW_50                       5
+#define TR_ELITEM_34                       6
 #define TR_DOCTOR_09W                      7
 #define FLD_ITEM_119W                      8
 #define FLD_ITEM_120W                      9
@@ -27,6 +27,8 @@
 #define FLD_ITEM_122W                     11
 #define FLD_ITEM_123W                     12
 #define D24R0901_SWBELL_01                13
+#define TR_BACKPACKERW_19                 14
+#define TR_MOUNT_21W                      15
 
 #endif //ZONE_D24R0901_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d24r0901.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -36,6 +36,10 @@
 #define FLD_ITEM_258                      22
 #define D02R0101_GIRL4_01                 23
 #define D02R0101_MAN2_01                  24
+#define TR_CHILDCARE_11                   25
+#define TR_KINDERGARTENM_12               26
+#define TR_MINI_27                        27
+#define TR_TANPAN_35                      28
 
 #endif //ZONE_D02R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d02r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

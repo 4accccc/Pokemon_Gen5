@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/26 20:38:33
+#save date:2011/12/01 17:28:26
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d02r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d02r0101.wms
 #hold event type:
 1
 #hold event number:
-25
+29
 #event number: 0
 #type
 1
@@ -421,7 +421,7 @@ TR_TANPAN_31
 #OBJ CODE Number
 BOY2
 #MOVE CODE Number
-MV_LEFT
+MV_RND_DR
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -429,7 +429,7 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_TANPAN_31
 #Direction Type Number
-DIR_LEFT
+DIR_DOWN
 #Parameter 0 Number
 5
 #Parameter 1 Number
@@ -443,7 +443,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-504 0 -408
+136 0 -872
 #event number: 14
 #type
 1
@@ -464,17 +464,17 @@ DIR_UP
 #Parameter 0 Number
 1
 #Parameter 1 Number
-7
+6
 #Parameter 2 Number
 0
 #Move Limit X Number
 0
 #Move Limit Z Number
-9
+8
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-568 0 -1096
+568 0 -1144
 #event number: 15
 #type
 1
@@ -514,7 +514,7 @@ TR_VETERANM_20
 #OBJ CODE Number
 VETERANM
 #MOVE CODE Number
-MV_DOWN
+MV_LEFT
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -522,9 +522,9 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_VETERANM_20
 #Direction Type Number
-DIR_DOWN
+DIR_LEFT
 #Parameter 0 Number
-5
+6
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -536,7 +536,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-136 0 -872
+248 0 -440
 #event number: 17
 #type
 1
@@ -576,7 +576,7 @@ TR_VETERANW_17
 #OBJ CODE Number
 VETERANW
 #MOVE CODE Number
-MV_RND_H
+MV_RIGHT
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -584,9 +584,9 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_VETERANW_17
 #Direction Type Number
-DIR_LEFT
+DIR_RIGHT
 #Parameter 0 Number
-4
+1
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -598,7 +598,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-168 48 -600
+136 0 -440
 #event number: 19
 #type
 1
@@ -785,6 +785,130 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 984 0 -456
+#event number: 25
+#type
+1
+#ID name
+TR_CHILDCARE_11
+#OBJ CODE Number
+WOMAN3
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_CHILDCARE_11
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+4
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+648 0 -936
+#event number: 26
+#type
+1
+#ID name
+TR_KINDERGARTENM_12
+#OBJ CODE Number
+BABYBOY2
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_KINDERGARTENM_12
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+4
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+648 0 -1016
+#event number: 27
+#type
+1
+#ID name
+TR_MINI_27
+#OBJ CODE Number
+GIRL2
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_MINI_27
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+696 -32 -488
+#event number: 28
+#type
+1
+#ID name
+TR_TANPAN_35
+#OBJ CODE Number
+BOY2
+#MOVE CODE Number
+MV_UP
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_TANPAN_35
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+1
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+648 -32 -504
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
