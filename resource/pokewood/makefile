@@ -16,7 +16,7 @@ targetname  = pokewood
 
 EXCEL_CONV    = ..\..\tools\exceltool\excelcommaconv.exe
 UPDATEWITHGMM = ../../tools/message/UpdateWithGmm.bat
-SENARIO_CONV  = ruby senario_conv.rb
+SENARIO_CONV  = ruby -Ks senario_conv.rb
 BGM_HASH_CONV = ruby make_bgmhash.rb
 BRIEFING_CONV = ruby briefing_conv.rb
 BRIEFING_MODEL_CDAT = pkwd_briefing_model.cdat
