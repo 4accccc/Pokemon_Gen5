@@ -1023,27 +1023,41 @@ void MYITEM_MoveBottom( MYITEM_PTR myitem, u16 item_no )
   {
     ITEM_ST * item;
     ITEM_ST * move_st;
+    ITEM_ST copy_st;
     u32	max;
     move_st = MYITEM_IdItemGet( myitem ,pocket ,item_no );
     if( move_st == NULL )
     {
       return;
     }
+   
+    // 移動データをコピー
+    copy_st = *move_st;
 
+    // 元データを削除
+    move_st->id = ITEM_DUMMY_DATA;
+    move_st->no = 0;
+
+    // アイテムリストを取得
     MyPocketDataGet( myitem, pocket, &item, &max );
+ 
+    // 空位置をソート
+    MYITEM_SortSpace( item, max );
+
     for( i = 0; i < max ; i++ )
     {
       if( item[i].id == ITEM_DUMMY_DATA )
       {
-        item[i] = *move_st;
-        move_st->id = 0;
-        move_st->no = 0;
-        break;
+        item[i] = copy_st;
+        return;
       }
     }
 
+    // 空位置をソート
+    GF_ASSERT_MSG(0,"アイテムを下に移動することが出来なかった\n");
     MYITEM_SortSpace( item, max );
   }
+  return;
 }
 
 //------------------------------------------------------------------
