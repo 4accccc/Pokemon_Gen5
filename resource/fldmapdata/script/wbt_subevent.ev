@@ -272,6 +272,10 @@ sub_menu_kanto:
     IF $SCWK_ANSWER == TRUE THEN
       _BMPMENU_MAKE_LIST( msg_wbt_subev_kanto_07, msg_wbt_subev_kanto_07 )
     ENDIF
+    _WBT_GET_TRAINER_FLAG( 35, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_jouto_09, msg_wbt_subev_jouto_09 )
+    ENDIF
     _WBT_GET_TRAINER_FLAG( 14, SCWK_ANSWER )
     IF $SCWK_ANSWER == TRUE THEN
       _BMPMENU_MAKE_LIST( msg_wbt_subev_kanto_00, msg_wbt_subev_kanto_00 )
@@ -293,6 +297,8 @@ sub_menu_kanto:
       _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_26 )
     CASE msg_wbt_subev_kanto_07 THEN
       _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_27 )
+    CASE msg_wbt_subev_jouto_09 THEN
+      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_36 )
     CASE msg_wbt_subev_kanto_00 THEN
       _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_15 )
     DEFAULT
@@ -338,10 +344,6 @@ sub_menu_jouto:
     IF $SCWK_ANSWER == TRUE THEN
       _BMPMENU_MAKE_LIST( msg_wbt_subev_jouto_08, msg_wbt_subev_jouto_08 )
     ENDIF
-    _WBT_GET_TRAINER_FLAG( 35, SCWK_ANSWER )
-    IF $SCWK_ANSWER == TRUE THEN
-      _BMPMENU_MAKE_LIST( msg_wbt_subev_jouto_09, msg_wbt_subev_jouto_09 )
-    ENDIF
     _WBT_GET_TRAINER_FLAG( 15, SCWK_ANSWER )
     IF $SCWK_ANSWER == TRUE THEN
       _BMPMENU_MAKE_LIST( msg_wbt_subev_jouto_00, msg_wbt_subev_jouto_00 )
@@ -365,8 +367,6 @@ sub_menu_jouto:
       _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_34 )
     CASE msg_wbt_subev_jouto_08 THEN
       _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_35 )
-    CASE msg_wbt_subev_jouto_09 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_36 )
     CASE msg_wbt_subev_jouto_00 THEN
       _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_16 )
     DEFAULT
@@ -577,6 +577,8 @@ sub_count_kanto:
   $LWK_TOTAL += $SCWK_ANSWER
   _WBT_GET_TRAINER_FLAG( 26, SCWK_ANSWER )
   $LWK_TOTAL += $SCWK_ANSWER
+  _WBT_GET_TRAINER_FLAG( 35, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
   //グリーン：赤緑チャンピオン
   _WBT_GET_TRAINER_FLAG( 14, SCWK_ANSWER )
   $LWK_TOTAL += $SCWK_ANSWER
@@ -599,8 +601,6 @@ sub_count_jouto:
   _WBT_GET_TRAINER_FLAG( 33, SCWK_ANSWER )
   $LWK_TOTAL += $SCWK_ANSWER
   _WBT_GET_TRAINER_FLAG( 34, SCWK_ANSWER )
-  $LWK_TOTAL += $SCWK_ANSWER
-  _WBT_GET_TRAINER_FLAG( 35, SCWK_ANSWER )
   $LWK_TOTAL += $SCWK_ANSWER
   //ワタル：金銀チャンピオン
   _WBT_GET_TRAINER_FLAG( 15, SCWK_ANSWER )

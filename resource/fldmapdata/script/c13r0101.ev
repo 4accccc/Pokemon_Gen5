@@ -57,8 +57,8 @@ _TALK_OBJ_START()
 EVENT_END
 
 /**************************************************************/
-/*		C13R0101	チョロネコ	一言メッセージ				  */
+/*		C13R0101	タブンネ	一言メッセージ				  */
 /**************************************************************/
 EVENT_START		ev_c13r0101_poke_01
-	_EASY_TALK_POKEVOICE( MONSNO_TYORONEKO, msg_c13r0101_poke_01 )
+	_EASY_TALK_POKEVOICE( MONSNO_TABUNNE, msg_c13r0101_poke_01 )
 EVENT_END
