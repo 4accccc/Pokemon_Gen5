@@ -34,4 +34,6 @@ $effect_id_hash = {
   "FLDEFFID_POKEWOOD" => 30,
   "FLDEFFID_ZEKUROMU" => 31,
   "FLDEFFID_RESIRAMU" => 32,
+  "FLDEFFID_KUSABI_B" => 33,
+  "FLDEFFID_KUSABI_W" => 34,
 }
