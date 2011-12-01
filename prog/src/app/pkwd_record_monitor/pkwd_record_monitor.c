@@ -3721,7 +3721,8 @@ static void pwm_disp_mark( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const BOOL bflg, 
 //--------------------------------------------------------------------------------------------
 static void pwm_debug( PKWD_RECORD_MONITOR_MAIN_WORK *wk )
 {
-#ifdef PM_DEBUG
+//#ifdef PM_DEBUG
+#if 0		// –¢Žg—p
   static int ev1;
   static int ev2;
 	

@@ -732,7 +732,8 @@ static void mt_init( MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *mtw )
   appwk->common->title_curpos = MONOLITH_RET_FMISSION;
   
   // ‰Šú‰»‚ð‚Ü‚Æ‚ß‚Äs‚¤
-#ifdef PM_DEBUG
+//#ifdef PM_DEBUG
+#if 0	// –¢Žg—p
   // L‚ð‰Ÿ‚µ‚È‚ª‚ç..
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
     if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){
