@@ -289,40 +289,6 @@ void GIANTHOLE_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
 {
   GIANTHOLE_GIMMICK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GIMMICK_TMP_ASSIGN_ID );
 
-#ifdef PM_DEBUG
-  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      OS_Printf("デバッグ こごえるせかい前半\n");
-
-      // 表示設定
-      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, OBJ_BLIZZARD_01, TRUE );
-      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, OBJ_BLIZZARD_02, TRUE );
-
-      GIANTHOLE_GIMMICK_AnmStart( gsys, 0 );
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      OS_Printf("デバッグ こごえるせかい後半\n");
-
-      // 表示設定
-      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, OBJ_BLIZZARD_01, TRUE );
-      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, OBJ_BLIZZARD_02, TRUE );
-
-      GIANTHOLE_GIMMICK_AnmStart( gsys, 1 );
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      OS_Printf("デバッグ N出現\n");
-
-      GIANTHOLE_GIMMICK_N_POKE_AnmStart( gsys );
-    }
-  }
-#endif
-
   // SE再生
   {
     if( p_wk->anm_type != ANIME_TYPE_NULL )

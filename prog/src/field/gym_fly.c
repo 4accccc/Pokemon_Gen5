@@ -2565,41 +2565,6 @@ static void SOUND_Update( SOUND_WORK *p_wk, const u16 c_time )
     SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( GYM_FLY_SE_FAN );
     PMSND_SetStatusSE_byPlayerID( player_ID, PMSND_NOEFFECT, p_wk->pitch, PMSND_NOEFFECT);
   }
-
-
-#ifdef PM_DEBUG
-  // Rボタン押しながらでデバッグ
-  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L)
-  {
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-    {
-      PMSND_StopSE();
-      ICHI_Printf("SE STOP!\n");
-    }
-
-    if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
-    {
-      PMSND_PlaySE( GYM_FLY_SE_MACHINE );
-      ICHI_Printf("SE H07 Play\n");
-    }
-    if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
-    {
-      PMSND_PlaySE( GYM_FLY_SE_WIND_TURN );
-      ICHI_Printf("SE H05 Play\n");
-    }
-    if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
-    {
-      PMSND_PlaySE( GYM_FLY_SE_FAN );
-      ICHI_Printf("SE H02 Play\n");
-    }
-    if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
-    {
-      PMSND_PlaySE( GYM_FLY_SE_BLOW );
-      ICHI_Printf("SE H01 Play\n");
-    }
-  }
-#endif
-
 }
 
 //----------------------------------------------------------------------------

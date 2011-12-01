@@ -275,26 +275,6 @@ void GYM_GROUND_ENT_Move(FIELDMAP_WORK *p_fieldmap)
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
 //  GYM_GROUND_ENT_TMP *tmp = GMK_TMP_WK_GetWork(p_fieldmap, GYM_GROUND_ENT_TMP_ASSIGN_ID);
 
-#ifdef PM_DEBUG
-  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-      GAMESYS_WORK *p_gamesys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      GMEVENT *event;
-      {
-        event = GYM_GROUND_ENT_CreateExitLiftMoveEvt(p_gamesys, TRUE, TRUE);
-        GAMESYSTEM_SetEvent(p_gamesys, event);
-      }
-    }else if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-      GAMESYS_WORK *p_gamesys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      GMEVENT *event;
-      {
-        event = GYM_GROUND_ENT_CreateExitLiftMoveEvt(p_gamesys, FALSE, TRUE);
-        GAMESYSTEM_SetEvent(p_gamesys, event);
-      }
-    }
-  }
-#endif
-
   //アニメーション再生
   FLD_EXP_OBJ_PlayAnime( ptr );
 }

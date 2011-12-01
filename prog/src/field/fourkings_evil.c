@@ -325,27 +325,6 @@ void FOURKINGS_EVIL_Move(FIELDMAP_WORK *p_fieldmap)
 {
   FOURKINGS_EVIL_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, FOURKINGS_EVIL_TMP_ASSIGN_ID );
 
-#ifdef PM_DEBUG
-  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-    {
-      ANM_FIRE_Play( p_wk, &p_wk->anm_wk, 0 );
-      ANM_FIRE_Play( p_wk, &p_wk->anm_wk, 1 );
-      OS_Printf("炎再生\n");
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
-    {
-      ANM_CLAW_Play( p_wk, 0 );
-      OS_Printf("爪開く\n");
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
-    {
-      ANM_CLAW_Play( p_wk, 1 );
-      OS_Printf("爪閉じる\n");
-    }
-  }
-#endif
-
   // EXPOBJアニメメイン
   EXPOBJ_ObjMain( p_wk );
 

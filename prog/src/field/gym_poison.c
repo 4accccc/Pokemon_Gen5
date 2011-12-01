@@ -289,45 +289,6 @@ void GYM_POISON_Move(FIELDMAP_WORK *p_fieldmap)
 {
   GYM_POISON_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GYM_POISON_TMP_ASSIGN_ID );
 
-
-#ifdef PM_DEBUG
-  // デバッグ
-  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
-      ICHI_Printf("スイッチ1 ON\n");
-      ISS_SWITCH_SYS_SwitchOn( p_wk->map_wk.p_iss_switch, 1 );
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
-      ICHI_Printf("スイッチ2 ON\n");
-      ISS_SWITCH_SYS_SwitchOn( p_wk->map_wk.p_iss_switch, 2 );
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-      ICHI_Printf("スイッチ3 ON\n");
-      ISS_SWITCH_SYS_SwitchOn( p_wk->map_wk.p_iss_switch, 3 );
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-      ICHI_Printf("スイッチ4 ON\n");
-      ISS_SWITCH_SYS_SwitchOn( p_wk->map_wk.p_iss_switch, 4 );
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){
-      ICHI_Printf("スイッチ1 OFF\n");
-      ISS_SWITCH_SYS_SwitchOff( p_wk->map_wk.p_iss_switch, 1 );
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
-      ICHI_Printf("スイッチ2 OFF\n");
-      ISS_SWITCH_SYS_SwitchOff( p_wk->map_wk.p_iss_switch, 2 );
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){
-      ICHI_Printf("スイッチ3 OFF\n");
-      ISS_SWITCH_SYS_SwitchOff( p_wk->map_wk.p_iss_switch, 3 );
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
-      ICHI_Printf("スイッチ4 OFF\n");
-      ISS_SWITCH_SYS_SwitchOff( p_wk->map_wk.p_iss_switch, 4 );
-    }
-  }
-#endif
-
   // EXPOBJアニメメイン
   EXPOBJ_ObjMain( p_wk );
 

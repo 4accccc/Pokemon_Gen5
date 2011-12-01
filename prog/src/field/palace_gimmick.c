@@ -277,36 +277,7 @@ void PALACE_GMK_Move(FIELDMAP_WORK *fieldWork)
   PALACE_GMK_WORK* work = GMK_TMP_WK_GetWork(fieldWork, GIMMICK_WORK_ASSIGN_ID);
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   INTRUDE_COMM_SYS_PTR intcomm = _GetIntrudeComm(game_comm);
-  
 
-#ifdef PM_DEBUG
-  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-    {
-      OS_Printf("デバッグ エフェクト01再生\n");
-
-      ANM_EFFECT_01_Play( work );
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-    {
-      OS_Printf("デバッグ エフェクト02再生\n");
-
-      ANM_EFFECT_02_Play( work );
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
-    {
-      OS_Printf("デバッグ エフェクト03再生\n");
-
-      ANM_EFFECT_03_Play( work );
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
-    {
-      OS_Printf("デバッグ エフェクト04再生\n");
-
-      ANM_EFFECT_04_Play( work );
-    }
-  }
-#endif
 
 
   if(intcomm != NULL && intcomm->intrude_status_mine.palace_area != work->tree_palace_area){

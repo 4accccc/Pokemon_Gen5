@@ -539,43 +539,6 @@ void FOURKINGS_GHOST_Move(FIELDMAP_WORK *p_fieldmap)
 {
   FOURKINGS_GHOST_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, FOURKINGS_GHOST_TMP_ASSIGN_ID );
 
-
-#ifdef PM_DEBUG
-  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      GMEVENT *event;
-      event = MIST_CreateEvent( NULL, gsys);
-      GAMESYSTEM_SetEvent(gsys, event);
-      OS_Printf("霧イベント\n");
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      GMEVENT *event;
-      event = BOOK_FALL_CreateEvent( gsys, 10 );
-      GAMESYSTEM_SetEvent(gsys, event);
-      OS_Printf("本落ちるイベント\n");
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      GMEVENT *event;
-      event = LAMP_CreateEvent( NULL, gsys);
-      GAMESYSTEM_SetEvent(gsys, event);
-      OS_Printf("霧イベント\n");
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
-    {
-      FIELD_FOG_WORK  *fog  = FIELDMAP_GetFieldFog( p_wk->p_fieldmap );
-      FIELD_FOG_SetFlag( fog, FALSE );
-      FIELD_FOG_Reflect( fog );
-      ICHI_Printf("fog 無効 \n");
-    }
-  }
-#endif
-
   // FOGを無効
   // セットアップで行うと天気で上書きされてしまうため
   // 動作関数で行う

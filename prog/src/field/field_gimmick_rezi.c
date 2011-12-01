@@ -237,51 +237,6 @@ void REZI_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
 {
   REZI_GIMMICK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GIMMICK_TMP_ASSIGN_ID );
 
-
-#ifdef PM_DEBUG
-  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      REZI_GIMMICK_SetDoorState( gsys, FALSE );
-      REZI_GIMMICK_AnmDoorStart( gsys, TRUE );
-      OS_Printf("ドア開く\n");
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      REZI_GIMMICK_SetDoorState( gsys, TRUE );
-      REZI_GIMMICK_AnmDoorStart( gsys, FALSE );
-      OS_Printf("ドア閉まる\n");
-    }
-
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      REZI_GIMMICK_SetEye( gsys, 0 );
-      OS_Printf("眼 0\n");
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      REZI_GIMMICK_SetEye( gsys, 1 );
-      OS_Printf("眼 1\n");
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      REZI_GIMMICK_SetEye( gsys, 2 );
-      OS_Printf("眼 2\n");
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      REZI_GIMMICK_SetEye( gsys, 3 );
-      OS_Printf("眼 3\n");
-    }
-  }
-#endif
-
   // EXPOBJアニメメイン
   EXPOBJ_ObjMain( p_wk );
 }

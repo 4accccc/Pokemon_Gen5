@@ -1072,61 +1072,6 @@ void HIDE_SHIP_Move( FIELDMAP_WORK *p_fieldmap )
 {
   HIDE_SHIP_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, HIDE_SHIP_TMP_ASSIGN_ID );
 
-#ifdef PM_DEBUG
-  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      GMEVENT *event;
-      event = BUTTON_CreateEvent( gsys, 0 );
-      GAMESYSTEM_SetEvent(gsys, event);
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      GMEVENT *event;
-      event = BUTTON_CreateEvent( gsys, 1 );
-      GAMESYSTEM_SetEvent(gsys, event);
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      GMEVENT *event;
-      event = BUTTON_CreateEvent( gsys, 2 );
-      GAMESYSTEM_SetEvent(gsys, event);
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      GMEVENT *event;
-      event = BUTTON_CreateEvent( gsys, 3 );
-      GAMESYSTEM_SetEvent(gsys, event);
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      HIDE_SHIP_GateSet( gsys, 0, TRUE );
-      HIDE_SHIP_GateSet( gsys, 1, TRUE );
-      HIDE_SHIP_GateSet( gsys, 2, TRUE );
-      HIDE_SHIP_GateSet( gsys, 3, TRUE );
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      HIDE_SHIP_GateSet( gsys, 0, FALSE );
-      HIDE_SHIP_GateSet( gsys, 1, FALSE );
-      HIDE_SHIP_GateSet( gsys, 2, FALSE );
-      HIDE_SHIP_GateSet( gsys, 3, FALSE );
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      HIDE_SHIP_ButtonOff( gsys, 0 );
-      HIDE_SHIP_GateOff( gsys, 0 );
-    }
-  }
-#endif
-
   // EXPOBJÉAÉjÉÅÉÅÉCÉì
   EXPOBJ_ObjMain( p_wk );
 }

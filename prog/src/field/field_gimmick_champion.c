@@ -28,13 +28,6 @@
 // mine
 #include "field_gimmick_champion.h"
 
-//-------------------------------------
-///	デバッグ
-//=====================================
-#ifdef PM_DEBUG
-#define CHAMPION_DEBUG_MENU
-#endif //PM_DEBUG
-
 //=============================================================================
 /**
  *					定数宣言
@@ -274,20 +267,6 @@ typedef struct {
 // カメラ揺れるタスク
 static FIELD_TASK_RETVAL CameraShake( void* wk );
 
-#ifdef CHAMPION_DEBUG_MENU
-//-------------------------------------
-///	デバッグメニュー
-//=====================================
-static void DEBUGMENU_Init( void *p_wk, FIELDMAP_WORK *p_fieldmap, HEAPID heapID );
-static void DEBUGMENU_Exit( void );
-
-static u32  debug_cam_width = 1;
-static u32  debug_cam_sync = 3;
-static u32  debug_cam_time = 22;
-static u32  debug_cam_wait = 149;
-
-#endif // CHAMPION_DEBUG_MENU
-
 //=============================================================================
 /**
  *					外部公開関数
@@ -317,10 +296,6 @@ void CHAMPION_Setup( FIELDMAP_WORK *p_fieldmap )
 
   // 初期化
   INIT_FieldRecover( p_wk );
-
-#ifdef CHAMPION_DEBUG_MENU
-  DEBUGMENU_Init( p_wk, p_fieldmap, HEAPID_FIELDMAP );
-#endif // CHAMPION_DEBUG_MENU
 }
 
 //--------------------------------------------------------------
@@ -333,10 +308,6 @@ void CHAMPION_Setup( FIELDMAP_WORK *p_fieldmap )
 void CHAMPION_End( FIELDMAP_WORK *p_fieldmap )
 {
   CHAMPION_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, CHAMPION_TMP_ASSIGN_ID );
-
-#ifdef CHAMPION_DEBUG_MENU
-  DEBUGMENU_Exit();
-#endif // CHAMPION_DEBUG_MENU
 
   // EXPOBJ破棄
   EXPOBJ_ObjDell( p_wk );
@@ -356,78 +327,6 @@ void CHAMPION_Move( FIELDMAP_WORK *p_fieldmap )
 {
   CHAMPION_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, CHAMPION_TMP_ASSIGN_ID );
 
-#ifdef PM_DEBUG
-  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-    {
-      OS_Printf("デバッグ 点灯前状態\n");
-
-      // 表示設定
-      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_ROOM_1, FALSE );
-      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_ROOM_2, TRUE );
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-    {
-      OS_Printf("デバッグ 点灯後状態\n");
-
-      // 表示設定
-      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_ROOM_1, TRUE );
-      FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_ROOM_2, FALSE );
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      GMEVENT *event;
-      event = LIGHTING_CreateEvent(gsys);
-      GAMESYSTEM_SetEvent(gsys, event);
-      OS_Printf("照明点灯イベント\n");
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      GMEVENT *event;
-      event = HALL_ROOM_CreateEvent(gsys);
-      GAMESYSTEM_SetEvent(gsys, event);
-      OS_Printf("殿堂部屋出現イベント\n");
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
-    {
-      ANM_LIGHT_Play( p_wk );
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
-    {
-      FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( p_fieldmap );
-      MMDL* mmdl = FIELD_PLAYER_GetMMdl( player );
-      MMDL_SetStatusLightAttrOFF( mmdl, TRUE );
-      OS_Printf("アトリビュートライト無効\n");
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
-    {
-      FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( p_fieldmap );
-      MMDL* mmdl = FIELD_PLAYER_GetMMdl( player );
-      MMDL_SetStatusLightAttrOFF( mmdl, FALSE );
-      OS_Printf("アトリビュートライト有効\n");
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
-    {
-      ANM_Play( p_wk->exp_obj, OBJ_RELIEF_1, 2, 0, TRUE );
-      ANM_Play( p_wk->exp_obj, OBJ_RELIEF_2, 2, 0, TRUE );
-      OS_Printf("レリーフIMAアニメ再生\n");
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
-    {
-      ANM_Stop( p_wk->exp_obj, OBJ_RELIEF_1, 2 );
-      ANM_Stop( p_wk->exp_obj, OBJ_RELIEF_2, 2 );
-      OS_Printf("レリーフIMAアニメ停止\n");
-    }
-
-    {
-      int frame;
-      frame = FLD_EXP_OBJ_GetObjAnmFrm( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, 2 );
-      ICHI_Printf("anm frame %d \n", frame/FX32_ONE);
-    }
-  }
-#endif
 
   
 
@@ -981,17 +880,10 @@ static GMEVENT_RESULT HallRoomEvent( GMEVENT* event, int* seq, void* wk )
 
         CAMERA_SHAKE_PARAM shakeParam;
         GFL_STD_MemFill(&shakeParam, 0, sizeof(shakeParam)); // パラメータの初期化
-#ifdef CHAMPION_DEBUG_MENU
-        shakeParam.Height          = debug_cam_width;
-        shakeParam.Sync            = debug_cam_sync;
-        shakeParam.Time            = debug_cam_time;
-        shakeParam.WaitStartFrame  = debug_cam_wait;
-#else
         shakeParam.Height          = 1;
         shakeParam.Sync            = 3;
         shakeParam.Time            = 22;
         shakeParam.WaitStartFrame  = 149;
-#endif
 
         cam = FIELD_TASK_CameraShake( p_fieldmap, &shakeParam );
         taskMan = FIELDMAP_GetTaskManager( p_fieldmap );
@@ -1211,227 +1103,4 @@ static FIELD_TASK_RETVAL CameraShake( void* wk )
 
   return FIELD_TASK_RETVAL_CONTINUE;
 }
-
-
-#ifdef CHAMPION_DEBUG_MENU
-//=============================================================================
-/**
- *    デバッグメニュー
- */
-//=============================================================================
-//-------------------------------------
-///	マクロ
-//=====================================
-#define DEBUGMENU_CAM   (2)
-
-//-------------------------------------
-///	static
-//=====================================
-// キー入力でデータ変更
-static BOOL DebugWin_ChangeData( int *p_param, int min, int max );
-// cam
-static void DebugWin_Update_ChangeCamWidth( void *userWork, DEBUGWIN_ITEM *item );
-static void DebugWin_Draw_ChangeCamWidth( void *userWork, DEBUGWIN_ITEM *item );
-static void DebugWin_Update_ChangeCamSync( void *userWork, DEBUGWIN_ITEM *item );
-static void DebugWin_Draw_ChangeCamSync( void *userWork, DEBUGWIN_ITEM *item );
-static void DebugWin_Update_ChangeCamTime( void *userWork, DEBUGWIN_ITEM *item );
-static void DebugWin_Draw_ChangeCamTime( void *userWork, DEBUGWIN_ITEM *item );
-static void DebugWin_Update_ChangeCamWait( void *userWork, DEBUGWIN_ITEM *item );
-static void DebugWin_Draw_ChangeCamWait( void *userWork, DEBUGWIN_ITEM *item );
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  R+Yにデバッグメニュー追加
- *
- *	@param	*p_wk       ギミックワーク
- *	@param	*p_fieldmap フィールドマップワーク
- *	@param	heapID      ヒープID
- */
-//-----------------------------------------------------------------------------
-static void DEBUGMENU_Init( void *p_wk, FIELDMAP_WORK *p_fieldmap, HEAPID heapID )
-{
-
-  // デバッグメニューグループ追加
-  DEBUGWIN_AddGroupToTop( DEBUGMENU_CAM, "チャンピオンべや", heapID );
-
-  // 
-  
-  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeCamWidth,
-                              DebugWin_Draw_ChangeCamWidth,
-                              p_fieldmap,
-                              DEBUGMENU_CAM,
-                              heapID );
-  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeCamSync,
-                              DebugWin_Draw_ChangeCamSync,
-                              p_fieldmap,
-                              DEBUGMENU_CAM,
-                              heapID );
-  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeCamTime,
-                              DebugWin_Draw_ChangeCamTime,
-                              p_fieldmap,
-                              DEBUGMENU_CAM,
-                              heapID );
-  DEBUGWIN_AddItemToGroupEx(  DebugWin_Update_ChangeCamWait,
-                              DebugWin_Draw_ChangeCamWait,
-                              p_fieldmap,
-                              DEBUGMENU_CAM,
-                              heapID );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  R+Yからデバッグメニュー破棄
- */
-//-----------------------------------------------------------------------------
-static void DEBUGMENU_Exit( void )
-{
-  DEBUGWIN_RemoveGroup( DEBUGMENU_CAM );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  デバッグ数値入力
- *
- *	@param	*p_param  変更する値のポインタ
- *	@param	min       入力する時の最小値
- *	@param	max       入力する時の最大値
- *
- *	@retval TRUE 入力あり
- *	@retval FALSE 入力なし
- */
-//-----------------------------------------------------------------------------
-static BOOL DebugWin_ChangeData( int *p_param, int min, int max )
-{
-  int value = 0;
-
-  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
-  { 
-    value = -1;
-  }
-  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
-  { 
-    value = +1;
-  }
-
-  (*p_param) += value;
-  (*p_param)  = MATH_CLAMP( (*p_param), min, max );
-
-  if( value == 0 )
-  {
-    return FALSE;
-  }
-  else
-  {
-    return TRUE;
-  }
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  カメラゆれ　幅 更新
- */
-//-----------------------------------------------------------------------------
-static void DebugWin_Update_ChangeCamWidth( void *userWork, DEBUGWIN_ITEM *item )
-{
-  FIELDMAP_WORK *p_fieldmap = userWork;
-  int value = debug_cam_width;
-
-  if( DebugWin_ChangeData( &value, 0, 100 ) )
-  {
-    // 更新あり
-    debug_cam_width = value;
-    DEBUGWIN_RefreshScreen();
-  }
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  カメラゆれ　幅 描画
- */
-//-----------------------------------------------------------------------------
-static void DebugWin_Draw_ChangeCamWidth( void *userWork, DEBUGWIN_ITEM *item )
-{
-  DEBUGWIN_ITEM_SetNameV( item, "はば[%d]", debug_cam_width );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  カメラゆれ　シンク 更新
- */
-//-----------------------------------------------------------------------------
-static void DebugWin_Update_ChangeCamSync( void *userWork, DEBUGWIN_ITEM *item )
-{
-  FIELDMAP_WORK *p_fieldmap = userWork;
-  int value = debug_cam_sync;
-
-  if( DebugWin_ChangeData( &value, 0, 100 ) )
-  {
-    // 更新あり
-    debug_cam_sync = value;
-    DEBUGWIN_RefreshScreen();
-  }
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  カメラゆれ　シンク 描画
- */
-//-----------------------------------------------------------------------------
-static void DebugWin_Draw_ChangeCamSync( void *userWork, DEBUGWIN_ITEM *item )
-{
-  DEBUGWIN_ITEM_SetNameV( item, "シンク[%d]", debug_cam_sync );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  カメラゆれ　かいすう 更新
- */
-//-----------------------------------------------------------------------------
-static void DebugWin_Update_ChangeCamTime( void *userWork, DEBUGWIN_ITEM *item )
-{
-  FIELDMAP_WORK *p_fieldmap = userWork;
-  int value = debug_cam_time;
-
-  if( DebugWin_ChangeData( &value, 0, 100 ) )
-  {
-    // 更新あり
-    debug_cam_time = value;
-    DEBUGWIN_RefreshScreen();
-  }
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  カメラゆれ　かいすう 描画
- */
-//-----------------------------------------------------------------------------
-static void DebugWin_Draw_ChangeCamTime( void *userWork, DEBUGWIN_ITEM *item )
-{
-  DEBUGWIN_ITEM_SetNameV( item, "かいすう[%d]", debug_cam_time );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  カメラゆれ　かいしまでのウェイト 更新
- */
-//-----------------------------------------------------------------------------
-static void DebugWin_Update_ChangeCamWait( void *userWork, DEBUGWIN_ITEM *item )
-{
-  FIELDMAP_WORK *p_fieldmap = userWork;
-  int value = debug_cam_wait;
-
-  if( DebugWin_ChangeData( &value, 0, 200 ) )
-  {
-    // 更新あり
-    debug_cam_wait = value;
-    DEBUGWIN_RefreshScreen();
-  }
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  カメラゆれ　かいしまでのウェイト 描画
- */
-//-----------------------------------------------------------------------------
-static void DebugWin_Draw_ChangeCamWait( void *userWork, DEBUGWIN_ITEM *item )
-{
-  DEBUGWIN_ITEM_SetNameV( item, "ゆれまでのウェイト[%d]", debug_cam_wait );
-}
-
-#endif // CHAMPION_DEBUG_MENU
 

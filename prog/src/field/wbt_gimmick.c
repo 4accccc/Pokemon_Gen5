@@ -689,11 +689,6 @@ void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
 
 #ifdef PM_DEBUG
   if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-    {
-      OS_Printf("デバッグ トーナメントロゴビジョン\n");
-      WBT_GIMMICK_VisionChange( p_fieldmap, SCR_WBT_VISION_ALL, NULL, NULL, 0, 0 );
-    }
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
     {
       GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
@@ -710,34 +705,6 @@ void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
 
       GFL_STR_DeleteBuffer( strbuf1 );
       GFL_STR_DeleteBuffer( strbuf2 );
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      GAMEDATA   *gdata = GAMESYSTEM_GetGameData( gsys );
-      STRBUF * strbuf1;
-      MYSTATUS* myStatus;
-      myStatus = GAMEDATA_GetMyStatus( gdata );
-      strbuf1  = MyStatus_CreateNameString( myStatus, p_wk->heapID );
-
-      OS_Printf("デバッグ 優勝ビジョン\n");
-      WBT_GIMMICK_VisionChange( p_fieldmap, SCR_WBT_VISION_WIN_PLAYER, strbuf1, NULL, debug_wbt_trtype, 0 );
-
-      GFL_STR_DeleteBuffer( strbuf1 );
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
-    {
-      WBT_GIMMICK_EffectStart( p_fieldmap, SCR_WBT_EFFECT_CHAMP, SCR_WBT_EFFECT_POS_R );
-      OS_Printf("デバッグ エフェクト\n");
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
-    {
-      WBT_GIMMICK_WinEffectStart( p_fieldmap );
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
-    {
-      WBT_GIMMICK_EffectStart( p_fieldmap, SCR_WBT_EFFECT_WM, SCR_WBT_EFFECT_POS_L );
-      OS_Printf("デバッグ エフェクト\n");
     }
   }
 #endif

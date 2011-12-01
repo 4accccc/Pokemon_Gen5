@@ -316,13 +316,6 @@ static void POSTER_TexTrans( PKWD_FIELD_TMP *p_wk, const TEX_INDEX tex_index )
 
     int dat_id = POKEWOOD_SAVEDATA_GetKanbanNo( pokewood_sv, tex_index );
     
-#ifdef PM_DEBUG
-    // ŠÅ”Â‚ÌNO‘‚«Š·‚¦
-    if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
-      dat_id = tex_index;
-    }
-#endif
-
     ICHI_Printf("ŠÅ”Â‚ÌNO %d \n", dat_id );
 
     // 0‚Í‰½‚àã‰f‚µ‚Ä‚¢‚È‚¢‚Ì‚ÅSKIP
