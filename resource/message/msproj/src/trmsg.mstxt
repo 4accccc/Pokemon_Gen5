@@ -52427,8 +52427,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="TRID_RANGERM_21_TRMSG_FIGHT_AFTER"
-		Style="Large">
+		Label="TRID_RANGERM_21_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<LanguageCell
 			Language="JPN">
 			<Text>あちている　どうぐの　ちかくで
@@ -52437,11 +52436,11 @@
 うまく　かくれていた……　よね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T07:04:22" />
+				Time="2011-12-01T05:07:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T07:04:22" />
+				Time="2011-12-01T05:07:47" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -52451,19 +52450,12 @@
 うまく　隠れていた……　よね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T12:59:00" />
+				Time="2011-12-01T05:07:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T12:59:00" />
+				Time="2011-12-01T05:07:47" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:30" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="TRID_RANGERW_21_TRMSG_FIGHT_START"
@@ -52567,8 +52559,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="TRID_RANGERW_21_TRMSG_FIGHT_AFTER"
-		Style="Large">
+		Label="TRID_RANGERW_21_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<LanguageCell
 			Language="JPN">
 			<Text>かいだんを　のぼれば
@@ -52576,11 +52567,11 @@
 チャンピオンロードは　めのまえよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T07:04:22" />
+				Time="2011-12-01T05:07:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T07:04:22" />
+				Time="2011-12-01T05:07:47" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -52589,19 +52580,12 @@
 チャンピオンロードは　目前よ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-12-01T05:07:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T13:25:51" />
+				Time="2011-12-01T05:07:47" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:30" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="TRID_ELITEM_32_TRMSG_FIGHT_START"
@@ -78028,6 +78012,686 @@
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-27T11:21:19" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_BACKPACKERW_26_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>バックパッカーで　ありつつ
+トレジャーハンターも　してます！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バックパッカーで　ありつつ
+トレジャーハンターも　してます！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_BACKPACKERW_26_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>しょうり　という
+おたからを　とりのがしました！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>勝利という
+お宝を　取り逃しました！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_BACKPACKERW_26_TRMSG_FIGHT_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>かざんのおきいしって　しってる？▼
+かざんに　ねむる　といわれる
+ポケモンに　かんけい　あるらしいけど▼
+おくと　ポケモンが　めざめるのか
+どかすと　ポケモンが　めざめるのか▽
+よく　わかってないらしいの</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かざんのおきいしって　知ってる？▼
+かざんに　眠る　といわれる
+ポケモンに　関係あるらしいけど▼
+置くと　ポケモンが　めざめるのか
+どかすと　ポケモンが　めざめるのか▽
+よく　わかってないらしいの</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_ELITEM_45_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>イッツ　トレーニング！
+ポケモンと　ともに　つよくなり▼
+ソウリュウや　セイガイハの
+ポケモンジムに　いどむ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イッツ　トレーニング！
+ポケモンと　ともに　強くなり▼
+ソウリュウや　セイガイハの
+ポケモンジムに　挑む！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_ELITEM_45_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>まだ！　まだまだ
+じつりょくが　ともなってないか！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まだ！　まだまだ
+実力が　伴ってないか！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_ELITEM_45_TRMSG_FIGHT_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぼくにとって　ポケモンは
+たいせつな　たいせつな　そんざい▼
+ぼくの　くやしなみだや　えがおを
+いつも　そばで　みていたからね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぼくにとって　ポケモンは
+大切な　大切な　存在▼
+ぼくの　悔し涙や　笑顔を
+いつも　そばで　みていたからね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_BACKPACKERM_31_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>バックパッカーの　ふりをした
+トレジャーハンター　なんだぜ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バックパッカーの　ふりをした
+トレジャーハンター　なんだぜ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_BACKPACKERM_31_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>しょうり　という
+おたからを　とりのがしたか！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>勝利という
+お宝を　取り逃したか！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_BACKPACKERM_31_TRMSG_FIGHT_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>かざんのおきいしって　しってる？▼
+かざんに　ねむる　といわれる
+ポケモンに　かんけい　あるらしいけど▼
+おくと　ポケモンが　めざめるのか
+どかすと　ポケモンが　めざめるのか▽
+よく　わかってないらしいよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>かざんのおきいしって　知ってるか？▼
+かざんに　ねむる　といわれる
+ポケモンに　関係あるらしいけど▼
+置くと　ポケモンが　めざめるのか
+どかすと　ポケモンが　めざめるのか▽
+よく　わかってないらしいよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_ELITEW_50_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>イッツ　トレーニング！
+ポケモンと　ともに　つよくなり▼
+ソウリュウや　セイガイハの
+ポケモンジムに　いどむの！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イッツ　トレーニング！
+ポケモンと　ともに　強くなり▼
+ソウリュウや　セイガイハの
+ポケモンジムに　挑むの！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_ELITEW_50_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>まだ！　まだまだ
+じつりょくが　ともなってないわね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まだ！　まだまだ
+実力が　伴ってないわね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_ELITEW_50_TRMSG_FIGHT_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたしにとって　ポケモンは
+たいせつな　たいせつな　きょうだい▼
+だって　うまれたときから
+いっしょに　ないて　わらってきたもの</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あたしにとって　ポケモンは
+大切な　大切な　兄弟▼
+だって　生まれたときから
+一緒に　泣いて　笑ってきたもの</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_CHILDCARE_11_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>こころの　さけび！▼
+みんな　ゆうこと　きけえ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>心の　叫び！▼
+みんな　ゆうこと　きけえ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_CHILDCARE_11_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>はあ　はあ　はあ
+ちょっと　スッキリ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はあ　はあ　はあ
+ちょっと　スッキリ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_CHILDCARE_11_TRMSG_FIGHT_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>こどもも　ポケモンも　すきだけど
+あたし　やさしく　ないんだからね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こどもも　ポケモンも　好きだけど
+あたし　優しく　ないんだからね！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_KINDERGARTENM_12_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>おまえ！
+おれに　まけて　なけ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おまえ！
+おれに　まけて　なけ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_KINDERGARTENM_12_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>……ぐぬぬ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……ぐぬぬ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_KINDERGARTENM_12_TRMSG_FIGHT_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>きめたぞ！　チャンピオンになって
+おまえを　ぶっとばしてっやる！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きめたぞ！　チャンピオンになって
+おまえを　ぶっとばしてっやる！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_TANPAN_35_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>……あんた　つよそうだな！
+いいぜいいぜ！　てごわい　あいてほど
+オレの　ポケモン　もえるんだぜ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……あんた　強そうだな！
+いいぜいいぜ！　手強い　相手ほど
+オレの　ポケモン　燃えるんだぜ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_TANPAN_35_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>くう……
+うまく　めいれい　できなかった</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>くう……
+うまく　命令できなかった</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_TANPAN_35_TRMSG_FIGHT_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>おたがいの　ポケモンを
+めいれい　せずに　たたかわせたら▽
+どんな　たたかいに　なるのかな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>お互いの　ポケモンを
+命令せずに　戦わせたら▽
+どんな　戦いに　なるのかな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_MINI_27_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゃーん！
+かわいい　ポケモン　じゃーん！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>じゃーん！
+可愛い　ポケモン　じゃーん！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_MINI_27_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>いやーん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いやーん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_MINI_27_TRMSG_FIGHT_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>……いいの　おうちで　いとしの
+ポケモンに　なぐさめて　もらうもん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……いいの　おうちで　愛しの
+ポケモンに　なぐさめて　もらうもん</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-01T03:41:59" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>
