@@ -566,6 +566,12 @@ static int MainSeq_EndSearch( ZUKAN_MAIN_WORK * wk )
 	switch( search->retMode ){
 	case ZKNSEARCH_RET_START:		// 検索実行
 		FreeListData( wk );
+    
+    // Yボタンで起動し、図鑑モードが生息地だった場合は戻り先は地方図鑑
+    if( ZUKANSAVE_GetZukanMode( wk->prm->savedata ) == ZUKAN_MODE_HABITAT ){
+      ZUKANSAVE_SetZukanMode( wk->prm->savedata , ZUKAN_MODE_LOCAL );
+    }
+
 		wk->list     = search->list;
 		wk->listMax  = search->listMax;
 		wk->listMode = ZKNLIST_CALL_SEARCH;
@@ -573,6 +579,10 @@ static int MainSeq_EndSearch( ZUKAN_MAIN_WORK * wk )
 		break;
 	
 	case ZKNSEARCH_RET_CANCEL:	// キャンセル
+    // Yボタンで起動し、図鑑モードが生息地だった場合は戻り先は地方図鑑
+    if( ZUKANSAVE_GetZukanMode( wk->prm->savedata ) == ZUKAN_MODE_HABITAT ){
+      ZUKANSAVE_SetZukanMode( wk->prm->savedata , ZUKAN_MODE_LOCAL );
+    }
 #ifdef	BUGFIX_BTS7745_20100712
 		wk->listMode = ZKNLIST_CALL_NORMAL;
 #endif	// BUGFIX_BTS7745_20100712
@@ -696,6 +706,10 @@ static int MainSeq_EndDetail( ZUKAN_MAIN_WORK * wk )
     {
       if( wk->is_habitat_call == FALSE )
       {
+        // Yボタンで起動し、図鑑モードが生息地だった場合は戻り先は地方図鑑
+        if( ZUKANSAVE_GetZukanMode( wk->prm->savedata ) == ZUKAN_MODE_HABITAT ){
+          ZUKANSAVE_SetZukanMode( wk->prm->savedata , ZUKAN_MODE_LOCAL );
+        }
         wk->prm->retMode = ZUKAN_RET_NORMAL;
         ret = SEQ_LIST_CALL;
       }
@@ -792,8 +806,10 @@ static int MainSeq_EndHabitatZone( ZUKAN_MAIN_WORK * wk )
     }
     else
     {
-      ONOUE_Printf("リスト画面へ戻る\n");
+      // Yボタンからきた場合は、図鑑モードが全国もしくはイッシュになっている可能性がある
+      ZUKANSAVE_SetZukanMode( wk->prm->savedata , ZUKAN_MODE_HABITAT);
       ret = SEQ_HABITAT_ZONE_LIST_CALL;
+      ONOUE_Printf("リスト画面へ戻る\n");
     }
     wk->is_habitat_call = FALSE;
     break;
