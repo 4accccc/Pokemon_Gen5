@@ -3130,55 +3130,6 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_r06r0101_ambrella_suna_05"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:21:11" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:21:10" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:21:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:21:13" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・
-※swanで新規作成</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:12:12" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>AMBRELLA</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-15T09:12:12" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
 		Label="msg_r06r0101_ambrella_suna_06"
 		Style="Large">
 		<LanguageCell

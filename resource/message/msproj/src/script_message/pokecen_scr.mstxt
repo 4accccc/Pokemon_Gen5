@@ -1750,10 +1750,10 @@ DS本体の　電源が　切れましたね▼
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]は バトルポイントを
-[Digit:2digits Idx="1" ]　てにいれた！</Text>
+[Digit:2digits Idx="1" ]　手に入れた！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-07T09:10:32" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T05:26:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -945,11 +945,11 @@
 			<Comment>♀
 ・ポケモン交換後＋マップチェンジ後
 ・はい/いいえの選択肢表示
-　はい　→girl1_07
+　はい　→girl1_17
 　いいえ→girl1_08</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T11:12:24" />
+				Time="2011-12-01T03:58:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1011,57 +1011,6 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-20T11:12:47" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#008080</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_t02r0101_girl1_14"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>そうよね……　いつもいつも
-しょうぶ　したいわけじゃ　ないよね</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-07T06:46:04" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-07T06:46:04" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>そうよね……　いつもいつも
-勝負したいわけじゃ　ないよね</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-20T11:11:23" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-07T06:46:04" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♀
-・ポケモン交換後＋マップチェンジ後
-・いいえ選択</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-07T06:46:04" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>GIRL1</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-07T06:46:09" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

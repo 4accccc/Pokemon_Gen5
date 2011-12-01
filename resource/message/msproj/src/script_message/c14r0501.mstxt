@@ -977,7 +977,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c14r0501_poke46_03">
+		Label="msg_c14r0501_poke46_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>きょふー♪</Text>
