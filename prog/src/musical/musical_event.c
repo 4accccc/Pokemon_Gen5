@@ -170,6 +170,9 @@ static const void MUSICAL_EVENT_JumpMusicalHall( GMEVENT *event, MUSICAL_EVENT_W
 static const void MUSICAL_EVENT_RunScript( GMEVENT *event, MUSICAL_EVENT_WORK *evWork , u16 scriptId );
 static const u8 MUSICAL_EVENT_CalcNpcIdx( MUSICAL_EVENT_WORK *evWork , const u8 idx );
 
+// バージョンからOBJ_CODEを求める
+static u16 getObjCode_Version( const MYSTATUS* mystatus );
+
 //--------------------------------------------------------------
 //  イベント作成
 //--------------------------------------------------------------
@@ -1313,6 +1316,50 @@ static const u8 MUSICAL_EVENT_CalcNpcIdx( MUSICAL_EVENT_WORK *evWork , const u8 
   return npcIdx;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バージョンからOBJ_CODEを求める
+ *
+ *	@param	const MYSTATUS* mystatus 
+ *
+ *	@return OBJ_CODE
+ */
+//-----------------------------------------------------------------------------
+static u16 getObjCode_Version( const MYSTATUS* mystatus )
+{
+  u8  version = MyStatus_GetRomCode( mystatus );
+  u32 sex     = MyStatus_GetMySex( mystatus );
+  u16 obj_code;
+  
+  // swan
+  if( version == VERSION_W2 || version == VERSION_B2 )
+  {
+    if( sex == PM_MALE )
+    {
+      obj_code = SWHERO;
+    }
+    else
+    {
+      obj_code = SWHEROINE;
+    }
+  }
+  else
+  // wb
+  {
+    if( sex == PM_MALE )
+    {
+      obj_code = HERO;
+    }
+    else
+    {
+      obj_code = HEROINE;
+    }
+  }
+
+  return obj_code;
+}
+
+
 #pragma mark [>outer func
 //自分の参加番号取得
 const u8 MUSICAL_EVENT_GetSelfIndex( MUSICAL_EVENT_WORK *evWork )
@@ -1446,15 +1493,8 @@ const u8 MUSICAL_EVENT_GetPosObjView( MUSICAL_EVENT_WORK *evWork , const u8 pos 
     MYSTATUS *commMyStatus = MUS_COMM_GetPlayerMyStatus( evWork->commWork , idx );
     if( commMyStatus != NULL )
     {
-      const u32 sex = MyStatus_GetMySex( commMyStatus );
-      if( sex == PTL_SEX_MALE )
-      {
-        return HERO;
-      }
-      else
-      {
-        return HEROINE;
-      }
+      // バージョン別で見た目を決める
+      return getObjCode_Version( commMyStatus );
     }
   }
   
