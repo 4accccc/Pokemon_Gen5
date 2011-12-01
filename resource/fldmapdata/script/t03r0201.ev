@@ -13,6 +13,7 @@
   .include  "t03r0201.h"
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -202,8 +203,14 @@ EVENT_START   ev_reserve_t03r0201_hakase2_01
   _TIME_WAIT( 16 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
   _OBJ_ANIME_WAIT()
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  
   _OBJ_DEL( T03R0201_HAKASE2_01 )
   _OBJ_DEL( T03R0201_SWBELL_01 )
+
+  _SE_WAIT()
 
   //========================================//
   //アララギ娘とベルを非表示

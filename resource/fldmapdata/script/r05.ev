@@ -17,9 +17,9 @@
   .include  "d34r0101.h"
   .include  "d34r0101_def.h"
 
-  //@author	suginaka_katsunori（チャールズなど、ベルイベント修正）
   //@author fujimura_souichirou（一言メッセージ一部追加、動作モデルの変更）
   //@author Mizuguchi_Mai（ベル）
+  //@author suginaka_katsunori（チャールズなど、ベルイベント修正）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -42,7 +42,7 @@ _EVENT_DATA		ev_r05_stop06_01
 _EVENT_DATA		ev_r05_stop07_01
 _EVENT_DATA		ev_r05_stop08_01
 _EVENT_DATA		ev_r05_stop09_01
-_EVENT_DATA   ev_r05_cameraman_01
+_EVENT_DATA		ev_r05_cameraman_01
 _EVENT_DATA		ev_r05_swleader1_01
 _EVENT_DATA		ev_zone_r05
 _EVENT_DATA		ev_pos_r05_swbell_01
@@ -51,6 +51,11 @@ _EVENT_DATA_END
 //話しかけた方向取得変数
 DEFINE_LOCAL LCW_POSX
 DEFINE_LOCAL LCW_POSZ
+
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL LCW_VERSION
+DEFINE_LOCAL LWK_BADGE
+
 /**************************************************************/
 /*			ゾーンチェンジラベル							  */
 /**************************************************************/
@@ -556,139 +561,74 @@ _RET
 /*	R05		BADRIDER	チャールズストッパーイベント		  */
 /**************************************************************/
 EVENT_START		ev_r05_badrider_01
-{
-//バージョンチェック
-DEFINE_LOCAL LCW_VERSION
-_GET_ROM_VERSION ( LCW_VERSION ) 
-
-
-DEFINE_LOCAL LWK_BADGE
+_TALK_OBJ_START()
 //バッジフラグ取得
 _GET_BADGE_FLAG( LWK_BADGE, BADGE_ID_04 )
 
-//ホワイト２の場合：トリプルバトル
-IF $LCW_VERSION == VERSION_W2 THEN 
+//ボルトバッジを入手していない場合
+IF $LWK_BADGE == 0 THEN
 
-	//ボルトバッジを入手していない場合
-	IF $LWK_BADGE == 0 THEN
-		
-		//トリプルバトル真っ最中
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r05_badrider_00w )
+	_BALLOONWIN_OBJMSG_WB( msg_r05_badrider_00w, msg_r05_badrider_00b, R05_BADRIDER_01, POS_DEFAULT )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 	
-	//ボルトバッジ入手済みの場合
-	ELSE
-		_TALK_OBJ_START()
-		
-		//初回会話の場合
-		IF FLAG_OFF( FE_R05_BADRIDER_TALK ) THEN
-		
-			//トリプルバトルが　どんな　しょうぶか　しりたいか？
-			_BALLOONWIN_TALKOBJ_MSG( msg_r05_badrider_01w )
+	_OBJ_ANIME( R05_BADRIDER_01, anm_dir_r )
+	_OBJ_ANIME_WAIT()
 
-			_YES_NO_WIN( SCWK_ANSWER )	
-		
-			//はい
-			IF $SCWK_ANSWER == SCR_YES THEN
-			
-				//========================================/
-			
-				//初回会話終了
-				_FLAG_SET(FE_R05_BADRIDER_TALK)
-				
-				//========================================/
-				
-				
-				//トリプルバトルの　あらましさ
-				_BALLOONWIN_TALKOBJ_MSG( msg_r05_badrider_03w )
-				
-				_CALL ev_r05_btl_white
-		
-			//いいえ
-			ELSE
-		
-				//まいったぜ！　あいての　きをひくのは
-				_BALLOONWIN_TALKOBJ_MSG( msg_r05_badrider_02w )
-				_LAST_KEYWAIT()
-				_MSGWIN_CLOSE()
-		
-			ENDIF
-	
-		//２回目以降の場合
-		ELSE
-		
-			_CALL ev_r05_btl_white
-		
-		ENDIF
-
-	ENDIF
-
-//ブラック２の場合：ローテーションバトル
+//ボルトバッジ入手済みの場合
 ELSE
-
-	//ボルトバッジを入手していない場合
-	IF $LWK_BADGE == 0 THEN
-		
-		//ローテーションバトル真っ最中
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r05_badrider_00b )
+	_TALK_OBJ_START()
 	
-	//ボルトバッジ入手済みの場合
-	ELSE
-		_TALK_OBJ_START()
-		
-		//初回会話の場合
-		IF FLAG_OFF( FE_R05_BADRIDER_TALK ) THEN
-		
-			//ローテーションバトルが　どんな　しょうぶか　しりたいか？
-			_BALLOONWIN_TALKOBJ_MSG( msg_r05_badrider_01b )
-
-			_YES_NO_WIN( SCWK_ANSWER )	
-		
-			//はい
-			IF $SCWK_ANSWER == SCR_YES THEN
-			
-				//========================================/
-			
-				//初回会話終了
-				_FLAG_SET(FE_R05_BADRIDER_TALK)
-				
-				//========================================/
-				
-				
-				//ローテーションバトルの　あらましさ
-				_BALLOONWIN_TALKOBJ_MSG( msg_r05_badrider_03b )
-				
-				_CALL ev_r05_btl_black
-		
-			//いいえ
-			ELSE
-		
-				//まいったぜ！　あいての　きをひくのは
-				_BALLOONWIN_TALKOBJ_MSG( msg_r05_badrider_02b )
-				_LAST_KEYWAIT()
-				_MSGWIN_CLOSE()
-		
-			ENDIF
+	//初回会話の場合
+	IF FLAG_OFF( FE_R05_BADRIDER_TALK ) THEN
 	
-		//２回目以降の場合
+		//トリプルバトルが　どんな　しょうぶか　しりたいか？
+		_BALLOONWIN_OBJMSG_WB( msg_r05_badrider_01w, msg_r05_badrider_01b, R05_BADRIDER_01, POS_DEFAULT )
+		_YES_NO_WIN( SCWK_ANSWER )	
+	
+		//はい
+		IF $SCWK_ANSWER == SCR_YES THEN
+		
+			//========================================/
+		
+			//初回会話終了
+			_FLAG_SET(FE_R05_BADRIDER_TALK)
+			
+			//========================================/
+
+			//トリプルバトルの　あらましさ
+			_BALLOONWIN_OBJMSG_WB( msg_r05_badrider_03w, msg_r05_badrider_03b, R05_BADRIDER_01, POS_DEFAULT )
+			
+			_CALL ev_r05_btl
+		
+		//いいえ
 		ELSE
 		
-			_CALL ev_r05_btl_black
+			//まいったぜ！　あいての　きをひくのは
+			_BALLOONWIN_OBJMSG_WB( msg_r05_badrider_02w, msg_r05_badrider_02b, R05_BADRIDER_01, POS_DEFAULT )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
 		
 		ENDIF
+	
+	//２回目以降の場合
+	ELSE
+		
+		_CALL ev_r05_btl
 		
 	ENDIF
 
 ENDIF
-}
+
 EVENT_END
 
 /**************************************************************/
 /*CALL：チャールズバトル処理
 /**************************************************************/
-ev_r05_btl_white:
+ev_r05_btl:
 {
 //オレは　こいするおとこ　そのなも　チャールズ
-_BALLOONWIN_TALKOBJ_MSG( msg_r05_badrider_04w )
+_BALLOONWIN_OBJMSG_WB( msg_r05_badrider_04w, msg_r05_badrider_04b, R05_BADRIDER_01, POS_DEFAULT )
 _YES_NO_WIN( SCWK_ANSWER )
 	
 //はい
@@ -701,46 +641,76 @@ IF $SCWK_ANSWER == 0 THEN
 	//戦えるポケモンが３匹未満
 	IF $LCW_POKECOUNT < 3 THEN
 		
-		_BALLOONWIN_OBJMSG(msg_r05_badrider_06w,R05_BADRIDER_01)
+		//もえあがった　きもちに　みずを　さして　すまない
+		_BALLOONWIN_OBJMSG_WB( msg_r05_badrider_06w, msg_r05_badrider_06b, R05_BADRIDER_01, POS_DEFAULT )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		
 	//戦えるポケモンが３匹以上
 	ELSE
-	
-			_BALLOONWIN_OBJMSG(msg_r05_badrider_05w,R05_BADRIDER_01)
+			
+			//いい　こころがけ　だな
+			_BALLOONWIN_OBJMSG_WB( msg_r05_badrider_05w, msg_r05_badrider_05b, R05_BADRIDER_01, POS_DEFAULT )
 			_BALLOONWIN_CLOSE()
 			
+			_CALL ev_badrider_btl_move
+			
+			_GET_ROM_VERSION( LCW_VERSION )
+			
 			//戦闘処理
-			_TRAINER_BTL_SET( TRID_BADRIDER_01_09, 0 )
-		
+			//ホワイト２の場合：トリプルバトル
+			SWITCH $LCW_VERSION
+			CASE VERSION_W2 THEN
+				_TRAINER_BTL_SET( TRID_BADRIDER_01_09, 0 )
+			CASE VERSION_B2 THEN
+				_TRAINER_BTL_SET( TRID_BADRIDER_01_08, 0 )
+			ENDSWITCH
+
 			//結果チェック
 			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			
+				_CAMERA_START()		//カメラ操作開始
+				_CAMERA_PURGE()		//カメラのバインドを解く
+				//カメラ操作
+				_CAMERA_MOVE( 9688,0,970752,22380544,0,28409856,1 )	//一番最後の引数は移動にかかるフレーム数
+				_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+			
 				_TRAINER_WIN()
 			ELSE
 				_TRAINER_LOSE()
 			ENDIF
 			
-			_BALLOONWIN_OBJMSG(msg_r05_badrider_08w,R05_BADRIDER_01)
+			//……ふっ　ざまあねえな
+			_BALLOONWIN_OBJMSG_WB( msg_r05_badrider_08w, msg_r05_badrider_08b, R05_BADRIDER_01, POS_DEFAULT )
 			_BALLOONWIN_CLOSE()
-			
-			//【仮】チャールズ退場演出が仮
 			
 			//退場演出
 			_CALL ev_badrider_move
 			
-			_BALLOONWIN_OBJMSG(msg_r05_badrider_09w,R05_BADRIDER_01)
+			//オレは……　こいする　おとこ
+			_BALLOONWIN_OBJMSG_WB( msg_r05_badrider_09w, msg_r05_badrider_09b, R05_BADRIDER_01, POS_DEFAULT )
 			_BALLOONWIN_CLOSE()
-			
-			//画面暗転
-			_BLACK_OUT()
-			
+
 			//退場演出
 			_CALL ev_badrider_leave
 
-			_DISP_FADE_END_CHECK()
+			_OBJ_ANIME( R05_STOP01_01, anm_stop01_leave )
+			_OBJ_ANIME( R05_STOP02_01, anm_stop02_leave )
+			_OBJ_ANIME( R05_STOP03_01, anm_stop03_leave )
+			_OBJ_ANIME( R05_STOP04_01, anm_stop04_leave )
+			_OBJ_ANIME( R05_STOP05_01, anm_stop05_leave )
+			_OBJ_ANIME( R05_STOP06_01, anm_stop06_leave )
+			_OBJ_ANIME( R05_STOP07_01, anm_stop07_leave )
+			_OBJ_ANIME( R05_STOP08_01, anm_stop08_leave )
+			_TIME_WAIT( 30 )
+			
+			//画面暗転
+			_BLACK_OUT_SLOW()
 
+			_OBJ_ANIME_WAIT()
+			_DISP_FADE_END_CHECK()
+			
 			//ストッパーを消す
 			_OBJ_DEL( R05_BADRIDER_01 )
 			_OBJ_DEL( R05_STOP01_01 )
@@ -752,29 +722,33 @@ IF $SCWK_ANSWER == 0 THEN
 			_OBJ_DEL( R05_STOP07_01 )
 			_OBJ_DEL( R05_STOP08_01 )
 			_OBJ_DEL( R05_STOP09_01 )
-			
-			
+
 			//========================================/
 			
 			//バニシュフラグをセット
 			_FLAG_SET(FV_R05_STOP)
-			
 			
 			//========================================/
 			
 			_TIME_WAIT( 30 )
 			
 			//画面暗転解除
-			_BLACK_IN()
+			_BLACK_IN_SLOW()
+			
+			_CAMERA_RECV_MOVE(20)
+			
 			_DISP_FADE_END_CHECK()
-			
-			
+
+			_CAMERA_WAIT_MOVE()
+			_CAMERA_BIND()		//カメラのバインドを解く
+			_CAMERA_END()
+
 		ENDIF
 	
 //いいえ
 ELSE
-	
-	_BALLOONWIN_OBJMSG(msg_r05_badrider_07w,R05_BADRIDER_01)
+	//オレは　こいする　おとこ　そのなも　チャールズ
+	_BALLOONWIN_OBJMSG_WB( msg_r05_badrider_07w, msg_r05_badrider_07b, R05_BADRIDER_01, POS_DEFAULT )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
@@ -783,138 +757,83 @@ ENDIF
 }
 _RET
 
+ev_badrider_btl_move:
 
-/**************************************************************/
-/*CALL：チャールズバトル処理
-/**************************************************************/
-ev_r05_btl_black:
-{
-//オレは　こいするおとこ　そのなも　チャールズ
-_BALLOONWIN_TALKOBJ_MSG( msg_r05_badrider_04b )
-_YES_NO_WIN( SCWK_ANSWER )
-	
-//はい
-IF $SCWK_ANSWER == 0 THEN
-		
-	//手持ちポケモンカウント
-	DEFINE_LOCAL LCW_POKECOUNT
-	_GET_PARTY_POKE_COUNT( LCW_POKECOUNT , POKECOUNT_MODE_BATTLE_ENABLE )
-		
-	//戦えるポケモンが３匹未満
-	IF $LCW_POKECOUNT < 3 THEN
-		
-		_BALLOONWIN_OBJMSG(msg_r05_badrider_06b,R05_BADRIDER_01)
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-		
-	//戦えるポケモンが３匹以上
-	ELSE
-	
-			_BALLOONWIN_OBJMSG(msg_r05_badrider_05b,R05_BADRIDER_01)
-			_BALLOONWIN_CLOSE()
-			
-			//戦闘処理
-			_TRAINER_BTL_SET( TRID_BADRIDER_01_08, 0 )
-		
-			//結果チェック
-			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-				_TRAINER_WIN()
-			ELSE
-				_TRAINER_LOSE()
-			ENDIF
-			
-			_BALLOONWIN_OBJMSG(msg_r05_badrider_08b,R05_BADRIDER_01)
-			_BALLOONWIN_CLOSE()
-			
-			//【仮】チャールズ退場演出が仮
-			
-			//退場演出
-			_CALL ev_badrider_move
-			
-			_BALLOONWIN_OBJMSG(msg_r05_badrider_09b,R05_BADRIDER_01)
-			_BALLOONWIN_CLOSE()
-			
-			//画面暗転
-			_BLACK_OUT()			
-			
-			//退場演出
-			_CALL ev_badrider_leave
+//カップル移動
+_OBJ_ANIME( R05_STOP01_01, anm_stop01_move )
+_OBJ_ANIME( R05_STOP02_01, anm_walk_d )
+_OBJ_ANIME( R05_STOP03_01, anm_dir_u )
+_OBJ_ANIME( R05_STOP04_01, anm_dir_u )
+_OBJ_ANIME( R05_STOP05_01, anm_dir_r )
+_OBJ_ANIME( R05_STOP06_01, anm_dir_r )
+_OBJ_ANIME( R05_STOP07_01, anm_dir_r )
+_OBJ_ANIME( R05_STOP08_01, anm_dir_r )
+_OBJ_ANIME_WAIT()
 
-			_DISP_FADE_END_CHECK()
+_OBJ_ANIME( R05_STOP01_01, anm_staystep_u )
+_OBJ_ANIME( R05_STOP02_01, anm_staystep_u )
+_OBJ_ANIME( R05_STOP09_01, anm_dir_r )
+_OBJ_ANIME_WAIT()
 
-			//ストッパーを消す
-			_OBJ_DEL( R05_BADRIDER_01 )
-			_OBJ_DEL( R05_STOP01_01 )
-			_OBJ_DEL( R05_STOP02_01 )
-			_OBJ_DEL( R05_STOP03_01 )
-			_OBJ_DEL( R05_STOP04_01 )
-			_OBJ_DEL( R05_STOP05_01 )
-			_OBJ_DEL( R05_STOP06_01 )
-			_OBJ_DEL( R05_STOP07_01 )
-			_OBJ_DEL( R05_STOP08_01 )
-			_OBJ_DEL( R05_STOP09_01 )
-			
-			
-			//========================================/
-			
-			//バニシュフラグをセット
-			_FLAG_SET(FV_R05_STOP)
-			
-			
-			//========================================/
-			
-			_TIME_WAIT( 30 )
-			
-			//画面暗転解除
-			_BLACK_IN()
-			_DISP_FADE_END_CHECK()
-			
-			
-		ENDIF
+_CAMERA_START()		//カメラ操作開始
+_CAMERA_PURGE()		//カメラのバインドを解く
 	
-	//いいえ
-	ELSE
-	
-		_BALLOONWIN_OBJMSG(msg_r05_badrider_07b,R05_BADRIDER_01)
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-	
-	ENDIF
+//カメラ操作
+_CAMERA_MOVE( 9688,0,970752,22380544,0,28409856,20 )	//一番最後の引数は移動にかかるフレーム数
 
-}
+//主人公定位置へ
+_PLAYER_DIR_GET( LWK_DIR )
+SWITCH $LWK_DIR
+CASE DIR_UP,DIR_LEFT,DIR_DOWN THEN
+	_OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 342, 433, FORCE_TYPE_NOT, 8, DIR_LR )
+CASE DIR_RIGHT THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_d )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 342, 433, FORCE_TYPE_NOT, 8, DIR_LR )
+ENDSWITCH
+
+_TIME_WAIT( 8 )
+_OBJ_ANIME( R05_BADRIDER_01, anm_dir_r )
+_OBJ_ANIME_WAIT()
+
+_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+_OBJ_ANIME_WAIT()
+
+_CAMERA_WAIT_MOVE()
+
 _RET
 
 ev_badrider_move:
-{
-DEFINE_LOCAL	LWK_DIR
 
-_PLAYER_DIR_GET( LWK_DIR )
-SWITCH $LWK_DIR
-CASE DIR_UP,DIR_LEFT,DIR_DOWN THEN
-	_OBJ_ANIME( R05_BADRIDER_01, anm_badrider_move )
-CASE DIR_RIGHT THEN
-	_OBJ_ANIME( R05_BADRIDER_01, anm_badrider_move_r )
-ENDSWITCH
+_OBJ_ANIME_AUTO( R05_BADRIDER_01, 338, 433, FORCE_TYPE_NOT, 6, DIR_LR )
+_TIME_WAIT( 8 )
+_OBJ_ANIME( R05_STOP05_01, anm_dir_d )
+_OBJ_ANIME( R05_STOP06_01, anm_walk_u )
+_OBJ_ANIME( R05_STOP07_01, anm_walk_d )
+_OBJ_ANIME( R05_STOP08_01, anm_dir_u )
+_OBJ_ANIME_WAIT()
+_OBJ_ANIME( R05_STOP06_01, anm_dir_d )
+_OBJ_ANIME( R05_STOP07_01, anm_dir_u )
+_OBJ_ANIME( R05_STOP09_01, anm_dir_u )
 _OBJ_ANIME_WAIT()
 
-}
+//カメラをチャールズに合わせる
+_CAMERA_MOVE( 9688,0,970752,22183936,0,28409856,40 )
+_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
 _RET
 
 ev_badrider_leave:
-{
-DEFINE_LOCAL	LWK_DIR
 
-_PLAYER_DIR_GET( LWK_DIR )
-SWITCH $LWK_DIR
-CASE DIR_UP,DIR_LEFT,DIR_DOWN THEN
-	_OBJ_ANIME( R05_BADRIDER_01, anm_badrider_leave )
-CASE DIR_RIGHT THEN
-	_OBJ_ANIME( R05_BADRIDER_01, anm_badrider_leave )
-ENDSWITCH
+_OBJ_ANIME( R05_BADRIDER_01, anm_badrider_leave )
+_TIME_WAIT( 18 )
+_OBJ_ANIME( R05_STOP05_01, anm_dir_l )
+_OBJ_ANIME( R05_STOP06_01, anm_dir_l )
+_OBJ_ANIME( R05_STOP07_01, anm_dir_l )
+_OBJ_ANIME( R05_STOP08_01, anm_dir_l )
+_OBJ_ANIME( R05_STOP09_01, anm_dir_l )
 _OBJ_ANIME_WAIT()
 
-}
 _RET
 
 //--------------------------------------------------------------------
@@ -934,6 +853,10 @@ _ANIME_LABEL	anm_staystep_l
 
 _ANIME_LABEL	anm_staystep_r
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l_3
+	_ANIME_DATA	AC_STAY_WALK_L_4F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -998,7 +921,9 @@ _ANIME_LABEL	anm_common_onpu
 //	◆チャールズ：退場
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_badrider_leave
-	_ANIME_DATA	AC_WALK_L_8F,5
+	_ANIME_DATA	AC_WALK_L_16F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_L_2F,8
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_badrider_leave_r
@@ -1014,33 +939,93 @@ _ANIME_LABEL	anm_badrider_move_r
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_stop01_move
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop01_leave
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop02_leave
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop03_leave
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop04_leave
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop05_leave
+	_ANIME_DATA	AC_WALK_R_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop06_leave
+	_ANIME_DATA	AC_WALK_L_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop07_leave
+	_ANIME_DATA	AC_WALK_L_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop08_leave
+	_ANIME_DATA	AC_WALK_L_8F,6
+	_ANIME_DATA	ACMD_END,0
+	
+
 /**************************************************************/
-/*	R05	STOP01												  */
+/*	R05	STOP01									  */
 /**************************************************************/
 EVENT_START		ev_r05_stop01_01
-{
-DEFINE_LOCAL LWK_BADGE
+
 //バッジフラグ取得
 _GET_BADGE_FLAG( LWK_BADGE, BADGE_ID_04 )
 
 //ボルトバッジを入手していない場合
 IF $LWK_BADGE == 0 THEN
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r05_stop01_01 )
+	
+	_TALK_START_TURN_NOT()
+	
+	_OBJ_ANIME( R05_STOP01_01, anm_staystep_l_3 )
+	_OBJ_ANIME_WAIT()
+	
+	//こいする　おとこに　まけるのか
+	_BALLOONWIN_TALKOBJ_MSG_POS( msg_r05_stop01_01, POS_DEFAULT )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
 ELSE
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r05_stop01_02 )
+
+	_TALK_OBJ_START()
+	
+	_OBJ_ANIME( R05_STOP01_01, anm_common_gyoe )
+	_OBJ_ANIME_WAIT()
+	
+	//ジムバッジが　４こ……
+	_BALLOONWIN_TALKOBJ_MSG_POS( msg_r05_stop01_02, POS_DEFAULT )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
 ENDIF
-}
+
 EVENT_END
 
 /**************************************************************/
-/*	R05	STOP02												  */
+/*	R05	STOP02									  */
 /**************************************************************/
 EVENT_START		ev_r05_stop02_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r05_stop02_01 )
 EVENT_END
 
 /**************************************************************/
-/*	R05	STOP03												  */
+/*	R05	STOP03									  */
 /**************************************************************/
 EVENT_START		ev_r05_stop03_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r05_stop03_01 )
