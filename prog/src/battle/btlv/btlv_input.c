@@ -521,6 +521,8 @@ enum{
   AUDIENCE_SEAT_PALSIZE = 0x20*15, // 15パレット分(5色単位)
   //
   AUDIENCE_TIMER   = 4,       // パターン切り替え時間
+  //
+  AUDIENCE_ANI_MAX = 3,       // 3種類のアニメパターンがある
 };
 
 // パレットチェンジ
@@ -531,7 +533,7 @@ enum{
 
 // 観客のパレットチェンジ(test)
 #define __AUDIENCE_PALCHG__
-#undef  __AUDIENCE_PALCHG__
+//#undef  __AUDIENCE_PALCHG__
 
 //============================================================================================
 /**
@@ -639,6 +641,8 @@ struct _BTLV_INPUT_WORK
   u16                   *audience_seat_pal;		// 座席のパレット
   s32                   audience_palmode;       // パレットの段階
   s32                   audience_timer;         // タイマ
+  s32                   audience_aninum;        // アニメの番号(0-2)
+  s32                   audience_loopnum;       // 繰り返し数(1-4)
   BOOL                  audience_palflag;       // パレットチェンジの有無
 
   //フォント
@@ -906,6 +910,10 @@ static  void  btlv_init_palchg( BTLV_INPUT_WORK *biw );
 static  void  btlv_set_palchg(  BTLV_INPUT_WORK *biw, const s32 num );
 static  void  btlv_main_palchg( BTLV_INPUT_WORK *biw );
 static  void  btlv_set_mode( BTLV_INPUT_WORK *biw, const s32 mode );
+static  void  btlv_set_aninum( BTLV_INPUT_WORK *biw, const s32 num );
+static   s32  btlv_set_aninum_rand( BTLV_INPUT_WORK *biw, const s32 num );
+
+static   u32  btlv_get_random( BTLV_INPUT_WORK *biw, const s32 num );
 
 static  void  SePlayOpen( BTLV_INPUT_WORK* biw );
 static  void  SePlaySelect( BTLV_INPUT_WORK* biw );
@@ -1053,6 +1061,8 @@ static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TY
   biw->audience_seat_pal = 0;
   biw->audience_palmode  = 0;
   biw->audience_timer    = 0;
+  biw->audience_aninum   = 0;
+  biw->audience_loopnum  = 0;
   biw->audience_palflag  = FALSE;
   //
   BTLV_INPUT_InitBG( biw );
@@ -3089,12 +3099,43 @@ static const GFL_CLWK_DATA audience_param[] =
   },
 };
 
-// 観客のパターン
-static const s16 audience_ptn[] = {
+//-----------------
+// 観客の点滅処理
+//-----------------
+// アニメ0( 1->2->1->0->.. )
+static const s16 audience_00_ptn[] = {
   1,
   2,
   1,
   0,
+};
+
+// アニメ1( 0->0->0->0->.. )
+static const s16 audience_01_ptn[] = {
+  0,
+  0,
+  0,
+  0,
+};
+
+// アニメ2( 1->0->.. )
+static const s16 audience_02_ptn[] = {
+  1,
+  0,
+};
+
+// テーブルまとめ
+static const s16 *audience_ptn_tbl[] = {
+  audience_00_ptn,      // アニメ0
+  audience_01_ptn,      // アニメ1
+  audience_02_ptn,      // アニメ2
+};
+
+// テーブルの要素数、繰り返し数
+static const s16 audience_ptn_num_tbl[] = {
+  4,4,                  // アニメ0
+  4,4,                  // アニメ1
+  2,2,                  // アニメ2
 };
 
 //--------------------------------------------------------------
@@ -3349,8 +3390,8 @@ static void btlv_init_palchg( BTLV_INPUT_WORK *biw )
     GFL_HEAP_FreeMemory( buf );
   }
   //
-//  biw->audience_palflag = TRUE;
-  biw->audience_palflag = FALSE;
+  biw->audience_palflag = TRUE;
+//  biw->audience_palflag = FALSE;
 }
 
 //----------------------------------------------------------------------------------
@@ -3385,11 +3426,14 @@ static void btlv_set_palchg( BTLV_INPUT_WORK *biw, const s32 num )
 //----------------------------------------------------------------------------------
 static void btlv_main_palchg( BTLV_INPUT_WORK *biw )
 {
+  const s16 *adr;
+  s32 num;
+  
   // 再生中のみ(念のため)
   if(biw->pokewood != BTL_POKEWOOD_SHOW){
     return;
   }
-#if 1	// debug
+#if 0	// debug
   // Lボタンを押しながら..
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
     // 停止
@@ -3402,7 +3446,6 @@ static void btlv_main_palchg( BTLV_INPUT_WORK *biw )
     }
   }
 #endif
-
   // フラグチェック
   if(biw->audience_palflag == FALSE){
     return;
@@ -3414,23 +3457,25 @@ static void btlv_main_palchg( BTLV_INPUT_WORK *biw )
     biw->audience_timer = 0;
     //
     biw->audience_palmode++;
-    if(biw->audience_palmode > 3){
+    if(biw->audience_palmode >= audience_ptn_num_tbl[2*biw->audience_aninum]){
       biw->audience_palmode = 0;
+      //
+      // 繰り返し回数の処理
+      biw->audience_loopnum--;
+      if(biw->audience_loopnum <= 0){
+        // 新アニメ番号(biw->audience_aninum)のセット
+        num = btlv_set_aninum_rand( biw, biw->audience_aninum );
+        btlv_set_aninum( biw, num );
+        // それぞれの乱数(繰り返し数)が求まるはず
+        biw->audience_loopnum = 1+btlv_get_random( biw, audience_ptn_num_tbl[2*biw->audience_aninum+1] );
+        //
+//        OS_Printf("aninum, loopnum %d,%d\n", biw->audience_aninum, biw->audience_loopnum);
+      }
     }
     // 切り替え
-    btlv_set_palchg( biw, audience_ptn[biw->audience_palmode] );
+    adr = audience_ptn_tbl[biw->audience_aninum];
+    btlv_set_palchg( biw, adr[biw->audience_palmode] );
   }
-  
-#if 0	// debug
-  // パレットチェンジ
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
-    biw->audience_palmode++;
-    if(biw->audience_palmode > 2){
-      biw->audience_palmode = 0;
-    }
-    btlv_set_palchg( biw, biw->audience_palmode );
-  }
-#endif
 }
 
 //----------------------------------------------------------------------------------
@@ -3454,6 +3499,71 @@ static void btlv_set_mode( BTLV_INPUT_WORK *biw, const s32 mode )
     // 初期化
     btlv_set_palchg( biw, 0 );
   }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	観客用アニメ種類設定
+ *
+ * @param   BTLV_INPUT_WORK		*biw
+ * @param   const s32			(番号(0-2))
+ */
+//----------------------------------------------------------------------------------
+static void btlv_set_aninum( BTLV_INPUT_WORK *biw, const s32 num )
+{
+  biw->audience_aninum = num;
+  biw->audience_timer   = 0;
+  biw->audience_palmode = 0;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	観客用アニメ番号の設定
+ *          (以前のアニメ番号とは違うものを使用するための処理)
+ *
+ * @param   BTLV_INPUT_WORK		*biw
+ * @param   const s32			(旧番号(0-2))
+ */
+//----------------------------------------------------------------------------------
+static s32 btlv_set_aninum_rand( BTLV_INPUT_WORK *biw, const s32 num )
+{
+  s32 i;
+  s32 flg=0;
+  s32 rnum;
+  
+  // 10回程度調べる
+  for(i=0;i<10;i++){
+    rnum = btlv_get_random( biw, AUDIENCE_ANI_MAX );
+    if(rnum != num){
+      flg = 1;
+      break;
+    }
+  }
+  // 重複しないものが見つかるはずだが念のため
+  if(flg == 0){
+    rnum = num+1;
+    if(rnum > (AUDIENCE_ANI_MAX-1)){
+      rnum = 0;
+    }
+  }
+//  OS_Printf("rnum %d\n", rnum );
+  return( rnum );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	ランダムの取得(念のためまとめておく)
+ *
+ * @param   BTLV_INPUT_WORK		*biw
+ * @param   const s32			(num-1)までの乱数
+ */
+//----------------------------------------------------------------------------------
+static u32 btlv_get_random( BTLV_INPUT_WORK *biw, const s32 num )
+{
+  u32 rnum;
+  //
+  rnum = GFUser_GetPublicRand( num );
+  return( rnum );
 }
 
 //=============================================================================================
