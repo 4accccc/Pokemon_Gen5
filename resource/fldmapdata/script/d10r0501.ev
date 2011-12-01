@@ -391,6 +391,9 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   //========================================//
   // ストーン状態のゼクロム(レシラム)を削除
   _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+  //キュレム非表示
+  _FLAG_SET( FV_D10R0401_POKE_01 )
+  _OBJ_DEL( D10R0501_POKE1_01 )
   // カメラ戻し
 	_CAMERA_BIND()	//カメラバインド
 	_CAMERA_END()		//カメラ操作終了
@@ -409,9 +412,6 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   //キュラム・キュロム表示
   _FLAG_RESET( FV_D10R0401_POKE_03 )
   _OBJ_ADD( D10R0501_POKE2_01 )
-  //キュレム非表示
-  _FLAG_SET( FV_D10R0401_POKE_01 )
-  _OBJ_DEL( D10R0501_POKE1_01 )
   //ゲーチス移動
   _OBJ_POS_CHANGE( D10R0501_SWSAGE1_01, 17, 0, 16, DIR_DOWN)
   //主人公移動
