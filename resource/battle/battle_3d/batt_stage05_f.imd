@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="toyama" host="W00153" date="2011-11-26T15:46:30" source="batt_field05_all.mb"/>
+	<create user="toyama" host="W00153" date="2011-11-29T18:32:34" source="batt_field05_all.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="toyama" host="W00153" date="2011-11-26T15:46:30" source="batt_field05_all.mb"/>
+<original_create user="toyama" host="W00153" date="2011-11-29T18:32:34" source="batt_field05_all.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -70,28 +70,20 @@
 	</tex_image>
 	<tex_image index="2" name="batt_stage05"
 		width="16" height="16" original_width="16" original_height="16"
-		format="palette256"
+		format="palette16"
 		color0_mode="color"
 		palette_name="batt_stage05_pl"
 		path="C:/home/swan_data2d/battle_3d/mayadata/tex/batt_stage05.tga"
 	>
-		<bitmap size="128">
-			2121 2121 2121 2121 2121 2121 2121 2121
-			2020 2020 2020 2020 2020 2020 2020 2020
-			2020 2020 2020 2020 2020 2020 2020 2020
-			201f 2020 201f 1f1f 1e1e 1f1f 1f1f 1f1f
-			1e1e 1e1e 1e1e 1e1e 1e1e 1e1e 1e1e 1e1e
-			1c1c 1c1c 1d1d 1e1d 1e1e 1d1e 1d1d 1d1d
-			1b1b 1b1b 1c1b 1c1c 1b1b 1b1c 1a1a 1b1b
-			1818 1818 1818 1819 1717 1818 1818 1818
-			1616 1616 1614 1616 1516 1414 1616 1516
-			1414 1314 1212 1414 1414 1313 1414 1414
-			1212 1112 1211 1212 1212 1212 1212 1212
-			0e0d 100e 100f 1210 1212 1212 1010 1111
-			0807 0b0b 0b0b 0e0c 0e0e 0d0e 0b0c 0a0b
-			0706 0808 0808 0a08 090a 0807 0707 0506
-			0402 0404 0404 0304 0202 0403 0302 0202
-			0101 0101 0001 0000 0101 0101 0101 0101
+		<bitmap size="64">
+			0000 0000 0000 0000 1111 1111 1111 1111
+			1111 1111 1111 1111 1112 2212 2233 2222
+			3333 3333 3333 3333 5555 3444 4333 4444
+			6666 5556 6566 6666 7777 7777 7777 7777
+			8888 8889 9988 8888 9999 99aa 9999 9999
+			aaaa aaaa aaaa aaaa bbbb abbb aaaa aabb
+			ccdd bccc bbbb cccc dddd cddd dddc eddd
+			eeee eeee eeee eeee ffff ffff ffff ffff
 		</bitmap>
 	</tex_image>
 	<tex_image index="3" name="batt_stone05"
@@ -101,10 +93,10 @@
 		path="C:/home/swan_data2d/battle_3d/mayadata/tex/batt_stone05.tga"
 	>
 		<bitmap size="32">
-			0000 0000 0000 0000 0000 0600 0a0c 0000
-			0100 b651 93d7 020b 0600 d792 92d7 0330
-			0400 9492 93b5 0851 0200 2e2d 2f30 082e
-			0000 0705 0909 0208 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0300 0506 0000
+			0000 ae4a 8ccf 0106 0300 cf8b 8bcf 0229
+			0200 8d8b 8cae 044a 0100 2727 2829 0427
+			0000 0403 0505 0104 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="4" name="batt_stoneb05"
@@ -115,9 +107,9 @@
 	>
 		<bitmap size="32">
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0100 0002 6800 0072
-			0368 f4f1 f368 68f3 44f6 f6f4 f5cf cff3
-			e4e7 f0ee eef5 ebed ede6 eae5 e6e9 eced
+			0000 0000 0000 0000 0100 0002 6700 006b
+			0367 edeb ec67 67ec 44ef efed eeca caec
+			e4e6 eae9 e9ee e8e8 e8e5 e6e5 e5e6 e8e8
 		</bitmap>
 	</tex_image>
 </tex_image_array>
@@ -130,22 +122,17 @@
 		1d29 212a 214b 256c 296d 298d 2d8e 2dae
 		2dcf 31f0 3611 3a11 3a31 3a32 7fff 7fff
 	</tex_palette>
-	<tex_palette index="2" name="batt_stage05_pl" color_size="40">
-		192c 192d 1d4e 1d4f 1d6f 216f 2170 2190
-		2191 2591 25b1 25b2 25d2 25d3 29d3 29f3
-		29f4 2df4 2e15 2e36 3236 3237 3257 3658
-		3678 3679 3a79 3a99 3a9a 3eba 3ebb 42db
-		42dc 42fc 7fff 7fff 7fff 7fff 7fff 7fff
+	<tex_palette index="2" name="batt_stage05_pl" color_size="16">
+		42fc 42dc 42db 3ebb 3eba 3a9a 3a99 3678
+		3257 3236 2e15 29d3 25b2 2191 1d6f 192d
 	</tex_palette>
-	<tex_palette index="3" name="batt_stone05_pl" color_size="24">
-		0000 0001 0021 0422 0442 0443 0843 0864
-		0865 0885 0c85 0ca7 10c7 150a 190b 192b
-		192c 216e 29f3 2df3 2e15 2e35 3256 3678
+	<tex_palette index="3" name="batt_stone05_pl" color_size="16">
+		0000 0021 0422 0843 0865 0885 0ca7 190b
+		192b 192c 216e 29f3 2df3 2e15 2e56 3678
 	</tex_palette>
-	<tex_palette index="4" name="batt_stoneb05_pl" color_size="24">
-		0000 0422 0843 18e9 18ea 190d 192d 1d0c
-		1d2b 1d2c 1d2d 1d4d 1d4e 214d 256e 256f
-		258f 298f 2990 2db1 2dd1 31d2 31f3 7fff
+	<tex_palette index="4" name="batt_stoneb05_pl" color_size="16">
+		0000 0422 0843 18e9 18ea 192d 1d0c 1d2b
+		214d 256e 256f 2990 2db1 2dd1 31d2 31f3
 	</tex_palette>
 </tex_palette_array>
 

@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="toyama" host="W00153" date="2011-10-28T14:38:37" source="pkwd_field05c_all.mb"/>
+	<create user="toyama" host="W00153" date="2011-12-01T12:46:35" source="pkwd_field05c_all.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="toyama" host="W00153" date="2011-10-28T14:38:37" source="pkwd_field05c_all.mb"/>
+<original_create user="toyama" host="W00153" date="2011-12-01T12:46:35" source="pkwd_field05c_all.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -21,7 +21,7 @@
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="12 11"
-	compress_material="on" material_size="14 13"
+	compress_material="on" material_size="14 14"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
@@ -29,8 +29,34 @@
 
 <box_test pos_scale="5" xyz="-4.489258 -0.036865 -2.364258" whd="7.236084 2.500000 4.576416"/>
 
-<tex_image_array size="12">
-	<tex_image index="0" name="sands_grass"
+<tex_image_array size="13">
+	<tex_image index="0" name="efect_white"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette4"
+		color0_mode="color"
+		palette_name="efect_white_pl"
+		path="C:/home/swan_data2d/pokewood/tex/efect/efect_white.tga"
+	>
+		<bitmap size="128">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="sands_grass"
 		width="32" height="32" original_width="32" original_height="32"
 		format="a3i5"
 		palette_name="sands_grass_pl"
@@ -103,7 +129,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="1" name="sands_land"
+	<tex_image index="2" name="sands_land"
 		width="32" height="32" original_width="32" original_height="32"
 		format="a3i5"
 		palette_name="sands_land_pl"
@@ -176,7 +202,7 @@
 			faf9 faf9 fafa fafa fafa fafa fafa fafa
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="sands_light"
+	<tex_image index="3" name="sands_light"
 		width="32" height="32" original_width="32" original_height="32"
 		format="a5i3"
 		palette_name="sands_light_pl"
@@ -249,7 +275,7 @@
 			1010 0808 0808 0008 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="3" name="sands_moons"
+	<tex_image index="4" name="sands_moons"
 		width="32" height="32" original_width="32" original_height="32"
 		format="a5i3"
 		palette_name="sands_moons_pl"
@@ -322,7 +348,7 @@
 			7878 6870 4850 3838 1028 0808 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="sands_reef"
+	<tex_image index="5" name="sands_reef"
 		width="32" height="32" original_width="32" original_height="32"
 		format="a3i5"
 		palette_name="sands_reef_pl"
@@ -395,7 +421,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="5" name="sands_sand"
+	<tex_image index="6" name="sands_sand"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -533,7 +559,7 @@
 			4444 3444 4332 4444 4444 4444 4444 4444
 		</bitmap>
 	</tex_image>
-	<tex_image index="6" name="sands_sea"
+	<tex_image index="7" name="sands_sea"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -575,7 +601,7 @@
 			0000 1000 6642 0124 0000 4631 1112 1484
 		</bitmap>
 	</tex_image>
-	<tex_image index="7" name="sands_shadow"
+	<tex_image index="8" name="sands_shadow"
 		width="64" height="64" original_width="64" original_height="64"
 		format="a5i3"
 		palette_name="sands_shadow_pl"
@@ -840,7 +866,7 @@
 			5048 5850 5858 5860 0018 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="8" name="sands_sun"
+	<tex_image index="9" name="sands_sun"
 		width="32" height="32" original_width="32" original_height="32"
 		format="a5i3"
 		palette_name="sands_sun_pl"
@@ -913,7 +939,7 @@
 			1010 0810 0808 0008 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="9" name="sands_tree"
+	<tex_image index="10" name="sands_tree"
 		width="16" height="16" original_width="16" original_height="16"
 		format="a3i5"
 		palette_name="sands_tree_pl"
@@ -938,7 +964,7 @@
 			fafa edef fafa edef faef fafa faef edef
 		</bitmap>
 	</tex_image>
-	<tex_image index="10" name="sands_tree2"
+	<tex_image index="11" name="sands_tree2"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette256"
 		color0_mode="transparency"
@@ -1012,7 +1038,7 @@
 			090c 0404 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="11" name="sands_wave"
+	<tex_image index="12" name="sands_wave"
 		width="64" height="64" original_width="64" original_height="64"
 		format="a3i5"
 		palette_name="sands_wave_pl"
@@ -1279,55 +1305,58 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="12">
-	<tex_palette index="0" name="sands_grass_pl" color_size="24">
+<tex_palette_array size="13">
+	<tex_palette index="0" name="efect_white_pl" color_size="4">
+		7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="1" name="sands_grass_pl" color_size="24">
 		0000 0020 0420 0421 0440 0442 0861 0862
 		0c81 0c84 10c2 14e2 14e5 1d24 2184 25a5
 		29e5 2de8 2e06 3226 3a67 3e87 7fff 7fff
 	</tex_palette>
-	<tex_palette index="1" name="sands_land_pl" color_size="32">
+	<tex_palette index="2" name="sands_land_pl" color_size="32">
 		0000 0020 0041 0441 08a2 0ce4 1566 1e09
 		268b 26ab 2a6b 2a8b 2aab 2e6b 324b 364b
 		364c 364d 3a0c 3a2c 3e2d 3e2e 3e4f 4251
 		4673 4ab5 4ef7 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="2" name="sands_light_pl" color_size="8">
+	<tex_palette index="3" name="sands_light_pl" color_size="8">
 		4bbf 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="3" name="sands_moons_pl" color_size="8">
+	<tex_palette index="4" name="sands_moons_pl" color_size="8">
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="4" name="sands_reef_pl" color_size="24">
+	<tex_palette index="5" name="sands_reef_pl" color_size="24">
 		0000 0420 0840 0861 0c81 14c1 1902 2122
 		2163 2563 25a4 2983 2da3 2dc3 2dc4 2dc5
 		2e04 3206 3225 3645 3646 3a67 3e87 3e88
 	</tex_palette>
-	<tex_palette index="5" name="sands_sand_pl" color_size="8">
+	<tex_palette index="6" name="sands_sand_pl" color_size="8">
 		571b 5b3c 5f5d 635d 637d 637e 677e 679e
 	</tex_palette>
-	<tex_palette index="6" name="sands_sea_pl" color_size="16">
+	<tex_palette index="7" name="sands_sea_pl" color_size="16">
 		6686 66a6 6aa7 6ac7 6ee8 6f09 732a 734b
 		776d 778f 7bb2 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="7" name="sands_shadow_pl" color_size="8">
+	<tex_palette index="8" name="sands_shadow_pl" color_size="8">
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="8" name="sands_sun_pl" color_size="8">
+	<tex_palette index="9" name="sands_sun_pl" color_size="8">
 		4bbf 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="9" name="sands_tree2_pl" color_size="32">
+	<tex_palette index="10" name="sands_tree2_pl" color_size="32">
 		0000 1d0a 1d0b 1d2b 212b 214c 214d 254c
 		254d 256d 256e 296e 298e 298f 29af 2daf
 		2db0 2dd0 2dd1 31d1 31f1 31f2 3212 3613
 		3633 3a34 3a54 3a55 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="10" name="sands_tree_pl" color_size="32">
+	<tex_palette index="11" name="sands_tree_pl" color_size="32">
 		14a5 14c5 18c5 18e5 1d05 2126 2567 25ea
 		2a0b 2da7 2dc8 3609 362a 362e 3a48 3a50
 		3e0a 3e2d 3e69 422b 424b 462b 464c 466b
 		468a 468b 4693 46aa 46ca 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="11" name="sands_wave_pl" color_size="32">
+	<tex_palette index="12" name="sands_wave_pl" color_size="32">
 		0000 1084 2508 358b 460f 5292 62f5 6646
 		6665 6666 6684 66a3 6ac2 6ac3 6ae2 6b03
 		6b57 6f25 6f28 736b 736c 736e 7392 7398
@@ -1335,27 +1364,8 @@
 	</tex_palette>
 </tex_palette_array>
 
-<material_array size="13">
-	<material index="0" name="lm5"
-		light0="off" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="0"
-		fog_flag="off"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="12 12 12"
-		ambient="31 31 31"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="-1" tex_palette_idx="-1"
-	/>
-	<material index="1" name="sands_grass_1"
+<material_array size="14">
+	<material index="0" name="efect_white_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1379,7 +1389,26 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="sands_land_1"
+	<material index="1" name="lm9"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="12 12 12"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="-1" tex_palette_idx="-1"
+	/>
+	<material index="2" name="sands_grass_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1403,13 +1432,13 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="sands_light_1"
+	<material index="3" name="sands_land_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="24"
+		polygon_id="0"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -1427,13 +1456,13 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="4" name="sands_moons_1"
+	<material index="4" name="sands_light_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="24"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -1451,7 +1480,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="5" name="sands_reef_1"
+	<material index="5" name="sands_moons_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1475,7 +1504,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="6" name="sands_sand_1"
+	<material index="6" name="sands_reef_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1499,7 +1528,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="7" name="sands_sea_1"
+	<material index="7" name="sands_sand_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1523,7 +1552,31 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="8" name="sands_shadow_2"
+	<material index="8" name="sands_sea_1"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="7" tex_palette_idx="7"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="9" name="sands_shadow_2"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="14"
@@ -1540,14 +1593,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="7" tex_palette_idx="7"
+		tex_image_idx="8" tex_palette_idx="8"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="9" name="sands_sun_1"
+	<material index="10" name="sands_sun_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1564,14 +1617,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="8" tex_palette_idx="8"
+		tex_image_idx="9" tex_palette_idx="9"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="10" name="sands_tree2_1"
+	<material index="11" name="sands_tree2_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1588,14 +1641,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="10" tex_palette_idx="9"
+		tex_image_idx="11" tex_palette_idx="10"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="11" name="sands_tree_1"
+	<material index="12" name="sands_tree_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1612,14 +1665,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="9" tex_palette_idx="10"
+		tex_image_idx="10" tex_palette_idx="11"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="12" name="sands_wave_1"
+	<material index="13" name="sands_wave_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1636,7 +1689,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="11" tex_palette_idx="11"
+		tex_image_idx="12" tex_palette_idx="12"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1752,124 +1805,180 @@
 		volume_max="5.354248 4.752441 0.030518"
 		volume_r="7.165283"
 		mtx_prim_size="1"
-		nrm_flag="off" clr_flag="on" tex_flag="off"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
 			<primitive_array size="2">
 				<primitive index="0" type="quad_strip" vertex_size="28">
 					<mtx idx="0"/>
+					<tex st="54.437500 31.875000"/>
 					<clr rgb="30 6 1"/>
 					<pos_xyz xyz="5.354248 0.000000 -0.294678"/>
+					<tex st="54.437500 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xy xy="5.354248 0.929443"/>
+					<tex st="48.375000 31.875000"/>
 					<clr rgb="30 6 1"/>
 					<pos_xyz xyz="5.186035 0.000000 -1.331543"/>
+					<tex st="48.375000 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xy xy="5.186035 0.929443"/>
+					<tex st="42.375000 31.875000"/>
 					<clr rgb="30 6 1"/>
 					<pos_xyz xyz="4.691895 0.000000 -2.579346"/>
+					<tex st="42.375000 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xy xy="4.691895 0.929443"/>
+					<tex st="36.312500 31.875000"/>
 					<clr rgb="30 6 1"/>
 					<pos_xyz xyz="3.903076 0.000000 -3.665283"/>
+					<tex st="36.312500 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xy xy="3.903076 0.929443"/>
+					<tex st="30.250000 31.875000"/>
 					<clr rgb="30 6 1"/>
 					<pos_xyz xyz="2.868896 0.000000 -4.520752"/>
+					<tex st="30.250000 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xy xy="2.868896 0.929443"/>
+					<tex st="24.250000 31.875000"/>
 					<clr rgb="30 6 1"/>
 					<pos_xyz xyz="1.654541 0.000000 -5.092285"/>
+					<tex st="24.250000 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xy xy="1.654541 0.929443"/>
+					<tex st="18.187500 31.875000"/>
 					<clr rgb="30 6 1"/>
 					<pos_xyz xyz="0.336182 0.000000 -5.343750"/>
+					<tex st="18.187500 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xy xy="0.336182 0.929443"/>
+					<tex st="12.187500 31.875000"/>
 					<clr rgb="30 6 1"/>
 					<pos_xyz xyz="-1.003418 0.000000 -5.259521"/>
+					<tex st="12.187500 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xy xy="-1.003418 0.929443"/>
+					<tex st="6.125000 31.875000"/>
 					<clr rgb="30 6 1"/>
 					<pos_xyz xyz="-2.279785 0.000000 -4.844727"/>
+					<tex st="6.125000 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xy xy="-2.279785 0.929443"/>
+					<tex st="0.062500 31.875000"/>
 					<clr rgb="30 6 1"/>
 					<pos_xyz xyz="-3.413086 0.000000 -4.125488"/>
+					<tex st="0.062500 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xy xy="-3.413086 0.929443"/>
+					<tex st="-5.937500 31.875000"/>
 					<clr rgb="30 6 1"/>
 					<pos_xyz xyz="-4.331787 0.000000 -3.147217"/>
+					<tex st="-5.937500 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xy xy="-4.331787 0.929443"/>
+					<tex st="-12.000000 31.875000"/>
 					<clr rgb="30 6 1"/>
 					<pos_xyz xyz="-4.978271 0.000000 -1.970947"/>
+					<tex st="-12.000000 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xy xy="-4.978271 0.929443"/>
+					<tex st="-18.000000 31.875000"/>
 					<clr rgb="30 6 1"/>
 					<pos_xyz xyz="-5.312012 0.000000 -0.671143"/>
+					<tex st="-18.000000 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xy xy="-5.312012 0.929443"/>
+					<tex st="-24.062500 31.875000"/>
 					<clr rgb="30 6 1"/>
 					<pos_yz yz="0.000000 0.030518"/>
+					<tex st="-24.062500 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xy xy="-5.312012 0.929443"/>
 				</primitive>
 				<primitive index="1" type="quad_strip" vertex_size="28">
+					<tex st="54.437500 25.500000"/>
 					<pos_xz xz="5.354248 -0.294678"/>
+					<tex st="54.437500 2.312500"/>
 					<clr rgb="3 1 13"/>
 					<pos_xy xy="5.354248 4.752441"/>
+					<tex st="48.375000 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xyz xyz="5.186035 0.929443 -1.331543"/>
+					<tex st="48.375000 2.312500"/>
 					<clr rgb="3 1 13"/>
 					<pos_xy xy="5.186035 4.752441"/>
+					<tex st="42.375000 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xyz xyz="4.691895 0.929443 -2.579346"/>
+					<tex st="42.375000 2.312500"/>
 					<clr rgb="3 1 13"/>
 					<pos_xy xy="4.691895 4.752441"/>
+					<tex st="36.312500 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xyz xyz="3.903076 0.929443 -3.665283"/>
+					<tex st="36.312500 2.312500"/>
 					<clr rgb="3 1 13"/>
 					<pos_xy xy="3.903076 4.752441"/>
+					<tex st="30.250000 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xyz xyz="2.868896 0.929443 -4.520752"/>
+					<tex st="30.250000 2.312500"/>
 					<clr rgb="3 1 13"/>
 					<pos_xy xy="2.868896 4.752441"/>
+					<tex st="24.250000 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xyz xyz="1.654541 0.929443 -5.092285"/>
+					<tex st="24.250000 2.312500"/>
 					<clr rgb="3 1 13"/>
 					<pos_xy xy="1.654541 4.752441"/>
+					<tex st="18.187500 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xyz xyz="0.336182 0.929443 -5.343750"/>
+					<tex st="18.187500 2.312500"/>
 					<clr rgb="3 1 13"/>
 					<pos_xy xy="0.336182 4.752441"/>
+					<tex st="12.187500 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xyz xyz="-1.003418 0.929443 -5.259521"/>
+					<tex st="12.187500 2.312500"/>
 					<clr rgb="3 1 13"/>
 					<pos_xy xy="-1.003418 4.752441"/>
+					<tex st="6.125000 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xyz xyz="-2.279785 0.929443 -4.844727"/>
+					<tex st="6.125000 2.312500"/>
 					<clr rgb="3 1 13"/>
 					<pos_xy xy="-2.279785 4.752441"/>
+					<tex st="0.062500 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xyz xyz="-3.413086 0.929443 -4.125488"/>
+					<tex st="0.062500 2.312500"/>
 					<clr rgb="3 1 13"/>
 					<pos_xy xy="-3.413086 4.752441"/>
+					<tex st="-5.937500 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xyz xyz="-4.331787 0.929443 -3.147217"/>
+					<tex st="-5.937500 2.312500"/>
 					<clr rgb="3 1 13"/>
 					<pos_xy xy="-4.331787 4.752441"/>
+					<tex st="-12.000000 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xyz xyz="-4.978271 0.929443 -1.970947"/>
+					<tex st="-12.000000 2.312500"/>
 					<clr rgb="3 1 13"/>
 					<pos_xy xy="-4.978271 4.752441"/>
+					<tex st="-18.000000 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_xyz xyz="-5.312012 0.929443 -0.671143"/>
+					<tex st="-18.000000 2.312500"/>
 					<clr rgb="3 1 13"/>
 					<pos_xy xy="-5.312012 4.752441"/>
+					<tex st="-24.062500 25.500000"/>
 					<clr rgb="30 19 30"/>
 					<pos_yz yz="0.929443 0.030518"/>
+					<tex st="-24.062500 2.312500"/>
 					<clr rgb="3 1 13"/>
 					<pos_xy xy="-5.312012 4.752441"/>
 				</primitive>
@@ -3134,7 +3243,7 @@
 		volume_max="0.014160 0.000000 0.043945"
 		volume_r="0.061523"
 	>
-		<display index="0" material="4" polygon="0" priority="0"/>
+		<display index="0" material="5" polygon="0" priority="0"/>
 	</node>
 	<node index="3" name="pPlane7" kind="mesh"
 		parent="0"
@@ -3154,7 +3263,7 @@
 		volume_max="0.177979 0.389648 -0.209717"
 		volume_r="0.592773"
 	>
-		<display index="0" material="9" polygon="1" priority="0"/>
+		<display index="0" material="10" polygon="1" priority="0"/>
 	</node>
 	<node index="4" name="pPlane8" kind="mesh"
 		parent="3"
@@ -3174,7 +3283,7 @@
 		volume_max="0.550781 0.508301 0.493164"
 		volume_r="0.897217"
 	>
-		<display index="0" material="3" polygon="2" priority="0"/>
+		<display index="0" material="4" polygon="2" priority="0"/>
 	</node>
 	<node index="5" name="pPlane9" kind="mesh"
 		parent="0"
@@ -3194,7 +3303,7 @@
 		volume_max="1.479736 -0.002930 3.858398"
 		volume_r="6.046631"
 	>
-		<display index="0" material="7" polygon="4" priority="0"/>
+		<display index="0" material="8" polygon="4" priority="0"/>
 	</node>
 	<node index="6" name="polySurface19" kind="mesh"
 		parent="0"
@@ -3214,9 +3323,9 @@
 		volume_max="1.515381 0.774658 -0.311035"
 		volume_r="3.700195"
 	>
-		<display index="0" material="1" polygon="7" priority="0"/>
-		<display index="1" material="5" polygon="5" priority="0"/>
-		<display index="2" material="10" polygon="6" priority="0"/>
+		<display index="0" material="2" polygon="7" priority="0"/>
+		<display index="1" material="6" polygon="5" priority="0"/>
+		<display index="2" material="11" polygon="6" priority="0"/>
 	</node>
 	<node index="7" name="polySurface20" kind="mesh"
 		parent="0"
@@ -3236,9 +3345,9 @@
 		volume_max="3.565674 0.728027 3.928711"
 		volume_r="5.302979"
 	>
-		<display index="0" material="2" polygon="8" priority="0"/>
-		<display index="1" material="6" polygon="10" priority="0"/>
-		<display index="2" material="11" polygon="9" priority="0"/>
+		<display index="0" material="3" polygon="8" priority="0"/>
+		<display index="1" material="7" polygon="10" priority="0"/>
+		<display index="2" material="12" polygon="9" priority="0"/>
 	</node>
 	<node index="8" name="polySurface25" kind="mesh"
 		parent="0"
@@ -3258,7 +3367,7 @@
 		volume_max="0.808594 0.227783 0.291016"
 		volume_r="1.004150"
 	>
-		<display index="0" material="0" polygon="11" priority="0"/>
+		<display index="0" material="1" polygon="11" priority="0"/>
 	</node>
 	<node index="9" name="shadow" kind="mesh"
 		parent="0"
@@ -3278,7 +3387,7 @@
 		volume_max="0.041992 0.000732 0.031250"
 		volume_r="0.052490"
 	>
-		<display index="0" material="8" polygon="12" priority="0"/>
+		<display index="0" material="9" polygon="12" priority="0"/>
 	</node>
 	<node index="10" name="wave" kind="mesh"
 		parent="0"
@@ -3298,7 +3407,7 @@
 		volume_max="0.041992 0.000732 0.031250"
 		volume_r="0.077881"
 	>
-		<display index="0" material="12" polygon="13" priority="0"/>
+		<display index="0" material="13" polygon="13" priority="0"/>
 	</node>
 </node_array>
 

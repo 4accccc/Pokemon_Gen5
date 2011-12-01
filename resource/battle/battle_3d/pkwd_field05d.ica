@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="toyama" host="W00153" date="2011-11-04T16:15:27" source="pkwd_field05d_all.mb"/>
+	<create user="toyama" host="W00153" date="2011-12-01T12:47:38" source="pkwd_field05d_all.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -24,13 +24,13 @@
 	tolerance_translate="0.100000"
 />
 
-<node_scale_data size="17">
+<node_scale_data size="14">
 	1.000000 7.833252 9.641846 30.588135 0.415039 4.519775 1.412354 8.975586 0.005859 16.175781
-	2.787354 0.001709 5.508301 1.052002 1.356934 15.673828 138.345459
+	1.052002 1.356934 15.673828 138.345459
 </node_scale_data>
 
 <node_rotate_data size="8">
-	0.000000 23.642822 8.819092 5.659668 4.109863 3.670410 0.709961 -9.004150
+	0.000000 23.642822 8.819092 5.659668 0.090820 -3.441406 0.709961 -9.004150
 </node_rotate_data>
 
 <node_translate_data size="2430">
@@ -303,9 +303,9 @@
 		<translate_z frame_step="1" data_size="1" data_head="15"/>
 	</node_anm>
 	<node_anm index="2">
-		<scale_x frame_step="1" data_size="1" data_head="13"/>
-		<scale_y frame_step="1" data_size="1" data_head="13"/>
-		<scale_z frame_step="1" data_size="1" data_head="13"/>
+		<scale_x frame_step="1" data_size="1" data_head="10"/>
+		<scale_y frame_step="1" data_size="1" data_head="10"/>
+		<scale_z frame_step="1" data_size="1" data_head="10"/>
 		<rotate_x frame_step="1" data_size="1" data_head="0"/>
 		<rotate_y frame_step="1" data_size="1" data_head="0"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
@@ -325,9 +325,9 @@
 		<translate_z frame_step="1" data_size="1" data_head="12"/>
 	</node_anm>
 	<node_anm index="4">
-		<scale_x frame_step="1" data_size="1" data_head="10"/>
-		<scale_y frame_step="1" data_size="1" data_head="11"/>
-		<scale_z frame_step="1" data_size="1" data_head="12"/>
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
 		<rotate_x frame_step="1" data_size="1" data_head="0"/>
 		<rotate_y frame_step="1" data_size="1" data_head="5"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
@@ -369,9 +369,9 @@
 		<translate_z frame_step="1" data_size="1" data_head="9"/>
 	</node_anm>
 	<node_anm index="8">
-		<scale_x frame_step="1" data_size="1" data_head="14"/>
-		<scale_y frame_step="1" data_size="1" data_head="14"/>
-		<scale_z frame_step="1" data_size="1" data_head="14"/>
+		<scale_x frame_step="1" data_size="1" data_head="11"/>
+		<scale_y frame_step="1" data_size="1" data_head="11"/>
+		<scale_z frame_step="1" data_size="1" data_head="11"/>
 		<rotate_x frame_step="1" data_size="1" data_head="6"/>
 		<rotate_y frame_step="1" data_size="1" data_head="0"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
@@ -413,9 +413,9 @@
 		<translate_z frame_step="1" data_size="1" data_head="823"/>
 	</node_anm>
 	<node_anm index="12">
-		<scale_x frame_step="1" data_size="1" data_head="15"/>
-		<scale_y frame_step="1" data_size="1" data_head="15"/>
-		<scale_z frame_step="1" data_size="1" data_head="16"/>
+		<scale_x frame_step="1" data_size="1" data_head="12"/>
+		<scale_y frame_step="1" data_size="1" data_head="12"/>
+		<scale_z frame_step="1" data_size="1" data_head="13"/>
 		<rotate_x frame_step="1" data_size="1" data_head="0"/>
 		<rotate_y frame_step="1" data_size="1" data_head="0"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
@@ -424,9 +424,9 @@
 		<translate_z frame_step="1" data_size="1" data_head="826"/>
 	</node_anm>
 	<node_anm index="13">
-		<scale_x frame_step="1" data_size="1" data_head="15"/>
-		<scale_y frame_step="1" data_size="1" data_head="15"/>
-		<scale_z frame_step="1" data_size="1" data_head="16"/>
+		<scale_x frame_step="1" data_size="1" data_head="12"/>
+		<scale_y frame_step="1" data_size="1" data_head="12"/>
+		<scale_z frame_step="1" data_size="1" data_head="13"/>
 		<rotate_x frame_step="1" data_size="1" data_head="0"/>
 		<rotate_y frame_step="1" data_size="1" data_head="0"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
