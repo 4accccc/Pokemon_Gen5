@@ -1954,6 +1954,7 @@ DEP_TEXSET_IMD_OUTDOOR047 = \
 	$(SRCDIR)/door_bar.imd \
 	$(SRCDIR)/c03_cloud.imd \
 	$(SRCDIR)/c03_kanban.imd \
+	$(SRCDIR)/c13_ship_01.imd \
 	$(SRCDIR)/c03_ship_03_01.imd
 
 texset/outdoor047.imd: $(DEP_TEXSET_IMD_OUTDOOR047) texset/tmp/outdoor047.list
