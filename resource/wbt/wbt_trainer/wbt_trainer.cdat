@@ -782,12 +782,12 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		TRUE , //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_JOUTO, //限定トーナメント種別
+		WBTCUP_KANTO, //限定トーナメント種別
 		POKETYPE_DOKU, //タイプトーナメント種別
 		 3, //優先度
 		20, //パワー乱数
 		 0, //AI
-		SEQ_BGM_VS_GS_LEADER                    , // BTL_BGM
+		SEQ_BGM_VS_RG_LEADER                    , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		168, //切り札ポケモン
 	},

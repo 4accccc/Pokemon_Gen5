@@ -479,6 +479,8 @@ EVENT_START   ev_scene_c06_swleader6_01
   ENDIF
   //アニメ：フウロ退場
   _OBJ_ANIME( C06_SWLEADER6_01, anm_swleader6_back_01 )
+  _TIME_WAIT( 16 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_r )
   _OBJ_ANIME_WAIT()
 
   _OBJ_DEL( C06_SWLEADER6_01 )
