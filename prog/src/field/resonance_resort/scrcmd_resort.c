@@ -245,7 +245,8 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
       *p_ret_wk = RESORT_BINARY_SHOP_DATA_GetData( cp_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
     }
     break;
-  case RESORT_GET_PARAM_HAS_RECORD:
+
+  case RESORT_GET_PARAM_NUM_RECORD:
     GF_ASSERT( RESORT_PEOPLE_TYPE_RESIDENT == RESORT_PEOPLE_GetPeopleData(p_people,RESORT_PEOPLE_DATA_PARAM_TYPE) || 
         RESORT_PEOPLE_TYPE_TOURIST == RESORT_PEOPLE_GetPeopleData(p_people,RESORT_PEOPLE_DATA_PARAM_TYPE) );
     {
@@ -253,19 +254,16 @@ VMCMD_RESULT EvCmdResortGetData( VMHANDLE *p_core, void *p_wk_adrs )
       BOOL is_extend = RESORT_RESIDENT_DATA_IsExtend( p_resident, RESORT_EXTEND_TYPE_05 );
 
 
-      *p_ret_wk = is_extend;
-    }
-    break;
-
-  case RESORT_GET_PARAM_NUM_RECORD:
-    {
-      RESORT_DATA_PARAM i;
       *p_ret_wk = 0;
-      for( i = RESORT_DATA_PARAM_EXT5_RECORD_00; i <= RESORT_DATA_PARAM_EXT5_RECORD_03; i++ )
+      if( is_extend )
       {
-        if( RESORT_PEOPLE_GetData( p_people, i, NULL ) != RESORT_RECORD_ID_NONE )
+        RESORT_DATA_PARAM i;
+        for( i = RESORT_DATA_PARAM_EXT5_RECORD_00; i <= RESORT_DATA_PARAM_EXT5_RECORD_03; i++ )
         {
-          (*p_ret_wk)++;
+          if( RESORT_PEOPLE_GetData( p_people, i, NULL ) != RESORT_RECORD_ID_NONE )
+          {
+            (*p_ret_wk)++;
+          }
         }
       }
     }
@@ -1349,7 +1347,7 @@ VMCMD_RESULT EvCmdResortCombo( VMHANDLE *p_core, void *p_wk_adrs )
       }
 
       //Z–¯‚ª‚Wl‚¢‚È‚¢‚ÆƒRƒ“ƒ{‚Í‚â‚ç‚È‚¢
-      if( RESORT_PEOPLE_ALL_DATA_GetResidentCount( p_all_people ) != RESORT_RESIDENT_DATA_NUM )
+      if( !RESORT_UTIL_IsEnableCombo(p_sys) )
       {
         *p_ret_wk = RESORT_COMBO_RESULT_FAILER;
         return VMCMD_RESULT_CONTINUE;
@@ -2291,6 +2289,10 @@ VMCMD_RESULT EvCmdResortGetMyData( VMHANDLE *p_core, void *p_wk_adrs )
 
   case RESORT_MY_PARAM_TEX:
     *p_ret_wk = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_TEX, NULL );
+    break;
+
+  case RESORT_MY_PARAM_IS_ENABLE_COMBO:
+    *p_ret_wk = RESORT_UTIL_IsEnableCombo( p_sys );
     break;
   default:
     GF_ASSERT_MSG(0,"%d\n",param);

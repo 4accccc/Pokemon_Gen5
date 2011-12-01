@@ -78,7 +78,7 @@ extern BOOL RESORT_UTIL_CheckConvert( RESORT_SYSTEM *p_sys, RESORT_DATA_BUFFER_T
 extern STRBUF * RESORT_UTIL_CreateShopName( const RESORT_BINARY_SHOP *cp_wk, const RESORT_ABSTRUCT_DATA *cp_data, u16 shopno, HEAPID heapID );
 
 
-extern void RESORT_UTIL_SetProxyRandom( RESORT_SYSTEM *p_sys, RESORT_PROXY_DATA *p_wk, u32 proxy_type, HEAPID heapID );
+extern void RESORT_UTIL_SetProxyRandom( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, RESORT_PROXY_DATA *p_wk, u32 proxy_type, HEAPID heapID );
 extern void RESORT_UTIL_SetSecretaryPreset( RESORT_SYSTEM *p_sys, RESORT_SECRETARY_DATA *p_wk, u16 type, u16 preset_type, u16 peopleID, HEAPID heapID );
 extern void RESORT_UTIL_SetProxyPreset( RESORT_SYSTEM *p_sys, RESORT_PROXY_DATA *p_wk, u16 type, u16 preset_type, HEAPID heapID );
 
@@ -93,3 +93,5 @@ extern void RESORT_UTIL_SuccessCombo( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA
 
 //Ž©•ª‚Ì‚¨“X
 extern BOOL RESORT_UTIL_GetReleaseMyShop( const RESORT_SYSTEM *cp_sys, const GAMEDATA *cp_gamedata, u16 shop_type );
+
+extern BOOL RESORT_UTIL_IsEnableCombo( const RESORT_SYSTEM *cp_sys );

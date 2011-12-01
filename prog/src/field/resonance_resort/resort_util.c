@@ -594,6 +594,11 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
   case RESORT_RESIDENT_COMBO_RND_MSGID:
     {
       u32 rnd = RESORT_UTIL_GetComboInitRnd( p_sys, p_abstruct );
+      if( !RESORT_UTIL_IsEnableCombo(p_sys) )
+      {
+        return RESORT_MSGID_NONE;
+      }
+
       if( rnd >= RESORT_CONST_COMBO_RND_MSG_00 )
       {
         return SexGetMsgID( sex, resort_resident_lv_02_m, resort_resident_lv_02_f );
@@ -2551,7 +2556,7 @@ static void Resort_Util_SetProxyPreset( RESORT_PROXY_DATA *p_wk, u16 type, const
  *	@param	RESORT_RECV_DATA *cp_owner  自分のデータ
  */
 //-----------------------------------------------------------------------------
-void RESORT_UTIL_SetProxyRandom( RESORT_SYSTEM *p_sys, RESORT_PROXY_DATA *p_wk, u32 proxy_type, HEAPID heapID )
+void RESORT_UTIL_SetProxyRandom( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, RESORT_PROXY_DATA *p_wk, u32 proxy_type, HEAPID heapID )
 {
   static const struct
   {
@@ -2628,8 +2633,10 @@ void RESORT_UTIL_SetProxyRandom( RESORT_SYSTEM *p_sys, RESORT_PROXY_DATA *p_wk, 
   {
     STRCODE strcode[ 64 ];
 
-    RESORT_RECV_DATA_GetData( cp_owner, RESORT_DATA_PARAM_INTRODUCTION, strcode );
-    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_INTRODUCTION, (u32)strcode );
+    MISC *p_misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(p_gamedata) );
+
+    const STRCODE *cp_src = MISC_CrossComm_GetSelfIntroduction(p_misc);
+    RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_INTRODUCTION, (u32)cp_src );
 
     RESORT_RECV_DATA_GetData( cp_owner, RESORT_DATA_PARAM_EXT6_PHRASE, strcode );
     RESORT_PROXY_DATA_SetData( p_wk, RESORT_DATA_PARAM_EXT6_PHRASE, (u32)strcode );
@@ -3065,6 +3072,11 @@ u32 RESORT_UTIL_GetComboInitRnd( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_a
   {
     u8 objcode = RESORT_ABSTRUCT_DATA_GetData(p_abstruct,RESORT_DATA_PARAM_OBJCODE,NULL);
     trainer_view = UnionView_Objcode_to_Index(objcode);
+
+    if( trainer_view >= UNION_VIEW_INDEX_WOMAN_START )
+    {
+      trainer_view -= UNION_VIEW_INDEX_WOMAN_START;
+    }
   }
 
   //見た目確率
@@ -3192,4 +3204,20 @@ BOOL RESORT_UTIL_GetReleaseMyShop( const RESORT_SYSTEM *cp_sys, const GAMEDATA *
       return FALSE;
     }
   }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  コンボ可能
+ *
+ *	@param	const RESORT_SYSTEM *cp_sys   システム
+ *
+ *	@return TRUEコンボ可能  FALSEコンボ不可能
+ */
+//-----------------------------------------------------------------------------
+BOOL RESORT_UTIL_IsEnableCombo( const RESORT_SYSTEM *cp_sys )
+{
+  RESORT_PEOPLE_ALL_DATA *p_all_people = RESORT_SYSTEM_GetPeopleAllData( (RESORT_SYSTEM *)cp_sys );
+  return RESORT_PEOPLE_ALL_DATA_GetResidentCount( p_all_people ) == RESORT_RESIDENT_DATA_NUM;
 }

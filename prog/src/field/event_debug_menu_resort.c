@@ -77,10 +77,16 @@ static BOOL debugMenuCallProc_Script( DEBUG_MENU_EVENT_WORK *p_wk );
 
 static const DEBUG_MENU_LIST DATA_SubMenuList[] =
 {
-  { DEBUG_FIELD_RESORT_18, debugMenuCallProc_ChangeMap, GFL_OVERLAY_BLANK_ID },
-  { DEBUG_FIELD_RESORT_38, debugMenuCallProc_DesignerSetup1, GFL_OVERLAY_BLANK_ID },
+  //ƒVƒXƒeƒ€
+  { DEBUG_FIELD_RESORT_45, (void*)BMPMENULIST_LABEL, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_16, debugMenuCallProc_Input, GFL_OVERLAY_BLANK_ID},
+  { DEBUG_FIELD_RESORT_18, debugMenuCallProc_ChangeMap, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_44, debugMenuCallProc_Script, GFL_OVERLAY_BLANK_ID},
+  { DEBUG_FIELD_RESORT_10, debugMenuCallProc_AllClear, GFL_OVERLAY_BLANK_ID},
+  { DEBUG_FIELD_RESORT_11, debugMenuCallProc_UpdateDay, GFL_OVERLAY_BLANK_ID},
+
+  //l•¨‘€ì
+  { DEBUG_FIELD_RESORT_48, (void*)BMPMENULIST_LABEL, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_01, debugMenuCallProc_SetRecv, GFL_OVERLAY_BLANK_ID },
   { DEBUG_FIELD_RESORT_05, debugMenuCallProc_AllRecv, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_02, debugMenuCallProc_SetProxy, GFL_OVERLAY_BLANK_ID },
@@ -89,8 +95,6 @@ static const DEBUG_MENU_LIST DATA_SubMenuList[] =
   { DEBUG_FIELD_RESORT_04, debugMenuCallProc_ClearProxyBuff, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_08, debugMenuCallProc_AllSecretary, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_09, debugMenuCallProc_AllResident, GFL_OVERLAY_BLANK_ID},
-  { DEBUG_FIELD_RESORT_10, debugMenuCallProc_AllClear, GFL_OVERLAY_BLANK_ID},
-  { DEBUG_FIELD_RESORT_11, debugMenuCallProc_UpdateDay, GFL_OVERLAY_BLANK_ID},
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSubMenuData = {
@@ -153,6 +157,13 @@ static const DEBUG_MENU_INITIALIZER DebugSubMenuData_Input = {
   NULL
 };
 
+
+static void Debig_Menu_Resort_ChangeOutZone( DEBUG_MENU_EVENT_WORK*p_wk )
+{
+  GMEVENT* event = DEBUG_EVENT_QuickChangeMapDefaultPos( p_wk->gmSys,
+                                                p_wk->fieldWork, ZONE_ID_R04 );
+  GMEVENT_ChangeEvent( p_wk->gmEvent, event );
+}
 
 //--------------------------------------------------------------
 /// struct
@@ -308,6 +319,7 @@ static BOOL debugMenuCallProc_SetRecv( DEBUG_MENU_EVENT_WORK *p_wk )
   RESONANCE_RESORT_SV_SetData( p_resort, p_wk->gdata, p_recv, RESORT_MERGE_TYPE_RECV );
 
   RESORT_RECV_DATA_Exit( p_recv );
+
   return FALSE;
 }
 
@@ -363,14 +375,9 @@ static BOOL debugMenuCallProc_ClearRecvBuff( DEBUG_MENU_EVENT_WORK *p_wk )
   RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
   RESORT_RECV_BUFF *p_recv_buff = RESONANCE_RESORT_SV_GetDataBuff( p_resort );
 
-  //Œ}•oŠÙ‚Å‚ÍŽg‚¦‚È‚¢
-  if( FIELDMAP_GetZoneID( p_wk->fieldWork) == RESORT_ZONE_ID_FIELD )
-  {
-    return FALSE;
-  }
-
   RESORT_RECV_BUFF_InitInstance( p_recv_buff, RESONANCE_RESORT_SV_RECV_BUFF_NUM );
-  return FALSE;
+  Debig_Menu_Resort_ChangeOutZone( p_wk );
+  return TRUE;
 }
 static BOOL debugMenuCallProc_ClearProxyBuff( DEBUG_MENU_EVENT_WORK *p_wk )
 {
@@ -378,14 +385,9 @@ static BOOL debugMenuCallProc_ClearProxyBuff( DEBUG_MENU_EVENT_WORK *p_wk )
   RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
   RESORT_PROXY_BUFF *p_proxy_buff = RESONANCE_RESORT_SV_GetProxyBuff( p_resort );
 
-  //Œ}•oŠÙ‚Å‚ÍŽg‚¦‚È‚¢
-  if( FIELDMAP_GetZoneID( p_wk->fieldWork) == RESORT_ZONE_ID_FIELD )
-  {
-    return FALSE;
-  }
-
   RESORT_PROXY_BUFF_InitInstance( p_proxy_buff, RESONANCE_RESORT_SV_PROXY_BUFF_NUM );
-  return FALSE;
+  Debig_Menu_Resort_ChangeOutZone( p_wk );
+  return TRUE;
 }
 static BOOL debugMenuCallProc_AllRecv( DEBUG_MENU_EVENT_WORK *p_wk )
 {
@@ -477,7 +479,10 @@ static BOOL debugMenuCallProc_AllSecretary( DEBUG_MENU_EVENT_WORK *p_wk )
   }
 
   RESORT_RECV_DATA_Exit( p_recv );
-  return FALSE;
+
+  Debig_Menu_Resort_ChangeOutZone( p_wk );
+
+  return TRUE;
 }
 static BOOL debugMenuCallProc_AllResident( DEBUG_MENU_EVENT_WORK *p_wk )
 {
@@ -504,7 +509,9 @@ static BOOL debugMenuCallProc_AllResident( DEBUG_MENU_EVENT_WORK *p_wk )
   RESORT_BINARY_SHOP_Exit(p_shop);
 
   RESORT_RECV_DATA_Exit( p_recv );
-  return FALSE;
+
+  Debig_Menu_Resort_ChangeOutZone( p_wk );
+  return TRUE;
 }
 static BOOL debugMenuCallProc_AllClear( DEBUG_MENU_EVENT_WORK *p_wk )
 {
@@ -535,7 +542,10 @@ static BOOL debugMenuCallProc_AllClear( DEBUG_MENU_EVENT_WORK *p_wk )
     RESORT_PEOPLE_ALL_DATA *p_all_people = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort );
     RESORT_PEOPLE_ALL_DATA_InitInstance( p_all_people );
   }
-  return FALSE;
+
+
+  Debig_Menu_Resort_ChangeOutZone( p_wk );
+  return TRUE;
 }
 static BOOL debugMenuCallProc_UpdateDay( DEBUG_MENU_EVENT_WORK *p_wk )
 {

@@ -3277,6 +3277,15 @@ static void RESORT_CROWD_NOISE_WK_Start( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* 
     break;
   }
   
+#ifdef PM_DEBUG
+  {
+    STRCODE strcode[1]  = {0xFFFF};
+    STRBUF *p_strbuf = GFL_STR_CreateBuffer( 10, 0 );
+    GFL_STR_SetStringCode( p_strbuf, strcode );
+    GF_ASSERT_MSG( !GFL_STR_CompareBuffer(p_wk->p_str, p_strbuf), "type%d idx%d\n", RESORT_ABSTRUCT_DATA_GetBufferType( cp_data), RESORT_ABSTRUCT_DATA_GetBufferIndex( cp_data) );
+    GFL_STR_DeleteBuffer( p_strbuf );
+  }
+#endif
   {
     u8 cx;
     u8 cy;
@@ -4279,7 +4288,7 @@ static void RESORT_FIELD_AppearFun( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, 
 
     for( i = 0; i < fun_appear_num; i++ )
     {
-      RESORT_UTIL_SetProxyRandom( p_sys, p_proxy, RESORT_PROXY_TYPE_FUN, heapID );
+      RESORT_UTIL_SetProxyRandom( p_sys, p_gamedata, p_proxy, RESORT_PROXY_TYPE_FUN, heapID );
       if( RESONANCE_RESORT_SV_SetData( p_reso_sv, p_gamedata, p_proxy, RESORT_MERGE_TYPE_PROXY ) != RESORT_SETDATA_SET )
       {
         continue;
@@ -4365,7 +4374,7 @@ static void RESORT_FIELD_AppearCeleb( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata
       //ƒZƒŒƒu‚¢‚ê‚é
       RESORT_PROXY_DATA *p_proxy = RESORT_PROXY_DATA_Init( GFL_HEAP_LOWID(heapID) );
 
-      RESORT_UTIL_SetProxyRandom( p_sys, p_proxy, RESORT_PROXY_TYPE_CELEB, heapID );
+      RESORT_UTIL_SetProxyRandom( p_sys, p_gamedata, p_proxy, RESORT_PROXY_TYPE_CELEB, heapID );
 
       if( RESONANCE_RESORT_SV_SetData( p_reso_sv, p_gamedata, p_proxy, RESORT_MERGE_TYPE_PROXY ) == RESORT_SETDATA_SET )
       {
