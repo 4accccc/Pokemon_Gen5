@@ -13745,10 +13745,10 @@ LR→補完"</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>システム</Text>
+			<Text>[System:Color name="1" ]システム[/System:Color]</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-30T11:01:30" />
+				Time="2011-12-01T04:03:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13756,10 +13756,10 @@ LR→補完"</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>システム</Text>
+			<Text>[System:Color name="1" ]システム[/System:Color]</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-30T11:01:34" />
+				Time="2011-12-01T04:03:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13778,10 +13778,10 @@ LR→補完"</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>入力</Text>
+			<Text>[System:Color name="1" ]入力[/System:Color]</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-30T11:01:41" />
+				Time="2011-12-01T04:03:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13789,10 +13789,10 @@ LR→補完"</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>入力</Text>
+			<Text>[System:Color name="1" ]入力[/System:Color]</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-30T11:01:43" />
+				Time="2011-12-01T04:03:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13811,10 +13811,10 @@ LR→補完"</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジャンプ</Text>
+			<Text>[System:Color name="1" ]ジャンプ[/System:Color]</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-30T11:01:49" />
+				Time="2011-12-01T04:04:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13822,10 +13822,10 @@ LR→補完"</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジャンプ</Text>
+			<Text>[System:Color name="1" ]ジャンプ[/System:Color]</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-30T11:01:53" />
+				Time="2011-12-01T04:04:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13844,10 +13844,10 @@ LR→補完"</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>人物操作</Text>
+			<Text>[System:Color name="1" ]人物操作[/System:Color]</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-30T11:01:59" />
+				Time="2011-12-01T04:03:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13855,10 +13855,10 @@ LR→補完"</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>人物操作</Text>
+			<Text>[System:Color name="1" ]人物操作[/System:Color]</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-11-30T11:02:01" />
+				Time="2011-12-01T04:03:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

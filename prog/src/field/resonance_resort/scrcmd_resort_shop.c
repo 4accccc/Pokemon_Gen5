@@ -3451,6 +3451,10 @@ static u32 ResortShop_CalcPlace( SHOP_BUY_APP_WORK *p_wk, u32 price )
   {
     city_lv--;
   }
+  else
+  {
+    city_lv = RESORT_CONST_LEVEL_CAP;
+  }
 
   v = FX_Mul( fever_num, RESORT_CONST_PRICE_COEFFEICENT );
   price = price - FX_Whole(price * city_lv * v );

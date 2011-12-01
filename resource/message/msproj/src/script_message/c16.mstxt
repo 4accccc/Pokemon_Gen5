@@ -1569,10 +1569,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ばんざい！</Text>
+			<Text>バンザイ！</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-10-06T10:50:39" />
+				Time="2011-12-01T06:36:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1580,10 +1580,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ばんざい！</Text>
+			<Text>バンザイ！</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-10-06T10:50:41" />
+				Time="2011-12-01T06:36:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

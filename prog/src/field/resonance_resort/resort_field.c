@@ -52,7 +52,7 @@
 
 #ifdef PM_DEBUG
 #define DEBUG_RESORT_FIELD_PRINT_ON
-//#define DEBUG_EFFECT_MOVE
+#define DEBUG_EFFECT_MOVE
 #endif
 
 #if defined(DEBUG_RESORT_FIELD_PRINT_ON) && ( defined(DEBUG_ONLY_FOR_nagihashi_toru) || defined(DEBUG_ONLY_FOR_shimoyamada) )
@@ -3274,6 +3274,7 @@ static void RESORT_CROWD_NOISE_WK_Start( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* 
     break;
   case RESORT_CROWD_NOISE_MSG_BANZAI:
     GFL_MSG_GetString( p_msg, msg_c16_parade_00, p_wk->p_str );
+    type = TALKMSGWIN_TYPE_GIZA;
     break;
   }
   
@@ -3875,7 +3876,7 @@ static RESORT_FIELD_EFFECT * RESORT_FIELD_EFFECT_Init( HEAPID heapID, FLD_EXP_OB
   FLD_EXP_OBJ_AddUnit( p_wk->p_exp_obj, &sc_util_setup, RESORT_FIELD_EFFECT_UNIT );
 
 #ifdef DEBUG_EFFECT_MOVE
-  RESORT_FIELD_EFFECT_Start( p_wk, RESORT_FIELD_EFFECT_ID_CONFETTI );
+  //RESORT_FIELD_EFFECT_Start( p_wk, RESORT_FIELD_EFFECT_ID_CONFETTI );
 #endif
 
   return p_wk;
@@ -3890,7 +3891,7 @@ static RESORT_FIELD_EFFECT * RESORT_FIELD_EFFECT_Init( HEAPID heapID, FLD_EXP_OB
 static void RESORT_FIELD_EFFECT_Exit( RESORT_FIELD_EFFECT *p_wk )
 {
 #ifdef DEBUG_EFFECT_MOVE
-  RESORT_FIELD_EFFECT_Stop( p_wk, RESORT_FIELD_EFFECT_ID_CONFETTI );
+  //RESORT_FIELD_EFFECT_Stop( p_wk, RESORT_FIELD_EFFECT_ID_CONFETTI );
 #endif
 
   FLD_EXP_OBJ_DelUnit( p_wk->p_exp_obj, RESORT_FIELD_EFFECT_UNIT );
@@ -3963,6 +3964,7 @@ static void RESORT_FIELD_EFFECT_Stop( RESORT_FIELD_EFFECT *p_wk, RESORT_FIELD_EF
   if( p_wk->cp_func[id] )
   {
     p_wk->cp_func[id]->Stop( p_wk );
+    p_wk->cp_func[id] = NULL;
   }
 }
 
@@ -3981,10 +3983,17 @@ static void Resort_Field_Effect_StartConfetti( RESORT_FIELD_EFFECT *p_wk )
     GFL_G3D_OBJSTATUS *p_loop_st =FLD_EXP_OBJ_GetUnitObjStatus( p_wk->p_exp_obj,
                             RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_LOOP );
 
+    static const u16 sc_rot = 0;
+
+    MTX_RotX33(&p_start_st->rotate, FX_SinIdx(sc_rot), FX_CosIdx(sc_rot));
+    MTX_RotX33(&p_loop_st->rotate, FX_SinIdx(sc_rot), FX_CosIdx(sc_rot));
+
     p_start_st->trans.x = FX32_CONST(127);
     p_start_st->trans.z = FX32_CONST(500);
     p_loop_st->trans = p_start_st->trans;
+
   }
+
 
   // •\Ž¦
   FLD_EXP_OBJ_SetVanish( p_wk->p_exp_obj, RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_START, FALSE );
@@ -4139,8 +4148,6 @@ static void Resort_Field_Effect_StopConfetti( RESORT_FIELD_EFFECT *p_wk )
     FLD_EXP_OBJ_ValidCntAnm( p_wk->p_exp_obj, RESORT_FIELD_EFFECT_UNIT, MODEL_OBJ_CONFETTI_LOOP, i, FALSE );
     FLD_EXP_OBJ_ChgAnmStopFlg( p_loop_anm, TRUE );
   }
-
-  p_wk->cp_func[RESORT_FIELD_EFFECT_ID_CONFETTI] = NULL;
 }
 
 //----------------------------------------------------------------------------
