@@ -497,6 +497,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/scrcmd_d12_gmk.c \
         field/field_gimmick_d12_st.c \
         field/fldmmdl.c \
+        field/fes_gimmick_nw.c \
         field/straw_poke_form.c \
         field/event_battle.c \
         app/trainercard/trcard_sys.c \
@@ -603,7 +604,6 @@ SRCS_OVERLAY_INTRUDE_SYSTEM = field/field_comm/intrude_comm_command.c \
         field/field_comm/intrude_mission.c \
         field/scrcmd_research.c \
         field/event_research_team.c \
-        field/fes_gimmick_nw.c \
         gamesystem/fest_mission_data.c
         
 
