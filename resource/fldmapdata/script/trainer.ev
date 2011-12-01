@@ -1,6 +1,6 @@
 //======================================================================
 // trainer.ev
-// ../../trdata/trno_def.hを元にコンバートしています
+// ../../../prog/include/tr_tool/trno_def.hを元にコンバートしています
 //  ●コンバート実行
 //    trainer(.bat)
 //  ●更新されるファイル
@@ -1611,7 +1611,7 @@ ev_TRID_MINI_27:
 ev_TRID_MAX:
 
 //----------------------------------------------------------------------
-// ./scr_trainer/trainer_base.ev
+// scr_trainer/trainer_base.ev
 //----------------------------------------------------------------------
 
   DEFINE_LOCAL  LWK_TRAINERID
@@ -2008,7 +2008,7 @@ ev_trainer_type_tag:
 
   //移動終了後、会話へ
   _EYE_TRAINER_OBJ_ID_GET( SCR_EYE_TR_0, LWK_TR_OBJID )
-  _TRAINER_MSG_SET( LWK_TRID_01, TRMSG_FIGHT_START_1, LWK_TR_OBJID )
+  _TRAINER_MSG_SET( LWK_TRID_01, TRMSG_FIGHT_START, LWK_TR_OBJID )
   _BALLOONWIN_CLOSE()
 
   //視線曲セット
@@ -2020,7 +2020,7 @@ ev_trainer_type_tag:
 
   //移動終了後、会話へ
   _EYE_TRAINER_OBJ_ID_GET( SCR_EYE_TR_1, LWK_TR_OBJID )
-  _TRAINER_MSG_SET( LWK_TRID_02, TRMSG_FIGHT_START_2, LWK_TR_OBJID )
+  _TRAINER_MSG_SET( LWK_TRID_02, TRMSG_FIGHT_START, LWK_TR_OBJID )
   _BALLOONWIN_CLOSE()
 
   _TRAINER_BTL_SET( LWK_TRID_01, LWK_TRID_02 )
