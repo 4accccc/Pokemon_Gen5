@@ -1900,9 +1900,10 @@ EVENT_START   ev_debug_ichiraku
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_10,  10 ) // 観覧車トレーナーリセット
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_11,  11 ) // 背景真っ黒のままメッセージ
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_12,  12 ) // キュレム合体イベントリセット
-	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_13,  13 ) // コバルオン入退場
-	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_14,  14 ) // キュレムデモ 覚醒
-	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_15,  15 ) // キュレムデモ 登場
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_13,  13 ) // キュレム合体したあと
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_14,  14 ) // コバルオン入退場
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_15,  15 ) // キュレムデモ 覚醒
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_16,  16 ) // キュレムデモ 登場
 	_BMPMENU_START()
 
   SWITCH $SCWK_ANSWER
@@ -2008,9 +2009,22 @@ EVENT_START   ev_debug_ichiraku
     _FLAG_SET( FV_D10R0401_POKE_03 )
     $WK_SCENE_D10R0401_SWSAGE1_01 = 1
 
-    _MAP_CHANGE_DEFAULT_POS( ZONE_ID_D10R0401, DIR_DOWN )
+    _MAP_CHANGE( ZONE_ID_D10R0401, 16, 4, DIR_UP )
 
   CASE 13 THEN
+    // キュレム合体したあと
+    // N表示
+    _FLAG_RESET( FV_D10R0401_BOSS_01 )
+    //キュラム・キュロム表示
+    _FLAG_RESET( FV_D10R0401_POKE_03 )
+    //キュレム非表示
+    _FLAG_SET( FV_D10R0401_POKE_01 )
+    //SCENE_CHANGE無効
+    $WK_SCENE_D10R0401_SWSAGE1_01 = 2
+
+    _MAP_CHANGE( ZONE_ID_D10R0501, 15, 19, DIR_UP )
+
+  CASE 14 THEN
     // コバルオンイベント
     {
 
@@ -2041,7 +2055,7 @@ EVENT_START   ev_debug_ichiraku
       _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
     }
 
-  CASE 14 THEN
+  CASE 15 THEN
     {
     DEFINE_LOCAL LCWK_VERSION
     _GET_ROM_VERSION( LCWK_VERSION )
@@ -2057,7 +2071,7 @@ EVENT_START   ev_debug_ichiraku
     ENDIF
 	  _DEMO_FADEIN_BLACK_CALL()
     }
-  CASE 15 THEN
+  CASE 16 THEN
     {
       DEFINE_LOCAL LCWK_VERSION
 
