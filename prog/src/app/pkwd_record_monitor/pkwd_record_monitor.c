@@ -2443,6 +2443,8 @@ static void pwm_main_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 				pwm_disp_record_monitor_string( wk, 1 );
 				// poke icon 表示
 				pwm_disp_poke_obj( wk );
+        // フラグセット(すでに見た)
+        wk->FlagBuffer[wk->ScenarioCurPos].stateflag |= FLG_PWRM_FINISH;
 				wk->SubMode = STEP_LV1;
 			}
 			break;
