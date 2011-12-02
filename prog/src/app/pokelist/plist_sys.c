@@ -2791,14 +2791,24 @@ static void _update_poke_form( POKEMON_PARAM *srcPoke, POKEMON_PARAM *desPoke )
 
 }
 
+static void _put_no_move_message( PLIST_WORK *work, u32 mes_id )
+{
+  PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+  PLIST_PLATE_SetActivePlate( work , work->plateWork[work->changeTarget] , FALSE );
+  PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , FALSE );
+  GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[1] , FALSE );
+  PLIST_MessageWaitInit( work , mes_id , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+}
+
+
 static void PLIST_SelectPokeTerm_MoveItem( PLIST_WORK *work)
 {
   if( work->selectState == PSSEL_SELECT )
   {
     POKEMON_PARAM *srcPoke = PokeParty_GetMemberPointer(work->plData->pp, work->changeTarget);
     POKEMON_PARAM *desPoke = PokeParty_GetMemberPointer(work->plData->pp, work->pokeCursor);
-    u16 srcPokeNo = PP_Get( srcPoke, ID_PARA_monsno, NULL );
-    u16 desPokeNo = PP_Get( desPoke, ID_PARA_monsno, NULL );
+    u16 srcPokeNo = PP_Get( srcPoke, ID_PARA_monsno_egg, NULL );
+    u16 desPokeNo = PP_Get( desPoke, ID_PARA_monsno_egg, NULL );
     const u16 srcItemNo = PP_Get( srcPoke , ID_PARA_item , NULL );
     const u16 desItemNo = PP_Get( desPoke , ID_PARA_item , NULL );
     OS_Printf("pokeC=%d, changeC=%d\n", work->pokeCursor, work->changeTarget);
@@ -2808,18 +2818,13 @@ static void PLIST_SelectPokeTerm_MoveItem( PLIST_WORK *work)
     // ギラティナにはっきんだまを移動させることはできない
     if((desPokeNo==MONSNO_GIRATHINA && srcItemNo==ITEM_HAKKINDAMA) 
     || (srcPokeNo==MONSNO_GIRATHINA && desItemNo==ITEM_HAKKINDAMA)){
-      PLIST_SelectPokeSetCursor( work , work->pokeCursor );
-      PLIST_PLATE_SetActivePlate( work , work->plateWork[work->changeTarget] , FALSE );
-      PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , FALSE );
-      GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[1] , FALSE );
-      PLIST_MessageWaitInit( work , mes_pokelist_04_59_2 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+      _put_no_move_message( work, mes_pokelist_04_59_2 );
     // ギラティナからはっきんだまをはがす事もできない
     }else if(desPokeNo==MONSNO_GIRATHINA && desItemNo==ITEM_HAKKINDAMA){
-      PLIST_SelectPokeSetCursor( work , work->pokeCursor );
-      PLIST_PLATE_SetActivePlate( work , work->plateWork[work->changeTarget] , FALSE );
-      PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , FALSE );
-      GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[1] , FALSE );
-      PLIST_MessageWaitInit( work , mes_pokelist_04_59_3 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+      _put_no_move_message( work, mes_pokelist_04_59_3 );
+    // タマゴに道具を移動しようとした
+    }else if(desPokeNo==MONSNO_TAMAGO){
+      _put_no_move_message( work, mes_pokelist_04_59_4 );
     }else{
       // 通常移動処理
       if(desItemNo==0){
