@@ -14,6 +14,7 @@ goto end
 :: 実際の処理
 :: =====================================================
 :EX
+ruby ../../../../tools/exceltool/xls2xml/tab_out_direct_sheet.rb 未使用メッセージ解析データ.xls -n 0 -s > ./message_list/nosearch_gmm.csv
 cd ./message_list
 ruby ./unused_message_listup.rb ev c h data
 
