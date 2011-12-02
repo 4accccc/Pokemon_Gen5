@@ -2865,7 +2865,9 @@ static void ShinkaDemo_ShinkaCondCheckSpecialLevelup( SHINKA_DEMO_PARAM* param, 
         PP_Put( nukenin_pp, ID_PARA_cb_core, cb_core );
       }
  */
-
+      // スターポイントをクリア
+      PP_Put( nukenin_pp, ID_PARA_star_point, 0 );
+      
       //-------------// ↑パラメータを設定する↑ //-------------//
 
 
