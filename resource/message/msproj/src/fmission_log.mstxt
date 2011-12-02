@@ -19,8 +19,8 @@
 			Language="JPN_KANJI">
 			<Text>目標[Digit:4digits ]</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-23T06:44:35" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:32:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -50,7 +50,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_sys_goal_num01">
+		Label="msg_sys_goal_num01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>もくひょう[Digit:4digits ]にん</Text>
@@ -64,10 +65,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>目標[Digit:4digits ]にん</Text>
+			<Text>目標[Digit:4digits ]人</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-23T06:47:50" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:32:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -90,7 +91,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_sys_goal_num02">
+		Label="msg_sys_goal_num02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>もくひょう[Digit:4digits ]ひき</Text>
@@ -104,10 +106,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>目標[Digit:4digits ]ひき</Text>
+			<Text>目標[Digit:4digits ]匹</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-23T06:47:50" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:32:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -130,7 +132,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_sys_goal_num03">
+		Label="msg_sys_goal_num03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>もくひょう[Digit:4digits ]こ</Text>
@@ -144,10 +147,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>目標[Digit:4digits ]こ</Text>
+			<Text>目標[Digit:4digits ]個</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-23T06:47:50" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:33:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -170,7 +173,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_sys_goal_num04">
+		Label="msg_sys_goal_num04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>もくひょう[Digit:4digits ]かい</Text>
@@ -184,10 +188,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>目標[Digit:4digits ]かい</Text>
+			<Text>目標[Digit:4digits ]回</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-23T06:47:50" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:32:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -2334,10 +2338,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName ]を　見つけた！</Text>
+			<Text>[Name:PokemonName ]を　みつけた！</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-13T09:23:16" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:33:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2863,10 +2867,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName ]が　ひんしです</Text>
+			<Text>[Name:PokemonName ]が　ひん死です</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-11-27T13:11:17" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:33:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2930,7 +2934,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fmission_log_act44">
+		Label="msg_fmission_log_act44"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonName ]のPPが　すくない！</Text>
@@ -2970,7 +2975,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fmission_log_act45">
+		Label="msg_fmission_log_act45"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PMS Idx="0" ]</Text>

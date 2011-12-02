@@ -297,15 +297,15 @@ plc_girl4_03_06,7,8</Comment>
 あらわれます▼
 もりのひろば　に
 あらわれた　ポケモンは▼
-きっと　あなたの　なかまに
-なってくれます▼
+きっと　あなたの
+なかまに　なってくれます▼
 また　ひろばにいる　ポケモンを
 「もりのおく」に　いどうさせれば▼
 いつまでも　もりのおくで
 あなたを　まってくれるでしょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:13:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -318,15 +318,15 @@ plc_girl4_03_06,7,8</Comment>
 あらわれます▼
 森の広場　に
 あらわれた　ポケモンは▼
-きっと　あなたの　仲間に
-なってくれます▼
+きっと　あなたの
+仲間に　なってくれます▼
 また　広場にいる　ポケモンを
 「森の奥」に　移動させれば▼
 いつまでも　森の奥で
 あなたを　待ってくれるでしょう▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:13:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -784,7 +784,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_tutorial_firststep_01">
+		Label="plc_tutorial_firststep_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ようこそ　ハイリンクへ▼
@@ -805,11 +806,11 @@ invation.mstxtのplc_mono_01を移動</Comment>
 			<Text>ようこそ　ハイリンクへ▼
 ……　……　……
 ……おや？▼
-そのようすだと　ここが　どこか
+その様子だと　ここが　どこか
 わからない　ようじゃな▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-06T13:21:35" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:19:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -840,7 +841,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_tutorial_firststep_02">
+		Label="plc_tutorial_firststep_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ここは　ハイリンク……
@@ -860,14 +862,14 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ここは　ハイリンク……
-ひとと　ひとを　つなぐ▽
-ふしぎな　ばしょじゃ▼
-ちかくにいる　ぼうけんしゃと
-きょうりょくし　たすけあう　ために▽
-ちからを　みがく　ばしょ　でもある▼</Text>
+人と　人を　つなぐ▽
+不思議な　場所じゃ▼
+近くにいる　冒険者と
+協力し　助けあう　ために▽
+力を　磨く　場所でもある▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-13T11:56:44" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:20:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -897,16 +899,17 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_tutorial_firststep_03">
+		Label="plc_tutorial_firststep_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……　……ふむ
+			<Text>……　……　……ふむ
 ことばでは　つたわらない　であろう▼
 おぬしも　ぼうけんしゃ　なら
 ちからを　みがくのが　よいな……▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-06T13:46:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:21:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -914,13 +917,13 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……　……ふむ
-ことばでは　つたわらない　であろう▼
-おぬしも　ぼうけんしゃ　なら
-ちからを　みがくのが　よいな……▼</Text>
+			<Text>……　……　……ふむ
+言葉では　伝わらない　であろう▼
+おぬしも　冒険者なら
+力を　磨くのが　よいな……▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-13T11:56:44" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:20:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -950,7 +953,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_tutorial_firststep_04">
+		Label="plc_tutorial_firststep_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>まずは　この　ハイルツリーに
@@ -968,12 +972,12 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>まずは　この　ハイルツリーに
-はなしかけて　ミッションを　うけるのじゃ▼
+話しかけて　ミッションを　受けるのじゃ▼
 そして　ハイルツリーに
-おぬしの　ちからを　とどけてみせよ！</Text>
+おぬしの　力を　届けてみせよ！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-13T11:56:44" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:21:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1006,7 +1010,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_tutorial_mission_01">
+		Label="plc_tutorial_mission_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>うむ　ミッションを
@@ -1014,18 +1019,18 @@ invation.mstxtのplc_mono_01を移動</Comment>
 まずは　きのみさがし　か……
 はじめての　おまえさんには▽
 ちょうどよい　ミッションじゃ▼
-よいか　まちや　みちに
+よいか！　まちや　みちに
 ひかる　ばしょが　あるはずだ▼
-そこに　きのみが　おちている
-よおく　さがすのだぞ▼
+そこに　きのみが　おちている！
+よおく　しらべて　さがすのだぞ▼
 ミッションが　おわったら
 また　もどってくるがよい▽
 あたらしい　ちからを　さずけよう……▼
 はなしは　おわりだ
 さあゆけ！　いってくるのだ！！▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-13T12:11:39" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:22:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1034,22 +1039,22 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>うむ　ミッションを
-うけることが　できたようじゃな▼
+受けることが　できたようじゃな▼
 まずは　きのみさがし　か……
 はじめての　おまえさんには▽
 ちょうどよい　ミッションじゃ▼
-よいか　まちや　みちに
-ひかる　ばしょが　あるはずだ▼
-そこに　きのみが　おちている
-よおく　さがすのだぞ▼
+よいか！　街や　道に
+光る　場所が　あるはずだ▼
+そこに　きのみが　落ちている！
+よおく　調べて　探すのだぞ▼
 ミッションが　おわったら
-また　もどってくるがよい▽
-あたらしい　ちからを　さずけよう……▼
-はなしは　おわりだ
+また　戻ってくるがよい▽
+新しい　力を　授けよう……▼
+話は　終わりだ
 さあゆけ！　いってくるのだ！！▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-13T12:35:10" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:22:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1080,11 +1085,12 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_tutorial_mission_02">
+		Label="plc_tutorial_mission_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おお　もどってきたか……▼
-……　むむ
+むむ
 すばらしい　すばらしいぞ！▽
 ミッションを　せいこう　させたな！▼
 よしよし　やくそく　どおり
@@ -1093,8 +1099,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 わしが　あたえるのでは　ない▽
 ハイルツリーから　うけとるのだ▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-13T12:21:06" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:23:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1102,18 +1108,18 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おお　もどってきたか……▼
-……　むむ
+			<Text>おお　戻ってきたか……▼
+むむ！
 すばらしい　すばらしいぞ！▽
-ミッションを　せいこう　させたな！▼
-よしよし　やくそく　どおり
-あたらしい　ちからを　さずけよう……▼
+ミッションを　成功させたな！▼
+よしよし　約束どおり
+新しい　力を　授けよう……▼
 とは　いってもな
-わしが　あたえるのでは　ない▽
-ハイルツリーから　うけとるのだ▼</Text>
+わしが　与えるのでは　ない▽
+ハイルツリーから　受け取るのだ▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-13T12:35:03" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:24:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1138,11 +1144,12 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_tutorial_mission_03">
+		Label="plc_tutorial_mission_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おお　もどってきたか……▼
-……　むむ
+……むむ
 ざんねん　だったな▽
 ミッションは　しっぱい　だったか……▼
 さいしょは　むずかしい　だろうが
@@ -1151,8 +1158,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 よし　がんばった　おぬしに
 これを　やろう！▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-13T12:33:47" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:25:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1160,18 +1167,18 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おお　もどってきたか……▼
-……　むむ
-ざんねん　だったな▽
-ミッションは　しっぱい　だったか……▼
-さいしょは　むずかしい　だろうが
-なんども　ちょうせん　してみるがよい▽
-すこしずつ　うまく　なるじゃろう▼
+			<Text>おお　戻ってきたか……▼
+……むむ
+残念だったな▽
+ミッションは　失敗だったか……▼
+最初は　難しい　だろうが
+何度も　挑戦してみるがよい▽
+少しずつ　うまく　なるじゃろう▼
 よし　がんばった　おぬしに
 これを　やろう！▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-13T12:35:03" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:24:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1196,7 +1203,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_tutorial_mission_04">
+		Label="plc_tutorial_mission_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さて　やくそく　どおり
@@ -1214,14 +1222,14 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さて　やくそく　どおり
-あたらしい　ちからを　さずけよう……▼
+			<Text>さて　約束どおり
+新しい　力を　授けよう……▼
 とは　いってもな
-わしが　あたえるのでは　ない▽
-ハイルツリーから　うけとるのだ▼</Text>
+わしが　与えるのでは　ない▽
+ハイルツリーから　受け取るのだ▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-13T12:35:03" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:25:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1246,17 +1254,18 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_tutorial_mission_05">
+		Label="plc_tutorial_mission_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ハイルツリーには　ひとびとの
 おもいが　あつまる▼
-そのおもいが　きょうめいし
+その　おもいが　きょうめいし
 ぼうけんしゃを　たすける▽
 デルパワー　となるのじゃ▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-13T12:34:54" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:26:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1264,14 +1273,14 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハイルツリーには　ひとびとの
-おもいが　あつまる▼
-そのおもいが　きょうめいし
-ぼうけんしゃを　たすける▽
+			<Text>ハイルツリーには　人々の
+思いが　集まる▼
+その思いが　共鳴し
+冒険者を　助ける▽
 デルパワー　となるのじゃ▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-13T12:35:03" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:25:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1296,7 +1305,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_tutorial_mission_06">
+		Label="plc_tutorial_mission_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>まあ　うけとってみれば　わかるだろう
@@ -1312,12 +1322,12 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まあ　うけとってみれば　わかるだろう
-さあ　ハイルツリーに　はなしかけて▽
-デルパワーを　うけとるのじゃ！</Text>
+			<Text>まあ　受け取ってみれば　わかるだろう
+さあ　ハイルツリーに　話しかけて▽
+デルパワーを　受け取るのじゃ！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-13T12:48:31" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:26:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1342,7 +1352,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_tutorial_power_01">
+		Label="plc_tutorial_power_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>デルパワーを　うけとれた　ようじゃな▼
@@ -1371,25 +1382,25 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>デルパワーを　うけとれた　ようじゃな▼
+			<Text>デルパワーを　受け取れた　ようじゃな▼
 これで　おぬしも
-りっぱな　ぼうけんしゃ　じゃ▼
-デルパワーを　つかえば
-ちかくにいる　ぼうけんしゃを▽
-たすけることが　できるのじゃ！▼
-ただし　デルパワーを　つかうには
-デルダマが　ひつよう　じゃぞ▼
-ときどき　ミッションを　うけて
-デルダマを　あつめるのが　よいだろう▼
+立派な　冒険者じゃ▼
+デルパワーを　使えば
+近くにいる　冒険者を▽
+助けることが　できるのじゃ！▼
+ただし　デルパワーを　使うには
+デルダマが　必要じゃぞ▼
+ときどき　ミッションを　受けて
+デルダマを　集めるのが　よいだろう▼
 ……　さてさて
-おしえられるのも　ここまでじゃ▼
-あとは　おぬしが　かんがえ
-こうどうして　おぼえる　のじゃ▼
-すばらしい　ぼうけんの
-たびに　なることを　いのろう……▼</Text>
+教えられるのも　ここまでじゃ▼
+あとは　おぬしが　考え
+行動して　覚える　のじゃ▼
+すばらしい　冒険の
+旅に　なることを　いのろう……▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-13T12:49:14" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:27:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1414,17 +1425,18 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_tutorial_power_02">
+		Label="plc_tutorial_power_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>デルパワーは　Cギアの
 すれちがいログから　つかえます▼
 すれちがいログの　がめんにある
 みどりいろの　さんかくマークを▽
-おしてみて　ください</Text>
+タッチしてみて　ください</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-25T14:35:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:27:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1432,14 +1444,14 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>デルパワーは　Cギアの
-すれちがいログから　つかえます▼
-すれちがいログの　がめんにある
-みどりいろの　さんかくマークを▽
-おしてみて　ください</Text>
+			<Text>デルパワーは　Ｃ－ＧＥＡＲの
+すれちがいログから　使えます▼
+すれちがいログの　画面にある
+緑色の　さんかくマークを▽
+タッチしてみて　ください</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-25T14:35:19" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:27:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1471,7 +1483,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_sw_oldman_01">
+		Label="plc_sw_oldman_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ハイリンクについて
@@ -1519,7 +1532,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_sw_oldman_02">
+		Label="plc_sw_oldman_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>フェスミッション　とは</Text>
@@ -1565,7 +1579,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_sw_oldman_03">
+		Label="plc_sw_oldman_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>デルパワー　とは</Text>
@@ -1611,7 +1626,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_sw_oldman_04">
+		Label="plc_sw_oldman_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>やめる</Text>
@@ -1657,7 +1673,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_sw_oldman_05">
+		Label="plc_sw_oldman_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ハイリンクは　ぼうけんしゃを
@@ -1674,13 +1691,13 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハイリンクは　ぼうけんしゃを
-つなぐ　ふしぎな　しま……▼
-おおくの　ぼうけんしゃと　であい
-おのれを　みがくのじゃ</Text>
+			<Text>ハイリンクは　冒険者を
+つなぐ　不思議な　島……▼
+多くの　冒険者と　であい
+己を　磨くのじゃ</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-26T07:11:00" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:28:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1709,7 +1726,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_sw_oldman_06">
+		Label="plc_sw_oldman_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ぼうけんしゃたちの　ちからを
@@ -1735,22 +1753,23 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼうけんしゃたちの　ちからを
-ためす　しれん　といえるだろう▼
+			<Text>冒険者たちの　力を　見極める
+試練と　いえるだろう▼
 ミッションに　クリアすることで
 デルダマや　デルパワーといった▽
-おおきな　ちからを　えるのじゃ▼
-ハイルツリーに　はなしかけて
-ミッションを　かいさい　するか▼
-Ｃギアの　「すれちがいログ」から
-だれかが　かいさいした　ミッションに▽
-さんか　することも　できる▼
-ちかくにいる　ぼうけんしゃと
-きょうりょく　すれば▽
-よりおおきな　ちからを　えるであろう▼</Text>
+大きな　力を　得るのじゃ▼
+ハイルツリーに　話しかけて
+ミッションを　開催するか▼
+Ｃ－ＧＥＡＲの
+「すれちがいログ」から　だれかが▽
+開催した　ミッションに▽
+参加することも　できる▼
+近くにいる　冒険者と
+協力すれば▽
+より大きな　力を　得るであろう▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-26T05:57:20" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:31:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1779,7 +1798,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_sw_oldman_07">
+		Label="plc_sw_oldman_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ぼうけんしゃを　たすける
@@ -1788,15 +1808,15 @@ invation.mstxtのplc_mono_01を移動</Comment>
 とうろく　することが　できるのじゃ▼
 Ｃギアの
 「すれちがいログ」から▽
-すれちがった　あいてにむけて▽
+すれちがった　あいてに　むけて▽
 つかうことが　できる▼
 デルパワーを　つかうには
 デルダマが　ひつよう　じゃ▼
 ミッションを　うけて
 デルダマを　あつめるのが　よかろう▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-26T05:53:58" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:31:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1804,21 +1824,21 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼうけんしゃを　たすける
-ふしぎな　ちから　じゃな▼
-Ｃギアに　３つまで
-とうろく　することが　できるのじゃ▼
-Ｃギアの
+			<Text>冒険者を　助ける
+不思議な　力じゃな▼
+Ｃ－ＧＥＡＲに　３つまで
+登録することが　できるのじゃ▼
+Ｃ－ＧＥＡＲの
 「すれちがいログ」から▽
-すれちがった　あいてにむけて▽
-つかうことが　できる▼
-デルパワーを　つかうには
-デルダマが　ひつよう　じゃ▼
-ミッションを　うけて
-デルダマを　あつめるのが　よかろう▼</Text>
+すれちがった　相手に　向けて▽
+使うことが　できる▼
+デルパワーを　使うには
+デルダマが　必要じゃ▼
+ミッションを　受けて
+デルダマを　集めるのが　よかろう▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-26T05:54:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:31:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1847,7 +1867,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_sw_oldman_08">
+		Label="plc_sw_oldman_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>まずは　ハイルツリーに　はなしかけて
@@ -1864,13 +1885,13 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まずは　ハイルツリーに　はなしかけて
-ミッションを　うけるのじゃ▼
-そして　おぬしの　おもいを
-ハイルツリーに　とどけるのじゃ！</Text>
+			<Text>まずは　ハイルツリーに　話しかけて
+ミッションを　受けるのじゃ▼
+そして　おぬしの　思いを
+ハイルツリーに　届けるのじゃ！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-22T14:03:57" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:19:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1899,7 +1920,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_sw_oldman_09">
+		Label="plc_sw_oldman_09"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さあ　ハイルツリーから
@@ -1915,10 +1937,10 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>さあ　ハイルツリーから
-デルパワーを　うけとるのじゃ！</Text>
+デルパワーを　受け取るのじゃ！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-22T14:03:57" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:19:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1947,7 +1969,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_sw_girl4_r_01">
+		Label="plc_sw_girl4_r_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ハイルツリーについて
@@ -1963,10 +1986,10 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハイルツリーについて
-しりたいことは　ありますか？</Text>
+知りたいことは　ありますか？</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-26T07:18:52" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:19:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -1988,7 +2011,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_sw_girl4_r_02">
+		Label="plc_sw_girl4_r_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ミッションの　しゅるい</Text>
@@ -2002,10 +2026,10 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミッションの　しゅるい</Text>
+			<Text>ミッションの種類</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-26T07:18:52" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:19:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2034,7 +2058,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_sw_girl4_r_03">
+		Label="plc_sw_girl4_r_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>デルパワーの　しゅるい</Text>
@@ -2048,10 +2073,10 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>デルパワーの　しゅるい</Text>
+			<Text>デルパワーの種類</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-26T07:18:52" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:18:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2080,7 +2105,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_sw_girl4_r_04">
+		Label="plc_sw_girl4_r_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>やめる</Text>
@@ -2126,7 +2152,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_sw_girl4_r_05">
+		Label="plc_sw_girl4_r_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ハイルツリーから　うける
@@ -2149,19 +2176,19 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハイルツリーから　うける
+			<Text>ハイルツリーから　受ける
 フェスミッションは▼
-ぼうけんを　すすめることで
-しゅるいが　ふえて　いきます▼
-ぼうけんの　なかで
-であった　ひとに　はなしかけたり▼
-トレーナーと　たたかう　ことで
-ミッションが　ふえて　いくでしょう▼
-ひとびとの　おもいに
-みみを　かたむけて　ください▼</Text>
+冒険を　進めることで
+種類が　増えて　いきます▼
+冒険の　中で
+であった　人に　話しかけたり▼
+トレーナーと　戦う　ことで
+ミッションが　増えて　いくでしょう▼
+人々の　思いに
+耳を　傾けて　ください▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-26T07:19:51" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:18:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2190,7 +2217,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_sw_girl4_r_06">
+		Label="plc_sw_girl4_r_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ハイリンクレベルを　あげることで
@@ -2212,16 +2240,16 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハイリンクレベルを　あげることで
-あたらしい　デルパワーを▽
-うけとる　ことが　できます▼
+新しい　デルパワーを▽
+受け取ることが　できます▼
 ハイリンクレベルは
 フェスミッションを　クリアしたときに▽
 あがることが　あります▼
-スコアが　おおいほど
+スコアが　多いほど
 レベルが　あがりやすい　ようです▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-26T07:33:51" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:18:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2250,7 +2278,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_sw_girl4_r_07">
+		Label="plc_sw_girl4_r_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ハイルツリーは　すこしずつ
@@ -2267,13 +2296,13 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハイルツリーは　すこしずつ
-せいちょう　しています▼
-まるで　ひとびとの
-おもいに　こたえるかの　ように</Text>
+			<Text>ハイルツリーは　少しずつ
+成長しています▼
+まるで　人々の
+思いに　応えるかの　ように</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-26T07:33:54" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:17:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2302,7 +2331,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_sw_girl4_l_01">
+		Label="plc_sw_girl4_l_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さんかしゃ　について
@@ -2317,11 +2347,11 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さんかしゃ　について
-しりたいことは　ありますか？</Text>
+			<Text>参加者について
+知りたいことは　ありますか？</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-26T08:28:44" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:17:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2350,7 +2380,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_sw_girl4_l_02">
+		Label="plc_sw_girl4_l_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さんかしゃ　とは</Text>
@@ -2364,10 +2395,10 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さんかしゃ　とは</Text>
+			<Text>参加者とは</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-26T08:28:44" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:17:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2396,7 +2427,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_sw_girl4_l_03">
+		Label="plc_sw_girl4_l_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>きょうりょく　とは</Text>
@@ -2410,10 +2442,10 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうりょく　とは</Text>
+			<Text>協力とは</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-26T08:28:44" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:17:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2442,7 +2474,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_sw_girl4_l_04">
+		Label="plc_sw_girl4_l_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>やめる</Text>
@@ -2488,7 +2521,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_sw_girl4_l_05">
+		Label="plc_sw_girl4_l_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>フェスミッションを　かいさい　すると
@@ -2510,18 +2544,18 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フェスミッションを　かいさい　すると
-ちかくにいる　ぼうけんしゃは▼
-Ｃギアの　「すれちがいログ」から
-おなじミッションに　さんか　できるわ▼
-ミッションの　おさそいが
-とどくまで　じかんが▽
+			<Text>フェスミッションを　開催すると
+近くにいる　冒険者は▼
+Ｃ－ＧＥＡＲの　「すれちがいログ」から
+同じミッションに　参加できるわ▼
+ミッションの　お誘いが
+届くまで　時間が▽
 かかることも　あるけど▼
 「すれちがいログ」を　みて
-しばらく　まっていれば　だいじょうぶよ▼</Text>
+しばらく　待っていれば　大丈夫よ▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-26T08:30:21" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:17:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2550,7 +2584,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_sw_girl4_l_06">
+		Label="plc_sw_girl4_l_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おなじ　フェスミッションに
@@ -2563,16 +2598,14 @@ invation.mstxtのplc_mono_01を移動</Comment>
 だれの　せかいでも
 おなじ　ばしょで　みつかるの▼
 こえを　かけあえば
-クリアも　かんたんに▽
-なるんじゃ　ないかしら？▼
+クリアも　かんたんに　なるかもね？▼
 そうそう　スコアは　たまにね
 とどかない　ことも　あるわ▼
-おたがいの　せかいが
-うまいこと　きょうめい▽
-しないときも　あるのね▼</Text>
+おたがいの　せかいが　うまいこと
+きょうめい　しないときも　あるのね▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-26T08:26:03" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:16:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2580,26 +2613,24 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おなじ　フェスミッションに
-さんか　しているなら▼
-じぶん　だけでなく
-さんかしゃの　こうどうも▽
+			<Text>同じ　フェスミッションに
+参加しているなら▼
+自分だけでなく
+参加者の　行動も▽
 スコアとして　カウント　されるわ▼
 それとね　ミッションで
-さがす　どうぐは▼
-だれの　せかいでも
-おなじ　ばしょで　みつかるの▼
-こえを　かけあえば
-クリアも　かんたんに▽
-なるんじゃ　ないかしら？▼
+探す　道具は▼
+だれの　世界でも
+同じ　場所で　みつかるの▼
+声を　かけあえば
+クリアも　簡単に　なるかもね？▼
 そうそう　スコアは　たまにね
-とどかない　ことも　あるわ▼
-おたがいの　せかいが
-うまいこと　きょうめい▽
-しないときも　あるのね▼</Text>
+届かない　ことも　あるわ▼
+お互いの　世界が　うまいこと
+共鳴しないときも　あるのね▼</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-26T08:26:43" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:15:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -2628,7 +2659,8 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_sw_girl4_l_07">
+		Label="plc_sw_girl4_l_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ぼうけんしゃが　ちからを
@@ -2645,13 +2677,13 @@ invation.mstxtのplc_mono_01を移動</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼうけんしゃが　ちからを
+			<Text>冒険者が　力を
 あわせれば　ハイリンクに▼
-より　おおきな　ちからが
-あつまると　おもうわ</Text>
+より　大きな　力が
+集まると　思うわ</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-26T08:31:47" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:14:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"

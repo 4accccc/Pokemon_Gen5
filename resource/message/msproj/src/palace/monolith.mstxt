@@ -158,10 +158,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>記録を　見る</Text>
+			<Text>記録を　みる</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-12T05:52:33" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:31:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -223,7 +223,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_mono_title_info_001">
+		Label="msg_mono_title_info_001"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>フェスミッションを　うけてください！</Text>
@@ -264,7 +265,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_mono_title_info_002">
+		Label="msg_mono_title_info_002"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>デルパワーを
@@ -280,10 +282,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>デルパワーを
-うけとって　ください！</Text>
+受け取って　ください！</Text>
 			<TextModifiedBy
-				User="masafumi_saitou:W00225"
-				Time="2011-11-12T06:39:25" />
+				User="matsumiya:W00224"
+				Time="2011-12-01T12:32:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -542,7 +544,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_mono_st_009">
+		Label="msg_mono_st_009"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かいさいしたミッション</Text>
@@ -585,7 +588,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_mono_st_010">
+		Label="msg_mono_st_010"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さんかしたミッション</Text>
@@ -628,7 +632,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_mono_st_011">
+		Label="msg_mono_st_011"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さいこうにんずう</Text>
@@ -671,7 +676,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_mono_st_012">
+		Label="msg_mono_st_012"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>トップスコア</Text>
@@ -714,7 +720,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_mono_st_013">
+		Label="msg_mono_st_013"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Digit:5digits ]かい</Text>
@@ -757,7 +764,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_mono_st_014">
+		Label="msg_mono_st_014"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Digit:5digits ]かい</Text>
@@ -800,7 +808,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_mono_st_015">
+		Label="msg_mono_st_015"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Digit:5digits ]かい</Text>
@@ -843,7 +852,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_mono_st_016">
+		Label="msg_mono_st_016"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Digit:3digits ]にん</Text>
@@ -886,7 +896,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_mono_st_017">
+		Label="msg_mono_st_017"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[Digit:5digits ]かい</Text>

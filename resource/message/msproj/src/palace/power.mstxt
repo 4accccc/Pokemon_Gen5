@@ -1616,7 +1616,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_power_49">
+		Label="plc_power_49"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>むこう　ID NULL</Text>
@@ -1657,7 +1658,8 @@ GPOWER_ID_NULLに相当
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_power_50">
+		Label="plc_power_50"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>たんさくパワー　＋</Text>
@@ -1696,7 +1698,8 @@ GPOWER_ID_NULLに相当
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_power_51">
+		Label="plc_power_51"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>たんさくパワー　＋＋</Text>
@@ -1735,7 +1738,8 @@ GPOWER_ID_NULLに相当
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_power_52">
+		Label="plc_power_52"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>たんさくパワー　＋＋＋</Text>
@@ -1774,7 +1778,8 @@ GPOWER_ID_NULLに相当
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_power_53">
+		Label="plc_power_53"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かくしあなパワー　＋</Text>
@@ -1813,7 +1818,8 @@ GPOWER_ID_NULLに相当
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_power_54">
+		Label="plc_power_54"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かくしあなパワー　＋＋</Text>
@@ -1852,7 +1858,8 @@ GPOWER_ID_NULLに相当
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_power_55">
+		Label="plc_power_55"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かくしあなパワー　＋＋＋</Text>
@@ -1891,7 +1898,8 @@ GPOWER_ID_NULLに相当
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_power_56">
+		Label="plc_power_56"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おまじないパワー　＋</Text>
@@ -1930,7 +1938,8 @@ GPOWER_ID_NULLに相当
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_power_57">
+		Label="plc_power_57"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おまじないパワー　＋＋</Text>
@@ -1969,7 +1978,8 @@ GPOWER_ID_NULLに相当
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_power_58">
+		Label="plc_power_58"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おまじないパワー　＋＋＋</Text>
@@ -2008,7 +2018,8 @@ GPOWER_ID_NULLに相当
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_power_59">
+		Label="plc_power_59"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>たんさくパワー　Ｓ</Text>
@@ -2047,7 +2058,8 @@ GPOWER_ID_NULLに相当
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_power_60">
+		Label="plc_power_60"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>たんさくパワー　ＭＡＸ</Text>
@@ -2086,7 +2098,8 @@ GPOWER_ID_NULLに相当
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_power_61">
+		Label="plc_power_61"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かくしあなパワー　Ｓ</Text>
@@ -2125,7 +2138,8 @@ GPOWER_ID_NULLに相当
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_power_62">
+		Label="plc_power_62"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>かくしあなパワー　ＭＡＸ</Text>
@@ -2164,7 +2178,8 @@ GPOWER_ID_NULLに相当
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_power_63">
+		Label="plc_power_63"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おまじないパワー　Ｓ</Text>
@@ -2203,7 +2218,8 @@ GPOWER_ID_NULLに相当
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="plc_power_64">
+		Label="plc_power_64"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>おまじないパワー　ＭＡＸ</Text>
