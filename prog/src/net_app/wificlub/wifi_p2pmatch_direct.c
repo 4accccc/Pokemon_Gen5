@@ -1194,7 +1194,14 @@ static int _playerDirectNoregParent1( WIFIP2PMATCH_WORK *wk, int seq )
     _Menu_RegulationDelete(wk);
     if( wk->bb_party){
       _CheckRegulation_BBox(wk->pRegulation, wk->bb_party, &fail_bit );
-      _Menu_RegulationSetup(wk, fail_bit, wk->pParentWork->shooter , REGWIN_TYPE_NG_BBOX);
+
+      if((wk->state == WIFIP2PMATCH_STATE_TALK) || (wk->state == WIFIP2PMATCH_STATE_MACHINE)){
+        _Menu_RegulationSetup(wk, fail_bit, wk->pParentWork->battleBoard.shooterSelect, REGWIN_TYPE_NG_BBOX);
+      }
+      else
+      {
+        _Menu_RegulationSetup(wk, fail_bit, wk->pParentWork->shooter , REGWIN_TYPE_NG_BBOX);
+      }
       _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT2);
     }
     else{
