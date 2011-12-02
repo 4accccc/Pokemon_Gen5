@@ -2212,6 +2212,9 @@ static void RESORT_CROWD_LINE_SetUp( RESORT_CROWD_LINE *p_wk, RESORT_CROWD_MOVE 
           if( !RESORT_CROWD_PEOPLE_WK_IsNewData(p_wk->p_move[i]) )
           {
             RESORT_CROWD_PEOPLE_WK_StartMove( p_wk->p_move[i], AC_WALK_U_8F, p_wk->move_dir, p_wk->x );
+            p_wk->wait  = RESORT_CROWD_LINE_WAIT_RND;
+            p_wk->start_index = i+1;
+            p_wk->start_index %= RESORT_CROWD_MOVE_LINE_PEOPLE_MAX;
           }
         }
       }
