@@ -210,7 +210,7 @@ static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_boy4[] = {
 
 static const u16 res_f_wheel_file_swrival[] = {
  NARC_data_demo3d_fmdl_swrival_nsbmd,
- NARC_data_demo3d_fmdl_t4x4x16_u_nsbtp,
+ NARC_data_demo3d_fmdl_t4x4x17_u_nsbtp,
  NARC_data_demo3d_sub_obj_nsbca,
 };
 
