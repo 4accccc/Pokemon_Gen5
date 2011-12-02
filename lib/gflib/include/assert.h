@@ -46,9 +46,9 @@ extern "C" {
     #define GF_ASSERT_LIGHT(exp)				((void)0);
     #define GF_ASSERT_MSG_LIGHT(exp, ...)		((void)0);
     #define GF_ASSERT_HEAVY(exp)		\
-    	(exp)? ((void)0): GFL_Assert(__FILE__, __LINE__, #exp);
+    	(exp)? ((void)0): GFL_Assert("", 0, #exp);
     #define GF_ASSERT_MSG_HEAVY(exp, ... )		\
-    	(exp)? ((void)0): GFL_AssertMsg(__FILE__, __LINE__, __VA_ARGS__ );
+    	(exp)? ((void)0): GFL_AssertMsg("", 0, __VA_ARGS__ );
     #define GF_PANIC(...)         OS_Panic(__VA_ARGS__)
   #endif
 
