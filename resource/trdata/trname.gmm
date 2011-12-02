@@ -3661,8 +3661,8 @@
 	</row>
 
 	<row id="veteranm_20">
-		<language name="JPN" width="216">チヅル</language>
-		<language name="JPN_KANJI" width="216">チヅル</language>
+		<language name="JPN" width="216">ソウジロウ</language>
+		<language name="JPN_KANJI" width="216">ソウジロウ</language>
 	</row>
 
 	<row id="veteranw_17">
@@ -4396,23 +4396,23 @@
 	</row>
 
 	<row id="childcare_11">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">チヅル</language>
+		<language name="JPN_KANJI" width="216">チヅル</language>
 	</row>
 
 	<row id="kindergartenm_12">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">カイト</language>
+		<language name="JPN_KANJI" width="216">カイト</language>
 	</row>
 
 	<row id="tanpan_35">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">ヘイタ</language>
+		<language name="JPN_KANJI" width="216">ヘイタ</language>
 	</row>
 
 	<row id="mini_27">
-		<language name="JPN" width="216">●</language>
-		<language name="JPN_KANJI" width="216">●</language>
+		<language name="JPN" width="216">ヒヨリ</language>
+		<language name="JPN_KANJI" width="216">ヒヨリ</language>
 	</row>
 
 	<flowchart-group-list>
