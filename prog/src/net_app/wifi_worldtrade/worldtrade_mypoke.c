@@ -433,9 +433,9 @@ static void DelCellActor( WORLDTRADE_WORK *wk )
 static const info_bmpwin_table[][4]={
 	{   2,  1,  12,  2, },	// ポケモンのニックネーム
 #ifdef BUGFIX_AF_BTS7715_20100916
-	{   7,  4,  8,  2, },	// ポケモンの種族名
+	{   7,  4,  9,  2, },	// ポケモンの種族名
 #else //BUGFIX_AF_BTS7715_20100916
-	{   8,  4,  8,  2, },	// ポケモンの種族名
+	{   8,  4,  9,  2, },	// ポケモンの種族名
 #endif //BUGFIX_AF_BTS7715_20100916
 	{  11,  1,  4,  2, },	// 「レベル」
 	{  14,  1,  4,  2, },	// レベル
