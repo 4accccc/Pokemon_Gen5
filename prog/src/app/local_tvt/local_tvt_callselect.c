@@ -14,6 +14,7 @@
 #include "system/gfl_use.h"
 #include "sound/pm_sndsys.h"
 #include "app/app_taskmenu.h"
+#include "system/bmp_winframe.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -400,6 +401,9 @@ s32 LOCAL_TVT_CALLSELECT_GetSelect( const LOCAL_TVT_CALLSELECT *cp_wk )
 static void LOCAL_TVT_CALLSELECT_LoadResource( LOCAL_TVT_CALLSELECT *p_wk, HEAPID heapID )
 {
   ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( ARCID_COMM_TVT_GRA , heapID ); 
+
+
+  BmpWinFrame_GraphicSet( LTVT_FRAME_SUB_MSG , LTVT_FRAME_SUB_CGX, LTVT_PLT_BG_SUB_WINFRAME , 0 , heapID );
 
   //セルリソース
   p_wk->res[RESID_OBJ_PLT]  = GFL_CLGRP_PLTT_RegisterComp( p_handle , 
