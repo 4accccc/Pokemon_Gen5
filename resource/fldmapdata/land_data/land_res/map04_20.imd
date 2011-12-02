@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-11-18T17:08:01" source="map04_20.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-12-01T21:31:08" source="autumn00_00_all.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2011-11-18T17:08:01" source="map04_20.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2011-12-01T21:31:08" source="autumn00_00_all.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -1756,7 +1756,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="13" name="ki02ax"
+	<material index="13" name="ki02ax1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="both"
 		alpha="31"
@@ -1780,7 +1780,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="14" name="ki02bx"
+	<material index="14" name="ki02bx1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -1852,7 +1852,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="17" name="ki02dx"
+	<material index="17" name="ki02dx1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -7892,9 +7892,9 @@
 	<polygon index="30" name="polygon30"
 		vertex_size="24" polygon_size="6"
 		triangle_size="0" quad_size="6"
-		volume_min="-0.375000 0.353027 -1.937500"
-		volume_max="1.875000 0.353027 4.312500"
-		volume_r="4.371826"
+		volume_min="-0.375000 0.337402 -1.937500"
+		volume_max="1.875000 0.337402 4.312500"
+		volume_r="4.370605"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -7905,11 +7905,11 @@
 					<mtx idx="0"/>
 					<tex st="47.125000 0.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_xyz xyz="0.625000 0.353027 4.312500"/>
+					<pos_xyz xyz="0.625000 0.337402 4.312500"/>
 					<tex st="32.250000 0.000000"/>
 					<pos_xz xz="0.625000 3.812500"/>
 					<tex st="32.250000 16.000000"/>
-					<pos_xy xy="-0.375000 0.353027"/>
+					<pos_xy xy="-0.375000 0.337402"/>
 					<tex st="47.125000 16.000000"/>
 					<pos_xz xz="-0.375000 4.312500"/>
 					<tex st="32.250000 16.000000"/>
@@ -7917,7 +7917,7 @@
 					<tex st="47.125000 16.000000"/>
 					<pos_xz xz="0.625000 3.312500"/>
 					<tex st="47.125000 0.000000"/>
-					<pos_xy xy="-0.375000 0.353027"/>
+					<pos_xy xy="-0.375000 0.337402"/>
 					<tex st="32.250000 0.000000"/>
 					<pos_xz xz="-0.375000 3.812500"/>
 					<tex st="47.125000 0.000000"/>
@@ -7925,7 +7925,7 @@
 					<tex st="32.250000 0.000000"/>
 					<pos_xz xz="1.875000 0.062500"/>
 					<tex st="32.250000 16.000000"/>
-					<pos_xy xy="0.875000 0.353027"/>
+					<pos_xy xy="0.875000 0.337402"/>
 					<tex st="47.125000 16.000000"/>
 					<pos_xz xz="0.875000 0.312500"/>
 					<tex st="32.250000 16.000000"/>
@@ -7933,7 +7933,7 @@
 					<tex st="47.125000 16.000000"/>
 					<pos_xz xz="1.875000 -0.312500"/>
 					<tex st="47.125000 0.000000"/>
-					<pos_xy xy="0.875000 0.353027"/>
+					<pos_xy xy="0.875000 0.337402"/>
 					<tex st="32.250000 0.000000"/>
 					<pos_xz xz="0.875000 0.062500"/>
 					<tex st="47.125000 0.000000"/>
@@ -7941,7 +7941,7 @@
 					<tex st="32.250000 0.000000"/>
 					<pos_xz xz="1.875000 -1.437500"/>
 					<tex st="32.250000 16.000000"/>
-					<pos_xy xy="0.875000 0.353027"/>
+					<pos_xy xy="0.875000 0.337402"/>
 					<tex st="47.125000 16.000000"/>
 					<pos_xz xz="0.875000 -0.937500"/>
 					<tex st="32.250000 16.000000"/>
@@ -7949,7 +7949,7 @@
 					<tex st="47.125000 16.000000"/>
 					<pos_xz xz="1.875000 -1.937500"/>
 					<tex st="47.125000 0.000000"/>
-					<pos_xy xy="0.875000 0.353027"/>
+					<pos_xy xy="0.875000 0.337402"/>
 					<tex st="32.250000 0.000000"/>
 					<pos_xz xz="0.875000 -1.437500"/>
 				</primitive>
@@ -8158,7 +8158,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface1" kind="mesh"
+	<node index="0" name="polySurface1210" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
