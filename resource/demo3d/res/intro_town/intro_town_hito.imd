@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino_hiroki" host="W00252" date="2011-11-17T17:39:30" source="intro_town_camera.mb"/>
+	<create user="fuchino_hiroki" host="W00252" date="2011-11-30T15:16:26" source="intro_town_camera.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="fuchino_hiroki" host="W00252" date="2011-11-17T17:39:30" source="intro_town_camera.mb"/>
+<original_create user="fuchino_hiroki" host="W00252" date="2011-11-30T15:16:26" source="intro_town_camera.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="4" xyz="-2.329834 0.099365 1.454834" whd="3.461914 1.275391 3.044922"/>
+<box_test pos_scale="4" xyz="-2.411133 0.099365 1.454834" whd="3.542969 1.275391 3.044922"/>
 
 <tex_image_array size="27">
 	<tex_image index="0" name="babygirl1.1"
@@ -1895,9 +1895,9 @@
 	<polygon index="7" name="polygon7"
 		vertex_size="8" polygon_size="2"
 		triangle_size="0" quad_size="2"
-		volume_min="-2.329834 1.375000 1.454834"
+		volume_min="-2.411133 1.375000 1.454834"
 		volume_max="1.132080 1.375000 3.261475"
-		volume_r="4.237549"
+		volume_r="4.282715"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -1916,13 +1916,13 @@
 					<tex st="0.000000 -64.000000"/>
 					<pos_xy xy="-0.468018 1.375000"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xz xz="-2.329834 3.261475"/>
+					<pos_xz xz="-2.411133 3.261475"/>
 					<tex st="64.000000 0.000000"/>
-					<pos_xy xy="-0.729736 1.375000"/>
+					<pos_xy xy="-0.811035 1.375000"/>
 					<tex st="64.000000 -64.000000"/>
-					<pos_xz xz="-0.729736 1.661621"/>
+					<pos_xz xz="-0.811035 1.661621"/>
 					<tex st="0.000000 -64.000000"/>
-					<pos_xy xy="-2.329834 1.375000"/>
+					<pos_xy xy="-2.411133 1.375000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -2243,7 +2243,7 @@
 		display_size="2"
 		vertex_size="24" polygon_size="6"
 		triangle_size="0" quad_size="6"
-		volume_min="-2.329834 0.112549 1.454834"
+		volume_min="-2.411133 0.112549 1.454834"
 		volume_max="1.132080 1.375000 4.500000"
 		volume_r="4.590576"
 	>
