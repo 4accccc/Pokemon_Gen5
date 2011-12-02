@@ -1949,19 +1949,6 @@ static u32 gethint_medic_dir( const TRHINT_WK *p_wk )
   // ブラック用テーブル
   const u32 msg_table_b[INFTR_DIR_MAX] =
   {
-    msg_hint_nurse_dir_u_01,
-    msg_hint_nurse_dir_d_01,
-    msg_hint_nurse_dir_l_01,
-    msg_hint_nurse_dir_r_01,
-    msg_hint_nurse_dir_lu_01,
-    msg_hint_nurse_dir_ru_01,
-    msg_hint_nurse_dir_ld_01,
-    msg_hint_nurse_dir_rd_01,
-  };
-
-  // ブラック用テーブル
-  const u32 msg_table_w[INFTR_DIR_MAX] =
-  {
     msg_hint_doctor_dir_u_01,
     msg_hint_doctor_dir_d_01,
     msg_hint_doctor_dir_l_01,
@@ -1970,6 +1957,19 @@ static u32 gethint_medic_dir( const TRHINT_WK *p_wk )
     msg_hint_doctor_dir_ru_01,
     msg_hint_doctor_dir_ld_01,
     msg_hint_doctor_dir_rd_01,
+  };
+
+  // ブラック用テーブル
+  const u32 msg_table_w[INFTR_DIR_MAX] =
+  {
+    msg_hint_nurse_dir_u_01,
+    msg_hint_nurse_dir_d_01,
+    msg_hint_nurse_dir_l_01,
+    msg_hint_nurse_dir_r_01,
+    msg_hint_nurse_dir_lu_01,
+    msg_hint_nurse_dir_ru_01,
+    msg_hint_nurse_dir_ld_01,
+    msg_hint_nurse_dir_rd_01,
   };
 
   // 使用するテーブル取得
