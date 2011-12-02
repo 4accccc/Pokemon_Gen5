@@ -1609,6 +1609,18 @@ static BOOL Resort_Crowd_People_Walk_CheckEnd(RESORT_CROWD_PEOPLE_WK *p_wk, MMDL
     p_wk->is_walk = FALSE;
     p_wk->seq = 0;
     RESORT_PEOPLE_SetVisible( p_wk->p_people, FALSE );
+
+    //0,0‚É–ß‚é
+    {
+      VecFx32 vec;
+      MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk->p_people );
+      MMDL_GetVectorPos( p_mmdl, &vec );
+      vec.x = vec.z = 0;
+      MMDL_SetVectorPos( p_mmdl, &vec );
+      MMDL_SetGridPosX( p_mmdl, 0 );
+      MMDL_SetGridPosZ( p_mmdl, 0 );
+    }
+
     RESORT_PEOPLE_SetData( p_wk->p_people, RESORT_DATA_PARAM_REPLACE_LOCK, FALSE );
     return FALSE;
   }
@@ -2214,7 +2226,7 @@ static void RESORT_CROWD_LINE_SetUp( RESORT_CROWD_LINE *p_wk, RESORT_CROWD_MOVE 
             RESORT_CROWD_PEOPLE_WK_StartMove( p_wk->p_move[i], AC_WALK_U_8F, p_wk->move_dir, p_wk->x );
             p_wk->wait  = RESORT_CROWD_LINE_WAIT_RND;
             p_wk->start_index = i+1;
-            p_wk->start_index %= RESORT_CROWD_MOVE_LINE_PEOPLE_MAX;
+            p_wk->start_index %= RESORT_CROWD_MOVE_LINE_PEOPLE_MAX;        
           }
         }
       }
