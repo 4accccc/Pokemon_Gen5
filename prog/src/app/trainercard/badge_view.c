@@ -2065,7 +2065,7 @@ static void CellActorPosSet( BADGEVIEW_WORK *wk, int id, int x, int y )
 
 
 // ジムリーダーのテキストをWBで対応させるためのテーブル
-#if PM_VERSION==VERSION_B2
+// => swanでは仕様変更により分岐はしない
 static const u32 gymleader_text_tbl[]={
   MSG_BADGE_LEADER1_01,
   MSG_BADGE_LEADER2_01,
@@ -2076,19 +2076,6 @@ static const u32 gymleader_text_tbl[]={
   MSG_BADGE_LEADER7_01,
   MSG_BADGE_LEADER8B_01,
 };
-
-#else
-static const u32 gymleader_text_tbl[]={
-  MSG_BADGE_LEADER1_01,
-  MSG_BADGE_LEADER2_01,
-  MSG_BADGE_LEADER3_01,
-  MSG_BADGE_LEADER4_01,
-  MSG_BADGE_LEADER5_01,
-  MSG_BADGE_LEADER6_01,
-  MSG_BADGE_LEADER7_01,
-  MSG_BADGE_LEADER8W_01,
-};
-#endif
 
 //----------------------------------------------------------------------------------
 /**
