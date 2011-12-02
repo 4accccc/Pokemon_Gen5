@@ -2245,6 +2245,14 @@ static int _playerDirectVCTChange4( WIFIP2PMATCH_WORK *wk, int seq )
   if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_STATUS, sizeof(u16)*2, gamemode)){
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_VCTCHANGE5);
     WIFI_STATUS_SetUseVChat(wk->pMatch, gamemode[1]);
+
+    //BTS40 対戦を行った後ボイスONに変えていてもOFFのままで続けて
+    //ライブキャスター等が遊べない
+    WIFI_STATUS_SetVChatStatus(wk->pMatch, gamemode[1]);
+
+    //BTS40 状態を反転したので自分の状態を表示
+    _userDataDrawUserVChat(wk);
+
   }
   return seq;
 }
