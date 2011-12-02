@@ -246,14 +246,16 @@ void  TT_TrainerMessageGet( TrainerID tr_id, int kindID, STRBUF* str, HEAPID hea
     GFL_MSGDATA*  msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_trmsg_dat, heapID );
 
     size = GFL_ARC_GetDataSize( ARCID_TRMSGTBL, 0 );
-#ifdef PM_DEBUG
+// デバッグだけでなく、製品版でも対応するメッセージがない場合に誤動作しないようにする
+//#ifdef PM_DEBUG
     ofs_size = GFL_ARC_GetDataSize( ARCID_TRMSGTBL_OFS, 0 );
     if( ofs_size < tr_id * 2 )
     {
       GFL_STR_ClearBuffer( str );
+      GFL_MSG_Delete( msg );
       return;
     }
-#endif
+//#endif
     GFL_ARC_LoadDataOfs( &ofs, ARCID_TRMSGTBL_OFS, 0, tr_id * 2, 2 );
     handle = GFL_ARC_OpenDataHandle( ARCID_TRMSGTBL, heapID );
 
