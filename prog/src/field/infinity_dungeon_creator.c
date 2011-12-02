@@ -1171,7 +1171,7 @@ static s32 GetGateTrainerSetTrIndexArray( INF_DUNGEON_DATA  *p_dungeon_data ,s32
 
     // ボス部屋が見つかったときは、ボス部屋の下の部屋には置かない
     if( ( boss_room_id != -1 ) &&
-        boss_room_id == (room_id + ROOM_MAX_X) ){ continue; }
+        boss_room_id == (room_id - ROOM_MAX_X) ){ continue; }
 
     // トレーナーIDを保存する
     {
