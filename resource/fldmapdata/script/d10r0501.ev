@@ -134,7 +134,7 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 	//ゲーチス：わたしには
   _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_03, D10R0501_SWSAGE1_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
-  
+ 
   // ゲーチス：右に歩いてつえをかかげる
   _OBJ_ANIME( D10R0501_SWSAGE1_01, anm_swsage_2 )
   _OBJ_ANIME_WAIT()
@@ -239,7 +239,7 @@ EVENT_START ev_pos_d10r0501_swsage1_01
     // 暗転中にカメラを変える
 	  _CAMERA_START()		//カメラ操作開始
 	  _CAMERA_PURGE()		//カメラのバインドを解く
-	  _CAMERA_MOVE( 9688,0,970752,1015808,0,1081344, 1 )	//一番最後の引数は移動にかかるフレーム数
+	  _CAMERA_MOVE( 9816,0,970752,1015808,0,1228800, 1 )	//一番最後の引数は移動にかかるフレーム数
 	  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
     //=======================================
@@ -267,7 +267,7 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   _TIME_WAIT(7)
   
   //N：おしえてくれた
-  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_boss_02w, msg_d10r0501_boss_02b, D10R0501_BOSS_01, POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_boss_02w, msg_d10r0501_boss_02b, D10R0501_BOSS_01, POS_DOWN)
   _MSGWIN_CLOSE()
   
   //ブラック：ババリバリッシュ！
@@ -287,26 +287,29 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   ENDIF
   
   //ゲーチス：すばらしい
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_06, D10R0501_SWSAGE1_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_06, D10R0501_SWSAGE1_01, POS_UP )
+  _MSGWIN_CLOSE()
   
   //ゲーチス：とはいえ
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_07, D10R0501_SWSAGE1_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_07, D10R0501_SWSAGE1_01, POS_UP )
+  _MSGWIN_CLOSE()
   
   //ゲーチス：だがそれも
-  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_swsage01_08w, msg_d10r0501_swsage01_08b, D10R0501_SWSAGE1_01, POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_swsage01_08w, msg_d10r0501_swsage01_08b, D10R0501_SWSAGE1_01, POS_UP)
   _MSGWIN_CLOSE()
   
   //N：そんな数式は
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_boss_03, D10R0501_BOSS_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_boss_03, D10R0501_BOSS_01, POS_DOWN )
   _MSGWIN_CLOSE()
   
   //ゲーチス：できますとも！
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_09, D10R0501_SWSAGE1_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_09, D10R0501_SWSAGE1_01, POS_UP )
   _MSGWIN_CLOSE()
   
   // ゲーチス：つえをかかげる
+  _CAMERA_MOVE( 9688,0,970752,1015808,0,983040, 35 )	//一番最後の引数は移動にかかるフレーム数
+  _TIME_WAIT(20)
   _OBJ_ANIME( D10R0501_SWSAGE1_01, anm_swsage_4 )
-  _CAMERA_MOVE( 9688,0,970752,1015808,0,983040, 20 )	//一番最後の引数は移動にかかるフレーム数
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   _OBJ_ANIME_WAIT()
 
@@ -321,6 +324,17 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   // デモ呼び出し
   // ※デモを2つに分けたので連続で呼び出している
 	_DEMO_FADEOUT_BLACK_CALL()
+
+  //=======================================
+  // 解放状態のキュレムにする
+  _OBJ_DEL( D10R0501_POKE1_01 )
+  $OBJCHRWORK0 = SPPOKE03_KU
+  _OBJ_ADD( D10R0501_POKE1_01 )
+  //ゼクロム・レシラム非表示
+  _FLAG_SET( FV_D10R0401_POKE_02 )
+  _OBJ_DEL( D10R0501_NPOKE_01 )
+  //=======================================
+
   _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_00 )
 	IF $LCWK_VERSION == VERSION_B2 THEN
     _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_B_01 )
@@ -331,15 +345,9 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   // 暗転中にカメラを変える
   _CAMERA_START()		//カメラ操作開始
   _CAMERA_PURGE()		//カメラのバインドを解く
-  _CAMERA_MOVE( 9688,0,970752,1015808,0,1081344, 1 )	//一番最後の引数は移動にかかるフレーム数
+  _CAMERA_MOVE( 9688,0,970752,1015808,0,1200128, 1 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
-  //=======================================
-  _OBJ_DEL( D10R0501_POKE1_01 )
-  // 解放状態のキュレムにする
-  $OBJCHRWORK0 = SPPOKE03_KU
-  _OBJ_ADD( D10R0501_POKE1_01 )
-  //=======================================
   //=======================================
   // キュレムを表示し、ゲーチスを横に移動
   _OBJ_POS_CHANGE( D10R0501_SWSAGE1_01, 17, 0, 16, DIR_DOWN)
@@ -350,11 +358,6 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   // Nをずらしていたのを元にもどす
   _DEMO_GIMMICK_GIANTHOLE_OBJ_OFFSET_SET( D10R0501_BOSS_01, -4, 0 )
   //=======================================
-
-
-  //ゼクロム・レシラム非表示
-  _FLAG_SET( FV_D10R0401_POKE_02 )
-  _OBJ_DEL( D10R0501_NPOKE_01 )
 
   // ストーン状態のゼクロム(レシラム)を追加
 	IF $LCWK_VERSION == VERSION_B2 THEN
@@ -378,11 +381,11 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   _OBJ_ANIME_WAIT()
 
   //N：ゼクロム（レシラム）！？
-  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_boss_14w, msg_d10r0501_boss_14b, D10R0501_BOSS_01, POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_boss_14w, msg_d10r0501_boss_14b, D10R0501_BOSS_01, POS_DOWN)
   _MSGWIN_CLOSE()
 
   //ゲーチス：きゅうしゅうなさい！
-  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_swsage01_10w, msg_d10r0501_swsage01_10b, D10R0501_SWSAGE1_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_swsage01_10w, msg_d10r0501_swsage01_10b, D10R0501_SWSAGE1_01, POS_UP )
   _MSGWIN_CLOSE()
 
   // デモ呼び出し
@@ -415,7 +418,7 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   //ゲーチス移動
   _OBJ_POS_CHANGE( D10R0501_SWSAGE1_01, 17, 0, 16, DIR_DOWN)
   //主人公移動
-  //_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 15, 0, 20, DIR_UP)
+  _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 15, 0, 20, DIR_UP)
   //========================================//
 
   // 暗転中にカメラを変える
