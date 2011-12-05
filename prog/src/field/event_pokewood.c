@@ -93,23 +93,23 @@ typedef struct {
   GAMESYS_WORK * gsys;
 
   //POKEWOOD_WORK * pokewood_work;
-  u8 PokewoodMode;
-  u8 SenarioNo;
-  int rec_id;
-  HEAPID heapID;
+  u8 PokewoodMode;  ///< ポケウッドの起動モード（BTL_POKEWOOD_REC or BTL_POKEWOOD_SHOW)
+  u8 SenarioNo;     ///< 撮影するシナリオNO（0オリジン）
+  int rec_id;       ///< 再生する外部データインデックス
+  HEAPID heapID;    ///< HEAPID
 
-  u16 EncEffNo;
-  PKWD_COUNT_PARAM    pkwd_count_param;
-  PKWD_BRIEFING_PARAM pkwd_briefing_param;
-  PKWD_BRIEFING_PARAM pkwd_endroll_param;
-  STRBUF              *TrainerTypeName;
+  PKWD_COUNT_PARAM    pkwd_count_param;     ///< 上映前アプリ呼び出しパラメータ
+  PKWD_BRIEFING_PARAM pkwd_briefing_param;  ///< 上映前あらすじアプリ呼び出しパラメータ
+  PKWD_BRIEFING_PARAM pkwd_endroll_param;   ///< エンドロールアプリ呼び出しパラメータ
+  STRBUF              *TrainerTypeName;     ///< 戦闘内の敵トレーナータイプ名使用用STRBUF
+  CONFIG              *showConfig;          ///< 上映時の戦闘アニメOFF指定用CONFIG
 //  int musicDefault;
 }POKEWOOD_REPLAY_EVENT_WORK, PREW;
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 typedef struct {
-  BATTLE_SETUP_PARAM * bp;
+  BATTLE_SETUP_PARAM * bp;    ///< 戦闘呼び出しパラメータ
   PREW * prew;
 }POKEWOOD_BATTLE_EVENT_WORK, PBEW;
 
@@ -597,6 +597,9 @@ static BATTLE_SETUP_PARAM * createPokewoodBSP(
       setTrainerTypeName( prew, bsp, bsp->pokewoodSenario, BTL_POKEWOOD_SHOW, heapID );
       GFL_HEAP_FreeMemory( senario );
     }
+    
+    // 戦闘アニメをOFFにできないようにする
+    CONFIG_SetWazaEffectMode( (CONFIG*)bsp->configData, WAZAEFF_MODE_ON );
     
     // 上映キャンセル可能にするか?
     if(bsp->pokewoodSenario<POKEWOOD_PLAY_MAX){   //チュートリアル上映は常にキャンセル禁止
