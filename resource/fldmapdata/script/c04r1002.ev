@@ -20,7 +20,11 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c04r1002_trainerm_01
+_EVENT_DATA	ev_c04r1002_woman1_01
+_EVENT_DATA	ev_c04r1002_oldman1_01
 _EVENT_DATA_END
+
+DEFINE_LOCAL	LWK_NATSUKI
 
 /************************************************************/
 /*					エリートトレーナー男性					*/
@@ -47,4 +51,46 @@ EVENT_START	ev_c04r1002_trainerm_01
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
+EVENT_END
+
+/************************************************************/
+/*		WOMAN1	なつき度チェック					*/
+/************************************************************/
+EVENT_START	ev_c04r1002_woman1_01
+
+//先頭の瀕死・タマゴ以外のポケモンを調べる
+_GET_PARTY_FRONT_POKEMON( SCWK_ANSWER, POKECOUNT_MODE_BATTLE_ENABLE )
+
+//手持ちポケモンの種族名を格納
+_TEMOTI_MONS_NAME( 0, SCWK_ANSWER )
+
+_TALK_OBJ_START()
+
+//だいすきな　ポケモンなら
+_BALLOONWIN_TALKOBJ_MSG_POS( msg_c04r1001_woman1_01, POS_DEFAULT )
+
+//なつき度チェック
+_GET_TEMOTI_NATSUKI( LWK_NATSUKI, SCWK_ANSWER )
+
+//なつき度が１２０以上
+IF $LWK_NATSUKI >= 120 THEN
+	_BALLOONWIN_TALKOBJ_MSG_POS( msg_c04r1001_woman1_02, POS_DEFAULT )
+//なつき度が７０以上
+ELSIF $LWK_NATSUKI >= 70 THEN
+	_BALLOONWIN_TALKOBJ_MSG_POS( msg_c04r1001_woman1_03, POS_DEFAULT )
+//それ以下
+ELSE
+	_BALLOONWIN_TALKOBJ_MSG_POS( msg_c04r1001_woman1_04, POS_DEFAULT )
+ENDIF
+
+_LAST_KEYWAIT()
+_MSGWIN_CLOSE()
+
+EVENT_END
+
+/************************************************************/
+/*	OLDMAN1	一言メッセージ							*/
+/************************************************************/
+EVENT_START	ev_c04r1002_oldman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r1001_oldman1_01 )
 EVENT_END
