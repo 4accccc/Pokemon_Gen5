@@ -59,6 +59,10 @@
 extern u16 RESORT_DATA_GetWantJobModify( u16 want_job, u16 id, u16 ver, BOOL is_special, const RESORT_CITY_DATA *cp_data, const RESORT_BINARY_SHOP *cp_shop );
 extern void RESORT_RESIDENT_DATA_ConvertRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, const RESORT_BINARY_SHOP *cp_shop, u16 peopleID, u16 placeID );
 extern void RESORT_RESIDENT_DATA_ConvertProxy( RESORT_RESIDENT_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy, const RESORT_BINARY_SHOP *cp_shop, u16 peopleID, u16 placeID );
+
+
+static BOOL Resort_Util_CheckCameraRange( const MMDL *cp_mmdl, const FIELD_CAMERA *cp_camera );
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -553,6 +557,28 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
       u32 rnd;
       u32 cnt = 0;
       RESORT_RESIDENT_DATA *p_resident = RESORT_ABSTRUCT_DATA_GetDataAdrs(p_abstruct);
+
+
+      //第３秘書がいないと言わない
+      {
+        int i;
+        BOOL is_ret = FALSE;
+        for( i = 0; i < RESORT_SECRETARY_DATA_NUM; i++ )
+        {
+          RESORT_SECRETARY_DATA *p_sec = RESORT_PEOPLE_ALL_DATA_GetSecretary( p_people_all, i );
+          if( !RESORT_SECRETARY_DATA_IsEmpty(p_sec)
+              && RESORT_SECRETARY_DATA_GetData(p_sec, RESORT_DATA_PARAM_TYPE, NULL) == RESORT_SECRETARY_TYPE_ARRANGE )
+          {
+            is_ret = TRUE;
+            break;
+          }
+        }
+        if( !is_ret )
+        {
+          return RESORT_MSGID_NONE;
+        }
+      }
+
       for( i = 0; i < 8; i++ )
       {
         if( RESORT_UTIL_CalcRankingNum( p_people_all, p_resident, i ) == 0 )
@@ -1712,11 +1738,8 @@ u32 RESORT_UTIL_DrawLotsWantSpot( const RESORT_ABSTRUCT_DATA *cp_wk, RESORT_SYST
         u32 index;
         if( RESORT_UTIL_CheckSpot( want_spot, p_resident, p_sys, &index ) )
         {
-          if( RESORT_BINARY_SPOT_GetData( p_spot, want_spot, RESORT_BINARY_SPOT_PARAM_GRADE + index*RESORT_BINARY_SPOT_ANSWER_NUM ) == RESORT_GRADE_TYPE_EXCELLENT )
-          {
-            is_retry = FALSE;
-            break;
-          }
+          is_retry = FALSE;
+          break;
         }
       }
     }
@@ -2142,7 +2165,7 @@ u32 RESORT_UTIL_GetCelebData( RESORT_BINARY_PRESET *p_set, RESORT_ABSTRUCT_DATA 
  *	@param	type  状況
  */
 //-----------------------------------------------------------------------------
-void RESORT_UTIL_SetSceneVisible( RESORT_PEOPLE_SYS *p_sys, RESORT_NPC_SYS *p_npc, RESORT_PEOPLE *p_talk_people, RESORT_UTIL_VISIBLE type )
+void RESORT_UTIL_SetSceneVisible( RESORT_PEOPLE_SYS *p_sys, RESORT_NPC_SYS *p_npc, FIELDMAP_WORK *p_field, RESORT_PEOPLE *p_talk_people, RESORT_UTIL_VISIBLE type )
 {
   static const struct
   {
@@ -2154,8 +2177,19 @@ void RESORT_UTIL_SetSceneVisible( RESORT_PEOPLE_SYS *p_sys, RESORT_NPC_SYS *p_np
     { RESORT_PEOPLE_TYPE_RESIDENT, RESORT_PEOPLE_TYPE_TOURIST, RESORT_PEOPLE_TYPE_PROXY, RESORT_PEOPLE_TYPE_MAX },
   };
 
+  FIELD_PLAYER *p_player = FIELDMAP_GetFieldPlayer( p_field );
+  FIELD_CAMERA *p_camera = FIELDMAP_GetFieldCamera( p_field );
+
   int i;
   int j;
+  BOOL is_camera  = FALSE;
+
+  //カメラ範囲
+  if( type == RESORT_UTIL_VISIBLE_OFF_CAMERA_RANGE )
+  {
+    type = RESORT_UTIL_VISIBLE_OFF_ALLPEOPLE;
+    is_camera = TRUE;
+  }
 
   GF_ASSERT( type < NELEMS(sc_visible_type) );
 
@@ -2170,15 +2204,86 @@ void RESORT_UTIL_SetSceneVisible( RESORT_PEOPLE_SYS *p_sys, RESORT_NPC_SYS *p_np
       {
         if( p_wk != p_talk_people && people_type == sc_visible_type[type].array[j] )
         {
-          RESORT_PEOPLE_SetTemporaryVisible( p_wk, RESORT_PEOPLE_VISIBLE_OFF );
+          BOOL is_visible = TRUE;
+
+          //カメラ範囲チェック
+          if( is_camera )
+          {
+            MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk );
+            is_visible = !Resort_Util_CheckCameraRange( p_mmdl, p_camera );
+          }
+
+          if( is_visible )
+          {
+            RESORT_PEOPLE_SetTemporaryVisible( p_wk, RESORT_PEOPLE_VISIBLE_OFF );
+          }
           break;
         }
       }
     }
   }
 
+  //カメラ範囲チェックなら主人公もチェック
+  if( is_camera )
+  {
+    MMDL *p_mmdl = FIELD_PLAYER_GetMMdl( p_player );
+    if( !Resort_Util_CheckCameraRange( p_mmdl, p_camera ) )
+    {
+      MMDL_SetStatusBitVanish( p_mmdl, TRUE );
+    }
+  }
 
-  RESORT_NPC_SYS_SetVisibleAll( p_npc, FALSE );
+
+  if( is_camera )
+  {
+    int i;
+    for( i = 0; i < RESORT_NPS_SYS_GetMax(p_npc); i++ )
+    {
+      MMDL *p_mmdl = RESORT_NPC_SYS_GetMmdl( p_npc, i );
+      if( p_mmdl )
+      {
+        if( !Resort_Util_CheckCameraRange( p_mmdl, p_camera ) )
+        {
+          MMDL_SetStatusBitVanish( p_mmdl, TRUE );
+        }
+      }
+    }
+  }
+  else
+  {
+    RESORT_NPC_SYS_SetVisibleAll( p_npc, FALSE );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラ範囲をチェック
+ *
+ *	@param	const MMDL *cp_mmdl 調べるMMDL
+ *	@param	VecFx32 *cp_camera_pos  カメラ位置
+ *
+ *	@return TRUE表示範囲内  FALSE非表示
+ */
+//-----------------------------------------------------------------------------
+static BOOL Resort_Util_CheckCameraRange( const MMDL *cp_mmdl, const FIELD_CAMERA *cp_camera )
+{
+  static const fx32 sc_camera_range_z = GRID_SIZE_FX32( 8 );
+
+  VecFx32 mmdl_pos;
+  VecFx32 camera_pos;
+
+  FIELD_CAMERA_GetCameraPos( cp_camera, &camera_pos );
+  MMDL_GetVectorPos( cp_mmdl, &mmdl_pos );
+
+  //カメラから一定距離
+  if( mmdl_pos.z < (camera_pos.z - sc_camera_range_z) )
+  {
+    return TRUE;
+  }
+  else
+  {
+    return FALSE;
+  }
 }
 
 
@@ -3180,7 +3285,7 @@ BOOL RESORT_UTIL_GetReleaseMyShop( const RESORT_SYSTEM *cp_sys, const GAMEDATA *
   else
   {
     const MYSTATUS *cp_mystatus = GAMEDATA_GetMyStatus( (GAMEDATA *)cp_gamedata );
-    u32 id = MyStatus_GetID_Low( cp_mystatus ) % 10;
+    u32 id = MyStatus_GetID_Low( cp_mystatus ) % RESORT_INSTITUTION_TBL_MAX;
     u32 lv = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
 
     //LVが制限外ならば全部開放してる

@@ -27,5 +27,6 @@
 #define KEYSYS_SE_FALLKEY     SEQ_SE_SW_KEYSYS_02	//鍵が落ちてくる
 #define KEYSYS_SE_OPENKEY     SEQ_SE_SW_KEYSYS_03	//鍵が鍵穴に入る
 #define KEYSYS_SE_KIRAKIRA    SEQ_SE_SW_KEYSYS_04 //きらきら
+#define KEYSYS_SE_SAVE        SEQ_SE_SAVE   //セーブ音
 
 #define KEYSYS_BGM_MAIN       SEQ_BGM_DATA_CONV   //メイン曲

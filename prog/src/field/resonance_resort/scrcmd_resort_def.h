@@ -435,6 +435,7 @@
 #define RESORT_SCENE_VISIBLE_OFF_ALL_CROWDPEOPLE  (1) //全歩行者
 #define RESORT_SCENE_VISIBLE_DEFAULT              (2) //通常に戻す
 #define RESORT_SCENE_VISIBLE_OFF_ALL_PEOPLE       (3) //全ての人
+#define RESORT_SCENE_VISIBLE_OFF_CAMERA_RANGE     (4) //カメラ位置から全部の人
 
 //リゾート用レコードID
 #define  RESORT_RECORD_ID_NONE        ( 0)//なにもない

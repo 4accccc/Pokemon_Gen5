@@ -27,9 +27,12 @@
 #include "arc/key_system_gra.naix"
 #include "arc/mb_parent.naix"
 #include "msg/msg_key_system.h"
+#include "msg/script/msg_common_scr.h"
+#include "script_message.naix"
 #include "message.naix"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 #include "../../../resource/fldmapdata/flagwork/work_define.h"
+#include "system/ds_system.h"
 
 //自分のモジュール
 #include "key_system_util.h"
@@ -302,6 +305,7 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
 {
   enum
   {
+    SEQ_INIT,
     SEQ_YESNO_START,
     SEQ_YESNO_DRAW_WAIT,
     SEQ_YESNO_WAIT,
@@ -337,6 +341,20 @@ static void DataConv_Seq_Wireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p
 
   switch( *p_seq )
   {
+  case SEQ_INIT:
+    if( DS_SYSTEM_IsAvailableWireless() )
+    {
+      //無線許可なら通信してよいか聞いて開始
+      (*p_seq)  = SEQ_YESNO_START;
+    }
+    else
+    {
+      //無線OFFならば警告だして終了
+      KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_DisableWireless );
+      (*p_seq)  = SEQ_END;
+    }
+    break;
+
   case SEQ_YESNO_START:
     {
       KEYSYS_LIST_SETUP setup;
@@ -937,6 +955,8 @@ static void DataConv_Seq_Save( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     SEQ_SAVE_MSG,
     SEQ_SAVE_MSG_WAIT,
     SEQ_SAVE,
+    SEQ_SAVE_SE_START,
+    SEQ_SAVE_SE_WAIT,
     SEQ_SAVE_COMPLETE_MSG,
     SEQ_SAVE_COMPLETE_WAIT,
     SEQ_END,
@@ -967,13 +987,27 @@ static void DataConv_Seq_Save( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     }
     (*p_seq)++;
     break;
+
+  case SEQ_SAVE_SE_START:
+    PMSND_PlaySE( KEYSYS_SE_SAVE );
+    (*p_seq) = SEQ_SAVE_SE_WAIT;
+    break;
+
+  case SEQ_SAVE_SE_WAIT:
+    //if( !PMSND_CheckPlaySE() )
+    {
+      (*p_seq) = SEQ_SAVE_COMPLETE_MSG;
+    }
+    break;
+
   case SEQ_SAVE_COMPLETE_MSG:
     KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_STR_45, KEYSYS_TEXT_TYPE_STREAM_FIX );
     (*p_seq) = SEQ_SAVE_COMPLETE_WAIT;
     break;
 
   case SEQ_SAVE_COMPLETE_WAIT:
-    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text )
+        && !PMSND_CheckPlaySE() )
     {
       (*p_seq) = SEQ_END;
     }

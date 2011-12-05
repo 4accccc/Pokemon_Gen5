@@ -23,6 +23,8 @@
 #include "arc/key_system_gra.naix"
 #include "msg/msg_key_system.h"
 #include "message.naix"
+#include "msg/script/msg_common_scr.h"
+#include "script_message.naix"
 
 //自分のモジュール
 #include "key_system_util.h"
@@ -545,6 +547,67 @@ void KeySys_Seq_DeleteDisplay( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     KEYSYS_SEQ_Return( p_seqwk );
 		break;
 
+  default:
+    GF_ASSERT(0);
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  無線OFF
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                    シーケンス
+ *	@param	*p_wk_adrs                ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+void KeySys_Seq_DisableWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_START_DISABLE_WIRELESS_MSG,
+    SEQ_WAIT_DISABLE_WIRELESS_MSG,
+    SEQ_END,
+  };
+
+
+  KEY_SYSTEM_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  {
+  case SEQ_START_DISABLE_WIRELESS_MSG:
+    {
+      //ワイヤレスがない
+      //エラーメッセージ
+      KEYSYS_TEXT_Create( p_wk, HEAPID_KEY_SYSTEM );
+
+      {
+	      GFL_MSGDATA* p_err_msg	= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_common_scr_dat, HEAPID_KEY_SYSTEM );
+
+        STRBUF *p_err_str = GFL_MSG_CreateString( p_err_msg, msg_common_wireless_off_keywait );
+        KEYSYS_TEXT_PrintBuf( p_wk->p_text, p_err_str, KEYSYS_TEXT_TYPE_STREAM ); 
+
+        GFL_STR_DeleteBuffer( p_err_str );
+        GFL_MSG_Delete( p_err_msg );
+
+        GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+      }
+
+      (*p_seq)  = SEQ_WAIT_DISABLE_WIRELESS_MSG;
+    }
+    break;
+  case SEQ_WAIT_DISABLE_WIRELESS_MSG:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      KEYSYS_TEXT_Delete( p_wk );
+      GFL_BG_LoadScreenV_Req( KEYSYS_BG_FRAME_TEXT_M );
+      *p_seq  = SEQ_END;
+    }
+    break;
+  case SEQ_END:
+    KEYSYS_SEQ_Return( p_seqwk );
+    break;
   default:
     GF_ASSERT(0);
   }

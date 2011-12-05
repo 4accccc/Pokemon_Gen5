@@ -17,6 +17,7 @@
 #include "print/wordset.h"
 #include "field/zonedata.h"
 #include "fieldmap/zone_id.h"
+#include "system/ds_system.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -522,7 +523,16 @@ void KEYSYS_KEYFLOW_SEQ_Main( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     {
     case 0://キーの通信
       //カーソル位置を登録
-      KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_App_Irc );
+      if( DS_SYSTEM_IsAvailableWireless() )
+      {
+        //無線許可なら赤外線
+        KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_App_Irc );
+      }
+      else
+      {
+        //無線OFFならば警告だして終了
+        KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_DisableWireless );
+      }
       //もう一度メインメニュー
       (*p_seq ) = 0;
       break;
@@ -1541,6 +1551,8 @@ static void KeySys_Seq_Save( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
     SEQ_SAVE_MSG,
     SEQ_SAVE_START,
     SEQ_SAVE_END,
+    SEQ_SAVE_SE_START,
+    SEQ_SAVE_SE_WAIT,
     SEQ_COMPLETE_MSG_START,
     SEQ_COMPLETE_MSG_WAIT,
     SEQ_END,
@@ -1591,6 +1603,19 @@ static void KeySys_Seq_Save( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
       }
     }
     break;
+
+  case SEQ_SAVE_SE_START:
+    PMSND_PlaySE( KEYSYS_SE_SAVE );
+    (*p_seq) = SEQ_SAVE_SE_WAIT;
+    break;
+
+  case SEQ_SAVE_SE_WAIT:
+    //if( !PMSND_CheckPlaySE() )
+    {
+      (*p_seq) = SEQ_COMPLETE_MSG_START;
+    }
+    break;
+
   case SEQ_COMPLETE_MSG_START:
     if( p_wk->cnt++ > KEYSYS_SAVE_MSG_SYNC )
     {
@@ -1607,7 +1632,8 @@ static void KeySys_Seq_Save( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
     }
     break;
   case SEQ_COMPLETE_MSG_WAIT:
-    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text )
+        && !PMSND_CheckPlaySE() )
     {
       (*p_seq)++;
     }

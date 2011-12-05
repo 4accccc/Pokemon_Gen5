@@ -4335,7 +4335,7 @@ u32 RESORT_DATA_GetDefaultWantJob( u16 want_job, u16 id, u16 ver )
 {
   if( want_job == RESORT_SHOP_ID_NULL )
   {
-    u32 shop_type = sc_resort_institution_release_tbl[id%10][0];
+    u32 shop_type = sc_resort_institution_release_tbl[id%RESORT_INSTITUTION_TBL_MAX][0];
 
     switch( shop_type )
     {

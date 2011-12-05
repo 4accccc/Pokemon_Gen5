@@ -3731,7 +3731,7 @@ static BOOL CameraShop_StartMove( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldm
     break;
   case SEQ_SET_CAMERA:
     SetCameraMoveResort( sbw, fieldmap, sbw->wk.camera_type);
-    RESORT_UTIL_SetSceneVisible( sbw->wk.p_people_sys, sbw->wk.p_npc_sys, sbw->wk.p_people, RESORT_UTIL_VISIBLE_OFF_CROWDPEOPLE );
+    RESORT_UTIL_SetSceneVisible( sbw->wk.p_people_sys, sbw->wk.p_npc_sys, fieldmap , sbw->wk.p_people, RESORT_UTIL_VISIBLE_OFF_CROWDPEOPLE );
     (*p_seq)++;
     break;
   case SEQ_SHOPLIST_CREATE:

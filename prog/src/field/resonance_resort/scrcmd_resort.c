@@ -1249,16 +1249,20 @@ VMCMD_RESULT EvCmdResortSetSeceneVisible( VMHANDLE *p_core, void *p_wk_adrs )
   u16 mode = SCRCMD_GetVMWorkValue( p_core, p_wk );
 
 
+
   switch( mode )
   {
   case RESORT_SCENE_VISIBLE_OFF_CROWDPEOPLE:
-    RESORT_UTIL_SetSceneVisible( p_people_sys, p_npc_sys, p_people, RESORT_UTIL_VISIBLE_OFF_CROWDPEOPLE );
+    RESORT_UTIL_SetSceneVisible( p_people_sys, p_npc_sys, p_field, p_people, RESORT_UTIL_VISIBLE_OFF_CROWDPEOPLE );
     break;
   case RESORT_SCENE_VISIBLE_OFF_ALL_CROWDPEOPLE:
-    RESORT_UTIL_SetSceneVisible( p_people_sys, p_npc_sys, NULL, RESORT_UTIL_VISIBLE_OFF_CROWDPEOPLE );
+    RESORT_UTIL_SetSceneVisible( p_people_sys, p_npc_sys, p_field, NULL, RESORT_UTIL_VISIBLE_OFF_CROWDPEOPLE );
     break;
   case RESORT_SCENE_VISIBLE_OFF_ALL_PEOPLE:
-    RESORT_UTIL_SetSceneVisible( p_people_sys, p_npc_sys, NULL, RESORT_UTIL_VISIBLE_OFF_ALLPEOPLE );
+    RESORT_UTIL_SetSceneVisible( p_people_sys, p_npc_sys, p_field, NULL, RESORT_UTIL_VISIBLE_OFF_ALLPEOPLE );
+    break;
+  case RESORT_SCENE_VISIBLE_OFF_CAMERA_RANGE:
+    RESORT_UTIL_SetSceneVisible( p_people_sys, p_npc_sys, p_field, NULL, RESORT_UTIL_VISIBLE_OFF_CAMERA_RANGE );
     break;
   case RESORT_SCENE_VISIBLE_DEFAULT:
     RESORT_PEOPLE_SYS_ReturnMasterVisibleAll( p_people_sys);

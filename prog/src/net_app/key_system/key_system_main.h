@@ -360,6 +360,7 @@ extern void KeySys_Seq_FadeInBlack( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *
 extern void KeySys_Seq_FadeOutBlack( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 extern void KeySys_Seq_FadeOutWhite( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 extern void KeySys_Seq_DeleteDisplay( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+extern void KeySys_Seq_DisableWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //-------------------------------------
 /// BG

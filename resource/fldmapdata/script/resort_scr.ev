@@ -538,7 +538,7 @@ sub_tourist_spot:
       _RESORT_COMBO( LWK_MAIN_EXP, RESORT_COMBO_PARAM_EXP, LWK_EXP, LWK_RET )
 
       IF $LWK_SPOT_RESULT == TRUE THEN
-        $LWK_CITY_EXP += $LWK_EXP
+        $LWK_CITY_EXP = $LWK_EXP
       ENDIF
 
       //コンボ確定！
@@ -1021,8 +1021,12 @@ _RET
 //==============================================================
 sub_city_camera:
 {
+
 	_CAMERA_MOVE( RESORT_CAM_CITY_PITCH,RESORT_CAM_CITY_YAW,RESORT_CAM_CITY_DIST,RESORT_CAM_CITY_X,RESORT_CAM_CITY_Y,RESORT_CAM_CITY_Z,1 )
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
+  //カメラ位置を見るため、カメラ移動させてから呼ぶ
+  _RESORT_SET_SCENE_VISIBLE( RESORT_SCENE_VISIBLE_OFF_CAMERA_RANGE )
 }
 _RET
 

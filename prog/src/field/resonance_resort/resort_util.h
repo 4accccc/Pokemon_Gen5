@@ -63,8 +63,10 @@ typedef enum
 {
   RESORT_UTIL_VISIBLE_OFF_CROWDPEOPLE,  //通行人を全て消す
   RESORT_UTIL_VISIBLE_OFF_ALLPEOPLE,  //通行人を全て消す
+
+  RESORT_UTIL_VISIBLE_OFF_CAMERA_RANGE,  //カメラの周囲にいる人を全て消す
 }RESORT_UTIL_VISIBLE;
-extern void RESORT_UTIL_SetSceneVisible( RESORT_PEOPLE_SYS *p_sys, RESORT_NPC_SYS *p_npc, RESORT_PEOPLE *p_talk_people, RESORT_UTIL_VISIBLE type );
+extern void RESORT_UTIL_SetSceneVisible( RESORT_PEOPLE_SYS *p_sys, RESORT_NPC_SYS *p_npc, FIELDMAP_WORK *p_field, RESORT_PEOPLE *p_talk_people, RESORT_UTIL_VISIBLE type );
 
 //フィールドからのモジュール取得
 extern RESORT_SYSTEM * RESORT_UTIL_GetSystem( FIELDMAP_WORK *p_field );
