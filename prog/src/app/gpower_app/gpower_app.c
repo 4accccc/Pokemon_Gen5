@@ -1857,7 +1857,8 @@ static void gpower_app_disp_bmpoam( GPOWER_APP_MAIN_WORK* wk, const s32 wnum, co
 		return;
 	}
 	GFL_BMP_Clear( wk->BmpData[wnum], 0 );
-	PRINTSYS_PrintQueColor( wk->print_que, wk->BmpData[wnum], 0, 0, strbuf, wk->font, PRINTSYS_LSB_Make(15,2,0) );
+//	PRINTSYS_PrintQueColor( wk->print_que, wk->BmpData[wnum], 0, 0, strbuf, wk->font, PRINTSYS_LSB_Make(15,2,0) );
+	PRINTSYS_PrintColor( wk->BmpData[wnum], 0, 0, strbuf, wk->font, PRINTSYS_LSB_Make(15,2,0) );
 	BmpOam_ActorBmpTrans( wk->BmpOamWork[wnum] );
 	//
 	// 座標も再セットしておく

@@ -226,6 +226,11 @@ static GFL_PROC_RESULT UpFMisssionProc_Main( GFL_PROC * proc, int * seq, void * 
   for(i = 0; i < BMPWIN_MAX; i++){
     trans_ret[i] = PRINT_UTIL_Trans(&mpw->print_util[i], appwk->setup->printQue);
   }
+  
+  // 処理中は更新しない
+  if( PRINTSYS_QUE_IsFinished( appwk->setup->printQue ) == FALSE ){
+    return( GFL_PROC_RES_CONTINUE );
+  }
   //
   // 一つ前のデータと比較
   if((appwk->common->fmission_id != mpw->Id)||(appwk->common->fmission_level != mpw->Level)){

@@ -643,6 +643,7 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk );
 static void wbt_main( WBTLIST_MAIN_WORK* wk );
 static void wbt_exit( WBTLIST_MAIN_WORK* wk );
 static void wbt_up(   WBTLIST_MAIN_WORK* wk );
+static void wbt_main_print( WBTLIST_MAIN_WORK* wk );
 //
 static void wbt_key_00( WBTLIST_MAIN_WORK* wk );
 static void wbt_key_all( WBTLIST_MAIN_WORK* wk );
@@ -901,8 +902,8 @@ static GFL_PROC_RESULT WBTListProc_Main( GFL_PROC *proc, int *seq, void *pwk, vo
 	// ‰ï˜bƒEƒCƒ“ƒhƒE—p
 	GFL_TCBL_Main( wk->MsgTcblSys );
 	
-	//PRINT_QUE
-	PRINTSYS_QUE_Main( wk->print_que );
+	//Que
+	wbt_main_print( wk );
 	
 	//2D•`‰æ
 	WBTLIST_GRAPHIC_2D_Draw( wk->graphic );
@@ -1110,7 +1111,8 @@ static void wbt_init( WBTLIST_MAIN_WORK* wk )
 	// “]‘—
 	for(i=0;i<WBT_BMPOAM_MAXNUM;i++){
 		GFL_BMP_Clear( wk->BmpData[i], 0 );
-		PRINTSYS_PrintQueColor( wk->print_que, wk->BmpData[i], 0, 0, wk->Param->trainer[i].name, wk->font, PRINTSYS_LSB_Make(15,14,0) );
+//		PRINTSYS_PrintQueColor( wk->print_que, wk->BmpData[i], 0, 0, wk->Param->trainer[i].name, wk->font, PRINTSYS_LSB_Make(15,14,0) );
+		PRINTSYS_PrintColor( wk->BmpData[i], 0, 0, wk->Param->trainer[i].name, wk->font, PRINTSYS_LSB_Make(15,14,0) );
 		BmpOam_ActorBmpTrans( wk->BmpOamWork[i] );
 	}
 	//
@@ -1178,6 +1180,27 @@ static void wbt_exit( WBTLIST_MAIN_WORK* wk )
 	//
 	// OBJ”jŠü
 	wbt_exit_obj( wk );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  Que‚Ìˆ—(Main)
+ *
+ *	@param	WBTLIST_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void wbt_main_print( WBTLIST_MAIN_WORK* wk )
+{
+	s32		i;
+	
+	// Que‚Ìˆ—
+	PRINTSYS_QUE_Main( wk->print_que );
+	//
+	for(i=0;i<WBT_CANVAS_MAXNUM;i++){
+		PRINT_UTIL_Trans( &wk->PrintUtil[i], wk->print_que );
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -1594,7 +1617,7 @@ static void wbt_disp_string( WBTLIST_MAIN_WORK* wk, const s32 mode, const s32 x,
 	GFL_BMPWIN_MakeScreen( wk->PrintUtil[mode].win );
 	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->PrintUtil[mode].win) );
 	// “]‘—?
-	PRINT_UTIL_Trans( &wk->PrintUtil[mode], wk->print_que );
+//	PRINT_UTIL_Trans( &wk->PrintUtil[mode], wk->print_que );
 }
 
 //-----------------------------------------------------------------------------

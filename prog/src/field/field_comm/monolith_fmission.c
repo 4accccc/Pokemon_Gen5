@@ -209,8 +209,20 @@ enum{
 };
 
 // debug
+enum{
+  FLG_DBG_ON      = (1<<0),    // on
+  FLG_DBG_LEFT    = (1<<1),    // left
+  FLG_DBG_RIGHT   = (1<<2),    // right
+  FLG_DBG_UP      = (1<<3),    // up
+  FLG_DBG_DOWN    = (1<<4),    // down
+};
+
+// debug
 #define _DEBUG_STAR_
 #undef  _DEBUG_STAR_
+
+#define __CHK_FMISSION__
+#undef  __CHK_FMISSION__
 
 //==============================================================================
 //  構造体定義
@@ -272,6 +284,7 @@ typedef struct{
   s32  SecretNum;         /// 隠しコマンド用
   s32  Level;             /// レベル
   u32  Flag;              /// フラグ
+  u32  DebugFlag;         /// debug
   
   s32 cursor_pos;         ///<カーソル位置(項目No)
   s32 backup_cursor_pos;  ///<1つ前のカーソル位置
@@ -365,6 +378,10 @@ static void fmission_chg_bgpal( MONOLITH_FMSELECT_WORK *mfw );
 static void fmission_chk_secret( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw );
 static void fmission_init_mode( MONOLITH_FMSELECT_WORK *mfw, const s32 mode );
 static void fmission_disp_startmes( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw );
+//
+static int GetKeyTrg(    MONOLITH_FMSELECT_WORK *mfw );
+static int GetKeyCont(   MONOLITH_FMSELECT_WORK *mfw );
+static int GetKeyRepeat( MONOLITH_FMSELECT_WORK *mfw );
 //
 static void fmission_debug( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw );
 
@@ -754,7 +771,8 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
     break;
   case SEQ_FIRST_STREAM_TP_RELEASE: //文字送りに使用したキーとタッチ両方を離すのを待つ
     if(GFL_UI_TP_GetCont() == FALSE 
-        && (GFL_UI_KEY_GetCont() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL)) == 0){
+        && (GetKeyCont(mfw) & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL)) == 0){
+//        && (GFL_UI_KEY_GetCont() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL)) == 0){
       *seq = SEQ_TOP;
     }
     break;
@@ -1695,7 +1713,8 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
     tp_cont = FALSE;
   }
   
-  if(GFL_UI_KEY_GetCont() & (PAD_KEY_UP|PAD_KEY_DOWN|PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL|PAD_KEY_LEFT|PAD_KEY_RIGHT)){
+//  if(GFL_UI_KEY_GetCont() & (PAD_KEY_UP|PAD_KEY_DOWN|PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL|PAD_KEY_LEFT|PAD_KEY_RIGHT)){
+  if(GetKeyCont(mfw) & (PAD_KEY_UP|PAD_KEY_DOWN|PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL|PAD_KEY_LEFT|PAD_KEY_RIGHT)){
     s32 list_top_no = ((mfw->list_y >> 8) + _TITLE_BAR_Y_LEN) / POWER_LIST_SPACE;
     s32 list_space_pos = ((mfw->list_y >> 8) + _TITLE_BAR_Y_LEN) % POWER_LIST_SPACE;
     //慣性力で進んでいる場合に新たな入力があれば停止する
@@ -1728,7 +1747,8 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
 //        }
         return TRUE;
       }
-      else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
+//      else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
+      else if(GetKeyRepeat(mfw) & PAD_KEY_UP){
         s32 check_topno = list_top_no;
         if(list_space_pos != 0){
           check_topno++;
@@ -1742,7 +1762,8 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
         fmission_chg_level( appwk, mfw, 0 );
         return FALSE;
       }
-      else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
+//      else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
+      else if(GetKeyRepeat(mfw) & PAD_KEY_DOWN){
         s32 check_bottomno = ((mfw->list_y>>8) + 192-_MENU_BAR_Y_LEN) / POWER_LIST_SPACE;
         s32 bottom_list_space = ((mfw->list_y>>8) + 192-_MENU_BAR_Y_LEN) % POWER_LIST_SPACE;
         if(bottom_list_space != 0){
@@ -1757,7 +1778,8 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
         fmission_chg_level( appwk, mfw, 0 );
         return FALSE;
       }
-      else if(GFL_UI_KEY_GetRepeat() & (PAD_KEY_LEFT|PAD_KEY_RIGHT)){
+//      else if(GFL_UI_KEY_GetRepeat() & (PAD_KEY_LEFT|PAD_KEY_RIGHT)){
+      else if(GetKeyRepeat(mfw) & (PAD_KEY_LEFT|PAD_KEY_RIGHT)){
         fmission_chg_level( appwk, mfw, 2 );
         return FALSE;
       }
@@ -2734,7 +2756,8 @@ static void fmission_chg_level( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WO
   // 入力時(key)
   else if(mode == 2){
     // 左
-    if(GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT){
+//    if(GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT){
+    if(GetKeyRepeat(mfw) & PAD_KEY_LEFT){
       if(mfw->Level != 0){
         // SE
         PMSND_PlaySE( MONOLITH_SE_SELECT );
@@ -2746,7 +2769,8 @@ static void fmission_chg_level( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WO
       flg = 1;
     }
     // 右
-    else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT){
+//    else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT){
+    else if(GetKeyRepeat(mfw) & PAD_KEY_RIGHT){
       if(mfw->Level != num){
         // SE
         PMSND_PlaySE( MONOLITH_SE_SELECT );
@@ -2901,6 +2925,82 @@ static void fmission_disp_startmes( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELEC
 
 //==================================================================
 /**
+ * キー(Trg,Cont,Repeat)
+ *
+ * @param   MONOLITH_FMSELECT_WORK	*mfw
+ */
+//==================================================================
+static int GetKeyTrg( MONOLITH_FMSELECT_WORK *mfw )
+{
+  int trg = GFL_UI_KEY_GetTrg();
+#ifdef __CHK_FMISSION__
+  if(mfw->DebugFlag & FLG_DBG_ON){
+    // 補正
+    if(mfw->DebugFlag & FLG_DBG_DOWN){
+      trg |= PAD_KEY_DOWN;
+    }
+    if(mfw->DebugFlag & FLG_DBG_UP){
+      trg |= PAD_KEY_UP;
+    }
+    if(mfw->DebugFlag & FLG_DBG_LEFT){
+      trg |= PAD_KEY_LEFT;
+    }
+    if(mfw->DebugFlag & FLG_DBG_RIGHT){
+      trg |= PAD_KEY_RIGHT;
+    }
+  }
+#endif
+  return( trg );
+}
+
+static int GetKeyCont( MONOLITH_FMSELECT_WORK *mfw )
+{
+  int cont = GFL_UI_KEY_GetCont();
+#ifdef __CHK_FMISSION__
+  if(mfw->DebugFlag & FLG_DBG_ON){
+    // 補正
+    if(mfw->DebugFlag & FLG_DBG_DOWN){
+      cont |= PAD_KEY_DOWN;
+    }
+    if(mfw->DebugFlag & FLG_DBG_UP){
+      cont |= PAD_KEY_UP;
+    }
+    if(mfw->DebugFlag & FLG_DBG_LEFT){
+      cont |= PAD_KEY_LEFT;
+    }
+    if(mfw->DebugFlag & FLG_DBG_RIGHT){
+      cont |= PAD_KEY_RIGHT;
+    }
+  }
+#endif
+  return( cont );
+}
+
+static int GetKeyRepeat( MONOLITH_FMSELECT_WORK *mfw )
+{
+  int rep = GFL_UI_KEY_GetRepeat();
+#ifdef __CHK_FMISSION__
+  if(mfw->DebugFlag & FLG_DBG_ON){
+    // 補正
+    if(mfw->DebugFlag & FLG_DBG_DOWN){
+      rep |= PAD_KEY_DOWN;
+    }
+    if(mfw->DebugFlag & FLG_DBG_UP){
+      rep |= PAD_KEY_UP;
+    }
+    if(mfw->DebugFlag & FLG_DBG_LEFT){
+      rep |= PAD_KEY_LEFT;
+    }
+    if(mfw->DebugFlag & FLG_DBG_RIGHT){
+      rep |= PAD_KEY_RIGHT;
+    }
+  }
+#endif
+  return( rep );
+}
+
+//==================================================================
+/**
  * debug
  *
  * @param   MONOLITH_APP_PARENT		*appwk
@@ -2918,7 +3018,31 @@ static void fmission_debug( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *
     EVENTWORK_SetEventFlag( evwork, fmiss_flag_tbl[0] );
   }
 #endif
+#endif
 
+#ifdef __CHK_FMISSION__
+  // X
+  if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_X){
+    mfw->DebugFlag |= FLG_DBG_ON;
+  }
+  // Y
+  if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y){
+    mfw->DebugFlag &= ~FLG_DBG_ON;
+  }
+  //
+  if(mfw->DebugFlag & FLG_DBG_ON){
+    if(mfw->DebugFlag & FLG_DBG_DOWN){
+      mfw->DebugFlag &= ~FLG_DBG_DOWN;
+      mfw->DebugFlag |=  FLG_DBG_UP;
+//      mfw->DebugFlag &= ~FLG_DBG_LEFT;
+//      mfw->DebugFlag |=  FLG_DBG_RIGHT;
+    }else{
+      mfw->DebugFlag |=  FLG_DBG_DOWN;
+      mfw->DebugFlag &= ~FLG_DBG_UP;
+//      mfw->DebugFlag |=  FLG_DBG_LEFT;
+//      mfw->DebugFlag &= ~FLG_DBG_RIGHT;
+    }
+  }
 #endif
 }
 

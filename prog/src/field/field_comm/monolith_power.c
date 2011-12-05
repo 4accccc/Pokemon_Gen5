@@ -141,6 +141,17 @@ enum{
   MP_PASSIVE_RATE  = -10,      // パッシブの割合
 };
 
+// debug
+enum{
+  FLG_DBG_ON      = (1<<0),    // on
+  FLG_DBG_LEFT    = (1<<1),    // left
+  FLG_DBG_RIGHT   = (1<<2),    // right
+  FLG_DBG_UP      = (1<<3),    // up
+  FLG_DBG_DOWN    = (1<<4),    // down
+};
+
+#define __CHK_POWER__
+#undef  __CHK_POWER__
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -189,6 +200,7 @@ typedef struct{
   
   u32       Flag;             ///<フラグ
   s32       SlotNum;          ///<上書きするスロット番号(0-2)
+  u32       DebugFlag;        ///<デバッグ
   APP_KEYCURSOR_WORK  *MsgCursorWork;  ///<ページ送りマーク用ワーク
   
   APP_TASKMENU_RES *app_menu_res;
@@ -254,6 +266,10 @@ static void _mp_set_gpower( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *
 static s32  _mp_chk_free_buffer( MONOLITH_APP_PARENT *appwk );
 static void _mp_chg_brightness( MONOLITH_PWSELECT_WORK *mpw, const BOOL bflg );
 static void _mp_main_keycursor( MONOLITH_PWSELECT_WORK *mpw, const s32 mode );
+//
+static int GetKeyTrg(    MONOLITH_PWSELECT_WORK *mpw );
+static int GetKeyCont(   MONOLITH_PWSELECT_WORK *mpw );
+static int GetKeyRepeat( MONOLITH_PWSELECT_WORK *mpw );
 //
 static void _mp_debug( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw );
 
@@ -1406,7 +1422,8 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WOR
     tp_cont = FALSE;
   }
   
-  if(GFL_UI_KEY_GetCont() & (PAD_KEY_UP|PAD_KEY_DOWN|PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL)){
+//  if(GFL_UI_KEY_GetCont() & (PAD_KEY_UP|PAD_KEY_DOWN|PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL)){
+  if(GetKeyCont(mpw) & (PAD_KEY_UP|PAD_KEY_DOWN|PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL)){
     s32 list_top_no = ((mpw->list_y >> 8) + _TITLE_BAR_Y_LEN) / POWER_LIST_SPACE;
     s32 list_space_pos = ((mpw->list_y >> 8) + _TITLE_BAR_Y_LEN) % POWER_LIST_SPACE;
     //慣性力で進んでいる場合に新たな入力があれば停止する
@@ -1441,7 +1458,8 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WOR
         }
         return TRUE;
       }
-      else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
+//      else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
+      else if(GetKeyRepeat(mpw) & PAD_KEY_UP){
         s32 check_topno = list_top_no;
         if(list_space_pos != 0){
           check_topno++;
@@ -1454,7 +1472,8 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WOR
         }
         return FALSE;
       }
-      else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
+//      else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
+      else if(GetKeyRepeat(mpw) & PAD_KEY_DOWN){
         s32 check_bottomno = ((mpw->list_y>>8) + 192-_MENU_BAR_Y_LEN) / POWER_LIST_SPACE;
         s32 bottom_list_space = ((mpw->list_y>>8) + 192-_MENU_BAR_Y_LEN) % POWER_LIST_SPACE;
         if(bottom_list_space != 0){
@@ -2125,6 +2144,82 @@ static void _mp_main_keycursor( MONOLITH_PWSELECT_WORK *mpw, const s32 mode )
   }
 }
 
+//==================================================================
+/**
+ * キー(Trg,Cont,Repeat)
+ *
+ * @param   MONOLITH_PWSELECT_WORK	*mpw
+ */
+//==================================================================
+static int GetKeyTrg( MONOLITH_PWSELECT_WORK *mpw )
+{
+  int trg = GFL_UI_KEY_GetTrg();
+#ifdef __CHK_POWER__
+  if(mpw->DebugFlag & FLG_DBG_ON){
+    // 補正
+    if(mpw->DebugFlag & FLG_DBG_DOWN){
+      trg |= PAD_KEY_DOWN;
+    }
+    if(mpw->DebugFlag & FLG_DBG_UP){
+      trg |= PAD_KEY_UP;
+    }
+    if(mpw->DebugFlag & FLG_DBG_LEFT){
+      trg |= PAD_KEY_LEFT;
+    }
+    if(mpw->DebugFlag & FLG_DBG_RIGHT){
+      trg |= PAD_KEY_RIGHT;
+    }
+  }
+#endif
+  return( trg );
+}
+
+static int GetKeyCont( MONOLITH_PWSELECT_WORK *mpw )
+{
+  int cont = GFL_UI_KEY_GetCont();
+#ifdef __CHK_POWER__
+  if(mpw->DebugFlag & FLG_DBG_ON){
+    // 補正
+    if(mpw->DebugFlag & FLG_DBG_DOWN){
+      cont |= PAD_KEY_DOWN;
+    }
+    if(mpw->DebugFlag & FLG_DBG_UP){
+      cont |= PAD_KEY_UP;
+    }
+    if(mpw->DebugFlag & FLG_DBG_LEFT){
+      cont |= PAD_KEY_LEFT;
+    }
+    if(mpw->DebugFlag & FLG_DBG_RIGHT){
+      cont |= PAD_KEY_RIGHT;
+    }
+  }
+#endif
+  return( cont );
+}
+
+static int GetKeyRepeat( MONOLITH_PWSELECT_WORK *mpw )
+{
+  int rep = GFL_UI_KEY_GetRepeat();
+#ifdef __CHK_POWER__
+  if(mpw->DebugFlag & FLG_DBG_ON){
+    // 補正
+    if(mpw->DebugFlag & FLG_DBG_DOWN){
+      rep |= PAD_KEY_DOWN;
+    }
+    if(mpw->DebugFlag & FLG_DBG_UP){
+      rep |= PAD_KEY_UP;
+    }
+    if(mpw->DebugFlag & FLG_DBG_LEFT){
+      rep |= PAD_KEY_LEFT;
+    }
+    if(mpw->DebugFlag & FLG_DBG_RIGHT){
+      rep |= PAD_KEY_RIGHT;
+    }
+  }
+#endif
+  return( rep );
+}
+
 //--------------------------------------------------------------
 /**
  * debug
@@ -2145,6 +2240,27 @@ static void _mp_debug( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw )
   if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y){
     for(i=0;i<INTRUDE_EQUIP_GPOWER_MAX;i++){
       appwk->common->gpower_no[i] = GPOWER_ID_NULL;
+    }
+  }
+#endif
+
+#ifdef __CHK_POWER__
+  // X
+  if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_X){
+    mpw->DebugFlag |= FLG_DBG_ON;
+  }
+  // Y
+  if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y){
+    mpw->DebugFlag &= ~FLG_DBG_ON;
+  }
+  //
+  if(mpw->DebugFlag & FLG_DBG_ON){
+    if(mpw->DebugFlag & FLG_DBG_DOWN){
+      mpw->DebugFlag &= ~FLG_DBG_DOWN;
+      mpw->DebugFlag |=  FLG_DBG_UP;
+    }else{
+      mpw->DebugFlag |=  FLG_DBG_DOWN;
+      mpw->DebugFlag &= ~FLG_DBG_UP;
     }
   }
 #endif

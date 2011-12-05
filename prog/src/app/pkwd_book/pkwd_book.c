@@ -293,6 +293,8 @@ enum{
 	FLG_LEFT_ANIM		= (1<<4),		// 左アニメ
 	FLG_RIGHT_ANIM		= (1<<5),		// 右アニメ
 	FLG_UPDATE			= (1<<6),		// 更新
+	//
+	FLG_STR_WAIT		= (1<<8),		// 文字列待ち
 };
 
 //-------------
@@ -352,6 +354,13 @@ enum{
 	PWB_LEFT_MODE	 = 0,	// 左そろえモード(通常)
 	PWB_CENTER_MODE  = 2,	// 中央そろえのモード
 	PWB_CENTER_OFF_X = 112,	// 中央そろえのoffset(canvasが変わったらここも変更)
+};
+
+// デバッグ
+enum{
+	FLG_DBG_ON		= (1<<0),	// on
+	FLG_DBG_LEFT	= (1<<1),	// 左入力
+	FLG_DBG_RIGHT	= (1<<2),	// 右入力
 };
 
 //=============================================================================
@@ -470,6 +479,7 @@ typedef struct
 	NNSG2dPaletteData		*FontPalBufData[PKWD_BOOK_COLOR_NUM]; ///< フォント上画面パレット(4本分)
 	//
 	s32						Alpha[2];		// debug用として残しておく
+	u32						DebugFlag;		// debug用
 } PKWD_BOOK_MAIN_WORK;
 
 //-----------------------------------------
@@ -1143,6 +1153,10 @@ static const s16 pwb_name_id[] = {
 	0,
 };
 
+// 文字負荷チェック用
+#define __CHK_PWB__
+#undef  __CHK_PWB__
+
 //=============================================================================
 /**
  *							プロトタイプ宣言
@@ -1587,6 +1601,7 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	//
 	wk->Party			= 0;
 	wk->frame_list_work = 0;
+	wk->DebugFlag		= 0;
 	//
 	for(i=0;i<PKWD_BOOK_SCENARIO_MAX;i++){
 		wk->FlagBuffer[i].openid   = 0xff;
@@ -3388,10 +3403,21 @@ static void pwb_key_book( PKWD_BOOK_MAIN_WORK * wk )
 			}
 		}
 	}
+	// 更新
+	if(flg == 1){
+		wk->Flag |= FLG_STR_WAIT;
+	}
+	//
+	// 処理中は更新しない
+	if( PRINTSYS_QUE_IsFinished( wk->print_que ) == FALSE ){
+		return;
+	}
 	//
 	// 上文字列更新
+	// Queの処理が終了したら更新
 //	if(flg != 0){
-	if(flg == 1){
+//	if(flg == 1){
+	if(wk->Flag & FLG_STR_WAIT){
 		//
 		// 固定文字列
 		pwb_disp_fix_string( wk, STR_MAIN, TMODE_BOOK );
@@ -3404,6 +3430,7 @@ static void pwb_key_book( PKWD_BOOK_MAIN_WORK * wk )
 		// ロゴ表示
 		tmp = pwb_get_title_no( wk, wk->FlagBuffer[wk->ScenarioCurPos].openid );
 		pwb_chg_bglogo( wk, tmp );
+		wk->Flag &= ~FLG_STR_WAIT;
 	}
 	//
 	// スクロールバー処理(要検討)
@@ -3580,6 +3607,10 @@ static void pwb_key_trainer( PKWD_BOOK_MAIN_WORK * wk )
 	s32		mflg=0;
 	s32		id;
 	
+	// 処理中は更新しない
+	if( PRINTSYS_QUE_IsFinished( wk->print_que ) == FALSE ){
+		return;
+	}
 	// タッチペンの判定
 	id = pwb_chk_tp( wk, wk->TitleMode );
 	if(id == 0){		// 左
@@ -3605,6 +3636,17 @@ static void pwb_key_trainer( PKWD_BOOK_MAIN_WORK * wk )
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
 			mflg = 3;
 		}
+		//
+#ifdef __CHK_PWB__
+		else{
+			// debug
+			if(wk->DebugFlag & FLG_DBG_ON){
+				if(wk->DebugFlag & FLG_DBG_LEFT){
+					mflg = 1;
+				}
+			}
+		}
+#endif
 	}
 	
 	// まとめ
@@ -3862,6 +3904,10 @@ static void pwb_key_poke( PKWD_BOOK_MAIN_WORK * wk )
 	s32		mflg=0;
 	s32		id;
 	
+	// 処理中は更新しない
+	if( PRINTSYS_QUE_IsFinished( wk->print_que ) == FALSE ){
+		return;
+	}
 	// タッチペンの判定
 	id = pwb_chk_tp( wk, wk->TitleMode );
 	if(id == 0){		// 左
@@ -3887,6 +3933,16 @@ static void pwb_key_poke( PKWD_BOOK_MAIN_WORK * wk )
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
 			mflg = 3;
 		}
+#ifdef __CHK_PWB__
+		else{
+			// debug
+			if(wk->DebugFlag & FLG_DBG_ON){
+				if(wk->DebugFlag & FLG_DBG_LEFT){
+					mflg = 1;
+				}
+			}
+		}
+#endif
 	}
 	// 左
 	if(mflg == 1){
@@ -5404,6 +5460,16 @@ static void pwb_debug( PKWD_BOOK_MAIN_WORK *wk )
 			GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
 			wk->Alpha[0], wk->Alpha[1]);
 		OS_Printf("*** %d,%d ***\n",wk->Alpha[0],wk->Alpha[1]);
+	}
+#endif
+
+#ifdef __CHK_PWB__
+	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_X) ){
+		wk->DebugFlag |= FLG_DBG_ON;
+		wk->DebugFlag |= FLG_DBG_LEFT;
+	}
+	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_Y) ){
+		wk->DebugFlag &= ~(FLG_DBG_ON|FLG_DBG_LEFT);
 	}
 #endif
 }

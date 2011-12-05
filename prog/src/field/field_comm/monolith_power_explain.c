@@ -159,6 +159,11 @@ static GFL_PROC_RESULT MonolithPowerExplainProc_Main( GFL_PROC * proc, int * seq
     trans_ret[i] = PRINT_UTIL_Trans(&pew->print_util[i], appwk->setup->printQue);
   }
   
+  // ˆ—’†‚ÍXV‚µ‚È‚¢
+  if( PRINTSYS_QUE_IsFinished( appwk->setup->printQue ) == FALSE ){
+    return( GFL_PROC_RES_CONTINUE );
+  }
+  
   switch(*seq){
   case 0:
     if(appwk->common->power_eqp_update == TRUE && trans_ret[BMPWIN_EQP] == TRUE){

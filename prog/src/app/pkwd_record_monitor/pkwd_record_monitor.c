@@ -294,6 +294,8 @@ enum{
 	FLG_LEFT_ANIM		= (1<<4),		// 左アニメ
 	FLG_RIGHT_ANIM		= (1<<5),		// 右アニメ
 	FLG_UPDATE			= (1<<6),		// 更新
+	//
+	FLG_STR_WAIT		= (1<<8),		// wait
 };
 
 //-------------
@@ -2592,10 +2594,20 @@ static void pwm_key_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 			}
 		}
 	}
+	// 更新
+	if(flg == 1){
+		wk->Flag |= FLG_STR_WAIT;
+	}
+	//
+	// 処理中は更新しない(念のため)
+	if( PRINTSYS_QUE_IsFinished( wk->print_que ) == FALSE ){
+		return;
+	}
 	//
 	// 上文字列更新
 //	if(flg != 0){
-	if(flg == 1){
+//	if(flg == 1){
+	if(wk->Flag & FLG_STR_WAIT){
 		//
 		// 画面に何も出ていない状態ならアニメ開始から入る
 		if( wk->first_anime_flag == FALSE )
@@ -2614,6 +2626,7 @@ static void pwm_key_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 		}
 		// カラーの変更
 		//tmp = wk->FlagBuffer[wk->ScenarioCurPos].color;
+		wk->Flag &= ~FLG_STR_WAIT;
 	}
 	//
 	// スクロールバー処理(要検討)
