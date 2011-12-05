@@ -7,7 +7,7 @@
 GMMDATA =Struct.new("GMMDATA_",:name,:data_list)
 require "csv"
 
-result = open("../result.txt","r")
+result = open("../all_message_check_result.txt","r")
 
 NO_SEARCH_DATA  = "nosearch_gmm.csv" # メッセージIDの定義ファイル
 #=============================

@@ -12,7 +12,7 @@ require "message.rb"
 require "benchmark"
 require "csv"
 
-RESULT_FILE     = "../result.txt" # 解析結果の出力ファイル
+RESULT_FILE     = "../all_message_check_result.txt" # 解析結果の出力ファイル
 EV_FILES        = "../../*.ev" # チェック対象の .ev ファイル
 H_FILES         = "../../../../../prog/include/**/*.h"  # チェック対象の .c ファイル
 LOCAL_H_FILES   = "../../../../../prog/src/**/*.h"  # チェック対象の .c ファイル
