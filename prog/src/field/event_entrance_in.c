@@ -208,10 +208,20 @@ void EntranceEvent_OneStepAnmSet( ENTRANCE_EVDATA* evdata )
 
   evdata->oneStepTCB[ENTRANCE_ANM_PLAYER] = FldMMdlOneStepAnimeStart( player_mmdl, player_dir );
 
+  if( PAIRSYS_CheckPairFlag( evdata->gameData )){
+    MMDL* pair_mmdl = MMDLSYS_SearchOBJID( mmdlsys, MMDL_ID_PAIR );
+    if( pair_mmdl == NULL ){
+      GF_ASSERT(0);
+      return;
+    }
+    MMDL_OffMoveBitMoveProcPause( pair_mmdl );
+  }
+#if 0
   if( !PAIRSYS_CheckPairFlag( evdata->gameData )){
     evdata->oneStepTCB[ENTRANCE_ANM_PAIR] = NULL;
     return;
   }
+  evdata->oneStepTCB[ENTRANCE_ANM_PAIR] = NULL;
 
   //˜A‚ê•à‚«OBJ‚ðŽæ“¾
   {
@@ -249,6 +259,7 @@ void EntranceEvent_OneStepAnmSet( ENTRANCE_EVDATA* evdata )
 
     evdata->oneStepTCB[ENTRANCE_ANM_PAIR] = FldMMdlOneStepAnimeStart( pair_mmdl, pair_dir );
   }
+#endif
 }
 
 //---------------------------------------------------------------------------------------
@@ -258,6 +269,7 @@ void EntranceEvent_OneStepAnmSet( ENTRANCE_EVDATA* evdata )
 //---------------------------------------------------------------------------------------
 BOOL EntranceEvent_OneStepAnmWait( ENTRANCE_EVDATA* evdata )
 {
+#if 0
   if( evdata->oneStepTCB[ENTRANCE_ANM_PAIR] != NULL ){
     if( MMDL_CheckEndAcmdList(evdata->oneStepTCB[ENTRANCE_ANM_PAIR]) == FALSE ){
       return FALSE;
@@ -266,6 +278,7 @@ BOOL EntranceEvent_OneStepAnmWait( ENTRANCE_EVDATA* evdata )
     evdata->oneStepTCB[ENTRANCE_ANM_PAIR] = NULL;
     return FALSE;
   }
+#endif
   if( MMDL_CheckEndAcmdList(evdata->oneStepTCB[ENTRANCE_ANM_PLAYER]) == FALSE ){
     return FALSE;
   }
