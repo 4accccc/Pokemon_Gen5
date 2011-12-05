@@ -911,6 +911,7 @@
 #define FV_D10R0501_KYUREMU               1004 /* 0x03ec ジャイアントホール：クリア後キュレム */
 #define FV_D11R0101_STOPPER_01            1005 /* 0x03ed ヒウン下水道：連れ歩き時ストッパー配置 */
 #define FV_C06GYM0101_LEADER6_01          1006 /* 0x03ee ひこうジム：フウロ */
+#define FV_C09P02_ENDING                  1007 /* 0x03ef エンディング用 */
 
 #define FV_AREA_END                       1099 /* 0x044b  */
 
@@ -2307,6 +2308,7 @@
 #define SYS_FLAG_FES_OPEN_21              2549 /* 0x09f5 フェスミッションのオープンフラグその21 */
 #define SYS_FLAG_FES_OPEN_22              2550 /* 0x09f6 フェスミッションのオープンフラグその22 */
 #define SYS_FLAG_FES_OPEN_23              2551 /* 0x09f7 フェスミッションのオープンフラグその23 */
+#define SYS_FLAG_ENDING                   2552 /* 0x09f8 エンディングスクリプトの初期化フラグ */
 
 #define SYS_FLAG_AREA_END                 2639 /* 0x0a4f  */
 
