@@ -2396,7 +2396,8 @@ static void _createSubBg(C_GEAR_WORK* pWork)
   // アルファ値設定
 //  _setUpSubAlpha( pWork );
 
-  // 一応ObjWindowを消しておく
+  // アルファ設定をOffにして、ObjWindowを消しておく
+  G2S_BlendNone();
   GXS_SetVisibleWnd( GX_WNDMASK_NONE );
 }
 
