@@ -1393,10 +1393,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホミカ『てわけして　さがすよ！！▼</Text>
+			<Text>ホミカ『てわけするよ！
+アンタは　どうろを　さがして！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T11:26:40" />
+				Time="2011-12-05T10:58:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1404,10 +1405,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホミカ『てわけして　探すよ！！▼</Text>
+			<Text>ホミカ『てわけするよ！
+アンタは　道路を　探して！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T11:26:47" />
+				Time="2011-12-05T10:58:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

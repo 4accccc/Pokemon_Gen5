@@ -784,15 +784,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>メダルラリーじむきょく　は
-あらゆることに　チャレンジする▽
-トレーナーを　おうえん　しています！▼
-まあ　なにごとも　けいけん　ですよ！▼
+			<Text>ちなみに！▼
+メダルは　じょうけんを　みたしてから
+ポケモンセンターに　いけば▽
+わたしから　ばんばん　もらえます！▼
 とりあえずは　メダルボックスを　つかい
 なかを　たしかめてください！　では！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T03:42:46" />
+				Time="2011-12-05T07:03:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -800,15 +800,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>メダルラリー事務局　は
-あらゆることに　チャレンジする▽
-トレーナーを　応援しています！▼
-まあ　なにごとも　経験ですよ！▼
+			<Text>ちなみに！▼
+メダルは　条件を　満たしてから
+ポケモンセンターに　行けば▽
+わたしから　ばんばん　もらえます！▼
 とりあえずは　メダルボックスを　使い
 中を　確かめてください！　では！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T03:42:57" />
+				Time="2011-12-05T07:03:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
