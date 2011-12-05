@@ -2881,6 +2881,20 @@
 
 //--------------------------------------------------------------
 /**
+ *  _TRAINER_BGM_NO_PUSH トレーナーBGMセット  現BGMをPUSHしない版
+ *  @param tr_id トレーナーID
+ */
+//--------------------------------------------------------------
+#define _TRAINER_BGM_NO_PUSH( tr_id ) \
+  _ASM_TRAINER_BGM_NO_PUSH  tr_id
+
+  .macro  _ASM_TRAINER_BGM_NO_PUSH  tr_id
+  .short  EV_SEQ_TRAINER_BGM_NO_PUSH
+  .short  \tr_id
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @def _TRAINER_WIN
  * @brief トレーナー戦勝利
  *

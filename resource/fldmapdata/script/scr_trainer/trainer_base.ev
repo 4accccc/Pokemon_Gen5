@@ -397,8 +397,8 @@ ev_trainer_type_tag:
   _BALLOONWIN_CLOSE()
 
   //視線曲セット
-  //※タッグで2人目専用です。（内部でBGMをPOPしています）
-  _TRAINER_BGM_TAG_SET( LWK_TRID_02 )
+  //※タッグで2人目専用です。
+  _TRAINER_BGM_NO_PUSH( LWK_TRID_02 )
 
   _EYE_TRAINER_MOVE_SET( SCR_EYE_TR_1 )        //トレーナー移動処理呼び出し
   _EYE_TRAINER_MOVE()                          //移動終了待ち
@@ -450,8 +450,8 @@ ev_trainer_type_multi:
   _BALLOONWIN_CLOSE()
 
   //視線曲セット
-  //※タッグで2人目専用です。（内部でBGMをPOPしています）
-  _TRAINER_BGM_TAG_SET( LWK_TRID_02 )
+  //※タッグで2人目専用です。
+  _TRAINER_BGM_NO_PUSH( LWK_TRID_02 )
 
   _EYE_TRAINER_MOVE_SET( SCR_EYE_TR_1 )        //トレーナー移動処理呼び出し
   _EYE_TRAINER_MOVE()                          //移動終了待ち

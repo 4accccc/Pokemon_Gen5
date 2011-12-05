@@ -210,7 +210,7 @@
   DEF_CMD( EvCmdTrainerWin, EV_SEQ_TRAINER_WIN )
 
   DEF_CMD( EvCmdTrainerBgmSetByTrtype, EV_SEQ_TRAINER_BGM_SET_BY_TRTYPE )
-  NO_CMD()
+  DEF_CMD( EvCmdTrainerBgmNoPush, EV_SEQ_TRAINER_BGM_NO_PUSH )
   NO_CMD()
 
   DEF_CMD( EvCmdTrainerSpecialTypeGet, EV_SEQ_TRAINER_SPTYPE_GET )

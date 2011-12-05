@@ -29,6 +29,7 @@ extern VMCMD_RESULT EvCmdTrainerWin(VMHANDLE *core,void *wk);
 extern VMCMD_RESULT EvCmdTrainerSpecialTypeGet( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdTrainerItemGet( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdTrainerBgmSetByTrtype( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdTrainerBgmNoPush( VMHANDLE *core, void *wk );
 
 
 extern VMCMD_RESULT EvCmdGetTradeAfterTrainerBattleSet( VMHANDLE *core, void *wk ); // 交換後トレーナーとの対戦
