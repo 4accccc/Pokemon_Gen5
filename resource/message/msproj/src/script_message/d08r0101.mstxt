@@ -2,14 +2,22 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_mapscript_dummy"
+		Label="msg_d08r0101_hakase1_01b"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テストメッセージ</Text>
+			<Text>アララギ『……２ねんまえ
+この　とうの　さいじょうかいで▼
+ひとりの　おとこが
+でんせつの　ポケモンと　むきあった▼
+おとこの　なまえは　Ｎ▼
+りそうを　しるため
+ゼクロムと　もとめていたのだよ▼
+かれは　かれなりの
+りそうを　みつけたのかねえ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T07:30:34" />
+				Time="2011-12-05T12:27:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -17,10 +25,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>アララギ『……２年前
+この塔の　最上階で▼
+一人の　男が
+伝説の　ポケモンと　向き合った▼
+男の　名前は　Ｎ▼
+理想を　知るため
+ゼクロムと　求めていたのだよ▼
+彼は　彼なりの
+理想を　みつけたのかねえ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T07:30:34" />
+				Time="2011-12-05T12:27:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -28,17 +44,21 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>？？？</Comment>
+			<Comment>♂
+・Black2ver
+・n01r0502でのイベント前
+・GRIDX＝181、GRIDZ＝145、上向き</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T07:30:34" />
+				Time="2011-12-05T12:27:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>？？？</Text>
+			<Text>HAKASE1
+アララギ博士父</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T07:30:34" />
+				Time="2011-12-05T12:27:31" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -46,6 +66,680 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:13" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0101_hakase1_01w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギ『……２ねんまえ
+この　とうの　さいじょうかいで▼
+ひとりの　おとこが
+でんせつの　ポケモンと　むきあった▼
+おとこの　なまえは　Ｎ▼
+しんじつを　しるため
+レシラムと　もとめていたのだよ▼
+かれは　かれなりの
+しんじつを　みつけたのかねえ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ『……２年前
+この塔の　最上階で▼
+一人の　男が
+伝説の　ポケモンと　向き合った▼
+男の　名前は　Ｎ▼
+真実を　知るため
+レシラムと　求めていたのだよ▼
+彼は　彼なりの
+真実を　みつけたのかねえ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・White2ver
+・n01r0502でのイベント前
+・GRIDX＝181、GRIDZ＝145、上向き</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE1
+アララギ博士父</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0101_hakase1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わかったことは　なにもない……▼
+それが　リュウラセンのとうの
+しんじつであり　りそうというのか？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わかったことは　なにもない……▼
+それが　リュウラセンの塔の
+真実であり　理想というのか？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・n01r0502でのイベント後
+・GRIDX＝181、GRIDZ＝145、上向き
+　posイベント
+　GRIDX＝177~172、GRIDZ＝146
+・！マーク表示後、振り向き（隣接）</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE1
+アララギ博士父</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0101_hakase1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギ『おお！
+おまえさんも　きたのかい▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ『おお！
+おまえさんも　来たのかい▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けて
+　Balck2→hakase1_03b
+　White2→hakase1_03w</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE1
+アララギ博士父</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0101_hakase1_03b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……２ねんまえ▼
+この　とうで　ひとりの　おとこと
+１ぴきの　ポケモンが　むきあった▼
+その　おとこは　せかいを　かえようと
+りそうを　おいもとめていた▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>２年前▼
+この塔で　一人の　男と
+１匹の　ポケモンが　向き合った▼
+その男は　世界を　変えようと
+理想を　追い求めていた▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・Black2ver
+・再度上を向いてメッセージ表示
+・続けてhakase1_04b</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE1
+アララギ博士父</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0101_hakase1_03w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……２ねんまえ▼
+この　とうで　ひとりの　おとこと
+１ぴきの　ポケモンが　むきあった▼
+その　おとこは　せかいを　かえようと
+しんじつを　おいもとめていた▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>２年前▼
+この塔で　一人の　男と
+１匹の　ポケモンが　向き合った▼
+その男は　世界を　変えようと
+真実を　追い求めていた▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・White2ver
+・再度上を向いてメッセージ表示
+・続けてhakase1_04w</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE1
+アララギ博士父</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0101_hakase1_04b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そう！　この　おくに
+ゆうぜんと　そびえるのが▽
+リュウラセンのとう▼
+イッシュの　くにが　できるより
+おおむかしから　そびえたち▼
+さいじょうかい　では
+でんせつの　ドラゴンポケモンが▼
+りそうを　おいもとめる
+にんげんが　あらわれるのを▽
+まっていた……▼
+そう　つたわっていた
+とおり　だったね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そう！　この奥に
+悠然と　そびえるのが▽
+リュウラセンの塔▼
+イッシュの　国が　できるより
+大昔から　そびえたち▼
+最上階では
+伝説の　ドラゴンポケモンが▼
+理想を　追い求める
+人間が　現れるのを▽
+待っていた……▼
+そう　伝わっていた
+とおり　だったね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・主人公と向き合ってメッセージ表示
+・続けてhakase1_05b</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE1
+アララギ博士父</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0101_hakase1_04w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そう！　この　おくに
+ゆうぜんと　そびえるのが▽
+リュウラセンのとう▼
+イッシュの　くにが　できるより
+おおむかしから　そびえたち▼
+さいじょうかい　では
+でんせつの　ドラゴンポケモンが▼
+しんじつを　おいもとめる
+にんげんが　あらわれるのを▽
+まっていた……▼
+そう　つたわっていた
+とおり　だったね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そう！　この奥に
+悠然と　そびえるのが▽
+リュウラセンの塔▼
+イッシュの　国が　できるより
+大昔から　そびえたち▼
+最上階では
+伝説の　ドラゴンポケモンが▼
+真実を　追い求める
+人間が　現れるのを▽
+待っていた……▼
+そう　伝わっていた
+とおり　だったね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・主人公と向き合ってメッセージ表示
+・続けてhakase1_05w</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE1
+アララギ博士父</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0101_hakase1_05b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おお！
+ダークストーン！▼
+そうか　ならば　おまえさんも
+さいじょうかいへ　いくんだね▼
+せかいを　かえる……▼
+それは　とほうも　ないが
+じぶんを　かえることは　できる▽
+りそうを　おいもとめる　かぎりね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おお！
+ダークストーン！▼
+そうか　ならば　おまえさんも
+最上階へ　行くんだね▼
+世界を　変える……▼
+それは　途方も　ないが
+自分を　変えることは　できる▽
+理想を　追い求める　かぎりね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・！マーク表示後にメッセージ
+・続けてhakase1_06</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE1
+アララギ博士父</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0101_hakase1_05w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おお！
+ライトストーン！▼
+そうか　ならば　おまえさんも
+さいじょうかいへ　いくんだね▼
+せかいを　かえる……▼
+それは　とほうも　ないが
+じぶんを　かえることは　できる▽
+しんじつを　おいもとめる　かぎりね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おお！
+ライトストーン！▼
+そうか　ならば　おまえさんも
+最上階へ　行くんだね▼
+世界を　変える……▼
+それは　途方も　ないが
+自分を　変えることは　できる▽
+真実を　追い求める　かぎりね▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・！マーク表示後にメッセージ
+・続けてhakase1_06</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE1
+アララギ博士父</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0101_hakase1_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おっと！
+かたい　はなしに　なったね▼
+こんな　ときは
+あまいもの　だよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おっと！
+かたい　話に　なったね▼
+こんな　ときは
+甘いもの　だよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アイテム入手処理
+　No054「もりのヨウカン」
+・続けてhakase1_07</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:28:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE1
+アララギ博士父</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0101_hakase1_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>それでは　また　あおうぞ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それでは　また　会おうぞ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・表示後、画面下へ去って行く
+　画面外に消えると主人公操作可能に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKASE1
+アララギ博士父</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-05T12:27:31" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
