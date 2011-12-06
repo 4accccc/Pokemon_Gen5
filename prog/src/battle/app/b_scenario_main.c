@@ -122,6 +122,17 @@ enum{
 	FLG_RIGHT_LIMIT		= (1<<21),	// 右リミット
 };
 
+// debug
+// デバッグ
+enum{
+	FLG_DBG_ON		= (1<<0),	// on
+	FLG_DBG_LEFT	= (1<<1),	// 左入力
+	FLG_DBG_RIGHT	= (1<<2),	// 右入力
+	FLG_DBG_UP		= (1<<3),	// 上入力
+	FLG_DBG_DOWN	= (1<<4),	// 下入力
+	FLG_DBG_DECIDE	= (1<<5),	// 決定
+};
+
 //============================================================================================
 //  データ
 //============================================================================================
@@ -233,6 +244,10 @@ static const s16 bs_font_pal_tbl[] = {
 	NARC_b_scenario_gra_pkwd_scenario_u4_font_NCLR,
 };
 
+// 文字負荷チェック用
+#define __CHK_BS__
+#undef  __CHK_BS__
+
 //============================================================================================
 //  プロトタイプ宣言
 //============================================================================================
@@ -300,6 +315,8 @@ static void bs_disp_cursor( BSCENARIO_WORK * wk, const s32 mode, const s32 num )
 static void bs_set_init_page( BSCENARIO_WORK * wk );
 // タイムアウトの判定
 static BOOL bs_chk_timeout( BSCENARIO_WORK * wk );
+//
+static void bs_debug( BSCENARIO_WORK *wk );
 
 //============================================================================================
 //  データ2
@@ -864,14 +881,14 @@ static void bs_chk_canvas( BSCENARIO_WORK * wk )
 	}
 	//
 	// 処理が終わってからBG切り替えなどを行う
-	bflg = PRINTSYS_QUE_IsFinished( wk->print_que );
-	if(bflg == TRUE){
+//	bflg = PRINTSYS_QUE_IsFinished( wk->print_que );
+//	if(bflg == TRUE){
 		// スクロール切り替え
 		BsCmn_BgScroll( wk, wk->TitleMode );
 		// bgスクリーン
-		BsCmn_DispArrow( wk, wk->TitleMode, TRUE );
+//		BsCmn_DispArrow( wk, wk->TitleMode, TRUE );
 		// 上マーク切替
-		BsCmn_DispUpMark( wk, wk->TitleMode );
+//		BsCmn_DispUpMark( wk, wk->TitleMode );
 		//
 		// obj非表示(このタイミングにしないとちらつく)
 		if( wk->TitleMode != BS_INFO ){
@@ -888,7 +905,7 @@ static void bs_chk_canvas( BSCENARIO_WORK * wk )
 		
 		// 切り替え終了
 		wk->Flag &= ~FLG_CHG_TITLE;
-	}
+//	}
 }
 
 //-----------------------------------------------------------------------------------------------
@@ -917,6 +934,13 @@ static void bs_init_top( BSCENARIO_WORK * wk )
 		BsCmn_InitString( wk, BS_TOP );
 		// 表示まとめ
 		bs_disp_top_string( wk, STR_INIT );
+		//
+		// canvasのウエイト
+//		bs_chk_canvas( wk );
+		// bgスクリーン
+		BsCmn_DispArrow( wk, wk->TitleMode, TRUE );
+		// 上マーク切替
+		BsCmn_DispUpMark( wk, wk->TitleMode );
 		//
 		wk->Flag |= FLG_UPDATE;
 	}
@@ -1020,6 +1044,11 @@ static void bs_key_top( BSCENARIO_WORK * wk )
 	s32		nmode;
 	BOOL	bflg;
 	
+	// 処理中は更新しない
+	if( PRINTSYS_QUE_IsFinished( wk->print_que ) == FALSE ){
+		return;
+	}
+	
 	// 更新あり
 	if(wk->Flag & FLG_UPDATE){
 		mflg = 1;
@@ -1063,6 +1092,16 @@ static void bs_key_top( BSCENARIO_WORK * wk )
 			else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
 				flg = 4;
 			}
+#ifdef __CHK_BS__
+			else{
+				// debug
+				if(wk->DebugFlag & FLG_DBG_ON){
+					if(wk->DebugFlag & FLG_DBG_DECIDE){
+						flg = 3;
+					}
+				}
+			}
+#endif
 		}
 	}
 	//
@@ -1251,6 +1290,13 @@ static void bs_init_scenario( BSCENARIO_WORK * wk )
 	// 表示(パラメータをセットしておくこと)
 	bs_disp_scenario_string( wk, STR_INIT );
 	//
+	// canvasのウエイト
+//	bs_chk_canvas( wk );
+	// bgスクリーン
+	BsCmn_DispArrow( wk, wk->TitleMode, TRUE );
+	// 上マーク切替
+	BsCmn_DispUpMark( wk, wk->TitleMode );
+	
 	// リミットチェック
 	bs_chk_limit( wk, BS_SCENARIO, 1 );
 	
@@ -1372,6 +1418,11 @@ static void bs_key_scenario( BSCENARIO_WORK * wk )
 	s32		tmp;
 	BOOL	bflg;
 	
+	// 処理中は更新しない
+	if( PRINTSYS_QUE_IsFinished( wk->print_que ) == FALSE ){
+		return;
+	}
+	
 	// キー表示の更新
 	if(wk->Flag & FLG_UPDATE){
 		mflg = 1;
@@ -1420,6 +1471,16 @@ static void bs_key_scenario( BSCENARIO_WORK * wk )
 			else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
 				flg = 4;
 			}
+#ifdef __CHK_BS__
+			else{
+				// debug
+				if(wk->DebugFlag & FLG_DBG_ON){
+					if(wk->DebugFlag & FLG_DBG_DECIDE){
+						flg = 3;
+					}
+				}
+			}
+#endif
 		}
 	}
 	
@@ -1782,6 +1843,12 @@ static void bs_init_info( BSCENARIO_WORK * wk )
 	//
 	// 表示
 	bs_disp_info_obj( wk, 0 );
+	// canvasのウエイト
+//	bs_chk_canvas( wk );
+	// bgスクリーン
+	BsCmn_DispArrow( wk, wk->TitleMode, TRUE );
+	// 上マーク切替
+	BsCmn_DispUpMark( wk, wk->TitleMode );
 	//
 	// リミットチェック
 	bs_chk_limit( wk, BS_INFO, 1 );
@@ -1901,6 +1968,11 @@ static void bs_key_info( BSCENARIO_WORK * wk )
 	s32		tmp;
 	BOOL	bflg;
 	
+	// 処理中は更新しない
+	if( PRINTSYS_QUE_IsFinished( wk->print_que ) == FALSE ){
+		return;
+	}
+	
 	// 更新
 	if(wk->Flag & FLG_UPDATE){
 		mflg = 1;
@@ -1949,6 +2021,16 @@ static void bs_key_info( BSCENARIO_WORK * wk )
 			else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
 				flg = 4;
 			}
+#ifdef __CHK_BS__
+			else{
+				// debug
+				if(wk->DebugFlag & FLG_DBG_ON){
+					if(wk->DebugFlag & FLG_DBG_DECIDE){
+						flg = 3;
+					}
+				}
+			}
+#endif
 		}
 	}
 	
@@ -2394,6 +2476,8 @@ static BOOL bs_main_loop( BSCENARIO_WORK * wk )
 	// 処理の分岐
 	bs_functbl[wk->Mode]( wk );
 	//
+	// debug
+	bs_debug( wk );
 	//
 	// 終了判定
 	if(wk->NextMode == SMODE_END){
@@ -2788,4 +2872,26 @@ static BOOL bs_chk_timeout( BSCENARIO_WORK * wk )
 	return( bflg );
 }
 
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	debug
+ *
+ * @param	BSCENARIO_WORK*		wk
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void bs_debug( BSCENARIO_WORK *wk )
+{
+#ifdef __CHK_BS__
+	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_X) ){
+		wk->DebugFlag |= FLG_DBG_ON;
+		wk->DebugFlag |= FLG_DBG_DECIDE;
+	}
+	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_Y) ){
+		wk->DebugFlag &= ~(FLG_DBG_ON|FLG_DBG_DECIDE);
+	}
+#endif
+}
 

@@ -120,6 +120,21 @@ enum{
 	FLG_MW_PAGE_MIN		= (1<<22),		// ページ最小(1ページのみ)
 };
 
+// debug
+// デバッグ
+enum{
+	FLG_DBG_ON		= (1<<0),	// on
+	FLG_DBG_LEFT	= (1<<1),	// 左入力
+	FLG_DBG_RIGHT	= (1<<2),	// 右入力
+	FLG_DBG_UP		= (1<<3),	// 上入力
+	FLG_DBG_DOWN	= (1<<4),	// 下入力
+	FLG_DBG_DECIDE	= (1<<5),	// 決定
+};
+
+// 文字負荷チェック用
+#define __CHK_TD__
+#undef  __CHK_TD__
+
 //=============================================================================
 /**
  *								構造体定義
@@ -197,6 +212,8 @@ static BOOL td_chk_key_input_save( T_DOWNLOAD_MAIN_WORK* wk );
 static void td_key_save( T_DOWNLOAD_MAIN_WORK* wk );
 static BOOL td_chk_wait_mes_save( T_DOWNLOAD_MAIN_WORK* wk );
 static void td_exit_save( T_DOWNLOAD_MAIN_WORK* wk );
+//
+static void td_debug( T_DOWNLOAD_MAIN_WORK* wk );
 
 //------------------
 // 関数のテーブル
@@ -566,6 +583,9 @@ static void td_main( T_DOWNLOAD_MAIN_WORK* wk )
 	//
 	// スクロール
 	TdCmn_main_bg_scroll( wk );
+	//
+	// debug
+	td_debug( wk );
 }
 
 //-----------------------------------------------------------------------------
@@ -820,6 +840,10 @@ static void td_chk_input_join( T_DOWNLOAD_MAIN_WORK* wk )
 {
 	BOOL	bflg;
 	//
+	// 処理中は更新しない
+	if( PRINTSYS_QUE_IsFinished( wk->print_que ) == FALSE ){
+		return;
+	}
 	// 判定
 	// タッチペン
 	bflg = td_chk_tp_input_join( wk );
@@ -1298,6 +1322,11 @@ static void td_chk_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 	s32		flg=0;
 	BOOL	bflg;
 	
+	// 処理中は更新しない
+	if( PRINTSYS_QUE_IsFinished( wk->print_que ) == FALSE ){
+		return;
+	}
+	
 	// 判定
 	// ここだけは、自前で処理する必要がある
 	if(flg == 0){
@@ -1496,7 +1525,15 @@ static BOOL td_chk_key_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 {
 	s32		flg=0;
 	s32		sflg=0;
+	s32		dflg=0;
 	BOOL	bflg=FALSE;
+	
+#ifdef __CHK_TD__
+	// debug
+	if(wk->DebugFlag & FLG_DBG_ON){
+		dflg = 1;
+	}
+#endif
 	
 	// 戻る
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
@@ -1506,7 +1543,7 @@ static BOOL td_chk_key_input_info( T_DOWNLOAD_MAIN_WORK* wk )
 		PMSND_PlaySE( SND_T_DOWNLOAD_CANCEL );
 	}
 	// 左
-	else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
+	else if(( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )||(dflg == 1)){
 		wk->InfoCurPos--;
 		if(wk->InfoCurPos < 0){
 			wk->InfoCurPos = T_DOWNLOAD_INFO_MAX-1;
@@ -1800,6 +1837,8 @@ static void td_init_select( T_DOWNLOAD_MAIN_WORK* wk )
 	// 上画面表示
 	TdCmn_disp_upmes( wk, T_DOWNLOAD_DATA_LIST, wk->AllCurPos[T_DOWNLOAD_LIST_CURRENT] );
 	//
+	wk->Step = STEP_LV1;
+	//
 	// 3つセーブ済み
 	// 一度も表示してない場合のみ、
 	//「選択してください」を表示
@@ -1833,6 +1872,7 @@ static void td_chk_input_select( T_DOWNLOAD_MAIN_WORK* wk )
 	s32		listflg=0;
 	BOOL	bflg;
 	
+	//
 	// タッチモード => キーモードにする
 	if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH ){
 		// 入力待ち
@@ -1880,6 +1920,10 @@ static void td_chk_input_select( T_DOWNLOAD_MAIN_WORK* wk )
 			// キー
 			td_chk_key_input_select( wk );
 		}
+	}
+	// 処理中は更新しない
+	if( PRINTSYS_QUE_IsFinished( wk->print_que ) == FALSE ){
+		return;
 	}
 	//
 	// 更新
@@ -2374,6 +2418,8 @@ static void td_init_save( T_DOWNLOAD_MAIN_WORK* wk )
 	// 上画面処理
 	TdCmn_chk_up_disp( wk, FALSE, FALSE, FALSE );
 	//
+	wk->Step = STEP_LV1;
+	//
 	// 詳細画面からの戻りの場合は、
 	// 処理を分岐
 	if(!(wk->Flag & FLG_MW_SAVE2INFO)){
@@ -2395,16 +2441,17 @@ static void td_init_save( T_DOWNLOAD_MAIN_WORK* wk )
 			// 輝度変更=>そのまま引き継ぐ
 			// アニメ停止
 			TdCmn_stop_anim_speed( wk, TRUE );
-			wk->Step = STEP_LV5;
+//			wk->Step = STEP_LV5;
+			wk->Step = STEP_LV4+5;
 			// カーソル非表示
 			TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, FALSE );
 			//----------------
 			// セーブ処理
 			//----------------
 			// 空きにセット
-			num = TdSave_get_save_pos( wk );
-			TdSave_init_save( wk, wk->AllCurPos[T_DOWNLOAD_LIST_SELECT], num );
-			TdSave_init_timeicon( wk );
+//			num = TdSave_get_save_pos( wk );
+//			TdSave_init_save( wk, wk->AllCurPos[T_DOWNLOAD_LIST_SELECT], num );
+//			TdSave_init_timeicon( wk );
 		}
 	}
 	// 左上タイトル表示
@@ -2427,6 +2474,10 @@ static void td_chk_input_save( T_DOWNLOAD_MAIN_WORK* wk )
 {
 	BOOL	bflg;
 	
+	// 処理中は更新しない
+	if( PRINTSYS_QUE_IsFinished( wk->print_que ) == FALSE ){
+		return;
+	}
 	// 判定
 	// タッチペン
 	bflg = td_chk_tp_input_save( wk );
@@ -2584,6 +2635,18 @@ static BOOL td_chk_key_input_save( T_DOWNLOAD_MAIN_WORK* wk )
 			TdCmn_set_cmn_anim( wk, T_DOWNLOAD_CLWKID_CMN_RETURN, 0 );
 			flg = 1;
 		}
+		//
+#ifdef __CHK_TD__
+		else{
+			if(wk->DebugFlag & FLG_DBG_ON){
+				wk->SaveCurPos++;
+				if(wk->SaveCurPos > (wk->DispMaxNum-1)){
+					wk->SaveCurPos = 0;
+				}
+				sflg = 1;
+			}
+		}
+#endif
 	}
 	
 	// 更新
@@ -2985,13 +3048,48 @@ static void td_key_save( T_DOWNLOAD_MAIN_WORK* wk )
 				//
 				// ウインドウ
 				TdCmn_disp_winmes( wk, T_DOWNLOAD_MSG_DOWN_MESWIN_01, T_DOWNLOAD_WIN_NOW_SAVING, 0 );
-				wk->Step = STEP_LV5;
+//				wk->Step = STEP_LV5;
+				wk->Step = STEP_LV4+10;
 				//----------------
 				// セーブ処理
 				//----------------
-				TdSave_init_save( wk, wk->AllCurPos[T_DOWNLOAD_LIST_SELECT], wk->SaveCurPos );
-				TdSave_init_timeicon( wk );
+//				TdSave_init_save( wk, wk->AllCurPos[T_DOWNLOAD_LIST_SELECT], wk->SaveCurPos );
+//				TdSave_init_timeicon( wk );
 			}
+			break;
+		
+		//------------------------------
+		// セーブ処理
+		// (すぐセーブの場合)
+		//------------------------------
+		case STEP_LV4+5:
+			// 処理中は更新しない
+			if( PRINTSYS_QUE_IsFinished( wk->print_que ) == FALSE ){
+				break;
+			}
+			// 文字の処理(負荷が高い)をしているとセーブ時に落ちてしまうので、
+			// 終了を待ってから処理
+			// 空きを見つけてセーブ
+			tmp = TdSave_get_save_pos( wk );
+			TdSave_init_save( wk, wk->AllCurPos[T_DOWNLOAD_LIST_SELECT], tmp );
+			TdSave_init_timeicon( wk );
+			wk->Step = STEP_LV5;
+			break;
+		
+		//------------------------------
+		// セーブ処理
+		// (削除後のセーブ)
+		//------------------------------
+		case STEP_LV4+10:
+			// 処理中は更新しない
+			if( PRINTSYS_QUE_IsFinished( wk->print_que ) == FALSE ){
+				break;
+			}
+			// 指定の位置にセーブ
+			tmp = wk->SaveCurPos;
+			TdSave_init_save( wk, wk->AllCurPos[T_DOWNLOAD_LIST_SELECT], tmp );
+			TdSave_init_timeicon( wk );
+			wk->Step = STEP_LV5;
 			break;
 		
 		//----------------------
@@ -3079,5 +3177,27 @@ static void td_exit_save( T_DOWNLOAD_MAIN_WORK* wk )
 	}
 	// 文字列破棄
 	TdCmn_exit_string2( wk, wk->Mode );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  debug
+ *
+ *	@param	T_DOWNLOAD_MAIN_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void td_debug( T_DOWNLOAD_MAIN_WORK* wk )
+{
+#ifdef __CHK_TD__
+	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_X) ){
+		wk->DebugFlag |= FLG_DBG_ON;
+		wk->DebugFlag |= FLG_DBG_UP;
+	}
+	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_Y) ){
+		wk->DebugFlag &= ~(FLG_DBG_ON|FLG_DBG_UP);
+	}
+#endif
 }
 

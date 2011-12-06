@@ -188,6 +188,7 @@ typedef struct {
 	s32					AnimNum;		///< アニメ用(段階)
 	s32					AnimType;		///< アニメ用タイプ
 	u32					PFlag;			///< 画面切り替え用(bitに対応)
+	u32					DebugFlag;		///< デバッグ
 	// トップ情報
 	s32					TopNum;			///< 台本番号(0-39)
 	s32					TopCurPos;		///< カーソル位置

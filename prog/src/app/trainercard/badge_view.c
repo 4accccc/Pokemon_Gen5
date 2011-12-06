@@ -436,6 +436,10 @@ static const s16 bv_scr_model_tbl[] = {
 };
 
 
+// 文字負荷チェック用
+#define __CHK_BV__
+#undef  __CHK_BV__
+
 //--------------------------------------------------------------------------------------------
 // 関数プロトタイプ宣言
 //--------------------------------------------------------------------------------------------
@@ -2477,11 +2481,16 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg, BOOL keyflag )
   s32	num=0;
   s32	flg=0;
   BOOL	bflg;
-  
+
+#ifdef __CHK_BV__
+  if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_X) ){
+    trg = TOUCH_GYM_READER_0;
+  }
+#else
   if(trg==GFL_UI_TP_HIT_NONE){
     return;
   }
-  
+#endif
 //  OS_Printf("trg=%d\n",trg);
   switch(trg){
   case TOUCH_BADGE_0: // バッジにタッチ
@@ -2492,6 +2501,10 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg, BOOL keyflag )
   case TOUCH_BADGE_5:
   case TOUCH_BADGE_6:
   case TOUCH_BADGE_7:
+    // 処理中は更新しない
+    if( PRINTSYS_QUE_IsFinished( wk->printQue ) == FALSE ){
+      break;
+    }
     if(wk->badgeflag[trg-TOUCH_BADGE_0]){
       // 通常とバッジの時のみ
       if((wk->Mode == MODE_NORMAL)||(wk->Mode == MODE_BADGE)){
@@ -2539,6 +2552,10 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg, BOOL keyflag )
   case TOUCH_GYM_READER_5:
   case TOUCH_GYM_READER_6:
   case TOUCH_GYM_READER_7:
+    // 処理中は更新しない
+    if( PRINTSYS_QUE_IsFinished( wk->printQue ) == FALSE ){
+      break;
+    }
     // 通常とジムリーダーの時のみ
     if((wk->Mode == MODE_NORMAL)||(wk->Mode == MODE_LEADER)){
       //回転が終わるまでタッチできなくする

@@ -217,6 +217,17 @@ enum{
   SUB_SEQ_STRANGE  = 12, // STRANGE
 };
 
+// デバッグ
+enum{
+	FLG_DBG_ON		= (1<<0),	// on
+	FLG_DBG_LEFT	= (1<<1),	// 左入力
+	FLG_DBG_RIGHT	= (1<<2),	// 右入力
+};
+
+// 文字負荷チェック用
+#define __CHK_SS__
+#undef  __CHK_SS__
+
 //=============================================================================
 /**
  *							データ定義
@@ -323,6 +334,7 @@ typedef struct
   int isTouch;
   BLINKPALANM_WORK *blinkWork[4];
   int page;
+  u32 DebugFlag;   // debug
 
   // セーブデータ分必要な情報
   PW_SVDATA   svdata[LOAD_SAVEDATA_MAX];       ///< 外部データから取得した情報実体
@@ -461,7 +473,8 @@ static void PrintTool_AddBmpWin( PKWD_SELECT_SCREEN_MAIN_WORK * wk );
 static void PrintTool_DelBmpWin( PKWD_SELECT_SCREEN_MAIN_WORK * wk );
 static void PrintTool_ScreenTrans( PKWD_SELECT_SCREEN_MAIN_WORK * wk, int index );
 static void PrintTool_PrintHP( PKWD_SELECT_SCREEN_MAIN_WORK * wk );
-
+//
+static void _debug_string( PKWD_SELECT_SCREEN_MAIN_WORK *wk );
 
 //=============================================================================
 /**
@@ -2150,7 +2163,22 @@ static int _check_nowpos( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 static BOOL SubSeq_Main( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
 {
   int result;
+  s32 flg=0;
+  
+  // debug
+#ifdef __CHK_SS__
+  _debug_string( wk );
+  //
+  if(wk->DebugFlag & FLG_DBG_ON){
+    flg = 1;
+  }
+#endif
 
+  // 処理中は更新しない
+  if( PRINTSYS_QUE_IsFinished( wk->print_que ) == FALSE ){
+    return( FALSE );
+  }
+  //
   // タッチ・キー制御
   if((result=_touch_input(wk))==GFL_UI_TP_HIT_NONE){
     result = _key_input(wk);
@@ -2168,8 +2196,8 @@ static BOOL SubSeq_Main( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
       wk->seq = MENU_FADEOUT;
       *wk->param->result = LOAD_SAVEDATA_MAX;
     // ページ切り替え
-    }else if(TOUCHBAR_GetTrg(wk->touchbar)==TOUCHBAR_ICON_CUR_L  ||
-        TOUCHBAR_GetTrg(wk->touchbar)==TOUCHBAR_ICON_CUR_R ){
+    }else if((TOUCHBAR_GetTrg(wk->touchbar)==TOUCHBAR_ICON_CUR_L)||
+             (TOUCHBAR_GetTrg(wk->touchbar)==TOUCHBAR_ICON_CUR_R)||(flg == 1)){
 
       // ページ切り替え処理まとめ
       wk->page ^= 1;
@@ -2501,3 +2529,23 @@ static void _touchbar_button_refresh( PKWD_SELECT_SCREEN_MAIN_WORK *wk, BOOL fla
   TOUCHBAR_SetVisible( wk->touchbar,  TOUCHBAR_ICON_CUR_R, flag );
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	debug
+ *
+ * @param   wk		
+ * @param   flag	TRUE:表示ON FALSE:表示OFF
+ */
+//----------------------------------------------------------------------------------
+static void _debug_string( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
+{
+#ifdef __CHK_SS__
+  if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_X) ){
+    wk->DebugFlag |= FLG_DBG_ON;
+    wk->DebugFlag |= FLG_DBG_LEFT;
+  }
+  if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_Y) ){
+    wk->DebugFlag &= ~(FLG_DBG_ON|FLG_DBG_LEFT);
+  }
+#endif
+}

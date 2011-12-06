@@ -301,6 +301,7 @@ typedef struct
 	s32						Mode;							// モード
 	u32						Flag;							// フラグ
 	u32						CmnFlag;						// 共通フラグ
+	u32						DebugFlag;						// debug
 	s32						RetMode;						// 戻りモード
 	s32						InfoCurPos;						// 詳細カーソル位置(0-2)
 	s32						ScrollOffy;						// BG3のスクロールoffset
