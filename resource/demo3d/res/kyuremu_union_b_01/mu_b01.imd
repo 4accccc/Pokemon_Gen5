@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-11-23T20:52:36" source="kyuremu_union_b_01_013.mb"/>
+	<create user="swan_3dcg02" host="W00193" date="2011-12-06T21:05:28" source="kyuremu_union_b_01_v05b.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-11-23T20:52:36" source="kyuremu_union_b_01_013.mb"/>
+<original_create user="swan_3dcg02" host="W00193" date="2011-12-06T21:05:28" source="kyuremu_union_b_01_v05b.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="4" xyz="-2.351074 -0.000977 -3.036621" whd="4.701904 3.370361 3.563232"/>
 
-<tex_image_array size="9">
+<tex_image_array size="10">
 	<tex_image index="0" name="mu_blue2"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
@@ -2102,7 +2102,273 @@
 			4444 f444 4444 4444 4444 4444 4444 e444
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="mu_eye.4"
+	<tex_image index="2" name="mu_eye.1"
+		width="128" height="64" original_width="128" original_height="64"
+		format="palette16"
+		color0_mode="color"
+		palette_name="mu_eye.1_pl"
+		path="C:/home/swan_data3d/demo/zekrom/tex/mu_eye.1.tga"
+	>
+		<bitmap size="2048">
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dedd dddd eddd dddd ddde
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			eddd eddd eded dedd dede dede dede eded
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dded edde eded eded eded eeed eded eded
+			dded dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dded
+			dede dede eede eeed eeee eeee eeee edee
+			eded dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd eddd eddd dded dede
+			dede eeee eeee ceee eeee eeec ceec eeee
+			dede edde dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dded dede eede
+			eeee eeee ceec ccec cccc cccc eccc eeec
+			eeee dded ddde dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dedd edde eedd eded eeed eeee
+			ecee ccee cccc cccc cccc cccc cccc cccc
+			eece dede ddde dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dded dede dede eeee eeee ecee
+			cecc cccc cccc 5c5c 555c c555 c5c5 cccc
+			ecec deee ddde dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dede eddd eded eeee eeee ccec cecc
+			cccc 5ccc 5c5c 5555 5555 5555 5555 c5c5
+			cccc eeec dede dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dedd eded deee eeee ceee cccc cccc cccc
+			55c5 5555 5555 7555 7575 7777 5575 5555
+			cccc ecee eded dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd eddd
+			dddd dede eeee eece eccc cccc cccc 555c
+			5555 5555 7775 7777 2272 7227 7772 5557
+			c555 eecc deee ddde dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd eddd
+			eeed eeee ceee ccec cccc 5c5c 555c 5555
+			5755 7777 2722 2222 2422 2224 2222 7777
+			5555 eccc deec ddde dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dedd dedd
+			eede ceee cccc cccc 55cc 5555 5555 7755
+			7777 2222 4222 b444 b4b4 4bb4 444b 7222
+			5557 ccc5 deee dede dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd eddd eded
+			eeee cccc cccc 55c5 5555 7555 7777 2727
+			2222 4442 bbb4 6bbb 66b6 6666 bbbb 2244
+			5772 cc55 ecec dede dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dedd eeee
+			ccec cccc 55cc 5555 5755 7777 2277 2222
+			4444 bbbb 66b6 6866 8888 8888 b668 24bb
+			7722 c555 eecc dede dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd eded eeee
+			cccc c5cc 5555 7755 2777 2227 4242 bb44
+			6bbb 8666 8886 3838 3333 8333 8838 bb66
+			7224 c557 eccc ddee dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd eede ceee
+			ccce 555c 7555 7777 2222 4422 bb44 6bbb
+			8666 8888 3338 3933 9393 9393 3333 b688
+			224b 5557 eccc dede dddd 0f00 ddd0 dddd
+			dddd dddd dddd dddd dddd eddd eeed ccce
+			55cc 5555 2777 2227 4442 bbb4 666b 8686
+			8388 3333 9939 9999 9191 9991 3399 6883
+			24bb 5577 eccc ddee ff0d 0fff dddd dddd
+			dddd dddd dddd dddd dddd dedd eeee cccc
+			555c 7755 2227 4442 bbb4 666b 8888 3388
+			3333 9993 1999 1119 1111 1111 9991 8833
+			24b6 5572 eccc f00e ffff d0ff dddd dddd
+			dddd dddd dddd dddd dddd edde ceee 5ccc
+			5555 2277 4422 bbbb 8666 8888 3388 3333
+			9999 9199 1111 1111 aaaa 11a1 9111 8339
+			24b6 5572 0dec ffff ffff ddd0 dddd dddd
+			dddd dddd dddd dddd dddd eede ceee c5cc
+			7755 2227 bb44 666b 8888 3388 3393 9999
+			1919 1111 aa11 aaaa aaaa aaaa 9111 8339
+			24b6 de57 fff0 ffff d0ff dddd dddd dddd
+			dddd dddd dddd dddd dddd eede ccce 55cc
+			2775 4422 66bb 8886 3383 9393 9999 1119
+			1111 aaa1 aaaa aaaa aaaa a1aa 9911 6833
+			c54b ff0d ffff 0fff ddd0 dddd dddd dddd
+			dddd dddd dddd dddd eddd eeed ccce 555c
+			2277 bb42 8866 3388 9393 9999 1191 1111
+			aaa1 aaaa aaaa aaaa aaaa 11aa 3991 7b83
+			f00e ffff ffff dd00 dded dddd dddd dddd
+			dddd dddd dddd dddd dedd eeee cccc 7555
+			2227 6bbb 3886 9333 9993 1111 1111 aaa1
+			aaaa aaaa aaaa aaaa 11aa 9111 2839 f0dc
+			ffff ffff dd00 ddee dddd dddd dddd dddd
+			dddd dddd dddd dddd eddd eeed cccc 7755
+			4227 86bb 3388 9993 1119 1111 aaa1 aaaa
+			aaaa aaaa aaaa 1aaa 111a 2899 f0dc ffff
+			ffff ed0f ddee dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dedd eeee 5ccc 7755
+			b422 886b 9333 1999 1111 aaa1 a1aa aaaa
+			aaaa aaaa aaaa 1111 5439 f0de ffff ffff
+			ed0f ecc5 eeee dded dddd dddd dddd dddd
+			dddd dddd dddd dddd eded ceee 5ccc 2755
+			b442 8886 9933 1119 a111 aa1a aaaa aaaa
+			aaaa 1aaa 9111 d5b3 f00d ffff ffff c00f
+			5555 ccc5 eeec deee ddde dddd dddd dddd
+			dddd dddd dddd dddd dedd ceee 55cc 2775
+			6b42 3886 9993 1111 1aaa 1aaa aaaa 1111
+			111a 8991 dd54 ff00 ffff ffff cd00 7775
+			5577 cc55 eecc edee dddd dddd dddd dddd
+			dddd dddd dddd dddd eded cece 55cc 2775
+			6b44 3388 1999 1191 a111 a11a 1111 9111
+			7639 00dc fff0 ffff ffff 5d00 2727 2222
+			7772 5555 cecc deee ddde dddd dddd dddd
+			dddd dddd dddd dddd dedd ccee 555c 2275
+			bb44 3886 9993 1119 1111 9191 6399 ddc2
+			f000 ffff ffff 00ff 75dd 2222 2222 2224
+			7722 5557 eccc deec ddde dddd dddd dddd
+			dddd dddd dddd dddd eede ecee 5ccc 2755
+			6b42 8886 9333 9933 2683 dec7 f00d fff0
+			ffff ffff d00f 27cd 2222 4424 b444 4444
+			7222 5557 eccc edee dddd dddd dddd dddd
+			dddd dddd dddd dddd dded eeee 5ccc 7755
+			4422 2bbb ec57 00dd f000 fff0 ffff ffff
+			ffff dd00 7755 2222 4442 4b44 bbbb 44bb
+			7222 c557 eccc deee dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			0d0d 0000 fff0 ffff ffff ffff ffff 000f
+			55dd 7777 2222 b442 b4b4 b6bb b6b6 b4bb
+			7222 5557 cccc dede dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd 0f0d ffff ffff
+			ffff ffff ffff ffff ffff d000 5edd 7775
+			2277 2222 4442 b444 66bb 6666 6666 44bb
+			7722 c555 eecc ddee dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd f00d ffff ffff
+			ffff ffff d00f ddd0 755e 7775 2777 2227
+			2222 4442 bb44 6b6b 6666 6866 b666 244b
+			5772 cc55 eeec dede dddd dddd dddd dddd
+			dddd dddd dddd dddd 0ddd d0dd 0d00 d0d0
+			eddd 5cce 5555 7777 7777 2727 2222 2422
+			4444 b444 6bbb 666b 6868 6668 4bb6 2224
+			5577 ccc5 dece ddde dddd dddd dddd dddd
+			dddd dddd dddd dddd dd0d ddd0 dddd ecde
+			c5ce 5555 7775 2777 2227 2222 4242 4444
+			bb44 6bbb 666b 6866 6666 bb66 444b 7722
+			5555 cccc deee ddde dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd 0ddd dddd eedd
+			5ccc 5555 7777 2222 4422 4444 b444 bbb4
+			bbbb b66b 6666 6666 bbb6 444b 2222 5777
+			cc55 eccc edee dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd d0dd dd0d dddd eeed
+			cccc 7555 2777 2222 4444 bb44 bbbb bbbb
+			b6b6 66b6 b66b 4bbb 44bb 2244 7722 5557
+			cc55 eeec dede dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd cedd
+			55cc 7755 2227 4242 bb44 bbbb bbbb bbbb
+			bbbb bbb6 bb4b 4444 2222 2722 5757 c555
+			cccc eece dede dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd 0ddd dddd dddd cced
+			5c5c 7755 2277 b442 b4b4 bbbb bbbb bbbb
+			4b4b 4444 2444 2224 7222 5777 5555 cc55
+			eccc deee dded dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd eddd ecee
+			55cc 7555 2227 4422 4444 b4b4 44b4 44b4
+			2444 2224 2722 7777 5577 5555 cc55 cccc
+			eeec edee ddde dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd eddd ccce
+			55cc 7555 7777 2222 4424 4424 4444 2242
+			2222 7222 7777 5777 5555 c555 ccc5 eccc
+			eeee dede dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd eedd ceee
+			5ccc 5555 7777 2272 2222 2222 2222 7272
+			7777 5575 5557 5555 5555 cc5c cccc eeec
+			deee dded dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd eedd ccee
+			cccc 555c 7555 7777 7277 7777 7777 7577
+			5577 5555 5555 c5c5 cccc cccc eecc eeee
+			edee dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd edee eeee
+			ccce 55cc 5555 5555 7557 5757 5555 5555
+			5555 5555 cccc cccc cccc eeec eeee edee
+			dedd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd eeee
+			ceec cccc c5cc 5555 5555 5555 5555 c555
+			ccc5 cccc cccc cccc eece eeee eeee dede
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd eddd eeed
+			ecee ccce cccc cccc c5c5 c5c5 c5c5 cccc
+			cccc cccc ecec eeee eeee eeee eded dded
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dded
+			eeee eeec ccce cccc cccc cccc cccc cccc
+			eccc eecc eeee eeee eeee dded ddde ddde
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd eded
+			eded ceee ceee cccc cccc cccc cccc ecec
+			ecee eeee eeee eeee dedd ddde dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dedd
+			dede eede eeee eeee eeee ceec eeee eeee
+			eeee eeee eeee eded dded dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			eddd eded edee eeee eeee eeee eeee eeee
+			edee dded eddd dded ddde dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dded dede eede eeee eede deed dede
+			dede edde deee dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd eddd
+			dddd dded eded dded eded eded eded eded
+			dded dded dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dded dedd dddd ddde dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+		</bitmap>
+	</tex_image>
+	<tex_image index="3" name="mu_eye.4"
 		width="128" height="64" original_width="128" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -2368,7 +2634,7 @@
 			7777 7777 7777 7777 7777 7777 7777 7777
 		</bitmap>
 	</tex_image>
-	<tex_image index="3" name="mu_head"
+	<tex_image index="4" name="mu_head"
 		width="128" height="128" original_width="128" original_height="128"
 		format="palette16"
 		color0_mode="color"
@@ -2890,7 +3156,7 @@
 			2222 2222 aaaa 5158 5555 5555 5555 5555
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="mu_tail_blue"
+	<tex_image index="5" name="mu_tail_blue"
 		width="8" height="8" original_width="8" original_height="8"
 		format="palette4"
 		color0_mode="color"
@@ -2901,7 +3167,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="5" name="mu_tail_gen"
+	<tex_image index="6" name="mu_tail_gen"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -2927,7 +3193,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="6" name="mu_tail_white"
+	<tex_image index="7" name="mu_tail_white"
 		width="8" height="8" original_width="8" original_height="8"
 		format="palette4"
 		color0_mode="color"
@@ -2938,7 +3204,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="7" name="mu_teeth"
+	<tex_image index="8" name="mu_teeth"
 		width="8" height="8" original_width="8" original_height="8"
 		format="palette16"
 		color0_mode="color"
@@ -2950,7 +3216,7 @@
 			3333 3333 5555 5555 6666 6666 6666 6666
 		</bitmap>
 	</tex_image>
-	<tex_image index="8" name="mu_tongue"
+	<tex_image index="9" name="mu_tongue"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -2978,7 +3244,7 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="9">
+<tex_palette_array size="10">
 	<tex_palette index="0" name="mu_blue2_pl" color_size="4">
 		72c6 7fff 7fff 7fff
 	</tex_palette>
@@ -2986,27 +3252,31 @@
 		318b 35ac 18c6 14a5 0842 2949 2107 1ce6
 		2528 18c5 2949 1ce7 1084 2d6a 0c63 0841
 	</tex_palette>
-	<tex_palette index="2" name="mu_eye.4_pl" color_size="16">
+	<tex_palette index="2" name="mu_eye.1_pl" color_size="16">
+		0000 1cc6 1084 18c6 1484 0c63 14a5 1084
+		18a5 1cc6 1ce7 14a5 0c62 0842 0842 0000
+	</tex_palette>
+	<tex_palette index="3" name="mu_eye.4_pl" color_size="16">
 		0c68 255b 2139 1cf5 2117 18d1 10ad 0842
 		39ce 7bde 6f7b 6318 5294 4631 294a 18c6
 	</tex_palette>
-	<tex_palette index="3" name="mu_head_pl" color_size="16">
+	<tex_palette index="4" name="mu_head_pl" color_size="16">
 		35ac 318b 2108 1ce6 0c63 294a 1ce6 0421
 		2529 14a5 2107 18c6 1084 1084 0842 0421
 	</tex_palette>
-	<tex_palette index="4" name="mu_tail_blue_pl" color_size="4">
+	<tex_palette index="5" name="mu_tail_blue_pl" color_size="4">
 		7b50 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="5" name="mu_tail_gen_pl" color_size="8">
+	<tex_palette index="6" name="mu_tail_gen_pl" color_size="8">
 		7fb2 7fd5 7ff8 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="6" name="mu_tail_white_pl" color_size="4">
+	<tex_palette index="7" name="mu_tail_white_pl" color_size="4">
 		7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="7" name="mu_teeth_pl" color_size="8">
+	<tex_palette index="8" name="mu_teeth_pl" color_size="8">
 		2509 294b 318d 4632 3def 4e74 56b5 7fff
 	</tex_palette>
-	<tex_palette index="8" name="mu_tongue_pl" color_size="16">
+	<tex_palette index="9" name="mu_tongue_pl" color_size="16">
 		0000 0424 210d 14a9 0002 0c46 1067 3172
 		1cec 20ec 18aa 2d30 1ccb 290f 1cca 1488
 	</tex_palette>
@@ -3078,7 +3348,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="2" tex_palette_idx="2"
+		tex_image_idx="3" tex_palette_idx="3"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3102,7 +3372,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="3" tex_palette_idx="3"
+		tex_image_idx="4" tex_palette_idx="4"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3121,12 +3391,12 @@
 		translucent_update_depth="off"
 		render_1_pixel="off"
 		far_clipping="off"
-		diffuse="0 0 0"
+		diffuse="25 25 25"
 		ambient="0 0 0"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="4" tex_palette_idx="4"
+		tex_image_idx="5" tex_palette_idx="5"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3145,12 +3415,12 @@
 		translucent_update_depth="off"
 		render_1_pixel="off"
 		far_clipping="off"
-		diffuse="0 0 0"
+		diffuse="25 25 25"
 		ambient="25 25 25"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="5" tex_palette_idx="5"
+		tex_image_idx="6" tex_palette_idx="6"
 		tex_tiling="repeat repeat"
 		tex_scale="7.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3169,12 +3439,12 @@
 		translucent_update_depth="off"
 		render_1_pixel="off"
 		far_clipping="off"
-		diffuse="12 12 12"
+		diffuse="25 25 25"
 		ambient="31 31 31"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="6" tex_palette_idx="6"
+		tex_image_idx="7" tex_palette_idx="7"
 		tex_tiling="flip repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3198,7 +3468,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="7" tex_palette_idx="7"
+		tex_image_idx="8" tex_palette_idx="8"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3222,7 +3492,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="8" tex_palette_idx="8"
+		tex_image_idx="9" tex_palette_idx="9"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -11282,7 +11552,7 @@
 		scale_compensate="off"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 -90.000000 0.000000"
+		rotate="-90.000000 -15.518311 90.000000"
 		translate="0.190430 0.050293 0.000000"
 		visibility="off"
 		display_size="1"
