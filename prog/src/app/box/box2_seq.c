@@ -6246,23 +6246,28 @@ static int MainSeq_ItemMain( BOX2_SYS_WORK * syswk )
     }
     return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_ITEM_MENU_CLOSE );
 
-  case BOX2UI_ITEM_MAIN_CONV:         // 39: 便利モード
+	case BOX2UI_ITEM_MAIN_NORMAL:				// 39: 通常モードへ
+		if( syswk->mv_cnv_mode == 1 ){
+			syswk->mv_cnv_mode = 0;
+			return ChgSeqSelectTouch( syswk, BOX2SEQ_MAINSEQ_ITEMGET_INIT );
+		}
+		break;
+
+  case BOX2UI_ITEM_MAIN_CONV:         // 40: 便利モード
 		if( syswk->mv_cnv_mode == 0 ){
 			syswk->mv_cnv_mode = 1;
-		}else{
-			syswk->mv_cnv_mode = 0;
-		}
-    {
-      int next = ChgSeqSelectTouch( syswk, BOX2SEQ_MAINSEQ_ITEMGET_INIT );
-      if( syswk->mv_cnv_mode == 1 && syswk->mv_cnv_menu == 0 ){
-        u8  pos = CURSORMOVE_PosGet( syswk->app->cmwk );
-        if( pos < BOX2OBJ_POKEICON_TRAY_MAX ){
-          syswk->get_pos = pos;
-        }else{
-          syswk->get_pos = 0;
-        }
-      }
-      return next;
+	    {
+	      int next = ChgSeqSelectTouch( syswk, BOX2SEQ_MAINSEQ_ITEMGET_INIT );
+	      if( syswk->mv_cnv_menu == 0 ){
+	        u8  pos = CURSORMOVE_PosGet( syswk->app->cmwk );
+	        if( pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+	          syswk->get_pos = pos;
+	        }else{
+	          syswk->get_pos = 0;
+	        }
+	      }
+	      return next;
+			}
     }
     break;
 
@@ -7167,25 +7172,31 @@ static int MainSeq_ItemPartyMain( BOX2_SYS_WORK * syswk )
     }
     return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_ITEM_PARTY_MENU_CLOSE );
 
-  case BOX2UI_ITEM_PARTY_CONV:      // 12: 便利モード
+
+	case BOX2UI_ITEM_PARTY_NORMAL:		// 12: 通常モード
+		if( syswk->mv_cnv_mode == 1 ){
+			syswk->mv_cnv_mode = 0;
+			return ChgSeqSelectTouch( syswk, BOX2SEQ_MAINSEQ_ITEMGET_INIT );
+		}
+		break;
+
+  case BOX2UI_ITEM_PARTY_CONV:      // 13: 便利モード
 		if( syswk->mv_cnv_mode == 0 ){
 			syswk->mv_cnv_mode = 1;
-		}else{
-			syswk->mv_cnv_mode = 0;
+			{
+				int next = ChgSeqSelectTouch( syswk, BOX2SEQ_MAINSEQ_ITEMGET_INIT );
+				if( syswk->mv_cnv_menu == 0 ){
+					u8  pos = CURSORMOVE_PosGet( syswk->app->cmwk );
+					if( pos < BOX2OBJ_POKEICON_MINE_MAX ){
+						syswk->get_pos = pos + BOX2OBJ_POKEICON_TRAY_MAX;
+					}else{
+						syswk->get_pos = BOX2OBJ_POKEICON_TRAY_MAX;
+					}
+				}
+				return next;
+			}
 		}
-    {
-      int next = ChgSeqSelectTouch( syswk, BOX2SEQ_MAINSEQ_ITEMGET_INIT );
-      if( syswk->mv_cnv_mode == 1 && syswk->mv_cnv_menu == 0 ){
-        u8  pos = CURSORMOVE_PosGet( syswk->app->cmwk );
-        if( pos < BOX2OBJ_POKEICON_MINE_MAX ){
-          syswk->get_pos = pos + BOX2OBJ_POKEICON_TRAY_MAX;
-        }else{
-          syswk->get_pos = BOX2OBJ_POKEICON_TRAY_MAX;
-        }
-      }
-      return next;
-    }
-    break;
+		break;
 
   case CURSORMOVE_NO_MOVE_UP:     // 十字キー上が押されたが、移動なし
   case CURSORMOVE_NO_MOVE_DOWN:   // 十字キー下が押されたが、移動なし

@@ -226,8 +226,8 @@ enum {
   BOX2UI_ITEM_MAIN_MENU2,       // 37: バッグへ or もたせる
   BOX2UI_ITEM_MAIN_CLOSE,       // 38: とじる
 
-  BOX2UI_ITEM_MAIN_CONV,        // 39: 便利モードへ
-  BOX2UI_ITEM_MAIN_NORMAL,      // 40: 通常モードへ
+  BOX2UI_ITEM_MAIN_NORMAL,      // 39: 通常モードへ
+  BOX2UI_ITEM_MAIN_CONV,        // 40: 便利モードへ
 
   // 持ち物整理・手持ちポケモン
   BOX2UI_ITEM_PARTY_POKE1 = 0,  // 00: 手持ちポケモン
@@ -245,7 +245,8 @@ enum {
   BOX2UI_ITEM_PARTY_MENU2,      // 10: バッグへ or もたせる
   BOX2UI_ITEM_PARTY_CLOSE,      // 11: とじる
 
-  BOX2UI_ITEM_PARTY_CONV,       // 12: 便利モード
+  BOX2UI_ITEM_PARTY_NORMAL,     // 12: 通常モード
+  BOX2UI_ITEM_PARTY_CONV,       // 13: 便利モード
 
   // 寝かせる
   BOX2UI_SLEEP_MAIN_POKE1 = 0,  // 00: ポケモン
