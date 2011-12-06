@@ -561,7 +561,7 @@
 <tex_palette_array size='1'>
 	<tex_palette name='t4x4x15' color_size='16' index='0'>
 		51f7 05d7 0e7c 09a3 1ea7 4390 192a 0297 
-		3f9d 192f 4ebc 6f9f 7fff 7338 381c 0000 
+		3f9d 192f 4ebc 6f9f 7fff 7338 3c59 0000 
 	</tex_palette>
 </tex_palette_array>
 
