@@ -61,6 +61,7 @@ _EVENT_DATA    ev_pos_c12_swbell_meet_stop_02a
 _EVENT_DATA    ev_c12_game_start_init
 _EVENT_DATA    ev_c12_game_start
 _EVENT_DATA	ev_c12_girl2_01
+_EVENT_DATA    ev_c12_ending
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -2076,6 +2077,17 @@ EVENT_START   ev_c12_game_start
 
 EVENT_END
 
+/************************************************************/
+/*  エンディングイベント                                    */
+/*  プログラムから呼ばれる                                  */
+/************************************************************/
+EVENT_START    ev_c12_ending
+
+  //アニメ：家まで走る
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 47, 763, FORCE_TYPE_NPC, 4, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  
+EVENT_END
 
 //--------------------------------------------------------------------
 //  ライバルの妹：歩きa（クリア後イベント用）
@@ -2173,6 +2185,14 @@ _ANIME_LABEL	anm_game_start_03
 _ANIME_LABEL	anm_game_start_04
   _ANIME_DATA	AC_SWMAMA2_HANG_UP_PHONE,1
   _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆エンディング：主人公家まで走る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ending_01
+  _ANIME_DATA	AC_WALK_D_4F,4
+  _ANIME_DATA	AC_WALK_R_4F,2
+	_ANIME_DATA	ACMD_END,0
 
 
 //--------------------------------------------------------------------

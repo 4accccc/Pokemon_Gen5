@@ -21,8 +21,90 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_bg_c09p02_elevator_01
+_EVENT_DATA   ev_zone_c09p02
+_EVENT_DATA   ev_c09p02_ending
+_EVENT_DATA   ev_bg_c09p02_elevator_01
 _EVENT_DATA_END
+
+
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_c09p02
+
+  // エンディングスクリプトなら四天王表示
+  IF FLAG_ON(SYS_FLAG_ENDING) THEN
+    _FLAG_RESET( FV_C09P02_ENDING )
+  ENDIF
+  
+INIT_EVENT_END
+
+
+/************************************************************/
+/*	エンディングイベント                                    */
+/*  プログラムから呼ばれる                                  */
+/************************************************************/
+EVENT_START ev_c09p02_ending
+
+  //======================
+  // @todo
+  // 花火が入る
+  // 
+  //======================
+
+  //アニメ：主人公部屋から出てくる
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_1 )
+  _OBJ_ANIME_WAIT()
+
+  //アニメ：アイリスも続けて出てくる
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_2 )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C09P02_SWCHAMPION, anm_swchampion_1 )
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：2人で階段を降りる
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_3 )
+  _OBJ_ANIME( C09P02_SWCHAMPION, anm_player_3 )
+  _OBJ_ANIME_WAIT()
+
+
+  //アニメ：四天王と会話するような動き
+
+
+  //アニメ：主人公一気に階段を駆け下りる
+
+
+  //========================================//
+  // 四天王非表示
+  _FLAG_SET( FV_C09P02_ENDING )
+  //========================================//
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//  主人公アニメ
+//--------------------------------------------------------------------
+// 部屋から出てくる
+_ANIME_LABEL  anm_player_1
+  _ANIME_DATA AC_WALK_D_8F,6
+  _ANIME_DATA ACMD_END,0
+
+// 振り向く
+_ANIME_LABEL  anm_player_2
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA ACMD_END,0
+
+// 階段を降りる
+_ANIME_LABEL  anm_player_3
+  _ANIME_DATA AC_WALK_D_16F,9
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  アイリスアニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_swchampion_1
+  _ANIME_DATA AC_WALK_D_8F,7
+  _ANIME_DATA ACMD_END,0
 
 
 /************************************************************/

@@ -40,5 +40,6 @@
 #define SCRID_C12_GAME_START_INIT (33)
 #define SCRID_C12_GAME_START (34)
 #define SCRID_C12_GIRL2_01 (35)
+#define SCRID_C12_ENDING (36)
 
 #endif //_C12_DEF_H_

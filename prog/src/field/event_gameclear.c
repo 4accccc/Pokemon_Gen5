@@ -34,11 +34,17 @@
 #include "net_app/key_system.h"
 #include "savedata/medalbox.h"
 
+#include "fieldmap/zone_id.h"   // for ZONE_ID_
+#include "field/field_const.h"  // for GRID_TO_FX32
+#include "event_mapchange.h"    // for 
+#include "event_fieldmap_control.h" // EVENT_FieldOpen
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
+#include "../../../resource/fldmapdata/script/c09p02_def.h" // for SCRID_C09P02_
+#include "../../../resource/fldmapdata/script/c12_def.h" // for SCRID_C12_
 
 //==============================================================================================
 //==============================================================================================
-#define MAX_SEQ_NUM (16) // 実行するシーケンスの最大数
+#define MAX_SEQ_NUM (30) // 実行するシーケンスの最大数
 #define WAIT_FRAME  (60)
 
 
@@ -85,6 +91,15 @@ enum {
   GMCLEAR_SEQ_SAVE_MESSAGE,     // セーブ中メッセージ表示
   GMCLEAR_SEQ_FRAME_WAIT,       // フレーム経過待ち
   GMCLEAR_SEQ_THE_END,          //「THE END」表示
+  // swan追加 ichiraku
+  GMCLEAR_SEQ_MAP_CHANGE_FIRST, // マップチェンジ(C09P02)
+  GMCLEAR_SEQ_MAP_CHANGE_SECOND,// マップチェンジ(C12)
+  GMCLEAR_SEQ_SCRIPT_CALL_FIRST,// スクリプト呼び出し(C09P02)
+  GMCLEAR_SEQ_SCRIPT_CALL_SECOND,// スクリプト呼び出し(C12)
+  GMCLEAR_SEQ_FIELD_OPEN_WAIT,  // フィールドマップ開始待ち
+  GMCLEAR_SEQ_FADEIN,           // フェードイン
+  //
+
   GMCLEAR_SEQ_END,              // 終了
 };
 
@@ -129,6 +144,10 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
       //GF_ASSERT( EVENTWORK_CheckEventFlag( GAMEDATA_GetEventWork( gamedata ), SYS_FLAG_GAME_CLEAR ) ); // ゲームクリアなしで殿堂入り ( 通常はありえない )
       ElboardStartChampNews( wk ); // 電光掲示板にチャンピオンニュースを表示
     //}
+    
+    // スクリプト初期化用のフラグをたてる
+    //  c09p02.ev c12.ev の初期化に使用
+    EVENTWORK_SetEventFlag( GAMEDATA_GetEventWork( gamedata ), SYS_FLAG_ENDING );
  
     // メダル達成処理
     CheckMedalAchieve( wk );
@@ -238,7 +257,67 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
     NowSeqFinish( work, seq );
     break;
 
+  //=====================================
+  // ↓ここから↓
+  // swan追加 ichiraku
+  
+  // マップチェンジ(C09P02)
+  case GMCLEAR_SEQ_MAP_CHANGE_FIRST:
+    {
+      VecFx32 pos = { GRID_TO_FX32(31), GRID_TO_FX32(47), GRID_TO_FX32(1) };
+      GMEVENT_CallEvent( event, 
+          EVENT_ChangeMapPosNoFade( gsys, fieldmap, ZONE_ID_C09P02, &pos, DIR_DOWN ) ); 
+      NowSeqFinish( work, seq );
+    }
+    break;
+
+  // マップチェンジ(C12)
+  case GMCLEAR_SEQ_MAP_CHANGE_SECOND:
+    {
+      VecFx32 pos = { GRID_TO_FX32(43), GRID_TO_FX32(1), GRID_TO_FX32(757) };
+      GMEVENT_CallEvent( event, 
+          EVENT_ChangeMapPosNoFade( gsys, fieldmap, ZONE_ID_C12, &pos, DIR_DOWN ) ); 
+      NowSeqFinish( work, seq );
+    }
+    break;
+
+  // スクリプト呼び出し(C09P02)
+  case GMCLEAR_SEQ_SCRIPT_CALL_FIRST:
+    {
+      SCRIPT_CallScript( event, SCRID_C09P02_ENDING, NULL, NULL, HEAPID_PROC );
+      NowSeqFinish( work, seq );
+    }
+    break;
+
+  // スクリプト呼び出し(C12)
+  case GMCLEAR_SEQ_SCRIPT_CALL_SECOND:
+    {
+      SCRIPT_CallScript( event, SCRID_C12_ENDING, NULL, NULL, HEAPID_PROC );
+      NowSeqFinish( work, seq );
+    }
+    break;
+
+  // フィールドマップ開始待ち
+  case GMCLEAR_SEQ_FIELD_OPEN_WAIT:
+    {
+      GMEVENT_CallEvent( event, EVENT_FieldOpen_FieldProcOnly( gsys ) );
+      NowSeqFinish( work, seq );
+    }
+    break;
+
+  // フェードイン
+  case GMCLEAR_SEQ_FADEIN:
+    {
+      GMEVENT_CallEvent( event, 
+          EVENT_FieldFadeIn_Black( gsys, fieldmap, FIELD_FADE_WAIT ) ); 
+      NowSeqFinish( work, seq );
+    }
+    break;
+
   case GMCLEAR_SEQ_END:
+    // スクリプト初期化用のフラグをリセット
+    EVENTWORK_ResetEventFlag( GAMEDATA_GetEventWork( gamedata ), SYS_FLAG_ENDING );
+
     return GMEVENT_RES_FINISH;
 
   case GMCLEAR_SEQ_END + 1:
@@ -331,6 +410,14 @@ static void SetupStaffRollDemoParam( GAMECLEAR_WORK* work )
   // 殿堂入りの場合はスキップ可能
   work->staffRollDemoParam.fastMode = ( work->clear_mode == GAMECLEAR_MODE_DENDOU );
 
+#ifdef PM_DEBUG
+#if defined(DEBUG_ONLY_FOR_ichiraku_katsuhiko)
+  // デバッグモード起動
+  work->staffRollDemoParam.fastMode = STAFFROLL_MODE_DEBUG;
+#endif
+#endif
+
+
   // 文字モードを設定
   {
     SAVE_CONTROL_WORK* save;
@@ -376,8 +463,27 @@ static void SetupSequence( GAMECLEAR_WORK* work )
   work->seqArray[pos++] = GMCLEAR_SEQ_CLEAR_SCRIPT;
   work->seqArray[pos++] = GMCLEAR_SEQ_SAVE_MESSAGE;
   work->seqArray[pos++] = GMCLEAR_SEQ_FRAME_WAIT;
+
+  // 最初のスクリプト
+  work->seqArray[pos++] = GMCLEAR_SEQ_FIELD_OPEN_WAIT;
+  work->seqArray[pos++] = GMCLEAR_SEQ_MAP_CHANGE_FIRST;
+  work->seqArray[pos++] = GMCLEAR_SEQ_FADEIN;
+  work->seqArray[pos++] = GMCLEAR_SEQ_SCRIPT_CALL_FIRST;
+  work->seqArray[pos++] = GMCLEAR_SEQ_FADEOUT;
+  work->seqArray[pos++] = GMCLEAR_SEQ_FIELD_CLOSE_WAIT;
+
+  // スタッフロール
   work->seqArray[pos++] = GMCLEAR_SEQ_STAFF_ROLL;
   work->seqArray[pos++] = GMCLEAR_SEQ_STAFF_ROLL_WAIT;
+
+  // 2回目のスクリプト
+  work->seqArray[pos++] = GMCLEAR_SEQ_FIELD_OPEN_WAIT;
+  work->seqArray[pos++] = GMCLEAR_SEQ_MAP_CHANGE_SECOND;
+  work->seqArray[pos++] = GMCLEAR_SEQ_FADEIN;
+  work->seqArray[pos++] = GMCLEAR_SEQ_SCRIPT_CALL_SECOND;
+  work->seqArray[pos++] = GMCLEAR_SEQ_FADEOUT;
+  work->seqArray[pos++] = GMCLEAR_SEQ_FIELD_CLOSE_WAIT;
+
   work->seqArray[pos++] = GMCLEAR_SEQ_THE_END;
   work->seqArray[pos++] = GMCLEAR_SEQ_END;
 
