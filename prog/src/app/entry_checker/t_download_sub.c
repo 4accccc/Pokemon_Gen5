@@ -1927,8 +1927,8 @@ void TdCmn_init_framelist( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode )
 		// €–Ú‚ð•\Ž¦
 		FRAMELIST_AddItem( wk->frame_list_work, flg, i );
 	}
-	// ‰Šú‰»
-	FRAMELIST_Init( wk->frame_list_work );
+	// ‰Šú‰»(êŠˆÚ“®)
+//	FRAMELIST_Init( wk->frame_list_work );
 }
 
 #if 0

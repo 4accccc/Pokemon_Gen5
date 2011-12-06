@@ -118,6 +118,8 @@ enum{
 	FLG_MW_JOIN_UPDATE	= (1<<20),		// 更新
 	FLG_MW_SAVE_UPDATE	= (1<<21),		// 更新
 	FLG_MW_PAGE_MIN		= (1<<22),		// ページ最小(1ページのみ)
+	//
+	FLG_MW_FRAME_STAT	= (1<<24),		// フレームの状態(初期化済みかどうか)
 };
 
 // debug
@@ -505,6 +507,7 @@ static void td_init( T_DOWNLOAD_MAIN_WORK* wk )
 	wk->PCount		= 0;
 	wk->InfoCurPos	= 0;
 	wk->RetMode		= -1;
+	wk->NextMode	= 0;
 	//
 	for(i=0;i<T_DOWNLOAD_CANVAS_MAXNUM;i++){
 		wk->PrintUtil[i].win = 0;
@@ -1804,7 +1807,13 @@ static void td_init_select( T_DOWNLOAD_MAIN_WORK* wk )
 	wk->ListScrollPos[T_DOWNLOAD_LIST_CURRENT] 	= wk->ListScrollPos[T_DOWNLOAD_LIST_SELECT];
 	//
 	// リスト初期化
+	GFL_BG_SetVisible( GFL_BG_FRAME2_M, FALSE );
+	wk->Flag &= ~FLG_MW_FRAME_STAT;
 	TdCmn_init_framelist( wk, wk->Mode );
+	// 初期化状態チェック
+	if( FRAMELIST_Init( wk->frame_list_work ) == FALSE ){
+		wk->Flag |= FLG_MW_FRAME_STAT;
+	}
 	// カーソル表示
 	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, TRUE );
 	// 通常アニメ
@@ -1837,7 +1846,9 @@ static void td_init_select( T_DOWNLOAD_MAIN_WORK* wk )
 	// 上画面表示
 	TdCmn_disp_upmes( wk, T_DOWNLOAD_DATA_LIST, wk->AllCurPos[T_DOWNLOAD_LIST_CURRENT] );
 	//
-	wk->Step = STEP_LV1;
+	wk->Step = STEP_INIT+5;
+//	wk->Step = STEP_LV1;
+	wk->NextMode = STEP_LV1;
 	//
 	// 3つセーブ済み
 	// 一度も表示してない場合のみ、
@@ -1850,9 +1861,19 @@ static void td_init_select( T_DOWNLOAD_MAIN_WORK* wk )
 		// アニメ停止
 		TdCmn_stop_anim_speed( wk, TRUE );
 		// 通常
-		wk->Step = STEP_INIT+10;
+//		wk->Step = STEP_INIT+10;
+		wk->NextMode = STEP_INIT+10;
 		//
 		wk->Flag |= FLG_MW_DISP_SEL_1ST;
+	}
+	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, FALSE );
+	// 終了済み
+	if(wk->Flag & FLG_MW_FRAME_STAT){
+		wk->Step = wk->NextMode;
+		GFL_BG_SetVisible( GFL_BG_FRAME2_M, TRUE );
+		// カーソル表示と移動
+		TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, TRUE );
+		TdCmn_disp_panel_cursor( wk, T_DOWNLOAD_PANEL_FRAME, wk->ListCurPos[T_DOWNLOAD_LIST_CURRENT] );
 	}
 }
 
@@ -2065,6 +2086,28 @@ static void td_key_select( T_DOWNLOAD_MAIN_WORK* wk )
 			wk->Step = STEP_LV1;
 //			break;
 		//
+		//---------------------------------------
+		// フレームの初期化待ち
+		// (負荷があると表示が遅れるための処理)
+		// (通常時では、ほとんど起こらないはず)
+		//----------------------------------------
+		case STEP_INIT+5:
+			// 初期化状態チェック
+			if(!(wk->Flag & FLG_MW_FRAME_STAT)){
+				if( FRAMELIST_Init( wk->frame_list_work ) == FALSE ){
+					wk->Flag |= FLG_MW_FRAME_STAT;
+					wk->Step = wk->NextMode;
+					GFL_BG_SetVisible( GFL_BG_FRAME2_M, TRUE );
+					// カーソル表示と移動
+					TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, TRUE );
+					TdCmn_disp_panel_cursor( wk, T_DOWNLOAD_PANEL_FRAME, wk->ListCurPos[T_DOWNLOAD_LIST_CURRENT] );
+				}
+			}else{
+				// こないはず(念のため)
+				wk->Step = wk->NextMode;
+			}
+			break;
+		
 		//------------
 		// 開始win待ち(stream)
 		//------------

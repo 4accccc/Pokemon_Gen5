@@ -3755,10 +3755,8 @@ static void bv_chk_leader( BADGEVIEW_WORK* wk )
 				InfoWinPut( wk );
 				flg = 1;
 			}
-			// とりあえずここに入れておく(要検討)
 			// タッチ判定
 			if(flg == 0){
-				// タッチ判定
 				trg = GFL_UI_TP_HitTrg( leader_hit_tbl );
 				if(trg == 0){
 					// メッセージ変更

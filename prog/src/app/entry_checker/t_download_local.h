@@ -115,7 +115,7 @@ enum
 {
 	T_DOWNLOAD_CLWKID_BAR = 0,						// スクロールバー
 	T_DOWNLOAD_CLWKID_BAR_BASE,						// スクローバー下地
-	T_DOWNLOAD_CLWKID_CURSOR,						// カーソル(仮)
+	T_DOWNLOAD_CLWKID_CURSOR,						// カーソル
 	//
 	T_DOWNLOAD_CLWKID_ICON_00,						// アイコン
 	T_DOWNLOAD_CLWKID_ICON_01,
@@ -309,6 +309,7 @@ typedef struct
 	u32						SaveFlag;						// セーブフラグ
 	s32						JoinCurPos;						// 参加カーソル
 	s32						SaveCurPos;						// セーブカーソル
+	s32						NextMode;						// 飛び先
 	s32						SaveSrc;						// セーブ元
 	s32						SaveDest;						// セーブ先
 	//
