@@ -16,6 +16,7 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "system/file_util.h"   // FS_File
+#include "system/wipe.h"        // WIPE_SYS_
 
 // archive
 #include "arc_def.h"
@@ -38,6 +39,15 @@
 
 // Skipボタン定義
 #define PAD_BUTTON_SKIP       ( PAD_BUTTON_START | PAD_BUTTON_B )
+
+// サウンド鳴らさない
+//#define IMAGE_ONLY
+// サウンドを切ってストリーミングをならす実験のために定義した
+
+#ifdef IMAGE_ONLY
+#include "sound/pm_sndsys.h"
+#include "sound/snd_strm.h"
+#endif
 
 //==============================================================================
 //	ローカル変数
@@ -97,7 +107,6 @@ typedef struct {
   u32				      audioSampleBufferIndex;     // サウンドバッファアドレス計算用
   u32				      soundBufferNbPackets;       // サウンドバッファの容量 1フレームのパケット×キューにためておけるフレーム数
 
-  // 【仮】戻り値がある訳ではないので、外部で持たせなくてもいいかもしれない
   MOBICLIP_PARAM  *p_param;     // パラメータ
 
 } MO_WORK;
@@ -286,9 +295,13 @@ static GFL_PROC_RESULT MOBICLIP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p
     ret = MO_IMAGE_Init( p_wk );
     GF_ASSERT_MSG( ret, "MO_IMAGE_Init初期化失敗\n");
 
+#ifndef IMAGE_ONLY
     // サウンド初期化
     ret = MO_SOUND_Init( p_wk, p_wk->heapID );
     GF_ASSERT_MSG( ret, "MO_SOUND_Init初期化失敗\n");
+#else
+    SND_STRM_Init( HEAPID_MOBICLIP );
+#endif
   }
 
   OS_Printf("MOBICLIP_PROC_Init\n");
@@ -316,8 +329,12 @@ static GFL_PROC_RESULT MOBICLIP_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p
   if( p_wk->isOpen == TRUE )
   {
     MO_IMAGE_Exit( p_wk );
-    MO_SOUND_Exit( p_wk );
+    // SOUND_EXITはFADE_OUT前に移動
   }
+
+#ifdef IMAGE_ONLY
+  SND_STRM_Exit();
+#endif
 
   // ファイル閉じる
   MO_Close( p_wk );
@@ -353,8 +370,12 @@ static GFL_PROC_RESULT MOBICLIP_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
 
   // シーケンス定義
   enum{
+    SEQ_FADEIN,           // フェードイン
+    SEQ_FADEIN_WAIT,      // フェードイン待ち
     SEQ_MOVIE_PLAY,       // ムービー再生
     SEQ_MOVIE_LAST_PLAY,  // 終了前ムービー再生
+    SEQ_FADEOUT,          // フェードアウト
+    SEQ_FADEOUT_WAIT,     // フェードアウト待ち
   };
 
   // ファイルオープンに失敗していたら、終了させる
@@ -371,6 +392,25 @@ static GFL_PROC_RESULT MOBICLIP_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
 
   // シーケンス別処理
   switch( *p_seq ){
+  // フェードイン
+  case SEQ_FADEIN:
+    WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, 
+        WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, p_wk->heapID );
+    (*p_seq) = SEQ_FADEIN_WAIT;
+    break;
+
+  // フェードイン待ち
+  case SEQ_FADEIN_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+#ifdef IMAGE_ONLY
+      SND_STRM_Play( STRM_TITLE );
+#endif
+      (*p_seq) = SEQ_MOVIE_PLAY;
+    }
+    break;
+
+  // ムービー再生
   case SEQ_MOVIE_PLAY:
     {
       BOOL  is_end = FALSE;     // 終了
@@ -381,8 +421,10 @@ static GFL_PROC_RESULT MOBICLIP_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
         is_end = TRUE;
       }
       
+#ifndef IMAGE_ONLY
       // サウンドメイン
       MO_SOUND_Main( p_wk, p_wk->handle );
+#endif
 
       // ムービーSkip
       if( p_wk->p_param->skip_enable == TRUE &&
@@ -409,15 +451,39 @@ static GFL_PROC_RESULT MOBICLIP_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p
         {
           MO_IMAGE_BlitAndFlip( p_wk->handle );
           ICHI_Printf("lastQue = %d \n", p_wk->lastQue);
-          return GFL_PROC_RES_CONTINUE;
+          break;
         }
       }
 
+#ifndef IMAGE_ONLY
+      // サウンドSTOP
+      MO_SOUND_Exit( p_wk );
+#else
+      SND_STRM_FadeOut( 4 );
+#endif
+
+      (*p_seq) = SEQ_FADEOUT;
+    }
+    break;
+
+  case SEQ_FADEOUT:
+    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, 
+        WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, p_wk->heapID );
+    (*p_seq) = SEQ_FADEOUT_WAIT;
+    break;
+
+  case SEQ_FADEOUT_WAIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+#ifdef IMAGE_ONLY
+      if( SND_STRM_CheckPlay() == FALSE ){
+        SND_STRM_Stop();
+      }
+#endif
       // 終了
       return GFL_PROC_RES_FINISH;
     }
     break;
-
   default: GF_ASSERT(0);
   }
 
@@ -688,9 +754,11 @@ static void MO_IMAGE_Trans( MO_WORK *p_wk, MOHandle handle )
   // フレームを解凍した回数が指定した回数に達したら、イメージ転送をする
   if (p_wk->nbFrameBuffered >= BUFFERED_FRAME_MAX || MO_GetAudioFrequency(handle) == 0)
   {
+#ifndef IMAGE_ONLY
     // パケット転送した回数 - サウンドアラームが呼ばれた回数
     // = 転送していないサウンドパケット数
     s32 nbRemainingSoundPacketsToStream = (int)(p_wk->nbSoundPacketPushed - g_SoundPacketStreamed);
+#endif
 
 
     // 閉じてない
@@ -698,7 +766,10 @@ static void MO_IMAGE_Trans( MO_WORK *p_wk, MOHandle handle )
     // サウンド有り
     // フレームを解凍した回数が指定した回数以上
     if (p_wk->coverClosed || 
-        (nbRemainingSoundPacketsToStream <= p_wk->nbSoundPacketPerFrame * 3 && 
+        (
+#ifndef IMAGE_ONLY
+        nbRemainingSoundPacketsToStream <= p_wk->nbSoundPacketPerFrame * 3 && 
+#endif
          p_wk->skipDone == FALSE && 
          MO_GetAudioFrequency( handle ) > 0 &&
          p_wk->nbFrameBuffered >= BUFFERED_FRAME_MAX))
@@ -714,7 +785,9 @@ static void MO_IMAGE_Trans( MO_WORK *p_wk, MOHandle handle )
       // イメージをBlit転送し、バッファをFlipする
       MO_IMAGE_BlitAndFlip( handle );
 
+#ifndef IMAGE_ONLY
       p_wk->skipDone = FALSE;
+#endif
     }
   }
 }
