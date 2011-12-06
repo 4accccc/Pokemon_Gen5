@@ -3696,13 +3696,13 @@
 	</row>
 
 	<row id="MONSNAME_650">
-		<language name="JPN" width="216">たまご</language>
-		<language name="JPN_KANJI" width="216">たまご</language>
+		<language name="JPN" width="216">タマゴ</language>
+		<language name="JPN_KANJI" width="216">タマゴ</language>
 	</row>
 
 	<row id="MONSNAME_651">
-		<language name="JPN" width="216">だめたまご</language>
-		<language name="JPN_KANJI" width="216">だめたまご</language>
+		<language name="JPN" width="216">ダメタマゴ</language>
+		<language name="JPN_KANJI" width="216">ダメタマゴ</language>
 	</row>
 
 	<row id="MONSNAME_652">
