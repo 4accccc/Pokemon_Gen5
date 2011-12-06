@@ -527,3 +527,17 @@ int POKEWOOD_SAVEDATA_GetSenarioOpenNum( POKEWOOD_SAVEDATA *sv )
 {
   return POKEWOOD_SAVEDATA_GetFlagTotal( sv, PWSV_TYPE_SENARIO_OPEN );
 }
+
+#ifdef PM_DEBUG
+static u8 debugPokewoodBattleFlag = 0;   // ポケウッドの戦闘デバッグフラグ反映に使用
+
+BOOL POKEWOOD_SAVEDATA_GetBattleDebugFlag( int index )
+{
+  return (debugPokewoodBattleFlag>>index) & 1;
+}
+void POKEWOOD_SAVEDATA_SetBattleDebugFlag( int index, int value )
+{
+  debugPokewoodBattleFlag &= 0xff ^ (1<<index);
+  debugPokewoodBattleFlag |= (value<<index);
+}
+#endif
