@@ -5365,13 +5365,33 @@
 		<language name="JPN" width="256">BGM-SW-DEMO-FLIGHT</language>
 		<language name="JPN_KANJI" width="256">BGM-SW-DEMO-FLIGHT</language>
 	</row>
-	<row id="msg_seq_bgm_sw_demo_union">
-		<language name="JPN" width="256">BGM-SW-DEMO-UNION</language>
-		<language name="JPN_KANJI" width="256">BGM-SW-DEMO-UNION</language>
+	<row id="msg_seq_bgm_sw_demo_union_00">
+		<language name="JPN" width="256">BGM-SW-DEMO-UNION-00</language>
+		<language name="JPN_KANJI" width="256">BGM-SW-DEMO-UNION-00</language>
+	</row>
+	<row id="msg_seq_bgm_sw_demo_union_01">
+		<language name="JPN" width="256">BGM-SW-DEMO-UNION-01</language>
+		<language name="JPN_KANJI" width="256">BGM-SW-DEMO-UNION-01</language>
+	</row>
+	<row id="msg_seq_bgm_sw_demo_union_02">
+		<language name="JPN" width="256">BGM-SW-DEMO-UNION-02</language>
+		<language name="JPN_KANJI" width="256">BGM-SW-DEMO-UNION-02</language>
+	</row>
+	<row id="msg_seq_bgm_sw_demo_union_03b">
+		<language name="JPN" width="256">BGM-SW-DEMO-UNION-03B</language>
+		<language name="JPN_KANJI" width="256">BGM-SW-DEMO-UNION-03B</language>
+	</row>
+	<row id="msg_seq_bgm_sw_demo_union_03w">
+		<language name="JPN" width="256">BGM-SW-DEMO-UNION-03W</language>
+		<language name="JPN_KANJI" width="256">BGM-SW-DEMO-UNION-03W</language>
 	</row>
 	<row id="msg_seq_bgm_sw_demo_ajito_ship">
 		<language name="JPN" width="256">BGM-SW-DEMO-AJITO-SHIP</language>
 		<language name="JPN_KANJI" width="256">BGM-SW-DEMO-AJITO-SHIP</language>
+	</row>
+	<row id="msg_seq_bgm_sw_demo_frigate">
+		<language name="JPN" width="256">BGM-SW-DEMO-FRIGATE</language>
+		<language name="JPN_KANJI" width="256">BGM-SW-DEMO-FRIGATE</language>
 	</row>
 	<row id="msg_seq_bgm_e_hue">
 		<language name="JPN" width="256">BGM-E-HUE</language>
@@ -5505,26 +5525,6 @@
 		<language name="JPN" width="256">BGM-END</language>
 		<language name="JPN_KANJI" width="256">BGM-END</language>
 	</row>
-          <row id="msg_seq_1265">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
-          <row id="msg_seq_1266">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
-          <row id="msg_seq_1267">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
-          <row id="msg_seq_1268">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
-          <row id="msg_seq_1269">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
           <row id="msg_seq_1270">
           <language name="JPN" width="256">dmy</language>
           <language name="JPN_KANJI" width="256">dmy</language>
@@ -9345,6 +9345,18 @@
 		<language name="JPN" width="256">SW-YACONROAD-01</language>
 		<language name="JPN_KANJI" width="256">SW-YACONROAD-01</language>
 	</row>
+	<row id="msg_seq_se_sw_relic_01">
+		<language name="JPN" width="256">SW-RELIC-01</language>
+		<language name="JPN_KANJI" width="256">SW-RELIC-01</language>
+	</row>
+	<row id="msg_seq_se_sw_relic_02">
+		<language name="JPN" width="256">SW-RELIC-02</language>
+		<language name="JPN_KANJI" width="256">SW-RELIC-02</language>
+	</row>
+	<row id="msg_seq_se_sw_relic_03">
+		<language name="JPN" width="256">SW-RELIC-03</language>
+		<language name="JPN_KANJI" width="256">SW-RELIC-03</language>
+	</row>
 	<row id="msg_seq_se_sw_champiris_01">
 		<language name="JPN" width="256">SW-CHAMPIRIS-01</language>
 		<language name="JPN_KANJI" width="256">SW-CHAMPIRIS-01</language>
@@ -9465,54 +9477,6 @@
 		<language name="JPN" width="256">SW-MEDALGET</language>
 		<language name="JPN_KANJI" width="256">SW-MEDALGET</language>
 	</row>
-	<row id="msg_seq_se_sw_gianthole_01">
-		<language name="JPN" width="256">SW-GIANTHOLE-01</language>
-		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-01</language>
-	</row>
-	<row id="msg_seq_se_sw_gianthole_02">
-		<language name="JPN" width="256">SW-GIANTHOLE-02</language>
-		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-02</language>
-	</row>
-	<row id="msg_seq_se_sw_gianthole_03">
-		<language name="JPN" width="256">SW-GIANTHOLE-03</language>
-		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-03</language>
-	</row>
-	<row id="msg_seq_se_sw_gianthole_04">
-		<language name="JPN" width="256">SW-GIANTHOLE-04</language>
-		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-04</language>
-	</row>
-	<row id="msg_seq_se_sw_gianthole_05">
-		<language name="JPN" width="256">SW-GIANTHOLE-05</language>
-		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-05</language>
-	</row>
-	<row id="msg_seq_se_sw_gianthole_06">
-		<language name="JPN" width="256">SW-GIANTHOLE-06</language>
-		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-06</language>
-	</row>
-	<row id="msg_seq_se_sw_gianthole_07_01">
-		<language name="JPN" width="256">SW-GIANTHOLE-07-01</language>
-		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-07-01</language>
-	</row>
-	<row id="msg_seq_se_sw_gianthole_07_02">
-		<language name="JPN" width="256">SW-GIANTHOLE-07-02</language>
-		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-07-02</language>
-	</row>
-	<row id="msg_seq_se_sw_gianthole_08_01">
-		<language name="JPN" width="256">SW-GIANTHOLE-08-01</language>
-		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-08-01</language>
-	</row>
-	<row id="msg_seq_se_sw_gianthole_08_02">
-		<language name="JPN" width="256">SW-GIANTHOLE-08-02</language>
-		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-08-02</language>
-	</row>
-	<row id="msg_seq_se_sw_gianthole_09">
-		<language name="JPN" width="256">SW-GIANTHOLE-09</language>
-		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-09</language>
-	</row>
-	<row id="msg_seq_se_sw_gianthole_10">
-		<language name="JPN" width="256">SW-GIANTHOLE-10</language>
-		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-10</language>
-	</row>
 	<row id="msg_seq_se_sw_ja_exp">
 		<language name="JPN" width="256">SW-JA-EXP</language>
 		<language name="JPN_KANJI" width="256">SW-JA-EXP</language>
@@ -9580,6 +9544,122 @@
 	<row id="msg_seq_se_sw_ci_pkwood_03">
 		<language name="JPN" width="256">SW-CI-PKWOOD-03</language>
 		<language name="JPN_KANJI" width="256">SW-CI-PKWOOD-03</language>
+	</row>
+	<row id="msg_seq_se_sw_gianthole_01">
+		<language name="JPN" width="256">SW-GIANTHOLE-01</language>
+		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-01</language>
+	</row>
+	<row id="msg_seq_se_sw_gianthole_02">
+		<language name="JPN" width="256">SW-GIANTHOLE-02</language>
+		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-02</language>
+	</row>
+	<row id="msg_seq_se_sw_gianthole_03">
+		<language name="JPN" width="256">SW-GIANTHOLE-03</language>
+		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-03</language>
+	</row>
+	<row id="msg_seq_se_sw_gianthole_04">
+		<language name="JPN" width="256">SW-GIANTHOLE-04</language>
+		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-04</language>
+	</row>
+	<row id="msg_seq_se_sw_gianthole_05">
+		<language name="JPN" width="256">SW-GIANTHOLE-05</language>
+		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-05</language>
+	</row>
+	<row id="msg_seq_se_sw_gianthole_06">
+		<language name="JPN" width="256">SW-GIANTHOLE-06</language>
+		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-06</language>
+	</row>
+	<row id="msg_seq_se_sw_gianthole_07_1">
+		<language name="JPN" width="256">SW-GIANTHOLE-07-1</language>
+		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-07-1</language>
+	</row>
+	<row id="msg_seq_se_sw_gianthole_07_2">
+		<language name="JPN" width="256">SW-GIANTHOLE-07-2</language>
+		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-07-2</language>
+	</row>
+	<row id="msg_seq_se_sw_gianthole_07_3">
+		<language name="JPN" width="256">SW-GIANTHOLE-07-3</language>
+		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-07-3</language>
+	</row>
+	<row id="msg_seq_se_sw_gianthole_07_4">
+		<language name="JPN" width="256">SW-GIANTHOLE-07-4</language>
+		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-07-4</language>
+	</row>
+	<row id="msg_seq_se_sw_gianthole_08_1">
+		<language name="JPN" width="256">SW-GIANTHOLE-08-1</language>
+		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-08-1</language>
+	</row>
+	<row id="msg_seq_se_sw_gianthole_08_2">
+		<language name="JPN" width="256">SW-GIANTHOLE-08-2</language>
+		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-08-2</language>
+	</row>
+	<row id="msg_seq_se_sw_gianthole_08_3">
+		<language name="JPN" width="256">SW-GIANTHOLE-08-3</language>
+		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-08-3</language>
+	</row>
+	<row id="msg_seq_se_sw_gianthole_08_4">
+		<language name="JPN" width="256">SW-GIANTHOLE-08-4</language>
+		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-08-4</language>
+	</row>
+	<row id="msg_seq_se_sw_gianthole_09">
+		<language name="JPN" width="256">SW-GIANTHOLE-09</language>
+		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-09</language>
+	</row>
+	<row id="msg_seq_se_sw_gianthole_10">
+		<language name="JPN" width="256">SW-GIANTHOLE-10</language>
+		<language name="JPN_KANJI" width="256">SW-GIANTHOLE-10</language>
+	</row>
+	<row id="msg_seq_se_sw_kusabi_in_01">
+		<language name="JPN" width="256">SW-KUSABI-IN-01</language>
+		<language name="JPN_KANJI" width="256">SW-KUSABI-IN-01</language>
+	</row>
+	<row id="msg_seq_se_sw_kusabi_in_02">
+		<language name="JPN" width="256">SW-KUSABI-IN-02</language>
+		<language name="JPN_KANJI" width="256">SW-KUSABI-IN-02</language>
+	</row>
+	<row id="msg_seq_se_sw_kusabi_in_03">
+		<language name="JPN" width="256">SW-KUSABI-IN-03</language>
+		<language name="JPN_KANJI" width="256">SW-KUSABI-IN-03</language>
+	</row>
+	<row id="msg_seq_se_sw_kusabi_in_04">
+		<language name="JPN" width="256">SW-KUSABI-IN-04</language>
+		<language name="JPN_KANJI" width="256">SW-KUSABI-IN-04</language>
+	</row>
+	<row id="msg_seq_se_sw_kusabi_in_05">
+		<language name="JPN" width="256">SW-KUSABI-IN-05</language>
+		<language name="JPN_KANJI" width="256">SW-KUSABI-IN-05</language>
+	</row>
+	<row id="msg_seq_se_sw_kusabi_in_06">
+		<language name="JPN" width="256">SW-KUSABI-IN-06</language>
+		<language name="JPN_KANJI" width="256">SW-KUSABI-IN-06</language>
+	</row>
+	<row id="msg_seq_se_sw_kusabi_in_07">
+		<language name="JPN" width="256">SW-KUSABI-IN-07</language>
+		<language name="JPN_KANJI" width="256">SW-KUSABI-IN-07</language>
+	</row>
+	<row id="msg_seq_se_sw_kusabi_in_08">
+		<language name="JPN" width="256">SW-KUSABI-IN-08</language>
+		<language name="JPN_KANJI" width="256">SW-KUSABI-IN-08</language>
+	</row>
+	<row id="msg_seq_se_sw_kusabi_in_09">
+		<language name="JPN" width="256">SW-KUSABI-IN-09</language>
+		<language name="JPN_KANJI" width="256">SW-KUSABI-IN-09</language>
+	</row>
+	<row id="msg_seq_se_sw_kusabi_in_10">
+		<language name="JPN" width="256">SW-KUSABI-IN-10</language>
+		<language name="JPN_KANJI" width="256">SW-KUSABI-IN-10</language>
+	</row>
+	<row id="msg_seq_se_sw_kusabi_in_11">
+		<language name="JPN" width="256">SW-KUSABI-IN-11</language>
+		<language name="JPN_KANJI" width="256">SW-KUSABI-IN-11</language>
+	</row>
+	<row id="msg_seq_se_sw_kusabi_in_12">
+		<language name="JPN" width="256">SW-KUSABI-IN-12</language>
+		<language name="JPN_KANJI" width="256">SW-KUSABI-IN-12</language>
+	</row>
+	<row id="msg_seq_se_sw_kusabi_in_13">
+		<language name="JPN" width="256">SW-KUSABI-IN-13</language>
+		<language name="JPN_KANJI" width="256">SW-KUSABI-IN-13</language>
 	</row>
 	<row id="msg_seq_se_dmy_390">
 		<language name="JPN" width="256">DMY-390</language>
