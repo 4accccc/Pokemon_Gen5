@@ -99,7 +99,10 @@ static void reflectBlAct_Update(
 
 static const FLDEFF_TASK_HEADER data_reflectTaskHeader;
 
-static void ResortAddOffset( u32 zone_id, MMDL_BLACT_MDLSIZE size, VecFx32 *p_pos );
+//リゾート用補正
+static void ResortAddOffsetY( FIELD_CAMERA *camera, u32 zone_id, MMDL_BLACT_MDLSIZE size, VecFx32 *p_pos );
+static void ResortAddOffsetZ( FIELD_CAMERA *camera, u32 zone_id, const VecFx32 *cp_target, VecFx32 *p_pos );
+static void ResortAddOffsetX( FIELD_CAMERA *camera, u32 zone_id, const VecFx32 *cp_target, VecFx32 *p_pos );
 
 #ifdef BUGFIX_BTS_GF1706_GF1720
 static fx32 btsGF1706_GetOffsetScaleY( u32 zone_id );
@@ -187,6 +190,8 @@ static void reflect_DeleteResource( FLDEFF_REFLECT *reflect )
 void FLDEFF_REFLECT_SetMMdl( MMDLSYS *mmdlsys,
     MMDL *mmdl, FLDEFF_CTRL *fectrl, REFLECT_TYPE type )
 {
+  FIELDMAP_WORK *field = FLDEFF_CTRL_GetFieldMapWork( fectrl );
+
   TASKHEADER_REFLECT head;
 
   head.type = type;
@@ -468,7 +473,11 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
     pos.y += btsGF1706_GetOffsetY( zone_id, param->mdl_size );
     #endif
 
-    ResortAddOffset( zone_id, param->mdl_size, &pos );
+    {
+      FIELDMAP_WORK *fieldmap = FLDEFF_CTRL_GetFieldMapWork( work->head.eff_reflect->fectrl );
+      FIELD_CAMERA *fld_cam = FIELDMAP_GetFieldCamera( fieldmap );
+      ResortAddOffsetY( fld_cam, zone_id, param->mdl_size, &pos );
+    }
 
 #ifdef DEBUG_REFLECT_CHECK
     if( MMDL_GetOBJID(work->head.mmdl) == MMDL_ID_PLAYER ){
@@ -624,11 +633,19 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
       g3Dcamera = FIELD_CAMERA_GetCameraPtr( fld_cam );
       
       GFL_G3D_CAMERA_GetTarget( g3Dcamera, &t_pos );
-      tx = FX32_NUM( t_pos.x );
-      mx = FX32_NUM( pos.x );
 
-      ox = REF_OFFS_TX_UNIT_ONE_X * (mx-tx);
-      pos.x += ox;
+      if( zone_id == ZONE_ID_C16 )
+      {
+        ResortAddOffsetX( fld_cam, zone_id, &t_pos, &pos );
+      }
+      else
+      {
+        tx = FX32_NUM( t_pos.x );
+        mx = FX32_NUM( pos.x );
+
+        ox = REF_OFFS_TX_UNIT_ONE_X * (mx-tx);
+        pos.x += ox;
+      }
 #if 0
 #ifdef PM_DEBUG
       if( GFL_UI_KEY_GetTrg( ) & PAD_BUTTON_L )
@@ -646,13 +663,7 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
       
       //リゾートではカメラがX軸向きに変わるので
       //Z方向も補正する
-      if( zone_id == ZONE_ID_C16 )
-      {
-        int tz = FX32_NUM( t_pos.z );
-        int mz = FX32_NUM( pos.z );
-
-        pos.z += REF_OFFS_TX_UNIT_ONE_Z * (mz-tz);
-      }
+      ResortAddOffsetZ( fld_cam, zone_id, &t_pos, &pos );
     }
     #endif
 
@@ -1191,22 +1202,105 @@ static fx32 btsGF1706_GetOffsetY( u32 zone_id, MMDL_BLACT_MDLSIZE size )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  リゾート用オフセットを加算
+ *	@brief  リゾート用Y補正
  *
+ *	@param	FIELD_CAMERA *camera  カメラ
  *	@param	u32 zone_id ゾーンID
  *	@param	size  サイズ
- *	@param	*p_pos  元のあ対
+ *	@param	*p_pos  修正座標
  */
 //-----------------------------------------------------------------------------
-static void ResortAddOffset( u32 zone_id, MMDL_BLACT_MDLSIZE size, VecFx32 *p_pos )
+static void ResortAddOffsetY( FIELD_CAMERA *camera, u32 zone_id, MMDL_BLACT_MDLSIZE size, VecFx32 *p_pos )
 {
   if( zone_id == ZONE_ID_C16 )
   {
+    u32 RESORT_REF_OFFS_Y = 0x8000;
+
+    //OS_Printf("yaw %d pitch %d ", FIELD_CAMERA_GetAngleYaw(camera), FIELD_CAMERA_GetAnglePitch(camera) );
+
+    //リゾートはカメラのアングルが変わりまくるので、
+    //アングルによって反射する位置を変える
+    //
+    //  覚え書き
+    //
+    //  建てた時カメラのピッチ  3877
+    //  通常時カメラのピッチ    6693
+    //  街カメラのピッチ        64037
+    //
+
+    if( FIELD_CAMERA_GetAnglePitch(camera) <= 4000 )
+    {
+      RESORT_REF_OFFS_Y += 0x2000;
+    }
+    else if( FIELD_CAMERA_GetAnglePitch(camera) <= 10000 )
+    {
+      //何も無し
+    }
+    else
+    {
+      RESORT_REF_OFFS_Y -= 0x4000;
+    }
+
     if( size == MMDL_BLACT_MDLSIZE_32x32 )
     {
       p_pos->z  -= REF_OFFS_Z;
-      p_pos->y  -= 0x8000;
+      p_pos->y  -= RESORT_REF_OFFS_Y;
     }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リゾート用Z補正
+ *
+ *	@param	FIELD_CAMERA *camera  カメラ
+ *	@param	zone_id ゾーンID
+ *	@param  cp_target カメラ目標の位置
+ *	@param	*p_pos 修正座標
+ */
+//-----------------------------------------------------------------------------
+static void ResortAddOffsetZ( FIELD_CAMERA *camera, u32 zone_id, const VecFx32 *cp_target, VecFx32 *p_pos )
+{
+  if( zone_id == ZONE_ID_C16 )
+  {
+    u32 RESORT_REF_OFFS_TX_UNIT_ONE_Z = (0xea);
+
+    int tz = FX32_NUM( cp_target->z );
+    int mz = FX32_NUM( p_pos->z );
+
+    p_pos->z += RESORT_REF_OFFS_TX_UNIT_ONE_Z * (mz-tz);
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リゾート用X補正
+ *
+ *	@param	FIELD_CAMERA *camera  カメラ
+ *	@param	zone_id ゾーンID
+ *	@param  cp_target カメラ目標の位置
+ *	@param	*p_pos 修正座標
+ */
+//-----------------------------------------------------------------------------
+static void ResortAddOffsetX( FIELD_CAMERA *camera, u32 zone_id, const VecFx32 *cp_target, VecFx32 *p_pos )
+{
+  if( zone_id == ZONE_ID_C16 )
+  {
+    s32 RESORT_REF_OFFS_TX_UNIT_ONE_X = (0x7000/96);
+
+    int tx = FX32_NUM( cp_target->x );
+    int mx = FX32_NUM( p_pos->x );
+    fx32 ox;
+
+    if( FIELD_CAMERA_GetAnglePitch(camera) <= 10000 )
+    {
+      //何も無し
+    }
+    else
+    {
+      RESORT_REF_OFFS_TX_UNIT_ONE_X -= 0x230;
+    }
+
+    ox = RESORT_REF_OFFS_TX_UNIT_ONE_X * (mx-tx);
+    p_pos->x += ox;
   }
 }
 
