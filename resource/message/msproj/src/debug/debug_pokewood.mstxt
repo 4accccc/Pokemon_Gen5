@@ -1821,4 +1821,446 @@
 				Time="2011-09-14T12:17:54" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_POKEWOOD_BATTLE_SETUP"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>戦闘デバッグ設定</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:34:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>戦闘デバッグ設定</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:34:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_BATTLE_SETUP_PARAM_0_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>必ず追加効果　</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T10:53:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>必ず追加効果</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:35:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_BATTLE_SETUP_PARAM_0_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>必ずとくせい</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:36:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>必ずとくせい</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:53:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_BATTLE_SETUP_PARAM_0_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>必ずアイテム</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:51:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>必ずアイテム</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:53:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_BATTLE_SETUP_PARAM_0_3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>必ず急所</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:51:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>必ず急所</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:53:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_BATTLE_SETUP_PARAM_0_4"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＨＰ減らない</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:51:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＨＰ減らない</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:53:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_BATTLE_SETUP_PARAM_0_5"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＰＰ減らない</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:52:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＰＰ減らない</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:53:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_BATTLE_SETUP_PARAM_0_6"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>命中１００％</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:52:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>命中１００％</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:53:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_BATTLE_SETUP_PARAM_0_7"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ＡＩコントロール</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:52:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＡＩコントロール</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:53:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_BATTLE_SETUP_PARAM_1_0"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl1:Color Letter="3" Shadow="4" ]必ず追加効果</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T10:55:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl1:Color Letter="3" Shadow="4" ]必ず追加効果</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T10:55:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_BATTLE_SETUP_PARAM_1_1"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl1:Color Letter="3" Shadow="4" ]必ずとくせい</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T12:15:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>必ずとくせい</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:55:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_BATTLE_SETUP_PARAM_1_2"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl1:Color Letter="3" Shadow="4" ]必ずアイテム</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T12:15:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>必ずアイテム</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:55:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_BATTLE_SETUP_PARAM_1_3"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl1:Color Letter="3" Shadow="4" ]必ず急所</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T12:15:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>必ず急所</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:55:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_BATTLE_SETUP_PARAM_1_4"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl1:Color Letter="3" Shadow="4" ]ＨＰ減らない</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T12:16:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＨＰ減らない</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:55:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_BATTLE_SETUP_PARAM_1_5"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl1:Color Letter="3" Shadow="4" ]ＰＰ減らない</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T12:16:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＰＰ減らない</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:55:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_BATTLE_SETUP_PARAM_1_6"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl1:Color Letter="3" Shadow="4" ]命中１００％</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T12:16:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>命中１００％</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:55:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_STRID_BATTLE_SETUP_PARAM_1_7"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl1:Color Letter="3" Shadow="4" ]ＡＩコントロール</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T12:16:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ＡＩコントロール</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-06T08:53:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-14T12:17:54" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

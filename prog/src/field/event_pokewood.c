@@ -102,7 +102,6 @@ typedef struct {
   PKWD_BRIEFING_PARAM pkwd_briefing_param;  ///< 上映前あらすじアプリ呼び出しパラメータ
   PKWD_BRIEFING_PARAM pkwd_endroll_param;   ///< エンドロールアプリ呼び出しパラメータ
   STRBUF              *TrainerTypeName;     ///< 戦闘内の敵トレーナータイプ名使用用STRBUF
-  CONFIG              *showConfig;          ///< 上映時の戦闘アニメOFF指定用CONFIG
 //  int musicDefault;
 }POKEWOOD_REPLAY_EVENT_WORK, PREW;
 
@@ -563,6 +562,16 @@ static void setTrainerTypeName( PREW *prew, BATTLE_SETUP_PARAM *bsp, int no, int
 
 }
 
+static const u8 debug_flag_tbl[]={
+  BTL_DEBUGFLAG_MUST_TUIKA,     ///< 追加効果の発生率を100％にする
+  BTL_DEBUGFLAG_MUST_TOKUSEI,   ///< 一部とくせいの効果発生率を100％にする
+  BTL_DEBUGFLAG_MUST_ITEM,      ///< 一部アイテムの効果発生率を100％にする
+  BTL_DEBUGFLAG_MUST_CRITICAL,  ///< 打撃ワザのクリティカル発生率を100％にする
+  BTL_DEBUGFLAG_HP_CONST,       ///< HP減らない
+  BTL_DEBUGFLAG_PP_CONST,       ///< PP減らない
+  BTL_DEBUGFLAG_HIT100PER,      ///< 命中率が常に100％
+  BTL_DEBUGFLAG_AI_CTRL,        ///< AIを起動せずにプレイヤーが操作する
+};
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -613,7 +622,21 @@ static BATTLE_SETUP_PARAM * createPokewoodBSP(
     }
     break;
   }
+
+  // 共通BSP設定
   bsp->badgeCount   = 8; //無理やりいうことをきかせる
+
+#ifdef PM_DEBUG
+  {
+    // デバッグフラグを設定する
+    int i;
+    for(i=0;i<8;i++){
+      if(POKEWOOD_SAVEDATA_GetBattleDebugFlag(i)){
+        bsp->DebugFlagBit |= 1<<(debug_flag_tbl[i]);
+      }
+    }
+  }
+#endif
   return bsp;
 }
 

@@ -77,6 +77,8 @@ struct _DEBUG_POKEWOOD_WORK
   u16         result;
   u16         sub_seq_no;
   u32         num;
+  DEBUG_MENU_EVENT_WORK *d_work;
+  u16 list_pos, cursor_pos;
 };
 
 //typedef DEBUG_MENU_EVENT_WORK POKEWOOD_FUNC_WORK;
@@ -152,6 +154,8 @@ static BOOL debugMenu_series11_ready(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_scenario_full_open(POKEWOOD_FUNC_WORK *wk);
 
 static BOOL debugMenu_CutinCheck(POKEWOOD_FUNC_WORK *wk);
+static GMEVENT_RESULT debugMenuPokewoodBattleSetupEvent( GMEVENT *event, int *seq, void *wk );
+static BOOL debugMenuPokewoodCallBattleSetupEvent( DEBUG_POKEWOOD_WORK *wk );
 
 
 #define NUMINPUT_NONE (0xFFFF)
@@ -194,6 +198,7 @@ static const DEBUG_MENU_LIST DebugPokewoodMenuList[] =
 //  { DEBUG_STRID_POKEWOOD_SHOW_01, (void*)debugMenuCallProc_PokewoodShow1, GFL_OVERLAY_BLANK_ID }, //
 //  { DEBUG_STRID_POKEWOOD_REC_03, (void*)debugMenuCallProc_PokewoodRec3, GFL_OVERLAY_BLANK_ID },  // 
 //  { DEBUG_STRID_POKEWOOD_SHOW_03, (void*)debugMenuCallProc_PokewoodShow3, GFL_OVERLAY_BLANK_ID }, //
+  { DEBUG_STRID_POKEWOOD_BATTLE_SETUP, (void*)debugMenuPokewoodCallBattleSetupEvent, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_ANNOUNCE, (void*)debugMenuCallProc_PokewoodAnnounce, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_BOOK, (void*)debugMenuCallProc_PokewoodBook, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_SELECT_SCREEN, (void*)debugMenuCallProc_PokewoodSelect, GFL_OVERLAY_BLANK_ID },
@@ -341,7 +346,14 @@ BOOL debugMenuCallProc_Pokewood( DEBUG_MENU_EVENT_WORK *wk )
       OS_Printf( "icon mons=%2d, form=%2d, sex=%2d\n", mons, form, sex);
     }
   }
-  
+  // 看板の状態を取得
+  {
+    int i;
+    POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata( GAMESYSTEM_GetGameData(gsys) );
+    for(i=0;i<4;i++){
+      OS_Printf("kanban%d: poster=%d\n", i ,POKEWOOD_SAVEDATA_GetKanbanNo(ps, i));
+    }
+  }
   return TRUE;
 }
 
@@ -1054,6 +1066,198 @@ static void DrawNum( POKEWOOD_FUNC_WORK *work )
   GFL_STR_DeleteBuffer( exp );
   WORDSET_Delete( wset );
 }
+
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+
+static BOOL debugMenuPokewoodCallBattleSetupEvent( DEBUG_POKEWOOD_WORK *wk )
+{
+  GAMESYS_WORK *gsys       = wk->gmSys;
+  GMEVENT *event           = wk->gmEvent;
+  HEAPID heapID            = wk->heapID;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  DEBUG_POKEWOOD_WORK *work;
+
+  GMEVENT_Change( event, debugMenuPokewoodBattleSetupEvent, sizeof(DEBUG_POKEWOOD_WORK) );
+
+  work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( work, sizeof(DEBUG_POKEWOOD_WORK) );
+
+  work->gmSys     = gsys;
+  work->gmEvent   = event;
+  work->heapID    = heapID;
+  work->fieldWork = fieldWork;
+
+  return TRUE;
+}
+
+
+//-----------------------------------------------------------------------------
+///リスト メニューヘッダー
+//-----------------------------------------------------------------------------
+static const FLDMENUFUNC_HEADER DebugPokewoodBattleSetupMenuHeader =
+{
+  1,    //リスト項目数
+  7,    //表示最大項目数
+  0,    //ラベル表示Ｘ座標
+  13,   //項目表示Ｘ座標
+  0,    //カーソル表示Ｘ座標
+  0,    //表示Ｙ座標
+  1,    //表示文字色
+  15,   //表示背景色
+  2,    //表示文字影色
+  0,    //文字間隔Ｘ
+  1,    //文字間隔Ｙ
+  FLDMENUFUNC_SKIP_LRKEY, //ページスキップタイプ
+  12,   //文字サイズX(ドット
+  12,   //文字サイズY(ドット
+  0,    //表示座標X キャラ単位
+  0,    //表示座標Y キャラ単位
+  0,    //表示サイズX キャラ単位
+  0,    //表示サイズY キャラ単位
+};
+
+//-----------------------------------------------------------------------------
+///メニューリスト
+//-----------------------------------------------------------------------------
+
+#define DEBUG_POKEWOOD_BATTLE_SETUP_NUM  ( 8 )   /// 項目数
+static void makePokewoodBattleSetupList( GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work );
+static u16 getPokewoodBattleSetupList( GAMESYS_WORK* gsys, void* cb_work );
+
+//-----------------------------------------------------------------------------
+/// デバッグメニュー初期化パラメータ
+//-----------------------------------------------------------------------------
+static const DEBUG_MENU_INITIALIZER DebugMenuPokewoodBattleSetupInitializer = {
+  NARC_debug_message_debug_pokewood_dat,
+  0,
+  NULL,
+  &DebugPokewoodBattleSetupMenuHeader,
+  1, 1, 14, 14,
+  makePokewoodBattleSetupList,
+  getPokewoodBattleSetupList,
+};
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	バトル用デバッグ設定を行うBMPLISTイベント
+ *
+ * @param   event	
+ * @param   seq		
+ * @param   wk		
+ *
+ * @retval  static		
+ */
+//----------------------------------------------------------------------------------
+static GMEVENT_RESULT debugMenuPokewoodBattleSetupEvent( GMEVENT *event, int *seq, void *wk )
+{
+  DEBUG_POKEWOOD_WORK *work = wk;
+  u32 ret;
+
+  switch( *seq ){
+  case 0:
+    work->menuFunc = DEBUGFLDMENU_InitExPos( work->fieldWork, work->heapID, 
+                                        &DebugMenuPokewoodBattleSetupInitializer,
+                                        work->list_pos, work->cursor_pos );
+    (*seq)++;
+    break;
+
+  case 1:
+
+    ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
+    switch( ret ){
+    case FLDMENUFUNC_NULL:    // 操作無し
+      break;
+
+    case FLDMENUFUNC_CANCEL:  // キャンセル
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      return GMEVENT_RES_FINISH;
+    default:
+      // Aボタンを押すと項目反転
+      {
+        int flag = POKEWOOD_SAVEDATA_GetBattleDebugFlag(ret);
+        POKEWOOD_SAVEDATA_SetBattleDebugFlag(ret, flag^1);
+      }
+      (*seq)++;
+    }
+    break;
+
+  case 2:
+    // メニュー再描画
+    FLDMENUFUNC_GetListCursor( work->menuFunc, &work->list_pos, &work->cursor_pos );
+    FLDMENUFUNC_DeleteMenu( work->menuFunc );
+    (*seq) = 0;
+    break;
+  }
+
+  return GMEVENT_RES_CONTINUE;
+  
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  リスト初期化 リスト生成
+ *
+ *	@param	GAMESYS_WORK * gsys
+ *	@param	*list
+ *	@param	heapID
+ *	@param	msgData
+ *	@param	cb_work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void makePokewoodBattleSetupList( GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work )
+{
+  int i;
+  STRBUF *strBuf1 = GFL_STR_CreateBuffer( 64, heapID );
+  FIELDMAP_WORK * fieldmap  = GAMESYSTEM_GetFieldMapWork( gsys );
+  FLDMSGBG * msgBG          = FIELDMAP_GetFldMsgBG( fieldmap );
+  GFL_MSGDATA * pMsgData    = DEBUGFLDMENU_CreateMSGDATA( fieldmap, NARC_debug_message_debug_pokewood_dat );
+  
+  for( i = 0; i < DEBUG_POKEWOOD_BATTLE_SETUP_NUM; i++ ){
+    GFL_STR_ClearBuffer( strBuf1 );
+
+    // デバッグ項目反映の場合は赤文字、反映していない時は白文字
+    if(POKEWOOD_SAVEDATA_GetBattleDebugFlag(i)){
+      GFL_MSG_GetString( pMsgData, DEBUG_STRID_BATTLE_SETUP_PARAM_1_0+i, strBuf1 );
+    }else{
+      GFL_MSG_GetString( pMsgData, DEBUG_STRID_BATTLE_SETUP_PARAM_0_0+i, strBuf1 );
+    }
+    FLDMENUFUNC_AddStringListData( list, strBuf1, i, heapID );
+  }
+  
+  GFL_MSG_Delete( pMsgData );
+  GFL_HEAP_FreeMemory( strBuf1 );
+
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  リスト初期化 リスト項目数を返す
+ *
+ *	@param	GAMESYS_WORK* gsys
+ *	@param	cb_work 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static u16 getPokewoodBattleSetupList( GAMESYS_WORK* gsys, void* cb_work )
+{
+  return DEBUG_POKEWOOD_BATTLE_SETUP_NUM;
+}
+
+
 
 #endif  //  PM_DEBUG
 

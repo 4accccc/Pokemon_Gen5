@@ -167,3 +167,8 @@ extern void POKEWOOD_SAVEDATA_SetStarRankAnnounced( POKEWOOD_SAVEDATA *sv, int r
 //=============================================================================================
 int  POKEWOOD_SAVEDATA_GetKanbanNo( POKEWOOD_SAVEDATA *sv, u32 index );
 void POKEWOOD_SAVEDATA_SetKanbanNo( POKEWOOD_SAVEDATA *sv, u32 index, int title_no );
+
+#ifdef PM_DEBUG
+BOOL POKEWOOD_SAVEDATA_GetBattleDebugFlag( int index );
+void POKEWOOD_SAVEDATA_SetBattleDebugFlag( int index, int value );
+#endif
