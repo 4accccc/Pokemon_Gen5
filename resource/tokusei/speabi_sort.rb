@@ -26,7 +26,8 @@ hira_array = []
 File.open(ARGV[0], "r"){|readfile|
   readfile.each{|line|
     line.chomp!
-    hira_array << [ line.tr("ƒ@-ƒ“", "‚Ÿ-‚ñ").tr("ƒ”","‚¤").tr(FROM_STR,TO_STR), line ]
+    #hira_array << [ line.tr("ƒ@-ƒ“", "‚Ÿ-‚ñ").tr("ƒ”","‚¤").tr(FROM_STR,TO_STR), line ]
+    hira_array << [ line.tr("ƒ@-ƒ“", "‚Ÿ-‚ñ").tr(FROM_STR,TO_STR), line ]
   }
 }
 
