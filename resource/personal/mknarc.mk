@@ -22,6 +22,8 @@ PMSTBL		= pms.narc
 GROWTBL		= growtbl.narc
 ICONSCR		= pokeicon_all.scr
 ICONATTR	= attr_list.txt
+PERSONAL_WB	= personal_wb.narc
+PERSONAL_WB_NAIX= personal_wb.naix
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -83,13 +85,19 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	$(TARGETDIR)$(PERSONAL) $(TARGETDIR)$(PERSONAL_NAIX) $(TARGETDIR)$(WOTBL) $(TARGETDIR)$(EVOTBL) $(TARGETDIR)$(PMSTBL) $(TARGETDIR)$(GROWTBL) $(POKEICONDIR)$(ICONSCR) $(POKEICONDIR)$(ICONATTR)
+do-build:	$(TARGETDIR)$(PERSONAL) $(TARGETDIR)$(PERSONAL_NAIX) $(TARGETDIR)$(WOTBL) $(TARGETDIR)$(EVOTBL) $(TARGETDIR)$(PMSTBL) $(TARGETDIR)$(GROWTBL) $(POKEICONDIR)$(ICONSCR) $(POKEICONDIR)$(ICONATTR) $(TARGETDIR)$(PERSONAL_WB) $(TARGETDIR)$(PERSONAL_WB_NAIX)
 
 $(TARGETDIR)$(PERSONAL):	$(PERSONAL)
 	$(COPY)	$(PERSONAL) $(TARGETDIR)
 
 $(TARGETDIR)$(PERSONAL_NAIX):	$(PERSONAL_NAIX)
 	$(COPY)	$(PERSONAL_NAIX) $(TARGETDIR)
+
+$(TARGETDIR)$(PERSONAL_WB):	$(PERSONAL_WB)
+	$(COPY)	$(PERSONAL_WB) $(TARGETDIR)
+
+$(TARGETDIR)$(PERSONAL_WB_NAIX):	$(PERSONAL_WB_NAIX)
+	$(COPY)	$(PERSONAL_WB_NAIX) $(TARGETDIR)
 
 $(TARGETDIR)$(WOTBL):	$(WOTBL)
 	$(COPY)	$(WOTBL) $(TARGETDIR)

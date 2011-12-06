@@ -692,6 +692,8 @@ extern  u8    PPP_GetSeikaku( const POKEMON_PASO_PARAM *ppp );
 extern  BOOL  PP_CheckRare( const POKEMON_PARAM *pp );
 extern  BOOL  PPP_CheckRare( const POKEMON_PASO_PARAM *pp );
 extern  BOOL  POKETOOL_CheckKyuremuUnionForm( const u16 monsno, const u8 form );
+extern  BOOL POKETOOL_CheckTrosBrothersReijuForm( const u16 monsno, const u8 form );
+extern  BOOL POKETOOL_CheckKerudioSwordForm( const u16 monsno, const u8 form );
 extern  BOOL  POKETOOL_CheckSwanOnlyPoke( const u16 monsno, const u8 form );
 extern  BOOL  PPP_CheckSwanOnlyPoke( const POKEMON_PASO_PARAM *ppp );
 extern  PokeSick PP_GetSick( const POKEMON_PARAM* pp );
@@ -828,6 +830,8 @@ extern void PPP_SetDefaultNickName( POKEMON_PASO_PARAM* ppp );
 
 // ポケウッドスターポイントをスターランクに変換する(PP_Get(ID_PARA_star_point,,)の値を入れる
 extern PtlStarRank POKETOOL_StarPoint2Rank( u8 star_point );
+
+extern u32 POKETOOL_GetPersonalParamBW( u16 mons_no, u16 form_no, PokePersonalParamID param );
 
 #endif __ASM_NO_DEF_
 

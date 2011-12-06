@@ -375,3 +375,4 @@
   ARCID_GIANTHOLE_GIMMICK "fieldmap/gianthole.narc" # H06ギミック
   ARCID_INTRO_DEMO_GIMMICK "fieldmap/intro_demo.narc" # 物語開始ギミック
   ARCID_REZI_GIMMICK "fieldmap/rezi.narc" # レジ３体の地底遺跡ギミック
+  ARCID_PERSONAL_BW    "personal/personal_wb.narc"    #BWのパーソナルデータ

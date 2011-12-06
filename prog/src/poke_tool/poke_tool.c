@@ -1124,6 +1124,26 @@ BOOL POKETOOL_CheckKyuremuUnionForm( const u16 monsno, const u8 form )
   return FALSE;
 }
 
+/// ボルトロス・トルネロス・ランドロス別フォルムチェック
+BOOL POKETOOL_CheckTrosBrothersReijuForm( const u16 monsno, const u8 form )
+{
+  if(((monsno == MONSNO_TORUNEROSU) || (monsno == MONSNO_BORUTOROSU) || (monsno == MONSNO_RANDOROSU))
+  && (form != 0)){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+/// ケルディオ別フォルムチェック
+BOOL POKETOOL_CheckKerudioSwordForm( const u16 monsno, const u8 form )
+{
+  if((monsno == MONSNO_KERUDHIO) && (form != 0)){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
 //==============================================================================
 /**
  * @brief   モンスターNoとフォルムからスワンの特別なポケモンか判定する
@@ -1141,6 +1161,12 @@ BOOL  POKETOOL_CheckSwanOnlyPoke( const u16 monsno, const u8 form )
 {
   if( POKETOOL_CheckKyuremuUnionForm( monsno, form )){
     return TRUE;  //合体キュレムはダメ
+  }
+  if( POKETOOL_CheckTrosBrothersReijuForm( monsno, form )){
+    return TRUE;  //ボルトロス・トルネロス・ランドロスの霊獣フォルムはダメ
+  }
+  if( POKETOOL_CheckKerudioSwordForm( monsno, form )){
+    return TRUE;  //ケルディオ別フォルムはダメ
   }
   return FALSE;
 }
@@ -4456,4 +4482,44 @@ PtlStarRank POKETOOL_StarPoint2Rank( u8 star_point )
     rank=PTL_STAR_RANK_4;
   }
   return rank;
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * ローカルワークにパーソナルデータ読み込み（直前と同じデータならそのまま何もしない）
+ *
+ * @param   monsno
+ * @param   formno
+ *
+ * @retval  POKEMON_PERSONAL_DATA*    読み込み先ワークポインタ
+ */
+//----------------------------------------------------------------------------------
+static POKEMON_PERSONAL_DATA* Personal_LoadBW( u16 monsno, u16 formno )
+{
+  if( (monsno != PersonalLatestMonsNo) || (formno != PersonalLatestFormNo) ){
+    PersonalLatestFormNo = formno;
+    PersonalLatestMonsNo = monsno;
+    POKE_PERSONAL_LoadDataBW( monsno, formno, &PersonalDataWork );
+  }
+  return &PersonalDataWork;
+}
+
+//============================================================================================
+/**
+ *  ポケモンパーソナル構造体データから任意でデータを取得
+ *  （一発でデータを取り出したいときに使用してください、
+ *    パーソナルデータをたくさん取り出したいときはOpen,Get,Closeした方が軽いです）
+ *
+ * @param[in] mons_no 取得したいポケモンナンバー
+ * @param[in] form_no 取得したいポケモンのフォルムナンバー
+ * @param[in] param 取得したデータのインデックス（poke_tool.hに定義）
+ *
+ * @return  取得したデータ
+ */
+//============================================================================================
+u32 POKETOOL_GetPersonalParamBW( u16 mons_no, u16 form_no, PokePersonalParamID param )
+{
+  POKEMON_PERSONAL_DATA* ppd = Personal_LoadBW( mons_no, form_no );
+  return POKE_PERSONAL_GetParam( ppd, param );
 }

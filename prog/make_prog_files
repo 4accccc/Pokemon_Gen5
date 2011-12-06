@@ -2015,6 +2015,7 @@ SRCS_OVERLAY_MUSICAL_SHOT = musical/shot/musical_shot_sys.c \
         musical/mus_item_draw.c \
 		    musical/mus_poke_draw.c \
         musical/musical_mcss.c \
+        musical/mus_pokegra.c \
         musical/stage/sta_act_obj.c \
         musical/stage/sta_act_light.c \
         musical/stage/sta_act_bg.c \
@@ -2026,6 +2027,7 @@ SRCS_OVERLAY_MUSICAL_SHOT = musical/shot/musical_shot_sys.c \
     musical/stage/script/sta_act_script.c \
     musical/stage/script/script_command.c \
     musical/stage/script/script_table.c
+
 
 #ミュージカル汎用
 #ここにあるソースは、

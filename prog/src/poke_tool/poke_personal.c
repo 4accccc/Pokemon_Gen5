@@ -37,7 +37,8 @@ extern void POKE_PERSONAL_GetData( u16 mons_no, u16 form_no, POKEMON_PERSONAL_DA
 /*--------------------------------------------------------------------------*/
 /* Globals                                                                  */
 /*--------------------------------------------------------------------------*/
-static ARCHANDLE*  ArcHandle = NULL;
+static ARCHANDLE*  ArcHandle   = NULL;
+static ARCHANDLE*  ArcHandleBW = NULL;
 
 
 //=============================================================================================
@@ -52,7 +53,8 @@ void POKE_PERSONAL_InitSystem( HEAPID heapID )
 {
   if( ArcHandle == NULL )
   {
-    ArcHandle = GFL_ARC_OpenDataHandle( ARCID_PERSONAL, heapID );
+    ArcHandle   = GFL_ARC_OpenDataHandle( ARCID_PERSONAL,    heapID );
+    ArcHandleBW = GFL_ARC_OpenDataHandle( ARCID_PERSONAL_BW, heapID );
   }
 }
 
@@ -407,3 +409,66 @@ static u16 get_personalID( u16 mons_no, u16 form_no )
 
 }
 
+//--------------------------------------------------------------------------
+/**
+ * モンスターナンバー＆フォルムナンバーからパーソナルデータIDを取得
+ *
+ * @param   mons_no   ポケモンナンバー
+ * @param   form_no   フォルムナンバー
+ *
+ * @retval  u16     パーソナルデータID
+ */
+//--------------------------------------------------------------------------
+static u16 get_personalIDBW( u16 mons_no, u16 form_no )
+{
+  POKEMON_PERSONAL_DATA ppd;
+  u32 data_ofs;
+  u16 tmp = mons_no;
+
+  //タマゴにはパーソナルがないので、0のダミーデータを読み込ませるようにする
+  //GF_ASSERT( ( mons_no != MONSNO_TAMAGO ) && ( mons_no != MONSNO_DAMETAMAGO ) );
+  if( ( mons_no == MONSNO_TAMAGO ) ||
+      ( mons_no == MONSNO_DAMETAMAGO ) )
+  { 
+    return 0;
+  }
+
+  data_ofs = GFL_ARC_GetDataOfsByHandle( ArcHandleBW, mons_no );
+  GFL_ARC_SeekDataByHandle( ArcHandleBW, data_ofs );
+  GFL_ARC_LoadDataByHandleContinue( ArcHandleBW, sizeof(POKEMON_PERSONAL_DATA), &ppd );
+
+  if( ( ppd.form_index == 0 ) || ( ppd.form_max <= form_no ) || ( form_no == 0 ) )
+  {
+    return mons_no;
+  }
+
+  mons_no = ppd.form_index + form_no - 1;
+
+  OS_Printf("monsno=%d のform_no=%dは ID=%d\n", tmp, form_no, mons_no);
+
+  return mons_no;
+
+}
+
+
+//=============================================================================================
+/**
+ * パーソナルデータをメモリ上にロード（poke_toolグループ内）
+ *
+ * @param   monsno    モンスターナンバー
+ * @param   form_no   フォルムナンバー
+ * @param   ppd     [out] データ取得用構造体アドレス
+ *
+ */
+//=============================================================================================
+void POKE_PERSONAL_LoadDataBW( u16 mons_no, u16 form_no, POKEMON_PERSONAL_DATA* ppd )
+{
+  u32 data_ofs;
+  u16 personalID = get_personalID( mons_no, form_no );
+
+  NAGI_Printf( "mons_no%d form_no%d\n", mons_no, form_no );
+
+  data_ofs = GFL_ARC_GetDataOfsByHandle( ArcHandleBW, personalID );
+  GFL_ARC_SeekDataByHandle( ArcHandleBW, data_ofs );
+  GFL_ARC_LoadDataByHandleContinue( ArcHandleBW, sizeof(POKEMON_PERSONAL_DATA), ppd );
+}

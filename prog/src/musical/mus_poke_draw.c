@@ -11,6 +11,7 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "system/pokegra.h"
+#include "mus_pokegra.h"
 
 #include "arc_def.h"
 #include "poke_tool/poke_tool.h"
@@ -426,13 +427,13 @@ static void	MUS_POKE_MakeMAW( const MUSICAL_POKE_PARAM *musPoke, MUS_MCSS_ADD_WO
 
 	maw->arcID = ARCID_POKEGRA_MUS;
 
-	maw->ncbr = POKEGRA_GetCbrArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
-	maw->nclr = POKEGRA_GetPalArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
-	maw->ncer = POKEGRA_GetCelArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
-	maw->nanr = POKEGRA_GetAnmArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
-	maw->nmcr = POKEGRA_GetMCelArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
-	maw->nmar = POKEGRA_GetMAnmArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
-	maw->ncec = POKEGRA_GetNcecArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
+	maw->ncbr = MUS_POKEGRA_GetCbrArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
+	maw->nclr = MUS_POKEGRA_GetPalArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
+	maw->ncer = MUS_POKEGRA_GetCelArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
+	maw->nanr = MUS_POKEGRA_GetAnmArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
+	maw->nmcr = MUS_POKEGRA_GetMCelArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
+	maw->nmar = MUS_POKEGRA_GetMAnmArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
+	maw->ncec = MUS_POKEGRA_GetNcecArcIndex( maw->arcID , mons_no, form_no, sex, rare,  dir, egg );
 	maw->rand = musPoke->mcssParam.perRand;
 
 }
