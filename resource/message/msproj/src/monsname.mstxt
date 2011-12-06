@@ -21458,23 +21458,23 @@
 			Language="JPN">
 			<Text>タマゴ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-28T02:07:05" />
+				User="mori:W00269"
+				Time="2011-12-01T09:33:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:45:44" />
+				User="mori:W00269"
+				Time="2011-12-01T09:33:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>タマゴ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-28T02:07:15" />
+				User="mori:W00269"
+				Time="2011-12-01T09:33:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:45:44" />
+				User="mori:W00269"
+				Time="2011-12-01T09:33:00" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -21489,25 +21489,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だめたまご</Text>
+			<Text>ダメタマゴ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-28T02:07:13" />
+				User="mori:W00269"
+				Time="2011-12-01T09:33:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:45:44" />
+				User="mori:W00269"
+				Time="2011-12-01T09:33:00" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>だめたまご</Text>
+			<Text>ダメタマゴ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:45:44" />
+				User="mori:W00269"
+				Time="2011-12-01T09:33:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T10:45:44" />
+				User="mori:W00269"
+				Time="2011-12-01T09:33:00" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
