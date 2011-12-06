@@ -764,4 +764,5 @@ $gender_hash = {
 	"‚¾‚¢‚n‚k‚Q" => "GENDER_TYPE_MALE_ONLY",
 	"‚e|‚O‚O‚Q" => "GENDER_TYPE_MALE_ONLY",
 	"ƒJƒ‰ƒe‚¨‚¤" => "GENDER_TYPE_MALE_ONLY",
+	"ƒh[ƒuƒ‹‚Q" => "GENDER_TYPE_NORMAL",
 }

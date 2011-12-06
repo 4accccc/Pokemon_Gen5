@@ -764,4 +764,5 @@ $mons_fullname_list = [
 	"‚¾‚¢‚n‚k‚Q",
 	"‚e|‚O‚O‚Q",
 	"ƒJƒ‰ƒe‚¨‚¤",
+	"ƒh[ƒuƒ‹‚Q",
 ]
