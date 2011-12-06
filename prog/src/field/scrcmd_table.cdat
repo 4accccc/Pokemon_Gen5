@@ -912,7 +912,7 @@
   DEF_CMD( EvCmdPairTrainerParamSet, EV_SEQ_PAIR_TRAINER_PARAM_SET )
   DEF_CMD( EvCmdPairTrainerParamFree, EV_SEQ_PAIR_TRAINER_PARAM_FREE )
   DEF_CMD( EvCmdPairTrainerIdGet, EV_SEQ_PAIR_TRAINER_ID_GET )
-  NO_CMD()
+  DEF_CMD( EvCmdPairPlayerFollowOnOff, EV_SEQ_PAIR_PLAYER_FOLLOW_ON_OFF )
   NO_CMD()
   
   NO_CMD()

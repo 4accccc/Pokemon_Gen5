@@ -28,7 +28,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c12_swrival_01
 _EVENT_DATA    ev_pos_c12_swbell_meet_stop_01
-_EVENT_DATA	ev_pos_c12_swbell_meet_stop_01a
+_EVENT_DATA	   ev_pos_c12_swbell_meet_stop_01a
 _EVENT_DATA    ev_pos_c12_swbell_meet_stop_02
 _EVENT_DATA    ev_scene_c12_townmap_01
 _EVENT_DATA    ev_zone_c12
@@ -54,13 +54,13 @@ _EVENT_DATA    ev_scene_c12_gymclear_01
 _EVENT_DATA    ev_c12_swleader1_01
 _EVENT_DATA    ev_c12_rival_pair_01
 _EVENT_DATA    ev_scene_c12_rivalsister_end_01
-_EVENT_DATA	ev_c12_middleman1_02
-_EVENT_DATA	ev_c12_girl1_01
-_EVENT_DATA	ev_c12_woman1_01
+_EVENT_DATA	   ev_c12_middleman1_02
+_EVENT_DATA	   ev_c12_girl1_01
+_EVENT_DATA	   ev_c12_woman1_01
 _EVENT_DATA    ev_pos_c12_swbell_meet_stop_02a
 _EVENT_DATA    ev_c12_game_start_init
 _EVENT_DATA    ev_c12_game_start
-_EVENT_DATA	ev_c12_girl2_01
+_EVENT_DATA	   ev_c12_girl2_01
 _EVENT_DATA    ev_c12_ending
 _EVENT_DATA_END
 
@@ -1786,8 +1786,10 @@ _RET
 //★C12連れ歩きストッパー戻り処理
 ev_c12_rival_ng_return02:
   //アニメ：下に移動
+  _PAIR_PLAYER_FOLLOW_ON()  //連れ歩き追随開始
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_d )
   _OBJ_ANIME_WAIT()
+  _PAIR_PLAYER_FOLLOW_OFF() //連れ歩き追随終了
 _RET
 
 /**************************************************************/

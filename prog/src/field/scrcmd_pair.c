@@ -108,3 +108,30 @@ VMCMD_RESULT EvCmdPairTrainerIdGet( VMHANDLE * core, void *wk )
 
   return VMCMD_RESULT_SUSPEND;
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief 連れ歩きOBJ イベント内アニメコマンド追随開始/終了
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPairPlayerFollowOnOff( VMHANDLE * core, void *wk )
+{
+  u8 on_off = VMGetU8( core );
+  GAMEDATA* gdata = SCRCMD_WORK_GetGameData( wk );
+  
+  MMDL *mmdl = MMDLSYS_SearchOBJID( GAMEDATA_GetMMdlSys( gdata ), MMDL_ID_PAIR );
+
+  if( mmdl == NULL ){
+    GF_ASSERT_MSG(0, "連れ歩いていません\n");
+    return VMCMD_RESULT_SUSPEND;
+  }
+  if( on_off ){
+    MMDL_OffMoveBitMoveProcPause( mmdl );
+  }else{
+    MMDL_OnMoveBitMoveProcPause( mmdl );
+  }
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
+

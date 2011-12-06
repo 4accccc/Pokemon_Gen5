@@ -2145,6 +2145,26 @@
   .short  \ret_wk
   .endm
 
+//--------------------------------------------------------------
+/**
+ *  @def  _PAIR_PLAYER_FOLLOW_ON
+ *  @def  _PAIR_PLAYER_FOLLOW_OFF
+ *  @brief  連れ歩き：自機アニメ追随開始/終了
+ *  @note
+ *
+ *  必ずペアで呼び出してください
+ */
+//--------------------------------------------------------------
+#define _PAIR_PLAYER_FOLLOW_ON() \
+    _ASM_PAIR_PLAYER_FOLLOW_ON_OFF(TRUE)
+
+#define _PAIR_PLAYER_FOLLOW_OFF() \
+    _ASM_PAIR_PLAYER_FOLLOW_ON_OFF(FALSE)
+
+  .macro  _ASM_PAIR_PLAYER_FOLLOW_ON_OFF on_off
+  .short  EV_SEQ_PAIR_PLAYER_FOLLOW_ON_OFF
+  .byte   \on_off
+  .endm
 
 //======================================================================
 //  はい、いいえ　処理

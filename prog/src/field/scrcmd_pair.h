@@ -33,6 +33,12 @@ extern VMCMD_RESULT EvCmdPairTrainerParamFree( VMHANDLE * core, void *wk );
 //-----------------------------------------------------------------------------
 extern VMCMD_RESULT EvCmdPairTrainerIdGet( VMHANDLE * core, void *wk );
 
+//--------------------------------------------------------------
+/**
+ * @brief 連れ歩きOBJ イベント内アニメコマンド追随開始/終了
+ */
+//--------------------------------------------------------------
+extern VMCMD_RESULT EvCmdPairPlayerFollowOnOff( VMHANDLE * core, void *wk );
 
 #endif //__H_SCRCMD_PAIR_H__
 
