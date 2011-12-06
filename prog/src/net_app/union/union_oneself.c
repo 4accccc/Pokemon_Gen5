@@ -2108,7 +2108,7 @@ static BOOL OneselfSeq_Talk_Battle_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITU
     }
     break;
   case _REG_PRINT_BBOX:       //バトルボックスNGレギュレーション表示
-    UnionMsg_Menu_RegulationSetup(unisys, fieldWork, situ->reg_temoti_fail_bit, 
+    UnionMsg_Menu_RegulationSetup(unisys, fieldWork, situ->reg_bbox_fail_bit, 
       Union_GetPlayCategory_to_Shooter(situ->mycomm.mainmenu_select), REGWIN_TYPE_NG_BBOX);
     (*seq)++;
     break;
