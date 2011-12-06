@@ -2627,30 +2627,33 @@ static void BoxObjAdd( BOX2_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 void BOX2OBJ_PutConvButton( BOX2_SYS_WORK * syswk, int index, BOOL flg )
 {
-  int i;
-  static const u8 button_tbl[][3]={
-    { BOX2OBJ_ANM_CONV0_ON, BOX2OBJ_ANM_CONV1_OFF,BOX2OBJ_ANM_CONV2_OFF },
-    { BOX2OBJ_ANM_CONV0_OFF,BOX2OBJ_ANM_CONV1_ON, BOX2OBJ_ANM_CONV2_OFF },
-    { BOX2OBJ_ANM_CONV0_OFF,BOX2OBJ_ANM_CONV1_OFF,BOX2OBJ_ANM_CONV2_ON  },
-  };
-  GF_ASSERT( index >= BOX2OBJ_ID_CONV_BUTTON && index <= BOX2OBJ_ID_CONV_BUTTON3 );
+	int i;
+	static const u8 button_tbl[][3]={
+		{ BOX2OBJ_ANM_CONV0_ON, BOX2OBJ_ANM_CONV1_OFF,BOX2OBJ_ANM_CONV2_OFF },
+		{ BOX2OBJ_ANM_CONV0_OFF,BOX2OBJ_ANM_CONV1_ON, BOX2OBJ_ANM_CONV2_OFF },
+		{ BOX2OBJ_ANM_CONV0_OFF,BOX2OBJ_ANM_CONV1_OFF,BOX2OBJ_ANM_CONV2_ON  },
+	};
+	GF_ASSERT( index >= BOX2OBJ_ID_CONV_BUTTON && index <= BOX2OBJ_ID_CONV_BUTTON3 );
 
-  // •\Ž¦‚µ‚È‚¢ƒ{ƒbƒNƒXƒ‚[ƒh‚Ì‚Æ‚«‚Í‘S•”‚n‚e‚e
-  if( syswk->dat->callMode != BOX_MODE_SEIRI &&
-      syswk->dat->callMode != BOX_MODE_BATTLE &&
-      syswk->dat->callMode != BOX_MODE_ITEM ){
-    for(i=0;i<BOX2OBJ_ID_CONV_BUTTON3-BOX2OBJ_ID_CONV_BUTTON+1;i++){
-      BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_CONV_BUTTON+i, FALSE );
-    }
+	// •\Ž¦‚µ‚È‚¢ƒ{ƒbƒNƒXƒ‚[ƒh‚Ì‚Æ‚«‚Í‘S•”‚n‚e‚e
+	if( syswk->dat->callMode != BOX_MODE_SEIRI &&
+			syswk->dat->callMode != BOX_MODE_BATTLE &&
+			syswk->dat->callMode != BOX_MODE_ITEM ){
+		for(i=BOX2OBJ_ID_CONV_BUTTON;i<=BOX2OBJ_ID_CONV_BUTTON3;i++){
+			BOX2OBJ_Vanish( syswk->app, i, FALSE );
+		}
 		return;
-  }
+	}
 
-  // Žw’è‚Ìƒ{ƒ^ƒ“‚ð‚n‚m‚µ‚Ä‚»‚êˆÈŠO‚Ìƒ{ƒ^ƒ“‚ð‚n‚e‚e‚É‚·‚é
-  for(i=0;i<BOX2OBJ_ID_CONV_BUTTON3-BOX2OBJ_ID_CONV_BUTTON+1;i++){
-    BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_CONV_BUTTON+i, button_tbl[index-BOX2OBJ_ID_CONV_BUTTON][i] );
-    BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_CONV_BUTTON+i, flg );
-  }
+	// Žw’è‚Ìƒ{ƒ^ƒ“‚ð‚n‚m‚µ‚Ä‚»‚êˆÈŠO‚Ìƒ{ƒ^ƒ“‚ð‚n‚e‚e‚É‚·‚é
+	for(i=0;i<BOX2OBJ_ID_CONV_BUTTON3-BOX2OBJ_ID_CONV_BUTTON+1;i++){
+		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_CONV_BUTTON+i, button_tbl[index-BOX2OBJ_ID_CONV_BUTTON][i] );
+		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_CONV_BUTTON+i, flg );
+	}
 
+	if( syswk->dat->callMode == BOX_MODE_ITEM ){
+		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_CONV_BUTTON3, FALSE );
+	}
 }
 
 //--------------------------------------------------------------------------------------------
