@@ -17,7 +17,6 @@
 
 // field
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
-#include "map_replace.h"
 
 // gimmick
 #include "field_gimmick_def.h"
@@ -25,9 +24,6 @@
 
 // arc
 #include "arc/fieldmap/hide_ship_deck.naix"
-
-// script
-#include "../../../resource/fldmapdata/flagwork/work_define.h"
 
 // mine
 #include "field_gimmick_hide_ship_deck.h"
@@ -112,27 +108,6 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
   },
 };
 
-// OBJ クリア後版
-static const GFL_G3D_UTIL_OBJ obj_3d_table2[] =
-{
-  // OBJ_HATCH_1
-  {
-    RESID_HATCH_MDL_01,   // モデルリソースID
-    0,                    // モデルデータID(リソース内部INDEX)
-    RESID_HATCH_MDL_01,   // テクスチャリソースID
-    NULL,                 // アニメテーブル(複数指定のため)
-    0,                    // アニメリソース数
-  },
-  // OBJ_HATCH_2
-  {
-    RESID_HATCH_MDL_01,   // モデルリソースID
-    0,                    // モデルデータID(リソース内部INDEX)
-    RESID_HATCH_MDL_01,   // テクスチャリソースID
-    NULL,                 // アニメテーブル(複数指定のため)
-    0,                    // アニメリソース数
-  },
-};
-
 
 // セットアップデータ
 static const GFL_G3D_UTIL_SETUP g3Dutil_Setup = {
@@ -142,13 +117,6 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_Setup = {
 	NELEMS(obj_3d_table),		//オブジェクト数
 };
 
-// セットアップデータ クリア後版
-static const GFL_G3D_UTIL_SETUP g3Dutil_Setup2 = {
-  res_3d_table,				    //リソーステーブル
-	NELEMS(res_3d_table),		//リソース数
-	obj_3d_table2,				    //オブジェクト設定テーブル
-	NELEMS(obj_3d_table2),		//オブジェクト数
-};
 
 //=============================================================================
 /**
@@ -156,7 +124,7 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_Setup2 = {
 */
 //=============================================================================
 // EXPOBJ
-static void EXPOBJ_ObjSet( HIDE_SHIP_TMP *p_wk, const BOOL clear );
+static void EXPOBJ_ObjSet( HIDE_SHIP_TMP *p_wk );
 static void EXPOBJ_ObjDell( HIDE_SHIP_TMP *p_wk );
 static void EXPOBJ_ObjMain( HIDE_SHIP_TMP *p_wk );
 
@@ -176,7 +144,6 @@ void HIDE_SHIP_DECK_Setup( FIELDMAP_WORK *p_fieldmap )
 {
   GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
   GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
-  BOOL      clear;
 
   // 汎用ワーク確保
   HIDE_SHIP_TMP *p_wk = GMK_TMP_WK_AllocWork( p_fieldmap, HIDE_SHIP_TMP_ASSIGN_ID,
@@ -185,12 +152,8 @@ void HIDE_SHIP_DECK_Setup( FIELDMAP_WORK *p_fieldmap )
   p_wk->exp_obj = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
   p_wk->p_fieldmap = p_fieldmap;
 
-  
-  // マップ置き換えフラグ取得
-  clear = MAPREPLACE_GetFlag( p_gdata, MAPREPLACE_ID_02 );
-
   // EXPOBJセット
-  EXPOBJ_ObjSet( p_wk, clear );
+  EXPOBJ_ObjSet( p_wk );
 
 }
 
@@ -246,24 +209,11 @@ void HIDE_SHIP_DECK_Move( FIELDMAP_WORK *p_fieldmap )
  *	@param  clear クリア後ならTRUE
  */
 //-----------------------------------------------------------------------------
-static void EXPOBJ_ObjSet( HIDE_SHIP_TMP *p_wk, const BOOL clear )
+static void EXPOBJ_ObjSet( HIDE_SHIP_TMP *p_wk )
 {
 
-  // クリア後だとどちらのハッチも開いているもの
-  {
-    // マップ置き換えが発生していたらクリア後
-    if( clear == TRUE )
-    {
-      //必要なリソースの用意
-      FLD_EXP_OBJ_AddUnitByHandle( p_wk->exp_obj, &g3Dutil_Setup2, HIDE_SHIP_UNIT_IDX);
-    }
-    else
-    {
-      //必要なリソースの用意
-      FLD_EXP_OBJ_AddUnitByHandle( p_wk->exp_obj, &g3Dutil_Setup, HIDE_SHIP_UNIT_IDX);
-    }
-  }
-
+  //必要なリソースの用意
+  FLD_EXP_OBJ_AddUnitByHandle( p_wk->exp_obj, &g3Dutil_Setup, HIDE_SHIP_UNIT_IDX);
 
   //=====================================
   {
