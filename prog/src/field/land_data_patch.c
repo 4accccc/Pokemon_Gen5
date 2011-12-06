@@ -120,16 +120,6 @@ void FIELD_DATA_PATCH_WriteBuildModel( FIELD_DATA_PATCH *p_sys, BMODEL_ID bmodel
   p_position[ index ].resourceID        = (bmodelID & 0xFF);
   p_position[ index ].resourceIDupper   = ((bmodelID>>8)&0xFF);
 }
-void FIELD_DATA_PATCH_WriteBuildModelEx( FIELD_DATA_PATCH *p_sys, BMODEL_ID bmodelID, u16 index, u16 rotate )
-{
-  FIELD_DATA_PATCH_WriteBuildModel(p_sys, bmodelID, index);
-
-  {
-    LayoutFormat* p_3dmd = FIELD_LAND_DATA_PATCH_Get3DmdData( p_sys );
-    PositionSt* p_position = (PositionSt*)&p_3dmd->posData;
-    p_position[ index ].rotate  = rotate;
-  }
-}
 
 //----------------------------------------------------------------------------
 /**

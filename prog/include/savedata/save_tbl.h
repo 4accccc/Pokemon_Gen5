@@ -37,7 +37,7 @@
 #define SAVESIZE_EXTRA_POKEWOOD           (0x600)
 ///EXTRA領域でWBTが使用するセーブデータサイズ
 #define SAVESIZE_EXTRA_WBT                (0x1400)
-///EXTRA領域で3DS連動が使用するセーブデータサイズ //TODO　仮
+///EXTRA領域で3DS連動が使用するセーブデータサイズ //CYGNUS用の領域だったが、内部セーブにとったため、この領域は未使用になっている。
 #define SAVESIZE_EXTRA_3DS                (0x400)
 ///管理外領域で不思議な贈り物が使用するセーブサイズ
 #define SAVESIZE_OUTSIDE_MYSTERY          (0x400)

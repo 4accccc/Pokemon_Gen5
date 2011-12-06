@@ -3118,7 +3118,6 @@ static void KeySys_SelMenu_Init( KEYSYS_SELECT_MENU *p_wk, KEYSYS_SELMENU_TYPE t
     menu_param.p_wk_adrs = p_wk;
     menu_param.DecideCallBack = KeySys_SelMenu_DecideCallBack;
 
-    //Ç†Ç∆Ç≈ç≈ëÂílÇ¢ÇÍÇÈ
     for( i = 0; i < KEYSYS_MENU_WINDOW_MAX; i++ )
     {
       menu_param.wnd_data[i].w      = 15;

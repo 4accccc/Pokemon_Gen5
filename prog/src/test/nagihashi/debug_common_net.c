@@ -309,7 +309,7 @@ static GFL_PROC_RESULT Debug_Common_Net_CoreProc_Init( GFL_PROC *p_proc, int *p_
       GFL_STD_MemClear( &init_param, sizeof(COMMON_DOWNLOAD_INIT_PARAM) );
       init_param.net_type     = p_wk->p_param->net_type;
       init_param.p_gamedata   = p_wk->p_param->p_gamedata;
-      init_param.buffer_size  = 1024; //‰¼‚Å1kb
+      init_param.buffer_size  = 1024;
       init_param.heapID       = HEAPID_NAGI_DEBUG_SUB;
       p_wk->p_common_download = COMMON_DOWNLOAD_Init( &init_param );
     }
