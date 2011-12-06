@@ -433,6 +433,8 @@ GMEVENT * EVENT_TrainerBattle(
       bp->fieldSituation.bgType = dungeon_area;
       // ƒAƒCƒeƒ€Žg—p‹ÖŽ~
       bp->bag_nouse_flag = TRUE;
+      // Œ©‚½“o˜^‹ÖŽ~
+      bp->ZukanSeeFlagNoSetFlag = TRUE;
     
       ONOUE_Printf("–³ŒÀƒ_ƒ“ƒWƒ‡ƒ“—p”wŒi·‘Ö‚¦");
     }
@@ -575,6 +577,9 @@ GMEVENT * EVENT_InfinityDungeonTrainerBattle(
    
   // ƒAƒCƒeƒ€Žg—p‹ÖŽ~
   bp->bag_nouse_flag = TRUE;
+  
+  // Œ©‚½“o˜^‹ÖŽ~
+  bp->ZukanSeeFlagNoSetFlag = TRUE;
    
 #ifdef PM_DEBUG
   debug_FieldDebugFlagSet( bp );

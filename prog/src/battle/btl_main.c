@@ -2838,6 +2838,12 @@ void BTL_MAIN_RegisterZukanSeeFlag( const BTL_MAIN_MODULE* wk, u8 clientID, cons
 {
   BtlCompetitor competitor = BTL_MAIN_GetCompetitor( wk );
   int           pokewood   = BTL_MAIN_GetPokewoodMode( wk );
+  
+  // 見た登録禁止フラグをチェック
+  if( wk->setupParam->ZukanSeeFlagNoSetFlag == TRUE )
+  {
+    return;
+  }
 
   // 野生戦とトレーナー戦では図鑑登録をするが、ポケウッド中はしない
   if( ((competitor == BTL_COMPETITOR_WILD) || (competitor == BTL_COMPETITOR_TRAINER))

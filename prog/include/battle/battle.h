@@ -379,6 +379,8 @@ typedef struct {
   u8 WBTFinalFlag             : 1;  // swan追加：WBT決勝かどうか（戦闘背景制御用）
   u8 PokewoodShowNoCancelFlag : 1;  // [in]ポケウッド上映でBボタンキャンセルをできなくさせるフラグ
                                     //     (TRUE:キャンセルできない）
+  
+  u8 ZukanSeeFlagNoSetFlag    : 1;  // 図鑑登録禁止フラグ
 
   u8 pokewoodSenario;         // ポケウッドのシナリオNo
   u8 pokewoodRentalFlag;      // ポケウッドにレンタルポケモンで参加しているか？(1:レンタル 0:自前）
