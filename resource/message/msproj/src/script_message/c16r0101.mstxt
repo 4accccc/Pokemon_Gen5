@@ -574,14 +574,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>マーケットでは
-ぼうけんに　やくだつ　しなものを▽
-やすく　かうことが　できます▼
+冒険に　役立つ　品物を▽
+安く　買うことが　できます▼
 なかには　フレンドリィショップでは
-てにはいらない　どうぐを▽
-しいれて　くるなんてことも……？▼</Text>
+手に入らない　道具を▽
+仕入れて　くるなんてことも……？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T12:41:14" />
+				Time="2011-12-06T02:49:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -622,14 +622,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くじやでは　１にち　１かいの
-ちゅうせんに　あたると▽
-ごうか　けいひんが　もらえます▼
-１とうは　なんと　マスターボールが
-あたります▼</Text>
+			<Text>くじやでは　１日　１回の
+抽選に　当たると▽
+豪華　景品が　もらえます▼
+１等は　なんと　マスターボールが
+当たります▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T12:43:38" />
+				Time="2011-12-06T02:53:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -656,10 +656,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>はなや　では
-きのみを　かうことが　できます▼</Text>
+きのみを　かうことが　できます▼
+おみせに　よって
+きのみの　しゅるいは　かわります</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T12:43:51" />
+				Time="2011-12-06T03:16:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -668,10 +670,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>はなや　では
-きのみを　かうことが　できます▼</Text>
+きのみを　買うことが　できます▼
+お店に　よって
+きのみの　種類は　変わります</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-15T10:36:45" />
+				Time="2011-12-06T03:16:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -712,12 +716,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ほいくじょでは
-ポケモンの　タマゴを　あたためて▼
-ふだん　より　はやく
+ポケモンの　タマゴを　温めて▼
+普段　より　早く
 ふか　させることが　できます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-15T10:36:45" />
+				Time="2011-12-06T02:58:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -759,13 +763,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>どうじょうでは
-ポケモンを　きたえて　つよくします▼
+ポケモンを　鍛えて　つよくします▼
 ポケモンの　レベルや
-ポケモンの　つよさの　きそポイントを▽
-あげることが　できます▼</Text>
+ポケモンの　つよさの　基礎ポイントを▽
+上げることが　できます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-15T10:36:45" />
+				Time="2011-12-06T03:23:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -806,12 +810,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ふるどうぐや　では
-ほりだしものが　うっています▼
-ふつうの　おみせでは　かえない
-しなものが　ならぶことが　あります▼</Text>
+掘り出し物が　売っています▼
+普通の　お店では　買えない
+品物が　並ぶことが　あります▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-15T10:36:45" />
+				Time="2011-12-06T03:00:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -855,15 +859,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>カフェ　では
-ポケモンと　しょくじが　できます▼
-しょくじを　した　ポケモンが
-よろこんで　なつきやすく　なります▼
-また　しょくじの　こうかに　より
+ポケモンと　食事が　できます▼
+食事を　した　ポケモンが
+喜んで　なつきやすく　なります▼
+また　食事の　効果に　より
 レベルや　つよさの　きそポイントを▽
-あげることが　できます▼</Text>
+上げることが　できます▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-15T10:36:45" />
+				Time="2011-12-06T03:00:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -911,7 +915,7 @@
 なつき　やすく　なります▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-15T10:36:45" />
+				Time="2011-12-06T03:01:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -958,20 +962,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortTown ]で　たてられる
-おみは　７つの　しゅるいが　あります▼
-まちに　しょうたいした　とき
-じゅうにん　やりたい　しゅるいの▽
-おみせが　たてられます▼
-おみせに　ひとを　あんないして
-にんきを　あげると　ランクアップして▽
-おみせは　おおきく　なります▼
-また　だい２ひしょに　はなしかけると
-はってん　しやすい　おみせを▽
+			<Text>[Name:ResortTown ]で　建てられる
+お店は　７つの　種類が　あります▼
+街に　招待した　とき
+住人が　やりたい　種類の▽
+お店が　建てられます▼
+お店に　人を　案内して
+人気を　上げると　ランクアップして▽
+お店は　大きく　なります▼
+また　第２秘書に　話しかけると
+発展　しやすい　お店を▽
 アドバイスして　くれますよ▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T12:34:15" />
+				Time="2011-12-06T03:04:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1021,20 +1025,20 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:ResortTown ]で　たてられる
-おみは　８つの　しゅるいが　あります▼
-まちに　しょうたいした　とき
-じゅうにん　やりたい　しゅるいの▽
-おみせが　たてられます▼
-おみせに　ひとを　あんないして
-にんきを　あげると　ランクアップして▽
-おみせは　おおきく　なります▼
-また　だい２ひしょに　はなしかけると
-はってん　しやすい　おみせを▽
+			<Text>[Name:ResortTown ]で　建てられる
+お店は　８つの　種類が　あります▼
+街に　招待した　とき
+住人が　やりたい　種類の▽
+お店が　建てられます▼
+お店に　人を　案内して
+人気を　上げると　ランクアップして▽
+お店は　大きく　なります▼
+また　第２秘書に　話しかけると
+発展　しやすい　お店を▽
 アドバイスして　くれますよ▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-23T12:35:06" />
+				Time="2011-12-06T03:04:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1075,11 +1079,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おみせに　ついて
-しりたいこと　ありますか？</Text>
+			<Text>お店に　ついて
+知りたいこと　ありますか？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-05T11:15:37" />
+				Time="2011-12-06T03:03:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1160,10 +1164,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここって　なに？</Text>
+			<Text>ここって　何？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-11T09:00:40" />
+				Time="2011-12-06T02:46:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1207,10 +1211,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なにをするの？</Text>
+			<Text>何を　するの？</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:30:46" />
+				User="shimoyamada:W00184"
+				Time="2011-12-06T02:46:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1254,10 +1258,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すてきなまち　って？</Text>
+			<Text>すてきな街　って？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T05:20:29" />
+				User="shimoyamada:W00184"
+				Time="2011-12-06T02:46:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1301,10 +1305,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おきゃくさまをよぶ　には？</Text>
+			<Text>お客様を呼ぶ　には？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T05:20:29" />
+				User="shimoyamada:W00184"
+				Time="2011-12-06T02:47:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1350,8 +1354,8 @@
 			Language="JPN_KANJI">
 			<Text>しょうたいする　って？</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:31:08" />
+				User="shimoyamada:W00184"
+				Time="2011-12-06T03:05:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1397,8 +1401,8 @@
 			Language="JPN_KANJI">
 			<Text>あんないする　って？</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:31:14" />
+				User="shimoyamada:W00184"
+				Time="2011-12-06T03:05:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1442,10 +1446,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おみせ　って？</Text>
+			<Text>お店　って？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-04T05:35:49" />
+				Time="2011-12-06T02:47:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1483,10 +1487,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　へやは　なに？</Text>
+			<Text>この　部屋は　何？</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-23T12:04:20" />
+				Time="2011-12-06T02:47:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1532,8 +1536,8 @@
 			Language="JPN_KANJI">
 			<Text>だいじょうぶ！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-06T11:31:21" />
+				User="shimoyamada:W00184"
+				Time="2011-12-06T02:48:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2674,14 +2678,18 @@
 あたらしい　サービスや
 しなものが　ふえているから▽
 のぞいてみると　いいよ▼
-あと　ポケモンの
-タマゴって　しっているかい？▼
-ポケモンの　タマゴを　ふかを
-たすける　おみせも　たてられるように▽
-なったから　ためして　みてね▼</Text>
+さらに！▼
+きみは　ポケモンの　タマゴって
+しっているかい？▼
+こんど　まちに　『ほいくじょ』という
+タマゴの　ふかを　たすける　おみせが▽
+たてられるように　なったんだ▼
+まちに　あそびに　やってくる
+『ほいくじょ』を　たてたい　ひとを▽　
+しょうたいして　ためしてみてね</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T05:25:12" />
+				User="shimoyamada:W00184"
+				Time="2011-12-06T02:34:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2696,14 +2704,18 @@
 新しい　サービスや
 品物が　増えているから▽
 のぞいてみると　いいよ▼
-あと　ポケモンの
-タマゴって　知っているかい？▼
-ポケモンの　タマゴを　ふかを
-たすける　お店も　建てられるように▽
-なったから　試してて　みてね▼</Text>
+さらに！▼
+きみは　ポケモンの　タマゴって
+知っているかい？▼
+今度　街に　『ほいくじょ』という
+タマゴの　ふかを　助ける　お店が▽
+建てられるように　なったんだ▼
+街に　遊びに　やって来る
+『ほいくじょ』を　建てたい人を▽
+招待して　試してみてね</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T05:25:38" />
+				User="shimoyamada:W00184"
+				Time="2011-12-06T02:35:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2725,7 +2737,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#0080c0</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2755,12 +2767,12 @@
 			<Text>きょうは　きみに
 サプライズ　プレゼントが　あるよ▼
 きみの　がんばりを　
-まちのみんなが　いわって　くれるよ▼
+街の　みんなが　いわって　くれるよ▼
 さあ！
-まちのみんなに　あいさつしに　いこう▼</Text>
+街の　みんなに　あいさつしに　いこう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-27T07:56:44" />
+				User="shimoyamada:W00184"
+				Time="2011-12-06T03:29:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2796,10 +2808,10 @@
 			<Text>きょうは　がんばってる　きみに
 プレゼントが　あるよ▼
 ちょっとした　ものだけど
-これをあげよう▼</Text>
+これを　あげよう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-27T08:04:43" />
+				User="shimoyamada:W00184"
+				Time="2011-12-06T02:45:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2810,10 +2822,10 @@
 			<Text>きょうは　がんばってる　きみに
 プレゼントが　あるよ▼
 ちょっとした　ものだけど
-これをあげよう▼</Text>
+これを　あげよう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-27T08:04:46" />
+				User="shimoyamada:W00184"
+				Time="2011-12-06T02:45:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
