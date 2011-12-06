@@ -15,7 +15,7 @@ require 'tokusei_hash.rb'
 
 #----------- ’è”’è‹`
 HEADSTR = "‚ ‚¢‚¤‚¦‚¨‚©‚«‚­‚¯‚±‚³‚µ‚·‚¹‚»‚½‚¿‚Â‚Ä‚Æ‚È‚É‚Ê‚Ë‚Ì‚Í‚Ð‚Ó‚Ö‚Ù‚Ü‚Ý‚Þ‚ß‚à‚â‚ä‚æ‚ç‚è‚é‚ê‚ë‚í‚ñ"
-FROM_STR = "‚ª‚¬‚®‚°‚²‚´‚¶‚¸‚º‚¼‚¾‚À‚Ã‚Å‚Ç‚Î‚Ñ‚Ô‚×‚²‚Ï‚Ò‚Õ‚Ø‚Û"
+FROM_STR = "‚ª‚¬‚®‚°‚²‚´‚¶‚¸‚º‚¼‚¾‚À‚Ã‚Å‚Ç‚Î‚Ñ‚Ô‚×‚Ú‚Ï‚Ò‚Õ‚Ø‚Û"
   TO_STR = "‚©‚«‚­‚¯‚±‚³‚µ‚·‚¹‚»‚½‚¿‚Â‚Ä‚Æ‚Í‚Ð‚Ó‚Ö‚Ù‚Í‚Ð‚Ó‚Ö‚Ù"
 
 
@@ -26,7 +26,7 @@ hira_array = []
 File.open(ARGV[0], "r"){|readfile|
   readfile.each{|line|
     line.chomp!
-    hira_array << [ line.tr("ƒ@-ƒ“", "‚Ÿ-‚ñ").tr(FROM_STR,TO_STR), line ]
+    hira_array << [ line.tr("ƒ@-ƒ“", "‚Ÿ-‚ñ").tr("ƒ”","‚¤").tr(FROM_STR,TO_STR), line ]
   }
 }
 
@@ -72,7 +72,7 @@ File.open("tokusei_aiueo_header_table.cdat","w"){|file|
       end
     }
     if start_pos != -1 && end_pos == -1 then
-      end_pos = sorted_array.size - 1
+      end_pos = sorted_array.size
     end
     file.printf(" { %3d, %3d },  //%s\n", start_pos + 1, end_pos + 1, code )
   }
