@@ -18,11 +18,6 @@
 #include "savedata/save_tbl.h"
 #include "tr_tool/ex_trainer_def.h"
 
-// グローバル変数
-#ifdef PM_DEBUG
-extern BOOL g_debug_inf_is_presentation;
-#endif
-
 #define TRAINER_FLAG_MAX (32) // 1階に存在するトレーナーの最大数
 
 //=============================================================================
@@ -465,13 +460,11 @@ u8 INFINITYDUNGEON_SAVE_GetAreaStartFloor( u8 area_id )
   s32 start_floor = 0;
 
   // 指定の階数まで加算
-  for( i = 0; i <= area_id; i++ )
+  for( i = 0; i < area_id; i++ )
   {
     start_floor += INFINITYDUNGEON_SAVE_GetFloorNum(i);
   }
-
-  // ゼロオリジン
-  return start_floor - 1;
+  return start_floor;
 }
 
 //----------------------------------------------------------------------------
