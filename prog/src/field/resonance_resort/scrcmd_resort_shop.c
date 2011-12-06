@@ -24,6 +24,7 @@
 #include "message.naix"
 #include "script_message.naix"
 #include "gamesystem/g_power.h"  //  GPOWER_Calc_Sale
+#include "system/sdkdef.h"
 
 #include "gamesystem/game_data.h"
 #include "gamesystem/msgspeed.h"
@@ -1055,7 +1056,6 @@ static void sort_shop_main( SHOP_BUY_APP_WORK *wk )
         wk->cp_select = &wk->lineup[ret];
         BmpMenuList_PosGet( wk->menuList, &wk->insert_list, &wk->insert_cursor );
         SortPeople_Cursor_SetPos( wk );
-        GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_CURSOR_RED], TRUE );
       }
     }
   }
@@ -2295,6 +2295,7 @@ static void obj_set( SHOP_BUY_APP_WORK *wk, const GFL_CLWK_DATA *cp_item_adta )
       wk->clact_res[0][ SHOP_OBJ_RES_CELL ], 
       &shop_obj_param[6], CLSYS_DEFREND_MAIN, wk->heapId );
   GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_CURSOR_RED], FALSE );
+  
 
   // 矢印は非表示
   GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_ARROW_UP],   FALSE );
@@ -3207,7 +3208,6 @@ static void SortPeople_move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode)
     GF_ASSERT( sbw->cp_select != NULL );
 
     SortPeople_Cursor_SetPos( sbw );
-    GFL_CLACT_WK_SetDrawEnable( sbw->ClactWork[SHOP_OBJ_CURSOR_RED], TRUE );
   }
   else
   {
@@ -3229,9 +3229,38 @@ static void SortPeople_Cursor_SetPos( SHOP_BUY_APP_WORK *wk )
 
   clpos.x = shop_obj_param[0].pos_x; 
   clpos.y = shop_obj_param[0].pos_y+insert_y;
+
   //以前選択したものの位置
   GFL_CLACT_WK_SetPos( wk->ClactWork[SHOP_OBJ_CURSOR_RED], &clpos, CLSYS_DEFREND_MAIN );
 
+  //NAGI_Printf( "x%d y%d\n", clpos.x, clpos.y );
+
+  //場所によってカーソル形状を変える
+  if( clpos.y == 6 )
+  {
+    //リストの上にきた
+    GFL_CLACT_WK_SetAnmSeq( wk->ClactWork[SHOP_OBJ_CURSOR_RED], 3 );
+  }
+  else if( clpos.y == 134 )
+  {
+    //リスト下にきた
+    GFL_CLACT_WK_SetAnmSeq( wk->ClactWork[SHOP_OBJ_CURSOR_RED], 2 );
+  }
+  else
+  {
+    //真ん中
+    GFL_CLACT_WK_SetAnmSeq( wk->ClactWork[SHOP_OBJ_CURSOR_RED], 1 );
+  }
+
+  //範囲内なら描画
+  if( 0 < clpos.y && clpos.y < 192 )
+  {
+    GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_CURSOR_RED], TRUE );
+  }
+  else
+  {
+    GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_CURSOR_RED], FALSE );
+  }
 }
 static void SecretaryList_Decide( SHOP_BUY_APP_WORK *wk, int type, int id )
 {

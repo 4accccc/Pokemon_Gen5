@@ -471,6 +471,8 @@ BOOL debugMenu_SyachiCompatible( DEBUG_MENU_EVENT_WORK * wk )
   if(GFL_NET_IsInit() == TRUE){
     DEBUG_GFL_NET_AloneTestCodeReflect();
   }
+
+  return TRUE;
 }
 
 #endif  //  PM_DEBUG
