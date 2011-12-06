@@ -1665,7 +1665,9 @@ static int MainSeq_ArrangePokeGetInit( BOX2_SYS_WORK * syswk )
 {
   switch( syswk->app->sub_seq ){
   case 0:
-    syswk->box_mv_pos = syswk->tray;  // 現在参照しているボックス
+    if( BOX2BGWFRM_CheckBoxMoveFrm( syswk->app->wfrm ) == FALSE ){
+	    syswk->box_mv_pos = syswk->tray;  // 現在参照しているボックス
+		}
     // セレクトボタン
 		if( syswk->mv_cnv_mode == 1 && syswk->mv_cnv_menu == 0 ){ // 掴んだ状態
       syswk->get_tray = BOX2MAIN_GETPOS_NONE;
@@ -2344,7 +2346,9 @@ static int MainSeq_ArrangeMultiPokeGetInit( BOX2_SYS_WORK * syswk )
 {
   switch( syswk->app->sub_seq ){
   case 0:
-    syswk->box_mv_pos = syswk->tray;  // 現在参照しているボックス
+    if( BOX2BGWFRM_CheckBoxMoveFrm( syswk->app->wfrm ) == FALSE ){
+	    syswk->box_mv_pos = syswk->tray;  // 現在参照しているボックス
+		}
 /*
     // セレクトボタン
     if( syswk->mv_cnv_mode == 2 ){
@@ -3856,7 +3860,9 @@ static int MainSeq_ArrangePartyMultiPokeGetBoxListChange( BOX2_SYS_WORK * syswk 
 
   case 1:
     PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
-    syswk->box_mv_pos = syswk->tray;  // 現在参照しているボックス
+    if( BOX2BGWFRM_CheckBoxMoveFrm( syswk->app->wfrm ) == FALSE ){
+	    syswk->box_mv_pos = syswk->tray;  // 現在参照しているボックス
+		}
     syswk->app->sub_seq++;
     return BoxMoveFrmInSet( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_BOXLIST_CHANGE );
 
@@ -4695,7 +4701,9 @@ static int MainSeq_ArrangePartyPokeGetBoxListChange( BOX2_SYS_WORK * syswk )
 
   case 1:
     PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
-    syswk->box_mv_pos = syswk->tray;  // 現在参照しているボックス
+    if( BOX2BGWFRM_CheckBoxMoveFrm( syswk->app->wfrm ) == FALSE ){
+	    syswk->box_mv_pos = syswk->tray;  // 現在参照しているボックス
+		}
     syswk->app->sub_seq++;
     return BoxMoveFrmInSet( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_BOXLIST_CHANGE );
 
@@ -8626,7 +8634,9 @@ static int MainSeq_BoxThemaJumpInit( BOX2_SYS_WORK * syswk )
     return VFuncSet( syswk, BOX2MAIN_VFuncPokeMenuMove, BOX2SEQ_MAINSEQ_BOXTHEMA_JUMP_INIT );
 
   case 1:
-    syswk->box_mv_pos = syswk->tray;  // 現在参照しているボックス
+    if( BOX2BGWFRM_CheckBoxMoveFrm( syswk->app->wfrm ) == FALSE ){
+	    syswk->box_mv_pos = syswk->tray;  // 現在参照しているボックス
+		}
     syswk->app->sub_seq++;
     PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
     return BoxMoveFrmInSet( syswk, BOX2SEQ_MAINSEQ_BOXTHEMA_JUMP_INIT );
