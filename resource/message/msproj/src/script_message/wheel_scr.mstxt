@@ -79,10 +79,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>フーン……
-いい　どきょう　してるじゃん</Text>
+いい　どきょう　してんじゃん▼
+</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T08:22:44" />
+				Time="2011-12-07T09:49:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -91,10 +92,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>フーン……
-いい　度胸してるじゃん</Text>
+いい　度胸してんじゃん▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T08:22:55" />
+				Time="2011-12-07T09:49:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -137,11 +138,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あっそー　アンタ　にげるんだ？
-おとこのくせに　なさけないわねー</Text>
+			<Text>ダッセー！　アンタ　にげるんだ？
+おとこのくせに　マジなさけないー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T09:07:35" />
+				Time="2011-12-07T09:50:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -149,11 +150,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あっそー　アンタ　逃げるんだ？
-男のくせに　情けないわねー</Text>
+			<Text>ダッセー！　アンタ　逃げるんだ？
+男のくせに　マジ情けないー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T09:07:54" />
+				Time="2011-12-07T09:50:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -197,15 +198,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ウキー！！　なんで　まけんのよ！！
-つーかさ　ますます　ムカつくわ！▼
-だったら　つぎは　どきょうだめし　よ！
+つーかさ　ますます　ムカつくー！▼
+だったら　つぎは　どきょうだめしよ！
 オンボロで　ゆうめいな▽
 この　かんらんしゃに　のって▽
 さきに　ビビッた　ほうが　まけ！▽
 ホラホラ！　いくわよっ！！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T09:08:38" />
+				Time="2011-12-07T10:34:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -215,14 +216,14 @@
 			Language="JPN_KANJI">
 			<Text>ウキー！！　何で　負けんのよ！！
 つーかさ　ますます　ムカつくわ！▼
-だったら　次は　度胸試し　よ！
+だったら　次は　度胸試しよ！
 オンボロで　有名な▽
 この　観覧車に　乗って▽
 先に　ビビッたほうが　負け！▽
 ホラホラ！　行くわよっ！！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T09:08:34" />
+				Time="2011-12-07T10:26:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -410,10 +411,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>こんどは　ぜってー　まけねーし！
-こうかいすると　いいわ　マジで！</Text>
+ツブす！　マジで　ツブすっ！！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T09:17:37" />
+				Time="2011-12-07T09:51:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -422,10 +423,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>今度は　ぜってー　負けねーし！
-後悔すると　いいわ　マジで！</Text>
+ツブす ！　マジで　ツブすっ！！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T09:17:45" />
+				Time="2011-12-07T09:51:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -544,10 +545,10 @@
 つーかさ　やっぱ　きに　いらない！！
 まえより　もっと　オンボロに　なった▽
 かんらんしゃで　どうきょうだめしよ！▽
-こんどは　ぜったい　ビビんないし！</Text>
+こんどは　ぜったい　ビビんないし！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T09:56:31" />
+				Time="2011-12-07T09:51:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -562,10 +563,10 @@
 つーかさ　やっぱ　気に　入らない！！
 前より　もっと　オンボロに　なった▽
 観覧車で　度胸試しよ！▽
-今度は　絶対　ビビんないし！</Text>
+今度は　絶対　ビビんないし！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T09:56:36" />
+				Time="2011-12-07T09:51:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -862,10 +863,10 @@
 まだまだ　って　ことか……▼
 ……まっ　それは　いいや！
 せっかく　こうして　しりあえたんだし▽
-ここの　かんらんしゃ　のってこうぜ！</Text>
+ここの　かんらんしゃ　のってこうぜ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T09:57:24" />
+				Time="2011-12-07T09:52:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -881,10 +882,10 @@
 まだまだ　って　ことか……▼
 ……まっ　それは　いいや！
 せっかく　こうして　知り合えたんだし▽
-ここの　観覧車　乗ってこうぜ！</Text>
+ここの　観覧車　乗ってこうぜ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T07:28:27" />
+				Time="2011-12-07T09:52:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1063,11 +1064,11 @@
 			Language="JPN">
 			<Text>オオ　マジで？　サンキュー……
 やっぱ　オマエ　いいヤツだな……▼
-じゃ　いくぜ！
-オマエも　ほんきで　きてくれよ！！</Text>
+じゃ　マジで　いくぜ　オレ！
+オマエも　ほんきで　きてくれよ！！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T02:36:14" />
+				Time="2011-12-07T09:53:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1077,11 +1078,11 @@
 			Language="JPN_KANJI">
 			<Text>オオ　マジで？　サンキュー……
 やっぱ　オマエ　いいヤツだな……▼
-じゃ　いくぜ！
+じゃ　マジで　いくぜ　オレ！
 オマエも　本気で　きてくれよ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T02:36:21" />
+				Time="2011-12-07T09:53:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1204,10 +1205,10 @@
 なんでも　ない　こっちのことさ▼
 それよりさ　かんらんしゃ　のろうぜ！
 なんかさ　ながめの　いいとこで▽
-スカッとしたい　きぶん　なんだ！</Text>
+スカッとしたい　きぶん　なんだ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T02:37:01" />
+				Time="2011-12-07T09:53:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1223,10 +1224,10 @@
 何でも　ない　こっちの　ことさ▼
 それよりさ　観覧車　乗ろうぜ！
 何か　眺めの　いいとこで▽
-スカッとしたい　気分なんだ！</Text>
+スカッとしたい　気分なんだ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T10:30:03" />
+				Time="2011-12-07T09:53:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1281,16 +1282,17 @@
 みてたら　オレも　なんか▽
 やんねーと！　って　おもってさ▽
 いまの　ダンスチーム　はじめたんだ▼
-ああ　ゴメンな　[Name:TrainerName Idx="0" ]が
-しらない　ヤツの　はなしなんかして▼
-たださ　なんか　オマエ　みてると
-ソイツを　おもいだすんだよね▽
+あっ……　ゴメン……▼
+[Name:TrainerName Idx="0" ]と　いるのに
+しらないヤツの　はなしなんかして……▼
+……ただな　なんか　オマエ　みてると
+ソイツを　おもいだすんだよ……▽
 スッゲー　つよいとこも　ふくめてさ！▼
 じゃサンキュー！　また　あそぼーぜ！
 バイバイ！　[Name:TrainerName Idx="0" ]！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T02:38:06" />
+				Time="2011-12-07T10:39:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1307,16 +1309,17 @@
 みてたらさ　オレも　何か▽
 やんねーと！　って　思って▽
 今の　ダンスチーム　始めたんだ▼
-ああ　ゴメンな　[Name:TrainerName Idx="0" ]が
-知らないヤツの　話なんかして▼
-たださ　何か　オマエ　みてると
-ソイツを　思い出すんだ▽
+あっ……　ゴメン……▼
+[Name:TrainerName Idx="0" ]と　いるのに
+知らないヤツの　話なんかして……▼
+……ただな　何か　オマエ　みてると
+ソイツを　思い出すんだよ……▽
 スッゲー　強いとこも　ふくめてさ！▼
 じゃサンキュー！　また　遊ぼーぜ！
 バイバイ！　[Name:TrainerName Idx="0" ]！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T02:37:44" />
+				Time="2011-12-07T10:39:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2320,7 +2323,7 @@
 しゃしん　とりはじめたりして▼
 クセっていうか　ボクは　ああやって
 きれいな　ものを　フィルムに▽
-のこすのが　すきなんだ▼
+のこすのが　すきなんだ……▼
 ……キミくらいの　ころは
 プロのカメラマンに　なりたくてさ▽
 いつも　そらを　ながめて▽
@@ -2333,7 +2336,7 @@
 ヒマだったら　また　おいでよ▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T06:19:14" />
+				Time="2011-12-07T10:46:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2345,7 +2348,7 @@
 写真　撮りだしたりしてさ▼
 クセっていうか　ボクは　ああやって
 きれいな　ものを　フィルムに▽
-残すのが　スキなんだ▼
+残すのが　スキなんだ……▼
 ……キミくらいの　ころは
 プロのカメラマンに　なりたくてさ▽
 いつも　空を　眺めて▽
@@ -2358,7 +2361,7 @@
 ヒマだったら　また　おいでよ▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T06:19:19" />
+				Time="2011-12-07T10:46:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2591,13 +2594,13 @@
 キミを　とってみたい　って▼
 かいしゃに　つとめるように　なってから
 まじめに　しゃしんを　とろう　なんて▽
-おもうことも　なくなってからさ▽
+おもうことも　なくなってたからさ▽
 じぶんでも　いがいで……▼
 ……それじゃあ　つぎに　いこう！
 こんどは　かんらんしゃに　のるよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T06:39:30" />
+				Time="2011-12-07T10:48:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2614,13 +2617,13 @@
 キミを　撮ってみたい　って▼
 会社に　勤めるように　なってから
 真面目に　写真を　撮ろう　って▽
-思うこと　なくなってからさ▽
+思うこと　なくなってたからさ▽
 自分でも　意外で……▼
 ……それじゃあ　次に　行こう！
 今度は　観覧車に　乗るよ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T06:39:33" />
+				Time="2011-12-07T10:48:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4115,13 +4118,13 @@ OL</Text>
 こんなに　さむい　まふゆ　にさ
 そんな　すずしげ　ファッションって▽
 かなりの　ロッキン　ボーイ　じゃん？▼
-でもサ　この　アタイより　ロッキンな
+でもサ　このアタイより　ロッキンな
 ヤツなんて　そんざい　しないのサ！▼
 だから　どっちが　ロッキンな　ヤツか
 バトルで　きめる　ってことで　ＯＫ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T10:42:03" />
+				Time="2011-12-07T10:14:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4133,13 +4136,13 @@ OL</Text>
 こんなに　寒い　真冬にさ
 そんな　涼しげファッション　って▽
 かなりの　ロッキン　ボーイ　じゃん？▼
-でもサ　この　アタイより　ロッキンな
+でもサ　このアタイより　ロッキンな
 ヤツなんて　そんざい　しないのサ！▼
 だから　どっちが　ロッキンな　ヤツか
 バトルで　決める　ってことで　ＯＫ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T10:41:56" />
+				Time="2011-12-07T10:14:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4184,10 +4187,10 @@ OL</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>ＯＫ　いくわよ　ロッキン　ボーイ！
-アタイの　ビートで　しびちゃいナ！</Text>
+アタイの　ビートで　しびちゃいナ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T06:41:14" />
+				Time="2011-12-07T09:36:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4196,10 +4199,10 @@ OL</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ＯＫ　いくわよ　ロッキン　ボーイ！
-アタイの　ビートで　しびちゃいナ！</Text>
+アタイの　ビートで　しびちゃいナ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T06:41:18" />
+				Time="2011-12-07T09:36:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4302,18 +4305,18 @@ OL</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>フッフー！　やるじゃん　アンタ！▼
-ほとばしる　アツアツの　アンタの
+ほとばしってる　アツアツな　アンタの
 ロッキンに　アタイの　ハートも▽
 ビンビン　かんじちゃったワ！▼
-その　おれいに　アタイの　うたを▽
+その　おれいに　アタイの　うたを
 プレゼントして　あげちゃう！▼
 でもネ　ストップ　ここじゃ　ダメ！
-アタイの　うたは　プレミアム▽
+アタイの　うたは　プレミアム！▽
 アンタだけに　きかせて　ア・ゲ・ル▽
-さあさあ！　こっちに　カモン！</Text>
+さあさあ！　こっちに　カモン！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T09:11:53" />
+				Time="2011-12-07T10:14:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4322,18 +4325,18 @@ OL</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>フッフー！　やるじゃん　アンタ！▼
-ほとばしる　アツアツの　アンタの
+ほとばしってる　アツアツな　アンタの
 ロッキンに　アタイの　ハートも▽
 ドクドク　感じちゃったワ！▼
-お礼に　アタイの　歌を▽
+そのお礼に　アタイの　歌を
 プレゼントして　あげちゃう！▼
 でもネ　ストップ　ここじゃ　ダメ！
-アタイの　うたは　プレミアム▽
+アタイの　うたは　プレミアム！▽
 アンタだけに　きかせて　ア・ゲ・ル▽
-さあさあ！　こっちに　カモン！</Text>
+さあさあ！　こっちに　カモン！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T09:11:47" />
+				Time="2011-12-07T10:14:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4379,11 +4382,12 @@ OL</Text>
 			<Text>いかがかしら？　ロッキンボーイ！▼
 ロッキンな　アタイの　おんがくは
 ヤバいくらい　ロッキンでしょ？▼
-こいに　やぶれた　おんなの
-ぬぐえぬ　ぼじょうを　こおりタイプの▽
+こいに　やぶれた　かなしい　おんなの
+ぬぐえぬ　ぼじょうを　こおりタイプな▽
 ＥＮＫＡスタイルで　ドロップする▽
-せつなさの　マスターピースよ！！▼
-そして　さいごに　こくちよ！▼
+せつなさの　マスターピースさ！！▼
+って　かんじで　きょうは　ここまで！
+さいごに　アタイから　おしらせよ！▼
 アタイは　ただいま
 ワールド　ろじょう　ライブツアーの▽
 まっさいちゅう！▼
@@ -4391,7 +4395,7 @@ OL</Text>
 アンタの　アンコール　まってるゼ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T09:13:52" />
+				Time="2011-12-07T10:16:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4402,11 +4406,12 @@ OL</Text>
 			<Text>いかがかしら？　ロッキンボーイ！▼
 ロッキンな　アタイの　音楽は
 ヤバいくらい　ロッキンでしょ？▼
-恋に　破れた　女の
-拭えぬ　慕情を　こおりタイプの▽
+恋に　破れた　悲しい　女の
+ぬぐえぬ　慕情を　こおりタイプな▽
 ＥＮＫＡスタイルで　ドロップする▽
-せつなさの　マスターピースよ！！▼
-そして　最後に　告知よ！▼
+せつなさの　マスターピースさ！！▼
+って　感じで　今日は　ここまで！
+最後に　アタイから　告知よ！▼
 アタイは　ただ今
 ワールド　路上　ライブツアーの▽
 真っ最中！▼
@@ -4414,7 +4419,7 @@ OL</Text>
 アンタの　アンコール　待ってるゼ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T09:15:31" />
+				Time="2011-12-07T10:17:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4532,10 +4537,11 @@ OL</Text>
 			Language="JPN">
 			<Text>ありがとう　ございます……▼
 では　えんりょ　なさらず
-おもいきって　おねがいします</Text>
+ロッキン……▽
+いえ　おもいきり　おねがいします▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T07:05:28" />
+				Time="2011-12-07T09:44:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4545,10 +4551,11 @@ OL</Text>
 			Language="JPN_KANJI">
 			<Text>ありがとう　ございます……▼
 では　遠慮なさらず
-思い切って　お願いします</Text>
+ロッキン……▽
+いえ　思い切って　お願いします▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T07:05:29" />
+				Time="2011-12-07T09:45:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4594,12 +4601,12 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そうですか……
+			<Text>ああ　そうですか……
 おいそがしいのに　ひきとめてしまい▽
 もうしわけ　ありませんでした……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T07:30:51" />
+				Time="2011-12-07T10:21:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4607,12 +4614,12 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そうですか……
+			<Text>ああ　そうですか……
 お忙しいのに　引き止めてしまい▽
 申し訳　ありませんでした……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T07:31:11" />
+				Time="2011-12-07T10:21:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4670,10 +4677,10 @@ OL</Text>
 でも　それが……▼
 ……いや　そのまえに　[Name:TrainerName Idx="0" ]さん
 もういちど　わたしの　うたを▽
-きいて　ください……</Text>
+きいて　ください……▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T09:18:48" />
+				Time="2011-12-07T09:45:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4693,10 +4700,10 @@ OL</Text>
 でも　それが……▼
 ……いや　その前に　[Name:TrainerName Idx="0" ]さん
 もう一度　私の　歌を▽
-聞いて　ください……</Text>
+聞いて　ください……▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T09:19:35" />
+				Time="2011-12-07T09:45:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4742,10 +4749,10 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どうでした　わたしの　うた……▼
-……　……　……　……▼
-……さっきの　はなしの　つづき……
-わたし　せいじゅんは　アイドルとして▽
+			<Text>どうでした？　わたしの　うた……▼
+……　……　……　……
+……さっきの　はなしの　つづき▼
+わたし　せいじゅんはアイドルとして▽
 デビューすることに　なりそうなんです▼
 うたも　きいて　もらったんだけど
 いまどき　ウケない　って……▼
@@ -4760,12 +4767,12 @@ OL</Text>
 でも　[Name:TrainerName Idx="0" ]……
 アンタの　まえでは　ときどき▽
 ほんとうの　アタイで　いさせて！▽
-あのうたも　アンタにだけ　うたう……▼
+あのうたも　アンタにだけ　うたうわ……▼
 だから　[Name:TrainerName Idx="0" ]！
 また　ぜったい　あいに　きてよネ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T09:24:25" />
+				Time="2011-12-07T10:22:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4773,9 +4780,9 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どうでした　私の　歌……▼
-……　……　……　……▼
-……さっきの　話の　続き……
+			<Text>どうでした？　私の　歌……▼
+……　……　……　……
+……さっきの　話の　続き▼
 私　清純派アイドルとして▽
 デビューすることに　なりそうなんです▼
 歌も　聴いて　もらったんだけど
@@ -4791,12 +4798,12 @@ OL</Text>
 でも　[Name:TrainerName Idx="0" ]……
 アンタの　前では　時々▽
 本当の　アタイで　いさせて！▽
-あの歌も　アンタにだけ　歌う……▼
+あの歌も　アンタにだけ　歌うわ……▼
 だから　[Name:TrainerName Idx="0" ]！
 また　絶対　あいに　来てよネ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T09:24:45" />
+				Time="2011-12-07T10:22:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

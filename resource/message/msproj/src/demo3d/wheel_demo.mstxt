@@ -229,11 +229,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……　……　……ギシ
+			<Text>……　……　……ギシッ
 ……ギシッ！　ギシギシッ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T09:26:52" />
+				Time="2011-12-07T10:37:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -241,11 +241,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……　……　……ギシ
+			<Text>……　……　……ギシッ
 ……ギシッ！　ギシギシッ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T09:27:00" />
+				Time="2011-12-07T10:37:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -281,11 +281,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キャーッ！　なにコレ　こわれちゃう！
-アタシ　もうダメッ！　たすけてーっ！！</Text>
+			<Text>キャーッ！　なにコレ　こわれちゃう！！
+アタシ　もうダメッ！　こわれるーッ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T08:39:50" />
+				Time="2011-12-07T09:58:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -294,10 +294,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>キャーッ！　何コレ　壊れちゃう！
-アタシ　もうダメッ！　助けてーっ！！</Text>
+アタシ　もうダメッ！　壊れるーッ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T08:40:08" />
+				Time="2011-12-07T09:57:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -334,10 +334,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>オー！　のぼってる　のぼってる！
-なんか　なつかしーな……</Text>
+なんか……　なつかしーな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T08:44:28" />
+				Time="2011-12-07T09:58:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -346,10 +346,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>オー！　昇ってる　昇ってる！
-何か　なつかしーな……</Text>
+何か……　なつかしーな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T08:44:46" />
+				Time="2011-12-07T09:58:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -401,7 +401,7 @@
 スッゲー　きれいだぜ　って　あっ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T08:44:02" />
+				Time="2011-12-07T09:58:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -437,11 +437,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あ……　そっか……
+			<Text>ああ……　そっか……
 そういや　そうだったよな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T10:59:26" />
+				Time="2011-12-07T09:58:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -449,11 +449,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あ……　そっか……
+			<Text>ああ……　そっか……
 そういや　そうだったよな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T10:59:32" />
+				Time="2011-12-07T09:58:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1143,11 +1143,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハア～　あられェ～　ゆきがくれェ～
-ハアァ～　きえてしまったァ　あなたァ～</Text>
+			<Text>ハア～　あられェ～　ィゆきがくれェ～
+ハアァ～　いってしまったァ　あなたァ～</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T11:50:42" />
+				Time="2011-12-07T10:00:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1155,11 +1155,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハア～　あられェ～　雪隠れェ～
-ハアァ～　消えてしまったァ　貴方ァ～</Text>
+			<Text>ハア～　あられェ～　ィ雪隠れェ～
+ハアァ～　行ってしまったァ　貴方ァ～</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T11:50:25" />
+				Time="2011-12-07T10:00:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1259,11 +1259,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おいかけてェ～　なきぬれてォ～
+			<Text>アァ　おいかけてェ～　なきぬれてォ～
 まふゆのォ～　ユキメノコォォォ～ン～</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T13:11:30" />
+				Time="2011-12-07T10:01:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1271,11 +1271,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>追いかけてェ～　泣きぬれてォ～
+			<Text>アァ　追いかけてェ～　泣きぬれてォ～
 真冬のォ～　ユキメノコォォォ～ン～</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T13:11:45" />
+				Time="2011-12-07T10:02:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
