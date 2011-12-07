@@ -106,7 +106,7 @@ class CPokeFilter
   def initialize f_path
     @fpath_base = f_path
     
-    @monsno_max = $monsno_hash.fetch('ÇΩÇ‹Ç≤')
+    @monsno_max = $monsno_hash.fetch('É^É}ÉS')
     @monsno_end = @monsno_max-1
 
     @data = Array.new()
