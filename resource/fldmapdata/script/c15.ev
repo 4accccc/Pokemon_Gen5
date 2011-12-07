@@ -492,6 +492,7 @@ EVENT_START   ev_scene_c15_bonus_event_01
   //=================================================
   //♀MAIDの前に移動
   _OBJ_ANIME( C15_PWSTAFF_01, anm_bonus_event_02_s )
+  _TIME_WAIT(4)
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_02_p )
   _OBJ_ANIME_WAIT()
 
@@ -503,6 +504,7 @@ EVENT_START   ev_scene_c15_bonus_event_01
   //=================================================
   //♂PWMOJIの前に移動
   _OBJ_ANIME( C15_PWSTAFF_01, anm_bonus_event_03 )
+  _TIME_WAIT(4)
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_03 )
   _OBJ_ANIME_WAIT()
   
@@ -514,6 +516,7 @@ EVENT_START   ev_scene_c15_bonus_event_01
   //=================================================
   // ♂BACKPACKERMの前に移動
   _OBJ_ANIME( C15_PWSTAFF_01, anm_bonus_event_04 )
+  _TIME_WAIT(4)
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_04 )
   _OBJ_ANIME_WAIT()
 
@@ -525,6 +528,7 @@ EVENT_START   ev_scene_c15_bonus_event_01
   //=================================================
   // ♀RGLEADER5の前に移動
   _OBJ_ANIME( C15_PWSTAFF_01, anm_bonus_event_05_s )
+  _TIME_WAIT(2)
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_05_p )
   _OBJ_ANIME_WAIT()
 
@@ -536,6 +540,7 @@ EVENT_START   ev_scene_c15_bonus_event_01
   //=================================================
   //♀OLの前に移動
   _OBJ_ANIME( C15_PWSTAFF_01, anm_bonus_event_06 )
+  _TIME_WAIT(2)
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_06 )
   _OBJ_ANIME_WAIT()
 
@@ -547,6 +552,7 @@ EVENT_START   ev_scene_c15_bonus_event_01
   //=================================================
   //♂GENTLEMAN の前に移動
   _OBJ_ANIME( C15_PWSTAFF_01, anm_bonus_event_07 )
+  _TIME_WAIT(2)
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_07 )
   _OBJ_ANIME_WAIT()
 
@@ -558,6 +564,7 @@ EVENT_START   ev_scene_c15_bonus_event_01
   //=================================================
   // ♂PWOWNERの前に移動
   _OBJ_ANIME( C15_PWSTAFF_01, anm_bonus_event_08 )
+  _TIME_WAIT(4)
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_bonus_event_08 )
   _OBJ_ANIME_WAIT()
 
@@ -568,6 +575,7 @@ EVENT_START   ev_scene_c15_bonus_event_01
 
   // 横にどける
   _OBJ_ANIME( C15_PWSTAFF_01, anm_bonus_event_09 )
+  _TIME_WAIT(4)
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_u )
   _OBJ_ANIME_WAIT()
 
