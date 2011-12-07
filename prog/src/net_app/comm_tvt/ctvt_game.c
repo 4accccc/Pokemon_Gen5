@@ -4272,7 +4272,16 @@ static BOOL game_update_seq_score( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork
     }
 
     // ME再生 ファンファーレ
-    PMSND_PlayBGM( SEQ_ME_LCG_02 );
+    // 1位とそれ以外で違う
+    if( gameWork->p_plate[selfId]->rank == 1 )
+    {
+      PMSND_PlayBGM( SEQ_ME_LCG_02 );
+    }
+    else
+    {
+      PMSND_PlayBGM( SEQ_ME_LCG_04 );
+    }
+
     gameWork->sub_seq = SUB_SEQ_HIDE_ANIME;
     break;
   case SUB_SEQ_HIDE_ANIME:   // 隠すプレートアニメ
