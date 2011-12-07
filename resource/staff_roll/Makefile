@@ -7,17 +7,34 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= hiro_nakamura toyama ohkubo_tomohiko
+USERS	= hiro_nakamura toyama ohkubo_tomohiko ichiraku_katsuhiko
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
 targetname = staff_roll
 
+# GMMファイル
+STAFF_LIST_GMMFILE_JP = staff_list_jp.gmm
+STAFF_LIST_GMMFILE_ENG = staff_list_eng.gmm
+# MSTXTファイル
+STAFF_LIST_MSTXTFILE_JP = src/staff_list_jp.mstxt
+STAFF_LIST_MSTXTFILE_ENG = src/staff_list_eng.mstxt
+
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
 #------------------------------------------------------------------------------
 TARGETDIR = $(PROJECT_ARCDIR)
+
+GMMDIR	= ../../resource/message/src/
+
+#------------------------------------------------------------------------------
+#※gmm->mstxt変換ツール
+#------------------------------------------------------------------------------
+UPDATEWITHGMM 	= ../../tools/message/UpdateWithGmm.bat
+TYPE_MSTXTFILE = src/trtype.mstxt
+MSPROJDIR	= ../message/msproj/
+
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -98,7 +115,7 @@ CSVCVTR	= $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	subdir $(TARGETDIR)/$(targetname).narc $(MSPROJDIR)$(STAFF_LIST_MSTXTFILE_JP) $(MSPROJDIR)$(STAFF_LIST_MSTXTFILE_ENG)
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -121,8 +138,13 @@ $(targetname).narc: WBStaffList.xls arclist.txt $(lobjects) $(gobjects) $(sobjec
 	nnsarc -c -l -n -i $(targetname) -S arclist.txt
 	$(NAIXCUT) $(targetname).naix
 
-	$(COPY) staff_list_jp.gmm ../message/src
-	$(COPY) staff_list_eng.gmm ../message/src
+# gmm -> mstxt 変換
+$(MSPROJDIR)$(STAFF_LIST_MSTXTFILE_JP) : $(STAFF_LIST_GMMFILE_JP)
+	$(UPDATEWITHGMM) . $(STAFF_LIST_GMMFILE_JP) $(STAFF_LIST_MSTXTFILE_JP)
+
+$(MSPROJDIR)$(STAFF_LIST_MSTXTFILE_ENG) : $(STAFF_LIST_GMMFILE_ENG)
+	$(UPDATEWITHGMM) . $(STAFF_LIST_GMMFILE_ENG) $(STAFF_LIST_MSTXTFILE_ENG)
+
 endif
 
 #------------------------------------------------------------------------------
