@@ -5781,21 +5781,13 @@
 		<language name="JPN" width="256">ME-LCG-03</language>
 		<language name="JPN_KANJI" width="256">ME-LCG-03</language>
 	</row>
-	<row id="msg_seq_me_md_hint">
-		<language name="JPN" width="256">ME-MD-HINT</language>
-		<language name="JPN_KANJI" width="256">ME-MD-HINT</language>
-	</row>
-	<row id="msg_seq_me_md_get">
-		<language name="JPN" width="256">ME-MD-GET</language>
-		<language name="JPN_KANJI" width="256">ME-MD-GET</language>
+	<row id="msg_seq_me_lcg_04">
+		<language name="JPN" width="256">ME-LCG-04</language>
+		<language name="JPN_KANJI" width="256">ME-LCG-04</language>
 	</row>
 	<row id="msg_seq_me_md_fan01">
 		<language name="JPN" width="256">ME-MD-FAN01</language>
 		<language name="JPN_KANJI" width="256">ME-MD-FAN01</language>
-	</row>
-	<row id="msg_seq_me_md_fan02">
-		<language name="JPN" width="256">ME-MD-FAN02</language>
-		<language name="JPN_KANJI" width="256">ME-MD-FAN02</language>
 	</row>
 	<row id="msg_seq_me_md_fan03">
 		<language name="JPN" width="256">ME-MD-FAN03</language>
@@ -5837,10 +5829,18 @@
 		<language name="JPN" width="256">ME-ZUKAN-02</language>
 		<language name="JPN_KANJI" width="256">ME-ZUKAN-02</language>
 	</row>
+	<row id="msg_seq_me_pokewood">
+		<language name="JPN" width="256">ME-POKEWOOD</language>
+		<language name="JPN_KANJI" width="256">ME-POKEWOOD</language>
+	</row>
 	<row id="msg_seq_me_end">
 		<language name="JPN" width="256">ME-END</language>
 		<language name="JPN_KANJI" width="256">ME-END</language>
 	</row>
+          <row id="msg_seq_1348">
+          <language name="JPN" width="256">dmy</language>
+          <language name="JPN_KANJI" width="256">dmy</language>
+          </row>
           <row id="msg_seq_1349">
           <language name="JPN" width="256">dmy</language>
           <language name="JPN_KANJI" width="256">dmy</language>
