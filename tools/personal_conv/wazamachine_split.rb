@@ -120,6 +120,10 @@ class PARA
     WEIGHT
     WAZA_OSHIE
     NO_JUMP
+    WAZA_OSHIE_RED
+    WAZA_OSHIE_BLUE
+    WAZA_OSHIE_YELLOW
+    WAZA_OSHIE_GREEN
     MAX
   ]
 end
@@ -238,6 +242,92 @@ end
     "りゅうせいぐん",
   ]
 
+  waza_oshie_red = [
+  "むしくい",
+  "ほしがる",
+  "いかりのまえば",
+  "ダブルチョップ",
+  "シグナルビーム",
+  "アイアンヘッド",
+  "タネばくだん",
+  "ドリルライナー",
+  "とびはねる",
+  "けたぐり",
+  "ダストシュート",
+  "さわぐ",
+  "かみなりパンチ",
+  "ほのおのパンチ",
+  "れいとうパンチ",
+  ]
+  waza_oshie_blue = [
+  "マジックコート",
+  "とおせんぼう",
+  "だいちのちから",
+  "イカサマ",
+  "じゅうりょく",
+  "でんじふゆう",
+  "てっぺき",
+  "とっておき",
+  "ばかぢから",
+  "エレキネット",
+  "こごえるかぜ",
+  "アクアテール",
+  "あくのはどう",
+  "しねんのずつき",
+  "りゅうのはどう",
+  "ハイパーボイス",
+  "アイアンテール",
+  ]
+  waza_oshie_yellow = [
+  "しめつける",
+  "いびき",
+  "はたきおとす",
+  "こうごうせい",
+  "ねっぷう",
+  "なりきり",
+  "いやしのすず",
+  "おいかぜ",
+  "ゴッドバード",
+  "いたみわけ",
+  "ギガドレイン",
+  "ドレインパンチ",
+  "はねやすめ",
+  ]
+  waza_oshie_green = [
+  "いえき",
+  "なやみのタネ",
+  "うらみ",
+  "おさきにどうぞ",
+  "てだすけ",
+  "トリック",
+  "マジックルーム",
+  "ワンダールーム",
+  "がむしゃら",
+  "げきりん",
+  "リサイクル",
+  "よこどり",
+  "ステルスロック",
+  "ねごと",
+  "スキルスワップ",
+  ]
+
+def waza_split fp_w, s_data, column_no, num 
+  list = s_data[ column_no ].split(//)
+  list.size.times {|k|
+  if list[ k ] == "●"
+    fp_w.print("●,")
+  else
+    fp_w.print(",")
+    end
+  }
+
+  padding = num - list.size
+
+  padding.times {|k|
+    fp_w.print(",")
+  }
+end
+
 	if ARGV.size < 2
 		print "error: ruby wazamachine_split.rb read_file write_file\n"
 		print "read_file:読み込むファイル\n"
@@ -280,53 +370,45 @@ end
         fp_w.printf( "%s,", waza_oshie_waza[ j ] )
       }
       fp_w.printf( "%s,", split_data[ PARA::NO_JUMP ] )
+      
+      waza_oshie_red.size.times {|j|
+        fp_w.printf( "%s,", waza_oshie_red[ j ] )
+      }
+      waza_oshie_blue.size.times {|j|
+        fp_w.printf( "%s,", waza_oshie_blue[ j ] )
+      }
+      waza_oshie_yellow.size.times {|j|
+        fp_w.printf( "%s,", waza_oshie_yellow[ j ] )
+      }
+      waza_oshie_green.size.times {|j|
+        fp_w.printf( "%s,", waza_oshie_green[ j ] )
+      }
 
       fp_w.print("\n")
     else
       for j in PARA::POKENAME..PARA::SHINKA_COND7
         fp_w.printf( "%s,", split_data[ j ] )
       end
-
-      waza_machine = split_data[ PARA::WAZA_MACHINE ].split(//)
-
-      waza_machine.size.times {|k|
-        if waza_machine[ k ] == "●"
-          fp_w.print("●,")
-        else
-          fp_w.print(",")
-        end
-      }
-
-      padding = 101 - waza_machine.size
-
-      padding.times {|k|
-        fp_w.print(",")
-      }
+      
+      waza_split( fp_w, split_data, PARA::WAZA_MACHINE, waza_machine_waza.size() )
 
       for j in PARA::GRA_NO..PARA::WEIGHT
         fp_w.printf( "%s,", split_data[ j ] )
       end
-
-      waza_machine = split_data[ PARA::WAZA_OSHIE ].split(//)
-
-      waza_machine.size.times {|k|
-        if waza_machine[ k ] == "●"
-          fp_w.print("●,")
-        else
-          fp_w.print(",")
-        end
-      }
-
-      padding = 7 - waza_machine.size
-
-      padding.times {|k|
-        fp_w.print(",")
-      }
+      
+      waza_split( fp_w, split_data, PARA::WAZA_OSHIE, waza_oshie_waza.size() )
 
       fp_w.printf( "%s,", split_data[ PARA::NO_JUMP ] )
 
+      waza_split( fp_w, split_data, PARA::WAZA_OSHIE_RED, waza_oshie_red.size() )
+      waza_split( fp_w, split_data, PARA::WAZA_OSHIE_BLUE, waza_oshie_blue.size() )
+      waza_split( fp_w, split_data, PARA::WAZA_OSHIE_YELLOW, waza_oshie_yellow.size() )
+      waza_split( fp_w, split_data, PARA::WAZA_OSHIE_GREEN, waza_oshie_green.size() )
       fp_w.print("\n")
     end
   }
 
   fp_w.close
+
+
+
