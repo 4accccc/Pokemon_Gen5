@@ -2697,6 +2697,12 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 
   case CURSORMOVE_CANCEL:         // キャンセル
 		if( syswk->poke_get_key == 1 ){
+			u8  pos = CURSORMOVE_PosGet( syswk->app->cmwk );
+			if( pos < BOX2OBJ_POKEICON_TRAY_MAX ){
+				BOX2MAIN_PokeInfoPut( syswk, pos );
+			}else{
+				BOX2MAIN_PokeInfoOff( syswk );
+			}
 			MultiSelectCancel( syswk );
 		}else if( syswk->poke_get_key != 0 ){
 			// ポケモンを戻して選択を解除する
@@ -2713,6 +2719,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
   case CURSORMOVE_NO_MOVE_UP:     // 十字キー上が押されたが、移動なし
     if( CURSORMOVE_PosGet( syswk->app->cmwk ) == BOX2UI_ARRANGE_PGT_TRAY2 ){
 			if( syswk->poke_get_key == 1 ){
+				BOX2MAIN_PokeSelectOff( syswk );
 				MultiSelectCancel( syswk );
 			}
       PMSND_PlaySE( SE_BOX2_MOVE_CURSOR );
@@ -2724,6 +2731,7 @@ static int MainSeq_ArrangeMultiPokeGetMain( BOX2_SYS_WORK * syswk )
   case CURSORMOVE_NO_MOVE_DOWN:   // 十字キー下が押されたが、移動なし
     if( CURSORMOVE_PosGet( syswk->app->cmwk ) == BOX2UI_ARRANGE_PGT_TRAY5 ){
 			if( syswk->poke_get_key == 1 ){
+				BOX2MAIN_PokeSelectOff( syswk );
 				MultiSelectCancel( syswk );
 			}
       PMSND_PlaySE( SE_BOX2_MOVE_CURSOR );
@@ -3526,6 +3534,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
       BOX2MAIN_PokeSelectOff( syswk );
 		// 選択中
 		}else if( syswk->poke_get_key == 1 ){
+			BOX2MAIN_PokeSelectOff( syswk );
 			MultiSelectCancel( syswk );
     // 取得中
     }else{
@@ -3544,6 +3553,7 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
       BOX2MAIN_PokeSelectOff( syswk );
 		// 選択中
 		}else if( syswk->poke_get_key == 1 ){
+			BOX2MAIN_PokeSelectOff( syswk );
 			MultiSelectCancel( syswk );
     // 取得中
     }else{
@@ -3623,6 +3633,12 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 
   case CURSORMOVE_CANCEL:         // キャンセル
 		if( syswk->poke_get_key == 1 ){
+			u8  pos = CURSORMOVE_PosGet( syswk->app->cmwk );
+			if( pos < BOX2OBJ_POKEICON_PUT_MAX ){
+				BOX2MAIN_PokeInfoPut( syswk, pos );
+			}else{
+				BOX2MAIN_PokeInfoOff( syswk );
+			}
 			MultiSelectCancel( syswk );
 		}else if( syswk->poke_get_key != 0 ){
 			// ポケモンを戻して選択を解除する
@@ -3640,6 +3656,10 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 
   case CURSORMOVE_NO_MOVE_LEFT:   // 十字キー左が押されたが、移動なし
     if( CURSORMOVE_PosGet( syswk->app->cmwk ) == BOX2UI_ARRANGE_PTGT_NAME ){
+			if( syswk->poke_get_key == 1 ){
+				BOX2MAIN_PokeSelectOff( syswk );
+				MultiSelectCancel( syswk );
+			}
       PMSND_PlaySE( SE_BOX2_CHANGE_TRAY );
       return TrayLeftScrollSet( syswk, FALSE, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_MAIN );
     }
@@ -3647,6 +3667,10 @@ static int MainSeq_ArrangePartyMultiPokeGetMain( BOX2_SYS_WORK * syswk )
 
   case CURSORMOVE_NO_MOVE_RIGHT:  // 十字キー右が押されたが、移動なし
     if( CURSORMOVE_PosGet( syswk->app->cmwk ) == BOX2UI_ARRANGE_PTGT_NAME ){
+			if( syswk->poke_get_key == 1 ){
+				BOX2MAIN_PokeSelectOff( syswk );
+				MultiSelectCancel( syswk );
+			}
       PMSND_PlaySE( SE_BOX2_CHANGE_TRAY );
       return TrayRightScrollSet( syswk, FALSE, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MULTI_POKEGET_MAIN );
     }
