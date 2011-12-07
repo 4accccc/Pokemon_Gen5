@@ -589,7 +589,7 @@ EVENT_START   ev_scene_c15_bonus_event_01
 
   //オーナー：○○ちゃん！！　キミこそ　ポケウッドのしんの　スターだ
   _BALLOONWIN_OBJMSG_POS( msg_c15_end_11, C15_PWOWNER_01, POS_DOWN )
-  _ME_PLAY( SEQ_ME_HYOUKA6 )             //ファンファーレ
+  _ME_PLAY( SEQ_ME_POKEWOOD )             //ファンファーレ
   _ME_WAIT()
 
   //オーナー：とういことで　○○ちゃんに　ボクから　ささやかな　プレゼントだよ
@@ -608,7 +608,7 @@ EVENT_START   ev_scene_c15_bonus_event_01
 
   //楽屋に飛ぶ
 	//予約スクリプト
-	_RESERVE_SCRIPT( SCRID_RESERVE_C15R0401_SUNGLASSES_01 )
+	_RESERVE_SCRIPT( SCRID_RESERVE_C15R0401_PWSTAFF_01 )
 	//マップチェンジ
 	_MAP_CHANGE( ZONE_ID_C15R0401, 11, 16, DIR_RIGHT )
 
