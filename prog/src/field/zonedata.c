@@ -1573,12 +1573,12 @@ u8 ZONEDATA_GetMvMdlID(u16 zone_id)
 
 
 //------------------------------------------------------------------
-// D09チャンピオンロード関係のZONEか？
+// チャンピオンロード関係のZONEか？
 //------------------------------------------------------------------
-BOOL ZONEDATA_IsChampionLord(u16 zone_id)
+BOOL ZONEDATA_IsChampionRoad(u16 zone_id)
 {
   // @todo ZONE_GROUPが変わったらここも確認する必要があります。 2010.05.25
-  return ( ZONEDATA_GetGroupID( zone_id ) ==  ZONE_ID_D09 );
+  return ( ZONEDATA_GetGroupID( zone_id ) ==  ZONE_ID_D26R0101 );
 }
 
 //------------------------------------------------------------------

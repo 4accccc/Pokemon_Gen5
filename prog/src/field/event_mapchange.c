@@ -3615,17 +3615,18 @@ static void Escape_SetSPEscapeLocation( GAMEDATA* gamedata, const LOCATION* loc_
   ent = GAMEDATA_GetEntranceLocation( gamedata );
   loc_now = GAMEDATA_GetStartLocation( gamedata );
 
-  // 接続先がD09
-  if( ZONEDATA_IsChampionLord( loc_req->zone_id ) ){
-    // 今、チャンピオンリーグ
+  // 接続先がチャンピオンロード
+  if( ZONEDATA_IsChampionRoad( loc_req->zone_id ) ){
+    // 今、ポケモンリーグ
     if( loc_now->zone_id == ZONE_ID_C09 ){
-      
       GAMEDATA_SetEscapeLocation( gamedata, ent );
-    }else if( ZONEDATA_IsChampionLord( loc_now->zone_id ) == FALSE ){ // ChampionLord以外
+
+    // 今、バッジチェックゲート 
+    }else if( loc_now->zone_id == ZONE_ID_D26R0101 ){ 
       LOCATION location;
 
-      //D09のデフォルトを設定
-      LOCATION_SetDefaultPos( &location, ZONE_ID_D09 );
+      //バッジチェックゲートのデフォルトを設定
+      LOCATION_SetDefaultPos( &location, ZONE_ID_D26R0101 );
       GAMEDATA_SetEscapeLocation( gamedata, &location );
     }
   }
