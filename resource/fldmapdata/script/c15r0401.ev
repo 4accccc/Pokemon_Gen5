@@ -20,7 +20,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_init_c15r0401
-_EVENT_DATA    ev_reserve_c15r0401_sunglasses_01
+_EVENT_DATA    ev_reserve_c15r0401_pwstaff_01
 _EVENT_DATA    ev_c15r0401_adaltw_01
 _EVENT_DATA    ev_c15r0401_adaltw_02
 _EVENT_DATA    ev_c15r0401_middleman2_01
@@ -40,30 +40,30 @@ _EVENT_DATA_END
 INIT_EVENT_START ev_init_c15r0401
 
   IF $WK_SCENE_C15_BONUS_EVENT_01 == 1 THEN
-    _OBJ_POS_CHANGE( C15R0401_SUNGLASSES_01, 12, 0, 16, DIR_LEFT )
+    _OBJ_POS_CHANGE( C15R0401_PWSTAFF_01, 12, 0, 16, DIR_LEFT )
   ENDIF
 
 INIT_EVENT_END
 
 /**************************************************************/
-/* サングラスイベント（予約スクリプト）                       */
+/* PWスタッフイベント（予約スクリプト）                       */
 /*  ポケウッドごほうびイベント後にくる                        */
 /**************************************************************/
-EVENT_START    ev_reserve_c15r0401_sunglasses_01
+EVENT_START    ev_reserve_c15r0401_pwstaff_01
 
   //タグ０にプレイヤー名
   _PLAYER_NAME( 0 )
 
-  //サングラス：ここは　ウッドウさんが　みとめた
-  _BALLOONWIN_OBJMSG_POS( msg_c15r0401_end_14, C15R0401_SUNGLASSES_01, POS_DOWN )
+  //ポケウッドスタッフ：ここは　ウッドウさんが　みとめた
+  _BALLOONWIN_OBJMSG_POS( msg_c15r0401_end_14, C15R0401_PWSTAFF_01, POS_DOWN )
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
 
   // 退室
-  _OBJ_ANIME( C15R0401_SUNGLASSES_01, anm_exit )
+  _OBJ_ANIME( C15R0401_PWSTAFF_01, anm_exit )
   _OBJ_ANIME_WAIT()
 	// 削除
-  _OBJ_POS_CHANGE( C15R0401_SUNGLASSES_01, 12, 0, 30, DIR_LEFT )
+  _OBJ_POS_CHANGE( C15R0401_PWSTAFF_01, 12, 0, 30, DIR_LEFT )
 
   //==================================//
   // C15ごほうびイベント終了

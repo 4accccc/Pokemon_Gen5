@@ -9,7 +9,7 @@
 #ifndef ZONE_C15R0401_EVC_H
 #define ZONE_C15R0401_EVC_H
 
-#define C15R0401_SUNGLASSES_01             0
+#define C15R0401_PWSTAFF_01                0
 #define C15R0401_POLICEMAN_01              1
 #define C15R0401_ADALTW_01                 2
 #define C15R0401_ADALTW_02                 3
