@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="toyama" host="W00153" date="2011-12-01T16:57:56" source="pkwd_field10d_all.mb"/>
+	<create user="toyama" host="W00153" date="2011-12-07T18:41:09" source="pkwd_field10d_all.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -33,7 +33,7 @@
 </node_rotate_data>
 
 <node_translate_data size="2">
-	0.000000 -3.274170
+	0.000000 -3.903320
 </node_translate_data>
 
 <node_anm_array size="3">

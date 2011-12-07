@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="toyama" host="W00153" date="2011-12-01T17:01:06" source="pkwd_field10e_all.mb"/>
+	<create user="toyama" host="W00153" date="2011-12-07T18:41:39" source="pkwd_field10e_all.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="toyama" host="W00153" date="2011-12-01T17:01:06" source="pkwd_field10e_all.mb"/>
+<original_create user="toyama" host="W00153" date="2011-12-07T18:41:39" source="pkwd_field10e_all.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="4" xyz="-2.381348 -0.139160 -3.507568" whd="4.762451 3.016113 4.540283"/>
+<box_test pos_scale="4" xyz="-2.381348 -0.139160 -3.526611" whd="4.762451 3.016113 4.540283"/>
 
 <tex_image_array size="14">
 	<tex_image index="0" name="fctry_base"
@@ -5977,7 +5977,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 30.810791 -15.007080"
+		translate="0.000000 30.810791 -15.310547"
 		visibility="on"
 		display_size="5"
 		vertex_size="410" polygon_size="152"
@@ -6001,7 +6001,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 -3.240479"
+		translate="0.000000 0.000000 -3.543945"
 		visibility="on"
 		display_size="14"
 		vertex_size="1110" polygon_size="364"
@@ -6034,7 +6034,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 -3.240479"
+		translate="0.000000 0.000000 -3.543945"
 		visibility="on"
 		display_size="4"
 		vertex_size="34" polygon_size="12"

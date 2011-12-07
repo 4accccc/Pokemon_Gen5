@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="toyama" host="W00153" date="2011-11-30T19:58:55" source="pkwd_field01a_all.mb"/>
+	<create user="toyama" host="W00153" date="2011-12-05T16:03:40" source="pkwd_field01a_all.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -17,15 +17,15 @@
 	tool_start_frame="0"
 	tool_end_frame="800"
 	interpolation="frame"
-	compress_node="merge" node_size="7 7"
+	compress_node="merge" node_size="8 8"
 	frame_step_mode="1"
 	tolerance_scale="0.100000"
 	tolerance_rotate="0.100000"
 	tolerance_translate="0.100000"
 />
 
-<node_scale_data size="1">
-	1.000000
+<node_scale_data size="3">
+	1.000000 0.714844 1.164307
 </node_scale_data>
 
 <node_rotate_data size="802">
@@ -112,11 +112,11 @@
 	-35.419434 -35.429443
 </node_rotate_data>
 
-<node_translate_data size="6">
-	0.000000 -0.556641 -9.372803 -49.283936 -26.565430 2.354980
+<node_translate_data size="7">
+	0.000000 -0.556641 -9.372803 -49.283936 -26.565430 2.354980 -19.521240
 </node_translate_data>
 
-<node_anm_array size="7">
+<node_anm_array size="8">
 	<node_anm index="0">
 		<scale_x frame_step="1" data_size="1" data_head="0"/>
 		<scale_y frame_step="1" data_size="1" data_head="0"/>
@@ -192,6 +192,17 @@
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
 		<translate_x frame_step="1" data_size="1" data_head="0"/>
 		<translate_y frame_step="1" data_size="1" data_head="0"/>
+		<translate_z frame_step="1" data_size="1" data_head="0"/>
+	</node_anm>
+	<node_anm index="7">
+		<scale_x frame_step="1" data_size="1" data_head="1"/>
+		<scale_y frame_step="1" data_size="1" data_head="2"/>
+		<scale_z frame_step="1" data_size="1" data_head="1"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="0"/>
+		<translate_y frame_step="1" data_size="1" data_head="6"/>
 		<translate_z frame_step="1" data_size="1" data_head="0"/>
 	</node_anm>
 </node_anm_array>
