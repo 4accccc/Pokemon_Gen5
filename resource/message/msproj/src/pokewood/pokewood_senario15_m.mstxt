@@ -2928,33 +2928,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……だいバンギラスの　おうよ▼
-あなたの　おかげで
+			<Text>……だいバンギラスの　おうよ
+あなたの　おかげで▽
 イッシュは　すくわれました……▼
 あなたは　イッシュの　しゅごしゃ
 だったのですね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:14" />
+				Time="2011-12-05T07:37:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:14" />
+				Time="2011-12-05T07:37:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……大バンギラスの　王よ▼
-あなたの　おかげで
+			<Text>……大バンギラスの　王よ
+あなたの　おかげで▽
 イッシュは　救われました……▼
 あなたは　イッシュの　守護者
 だったのですね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:14" />
+				Time="2011-12-05T07:37:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:14" />
+				Time="2011-12-05T07:37:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

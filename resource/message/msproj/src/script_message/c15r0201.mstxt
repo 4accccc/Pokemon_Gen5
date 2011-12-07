@@ -369,11 +369,11 @@ msg_c15r0301_middleman2_01</Comment>
 			<Text>ようこそ！
 ポケウッド　撮影スタジオへ▼
 あら……　あなたは……▼
-わたしが　覚えていないって　ことは▽
+わたしが　覚えていないって　ことは
 まだ　新人さん　かな？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T09:43:00" />
+				Time="2011-12-07T05:27:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -452,13 +452,13 @@ msg_c15r0301_middleman2_01</Comment>
 			<Text>ようこそ！
 ポケウッド　さつえいスタジオへ▼
 あら……　あなたは……▼
-[Name:TrainerName ]　でしょ？
+たしか　[Name:TrainerName ]　でしょ？
 さいきん　ウチの　スタジオでも▽
 あなたの　なまえを　よくきくよ！▽
 フフ！　がんばってるんだね！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T09:43:34" />
+				Time="2011-12-07T06:14:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -469,13 +469,13 @@ msg_c15r0301_middleman2_01</Comment>
 			<Text>ようこそ！
 ポケウッド　撮影スタジオへ▼
 あら……　あなたは……▼
-[Name:TrainerName ]でしょ？
+確か　[Name:TrainerName ]でしょ？
 最近　ウチの　スタジオでも▽
 あなたの　名前を　よく聞くよ！▽
 フフ！　がんばってるんだね！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T09:43:38" />
+				Time="2011-12-07T06:14:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -503,7 +503,7 @@ msg_c15r0301_middleman2_01</Comment>
 			<Text>ようこそ！
 ポケウッド　さつえいスタジオへ▼
 あら……
-[Name:TrainerName ]さん▼
+[Name:TrainerName ]さん　おつかれさま▼
 さいきんは　あなたの　えいがが
 こうかいすると　シアターが▽
 まんいん　なんですってね！▼
@@ -511,7 +511,7 @@ msg_c15r0301_middleman2_01</Comment>
 えいがスターの　なかまいりね！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T09:43:52" />
+				Time="2011-12-07T05:28:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -522,7 +522,7 @@ msg_c15r0301_middleman2_01</Comment>
 			<Text>ようこそ！
 ポケウッド　撮影スタジオへ▼
 あら……
-[Name:TrainerName ]さん▼
+[Name:TrainerName ]さん　お疲れ様▼
 最近は　あなたの　映画が
 公開すると　シアターが▽
 満員なんですってね！▼
@@ -530,7 +530,7 @@ msg_c15r0301_middleman2_01</Comment>
 映画スターの　仲間入りね！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T09:43:46" />
+				Time="2011-12-07T05:29:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

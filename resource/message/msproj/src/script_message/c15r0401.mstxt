@@ -6,14 +6,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さすがは　トップスター……
+			<Text>さすが　トップスター……
 たんせいな　おかおだち……▼
 [Name:TrainerName ]さまの　めもとは
 どんな　アイシャドウよりも▽
 シャイニー　ございますわ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T01:45:29" />
+				Time="2011-12-07T01:57:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -21,14 +21,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>流石は　トップスター……
+			<Text>流石　トップスター……
 端正な　お顔だち……▼
 [Name:TrainerName ]様の　目元は
 どんな　アイシャドウよりも▽
 シャイニーで　ございますわ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T01:45:21" />
+				Time="2011-12-07T01:57:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -198,7 +198,7 @@
 			Language="JPN">
 			<Text>ここは　ウッドウさんが
 みとめた　やくしゃだけが　つかえる▼
-ウルトラデラックスな
+スターせんようの　ウルトラデラックスな
 ドレッシングルーム！▼
 いまから　ここは　[Name:TrainerName ]だけが
 じゆうに　つかうことを　ゆるされたぜ！▼
@@ -206,8 +206,8 @@
 また　アンタの　えいがを　みられるのを▽
 たのしみに　してるぜっ！！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-16T06:25:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-07T03:58:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -217,7 +217,7 @@
 			Language="JPN_KANJI">
 			<Text>ここは　ウッドウさんが
 認めた　役者だけが　使える▼
-ウルトラデラックスな
+スター専用の　ウルトラデラックスな
 ドレッシングルーム！▼
 今から　ここは　[Name:TrainerName ]だけが
 自由に　使うことを　許されたぜ！▼
@@ -225,8 +225,8 @@
 また　アンタの　映画を　観られるのを▽
 楽しみに　してるぜっ！！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-16T06:25:22" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-07T03:59:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -234,12 +234,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂sunglasses
+			<Comment>♂pwstaff
 
 メッセージ終了後退室し銅像イベント終了</Comment>
 			<CommentModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-18T09:49:37" />
+				Time="2011-12-07T01:47:16" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -287,14 +287,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>むかしの　えいがの
-だいほんが　おいてある……▼
+			<Text>ボロボロになった　だいほんが
+たいりょうに　おいてある……▼
 そして　ラプラスは　ゆく▼
+ゆきゆきて　シードラ▼
+サンのみを　ぬすんだ　おとこ▼
+ずかんをすてよ　シティにでよう▼
+おにび▼
+まぼろしの　トレーナーせん▼
+１１０どうろ　こうさてん▼
+みずタイプの　おんな▼
+まよなかの　たんぱんボーイ▼
+そのポケモン　ふゆうにつき▼
 さらば　ふゆのキャモメ▼
-まよなかの　たんぱんボーイ</Text>
+ライモン　ちょうとっきゅう▼
+ドンファン・マン▼
+モココたちの　ちんもく</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-22T12:27:58" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-07T05:23:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -302,14 +313,25 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>昔の　映画の
-台本が　おいてある……▼
+			<Text>ボロボロになった　台本が
+大量に　置いてある……▼
 そして　ラプラスは　ゆく▼
+ゆきゆきて　シードラ▼
+サンのみを　盗んだ　男▼
+図鑑を捨てよ　シティに出よう▼
+おにび▼
+まぼろしの　トレーナー戦▼
+１１０道路交差点▼
+みずタイプの　女▼
+真夜中の　たんぱんボーイ▼
+そのポケモン　ふゆうにつき▼
 さらば　冬のキャモメ▼
-真夜中の　たんぱんボーイ</Text>
+ライモン超特急▼
+ドンファン・マン▼
+モココたちの　沈黙</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-22T12:28:28" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-07T05:23:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

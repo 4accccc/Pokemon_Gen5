@@ -750,10 +750,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あいての　ようすを　うかがえ！
-（セリフの　せんたくが　じゅうよう！）</Text>
+セリフのせんたくが　じゅうよう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T07:27:17" />
+				Time="2011-12-05T07:29:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -762,10 +762,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>相手の　様子を　うかがえ！
-（セリフの　選択が　重要！）</Text>
+セリフの選択が　重要！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T07:27:22" />
+				Time="2011-12-05T07:29:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -794,10 +794,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あいての　ようすを　うかがえ！
-（セリフの　せんたくが　じゅうよう！）</Text>
+セリフのせんたくが　じゅうよう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T07:41:16" />
+				Time="2011-12-05T07:29:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -806,10 +806,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>相手の　様子を　うかがえ！
-（セリフの　選択が　重要！）</Text>
+セリフの選択が　重要！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T07:41:18" />
+				Time="2011-12-05T07:29:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -830,10 +830,11 @@
 		Label="pw_movie_hint_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいての　のうりょくを　さげろ！</Text>
+			<Text>あいての　のうりょくを　さげろ！
+あいてのわざに　ちゅうもく！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T08:42:56" />
+				Time="2011-12-05T07:29:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -841,10 +842,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手の　能力を　さげろ！</Text>
+			<Text>相手の能力を　下げろ！
+相手の　わざに　注目！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T08:43:33" />
+				Time="2011-12-05T07:29:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -868,7 +870,7 @@
 			<Text>あいての　わざに　ちゅうもく！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T07:44:11" />
+				Time="2011-12-05T05:57:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -900,10 +902,10 @@
 		Label="pw_movie_hint_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいての　わざに　ちゅうもく！</Text>
+			<Text>いっきに　まけろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T07:44:11" />
+				Time="2011-12-05T05:56:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -911,10 +913,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手の　わざに　注目！</Text>
+			<Text>一気に　負けろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T07:44:41" />
+				Time="2011-12-05T05:57:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

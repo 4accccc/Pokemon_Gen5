@@ -762,10 +762,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>天候を　利用しろ！
-セリフのせんたくが　じゅうよう！</Text>
+セリフの選択が　重要！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T11:01:08" />
+				Time="2011-12-05T08:13:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -806,10 +806,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わざの　効果を　見極めろ！
-セリフの　選択が　重要！</Text>
+セリフの選択が　重要！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T11:36:42" />
+				Time="2011-12-05T08:13:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -841,10 +841,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>効果を　見極めて　わざを　選べ</Text>
+			<Text>効果を見極めて　わざを選べ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T13:28:00" />
+				Time="2011-12-05T08:13:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -876,10 +876,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>効果を　見極めて　わざを　選べ</Text>
+			<Text>効果を見極めて　わざを選べ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T13:28:37" />
+				Time="2011-12-05T08:13:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -911,10 +911,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>効果を　見極めて　わざを　選べ</Text>
+			<Text>効果を見極めて　わざを選べ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T13:28:37" />
+				Time="2011-12-05T08:13:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -946,10 +946,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>効果を　見極めて　わざを　選べ</Text>
+			<Text>効果を見極めて　わざを選べ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T13:28:37" />
+				Time="2011-12-05T08:13:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

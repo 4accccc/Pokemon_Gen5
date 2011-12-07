@@ -750,10 +750,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あいての　こうげきから　みを　まもれ！
-（セリフの　せんたくが　じゅうよう！）</Text>
+セリフのせんたくが　じゅうよう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T04:03:43" />
+				Time="2011-12-05T07:08:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -762,10 +762,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>相手の　こうげきから　身を　守れ！
-（セリフの　選択が　重要！）</Text>
+セリフの選択が　重要！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T04:03:48" />
+				Time="2011-12-05T07:08:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

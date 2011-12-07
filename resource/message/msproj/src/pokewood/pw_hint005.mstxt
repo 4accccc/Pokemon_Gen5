@@ -750,10 +750,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>じぶんの　のうりょくを　あげろ！
-（セリフの　せんたくが　じゅうよう！）</Text>
+セリフの　せんたくが　じゅうよう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T04:19:40" />
+				Time="2011-12-05T07:04:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -761,11 +761,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>自分の　能力を　あげろ！
-（セリフの　選択が　重要！）</Text>
+			<Text>自分の　能力を　上げろ！
+セリフの　選択が　重要！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T04:19:47" />
+				Time="2011-12-05T07:04:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

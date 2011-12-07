@@ -400,7 +400,7 @@
 	<row id="pw_event0_hero_0">
 		<language name="JPN" width="256">つうしん『おい！　きこえるか！？
 おうとうせよ！　[1:00:トレーナー名:1]！▽
-じょうきょうを　ほうこく　しろ！</language>
+じょうきょうを　ほうこくしろ！</language>
 		<language name="JPN_KANJI" width="256">通信『おい！　聞こえるか！？
 応答せよ！　[1:00:トレーナー名:1]！▽
 状況を　報告せよ！</language>
@@ -539,7 +539,7 @@ UFOの　全身が　少しずつ▽
 いま　あいに　いきますぞ……</language>
 		<language name="JPN_KANJI" width="256">老人『これまでじゃ……
 ああ……　じいさん　や……▽
-いま　あいに　行きますぞ……</language>
+いま 　あいに　行きますぞ……</language>
 	</row>
 	<row id="pw_event2_enemy_7">
 		<language name="JPN" width="256">ＵＦＯ『……　……</language>
@@ -555,7 +555,7 @@ UFOの　全身が　少しずつ▽
 	</row>
 	<row id="pw_event2_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ここで　くいとめるぞ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ここで　くいとめるぞ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ここで　くい止めるぞ！</language>
 	</row>
 	<row id="pw_event2_react_enemy_1">
 		<language name="JPN" width="256">ＵＦＯ『……　……</language>
@@ -605,7 +605,7 @@ UFOから　光が……▼
 じょうきょうを　ほうこく　しろ！</language>
 		<language name="JPN_KANJI" width="256">通信『おい！　聞こえるか！？
 応答せよ！　[1:00:トレーナー名:1]！▽
-状況を　報告　しろ！</language>
+状況を　報告しろ！</language>
 	</row>
 	<row id="pw_event3_hero_5">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『キ……　キャップ……▼

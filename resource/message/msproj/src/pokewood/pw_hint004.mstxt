@@ -750,10 +750,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>いりょくの　よわい　わざを　つかえ！
-（セリフせんたくが　じゅうよう！）</Text>
+セリフせんたくが　じゅうよう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T03:27:30" />
+				Time="2011-12-05T07:04:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -762,10 +762,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>威力の　弱い　わざを　使え！
-（セリフ選択が　重要！）</Text>
+セリフ選択が　重要！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T04:18:41" />
+				Time="2011-12-05T07:04:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

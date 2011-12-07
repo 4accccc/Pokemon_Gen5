@@ -948,13 +948,13 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ラジャー！！</language>
 	</row>
 	<row id="pw_event6_hero_9">
-		<language name="JPN" width="256">……だいバンギラスの　おうよ▼
-あなたの　おかげで
+		<language name="JPN" width="256">……だいバンギラスの　おうよ
+あなたの　おかげで▽
 イッシュは　すくわれました……▼
 あなたは　イッシュの　しゅごしゃ
 だったのですね……</language>
-		<language name="JPN_KANJI" width="256">……大バンギラスの　王よ▼
-あなたの　おかげで
+		<language name="JPN_KANJI" width="256">……大バンギラスの　王よ
+あなたの　おかげで▽
 イッシュは　救われました……▼
 あなたは　イッシュの　守護者
 だったのですね……</language>

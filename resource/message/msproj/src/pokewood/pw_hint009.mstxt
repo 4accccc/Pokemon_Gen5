@@ -792,10 +792,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かくじつに　わざを　きめろ！
-（セリフの　せんたくが　じゅうよう！）</Text>
+セリフの　せんたくが　じゅうよう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T03:27:03" />
+				Time="2011-12-05T06:10:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -804,10 +804,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>確実に　わざを　決めろ！
-（セリフの　選択が　重要！）</Text>
+セリフの　選択が　重要！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T03:27:11" />
+				Time="2011-12-05T06:10:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1073,10 +1073,10 @@
 		Label="pw_movie_hint_09">
 		<LanguageCell
 			Language="JPN">
-			<Text>いっきに　きめろ！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T06:13:29" />
+				Time="2011-12-05T05:27:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1084,10 +1084,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>一気に　決めろ！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-16T06:14:06" />
+				Time="2011-12-05T05:27:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

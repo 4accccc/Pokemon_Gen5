@@ -1087,14 +1087,14 @@ UFOの　全身が　少しずつ▽
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ここで　くいとめるわ！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ここで　くい止めるわ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-05T07:37:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-05T07:37:02" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

@@ -3853,10 +3853,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>６カットいないに　あいてを　たおせ</Text>
+			<Text>８カットいないに　あいてを　たおせ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-11T03:42:59" />
+				Time="2011-12-05T05:43:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3864,10 +3864,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>６カット以内に　相手を　倒せ</Text>
+			<Text>８カット以内に　相手を　倒せ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-11T03:42:53" />
+				Time="2011-12-05T05:43:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3890,10 +3890,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>５カットいないに　ぜんめつしろ</Text>
+			<Text>４カットいないに　ぜんめつしろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T03:41:26" />
+				Time="2011-12-05T05:45:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3901,10 +3901,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>５カット以内に　全滅しろ</Text>
+			<Text>４カット以内に　全滅しろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T03:41:18" />
+				Time="2011-12-05T05:45:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3927,10 +3927,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>５カットいないに　たおせ</Text>
+			<Text>６カットいないに　たおせ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T09:58:25" />
+				Time="2011-12-05T05:46:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3938,10 +3938,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>５カット以内に　倒せ</Text>
+			<Text>６カット以内に　倒せ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T09:58:34" />
+				Time="2011-12-05T05:46:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3964,11 +3964,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>４カット　いないに
+			<Text>７カット　いないに
 すべての　あいてを　たおせ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:06:23" />
+				Time="2011-12-05T05:48:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -3976,11 +3976,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>４カット　以内に
+			<Text>７カット　以内に
 すべての　相手を　倒せ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-12T04:06:20" />
+				Time="2011-12-05T05:48:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4081,10 +4081,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１０カットいないに　ぜんめつしろ</Text>
+			<Text>８カットいないに　ぜんめつしろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T07:09:59" />
+				Time="2011-12-05T05:52:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4092,10 +4092,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１０カット以内に　全滅しろ</Text>
+			<Text>８カット以内に　全滅しろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T07:10:01" />
+				Time="2011-12-05T05:52:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4118,10 +4118,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>８カットいないに　ぜんめつしろ</Text>
+			<Text>１０カットいないに　ぜんめつしろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T07:08:23" />
+				Time="2011-12-05T05:54:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4129,10 +4129,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>８カット以内に　全滅しろ</Text>
+			<Text>１０カット以内に　全滅しろ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-04T07:08:25" />
+				Time="2011-12-05T05:54:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4467,10 +4467,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>５カットいないにセットＲ１をたおせ</Text>
+			<Text>９カットいないにセットＲ１をたおせ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-11T03:50:34" />
+				Time="2011-12-05T06:09:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4478,10 +4478,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>５カット以内に　セットＲ１を倒せ</Text>
+			<Text>９カット以内に　セットＲ１を倒せ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-11T03:50:24" />
+				Time="2011-12-05T06:09:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4578,11 +4578,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１０カットいないに
+			<Text>６カットいないに
 すべての　あいてを　たおせ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:17:12" />
+				Time="2011-12-05T06:17:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4590,11 +4590,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１０カット以内に
+			<Text>６カット以内に
 すべての　相手を　倒せ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:17:30" />
+				Time="2011-12-05T06:17:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4846,10 +4846,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きゃくほん</Text>
+			<Text>脚本</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T11:11:26" />
+				Time="2011-12-06T08:57:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

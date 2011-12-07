@@ -253,7 +253,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ほおっておけ……▼
+			<Text>[Name:TrainerName Idx="1" ]『ほっておけ……▼
 どうせ　そんなもの　だれにでも
 できるような　けんきゅう　だろ？▼
 それより　オレは　Ｆー００に
@@ -262,15 +262,15 @@
 じゅうじつして　やりたいんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:20" />
+				Time="2011-12-05T08:12:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:20" />
+				Time="2011-12-05T08:12:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ほおっておけ……▼
+			<Text>[Name:TrainerName Idx="1" ]『ほっておけ……▼
 どうせ　そんなもの　だれにでも
 できるような　研究だろ？▼
 それより　オレは　Ｆー００に
@@ -279,11 +279,11 @@
 充実して　やりたいんだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:20" />
+				Time="2011-12-05T08:12:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:20" />
+				Time="2011-12-05T08:12:13" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

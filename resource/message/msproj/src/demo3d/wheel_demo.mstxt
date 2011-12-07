@@ -177,11 +177,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わあ……　やっぱ　たかいなあ……
-あ……　こわくなってきたかも……</Text>
+			<Text>あらー？　なんで　だまってんの？
+ひょっとして　ビビッてんじゃん！？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T02:12:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -189,11 +189,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わあ……　やっぱ　高いなあ……
-あ……　怖くなってきたかも……</Text>
+			<Text>あらー？　何で　だまってんの？
+ひょっとして　ビビッてんじゃん！？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T02:11:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -203,10 +203,11 @@
 			Language="JPN">
 			<Comment>♀
 ・主人公♂＋春
+ミニスカート
 ・観覧車その1</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-05T10:58:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -228,11 +229,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うう……　ゆれるよお……　……　……
-……こわいよお　たかいよお……　……</Text>
+			<Text>……　……　……ギシ
+……ギシッ！　ギシギシッ！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-07T09:26:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -240,11 +241,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うう……　揺れるよお……　……　……
-……怖いよお　高いよお……　……</Text>
+			<Text>……　……　……ギシ
+……ギシッ！　ギシギシッ！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-07T09:27:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -254,10 +255,11 @@
 			Language="JPN">
 			<Comment>♀
 ・主人公♂＋春
-・観覧車その２</Comment>
+・観覧車その２
+ミニスカート</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-05T10:58:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -279,11 +281,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あ　ダメ……　もう　げんかい……
-こっち……　そばに　きて……　ね？</Text>
+			<Text>キャーッ！　なにコレ　こわれちゃう！
+アタシ　もうダメッ！　たすけてーっ！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-05T08:39:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -291,11 +293,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あ　ダメ……　もう　限界……
-こっち……　そばに　きて……　ね？</Text>
+			<Text>キャーッ！　何コレ　壊れちゃう！
+アタシ　もうダメッ！　助けてーっ！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-05T08:40:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -305,10 +307,11 @@
 			Language="JPN">
 			<Comment>♀
 ・主人公♂＋春
-・観覧車その３</Comment>
+・観覧車その３
+ミニスカート</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-05T10:58:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -330,11 +333,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……のぼってる　のぼってる……　
-オー　いがいに　スピードあるな　コレ</Text>
+			<Text>オー！　のぼってる　のぼってる！
+なんか　なつかしーな……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-05T08:44:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -342,11 +345,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……昇ってる　昇ってる……　
-オー　意外に　スピードあるな　コレ</Text>
+			<Text>オー！　昇ってる　昇ってる！
+何か　なつかしーな……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-05T08:44:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -356,10 +359,11 @@
 			Language="JPN">
 			<Comment>♂
 ・主人公♀＋春
-・観覧車その1</Comment>
+・観覧車その1
+ダンサー</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-05T10:58:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -381,11 +385,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>お！　ちょっと　こっち　きてみろよ！
-ほらアレ　って　あっ……　……　……</Text>
+			<Text>オー！　ほらアレ　みてみろよ！
+スッゲー　きれいだぜ　って　あっ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-05T08:44:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -393,11 +397,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お！　ちょっと　こっち　きてみろよ！
-ほらアレ　って　あっ……　……　……</Text>
+			<Text>オー！　ほらアレ　みてみろよ！
+スッゲー　きれいだぜ　って　あっ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-05T08:44:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -407,10 +411,11 @@
 			Language="JPN">
 			<Comment>♂
 ・主人公♀＋春
-・観覧車その２</Comment>
+・観覧車その２
+ダンサー</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-05T10:59:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -432,11 +437,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……　……　……　……　……　……
-……　……　……　……　……　……</Text>
+			<Text>あ……　そっか……
+そういや　そうだったよな……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-05T10:59:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -444,11 +449,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……　……　……　……　……　……
-……　……　……　……　……　……</Text>
+			<Text>あ……　そっか……
+そういや　そうだったよな……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-05T10:59:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -458,10 +463,11 @@
 			Language="JPN">
 			<Comment>♂
 ・主人公♀＋春
-・観覧車その３</Comment>
+・観覧車その３
+ダンサー</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-05T10:59:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -657,11 +663,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オオウ　そうぞう　いじょうに　たかい
-アフウ　そうぞう　いじょうに　ゆれる</Text>
+			<Text>こうして　シートに　ねころがってさ
+そとの　ふうけいを　ながめてごらん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T03:18:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -669,11 +675,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オオウ　想像　以上に　高い
-アフウ　想像　以上に　揺れる</Text>
+			<Text>こうして　シートに　寝転がってさ
+外の　風景を　眺めてごらん</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T03:18:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -715,11 +721,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オイ　うごくなよお！　おちるでしょ！
-おねがいだから　うごかないでー！！</Text>
+			<Text>パシャッ！　パシャッ！　パシャッ！
+ああ　とても　いい　かんじだ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:26:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -727,11 +733,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オイ　動くなよお！　落ちるでしょ！
-お願いだから　動かないでー！！</Text>
+			<Text>パシャッ！　パシャッ！　パシャッ！
+ああ　とても　いい　感じだ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:26:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -773,11 +779,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あ……　もうダメ……　げんかいです
-……て　……て　つないで　いい？</Text>
+			<Text>やっぱり　きれいだ……　とても……
+パシャッ！　パシャッ！　パシャッ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T09:19:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -785,11 +791,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あ……　もうダメ……　限界です
-……手　……手　つないで　いい？</Text>
+			<Text>やっぱり　きれいだ……　とても……
+パシャッ！　パシャッ！　パシャッ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T09:19:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -831,11 +837,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ステキな　ながめね……　……　……
+			<Text>ステキな　眺めね……　……　……
 ……　……　だけど……　……　……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T03:23:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1137,11 +1143,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わーいわーい！　くるくる　まわるー！
-わーいわーい！　どんどん　あがるー！</Text>
+			<Text>ハア～　あられェ～　ゆきがくれェ～
+ハアァ～　きえてしまったァ　あなたァ～</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T11:50:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1149,11 +1155,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わーいわーい！　くるくる　まわるー！
-わーいわーい！　どんどん　あがるー！</Text>
+			<Text>ハア～　あられェ～　雪隠れェ～
+ハアァ～　消えてしまったァ　貴方ァ～</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T11:50:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1195,11 +1201,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わーい！　たかーい！　たかいぞー！！
-えへへ　おにーちゃん！　たのしーね！</Text>
+			<Text>ゴーストォ　ゴーストなァ　あなたァ～
+ノーマルな　あたしィ　ふれられないィ～</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T11:53:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1207,11 +1213,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わーい！　たかーい！　たかいぞー！！
-えへへ　おにーちゃん！　たのしーね！</Text>
+			<Text>ゴーストォ　ゴーストなァ　貴方ァ～
+ノーマルな　あたしィ　触れられないィ～</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T11:53:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1253,11 +1259,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ねー　ねー　おにーちゃん！
-おひざのうえ　のっても　いーい？</Text>
+			<Text>おいかけてェ～　なきぬれてォ～
+まふゆのォ～　ユキメノコォォォ～ン～</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T13:11:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1265,11 +1271,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ねー　ねー　おにーちゃん！
-おひざのうえ　のっても　いーい？</Text>
+			<Text>追いかけてェ～　泣きぬれてォ～
+真冬のォ～　ユキメノコォォォ～ン～</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T13:11:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1311,11 +1317,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わあ　まちが　どんどん　ちいさく……　
-とても　きれいだね……　……　……</Text>
+			<Text>メッセージちょうせいちゅう</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T11:58:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1323,11 +1328,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わあ　町が　どんどん　小さく……　
-とても　きれいだね……　……　……</Text>
+			<Text>メッセージちょうせいちゅう</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T11:59:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1369,11 +1373,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゴホッ！　……　ゴホッ！ゴホッ！
-ごめん……　すこし　ひえたかな……</Text>
+			<Text>メッセージちょうせいちゅう</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T11:58:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1381,11 +1384,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゴホッ！　……　ゴホッ！ゴホッ！
-ごめん……　少し　冷えたかな……</Text>
+			<Text>メッセージちょうせいちゅう</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T11:59:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1427,11 +1429,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>え……　ありがとう……　あたたかい
-あなたは……　やさしい　ひとだね……</Text>
+			<Text>メッセージちょうせいちゅう</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T11:58:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1439,11 +1440,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>え……　ありがとう……　暖かい
-あなたは……　優しい　人だね……</Text>
+			<Text>メッセージちょうせいちゅう</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:07" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T11:59:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

@@ -750,10 +750,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>てんこうを　りようしろ！
-（セリフの　せんたくが　じゅうよう！）</Text>
+セリフの　せんたくが　じゅうよう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T03:48:12" />
+				Time="2011-12-05T07:04:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -762,10 +762,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>天候を　利用しろ！
-（セリフの　選択が　重要！）</Text>
+セリフの　選択が　重要！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T03:48:21" />
+				Time="2011-12-05T07:04:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

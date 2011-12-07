@@ -8336,10 +8336,10 @@
 		Label="BTLPW__STRID_turn_01">
 		<LanguageCell
 			Language="JPN">
-			<Text>カット１</Text>
+			<Text>カット０１</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:42:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:44:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8347,10 +8347,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カット１</Text>
+			<Text>ＣＵＴ　０１</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:43:05" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:40:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8361,10 +8361,10 @@
 		Label="BTLPW__STRID_turn_02">
 		<LanguageCell
 			Language="JPN">
-			<Text>カット２</Text>
+			<Text>カット０２</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:47:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:45:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8372,10 +8372,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カット２</Text>
+			<Text>ＣＵＴ　０２</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:47:26" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:41:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8386,10 +8386,10 @@
 		Label="BTLPW__STRID_turn_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>カット３</Text>
+			<Text>カット０３</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:47:32" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:45:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8397,10 +8397,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カット３</Text>
+			<Text>ＣＵＴ　０３</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:47:37" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:45:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8411,10 +8411,10 @@
 		Label="BTLPW__STRID_turn_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>カット４</Text>
+			<Text>カット０４</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:47:42" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:45:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8422,10 +8422,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カット４</Text>
+			<Text>ＣＵＴ　０４</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:47:46" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:45:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8436,10 +8436,10 @@
 		Label="BTLPW__STRID_turn_05">
 		<LanguageCell
 			Language="JPN">
-			<Text>カット５</Text>
+			<Text>カット０５</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:47:52" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:45:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8447,10 +8447,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カット５</Text>
+			<Text>ＣＵＴ　０５</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:47:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:45:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8461,10 +8461,10 @@
 		Label="BTLPW__STRID_turn_06">
 		<LanguageCell
 			Language="JPN">
-			<Text>カット６</Text>
+			<Text>カット０６</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-28T11:23:16" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:46:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8472,10 +8472,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カット７</Text>
+			<Text>ＣＵＴ　０６</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-28T11:23:21" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:46:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8486,10 +8486,10 @@
 		Label="BTLPW__STRID_turn_07">
 		<LanguageCell
 			Language="JPN">
-			<Text>カット７</Text>
+			<Text>カット０７</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-28T11:23:27" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:46:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8497,10 +8497,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カット７</Text>
+			<Text>ＣＵＴ　０７</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-28T11:23:51" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:46:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8511,10 +8511,10 @@
 		Label="BTLPW__STRID_turn_08">
 		<LanguageCell
 			Language="JPN">
-			<Text>カット８</Text>
+			<Text>カット０８</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-28T11:23:39" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:46:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8522,10 +8522,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カット８</Text>
+			<Text>ＣＵＴ　０８</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-28T11:23:43" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:46:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8536,10 +8536,10 @@
 		Label="BTLPW__STRID_turn_09">
 		<LanguageCell
 			Language="JPN">
-			<Text>カット９</Text>
+			<Text>カット０９</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-28T11:23:56" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:47:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8547,10 +8547,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カット９</Text>
+			<Text>ＣＵＴ　０９</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-28T11:24:01" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:47:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8563,8 +8563,8 @@
 			Language="JPN">
 			<Text>カット１０</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-28T11:24:06" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:47:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8572,10 +8572,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カット１０</Text>
+			<Text>ＣＵＴ　１０</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-28T11:24:10" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:47:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8586,10 +8586,10 @@
 		Label="BTLPW__STRID_turn_11">
 		<LanguageCell
 			Language="JPN">
-			<Text>カット１</Text>
+			<Text>カット１１</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:42:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:47:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8597,10 +8597,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カット１</Text>
+			<Text>ＣＵＴ　１１</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:43:05" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:53:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8611,10 +8611,10 @@
 		Label="BTLPW__STRID_turn_12">
 		<LanguageCell
 			Language="JPN">
-			<Text>カット１</Text>
+			<Text>カット１２</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:42:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:52:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8622,10 +8622,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カット１</Text>
+			<Text>ＣＵＴ　１２</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:43:05" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:52:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8636,10 +8636,10 @@
 		Label="BTLPW__STRID_turn_13">
 		<LanguageCell
 			Language="JPN">
-			<Text>カット１</Text>
+			<Text>カット１３</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:42:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:52:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8647,10 +8647,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カット１</Text>
+			<Text>ＣＵＴ　１３</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:43:05" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:52:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8661,10 +8661,10 @@
 		Label="BTLPW__STRID_turn_14">
 		<LanguageCell
 			Language="JPN">
-			<Text>カット１</Text>
+			<Text>カット１４</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:42:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:52:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8672,10 +8672,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カット１</Text>
+			<Text>ＣＵＴ　１４</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:43:05" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:52:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8686,10 +8686,10 @@
 		Label="BTLPW__STRID_turn_15">
 		<LanguageCell
 			Language="JPN">
-			<Text>カット１</Text>
+			<Text>カット１５</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:42:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:52:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8697,10 +8697,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カット１</Text>
+			<Text>ＣＵＴ　１５</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:43:05" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:52:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8711,10 +8711,10 @@
 		Label="BTLPW__STRID_turn_16">
 		<LanguageCell
 			Language="JPN">
-			<Text>カット１</Text>
+			<Text>カット１６</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:42:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:52:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8722,10 +8722,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カット１</Text>
+			<Text>ＣＵＴ　１６</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:43:05" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:52:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8736,10 +8736,10 @@
 		Label="BTLPW__STRID_turn_17">
 		<LanguageCell
 			Language="JPN">
-			<Text>カット１</Text>
+			<Text>カット１７</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:42:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:53:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8747,10 +8747,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カット１</Text>
+			<Text>ＣＵＴ　１７</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:43:05" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:53:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8761,10 +8761,10 @@
 		Label="BTLPW__STRID_turn_18">
 		<LanguageCell
 			Language="JPN">
-			<Text>カット１</Text>
+			<Text>カット１８</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:42:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:53:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8772,10 +8772,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カット１</Text>
+			<Text>ＣＵＴ　１８</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:43:05" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:53:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8786,10 +8786,10 @@
 		Label="BTLPW__STRID_turn_19">
 		<LanguageCell
 			Language="JPN">
-			<Text>カット１</Text>
+			<Text>カット１９</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:42:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:53:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8797,10 +8797,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カット１</Text>
+			<Text>ＣＵＴ　１９</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:43:05" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:53:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8811,10 +8811,10 @@
 		Label="BTLPW__STRID_turn_20">
 		<LanguageCell
 			Language="JPN">
-			<Text>カット１</Text>
+			<Text>カット２０</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:42:59" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:54:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -8822,10 +8822,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カット１</Text>
+			<Text>ＣＵＴ　２０</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-07-07T09:43:05" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-06T07:54:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"

@@ -750,10 +750,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あいての　こうげきから　みを　まもれ！
-（セリフの　せんたくが　じゅうよう！）</Text>
+セリフのせんたくが　じゅうよう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T03:55:34" />
+				Time="2011-12-05T05:38:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -761,11 +761,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手の　こうげきから　身を　守れ！
-（セリフの　選択が　重要！）</Text>
+			<Text>相手の　攻撃から　身を　守れ！
+セリフの選択が　重要！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T03:55:30" />
+				Time="2011-12-05T05:38:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -863,10 +863,10 @@
 		Label="pw_movie_hint_03">
 		<LanguageCell
 			Language="JPN">
-			<Text>相手の　こうげきを　たえろ！</Text>
+			<Text>あいての　こうげきを　たえろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T03:50:20" />
+				Time="2011-12-05T05:37:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -874,10 +874,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手の　こうげきを　耐えろ！</Text>
+			<Text>相手の　攻撃を　耐えろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T03:51:45" />
+				Time="2011-12-05T07:21:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -898,10 +898,10 @@
 		Label="pw_movie_hint_04">
 		<LanguageCell
 			Language="JPN">
-			<Text>相手の　こうげきを　たえろ！</Text>
+			<Text>あいての　こうげきを　たえろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T03:51:34" />
+				Time="2011-12-05T05:38:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -909,10 +909,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手の　こうげきを　耐えろ！</Text>
+			<Text>相手の　攻撃を　耐えろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T03:51:49" />
+				Time="2011-12-05T07:21:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

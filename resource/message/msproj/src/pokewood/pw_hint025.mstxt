@@ -750,10 +750,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かくれた　こうかを　いかして
-あいてを　こうげきを　うけろ！</Text>
+あいてのこうげきを　うけろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:34:48" />
+				Time="2011-12-05T07:28:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -762,10 +762,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>隠れた　効果を　活かして
-相手を　こうげきを　うけろ！</Text>
+相手の攻撃を　うけろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:35:00" />
+				Time="2011-12-05T07:28:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -794,10 +794,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わざの　こうかに　ちゅうもく！
-（セリフのせんたくが　じゅうよう！）</Text>
+セリフのせんたくが　じゅうよう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T07:52:24" />
+				Time="2011-12-05T05:53:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -806,10 +806,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わざの　効果に　注目！
-（セリフの　選択が　重要！）</Text>
+セリフの　選択が　重要！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T07:52:43" />
+				Time="2011-12-05T05:53:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -831,10 +831,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わざの　こうかに　ちゅうもく！
-（セリフのせんたくが　じゅうよう！）</Text>
+セリフのせんたくが　じゅうよう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T07:53:13" />
+				Time="2011-12-05T05:53:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -843,10 +843,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わざの　効果に　注目！
-（セリフの　選択が　重要！）</Text>
+セリフの　選択が　重要！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T07:53:23" />
+				Time="2011-12-05T05:53:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -868,10 +868,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かくれた　こうかを　いかして
-あいてを　こうげきを　うけろ！</Text>
+あいてのこうげきを　うけろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:35:11" />
+				Time="2011-12-05T07:28:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -880,10 +880,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>隠れた　効果を　活かして
-相手を　こうげきを　うけろ！</Text>
+相手の攻撃を　うけろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:35:06" />
+				Time="2011-12-05T07:28:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -905,10 +905,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>かくれた　こうかを　いかして
-あいてを　こうげきを　うけろ！</Text>
+あいてのこうげきを　うけろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:35:11" />
+				Time="2011-12-05T07:28:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -917,10 +917,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>隠れた　効果を　活かして
-相手を　こうげきを　うけろ！</Text>
+相手の攻撃を　うけろ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-01T10:35:06" />
+				Time="2011-12-05T07:28:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1046,10 +1046,10 @@
 		Label="pw_movie_hint_08">
 		<LanguageCell
 			Language="JPN">
-			<Text>いっきに　まけろ！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T07:49:56" />
+				Time="2011-12-05T05:53:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1057,10 +1057,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>一気に　負けろ！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T07:49:59" />
+				Time="2011-12-05T05:53:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

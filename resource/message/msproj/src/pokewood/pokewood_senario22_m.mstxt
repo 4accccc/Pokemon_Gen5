@@ -2134,28 +2134,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]おうじ『やったっ！
-ぜんぶ　たおしたぜ！▼
-これで　でられる……　あれ！？</Text>
+コロモリどもを　たおしたぜ！▽
+これで　ここから　でられる……▼
+あれ！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:18" />
+				Time="2011-12-05T07:37:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:18" />
+				Time="2011-12-05T07:37:21" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]王子『やったっ！
-ぜんぶ　倒したぜ！▼
-これで　出られる……　あれ！？</Text>
+コロモリどもを　倒したぜ！▽
+これで　ここから　出られる……▼
+あれ！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:18" />
+				Time="2011-12-05T07:37:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:18" />
+				Time="2011-12-05T07:37:21" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

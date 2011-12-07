@@ -555,7 +555,7 @@ UFOの　全身が　少しずつ▽
 	</row>
 	<row id="pw_event2_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ここで　くいとめるわ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ここで　くいとめるわ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ここで　くい止めるわ！</language>
 	</row>
 	<row id="pw_event2_react_enemy_1">
 		<language name="JPN" width="256">ＵＦＯ『……　……</language>

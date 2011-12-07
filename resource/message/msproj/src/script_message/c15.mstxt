@@ -878,14 +878,14 @@ msg_c15_oldman1_01_04
 		<LanguageCell
 			Language="JPN">
 			<Text>おお！　ＡDかと　おもったら
-[Name:TrainerName ]か！▼
+[Name:TrainerName ]ではないか！▼
 おまえほどの　スター　ならば
 わしの　えいがに　だしてもよいぞ！▼
 あのヨーテリーの　かわりに
 ポケモンやくを　やってみんか！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T01:49:11" />
+				Time="2011-12-05T07:02:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -894,14 +894,14 @@ msg_c15_oldman1_01_04
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おお！　ＡDかと　思ったら
-[Name:TrainerName ]か！▼
+[Name:TrainerName ]ではないか！▼
 お前ほどの　スター　ならば
 わしの　映画に　だしてもよいぞ！▼
 あのヨーテリーの　かわりに
 ポケモン役を　やってみんか！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T01:49:06" />
+				Time="2011-12-05T07:02:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2649,15 +2649,15 @@ Bis  bald.</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やあ！　[Name:TrainerName ]！▼
-キミと　きょうえん　できたこと
+			<Text>よお！　[Name:TrainerName ]！▼
+アンタと　きょうえん　できたこと
 じつに　こうえいに　おもってるよ！▼
 え？　ボクのこと　おぼえてない？▼
-ヒドいな！　ＵＦＯを
+オイ　そりゃないぜ！　ＵＦＯを
 えんじてるのは　ボクなんだぜ！　</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T03:00:43" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-07T06:17:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2665,15 +2665,15 @@ Bis  bald.</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やあ！　[Name:TrainerName ]！▼
-キミと　共演できたこと
+			<Text>よお！　[Name:TrainerName ]！▼
+アンタと　共演できたこと
 実に　光栄に　思ってるよ！▼
 え？　ボクのこと　覚えてない？▼
-ヒドいな！　ＵＦＯを
+オイ　そりゃないぜ！　ＵＦＯを
 演じてるのは　ボクなんだぜ！　</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T03:00:47" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-07T06:17:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2833,7 +2833,7 @@ Bis  bald.</Text>
 かんしゃを　わすれては　いかんぞ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T13:05:08" />
+				Time="2011-12-07T04:02:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2915,27 +2915,24 @@ Bis  bald.</Text>
 			<Text>うむ……▼
 [Name:TrainerName ]ちゃん……
 きょうは　きねんすべき　ひ　なんだ……▼
-この　だいざ……
-そして　うえにたつ　どうぞうを　みてよ▼
 ……ボクはね　ここを　つくったとき
 ひとつの　ねがいと　ちかいを　たてたの▼
-それは　このポケウッドがね
+それは　ポケウッドが
 せかいじゅうを　アメイジングさせる▽
 エンターテインメントの　でんどうに▽
 せいちょうする　そのひ　まで……▼
-そして　そんなポケウッドに　ふさわしい
+そして　ポケウッドに　ふさわしい
 しんのスターが　うまれる　ひまで……▽
 この　だいざの　うえには▽
-なにも　たてずに　おこうと……▼
-……だが　みてよ▼
-すでに　ここには　りっぱな
-どうぞうが　たっているでしょ？▼
+なにも　たてずに　おこう　ってね▼
+……だが　みてごらん
+いま　ここには　どうぞうが　たっている▼
 つまり　ボクのねがいは　かなったの……▼
-[Name:TrainerName ]ちゃん……
+そう　[Name:TrainerName ]ちゃん……
 キミの　おかげでね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-07T13:13:46" />
+				Time="2011-12-07T05:25:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -2946,27 +2943,24 @@ Bis  bald.</Text>
 			<Text>うむ……▼
 [Name:TrainerName ]ちゃん……
 今日は　記念すべき日　なんだ……▼
-この　台座……
-そして　上に建つ　銅像を　みてよ▼
 ……ボクはね　ここを　つくったとき
 一つの　願いと　誓いを　立てたの▼
-それは　このポケウッドがね
-世界中を　アメイジングさせる
-エンターテインメントの　殿堂に
+それは　ポケウッドが
+世界中を　アメイジングさせる▽
+エンターテインメントの　殿堂に▽
 成長する　その日まで……▼
-そして　そんなポケウッドに　相応しい
-真の　スターが　誕生する日まで……▽
+そして　ポケウッドに　相応しい
+真のスターが　誕生する日まで……▽
 この台座の　上には▽
-何も　建てずに　おこうと……▼
-……　……だが　みてよ▼
-すでに　ここには　立派な
-銅像が　立っているでしょ？
+何も　建てずに　おこう　ってね▼
+……　……だが　みてごらん
+今ここに　銅像が　立っている▼
 つまり　ボクの願いは　かなったの……▼
-[Name:TrainerName ]ちゃん……
+そう　[Name:TrainerName ]ちゃん……
 キミの　おかげでね……</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-18T12:23:42" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-07T05:25:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

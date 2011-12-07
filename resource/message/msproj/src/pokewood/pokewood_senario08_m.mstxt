@@ -321,14 +321,14 @@
 			Language="JPN">
 			<Text>つうしん『おい！　きこえるか！？
 おうとうせよ！　[Name:TrainerName Idx="1" ]！▽
-じょうきょうを　ほうこく　しろ！</Text>
+じょうきょうを　ほうこくしろ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-05T07:37:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-05T07:37:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -955,14 +955,14 @@ UFOの　全身が　少しずつ▽
 			Language="JPN_KANJI">
 			<Text>老人『これまでじゃ……
 ああ……　じいさん　や……▽
-いま　あいに　行きますぞ……</Text>
+いま 　あいに　行きますぞ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T08:50:13" />
+				Time="2011-12-05T07:37:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T08:50:13" />
+				Time="2011-12-05T07:37:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1087,14 +1087,14 @@ UFOの　全身が　少しずつ▽
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ここで　くいとめるぞ！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ここで　くい止めるぞ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-05T07:37:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-05T07:37:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1398,14 +1398,14 @@ UFOから　光が……▼
 			Language="JPN_KANJI">
 			<Text>通信『おい！　聞こえるか！？
 応答せよ！　[Name:TrainerName Idx="1" ]！▽
-状況を　報告　しろ！</Text>
+状況を　報告しろ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-05T07:37:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-05T07:37:03" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

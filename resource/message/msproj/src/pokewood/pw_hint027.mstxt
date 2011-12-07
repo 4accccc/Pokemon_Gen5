@@ -750,10 +750,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わざの　こうかに　ちゅうもく！
-(セリフの　せんたくが　じゅうよう！)</Text>
+セリフの　せんたくが　じゅうよう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T08:43:11" />
+				Time="2011-12-05T05:58:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -762,10 +762,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わざの　効果に　注目！
-(セリフの　選択が　重要！)</Text>
+セリフの　選択が　重要！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T08:43:22" />
+				Time="2011-12-05T05:58:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -829,10 +829,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>わざの　こうかに　ちゅうもく！
-(セリフの　せんたくが　じゅうよう！)</Text>
+セリフの　せんたくが　じゅうよう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T08:41:05" />
+				Time="2011-12-05T05:58:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -841,10 +841,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わざの　効果に　注目！
-(セリフの　選択が　重要！)</Text>
+セリフの　選択が　重要！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T08:43:22" />
+				Time="2011-12-05T05:58:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -936,10 +936,10 @@
 		Label="pw_movie_hint_05">
 		<LanguageCell
 			Language="JPN">
-			<Text>わざの　こうかに　ちゅうもく！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T08:44:07" />
+				Time="2011-12-05T05:58:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -947,10 +947,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わざの　効果に　注目！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T08:44:12" />
+				Time="2011-12-05T05:58:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

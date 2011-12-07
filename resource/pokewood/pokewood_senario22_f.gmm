@@ -896,11 +896,13 @@
 	</row>
 	<row id="pw_event9_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『やった！
-ぜんぶ　たおしたわ！▼
-これで　でられる……　あれ！？</language>
+コロモリどもを　たおしたわ！▽
+これで　でられる……▼
+あれ！？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『やった！
-ぜんぶ　倒したわ！▼
-これで　出られる……　あれ！？</language>
+コロモリどもを　倒したわ！▽
+これで　出られる……▼
+あれ！？</language>
 	</row>
 	<row id="pw_event9_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『どこっ！？
