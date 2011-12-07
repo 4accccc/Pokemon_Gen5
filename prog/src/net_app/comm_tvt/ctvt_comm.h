@@ -46,6 +46,8 @@ typedef enum
   CCFT_FINISH_TALK,  //会話終了通知
   CCFT_CANCEL_TALK,  //会話取り消し通知 //何かしらうまくいかなかったとき
 
+  CCFT_FINISH_PARENT,  //親が終了を要求する
+  
   // add ichiraku
   // ミニゲーム参加受付用
   CCFT_REQ_GAME,        // 参加要求通知       親が送信
@@ -56,8 +58,6 @@ typedef enum
   CCFT_DECIDE_GAME2,    // 参加決定 確認用    子が送信
   CCFT_START_GAME2,     // 開始要求 確認用    親が送信
 
-  CCFT_FINISH_PARENT,  //親が終了を要求する
-  
   CCFT_MAX,
 }CTVT_COMM_FLAG_TYPE;
 
