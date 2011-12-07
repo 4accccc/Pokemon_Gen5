@@ -58,7 +58,6 @@
 //外部公開
 #include "app/wbt_list.h"
 
-//@TODO BG読み込み とりあえずマイクテストのリソース
 #include "message.naix"
 #include "wbt_list_gra.naix"
 
@@ -933,8 +932,6 @@ static GFL_PROC_RESULT WBTListProc_Main( GFL_PROC *proc, int *seq, void *pwk, vo
 //-----------------------------------------------------------------------------
 static void WBTList_BG_LoadResource( WBTLIST_BG_WORK* wk, HEAPID heapID )
 {
-	//@TODO とりあえずマイクテストのリソース
-	//@TODO 複数枚ロードできるようにして切り離す？
 	enum
 	{
 		RES_ARC = ARCID_WBTLIST_GRA,
@@ -2029,7 +2026,6 @@ static void wbt_init_movework( WBTLIST_MAIN_WORK* wk, const s32 wnum, const s16 
 	wk->MoveWork[wnum].sx 		= sx;
 	wk->MoveWork[wnum].ex		= ex;
 	// 内部の計算は100倍しておく
-	// シフトを使ってもよいがとりあえずは保留
 	wk->MoveWork[wnum].rate		= (ex-sx)*100/frame;
 	wk->MoveWork[wnum].calcnum	= sx*100;
 	wk->MoveWork[wnum].flag		= FLG_MOVE_INIT;

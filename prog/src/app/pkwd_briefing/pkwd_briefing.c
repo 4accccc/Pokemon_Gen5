@@ -260,11 +260,6 @@ typedef struct{
   POKEPARTY       *myparty;
   POKEPARTY       *enemyparty;
 
-  // vblank中にprintしたい
-  int             vblank_str_print;
-  int             briefing_linage;
-  int             briefing_index;
-
   u8              linage_pool[BRIEFING_PAGE_MAX];
   int             exchange_result;    /// 敵トレーナーと順番を入れ替えたか？TRUE=はい
 }G2D_CONTROL;
@@ -1012,14 +1007,6 @@ static void VintrBriefingFunc(GFL_TCB *tcb, void *work)
 {
   PKWD_BRIEFING_WORK *tw = work;
   G2D_CONTROL *CG2d = &tw->CG2d;
-
-  if(CG2d->vblank_str_print){
-    PRINT_UTIL_PrintColor( &CG2d->printUtil[CG2d->briefing_index], CG2d->printQue, 0, 
-                          (BRIEF_BMPWIN_H*8-CG2d->briefing_linage*16)/2, 
-                          CG2d->expandbuf[CG2d->briefing_index], CG2d->fontHandle,
-                          PRINTSYS_MACRO_LSB(1,2,14) );
-    CG2d->vblank_str_print = FALSE;
-  }
 
   PRINTSYS_QUE_Main( tw->CG2d.printQue );
   PRINT_UTIL_Trans( &tw->CG2d.printUtil[0], tw->CG2d.printQue );
@@ -2178,15 +2165,9 @@ static void BriefingFunc( PKWD_BRIEFING_WORK *tw )
   switch(tw->blend_seq){
   // 開始
   case BLEND_SEQ_START:
-    if((tw->CG2d.now_page&1)==0){
-      GFL_BG_SetVisible( FRAME_BRIEF1, VISIBLE_ON );
-      GFL_BG_SetVisible( FRAME_BRIEF2, VISIBLE_OFF );
-      G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,GX_BLEND_PLANEMASK_BG0,  0, 16 );
-    }else{
-      GFL_BG_SetVisible( FRAME_BRIEF1, VISIBLE_OFF );
-      GFL_BG_SetVisible( FRAME_BRIEF2, VISIBLE_ON );
-      G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2,GX_BLEND_PLANEMASK_BG0,  0, 16 );
-    }
+    GFL_BG_SetVisible( FRAME_BRIEF1, VISIBLE_ON );
+    GFL_BG_SetVisible( FRAME_BRIEF2, VISIBLE_OFF );
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,GX_BLEND_PLANEMASK_BG0,  0, 16 );
     tw->blend_seq = BLEND_SEQ_BLACK_BACK_WAIT;
     break;
   // 背景を暗くするまえにウェイト
@@ -2214,27 +2195,15 @@ static void BriefingFunc( PKWD_BRIEFING_WORK *tw )
     break;
   // 文字列フェード開始
   case BLEND_SEQ_FADEIN_START:
-    if((tw->CG2d.now_page&1)==0){
-      GFL_BG_SetVisible( FRAME_BRIEF1, VISIBLE_ON );
-      GFL_BG_SetVisible( FRAME_BRIEF2, VISIBLE_OFF );
-      G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,GX_BLEND_PLANEMASK_BG0,  0, 8 );
-    }else{
-      GFL_BG_SetVisible( FRAME_BRIEF1, VISIBLE_OFF );
-      GFL_BG_SetVisible( FRAME_BRIEF2, VISIBLE_ON );
-      G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2,GX_BLEND_PLANEMASK_BG0,  0, 8 );
-    }
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,GX_BLEND_PLANEMASK_BG0,  0, 8 );
     tw->blend_seq = BLEND_SEQ_FADEIN;
     break;
   // 文字列フェード
   case BLEND_SEQ_FADEIN:
     tw->CG2d.blend_work++;
-    if((tw->CG2d.now_page&1)==0){
-      G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,GX_BLEND_PLANEMASK_BG0,  tw->CG2d.blend_work, 8 );
-      G2_SetBG1Offset( SCREEN_MOVE_CALC, 0 );
-    }else{
-      G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2,GX_BLEND_PLANEMASK_BG0,  tw->CG2d.blend_work, 8 );
-      G2_SetBG2Offset( SCREEN_MOVE_CALC, 0 );
-    }
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,GX_BLEND_PLANEMASK_BG0,  tw->CG2d.blend_work, 8 );
+    G2_SetBG1Offset( SCREEN_MOVE_CALC, 0 );
+    // フェード終了判定
     if(tw->CG2d.blend_work==16){
       tw->blend_seq = BLEND_SEQ_WAIT;
     }
@@ -2249,13 +2218,9 @@ static void BriefingFunc( PKWD_BRIEFING_WORK *tw )
   // 文字列フェードアウト
   case BLEND_SEQ_FADEOUT:
     tw->CG2d.blend_work--;
-    if((tw->CG2d.now_page&1)==0){
-      G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,GX_BLEND_PLANEMASK_BG0,  tw->CG2d.blend_work, 8 );
-      G2_SetBG1Offset( SCREEN_MOVE_CALC2, 0 );
-    }else{
-      G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2,GX_BLEND_PLANEMASK_BG0,  tw->CG2d.blend_work, 8 );
-      G2_SetBG2Offset( SCREEN_MOVE_CALC2, 0 );
-    }
+    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,GX_BLEND_PLANEMASK_BG0,  tw->CG2d.blend_work, 8 );
+    G2_SetBG1Offset( SCREEN_MOVE_CALC2, 0 );
+    // フェード終了判定
     if(tw->CG2d.blend_work==0){
       tw->blend_seq = BLEND_SEQ_END;
     }
@@ -2266,8 +2231,15 @@ static void BriefingFunc( PKWD_BRIEFING_WORK *tw )
     if(_next_page_check( tw )){
       tw->seq  = SEQ_VOICE_PLAY;                // 終了
     }else{
-      tw->blend_seq = BLEND_SEQ_FADEIN_START;   // 次のページ表示へ
+      tw->blend_seq = BLEND_SEQ_END_WAIT;
+      // 実際の表示
       _briefing_print( &tw->CG2d, tw->CG2d.now_page, tw->sex );
+    }
+    break;
+  // 念のためメッセージの終了を待つ
+  case BLEND_SEQ_END_WAIT:
+    if( PRINTSYS_QUE_IsFinished( tw->CG2d.printQue ) == TRUE ){
+      tw->blend_seq = BLEND_SEQ_FADEIN_START;   // 次のページ表示へ
     }
     break;
   }
@@ -2321,14 +2293,15 @@ static void initLcdWindow2( int left_right )
  *
  * @param   CG2d		
  * @param   page		表示するページ
+ * @param   sex			性別
  */
 //----------------------------------------------------------------------------------
 static void _briefing_print( G2D_CONTROL* CG2d, int page, int sex )
 {
   int linage;
-  int index = page%2;
+  int index = 0;		// 固定
   STRBUF *strbuf=NULL;
-
+  
   // 男女別であらすじ文字列を取得して、wordset展開
   if(sex==PM_MALE){
     strbuf = GFL_MSG_CreateString( CG2d->mm, pw_briefing_001+page );
@@ -2343,12 +2316,9 @@ static void _briefing_print( G2D_CONTROL* CG2d, int page, int sex )
 
   //メッセージ表示
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( CG2d->bmpwin[index] ), BRIEF_CLEAR_COLOR );
-  CG2d->vblank_str_print = TRUE;
-  CG2d->briefing_linage = linage;
-  CG2d->briefing_index  = index;
-//  PRINT_UTIL_PrintColor( &CG2d->printUtil[index], CG2d->printQue, 0, 
-//                        (BRIEF_BMPWIN_H*8-linage*16)/2, CG2d->expandbuf[index], CG2d->fontHandle,
-//                        PRINTSYS_MACRO_LSB(1,2,14) );
+  PRINT_UTIL_PrintColor( &CG2d->printUtil[index], CG2d->printQue, 0, 
+                        (BRIEF_BMPWIN_H*8-linage*16)/2, CG2d->expandbuf[index], CG2d->fontHandle,
+                        PRINTSYS_MACRO_LSB(1,2,14) );
 
 }
 
