@@ -677,6 +677,9 @@ BOOL BOX2SEQ_Main( BOX2_SYS_WORK * syswk, int * seq )
 {
   if( syswk->app != NULL && syswk->app->que != NULL && PRINTSYS_QUE_IsFinished( syswk->app->que ) == FALSE ){
   }else{
+	  if( syswk->app != NULL ){
+			BOX2BMP_BoxNameTrans( syswk );
+		}
     *seq = MainSeq[*seq]( syswk );
   }
 

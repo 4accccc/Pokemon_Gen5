@@ -233,7 +233,10 @@ extern void BOX2BMP_BoxListButtonBgFrmWkMake( BOX2_SYS_WORK * syswk );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
+extern void BOX2BMP_BoxNameWriteNoTrans( BOX2_SYS_WORK * syswk, u32 tray, u32 idx );
 extern void BOX2BMP_BoxNameWrite( BOX2_SYS_WORK * syswk, u32 tray, u32 idx );
+
+extern void BOX2BMP_BoxNameTrans( BOX2_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**

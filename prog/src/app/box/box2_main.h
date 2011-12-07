@@ -430,6 +430,8 @@ typedef struct {
   u8  multi_w,multi_h;  // 複数選択しているときの横・縦
   MULTISELECT_OUTLINE_WORK multiselect_outline; // 複数選択範囲描画用ワーク
 	BOOL	multi_no_drag;	// 複数選択のドラッグ無効 = TRUE
+
+	BOOL	tray_name_trans;		// トレイ名のBMPOAM転送フラグ　BTS34対策
 }BOX2_APP_WORK;
 
 // ボックス画面システムワーク

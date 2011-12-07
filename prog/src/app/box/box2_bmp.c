@@ -1223,7 +1223,7 @@ void BOX2BMP_BoxListButtonBgFrmWkMake( BOX2_SYS_WORK * syswk )
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void BOX2BMP_BoxNameWrite( BOX2_SYS_WORK * syswk, u32 tray, u32 idx )
+void BOX2BMP_BoxNameWriteNoTrans( BOX2_SYS_WORK * syswk, u32 tray, u32 idx )
 {
 	STRBUF * str;
 	u32	x;
@@ -1236,9 +1236,21 @@ void BOX2BMP_BoxNameWrite( BOX2_SYS_WORK * syswk, u32 tray, u32 idx )
 	PRINTSYS_PrintColor( syswk->app->fobj[idx].bmp, x, 0, str, syswk->app->font, FCOL_FNTOAM );
 
 	GFL_STR_DeleteBuffer( str );
-
+}
+void BOX2BMP_BoxNameWrite( BOX2_SYS_WORK * syswk, u32 tray, u32 idx )
+{
+	BOX2BMP_BoxNameWriteNoTrans( syswk, tray, idx );
 	BmpOam_ActorBmpTrans( syswk->app->fobj[idx].oam );
 }
+
+void BOX2BMP_BoxNameTrans( BOX2_SYS_WORK * syswk )
+{
+	if( syswk->app->tray_name_trans == TRUE ){
+		BmpOam_ActorBmpTrans( syswk->app->fobj[BOX2MAIN_FNTOAM_TRAY_NAME].oam );
+		syswk->app->tray_name_trans = FALSE;
+	}
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1257,7 +1269,8 @@ void BOX2BMP_BoxMoveNameWrite( BOX2_SYS_WORK * syswk, u32 pos )
 		pos -= syswk->trayMax;
 	}
 
-	BOX2BMP_BoxNameWrite( syswk, pos, BOX2MAIN_FNTOAM_TRAY_NAME );
+	BOX2BMP_BoxNameWriteNoTrans( syswk, pos, BOX2MAIN_FNTOAM_TRAY_NAME );
+	syswk->app->tray_name_trans = TRUE;
 }
 
 //--------------------------------------------------------------------------------------------
