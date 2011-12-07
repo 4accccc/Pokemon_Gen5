@@ -21035,7 +21035,7 @@ static const ZONEDATA ZoneData[] = {
 		SEQ_BGM_D_01,
 		SEQ_BGM_D_01,
 		SEQ_BGM_D_01,
-		enc_dummy,
+		NARC_encount_data_w_d35r0101_bin,
 		FMISSION_MAP_ATTR_FOREST,
 		NARC_eventdata_d35r0101_bin,
     ZONE_ID_D35R0101,
