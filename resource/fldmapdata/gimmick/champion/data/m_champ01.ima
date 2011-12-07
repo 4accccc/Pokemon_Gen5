@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-08-23T19:02:12" source="m_champ01.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-12-07T12:31:04" source="m_champ01_s.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -15,7 +15,7 @@
 	tool_start_frame="1"
 	tool_end_frame="370"
 	interpolation="frame"
-	compress_material="on" material_size="45 45"
+	compress_material="on" material_size="44 44"
 	frame_step_mode="1"
 	tolerance_color="2"
 />
@@ -99,7 +99,7 @@
 </mat_color_data>
 
 <mat_color_anm_array size="2">
-	<mat_color_anm index="0" material_name="in38_kemuri01">
+	<mat_color_anm index="0" material_name="in38_kemuri01_1">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
@@ -114,7 +114,7 @@
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
 		<polygon_alpha frame_step="1" data_size="370" data_head="2"/>
 	</mat_color_anm>
-	<mat_color_anm index="1" material_name="in38_kemuri02">
+	<mat_color_anm index="1" material_name="in38_kemuri02_1">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_b frame_step="1" data_size="1" data_head="0"/>

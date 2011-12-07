@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-08-23T18:20:23" source="c_relief_01.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-12-07T12:44:16" source="c_relief_01.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -17,7 +17,7 @@
 	tool_start_frame="1"
 	tool_end_frame="1200"
 	interpolation="frame"
-	compress_node="merge" node_size="15 11"
+	compress_node="merge" node_size="16 12"
 	frame_step_mode="4"
 	tolerance_scale="0.100000"
 	tolerance_rotate="0.100000"
@@ -304,7 +304,7 @@
 	-5.704834 -4.503662 -3.302734 -2.101807 -0.900635 -0.600586 -0.300293 0.000000
 </node_rotate_data>
 
-<node_translate_data size="2437">
+<node_translate_data size="2440">
 	8.000000 338.842285 -448.000000 0.000000 -18.151367 -78.380859 -81.895264 -84.834473 -87.177490 -88.907959
 	-90.013916 -90.487305 -90.324951 -89.528076 -88.102051 -86.057129 -83.407471 -80.171875 -76.373047 -72.037598
 	-67.195801 -61.882080 -56.133545 -49.990723 -43.496582 -36.696777 -29.639160 -22.373291 -14.950195 -7.422119
@@ -548,10 +548,10 @@
 	24.068848 20.532959 16.988037 13.435547 9.877197 6.314697 2.749268 -0.817383 -4.383545 -7.947998
 	-11.508789 -15.064697 -18.613770 -22.154785 -25.686035 -29.206055 -32.713135 -36.206055 -39.682861 -43.142334
 	-46.582764 -50.002686 -53.400879 -56.775391 -60.125000 -63.448242 -66.743652 -70.009521 -73.244873 -76.447998
-	-79.617432 -82.751953 -83.529785 -84.305664 -85.078857 -52.000000 -16.000000
+	-79.617432 -82.751953 -83.529785 -84.305664 -85.078857 -52.000000 -0.004150 -16.250000 -60.000000 -16.000000
 </node_translate_data>
 
-<node_anm_array size="11">
+<node_anm_array size="12">
 	<node_anm index="0">
 		<scale_x frame_step="1" data_size="1" data_head="0"/>
 		<scale_y frame_step="1" data_size="1" data_head="0"/>
@@ -658,11 +658,22 @@
 		<rotate_x frame_step="1" data_size="1" data_head="0"/>
 		<rotate_y frame_step="1" data_size="1" data_head="0"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="2436"/>
+		<translate_y frame_step="1" data_size="1" data_head="2437"/>
+		<translate_z frame_step="1" data_size="1" data_head="2438"/>
+	</node_anm>
+	<node_anm index="10">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
 		<translate_x frame_step="1" data_size="1" data_head="3"/>
 		<translate_y frame_step="1" data_size="1" data_head="3"/>
 		<translate_z frame_step="1" data_size="1" data_head="3"/>
 	</node_anm>
-	<node_anm index="10">
+	<node_anm index="11">
 		<scale_x frame_step="1" data_size="1" data_head="0"/>
 		<scale_y frame_step="1" data_size="1" data_head="0"/>
 		<scale_z frame_step="1" data_size="1" data_head="0"/>
@@ -671,7 +682,7 @@
 		<rotate_z frame_step="4" data_size="303" data_head="2425"/>
 		<translate_x frame_step="1" data_size="1" data_head="3"/>
 		<translate_y frame_step="1" data_size="1" data_head="3"/>
-		<translate_z frame_step="1" data_size="1" data_head="2436"/>
+		<translate_z frame_step="1" data_size="1" data_head="2439"/>
 	</node_anm>
 </node_anm_array>
 
