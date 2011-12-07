@@ -737,9 +737,11 @@ BOOL ZONEDATA_IsRailMap(u16 zone_id)
  */
 //------------------------------------------------------------------
 /*
- * @todo ゾーンIDが2047を超える場合、
+ * ゾーンIDが2047を超える場合、
  *       また、レールデータアーカイブのデータ数が32を越える時はbitを拡張する必要アリ
  */
+SDK_COMPILER_ASSERT( ZONE_ID_MAX <= 2047 );
+
 typedef struct RAIL_DATA{
   u16 zone_id:11;
   u16 rail_id:5;
@@ -782,6 +784,7 @@ int ZONEDATA_GetRailDataID(u16 zone_id)
 
   for( i = 0;i < NELEMS(DATA_RailTbl);i++){
     if( DATA_RailTbl[i].zone_id == zone_id ){
+      GF_ASSERT(NELEMS(DATA_RailTbl)<=32);
       return DATA_RailTbl[i].rail_id;
     }
   }
@@ -1372,9 +1375,11 @@ u32 ZONEDATA_GetFieldSkillMapEffMsk(u16 zone_id)
  */
 //-----------------------------------------------------------------------------
 /*
- * @todo ゾーンIDが2047を超える場合、
+ * ゾーンIDが2047を超える場合、
  *       また、カメラシーンデータアーカイブのデータ数が32を越える時はbitを拡張する必要アリ
  */
+SDK_COMPILER_ASSERT( ZONE_ID_MAX <= 2047 );
+
 typedef struct CAMERA_SCENE_DATA{
   u16 zone_id:11;
   u16 scene_id:5;
@@ -1400,6 +1405,7 @@ u32 ZONEDATA_GetSceneAreaID(u16 zone_id)
   
   for( i = 0;i < NELEMS(DATA_CameraScene);i++){
     if( DATA_CameraScene[i].zone_id == zone_id ){
+      GF_ASSERT(NELEMS(DATA_CameraScene)<=32);
       return DATA_CameraScene[i].scene_id;
     }
   }
