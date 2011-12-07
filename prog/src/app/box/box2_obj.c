@@ -1110,6 +1110,11 @@ static BOOL CheckPokeSearchCondition( BOX_SEARCH_DATA* sp, const POKEMON_PASO_PA
   }
   //絞込み条件に一致しているか？
 
+	//タマゴ
+	if( PPP_Get(ppp,ID_PARA_tamago_flag,NULL) != 0 ){
+		return FALSE;
+	}
+
   //ポケモンNo(1オリジン)
   if( sp->pokemon_id != 0 ){
     if( PPP_Get(ppp,ID_PARA_monsno,NULL) != sp->pokemon_id ){
