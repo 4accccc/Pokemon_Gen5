@@ -3138,21 +3138,21 @@ static void RESORT_CROWD_NOISE_WK_Main( RESORT_CROWD_NOISE_WK *p_wk, FLDMSGBG* p
 static const u8 sc_NOISE_X[] = 
 {
   1,
-  22,
-  2,
-  20,
-  4,
-  21,
-  3,
   19,
+  2,
+  17,
+  4,
+  19,
+  3,
+  16,
   1,
-  19,
+  16,
   2,
-  22,
+  19,
   3,
-  20,
+  18,
   4,
-  21,
+  17,
 };
 static const u8 sc_NOISE_Y[] = 
 {
