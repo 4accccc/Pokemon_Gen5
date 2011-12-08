@@ -36,7 +36,11 @@ enum {
 	NARC_league_front_pl_lite4_off_nsbta = 22,
 	NARC_league_front_pl_efect_01_nsbma = 23,
 	NARC_league_front_pl_ele_00_ica_bin = 24,
-	NARC_league_front_pl_ele_01_ica_bin = 25
+	NARC_league_front_pl_ele_01_ica_bin = 25,
+	NARC_league_front_ed_hanabi01_nsbmd = 26,
+	NARC_league_front_ed_hanabi01_nsbca = 27,
+	NARC_league_front_ed_hanabi01_nsbma = 28,
+	NARC_league_front_ed_hanabi01_nsbta = 29
 };
 
 /* NARC_LEAGUE_FRONT_NAIX_ */

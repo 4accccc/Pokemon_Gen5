@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= obata_toshihiro fujiwara_maiko
+USERS	= obata_toshihiro fujiwara_maiko ichiraku_katsuhiko fuchino_hiroki
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -59,7 +59,11 @@ CONVERTDATA = $(GRAPHIC_BIN)/pl_ele_00.nsbmd \
 							$(GRAPHIC_BIN)/pl_lite4_off.nsbta \
 							$(GRAPHIC_BIN)/pl_efect_01.nsbma \
 							$(GRAPHIC_BIN)/pl_ele_00_ica.bin \
-							$(GRAPHIC_BIN)/pl_ele_01_ica.bin
+							$(GRAPHIC_BIN)/pl_ele_01_ica.bin \
+							$(GRAPHIC_BIN)/ed_hanabi01.nsbmd \
+							$(GRAPHIC_BIN)/ed_hanabi01.nsbca \
+							$(GRAPHIC_BIN)/ed_hanabi01.nsbma \
+							$(GRAPHIC_BIN)/ed_hanabi01.nsbta
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -104,6 +108,10 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g3dcvtr $(GRAPHIC_SOURCE)/pl_efect_01.ima -o $(GRAPHIC_BIN)/pl_efect_01.nsbma
 	ruby $(ICACONV) -t $(GRAPHIC_SOURCE)/pl_ele_00.ica $(GRAPHIC_BIN)/pl_ele_00_ica.bin
 	ruby $(ICACONV) -t $(GRAPHIC_SOURCE)/pl_ele_01.ica $(GRAPHIC_BIN)/pl_ele_01_ica.bin
+	g3dcvtr $(GRAPHIC_SOURCE)/ed_hanabi01.imd -o $(GRAPHIC_BIN)/ed_hanabi01.nsbmd
+	g3dcvtr $(GRAPHIC_SOURCE)/ed_hanabi01.ica -o $(GRAPHIC_BIN)/ed_hanabi01.nsbca
+	g3dcvtr $(GRAPHIC_SOURCE)/ed_hanabi01.ima -o $(GRAPHIC_BIN)/ed_hanabi01.nsbma
+	g3dcvtr $(GRAPHIC_SOURCE)/ed_hanabi01.ita -o $(GRAPHIC_BIN)/ed_hanabi01.nsbta
 endif
 
 
