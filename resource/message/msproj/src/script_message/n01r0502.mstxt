@@ -1828,12 +1828,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・これ以降の処理未定
-・条件を満たすとトレーナー戦闘が
-　できるようにする予定</Comment>
+・リュウラセンの塔で
+　レシラム、ゼクロムが出現とここから削除</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T07:02:17" />
+				Time="2011-12-08T02:57:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
