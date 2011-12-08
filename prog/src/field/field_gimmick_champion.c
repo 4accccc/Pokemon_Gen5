@@ -52,6 +52,7 @@
 //=============================================================================
 // セーブワーク
 typedef struct {
+  BOOL      pos_flag;          // POSイベントを踏んだか
   BOOL      exchange_flag;     // 点灯後に切り替えているか
 } CHAMPION_SV_WORK;
 
@@ -224,6 +225,8 @@ static GMEVENT_RESULT HallRoomEvent( GMEVENT* event, int* seq, void* wk );
 //-------------------------------------
 ///	セーブ情報
 //=====================================
+static void SAVE_SetPosFlag( CHAMPION_SV_WORK *p_wk, BOOL flag );
+static BOOL SAVE_GetPosFlag( const CHAMPION_SV_WORK *p_wk );
 static void SAVE_SetExchangeFlag( CHAMPION_SV_WORK *p_wk, BOOL flag );
 static BOOL SAVE_GetExchangeFlag( const CHAMPION_SV_WORK *p_wk );
 
@@ -327,9 +330,6 @@ void CHAMPION_Move( FIELDMAP_WORK *p_fieldmap )
 {
   CHAMPION_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, CHAMPION_TMP_ASSIGN_ID );
 
-
-  
-
   // EXPOBJアニメメイン
   EXPOBJ_ObjMain( p_wk );
 }
@@ -416,6 +416,22 @@ void CHAMPION_LightAttrON( GAMESYS_WORK *gsys, const int obj_id )
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  モデル切り替えフラグON
+ *
+ *	@param	GAMESYS_WORK *gsys 
+ */
+//-----------------------------------------------------------------------------
+void CHAMPION_SetExchangeFlag( GAMESYS_WORK *gsys )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+  CHAMPION_TMP  *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, CHAMPION_TMP_ASSIGN_ID );
+
+  // 切り替え後になったことを保存
+  SAVE_SetExchangeFlag( p_wk->p_sv_wk, TRUE );
+}
+
 //=============================================================================
 /**
  *					static関数
@@ -430,11 +446,11 @@ void CHAMPION_LightAttrON( GAMESYS_WORK *gsys, const int obj_id )
 //-----------------------------------------------------------------------------
 static void INIT_FieldRecover( CHAMPION_TMP *p_wk )
 {
-  const BOOL exchange_flag = SAVE_GetExchangeFlag( p_wk->p_sv_wk );
+  const BOOL pos_flag     = SAVE_GetPosFlag( p_wk->p_sv_wk );
+  const BOOL exchange_flag= SAVE_GetExchangeFlag( p_wk->p_sv_wk );
 
-  // 切り替え後ならモデルを点灯後にする
-  // アニメは初期化
-  if( exchange_flag == TRUE )
+  // POSを踏んでいるならモデルを切り替える
+  if( pos_flag == TRUE )
   {
     // ルーム表示切り替え
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_ROOM_1, TRUE );
@@ -443,14 +459,6 @@ static void INIT_FieldRecover( CHAMPION_TMP *p_wk )
     // レリーフ表示切り替え
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_1, TRUE );
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, FALSE );
-    {
-      // 無効化解除
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, 1, TRUE );
-      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, 2, TRUE );
-      // フレーム設定(0進めた状態にする)
-      FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, 1, 0 );
-      FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, 2, 0 );
-    }
 
     // 光差し込み状態に
     ANM_LIGHT_SetLastFrame( p_wk );
@@ -460,6 +468,23 @@ static void INIT_FieldRecover( CHAMPION_TMP *p_wk )
       FIELD_CAMERA *p_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
       FIELD_CAMERA_SetCameraType( p_camera, TOP_CAMERA_ID );
     }
+  }
+
+  // 切り替え後ならモデルを点灯後にする
+  // アニメは初期化
+  if( exchange_flag == TRUE )
+  {
+    // 無効化解除
+    FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, 1, TRUE );
+    FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, 2, TRUE );
+    // フレーム設定(0進めた状態にする)
+    FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, 1, 0 );
+    FLD_EXP_OBJ_SetObjAnmFrm( p_wk->exp_obj, CHAMPION_UNIT_IDX, OBJ_RELIEF_2, 2, 0 );
+  }
+  else
+  {
+    // レリーフが回転を再生する
+    ANM_Play( p_wk->exp_obj, OBJ_RELIEF_2, 0, 0, TRUE );
   }
 }
 
@@ -797,8 +822,8 @@ static GMEVENT_RESULT LightingEvent( GMEVENT* event, int* seq, void* wk )
         ANM_Stop( p_wk->exp_obj, OBJ_RELIEF_1, anm_idx );
       }
 
-      // 切り替え後になったことを保存
-      SAVE_SetExchangeFlag( p_wk->p_sv_wk, TRUE );
+      // POS踏んだフラグをON
+      SAVE_SetPosFlag( p_wk->p_sv_wk, TRUE );
 
       // デフォルトカメラも頂上用に変更
       {
@@ -908,6 +933,31 @@ static GMEVENT_RESULT HallRoomEvent( GMEVENT* event, int* seq, void* wk )
  *          セーブ情報
  */
 //=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  POSイベント踏んだフラグを設定
+ *
+ *	@param	CHAMPION_SV_WORK *p_wk
+ *	@param	flag TRUEで踏んだ後
+ */
+//-----------------------------------------------------------------------------
+static void SAVE_SetPosFlag( CHAMPION_SV_WORK *p_wk, BOOL flag )
+{
+  p_wk->pos_flag = flag;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  POSイベント踏んだフラグを取得
+ *
+ *	@param	const CHAMPION_SV_WORK *p_wk 
+ *
+ *	@return flag TRUEで踏んだ後
+ */
+//-----------------------------------------------------------------------------
+static BOOL SAVE_GetPosFlag( const CHAMPION_SV_WORK *p_wk )
+{
+  return p_wk->pos_flag;
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  モデル切り替え後フラグを設定

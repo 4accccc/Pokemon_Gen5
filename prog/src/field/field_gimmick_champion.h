@@ -25,4 +25,5 @@ extern GMEVENT* CHAMPION_Lighting( GAMESYS_WORK *gsys );
 extern GMEVENT* CHAMPION_HallRoom( GAMESYS_WORK *gsys );
 extern void CHAMPION_LightAttrOFF( GAMESYS_WORK *gsys, const int obj_id );
 extern void CHAMPION_LightAttrON( GAMESYS_WORK *gsys, const int obj_id );
+extern void CHAMPION_SetExchangeFlag( GAMESYS_WORK *gsys );
 
