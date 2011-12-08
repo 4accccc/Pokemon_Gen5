@@ -56,7 +56,7 @@ DEFINE_LOCAL  LCW_POSZ
 //  LOCALWORK01 ⇒ 歯車0を管理するWORK。オンオフで0か1になる。      //
 //  LOCALWORK02 ⇒ 歯車1を管理するWORK。オンオフで0か1になる。      //
 //  LOCALWORK03 ⇒ 歯車2を管理するWORK。オンオフで0か1になる。      //
-//  LOCALWORK15をリンクイベントで使用。
+//  LOCALWORK12をリンクイベントで使用。
 //                                                                  //
 //------------------------------------------------------------------//
 
@@ -66,9 +66,9 @@ DEFINE_LOCAL  LCW_POSZ
 INIT_EVENT_START   ev_zone_c07gym0101
   
   //データコンバートフラグチェック
-  _DATACONV_GET_FLAG( DATACONV_FLAG_GAME_CLEAR, LOCALWORK15 )
+  _DATACONV_GET_FLAG( DATACONV_FLAG_GAME_CLEAR, LOCALWORK12 )
   
-  IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_03 == 0 THEN
+  IF $LOCALWORK12 == 1 && $WK_SYS_LINK_EVENT_03 == 0 THEN
   
     //========================================//
     //ハチクを表示
