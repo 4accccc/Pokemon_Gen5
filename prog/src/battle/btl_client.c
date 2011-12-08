@@ -1819,8 +1819,12 @@ static BOOL UI_SelectActionPokewoodRec( BTL_CLIENT *wk, int *seq )
   switch( *seq ){
   case SELECT_ACT_SEQ_START:
     wk->pokewoodSeqWork.seq=0;
+    // クライアントＩＤがユーザーの時だけポケウッド処理は動作させる（ＡＩなりかわり対策）
+    if(wk->myID!=BTL_CLIENT_PLAYER){
+      (*seq) = SELECT_ACT_SEQ_SELECT_START;
+      return FALSE;
+    }
     // ポケウッドイベント起動チェック
-
     if(_check_event_choice( BTL_MAIN_GetPokewoodSenario(wk->mainModule), &wk->pokewoodSeqWork, wk->clientTurnCount) ){
       (*seq)++;
     }else{
@@ -3156,6 +3160,10 @@ static BOOL SubProc_REC_SelectActionSub( BTL_CLIENT* wk, int* seq, BOOL flag )
   // ポケウッドでなければ即終了
   case SUBSEQ_REC_S_POKEWOOD_CHECK:
     if( BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_NONE){
+      wk->pokewoodSeqWork.seq=0;
+      return TRUE;
+    // クライアントＩＤがユーザーの時だけポケウッド処理は動作させる（ＡＩなりかわり対策）
+    }else if(wk->myID!=BTL_CLIENT_PLAYER){
       wk->pokewoodSeqWork.seq=0;
       return TRUE;
     }else{
