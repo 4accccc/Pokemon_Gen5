@@ -415,7 +415,7 @@ sub_medaloyaji_rankup_check:
     _GET_MEDAL_COUNT( SCR_MEDALCOUNT_RANK,LWK_MEDAL_RANK  )
     _MEDAL_RANK_NAME( 1, LWK_MEDAL_RANK )
     _SYSWIN_MSG( msg_mdloyj_rankup_sys, POS_DEFAULT )
-    _ME_PLAY(	SEQ_ME_KEYITEM )  //‰¼
+    _ME_PLAY(	SEQ_ME_MD_FAN01 )
     _ME_WAIT()
     _AB_KEYWAIT_MARK()
     _SYSWIN_CLOSE()
