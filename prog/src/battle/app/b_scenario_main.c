@@ -886,9 +886,9 @@ static void bs_chk_canvas( BSCENARIO_WORK * wk )
 		// スクロール切り替え
 		BsCmn_BgScroll( wk, wk->TitleMode );
 		// bgスクリーン
-//		BsCmn_DispArrow( wk, wk->TitleMode, TRUE );
+		BsCmn_DispArrow( wk, wk->TitleMode, TRUE );
 		// 上マーク切替
-//		BsCmn_DispUpMark( wk, wk->TitleMode );
+		BsCmn_DispUpMark( wk, wk->TitleMode );
 		//
 		// obj非表示(このタイミングにしないとちらつく)
 		if( wk->TitleMode != BS_INFO ){
@@ -938,9 +938,9 @@ static void bs_init_top( BSCENARIO_WORK * wk )
 		// canvasのウエイト
 //		bs_chk_canvas( wk );
 		// bgスクリーン
-		BsCmn_DispArrow( wk, wk->TitleMode, TRUE );
+//		BsCmn_DispArrow( wk, wk->TitleMode, TRUE );
 		// 上マーク切替
-		BsCmn_DispUpMark( wk, wk->TitleMode );
+//		BsCmn_DispUpMark( wk, wk->TitleMode );
 		//
 		wk->Flag |= FLG_UPDATE;
 	}
@@ -1293,9 +1293,9 @@ static void bs_init_scenario( BSCENARIO_WORK * wk )
 	// canvasのウエイト
 //	bs_chk_canvas( wk );
 	// bgスクリーン
-	BsCmn_DispArrow( wk, wk->TitleMode, TRUE );
+//	BsCmn_DispArrow( wk, wk->TitleMode, TRUE );
 	// 上マーク切替
-	BsCmn_DispUpMark( wk, wk->TitleMode );
+//	BsCmn_DispUpMark( wk, wk->TitleMode );
 	
 	// リミットチェック
 	bs_chk_limit( wk, BS_SCENARIO, 1 );
@@ -1846,9 +1846,9 @@ static void bs_init_info( BSCENARIO_WORK * wk )
 	// canvasのウエイト
 //	bs_chk_canvas( wk );
 	// bgスクリーン
-	BsCmn_DispArrow( wk, wk->TitleMode, TRUE );
+//	BsCmn_DispArrow( wk, wk->TitleMode, TRUE );
 	// 上マーク切替
-	BsCmn_DispUpMark( wk, wk->TitleMode );
+//	BsCmn_DispUpMark( wk, wk->TitleMode );
 	//
 	// リミットチェック
 	bs_chk_limit( wk, BS_INFO, 1 );
