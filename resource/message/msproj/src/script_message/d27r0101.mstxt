@@ -6,11 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『なんだ　この　ふね？▼
+			<Text>[Name:TrainerName Idx="1" ]『この　ふね……▼
 なんで　つめたいんだ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T13:34:47" />
+				Time="2011-12-08T10:12:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『なんだ　この　船？▼
+			<Text>[Name:TrainerName Idx="1" ]『この船……▼
 なんで　冷たいんだ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T13:34:54" />
+				Time="2011-12-08T10:11:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1589,12 +1589,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『チッ！
-みんな　にげたか……▼
-どこだよ……　チョロネコ……▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ほら！
+ぜんいん　たおしただろ？▼
+さあ！　チョロネコについて
+いろいろ　きかせてもらうぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T03:13:25" />
+				Time="2011-12-08T10:17:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1602,12 +1603,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『チッ！
-みんな　逃げたか……▼
-どこだよ……　チョロネコ……▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ほら！
+全員　倒しただろ？▼
+さあ！　チョロネコについて
+いろいろ　きかせてもらうぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T03:13:31" />
+				Time="2011-12-08T10:17:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

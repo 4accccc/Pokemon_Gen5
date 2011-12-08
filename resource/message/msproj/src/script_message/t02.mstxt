@@ -1022,6 +1022,97 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_t02_oldwoman1a_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あたしの　タマゲタケちゃん
+モンスターボール　そっくりでしょ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T09:31:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T09:31:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あたしの　タマゲタケちゃん
+モンスターボール　そっくりでしょ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T09:31:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T09:31:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・GRIDX＝770、GRIDZ＝666</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T09:32:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDWOMAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T09:30:55" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t02_monsterball_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……ポケモンの　タマゲタケ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T09:29:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T09:29:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……ポケモンの　タマゲタケ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T09:29:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T09:29:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン？
+・GRIDX＝770、GRIDZ＝667</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T09:32:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MONSTERBALL</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T09:30:48" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_t02_sign1_01"
 		Style="Large">
 		<LanguageCell

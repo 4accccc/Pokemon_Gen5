@@ -1054,4 +1054,219 @@
 				Time="2011-09-17T05:17:52" />
 		</AttributeCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d24r0901_list_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>きみ　せいそくちリストを
+うめていそうな　タイプだな▼
+ねえ　リバースマウンテンには　どんな
+ポケモンが　いるのか　おしえてよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:14:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:14:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きみ　生息地リストを
+埋めていそうな　タイプだな▼
+ねえ　リバースマウンテンには　どんな
+ポケモンが　いるのか　教えてよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:14:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:14:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：せいそくちリスト
+・対象マップが
+　埋まっている　→list_02
+　埋まっていない→list_03
+・GRIDX=80、GRIDZ＝8</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:16:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:14:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d24r0901_list_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ああ……　まだ
+しらべている　とちゅう　なんだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:14:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:14:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ああ……　まだ
+調べている　途中　なんだ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:14:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:14:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：せいそくちリスト
+・埋まってない</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:14:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:14:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d24r0901_list_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>へえ！　すごいね！
+こんな　ポケモンが　いるんだ▼
+いいものを　みせてくれたから
+プレゼント　しちゃうよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:14:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:14:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>へえ！　すごいね！
+こんな　ポケモンが　いるんだ▼
+いいものを　みせてくれたから
+プレゼント　しちゃうよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:14:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:14:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：せいそくちリスト
+・埋まっている
+・アイテム入手処理
+　No010「タイマーボール」×5</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:14:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:14:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d24r0901_list_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せいそくちリストの　きのうを
+つくった　ひとって　よっぽど▽
+ポケモンと　であってほしいんだね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:14:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:14:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>生息地リストの　機能を
+追加した　人って　よっぽど▽
+ポケモンと　出会ってほしいんだね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:14:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:14:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：せいそくちリスト
+・アイテム入手後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:14:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ASSISTANTM</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:14:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

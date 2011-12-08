@@ -6709,11 +6709,16 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>りょうかい！　うちのコなら
+			<Text>どうしたの？▼
+アララギから　れんらくなんて
+すごい　ひさしぶり　じゃない？▼
+……　……　……
+……　……　……▼
+りょうかい！　うちのコなら
 ぜったい　ひきうけてくれるわよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T05:55:46" />
+				Time="2011-12-08T09:43:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6721,11 +6726,16 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>了解！　うちのコなら
+			<Text>どうしたの？▼
+アララギから　連絡なんて
+すごい　ひさしぶり　じゃない？▼
+……　……　……
+……　……　……▼
+了解！　うちのコなら
 絶対　引き受けてくれるわよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T05:55:58" />
+				Time="2011-12-08T09:43:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6746,17 +6756,28 @@ GIRL2</Text>
 				User="matsumiya:W00224"
 				Time="2011-11-09T05:51:04" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c12_demo_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うん！　ベルちゃんね！
+			<Text>なあに？　そのこ　ってば
+もう　こっちに　きてるの？▼
+うん！　ベルちゃんね！
+おおきな　みどりの　ぼうし　っと▼
+はいはい
 だいじょうぶ！　だいじょうぶ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T05:55:02" />
+				Time="2011-12-08T09:44:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6764,11 +6785,15 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うん！　ベルちゃんね！
+			<Text>なあに？　その子ってば
+もう　こっちに　来てるの？▼
+うん！　ベルちゃんね！
+大きな　緑の　帽子っと▼
+はいはい
 大丈夫！　大丈夫！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T05:55:12" />
+				Time="2011-12-08T09:45:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6789,6 +6814,13 @@ GIRL2</Text>
 				User="matsumiya:W00224"
 				Time="2011-11-09T05:51:14" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c12_sign1_01"

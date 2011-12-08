@@ -1891,12 +1891,13 @@ RANGERW</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でんせつのポケモン　ゼクロムの
+			<Text>とくべつてんじ！▼
+でんせつのポケモン　ゼクロムの
 かりのすがた　ダークストーン▽
 その　レプリカ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T07:52:29" />
+				Time="2011-12-08T09:35:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1904,12 +1905,13 @@ RANGERW</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>伝説のポケモン　ゼクロムの
+			<Text>特別展示！▼
+伝説のポケモン　ゼクロムの
 仮の姿　ダークストーン▽
 その　レプリカ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T07:52:54" />
+				Time="2011-12-08T09:36:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1945,12 +1947,13 @@ RANGERW</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でんせつのポケモン　レシラムの
+			<Text>とくべつてんじ！▼
+でんせつのポケモン　レシラムの
 かりのすがた　ライトストーン▽
 その　レプリカ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T07:52:41" />
+				Time="2011-12-08T09:35:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1958,12 +1961,13 @@ RANGERW</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>伝説のポケモン　レシラムの
+			<Text>特別展示！▼
+伝説のポケモン　レシラムの
 仮の姿　ライトストーン▽
 その　レプリカ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T07:53:04" />
+				Time="2011-12-08T09:36:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

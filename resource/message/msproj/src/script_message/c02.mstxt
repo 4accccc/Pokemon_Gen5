@@ -743,10 +743,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>シッポウはくぶつかん
+こんげつの　てんじないよう</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T09:12:38" />
+				Time="2011-12-08T09:34:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -754,10 +755,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>シッポウ博物館
+今月の　展示内容</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T09:12:43" />
+				Time="2011-12-08T09:34:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -791,10 +793,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>とくべつてんじ
+あの　ポケモンの　かりのすがた！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T09:12:45" />
+				Time="2011-12-08T09:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -802,10 +805,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>特別展示
+あの　ポケモンの　仮の姿！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T09:12:45" />
+				Time="2011-12-08T09:35:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -833,5 +837,141 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02_dancer_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんろあとの　うえを　あるく……
+だれだって　するよな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T08:57:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T08:42:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>線路跡の　上を　歩く……
+だれだって　するよな？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T08:57:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T08:51:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX＝632、GRIDZ＝602を左右に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T08:51:01" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>DANCER</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:56:15" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02_ol_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すきな　ポケモンを　あつめていたら
+いつのまに　６ぴき　そろっちゃった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T09:26:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T08:42:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>好きな　ポケモンを　集めていたら
+いつのまに　６ぴき　そろっちゃった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T09:26:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T09:01:21" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・GRIDX＝658、GRIDZ＝600</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:59:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OL</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:56:55" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c02_olaman_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ドーブルの　スケッチという　わざを
+えがこうとする　わたくし　なのです</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T09:17:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T06:03:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ドーブルの　スケッチという　技を
+描こうとする　わたくし　なのです</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T09:18:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T06:03:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・GRIDX＝636、GRIDZ＝584</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:58:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>OLDMAN1</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T05:58:30" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

@@ -91,14 +91,22 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※swanで削除</Comment>
+			<Comment>♀
+・いけない状態</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T07:22:17" />
+				Time="2011-12-08T09:37:37" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>INFORMATIONW</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-08T09:37:38" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
