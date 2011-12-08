@@ -100,180 +100,180 @@ EVENT_END
 /************************************************************/
 EVENT_START ev_c09r0501_swchampion_01
 
-_TALK_OBJ_START()
+  _TALK_OBJ_START()
 
-//カメラ操作 //
-_CAMERA_START()//カメラ操作開始
-_CAMERA_PURGE()//カメラのバインドを解く
-_CAMERA_MOVE( 10317,0,466944,1081344,852175,3256320, 60 )
-//6477,0,774144,1077248,852175,3022848   8141,0,630784,1077248,852175,3170304
+  //カメラ操作 //
+  _CAMERA_START()//カメラ操作開始
+  _CAMERA_PURGE()//カメラのバインドを解く
+  _CAMERA_MOVE( 10317,0,466944,1081344,852175,3256320, 60 )
+  //6477,0,774144,1077248,852175,3022848   8141,0,630784,1077248,852175,3170304
 
-_PLAYER_DIR_GET(SCWK_ANSWER)
-SWITCH $SCWK_ANSWER
-CASE DIR_LEFT THEN
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ready_l )
-CASE DIR_RIGHT THEN
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ready_r )
-CASE DIR_UP THEN
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ready_u )
-ENDSWITCH
-_TIME_WAIT( 24 )
-_OBJ_ANIME_AUTO( C09R0501_SWCHAMPION_01, 18, 40, FORCE_TYPE_NOT, 8, DIR_LR )
-_CAMERA_WAIT_MOVE()  //カメラ移動待ち
-_OBJ_ANIME_WAIT()
-_CAMERA_END()		//カメラ操作終了
-_OBJ_ANIME( C09R0501_SWCHAMPION_01, anm_staystep_l )
-_OBJ_ANIME_WAIT()
+  _PLAYER_DIR_GET(SCWK_ANSWER)
+  SWITCH $SCWK_ANSWER
+  CASE DIR_LEFT THEN
+	  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ready_l )
+  CASE DIR_RIGHT THEN
+	  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ready_r )
+  CASE DIR_UP THEN
+	  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ready_u )
+  ENDSWITCH
+  _TIME_WAIT( 24 )
+  _OBJ_ANIME_AUTO( C09R0501_SWCHAMPION_01, 18, 40, FORCE_TYPE_NOT, 8, DIR_LR )
+  _CAMERA_WAIT_MOVE()  //カメラ移動待ち
+  _OBJ_ANIME_WAIT()
+  _CAMERA_END()		//カメラ操作終了
+  _OBJ_ANIME( C09R0501_SWCHAMPION_01, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
 
-_TIME_WAIT( 30 )
+  _TIME_WAIT( 30 )
 
-//ゲームクリア前後で分岐
-IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+  // ギミックのモデル切り替えフラグをON
+  _CHAMPION_SET_EXCHANGE_FLAG()
 
-	//アイリス：あたしね　つよい　トレーナーとの
-	_BALLOONWIN_OBJMSG_POS( msg_c09r0501_swchampion_02, C09R0501_SWCHAMPION_01, POS_UP )
-	_MSGWIN_CLOSE()
+  //ゲームクリア前後で分岐
+  IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+
+	  //アイリス：あたしね　つよい　トレーナーとの
+	  _BALLOONWIN_OBJMSG_POS( msg_c09r0501_swchampion_02, C09R0501_SWCHAMPION_01, POS_UP )
+	  _MSGWIN_CLOSE()
     
-	_OBJ_ANIME( C09R0501_SWCHAMPION_01, anm_walk_l )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
-	_OBJ_ANIME_WAIT()
+	  _OBJ_ANIME( C09R0501_SWCHAMPION_01, anm_walk_l )
+	  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
+	  _OBJ_ANIME_WAIT()
 
-{
-  //難易度取得ワーク定義
-  DEFINE_LOCAL  LCW_DIFFICULTY
+   {
+    //難易度取得ワーク定義
+    DEFINE_LOCAL  LCW_DIFFICULTY
   
-  //現在の難易度を取得
-  _KEYSYS_GET_DIFFICULTY( LCW_DIFFICULTY )
+    //現在の難易度を取得
+    _KEYSYS_GET_DIFFICULTY( LCW_DIFFICULTY )
   
-  //トレーナー戦呼び出し
+    //トレーナー戦呼び出し
   
-  //むずかしい
-  IF $LCW_DIFFICULTY == 2 THEN
-    _TRAINER_BTL_SET( TRID_SWCHAMPION_03, 0 )
+    //むずかしい
+    IF $LCW_DIFFICULTY == 2 THEN
+      _TRAINER_BTL_SET( TRID_SWCHAMPION_03, 0 )
   
-  //ふつう・かんたん
-  ELSE
-    _TRAINER_BTL_SET( TRID_SWCHAMPION_01, 0 )
-  ENDIF
-
-}
+    //ふつう・かんたん
+    ELSE
+      _TRAINER_BTL_SET( TRID_SWCHAMPION_01, 0 )
+    ENDIF
+   }
 	
-	//敗戦チェック
-	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-		_CALL ev_vanish
-		_TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
-	ELSE
-		_TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
-	ENDIF
+	  //敗戦チェック
+    _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		  _CALL ev_vanish
+		  _TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
+	  ELSE
+		  _TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	  ENDIF
 
-//クリア後（２回目以降）
-ELSE
-
-	//アイリス：ここにくるのは　こころの　そこから
-	_BALLOONWIN_OBJMSG_POS( msg_c09r0501_swchampion_03, C09R0501_SWCHAMPION_01, POS_UP )
-	_MSGWIN_CLOSE()
-
-	_OBJ_ANIME( C09R0501_SWCHAMPION_01, anm_walk_l )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
-	_OBJ_ANIME_WAIT()
-
-{
-  //難易度取得ワーク定義
-  DEFINE_LOCAL  LCW_DIFFICULTY
-  
-  //現在の難易度を取得
-  _KEYSYS_GET_DIFFICULTY( LCW_DIFFICULTY )
-  
-  //トレーナー戦呼び出し
-  
-  //むずかしい
-  IF $LCW_DIFFICULTY == 2 THEN
-    _TRAINER_BTL_SET( TRID_SWCHAMPION_04, 0 )
-  
-  //ふつう・かんたん
+  //クリア後（２回目以降）
   ELSE
-    _TRAINER_BTL_SET( TRID_SWCHAMPION_02, 0 )
+
+	  //アイリス：ここにくるのは　こころの　そこから
+	  _BALLOONWIN_OBJMSG_POS( msg_c09r0501_swchampion_03, C09R0501_SWCHAMPION_01, POS_UP )
+	  _MSGWIN_CLOSE()
+
+	  _OBJ_ANIME( C09R0501_SWCHAMPION_01, anm_walk_l )
+	  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
+	  _OBJ_ANIME_WAIT()
+
+    {
+      //難易度取得ワーク定義
+      DEFINE_LOCAL  LCW_DIFFICULTY
+  
+      //現在の難易度を取得
+      _KEYSYS_GET_DIFFICULTY( LCW_DIFFICULTY )
+  
+      //トレーナー戦呼び出し
+  
+      //むずかしい
+      IF $LCW_DIFFICULTY == 2 THEN
+        _TRAINER_BTL_SET( TRID_SWCHAMPION_04, 0 )
+  
+      //ふつう・かんたん
+      ELSE
+        _TRAINER_BTL_SET( TRID_SWCHAMPION_02, 0 )
+      ENDIF
+    }
+
+	  //敗戦チェック
+	  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		  _CALL ev_vanish
+		  _TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
+	  ELSE
+		  _TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	  ENDIF
   ENDIF
 
-}
+  _TIME_WAIT( 8 )
 
-	//敗戦チェック
-	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-		_CALL ev_vanish
-		_TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
-	ELSE
-		_TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
-	ENDIF
+  //アイリス：かてなくて　くやしいよ！▼
+  _BALLOONWIN_OBJMSG_POS( msg_c09r0501_swchampion_04, C09R0501_SWCHAMPION_01, POS_UP )
+  _MSGWIN_CLOSE()
 
-ENDIF
+  _CAMERA_RECV_MOVE(60)
 
-_TIME_WAIT( 8 )
+  //アニメ：アイリスと主人公振り向き
+  _OBJ_ANIME( C09R0501_SWCHAMPION_01, anm_staystep_u )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
 
-//アイリス：かてなくて　くやしいよ！▼
-_BALLOONWIN_OBJMSG_POS( msg_c09r0501_swchampion_04, C09R0501_SWCHAMPION_01, POS_UP )
-_MSGWIN_CLOSE()
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラのバインドを解く
+  _CAMERA_END()
 
-_CAMERA_RECV_MOVE(60)
+  //殿堂入り部屋出現
+  _CHAMPION_HALL_ROOM()
 
-//アニメ：アイリスと主人公振り向き
-_OBJ_ANIME( C09R0501_SWCHAMPION_01, anm_staystep_u )
-_TIME_WAIT( 8 )
-_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_u )
-_OBJ_ANIME_WAIT()
+  //========================================
+  //== アニメメモ ==========================
+  // 
+  // 総アニメ数 370F
+  // ドラゴンの石造が沈む 130F ～ 216F
+  //  壁に穴があいて、はしご用のロープが出てくる  235F ～ 307F
+  //  はしご用のステップが出てくる 312F ～ 350F
 
-_CAMERA_WAIT_MOVE()
-_CAMERA_BIND()		//カメラのバインドを解く
-_CAMERA_END()
+  _SE_PLAY( SEQ_SE_SW_CHAMPIRIS_02 )    // 星座板の４つの石が回る音
+  _SE_PLAY( SEQ_SE_SW_CHAMPIRIS_06 )    // 
 
-//殿堂入り部屋出現
-_CHAMPION_HALL_ROOM()
+  _TIME_WAIT( 130 )
+  _SE_PLAY( SEQ_SE_SW_CHAMPIRIS_03 )    // ドラゴンの石像が沈む音
 
-//========================================
-//== アニメメモ ==========================
-// 
-// 総アニメ数 370F
-// ドラゴンの石造が沈む 130F ～ 216F
-//  壁に穴があいて、はしご用のロープが出てくる  235F ～ 307F
-//  はしご用のステップが出てくる 312F ～ 350F
+  _TIME_WAIT( 105 )
+  _SE_PLAY( SEQ_SE_SW_CHAMPIRIS_04 )    // 壁に穴があいて、はしご用のロープが出てくる音
 
-_SE_PLAY( SEQ_SE_SW_CHAMPIRIS_02 )    // 星座板の４つの石が回る音
-_SE_PLAY( SEQ_SE_SW_CHAMPIRIS_06 )    // 
+  _TIME_WAIT( 77 )
+  _SE_PLAY( SEQ_SE_SW_CHAMPIRIS_05 )    // はしご用のステップが出てくる音
 
-_TIME_WAIT( 130 )
-_SE_PLAY( SEQ_SE_SW_CHAMPIRIS_03 )    // ドラゴンの石像が沈む音
+  _TIME_WAIT( 58 )  //殿堂入り部屋出現演出待ち
 
-_TIME_WAIT( 105 )
-_SE_PLAY( SEQ_SE_SW_CHAMPIRIS_04 )    // 壁に穴があいて、はしご用のロープが出てくる音
+  //========================================
 
-_TIME_WAIT( 77 )
-_SE_PLAY( SEQ_SE_SW_CHAMPIRIS_05 )    // はしご用のステップが出てくる音
+  _TIME_WAIT( 16 )  //間
 
-_TIME_WAIT( 58 )  //殿堂入り部屋出現演出待ち
-
-//========================================
-
-_TIME_WAIT( 16 )  //間
-
-//アニメ：チャンピオン移動（殿堂入り部屋へ）
-_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_player_work_up_01 )
-_TIME_WAIT( 8 )
-_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_work_up_01a )
-_TIME_WAIT( 8 )
-_OBJ_ANIME( C09R0501_SWCHAMPION_01, anm_champion_walk_up_01 )
-_OBJ_ANIME_WAIT()
+  //アニメ：チャンピオン移動（殿堂入り部屋へ）
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_player_work_up_01 )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_work_up_01a )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( C09R0501_SWCHAMPION_01, anm_champion_walk_up_01 )
+  _OBJ_ANIME_WAIT()
   
-// ビル影ON
-_CHAMPION_LIGHT_ATTR_ON( C09R0501_SWCHAMPION_01 )
-_CHAMPION_LIGHT_ATTR_ON( MMDL_ID_PLAYER )
-_CHAMPION_LIGHT_ATTR_ON( MMDL_ID_EVENTOBJ_00 )
+  // ビル影ON
+  _CHAMPION_LIGHT_ATTR_ON( C09R0501_SWCHAMPION_01 )
+  _CHAMPION_LIGHT_ATTR_ON( MMDL_ID_PLAYER )
+  _CHAMPION_LIGHT_ATTR_ON( MMDL_ID_EVENTOBJ_00 )
 
-//マップチェンジ後以下のスクリプトを起動する
-_RESERVE_SCRIPT( SCRID_RESERVE_C09R0601_SWCHAMPION_01 )
+  //マップチェンジ後以下のスクリプトを起動する
+  _RESERVE_SCRIPT( SCRID_RESERVE_C09R0601_SWCHAMPION_01 )
 
-//殿堂入り部屋へシーン切り替え
-_MAP_CHANGE( ZONE_ID_C09R0601, 8, 19, DIR_UP )
+  //殿堂入り部屋へシーン切り替え
+  _MAP_CHANGE( ZONE_ID_C09R0601, 8, 19, DIR_UP )
 
 EVENT_END
 

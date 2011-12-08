@@ -546,4 +546,18 @@ VMCMD_RESULT EvCmdChampion_LightAttrON( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  殿堂入り部屋　モデル切り替えフラグON
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdChampion_SetExchangeFlag( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  CHAMPION_SetExchangeFlag( gsys );
+
+  return VMCMD_RESULT_CONTINUE;
+}
 

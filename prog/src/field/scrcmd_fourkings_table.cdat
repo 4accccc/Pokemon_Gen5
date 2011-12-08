@@ -46,6 +46,7 @@
   DEF_CMD( EvCmdChampion_HallRoom, EV_SEQ_CHAMPION_HALL_ROOM )
   DEF_CMD( EvCmdChampion_LightAttrOFF, EV_SEQ_CHAMPION_LIGHT_ATTR_OFF )
   DEF_CMD( EvCmdChampion_LightAttrON, EV_SEQ_CHAMPION_LIGHT_ATTR_ON )
+  DEF_CMD( EvCmdChampion_SetExchangeFlag, EV_SEQ_CHAMPION_SET_EXCHANGE_FLAG )
 
   END_CMD
   //スクリプトコマンドテーブル終了

@@ -70,6 +70,7 @@ extern VMCMD_RESULT EvCmdChampion_Lighting( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdChampion_HallRoom( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdChampion_LightAttrOFF( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdChampion_LightAttrON( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdChampion_SetExchangeFlag( VMHANDLE *core, void *wk );
 
 #ifdef _cplusplus
 }	// extern "C"{

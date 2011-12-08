@@ -10409,6 +10409,20 @@
   .short  \obj_id
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _CHAMPION_SET_EXCHANGE_FLAG
+ * @brief チャンピオン部屋  モデル切り替えフラグをON
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ *
+ * これをONにすると、ギミックの初期化でモデルを切り替える
+ */
+//--------------------------------------------------------------
+#define _CHAMPION_SET_EXCHANGE_FLAG() _ASM_CHAMPION_SET_EXCHANGE_FLAG
+
+  .macro  _ASM_CHAMPION_SET_EXCHANGE_FLAG
+  .short  EV_SEQ_CHAMPION_SET_EXCHANGE_FLAG
+  .endm
 
 
 
