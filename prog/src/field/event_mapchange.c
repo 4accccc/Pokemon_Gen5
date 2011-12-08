@@ -134,6 +134,7 @@ static void MAPCHG_setupFieldSkillMapEff( GAMEDATA * gamedata, u16 zone_id );
 static void AssignGimmickID(GAMEDATA * gamedata, int inZoneID);
 
 static GMEVENT_RESULT EVENT_MapChangeNoFade(GMEVENT * event, int *seq, void*work);
+static GMEVENT_RESULT EVENT_MapChangeNoFadeBGMKeep( GMEVENT* event, int* seq, void* wk );
 
 static GMEVENT* EVENT_FirstGameStart( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* gameInitWork );
 static GMEVENT* EVENT_FirstMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* gameInitWork );
@@ -1335,6 +1336,35 @@ static GMEVENT_RESULT EVENT_MapChangeNoFade( GMEVENT* event, int* seq, void* wk 
     (*seq)++;
     break;
   case 3:
+    return GMEVENT_RES_FINISH; 
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief フェードなし・BGM変更なしマップチェンジ
+ */
+//------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_MapChangeNoFadeBGMKeep( GMEVENT* event, int* seq, void* wk )
+{
+  MAPCHANGE_WORK* work       = wk;
+  GAMESYS_WORK*   gameSystem = work->gameSystem;
+  FIELDMAP_WORK*  fieldmap   = work->fieldmap;
+
+  switch(*seq) 
+  {
+  case 0:
+    // 動作モデル停止
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gameSystem, fieldmap) );
+    (*seq)++;
+    break;
+  case 1:
+    // マップチェンジ コアイベント
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, work->mapchange_type ) );
+    (*seq)++;
+    break;
+  case 2:
     return GMEVENT_RES_FINISH; 
   }
   return GMEVENT_RES_CONTINUE;
@@ -2683,6 +2713,37 @@ GMEVENT * EVENT_ChangeMapBGMKeep( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* field
   dir = EXITDIR_fromDIR( dir );
   LOCATION_SetDirect( &(work->loc_req), zoneID, dir, pos->x, pos->y, pos->z );
   work->exit_type = EXIT_TYPE_NONE;
+  work->is_goout_no_setup  = TRUE;
+  
+  return event;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief マップ遷移イベント生成 (フェードなし・BGM変更なし)
+ * @param gameSystem ゲームシステムへのポインタ
+ * @param fieldmap   フィールドシステムへのポインタ
+ * @param zoneID     遷移するマップのZONE指定
+ * @param pos        遷移するマップでの座標指定
+ * @param dir        遷移するマップでの方向指定
+ * @return GMEVENT  生成したマップ遷移イベント
+ */
+//------------------------------------------------------------------
+GMEVENT * EVENT_ChangeMapPosNoFadeBGMKeep( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+                                  u16 zoneID, const VecFx32* pos, u16 dir )
+{
+  MAPCHANGE_WORK* work;
+  GMEVENT* event;
+
+  event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangeNoFadeBGMKeep, sizeof(MAPCHANGE_WORK) );
+  work  = GMEVENT_GetEventWork( event );
+
+  // イベントワーク初期化
+  MAPCHANGE_WORK_init( work, gameSystem ); 
+  dir = EXITDIR_fromDIR( dir );
+  LOCATION_SetDirect( &(work->loc_req), zoneID, dir, pos->x, pos->y, pos->z );
+  work->exit_type = EXIT_TYPE_NONE;
+  work->mapchange_type = EV_MAPCHG_NORMAL; 
   work->is_goout_no_setup  = TRUE;
   
   return event;

@@ -44,9 +44,10 @@
 
 //==============================================================================================
 //==============================================================================================
-#define MAX_SEQ_NUM (30) // 実行するシーケンスの最大数
+#define MAX_SEQ_NUM (31) // 実行するシーケンスの最大数
 #define WAIT_FRAME  (60)
 
+#define	BGM_FADE_FRAME  ( 64 )			// BGMフェードアウトフレーム数
 
 //==============================================================================================
 //==============================================================================================
@@ -98,6 +99,9 @@ enum {
   GMCLEAR_SEQ_SCRIPT_CALL_SECOND,// スクリプト呼び出し(C12)
   GMCLEAR_SEQ_FIELD_OPEN_WAIT,  // フィールドマップ開始待ち
   GMCLEAR_SEQ_FADEIN,           // フェードイン
+  GMCLEAR_SEQ_BGM_PLAY,         // BGM再生
+  GMCLEAR_SEQ_BGM_FADE_OUT,     // BGMフェードアウト
+  GMCLEAR_SEQ_BGM_STOP,         // BGM停止
   //
 
   GMCLEAR_SEQ_END,              // 終了
@@ -266,7 +270,7 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
     {
       VecFx32 pos = { GRID_TO_FX32(31), GRID_TO_FX32(47), GRID_TO_FX32(1) };
       GMEVENT_CallEvent( event, 
-          EVENT_ChangeMapPosNoFade( gsys, fieldmap, ZONE_ID_C09P02, &pos, DIR_DOWN ) ); 
+          EVENT_ChangeMapPosNoFadeBGMKeep( gsys, fieldmap, ZONE_ID_C09P02, &pos, DIR_DOWN ) ); 
       NowSeqFinish( work, seq );
     }
     break;
@@ -276,7 +280,7 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
     {
       VecFx32 pos = { GRID_TO_FX32(43), GRID_TO_FX32(1), GRID_TO_FX32(757) };
       GMEVENT_CallEvent( event, 
-          EVENT_ChangeMapPosNoFade( gsys, fieldmap, ZONE_ID_C12, &pos, DIR_DOWN ) ); 
+          EVENT_ChangeMapPosNoFadeBGMKeep( gsys, fieldmap, ZONE_ID_C12, &pos, DIR_DOWN ) ); 
       NowSeqFinish( work, seq );
     }
     break;
@@ -310,6 +314,42 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
     {
       GMEVENT_CallEvent( event, 
           EVENT_FieldFadeIn_Black( gsys, fieldmap, FIELD_FADE_WAIT ) ); 
+      NowSeqFinish( work, seq );
+    }
+    break;
+
+  // BGM再生
+  case GMCLEAR_SEQ_BGM_PLAY:
+    {
+      // BGM再生開始
+      // 2回目のスクリプトが終了まで再生する。
+      //
+      // 【仮】ラベルは仮
+      PMSND_PlayBGM( SEQ_BGM_ENDING );
+
+      NowSeqFinish( work, seq );
+    }
+    break;
+
+  // BGMフェードアウト
+  case GMCLEAR_SEQ_BGM_FADE_OUT:
+    {
+      if( PMSND_CheckPlayBGM() == TRUE ){
+        PMSND_FadeOutBGM( BGM_FADE_FRAME );
+      }
+      NowSeqFinish( work, seq );
+    }
+    break;
+
+  // BGM停止
+  case GMCLEAR_SEQ_BGM_STOP:
+    {
+      if( PMSND_CheckFadeOnBGM() == TRUE ){
+        break;
+      }
+      if( PMSND_CheckPlayBGM() == TRUE ){
+        PMSND_StopBGM();
+      }
       NowSeqFinish( work, seq );
     }
     break;
@@ -448,6 +488,10 @@ static void SetupSequence( GAMECLEAR_WORK* work )
 {
   int pos = 0;
 
+  // *****************************************
+  // シーケンスを増やしたら
+  // シーケンスの最大数の定義を増やすこと！
+  // *****************************************
   work->seqArray[pos++] = GMCLEAR_SEQ_INIT;
   work->seqArray[pos++] = GMCLEAR_SEQ_COMM_END_REQ;
   work->seqArray[pos++] = GMCLEAR_SEQ_FADEOUT;
@@ -468,6 +512,7 @@ static void SetupSequence( GAMECLEAR_WORK* work )
   work->seqArray[pos++] = GMCLEAR_SEQ_FIELD_OPEN_WAIT;
   work->seqArray[pos++] = GMCLEAR_SEQ_MAP_CHANGE_FIRST;
   work->seqArray[pos++] = GMCLEAR_SEQ_FADEIN;
+  work->seqArray[pos++] = GMCLEAR_SEQ_BGM_PLAY;
   work->seqArray[pos++] = GMCLEAR_SEQ_SCRIPT_CALL_FIRST;
   work->seqArray[pos++] = GMCLEAR_SEQ_FADEOUT;
   work->seqArray[pos++] = GMCLEAR_SEQ_FIELD_CLOSE_WAIT;
@@ -481,7 +526,9 @@ static void SetupSequence( GAMECLEAR_WORK* work )
   work->seqArray[pos++] = GMCLEAR_SEQ_MAP_CHANGE_SECOND;
   work->seqArray[pos++] = GMCLEAR_SEQ_FADEIN;
   work->seqArray[pos++] = GMCLEAR_SEQ_SCRIPT_CALL_SECOND;
+  work->seqArray[pos++] = GMCLEAR_SEQ_BGM_FADE_OUT;
   work->seqArray[pos++] = GMCLEAR_SEQ_FADEOUT;
+  work->seqArray[pos++] = GMCLEAR_SEQ_BGM_STOP;
   work->seqArray[pos++] = GMCLEAR_SEQ_FIELD_CLOSE_WAIT;
 
   work->seqArray[pos++] = GMCLEAR_SEQ_THE_END;

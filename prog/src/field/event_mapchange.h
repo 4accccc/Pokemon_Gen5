@@ -213,6 +213,7 @@ extern GMEVENT * EVENT_ChangeMapPalace_to_Palace( GAMESYS_WORK* gameSystem, u16 
 extern GMEVENT* EVENT_ChangeMapPosNoFade( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
                                           u16 zoneID, const VecFx32* pos, u16 dir );
 
+
 //------------------------------------------------------------------
 /**
  * @brief マップ遷移イベント生成 ( BGM変更なし )
@@ -228,6 +229,14 @@ extern GMEVENT* EVENT_ChangeMapPosNoFade( GAMESYS_WORK* gameSystem, FIELDMAP_WOR
 //------------------------------------------------------------------
 extern GMEVENT* EVENT_ChangeMapBGMKeep( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
                                         u16 zoneID, const VecFx32* pos, u16 dir );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  マップ遷移イベント（フェードなし・BGM変更なし）
+ */
+//-----------------------------------------------------------------------------
+extern GMEVENT* EVENT_ChangeMapPosNoFadeBGMKeep( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+                                          u16 zoneID, const VecFx32* pos, u16 dir );
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

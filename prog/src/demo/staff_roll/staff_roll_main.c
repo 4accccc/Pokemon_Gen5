@@ -433,8 +433,6 @@ static int MainSeq_Init( SRMAIN_WORK * wk )
 
 	InitVBlank( wk );
 
-	PMSND_PlayBGM_WideChannel( SEQ_BGM_ENDING );
-
 	OS_Printf( "heap size [0] = 0x%x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_STAFF_ROLL) );
 
 	return MAINSEQ_START_WAIT;
@@ -468,12 +466,6 @@ static int MainSeq_Wipe( SRMAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_Release( SRMAIN_WORK * wk )
 {
-	if( PMSND_CheckFadeOnBGM() == TRUE ){
-		return MAINSEQ_RELEASE;
-	}
-	if( PMSND_CheckPlayBGM() == TRUE ){
-		PMSND_StopBGM();
-	}
 
 	ExitVBlank( wk );
 
@@ -640,9 +632,6 @@ static int MainSeq_Main( SRMAIN_WORK * wk )
 		break;
 
 	case SUBSEQ_END:
-		if( PMSND_CheckPlayBGM() == TRUE ){
-		  PMSND_FadeOutBGM( SKIP_MODE_BGM_FADE );
-		}
 		return SetFadeOut( wk, MAINSEQ_RELEASE );
 	}
 
