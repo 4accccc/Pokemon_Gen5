@@ -1399,6 +1399,9 @@ static int SubSeq_ServerQuery(WORLDTRADE_WORK *wk )
 		exs.countryCode = wk->country_code;
 
 		Dpw_Tr_DownloadMatchDataExAsync(&exs, wk->DownloadPokemonData);
+
+
+    OS_Printf("monsno%d gender%d lvmin%d lvmax pad%d max%d contry%d\n", exs.characterNo, exs.gender,exs.level_min,exs.level_max,exs.padding,exs.maxNum,exs.countryCode);
 	}
 	wk->SearchBackup = wk->Search;
 	wk->SearchBackup_CountryCode = wk->country_code;
@@ -1434,7 +1437,7 @@ static int SubSeq_ServerResult( WORLDTRADE_WORK *wk )
 		switch (result){
 		case 0:		case 1:		case 2:		case 3:		case 4:		
 		case 5:		case 6:		case 7:
-			OS_TPrintf(" query is success!\n");
+			OS_TPrintf(" query is success! %d\n", result);
 
 			// 検索の結果の数を保存
 			wk->SearchResult   = result;
@@ -1453,8 +1456,19 @@ static int SubSeq_ServerResult( WORLDTRADE_WORK *wk )
       PMSND_StopSE();
 
 			// サーバーと通信できません→終了
+      // system322(Syachi)のバグ修正
       wk->SearchResult  = 0;
-      GFL_STD_MemClear( &wk->Search, sizeof(Dpw_Tr_PokemonSearchData) );
+
+      //11/12/07　GF2027 system322 バグ覚え書き
+      //DP時代まではエラーが起こったら即Wi-Fiから抜けていた
+      //Syachiからはエラーしても復帰できるようにした。
+      //そのためSyachiから検索結果が残った状態で復帰することになった。
+      //エラー時SearchResultを残したままにすると、選ぶボタンが押されてしまう
+      //ため、上記の０クリア処理は必要
+      //ただし、下記コメントアウトの検索結果クリアは無関係。
+      //クリアしてしまうと、エラー復帰時、前と同じ検索条件を指定できてしまう。
+      //その結果、（なぜか）サーバーから０件見つかりましたという条件がくる。
+      //GFL_STD_MemClear( &wk->Search, sizeof(Dpw_Tr_PokemonSearchData) );
 			wk->subprocess_seq = SUBSEQ_SEARCH_ERROR_DICONNECT_MES1;
 
       NetErr_ExitNetSystem();
@@ -1589,7 +1603,6 @@ static int SubSeq_ServerQueryFailure( WORLDTRADE_WORK *wk )
 	SubSeq_MessagePrint( wk, msg_gtc_01_039, 1, 0, 0x0f0f );
 	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_MAIN );
 	PMSND_PlaySE(SE_GTC_NG);
-
 
 #ifdef BUGFIX_AF_GFBTS2027_2010107
   // 「GTSで検索失敗したあと選ぶ選択すると確定でブラックアウトする」バグ修正
