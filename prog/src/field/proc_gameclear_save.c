@@ -301,13 +301,13 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
 
       //「初回クリア」= 「殿堂入り」をセーブ
       if( para->clear_mode == GAMECLEAR_MODE_FIRST ) {
+        SaveFirstDendouiriTime( wk ); // 初「殿堂入り」の日時
         UpdateFirstClearRecord( wk ); // レコードデータ
         // 殿堂入りセーブ
         DendouSave_init( wk );
       }
       //「殿堂入り」をセーブ
       else {
-        SaveFirstDendouiriTime( wk ); // 初「殿堂入り」の日時
         UpdateDendouRecord( wk ); // 殿堂入り関連レコード
         DendouSave_init( wk );
       }
