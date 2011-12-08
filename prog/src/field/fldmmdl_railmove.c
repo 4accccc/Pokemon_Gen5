@@ -384,6 +384,7 @@ static void MMdl_MapAttrProc_MoveStartFirst( MMDL * mmdl )
       MMdl_MapAttrGrassProc_0( mmdl, now, old, prm );
       MMdl_MapAttrShadowProc_0( mmdl, now, old, prm );
       MMdl_MapAttrReflect_01( mmdl, now, old, prm );
+      MMdl_MapAttrLight( mmdl, now, old, prm );
     }
   }
 }
