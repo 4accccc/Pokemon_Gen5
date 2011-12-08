@@ -25268,21 +25268,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいりょく＋４</Text>
+			<Text>たいりょくＬＶ４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:35:22" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-12-08T02:12:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たいりょく＋４</Text>
+			<Text>たいりょくＬＶ４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:35:28" />
+				Time="2011-12-08T02:19:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25290,11 +25290,11 @@ ME
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>道場
+			<Comment>道場１段階目
 努力値</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-26T18:02:06" />
+				Time="2011-12-08T02:05:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -25316,21 +25316,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいりょく+８</Text>
+			<Text>たいりょくＬＶ８</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:35:36" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-12-08T02:12:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たいりょく＋８</Text>
+			<Text>たいりょくＬＶ８</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:35:41" />
+				Time="2011-12-08T02:19:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25338,11 +25338,11 @@ ME
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>道場
+			<Comment>道場２段階目
 努力値</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-26T18:02:15" />
+				Time="2011-12-08T02:05:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -25364,21 +25364,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいりょく＋１２</Text>
+			<Text>たいりょくＬＶ１２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:36:17" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-12-08T02:12:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たいりょく＋１２</Text>
+			<Text>たいりょくＬＶ１２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:36:23" />
+				Time="2011-12-08T02:19:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25412,21 +25412,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいりょく＋１６</Text>
+			<Text>たいりょくＬＶ１６</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:36:33" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-12-08T02:12:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たいりょく＋１６</Text>
+			<Text>たいりょくＬＶ１６</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:36:39" />
+				Time="2011-12-08T02:19:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25460,21 +25460,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいりょく＋２０</Text>
+			<Text>たいりょくＬＶ２４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:37:03" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-12-08T02:13:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たいりょく＋２０</Text>
+			<Text>たいりょくＬＶ２４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:37:08" />
+				Time="2011-12-08T02:19:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25508,21 +25508,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいりょく＋６４</Text>
+			<Text>たいりょくＬＶ３２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:37:18" />
+				Time="2011-12-08T02:19:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-12-08T02:12:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たいりょく＋６４</Text>
+			<Text>たいりょくＬＶ３２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:37:25" />
+				Time="2011-12-08T02:19:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25556,21 +25556,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たいりょく＋１２８</Text>
+			<Text>たいりょくＬＶ６４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:37:36" />
+				Time="2011-12-08T02:19:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="shimoyamada:W00184"
+				Time="2011-12-08T02:12:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たいりょく＋１２８</Text>
+			<Text>たいりょくＬＶ６４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:37:42" />
+				Time="2011-12-08T02:19:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25604,21 +25604,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こうげき＋４</Text>
+			<Text>こうげきＬＶ４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:38:32" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:38:48" />
+				Time="2011-12-08T02:12:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こうげき＋４</Text>
+			<Text>こうげきＬＶ４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25652,10 +25652,10 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こうげき+８</Text>
+			<Text>こうげきＬＶ８</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:38:32" />
+				Time="2011-12-08T02:19:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -25663,10 +25663,10 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こうげき+８</Text>
+			<Text>こうげきＬＶ８</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25700,21 +25700,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こうげき＋１２</Text>
+			<Text>こうげきＬＶ１２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:38:32" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:38:48" />
+				Time="2011-12-08T02:12:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こうげき＋１２</Text>
+			<Text>こうげきＬＶ１２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25748,21 +25748,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こうげき＋１６</Text>
+			<Text>こうげきＬＶ１６</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:38:32" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:38:48" />
+				Time="2011-12-08T02:12:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こうげき＋１６</Text>
+			<Text>こうげきＬＶ１６</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25796,21 +25796,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こうげき＋２０</Text>
+			<Text>こうげきＬＶ２４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:38:32" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:38:48" />
+				Time="2011-12-08T02:13:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こうげき＋２０</Text>
+			<Text>こうげきＬＶ２４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25844,21 +25844,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こうげき＋６４</Text>
+			<Text>こうげきＬＶ３２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:38:32" />
+				Time="2011-12-08T02:20:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:38:48" />
+				Time="2011-12-08T02:12:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こうげき＋６４</Text>
+			<Text>こうげきＬＶ３２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25892,21 +25892,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こうげき＋１２８</Text>
+			<Text>こうげきＬＶ６４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:38:32" />
+				Time="2011-12-08T02:20:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:38:48" />
+				Time="2011-12-08T02:12:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こうげき＋１２８</Text>
+			<Text>こうげきＬＶ６４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25940,21 +25940,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼうぎょ＋４</Text>
+			<Text>ぼうぎょＬＶ４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:10" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:22" />
+				Time="2011-12-08T02:12:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼうぎょ＋４</Text>
+			<Text>ぼうぎょＬＶ４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25988,10 +25988,10 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼうぎょ+８</Text>
+			<Text>ぼうぎょＬＶ８</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:10" />
+				Time="2011-12-08T02:20:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -25999,10 +25999,10 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼうぎょ+８</Text>
+			<Text>ぼうぎょＬＶ８</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26036,21 +26036,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼうぎょ＋１２</Text>
+			<Text>ぼうぎょＬＶ１２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:10" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:22" />
+				Time="2011-12-08T02:12:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼうぎょ＋１２</Text>
+			<Text>ぼうぎょＬＶ１２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26084,21 +26084,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼうぎょ＋１６</Text>
+			<Text>ぼうぎょＬＶ１６</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:10" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:22" />
+				Time="2011-12-08T02:12:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼうぎょ＋１６</Text>
+			<Text>ぼうぎょＬＶ１６</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26132,21 +26132,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼうぎょ＋２０</Text>
+			<Text>ぼうぎょＬＶ２４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:10" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:22" />
+				Time="2011-12-08T02:13:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼうぎょ＋２０</Text>
+			<Text>ぼうぎょＬＶ２４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26180,21 +26180,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼうぎょ＋６４</Text>
+			<Text>ぼうぎょＬＶ３２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:10" />
+				Time="2011-12-08T02:20:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:22" />
+				Time="2011-12-08T02:12:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼうぎょ＋６４</Text>
+			<Text>ぼうぎょＬＶ３２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26228,21 +26228,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぼうぎょ＋１２８</Text>
+			<Text>ぼうぎょＬＶ６４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:10" />
+				Time="2011-12-08T02:20:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:22" />
+				Time="2011-12-08T02:12:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぼうぎょ＋１２８</Text>
+			<Text>ぼうぎょＬＶ６４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26276,21 +26276,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とくこう＋４</Text>
+			<Text>とくこうＬＶ４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:14" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:07" />
+				Time="2011-12-08T02:12:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とくこう＋４</Text>
+			<Text>とくこうＬＶ４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26324,21 +26324,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とくこう+８</Text>
+			<Text>とくこうＬＶ８</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-11-27T17:39:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:07" />
+				Time="2011-12-08T02:21:23" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とくこう+８</Text>
+			<Text>とくこうＬＶ８</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26372,21 +26372,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とくこう＋１２</Text>
+			<Text>とくこうＬＶ１２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:14" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:07" />
+				Time="2011-12-08T02:12:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とくこう＋１２</Text>
+			<Text>とくこうＬＶ１２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26420,21 +26420,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とくこう＋１６</Text>
+			<Text>とくこうＬＶ１６</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:14" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:07" />
+				Time="2011-12-08T02:12:57" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とくこう＋１６</Text>
+			<Text>とくこうＬＶ１６</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26468,21 +26468,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とくこう＋２０</Text>
+			<Text>とくこうＬＶ２４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:14" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:07" />
+				Time="2011-12-08T02:13:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とくこう＋２０</Text>
+			<Text>とくこうＬＶ２４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26516,21 +26516,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とくこう＋６４</Text>
+			<Text>とくこうＬＶ３２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:14" />
+				Time="2011-12-08T02:22:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:07" />
+				Time="2011-12-08T02:12:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とくこう＋６４</Text>
+			<Text>とくこうＬＶ３２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26564,21 +26564,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とくこう＋１２８</Text>
+			<Text>とくこうＬＶ６４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:14" />
+				Time="2011-12-08T02:22:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:07" />
+				Time="2011-12-08T02:12:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とくこう＋１２８</Text>
+			<Text>とくこうＬＶ６４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26612,21 +26612,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とくぼう＋４</Text>
+			<Text>とくぼうＬＶ４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:16" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:50" />
+				Time="2011-12-08T02:12:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とくぼう＋４</Text>
+			<Text>とくぼうＬＶ４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26660,21 +26660,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とくぼう+８</Text>
+			<Text>とくぼうＬＶ８</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-11-27T17:39:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:50" />
+				Time="2011-12-08T02:21:23" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とくぼう+８</Text>
+			<Text>とくぼうＬＶ８</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26708,21 +26708,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とくぼう＋１２</Text>
+			<Text>とくぼうＬＶ１２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:16" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:50" />
+				Time="2011-12-08T02:12:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とくぼう＋１２</Text>
+			<Text>とくぼうＬＶ１２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26756,21 +26756,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とくぼう＋１６</Text>
+			<Text>とくぼうＬＶ１６</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:16" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:50" />
+				Time="2011-12-08T02:12:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とくぼう＋１６</Text>
+			<Text>とくぼうＬＶ１６</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26804,21 +26804,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とくぼう＋２０</Text>
+			<Text>とくぼうＬＶ２４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:16" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:50" />
+				Time="2011-12-08T02:13:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とくぼう＋２０</Text>
+			<Text>とくぼうＬＶ２４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26852,21 +26852,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とくぼう＋６４</Text>
+			<Text>とくぼうＬＶ３２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:16" />
+				Time="2011-12-08T02:22:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:50" />
+				Time="2011-12-08T02:12:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とくぼう＋６４</Text>
+			<Text>とくぼうＬＶ３２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26900,21 +26900,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とくぼう＋１２８</Text>
+			<Text>とくぼうＬＶ６４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:16" />
+				Time="2011-12-08T02:21:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:50" />
+				Time="2011-12-08T02:12:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とくぼう＋１２８</Text>
+			<Text>とくぼうＬＶ６４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26948,21 +26948,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すばやさ＋４</Text>
+			<Text>すばやさＬＶ４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:19" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:37" />
+				Time="2011-12-08T02:12:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すばやさ＋４</Text>
+			<Text>すばやさＬＶ４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26996,21 +26996,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すばやさ+８</Text>
+			<Text>すばやさＬＶ８</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
 				Time="2011-11-27T17:39:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:37" />
+				Time="2011-12-08T02:21:23" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すばやさ+８</Text>
+			<Text>すばやさＬＶ８</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -27044,21 +27044,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すばやさ＋１２</Text>
+			<Text>すばやさＬＶ１２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:19" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:37" />
+				Time="2011-12-08T02:12:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すばやさ＋１２</Text>
+			<Text>すばやさＬＶ１２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -27092,21 +27092,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すばやさ＋１６</Text>
+			<Text>すばやさＬＶ１６</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:19" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:37" />
+				Time="2011-12-08T02:12:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すばやさ＋１６</Text>
+			<Text>すばやさＬＶ１６</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -27140,21 +27140,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すばやさ＋２０</Text>
+			<Text>すばやさＬＶ２４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:19" />
+				Time="2011-12-08T02:12:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:37" />
+				Time="2011-12-08T02:13:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すばやさ＋２０</Text>
+			<Text>すばやさＬＶ２４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -27188,21 +27188,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すばやさ＋６４</Text>
+			<Text>すばやさＬＶ３２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:19" />
+				Time="2011-12-08T02:21:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:37" />
+				Time="2011-12-08T02:12:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すばやさ＋６４</Text>
+			<Text>すばやさＬＶ３２</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -27236,21 +27236,21 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すばやさ＋１２８</Text>
+			<Text>すばやさＬＶ６４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:19" />
+				Time="2011-12-08T02:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:39:37" />
+				Time="2011-12-08T02:12:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すばやさ＋１２８</Text>
+			<Text>すばやさＬＶ６４</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-27T17:40:44" />
+				Time="2011-12-08T02:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
