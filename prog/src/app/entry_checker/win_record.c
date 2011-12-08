@@ -299,6 +299,8 @@ enum{
 	//
 	FLG_MW_END			= (1<<12),			// 終了
 	//
+	FLG_MW_FRAME_STAT	= (1<<16),			// フレーム初期化
+	//
 	// フラグまとめ(アニメ再生中か)
 	FLG_MW_ANM_ALL		= (FLG_MW_ANM_LEFT|FLG_MW_ANM_RIGHT|FLG_MW_ANM_CROSS|FLG_MW_ANM_RETURN),
 };
@@ -1193,7 +1195,14 @@ static void wr_key_all( WIN_RECORD_MAIN_WORK* wk )
 	{
 		// 初期化
 		case STEP_INIT:
-			wk->Step = STEP_LV1;
+			if(!(wk->Flag & FLG_MW_FRAME_STAT)){
+				if( FRAMELIST_Init( wk->frame_list_work ) == FALSE ){
+					wk->Step = STEP_LV1;
+					wk->Flag |= FLG_MW_FRAME_STAT;
+				}
+			}else{
+				wk->Step = STEP_LV1;
+			}
 			break;
 		//
 		// 入力まとめ
@@ -2416,7 +2425,10 @@ static void wr_init_framelist( WIN_RECORD_MAIN_WORK * wk )
 		FRAMELIST_AddItem( wk->frame_list_work, 0, wr_tmt_gmm_tbl[wk->DispBuffer[i]] );
 	}
 	// 初期化
-	FRAMELIST_Init( wk->frame_list_work );
+	wk->Flag &= ~FLG_MW_FRAME_STAT;
+	if( FRAMELIST_Init( wk->frame_list_work ) == FALSE ){
+		wk->Flag |= FLG_MW_FRAME_STAT;
+	}
 }
 
 //--------------------------------------------------------------------------------------------

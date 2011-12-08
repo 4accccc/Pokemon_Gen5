@@ -296,6 +296,9 @@ enum{
 	FLG_UPDATE			= (1<<6),		// 更新
 	//
 	FLG_STR_WAIT		= (1<<8),		// wait
+	//
+	FLG_FRAME_STAT		= (1<<12),		// フレーム初期化終了
+	FLG_FRAME_SET_PAL	= (1<<13),		// パレット転送
 };
 
 //-------------
@@ -893,6 +896,8 @@ static void pwm_chk_endflag( PKWD_RECORD_MONITOR_MAIN_WORK *wk );
 static s32  pwm_get_scenario_curpos( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 num );
 //
 static void pwm_disp_up_bg( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 smode );
+static BOOL pwm_chk_1st_anime( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
+
 //
 // フレーム関連
 static void pwm_init_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
@@ -2366,13 +2371,13 @@ static void pwm_init_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 	wk->TitleMode	= TMODE_RECORD_MONITOR;
 	//
 	// bg初期化(1回目だけは転送しない)
-	if(wk->Flag & FLG_SET_INIT){
-		wk->Flag |= FLG_CHG_TITLE;
-		// 矢印位置
-		pwm_chg_cmn_cursor( wk, 0 );
-		// frame再セット
-		pwm_set_init_framelist( wk );
-	}
+//	if(wk->Flag & FLG_SET_INIT){
+//		wk->Flag |= FLG_CHG_TITLE;
+//		// 矢印位置
+//		pwm_chg_cmn_cursor( wk, 0 );
+//		// frame再セット
+//		pwm_set_init_framelist( wk );
+//	}
 	// objの初期化
 	pwm_clear_obj( wk, 0 );
   // キーとタッチでもう1回処理
@@ -2409,7 +2414,25 @@ static void pwm_main_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 	switch( wk->SubMode ){
 		// 初期化
 		case STEP_INIT:
-			wk->SubMode = STEP_LV1;
+			if(!(wk->Flag & FLG_FRAME_STAT)){
+				if( FRAMELIST_Init( wk->frame_list_work ) == FALSE ){
+					wk->SubMode = STEP_INIT+10;
+					wk->Flag |= FLG_FRAME_STAT;
+				}
+			}else{
+//				wk->SubMode = STEP_LV1;
+				wk->SubMode = STEP_INIT+10;
+			}
+			break;
+		//
+		// ここで上画面のチェックを行う
+		case STEP_INIT+10:
+			bflg = pwm_chk_1st_anime( wk );
+			if(bflg == TRUE){
+				wk->SubMode = STEP_LINE_ANIME;
+			}else{
+				wk->SubMode = STEP_LV1;
+			}
 			break;
 		//
 		// ラインのobjアニメ
@@ -2539,24 +2562,30 @@ static void pwm_key_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 	s32		flg=0;		// 更新の有無
 	s32		mflg=0;		// 決定の有無
 	s32		listflg=0;
+	s32		kflg=0;		// 入力したか
 	s32		id;
 	s32		tmp;
 	u32		ret;
 	BOOL	bflg;
 	
+	// 処理中は更新しない
+	if( PRINTSYS_QUE_IsFinished( wk->print_que ) == FALSE ){
+		return;
+	}
+	
 	// main
 	ret = pwm_main_framelist( wk );
 	listflg = pwm_is_main_framelist( wk, ret );
-//	if(listflg != 0){
-//		flg = 2;
-//	}
+	//
 	// カーソル移動=>STEPが変わる(更新は後)
 	if(listflg == 1){
 		flg = 2;
+		kflg = 1;
 	}
 	// キーにタッチ=>そのまま(更新)
 	else if(listflg == 2){
 		flg = 1;
+		kflg = 2;
 	}
 	
 	// 更新あり
@@ -2599,24 +2628,28 @@ static void pwm_key_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 		wk->Flag |= FLG_STR_WAIT;
 	}
 	//
-	// 処理中は更新しない(念のため)
-	if( PRINTSYS_QUE_IsFinished( wk->print_que ) == FALSE ){
-		return;
+	// 入力判定処理
+	if(wk->first_anime_flag == FALSE){
+		// キー入力か項目をタッチ
+		if(( GFL_UI_KEY_GetTrg() )||(kflg == 2)){
+			wk->SubMode = STEP_LINE_ANIME;
+			wk->first_anime_flag = TRUE;
+		}
 	}
-	//
 	// 上文字列更新
-//	if(flg != 0){
-//	if(flg == 1){
 	if(wk->Flag & FLG_STR_WAIT){
 		//
 		// 画面に何も出ていない状態ならアニメ開始から入る
+#if 0
 		if( wk->first_anime_flag == FALSE )
 		{
 			// アニメさせるシーケンスに移行
 			wk->SubMode = STEP_LINE_ANIME;
 			wk->first_anime_flag = TRUE;
 		}
-		else
+//		else
+#endif
+		if( wk->first_anime_flag == TRUE)
 		{
 			pwm_disp_record_monitor_string( wk, 1 );
 			// poke icon 表示
@@ -2627,6 +2660,14 @@ static void pwm_key_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 		// カラーの変更
 		//tmp = wk->FlagBuffer[wk->ScenarioCurPos].color;
 		wk->Flag &= ~FLG_STR_WAIT;
+	}
+	//
+	// あまりやりたくないが、
+	// 初期のカーソル位置転送
+	// (FRAMELIST_Main)を通す必要があるためここでセット
+	if(!(wk->Flag & FLG_FRAME_SET_PAL)){
+		FRAMELIST_SetCursorPosPalette( wk->frame_list_work );
+		wk->Flag |= FLG_FRAME_SET_PAL;
 	}
 	//
 	// スクロールバー処理(要検討)
@@ -2651,15 +2692,13 @@ static void pwm_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
 	s32			num;
 	STRBUF	*strbuf;
 	STRBUF	*namebuf;
-//  HEAPID  heapID = GFL_HEAP_LOWID( wk->heapID );
 	
 	// カーソル位置からシナリオのidを計算
 	id = pwm_get_scenario_curpos( wk, wk->ScenarioCurPos );
 	
 	// 初期のみでよいはず
 	if(mode == 0){
-    // トレーナ名
-#if 1
+    	// トレーナ名
 		strbuf  = GFL_MSG_CreateString( wk->MsgData, pwm_mes_tbl[4] );
 		namebuf = GFL_STR_CreateBuffer( PERSON_NAME_SIZE+EOM_SIZE, wk->heapID );
 		WORDSET_RegisterPlayerName( wk->Wordset, 1, wk->Param->mystatus );
@@ -2668,28 +2707,8 @@ static void pwm_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
 		// 表示
 		pwm_disp_string( wk, STR_MAIN, PWB_CVS_TOP_07, 0, 0, namebuf, 1, TEXT_COL_MAIN );
 		GFL_STR_DeleteBuffer( namebuf );
-#else
-    {
-      strbuf = GFL_MSG_CreateString( wk->MsgData, pwm_mes_tbl[4] );
-
-      // 単語登録
-      {
-        STRBUF  *namebuf = GFL_STR_CreateBuffer( PERSON_NAME_SIZE+EOM_SIZE, wk->heapID );
-        WORDSET_RegisterPlayerName( wk->Wordset, 1, wk->Param->mystatus );
-        WORDSET_ExpandStr( wk->Wordset, namebuf, strbuf );
-        GFL_STR_DeleteBuffer( strbuf );
-        strbuf = namebuf;
-      }
-
-      pwm_disp_string( wk, STR_MAIN, PWB_CVS_TOP_07, 0, 0, strbuf, 1, TEXT_COL_MAIN );
-
-      GFL_STR_DeleteBuffer( strbuf );
-    }
-#endif
 	}
-
   //
-
   // タグ展開
   {
     // ポケウッドのセーブ取得
@@ -2702,6 +2721,7 @@ static void pwm_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
       pwm_disp_string( wk, STR_MAIN, PWB_CVS_TOP_04, 0, 0, strbuf, 0, TEXT_COL_MAIN );
       GFL_STR_DeleteBuffer( strbuf );
     }
+    //
     // サブタイトル
     {
       u32 str_id;
@@ -2715,8 +2735,8 @@ static void pwm_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
       {
         str_id = pwm_mes_tbl[2] + id;
       }
-#if 1
-	{
+      //
+      {
 		STRBUF  *monsbuf = GFL_STR_CreateBuffer( 128, wk->heapID );
 		u32 monsno,form,sex;
 		//
@@ -2729,29 +2749,9 @@ static void pwm_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
 		//
 		pwm_disp_string( wk, STR_MAIN, PWB_CVS_TOP_05, 0, 0, monsbuf, 0, TEXT_COL_MAIN );
 		GFL_STR_DeleteBuffer( monsbuf );
-	}
-#else
-      strbuf = GFL_MSG_CreateString( wk->MsgData, str_id );
-
-      // 単語登録 先頭ポケモン名
-      {
-        STRBUF  *monsbuf = GFL_STR_CreateBuffer( 128, wk->heapID );
-        u32 monsno,form,sex;
-
-        POKEICON_UnpackResourceData( p_pkwd_record->pokeicon[0], &monsno, &form, &sex );
-        WORDSET_RegisterPokeMonsNameNo( wk->Wordset, 0, monsno );
-        WORDSET_RegisterPlayerName( wk->Wordset, 1, wk->Param->mystatus );
-        WORDSET_ExpandStr( wk->Wordset, monsbuf, strbuf );
-        GFL_STR_DeleteBuffer( strbuf );
-        strbuf = monsbuf;
       }
-
-      pwm_disp_string( wk, STR_MAIN, PWB_CVS_TOP_05, 0, 0, strbuf, 0, TEXT_COL_MAIN );
-      GFL_STR_DeleteBuffer( strbuf );
-#endif
     }
     // XXXX億円
-#if 1
 	strbuf  = GFL_MSG_CreateString( wk->MsgData, pwm_mes_tbl[3] );
 	namebuf = GFL_STR_CreateBuffer( 128, wk->heapID );
 	num = p_pkwd_record->profits;
@@ -2759,33 +2759,13 @@ static void pwm_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
 		num = 9999;
 		OS_Printf("max over:%d\n",p_pkwd_record->profits);
 	}
-//	WORDSET_RegisterNumber( wk->Wordset, 2, p_pkwd_record->profits, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	WORDSET_RegisterNumber( wk->Wordset, 2, num, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	WORDSET_ExpandStr( wk->Wordset, namebuf, strbuf );
 	GFL_STR_DeleteBuffer( strbuf );
 	// 表示
 	pwm_disp_string( wk, STR_MAIN, PWB_CVS_TOP_06, 0, 0, namebuf, 1, TEXT_COL_MAIN );
 	GFL_STR_DeleteBuffer( namebuf );
-#else
-    {
-      strbuf = GFL_MSG_CreateString( wk->MsgData, pwm_mes_tbl[3] );
-
-      // 単語登録
-      {
-        STRBUF  *namebuf = GFL_STR_CreateBuffer( 128, wk->heapID );
-        WORDSET_RegisterNumber( wk->Wordset, 2, p_pkwd_record->profits, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-        WORDSET_ExpandStr( wk->Wordset, namebuf, strbuf );
-        GFL_STR_DeleteBuffer( strbuf );
-        strbuf = namebuf;
-      }
-
-      pwm_disp_string( wk, STR_MAIN, PWB_CVS_TOP_06, 0, 0, strbuf, 1, TEXT_COL_MAIN );
-
-      GFL_STR_DeleteBuffer( strbuf );
-    }
-#endif
   }
-
 }
 
 //-----------------------------------------------------------------------------------------------
@@ -3150,6 +3130,7 @@ static void pwm_disp_up_bg( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 smode 
 	//
 	// 引き継ぐ
 	if(smode == 0){
+#if 0
 		// 限定で大丈夫なはずなのでここで判定
 		mode = GFL_UI_CheckTouchOrKey();
 		//
@@ -3163,7 +3144,8 @@ static void pwm_disp_up_bg( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 smode 
 				wk->first_anime_flag = TRUE;
 			}
 		}
-		// フォント面のみを考慮にいれる
+#endif
+		// 一旦消しておく
 		GFL_BG_SetVisible( GFL_BG_FRAME0_M, flag );
 	}
 	// 表示
@@ -3172,6 +3154,31 @@ static void pwm_disp_up_bg( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 smode 
 		// フォント面のみを考慮にいれる
 		GFL_BG_SetVisible( GFL_BG_FRAME0_M, flag );
 	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	上画面のBGのアニメをするかチェック
+ *
+ * @param	PKWD_RECORD_MONITOR_MAIN_WORK*		wk
+ *
+ * @return  BOOL								(TRUE:再生、FALSE:なし)
+ */
+//--------------------------------------------------------------------------------------------
+static BOOL pwm_chk_1st_anime( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
+{
+	BOOL	bflg=FALSE;
+	//
+	// 処理済み
+	if(wk->first_anime_flag == TRUE){
+		return( bflg );
+	}
+	// チェック
+	if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY ){
+		bflg = TRUE;
+		wk->first_anime_flag = TRUE;
+	}
+	return( bflg );
 }
 
 //-----------------------------------------------------------------------------------------------------------
@@ -3242,7 +3249,10 @@ static void pwm_init_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 		FRAMELIST_AddItem( wk->frame_list_work, wk->FlagBuffer[i].color, pw_title_00+wk->FlagBuffer[i].openid );
 	}
 	// 初期化
-	FRAMELIST_Init( wk->frame_list_work );
+	wk->Flag &= ~FLG_FRAME_STAT;
+	if( FRAMELIST_Init( wk->frame_list_work ) == FALSE ){
+		wk->Flag |= FLG_FRAME_STAT;
+	}
 	//
 	// 背景色をセット
 	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0x679d );

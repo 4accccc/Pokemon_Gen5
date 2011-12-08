@@ -295,6 +295,9 @@ enum{
 	FLG_UPDATE			= (1<<6),		// 更新
 	//
 	FLG_STR_WAIT		= (1<<8),		// 文字列待ち
+	//
+	FLG_FRAME_STAT		= (1<<12),		// フレーム
+	FLG_FRAME_SET_PAL	= (1<<13),		// パレット転送
 };
 
 //-------------
@@ -3166,7 +3169,8 @@ static void pwb_init_book( PKWD_BOOK_MAIN_WORK * wk )
 {
 	// main処理へ
 	wk->Mode 		= MODE_MAIN_BOOK;
-	wk->SubMode 	= STEP_LV1;
+//	wk->SubMode 	= STEP_LV1;
+	wk->SubMode		= STEP_INIT;
 	wk->TitleMode	= TMODE_BOOK;
 	//
 	// bg初期化(1回目だけは転送しない)
@@ -3195,6 +3199,7 @@ static void pwb_init_book( PKWD_BOOK_MAIN_WORK * wk )
 	pwb_disp_up_bg( wk, 0 );
 	//
 	wk->Flag |= FLG_SET_INIT;
+	wk->Flag &= ~FLG_FRAME_SET_PAL;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -3216,8 +3221,16 @@ static void pwb_main_book( PKWD_BOOK_MAIN_WORK * wk )
 	switch( wk->SubMode ){
 		// 初期化
 		case STEP_INIT:
-			wk->SubMode = STEP_LV1;
-			
+			if(!(wk->Flag & FLG_FRAME_STAT)){
+				if( FRAMELIST_Init( wk->frame_list_work ) == FALSE ){
+					wk->Flag |= FLG_FRAME_STAT;
+					wk->SubMode = STEP_LV1;
+				}
+			}else{
+				wk->SubMode = STEP_LV1;
+			}
+			break;
+		//
 		// 通常
 		case STEP_LV1:
 			pwb_key_book( wk );
@@ -3352,6 +3365,11 @@ static void pwb_key_book( PKWD_BOOK_MAIN_WORK * wk )
 	u32		ret;
 	BOOL	bflg;
 	
+	// 処理中は更新しない
+	if( PRINTSYS_QUE_IsFinished( wk->print_que ) == FALSE ){
+		return;
+	}
+	
 	// main
 	ret = pwb_main_framelist( wk );
 	listflg = pwb_is_main_framelist( wk, ret );
@@ -3408,15 +3426,8 @@ static void pwb_key_book( PKWD_BOOK_MAIN_WORK * wk )
 		wk->Flag |= FLG_STR_WAIT;
 	}
 	//
-	// 処理中は更新しない
-	if( PRINTSYS_QUE_IsFinished( wk->print_que ) == FALSE ){
-		return;
-	}
-	//
 	// 上文字列更新
 	// Queの処理が終了したら更新
-//	if(flg != 0){
-//	if(flg == 1){
 	if(wk->Flag & FLG_STR_WAIT){
 		//
 		// 固定文字列
@@ -3431,6 +3442,14 @@ static void pwb_key_book( PKWD_BOOK_MAIN_WORK * wk )
 		tmp = pwb_get_title_no( wk, wk->FlagBuffer[wk->ScenarioCurPos].openid );
 		pwb_chg_bglogo( wk, tmp );
 		wk->Flag &= ~FLG_STR_WAIT;
+	}
+	//
+	// あまりやりたくないが、
+	// 初期のカーソル位置転送
+	// (FRAMELIST_Main)を通す必要があるためここでセット
+	if(!(wk->Flag & FLG_FRAME_SET_PAL)){
+		FRAMELIST_SetCursorPosPalette( wk->frame_list_work );
+		wk->Flag |= FLG_FRAME_SET_PAL;
 	}
 	//
 	// スクロールバー処理(要検討)
@@ -4724,7 +4743,10 @@ static void pwb_init_framelist( PKWD_BOOK_MAIN_WORK * wk )
 		FRAMELIST_AddItem( wk->frame_list_work, wk->FlagBuffer[i].color, pw_title_00+wk->FlagBuffer[i].openid );
 	}
 	// 初期化
-	FRAMELIST_Init( wk->frame_list_work );
+	wk->Flag &= ~FLG_FRAME_STAT;
+	if( FRAMELIST_Init( wk->frame_list_work ) == FALSE ){
+		wk->Flag |= FLG_FRAME_STAT;
+	}
 	//
 	// 背景色をセット
 	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0x679d );

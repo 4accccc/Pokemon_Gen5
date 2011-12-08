@@ -1893,6 +1893,10 @@ static void td_chk_input_select( T_DOWNLOAD_MAIN_WORK* wk )
 	s32		listflg=0;
 	BOOL	bflg;
 	
+	// 処理中は更新しない
+	if( PRINTSYS_QUE_IsFinished( wk->print_que ) == FALSE ){
+		return;
+	}
 	//
 	// タッチモード => キーモードにする
 	if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH ){
@@ -1943,9 +1947,9 @@ static void td_chk_input_select( T_DOWNLOAD_MAIN_WORK* wk )
 		}
 	}
 	// 処理中は更新しない
-	if( PRINTSYS_QUE_IsFinished( wk->print_que ) == FALSE ){
-		return;
-	}
+//	if( PRINTSYS_QUE_IsFinished( wk->print_que ) == FALSE ){
+//		return;
+//	}
 	//
 	// 更新
 	if(wk->CmnFlag & T_DOWNLOAD_FLG_UPDATE){
