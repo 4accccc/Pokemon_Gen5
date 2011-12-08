@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="shiiyama_yukiko" host="W00229" date="2011-11-09T12:07:57" source="out18_local_texset.mb"/>
+	<create user="shiiyama_yukiko" host="W00229" date="2011-12-07T18:59:50" source="out18_local_texset.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="shiiyama_yukiko" host="W00229" date="2011-11-09T12:07:57" source="out18_local_texset.mb"/>
+<original_create user="shiiyama_yukiko" host="W00229" date="2011-12-07T18:59:50" source="out18_local_texset.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -621,14 +621,14 @@
 		path="C:/home/swan_data3d/field/out18/chip/tex/out57_futa.tga"
 	>
 		<bitmap size="64">
-			7555 1133 6653 5555 3755 3703 6657 5555
-			0355 7006 6507 5556 6035 0566 5200 5565
-			4672 5664 4620 5555 4427 5644 4460 2564
-			4442 2664 4442 2666 6444 2266 6446 2666
-			6444 6026 6646 2566 6442 2255 6646 0546
-			5560 2566 4462 3764 6520 5556 6622 7722
-			6200 5556 2725 2272 2072 5566 2075 2665
-			0305 5662 5007 5566 3755 0733 6600 5556
+			1577 0023 6651 7777 2377 2313 6653 7777
+			1267 3115 6513 7776 6126 1566 5411 7765
+			7634 5667 7641 5555 7743 5677 7761 4567
+			7774 4667 7774 4666 6777 4466 6776 4666
+			6777 6146 6676 4566 6774 4455 6676 1576
+			5561 4566 7764 2367 6541 5556 6644 3344
+			6411 5556 4345 4434 4134 5566 4135 4665
+			1216 5664 5113 7766 2367 1322 6611 7776
 		</bitmap>
 	</tex_image>
 	<tex_image index="17" name="out57_gake01a"
@@ -639,14 +639,14 @@
 		path="C:/home/swan_data3d/field/out18/chip/tex/out57_gake01a.tga"
 	>
 		<bitmap size="64">
-			7443 7777 7447 4447 7743 7777 7747 4477
-			7733 7777 7744 1477 7731 7777 7444 1347
-			7431 4777 4433 1534 7431 6677 4555 1553
-			6331 6666 5515 1155 6351 3666 5115 1255
-			6551 5666 5111 1255 6351 5666 5111 2215
-			3552 5366 1111 2221 5512 5533 1221 2222
-			5122 1555 2222 2222 1223 2111 2222 3222
-			2330 2222 2222 0332 3000 3333 3333 0003
+			7664 7777 7667 6677 7764 7777 7767 6777
+			7744 7777 7766 2777 7742 7777 7666 2477
+			7642 6677 6644 2347 7642 4567 6333 2334
+			5442 4455 3333 2233 5432 3455 3343 2232
+			5432 3355 3443 2222 5432 2345 3443 1222
+			4331 2334 3333 1122 3321 2234 2332 1122
+			3211 2223 2221 1111 2114 1222 1111 4111
+			1440 1111 1111 0441 4000 4444 4444 0004
 		</bitmap>
 	</tex_image>
 	<tex_image index="18" name="out57_gake1_0"
@@ -657,10 +657,10 @@
 		path="C:/home/swan_data3d/field/out18/chip/tex/out57_gake1_0.tga"
 	>
 		<bitmap size="32">
-			1533 5552 2412 3335 1253 3352 4453 3352
-			2125 3335 1233 5552 2122 3333 1223 2222
-			2422 3332 1422 2224 4442 2222 1142 2241
-			1144 2221 1114 4411 5114 3333 5515 4145
+			1466 4443 3213 6664 0336 6643 2246 6643
+			3133 6665 1366 3443 5030 5555 4455 0333
+			3200 5555 3444 0003 2220 3444 3323 0044
+			4122 6666 3012 2255 6412 6666 6404 0566
 		</bitmap>
 	</tex_image>
 	<tex_image index="19" name="sea_asase02"
@@ -941,13 +941,13 @@
 		7e28 7e4b 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="16" name="out57_futa_pl" color_size="8">
-		21b7 1d73 25d8 2194 323b 2df9 321a 25b6
+		1951 1954 1d52 1d53 1d75 25b6 29d7 29d8
 	</tex_palette>
 	<tex_palette index="17" name="out57_gake01a_pl" color_size="8">
-		7c1f 1d70 194e 2193 21b6 1d72 21b5 2df9
+		0000 194e 1d70 1d72 2193 21b5 21b6 2df9
 	</tex_palette>
 	<tex_palette index="18" name="out57_gake1_0_pl" color_size="8">
-		1d94 1d73 2196 2df9 2195 29d7 7fff 7fff
+		1d73 1d94 2195 2196 29d7 29d8 2df9 7fff
 	</tex_palette>
 	<tex_palette index="19" name="sea_asase02_pl" color_size="4">
 		6ad0 5e8f 62b0 7fff
