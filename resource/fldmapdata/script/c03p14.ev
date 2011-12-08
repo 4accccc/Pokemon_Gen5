@@ -14,6 +14,7 @@
   .include  "c11_def.h"
 
   //@author fujimura_souichirou（アイテム入手イベント）
+  //@author Mizuguchi_Mai
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -38,10 +39,12 @@ EVENT_START		ev_c03p14_recept_01
 	DEFINE_LOCAL	lwk_loop
 	DEFINE_LOCAL	lwk_select
 
+	//交換した国数をチェック（自分以外の国と交換したことがあるか）
+	_UN_GET_COUNTRY_NUM( FALSE, SCWK_TEMP0 )
 	//ジオネットに自分の国コードを登録しているかチェック
 	_UN_IS_SETTING_MYCOUNTRY( SCWK_TEMP1 )
-	IF $SCWK_TEMP1 == TRUE THEN
-		//自分の出身地を登録している
+	IF $SCWK_TEMP0 != 0 && $SCWK_TEMP1 == TRUE THEN
+		//海外の人と交換したことがある & 自分の出身地を登録している
 		
 		WHILE $lwk_loop != 555
 			
@@ -81,7 +84,7 @@ EVENT_START		ev_c03p14_recept_01
 		ENDWHILE
 
 	ELSE
-		//ジオネットに自分の国を登録していない
+		//海外の人と交換したことがない。自分の国を登録していない
 		
 		//国境って何のために……
 		_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_02, C03P14_RECEPT_01, POS_DEFAULT )
@@ -131,6 +134,7 @@ ev_select_yes:
 	//マップ遷移
 	_MAP_CHANGE_NO_FADE( ZONE_ID_C11, 407, 0, 762, DIR_LEFT )
 _RET
+
 
 //--------------------------------------------------------------------
 //主人公：船へ
