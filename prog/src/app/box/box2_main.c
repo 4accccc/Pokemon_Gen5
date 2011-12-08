@@ -2218,6 +2218,28 @@ static BOOL PokeIconObjDrop( BOX2_SYS_WORK * syswk )
  * @retval  "FALSE = 不可"
  */
 //--------------------------------------------------------------------------------------------
+static BOOL CheckBattleBoxTamago( BOX2_SYS_WORK * syswk, u32 pos, u32 tray )
+{
+	if( BOX2MAIN_GetNowSelectMultiPokeNum(syswk->app) == 0 ){
+		if( BOX2MAIN_PokeParaGet( syswk, pos, tray, ID_PARA_tamago_flag, NULL ) != 0 ){
+			return FALSE;
+		}
+	}else{
+		u16	x, y;
+		for( y=0; y<syswk->app->multi_h; y++ ){
+			for( x=0; x<syswk->app->multi_w; x++ ){
+				// 存在チェック
+				if( syswk->app->multi_pokemon_id[y*BOX_MAX_COLUMN+x] == 0 ){
+					continue;
+				}
+				if( BOX2MAIN_PokeParaGet( syswk, pos+y*BOX_MAX_COLUMN+x, tray, ID_PARA_tamago_flag, NULL ) != 0 ){
+					return FALSE;
+				}
+			}
+		}
+	}
+	return TRUE;
+}
 static BOOL PartyMoveCheck( BOX2_SYS_WORK * syswk, u32 get_pos, u32 put_pos )
 {
   u32 exist;
@@ -2260,17 +2282,17 @@ static BOOL PartyMoveCheck( BOX2_SYS_WORK * syswk, u32 get_pos, u32 put_pos )
     // タマゴをトレイから手持ちに配置しようとしたとき
     if( get_pos < BOX2OBJ_POKEICON_TRAY_MAX &&
         put_pos >= BOX2OBJ_POKEICON_TRAY_MAX && put_pos < BOX2OBJ_POKEICON_PUT_MAX &&
-        BOX2MAIN_PokeParaGet( syswk, get_pos, syswk->get_tray, ID_PARA_tamago_flag, NULL ) != 0 ){
+				CheckBattleBoxTamago( syswk, get_pos, syswk->get_tray ) == FALSE ){
       syswk->app->mv_err_code = BOX2MAIN_ERR_CODE_EGG;
       return FALSE;
     }
     // パーティ取得時に配置位置のトレイポケモンがタマゴなら
     if( get_pos >= BOX2OBJ_POKEICON_TRAY_MAX && get_pos < BOX2OBJ_POKEICON_PUT_MAX &&
         put_pos < BOX2OBJ_POKEICON_TRAY_MAX && exist != 0 &&
-        BOX2MAIN_PokeParaGet( syswk, put_pos, syswk->tray, ID_PARA_tamago_flag, NULL ) != 0 ){
+				CheckBattleBoxTamago( syswk, put_pos, syswk->tray ) == FALSE ){
       syswk->app->mv_err_code = BOX2MAIN_ERR_CODE_EGG;
       return FALSE;
-    }
+		}
   }
 
   // 手持ちから
