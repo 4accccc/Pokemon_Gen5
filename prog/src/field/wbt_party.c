@@ -406,13 +406,13 @@ static void choiceBSubwayData(
 {
   int i;
   int  set_count;
-  u8 selected[TEMOTI_POKEMAX];
+  u16 selected[TEMOTI_POKEMAX];
 
-  GFL_STD_MemClear( selected, sizeof(u8) * TEMOTI_POKEMAX );
+  GFL_STD_MemClear( selected, sizeof(u16) * TEMOTI_POKEMAX );
 
   for( set_count = 0; set_count != cnt; set_count ++ )
   {
-    u8  poke_index;
+    u16 poke_index;
     u32 available_count;
     u32 choice;
 
