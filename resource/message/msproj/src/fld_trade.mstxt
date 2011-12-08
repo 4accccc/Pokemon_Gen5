@@ -2481,25 +2481,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ユキエ</Text>
+			<Text>ユリコ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T09:16:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-08T10:16:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T09:16:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-08T10:16:56" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ユキエ</Text>
+			<Text>ユリコ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T09:16:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-08T10:16:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T09:16:07" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-08T10:16:56" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
