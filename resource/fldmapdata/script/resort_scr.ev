@@ -733,8 +733,9 @@ sub_come_shop:
       _NUMBER( 5, LWK_EXP, 5 )
       _SYSWIN_MSG( resort_sys_16, POS_DOWN )
       _SE_WAIT()
-      _SE_PLAY( SEQ_SE_SW_JA_EXP )
-      _SE_WAIT()
+      //TODO SEループバグのため一旦コメント
+      //_SE_PLAY( SEQ_SE_SW_JA_EXP )
+      //_SE_WAIT()
 
       _NUMBER( 6, LWK_LV, 2 )
       //施設レベルアップ
@@ -873,8 +874,9 @@ sub_city_app_exp:
 
     _SYSWIN_MSG( resort_sys_17, POS_DOWN )
     _SE_WAIT()
-    _SE_PLAY( SEQ_SE_SW_JA_EXP )
-    _SE_WAIT()
+    //TODO SEループバグのため一旦コメント
+    //_SE_PLAY( SEQ_SE_SW_JA_EXP )
+    //_SE_WAIT()
 
     //街レベルアップ
     IF $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_RANK || $LWK_RET2 == RESORT_SET_SPOT_CITY_LVUP_PRIZE_RANK THEN
