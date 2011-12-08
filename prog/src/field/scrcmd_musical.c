@@ -33,6 +33,7 @@
 #include "savedata/save_control.h"
 #include "savedata/musical_save.h"
 #include "savedata/musical_dist_save.h"
+#include "musical/comm/mus_comm_define.h"
 
 #include "poke_tool/poke_tool.h"  //ドレスアップデータ用
 #include "poke_tool/monsno_def.h" //ドレスアップデータ用
@@ -929,14 +930,35 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
     }
     break;
   case MUSICAL_TOOL_COMM_TIMESYNC:
-    //非通信ならスルー
-    if( musScriptWork->commWork != NULL &&
-        isNetErr == FALSE )
     {
-      musScriptWork->commSyncNo = val1;
-      MUS_COMM_SendTimingCommand( musScriptWork->commWork , musScriptWork->commSyncNo );
-      VMCMD_SetWait( core, EvCmdMusicalCommTimingSync );
-      return( VMCMD_RESULT_SUSPEND );
+      BOOL enable = TRUE;
+      if( val1 == MUSICAL_COMM_SYNC_MSG22 )
+      {
+        int i;
+        for( i = 0; i < MUSICAL_COMM_MEMBER_NUM; i++ )
+        {
+          MYSTATUS *status = MUS_COMM_GetPlayerMyStatus( musScriptWork->commWork, i );
+          if( status != NULL )
+          {
+            int version = MyStatus_GetRomCode( status );
+            if( version == VERSION_BLACK || version == VERSION_WHITE )
+            {
+              enable = FALSE;
+            }
+          }
+        }
+      }
+
+      //非通信ならスルー
+      if( musScriptWork->commWork != NULL &&
+          isNetErr == FALSE && 
+          enable )
+      {
+        musScriptWork->commSyncNo = val1;
+        MUS_COMM_SendTimingCommand( musScriptWork->commWork , musScriptWork->commSyncNo );
+        VMCMD_SetWait( core, EvCmdMusicalCommTimingSync );
+        return( VMCMD_RESULT_SUSPEND );
+      }
     }
     break;
   case MUSICAL_TOOL_COMM_WAIT_POST_PROGRAM:
