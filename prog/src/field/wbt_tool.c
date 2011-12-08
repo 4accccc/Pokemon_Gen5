@@ -145,8 +145,6 @@ void WBTTOOL_DeleteRomTrainerData( WBTROM_TRDATA * rom_trdata )
  * @param heapID
  * @param tr_id
  * @param tr_data
- *
- * @todo  メモリ圧迫に備えて、バイナリから読み込むように修正
  */
 //------------------------------------------------------------------
 void WBTTOOL_GetRomTrainerData(
@@ -380,7 +378,7 @@ u8 WBTTOOL_GetPartyPokeType( POKEPARTY * party, u64 seed )
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"  //SYS_FLAG_GAMECLEAR
 
 enum {
-  CHAMP_OPEN_COUNT = 10,  ///<仮：１０回クリアでチャンプトーナメント解除
+  CHAMP_OPEN_COUNT = 10,  ///<ワールドリーダーズ１０回クリアでチャンピオントーナメント解除
 };
 
 //-----------------------------------------------------------------------------

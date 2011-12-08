@@ -109,7 +109,7 @@ WBTSYS * WBT_SCR_getWBTSys( SCRCMD_WORK * work )
 
 //--------------------------------------------------------------
 /**
- * @todo  トーナメント種別確定次第、正しいものをインクリメントする
+ * @brief  対応したトーナメントの優勝数をインクリメントする
  */
 //--------------------------------------------------------------
 static void incVictoryCount( WBTSYS * wbtsys, SCRCMD_WORK * work )
