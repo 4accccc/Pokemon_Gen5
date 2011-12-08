@@ -45,8 +45,10 @@
 
 #include "../../battle/pokewood/pokewood_senario.h"
 
-
-//#define SCROLL_DEBUG    //有効にするとスクロールの数値をプリント
+#ifdef PM_DEBUG
+//#define SCROLL_DEBUG        ///<有効にするとスクロールの数値をプリント
+//#define ENDING_TYPE_DEBUG   ///<有効にするとエンディングを指定できる
+#endif
 //==============================================================================
 //  定数定義
 //==============================================================================
@@ -211,6 +213,16 @@ enum{
   ENDROLL_STR_MAX,
 };
 
+// 観客パレットチェンジ用定義
+enum{
+  AUDIENCE_CHAR_PALSIZE = 0x20*12, // 12パレット分(4色単位)
+  AUDIENCE_SEAT_PALSIZE = 0x20*15, // 15パレット分(5色単位)
+  //
+  AUDIENCE_TIMER   = 4,       // パターン切り替え時間
+  //
+  AUDIENCE_ANI_MAX = 3,       // 3種類のアニメパターンがある
+};
+
 //  エンドロール関係定義
 #define ENDROLL_SCROLL_ENDLINE     ((tw->CG2d.line_count*8+128))
 #define ENDROLL_SCROLL_ENDLINE_LR  ((tw->CG2d.line_count*8+128+128+64))
@@ -286,12 +298,21 @@ typedef struct{
 
 //ポケウッド観客
 typedef struct{
-  u32                   audience_charaID;		// objcharIDを流用
-  u32                   audience_plttID;
-  u32                   audience_cellID;
-  GFL_CLUNIT*           audience_clunit;
-  GFL_CLWK*             audience_wk[ BTLV_INPUT_AUDIENCE_MAX ];
-  ARCHANDLE                *aHandle;
+  u32         audience_charaID;		// objcharIDを流用
+  u32         audience_plttID;
+  u32         audience_cellID;
+  GFL_CLUNIT* audience_clunit;
+  GFL_CLWK*   audience_wk[ BTLV_INPUT_AUDIENCE_MAX ];
+  ARCHANDLE      *aHandle;
+  
+  // 観客席パレットチェンジ処理用ワーク
+  u16         *audience_char_pal; ///< 観客OBJの変更用パレット
+  u16         *audience_seat_pal; ///< 座席BGの変更用パレット
+  s32         audience_palmode;   ///< パレットの段階
+  s32         audience_timer;     ///< タイマ
+  s32         audience_aninum;    ///< アニメの番号(0-2)
+  s32         audience_loopnum;   ///< 繰り返し数(1-4)
+
 }AUDIENCE_CONTROL;
 
 typedef struct {
@@ -406,6 +427,14 @@ static void releaseBriefingMsgdata(G2D_CONTROL* CG2d);
 static void _BG3Offset_func( PKWD_BRIEFING_WORK *tw, int scroll, int mode, HEAPID heapID );
 static void _endroll_screen_onoff( G2D_CONTROL *CG2d );
 static void _scroll_control( PKWD_BRIEFING_WORK *tw );
+
+static void btlv_init_palchg( AUDIENCE_CONTROL *AOam, HEAPID heapID );
+static void btlv_release_audience_palchg( AUDIENCE_CONTROL *AOam );
+static void btlv_set_palchg( AUDIENCE_CONTROL *AOam, const s32 num );
+static void btlv_main_palchg( AUDIENCE_CONTROL *AOam );
+static void btlv_set_aninum( AUDIENCE_CONTROL *AOam, const s32 num );
+static s32 btlv_set_aninum_rand( AUDIENCE_CONTROL *AOam, const s32 num );
+static u32 btlv_get_random( AUDIENCE_CONTROL *AOam, const s32 num );
 
 static void transBGGraphic( G2D_CONTROL* CG2d, HEAPID heapID, int align );
 
@@ -735,7 +764,7 @@ GFL_PROC_RESULT PkwdEndrollProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 
     tw->seq = SEQ_SETUP;
 
-#ifdef SCROLL_DEBUG
+#ifdef ENDING_TYPE_DEBUG
     // エンディング画面のレイアウトを変更する
     if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L){
       tw->mode = 1;
@@ -991,6 +1020,7 @@ static void MainFunc(PKWD_BRIEFING_WORK* tw)
 
   mainG3Dcontrol(&tw->CG3d, tw->heapID, tw->param->scenario_no);
   mainOAMcontrol(&tw->COam, tw->heapID);
+  btlv_main_palchg( &tw->AOam );
   INFOWIN_Update();
 }
 
@@ -2145,6 +2175,7 @@ enum{
   BLEND_SEQ_FADEOUT,
   BLEND_SEQ_END,
 
+  BLEND_SEQ_END_PUT_BEFORE,
   BLEND_SEQ_END_PUT,
   BLEND_SEQ_END_WAIT,
 };
@@ -2459,6 +2490,9 @@ static  void  BTLV_INPUT_CreateAudienceObj( AUDIENCE_CONTROL *AOam, HEAPID heapI
     col = audience_info[i][2];
     GFL_CLACT_WK_SetPlttOffs( AOam->audience_wk[ i ], col, CLWK_PLTTOFFS_MODE_PLTT_TOP );
   }
+
+  // パレットチェンジアニメ初期化
+  btlv_init_palchg( AOam, heapID );
 }
 
 //--------------------------------------------------------------
@@ -2469,7 +2503,11 @@ static  void  BTLV_INPUT_CreateAudienceObj( AUDIENCE_CONTROL *AOam, HEAPID heapI
 static  void  BTLV_INPUT_DeleteAudienceObj( AUDIENCE_CONTROL *AOam )
 {
   int i;
+
+  // パレットチェンジ解放
+  btlv_release_audience_palchg( AOam );
   
+  // CLACT解放
   for( i = 0 ; i < BTLV_INPUT_AUDIENCE_MAX ; i++ )
   {
     if(AOam->audience_wk[i]){
@@ -2728,6 +2766,237 @@ static void _playSE_audience_reaction( u32 audienceNum, int type )
 }
 
 
+//-----------------
+// 観客の点滅処理
+//-----------------
+// アニメ0( 1->2->1->0->.. )
+static const s16 audience_00_ptn[] = {
+  1,
+  2,
+  1,
+  0,
+};
+
+// アニメ1( 0->0->0->0->.. )
+static const s16 audience_01_ptn[] = {
+  0,
+  0,
+  0,
+  0,
+};
+
+// アニメ2( 1->0->.. )
+static const s16 audience_02_ptn[] = {
+  1,
+  0,
+};
+
+// テーブルまとめ
+static const s16 *audience_ptn_tbl[] = {
+  audience_00_ptn,      // アニメ0
+  audience_01_ptn,      // アニメ1
+  audience_02_ptn,      // アニメ2
+};
+
+// テーブルの要素数、繰り返し数
+static const s16 audience_ptn_num_tbl[] = {
+  4,4,                  // アニメ0
+  4,4,                  // アニメ1
+  2,2,                  // アニメ2
+};
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	観客用パレットチェンジ初期化
+ *
+ * @param   wk		
+ */
+//----------------------------------------------------------------------------------
+static void btlv_init_palchg( AUDIENCE_CONTROL *AOam, HEAPID heapID )
+{
+  // メモリ確保(最後に破棄をすること)
+  AOam->audience_char_pal = GFL_HEAP_AllocMemory( heapID, AUDIENCE_CHAR_PALSIZE );
+  GFL_STD_MemClear( AOam->audience_char_pal, AUDIENCE_CHAR_PALSIZE );
+  //
+  AOam->audience_seat_pal = GFL_HEAP_AllocMemory( heapID, AUDIENCE_SEAT_PALSIZE );
+  GFL_STD_MemClear( AOam->audience_seat_pal, AUDIENCE_SEAT_PALSIZE );
+  //
+  
+  // パレットセット(obj)
+  {
+    NNSG2dPaletteData* pal_data;
+    void* buf = GFL_ARCHDL_UTIL_LoadPalette( AOam->aHandle, NARC_battgra_wb_pkwd_obj_NCLR, &pal_data, heapID );
+    u16* raw_data = pal_data->pRawData;
+    // パレットをコピー
+    GFL_STD_MemCopy( &raw_data[0], AOam->audience_char_pal, AUDIENCE_CHAR_PALSIZE );  // 12本分
+    // 破棄
+    GFL_HEAP_FreeMemory( buf );
+  }
+  //
+  // パレットセット(bg)
+  {
+    NNSG2dPaletteData* pal_data;
+    void* buf = GFL_ARCHDL_UTIL_LoadPalette( AOam->aHandle, NARC_battgra_wb_pkwd_movie_c_NCLR, &pal_data, heapID );
+    u16* raw_data = pal_data->pRawData;
+    // パレットをコピー
+    GFL_STD_MemCopy( &raw_data[0], AOam->audience_seat_pal, AUDIENCE_SEAT_PALSIZE );  // 15本分
+    // 破棄
+    GFL_HEAP_FreeMemory( buf );
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	パレットチェンジ用ワーク解放
+ *
+ * @param   wk		
+ */
+//----------------------------------------------------------------------------------
+static void btlv_release_audience_palchg( AUDIENCE_CONTROL *AOam )
+{
+  // palクリア
+  if(AOam->audience_char_pal){
+    GFL_HEAP_FreeMemory( AOam->audience_char_pal );
+    AOam->audience_char_pal = 0;
+  }
+  // palクリア
+  if(AOam->audience_seat_pal){
+    GFL_HEAP_FreeMemory( AOam->audience_seat_pal );
+    AOam->audience_seat_pal = 0;
+  }
+
+}
+
+#define AUDIENCE_OBJ_PALCHG_TRANS_SIZE  ( 0x20*4 )
+#define AUDIENCE_BG_PALCHG_TRANS_SIZE   ( 0x20*5 )
+//----------------------------------------------------------------------------------
+/**
+ * @brief	観客用パレットチェンジ
+ *
+ * @param   wk		
+ * @param   const s32		(0-2:段階)
+ */
+//----------------------------------------------------------------------------------
+static void btlv_set_palchg( AUDIENCE_CONTROL *AOam, const s32 num )
+{
+  u16 *adr;
+  //
+  // objパレットをセット(4本単位)
+  adr = &AOam->audience_char_pal[0];
+  adr += 0x10*4*num;
+//  PaletteWorkSet( AOam->pfd, adr, FADE_SUB_OBJ, 0, 0x20*4 );
+  GXS_LoadOBJPltt( adr, 0, AUDIENCE_OBJ_PALCHG_TRANS_SIZE);
+  //
+  // bgパレットをセット(5本単位)
+  adr = &AOam->audience_seat_pal[0];
+  adr += 0x10*5*num;
+//  PaletteWorkSet( AOam->pfd, adr, FADE_SUB_BG, 0, 0x20*5 );
+  GXS_LoadBGPltt( adr, 0, AUDIENCE_BG_PALCHG_TRANS_SIZE );
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	観客用パレットチェンジ(main)
+ *
+ * @param   wk		
+ */
+//----------------------------------------------------------------------------------
+static void btlv_main_palchg( AUDIENCE_CONTROL *AOam )
+{
+  const s16 *adr;
+  s32 num;
+  
+  // タイマ
+  AOam->audience_timer++;
+  if(AOam->audience_timer > AUDIENCE_TIMER){
+    AOam->audience_timer = 0;
+    //
+    AOam->audience_palmode++;
+    if(AOam->audience_palmode >= audience_ptn_num_tbl[2*AOam->audience_aninum]){
+      AOam->audience_palmode = 0;
+      //
+      // 繰り返し回数の処理
+      AOam->audience_loopnum--;
+      if(AOam->audience_loopnum <= 0){
+        // 新アニメ番号(AOam->audience_aninum)のセット
+        num = btlv_set_aninum_rand( AOam, AOam->audience_aninum );
+        btlv_set_aninum( AOam, num );
+        // それぞれの乱数(繰り返し数)が求まるはず
+        AOam->audience_loopnum = 1+btlv_get_random( AOam, audience_ptn_num_tbl[2*AOam->audience_aninum+1] );
+      }
+    }
+    // 切り替え
+    adr = audience_ptn_tbl[AOam->audience_aninum];
+    btlv_set_palchg( AOam, adr[AOam->audience_palmode] );
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * @brief	観客用アニメ種類設定
+ *
+ * @param   AUDIENCE_CONTROL		*AOam
+ * @param   const s32			(番号(0-2))
+ */
+//----------------------------------------------------------------------------------
+static void btlv_set_aninum( AUDIENCE_CONTROL *AOam, const s32 num )
+{
+  AOam->audience_aninum = num;
+  AOam->audience_timer   = 0;
+  AOam->audience_palmode = 0;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	観客用アニメ番号の設定
+ *          (以前のアニメ番号とは違うものを使用するための処理)
+ *
+ * @param   AUDIENCE_CONTROL		*AOam
+ * @param   const s32			(旧番号(0-2))
+ */
+//----------------------------------------------------------------------------------
+static s32 btlv_set_aninum_rand( AUDIENCE_CONTROL *AOam, const s32 num )
+{
+  s32 i;
+  s32 flg=0;
+  s32 rnum;
+  
+  // 10回程度調べる
+  for(i=0;i<10;i++){
+    rnum = btlv_get_random( AOam, AUDIENCE_ANI_MAX );
+    if(rnum != num){
+      flg = 1;
+      break;
+    }
+  }
+  // 重複しないものが見つかるはずだが念のため
+  if(flg == 0){
+    rnum = num+1;
+    if(rnum > (AUDIENCE_ANI_MAX-1)){
+      rnum = 0;
+    }
+  }
+//  OS_Printf("rnum %d\n", rnum );
+  return( rnum );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	ランダムの取得(念のためまとめておく)
+ *
+ * @param   AUDIENCE_CONTROL		*AOam
+ * @param   const s32			(num-1)までの乱数
+ */
+//----------------------------------------------------------------------------------
+static u32 btlv_get_random( AUDIENCE_CONTROL *AOam, const s32 num )
+{
+  u32 rnum;
+  //
+  rnum = GFUser_GetPublicRand( num );
+  return( rnum );
+}
+
+
 
 //=============================================================================================
 //=============================================================================================
@@ -2752,6 +3021,7 @@ static void _playSE_audience_reaction( u32 audienceNum, int type )
 //  エンドロール関係
 //=============================================================================================
 
+#define ENDROL_BGM_FADE_SYNC  ( 40 )
 //----------------------------------------------------------------------------------
 /**
  * @brief	あらすじ表示半透明処理
@@ -2820,9 +3090,19 @@ static void EndrollFunc( PKWD_BRIEFING_WORK *tw )
     // スクロール制御
     _scroll_control( tw );
     break;
+  case BLEND_SEQ_END_PUT_BEFORE:
+    if(tw->CG2d.wait==0){
+      PMSND_PlayNextBGM( SEQ_BGM_SILENCE_FIELD, ENDROL_BGM_FADE_SYNC, 5 );
+      tw->CG2d.wait++;
+    }else if(tw->CG2d.wait==ENDROL_BGM_FADE_SYNC-10){
+      tw->blend_seq = BLEND_SEQ_END_PUT;
+      tw->CG2d.wait=0;
+    }else{
+      tw->CG2d.wait++;
+    }
+    break;
   // 「END」表示
   case BLEND_SEQ_END_PUT:
-    PMSND_PlayNextBGM( SEQ_BGM_SILENCE_FIELD, 20, 5 );
     setAudienceReaction( tw, tw->param->bsp );
     _trans_G2DGraphic_End( &tw->CG2d, tw->heapID );
     GX_SetVisibleWnd( GX_WNDMASK_W1 );
@@ -2895,7 +3175,7 @@ static void _scroll_control( PKWD_BRIEFING_WORK *tw)
   // 全面スクロール
   if(tw->mode==0){
     if(tw->CG2d.scroll>=ENDROLL_SCROLL_ENDLINE){
-      tw->blend_seq = BLEND_SEQ_END_PUT;
+      tw->blend_seq = BLEND_SEQ_END_PUT_BEFORE;
       tw->CG2d.wait=0;
     }
   }else{
@@ -3006,7 +3286,7 @@ static void _BG3Offset_func( PKWD_BRIEFING_WORK *tw, int scroll, int align, HEAP
   // 左右分割のときだけ「END」スクリーンを転送する
   if(scroll==(pokewood_pos+POKEWOOD_LOG_SCREEN_HEIGHT) && align!=0){
     transSideEndScreen( &tw->CG2d, heapID, align );
-    PMSND_PlayNextBGM( SEQ_BGM_SILENCE_FIELD, 20, 5 );
+    PMSND_PlayNextBGM( SEQ_BGM_SILENCE_FIELD, ENDROL_BGM_FADE_SYNC, 5 );
   }
   
   // 左右分割の時の「END」スクリーン登場にあわせた観客リアクション
