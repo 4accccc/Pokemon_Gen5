@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-05-18T15:57:22" source="c5_statue_01.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-11-01T11:45:13" source="c5_statue_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2011-05-18T15:57:22" source="c5_statue_01.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2011-11-01T11:45:13" source="c5_statue_01.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -188,10 +188,10 @@
 			8c8c 8c8c 8c8c 8c8c 0101 0101 0101 0101
 			8c8c 8c8c 8c8c 8c8c 0101 0101 0101 0101
 			8c8c 8c8c 8c8c 8c8c 0101 0101 0101 0101
-			6363 6363 6363 6363 0101 0101 0101 0101
-			6363 6363 6363 6363 0101 0101 0101 0101
-			4646 4646 4646 4646 0101 0101 0101 0101
-			4646 4646 4646 4646 0101 0101 0101 0101
+			6464 6464 6464 6464 0101 0101 0101 0101
+			6464 6464 6464 6464 0101 0101 0101 0101
+			4444 4444 4444 4444 0101 0101 0101 0101
+			4444 4444 4444 4444 0101 0101 0101 0101
 		</bitmap>
 	</tex_image>
 	<tex_image index="9" name="t_light04"
