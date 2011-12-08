@@ -472,7 +472,7 @@ BOOL debugMenu_SyachiCompatible( DEBUG_MENU_EVENT_WORK * wk )
     DEBUG_GFL_NET_AloneTestCodeReflect();
   }
 
-  return TRUE;
+  return FALSE;
 }
 
 #endif  //  PM_DEBUG
