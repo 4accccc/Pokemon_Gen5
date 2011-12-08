@@ -336,5 +336,11 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     REZI_GIMMICK_End,    // レジ３体の地底遺跡
     REZI_GIMMICK_Move,   // レジ３体の地底遺跡
   },
+  {
+    FS_OVERLAY_ID(field_gimmick_ending),
+    ENDING_GIMMICK_Setup,  // エンディング
+    ENDING_GIMMICK_End,    // エンディング
+    ENDING_GIMMICK_Move,   // エンディング
+  },
 };
 
