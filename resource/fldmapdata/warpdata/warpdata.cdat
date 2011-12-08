@@ -568,5 +568,12 @@ static const WARPDATA WarpData[] = {
 		ZONE_ID_D20R0501    ,   0,   0,
 		ZONE_ID_D20R0501    ,   0,   0,
 	},
+	{
+		SYS_FLAG_ARRIVE_R04,
+		FALSE,TRUE ,
+		ZONE_ID_R04W        ,   0,   0,
+		ZONE_ID_R04W        ,   0,   0,
+		ZONE_ID_R04W        ,   0,   0,
+	},
 };
 //==================================
