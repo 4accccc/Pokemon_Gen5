@@ -920,6 +920,8 @@
 #define FV_C08R0102_FOOTBALLM_01          1009 /* 0x03f1 ソウリュウシティ民家：シャガ宅２F */
 #define FV_C08R0102_FOOTBALLM_02          1010 /* 0x03f2 ソウリュウシティ民家：シャガ宅２F */
 #define FV_D10R0501_SWLEADER1_01          1011 /* 0x03f3 ジャイアントホール最深部：ベルとチェレン */
+#define FV_D08R0101_HAKASE1_01            1012 /* 0x03f4 リュウラセンの塔：アララギ父 */
+#define FV_C01_GLASSESE_01                1013 /* 0x03f5 サンヨウシティ：ダンペイ */
 
 #define FV_AREA_END                       1099 /* 0x044b  */
 
