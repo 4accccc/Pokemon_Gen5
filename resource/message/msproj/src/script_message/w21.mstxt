@@ -825,12 +825,10 @@
 			<Text>チェレン『ゴメン……
 おそくなって▼
 とんださきは　おそらく　だけど
-ジャイアントホール　だね▼
-いちど　アララギはかせと　あって
-たいさくを　ねったほうが　いい▼</Text>
+ジャイアントホール　だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T05:45:29" />
+				Time="2011-12-09T06:04:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -841,12 +839,10 @@
 			<Text>チェレン『ゴメン……
 遅くなって▼
 飛び先は　おそらく　だけど
-ジャイアントホール　だね▼
-一度　アララギ博士と　会って
-対策を　練ったほうが　いい▼</Text>
+ジャイアントホール　だね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T05:45:33" />
+				Time="2011-12-09T06:04:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -881,12 +877,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『じゃ　そちらは
-チェレンさんに　まかせる▼
-オレは　いくよ▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ジャイアントホール！
+じゃ　オレは　いくから！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T12:51:32" />
+				Time="2011-12-09T06:04:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -894,12 +889,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『じゃ　そちらは
-チェレンさんに　任せる▼
-オレは　行くよ▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ジャイアントホール！
+じゃ　オレは　行くから！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T12:51:35" />
+				Time="2011-12-09T06:06:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -995,10 +989,10 @@
 			Language="JPN">
 			<Text>チェレン『キュレム！▼
 プラズマだんは　キュレムの　ちからを
-あくよう　しようと　しているのか！▼</Text>
+あくよう　しているのか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T10:17:59" />
+				Time="2011-12-09T06:06:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1008,10 +1002,10 @@
 			Language="JPN_KANJI">
 			<Text>チェレン『キュレム！▼
 プラズマ団は　キュレムの　能力を
-悪用しようと　しているのか！▼</Text>
+悪用　しているのか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T10:24:20" />
+				Time="2011-12-09T06:06:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

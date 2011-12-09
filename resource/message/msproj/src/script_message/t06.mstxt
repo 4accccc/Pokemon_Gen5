@@ -831,7 +831,7 @@
 じかんは　いま　なんだよねー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T03:27:56" />
+				Time="2011-12-09T05:09:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -873,6 +873,143 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:18" />
 		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06_boy1a_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アデクさんに　おしえてもらったこと
+きみも　しりたい？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-09T04:55:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-09T04:55:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アデクさんに　教えてもらったこと
+きみも　知りたい？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-09T05:05:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-09T04:56:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい/いいえの選択肢表示
+・はい　→
+　いいえ→</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-09T04:56:12" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06_boy1a_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンしょうぶのとき　とびだすのは
+ポケモンリストの　ひだりうえに▽
+セットした　ポケモン　なんだって！▼
+だから　おれ　そだてたい　ポケモンか
+つよい　ポケモンを　セットしてるよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-09T05:11:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-09T04:55:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモン勝負のとき　飛びだすのは
+ポケモンリストの　左上に▽
+セットした　ポケモン　なんだって！▼
+だから　おれ　育てたい　ポケモンか
+強い　ポケモンを　セットしてるよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-09T05:11:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-09T04:56:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-09T04:56:17" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06_boy1a_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もう　えんりょ　しちゃって！
+せっかくだから　どんどん　きいてよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-09T05:05:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-09T04:56:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もう　遠慮しちゃって！
+せっかくだから　どんどん　きいてよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-09T05:05:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-09T04:56:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-09T04:56:21" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_t06_woman2_01"

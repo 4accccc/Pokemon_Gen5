@@ -933,10 +933,10 @@
 この　ソウリュウは
 かこと　みらいが　からみあう　まち▼
 わかれた　ポケモンを　つなげる
-くさびが　あるに　ふさわしい　ばしょだ▼</Text>
+くさびが　あるに　ふさわしい　ばしょ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T07:04:29" />
+				Time="2011-12-09T05:52:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -949,10 +949,10 @@
 この　ソウリュウは
 過去と　未来が　絡みあう　街▼
 分かれた　ポケモンを　つなげる
-くさびが　あるに　ふさわしい　場所だ▼</Text>
+くさびが　あるに　ふさわしい　場所▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T07:04:18" />
+				Time="2011-12-09T05:52:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1034,15 +1034,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヴィオ『そうぞうどおりの　おこたえ▼
+			<Text>ヴィオ『はい　そうぞうどおり▼
 ほんらいで　あれば　もういちど
 こおりを　うちこむと　おどしたいが▽
 しばらくは　つかえぬし……▼
 さむい　なか　めんどう　ですが
-さがすしか　ないのか……！▼</Text>
+さがすと　しますか……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T02:45:15" />
+				Time="2011-12-09T05:53:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1050,15 +1050,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヴィオ『想像通りの　お答え▼
+			<Text>ヴィオ『はい　想像通り▼
 本来であれば　もう一度
 氷を　撃ちこむと　脅したいが▽
 しばらくは　使えぬし……▼
 寒い中　面倒ですが
-探すしか　ないのか……！▼</Text>
+探すと　しまうすか……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T02:43:54" />
+				Time="2011-12-09T05:53:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1097,11 +1097,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャガ『なんにせよ
-あいつらを　かたづけよう！▼</Text>
+			<Text>シャガ『なんとまあ
+ぶれいな　れんちゅうだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-23T05:45:02" />
+				Time="2011-12-09T05:56:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1109,11 +1109,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シャガ『なんにせよ
-あいつらを　かたづけよう！▼</Text>
+			<Text>シャガ『なんとまあ
+無礼な　連中だ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-23T05:45:07" />
+				Time="2011-12-09T05:56:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1150,11 +1150,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]！
-きみの　ちからを　かしてほしい▽
-この　まちの　ジムを　まもるんだ！▼</Text>
+きみの　ちからを　かしてほしい▼
+この　ソウリュウから
+プラズマだんを　おいはらうぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T10:07:52" />
+				Time="2011-12-09T05:54:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1163,11 +1164,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]！
-君の　力を　貸してほしい▽
-この街の　ジムを　守るんだ！▼</Text>
+君の　力を　貸してほしい▼
+この　ソウリュウから
+プラズマ団を　追い払うぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T02:47:48" />
+				Time="2011-12-09T05:54:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1810,10 +1812,11 @@
 			<Text>シャガ『こいつら……！
 てごわく　なっている！▼
 [Name:TrainerName ]！
+ほかの　プラズマだんを　たのむ！▽
 この　まちの　ジムを　まもってくれ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T05:44:14" />
+				Time="2011-12-09T05:58:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1824,10 +1827,11 @@
 			<Text>シャガ『こいつら……！
 手強く　なっている！▼
 [Name:TrainerName ]！
+他の　プラズマ団を　頼む！▽
 この街の　ジムを　守ってくれ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T02:48:45" />
+				Time="2011-12-09T05:58:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2641,11 +2645,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『きたか……　だが
+			<Text>？？？『……いでんしのくさび
 うばいかえせるか　わたしから？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T03:13:05" />
+				Time="2011-12-09T06:00:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2653,11 +2657,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『来たか……　だが
+			<Text>？？？『……いでんしのくさび
 奪い返せるか　わたしから？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T03:12:58" />
+				Time="2011-12-09T06:00:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2962,11 +2966,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『[Name:TrainerName ]！
-あっ　シャガさんも　ごぶじ　でしたか！▼</Text>
+			<Text>チェレン『[Name:TrainerName ]！▼
+あっ　シャガさんも
+ごぶじ　でしたか！　よかった！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T10:38:47" />
+				Time="2011-12-09T06:01:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2974,11 +2979,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『[Name:TrainerName ]！
-あっ　シャガさんも　ご無事でしたか！▼</Text>
+			<Text>チェレン『[Name:TrainerName ]！▼
+あっ　シャガさんも
+ご無事でしたか！　よかった！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T03:22:36" />
+				Time="2011-12-09T06:01:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3199,13 +3205,14 @@
 			Language="JPN">
 			<Text>チェレン『[Name:TrainerName ]！
 できれば　いっしょに　きてほしい！▼
-プラズマだん　とも　わたりあえる
+きみは　プラズマだん　とも
+わたりあえる　すごうでの▽
 ポケモントレーナー　だからね▼
 では　シャガさん
 いってきます！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T10:00:49" />
+				Time="2011-12-09T06:02:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3215,13 +3222,14 @@
 			Language="JPN_KANJI">
 			<Text>チェレン『[Name:TrainerName ]！▼
 できれば　一緒に　来てほしい！▼
-プラズマ団とも　渡り合える
+きみは　ププラズマ団とも
+渡り合える　すごうでの▽
 ポケモントレーナー　だからね▼
 では　シャガさん
 行ってきます！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T10:00:54" />
+				Time="2011-12-09T06:02:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4785,14 +4793,14 @@
 			<Text>お得な　掲示板！▼
 
 シャガ市長が　認めた
-つよい　トレーナーに▼
+強い　トレーナーに▼
 ドラゴンタイプ　最強の　技を
 伝授します！▼
 詳しくは
 シャガ市長の　家で！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T05:56:16" />
+				Time="2011-12-09T06:03:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

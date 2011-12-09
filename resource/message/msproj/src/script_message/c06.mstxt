@@ -240,10 +240,10 @@
 どんな　ポケモンも　ぜったいに▽
 つかまえられる　さいこうの　ボール▼
 たびは　ポケモンとの　であい！
-チャンスを　のがさないようでね！▼</Text>
+チャンスを　のがさないでね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T03:37:45" />
+				Time="2011-12-09T06:07:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -255,10 +255,10 @@
 どんな　ポケモンも　絶対に▽
 捕まえられる　最高の　ボール▼
 旅は　ポケモンとの　出会い！
-チャンスを　逃さないようでね！▼</Text>
+チャンスを　逃さないでね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T03:38:12" />
+				Time="2011-12-09T06:07:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -503,12 +503,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>フウロ『あら！　じゃないですよ▼
-ひこうきに　のるから　じゅんびは
-たのんだわよ！　って　きたのは▽
+いま　ネジやまは　こえられないから
+ひこうきに　のせてね！　って▼
+たのんで　きたのは
 アララギはかせ　ですよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:00:12" />
+				Time="2011-12-09T06:19:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -517,12 +518,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>フウロ『あら！　じゃないですよ▼
-飛行機に　乗るから　準備は
-頼んだわよ！　って　きたのは▽
+いま　ネジ山は　越えられないから
+飛行機に　乗せてね！　って▼
+頼んで　きたのは
 アララギ博士　ですよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T12:28:00" />
+				Time="2011-12-09T06:19:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -612,11 +614,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それじゃあね　[Name:TrainerName ]！
-どんなときでも　ポケモンと　なかよくよ▼</Text>
+			<Text>それじゃあね　[Name:TrainerName ]！▼
+どんなときでも
+どんな　ポケモンとも　なかよくよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-04T07:19:27" />
+				Time="2011-12-09T06:25:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -624,11 +627,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それじゃあね　[Name:TrainerName ]！
-どんなときでも　ポケモンと　仲良くよ▼</Text>
+			<Text>それじゃあね　[Name:TrainerName ]！▼
+どんなときでも
+どんな　ポケモンとも　仲良くよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-04T07:19:31" />
+				Time="2011-12-09T06:25:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -725,10 +729,10 @@
 それとも　はかせが　むかった
 タワーオブヘブンで　きたえる？▼
 アタシとしては　つよい　トレーナーと
-たたかえるなら　どっちでも　いいけどね▼</Text>
+たたかえるなら　どっちでも　いいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T12:37:39" />
+				Time="2011-12-09T06:26:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -742,10 +746,10 @@
 それとも　博士が　向かった
 タワーオブヘブンで　鍛える？▼
 アタシとしては　強い　トレーナーと
-戦えるなら　どっちでも　いいけどね▼</Text>
+戦えるなら　どっちでも　いいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T12:37:32" />
+				Time="2011-12-09T06:26:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
