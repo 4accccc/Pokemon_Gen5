@@ -375,10 +375,10 @@ IRC♂
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
 GTSで　こうかんしたこと
-おぼえている？</Text>
+おぼえている？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-08-30T06:32:39" />
+				User="shimoyamada:W00184"
+				Time="2011-12-09T02:33:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -388,10 +388,10 @@ GTSで　こうかんしたこと
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
 GTSで　交換したこと
-覚えている？</Text>
+覚えている？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T05:52:21" />
+				User="shimoyamada:W00184"
+				Time="2011-12-09T02:33:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1525,10 +1525,10 @@ IRC♀
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
 GTSで　こうかんしたこと
-おぼえている？</Text>
+おぼえている？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T04:10:59" />
+				Time="2011-12-09T02:34:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -1538,10 +1538,10 @@ GTSで　こうかんしたこと
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
 GTSで　交換したこと
-覚えている？</Text>
+覚えている？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:34:05" />
+				User="shimoyamada:W00184"
+				Time="2011-12-09T02:34:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
