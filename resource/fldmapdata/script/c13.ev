@@ -93,7 +93,7 @@ EVENT_START		ev_pos_c13_swleader2_meet_01
 	_OBJ_ANIME_WAIT()
 	
 	//ホミカ：あのね！　アンタ　せんちょう　でしょ？
-	_BALLOONWIN_OBJMSG( msg_c13_swleader2_01 , C13_SWLEADER2_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_c13_swleader2_01 , C13_SWLEADER2_01 , POS_DL )
 	_MSGWIN_CLOSE()
 	
 	//ホミカ父：ホミカと向き合う
@@ -116,7 +116,7 @@ EVENT_START		ev_pos_c13_swleader2_meet_01
 	//_OBJ_ANIME_WAIT()
 	
 	//ホミカ：あー　もう！！　バカ！
-	_BALLOONWIN_OBJMSG( msg_c13_swleader2_02 , C13_SWLEADER2_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_c13_swleader2_02 , C13_SWLEADER2_01 , POS_DL )
 	_MSGWIN_CLOSE()
 	
 	//ホミカ：ジムの方へ去っていく
@@ -312,19 +312,19 @@ EVENT_START		ev_pos_c13_sunglasses_stop
 	CASE 215 THEN
 		_OBJ_ANIME( C13_SUNGLASSES_01, anm_sunglasses_stop_x215 )
 		_OBJ_ANIME_WAIT()
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
 	CASE 216 THEN
 		_OBJ_ANIME( C13_SUNGLASSES_01, anm_sunglasses_stop_x216 )
 		_OBJ_ANIME_WAIT()
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
 	CASE 218 THEN
 		_OBJ_ANIME( C13_SUNGLASSES_01, anm_sunglasses_stop_x218 )
 		_OBJ_ANIME_WAIT()
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
 	CASE 219 THEN
 		_OBJ_ANIME( C13_SUNGLASSES_01, anm_sunglasses_stop_x219 )
 		_OBJ_ANIME_WAIT()
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
 	ENDSWITCH
 	_OBJ_ANIME_WAIT()
 
@@ -670,7 +670,7 @@ _TALK_OBJ_START()
 		//ライバル：２０番道路へ
 		_OBJ_ANIME_AUTO( C13_SWRIVAL_01, 228, 670, FORCE_TYPE_NOT, 4, DIR_LR )
 		_TIME_WAIT( 8 )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
 		_OBJ_ANIME_WAIT()
 
 		//ライバルのOBJ削除
