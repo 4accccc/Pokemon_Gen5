@@ -2023,7 +2023,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 	},
-	{ //092 ツバサ
+	{ //092 ツトム
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
 		RANGERM         ,// 動作モデル指定
@@ -2089,7 +2089,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 	},
-	{ //095 チヒロ
+	{ //095 チトセ
 		POKETYPE_MAX, //オールマイティ
 		PM_FEMALE, //女
 		RANGERW         ,// 動作モデル指定
@@ -2221,7 +2221,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 	},
-	{ //101 カズキ
+	{ //101 カズシ
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
 		FIGHTERM        ,// 動作モデル指定
@@ -2441,7 +2441,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 	},
-	{ //111 マキコ
+	{ //111 マキヨ
 		POKETYPE_MAX, //オールマイティ
 		PM_FEMALE, //女
 		OL              ,// 動作モデル指定
