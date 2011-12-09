@@ -745,6 +745,7 @@ static void _init_pkwd_briefing_param( PKWD_BRIEFING_PARAM *param, BATTLE_SETUP_
   param->audienceNum  = bsp->audience_num;
   param->mystatus     = mystatus;
   param->bsp          = bsp;
+  param->no_cancel    = bsp->PokewoodShowNoCancelFlag;  // 初上映済ならキャンセル不可
 }
 
 //----------------------------------------------------------------------------------
@@ -769,6 +770,7 @@ static void _init_pkwd_endroll_param( PKWD_BRIEFING_PARAM *param, BATTLE_SETUP_P
   param->audienceBit = bsp->audience_bit;
   param->bsp         = bsp;
   param->scenario_no = bsp->pokewoodSenario;
+  param->no_cancel   = bsp->PokewoodShowNoCancelFlag;  // 初上映済ならキャンセル不可
 }
 
 //----------------------------------------------------------------------------------
@@ -898,8 +900,13 @@ static GMEVENT_RESULT pokewoodShowBattleEvent( GMEVENT * event, int *seq, void *
   // あらすじアプリ終了待ち
   case PW_SHOW_SEQ_BRIEFING_APP_END:
     pbew->bp->audience_bit = prew->pkwd_briefing_param.audienceBit; // あらすじで設置した観客配置を引き継ぐ
+    // キャンセルしていたらフィールド復帰
+    if(prew->pkwd_briefing_param.done_cancel){
+      (*seq) = PW_SHOW_SEQ_FIELD_OPEN;
+    }else{
+      (*seq)++; //上映続行
+    }
     _delete_pkwd_briefing_param( &prew->pkwd_briefing_param );
-    (*seq)++;
     break;
   // バトル呼び出し
   case PW_SHOW_SEQ_CALL_BATTLE:

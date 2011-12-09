@@ -53,7 +53,7 @@
 //  定数定義
 //==============================================================================
 /// あらすじ文字列の1回表示毎のウェイト
-#define BRIEFING_MSG_WAIT      (180)
+#define BRIEFING_MSG_WAIT      (240)
 
 // １画面に表示する文字数( (18文字＋改行)x8 )x2
 #define BRIEFING_MSG_LENGTH   ( 19*8*2 )
@@ -463,7 +463,8 @@ GFL_PROC_RESULT PkwdBriefingProcInit( GFL_PROC * proc, int * seq, void * pwk, vo
   GFL_STD_MemClear(tw, sizeof(PKWD_BRIEFING_WORK));
   tw->heapID = HEAPID_PKWD_BRIEFING;
   tw->param  = param;
-
+  tw->param->done_cancel = FALSE;
+  
   tw->sex    = MyStatus_GetMySex(tw->param->mystatus);
 
   GFL_OVERLAY_Load( FS_OVERLAY_ID(battle_view));
@@ -481,13 +482,16 @@ GFL_PROC_RESULT PkwdBriefingProcInit( GFL_PROC * proc, int * seq, void * pwk, vo
 //----------------------------------------------------------------------------------
 static void _key_check( PKWD_BRIEFING_WORK *tw )
 {
-  // ゲーム開始
-  if(  GFL_UI_KEY_GetTrg() & NEXT_PROC_MASK){
-    tw->seq  = SEQ_VOICE_PLAY;
-    GFL_BG_SetVisible(FRAME_INFOWIN, VISIBLE_ON);
-    return;
+  // １度上映していればキャンセル可
+  if(tw->param->no_cancel==FALSE){
+    // 上映キャンセル処理
+    if(  GFL_UI_KEY_GetTrg() & NEXT_PROC_MASK){
+      tw->seq  = SEQ_VOICE_PLAY;
+      tw->param->done_cancel = TRUE;
+      GFL_BG_SetVisible(FRAME_INFOWIN, VISIBLE_ON);
+      return;
+    }
   }
-
 }
 
 #ifdef PM_DEBUG
