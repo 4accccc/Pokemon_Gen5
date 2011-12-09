@@ -224,11 +224,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>……その　きねんとして
-メダル[System:Color name="2" ]「[Name:Medal ]」[/System:Color]を
+メダル[System:Color name="2" ]「[Name:Medal Idx="1" ]」[/System:Color]を
 ぞうてい　いたします！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:39:10" />
+				Time="2011-12-09T03:36:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -237,11 +237,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……その　記念として
-メダル[System:Color name="2" ]「[Name:Medal ]」[/System:Color]を
+メダル[System:Color name="2" ]「[Name:Medal Idx="1" ]」[/System:Color]を
 贈呈いたします！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T12:04:01" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-09T03:36:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -250,10 +250,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>メダル事務局・ゴールイン表彰イベント
-・0=メダル名</Comment>
+・1=メダル名</Comment>
 			<CommentModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:39:27" />
+				Time="2011-12-09T03:36:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -631,11 +631,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>……その　えいよの　あかし　として
-メダル[System:Color name="2" ]「[Name:Medal ]」[/System:Color]を
+メダル[System:Color name="2" ]「[Name:Medal Idx="1" ]」[/System:Color]を
 ぞうていします！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:42:43" />
+				Time="2011-12-09T03:36:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -644,11 +644,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……その栄誉の　証として
-メダル[System:Color name="2" ]「[Name:Medal ]」[/System:Color]を
+メダル[System:Color name="2" ]「[Name:Medal Idx="1" ]」[/System:Color]を
 贈呈します！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T12:05:02" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-09T03:37:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -657,10 +657,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>メダル事務局・フルコンプリート表彰イベント
-・0=メダル名</Comment>
+・1=メダル名</Comment>
 			<CommentModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:44:05" />
+				Time="2011-12-09T03:37:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
