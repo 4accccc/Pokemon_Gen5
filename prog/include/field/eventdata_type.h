@@ -91,6 +91,16 @@ typedef enum {
   EXIT_TYPE_SP48,
   EXIT_TYPE_SP49,
   EXIT_TYPE_SP50,
+  EXIT_TYPE_SP51,
+  EXIT_TYPE_SP52,
+  EXIT_TYPE_SP53,
+  EXIT_TYPE_SP54,
+  EXIT_TYPE_SP55,
+  EXIT_TYPE_SP56,
+  EXIT_TYPE_SP57,
+  EXIT_TYPE_SP58,
+  EXIT_TYPE_SP59,
+  EXIT_TYPE_SP60,
 
   EXIT_TYPE_MAX,
 }EXIT_TYPE;
@@ -102,7 +112,7 @@ typedef enum {
  * @return ì¡éÍèoì¸å˚Ç»ÇÁ TRUE
  */
 //------------------------------------------------------------------
-BOOL EXIT_TYPE_IsSpExit( EXIT_TYPE type );
+extern BOOL EXIT_TYPE_IsSpExit( EXIT_TYPE type );
 
 //------------------------------------------------------------------
 /// èoì¸å˚ï˚å¸éwíË
