@@ -1677,7 +1677,7 @@
 		<language name="JPN" width="216">うまく　いきぬき　するのも
 しごとの　うちなんだぜ！</language>
 		<language name="JPN_KANJI" width="216">うまく　息抜き　するのも
-仕事の内　なんだぜ！</language>
+仕事のうち　なんだぜ！</language>
 	</row>
 
 	<row id="TRID_BUSINESS2_02_TRMSG_FIGHT_START">
@@ -2490,13 +2490,9 @@
 
 	<row id="TRID_PRINCE_06_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">ＶＩＰせきが　どんなもんか
-しりたいかい？▼
-ぼくに　かったら
-おしえて　あげるよ！▼</language>
+しりたければ　ぼくに　かつことだね▼</language>
 		<language name="JPN_KANJI" width="216">ＶＩＰ席が　どんなもんか
-知りたいかい？▼
-僕に　勝ったら
-教えて　あげるよ！▼</language>
+知りたければ　ぼくに　勝つことだね▼</language>
 	</row>
 
 	<row id="TRID_PRINCE_06_TRMSG_FIGHT_LOSE">
@@ -2516,8 +2512,8 @@
 	<row id="TRID_PRINCE_06_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">しあいは　よくみえたけど　せんしゅが
 こめつぶ　みたいに　みえたよ</language>
-		<language name="JPN_KANJI" width="216">試合は　よく見えたけど　選手が
-米粒みたいに　見えたよ</language>
+		<language name="JPN_KANJI" width="216">試合は　よく観えたけど　選手が
+米粒みたいに　みえたよ</language>
 	</row>
 
 	<row id="TRID_PRINCESS_06_TRMSG_FIGHT_START">
@@ -3199,7 +3195,7 @@
 いいとこ　みせるため　しょうぶだぜ▼</language>
 		<language name="JPN_KANJI" width="216">あっ！▼
 選手が　こっち　見てる！
-いいとこ　見せるため　勝負だぜ▼</language>
+いいとこ　みせるため　勝負だぜ▼</language>
 	</row>
 
 	<row id="TRID_FANM_08_TRMSG_FIGHT_LOSE">
@@ -3216,8 +3212,8 @@
 	<row id="TRID_FANM_08_TRMSG_FIGHT_AFTER_1">
 		<language name="JPN" width="216">こっち　みてると　おもったけど
 あいての　せんしゅ　みてたわ……</language>
-		<language name="JPN_KANJI" width="216">こっち　見てると　思ったけど
-相手の　選手　見てたわ……</language>
+		<language name="JPN_KANJI" width="216">こっち　みてると　思ったけど
+相手の　選手　みてたわ……</language>
 	</row>
 
 	<row id="TRID_FANM_08_TRMSG_POKE_ONE_1">
@@ -3303,7 +3299,7 @@
 って　かんじに　みえるよね</language>
 		<language name="JPN_KANJI" width="216">ボールから　選手を　みると
 ぼくの　ために　争わないで！▽
-って　感じに　見えるよね</language>
+って　感じに　みえるよね</language>
 	</row>
 
 	<row id="TRID_FANM_09_TRMSG_POKE_ONE_2">
@@ -3547,7 +3543,7 @@
 		<language name="JPN" width="216">ドンドンドン！　あ　ドンドンドン！
 ファンの　こどうを　きいてくれい！▼</language>
 		<language name="JPN_KANJI" width="216">ドンドンドン！　あ　ドンドンドン！
-ファンの　鼓動を　聞いてくれい！▼</language>
+ファンの　鼓動を　きいてくれい！▼</language>
 	</row>
 
 	<row id="TRID_FANM_10_TRMSG_FIGHT_LOSE">
@@ -3796,7 +3792,7 @@
 とばすって　ことばを▽
 きょうちょう　するための▽
 「かっ」なんだって！</language>
-		<language name="JPN_KANJI" width="216">あたしが　聞いたのは
+		<language name="JPN_KANJI" width="216">あたしが　きいたのは
 とばすって　言葉を▽
 強調するための▽
 「かっ」なんだって！</language>
@@ -4083,7 +4079,7 @@
 どんな　みちをも　きりひらく
 さいきょうの　パワーで　かつ！▼</language>
 		<language name="JPN_KANJI" width="216">ＰＯＷＥＲ！！！！▼
-どんな　道をも　切り開く
+どんな　道をも　切り拓く
 最強の　パワーで　勝つ！▼</language>
 	</row>
 
@@ -4209,7 +4205,7 @@
 つくりあげた　チームの　つよさ▽
 きみに　レクチャー　しよう▼</language>
 		<language name="JPN_KANJI" width="216">強い　ポケモンを　軸に
-作り上げた　チームの強さ▽
+作りあげた　チームの強さ▽
 きみに　レクチャー　しよう▼</language>
 	</row>
 
@@ -6294,9 +6290,9 @@
 
 	<row id="TRID_BACKPACKERW_14_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">あなたの　たびの　おともは
-どんな　ポケモンか　みせてみせて！▼</language>
+どんな　ポケモン？！▼</language>
 		<language name="JPN_KANJI" width="216">あなたの　旅の　お供は
-どんな　ポケモンか　みせてみせて！▼</language>
+どんな　ポケモン？▼</language>
 	</row>
 
 	<row id="TRID_BACKPACKERW_14_TRMSG_FIGHT_LOSE">
@@ -6505,10 +6501,10 @@
 	</row>
 
 	<row id="TRID_ARTIST_04_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">ドッカーン！▼
+		<language name="JPN" width="216">ドッカーン！！▼
 いろんな　いろが　まじりあい
 あたらしい　いろを　うみだすのだ！</language>
-		<language name="JPN_KANJI" width="216">ドッカーン！▼
+		<language name="JPN_KANJI" width="216">ドッカーン！！▼
 いろんな　色が　混じりあい
 新しい　色を　生みだすのだ！</language>
 	</row>
@@ -6787,9 +6783,9 @@
 	</row>
 
 	<row id="TRID_SCIENTISTW_10_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">あなたの　つよさの　ひみつ！
+		<language name="JPN" width="216">トレーナーと　ポケモンの　かんけい！
 その　メカニズムを　ときあかすわ！▼</language>
-		<language name="JPN_KANJI" width="216">あなたの　強さの　秘密！
+		<language name="JPN_KANJI" width="216">トレーナーと　ポケモンの　関係！
 その　メカニズムを　解明するわ！▼</language>
 	</row>
 
