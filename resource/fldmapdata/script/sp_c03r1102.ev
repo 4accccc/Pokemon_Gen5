@@ -16,6 +16,7 @@
 //              特殊スクリプト
 //--------------------------------------------------------------
 _SCENE_CHANGE_LABEL		sp_c03r1102_tbl
+_FIELD_INIT_LABEL   SCRID_INIT_C03R1102
 _SP_EVENT_DATA_END
 
 sp_c03r1102_tbl:

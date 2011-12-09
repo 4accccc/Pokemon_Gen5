@@ -12,6 +12,7 @@
 #define C03R1102_PEOPLE_01                 1
 #define C03R1102_PEOPLE_03                 2
 #define C03R1102_CLOWN_01                  3
+#define C03R1102_MEDALMAN_01               4
 
 #endif //ZONE_C03R1102_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r1102.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

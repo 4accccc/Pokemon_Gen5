@@ -28,12 +28,31 @@ _EVENT_DATA    ev_bg_c03r1102_statue_01
 _EVENT_DATA    ev_bg_c03r1102_graph_01
 _EVENT_DATA    ev_bg_c03r1102_frame_01
 _EVENT_DATA    ev_c03r1102_clown_01
+_EVENT_DATA    ev_c03r1102_medalman_01
+_EVENT_DATA    ev_init_c03r1102
 _EVENT_DATA_END
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START ev_init_c03r1102
+
+  IF $WK_SCENE_MEDAL_EVENT == 5 THEN
+    _OBJ_POS_CHANGE( C03R1102_MEDALMAN_01, 7, 0, 13, DIR_UP )
+  ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*  メダル表彰イベント */
 /**************************************************************/
 EVENT_START   ev_scene_c03r1102_commendation_01
+
+  //================================================//
+  //MEDALMAN表示
+  _FLAG_RESET( FV_C03R1102_MEDALMAN_01 )
+  //================================================//
+
 {
   //「！」
   _PLAYER_NAME( 0 )
@@ -55,8 +74,8 @@ EVENT_START   ev_scene_c03r1102_commendation_01
   _SE_PLAY( SEQ_SE_FLD_87 )
   _SE_WAIT()
   
-  //SUNGLASSES配置
-  _OBJ_ADD_EX( 7, 0, DIR_DOWN, MMDL_ID_EVENTOBJ_00, MEDALMAN, MV_DMY )
+  //MEDALMAN生成
+  _OBJ_ADD( C03R1102_MEDALMAN_01 )
   
   //ドア開ける
   DEFINE_LOCAL	DOOR_ANIME_ID
@@ -65,7 +84,7 @@ EVENT_START   ev_scene_c03r1102_commendation_01
   _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
   
   //会長来る
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_oldman_comming )
+  _OBJ_ANIME( C03R1102_MEDALMAN_01 , anm_oldman_comming )
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u )
   _OBJ_ANIME_WAIT()
 
@@ -75,11 +94,11 @@ EVENT_START   ev_scene_c03r1102_commendation_01
   _BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
   
   //SUNGLASSES：はじめましょう
-  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizegoal_02 , MMDL_ID_EVENTOBJ_00, POS_UP )
+  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizegoal_02 , C03R1102_MEDALMAN_01, POS_UP )
   _BALLOONWIN_CLOSE()
   
   //会長・主人公移動
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_oldman_goto_desk )
+  _OBJ_ANIME( C03R1102_MEDALMAN_01 , anm_oldman_goto_desk )
   _TIME_WAIT(32)
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_goto_desk )
   _TIME_WAIT(40)
@@ -91,7 +110,7 @@ EVENT_START   ev_scene_c03r1102_commendation_01
   
   //SUNGLASSES：ゆうしゅうな せいせきを おさめ…
   _PLAYER_NAME( 0 )
-  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizegoal_03 , MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizegoal_03 , C03R1102_MEDALMAN_01, POS_DOWN )
   
   //歓声があがる
   _SUBWIN_MSG( msg_mdloyj_prizegoal_sub_01 , 21 , 3 , 1 )
@@ -108,25 +127,33 @@ EVENT_START   ev_scene_c03r1102_commendation_01
   
    //SUNGLASSES：きねんに さしあげます
   _PLAYER_NAME( 0 )
-  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizegoal_04 , MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  _MEDAL_NAME( 1, MDLID_GOAL )
+  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizegoal_04 , C03R1102_MEDALMAN_01, POS_DOWN )
   _MSGWIN_CLOSE()
+  
+  {
+  
+  //ME再生
+  _ME_PLAY( SEQ_ME_MD_FAN03 )
+  
+  //バッジ入手演出再生
+  //カットインID取得
+  _GET_MEDAL_CIID( MDLID_GOAL, LOCALWORK15 )
+  _CALL_FLD3D_CUTIN( LOCALWORK15 )
+  
+  //ME待ち
+  _ME_WAIT()
+  
+  }
   
   //システムメッセージ：手に入れた
   _PLAYER_NAME( 0 )
   _SYSWIN_MSG( msg_mdloyj_titleget_sys , POS_DOWN )
   _SYSWIN_CLOSE()
   
-  {
-  //バッジ入手演出再生
-  //カットインID取得
-  _GET_MEDAL_CIID( MDLID_GOAL, LOCALWORK15 )
-  _CALL_FLD3D_CUTIN( LOCALWORK15 )
-  
-  }
-  
   //SUNGLASSES：これからもがんばって
   _PLAYER_NAME( 0 )
-  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizegoal_end , MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizegoal_end , C03R1102_MEDALMAN_01, POS_DOWN )
   _MSGWIN_CLOSE()
   
   //================================================//
@@ -135,6 +162,9 @@ EVENT_START   ev_scene_c03r1102_commendation_01
   $WK_SCENE_MEDAL_EVENT = 3
   //メダル獲得処理
   _GET_MEDAL( MDLID_GOAL, TRUE ) 
+  
+  //MEDALMAN非表示
+  _FLAG_SET( FV_C03R1102_MEDALMAN_01 )
 	//================================================//
 }
 EVENT_END
@@ -143,6 +173,12 @@ EVENT_END
 /*  メダル表彰イベント（コンプリート） */
 /**************************************************************/
 EVENT_START   ev_scene_c03r1102_commendation_02
+  
+  //================================================//
+  //MEDALMAN表示
+  _FLAG_RESET( FV_C03R1102_MEDALMAN_01 )
+  //================================================//
+  
  {
   //「！」
   _OBJ_ANIME( C03R1102_PEOPLE_01 , anm_people01_gyoe )
@@ -164,8 +200,8 @@ EVENT_START   ev_scene_c03r1102_commendation_02
   _SE_PLAY( SEQ_SE_FLD_87 )
   _SE_WAIT()
   
-  //SUNGLASSES配置
-  _OBJ_ADD_EX( 7, 0, DIR_DOWN, MMDL_ID_EVENTOBJ_00, MEDALMAN, MV_DMY )
+  //MEDALMAN生成
+  _OBJ_ADD( C03R1102_MEDALMAN_01 )
   
   //ドア開ける
   DEFINE_LOCAL	DOOR_ANIME_ID
@@ -174,7 +210,7 @@ EVENT_START   ev_scene_c03r1102_commendation_02
   _BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
   
   //会長来る
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_oldman_comming )
+  _OBJ_ANIME( C03R1102_MEDALMAN_01 , anm_oldman_comming )
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u )
   _OBJ_ANIME_WAIT()
 
@@ -184,11 +220,11 @@ EVENT_START   ev_scene_c03r1102_commendation_02
   _BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
   
   //SUNGLASSES：はじめましょう
-  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizecomp_02 , MMDL_ID_EVENTOBJ_00, POS_UP )
+  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizecomp_02 , C03R1102_MEDALMAN_01, POS_UP )
   _BALLOONWIN_CLOSE()
   
   //会長・主人公移動
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_oldman_goto_desk )
+  _OBJ_ANIME( C03R1102_MEDALMAN_01 , anm_oldman_goto_desk )
   _TIME_WAIT(32)
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_goto_desk )
   _TIME_WAIT(40)
@@ -200,7 +236,7 @@ EVENT_START   ev_scene_c03r1102_commendation_02
   
   //SUNGLASSES：ゆうしゅうな せいせきを おさめ…
   _PLAYER_NAME( 0 )
-  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizecomp_03 , MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizecomp_03 , C03R1102_MEDALMAN_01, POS_DOWN )
   
   //歓声があがる
   _SUBWIN_MSG( msg_mdloyj_prizecomp_sub_01 , 6 , 0 , 1 )
@@ -217,19 +253,28 @@ EVENT_START   ev_scene_c03r1102_commendation_02
   
    //SUNGLASSES：きねんに さしあげます
   _PLAYER_NAME( 0 )
-  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizecomp_04 , MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  _MEDAL_NAME( 1, MDLID_ALL_COMPLETE )
+  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizecomp_04 , C03R1102_MEDALMAN_01, POS_DOWN )
   _MSGWIN_CLOSE()
+  
+  {
+  
+  //ME再生
+  _ME_PLAY( SEQ_ME_MD_FAN04 )
+  
+  //カットインID取得
+  _GET_MEDAL_CIID( MDLID_ALL_COMPLETE, LOCALWORK15 )
+  _CALL_FLD3D_CUTIN( LOCALWORK15 )
+  
+  //ME待ち
+  _ME_WAIT()
+  
+  }
   
   //システムメッセージ：手に入れた
   _PLAYER_NAME( 0 )
   _SYSWIN_MSG( msg_mdloyj_titleget_sys , POS_DOWN )
   _SYSWIN_CLOSE()
-  
-  {
-  //カットインID取得
-  _GET_MEDAL_CIID( MDLID_ALL_COMPLETE, LOCALWORK15 )
-  _CALL_FLD3D_CUTIN( LOCALWORK15 )
-  }
   
   //歓声があがる
   _SUBWIN_MSG( msg_mdloyj_prizecomp_sub_04 , 9 , 8 , 1 )
@@ -255,7 +300,7 @@ EVENT_START   ev_scene_c03r1102_commendation_02
   
   //SUNGLASSES：これからもがんばって
   _PLAYER_NAME( 0 )
-  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizecomp_end , MMDL_ID_EVENTOBJ_00, POS_DOWN )
+  _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizecomp_end , C03R1102_MEDALMAN_01, POS_DOWN )
   _MSGWIN_CLOSE()
   
   //================================================//
@@ -264,6 +309,7 @@ EVENT_START   ev_scene_c03r1102_commendation_02
   $WK_SCENE_MEDAL_EVENT = 5
   //メダル獲得処理
   _GET_MEDAL( MDLID_ALL_COMPLETE, TRUE ) 
+  
 	//================================================//
 }
 EVENT_END
@@ -313,6 +359,25 @@ _ANIME_LABEL	anm_player_goto_desk
 	_ANIME_DATA	AC_WALK_R_8F,3
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*  C03 MEDALMANの会話                      */
+/**************************************************************/
+EVENT_START   ev_c03r1102_medalman_01
+  
+  //プレイヤー名格納
+  _PLAYER_NAME( 0 )
+  
+  //ゴール
+  IF $WK_SCENE_MEDAL_EVENT == 3 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_prizegoal_end )
+  
+  //コンプリート
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_mdloyj_prizecomp_end )
+  ENDIF
+
+EVENT_END
 /**************************************************************/
 /*  C03 PEOPLE01の会話（OL）                      */
 /**************************************************************/

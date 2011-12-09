@@ -86,6 +86,9 @@ init_flags:
   //C03P09 ヒウンアイスイベントの行列非表示
   _FLAG_SET( FV_C03P09_PEOPLE_01 )
   _FLAG_SET( FV_C03P09_PEOPLE_02 )
+  
+  //C03R1102 メダル事務局のおやじ非表示
+  _FLAG_SET( FV_C03R1102_MEDALMAN_01 )
 
   //C04 ライバルとプラズマ団イベント前には非表示
   _FLAG_SET( FV_C04_SWRIVAL_01 )
