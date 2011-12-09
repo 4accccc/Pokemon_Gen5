@@ -322,11 +322,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>BGメッセージ
-※swanでメッセージ修正予定</Comment>
+			<Comment>BGメッセージ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T06:11:05" />
+				Time="2011-12-09T02:45:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

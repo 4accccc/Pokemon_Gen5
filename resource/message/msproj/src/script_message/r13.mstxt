@@ -421,15 +421,17 @@
 			Language="JPN">
 			<Text>おとくな　けいじばん！▼
 
-ライブキャスターを
-つかっている　とき▼
-じゅうじボタンの
-じょうげさゆうを　おすと▼
-がめんの　ふんいきが
-いろいろ　かわります！</Text>
+トレーナーカードで
+かたがきを　へんこう　すると▼
+ユニオンルームや
+すれちがいログで▼
+たにんから　みたときの　みためが
+かたがきどおりに　なります！▼
+じこしょうかいや　せいかくに　あわせ
+あなたの　こせいを　アピールしましょう</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T05:31:46" />
+				Time="2011-12-09T02:43:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -439,13 +441,17 @@
 			Language="JPN_KANJI">
 			<Text>お得な　掲示板！▼
 
-ライブキャスターを　使用中に
-十字ボタンの　上下左右を　押すと▼
-画面の　雰囲気が
-いろいろ　変化します！</Text>
+トレーナーカードで
+肩書きを　変更すると▼
+ユニオンルームや
+すれ違いログで▼
+他人から　みたときの　みためが
+肩書きどおりに　なります！▼
+自己紹介や　性格に　あわせ
+あなたの　個性を　アピールしましょう</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T05:31:52" />
+				Time="2011-12-09T02:43:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -454,10 +460,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>BGメッセージ
-※swanでメッセージ変更予定</Comment>
+※swanでメッセージ変更
+※r14と入れ替え</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-01T03:41:28" />
+				Time="2011-12-09T02:43:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

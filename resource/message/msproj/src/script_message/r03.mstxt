@@ -887,13 +887,15 @@
 			Language="JPN">
 			<Text>おとくな　けいじばん！▼
 
-ポケモンリストの　ひだりうえに
-セットする　ポケモンは　だいじです！▼
-ポケモンしょうぶのとき　とびだすのは
-そこに　セットされた　ポケモンです！</Text>
+ボックスの　うえに　ある
+きいろの　ボタンを　おすと▼
+あづけている　ポケモンを
+まとめて　いどうできる▼
+ふくすうせんたくいどうモードに
+きりかえることが　できます！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T05:21:12" />
+				Time="2011-12-09T03:08:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -903,13 +905,15 @@
 			Language="JPN_KANJI">
 			<Text>お得な　掲示板！▼
 
-ポケモンリストの　左上に
-セットする　ポケモンは　大事です！▼
-ポケモン勝負のとき　飛びだすのは
-そこに　セットされた　ポケモンです！</Text>
+ボックスの　上に　ある
+黄色の　ボタンを　おすと▼
+預けている　ポケモンを
+まとめて　移動できる▼
+複数選択移動モードに
+きりかえることが　できます！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T05:21:15" />
+				Time="2011-12-09T03:09:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

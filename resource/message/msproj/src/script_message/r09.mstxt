@@ -120,13 +120,13 @@
 			Language="JPN">
 			<Text>おとくな　けいじばん！▼
 
-パソコンの　ボックスを　せいりするとき
-セレクトボタンを　おすと▼
-ポケモンを　さくさく
-いどうできる　モードに　なります！</Text>
+おなじ　しゅるいの　ポケモンでも
+とくせいが　ことなることが　あります▼
+つかまえた　ポケモンでも
+また　つかまえてみましょう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T05:26:07" />
+				Time="2011-12-09T02:44:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -136,13 +136,13 @@
 			Language="JPN_KANJI">
 			<Text>お得な　掲示板！▼
 
-パソコンの　ボックスを　整理するとき
-セレクトボタンを　押すと▼
-ポケモンを　さくさく
-移動できる　モードに　なります！</Text>
+同じ　種類の　ポケモンでも
+特性が　異なることが　あります▼
+捕まえた　ポケモンでも
+また　捕まえてみましょう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T05:26:11" />
+				Time="2011-12-09T02:44:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -151,10 +151,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>BGメッセージ
-※swanでメッセージ修正予定</Comment>
+※swanでメッセージ修正
+※r12と入れ替え</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T02:33:27" />
+				Time="2011-12-09T02:45:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
