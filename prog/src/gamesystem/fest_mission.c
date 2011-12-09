@@ -39,8 +39,6 @@ static BOOL score_CalcCommon( const FEST_MISSION* fmwk, u16 param );
 
 /*
  *  ミッションスコア計算に必要なパラメータテーブル
- *
- *  @todo いずれ外部化する予定
  */
 static const MISSION_SCORE_CALC_PARAM DATA_ScoreCalcParamTbl[] = {
   { NULL },
