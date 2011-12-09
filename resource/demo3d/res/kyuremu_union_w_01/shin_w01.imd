@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-11-25T15:23:09" source="kyuremu_union_w_01_003.mb"/>
+	<create user="swan_3dcg02" host="W00193" date="2011-12-09T12:19:59" source="kyuremu_union_w_01_v03.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-11-25T15:23:09" source="kyuremu_union_w_01_003.mb"/>
+<original_create user="swan_3dcg02" host="W00193" date="2011-12-09T12:19:59" source="kyuremu_union_w_01_v03.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="4" xyz="-3.739258 -0.000732 -3.811768" whd="7.479248 3.612549 5.211914"/>
 
-<tex_image_array size="8">
+<tex_image_array size="9">
 	<tex_image index="0" name="glow"
 		width="32" height="32" original_width="32" original_height="32"
 		format="a5i3"
@@ -2161,7 +2161,273 @@
 			7777 6177 6666 efa1 feee ffff ffff efff
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="shin_eye.4"
+	<tex_image index="2" name="shin_eye.1"
+		width="128" height="64" original_width="128" original_height="64"
+		format="palette16"
+		color0_mode="color"
+		palette_name="shin_eye.1_pl"
+		path="C:/home/swan_data3d/demo/reshiram/tex/shin_eye.1.tga"
+	>
+		<bitmap size="2048">
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cbcb cbcb cbcb bbbb bbbb bbbb bbbb
+			bbab bbbb bbbb aaab aa99 ccbb cccc cccd
+			cccc cbcc cbcc cbcc cbcc cbcc cbcc cbcc
+			cbcc cbcc cbcc cbcc bbbb bbbb bbbb bbbb
+			bbbb babb abab abab aaab aaab aaaa aaaa
+			aaa9 aaaa abab 99aa aa99 cccb cccc cccc
+			bbbb bbbb bbbb bbbb bbbb abbb abab abab
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aa99 baaa baba 9aaa a999 ccba cccc cccc
+			aaaa abab aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaa9 aaaa
+			aa9a aaab aaaa aaaa 9999 bbba cbcb cbcb
+			9999 a9aa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aa9a aaaa
+			aaa9 aaaa aaba aaaa 99aa bba9 bbbb cccb
+			7777 8877 9988 baa9 bbbb bbab abab aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aa9a aaaa
+			aaaa aaaa aaaa aaba 99aa aa9a bbbb ccbb
+			4444 6655 7776 aa88 aaba aaaa aaa9 aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa 9aaa a99a
+			aaaa aaaa aaaa aaaa aaaa a999 baba ccba
+			2223 4332 5544 8766 8887 8888 a999 baaa
+			bbbb baba aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa a9a9
+			aaaa aaaa aaaa baaa aaaa 999a abaa ccbb
+			1101 1111 3322 4433 5554 7766 8887 aaa9
+			aaab aaab aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa 9aaa aaaa
+			aaaa aaaa aaaa aaaa 9aaa 9999 aaaa ccba
+			1010 1010 1101 1111 2221 4433 6555 8776
+			8888 9988 a999 aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa 9999 aaa9 ccba
+			1111 0111 0101 0000 1000 1111 3221 4433
+			6664 7777 9988 bbba baba aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa 9999 aaaa ccba
+			3323 2223 1011 0001 0000 0000 0000 1100
+			3322 5544 7766 8888 8988 9999 aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa ccba
+			4444 3344 1122 0001 0000 0000 0000 0000
+			1100 2221 4433 6554 7766 8887 aa98 baba
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa bcba
+			4444 3344 2222 1112 0000 0000 0000 0000
+			0000 0000 1101 3222 5443 7665 9887 9999
+			9999 aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa ccba
+			4344 3333 3333 3333 2233 1122 0011 0000
+			0000 0000 0000 0000 2111 4332 5544 7666
+			8877 9998 baaa baba aaba aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa ccba
+			4444 4444 4444 4444 4445 3343 2232 0011
+			0000 0000 0000 0000 0000 1000 2211 4333
+			6655 8877 aaa9 aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa ccba
+			6666 6666 5666 5565 4455 4444 3333 2223
+			0111 0000 0000 0000 0000 0000 0000 1100
+			4322 6554 7776 8888 9989 aaa9 abab abab
+			aaab aaaa aaaa aaaa aaaa aaaa aaaa bcba
+			8888 7787 7777 6666 5656 4555 4545 4444
+			3334 2233 0012 0000 0000 0000 0000 0000
+			1100 3221 4433 6665 8777 a998 baaa aaba
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa ccba
+			8989 8889 8888 7787 7777 7676 6666 5566
+			4445 3333 2222 0011 0000 0000 0000 0000
+			0000 0000 2111 4332 6655 8777 9988 a999
+			aa99 aaa9 aaaa aaaa aaaa aaaa aaaa ccba
+			8899 8888 8888 7888 7888 8788 7787 6677
+			5555 3444 3333 3333 1223 0001 0000 0000
+			0000 0000 0000 2110 3322 6544 7666 8787
+			9998 bba9 babb aaaa aaaa aaaa aaaa ccba
+			8888 8888 8888 9898 9898 8988 8898 7778
+			6666 4455 3333 3433 3333 2233 0011 0000
+			0000 0000 0000 0000 1110 3221 4433 6654
+			8776 9998 9999 99a9 9999 9999 aaaa cbb9
+			8889 8888 9898 8999 8999 8899 8888 7888
+			7777 4566 3333 3334 3434 4443 3433 1233
+			1111 0000 0000 0000 0000 0000 2111 4322
+			5554 7766 8787 8888 a998 aaa9 a9a9 ccaa
+			9999 9899 9999 9898 9998 9898 8888 8888
+			7878 4567 3333 4443 5444 5554 5555 4445
+			2333 1122 0000 0000 0000 0000 0000 2111
+			3322 4444 6555 7766 9888 9999 9999 cca9
+			999a 9999 9999 9999 9999 9999 9999 8888
+			8888 3458 4343 4443 6655 7666 6666 4555
+			4444 3334 2233 1112 0001 0000 0000 0000
+			1111 2211 3332 5444 6665 7777 8777 cc97
+			abab abbb aaaa aaaa 9999 9998 9898 8898
+			8888 2257 3333 5444 6665 7777 7777 5666
+			5556 5555 4455 3333 1222 0001 0000 0000
+			0000 0000 2111 3322 4433 5444 6665 cc86
+			cccb cccb abbb aaaa aaaa 999a 999a 9989
+			9889 1268 4331 5443 7765 8777 8887 7888
+			7777 7677 5666 4455 3334 2233 1112 1111
+			0000 0000 1000 1110 1211 3222 4433 cc75
+			cccc cccc bbcc bbbb bbbb abab 9aaa 999a
+			9999 1489 3211 5444 7766 8887 8888 9999
+			8899 8889 7778 5666 5555 4545 3344 1222
+			0011 0000 0101 0101 0011 1100 3221 bc53
+			dccc dddd ccdd bbbc bbbc bbbb bbbb abaa
+			aaaa 3899 2111 6544 7766 8888 a988 abaa
+			aaaa bbba 99aa 8899 7677 6666 4555 3334
+			2223 2222 1121 0111 0001 1000 1110 cc41
+			dddd dddd cddd cccc cccc bccc bcbc bbbb
+			aaab 79aa 1113 5542 8776 8888 ba99 bbbb
+			bbbb ccbb bbcc aabb 899a 7788 6666 4555
+			4444 3334 2323 1222 0111 0000 0100 cb31
+			dddd eedd ddee dddd dccd cccd bccc bbbb
+			abbb 8aab 1137 6311 8777 9988 bb99 bccc
+			ccbb dedd dddd cccc 9abb 8899 6778 6666
+			5566 4455 3334 2333 2222 1112 0101 cb30
+			ddee eeee eeee ddee dddd dddd cccc bbbb
+			bbbb abbb 1379 3111 8876 9999 bba9 cccc
+			cccc feed eeee deee bcdd 999a 7788 7777
+			6666 4455 3444 3333 3333 2333 1122 cb30
+			eeee eeee eeee eeee eeee ddde ccdd cbcc
+			bbbb bbbb 4799 1111 8752 9a99 cbaa cccc
+			dccc eeee eeff eeee bdde aabb 889a 7778
+			6677 5556 4444 4444 3233 4444 2233 cc42
+			eeee eeee efef efef eeee eeee ddde cddd
+			bccc bbbc 78ab 1124 4311 aaa7 bbaa cccc
+			ddcc feee ffef eefe bdde bbbb 899a 7777
+			6677 4555 4545 3444 3111 5665 4455 cc64
+			fefe efee feef fefe efff efef eeef dddd
+			ddcd cccc 9abc 1358 1111 9742 aaaa cbbb
+			cccc efed fefe eefe cdde abbb 789a 7777
+			6667 5556 4455 1133 5211 7766 6767 cc76
+			fefe feff effe efef fefe ffff feff eeee
+			ddee dddd abcd 4788 1112 4211 a986 baba
+			cbbb eddc eeee eeee bddd aabb 789a 7777
+			6667 4566 1334 1111 6421 7776 7787 cc87
+			fefe efee feff ffef fffe ffff ffff feff
+			eefe eeee deee 89ac 1147 1111 6321 ba88
+			bbba ccbb cdcc cddd bccc abbb 789a 7777
+			6677 2355 1111 1111 6532 7766 7777 cb87
+			ffff ffff ffff feff ffff ffff ffff ffff
+			fefe eeef eeee abce 2679 1111 2111 6432
+			ba98 bbbb bbbb bbbb aaab 99aa 8889 6677
+			1235 1111 1111 3211 6654 7777 7877 cc88
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff fffe efff cdef 789b 1224 1111 1111
+			6432 8777 baa9 9aab 9999 8889 4668 1223
+			1111 1111 1111 5532 7665 7777 8787 cc87
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff eefe 8abd 3578 1112 1111
+			1111 1211 4322 3445 2233 1222 1111 1111
+			1111 1111 4321 6654 7777 8878 7878 cb88
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff efef bcde 788a 2457 1122
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 2211 5554 8766 8887 8888 8888 cc88
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff feff ceee 9abb 6789 3346
+			1112 1111 1111 1111 1111 1111 1111 1111
+			2221 5543 7666 8887 8898 8888 8888 cc88
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff efff eeff bbcd 88aa 6677
+			2346 1112 1111 1111 1111 1111 2211 4332
+			5544 7666 8877 9998 9999 8899 8888 cc98
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff efef deee abbc 8899
+			6787 3346 2222 2222 3322 4433 6655 6556
+			7666 9887 9a99 a999 aaaa 9999 9999 cc99
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff efff eeef cddd aabb
+			8999 7778 7777 7777 7777 7676 6777 7776
+			a988 bbba aaab aaaa aaaa a9aa a9a9 cbaa
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff eefe eeee ccde
+			aabb 8999 8888 8787 7787 8778 8887 baa9
+			ccbb cccc bbbb aaba aaba aaba abab ccba
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff eeff eeef eeee
+			ccdd bbbc 99aa 9999 9a99 aaaa cbbb dddc
+			dddd dddd cccd bbbb bbbb bbbb bbbb ccbb
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffef efee eeee
+			eeee cdee bccc bbbb ccbb ddcc eddd edee
+			dede ddde cddd cccc cccc cccc cbcc ccbb
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff feff feff
+			efee eeee eeee edee ddee eede eeee eeee
+			ddee eeee ddee ddcd dddd ddcc cccd cccc
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff efff efef
+			feff ffff efef efef eeef eeee eeee eeee
+			eeee eeee eeee dede dddd dddd ccdd bccc
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff fefe
+			ffff ffff ffff ffff ffff efef efef efef
+			ffef fefe efef eeee eeee ddde dddd cccc
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff efef eeef eeee ddee cddd cccc
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff feff feef eeee eeee dded ccdd cccc
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff efff efef eeee deee dddd cccd cccc
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff efef eefe eeee ddee dddd cccc cccc
+			effe ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			feff eeef eeee eeee dded cccd cccc cccc
+			feff fffe ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			feff efee eeee deee cddd ccdc cccc cccc
+			feee ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			eeef eeee eeee ddee ccdd cccc cccc bccc
+			eeee fefe ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff feff
+			eefe eeee eeee ddde cccc cccc cccc cccc
+			feee efef ffff ffff ffff ffff ffff ffff
+			feff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff efff
+			eeef eeee ddee dcdd cccc cccc cccc cccc
+			eeee fefe ffef ffff ffff ffff ffff ffff
+			ffef ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff fefe
+			eeee eeee ddde ccdd cccc cccc cccc cccc
+			eeee fefe fefe ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff efff eeef
+			eeef eeee dddd cccc cccc cccc cccc cccc
+			eeee efee ffef ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff efef ffff fefe
+			eeee deee ccdd cccc cccc cccc cccc cccc
+			eeee eeee fefe fffe ffff ffff ffff ffff
+			ffff ffff ffff ffff fefe fefe feee eeee
+			eeee eeee eeee eeee edee dddd dddd dddd
+			ccdd cccc cccc cccc cccc cccc cccc cbcc
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+			eeee eeee eeee eeee eeee eeee eeee eeee
+		</bitmap>
+	</tex_image>
+	<tex_image index="3" name="shin_eye.4"
 		width="128" height="64" original_width="128" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -2427,7 +2693,7 @@
 			3333 3333 3333 3333 3333 3333 3333 3333
 		</bitmap>
 	</tex_image>
-	<tex_image index="3" name="shin_head"
+	<tex_image index="4" name="shin_head"
 		width="128" height="128" original_width="128" original_height="128"
 		format="palette16"
 		color0_mode="color"
@@ -2949,7 +3215,7 @@
 			2222 2222 2222 2222 2222 99e7 9999 c999
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="shin_mouth"
+	<tex_image index="5" name="shin_mouth"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -2967,7 +3233,7 @@
 			4444 4444 3333 a886 bbbb bbbb 3333 8875
 		</bitmap>
 	</tex_image>
-	<tex_image index="5" name="shin_tail_r"
+	<tex_image index="6" name="shin_tail_r"
 		width="128" height="64" original_width="128" original_height="64"
 		format="palette256"
 		color0_mode="color"
@@ -3489,7 +3755,7 @@
 			0303 0303 0303 0303 0303 0303 0705 0101
 		</bitmap>
 	</tex_image>
-	<tex_image index="6" name="shin_tail_w"
+	<tex_image index="7" name="shin_tail_w"
 		width="128" height="64" original_width="128" original_height="64"
 		format="palette256"
 		color0_mode="color"
@@ -4011,7 +4277,7 @@
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 030b 0a0a
 		</bitmap>
 	</tex_image>
-	<tex_image index="7" name="shin_teeth"
+	<tex_image index="8" name="shin_teeth"
 		width="8" height="8" original_width="8" original_height="8"
 		format="palette16"
 		color0_mode="color"
@@ -4025,7 +4291,7 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="8">
+<tex_palette_array size="9">
 	<tex_palette index="0" name="glow_pl" color_size="8">
 		025f 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
@@ -4033,57 +4299,37 @@
 		3d8c 4a0f 5672 62d5 6b17 41cd 45ee 4e30
 		5251 5a93 5eb4 66f6 6f39 735a 779c 737b
 	</tex_palette>
-	<tex_palette index="2" name="shin_eye.4_pl" color_size="16">
+	<tex_palette index="2" name="shin_eye.1_pl" color_size="16">
+		4e30 5251 5672 5a93 5eb4 5eb5 62d6 62f6
+		6717 6b18 6b38 6f39 6f59 735a 737b 739b
+	</tex_palette>
+	<tex_palette index="3" name="shin_eye.4_pl" color_size="16">
 		2529 4dc0 6f34 6640 5e20 55e0 49a0 4180
 		3d60 3540 2d00 24e0 5648 62ad 1ce6 14a5
 	</tex_palette>
-	<tex_palette index="3" name="shin_head_pl" color_size="16">
+	<tex_palette index="4" name="shin_head_pl" color_size="16">
 		7b9c 4e0f 5672 62d5 41ac 45ee 5651 5a93
 		5eb4 66f7 6f59 6b38 6b17 735a 66f6 737b
 	</tex_palette>
-	<tex_palette index="4" name="shin_mouth_pl" color_size="16">
+	<tex_palette index="5" name="shin_mouth_pl" color_size="16">
 		2d2c 292b 250b 3570 41d2 3990 3db2 41b2
 		45d3 3db1 45f4 45d3 3990 314d 356f 4e15
 	</tex_palette>
-	<tex_palette index="5" name="shin_tail_r_pl" color_size="16">
+	<tex_palette index="6" name="shin_tail_r_pl" color_size="16">
 		1037 0c14 1418 181d 181c 181c 181b 141a
 		1419 021d 01fc 01bb 0158 0137 04d7 0897
 	</tex_palette>
-	<tex_palette index="6" name="shin_tail_w_pl" color_size="16">
+	<tex_palette index="7" name="shin_tail_w_pl" color_size="16">
 		6718 62f6 6b39 5251 5272 5ab5 45ee 62d6
 		5ed5 62f7 4a10 5673 5ab4 5a94 5693 5693
 	</tex_palette>
-	<tex_palette index="7" name="shin_teeth_pl" color_size="8">
+	<tex_palette index="8" name="shin_teeth_pl" color_size="8">
 		5ad5 3dcd 460f 4e72 6718 6f7b 6b5a 7fff
 	</tex_palette>
 </tex_palette_array>
 
 <material_array size="9">
-	<material index="0" name="glow_1"
-		light0="off" light1="off" light2="off" light3="off"
-		face="both"
-		alpha="0"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="63"
-		fog_flag="on"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="0 0 0"
-		specular="0 0 0"
-		emission="16 16 16"
-		shininess_table_flag="off"
-		tex_image_idx="0" tex_palette_idx="0"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="1" name="shin_bod_1"
+	<material index="0" name="shin_bod_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -4107,7 +4353,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="shin_bod_2"
+	<material index="1" name="shin_bod_2"
 		light0="off" light1="off" light2="off" light3="off"
 		face="both"
 		alpha="31"
@@ -4131,31 +4377,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="shin_eye_1"
-		light0="off" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="20"
-		fog_flag="on"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="0 0 0"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="2" tex_palette_idx="2"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="4" name="shin_head_1"
+	<material index="2" name="shin_eye_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -4179,7 +4401,31 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="5" name="shin_mouth_1"
+	<material index="3" name="shin_glow_1"
+		light0="off" light1="off" light2="off" light3="off"
+		face="both"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="63"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="16 16 16"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="4" name="shin_head_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -4203,13 +4449,13 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="6" name="shin_tail_r_1"
+	<material index="5" name="shin_mouth_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="0"
+		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="21"
+		polygon_id="20"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -4227,7 +4473,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="7" name="shin_tail_w_1"
+	<material index="6" name="shin_tail_r_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -4251,6 +4497,30 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
+	<material index="7" name="shin_tail_w_1"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="0"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="21"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="7" tex_palette_idx="7"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
 	<material index="8" name="shin_teeth_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
@@ -4268,7 +4538,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="7" tex_palette_idx="7"
+		tex_image_idx="8" tex_palette_idx="8"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -11240,10 +11510,10 @@
 		volume_max="14.961670 14.448242 5.601807"
 		volume_r="17.020752"
 	>
-		<display index="0" material="0" polygon="4" priority="0"/>
-		<display index="1" material="1" polygon="1" priority="0"/>
-		<display index="2" material="2" polygon="8" priority="0"/>
-		<display index="3" material="3" polygon="5" priority="0"/>
+		<display index="0" material="0" polygon="1" priority="0"/>
+		<display index="1" material="1" polygon="8" priority="0"/>
+		<display index="2" material="2" polygon="5" priority="0"/>
+		<display index="3" material="3" polygon="4" priority="0"/>
 		<display index="4" material="4" polygon="6" priority="0"/>
 		<display index="5" material="5" polygon="7" priority="0"/>
 		<display index="6" material="7" polygon="3" priority="0"/>
@@ -11632,7 +11902,7 @@
 		draw_mtx="on"
 		scale_compensate="off"
 		billboard="off"
-		scale="1.000000 1.000000 1.000000"
+		scale="1.400879 1.400879 1.332031"
 		rotate="0.000000 -90.000000 0.000000"
 		translate="0.979492 0.203613 0.000000"
 		visibility="off"
