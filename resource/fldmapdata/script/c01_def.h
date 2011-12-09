@@ -23,5 +23,6 @@
 #define SCRID_C01_BABYGIRL1_01 (16)
 #define SCRID_C01_WOMAN2_02 (17)
 #define SCRID_C01_WOMAN3_01 (18)
+#define SCRID_C01_GLASSESE_01 (19)
 
 #endif //_C01_DEF_H_

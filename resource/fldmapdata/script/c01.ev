@@ -11,6 +11,7 @@
   .include  "c01.h"
 
   //@author fujimura_souichirou（マッギョ祭／一言メッセージ）
+  //@author suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -37,6 +38,7 @@ _EVENT_DATA   ev_c01_woman2_01
 _EVENT_DATA   ev_c01_babygirl1_01
 _EVENT_DATA   ev_c01_woman2_02
 _EVENT_DATA   ev_c01_woman3_01
+_EVENT_DATA	ev_c01_glassese_01
 _EVENT_DATA_END
 
 //季節と時間変数
@@ -330,4 +332,77 @@ EVENT_START   ev_c01_woman3_01
 
 EVENT_END
 
+/************************************************************/
+/*	DANPEI	一言メッセージ							*/
+/************************************************************/
+EVENT_START	ev_c01_glassese_01
 
+	_TALK_OBJ_START()
+	
+	//ポケモンしょうぶも　たのしめる
+	_BALLOONWIN_TALKOBJ_MSG_POS( msg_c01_glasses_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( C01_GLASSESE_01, anm_staystep_u )
+	_OBJ_ANIME_WAIT()
+
+	//ドアアニメ再生
+	_BMODEL_ANIME_CREATE( SCWK_ANSWER, SCR_BMID_DOOR, 788, 586 )
+	_BMODEL_ANIME_SET( SCWK_ANSWER, SCR_BMANM_DOOR_OPEN )
+	_BMODEL_ANIME_WAIT( SCWK_ANSWER )
+
+	_OBJ_ANIME( C01_GLASSESE_01, anm_walk_u )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_DEL( C01_GLASSESE_01 )
+
+	_BMODEL_ANIME_SET( SCWK_ANSWER, SCR_BMANM_DOOR_CLOSE )
+	_BMODEL_ANIME_WAIT( SCWK_ANSWER )
+	_BMODEL_ANIME_DELETE( SCWK_ANSWER )
+
+	//========================================//
+	
+	//ダンペイのバニシュセット
+	_FLAG_SET(FV_C01_GLASSESE_01)
+	
+	//========================================//
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_staystep_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+ 
+//--------------------------------------------------------------------
+//☆共通処理：歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk_d
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_walk_u
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_walk_r
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_walk_l
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
