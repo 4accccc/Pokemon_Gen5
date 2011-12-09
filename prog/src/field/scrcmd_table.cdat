@@ -1152,6 +1152,9 @@
   DEF_CMD( EvCmdMapFadeOut_MsgEnable, EV_SEQ_MAP_FADE_OUT_MSG_ENABLE )
   DEF_CMD( EvCmdMapFadeIn_MsgEnable, EV_SEQ_MAP_FADE_IN_MSG_ENABLE )
 
+  // エンディング
+  DEF_CMD( EvCmdLeagueFrontFireworks, EV_SEQ_LEAGUE_FRONT_FIREWORKS )
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

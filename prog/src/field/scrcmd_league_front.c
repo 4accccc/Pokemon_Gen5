@@ -13,6 +13,7 @@
 #include "system/vm_cmd.h"
 #include "scrcmd_league_front.h"
 #include "field_gimmick_league_front01.h"
+#include "field_gimmick_league_front02.h"
 #include "scrcmd_work.h"
 #include "script_local.h"
 #include "scrcmd.h"
@@ -40,3 +41,26 @@ VMCMD_RESULT EvCmdLeagueFrontLiftDown( VMHANDLE *core, void *wk )
   SCRIPT_CallEvent( script, event );
   return VMCMD_RESULT_SUSPEND;
 } 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  花火再生（エンディング用）
+ *
+ *  @param  core    仮想マシン制御構造体へのポインタ
+ *  @param  wk      SCRCMD_WORKへのポインタ
+ *  @retval VMCMD_RESULT
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdLeagueFrontFireworks( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*     script = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys ); 
+
+  // 花火再生
+  LEAGUE_FRONT_02_GIMMICK_Hanabi( fieldmap );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
