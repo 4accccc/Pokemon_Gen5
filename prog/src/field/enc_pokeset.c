@@ -534,9 +534,13 @@ void ENCPOKE_PPSetupNPoke(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, u8 n_p
   const ENCOUNT_DATA_N_POKE* prm = &DATA_EncountDataNPoke[n_poke_id];
   {
 	  u32 pow_rnd = PTL_SETUP_POW_PACK( N_POKE_POW_RND, N_POKE_POW_RND, N_POKE_POW_RND, N_POKE_POW_RND, N_POKE_POW_RND, N_POKE_POW_RND );
-	  u32 per_rnd = POKETOOL_CalcPersonalRandEx( N_POKE_OYA_ID, prm->mons_no, 0, prm->sex, prm->tokusei, FALSE );
+	  u32 per_rnd = POKETOOL_CalcPersonalRandEx( N_POKE_OYA_ID, prm->mons_no, 0, prm->sex, prm->tokusei%2, FALSE );
 
     PP_SetupEx( pp, prm->mons_no, prm->level, N_POKE_OYA_ID, pow_rnd, per_rnd );
+
+    if( prm->tokusei > 1 ){
+      PP_SetTokusei3( pp, prm->mons_no, 0 );
+    }
   }
 	PP_Put( pp, ID_PARA_seikaku, prm->seikaku );		// «Ši
 	PP_Put( pp, ID_PARA_friend, N_POKE_NATSUKI );		// ‰Šú‚È‚Â‚«“x

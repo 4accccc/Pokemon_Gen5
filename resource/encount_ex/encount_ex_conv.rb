@@ -126,8 +126,8 @@ class CEncDataEx
        cp.sex = sex_conv(work[6])
        
        cp.tokusei = work[7].to_i
-       if cp.tokusei < 0 || cp.tokusei > 1 then
-         print("ERROR! “Á«‚Í0or1<“Á«1or“Á«2>‚Åw’è‚µ‚Ä‚­‚¾‚³‚¢\n")
+       if cp.tokusei < 0 || cp.tokusei > 2 then
+         print("ERROR! “Á«‚Í0or1<“Á«1or“Á«2or“Á«3>‚Åw’è‚µ‚Ä‚­‚¾‚³‚¢\n")
          exit 1
        end
        cp.tokusei_com = work[8]
