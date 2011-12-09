@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-12-07T19:41:09" source="sky_d_04.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-12-08T19:04:34" source="sky_d.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -100,7 +100,7 @@
 
 <node_translate_data size="30">
 	0.000000 -0.009521 6.157227 -7.521240 4.009277 -7.897217 3.500244 3.115723 -7.073730 0.305664
-	-5.491211 -0.759033 -1.788818 3.097168 -1.925049 0.012939 0.201660 -1.457520 -0.042236 0.160889
+	-5.491211 -0.759033 -1.788818 3.939209 -1.925049 0.012939 0.201660 -1.457520 -0.042236 0.160889
 	0.947266 -1.000000 11.537598 0.000732 0.133789 -0.806885 -22.593506 0.062988 18.255127 0.012207
 </node_translate_data>
 

@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-12-08T10:55:02" source="sky_e_02.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-12-08T20:56:32" source="sky_e.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -15,23 +15,13 @@
 	tool_start_frame="0"
 	tool_end_frame="660"
 	interpolation="frame"
-	compress_material="on" material_size="17 17"
+	compress_material="on" material_size="18 18"
 	frame_step_mode="1"
 	tolerance_color="2"
 />
 
 <mat_color_data size="1986">
 	25 31 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
@@ -209,6 +199,16 @@
 	6 5 5 5 5 4 4 4 4 3
 	3 3 3 2 2 2 2 2 1 1
 	1 1 1 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
