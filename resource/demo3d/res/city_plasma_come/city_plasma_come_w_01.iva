@@ -3,7 +3,7 @@
 <iva version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-11-28T17:34:30" source="city_plasma_come_w.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-12-01T15:44:55" source="city_plasma_come_w.mb"/>
 	<title>Visibility Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -11,19 +11,19 @@
 <body>
 
 <visibility_info
-	frame_size="1500"
+	frame_size="1515"
 	tool_start_frame="1"
-	tool_end_frame="1500"
+	tool_end_frame="1515"
 	compress_node="merge" node_size="47 32"
 />
 
 <visibility_data>
 	<frame_idx size="49">
-		0 0 1200 0 120 1200 1350 0 250 0
-		700 879 0 800 1080 0 874 880 0 1350
-		0 930 0 1130 0 1140 0 1200 0 400
-		0 909 0 1050 0 1020 1060 0 900 1020
-		0 1100 1150 0 1130 1200 0 860 900
+		0 0 1215 0 120 1215 1365 0 250 0
+		700 894 0 815 1095 0 889 895 0 1365
+		0 945 0 1145 0 1155 0 1215 0 400
+		0 924 0 1065 0 1035 1075 0 915 1035
+		0 1115 1165 0 1145 1215 0 875 915
 	</frame_idx>
 	<visibility size="49">
 		1 1 0 1 0 1 0 0 1 0

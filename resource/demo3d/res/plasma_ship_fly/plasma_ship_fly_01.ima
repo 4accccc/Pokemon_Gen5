@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-11-28T19:18:53" source="plasma_ship_fly.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-12-05T15:38:17" source="plasma_ship_fly.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -15,12 +15,12 @@
 	tool_start_frame="1"
 	tool_end_frame="1260"
 	interpolation="frame"
-	compress_material="on" material_size="43 43"
+	compress_material="on" material_size="45 45"
 	frame_step_mode="1"
 	tolerance_color="2"
 />
 
-<mat_color_data size="7562">
+<mat_color_data size="10082">
 	25 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
@@ -50,19 +50,19 @@
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 25 31 31
 	31 31 31 31 31 31 31 31 31 31
-	31 30 30 30 30 29 29 29 29 28
-	28 28 28 27 27 27 27 26 26 26
-	26 25 25 25 25 24 24 24 24 23
-	23 23 23 22 22 22 22 21 21 21
-	21 20 20 20 20 19 19 19 19 18
-	18 18 18 17 17 17 17 16 16 16
-	16 15 15 15 15 15 14 14 14 14
-	13 13 13 13 12 12 12 12 11 11
-	11 11 10 10 10 10 9 9 9 9
-	8 8 8 8 7 7 7 7 6 6
-	6 6 5 5 5 5 4 4 4 4
-	3 3 3 3 2 2 2 2 1 1
-	1 1 0 0 0 0 0 0 0 0
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 30 30 29 29 28 28 27
+	27 26 25 25 24 24 24 23 23 22
+	22 21 21 20 20 19 19 18 18 17
+	17 16 16 15 15 14 14 13 13 12
+	12 11 10 10 9 9 8 8 8 7
+	7 6 6 5 5 4 4 3 3 2
+	2 1 1 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
@@ -525,7 +525,133 @@
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 1 1 1 1
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 1 2 3 4 5 6 7 7
+	8 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 9 9 9 9 9 9 9 9
+	9 9 0 0 0 0 1 1 1 1
 	1 1 1 1 2 2 2 2 2 2
 	2 3 3 3 3 3 3 3 4 4
 	4 4 4 4 4 5 5 5 5 5
@@ -777,10 +903,136 @@
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
+	0 0 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
 	0 0
 </mat_color_data>
 
-<mat_color_anm_array size="7">
+<mat_color_anm_array size="9">
 	<mat_color_anm index="0" material_name="baku01_02_1">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
@@ -841,7 +1093,7 @@
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
 		<polygon_alpha frame_step="1" data_size="1260" data_head="3782"/>
 	</mat_color_anm>
-	<mat_color_anm index="4" material_name="jet_01_1">
+	<mat_color_anm index="4" material_name="hikari_day_1">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
@@ -856,22 +1108,7 @@
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
 		<polygon_alpha frame_step="1" data_size="1260" data_head="5042"/>
 	</mat_color_anm>
-	<mat_color_anm index="5" material_name="jet_01_2">
-		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
-		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
-		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
-		<ambient_r frame_step="1" data_size="1" data_head="1"/>
-		<ambient_g frame_step="1" data_size="1" data_head="1"/>
-		<ambient_b frame_step="1" data_size="1" data_head="1"/>
-		<specular_r frame_step="1" data_size="1" data_head="1"/>
-		<specular_g frame_step="1" data_size="1" data_head="1"/>
-		<specular_b frame_step="1" data_size="1" data_head="1"/>
-		<emission_r frame_step="1" data_size="1" data_head="1"/>
-		<emission_g frame_step="1" data_size="1" data_head="1"/>
-		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="1260" data_head="5042"/>
-	</mat_color_anm>
-	<mat_color_anm index="6" material_name="jet_01_5">
+	<mat_color_anm index="5" material_name="jet_01_1">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
@@ -885,6 +1122,51 @@
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
 		<polygon_alpha frame_step="1" data_size="1260" data_head="6302"/>
+	</mat_color_anm>
+	<mat_color_anm index="6" material_name="jet_01_2">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="1"/>
+		<ambient_g frame_step="1" data_size="1" data_head="1"/>
+		<ambient_b frame_step="1" data_size="1" data_head="1"/>
+		<specular_r frame_step="1" data_size="1" data_head="1"/>
+		<specular_g frame_step="1" data_size="1" data_head="1"/>
+		<specular_b frame_step="1" data_size="1" data_head="1"/>
+		<emission_r frame_step="1" data_size="1" data_head="1"/>
+		<emission_g frame_step="1" data_size="1" data_head="1"/>
+		<emission_b frame_step="1" data_size="1" data_head="1"/>
+		<polygon_alpha frame_step="1" data_size="1260" data_head="6302"/>
+	</mat_color_anm>
+	<mat_color_anm index="7" material_name="jet_01_5">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="1"/>
+		<ambient_g frame_step="1" data_size="1" data_head="1"/>
+		<ambient_b frame_step="1" data_size="1" data_head="1"/>
+		<specular_r frame_step="1" data_size="1" data_head="1"/>
+		<specular_g frame_step="1" data_size="1" data_head="1"/>
+		<specular_b frame_step="1" data_size="1" data_head="1"/>
+		<emission_r frame_step="1" data_size="1" data_head="1"/>
+		<emission_g frame_step="1" data_size="1" data_head="1"/>
+		<emission_b frame_step="1" data_size="1" data_head="1"/>
+		<polygon_alpha frame_step="1" data_size="1260" data_head="7562"/>
+	</mat_color_anm>
+	<mat_color_anm index="8" material_name="jet_02_2">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="278"/>
+		<ambient_g frame_step="1" data_size="1" data_head="278"/>
+		<ambient_b frame_step="1" data_size="1" data_head="278"/>
+		<specular_r frame_step="1" data_size="1" data_head="1"/>
+		<specular_g frame_step="1" data_size="1" data_head="1"/>
+		<specular_b frame_step="1" data_size="1" data_head="1"/>
+		<emission_r frame_step="1" data_size="1" data_head="1"/>
+		<emission_g frame_step="1" data_size="1" data_head="1"/>
+		<emission_b frame_step="1" data_size="1" data_head="1"/>
+		<polygon_alpha frame_step="1" data_size="1260" data_head="8822"/>
 	</mat_color_anm>
 </mat_color_anm_array>
 
