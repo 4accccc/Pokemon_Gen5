@@ -377,9 +377,17 @@ EVENT_START   ev_r09r0201_girl4_01
 
   //イベント中
   ELSIF $WK_OTHER_R9R0201_ITEMBUY == 1 && FLAG_OFF( TMFLG_R9R0201_ITEMBUY_CLEAR ) THEN
-
-    //お嬢様：それとも　もう　かってきてくれた？
-    _BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_girl4_05 )
+    
+    //イベント発生後日付が経過していない
+    IF FLAG_ON( TMFLG_R9R0201_ITEMBUY ) THEN
+      //お嬢様：それとも　もう　かってきてくれた？
+      _BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_girl4_05 )
+    
+    //イベント発生後日付が経過した
+    ELSE
+      //お嬢様：わたし……　あなたに
+      _BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_girl4_06 )
+    ENDIF
 
     //すごいキズぐすりを買ってきた？
     _YES_NO_WIN( SCWK_ANSWER )

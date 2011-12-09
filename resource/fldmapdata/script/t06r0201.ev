@@ -24,6 +24,7 @@
 _EVENT_DATA    ev_t06r0201_babyboy1_01
 _EVENT_DATA    ev_t06r0201_woman3_01
 _EVENT_DATA    ev_t06r0201_poke17_01
+_EVENT_DATA    ev_t06r0201_oldman1_01
 _EVENT_DATA_END
 
 
@@ -53,5 +54,13 @@ EVENT_END
 EVENT_START   ev_t06r0201_poke17_01
   _EASY_TALK_POKEVOICE( MONSNO_537, msg_t06r0201_poke17_01 )
 EVENT_END
+
+/**************************************************************/
+/*  OLDMAN1ÅFòbÇµÇ©ÇØ                              */
+/**************************************************************/
+EVENT_START   ev_t06r0201_oldman1_01
+  _EASY_TALK_ITEM_EVENT( ITEM_KIZUGUSURI, 1, FE_T06R0201_ITEMGET_01, msg_t06r0201_oldman1_01, msg_t06r0201_oldman1_02, msg_t06r0201_oldman1_02)
+EVENT_END
+
 
 

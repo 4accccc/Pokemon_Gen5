@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/29 14:36:38
+#save date:2011/12/08 16:47:45
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c05.wms
 #SECTION START:OBJ_EVENT
@@ -642,11 +642,11 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_C05_STOPPER_01
 #Event Script Name
 SCRID_C05_STOPPER_01
 #Direction Type Number
-DIR_RIGHT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number

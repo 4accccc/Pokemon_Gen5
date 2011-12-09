@@ -40,6 +40,9 @@
 #define TR_KINDERGARTENM_12               26
 #define TR_MINI_27                        27
 #define TR_TANPAN_35                      28
+#define D02R0101_MAN1_01                  29
+#define D02R0101_MOUNTAIN_01              30
+#define D02R0101_ASSISTANTW_01            31
 
 #endif //ZONE_D02R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d02r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

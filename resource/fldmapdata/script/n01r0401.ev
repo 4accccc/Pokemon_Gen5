@@ -201,9 +201,12 @@ ev_n01r0401_pairend_01:
     _BALLOONWIN_OBJMSG_POS( msg_n01r0401_boss_08, PAIR_TRAINER_01, POS_DEFAULT )
     _MSGWIN_CLOSE()
     
+    _PAIR_PLAYER_FOLLOW_ON()  //連れ歩き追随開始
     //アニメ：主人公戻す
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
     _OBJ_ANIME_WAIT()
+    _PAIR_PLAYER_FOLLOW_OFF() //連れ歩き追随終了
+    
   ENDIF
   }
 _RET
@@ -217,9 +220,11 @@ EVENT_START		ev_pos_n01r0401_boss_02
   _BALLOONWIN_OBJMSG_POS( msg_n01r0401_boss_13, PAIR_TRAINER_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
+  _PAIR_PLAYER_FOLLOW_ON()  //連れ歩き追随開始
   //アニメ：主人公１歩戻る処理
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_d )
   _OBJ_ANIME_WAIT()
+  _PAIR_PLAYER_FOLLOW_OFF() //連れ歩き追随終了
     
 EVENT_END
 

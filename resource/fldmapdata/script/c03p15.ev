@@ -14,7 +14,7 @@
   .include  "c13r0401_def.h"
 
   //@author fujimura_souichirou（ヒウン名所巡りイベント）
-  //@author Mizuguchi_Mai（タチワキ接続関連）
+  //@author Mizuguchi_Mai（タチワキ接続関連・一言メッセージ配置）
   //@author suginaka_katsunori（船の復帰処理）
 
 //--------------------------------------------------------------
@@ -27,6 +27,8 @@
 _EVENT_DATA   ev_c03p15_pilot_01
 _EVENT_DATA   ev_scene_c03p15_first_01
 _EVENT_DATA	ev_reserve_c03p15_end
+_EVENT_DATA   ev_c03p15_woman1_01
+_EVENT_DATA   ev_c03p15_gentleman_01
 _EVENT_DATA_END
 
 
@@ -239,4 +241,25 @@ EVENT_START	ev_reserve_c03p15_end
 	
 	_PLACE_NAME_DISPLAY()	//地名表示演出
 	
+EVENT_END
+
+/**************************************************************/
+/*   C03P15：WOMAN1一言メッセージ                                */
+/**************************************************************/
+EVENT_START   ev_c03p15_woman1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p15_woman1_01 )
+EVENT_END
+
+/**************************************************************/
+/*   C03P1：GENTLEMAN一言メッセージ                                */
+/**************************************************************/
+EVENT_START   ev_c03p15_gentleman_01
+  
+  //C05到着前
+  IF FLAG_OFF(SYS_FLAG_ARRIVE_C05) THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p15_gentleman_01 )
+  //C05到着後
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p15_gentleman_02 )
+  ENDIF
 EVENT_END

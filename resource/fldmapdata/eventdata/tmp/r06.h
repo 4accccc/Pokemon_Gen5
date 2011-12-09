@@ -31,6 +31,8 @@
 #define R06_FLDMONS_01                    17
 #define R06_FLDMONS_03                    18
 #define R06_FLDMONS_02                    19
+#define R06_WOMAN2_01                     20
+#define R06_MOUNTAIN_01                   21
 
 #endif //ZONE_R06_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r06.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

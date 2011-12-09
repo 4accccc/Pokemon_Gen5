@@ -24,6 +24,7 @@
 _EVENT_DATA   ev_c08r0102_footballm_01
 _EVENT_DATA   ev_c08r0102_woman2_01
 _EVENT_DATA   ev_c08r0102_veteranw_01
+_EVENT_DATA   ev_c08r0102_footballm_02
 _EVENT_DATA_END
 
 
@@ -35,44 +36,59 @@ EVENT_START   ev_c08r0102_footballm_01
 EVENT_END
 
 /**************************************************************/
+/*   C08：FOOTBALLMアイテム入手イベント                       */
+/**************************************************************/
+EVENT_START   ev_c08r0102_footballm_02
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0102_footballm_03 )
+EVENT_END
+
+/**************************************************************/
 /*   C08：WOMAN2アイテム入手イベント                          */
 /**************************************************************/
 EVENT_START   ev_c08r0102_woman2_01
+  
+  //ソウリュウシティが通常マップか
+  IF FLAG_OFF( FE_C08_PLAZMA_COME ) THEN
+    //アイテム未入手
+    IF FLAG_OFF( FE_C08R0102_ITEMGET_02 ) THEN
+      _TALK_OBJ_START()
+      //いる？
+      _BALLOONWIN_OBJMSG( msg_c08r0102_woman2_01, C08R0102_WOMAN2_01 )
+      _YES_NO_WIN( SCWK_ANSWER )
 
-  //アイテム未入手
-  IF FLAG_OFF( FE_C08R0102_ITEMGET_02 ) THEN
-    _TALK_OBJ_START()
-    //いる？
-    _BALLOONWIN_OBJMSG( msg_c08r0102_woman2_01, C08R0102_WOMAN2_01 )
-    _YES_NO_WIN( SCWK_ANSWER )
+      //はい
+      IF $SCWK_ANSWER == 0 THEN
+        _BALLOONWIN_OBJMSG( msg_c08r0102_woman2_03, C08R0102_WOMAN2_01 )
+        _BALLOONWIN_CLOSE()
 
-    //はい
-    IF $SCWK_ANSWER == 0 THEN
-      _BALLOONWIN_OBJMSG( msg_c08r0102_woman2_03, C08R0102_WOMAN2_01 )
-      _BALLOONWIN_CLOSE()
+        //アイテム入手処理
+        _ITEM_EVENT_KEYWAIT ( ITEM_NERAINOMATO, 1)
 
-      //アイテム入手処理
-      _ITEM_EVENT_KEYWAIT ( ITEM_NERAINOMATO, 1)
+        _BALLOONWIN_OBJMSG( msg_c08r0102_woman2_04, C08R0102_WOMAN2_01 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
 
-      _BALLOONWIN_OBJMSG( msg_c08r0102_woman2_04, C08R0102_WOMAN2_01 )
-      _LAST_KEYWAIT()
-      _BALLOONWIN_CLOSE()
+        //==================================//
+        //アイテム入手終了
+        _FLAG_SET( FE_C08R0102_ITEMGET_02 )
+        //==================================//
 
-      //==================================//
-      //アイテム入手終了
-      _FLAG_SET( FE_C08R0102_ITEMGET_02 )
-      //==================================//
-
-    //いいえ
+      //いいえ
+      ELSE
+        _BALLOONWIN_OBJMSG( msg_c08r0102_woman2_02, C08R0102_WOMAN2_01 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+      ENDIF
     ELSE
-      _BALLOONWIN_OBJMSG( msg_c08r0102_woman2_02, C08R0102_WOMAN2_01 )
-      _LAST_KEYWAIT()
-      _BALLOONWIN_CLOSE()
+    //入手後
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0102_woman2_04 )
     ENDIF
+  
+  //ソウリュウシティ氷漬け中
   ELSE
-  //入手後
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0102_woman2_04 )
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0102_woman2_05 )
   ENDIF
+  
 EVENT_END
 
 /**************************************************************/

@@ -64,6 +64,33 @@ DEFINE_LOCAL  LCWK_SEX
 /*		ZONE_CHANGE                             */
 /************************************************************/
 INIT_EVENT_START   ev_zone_n01r0502
+{
+  //N再戦処理
+  DEFINE_LOCAL  LCWK_SEASON
+  DEFINE_LOCAL  LCWK_NOW_SEASON
+  _GET_SEASON_ID( LCWK_SEASON )
+  
+  SWITCH  $LCWK_SEASON
+  CASE 0 THEN
+    $LCWK_NOW_SEASON = 1
+  CASE 1 THEN
+    $LCWK_NOW_SEASON = 2
+  CASE 2 THEN
+    $LCWK_NOW_SEASON = 3
+  CASE 3 THEN
+    $LCWK_NOW_SEASON = 4
+  ENDSWITCH
+  
+  //・D10でキュレムと戦闘した
+  //・C04P01観覧車でNと出会った
+  //・季節が変わっている
+  //以上3点の条件を満たしていたならばNを再表示
+  IF FLAG_ON( FE_D10R0401_POKE10_MEET ) && FLAG_ON( FE_C04WHEEL_N_MEET ) && $WK_OTHER_N01R0502_N_SEASON != $LCWK_NOW_SEASON THEN
+    //n01r0502 N表示
+    _FLAG_RESET( FV_N01R0502_BOSS_01 )
+  ENDIF
+  
+}
 
   //バージョンを取得してOBJを変化させる
 	_GET_ROM_VERSION( SCWK_ANSWER )
@@ -236,7 +263,8 @@ EVENT_START	ev_n01r0502_boss_02
   //入手済みイベント
   IF $WK_SCENE_N01R0502_BOSS == 3 THEN
     
-    //【仮】再戦闘条件未定
+    //再戦闘
+    _CALL ev_n02r0502_boss_retry
       
   //ダークストーン・ライトストーン入手イベント
   ELSE
@@ -402,6 +430,14 @@ ev_n02r0502_boss_vs_end:
   _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_17b , msg_n01r0502_boss_17w , N01R0502_BOSS_01 , POS_DEFAULT)
   _MSGWIN_CLOSE()
   
+  _OBJ_ANIME_AUTO( N01R0502_BOSS_01,17,43, FORCE_TYPE_NPC, 8, DIR_LR )
+  _TIME_WAIT( 24 )
+  _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //N動作モデル削除
+  _OBJ_DEL( N01R0502_BOSS_01 )
+  
   //イベント曲停止
 	_END_EVENT_BGM()
   
@@ -409,10 +445,116 @@ ev_n02r0502_boss_vs_end:
   //n01r0502 全てのイベント終了
   $WK_SCENE_N01R0502_BOSS = 3
   //n01r0502 レシラム・ゼクロム非表示
-  _FLAG_RESET( FV_N01R0502_NPOKE_01 )
+  _FLAG_SET( FV_N01R0502_NPOKE_01 )
+  //n01r0502 N非表示
+  _FLAG_SET( FV_N01R0502_BOSS_01 )
   //d08r0901 POS有効
   $WK_SCENE_D08R0901_LEGEND = 1
   //==================================//
+  
+_RET
+
+/************************************************************/
+/*					CALL：vs N（再戦版）						*/
+/************************************************************/
+ev_n02r0502_boss_retry:
+  
+  //季節が変わって初回会話
+  IF FLAG_OFF( FE_N01R0502_N_RETRY_TALK ) THEN
+    //Ｎ：……おどろいた
+    _BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_01_01, N01R0502_BOSS_01, POS_DEFAULT )
+  
+  //再会話
+  ELSE
+    //Ｎ：キミのポケモンが
+    _BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_01_06, N01R0502_BOSS_01, POS_DEFAULT )
+  ENDIF
+  
+  _YES_NO_WIN( SCWK_ANSWER )
+  
+  //はい
+  IF $SCWK_ANSWER == SCR_YES THEN
+    
+    //ウン…！！
+    _BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_01_02, N01R0502_BOSS_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+    
+    {
+    
+    //季節取得
+    DEFINE_LOCAL  LCWK_SEASON
+    _GET_SEASON_ID( LCWK_SEASON )
+    
+    //季節でトレーナーデータ分岐
+    IF $LCWK_SEASON == PMSEASON_SPRING THEN
+      _TRAINER_BTL_SET( TRID_BOSS_03, 0 )
+    ELSIF $LCWK_SEASON == PMSEASON_SUMMER THEN
+      _TRAINER_BTL_SET( TRID_BOSS_04, 0 )
+    ELSIF $LCWK_SEASON == PMSEASON_AUTUMN THEN
+      _TRAINER_BTL_SET( TRID_BOSS_05, 0 )
+    ELSIF $LCWK_SEASON == PMSEASON_WINTER THEN
+      _TRAINER_BTL_SET( TRID_BOSS_06, 0 )
+    ENDIF
+    
+    //結果チェック
+    _CALL ev_battle_check
+    
+    //Ｎ：…はなしてくれたこと　おもいだした
+    _BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_01_03b , msg_n01r0502_boss_01_03w , N01R0502_BOSS_01 , POS_DEFAULT)
+    _MSGWIN_CLOSE()
+    
+    //Ｎ：ボクはまた
+    _BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_01_04, N01R0502_BOSS_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
+    
+    _OBJ_ANIME_AUTO( N01R0502_BOSS_01,17,43, FORCE_TYPE_NPC, 8, DIR_LR )
+    _TIME_WAIT( 24 )
+    _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_d )
+    _OBJ_ANIME_WAIT()
+    
+    //N動作モデル削除
+    _OBJ_DEL( N01R0502_BOSS_01 )
+    
+    //戦闘済み季節を格納する
+    SWITCH  $LCWK_SEASON
+    CASE 0 THEN
+      //==================================//
+      $WK_OTHER_N01R0502_N_SEASON = 1
+      //==================================//
+    CASE 1 THEN
+      //==================================//
+      $WK_OTHER_N01R0502_N_SEASON = 2
+      //==================================//
+    CASE 2 THEN
+      //==================================//
+      $WK_OTHER_N01R0502_N_SEASON = 3
+      //==================================//
+    CASE 3 THEN
+      //==================================//
+      $WK_OTHER_N01R0502_N_SEASON = 4
+      //==================================//
+    ENDSWITCH
+    
+    //==================================//
+    //n01r0502 N非表示
+    _FLAG_SET( FV_N01R0502_BOSS_01 )
+    //再会話フラグリセット
+    _FLAG_RESET( FE_N01R0502_N_RETRY_TALK )
+    //==================================//
+    }
+  
+  //いいえ
+  ELSE
+    //いつまでも　待つ！
+    _BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_01_05, N01R0502_BOSS_01, POS_DEFAULT )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    
+    //==================================//
+    //再会話フラグ
+    _FLAG_SET( FE_N01R0502_N_RETRY_TALK )
+    //==================================//
+  ENDIF
   
 _RET
 

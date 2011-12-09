@@ -223,9 +223,11 @@ EVENT_START		ev_pos_d24r0301_swbell_01
     _BALLOONWIN_OBJMSG_POS( msg_d24r0301_swbell_17, PAIR_TRAINER_01, POS_DEFAULT )
     _MSGWIN_CLOSE()
     
+     _PAIR_PLAYER_FOLLOW_ON()  //連れ歩き追随開始
     //アニメ：主人公１歩戻る
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
     _OBJ_ANIME_WAIT()
+    _PAIR_PLAYER_FOLLOW_OFF() //連れ歩き追随終了
     
   ENDIF
   }

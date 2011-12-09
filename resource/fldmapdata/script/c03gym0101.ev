@@ -396,7 +396,7 @@ _TALK_START_SE_PLAY()
 	
 	//ジムバッジを取得している場合
 	ELSE
-		//【仮】C04到着前
+		//C04到着前
 		IF FLAG_OFF( SYS_FLAG_ARRIVE_C04 ) THEN
 			_PLAINWIN_MSG_DOWN( msg_c03gym0101_statue_02 )
 		//C04到着後

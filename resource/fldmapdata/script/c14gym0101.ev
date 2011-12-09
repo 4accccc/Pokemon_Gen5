@@ -51,18 +51,24 @@ EVENT_START   ev_c14gym0101_swleader8_01
     //ゲームクリア前なら
     IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
 
-      //シズイ：
+      //シズイ：とりゃお！
       _BALLOONWIN_OBJMSG( msg_c14gym0101_swleader8_07, C14GYM0101_SWLEADER8_01 )
-      _LAST_KEYWAIT()
+      _AB_KEYWAIT_MARK()
       _BALLOONWIN_CLOSE()
+      
+      //退場
+      _CALL sub_leader_return
 
     //ゲームクリア後なら
     ELSE
 
-      //シズイ：
-      _BALLOONWIN_OBJMSG( msg_c14gym0101_swleader8_07, C14GYM0101_SWLEADER8_01 )
-      _LAST_KEYWAIT()
+      //シズイ：おだやかな　うみも
+      _BALLOONWIN_OBJMSG( msg_c14gym0101_swleader8_08, C14GYM0101_SWLEADER8_01 )
+      _AB_KEYWAIT_MARK()
       _BALLOONWIN_CLOSE()
+      
+      //退場
+      _CALL sub_leader_return
 
     ENDIF
 

@@ -20,6 +20,8 @@
 #define TR_ELITEW_42                       8
 #define TR_SCHOOLB_15                      9
 #define TR_SCHOOLG_13                     10
+#define D02_FIGHTERM_01                   11
+#define D02_GIRL1_01                      12
 
 #endif //ZONE_D02_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d02.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

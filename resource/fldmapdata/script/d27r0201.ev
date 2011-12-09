@@ -163,6 +163,10 @@ _ANIME_LABEL	anm_rival_bye_01
 /*					バリア解除スイッチ（１）				*/
 /************************************************************/
 EVENT_START	ev_pos_d27r0201_switch_01
+
+  //メッセージ：スイッチを踏んだ！
+  _PLAINWIN_MSG_DOWN( msg_d27r0201_switch_01 )
+  _MSGWIN_CLOSE()
   
   //ボタン踏んだ処理
   _HIDE_SHIP_BOW_BUTTON_OFF( 0 )
@@ -173,12 +177,23 @@ EVENT_START	ev_pos_d27r0201_switch_01
   $WK_SCENE_D27_SWITCH_01 = 1
   //=====================================
 
+  //メッセージ：バリアが解除された！
+  IF $WK_SCENE_D27_SWITCH_01 == 1 && $WK_SCENE_D27_SWITCH_02 == 1 && $WK_SCENE_D27_SWITCH_03 == 1 && $WK_SCENE_D27_SWITCH_04 == 1 THEN
+    _PLAINWIN_MSG_DOWN( msg_d27r0201_switch_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+  ENDIF
+
 EVENT_END
 
 /************************************************************/
 /*					バリア解除スイッチ（２）				*/
 /************************************************************/
 EVENT_START	ev_pos_d27r0201_switch_02
+
+  //メッセージ：スイッチを踏んだ！
+  _PLAINWIN_MSG_DOWN( msg_d27r0201_switch_01 )
+  _MSGWIN_CLOSE()
   
   //ボタン踏んだ処理
   _HIDE_SHIP_BOW_BUTTON_OFF( 1 )
@@ -189,12 +204,23 @@ EVENT_START	ev_pos_d27r0201_switch_02
   $WK_SCENE_D27_SWITCH_02 = 1
   //=====================================
 
+  //メッセージ：バリアが解除された！
+  IF $WK_SCENE_D27_SWITCH_01 == 1 && $WK_SCENE_D27_SWITCH_02 == 1 && $WK_SCENE_D27_SWITCH_03 == 1 && $WK_SCENE_D27_SWITCH_04 == 1 THEN
+    _PLAINWIN_MSG_DOWN( msg_d27r0201_switch_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+  ENDIF
+
 EVENT_END
 
 /************************************************************/
 /*					バリア解除スイッチ（３）				*/
 /************************************************************/
 EVENT_START	ev_pos_d27r0201_switch_03
+  
+  //メッセージ：スイッチを踏んだ！
+  _PLAINWIN_MSG_DOWN( msg_d27r0201_switch_01 )
+  _MSGWIN_CLOSE()
   
   //ボタン踏んだ処理
   _HIDE_SHIP_BOW_BUTTON_OFF( 2 )
@@ -205,6 +231,13 @@ EVENT_START	ev_pos_d27r0201_switch_03
   $WK_SCENE_D27_SWITCH_03 = 1
   //=====================================
 
+  //メッセージ：バリアが解除された！
+  IF $WK_SCENE_D27_SWITCH_01 == 1 && $WK_SCENE_D27_SWITCH_02 == 1 && $WK_SCENE_D27_SWITCH_03 == 1 && $WK_SCENE_D27_SWITCH_04 == 1 THEN
+    _PLAINWIN_MSG_DOWN( msg_d27r0201_switch_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+  ENDIF
+
 EVENT_END
 
 /************************************************************/
@@ -212,14 +245,26 @@ EVENT_END
 /************************************************************/
 EVENT_START	ev_pos_d27r0201_switch_04
   
+  //メッセージ：スイッチを踏んだ！
+  _PLAINWIN_MSG_DOWN( msg_d27r0201_switch_01 )
+  _MSGWIN_CLOSE()
+  
   //ボタン踏んだ処理
   _HIDE_SHIP_BOW_BUTTON_OFF( 3 )
   //ゲート解除演出
   _HIDE_SHIP_BOW_GATE_OFF( 3 )
+    
   //=====================================
   //POS無効
   $WK_SCENE_D27_SWITCH_04 = 1
   //=====================================
+  
+  //メッセージ：バリアが解除された！
+  IF $WK_SCENE_D27_SWITCH_01 == 1 && $WK_SCENE_D27_SWITCH_02 == 1 && $WK_SCENE_D27_SWITCH_03 == 1 && $WK_SCENE_D27_SWITCH_04 == 1 THEN
+    _PLAINWIN_MSG_DOWN( msg_d27r0201_switch_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+  ENDIF
 
 EVENT_END
 

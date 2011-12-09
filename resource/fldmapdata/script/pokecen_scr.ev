@@ -29,6 +29,7 @@
   .include  "t04pc0101.h"
   .include  "t06pc0101.h"
   .include  "t07pc0101.h"
+  .include  "d26pc0101.h"
 
   .include  "oldd06r0101.h"
   .include  "oldd06r0101_def.h"
@@ -818,6 +819,9 @@ EVENT_START    ev_reserve_omoidelink_end_pc
   CASE 460 THEN
     //T07
     _BALLOONWIN_OBJMSG_POS( msg_pc_memory_01 , T07PC0101_BREEDERM_01 , POS_DEFAULT)
+  CASE 602 THEN
+    //D26
+    _BALLOONWIN_OBJMSG_POS( msg_pc_memory_01 , D26PC0101_BREEDERM_01 , POS_DEFAULT)
   ENDSWITCH
   _MSGWIN_CLOSE()
   

@@ -187,6 +187,7 @@ init_flags:
   _FLAG_SET(FV_C08_NINJA_01)  //ソウリュウシティ：ダークトリニティ（戦うやつ）
   _FLAG_SET(FV_C08_NINJA_02)  //ソウリュウシティ：ダークトリニティ（戦わないやつ）
   _FLAG_SET(FV_C08R0101_SWLEADER7_01) //シャガ家：シャガ
+  _FLAG_SET(FV_C08R0102_FOOTBALLM_02) //シャガ家：おろおろしてる人
 
   //H04R0301：ビレッジブリッジの民家のツリーズ
   _FLAG_SET( FV_H04R0301_FISING_01 )
@@ -195,6 +196,7 @@ init_flags:
   _FLAG_SET( FV_C14_SWLEADER8_01 )  //セイガイハシティ：シズイ
   _FLAG_SET( FV_C14_BOY4_02 )       //セイガイハシティ：カップル男（独り用）
   _FLAG_SET( FV_C14_KAODASI_01 )    //セイガイハシティ：カメラマン
+  _FLAG_SET( FV_C14_MAN3_01 ) //ペンションオーナー
 
   //R22
   _FLAG_SET( FV_R22_SWBOSS_01 ) //22番道路：アクロマ
@@ -573,7 +575,9 @@ ev_first_gameclear:
   _FLAG_RESET( SYS_FLAG_BGM_C08_PLAZMA )
   _FLAG_RESET( FV_C08_PEOPLE_01 )
   _FLAG_RESET( FV_C08R0101_SWLEADER7_01 )
+  _FLAG_RESET( FV_C08R0102_FOOTBALLM_01 )
   _FLAG_SET( FV_C08_SWLEADER7_01 )
+  _FLAG_SET( FV_C08R0102_FOOTBALLM_02 )
   _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_01, FALSE, FALSE )
 
   //古代の城のマップ変化
@@ -635,6 +639,9 @@ ev_first_gameclear:
   
   //R06R0201：ストッパー非表示
   _FLAG_SET( FV_R06R0201_STOPPER_01 )
+  
+  //C14：ペンションオーナー表示
+  _FLAG_RESET( FV_C14_MAN3_01 )
 
 _RET
 

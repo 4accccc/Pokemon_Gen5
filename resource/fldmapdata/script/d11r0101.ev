@@ -188,9 +188,11 @@ ev_d11r0101_pairend_01:
     _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swrival_03, PAIR_TRAINER_01, POS_DEFAULT )
     _MSGWIN_CLOSE()
     
+    _PAIR_PLAYER_FOLLOW_ON()  //連れ歩き追随開始
     //アニメ：主人公戻す
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
     _OBJ_ANIME_WAIT()
+    _PAIR_PLAYER_FOLLOW_OFF() //連れ歩き追随終了
   ENDIF
   }
 _RET
@@ -387,6 +389,10 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d )
   _OBJ_ANIME_WAIT()
   
+  //アーティ：いっちゃった
+  _BALLOONWIN_OBJMSG_POS( msg_d11r0101_swleader3_04, D11R0101_SWLEADER3_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
   //？？？：そこのあなた！
   _PLAINWIN_MSG_UP( msg_d11r0101_swboss_01 )
   _PLAINWIN_CLOSE()
@@ -503,10 +509,12 @@ EVENT_START		ev_pos_d11r0101_stopper_01
   _BALLOONWIN_OBJMSG_POS( msg_d11r0101_man2_01, D11R0101_MAN2_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
+  _PAIR_PLAYER_FOLLOW_ON()  //連れ歩き追随開始
   //アニメ：主人公戻す
   _OBJ_ANIME( D11R0101_MAN2_01, anm_staystep_r )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
   _OBJ_ANIME_WAIT()
+  _PAIR_PLAYER_FOLLOW_OFF() //連れ歩き追随終了
   
 EVENT_END
 

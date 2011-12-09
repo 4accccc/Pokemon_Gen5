@@ -107,55 +107,9 @@ EVENT_START   ev_pos_r11_poke6_01
   _AB_KEYWAIT_MARK()
   _GIZAPLAINWIN_CLOSE()
 
-  //戦闘開始
-  {
-    DEFINE_LOCAL flag
-    $flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
-    $flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
-    _WILD_BTL_SET_EX( MONSNO_647, 45, flag ) // Lv45 ビリジオン
-  }
-
-  _WILD_LOSE_CHECK( SCWK_ANSWER )
-  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
-
-    //==================================//
-    //ビリジオン非表示
-    _FLAG_SET( FV_R11_POKE6_01 )
-    //==================================//
-    _OBJ_DEL( R11_POKE6_01 )   //ビリジオンを消す
-
-    _WILD_WIN()
-  ELSE
-    _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
-  ENDIF
-
-  //ビリジオンを捕獲した？
-  _WILD_RETRY_CHECK( SCWK_ANSWER )
-  SWITCH $SCWK_ANSWER
-  CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
-    //==================================//
-    //ビリジオンを捕獲した
-    _FLAG_SET( FE_R11_POKE6_GET_01 )
-    //==================================//
-
-  CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN //勝利した場合、あるいは逃げた場合
-
-  ENDSWITCH
-
-  //ビリジオンを捕獲できなかった場合の分岐
-  IF FLAG_OFF( FE_R11_POKE6_GET_01 ) THEN
-
-    //システム：ポケモンは　どうろの　さきへ
-    _SYSWIN_MSG( msg_r11_poke6_02, POS_DOWN )
-    _SYSWIN_CLOSE()
-
-  ENDIF
-
   //==================================//
   //POS無効
   $WK_SCENE_R11_POKE6 = 1
-  //ビリジオン発見
-  _FLAG_SET( FE_R11_POKE6_MEET_01 )
   //==================================//
 
 EVENT_END
@@ -173,6 +127,13 @@ EVENT_START   ev_r11_poke6_01
   _VOICE_WAIT()
   _AB_KEYWAIT_MARK()
   _GIZAPLAINWIN_CLOSE()
+  
+  _CALL ev_poke6_btl_start
+
+EVENT_END
+
+
+ev_poke6_btl_start:
 
   //ビリジオンを見たことがあるか
   IF FLAG_OFF( FE_R11_POKE6_MEET_01 ) THEN
@@ -239,7 +200,7 @@ EVENT_START   ev_r11_poke6_01
 
   ENDIF
 
-EVENT_END
+_RET
 
 //--------------------------------------------------------------------
 //主人公：「！」振り向く

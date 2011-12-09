@@ -116,8 +116,17 @@ EVENT_START	ev_c05gym0201_startlift_01
 	//スイッチの下側から話しかけた場合はリフト起動
   // かつ ヤーコンリフトではない
 	IF $SCWK_ANSWER == DIR_UP && $LOCALWORK0 == 0 THEN
+	  
+	  _PLAYER_NAME( 0 )
+	  
+	  //スイッチSE
 		_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
-		_SE_WAIT()
+		
+		//スイッチを押した！
+  	_PLAINWIN_MSG_DOWN( msg_c05gym0201_swicth_01 )
+  	_SE_WAIT()
+    _AB_KEYWAIT_MARK()
+    _MSGWIN_CLOSE()
 
 	  //マップブラックアウト
     _MAP_FADE_BLACK_OUT_SLOW()

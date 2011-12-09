@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/26 23:31:44
+#save date:2011/12/07 16:27:23
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d10r0101.wms
 #SECTION START:OBJ_EVENT
@@ -212,7 +212,7 @@ FV_D10R0101_SWPLAZMAM_01
 #Event Script Name
 SCRID_D10R0101_SWPLAZMAM_02
 #Direction Type Number
-DIR_UP
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -367,7 +367,7 @@ FV_D10R0101_SWPLAZMAM_01
 #Event Script Name
 SCRID_D10R0101_SWPLAZMAM_01
 #Direction Type Number
-DIR_UP
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number

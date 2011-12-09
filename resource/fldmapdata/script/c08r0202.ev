@@ -25,6 +25,8 @@ _EVENT_DATA   ev_c08r0202_babyboy1_01
 _EVENT_DATA   ev_c08r0202_babyboy1_02
 _EVENT_DATA   ev_c08r0202_babygirl1_01
 _EVENT_DATA   ev_c08r0202_babygirl1_02
+_EVENT_DATA   ev_c08r0202_breederm_01
+_EVENT_DATA   ev_c08r0202_poke41_01
 _EVENT_DATA_END
 
 //変数
@@ -37,6 +39,8 @@ DEFINE_LOCAL LCWK_MSGID_04  //女の子02
 DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL LCW_POSX
 DEFINE_LOCAL LCW_POSZ
+//カメラ操作用
+DEFINE_LOCAL LCW_FRAME
 
 //サブウィン座標用変数
 DEFINE_LOCAL LCW_BABYBOY_01_POSX
@@ -123,41 +127,30 @@ ev_c08r0202_subwin_puiz_01:
 
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+  
+  //サブウィン表示位置設定
+  $LCW_BABYBOY_01_POSX = 13
+  $LCW_BABYBOY_02_POSX = 14
+  $LCW_BABYGIRL_01_POSX = 6
+  $LCW_BABYGIRL_02_POSX = 19
+  
+  $LCW_BABYBOY_01_POSZ = 6
+  $LCW_BABYBOY_02_POSZ = 15
+  $LCW_BABYGIRL_01_POSZ = 10
+  $LCW_BABYGIRL_02_POSZ = 10
+  
+  //カメラ操作
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
 
-  //主人公の座標でサブウィンの表示位置を出す
-  IF $LCW_POSX >= 9 THEN
-    $LCW_BABYBOY_01_POSX = 9
-    $LCW_BABYBOY_02_POSX = 9
-    $LCW_BABYGIRL_01_POSX = 5
-    $LCW_BABYGIRL_02_POSX = 16
-  ELSIF $LCW_POSX <= 9 THEN
-    $LCW_BABYBOY_01_POSX = 9
-    $LCW_BABYBOY_02_POSX = 9
-    $LCW_BABYGIRL_01_POSX = 4
-    $LCW_BABYGIRL_02_POSX = 18
+  //座標によってカメラ移動時間変更
+  IF $LCW_POSZ >= 10 THEN
+    _CAMERA_MOVE( 9688,0,970752,634880,0,667648,40 )
   ELSE
-    $LCW_BABYBOY_01_POSX = 9
-    $LCW_BABYBOY_02_POSX = 9
-    $LCW_BABYGIRL_01_POSX = 5
-    $LCW_BABYGIRL_02_POSX = 13
+    _CAMERA_MOVE( 9688,0,970752,634880,0,667648,16 )
   ENDIF
 
- IF $LCW_POSZ >= 11 THEN
-    $LCW_BABYBOY_01_POSZ = 5
-    $LCW_BABYBOY_02_POSZ = 13
-    $LCW_BABYGIRL_01_POSZ = 9
-    $LCW_BABYGIRL_02_POSZ = 9
- ELSIF $LCW_POSZ <= 11 THEN
-    $LCW_BABYBOY_01_POSZ = 7
-    $LCW_BABYBOY_02_POSZ = 15
-    $LCW_BABYGIRL_01_POSZ = 10
-    $LCW_BABYGIRL_02_POSZ = 10
-  ELSE
-    $LCW_BABYBOY_01_POSZ = 9
-    $LCW_BABYBOY_02_POSZ = 14
-    $LCW_BABYGIRL_01_POSZ = 9
-    $LCW_BABYGIRL_02_POSZ = 9
-  ENDIF
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち 
 
   //乱数で0～4幅で次の台詞を決める
   _GET_RND( LOCALWORK1, 4 )
@@ -205,7 +198,7 @@ ev_c08r0202_subwin_puiz_01:
 
   //乱数で0～3幅でセリフの順番を決める
   _GET_RND( LOCALWORK2, 3 )
-
+  
   //Ａパターン
   IF $LOCALWORK2 == 0 THEN
 
@@ -240,6 +233,18 @@ ev_c08r0202_subwin_puiz_01:
   _SUBWIN_CLOSE( 4 )
 
   _TIME_WAIT( 16 )  //間
+  
+  //座標によってカメラ移動時間変更
+  //自機にカメラを戻す
+  IF $LCW_POSZ >= 10 THEN
+    _CAMERA_DEF_MOVE (40)
+  ELSE
+    _CAMERA_DEF_MOVE (16)
+  ENDIF
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
 
 _RET
 
@@ -514,6 +519,20 @@ EVENT_START   ev_c08r0202_babygirl1_02
 
   ENDIF
 
+EVENT_END
+
+/**************************************************************/
+/*   C08R0101：BREEDERM一言メッセージ                                */
+/**************************************************************/
+EVENT_START   ev_c08r0202_breederm_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0202_breederm_01 )
+EVENT_END
+
+/**************************************************************/
+/*   C08R0101：デンチュラ一言メッセージ                                */
+/**************************************************************/
+EVENT_START   ev_c08r0202_poke41_01
+  _EASY_TALK_POKEVOICE( MONSNO_578, msg_c08r0202_poke41_01 )
 EVENT_END
 
 

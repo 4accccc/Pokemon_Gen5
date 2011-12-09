@@ -12,6 +12,7 @@
 #define C08R0102_FOOTBALLM_01              0
 #define C08R0102_WOMAN2_01                 1
 #define C08R0102_VETERANW_01               2
+#define C08R0102_FOOTBALLM_02              3
 
 #endif //ZONE_C08R0102_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c08r0102.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -13,6 +13,8 @@
 #define C08R0202_BABYGIRL1_02              1
 #define C08R0202_BABYBOY1_02               2
 #define C08R0202_BABYGIRL1_01              3
+#define C08R0202_BREEDERM_01               4
+#define C08R0202_POKE41_01                 5
 
 #endif //ZONE_C08R0202_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c08r0202.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

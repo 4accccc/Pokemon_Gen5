@@ -65,7 +65,7 @@ EVENT_START   ev_c08pc0101_lady_01
     IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
 
       //マダム：のこされた　じかんを（バージョンによってセリフが異なる）
-      _BALLOONWIN_OBJMSG_WB( msg_c08pc0101_lady_01w, msg_c08pc0101_lady_01b_02, C08PC0101_LADY_01, POS_DEFAULT )
+      _BALLOONWIN_OBJMSG_WB( msg_c08pc0101_lady_01w, msg_c08pc0101_lady_01b, C08PC0101_LADY_01, POS_DEFAULT )
 
     //ゲームクリア後
     ELSE

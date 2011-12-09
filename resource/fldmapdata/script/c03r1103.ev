@@ -274,7 +274,7 @@ _TALK_OBJ_START()
 				//ŽèŽ‚¿‚ª‚¢‚Á‚Ï‚¢‚Ìê‡
 				IF $LWK_COUNT == 6 THEN
 				
-					_BALLOONWIN_TALKOBJ_MSG( msg_c03r1103_girl3_13 )
+					_BALLOONWIN_TALKOBJ_MSG( msg_c03r1103_girl3_12 )
 					_LAST_KEYWAIT()
 					_MSGWIN_CLOSE()
 				

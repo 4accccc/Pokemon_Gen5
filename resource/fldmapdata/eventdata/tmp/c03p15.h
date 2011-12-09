@@ -13,6 +13,8 @@
 #define C03P15_PILOT_01                    0
 #define C03P15_SWRIVAL_01                  1
 #define FLD_ITEM_27                        2
+#define C03P15_GENTLEMAN_01                3
+#define C03P15_WOMAN1_01                   4
 
 #endif //ZONE_C03P15_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03p15.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -131,17 +131,10 @@ EVENT_START ev_c14r0501_lady_01
     _BMPMENU_MAKE_LIST( msg_c14r0501_select_02, 1 ) //やめる
     _BMPMENU_START()
     
-    //はい
-    IF $LWK_WALK_ANSWER == 0 THEN
+    //いいえ
+    IF $LWK_WALK_ANSWER == 1 THEN
       
-      _BALLOONWIN_OBJMSG_POS( msg_c14r0501_lady_07,C14R0501_LADY_01, POS_DEFAULT )
-      _LAST_KEYWAIT()
-      _MSGWIN_CLOSE()
-    
-    //やめる・キャンセル
-    ELSE
-      
-      //LADY：またきがむいたら
+       //LADY：またきがむいたら
       _BALLOONWIN_OBJMSG_POS( msg_c14r0501_lady_09,C14R0501_LADY_01, POS_DEFAULT )
       _MSGWIN_CLOSE()
       
@@ -175,7 +168,12 @@ EVENT_START ev_c14r0501_lady_01
       //LOCALFLAGをイベント起動してない状態に変更
       _FLAG_RESET( FH_15 )
       //========================================//
-    
+      
+    //つづける・キャンセル
+    ELSE
+        _BALLOONWIN_OBJMSG_POS( msg_c14r0501_lady_07,C14R0501_LADY_01, POS_DEFAULT )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
     ENDIF
   
   //今日までイベントを終えていない（イベント発生中・条件達成） 
@@ -237,6 +235,8 @@ EVENT_START ev_c14r0501_lady_01
     $LOCALWORK15 = 0
     //今日のお散歩終了フラグをセット
     _FLAG_SET( TMFLG_C14R0501_POKEWALK )
+    //お散歩クリア状態にセット
+    _FLAG_SET( TMFLG_C14R0501_WALK_CLEAR )
     //LOCALFLAGをイベント起動してない状態に変更
     _FLAG_RESET( FH_15 )
     //========================================//
@@ -269,8 +269,16 @@ EVENT_START ev_c14r0501_poke45_01
   
 
   //連れ歩きしていない
-  IF FLAG_OFF( FH_15 ) THEN
+  IF FLAG_OFF(SYS_FLAG_PAIR) && FLAG_OFF( TMFLG_C14R0501_POKEWALK ) THEN
     _EASY_TALK_POKEVOICE( MONSNO_630, msg_c14r0501_poke46_01 )
+  
+  //連れ歩き後達成
+  ELSIF FLAG_ON(TMFLG_C14R0501_POKEWALK) && FLAG_ON( TMFLG_C14R0501_WALK_CLEAR ) THEN
+    _EASY_TALK_POKEVOICE( MONSNO_630, msg_c14r0501_poke46_03 )
+  
+  //連れ歩き後未達成
+  ELSIF FLAG_ON(TMFLG_C14R0501_POKEWALK) && FLAG_OFF( TMFLG_C14R0501_WALK_CLEAR ) THEN
+    _EASY_TALK_POKEVOICE( MONSNO_630, msg_c14r0501_poke46_02 )
     
   //連れ歩き中
   ELSE
@@ -429,12 +437,14 @@ EVENT_START ev_pos_c14r0501_stopper_01
   _BALLOONWIN_OBJMSG_POS( msg_c14r0501_lady_11,C14R0501_LADY_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
+  _PAIR_PLAYER_FOLLOW_ON()  //連れ歩き追随開始
   //アニメ：LADYもとの位置に・主人公戻る
   _OBJ_ANIME_AUTO( C14R0501_LADY_01, 6, 3, FORCE_TYPE_NPC, 8, DIR_LR)
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_u)
   _OBJ_ANIME_WAIT()
   _OBJ_ANIME( C14R0501_LADY_01,anm_staystep_d )
   _OBJ_ANIME_WAIT()
+  _PAIR_PLAYER_FOLLOW_OFF() //連れ歩き追随終了
   
 EVENT_END
 

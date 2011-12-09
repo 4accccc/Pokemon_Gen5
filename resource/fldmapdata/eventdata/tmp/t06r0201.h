@@ -12,6 +12,7 @@
 #define T06R0201_BABYBOY1_01               0
 #define T06R0201_WOMAN3_01                 1
 #define T06R0201_POKE17_01                 2
+#define T06R0201_OLDMAN1_01                3
 
 #endif //ZONE_T06R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t06r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

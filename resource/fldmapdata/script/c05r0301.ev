@@ -154,7 +154,7 @@ ev_c05r0301_waza_check:
     IF $LWK_WAZA_RESURT == 6 THEN
 
       //（わざ名）というわざを覚えたポケモンがみたいわ！
-      _BALLOONWIN_OBJMSG( msg_c05r0301_girl4_03, C05R0301_GIRL4_01 )
+      _BALLOONWIN_OBJMSG( msg_c05r0301_girl4_05, C05R0301_GIRL4_01 )
       _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
 
@@ -203,7 +203,7 @@ ev_c05r0301_waza_check:
     IF $LWK_WAZA_RESURT == 6 THEN
 
       //（わざ名）というわざを覚えたポケモンがみたいわ！
-      _BALLOONWIN_OBJMSG( msg_c05r0301_girl4_03, C05R0301_GIRL4_01 )
+      _BALLOONWIN_OBJMSG( msg_c05r0301_girl4_05, C05R0301_GIRL4_01 )
       _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
 

@@ -496,6 +496,10 @@
 #define FE_D08R0901_BOSS_TALK              480 /* 0x01e0 リュウラセンの塔・最上階：Ｎイベントフラグ */
 #define FE_D10R0501_KUSABI_GET             481 /* 0x01e1 ジャイアントホール：いでんしのくさび入手フラグ */
 #define FE_D22R0101_BREEEDERM_01           482 /* 0x01e2 サンギぼくじょう：クリア後会話フラグ */
+#define FE_D10R0401_POKE10_MEET            483 /* 0x01e3 ジャイアントホール：クリア後キュレム遭遇フラグ */
+#define FE_C04WHEEL_N_MEET                 484 /* 0x01e4 c04p01：観覧車N遭遇フラグ */
+#define FE_R07R0301_ZUKAN_LOOK             485 /* 0x01e5 r07r0301：ランドロス'sのずかん登録イベント */
+#define FE_N01R0502_N_RETRY_TALK           486 /* 0x01e6 N城：N再会話フラグ */
 
 #define FE_AREA_END                        599 /* 0x0257  */
 
@@ -912,6 +916,10 @@
 #define FV_D11R0101_STOPPER_01            1005 /* 0x03ed ヒウン下水道：連れ歩き時ストッパー配置 */
 #define FV_C06GYM0101_LEADER6_01          1006 /* 0x03ee ひこうジム：フウロ */
 #define FV_C09P02_ENDING                  1007 /* 0x03ef エンディング用 */
+#define FV_C14_MAN3_01                    1008 /* 0x03f0 セイガイハシティ：ペンションの主 */
+#define FV_C08R0102_FOOTBALLM_01          1009 /* 0x03f1 ソウリュウシティ民家：シャガ宅２F */
+#define FV_C08R0102_FOOTBALLM_02          1010 /* 0x03f2 ソウリュウシティ民家：シャガ宅２F */
+#define FV_D10R0501_SWLEADER1_01          1011 /* 0x03f3 ジャイアントホール最深部：ベルとチェレン */
 
 #define FV_AREA_END                       1099 /* 0x044b  */
 
@@ -2302,13 +2310,14 @@
 #define SYS_FLAG_ARRIVE_D13               2543 /* 0x09ef 到着フラグ：D13 */
 #define SYS_FLAG_ARRIVE_D29R0101          2544 /* 0x09f0 到着フラグ：D29R0101 */
 #define SYS_FLAG_BGM_C16_PARADE           2545 /* 0x09f1 BGM変更フラグ：ジョインアベニュー */
-#define SYS_FLAG_BGM_C08_PLAZMA           2546 /* 0x09f2 BGM変更フラグ：氷漬けプラズマ団 */
+#define SYS_FLAG_BGM_C08_PLAZMA           2546 /* 0x09f2 BGM変更フラグ：氷漬けソウリュウシティ */
 #define SYS_FLAG_POKEWOOD_DISABLE_REC     2547 /* 0x09f3 ポケウッド：撮影を一時的に行わない状態 */
 #define SYS_FLAG_FES_OPEN_20              2548 /* 0x09f4 フェスミッションのオープンフラグその20 */
 #define SYS_FLAG_FES_OPEN_21              2549 /* 0x09f5 フェスミッションのオープンフラグその21 */
 #define SYS_FLAG_FES_OPEN_22              2550 /* 0x09f6 フェスミッションのオープンフラグその22 */
 #define SYS_FLAG_FES_OPEN_23              2551 /* 0x09f7 フェスミッションのオープンフラグその23 */
 #define SYS_FLAG_ENDING                   2552 /* 0x09f8 エンディングスクリプトの初期化フラグ */
+#define SYS_FLAG_BGM_C08_SILENT           2553 /* 0x09f9 BGM変更フラグ：無音ソウリュウシティ */
 
 #define SYS_FLAG_AREA_END                 2639 /* 0x0a4f  */
 
@@ -2468,6 +2477,7 @@
 #define TMFLG_C14_KAODASI_01              2780 /* 0x0adc セイガイハシティ：顔出し看板イベント制御（１日１回） */
 #define TMFLG_D11R0401_EXPERIMENT         2781 /* 0x0add ヒウン下水道：毒実験イベント・アイテム入手フラグ（１日1回） */
 #define TMFLG_D11R0501_EXPERIMENT         2782 /* 0x0ade ヒウン下水道：毒実験イベント・アイテム入手フラグ（１日１回） */
+#define TMFLG_C14R0501_WALK_CLEAR         2783 /* 0x0adf セイガイハシティ民家：おさんぽクリア */
 
 #define TMFLG_AREA_END                    2819 /* 0x0b03  */
 

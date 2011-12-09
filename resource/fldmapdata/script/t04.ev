@@ -38,6 +38,7 @@ _EVENT_DATA		ev_t04_sage7_01
 _EVENT_DATA		ev_pos_t04_localtvt_01
 _EVENT_DATA		ev_t04_workman2_01
 _EVENT_DATA		ev_bg_t04_sign4_01
+_EVENT_DATA		ev_t04_trainerw_01
 _EVENT_DATA_END
 
 //òbÇµÇ©ÇØÇΩï˚å¸éÊìæïœêî
@@ -473,6 +474,13 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_t04_workman2_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04_workman2_01 )
+EVENT_END
+
+/**************************************************************/
+/*			òbÇµÇ©ÇØÅFtrainerw									  */
+/**************************************************************/
+EVENT_START		ev_t04_trainerw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04_trainerw_01 )
 EVENT_END
 
 /**************************************************************/

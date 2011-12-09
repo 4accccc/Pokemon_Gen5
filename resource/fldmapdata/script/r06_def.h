@@ -12,5 +12,7 @@
 #define SCRID_POS_R06_LEGEND_MEET_01 (5)
 #define SCRID_R06_OLDMAN1_01 (6)
 #define SCRID_R06_SAGE6_01 (7)
+#define SCRID_R06_WOMAN2_01 (8)
+#define SCRID_R06_MOUNTAIN_01 (9)
 
 #endif //_R06_DEF_H_

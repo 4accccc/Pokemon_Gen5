@@ -30,6 +30,9 @@ _EVENT_DATA		ev_pos_d02r0101_swleader1_02
 _EVENT_DATA		ev_d02r0101_swleader1_03
 _EVENT_DATA		ev_d02r0101_girl4_01
 _EVENT_DATA		ev_d02r0101_man2_01
+_EVENT_DATA		ev_d02r0101_man1_01
+_EVENT_DATA		ev_d02r0101_mountain_01
+_EVENT_DATA		ev_d02r0101_assistantw_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -304,9 +307,12 @@ ev_d02r0101_pairend_01:
     _BALLOONWIN_OBJMSG_POS( msg_d02r0101_swleader1_03, PAIR_TRAINER_01, POS_DEFAULT )
     _MSGWIN_CLOSE()
     
+    _PAIR_PLAYER_FOLLOW_ON()  //連れ歩き追随開始
     //アニメ：主人公戻す
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
     _OBJ_ANIME_WAIT()
+    _PAIR_PLAYER_FOLLOW_OFF() //連れ歩き追随終了
+    
   ENDIF
   }
 _RET
@@ -325,6 +331,30 @@ EVENT_START   ev_d02r0101_man2_01
   _OBJ_ANIME_WAIT()
   
 EVENT_END
+
+/**************************************************************/
+/* 			man1：話しかけ			  */
+/**************************************************************/
+EVENT_START		ev_d02r0101_man1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d02r0101_sportsm_01 )
+EVENT_END
+
+
+/**************************************************************/
+/* 			mountain：話しかけ			  */
+/**************************************************************/
+EVENT_START		ev_d02r0101_mountain_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d02r0101_mountain_01 )
+EVENT_END
+
+
+/**************************************************************/
+/* 			assistantw：話しかけ			  */
+/**************************************************************/
+EVENT_START		ev_d02r0101_assistantw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d02r0101_assistantw_01 )
+EVENT_END
+
 
 /**************************************************************/
 /*	D02R0101	リーフィア進化用の石						  */

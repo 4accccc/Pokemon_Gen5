@@ -28,6 +28,7 @@ _EVENT_DATA ev_bg_r07_board_02
 _EVENT_DATA ev_bg_r07_board_03
 _EVENT_DATA ev_zone_r07
 _EVENT_DATA	ev_pos_r07_livecaster
+_EVENT_DATA	ev_r07_fighterw_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -58,6 +59,13 @@ EVENT_END
 EVENT_START  ev_bg_r07_board_03
 	_EASY_BGWIN_MSG(msg_r07_sign3_01 , TYPE_INFO)
   _FLAG_SET( MDL_FLAG_BOARD_R07_03 )
+EVENT_END
+
+/**************************************************************/
+/*  òbÇµÇ©ÇØÅFFIGHTERW */
+/**************************************************************/
+EVENT_START   ev_r07_fighterw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r07_fighterw1_01 )
 EVENT_END
 
 /**************************************************************/

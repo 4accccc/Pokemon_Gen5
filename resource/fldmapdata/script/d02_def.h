@@ -7,5 +7,7 @@
 //スクリプトデータID定義
 #define SCRID_BG_D02_ROCK_01 (1)
 #define SCRID_BG_D02_BOARD_01 (2)
+#define SCRID_D02_FIGHTERM_01 (3)
+#define SCRID_D02_GIRL1_01 (4)
 
 #endif //_D02_DEF_H_

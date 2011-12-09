@@ -318,24 +318,33 @@ EVENT_START   ev_t06r0101_champion_01
       _MSGWIN_CLOSE()
 
     ENDIF
-
-  //クリア前
+  
   ELSE
-
+{
+    
     _GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
-
+    
+    //バッジ数カウント
+     DEFINE_LOCAL  LCW_BADGE_COUNT
+    //バッジ数
+    _GET_BADGE_COUNT( LCW_BADGE_COUNT )
+    
     //ヒオウギジムバッジを入手していない
     IF $SCWK_TEMP0 == 0 THEN
       //アデク：それが　たびの　よさ　だな
       _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06r0101_champion_11 )
-
-    //ジムバッジ入手後
+    
+    //タチワキシティバッジ入手後
+    ELSIF $LCW_BADGE_COUNT > 1 THEN
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06r0101_champion_13 )
+      
+    //ヒオウギジムバッジ入手後
     ELSE
       //アデク：ちからを　ひきだせたけっかだな
       _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t06r0101_champion_12 )
 
     ENDIF
-
+}
   ENDIF
 
 EVENT_END

@@ -429,6 +429,10 @@ EVENT_START   ev_reserve_c08_plazma_comming_01
   _FLAG_RESET( FV_C08_SWSAGE7_01 )
   //C08ふつうの人非表示
   _FLAG_SET( FV_C08_PEOPLE_01 )
+  //c08r0101ふつうの人一時非表示（クリア時復帰）
+  _FLAG_SET( FV_C08R0102_FOOTBALLM_01 )
+  //c08r0101オロオロしてる人一時表示
+  _FLAG_RESET( FV_C08R0102_FOOTBALLM_02 )
   //C08マップ破壊状態に差し替え
   _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_01, TRUE, TRUE )
   //========================================//
@@ -470,10 +474,10 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
   _AB_KEYWAIT_MARK()
   _MSGWIN_CLOSE()
   
-  //アニメ：オノノクス技を出した的な演出（移動＋カメラゆれ＋破壊音再生）
+  //アニメ：オノノクス技を出した的な演出（移動＋カメラゆれ＋ドラゴンテール音再生）
   _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 419, 164, FORCE_TYPE_ALL, 8, DIR_UD)
   _TIME_WAIT(16)
-  _SE_PLAY( SEQ_SE_KOUKA_H )
+  _SE_PLAY( SEQ_SE_W121_01 )
   _SHAKE_CAMERA(0,1,3,6,0,0,0,0)
   _OBJ_ANIME_WAIT()
   _SE_WAIT()

@@ -467,7 +467,14 @@ EVENT_END
 /*					話しかけ：レパルダス				*/
 /************************************************************/
 EVENT_START	ev_d27r0601_poke32_01
-  _EASY_TALK_POKEVOICE( MONSNO_547, msg_d27r0601_poke32_03_01 )
+  //ダークトリニティ戦終了前
+  IF $WK_SCENE_D27R0601_SWSAGE1_01 < 4 THEN
+    _EASY_TALK_POKEVOICE( MONSNO_547, msg_d27r0601_poke32_03_01 )
+    
+  //ダークトリニティ戦終了後
+  ELSE
+    _EASY_TALK_POKEVOICE( MONSNO_547, msg_d27r0601_poke_32 )
+  ENDIF
 EVENT_END
 
 

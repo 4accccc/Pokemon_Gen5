@@ -15,6 +15,7 @@
 #define D26PC0101_SHOPM_02                 3
 #define D26PC0101_VETERANM_01              4
 #define D26PC0101_TRAINERW_01              5
+#define D26PC0101_BREEDERM_01              6
 
 #endif //ZONE_D26PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d26pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

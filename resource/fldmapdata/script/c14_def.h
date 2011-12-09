@@ -24,5 +24,6 @@
 #define SCRID_BG_C14_BOARD_02 (17)
 #define SCRID_BG_C14_BOARD_03 (18)
 #define SCRID_C14_FIGHTERM_02 (19)
+#define SCRID_C14_MAN3_01 (20)
 
 #endif //_C14_DEF_H_

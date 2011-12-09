@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/28 19:26:52
+#save date:2011/12/07 17:39:01
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c14.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\c14.wms
 #hold event type:
 1
 #hold event number:
-15
+16
 #event number: 0
 #type
 1
@@ -475,6 +475,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -168 -56 -184
+#event number: 15
+#type
+1
+#ID name
+C14_MAN3_01
+#OBJ CODE Number
+MAN3
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_C14_MAN3_01
+#Event Script Name
+SCRID_C14_MAN3_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 -56 56
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -848,7 +879,7 @@ EVENTDATA_POSTYPE_GRID
 #position
 88 -64 -488
 #size
-1 1
+1 2
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

@@ -88,6 +88,9 @@ EVENT_START   ev_pos_c03r0601_swbell_01
   _SE_WAIT()
 
   _OBJ_ADD( C03R0601_SWBELL_01 )  //ベル表示
+  
+  //イベント曲再生
+  _START_EVENT_BGM( SEQ_BGM_E_BERU )
 
   //ベル：おうい（主人公の性別でセリフが異なる）
   _BALLOONWIN_OBJMSG_MF( msg_c03r0601_swbell_01, msg_c03r0601_swbell_02, C03R0601_SWBELL_01, POS_DEFAULT )
@@ -122,6 +125,9 @@ EVENT_START   ev_pos_c03r0601_swbell_01
   //階段SE
   _SE_PLAY( SEQ_SE_KAIDAN ) 
   _SE_WAIT()
+  
+  //イベント曲終了
+  _END_EVENT_BGM()
 
   //========================================//
   //ベルを非表示

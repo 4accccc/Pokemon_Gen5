@@ -275,9 +275,12 @@ EVENT_START		ev_pos_c05_hakaim_01
   _TIME_WAIT( 28 )
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_backstep )
   _TIME_WAIT( 20 )
+  //SE再生
+  _SE_PLAY( SEQ_SE_W001_01 )
   _OBJ_ANIME( C05_SWPLAZMAM_01 , anm_swplazmam_backstep )
   _OBJ_ANIME( C05_HAKAIM_01,anm_staystep_u )
   _OBJ_ANIME_WAIT()
+  _SE_WAIT()
   
   //アニメ：主人公振り向き
   _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_l )

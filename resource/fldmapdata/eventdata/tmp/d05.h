@@ -30,6 +30,7 @@
 #define D05_BADMAN_01                     15
 #define D05_VETERANW_01                   16
 #define D05_BACKPACKERW_01                17
+#define D05_WORKMAN1_02                   18
 
 #endif //ZONE_D05_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d05.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

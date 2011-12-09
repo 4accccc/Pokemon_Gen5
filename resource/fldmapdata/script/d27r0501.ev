@@ -82,8 +82,16 @@ EVENT_START	ev_scene_d27r0501_swsage7_01
   _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 12, 17, FORCE_TYPE_NPC, 8, DIR_UD)
   _OBJ_ANIME_WAIT()
   
-  //イベント曲再生
-  //_START_TEMP_EVENT_BGM( SEQ_BGM_E_7_SAGE )
+  //カメラ操作　ベル追従
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_MOVE( 9688,0,643072,819200,0,1032192,56 )
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  
+  _TIME_WAIT(32)
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (20)
   
   //七賢人動作モデル生成
   _OBJ_ADD( D27R0501_SWSAGE7_01 )
@@ -94,6 +102,14 @@ EVENT_START	ev_scene_d27r0501_swsage7_01
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
   _OBJ_ANIME_WAIT()
   
+  //イベント曲再生
+  _START_TEMP_EVENT_BGM( SEQ_BGM_E_7_SAGE )
+  
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
+  
   //ヴィオ：そのポケモンは……
   _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_01 , D27R0501_SWSAGE7_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
@@ -101,6 +117,9 @@ EVENT_START	ev_scene_d27r0501_swsage7_01
   //ヴィオ：キュレム！
   _GIZAWIN_OBJMSG_POS( msg_d27r0101_sage7_02_02 , D27R0501_SWSAGE7_01, POS_DEFAULT )
   _GIZAWIN_CLOSE()
+  
+  //ヴィオ：ソウリュウに
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_03 , D27R0501_SWSAGE7_01 ,POS_DEFAULT )
   
   //ヴィオ：さて……
   _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_04 , D27R0501_SWSAGE7_01 ,POS_DEFAULT )
@@ -153,6 +172,8 @@ EVENT_START	ev_scene_d27r0501_swsage7_01
   
   //アニメ：ライバル下を見る
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swrival_anime )
   _OBJ_ANIME_WAIT()
   
   //ライバル：きまってるだろ！
@@ -363,4 +384,10 @@ _ANIME_LABEL	anm_common_gyoe
 _ANIME_LABEL	anm_common_hatena
 	_ANIME_DATA	AC_MARK_HATENA,1
 	_ANIME_DATA	ACMD_END,0
-	
+
+//--------------------------------------------------------------------
+//	☆共通処理：ライバル芝居
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swrival_anime
+	_ANIME_DATA	AC_SWRIVAL_ACT0,1
+	_ANIME_DATA	ACMD_END,0

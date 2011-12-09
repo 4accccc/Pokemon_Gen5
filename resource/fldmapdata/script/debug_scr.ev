@@ -619,10 +619,16 @@ EVENT_START   ev_debug_mizuguchi
 		    _FLAG_RESET(FV_C08_SWLEADER7_01)
 		    _FLAG_RESET(FV_C08_SWSAGE7_01)
 		    _FLAG_RESET(FV_C08_SWPLAZMA_01)
+		    _FLAG_SET( FV_C08_NINJA_01 )
+        _FLAG_SET( FV_C08_NINJA_02 )
 		    _FLAG_SET(FV_C08_PEOPLE_01)  //ソウリュウシティ：一般市民
 		    _FLAG_SET( FE_C08_PLAZMA_COME )
 		    _FLAG_SET( SYS_FLAG_BGM_C08_PLAZMA )
 		    _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_01, TRUE, TRUE )
+		    
+		    //マップ遷移
+        _MAP_CHANGE( ZONE_ID_C08, 405, 147, DIR_UP )
+		    
 		ELSIF $SCWK_TEMP2 == 6 THEN
 		   //C08初期化
 		   //C08アイリス非表示
@@ -879,6 +885,18 @@ EVENT_START   ev_debug_mizuguchi
       _FLAG_SET( FV_R06_OLDMAN1_01 )
       _MAP_CHANGE( ZONE_ID_R06, 103, 366, DIR_UP )
       
+    ELSIF $SCWK_TEMP2 == 21 THEN
+      
+      /*
+      //下水道前イベント開始
+      //C03P07表示
+      _FLAG_RESET( FV_C03P17_SWCHAMPION_01 )
+      //C03P17_SCENE_CHANGE有効
+      $WK_SCENE_C03P17 = 1
+      */
+      
+      //R20プラズマ団イベント開始
+      _FLAG_RESET( FV_R20_SWPLAZMA_01 )
       /*
       //牧場イベント最後の
       $WK_SCENE_D22R0101 = 4
@@ -887,8 +905,19 @@ EVENT_START   ev_debug_mizuguchi
       _FLAG_RESET(FV_D22R0101_SWPLAZMA_01)
       _MAP_CHANGE( ZONE_ID_D22, 142, 631, DIR_UP )
       */
-    ELSIF $SCWK_TEMP2 == 21 THEN
-    
+      
+      /*
+      //D27戦闘中の状況確認用
+       $WK_SCENE_D27R0101_FIRST_01 = 3
+      //乗船1回目の人物を全て表示に
+      _FLAG_RESET(FV_D27R0101_SWRIVAL_01)
+      _FLAG_RESET(FV_D27R0101_SWPLAZMA_01)
+      _FLAG_RESET(FV_D27R0101_SWLEADER1_01)
+      _FLAG_SET(FV_D27R0101_SWSAGE7_01)
+      _FLAG_SET(FV_D27R0101_NINJA_01)
+      */
+      
+      /*
       //R27R0601イベント初期化
       _FLAG_RESET( FV_D27R0601_SWSAGE1_01 )
       _FLAG_SET( FV_D27R0601_NINJA_01 )
@@ -897,6 +926,7 @@ EVENT_START   ev_debug_mizuguchi
       $WK_SCENE_D27R0601_SWSAGE1_01 = 1
       //D27R0701 STOPPER無効
       $WK_SCENE_D27R0601_STOPPER_01 = 0
+      */
       
       /*
       //D27バリア解説イベント起動
@@ -930,19 +960,11 @@ EVENT_START   ev_debug_mizuguchi
       */
       
       /*
-      //C08ダークトリニティ（１）（２）表示
+      //C08ダークトリニティ（１）表示
       _FLAG_RESET( FV_C08_NINJA_01 )
       //C08：ダークトリニティ戦起動
       $WK_SCENE_C08_NINJA = 1
       $WK_SCENE_C08_SWPLAZMA = 6
-      */
-      
-      /*
-      //C08R0101伝説解説SCENE_CHANGEイベント起動
-      $WK_SCENE_C08R0101 = 1
-      //C08R0101シャガ表示
-      _FLAG_RESET( FV_C08R0101_SWLEADER7_01 )
-      _MAP_CHANGE( ZONE_ID_C08, 418, 162, DIR_LEFT )
       */
       
       /*
@@ -980,12 +1002,22 @@ EVENT_START   ev_debug_mizuguchi
       */
       
     ELSIF $SCWK_TEMP2 == 22 THEN
+    
+      /*
+      //C08R0101伝説解説SCENE_CHANGEイベント起動
+      $WK_SCENE_C08R0101 = 1
+      //C08R0101シャガ表示
+      _FLAG_RESET( FV_C08R0101_SWLEADER7_01 )
+      _MAP_CHANGE( ZONE_ID_C08, 418, 162, DIR_LEFT )
+      */
       
+      /*
       //はじまりの場所イベント二人目
       $WK_SCENE_C03P19 = 1
       _TRAINER_FLAG_SET( TRID_HEADS_11 )
       _TRAINER_FLAG_RESET( TRID_DANCER_08 )
       _TRAINER_FLAG_RESET( TRID_GUITARW_04 )
+      */
       
       /*
       //W21開始イベント
@@ -999,11 +1031,13 @@ EVENT_START   ev_debug_mizuguchi
     
     ELSIF $SCWK_TEMP2 == 23 THEN
       
+      /*
       //はじまりの場所イベント三人目
       $WK_SCENE_C03P19 = 2
       _TRAINER_FLAG_SET( TRID_HEADS_11 )
       _TRAINER_FLAG_SET( TRID_DANCER_08 )
       _TRAINER_FLAG_RESET( TRID_GUITARW_04 )
+      */
       
       /*
       //W21終了イベント

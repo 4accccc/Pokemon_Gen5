@@ -151,7 +151,7 @@ EVENT_START   ev_r18_item_01
   _OBJ_DEL( R18_ITEM_01 )
 
   //アイテム（かざんのおきいし）入手
-  _ITEM_EVENT_FIELD_KEYWAIT( ITEM_KAZANNOOKIISI, 1 ) 
+  _ITEM_EVENT_FIELD( ITEM_KAZANNOOKIISI, 1 ) 
 
   //========================================//
   //モンスターボール非表示

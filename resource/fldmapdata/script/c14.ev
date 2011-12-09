@@ -41,6 +41,7 @@ _EVENT_DATA    ev_bg_c14_board_01
 _EVENT_DATA    ev_bg_c14_board_02
 _EVENT_DATA    ev_bg_c14_board_03
 _EVENT_DATA    ev_c14_fighterm_02
+_EVENT_DATA    ev_c14_man3_01
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -419,7 +420,7 @@ EVENT_START   ev_c14_boy4_02
     
   //2回目以降
   ELSE
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14_mission_add_01 )
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14_boy4_02 )
   ENDIF
 
 EVENT_END
@@ -725,6 +726,13 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c14_fighterm_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14_fighterm_01 )
+EVENT_END
+
+/**************************************************************/
+/*		MAN3	会話スクリプト						  */
+/**************************************************************/
+EVENT_START		ev_c14_man3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14_man3_01 )
 EVENT_END
 
 /**************************************************************/

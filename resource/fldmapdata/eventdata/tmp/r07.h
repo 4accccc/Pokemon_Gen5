@@ -27,6 +27,7 @@
 #define TR_TANPAN_21                      13
 #define R07_FLDMONS_01                    14
 #define R07_FLDMONS_02                    15
+#define R07_FIGHTERW_01                   16
 
 #endif //ZONE_R07_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r07.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

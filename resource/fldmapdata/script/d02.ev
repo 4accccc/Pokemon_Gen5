@@ -13,6 +13,7 @@
   .include  "d02.h"
 
   //@author fujimura_souichirou
+  //@author Mizuguchi_Mai（一言メッセージ配置）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -22,8 +23,24 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA   ev_bg_d02_rock_01
-_EVENT_DATA    ev_bg_d02_board_01
+_EVENT_DATA   ev_bg_d02_board_01
+_EVENT_DATA   ev_d02_fighterm_01
+_EVENT_DATA   ev_d02_girl1_01
 _EVENT_DATA_END
+
+/**************************************************************/
+/* 			fighterm：話しかけ			  */
+/**************************************************************/
+EVENT_START		ev_d02_fighterm_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d02_fighterw_01 )
+EVENT_END
+
+/**************************************************************/
+/* 			girl1：話しかけ			  */
+/**************************************************************/
+EVENT_START		ev_d02_girl1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d02_girl1_01 )
+EVENT_END
 
 
 /**************************************************************/

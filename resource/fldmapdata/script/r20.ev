@@ -396,7 +396,7 @@ EVENT_START   ev_r20_swplazmaw_01
   _OBJ_ADD( R20_SWRIVAL_01 )
   
   //ライバル位置移動
-  _OBJ_POS_CHANGE( R20_SWRIVAL_01, 155, 2, 654, DIR_DOWN )
+  _OBJ_POS_CHANGE( R20_SWRIVAL_01, 146, 2, 663, DIR_RIGHT )
   
   
   //PLAZMAW：しつこい！

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/23 21:02:37
+#save date:2011/11/29 18:11:03
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d32r0101.wms
 #SECTION START:OBJ_EVENT
@@ -305,7 +305,7 @@ FV_D32R0101_POKE50_01
 #Event Script Name
 SCRID_D32R0101_POKE50_01
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number

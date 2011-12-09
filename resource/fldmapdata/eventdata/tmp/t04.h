@@ -24,6 +24,7 @@
 #define T04_SWRIVAL_01                     6
 #define T04_SAGE7_01                       7
 #define T04_WORKMAN2_01                    8
+#define T04_TRAINERW_01                    9
 
 #endif //ZONE_T04_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t04.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
