@@ -3418,6 +3418,22 @@ $(DIR_WBTMP)/m_dun2909_00_01.tbl: $(DIR_RES)/m_dun2909_00_01.bin
 	@echo create_bintbl m_dun2909_00_01
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun2909_00_01.bin
 
+$(DIR_WBTMP)/m_dun3601_00_00.tbl: $(DIR_RES)/m_dun3601_00_00.bin
+	@echo create_bintbl m_dun3601_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun3601_00_00.bin
+
+$(DIR_WBTMP)/m_dun3601_00_01.tbl: $(DIR_RES)/m_dun3601_00_01.bin
+	@echo create_bintbl m_dun3601_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_dun3601_00_01.bin
+
+$(DIR_WBTMP)/autumn3601_00_00.tbl: $(DIR_RES)/autumn3601_00_00.bin
+	@echo create_bintbl autumn3601_00_00
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/autumn3601_00_00.bin
+
+$(DIR_WBTMP)/autumn3601_00_01.tbl: $(DIR_RES)/autumn3601_00_01.bin
+	@echo create_bintbl autumn3601_00_01
+	@ruby wb_bin_conv.rb TBL $(DIR_RES)/autumn3601_00_01.bin
+
 $(DIR_WBTMP)/m_ruin01_00_00.tbl: $(DIR_RES)/m_ruin01_00_00.bin
 	@echo create_bintbl m_ruin01_00_00
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/m_ruin01_00_00.bin

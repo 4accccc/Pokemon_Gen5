@@ -412,3 +412,5 @@
 "DUN2907.bin"
 "DUN2908.bin"
 "DUN2909.bin"
+"DUN3601.bin"
+"AUTUMN3601.bin"
