@@ -71,15 +71,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『なかなか　だな▼
+			<Text>[Name:TrainerName Idx="1" ]『まあまあ　だな▼
 ポケモンの　ちからを　ひきだせるよう
-ちょっとは　かんがえているし▼
+ちょっとは　かんがえているし▽
+これなら　だいじょうぶ　かもな▼
 で　なにしに　きたんだ？▼
 えっ……
 タウンマップ！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T07:00:48" />
+				Time="2011-12-09T06:50:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -89,13 +90,14 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『なかなか　だな▼
 ポケモンの　力を　ひきだせるよう
-ちょっとは　考えているし▼
+ちょっとは　考えているし▽
+これなら　大丈夫かもな▼
 で　なにしに　来たんだ？▼
 えっ……
 タウンマップ！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T07:00:52" />
+				Time="2011-12-09T06:50:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
