@@ -16,6 +16,7 @@
 #define R19_GIRL2_01                       4
 #define R19_SWBELL_01                      5
 #define FLD_ITEM_323                       6
+#define R19_BOY2_02                        7
 
 #endif //ZONE_R19_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r19.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

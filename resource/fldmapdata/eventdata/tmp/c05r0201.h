@@ -11,6 +11,8 @@
 
 #define C05R0201_OLDMAN1_01                0
 #define C05R0201_INFORMATIONW_01           1
+#define C05R0201_BREEDERW_01               2
+#define C05R0201_ASSISTANTW_01             3
 
 #endif //ZONE_C05R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c05r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

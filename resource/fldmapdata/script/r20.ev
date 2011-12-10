@@ -33,6 +33,7 @@ _EVENT_DATA    ev_zone_r20
 _EVENT_DATA    ev_init_r20
 _EVENT_DATA    ev_r20_swrival_01
 _EVENT_DATA    ev_r20_swplazmaw_01
+_EVENT_DATA    ev_r20_girl1_01
 _EVENT_DATA_END
 
 //òbÇµÇ©ÇØÇΩï˚å¸éÊìæïœêî
@@ -491,6 +492,13 @@ EVENT_START   ev_r20_swplazmaw_01
   
   //==================================//
   
+EVENT_END
+
+/**************************************************************/
+/*  GIRL1ÅFòbÇµÇ©ÇØ                                      */
+/**************************************************************/
+EVENT_START   ev_r20_girl1_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r20_girl1_01 )
 EVENT_END
 
 /**************************************************************/

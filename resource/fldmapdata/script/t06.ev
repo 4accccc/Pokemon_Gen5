@@ -36,6 +36,7 @@ _EVENT_DATA    ev_t06_middleman1_01
 _EVENT_DATA    ev_bg_t06_board_01
 _EVENT_DATA    ev_t06_woman2_01
 _EVENT_DATA    ev_bg_t06_board_02
+_EVENT_DATA    ev_t06_boy1_02
 _EVENT_DATA_END
 
 //ドア変数定義
@@ -373,6 +374,35 @@ EVENT_START   ev_t06_woman2_01
   //いいえ
   ELSE
     _BALLOONWIN_TALKOBJ_MSG( msg_t06_woman2_03 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  ENDIF
+
+}
+EVENT_END
+
+/**************************************************************/
+/*  WOMAN2話しかけ                                            */
+/**************************************************************/
+EVENT_START   ev_t06_boy1_02
+{
+
+  _TALK_OBJ_START()
+  //おしえてほしい＿
+  _BALLOONWIN_TALKOBJ_MSG( msg_t06_boy1a_01 )
+
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  //はい
+  IF $SCWK_ANSWER == SCR_YES THEN
+    _BALLOONWIN_TALKOBJ_MSG( msg_t06_boy1a_02 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+
+  //いいえ
+  ELSE
+    _BALLOONWIN_TALKOBJ_MSG( msg_t06_boy1a_03 )
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
 

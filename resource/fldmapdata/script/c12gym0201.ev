@@ -351,6 +351,9 @@ ev_leader1_btl:
    //C12R0101のベル非表示
    _FLAG_SET( FV_C12R0101_SWBELL )
    
+   //R19波乗りストッパー削除
+   _FLAG_SET( FV_R19_BOY2_01 )
+   
    //R19イベント起動
    $WK_SCENE_R19 = 5
     

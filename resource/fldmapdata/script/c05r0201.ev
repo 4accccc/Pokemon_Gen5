@@ -23,6 +23,8 @@
 //--------------------------------------------------------------
 _EVENT_DATA   ev_c05r0201_informationw_01
 _EVENT_DATA   ev_c05r0201_oldman1_01
+_EVENT_DATA   ev_c05r0201_assistantw_01
+_EVENT_DATA   ev_c05r0201_breederw_01
 _EVENT_DATA_END
 
 
@@ -31,6 +33,20 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START   ev_c05r0201_informationw_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0201_infomationw_01 )
+EVENT_END
+
+/**************************************************************/
+/*  BREEDERW：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c05r0201_assistantw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0201_assistantw_01 )
+EVENT_END
+
+/**************************************************************/
+/*  ASSISTENTW：話しかけ                                          */
+/**************************************************************/
+EVENT_START   ev_c05r0201_breederw_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0201_breederw_01 )
 EVENT_END
 
 /**************************************************************/

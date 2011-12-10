@@ -481,7 +481,7 @@ EVENT_START	ev_d02r0101_girl4_01
 			_BALLOONWIN_TALKOBJ_MSG(msg_d02r0101_list_03)
 			_MSGWIN_CLOSE()
 			
-			_ITEM_EVENT_KEYWAIT( ITEM_DAAKUBOORU, 5 )
+			_ITEM_EVENT_KEYWAIT( ITEM_NESUTOBOORU, 5 )
 			
 			//========================================//
 			//イベント終了フラグセット

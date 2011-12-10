@@ -28,6 +28,7 @@ _EVENT_DATA    ev_bg_r19_board_03
 _EVENT_DATA    ev_pos_r19_champion_02
 _EVENT_DATA    ev_pos_r19_zukan_01
 _EVENT_DATA    ev_r19_girl2_01
+_EVENT_DATA    ev_r19_boy2_02
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
@@ -719,6 +720,13 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_r19_girl2_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r19_girl2_01 )
+EVENT_END
+
+/**************************************************************/
+/*  boy2：一言メッセージ（C12ジムクリア後削除）                */
+/**************************************************************/
+EVENT_START   ev_r19_boy2_02
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r19_boy2_stop_01 )
 EVENT_END
 
 /**************************************************************/

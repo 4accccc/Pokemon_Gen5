@@ -15,5 +15,6 @@
 #define SCRID_INIT_R20 (8)
 #define SCRID_R20_SWRIVAL_01 (9)
 #define SCRID_R20_SWPLAZMAW_01 (10)
+#define SCRID_R20_GIRL1_01 (11)
 
 #endif //_R20_DEF_H_

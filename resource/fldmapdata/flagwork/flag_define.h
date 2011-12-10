@@ -923,6 +923,7 @@
 #define FV_D08R0101_HAKASE1_01            1012 /* 0x03f4 リュウラセンの塔：アララギ父 */
 #define FV_C01_GLASSESE_01                1013 /* 0x03f5 サンヨウシティ：ダンペイ */
 #define FV_C03R1102_MEDALMAN_01           1014 /* 0x03f6 メダル事務局：メダルおやじ */
+#define FV_R19_BOY2_01                    1015 /* 0x03f7 19番道路：波乗りストッパー */
 
 #define FV_AREA_END                       1099 /* 0x044b  */
 

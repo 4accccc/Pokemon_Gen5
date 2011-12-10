@@ -97,7 +97,8 @@ EVENT_START   ev_scene_c08r0101_legend_01
   //========================================//
   
   //BGMを変更
-  _START_EVENT_BGM_SILENT( 20 )
+  //_START_EVENT_BGM_SILENT( 20 )
+  _BGM_NOW_MAP_RECOVER()
   
   //プレーンギザウィン：ぶぅん
   _GIZAPLAINWIN_MSG_POS( msg_c08_event_01, POS_DOWN )
@@ -111,7 +112,6 @@ EVENT_START   ev_scene_c08r0101_legend_01
   
   _OBJ_ANIME( C08R0101_SWLEADER7_01, anm_common_hatena)
   _OBJ_ANIME_WAIT()
-  
   
   //シャガ：なにごと　だ？
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_06 , C08R0101_SWLEADER7_01 , POS_DEFAULT)
@@ -158,6 +158,7 @@ EVENT_START   ev_scene_c08r0101_legend_01
     _MAP_CHANGE( ZONE_ID_C08, 418, 164, DIR_DOWN )
    ENDIF
   }
+  
 EVENT_END
 
 //--------------------------------------------------------------------

@@ -19,5 +19,6 @@
 #define SCRID_BG_T06_BOARD_01 (12)
 #define SCRID_T06_WOMAN2_01 (13)
 #define SCRID_BG_T06_BOARD_02 (14)
+#define SCRID_T06_BOY1_02 (15)
 
 #endif //_T06_DEF_H_

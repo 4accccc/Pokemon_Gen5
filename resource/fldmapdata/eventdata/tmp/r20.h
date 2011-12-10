@@ -34,6 +34,7 @@
 #define R20_SWRIVAL_01                    21
 #define R20_SWPLAZMAW_01                  22
 #define R20_SWLEADER1_01                  23
+#define R20_GIRL1_01                      24
 
 #endif //ZONE_R20_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r20.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

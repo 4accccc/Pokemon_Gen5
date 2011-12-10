@@ -60,8 +60,8 @@ EVENT_START   ev_c03r0302_businessman_01
     _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
-    //アイテム（クイックボール×10）入手
-    _ITEM_EVENT_NOWAIT( ITEM_KUIKKUBOORU, 10 )
+    //アイテム（クイックボール×2）入手
+    _ITEM_EVENT_NOWAIT( ITEM_KUIKKUBOORU, 2 )
 
     //ビジネスマン：クイックボールは　ポケモンと
     _BALLOONWIN_TALKOBJ_MSG( msg_c03r0302_businessman1_03 )
@@ -121,8 +121,8 @@ EVENT_START   ev_c03r0302_businessman_02
     _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
-    //アイテム（タイマーボール×10）入手
-    _ITEM_EVENT_NOWAIT( ITEM_TAIMAABOORU, 10 )
+    //アイテム（タイマーボール×5）入手
+    _ITEM_EVENT_NOWAIT( ITEM_TAIMAABOORU, 5 )
 
     //ビジネスマン：タイマーボールは　ポケモンと
     _BALLOONWIN_TALKOBJ_MSG( msg_c03r0302_businessman2_03 )
