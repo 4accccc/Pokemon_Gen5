@@ -46,6 +46,10 @@ INIT_EVENT_END
 /************************************************************/
 EVENT_START ev_c09p02_ending
 
+  // フェードイン
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+
   //======================
   // @todo
   // 花火が入る
