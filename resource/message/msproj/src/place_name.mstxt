@@ -6285,4 +6285,46 @@ R14R0101/R15R0101</Comment>
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="MAPNAME_T06R0401"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>れんまのはやし</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-10T06:57:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-10T06:35:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>練磨の林</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-10T06:35:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-10T06:35:13" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>T06R0401
+※仮名
+</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-10T06:58:07" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
