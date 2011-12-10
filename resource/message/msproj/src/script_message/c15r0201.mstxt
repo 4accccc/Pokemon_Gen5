@@ -74,13 +74,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わっ！　[Name:TrainerName Idx="0" ]さん！▼
-いつも　お疲れ様です！
+いつも　おつかれさまです！
 わたくしも　バチュル　一匹▽
 通さぬよう　全身全霊で▽
 警備に　勤しんで　おります！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T08:20:56" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T02:37:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -170,14 +170,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お　お疲れさまですっ！
+			<Text>お　おつかれさまですっ！
 ウッドウさんから　うかがっております！▼
 さあさあ　[Name:TrainerName ]様！
 こちらの　楽屋で　ご自由に▽
 おくつろぎ　くださいませっ！</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T08:18:31" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T02:37:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
