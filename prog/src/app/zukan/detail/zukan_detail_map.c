@@ -1499,7 +1499,6 @@ static void Zukan_Detail_Map_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pwk
     case ZKNDTL_CMD_CUR_U:
     case ZKNDTL_CMD_CHECK:
     case ZKNDTL_CMD_MAP_RETURN:
-    case ZKNDTL_SCMD_MAP_RET_HABITAT:
       {
         work->input_enable = TRUE;
         b_valid_cmd = TRUE;
