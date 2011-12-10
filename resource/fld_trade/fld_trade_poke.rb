@@ -216,7 +216,7 @@ def GetMonsnoVal( label )
 	file.close
 	# åüçı
 	file_line.each do |line|
-		if line.index(/#define.*#{label}.*\(\s*(\d*)\s*\)/) != nil then 
+		if line.index(/#define\s+#{label}\s+\(\s+(\d+)\s+\)/) != nil then 
 			return $1.to_i
 		end
 	end 
@@ -227,7 +227,7 @@ def GetMonsnoVal( label )
 	file.close
 	# åüçı
 	file_line.each do |line|
-		if line.index(/#define.*#{label}.*\(\s*(\d*)\s*\)/) != nil then 
+		if line.index(/#define\s+#{label}\s+\(\s+(\d+)\s+\)/) != nil then 
 			return $1.to_i
 		end
 	end
@@ -247,7 +247,7 @@ def GetFormnoVal( label )
 	file.close
 	# åüçı
 	file_line.each do |line|
-		if line.index(/#define.*#{label}.*\(\s*(\d*)\s*\)/) != nil then 
+		if line.index(/#define\s+#{label}\s+\(\s+(\d+)\s+\)/) != nil then 
 			return $1.to_i
 		end
 	end
@@ -267,7 +267,7 @@ def GetItemVal( label )
 	file.close
 	# åüçı
 	file_line.each do |line|
-		if line.index(/#define.*#{label}.*\(\s*(\d*)\s*\)/) != nil then 
+		if line.index(/#define\s+#{label}\s+\(\s+(\d+)\s+\)/) != nil then 
 			return $1.to_i
 		end
 	end
@@ -287,7 +287,7 @@ def GetSexVal( label )
 	file.close
 	# åüçı
 	file_line.each do |line|
-		if line.index(/#define.*#{label}\s*(\d*)\s*/) != nil then 
+		if line.index(/#define\s+#{label}\s+(\d+)\s+/) != nil then 
 			return $1.to_i
 		end
 	end
@@ -307,7 +307,7 @@ def GetLangCodeVal( label )
 	file.close
 	# åüçı
 	file_line.each do |line|
-		if line.index(/#define.*#{label}.*\s*(\d*)\s/) != nil then 
+		if line.index(/#define\s+#{label}\s+(\d+)\s/) != nil then 
 			return $1.to_i
 		end
 	end
@@ -327,7 +327,7 @@ def GetTokuseiVal( label )
 	file.close
 	# åüçı
 	file_line.each do |line|
-		if line.index(/#define.*#{label}.*\(\s*(\d*)\s*\)/) != nil then 
+		if line.index(/#define\s+#{label}\s+\(\s+(\d+)\s+\)/) != nil then 
 			return $1.to_i
 		end
 	end
