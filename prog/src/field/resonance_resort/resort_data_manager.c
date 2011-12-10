@@ -287,6 +287,11 @@ u32 RESORT_ABSTRUCT_DATA_DrawLotsPresentItem( const RESORT_ABSTRUCT_DATA *cp_wk,
     {
       rnd = 0;
     }
+    
+    if( RESORT_DEBUG_FLAG_Get(RESORT_DEBUG_FLAG_PRESENT_NONE) )
+    {
+      return 0;
+    }
 #endif
 
   if( rnd < present_recv )

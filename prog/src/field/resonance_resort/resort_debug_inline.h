@@ -10,6 +10,15 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
+#include <gflib.h>
+#include "arc/script_message.naix"
+#include "msg/script/msg_resort_scr.h"
+#include "debug_message.naix"
+#include "msg/debug/msg_d_field.h"
+#include "msg/debug/msg_debug_resort2.h"
+#include "net_app/union/union_beacon_tool.h"
+#include "field/resonance_resort_data.h"
+
 //=============================================================================
 /**
  *					デバッグ住人作成

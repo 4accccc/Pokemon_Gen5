@@ -35,6 +35,8 @@ DEBUG_UI_TYPE DEBUG_UI_GetType( void ){ return 0; }
 // キーテーブル
 #include "debug_ui_updown.h"
 #include "debug_ui_leftright.h"
+#include "debug_ui_resort_guide.h"
+#include "debug_ui_a.h"
 #include "debug_ui_input.h"
 
 //-----------------------------------------------------------------------------
@@ -96,6 +98,22 @@ static const DEBUG_UI_KEY_TABLE sc_DEBUG_UI_KEY_TABLE[] = {
     DEBUG_UI_LEFTRIGHT_DATA_MAX,
     c_DEBUG_UI_LEFTRIGHT,
 		FS_OVERLAY_ID(debug_ui_leftright)
+  },
+
+  // 自動 DEBUG_UI_AUTO_RESORT_GUIDE
+  {
+    DEBUG_UI_AUTO_RESORT_GUIDE,
+    DEBUG_UI_RESORT_GUIDE_DATA_MAX,
+    c_DEBUG_UI_RESORT_GUIDE,
+		FS_OVERLAY_ID(debug_ui_resort_guide)
+  },
+
+  // 自動 DEBUG_UI_AUTO_A
+  {
+    DEBUG_UI_AUTO_A,
+    DEBUG_UI_A_DATA_MAX,
+    c_DEBUG_UI_A,
+		FS_OVERLAY_ID(debug_ui_a)
   },
 };
 

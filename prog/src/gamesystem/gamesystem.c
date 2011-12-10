@@ -37,6 +37,10 @@
 #include "amprotect.h"
 
 
+//デバッグ用
+#include "debug/debug_hudson.h"
+
+
 //============================================================================================
 //============================================================================================
 #ifdef PM_DEBUG
@@ -112,7 +116,6 @@ static void GameSystem_ResetNotSleepCallback( GAMESYS_WORK *gsys );
 
 static void GameSystem_UpdateDoEvent( GAMESYS_WORK * gsys );
 static void GameSysmte_FieldAlwaysBootWatch(GAMESYS_WORK *gsys);
-
 
 //============================================================================================
 /**
@@ -232,133 +235,13 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
     }
   }
 #endif
-  return GFL_PROC_RES_FINISH;
-}
 
 #ifdef DEBUG_ONLY_FOR_hudson
-
-#include "debug/debug_hudson.h"
-#include "field/event_debug_menu.h" // for EVENT_DEBUG_AllMapCheck
-#include "field/event_debug_all_connect_check.h" // for EVENT_DEBUG_AllConnectCheck
-#include "field/event_debug_btl_all_waza_check.h" // for EVENT_DEBUG_BtlAllWazaCheck
-#include "field/event_debug_btl_all_waza_check2.h" // for EVENT_DEBUG_BtlAllWazaCheck2
-#include "field/event_debug_btl_all_poke_check.h" // for EVENT_DEBUG_BtlAllPokeCheck
-#include "field/event_debug_btl_all_waza_cam_check.h" // for EVENT_DEBUG_BtlAllWazaCamCheck
-#include "field/event_debug_btl_poke_change.h" // for EVENT_DEBUG_BtlPokeChange
-#include "field/event_debug_menu_ov_jump.h" // for debugMenuCallProc_AllMapCheck
-
-#include "savedata/config.h"
-
-static void HudsonMain( GAMESYS_WORK* gsys )
-{
-  static int debugcnt = 0;
-  
-#if 1
-  if( OS_GetArgc() < 2 )
-  {
-    return;
-  }
-#endif
-
-  if( debugcnt > 780 )
-  {
-    return;
-  }
-
-  switch( debugcnt )
-  {
-  default:
-    debugcnt++;
-    break;
-  case 180:
-    {
-      // すれ違い画面に切り替え
-      FIELDMAP_WORK * fwork = GAMESYSTEM_GetFieldMapWork(gsys);
-      FIELD_SUBSCREEN_WORK* subscreen = FIELDMAP_GetFieldSubscreenWork(fwork);
-      FIELD_SUBSCREEN_ChangeForce( subscreen, FIELD_SUBSCREEN_BEACON_VIEW );
-      OS_Printf("デバッグ：すれ違いログ画面\n");
-      debugcnt++;
-    }
-    break;
-  case 780:
-    {
-      GMEVENT * new_event;
-
-      debugcnt++;
-
-      //>>引数からテストモード切り替え
-
-      // 全マップチェック
-#if 1
-      /*    デバグメニューをオーバーレイ化したので、
-       *    ひとまずコメントアウトしています。
-       *    下記関数を使うためにはオーバーレイを読み込む必要があります
-       */
-      if ( HUDSON_IsTestCode( HUDSON_TESTCODE_MAP_JUMP ) )
-      {
-        new_event = GMEVENT_CreateOverlayEventCall( gsys, 
-            FS_OVERLAY_ID( debugmenu_jump ), EVENT_DEBUG_AllMapCheck, NULL );
-        GAMESYSTEM_SetEvent( gsys, new_event );
-        OS_Printf("デバッグ：全マップチェック開始\n");
-      }
-      // 全接続チェック
-      else
-#endif
-        if ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_CONNECT ) )
-        {
-          new_event = GMEVENT_CreateOverlayEventCall( gsys, 
-              FS_OVERLAY_ID( debug_connect_check ), EVENT_DEBUG_AllConnectCheck, NULL );
-          GAMESYSTEM_SetEvent( gsys, new_event );
-        }
-      // 全技チェック
-        else if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) )
-        {
-#if 0      
-          {
-            // 技エフェクトOFF
-            GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
-            SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork( gdata );
-            CONFIG* cfg = SaveData_GetConfig( sv ); 
-            CONFIG_SetWazaEffectMode( cfg, WAZAEFF_MODE_OFF );
-          }
-#endif
-          new_event = GMEVENT_CreateOverlayEventCall( gsys, 
-              FS_OVERLAY_ID( debug_all_waza_check ), EVENT_DEBUG_BtlAllWazaCheck, NULL );
-          GAMESYSTEM_SetEvent( gsys, new_event );
-        }
-      // 全技チェック2(トリプルバトル)
-        else if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) )
-        {
-          new_event = GMEVENT_CreateOverlayEventCall( gsys, 
-              FS_OVERLAY_ID( debug_all_waza_check2 ), EVENT_DEBUG_BtlAllWazaCheck2, NULL );
-          GAMESYSTEM_SetEvent( gsys, new_event );
-        }
-      // 全ポケモンチェック
-        else if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_POKE ) )
-        {
-          new_event = GMEVENT_CreateOverlayEventCall( gsys, 
-              FS_OVERLAY_ID( debug_all_poke_check ), EVENT_DEBUG_BtlAllPokeCheck, NULL );
-          GAMESYSTEM_SetEvent( gsys, new_event );
-        }
-      // 全技カメラチェック
-        else if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA_CAM ) )
-        {
-          new_event = GMEVENT_CreateOverlayEventCall( gsys, 
-              FS_OVERLAY_ID( debug_all_waza_cam_check ), EVENT_DEBUG_BtlAllWazaCamCheck, NULL );
-          GAMESYSTEM_SetEvent( gsys, new_event );
-        }
-        else if( HUDSON_IsTestCode( HUDSON_TESTCODE_POKE_CHANGE ) )
-        {
-          new_event = GMEVENT_CreateOverlayEventCall( gsys, 
-              FS_OVERLAY_ID( debug_poke_change ), EVENT_DEBUG_BtlPokeChange, NULL );
-          GAMESYSTEM_SetEvent( gsys, new_event );
-        }
-    }
-    break;
-  }
-
-}
+  HUDSON_Init( gsys, GFL_HEAPID_SYSTEM );
 #endif // DEBUG_ONLY_FOR_hudson
+
+  return GFL_PROC_RES_FINISH;
+}
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -367,7 +250,7 @@ static GFL_PROC_RESULT GameMainProcMain(GFL_PROC * proc, int * seq, void * pwk, 
   GAMESYS_WORK * gsys = mywk;
 
 #ifdef DEBUG_ONLY_FOR_hudson
-  HudsonMain( gsys );
+  HUDSON_Main( gsys );
 #endif // DEBUG_ONLY_FOR_hudson
 
   if (GameSystem_Main(gsys)) {
@@ -381,6 +264,11 @@ static GFL_PROC_RESULT GameMainProcMain(GFL_PROC * proc, int * seq, void * pwk, 
 static GFL_PROC_RESULT GameMainProcEnd(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
   GAMESYS_WORK * gsys = mywk;
+
+#ifdef DEBUG_ONLY_FOR_hudson
+  HUDSON_Exit( gsys );
+#endif // DEBUG_ONLY_FOR_hudson
+
   GameSystem_End(gsys);
   GFL_PROC_FreeWork(proc);
   GFL_HEAP_DeleteHeap( HEAPID_WORLD );

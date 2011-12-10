@@ -2159,6 +2159,14 @@ SRCS_OVERLAY_DEBUG_UI_UPDOWN   = debug/debug_ui_updown.c
 #===> SRCS_OVERLAY_MCS_LIB
 SRCS_OVERLAY_DEBUG_UI_LEFTRIGHT   = debug/debug_ui_leftright.c
 
+#KEY　オートLEFTRIGHT
+#===> SRCS_OVERLAY_MCS_LIB
+SRCS_OVERLAY_DEBUG_UI_RESORT_GUIDE = debug/debug_ui_resort_guide.c
+
+#KEY　オートA
+#===> SRCS_OVERLAY_MCS_LIB
+SRCS_OVERLAY_DEBUG_UI_A = debug/debug_ui_a.c
+
 ############################
 
 #SNDVIEWERライブラリ
@@ -2225,6 +2233,10 @@ SRCS_OVERLAY_DEBUG_SODATEYA = field/event_debug_sodateya.c
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_CONNECT_CHECK = field/event_debug_all_connect_check.c \
                                    field/event_debug_menu_connect_check.c
+#DEBUG_RESORT_CHECK
+#===> GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_DEBUG_RESORT_CHECK = debug/debug_hudson_auto_ja_check.c
+
 #DEBUG_FSKILL
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_FSKILL = field/event_debug_menu_fskill.c
