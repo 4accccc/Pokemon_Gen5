@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/23 18:40:07
+#save date:2011/12/10 13:55:42
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r09.wms
 #SECTION START:OBJ_EVENT
@@ -49,9 +49,9 @@ TR_BADRIDER_08
 #OBJ CODE Number
 BADRIDER
 #MOVE CODE Number
-MV_RND
+MV_RT2
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_TR_D_ACC
 #Flag Name
 0
 #Event Script Name
@@ -59,19 +59,19 @@ SCRID_TRID_BADRIDER_08
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number
-1
+2
 #Parameter 1 Number
 0
 #Parameter 2 Number
 0
 #Move Limit X Number
-2
+0
 #Move Limit Z Number
-2
+4
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-424 0 -24
+440 0 -24
 #event number: 2
 #type
 1
@@ -82,7 +82,7 @@ BADRIDER
 #MOVE CODE Number
 MV_RTRD         
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_TR_D_ACC
 #Flag Name
 0
 #Event Script Name

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/17 14:02:58
+#save date:2011/12/10 14:13:40
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\h04.wms
 #SECTION START:OBJ_EVENT
@@ -144,7 +144,7 @@ TENNISW
 #MOVE CODE Number
 MV_RT2
 #EVENT TYPE Number
-EV_TYPE_TRAINER_EYEALL
+EV_TYPE_TR_D_ACC
 #Flag Name
 0
 #Event Script Name
@@ -609,7 +609,7 @@ BASKETM
 #MOVE CODE Number
 MV_RTUL         
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_TR_D_ACC
 #Flag Name
 0
 #Event Script Name
@@ -640,7 +640,7 @@ BASKETM
 #MOVE CODE Number
 MV_RTLD         
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_TR_D_ACC
 #Flag Name
 0
 #Event Script Name
@@ -671,7 +671,7 @@ TENNISW
 #MOVE CODE Number
 MV_RT2
 #EVENT TYPE Number
-EV_TYPE_TRAINER_EYEALL
+EV_TYPE_TR_D_ACC
 #Flag Name
 0
 #Event Script Name
