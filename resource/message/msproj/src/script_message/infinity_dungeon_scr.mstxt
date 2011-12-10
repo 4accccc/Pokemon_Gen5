@@ -7655,6 +7655,49 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
+		Label="msg__get_item_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName ]は
+[Name:Item ]を　[Digit:1digit ]こ　てにいれた！
+</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:04:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-01T10:48:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName ]は
+[Name:Item ]を　[Digit:1digit ]個　手に入れた！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:08:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-08-01T10:48:39" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>報酬アイテムを複数個入手時に表示</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:07:41" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_event_b_01_01_00"
 		Style="Large">
 		<LanguageCell
