@@ -6162,6 +6162,31 @@
   .short \ball
   .endm
   
+//--------------------------------------------------------------
+/**
+ * @def _ADD_NPOKEMON_TO_PARTY
+ * @brief Nポケモンを手持ちに追加する
+ * @param ret_wk 結果を受け取るワーク
+ * @param monsno  モンスターナンバー
+ * @param level   レベル
+ * @param seikaku 性格指定    SCR_SEIKAKU_～を指定  script_def.h
+ * @param tokusei 特性指定    SCR_TOKUSEI_SPEC～を指定  script_def.h参照
+ * @param sex     性別指定    SCR_SEX_SPEC～を指定  script_def.h参照
+ * @retval BOOL 追加できたらTRUE
+ */
+//--------------------------------------------------------------
+#define _ADD_NPOKEMON_TO_PARTY( ret_wk, monsno, level, seikaku, tokusei, sex ) \
+    _ASM_ADD_NPOKEMON_TO_PARTY ret_wk, monsno, level, seikaku, tokusei, sex
+
+  .macro _ASM_ADD_NPOKEMON_TO_PARTY ret_wk, monsno, level, seikaku, tokusei, sex
+  .short EV_SEQ_ADD_NPOKEMON_TO_PARTY
+  .short \ret_wk
+  .short \monsno
+  .short \level
+  .short \seikaku
+  .short \tokusei
+  .short \sex
+  .endm
 
 //--------------------------------------------------------------
 /**

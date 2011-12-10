@@ -585,6 +585,37 @@
 #define SCR_TOKUSEI_SPEC_3    (3)     //特性3をセット(PTL_TOKUSEI_SPEC_MAXと同じ値なので注意)
 
 //--------------------------------------------------------------
+//    ポケモン作成 性格指定
+//    @note poke_tool.hの PTL_SEIKAKU_XXXXと一致
+//--------------------------------------------------------------
+#define SCR_SEIKAKU_GANBARIYA    ( 0 )   //がんばりや
+#define SCR_SEIKAKU_SAMISHIGARI  ( 1 )   //さみしがり
+#define SCR_SEIKAKU_YUUKAN       ( 2 )   //ゆうかん
+#define SCR_SEIKAKU_IJIPPARI     ( 3 )   //いじっぱり
+#define SCR_SEIKAKU_YANTYA       ( 4 )   //やんちゃ
+#define SCR_SEIKAKU_ZUBUTOI      ( 5 )   //ずぶとい
+#define SCR_SEIKAKU_SUNAO        ( 6 )   //すなお
+#define SCR_SEIKAKU_NONKI        ( 7 )   //のんき
+#define SCR_SEIKAKU_WANPAKU      ( 8 )   //わんぱく
+#define SCR_SEIKAKU_NOUTENKI     ( 9 )   //のうてんき
+#define SCR_SEIKAKU_OKUBYOU      ( 10 )  //おくびょう
+#define SCR_SEIKAKU_SEKKATI      ( 11 )  //せっかち
+#define SCR_SEIKAKU_MAJIME       ( 12 )  //まじめ
+#define SCR_SEIKAKU_YOUKI        ( 13 )  //ようき
+#define SCR_SEIKAKU_MUJYAKI      ( 14 )  //むじゃき
+#define SCR_SEIKAKU_HIKAEME      ( 15 )  //ひかえめ
+#define SCR_SEIKAKU_OTTORI       ( 16 )  //おっとり
+#define SCR_SEIKAKU_REISEI       ( 17 )  //れいせい
+#define SCR_SEIKAKU_TEREYA       ( 18 )  //てれや
+#define SCR_SEIKAKU_UKKARIYA     ( 19 )  //うっかりや
+#define SCR_SEIKAKU_ODAYAKA      ( 20 )  //おだやか
+#define SCR_SEIKAKU_OTONASHII    ( 21 )  //おとなしい
+#define SCR_SEIKAKU_NAMAIKI      ( 22 )  //なまいき
+#define SCR_SEIKAKU_SINTYOU      ( 23 )  //しんちょう
+#define SCR_SEIKAKU_KIMAGURE     ( 24 )  //きまぐれ
+#define SCR_SEIKAKU_MAX          ( 25 )
+
+//--------------------------------------------------------------
 //    ポケモン作成 レア指定
 //    @note poke_tool.hの PtlRareSpecと一致
 //--------------------------------------------------------------

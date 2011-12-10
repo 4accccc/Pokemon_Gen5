@@ -1155,6 +1155,11 @@
   // エンディング
   DEF_CMD( EvCmdLeagueFrontFireworks, EV_SEQ_LEAGUE_FRONT_FIREWORKS )
 
+  //手持ちポケモンのPOKEMON_PARAM取得・操作系
+  DEF_CMD( EvCmdAddNPokemonToParty, EV_SEQ_ADD_NPOKEMON_TO_PARTY )
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

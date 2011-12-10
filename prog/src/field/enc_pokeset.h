@@ -111,7 +111,8 @@ extern u8 ENCPOKE_CheckNPokeEncount( ENCPOKE_FLD_PARAM* efp, u16 zone_id );
 extern POKEMON_PARAM* ENCPOKE_PPCreate(const ENCPOKE_FLD_PARAM* efp, const ENC_POKE_PARAM* poke, int heapID);
 extern void ENCPOKE_PPSetup(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, const ENC_POKE_PARAM* poke );
 extern void ENCPOKE_PPSetupMovePoke(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, MPD_PTR mpd );
-extern void ENCPOKE_PPSetupNPoke(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, u8 n_poke_id );
+extern void ENCPOKE_PPSetupNPoke(POKEMON_PARAM* pp, const u8 n_poke_id );
+extern void MakeNPokeParam( POKEMON_PARAM* pp, const ENCOUNT_DATA_N_POKE *prm );
 
 
 

@@ -50,6 +50,8 @@ extern VMCMD_RESULT EvCmdChkPokeWazaGroup( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdAddPokemonToParty( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdAddPokemonToPartyEx( VMHANDLE *core, void *wk );
+// Nƒ|ƒPƒ‚ƒ“  swan’Ç‰Á
+extern VMCMD_RESULT EvCmdAddNPokemonToParty( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdAddPokemonToBox( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdAddPokemonToBoxEx( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdAddTamagoToParty( VMHANDLE *core, void *wk );

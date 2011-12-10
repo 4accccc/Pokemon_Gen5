@@ -647,7 +647,7 @@ static void enc_CreateBattleParamNPoke( FIELD_ENCOUNT *enc, const ENCPOKE_FLD_PA
   POKEPARTY* partyEnemy = PokeParty_AllocPartyWork( heapID );
   POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemoryLo( heapID, POKETOOL_GetWorkSize() );
 
-  ENCPOKE_PPSetupNPoke( pp, efp, n_poke_id );
+  ENCPOKE_PPSetupNPoke( pp, n_poke_id );
   PokeParty_Add( partyEnemy, pp );
 
   BTL_FIELD_SITUATION_SetFromFieldStatus( &sit, enc->gdata, enc->fwork );

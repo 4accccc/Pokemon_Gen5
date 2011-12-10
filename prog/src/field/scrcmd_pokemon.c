@@ -48,6 +48,7 @@
 
 #include "print/global_msg.h"  //for GlobalMsg_PokeName
 
+#include "field/enc_pokeset.h"  // for MakeNPokeParam
 
 //======================================================================
 //  define
@@ -932,6 +933,74 @@ VMCMD_RESULT EvCmdAddPokemonToPartyEx( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * Nポケモンを手持ちに追加
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdAddNPokemonToParty( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*    gdata = SCRCMD_WORK_GetGameData( work );
+  HEAPID     heap_id = SCRCMD_WORK_GetHeapID( work );
+  POKEPARTY*   party = GAMEDATA_GetMyPokemon( gdata );
+  MYSTATUS*   status = GAMEDATA_GetMyStatus( gdata );
+  u16*        ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
+  u16         monsno = SCRCMD_GetVMWorkValue( core, work );  // コマンド第2引数
+  u16          level = SCRCMD_GetVMWorkValue( core, work );  // コマンド第3引数
+  u16        seikaku = SCRCMD_GetVMWorkValue( core, work );  // コマンド第4引数
+  u16        tokusei = SCRCMD_GetVMWorkValue( core, work );  // コマンド第5引数
+  u16            sex = SCRCMD_GetVMWorkValue( core, work );  // コマンド第6引数
+
+  POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemoryLo( heap_id, POKETOOL_GetWorkSize() );
+
+  // Nポケ生成
+  //
+  // Nポケエンカウント時のポケパラ生成
+  // field/enc_pokeset.c | 532
+  //
+  {
+    ENCOUNT_DATA_N_POKE prm;
+    MI_CpuClear8( &prm, sizeof( ENCOUNT_DATA_N_POKE  ) );
+
+    prm.mons_no = monsno;
+    prm.level   = level;
+    prm.seikaku = seikaku;
+    prm.sex     = sex;
+    prm.tokusei = tokusei;
+
+    MakeNPokeParam( pp, &prm );
+
+    {
+      //捕獲ボールセット
+      //get_ballパラメータはBALLIDなので、アイテムナンバーから変換
+      PP_Put( pp, ID_PARA_get_ball, ITEM_GetBallID(ITEM_MONSUTAABOORU) );     // 捕獲ボールセット
+    }
+    {
+      // トレーナーメモ
+      PLAYER_WORK* player_wk = GAMEDATA_GetMyPlayerWork( gdata );
+      POKE_MEMO_SetTrainerMemoPP( pp, POKE_MEMO_SET_N_POKE_CAPTURE, status,
+          ZONEDATA_GetPlaceNameID( PLAYERWORK_getZoneID( player_wk ) ), heap_id );
+    }
+
+    PP_Renew( pp );
+  }
+
+  // パーティに追加
+  *ret_wk = PokeParty_Add( party, pp );
+
+  //一応図鑑登録
+  ZUKANSAVE_SetPokeGet(GAMEDATA_GetZukanSave( gdata ), pp);
+
+  GFL_HEAP_FreeMemory( pp );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
  * 手持ちポケモンの技個数取得
  * @param	core		仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
@@ -1786,3 +1855,4 @@ static BOOL AddPokeToParty(GAMEDATA* gdata, ADD_POKE_PRM *prm)
   return TRUE;
 
 }
+
