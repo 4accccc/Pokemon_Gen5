@@ -823,7 +823,7 @@ EVENT_START ev_d10r0501_kusabi_01
   _OBJ_DEL( D10R0501_KUSABI_01 )
 
   //アイテム（いでんしのくさび）入手
-  _ITEM_EVENT_FIELD_KEYWAIT( ITEM_IDENSINOKUSABI, 1 )
+  _ITEM_EVENT_FIELD( ITEM_IDENSINOKUSABI, 1 )
 
   //========================================//
   //モンスターボール非表示
@@ -838,6 +838,15 @@ EVENT_END
 /*					話しかけ：キュレム（クリア後）						*/
 /************************************************************/
 EVENT_START ev_d10r0501_kyuremu_01
+  
+  _TALK_START_SE_PLAY()
+
+  //キュレム：ヒュラララ！
+  _VOICE_PLAY(MONSNO_653,0)
+  _GIZAPLAINWIN_MSG_POS( msg_d10r0501_poke10_end_01, POS_UP )
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _GIZAPLAINWIN_CLOSE()
 
   //キュレム戦闘
   _WILD_BTL_SET_LEGEND( MONSNO_653, 75 ) // Lv.75 キュレム
@@ -861,6 +870,11 @@ EVENT_START ev_d10r0501_kyuremu_01
       //========================================//
       _OBJ_ADD( D10R0501_KUSABI_01 )
     ENDIF
+    
+    //キュレムと初戦闘だった
+    IF FLAG_OFF( FE_D10R0401_POKE10_MEET ) THEN
+      _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 16, DIR_UP)
+    ENDIF
 
     _WILD_WIN()
   ELSE
@@ -874,21 +888,105 @@ EVENT_START ev_d10r0501_kyuremu_01
     //==================================//
     //キュレムを捕獲した
     _FLAG_SET( FE_D10R0401_POKE10_GET )
-    //クリア後キュレムと遭遇した
-    _FLAG_SET( FE_D10R0401_POKE10_MEET )
     //==================================//
 
   CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN   //勝利した場合、あるいは逃げた場合
-    //==================================//
-    //クリア後キュレムと遭遇した
-    _FLAG_SET( FE_D10R0401_POKE10_MEET )
-    //==================================//
+    
+    //システム：キュレムは　ほらあなの　くらがりに
+    _SYSWIN_MSG( msg_d10r0501_poke10_end_02, POS_DEFAULT )
+    _AB_KEYWAIT_MARK()
+    _SYSWIN_CLOSE()
     
   ENDSWITCH
   
-  //【仮】ベル登場
+  //クリア後キュレムと初戦闘だった場合はベルとの会話イベントを開始
+  IF FLAG_OFF( FE_D10R0401_POKE10_MEET ) THEN
+   _CALL ev_kyuremu_after
+  ENDIF
 
 EVENT_END
+
+/************************************************************/
+/*					CALL：キュレム戦後ベル登場						*/
+/************************************************************/
+ev_kyuremu_after:
+  
+  //==================================//
+  //チェレン・ベルを表示
+  _FLAG_RESET( FV_D10R0501_SWLEADER1_01 )
+  //==================================//
+  
+  //チェレン・ベル動作モデルを生成
+  _OBJ_ADD( D10R0501_SWLEADER1_01 )
+  _OBJ_ADD( D10R0501_SWBELL_01 )
+  
+  //アニメ：チェレン・ベル隣接
+  _OBJ_ANIME_AUTO( D10R0501_SWLEADER1_01, 17,18, FORCE_TYPE_NOT, 8, DIR_LR )
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME_AUTO( D10R0501_SWBELL_01, 16,18, FORCE_TYPE_NOT, 8, DIR_LR )
+  _TIME_WAIT( 8*5 )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //プレイヤー名導入
+  _PLAYER_NAME( 0 )
+  
+  //チェレン：いまのが キュレムだね
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swleader1_01 , D10R0501_SWLEADER1_01 ,POS_DR )
+  _MSGWIN_CLOSE()
+  
+  //ベル：すごいね！
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swbell_01 , D10R0501_SWBELL_01 ,POS_DL )
+  
+  //カノコタウンでの会話状態で分岐
+  
+  //アララギ娘と会話していない
+  IF FLAG_OFF( FE_T01R0401_HAKASE2_TALK ) THEN
+    
+    _MSGWIN_CLOSE()
+    
+    //アニメ：ベル「！」
+    _OBJ_ANIME( D10R0501_SWBELL_01 , anm_common_gyoe )
+    _OBJ_ANIME_WAIT()
+    
+    //ベル：ねえねえ！
+    _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swbell_02 , D10R0501_SWBELL_01 ,POS_DL )
+    
+  ELSE
+    
+    //ベル：アララギはかせに
+    _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swbell_03 , D10R0501_SWBELL_01 ,POS_DL )
+  
+  ENDIF
+  
+  _MSGWIN_CLOSE()
+  
+  //チェレン：そうだね！
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swleader1_02 , D10R0501_SWLEADER1_01 ,POS_DR )
+  _MSGWIN_CLOSE()
+  
+  //ベル：それにしても
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swbell_04 , D10R0501_SWBELL_01 ,POS_DL )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：チェレン・ベル退場
+  _OBJ_ANIME_AUTO( D10R0501_SWLEADER1_01, 17,25, FORCE_TYPE_NOT, 8, DIR_LR )
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME_AUTO( D10R0501_SWBELL_01, 16,25, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  
+  //チェレン・ベル動作モデルを削除
+  _OBJ_DEL( D10R0501_SWLEADER1_01 )
+  _OBJ_DEL( D10R0501_SWBELL_01 )
+  
+  //==================================//
+  //クリア後キュレムと遭遇した
+  _FLAG_SET( FE_D10R0401_POKE10_MEET )
+  //D10R0501 チェレン・ベル非表示
+  _FLAG_SET( FV_D10R0501_SWLEADER1_01 )
+  //==================================//
+
+_RET
 
 ev_battle_check:	
   //敗戦チェック
