@@ -3630,10 +3630,19 @@ static BOOL game_update_seq_main_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
           }
         }
       }
+
+      // タッチアニメ
+      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkTouch, TRUE );
+      GFL_CLACT_WK_ResetAnm( gameWork->clwkTouch );
     }
-    //↑↑↑↑↑↑↑↑↑↑↑↑
-    //ここまででタッチのアニメシーケンスが決まる
-    GFL_CLACT_WK_SetAnmSeq( gameWork->clwkTouch, gameWork->touch_anmseq );
+
+    // アニメしていない時のみ変更
+    if( GFL_CLACT_WK_CheckAnmActive(gameWork->clwkPompHandle) == FALSE )
+    {
+      //↑↑↑↑↑↑↑↑↑↑↑↑
+      //ここまででタッチのアニメシーケンスが決まる
+      GFL_CLACT_WK_SetAnmSeq( gameWork->clwkTouch, gameWork->touch_anmseq );
+    }
     // 例外は↓のタッチできないときのみ
   }
   // 風船補充中はタッチできない
