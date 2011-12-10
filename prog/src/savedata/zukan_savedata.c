@@ -309,7 +309,7 @@ static inline void SetZukanRandom( ZUKAN_SAVEDATA * zw, u16 monsno, u32 rand )
 static void SetZukanTextVersionUp( ZUKAN_SAVEDATA * zw, u16 monsno, u32 lang )
 {
 	// 国コード最大 or 欠番コード
-	if( lang > 8 || lang == 6 ){
+	if( (lang > 8) || (lang == 6) || (lang == 0) ){
 		return;
 	}
 
@@ -1520,7 +1520,7 @@ BOOL ZUKANSAVE_GetTextVersionUpFlag( const ZUKAN_SAVEDATA * zw, u16 monsno, u32 
   zukan_incorrect(zw);
 
 	// 国コード最大 or 欠番コード
-	if( country_code > 8 || country_code == 6 ){
+	if( (country_code > 8) || (country_code == 6) || (country_code == 0) ){
 		return FALSE;
 	}
 
