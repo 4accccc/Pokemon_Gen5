@@ -488,7 +488,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
         ZUKAN_SAVEDATA* zkn_sv = GAMEDATA_GetZukanSave( ZKNDTL_COMMON_GetGamedata(cmn) );
         GFL_CLUNIT*     clunit = ZUKAN_DETAIL_GRAPHIC_GetClunit( ZKNDTL_COMMON_GetGraphic(cmn) );
         
-        ZUKAN_MODE zukan_mode = ZUKANSAVE_GetZukanMode( zkn_sv );
+        BOOL is_zenkoku = ZUKANSAVE_GetZenkokuZukanFlag( zkn_sv );
         // 全国図鑑を持っていても、地方図鑑として扱っていたらFALSEになる。
         
         u16  monsno;
@@ -519,7 +519,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
                         sex,
                         rare,
                         personal_rnd,
-                        zukan_mode,
+                        is_zenkoku,
                         b_get_flag,
                         ZUKAN_INFO_LAUNCH_LIST,
                         ZUKAN_INFO_DISP_M,
@@ -539,7 +539,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
                         sex,
                         rare,
                         personal_rnd,
-                        zukan_mode,
+                        is_zenkoku,
                         b_get_flag,
                         ZUKAN_INFO_LAUNCH_LIST,
                         ZUKAN_INFO_DISP_S,

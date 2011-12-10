@@ -110,7 +110,7 @@ extern ZUKAN_INFO_WORK* ZUKAN_INFO_InitFromMonsno(
                             u16                    a_sex,           // PTL_SEX_MALE, PTL_SEX_FEMALE, PTL_SEX_UNKNOWN
                             u16                    a_rare,          // 0(ÉåÉAÇ∂Ç·Ç»Ç¢)Ç©1(ÉåÉA)  // PP_CheckRare( pp ) 
                             u32                    a_personal_rnd,  // ?  // personal_rndÇÕmonsno==MONSNO_PATTIIRUÇÃÇ∆Ç´ÇÕïKê{
-                            ZUKAN_MODE             zukan_mode,
+                            BOOL                   is_zenkoku,
                             BOOL                   a_get_flag,
                             ZUKAN_INFO_LAUNCH      a_launch,
                             ZUKAN_INFO_DISP        a_disp,

@@ -700,7 +700,7 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_InitFromMonsno(
                             u16                    a_sex,           // PTL_SEX_MALE, PTL_SEX_FEMALE, PTL_SEX_UNKNOWN
                             u16                    a_rare,          // 0(ƒŒƒA‚¶‚á‚È‚¢)‚©1(ƒŒƒA)  // PP_CheckRare( pp ) 
                             u32                    a_personal_rnd,  // ?  // personal_rnd‚Ímonsno==MONSNO_PATTIIRU‚Ì‚Æ‚«‚Í•K{
-                            ZUKAN_MODE             zukan_mode,
+                            BOOL                   is_zenkoku,
                             BOOL                   a_get_flag,
                             ZUKAN_INFO_LAUNCH      a_launch,
                             ZUKAN_INFO_DISP        a_disp,
@@ -729,14 +729,7 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_InitFromMonsno(
     work->sex                 = a_sex;   
     work->rare                = a_rare; 
     work->personal_rnd        = a_personal_rnd;
-    if( zukan_mode == ZUKAN_MODE_ZENKOKU )
-    {
-      work->zenkoku_flag        = TRUE;
-    }
-    else
-    {
-      work->zenkoku_flag        = FALSE;
-    }
+    work->zenkoku_flag        = is_zenkoku;
     work->get_flag            = a_get_flag;
     work->launch              = a_launch;
     work->disp                = a_disp;
