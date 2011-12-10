@@ -29,6 +29,7 @@
 #define D24R0301_SWBELL_01                13
 #define TR_BACKPACKERM_25                 14
 #define TR_MOUNT_22                       15
+#define D24R0301_ASSITANTM_01             16
 
 #endif //ZONE_D24R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d24r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

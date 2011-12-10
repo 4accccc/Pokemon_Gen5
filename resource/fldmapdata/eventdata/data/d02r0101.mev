@@ -1,5 +1,5 @@
 #event data
-#save date:2011/12/08 11:52:54
+#save date:2011/12/10 20:01:36
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d02r0101.wms
 #SECTION START:OBJ_EVENT
@@ -729,7 +729,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 D02R0101_GIRL4_01
 #OBJ CODE Number
-GIRL4
+ASSISTANTW
 #MOVE CODE Number
 MV_RND
 #EVENT TYPE Number

@@ -13,7 +13,6 @@
 #define C04R0801_BASEBALLM_01              0
 #define C04R0801_TRAINERW_01               1
 #define C04R0801_INFOMATIONW_01            2
-#define C04R0801_BOY4_01                   3
 
 #endif //ZONE_C04R0801_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04r0801.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

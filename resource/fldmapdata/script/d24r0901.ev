@@ -16,6 +16,7 @@
   .include  "d24r0701_def.h"
   
   //@author Mizuguchi_Mai
+  //@author suginaka_katsunori //せいそくちサブイベント
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -30,6 +31,7 @@ _EVENT_DATA    ev_scene_d24r0901_pair_start
 _EVENT_DATA    ev_pos_d24r0901_swbell_01
 _EVENT_DATA    ev_pos_d24r0901_room_01
 _EVENT_DATA    ev_d24r0901_swbell_02
+_EVENT_DATA	ev_d24r0901_assistantm_01
 _EVENT_DATA_END
 
 
@@ -313,6 +315,60 @@ ev_player_return_anm:
   _OBJ_ANIME_WAIT()
   
 _RET
+
+/************************************************************/
+/*	せいそくちリストサブイベント						*/
+/************************************************************/
+EVENT_START	ev_d24r0901_assistantm_01
+	//イベント終了前か？
+	IF FLAG_OFF( FE_C04R0801_ITEMGET_02 ) THEN
+
+		_TALK_OBJ_START()
+		
+		//あら？
+		_BALLOONWIN_TALKOBJ_MSG(msg_d24r0901_list_01)
+		
+		//せいそくちリストが埋まっているかチェック
+		_SC_GET_ZONE_POKE_CMP_CHECK( ZONE_ID_D24 ,SCR_HABITAT_TYPE_LAND ,FALSE ,SCWK_ANSWER )
+
+		//みたコンプしている場合
+		IF $SCWK_ANSWER == TRUE THEN
+		
+			_BALLOONWIN_TALKOBJ_MSG(msg_d24r0901_list_03)
+			_MSGWIN_CLOSE()
+			
+			_ITEM_EVENT_KEYWAIT( ITEM_TAIMAABOORU, 5 )
+			
+			//========================================//
+			//イベント終了フラグセット
+			_FLAG_SET(FE_C04R0801_ITEMGET_02)
+			
+			//========================================//
+
+			//せいそくちリストの　きのうを
+			_BALLOONWIN_TALKOBJ_MSG(msg_d24r0901_list_04)
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		ELSE
+			
+			//うまってないんだね
+			_BALLOONWIN_TALKOBJ_MSG(msg_d24r0901_list_02)
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		ENDIF
+
+
+	//イベント終了後の場合
+	ELSE
+
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d24r0901_list_04 )
+
+	ENDIF
+
+EVENT_END
+
 
 //--------------------------------------------------------------------
 //	☆共通処理：1歩歩く

@@ -1,5 +1,5 @@
 #event data
-#save date:2011/12/01 17:24:32
+#save date:2011/12/10 19:39:49
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d24r0901.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d24r0901.wms
 #hold event type:
 1
 #hold event number:
-16
+17
 #event number: 0
 #type
 1
@@ -506,6 +506,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 840 32 -344
+#event number: 16
+#type
+1
+#ID name
+D24R0901_ASSISTANTM_01
+#OBJ CODE Number
+ASSISTANTM
+#MOVE CODE Number
+MV_RND_DLR
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_D24R0901_ASSISTANTM_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1032 0 120
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
