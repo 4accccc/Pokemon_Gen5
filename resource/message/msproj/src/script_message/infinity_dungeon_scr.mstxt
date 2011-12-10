@@ -7655,7 +7655,7 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="msg__get_item_01"
+		Label="msg_get_item_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
