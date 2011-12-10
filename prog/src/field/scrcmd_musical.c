@@ -932,18 +932,21 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
   case MUSICAL_TOOL_COMM_TIMESYNC:
     {
       BOOL enable = TRUE;
-      if( val1 == MUSICAL_COMM_SYNC_MSG22 )
+      if( musScriptWork->commWork != NULL )
       {
-        int i;
-        for( i = 0; i < MUSICAL_COMM_MEMBER_NUM; i++ )
+        if( val1 == MUSICAL_COMM_SYNC_MSG22 )
         {
-          MYSTATUS *status = MUS_COMM_GetPlayerMyStatus( musScriptWork->commWork, i );
-          if( status != NULL )
+          int i;
+          for( i = 0; i < MUSICAL_COMM_MEMBER_NUM; i++ )
           {
-            int version = MyStatus_GetRomCode( status );
-            if( version == VERSION_BLACK || version == VERSION_WHITE )
+            MYSTATUS *status = MUS_COMM_GetPlayerMyStatus( musScriptWork->commWork, i );
+            if( status != NULL )
             {
-              enable = FALSE;
+              int version = MyStatus_GetRomCode( status );
+              if( version == VERSION_BLACK || version == VERSION_WHITE )
+              {
+                enable = FALSE;
+              }
             }
           }
         }
