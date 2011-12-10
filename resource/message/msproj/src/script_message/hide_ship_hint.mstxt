@@ -168,13 +168,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>パスワードの　ヒントは……▼
-ポケモンの　なまえ　だよ
+すうじ　だよ
 ははは！　これじゃ　わからないか▼
 ヒントを　もうひとつ
-たかさは　１．１ｍ　だな</Text>
+２ばんめの　すうじは「９」だ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:53:17" />
+				Time="2011-12-10T09:39:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -183,13 +183,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>パスワードの　ヒントは……▼
-ポケモンの　名前だよ
+数字　だよ
 ははは！　これじゃ　わからないか▼
 ヒントを　もうひとつ
-たかさは　１．１ｍ　だな</Text>
+２番目の　数字は「９」だ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:53:29" />
+				Time="2011-12-10T09:43:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -199,10 +199,10 @@
 			Language="JPN">
 			<Comment>♂
 ・ヒント1-3
-・ミルホッグのヒント</Comment>
+・9909のヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:49:12" />
+				Time="2011-12-10T09:55:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -226,13 +226,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>パスワードの　ヒントは……▼
-ポケモンの　なまえ　だよ
+すうじ　だよ
 ははは！　これじゃ　わからないか▼
 ヒントを　もうひとつ
-たかさは　１．１ｍ　だな</Text>
+２ばんめの　すうじは「７」だ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:53:20" />
+				Time="2011-12-10T09:39:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -241,13 +241,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>パスワードの　ヒントは……▼
-ポケモンの　名前だよ
+数字　だよ
 ははは！　これじゃ　わからないか▼
 ヒントを　もうひとつ
-たかさは　１．１ｍ　だな</Text>
+２番目の　数字は「７」だ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:53:32" />
+				Time="2011-12-10T09:43:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -257,10 +257,10 @@
 			Language="JPN">
 			<Comment>♂
 ・ヒント1-4
-・レパルダスのヒント</Comment>
+・7707のヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:49:37" />
+				Time="2011-12-10T09:55:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -269,6 +269,64 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-25T12:28:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint1_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>パスワードの　ヒントは……▼
+すうじ　だよ
+ははは！　これじゃ　わからないか▼
+ヒントを　もうひとつ
+２ばんめの　すうじは「２」だ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:40:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:31:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>パスワードの　ヒントは……▼
+数字　だよ
+ははは！　これじゃ　わからないか▼
+ヒントを　もうひとつ
+２番目の　数字は「２」だ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:43:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:31:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヒント1-5
+・2202のヒント</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:55:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:42:40" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -442,12 +500,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たしか　ノーマルタイプの　ポケモンだ！▼
-おまえが　どこまで　やれるか
-たのしませて　もらうと　するか</Text>
+			<Text>４つの　すうじの　うち
+３つは　おなじ　すうじだったな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T12:21:19" />
+				Time="2011-12-10T09:43:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -455,12 +512,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たしか　ノーマルタイプの　ポケモンだ！▼
-おまえが　どこまで　やれるか
-楽しませて　もらうと　するか</Text>
+			<Text>４つの　数字の　うち
+３つは　同じ　数字だったな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T12:20:58" />
+				Time="2011-12-10T09:43:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -470,10 +526,10 @@
 			Language="JPN">
 			<Comment>♂
 ・ヒント2-3
-・ミルホッグのヒント</Comment>
+・9909のヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:49:14" />
+				Time="2011-12-10T09:56:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -496,12 +552,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たしか　あくタイプの　ポケモンだ！▼
-おまえが　どこまで　やれるか
-たのしませて　もらうと　するか</Text>
+			<Text>４つの　すうじの　うち
+３つは　おなじ　すうじだったな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T12:21:14" />
+				Time="2011-12-10T09:43:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -509,12 +564,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たしか　あくタイプの　ポケモンだ！▼
-おまえが　どこまで　やれるか
-楽しませて　もらうと　するか</Text>
+			<Text>４つの　数字の　うち
+３つは　同じ　数字だったな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T12:21:10" />
+				Time="2011-12-10T09:43:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -524,10 +578,10 @@
 			Language="JPN">
 			<Comment>♂
 ・ヒント2-4
-・レパルダスのヒント</Comment>
+・7707のヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:49:33" />
+				Time="2011-12-10T09:56:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -536,6 +590,58 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-25T12:28:23" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint2_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>４つの　すうじの　うち
+３つは　おなじ　すうじだったな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:43:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:31:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>４つの　数字の　うち
+３つは　同じ　数字だったな</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:43:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:31:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヒント2-5
+・2202のヒント</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:56:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:42:42" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -689,7 +795,7 @@
 そういうのは　思うだけにしろ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T08:21:21" />
+				Time="2011-12-10T09:46:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -727,13 +833,10 @@
 			Language="JPN">
 			<Text>まけたからには
 いさぎよく　おしえてやる▼
-パスワードは　ポケモンの　なまえ
-そいつの　おもさは　２７ｋｇさ▼
-ケチくさい　とか　いうなよ
-そういうのは　おもうだけにしろ！</Text>
+さいしょの　すうじは「９」だ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:54:32" />
+				Time="2011-12-10T09:46:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -743,13 +846,10 @@
 			Language="JPN_KANJI">
 			<Text>負けたからには
 潔く　教えてやる▼
-パスワードは　ポケモンの　名前
-そいつの　重さは　２７ｋｇさ▼
-ケチくさい　とか　いうなよ
-そういうのは　思うだけにしろ！</Text>
+最初の　数字は「９」だ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:55:11" />
+				Time="2011-12-10T09:46:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -759,10 +859,10 @@
 			Language="JPN">
 			<Comment>♂
 ・ヒント3-3
-・ミルホッグのヒント</Comment>
+・9909のヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:49:17" />
+				Time="2011-12-10T09:56:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -787,13 +887,10 @@
 			Language="JPN">
 			<Text>まけたからには
 いさぎよく　おしえてやる▼
-パスワードは　ポケモンの　なまえ
-そいつの　おもさは　３７．５ｋｇさ▼
-ケチくさい　とか　いうなよ
-そういうのは　おもうだけにしろ！</Text>
+さいしょの　すうじは「７」だ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:54:49" />
+				Time="2011-12-10T09:46:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -803,13 +900,10 @@
 			Language="JPN_KANJI">
 			<Text>負けたからには
 潔く　教えてやる▼
-パスワードは　ポケモンの　名前
-そいつの　重さは　３７．５ｋｇさ▼
-ケチくさい　とか　いうなよ
-そういうのは　思うだけにしろ！</Text>
+最初の　数字は「７」だ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:55:21" />
+				Time="2011-12-10T09:46:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -819,10 +913,10 @@
 			Language="JPN">
 			<Comment>♂
 ・ヒント3-4
-・レパルダスのヒント</Comment>
+・7707のヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:49:30" />
+				Time="2011-12-10T09:56:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -831,6 +925,60 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-25T12:28:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint3_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まけたからには
+いさぎよく　おしえてやる▼
+さいしょの　すうじは「２」だ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:46:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:31:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>負けたからには
+潔く　教えてやる▼
+最初の　数字は「２」だ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:46:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:31:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヒント3-5
+・2202のヒント</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:56:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ３</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:38:50" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1010,12 +1158,11 @@
 			Language="JPN">
 			<Text>つよいから　おしえてやるよ
 パスワードの　ヒントは……▼
-ポケモンずかん　では
-けいかいポケモンと　されている▽
-なんて　なまえ　だったっけ……？</Text>
+４ケタの　すうじ
+そして　さいごが「９」だな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:55:57" />
+				Time="2011-12-10T09:47:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1025,12 +1172,11 @@
 			Language="JPN_KANJI">
 			<Text>強いから　教えてやるよ
 パスワードの　ヒントは……▼
-ポケモン図鑑　では
-けいかいポケモンと　されている▽
-なんて　名前だったっけ……？</Text>
+４ケタの　数字
+そして　最後が「９」だな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T12:20:13" />
+				Time="2011-12-10T09:47:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1040,10 +1186,10 @@
 			Language="JPN">
 			<Comment>♂
 ・ヒント4-3
-・ミルホッグのヒント</Comment>
+・9909のヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:49:20" />
+				Time="2011-12-10T09:56:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1068,12 +1214,11 @@
 			Language="JPN">
 			<Text>つよいから　おしえてやるよ
 パスワードの　ヒントは……▼
-ポケモンずかん　では
-れいこくポケモンと　されている▽
-なんて　なまえ　だったっけ……？</Text>
+４ケタの　すうじ
+そして　さいごが「７」だな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:56:07" />
+				Time="2011-12-10T09:47:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1083,12 +1228,11 @@
 			Language="JPN_KANJI">
 			<Text>強いから　教えてやるよ
 パスワードの　ヒントは……▼
-ポケモン図鑑　では
-れいこくポケモンと　されている▽
-なんて　名前だったっけ……？</Text>
+４ケタの　数字
+そして　最後が「７」だな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T12:20:24" />
+				Time="2011-12-10T09:47:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1098,10 +1242,10 @@
 			Language="JPN">
 			<Comment>♂
 ・ヒント4-4
-・レパルダスのヒント</Comment>
+・7707のヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:49:27" />
+				Time="2011-12-10T09:56:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1110,6 +1254,62 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-25T12:28:36" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint4_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つよいから　おしえてやるよ
+パスワードの　ヒントは……▼
+４ケタの　すうじ
+そして　さいごが「２」だな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:47:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:31:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>強いから　教えてやるよ
+パスワードの　ヒントは……▼
+４ケタの　数字
+そして　最後が「２」だな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:47:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:31:31" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヒント4-5
+・2202のヒント</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:56:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:38:44" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1233,10 +1433,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>パスワード？
-すきに　いれちゃいなさいよ！</Text>
+すきに　いれちゃいなさいよ！▼
+ちなみに　あたしが
+すきな　すうじは「０」だけど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T07:54:34" />
+				Time="2011-12-10T09:53:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1245,10 +1447,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>パスワード？
-好きに　いれちゃいなさいよ！</Text>
+好きに　いれちゃいなさいよ！▼
+ちなみに　あたしが
+好きな　数字は「０」だけど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T07:54:40" />
+				Time="2011-12-10T09:54:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1284,10 +1488,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>パスワード？
-すきに　いれちゃいなさいよ！</Text>
+すきに　いれちゃいなさいよ！▼
+ちなみに　あたしが
+すきな　すうじは「０」だけど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T07:54:43" />
+				Time="2011-12-10T09:53:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1296,10 +1502,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>パスワード？
-好きに　いれちゃいなさいよ！</Text>
+好きに　いれちゃいなさいよ！▼
+ちなみに　あたしが
+好きな　数字は「０」だけど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T07:54:43" />
+				Time="2011-12-10T09:54:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1311,7 +1519,7 @@
 ・ヒント6-2</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:46:18" />
+				Time="2011-12-10T09:57:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1335,10 +1543,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>パスワード？
-すきに　いれちゃいなさいよ！</Text>
+すきに　いれちゃいなさいよ！▼
+ちなみに　あたしが
+すきな　すうじは「０」だけど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T07:54:43" />
+				Time="2011-12-10T09:53:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1347,10 +1557,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>パスワード？
-好きに　いれちゃいなさいよ！</Text>
+好きに　いれちゃいなさいよ！▼
+ちなみに　あたしが
+好きな　数字は「０」だけど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T07:54:43" />
+				Time="2011-12-10T09:54:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1359,10 +1571,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・ヒント6-3</Comment>
+・ヒント6-3
+・9909のヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:46:20" />
+				Time="2011-12-10T09:57:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1386,10 +1599,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>パスワード？
-すきに　いれちゃいなさいよ！</Text>
+すきに　いれちゃいなさいよ！▼
+ちなみに　あたしが
+すきな　すうじは「０」だけど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T07:54:43" />
+				Time="2011-12-10T09:53:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1398,10 +1613,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>パスワード？
-好きに　いれちゃいなさいよ！</Text>
+好きに　いれちゃいなさいよ！▼
+ちなみに　あたしが
+好きな　数字は「０」だけど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T07:54:43" />
+				Time="2011-12-10T09:54:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1410,10 +1627,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・ヒント6-4</Comment>
+・ヒント6-4
+・7707のヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:46:22" />
+				Time="2011-12-10T09:57:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1422,6 +1640,62 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-25T12:28:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_hide_ship_hint6_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>パスワード？
+すきに　いれちゃいなさいよ！▼
+ちなみに　あたしが
+すきな　すうじは「０」だけど</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:53:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:53:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>パスワード？
+好きに　いれちゃいなさいよ！▼
+ちなみに　あたしが
+好きな　数字は「０」だけど</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:54:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:54:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・ヒント6-5
+・2202のヒント</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:57:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+プラズマ団♀・したっぱ６</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-10T09:57:14" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

@@ -540,11 +540,11 @@
 教えるつもりが　教わるとはな▼
 それにしても　おまえには
 見所が　ある▼
-じぶんの　ポケモンへの　理解がなきゃ
+自分の　ポケモンへの　理解がなきゃ
 トリプルバトルは　勝てないからな▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T08:59:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1187,11 +1187,11 @@
 教えるつもりが　教わるとはな▼
 それにしても　おまえには
 見所が　ある▼
-じぶんの　ポケモンへの　理解がなきゃ
+自分の　ポケモンへの　理解がなきゃ
 ローテーションバトルは　勝てないからな▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:16" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T08:58:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3308,11 +3308,11 @@ musician_01</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>うあ！　ここ！！▼
-はいれそうな　スキマが　あるよ
+入れそうな　スキマが　あるよ
 ね！　みてみよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T12:31:34" />
+				Time="2011-12-10T09:00:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3673,11 +3673,11 @@ Nという　ポケモントレーナーと
 ・GRIDX=359、GRIDZ=439、下向き
 　話しかけでイベント開始
 ・はい/いいえの選択肢表示
-　はい　→
-　いいえ→</Comment>
+　はい　→swleader1_03
+　いいえ→swleader1_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T06:23:32" />
+				Time="2011-12-10T09:00:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3728,11 +3728,11 @@ Nという　ポケモントレーナーと
 			Language="JPN">
 			<Comment>♂：データコンバート
 ・はい/いいえの選択肢表示
-　はい　→
-　いいえ→</Comment>
+　はい　→swleader1_03
+　いいえ→swleader1_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T06:31:40" />
+				Time="2011-12-10T09:00:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

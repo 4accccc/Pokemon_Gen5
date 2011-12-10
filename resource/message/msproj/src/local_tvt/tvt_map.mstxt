@@ -8114,10 +8114,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちていいせき</Text>
+			<Text>なあに？
+ちていいせき？▼
+しらないわねえ▼
+ママも　いって　どんな　ばしょか
+みておいたほうが　いいかな？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-16T03:48:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T10:13:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8125,10 +8129,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちていいせき</Text>
+			<Text>なあに？
+地底遺跡？▼
+知らないわねえ▼
+ママも　行って　どんな　場所か
+みておいたほうが　いいかな？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-16T03:48:43" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T10:13:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8137,10 +8145,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>D29R0401/R0501/R0601
-</Comment>
+・地底遺跡</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-16T03:48:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T10:13:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -8169,10 +8177,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いわやまのま</Text>
+			<Text>なあに？
+いわやまのま？▼
+しらないわねえ▼
+ママも　いって　どんな　ばしょか
+みておいたほうが　いいかな？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-16T03:48:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T10:14:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8180,10 +8192,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いわやまのま</Text>
+			<Text>なあに？
+岩山の間？▼
+知らないわねえ▼
+ママも　行って　どんな　場所か
+みておいたほうが　いいかな？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-16T03:48:43" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T10:15:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8192,11 +8208,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>D29R0701
-
-</Comment>
+・岩山の間</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-16T03:48:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T10:13:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -8225,10 +8240,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひょうざんのま</Text>
+			<Text>なあに？
+ひょうざんのま？▼
+しらないわねえ▼
+ママも　いって　どんな　ばしょか
+みておいたほうが　いいかな？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-16T03:48:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T10:14:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8236,10 +8255,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひょうざんのま</Text>
+			<Text>なあに？
+氷山の間？▼
+知らないわねえ▼
+ママも　行って　どんな　場所か
+みておいたほうが　いいかな？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-16T03:48:43" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T10:15:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8247,10 +8270,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>D29R0801</Comment>
+			<Comment>D29R0801
+・氷山の間</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-16T03:48:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T10:14:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -8279,10 +8303,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>くろがねのま</Text>
+			<Text>なあに？
+くろがねのま？▼
+しらないわねえ▼
+ママも　いって　どんな　ばしょか
+みておいたほうが　いいかな？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-16T03:48:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T10:15:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8290,10 +8318,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くろがねのま</Text>
+			<Text>なあに？
+鉄の間？▼
+知らないわねえ▼
+ママも　行って　どんな　場所か
+みておいたほうが　いいかな？▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-16T03:48:43" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T10:15:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8301,10 +8333,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>D29R0901</Comment>
+			<Comment>D29R0901
+・鉄の間</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-16T03:48:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T10:14:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -8333,10 +8366,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>れんまのはやし</Text>
+			<Text>れんまのはやし
+かりメッセージ</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-12-10T09:22:18" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T10:14:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8344,10 +8378,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>練磨の林</Text>
+			<Text>練磨の林
+仮メッセージ</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-12-10T09:22:18" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T10:14:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8356,11 +8391,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>T06R0401
-※仮名
-</Comment>
+※仮・</Comment>
 			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-12-10T09:22:18" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T10:14:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

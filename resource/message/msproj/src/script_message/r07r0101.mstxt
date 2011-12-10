@@ -200,10 +200,10 @@
 エスパータイプが　おおいところに▽
 この　たてものが　つくられたのか▼
 それとも　たてられたからこそ
-そうした　ポケモンが　つどうのかしら</Text>
+そうした　ポケモンが　つどうのかしら▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T11:14:43" />
+				Time="2011-12-10T08:12:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -217,10 +217,10 @@
 エスパータイプが　多いところに▽
 この建物が　造られたのか▼
 それとも　建てられたからこそ
-そうした　ポケモンが　集うのかしら</Text>
+そうした　ポケモンが　集うのかしら▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-27T02:07:16" />
+				Time="2011-12-10T08:12:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -232,12 +232,12 @@
 ・c06ジムバッジ入手まで
 　ここで会話しなかった場合
 ・c06ジムバッジ取得後
-・アイテム入手処理
-　No231「しあわせタマゴ」
+・メッセージ表示後にキョロキョロ
+　続けてhakase2_07
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T03:03:34" />
+				Time="2011-12-10T08:14:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -259,7 +259,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『ハーイ！
+			<Text>ハーイ！
 フウロちゃんは　どうだった？▼
 あら！　ジェットバッジ　じゃない！
 それじゃ　ひこうきが　とぶのね▼
@@ -268,7 +268,7 @@
 きみ　つかってみてよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T03:04:10" />
+				Time="2011-12-10T08:12:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -276,7 +276,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『ハーイ！
+			<Text>ハーイ！
 フウロちゃんは　どうだった？▼
 あら！　ジェットバッジ　じゃない！
 それじゃ　飛行機が　飛ぶのね▼
@@ -285,7 +285,7 @@
 きみ　使ってみてよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T03:04:11" />
+				Time="2011-12-10T08:12:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -329,10 +329,10 @@
 たたかいで　もらえる
 けいけんちが　ちょっぴり　ふえるの！▼
 ポケモンが　たくましくなった　ほうが
-ずかんの　ページも　うめやすいよね！</Text>
+ずかんの　ページも　うめやすいよね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T11:14:41" />
+				Time="2011-12-10T08:14:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -345,10 +345,10 @@
 戦いで　もらえる
 経験値が　ちょっぴり　増えるの！▼
 ポケモンが　たくましくなった　ほうが
-図鑑の　ページも　埋めやすいよね！</Text>
+図鑑の　ページも　埋めやすいよね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T11:14:41" />
+				Time="2011-12-10T08:14:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -357,11 +357,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・アイテム入手
+・アイテム入手後
+・続けてhakase2_07
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T03:02:32" />
+				Time="2011-12-10T08:14:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
