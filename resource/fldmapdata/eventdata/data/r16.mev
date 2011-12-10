@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/23 20:09:32
+#save date:2011/12/10 12:33:45
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r16.wms
 #SECTION START:OBJ_EVENT
@@ -144,7 +144,7 @@ CYCLEW
 #MOVE CODE Number
 MV_RTDLRU       
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_TR_D_ACC
 #Flag Name
 0
 #Event Script Name
@@ -175,7 +175,7 @@ CYCLEM
 #MOVE CODE Number
 MV_RTLD         
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_TR_D_ACC
 #Flag Name
 0
 #Event Script Name
