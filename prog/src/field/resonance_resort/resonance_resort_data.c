@@ -32,6 +32,7 @@
 #include "savedata/resonance_resort_sv.h"
 #include "savedata/record.h"
 #include "savedata/medalbox.h"
+#include "savedata/gametime.h"
 
 //mine 
 #include "field/resonance_resort/resort_map.h"
@@ -689,6 +690,25 @@ static void RESORT_EXTEND1_DATA_SetMyData( RESORT_EXTEND1_DATA *p_wk, const GAME
   SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( (GAMEDATA *)cp_gamedata );
 
   GFL_STD_MemClear( p_wk, sizeof(RESORT_EXTEND1_DATA) );
+
+  //冒険開始、殿堂入り
+  {
+    GMTIME *p_time = SaveData_GetGameTime( p_sv );
+
+    RTCDate date;
+    RTCTime time;
+
+    RTC_ConvertSecondToDateTime( &date , &time , p_time->start_sec );
+
+    p_wk->start_date = RESORT_DATA_RtcToDate( &date );
+  
+    if( p_time->clear_sec == 0 )
+    {
+      RTC_ConvertSecondToDateTime( &date , &time , p_time->clear_sec );
+
+      p_wk->dendou_date = RESORT_DATA_RtcToDate( &date );
+    }
+  }
 
   //メダル情報
   {
