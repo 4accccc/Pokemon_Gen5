@@ -2416,8 +2416,8 @@ BOOL INFINITY_DUNGEON_GetGateOpen( const INF_DUNGEON_DATA *p_dungeon_data ,const
   return INFINITYDUNGEON_SAVE_GetTrainerFlag( p_save ,floor_id ,tr_id_pos);
 }
 
-// エリア1~2報酬アイテムテーブル
-static const u16 item_table_1_2[] =
+// エリア1~5報酬アイテムテーブル
+static const u16 item_table_1_5[] =
 {
    ITEM_TAURIN,
    ITEM_BUROMUHEKISIN,
@@ -2427,25 +2427,26 @@ static const u16 item_table_1_2[] =
    ITEM_MAKKUSUAPPU,
 };
 
-// エリア1~2報酬アイテム確率テーブル
-static const u16 item_prob_table_1_2[] = { 17, 17, 17, 17, 16 , 16 };
+// エリア1~5報酬アイテム確率テーブル
+static const u16 item_prob_table_1_5[] = { 17, 17, 17, 17, 16 , 16 };
 
-// エリア3~5報酬アイテムテーブル
-static const u16 item_table_3_5[] =
+// エリア6~9報酬アイテムテーブル
+static const u16 item_table_6_9[] =
 {
-  ITEM_TAURIN,
-  ITEM_BUROMUHEKISIN,
-  ITEM_RIZOTIUMU,
-  ITEM_KITOSAN,
-  ITEM_INDOMETASIN,
-  ITEM_MAKKUSUAPPU,
+  ITEM_TAIRYOKUNOHANE,
+  ITEM_KINRYOKUNOHANE,
+  ITEM_TEIKOUNOHANE,
+  ITEM_TIRYOKUNOHANE,
+  ITEM_SEISINNOHANE,
+  ITEM_SYUNPATUNOHANE,
+  ITEM_HUSIGINAAME,
 };
 
-// エリア3~5報酬アイテム確率テーブル
-static const u16 item_prob_table_3_5[] = { 17, 17, 17, 17, 16 , 16 };
+// エリア6~9報酬アイテム確率テーブル
+static const u16 item_prob_table_6_9[] = { 15, 15, 15, 15, 15, 15 ,10 };
 
-// エリア6~8報酬アイテムテーブル
-static const u16 item_table_6_8[] =
+// エリア10報酬アイテムテーブル
+static const u16 item_table_10[] =
 {
   ITEM_ZAROKUNOMI,
   ITEM_NEKOBUNOMI,
@@ -2457,22 +2458,7 @@ static const u16 item_table_6_8[] =
 };
 
 // エリア6~8報酬アイテム確率テーブル
-static const u16 item_prob_table_6_8[] = { 15, 15, 15, 15, 15, 15 ,10 };
-
-// エリア9~10報酬アイテムテーブル
-static const u16 item_table_9_10[] =
-{
-  ITEM_ZAROKUNOMI,
-  ITEM_NEKOBUNOMI,
-  ITEM_TAPORUNOMI,
-  ITEM_ROMENOMI,
-  ITEM_UBUNOMI,
-  ITEM_MATOMANOMI,
-  ITEM_HUSIGINAAME,
-};
-
-// エリア6~8報酬アイテム確率テーブル
-static const u16 item_prob_table_9_10[] = { 15, 15, 15, 15, 15, 15 ,10 };
+static const u16 item_prob_table_10[] = { 15, 15, 15, 15, 15, 15 ,10 };
 
 //----------------------------------------------------------------------------
 /**
@@ -2492,51 +2478,62 @@ static void SetRewardItem( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,u32 se
   GFL_STD_RandContext rand_context;
 
   // エリアごとの入手個数テーブル
-  const u8 item_num_table[INFINITY_DUNGEON_AREA_ID_MAX] = {1,1,2,2,2,1,1,1,2,2};
+  const u8 item_num_table[INFINITY_DUNGEON_AREA_ID_MAX] = {
+    1,  // エリア1
+    1,  // エリア2
+    1,  // エリア3
+    2,  // エリア4
+    2,  // エリア5
+    1,  // エリア6
+    1,  // エリア7
+    2,  // エリア8
+    2,  // エリア9
+    1   // エリア10
+  };
 
   // アイテム入手テーブル
   const u16 *p_item_table[INFINITY_DUNGEON_AREA_ID_MAX] =
   {
-    item_table_1_2, // エリア1
-    item_table_1_2, // エリア2
-    item_table_3_5, // エリア3
-    item_table_3_5, // エリア4
-    item_table_3_5, // エリア5
-    item_table_6_8, // エリア6
-    item_table_6_8, // エリア7
-    item_table_6_8, // エリア8
-    item_table_9_10, // エリア9
-    item_table_9_10, // エリア10
+    item_table_1_5, // エリア1
+    item_table_1_5, // エリア2
+    item_table_1_5, // エリア3
+    item_table_1_5, // エリア4
+    item_table_1_5, // エリア5
+    item_table_6_9, // エリア6
+    item_table_6_9, // エリア7
+    item_table_6_9, // エリア8
+    item_table_6_9,   // エリア9
+    item_table_10,  // エリア10
   };
 
   // アイテム入手確率テーブル
   const u16 *p_item_prob_table[INFINITY_DUNGEON_AREA_ID_MAX] =
   {
-    item_prob_table_1_2, // エリア1
-    item_prob_table_1_2, // エリア2
-    item_prob_table_3_5, // エリア3
-    item_prob_table_3_5, // エリア4
-    item_prob_table_3_5, // エリア5
-    item_prob_table_6_8, // エリア6
-    item_prob_table_6_8, // エリア7
-    item_prob_table_6_8, // エリア8
-    item_prob_table_9_10, // エリア9
-    item_prob_table_9_10, // エリア10
+    item_prob_table_1_5, // エリア1
+    item_prob_table_1_5, // エリア2
+    item_prob_table_1_5, // エリア3
+    item_prob_table_1_5, // エリア4
+    item_prob_table_1_5, // エリア5
+    item_prob_table_6_9, // エリア6
+    item_prob_table_6_9, // エリア7
+    item_prob_table_6_9, // エリア8
+    item_prob_table_6_9, // エリア9
+    item_prob_table_10,  // エリア10
   };
 
   // アイテム種類数テーブル
   const u16 item_type_num_table[INFINITY_DUNGEON_AREA_ID_MAX] =
   {
-    NELEMS(item_prob_table_1_2), // エリア1
-    NELEMS(item_prob_table_1_2), // エリア2
-    NELEMS(item_prob_table_3_5), // エリア3
-    NELEMS(item_prob_table_3_5), // エリア4
-    NELEMS(item_prob_table_3_5), // エリア5
-    NELEMS(item_prob_table_6_8), // エリア6
-    NELEMS(item_prob_table_6_8), // エリア7
-    NELEMS(item_prob_table_6_8), // エリア8
-    NELEMS(item_prob_table_9_10), // エリア9
-    NELEMS(item_prob_table_9_10), // エリア10
+    NELEMS(item_prob_table_1_5), // エリア1
+    NELEMS(item_prob_table_1_5), // エリア2
+    NELEMS(item_prob_table_1_5), // エリア3
+    NELEMS(item_prob_table_1_5), // エリア4
+    NELEMS(item_prob_table_1_5), // エリア5
+    NELEMS(item_prob_table_6_9), // エリア6
+    NELEMS(item_prob_table_6_9), // エリア7
+    NELEMS(item_prob_table_6_9), // エリア8
+    NELEMS(item_prob_table_6_9), // エリア9
+    NELEMS(item_prob_table_10),  // エリア10
   };
 
   // 乱数を作成

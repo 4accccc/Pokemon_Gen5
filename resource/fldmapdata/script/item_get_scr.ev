@@ -28,6 +28,7 @@ _EVENT_DATA   ev_item_event_prog_call
 _EVENT_DATA   ev_item_event_field_keywait
 _EVENT_DATA   ev_item_event_fmission_clear
 _EVENT_DATA   ev_item_event_fmission_item_get
+_EVENT_DATA   ev_inf_item_event_keywait
 _EVENT_DATA_END //終了
 
 
@@ -740,4 +741,51 @@ ev_item_event_fmission_item_get:
 }
 _CHG_LOCAL_SCR													//ローカルスクリプトに切り替え
 _END
+
+//====================================================================
+//	アイテム取得イベント-無限ダンジョン専用(送りカーソル待ちあり)
+//
+//	SCWK_PARAM0	アイテムナンバー
+//	SCWK_PARAM1	個数
+//====================================================================
+ev_inf_item_event_keywait:
+  _ADD_ITEM_CHK( SCWK_PARAM0, SCWK_PARAM1, SCWK_ANSWER)
+  IF $SCWK_ANSWER == FALSE THEN
+      //入手失敗システムメッセージ
+      $SCWK_TEMP0 = $SCWK_PARAM0
+      $SCWK_TEMP1 = $SCWK_PARAM1
+      _CALL   sub_item_event_fail_keywait
+  ELSE
+      //入手成功システムメッセージ
+      $SCWK_TEMP0 = $SCWK_PARAM0
+      $SCWK_TEMP1 = $SCWK_PARAM1
+      _CALL   sub_inf_item_event_keywait
+  ENDIF
+  _CHG_LOCAL_SCR
+  _END
+
+  //--------------------------------------------------------------------
+//	アイテム取得イベント-無限ダンジョン専用(成功)(送りカーソル待ちあり)
+//
+//	SCWK_TEMP0	アイテムナンバー
+//	SCWK_TEMP1	個数
+//--------------------------------------------------------------------
+sub_inf_item_event_keywait:
+{
+  //アイテム追加
+  _ADD_ITEM( SCWK_TEMP0,SCWK_TEMP1,SCWK_ANSWER )
+
+  _CALL	  sub_pocket_me_set									//MEセット
+  
+  // 専用メッセージ
+  _PLAYER_NAME( 0 )
+  _ITEM_NAME( 1, SCWK_TEMP0 )
+  _NUMBER( 2, SCWK_TEMP1, 1 )
+  _SYSWIN_MSG( msg_infinity_dungeon_clear_item_get , POS_DEFAULT )
+  _ME_WAIT()
+  _AB_KEYWAIT_MARK()
+	
+  _CALL   sub_item_event_pocket_msg_keywait
+}
+_RET
 

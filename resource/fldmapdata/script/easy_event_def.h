@@ -238,6 +238,21 @@
   _POP_WORK   SCWK_PARAM0
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief 無限ダンジョン用アイテム入手成功イベント
+ */
+//--------------------------------------------------------------
+  .macro  _ASM_INF_ITEM_GET itemno, num
+  _PUSH_WORK  SCWK_PARAM0
+  _PUSH_WORK  SCWK_PARAM1
+  _ASM_LDWKVAL  SCWK_PARAM0, \itemno
+  _ASM_LDWKVAL  SCWK_PARAM1, \num
+  _CHG_COMMON_SCR SCRID_INF_ITEM_EVENT_KEYWAIT
+  _POP_WORK   SCWK_PARAM1
+  _POP_WORK   SCWK_PARAM0
+  .endm
+
 //======================================================================
 //   簡易メッセージコマンド
 //======================================================================
