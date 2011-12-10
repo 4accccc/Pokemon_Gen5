@@ -258,7 +258,7 @@ def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service, header )
   patchdata.load( patch )
 
   #タイプ別最大LVチェック配列
-  lv_max_array  = Array.new(1)
+  lv_max_array  = Array.new(4)
 
   for row in SHOP_ROW_START...csv.row_length-1
 
@@ -275,12 +275,12 @@ def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service, header )
 
     #データ書き込み
     data.write_u16( h_define[shop] )
-    data.write_u16( type )
+    data.write_u16( h_define[type] )
     data.write_u16( lv )
     data.write_u16( nextexp )
 
     #タイプ別最大LV
-    index = h_define[shop] * (type.to_i+1)
+    index = h_define[shop] + (h_define[type])*8
     if lv_max_array[index] == nil || lv_max_array[index]  < lv
       lv_max_array[index]  = lv
     end
@@ -326,13 +326,11 @@ def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service, header )
 
   #ヘッダに書きこみ
   lv_max_array.each {|num|
-    if lv_max_array[0] != num 
+    if lv_max_array[0] != num
       puts "最大LVが#{num}の場所があります。"
       exit(1)
     end
   }
-  p lv_max_array
-
   header.write( "#define RESORT_SHOP_LVMAX (#{lv_max_array[0]})\n" )
 
 end
