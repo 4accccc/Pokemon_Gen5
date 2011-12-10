@@ -907,7 +907,7 @@ VMCMD_RESULT EvCmdResortAddEffort( VMHANDLE *p_core, void *p_wk_adrs )
       }
     }
     
-    v = PrmExp_Up( v, all, value );
+    v = PrmExp_Up( v, all-v, value );
     if( v != -1 )
     {
       PP_Put( p_pp, ID_PARA_hp_exp + effort, v );
