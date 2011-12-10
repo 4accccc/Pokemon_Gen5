@@ -638,38 +638,47 @@
 			<Text>しょうばいはんじょう！▼
 ブラックシティの　めいてんと
 いえば　このおみせ！▼
-ここに　しかない
-おたからだよ！▼</Text>
+きょうは　とくべつに
+つきのいしを　５０００えんで！▽
+いかがですか？</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T02:38:56" />
+				Time="2011-12-10T06:24:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T07:04:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>商売繁盛！▼
 ブラックシティの　名店と
 言えば　このお店！▼
-ここに　しかない
-お宝だよ！▼</Text>
+今日は　特別に
+つきのいしを　５０００円で！▽
+いかがですか？</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T02:38:41" />
+				Time="2011-12-10T06:26:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T07:04:10" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>ショップ店員A　販売時
-</Comment>
+（平日）
+・以下の選択肢表示
+　かう
+　いらない
+・「かう」選択→shop_a_03
+・「かう」選択、バッグがいっぱい→shop_a_04
+・「かう」選択、お金がない→shop_a_05
+・いらない→shop_a_06</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T02:36:13" />
+				Time="2011-12-10T06:32:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -687,7 +696,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -698,36 +707,50 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>またきてくれよ！▼
-おれの　きぶんしだいで
-しょうひんが　かわるからさ</Text>
+			<Text>しょうばいはんじょう！▼
+ブラックシティの　めいてんと
+いえば　このおみせ！▼
+きょうは　とくべつに
+たいようのいしを　５０００えんで！▽
+いかがですか？</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T02:40:25" />
+				Time="2011-12-10T06:31:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T07:04:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>また来てくれよ！▼
-おれの　気分次第で
-商品が　変わるからさ</Text>
+			<Text>商売繁盛！▼
+ブラックシティの　名店と
+言えば　このお店！▼
+今日は　特別に
+たいようのいしを　５０００円で！▽
+いかがですか？</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T02:40:48" />
+				Time="2011-12-10T06:31:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T07:04:11" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ショップ店員A　販売終了時</Comment>
+			<Comment>ショップ店員A　販売時
+（休日）
+・以下の選択肢表示
+　かう
+　いらない
+・「かう」選択→shop_a_03
+・「かう」選択、バッグがいっぱい→shop_a_04
+・「かう」選択、お金がない→shop_a_05
+・いらない→shop_a_06</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T02:36:24" />
+				Time="2011-12-10T06:36:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -745,7 +768,232 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_bc10r0401_shop_a_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はい　どうぞ
+おきゃくさん　いいかいものしたね！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:28:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はい　どうぞ
+お客さん　いい買い物したね！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:28:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・「かう」選択
+　続けてアイテム入手処理</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:28:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_bc10r0401_shop_a_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おっと！
+バッグが　いっぱいだぞ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:29:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おっと！
+バッグが　いっぱいだぞ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:30:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・「かう」選択、バッグがいっぱい</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_bc10r0401_shop_a_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おいおい！
+おかねが　たりないぞ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:30:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おいおい！
+お金が　足りないぞ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:30:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・「かう」選択、お金がない</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:35:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_bc10r0401_shop_a_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>またきてくれよ！
+ひんしつには　じしんが　あるからさ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:36:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>また来てくれよ！
+品質には　自信が　あるからさ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:36:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・「いらない」選択</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:35:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -759,38 +1007,47 @@
 			<Text>せんきゃくばんらい！▼
 ブラックシティの　いちりゅうてんと
 いえば　このおみせ！▼
-ここに　しかない
-おたからだよ！▼</Text>
+きょうは　とくべつに
+するどいツメを　１００００えんで！▽
+いかがですか？</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T03:17:08" />
+				Time="2011-12-10T06:38:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T07:04:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>千客万来！▼
 ブラックシティの　一流店と
 言えば　このお店！▼
-ここに　しかない
-お宝だよ！▼</Text>
+今日は　特別に
+するどいツメを　１００００円で！▽
+いかがですか？</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T03:17:40" />
+				Time="2011-12-10T06:39:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T07:04:12" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ショップ店員B　販売時
-</Comment>
+			<Comment>ショップ店員Ｂ販売時
+（平日）
+・以下の選択肢表示
+　かう
+　いらない
+・「かう」選択→shop_b_03
+・「かう」選択、バッグがいっぱい→shop_b_04
+・「かう」選択、お金がない→shop_b_05
+・いらない→shop_b_06</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T02:42:05" />
+				Time="2011-12-10T06:39:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -808,7 +1065,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -819,36 +1076,50 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>またきてくれよ！▼
-おれの　やるきしだいで
-しょうひんが　かわるからさ</Text>
+			<Text>せんきゃくばんらい！▼
+ブラックシティの　いちりゅうてんと
+いえば　このおみせ！▼
+きょうは　とくべつに
+するどいキバを　１００００えんで！▽
+いかがですか？</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T02:43:28" />
+				Time="2011-12-10T06:40:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T07:04:12" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>また来てくれよ！▼
-おれの　やる気次第で
-商品が　変わるからさ</Text>
+			<Text>千客万来！▼
+ブラックシティの　一流店と
+言えば　このお店！▼
+今日は　特別に
+するどいキバを　１００００円で！▽
+いかがですか？</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T02:43:37" />
+				Time="2011-12-10T06:40:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T07:04:12" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ショップ店員B　販売終了時</Comment>
+			<Comment>ショップ店員Ｂ販売時
+（休日）
+・以下の選択肢表示
+　かう
+　いらない
+・「かう」選択→shop_b_03
+・「かう」選択、バッグがいっぱい→shop_b_04
+・「かう」選択、お金がない→shop_b_05
+・いらない→shop_b_06</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T02:42:08" />
+				Time="2011-12-10T06:40:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -866,7 +1137,232 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_bc10r0401_shop_b_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はい　どうぞ
+おきゃくさん　いいかいものしたね！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:28:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はい　どうぞ
+お客さん　いい買い物したね！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:28:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・「かう」選択
+　続けてアイテム入手処理</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:28:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_bc10r0401_shop_b_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おっと！
+バッグが　いっぱいだぞ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:29:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おっと！
+バッグが　いっぱいだぞ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:30:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・「かう」選択、バッグがいっぱい</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_bc10r0401_shop_b_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おいおい！
+おかねが　たりないぞ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:30:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おいおい！
+お金が　足りないぞ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:30:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・「かう」選択、お金がない</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:35:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_bc10r0401_shop_b_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>またきてくれよ！
+ひんしつには　じしんが　あるからさ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:36:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>また来てくれよ！
+品質には　自信が　あるからさ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:36:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・「いらない」選択</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:35:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -880,38 +1376,47 @@
 			<Text>はくりたばい！▼
 ブラックシティの　がんそと
 いえば　このおみせ！▼
-ここに　しかない
-おたからだよ！▼</Text>
+きょうは　とくべつに
+しんかいのキバを　１５０００えんで！▽
+いかがですか？</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T02:56:24" />
+				Time="2011-12-10T06:48:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T07:04:12" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>薄利多売！▼
 ブラックシティの　元祖と
 言えば　このお店！▼
-ここに　しかない
-お宝だよ！▼</Text>
+今日は　特別に
+しんかいのキバを　１５０００円で！▽
+いかがですか？</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T02:56:37" />
+				Time="2011-12-10T06:49:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T07:04:13" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ショップ店員C　販売時
-</Comment>
+			<Comment>ショップ店員Ｂ販売時
+（平日）
+・以下の選択肢表示
+　かう
+　いらない
+・「かう」選択→shop_c_03
+・「かう」選択、バッグがいっぱい→shop_c_04
+・「かう」選択、お金がない→shop_c_05
+・いらない→shop_c_06</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T03:15:43" />
+				Time="2011-12-10T06:48:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -929,7 +1434,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -940,36 +1445,50 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>またきてくれよ！▼
-おれの　きもちしだいで
-しょうひんが　かわるからさ</Text>
+			<Text>はくりたばい！▼
+ブラックシティの　がんそと
+いえば　このおみせ！▼
+きょうは　とくべつに
+しんかいのウロコを　１５０００えんで！▽
+いかがですか？</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T02:57:34" />
+				Time="2011-12-10T06:49:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T07:04:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>また来てくれよ！▼
-おれの　気持ち次第で
-商品が　変わるからさ</Text>
+			<Text>薄利多売！▼
+ブラックシティの　元祖と
+言えば　このお店！▼
+今日は　特別に
+しんかいのウロコを　１５０００円で！▽
+いかがですか？</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T02:57:41" />
+				Time="2011-12-10T06:49:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T07:04:13" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ショップ店員C　販売終了時</Comment>
+			<Comment>ショップ店員Ｂ販売時
+（休日）
+・以下の選択肢表示
+　かう
+　いらない
+・「かう」選択→shop_c_03
+・「かう」選択、バッグがいっぱい→shop_c_04
+・「かう」選択、お金がない→shop_c_05
+・いらない→shop_c_06</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T03:15:39" />
+				Time="2011-12-10T06:50:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -987,7 +1506,232 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_bc10r0401_shop_c_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はい　どうぞ
+おきゃくさん　いいかいものしたね！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:28:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はい　どうぞ
+お客さん　いい買い物したね！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:28:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・「かう」選択
+　続けてアイテム入手処理</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:28:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_bc10r0401_shop_c_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おっと！
+バッグが　いっぱいだぞ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:29:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おっと！
+バッグが　いっぱいだぞ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:30:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・「かう」選択、バッグがいっぱい</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_bc10r0401_shop_c_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おいおい！
+おかねが　たりないぞ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:30:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おいおい！
+お金が　足りないぞ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:30:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・「かう」選択、お金がない</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:35:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_bc10r0401_shop_c_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>またきてくれよ！
+ひんしつには　じしんが　あるからさ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:36:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>また来てくれよ！
+品質には　自信が　あるからさ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:36:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・「いらない」選択</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:35:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1001,38 +1745,47 @@
 			<Text>りえきかんげん！▼
 ブラックシティの　しにせと
 いえば　このおみせ！▼
-ここに　しかない
-おたからだよ！▼</Text>
+きょうは　とくべつに
+りゅうのウロコを　２００００えんで！▽
+いかがですか？</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T03:05:09" />
+				Time="2011-12-10T06:50:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T07:04:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>利益還元！▼
 ブラックシティの　老舗と
 言えば　このお店！▼
-ここに　しかない
-お宝だよ！▼</Text>
+今日は　特別に
+りゅうのウロコを　２００００円で！▽
+いかがですか？</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T03:06:38" />
+				Time="2011-12-10T06:51:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T07:04:13" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ショップ店員D　販売時
-</Comment>
+			<Comment>ショップ店員Ｂ販売時
+（平日）
+・以下の選択肢表示
+　かう
+　いらない
+・「かう」選択→shop_d_03
+・「かう」選択、バッグがいっぱい→shop_d_04
+・「かう」選択、お金がない→shop_d_05
+・いらない→shop_d_06</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T03:15:36" />
+				Time="2011-12-10T06:53:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1050,7 +1803,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1061,36 +1814,50 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>またきてくれよ！▼
-おれの　たいちょうしだいで
-しょうひんが　かわるからさ</Text>
+			<Text>りえきかんげん！▼
+ブラックシティの　しにせと
+いえば　このおみせ！▼
+きょうは　とくべつに
+おうじゃのしるしを　２００００えんで！▽
+いかがですか？</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T03:06:55" />
+				Time="2011-12-10T06:52:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T07:04:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>また来てくれよ！▼
-おれの　体調次第で
-商品が　変わるからさ</Text>
+			<Text>利益還元！▼
+ブラックシティの　老舗と
+言えば　このお店！▼
+今日は　特別に
+おうじゃのしるしを　２００００円で！▽
+いかがですか？</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T03:07:04" />
+				Time="2011-12-10T06:52:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T07:04:14" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ショップ店員D　販売終了時</Comment>
+			<Comment>ショップ店員Ｂ販売時
+（休日）
+・以下の選択肢表示
+　かう
+　いらない
+・「かう」選択→shop_d_03
+・「かう」選択、バッグがいっぱい→shop_d_04
+・「かう」選択、お金がない→shop_d_05
+・いらない→shop_d_06</Comment>
 			<CommentModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-09T03:15:32" />
+				Time="2011-12-10T06:52:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1108,7 +1875,344 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_bc10r0401_shop_d_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はい　どうぞ
+おきゃくさん　いいかいものしたね！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:28:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>はい　どうぞ
+お客さん　いい買い物したね！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:28:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・「かう」選択
+　続けてアイテム入手処理</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:28:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_bc10r0401_shop_d_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おっと！
+バッグが　いっぱいだぞ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:29:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おっと！
+バッグが　いっぱいだぞ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:30:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・「かう」選択、バッグがいっぱい</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:30:16" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_bc10r0401_shop_d_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おいおい！
+おかねが　たりないぞ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:30:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おいおい！
+お金が　足りないぞ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:30:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・「かう」選択、お金がない</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:35:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_bc10r0401_shop_d_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>またきてくれよ！
+ひんしつには　じしんが　あるからさ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:36:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>また来てくれよ！
+品質には　自信が　あるからさ！</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:36:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・「いらない」選択</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T06:35:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_bc10r0401_shop_choice_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かう</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T07:06:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>買う</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T07:06:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・shop_○_01　or　shop_○_02
+表示後の選択肢</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T07:11:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS
+ウェートレス</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_bc10r0401_shop_choice_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いらない</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いらない</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・shop_○_01　or　shop_○_02
+表示後の選択肢</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-10T07:11:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WAITRESS
+ウェートレス</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
