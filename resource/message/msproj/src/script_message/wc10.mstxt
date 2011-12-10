@@ -7563,4 +7563,488 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_wc10_shop_a_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しょうばいはんじょう！▼
+ホワイトフォレストの　めいてんと
+いえば　このおみせ！▼
+ここに　しかない
+おたからだよ！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T03:19:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>商売繁盛！▼
+ホワイトフォレストの　名店と
+言えば　このお店！▼
+ここに　しかない
+お宝だよ！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T03:20:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ショップ店員A　販売時
+</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T02:36:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wc10_shop_a_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>またきてくれよ！▼
+おれの　きぶんしだいで
+しょうひんが　かわるからさ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T02:40:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>また来てくれよ！▼
+おれの　気分次第で
+商品が　変わるからさ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T02:40:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ショップ店員A　販売終了時</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T02:36:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wc10_shop_b_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>せんきゃくばんらい！▼
+ホワイトフォレストの　いちりゅうてんと
+いえば　このおみせ！▼
+ここに　しかない
+おたからだよ！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T03:20:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>千客万来！▼
+ホワイトフォレストの　一流店と
+言えば　このお店！▼
+ここに　しかない
+お宝だよ！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T03:20:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ショップ店員B　販売時
+</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T02:42:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wc10_shop_b_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>またきてくれよ！▼
+おれの　やるきしだいで
+しょうひんが　かわるからさ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T02:43:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>また来てくれよ！▼
+おれの　やる気次第で
+商品が　変わるからさ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T02:43:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ショップ店員B　販売終了時</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T02:42:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wc10_shop_c_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>はくりたばい！▼
+ホワイトフォレストの　がんそと
+いえば　このおみせ！▼
+ここに　しかない
+おたからだよ！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T03:20:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>薄利多売！▼
+ホワイトフォレストの　元祖と
+言えば　このお店！▼
+ここに　しかない
+お宝だよ！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T03:20:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ショップ店員C　販売時
+</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T03:15:43" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wc10_shop_c_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>またきてくれよ！▼
+おれの　きもちしだいで
+しょうひんが　かわるからさ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T02:57:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>また来てくれよ！▼
+おれの　気持ち次第で
+商品が　変わるからさ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T02:57:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ショップ店員C　販売終了時</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T03:15:39" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wc10_shop_d_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>りえきかんげん！▼
+ホワイトフォレストの　しにせと
+いえば　このおみせ！▼
+ここに　しかない
+おたからだよ！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T03:21:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>利益還元！▼
+ホワイトフォレストの　老舗と
+言えば　このお店！▼
+ここに　しかない
+お宝だよ！▼</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T03:21:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ショップ店員D　販売時
+</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T03:15:36" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wc10_shop_d_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>またきてくれよ！▼
+おれの　たいちょうしだいで
+しょうひんが　かわるからさ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T03:06:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>また来てくれよ！▼
+おれの　体調次第で
+商品が　変わるからさ</Text>
+			<TextModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T03:07:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ショップ店員D　販売終了時</Comment>
+			<CommentModifiedBy
+				User="nakamura_akira:W00280"
+				Time="2011-12-09T03:15:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:09" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>
