@@ -54,7 +54,6 @@ INIT_EVENT_END
 /**************************************************************/
 EVENT_START   ev_scene_c08r0101_legend_01
   
-  
   //アニメ：主人公シャガの前に移動
   _OBJ_ANIME( MMDL_ID_PLAYER,anm_player_to_swleader8 )
   _TIME_WAIT(8*4)
@@ -89,8 +88,16 @@ EVENT_START   ev_scene_c08r0101_legend_01
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_05 , C08R0101_SWLEADER7_01 , POS_DEFAULT)
   _MSGWIN_CLOSE()
   
-  //【仮】氷が降ってくる効果音
+  //【仮】飛行機の効果音
   _SE_PLAY( SEQ_SE_KOUKA_H )
+  
+  //========================================//
+  //C08の曲を無音状態にセット
+  _FLAG_SET( SYS_FLAG_BGM_C08_SILENT )
+  //========================================//
+  
+  //BGMを変更
+  _START_EVENT_BGM_SILENT( 20 )
   
   //プレーンギザウィン：ぶぅん
   _GIZAPLAINWIN_MSG_POS( msg_c08_event_01, POS_DOWN )
@@ -104,6 +111,7 @@ EVENT_START   ev_scene_c08r0101_legend_01
   
   _OBJ_ANIME( C08R0101_SWLEADER7_01, anm_common_hatena)
   _OBJ_ANIME_WAIT()
+  
   
   //シャガ：なにごと　だ？
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_06 , C08R0101_SWLEADER7_01 , POS_DEFAULT)
@@ -138,9 +146,18 @@ EVENT_START   ev_scene_c08r0101_legend_01
   
   //予約スクリプト
   _RESERVE_SCRIPT( SCRID_RESERVE_C08_PLAZMA_COMMING_01 )
-  //C08マップチェンジ
-  _MAP_CHANGE( ZONE_ID_C08, 418, 162, DIR_DOWN )
-
+  
+  //C08マップチェンジ（バージョンによって位置を分岐）
+  {
+   DEFINE_LOCAL LCWK_VERSION
+   _GET_ROM_VERSION( LCWK_VERSION )
+   
+   IF $LCWK_VERSION == VERSION_B2 THEN
+    _MAP_CHANGE( ZONE_ID_C08, 418, 162, DIR_DOWN )
+   ELSE
+    _MAP_CHANGE( ZONE_ID_C08, 418, 164, DIR_DOWN )
+   ENDIF
+  }
 EVENT_END
 
 //--------------------------------------------------------------------

@@ -149,7 +149,7 @@ INIT_EVENT_START ev_init_c08
   //プラズマ団襲来　ホワイトver
   ELSIF $WK_SCENE_C08_SWPLAZMA == 1 && $LCWK_VERSION == VERSION_W2 THEN
     _DEBUG_PRINT_WK( 4 )
-    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 419, 0, 162, DIR_DOWN )
+    _OBJ_POS_CHANGE( C08_SWLEADER7_01, 419, 0, 164, DIR_DOWN )
    //プラズマ団襲来　ブラックver
   ELSIF $WK_SCENE_C08_SWPLAZMA == 1 && $LCWK_VERSION == VERSION_B2 THEN
     _DEBUG_PRINT_WK( 5 )
@@ -423,7 +423,7 @@ EVENT_START   ev_reserve_c08_plazma_comming_01
   //========================================//
   //プラズマ団襲来状態に変更
   _FLAG_SET( FE_C08_PLAZMA_COME )
-  _FLAG_SET( SYS_FLAG_BGM_C08_PLAZMA )
+  //_FLAG_SET( SYS_FLAG_BGM_C08_PLAZMA )
   //C08プラズマ団表示
   _FLAG_RESET( FV_C08_SWPLAZMA_01 )
   _FLAG_RESET( FV_C08_SWSAGE7_01 )
@@ -439,8 +439,15 @@ EVENT_START   ev_reserve_c08_plazma_comming_01
   
   //予約スクリプト
   _RESERVE_SCRIPT( SCRID_RESERVE_C08_PLAZMA_COMMING_02 )
-  //マップチェンジ
-  _MAP_CHANGE_NO_FADE( ZONE_ID_C08, 418, 0, 162, DIR_DOWN )
+  
+  _GET_ROM_VERSION( LCW_VERSION )
+  
+  //マップチェンジ（バージョン分岐）
+  IF $LCW_VERSION == VERSION_B2 THEN
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C08, 418, 0, 162, DIR_DOWN )
+   ELSE
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C08, 418, 0, 164, DIR_DOWN )
+   ENDIF
   
 EVENT_END
 
@@ -449,20 +456,29 @@ EVENT_END
 /*  RESERVE：プラズマ団イベント開始（同一ゾーンで使用）       */
 /**************************************************************/
 EVENT_START   ev_reserve_c08_plazma_comming_02
+
+
   //ハイリンク通信ブロック処理
   _DISABLE_NETWORK_IN_IMPORTANT_EVENT()
 
   //暗転復帰
   _MAP_FADE_BLACK_IN()
   _DISP_FADE_END_CHECK()
-  
+
   //シャガ：この　こおりの　せかいは…
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_04a , C08_SWLEADER7_01 , POS_UR)
   _MSGWIN_CLOSE()
   
-  //オノノクス動作OBJ表示
-  _OBJ_ADD_EX( 419, 163, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE46, MV_DMY )
+  _GET_ROM_VERSION( LCW_VERSION )
   
+  //オノノクス動作OBJ表示（バージョンによって位置を分岐）
+  IF $LCW_VERSION == VERSION_B2 THEN
+   _OBJ_ADD_EX( 419, 163, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE46, MV_DMY )
+  ELSE
+    _OBJ_ADD_EX( 419, 165, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE46, MV_DMY )
+  ENDIF
+  
+
   //シャガ：ドラゴンテールだ
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_05 , C08_SWLEADER7_01 , POS_UR)
   _MSGWIN_CLOSE()
@@ -496,6 +512,7 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
   //シャガ：よくやった！
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_06 , C08_SWLEADER7_01 , POS_UR)
   
+  
   //オノノクス動作OBJ非表示
   _OBJ_DEL(MMDL_ID_EVENTOBJ_00)
   
@@ -506,20 +523,38 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
   //？？？：そうでしょうとも
   _PLAINWIN_MSG_DOWN( msg_c08_sage7_01 )
   _MSGWIN_CLOSE()
-  
+
   //イベント曲再生
     _START_EVENT_BGM( SEQ_BGM_E_7_SAGE )
   
-  //ヴィオ配置変更
-  _OBJ_POS_CHANGE( C08_SWPLAZMAM_01, 419, 0, 169, DIR_UP )
-  _OBJ_POS_CHANGE( C08_SWSAGE7_01, 419, 0, 170, DIR_UP )
-  _OBJ_POS_CHANGE( C08_SWPLAZMAW_01, 419, 0, 171, DIR_UP )
-  
-  //アニメ：ヴィオ接近
-  _OBJ_ANIME_AUTO( C08_SWPLAZMAM_01, 417, 164, FORCE_TYPE_ALL, 8, DIR_UD)
-  _OBJ_ANIME_AUTO( C08_SWSAGE7_01, 418, 164, FORCE_TYPE_ALL, 8, DIR_UD)
-  _OBJ_ANIME_AUTO( C08_SWPLAZMAW_01, 419, 164, FORCE_TYPE_ALL, 8, DIR_UD)
-  _OBJ_ANIME_WAIT()
+  //バージョン分岐
+  IF $LCW_VERSION == VERSION_B2 THEN
+    
+    //ヴィオ配置変更
+    _OBJ_POS_CHANGE( C08_SWPLAZMAM_01, 419, 0, 169, DIR_UP )
+    _OBJ_POS_CHANGE( C08_SWSAGE7_01, 419, 0, 170, DIR_UP )
+    _OBJ_POS_CHANGE( C08_SWPLAZMAW_01, 419, 0, 171, DIR_UP )
+    
+    //アニメ：ヴィオ接近
+    _OBJ_ANIME_AUTO( C08_SWPLAZMAM_01, 417, 164, FORCE_TYPE_ALL, 8, DIR_UD)
+    _OBJ_ANIME_AUTO( C08_SWSAGE7_01, 418, 164, FORCE_TYPE_ALL, 8, DIR_UD)
+    _OBJ_ANIME_AUTO( C08_SWPLAZMAW_01, 419, 164, FORCE_TYPE_ALL, 8, DIR_UD)
+    _OBJ_ANIME_WAIT()
+    
+  ELSE
+    
+    //ヴィオ配置変更
+    _OBJ_POS_CHANGE( C08_SWPLAZMAM_01, 419, 0, 171, DIR_UP )
+    _OBJ_POS_CHANGE( C08_SWSAGE7_01, 419, 0, 172, DIR_UP )
+    _OBJ_POS_CHANGE( C08_SWPLAZMAW_01, 419, 0, 173, DIR_UP )
+    
+    //アニメ：ヴィオ接近
+    _OBJ_ANIME_AUTO( C08_SWPLAZMAM_01, 417, 166, FORCE_TYPE_ALL, 8, DIR_UD)
+    _OBJ_ANIME_AUTO( C08_SWSAGE7_01, 418, 166, FORCE_TYPE_ALL, 8, DIR_UD)
+    _OBJ_ANIME_AUTO( C08_SWPLAZMAW_01, 419, 166, FORCE_TYPE_ALL, 8, DIR_UD)
+    _OBJ_ANIME_WAIT()
+    
+  ENDIF
   
   //アニメ：上を向く
   _OBJ_ANIME( C08_SWPLAZMAM_01, anm_staystep_u)
@@ -551,21 +586,28 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
   _BALLOONWIN_OBJMSG_POS( msg_c08_sage7_04 , C08_SWSAGE7_01 , POS_DL)
   _MSGWIN_CLOSE()
   
-  //アニメ：ヴィオ1歩上へ
-  _OBJ_ANIME( C08_SWSAGE7_01, anm_walk_d)
-  _OBJ_ANIME_WAIT()
   
-  //アニメ：ヴィオ退場
-  _OBJ_ANIME_AUTO( C08_SWPLAZMAM_01, 419, 171, FORCE_TYPE_ALL, 8, DIR_UD)
-  _OBJ_ANIME_AUTO( C08_SWSAGE7_01, 419, 172, FORCE_TYPE_ALL, 8, DIR_UD)
-  _OBJ_ANIME_AUTO( C08_SWPLAZMAW_01, 419, 173, FORCE_TYPE_ALL, 8, DIR_UD)
-  _OBJ_ANIME_WAIT()
+  //バージョン分岐
+  IF $LCW_VERSION == VERSION_B2 THEN
+    //アニメ：ヴィオ退場
+    _OBJ_ANIME_AUTO( C08_SWPLAZMAM_01, 419, 171, FORCE_TYPE_ALL, 8, DIR_UD)
+    _OBJ_ANIME_AUTO( C08_SWSAGE7_01, 419, 172, FORCE_TYPE_ALL, 8, DIR_UD)
+    _OBJ_ANIME_AUTO( C08_SWPLAZMAW_01, 419, 173, FORCE_TYPE_ALL, 8, DIR_UD)
+    _OBJ_ANIME_WAIT()
+  ELSE
+    //アニメ：ヴィオ退場
+    _OBJ_ANIME_AUTO( C08_SWPLAZMAM_01, 419, 173, FORCE_TYPE_ALL, 8, DIR_UD)
+    _OBJ_ANIME_AUTO( C08_SWSAGE7_01, 419, 174, FORCE_TYPE_ALL, 8, DIR_UD)
+    _OBJ_ANIME_AUTO( C08_SWPLAZMAW_01, 419, 175, FORCE_TYPE_ALL, 8, DIR_UD)
+    _OBJ_ANIME_WAIT()
+  ENDIF
   
   //イベント曲終了
   _END_EVENT_BGM()
   
   //ヴィオ動作OBJ削除
   _OBJ_DEL( C08_SWSAGE7_01 )
+  
   
   //シャガ：2年前
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_10 , C08_SWLEADER7_01 , POS_UR)
@@ -582,8 +624,15 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_11 , C08_SWLEADER7_01 , POS_UR)
   _MSGWIN_CLOSE()
   
-  //アニメ：シャガ退場
-  _OBJ_ANIME_AUTO( C08_SWLEADER7_01, 420, 171, FORCE_TYPE_ALL, 8, DIR_UD)
+  //バージョン分岐
+  IF $LCW_VERSION == VERSION_B2 THEN
+    //アニメ：シャガ退場
+    _OBJ_ANIME_AUTO( C08_SWLEADER7_01, 421, 171, FORCE_TYPE_NPC, 8, DIR_UD)
+  ELSE
+    //アニメ：シャガ退場
+    _OBJ_ANIME_AUTO( C08_SWLEADER7_01, 420, 170, FORCE_TYPE_NPC, 8, DIR_UD)
+  ENDIF
+  
   _TIME_WAIT( 16 )
   //アニメ：主人公見送り
   _OBJ_ANIME( MMDL_ID_PLAYER,anm_staystep_d )
@@ -595,12 +644,19 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
   _OBJ_POS_CHANGE( C08_SWPLAZMAM_01, 430, 0, 168, DIR_DOWN )
   _OBJ_POS_CHANGE( C08_SWPLAZMAW_01, 424, 0, 145, DIR_DOWN )
   
+  
   //========================================//
   //C08プラズマ団襲来イベント進行
   $WK_SCENE_C08_SWPLAZMA = 2
   //C08ヴィオ非表示
   _FLAG_SET( FV_C08_SWSAGE7_01 )
+  //イベント再生
+  _FLAG_SET( SYS_FLAG_BGM_C08_PLAZMA )
+  _FLAG_RESET( SYS_FLAG_BGM_C08_SILENT )
   //========================================//
+  
+  //BGMを変更
+  _BGM_NOW_MAP_RECOVER()
   
   //ハイリンク通信ブロック処理終了
   _ENABLE_NETWORK_IN_IMPORTANT_EVENT()
