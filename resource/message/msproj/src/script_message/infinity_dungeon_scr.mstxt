@@ -1324,15 +1324,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>いたたた……▼
-あのこが　うわさの
-バンジロウだったのね▼
+けたちがいの　つよさを　もつ
+トレーナーって　いるものね▼
 あれだけの　そしつを
-もっているこは　はじめて　みたわ▼
+もっているなんて　ジェラシーだわ▼
 さあ　つぎは　キミの　ばんよ
 ぜんりょくで　ぶつかって　きなさい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T02:43:10" />
+				Time="2011-12-10T06:21:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1341,15 +1341,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>痛たたた……▼
-あの子が　うわさの
-バンジロウだったのね▼
+ケタ違いの　強さを　持つ
+トレーナーって　いるものね▼
 あれだけの　素質を
-持っている子は　はじめて　みたわ▼
+持っているなんて　ジェラシーだわ▼
 さあ　次は　キミの　番よ
 全力で　ぶつかって　来なさい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T02:43:13" />
+				Time="2011-12-10T06:20:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1384,7 +1384,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>しろのじゅどうは　どうだい？
-ふしぎな　ばしょだろう？▼
+ふしぎな　ばしょ　だろう？▼
 おれたちも　ここが　
 どこまで　つづいているのか▽
 はあくして　いないぐらいだからな▼
@@ -1393,8 +1393,8 @@
 それじゃ　キミが　どこまで　いけるか
 その　じつりょくを　みせてもらおう！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-09-28T02:23:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T01:38:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1447,18 +1447,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キミが　つぎの　ちょうせんしゃね▼
-さいきんは　バンジロウのような
-つよい　トレーナーが　すくないのよ▼
+			<Text>つぎの　ちょうせんしゃね▼
 キミは　わたしを
 たのしませて　くれるかしら？▼
 わたしは　つよい　トレーナーと
-たたかうために　ここにいるの▼
+たたかうために　ここに　いるの▼
 さあ　キミの　じつりょくを
 ためさせて　もらうわよ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-28T13:31:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T06:24:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1466,18 +1464,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キミが　次の　挑戦者ね▼
-最近は　バンジロウのような
-強い　トレーナーが　少ないのよ▼
+			<Text>次の　挑戦者ね▼
 キミは　わたしを
 楽しませて　くれるかしら？▼
 わたしは　強い　トレーナーと
-戦うために　ここにいるの▼
+戦うために　ここに　いるの▼
 さあ　キミの　実力を
 試させて　もらうわよ！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-28T13:31:43" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T06:24:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2005,15 +2001,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>いたたた……▼
-あのこが　うわさの
-バンジロウだったのか▼
-あれだけの　そしつを
-もっているこは　はじめて　みたよ▼
+けたちがいの　つよさを　もつ
+トレーナーって　いるものだね▼
+あれだけの　そしつの　もちぬし
+はじめて　みたよ▼
 さあ　つぎは　キミの　ばんだ
 ぜんりょくで　ぶつかって　来い！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T02:45:50" />
+				Time="2011-12-10T06:22:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2022,15 +2018,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>痛たたた……▼
-あの子が　うわさの
-バンジロウだったのか▼
-あれだけの　素質を
-持っている子は　はじめて　みたよ▼
+ケタ違いの　強さを　持つ
+トレーナーって　いるものだね▼
+あれだけの　素質の　持ち主
+はじめて　みたよ▼
 さあ　次は　キミの　番だ
 全力で　ぶつかって　来い！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T02:45:54" />
+				Time="2011-12-10T06:22:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2128,9 +2124,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キミが　つぎの　ちょうせんしゃか▼
-さいきんは　バンジロウのような
-つよい　トレーナーが　すくないからな▼
+			<Text>つぎの　ちょうせんしゃか▼
 キミは　わたしを
 たのしませて　くれるかな？▼
 つよい　トレーナーと　たたかうのが
@@ -2138,8 +2132,8 @@
 さあ　キミの　じつりょくを
 ためさせて　もらおう！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-28T13:32:43" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T06:25:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2147,9 +2141,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キミが　次の　挑戦者か▼
-最近は　バンジロウのような
-強い　トレーナーが　少ないからな▼
+			<Text>次の　挑戦者か▼
 キミは　わたしを
 楽しませて　くれるかな？▼
 強い　トレーナーと　戦うのが
@@ -2157,8 +2149,8 @@
 さあ　キミの　実力を
 試させて　もらおう！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-28T13:33:03" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T06:25:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3992,14 +3984,12 @@
 			Language="JPN">
 			<Text>いたたた……
 キミの　つよさも　よくわかったよ▼
-キミなら　バンジロウとも
-いいしょうぶが　できるんじゃないかな▼
 これで　エリア３も　クリアだ▼
 キミが　どこまで　いけるのか
 たのしみに　しているよ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-28T08:25:50" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T06:23:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4009,14 +3999,12 @@
 			Language="JPN_KANJI">
 			<Text>痛たたた……
 キミの　強さも　よくわかったよ▼
-キミなら　バンジロウとも
-いい勝負が　できるんじゃないかな▼
 これで　エリア３も　クリアだ▼
 キミが　どこまで　行けるのか
 楽しみに　しているよ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-28T08:35:21" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T06:23:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4107,18 +4095,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つよいな　キミは▼
-バンジロウと　おなじ
-いや　それいじょうの　なにかを▽
-キミには　かんじるよ▼
-キミが　ここで　たたかいつづければ
-バンジロウと　たたかうひが▽
-くるかもしれないな▼
-キミたちの　たたかい……
+だけど　キミと　おなじぐらい……▼
+いや　キミより　つよい
+トレーナーが　いるはず！▼
+そんな　トレーナーと　であったとき
+どんな　たたかいに　なるのか▽
 みてみたいものだ▼
-では　また　たたかおう▼</Text>
+では　また　たたかおう！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-28T13:35:54" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T06:31:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4127,18 +4113,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>強いな　キミは▼
-バンジロウと　同じ
-いや　それ以上の　なにかを▽
-キミには　感じるよ▼
-キミが　ここで　戦い続ければ
-バンジロウと　戦う日が▽
-来るかもしれないな▼
-キミたちの　戦い……
+だけど　キミと　同じぐらい……▼
+いえ　キミより　強い
+トレーナーが　いるはず！▼
+そんな　トレーナーと　遭遇したとき
+どんな　戦いに　なるのか▽
 みてみたいものだ▼
-では　また　戦おう▼</Text>
+では　また　戦おう！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-28T13:35:25" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T06:32:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4686,14 +4670,12 @@
 			Language="JPN">
 			<Text>いたたた……
 キミの　つよさも　よくわかったわ▼
-キミなら　バンジロウとも
-いいしょうぶが　できると　おもうわ▼
 これで　エリア３も　クリアよ▼
 キミが　どこまで　いけるのか
 たのしみに　しているわ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-28T08:38:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T06:20:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4703,14 +4685,12 @@
 			Language="JPN_KANJI">
 			<Text>痛たたた……
 キミの　強さも　よくわかったわ▼
-キミなら　バンジロウとも
-いい勝負が　できるんと　思うわ▼
 これで　エリア3も　クリアよ▼
 キミが　どこまで　行けるのか
 楽しみに　しているわ▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-28T08:38:02" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T06:20:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4801,18 +4781,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つよいわね　キミ▼
-バンジロウと　おなじ
-いや　それいじょうの　なにかを▽
-キミには　かんじるわ▼
-キミが　ここで　たたかいつづければ
-バンジロウと　たたかうひが▽
-くるかもしれないわね▼
-キミたちの　たたかい……
+だけど　キミと　おなじぐらい……▼
+いえ　キミより　つよい
+トレーナーが　いるはず！▼
+そんな　トレーナーと　であったとき
+どんな　たたかいに　なるのか▽
 きょうみぶかいわ▼
 それじゃ　また　たたかいましょうね▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-28T13:37:25" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T06:27:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4820,19 +4798,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>強いわね　キミ▼
-バンジロウと　同じ
-いや　それ以上の　何かを▽
-キミには　感じるわ▼
-キミが　ここで　戦い続ければ
-バンジロウと　戦う日が▽
-来るかもしれないわね▼
-キミたちの　戦い……
+			<Text>つよいわね　キミ▼
+だけど　キミと　同じぐらい……▼
+いえ　キミより　強い
+トレーナーが　いるはず！▼
+そんな　トレーナーと　遭遇したとき
+どんな　戦いに　なるのか▽
 興味深いわ▼
 それじゃ　また　戦いましょうね▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-28T13:38:46" />
+				User="matsumiya:W00224"
+				Time="2011-12-10T06:28:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
