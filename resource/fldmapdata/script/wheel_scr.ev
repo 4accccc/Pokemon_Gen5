@@ -88,6 +88,8 @@ EVENT_START   ev_wheel_ride
       CASE RTC_WEEK_FRIDAY THEN
         // 金曜日はN
         $lwk_npc_id = 2
+        // Nと観覧車乗ったフラグを立てる
+        _FLAG_SET( FE_C04WHEEL_N_MEET )
       CASE RTC_WEEK_SATURDAY THEN
         // 土曜日はチェレン
         $lwk_npc_id = 3
