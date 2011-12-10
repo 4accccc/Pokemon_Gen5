@@ -7675,7 +7675,7 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_item_get_fail_keywait"
+		Label="msg_get_item_fill_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
