@@ -15,4 +15,208 @@
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
-_EVENT_DATA_END	
+_EVENT_DATA	ev_d08r0101_hakase1_01
+_EVENT_DATA	ev_pos_d08r0101_hakase1_ev_01
+_EVENT_DATA_END
+
+DEFINE_LOCAL	LWK_POSX
+DEFINE_LOCAL	LWK_POSZ
+
+/************************************************************/
+/*	D08R0101	アララギ父							*/
+/************************************************************/
+EVENT_START	ev_d08r0101_hakase1_01
+
+_TALK_OBJ_START()
+
+_BALLOONWIN_OBJMSG_WB( msg_d08r0101_hakase1_01w, msg_d08r0101_hakase1_01b, D08R0101_HAKASE1_01, POS_DEFAULT )
+_LAST_KEYWAIT()
+_MSGWIN_CLOSE()
+
+EVENT_END
+
+/************************************************************/
+/*	D08R0101	アララギ父POSイベント					*/
+/************************************************************/
+EVENT_START	ev_pos_d08r0101_hakase1_ev_01
+
+	//わかったことはなにもない
+	_BALLOONWIN_OBJMSG_POS( msg_d08r0101_hakase1_01 ,D08R0101_HAKASE1_01 ,POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//アニメ：その場歩きで下を向く・！マーク
+	_OBJ_ANIME( D08R0101_HAKASE1_01, anm_staystep_d )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( D08R0101_HAKASE1_01, anm_common_gyoe )
+	_OBJ_ANIME_WAIT()
+
+	_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+
+	$LWK_POSZ -= 1
+
+	//プレイヤーに隣接
+	_OBJ_ANIME_AUTO( D08R0101_HAKASE1_01, LWK_POSX, LWK_POSZ, FORCE_TYPE_NPC, 8, DIR_LR )
+	_OBJ_ANIME_WAIT()
+
+	IF $LWK_POSX != 22 THEN
+	
+		//_OBJ_ANIME( D08R0101_HAKASE1_01, anm_staystep_d )
+		//_OBJ_ANIME_WAIT()
+	
+	ENDIF
+
+	//おお！　おまえさんも
+	_BALLOONWIN_OBJMSG_POS( msg_d08r0101_hakase1_02 ,D08R0101_HAKASE1_01 ,POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( D08R0101_HAKASE1_01, anm_staystep_u )
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT( 20 )
+	
+	//２ねんまえ……
+	_BALLOONWIN_OBJMSG_WB( msg_d08r0101_hakase1_03w, msg_d08r0101_hakase1_03b, D08R0101_HAKASE1_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( D08R0101_HAKASE1_01, anm_staystep_d )
+	_OBJ_ANIME_WAIT()
+
+	//そう！　この　おくに
+	_BALLOONWIN_OBJMSG_WB( msg_d08r0101_hakase1_04w, msg_d08r0101_hakase1_04b, D08R0101_HAKASE1_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	_OBJ_ANIME( D08R0101_HAKASE1_01, anm_common_gyoe )
+	_OBJ_ANIME_WAIT()
+
+	//おお！　●●●ストーン！
+	_BALLOONWIN_OBJMSG_WB( msg_d08r0101_hakase1_05w, msg_d08r0101_hakase1_05b, D08R0101_HAKASE1_01, POS_DEFAULT )
+
+	//おっと！　かたいはなしに　なったね
+	_BALLOONWIN_OBJMSG_POS( msg_d08r0101_hakase1_06 ,D08R0101_HAKASE1_01 ,POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	//もりのようかん入手
+	_ITEM_EVENT_KEYWAIT( ITEM_MORINOYOUKAN, 1 )
+
+	//それでは　また　あおうぞ
+	_BALLOONWIN_OBJMSG_POS( msg_d08r0101_hakase1_07 ,D08R0101_HAKASE1_01 ,POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	$LWK_POSZ = 51
+
+	IF $LWK_POSX != 21 THEN
+	
+		_OBJ_ANIME_AUTO( D08R0101_HAKASE1_01, 21, LWK_POSZ, FORCE_TYPE_MAP, 8, DIR_LR )
+	ELSE
+	
+		_OBJ_ANIME( D08R0101_HAKASE1_01, anm_walk_r )
+		_OBJ_ANIME_WAIT()
+		
+		_OBJ_ANIME_AUTO( D08R0101_HAKASE1_01, 22, LWK_POSZ, FORCE_TYPE_MAP, 8, DIR_UD )
+
+	ENDIF
+	
+	SWITCH $LWK_POSX
+	CASE 20 THEN
+		_TIME_WAIT( 24 )
+	CASE 21 THEN
+		_TIME_WAIT( 18 )
+	CASE 22 THEN
+		_TIME_WAIT( 24 )
+	CASE 23 THEN
+		_TIME_WAIT( 30 )
+	ENDSWITCH
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )	
+	_OBJ_ANIME_WAIT()
+
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_OBJ_DEL( D08R0101_HAKASE1_01 )
+	_SE_WAIT()
+	//========================================//
+	
+	//ハカセのバニシュフラグセット
+	_FLAG_SET(FV_D08R0101_HAKASE1_01)
+	
+	//イベント終了
+	$WK_SCENE_D08R0101 = 2
+	
+	//========================================//
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ・？・…
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_tenten
+	_ANIME_DATA	AC_MARK_TENTEN,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_onpu
+	_ANIME_DATA	AC_MARK_ONPU,1
+	_ANIME_DATA	ACMD_END,0

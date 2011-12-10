@@ -450,6 +450,8 @@ ev_n02r0502_boss_vs_end:
   _FLAG_SET( FV_N01R0502_BOSS_01 )
   //d08r0901 POS—LŒø
   $WK_SCENE_D08R0901_LEGEND = 1
+  //d08r0101 POS—LŒø
+  $WK_SCENE_D08R0101 = 1
   //==================================//
   
 _RET
