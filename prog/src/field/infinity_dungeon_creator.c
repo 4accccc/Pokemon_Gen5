@@ -885,9 +885,9 @@ static BOOL CheckDigEnd( const ROOM_DATA *p_room_data ,int fs_x ,int fs_y)
 //-----------------------------------------------------------------------------
 static int GetSetTrainerIDTable( const INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,u32 *p_trid_array ,GFL_STD_RandContext *rand_context);
 static s32 GetRecoverTrainerSetRoomIdArray( INF_DUNGEON_DATA  *p_dungeon_data ,int floor_no ,int *room_id_array ,u32 *member_num );
-static void SetRecoverTrainer( INF_DUNGEON_DATA  *p_dungeon_data ,int floor_no ,u32 area_no,const int *room_id_array ,int cnt,const u32 *member_num , GFL_STD_RandContext *rand_context ,u32 *recover_index );
+static void SetRecoverTrainer( INF_DUNGEON_DATA  *p_dungeon_data ,u16* tr_id_array ,int floor_no ,u32 area_no,const int *room_id_array ,int cnt,const u32 *member_num , GFL_STD_RandContext *rand_context ,u32 *recover_index  );
 static s32 GetGateTrainerSetTrIndexArray( INF_DUNGEON_DATA  *p_dungeon_data ,s32 floor_no ,s32* id_pos_array, s32* room_id_array );
-static u32 GetRecoverTrainerID( const INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,GFL_STD_RandContext *rand_context );
+static void GetRecoverTrainerIDArray( const INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,u16 *tr_id_array, GFL_STD_RandContext *rand_context );
 
 //----------------------------------------------------------------------------
 /**
@@ -939,9 +939,14 @@ void INF_DCREATOR_SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no 
   // 回復トレーナー配置位置を決める
   {
     s32 cnt = 0;
+    u16 tr_id_array[INF_TRID_RECOVERY_AREA_NUM];
     int room_id_array[ROOM_MAX];
     u32 member_num[ROOM_MAX];
     u32 recover_index = 0;
+
+    
+    // エリア番号から、適切な回復トレーナーID配列を取得する
+    GetRecoverTrainerIDArray( p_dungeon_data ,area_no ,tr_id_array ,&rand_context);
 
     // 全フロアに配置する
     for( n = 0; n<top_floor; n++)
@@ -956,7 +961,7 @@ void INF_DCREATOR_SetTrainerData( INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no 
       GF_ASSERT_MSG(cnt!=0,"回復トレーナーが置ける場所がありません\n");
       if( cnt <= 0 ){ return; }
 
-      SetRecoverTrainer( p_dungeon_data ,n,area_no ,room_id_array ,cnt ,member_num ,&rand_context ,&recover_index);
+      SetRecoverTrainer( p_dungeon_data ,tr_id_array ,n,area_no ,room_id_array ,cnt ,member_num ,&rand_context ,&recover_index);
     }
 
     GF_ASSERT_MSG(recover_index==top_floor,"回復トレーナーが正しく設置できていません\n");
@@ -1107,6 +1112,7 @@ static s32 GetRecoverTrainerSetRoomIdArray( INF_DUNGEON_DATA  *p_dungeon_data ,i
  *	@brief  回復トレーナー設置
  *
  *	@param	*p_dungeon_data ダンジョンデータ
+ *	@param	tr_id_array  設置するトレーナーID
  *	@param	floor_no        設置フロア
  *	@param	*room_id_array  配置可能部屋リスト
  *	@param	cnt             配置可能部屋数
@@ -1117,19 +1123,16 @@ static s32 GetRecoverTrainerSetRoomIdArray( INF_DUNGEON_DATA  *p_dungeon_data ,i
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void SetRecoverTrainer( INF_DUNGEON_DATA  *p_dungeon_data ,int floor_no ,u32 area_no,const int *room_id_array ,int cnt,const u32 *member_num , GFL_STD_RandContext *rand_context ,u32 *recover_index )
+static void SetRecoverTrainer( INF_DUNGEON_DATA  *p_dungeon_data ,u16* tr_id_array ,int floor_no ,u32 area_no,const int *room_id_array ,int cnt,const u32 *member_num , GFL_STD_RandContext *rand_context ,u32 *recover_index  )
 {
   int id_pos = 0;
-  u16 tr_id;
   u32 room_id_index;
   u32 member_index;
+  u16 tr_id = tr_id_array[ (*recover_index) ];
 
   room_id_index = GFL_STD_Rand( rand_context ,cnt);
   member_index = GFL_STD_Rand( rand_context ,member_num[room_id_index]);
   id_pos = INF_TOOL_DUNGEON_GetRoomTrainerIDPos( p_dungeon_data ,floor_no ,room_id_array[room_id_index] ,member_index);
-
-  // エリア番号から、適切な回復トレーナーを抽選
-  tr_id = GetRecoverTrainerID( p_dungeon_data ,area_no ,rand_context);
 
   p_dungeon_data->tr_data[floor_no].tr_id[id_pos] = tr_id;
   p_dungeon_data->recover_data[(*recover_index)] = tr_id;
@@ -1217,16 +1220,17 @@ static s32 GetGateTrainerSetTrIndexArray( INF_DUNGEON_DATA  *p_dungeon_data ,s32
  *	@brief  エリアごとの回復トレーナーID取得
  *
  *	@param	*p_dungeon_data 
+ *	@param	*tr_id_array
  *	@param	*rand_context 
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static u32 GetRecoverTrainerID( const INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,GFL_STD_RandContext *rand_context )
-{
+static void GetRecoverTrainerIDArray( const INF_DUNGEON_DATA *p_dungeon_data ,u32 area_no ,u16 *tr_id_array, GFL_STD_RandContext *rand_context )
+{ 
+  int i;
   const u32 dungeon_color = INF_TOOL_DUNGEON_GetDungeonColor( p_dungeon_data );
   u32 start_trid = INF_TRID_START_RECOVERY;
-  u32 trid_ofs   = GFL_STD_Rand( rand_context ,INF_TRID_RECOVERY_AREA_NUM);
 
   // 現在のエリアによって分岐
   switch( area_no )
@@ -1269,9 +1273,14 @@ static u32 GetRecoverTrainerID( const INF_DUNGEON_DATA *p_dungeon_data ,u32 area
     break;
   }
 
-  // 回復トレーナーID
-  start_trid += trid_ofs;
+  // リストデータの作成
+  for( i = 0; i < INF_TRID_RECOVERY_AREA_NUM; i++ )
+  {
+    tr_id_array[i] = start_trid + i;
+  }
 
-  return start_trid;
+  // ランダムなならびに変更
+  INF_TOOL_RndArrayU16( tr_id_array ,INF_TRID_RECOVERY_AREA_NUM, rand_context );
+
 }
 

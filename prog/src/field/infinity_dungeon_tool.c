@@ -435,6 +435,30 @@ void INF_TOOL_RndArrayU8( u8 *p_array , int size ,GFL_STD_RandContext *rand_cont
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  配列内のデータをランダムにならびかえる(u16版)
+ *
+ *	@param	*p_array 
+ *	@param	size 
+ *	@param	context 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void INF_TOOL_RndArrayU16( u16 *p_array , int size ,GFL_STD_RandContext *rand_context )
+{
+  int i;
+  u32 tmp;
+  for( i = 0; i < size ;i++ )
+  {
+    u32 rnd = GFL_STD_Rand( rand_context,size);
+    tmp = p_array[rnd];
+    p_array[rnd] = p_array[i];
+    p_array[i] = tmp;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  無限ダンジョン用シードを生成する
  *
  *	@param	*p_seed 
