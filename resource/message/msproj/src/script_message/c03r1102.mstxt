@@ -66,10 +66,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]さん
-こっち　きてー！</Text>
+こっち　きてー！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T12:02:27" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-10T06:50:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -78,10 +78,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]さん
-こっち　来てー！</Text>
+こっち　来てー！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T12:02:31" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-10T06:50:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -118,10 +118,10 @@
 			<Text>[Name:TrainerName ]さん　きましたね！
 それでは　さっそく▼
 ひょうしょうしきを
-はじめましょう！</Text>
+はじめましょう！▼</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:37:55" />
+				Time="2011-12-10T06:50:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -132,10 +132,10 @@
 			<Text>[Name:TrainerName ]さん　来ましたね！
 それでは　さっそく▼
 表彰式を
-はじめましょう！</Text>
+はじめましょう！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T12:02:45" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-10T06:50:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -172,10 +172,10 @@
 			<Text>[Name:TrainerName ]さん　あなたは
 メダルラリーに　おいて▼
 ゆうしゅうな
-せいせきを　おさめ……</Text>
+せいせきを　おさめ……▼</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:38:39" />
+				Time="2011-12-10T06:50:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -186,10 +186,10 @@
 			<Text>[Name:TrainerName ]さん　あなたは
 メダルラリーに　おいて▼
 優秀な
-成績を　収め……</Text>
+成績を　収め……▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T12:03:48" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-10T06:50:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -224,11 +224,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>……その　きねんとして
-メダル[System:Color name="2" ]「[Name:Medal Idx="1" ]」[/System:Color]を
-ぞうてい　いたします！</Text>
+メダル[System:Color name="2" ]「[Name:Medal Idx="1" ]」[/System:Color]を▽
+ぞうてい　いたします！▼</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-09T03:36:19" />
+				Time="2011-12-10T06:51:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -237,11 +237,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……その　記念として
-メダル[System:Color name="2" ]「[Name:Medal Idx="1" ]」[/System:Color]を
-贈呈いたします！</Text>
+メダル[System:Color name="2" ]「[Name:Medal Idx="1" ]」[/System:Color]を▽
+贈呈いたします！▼</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-09T03:36:33" />
+				Time="2011-12-10T06:51:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -474,10 +474,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>きゃーっ！
-[Name:TrainerName Idx="0" ]さーん！</Text>
+[Name:TrainerName Idx="0" ]さーん！▼</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:40:20" />
+				Time="2011-12-10T06:51:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -486,10 +486,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>きゃーっ！
-[Name:TrainerName Idx="0" ]さーん！</Text>
+[Name:TrainerName Idx="0" ]さーん！▼</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-10-20T07:40:26" />
+				Time="2011-12-10T06:51:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -527,10 +527,10 @@
 ついに　このときが　きたのですね……▼
 あなたが　すべての
 メダリストの　ちょうてんに▽
-かがやく　この　しゅんかんが！</Text>
+かがやく　この　しゅんかんが！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T12:04:32" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-10T06:51:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -542,10 +542,10 @@
 ついに　このときが　来たのですね……▼
 あなたが　すべての
 メダリストの　頂点に▽
-輝く　この瞬間が！</Text>
+輝く　この瞬間が！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-10T12:04:46" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-10T06:51:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -631,11 +631,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>……その　えいよの　あかし　として
-メダル[System:Color name="2" ]「[Name:Medal Idx="1" ]」[/System:Color]を
-ぞうていします！</Text>
+メダル[System:Color name="2" ]「[Name:Medal Idx="1" ]」[/System:Color]を▽
+ぞうていします！▼</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-09T03:36:58" />
+				Time="2011-12-10T06:51:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -644,11 +644,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……その栄誉の　証として
-メダル[System:Color name="2" ]「[Name:Medal Idx="1" ]」[/System:Color]を
-贈呈します！</Text>
+メダル[System:Color name="2" ]「[Name:Medal Idx="1" ]」[/System:Color]を▽
+贈呈します！▼</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-09T03:37:09" />
+				Time="2011-12-10T06:51:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
