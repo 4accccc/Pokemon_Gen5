@@ -2,14 +2,266 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
+		Label="msg_d27r0201_swplazmam1_02_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん『なんだ　おまえら？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T03:59:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T03:59:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマ団『なんだ　おまえら？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T03:59:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T03:59:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・Black2ver
+・GRIDX＝11、GRIDZ＝10
+・自動でイベント開始</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T03:59:21" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T03:59:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0201_swrival_02_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『いいから
+オマエらの　ポケモン　みせろよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T04:17:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T03:59:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『いいから
+オマエらの　ポケモン　みせろよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T04:17:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T03:59:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・Black2ver
+・アジト船：2回目
+　マップ切り替えでイベント開始
+・続けてswrival_02_02
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T04:04:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T03:59:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0201_swplazmam1_02_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん『やばい！
+スイッチを　まもらないと！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T03:59:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T03:59:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマだん『やばい！
+スイッチを　守らないと！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T03:59:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T03:59:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・Black2ver
+・戦闘後に自動で表示
+　続けて</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T03:59:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T03:59:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0201_swplazmaw1_02_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん『なかまに　しらせなきゃ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T03:59:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T03:59:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマ団『仲間に　知らせなきゃ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T04:18:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T03:59:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・Black2ver
+・GRIDX＝10、GRIDZ＝10
+・表示後、画面外へ倍速移動
+・続けてswrival_02_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T04:00:47" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAW
+プラズマ団♀・したっぱ２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T03:59:06" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0201_swrival_02_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『チッ！▼
+アイツら　チョロネコ
+つれていなかったな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T04:18:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T03:59:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『チッ！▼
+アイツら　チョロネコ
+つれていなかったな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T04:18:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T03:59:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・Black2ver
+・下をむいたまま
+・続けてswrival_02_02
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T04:04:08" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d27r0201_swrival_02_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……バリア　だな▼</Text>
+			<Text>バリア　か……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T04:25:04" />
+				Time="2011-12-11T03:59:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -17,10 +269,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……バリア　だな▼</Text>
+			<Text>バリア　か……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T04:25:07" />
+				Time="2011-12-11T03:59:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -30,12 +282,10 @@
 			Language="JPN">
 			<Comment>♂
 ・Black2ver
-・アジト船：2回目
-　マップ切り替えでイベント開始
 ・続けてswrival_02_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T11:52:26" />
+				Time="2011-12-11T04:00:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -58,14 +308,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ということはだ▼
-ふねの　なかの　スイッチを　さがして
-バリアを　けすしかないか▼
+			<Text>さっきの　ヤツが　いってたな▼
+スイッチを　おして
+かいじょ　すれば　いいんだ▼
 [Name:TrainerName ]！　てわけして
-スイッチを　さがすぜ！▼</Text>
+スイッチを　さがすぜ！▼"</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T05:37:40" />
+				Time="2011-12-11T04:05:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -73,14 +323,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ということはだ▼
-船内の　どこかに　あるだろう
-スイッチで　バリアを　解除しないとな▼
+			<Text>さっきの　ヤツが　いってたな▼
+スイッチを　押して
+解除すれば　いいんだ▼
 [Name:TrainerName ]！　手分けして
-スイッチを　探すぜ！▼</Text>
+スイッチを　探すぜ！▼"</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T08:19:30" />
+				Time="2011-12-11T04:06:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

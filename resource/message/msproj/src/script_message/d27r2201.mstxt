@@ -34,12 +34,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♀：White2ver
 ・アジト船：2回目
 ・メッセージ表示後、戦闘に</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:32:52" />
+				Time="2011-12-11T06:06:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -90,14 +90,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♀：White2ver
 ・アジト船：2回目
 ・戦闘後、自動で表示
 ・アイテム入手処理
 　No633「プラズマカード」入手</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:33:19" />
+				Time="2011-12-11T06:06:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -146,12 +146,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♀：White2ver
 ・アジト船：2回目
 ・アイテム入手後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T10:35:35" />
+				Time="2011-12-11T06:06:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -320,16 +320,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだんに　はいって
-いわれたことを　やっていれば▽
-パンを　たべれて　よかったの……▼
+			<Text>プラズマだんで　めいれい　されたこと
+やっていれば　パンを　たべれたの……▼
 じぶんで　かんがえなかったから
 こう　なっちゃったのよね……▼
 あー！
 この　パン　おいしー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T10:54:23" />
+				Time="2011-12-11T06:08:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -337,16 +336,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団に　はいって
-いわれたことを　やっていれば▽
-パンを　食べれて　よかったの……▼
+			<Text>プラズマ団で　命令されたこと
+やっていれば　パンを　食べれたの……▼
 自分で　考えなかったから
 こう　なっちゃったのよね……▼
 あー！
 この　パン　おいしー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T10:55:07" />
+				Time="2011-12-11T06:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -632,5 +630,154 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r2201_announce_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>けいこく！　けいこく！
+かんないに　　シンニュウシャ　あり！▽
+かくいん　たいおう　してください</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T06:11:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T06:11:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>警告！　警告！
+艦内に　　侵入者　あり！▽
+各員　対応してください</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T06:11:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T06:11:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>アナウンス
+・入室したときに1回のみ
+・警戒音的なSE後にメッセージ表示（要調整）</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T06:11:17" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r2201_swplazmam1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いま　ほうそうで
+いわれていたのは　おまえか▼
+いいさ
+オレは　とっても　つよいからな▼
+おまえの　ような
+おこさまは　みのがしてやるよ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T06:32:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T06:27:20" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いま　艦内放送で
+いわれていたのは　おまえか▼
+いいさ
+オレは　とっても　強いからな▼
+おまえの　ような
+お子様は　見逃してやるよ……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T06:32:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T06:28:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T06:11:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T06:11:33" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r2201_swplazmam2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>にんむに　しっぱいして
+ポケモンを　とりあげられたのさ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T06:28:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T06:26:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>にんむに　しっぱいして
+ポケモンを　とりあげられたのさ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T06:28:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T06:27:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T06:26:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T06:25:56" />
+		</AttributeCell>
 	</TextRow>
 </MessageStudioText>

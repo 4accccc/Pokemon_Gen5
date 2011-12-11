@@ -1,3 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_d27r1701_announce_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>けいこく！　けいこく！
+かんないに　　シンニュウシャ　あり！▽
+かくいん　たいおう　してください</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T05:36:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T05:28:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>警告！　警告！
+艦内に　　侵入者　あり！▽
+各員　対応してください</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T05:37:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T05:36:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>アナウンス
+・入室したときに1回のみ
+・警戒音的なSE後にメッセージ表示（要調整）</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-11T05:28:07" />
+		</CommentCell>
+	</TextRow>
+</MessageStudioText>

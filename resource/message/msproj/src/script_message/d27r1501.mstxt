@@ -63,13 +63,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おれの　さゆうに　ある　ベッドは
+			<Text>この　へやの　ベッドは
 だれも　つかっていない▼
 ウソだと　おもうなら　しらべてから
 やすんでも　いいんだぞ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-08T11:58:33" />
+				Time="2011-12-11T05:12:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -77,13 +77,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おれの　左右に　ある　ベッドは
+			<Text>この部屋の　ベッドは
 だれも　使っていない▼
 ウソだと　思うなら　調べてから
 休んでも　いいんだぞ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-08T11:58:31" />
+				Time="2011-12-11T05:12:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -92,11 +92,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・Black2ver
 ・アジト船：クリア前
 ・GRIDX＝25、GRIDZ＝2</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-08T11:57:58" />
+				Time="2011-12-11T05:13:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

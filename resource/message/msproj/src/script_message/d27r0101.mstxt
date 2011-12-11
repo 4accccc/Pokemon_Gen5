@@ -2027,10 +2027,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『そっちは　まかせる！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『そっちは　まかせた！
+オマエなら　よゆう　だろ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T05:08:27" />
+				Time="2011-12-11T03:07:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2038,10 +2039,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『そっちは　まかせる！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『そっちは　まかせた！
+オマエなら　余裕だろ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T05:08:29" />
+				Time="2011-12-11T03:07:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2121,7 +2123,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2132,13 +2134,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さてと……▼
-ぜんかいは　わけの　わからない
-れんちゅうに　つれだされたが▽
-こんどこそ　このふねを　しらべる！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『よし！
+こんどこそ　このふねを　しらべるぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T06:44:39" />
+				Time="2011-12-11T02:58:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2146,13 +2146,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『さてと……▼
-前回は　わけの　わからない
-連中に　連れだされたが▽
-今度こそ　この船を　調べる！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『よし！
+今度こそ　この船を　調べるぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T06:45:01" />
+				Time="2011-12-11T02:42:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2191,11 +2189,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うーん
-ここ　あやしそうだな▼</Text>
+			<Text>……ここだな▼
+よし　いくぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T04:23:27" />
+				Time="2011-12-11T02:59:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2203,11 +2201,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うーん
-ここ　怪しそうだな▼</Text>
+			<Text>……ここだな▼
+よし　いくぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T04:23:34" />
+				Time="2011-12-11T02:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2308,10 +2306,12 @@
 			Language="JPN">
 			<Text>プラズマだん『おまえら！▼
 タラップを　おろした
-ごようきみずぎの　なかま　か！！▼</Text>
+ごようきみずぎの　なかま　だな！！▼
+いくぞ！
+プラーズマー！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T09:21:17" />
+				Time="2011-12-11T02:53:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2321,10 +2321,12 @@
 			Language="JPN_KANJI">
 			<Text>プラズマ団『おまえら！▼
 タラップを　降ろした
-ご陽気水着の　仲間か！！▼</Text>
+ご陽気水着の　仲間か！！▼
+いくぞ！
+プラーズマー！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T09:21:26" />
+				Time="2011-12-11T02:53:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2365,7 +2367,7 @@
 ハッチが　しまっていない！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T06:41:22" />
+				Time="2011-12-11T02:55:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2445,6 +2447,13 @@
 				User="matsumiya:W00224"
 				Time="2011-07-25T12:28:00" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d27r0101_swplazmam_stop_01"

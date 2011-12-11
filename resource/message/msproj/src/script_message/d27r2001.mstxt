@@ -8,12 +8,11 @@
 			Language="JPN">
 			<Text>あー　よくねた！▼
 あんた　へんな　かっこうだけど
-しんいり　かしら？▼
-じゃ　これか　これ
-どっちかの　ベッド　つかいなさいよ</Text>
+しんいり？　ここの　ベッド▽
+あいてるから　じゆうに　つかえば？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T05:48:46" />
+				Time="2011-12-11T05:59:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -23,12 +22,11 @@
 			Language="JPN_KANJI">
 			<Text>あー　よく寝た！▼
 あんた　変な　格好だけど
-新入り　かしら？▼
-じゃ　これか　これ
-どっちかの　ベッド　使いなさいよ</Text>
+新入り？　ここの　ベッド▽
+空いてるから　自由に　使えば？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T05:48:44" />
+				Time="2011-12-11T05:59:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -38,10 +36,10 @@
 			Language="JPN">
 			<Comment>♂
 ・アジト船：クリア前
-・GRIDX＝25、GRIDZ＝2</Comment>
+・GRIDX＝21、GRIDZ＝8</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T05:45:44" />
+				Time="2011-12-11T05:55:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
