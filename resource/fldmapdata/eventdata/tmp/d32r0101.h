@@ -50,5 +50,7 @@
 #define BG_D32R0101_DUMMY_FES_15         16
 #define BG_D32R0101_DUMMY_FES_16         17
 #define BG_D32R0101_DUMMY_FES_17         18
+#define BG_D32R0101_DUMMY_FES_18         19
+#define BG_D32R0101_DUMMY_FES_19         20
 
 #endif //ZONE_D32R0101_EVB_H

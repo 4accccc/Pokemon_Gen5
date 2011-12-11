@@ -28,6 +28,9 @@
 #define BG_D26R0601_DUMMY_FES_08          7
 #define HIDE_ITEM_107                     8
 #define HIDE_ITEM_106                     9
-#define BG_D26R0601_DUMMY_FES_11         10
+#define BG_D26R0601_DUMMY_FES_09         10
+#define BG_D26R0601_DUMMY_FES_10         11
+#define BG_D26R0601_DUMMY_FES_11         12
+#define BG_D26R0601_DUMMY_FES_12         13
 
 #endif //ZONE_D26R0601_EVB_H

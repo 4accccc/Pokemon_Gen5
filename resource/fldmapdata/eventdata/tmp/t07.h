@@ -38,5 +38,9 @@
 #define BG_T07_DUMMY_FES_11              10
 #define BG_T07_DUMMY_FES_12              11
 #define BG_T07_DUMMY_FES_13              12
+#define BG_T07_DUMMY_FES_14              13
+#define BG_T07_DUMMY_FES_15              14
+#define BG_T07_DUMMY_FES_16              15
+#define BG_T07_DUMMY_FES_17              16
 
 #endif //ZONE_T07_EVB_H

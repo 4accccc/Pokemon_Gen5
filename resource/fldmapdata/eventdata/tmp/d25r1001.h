@@ -21,5 +21,20 @@
 #define BG_D25R1001_DUMMY_FES_03          2
 #define BG_D25R1001_DUMMY_FES_04          3
 #define BG_D25R1001_DUMMY_FES_05          4
+#define BG_D25R1001_DUMMY_FES_06          5
+#define BG_D25R1001_DUMMY_FES_07          6
+#define BG_D25R1001_DUMMY_FES_08          7
+#define BG_D25R1001_DUMMY_FES_09          8
+#define BG_D25R1001_DUMMY_FES_10          9
+#define BG_D25R1001_DUMMY_FES_11         10
+#define BG_D25R1001_DUMMY_FES_12         11
+#define BG_D25R1001_DUMMY_FES_13         12
+#define BG_D25R1001_DUMMY_FES_14         13
+#define BG_D25R1001_DUMMY_FES_15         14
+#define BG_D25R1001_DUMMY_FES_16         15
+#define BG_D25R1001_DUMMY_FES_17         16
+#define BG_D25R1001_DUMMY_FES_18         17
+#define BG_D25R1001_DUMMY_FES_19         18
+#define BG_D25R1001_DUMMY_FES_20         19
 
 #endif //ZONE_D25R1001_EVB_H
