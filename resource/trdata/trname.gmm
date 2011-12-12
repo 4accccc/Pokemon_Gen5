@@ -2046,8 +2046,8 @@
 	</row>
 
 	<row id="worker2_25">
-		<language name="JPN" width="216">ウェッソン</language>
-		<language name="JPN_KANJI" width="216">ウェッソン</language>
+		<language name="JPN" width="216">トオル</language>
+		<language name="JPN_KANJI" width="216">トオル</language>
 	</row>
 
 	<row id="worker2_26">
@@ -4413,6 +4413,51 @@
 	<row id="mini_27">
 		<language name="JPN" width="216">ヒヨリ</language>
 		<language name="JPN_KANJI" width="216">ヒヨリ</language>
+	</row>
+
+	<row id="swrival_28">
+		<language name="JPN" width="216">ライバル</language>
+		<language name="JPN_KANJI" width="216">ライバル</language>
+	</row>
+
+	<row id="swrival_29">
+		<language name="JPN" width="216">ライバル</language>
+		<language name="JPN_KANJI" width="216">ライバル</language>
+	</row>
+
+	<row id="swrival_30">
+		<language name="JPN" width="216">ライバル</language>
+		<language name="JPN_KANJI" width="216">ライバル</language>
+	</row>
+
+	<row id="swplazmam_37">
+		<language name="JPN" width="216">したっぱ</language>
+		<language name="JPN_KANJI" width="216">したっぱ</language>
+	</row>
+
+	<row id="swplazmam_38">
+		<language name="JPN" width="216">したっぱ</language>
+		<language name="JPN_KANJI" width="216">したっぱ</language>
+	</row>
+
+	<row id="swplazmaw_14">
+		<language name="JPN" width="216">したっぱ</language>
+		<language name="JPN_KANJI" width="216">したっぱ</language>
+	</row>
+
+	<row id="swplazmam_39">
+		<language name="JPN" width="216">したっぱ</language>
+		<language name="JPN_KANJI" width="216">したっぱ</language>
+	</row>
+
+	<row id="swplazmaw_15">
+		<language name="JPN" width="216">したっぱ</language>
+		<language name="JPN_KANJI" width="216">したっぱ</language>
+	</row>
+
+	<row id="swplazmaw_16">
+		<language name="JPN" width="216">したっぱ</language>
+		<language name="JPN_KANJI" width="216">したっぱ</language>
 	</row>
 
 	<flowchart-group-list>

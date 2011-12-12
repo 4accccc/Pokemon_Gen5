@@ -10566,25 +10566,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ウェッソン</Text>
+			<Text>トオル</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-07T06:48:56" />
+				Time="2011-12-10T08:07:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-07T06:48:56" />
+				Time="2011-12-10T08:07:42" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ウェッソン</Text>
+			<Text>トオル</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-07T06:48:56" />
+				Time="2011-12-10T08:07:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-07T06:48:56" />
+				Time="2011-12-10T08:07:42" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -25721,6 +25721,231 @@
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
 				Time="2011-12-02T02:16:50" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="swrival_28">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="swrival_29">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="swrival_30">
+		<LanguageCell
+			Language="JPN">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ライバル</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="swplazmam_37">
+		<LanguageCell
+			Language="JPN">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="swplazmam_38">
+		<LanguageCell
+			Language="JPN">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="swplazmaw_14">
+		<LanguageCell
+			Language="JPN">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="swplazmam_39">
+		<LanguageCell
+			Language="JPN">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="swplazmaw_15">
+		<LanguageCell
+			Language="JPN">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="swplazmaw_16">
+		<LanguageCell
+			Language="JPN">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-12T03:42:38" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

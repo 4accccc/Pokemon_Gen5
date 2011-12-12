@@ -804,7 +804,16 @@
 #define	TRID_KINDERGARTENM_12   ( 791 ) 
 #define	TRID_TANPAN_35   ( 792 ) 
 #define	TRID_MINI_27   ( 793 ) 
-#define TRID_MAX  ( 794 )
+#define	TRID_SWRIVAL_28   ( 794 ) 
+#define	TRID_SWRIVAL_29   ( 795 ) 
+#define	TRID_SWRIVAL_30   ( 796 ) 
+#define	TRID_SWPLAZMAM_37   ( 797 ) 
+#define	TRID_SWPLAZMAM_38   ( 798 ) 
+#define	TRID_SWPLAZMAW_14   ( 799 ) 
+#define	TRID_SWPLAZMAM_39   ( 800 ) 
+#define	TRID_SWPLAZMAW_15   ( 801 ) 
+#define	TRID_SWPLAZMAW_16   ( 802 ) 
+#define TRID_MAX  ( 803 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
