@@ -14,5 +14,7 @@
 #define SCRID_T02_POKE36_01 (7)
 #define SCRID_T02_BOY2_01 (8)
 #define SCRID_T02_GIRL2_01 (9)
+#define SCRID_T02_OLDWOMAN1A_01 (10)
+#define SCRID_T02_MONSTERBALL_01 (11)
 
 #endif //_T02_DEF_H_

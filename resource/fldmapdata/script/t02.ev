@@ -9,6 +9,7 @@
   .include  "t02.h"
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori //NPC配置
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -26,6 +27,8 @@ _EVENT_DATA   ev_t02_girl1_01
 _EVENT_DATA   ev_t02_poke36_01
 _EVENT_DATA   ev_t02_boy2_01
 _EVENT_DATA   ev_t02_girl2_01
+_EVENT_DATA	ev_t02_oldwoman1a_01
+_EVENT_DATA	ev_t02_monsterball_01
 _EVENT_DATA_END
 
 //手持ちに最初に選んだポケモンが要るか用変数定義
@@ -165,6 +168,23 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_t02_poke36_01
   _EASY_TALK_POKEVOICE( MONSNO_599, msg_t01_poke36_01 )
+EVENT_END
+
+/**************************************************************/
+/*  おばあさんA：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_t02_oldwoman1a_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02_oldwoman1a_01 )
+EVENT_END
+
+/**************************************************************/
+/*  モンスターボール：話しかけ                                */
+/**************************************************************/
+EVENT_START   ev_t02_monsterball_01
+	_TALK_OBJ_START()
+	_PLAINWIN_MSG_DOWN( msg_t02_monsterball_01 )
+	_LAST_KEYWAIT()
+	_PLAINWIN_CLOSE()
 EVENT_END
 
 /**************************************************************/

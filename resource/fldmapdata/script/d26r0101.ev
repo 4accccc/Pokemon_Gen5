@@ -38,6 +38,8 @@ _EVENT_DATA   ev_pos_d26r0101_badge_check_07
 _EVENT_DATA   ev_pos_d26r0101_badge_check_08
 _EVENT_DATA   ev_pos_d26r0101_open_gate
 _EVENT_DATA   ev_pos_d26r0101_boss_01
+_EVENT_DATA	ev_bg_d26r0101_sign1_01
+_EVENT_DATA	ev_bg_d26r0101_sign2_01
 _EVENT_DATA_END
 
 //éÂêlåˆï˚å¸éÊìæïœêî
@@ -571,4 +573,16 @@ _ANIME_LABEL  anm_common_turn_d
   _ANIME_DATA AC_STAY_WALK_D_8F,1
   _ANIME_DATA ACMD_END,0
 
+/**************************************************************/
+/*		D26R0101	åöï®ä≈î¬							  */
+/**************************************************************/
+EVENT_START		ev_bg_d26r0101_sign1_01
+  _EASY_BGWIN_MSG( msg_d26r0101_sign1_01, TYPE_POST )
+EVENT_END
 
+/**************************************************************/
+/*		D26R0101	åöï®ä≈î¬2							  */
+/**************************************************************/
+EVENT_START		ev_bg_d26r0101_sign2_01
+  _EASY_BGWIN_MSG( msg_d26r0101_sign2_01, TYPE_POST )
+EVENT_END

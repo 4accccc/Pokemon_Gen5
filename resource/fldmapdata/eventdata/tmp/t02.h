@@ -23,6 +23,8 @@
 #define T02_GIRL2_01                       6
 #define FLD_ITEM_300_DUMMY                 7
 #define FLD_ITEM_305_DUMMY                 8
+#define T02_OLDWOMAN1A_01                  9
+#define T02_MONSTERBALL_01                10
 
 #endif //ZONE_T02_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t02.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

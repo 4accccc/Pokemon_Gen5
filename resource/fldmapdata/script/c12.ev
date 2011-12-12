@@ -52,7 +52,6 @@ _EVENT_DATA    ev_pos_c12_ng_03
 _EVENT_DATA    ev_pos_c12_rival_pair_01_guide
 _EVENT_DATA    ev_scene_c12_gymclear_01
 _EVENT_DATA    ev_c12_swleader1_01
-_EVENT_DATA    ev_c12_rival_pair_01
 _EVENT_DATA    ev_scene_c12_rivalsister_end_01
 _EVENT_DATA	   ev_c12_middleman1_02
 _EVENT_DATA	   ev_c12_girl1_01
@@ -679,36 +678,6 @@ EVENT_START ev_pos_c12_rival_pair_return_01
   $WK_SCENE_C12_WHITE_MEET = 2
   //========================================//
 }
-EVENT_END
-
-//連れ歩き中話しかけスクリプト
-EVENT_START ev_c12_rival_pair_01
-
-  //ライバル名代入
-  _RIVAL_NAME( 1 )
-
-  //話しかけるごとに0～2のセリフを順番に表示
-  
-  IF $WK_OTHER_C12_RIVAL_PAIR == 3 THEN
-	$WK_OTHER_C12_RIVAL_PAIR = 0
-  ENDIF
-  _TALK_OBJ_START()
-  
-  SWITCH $WK_OTHER_C12_RIVAL_PAIR
-  CASE 0 THEN
-	_BALLOONWIN_OBJMSG( msg_c12_swrival_05, PAIR_TRAINER_01 )
-  CASE 1 THEN
-	_BALLOONWIN_OBJMSG( msg_c12_swrival_06, PAIR_TRAINER_01 )
-  CASE 2 THEN
-	_BALLOONWIN_OBJMSG( msg_c12_swrival_07, PAIR_TRAINER_01 )
-  ENDSWITCH
-
-  _LAST_KEYWAIT()
-  _MSGWIN_CLOSE()
-  
-  $WK_OTHER_C12_RIVAL_PAIR += 1
-  _DEBUG_PRINT_WK( WK_OTHER_C12_RIVAL_PAIR )
-  
 EVENT_END
 
 /**************************************************************/
@@ -1829,6 +1798,7 @@ EVENT_START ev_pos_c12_rival_pair_01_guide
   
   //ライバル：ちがうよ
   _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_04,PAIR_TRAINER_01, POS_DEFAULT )
+  _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
   
    //========================================//
@@ -2058,10 +2028,10 @@ EVENT_START   ev_c12_game_start
   _TIME_WAIT( 30 )
   
   //ママ・電話をきる
+  _SE_PLAY( SEQ_SE_SYS_72 )
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_game_start_04 )
   _OBJ_ANIME_WAIT()
-
-  _TIME_WAIT( 30 )
+  _SE_WAIT()
   
   _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 47, 762, FORCE_TYPE_NPC, 8, DIR_LR )
   _OBJ_ANIME_WAIT()
