@@ -11,7 +11,6 @@
 #include "msg/msg_sptr_name.h"
 #include "../../../resource/fld3d_ci/fldci_id_def.h"
 
-//TODO エンカウントカットインで使用する名前を整理する（sptr_name.gmmにメッセージデータが用意されている)
 static const ENC_CUTIN_DAT EncCutinDat[] = 
 {
   {FLDCIID_RIVAL, SPTR_RIVAL, 0x7fff ,0x0000}, //ライバル
