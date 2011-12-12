@@ -6714,17 +6714,14 @@ static int MainSeq_ItemGetMain( BOX2_SYS_WORK * syswk )
     }
     break;
 
-  case BOX2UI_ARRANGE_PTGT_NORMAL:  // 42: 便利モード
+  case BOX2UI_ARRANGE_PTGT_NORMAL:  // 42: 通常モード
     if( syswk->mv_cnv_mode != 0 && syswk->poke_get_key == 0 ){
       syswk->mv_cnv_mode = 0;
       return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ITEMGET_END );
     }
     break;
+
   case BOX2UI_ARRANGE_PTGT_MOVE:  // 42: 便利モード
-    if( syswk->mv_cnv_mode != 0 && syswk->poke_get_key == 0 ){
-      syswk->mv_cnv_mode = 0;
-      return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_ITEMGET_END );
-    }
     break;
   case BOX2UI_ARRANGE_PTGT_MULTI:  // 42: 便利モード
     break;
