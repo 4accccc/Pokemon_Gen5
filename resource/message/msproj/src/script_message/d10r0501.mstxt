@@ -3249,11 +3249,12 @@ N</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・キュレムとの戦闘後、ベルと一緒に出現
+・キュレムとの戦闘後
+　ベルと一緒に画面下から出現
 ・続けてswbell_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T08:13:37" />
+				Time="2011-12-12T06:08:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3276,11 +3277,11 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ベル『[Name:TrainerName ]って　すごいね！
+			<Text>ベル『[Name:TrainerName ]って　すごいよ！
 いろんな　ポケモンと　であって▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T07:54:57" />
+				Time="2011-12-12T06:02:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3288,11 +3289,11 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ベル『[Name:TrainerName ]って　すごいね！
+			<Text>ベル『[Name:TrainerName ]って　すごいよ！
 いろんな　ポケモンと　であって▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T08:11:20" />
+				Time="2011-12-12T06:02:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3442,11 +3443,12 @@ N</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>チェレン『そうだね！▼
-そのために　ポケモンずかんを
-[Name:TrainerName ]に　たくしたんだから▼</Text>
+イッシュには……　いや　せかいには
+まだまだ　おおくの　ポケモンが　いて▽
+きみと　であうのを　まっているよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T05:18:56" />
+				Time="2011-12-12T06:07:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3455,11 +3457,12 @@ N</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>チェレン『そうだね！▼
-そのために　ポケモン図鑑を
-[Name:TrainerName ]に　託したんだから▼</Text>
+イッシュには……　いや　世界には
+まだまだ　多くの　ポケモンが　いて▽
+きみと　出会うのを　待っているよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T05:18:56" />
+				Time="2011-12-12T06:07:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3496,12 +3499,12 @@ N</Text>
 			Language="JPN">
 			<Text>ベル『……それにしても
 ポケモンって　いったいぜんたい▽
-どれだけ　いるんだろうねえ？▼
+どれだけ　いるんだろうね？▼
 カノコタウンに　もどって
-アララギはかせに　きいてみようかな▼</Text>
+アララギはかせに　たずねてみようかな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T08:12:51" />
+				Time="2011-12-12T06:08:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3511,12 +3514,12 @@ N</Text>
 			Language="JPN_KANJI">
 			<Text>ベル『……それにしても
 ポケモンって　一体全体▽
-どれだけ　いるんだろうねえ？▼
+どれだけ　いるんだろうね？▼
 カノコタウンに　戻って
-アララギ博士に　きいてみようかな▼</Text>
+アララギ博士に　たずねてみようかな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T08:13:12" />
+				Time="2011-12-12T06:08:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

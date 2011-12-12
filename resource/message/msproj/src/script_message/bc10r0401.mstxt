@@ -639,11 +639,11 @@
 ブラックシティの　めいてんと
 いえば　この　おみせ！▼
 きょうは　とくべつに
-つきのいしを　５０００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:21:28" />
+				Time="2011-12-12T06:18:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -655,11 +655,11 @@
 ブラックシティの　名店と
 いえば　この　お店！▼
 今日は　特別に
-つきのいしを　５０００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:11:27" />
+				Time="2011-12-12T06:18:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -711,11 +711,11 @@
 ブラックシティの　めいてんと
 いえば　このおみせ！▼
 きょうは　とくべつに
-たいようのいしを　５０００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:21:33" />
+				Time="2011-12-12T06:18:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -727,11 +727,11 @@
 ブラックシティの　名店と
 いえば　このお店！▼
 今日は　特別に
-たいようのいしを　５０００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:07:54" />
+				Time="2011-12-12T06:18:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1008,11 +1008,11 @@
 ブラックシティの　いちりゅうてんと
 いえば　この　おみせ！▼
 きょうは　とくべつに
-するどいツメを　１００００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:21:37" />
+				Time="2011-12-12T06:19:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1024,11 +1024,11 @@
 ブラックシティの　一流店と
 いえば　この　お店！▼
 今日は　特別に
-するどいツメを　１００００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:11:34" />
+				Time="2011-12-12T06:18:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1080,11 +1080,11 @@
 ブラックシティの　いちりゅうてんと
 いえば　この　おみせ！▼
 きょうは　とくべつに
-するどいキバを　１００００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:21:41" />
+				Time="2011-12-12T06:19:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1096,11 +1096,11 @@
 ブラックシティの　一流店と
 いえば　このお店！▼
 今日は　特別に
-するどいキバを　１００００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:08:28" />
+				Time="2011-12-12T06:19:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1377,11 +1377,11 @@
 ブラックシティの　がんそと
 いえば　この　おみせ！▼
 きょうは　とくべつに
-しんかいのキバを　１５０００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:21:48" />
+				Time="2011-12-12T06:19:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1393,11 +1393,11 @@
 ブラックシティの　元祖と
 いえば　この　お店！▼
 今日は　特別に
-しんかいのキバを　１５０００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:11:42" />
+				Time="2011-12-12T06:19:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1449,11 +1449,11 @@
 ブラックシティの　がんそと
 いえば　この　おみせ！▼
 きょうは　とくべつに
-しんかいのウロコを　１５０００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:21:52" />
+				Time="2011-12-12T06:19:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1465,11 +1465,11 @@
 ブラックシティの　元祖と
 いえば　このお店！▼
 今日は　特別に
-しんかいのウロコを　１５０００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:08:59" />
+				Time="2011-12-12T06:19:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1746,11 +1746,11 @@
 ブラックシティの　しにせと
 いえば　この　おみせ！▼
 きょうは　とくべつに
-りゅうのウロコを　２００００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:21:58" />
+				Time="2011-12-12T06:19:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1762,11 +1762,11 @@
 ブラックシティの　老舗と
 いえば　この　お店！▼
 今日は　特別に
-りゅうのウロコを　２００００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:11:49" />
+				Time="2011-12-12T06:19:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1818,11 +1818,11 @@
 ブラックシティの　しにせと
 いえば　この　おみせ！▼
 きょうは　とくべつに
-おうじゃのしるしを　２００００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:22:02" />
+				Time="2011-12-12T06:19:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1834,11 +1834,11 @@
 ブラックシティの　老舗と
 いえば　このお店！▼
 今日は　特別に
-おうじゃのしるしを　２００００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:09:19" />
+				Time="2011-12-12T06:19:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"

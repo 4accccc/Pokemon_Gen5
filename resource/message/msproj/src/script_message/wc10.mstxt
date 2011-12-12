@@ -7140,11 +7140,11 @@
 ホワイトフォレストの　めいてんと
 いえば　この　おみせ！▼
 きょうは　とくべつに
-つきのいしを　５０００えんで！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:11:07" />
+				Time="2011-12-12T06:19:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7156,11 +7156,11 @@
 ホワイトフォレストの　名店と
 いえば　この　お店！▼
 今日は　特別に
-つきのいしを　５０００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:11:03" />
+				Time="2011-12-12T06:19:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7212,11 +7212,11 @@
 ホワイトフォレストの　めいてんと
 いえば　この　おみせ！▼
 きょうは　とくべつに
-たいようのいしを　５０００えんで！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:11:59" />
+				Time="2011-12-12T06:19:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7228,11 +7228,11 @@
 ホワイトフォレストの　名店と
 いえば　この　お店！▼
 今日は　特別に
-たいようのいしを　５０００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:12:01" />
+				Time="2011-12-12T06:19:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7509,11 +7509,11 @@
 ホワイトフォレストの　いちりゅうてんと
 いえば　この　おみせ！▼
 きょうは　とくべつに
-するどいツメを　１００００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:18:02" />
+				Time="2011-12-12T06:20:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7525,11 +7525,11 @@
 ホワイトフォレストの　一流店と
 いえば　この　お店！▼
 今日は　特別に
-するどいツメを　１００００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:12:08" />
+				Time="2011-12-12T06:20:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7581,11 +7581,11 @@
 ホワイトフォレストの　いちりゅうてんと
 いえば　この　おみせ！▼
 きょうは　とくべつに
-するどいキバを　１００００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:18:07" />
+				Time="2011-12-12T06:20:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7597,11 +7597,11 @@
 ホワイトフォレストの　一流店と
 いえば　この　お店！▼
 今日は　特別に
-するどいキバを　１００００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:12:16" />
+				Time="2011-12-12T06:20:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7878,11 +7878,11 @@
 ホワイトフォレストの　がんそと
 いえば　この　おみせ！▼
 きょうは　とくべつに
-しんかいのキバを　１５０００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:18:11" />
+				Time="2011-12-12T06:20:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7894,11 +7894,11 @@
 ホワイトフォレストの　元祖と
 いえば　この　お店！▼
 今日は　特別に
-しんかいのキバを　１５０００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:12:22" />
+				Time="2011-12-12T06:20:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7950,11 +7950,11 @@
 ホワイトフォレストの　がんそと
 いえば　この　おみせ！▼
 きょうは　とくべつに
-しんかいのウロコを　１５０００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:18:14" />
+				Time="2011-12-12T06:20:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7966,11 +7966,11 @@
 ホワイトフォレストの　元祖と
 いえば　この　お店！▼
 今日は　特別に
-しんかいのウロコを　１５０００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:12:28" />
+				Time="2011-12-12T06:20:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8247,11 +8247,11 @@
 ホワイトフォレストの　しにせと
 いえば　この　おみせ！▼
 きょうは　とくべつに
-りゅうのウロコを　２００００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:18:19" />
+				Time="2011-12-12T06:20:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8263,11 +8263,11 @@
 ホワイトフォレストの　老舗と
 いえば　この　お店！▼
 今日は　特別に
-りゅうのウロコを　２００００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:12:37" />
+				Time="2011-12-12T06:20:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8319,11 +8319,11 @@
 ホワイトフォレストの　しにせと
 いえば　この　おみせ！▼
 きょうは　とくべつに
-おうじゃのしるしを　２００００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:18:21" />
+				Time="2011-12-12T06:20:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8335,11 +8335,11 @@
 ホワイトフォレストの　老舗と
 いえば　この　お店！▼
 今日は　特別に
-おうじゃのしるしを　２００００円で！▽
+[Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T03:12:44" />
+				Time="2011-12-12T06:20:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
