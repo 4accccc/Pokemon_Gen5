@@ -215,7 +215,7 @@ EVENT_START  ev_infinity_dungeon_elevator
   DEFINE_LOCAL LWK_NOW_FLOOR
   DEFINE_LOCAL LWK_NOW_FLOOR_NUM
  
-  // ROMバージョンでの判断
+  // バージョンでの判断
 	_INFINITY_DUNGEON_GET_VERSION( LWK_D_VERSION )
   
   // カメラ移動開始
@@ -858,7 +858,7 @@ EVENT_START  ev_infinity_dungeon_comeback
 
   // 会話開始音
   _TALK_START_SE_PLAY()
-  
+
   // ボス勝利判定
   IF $LWK_MAP_STATUS == INFINITY_DUNGEON_MAP_STATUS_BOSS_WIN THEN
     $LWK_CLEAR_AREA_ID = $LWK_NOW_AREA
@@ -866,6 +866,9 @@ EVENT_START  ev_infinity_dungeon_comeback
     // 無限ダンジョンクリアビーコン
     _BEACON_SET_REQ_INF_DUNGEON_CLEAR( LWK_CLEAR_AREA_ID )
 
+    // WFBC店員開放
+    _CALL shop_flag_set
+  
     // エリア2~5のメダル取得
     IF (($LWK_CLEAR_AREA_ID >= INFINITY_DUNGEON_AREA_ID_2) && ($LWK_CLEAR_AREA_ID <= INFINITY_DUNGEON_AREA_ID_5)) THEN
 
@@ -2396,6 +2399,40 @@ gate_open_event:
 {
   // ボス部屋への入り口開門演出再生
   _INFINITY_DUNGEON_OPNEN_GATE()
+}
+_RET
+
+//--------------------------------------------------------------------
+// ショップフラグ設定
+//--------------------------------------------------------------------
+shop_flag_set:
+{
+  // バージョンでの判断
+	_INFINITY_DUNGEON_GET_VERSION( LWK_D_VERSION )
+  
+  IF $LWK_D_VERSION == VERSION_B2 THEN
+    // ブラックの時
+    IF $LWK_CLEAR_AREA_ID == INFINITY_DUNGEON_AREA_ID_2 THEN
+      _FLAG_RESET( FV_BC10R0401_SHOPM1_01 )
+    ELSIF $LWK_CLEAR_AREA_ID == INFINITY_DUNGEON_AREA_ID_5 THEN
+      _FLAG_RESET( FV_BC10R0401_SHOPM1_02 )
+    ELSIF $LWK_CLEAR_AREA_ID == INFINITY_DUNGEON_AREA_ID_8 THEN
+      _FLAG_RESET( FV_BC10R0401_SHOPM1_03 )
+    ELSIF $LWK_CLEAR_AREA_ID == INFINITY_DUNGEON_AREA_ID_10 THEN
+      _FLAG_RESET( FV_BC10R0401_SHOPM1_04 )
+    ENDIF
+  ELSE
+    // ホワイトの時
+    IF $LWK_CLEAR_AREA_ID == INFINITY_DUNGEON_AREA_ID_2 THEN
+      _FLAG_RESET( FV_WC10_SHOPM1_01 )
+    ELSIF $LWK_CLEAR_AREA_ID == INFINITY_DUNGEON_AREA_ID_5 THEN
+      _FLAG_RESET( FV_WC10_SHOPM1_02 )
+    ELSIF $LWK_CLEAR_AREA_ID == INFINITY_DUNGEON_AREA_ID_8 THEN
+      _FLAG_RESET( FV_WC10_SHOPM1_03 )
+    ELSIF $LWK_CLEAR_AREA_ID == INFINITY_DUNGEON_AREA_ID_10 THEN
+      _FLAG_RESET( FV_WC10_SHOPM1_04 )
+    ENDIF
+  ENDIF
 }
 _RET
 
