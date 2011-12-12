@@ -7836,39 +7836,48 @@ BOOL BOX2MAIN_CheckMultiSelectTable( BOX2_SYS_WORK * syswk, int tray, int pos )
 		}
 	// 手持ち
 	}else{
-		int	ppcnt = PokeParty_GetPokeCount( syswk->dat->pokeparty );
-		if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX &&
-				BOX2MAIN_GetNowSelectMultiPokeNum(syswk->app) > (BOX2OBJ_POKEICON_MINE_MAX-ppcnt) ){
+		int	ppcnt	  = PokeParty_GetPokeCount( syswk->dat->pokeparty );
+		int	get_num = BOX2MAIN_GetNowSelectMultiPokeNum( syswk->app );
+
+		if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX && get_num > (BOX2OBJ_POKEICON_MINE_MAX-ppcnt) ){
 			return FALSE;
 		}
-	}
 
-/*
-	OS_Printf("drop tray=%d, pos=%d\n", tray, pos);
+		pos -= BOX2OBJ_POKEICON_TRAY_MAX;
 
-	if(pos<BOX2OBJ_POKEICON_TRAY_MAX){
-		// ポケモンが重なっていないかチェック
-		if(tray<BOX_MAX_TRAY){
-			for(y=0;y<syswk->app->multi_h;y++){
-				for(x=0;x<syswk->app->multi_w;x++){
-					state = BOXDAT_PokeParaGet(
-										syswk->dat->sv_box, tray, pos + y*BOX_MAX_COLUMN+x, ID_PARA_poke_exist, NULL );
-					// 衝突しているかどうか
-					if(syswk->app->multi_pokemon_id[y*BOX_MAX_COLUMN+x] == 1 && state==1 ){
+		for( y=0; y<syswk->app->multi_h; y++ ){
+			for( x=0; x<syswk->app->multi_w; x++ ){
+				// 存在チェック
+				if( syswk->app->multi_pokemon_id[y*sx+x] == 0 ){
+					continue;
+				}
+				// 範囲チェック
+				if( (pos/2+y) >= 3 || (pos%2+x) >= 2 ){
+					return FALSE;
+				}
+				// 衝突しているかどうか
+				if( ( (pos/2+y)*2+(pos%2+x) ) < ppcnt ){
+					if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
 						return FALSE;
+					// 衝突していても取得していればおｋ
+					}else{
+						u32	h;
+						u16	p, g;
+						p = pos + y*2+x;
+						g = syswk->get_pos - BOX2OBJ_POKEICON_TRAY_MAX;
+						for( h=0; h<syswk->app->multi_h; h++ ){
+							if( p >= (g+h*2) && p < (g+h*2+syswk->app->multi_w) ){
+								break;
+							}
+						}
+						if( h == syswk->app->multi_h ){
+							return FALSE;
+						}
 					}
 				}
 			}
 		}
-	// 手持ちに置いた
-	}else{
-		// 手持ちの空きより多かったらダメ
-		int temoti_aki = BOX2OBJ_POKEICON_MINE_MAX-PokeParty_GetPokeCount( syswk->dat->pokeparty );
-		if(temoti_aki<BOX2MAIN_GetNowSelectMultiPokeNum( syswk->app )){
-			return FALSE;
-		}
 	}
-*/
 
 	return TRUE;
 }
