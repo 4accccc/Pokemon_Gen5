@@ -34,6 +34,7 @@ _EVENT_DATA	ev_c06r0201_workman1_01
 _EVENT_DATA	ev_c06r0201_workman2_01
 _EVENT_DATA	ev_c06r0201_poke19_01
 _EVENT_DATA	ev_c06r0201_workman3_01
+_EVENT_DATA    ev_reserve_c06r0201_end
 _EVENT_DATA_END
 
 //アイテムチェック用変数
@@ -48,6 +49,16 @@ DEFINE_LOCAL	LWK_TYPE2			//２番目のタイプ格納
 DEFINE_LOCAL	LWK_RET_MONSNO		//ポケモン種族名を格納
 DEFINE_LOCAL	LWK_EV_CHK		//指定タイプがいるか・いないか
 
+/************************************************************/
+/*		飛行機降りた後のリザーブ						*/
+/************************************************************/
+EVENT_START	ev_reserve_c06r0201_end
+
+	//暗転復帰
+	_MAP_FADE_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+	
+EVENT_END
 
 /**************************************************************/
 /*  ウェイトレスのハートスイーツとハートのウロコ交換イベント
@@ -521,13 +532,13 @@ ev_map_change_t07_hakase:
 
   //３Ｄデモコール
   _DEMO_FADEOUT_BLACK_CALL_SINGLE()
-  _CALL_3D_DEMO( DEMO3D_ID_PLANE_TAKE_OFF_YAMAJI )
+  _CALL_3D_DEMO( DEMO3D_ID_PLANE_TAKE_OFF_FUKIYOSE )
 
   //リザーブスクリプト
   _RESERVE_SCRIPT( SCRID_RESERVE_T07_END )
 
   //マップチェンジ
-  _MAP_CHANGE_NO_FADE( ZONE_ID_T07, 625, -5, 305, DIR_LEFT )
+  _MAP_CHANGE_NO_FADE( ZONE_ID_T07, 617, -5, 305, DIR_LEFT )
   
 _RET
 
@@ -537,7 +548,7 @@ ev_map_change_t07:
 
   //３Ｄデモコール
   _DEMO_FADEOUT_BLACK_CALL_SINGLE()
-  _CALL_3D_DEMO( DEMO3D_ID_PLANE_TAKE_OFF_YAMAJI )
+  _CALL_3D_DEMO( DEMO3D_ID_PLANE_TAKE_OFF_FUKIYOSE )
 
   //リザーブスクリプト
   _RESERVE_SCRIPT( SCRID_RESERVE_T07_END )

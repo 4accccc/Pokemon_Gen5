@@ -11,6 +11,8 @@
   .include  "scr_seq_def.h"
   .include  "msg_t07.h"
   .include  "t07.h"
+  
+  .include  "c06r0201_def.h"
 
   //@author fujimura_souichirou
 
@@ -119,7 +121,7 @@ EVENT_START   ev_scene_t07_hakase2_01
   _MSGWIN_CLOSE()
 
   //ベル退場
-  _OBJ_ANIME_AUTO( T07_SWBELL_01, 634, 306, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_AUTO( T07_SWBELL_01, 626, 306, FORCE_TYPE_NPC, 8, DIR_UD )
   _TIME_WAIT( 8 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_r )
   _OBJ_ANIME_WAIT()
@@ -154,10 +156,16 @@ EVENT_START   ev_t07_informationw_01
     _BALLOONWIN_TALKOBJ_MSG( msg_t07_infomationw_02 )
     _AB_KEYWAIT()
     _MSGWIN_CLOSE()
+      
+    //３Ｄデモコール
+    _DEMO_FADEOUT_BLACK_CALL_SINGLE()
+    _CALL_3D_DEMO( DEMO3D_ID_PLANE_TAKE_OFF_YAMAJI )
 
-      //【仮】発着デモへ（詳細未定）
-      //マップチェンジ
-      _MAP_CHANGE( ZONE_ID_C06R0201, 14, 19, DIR_DOWN )
+    //リザーブスクリプト
+    _RESERVE_SCRIPT( SCRID_RESERVE_C06R0201_END )
+
+    //マップチェンジ
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C06R0201, 14, 0, 19, DIR_DOWN )
 
   ELSE  //いいえ
     //いつでも　ごりよう　ください！
