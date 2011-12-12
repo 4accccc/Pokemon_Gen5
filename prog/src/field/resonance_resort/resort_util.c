@@ -46,8 +46,10 @@
 
 #if defined(DEBUG_RESORT_PRINT_ON)
 #define RESORT_Printf(...)  OS_TFPrintf(0,__VA_ARGS__)
+#define RESORT_LOG_Printf(...)  OS_TFPrintf(2,__VA_ARGS__)
 #else
 #define RESORT_Printf(...)  /* */
+#define RESORT_LOG_Printf(...)  /* */
 #endif
 
 //=============================================================================
@@ -163,6 +165,8 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
 #endif
 
       GF_ASSERT( spot > 0 );
+      RESORT_LOG_Printf( "ˆÄ“àID%d\n",spot );
+      
       if( sex == PM_MALE )
       {
         return RESORT_BINARY_SPOT_GetData( p_spot, spot, RESORT_BINARY_SPOT_PARAM_MSG_M );

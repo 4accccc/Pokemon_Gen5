@@ -57,7 +57,8 @@
 typedef struct
 {
   GFL_TCBLSYS *p_tcblsys;
-  int cnt;
+  BOOL is_task_create;
+  int seq;
   u8  flag[HUDSON_AUTOTEST_FLAG_ARR_NUM];
   FSOverlayID task_overlayID;
   GAMESYS_WORK* gsys;
@@ -141,15 +142,22 @@ void HUDSON_Main( GAMESYS_WORK* gsys )
 
   GFL_TCBL_Main( sp_wk->p_tcblsys );
 
-  if( sp_wk->cnt > 780 )
+#ifdef DEBUG_HUDSON_INPUT_AUTO_TEST
+  //JAチェックのため、任意で発動できるようにしている。
+  if( GFL_UI_KEY_GetTrg( ) & PAD_BUTTON_B
+      && GFL_UI_KEY_GetCont( ) & PAD_BUTTON_L )
   {
-    return;
+    if( !sp_wk->is_task_create )
+    {
+      Hudson_CreateTask( sp_wk, &HUDSON_AUTOTEST_ResortShopCheck, FS_OVERLAY_ID( debug_resort_check ) );
+    }
   }
+#endif
 
-  switch( sp_wk->cnt )
+  switch( sp_wk->seq )
   {
   default:
-    sp_wk->cnt++;
+    sp_wk->seq++;
     break;
   case 180:
     {
@@ -158,22 +166,16 @@ void HUDSON_Main( GAMESYS_WORK* gsys )
       FIELD_SUBSCREEN_WORK* subscreen = FIELDMAP_GetFieldSubscreenWork(fwork);
       FIELD_SUBSCREEN_ChangeForce( subscreen, FIELD_SUBSCREEN_BEACON_VIEW );
       OS_Printf("デバッグ：すれ違いログ画面\n");
-      sp_wk->cnt++;
+      sp_wk->seq++;
     }
+    break;
+  case 781:
     break;
   case 780:
-    if( GFL_UI_KEY_GetTrg( ) & PAD_BUTTON_B
-        && GFL_UI_KEY_GetCont( ) & PAD_BUTTON_L )
-    {
-      Hudson_CreateTask( sp_wk, &HUDSON_AUTOTEST_ResortShopCheck, FS_OVERLAY_ID( debug_resort_check ) );
-    }
-     //sp_wk->cnt++;
-    break;
-  case -1:
     {
       GMEVENT * new_event;
 
-      sp_wk->cnt++;
+      sp_wk->seq++;
 
       //>>引数からテストモード切り替え
 
@@ -241,6 +243,10 @@ void HUDSON_Main( GAMESYS_WORK* gsys )
           new_event = GMEVENT_CreateOverlayEventCall( gsys, 
               FS_OVERLAY_ID( debug_poke_change ), EVENT_DEBUG_BtlPokeChange, NULL );
           GAMESYSTEM_SetEvent( gsys, new_event );
+        }
+        else if( HUDSON_IsTestCode( HUDSON_TESTCODE_JA_SHOP_CHECK ) )
+        {
+          Hudson_CreateTask( sp_wk, &HUDSON_AUTOTEST_ResortShopCheck, FS_OVERLAY_ID( debug_resort_check ) );
         }
     }
     break;
@@ -360,6 +366,8 @@ static void Hudson_CreateTask( HUDSON_WORK * p_wk, const HUDSON_AUTOTEST_WORK *a
       void *p_wk_adrs = GFL_TCBL_GetWork(p_tcbl);
       autotest->Init( p_wk_adrs, p_wk->gsys, p_wk->heapID );
     }
+
+    p_wk->is_task_create  = TRUE;
   }
 }
 

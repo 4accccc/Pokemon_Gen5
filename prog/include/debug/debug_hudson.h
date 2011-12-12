@@ -10,8 +10,12 @@
 //============================================================================
 #pragma once
 
+//ハドソンデバッグを使う用にする
+//（本来ならばDEBUG_ONLY_FOR_hudsonを別定義にしたいところなのだが
+//相当いろんなソースに書いてあるので別定義にはしない）
 #ifdef PM_DEBUG
-#if defined(DEBUG_ONLY_FOR_nagihashi_toru)
+#if defined(DEBUG_ONLY_FOR_nagihashi_toru) || defined(DEBUG_ONLY_FOR_shimoyamada)
+#define DEBUG_HUDSON_INPUT_AUTO_TEST  //L+Bとかで強制デバッグ実行できる
 #define DEBUG_ONLY_FOR_hudson
 #endif  //if defined
 #endif  //PMDEBUG
@@ -38,6 +42,7 @@
 #define HUDSON_TESTCODE_ALL_POKE ("5")
 #define HUDSON_TESTCODE_ALL_WAZA_CAM ("6")  ///< 全技カメラチェック
 #define HUDSON_TESTCODE_POKE_CHANGE ("7")  
+#define HUDSON_TESTCODE_JA_SHOP_CHECK ("8")   ///< JA施設チェック
 
 //=============================================================================
 /**
@@ -49,7 +54,6 @@ extern void HUDSON_Init( GAMESYS_WORK* gsys, HEAPID heapID );
 extern void HUDSON_Exit( GAMESYS_WORK* gsys );
 extern void HUDSON_Main( GAMESYS_WORK* gsys );
 
-//ハドソンデバッグ用アクセサ
 
 //ツール類
 extern BOOL HUDSON_IsSkipTitle( void );
