@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="toyama" host="W00153" date="2011-09-27T19:58:43" source="batt_field08_all.mb"/>
+	<create user="toyama" host="W00153" date="2011-12-12T18:30:56" source="batt_field08_all.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -17,7 +17,7 @@
 	tool_start_frame="0"
 	tool_end_frame="5000"
 	interpolation="frame"
-	compress_node="merge" node_size="3 3"
+	compress_node="merge" node_size="1 1"
 	frame_step_mode="1"
 	tolerance_scale="0.100000"
 	tolerance_rotate="0.100000"
@@ -32,11 +32,11 @@
 	0.000000
 </node_rotate_data>
 
-<node_translate_data size="9">
-	0.000000 -0.199951 -5.043701 2.441406 0.385742 9.511230 -2.367432 0.016357 0.621094
+<node_translate_data size="2">
+	0.000000 -0.037354
 </node_translate_data>
 
-<node_anm_array size="3">
+<node_anm_array size="1">
 	<node_anm index="0">
 		<scale_x frame_step="1" data_size="1" data_head="0"/>
 		<scale_y frame_step="1" data_size="1" data_head="0"/>
@@ -45,30 +45,8 @@
 		<rotate_y frame_step="1" data_size="1" data_head="0"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
 		<translate_x frame_step="1" data_size="1" data_head="0"/>
-		<translate_y frame_step="1" data_size="1" data_head="1"/>
-		<translate_z frame_step="1" data_size="1" data_head="2"/>
-	</node_anm>
-	<node_anm index="1">
-		<scale_x frame_step="1" data_size="1" data_head="0"/>
-		<scale_y frame_step="1" data_size="1" data_head="0"/>
-		<scale_z frame_step="1" data_size="1" data_head="0"/>
-		<rotate_x frame_step="1" data_size="1" data_head="0"/>
-		<rotate_y frame_step="1" data_size="1" data_head="0"/>
-		<rotate_z frame_step="1" data_size="1" data_head="0"/>
-		<translate_x frame_step="1" data_size="1" data_head="3"/>
-		<translate_y frame_step="1" data_size="1" data_head="4"/>
-		<translate_z frame_step="1" data_size="1" data_head="5"/>
-	</node_anm>
-	<node_anm index="2">
-		<scale_x frame_step="1" data_size="1" data_head="0"/>
-		<scale_y frame_step="1" data_size="1" data_head="0"/>
-		<scale_z frame_step="1" data_size="1" data_head="0"/>
-		<rotate_x frame_step="1" data_size="1" data_head="0"/>
-		<rotate_y frame_step="1" data_size="1" data_head="0"/>
-		<rotate_z frame_step="1" data_size="1" data_head="0"/>
-		<translate_x frame_step="1" data_size="1" data_head="6"/>
-		<translate_y frame_step="1" data_size="1" data_head="7"/>
-		<translate_z frame_step="1" data_size="1" data_head="8"/>
+		<translate_y frame_step="1" data_size="1" data_head="0"/>
+		<translate_z frame_step="1" data_size="1" data_head="1"/>
 	</node_anm>
 </node_anm_array>
 
