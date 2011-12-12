@@ -63,6 +63,9 @@ _EVENT_DATA_END
 //  LOCALWORK0  1のとき初上映でのオーナー出現イベント発生
 //  LOCALWORK1  上記イベントでの上映データ位置を記録
 //  LOCALWORK2  上映した作品Noを保存している
+//  LOCALWORK3  1のとき初上映
+//              ※LOCALWORK0も同じ意味だが、オーナーイベントが終わると
+//                リセットされるため新しく定義した
 //
 //	LOCALWORK5～15までをファンにアイテムを渡したかの制御に使用//
 //		ゾーン内での使用を禁止します							                //
@@ -561,7 +564,7 @@ fan:
   // 1.ごほうびをもらっていない
   // 2.ごほうびアイテムが設定されている
   // 3.初めて上映する
-  IF $bonus_localwork == 0 && $bonus_item_no != 0 && $LOCALWORK0 == 1 THEN
+  IF $bonus_localwork == 0 && $bonus_item_no != 0 && $LOCALWORK3 == 1 THEN
     // ご褒美アイテム
     _CALL bonus_item
   ELSE

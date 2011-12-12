@@ -627,6 +627,9 @@ ev_pkwd_show_after:
     //オーナー登場POSイベント設定
     $LOCALWORK0 = 1
     $LOCALWORK1 = $LWK_PKWD_SHOW_REC_POS
+
+    // ごほうびイベント用
+    $LOCALWORK3 = 1   // 初上映フラグON
   ELSE
     //オーナー登場POSイベント解除（念のため）
     $LOCALWORK0 = 0
