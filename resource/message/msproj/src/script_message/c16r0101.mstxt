@@ -161,11 +161,11 @@
 遊びに　来た　人々が
 満足できる　街に　しましょう▼
 お仕事を　てだすけ　する
-秘書も　ひかえて　いますから▽
+秘書も　控えて　いますから▽
 なんなりと　申しつけ　ください▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-29T08:27:19" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T10:55:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -410,7 +410,7 @@
 あんない　した　おみせと▽
 まちの　にんきが　あがります▼
 にんきを　たくさん　あつめると
-ランクが　アップ　します▼
+ランクが　アップします▼
 おみせの　ランクが　あがれば
 しなものや　サービスが▽
 べんりに　なります▼
@@ -422,8 +422,8 @@
 じょうずに　あんないして▽
 にんきを　あつめましょう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-29T08:27:43" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T10:55:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -437,7 +437,7 @@
 案内した　お店と▽
 街の　人気が　あがります▼
 人気を　たくさん　集めると
-ランクが　アップ　します▼
+ランクが　アップします▼
 お店の　ランクが　あがれば
 品物や　サービスが▽
 便利に　なります▼
@@ -449,8 +449,8 @@
 上手に　案内して▽
 人気を　集めましょう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-29T08:27:45" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T10:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -610,11 +610,11 @@
 			<Text>くじやでは　１にち　１かいの
 ちゅうせんに　あたると▽
 ごうか　けいひんが　もらえます▼
-１とうは　なんと　マスターボールが
-あたります▼</Text>
+１とうは　なんと！
+マスターボールが　あたります▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-23T12:43:32" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T10:56:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -625,11 +625,11 @@
 			<Text>くじやでは　１日　１回の
 抽選に　当たると▽
 豪華　景品が　もらえます▼
-１等は　なんと　マスターボールが
-当たります▼</Text>
+１等は　なんと！
+マスターボールが　当たります▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T02:53:37" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T10:56:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -766,10 +766,10 @@
 ポケモンを　鍛えて　つよくします▼
 ポケモンの　レベルや
 ポケモンの　つよさの　基礎ポイントを▽
-上げることが　できます▼</Text>
+あげることが　できます▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T03:23:37" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T10:56:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -897,10 +897,10 @@
 ポケモンを　きれいに　します▼
 カットや　メイクを　することで
 ポケモンは　よろこび▽
-なつき　やすく　なります▼</Text>
+なつきやすく　なります▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-15T10:35:06" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T10:56:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -911,11 +911,11 @@
 			<Text>びようしつ　では
 ポケモンを　きれいに　します▼
 カットや　メイクを　することで
-ポケモンは　よろこび▽
-なつき　やすく　なります▼</Text>
+ポケモンは　喜び▽
+なつきやすく　なります▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T03:01:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T10:56:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -968,14 +968,14 @@
 住人が　やりたい　種類の▽
 お店が　建てられます▼
 お店に　人を　案内して
-人気を　上げると　ランクアップして▽
+人気を　あげると　ランクアップして▽
 お店は　大きく　なります▼
 また　第２秘書に　話しかけると
-発展　しやすい　お店を▽
+発展しやすい　お店を▽
 アドバイスして　くれますよ▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T03:04:37" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T10:57:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1031,14 +1031,14 @@
 住人が　やりたい　種類の▽
 お店が　建てられます▼
 お店に　人を　案内して
-人気を　上げると　ランクアップして▽
+人気を　あげると　ランクアップして▽
 お店は　大きく　なります▼
 また　第２秘書に　話しかけると
-発展　しやすい　お店を▽
+発展しやすい　お店を▽
 アドバイスして　くれますよ▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T03:04:47" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T10:57:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2299,10 +2299,10 @@
 			<Text>きょうは　きみに
 プレゼントが　あるんだ▼
 きみの　しごとを　たすける
-あたらしい　ひしょを　スカウト　したよ▼</Text>
+あたらしい　ひしょを　スカウトしたよ▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-18T11:00:33" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T10:57:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2313,10 +2313,10 @@
 			<Text>今日は　きみに
 プレゼントが　あるんだ▼
 きみの　仕事を　たすける
-新しい　秘書を　スカウト　したよ▼</Text>
+新しい　秘書を　スカウトしたよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:20:44" />
+				Time="2011-12-12T10:57:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2352,10 +2352,10 @@
 			<Text>きょうは　きみに
 プレゼントが　あるんだ▼
 きみの　しごとを　たすける
-あたらしい　ひしょを　スカウト　したよ▼</Text>
+あたらしい　ひしょを　スカウトしたよ▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-18T11:00:48" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T10:57:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2366,10 +2366,10 @@
 			<Text>今日は　きみに
 プレゼントが　あるんだ▼
 きみの　仕事を　たすける
-新しい　秘書を　スカウト　したよ▼</Text>
+新しい　秘書を　スカウトしたよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:20:58" />
+				Time="2011-12-12T10:57:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2496,11 +2496,11 @@
 [Name:ResortTown Idx="2" ]は、もう
 [Name:ResortMayor Idx="1" ]　の街だ！▽
 後のことは　頼んだよ▼
-もっと　もっと　ひとを
+もっと　もっと　人を
 楽しませる　街に　しておくれ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T13:14:25" />
+				Time="2011-12-12T10:57:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2824,8 +2824,8 @@
 ちょっとした　ものだけど
 これを　あげよう▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T02:45:56" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T10:58:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"

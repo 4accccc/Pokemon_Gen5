@@ -227,12 +227,12 @@
 			Language="JPN_KANJI">
 			<Text>ありがとう！▼
 じゃあ　きみという
-人間を　おしえてよ▼
-せかいの　みんなに　つたえたい
+人間を　教えてよ▼
+世界の　みんなに　伝えたい
 きみの　「くちぐせ」は？▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-20T05:37:37" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T10:52:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -318,11 +318,11 @@
 			<Text>なるほど！▼
 じゃあ　思わず
 「かんどう」　したとき　なんていう？▼
-はじめて　あった　ひとにも　つたわる
+はじめて　会った　人にも　伝わる
 グローバルな　セリフで　よろしくー▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-02T05:57:24" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T10:52:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -973,7 +973,7 @@
 			Language="JPN_KANJI">
 			<Text>おめでとうございます！▼
 お客さまを
-おみせに　ご案内して▽
+お店に　ご案内して▽
 街の　人気が　あがりました▼
 街や　お店の　人気を　あげて
 有名に　していきましょう▼
@@ -986,13 +986,13 @@
 通信施設へ　行ってみましょう▼
 それでは　わたくしどもは
 [Name:ResortMayor ]の　秘書として▽
-こちらの　へやで　お待ちしています▼
+こちらの　部屋で　お待ちしています▼
 いろいろと　サポートを　いたしますので
 ぜひ　いらして　くださいね▼
 それでは▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:29:16" />
+				Time="2011-12-12T10:54:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1885,11 +1885,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>だい[Digit:1digit Idx="4" ]ひしょ　[Name:TrainerName ]
+			<Text>第[Digit:1digit Idx="4" ]秘書　[Name:TrainerName ]
 出会った日：２０[Digit:2digits Idx="1" ]年[Digit:2digits Idx="2" ]月[Digit:2digits Idx="3" ]日</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T16:13:37" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T10:54:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
