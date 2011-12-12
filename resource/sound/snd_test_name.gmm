@@ -5521,14 +5521,14 @@
 		<language name="JPN" width="256">BGM-THEEND</language>
 		<language name="JPN_KANJI" width="256">BGM-THEEND</language>
 	</row>
+	<row id="msg_seq_bgm_champion_room">
+		<language name="JPN" width="256">BGM-CHAMPION-ROOM</language>
+		<language name="JPN_KANJI" width="256">BGM-CHAMPION-ROOM</language>
+	</row>
 	<row id="msg_seq_bgm_end">
 		<language name="JPN" width="256">BGM-END</language>
 		<language name="JPN_KANJI" width="256">BGM-END</language>
 	</row>
-          <row id="msg_seq_1270">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
           <row id="msg_seq_1271">
           <language name="JPN" width="256">dmy</language>
           <language name="JPN_KANJI" width="256">dmy</language>
