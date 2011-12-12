@@ -1105,47 +1105,47 @@ void BOX2OBJ_PokeIconBufLoad( BOX2_SYS_WORK * syswk, u32 tray )
 //--------------------------------------------------------------------------------------------
 static BOOL CheckPokeSearchCondition( BOX_SEARCH_DATA* sp, const POKEMON_PASO_PARAM* ppp )
 {
+	u32	tamago;
+
   if( !sp->search_on ){
     return TRUE; //サーチOffなので無条件スルー
   }
   //絞込み条件に一致しているか？
 
 	//タマゴ
-	if( PPP_Get(ppp,ID_PARA_tamago_flag,NULL) != 0 ){
-		return FALSE;
-	}
+	tamago = PPP_Get( ppp, ID_PARA_tamago_flag, NULL );
 
   //ポケモンNo(1オリジン)
   if( sp->pokemon_id != 0 ){
-    if( PPP_Get(ppp,ID_PARA_monsno,NULL) != sp->pokemon_id ){
+    if( PPP_Get(ppp,ID_PARA_monsno,NULL) != sp->pokemon_id || tamago != 0 ){
       return FALSE;
     }
   }
   //道具(1オリジン)(0:道具をみない, 1:道具なし 2:道具あり）
 	if( sp->item == 1 ){
-		if( PPP_Get(ppp,ID_PARA_item,NULL) != ITEM_DUMMY_DATA ){
+		if( PPP_Get(ppp,ID_PARA_item,NULL) != ITEM_DUMMY_DATA || tamago != 0 ){
 			return FALSE;
     }
 	}else if( sp->item == 2 ){
-		if( PPP_Get(ppp,ID_PARA_item,NULL) == ITEM_DUMMY_DATA ){
+		if( PPP_Get(ppp,ID_PARA_item,NULL) == ITEM_DUMMY_DATA || tamago != 0 ){
 			return FALSE;
 		}
   }
   //性格(0オリジン)
   if( sp->seikaku != 0 ){
-    if( PPP_Get(ppp,ID_PARA_seikaku,NULL) != sp->seikaku-1 ){
+    if( PPP_Get(ppp,ID_PARA_seikaku,NULL) != sp->seikaku-1 || tamago != 0 ){
       return FALSE;
     }
   }
   //特性(0オリジン)（0:性別をみない,1=PTL_SEX_MALE, 2=PTL_SEX_FEMALE, 3=PTL_SEX_UNKNOWN)
   if( sp->tokusei != 0 ){
-    if( PPP_Get(ppp,ID_PARA_speabino,NULL) != sp->tokusei ){
+    if( PPP_Get(ppp,ID_PARA_speabino,NULL) != sp->tokusei || tamago != 0 ){
       return FALSE;
     }
   }
   //性別(0オリジン)
   if( sp->sex != 0 ){ // PTL_SEX_UNKNOWN=2
-    if( PPP_Get(ppp,ID_PARA_sex,NULL) != sp->sex-1 ){
+    if( PPP_Get(ppp,ID_PARA_sex,NULL) != sp->sex-1 || tamago != 0 ){
       return FALSE;
     }
   }
