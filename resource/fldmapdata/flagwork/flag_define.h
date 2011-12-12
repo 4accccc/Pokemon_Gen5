@@ -924,6 +924,14 @@
 #define FV_C01_GLASSESE_01                1013 /* 0x03f5 サンヨウシティ：ダンペイ */
 #define FV_C03R1102_MEDALMAN_01           1014 /* 0x03f6 メダル事務局：メダルおやじ */
 #define FV_R19_BOY2_01                    1015 /* 0x03f7 19番道路：波乗りストッパー */
+#define FV_BC10R0401_SHOPM1_01            1016 /* 0x03f8 ブラックシティお店１：店員 */
+#define FV_BC10R0401_SHOPM1_02            1017 /* 0x03f9 ブラックシティお店２：店員 */
+#define FV_BC10R0401_SHOPM1_03            1018 /* 0x03fa ブラックシティお店３：店員 */
+#define FV_BC10R0401_SHOPM1_04            1019 /* 0x03fb ブラックシティお店４：店員 */
+#define FV_WC10_SHOPM1_01                 1020 /* 0x03fc ホワイトフォレストお店１：店員 */
+#define FV_WC10_SHOPM1_02                 1021 /* 0x03fd ホワイトフォレストお店２：店員 */
+#define FV_WC10_SHOPM1_03                 1022 /* 0x03fe ホワイトフォレストお店３：店員 */
+#define FV_WC10_SHOPM1_04                 1023 /* 0x03ff ホワイトフォレストお店４：店員 */
 
 #define FV_AREA_END                       1099 /* 0x044b  */
 
