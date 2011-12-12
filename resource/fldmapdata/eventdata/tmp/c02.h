@@ -29,6 +29,9 @@
 #define C02_GIRL3A_01                      6
 #define C02_GIRL3B_01                      7
 #define C02_MIDDLEWOMAN2A_01               8
+#define C02_DANCER_01                      9
+#define C02_OL_01                         10
+#define C02_OLDMAN_01                     11
 
 #endif //ZONE_C02_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c02.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

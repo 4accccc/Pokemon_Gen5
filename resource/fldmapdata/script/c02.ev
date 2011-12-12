@@ -38,6 +38,9 @@ _EVENT_DATA		ev_c02_girl3b_01
 _EVENT_DATA	ev_bg_c02_sign3_01
 _EVENT_DATA	ev_bg_c02_sign4_01
 _EVENT_DATA	ev_c02_middlewoman2a_01
+_EVENT_DATA	ev_c02_dancer_01
+_EVENT_DATA	ev_c02_ol_01
+_EVENT_DATA	ev_c02_oldman_01
 _EVENT_DATA_END
 
 //éÂêlåˆï˚å¸éÊìæïœêî
@@ -131,6 +134,27 @@ EVENT_END
 /**************************************************************/
 EVENT_START	ev_c02_girl3b_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02_girl3b_01 )
+EVENT_END
+
+/**************************************************************/
+/*	C02	DANCER												  */
+/**************************************************************/
+EVENT_START	ev_c02_dancer_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02_dancer_01 )
+EVENT_END
+
+/**************************************************************/
+/*	C02	OL												  */
+/**************************************************************/
+EVENT_START	ev_c02_ol_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02_ol_01 )
+EVENT_END
+
+/**************************************************************/
+/*	C02	oldman												  */
+/**************************************************************/
+EVENT_START	ev_c02_oldman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02_olaman_01 )
 EVENT_END
 
 /**************************************************************/

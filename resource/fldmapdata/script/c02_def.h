@@ -21,5 +21,8 @@
 #define SCRID_BG_C02_SIGN3_01 (14)
 #define SCRID_BG_C02_SIGN4_01 (15)
 #define SCRID_C02_MIDDLEWOMAN2A_01 (16)
+#define SCRID_C02_DANCER_01 (17)
+#define SCRID_C02_OL_01 (18)
+#define SCRID_C02_OLDMAN_01 (19)
 
 #endif //_C02_DEF_H_
