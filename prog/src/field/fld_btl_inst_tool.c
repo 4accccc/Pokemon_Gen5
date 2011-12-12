@@ -594,7 +594,7 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
     dst->playerStatus[client] = mystatus;
     
     // プレイヤーパーティーの登録
-    EntryMyParty( my_party ,dst->party[client] ,inMemNum ,0 ,heapID);
+    EntryMyParty( my_party ,dst->party[client] ,inMemNum ,50 ,heapID);
   }
   
   //敵トレーナーセット
