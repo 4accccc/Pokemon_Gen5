@@ -34,10 +34,10 @@
 			Language="JPN">
 			<Comment>イベント
 ・Black2ver
-・カードキー（仮）を持っていない</Comment>
+・No633「プラズマカード」を持っていない</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T09:10:48" />
+				Time="2011-12-12T11:22:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -87,7 +87,7 @@
 			Language="JPN">
 			<Comment>イベント
 ・Black2ver
-・カードキー（仮）を持っている
+・No633「プラズマカード」を持っている
 ・はい/いいえの選択肢表示
 　はい　→入力画面へ
 　いいえ→終了
@@ -95,7 +95,7 @@
 　hide_ship_passwordで</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T09:10:53" />
+				Time="2011-12-12T11:22:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -134,13 +134,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>イベント：船首楼
+			<Comment>イベント
 ・Black2ver
-・カードキーを持っている
+・No633「プラズマカード」を持っている
 ・入力ワードが不正解</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T12:45:01" />
+				Time="2011-12-12T11:23:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

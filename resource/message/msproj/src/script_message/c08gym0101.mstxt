@@ -504,13 +504,13 @@ ID：veteranm_11</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジムにいる　ぜんいんに　かったのか？▼
-なら　シャガさまに　いどめ！▼
+			<Text>ここまで　きたんだ！
+シャガさまに　いどめ！▼
 こころの　そこから　しょうりを
 もとめて　おもうぞんぶん　あばれな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-09T04:02:58" />
+				Time="2011-12-12T11:03:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -518,13 +518,13 @@ ID：veteranm_11</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジムにいる　全員に　勝ったのか？▼
-なら　シャガさまに　挑め！▼
+			<Text>ここまで　来たんだ！
+シャガさまに　挑め！▼
 心の底から　勝利を
 求めて　思う存分　暴れな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-09T04:05:29" />
+				Time="2011-12-12T11:03:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1376,12 +1376,12 @@ ID：veteranw_08</Text>
 シャガさんを　目指すっす！▼
 シャガさんは　ドラゴンタイプの
 使い手っす！▼
-ここだけの話し　ドラゴンタイプは
+ここだけの話　ドラゴンタイプは
 同じ　ドラゴンタイプと▽
 こおりタイプが　弱点　なんすよ！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-06-21T04:27:57" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T11:02:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
