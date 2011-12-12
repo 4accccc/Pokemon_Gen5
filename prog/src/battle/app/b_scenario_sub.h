@@ -36,8 +36,7 @@ enum{
 	BS_CVS_SCENARIO_MAX,	// max
 	
 	BS_CVS_INFO_CAST = 0,				// INFO
-	BS_CVS_INFO_NAME,
-	BS_CVS_INFO_SEX,
+	BS_CVS_INFO_NAME,		// ñºëO+ê´ï 
 	BS_CVS_INFO_LEVEL,
 	BS_CVS_INFO_ITEM,
 	BS_CVS_INFO_ITEM01,
@@ -101,7 +100,7 @@ extern void BsCmn_BgScroll(BSCENARIO_WORK* wk, const s32 mode );
 extern void BsCmn_InitString( BSCENARIO_WORK* wk, const s32 mode );
 extern void BsCmn_MainPrint(  BSCENARIO_WORK *wk );
 void BsCmn_DispString( BSCENARIO_WORK* wk, const s32 mode, const s32 x, const s32 y, const STRBUF* strbuf, const u32 pmode, 
-							const PRINTSYS_LSB col, const s32 fmode );
+							const PRINTSYS_LSB col, const s32 fmode, const s32 cmode );
 extern void BsCmn_DispStringNumber( BSCENARIO_WORK* wk, const s32 mode, const s32 x, const s32 y, const s32 num, const s32 lnum,
 							const u32 pmode, const s32 fmode);
 extern void BsCmn_ExitString( BSCENARIO_WORK* wk );

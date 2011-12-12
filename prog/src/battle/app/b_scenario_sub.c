@@ -227,8 +227,7 @@ static const BS_CANVAS_DATA bs_canvas_01_tbl[] = {
 // INFO
 static const BS_CANVAS_DATA bs_canvas_02_tbl[] = {
 	{ GFL_BG_FRAME1_S,	2,	1,	28,	2,	8,},		// CAST
-	{ GFL_BG_FRAME1_S,	1,	6,	8,	2,	9,},		// 名前
-	{ GFL_BG_FRAME1_S,	9,	6,	1,	2,	8,},		// 性別
+	{ GFL_BG_FRAME1_S,	1,	6,	10,	2,	9,},		// 名前(+性別)
 	{ GFL_BG_FRAME1_S,	2,	11,	10,	2,	9,},		// レベル
 	{ GFL_BG_FRAME1_S,	4,	15,	12,	2,	9,},		// 持ち物(fix)
 	{ GFL_BG_FRAME1_S,	13,	15,	12,	2,	9,},		// 持ち物2
@@ -421,7 +420,7 @@ void BsCmn_BgScroll(BSCENARIO_WORK* wk, const s32 mode );
 void BsCmn_InitString( BSCENARIO_WORK* wk, const s32 mode );
 void BsCmn_MainPrint(  BSCENARIO_WORK *wk );
 void BsCmn_DispString( BSCENARIO_WORK* wk, const s32 mode, const s32 x, const s32 y, const STRBUF* strbuf, const u32 pmode, 
-							const PRINTSYS_LSB col, const s32 fmode );
+							const PRINTSYS_LSB col, const s32 fmode, const s32 cmode );
 void BsCmn_DispStringNumber( BSCENARIO_WORK* wk, const s32 mode, const s32 x, const s32 y, const s32 num, const s32 lnum,
 							 const u32 pmode, const s32 fmode );
 void BsCmn_ExitString( BSCENARIO_WORK* wk );
@@ -622,17 +621,20 @@ void BsCmn_InitString( BSCENARIO_WORK* wk, const s32 mode )
  *	@param	const u32			表示位置(左(0)、右(1)、中央(2)など)
  *	@param	const PRINTSYS_LSB	カラー
  *	@param	const s32			(0:通常、1:小)
+ *	@param	const s32			(0:クリアして表示、1:クリアしないで表示)
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
 void BsCmn_DispString( BSCENARIO_WORK* wk, const s32 mode, const s32 x, const s32 y, const STRBUF* strbuf, const u32 pmode, 
-								const PRINTSYS_LSB col, const s32 fmode )
+								const PRINTSYS_LSB col, const s32 fmode, const s32 cmode )
 {
 	u16		siz;
 	
-	// 一度クリアしてみる
-	BsCmn_ClearCanvas( wk, mode );
+	if(cmode == 0){
+		// 一度クリアしてみる
+		BsCmn_ClearCanvas( wk, mode );
+	}
 	// 表示位置の補正
 	if(fmode == 0){		// 通常フォント
 		siz = bscmn_putsizeget( strbuf, wk->dat->font, pmode );
@@ -678,7 +680,7 @@ void BsCmn_DispStringNumber( BSCENARIO_WORK* wk, const s32 mode, const s32 x, co
 	strbuf = GFL_STR_CreateBuffer( 128, wk->dat->heap );
 	STRTOOL_SetNumber( strbuf, num, lnum, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 	// 表示
-	BsCmn_DispString( wk, mode, x, y, strbuf, pmode, PRINTSYS_LSB_Make(1,2,0), fmode );
+	BsCmn_DispString( wk, mode, x, y, strbuf, pmode, PRINTSYS_LSB_Make(1,2,0), fmode, 0 );
 	//
 	GFL_STR_DeleteBuffer( strbuf );
 }

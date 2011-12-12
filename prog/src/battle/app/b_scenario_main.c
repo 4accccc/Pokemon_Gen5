@@ -1258,7 +1258,7 @@ static void bs_disp_top_string( BSCENARIO_WORK * wk, const s32 mode )
 				offx  = BS_CENTER_OFF_X;
 			}
 			strbuf = GFL_MSG_CreateString( wk->MsgData[0], bs_mes_tbl[i]+id );
-			BsCmn_DispString( wk, BS_CVS_TOP_TITLE_MES+i, offx, 0, strbuf, pmode, PRINTSYS_LSB_Make(1,2,0), 0 );
+			BsCmn_DispString( wk, BS_CVS_TOP_TITLE_MES+i, offx, 0, strbuf, pmode, PRINTSYS_LSB_Make(1,2,0), 0, 0 );
 			GFL_STR_DeleteBuffer( strbuf );
 		}
 		// 切り替え
@@ -1756,7 +1756,7 @@ static void bs_disp_scenario_string( BSCENARIO_WORK * wk, const s32 mode )
 		bs_disp_fix_string( wk, BS_SCENARIO );
 		// slash
 		strbuf = GFL_MSG_CreateString( wk->MsgData[0], bs_info_tbl[10] );
-		BsCmn_DispString( wk, BS_CVS_SCENARIO_SLASH, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0), 1 );
+		BsCmn_DispString( wk, BS_CVS_SCENARIO_SLASH, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0), 1, 0 );
 		GFL_STR_DeleteBuffer( strbuf );
 		// 切り替え
 		wk->Flag |= FLG_CHG_TITLE;
@@ -1775,11 +1775,11 @@ static void bs_disp_scenario_string( BSCENARIO_WORK * wk, const s32 mode )
 		//-----------
 		// 見出し
 		strbuf = GFL_MSG_CreateString( wk->MsgData[1], topid+2*wk->PageNum );
-		BsCmn_DispString( wk, BS_CVS_SCENARIO_SCENE00, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
+		BsCmn_DispString( wk, BS_CVS_SCENARIO_SCENE00, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0), 0, 0 );
 		GFL_STR_DeleteBuffer( strbuf );
 		//ヒント
 		strbuf = GFL_MSG_CreateString( wk->MsgData[1], mesid+2*wk->PageNum );
-		BsCmn_DispString( wk, BS_CVS_SCENARIO_SCENE00_MES, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
+		BsCmn_DispString( wk, BS_CVS_SCENARIO_SCENE00_MES, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0), 0, 0 );
 		GFL_STR_DeleteBuffer( strbuf );
 		
 		//-----------
@@ -1788,11 +1788,11 @@ static void bs_disp_scenario_string( BSCENARIO_WORK * wk, const s32 mode )
 		if((2*wk->PageNum+1) < wk->ScenarioMax){
 			// 見出し
 			strbuf = GFL_MSG_CreateString( wk->MsgData[1], topid+2*wk->PageNum+1 );
-			BsCmn_DispString( wk, BS_CVS_SCENARIO_SCENE01, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
+			BsCmn_DispString( wk, BS_CVS_SCENARIO_SCENE01, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0), 0, 0 );
 			GFL_STR_DeleteBuffer( strbuf );
 			// ヒント
 			strbuf = GFL_MSG_CreateString( wk->MsgData[1], mesid+2*wk->PageNum+1 );
-			BsCmn_DispString( wk, BS_CVS_SCENARIO_SCENE01_MES, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
+			BsCmn_DispString( wk, BS_CVS_SCENARIO_SCENE01_MES, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0), 0, 0 );
 			GFL_STR_DeleteBuffer( strbuf );
 		}
 		else{
@@ -2254,7 +2254,7 @@ static void bs_key_info( BSCENARIO_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief	文字列表示(info)(要整理)
+ * @brief	文字列表示(info)
  *
  * @param	BSCENARIO_WORK*		wk
  * @param	const s32			(0:初期化、1:更新)
@@ -2293,10 +2293,10 @@ static void bs_disp_info_string( BSCENARIO_WORK * wk, const s32 mode )
 		str = GFL_MSG_CreateString( wk->MsgData[0], bs_info_tbl[0] );
 		WORDSET_RegisterPokeMonsNameNo( wk->Wordset, 0, buf[0] );
 		WORDSET_ExpandStr( wk->Wordset, exp, str );
-		BsCmn_DispString( wk, BS_CVS_INFO_NAME, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
+		BsCmn_DispString( wk, BS_CVS_INFO_NAME, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0), 0, 0 );
 		GFL_STR_DeleteBuffer( str );
 		//
-		// 性別
+		// 性別(名前のcanvasを使用)
 		tmp = 1;
 		pcol   = PRINTSYS_LSB_Make(6,5,0);
 		buf[0] = wk->PokeWork[wk->PokePageNum].sex;
@@ -2305,7 +2305,7 @@ static void bs_disp_info_string( BSCENARIO_WORK * wk, const s32 mode )
 			pcol = PRINTSYS_LSB_Make(4,3,0);
 		}
 		str = GFL_MSG_CreateString( wk->MsgData[0], bs_info_tbl[tmp] );
-		BsCmn_DispString( wk, BS_CVS_INFO_SEX, 0, 0, str, 0, pcol, 0 );
+		BsCmn_DispString( wk, BS_CVS_INFO_NAME, 62, 0, str, 0, pcol, 0, 1 );
 		GFL_STR_DeleteBuffer( str );
 		//
 		// レベル
@@ -2313,7 +2313,7 @@ static void bs_disp_info_string( BSCENARIO_WORK * wk, const s32 mode )
 		str = GFL_MSG_CreateString( wk->MsgData[0], bs_info_tbl[3] );
 		WORDSET_RegisterNumber( wk->Wordset, 0, buf[0], 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_ZENKAKU);
 		WORDSET_ExpandStr( wk->Wordset, exp, str );
-		BsCmn_DispString( wk, BS_CVS_INFO_LEVEL, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
+		BsCmn_DispString( wk, BS_CVS_INFO_LEVEL, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0), 0, 0 );
 		GFL_STR_DeleteBuffer( str );
 		//
 		// もちもの
@@ -2321,7 +2321,7 @@ static void bs_disp_info_string( BSCENARIO_WORK * wk, const s32 mode )
 		str = GFL_MSG_CreateString( wk->MsgData[0], bs_info_tbl[4] );
 		WORDSET_RegisterItemName( wk->Wordset, 0, buf[0] );
 		WORDSET_ExpandStr( wk->Wordset, exp, str );
-		BsCmn_DispString( wk, BS_CVS_INFO_ITEM01, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
+		BsCmn_DispString( wk, BS_CVS_INFO_ITEM01, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0), 0, 0 );
 		GFL_STR_DeleteBuffer( str );
 		//
 		// 技
@@ -2332,7 +2332,7 @@ static void bs_disp_info_string( BSCENARIO_WORK * wk, const s32 mode )
 				WORDSET_RegisterWazaName( wk->Wordset, 0, buf[0] );
 				WORDSET_ExpandStr( wk->Wordset, exp, str );
 				// 表示
-				BsCmn_DispString( wk, BS_CVS_INFO_SKILL00+i, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
+				BsCmn_DispString( wk, BS_CVS_INFO_SKILL00+i, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0), 0, 0 );
 				GFL_STR_DeleteBuffer( str );
 			}else{
 				BsCmn_ClearCanvas( wk, BS_CVS_INFO_SKILL00+i );
@@ -2344,7 +2344,7 @@ static void bs_disp_info_string( BSCENARIO_WORK * wk, const s32 mode )
 		str = GFL_MSG_CreateString( wk->MsgData[0], bs_info_tbl[5] );
 		WORDSET_RegisterTokuseiName( wk->Wordset, 0, buf[0] );
 		WORDSET_ExpandStr( wk->Wordset, exp, str );
-		BsCmn_DispString( wk, BS_CVS_INFO_STATUS01, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
+		BsCmn_DispString( wk, BS_CVS_INFO_STATUS01, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0), 0, 0 );
 		GFL_STR_DeleteBuffer( str );
 		//
 		// 破棄
@@ -2618,7 +2618,7 @@ static void bs_disp_fix_string( BSCENARIO_WORK * wk, const s32 mode )
 			offx  = BS_CENTER_OFF_X;
 		}
 		strbuf = GFL_MSG_CreateString( wk->MsgData[ buf[3] ], bs_fix_mestbl[ buf[0] ] );
-		BsCmn_DispString( wk, buf[1], offx, 0, strbuf, pmode, col, 0 );
+		BsCmn_DispString( wk, buf[1], offx, 0, strbuf, pmode, col, 0, 0 );
 		GFL_STR_DeleteBuffer( strbuf );
 	}
 }

@@ -338,8 +338,7 @@ enum{
 	PWB_CVS_TRAINER_MAX,	// max
 	
 	PWB_CVS_INFO_CAST = 0,				// INFO
-	PWB_CVS_INFO_NAME,
-	PWB_CVS_INFO_SEX,
+	PWB_CVS_INFO_NAME,		// 名前+性別
 	PWB_CVS_INFO_LEVEL,
 	PWB_CVS_INFO_ITEM,
 	PWB_CVS_INFO_ITEM01,
@@ -848,8 +847,7 @@ static const PKWD_BOOK_CANVAS_DATA pwb_canvas_02_tbl[] = {
 // ポケ情報
 static const PKWD_BOOK_CANVAS_DATA pwb_canvas_03_tbl[] = {
 	{ GFL_BG_FRAME0_S,	2,	1,	28,	2,	10,},		// CAST
-	{ GFL_BG_FRAME0_S,	1,	6,	8,	2,	13,},		// 名前
-	{ GFL_BG_FRAME0_S,	9,	6,	1,	2,	10,},		// 性別
+	{ GFL_BG_FRAME0_S,	1,	6,	10,	2,	13,},		// 名前(+性別)
 	{ GFL_BG_FRAME0_S,	2,	11,	10,	2,	13,},		// レベル
 	{ GFL_BG_FRAME0_S,	4,	15,	12,	2,	13,},		// 持ち物(fix)
 	{ GFL_BG_FRAME0_S,	13,	15,	12,	2,	13,},		// 持ち物2
@@ -1217,7 +1215,7 @@ static void pwb_init_string( PKWD_BOOK_MAIN_WORK* wk, const s32 type, const s32 
 static void pwb_exit_string( PKWD_BOOK_MAIN_WORK* wk, const s32 type );
 static void pwb_main_print( PKWD_BOOK_MAIN_WORK *wk );
 static void pwb_disp_string( PKWD_BOOK_MAIN_WORK* wk, const s32 type, const s32 mode, const s32 x, const s32 y, const STRBUF* strbuf, const u32 pmode,
-								const PRINTSYS_LSB col );
+								const PRINTSYS_LSB col, const s32 cmode );
 static u16  pwb_get_putsize( const STRBUF * buf, GFL_FONT * font, u32 mode );
 static void pwb_clear_canvas( PKWD_BOOK_MAIN_WORK* wk, const s32 type, const s32 mode, const u32 color);
 static void pwb_disp_title_string( PKWD_BOOK_MAIN_WORK* wk );
@@ -2973,18 +2971,20 @@ static void pwb_main_print( PKWD_BOOK_MAIN_WORK *wk )
  *	@param	const STRBUF* 			表示文字列
  *	@param	const u32				表示位置(左(0)、右(1)、中央(2)など)
  *	@param	const PRINTSYS_LSB		カラー
+ *	@param	const s32				(0:クリアして表示、1:クリアせず表示)
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
 static void pwb_disp_string( PKWD_BOOK_MAIN_WORK* wk, const s32 type, const s32 mode, const s32 x, const s32 y, const STRBUF* strbuf, const u32 pmode,
-								const PRINTSYS_LSB col )
+								const PRINTSYS_LSB col, const s32 cmode )
 {
 	u16		siz;
 	
-	// clear
-	pwb_clear_canvas( wk, type, mode, MES_CLEAR_COLOR );
-	
+	if(cmode == 0){
+		// clear
+		pwb_clear_canvas( wk, type, mode, MES_CLEAR_COLOR );
+	}
 	// 表示位置の補正
 	siz = pwb_get_putsize( strbuf, wk->font, pmode );
 	if(type == STR_MAIN){		// main
@@ -3117,7 +3117,7 @@ static void pwb_disp_fix_string( PKWD_BOOK_MAIN_WORK * wk, const s32 type, const
 			}
 		}
 		strbuf = GFL_MSG_CreateString( wk->MsgData[ buf[3] ], pwb_fix_mestbl[ buf[0] ] );
-		pwb_disp_string( wk, type, buf[1], offx, 0, strbuf, pmode, col );
+		pwb_disp_string( wk, type, buf[1], offx, 0, strbuf, pmode, col, 0 );
 		
 		GFL_STR_DeleteBuffer( strbuf );
 	}
@@ -3492,7 +3492,7 @@ static void pwb_disp_book_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 			pmode = PWB_CENTER_MODE;
 			offx  = PWB_CENTER_OFF_X;
 		}
-		pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_TITLE_MES+i, offx, 0, strbuf, pmode, PRINTSYS_LSB_Make( 1, 2, 0 ) );
+		pwb_disp_string( wk, STR_MAIN, PWB_CVS_TOP_TITLE_MES+i, offx, 0, strbuf, pmode, PRINTSYS_LSB_Make( 1, 2, 0 ), 0 );
 		GFL_STR_DeleteBuffer( strbuf );
 	}
 }
@@ -3728,14 +3728,14 @@ static void pwb_disp_trainer_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 		// シナリオ番号
 		tmp = pwb_get_scenario_curpos( wk, wk->ScenarioCurPos );
 		// 職業名(上映時を表示)(初期化時にまとめて取得)
-		pwb_disp_string(  wk, STR_SUB, PWB_CVS_TRAINER_WORK, 0, 0, wk->NameBuffer[tmp], 0, PRINTSYS_LSB_Make(1,2,0) );
+		pwb_disp_string(  wk, STR_SUB, PWB_CVS_TRAINER_WORK, 0, 0, wk->NameBuffer[tmp], 0, PRINTSYS_LSB_Make(1,2,0), 0 );
 		// 役名(上映時を表示)
     if(mysex==PM_MALE){
   		strbuf = GFL_MSG_CreateString( wk->MsgData[3], pw_show_trainername_01+tmp );
     }else{
   		strbuf = GFL_MSG_CreateString( wk->MsgData[3], pw_show_trainername_f_01+tmp );
     }
-		pwb_disp_string(  wk, STR_SUB, PWB_CVS_TRAINER_WORKER, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0) );
+		pwb_disp_string(  wk, STR_SUB, PWB_CVS_TRAINER_WORKER, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
 		GFL_STR_DeleteBuffer( strbuf );
 	}
 }
@@ -4037,10 +4037,10 @@ static void pwb_disp_poke_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	str = GFL_MSG_CreateString( wk->MsgData[0], pwb_info_tbl[0] );
 	WORDSET_RegisterPokeMonsNameNo( wk->Wordset, 0, buf[0] );
 	WORDSET_ExpandStr( wk->Wordset, exp, str );
-	pwb_disp_string( wk, STR_SUB, PWB_CVS_INFO_NAME, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0) );
+	pwb_disp_string( wk, STR_SUB, PWB_CVS_INFO_NAME, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
 	GFL_STR_DeleteBuffer( str );
 	//
-	// 性別
+	// 性別(名前のcanvasを使用)
 	tmp = 1;
 	pcol   = PRINTSYS_LSB_Make(6,5,0);
 	buf[0] = wk->PokeWork[wk->PokePageNum].sex;
@@ -4049,7 +4049,7 @@ static void pwb_disp_poke_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 		pcol = PRINTSYS_LSB_Make(4,3,0);
 	}
 	str = GFL_MSG_CreateString( wk->MsgData[0], pwb_info_tbl[tmp] );
-	pwb_disp_string(  wk, STR_SUB, PWB_CVS_INFO_SEX, 0, 0, str, 0, pcol );
+	pwb_disp_string(  wk, STR_SUB, PWB_CVS_INFO_NAME, 62, 0, str, 0, pcol, 1 );
 	GFL_STR_DeleteBuffer( str );
 	//
 	// レベル
@@ -4057,7 +4057,7 @@ static void pwb_disp_poke_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	str = GFL_MSG_CreateString( wk->MsgData[0], pwb_info_tbl[3] );
 	WORDSET_RegisterNumber( wk->Wordset, 0, buf[0], 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_ZENKAKU);
 	WORDSET_ExpandStr( wk->Wordset, exp, str );
-	pwb_disp_string(  wk, STR_SUB, PWB_CVS_INFO_LEVEL, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0) );
+	pwb_disp_string(  wk, STR_SUB, PWB_CVS_INFO_LEVEL, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0), 0);
 	GFL_STR_DeleteBuffer( str );
 	//
 	// もちもの
@@ -4065,7 +4065,7 @@ static void pwb_disp_poke_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	str = GFL_MSG_CreateString( wk->MsgData[0], pwb_info_tbl[4] );
 	WORDSET_RegisterItemName( wk->Wordset, 0, buf[0] );
 	WORDSET_ExpandStr( wk->Wordset, exp, str );
-	pwb_disp_string(  wk, STR_SUB, PWB_CVS_INFO_ITEM01, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0) );
+	pwb_disp_string(  wk, STR_SUB, PWB_CVS_INFO_ITEM01, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
 	GFL_STR_DeleteBuffer( str );
 	//
 	// 技
@@ -4076,7 +4076,7 @@ static void pwb_disp_poke_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 			WORDSET_RegisterWazaName( wk->Wordset, 0, buf[0] );
 			WORDSET_ExpandStr( wk->Wordset, exp, str );
 			// 表示
-			pwb_disp_string(  wk, STR_SUB, PWB_CVS_INFO_SKILL00+i, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0) );
+			pwb_disp_string(  wk, STR_SUB, PWB_CVS_INFO_SKILL00+i, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
 			GFL_STR_DeleteBuffer( str );
 		}else{
 			pwb_clear_canvas( wk, STR_SUB, PWB_CVS_INFO_SKILL00+i, MES_CLEAR_COLOR );
@@ -4088,7 +4088,7 @@ static void pwb_disp_poke_string( PKWD_BOOK_MAIN_WORK * wk, const s32 mode )
 	str = GFL_MSG_CreateString( wk->MsgData[0], pwb_info_tbl[5] );
 	WORDSET_RegisterTokuseiName( wk->Wordset, 0, buf[0] );
 	WORDSET_ExpandStr( wk->Wordset, exp, str );
-	pwb_disp_string(  wk, STR_SUB, PWB_CVS_INFO_STATUS01, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0) );
+	pwb_disp_string(  wk, STR_SUB, PWB_CVS_INFO_STATUS01, 0, 0, exp, 0, PRINTSYS_LSB_Make(1,2,0), 0 );
 	GFL_STR_DeleteBuffer( str );
 	//
 	// 破棄
