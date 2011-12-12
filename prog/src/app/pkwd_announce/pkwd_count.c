@@ -1242,9 +1242,6 @@ static void pwc_init_obj_clwk( PKWD_COUNT_MAIN_WORK* wk, const s32 drawtype, con
 		if(adr->dispflag & FLG_OBJ_VFLIP){
 			GFL_CLACT_WK_SetFlip( clwk[i], CLWK_FLIP_V, TRUE );
 		}
-		// 半透明のテスト
-//		GFL_CLACT_WK_SetObjMode( clwk[i], GX_OAM_MODE_XLU );
-		
 		// 次のデータへ
 		adr++;
 	}

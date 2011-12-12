@@ -283,7 +283,6 @@ s32 TdSave_get_item_num( T_DOWNLOAD_MAIN_WORK* wk, const WBTDL_DATA* wbtdl, cons
 		k=0;
 		for(i=WAZANO_HATAKU;i<WAZANO_MAX;i++){
 			bflg = WBTDL_DATA_IsVetoWazaNo( wbtdl, i );
-//			if(bflg == TRUE){
 			if(bflg == FALSE){
 				k++;
 			}
@@ -402,7 +401,6 @@ void TdSave_init_save( T_DOWNLOAD_MAIN_WORK* wk, const s32 src, const s32 dest )
 	wbtdl = wk->CheckBuffer[src];
 	//
 	// セーブ先を保存
-//	wk->SaveCurrent = dest;
 	wk->SaveSrc		= src;
 	wk->SaveDest	= dest;
 	//
@@ -656,10 +654,6 @@ static s32 td_chk_download_data( T_DOWNLOAD_MAIN_WORK* wk )
 		// ダウンロードしたデータをチェック(ここだけ参照)
 		wbtdl = &wk->Param->data->data[i];
 		bflg = WBTDL_DATA_CheckIllegal( wbtdl );
-		// test
-//		if(i == 3){
-//			bflg = FALSE;
-//		}
 		if(bflg == TRUE){
 			wk->CheckBuffer[j] = GFL_HEAP_AllocClearMemoryLo( wk->heapID, sizeof(WBTDL_DATA) );
 			// wbtdl -> checkbuffer[j]

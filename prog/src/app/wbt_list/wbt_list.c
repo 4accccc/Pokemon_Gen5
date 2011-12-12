@@ -2299,7 +2299,7 @@ static void wbt_set_meswin( WBTLIST_MAIN_WORK* wk, const s32 mesid )
 		GFL_STR_DeleteBuffer( wk->MsgBuffer );
 		wk->MsgBuffer = GFL_STR_CreateBuffer( MES_STRING_BUFFER, wk->heapID );
 	}
-	// メッセージ仮バッファセット
+	// メッセージバッファセット
 	strbuf = GFL_MSG_CreateString( wk->msg[0], mesid );
 	// パラメータを展開しMsgBufferに再セット
 	WORDSET_ExpandStr( wordset, wk->MsgBuffer, strbuf );

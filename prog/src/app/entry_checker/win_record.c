@@ -1353,32 +1353,6 @@ static void wr_init_bg( WIN_RECORD_MAIN_WORK* wk )
 	}
 	// 終了
 	GFL_ARC_CloseDataHandle( handle );
-	
-#if 0
-	//--------------------
-	// スクリーンの書き換え
-	//--------------------
-	// スクリーンバッファ指定
-	adr = GFL_BG_GetScreenBufferAdrs( GFL_BG_FRAME3_M );
-	for(i=0;i<32;i++){
-		for(j=0;j<32;j++){
-			// オフセットを加算
-			adr[i*32+j] += ((PLTID_BG_BASE&0x0f)<<12);
-		}
-	}
-	
-	// スクリーンバッファ指定
-	adr = GFL_BG_GetScreenBufferAdrs( GFL_BG_FRAME1_M );
-	for(i=0;i<32;i++){
-		for(j=0;j<32;j++){
-			// オフセットを加算
-			adr[i*32+j] += ((PLTID_BG_BASE&0x0f)<<12);
-		}
-	}
-	//
-	GFL_BG_LoadScreenReq( GFL_BG_FRAME3_M );
-	GFL_BG_LoadScreenReq( GFL_BG_FRAME1_M );
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -2009,7 +1983,6 @@ static void wr_set_param( WIN_RECORD_MAIN_WORK* wk )
 			cnt = WIN_RECORD_MAX_COUNT;
 		}
 		wk->CountBuffer[i] = cnt;
-//		wk->CountBuffer[i] = i;		// test
 	}
 	// 判定
 	j=0;
@@ -2023,7 +1996,6 @@ static void wr_set_param( WIN_RECORD_MAIN_WORK* wk )
 #endif
 	for(i=0;i<TMT_MAX;i++){
 		// 表示の判定
-//		bflg = wr_chk_dispflag( wk, i );
 		bflg = wr_chk_dispflag( wk, wbtwin_tbl[i] );
 		if(bflg == TRUE){
 			// 表示
@@ -2047,9 +2019,7 @@ static void wr_set_param( WIN_RECORD_MAIN_WORK* wk )
 		num = WIN_RECORD_MAX_COUNT;
 	}
 	wk->TotalWinCount = num;
-#if 0
-	OS_Printf("total win count :%d\n",wk->TotalWinCount);
-#endif
+//	OS_Printf("total win count :%d\n",wk->TotalWinCount);
 	
 #if 1
 	OS_Printf("boy :%d\n",wk->TrainerId);
@@ -2297,7 +2267,7 @@ static void wr_chk_anim( WIN_RECORD_MAIN_WORK* wk )
 		bflg = wr_is_anime_end( wk, CLWKMODE_CMN, wnum );
 		if(bflg == FALSE){
 			// アニメの終了
-			// とりあえず通常に戻しておく
+			// 通常に戻しておく
 			wr_chg_objseq( wk, CLWKMODE_CMN, wnum, wr_cmn_btn_tbl[wnum*4] );
 			wk->Flag &= ~(1<<wnum);
 			//
@@ -2340,7 +2310,7 @@ static BOOL wr_chk_dispflag( WIN_RECORD_MAIN_WORK* wk, const s32 mode )
 	// 判定
 	switch(mode){
 		//
-		// 念のため
+		// defaultでセットされるもの
 		case WBTWIN_COUNT_HODOMOE:		// ホドモエ
 		case WBTWIN_COUNT_RENTAL:		// レンタル
 		case WBTWIN_COUNT_SHUFFLE:		// シャッフル
@@ -2350,17 +2320,6 @@ static BOOL wr_chk_dispflag( WIN_RECORD_MAIN_WORK* wk, const s32 mode )
 		default:
 			break;
 	}
-	//
-#ifdef PM_DEBUG
-
-#if 0 // テスト
-	if(wk->Mode == MODE_LV3){
-		bflg = TRUE;
-	}
-#endif
-
-#endif
-	
 	//
 	return( bflg );
 }
@@ -2671,7 +2630,6 @@ static void wr_main_scrollbar( WIN_RECORD_MAIN_WORK * wk )
 	// 座標の取得
 	GFL_CLACT_WK_GetPos( wk->wk_obj.clwk[CLWKID_BAR], &cp_pos, CLSYS_DEFREND_MAIN );
 	cp_pos.y = FRAMELIST_GetScrollBarPY2( wk->frame_list_work, cp_pos.y );
-//	cp_pos.x = 240;		// test
 	//
 	// RAILの領域の(+-8補正:アイコンの半分の大きさ補正)
 	if( cp_pos.y < 40 ){

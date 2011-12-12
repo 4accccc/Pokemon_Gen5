@@ -704,10 +704,7 @@ static void td_init_obj_res_cmn( T_DOWNLOAD_MAIN_WORK* wk, const s32 drawtype );
 static void td_init_obj( T_DOWNLOAD_MAIN_WORK* wk );
 static void td_exit_obj( T_DOWNLOAD_MAIN_WORK* wk );
 //
-//static BOOL td_update_printstream( T_DOWNLOAD_MAIN_WORK* wk );
-//
 // リスト処理
-//static BOOL td_chk_framelist( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num );
 static void td_listcallback_draw( void *work, u32 pos, PRINT_UTIL *print_util, s16 y, BOOL disp );
 static void td_listcallback_move( void *work, u32 pos, BOOL flag );
 static void td_listcallback_scroll( void *work, s8 mv );
@@ -1586,55 +1583,12 @@ BOOL TdCmn_main_meswin( T_DOWNLOAD_MAIN_WORK* wk )
 	// streamの入力処理をまとめて処理してくれるらしい
 	// 内部でkey/touchの判定もしてくれるようだ
 	bflg = APP_PRINTSYS_COMMON_PrintStreamFunc( &wk->PrintSysWork , wk->PrintStream );
-	// 連結部分がうまくいかないため自前で処理(?)
-//	bflg = td_update_printstream( wk );
 	if( bflg == TRUE ){
 		// 終了
 		return( FALSE );
 	}
 	return( TRUE );
 }
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  stream文字送り(yes/no)
- *
- *	@param	T_DOWNLOAD_MAIN_WORK* wk
- *
- *	@retval BOOL				(TRUE:終了、FALSE:まだ)
- */
-//-----------------------------------------------------------------------------
-#if 0	// しばらく保留
-static BOOL td_update_printstream( T_DOWNLOAD_MAIN_WORK* wk )
-{
-	// APP_PRINTSYS_COMMON_PrintStreamFunc( &wk->PrintSysWork , wk->PrintStream );
-	// を使ってしまうと最後の部分を入力しないと先にいかないことになってしまうので、
-	// 自前で処理する
-	BOOL	bflg=FALSE;
-	s32 	status = PRINTSYS_PrintStreamGetState( wk->PrintStream );
-	
-	// 起動中
-	if(status == PRINTSTREAM_STATE_RUNNING){
-		if(GFL_UI_KEY_GetCont()&PAD_BUTTON_DECIDE){
-			PRINTSYS_PrintStreamShortWait( wk->PrintStream, 0 );
-		}
-	}
-	// 終わった
-	else if( status == PRINTSTREAM_STATE_DONE ){
-//		PRINTSYS_PrintStreamDelete( wk->PrintStream );
-		bflg = TRUE;
-//		return wk->next_seq;
-	}
-	// 次へ(ここにくるようだ)
-	else if(status == PRINTSTREAM_STATE_PAUSE){
-//		if(GFL_UI_KEY_GetTrg()&(PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) || GFL_UI_TP_GetTrg()){
-			PRINTSYS_PrintStreamReleasePause( wk->PrintStream );
-//			PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
-//		}
-	}
-	return( bflg );
-}
-#endif
 
 //-----------------------------------------------------------------------------
 /**
@@ -1919,7 +1873,6 @@ void TdCmn_init_framelist( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode )
 	// 項目追加(タイトル文字をセット)
 	for(i=0;i<header.itemMax;i++){
 		flg = 0;
-//		bflg = td_chk_framelist( wk, mode, i );
 		bflg = TdSave_chk_save_list( wk, i );
 		if(bflg == TRUE){
 			flg = 1;
@@ -1930,40 +1883,6 @@ void TdCmn_init_framelist( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode )
 	// 初期化(場所移動)
 //	FRAMELIST_Init( wk->frame_list_work );
 }
-
-#if 0
-//--------------------------------------------------------------------------------------------
-/**
- * @brief	フレームの判定(正式な判定が必要)
- *
- * @param	T_DOWNLOAD_MAIN_WORK*		wk
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-static BOOL td_chk_framelist( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32 num )
-{
-	s16		i;
-	u16		tid[2];
-	BOOL	bflg=FALSE;
-	//
-	// リストの情報のtournamentidと
-	// セーブの情報のtournamentidが一致しているかチェック
-	// フレーム情報
-//	tid[0] = WBTDL_DATA_GetTournamentId( &wk->Param->data->data[num] );
-	tid[0] = WBTDL_DATA_GetTournamentId( &wk->CheckBuffer[num] );
-	// セーブ情報
-	for(i=0;i<wk->SaveMaxNum;i++){
-		tid[1] = WBTDL_DATA_GetTournamentId( wk->WbtSaveData[i] );
-		if(tid[0] == tid[1]){
-			bflg = TRUE;
-			break;
-		}
-	}
-	// 結果
-	return( bflg );
-}
-#endif
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2423,7 +2342,6 @@ void TdCmn_main_scrollbar( T_DOWNLOAD_MAIN_WORK * wk )
 	// 座標の取得
 	GFL_CLACT_WK_GetPos( wk->wk_obj.clwk[T_DOWNLOAD_CLWKID_BAR], &cp_pos, CLSYS_DEFREND_MAIN );
 	cp_pos.y = FRAMELIST_GetScrollBarPY2( wk->frame_list_work, cp_pos.y );
-//	cp_pos.x = 240;		// test
 	//
 	// RAILの領域の(+-8補正:アイコンの半分の大きさ補正)
 	if( cp_pos.y < 40 ){
@@ -2702,15 +2620,8 @@ void TdCmn_disp_title_info( T_DOWNLOAD_MAIN_WORK * wk, const s32 mode, const s32
 	//
 	// クリア
 	TdCmn_clear_canvas( wk, T_DOWNLOAD_MSG_DOWN_TITLE );
-	// ここは即転送が必要らしい
-//	GFL_BMPWIN_TransVramCharacter( wk->PrintUtil[mode].win );
 	//
 	wk->PFlag |= (1<<T_DOWNLOAD_MSG_DOWN_TITLE);
-#if 0
-	// スクリーンを作る必要があるようだ
-	GFL_BMPWIN_MakeScreen( wk->PrintUtil[T_DOWNLOAD_MSG_DOWN_TITLE].win );
-	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->PrintUtil[T_DOWNLOAD_MSG_DOWN_TITLE].win) );
-#endif
 	//
 	id = 0;
 	if(mode == T_DOWNLOAD_MODE_SELECT){
@@ -3125,9 +3036,8 @@ BOOL TdCmn_chk_anim( T_DOWNLOAD_MAIN_WORK* wk, const s32 mode )
 		if(bflg == FALSE){
 			flg = 2;
 			// アニメの終了
-			// とりあえず通常に戻しておく
+			// 通常に戻しておく
 			// =>最終で待つでもよいはず
-//			TdCmn_set_cmn_anim( wk, wnum, 0 );
 			wk->CmnFlag &= ~(1<<wnum);
 			//
 			// 終了判定ありの場合
