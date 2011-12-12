@@ -44,7 +44,7 @@
 // 定数
 enum
 {
-  PLACE_DATA_MAX       = 100,    // @todo 最大値を見積もる
+  PLACE_DATA_MAX       = 100,    // リスト登録数がこの数を超えない必要がある
   LIST_ICON_NUM        = 3,      // リスト1本につくアイコン数
   LIST_BAR_NUM         = 9,      // バーの総数
   LIST_ICON_MAX        = (LIST_BAR_NUM * LIST_ICON_NUM),
