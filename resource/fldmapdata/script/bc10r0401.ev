@@ -14,6 +14,7 @@
   .include "../../../prog/src/field/scrcmd_wfbc_define.h"
 
   //@author fujimura_souichirou（一言メッセージ追加）
+  //@author suginaka_katsunori //店スクリプト作成
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -41,6 +42,19 @@ _EVENT_DATA_END
 //無限ダンジョンの状態を取得する用変数
 DEFINE_LOCAL  LWK_DUNGEON_STATUS
 
+//店スクリプトに使用
+DEFINE_LOCAL	LWK_MSG1
+DEFINE_LOCAL	LWK_MSG2
+DEFINE_LOCAL	LWK_MSG3
+DEFINE_LOCAL	LWK_MSG4
+DEFINE_LOCAL	LWK_MSG5
+DEFINE_LOCAL	LWK_MSG6
+DEFINE_LOCAL	LWK_SELECT
+DEFINE_LOCAL	LWK_BAG_CHK
+DEFINE_LOCAL	LWK_GOLD_CHK
+DEFINE_LOCAL	LWK_ITEM
+DEFINE_LOCAL	LWK_PRICE
+DEFINE_LOCAL	LWK_WEEK
 
 /**************************************************************/
 /*            フィールド初期化スクリプト                      */
@@ -49,36 +63,224 @@ INIT_EVENT_START ev_zone_bc10r0401
 
 INIT_EVENT_END
 
+/************************************************************/
+/*		ショップの共通スクリプト						*/
+/************************************************************/
+ev_shop_scr:
+
+_TALK_OBJ_START()
+
+//商品をいかがですか？
+SWITCH $LWK_WEEK
+CASE RTC_WEEK_SATURDAY,RTC_WEEK_SUNDAY THEN   //土,日曜日
+	_BALLOONWIN_TALKOBJ_MSG_POS( LWK_MSG2, POS_DOWN )
+DEFAULT
+	_BALLOONWIN_TALKOBJ_MSG_POS( LWK_MSG1, POS_DOWN )
+ENDSWITCH
+
+//所持金の表示
+_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+
+//購入本数の選択画面を作成
+_BMPMENU_INIT_RIGHT( MENU_X2, MENU_Y2, 0, 1, LWK_SELECT  )
+_BMPMENU_MAKE_LIST( msg_bc10r0401_shop_choice_01, 0 ) //かう
+_BMPMENU_MAKE_LIST( msg_bc10r0401_shop_choice_02, 1 ) //いらない
+
+_BMPMENU_START()
+
+//買う場合
+IF $LWK_SELECT == 0 THEN
+	
+	//アイテムが購入できるかチェック
+	_ADD_ITEM_CHK( LWK_ITEM, 1, LWK_BAG_CHK )
+	_CHECK_GOLD( LWK_GOLD_CHK, LWK_PRICE )
+	
+	//アイテムがいっぱいの場合
+	IF $LWK_BAG_CHK == FALSE THEN
+	
+		//バッグがいっぱいだぞ
+		_BALLOONWIN_TALKOBJ_MSG_POS( LWK_MSG4, POS_DOWN )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	//お金が足りない場合
+	ELSIF $LWK_GOLD_CHK == FALSE THEN
+
+		//おかねが　たりないぞ！
+		_BALLOONWIN_TALKOBJ_MSG_POS( LWK_MSG5, POS_DOWN )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()	
+	
+	//購入条件を満たしている場合
+	ELSE
+
+		//レジ音再生・所持金から金額分を減算
+		_SE_PLAY( SEQ_SE_SYS_22 )
+		_SUBTRACT_GOLD( LWK_PRICE )
+		_GOLD_WIN_UPDATE()
+		_SE_WAIT()
+
+		//はい　どうぞ
+		_BALLOONWIN_TALKOBJ_MSG_POS( LWK_MSG3, POS_DOWN )
+		_MSGWIN_CLOSE()
+		
+		_ITEM_EVENT_KEYWAIT( LWK_ITEM, 1 )
+		
+		//またきてくれよ
+		_BALLOONWIN_TALKOBJ_MSG_POS( LWK_MSG6, POS_DOWN )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ENDIF
+
+//買わない場合
+ELSE
+	
+	//またきてくれよ
+	_BALLOONWIN_TALKOBJ_MSG_POS( LWK_MSG6, POS_DOWN )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+ENDIF
+
+//金額ウィンドウを消す
+_GOLD_WIN_CLOSE()
+
+_RET
+
+
+
 /**************************************************************/
 /* ショップ01                                                 */
 /**************************************************************/
 EVENT_START   ev_bc10r0401_shopm1_01
-  _TALK_OBJ_START()
-  _BLACK_CITY_SHOP0_CALL( )
+
+  //========================================//
+  //商品・金額・メッセージ格納
+  _GET_WEEK( LWK_WEEK )
+  SWITCH $LWK_WEEK
+  CASE RTC_WEEK_SATURDAY,RTC_WEEK_SUNDAY THEN
+	  $LWK_ITEM = ITEM_YAMINOISI
+	  $LWK_PRICE = 10000
+  DEFAULT
+	  $LWK_ITEM = ITEM_HIKARINOISI
+	  $LWK_PRICE = 10000
+  ENDSWITCH
+
+  _ITEM_NAME( 0, LWK_ITEM )
+  _NUMBER( 1, LWK_PRICE, 5 )
+
+  $LWK_MSG1 = msg_bc10r0401_shop_a_01
+  $LWK_MSG2 = msg_bc10r0401_shop_a_02
+  $LWK_MSG3 = msg_bc10r0401_shop_a_03
+  $LWK_MSG4 = msg_bc10r0401_shop_a_04
+  $LWK_MSG5 = msg_bc10r0401_shop_a_05
+  $LWK_MSG6 = msg_bc10r0401_shop_a_06
+
+  //========================================//
+
+  _CALL ev_shop_scr
+
 EVENT_END
 
 /**************************************************************/
 /* ショップ02                                                  */
 /**************************************************************/
 EVENT_START   ev_bc10r0401_shopm1_02
-  _TALK_OBJ_START()
-  _BLACK_CITY_SHOP1_CALL( )
-EVENT_END
+
+  //========================================//
+
+  //商品・金額・メッセージ格納
+  _GET_WEEK( LWK_WEEK )
+  SWITCH $LWK_WEEK
+  CASE RTC_WEEK_SATURDAY,RTC_WEEK_SUNDAY THEN
+	  $LWK_ITEM = ITEM_AYASIIPATTI
+	  $LWK_PRICE = 20000
+  DEFAULT
+	  $LWK_ITEM = ITEM_APPUGUREEDO
+	  $LWK_PRICE = 20000
+  ENDSWITCH
+
+  _ITEM_NAME( 0, LWK_ITEM )
+  _NUMBER( 1, LWK_PRICE, 5 )
+
+  $LWK_MSG1 = msg_bc10r0401_shop_b_01
+  $LWK_MSG2 = msg_bc10r0401_shop_b_02
+  $LWK_MSG3 = msg_bc10r0401_shop_b_03
+  $LWK_MSG4 = msg_bc10r0401_shop_b_04
+  $LWK_MSG5 = msg_bc10r0401_shop_b_05
+  $LWK_MSG6 = msg_bc10r0401_shop_b_06
+
+  //========================================//
+
+  //_CALL ev_shop_scr
+
+  EVENT_END
 
 /**************************************************************/
 /* ショップ03                                                 */
 /**************************************************************/
 EVENT_START   ev_bc10r0401_shopm1_03
-  _TALK_OBJ_START()
-  _BLACK_CITY_SHOP2_CALL( )
+
+  //========================================//
+  //商品・金額・メッセージ格納
+  _GET_WEEK( LWK_WEEK )
+  SWITCH $LWK_WEEK
+  CASE RTC_WEEK_SATURDAY,RTC_WEEK_SUNDAY THEN
+	  $LWK_ITEM = ITEM_METARUKOOTO
+	  $LWK_PRICE = 30000
+  DEFAULT
+	  $LWK_ITEM = ITEM_PUROTEKUTAA
+	  $LWK_PRICE = 30000
+  ENDSWITCH
+
+  _ITEM_NAME( 0, LWK_ITEM )
+  _NUMBER( 1, LWK_PRICE, 5 )
+
+  $LWK_MSG1 = msg_bc10r0401_shop_c_01
+  $LWK_MSG2 = msg_bc10r0401_shop_c_02
+  $LWK_MSG3 = msg_bc10r0401_shop_c_03
+  $LWK_MSG4 = msg_bc10r0401_shop_c_04
+  $LWK_MSG5 = msg_bc10r0401_shop_c_05
+  $LWK_MSG6 = msg_bc10r0401_shop_c_06
+
+  //========================================//
+
+  _CALL ev_shop_scr
+
 EVENT_END
 
 /**************************************************************/
 /* ショップ04                                                 */
 /**************************************************************/
 EVENT_START   ev_bc10r0401_shopm1_04
-  _TALK_OBJ_START()
-  _BLACK_CITY_SHOP3_CALL( )
+
+  //========================================//
+  //商品・金額・メッセージ格納
+  _GET_WEEK( LWK_WEEK )
+  SWITCH $LWK_WEEK
+  CASE RTC_WEEK_SATURDAY,RTC_WEEK_SUNDAY THEN
+	  $LWK_ITEM = ITEM_MAGUMABUUSUTAA
+	  $LWK_PRICE = 50000
+  DEFAULT
+	  $LWK_ITEM = ITEM_EREKIBUUSUTAA
+	  $LWK_PRICE = 50000
+  ENDSWITCH
+
+  _ITEM_NAME( 0, LWK_ITEM )
+  _NUMBER( 1, LWK_PRICE, 5 )
+
+  $LWK_MSG1 = msg_bc10r0401_shop_d_01
+  $LWK_MSG2 = msg_bc10r0401_shop_d_02
+  $LWK_MSG3 = msg_bc10r0401_shop_d_03
+  $LWK_MSG4 = msg_bc10r0401_shop_d_04
+  $LWK_MSG5 = msg_bc10r0401_shop_d_05
+  $LWK_MSG6 = msg_bc10r0401_shop_d_06
+
+  //========================================//
+
+  _CALL ev_shop_scr
+
 EVENT_END
 
 /**************************************************************/

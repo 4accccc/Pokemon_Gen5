@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/26 19:50:15
+#save date:2011/12/12 19:55:08
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\wc10.wms
 #SECTION START:OBJ_EVENT
@@ -425,7 +425,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_WC10_SHOPM1_01
 #Event Script Name
 SCRID_WC10_SHOPM1_01
 #Direction Type Number
@@ -456,7 +456,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_WC10_SHOPM1_02
 #Event Script Name
 SCRID_WC10_SHOPM1_02
 #Direction Type Number
@@ -487,7 +487,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_WC10_SHOPM1_03
 #Event Script Name
 SCRID_WC10_SHOPM1_03
 #Direction Type Number
@@ -518,7 +518,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_WC10_SHOPM1_04
 #Event Script Name
 SCRID_WC10_SHOPM1_04
 #Direction Type Number
