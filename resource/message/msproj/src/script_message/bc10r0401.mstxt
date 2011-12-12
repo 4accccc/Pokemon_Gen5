@@ -371,11 +371,11 @@
 			Language="JPN">
 			<Text>みんなと　おなじなら
 まんぞく！　って　ダメよ▼
-そんなの　わるい　おとなに　だまされ
-なんにも　かんがえてないだけ！</Text>
+そんなの　かんがえてないだけ！
+わるい　おとなに　だまされちゃうよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T07:56:35" />
+				Time="2011-12-12T03:07:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -385,11 +385,11 @@
 			Language="JPN_KANJI">
 			<Text>みんなと　同じなら
 満足！　って　ダメよ▼
-そんなの　悪い　大人に　だまされ
-なんにも　考えてないだけ！</Text>
+そんなの　考えてないだけ！
+悪い　大人に　だまされちゃうよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T12:12:42" />
+				Time="2011-12-12T03:07:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -637,13 +637,13 @@
 			Language="JPN">
 			<Text>しょうばいはんじょう！▼
 ブラックシティの　めいてんと
-いえば　このおみせ！▼
+いえば　この　おみせ！▼
 きょうは　とくべつに
-つきのいしを　５０００えんで！▽
+つきのいしを　５０００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:24:44" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:21:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -653,13 +653,13 @@
 			Language="JPN_KANJI">
 			<Text>商売繁盛！▼
 ブラックシティの　名店と
-言えば　このお店！▼
+いえば　この　お店！▼
 今日は　特別に
 つきのいしを　５０００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:26:00" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:11:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -711,11 +711,11 @@
 ブラックシティの　めいてんと
 いえば　このおみせ！▼
 きょうは　とくべつに
-たいようのいしを　５０００えんで！▽
+たいようのいしを　５０００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:31:34" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:21:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -725,13 +725,13 @@
 			Language="JPN_KANJI">
 			<Text>商売繁盛！▼
 ブラックシティの　名店と
-言えば　このお店！▼
+いえば　このお店！▼
 今日は　特別に
 たいようのいしを　５０００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:31:47" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:07:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -779,11 +779,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はい　どうぞ
-おきゃくさん　いいかいものしたね！▼</Text>
+			<Text>はい　どうぞ！
+おきゃくさん　いい　かいものしたね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:28:47" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:08:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -791,11 +791,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はい　どうぞ
-お客さん　いい買い物したね！▼</Text>
+			<Text>はい　どうぞ！
+お客さん　いい　買い物したね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:28:54" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:08:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -948,11 +948,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>またきてくれよ！
+			<Text>また　きてくれよ！
 ひんしつには　じしんが　あるからさ！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:36:07" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:08:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1006,13 +1006,13 @@
 			Language="JPN">
 			<Text>せんきゃくばんらい！▼
 ブラックシティの　いちりゅうてんと
-いえば　このおみせ！▼
+いえば　この　おみせ！▼
 きょうは　とくべつに
-するどいツメを　１００００えんで！▽
+するどいツメを　１００００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:38:32" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:21:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1022,13 +1022,13 @@
 			Language="JPN_KANJI">
 			<Text>千客万来！▼
 ブラックシティの　一流店と
-言えば　このお店！▼
+いえば　この　お店！▼
 今日は　特別に
 するどいツメを　１００００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:39:25" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:11:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1078,13 +1078,13 @@
 			Language="JPN">
 			<Text>せんきゃくばんらい！▼
 ブラックシティの　いちりゅうてんと
-いえば　このおみせ！▼
+いえば　この　おみせ！▼
 きょうは　とくべつに
-するどいキバを　１００００えんで！▽
+するどいキバを　１００００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:40:07" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:21:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1094,13 +1094,13 @@
 			Language="JPN_KANJI">
 			<Text>千客万来！▼
 ブラックシティの　一流店と
-言えば　このお店！▼
+いえば　このお店！▼
 今日は　特別に
 するどいキバを　１００００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:40:13" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:08:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1148,11 +1148,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はい　どうぞ
-おきゃくさん　いいかいものしたね！▼</Text>
+			<Text>はい　どうぞ！
+おきゃくさん　いい　かいものしたね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:28:47" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:08:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1160,11 +1160,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はい　どうぞ
-お客さん　いい買い物したね！▼</Text>
+			<Text>はい　どうぞ！
+お客さん　いい　買い物したね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:28:54" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:08:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1317,11 +1317,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>またきてくれよ！
+			<Text>また　きてくれよ！
 ひんしつには　じしんが　あるからさ！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:36:07" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:08:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1375,13 +1375,13 @@
 			Language="JPN">
 			<Text>はくりたばい！▼
 ブラックシティの　がんそと
-いえば　このおみせ！▼
+いえば　この　おみせ！▼
 きょうは　とくべつに
-しんかいのキバを　１５０００えんで！▽
+しんかいのキバを　１５０００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:48:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:21:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1391,13 +1391,13 @@
 			Language="JPN_KANJI">
 			<Text>薄利多売！▼
 ブラックシティの　元祖と
-言えば　このお店！▼
+いえば　この　お店！▼
 今日は　特別に
 しんかいのキバを　１５０００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:49:16" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:11:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1447,13 +1447,13 @@
 			Language="JPN">
 			<Text>はくりたばい！▼
 ブラックシティの　がんそと
-いえば　このおみせ！▼
+いえば　この　おみせ！▼
 きょうは　とくべつに
-しんかいのウロコを　１５０００えんで！▽
+しんかいのウロコを　１５０００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:49:24" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:21:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1463,13 +1463,13 @@
 			Language="JPN_KANJI">
 			<Text>薄利多売！▼
 ブラックシティの　元祖と
-言えば　このお店！▼
+いえば　このお店！▼
 今日は　特別に
 しんかいのウロコを　１５０００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:49:06" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:08:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1517,11 +1517,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はい　どうぞ
-おきゃくさん　いいかいものしたね！▼</Text>
+			<Text>はい　どうぞ！
+おきゃくさん　いい　かいものしたね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:28:47" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:08:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1529,11 +1529,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はい　どうぞ
-お客さん　いい買い物したね！▼</Text>
+			<Text>はい　どうぞ！
+お客さん　いい　買い物したね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:28:54" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:08:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1686,11 +1686,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>またきてくれよ！
+			<Text>また　きてくれよ！
 ひんしつには　じしんが　あるからさ！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:36:07" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:09:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1744,13 +1744,13 @@
 			Language="JPN">
 			<Text>りえきかんげん！▼
 ブラックシティの　しにせと
-いえば　このおみせ！▼
+いえば　この　おみせ！▼
 きょうは　とくべつに
-りゅうのウロコを　２００００えんで！▽
+りゅうのウロコを　２００００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:50:22" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:21:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1760,13 +1760,13 @@
 			Language="JPN_KANJI">
 			<Text>利益還元！▼
 ブラックシティの　老舗と
-言えば　このお店！▼
+いえば　この　お店！▼
 今日は　特別に
 りゅうのウロコを　２００００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:51:13" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:11:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1816,13 +1816,13 @@
 			Language="JPN">
 			<Text>りえきかんげん！▼
 ブラックシティの　しにせと
-いえば　このおみせ！▼
+いえば　この　おみせ！▼
 きょうは　とくべつに
-おうじゃのしるしを　２００００えんで！▽
+おうじゃのしるしを　２００００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:52:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:22:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1832,13 +1832,13 @@
 			Language="JPN_KANJI">
 			<Text>利益還元！▼
 ブラックシティの　老舗と
-言えば　このお店！▼
+いえば　このお店！▼
 今日は　特別に
 おうじゃのしるしを　２００００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:52:23" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:09:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1886,11 +1886,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はい　どうぞ
-おきゃくさん　いいかいものしたね！▼</Text>
+			<Text>はい　どうぞ！
+おきゃくさん　いい　かいものしたね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:28:47" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:09:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1898,11 +1898,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はい　どうぞ
-お客さん　いい買い物したね！▼</Text>
+			<Text>はい　どうぞ！
+お客さん　いい　買い物したね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:28:54" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:09:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2055,11 +2055,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>またきてくれよ！
+			<Text>また　きてくれよ！
 ひんしつには　じしんが　あるからさ！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:36:07" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:09:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2169,8 +2169,8 @@
 			Language="JPN">
 			<Text>いらない</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:22:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

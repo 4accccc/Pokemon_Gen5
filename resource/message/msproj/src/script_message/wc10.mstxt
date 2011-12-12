@@ -2,438 +2,6 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_wc10_girl1_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>GIRL1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_wc10_middleman1_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>MIDDLEMAN1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_wc10_girl4_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>GIRL4</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_wc10_man3_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>MAN3</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_wc10_woman1_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>WOMAN1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_wc10_girl3_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>GIRL3</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_wc10_middleman2_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>MIDDLEMAN2</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="msg_wc10_oldwoman1_01"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>no data</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>※swanで削除</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-21T02:44:17" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>OLDWOMAN1</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
 		Label="wc10_01_01"
 		Style="Large">
 		<LanguageCell
@@ -4294,15 +3862,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ガクト『しんせいなる　しろのたいじゅの
-したに　とつぜん　どうくつができた！▼
+			<Text>ガクト『しんせいなる　しろのたいじゅに
+とつぜん　ほらあなが　できた！▼
 ちょうさいんや　トレーナーが
 たくさん　きているみたいだけど▼
 じもとみんの　われわれが　いちばんに
 さいかそうに　いくぞ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:55:18" />
+				Time="2011-12-12T03:22:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4310,15 +3878,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ガクト『神聖なる　白の大樹の下に
-突然　洞穴が現れた！▼
+			<Text>ガクト『神聖なる　白の大樹に
+突然　洞穴が　現れた！▼
 調査員や　トレーナーが
 たくさん　来ているみたいだけど▼
 地元民の　我々が
-一番に　最下層に行くぞ！</Text>
+一番に　最下層に　行くぞ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:55:28" />
+				Time="2011-12-12T03:23:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4831,14 +4399,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ミホ『こっちに　ひっこしてきたら
-おはだが　つるつるになったの！▼
+おはだが　つるつるに　なったの！▼
 とれたての　きのみを
 まいにち　たべている　おかげかな？▼
 だいしぜんって　すごいね！
 だいしぜん　ばんざーい！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T08:58:53" />
+				Time="2011-12-12T03:23:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4847,14 +4415,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ミホ『こっちに　引っ越してきたら
-お肌が　つるつるになったの！▼
+お肌が　つるつるに　なったの！▼
 取れたての　木の実を
 毎日　食べている　おかげかな？▼
 大自然って　すごいね！
 大自然　ばんざーい！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T08:58:57" />
+				Time="2011-12-12T03:23:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6402,14 +5970,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ローザ『わたしも　しろのたいじゅに
-ちょうせんしてるんだけどさ▼
+ちょうせん　してるんだけどさ▼
 あそこって　なんか
 へんな　トレーナーばかりいるよね▼
 まー　みんな　じつりょくは
 そうとうな　もんだけどさ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:56:34" />
+				Time="2011-12-12T03:23:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6484,7 +6052,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ローザ『初心に　返って
+			<Text>ローザ『初心に　かえって
 白の樹洞で　修行していたらね▼
 駆け出しのころに　感じた
 純粋な　ポケモン勝負の▽
@@ -6493,7 +6061,7 @@
 大切なものを　みつけられた？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T06:58:39" />
+				Time="2011-12-12T03:23:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7570,13 +7138,13 @@
 			Language="JPN">
 			<Text>しょうばいはんじょう！▼
 ホワイトフォレストの　めいてんと
-いえば　このおみせ！▼
+いえば　この　おみせ！▼
 きょうは　とくべつに
 つきのいしを　５０００えんで！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:24:44" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:11:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7586,13 +7154,13 @@
 			Language="JPN_KANJI">
 			<Text>商売繁盛！▼
 ホワイトフォレストの　名店と
-言えば　このお店！▼
+いえば　この　お店！▼
 今日は　特別に
 つきのいしを　５０００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:26:00" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:11:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7642,13 +7210,13 @@
 			Language="JPN">
 			<Text>しょうばいはんじょう！▼
 ホワイトフォレストの　めいてんと
-いえば　このおみせ！▼
+いえば　この　おみせ！▼
 きょうは　とくべつに
 たいようのいしを　５０００えんで！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:31:34" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:11:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7658,13 +7226,13 @@
 			Language="JPN_KANJI">
 			<Text>商売繁盛！▼
 ホワイトフォレストの　名店と
-言えば　このお店！▼
+いえば　この　お店！▼
 今日は　特別に
 たいようのいしを　５０００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:31:47" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:12:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7712,11 +7280,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はい　どうぞ
-おきゃくさん　いいかいものしたね！▼</Text>
+			<Text>はい　どうぞ！
+おきゃくさん　いい　かいものしたね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:28:47" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:10:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7724,11 +7292,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はい　どうぞ
-お客さん　いい買い物したね！▼</Text>
+			<Text>はい　どうぞ！
+お客さん　いい　買い物したね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:28:54" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:10:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7881,11 +7449,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>またきてくれよ！
+			<Text>また　きてくれよ！
 ひんしつには　じしんが　あるからさ！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:36:07" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:10:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7939,13 +7507,13 @@
 			Language="JPN">
 			<Text>せんきゃくばんらい！▼
 ホワイトフォレストの　いちりゅうてんと
-いえば　このおみせ！▼
+いえば　この　おみせ！▼
 きょうは　とくべつに
-するどいツメを　１００００えんで！▽
+するどいツメを　１００００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:38:32" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:18:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7955,13 +7523,13 @@
 			Language="JPN_KANJI">
 			<Text>千客万来！▼
 ホワイトフォレストの　一流店と
-言えば　このお店！▼
+いえば　この　お店！▼
 今日は　特別に
 するどいツメを　１００００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:39:25" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:12:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8011,13 +7579,13 @@
 			Language="JPN">
 			<Text>せんきゃくばんらい！▼
 ホワイトフォレストの　いちりゅうてんと
-いえば　このおみせ！▼
+いえば　この　おみせ！▼
 きょうは　とくべつに
-するどいキバを　１００００えんで！▽
+するどいキバを　１００００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:40:07" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:18:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8027,13 +7595,13 @@
 			Language="JPN_KANJI">
 			<Text>千客万来！▼
 ホワイトフォレストの　一流店と
-言えば　このお店！▼
+いえば　この　お店！▼
 今日は　特別に
 するどいキバを　１００００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:40:13" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:12:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8081,11 +7649,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はい　どうぞ
-おきゃくさん　いいかいものしたね！▼</Text>
+			<Text>はい　どうぞ！
+おきゃくさん　いい　かいものしたね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:28:47" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:10:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8093,11 +7661,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はい　どうぞ
-お客さん　いい買い物したね！▼</Text>
+			<Text>はい　どうぞ！
+お客さん　いい　買い物したね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:28:54" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:10:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8250,11 +7818,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>またきてくれよ！
+			<Text>また　きてくれよ！
 ひんしつには　じしんが　あるからさ！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:36:07" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:10:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8308,13 +7876,13 @@
 			Language="JPN">
 			<Text>はくりたばい！▼
 ホワイトフォレストの　がんそと
-いえば　このおみせ！▼
+いえば　この　おみせ！▼
 きょうは　とくべつに
-しんかいのキバを　１５０００えんで！▽
+しんかいのキバを　１５０００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:48:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:18:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8324,13 +7892,13 @@
 			Language="JPN_KANJI">
 			<Text>薄利多売！▼
 ホワイトフォレストの　元祖と
-言えば　このお店！▼
+いえば　この　お店！▼
 今日は　特別に
 しんかいのキバを　１５０００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:49:16" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:12:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8380,13 +7948,13 @@
 			Language="JPN">
 			<Text>はくりたばい！▼
 ホワイトフォレストの　がんそと
-いえば　このおみせ！▼
+いえば　この　おみせ！▼
 きょうは　とくべつに
-しんかいのウロコを　１５０００えんで！▽
+しんかいのウロコを　１５０００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:49:24" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:18:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8396,13 +7964,13 @@
 			Language="JPN_KANJI">
 			<Text>薄利多売！▼
 ホワイトフォレストの　元祖と
-言えば　このお店！▼
+いえば　この　お店！▼
 今日は　特別に
 しんかいのウロコを　１５０００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:49:06" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:12:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8450,11 +8018,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はい　どうぞ
-おきゃくさん　いいかいものしたね！▼</Text>
+			<Text>はい　どうぞ！
+おきゃくさん　いい　かいものしたね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:28:47" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:10:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8462,11 +8030,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はい　どうぞ
-お客さん　いい買い物したね！▼</Text>
+			<Text>はい　どうぞ！
+お客さん　いい　買い物したね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:28:54" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:10:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8619,11 +8187,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>またきてくれよ！
+			<Text>また　きてくれよ！
 ひんしつには　じしんが　あるからさ！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:36:07" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:10:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8677,13 +8245,13 @@
 			Language="JPN">
 			<Text>りえきかんげん！▼
 ホワイトフォレストの　しにせと
-いえば　このおみせ！▼
+いえば　この　おみせ！▼
 きょうは　とくべつに
-りゅうのウロコを　２００００えんで！▽
+りゅうのウロコを　２００００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:50:22" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:18:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8693,13 +8261,13 @@
 			Language="JPN_KANJI">
 			<Text>利益還元！▼
 ホワイトフォレストの　老舗と
-言えば　このお店！▼
+いえば　この　お店！▼
 今日は　特別に
 りゅうのウロコを　２００００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:51:13" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:12:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8749,13 +8317,13 @@
 			Language="JPN">
 			<Text>りえきかんげん！▼
 ホワイトフォレストの　しにせと
-いえば　このおみせ！▼
+いえば　この　おみせ！▼
 きょうは　とくべつに
-おうじゃのしるしを　２００００えんで！▽
+おうじゃのしるしを　２００００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:52:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:18:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8765,13 +8333,13 @@
 			Language="JPN_KANJI">
 			<Text>利益還元！▼
 ホワイトフォレストの　老舗と
-言えば　このお店！▼
+いえば　この　お店！▼
 今日は　特別に
 おうじゃのしるしを　２００００円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:52:23" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:12:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8819,11 +8387,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はい　どうぞ
-おきゃくさん　いいかいものしたね！▼</Text>
+			<Text>はい　どうぞ！
+おきゃくさん　いい　かいものしたね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:28:47" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:10:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8831,11 +8399,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はい　どうぞ
-お客さん　いい買い物したね！▼</Text>
+			<Text>はい　どうぞ！
+お客さん　いい　買い物したね！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:28:54" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:10:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8988,11 +8556,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>またきてくれよ！
+			<Text>また　きてくれよ！
 ひんしつには　じしんが　あるからさ！</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-12-10T06:36:07" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:10:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -9102,8 +8670,8 @@
 			Language="JPN">
 			<Text>いらない</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:18:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

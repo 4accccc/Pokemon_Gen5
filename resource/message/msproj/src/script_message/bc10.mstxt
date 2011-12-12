@@ -1575,13 +1575,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カレン『つわものたちが　あつまる
-しゅぎょうじょうが　あるときいて▽
+しゅぎょうじょうが　あると　きいて▽
 ポケモンたちを　つれてきたの！▼
 あなたも　トレーナーね！
 ともに　はげみましょう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:09:04" />
+				Time="2011-12-12T03:20:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1589,14 +1589,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カレン『つわものたちが集まる
-修行場が　あると聞いて▽
+			<Text>カレン『つわものたちが　集まる
+修行場が　あると　きいて▽
 ポケモンたちを　連れてきたの！▼
 あなたも　トレーナーね！
 共に　励みましょう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:09:07" />
+				Time="2011-12-12T03:20:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5326,11 +5326,11 @@
 アレが　にゅうかされたッス！▽
 ずーっと　まってたッスよぉ～▼
 ……えっ　アレってなにかって？▼
-プライバシーッス！
+プライバシー　ッス！
 ぜったい　おしえられないッス！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:10:56" />
+				Time="2011-12-12T03:19:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5342,11 +5342,11 @@
 アレが　入荷されたッス！▽
 ずーっと　待ってたッスよぉ～▼
 ……えっ　アレってなにかって？▼
-プライバシーッス！
+プライバシー　ッス！
 絶対　教えられないッス！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-25T06:11:03" />
+				Time="2011-12-12T03:19:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6519,15 +6519,15 @@
 			Language="JPN_KANJI">
 			<Text>エミ『お金を　稼ぐためとはいえ
 こんなに長く　同じ街に　いたのは▽
-初めてだな……▼
-色んな人とも　知り合ったし
+はじめてだな……▼
+いろんな人とも　知り合ったし
 お気に入りの　お店もできた……▼
 でも　そろそろ　旅にでなきゃ
 次は　ホワイトフォレストで▽
 のんびりってのも　いいかもね！</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-28T05:06:52" />
+				User="matsumiya:W00224"
+				Time="2011-12-12T03:19:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
