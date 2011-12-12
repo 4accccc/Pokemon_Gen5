@@ -23,5 +23,6 @@ DEMO_LIST =	c_cruiser.xls \
             kyuremu_union_w_02.xls \
             kyuremu_union_w_03.xls \
             tachiwaki_ship.xls \
-            plane_take_off.xls
+            plane_take_off_fukiyose.xls \
+            plane_take_off_yamaji.xls
 

@@ -1,6 +1,6 @@
 //=========================================================================
 /**
- * @fp	plane_take_off.cdat
+ * @fp	plane_take_off_yamaji.cdat
  * @brief	コンバート環境にあるデータからデモ再生に使うテーブルを生成します。
  * @autor	miyuki iwasawa
  * @note	このファイルはdemo3d/make_cdat.rbによって自動生成されたものです。
@@ -11,7 +11,7 @@
 // シーンパラメータ
 //============================================
 
-static const DEMO3D_SCENE_DATA data_plane_take_off_scene = {
+static const DEMO3D_SCENE_DATA data_plane_take_off_yamaji_scene = {
 	NARC_data_demo3d_plane_take_off_camera_bin,	///<カメラID
 	DEMO3D_BGM_NONE,	///<BGM No
 	ZONE_ID_T01,	///<ゾーンID
@@ -41,7 +41,7 @@ static const DEMO3D_SCENE_DATA data_plane_take_off_scene = {
 // シーンコマンドパラメータ
 //============================================
 
-static const DEMO3D_CMD_DATA demo3d_cmd_plane_take_off_data[] = {
+static const DEMO3D_CMD_DATA demo3d_cmd_plane_take_off_yamaji_data[] = {
  { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 340-10, { MASK_MAIN_DISPLAY, 10, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 340+10, { MASK_MAIN_DISPLAY, 10, -16, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 470, { MASK_MAIN_DISPLAY, 30, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
@@ -52,7 +52,7 @@ static const DEMO3D_CMD_DATA demo3d_cmd_plane_take_off_data[] = {
 // シーンコマンドパラメータ
 //============================================
 
-static const DEMO3D_CMD_DATA demo3d_cmd_plane_take_off_end_data[] = {
+static const DEMO3D_CMD_DATA demo3d_cmd_plane_take_off_yamaji_end_data[] = {
  { DEMO3D_CMD_TYPE_END, 0, { DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
 };
 
@@ -64,62 +64,62 @@ static const DEMO3D_CMD_DATA demo3d_cmd_plane_take_off_end_data[] = {
 ///==================================
 /// plane_take_off_01 Unit File Resource
 
-static const u16 res_plane_take_off_file_plane_take_off_01[] = {
+static const u16 res_plane_take_off_yamaji_file_plane_take_off_01[] = {
  NARC_data_demo3d_plane_take_off_01_nsbmd,
  NARC_data_demo3d_plane_take_off_01_nsbta,
  NARC_data_demo3d_plane_take_off_01_nsbca,
 };
 
-static const DEMO3D_FILE_UNIT res_plane_take_off_file_unit_plane_take_off_01[] = {
- { res_plane_take_off_file_plane_take_off_01, 3 },
+static const DEMO3D_FILE_UNIT res_plane_take_off_yamaji_file_unit_plane_take_off_01[] = {
+ { res_plane_take_off_yamaji_file_plane_take_off_01, 3 },
 };
 
 ///==================================
 /// plane_take_off_sky Unit File Resource
 
-static const u16 res_plane_take_off_file_plane_take_off_sky_morning[] = {
+static const u16 res_plane_take_off_yamaji_file_plane_take_off_sky_morning[] = {
  NARC_data_demo3d_plane_take_sky_nsbmd,
  NARC_data_demo3d_plane_take_sky_d_nsbtp,
 };
-static const u16 res_plane_take_off_file_plane_take_off_sky_noon[] = {
+static const u16 res_plane_take_off_yamaji_file_plane_take_off_sky_noon[] = {
  NARC_data_demo3d_plane_take_sky_nsbmd,
  NARC_data_demo3d_plane_take_sky_d_nsbtp,
 };
-static const u16 res_plane_take_off_file_plane_take_off_sky_evening[] = {
+static const u16 res_plane_take_off_yamaji_file_plane_take_off_sky_evening[] = {
  NARC_data_demo3d_plane_take_sky_nsbmd,
  NARC_data_demo3d_plane_take_sky_e_nsbtp,
 };
-static const u16 res_plane_take_off_file_plane_take_off_sky_night[] = {
+static const u16 res_plane_take_off_yamaji_file_plane_take_off_sky_night[] = {
  NARC_data_demo3d_plane_take_sky_nsbmd,
  NARC_data_demo3d_plane_take_sky_n_nsbtp,
 };
-static const u16 res_plane_take_off_file_plane_take_off_sky_midnight[] = {
+static const u16 res_plane_take_off_yamaji_file_plane_take_off_sky_midnight[] = {
  NARC_data_demo3d_plane_take_sky_nsbmd,
  NARC_data_demo3d_plane_take_sky_n_nsbtp,
 };
 
-static const DEMO3D_FILE_UNIT res_plane_take_off_file_unit_plane_take_off_sky[] = {
- { res_plane_take_off_file_plane_take_off_sky_morning, 2 },
- { res_plane_take_off_file_plane_take_off_sky_noon, 2 },
- { res_plane_take_off_file_plane_take_off_sky_evening, 2 },
- { res_plane_take_off_file_plane_take_off_sky_night, 2 },
- { res_plane_take_off_file_plane_take_off_sky_midnight, 2 },
+static const DEMO3D_FILE_UNIT res_plane_take_off_yamaji_file_unit_plane_take_off_sky[] = {
+ { res_plane_take_off_yamaji_file_plane_take_off_sky_morning, 2 },
+ { res_plane_take_off_yamaji_file_plane_take_off_sky_noon, 2 },
+ { res_plane_take_off_yamaji_file_plane_take_off_sky_evening, 2 },
+ { res_plane_take_off_yamaji_file_plane_take_off_sky_night, 2 },
+ { res_plane_take_off_yamaji_file_plane_take_off_sky_midnight, 2 },
 };
 
 ///========================================================
 /// シーンユニットテーブル
 ///========================================================
 
-static const DEMO3D_FILE_UNIT_TBL res_plane_take_off_file_unit_plane_take_off_01_tbl[] = {
- { res_plane_take_off_file_unit_plane_take_off_01, 1 },
+static const DEMO3D_FILE_UNIT_TBL res_plane_take_off_yamaji_file_unit_plane_take_off_01_tbl[] = {
+ { res_plane_take_off_yamaji_file_unit_plane_take_off_01, 1 },
 };
 
-static const DEMO3D_FILE_UNIT_TBL res_plane_take_off_file_unit_plane_take_off_sky_tbl[] = {
- { res_plane_take_off_file_unit_plane_take_off_sky, 5 },
+static const DEMO3D_FILE_UNIT_TBL res_plane_take_off_yamaji_file_unit_plane_take_off_sky_tbl[] = {
+ { res_plane_take_off_yamaji_file_unit_plane_take_off_sky, 5 },
 };
 
-static const DEMO3D_SCENE_UNIT res_plane_take_off_scene_unit[] = {
- { res_plane_take_off_file_unit_plane_take_off_01_tbl, 1, DEMO3D_UNITCHG_NONE },
- { res_plane_take_off_file_unit_plane_take_off_sky_tbl, 1, DEMO3D_UNITCHG_NONE },
+static const DEMO3D_SCENE_UNIT res_plane_take_off_yamaji_scene_unit[] = {
+ { res_plane_take_off_yamaji_file_unit_plane_take_off_01_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_plane_take_off_yamaji_file_unit_plane_take_off_sky_tbl, 1, DEMO3D_UNITCHG_NONE },
 };
 
