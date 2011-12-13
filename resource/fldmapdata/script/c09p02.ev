@@ -56,12 +56,12 @@ EVENT_START ev_c09p02_ending
   
   //========================================//
 
-  //_CAMERA_START()		//カメラ操作開始
-  //_CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
 	
   //カメラ操作
-  //_CAMERA_MOVE( 63439,0,773996,2064384,2851347,753664,1 )	//一番最後の引数は移動にかかるフレーム数
-  //_CAMERA_WAIT_MOVE()
+  _CAMERA_MOVE( 2129,0,1493327,2064384,4796947,1146880,1 )	//一番最後の引数は移動にかかるフレーム数
+  _CAMERA_WAIT_MOVE()
   
   // フェードイン
   _MAP_FADE_BLACK_IN()
@@ -74,7 +74,7 @@ EVENT_START ev_c09p02_ending
   //======================
 
   //カメラ操作
-  //_CAMERA_MOVE( 63439,0,773996,2064384,2851347,753664,1 )	//一番最後の引数は移動にかかるフレーム数
+  _CAMERA_MOVE( 6993,0,1034575,2080768,3674643,1339392,60 )	//一番最後の引数は移動にかかるフレーム数
 
   //アニメ：主人公部屋から出てくる
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_1 )
@@ -94,15 +94,18 @@ EVENT_START ev_c09p02_ending
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_r )
   _OBJ_ANIME_WAIT()
   
+  _TIME_WAIT( 30 )
+  
   //アニメ：2人で階段を降りる
   //カメラ操作
-  //_CAMERA_MOVE( 63439,0,773996,2064384,2851347,753664,60 )
+  _CAMERA_MOVE( 9169,0,532889,2064384,3215891,2306048,60 )
   _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 31, 14, FORCE_TYPE_NOT, 8, DIR_UD )
+  _TIME_WAIT( 4 )
   _OBJ_ANIME_AUTO( C09P02_SWCHAMPION, 31, 13, FORCE_TYPE_NOT, 8, DIR_UD )
   _OBJ_ANIME_WAIT()
   _OBJ_ANIME( C09P02_SWCHAMPION, anm_stay_d )
   _OBJ_ANIME_WAIT()
-  //_CAMERA_WAIT_MOVE()
+  _CAMERA_WAIT_MOVE()
 
   //アニメ：四天王と会話するような動き
   //ギーマと会話
@@ -163,10 +166,14 @@ EVENT_START ev_c09p02_ending
 
   //暗転処理
   _BLACK_OUT_SLOW()
+  _CAMERA_MOVE( 2129,0,828821,2064384,2626067,2297856,60 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_dash_d )
   _OBJ_ANIME_WAIT()
   _DISP_FADE_END_CHECK()
-
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  _CAMERA_BIND()		//カメラバインド
+  _CAMERA_END()		//カメラ操作終了
+  
   //========================================//
   // 四天王非表示
   _FLAG_SET( FV_C09P02_ENDING )
