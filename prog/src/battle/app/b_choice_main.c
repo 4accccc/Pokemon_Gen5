@@ -354,7 +354,7 @@ static const s16 *bc_cursor_emp_tbl[] = {
 static const s16 bc_timer_tbl[] = {
 	 1, BC_SEL_COLOR,	// 1フレーム目で選択色に変化
 	 5, -1,				// 5フレーム目で戻る(-1:初期にもどす)
-	 20, -2,			// 待ちの時間(-2:転送しない)(要調整)
+	 20, -2,			// 待ちの時間(-2:転送しない)
 	//
 	-1, -1,				// 終了判定
 };
@@ -405,8 +405,6 @@ static void bc_disp_cursor( BCHOICE_WORK *wk, const BOOL bflg, const s32 mode, c
 // empty
 static s16  bc_get_empty( BCHOICE_WORK *wk, const s32 num );
 //
-static void bc_chk_param( BCHOICE_WORK* wk );
-//
 static void bc_chg_bg_pal( BCHOICE_WORK* wk, const s32 mode, const s32 snum, const s32 pnum );
 static void bc_init_screen_anime( BCHOICE_WORK *wk );
 static void bc_main_screen_anime( BCHOICE_WORK *wk );
@@ -451,8 +449,6 @@ void BattleChoice_TaskAdd( BCHOICE_DATA * dat )
 	for(i=0;i<BC_CANVAS_MAXNUM;i++){
 		wk->PrintUtil[i].win = 0;
 	}
-	// チェック
-//	bc_chk_param( wk );
 	//
 	// 処理(初期化用)
 	bc_main_seq( wk );
@@ -544,8 +540,6 @@ static BOOL battle_choice_end( GFL_TCB * tcb, BCHOICE_WORK * wk )
 	bc_exit_string( wk );
 	// PRINT_QUE
 	PRINTSYS_QUE_Delete( wk->print_que );
-	//FONT(大元を使用)
-//	GFL_FONT_Delete( wk->font );
 	
 	wk->dat->end_flg = 1;
 	//
@@ -781,9 +775,7 @@ static void bc_init_graphics( BCHOICE_WORK *wk )
 
   { // BG3(背景：offsetを切り替える方式)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
-//      0, 0, 0x2000, 0,											// X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
       0, 0, 0x0800, 0,											// X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
-//      GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_16,				// ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,				// ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
       GX_BG_SCRBASE_0xc800, GX_BG_CHARBASE_0x00000, 0x8000,		// ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE							// 拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
@@ -1012,7 +1004,6 @@ static BOOL bc_key_input( BCHOICE_WORK * wk )
 	// 更新
 	if( mflg == 1 ){
 		// 決定時にカーソルを消すようにした
-//		bc_disp_cursor( wk, TRUE, wk->Mode, wk->Cursor );
 		bc_disp_cursor( wk, bflg, wk->Mode, wk->Cursor );
 	}
 	//
@@ -1037,7 +1028,6 @@ static void bc_init_bg( BCHOICE_WORK* wk, const s32 mode )
 	ARCHANDLE		*handle;
 	const BC_BGPAL_DATA	*padr = &bc_bgpal_00_tbl[0];
 	const BC_BGCHR_DATA	*cadr = &bc_bgchr_00_tbl[0];
-//	const BC_BGSCN_DATA	*sadr = &bc_bgscn_00_tbl[0];
 	const BC_BGSCN_DATA	*sadr = bc_bgscn_tbl[mode];		// 切り替え
 	
 	heapID = wk->dat->heap;
@@ -1266,7 +1256,6 @@ static void bc_disp_message( BCHOICE_WORK *wk )
 	for(i=0;i<wk->dat->mesnum;i++){
 		if(wk->dat->mesbuffer[i]){
 			bc_disp_string( wk, i, BC_CENTER_MES_X, 0, wk->dat->mesbuffer[i], 2, PRINTSYS_LSB_Make(1,2,0) );
-//			bc_disp_string_number( wk, i, 104, 0, i*1000, 8, 2 );		// 中央(112,0)
 		}
 	}
 }
@@ -1527,32 +1516,6 @@ static void bc_disp_cursor( BCHOICE_WORK *wk, const BOOL bflg, const s32 mode, c
 			pos.y = bc_get_empty(wk, 2*empnum+1);
 			// セット
 			GFL_CLACT_WK_SetPos( wk->clwk_cursor[i], &pos, CLSYS_DEFREND_SUB );
-		}
-	}
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  パラメータチェック(準備のみ)
- *
- *	@param	BCHOICE_WORK*			wk
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void bc_chk_param( BCHOICE_WORK* wk )
-{
-	s32		i;
-	
-	// メッセージ数チェック
-	if((wk->dat->mesnum < 2)||(wk->dat->mesnum > 4)){
-		GF_ASSERT_MSG(0, "mesnum = %d\n", wk->dat->mesnum );
-	}
-	//
-	for(i=0;i<wk->dat->mesnum;i++){
-		if(wk->dat->mesbuffer[i] == 0){
-			GF_ASSERT_MSG(0, "mesbuffer[%d] is 0\n", i );
-			break;		// なくてもいいはず
 		}
 	}
 }

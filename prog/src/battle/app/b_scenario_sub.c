@@ -133,7 +133,6 @@ typedef struct{
 //-------------------------------------
 // BGPAL
 static const BS_BGPAL_DATA bs_bgpal_00_tbl[] = {
-//	{ PALTYPE_SUB_BG,	NARC_b_scenario_gra_pkwd_scenario_NCLR,	0,	8,},	// 下、BG
 	{ PALTYPE_SUB_BG,	NARC_b_scenario_gra_pkwd_scenario_d1_font_NCLR,	0,	8,},	// 色(00)
 	{ PALTYPE_SUB_BG,	NARC_b_scenario_gra_pkwd_scenario_d2_font_NCLR,	0,	8,},	// 色(01)
 	{ PALTYPE_SUB_BG,	NARC_b_scenario_gra_pkwd_scenario_d3_font_NCLR,	0,	8,},	// 色(02)
@@ -218,9 +217,9 @@ static const BS_CANVAS_DATA bs_canvas_01_tbl[] = {
 	{ GFL_BG_FRAME1_S,	3,	5,	28,	4,	9,},		// SCENE00_MES
 	{ GFL_BG_FRAME1_S,	3,	12,	28,	4,	9,},		// SCENE01_MES
 	{ GFL_BG_FRAME1_S,	1,	21,	10,	2,	8,},		// 脚本
-	{ GFL_BG_FRAME1_S,	12,	17,	 2,	2,	8,},		// 現在(test)
-	{ GFL_BG_FRAME1_S,	15,	17,	 2,	2,	8,},		// 最大(test)
-	{ GFL_BG_FRAME1_S,	14,	17,	 1,	2,	8,},		// 「/」(test)
+	{ GFL_BG_FRAME1_S,	12,	17,	 2,	2,	8,},		// 現在
+	{ GFL_BG_FRAME1_S,	15,	17,	 2,	2,	8,},		// 最大
+	{ GFL_BG_FRAME1_S,	14,	17,	 1,	2,	8,},		// 「/」
 
 	{ 0xff, 0, 0, 0, 0, 0,}, // end code
 };
@@ -445,7 +444,6 @@ void BsCmn_ChgScreen( BSCENARIO_WORK *wk, const s32 num, const s32 mode );
 // static
 //------------
 static void bscmn_init_bg(  BSCENARIO_WORK* wk );
-static void bscmn_clear_allcanvas( BSCENARIO_WORK *wk );
 //
 static u16  bscmn_putsizeget( const STRBUF * buf, GFL_FONT * font, u32 mode );
 //
@@ -501,25 +499,11 @@ static void bscmn_init_bg( BSCENARIO_WORK* wk )
 	//
 	handle	= GFL_ARC_OpenDataHandle( ARCID_B_SCENARIO_GRA, GFL_HEAP_LOWID(heapID) );
 	//
-#if 1	// 決めうち
 	// 対応したカラーのパレットを転送
 	tmp = PokewoodCategoryData[wk->dat->scenario_num];
 	tmp &= 0x03;	// 念のため
 	padr += tmp;
 	GFL_ARCHDL_UTIL_TransVramPalette( handle, padr->arcid, padr->type, padr->offset, 0, heapID );
-#else
-	// パレット転送
-	for(i=0;i<BS_BG_MAXNUM;i++){
-		// 終了条件
-		if(padr->type == 0xff){
-			break;
-		}
-		tmp = padr->size;
-		tmp *= 0x20;		// 転送サイズ
-		GFL_ARCHDL_UTIL_TransVramPalette( handle, padr->arcid, padr->type, padr->offset, tmp, heapID );
-		padr++;
-	}
-#endif
 	//
 	// キャラ転送
 	for(i=0;i<BS_BG_MAXNUM;i++){
@@ -585,9 +569,6 @@ void BsCmn_InitString( BSCENARIO_WORK* wk, const s32 mode )
 	// 初期化
 	wk->PFlag = 0;
 	
-	// (いままでのを)クリア
-	bscmn_clear_allcanvas( wk );
-	
 	// 破棄(念のため)
 	BsCmn_ExitString( wk );
 	//
@@ -598,12 +579,6 @@ void BsCmn_InitString( BSCENARIO_WORK* wk, const s32 mode )
 		}
 		// セット
 		wk->PrintUtil[i].win = GFL_BMPWIN_Create( adr->frmnumber, adr->x, adr->y, adr->width, adr->height, adr->palnum, GFL_BMP_CHRAREA_GET_B );
-		// スクリーンは一度でよいはず
-		// このタイミングでは、画面にゴミが入ってしまう
-		// => スクリーンを作成するのは最後
-//		GFL_BMPWIN_MakeScreen( wk->PrintUtil[i].win );
-//		GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->PrintUtil[i].win) );
-//		GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(wk->PrintUtil[i].win) );
 		//
 		adr++;
 	}
@@ -726,36 +701,9 @@ void BsCmn_ClearCanvas( BSCENARIO_WORK* wk, const s32 mode )
 	if(wk->PrintUtil[mode].win){
 		// clear
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->PrintUtil[mode].win ), MES_CLEAR_COLOR );
-		// 要確認
+		// 転送命令
 		wk->PrintUtil[mode].transReq = TRUE;
 	}
-}
-
-//-----------------------------------------------------------------------------
-/**
- *	@brief  ウインドウクリア(static)
- *
- *	@param	BSCENARIO_WORK* 	wk
- *
- *	@retval
- */
-//-----------------------------------------------------------------------------
-static void bscmn_clear_allcanvas( BSCENARIO_WORK *wk )
-{
-#if 0	// ちらついてしまうので保留
-	s32		i;
-	
-	for(i=0;i<BS_CANVAS_MAXNUM;i++){
-		// win
-		if(wk->PrintUtil[i].win){
-			// chr側
-			GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->PrintUtil[i].win ), MES_CLEAR_COLOR );
-			GFL_BMPWIN_TransVramCharacter( wk->PrintUtil[i].win );
-			// scn側
-			GFL_BMPWIN_ClearTransWindow( wk->PrintUtil[i].win );
-		}
-	}
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1015,7 +963,7 @@ void BsCmn_ChgTypeObj( BSCENARIO_WORK * wk, const s32 wnum, const s32 mode, cons
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief	ポケアイコン切り替え(毎回でなくてもよいはず:要調整)
+ * @brief	ポケアイコン切り替え
  *
  * @param	BSCENARIO_WORK*		wk
  * @param	const s32			ワーク番号
@@ -1030,8 +978,6 @@ void BsCmn_ChgTypePoke( BSCENARIO_WORK * wk, const s32 wnum, const u32 id, const
 	// パレット設定
 	u8 pal_num = POKEICON_GetPalNum( id, 0, sex, FALSE );
 	GFL_CLACT_WK_SetPlttOffs( wk->clwk_poke[wnum], pal_num, CLWK_PLTTOFFS_MODE_OAM_COLOR );
-	// アニメON
-//	GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk_poke[wnum], TRUE );
 }
 
 //-----------------------------------------------------------------------------
@@ -1298,7 +1244,7 @@ static s16 bscmn_get_empty( BSCENARIO_WORK *wk, const s32 num )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  カーソル表示(static)
+ *	@brief  カーソル表示(static)(4箇所で1つのカーソル)
  *
  *	@param	BSCENARIO_WORK* 	wk
  *	@param	const BOOL			(TRUE:表示、FALSE:非表示)
@@ -1552,10 +1498,5 @@ void BsCmn_DispUpMark( BSCENARIO_WORK *wk, const s32 mode )
 		bflg = FALSE;
 	}
 	BsCmn_ObjVisible( wk, BS_CLWKMODE_ARROW, BS_CLWK_ARROW_UPMARK, bflg );
-	//
-	// ある場合はアニメ再生(なくてもよい)
-//	if(bflg == TRUE){
-//		BsCmn_ChgSeq( wk, BS_CLWK_ARROW_UPMARK, BS_SEQ_UPMARK );
-//	}
 }
 
