@@ -141,16 +141,16 @@ static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_mountman[] = {
 };
 
 ///==================================
-/// trainerm Unit File Resource
+/// woman3 Unit File Resource
 
-static const u16 res_f_wheel_file_trainerm[] = {
- NARC_data_demo3d_fmdl_trainerm_nsbmd,
+static const u16 res_f_wheel_file_woman3[] = {
+ NARC_data_demo3d_fmdl_woman3_nsbmd,
  NARC_data_demo3d_fmdl_t4x4flip_u_nsbtp,
  NARC_data_demo3d_sub_obj_nsbca,
 };
 
-static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_trainerm[] = {
- { res_f_wheel_file_trainerm, 3 },
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_woman3[] = {
+ { res_f_wheel_file_woman3, 3 },
 };
 
 ///==================================
@@ -167,42 +167,42 @@ static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_ol[] = {
 };
 
 ///==================================
-/// waitress Unit File Resource
+/// adultw Unit File Resource
 
-static const u16 res_f_wheel_file_waitress[] = {
- NARC_data_demo3d_fmdl_waitress_nsbmd,
- NARC_data_demo3d_fmdl_t4x4flip_u_nsbtp,
- NARC_data_demo3d_sub_obj_nsbca,
-};
-
-static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_waitress[] = {
- { res_f_wheel_file_waitress, 3 },
-};
-
-///==================================
-/// babygirl2 Unit File Resource
-
-static const u16 res_f_wheel_file_babygirl2[] = {
- NARC_data_demo3d_fmdl_babygirl2_nsbmd,
- NARC_data_demo3d_fmdl_t4x4flip_u_nsbtp,
- NARC_data_demo3d_sub_obj_nsbca,
-};
-
-static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_babygirl2[] = {
- { res_f_wheel_file_babygirl2, 3 },
-};
-
-///==================================
-/// boy4 Unit File Resource
-
-static const u16 res_f_wheel_file_boy4[] = {
- NARC_data_demo3d_fmdl_boy4_nsbmd,
+static const u16 res_f_wheel_file_adultw[] = {
+ NARC_data_demo3d_fmdl_adultw_nsbmd,
  NARC_data_demo3d_fmdl_t4x4nflip_u_nsbtp,
  NARC_data_demo3d_sub_obj_nsbca,
 };
 
-static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_boy4[] = {
- { res_f_wheel_file_boy4, 3 },
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_adultw[] = {
+ { res_f_wheel_file_adultw, 3 },
+};
+
+///==================================
+/// businessman Unit File Resource
+
+static const u16 res_f_wheel_file_businessman[] = {
+ NARC_data_demo3d_fmdl_businessman_nsbmd,
+ NARC_data_demo3d_fmdl_t4x4nflip_u_nsbtp,
+ NARC_data_demo3d_sub_obj_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_businessman[] = {
+ { res_f_wheel_file_businessman, 3 },
+};
+
+///==================================
+/// musicianw Unit File Resource
+
+static const u16 res_f_wheel_file_musicianw[] = {
+ NARC_data_demo3d_fmdl_musicianw_nsbmd,
+ NARC_data_demo3d_fmdl_t4x4nflip_u_nsbtp,
+ NARC_data_demo3d_sub_obj_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_musicianw[] = {
+ { res_f_wheel_file_musicianw, 3 },
 };
 
 ///==================================
@@ -387,12 +387,12 @@ static const DEMO3D_FILE_UNIT_TBL res_f_wheel_file_unit_boss_tbl[] = {
  { res_f_wheel_file_unit_boss, 1 },
  { res_f_wheel_file_unit_girl2, 1 },
  { res_f_wheel_file_unit_dancer, 1 },
- { res_f_wheel_file_unit_mountman, 1 },
- { res_f_wheel_file_unit_trainerm, 1 },
+ { res_f_wheel_file_unit_woman3, 1 },
+ { res_f_wheel_file_unit_businessman, 1 },
  { res_f_wheel_file_unit_ol, 1 },
- { res_f_wheel_file_unit_waitress, 1 },
- { res_f_wheel_file_unit_babygirl2, 1 },
- { res_f_wheel_file_unit_boy4, 1 },
+ { res_f_wheel_file_unit_mountman, 1 },
+ { res_f_wheel_file_unit_adultw, 1 },
+ { res_f_wheel_file_unit_musicianw, 1 },
  { res_f_wheel_file_unit_swrival, 1 },
  { res_f_wheel_file_unit_swbell, 1 },
  { res_f_wheel_file_unit_boss, 1 },

@@ -4,16 +4,16 @@ FLDMMDL_LIST =	swhero.imd \
 				swheroine.imd \
 				boss.imd \
 				dancer.imd \
-				trainerm.imd \
-				waitress.imd \
-				boy4.imd \
 				girl2.imd \
 				mountman.imd \
 				ol.imd \
-				babygirl2.imd \
         swrival.imd \
         swbell.imd \
         swleader1.imd \
         swidolm.imd \
-        swidolw.imd
+        swidolw.imd \
+				woman3.imd \
+				adultw.imd \
+				businessman.imd \
+				musicianw.imd
 

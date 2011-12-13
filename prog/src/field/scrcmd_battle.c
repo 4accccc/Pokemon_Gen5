@@ -202,9 +202,9 @@ VMCMD_RESULT EvCmdGetWheelTrainerObjID( VMHANDLE *core, void *wk )
  
   static const u16 obj_tbl[] = {
     GIRL2, DANCER,
-    MOUNTMAN, TRAINERM,
-    OL, WAITRESS,
-    BABYGIRL2, BOY4,
+    WOMAN3, BUSINESSMAN,
+    OL, MOUNTMAN,
+    ADULTW, MUSICIANW,
   };
 	*ret_wk = obj_tbl[id];
 	return VMCMD_RESULT_CONTINUE;
@@ -225,9 +225,9 @@ VMCMD_RESULT EvCmdGetWheelTrainerTrID( VMHANDLE *core, void *wk )
   
   static const u16 trid_tbl[] = {
     TRID_MINI_06, TRID_DANCER_03,
-    TRID_MOUNT_13, TRID_ELITEM_14,
-    TRID_OL_04, TRID_WAITRESS_04,
-    TRID_KINDERGARTENW_05,TRID_PRINCE_05,
+    TRID_CHILDCARE_12, TRID_BUSINESS1_13,
+    TRID_OL_04, TRID_MOUNT_13,
+    TRID_ADULTW_04,TRID_GUITARW_05,
   };
 
 	*ret_wk = trid_tbl[id];
