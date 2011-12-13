@@ -77,7 +77,7 @@ EVENT_START ev_wbt_subevent_sunglasses
   _WBT_GET_VICTORY_COUNT( SCR_WBT_CUP_HODOMOE, POKETYPE_NULL, SCWK_ANSWER )
   IF $SCWK_ANSWER == 0 THEN
     //０回なのでまだ一度もジムリーダーと戦っていない
-    _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_04 )
+    _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_04,POS_DOWN )
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
 
@@ -88,7 +88,7 @@ EVENT_START ev_wbt_subevent_sunglasses
 EVENT_END
 
 ev_sunglasses_main:
-  _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_01 )
+  _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_01,POS_DOWN )
   _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, TRUE, LWK_SELECT_POS )
   _CALL sub_count_issyu
   IF $LWK_TOTAL != 0 THEN
@@ -126,7 +126,7 @@ ev_sunglasses_main:
     _CALL sub_menu_sinou
   ENDSWITCH
 
-  _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_03 )
+  _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_03,POS_DOWN )
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
 
@@ -138,7 +138,7 @@ sub_menu_issyu:
   $LWK_LOOP = TRUE
 
   WHILE $LWK_LOOP == TRUE
-    _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_02 )
+    _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_02,POS_DOWN )
     _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, TRUE, LWK_SELECT_POS )
     _WBT_GET_TRAINER_FLAG(  0, SCWK_ANSWER )
     IF $SCWK_ANSWER == TRUE THEN
@@ -204,35 +204,35 @@ sub_menu_issyu:
     _BMPMENU_START()
     SWITCH $LWK_SELECT_POS
     CASE msg_wbt_subev_issyu_01 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_01 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_01,POS_DOWN )
     CASE msg_wbt_subev_issyu_02 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_02 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_02,POS_DOWN )
     CASE msg_wbt_subev_issyu_03 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_03 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_03,POS_DOWN )
     CASE msg_wbt_subev_issyu_04 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_04 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_04,POS_DOWN )
     CASE msg_wbt_subev_issyu_05 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_05 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_05,POS_DOWN )
     CASE msg_wbt_subev_issyu_06 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_06 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_06,POS_DOWN )
     CASE msg_wbt_subev_issyu_07 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_07 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_07,POS_DOWN )
     CASE msg_wbt_subev_issyu_08 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_08 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_08,POS_DOWN )
     CASE msg_wbt_subev_issyu_09 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_09 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_09,POS_DOWN )
     CASE msg_wbt_subev_issyu_10 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_10 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_10,POS_DOWN )
     CASE msg_wbt_subev_issyu_11 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_11 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_11,POS_DOWN )
     CASE msg_wbt_subev_issyu_12 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_12 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_12,POS_DOWN )
     CASE msg_wbt_subev_issyu_13 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_13 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_13,POS_DOWN )
     CASE msg_wbt_subev_issyu_14 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_14 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_14,POS_DOWN )
     CASE msg_wbt_subev_issyu_00 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_20 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_20,POS_DOWN )
     DEFAULT
       $LWK_LOOP = FALSE
     ENDSWITCH
@@ -242,7 +242,7 @@ sub_menu_issyu:
 sub_menu_kanto:
   $LWK_LOOP = TRUE
   WHILE $LWK_LOOP == TRUE
-    _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_02 )
+    _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_02,POS_DOWN )
     _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, TRUE, LWK_SELECT_POS )
     _WBT_GET_TRAINER_FLAG( 20, SCWK_ANSWER )
     IF $SCWK_ANSWER == TRUE THEN
@@ -284,23 +284,23 @@ sub_menu_kanto:
     _BMPMENU_START()
     SWITCH $LWK_SELECT_POS
     CASE msg_wbt_subev_kanto_01 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_21 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_21,POS_DOWN )
     CASE msg_wbt_subev_kanto_02 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_22 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_22,POS_DOWN )
     CASE msg_wbt_subev_kanto_03 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_23 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_23,POS_DOWN )
     CASE msg_wbt_subev_kanto_04 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_24 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_24,POS_DOWN )
     CASE msg_wbt_subev_kanto_05 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_25 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_25,POS_DOWN )
     CASE msg_wbt_subev_kanto_06 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_26 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_26,POS_DOWN )
     CASE msg_wbt_subev_kanto_07 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_27 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_27,POS_DOWN )
     CASE msg_wbt_subev_jouto_09 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_36 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_36,POS_DOWN )
     CASE msg_wbt_subev_kanto_00 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_15 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_15,POS_DOWN )
     DEFAULT
       $LWK_LOOP = FALSE
     ENDSWITCH
@@ -310,7 +310,7 @@ sub_menu_kanto:
 sub_menu_jouto:
   $LWK_LOOP = TRUE
   WHILE $LWK_LOOP == TRUE
-    _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_02 )
+    _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_02,POS_DOWN )
     _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, TRUE, LWK_SELECT_POS )
     _WBT_GET_TRAINER_FLAG( 27, SCWK_ANSWER )
     IF $SCWK_ANSWER == TRUE THEN
@@ -352,23 +352,23 @@ sub_menu_jouto:
     _BMPMENU_START()
     SWITCH $LWK_SELECT_POS
     CASE msg_wbt_subev_jouto_01 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_28 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_28,POS_DOWN )
     CASE msg_wbt_subev_jouto_02 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_29 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_29,POS_DOWN )
     CASE msg_wbt_subev_jouto_03 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_30 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_30,POS_DOWN )
     CASE msg_wbt_subev_jouto_04 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_31 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_31,POS_DOWN )
     CASE msg_wbt_subev_jouto_05 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_32 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_32,POS_DOWN )
     CASE msg_wbt_subev_jouto_06 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_33 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_33,POS_DOWN )
     CASE msg_wbt_subev_jouto_07 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_34 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_34,POS_DOWN )
     CASE msg_wbt_subev_jouto_08 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_35 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_35,POS_DOWN )
     CASE msg_wbt_subev_jouto_00 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_16 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_16,POS_DOWN )
     DEFAULT
       $LWK_LOOP = FALSE
     ENDSWITCH
@@ -380,7 +380,7 @@ sub_menu_jouto:
 sub_menu_houen:
   $LWK_LOOP = TRUE
   WHILE $LWK_LOOP == TRUE
-    _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_02 )
+    _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_02,POS_DOWN )
     _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, TRUE, LWK_SELECT_POS )
     _WBT_GET_TRAINER_FLAG( 36, SCWK_ANSWER )
     IF $SCWK_ANSWER == TRUE THEN
@@ -430,27 +430,27 @@ sub_menu_houen:
     _BMPMENU_START()
     SWITCH $LWK_SELECT_POS
     CASE msg_wbt_subev_houen_01 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_37 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_37,POS_DOWN )
     CASE msg_wbt_subev_houen_02 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_38 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_38,POS_DOWN )
     CASE msg_wbt_subev_houen_03 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_39 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_39,POS_DOWN )
     CASE msg_wbt_subev_houen_04 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_40 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_40,POS_DOWN )
     CASE msg_wbt_subev_houen_05 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_41 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_41,POS_DOWN )
     CASE msg_wbt_subev_houen_06 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_42 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_42,POS_DOWN )
     CASE msg_wbt_subev_houen_07 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_43 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_43,POS_DOWN )
     CASE msg_wbt_subev_houen_08 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_44 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_44,POS_DOWN )
     CASE msg_wbt_subev_houen_09 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_45 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_45,POS_DOWN )
     CASE msg_wbt_subev_houen_00 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_17 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_17,POS_DOWN )
     CASE msg_wbt_subev_houen_00a THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_18 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_18,POS_DOWN )
     DEFAULT
       $LWK_LOOP = FALSE
     ENDSWITCH
@@ -460,7 +460,7 @@ sub_menu_houen:
 sub_menu_sinou:
   $LWK_LOOP = TRUE
   WHILE $LWK_LOOP == TRUE
-    _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_02 )
+    _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_02,POS_DOWN )
     _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, TRUE, LWK_SELECT_POS )
     _WBT_GET_TRAINER_FLAG( 45, SCWK_ANSWER )
     IF $SCWK_ANSWER == TRUE THEN
@@ -502,23 +502,23 @@ sub_menu_sinou:
     _BMPMENU_START()
     SWITCH $LWK_SELECT_POS
     CASE msg_wbt_subev_sinou_01 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_46 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_46,POS_DOWN )
     CASE msg_wbt_subev_sinou_02 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_47 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_47,POS_DOWN )
     CASE msg_wbt_subev_sinou_03 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_48 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_48,POS_DOWN )
     CASE msg_wbt_subev_sinou_04 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_49 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_49,POS_DOWN )
     CASE msg_wbt_subev_sinou_05 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_50 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_50,POS_DOWN )
     CASE msg_wbt_subev_sinou_06 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_51 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_51,POS_DOWN )
     CASE msg_wbt_subev_sinou_07 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_52 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_52,POS_DOWN )
     CASE msg_wbt_subev_sinou_08 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_53 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_53,POS_DOWN )
     CASE msg_wbt_subev_sinou_00 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_wbt_subev_sunglasses_info_19 )
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_19,POS_DOWN )
     DEFAULT
       $LWK_LOOP = FALSE
     ENDSWITCH
