@@ -870,6 +870,8 @@ pos_warp:
   _DEBUG_PRINT_WK( param_x )
   _DEBUG_PRINT_WK( param_z )
 
+  _SE_PLAY( SEQ_SE_SW_PLAZMASHIP_10 )
+
   _PLAYER_DIR_GET( player_dir )
 
   _BLACK_OUT()                      // フェードアウト
