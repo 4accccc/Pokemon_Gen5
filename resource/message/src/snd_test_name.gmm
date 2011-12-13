@@ -9337,6 +9337,10 @@
 		<language name="JPN" width="256">SW-PLAZMASHIP-08</language>
 		<language name="JPN_KANJI" width="256">SW-PLAZMASHIP-08</language>
 	</row>
+	<row id="msg_seq_se_sw_plazmaship_09">
+		<language name="JPN" width="256">SW-PLAZMASHIP-09</language>
+		<language name="JPN_KANJI" width="256">SW-PLAZMASHIP-09</language>
+	</row>
 	<row id="msg_seq_se_sw_zukanstump_01">
 		<language name="JPN" width="256">SW-ZUKANSTUMP-01</language>
 		<language name="JPN_KANJI" width="256">SW-ZUKANSTUMP-01</language>
@@ -9500,6 +9504,10 @@
 	<row id="msg_seq_se_sw_kobalon_02">
 		<language name="JPN" width="256">SW-KOBALON-02</language>
 		<language name="JPN_KANJI" width="256">SW-KOBALON-02</language>
+	</row>
+	<row id="msg_seq_se_sw_souryu_rumble">
+		<language name="JPN" width="256">SW-SOURYU-RUMBLE</language>
+		<language name="JPN_KANJI" width="256">SW-SOURYU-RUMBLE</language>
 	</row>
 	<row id="msg_seq_se_sw_ci_vschamp_01">
 		<language name="JPN" width="256">SW-CI-VSCHAMP-01</language>
