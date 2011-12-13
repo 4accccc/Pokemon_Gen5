@@ -557,8 +557,8 @@
 ……グッ！？</language>
 	</row>
 	<row id="pw_event1_hero_2">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『……?</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『……?</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『……？</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『……？</language>
 	</row>
 	<row id="pw_event1_enemy_2">
 		<language name="JPN" width="256">ハチクマン『グハッ！！

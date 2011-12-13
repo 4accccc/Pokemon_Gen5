@@ -558,8 +558,8 @@
 ……グッ！？</language>
 	</row>
 	<row id="pw_event1_hero_2">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『……?</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『……?</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『……？</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『……？</language>
 	</row>
 	<row id="pw_event1_enemy_2">
 		<language name="JPN" width="256">ハチクマン『グハッ！！
@@ -568,8 +568,8 @@
 ゴフッ！　ゴフッ！！　ゴフーッ！！</language>
 	</row>
 	<row id="pw_event1_hero_3">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『なに……?</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『何……?</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『なに……？</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『何……？</language>
 	</row>
 	<row id="pw_event1_enemy_3">
 		<language name="JPN" width="256">ハチクマン『グムム……　もしや……</language>

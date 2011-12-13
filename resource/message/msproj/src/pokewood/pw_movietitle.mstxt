@@ -5119,10 +5119,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>L[Digit:3digits Idx="0" ]</Text>
+			<Text>Ｌｖ．[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-09T07:51:22" />
+				Time="2011-12-12T08:08:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -5130,10 +5130,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>L[Digit:3digits Idx="0" ]</Text>
+			<Text>Ｌｖ．[Digit:3digits Idx="0" ]</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-09T07:51:23" />
+				Time="2011-12-12T08:09:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

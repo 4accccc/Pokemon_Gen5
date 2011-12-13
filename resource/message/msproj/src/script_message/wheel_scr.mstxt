@@ -79,11 +79,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>フーン……
-いい　どきょう　してんじゃん▼
-</Text>
+いい　どきょう　してんじゃん▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T09:49:16" />
+				Time="2011-12-12T11:15:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -686,13 +685,13 @@
 って　オマエ　なんで　オレ　みてるの？▼
 ……ひょっとして　オレの　ファンのこ？
 わるいんだけどさ　きょうは　オレ▽
-ひさびさの　オフなんだ▽
+ひさびさの　オフなんだよ　だから▽
 そっと　しといてくれないか？▼
 ……まあ　しょうぶ　くらいなら
 つきあうからさ　それで　ゆるしてよ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T02:34:38" />
+				Time="2011-12-13T03:58:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -704,13 +703,13 @@
 って　オマエ　なんで　オレ　みてるの？▼
 ……ひょっとして　オレの　ファンの子？
 悪いんだけどさ　今日は　オレ▽
-久々の　オフなんだ▽
+久々の　オフなんだ　だから▽
 そっと　しといてくれないか？▼
 ……まあ　勝負　くらいなら
 付き合うからさ　それで　許してよ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T02:34:45" />
+				Time="2011-12-13T03:58:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -761,13 +760,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>分かってくれて　サンキュー！
+			<Text>わかってくれて　サンキュー！
 いい　ファンで　助かったよ！▼
 じゃあ　オレが　マジ愛してる
 ポケモン　紹介するぜ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T09:56:56" />
+				Time="2011-12-13T03:58:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -993,14 +992,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オ　オオ……　[Name:TrainerName Idx="0" ]　じゃん▼
-あ　あのさ　もし　じかん　あったら
-オレに　つきあって　もらえないか？▼　
+			<Text>よお！　[Name:TrainerName Idx="0" ]　じゃん▼
+なあ　もし　じかん　あったら
+オレに　つきあって　もらえないか？▼
 ん……　そうだな……
 まずは　ちょっと　バトルでも　しようぜ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T09:58:05" />
+				Time="2011-12-13T04:01:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1008,14 +1007,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オ　オオ……　[Name:TrainerName Idx="0" ]　じゃん▼
+			<Text>よお！　[Name:TrainerName Idx="0" ]　じゃん▼
 あのさ　もし　時間あったら
-オレに　付き合って　もらえないか？▼　
+オレに　付き合って　もらえないか？▼
 ん……　そうだな……
 まずは　ちょっと　バトルでも　しようぜ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T09:58:17" />
+				Time="2011-12-13T04:01:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1079,10 +1078,10 @@
 			<Text>オオ　マジで？　サンキュー……
 やっぱ　オマエ　いいヤツだな……▼
 じゃ　マジで　いくぜ　オレ！
-オマエも　本気で　きてくれよ！！</Text>
+オマエも　本気で　きてくれよ！！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T09:53:23" />
+				Time="2011-12-07T10:58:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1135,7 +1134,7 @@
 じゃ　またな　[Name:TrainerName Idx="0" ]</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T08:56:00" />
+				Time="2011-12-13T04:02:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1275,15 +1274,15 @@
 			Language="JPN">
 			<Text>……２ねんくらい　まえだっけか▼
 ちょうど　この　かんらんしゃで
-なかよくなった　こが　いたんだ▼
+なかよくなった　こが　いたんだ……▼
 そいつ　メチャクチャ　つよくてさ
 オレ　ぜんぜん　かなわねーの▼
-でも　スッゲー　つよい　そいつを
-みてたら　オレも　なんか▽
-やんねーと！　って　おもってさ▽
-いまの　ダンスチーム　はじめたんだ▼
+……でもな　そいつを　みてたら
+オレも　なんか　やんねーと！　って▽
+スッゲー　やるきに　なってさ▽
+いまの　ダンスチーム　つくったんだ▼
 あっ……　ゴメン……▼
-[Name:TrainerName Idx="0" ]と　いるのに
+せっかく　[Name:TrainerName Idx="0" ]と　いるのに
 しらないヤツの　はなしなんかして……▼
 ……ただな　なんか　オマエ　みてると
 ソイツを　おもいだすんだよ……▽
@@ -1292,7 +1291,7 @@
 バイバイ！　[Name:TrainerName Idx="0" ]！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T10:39:50" />
+				Time="2011-12-13T05:35:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1302,15 +1301,15 @@
 			Language="JPN_KANJI">
 			<Text>……２年くらい　前だっけか▼
 ちょうど　この　観覧車で
-仲良くなった　子が　いたんだ▼
+仲良くなった　子が　いたんだ……▼
 そいつ　メチャクチャ　強くさ
 オレ　全然　かなわねーの▼
-でも　スッゲー　強い　そいつを
-みてたらさ　オレも　何か▽
-やんねーと！　って　思って▽
-今の　ダンスチーム　始めたんだ▼
+……でもな　そいつを　みてたら
+オレも　何か　やんねーと！　って▽
+スッゲー　やる気に　なってさ▽
+今の　ダンスチーム　つくったんだ▼
 あっ……　ゴメン……▼
-[Name:TrainerName Idx="0" ]と　いるのに
+せっかく　[Name:TrainerName Idx="0" ]と　いるのに
 知らないヤツの　話なんかして……▼
 ……ただな　何か　オマエ　みてると
 ソイツを　思い出すんだよ……▽
@@ -1319,7 +1318,7 @@
 バイバイ！　[Name:TrainerName Idx="0" ]！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T10:39:41" />
+				Time="2011-12-13T05:35:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1365,18 +1364,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いやあ！　そこの　しょうねん！
-まいにち　ムシムシと　あついな！▼
-こんな　イケない　なつを　まんきつ
-しないわけには　いかないよ！　な？▼
-そこでだ！　ボクと　いっしょに
-かんらんしゃに　つきあわないか！▼
-もちろん　タダとは　いわんぞ！
-ボク　じまんの　ポケモンで▽
-しょうねんを　もんであげよう！</Text>
+			<Text>ハア……　まいにち　あついなあ……▼
+……あらら　ボク　どうしたの？
+まいご？　って　そんな　としでもないか▼
+えっと　じゃあ　なんの　ごよう？
+もしかして　ポケモンしょうぶ　だったり？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T05:39:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1384,18 +1379,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いやあ！　そこの　少年！
-まいにち　ムシムシと　暑いな！▼
-こんな　イケない　夏を　満喫
-しないわけには　いかないよ！　な？▼
-そこでだ！　ボクと　一緒に
-観覧車に　つきあわないか！▼
-もちろん　タダとは　いわんぞ！
-ボク　自慢の　ポケモンで▽
-少年を　もんであげよう！</Text>
+			<Text>ハア……　毎日　暑いなあ……▼
+……あらら　ボクどうしたの？
+迷子？　って　そんな　歳でもないか▼
+えっと　じゃあ　何の　御用？
+もしかして　ポケモン勝負だったり？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T05:39:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1439,13 +1430,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そうかァ！　しょうねん！
-キミは　みどころ　アリ　だな！▼
-さあ　さっそく　あいさつ　がわりに
-イッパツ　しょうぶと　いこうか！▼</Text>
+			<Text>わたしの　せんもんは　しょうぶより
+ポケモンの　おせわなんだけど……▼
+……まあ　いいっか▼
+ちょっと　きぶんが　オチてた　とこだし
+きぶんてんかんに　なりそうだもん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T05:40:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1453,13 +1445,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そうかァ！　少年！
-キミは　見所　アリ　だな！▼
-さあ　早速　あいさつ代わりに
-イッパツ　勝負と　いこうか！▼</Text>
+			<Text>わたしの　専門は　勝負より
+ポケモンの　お世話なんだけど……▼
+……まあ　いいっか▼
+ちょっと　気分が　オチてた　とこだし
+気分転換に　なりそうだもん▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T05:40:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1502,13 +1495,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ああ　ざんねんだ　しょうねん！▼
-あつくるしい　なつの　ひととき
-キミのような　わかい　つぼみと▽
-エンジョイ　したかったのだが！</Text>
+			<Text>あっ　そう……
+それじゃあ　バイバイ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-10T03:54:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1516,13 +1507,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ああ　残念だ　少年！▼
-暑苦しい　夏の　ひととき
-キミのような　若い　つぼみと▽
-エンジョイ　したかったのだが！</Text>
+			<Text>あっ　そう……
+それじゃあ　バイバイ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-10T03:54:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1565,18 +1554,23 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いやあ　よかったよ！　しょうねん！
-キミも　キミの　ポケモンも▽
-りっぱ！　けっこう！　タマランよ！▼
-さあて……▼
-ふたりの　からだも　こころも
-ひつよう　いじょうに▽
-あたたまった　ところで……▽
-かんらんしゃに　とつにゅうだ！▼
-さあ　ついてこい　しょうねん！▼</Text>
+			<Text>へえ……
+つよいんだね　キミの　ポケモン▽
+それに　だいじに　そだててる……▼
+ウフフ……
+わたし　ポケモンや　こどもを　あずかる▽
+ほいくえんに　つとめてて　ポケモンの▽
+ちょうしは　なんとなく　わかるんだよね▼
+……まあ　さいきんは
+ポケモンぎらいに　なりそうなくらい▽
+ちょっと　つかれてるけど……▼
+……って　それは　いいや▼
+これも　なにかの　えんだし
+もう　ちょっと　あそんでいこ！▽
+ほらほら　こっち　おいでよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T05:40:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1584,18 +1578,23 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いやあ　よかったよ！　少年！
-キミも　キミの　ポケモンも▽
-立派！　結構！　タマランよ！▼
-さあて……▼
-２人の　身体も　心も
-必要　以上に▽
-温まった　ところで……▽
-観覧車に　突入だ！▼
-さあ　ついて来い　少年！▼</Text>
+			<Text>へえ……
+強いんだね　キミの　ポケモン▽
+それに　大事に　育ててる……▼
+ウフフ……
+わたし　ポケモンや　子供を　預かる▽
+保育園に　勤めてるから　ポケモンの▽
+調子って　なんとなく　わかるんだよね▼
+……まあ　最近は
+ポケモン嫌いに　なりそうなくらい▽
+ちょっと　疲れてるけど……▼
+……って　それは　いいや▼
+これも　何かの　縁だし
+もう　ちょっと　遊んでいこ！▽
+ほらほら　こっち　おいでよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T03:10:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1638,19 +1637,28 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いやあ　そうぞうを　こえて　アツく
-ムシムシした　くうかんだったなあ！▼
-だが　これで　ボクと　しょうねんの
-あいだは　しんてん　したな！　な！▼
-ボクは　しばらく　このあたりで
-ウロウロする　よていだ！▼
-ふたりの　あいだを　しんてん
-させたい　ときは　えんりょなく▽
-こえを　かけて　くれたまえ！　な！▼
-では　またあおうな！　しょうねん！</Text>
+			<Text>フフフ……　たのしかったあ▼
+あのね……
+わたしたちの　しごと　って▽
+いそがしいトレーナーさんに　かわって▽
+ポケモンや　おこさんを　あずかるのね▼
+……たとえば　おあずかり　してる
+ポケモンが　あそんで　ケガするでしょ▼
+すると　むかえにきた　トレーナーさん
+ケガの　げんいんも　きかないでさ▽
+わたしたちを　せめるんだよね……▼
+……うちでは　そういう　ひとを
+ポケットモンスター　ペアレンツって▽
+よんでるけど　もう　こわくて……▼
+キミも　ポケモン　たいせつに　してるけど
+それとは　ぜんぜん　ちがう……▼
+……きょうは　キミに　あえて
+やっぱり　ポケモンと　トレーナーって▽
+いいなあ　って　おもえちゃったよ▽
+どうも　ありがと！　またね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T05:41:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1658,19 +1666,28 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いやあ　想像を　こえて　アツく
-ムシムシした　空間だったなあ！▼
-だが　これで　ボクと　少年の
-あいだは　進展したな！　な！▼
-ボクは　しばらく　この辺りで
-ウロウロする　予定だ！▼
-２人の　あいだを　進展
-させたい　ときは　遠慮なく▽
-声を　かけて　くれたまえ！　な！▽
-では　また会おうな！　少年！</Text>
+			<Text>フフフ……　楽しかったあ▼
+あのね……
+わたしたちの　仕事って▽
+忙しいトレーナーさんに　代わって▽
+ポケモンや　お子さんを　預かるのね▼
+……たとえば　お預かり　してる
+ポケモンが　遊んで　ケガするでしょ▼
+すると　迎えにきた　トレーナーさん
+ケガの原因も　聞かないでさ▽
+わたしたちを　責めるんだよね……▼
+……うちでは　そういう　人を
+ポケットモンスター　ペアレンツって▽
+呼んでるけど　もう　怖くて……▼
+キミも　ポケモン　大切に　してるけど
+それとは　ぜんぜん　違う……▼
+……今日は　キミに　合えて
+やっぱり　ポケモンと　トレーナーって▽
+いいなあ　って　思えちゃったよ▽
+どうも　ありがと！　またね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T05:41:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1713,15 +1730,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>よーし　きたな！　しょうねん！
-サマータイムは　みじかいぞ！▽
-しっかり　エンジョイ　してるか？▼
-エンジョイが　たりないなら　また
-ボクと　キミと　かんらんしゃで▽
-ひとなつの　けいけんを　しないか！</Text>
+			<Text>あー！　[Name:TrainerName Idx="0" ]くん！
+どう？　げんきに　してる？▼
+ねえねえ　いまって　ヒマかなー？
+ちょっとね　[Name:TrainerName Idx="0" ]くんに▽
+そうだんしたいこと　あるんだ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T03:13:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1729,15 +1745,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>よーし　来たな！　少年！
-サマータイムは　短いぞ！▽
-しっかり　エンジョイ　してるか？▼
-エンジョイが　足りないなら　また
-ボクと　キミと　観覧車で▽
-ひと夏の　経験を　しないか！</Text>
+			<Text>あー！　[Name:TrainerName Idx="0" ]くん！
+どう？　元気に　してる？▼
+ねえねえ　今って　ヒマかなー？
+ちょっとね　[Name:TrainerName Idx="0" ]くんに▽
+相談したいこと　あるんだ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T05:54:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1784,14 +1799,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そうか！　そうかあ！　しょうねん！
-これで　また　ふたりの　かんけいは▽
-おおきく　しんてん　してしまうな！▼
-じゃあ　まずは　あいさつ　がわりに
-ポケモン　イッパツ　やっとくか！▼</Text>
+			<Text>やった！　ありがと　[Name:TrainerName Idx="0" ]くん！
+でもな……　ただ　おはなし　だけじゃ▽
+[Name:TrainerName Idx="0" ]くんも　たいくつでしょ？▽
+すこし　いっしょに　あそぼっか？▼
+きょうの　わたしの　ポケモン
+けっこう　ちょうしが　いいんだよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T02:47:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1799,14 +1815,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そうか！　そうかあ！　少年！
-これで　また　２人の　関係は▽
-大きく　進展してしまうな！▼
-じゃあ　まずは　あいさつ　代わりに
-ポケモン　イッパツ　やっとくか！▼</Text>
+			<Text>やった！　ありがと　[Name:TrainerName Idx="0" ]くん！
+でもな……　ただ　お話するだけじゃ▽
+[Name:TrainerName Idx="0" ]くんも　退屈でしょ？▽
+少し　ふたりで　遊ぼっか？▼
+今日は　わたしの　ポケモン
+結構　調子が　いいんだよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T02:47:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1852,17 +1869,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんだ！　なんだよお！　しょうねん！
-ノリが　わるい　じゃないか！▼
-ふたりで　すごした　あの　じかんを
-わすれた　わけじゃないだろ？　な？▼
-ボクらふたりの　サマーに　らいねんが
-あるとは　かぎらないんだぞ！　な？▽
-ボクは　しばらく　ここにいるから▽
-かんがえなおして　きてほしいなっ！</Text>
+			<Text>そうなんだ　ざんねん……
+また　ヒマあったら　おしえてね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T02:47:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1870,17 +1881,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>何だ！　何だよお！　少年！
-ノリが　悪い　じゃないか！▼
-２人で　過ごした　あの　時間を
-忘れた　わけじゃないだろ？　な？▼
-ボクら２人の　サマーに　来年が
-あるとは　限らないんだぞ！　な？▽
-ボクは　しばらく　ここにいるから▽
-考え直して　きてほしいなっ！</Text>
+			<Text>そうなんだ　残念……
+また　ヒマあったら　教えてね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T02:47:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1926,18 +1931,24 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やはり　しょうねんの　ポケモンは
-たくましく　ごりっぱ　だなァ！▼
-ボクは　しょうねんの　これからの
-はってんと　かのうせいを▽
-きたいして　しんじているぞ！▼
-さて　それでは　いよいよ……▼
-ほんじつの　メインディッシュ！
-かんらんしゃに　とつにゅうだ！▼
-いくぞ　しょうねん！　ついてこい！▼</Text>
+			<Text>あーあ　たのしかった……▼
+なんか　もう　このまま　こうしてたいよ
+しごと　なんか　やめちゃいたい……▼
+……なんかね　きのうも　また
+ポケモン　おあずかり　してる▽
+トレーナーに　おこられちゃって……▼
+……ねえ　[Name:TrainerName Idx="0" ]くん▼
+ポケモンどうしがさ　しょうぶしたり
+あそんで　ケガするの　どうおもう？▼
+わたしは　そういうことって　だいじな
+けいけんだと　おもってたんだけど▽
+さいきん　なんか　もう　よく▽
+わかんなく　なっちゃって……▼
+……って　まあ　グチは　あとあと！
+つぎは　かんらんしゃに　いこっか！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T05:55:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1945,18 +1956,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やはり　少年の　ポケモンは
-たくましく　ご立派　だなァ！▼
-ボクは　少年の　これからの
-発展と　可能性を▽
-期待して　信じているぞ！▼
-さて　それでは　いよいよ……▼
-本日の　メインディッシュ！
-観覧車に　突入だ！▼
-いくぞ　少年！　ついて来い！▼</Text>
+			<Text>あーあ　楽しかった……▼
+なんか　もう　このまま　こうしてたいよ
+仕事なんか　辞めちゃいたい……▼
+……なんかね　昨日も　また
+ポケモン　お預かり　してる▽
+トレーナーに　怒られちゃって……▼
+……ねえ　[Name:TrainerName Idx="0" ]くん▼
+ポケモン同士がさ　勝負したり
+遊んで　ケガするの　どう思う？▼
+わたしは　そういうことって　大事な
+経験だと　思ってたんだけど▽
+最近は　なんか　もう　よく▽
+わかんなく　なっちゃって……▼
+……って　まあ　グチは　あとあと！
+次は　観覧車に　いこっか！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T03:15:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2002,17 +2019,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャツと　はだを　はりつける　あせが
-ふたりが　すごした　あのじかんを▽
-ものがたってしまうな　しょうねん！▼
-これで　ボクらの　なかは　いっそう
-しんてん　してしまった　わけだ！▼
-ボクら　ふたりの　なつやすみは
-いつまでも　おわらないな！▼
-では　また　あおう！　しょうねん！</Text>
+			<Text>うーん　やっぱり　なつに
+のるもんじゃなかったね　コレ▼
+あれ？　[Name:TrainerName Idx="0" ]くん　だいじょうぶ？
+かおが　バオップいろ だけど？▼
+ホラ　やっぱり　キミも　うわぎ
+ぬいどけば　よかったんだよ▼
+おとこどうし　なんだもん　べつに
+はずかしがること　ないでしょ？▼
+あ　それとも　いってなかった？
+わたしが　おとこ　だって▼
+いまの　しょくばね　じょせいしか
+さいよう　して　なかったのに▽
+むりやり　たのみこんだんだ▼
+そしたらさ　じょせい　として
+はたらくなら　さいよう　っていわれてさ▼
+……　……　……でも　そうだな
+そこまでして　えらんだ　しごと　だもん▽
+もう　ちょっと　がんばってみないと▼
+ふふふ　[Name:TrainerName Idx="0" ]くんの　おかげで
+なんか　やるきでたよ！　ありがとね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T03:16:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2020,17 +2049,29 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シャツと　肌を　張り付ける　汗が
-２人が　過ごした　あの時間を▽
-物語ってしまうな　少年！▼
-これで　ボクらの　仲は　一層
-進展してしまった　わけだ！▼
-ボクら　２人の　夏休みは
-いつまでも　終わらないな！▼
-では　また　会おう！　少年！</Text>
+			<Text>うーん　やっぱり　夏に
+乗るもんじゃなかったね　コレ▼
+あれ？　[Name:TrainerName Idx="0" ]くん　大丈夫？
+顔が　バオップ色だけど？▼
+ホラ　やっぱり　キミも　上着
+脱いどけば　良かったんだよ▼
+男同士なんだもん　別に
+恥ずかしがること　ないでしょ？▼
+あ　それとも　言ってなかった？
+わたしが　男だって▼
+今の　職場ね　女性しか
+採用してなかったのに▽
+無理やり　頼みこんだんだ▼
+そしたらさ　女性として
+働くなら　採用っていわれてさ▼
+……　……　……でも　そうだな
+そこまでして　選んだ　仕事だもん▽
+もうちょっと　頑張ってみないと▼
+ふふふ　[Name:TrainerName Idx="0" ]くんの　おかげで
+何か　やる気でたよ！　ありがとね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T05:56:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2139,12 +2180,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そっか……▼
+			<Text>ふうん……　そっか……▼
 それじゃ　はじめよっか
 どうせ　ボクも　ダラダラしてるだけだし▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T12:15:11" />
+				Time="2011-12-13T05:57:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2152,12 +2193,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そっか……▼
+			<Text>ふうん……　そっか……▼
 それじゃ　始めよっか
 どうせ　ボクも　ダラダラしてるだけだし▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-05T12:15:27" />
+				Time="2011-12-13T05:57:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2325,18 +2366,14 @@
 きれいな　ものを　フィルムに▽
 のこすのが　すきなんだ……▼
 ……キミくらいの　ころは
-プロのカメラマンに　なりたくてさ▽
 いつも　そらを　ながめて▽
 シャッター　きってたよ……▼
-……でも　げんじつは　きびしくて
-いまじゃ　たんなる　サラリーマン▽
-あげく　こうして　サボってる……▼
 ゴメン　ゴメン　つまんないね▼
 ボク　しばらく　このへんに　いるからさ
-ヒマだったら　また　おいでよ▼</Text>
+ヒマだったら　また　おいでよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T10:46:22" />
+				Time="2011-12-12T09:33:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2350,18 +2387,14 @@
 きれいな　ものを　フィルムに▽
 残すのが　スキなんだ……▼
 ……キミくらいの　ころは
-プロのカメラマンに　なりたくてさ▽
 いつも　空を　眺めて▽
 シャッター　切ってたよ……▼
-……でも　現実は　厳しくて
-今じゃ　単なる　サラリーマン▽
-あげくは　こうして　サボってる……▼
 ゴメン　ゴメン　つまんないね▼
 ボク　しばらく　この辺に　いるからさ
-ヒマだったら　また　おいでよ▼</Text>
+ヒマだったら　また　おいでよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T10:46:30" />
+				Time="2011-12-12T09:33:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2467,11 +2500,11 @@
 ことわられると　おもってたのに！▼
 よーし　それじゃ　どうするかな……▼
 ウン　きめた！▼
-まず　バトルする　[Name:TrainerName Idx="0" ]ちゃんを
-とらせてください！▼</Text>
+まず　バトルする　[Name:TrainerName Idx="0" ]ちゃんの
+しゅんかんを　とらせてください！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T06:38:40" />
+				Time="2011-12-13T05:57:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2486,10 +2519,10 @@
 よーし　それじゃ　どうするかな……▼
 ウン　決めた！▼
 まず　バトルする　[Name:TrainerName Idx="0" ]ちゃんを
-撮らせてください！▼</Text>
+瞬間を　撮らせてください！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T06:38:56" />
+				Time="2011-12-13T05:58:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2597,10 +2630,10 @@
 おもうことも　なくなってたからさ▽
 じぶんでも　いがいで……▼
 ……それじゃあ　つぎに　いこう！
-こんどは　かんらんしゃに　のるよ！▼</Text>
+こんどは　かんらんしゃで　さつえいだ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T10:48:18" />
+				Time="2011-12-12T03:27:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2620,10 +2653,10 @@
 思うこと　なくなってたからさ▽
 自分でも　意外で……▼
 ……それじゃあ　次に　行こう！
-今度は　観覧車に　乗るよ！▼</Text>
+今度は　観覧車で　撮影だ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T10:48:21" />
+				Time="2011-12-12T03:27:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2673,14 +2706,12 @@
 のこしておきたい！　ってさ▼
 カメラは　やめたはずだったのに……▼
 なんて　いったら　いいんだろ……
-ほんとうに　だいじに　してたことを▽
-おもいだしたって　いえばいいかな……▼
-よく　わかんないかも　しれないけどさ
-とにかく　キミには　かんしゃ　してます▽
+よく　わかんないかも　しれないけどさ▽
+キミには　かんしゃ　してます▽
 ありがとう　[Name:TrainerName Idx="0" ]ちゃん</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T09:54:17" />
+				Time="2011-12-12T03:28:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2698,14 +2729,12 @@
 残しておきたい！　ってさ▼
 カメラは　やめたはずだったのに……▼
 何て　言ったら　いいんだろ……
-本当に　大事にしてたことを▽
-思い出したって　言えばいいかな……▼
-よく　わかんないかも　しれないけどさ
-とにかく　キミには　感謝してます▽
+よく　わかんないかも　しれないけどさ▽
+キミには　感謝してます▽
 ありがとう　[Name:TrainerName Idx="0" ]ちゃん</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T09:53:39" />
+				Time="2011-12-12T03:28:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2744,25 +2773,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もう　あきに　なっちゃった……
-なつは　すぎるの　はやいな……▼
-あ……　ねえ　そこの　キミ……
-いま　ちょっと　じかん　あるかな？▼
-ここに　かんらんしゃ　みえるでしょ？
-これね　ふたりのり　せんよう　なの▽
-でも　いま　あたしは　ひとりぼっち▽
-だから　のりたくても　のれないんだ▼
-だから……▼
-もし　キミさえ　かまわなかったら
-おねがいしたいんだけど　さ▼
-おねえさんと　かんらんしゃに
-のって　もらえないかな……？▼
-とくに　おれいも　できないんだけど
-もし　つきあって　もらえるなら▽
-がんばって　ポケモンしょうぶするよ？</Text>
+			<Text>かぜが　すずしくなってきたな……
+あんまり　そとに　いると　また▽
+いしゃに　おこられちゃうかな……▼
+……あら？　キミは　だれ？
+ひょっとして　バトルの　おさそい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-12T09:54:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2770,25 +2788,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もう　秋に　なっちゃった……
-夏は　過ぎるの　はやいな……▼
-あ……　ねえ　そこの　キミ……
-いま　ちょっと　時間　あるかな？▼
-ここに　観覧車　みえるでしょ？
-これね　二人乗り　専用　なの▽
-でも　今　あたしは　ひとりぼっち▽
-だから　乗りたくても　乗れないんだ▼
-だから……▼
-もし　キミさえ　構わなかったら
-お願いしたいんだけど　さ▼
-お姉さんと　観覧車に
-乗って　もらえないかな……？▼
-特に　お礼も　できないんだけど
-もし　付き合って　もらえるなら▽
-がんばって　ポケモン勝負するよ？</Text>
+			<Text>そろそろ　涼しくなってきたな……
+あんまり　外に　いると　また▽
+医者に　怒られちゃうかな……▼
+……あら？　キミは　だれ？
+ひょっとして　バトルの　お誘い？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T02:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2832,13 +2839,13 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フフフ　ありがと……
-キミ　わかいのに　やさしいんだね▼
-じゃあ　ポケモンしょうぶ　しよっか！
-おねーさん　がんばるからね！▼</Text>
+			<Text>あたしみたいな　オバサンねらうなんて
+キミって　フフフ……▼
+でも　せっかくの　おさそいだしな……
+いいよ　ポケモンしょうぶ　しましょ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-12T09:34:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2846,13 +2853,13 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フフフ　ありがと……
-キミ　若いのに　優しいんだね▼
-じゃあ　ポケモン勝負　しよっか！
-おねーさん　頑張るからね！▼</Text>
+			<Text>あたしみたいな　オバサンねらうなんて
+キミって　フフフ……▼
+でも　せっかくの　お誘いだしな……
+いいよ　ポケモン勝負　しましょ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-12T09:49:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2895,12 +2902,10 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そっか……　しかたないよね……
-ゴメンなさい　いきなり　へんな▽
-おねがい　しちゃって……</Text>
+			<Text>そっか　それじゃあね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-12T07:20:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2908,12 +2913,10 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そっか……　仕方ないよね……
-ゴメンね　いきなり　変な▽
-お願い　しちゃって……</Text>
+			<Text>そっか　それじゃあね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-12T07:20:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2956,15 +2959,19 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あーあ　まけちゃったか！
-おねーさん　がんばったんだけどなー▼
-フフフ　でも　ありがと！
-なんかね……　とっても　たのしかった▼
-じゃ　さ……
-そろそろ　かんらんしゃ　のろっか？▼</Text>
+			<Text>あーあ　あっと　いうま　だったね……
+ゴメンね　あたし　つよくないからさ▼
+……えっと　[Name:TrainerName Idx="0" ]くん　だよね？
+この　かんらんしゃ　のったことある？▼
+なかなか　ながめよくて　ステキなんだよ
+ただね　ちょっと　かわってて▽
+ふたりのりせんよう　なんだけど……▼
+うーん……　はなしてたら
+ひさしぶりに　のりたくなっちゃった……▽
+ねえ　いっしょに　おいでよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-12T07:37:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2972,15 +2979,19 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あーあ　負けちゃったか！
-おねーさん　頑張ったんだけどなー▼
-フフフ　でも　ありがと！
-何かね……　とっても　楽しかった▼
-じゃ　さ……
-そろそろ　観覧車　乗ろっか？▼</Text>
+			<Text>あーあ　あっと　いうま　だったね
+ゴメンね　あたし　強くないからさ▼
+……えっと　[Name:TrainerName Idx="0" ]くん　だよね？
+この観覧車　乗ったことある？▼
+なかなか　眺めが良くて　ステキなんだよ
+ただね　ちょっと　変わってて▽
+二人乗り専用　なんだけど……▼
+うーん……　何か　話してたら
+ひさしぶりに　乗りたくなっちゃった……▽
+ねえ　一緒に　おいでよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T02:21:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3023,22 +3034,18 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……　……ゴメン　ね▼
-かんらんしゃから　みえる　けしき
-ながめてたら　さ　いろんなこと▽
-おもいだしちゃって……▼
-もう　だいじょうぶだから……▼
-そだ……▼
-あたし　まだ　キミのなまえも
-きいてなかったね▼
-ね？　よかったら　おしえて？▼
-……そう　[Name:TrainerName Idx="0" ]くん　か……▼
-あたし　しばらく　ここに　いるから
-よかったら　また　かんらんしゃに▽
-のってくれると　うれしいな</Text>
+			<Text>ふふふ……　ビックリ　したでしょ？
+こうみえて　あたし　ママなんだ▼
+といっても　うまれてくるのは
+まだ　すこし　さき　なんだけどね▼
+いしゃに　ムリしないように　いわれてて
+ちょっと　ストレス　たまってたんだけど▽
+キミの　おかげで　たのしかった▼
+ありがと　[Name:TrainerName Idx="0" ]くん
+また　あえると　いいね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-12T09:53:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3046,22 +3053,18 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……　……ゴメン　ね▼
-観覧車から　みえる　景色
-眺めてたら　さ　色んなこと▽
-思い出しちゃって……▼
-もう　大丈夫だから……▼
-そだ……▼
-あたし　まだ　キミの名前も
-聞いてなかったね▼
-ね？　よかったら　教えて？▼
-……そう　[Name:TrainerName Idx="0" ]くん　か……▼
-あたし　しばらく　ここに　いるから
-よかったら　また　観覧車に▽
-乗ってくれると　うれしいな</Text>
+			<Text>ふふふ……　ビックリ　したでしょ？
+こうみえて　あたし　ママなんだ▼
+といっても　生まれてくるのは
+まだ　少し　先なんだけどね▼
+医者に　ムリしないように　言われてて
+ちょっとストレス　たまってたんだけど▽
+キミの　おかげで　楽しかった▼
+ありがと　[Name:TrainerName Idx="0" ]くん
+また　あえると　いいね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-12T09:53:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3104,18 +3107,11 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あ……　キミは……▼
-あの……　げんき　だったかな……？▼
-あのね……▼
-じかん　あったらで　かまわないけれど
-また　つきあって　もらえないかな？▼
-ふたりでさ……▼
-ポケモンしたり……
-かんらんしゃに　のったりして▽
-すごせたら　うれしいんだけどな……</Text>
+			<Text>あら　[Name:TrainerName Idx="0" ]くん　じゃない
+もしかして　また　バトルの　おさそい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-12T09:34:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3123,18 +3119,11 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あ……　キミ……▼
-あの……　元気　だったかな……？▼
-あのね……▼
-時間　あったらで　構わないけれど
-また　付き合って　もらえないかな？▼
-ふたりでさ……▼
-ポケモンしたり……
-観覧車に　乗ったりして▽
-過ごせたら　うれしいんだけどな……</Text>
+			<Text>あら　[Name:TrainerName Idx="0" ]くん　じゃない
+もしかして　また　バトルの　お誘い？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-12T09:34:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3178,17 +3167,12 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うれしい……　ありがと……▼
-じゃあ　わがまま　ついでに
-もう　ひとつだけ　あまえさせて▼
-いまだけで　かまわないからさ……
-キミのこと　なまえで　よばせて……▼
-……　……じゃあ▼
-[Name:TrainerName Idx="0" ]！
-いっしょに　ポケモンしよ！▼</Text>
+			<Text>フフフ……　いいよ▼
+あたしも　おなかの　この　ために
+たいりょく　つけないと　いけないからね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-12T07:40:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3196,17 +3180,12 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うれしい……　ありがと……▼
-じゃあ　わがまま　ついでに
-もう　ひとつだけ　甘えさせて▼
-今だけで　構わないからさ……
-キミのこと　名前で　呼ばせて……▼
-……　……じゃあ▼
-[Name:TrainerName Idx="0" ]！
-一緒に　ポケモンしよ！▼</Text>
+			<Text>フフフ……　いいよ▼
+あたしも　お腹の子の　ために
+体力　つけないと　いけないからね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-12T07:40:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3249,13 +3228,10 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハハ……　そうだよね……▼
-キミって　いそがしそう　だし……
-ひきとめて　ゴメンなさい▽
-じゃあね……</Text>
+			<Text>そう　じゃあ　またね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-12T07:11:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3263,13 +3239,10 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハハ……　そうだよね……▼
-キミって　忙しそう　だし……
-引き止めて　ゴメンなさい▽
-じゃあね……</Text>
+			<Text>そう　じゃあ　またね！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-12T07:11:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3312,22 +3285,15 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふう……　たのしかった……▼
-[Name:TrainerName Idx="0" ]　ってさ
-ほんと　ポケモン　うまいね▼
-あたしと　しょうぶ　してても
-ものたりない　でしょ？▼
-なのに　あいてして　くれて……▼
-やさしいな……　あたし……
-かんちがい　しちゃうよ……▼
-……　……　……
-……　……　……▼
-……ゴメンね▼
-そろそろ　かんらんしゃ　のろっか
-さ！　いこ！　[Name:TrainerName Idx="0" ]！▼</Text>
+			<Text>フフフ……
+[Name:TrainerName Idx="0" ]くん　って　げんきね▽
+そういう　おとこのこ　って　ステキよ▼
+……さてと　[Name:TrainerName Idx="0" ]くん
+せっかく　だからさ　もう　ちょっと▽
+オバサンに　つきあってね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-16T07:02:26" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-12T09:57:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3335,22 +3301,15 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふう……　楽しかった……▼
-[Name:TrainerName Idx="0" ]　ってさ
-ほんと　ポケモン　うまいね▼
-あたしと　勝負　してても
-物足りない　でしょ？▼
-なのに　相手して　くれて……▼
-優しいな……　あたし……
-勘違い　しちゃうよ……▼
-……　……　……
-……　……　……▼
-……ゴメンね▼
-そろそろ　観覧車　乗ろっか
-ね！　いこ！　[Name:TrainerName Idx="0" ]！▼</Text>
+			<Text>フフフ……
+[Name:TrainerName Idx="0" ]くん　って　元気ね▽
+そういう　男の子　って　ステキよ▼
+……さーてと　[Name:TrainerName Idx="0" ]くん
+せっかく　だからさ　もう　ちょっと▽
+オバサンに　付き合ってね！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-16T07:02:28" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-12T09:57:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3393,23 +3352,18 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……　……　……
-……　……　……▼
-また　[Name:TrainerName Idx="0" ]に
-あまえちゃったな……▼
-あたしの　ほうが　おねーさんなのに
-なんか　なさけない……▼
-でも　[Name:TrainerName Idx="0" ]だから……▼
-いや……　イイや……
-なんでも　ない……▼
-[Name:TrainerName Idx="0" ]！　ありがと！
-きょうは　とっても　たのしかった！▼
-また　[Name:TrainerName Idx="0" ]と
-ふたりで　すごせると　いいな！▼
-またね　[Name:TrainerName Idx="0" ]！</Text>
+			<Text>……あたしに　とってね
+あの　かんらんしゃ　とくべつ　なんだ▼
+……　……　……　……▼
+……おなかの　なかの　こには
+[Name:TrainerName Idx="0" ]くん　みたいに▽
+げんきな　こに　そだってほしいな……▽
+そのために　がんばらないと……▼
+じゃあ　[Name:TrainerName Idx="0" ]くん……
+とっても　たのしかった　ありがとね！　</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-16T07:02:31" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-12T09:58:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3417,23 +3371,18 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……　……　……
-……　……　……▼
-また　[Name:TrainerName Idx="0" ]に
-甘えちゃったな……▼
-あたしの　ほうが　おねーさんなのに
-何か　情けない……▼
-でも　[Name:TrainerName Idx="0" ]だから……▼
-いや　イイや……
-何でも　ない……▼
-[Name:TrainerName Idx="0" ]！　ありがと！
-今日は　とっても　楽しかった！▼
-また　[Name:TrainerName Idx="0" ]と
-ふたりで　過ごせると　いいな！▼
-またね　[Name:TrainerName Idx="0" ]！</Text>
+			<Text>……あたしに　とってね
+あの観覧車　特別なんだ……▼
+……　……　……　……▼
+……お腹の　中の　子には
+[Name:TrainerName Idx="0" ]くん　みたいに▽
+元気な　子に　育ってほしいな……▽
+そのために　頑張らないと……▼
+じゃあ　[Name:TrainerName Idx="0" ]くん……
+とっても　楽しかった　ありがね！　</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-16T07:02:33" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-12T09:58:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3476,19 +3425,15 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんか　すずしく　なってきたな……
-もうすぐ　さむくなるのかな……▼
-え？　あなた　もしかして
-これに　のりたいんですか？▼
-でも　ここの　かんらんしゃって
-ふたりのり　せんよう　ですよ……▼
-……　……そうねえ▼
-ワタシと　しょうぶ　しません？
-もし　あなたが　かてば　ワタシが▽
-いっしょに　のりますけど？</Text>
+			<Text>おちる　おちばの　ひとひらに
+センチメントが　とまらない……▼
+ん？　なんだ？　こむすめ　よ？
+この　ボクに　なにか　ようか？▼
+みたところ　トレーナーの　ようだが
+しょうぶをしろ　とでも　いうのか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-12T09:35:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3496,19 +3441,15 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なんか　涼しく　なってきたな……
-もうすぐ　寒くなるのかな……▼
-え？　あなた　もしかして
-これに　乗りたいんですか？▼
-でも　ここの　観覧車って
-２人乗り　専用　ですよ……▼
-……　……そうねえ▼
-ワタシと　勝負　しません？
-もし　あなたが　勝てば　ワタシが▽
-一緒に　乗りますけど？</Text>
+			<Text>落ちる　落ち葉の　一片に
+センチメントが　止まらない……▼
+ん？　何だ？　小娘よ？
+この　ボクに　何か　ようか？▼
+どうやら　トレーナーの　ようだが
+勝負を　しろとでも　いうのか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-12T09:35:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3545,14 +3486,13 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんか　アッサリ　してますね……
-それとも　じしん　あるのかな？▼
-まあ　いいですけど
-しょうぶすれば　わかるし▽
-さっそく　はじめましょ！▼</Text>
+			<Text>フン　そうか　こむすめ　よ……▼
+ボクは　キミみたいな　タイプは
+きょうみゼロだが　しかたが　あるまい▽
+さっさと　はじめよう　じゃないか……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T02:22:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3560,14 +3500,13 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なんか　アッサリ　してますね……
-それとも　自信　あるのかな？▼
-まあ　いいですけど
-勝負すれば　わかるし▽
-早速　始めましょ！▼</Text>
+			<Text>フン　そうか　小娘よ……▼
+ボクは　キミみたいな　タイプは
+興味ゼロだが　仕方が　あるまい▽
+さっさと　始めようじゃないか……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T02:22:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3603,12 +3542,11 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あっ　そうですか▼
-まあ　ワタシ　しばらく　このあたり
-いると　おもいますから</Text>
+			<Text>そうか……
+では　そっとして　おいてくれ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-08T06:05:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3616,12 +3554,11 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あっ　そうですか▼
-まあ　しばらく　この辺り
-いると　思いますから</Text>
+			<Text>そうか……
+では　そっとして　おいてくれ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-08T08:22:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3657,15 +3594,23 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぜんぜん　かなわなかった……
-ワタシ　ポケモンしょうぶは▽
-すこしだけ　じしん　あったのに……▽
-すごいですね　あなた……▼
-……じゃあ　やくそく　どおり
-かんらんしゃ　のりましょうか▼</Text>
+			<Text>クッ……　ダメだ……
+ポケモンしょうぶを　するたびに▽
+あのなつの　おもかげが　ボクの▽
+むなぐらを　かきむしり　きりさく……▼
+……　……そうだ　こむすめ　よ▼
+ここで　きさまと　であったのも
+ひつぜんという　うんめい……▼
+なぜ　ボクが　こうなって　しまったか
+いきさつを　きいて　くれないか？▼
+こころの　くるしみは　だれかに
+はなすことで　やわらぐらしいからな▼
+つらいつらい　ラブの　メモリーズ……
+ほかの　だれかに　きかれたくない……▽
+こちらに　ついて　きてくれ……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T03:44:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3673,15 +3618,23 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>全然　かなわなかった……
-ワタシ　ポケモン勝負は▽
-少しだけ　自信　あったのに……▽
-すごいですね　あなた……▼
-……じゃあ　約束　どおり
-観覧車　乗りましょうか▼</Text>
+			<Text>クッ……　ダメだ……
+ポケモン勝負を　するたびに▽
+あの夏の　残像が　ボクの▽
+胸ぐらを　かきむしり　切り裂く……▼
+……　……そうだ　小娘よ▼
+ここで　貴様と　出会ったのも
+必然という　運命……▼
+なぜ　ボクが　こうなって　しまったか
+経緯を　聞いて　くれないか？▼
+心の　苦しみは　だれかに
+告白することで　和らぐらしいからな▼
+辛い辛い　ラブの　メモリーズ……
+他の　だれかに　聞かれたくない……▽
+こちらに　ついて　きてくれ……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T03:44:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3717,19 +3670,19 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はあー！　たのしかったです！！
-それに　あなたと　はなしてたら▽
-ふだん　モヤモヤしてる　ことが▽
-スッキリ　しちゃったー！▼
-やっぱ　おんなのこ　どうしでしか
-はなせないことって　ありますよね！▼
-ワタシ　しばらく　このあたりに
-いると　おもいます！▼
-ひまなとき　あったら
-また　こえ　かけて　くださいね！</Text>
+			<Text>グスッ……　す　すまん……▼
+あの　なつを　おもいだすだけで
+なみだが　おさえられないんだ……▼
+……ボクに　おおきな　あなを
+あけて　きえて　いった……▽
+うらぎられたも　どうぜん……▼
+なのに　じぶんの　こころの　なかで
+わりきれて　いないんだ……▼
+こむすめ　よ　すまん……
+すこし　ひとりに　してくれ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T02:25:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3737,19 +3690,19 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はあー！　楽しかったです！！
-それに　あなたと　話してたら▽
-ふだん　モヤモヤしてる　ことが▽
-スッキリ　しちゃったー！▼
-やっぱ　女の子　同士でしか
-話せないことって　ありますよね！▼
-ワタシ　しばらく　この辺りに
-いると　思います！▼
-ひまなとき　あったら
-また　声　かけて　くださいね！</Text>
+			<Text>グスッ……　す　すまん……▼
+あの夏を　思い出すだけで
+涙が　抑えられないんだ……▼
+……ボクに　大きな　穴を
+開けて　消えて　いった……▽
+裏切られたも　同然……▼
+なのに　自分の　心の中で
+割り切れて　いないんだ……▼
+小娘よ　すまん……
+少し　ひとりに　してくれ……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T02:25:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3785,16 +3738,17 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あー！　この　あいだの　ひとー！
-げんき　してましたー？▼
-もしも　じかん　あったら　また
-ワタシに　つきあって　くださいよ▼
-ポケモンしょうぶ　したり
-かんらんしゃに　のって▽
-おしゃべり　しません？</Text>
+			<Text>ああ……　こむすめ……
+いや　[Name:TrainerName Idx="0" ]では　ないか……▼
+どうだ　げんきで　やっているか？
+しょうじき　ボクは　まだまだ　さ……▼
+ハートは　いまも　レスキューたいを
+まちのぞんで　ふるえてる……▼
+もし　よければ　また　すこし
+ボクに　じかんを　くれないか？　な？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T03:52:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3802,16 +3756,17 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あー！　この　あいだの　人ー！
-元気　してましたー？▼
-もしも　時間　あったら　また
-ワタシに　付き合って　くださいよ▼
-ポケモン勝負　したり
-観覧車に　乗って▽
-おしゃべり　しません？</Text>
+			<Text>ああ……　小娘……
+いや　[Name:TrainerName Idx="0" ]では　ないか……▼
+どうだ　元気で　やっているか？
+正直　ボクは　まだまだ　さ……▼
+ハートは　今も　レスキュー隊を
+待ち望んで　震えてる……▼
+もし　よければ　また　少し
+ボクに　時間を　くれないか？　な？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T03:52:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3852,14 +3807,13 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>え！　いいんですか！　ありがとー！
-なんかー　あなたと　いると▽
-ワタシ　げんきに　なるんですよ！▼
-じゃあ　まずは　いっしょに
-ポケモンしょうぶ　しましょ！▼</Text>
+			<Text>そうか……　たすかるぞ……
+では　まずは　しょうぶと　いくか……▼
+いいかげん　ボクも　ポケモンくらいは
+できるように　ならないと　いかんし……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T03:51:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3867,14 +3821,13 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>え！　いいんですか！　ありがとー！
-何かー　あなたと　いると▽
-ワタシ　元気に　なるんですよ！▼
-じゃあ　まずは　一緒に
-ポケモン勝負　しましょ！▼</Text>
+			<Text>そうか……　助かるぞ……
+では　まずは　勝負と　いくか……▼
+いい加減　ボクも　ポケモンくらいは
+できるように　ならないと　いかんし……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T02:26:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3913,13 +3866,10 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>え？　ああ……　そうですか……
-むりいって　ごめんなさい▽
-また　じかんが　あるときに▽
-はなしかけて　くださいね</Text>
+			<Text>そうか……　では……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-08T09:47:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3927,13 +3877,10 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>え？　ああ……　そうですか……
-無理言って　ごめんなさい▽
-また　時間が　あるときに▽
-話しかけて　くださいね</Text>
+			<Text>そうか……　では……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-08T09:47:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3972,18 +3919,22 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふう……　また　まけちゃった！▼
-やっぱり　あなたの　ほうが
-ポケモンの　あつかいも▽
-じょうずだし　かなわないです▼
-ワタシよりも　ずっと　やせてて
-かおも　ちいさいし……▽
-なんか　あこがれちゃいますよ！▼
-それじゃあ　そろそろ
-かんらんしゃ　のりましょ！▼</Text>
+			<Text>ダメだ！　ダメだ　ダメだ　ダメだッ！！
+まるで　しゅうちゅう　できない……▼
+なぜ　こうも　むなしいんだ……
+なんで　おもいだして　しまうんだ……▽
+どうして　あのなつの　わすれらない……▽
+なぜ！　なぜ　あの　あせのかおりを▽
+わすれることが　できないんだッ！！▼
+……とりみだして　すまなかった▼
+もうすこしだけ　まってくれ……
+ボクは　いま　くだけちった　ハートの▽
+ピースを　ひろいあつめている……▼
+だから　[Name:TrainerName Idx="0" ]　よ……
+もうすこし　つきあってくれ　な？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T03:50:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3991,18 +3942,22 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふう……　また　負けちゃった！▼
-やっぱり　あなたの　ほうが
-ポケモンの　扱いも▽
-上手だし　かなわないです▼
-ワタシよりも　ずっと　やせてて
-顔も　小さいし……▽
-なんか　あこがれちゃいますよ！▼
-それじゃあ　そろそろ
-観覧車　乗りましょ！▼</Text>
+			<Text>ダメだ！　ダメだ　ダメだ　ダメだッ！！
+まるで　集中できない……▼
+なぜ　こうも　空しいんだ……
+なんで　思い出して　しまうんだ……▽
+どうして　あの夏の　忘れられない……▽
+なぜ！　なぜ　あの　汗の香りを▽
+忘れることが　できないんだッ！！▼
+……取り乱して　すまなかった▼
+もう少しだけ　待ってくれ……
+ボクは　今　砕け散った　ハートの▽
+ピースを　拾い集めている……▼
+だから　[Name:TrainerName Idx="0" ]　よ……
+もう少し　付き合ってくれ　な？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T03:50:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4041,20 +3996,23 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あーあ　もう　おわっちゃった！▼
-やっぱり　あなたと　あそんでると
-じかんが　すぎるの　はやいな！▼
-ワタシ　って　あんまり　ともだちが
-おおいタイプ　じゃ　ないから▽
-こうして　いっしょに　いろんなこと▽
-したり　はなせる　あいて　って▽
-とっても　たいせつ　なんです！▼
-きょうは　ありがとう！
-よかったら　また　いっしょに▽
-あそんで　くださいね！</Text>
+			<Text>グスッ……　グスッ　グスッ……▼
+なあ……　[Name:TrainerName Idx="0" ]　よ……
+こいとは　わかれとは　つらいな……▼
+……だがな　ボクは　おもうのだ
+それでも　こころを　よせる　あいてには▽
+むねの　おもいを　つげるべきだと……▼
+わかれに　おびえ　こころ　つげることを
+あきらめれば　きずつくことはない▼
+だが　あきらめの　ちへいせんには
+えいえんの　こどくしか　まっていない……▼
+……　……　……　……
+はなしを　きいてくれて　ありがとう……▼
+おんなだが　[Name:TrainerName Idx="0" ]は　ソウルで
+つながる　ボクの　マブダチだな……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T03:49:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4062,20 +4020,23 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あーあ　もう　終わっちゃった！▼
-やっぱり　あなたと　遊んでると
-時間が　過ぎるの　早いな！▼
-ワタシ　って　あんまり　友達が
-多いタイプ　じゃ　ないから▽
-こうして　一緒に　いろんなこと▽
-したり　話せる　相手　って▽
-とっても　大切　なんです！▼
-きょうは　ありがとう！
-よかったら　また　一緒に▽
-遊んで　くださいね！</Text>
+			<Text>グスッ……　グスッ　グスッ……▼
+なあ……　[Name:TrainerName Idx="0" ]よ……
+恋とは　別れとは　辛いな……▼
+……だがな　ボクは　思うのだ
+それでも　心を　寄せる　相手には▽
+胸の　思いを　告げるべきだと……▼
+別れに　おびえ　心　告げることを
+あきらめては　傷つくことはない▼
+だが　あきらめの　地平線には
+永遠の　孤独しか　待っていない……▼
+……　……　……　……
+話を　聞いてくれて　ありがとう……▼
+女だが　[Name:TrainerName Idx="0" ]は　ソウルで
+つながる　ボクのマブダチだな……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T03:49:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4114,17 +4075,15 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヘイ！　ヘイ！　そこの　ユー！▼
-こんなに　さむい　まふゆ　にさ
-そんな　すずしげ　ファッションって▽
-かなりの　ロッキン　ボーイ　じゃん？▼
-でもサ　このアタイより　ロッキンな
-ヤツなんて　そんざい　しないのサ！▼
-だから　どっちが　ロッキンな　ヤツか
-バトルで　きめる　ってことで　ＯＫ？</Text>
+			<Text>やれやれ……　さむいわね……▼
+でも　あんなヤツと　いっしょに
+ビーチリゾート　バケーションなんて▽
+ぜったいに　ありえないし……▼
+……あら　なに　アナタ？
+なにか　わたくしに　ごよう？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T10:14:06" />
+				Time="2011-12-12T09:59:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4132,17 +4091,15 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヘイ　ヘイ！　そこの　ユー！▼
-こんなに　寒い　真冬にさ
-そんな　涼しげファッション　って▽
-かなりの　ロッキン　ボーイ　じゃん？▼
-でもサ　このアタイより　ロッキンな
-ヤツなんて　そんざい　しないのサ！▼
-だから　どっちが　ロッキンな　ヤツか
-バトルで　決める　ってことで　ＯＫ？</Text>
+			<Text>やれやれ……　寒いわね……▼
+でも　あんなヤツと　一緒に
+ビーチリゾート　バケーションなんて▽
+絶対に　ありえないし……▼
+……あら　何　アナタ？
+何か　わたくしに　御用？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T10:14:09" />
+				Time="2011-12-12T09:59:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4186,11 +4143,14 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ＯＫ　いくわよ　ロッキン　ボーイ！
-アタイの　ビートで　しびちゃいナ！▼</Text>
+			<Text>あっ　そう……
+どうせ　こどもが　したいのは▽
+ポケモンしょうぶ　なんでしょ？▼
+いいわよ　どうせ　いまは　ヒマだし
+おあいてして　あげる▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T09:36:06" />
+				Time="2011-12-12T09:59:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4198,11 +4158,14 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＯＫ　いくわよ　ロッキン　ボーイ！
-アタイの　ビートで　しびちゃいナ！▼</Text>
+			<Text>あっ　そう……
+どうせ　子供が　したいのは▽
+ポケモン勝負　なんでしょ？▼
+いいわよ　どうせ　今は　ヒマだし
+お相手して　あげる▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T09:36:10" />
+				Time="2011-12-12T09:59:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4245,11 +4208,12 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あーら　シッポを　まくのね
-ロッキン　ボーイ！</Text>
+			<Text>あっ　そう……
+だったら　はやく　いって　くれる？▽
+わたくし　こどもが　とくい　じゃないの</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T10:48:43" />
+				Time="2011-12-10T06:47:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4257,11 +4221,12 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あーら　シッポを　まくのね
-ロッキン　ボーイ！</Text>
+			<Text>あっ　そう……
+だったら　早く　行って　くれる？▽
+わたくし　子供が　得意じゃないの</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-06T10:48:50" />
+				Time="2011-12-10T06:47:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4304,19 +4269,30 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フッフー！　やるじゃん　アンタ！▼
-ほとばしってる　アツアツな　アンタの
-ロッキンに　アタイの　ハートも▽
-ビンビン　かんじちゃったワ！▼
-その　おれいに　アタイの　うたを
-プレゼントして　あげちゃう！▼
-でもネ　ストップ　ここじゃ　ダメ！
-アタイの　うたは　プレミアム！▽
-アンタだけに　きかせて　ア・ゲ・ル▽
-さあさあ！　こっちに　カモン！▼</Text>
+			<Text>フーン　やるわね　アナタ……▼
+それに　よく　みたら　なかなか
+カワイイ　かお　してるし……▼
+……そうだ　このこ　つかえるかも▼
+……ねえ　アナタ？
+まだ　じかん　あるわよね？▼
+もうすこし　わたくし
+つきあって　あげるわ▼
+……さて　ちょっと　まってなさい
+いっぽん　れんらく　いれるから▼
+……　……もしもし？　わたくし▼
+わるいけれど　もう　わたくし
+アナタとは　あえないの……▽
+……　……　……　……　……▽
+そう　こいびとが　できたの▼
+そう……　だからさあ……
+え？　いま？　いまは　ライモンよ……▽
+かんらんしゃの　まえに　いるわ……▼
+それじゃあ　サヨナラ……▼
+……よし　これで　オーケーね▼
+さあ　アナタ　ついてきなさい▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T10:14:42" />
+				Time="2011-12-13T03:01:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4324,19 +4300,30 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フッフー！　やるじゃん　アンタ！▼
-ほとばしってる　アツアツな　アンタの
-ロッキンに　アタイの　ハートも▽
-ドクドク　感じちゃったワ！▼
-そのお礼に　アタイの　歌を
-プレゼントして　あげちゃう！▼
-でもネ　ストップ　ここじゃ　ダメ！
-アタイの　うたは　プレミアム！▽
-アンタだけに　きかせて　ア・ゲ・ル▽
-さあさあ！　こっちに　カモン！▼</Text>
+			<Text>フーン　やるわね　アナタ……▼
+それに　よく　みたら　なかなか
+カワイイ顔　してるし……▼
+……そうだ　この子　使えるかも▼
+……ねえ　アナタ？
+まだ　時間　あるわよね？▼
+もう少し　わたくし
+付き合って　あげるわ▼
+……さて　ちょっと　待ってなさい
+一本　連絡　入れるから▼
+……　……もしもし？　わたくし▼
+悪いけれど　もう　わたくし
+アナタとは　あえないの……▽
+……　……　……　……　……▽
+そう　恋人が　できたの▼
+そう……　だから　さあ……
+え？　今？　今は　ライモンよ……▽
+観覧車の　前に　いるけれど……▼
+それじゃあ　サヨナラ……▼
+……よし　これで　オーケーね▼
+さあ　アナタ　ついてきなさい▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T10:14:58" />
+				Time="2011-12-13T03:01:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4379,23 +4366,18 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いかがかしら？　ロッキンボーイ！▼
-ロッキンな　アタイの　おんがくは
-ヤバいくらい　ロッキンでしょ？▼
-こいに　やぶれた　かなしい　おんなの
-ぬぐえぬ　ぼじょうを　こおりタイプな▽
-ＥＮＫＡスタイルで　ドロップする▽
-せつなさの　マスターピースさ！！▼
-って　かんじで　きょうは　ここまで！
-さいごに　アタイから　おしらせよ！▼
-アタイは　ただいま
-ワールド　ろじょう　ライブツアーの▽
-まっさいちゅう！▼
-しばらく　ここに　いるからサ
-アンタの　アンコール　まってるゼ！</Text>
+			<Text>さてと……▼
+あーあ……　やっぱり　きてるわ
+そういうのが　きらわれるのに……▼
+……じゃあ　アナタ　ありがとう
+もう　いっても　いいわよ▼
+わたくしは　これから　めんどうな
+オトナの　はなしが　まってるの▼
+また　あえたら　おれい　してあげる
+それじゃあね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T10:16:41" />
+				Time="2011-12-12T10:46:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4403,23 +4385,18 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いかがかしら？　ロッキンボーイ！▼
-ロッキンな　アタイの　音楽は
-ヤバいくらい　ロッキンでしょ？▼
-恋に　破れた　悲しい　女の
-ぬぐえぬ　慕情を　こおりタイプな▽
-ＥＮＫＡスタイルで　ドロップする▽
-せつなさの　マスターピースさ！！▼
-って　感じで　今日は　ここまで！
-最後に　アタイから　告知よ！▼
-アタイは　ただ今
-ワールド　路上　ライブツアーの▽
-真っ最中！▼
-しばらく　ここに　いるからサ
-アンタの　アンコール　待ってるゼ！</Text>
+			<Text>さてと……▼
+あーあ……　やっぱり　来てるわ
+そういうのが　嫌われるのに……▼
+じゃあ　アナタ　ありがとう
+もう　行っても　いいわよ▼
+わたくしは　これから　面倒な
+オトナの　話が　待ってるの▼
+また　あえたら　お礼　してあげる
+それじゃあね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T10:17:03" />
+				Time="2011-12-12T10:45:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4462,16 +4439,17 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あ……　あなたは……
-ロッキン……▽
-いや……　おげんき　ですか？▼
-そうだ……▼
-あのう……　おいそがしい　ところ
-たいへん　もうしわけないのですが▽
-わたしと　バトルして　いただけません？▼</Text>
+			<Text>あら　[Name:TrainerName Idx="0" ]じゃない……
+このあいだは　たすかったわよ▽
+おかげで　いろいろ　スッキリしたもの▼
+……ハイ？
+なんのことだ　って？▽
+まあ　それは　いいじゃないの▼
+それより　アナタさ
+いまは　ヒマなんでしょう？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T09:15:50" />
+				Time="2011-12-12T10:47:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4479,16 +4457,17 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あ……　あなたは……
-ロッキン……▽
-いや……　お元気　ですか？▼
-そうだ……▼
-あのう……　お忙しい　ところ
-大変　申し訳ないのですが▽
-私と　バトルして　頂けません？▼</Text>
+			<Text>あら　[Name:TrainerName Idx="0" ]……
+このあいだは　助かったわよ▽
+おかげで　色々と　スッキリしたもの▼
+…ハイ？
+何のことだ　って？▽
+まあ　それは　いいじゃないの▼
+それより　アナタさ
+今は　ヒマなんでしょう？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T09:15:51" />
+				Time="2011-12-12T10:47:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4535,13 +4514,15 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありがとう　ございます……▼
-では　えんりょ　なさらず
-ロッキン……▽
-いえ　おもいきり　おねがいします▼</Text>
+			<Text>フフフ……　それは　よかった
+では　わたくしに　つきあいなさい▼
+たしか　アナタ　ポケモンしょうぶが
+すき　だったわよね？▼
+あらためて　おあいて　してあげるわ
+さあ　かかって　いらっしゃい▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T09:44:43" />
+				Time="2011-12-10T09:54:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4549,13 +4530,15 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ありがとう　ございます……▼
-では　遠慮なさらず
-ロッキン……▽
-いえ　思い切って　お願いします▼</Text>
+			<Text>フフフ……　それは　よかった
+では　わたくしに　付き合いなさい▼
+たしか　アナタ　ポケモン勝負が
+好き　だったわよね？▼
+改めて　お相手して　あげるわ
+さあ　かかって　いらっしゃい▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T09:45:06" />
+				Time="2011-12-10T09:54:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4601,12 +4584,12 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ああ　そうですか……
-おいそがしいのに　ひきとめてしまい▽
-もうしわけ　ありませんでした……</Text>
+			<Text>あっ　そう……
+あいての　ことを　かんがえるなら▽
+ヒマなときに　はなしかけなきゃ　ダメよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T10:21:24" />
+				Time="2011-12-10T08:33:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4614,12 +4597,12 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ああ　そうですか……
-お忙しいのに　引き止めてしまい▽
-申し訳　ありませんでした……</Text>
+			<Text>あっ　そう……
+相手の　ことを　考えるなら▽
+ヒマなときに　話しかけなきゃ　ダメよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T10:21:27" />
+				Time="2011-12-10T08:34:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4665,22 +4648,15 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありがとう　ございました……▼
-やはり　あなたは　ロッキン……
-いえ　とても　すてきだと　おもいます▼
-……　……　……　……▼
-……じつは　せんじつ　あなたと
-わかれた　すこし　あと……▽
-わたし　スカウトされたんです▼
-プロデューサーのかた　じきじきに
-デビューの　さそいも　いただいて……▼
-でも　それが……▼
-……いや　そのまえに　[Name:TrainerName Idx="0" ]さん
-もういちど　わたしの　うたを▽
-きいて　ください……▼</Text>
+			<Text>フフフ……　いいわね　アナタ……▼
+ポケモンの　あつかいも　てなれてるし
+せいちょうが　たのしみね……▼
+……さてと
+では　もうすこし　つきあいなさい▽
+わたくし　おれいも　したいし▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T09:45:59" />
+				Time="2011-12-10T09:55:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4688,22 +4664,15 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ありがとう　ございました……▼
-やはり　あなたは　ロッキン……
-いえ　とても　ステキだと　思います▼
-……　……　……　……▼
-……実は　先日　あなたと
-別れた　少し　後……▼
-私　スカウトされたんです▼
-プロデューサーの方　直々に
-デビューの　誘いも　頂いて……▼
-でも　それが……▼
-……いや　その前に　[Name:TrainerName Idx="0" ]さん
-もう一度　私の　歌を▽
-聞いて　ください……▼</Text>
+			<Text>フフフ……　いいわね　アナタ……▼
+ポケモンの　扱いも　手なれてるし
+成長が　楽しみね……▼
+……さてと
+では　もう少し　付き合いなさい▽
+わたくし　お礼も　したいし▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T09:45:29" />
+				Time="2011-12-12T11:16:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4749,30 +4718,18 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>どうでした？　わたしの　うた……▼
-……　……　……　……
-……さっきの　はなしの　つづき▼
-わたし　せいじゅんはアイドルとして▽
-デビューすることに　なりそうなんです▼
-うたも　きいて　もらったんだけど
-いまどき　ウケない　って……▼
-それに　ことばづかいも　じょうひんに
-なおしてくれ　って　いわれてて……▼
-そんなの　わたしじゃ　ない……▼
-だけど　せっかくの　チャンス
-みすみす　のがしたくない……▼
-だから　わたしは　かわるんです▼
-かわいくて　きれいで　じょうひんで
-みんなに　あいされるように……▼
-でも　[Name:TrainerName Idx="0" ]……
-アンタの　まえでは　ときどき▽
-ほんとうの　アタイで　いさせて！▽
-あのうたも　アンタにだけ　うたうわ……▼
-だから　[Name:TrainerName Idx="0" ]！
-また　ぜったい　あいに　きてよネ！</Text>
+			<Text>フフフ……
+ポケモンしょうぶは　エリートでも▽
+たんパンこぞう　みたいとこも　あるのね▼
+いまは　それも　チャーミングだけど
+アナタだったら　もっと　まなべば▽
+ステキな　おとこに　しんかする　ハズよ▼
+そう……　もっと　オトナに　なったら
+また　あいにきてくれると　うれしいわ▼
+それじゃあ　また　いつかどこかでね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T10:22:16" />
+				Time="2011-12-12T10:58:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4780,30 +4737,18 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>どうでした？　私の　歌……▼
-……　……　……　……
-……さっきの　話の　続き▼
-私　清純派アイドルとして▽
-デビューすることに　なりそうなんです▼
-歌も　聴いて　もらったんだけど
-今どき　ウケない　って……▼
-それに　言葉遣いも　上品に
-直してくれ　って　言われてて……▼
-そんなの　私じゃ　ない……▼
-だけど　せっかくの　チャンス
-みすみす　逃したくない……▼
-だから　私は　変わるんです▼
-可愛くて　きれいで　上品で
-みんなに　愛されるように……▼
-でも　[Name:TrainerName Idx="0" ]……
-アンタの　前では　時々▽
-本当の　アタイで　いさせて！▽
-あの歌も　アンタにだけ　歌うわ……▼
-だから　[Name:TrainerName Idx="0" ]！
-また　絶対　あいに　来てよネ！</Text>
+			<Text>フフフ……
+ポケモン勝負は　エリートでも▽
+たんパンこぞう　みたいとこも　あるのね▼
+いまは　それも　チャーミングだけど
+アナタだったら　もっと　学べば▽
+ステキな男に　進化する　ハズよ▼
+そう……　もっと　オトナに　なったら
+また　会いきてくれると　うれしいわ▼
+それじゃあ　また　いつかどこかでね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T10:22:29" />
+				Time="2011-12-12T10:58:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4849,22 +4794,17 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やあ……　まいにち　さむいよね▼
-あの　ちょっと……
-いま　きみ　じかん　あるかな？▼
-じつは　ぼく　ひさしぶりに
-そとに　でてるんだ……▼
-せっかく　でかけているのだし
-ポケモンたちに　うんどうさせて▽
-あげたいと　おもってて……▼
-それと……▼
-ぼく　この　かんらんしゃに
-のってみたいんだよ▼
-きみさえ　よければ　すこし
-つきあって　もらえないかな？</Text>
+			<Text>ヘイ！　ヘイ！　そこの　ユー！▼
+こんなに　さむい　まふゆ　にさ
+そんな　すずしげ　ファッションって▽
+かなりの　ロッキン　ベイベーじゃん？▼
+でもサ　このアタイより　ロッキンな
+ヤツなんて　そんざい　しないのサ！▼
+だから　どっちが　ロッキンな　ヤツか
+バトルで　きめる　ってことで　ＯＫ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-10T06:39:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4872,22 +4812,17 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やあ……　毎日　寒いよね▼
-あの　ちょっと……
-今　君　時間　あるかな？▼
-実は　僕　久しぶりに
-外に　出てるんだ……▼
-せっかく　出かけているのだし
-ポケモンたちに　運動させて▽
-あげたいと　思ってて……▼
-それと……▼
-僕　この　観覧車に
-乗ってみたいんだよ▼
-君さえ　よければ　少し
-付き合って　もらえないかな？</Text>
+			<Text>ヘイ　ヘイ！　そこの　ユー！▼
+こんなに　寒い　真冬にさ
+そんな　涼しげファッション　って▽
+かなりの　ロッキン　ベイベーじゃん？▼
+でもサ　このアタイより　ロッキンな
+ヤツなんて　そんざい　しないのサ！▼
+だから　どっちが　ロッキンな　ヤツか
+バトルで　決める　ってことで　ＯＫ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-10T06:44:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4924,14 +4859,11 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>えっ……　いいのかい？▼
-ありがとう……
-きみは　しんせつな　ひとだね……▼
-では　さっそくだけど　ポケモンの
-うんどうに　つきあってもらえるかな▼</Text>
+			<Text>ＯＫ　いくわよ　ロッキン　ベイベー！
+アタイの　ビートで　しびちゃいナ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-10T06:40:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4939,14 +4871,11 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>えっ……　いいのかい？▼
-ありがとう……
-君は　親切な　人だね……▼
-では　早速だけど　ポケモンの
-運動に　付き合ってもらえるかな▼</Text>
+			<Text>ＯＫ　いくわよ　ロッキン　ベイベー！
+アタイの　ビートで　しびちゃいナ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-10T06:44:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4982,11 +4911,11 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そうか……　ごめんなさい……
-へんなこと　たのんでしまって……</Text>
+			<Text>あーら　シッポを　まくのね？
+ロッキン　ベイベー！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-10T06:41:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4994,11 +4923,11 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そうか……　ごめんなさい……
-変なこと　頼んでしまって……</Text>
+			<Text>あーら　シッポを　まくのね
+ロッキン　ベイベー！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-10T06:44:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5034,23 +4963,19 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハアッ……　ハアッ……▼
-ひさしぶりに　おもいきって
-からだを　うごかしたから▽
-すこし　つかれちゃったかな……▼
-でも……▼
-とっても　たのしかったよ！▼
-ぼくの　ポケモンも　のびのび
-からだを　うごかせたからか▽
-とても　よろこんでるみたいだ▼
-しょうぶしてくれて　ありがとう▼
-……では▼
-つぎは　かんらんしゃに　いこうか▼
-ぼく……　ずっと　これに
-のってみたかったんだ▼</Text>
+			<Text>フッフー！　やるじゃん　アンタ！▼
+アツアツな　アンタの　ロッキンに
+アタイの　ハートも　ドクドク！▽
+むねのビートが　とまんないじゃない！▼
+そうね　おれいに　アタイの　うたを
+プレゼントして　あげちゃうわ！▼
+でもネ　ストップ　ここじゃ　ダメ！
+アタイの　うたは　プレミアム！▽
+アンタだけに　きかせて　ア・ゲ・ル▽
+さあさあ！　こっちに　カモン！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-10T06:41:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5058,23 +4983,19 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハアッ……　ハアッ……▼
-ひさしぶりに　思い切って
-体を　動かしたから▽
-少し　疲れちゃったかな……▼
-でも……▼
-とっても　楽しかったよ！▼
-ぼくの　ポケモンも　のびのび
-体を　動かせたからか▽
-とても　喜んでるみたいだ▼
-勝負してくれて　ありがとう▼
-……では▼
-次は　観覧車に　いこうか▼
-ぼく……　ずっと　これに
-乗ってみたかったんだ▼</Text>
+			<Text>フッフー！　やるじゃん　アンタ！▼
+アツアツな　アンタの　ロッキンに
+アタイの　ハートも　ドクドク！▽
+胸のビートが　止まんないじゃない！▼
+そうね　お礼に　アタイの　歌を
+プレゼントして　あげちゃうわ！▼
+でもネ　ストップ　ここじゃ　ダメ！
+アタイの　歌は　プレミアム！▽
+アンタだけに　聞かせて　ア・ゲ・ル▽
+さあさあ！　こっちに　カモン！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-10T06:42:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5110,22 +5031,23 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="0" ]さん　ありがとう……▼
-それと　めいわく　かけてしまって
-ごめんなさい……▼
-……ぼくは　うまれつき　からだが
-じょうぶなほうでは　なくてさ▼
-ふだんは　なかなか　じゆうに
-でかけることが　できないんだ……▼
-だから　きょう　きみと　ここで
-あそべて　とても　うれしかった……▼
-ありがとう　[Name:TrainerName Idx="0" ]さん
-げんきな　ときには　ここいるから▽
-また　きみと　いっしょに▽
-あそべると　うれしいな……</Text>
+			<Text>いかがかしら？　ロッキンベイベー！▼
+ロッキンな　アタイの　おんがくは
+ヤバいくらい　ロッキンでしょ？▼
+こいに　やぶれた　かなしい　おんなの
+ぬぐえぬ　ぼじょうを　こおりタイプな▽
+ＥＮＫＡスタイルで　ドロップする▽
+せつなさの　マスターピースさ！！▼
+って　かんじで　きょうは　ここまで！
+さいごに　アタイから　おしらせよ！▼
+アタイは　ただいま
+ワールド　ろじょう　ライブツアーの▽
+まっさいちゅう！▼
+しばらく　ここに　いるからサ
+アンタの　アンコール　まってるゼ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-10T06:42:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5133,22 +5055,23 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]さん　ありがとう……▼
-それと　迷惑　かけてしまって
-ごめんなさい……▼
-……僕は　生まれつき　体が
-丈夫なほうでは　なくてさ▼
-普段は　なかなか　自由に
-出かけることが　出来ないんだ……▼
-だから　今日　君と　ここで
-遊べて　とても　うれしかった……▼
-ありがとう　[Name:TrainerName Idx="0" ]さん
-元気な　ときには　ここいるから▽
-また　君と　一緒に▽
-遊べると　うれしいな……</Text>
+			<Text>いかがかしら？　ロッキンベイベー！▼
+ロッキンな　アタイの　音楽は
+ヤバいくらい　ロッキンでしょ？▼
+恋に　破れた　悲しい　女の
+ぬぐえぬ　慕情を　こおりタイプな▽
+ＥＮＫＡスタイルで　ドロップする▽
+せつなさの　マスターピースさ！！▼
+って　感じで　今日は　ここまで！
+最後に　アタイから　告知よ！▼
+アタイは　ただ今
+ワールド　路上　ライブツアーの▽
+真っ最中！▼
+しばらく　ここに　いるからサ
+アンタの　アンコール　待ってるゼ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-10T06:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5184,20 +5107,16 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>やあ……　[Name:TrainerName Idx="0" ]さん……
-さむいけれど　げんきにしてるかな？▼
-ぼく　きょうは　からだの
-ちょうしが　よさそうだから▽
-そとに　でかけてるんだ……▼
-[Name:TrainerName Idx="0" ]さん　さえよければ
-また　ポケモンの　うんどうや▽
-かんらんしゃに　つきあって▽
-もらえると　うれしいのだけど……▼
-よかったら……
-ぼくと　つきあって　もらえないかな？</Text>
+			<Text>あ……　あなたは……
+ロッキン……▽
+いや……　おげんき　ですか？▼
+そうだ……▼
+あのう……　おいそがしい　ところ
+たいへん　もうしわけないのですが▽
+わたしと　バトルして　いただけません？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-10T06:41:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5205,20 +5124,16 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やあ……　[Name:TrainerName Idx="0" ]さん……
-寒いけれど　元気にしてるかな？▼
-僕　今日は　体の
-調子が　良さそうだから▽
-外に　出かけてるんだ……▼
-[Name:TrainerName Idx="0" ]さん　さえよければ
-また　ポケモンの　運動や▽
-観覧車に　付き合って▽
-もらえると　うれしいのだけど……▼
-よかったら……
-僕と　付き合って　もらえないかな？</Text>
+			<Text>あ……　あなたは……
+ロッキン……▽
+いや……　お元気　ですか？▼
+そうだ……▼
+あのう……　お忙しい　ところ
+大変　申し訳ないのですが▽
+私と　バトルして　頂けません？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-10T06:42:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5258,13 +5173,13 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありがとう……　うれしいな……▼
-では……▼
-ぼくの　ポケモンの　うんどうに
-つきあってくれるかな▼</Text>
+			<Text>ありがとう　ございます……▼
+では　えんりょ　なさらず
+ロッキン……▽
+いえ　おもいきり　おねがいします▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-10T06:41:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5272,13 +5187,13 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ありがとう……　うれしいな……▼
-では……▼
-僕の　ポケモンの　運動に
-付き合ってくれるかな▼</Text>
+			<Text>ありがとう　ございます……▼
+では　遠慮なさらず
+ロッキン……▽
+いえ　思い切って　お願いします▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-10T06:42:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5317,12 +5232,12 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そうか……　いそがしいんだね
-また　じかんが　あるときにでも▽
-こえを　かけてくれると　うれしいな</Text>
+			<Text>ああ　そうですか……
+おいそがしいのに　ひきとめてしまい▽
+もうしわけ　ありませんでした……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-10T06:41:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5330,12 +5245,12 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そうか……　忙しいんだね
-また　時間が　あるときにでも▽
-声を　かけてくれると　うれしいな</Text>
+			<Text>ああ　そうですか……
+お忙しいのに　引き止めてしまい▽
+申し訳　ありませんでした……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-10T06:42:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5374,22 +5289,22 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハアッ……　ハアッ……▼
-まだ……▼
-まるで　たいりょくが　ついて
-いかないけれど……▼
-からだを　うごかすこと……▼
-だれかと　しょうぶ　することは
-とても　たのしいんだね……▼
-ぼくの　ポケモンも　きみと
-あうと　とっても　たのしそうだ▼
-ありがとう……▼
-では……▼
-そろそろ　かんらんしゃに　のろうか
-いこう……　[Name:TrainerName Idx="0" ]さん……▼</Text>
+			<Text>ありがとう　ございました……▼
+やはり　あなたは　ロッキン……
+いえ　とても　すてきだと　おもいます▼
+……　……　……　……▼
+……じつは　せんじつ　あなたと
+わかれた　すこし　あと……▽
+わたし　スカウトされたんです▼
+プロデューサーのかた　じきじきに
+デビューの　さそいも　いただいて……▼
+でも　それが……▼
+……いや　そのまえに　[Name:TrainerName Idx="0" ]さん
+もういちど　わたしの　うたを▽
+きいて　ください……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-10T06:43:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5397,22 +5312,22 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハアッ……　ハアッ……▼
-まだ……▼
-まるで　体力が　ついて
-いかないけれど……▼
-体を　動かすこと……▼
-だれかと　勝負　することは
-とても　楽しいんだね……▼
-僕の　ポケモンも　君と
-会うと　とっても　楽しそうだ▼
-ありがとう……▼
-では……▼
-そろそろ　観覧車に　乗ろうか
-いこう……　[Name:TrainerName Idx="0" ]さん……▼</Text>
+			<Text>ありがとう　ございました……▼
+やはり　あなたは　ロッキン……
+いえ　とても　ステキだと　思います▼
+……　……　……　……▼
+……実は　先日　あなたと
+別れた　少し　後……▼
+私　スカウトされたんです▼
+プロデューサーの方　直々に
+デビューの　誘いも　頂いて……▼
+でも　それが……▼
+……いや　その前に　[Name:TrainerName Idx="0" ]さん
+もう一度　私の　歌を▽
+聞いて　ください……▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-10T06:42:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5451,22 +5366,30 @@ OL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ごめんなさい……
-また　めいわくかけて　しまったね▼
-……　……でも▼
-こうして　[Name:TrainerName Idx="0" ]さんと
-あそぶように　なってから▽
-からだの　ちょうしが　いいんだよ▼
-それに……▼
-[Name:TrainerName Idx="0" ]さんと　あそべることが
-とっても　うれしいんだ……▼
-だから　よければ　また　ぼくと
-つきあってくれると　うれしいな▽
-きょうは　ほんとうに　ありがとう▽
-またね　[Name:TrainerName Idx="0" ]さん……</Text>
+			<Text>どうでした？　わたしの　うた……▼
+……　……　……　……
+……さっきの　はなしの　つづき▼
+わたし　せいじゅんはアイドルとして▽
+デビューすることに　なりそうなんです▼
+うたも　きいて　もらったんだけど
+いまどき　ウケない　って……▼
+それに　ことばづかいも　じょうひんに
+なおしてくれ　って　いわれてて……▼
+そんなの　わたしじゃ　ない……▼
+だけど　せっかくの　チャンス
+みすみす　のがしたくない……▼
+だから　わたしは　かわるんです▼
+かわいくて　きれいで　じょうひんで
+みんなに　あいされるように……▼
+でも　[Name:TrainerName Idx="0" ]さん……
+アンタの　まえでは　ときどき▽
+ほんとうの　アタイで　いさせて！▽
+あのうたも　アンタにだけ　うたうわ……▼
+だから　[Name:TrainerName Idx="0" ]！
+また　ぜったい　あいに　きてよネ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-10T06:43:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5474,22 +5397,30 @@ OL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ごめんなさい……
-また　迷惑かけて　しまったね▼
-……　……でも▼
-こうして　[Name:TrainerName Idx="0" ]さんと
-遊ぶように　なってから▽
-体の　調子が　いいんだよ▼
-それに……▼
-[Name:TrainerName Idx="0" ]さんと　遊べることが
-とっても　うれしいんだ……▼
-だから　よければ　また　僕と
-付き合ってくれると　うれしいな▽
-今日は　本当に　ありがとう▽
-またね　[Name:TrainerName Idx="0" ]さん……</Text>
+			<Text>どうでした？　私の　歌……▼
+……　……　……　……
+……さっきの　話の　続き▼
+私　清純派アイドルとして▽
+デビューすることに　なりそうなんです▼
+歌も　聴いて　もらったんだけど
+今どき　ウケない　って……▼
+それに　言葉遣いも　上品に
+直してくれ　って　言われてて……▼
+そんなの　私じゃ　ない……▼
+だけど　せっかくの　チャンス
+みすみす　逃したくない……▼
+だから　私は　変わるんです▼
+可愛くて　きれいで　上品で
+みんなに　愛されるように……▼
+でも　[Name:TrainerName Idx="0" ]さん……
+アンタの　前では　時々▽
+本当の　アタイで　いさせて！▽
+あの歌も　アンタにだけ　歌うわ……▼
+だから　[Name:TrainerName Idx="0" ]！
+また　絶対　あいに　来てよネ！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-10T06:43:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

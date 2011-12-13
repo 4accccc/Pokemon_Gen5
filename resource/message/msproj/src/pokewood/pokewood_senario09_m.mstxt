@@ -2923,31 +2923,31 @@
 		Label="pw_event6_enemy_4">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｅ『おぼえておけ……▼
+			<Text>Ｅ『いいか　おぼえておけ……▼
 ＵＦＯは　せいみつな　きかい　なのだ
 そのわざは　せいぎょシステムに▽
 ごさどうを　およぼしかねない</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:03:41" />
+				Time="2011-12-10T10:17:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:03:41" />
+				Time="2011-12-10T10:17:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｅ『覚えておけ……▼
+			<Text>Ｅ『いいか　覚えておけ……▼
 ＵＦＯは　精密な　機械　なのだ
 そのわざは　制御システムに▽
 誤作動を　及ぼしかねない</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:03:41" />
+				Time="2011-12-10T10:17:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T06:03:41" />
+				Time="2011-12-10T10:17:06" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

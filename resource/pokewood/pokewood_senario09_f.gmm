@@ -987,11 +987,11 @@
 そんなに　怒らなくても……</language>
 	</row>
 	<row id="pw_event6_enemy_4">
-		<language name="JPN" width="256">Ｅ『おぼえておけ……▼
+		<language name="JPN" width="256">Ｅ『いいか　おぼえておけ……▼
 ＵＦＯは　せいみつな　きかい　なのだ
 そのわざは　せいぎょシステムに▽
 ごさどうを　およぼしかねない</language>
-		<language name="JPN_KANJI" width="256">Ｅ『覚えておけ……▼
+		<language name="JPN_KANJI" width="256">Ｅ『いいか　覚えておけ……▼
 ＵＦＯは　精密な　機械　なのだ
 そのわざは　制御システムに▽
 誤作動を　及ぼしかねない</language>
