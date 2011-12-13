@@ -27,7 +27,7 @@
 #define CTVT_GAME_FRAME_S_BG      (GFL_BG_FRAME0_S)
 #define CTVT_GAME_FRAME_S_PLATE   (GFL_BG_FRAME1_S)
 #define CTVT_GAME_FRAME_S_TIMEBAR (GFL_BG_FRAME2_S)
-#define CTVT_GAME_FRAME_S_NONE2   (GFL_BG_FRAME3_S)
+#define CTVT_GAME_FRAME_S_BG2     (GFL_BG_FRAME3_S)
 
 // パレット
 #define CTVT_GAME_PAL_BG_M_BG       (0) // 5本
@@ -35,7 +35,8 @@
 #define CTVT_GAME_PAL_BG_M_WINFRAME (14) // 1本
 #define CTVT_GAME_PAL_BG_M_FONT     (15) // 1本
 
-#define CTVT_GAME_PAL_BG_S_BG       (0) // 5本
+#define CTVT_GAME_PAL_BG_S_BG       (0) // 3本
+#define CTVT_GAME_PAL_BG_S_BG2      (3) // 1本
 #define CTVT_GAME_PAL_BG_S_TIMEBAR  (13) // 1本
 #define CTVT_GAME_PAL_BG_S_WINFRAME (14) // 1本
 #define CTVT_GAME_PAL_BG_S_FONT     (15) // 1本

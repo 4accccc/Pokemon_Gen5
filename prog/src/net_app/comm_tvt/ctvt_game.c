@@ -1878,6 +1878,9 @@ static BOOL CTVT_GAME_Update( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
         GFL_BMPWIN_ClearTransWindow( gameWork->msgWinTitle );
         GFL_BG_LoadScreenReq(CTVT_GAME_FRAME_M_MSG);
 
+        // タイトルのBG非表示
+        GFL_BG_SetVisible( CTVT_GAME_FRAME_S_BG2, VISIBLE_OFF );
+
         // タイムゲージ描画
         draw_timebar( gameWork );
       }
@@ -2465,6 +2468,16 @@ static void game_update_seq_init_common( COMM_TVT_WORK *work, CTVT_GAME_WORK *ga
   ICHI_Printf("乱数Seed値 %d \n", gameWork->rnd_seed);
   ICHI_Printf("送信データサイズ:%d \n", sizeof(CTVT_GAME_SEND_DATA));
 
+  // BG
+  {
+    // 上画面
+    GFL_ARC_UTIL_TransVramPalette( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u2_NCLR , 
+        PALTYPE_SUB_BG, CTVT_GAME_PAL_BG_S_BG2*32, 32*1, heapID );
+    GFL_ARC_UTIL_TransVramBgCharacter( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u2_NCGR,
+        CTVT_GAME_FRAME_S_BG2, 0, 0, FALSE, heapID );
+    GFL_ARC_UTIL_TransVramScreen( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u2_NSCR, 
+        CTVT_GAME_FRAME_S_BG2,  0, 0, FALSE, heapID );
+  }
 
   // OBJ作成
   {
@@ -5008,19 +5021,26 @@ static void GRAPHIC_BG_Init( CTVT_GAME_WORK* p_wk, HEAPID heapID )
       GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000,GFL_BG_CHRSIZ_256x256,
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
-    // BG2 PLATE (プレート
+    // BG1 PLATE (プレート
     static const GFL_BG_BGCNT_HEADER header_sub1 = {
       0, 0, 0x0800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x0c000,GFL_BG_CHRSIZ_256x256,
       GX_BG_EXTPLTT_23, 0, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
-    // BG3 TIMEBAR (タイムゲージ
+    // BG2 TIMEBAR (タイムゲージ
     static const GFL_BG_BGCNT_HEADER header_sub2 = {
       0, 0, 0x0800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x10000,GFL_BG_CHRSIZ_256x256,
       GX_BG_EXTPLTT_23, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
+    // BG3 SUB (背景2
+    static const GFL_BG_BGCNT_HEADER header_sub3 = {
+      0, 0, 0x0800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x3000, GX_BG_CHARBASE_0x14000,GFL_BG_CHRSIZ_256x256,
+      GX_BG_EXTPLTT_23, 2, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
     GRAPHIC_BG_SetupBgFunc( &header_main1, CTVT_GAME_FRAME_M_BG, GFL_BG_MODE_TEXT );
@@ -5029,6 +5049,7 @@ static void GRAPHIC_BG_Init( CTVT_GAME_WORK* p_wk, HEAPID heapID )
     GRAPHIC_BG_SetupBgFunc( &header_sub0, CTVT_GAME_FRAME_S_BG, GFL_BG_MODE_TEXT );
     GRAPHIC_BG_SetupBgFunc( &header_sub1, CTVT_GAME_FRAME_S_PLATE, GFL_BG_MODE_TEXT );
     GRAPHIC_BG_SetupBgFunc( &header_sub2, CTVT_GAME_FRAME_S_TIMEBAR, GFL_BG_MODE_TEXT );
+    GRAPHIC_BG_SetupBgFunc( &header_sub3, CTVT_GAME_FRAME_S_BG2, GFL_BG_MODE_TEXT );
   }
 
   // ブレンド
@@ -5048,6 +5069,7 @@ static void GRAPHIC_BG_Init( CTVT_GAME_WORK* p_wk, HEAPID heapID )
   GFL_BG_SetPriority( CTVT_GAME_FRAME_S_BG, 3 ); 
   GFL_BG_SetPriority( CTVT_GAME_FRAME_S_PLATE, 0 ); 
   GFL_BG_SetPriority( CTVT_GAME_FRAME_S_TIMEBAR, 1 ); 
+  GFL_BG_SetPriority( CTVT_GAME_FRAME_S_BG2, 2 ); 
 
   GFL_BG_SetVisible( CTVT_GAME_FRAME_M_3D,    VISIBLE_ON );
   GFL_BG_SetVisible( CTVT_GAME_FRAME_M_MSG,   VISIBLE_ON );
@@ -5056,6 +5078,7 @@ static void GRAPHIC_BG_Init( CTVT_GAME_WORK* p_wk, HEAPID heapID )
   GFL_BG_SetVisible( CTVT_GAME_FRAME_S_BG,    VISIBLE_ON );
   GFL_BG_SetVisible( CTVT_GAME_FRAME_S_PLATE, VISIBLE_ON );
   GFL_BG_SetVisible( CTVT_GAME_FRAME_S_TIMEBAR, VISIBLE_ON );
+  GFL_BG_SetVisible( CTVT_GAME_FRAME_S_BG2,   VISIBLE_ON );
 }
 
 //----------------------------------------------------------------------------
