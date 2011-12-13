@@ -354,6 +354,15 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
         POKEMON_PARAM *shinka_pp   = PokeParty_GetMemberPointer( p_param->ppt, 0 );  // 0番に格納したので0番から取得
         // ppを進化後のもので上書きする
         POKETOOL_CopyPPtoPP( shinka_pp, pp );
+
+        {
+          //wk->ExchangePokemonData.postData.dataのなつきどを変更したが、
+          //wk->DownloadPokemonData[wk->TouchTrainerPos].postData.dataで上書きしている
+          //ポインタカエルのこわいのでここでいれる
+          // 交換されたポケモンに入れるなつき度
+          PP_Put(pp, ID_PARA_friend, 70);
+        }
+
         GFL_HEAP_FreeMemory( (void*)p_param->ppt );
         //パラメータクリア
         GFL_HEAP_FreeMemory(wk->sub_proc_wk);
