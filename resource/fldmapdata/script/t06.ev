@@ -177,17 +177,31 @@ EVENT_START   ev_pos_t06_champion_guide_02
   _BALLOONWIN_OBJMSG_POS( msg_t06_champion_06,T06_CHAMPION_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
+  //カメラ操作　アデク追従
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_MOVE( 9688,0,970752,7438336,131103,43667456,40 )
+  
   //アニメ：上に移動
   _OBJ_ANIME( T06_CHAMPION_01, anm_champion_look_r20 )
   _OBJ_ANIME_WAIT()
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   
   //メッセージ：20ばんどうろなら
   _BALLOONWIN_OBJMSG_POS( msg_t06_champion_07,T06_CHAMPION_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (40)
+  
   //アニメ：もとの位置に戻る
   _OBJ_ANIME_AUTO( T06_CHAMPION_01, 111, 669, FORCE_TYPE_NPC, 8, DIR_LR)
   _OBJ_ANIME_WAIT()
+  
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
   
   //アニメ：右を見る
   _OBJ_ANIME( T06_CHAMPION_01, anm_staystep_r )

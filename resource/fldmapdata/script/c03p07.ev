@@ -58,13 +58,8 @@ EVENT_START   ev_c03p07_sunglasses_01
     
     //アニメ：アイリス隣接
     _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 21,48, FORCE_TYPE_NOT, 8, DIR_UD )
-    _OBJ_ANIME( C03P07_SUNGLASSES_01, anm_pl_gyoe_down )
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_pl_gyoe_down )
-    _OBJ_ANIME_WAIT()
-    
-    //アニメ：主人公たち左を見る
-    _OBJ_ANIME( C03P07_SUNGLASSES_01, anm_staystep_l )
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+    _OBJ_ANIME( C03P07_SUNGLASSES_01, anm_common_gyoe )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_pl_gyoe_left )
     _OBJ_ANIME_WAIT()
     
     //ダンペイ：おー！アイリスさん
@@ -174,9 +169,10 @@ EVENT_END
 //--------------------------------------------------------------------
 //☆主人公・サングラス驚いて上を見る
 //--------------------------------------------------------------------
-_ANIME_LABEL  anm_pl_gyoe_down
+_ANIME_LABEL  anm_pl_gyoe_left
   _ANIME_DATA AC_MARK_GYOE,1
-  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA AC_WAIT_8F,1
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------

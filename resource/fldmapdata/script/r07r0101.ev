@@ -79,6 +79,25 @@ EVENT_START   ev_r07r0101_hakase2_01
     //========================================//
 
   ELSIF $WK_SCENE_C06HAKASE == 3 && $SCWK_TEMP0 == 1 THEN   //フキヨセジム攻略後
+  
+    //アララギ：あら！　ジェットバッジ　じゃない！
+    _BALLOONWIN_TALKOBJ_MSG( msg_r07r0101_hakase2_04 )
+    _MSGWIN_CLOSE()
+  
+    //主人公方向取得
+    _PLAYER_DIR_GET( LWK_DIR )
+    
+    //アニメ：主人公振り向き
+    IF $LWK_DIR == DIR_DOWN THEN
+      _OBJ_ANIME( R07R0101_HAKASE2_01, anm_hakase_kyoro2_u )
+    ELSIF $LWK_DIR == DIR_UP THEN
+      _OBJ_ANIME( R07R0101_HAKASE2_01, anm_hakase_kyoro2_d )
+    ELSIF $LWK_DIR == DIR_RIGHT THEN
+      _OBJ_ANIME( R07R0101_HAKASE2_01, anm_hakase_kyoro2_l )
+    ELSIF $LWK_DIR == DIR_LEFT THEN
+      _OBJ_ANIME( R07R0101_HAKASE2_01, anm_hakase_kyoro2_r )
+    ENDIF
+    _OBJ_ANIME_WAIT()
 
     //アララギ：あら！　ジェットバッジ　じゃない！
     _BALLOONWIN_TALKOBJ_MSG( msg_r07r0101_hakase2_05 )
@@ -135,6 +154,58 @@ EVENT_START   ev_r07r0101_hakase2_01
   ENDIF
 
 EVENT_END
+
+//--------------------------------------------------------------------
+//☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_hakase_kyoro2_l
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA AC_WAIT_4F,1
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA AC_WAIT_4F,1
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA AC_WAIT_8F,1
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_hakase_kyoro2_r
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA AC_WAIT_4F,1
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA AC_WAIT_4F,1
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA AC_WAIT_8F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_hakase_kyoro2_u
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA AC_WAIT_4F,1
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA AC_WAIT_4F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA AC_WAIT_8F,1
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_hakase_kyoro2_d
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA AC_WAIT_4F,1
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA AC_WAIT_4F,1
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA AC_WAIT_8F,1
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
 
 /**************************************************************/
 /*  ウェイトレス：話しかけ（カップルの鐘イベント）            */

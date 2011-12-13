@@ -130,7 +130,7 @@ EVENT_START   ev_pos_c14_swrival_01
   //ライバル名代入
   _RIVAL_NAME( 1 )
   //ライバル：いでんしのくさび
-  _BALLOONWIN_OBJMSG_POS( msg_c14_swrival_01, C14_SWRIVAL_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_c14_swrival_01a, C14_SWRIVAL_01, POS_DEFAULT )
 
   //ライバル：はやく
   _BALLOONWIN_OBJMSG_POS( msg_c14_swrival_02, C14_SWRIVAL_01, POS_DEFAULT )
@@ -352,9 +352,15 @@ EVENT_START   ev_c14_swrival_01
   
   //C14初回会話時（POSを踏んでいない時
   IF $WK_SCENE_C14_SWRIVAL_01 == 1 THEN
+    
+    _TALK_OBJ_START()
     //ライバル名代入
     _RIVAL_NAME( 1 )
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c14_swrival_01 )
+    //ライバル：いでんしのくさび
+    _BALLOONWIN_OBJMSG_POS( msg_c14_swrival_01a, C14_SWRIVAL_01, POS_DEFAULT )
+    //ライバル：はやく
+    _BALLOONWIN_OBJMSG_POS( msg_c14_swrival_02, C14_SWRIVAL_01, POS_DEFAULT )
+    _MSGWIN_CLOSE()
     //========================================//
     //C14 POS無効
     $WK_SCENE_C14_SWRIVAL_01 = 2

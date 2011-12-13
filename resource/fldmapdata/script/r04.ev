@@ -156,6 +156,9 @@ EVENT_START  ev_pos_r04_swboss_02
   _OBJ_ANIME( R04_BIGROCK_11, anm_poke50_hatena)
   _OBJ_ANIME_WAIT()
   
+  //暗転
+  _BLACK_OUT_SLOW()
+  
   //アニメ：イワパレス退場
   _OBJ_ANIME( R04_BIGROCK_08, anm_poke50_bye_z580)
   _OBJ_ANIME( R04_BIGROCK_09, anm_poke50_bye_z580)
@@ -168,6 +171,26 @@ EVENT_START  ev_pos_r04_swboss_02
   _OBJ_ANIME( R04_BIGROCK_05, anm_poke50_bye_z581)
   _OBJ_ANIME_WAIT()
   
+  _DISP_FADE_END_CHECK()
+  
+  //イワパレス動作モデル削除
+  _OBJ_DEL( R04_BIGROCK_01 )
+  _OBJ_DEL( R04_BIGROCK_02 )
+  _OBJ_DEL( R04_BIGROCK_03 )
+  _OBJ_DEL( R04_BIGROCK_04 )
+  _OBJ_DEL( R04_BIGROCK_05 )
+  _OBJ_DEL( R04_BIGROCK_06 )
+  _OBJ_DEL( R04_BIGROCK_07 )
+  _OBJ_DEL( R04_BIGROCK_08 )
+  _OBJ_DEL( R04_BIGROCK_09 )
+  _OBJ_DEL( R04_BIGROCK_10 )
+  _OBJ_DEL( R04_BIGROCK_11 )
+  
+  //暗転復帰
+  _BLACK_IN_SLOW()
+  _DISP_FADE_END_CHECK()
+  
+  /*
   _OBJ_ANIME( R04_BIGROCK_10, anm_poke50_bye_z579)
   _TIME_WAIT( 4 )
   _OBJ_ANIME( R04_BIGROCK_03, anm_poke50_bye_z581)
@@ -175,6 +198,8 @@ EVENT_START  ev_pos_r04_swboss_02
   _OBJ_ANIME( R04_BIGROCK_04, anm_poke50_bye_z581)
   _OBJ_ANIME( R04_BIGROCK_07, anm_poke50_bye_z581)
   _OBJ_ANIME_WAIT()
+  */
+  
   
   //アクロマ：……イワパレス
   _BALLOONWIN_OBJMSG_POS( msg_r04_swboss_03, R04_SWBOSS_01, POS_DEFAULT )
@@ -234,21 +259,11 @@ EVENT_START  ev_pos_r04_swboss_02
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
   _OBJ_ANIME_WAIT()
   
+  //アクロマ動作モデル削除
+  _OBJ_DEL( R04_SWBOSS_01 )
+  
   //イベント曲終了
   _END_EVENT_BGM()
-  
-  _OBJ_DEL( R04_SWBOSS_01 )
-  _OBJ_DEL( R04_BIGROCK_01 )
-  _OBJ_DEL( R04_BIGROCK_02 )
-  _OBJ_DEL( R04_BIGROCK_03 )
-  _OBJ_DEL( R04_BIGROCK_04 )
-  _OBJ_DEL( R04_BIGROCK_05 )
-  _OBJ_DEL( R04_BIGROCK_06 )
-  _OBJ_DEL( R04_BIGROCK_07 )
-  _OBJ_DEL( R04_BIGROCK_08 )
-  _OBJ_DEL( R04_BIGROCK_09 )
-  _OBJ_DEL( R04_BIGROCK_10 )
-  _OBJ_DEL( R04_BIGROCK_11 )
   
   //==================================//
   

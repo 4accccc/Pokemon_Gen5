@@ -154,6 +154,7 @@ EVENT_START   ev_scene_c03r1102_commendation_01
   //SUNGLASSESÅFÇ±ÇÍÇ©ÇÁÇ‡Ç™ÇÒÇŒÇ¡Çƒ
   _PLAYER_NAME( 0 )
   _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizegoal_end , C03R1102_MEDALMAN_01, POS_DOWN )
+  _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
   
   //================================================//
@@ -301,6 +302,7 @@ EVENT_START   ev_scene_c03r1102_commendation_02
   //SUNGLASSESÅFÇ±ÇÍÇ©ÇÁÇ‡Ç™ÇÒÇŒÇ¡Çƒ
   _PLAYER_NAME( 0 )
   _BALLOONWIN_OBJMSG_POS( msg_mdloyj_prizecomp_end , C03R1102_MEDALMAN_01, POS_DOWN )
+  _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
   
   //================================================//

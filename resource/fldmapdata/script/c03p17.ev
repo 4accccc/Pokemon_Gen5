@@ -123,9 +123,6 @@ EVENT_START		ev_scene_c03p17_swchampion_02
   
   //自機にカメラを戻す
   _CAMERA_DEF_MOVE (40)
-  //カメラ待ち
-  _CAMERA_WAIT_MOVE()
-  _CAMERA_BIND()    //カメラバインド　主人公位置をカメラが追従するようになります
   
   //アニメ：ライバル・下水道に移動
   _OBJ_ANIME( C03P17_SWRIVAL_01, anm_swrival_go_d11 )
@@ -133,6 +130,9 @@ EVENT_START		ev_scene_c03p17_swchampion_02
   _OBJ_ANIME( C03P17_SWCHAMPION_01, anm_staystep_d )
   _OBJ_ANIME_WAIT()
   
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()    //カメラバインド　主人公位置をカメラが追従するようになります
   _CAMERA_END()   //カメラ操作終了
   
   //ライバル動作モデル削除

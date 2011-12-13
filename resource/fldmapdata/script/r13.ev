@@ -58,7 +58,7 @@ EVENT_START   ev_bg_r13_sign3_01
 EVENT_END
 
 /**************************************************************/
-/*  POS：コバルオン登場（後に削除を）                         */
+/*  POS：コバルオン登場                         */
 /**************************************************************/
 EVENT_START   ev_pos_r13_poke4_01
 
@@ -68,21 +68,47 @@ EVENT_START   ev_pos_r13_poke4_01
   //アニメ：主人公「！」
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe )
   _OBJ_ANIME_WAIT()
-
+  
+  //カメラ操作
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_MOVE( 9688,0,970752,44859392,0,12484608,32 )
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  
+  //コバルオン振り向き
+  IF $LCW_POSZ == 187 THEN
+    _OBJ_ANIME( R13_POKE4_01, anm_common_turn_u )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
+  /*
+  
   //主人公の位置でアニメ分岐
-  IF $LCW_POSZ == 202 THEN
-    //アニメ：コバルオン主人公の前に（＋主人公振り向き）
-    $LCW_POSX -= 2
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
-    _TIME_WAIT ( 8 )
+  IF $LCW_POSZ == 187 THEN
+    //アニメ：コバルオン主人公の前に
+    $LCW_POSZ += 2
     _OBJ_ANIME_AUTO( R13_POKE4_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 6, DIR_UD )
     _OBJ_ANIME_WAIT()
   ELSE
     //アニメ：コバルオン主人公の前に
-    $LCW_POSX -= 2
+    $LCW_POSZ -= 2
     _OBJ_ANIME_AUTO( R13_POKE4_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 6, DIR_UD )
     _OBJ_ANIME_WAIT()
   ENDIF
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX, LCW_POSZ ) 
+  
+  //コバルオン向き合う
+  IF $LCW_POSZ != 684 && $LCW_POSZ == 187 THEN
+    _OBJ_ANIME( R13_POKE4_01, anm_common_turn_u )
+    _OBJ_ANIME_WAIT()
+  ELSIF $LCW_POSZ != 684 && $LCW_POSZ == 193 THEN
+    _OBJ_ANIME( R13_POKE4_01, anm_common_turn_d )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
+  */
 
   //コバルオン：こふおおおおーっ！
   _VOICE_PLAY( MONSNO_645, 0 ) 
@@ -90,57 +116,18 @@ EVENT_START   ev_pos_r13_poke4_01
   _VOICE_WAIT()
   _AB_KEYWAIT_MARK()
   _GIZAPLAINWIN_CLOSE()
-
-  //戦闘開始
-  {
-    DEFINE_LOCAL flag
-    $flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
-    $flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
-    _WILD_BTL_SET_EX( MONSNO_645, 45, flag ) // Lv45 コバルオン
-  }
-
-  _WILD_LOSE_CHECK( SCWK_ANSWER )
-  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
-
-    //==================================//
-    //コバルオン非表示
-    _FLAG_SET( FV_R13_POKE4_01 )
-    //==================================//
-    _OBJ_DEL( R13_POKE4_01 )   //コバルオンを消す
-
-    _WILD_WIN()
-  ELSE
-    _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
-  ENDIF
-
-  //コバルオンを捕獲した？
-  _WILD_RETRY_CHECK( SCWK_ANSWER )
-  SWITCH $SCWK_ANSWER
-  CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
-    //==================================//
-    //コバルオンを捕獲した
-    _FLAG_SET( FE_R13_POKE4_GET_01 )
-    //==================================//
-
-  CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN //勝利した場合、あるいは逃げた場合
-
-  ENDSWITCH
-
-  //コバルオンを捕獲できなかった場合の分岐
-  IF FLAG_OFF( FE_R13_POKE4_GET_01 ) THEN
-
-    //システム：ポケモンは　どうろの　さきへ
-    _SYSWIN_MSG( msg_r13_poke4_02, POS_DOWN )
-    _LAST_KEYWAIT()
-    _SYSWIN_CLOSE()
-
-  ENDIF
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (8*4)
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
+  
 
   //==================================//
   //POS無効
   $WK_SCENE_R13_POKE4 = 1
-  //コバルオン発見
-  _FLAG_SET( FE_R13_POKE4_MEET_01 )
   //==================================//
 
 EVENT_END
