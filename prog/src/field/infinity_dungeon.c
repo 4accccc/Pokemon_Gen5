@@ -1166,7 +1166,7 @@ static void SetTrainer( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p_ro
         MMDL_SetMoveLimitX( mmdl, p_mmdlp->lim_x );
         MMDL_SetMoveLimitZ( mmdl, p_mmdlp->lim_z );
         MMDL_SetEventID( mmdl, SCRID_INFINITY_DUNGEON_TALK_BATTLE_TRAINER );
-        OS_Printf("配置TRID=%u\n",tr_id);
+        OS_Printf("TRID=%u 視線:%u\n",tr_id ,p_mmdlp->param0);
       }
     }
   }
@@ -1689,16 +1689,16 @@ static u32 gethint_gate_tr_is_up_down( const TRHINT_WK *p_wk )
 {
   // 現在のフロア
   u8 now_floor = INFINITYDUNGEON_SAVE_GetFloorID( p_wk->p_save );
-  // ボス部屋の存在するフロア
-  u8 boss_floor = INFINITY_DUNGEON_GetBossFloor( p_wk->p_dungeon_data );
+  // ゲートトレーナーの存在するフロア
+  u8 gatetr_floor = p_wk->p_dungeon_data->gate_trainer_floor;
 
   // メッセージを取得
   u32 msg_id = msg_hint_updown_unknown_01;
 
-  ONOUE_Printf("現在のフロア：%u,ボスのフロア%u\n",now_floor ,boss_floor );
+  ONOUE_Printf("現在のフロア：%u,ゲートトレーナーのフロア%u\n",now_floor ,gatetr_floor );
   ONOUE_Printf("ヒント：上にいるか->");
 
-  if( now_floor < boss_floor )
+  if( now_floor < gatetr_floor )
   {
     if( INF_TOOL_DUNGEON_GetDungeonColor( p_wk->p_dungeon_data ) == VERSION_B2 )
     {
@@ -1711,7 +1711,7 @@ static u32 gethint_gate_tr_is_up_down( const TRHINT_WK *p_wk )
       msg_id = msg_hint_down_01;
     }
   }
-  else if( now_floor > boss_floor )
+  else if( now_floor > gatetr_floor )
   {
     if( INF_TOOL_DUNGEON_GetDungeonColor( p_wk->p_dungeon_data ) == VERSION_B2 )
     {
