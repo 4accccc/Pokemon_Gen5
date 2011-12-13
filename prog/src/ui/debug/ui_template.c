@@ -77,7 +77,7 @@
 #include "ui_template.h"
 
 
-//@TODO BG読み込み とりあえずマイクテストのリソース
+//BG読み込み マイクテスト画面のリソースで行う
 #include "message.naix"
 #include "mictest.naix"	// アーカイブ
 #include "msg/msg_mictest.h"  // GMM
@@ -543,7 +543,7 @@ static GFL_PROC_RESULT UITemplateProc_Init( GFL_PROC *proc, int *seq, void *pwk,
   UITemplate_PMSDRAW_Init( wk );
 #endif //UI_TEMPLATE_PMSDRAW
 
-	//@todo	フェードシーケンスがないので
+	//フェードシーケンスの代わりに
 	GX_SetMasterBrightness(0);
 	GXS_SetMasterBrightness(0);
 
@@ -722,8 +722,7 @@ static GFL_PROC_RESULT UITemplateProc_Main( GFL_PROC *proc, int *seq, void *pwk,
 //-----------------------------------------------------------------------------
 static void UITemplate_BG_LoadResource( UI_TEMPLATE_BG_WORK* wk, HEAPID heapID )
 {
-  //@TODO とりあえずマイクテストのリソース
-  //@TODO 複数枚ロードできるようにして切り離す？
+  //マイクテストのリソースで表示
   enum
   {
     RES_ARC = ARCID_MICTEST_GRA,
