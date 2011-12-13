@@ -213,7 +213,7 @@ EVENT_START   ev_bc10r0401_shopm1_02
 
   //========================================//
 
-  //_CALL ev_shop_scr
+  _CALL ev_shop_scr
 
   EVENT_END
 
