@@ -1404,7 +1404,7 @@
 まだ　強くなれる　ってこと！</language>
 	</row>
 
-	<row id="TRID_ELITEM_14_TRMSG_FIGHT_LOSE">
+	<row id="TRID_CHILDCARE_12_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">……なんだと？</language>
 		<language name="JPN_KANJI" width="216">……なんだと？</language>
 	</row>
@@ -1423,7 +1423,7 @@
 キミ　強いね……</language>
 	</row>
 
-	<row id="TRID_PRINCE_05_TRMSG_FIGHT_LOSE">
+	<row id="TRID_ADULTW_04_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">ハアッ　ハアッ　ハアッ　ハア……</language>
 		<language name="JPN_KANJI" width="216">ハアッ　ハアッ　ハアッ　ハア……</language>
 	</row>
@@ -4638,7 +4638,7 @@
 そんなに　強いわけ？</language>
 	</row>
 
-	<row id="TRID_KINDERGARTENW_05_TRMSG_FIGHT_LOSE">
+	<row id="TRID_BUSINESS1_13_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">わー！　わー！　すごー！
 おにーちゃん　つよいー！！</language>
 		<language name="JPN_KANJI" width="216">わー！　わー！　すごー！
@@ -4652,7 +4652,7 @@
 キミの　ポケモンは　たくましいなあ！</language>
 	</row>
 
-	<row id="TRID_WAITRESS_04_TRMSG_FIGHT_LOSE">
+	<row id="TRID_GUITARW_05_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">アタタ……
 かっこわるいなぁ……</language>
 		<language name="JPN_KANJI" width="216">アタタ……
