@@ -35,8 +35,9 @@
 #define CTVT_GAME_PAL_BG_M_WINFRAME (14) // 1本
 #define CTVT_GAME_PAL_BG_M_FONT     (15) // 1本
 
-#define CTVT_GAME_PAL_BG_S_BG       (0) // 3本
-#define CTVT_GAME_PAL_BG_S_BG2      (3) // 1本
+#define CTVT_GAME_PAL_BG_S_BG       (0) // 5本
+#define CTVT_GAME_PAL_BG_S_BG2_1    (3) //
+#define CTVT_GAME_PAL_BG_S_BG2_2    (4) //
 #define CTVT_GAME_PAL_BG_S_TIMEBAR  (13) // 1本
 #define CTVT_GAME_PAL_BG_S_WINFRAME (14) // 1本
 #define CTVT_GAME_PAL_BG_S_FONT     (15) // 1本

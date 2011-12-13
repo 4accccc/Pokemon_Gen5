@@ -2468,17 +2468,6 @@ static void game_update_seq_init_common( COMM_TVT_WORK *work, CTVT_GAME_WORK *ga
   ICHI_Printf("乱数Seed値 %d \n", gameWork->rnd_seed);
   ICHI_Printf("送信データサイズ:%d \n", sizeof(CTVT_GAME_SEND_DATA));
 
-  // BG
-  {
-    // 上画面
-    GFL_ARC_UTIL_TransVramPalette( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u2_NCLR , 
-        PALTYPE_SUB_BG, CTVT_GAME_PAL_BG_S_BG2*32, 32*1, heapID );
-    GFL_ARC_UTIL_TransVramBgCharacter( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u2_NCGR,
-        CTVT_GAME_FRAME_S_BG2, 0, 0, FALSE, heapID );
-    GFL_ARC_UTIL_TransVramScreen( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u2_NSCR, 
-        CTVT_GAME_FRAME_S_BG2,  0, 0, FALSE, heapID );
-  }
-
   // OBJ作成
   {
     GFL_CLWK_DATA cellInitData;
@@ -2621,11 +2610,22 @@ static void game_update_seq_init_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
 
     // 上画面
     GFL_ARC_UTIL_TransVramPalette( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u_NCLR , 
-        PALTYPE_SUB_BG, CTVT_GAME_PAL_BG_S_BG*32, 32*3, heapID );
+        PALTYPE_SUB_BG, CTVT_GAME_PAL_BG_S_BG*32, 32*5, heapID );
+
+    // 背景1
     GFL_ARC_UTIL_TransVramBgCharacter( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u_NCGR,
         CTVT_GAME_FRAME_S_BG, 0, 0, FALSE, heapID );
     GFL_ARC_UTIL_TransVramScreen( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u_NSCR, 
         CTVT_GAME_FRAME_S_BG,  0, 0, FALSE, heapID );
+
+    // 背景2
+    GFL_ARC_UTIL_TransVramBgCharacter( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u2_NCGR,
+        CTVT_GAME_FRAME_S_BG2, 0, 0, FALSE, heapID );
+    GFL_ARC_UTIL_TransVramScreen( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u2_NSCR, 
+        CTVT_GAME_FRAME_S_BG2,  0, 0, FALSE, heapID );
+    // パレットを変更する
+    GFL_BG_ChangeScreenPalette( CTVT_GAME_FRAME_S_BG2, 0, 0, 32, 24, CTVT_GAME_PAL_BG_S_BG2_1 );
+    GFL_BG_LoadScreenReq( CTVT_GAME_FRAME_S_BG2 );
 
     // タイムゲージ用にパレットを読み込む
     GFL_ARC_UTIL_TransVramPalette( ARCID_TVT_BALLOON, NARC_tvt_balloon_time_bar_NCLR, 
@@ -2827,11 +2827,22 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
 
     // 上画面
     GFL_ARC_UTIL_TransVramPalette( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u_NCLR , 
-        PALTYPE_SUB_BG, CTVT_GAME_PAL_BG_S_BG*32, 32*3, heapID );
+        PALTYPE_SUB_BG, CTVT_GAME_PAL_BG_S_BG*32, 32*5, heapID );
+
+    // 背景1
     GFL_ARC_UTIL_TransVramBgCharacter( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u_NCGR,
         CTVT_GAME_FRAME_S_BG, 0, 0, FALSE, heapID );
     GFL_ARC_UTIL_TransVramScreen( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u_NSCR, 
         CTVT_GAME_FRAME_S_BG,  0, 0, FALSE, heapID );
+
+    // 背景2
+    GFL_ARC_UTIL_TransVramBgCharacter( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u2_NCGR,
+        CTVT_GAME_FRAME_S_BG2, 0, 0, FALSE, heapID );
+    GFL_ARC_UTIL_TransVramScreen( ARCID_TVT_BALLOON, NARC_tvt_balloon_tv_game_bg_u2_NSCR, 
+        CTVT_GAME_FRAME_S_BG2,  0, 0, FALSE, heapID );
+    // パレットを変更する
+    GFL_BG_ChangeScreenPalette( CTVT_GAME_FRAME_S_BG2, 0, 0, 32, 24, CTVT_GAME_PAL_BG_S_BG2_2 );
+    GFL_BG_LoadScreenReq( CTVT_GAME_FRAME_S_BG2 );
 
     // BGパレットアニメ用
     {
