@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-08-30T14:20:30" source="c12_sky.mb"/>
+	<create user="shiiyama_yukiko" host="W00229" date="2011-12-13T15:25:50" source="c12_sky.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-08-30T14:20:30" source="c12_sky.mb"/>
+<original_create user="shiiyama_yukiko" host="W00229" date="2011-12-13T15:25:50" source="c12_sky.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -20,14 +20,14 @@
 	magnify="1.000000"
 	tool_start_frame="1"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="6 5"
+	compress_node="merge" node_size="5 5"
 	compress_material="on" material_size="3 3"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="7" xyz="-5.483398 0.226563 -2.687500" whd="7.811279 2.648682 3.127930"/>
+<box_test pos_scale="7" xyz="-5.483398 0.476563 -2.687500" whd="7.811279 2.648682 3.127930"/>
 
 <tex_image_array size="2">
 	<tex_image index="0" name="c12_sky"
@@ -1484,7 +1484,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		translate="0.000000 32.000000 0.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="10" polygon_size="3"
@@ -1504,7 +1504,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		translate="0.000000 32.000000 0.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="64" polygon_size="16"
@@ -1524,7 +1524,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 1.050049 0.000000"
+		translate="0.000000 33.050049 0.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="10" polygon_size="3"
@@ -1544,7 +1544,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		translate="0.000000 32.000000 0.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="10" polygon_size="3"
