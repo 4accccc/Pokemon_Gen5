@@ -681,8 +681,8 @@
 	</row>
 
 	<row id="mini_06">
-		<language name="JPN" width="216">ミハル</language>
-		<language name="JPN_KANJI" width="216">ミハル</language>
+		<language name="JPN" width="216">ハツハル</language>
+		<language name="JPN_KANJI" width="216">ハツハル</language>
 	</row>
 
 	<row id="tennis_03">
@@ -1981,8 +1981,8 @@
 	</row>
 
 	<row id="backpackerm_21">
-		<language name="JPN" width="216">タマヨ</language>
-		<language name="JPN_KANJI" width="216">タマヨ</language>
+		<language name="JPN" width="216">タギマ</language>
+		<language name="JPN_KANJI" width="216">タギマ</language>
 	</row>
 
 	<row id="swimmerm_06">
@@ -4458,6 +4458,26 @@
 	<row id="swplazmaw_16">
 		<language name="JPN" width="216">したっぱ</language>
 		<language name="JPN_KANJI" width="216">したっぱ</language>
+	</row>
+
+	<row id="childcare_12">
+		<language name="JPN" width="216">エナツ</language>
+		<language name="JPN_KANJI" width="216">エナツ</language>
+	</row>
+
+	<row id="adultw_04">
+		<language name="JPN" width="216">マフユ</language>
+		<language name="JPN_KANJI" width="216">マフユ</language>
+	</row>
+
+	<row id="business1_13">
+		<language name="JPN" width="216">ヒロナツ</language>
+		<language name="JPN_KANJI" width="216">ヒロナツ</language>
+	</row>
+
+	<row id="guitarw_05">
+		<language name="JPN" width="216">フユミ</language>
+		<language name="JPN_KANJI" width="216">フユミ</language>
 	</row>
 
 	<flowchart-group-list>

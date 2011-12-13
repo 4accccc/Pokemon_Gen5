@@ -813,7 +813,11 @@
 #define	TRID_SWPLAZMAM_39   ( 800 ) 
 #define	TRID_SWPLAZMAW_15   ( 801 ) 
 #define	TRID_SWPLAZMAW_16   ( 802 ) 
-#define TRID_MAX  ( 803 )
+#define	TRID_CHILDCARE_12   ( 803 ) 
+#define	TRID_ADULTW_04   ( 804 ) 
+#define	TRID_BUSINESS1_13   ( 805 ) 
+#define	TRID_GUITARW_05   ( 806 ) 
+#define TRID_MAX  ( 807 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
