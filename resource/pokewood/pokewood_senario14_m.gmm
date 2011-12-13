@@ -968,6 +968,46 @@
 この　若い　肉体を　使って
 ワシは　まだまだ　生きながらえる……</language>
 	</row>
+	<row id="pw_event6_enemy_0">
+		<language name="JPN" width="256">？？？『グロロ……
+それが　おぬしの　キバか……▼
+するどく……　むだ　なく……
+たくましい……　よきポケモンよ……▽
+しかも　かたい　きずなで▽
+むすばれて　おるな……</language>
+		<language name="JPN_KANJI" width="256">？？？『グロロ……
+それが　おぬしの　キバか……▼
+鋭く……　無駄なく……
+たくましい……　よきポケモンよ……▽
+しかも　固い　キズナで▽
+結ばれて　おるな……</language>
+	</row>
+	<row id="pw_event6_hero_1">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『そりゃ　そうさ！▼
+こいつらは　イッシュぼうえいたいの　
+かこくな　トレーニングを　いっしょに▽
+たえぬいた　パートナー……▼
+かたいきずな　どころか
+おなじ　じごくを　みた　せんゆう　だ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そりゃ　そうだ！▼
+こいつらは　イッシュ防衛隊の　
+過酷な　トレーニングを　一緒に▽
+耐え抜いた　パートナー……▼
+固いキズナ　どころか　
+同じ地獄を　みた　戦友だ！</language>
+	</row>
+	<row id="pw_event6_enemy_1">
+		<language name="JPN" width="256">？？？『なるほど　な……
+にんげんと　くらくを　ともにし▽
+とぎすまされた　ポケモンか……▼
+グロロロ……
+ワシにも　そのようなころが　あったわ</language>
+		<language name="JPN_KANJI" width="256">？？？『なるほど　な……
+人間と　苦楽を　共にし▽
+研ぎ澄まされた　ポケモンか……▼
+グロロロ……
+ワシにも　そのようなころが　あったわ</language>
+	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

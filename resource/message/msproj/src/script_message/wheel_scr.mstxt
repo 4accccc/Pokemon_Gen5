@@ -2500,11 +2500,11 @@
 ことわられると　おもってたのに！▼
 よーし　それじゃ　どうするかな……▼
 ウン　きめた！▼
-まず　バトルする　[Name:TrainerName Idx="0" ]ちゃんの
-しゅんかんを　とらせてください！▼</Text>
+まず　たたかう　[Name:TrainerName Idx="0" ]ちゃんを
+なんまいか　とらせてください！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-13T05:57:55" />
+				Time="2011-12-13T08:11:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2518,11 +2518,11 @@
 断られると　思ってたのに！▼
 よーし　それじゃ　どうするかな……▼
 ウン　決めた！▼
-まず　バトルする　[Name:TrainerName Idx="0" ]ちゃんを
-瞬間を　撮らせてください！▼</Text>
+まず　戦う　[Name:TrainerName Idx="0" ]ちゃんを
+何枚か　撮らせてください！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-13T05:58:02" />
+				Time="2011-12-13T08:11:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

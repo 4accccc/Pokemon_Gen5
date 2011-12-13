@@ -357,7 +357,7 @@ x31,z54辺りに配置
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ウンウン！　それ　ナイスねー！▼
+			<Text>あー　それ　ナイスねー！▼
 えいが！　それは　アメイジングよ！▼
 その　おどろき　そして　かんどうを
 ていきょうする　この　ポケウッドを▽
@@ -367,7 +367,7 @@ x31,z54辺りに配置
 [Name:TrainerName Idx="0" ]ちゃん！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T06:19:39" />
+				Time="2011-12-13T07:21:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -375,7 +375,7 @@ x31,z54辺りに配置
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ウンウン！　それが　ナイスねー！▼
+			<Text>あー　それが　ナイスねー！▼
 映画！　それは　アメイジングよ！▼
 その驚き　そして感動　を
 提供する　このポケウッドを▽
@@ -385,7 +385,7 @@ x31,z54辺りに配置
 [Name:TrainerName Idx="0" ]ちゃん！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-23T06:19:29" />
+				Time="2011-12-13T07:21:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

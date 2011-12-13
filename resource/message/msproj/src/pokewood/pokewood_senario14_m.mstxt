@@ -2886,4 +2886,107 @@
 				Time="2011-10-14T09:40:18" />
 		</AttributeCell>
 	</TextRow>
+	<TextRow
+		Label="pw_event6_enemy_0">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？『グロロ……
+それが　おぬしの　キバか……▼
+するどく……　むだ　なく……
+たくましい……　よきポケモンよ……▽
+しかも　かたい　きずなで▽
+むすばれて　おるな……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T08:35:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T08:35:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？『グロロ……
+それが　おぬしの　キバか……▼
+鋭く……　無駄なく……
+たくましい……　よきポケモンよ……▽
+しかも　固い　キズナで▽
+結ばれて　おるな……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T08:35:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T08:35:09" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_hero_1">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『そりゃ　そうさ！▼
+こいつらは　イッシュぼうえいたいの　
+かこくな　トレーニングを　いっしょに▽
+たえぬいた　パートナー……▼
+かたいきずな　どころか
+おなじ　じごくを　みた　せんゆう　だ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T08:35:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T08:35:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『そりゃ　そうだ！▼
+こいつらは　イッシュ防衛隊の　
+過酷な　トレーニングを　一緒に▽
+耐え抜いた　パートナー……▼
+固いキズナ　どころか　
+同じ地獄を　みた　戦友だ！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T08:35:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T08:35:09" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_enemy_1">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？『なるほど　な……
+にんげんと　くらくを　ともにし▽
+とぎすまされた　ポケモンか……▼
+グロロロ……
+ワシにも　そのようなころが　あったわ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T08:35:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T08:35:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？『なるほど　な……
+人間と　苦楽を　共にし▽
+研ぎ澄まされた　ポケモンか……▼
+グロロロ……
+ワシにも　そのようなころが　あったわ</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T08:35:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T08:35:09" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

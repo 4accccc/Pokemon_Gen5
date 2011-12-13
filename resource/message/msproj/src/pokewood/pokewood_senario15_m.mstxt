@@ -140,25 +140,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おとこ『だれだね……</Text>
+			<Text>おとこ『ムウ……　だれだね……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T06:38:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T06:38:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>男『だれだね……</Text>
+			<Text>男『ムウ……　だれだね……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T06:38:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-13T06:38:55" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -208,33 +208,33 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おとこ『わたしは　セリザワ
-この　とちの　オーナーだ……▼
+			<Text>おとこ『わたしは　セリザワ……
+この　とちの　オーナーだが……▼
 ここで　なにを　していようと
 かまわんだろう……？▼
 それよりも　なんだね？　キミは？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:14" />
+				Time="2011-12-13T06:38:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:14" />
+				Time="2011-12-13T06:38:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>男『私は　セリザワ
-この土地の　オーナーだ……▼
+			<Text>男『私は　セリザワ……
+この土地の　オーナーだが……▼
 ここで　何を　していようと
 構わんだろう……？▼
 それよりも　だれだね？　キミは？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:14" />
+				Time="2011-12-13T06:38:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:14" />
+				Time="2011-12-13T06:38:55" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
