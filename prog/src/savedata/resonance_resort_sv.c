@@ -53,7 +53,7 @@ static RESORT_SETDATA Resonance_Resort_Sv_SetData_02( RESONANCE_RESORT_SV *p_wk,
 //-----------------------------------------------------------------------------
 u32  RESONANCE_RESORT_SV_GetWorkSize(void)
 {
-  //TODO 仕様書によると5800バイト
+  //仕様書によると5800バイト->セーブをずらさないために固定になりました。
   return 5800;//sizeof(RESONANCE_RESORT_SV);
 }
 //----------------------------------------------------------------------------

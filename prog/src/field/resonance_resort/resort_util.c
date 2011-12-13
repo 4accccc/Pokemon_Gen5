@@ -1727,7 +1727,8 @@ u32 RESORT_UTIL_DrawLotsWantSpot( const RESORT_ABSTRUCT_DATA *cp_wk, RESORT_SYST
   //いきたい場所抽選
   want_spot = Resort_Util_DrawLotsWantSpotByGroup( cp_wk, p_sys, group );
 
-  //もしグループ強の場合、◎がなかったらグループ弱から抽選する
+  //正解がなかったらグループ弱から抽選する
+  if( group != RESORT_APPEAL_LV_LOW )
   {
     RESORT_BINARY_SPOT *p_spot  = RESORT_SYSTEM_GetBinarySpot(p_sys);
     RESORT_PEOPLE_ALL_DATA *p_people_all = RESORT_SYSTEM_GetPeopleAllData(p_sys);

@@ -81,9 +81,7 @@ static BOOL s_debug_permission = FALSE;
 #define RESORT_EXT_CHECK( x, y )  /* */
 #endif
 
-//TODO
-//#define RESORT_VALID_ASSERT(...) GF_ASSERT_MSG_LIGHT( 0, __VA_ARGS__ );
-#define RESORT_VALID_ASSERT(...) RESORT_Printf( __VA_ARGS__ )
+#define RESORT_VALID_ASSERT(...) GF_ASSERT_MSG_LIGHT( 0, __VA_ARGS__ );
 
 //----------------------------------------------------------------------------
 /**

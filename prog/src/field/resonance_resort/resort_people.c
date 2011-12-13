@@ -150,7 +150,7 @@ static RESORT_PEOPLE * RESORT_PEOPLE_Init( HEAPID heapID, const RESORT_PEOPLE_IN
   p_wk->p_abstruct_data = cp_param->p_data;
   p_wk->create      = cp_param->create;
 
-  //人物生成時には必ず不正検査を行う  //TODO 重いのでやらない
+  //人物生成時には必ず不正検査を行う  //重いのでやらなくなりました
   //RESORT_ABSTRUCT_DATA_ModifyProfWord( p_wk->p_abstruct_data, heapID );
 
   p_wk->people_type = RESORT_ABSTRUCT_DATA_GetPeopleType( p_wk->p_abstruct_data );

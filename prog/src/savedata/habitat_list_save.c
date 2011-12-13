@@ -55,7 +55,6 @@ typedef struct {
 //=====================================
 struct _HABITATLIST_SAVE
 {
-  //TODO せいそくちリスト実装者が中のパラメータ決めてください。
   //HABITATLIST_SAVE_WORK_SIZEの大きさで足りなかったら増やしてください
   //あと100byte程度は増やせるはず…。詳しくはblock 70のalignを見てください。
   u8  dummy_data[HABITATLIST_SAVE_WORK_SIZE-HABITATLIST_ZONE_ID_MAX-6];

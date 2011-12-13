@@ -590,7 +590,7 @@ static MBGameRegistry * Mp_Parent_MBGameRegistry_Create( const STRBUF *cp_title_
     p_registry->iconCharPathp     = "/dl_rom/icon_b.char";
     p_registry->iconPalettePathp  = "/dl_rom/icon_b.plt";
   }
-  p_registry->ggid = SYACHI_NETWORK_GGID; //TODO
+  p_registry->ggid = SYACHI_NETWORK_GGID;
   p_registry->maxPlayerNum  = 2;
 
   return p_registry;

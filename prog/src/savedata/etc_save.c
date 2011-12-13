@@ -311,7 +311,6 @@ const STRCODE * EtcSave_GetRivalName( const ETC_SAVE_WORK *etcsave )
  *
  *	@return 人物状態セーブデータワーク
  *
- *	@note TODO セーブデータが空き次第、ETCとPERSON_STATEは分離する
  */
 //-----------------------------------------------------------------------------
 extern void *EtcSave_GetPersonStatePtr( ETC_SAVE_WORK *etcsave )

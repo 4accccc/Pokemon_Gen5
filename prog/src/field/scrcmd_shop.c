@@ -1453,7 +1453,6 @@ static void wfbc_shop_item_set( SHOP_BUY_APP_WORK *wk, int type )
     },
   };
 
-  //TODO ?
   static const int sc_rank_clear_area[WFBC_SHOP_RANK_MAX] =
   {
     0,2,4,6,8,10,
