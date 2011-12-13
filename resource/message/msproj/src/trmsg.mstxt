@@ -4157,37 +4157,29 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="TRID_ELITEM_14_TRMSG_FIGHT_LOSE"
-		Style="Large">
+		Label="TRID_CHILDCARE_12_TRMSG_FIGHT_LOSE">
 		<LanguageCell
 			Language="JPN">
 			<Text>……なんだと？</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-13T05:15:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-13T05:15:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……なんだと？</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-13T05:15:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-13T05:15:04" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="TRID_MINI_06_TRMSG_FIGHT_LOSE"
@@ -4260,37 +4252,29 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="TRID_PRINCE_05_TRMSG_FIGHT_LOSE"
-		Style="Large">
+		Label="TRID_ADULTW_04_TRMSG_FIGHT_LOSE">
 		<LanguageCell
 			Language="JPN">
 			<Text>ハアッ　ハアッ　ハアッ　ハア……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-13T05:15:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-13T05:15:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハアッ　ハアッ　ハアッ　ハア……</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-13T05:15:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-13T05:15:04" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="TRID_ARTIST_02_TRMSG_FIGHT_START"
@@ -19123,39 +19107,31 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="TRID_KINDERGARTENW_05_TRMSG_FIGHT_LOSE"
-		Style="Large">
+		Label="TRID_BUSINESS1_13_TRMSG_FIGHT_LOSE">
 		<LanguageCell
 			Language="JPN">
 			<Text>わー！　わー！　すごー！
 おにーちゃん　つよいー！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-13T05:15:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-13T05:15:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>わー！　わー！　すごー！
 おにーちゃん　つよいー！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-13T05:15:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-13T05:15:04" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="TRID_MOUNT_13_TRMSG_FIGHT_LOSE"
@@ -19193,19 +19169,18 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="TRID_WAITRESS_04_TRMSG_FIGHT_LOSE"
-		Style="Large">
+		Label="TRID_GUITARW_05_TRMSG_FIGHT_LOSE">
 		<LanguageCell
 			Language="JPN">
 			<Text>アタタ……
 かっこわるいなぁ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-22T04:02:58" />
+				Time="2011-12-13T05:15:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-22T04:02:58" />
+				Time="2011-12-13T05:15:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -19213,19 +19188,12 @@
 かっこ悪いなぁ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-22T04:02:58" />
+				Time="2011-12-13T05:15:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-22T04:02:58" />
+				Time="2011-12-13T05:15:04" />
 		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
-		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="TRID_VETERANM_1_08_TRMSG_FIGHT_LOSE"
