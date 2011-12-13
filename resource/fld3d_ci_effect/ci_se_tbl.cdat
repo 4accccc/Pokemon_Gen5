@@ -168,6 +168,7 @@ const CI_SE_TBL Tbl26[] = {
 
 const CI_SE_TBL Tbl27[] = {
 	{ SEQ_SE_SW_MEDALGET, 1 },
+	{ SEQ_SE_SW_MEDALGET_02, 20 },
 	{ CI_SE_NONE, 0 },
 };
 

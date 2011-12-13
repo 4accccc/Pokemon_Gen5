@@ -9341,6 +9341,10 @@
 		<language name="JPN" width="256">SW-PLAZMASHIP-09</language>
 		<language name="JPN_KANJI" width="256">SW-PLAZMASHIP-09</language>
 	</row>
+	<row id="msg_seq_se_sw_plazmaship_10">
+		<language name="JPN" width="256">SW-PLAZMASHIP-10</language>
+		<language name="JPN_KANJI" width="256">SW-PLAZMASHIP-10</language>
+	</row>
 	<row id="msg_seq_se_sw_zukanstump_01">
 		<language name="JPN" width="256">SW-ZUKANSTUMP-01</language>
 		<language name="JPN_KANJI" width="256">SW-ZUKANSTUMP-01</language>
@@ -9480,6 +9484,10 @@
 	<row id="msg_seq_se_sw_medalget">
 		<language name="JPN" width="256">SW-MEDALGET</language>
 		<language name="JPN_KANJI" width="256">SW-MEDALGET</language>
+	</row>
+	<row id="msg_seq_se_sw_medalget_02">
+		<language name="JPN" width="256">SW-MEDALGET-02</language>
+		<language name="JPN_KANJI" width="256">SW-MEDALGET-02</language>
 	</row>
 	<row id="msg_seq_se_sw_ja_exp">
 		<language name="JPN" width="256">SW-JA-EXP</language>
@@ -9768,6 +9776,18 @@
 	<row id="msg_seq_se_sw_souryucity_18">
 		<language name="JPN" width="256">SW-SOURYUCITY-18</language>
 		<language name="JPN_KANJI" width="256">SW-SOURYUCITY-18</language>
+	</row>
+	<row id="msg_seq_se_sw_ending_01">
+		<language name="JPN" width="256">SW-ENDING-01</language>
+		<language name="JPN_KANJI" width="256">SW-ENDING-01</language>
+	</row>
+	<row id="msg_seq_se_sw_ending_02">
+		<language name="JPN" width="256">SW-ENDING-02</language>
+		<language name="JPN_KANJI" width="256">SW-ENDING-02</language>
+	</row>
+	<row id="msg_seq_se_sw_ending_03">
+		<language name="JPN" width="256">SW-ENDING-03</language>
+		<language name="JPN_KANJI" width="256">SW-ENDING-03</language>
 	</row>
 	<row id="msg_seq_se_dmy_390">
 		<language name="JPN" width="256">DMY-390</language>
