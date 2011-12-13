@@ -228,10 +228,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……それは　わからないです▼</Text>
+			<Text>……そっ　それは
+ちょっと　わからないです▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T04:32:23" />
+				Time="2011-12-13T12:30:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -239,10 +240,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……それは　わからないです▼</Text>
+			<Text>……そっ　それは
+ちょっと　わからないです▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T04:33:15" />
+				Time="2011-12-13T12:30:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

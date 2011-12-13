@@ -57,10 +57,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『いいから
-オマエらの　ポケモン　みせろよ！▼</Text>
+オマエらの　ポケモン　みせろ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T07:40:28" />
+				Time="2011-12-13T05:28:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -69,10 +69,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『いいから
-オマエらの　ポケモン　みせろよ！▼</Text>
+オマエらの　ポケモン　みせろ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T07:40:28" />
+				Time="2011-12-13T05:28:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -111,10 +111,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>プラズマだん『やばい！
-スイッチを　まもらないと！▼</Text>
+このままだと　しんにゅう　される！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T07:40:28" />
+				Time="2011-12-13T06:33:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -122,11 +122,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマだん『やばい！
-スイッチを　守らないと！▼</Text>
+			<Text>プラズマ団『やばい！
+このままだと　侵入される！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T07:40:28" />
+				Time="2011-12-13T06:34:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

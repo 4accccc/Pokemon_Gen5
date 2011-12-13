@@ -32,12 +32,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>イベント
-・Black2ver
+			<Comment>イベント：Black2ver
 ・No633「プラズマカード」を持っていない</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T11:22:49" />
+				Time="2011-12-13T05:28:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -85,8 +84,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>イベント
-・Black2ver
+			<Comment>イベント：Black2ver
 ・No633「プラズマカード」を持っている
 ・はい/いいえの選択肢表示
 　はい　→入力画面へ
@@ -95,7 +93,7 @@
 　hide_ship_passwordで</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T11:22:52" />
+				Time="2011-12-13T05:29:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -134,13 +132,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>イベント
-・Black2ver
+			<Comment>イベント：Black2ver
 ・No633「プラズマカード」を持っている
 ・入力ワードが不正解</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T11:23:00" />
+				Time="2011-12-13T05:29:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -179,15 +176,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>イベント
-・White2ver
+			<Comment>イベント：White2ver
 ・バリアーが解除されたとき
 ・すべて解除されたときは
 　続けてswitch_02
 </Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T02:26:42" />
+				Time="2011-12-13T05:29:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

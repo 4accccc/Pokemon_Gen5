@@ -37,10 +37,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・アジト船：クリア後</Comment>
+・クリア後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T10:39:38" />
+				Time="2011-12-13T05:30:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -91,13 +91,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver
-・アジト船：クリア前
+			<Comment>♂：Black2ver
+・クリア前
 ・GRIDX＝25、GRIDZ＝2</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T05:13:52" />
+				Time="2011-12-13T05:30:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -138,12 +137,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ＢＧメッセージ
-・はい／いいえの選択肢表示
+・はい/いいえの選択肢表示
 　はい　→bed_02
 　いいえ→終了</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-08T11:59:23" />
+				Time="2011-12-13T05:30:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

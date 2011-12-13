@@ -189,10 +189,12 @@
 そういう　いみで
 あなたは　ゆうしゅう　です！▼
 あなたが　わたくしの　のぞむ
-こたえを　もっているか　たしかめる！▼</Text>
+こたえを　もっているか　たしかめる！▼
+こころの　じゅんびが　できたなら
+わたくしに　かかってきなさい！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T07:32:58" />
+				Time="2011-12-13T13:10:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -209,10 +211,12 @@
 そういう　意味で
 あなたは　優秀です！▼
 あなたが　わたくしの　望む
-答えを　持っているか　確かめる！▼</Text>
+答えを　持っているか　確かめる！▼
+心の　準備が　できたなら
+わたくしに　かかってきなさい！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T07:32:53" />
+				Time="2011-12-13T13:11:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -222,10 +226,10 @@
 			Language="JPN">
 			<Comment>♂
 ・アジト船３回目
-・メッセージ表示後、トレーナー戦闘に</Comment>
+・メッセージ表示後、フリーに動ける</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T08:46:10" />
+				Time="2011-12-13T13:11:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -234,6 +238,58 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-18T06:46:54" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0401_swboss_03_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>じゅんびは　いいようですね！
+では　いきますよ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T13:11:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T13:11:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>準備は　いいようですね！
+では　いきますよ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T13:11:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T13:11:41" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船３回目
+・メッセージ表示後、トレーナー戦闘に</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T13:11:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T13:10:14" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -329,7 +385,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なるほど……！
-あなたの　へんじは
+あなたの　返答は
 わたくしに　とっての　理想！▼
 実際　あなたは
 その　信念を　もって！▼
@@ -337,7 +393,7 @@
 力を　ひきだしているッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-08T13:16:58" />
+				Time="2011-12-13T13:29:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -391,7 +447,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なるほど……！▼
-あなたの　返事は
+あなたの　返答は
 わたくしに　とっての　真実か？▼
 だが　あなたは　そう答えつつ
 それでも　あきらめず！▼
@@ -399,7 +455,7 @@
 強さの　理由に　なっている！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-08T13:16:25" />
+				Time="2011-12-13T13:29:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -611,10 +667,10 @@
 			<Comment>♂：クリア後
 ・アジト船４回目
 ・初回会話
-・続けて</Comment>
+・続けてswboss_end_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:42:43" />
+				Time="2011-12-13T13:13:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -704,10 +760,10 @@
 それにしても
 あなたが　かって　よかった▼
 もっとも　わたくしは　ゲーチスが
-きらい！　というのも　ありますがね▼</Text>
+キライ！　というのも　ありますがね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:48:20" />
+				Time="2011-12-13T13:13:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -726,10 +782,10 @@
 それにしても
 あなたが　勝って　よかった▼
 もっとも　わたくしは　ゲーチスが
-きらい！　というのも　ありますがね▼</Text>
+キライ！　というのも　ありますがね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:51:52" />
+				Time="2011-12-13T13:13:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -855,11 +911,10 @@
 			<Comment>♂：クリア後
 ・アジト船４回目
 ・アイテム入手後、自動で表示
-・仮ですが、次からは別の場所に移動
-　ソレまで繰り返し</Comment>
+・これ以降はd27r0101で戦闘に</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:50:14" />
+				Time="2011-12-13T13:14:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

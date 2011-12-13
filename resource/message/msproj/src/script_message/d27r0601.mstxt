@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『……きましたか▼</Text>
+			<Text>？？？『……アクロマめ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T07:51:49" />
+				Time="2011-12-13T13:23:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『……来ましたか▼</Text>
+			<Text>？？？『……アクロマめ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T07:51:44" />
+				Time="2011-12-13T13:23:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -43,16 +43,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アクロマめ▼
-きゃつは　かがくしゃ　として
+			<Text>きゃつは　かがくしゃ　として
 むだに　じゅんすい　すぎる！▼
-プラズマだん　としての
+プラズマだんの
+ボスに　してやったのに！▼
+われわれの　イッシュせいふく　という
 すうこうな　しめい　よりも▼
 こじんの　きょうみを
 ゆうせん　させるとは！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T07:51:54" />
+				Time="2011-12-13T13:23:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -60,16 +61,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アクロマめ▼
-きゃつは　科学者として
+			<Text>きゃつは　科学者として
 無駄に　純粋すぎる！▼
-プラズマ団の　一員としての
+プラズマ団の
+ボスに　してやったのに！▼
+われわれの　イッシュ征服　という
 崇高な　使命よりも▼
 個人の　興味を
 優先させるとは！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T07:51:51" />
+				Time="2011-12-13T13:23:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -105,12 +107,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>さてアナタは　こううん　です▼
-ワタクシ　ゲーチスの
-えんぜつを　きけるのですから▼</Text>
+			<Text>さて
+アナタは　こううん　です▼
+ワタクシ　ゲーチスの　えんぜつを
+たったひとりで　きけるのですから▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T07:52:14" />
+				Time="2011-12-13T13:26:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -118,12 +121,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>さてアナタは　幸運です▼
-ワタクシ　ゲーチスの
-演説を　拝聴できるのですから▼</Text>
+			<Text>さて
+アナタは　幸運です▼
+ワタクシ　ゲーチスの　演説を
+たった一人で　拝聴できるのですから▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T07:52:10" />
+				Time="2011-12-13T13:26:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -232,12 +236,12 @@
 			Language="JPN_KANJI">
 			<Text>キュレムは　虚無▼
 とある　ポケモンが　レシラムと
-ゼクロムに　分かれたときの　余り……▼
+ゼクロムに　分裂したときの　余り……▼
 ワタクシの　欲望は
 イッシュの　完全なる　支配！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T07:53:32" />
+				Time="2011-12-13T13:28:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -425,13 +429,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『まてよ！
-オマエらに　きくことが　ある！▼
+			<Text>[Name:TrainerName Idx="1" ]『まてッ！
+オマエが　ダークトリニティだな！▼
 ヒオウギで　うばわれた
-チョロネコのこと　しっているか？▼</Text>
+チョロネコのこと　しってるだろ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:59:51" />
+				Time="2011-12-13T13:32:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -440,12 +444,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『待てよ！
-オマエらに　きくことが　ある！▼
+オマエが　ダークトリニティだな！▼
 ヒオウギで　奪われた
-チョロネコのこと　知っているか？▼</Text>
+チョロネコのこと　知ってるだろ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:59:55" />
+				Time="2011-12-13T13:33:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -480,12 +484,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダークトリニティ『……　……　……
-……　……　ああ▽
+			<Text>ダークトリニティ『……　……　ああ▼
 それなら　コイツの　ことかもな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:59:47" />
+				Time="2011-12-13T13:33:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -493,12 +496,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダークトリニティ『……　……　……
-……　……　ああ▽
+			<Text>ダークトリニティ『……　……　ああ▼
 それなら　コイツの　ことかもな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:59:59" />
+				Time="2011-12-13T13:33:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -694,15 +696,24 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダークトリニティ『……つよがるな▼
-やっと　であえた　ポケモンと
-たたかえないだろう！▽
-そこで　だまって　みているんだな▼
-さて　オマエだ！
-ゲーチスさまの　ジャマは　させん！</Text>
+			<Text>ダークトリニティ『……やれやれ
+ポケモンは　あわれだな▼
+モンスターボールに　しはいされ
+トレーナーの　いいなり……▼
+ゲーチスさまは　やぼうのため
+ポケモン　かいほうを　うたわれたが▼
+２ねんまえの　さくせんが
+せいこう　だったならば！▼
+じっさいに　すくわれた
+ポケモンも　おおかっただろう▼
+その　レパルダス……　いや
+おまえに　とっては　チョロネコか▼
+ボールから　ときはなたれれば
+おまえの　もとに　もどっていたかもな▼
+さてと……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-08T13:28:17" />
+				Time="2011-12-13T13:51:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -710,15 +721,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダークトリニティ『……つよがるな▼
-やっと　であえた　ポケモンと
-戦えないだろう！▽
-そこで　黙って　みているんだな▼
-さて　オマエだ！
-ゲーチスさまの　ジャマは　させん！</Text>
+			<Text>ダークトリニティ『……やれやれ
+ポケモンは　哀れだな▼
+モンスターボールに　しはいされ
+トレーナーの　いいなり……▼
+ゲーチスさまは　野望のため
+ポケモン解放を　うたわれたが▼
+２年前の　作戦が
+成功だったならば！▼
+実際に　すくわれた
+ポケモンも　多かっただろう▼
+その　レパルダス……　いや
+おまえに　とっては　チョロネコか▼
+ボールから　解き放たれれば
+おまえの　元に　戻っていたかもな▼
+さてと……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-08T13:29:43" />
+				Time="2011-12-13T13:51:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -728,12 +748,10 @@
 			Language="JPN">
 			<Comment>♂
 ・アジト船３回目
-・メッセージ表示後、トレーナー戦闘に
-・戦闘後、レパルダスを消しておく
-・続けてninja2_03_00</Comment>
+・続けてninja2_03_08</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T08:57:18" />
+				Time="2011-12-13T13:52:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -743,6 +761,61 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-24T08:21:23" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0601_ninja1_03_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>オマエ！
+ゲーチスさまの　ジャマは　させん！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T13:47:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T13:47:16" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オマエ！
+ゲーチスさまの　ジャマは　させん！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T13:47:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T13:47:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船３回目
+・主人公をむいてメッセージ表示
+・メッセージ表示後、トレーナー戦闘に
+・続けてninja2_03_00</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T13:52:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>NINJA
+ダークトリニティ
+・１人目</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T13:47:06" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -799,6 +872,51 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="msg_d27r0601_ninja2_03_stop"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダークトリニティ『さきに　いくなら
+わたしたちを　たおすんだな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T13:54:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T13:53:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダークトリニティ『さきに　いくなら
+わたしたちを　たおすんだな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T13:54:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T13:54:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ストッパー処理時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T13:53:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>NINJA
+ダークトリニティ
+・２人目</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T13:53:27" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d27r0601_ninja2_03_01"
 		Style="Large">
 		<LanguageCell
@@ -807,7 +925,7 @@
 だが　ゲーチスさまの　ためだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T09:03:58" />
+				Time="2011-12-13T14:00:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -815,11 +933,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダークトリニティ『うらみは　ない
+			<Text>ダークトリニティ『恨みは　ない
 だが　ゲーチスさまの　ためだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T09:03:24" />
+				Time="2011-12-13T13:51:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1018,10 +1136,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・アジト船３回目</Comment>
+・アジト船３回目
+・トレーナー戦闘後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T09:03:30" />
+				Time="2011-12-13T13:57:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1262,11 +1381,12 @@
 			<Comment>♂
 ・アジト船３回目
 ・ダークトリニティ全員倒してから
+　自動で表示（以降繰り返し）
 ・0＝主人公名
 ・１＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T02:44:07" />
+				Time="2011-12-13T13:56:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

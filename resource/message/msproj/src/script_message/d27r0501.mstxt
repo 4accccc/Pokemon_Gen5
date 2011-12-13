@@ -137,10 +137,10 @@
 ・GRIDX＝12、GRIDZ＝15に移動して
 ・ギザウインで
 ・でキュレムにカメラを寄せる（要調整）
-・続けてsage7_02_03</Comment>
+・続けてpoke10_02_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T06:52:20" />
+				Time="2011-12-13T12:29:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -640,12 +640,12 @@
 			Language="JPN">
 			<Text>ヴィオ『チョロネコぐらい
 だれかが　うばい　つかっている▼
-だが　げせぬな……？▼
+だが　げせぬ……？▼
 チョロネコなら　ほかにも　いるのに
 なぜ　そこまで　こだわるのだ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T13:50:52" />
+				Time="2011-12-13T06:35:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -655,12 +655,12 @@
 			Language="JPN_KANJI">
 			<Text>ヴィオ『チョロネコぐらい
 だれかが　奪い　使っている▼
-だが　解せぬな……？▼
+だが　解せぬ……？▼
 チョロネコなら　他にも　いるのに
 なぜ　そこまで　こだわるのだ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T13:50:56" />
+				Time="2011-12-13T06:35:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -900,11 +900,13 @@
 			Language="JPN">
 			<Comment>♂
 ・アジト船：２回目
-・続けてpoke10_02_01
-・1＝ライバル名</Comment>
+・1＝ライバル名
+・ダークトリニティ出現後、
+　画面暗転しw21へ
+※アジト船2回目イベント終了</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T06:06:39" />
+				Time="2011-12-13T12:28:49" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -951,13 +953,11 @@
 			Language="JPN">
 			<Comment>ポケモン
 ・アジト船：２回目
-・あわせて鳴き声再生
-・ダークトリニティ出現後、
-　画面暗転しw21へ
-※アジト船2回目イベント終了</Comment>
+・あわせて鳴き声再生＋ギザウィン
+・続けてsage7_02_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T05:11:53" />
+				Time="2011-12-13T12:29:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
