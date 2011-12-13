@@ -422,13 +422,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん『かわいいね
-つよがり　いっちゃって！▼
-こいつら　たたきのめすぞ！
+			<Text>プラズマだん『よし！　かこめ！▼
+こいつらを　ボコボコに　するぞ！
 プラーズマー！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-05T12:02:54" />
+				Time="2011-12-13T05:47:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -436,13 +435,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団『かわいいね
-強がり　いっちゃって！▼
-こいつら　たたきのめすぞ！
+			<Text>プラズマ団『よし！　かこめ！▼
+こいつらを　ボコボコに　するぞ！
 プラーズマー！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-05T12:02:38" />
+				Time="2011-12-13T05:47:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -584,10 +582,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん『こんどは　おれ！！▼</Text>
+			<Text>プラズマだん『よーし！
+おれの　でばんだー！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T02:29:26" />
+				Time="2011-12-13T05:47:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -595,10 +594,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団『今度は　おれ！！▼</Text>
+			<Text>プラズマ団『よーし！
+おれの　出番だー！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T02:29:30" />
+				Time="2011-12-13T05:47:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -635,10 +635,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>プラズマだん『なんだよ　こいつ！
-２ねんまえの　トレーナー　みたいだな▼</Text>
+２ねんまえの　トレーナー　みたいだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T02:29:57" />
+				Time="2011-12-13T05:48:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -647,10 +647,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>プラズマ団『なんだよ　こいつ！
-２年前の　トレーナー　みたいだな▼</Text>
+２年前の　トレーナー　みたいだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T02:30:07" />
+				Time="2011-12-13T05:48:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -740,11 +740,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>チェレン『[Name:TrainerName ]！▼
-こいつらに　コンビネーションを
+ぼくらの　コンビネーションを
 みせたいから　てつだってくれるかな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T03:01:39" />
+				Time="2011-12-13T05:48:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -753,11 +753,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>チェレン『[Name:TrainerName ]！▼
-こいつらに　コンビネーションを
+ぼくらの　　コンビネーションを
 みせたいから　手伝ってくれるかな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T03:01:48" />
+				Time="2011-12-13T05:48:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2216,17 +2216,15 @@
 			<Comment>♂
 ・アジト船：２回目
 ・posイベント
-　Black2とWhite2でposが異なる
-・Black2
 　GRIDX＝17、GRIDZ＝15～17
 　GRIDX＝19、GRIDZ＝15～17
-・White2
-　GRIDX＝17～19、GRIDZ＝48
-・メッセージ後、ライバルが先に侵入する
+・メッセージ後、ライバルが誘導する形でマップ切り替え
+　　Black2ver→d27r0501へ
+　　White2ver→d27r1201へ
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T06:36:50" />
+				Time="2011-12-13T05:58:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2274,14 +2272,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・船首楼に行く前に
-　船内に下りようとしたとき
+・船首楼に行く前に船内に下りようとしたとき
 ・posイベント
 　Black2とWhite2でposが異なる
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T11:39:24" />
+				Time="2011-12-13T06:16:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2293,7 +2290,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2573,7 +2570,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマだん『知ってたよ……▼
+			<Text>プラズマ団『知ってたよ……▼
 ゲーチスさまに　使われていた
 そんなこと　知ってたよ……▼
 だけど　ここには
@@ -2581,7 +2578,7 @@
 ……ほとんど　いなくなったけどね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T10:31:02" />
+				Time="2011-12-13T06:02:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2602,6 +2599,200 @@
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-09-12T10:27:40" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swplazmam1_02_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しんにゅうしゃ　だよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:14:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:09:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>しんにゅうしゃ　だよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:10:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:09:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：２回目
+・ストッパー
+　GRIDX＝18、GRIDZ＝45</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:10:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:03:39" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swplazmam2_02_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>とにかく　とおせよー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:14:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:14:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>とにかく　とおせよー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:14:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:14:35" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：２回目
+・ストッパー
+　GRIDX＝19、GRIDZ＝45</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:14:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:14:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swplazmam3_02_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>みはりを　サボろうと
+いいかげんなこと　いうなよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:14:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:11:38" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>みはりを　サボろうと
+いいかげんなこと　いうなよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:15:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:15:13" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：２回目
+・ストッパー
+　GRIDX＝17、GRIDZ＝44</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:11:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ３</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:10:55" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swplazmam4_02_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>で　みずぎヤロウは
+みつかったのかよ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:15:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:11:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>で　みずぎヤロウは
+みつかったのかよ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:15:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:15:13" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：２回目
+・ストッパー
+　GRIDX＝19、GRIDZ＝44</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:11:24" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-13T06:11:01" />
 		</AttributeCell>
 	</TextRow>
 </MessageStudioText>
