@@ -12,7 +12,7 @@
 //============================================
 
 static const DEMO3D_SCENE_DATA data_plane_take_off_fukiyose_scene = {
-	NARC_data_demo3d_plane_take_off_camera_bin,	///<カメラID
+	NARC_data_demo3d_plane_take_off_fukiyose_camera_bin,	///<カメラID
 	DEMO3D_BGM_NONE,	///<BGM No
 	ZONE_ID_T01,	///<ゾーンID
 	DEMO3D_FRAME_RATE_30FPS,	///<フレームレート定義
@@ -62,64 +62,64 @@ static const DEMO3D_CMD_DATA demo3d_cmd_plane_take_off_fukiyose_end_data[] = {
 //============================================
 
 ///==================================
-/// plane_take_off_01 Unit File Resource
+/// plane_take_off_fukiyose Unit File Resource
 
-static const u16 res_plane_take_off_fukiyose_file_plane_take_off_01[] = {
- NARC_data_demo3d_plane_take_off_01_nsbmd,
- NARC_data_demo3d_plane_take_off_01_nsbta,
- NARC_data_demo3d_plane_take_off_01_nsbca,
+static const u16 res_plane_take_off_fukiyose_file_plane_take_off_fukiyose[] = {
+ NARC_data_demo3d_plane_take_off_fukiyose_nsbmd,
+ NARC_data_demo3d_plane_take_off_fukiyose_nsbta,
+ NARC_data_demo3d_plane_take_off_fukiyose_nsbca,
 };
 
-static const DEMO3D_FILE_UNIT res_plane_take_off_fukiyose_file_unit_plane_take_off_01[] = {
- { res_plane_take_off_fukiyose_file_plane_take_off_01, 3 },
+static const DEMO3D_FILE_UNIT res_plane_take_off_fukiyose_file_unit_plane_take_off_fukiyose[] = {
+ { res_plane_take_off_fukiyose_file_plane_take_off_fukiyose, 3 },
 };
 
 ///==================================
-/// plane_take_off_sky Unit File Resource
+/// plane_take_off_f_sky Unit File Resource
 
-static const u16 res_plane_take_off_fukiyose_file_plane_take_off_sky_morning[] = {
- NARC_data_demo3d_plane_take_sky_nsbmd,
- NARC_data_demo3d_plane_take_sky_d_nsbtp,
+static const u16 res_plane_take_off_fukiyose_file_plane_take_off_f_sky_morning[] = {
+ NARC_data_demo3d_plane_take_off_f_sky_nsbmd,
+ NARC_data_demo3d_plane_take_off_f_sky_d_nsbtp,
 };
-static const u16 res_plane_take_off_fukiyose_file_plane_take_off_sky_noon[] = {
- NARC_data_demo3d_plane_take_sky_nsbmd,
- NARC_data_demo3d_plane_take_sky_d_nsbtp,
+static const u16 res_plane_take_off_fukiyose_file_plane_take_off_f_sky_noon[] = {
+ NARC_data_demo3d_plane_take_off_f_sky_nsbmd,
+ NARC_data_demo3d_plane_take_off_f_sky_d_nsbtp,
 };
-static const u16 res_plane_take_off_fukiyose_file_plane_take_off_sky_evening[] = {
- NARC_data_demo3d_plane_take_sky_nsbmd,
- NARC_data_demo3d_plane_take_sky_e_nsbtp,
+static const u16 res_plane_take_off_fukiyose_file_plane_take_off_f_sky_evening[] = {
+ NARC_data_demo3d_plane_take_off_f_sky_nsbmd,
+ NARC_data_demo3d_plane_take_off_f_sky_e_nsbtp,
 };
-static const u16 res_plane_take_off_fukiyose_file_plane_take_off_sky_night[] = {
- NARC_data_demo3d_plane_take_sky_nsbmd,
- NARC_data_demo3d_plane_take_sky_n_nsbtp,
+static const u16 res_plane_take_off_fukiyose_file_plane_take_off_f_sky_night[] = {
+ NARC_data_demo3d_plane_take_off_f_sky_nsbmd,
+ NARC_data_demo3d_plane_take_off_f_sky_n_nsbtp,
 };
-static const u16 res_plane_take_off_fukiyose_file_plane_take_off_sky_midnight[] = {
- NARC_data_demo3d_plane_take_sky_nsbmd,
- NARC_data_demo3d_plane_take_sky_n_nsbtp,
+static const u16 res_plane_take_off_fukiyose_file_plane_take_off_f_sky_midnight[] = {
+ NARC_data_demo3d_plane_take_off_f_sky_nsbmd,
+ NARC_data_demo3d_plane_take_off_f_sky_n_nsbtp,
 };
 
-static const DEMO3D_FILE_UNIT res_plane_take_off_fukiyose_file_unit_plane_take_off_sky[] = {
- { res_plane_take_off_fukiyose_file_plane_take_off_sky_morning, 2 },
- { res_plane_take_off_fukiyose_file_plane_take_off_sky_noon, 2 },
- { res_plane_take_off_fukiyose_file_plane_take_off_sky_evening, 2 },
- { res_plane_take_off_fukiyose_file_plane_take_off_sky_night, 2 },
- { res_plane_take_off_fukiyose_file_plane_take_off_sky_midnight, 2 },
+static const DEMO3D_FILE_UNIT res_plane_take_off_fukiyose_file_unit_plane_take_off_f_sky[] = {
+ { res_plane_take_off_fukiyose_file_plane_take_off_f_sky_morning, 2 },
+ { res_plane_take_off_fukiyose_file_plane_take_off_f_sky_noon, 2 },
+ { res_plane_take_off_fukiyose_file_plane_take_off_f_sky_evening, 2 },
+ { res_plane_take_off_fukiyose_file_plane_take_off_f_sky_night, 2 },
+ { res_plane_take_off_fukiyose_file_plane_take_off_f_sky_midnight, 2 },
 };
 
 ///========================================================
 /// シーンユニットテーブル
 ///========================================================
 
-static const DEMO3D_FILE_UNIT_TBL res_plane_take_off_fukiyose_file_unit_plane_take_off_01_tbl[] = {
- { res_plane_take_off_fukiyose_file_unit_plane_take_off_01, 1 },
+static const DEMO3D_FILE_UNIT_TBL res_plane_take_off_fukiyose_file_unit_plane_take_off_fukiyose_tbl[] = {
+ { res_plane_take_off_fukiyose_file_unit_plane_take_off_fukiyose, 1 },
 };
 
-static const DEMO3D_FILE_UNIT_TBL res_plane_take_off_fukiyose_file_unit_plane_take_off_sky_tbl[] = {
- { res_plane_take_off_fukiyose_file_unit_plane_take_off_sky, 5 },
+static const DEMO3D_FILE_UNIT_TBL res_plane_take_off_fukiyose_file_unit_plane_take_off_f_sky_tbl[] = {
+ { res_plane_take_off_fukiyose_file_unit_plane_take_off_f_sky, 5 },
 };
 
 static const DEMO3D_SCENE_UNIT res_plane_take_off_fukiyose_scene_unit[] = {
- { res_plane_take_off_fukiyose_file_unit_plane_take_off_01_tbl, 1, DEMO3D_UNITCHG_NONE },
- { res_plane_take_off_fukiyose_file_unit_plane_take_off_sky_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_plane_take_off_fukiyose_file_unit_plane_take_off_fukiyose_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_plane_take_off_fukiyose_file_unit_plane_take_off_f_sky_tbl, 1, DEMO3D_UNITCHG_NONE },
 };
 
