@@ -2793,6 +2793,7 @@ static void _update_poke_form( POKEMON_PARAM *srcPoke, POKEMON_PARAM *desPoke )
 
 static void _put_no_move_message( PLIST_WORK *work, u32 mes_id )
 {
+  PMSND_PlaySystemSE( SEQ_SE_BEEP );
   PLIST_SelectPokeSetCursor( work , work->pokeCursor );
   PLIST_PLATE_SetActivePlate( work , work->plateWork[work->changeTarget] , FALSE );
   PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , FALSE );
