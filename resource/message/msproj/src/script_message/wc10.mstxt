@@ -7506,14 +7506,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>せんきゃくばんらい！▼
-ホワイトフォレストの　いちりゅうてんと
+ホワイトフォレストの　ほんけと
 いえば　この　おみせ！▼
 きょうは　とくべつに
 [Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-12T06:20:04" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-13T08:09:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7522,14 +7522,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>千客万来！▼
-ホワイトフォレストの　一流店と
+ホワイトフォレストの　本家と
 いえば　この　お店！▼
 今日は　特別に
 [Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-12T06:20:04" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-13T08:10:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7578,14 +7578,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>せんきゃくばんらい！▼
-ホワイトフォレストの　いちりゅうてんと
+ホワイトフォレストの　ほんけと
 いえば　この　おみせ！▼
 きょうは　とくべつに
 [Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-12T06:20:08" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-13T08:10:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7594,14 +7594,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>千客万来！▼
-ホワイトフォレストの　一流店と
+ホワイトフォレストの　本家と
 いえば　この　お店！▼
 今日は　特別に
 [Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-12T06:20:08" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-13T08:10:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

@@ -1005,14 +1005,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>せんきゃくばんらい！▼
-ブラックシティの　いちりゅうてんと
+ブラックシティの　ほんけと
 いえば　この　おみせ！▼
 きょうは　とくべつに
 [Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-12T06:19:06" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-13T08:11:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1021,14 +1021,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>千客万来！▼
-ブラックシティの　一流店と
+ブラックシティの　本家と
 いえば　この　お店！▼
 今日は　特別に
 [Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-12T06:18:58" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-13T08:11:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1077,14 +1077,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>せんきゃくばんらい！▼
-ブラックシティの　いちりゅうてんと
+ブラックシティの　ほんけと
 いえば　この　おみせ！▼
 きょうは　とくべつに
 [Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-12T06:19:11" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-13T08:11:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -1093,14 +1093,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>千客万来！▼
-ブラックシティの　一流店と
+ブラックシティの　本家と
 いえば　このお店！▼
 今日は　特別に
 [Name:Item ]を　[Digit:5digits Idx="1" ]円で！▽
 いかがですか？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-12T06:19:12" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-13T08:11:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
