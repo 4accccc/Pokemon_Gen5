@@ -1128,7 +1128,6 @@ static GMEVENT_RESULT pokewoodCallEvent( GMEVENT * event, int *seq, void * work 
   case PRE_SEQ_START:
     POKEWOOD_REC_Init( prew->heapID );
      //バトルプロセス呼び出し：プロセスが終了したらこのイベントに復帰する
-    //仮：本来はシナリオなどから反映する
     {
       GMEVENT * call_event;
       call_event = createPokewoodBattleEvent( gsys, prew );

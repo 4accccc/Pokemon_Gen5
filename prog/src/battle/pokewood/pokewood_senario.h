@@ -58,6 +58,15 @@ enum{
   // いつかポケモンから無人状態も要望されるか？
 };
 
+// シナリオデータトレーナータイプの撮影・上映・男女指定の配列参照用定義
+enum{
+  POKEWOOD_TRTYPE_REC_MAN=0,
+  POKEWOOD_TRTYPE_REC_WOMAN,
+  POKEWOOD_TRTYPE_SHOW_MAN,
+  POKEWOOD_TRTYPE_SHOW_WOMAN,
+};
+
+
 /// 勝利条件の数値定義
 enum{
   PW_PROV_EVERY_TURN=0,     ///< 毎ターン倒す

@@ -128,7 +128,7 @@ void PKWDSYS_SetupPokeListData( PKWDSYS * pkwdsys, GAMEDATA * gamedata, PLIST_DA
   // ポケウッドシナリオデータから参戦可能数を書き換える
   {
     POKEWOOD_SENARIO *senario = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD, pkwdsys->scenario_no, HEAPID_PROC);
-    pkwdsys->reg.NUM_LO = senario->pokenum_limit;   // @TODO:上限・下限ともに同数じゃなくなるかも
+    pkwdsys->reg.NUM_LO = senario->pokenum_limit;
     pkwdsys->reg.NUM_HI = senario->pokenum_limit;
     GFL_HEAP_FreeMemory(senario);
   }

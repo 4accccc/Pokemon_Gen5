@@ -1037,7 +1037,7 @@ int TRAINERCARD_GetCardRank( GAMEDATA *gameData )
     rank++;
   }
 
-  if(POKEWOOD_SAVEDATA_GetSenarioOpenNum(pokewood_sv)>=POKEWOOD_BOXOFFICE_DATA_MAX){
+  if(POKEWOOD_SAVEDATA_GetFlagTotal( pokewood_sv, PWSV_TYPE_SENARIO_OPEN )>=POKEWOOD_BOXOFFICE_DATA_MAX){
     DEBUG_TR_PRINT( "ポケウッドのシナリオがフルオープン\n");
     rank++;
   }

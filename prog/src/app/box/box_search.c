@@ -1115,8 +1115,7 @@ static GFL_PROC_RESULT BOXSEARCHProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
 //-----------------------------------------------------------------------------
 static void BOXSEARCH_BG_LoadResource( HEAPID heapID )
 {
-  //@TODO とりあえずマイクテストのリソース
-  //@TODO 複数枚ロードできるようにして切り離す？
+  // 読み込みリソース定義
   enum
   {
     RES_ARC = ARCID_BOX2_GRA,

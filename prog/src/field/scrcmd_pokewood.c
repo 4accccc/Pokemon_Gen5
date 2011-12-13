@@ -153,7 +153,7 @@ typedef enum {
 
 //--------------------------------------------------------------
 /**
- * @todo  scWork->trtypeの引数が直値なのでズレに対してどうするか？
+ * シナリオデータから必要な情報の読み込み
  */
 //--------------------------------------------------------------
 static u16 readScenarioData( u32 scenario_no, PKWD_SC_PARAM_ID param_id )
@@ -166,10 +166,10 @@ static u16 readScenarioData( u32 scenario_no, PKWD_SC_PARAM_ID param_id )
     value = scWork->director;
     break;
   case PKWD_SC_PARAM_TRTYPE_FOR_M:
-    value = scWork->trtype[0];
+    value = scWork->trtype[POKEWOOD_TRTYPE_REC_MAN];
     break;
   case PKWD_SC_PARAM_TRTYPE_FOR_F:
-    value = scWork->trtype[2];
+    value = scWork->trtype[POKEWOOD_TRTYPE_SHOW_MAN];
     break;
   case PKWD_SC_PARAM_DIFFICULT:
     value = scWork->difficult;
@@ -532,7 +532,6 @@ VMCMD_RESULT EvCmdPokewoodCheckMovieEnable( VMHANDLE * core, void * wk )
 /**
  * @brief スクリプトコマンド：ポケウッド録画データの評価を取得
  *
- * @todo  STARNGE ENDが未実装
  */
 //-----------------------------------------------------------------------------
 VMCMD_RESULT EvCmdPokewoodGetMovieValue( VMHANDLE * core, void * wk )
@@ -679,7 +678,7 @@ VMCMD_RESULT EvCmdPokewoodCheckNewScenario( VMHANDLE * core, void * wk )
     //告知済み状態にする
     POKEWOOD_SAVEDATA_SetPokewoodFlag( pkwdsave, PWSV_TYPE_SENARIO_ANNOUNCED, sc_no );
 
-    GFL_OVERLAY_Load( FS_OVERLAY_ID(notwifi_event_pokewood) );//仮：scrcmd_pokewoodオーバーレイにない
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(notwifi_event_pokewood) );
     switch ( PKWD_GetScenarioOpenProvision( sc_no ) )
     {
     default:
@@ -707,7 +706,7 @@ VMCMD_RESULT EvCmdPokewoodCheckNewScenario( VMHANDLE * core, void * wk )
       *msg_type = SCR_PKWD_ADDMSG_DUAL;
       break;
     }
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID(notwifi_event_pokewood) );//仮：scrcmd_pokewoodオーバーレイにない
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(notwifi_event_pokewood) );
     *ret_wk = TRUE;
   }
   OS_Printf("EvCmdPokewoodCheckNewScenario(%d) --> %d, %d\n", sc_no, *msg_type, *ret_wk );

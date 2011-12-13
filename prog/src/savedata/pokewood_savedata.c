@@ -514,19 +514,6 @@ int POKEWOOD_SAVEDATA_GetFlagTotal( POKEWOOD_SAVEDATA *sv, PokewoodFlagType type
 
 }
 
-//=============================================================================================
-/**
- * @brief	ポケウッドシナリオオープンの総数を返す
- *
- * @param   sv		POKEWOOD_SAVEDATA
- *
- * @retval  int		ポケウッドシナリオオープンの総数
- */
-//=============================================================================================
-int POKEWOOD_SAVEDATA_GetSenarioOpenNum( POKEWOOD_SAVEDATA *sv )
-{
-  return POKEWOOD_SAVEDATA_GetFlagTotal( sv, PWSV_TYPE_SENARIO_OPEN );
-}
 
 #ifdef PM_DEBUG
 static u8 debugPokewoodBattleFlag = 0;   // ポケウッドの戦闘デバッグフラグ反映に使用

@@ -96,7 +96,6 @@ extern void POKEWOOD_SAVEDATA_SetPokewoodFlag( POKEWOOD_SAVEDATA *sv, PokewoodFl
 //=============================================================================================
 extern BOOL POKEWOOD_SAVEDATA_GetPokewoodOpenFlag( const POKEWOOD_SAVEDATA *sv, int no );
 extern void POKEWOOD_SAVEDATA_SetPokewoodOpenFlag( POKEWOOD_SAVEDATA *sv, int no );
-extern  int POKEWOOD_SAVEDATA_GetSenarioOpenNum( POKEWOOD_SAVEDATA *sv );   //@todo è¡ÇµÇ‹Ç∑
 extern  int POKEWOOD_SAVEDATA_GetFlagTotal( POKEWOOD_SAVEDATA *sv, PokewoodFlagType type );
 
 

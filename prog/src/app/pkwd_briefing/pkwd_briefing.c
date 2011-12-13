@@ -5,7 +5,6 @@
  * @author  mori
  * @date  2011.08.01 (title.cから作成）
  *
- * @todo 敵役者の役名と本人名がまだ男女ごとに用意されていない
  */
 //==============================================================================
 #include <gflib.h>
@@ -781,7 +780,6 @@ GFL_PROC_RESULT PkwdEndrollProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     }
 #else
     // ランダムでエンディングのパターンを切り替える
-    // todo:ランダム切り替え仕様を詰める必要アリ
     tw->mode = GFUser_GetPublicRand(3);
 #endif
     break;
