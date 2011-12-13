@@ -454,7 +454,7 @@ GMEVENT* EVENT_NameInput_Rival( GAMESYS_WORK* gameSystem, u16* ret_wk )
   work->gameSystem = gameSystem;
   work->fieldmap   = GAMESYSTEM_GetFieldMapWork( gameSystem );
   work->retWork    = ret_wk;
-  work->nameInParam = NAMEIN_AllocParam(  //TODO
+  work->nameInParam = NAMEIN_AllocParam(  
         HEAPID_PROC, NAMEIN_RIVALNAME, 0, 0, NAMEIN_PERSON_LENGTH, NULL, misc );
 
   return event;
