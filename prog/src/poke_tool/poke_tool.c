@@ -3844,7 +3844,7 @@ static  void  round_calc( u8 *data, int value, int max )
   if( ( work + value ) > max ){
     work = max;
   }
-  if( ( work + value ) < 0 ){
+  else if( ( work + value ) < 0 ){
     work = 0;
   }
   else{

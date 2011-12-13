@@ -37,6 +37,19 @@
 //outer
 #include "scrcmd_resort.h"
 
+#ifdef PM_DEBUG
+#define DEBUG_RESORT_PRINT_ON
+#endif
+
+#if defined(DEBUG_RESORT_PRINT_ON)
+#define RESORT_Printf(...)  OS_TFPrintf(0,__VA_ARGS__)
+#define RESORT_LOG_Printf(...)  OS_TFPrintf(2,__VA_ARGS__)
+#else
+#define RESORT_Printf(...)  /* */
+#define RESORT_LOG_Printf(...)  /* */
+#endif
+
+
 #define PEOPLE_TYPE_ASSERT( p_people, type ) GF_ASSERT( RESORT_PEOPLE_GetPeopleData(p_people, RESORT_PEOPLE_DATA_PARAM_TYPE) == type )
 
 #define PEOPLE_TYPE_ASSERT2( p_people, type1, type2 ) GF_ASSERT( RESORT_PEOPLE_GetPeopleData(p_people, RESORT_PEOPLE_DATA_PARAM_TYPE) == type1 || RESORT_PEOPLE_GetPeopleData(p_people, RESORT_PEOPLE_DATA_PARAM_TYPE) == type2 )
@@ -803,6 +816,8 @@ VMCMD_RESULT EvCmdResortAddKindly( VMHANDLE *p_core, void *p_wk_adrs )
   POKEPARTY *p_party = GAMEDATA_GetMyPokemon( GAMESYSTEM_GetGameData(p_gamesys) );
   POKEMON_PARAM *p_pp   = PokeParty_GetMemberPointer( p_party, param );
 
+  RESORT_Printf( "‚È‚Â‚« before=%d value=%d ", PP_Get( p_pp, ID_PARA_friend, NULL ), value );
+
   if( PP_Get( p_pp, ID_PARA_friend, NULL ) == PTL_FRIEND_MAX )
   {
     *p_ret_wk = FALSE;
@@ -812,6 +827,7 @@ VMCMD_RESULT EvCmdResortAddKindly( VMHANDLE *p_core, void *p_wk_adrs )
     PP_Add( p_pp, ID_PARA_friend, value );
     *p_ret_wk = TRUE;
   }
+  RESORT_Printf( "after=%d\n", PP_Get( p_pp, ID_PARA_friend, NULL ) );
 
   return VMCMD_RESULT_CONTINUE;
 }
