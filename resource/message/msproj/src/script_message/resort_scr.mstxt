@@ -63847,10 +63847,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『ポケモンこうかんの　かいすう』が
-５０　いじょうの　ひと　いる？▼</Text>
+１０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T06:40:40" />
+				Time="2011-12-13T13:29:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63860,10 +63860,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『ポケモン交換の　回数』が
-５０　以上の　人　いる？▼</Text>
+１０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:14:39" />
+				User="shimoyamada:W00184"
+				Time="2011-12-13T13:29:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -63908,10 +63908,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『ポケモンこうかんの　かいすう』が
-５０　いじょうの　ひと　いる？▼</Text>
+１０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T06:41:26" />
+				Time="2011-12-13T13:29:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63921,10 +63921,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『ポケモン交換の　回数』が
-５０　以上の　人　いる？▼</Text>
+１０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:14:37" />
+				User="shimoyamada:W00184"
+				Time="2011-12-13T13:29:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -63969,10 +63969,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『ニックネームをつけた　かいすう』が
-３０　いじょうの　ひと　いる？▼</Text>
+５　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T06:43:50" />
+				Time="2011-12-13T13:29:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63982,10 +63982,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『ニックネームをつけた　回数』が
-３０　以上の　人　いる？▼</Text>
+５　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T06:43:54" />
+				Time="2011-12-13T13:29:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -64030,10 +64030,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『ニックネームをつけた　かいすう』が
-３０　いじょうの　ひと　いる？▼</Text>
+５　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T06:44:16" />
+				Time="2011-12-13T13:30:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64043,10 +64043,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『ニックネームをつけた　回数』が
-３０　以上の　人　いる？▼</Text>
+５　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T06:44:16" />
+				Time="2011-12-13T13:30:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -64091,10 +64091,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『まちに　おきゃくが　きた　かず』が
-１００　いじょうの　ひと　いる？▼</Text>
+１０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:03:45" />
+				Time="2011-12-13T13:30:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64104,10 +64104,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『街にお客がきた　数』が
-１００　以上の　人　いる？▼</Text>
+１０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:04:03" />
+				Time="2011-12-13T13:30:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -64152,10 +64152,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『まちに　おきゃくが　きた　かず』が
-１００　いじょうの　ひと　いる？▼</Text>
+１０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:04:16" />
+				Time="2011-12-13T13:30:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64165,10 +64165,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『街にお客がきた　数』が
-１００　以上の　人　いる？▼</Text>
+１０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:04:16" />
+				Time="2011-12-13T13:30:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -64238,10 +64238,12 @@ ME
 		<CommentCell
 			Language="JPN">
 			<Comment>買い物総額
-その１</Comment>
+その１
+
+削除</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T06:47:46" />
+				Time="2011-12-13T13:31:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -64261,7 +64263,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -64299,10 +64301,12 @@ ME
 		<CommentCell
 			Language="JPN">
 			<Comment>買い物総額
-その１</Comment>
+その１
+
+削除</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T06:48:39" />
+				Time="2011-12-13T13:30:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -64322,7 +64326,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -64335,10 +64339,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『すれちがった　ひとの　にんずう』が
-１００　いじょうの　ひと　いる？▼</Text>
+２５　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:04:29" />
+				Time="2011-12-13T13:31:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64348,10 +64352,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『すれ違った人の　人数』が
-１００　以上の　人　いる？▼</Text>
+２５　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:04:41" />
+				Time="2011-12-13T13:31:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -64360,10 +64364,12 @@ ME
 		<CommentCell
 			Language="JPN">
 			<Comment>すれ違った人数
-その１</Comment>
+その１
+
+</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T06:55:08" />
+				Time="2011-12-13T13:31:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -64396,10 +64402,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『すれちがった　ひとの　にんずう』が
-１００　いじょうの　ひと　いる？▼</Text>
+２５　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:04:53" />
+				Time="2011-12-13T13:31:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64408,11 +64414,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
-『すれ違った　人の　人数』が
-１００　以上の　人　いる？▼</Text>
+『すれ違った人の　人数』が
+２５　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:05:00" />
+				Time="2011-12-13T13:31:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -64421,10 +64427,12 @@ ME
 		<CommentCell
 			Language="JPN">
 			<Comment>すれ違った人数
-その１</Comment>
+その１
+
+</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T06:55:11" />
+				Time="2011-12-13T13:31:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -64457,10 +64465,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『つうしん　たいせん　かいすう』が
-５０　いじょうの　ひと　いる？▼</Text>
+１０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:05:16" />
+				Time="2011-12-13T13:31:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64470,10 +64478,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『通信対戦　回数』が
-５０　以上の　人　いる？▼</Text>
+１０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:14:03" />
+				User="shimoyamada:W00184"
+				Time="2011-12-13T13:31:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -64518,10 +64526,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『つうしん　たいせん　かいすう』が
-５０　いじょうの　ひと　いる？▼</Text>
+１０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:04:13" />
+				Time="2011-12-13T13:32:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64531,10 +64539,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『通信対戦　回数』が
-５０　以上の　人　いる？▼</Text>
+１０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:14:01" />
+				User="shimoyamada:W00184"
+				Time="2011-12-13T13:32:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -64579,10 +64587,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『つかまえた　かいすう』が
-１００　いじょうの　ひと　いる？▼</Text>
+２５　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:04:30" />
+				Time="2011-12-13T13:32:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64592,10 +64600,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『捕まえた　回数』が
-１００　以上の　人　いる？▼</Text>
+２５　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:13:55" />
+				User="shimoyamada:W00184"
+				Time="2011-12-13T13:32:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -64640,10 +64648,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『つかまえた　かいすう』が
-１００　いじょうの　ひと　いる？▼</Text>
+２５　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:04:42" />
+				Time="2011-12-13T13:32:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64653,10 +64661,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『捕まえた　回数』が
-１００　以上の　人　いる？▼</Text>
+２５　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:13:53" />
+				User="shimoyamada:W00184"
+				Time="2011-12-13T13:32:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -64701,10 +64709,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『タマゴを　ふかさせた　かいすう』が
-１００　いじょうの　ひと　いる？▼</Text>
+２５　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:46:32" />
+				Time="2011-12-13T13:32:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64714,10 +64722,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『タマゴを　ふかさせた　回数』が
-１００　以上の　人　いる？▼</Text>
+２５　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:46:35" />
+				Time="2011-12-13T13:32:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -64762,10 +64770,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『タマゴを　ふかさせた　かいすう』が
-５０　いじょうの　ひと　いる？▼</Text>
+２５　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:05:46" />
+				Time="2011-12-13T13:32:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64775,10 +64783,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『タマゴを　ふかさせた　回数』が
-５０　以上の　人　いる？▼</Text>
+２５　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:05:46" />
+				Time="2011-12-13T13:32:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -64823,10 +64831,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『メダルを　もっている　かず』が
-５０　いじょうの　ひと　いる？▼</Text>
+１０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:06:00" />
+				Time="2011-12-13T13:33:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64836,10 +64844,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『メダルを　持っている　数』が
-５０　以上の　人　いる？▼</Text>
+１０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:13:46" />
+				User="shimoyamada:W00184"
+				Time="2011-12-13T13:33:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -64884,10 +64892,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『メダルを　もっている　かず』が
-５０　いじょうの　ひと　いる？▼</Text>
+１０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:06:18" />
+				Time="2011-12-13T13:33:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64897,10 +64905,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『メダルを　持っている　数』が
-５０　以上の　人　いる？▼</Text>
+１０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:13:43" />
+				User="shimoyamada:W00184"
+				Time="2011-12-13T13:33:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -64945,10 +64953,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『ポケモンこうかんの　かいすう』が
-１００　いじょうの　ひと　いる？▼</Text>
+２５　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:19:34" />
+				Time="2011-12-13T13:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64958,10 +64966,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『ポケモン交換の　回数』が
-１００　以上の　人　いる？▼</Text>
+２５　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:13:40" />
+				User="shimoyamada:W00184"
+				Time="2011-12-13T13:33:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -65006,10 +65014,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『ポケモンこうかんの　かいすう』が
-１００　いじょうの　ひと　いる？▼</Text>
+２５　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:19:46" />
+				Time="2011-12-13T13:34:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65019,10 +65027,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『ポケモン交換の　回数』が
-１００　以上の　人　いる？▼</Text>
+２５　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:13:37" />
+				User="shimoyamada:W00184"
+				Time="2011-12-13T13:34:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -65067,10 +65075,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『ニックネームをつけた　かいすう』が
-６０　いじょうの　ひと　いる？▼</Text>
+１５　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:31:39" />
+				Time="2011-12-13T13:34:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65080,10 +65088,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『ニックネームをつけた　回数』が
-６０　以上の　人　いる？▼</Text>
+１５　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:31:42" />
+				Time="2011-12-13T13:34:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -65128,10 +65136,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『ニックネームをつけた　かいすう』が
-６０　いじょうの　ひと　いる？▼</Text>
+１５　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:31:48" />
+				Time="2011-12-13T13:34:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65141,10 +65149,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『ニックネームをつけた　回数』が
-６０　以上の　人　いる？▼</Text>
+１５　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:31:48" />
+				Time="2011-12-13T13:34:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -65189,10 +65197,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『まちに　おきゃくが　きた　かず』が
-１４０　いじょうの　ひと　いる？▼</Text>
+３５　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:05:49" />
+				Time="2011-12-13T13:34:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65202,10 +65210,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『街にお客が来た　数』が
-１４０　以上の　人　いる？▼</Text>
+３５　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:05:59" />
+				Time="2011-12-13T13:34:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -65250,10 +65258,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『まちに　おきゃくが　きた　かず』が
-１４０　いじょうの　ひと　いる？▼</Text>
+３５　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:06:08" />
+				Time="2011-12-13T13:35:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65263,10 +65271,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『街にお客が来た　数』が
-１４０　以上の　人　いる？▼</Text>
+３５　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:06:08" />
+				Time="2011-12-13T13:35:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -65336,10 +65344,11 @@ ME
 		<CommentCell
 			Language="JPN">
 			<Comment>買い物総額
-その２</Comment>
+その２
+削除</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:12:39" />
+				Time="2011-12-13T13:35:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -65397,10 +65406,11 @@ ME
 		<CommentCell
 			Language="JPN">
 			<Comment>買い物総額
-その２</Comment>
+その２
+削除</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:12:39" />
+				Time="2011-12-13T13:35:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -65433,10 +65443,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『すれちがった　ひとの　にんずう』が
-２００　いじょうの　ひと　いる？▼</Text>
+５０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:06:23" />
+				Time="2011-12-13T13:35:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65446,10 +65456,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『すれ違った人の　人数』が
-２００　以上の　人　いる？▼</Text>
+５０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:06:31" />
+				Time="2011-12-13T13:35:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -65494,10 +65504,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『すれちがった　ひとの　にんずう』が
-２００　いじょうの　ひと　いる？▼</Text>
+５０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:06:38" />
+				Time="2011-12-13T13:35:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65507,10 +65517,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『すれ違った人の　人数』が
-２００　以上の　人　いる？▼</Text>
+５０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:06:38" />
+				Time="2011-12-13T13:35:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -65555,10 +65565,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『つうしん　たいせん　かいすう』が
-１００　いじょうの　ひと　いる？▼</Text>
+２５　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:33:54" />
+				Time="2011-12-13T13:35:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65568,10 +65578,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『通信対戦　回数』が
-１００　以上の　人　いる？▼</Text>
+２５　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:13:02" />
+				User="shimoyamada:W00184"
+				Time="2011-12-13T13:35:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -65616,10 +65626,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『つうしん　たいせん　かいすう』が
-１００　いじょうの　ひと　いる？▼</Text>
+２５　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:33:41" />
+				Time="2011-12-13T13:36:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65629,10 +65639,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『通信対戦　回数』が
-１００　以上の　人　いる？▼</Text>
+２５　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:12:59" />
+				User="shimoyamada:W00184"
+				Time="2011-12-13T13:36:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -65677,10 +65687,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『つかまえた　かいすう』が
-２００　いじょうの　ひと　いる？▼</Text>
+５０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:34:25" />
+				Time="2011-12-13T13:36:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65690,10 +65700,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『捕まえた　回数』が
-２００　以上の　人　いる？▼</Text>
+５０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:12:47" />
+				User="shimoyamada:W00184"
+				Time="2011-12-13T13:36:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -65738,10 +65748,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『つかまえた　かいすう』が
-２００　いじょうの　ひと　いる？▼</Text>
+５０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:34:13" />
+				Time="2011-12-13T13:36:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65751,10 +65761,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『捕まえた　回数』が
-２００　以上の　人　いる？▼</Text>
+５０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:12:45" />
+				User="shimoyamada:W00184"
+				Time="2011-12-13T13:36:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -65799,10 +65809,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『タマゴを　ふかさせた　かいすう』が
-１００　いじょうの　ひと　いる？▼</Text>
+６０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:34:46" />
+				Time="2011-12-13T13:36:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65812,10 +65822,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『タマゴを　ふかさせた　回数』が
-１００　以上の　人　いる？▼</Text>
+６０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:34:50" />
+				Time="2011-12-13T13:36:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -65860,10 +65870,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『タマゴを　ふかさせた　かいすう』が
-２５０いじょうの　ひと　いる？▼</Text>
+６０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:46:06" />
+				Time="2011-12-13T13:36:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65873,10 +65883,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『タマゴを　ふかさせた　回数』が
-２５０　以上の　人　いる？▼</Text>
+６０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:46:11" />
+				Time="2011-12-13T13:36:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -65921,10 +65931,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『メダルを　もっている　かず』が
-１００　いじょうの　ひと　いる？▼</Text>
+２５　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:35:13" />
+				Time="2011-12-13T13:36:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65934,10 +65944,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『メダルを　持っている　数』が
-１００　以上の　人　いる？▼</Text>
+２５　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:12:40" />
+				User="shimoyamada:W00184"
+				Time="2011-12-13T13:37:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -65982,10 +65992,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『メダルを　もっている　かず』が
-１００　いじょうの　ひと　いる？▼</Text>
+２５　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:35:23" />
+				Time="2011-12-13T13:37:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -65995,10 +66005,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『メダルを　持っている　数』が
-１００　以上の　人　いる？▼</Text>
+２５　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:12:37" />
+				User="shimoyamada:W00184"
+				Time="2011-12-13T13:37:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -66043,10 +66053,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『ポケモンこうかんの　かいすう』が
-２００　いじょうの　ひと　いる？▼</Text>
+５０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:41:32" />
+				Time="2011-12-13T13:37:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66056,10 +66066,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『ポケモン交換の　回数』が
-２００　以上の　人　いる？▼</Text>
+５０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:12:32" />
+				User="shimoyamada:W00184"
+				Time="2011-12-13T13:37:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -66165,10 +66175,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『ニックネームをつけた　かいすう』が
-１２０　いじょうの　ひと　いる？▼</Text>
+３０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:41:48" />
+				Time="2011-12-13T13:38:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66178,10 +66188,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『ニックネームをつけた　回数』が
-１２０　以上の　人　いる？▼</Text>
+３０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:41:51" />
+				Time="2011-12-13T13:38:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -66226,10 +66236,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『ニックネームをつけた　かいすう』が
-１２０　いじょうの　ひと　いる？▼</Text>
+３０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:41:58" />
+				Time="2011-12-13T13:38:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66239,10 +66249,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『ニックネームをつけた　回数』が
-１２０　以上の　人　いる？▼</Text>
+３０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:41:58" />
+				Time="2011-12-13T13:38:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -66287,10 +66297,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『まちに　きゃくが　きた　かず』が
-２８０　いじょうの　ひと　いる？▼</Text>
+７０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:07:14" />
+				Time="2011-12-13T13:39:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66300,10 +66310,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『街にお客が来た　数』が
-２８０　以上の　人　いる？▼</Text>
+７０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:07:14" />
+				Time="2011-12-13T13:39:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -66348,10 +66358,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『まちに　きゃくが　きた　かず』が
-２８０　いじょうの　ひと　いる？▼</Text>
+７０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:06:54" />
+				Time="2011-12-13T13:39:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66361,10 +66371,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『街にお客が来た　数』が
-２８０　以上の　人　いる？▼</Text>
+７０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:07:04" />
+				Time="2011-12-13T13:39:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -66434,10 +66444,11 @@ ME
 		<CommentCell
 			Language="JPN">
 			<Comment>買い物総額
-その３</Comment>
+その３
+削除</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:37:45" />
+				Time="2011-12-13T13:39:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -66457,7 +66468,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -66495,10 +66506,11 @@ ME
 		<CommentCell
 			Language="JPN">
 			<Comment>買い物総額
-その３</Comment>
+その３
+削除</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:37:45" />
+				Time="2011-12-13T13:39:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -66518,7 +66530,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -66531,10 +66543,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『すれちがった　ひとの　にんずう』が
-４００　いじょうの　ひと　いる？▼</Text>
+１００　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:07:21" />
+				Time="2011-12-13T13:39:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66544,10 +66556,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『すれ違った人の　人数』が
-４００　以上の　人　いる？▼</Text>
+１００　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:07:27" />
+				Time="2011-12-13T13:39:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -66592,10 +66604,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『すれちがった　ひとの　にんずう』が
-４００　いじょうの　ひと　いる？▼</Text>
+１００　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:07:34" />
+				Time="2011-12-13T13:40:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66605,10 +66617,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『すれ違った人の　人数』が
-４００　以上の　人　いる？▼</Text>
+１００　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T10:07:34" />
+				Time="2011-12-13T13:40:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -66653,10 +66665,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『つうしん　たいせん　かいすう』が
-２００　いじょうの　ひと　いる？▼</Text>
+５０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:44:21" />
+				Time="2011-12-13T13:40:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66666,10 +66678,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『通信対戦　回数』が
-２００　以上の　人　いる？▼</Text>
+５０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:11:44" />
+				User="shimoyamada:W00184"
+				Time="2011-12-13T13:40:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -66714,10 +66726,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『つうしん　たいせん　かいすう』が
-２００　いじょうの　ひと　いる？▼</Text>
+５０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:44:30" />
+				Time="2011-12-13T13:40:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66727,10 +66739,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『通信対戦　回数』が
-２００　以上の　人　いる？▼</Text>
+５０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:11:47" />
+				User="shimoyamada:W00184"
+				Time="2011-12-13T13:40:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -66775,10 +66787,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『つかまえた　かいすう』が
-４００　いじょうの　ひと　いる？▼</Text>
+１００　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:44:47" />
+				Time="2011-12-13T13:40:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66788,10 +66800,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『捕まえた　回数』が
-４００　以上の　人　いる？▼</Text>
+１００　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:11:34" />
+				User="shimoyamada:W00184"
+				Time="2011-12-13T13:40:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -66836,10 +66848,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『つかまえた　かいすう』が
-４００　いじょうの　ひと　いる？▼</Text>
+１００　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:44:55" />
+				Time="2011-12-13T13:41:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66849,10 +66861,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『捕まえた　回数』が
-４００　以上の　人　いる？▼</Text>
+１００　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:11:37" />
+				User="shimoyamada:W00184"
+				Time="2011-12-13T13:41:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -66897,10 +66909,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『タマゴを　ふかさせた　かいすう』が
-１００　いじょうの　ひと　いる？▼</Text>
+１２５　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:37:45" />
+				Time="2011-12-13T13:41:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66910,10 +66922,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『タマゴを　ふかさせた　回数』が
-１００　以上の　人　いる？▼</Text>
+１２５　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:37:45" />
+				Time="2011-12-13T13:41:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -66958,10 +66970,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『タマゴを　ふかさせた　かいすう』が
-５００　いじょうの　ひと　いる？▼</Text>
+１２５　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:45:47" />
+				Time="2011-12-13T13:41:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -66971,10 +66983,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『タマゴを　ふかさせた　回数』が
-５００　以上の　人　いる？▼</Text>
+１２５　以上の　人　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:45:50" />
+				Time="2011-12-13T13:41:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -67019,10 +67031,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『メダルを　もっている　かず』が
-２００　いじょうの　ひと　いる？▼</Text>
+５０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:46:59" />
+				Time="2011-12-13T13:41:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67032,10 +67044,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『メダルを　持っている　数』が
-２００　以上の　人　いる？▼</Text>
+５０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:11:26" />
+				User="shimoyamada:W00184"
+				Time="2011-12-13T13:41:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -67080,10 +67092,10 @@ ME
 			Language="JPN">
 			<Text>レコードしょうぶが　したい▼
 『メダルを　もっている　かず』が
-２００　いじょうの　ひと　いる？▼</Text>
+５０　いじょうの　ひと　いる？▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T07:47:07" />
+				Time="2011-12-13T13:41:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -67093,10 +67105,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
 『メダルを　持っている　数』が
-２００　以上の　人　いる？▼</Text>
+５０　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T08:11:29" />
+				User="shimoyamada:W00184"
+				Time="2011-12-13T13:41:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
