@@ -1503,10 +1503,10 @@ HOJL</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>るかまをとかのめんはちいはうお</Text>
+			<Text>るかまをとかのめんはにはうお</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-24T10:55:07" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-13T05:13:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1514,10 +1514,10 @@ HOJL</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>るかまをとかのめんはちいはうお</Text>
+			<Text>るかまをとかのめんはにはうお</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-09-24T10:55:10" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-13T05:13:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
