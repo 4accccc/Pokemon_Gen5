@@ -1428,10 +1428,10 @@
 ３かいに　あがったなら
 もじを　さらに　１つずらすと▼
 このばあい　ずらすとは
-つぎの　もじに　おきかえることだろう▼</Text>
+まえの　もじに　おきかえることだろう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T05:44:29" />
+				Time="2011-12-13T05:22:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1446,10 +1446,10 @@
 ３階に　あがったなら
 文字を　さらに　１つずらすと▼
 この場合　ずらすとは
-次の　文字に　置き換えることだろう▼</Text>
+前の　文字に　置き換えることだろう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T05:46:28" />
+				Time="2011-12-13T05:22:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1730,10 +1730,10 @@
 			Language="JPN">
 			<Text>もっと　たんさく　するのだ！▼
 かいていいせきの　あんごうは
-じぶんで　かきのこすと　いいぞ！</Text>
+じぶんで　かきのこすと　いい！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T06:36:05" />
+				Time="2011-12-13T05:23:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1743,10 +1743,10 @@
 			Language="JPN_KANJI">
 			<Text>もっと　探索するのだ！▼
 海底遺跡の　暗号は
-自分で　書き残すと　いいぞ！</Text>
+自分で　書き残すと　いい！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T06:36:01" />
+				Time="2011-12-13T05:23:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1788,7 +1788,7 @@
 ポケモントレーナー　め！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T06:20:58" />
+				Time="2011-12-13T05:23:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
