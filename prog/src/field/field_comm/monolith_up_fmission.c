@@ -458,9 +458,6 @@ static void _Write_String( MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MO
   // クリア目標
   fmission_string( setup, wk, wk->Id, wk->Level, BMPWIN_CLEAR_R );
   //
-  // 報酬
-//  fmission_string( setup, wk, wk->Id, wk->Level, BMPWIN_GAIN_R );
-  //
   // ハイスコア
   fmission_highscore( appwk, wk, wk->Id );
 }
@@ -592,25 +589,6 @@ static void fmission_string( MONOLITH_SETUP *setup, MONOLITH_UP_WORK *wk, const 
     str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_clear_tbl[buf[1]] );
     WORDSET_ExpandStr( setup->wordset, expbuf, str );
   }
-#if 0
-  // 報酬
-  else if(mode == BMPWIN_GAIN_R){
-    // 報酬アイテム取得
-    buf[0] = wk->ArcData[wk->Id].param.item;
-    // 報酬数取得
-    buf[1] = wk->ArcData[wk->Id].param.level[wk->Level].pay;
-    //
-    WORDSET_RegisterItemName( setup->wordset, 0, buf[0] );
-    WORDSET_RegisterNumber(   setup->wordset, 1, buf[1], 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-    expbuf = GFL_STR_CreateBuffer( 64, HEAPID_MONOLITH );
-    if(wk->ArcData[wk->Id].param.pay_bonus == FMISSION_PAY_BONUS_NONE){
-      str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[mode*4] );
-    }else{
-      str = GFL_MSG_CreateString( setup->mm_monolith, mono_mes_tbl[mode*4+2] );
-    }
-    WORDSET_ExpandStr( setup->wordset, expbuf, str );
-  }
-#endif
   // ハイスコア(別で対応)
   else if(mode == BMPWIN_SCORE_R){
   }
@@ -639,7 +617,6 @@ static void fmission_highscore( MONOLITH_APP_PARENT *appwk, MONOLITH_UP_WORK *wk
   s32          lv;
   s32          flg=0;
   s32          dflg=0;
-//  s32          num;
   s32          width;
   STRBUF       *str;
   STRBUF       *expbuf;

@@ -217,10 +217,6 @@ enum{
   FLG_DBG_DOWN    = (1<<4),    // down
 };
 
-// debug
-#define _DEBUG_STAR_
-#undef  _DEBUG_STAR_
-
 #define __CHK_FMISSION__
 #undef  __CHK_FMISSION__
 
@@ -772,7 +768,6 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
   case SEQ_FIRST_STREAM_TP_RELEASE: //文字送りに使用したキーとタッチ両方を離すのを待つ
     if(GFL_UI_TP_GetCont() == FALSE 
         && (GetKeyCont(mfw) & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL)) == 0){
-//        && (GFL_UI_KEY_GetCont() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL)) == 0){
       *seq = SEQ_TOP;
     }
     break;
@@ -842,7 +837,6 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
   case SEQ_YESNO_STREAM:
     if(MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_BG) != PANEL_COLORMODE_FLASH
         && MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_OBJ) != PANEL_COLORMODE_FLASH){
-//      _Set_MsgStream(mfw, appwk->setup, msg_mono_fmission_003);
       fmission_disp_startmes( appwk, mfw );
       (*seq)++;
     }
@@ -879,10 +873,6 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
   case SEQ_DECIDE_STREAM:
     if(MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_BG) != PANEL_COLORMODE_FLASH
         && MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_OBJ) != PANEL_COLORMODE_FLASH){
-#if 0
-      WORDSET_RegisterGPowerName( 
-        appwk->setup->wordset, 0, mfw->use_gpower_id[mfw->decide_cursor_pos] );
-#endif
       _Set_MsgStreamExpand(mfw, appwk->setup, msg_mono_fmission_004);
       mfw->order_end = TRUE;
       (*seq)++;
@@ -946,12 +936,7 @@ static GFL_PROC_RESULT MonolithFMissionSelectProc_Main( GFL_PROC * proc, int * s
         IWASAWA_Printf("mission no %d->%d\n", mission_no,mission_no);
         FMISSION_DATA_GetMissionParam( mfw->fmd_man, mission_no, level, &mission);
         LINK_FESTIVAL_MissionStart( mfw->fest_sys, &mission, FALSE );
-
-        // NEWフラグクリア
-//        fmission_clear_newflag( appwk, mfw, mission_no );
-
-//        GAMEDATA_SetSubScreenMode(GAMESYSTEM_GetGameData(appwk->parent->gsys), FIELD_SUBSCREEN_FMISSION_VIEW );
-
+        
         if( comm_no == GAME_COMM_NO_FIELD_BEACON_SEARCH ){
           *seq = SEQ_FINISH;
         }else if( comm_no == GAME_COMM_NO_NULL ){
@@ -1207,9 +1192,6 @@ static void _Setup_BmpWinCreate(MONOLITH_FMSELECT_WORK *mfw, MONOLITH_SETUP *set
 	bmp = GFL_BMPWIN_GetBmp( mfw->bmpwin[_BMPWIN_TALKWIN] );
 	
 	GFL_BMP_Clear( bmp, 0xff );
-//	GFL_BMPWIN_TransVramCharacter( mfw->bmpwin[_BMPWIN_TALKWIN] );
-//	GFL_BMPWIN_MakeScreen( mfw->bmpwin[_BMPWIN_TALKWIN] );
-//	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
 	
 	mfw->bmpwin[_BMPWIN_TITLE] = GFL_BMPWIN_Create( GFL_BG_FRAME0_S,
 		0,0,32,3, MONOLITH_BG_DOWN_FONT_PALNO, GFL_BMP_CHRAREA_GET_B );
@@ -1395,7 +1377,7 @@ static void _Setup_PowerNameBMPCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_FMSEL
   use_count++;
   //
   for(i=0;i<FMISSION_ID_MAX;i++){
-    // 判定(idは通し番号でよいはず => 違う場合は要修正)
+    // 判定(idは通し番号でよいはず)
     bflg = fmission_chk_open( appwk, mfw, i );
     if(bflg == TRUE){
       // セーブデータチェック
@@ -1713,7 +1695,6 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
     tp_cont = FALSE;
   }
   
-//  if(GFL_UI_KEY_GetCont() & (PAD_KEY_UP|PAD_KEY_DOWN|PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL|PAD_KEY_LEFT|PAD_KEY_RIGHT)){
   if(GetKeyCont(mfw) & (PAD_KEY_UP|PAD_KEY_DOWN|PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL|PAD_KEY_LEFT|PAD_KEY_RIGHT)){
     s32 list_top_no = ((mfw->list_y >> 8) + _TITLE_BAR_Y_LEN) / POWER_LIST_SPACE;
     s32 list_space_pos = ((mfw->list_y >> 8) + _TITLE_BAR_Y_LEN) % POWER_LIST_SPACE;
@@ -1742,12 +1723,9 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
       if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
         _SetCursorPos(mfw, mfw->cursor_pos, _SET_CURSOR_MODE_KEY);
         GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-//        if(mfw->use_power[mfw->cursor_pos] == MONO_USE_POWER_OK){
-          PMSND_PlaySE(MONOLITH_SE_DECIDE);
-//        }
+        PMSND_PlaySE(MONOLITH_SE_DECIDE);
         return TRUE;
       }
-//      else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
       else if(GetKeyRepeat(mfw) & PAD_KEY_UP){
         s32 check_topno = list_top_no;
         if(list_space_pos != 0){
@@ -1762,7 +1740,6 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
         fmission_chg_level( appwk, mfw, 0 );
         return FALSE;
       }
-//      else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
       else if(GetKeyRepeat(mfw) & PAD_KEY_DOWN){
         s32 check_bottomno = ((mfw->list_y>>8) + 192-_MENU_BAR_Y_LEN) / POWER_LIST_SPACE;
         s32 bottom_list_space = ((mfw->list_y>>8) + 192-_MENU_BAR_Y_LEN) % POWER_LIST_SPACE;
@@ -1778,7 +1755,6 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WOR
         fmission_chg_level( appwk, mfw, 0 );
         return FALSE;
       }
-//      else if(GFL_UI_KEY_GetRepeat() & (PAD_KEY_LEFT|PAD_KEY_RIGHT)){
       else if(GetKeyRepeat(mfw) & (PAD_KEY_LEFT|PAD_KEY_RIGHT)){
         fmission_chg_level( appwk, mfw, 2 );
         return FALSE;
@@ -2196,9 +2172,9 @@ static void fmission_init_data( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WO
 //==================================================================
 static void fmission_set_up_curpos( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw )
 {
-  // idをセット(仮)
+  // idをセット
   if(mfw->cursor_pos == _CURSOR_POS_NONE){
-    appwk->common->fmission_id    = 0xff;
+    appwk->common->fmission_id    = 0xff;		// 非選択
     appwk->common->fmission_level = 0;
   }else{
     // カーソルが1始まりだが、
@@ -2450,7 +2426,7 @@ static void fmission_disp_bmpoam( MONOLITH_SETUP *setup, MONOLITH_FMSELECT_WORK 
   expbuf = GFL_STR_CreateBuffer( 64, HEAPID_MONOLITH );
   strbuf = GFL_MSG_CreateString( setup->mm_monolith, msg_mono_fmission_018 );
   WORDSET_ExpandStr( setup->wordset, expbuf, strbuf );
-  // queにしないとまずいかも..
+  // 直接描画
   PRINTSYS_PrintColor( mfw->BmpOam_Fmiss_bmp[mode], 0, 0, expbuf, mfw->sfont, PRINTSYS_LSB_Make(15,2,0));
   BmpOam_ActorBmpTrans( mfw->BmpOam_Fmiss[mode] );
   //
@@ -2668,16 +2644,6 @@ static void fmission_chk_savedata( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT
   }else{
     mfw->info_param[count].flag &= ~FLG_INFO_NEW;
   }
-  //
-#ifdef _DEBUG_STAR_	// debug
-  if(count < 2){
-    mfw->info_param[count].clear_level = 3;
-  }else if(count < 5){
-    mfw->info_param[count].clear_level = 2;
-  }else if(count < 7){
-    mfw->info_param[count].clear_level = 1;
-  }
-#endif
 }
 
 //==================================================================
@@ -2695,7 +2661,6 @@ static void fmission_clear_newflag( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELEC
   SAVE_CONTROL_WORK *work = GAMEDATA_GetSaveControlWork( gamedata );
   FMISSION_SAVE *fsave = SAVEDATA_GetFMissionSave( work );
   //
-//  id = mfw->fess_mission_id[mfw->decide_cursor_pos];
   FMISSION_SAVE_ResetMissionStatusNewFlag( fsave, id );
 }
 
@@ -2756,7 +2721,6 @@ static void fmission_chg_level( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WO
   // 入力時(key)
   else if(mode == 2){
     // 左
-//    if(GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT){
     if(GetKeyRepeat(mfw) & PAD_KEY_LEFT){
       if(mfw->Level != 0){
         // SE
@@ -2769,7 +2733,6 @@ static void fmission_chg_level( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WO
       flg = 1;
     }
     // 右
-//    else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT){
     else if(GetKeyRepeat(mfw) & PAD_KEY_RIGHT){
       if(mfw->Level != num){
         // SE
@@ -2908,7 +2871,6 @@ static void fmission_disp_startmes( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELEC
   //
   str = GFL_STR_CreateBuffer(32, HEAPID_MONOLITH);
   // 名前のセット
-//  FMISSION_DATA_GetMissionParam( mfw->fmd_man, mfw->fess_mission_id[mfw->cursor_pos], 0, &mission );
   FMISSION_DATA_GetMissionParam( mfw->fmd_man, mfw->fess_mission_id[mfw->cursor_pos], level, &mission );
   FMISSION_DATA_GetTitleStr( mfw->fmd_man, str, &mission, GFL_HEAP_LOWID(HEAPID_MONOLITH) );
   WORDSET_RegisterWord( appwk->setup->wordset, 0, str, 0, TRUE, PM_LANG );
@@ -3009,17 +2971,6 @@ static int GetKeyRepeat( MONOLITH_FMSELECT_WORK *mfw )
 //==================================================================
 static void fmission_debug( MONOLITH_APP_PARENT *appwk, MONOLITH_FMSELECT_WORK *mfw )
 {
-#ifdef PM_DEBUG
-#if 0  // test
-  if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){
-    GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
-    EVENTWORK *evwork  = GAMEDATA_GetEventWork( gamedata );
-    //
-    EVENTWORK_SetEventFlag( evwork, fmiss_flag_tbl[0] );
-  }
-#endif
-#endif
-
 #ifdef __CHK_FMISSION__
   // X
   if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_X){

@@ -7,7 +7,7 @@
  *	@data	  2011.04.22	
  */
 //=============================================================================
-//必ず必要なインクルード
+//必要なインクルード
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "system/main.h"
@@ -31,7 +31,7 @@
  *								定数定義
  */
 //=============================================================================
-// いろいろ(まとめること)
+// いろいろ
 enum{
 	FMA_BGNUM_MAX		= 8,
 	FMA_EMPTY_MAXNUM	= 14*2,
@@ -207,13 +207,11 @@ const FMA_CANVAS_DATA fma_canvas_00_tbl[] = {
   { GFL_BG_FRAME0_M,	3,	4,	7,	2,	FMA_BG_FONT_PAL,},			// 順位(左)
   { GFL_BG_FRAME0_M,	3,	7, 10,	2,	FMA_BG_FONT_PAL,},			// トップスコア(左)
   { GFL_BG_FRAME0_M,   13,  7,	8,	2,	FMA_BG_FONT_PAL,},			// 名前(左)
-//  { GFL_BG_FRAME0_M,	3, 10,	8,	2,	FMA_BG_FONT_PAL,},			// ハイスコア(左)
   { GFL_BG_FRAME0_M,	3, 13, 28,	8,	FMA_BG_FONT_PAL,},			// 説明文(左)
   //
   { GFL_BG_FRAME0_M,   21,	1,	8,	2,	FMA_BG_FONT_PAL,},			// マイスコア(右)
   { GFL_BG_FRAME0_M,   10,	4, 19,	2,	FMA_BG_FONT_PAL,},			// 順位(右)
   { GFL_BG_FRAME0_M,   21,	7,  8,	2,	FMA_BG_FONT_PAL,},			// トップスコア(右)
-//  { GFL_BG_FRAME0_M,   21, 10,	8,	2,	FMA_BG_FONT_PAL,},			// ハイスコア(右)
   //
   //
   { GFL_BG_FRAME1_S,    2, 21, 28,	2,	FMA_BG_FONT_PAL,},			// スクロール
@@ -502,7 +500,6 @@ static void fma_init_bg( FMISSION_APP_WORK* wk, const s32 mode )
 	s32		i;
 	s32		tmp;
 	s32		off;
-//	const FMA_BGPAL_DATA	*padr = &fma_bgpal_tbl[0];
 	const FMA_BGPAL_DATA	*padr = fma_bgpal_tbl[mode];	// まとめ
 	const FMA_BGCHR_DATA	*cadr = &fma_bgchr_tbl[0];
 	const FMA_BGSCN_DATA	*sadr = &fma_bgscn_tbl[0];
@@ -597,9 +594,6 @@ static void fma_init_bg2( FMISSION_APP_WORK* wk, const s32 type, const s32 pnum 
 	GFL_BG_LoadScreenReq( type );
 	//
 	GFL_ARC_CloseDataHandle( p_handle );
-	//
-	// 背景色をセット
-//	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -615,7 +609,6 @@ static void fma_init_bg2( FMISSION_APP_WORK* wk, const s32 type, const s32 pnum 
 static void fma_init_string( FMISSION_APP_WORK* wk, const s32 mode )
 {
 	s32		i;
-//	const FMA_CANVAS_DATA	*adr = &fma_canvas_00_tbl[0];
 	const FMA_CANVAS_DATA	*adr = fma_canvas_all_tbl[mode];
 	
 	for(i=0;i<FMA_CANVAS_MAXNUM;i++){
@@ -1027,7 +1020,7 @@ BOOL FmaCmn_is_anime_end( FMISSION_APP_WORK *wk, const s32 wmode, const s32 wnum
 {
 	BOOL	bflg=TRUE;
 	
-	// 終了判定らしい
+	// 終了判定
 	if(wmode == FMA_CLWKMODE_NORMAL){		// 通常
 		if( GFL_CLACT_WK_CheckAnmActive( wk->wk_obj.clwk[wnum] ) == FALSE ){
 			bflg = FALSE;
@@ -1094,7 +1087,6 @@ void FmaCmn_disp_number( FMISSION_APP_WORK *wk, const s32 wmode, const s32 src_w
 	GFL_CLACTPOS	pos;
 	BOOL			bflg;
 	s32				tmp=num;		// 値セット
-	s32				rflg = 1;		// (0:左あわせ、1:右あわせ)
 	
 	// 初期化
 	for(i=0;i<4;i++){
@@ -1113,50 +1105,24 @@ void FmaCmn_disp_number( FMISSION_APP_WORK *wk, const s32 wmode, const s32 src_w
 	}
 	//
 //	OS_Printf("%d,%d,%d,%d\n",buf[0],buf[1],buf[2],buf[3]);
-	// 左あわせ(しばらく残し)
-	if(rflg == 0){
-#if 0
-		// ここまででbuf[]に逆順で値が入っているはず
-		for(i=0;i<4;i++){
-			// 値のみ表示
-			bflg = TRUE;
-			if(smode == 0){
-				if((buf[3-i] == 0)&&(i != (4-1))){
-					bflg = FALSE;
-				}
+	// ここまででbuf[]に逆順で値が入っているはず
+	for(i=0;i<4;i++){
+		// 値のみ表示
+		bflg = TRUE;
+		if(smode == 0){
+			if(buf[i] == -1){
+				bflg = FALSE;
+				buf[i] = 0;	// 念のため
 			}
-			// 表示
-			GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk[src_wnum+i], bflg );
-			// フレームを指定(FX32_SHIFTをするようだ)=>うまくいかない
-//			GFL_CLACT_WK_SetAnmFrame( wk->wk_obj.clwk[src_wnum+i], (buf[3-i]<<FX32_SHIFT) );
-			GFL_CLACT_WK_SetAnmIndex( wk->wk_obj.clwk[src_wnum+i], buf[3-i] );
-			// x方向に加算
-			pos.x = x + 8*i;
-			GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[src_wnum+i], &pos, CLSYS_DEFREND_SUB );
 		}
-#endif
-	}
-	// 右あわせ
-	else{
-		// ここまででbuf[]に逆順で値が入っているはず
-		for(i=0;i<4;i++){
-			// 値のみ表示
-			bflg = TRUE;
-			if(smode == 0){
-				if(buf[i] == -1){
-					bflg = FALSE;
-					buf[i] = 0;	// 念のため
-				}
-			}
-			// 表示
-			GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk[src_wnum+3-i], bflg );
-			// フレームを指定(FX32_SHIFTをするようだ)=>うまくいかない
-//			GFL_CLACT_WK_SetAnmFrame( wk->wk_obj.clwk[src_wnum+i], (buf[3-i]<<FX32_SHIFT) );
-			GFL_CLACT_WK_SetAnmIndex( wk->wk_obj.clwk[src_wnum+3-i], buf[i] );
-			// x方向に加算
-			pos.x = x + 8*(3-i);
-			GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[src_wnum+3-i], &pos, CLSYS_DEFREND_SUB );
-		}
+		// 表示
+		GFL_CLACT_WK_SetDrawEnable(  wk->wk_obj.clwk[src_wnum+3-i], bflg );
+		// フレームを指定(FX32_SHIFT)したがうまくいかないので、
+		// アニメのインデックスをセットするようにした
+		GFL_CLACT_WK_SetAnmIndex( wk->wk_obj.clwk[src_wnum+3-i], buf[i] );
+		// x方向に加算
+		pos.x = x + 8*(3-i);
+		GFL_CLACT_WK_SetPos( wk->wk_obj.clwk[src_wnum+3-i], &pos, CLSYS_DEFREND_SUB );
 	}
 }
 
@@ -1259,6 +1225,8 @@ void FmaCmn_disp_star( FMISSION_APP_WORK *wk, const s32 cnum )
  *	タッチ判定
  *
  * @param   FMISSION_APP_WORK		*wk
+ *
+ * @retval  s32						(タッチ領域番号)
  */
 //--------------------------------------------------------------
 s32 FmaCmn_chk_tp( FMISSION_APP_WORK *wk )
@@ -1316,10 +1284,6 @@ static void fma_set_meswin( FMISSION_APP_WORK* wk, const s32 mode, const s32 id 
 			buf[1] = buf[0];
 		}
 		WORDSET_RegisterNumber( wk->Wordset, 2, buf[1], 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-		//
-//		buf[0] = wk->MissionResult.item_num;
-//		buf[1] = wk->MissionResult.bonus_num;
-//		WORDSET_RegisterNumber( wk->Wordset, 2, (buf[0]+buf[1]), 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
 		// セット
 		wk->MsgBuffer = GFL_STR_CreateBuffer( 256, wk->heapID );
 		str_tmp = GFL_MSG_CreateString( wk->MsgData[0], fma_meswin_tbl[id]);
@@ -1331,20 +1295,14 @@ static void fma_set_meswin( FMISSION_APP_WORK* wk, const s32 mode, const s32 id 
 		myitem = GAMEDATA_GetMyItem( wk->Param->gdata );
 		MYITEM_AddItem( myitem, wk->MissionResult.item, buf[1], wk->heapID );
 	}
-	// 手に入れられない
+	// 手に入れられない(アイテム名は持てない)
 	else if(id == FMA_MSGWIN_03){
-		// プレイヤ名
-//		mystatus = GAMEDATA_GetMyStatus( wk->Param->gdata );
-//		strbuf2 = GFL_STR_CreateBuffer( 64, wk->heapID );
-//		MyStatus_CopyNameString( mystatus, strbuf2 );
-//		WORDSET_RegisterWord( wk->Wordset, 0, strbuf2, 0, TRUE, PM_LANG );
 		// アイテム名
 		WORDSET_RegisterItemName( wk->Wordset, 0, wk->MissionResult.item );
 		// セット
 		wk->MsgBuffer = GFL_STR_CreateBuffer( 256, wk->heapID );
 		str_tmp = GFL_MSG_CreateString( wk->MsgData[0], fma_meswin_tbl[id]);
 		WORDSET_ExpandStr( wk->Wordset, wk->MsgBuffer, str_tmp );
-//		GFL_STR_DeleteBuffer(strbuf2);
 		GFL_STR_DeleteBuffer(str_tmp);
 	}
 	// 手に入れた2(sp)
@@ -1363,8 +1321,6 @@ static void fma_set_meswin( FMISSION_APP_WORK* wk, const s32 mode, const s32 id 
 			buf[1] = buf[0];
 		}
 		WORDSET_RegisterNumber( wk->Wordset, 2, buf[1], 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-//		buf[0] = wk->MissionResult.sp_item_num;
-//		WORDSET_RegisterNumber( wk->Wordset, 2, buf[0], 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
 		// セット
 		wk->MsgBuffer = GFL_STR_CreateBuffer( 256, wk->heapID );
 		str_tmp = GFL_MSG_CreateString( wk->MsgData[0], fma_meswin_tbl[2]);
@@ -1384,7 +1340,6 @@ static void fma_set_meswin( FMISSION_APP_WORK* wk, const s32 mode, const s32 id 
 		wk->MsgBuffer = GFL_STR_CreateBuffer( 256, wk->heapID );
 		str_tmp = GFL_MSG_CreateString( wk->MsgData[0], fma_meswin_tbl[3]);
 		WORDSET_ExpandStr( wk->Wordset, wk->MsgBuffer, str_tmp );
-//		GFL_STR_DeleteBuffer(strbuf2);
 		GFL_STR_DeleteBuffer(str_tmp);
 	}
 	// 個人
@@ -1455,11 +1410,9 @@ BOOL FmaCmn_main_meswin( FMISSION_APP_WORK* wk )
 	//
 	// 文字送りカーソル処理
 	APP_KEYCURSOR_Main( wk->MsgCursorWork, wk->PrintStream, wk->PrintUtil[FMAR_CANVAS_DOWN_WIN].win );
-	// streamの入力処理をまとめて処理してくれるらしい
-	// 内部でkey/touchの判定もしてくれるようだ
+	// streamの入力処理をまとめて処理してくれる
+	// 内部でkey/touchの判定もしてくれる
 	bflg = APP_PRINTSYS_COMMON_PrintStreamFunc( &wk->PrintSysWork , wk->PrintStream );
-	// 連結部分がうまくいかないため自前で処理(?)
-//	bflg = td_update_printstream( wk );
 	if( bflg == TRUE ){
 		// 終了
 		return( FALSE );

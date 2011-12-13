@@ -636,14 +636,12 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     break;
   case SEQ_DECIDE_ME_FADEIN_WAIT:
     if(PMSND_CheckFadeOnBGM() == FALSE){
-#if 1	// 新画面の飛び先
+      // 新画面の飛び先
+      // =>SEQ_TOPに戻す
       s32 ret = _mp_ret_mode( appwk, mpw );
       if(ret == 0){
         *seq = SEQ_TOP;
       }
-#else
-      *seq = SEQ_DECIDE_STREAM_KEY_WAIT;
-#endif
     }
     break;
   case SEQ_DECIDE_STREAM_KEY_WAIT:
@@ -1050,16 +1048,12 @@ static void _Set_MsgStreamExpand(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *se
 //--------------------------------------------------------------
 static BOOL _Wait_MsgStream(MONOLITH_SETUP *setup, MONOLITH_PWSELECT_WORK *mpw)
 {
-#if 1
   BOOL bflg;
   // stream
   bflg = APP_PRINTSYS_COMMON_PrintStreamFunc( &setup->app_printsys, mpw->print_stream );
-  // cursor
+  // 文字送りカーソル
   _mp_main_keycursor( mpw, 1 );
   return( bflg );
-#else
-  return APP_PRINTSYS_COMMON_PrintStreamFunc( &setup->app_printsys, mpw->print_stream );
-#endif
 }
 
 //--------------------------------------------------------------
@@ -1868,9 +1862,6 @@ static void _mp_init( MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw )
   for(i=0;i<INTRUDE_EQUIP_GPOWER_MAX;i++){
     appwk->common->gpower_no[i] = ISC_SAVE_GetGPowerID( intsave, i );
   }
-  // test
-//  appwk->common->gpower_no[1] = GPOWER_ID_NULL;
-//  appwk->common->gpower_no[2] = GPOWER_ID_NULL;
   //
   // 持っているGPOWER_IDのパネルを非選択とする処理
   for(j=0;j<INTRUDE_EQUIP_GPOWER_MAX;j++){
@@ -2114,7 +2105,6 @@ static void _mp_chg_brightness( MONOLITH_PWSELECT_WORK *mpw, const BOOL bflg )
   if(bflg == TRUE){
     rate = MP_PASSIVE_RATE;
   }
-//  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG1 |GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ, rate );
   G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ, rate );
   //
   // 戻す際にalphaも戻す

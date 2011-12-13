@@ -836,7 +836,7 @@ static GFL_PROC_RESULT GPowerAppProc_Main( GFL_PROC *proc, int *seq, void *pwk, 
 			(*seq) ++;
 			break;
 		//
-		// ここで最終終了待ちをしているようだ
+		// ここで最終終了待ち
 		case 3:
 			if (WIPE_SYS_EndCheck())
 			{
@@ -888,7 +888,7 @@ static void gpower_app_init( GPOWER_APP_MAIN_WORK* wk )
 	wk->CurPos		= 0;
 	wk->CurPosMax	= wk->Param->gpower_num;
 	if(wk->CurPosMax <= 0){
-//		wk->CurPosMax = 1;
+		// 念のため
 		wk->CurPos  = 3;	// ハイリンクにしておく
 		OS_Printf("gpower num error\n");
 	}
@@ -964,29 +964,6 @@ static void gpower_app_main( GPOWER_APP_MAIN_WORK* wk )
 {
 	// 下画面
 	gpower_app_down( wk );
-	
-#if 0	// 半透明のテスト用
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
-		rate[0]++;
-		rate[1]--;
-		//
-		OS_Printf("%d,%d\n",rate[0],rate[1]);
-	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1,
-		GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
-		rate[0], rate[1]);
-
-	}
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
-		rate[0]--;
-		rate[1]++;
-		//
-		OS_Printf("%d,%d\n",rate[0],rate[1]);
-	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1,
-		GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
-		rate[0], rate[1]);
-
-	}
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1201,9 +1178,6 @@ static void gpower_app_key_all( GPOWER_APP_MAIN_WORK* wk )
 				// スクロールUP終了後 => プライオリティ戻し => (yes/no)表示
 				gpower_app_set_bgprio( wk, PRIO_BACK );
 				gpower_app_init_yesnowin( wk );
-				// 戻るボタンを消しておく
-				// yes/no表示で見えにくくなるため
-//				gpower_app_set_obj_visible( wk, CLWKMODE_CMN, CLWKID_CMN_RETURN, FALSE );
 				wk->Step = STEP_LV4+10;
 			}
 			break;
@@ -1762,7 +1736,7 @@ static BOOL gpower_app_is_anime_end( GPOWER_APP_MAIN_WORK *wk, const s32 wmode, 
 {
 	BOOL	bflg=TRUE;
 	
-	// 終了判定らしい
+	// 終了判定
 	if(wmode == CLWKMODE_NORMAL){		// 通常
 		if(wnum >= GPOWER_APP_OBJ_MAXNUM){
 			OS_Printf("obj max error:%d\n",wnum);
@@ -1857,7 +1831,6 @@ static void gpower_app_disp_bmpoam( GPOWER_APP_MAIN_WORK* wk, const s32 wnum, co
 		return;
 	}
 	GFL_BMP_Clear( wk->BmpData[wnum], 0 );
-//	PRINTSYS_PrintQueColor( wk->print_que, wk->BmpData[wnum], 0, 0, strbuf, wk->font, PRINTSYS_LSB_Make(15,2,0) );
 	PRINTSYS_PrintColor( wk->BmpData[wnum], 0, 0, strbuf, wk->font, PRINTSYS_LSB_Make(15,2,0) );
 	BmpOam_ActorBmpTrans( wk->BmpOamWork[wnum] );
 	//
@@ -2194,7 +2167,7 @@ static void gpower_app_update( GPOWER_APP_MAIN_WORK* wk, const s32 mode )
 		// 使用可能(装備可能)のデルパワー情報
 		gpower_app_disp_use_able( wk );
 		//
-		// ハイリンク情報表示(test)
+		// ハイリンク情報表示
 		gpower_app_disp_hilink( wk );
 	}
 	// 通常の変更の反映が必要であれば以下に追加
@@ -2375,15 +2348,6 @@ static s32 gpower_app_chk_tp( GPOWER_APP_MAIN_WORK* wk )
 	// タッチペン判定
 	// =>ハイリンクのタッチの判定に注意
 	id = GFL_UI_TP_HitTrg( gpapp_rect_00_tbl );
-#if 0
-	if((id >= 0)&&(id <= 5)){
-		{
-			u32		x,y;
-			GFL_UI_TP_GetPointTrg( &x, &y );
-			OS_Printf("%d :(%d,%d)\n",id,x,y);
-		}
-	}
-#endif
 	//
 	// パネルの場合=>選択可能のものを調べる
 	if((id >= 0)&&(id <= 2)){
@@ -2517,12 +2481,6 @@ static BOOL gpower_app_chk_battery( GPOWER_APP_MAIN_WORK* wk )
 	
 	// 判定
 	bflg = GAMESYSTEM_IsBatt10Sleep( wk->Param->gsys );
-	//
-#if 0	// test
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
-		bflg = TRUE;
-	}
-#endif
 	return( bflg );
 }
 
@@ -2597,7 +2555,7 @@ static void gpower_app_main_chgpal( GPOWER_APP_MAIN_WORK* wk )
 	// 速度
 	rate = 0x400;
 	
-	// 加算(0 .. 1.0)にするようだ
+	// 加算(0 .. 1.0)にする
 	wk->PCount += rate;
 	if(wk->PCount >= 0x10000){
 		wk->PCount -= 0x10000;
@@ -2912,12 +2870,6 @@ static void gpower_app_init_deltama( GPOWER_APP_MAIN_WORK* wk )
 {
 	s32		i;
 	POWER_CONV_DATA*	p_data = GPOWER_PowerData_LoadAlloc( wk->heapID );
-	
-	// フラグ等はこの前に初期化済み
-//	wk->DelTamaFlag = 0;
-//	for(i=0;i<3;i++){
-//		wk->DelTama[i] = 0;
-//	}
 	//
 	// 装備中のデルタマの情報を取得
 	for(i=0;i<wk->Param->gpower_num;i++){

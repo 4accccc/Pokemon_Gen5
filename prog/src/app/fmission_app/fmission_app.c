@@ -7,7 +7,7 @@
  *	@data	  2011.04.22	
  */
 //=============================================================================
-//必ず必要なインクルード
+//必要なインクルード
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "system/main.h"
@@ -209,7 +209,6 @@ static void fma_update_down_result( FMISSION_APP_WORK* wk );
 //
 static void fma_disp_fes_string( FMISSION_APP_WORK *wk, const s32 mode, const s32 snum, const s32 x, const s32 y, const s32 lmode );
 //
-static void fma_disp_highscore( FMISSION_APP_WORK *wk );
 static void fma_disp_total_score( FMISSION_APP_WORK *wk, const s32 mode );
 static void fma_disp_scroll_info( FMISSION_APP_WORK *wk, const s32 num );
 static void fma_chk_log_buffer( FMISSION_APP_WORK *wk );
@@ -468,7 +467,7 @@ static GFL_PROC_RESULT FMissionAppProc_Main( GFL_PROC *proc, int *seq, void *pwk
 			(*seq) ++;
 			break;
 		//
-		// ここで最終終了待ちをしているようだ
+		// ここで最終終了待ち
 		case 3:
 			if (WIPE_SYS_EndCheck())
 			{
@@ -523,13 +522,6 @@ static void fma_init( FMISSION_APP_WORK* wk )
 	wk->LevelTimer = 0;
 	wk->Level	= 0;
 	//
-	//
-#ifdef PM_DEBUG
-	// R押しながら(debug)
-	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
-//		wk->Flag |= FLG_FMA_DEBUG;
-	}
-#endif
 	wk->OldWork.Timer	= -1;
 	wk->OldWork.Num 	= -1;
 	wk->OldWork.Score 	= -1;
@@ -872,11 +864,6 @@ static void fma_update_down_info( FMISSION_APP_WORK* wk )
 		//----------
 		// 説明文
 		fma_disp_fes_string( wk, FMA_MES_EXPLAIN, FMAI_CANVAS_DOWN_EXPLAIN_L, 0, 0, PRINTTOOL_MODE_LEFT );
-		//
-		//------------
-		// ハイスコア
-		//------------
-//		fma_disp_highscore( wk );
 	}
 	
 	//---------------------------------------
@@ -1033,7 +1020,7 @@ static void fma_clear_info_down( FMISSION_APP_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  スクロールチェック(要調整)
+ *	@brief  スクロールチェック(ログの表示)
  *
  *	@param	FMISSION_APP_WORK* wk 
  *
@@ -1048,7 +1035,7 @@ static void fma_chk_scroll( FMISSION_APP_WORK* wk )
 	if(wk->Step == STEP_END){
 		return;
 	}
-	// ログのチェック(毎フレーム必要)
+	// スコアログのチェック(毎フレーム必要)
 	fma_chk_log_buffer( wk );
 	
 	// 一人モードの場合
@@ -1157,14 +1144,6 @@ static void fma_init_result( FMISSION_APP_WORK* wk )
 		wk->Flag |= FLG_FMA_NEW_RD;
 	}
 	//
-#ifdef PM_DEBUG
-	// debug
-	if(wk->Flag & FLG_FMA_DEBUG){
-		wk->Flag |= (FLG_FMA_SUCCESS|FLG_FMA_BONUS|FLG_FMA_DOUBLE|FLG_FMA_CLEAR_TIME|FLG_FMA_GET|FLG_FMA_GET2|FLG_FMA_HILINK);
-		wk->Flag |= (FLG_FMA_NEW_TS|FLG_FMA_NEW_CT);
-	}
-#endif
-
 #ifdef PM_DEBUG
 	OS_Printf("clear, ver, vernum, score :%d,%d,%d,%d\n",
 			wk->MissionResult.clear_f,
@@ -1598,26 +1577,6 @@ static void fma_disp_fes_string( FMISSION_APP_WORK *wk, const s32 mode, const s3
 		//
 		OS_Printf("%d,%d\n",id,buf[1]);
 	}
-#if 0
-	else if(mode == FMA_MES_GAIN){		// 報酬
-		// 仕様変更により非表示となった
-		// 報酬アイテム取得
-		buf[0] = wk->ArcData[id].param.item;
-		// 報酬数取得
-		buf[1] = wk->ArcData[id].param.level[lv].pay;
-		//
-		WORDSET_RegisterItemName( wk->Wordset, 0, buf[0] );
-		WORDSET_RegisterNumber(   wk->Wordset, 1, buf[1], 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-		str = GFL_STR_CreateBuffer( 128, wk->heapID );
-		if(wk->ArcData[id].param.pay_bonus == FMISSION_PAY_BONUS_NONE){
-			str_tmp = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_02_tbl[0] );
-		}else{
-			str_tmp = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_02_tbl[1] );
-		}
-		WORDSET_ExpandStr( wk->Wordset, str, str_tmp );
-		GFL_STR_DeleteBuffer(str_tmp);
-	}
-#endif
 	else if(mode == FMA_MES_JOIN){		// 参加人数
 		// 参加人数
 		buf[0] = wk->MissionStatus.entry_num;
@@ -1724,60 +1683,7 @@ static void fma_disp_fes_string( FMISSION_APP_WORK *wk, const s32 mode, const s3
 
 //--------------------------------------------------------------
 /**
- * ハイスコア表示
- *
- * @param   FMISSION_APP_WORK		*wk
- */
-//--------------------------------------------------------------
-static void fma_disp_highscore( FMISSION_APP_WORK *wk )
-{
-#if 0
-	u8			buf[2];
-	s32			id;
-	s32			flg=0;
-	s32			dflg=0;
-	s32			num;
-	STRBUF		*str;
-	STRBUF		*expbuf;
-	SAVE_CONTROL_WORK *work = GAMEDATA_GetSaveControlWork( wk->Param->gdata );
-	FMISSION_SAVE *fsave 	= SAVEDATA_GetFMissionSave( work );
-	//
-	id = wk->Param->fmwk->beacon.m_id;
-	//
-	// 仕様変更によりスコアを表示
-	flg = 0;
-	num = FMISSION_SAVE_GetMissionStatusHighScore( fsave, id );
-	if(num == 0){
-		dflg = 1;
-	}
-	//
-	// 一旦クリア
-	FmaCmn_clear_canvas( wk, FMAI_CANVAS_DOWN_HIGH_L );
-	FmaCmn_clear_canvas( wk, FMAI_CANVAS_DOWN_HIGH_R );
-	//
-	if(dflg == 0){
-		// ハイスコア
-		str = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_tbl[8] );
-		FmaCmn_disp_string( wk, FMAI_CANVAS_DOWN_HIGH_L, 0, 0, str, PRINTTOOL_MODE_LEFT, PRINTSYS_LSB_Make(15,2,0));
-		GFL_STR_DeleteBuffer( str );
-		//
-		WORDSET_RegisterNumber(wk->Wordset, 0, num, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-		buf[1] = wk->ArcData[id].param.unit;
-		str = GFL_MSG_CreateString( wk->MsgData[0], fmai_mes_01_tbl[4*buf[1]+1] );
-		//
-		expbuf = GFL_STR_CreateBuffer( 64, wk->heapID );
-		WORDSET_ExpandStr( wk->Wordset, expbuf, str );
-		// 表示
-		FmaCmn_disp_string( wk, FMAI_CANVAS_DOWN_HIGH_R, 64, 0, expbuf, PRINTTOOL_MODE_RIGHT, PRINTSYS_LSB_Make(15,2,0));
-		GFL_STR_DeleteBuffer(str);
-		GFL_STR_DeleteBuffer(expbuf);
-	}
-#endif
-}
-
-//--------------------------------------------------------------
-/**
- * トータル表示(要整理)
+ * トータル表示
  *
  * @param   FMISSION_APP_WORK		*wk
  */
