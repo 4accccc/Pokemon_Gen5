@@ -467,4 +467,6 @@ TARGET_LIST = \
 	cnv_tmp/trwb_pkwd_ladybug.NCLR \
 	cnv_tmp/trwb_juggling_1_LZ.bin \
 	cnv_tmp/trwb_juggling_1.NCLR \
+	cnv_tmp/trwb_red_LZ.bin \
+	cnv_tmp/trwb_red.NCLR \
 

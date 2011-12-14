@@ -2198,3 +2198,12 @@ cnv_tmp/trwb_juggling_1.NCLR : ./../../../swan_doc/trgra/trwb_juggling.ncl
 	@g2dcvtr $< -bg -o/cnv_tmp
 	cp cnv_tmp/trwb_juggling.NCLR cnv_tmp/trwb_juggling_1.NCLR 
 
+cnv_tmp/trwb_red.NCGR : ./../../../swan_doc/trgra/trwb_red.ncg 
+	@g2dcvtr $< -bg -cr/0_28_32_4 -o/cnv_tmp
+
+cnv_tmp/trwb_red_LZ.bin : cnv_tmp/trwb_red.NCGR 
+	ntrcomp -l 2 cnv_tmp/trwb_red.NCGR
+
+cnv_tmp/trwb_red.NCLR : ./../../../swan_doc/trgra/trwb_red.ncl 
+	@g2dcvtr $< -bg -o/cnv_tmp
+
