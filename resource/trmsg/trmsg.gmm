@@ -18425,6 +18425,116 @@
 もっともっと　上を　めざすから！</language>
 	</row>
 
+	<row id="TRID_SWPLAZMAM_40_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">まってたぞ！▼</language>
+		<language name="JPN_KANJI" width="216">待ってたぞ！▼</language>
+	</row>
+
+	<row id="TRID_SWPLAZMAM_40_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">まけた！
+ちがう！　プラーズマー！</language>
+		<language name="JPN_KANJI" width="216">負けた！
+違う！　プラーズマー！</language>
+	</row>
+
+	<row id="TRID_SWPLAZMAM_40_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">まけろ！　まけろ！
+おまえなんか　まけてしまえ！</language>
+		<language name="JPN_KANJI" width="216">負けろ！　負けろ！
+おまえなんか　負けてしまえ！</language>
+	</row>
+
+	<row id="TRID_SWPLAZMAW_17_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">まってたわ！▼</language>
+		<language name="JPN_KANJI" width="216">待ってたわ！▼</language>
+	</row>
+
+	<row id="TRID_SWPLAZMAW_17_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">まけちゃった！
+ちがう！　プラーズマー！</language>
+		<language name="JPN_KANJI" width="216">負けちゃった！
+ちがう！　プラーズマー！</language>
+	</row>
+
+	<row id="TRID_SWPLAZMAW_17_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">まけろ！　まけちゃいなよ！
+あんたなんか　まけてしまいなさいよ！</language>
+		<language name="JPN_KANJI" width="216">負けろ！　負けちゃいなよ！
+あんたなんか　負けてしまいなさいよ！</language>
+	</row>
+
+	<row id="TRID_SWPLAZMAM_41_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">プラズマフリゲートの
+ギミックに　いらついてるんだろ？▼</language>
+		<language name="JPN_KANJI" width="216">プラズマフリゲートの
+ギミックに　いらついてるんだろ？▼</language>
+	</row>
+
+	<row id="TRID_SWPLAZMAM_41_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">むきー！
+めちゃくちゃ　いらつくぜ！</language>
+		<language name="JPN_KANJI" width="216">むきー！
+めちゃくちゃ　いらつくぜ！</language>
+	</row>
+
+	<row id="TRID_SWPLAZMAM_41_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">プラズマフリゲートの　ギミックに
+おかねを　かけすぎたせいで▽
+まいにち　パンしか　くえないんだぞ！</language>
+		<language name="JPN_KANJI" width="216">プラズマフリゲートの　ギミックに
+お金を　かけすぎたせいで▽
+毎日　パンしか　食えないんだぞ！</language>
+	</row>
+
+	<row id="TRID_SWPLAZMAW_18_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">しんにゅうしゃは
+あなたで　あってますか？▼</language>
+		<language name="JPN_KANJI" width="216">侵入者は
+あなたで　あってますか？▼</language>
+	</row>
+
+	<row id="TRID_SWPLAZMAW_18_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">たしかに　あなたは
+しんにゅうしゃ！</language>
+		<language name="JPN_KANJI" width="216">たしかに　あなたは
+侵入者！</language>
+	</row>
+
+	<row id="TRID_SWPLAZMAW_18_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">しんにゅうしゃの　あなたを　たおせば
+もっと　いい　ポケモンを……</language>
+		<language name="JPN_KANJI" width="216">侵入者の　あなたを　倒せば
+もっと　いい　ポケモンを……</language>
+	</row>
+
+	<row id="TRID_DOCTOR_11_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">プラズマだんが　せかいせいふく　すれば
+きずつく　ポケモンは　へるだろう！▼</language>
+		<language name="JPN_KANJI" width="216">プラズマ団が　世界征服すれば
+傷つく　ポケモンは　減るだろう！▼</language>
+	</row>
+
+	<row id="TRID_DOCTOR_11_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ぐぬぬ……　おしえてくれ！
+ポケモンしょうぶ　とは　なんだ？</language>
+		<language name="JPN_KANJI" width="216">ぐぬぬ……　教えてくれ！
+ポケモン勝負とは　なんだ？</language>
+	</row>
+
+	<row id="TRID_DOCTOR_11_TRMSG_FIGHT_AFTER_RECOVER_BEFORE">
+		<language name="JPN" width="216">きずついた　ポケモンに
+てきも　みかたも　あるもんか！▼</language>
+		<language name="JPN_KANJI" width="216">傷ついた　ポケモンに
+敵も　味方も　あるもんか！▼</language>
+	</row>
+
+	<row id="TRID_DOCTOR_11_TRMSG_FIGHT_AFTER_RECOVER_AFTER">
+		<language name="JPN" width="216">プラズマだんが　せかいせいふく　すれば
+あらそいは　なくなると　おもわないか？</language>
+		<language name="JPN_KANJI" width="216">プラズマ団が　世界征服すれば
+争いは　なくなると　思わないか？</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
