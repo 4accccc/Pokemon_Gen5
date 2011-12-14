@@ -406,7 +406,7 @@ struct _CTVT_GAME_WORK
   u32         cellResIdx[ CGOR_MAX ];   // セルリソースインデックス
   GFL_CLUNIT  *cellUnit;                // セルアクターシステム
   // タイトル
-  GFL_CLWK    *clwkTitle[4];            // タイトル
+  GFL_CLWK    *clwkTitle[3];            // タイトル
   // ゲームプレイ中
   GFL_CLWK    *clwkCloud_M[2];          // 雲
   GFL_CLWK    *clwkTime;                // タイムゲージ
@@ -1590,7 +1590,7 @@ static void CTVT_GAME_Init( COMM_TVT_WORK *work , CTVT_GAME_WORK *gameWork )
     gameWork->p_balloon_s_wk[i] = NULL;
   }
   // CLWK
-  for( i=0; i<4; i++ )
+  for( i=0; i<3; i++ )
   {
     gameWork->clwkTitle[i] = NULL;            // タイトル
   }
@@ -2869,21 +2869,27 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
     cellInitData.softpri = 4;
     cellInitData.bgpri = 1;
 
-    for( i=0; i<2; i++ )
-    {
-      cellInitData.anmseq = CGOAS_TITLE1 + i;
-      cellInitData.softpri = i+4;
-
-      gameWork->clwkTitle[i] = GFL_CLACT_WK_Create( gameWork->cellUnit,
-          gameWork->cellResIdx[CGOR_UPPER_PLT],
-          gameWork->cellResIdx[CGOR_UPPER_NCG],
-          gameWork->cellResIdx[CGOR_UPPER_ANM],
-          &cellInitData ,CLSYS_DEFREND_SUB, heapID );
-      GFL_CLACT_WK_SetDrawEnable( gameWork->clwkTitle[i] , TRUE );
-      GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkTitle[i] , TRUE );
-    }
+    cellInitData.anmseq = CGOAS_TITLE1;
+    cellInitData.softpri = 4;
+    gameWork->clwkTitle[0] = GFL_CLACT_WK_Create( gameWork->cellUnit,
+        gameWork->cellResIdx[CGOR_UPPER_PLT],
+        gameWork->cellResIdx[CGOR_UPPER_NCG],
+        gameWork->cellResIdx[CGOR_UPPER_ANM],
+        &cellInitData ,CLSYS_DEFREND_SUB, heapID );
+    GFL_CLACT_WK_SetDrawEnable( gameWork->clwkTitle[0] , TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkTitle[0] , TRUE );
     // part2の虹
     cellInitData.anmseq = CGOAS_RAINBOW2;
+    cellInitData.softpri = 6;
+    gameWork->clwkTitle[1] = GFL_CLACT_WK_Create( gameWork->cellUnit,
+        gameWork->cellResIdx[CGOR_UPPER_PLT],
+        gameWork->cellResIdx[CGOR_UPPER_NCG],
+        gameWork->cellResIdx[CGOR_UPPER_ANM],
+        &cellInitData ,CLSYS_DEFREND_SUB, heapID );
+    GFL_CLACT_WK_SetDrawEnable( gameWork->clwkTitle[1] , TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkTitle[1] , TRUE );
+    // part2の「2」
+    cellInitData.anmseq = CGOAS_PART2;
     cellInitData.softpri = 6;
     gameWork->clwkTitle[2] = GFL_CLACT_WK_Create( gameWork->cellUnit,
         gameWork->cellResIdx[CGOR_UPPER_PLT],
@@ -2892,16 +2898,6 @@ static void game_update_seq_init_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gam
         &cellInitData ,CLSYS_DEFREND_SUB, heapID );
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkTitle[2] , TRUE );
     GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkTitle[2] , TRUE );
-    // part2の「2」
-    cellInitData.anmseq = CGOAS_PART2;
-    cellInitData.softpri = 6;
-    gameWork->clwkTitle[3] = GFL_CLACT_WK_Create( gameWork->cellUnit,
-        gameWork->cellResIdx[CGOR_UPPER_PLT],
-        gameWork->cellResIdx[CGOR_UPPER_NCG],
-        gameWork->cellResIdx[CGOR_UPPER_ANM],
-        &cellInitData ,CLSYS_DEFREND_SUB, heapID );
-    GFL_CLACT_WK_SetDrawEnable( gameWork->clwkTitle[3] , TRUE );
-    GFL_CLACT_WK_SetAutoAnmFlag( gameWork->clwkTitle[3] , TRUE );
 
     // タッチするボタン
     cellInitData.pos_x = 128;
@@ -3177,7 +3173,7 @@ static void game_update_seq_title_end_part1( COMM_TVT_WORK *work, CTVT_GAME_WORK
 static void game_update_seq_title_end_part2( COMM_TVT_WORK *work, CTVT_GAME_WORK *gameWork )
 {
   u8 i;
-  for( i=0; i<4; i++ )
+  for( i=0; i<3; i++ )
   {
     // タイトル 非表示
     GFL_CLACT_WK_SetDrawEnable( gameWork->clwkTitle[i], FALSE );
