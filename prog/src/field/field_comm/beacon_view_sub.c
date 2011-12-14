@@ -386,12 +386,6 @@ BOOL BeaconView_CheckSpecialFMissionEntry( BEACON_VIEW_PTR wk )
   if( LINK_FESTIVAL_IsMissionEntry( wk->fest_sys ) ){
     return FALSE;
   }
-#if 0
-  //ハイリンクに侵入されていたらスルー @TODO ハイリンクがなくなるので、この処理要らなくなるはず
-  if( GameCommSys_BootCheck( wk->game_comm ) != GAME_COMM_NO_FIELD_BEACON_SEARCH ){
-    return FALSE;
-  }
-#endif
   //エントリーデータスタックチェック
   if( FMISSION_ENTRY_TBL_GetData( wk->fest_sys, &mission, wk->str_tmp ) == FALSE ){
     return FALSE;

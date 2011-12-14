@@ -283,13 +283,10 @@ GPOWER_ID ISC_SAVE_GetGPowerID(INTRUDE_SAVE_WORK *intsave, int idx)
     GF_ASSERT(0);
     return GPOWER_ID_NULL;
   }
-#ifdef PM_DEBUG
-  //@TODOセーブデータが引き継げなくなったら消す
-  if( GPOWER_IsEnableID( intsave->gpower_id[idx]) ){
+  if( !GPOWER_IsErrorID( intsave->gpower_id[idx]) ){
     return intsave->gpower_id[idx];
   }
   intsave->gpower_id[idx] = GPOWER_ID_NULL; //無効値でクリア
-#endif
   return intsave->gpower_id[idx];
 }
 
