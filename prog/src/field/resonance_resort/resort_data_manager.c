@@ -21,6 +21,19 @@
 #include "system/gfl_use.h"
 #include "field/resort_work.h"
 #include "resort_debug.h"
+
+#ifdef PM_DEBUG
+#define DEBUG_RESORT_PRINT_ON
+#endif
+
+#if defined(DEBUG_RESORT_PRINT_ON)
+#define RESORT_Printf(...)  OS_TFPrintf(2,__VA_ARGS__)
+#else
+#define RESORT_Printf(...)  /* */
+#endif
+
+
+
 //=============================================================================
 /**
  *	人物配置情報
@@ -132,10 +145,31 @@ void RESORT_DATA_MANAGER_Update( RESORT_DATA_MANAGER *p_wk )
 
         p_wk->info[ placeID ].people_buffer_type[ peopleID ]  = RESORT_ABSTRUCT_DATA_GetBufferType( p_data );
         p_wk->info[ placeID ].people_index[ peopleID ] = RESORT_ABSTRUCT_DATA_GetBufferIndex( p_data );
-        //OS_TFPrintf( 2, "placeID%d peopleID%d buffer_type%d bufferIndex%d\n", placeID, peopleID, p_wk->info[ placeID ].people_buffer_type[ peopleID ], p_wk->info[ placeID ].people_index[ peopleID ] );
+        //RESORT_Printf( "placeID%d peopleID%d buffer_type%d bufferIndex%d\n", placeID, peopleID, p_wk->info[ placeID ].people_buffer_type[ peopleID ], p_wk->info[ placeID ].people_index[ peopleID ] );
       }
     }
   }
+
+#ifdef PM_DEBUG
+  RESORT_Printf( "配置更新▼\n" );
+  for( i = RESORT_PLACEID_START; i < RESORT_PLACEID_MAX; i++ )
+  {
+    RESORT_DATA_MANAGER_INFO *p_info = &p_wk->info[i];
+    for( j = 0; j < RESORT_DATA_MANAGER_MAX; j++ )
+    {
+      if( p_info->people_buffer_type[j] == RESORT_DATA_BUFFER_TYPE_NULL )
+      {
+        RESORT_Printf( "[%d]○t=%di=%d ", j, p_info->people_buffer_type[j], p_info->people_index[j] );
+      }
+      else
+      {
+        RESORT_Printf( "[%d]× ", j, p_info->people_buffer_type[j], p_info->people_index[j] );
+      }
+    }
+    RESORT_Printf( "\n" );
+  }
+  RESORT_Printf( "―――――▲\n" );
+#endif
 }
 
 //----------------------------------------------------------------------------
