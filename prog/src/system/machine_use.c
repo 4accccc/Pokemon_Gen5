@@ -206,7 +206,7 @@ static void myExitCallback(void *arg)
 //------------------------------------------------------------------
 static  BOOL  card_pull_callback( void )
 { 
-  GF_ASSERT( 0 );
+  GF_ASSERT_MSG( 0, "card pull out!!\n" );
 
   return TRUE;
 }
