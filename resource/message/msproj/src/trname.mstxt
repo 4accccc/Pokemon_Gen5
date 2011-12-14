@@ -26173,4 +26173,29 @@
 				Time="2011-12-14T01:49:57" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="swplazmam_42">
+		<LanguageCell
+			Language="JPN">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T06:48:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T06:48:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T06:48:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T06:48:48" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>
