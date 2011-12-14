@@ -23874,10 +23874,10 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl1:xcenter ]しろのじゅどう
-[Ctrl1:xcenter ]エリア[Digit:2digits ]　　[Digit:2digits Idx="1" ]かい</Text>
+[Ctrl1:xcenter ]エリア[Digit:2digits ]　　ちか[Digit:2digits Idx="1" ]かい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T08:09:18" />
+				Time="2011-12-14T06:04:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -23886,10 +23886,10 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl1:xcenter ]白の樹洞
-[Ctrl1:xcenter ]エリア[Digit:2digits ]　　[Digit:2digits Idx="1" ]かい</Text>
+[Ctrl1:xcenter ]エリア[Digit:2digits ]　　地下[Digit:2digits Idx="1" ]かい</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T08:09:36" />
+				Time="2011-12-14T06:04:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
