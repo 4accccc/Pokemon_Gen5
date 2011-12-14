@@ -14,5 +14,4 @@
 //  extern 
 //=======================================================================================
 extern VMCMD_RESULT EvCmdLeagueFrontLiftDown( VMHANDLE *core, void *wk );
-extern VMCMD_RESULT EvCmdLeagueFrontFireworks( VMHANDLE *core, void *wk );
 

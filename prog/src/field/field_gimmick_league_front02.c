@@ -50,12 +50,6 @@ typedef enum {
   RES_LIFT_EFFECT_NSBTA,      // リフト稼動エフェクトのテクスチャアニメーション
   RES_LIFT_EFFECT_NSBMA,      // リフト稼動エフェクトのマテリアルアニメーション
 
-  // swan追加
-  RES_HANABI_NSBMD,           // 花火モデル
-  RES_HANABI_NSBCA,           // 花火アニメ
-  RES_HANABI_NSBMA,           // 花火アニメ
-  RES_HANABI_NSBTA,           // 花火アニメ
-
   RES_NUM
 } RES_INDEX;
 
@@ -66,11 +60,6 @@ static const GFL_G3D_UTIL_RES res_table[ RES_NUM ] =
   {ARCID, NARC_league_front_pl_efect_01_nsbmd,   GFL_G3D_UTIL_RESARC}, // [ RES_LIFT_EFFECT_NSBMD ]
   {ARCID, NARC_league_front_pl_efect_01_nsbta,   GFL_G3D_UTIL_RESARC}, // [ RES_LIFT_EFFECT_NSBTA ]
   {ARCID, NARC_league_front_pl_efect_01_nsbma,   GFL_G3D_UTIL_RESARC}, // [ RES_LIFT_EFFECT_NSBMA ]
-
-  {ARCID, NARC_league_front_ed_hanabi01_nsbmd,   GFL_G3D_UTIL_RESARC}, // [ RES_HANABI_NSBMD ]
-  {ARCID, NARC_league_front_ed_hanabi01_nsbca,   GFL_G3D_UTIL_RESARC}, // [ RES_HANABI_NSBCA ]
-  {ARCID, NARC_league_front_ed_hanabi01_nsbma,   GFL_G3D_UTIL_RESARC}, // [ RES_HANABI_NSBMA ]
-  {ARCID, NARC_league_front_ed_hanabi01_nsbta,   GFL_G3D_UTIL_RESARC}, // [ RES_HANABI_NSBTA ]
 }; 
 //------------------------
 // アニメーション(リフト)
@@ -87,15 +76,6 @@ static const GFL_G3D_UTIL_ANM anm_table_lift_effect[ LIFT_EFFECT_ANM_NUM ] =
   {RES_LIFT_EFFECT_NSBTA,  0}, 
   {RES_LIFT_EFFECT_NSBMA, 0},
 }; 
-//------------------------
-// アニメーション(花火)
-//------------------------
-static const GFL_G3D_UTIL_ANM anm_table_hanabi[ HANABI_ANM_NUM ] = 
-{
-  {RES_HANABI_NSBCA,  0}, 
-  {RES_HANABI_NSBMA,  0}, 
-  {RES_HANABI_NSBTA,  0}, 
-}; 
 //-------------
 // オブジェクト
 //-------------
@@ -103,7 +83,6 @@ static const GFL_G3D_UTIL_OBJ obj_table[ LF02_EXOBJ_NUM ] =
 {
   {RES_LIFT_NSBMD,        0, RES_LIFT_NSBMD,        anm_table_lift,        LIFT_ANM_NUM},
   {RES_LIFT_EFFECT_NSBMD, 0, RES_LIFT_EFFECT_NSBMD, anm_table_lift_effect, LIFT_EFFECT_ANM_NUM},
-  {RES_HANABI_NSBMD,      0, RES_HANABI_NSBMD,      anm_table_hanabi,      HANABI_ANM_NUM},
 }; 
 //----------
 // ユニット
@@ -124,17 +103,12 @@ static const GFL_G3D_UTIL_SETUP unit[ LF02_EXUNIT_NUM ] =
 #define LIFT_POS_Y (2 << FX32_SHIFT)
 #define LIFT_POS_Z ((LIFT_POS_Z_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
 
-// 花火座標
-#define HANABI_POS_X    ( 512 << FX32_SHIFT )
-#define HANABI_POS_Y    ( 768 << FX32_SHIFT )
-#define HANABI_POS_Z    ( -256 << FX32_SHIFT )
 
 // 配置座標
 static const VecFx32 obj_pos[ LF02_EXOBJ_NUM ] = 
 {
   {LIFT_POS_X, LIFT_POS_Y, LIFT_POS_Z},
   {LIFT_POS_X, LIFT_POS_Y, LIFT_POS_Z},
-  {HANABI_POS_X, HANABI_POS_Y, HANABI_POS_Z},
 };
 
 //==========================================================================================
@@ -211,14 +185,6 @@ void LEAGUE_FRONT_02_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 //------------------------------------------------------------------------------------------
 void LEAGUE_FRONT_02_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
 {
-
-#ifdef PM_DEBUG
-  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-      LEAGUE_FRONT_02_GIMMICK_Hanabi( fieldmap );
-    }
-  }
-#endif
 
   // 拡張オブジェクトのアニメ再生
   {
@@ -394,43 +360,6 @@ BOOL LEAGUE_FRONT_02_GIMMICK_CheckLiftEffectEnd( FIELDMAP_WORK* fieldmap )
   return TRUE;
 }
 
-//----------------------------------------------------------------------------
-/**
- *	@brief  花火を再生
- *
- *	@param	FIELDMAP_WORK* fieldmap フィールドマップ
- */
-//-----------------------------------------------------------------------------
-void LEAGUE_FRONT_02_GIMMICK_Hanabi( FIELDMAP_WORK* fieldmap )
-{
-  int i;
-  FLD_EXP_OBJ_CNT_PTR exobj_cnt;
-
-  exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
-
-  // 表示
-  FLD_EXP_OBJ_SetVanish( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_HANABI, FALSE );
-
-  for( i=0; i<HANABI_ANM_NUM; i++ )
-  {
-    // 有効化
-    FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_HANABI, i, TRUE );
-    // 頭だし
-    FLD_EXP_OBJ_SetObjAnmFrm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_HANABI, i, 0 );
-  }
-
-  // ループフラグを落とす
-  for( i=0; i<HANABI_ANM_NUM; i++ )
-  {
-    EXP_OBJ_ANM_CNT_PTR anime_controller;
-
-    anime_controller = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_HANABI, i );
-    // 1回再生設定
-    FLD_EXP_OBJ_ChgAnmLoopFlg( anime_controller, FALSE );  // ループ再生設定
-    FLD_EXP_OBJ_ChgAnmStopFlg( anime_controller, FALSE );   // アニメ再生設定
-  }
-}
-
 //==========================================================================================
 // ■ 非公開関数
 //==========================================================================================
@@ -512,13 +441,6 @@ static void InitGimmick( LF02WORK* work, FIELDMAP_WORK* fieldmap )
 
   // リフトの稼動エフェクトを初期化
   LEAGUE_FRONT_02_GIMMICK_HideLiftEffect( fieldmap );
-
-  // 花火を初期化
-  {
-    // 非表示
-    FLD_EXP_OBJ_SetVanish( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_HANABI, TRUE );
-  }
-
 }
 
 //------------------------------------------------------------------------------------------

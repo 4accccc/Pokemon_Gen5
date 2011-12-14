@@ -1152,9 +1152,6 @@
   DEF_CMD( EvCmdMapFadeOut_MsgEnable, EV_SEQ_MAP_FADE_OUT_MSG_ENABLE )
   DEF_CMD( EvCmdMapFadeIn_MsgEnable, EV_SEQ_MAP_FADE_IN_MSG_ENABLE )
 
-  // エンディング
-  DEF_CMD( EvCmdLeagueFrontFireworks, EV_SEQ_LEAGUE_FRONT_FIREWORKS )
-
   //手持ちポケモンのPOKEMON_PARAM取得・操作系
   DEF_CMD( EvCmdAddNPokemonToParty, EV_SEQ_ADD_NPOKEMON_TO_PARTY )
   NO_CMD()

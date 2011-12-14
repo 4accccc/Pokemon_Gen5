@@ -29,22 +29,12 @@ typedef enum {
   LIFT_EFFECT_ANM_MA, // マテリアルアニメーション
   LIFT_EFFECT_ANM_NUM
 } LIFT_EFFECT_ANM_INDEX;
-//----------------------------------------
-// アニメーション(花火)
-//----------------------------------------
-typedef enum {
-  HANABI_ANM_ICA,   // 
-  HANABI_ANM_IMA,   // 
-  HANABI_ANM_ITA,   // 
-  HANABI_ANM_NUM
-} HANABI_ANM_INDEX;
 //-------------
 // オブジェクト
 //-------------
 typedef enum {
   LF02_EXOBJ_LIFT,         // リフト
   LF02_EXOBJ_LIFT_EFFECT,  // リフトの稼動エフェクト
-  LF02_EXOBJ_HANABI,       // 花火
   LF02_EXOBJ_NUM
 } OBJ_INDEX;
 //----------
@@ -98,6 +88,4 @@ extern BOOL LEAGUE_FRONT_02_GIMMICK_CheckLiftAnimeEnd( FIELDMAP_WORK* fieldmap )
 extern void LEAGUE_FRONT_02_GIMMICK_ShowLiftEffect( FIELDMAP_WORK* fieldmap );
 extern void LEAGUE_FRONT_02_GIMMICK_HideLiftEffect( FIELDMAP_WORK* fieldmap );
 extern BOOL LEAGUE_FRONT_02_GIMMICK_CheckLiftEffectEnd( FIELDMAP_WORK* fieldmap );
-
-extern void LEAGUE_FRONT_02_GIMMICK_Hanabi( FIELDMAP_WORK* fieldmap );
 

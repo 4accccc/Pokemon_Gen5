@@ -10931,23 +10931,6 @@
   .short  EV_SEQ_LEAGUE_FRONT_LIFT_DOWN
   .endm
 
-//--------------------------------------------------------------
-/**
- * @def _LEAGUE_FRONT_FIREWORKS
- * @brief 花火再生
- *
- * @note  エンディング用
- */
-//--------------------------------------------------------------
-#define _LEAGUE_FRONT_FIREWORKS() \
-    _ASM_LEAGUE_FRONT_FIREWORKS
-
-  .macro  _ASM_LEAGUE_FRONT_FIREWORKS
-  .short  EV_SEQ_LEAGUE_FRONT_FIREWORKS
-  .endm
-
-
-
 //======================================================================
 //  バトルサブウェイ
 //======================================================================
