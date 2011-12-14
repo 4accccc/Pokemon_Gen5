@@ -96,6 +96,12 @@ def convertAppeal( csv, data, msg_h, header )
     rescue HeaderSearchError
       exit(1)
     end
+
+    if $define_hash[group] == nil
+      puts "#{group}‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ"
+      exit(1)
+    end
+
     data.write_u16( $define_hash[group] )
     data.write_u16( baseexp )
 
@@ -105,6 +111,19 @@ def convertAppeal( csv, data, msg_h, header )
       exp   = csv.get( row, SPOT_COL_EXP + col*5 )
       eff_m = csv.get( row, SPOT_COL_EFF_MSG_M + col*5 )
       eff_f = csv.get( row, SPOT_COL_EFF_MSG_F + col*5 )
+
+      if $define_hash[type] == nil
+        puts "#{type}‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ"
+        exit(1)
+      end
+      if $define_hash[dat] == nil
+        puts "#{dat}‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ"
+        exit(1)
+      end
+      if $define_hash[exp] == nil
+        puts "#{exp}‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ"
+        exit(1)
+      end
 
       data.write_u16( $define_hash[type] )
       data.write_u16( $define_hash[dat] )

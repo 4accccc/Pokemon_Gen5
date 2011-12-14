@@ -149,10 +149,20 @@ def  convertService( csv, data, h_define, h_item, gmm, h_service, presentlist_h 
       end
     end
     data.write_u16( money.to_i/10 )
+
+    if h_define[kind] == nil
+      puts "#{kind}がありません"
+      exit(1)
+    end
+
     data.write_u16( h_define[kind] )
 
     case kind 
     when "道具"
+      if h_item[param1] == nil
+        puts "#{param1}が道具に見つかりません"
+        exit(1)
+      end
       data.write_u16( h_item[param1] )
       data.write_u16( param2 )
 
@@ -274,6 +284,17 @@ def convertShop( csv, data, h_define, gmm, bmodel, patch, h_service, header )
     r3dmd  = csv.get( row, SHOP_COL_3DMD_R );
 
     #データ書き込み
+
+
+    if h_define[shop] == nil
+      puts "#{shop}がお店タイプにありません"
+      exit(1)
+    end
+    if h_define[type] == nil
+      puts "#{type}がバージョンにありません"
+      exit(1)
+    end
+
     data.write_u16( h_define[shop] )
     data.write_u16( h_define[type] )
     data.write_u16( lv )

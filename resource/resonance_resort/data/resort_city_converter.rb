@@ -126,6 +126,10 @@ def convertCity( csv, data, msg_h, pre_h )
       exit(1)
     end
     data.write_u16( per )
+    if $define_hash[prize] == nil
+      puts "#{prize}‚ª‚¨‚©‚µ‚¢‚Å‚·"
+      exit(1)
+    end
     data.write_u16( $define_hash[prize] )
     data.write_u16( celeb )
     if $item_hash.has_key?(item) == false
