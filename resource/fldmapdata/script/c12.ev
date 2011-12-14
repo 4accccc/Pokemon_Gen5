@@ -796,9 +796,21 @@ ev_vs_rival:
 
 	//ローカル変数を定義
 	{
+
 	//ライバル名代入
 	_RIVAL_NAME( 1 )
-  
+	SWITCH $WK_SYS_FIRST_POKETYPE
+	CASE FIRST_POKETYPE_KUSA THEN
+		_MONS_NAME( 3, MONSNO_POKABU )
+	CASE FIRST_POKETYPE_HONOO THEN
+		_MONS_NAME( 3, MONSNO_MIZYUMARU )
+	CASE FIRST_POKETYPE_MIZU THEN
+		_MONS_NAME( 3, MONSNO_TUTAAZYA )
+	ENDSWITCH
+
+	_OBJ_ANIME( C12_SWRIVAL_01, anm_swrival_anime )
+	_OBJ_ANIME_WAIT()
+
 	//オマエの　ポケモンが　どんな　ポケモンか　しりたい
 	_BALLOONWIN_OBJMSG_POS( msg_c12_swrival_17, C12_SWRIVAL_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
@@ -1594,25 +1606,40 @@ EVENT_START ev_pos_c12_rival_pair_01
   _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 43, 760, FORCE_TYPE_NPC, 8, DIR_LR)
   _OBJ_ANIME_WAIT()
   
-  //ライバル：おい！　ポケモンを　つれていないのに
+  _OBJ_ANIME( C12_SWRIVAL_01, anm_swrival_anime )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：よお！
   _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_01,C12_SWRIVAL_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
-  
+
+  _OBJ_ANIME( C12_SWRIVAL_01, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+
+  //ライバル：えっ？
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_08,C12_SWRIVAL_01, POS_DEFAULT )
+  //ライバル：ベルって
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_10,C12_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
   //妹：……ポケモンをもらったら
   _BALLOONWIN_OBJMSG_POS( msg_c12_rivalsister_06,C12_SWSISTER_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
-  //妹のほうを見た後に、プレイヤーを見る
+  //妹のほうを見る
   _OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_l)
-  _OBJ_ANIME_WAIT()
-  
-  _TIME_WAIT( 30 )
-
-  _OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_d )
   _OBJ_ANIME_WAIT()
   
   //ライバル：……そうだよな
   _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_09,C12_SWRIVAL_01, POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //プレイヤーをみる
+  _OBJ_ANIME( C12_SWRIVAL_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：よし！
+  _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_23,C12_SWRIVAL_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
   
   //アニメ：ライバル・妹向き合う
@@ -2244,4 +2271,9 @@ _ANIME_LABEL	anm_common_tenten
 
 _ANIME_LABEL	anm_common_onpu
 	_ANIME_DATA	AC_MARK_ONPU,1
+	_ANIME_DATA	ACMD_END,0
+
+
+_ANIME_LABEL	anm_swrival_anime
+	_ANIME_DATA	AC_SWRIVAL_ACT0,1
 	_ANIME_DATA	ACMD_END,0
