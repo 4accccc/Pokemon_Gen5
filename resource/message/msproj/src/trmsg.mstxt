@@ -80211,4 +80211,87 @@
 				Time="2011-12-14T05:40:39" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="TRID_SWPLAZMAM_42_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>なあなあ！
+しんにゅうしゃって　しらない？▼
+って　おまえ！？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T09:40:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T09:40:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なあなあ！
+侵入者って　知らない？▼
+って　おまえ！？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T09:40:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T09:40:00" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SWPLAZMAM_42_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマフリゲートに　しのびこむとは
+なんと　だいたんな　トレーナーめ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T09:40:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T09:40:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマフリゲートに　忍び込むとは
+なんと　大胆な　トレーナーめ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T09:40:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T09:40:00" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SWPLAZMAM_42_TRMSG_FIGHT_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマフリゲートを　つくった
+かがくりょくに　びびって　かえれよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T09:40:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T09:40:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマフリゲートを　造った
+科学力に　びびって　帰れよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T09:40:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T09:40:00" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>
