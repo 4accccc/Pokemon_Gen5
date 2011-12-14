@@ -169,29 +169,6 @@ BOOL WBTTOOL_IsVaridRomTrainerID( const WBTROM_TRDATA * rom_trdata, WBTROM_TRID 
 
 //------------------------------------------------------------------
 /**
- * @brief 前作主人公のWBTロムデータのIDを取得する
- * @param   sex
- * @return  u16
- */
-//------------------------------------------------------------------
-WBTROM_TRID WBTTOOL_GetBWRomTrainerID( const WBTROM_TRDATA * rom_trdata, u8 sex )
-{
-  WBTROM_TRID tr_id;
-  u16 search_mmdl = HERO;
-  if (sex == PM_MALE)
-  {
-    search_mmdl = HEROINE;
-  }
-  for ( tr_id = 0; tr_id < rom_trdata->num; tr_id ++ )
-  {
-    if ( rom_trdata->data[tr_id].mmdl_id == search_mmdl ) return tr_id;
-  }
-  GF_ASSERT( 0 );
-  return 0; //仮
-}
-
-//------------------------------------------------------------------
-/**
  * @brief
  */
 //------------------------------------------------------------------

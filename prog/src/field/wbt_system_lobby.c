@@ -48,8 +48,6 @@ enum {
 static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata );
 static void WBTTRAINER_SetRomTrainer(
     const WBTSYS * wbtsys, HEAPID heapID, WBTTRAINER * wbt_tr, WBTROM_TRID tr_id );
-static void WBTTRAINER_SetWBPlayer(
-    const WBTSYS * wbtsys, HEAPID heapID, WBTTRAINER * wbt_tr, GAMEDATA * gamedata );
 static void WBTTRAINER_SetDLTrainer( WBTTRAINER * wbt_tr,
     const WBTDL_CHARACTER * dl_char, u32 dl_tr_id, u8 pri );
 static void WBTTRAINER_SetDLHybridTrainer( WBTTRAINER * wbt_tr,
@@ -142,21 +140,6 @@ static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata )
 
 //------------------------------------------------------------------
 /**
- * @brief WBTTRAINER設定：前作主人公
- */
-//------------------------------------------------------------------
-static void WBTTRAINER_SetWBPlayer(
-    const WBTSYS * wbtsys, HEAPID heapID, WBTTRAINER * wbt_tr, GAMEDATA * gamedata )
-{
-  WBTROM_TRID tr_id;
-  const MYSTATUS * mystat = GAMEDATA_GetMyStatus( gamedata );
-
-  tr_id = WBTTOOL_GetBWRomTrainerID( wbtsys->rom_trdata, MyStatus_GetMySex( mystat ) );
-  WBTTRAINER_SetRomTrainer( wbtsys, heapID, wbt_tr, tr_id );
-}
-
-//------------------------------------------------------------------
-/**
  * @brief WBTTRAINER設定：ダウンロードデータから
  */
 //------------------------------------------------------------------
@@ -222,10 +205,7 @@ void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const WBT_TRCODE
       WBTTRAINER_SetPlayer( wbt_tr, gamedata );
       WBTTOOL_GetRomTrainerTypeName( wbtsys->heapID, wbt_tr->tr_id, wbt_tr->title );
       break;
-    case WBT_TRCODE_TYPE_WBHERO:
-      WBTTRAINER_SetWBPlayer( wbtsys, wbtsys->heapID, wbt_tr, gamedata );
-      WBTTOOL_GetRomTrainerTypeName( wbtsys->heapID, wbt_tr->tr_id, wbt_tr->title );
-      break;
+
     case WBT_TRCODE_TYPE_DL1:
     case WBT_TRCODE_TYPE_DL2:
     case WBT_TRCODE_TYPE_DL3:

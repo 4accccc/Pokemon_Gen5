@@ -350,10 +350,10 @@ static void entryChampTournament(MAKE_ENTRY_WORK * mew, WBT_TRCODE * tr_list )
   int tr_idx, j;
 
   GFL_STD_MemClear( tr_list, sizeof(WBT_TRCODE) * WBT_TRAINER_NUM );
-  tr_list[0].code = WBT_TRCODE_PLAYER;
-  tr_list[1].code = WBT_TRCODE_WBHERO;
+  tr_idx = 0;
+  tr_list[tr_idx ++].code = WBT_TRCODE_PLAYER;
 
-  for ( j = 0, tr_idx = 2; j < mew->cond->rom_trainer_num; j ++ )
+  for ( j = 0; j < mew->cond->rom_trainer_num; j ++ )
   {
     const WBT_TRDATA * rom_data = &mew->cond->rom_trainer_data[ j ];
     if ( rom_data->region_tournament_id != WBTCUP_CHAMPION ) continue;
@@ -522,7 +522,7 @@ void WBTSYS_MakeEntryList( GAMEDATA * gamedata, const WBT_MATCH_CONDITION * cond
   {
   default:
   case WBTCUP_NULL:
-    GF_ASSERT_MSG( 0, "âºÅFÇ‹ÇæÇ≈Ç´ÇƒÇ¢Ç‹ÇπÇÒÅI\n");
+    GF_ASSERT_MSG( 0, "WBTCUP_NULL!!\n" );
     /* FALL THROUGH */
 
   case WBTCUP_HODOMOE:

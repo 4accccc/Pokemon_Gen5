@@ -22,7 +22,6 @@
 //-----------------------------------------------------------------------------
 enum {
   WBT_TRCODE_TYPE_PLAYER = 0xff,
-  WBT_TRCODE_TYPE_WBHERO = 0xfe,
   WBT_TRCODE_TYPE_DL1    = 0xf1,
   WBT_TRCODE_TYPE_DL2    = 0xf2,
   WBT_TRCODE_TYPE_DL3    = 0xf3,
@@ -32,7 +31,6 @@ enum {
 
 enum {
   WBT_TRCODE_PLAYER = WBT_TRCODE_TYPE_PLAYER << 8,
-  WBT_TRCODE_WBHERO = WBT_TRCODE_TYPE_WBHERO << 8,
   WBT_TRCODE_DL1    = WBT_TRCODE_TYPE_DL1 << 8,
   WBT_TRCODE_DL2    = WBT_TRCODE_TYPE_DL2 << 8,
   WBT_TRCODE_DL3    = WBT_TRCODE_TYPE_DL3 << 8,
@@ -104,7 +102,6 @@ extern WBT_TRPRI WBTTOOL_GetRomTrainerPriority(
 extern void WBTTOOL_GetRomTrainerData(
     const WBTROM_TRDATA * rom_trdata, WBTROM_TRID tr_id, WBT_TRDATA * tr_data );
 extern BOOL WBTTOOL_IsVaridRomTrainerID( const WBTROM_TRDATA * rom_trdata, WBTROM_TRID tr_id );
-extern WBTROM_TRID WBTTOOL_GetBWRomTrainerID( const WBTROM_TRDATA * rom_trdata, u8 sex );
 extern WBTROM_TRID WBTTOOL_GetRivalTrainerID( const WBTROM_TRDATA * rom_trdata );
 
 extern u8 WBTTOOL_GetPartyPokeType( POKEPARTY * party, u64 seed );
