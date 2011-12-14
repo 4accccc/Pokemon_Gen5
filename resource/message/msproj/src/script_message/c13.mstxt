@@ -1035,11 +1035,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『それぞれ
-ひとりずつ　かたづけるぜ！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『いくぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T10:51:05" />
+				Time="2011-12-14T03:08:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1047,11 +1046,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『それぞれ
-一人ずつ　片付けるぜ！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『いくぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T10:51:14" />
+				Time="2011-12-14T03:08:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1393,11 +1391,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホミカ『てわけするよ！
-アンタは　どうろを　さがして！！▼</Text>
+			<Text>ホミカ『てわけするよ！　あんたは
+２０ばんどうろを　さがして！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-05T10:58:12" />
+				Time="2011-12-14T03:14:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1405,11 +1403,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホミカ『てわけするよ！
-アンタは　道路を　探して！！▼</Text>
+			<Text>ホミカ『てわけするよ！　あんたは
+２０番道路を　探して！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-05T10:58:21" />
+				Time="2011-12-14T03:15:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2180,10 +2178,10 @@
 めいわく　かけなきゃ
 あたしだって　おこらないよーだ！▼
 もっとも　ポケウッドの　ひとは
-どうおもってるか　しらないけどね！▼</Text>
+どうおもってるか　しらないけど！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-26T06:29:43" />
+				Time="2011-12-14T03:12:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2198,10 +2196,10 @@
 迷惑かけなきゃ
 あたしだって　怒らないよーだ！▼
 もっとも　ポケウッドの　人は
-どう思ってるか　知らないけどね！▼</Text>
+どう思ってるか　知らないけど！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-26T06:29:49" />
+				Time="2011-12-14T03:12:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

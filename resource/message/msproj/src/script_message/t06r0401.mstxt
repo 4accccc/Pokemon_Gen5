@@ -1,3 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_t06r0401_00_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>かりメッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T06:35:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T06:34:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T06:35:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T06:35:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ケルディオイベント用</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T06:34:51" />
+		</CommentCell>
+	</TextRow>
+</MessageStudioText>

@@ -74,7 +74,7 @@ GIRL2</Text>
 ポケモンを　くれる？　ほんとかよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T05:14:01" />
+				Time="2011-12-14T02:59:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -197,7 +197,7 @@ GIRL2</Text>
 ベルって　ひとを　さがせばいいんだろ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T05:15:14" />
+				Time="2011-12-14T03:00:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6714,11 +6714,13 @@ GIRL2</Text>
 すごい　ひさしぶり　じゃない？▼
 ……　……　……
 ……　……　……▼
-りょうかい！　うちのコなら
-ぜったい　ひきうけてくれるわよ！▼</Text>
+へえ！　ポケモンずかん……
+それを　うちの　コに？▼
+いいんじゃない！　だって　あたしも
+あのコに　たびしてほしいもの！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-08T09:43:17" />
+				Time="2011-12-14T02:46:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6731,11 +6733,13 @@ GIRL2</Text>
 すごい　ひさしぶり　じゃない？▼
 ……　……　……
 ……　……　……▼
-了解！　うちのコなら
-絶対　引き受けてくれるわよ！▼</Text>
+へえ！　ポケモン図鑑……
+それを　うちの　コに？▼
+いいんじゃない！　だって　あたしも
+あのコに　旅してほしいもの！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-08T09:43:24" />
+				Time="2011-12-14T02:46:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6769,7 +6773,7 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なあに？　そのこ　ってば
+			<Text>で　なあに？　そのコ　ってば
 もう　こっちに　きてるの？▼
 うん！　ベルちゃんね！
 おおきな　みどりの　ぼうし　っと▼
@@ -6777,7 +6781,7 @@ GIRL2</Text>
 だいじょうぶ！　だいじょうぶ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-08T09:44:44" />
+				Time="2011-12-14T02:42:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6785,7 +6789,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なあに？　その子ってば
+			<Text>で　なあに？　その子ってば
 もう　こっちに　来てるの？▼
 うん！　ベルちゃんね！
 大きな　緑の　帽子っと▼
@@ -6793,7 +6797,7 @@ GIRL2</Text>
 大丈夫！　大丈夫！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-08T09:45:07" />
+				Time="2011-12-14T02:42:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

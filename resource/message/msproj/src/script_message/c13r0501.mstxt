@@ -55,12 +55,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケウッド！　あそこでなら
-ふだんでは　あじわえない▽
-じんせいを　たのしめるのです！</Text>
+			<Text>ポケウッド！　たにんの
+じんせいを　あじわえる　ばしょ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-19T04:22:19" />
+				Time="2011-12-14T03:37:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -68,12 +67,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケウッド！　あそこでなら
-普段では　味わえない▽
-人生を　楽しめるのです！</Text>
+			<Text>ポケウッド！　他人の
+人生を　味わえる　場所！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-19T04:22:43" />
+				Time="2011-12-14T03:37:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

@@ -1121,10 +1121,10 @@
 			Language="JPN">
 			<Comment>♀
 ・はい選択時
-・画面暗転→発着デモへ（暫定）</Comment>
+・画面暗転→発着デモへ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-04T11:54:56" />
+				Time="2011-12-14T06:42:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
