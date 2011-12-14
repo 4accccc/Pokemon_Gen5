@@ -63,7 +63,7 @@ def checkArgument
 
   for i in 0...ARG_ITEMLIST_H
     unless FileTest.exists?(ARGV[i])
-      puts "#{ARGV[i]}‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ"
+		puts "#{ARGV[i]}‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ"
       return false
     end
   end

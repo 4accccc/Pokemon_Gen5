@@ -98,7 +98,7 @@ def convertAppeal( csv, data, msg_h, header )
     end
 
     if $define_hash[group] == nil
-      puts "#{group}が見つかりません"
+      puts "#{group}が見つかりません行#{row}"
       exit(1)
     end
 
@@ -113,20 +113,21 @@ def convertAppeal( csv, data, msg_h, header )
       eff_f = csv.get( row, SPOT_COL_EFF_MSG_F + col*5 )
 
       if $define_hash[type] == nil
-        puts "#{type}が見つかりません"
-        exit(1)
-      end
-      if $define_hash[dat] == nil
-        puts "#{dat}が見つかりません"
+        puts "#{type}が見つかりません行#{row}"
         exit(1)
       end
       if $define_hash[exp] == nil
-        puts "#{exp}が見つかりません"
+        puts "#{exp}が見つかりません行#{row}"
         exit(1)
       end
 
       data.write_u16( $define_hash[type] )
-      data.write_u16( $define_hash[dat] )
+
+      if $define_hash[dat] == nil
+		data.write_u16( dat )
+	  else
+		data.write_u16( $define_hash[dat] )
+	  end
       data.write_u16( $define_hash[exp] )
       begin
         data.write_u16( msgdata.search( "#{eff_m}", "#{row}行の#{msg_h}" ) )
