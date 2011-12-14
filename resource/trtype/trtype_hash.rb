@@ -235,6 +235,7 @@
 		"PILOT_1♂no data"=>231,
 		"PKWD_LADYBUG♂みらいじん"=>232,
 		"JUGGLING_1♂クラウン"=>233,
+		"RED♂レッド"=>234,
 	}
 #
 	$trtype_id_hash = {
@@ -472,4 +473,5 @@
 		"TRTYPE_PILOT_1" =>231,
 		"TRTYPE_PKWD_LADYBUG" =>232,
 		"TRTYPE_JUGGLING_1" =>233,
+		"TRTYPE_RED" =>234,
 	}

@@ -244,4 +244,5 @@
 #define	TRTYPE_PILOT_1    ( 231 )    //PILOT_1♂no data
 #define	TRTYPE_PKWD_LADYBUG    ( 232 )    //PKWD_LADYBUG♂みらいじん
 #define	TRTYPE_JUGGLING_1    ( 233 )    //JUGGLING_1♂クラウン
-#define	TRTYPE_MAX	( 234 )
+#define	TRTYPE_RED    ( 234 )    //RED♂レッド
+#define	TRTYPE_MAX	( 235 )

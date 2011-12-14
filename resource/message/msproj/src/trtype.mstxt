@@ -7715,4 +7715,29 @@
 				Time="2011-10-17T08:25:04" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="MSG_TRTYPE_RED">
+		<LanguageCell
+			Language="JPN">
+			<Text>レッド</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T02:47:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T02:47:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レッド</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T02:47:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T02:47:56" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

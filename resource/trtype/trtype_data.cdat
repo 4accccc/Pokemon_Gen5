@@ -943,6 +943,10 @@ const TRAINER_TYPE_DATA DATA_TrainerType[] = {
 		 32,PTL_SEX_MALE,
 		SEQ_BGM_EYE_CLOWN
 	},
+	{ // No.234 REDÅâÉåÉbÉh
+		187,PTL_SEX_MALE,
+		SEQ_BGM_EYE_01
+	},
 };
 
 const u16 DATA_TrainerBackCGIndex[][2] = {

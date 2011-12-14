@@ -1506,7 +1506,15 @@ enum {
 	NARC_trfgra_trwb_pkwd_ladybug_NMCR = 1492,
 	NARC_trfgra_trwb_pkwd_ladybug_NMAR = 1493,
 	NARC_trfgra_trwb_pkwd_ladybug_NCEC = 1494,
-	NARC_trfgra_trwb_pkwd_ladybug_NCLR = 1495
+	NARC_trfgra_trwb_pkwd_ladybug_NCLR = 1495,
+	NARC_trfgra_trwb_red_NCGR = 1496,
+	NARC_trfgra_trwb_red_NCBR = 1497,
+	NARC_trfgra_trwb_red_NCER = 1498,
+	NARC_trfgra_trwb_red_NANR = 1499,
+	NARC_trfgra_trwb_red_NMCR = 1500,
+	NARC_trfgra_trwb_red_NMAR = 1501,
+	NARC_trfgra_trwb_red_NCEC = 1502,
+	NARC_trfgra_trwb_red_NCLR = 1503
 };
 
 /* NARC_TRFGRA_NAIX_ */
