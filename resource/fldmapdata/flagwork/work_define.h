@@ -322,6 +322,7 @@
 #define WK_SCENE_T04_D20_TVT             16710 /* 0x4146 サザナミタウン・サザナミ湾：ライブキャスターPOS制御ワーク */
 #define WK_SCENE_C03P19                  16711 /* 0x4147 ヒウンシティはじまりの場所：ワルそうなチームイベント進行制御ワーク */
 #define WK_SCENE_D08R0101                16712 /* 0x4148 リュウラセンの塔フィールド：アララギ父イベント用 */
+#define WK_SCENE_D27_ANNOUNCE            16713 /* 0x4149 プラズマフリゲート：船内アナウンス */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 
