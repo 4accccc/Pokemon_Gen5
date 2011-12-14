@@ -1379,11 +1379,11 @@ static void KeySys_Seq_Both_RecvDemo( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void
         //通信で受け取るときは、BLACKバージョンならホワイトフォレストキー
         if( GET_VERSION() == VERSION_B2 )
         {
-          menu_msg = sc_key_to_menu_w[ p_wk->ret ];
+          menu_msg = sc_key_to_menu_b[ p_wk->ret ];
         }
         else
         {
-          menu_msg = sc_key_to_menu_b[ p_wk->ret ];
+          menu_msg = sc_key_to_menu_w[ p_wk->ret ];
         }
 
 
@@ -3721,12 +3721,12 @@ static BOOL KeySys_Mes_CreateKeyMessage( KEY_SYSTEM_WORK *p_wk, KEY_SYSTEM_TYPE 
       if( GET_VERSION() == VERSION_W2 )
       {
         //W2の場合受信するのはブラックキー　送信するのはホワイトキー
-        index = recv_or_send ? 2: 3;
+        index = recv_or_send ? 3: 2;
       }
       else
       {
         //B2の場合受信するのはホワイトキー  送信するのはブラックキー
-        index = recv_or_send ? 3: 2;
+        index = recv_or_send ? 2: 3;
       }
     }
     else if( index > KEY_SYSTEM_TYPE_CITY_WFBC )
