@@ -36,6 +36,7 @@
 #include "scrcmd_demo_gimmick.h"
 #include "field_gimmick_gianthole.h"
 #include "field_gimmick_c12.h"
+#include "field_gimmick_ending.h"
 
 // debug
 #include "debug/debug_str_conv.h"
@@ -190,6 +191,21 @@ VMCMD_RESULT EvCmdC12_AnmStart( VMHANDLE *core, void *wk )
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
 
   C12_GIMMICK_AnmStart( gsys );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エンディング  花火アニメ再生
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdEnding_FireWorks( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  ENDING_GIMMICK_FireWorks( gsys );
 
   return VMCMD_RESULT_CONTINUE;
 }

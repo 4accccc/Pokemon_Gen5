@@ -43,3 +43,7 @@ extern VMCMD_RESULT EvCmdGianthole_ObjOffsetSet( VMHANDLE *core, void *wk );
 // c12 ヒオウギシティ
 extern VMCMD_RESULT EvCmdC12_AnmStart( VMHANDLE *core, void *wk );
 
+// エンディング
+// C09P03 エンディング用のポケモンリーグ
+extern VMCMD_RESULT EvCmdEnding_FireWorks( VMHANDLE *core, void *wk );
+

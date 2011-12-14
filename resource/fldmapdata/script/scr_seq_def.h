@@ -16635,8 +16635,7 @@
   .short  \offset_z
   .endm
 
-
-
+// 物語開始デモ
 //--------------------------------------------------------------
 /**
  * @def   _DEMO_GIMMICK_INTRO_ANM_START
@@ -16651,6 +16650,25 @@
   .macro  _ASM_DEMO_GIMMICK_INTRO_ANM_START
   .short  EV_SEQ_DEMO_GIMMICK_INTRO_ANM_START
   .endm
+
+
+// エンディング
+//--------------------------------------------------------------
+/**
+ * @def _DEMO_GIMMICK_ENDING_FIREWORKS
+ * @brief 花火再生
+ *
+ * @note  エンディング用
+ */
+//--------------------------------------------------------------
+#define _DEMO_GIMMICK_ENDING_FIREWORKS() \
+    _ASM_DEMO_GIMMICK_ENDING_FIREWORKS
+
+  .macro  _ASM_DEMO_GIMMICK_ENDING_FIREWORKS
+  .short  EV_SEQ_DEMO_GIMMICK_ENDING_FIREWORKS
+  .endm
+
+
 
 //======================================================================
 

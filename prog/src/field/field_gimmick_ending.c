@@ -213,6 +213,8 @@ void ENDING_GIMMICK_FireWorks( GAMESYS_WORK *gsys )
 
   // â‘âŒçƒê∂
   ANM_Play( p_wk->exp_obj, OBJ_FIREWORKS );
+
+  ICHI_Printf("â‘âŒçƒê∂\n");
 }
 
 //=============================================================================
