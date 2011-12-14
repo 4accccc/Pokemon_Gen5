@@ -40,7 +40,8 @@ SUBDIRS	=	gym_denki \
 					h06 \
 					gianthole \
 					intro_demo \
-					rezi
+					rezi \
+					ending
 
 .PHONY:	do-build clean
 
