@@ -243,7 +243,7 @@ void PAIRSYS_PairViewRecover( GAMEDATA* gdata )
  *  @brief  連れ歩きペアID取得
  *
  *  @retval 0～ 連れ歩きペアID (定義はfield/pair_sys_def.h)
- *  @retval PAID_ID_NONE(0xFFFF)  連れ歩き無し
+ *  @retval PAID_ID_NONE(0xFF)  連れ歩き無し
  */
 //---------------------------------------------------
 u16 PAIRSYS_GetPairID( GAMEDATA* gdata )

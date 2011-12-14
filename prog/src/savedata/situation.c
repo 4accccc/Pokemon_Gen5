@@ -308,7 +308,7 @@ void SaveData_SituationUpdatePair(SITUATION* st, const PAIR_SYSTEM_WORK *pw)
 {
   st->pair_sv.pair_id = pw->pair_id;
   st->pair_sv.pair_type = pw->pair_type;
-  st->pair_sv.obj_id = pw->obj_code;
+  st->pair_sv.obj_id = pw->obj_id;
   st->pair_sv.obj_code = pw->obj_code;
   st->pair_sv.event_id = pw->event_id;
   st->pair_sv.tr_id = pw->tr_id;

@@ -14,10 +14,11 @@
 
 typedef struct _PAIR_SYSTEM_WORK{
   HEAPID  heapID;
+  //à»â∫ savedata/situation.hÇÃ PAIRSYS_WORK_SAVEç\ë¢ëÃå^Ç∆çáÇÌÇπÇƒÇ¢ÇÈ
   u8  pair_id;
-  u8  pair_type;
-  u16 obj_id;
-  u16 obj_code;
+  u8  obj_id;
+  u16 obj_code:15;
+  u16 pair_type:1;
   u16 event_id;
   u16 tr_id;
 }PAIR_SYSTEM_WORK;

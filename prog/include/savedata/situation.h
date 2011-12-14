@@ -39,12 +39,15 @@ typedef struct{
   u8 move_form;     ///< PLAYER_MOVE_FORM
 }PLAYERWORK_SAVE;
 
-///PAIR_SYSTEM_WORK構造体からセーブに必要なものだけをまとめた構造体
+/*
+ * PAIR_SYSTEM_WORK構造体からセーブに必要なものだけをまとめた構造体
+ * field/pair_sys.h PAIR_SYSTEM_WORK構造体の heapIDメンバ以下と構造を合わせている
+ */
 typedef struct{
   u8  pair_id;
-  u8  pair_type;
   u8  obj_id;
-  u8  obj_code;
+  u16 obj_code:15;
+  u16 pair_type:1;
   u16 event_id;
   u16 tr_id;
 }PAIRSYS_WORK_SAVE;

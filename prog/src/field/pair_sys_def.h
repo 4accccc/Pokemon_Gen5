@@ -19,7 +19,7 @@
 #define PAIR_ID_D11R0101_SWRIVAL      (6)  //D02R0101 スワンライバル
 #define PAIR_ID_D24_SWBELL            (7)  //D24 スワンベル
 #define PAIR_ID_MAX                   (8)
-#define PAIR_ID_NONE                  (0xFFFF)
+#define PAIR_ID_NONE                  (0xFF)  //セーブ領域が8bitなので
 
 #define PAIR_TYPE_ONE_ZONE   (0) //クローズマップ(1ゾーン内のみの移動の場合)
 #define PAIR_TYPE_FREE_ZONE  (1) //オープンマップ(複数ゾーンにまたがって移動する場合)
