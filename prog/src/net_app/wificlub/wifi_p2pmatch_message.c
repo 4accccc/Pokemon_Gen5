@@ -947,27 +947,6 @@ static void _userDataInfoDisp(WIFIP2PMATCH_WORK * wk)
   GFL_BG_LoadScreenReq(GFL_BG_FRAME3_M);
 }
 
-//----------------------------------------------------------------------------
-/**
- *	@brief  UserVchatの状況を見て上部のボイスチャットアイコンを変える
- *
- *	@param	*wk ワーク
- */
-//-----------------------------------------------------------------------------
-static void _userDataDrawUserVChat(WIFIP2PMATCH_WORK *wk)
-{
-  int vct_icon;
-  if( WIFI_STATUS_GetUseVChat(wk->pMatch) ){
-    vct_icon = PLAYER_DISP_ICON_IDX_NONE;
-  }else{
-    vct_icon = PLAYER_DISP_ICON_IDX_VCTNOT;
-  }
-
-  WifiP2PMatchFriendListIconWrite(  &wk->icon, GFL_BG_FRAME1_M,
-                                    PLAYER_DISP_VCTICON_POS_X, PLAYER_DISP_VCTICON_POS_Y,
-                                    vct_icon+PLAYER_DISP_ICON_MYMODE, 0 );
-}
-
 //------------------------------------------------------------------
 /**
  * BMPWIN処理（文字パネルにフォント描画）
