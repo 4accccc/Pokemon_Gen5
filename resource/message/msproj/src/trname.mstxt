@@ -26048,4 +26048,129 @@
 				Time="2011-12-13T03:11:05" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="swplazmam_40">
+		<LanguageCell
+			Language="JPN">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T01:49:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T01:49:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T01:49:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T01:49:57" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="swplazmam_41">
+		<LanguageCell
+			Language="JPN">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T01:49:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T01:49:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T01:49:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T01:49:57" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="swplazmaw_17">
+		<LanguageCell
+			Language="JPN">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T01:49:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T01:49:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T01:49:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T01:49:57" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="swplazmaw_18">
+		<LanguageCell
+			Language="JPN">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T01:49:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T01:49:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>したっぱ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T01:49:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T01:49:57" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="doctor_11">
+		<LanguageCell
+			Language="JPN">
+			<Text>キリツグ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T01:49:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T01:49:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>キリツグ</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T01:49:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-14T01:49:57" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>

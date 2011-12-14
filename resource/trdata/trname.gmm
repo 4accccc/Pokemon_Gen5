@@ -4480,6 +4480,31 @@
 		<language name="JPN_KANJI" width="216">フユミ</language>
 	</row>
 
+	<row id="swplazmam_40">
+		<language name="JPN" width="216">したっぱ</language>
+		<language name="JPN_KANJI" width="216">したっぱ</language>
+	</row>
+
+	<row id="swplazmam_41">
+		<language name="JPN" width="216">したっぱ</language>
+		<language name="JPN_KANJI" width="216">したっぱ</language>
+	</row>
+
+	<row id="swplazmaw_17">
+		<language name="JPN" width="216">したっぱ</language>
+		<language name="JPN_KANJI" width="216">したっぱ</language>
+	</row>
+
+	<row id="swplazmaw_18">
+		<language name="JPN" width="216">したっぱ</language>
+		<language name="JPN_KANJI" width="216">したっぱ</language>
+	</row>
+
+	<row id="doctor_11">
+		<language name="JPN" width="216">キリツグ</language>
+		<language name="JPN_KANJI" width="216">キリツグ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
