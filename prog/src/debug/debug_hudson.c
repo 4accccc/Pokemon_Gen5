@@ -133,13 +133,6 @@ void HUDSON_Main( GAMESYS_WORK* gsys )
 {
   GF_ASSERT( sp_wk != NULL );
   
-#if 0
-  if( OS_GetArgc() < 2 )
-  {
-    return;
-  }
-#endif
-
   GFL_TCBL_Main( sp_wk->p_tcblsys );
 
 #ifdef DEBUG_HUDSON_INPUT_AUTO_TEST
@@ -152,7 +145,12 @@ void HUDSON_Main( GAMESYS_WORK* gsys )
       Hudson_CreateTask( sp_wk, &HUDSON_AUTOTEST_ResortShopCheck, FS_OVERLAY_ID( debug_resort_check ) );
     }
   }
-#endif
+#else
+
+  if( OS_GetArgc() < 2 )
+  {
+    return;
+  }
 
   switch( sp_wk->seq )
   {
@@ -251,6 +249,7 @@ void HUDSON_Main( GAMESYS_WORK* gsys )
     }
     break;
   }
+#endif
 }
 
 //-----------------------------------------------------------------------------
