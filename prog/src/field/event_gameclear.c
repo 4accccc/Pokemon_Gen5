@@ -39,7 +39,7 @@
 #include "event_mapchange.h"    // for 
 #include "event_fieldmap_control.h" // EVENT_FieldOpen
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
-#include "../../../resource/fldmapdata/script/c09p02_def.h" // for SCRID_C09P02_
+#include "../../../resource/fldmapdata/script/c09p03_def.h" // for SCRID_C09P03_
 #include "../../../resource/fldmapdata/script/c12_def.h" // for SCRID_C12_
 
 //==============================================================================================
@@ -93,9 +93,9 @@ enum {
   GMCLEAR_SEQ_FRAME_WAIT,       // フレーム経過待ち
   GMCLEAR_SEQ_THE_END,          //「THE END」表示
   // swan追加 ichiraku
-  GMCLEAR_SEQ_MAP_CHANGE_FIRST, // マップチェンジ(C09P02)
+  GMCLEAR_SEQ_MAP_CHANGE_FIRST, // マップチェンジ(C09P03)
   GMCLEAR_SEQ_MAP_CHANGE_SECOND,// マップチェンジ(C12)
-  GMCLEAR_SEQ_SCRIPT_CALL_FIRST,// スクリプト呼び出し(C09P02)
+  GMCLEAR_SEQ_SCRIPT_CALL_FIRST,// スクリプト呼び出し(C09P03)
   GMCLEAR_SEQ_SCRIPT_CALL_SECOND,// スクリプト呼び出し(C12)
   GMCLEAR_SEQ_FIELD_OPEN_WAIT,  // フィールドマップ開始待ち
   GMCLEAR_SEQ_FADEIN,           // フェードイン
@@ -150,7 +150,7 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
     //}
     
     // スクリプト初期化用のフラグをたてる
-    //  c09p02.ev c12.ev の初期化に使用
+    //  c09p03.ev c12.ev の初期化に使用
     EVENTWORK_SetEventFlag( GAMEDATA_GetEventWork( gamedata ), SYS_FLAG_ENDING );
  
     // メダル達成処理
@@ -265,12 +265,12 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
   // ↓ここから↓
   // swan追加 ichiraku
   
-  // マップチェンジ(C09P02)
+  // マップチェンジ(C09P03)
   case GMCLEAR_SEQ_MAP_CHANGE_FIRST:
     {
       VecFx32 pos = { GRID_TO_FX32(31), GRID_TO_FX32(47), GRID_TO_FX32(1) };
       GMEVENT_CallEvent( event, 
-          EVENT_ChangeMapPosNoFadeBGMKeep( gsys, fieldmap, ZONE_ID_C09P02, &pos, DIR_DOWN ) ); 
+          EVENT_ChangeMapPosNoFadeBGMKeep( gsys, fieldmap, ZONE_ID_C09P03, &pos, DIR_DOWN ) ); 
       NowSeqFinish( work, seq );
     }
     break;
@@ -285,10 +285,10 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
     }
     break;
 
-  // スクリプト呼び出し(C09P02)
+  // スクリプト呼び出し(C09P03)
   case GMCLEAR_SEQ_SCRIPT_CALL_FIRST:
     {
-      SCRIPT_CallScript( event, SCRID_C09P02_ENDING, NULL, NULL, HEAPID_PROC );
+      SCRIPT_CallScript( event, SCRID_C09P03_ENDING, NULL, NULL, HEAPID_PROC );
       NowSeqFinish( work, seq );
     }
     break;
@@ -513,7 +513,6 @@ static void SetupSequence( GAMECLEAR_WORK* work )
   work->seqArray[pos++] = GMCLEAR_SEQ_MAP_CHANGE_FIRST;
   work->seqArray[pos++] = GMCLEAR_SEQ_BGM_PLAY;
   work->seqArray[pos++] = GMCLEAR_SEQ_SCRIPT_CALL_FIRST;
-  work->seqArray[pos++] = GMCLEAR_SEQ_FADEOUT;
   work->seqArray[pos++] = GMCLEAR_SEQ_FIELD_CLOSE_WAIT;
 
   // スタッフロール

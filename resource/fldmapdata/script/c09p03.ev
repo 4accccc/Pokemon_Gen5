@@ -9,8 +9,10 @@
   .text
 
   .include  "scr_seq_def.h"
-  .include  "msg_c09p03.h"
-  //.include  "c09p03.h"
+  .include  "../../message/dst/script/msg_c09p03.h"
+  .include  "c09p03.h"
+
+  //@author suginaka_katsunori //エンディング演出
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,4 +21,238 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA   ev_c09p03_ending
 _EVENT_DATA_END
+
+/************************************************************/
+/*	エンディングイベント                                    */
+/*  プログラムから呼ばれる                                  */
+/************************************************************/
+EVENT_START ev_c09p03_ending
+
+  //========================================//
+  _FLAG_RESET( FV_C09P02_ENDING )
+  
+  _OBJ_ADD( C09P03_BIGFOUR1 )
+  _OBJ_ADD( C09P03_BIGFOUR2 )
+  _OBJ_ADD( C09P03_BIGFOUR3 )
+  _OBJ_ADD( C09P03_BIGFOUR4 )
+  
+  //========================================//
+
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+	
+  //カメラ操作
+  _CAMERA_MOVE( 2129,0,1493327,2064384,4796947,1146880,1 )	//一番最後の引数は移動にかかるフレーム数
+  _CAMERA_WAIT_MOVE()
+  
+  // フェードイン
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+
+  //======================
+  // 花火
+  _DEMO_GIMMICK_ENDING_FIREWORKS()
+
+  _TIME_WAIT( 30 )
+  //======================
+
+  //カメラ操作
+  _CAMERA_MOVE( 6993,0,1034575,2080768,3674643,1339392,60 )	//一番最後の引数は移動にかかるフレーム数
+
+  //アニメ：主人公部屋から出てくる
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_1 )
+  _OBJ_ANIME_WAIT()
+
+  _CAMERA_WAIT_MOVE()
+
+  _OBJ_ADD( C09P03_SWCHAMPION )
+
+  //アニメ：アイリスも続けて出てくる
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
+  _OBJ_ANIME( C09P03_SWCHAMPION, anm_swchampion_1 )
+  _OBJ_ANIME_WAIT()
+
+  _OBJ_ANIME( C09P03_SWCHAMPION, anm_stay_l )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_r )
+  _OBJ_ANIME_WAIT()
+  
+  _TIME_WAIT( 30 )
+  
+  //アニメ：2人で階段を降りる
+  //カメラ操作
+  _CAMERA_MOVE( 9169,0,532889,2064384,3215891,2306048,60 )
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 31, 14, FORCE_TYPE_NOT, 8, DIR_UD )
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME_AUTO( C09P03_SWCHAMPION, 31, 13, FORCE_TYPE_NOT, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C09P03_SWCHAMPION, anm_stay_d )
+  _OBJ_ANIME_WAIT()
+  _CAMERA_WAIT_MOVE()
+
+  //アニメ：四天王と会話するような動き
+  //ギーマと会話
+  _OBJ_ANIME( C09P03_BIGFOUR2, anm_walk_r )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_l )
+  _OBJ_ANIME_WAIT()
+  
+  _TIME_WAIT( 30 )
+
+  //カトレアと会話
+  _OBJ_ANIME( C09P03_BIGFOUR4, anm_walk_l )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_r )
+  _OBJ_ANIME_WAIT()
+  
+  _TIME_WAIT( 30 )
+  
+  //主人公二歩移動・ギーマとカトレア眼で追いかける
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 31, 16, FORCE_TYPE_NOT, 8, DIR_UD )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( C09P03_BIGFOUR2, anm_stay_d )
+  _OBJ_ANIME( C09P03_BIGFOUR4, anm_stay_d )
+  _OBJ_ANIME_WAIT()
+  
+  //シキミと会話
+  _OBJ_ANIME( C09P03_BIGFOUR1, anm_walk_r )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_l )
+  _OBJ_ANIME_WAIT()
+  
+  _TIME_WAIT( 30 )
+
+  //レンブと会話
+  _OBJ_ANIME( C09P03_BIGFOUR3, anm_walk_l )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_r )
+  _OBJ_ANIME_WAIT()
+  
+  _TIME_WAIT( 30 )
+
+  //主人公二歩移動・ギーマとカトレア眼で追いかける
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 31, 18, FORCE_TYPE_NOT, 8, DIR_UD )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( C09P03_BIGFOUR1, anm_stay_d )
+  _OBJ_ANIME( C09P03_BIGFOUR3, anm_stay_d )
+  _OBJ_ANIME_WAIT()
+
+  //主人公振り向く・ギーマとカトレアとアイリスが移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME_AUTO( C09P03_BIGFOUR2, 29, 15, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_AUTO( C09P03_BIGFOUR4, 33, 15, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_AUTO( C09P03_SWCHAMPION, 32, 17, FORCE_TYPE_NOT, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+
+  _TIME_WAIT( 45 )
+
+  //暗転処理
+  _BLACK_OUT_SLOW()
+  _CAMERA_MOVE( 2129,0,828821,2064384,2626067,2297856,60 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dash_d )
+  _OBJ_ANIME_WAIT()
+  _DISP_FADE_END_CHECK()
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  _CAMERA_BIND()		//カメラバインド
+  _CAMERA_END()		//カメラ操作終了
+  
+  //========================================//
+  // 四天王非表示
+  _FLAG_SET( FV_C09P02_ENDING )
+  //========================================//
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//  主人公アニメ
+//--------------------------------------------------------------------
+// 部屋から出てくる
+_ANIME_LABEL  anm_player_1
+  _ANIME_DATA AC_WALK_D_8F,6
+  _ANIME_DATA ACMD_END,0
+
+// 振り向く
+_ANIME_LABEL  anm_player_2
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA ACMD_END,0
+
+// 階段を降りる
+_ANIME_LABEL  anm_player_3
+  _ANIME_DATA AC_WALK_D_16F,9
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//  アイリスアニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_swchampion_1
+  _ANIME_DATA AC_WALK_D_8F,7
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_stay_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_stay_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_stay_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_stay_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk_d
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_walk_u
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_walk_r
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_walk_l
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_dir_u
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_dir_d
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_dir_l
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_dir_r
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA ACMD_END,0
+
+//-----------------------------------------------------------
+//★自機：走る
+//-----------------------------------------------------------
+_ANIME_LABEL	anm_dash_d
+	_ANIME_DATA	AC_DASH_D_6F,10
+	_ANIME_DATA	ACMD_END,0
+
+
