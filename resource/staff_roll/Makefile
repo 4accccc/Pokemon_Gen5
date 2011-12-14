@@ -52,28 +52,14 @@ lsources:=$(wildcard *.ncl)
 gsources:=$(wildcard *.ncg)
 ssources:=$(wildcard *.nsc)
 
-src_imd:=$(wildcard *.imd)
-src_ica:=$(wildcard *.ica)
-src_ita:=$(wildcard *.ita)
-src_ima:=$(wildcard *.ima)
-src_itp:=$(wildcard *.itp)
-src_iva:=$(wildcard *.iva)
-
 # リソースが吐き出すファイルを自動でつくる
 lobjects = $(subst .ncl,.NCLR,$(lsources))
 gobjects = $(subst .ncg,.NCGR,$(gsources))
 sobjects = $(subst .nsc,.NSCR,$(ssources))
 
-obj_imd = $(subst .imd,.nsbmd,$(src_imd))
-obj_ica = $(subst .ica,.nsbca,$(src_ica))
-obj_ita = $(subst .ita,.nsbta,$(src_ita))
-obj_ima = $(subst .ima,.nsbma,$(src_ima))
-obj_itp = $(subst .itp,.nsbtp,$(src_itp))
-obj_iva = $(subst .iva,.nsbva,$(src_iva))
-
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .xls .nsbmd .imd .nsbca .ica .nsbta .ita .nsbma .ima .nsbtp .itp .nsbva .iva
+.SUFFIXES: .NCLR .ncl .NCGR .ncg .NSCR .nsc .xls 
 
 .ncl.NCLR:
 	g2dcvtr $<
@@ -84,24 +70,6 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .nsc.NSCR:
 	g2dcvtr $<
 
-.imd.nsbmd:
-	g3dcvtr $<
-
-.ica.nsbca:
-	g3dcvtr $< 
-
-.ita.nsbta:
-	g3dcvtr $<
-
-.ima.nsbma:
-	g3dcvtr $<
-
-.itp.nsbtp:
-	g3dcvtr $<
-
-.iva.nsbva:
-	g3dcvtr $<
-
 endif
 
 .PHONY:	do-build clean subdir
@@ -109,7 +77,7 @@ endif
 #----------------------------------------------------------------------------
 #	ツールへのパス指定
 #----------------------------------------------------------------------------
-CSVCVTR	= $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
+CSVCVTR	= $(PROJECT_ROOT)/tools/exceltool/xls2xml/tab_out_direct_sheet.rb
 
 
 #------------------------------------------------------------------------------
@@ -128,9 +96,9 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: WBStaffList.xls arclist.txt $(lobjects) $(gobjects) $(sobjects) $(obj_imd) $(obj_ica) $(obj_ita) $(obj_ima) $(obj_itp) $(obj_iva)
-	$(CSVCVTR) -o staff_list_jp.csv -p 2 -s csv WBStaffList.xls
-	$(CSVCVTR) -o staff_list_eng.csv -p 3 -s csv WBStaffList.xls
+$(targetname).narc: WBStaffList.xls arclist.txt $(lobjects) $(gobjects) $(sobjects)
+	ruby $(CSVCVTR) WBStaffList.xls -s -n 1 > staff_list_jp.csv
+	ruby $(CSVCVTR) WBStaffList.xls -s -n 2 > staff_list_eng.csv
 	perl staff_roll_gmm.pl staff_list_jp.csv ../message/template.gmm
 	perl staff_roll_gmm.pl staff_list_eng.csv ../message/template.gmm
 	perl staff_roll_cnv.pl staff_list_jp.csv
@@ -159,6 +127,9 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.nscr
 	rm -f *.narc
 	rm -f *.naix
+	rm -f *.N*R
+	rm -f *.dat
+	rm -f *.csv
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
 endif

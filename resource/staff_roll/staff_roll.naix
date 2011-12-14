@@ -17,13 +17,7 @@ enum {
 	NARC_staff_roll_end_ncgr = 3,
 	NARC_staff_roll_end_nscr = 4,
 	NARC_staff_roll_end_e_nscr = 5,
-	NARC_staff_roll_staffroll_b_nsbmd = 6,
-	NARC_staff_roll_staffroll_b_nsbca = 7,
-	NARC_staff_roll_staffroll_b_nsbtp = 8,
-	NARC_staff_roll_staffroll_w_nsbmd = 9,
-	NARC_staff_roll_staffroll_w_nsbca = 10,
-	NARC_staff_roll_staffroll_w_nsbtp = 11,
-	NARC_staff_roll_staffroll_font_nclr = 12
+	NARC_staff_roll_staffroll_font_nclr = 6
 };
 
 /* NARC_STAFF_ROLL_NAIX_ */

@@ -696,8 +696,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_050">
-		<language name="JPN" width="256">DIRECTOR  OF  POKÉMON  CHARACTERS</language>
-		<language name="JPN_KANJI" width="256">DIRECTOR  OF  POKÉMON  CHARACTERS</language>
+		<language name="JPN" width="256">DIRECTOR  OF  POKEMON  CHARACTERS</language>
+		<language name="JPN_KANJI" width="256">DIRECTOR  OF  POKEMON  CHARACTERS</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_051">
@@ -706,8 +706,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_052">
-		<language name="JPN" width="256">POKÉMON  CHARACTERS  DESIGN</language>
-		<language name="JPN_KANJI" width="256">POKÉMON  CHARACTERS  DESIGN</language>
+		<language name="JPN" width="256">POKEMON  CHARACTERS  DESIGN</language>
+		<language name="JPN_KANJI" width="256">POKEMON  CHARACTERS  DESIGN</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_053">
@@ -961,8 +961,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_103">
-		<language name="JPN" width="256">POKÉMON  CONCEPT  &amp;  POKÉDEX  TEXT</language>
-		<language name="JPN_KANJI" width="256">POKÉMON  CONCEPT  &amp;  POKÉDEX  TEXT</language>
+		<language name="JPN" width="256">POKEMON  CONCEPT  &amp;  POKEDEX  TEXT</language>
+		<language name="JPN_KANJI" width="256">POKEMON  CONCEPT  &amp;  POKEDEX  TEXT</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_104">
@@ -1006,8 +1006,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_112">
-		<language name="JPN" width="256">POKÉMON  VOICE  DESIGN</language>
-		<language name="JPN_KANJI" width="256">POKÉMON  VOICE  DESIGN</language>
+		<language name="JPN" width="256">POKEMON  VOICE  DESIGN</language>
+		<language name="JPN_KANJI" width="256">POKEMON  VOICE  DESIGN</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_113">
@@ -1331,8 +1331,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_177">
-		<language name="JPN" width="256">POKÉMON  &amp;  TRAINER  PARAMETER  DESIGN</language>
-		<language name="JPN_KANJI" width="256">POKÉMON  &amp;  TRAINER  PARAMETER  DESIGN</language>
+		<language name="JPN" width="256">POKEMON  &amp;  TRAINER  PARAMETER  DESIGN</language>
+		<language name="JPN_KANJI" width="256">POKEMON  &amp;  TRAINER  PARAMETER  DESIGN</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_178">

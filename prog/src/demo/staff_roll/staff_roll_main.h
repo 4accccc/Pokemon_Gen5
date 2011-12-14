@@ -19,7 +19,6 @@
 //	定数定義
 //============================================================================================
 
-#define	SRMAIN_CAMERA_REQ_MAX		( 16 )		// ３Ｄカメラ動作リクエスト最大数
 #define	SRMAIN_VBMP_MAX					( 64 )		// 仮想ＢＭＰ最大数
 
 // フォントタイプ
@@ -45,34 +44,6 @@ typedef struct {
 	s16	offs_x;
 }ITEMLIST_DATA;
 
-// カメラ動作データ
-typedef struct {
-	VecFx32	pos;
-	VecFx32	target;
-}SR3DCAMERA_PARAM;
-
-// カメラリクエストデータ
-typedef struct {
-	u16	no;
-	u16	cnt;
-}SR3DCAMERA_REQ_PARAM;
-
-typedef struct {
-	const SR3DCAMERA_PARAM * tbl;		// 座標テーブル
-	SR3DCAMERA_PARAM	param;				// 移動先
-	SR3DCAMERA_PARAM	val;					// 移動値
-
-	SR3DCAMERA_REQ_PARAM	req[SRMAIN_CAMERA_REQ_MAX];	// リクエスト
-
-	u16	tblMax;
-	u16	pos;
-
-	u16	cnt;
-	u16	cntMax;
-
-	BOOL	flg;
-}SR3DCAMERA_MOVE;
-
 typedef struct {
 	GFL_BMP_DATA * bmp;
 	u32	idx;
@@ -82,18 +53,6 @@ typedef struct {
 	STAFFROLL_DATA * dat;			// 外部設定データ
 
 	GFL_TCB * vtask;		// TCB ( VBLANK )
-
-	GFL_G3D_UTIL * g3d_util;
-	GFL_G3D_CAMERA * g3d_camera;
-	GFL_G3D_LIGHTSET * g3d_light;
-	u32	g3d_obj_id;
-	u16	g3d_unit;
-	fx32	g3d_briCount;
-
-	GFL_G3D_OBJ * g3d_obj;
-	int	g3d_anm;
-
-	SR3DCAMERA_MOVE	cameraMove;
 
 	GFL_FONT * font[SRMAIN_FONT_MAX];		// フォント
 	GFL_MSGDATA * mman;									// メッセージデータマネージャ

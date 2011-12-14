@@ -118,9 +118,6 @@ enum {
 	ITEMLIST_LABEL_END,
 
 	ITEMLIST_LABEL_LOGO_PUT,
-	ITEMLIST_LABEL_3D_PUT,
-	ITEMLIST_LABEL_3D_CLEAR,
-	ITEMLIST_LABEL_3D_CAMERA_REQUEST,
 
 	ITEMLIST_LABEL_VERSION,
 
@@ -138,8 +135,6 @@ enum {
 #define	STR_FADE_SPEED			( 4 )			// スキップ時の文字列フェード速度
 
 typedef int (*pCOMM_FUNC)(SRMAIN_WORK*,ITEMLIST_DATA*);
-
-#define	G3D_FADEIN_SPEED	( FX32_ONE / 16 )		// ３Ｄ面のフェードイン速度
 
 #define	ITEMLIST_SCROLL_SPEED		( FX32_CONST(1) )			// リストスクロール速度
 
@@ -172,14 +167,6 @@ static void ExitBmp( SRMAIN_WORK * wk );
 static void SetBmpWinTransFlag( SRMAIN_WORK * wk, u32 flg );
 static void TransBmpWinChar( SRMAIN_WORK * wk );
 
-static void Init3D( SRMAIN_WORK * wk );
-static void Exit3D( SRMAIN_WORK * wk );
-static void Main3D( SRMAIN_WORK * wk );
-static void CameraMoveInit( SR3DCAMERA_MOVE * mvwk );
-static VecFx32 CameraMoveValMake( const VecFx32 * now, const VecFx32 * mvp, u32 cnt );
-static void CameraMoveMain( SRMAIN_WORK * wk );
-static void CameraMoveFlagSet( SR3DCAMERA_MOVE * mvwk, BOOL flg );
-
 static void WriteVirtualBmp( SRMAIN_WORK * wk );
 static void PrintVirtualBmp( SRMAIN_WORK * wk );
 static void PrintStr( SRMAIN_WORK * wk, ITEMLIST_DATA * item, GFL_BMP_DATA * bmp, u32 py );
@@ -187,7 +174,6 @@ static void PrintStr( SRMAIN_WORK * wk, ITEMLIST_DATA * item, GFL_BMP_DATA * bmp
 static int SetFadeIn( SRMAIN_WORK * wk, int next );
 static int SetFadeOut( SRMAIN_WORK * wk, int next );
 static void CheckSkip( SRMAIN_WORK * wk );
-static void ChangeBrightness3D( SRMAIN_WORK * wk );
 
 static void ListScroll( SRMAIN_WORK * wk );
 
@@ -205,14 +191,10 @@ static BOOL Comm_LabelScrollStart( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelScrollStop( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelEnd( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelLogoPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
-static BOOL Comm_Label3DPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
-static BOOL Comm_Label3DClear( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
-static BOOL Comm_Label3DCameraRequest( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelVersion( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 
 #ifdef	PM_DEBUG
 static void DebugGridSet(void);
-static void DebugCameraPrint( SRMAIN_WORK * wk );
 #endif	// PM_DEBUG
 
 
@@ -275,91 +257,9 @@ static const pCOMM_FUNC CommFunc[] = {
 	Comm_LabelEnd,					// ラベル：終了
 
 	Comm_LabelLogoPut,					// ラベル：ロゴ表示
-	Comm_Label3DPut,						// ラベル：３Ｄ表示
-	Comm_Label3DClear,					// ラベル：３Ｄクリア
-	Comm_Label3DCameraRequest,	// ラベル：３Ｄカメラ移動リクエスト
 
 	Comm_LabelVersion,			// ラベル：バージョン別処理
 };
-
-// リソーステーブル
-static const GFL_G3D_UTIL_RES G3DUtilResTbl[] =
-{
-#if	PM_VERSION == LOCAL_VERSION
-	{ ARCID_STAFF_ROLL, NARC_staff_roll_staffroll_b_nsbmd, GFL_G3D_UTIL_RESARC },		// 00: モデル
-	{ ARCID_STAFF_ROLL, NARC_staff_roll_staffroll_b_nsbca, GFL_G3D_UTIL_RESARC },		// 01: アニメ
-	{ ARCID_STAFF_ROLL, NARC_staff_roll_staffroll_b_nsbtp, GFL_G3D_UTIL_RESARC },		// 02: アニメ
-#else
-	{ ARCID_STAFF_ROLL, NARC_staff_roll_staffroll_w_nsbmd, GFL_G3D_UTIL_RESARC },		// 00: モデル
-	{ ARCID_STAFF_ROLL, NARC_staff_roll_staffroll_w_nsbca, GFL_G3D_UTIL_RESARC },		// 01: アニメ
-	{ ARCID_STAFF_ROLL, NARC_staff_roll_staffroll_w_nsbtp, GFL_G3D_UTIL_RESARC },		// 02: アニメ
-#endif
-};
-
-// アニメテーブル
-static const GFL_G3D_UTIL_ANM G3DUtil_AnmTbl[] =
-{
-	{ 1, 0 },		// 00: アニメ
-	{ 2, 0 },		// 01: アニメ
-};
-
-// 3D OBJテーブル
-static const GFL_G3D_UTIL_OBJ G3DUtilObjTbl[] =
-{
-	{ 0, 0, 0, G3DUtil_AnmTbl, NELEMS(G3DUtil_AnmTbl) },
-};
-
-// 設定データ
-static const GFL_G3D_UTIL_SETUP G3DUtilSetup = {
-	G3DUtilResTbl, NELEMS(G3DUtilResTbl),
-	G3DUtilObjTbl, NELEMS(G3DUtilObjTbl),
-};
-
-//ライト初期設定データ
-static const GFL_G3D_LIGHT_DATA light_data[] = {
-  { 0, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
-  { 1, {{  (FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
-  { 2, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
-  { 3, {{ -(FX16_ONE-1), -(FX16_ONE-1), -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
-};
-static const GFL_G3D_LIGHTSET_SETUP light3d_setup = { light_data, NELEMS(light_data) };
-
-// カメラ座標（設定は増田さん）
-static const SR3DCAMERA_PARAM CameraMoveTable[] =
-{
-#if	PM_VERSION == LOCAL_VERSION
-	{ { 3681, 94888, 42318 }, { 0, 124745, 0 } },
-	{ { 1636, 95706, 63177 }, { 0, 124745, 0 } },
-	{ { -5317, 111657, 78310 }, { 0, 124745, 0 } },
-	{ { -7362, 159919, 128208 }, { 32311, 124745, 0 } },
-	{ { -64622, 150921, 81582 }, { 245809, 108794, 129244 } },
-	{ { -17178, 156238, 90580 }, { 199183, 98978, -41718 } },
-	{ { -18405, 189776, 93443 }, { 959514, 154602, 0 } },
-#else
-	{ { 7362, 78119, 2236 }, { 0, 124745, 0 } },
-	{ { 1636, 120655, 48453 }, { 0, 124745, 0 } },
-	{ { -39264, 151739, 53361 }, { 179960, 124745, 0 } },
-	{ { -8998, 153784, 137615 }, { 47853, 124745, 0 } },
-
-	{ { -64622, 159919, 81582 }, { 245809, 108794, 129244 } },
-	{ { -19223, 155011, 93443 }, { 199183, 98978, -41718 } },
-	{ { -21677, 148467, 185468 }, { 1908803, 121064, -41718 } },
-#endif
-};
-
-static const GFL_G3D_OBJSTATUS ObjStatus =
-{
-	{ 0, 0, 0 },																				// trans
-	{ FX32_ONE, FX32_ONE, FX32_ONE },										// scale
-	{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	// rotate
-};
-
-#ifdef PM_DEBUG
-static VecFx32 test_pos = {0,0,0};
-static VecFx32 test_target = {0,0,0};
-#endif
-
-
 
 //============================================================================================
 //	シーケンス
@@ -385,8 +285,6 @@ BOOL SRMAIN_Main( SRMAIN_WORK * wk )
 	}
 
 	WriteVirtualBmp( wk );
-
-	Main3D( wk );
 
 	return TRUE;
 }
@@ -427,7 +325,6 @@ static int MainSeq_Init( SRMAIN_WORK * wk )
 	LoadBgGraphic();
 	InitMsg( wk );
 	InitBmp( wk );
-	Init3D( wk );
 
 	CreateListData( wk );
 
@@ -471,7 +368,6 @@ static int MainSeq_Release( SRMAIN_WORK * wk )
 
 	DeleteListData( wk );
 
-	Exit3D( wk );
 	ExitBmp( wk );
 	ExitMsg( wk );
 	ExitBg();
@@ -931,33 +827,28 @@ static void ExitMsg( SRMAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void CreateVirtualBmp( SRMAIN_WORK * wk )
 {
-	u16	flg;
 	u16	i;
 
-	flg = 0;
 	i = 0;
 
 	while( 1 ){
 		ITEMLIST_DATA * item = &wk->list[i];
-		if( flg == 0 ){
-			if( item->label == ITEMLIST_LABEL_3D_PUT ){ flg = 1; }
-		}else{
-			if( item->label == ITEMLIST_LABEL_END ){
-				break;
-			}else if( item->label == ITEMLIST_LABEL_NONE && item->msgIdx != ITEMLIST_MSG_NONE ){
-				ITEMLIST_DATA * sub = &wk->list[i+1];
-				if( sub->wait == 0 && sub->label == ITEMLIST_LABEL_NONE && sub->msgIdx != ITEMLIST_MSG_NONE ){
-					wk->vBmp[wk->vBmpMax].bmp = GFL_BMP_Create( VBMP_SX, VBMP_SY, GFL_BMP_16_COLOR, HEAPID_STAFF_ROLL );
-					wk->vBmp[wk->vBmpMax].idx = i;
-					wk->vBmpMax++;
-					// 最大数を超えたら
-					if( wk->vBmpMax == SRMAIN_VBMP_MAX ){
-						break;
-					}
-					i++;
-				}
-			}
-		}
+    if( item->label == ITEMLIST_LABEL_END ){
+      break;
+    }else if( item->label == ITEMLIST_LABEL_NONE && item->msgIdx != ITEMLIST_MSG_NONE ){
+      ITEMLIST_DATA * sub = &wk->list[i+1];
+      if( sub->wait == 0 && sub->label == ITEMLIST_LABEL_NONE && sub->msgIdx != ITEMLIST_MSG_NONE ){
+        wk->vBmp[wk->vBmpMax].bmp = GFL_BMP_Create( VBMP_SX, VBMP_SY, GFL_BMP_16_COLOR, HEAPID_STAFF_ROLL );
+        wk->vBmp[wk->vBmpMax].idx = i;
+        wk->vBmpMax++;
+        // 最大数を超えたら
+        if( wk->vBmpMax == SRMAIN_VBMP_MAX ){
+          break;
+        }
+        i++;
+      }
+    }
+		
 		i++;
 	}
 }
@@ -1150,359 +1041,6 @@ static void TransBmpWinChar( SRMAIN_WORK * wk )
 
 
 //============================================================================================
-//	3D
-//============================================================================================
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		３Ｄ関連初期化
- *
- * @param		wk		ワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void Init3D( SRMAIN_WORK * wk )
-{
-	// ３Ｄシステム起動
-	GFL_G3D_Init(
-		GFL_G3D_VMANLNK,		// テクスチャマネージャ使用モード（フレームモード（とりっぱなし））
-		GFL_G3D_TEX256K,		// テクスチャマネージャサイズ 128KB(1ブロック)
-		GFL_G3D_VMANLNK,		// パレットマネージャ使用モード（フレームモード（とりっぱなし））
-		GFL_G3D_PLT32K,			// パレットマネージャサイズ
-		0x1000,							// ジオメトリバッファの使用サイズ
-		HEAPID_STAFF_ROLL,	// ヒープID
-		NULL );							// セットアップ関数(NULLの時はDefaultSetUp)
-
-	// ハンドル作成
-	wk->g3d_util = GFL_G3D_UTIL_Create( 3, 1, HEAPID_STAFF_ROLL );
-	wk->g3d_unit = GFL_G3D_UTIL_AddUnit( wk->g3d_util, &G3DUtilSetup );
-
-	{
-		u32	i;
-
-		wk->g3d_obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->g3d_unit );
-		wk->g3d_anm = GFL_G3D_OBJECT_GetAnimeCount( wk->g3d_obj );
-
-		for( i=0; i<wk->g3d_anm; i++ ){
-			GFL_G3D_OBJECT_EnableAnime( wk->g3d_obj, i );
-		}
-	}
-
-  // ライト作成
-	wk->g3d_light = GFL_G3D_LIGHT_Create( &light3d_setup, HEAPID_STAFF_ROLL );
-  GFL_G3D_LIGHT_Switching( wk->g3d_light );
-
-  // カメラ初期設定
-	{
-		VecFx32 up			= { 0, FX32_ONE, 0 };
-
-		wk->g3d_camera = GFL_G3D_CAMERA_Create(
-											GFL_G3D_PRJPERS, 
-											FX_SinIdx( defaultCameraFovy/2 * PERSPWAY_COEFFICIENT ),
-											FX_CosIdx( defaultCameraFovy/2 * PERSPWAY_COEFFICIENT ),
-											defaultCameraAspect, 0,
-											defaultCameraNear, defaultCameraFar, 0,
-											&CameraMoveTable[0].pos, &up, &CameraMoveTable[0].target, HEAPID_STAFF_ROLL );
-		GFL_G3D_CAMERA_Switching( wk->g3d_camera );
-#ifdef PM_DEBUG
-		test_pos = CameraMoveTable[0].pos;
-		test_target = CameraMoveTable[0].target;
-#endif
-	}
-
-	G3X_AntiAlias( TRUE );
-
-	GFL_BG_SetBGControl3D( 2 );				// BG面設定（引数は優先度）
-
-	CameraMoveInit( &wk->cameraMove );
-
-	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
-
-#if	PM_VERSION == LOCAL_VERSION
-	G2_SetBlendBrightness( GX_PLANEMASK_BG0, -16 );
-#else
-	G2_SetBlendBrightness( GX_PLANEMASK_BG0, 16 );
-#endif
-
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		３Ｄ関連解放
- *
- * @param		wk		ワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void Exit3D( SRMAIN_WORK * wk )
-{
-	GFL_G3D_CAMERA_Delete( wk->g3d_camera );
-	GFL_G3D_LIGHT_Delete( wk->g3d_light );
-
-	GFL_G3D_UTIL_DelUnit( wk->g3d_util, wk->g3d_unit );
-	GFL_G3D_UTIL_Delete( wk->g3d_util );
-
-	GFL_G3D_Exit();
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		３Ｄメイン
- *
- * @param		wk		ワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void Main3D( SRMAIN_WORK * wk )
-{
-	// ２回目は表示しない
-	if( wk->dat->fastMode == STAFFROLL_MODE_FAST ){
-		return;
-	}
-	// ３Ｄ面が非表示のとき
-	if( ( GFL_DISP_GetMainVisible() & GX_PLANEMASK_BG0 ) == 0 ){
-		return;
-	}
-
-#ifdef PM_DEBUG
-	DebugCameraPrint( wk );
-#endif
-
-	ChangeBrightness3D( wk );
-
-#ifdef	PMDEBUG
-	if( wk->debugStopFlg == FALSE ){
-		CameraMoveMain( wk );
-	}
-#else
-	CameraMoveMain( wk );
-#endif
-
-	{
-		u32	i;
-
-		for( i=0; i<wk->g3d_anm; i++ ){
-			GFL_G3D_OBJECT_LoopAnimeFrame( wk->g3d_obj, i, FX32_ONE );
-		}
-	}
-
-	GFL_G3D_DRAW_Start();
-	GFL_G3D_DRAW_SetLookAt();
-	GFL_G3D_DRAW_DrawObject( wk->g3d_obj, &ObjStatus );
-	GFL_G3D_DRAW_End();
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		カメラ移動初期化
- *
- * @param		mvwk		カメラ移動ワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void CameraMoveInit( SR3DCAMERA_MOVE * mvwk )
-{
-	u32	i;
-
-	mvwk->tbl    = CameraMoveTable;
-	mvwk->tblMax = NELEMS(CameraMoveTable);
-	mvwk->cnt    = 0;
-	mvwk->pos    = 0;
-	mvwk->flg = FALSE;
-
-	for( i=0; i<SRMAIN_CAMERA_REQ_MAX; i++ ){
-		mvwk->req[i].no  = 0xffff;
-		mvwk->req[i].cnt = 0;
-	}
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		カメラ移動リクエスト
- *
- * @param		mvwk		カメラ移動ワーク
- * @param		no			移動先カメラ番号
- * @param		cnt			移動終了までのフレーム数
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void CameraMoveRequestSet( SR3DCAMERA_MOVE * mvwk, u16 no, u16 cnt )
-{
-	u32	i;
-
-	for( i=0; i<SRMAIN_CAMERA_REQ_MAX; i++ ){
-		if( mvwk->req[i].no == 0xffff ){
-			mvwk->req[i].no  = no;
-			mvwk->req[i].cnt = cnt;
-			break;
-		}
-	}
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		次のカメラ移動リクエストへ
- *
- * @param		mvwk		カメラ移動ワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void CameraMoveRequestShift( SR3DCAMERA_MOVE * mvwk )
-{
-	u32	i;
-
-	for( i=0; i<SRMAIN_CAMERA_REQ_MAX-1; i++ ){
-		mvwk->req[i] = mvwk->req[i+1];
-	}
-	mvwk->req[SRMAIN_CAMERA_REQ_MAX-1].no  = 0xffff;
-	mvwk->req[SRMAIN_CAMERA_REQ_MAX-1].cnt = 0;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		カメラ移動量作成
- *
- * @param		now			現在のカメラ座標
- * @param		mvp			移動先のカメラ座標
- * @param		cnt			移動終了までのフレーム数
- *
- * @return	１フレームの移動量
- */
-//--------------------------------------------------------------------------------------------
-static VecFx32 CameraMoveValMake( const VecFx32 * now, const VecFx32 * mvp, u32 cnt )
-{
-	VecFx32	vec;
-
-	vec.x = ( GFL_STD_Abs(now->x-mvp->x) << 8 ) / cnt;
-	if( now->x > mvp->x ){
-		vec.x *= -1;
-	}
-	vec.y = ( GFL_STD_Abs(now->y-mvp->y) << 8 ) / cnt;
-	if( now->y > mvp->y ){
-		vec.y *= -1;
-	}
-	vec.z = ( GFL_STD_Abs(now->z-mvp->z) << 8 ) / cnt;
-	if( now->z > mvp->z ){
-		vec.z *= -1;
-	}
-	return vec;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		カメラ移動後の座標取得
- *
- * @param		p				現在のカメラ座標
- * @param		mv			１フレームの移動量
- * @param		cnt			現在のフレーム数
- *
- * @return	移動後の座標
- */
-//--------------------------------------------------------------------------------------------
-static VecFx32 CameraMoveCore( const VecFx32 * p, const VecFx32 * mv, u32 cnt )
-{
-	VecFx32	vec;
-	fx32	val;
-
-	vec = *p;
-
-	val = ( GFL_STD_Abs(mv->x) * cnt ) >> 8;
-	if( mv->x > 0 ){
-		vec.x += val;
-	}else{
-		vec.x -= val;
-	}
-	val = ( GFL_STD_Abs(mv->y) * cnt ) >> 8;
-	if( mv->y > 0 ){
-		vec.y += val;
-	}else{
-		vec.y -= val;
-	}
-	val = ( GFL_STD_Abs(mv->z) * cnt ) >> 8;
-	if( mv->z > 0 ){
-		vec.z += val;
-	}else{
-		vec.z -= val;
-	}
-	return vec;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		カメラ移動
- *
- * @param		wk		ワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void CameraMoveMain( SRMAIN_WORK * wk )
-{
-	SR3DCAMERA_MOVE * mvwk = &wk->cameraMove;
-
-	if( mvwk->flg == FALSE ){
-		return;
-	}
-
-	if( mvwk->cnt == 0 ){
-		VecFx32	vec;
-
-		mvwk->cntMax = mvwk->req[0].cnt;
-
-		GFL_G3D_CAMERA_GetPos( wk->g3d_camera, &vec );
-		mvwk->val.pos = CameraMoveValMake( &vec, &mvwk->tbl[mvwk->req[0].no].pos, mvwk->cntMax );
-
-		GFL_G3D_CAMERA_GetTarget( wk->g3d_camera, &vec );
-		mvwk->val.target = CameraMoveValMake( &vec, &mvwk->tbl[mvwk->req[0].no].target, mvwk->cntMax );
-	}
-
-	if( mvwk->cnt >= mvwk->cntMax ){
-		mvwk->param.pos    = mvwk->tbl[mvwk->req[0].no].pos;
-		mvwk->param.target = mvwk->tbl[mvwk->req[0].no].target;
-		mvwk->pos = mvwk->req[0].no;
-		mvwk->cnt = 0;
-		CameraMoveRequestShift( mvwk );
-		if( mvwk->req[0].no == 0xffff ){
-			CameraMoveFlagSet( mvwk, FALSE );
-		}
-	}else{
-		mvwk->param.pos    = CameraMoveCore( &mvwk->tbl[mvwk->pos].pos, &mvwk->val.pos, mvwk->cnt );
-		mvwk->param.target = CameraMoveCore( &mvwk->tbl[mvwk->pos].target, &mvwk->val.target, mvwk->cnt );
-		if( wk->skipFlag == 1 ){
-			mvwk->cnt += SKIP_SPEED;
-		}else{
-			mvwk->cnt++;
-		}
-	}
-
-	GFL_G3D_CAMERA_SetPos( wk->g3d_camera, &mvwk->param.pos );
-	GFL_G3D_CAMERA_SetTarget( wk->g3d_camera, &mvwk->param.target );
-	GFL_G3D_CAMERA_Switching( wk->g3d_camera );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		カメラ移動動作フラグ設定
- *
- * @param		wk		ワーク
- * @param		flg		TRUE = 動作, FALSE = 停止
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void CameraMoveFlagSet( SR3DCAMERA_MOVE * mvwk, BOOL flg )
-{
-	mvwk->flg = flg;
-}
-
-
-//============================================================================================
 //	その他
 //============================================================================================
 
@@ -1550,32 +1088,6 @@ static int SetFadeOut( SRMAIN_WORK * wk, int next )
 #endif
 	wk->nextSeq = next;
 	return MAINSEQ_WIPE;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		３Ｄ面のフェード処理
- *
- * @param		wk		ワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-static void ChangeBrightness3D( SRMAIN_WORK * wk )
-{
-	if( wk->g3d_briCount > FX32_CONST(16) ){ return; }
-
-	if( wk->skipFlag == 1 ){
-		wk->g3d_briCount += ( G3D_FADEIN_SPEED * SKIP_SPEED );
-	}else{
-		wk->g3d_briCount += G3D_FADEIN_SPEED;
-	}
-
-#if	PM_VERSION == LOCAL_VERSION
-	G2_SetBlendBrightness( GX_PLANEMASK_BG0, -16+wk->g3d_briCount/FX32_ONE );
-#else
-	G2_SetBlendBrightness( GX_PLANEMASK_BG0, 16-wk->g3d_briCount/FX32_ONE );
-#endif
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2161,61 +1673,6 @@ static BOOL Comm_LabelLogoPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		コマンド：３Ｄ表示
- *
- * @param		wk		ワーク
- * @param		item	リスト項目データ
- *
- * @retval	"TRUE = 処理中"
- * @retval	"FALSE = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-static BOOL Comm_Label3DPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
-{
-	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
-	return TRUE;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		コマンド：３Ｄクリア
- *
- * @param		wk		ワーク
- * @param		item	リスト項目データ
- *
- * @retval	"TRUE = 処理中"
- * @retval	"FALSE = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-static BOOL Comm_Label3DClear( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
-{
-	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
-	return TRUE;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		コマンド：３Ｄカメラ移動リクエスト
- *
- * @param		wk		ワーク
- * @param		item	リスト項目データ
- *
- * @retval	"TRUE = 処理中"
- * @retval	"FALSE = それ以外"
- */
-//--------------------------------------------------------------------------------------------
-static BOOL Comm_Label3DCameraRequest( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
-{
-	SR3DCAMERA_MOVE * mvwk = &wk->cameraMove;
-
-	CameraMoveRequestSet( mvwk, item->labelType, item->wait );
-	CameraMoveFlagSet( mvwk, TRUE );
-
-	return TRUE;
-}
-
-//--------------------------------------------------------------------------------------------
-/**
  * @brief		コマンド：バージョン別文字表示
  *
  * @param		wk		ワーク
@@ -2299,69 +1756,6 @@ static void DebugGridSet(void)
 
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
-}
-
-static void DebugCameraPrint( SRMAIN_WORK * wk )
-{
-	if( wk->debugStopFlg == TRUE ){
-		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
-			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){
-				test_pos.z -= FX32_ONE/10;
-			}
-			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ){
-				test_pos.z += FX32_ONE/10;
-			}
-			if( GFL_UI_KEY_GetCont() & PAD_KEY_UP ){
-				test_pos.y -= FX32_ONE/10;
-			}
-			if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){
-				test_pos.y += FX32_ONE/10;
-			}
-			if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT ){
-				test_pos.x -= FX32_ONE/10;
-			}
-			if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT ){
-				test_pos.x += FX32_ONE/10;
-			}
-			GFL_G3D_CAMERA_SetPos( wk->g3d_camera, &test_pos );
-			OS_Printf( "POS : x = %d, y = %d, z = %d\n", test_pos.x, test_pos.y, test_pos.z );
-		}
-		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
-			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){
-				test_target.z -= FX32_ONE/10;
-			}
-			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ){
-				test_target.z += FX32_ONE/10;
-			}
-			if( GFL_UI_KEY_GetCont() & PAD_KEY_UP ){
-				test_target.y -= FX32_ONE/10;
-			}
-			if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){
-				test_target.y += FX32_ONE/10;
-			}
-			if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT ){
-				test_target.x -= FX32_ONE/10;
-			}
-			if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT ){
-				test_target.x += FX32_ONE/10;
-			}
-			GFL_G3D_CAMERA_SetTarget( wk->g3d_camera, &test_target );
-			OS_Printf( "TARGET : x = %d, y = %d, z = %d\n", test_target.x, test_target.y, test_target.z );
-		}
-
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-			testCameraIndex++;
-			if( testCameraIndex >= NELEMS(CameraMoveTable) ){
-				testCameraIndex = 0;
-			}
-			GFL_G3D_CAMERA_SetPos( wk->g3d_camera, &CameraMoveTable[testCameraIndex].pos );
-			GFL_G3D_CAMERA_SetTarget( wk->g3d_camera, &CameraMoveTable[testCameraIndex].target );
-			GFL_G3D_CAMERA_GetPos( wk->g3d_camera, &test_pos );
-			GFL_G3D_CAMERA_GetTarget( wk->g3d_camera, &test_target );
-		}
-
-	  GFL_G3D_CAMERA_Switching( wk->g3d_camera );
-	}
 }
 
 #endif // PM_DEBUG
