@@ -70,12 +70,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンと　いっしょ　なんだ！▼
+			<Text>[Name:PokemonName Idx="1" ]と　いっしょ　なんだ！▼
 じゃあ　これは　はなむけ！
 えんりょせずに　もっていって▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T06:02:09" />
+				Time="2011-12-14T10:20:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -83,12 +83,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンと　一緒なんだ！▼
+			<Text>[Name:PokemonName Idx="1" ]と　一緒なんだ！▼
 じゃあ　これは　はなむけ！
 遠慮せずに　持っていって▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T06:02:15" />
+				Time="2011-12-14T10:20:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -100,10 +100,11 @@
 ・アイテム入手処理
 　No017「キズぐすり」×１
 ・アイテム入手後に
-　続けてinfomationw_04表示</Comment>
+　続けてinfomationw_04表示
+・1＝ポケモン種族名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-14T05:16:06" />
+				Time="2011-12-14T10:21:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

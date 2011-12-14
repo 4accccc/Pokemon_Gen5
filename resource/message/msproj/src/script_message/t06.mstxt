@@ -136,10 +136,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アデク『おう　こっちだ！
-ここで　しゅぎょう　しようか！▼</Text>
+では　しゅぎょう　しようか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T03:24:20" />
+				Time="2011-12-14T03:39:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -148,10 +148,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アデク『おう　こっちだ！
-ここで　修行しようか！▼</Text>
+では　修行しようか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T03:24:24" />
+				Time="2011-12-14T03:39:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -261,11 +261,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なるほど！
+			<Text>ほほう！
 ともだちの　タウンマップか▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T07:11:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -273,11 +273,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なるほど！
+			<Text>ほほう！
 友達の　タウンマップか▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:18" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T07:11:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -322,14 +322,13 @@
 			Language="JPN">
 			<Text>おまえさんの　ともだち　だが
 [Name:PokemonName Idx="0" ]を　つれているだろう▼
-その　しょうねん　だが
-さきほど　２０ばんどうろで▽
+うむ！ さきほど　２０ばんどうろで
 ポケモンを　きたえておったな……▼
-うむ！　タウンマップを
-とどけるのが　さきだな！▼</Text>
+それならば！　さきに
+タウンマップを　とどけるのだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T03:25:08" />
+				Time="2011-12-14T07:12:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -339,14 +338,13 @@
 			Language="JPN_KANJI">
 			<Text>おまえさんの　友達だが
 [Name:PokemonName Idx="0" ]を　連れているだろう▼
-その　少年なら
-さきほど　２０番道路で▽
+うむ！ さきほど　２０番道路で
 ポケモンを　鍛えておったな……▼
-うむ！　タウンマップを
-届けるのが　先だな！▼</Text>
+それならば！　先に
+タウンマップを　届けるのだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T03:25:18" />
+				Time="2011-12-14T07:13:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -406,7 +404,7 @@
 道なりに　進めば　すぐだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T03:25:35" />
+				Time="2011-12-14T07:18:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -668,11 +666,11 @@
 ポケモンが　おこしに　くる▼
 よるは　あそびつかれた
 ポケモンが　ベッドを　ひとりじめ▼
-ことばに　してみると　ひどいけど
-これが　いいんだよなあ</Text>
+ひどく　きこえるかも　しれないけど
+ぼくは　しあわせ　なんだなあ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-28T06:58:03" />
+				Time="2011-12-14T03:51:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -684,11 +682,11 @@
 ポケモンが　起こしに　くる▼
 夜は　遊びつかれた
 ポケモンが　ベッドを　独り占め▼
-言葉に　してみると　ひどいけど
-これが　いいんだよなあ</Text>
+ひどく　きこえるかも　しれないけど
+ぼくは　しあわせ　なんだなあ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-28T06:58:06" />
+				Time="2011-12-14T03:51:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -905,11 +903,11 @@
 			Language="JPN">
 			<Comment>♂
 ・はい/いいえの選択肢表示
-・はい　→
-　いいえ→</Comment>
+・はい　→boy1a_02
+　いいえ→boy1a_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T04:56:12" />
+				Time="2011-12-14T03:19:34" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

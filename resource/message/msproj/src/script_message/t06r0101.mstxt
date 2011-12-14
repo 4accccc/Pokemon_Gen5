@@ -733,12 +733,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>では　がんばった
-ポケモンを　げんきに　しよう！▼
+ポケモンを　元気に　しよう！▼
 [Name:PokemonName Idx="1" ]！
 [Name:TrainerName ]のために　よく　やったな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T03:38:48" />
+				Time="2011-12-14T07:54:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1257,12 +1257,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>？？？『じーちゃん！▼
+やった！▼
+やった！▼
 やったぜ！▼
 くろのまてんろう！▼
 てっぺんまで　のぼったぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T03:59:11" />
+				Time="2011-12-14T07:55:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1271,12 +1273,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>？？？『じーちゃん！▼
+やった！▼
+やった！▼
 やったぜ！▼
 黒の摩天楼！▼
 天辺まで　のぼったぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T01:40:10" />
+				Time="2011-12-14T07:55:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1315,12 +1319,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>？？？『じーちゃん！▼
+やった！▼
+やった！▼
 やったぜ！▼
 しろのじゅどう！▼
 いちばん　おくまで　もぐったぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T04:57:02" />
+				Time="2011-12-14T07:55:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1329,12 +1335,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>？？？『じーちゃん！▼
+やった！▼
+やった！▼
 やったぜ！▼
 白の樹洞！▼
 一番　奥まで　潜ったぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-22T04:57:06" />
+				Time="2011-12-14T07:55:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

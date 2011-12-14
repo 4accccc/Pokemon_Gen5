@@ -55,10 +55,10 @@
 たびを　してほしくなくてね……▽
 だって　アイツの　もくてきは……▼
 だが　こどもの　せいちょうを
-さまたげる　おやなんて　いないだろ</Text>
+ねがわない　おやなんて　いないだろ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T11:13:30" />
+				Time="2011-12-14T09:59:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -70,10 +70,10 @@
 旅を　してほしくなくてね……▽
 だって　アイツの　目的は……▼
 だが　こどもの　成長を
-さまたげる　親なんて　いないだろ</Text>
+願わない　親なんて　いないだろ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T11:13:25" />
+				Time="2011-12-14T09:59:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -109,12 +109,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>むすこは　だいじな　ものを
-とりもどせたようだね▼
+みつけたようだね▼
 ポケモンが……　そして
 キミが　いてくれた　おかげだね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T11:12:23" />
+				Time="2011-12-14T09:59:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -123,12 +123,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>息子は　大事な　ものを
-取り戻せたようだね▼
+みつけたようだね▼
 ポケモンが……　そして
 キミが　いてくれた　おかげだね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T11:12:20" />
+				Time="2011-12-14T10:00:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -202,6 +202,13 @@
 				User="matsumiya:W00224"
 				Time="2011-11-09T11:05:17" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c12r0201_woman3_01"

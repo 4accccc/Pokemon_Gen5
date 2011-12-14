@@ -270,12 +270,12 @@ ID：mount_14</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おまえたちには　参った！▼
-たのもしい　ポケモンが　いてくれれば
+頼もしい　ポケモンが　いてくれれば
 こどもでも　大人に▽
 見劣り　しないんだな！　うむ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T06:21:35" />
+				Time="2011-12-14T07:27:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -694,14 +694,13 @@ ID：mount_14</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『へえ
-チェレンさんって　ものしり　だな▼
-しかも　せかいせいふくを　ねらった
-あの　ひどい　れんちゅう……▽
+			<Text>[Name:TrainerName Idx="1" ]『さすが
+チェレンさん　ものしり　だな▼
+しかも　あの　ひどい　れんちゅう……
 プラズマだんとも　たたかったもんな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-14T02:43:42" />
+				Time="2011-12-14T10:45:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -709,14 +708,13 @@ ID：mount_14</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『へえ
-チェレンさんって　博識だな▼
-しかも　世界征服を　ねらった
-あの　ひどい　連中……▽
+			<Text>[Name:TrainerName Idx="1" ]『さすが
+チェレンさん　博識だな▼
+しかも　あの　ひどい　連中……
 プラズマ団とも　戦ったもんな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T06:20:08" />
+				Time="2011-12-14T10:45:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -753,15 +751,13 @@ ID：mount_14</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>きめた！
-チェレンさんより　つよくなる！▼
-まずは　タチワキシティの
-ポケモンジムに　ちょうせんするため▽
-あいぼうたちを　きたえる！▼
-おまえは　ポケモンずかん　だろ
-ひとの　たのみごと　だもんな！▼</Text>
+あの　ひと　より　つよくなる！▼
+オマエは……▼
+がんばれよ！　ずかんを　うめつつ
+オレの　サポートが　できるようになれ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T12:13:38" />
+				Time="2011-12-14T10:43:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -770,15 +766,13 @@ ID：mount_14</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>決めた！
-チェレンさんより　強くなる！▼
-まずは　タチワキシティの
-ポケモンジムに　挑戦するため▽
-相棒たちを　鍛える！▼
-おまえは　ポケモン図鑑　だろ
-人の　頼み事　だもんな！▼</Text>
+あの人より　強くなる！▼
+オマエは……▼
+がんばれよ！　図鑑を　埋めつつ
+オレの　サポートが　できるようになれ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T06:31:19" />
+				Time="2011-12-14T10:44:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -966,13 +960,13 @@ ID：mount_14</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……オレも　にげられた▼
-どうやら　アイツら　ふねで
-いどう　しているらしいな……▼
-うーん　ここから　ふねで
+どうやら　アイツら
+ふねで　いどう　しているらしいな▼
+ウーン　ここから　ふねで
 いくなら　ヒウンシティ　か……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T06:29:35" />
+				Time="2011-12-14T10:41:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -981,13 +975,13 @@ ID：mount_14</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……オレも　逃げられた▼
-どうやら　アイツら　船で
-移動している　らしいな……▼
-うーん　ここから　船で
+どうやら　アイツら
+船で　移動している　らしいな▼
+ウーン　ここから　船で
 移動するなら　ヒウンシティ　か……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-25T06:29:27" />
+				Time="2011-12-14T10:41:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

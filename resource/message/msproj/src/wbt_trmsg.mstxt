@@ -61454,10 +61454,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ　レッド</Text>
+			<Text>レッド『……▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:46:56" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:05:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -61465,10 +61465,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ　レッド</Text>
+			<Text>レッド『……▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:46:59" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:05:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -61477,19 +61477,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・赤緑主人公：レッド
+・RED
 ・１回戦用対戦前メッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:47:32" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:04:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>RED
-赤緑主人公・レッド</Text>
+			<Text>RED</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T07:37:44" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:03:58" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -61511,10 +61510,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ　レッド</Text>
+			<Text>レッド『……　……▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:47:10" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:05:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -61522,10 +61521,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ　レッド</Text>
+			<Text>レッド『……　……▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:47:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:05:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -61534,19 +61533,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・赤緑主人公：レッド
+・RED
 ・２回戦用対戦前メッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:45:46" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:04:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>RED
-赤緑主人公・レッド</Text>
+			<Text>RED</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T07:37:42" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:04:00" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -61568,10 +61566,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ　レッド</Text>
+			<Text>レッド『……　……　……▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:47:10" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:05:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -61579,10 +61577,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ　レッド</Text>
+			<Text>レッド『……　……　……▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:47:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:05:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -61591,19 +61589,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・赤緑主人公：レッド
+・RED
 ・決勝戦用対戦前メッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:45:46" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:04:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>RED
-赤緑主人公・レッド</Text>
+			<Text>RED</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T07:37:44" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:04:00" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -61625,10 +61622,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ　レッド</Text>
+			<Text>レッド『……！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:47:10" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:05:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -61636,10 +61633,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ　レッド</Text>
+			<Text>レッド『……！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:47:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:05:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -61648,19 +61645,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・赤緑主人公：レッド
+・RED
 ・対戦後メッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:45:46" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:04:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>RED
-赤緑主人公・レッド</Text>
+			<Text>RED</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T07:37:44" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:04:00" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -61682,10 +61678,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ　レッド</Text>
+			<Text>レッド『……？▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:47:10" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:08:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -61693,10 +61689,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ　レッド</Text>
+			<Text>レッド『……？▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:47:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:08:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -61705,19 +61701,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・赤緑主人公：レッド
+・RED
 ・対戦後　プレイヤー負けメッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:45:46" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:04:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>RED
-赤緑主人公・レッド</Text>
+			<Text>RED</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T07:37:44" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:04:00" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -61732,10 +61727,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ　レッド</Text>
+			<Text>レッド『……！！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:47:10" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:07:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -61743,10 +61738,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ　レッド</Text>
+			<Text>レッド『……！！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:47:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:08:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -61755,19 +61750,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・赤緑主人公：レッド
+・RED
 ・プレイヤーが勝った場合のメッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:45:46" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:04:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>RED
-赤緑主人公・レッド</Text>
+			<Text>RED</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T07:37:44" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:04:00" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -61789,10 +61783,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ　レッド</Text>
+			<Text>レッド『……！？▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:47:10" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:08:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -61800,10 +61794,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ　レッド</Text>
+			<Text>レッド『……！？▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:47:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:08:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -61812,19 +61806,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・赤緑主人公：レッド
+・RED
 ・プレイヤーが負けた場合のメッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:45:46" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:04:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>RED
-赤緑主人公・レッド</Text>
+			<Text>RED</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T07:37:44" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:04:00" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
@@ -61846,10 +61839,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ　レッド</Text>
+			<Text>リビング　レジェンド　レッド！
+その　つよさ　ほんもの　なのかあ！？</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:47:10" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:12:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -61857,10 +61851,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ　レッド</Text>
+			<Text>リビング　レジェンド　レッド！
+その　強さ　本物なのかあ！？</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:47:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:12:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -61869,19 +61864,18 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂：アナウンス
-・赤緑主人公：レッド
+・RED
 ・前口上メッセージ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T05:45:46" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:04:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>RED
-赤緑主人公・レッド</Text>
+			<Text>RED</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-14T07:37:44" />
+				User="matsumiya:W00224"
+				Time="2011-12-14T08:04:00" />
 		</AttributeCell>
 		<AttributeCell
 			Name="Width">
