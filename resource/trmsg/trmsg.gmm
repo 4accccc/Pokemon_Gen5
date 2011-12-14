@@ -18535,6 +18535,29 @@
 争いは　なくなると　思わないか？</language>
 	</row>
 
+	<row id="TRID_SWPLAZMAM_42_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">なあなあ！
+しんにゅうしゃって　しらない？▼
+って　おまえ！？▼</language>
+		<language name="JPN_KANJI" width="216">なあなあ！
+侵入者って　知らない？▼
+って　おまえ！？▼</language>
+	</row>
+
+	<row id="TRID_SWPLAZMAM_42_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">プラズマフリゲートに　しのびこむとは
+なんと　だいたんな　トレーナーめ！</language>
+		<language name="JPN_KANJI" width="216">プラズマフリゲートに　忍び込むとは
+なんと　大胆な　トレーナーめ！</language>
+	</row>
+
+	<row id="TRID_SWPLAZMAM_42_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">プラズマフリゲートを　つくった
+かがくりょくに　びびって　かえれよ！</language>
+		<language name="JPN_KANJI" width="216">プラズマフリゲートを　造った
+科学力に　びびって　帰れよ！</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
