@@ -1798,9 +1798,18 @@ static void _draw_movie_subtitle( PKWD_SELECT_SCREEN_MAIN_WORK *wk, int index )
   STRBUF *strbuf    = GFL_STR_CreateBuffer( PKWD_TITLE_STR_MAX, GetHeapLowID( HEAPID_PKWD_SELSCR ));
   STRBUF *expandbuf = GFL_STR_CreateBuffer( PKWD_TITLE_STR_MAX, GetHeapLowID( HEAPID_PKWD_SELSCR ));
   int sex = MyStatus_GetMySex(wk->param->mystatus);
+  BOOL blank_flag=FALSE;
   
-  // 録画データなし
-  if((wk->valid_list[index]->load_result==0)||(wk->nowpos == -1)){
+  // 表示不可能の状態か調査
+  if(index==-1 || wk->nowpos==-1){  // タッチで来ているので、参照場所が無い
+    blank_flag = TRUE;
+  }else{
+    if(wk->valid_list[index]->load_result==0){  // ロードしてみたが録画データが無い
+      blank_flag = TRUE;
+    }
+  }
+  // 上画面非表示状態なら白いタイトル
+  if(blank_flag){
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->print_util[PKWD_BMP_SUBTITLE_U].win), 0 );
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->print_util[PKWD_BMP_SUBTITLE_D].win), 0 );
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->print_util[PKWD_BMP_SUB_DATE].win),   0 );
