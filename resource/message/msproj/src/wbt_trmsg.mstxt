@@ -26322,11 +26322,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すべては　ポケモンしょうぶで
-わかるよ！　さあ　はじめよう！▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:08:22" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26334,11 +26333,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すべては　ポケモン勝負で
-わかるよ！　さあ　はじめよう！▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:20:19" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26348,10 +26346,11 @@
 			Language="JPN">
 			<Comment>♂
 ・前作主人公
-・１回戦用対戦前メッセージ</Comment>
+・１回戦用対戦前メッセージ
+未使用ラベル</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T06:43:21" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -26380,12 +26379,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ことばは　ごかいの　もと▼
-すべては　ポケモンしょうぶで
-わかるよ！　さあ　はじめよう！▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:10:24" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26393,12 +26390,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>言葉は　誤解の　もと▼
-すべては　ポケモン勝負で
-わかるよ！　さあ　はじめよう！▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:20:29" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26408,10 +26403,11 @@
 			Language="JPN">
 			<Comment>♂
 ・前作主人公
-・２回戦用対戦前メッセージ</Comment>
+・２回戦用対戦前メッセージ
+未使用ラベル</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T06:43:26" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -26440,13 +26436,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンとの　かいわは
-ことば　じゃなくて　きもち！▼
-すべては　ポケモンしょうぶで
-わかるよ！　さあ　はじめよう！▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:20:48" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26454,13 +26447,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンとの　会話は
-言葉じゃなくて　気持ち！▼
-すべては　ポケモン勝負で
-わかるよ！　さあ　はじめよう！▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:20:43" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26470,10 +26460,11 @@
 			Language="JPN">
 			<Comment>♂
 ・前作主人公
-・決勝戦用対戦前メッセージ</Comment>
+・決勝戦用対戦前メッセージ
+未使用ラベル</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T06:43:28" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -26502,10 +26493,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありがとう！！▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:23:16" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26513,10 +26504,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ありがとう！！▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:23:19" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26526,10 +26517,11 @@
 			Language="JPN">
 			<Comment>♂
 ・前作主人公
-・対戦後メッセージ</Comment>
+・対戦後メッセージ
+未使用ラベル</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T06:43:30" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -26558,11 +26550,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たまたま　かてた……
-そんな　かんじ　かな？▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:13:49" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26570,11 +26561,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たまたま　勝てた……
-そんな　感じ　かな？▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:20:56" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26584,10 +26574,11 @@
 			Language="JPN">
 			<Comment>♂
 ・前作主人公
-・対戦後　プレイヤー負けメッセージ</Comment>
+・対戦後　プレイヤー負けメッセージ
+未使用ラベル</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T06:43:31" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -26616,13 +26607,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トウヤ『ゆめを　かなえろ！▼
-そう　はげましてくれた
-おもいに　こたえるため▽
-いまも　たびを　つづけているんだ▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:15:26" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26630,13 +26618,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トウヤ『ゆめを　かなえろ！▼
-そう　はげましてくれた
-想いに　応えるため▽
-いまも　旅を　続けているんだ▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:21:22" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26646,10 +26631,11 @@
 			Language="JPN">
 			<Comment>♂
 ・前作主人公
-・プレイヤーが勝った場合のメッセージ</Comment>
+・プレイヤーが勝った場合のメッセージ
+未使用ラベル</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T06:43:32" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -26678,12 +26664,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トウヤ『むかし　いわれた　ことば
-きみにも　おくるよ▼
-キミよ……　ゆめを　もて！▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:20:07" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26691,12 +26675,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トウヤ『むかし　いわれた　言葉
-きみにも　贈るよ▼
-キミよ……　夢を　もて！▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:21:36" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26706,10 +26688,11 @@
 			Language="JPN">
 			<Comment>♂
 ・前作主人公
-・プレイヤーが負けた場合のメッセージ</Comment>
+・プレイヤーが負けた場合のメッセージ
+未使用ラベル</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T06:43:34" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -26738,11 +26721,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いちぶでは　さいきょうトレーナーと
-ウワサされる　トウヤ　けんざんッ！！</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:06:15" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26750,11 +26732,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>一部では　最強トレーナーと
-ウワサされる　トウヤ　見参ッ！！</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:22:48" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26763,10 +26744,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂：アナウンス
-・前口上メッセージ</Comment>
+・前口上メッセージ
+未使用ラベル</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T06:43:06" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -26795,11 +26777,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すべては　ポケモンしょうぶで
-わかるの！　さあ　はじめようよ！▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:23:45" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26807,11 +26788,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すべては　ポケモン勝負で
-わかるの！　さあ　はじめようよ！▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:23:51" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26821,10 +26801,11 @@
 			Language="JPN">
 			<Comment>♀
 ・前作主人公
-・１回戦用対戦前メッセージ</Comment>
+・１回戦用対戦前メッセージ
+未使用ラベル</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T06:43:38" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -26853,12 +26834,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ことばは　ごかいの　もと▼
-すべては　ポケモンしょうぶで
-わかるの！　さあ　はじめようよ！▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:23:59" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26866,12 +26845,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>言葉は　誤解の　もと▼
-すべては　ポケモン勝負で
-わかるの！　さあ　はじめようよ！▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:23:54" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26881,10 +26858,11 @@
 			Language="JPN">
 			<Comment>♀
 ・前作主人公
-・２回戦用対戦前メッセージ</Comment>
+・２回戦用対戦前メッセージ
+未使用ラベル</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T06:43:38" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:52" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -26913,13 +26891,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンとの　かいわは
-ことば　じゃなくて　きもち！▼
-すべては　ポケモンしょうぶで
-わかるの！　さあ　はじめようよ！▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:24:02" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26927,13 +26902,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンとの　会話は
-言葉じゃなくて　気持ち！▼
-すべては　ポケモン勝負で
-わかるの！　さあ　はじめようよ！▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:23:56" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26943,10 +26915,11 @@
 			Language="JPN">
 			<Comment>♀
 ・前作主人公
-・決勝戦用対戦前メッセージ</Comment>
+・決勝戦用対戦前メッセージ
+未使用ラベル</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T06:43:38" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -26975,10 +26948,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ありがとう！！▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:23:24" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26986,10 +26959,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ありがとう！！▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:23:24" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -26999,10 +26972,11 @@
 			Language="JPN">
 			<Comment>♀
 ・前作主人公
-・対戦後メッセージ</Comment>
+・対戦後メッセージ
+未使用ラベル</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T06:43:38" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -27031,11 +27005,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たまたま　かてた……
-そんな　かんじ　かな？▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:23:24" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -27043,11 +27016,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たまたま　勝てた……
-そんな　感じ　かな？▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:23:24" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -27057,10 +27029,11 @@
 			Language="JPN">
 			<Comment>♀
 ・前作主人公
-・対戦後　プレイヤー負けメッセージ</Comment>
+・対戦後　プレイヤー負けメッセージ
+未使用ラベル</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T06:43:38" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:37:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -27089,13 +27062,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トウコ『ゆめを　かなえろ！▼
-そう　はげましてくれた
-おもいに　こたえるため▽
-いまも　たびを　つづけているの▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:24:08" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -27103,13 +27073,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トウコ『ゆめを　かなえろ！▼
-そう　はげましてくれた
-想いに　応えるため▽
-いまも　旅を　続けているの▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:24:13" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -27119,10 +27086,11 @@
 			Language="JPN">
 			<Comment>♀
 ・前作主人公
-・プレイヤーが勝った場合のメッセージ</Comment>
+・プレイヤーが勝った場合のメッセージ
+未使用ラベル</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T06:43:38" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:37:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -27151,12 +27119,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トウコ『むかし　いわれた　ことば
-きみにも　おくるわね▼
-キミよ……　ゆめを　もて！▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:24:19" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -27164,12 +27130,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トウコ『むかし　いわれた　言葉
-きみにも　贈るわね▼
-キミよ……　夢を　もて！▼</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:24:24" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -27179,10 +27143,11 @@
 			Language="JPN">
 			<Comment>♀
 ・前作主人公
-・プレイヤーが負けた場合のメッセージ</Comment>
+・プレイヤーが負けた場合のメッセージ
+未使用ラベル</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T06:43:38" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:37:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -27211,11 +27176,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いちぶでは　さいきょうトレーナーと
-ウワサされる　トウコ　けんざんッ！！</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:23:24" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -27223,11 +27187,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>一部では　最強トレーナーと
-ウワサされる　トウコ　見参ッ！！</Text>
+			<Text>未使用▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T07:23:24" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -27236,10 +27199,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂：アナウンス
-・前口上メッセージ</Comment>
+・前口上メッセージ
+未使用ラベル</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-12T06:43:04" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:37:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -61480,6 +61444,455 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_RED_TRMSG_1ST_FIGHT_START"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>仮メッセージ　レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:46:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ　レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:46:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・赤緑主人公：レッド
+・１回戦用対戦前メッセージ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:47:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>RED
+赤緑主人公・レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:37:44" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_RED_TRMSG_2ND_FIGHT_START"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>仮メッセージ　レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:47:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ　レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:47:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・赤緑主人公：レッド
+・２回戦用対戦前メッセージ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>RED
+赤緑主人公・レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:37:42" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_RED_TRMSG_3RD_FIGHT_START"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>仮メッセージ　レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:47:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ　レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:47:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・赤緑主人公：レッド
+・決勝戦用対戦前メッセージ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>RED
+赤緑主人公・レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:37:44" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_RED_TRMSG_FIGHT_LOSE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>仮メッセージ　レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:47:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ　レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:47:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・赤緑主人公：レッド
+・対戦後メッセージ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>RED
+赤緑主人公・レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:37:44" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_RED_TRMSG_FIGHT_PLAYER_LOSE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>仮メッセージ　レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:47:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ　レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:47:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・赤緑主人公：レッド
+・対戦後　プレイヤー負けメッセージ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>RED
+赤緑主人公・レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:37:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_RED_TRMSG_FIGHT_AFTER_PLAYER_WIN"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>仮メッセージ　レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:47:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ　レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:47:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・赤緑主人公：レッド
+・プレイヤーが勝った場合のメッセージ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>RED
+赤緑主人公・レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:37:44" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_RED_TRMSG_FIGHT_AFTER_PLAYER_LOSE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>仮メッセージ　レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:47:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ　レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:47:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・赤緑主人公：レッド
+・プレイヤーが負けた場合のメッセージ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>RED
+赤緑主人公・レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:37:44" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_RED_TRMSG_OPENING_ANNOUNCE"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>仮メッセージ　レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:47:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ　レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:47:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂：アナウンス
+・赤緑主人公：レッド
+・前口上メッセージ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>RED
+赤緑主人公・レッド</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:37:44" />
+		</AttributeCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:45:46" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

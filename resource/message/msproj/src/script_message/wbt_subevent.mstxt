@@ -3015,14 +3015,64 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_wbt_subev_red_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>レッド『かり　メッセージ</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:26:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:25:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>レッド『かり　メッセージ</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:26:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:25:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・優勝後イベント用</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:25:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>RED
+赤緑主人公
+</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:38:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff78ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_wbt_subev_hero_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トウヤ『きみは　すごいんだね！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-18T04:16:36" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:26:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3030,10 +3080,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トウヤ『きみは　すごいんだね！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-18T04:16:38" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:26:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3042,10 +3092,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・優勝後イベント用</Comment>
+・優勝後イベント用
+未使用ラベル</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:41:34" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:26:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3057,7 +3108,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
+			<CellData>#000000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3068,10 +3119,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トウコ『きみ　すごいよね！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-18T04:16:30" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:26:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3079,10 +3130,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トウコ『きみ　すごいよね！</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-18T04:16:33" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:26:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -3091,10 +3142,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・優勝後イベント用</Comment>
+・優勝後イベント用
+未使用ラベル</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:42:56" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:26:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3106,7 +3158,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
+			<CellData>#000000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -6113,44 +6165,44 @@ msg_wbt_subev_sinou_～</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_subev_issyu_15"
+		Label="msg_wbt_subev_kanto_08"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トウヤ</Text>
+			<Text>レッド</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:44:18" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:24:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:43:43" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:22:16" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トウヤ</Text>
+			<Text>レッド</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:44:20" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:24:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:43:43" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:22:16" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
 			<Comment>・選択肢表示
-ＢＷ主人公♂</Comment>
+赤緑主人公</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:44:44" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:24:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>選択肢用</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:43:43" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:22:16" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -6161,14 +6213,14 @@ msg_wbt_subev_sinou_～</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_wbt_subev_issyu_16"
+		Label="msg_wbt_subev_issyu_15"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トウコ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:44:28" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:24:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -6176,10 +6228,10 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トウコ</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:44:30" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:24:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -6188,10 +6240,11 @@ msg_wbt_subev_sinou_～</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>・選択肢表示
-ＢＷ主人公♀</Comment>
+ＢＷ主人公♂
+未使用ラベル</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:44:53" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:43:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -6202,7 +6255,56 @@ msg_wbt_subev_sinou_～</Comment>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff00</CellData>
+			<CellData>#000000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_wbt_subev_issyu_16"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:24:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-29T09:43:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>no data</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:24:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-29T09:43:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・選択肢表示
+ＢＷ主人公♀
+未使用ラベル</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:43:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>選択肢用</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00227"
+				Time="2011-07-29T09:43:43" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#000000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -9230,11 +9332,11 @@ msg_wbt_subev_sinou_～</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トウヤ……？
-つよいらしいけど　よく　しらないね▼</Text>
+			<Text>レッド
+仮メッセージ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-17T09:38:39" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:24:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -9242,11 +9344,11 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トウヤ……？
-強いらしいけど　よく　知らないね▼</Text>
+			<Text>レッド
+仮メッセージ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-18T13:17:05" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:24:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -9255,11 +9357,11 @@ msg_wbt_subev_sinou_～</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・キャラ紹介
+・キャラ紹介（レッド）
 ・msg_wbt_subev_sunglasses_02へ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:50:52" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T05:42:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -9281,11 +9383,10 @@ msg_wbt_subev_sinou_～</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トウコちゃん……？
-つよいらしいけど　よく　しらないね▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-17T09:38:35" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:25:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -9293,11 +9394,10 @@ msg_wbt_subev_sinou_～</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トウコちゃん……？
-強いらしいけど　よく　知らないね▼</Text>
+			<Text>no data</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-18T13:17:10" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:25:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00227"
@@ -9307,10 +9407,11 @@ msg_wbt_subev_sinou_～</Comment>
 			Language="JPN">
 			<Comment>♂
 ・キャラ紹介
-・msg_wbt_subev_sunglasses_02へ</Comment>
+・msg_wbt_subev_sunglasses_02へ
+未使用ラベル</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00227"
-				Time="2011-07-29T09:50:52" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-14T07:27:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -9321,7 +9422,7 @@ msg_wbt_subev_sinou_～</Comment>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ff00</CellData>
+			<CellData>#000000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
