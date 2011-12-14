@@ -210,6 +210,7 @@ static void _BoxPokeRemove(G_SYNC_WORK* pWork);
 
 static BOOL _responceChk(G_SYNC_WORK* pWork,int response)
 {
+  NAGI_Printf( "レスポンス=%d\n", response );
   switch(response){
   case ERROR503:
     pWork->ErrorNo = _SERVERDOWN_ERROR;
@@ -430,6 +431,12 @@ static void _ErrorDisp(G_SYNC_WORK* pWork)
     gmm = GSYNC_ERR009;
   }
 #endif //BUGFIX_PGLBTS85_20100715
+  else if(pWork->ErrorNo == DREAM_WORLD_SERVER_SWAN_DATA) //SWANで新たにエラーが追加されていたので
+  {
+    //来ることはない…がきてしまったらエラーにしてしまう
+    GF_ASSERT( 0 );
+    gmm = GSYNC_ERR009;
+  }
   else if((pWork->ErrorNo <= 0) || (pWork->ErrorNo >= DREAM_WORLD_SERVER_ERROR_MAX)){
     gmm = GSYNC_ERR009;
   }

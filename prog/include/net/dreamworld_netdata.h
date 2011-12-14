@@ -27,6 +27,7 @@ typedef enum{
   DREAM_WORLD_SERVER_ILLEGAL_TOKEN,   // 認証トークンに問題がある
   DREAM_WORLD_SERVER_NO_ACCOUNT,      // アカウントがありません
   DREAM_WORLD_SERVER_ERROR_ETC,       // その他サーバがエラーの場合 これ以上の値が来ても同様にエラーにする
+  DREAM_WORLD_SERVER_SWAN_DATA,      // API savedata.getbwでのみ返ってくる、指定したgsidがSWANのものであるという結果コード
   DREAM_WORLD_SERVER_ERROR_MAX
 } DREAM_WORLD_SERVER_ERROR_TYPE;   /// サーバから返ってくるサーバの状態
 
