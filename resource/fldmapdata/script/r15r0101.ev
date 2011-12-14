@@ -13,6 +13,7 @@
   .include  "r15r0101.h"
 
   //@author fujimura_souichirou
+  //@author Mizuguchi_Mai（一言メッセージバージョン分岐削除）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -39,39 +40,21 @@ EVENT_END
 /*  受付嬢：話しかけ                                          */
 /**************************************************************/
 EVENT_START   ev_r15r0101_informationw_01
-
-  _TALK_OBJ_START()
-  //受付嬢：エネルギッシュな　まち（バージョンによってセリフが異なる）
-  _BALLOONWIN_OBJMSG_WB( msg_r15r0101_infomationw_01w, msg_r15r0101_infomationw_01b, R15R0101_INFORMATIONW_01, POS_DEFAULT )
-  _LAST_KEYWAIT()
-  _MSGWIN_CLOSE()
-
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r15r0101_infomationw_01b )
 EVENT_END
 
 /**************************************************************/
 /*  バックパッカー♀：話しかけ                                */
 /**************************************************************/
 EVENT_START   ev_r15r0101_backpackerw_01
-
-  _TALK_OBJ_START()
-  //バックパッカー♀：とかいに　くたびれた　ひとは（バージョンによってセリフが異なる）
-  _BALLOONWIN_OBJMSG_WB( msg_r15r0101_backpackerw_01w, msg_r15r0101_backpackerw_01b, R15R0101_BACKPACKERW_01, POS_DEFAULT )
-  _LAST_KEYWAIT()
-  _MSGWIN_CLOSE()
-
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r15r0101_backpackerw_01b )
 EVENT_END
 
 /**************************************************************/
 /*  おじさん：話しかけ                                        */
 /**************************************************************/
 EVENT_START   ev_r15r0101_middleman1_01
-
-  _TALK_OBJ_START()
-  //おじさん：あの　くろのまてんろう（バージョンによってセリフが異なる）
-  _BALLOONWIN_OBJMSG_WB( msg_r15r0101_middleman1_01w, msg_r15r0101_middleman1_01b, R15R0101_MIDDLEMAN1_01, POS_DEFAULT )
-  _LAST_KEYWAIT()
-  _MSGWIN_CLOSE()
-
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r15r0101_middleman1_01b )
 EVENT_END
 
 

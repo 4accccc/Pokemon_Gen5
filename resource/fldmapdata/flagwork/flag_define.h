@@ -500,6 +500,7 @@
 #define FE_C04WHEEL_N_MEET                 484 /* 0x01e4 c04p01：観覧車N遭遇フラグ */
 #define FE_R07R0301_ZUKAN_LOOK             485 /* 0x01e5 r07r0301：ランドロス'sのずかん登録イベント */
 #define FE_N01R0502_N_RETRY_TALK           486 /* 0x01e6 N城：N再会話フラグ */
+#define FE_D27R0101_SWRIVAL_3RD_TALK       487 /* 0x01e7 プラズマフリゲート：搭乗三回目初回会話 */
 
 #define FE_AREA_END                        599 /* 0x0257  */
 
