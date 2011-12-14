@@ -9100,8 +9100,8 @@ NPC：MUGENBOSS（バンジロウ）
 				Time="2011-11-26T06:42:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T05:01:34" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:41:14" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -9144,8 +9144,8 @@ NPC：MUGENBOSS（バンジロウ）
 				Time="2011-11-26T06:42:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T05:01:34" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:41:14" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -9181,11 +9181,11 @@ NPC：MUGENBOSS（バンジロウ）
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナー？
+			<Text>ゲートトレーナー？
 さっき　上の階で　みかけたよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-14T08:02:19" />
+				Time="2011-12-14T05:29:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -9213,11 +9213,11 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーを　さがしているの？
+			<Text>ゲートトレーナーを　さがしているの？
 うえのかいに　いるみたいよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-14T08:02:59" />
+				Time="2011-12-14T05:29:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -9232,8 +9232,8 @@ NPC：MUGENBOSS（バンジロウ）
 				Time="2011-11-26T06:42:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:33:01" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:41:15" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -9454,8 +9454,8 @@ NPC：MUGENBOSS（バンジロウ）
 				Time="2011-11-26T06:42:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T05:01:34" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:41:17" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -9498,8 +9498,8 @@ NPC：MUGENBOSS（バンジロウ）
 				Time="2011-11-26T06:42:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T05:01:34" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:41:17" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -9586,8 +9586,8 @@ NPC：MUGENBOSS（バンジロウ）
 				Time="2011-11-26T06:42:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:33:42" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:41:18" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -9808,8 +9808,8 @@ NPC：MUGENBOSS（バンジロウ）
 				Time="2011-11-26T06:42:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:34:57" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:41:19" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -9852,8 +9852,8 @@ NPC：MUGENBOSS（バンジロウ）
 				Time="2011-11-26T06:42:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:34:57" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:41:21" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -9921,11 +9921,11 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーを　さがしているの？
+			<Text>ゲートトレーナーを　さがしているの？
 このかいに　いるみたいよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-26T06:42:05" />
+				Time="2011-12-14T05:30:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -9937,11 +9937,11 @@ NPC：MUGENBOSS（バンジロウ）
 この階に　いるみたいよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-26T06:42:05" />
+				Time="2011-12-14T05:40:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T09:34:57" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:40:26" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -10144,10 +10144,10 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN">
 			<Text>ゲートトレーナーが　みつからないの？
-[Digit:3digits Idx="0" ]かいにいたよ！</Text>
+[Digit:3digits Idx="0" ]かいに　いたよ！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:33:55" />
+				Time="2011-12-14T05:36:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -10156,10 +10156,10 @@ NPC：MUGENBOSS（バンジロウ）
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ゲートトレーナーが　みつからないの？
-[Digit:3digits Idx="0" ]階にいたよ！</Text>
+[Digit:3digits Idx="0" ]階に　いたよ！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-08-14T08:15:24" />
+				Time="2011-12-14T05:37:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -13446,14 +13446,14 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>ゲートトレーナー？▼
 ひとりで　部屋に
-いるのを　見たわよ</Text>
+いるのを　みたよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T11:24:34" />
+				Time="2011-12-14T05:38:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:18:44" />
+				Time="2011-12-14T05:41:22" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -13492,14 +13492,14 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>ゲートトレーナーを　探しているの？▼
 ひとりで　部屋に
-いるのを　見たわよ</Text>
+いるのを　みたわよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-22T11:24:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:18:45" />
+				Time="2011-12-14T05:41:23" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -13538,14 +13538,14 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>ゲートトレーナーかい？▼
 それなら　ひとりで
-部屋に　いるのを　見たぞ</Text>
+部屋に　いるのを　みたぞ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-19T04:42:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:18:47" />
+				Time="2011-12-14T05:41:25" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -13814,14 +13814,14 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>ゲートトレーナー？▼
 ふたりで　部屋に
-いるのを　見たわよ</Text>
+いるのを　みたよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T11:26:47" />
+				Time="2011-12-14T05:38:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T11:15:27" />
+				Time="2011-12-14T05:41:26" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -13860,14 +13860,14 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>ゲートトレーナーを　探しているの？▼
 ふたりで　部屋に
-いるのを　見たわよ</Text>
+いるのを　みたわよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-22T11:27:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T11:15:28" />
+				Time="2011-12-14T05:41:26" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -13906,14 +13906,14 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>ゲートトレーナーかい？▼
 それなら　ふたりで　部屋に
-いるのを　見たぞ</Text>
+いるのを　みたぞ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-11-22T11:27:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-18T13:18:47" />
+				Time="2011-12-14T05:41:27" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -14182,14 +14182,14 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>ゲートトレーナー？▼
 ３人で　部屋に
-いるのを　見たわよ</Text>
+いるのを　みたよ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-12T04:02:42" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:39:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T11:18:32" />
+				Time="2011-12-14T05:41:28" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -14228,14 +14228,14 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>ゲートトレーナーを　探しているの？▼
 ３人で　部屋に
-いるのを　見たわよ</Text>
+いるのを　みたわよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-12-12T04:02:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T11:18:33" />
+				Time="2011-12-14T05:41:28" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -14550,14 +14550,14 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>ゲートトレーナー？▼
 ４人で　部屋に
-いるのを　みたわよ</Text>
+いるのを　みたよ</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-12T04:03:57" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:39:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-22T11:22:28" />
+				Time="2011-12-14T05:41:29" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -23167,27 +23167,27 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナー？
+			<Text>ゲートトレーナー？
 ごめん　どこにいるかは　しらないよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T12:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T10:05:44" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:32:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナー？
+			<Text>ゲートトレーナー？
 ごめん　どこにいるか　知らないよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T12:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T10:05:50" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:32:09" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -23211,27 +23211,27 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナー？
+			<Text>ゲートトレーナー？
 ごめんなさい　しらないわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T12:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T10:05:57" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:32:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナー？
+			<Text>ゲートトレーナー？
 ごめんなさい　知らないわ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T12:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T10:06:01" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:32:11" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -23255,27 +23255,27 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナーか？
+			<Text>ゲートトレーナーか？
 こっちも　さがしているところだよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T12:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T10:05:57" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:32:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナーか？
+			<Text>ゲートトレーナーか？
 こっちも　探しているところだよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T12:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T10:06:01" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:32:12" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -23299,27 +23299,27 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>え？　ボストレーナー？
+			<Text>え？　ゲートトレーナー？
 わたしも　さがしているのよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T12:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T10:05:57" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:32:12" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>え？　ボストレーナー？
+			<Text>え？　ゲートトレーナー？
 わたしも　探しているのよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-22T12:16:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T10:06:01" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:32:13" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -23343,27 +23343,27 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ん？　ボストレーナー？
+			<Text>ん？　ゲートトレーナー？
 どこにいるか　しらないよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-14T08:27:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T10:05:57" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:32:19" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ん？　ボストレーナー？
+			<Text>ん？　ゲートトレーナー？
 どこにいるか　知らないよ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-14T08:27:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T10:06:01" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:32:19" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -23387,27 +23387,27 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナー？
+			<Text>ゲートトレーナー？
 そのへんに　いるんじゃないかしら</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-14T08:27:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T10:05:57" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:32:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナー？
+			<Text>ゲートトレーナー？
 その辺に　いるんじゃないかしら</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
 				Time="2011-08-14T08:27:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T10:06:01" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:32:20" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -23431,27 +23431,27 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナー？
+			<Text>ゲートトレーナー？
 はて　どこかで　みたような……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-10-17T04:13:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T10:05:57" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:32:21" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナー？
+			<Text>ゲートトレーナー？
 はて　どこかで　みたような……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-10-17T04:13:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T05:01:35" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:32:22" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -23475,7 +23475,7 @@ NPC：MUGENBOSS（バンジロウ）
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボストレーナー？
+			<Text>ゲートトレーナー？
 どこかで　みたわよ▽
 どこだったかしら……</Text>
 			<TextModifiedBy
@@ -23483,12 +23483,12 @@ NPC：MUGENBOSS（バンジロウ）
 				Time="2011-10-17T05:10:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="onoue_masayuki:W00272"
-				Time="2011-08-05T10:05:57" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:32:23" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボストレーナー？
+			<Text>ゲートトレーナー？
 どこかで　みたわよ▽
 どこだったかしら……</Text>
 			<TextModifiedBy
@@ -23496,8 +23496,8 @@ NPC：MUGENBOSS（バンジロウ）
 				Time="2011-10-17T05:10:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-17T05:01:35" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-14T05:32:24" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
