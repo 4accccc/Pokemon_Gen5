@@ -79781,4 +79781,434 @@
 				Time="2011-12-09T03:57:14" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="TRID_SWPLAZMAM_40_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>まってたぞ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>待ってたぞ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SWPLAZMAM_40_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>まけた！
+ちがう！　プラーズマー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>負けた！
+違う！　プラーズマー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SWPLAZMAM_40_TRMSG_FIGHT_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>まけろ！　まけろ！
+おまえなんか　まけてしまえ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>負けろ！　負けろ！
+おまえなんか　負けてしまえ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SWPLAZMAW_17_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>まってたわ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>待ってたわ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SWPLAZMAW_17_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>まけちゃった！
+ちがう！　プラーズマー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>負けちゃった！
+ちがう！　プラーズマー！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SWPLAZMAW_17_TRMSG_FIGHT_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>まけろ！　まけちゃいなよ！
+あんたなんか　まけてしまいなさいよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>負けろ！　負けちゃいなよ！
+あんたなんか　負けてしまいなさいよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SWPLAZMAM_41_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマフリゲートの
+ギミックに　いらついてるんだろ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマフリゲートの
+ギミックに　いらついてるんだろ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SWPLAZMAM_41_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>むきー！
+めちゃくちゃ　いらつくぜ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>むきー！
+めちゃくちゃ　いらつくぜ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SWPLAZMAM_41_TRMSG_FIGHT_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマフリゲートの　ギミックに
+おかねを　かけすぎたせいで▽
+まいにち　パンしか　くえないんだぞ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマフリゲートの　ギミックに
+お金を　かけすぎたせいで▽
+毎日　パンしか　食えないんだぞ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SWPLAZMAW_18_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>しんにゅうしゃは
+あなたで　あってますか？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>侵入者は
+あなたで　あってますか？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SWPLAZMAW_18_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>たしかに　あなたは
+しんにゅうしゃ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>たしかに　あなたは
+侵入者！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_SWPLAZMAW_18_TRMSG_FIGHT_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>しんにゅうしゃの　あなたを　たおせば
+もっと　いい　ポケモンを……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>侵入者の　あなたを　倒せば
+もっと　いい　ポケモンを……</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_DOCTOR_11_TRMSG_FIGHT_START">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだんが　せかいせいふく　すれば
+きずつく　ポケモンは　へるだろう！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマ団が　世界征服すれば
+傷つく　ポケモンは　減るだろう！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_DOCTOR_11_TRMSG_FIGHT_LOSE">
+		<LanguageCell
+			Language="JPN">
+			<Text>ぐぬぬ……　おしえてくれ！
+ポケモンしょうぶ　とは　なんだ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ぐぬぬ……　教えてくれ！
+ポケモン勝負とは　なんだ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_DOCTOR_11_TRMSG_FIGHT_AFTER_RECOVER_BEFORE">
+		<LanguageCell
+			Language="JPN">
+			<Text>きずついた　ポケモンに
+てきも　みかたも　あるもんか！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>傷ついた　ポケモンに
+敵も　味方も　あるもんか！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="TRID_DOCTOR_11_TRMSG_FIGHT_AFTER_RECOVER_AFTER">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだんが　せかいせいふく　すれば
+あらそいは　なくなると　おもわないか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマ団が　世界征服すれば
+争いは　なくなると　思わないか？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-14T05:40:39" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>
