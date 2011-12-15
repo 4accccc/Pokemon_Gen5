@@ -651,6 +651,6 @@ static const u8 itemid_to_pocketno[] =
   BAG_POKE_EVENT,  // アクロママシーン(635)
   BAG_POKE_EVENT,  // わすれもの(636)
   BAG_POKE_EVENT,  // わすれもの(637)
-  BAG_POKE_EVENT,  // ドリームドロップ(638)
+  BAG_POKE_EVENT,  // うつしかがみ(638)
 };
 

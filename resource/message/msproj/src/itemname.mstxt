@@ -21060,25 +21060,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ドリームドロップ</Text>
+			<Text>うつしかがみ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T07:50:43" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-15T09:56:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T07:50:43" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-15T09:56:50" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ドリームドロップ</Text>
+			<Text>うつしかがみ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T07:50:43" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-15T09:56:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T07:50:43" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-15T09:56:50" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

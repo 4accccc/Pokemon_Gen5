@@ -23608,29 +23608,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トルネロス　ボルトロス　ランドロスの
-すがたを　かえる　ふしぎな　どうぐ
-</Text>
+			<Text>しんじつを　うつしだすことで
+ポケモンを　ほんらいの　すがたに
+かえてしまう　ふしぎな　かがみ。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T07:50:43" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-15T09:56:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T07:50:43" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-15T09:56:54" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トルネロス　ボルトロス　ランドロスの
-姿を　変える　不思議な　道具
-</Text>
+			<Text>真実を　映しだすことで
+ポケモンを　本来の　姿に
+変えてしまう　不思議な　鏡。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T07:50:43" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-15T09:56:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T07:50:43" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-15T09:56:54" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

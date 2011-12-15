@@ -5869,12 +5869,12 @@
 	</row>
 
 	<row id="ITEMINFO_638">
-		<language name="JPN" width="256">トルネロス　ボルトロス　ランドロスの
-すがたを　かえる　ふしぎな　どうぐ
-</language>
-		<language name="JPN_KANJI" width="256">トルネロス　ボルトロス　ランドロスの
-姿を　変える　不思議な　道具
-</language>
+		<language name="JPN" width="256">しんじつを　うつしだすことで
+ポケモンを　ほんらいの　すがたに
+かえてしまう　ふしぎな　かがみ。</language>
+		<language name="JPN_KANJI" width="256">真実を　映しだすことで
+ポケモンを　本来の　姿に
+変えてしまう　不思議な　鏡。</language>
 	</row>
 
 

@@ -627,7 +627,7 @@
 #define ITEM_AKUROMAMASIIN		( 635 )		// アクロママシーン
 #define ITEM_WASUREMONO		( 636 )		// わすれもの
 #define ITEM_WASUREMONO_1		( 637 )		// わすれもの
-#define ITEM_DORIIMUDOROPPU		( 638 )		// ドリームドロップ
+#define ITEM_UTUSIKAGAMI		( 638 )		// うつしかがみ
 
 #define ITEM_DATA_MAX		( 638 )		// アイテム最大数
 
