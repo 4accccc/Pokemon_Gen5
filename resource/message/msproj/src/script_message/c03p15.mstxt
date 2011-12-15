@@ -66,13 +66,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ここが　ヒウンか……
-きいてたよりも　はるかに　でかいな▼
-だけど　どこに　にげても
-プラズマだんは　さがしだす！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ここが　ヒウンシティ……
+きいてたよりも　はるかに　でかいな！▼
+だけど　かんけいない！▼
+どこに　にげても
+プラズマだんは　さがしだすッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T06:23:56" />
+				Time="2011-12-15T04:00:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -80,13 +81,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ここが　ヒウンか……
-きいてたよりも　はるかに　でかいな▼
-だけど　どこに　逃げても
-プラズマ団は　探しだす！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ここが　ヒウンシティ……
+きいてたよりも　はるかに　でかいな！▼
+だけど　関係ない！▼
+どこに　逃げても
+プラズマ団は　探しだすッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T06:23:57" />
+				Time="2011-12-15T04:00:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -128,13 +130,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そうだ　[Name:TrainerName Idx="0" ]！
-てわけして　さがすからな▼
-おたがいの　ライブキャスターに
-とうろく　しあうぞ▼</Text>
+			<Text>そうだ　[Name:TrainerName Idx="0" ]！▼
+ライブキャスターの　とうろく！
+ヒオウギだと　すぐ　あえてたもんな▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T03:59:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -142,13 +143,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そうだ　[Name:TrainerName Idx="0" ]！
-手分けして　探すからな▼
-お互いの　ライブキャスターに
-登録しあうぞ▼</Text>
+			<Text>そうだ　[Name:TrainerName Idx="0" ]！▼
+ライブキャスターの　登録！
+ヒオウギだと　すぐ　会えてたもんな▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:10" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T03:59:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
