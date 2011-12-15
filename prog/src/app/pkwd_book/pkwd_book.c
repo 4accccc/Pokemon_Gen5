@@ -4836,7 +4836,13 @@ static s32 pwb_is_main_framelist( PKWD_BOOK_MAIN_WORK * wk, const u32 mode )
 	// ‚±‚±‚Å‚È‚­‚Ä‚à‚¢‚¢‚Í‚¸
 	// ã‰æ–Ê•\¦
 	if(flg != 0){
-		pwb_disp_up_bg( wk, 1 );
+		// Œˆ’è‚Íã•\¦A€–Ú‚Í”»’è
+//		pwb_disp_up_bg( wk, 1 );
+		if(flg == 2){
+			pwb_disp_up_bg( wk, 1 );
+		}else{
+			pwb_disp_up_bg( wk, 0 );
+		}
 	}
 	return( flg );
 }

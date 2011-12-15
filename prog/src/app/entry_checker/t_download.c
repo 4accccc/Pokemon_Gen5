@@ -1855,8 +1855,11 @@ static void td_init_select( T_DOWNLOAD_MAIN_WORK* wk )
 		wk->Step = wk->NextMode;
 		GFL_BG_SetVisible( GFL_BG_FRAME2_M, TRUE );
 		// カーソル表示と移動
-		TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, TRUE );
-		TdCmn_disp_panel_cursor( wk, T_DOWNLOAD_PANEL_FRAME, wk->ListCurPos[T_DOWNLOAD_LIST_CURRENT] );
+		// キーの場合のみ
+		if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_KEY ){
+			TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, TRUE );
+			TdCmn_disp_panel_cursor( wk, T_DOWNLOAD_PANEL_FRAME, wk->ListCurPos[T_DOWNLOAD_LIST_CURRENT] );
+		}
 	}
 }
 
@@ -2082,8 +2085,11 @@ static void td_key_select( T_DOWNLOAD_MAIN_WORK* wk )
 					wk->Step = wk->NextMode;
 					GFL_BG_SetVisible( GFL_BG_FRAME2_M, TRUE );
 					// カーソル表示と移動
-					TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, TRUE );
-					TdCmn_disp_panel_cursor( wk, T_DOWNLOAD_PANEL_FRAME, wk->ListCurPos[T_DOWNLOAD_LIST_CURRENT] );
+					// キーの場合のみ
+					if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_KEY ){
+						TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, TRUE );
+						TdCmn_disp_panel_cursor( wk, T_DOWNLOAD_PANEL_FRAME, wk->ListCurPos[T_DOWNLOAD_LIST_CURRENT] );
+					}
 				}
 			}else{
 				// こないはず(念のため)

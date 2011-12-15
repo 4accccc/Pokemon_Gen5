@@ -936,6 +936,15 @@ static void gpower_app_init( GPOWER_APP_MAIN_WORK* wk )
 	// パレットチェンジ用
 	gpower_app_init_chgpal( wk );
 	
+	//--------------------------------------
+	// タッチ判定 => キーの場合カーソル表示
+	// (やらなくてもいいかもしれないが..)
+	//--------------------------------------
+	if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_KEY ){
+		wk->Flag |= FLG_MW_DISP_CURSOR;
+		gpower_app_set_palnum( wk, CLWKMODE_NORMAL, CLWKID_POWER_00+wk->CurPos, 2 );
+	}
+	//
 	//------------
 	// 初回更新
 	//------------
@@ -1163,6 +1172,12 @@ static void gpower_app_key_all( GPOWER_APP_MAIN_WORK* wk )
 				wk->Flag |= FLG_MW_UPDATE;
 				// 戻るボタンを戻しておく
 				gpower_app_set_obj_visible( wk, CLWKMODE_CMN, CLWKID_CMN_RETURN, TRUE );
+				//
+				// タッチの場合はカーソル非表示
+				if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH ){
+					wk->Flag &= ~FLG_MW_DISP_CURSOR;
+					gpower_app_set_palnum( wk, CLWKMODE_NORMAL, CLWKID_POWER_00+wk->CurPos, 0 );
+				}
 			}
 			break;
 		//
@@ -1232,6 +1247,12 @@ static void gpower_app_key_all( GPOWER_APP_MAIN_WORK* wk )
 					wk->Step = STEP_LV1;
 					// カーソルのアニメを戻す
 					wk->Flag |= FLG_MW_UPDATE;
+					//
+					// タッチの場合はカーソル非表示
+					if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH ){
+						wk->Flag &= ~FLG_MW_DISP_CURSOR;
+						gpower_app_set_palnum( wk, CLWKMODE_NORMAL, CLWKID_POWER_00+wk->CurPos, 0 );
+					}
 				}
 				// プライオリティを戻しておく
 				gpower_app_set_bgprio( wk, PRIO_BACK );
@@ -2015,6 +2036,8 @@ static void gpower_app_chk_input( GPOWER_APP_MAIN_WORK* wk )
 		// SE
 		// ハイリンクはそのまま決定
 		PMSND_PlaySE( SND_GPOWER_APP_DECIDE );
+		// タッチ
+		GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
 	}
 	// 戻る
 	else if(id == 4){
@@ -2024,6 +2047,8 @@ static void gpower_app_chk_input( GPOWER_APP_MAIN_WORK* wk )
 		wk->Step = STEP_LV2;
 		// SE
 		PMSND_PlaySE( SND_GPOWER_APP_CANCEL );
+		// タッチで終了
+		GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
 	}
 	//
 	// キー入力
@@ -2032,11 +2057,14 @@ static void gpower_app_chk_input( GPOWER_APP_MAIN_WORK* wk )
 		if(!(wk->Flag & FLG_MW_DISP_CURSOR)){
 			// 入力があったときに表示
 			// 他のキーも必要であれば追加
-			if(GFL_UI_KEY_GetRepeat() & (PAD_KEY_UP|PAD_KEY_DOWN|PAD_BUTTON_DECIDE)){
+//			if(GFL_UI_KEY_GetRepeat() & (PAD_KEY_UP|PAD_KEY_DOWN|PAD_BUTTON_DECIDE)){
+			if( GFL_UI_KEY_GetTrg() ){
 				flg = 1;
 				wk->Flag |= FLG_MW_DISP_CURSOR;
 				// SE
 				PMSND_PlaySE( SND_GPOWER_APP_CURSOR );
+				// キー
+				GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
 			}
 		}
 		// 上
@@ -2069,6 +2097,8 @@ static void gpower_app_chk_input( GPOWER_APP_MAIN_WORK* wk )
 					// SE
 					PMSND_PlaySE( SND_GPOWER_APP_CURSOR );
 				}
+				// キー
+				GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
 			}
 		}
 		// 下
@@ -2099,6 +2129,8 @@ static void gpower_app_chk_input( GPOWER_APP_MAIN_WORK* wk )
 					// SE
 					PMSND_PlaySE( SND_GPOWER_APP_CURSOR );
 				}
+				// キー
+				GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
 			}
 		}
 		// 戻る
@@ -2109,6 +2141,8 @@ static void gpower_app_chk_input( GPOWER_APP_MAIN_WORK* wk )
 			wk->Step = STEP_LV2;
 			// SE
 			PMSND_PlaySE( SND_GPOWER_APP_CANCEL );
+			// キーで終了
+			GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
 		}
 		// 決定
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
@@ -2118,6 +2152,8 @@ static void gpower_app_chk_input( GPOWER_APP_MAIN_WORK* wk )
 				// SE
 				PMSND_PlaySE( SND_GPOWER_APP_DECIDE );
 			}
+			// キー
+			GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
 		}
 	}
 	//
@@ -2742,6 +2778,8 @@ static BOOL gpower_app_chk_yesnowin( GPOWER_APP_MAIN_WORK* wk )
 		flg = 1;
 		// SE
 		PMSND_PlaySE( SND_GPOWER_APP_DECIDE );
+		// タッチ
+		GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
 	}
 	// いいえ
 	else if(id == 1){
@@ -2752,6 +2790,8 @@ static BOOL gpower_app_chk_yesnowin( GPOWER_APP_MAIN_WORK* wk )
 		flg = 1;
 		// SE
 		PMSND_PlaySE( SND_GPOWER_APP_CANCEL );
+		// タッチ
+		GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
 	}
 	//
 	// キーの判定
@@ -2765,6 +2805,8 @@ static BOOL gpower_app_chk_yesnowin( GPOWER_APP_MAIN_WORK* wk )
 			APP_TASKMENU_WIN_SetActive( wk->pAppTask[0], TRUE );
 			APP_TASKMENU_WIN_SetActive( wk->pAppTask[1], FALSE );
 			wk->YesNoCursor = 0;
+			// キー
+			GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
 		}
 		// 右
 		else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){
@@ -2775,6 +2817,8 @@ static BOOL gpower_app_chk_yesnowin( GPOWER_APP_MAIN_WORK* wk )
 			APP_TASKMENU_WIN_SetActive( wk->pAppTask[0], FALSE );
 			APP_TASKMENU_WIN_SetActive( wk->pAppTask[1], TRUE );
 			wk->YesNoCursor = 1;
+			// キー
+			GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
 		}
 		// 決定
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
@@ -2784,6 +2828,8 @@ static BOOL gpower_app_chk_yesnowin( GPOWER_APP_MAIN_WORK* wk )
 				APP_TASKMENU_WIN_SetActive( wk->pAppTask[1], FALSE );
 				// SE
 				PMSND_PlaySE( SND_GPOWER_APP_DECIDE );
+				// キー
+				GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
 			}
 			// no
 			else{
@@ -2791,6 +2837,8 @@ static BOOL gpower_app_chk_yesnowin( GPOWER_APP_MAIN_WORK* wk )
 				APP_TASKMENU_WIN_SetDecide( wk->pAppTask[1], TRUE );
 				// SE
 				PMSND_PlaySE( SND_GPOWER_APP_CANCEL );
+				// キー
+				GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
 			}
 			bflg = TRUE;
 		}
@@ -2802,6 +2850,8 @@ static BOOL gpower_app_chk_yesnowin( GPOWER_APP_MAIN_WORK* wk )
 			bflg = TRUE;
 			// SE
 			PMSND_PlaySE( SND_GPOWER_APP_CANCEL );
+			// キー
+			GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
 		}
 	}
 	//
@@ -2845,10 +2895,14 @@ static BOOL gpower_app_chk_deltamawin( GPOWER_APP_MAIN_WORK* wk )
 	
 	// 決定、キャンセル
 	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) ){
+		// キー
+		GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
 		bflg = TRUE;
 	}
 	// タッチをした
 	if( GFL_UI_TP_GetTrg() == TRUE ){
+		// タッチ
+		GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
 		bflg = TRUE;
 	}
 	//
