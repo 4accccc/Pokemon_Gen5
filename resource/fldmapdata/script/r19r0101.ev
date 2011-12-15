@@ -13,6 +13,7 @@
   .include  "r19r0101.h"
 
   //@author fujimura_souichirou
+  //@author Mizuguchi_Mai（引継ぎ）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -67,7 +68,9 @@ EVENT_START   ev_pos_r19r0101_informationw_01
   ENDIF
   
   _OBJ_ANIME_WAIT()
-
+  
+  //主人公名代入
+  _PLAYER_NAME( 0 )
   //受付嬢：ポケモンと　いっしょなんだ！▼
   _BALLOONWIN_OBJMSG_POS( msg_r19r0101_infomationw_02, R19R0101_INFORMATIONW_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
@@ -75,6 +78,8 @@ EVENT_START   ev_pos_r19r0101_informationw_01
   //きずぐすり入手処理
   _ITEM_EVENT_KEYWAIT(ITEM_KIZUGUSURI, 1)
   
+  //主人公名代入
+  _PLAYER_NAME( 0 )
   //受付嬢：むりせず
   _BALLOONWIN_OBJMSG_POS( msg_r19r0101_infomationw_04, R19R0101_INFORMATIONW_01, POS_DEFAULT )
   _LAST_KEYWAIT()
@@ -101,7 +106,9 @@ EVENT_START   ev_r19r0101_informationw_01
     _PLAYER_NAME( 0 )
     //受付嬢：あれ？　《主人公》▼
     _BALLOONWIN_TALKOBJ_MSG( msg_r19r0101_infomationw_01 )
-
+    
+    //主人公名代入
+    _PLAYER_NAME( 0 )
     //受付嬢：ポケモンと　いっしょなんだ！▼
     _BALLOONWIN_TALKOBJ_MSG( msg_r19r0101_infomationw_02 )
     _MSGWIN_CLOSE()
@@ -109,6 +116,8 @@ EVENT_START   ev_r19r0101_informationw_01
     //きずぐすり入手処理
     _ITEM_EVENT_KEYWAIT(ITEM_KIZUGUSURI, 1)
     
+    //主人公名代入
+    _PLAYER_NAME( 0 )
     //受付嬢：むりせず
     _BALLOONWIN_OBJMSG_POS( msg_r19r0101_infomationw_04, R19R0101_INFORMATIONW_01, POS_DEFAULT )
 

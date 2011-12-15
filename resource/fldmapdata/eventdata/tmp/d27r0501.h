@@ -14,6 +14,7 @@
 #define D27R0501_SWSAGE7_01                1
 #define D27R0501_NINJA_01                  2
 #define D27R0501_NINJA_02                  3
+#define D27R0501_SWPLAZMAM_01              4
 
 #endif //ZONE_D27R0501_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d27r0501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -53,7 +53,7 @@ INIT_EVENT_END
 /*   SCENE_CHANGE：ジムクリア後イベント                                */
 /**************************************************************/
 EVENT_START   ev_scene_c08r0101_legend_01
-  /*
+
   //アニメ：主人公シャガの前に移動
   _OBJ_ANIME( MMDL_ID_PLAYER,anm_player_to_swleader8 )
   _TIME_WAIT(8*4)
@@ -87,16 +87,13 @@ EVENT_START   ev_scene_c08r0101_legend_01
   //シャガ：ああ　遺伝子の
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_05 , C08R0101_SWLEADER7_01 , POS_DEFAULT)
   _MSGWIN_CLOSE()
-
-  */
   
   //プレーンギザウィン：ぶぅん
   _GIZAPLAINWIN_MSG_POS( msg_c08_event_01, POS_DOWN )
   _MSGWIN_CLOSE()
   
-  //【仮】飛行機の効果音
-  //_SE_PLAY( SEQ_SE_KOUKA_H )
-  _SE_PLAY( SEQ_SE_SW_SOURYUCITY_17 )
+  //飛行機の効果音
+  _SE_PLAY( SEQ_SE_SW_SOURYU_RUMBLE  )
   
   //_TIME_WAIT( 5 )
   
@@ -109,17 +106,17 @@ EVENT_START   ev_scene_c08r0101_legend_01
   //========================================//
   
   //BGMを変更
-  //_START_EVENT_BGM_SILENT( 20 )
   _BGM_NOW_MAP_RECOVER()
   _SE_WAIT()
   
-  /*
+  
   _OBJ_ANIME( C08R0101_SWLEADER7_01, anm_common_hatena)
   _OBJ_ANIME_WAIT()
   
   //シャガ：なにごと　だ？
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_06 , C08R0101_SWLEADER7_01 , POS_DEFAULT)
   _MSGWIN_CLOSE()
+  
   
   //アニメ：シャガ退場・主人公退室準備
   _OBJ_ANIME( C08R0101_SWLEADER7_01, anm_swleader8_bye)
@@ -162,10 +159,6 @@ EVENT_START   ev_scene_c08r0101_legend_01
     _MAP_CHANGE( ZONE_ID_C08, 418, 164, DIR_DOWN )
    ENDIF
   }
-  */
-  
-  //【仮】
-  $WK_SCENE_C08R0101 = 2
   
 EVENT_END
 
@@ -209,14 +202,9 @@ _ANIME_LABEL	anm_swleader8_bye
 /**************************************************************/
 EVENT_START   ev_c08r0101_swleader7_01
 
-	//ゲームクリアしていたらドラゴン技教え
-	IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
-		_TALK_OBJ_START()
-		_GLOBAL_CALL	SCRID_WAZA_TEACHER_DRAGON
-	ELSE
-	//未クリア
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0101_leader8a_07 )
-	ENDIF
+  //ドラゴン技教え
+  _TALK_OBJ_START()
+  _GLOBAL_CALL	SCRID_WAZA_TEACHER_DRAGON
 
 EVENT_END
 

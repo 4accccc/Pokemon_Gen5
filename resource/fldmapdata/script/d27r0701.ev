@@ -90,7 +90,7 @@ INIT_EVENT_START	ev_init_d27r0701
   
   //乗船2回目でブラックならばヒント人の位置を変更
   IF $WK_SCENE_D27R0701_PLAZMAM_01 == 1 && $LCWK_VERSION == VERSION_B2 THEN
-    _OBJ_POS_CHANGE(D27R0701_SWPLAZMAM_01,16,0,25,DIR_UP)
+    _OBJ_POS_CHANGE(D27R0701_SWPLAZMAM_01,16,0,26,DIR_UP)
   ENDIF
   
   
@@ -112,36 +112,162 @@ EVENT_START	ev_scene_d27r0701_plazmam_01
   // ROMバージョン取得
   _GET_ROM_VERSION( LCWK_VERSION )
   
-  //アニメ：「！」
+  //アニメ：主人公移動
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 16, 24, FORCE_TYPE_NPC, 8, DIR_LR)
+  ELSE
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 16, 43, FORCE_TYPE_NPC, 8, DIR_LR)
+  ENDIF
+  
+  _TIME_WAIT( 4 )
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  
+  //ライバル登場：ブラックとホワイトで分岐
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _OBJ_ADD_EX( 17, 20, DIR_DOWN, MMDL_ID_EVENTOBJ_00, SWRIVAL, MV_DMY )
+  ELSE
+    _OBJ_ADD_EX( 15, 47, DIR_UP, MMDL_ID_EVENTOBJ_00, SWRIVAL, MV_DMY )
+  ENDIF
+  
+  _SE_WAIT()
+  
+  //アニメ：ライバル移動
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_rival_come_b)
+  ELSE
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_rival_come_w)
+  ENDIF
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：またかよ
+  IF $LCWK_VERSION == VERSION_B2 THEN
+   _BALLOONWIN_OBJMSG_POS( msg_d27r0701_swrival_02_01 , MMDL_ID_EVENTOBJ_00 ,POS_UR )
+  ELSE
+    _BALLOONWIN_OBJMSG_POS( msg_d27r0701_swrival_02_01 , MMDL_ID_EVENTOBJ_00 ,POS_DL )
+  ENDIF
+  _MSGWIN_CLOSE()
+  
+  //アニメ：したっぱ「！」
   _OBJ_ANIME( D27R0701_SWPLAZMAM_01, anm_common_gyoe )
   _OBJ_ANIME_WAIT()
   
   //ネオプラズマ：おっと！
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0701_swplazmam1_02_01 , D27R0701_SWPLAZMAM_01 ,POS_DEFAULT )
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _BALLOONWIN_OBJMSG_POS( msg_d27r0701_swplazmam1_02_01 , D27R0701_SWPLAZMAM_01 ,POS_DL )
+  ELSE
+    _BALLOONWIN_OBJMSG_POS( msg_d27r0701_swplazmam1_02_01 , D27R0701_SWPLAZMAM_01 ,POS_UR )
+  ENDIF
   _MSGWIN_CLOSE()
   
-  //アニメ：ブラックとホワイトで分岐
+  //ネオプラズマ：おれはあやしくないです
   IF $LCWK_VERSION == VERSION_B2 THEN
-    _OBJ_ANIME_AUTO( D27R0701_SWPLAZMAM_01 , 16, 24, FORCE_TYPE_NPC, 8, DIR_UD)
+    _BALLOONWIN_OBJMSG_POS( msg_d27r0701_swplazmam1_02_02 , D27R0701_SWPLAZMAM_01 ,POS_DL )
   ELSE
-    _OBJ_ANIME_AUTO( D27R0701_SWPLAZMAM_01 , 16, 43, FORCE_TYPE_NPC, 8, DIR_UD)
+    _BALLOONWIN_OBJMSG_POS( msg_d27r0701_swplazmam1_02_02 , D27R0701_SWPLAZMAM_01 ,POS_UR )
   ENDIF
+  _MSGWIN_CLOSE()
+  
+  //ライバル：たいへんだな
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _BALLOONWIN_OBJMSG_POS( msg_d27r0701_swrival_02_02 , MMDL_ID_EVENTOBJ_00 ,POS_UR )
+  ELSE
+    _BALLOONWIN_OBJMSG_POS( msg_d27r0701_swrival_02_02 , MMDL_ID_EVENTOBJ_00 ,POS_DL )
+  ENDIF
+  _MSGWIN_CLOSE()
+  
+  //ネオプラズマ：それは　わからないです
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _BALLOONWIN_OBJMSG_POS( msg_d27r0701_swplazmam1_02_04 , D27R0701_SWPLAZMAM_01 ,POS_DL )
+  ELSE
+    _BALLOONWIN_OBJMSG_POS( msg_d27r0701_swplazmam1_02_04 , D27R0701_SWPLAZMAM_01 ,POS_UR )
+  ENDIF
+  _MSGWIN_CLOSE()
+  
+  //ライバル：まあいいさ
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _BALLOONWIN_OBJMSG_POS( msg_d27r0701_swrival_02_03 , MMDL_ID_EVENTOBJ_00 ,POS_UR )
+  ELSE
+    _BALLOONWIN_OBJMSG_POS( msg_d27r0701_swrival_02_03 , MMDL_ID_EVENTOBJ_00 ,POS_DL )
+  ENDIF
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバル退場
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_rival_bye_b)
+    _OBJ_ANIME_WAIT()
+    //階段SE再生
+    _SE_PLAY( SEQ_SE_KAIDAN )
+    _SE_WAIT()
+  ELSE
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_rival_bye_w)
+    _TIME_WAIT( 16 )
+    _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d)
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
+  //ライバル動作モデル削除
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+  
+  IF $LCWK_VERSION == VERSION_W2 THEN
+    //アニメ：主人公向きなおす
+    _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u)
+    _OBJ_ANIME_WAIT()
+  ENDIF
+  
+  //アニメ：したっぱ「…」
+  _OBJ_ANIME( D27R0701_SWPLAZMAM_01, anm_common_tenten )
   _OBJ_ANIME_WAIT()
   
-  //ネオプラズマ：おれは
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0701_swplazmam1_02_02 , D27R0701_SWPLAZMAM_01 ,POS_DEFAULT )
-  
-  //ネオプラズマ：このふね…
-  _BALLOONWIN_OBJMSG_WB( msg_d27r0701_swplazmam1_02_03w , msg_d27r0701_swplazmam1_02_03b , D27R0701_SWPLAZMAM_01 , POS_DEFAULT)
+  //ネオプラズマ：……うう
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _BALLOONWIN_OBJMSG_POS( msg_d27r0701_swplazmam1_02_05 , D27R0701_SWPLAZMAM_01 ,POS_DL )
+  ELSE
+    _BALLOONWIN_OBJMSG_POS( msg_d27r0701_swplazmam1_02_05 , D27R0701_SWPLAZMAM_01 ,POS_UR )
+  ENDIF
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
   
   //========================================//
   //D27R0701 SCENE_CHANGE無効
   $WK_SCENE_D27R0701_PLAZMAM_01 = 2
+  //D27アナウンスSCENE_CHANGE起動
+  $WK_SCENE_D27_ANNOUNCE = 1
   //========================================//
   
 EVENT_END
+
+//--------------------------------------------------------------------
+//	ライバル来るw
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_come_w
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ライバル来るb
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_come_b
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ライバル去るw
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_bye_w
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ライバル去るb
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_bye_b
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
 /*					話しかけ：元プラズマ団員  						*/
@@ -245,4 +371,10 @@ _ANIME_LABEL	anm_common_gyoe
 _ANIME_LABEL	anm_common_hatena
 	_ANIME_DATA	AC_MARK_HATENA,1
 	_ANIME_DATA	ACMD_END,0
-	
+
+//--------------------------------------------------------------------
+//	☆共通処理：…
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_tenten
+	_ANIME_DATA	AC_MARK_TENTEN,1
+	_ANIME_DATA	ACMD_END,0

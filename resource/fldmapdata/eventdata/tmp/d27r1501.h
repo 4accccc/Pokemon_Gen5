@@ -30,5 +30,19 @@
 #define BG_D27R1501_BED_08                7
 #define BG_D27R1501_BED_09                8
 #define BG_D27R1501_BED_10                9
+#define BG_D27R1501_BED_11               10
+#define BG_D27R1501_BED_12               11
+#define BG_D27R1501_BED_15               12
+#define BG_D27R1501_BED_14               13
+#define BG_D27R1501_BED_13               14
+#define BG_D27R1501_BED_16               15
+#define BG_D27R1501_BED_17               16
+#define BG_D27R1501_BED_18               17
+#define BG_D27R1501_BED_21               18
+#define BG_D27R1501_BED_20               19
+#define BG_D27R1501_BED_19               20
+#define BG_D27R1501_BED_23               21
+#define BG_D27R1501_BED_24               22
+#define BG_D27R1501_BED_22               23
 
 #endif //ZONE_D27R1501_EVB_H

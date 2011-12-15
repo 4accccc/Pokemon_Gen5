@@ -1,5 +1,5 @@
 #event data
-#save date:2011/09/15 15:52:22
+#save date:2011/12/15 18:15:34
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d27r1101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,162 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d27r1101.wms
 #hold event type:
 1
 #hold event number:
+5
+#event number: 0
+#type
+1
+#ID name
+D27R1101_SWPLAZMAM_03_01
+#OBJ CODE Number
+SWPLAZMAM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D27R1101_SWPLAZMA_03
+#Event Script Name
+SCRID_D27R1101_SWPLAZMAM_03_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
 0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+392 0 -264
+#event number: 1
+#type
+1
+#ID name
+D27R1101_SWPLAZMAM_03_02
+#OBJ CODE Number
+SWPLAZMAM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D27R1101_SWPLAZMA_03
+#Event Script Name
+SCRID_D27R1101_SWPLAZMAM_03_02
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+408 0 -248
+#event number: 2
+#type
+1
+#ID name
+D27R1101_SWPLAZMAM_03_04
+#OBJ CODE Number
+SWPLAZMAM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D27R1101_SWPLAZMA_03
+#Event Script Name
+SCRID_D27R1101_SWPLAZMAM_03_04
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+408 0 -216
+#event number: 3
+#type
+1
+#ID name
+D27R1101_SWPLAZMAM_03_03
+#OBJ CODE Number
+SWPLAZMAM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D27R1101_SWPLAZMA_03
+#Event Script Name
+SCRID_D27R1101_SWPLAZMAM_03_03
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+376 0 -200
+#event number: 4
+#type
+1
+#ID name
+D27R1101_SWRIVAL_01
+#OBJ CODE Number
+SWRIVAL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D27R1101_SWPLAZMA_03
+#Event Script Name
+SCRID_D27R1101_SWRIVAL_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+392 0 -232
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -95,7 +250,7 @@ EVENTDATA_POSTYPE_GRID
 #Door Event Label
 DOOR_ID_D27R1101_D27R1201_EXIT01
 #Next Zone ID Name
-ZONE_ID_D27R0201
+ZONE_ID_D27R1201
 #Next Door ID Name
 DOOR_ID_D27R1201_D27R1101_EXIT01
 #Door Direction

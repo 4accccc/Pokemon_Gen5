@@ -109,9 +109,68 @@ EVENT_START	ev_reserve_d27r0201_rival_01
   _RIVAL_NAME( 1 )
   
   //アニメ：主人公中央へ
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 11, 10, FORCE_TYPE_NPC, 8, DIR_LR)
-  _TIME_WAIT( 40 )
-  _OBJ_ANIME( D27R0201_SWRIVAL_01 , anm_staystep_u)
+  _OBJ_ANIME( D27R0201_SWRIVAL_01 , anm_rival_to_swplazma )
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 11, 12, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  //プラズマ団：なんだ？おまえら
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0201_swplazmam1_02_01 , D27R0201_SWPLAZMAM_01 ,POS_UR )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバルその場歩き
+  _OBJ_ANIME( D27R0201_SWRIVAL_01 , anm_rival_hate )
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：いいから オマエらの
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0201_swrival_02_03 , D27R0201_SWRIVAL_01 ,POS_DR )
+  _MSGWIN_CLOSE()
+  
+  //プラズマ団：やばい！
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0201_swplazmam1_02_02 , D27R0201_SWPLAZMAM_01 ,POS_UR )
+  _MSGWIN_CLOSE()
+  
+  //マルチバトル
+  IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
+    //初期３匹で草タイプを選択
+    _TRAINER_MULTI_BTL_SET( TRID_SWRIVAL_28, TRID_SWPLAZMAM_38, TRID_SWPLAZMAW_14 ) 
+  ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN
+    //初期３匹で炎タイプを選択
+    _TRAINER_MULTI_BTL_SET( TRID_SWRIVAL_29, TRID_SWPLAZMAM_38, TRID_SWPLAZMAW_14  ) 
+  ELSE
+    //初期３匹で水タイプを選択
+    _TRAINER_MULTI_BTL_SET( TRID_SWRIVAL_30, TRID_SWPLAZMAM_38, TRID_SWPLAZMAW_14 ) 
+  ENDIF
+  
+  _CALL ev_battle_check
+  
+  //プラズマ団：仲間に知らせなきゃ！
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0201_swplazmaw1_02_01 , D27R0201_SWPLAZMAW_01 ,POS_UL )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：プラズマ団員退場
+  _OBJ_ANIME( D27R0201_SWPLAZMAM_01 ,anm_swplazma_bye_02 )
+  _OBJ_ANIME( D27R0201_SWPLAZMAW_01 ,anm_swplazma_bye_01 )
+  _TIME_WAIT( 6 )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d )
+  _OBJ_ANIME( D27R0201_SWRIVAL_01 , anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //階段SE再生
+  _SE_PLAY( SEQ_SE_KAIDAN )
+  
+  //動作モデル削除
+  _OBJ_DEL( D27R0201_SWPLAZMAM_01 )
+  _OBJ_DEL( D27R0201_SWPLAZMAW_01 )
+  
+  _SE_WAIT()
+  
+  //ライバル：チッ
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0201_swrival_02_04 , D27R0201_SWRIVAL_01 ,POS_DR )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：二人とも上を見る
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u )
+  _OBJ_ANIME( D27R0201_SWRIVAL_01 , anm_staystep_u )
   _OBJ_ANIME_WAIT()
   
   //ライバル：……バリアだ
@@ -128,7 +187,7 @@ EVENT_START	ev_reserve_d27r0201_rival_01
   _MSGWIN_CLOSE()
   
   _OBJ_ANIME( D27R0201_SWRIVAL_01 , anm_rival_bye_01)
-  _TIME_WAIT( 16 )
+  _TIME_WAIT( 4 )
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_d)
   _OBJ_ANIME_WAIT()
   
@@ -151,13 +210,48 @@ EVENT_START	ev_reserve_d27r0201_rival_01
 EVENT_END
 
 //--------------------------------------------------------------------
+//	ライバル：プラズマ団前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_to_swplazma
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ライバル：キレてその場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_hate
+	_ANIME_DATA	AC_STAY_WALK_U_4F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	プラズマ団01：退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swplazma_bye_01
+  _ANIME_DATA	AC_WALK_L_4F,1
+  _ANIME_DATA	AC_WALK_D_4F,3
+  _ANIME_DATA	AC_WALK_R_4F,1
+  _ANIME_DATA	AC_WALK_D_4F,2
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	プラズマ団01：退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swplazma_bye_02
+  _ANIME_DATA	AC_WALK_R_4F,1
+  _ANIME_DATA	AC_WALK_D_4F,4
+  _ANIME_DATA	AC_WALK_L_4F,1
+  _ANIME_DATA	AC_WALK_D_4F,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
 //	ライバル：退場
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_rival_bye_01
-  _ANIME_DATA	AC_WALK_D_4F,1
-  _ANIME_DATA	AC_WALK_L_4F,1
-  _ANIME_DATA	AC_WALK_D_4F,4
+  _ANIME_DATA	AC_WALK_D_4F,3
   _ANIME_DATA	ACMD_END,0
+
 
 /************************************************************/
 /*					バリア解除スイッチ（１）				*/
@@ -288,6 +382,27 @@ EVENT_START ev_pos_d27r0201_barrier_01
   
   
 EVENT_END
+
+/************************************************************/
+/*					CALL：勝敗チェック				*/
+/************************************************************/
+ev_battle_check:	
+  //敗戦チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+  
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    
+    //手持ちが0匹だったら
+    _GET_PARTY_POKE_COUNT( SCWK_TEMP0, POKECOUNT_MODE_BATTLE_ENABLE )
+    IF $SCWK_TEMP0 == 0 THEN
+      _TEMOTI_POKEMON_KAIFUKU() //回復処理
+    ENDIF
+    
+    _TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+  ELSE
+    _TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+  ENDIF
+_RET
 
 //--------------------------------------------------------------------
 //	主人公：上を向いて「！」

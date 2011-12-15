@@ -1,5 +1,5 @@
 #event data
-#save date:2011/12/15 12:30:22
+#save date:2011/12/15 18:18:57
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d27r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d27r0101.wms
 #hold event type:
 1
 #hold event number:
-27
+25
 #event number: 0
 #type
 1
@@ -727,19 +727,19 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-D27R0101_SWPLAZMAM_03_01
+D27R0101_SWPLAZMAM1_02_03
 #OBJ CODE Number
 SWPLAZMAM
 #MOVE CODE Number
-MV_RND
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_D27R0101_SWPLAZMA_03
+FV_D27R0101_SWPLAZMA_02
 #Event Script Name
-SCRID_D27R0101_SWPLAZMAM_03_01
+SCRID_D27R0101_SWPLAZMAM1_02_03
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -753,24 +753,24 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-184 0 -296
+24 0 -456
 #event number: 24
 #type
 1
 #ID name
-D27R0101_SWPLAZMAM_03_02
+D27R0101_SWPLAZMAM1_02_04
 #OBJ CODE Number
 SWPLAZMAM
 #MOVE CODE Number
-MV_RND
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_D27R0101_SWPLAZMA_03
+FV_D27R0101_SWPLAZMA_02
 #Event Script Name
-SCRID_D27R0101_SWPLAZMAM_03_02
+SCRID_D27R0101_SWPLAZMAM1_02_04
 #Direction Type Number
-DIR_DOWN
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -784,69 +784,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-200 0 -280
-#event number: 25
-#type
-1
-#ID name
-D27R0101_SWPLAZMAM_03_03
-#OBJ CODE Number
-SWPLAZMAM
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D27R0101_SWPLAZMA_03
-#Event Script Name
-SCRID_D27R0101_SWPLAZMAM_03_03
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-168 0 -216
-#event number: 26
-#type
-1
-#ID name
-D27R0101_SWPLAZMAM_03_04
-#OBJ CODE Number
-SWPLAZMAM
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D27R0101_SWPLAZMA_03
-#Event Script Name
-SCRID_D27R0101_SWPLAZMAM_03_04
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-200 0 -248
+56 0 -456
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -881,9 +819,9 @@ WK_SCENE_D27R0101_SECONDB_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-40 0 8
+72 0 8
 #size
-1 1
+1 3
 #event number: 1
 #Pos Event Label
 POS_D27R0101_SECOND_W_02
@@ -898,9 +836,9 @@ WK_SCENE_D27R0101_SECONDW_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-40 0 8
+72 0 8
 #size
-1 1
+1 3
 #event number: 2
 #Pos Event Label
 POS_D27R0101_SECOND_B_01
@@ -915,9 +853,9 @@ WK_SCENE_D27R0101_SECONDB_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 0 -24
+8 0 8
 #size
-3 1
+1 3
 #event number: 3
 #Pos Event Label
 POS_D27R0101_SECOND_W_01
@@ -932,9 +870,9 @@ WK_SCENE_D27R0101_SECONDW_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 0 -456
+8 0 8
 #size
-3 1
+1 3
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

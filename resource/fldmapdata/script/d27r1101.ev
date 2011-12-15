@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d27r1101.h"
-  //.include  "d27r1101.h"
+  .include  "d27r1101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,246 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d27r1101
+_EVENT_DATA    ev_d27r1101_swrival_01
+_EVENT_DATA    ev_d27r1101_swplazmam_03_01
+_EVENT_DATA    ev_d27r1101_swplazmam_03_02
+_EVENT_DATA    ev_d27r1101_swplazmam_03_03
+_EVENT_DATA    ev_d27r1101_swplazmam_03_04
+_EVENT_DATA    ev_init_d27r1101
+_EVENT_DATA    ev_recover_d27r1101
+_EVENT_DATA    ev_zone_d27r1101
 _EVENT_DATA_END
 
+//バージョン取得
+DEFINE_LOCAL LCWK_VERSION
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_d27r1101:
-//  _END
+/************************************************************/
+/*					ZONE_CHANGE_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_d27r1101
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_d27r1101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+//
 
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_RECOVER_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_d27r1101
+
+  // 出口位置変更
+  _CALL sub_exit_change
+
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_LABEL  						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_d27r1101
+
+//
+
+INIT_EVENT_END
+
+
+// バージョン別で出口位置変更
+sub_exit_change:
+{
+  DEFINE_LOCAL  version   // ROMバージョン
+
+  // ROMバージョン取得
+  _GET_ROM_VERSION( version )
+
+  // B2クリア前
+  IF $version == VERSION_B2  THEN
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R1101_D27R1201_EXIT01, 0, 0, 0 )
+  
+  // W2クリア後
+  ELSE
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_D27R1101_D27R0201_EXIT01, 0, 0, 0 ) 
+  ENDIF
+}
+_RET
+
+/************************************************************/
+/*					話しかけ：ライバル  						*/
+/************************************************************/
+EVENT_START	ev_d27r1101_swrival_01
+  
+  _RIVAL_NAME(1)
+  _PLAYER_NAME(0)
+  
+  //乗船三回目
+  IF FLAG_OFF( FE_D27R0101_SWRIVAL_3RD_TALK ) THEN
+    //主人公名代入
+    _PLAYER_NAME( 0 )
+    //ライバル名代入
+    _RIVAL_NAME( 1 )
+    _TALK_OBJ_START()
+    
+    //ライバル：先に行け！
+    _BALLOONWIN_OBJMSG_POS( msg_d27r1101_swrival_03_01 , D27R1101_SWRIVAL_01 ,POS_DEFAULT )
+    
+    //主人公方向取得
+    _PLAYER_DIR_GET( LWK_DIR )
+    
+    //話しかけ方向で処理を分岐
+    IF $LWK_DIR == DIR_LEFT THEN
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+      
+    ELSE
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
+      
+      //アニメ：ライバル右に向きなおす
+      _OBJ_ANIME( D27R1101_SWRIVAL_01, anm_staystep_r )
+      _OBJ_ANIME_WAIT()
+    ENDIF
+    
+    //========================================//
+    //搭乗三回目初回会話終了
+    _FLAG_SET( FE_D27R0101_SWRIVAL_3RD_TALK )
+    //========================================//
+    
+  //乗船三回目（二回目話しかけ）
+  ELSE
+    //主人公名代入
+    _PLAYER_NAME( 0 )
+    //ライバル名代入
+    _RIVAL_NAME( 1 )
+    _TALK_START_SE_PLAY()
+    
+    //オマエら！
+    _BALLOONWIN_OBJMSG_POS( msg_d27r1101_swrival_03_02 , D27R1101_SWRIVAL_01 ,POS_DEFAULT )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+  
+  ENDIF
+
+EVENT_END
+
+/************************************************************/
+/*					話しかけ：プラズマ団員03_01  						*/
+/************************************************************/
+EVENT_START	ev_d27r1101_swplazmam_03_01
+	
+	_TALK_START_SE_PLAY()
+	_BALLOONWIN_TALKOBJ_MSG( msg_d27r1101_swplazmam1_03_01)
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+EVENT_END
+
+/************************************************************/
+/*					話しかけ：プラズマ団員03_02  						*/
+/************************************************************/
+EVENT_START	ev_d27r1101_swplazmam_03_02
+	
+	_TALK_START_SE_PLAY()
+	_BALLOONWIN_TALKOBJ_MSG( msg_d27r1101_swplazmam2_03_01)
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+EVENT_END
+
+/************************************************************/
+/*					話しかけ：プラズマ団員03_03  						*/
+/************************************************************/
+EVENT_START	ev_d27r1101_swplazmam_03_03
+
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r1101_swplazmam3_03_01 )
+
+EVENT_END
+
+/************************************************************/
+/*					話しかけ：プラズマ団員03_04  						*/
+/************************************************************/
+EVENT_START	ev_d27r1101_swplazmam_03_04
+
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r1101_swplazmam4_03_01 )
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ハテナ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ハテナ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_tenten
+	_ANIME_DATA	AC_MARK_TENTEN,1
+	_ANIME_DATA	ACMD_END,0
+	

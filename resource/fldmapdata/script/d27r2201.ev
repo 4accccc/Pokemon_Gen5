@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d27r2201.h"
-  //.include  "d27r2201.h"
+  .include  "d27r2201.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -23,6 +23,9 @@ _EVENT_DATA    ev_d27r2201_baker_01
 _EVENT_DATA    ev_d27r2201_swplazmam_01
 _EVENT_DATA    ev_d27r2201_swplazmaw_01
 _EVENT_DATA    ev_d27r2201_swplazmaw_02
+_EVENT_DATA    ev_d27r2201_swplazmam_02
+_EVENT_DATA    ev_d27r2201_swplazmam_03
+_EVENT_DATA    ev_scene_d27r2201_announce_01
 _EVENT_DATA_END
 
 /************************************************************/
@@ -111,4 +114,39 @@ EVENT_START   ev_d27r2201_swplazmaw_01
   
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r2201_swplazmaw_end_01 )
   
+EVENT_END
+
+/**************************************************************/
+/*  プラズマ団員：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_d27r2201_swplazmam_02
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r2201_swplazmam1_01 )
+EVENT_END
+
+
+/**************************************************************/
+/*  プラズマ団員：話しかけ                                      */
+/**************************************************************/
+EVENT_START   ev_d27r2201_swplazmam_03
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r2201_swplazmam2_01 )
+EVENT_END
+
+
+/**************************************************************/
+/*  SCENE_CHANGE：船内放送                                      */
+/**************************************************************/
+EVENT_START   ev_scene_d27r2201_announce_01
+  
+  //アナウンスSE再生
+  _SE_PLAY( SEQ_SE_SW_PLAZMASHIP_09 )
+  _SE_WAIT()
+  
+  _PLAINWIN_MSG_DOWN( msg_d27r2201_announce_01 )
+  _LAST_KEYWAIT()
+  _PLAINWIN_CLOSE()
+  
+  //========================================/
+  //D27船内放送SCENE_CHANGE無効
+  $WK_SCENE_D27_ANNOUNCE = 2
+  //========================================/
 EVENT_END

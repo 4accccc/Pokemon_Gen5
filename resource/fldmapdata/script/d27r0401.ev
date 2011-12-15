@@ -59,6 +59,8 @@ INIT_EVENT_START	ev_init_d27r0401
   
   //アクロマ戦終了後
   IF $WK_SCENE_D27R0401_SWBOSS_01 == 2 THEN
+    _OBJ_POS_CHANGE(D27R0401_SWBOSS_01,7,0,9,DIR_DOWN)
+  ELSIF $WK_SCENE_D27R0401_SWBOSS_01 == 3 THEN
     _OBJ_POS_CHANGE(D27R0401_SWBOSS_01,7,2,5,DIR_DOWN)
   ENDIF
   
@@ -74,7 +76,7 @@ INIT_EVENT_START	ev_recover_d27r0401
 INIT_EVENT_END
 
 /************************************************************/
-/*					SCENE_CHANGE：アクロマ戦  						*/
+/*					SCENE_CHANGE：アクロマ前口上  						*/
 /************************************************************/
 INIT_EVENT_START	ev_scene_d27r0401_swboss_01
 
@@ -129,6 +131,50 @@ INIT_EVENT_START	ev_scene_d27r0401_swboss_01
   
   //アクロマ：それはさておきっ
   _BALLOONWIN_OBJMSG_POS( msg_d27r0401_swboss_03_04 , D27R0401_SWBOSS_01 ,POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+  //イベント曲終了
+  _END_EVENT_BGM()
+
+  //========================================//
+  //D27R0401 SCENE_CHANGE無効
+  $WK_SCENE_D27R0401_SWBOSS_01 = 2
+  //========================================//
+
+INIT_EVENT_END
+
+//--------------------------------------------------------------------
+//	アクロマ：戻って向き合う
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swboss_ret_l
+  _ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_swboss_ret_r
+  _ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_swboss_ret_u
+  _ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_swboss_ret_d
+  _ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+/**************************************************************/
+/* CALL：クリア前アクロマ戦                                         */
+/**************************************************************/
+ev_vs_swboss:
+
+  _TALK_OBJ_START()
+   
+  //アクロマ：じゅんびは
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0401_swboss_03_10 , D27R0401_SWBOSS_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
   
   //トレーナー戦
@@ -148,57 +194,67 @@ INIT_EVENT_START	ev_scene_d27r0401_swboss_01
     _BALLOONWIN_OBJMSG_POS( msg_d27r0401_swboss_03_07 , D27R0401_SWBOSS_01 ,POS_DEFAULT )
   ENDIF
   _MSGWIN_CLOSE()
+   
+  _PLAYER_DIR_GET( LWK_DIR )
   
   //アニメ：アクロマ一歩右へ
-  _OBJ_ANIME( D27R0401_SWBOSS_01 , anm_walk_r)
+  IF $LWK_DIR == DIR_RIGHT THEN
+    _OBJ_ANIME( D27R0401_SWBOSS_01 , anm_walk_r)
+  ELSE
+    _OBJ_ANIME( D27R0401_SWBOSS_01 , anm_walk_l)
+  ENDIF
   _OBJ_ANIME_WAIT()
-  
+    
   //アクロマ：くりかえしますが
   _BALLOONWIN_OBJMSG_POS( msg_d27r0401_swboss_03_08 , D27R0401_SWBOSS_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
   
   //アニメ：アクロマ元の位置に戻る
-  _OBJ_ANIME( D27R0401_SWBOSS_01 , anm_swboss_ret_01)
+  SWITCH  $LWK_DIR
+  CASE DIR_RIGHT THEN
+    _OBJ_ANIME( D27R0401_SWBOSS_01 , anm_swboss_ret_r)
+  CASE DIR_LEFT THEN
+    _OBJ_ANIME( D27R0401_SWBOSS_01 , anm_swboss_ret_l)
+  CASE DIR_UP THEN
+    _OBJ_ANIME( D27R0401_SWBOSS_01 , anm_swboss_ret_u)
+  CASE DIR_DOWN THEN
+    _OBJ_ANIME( D27R0401_SWBOSS_01 , anm_swboss_ret_d)
+  ENDSWITCH
   _OBJ_ANIME_WAIT()
-  
+    
   //アクロマ：ごぶうんを
   _BALLOONWIN_OBJMSG_POS( msg_d27r0401_swboss_03_09 , D27R0401_SWBOSS_01 ,POS_DEFAULT )
+  _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
-  
-  //イベント曲終了
-  _END_EVENT_BGM()
-
+    
   //========================================//
   //D27R0401 SCENE_CHANGE無効
-  $WK_SCENE_D27R0401_SWBOSS_01 = 2
+  $WK_SCENE_D27R0401_SWBOSS_01 = 3
   //D27R0501 SCENE_CHANGE有効
   $WK_SCENE_D27R0601_SWSAGE1_01 = 1
   //D27R1001,D27R1301 STOPPER解除
   $WK_SCENE_D27R10R13_STOPPER = 1
   //========================================//
 
-INIT_EVENT_END
-
-//--------------------------------------------------------------------
-//	アクロマ：戻って向き合う
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_swboss_ret_01
-  _ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
-
+_RET
 
 /**************************************************************/
 /* アクロマ：話しかけ                                         */
 /**************************************************************/
 EVENT_START   ev_d27r0401_swboss_01
 
-  //クリア前
-  IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
-
+  //クリア前・戦闘前
+  IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) && $WK_SCENE_D27R0401_SWBOSS_01 == 2 THEN
+    
+    //アクロマ戦処理へ
+    _CALL ev_vs_swboss
+  
+  //クリア前・戦闘後
+  ELSIF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) && $WK_SCENE_D27R0401_SWBOSS_01 == 3 THEN
+    
     //アクロマ：ですが　あなたは　わたくしに
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0401_swboss_03_09 )
-
+    
   //クリア後
   ELSE
 

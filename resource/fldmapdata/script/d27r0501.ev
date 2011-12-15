@@ -26,11 +26,15 @@
 _EVENT_DATA    ev_zone_d27r0501
 _EVENT_DATA    ev_init_d27r0501
 _EVENT_DATA    ev_recover_d27r0501
-_EVENT_DATA    ev_scene_d27r0501_swsage7_01
+_EVENT_DATA    ev_pos_d27r0501_swsage7_01
 _EVENT_DATA_END
 
 //バージョン取得
 DEFINE_LOCAL LCWK_VERSION
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
 /************************************************************/
 /*					ZONE_CHANGE_LABEL  						*/
 /************************************************************/
@@ -70,7 +74,11 @@ INIT_EVENT_END
 /************************************************************/
 /*					SCENE_CHANGE：ヴィオ戦  						*/
 /************************************************************/
-EVENT_START	ev_scene_d27r0501_swsage7_01
+EVENT_START	ev_pos_d27r0501_swsage7_01
+
+  //主人公・ライバル名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
 
   //========================================//
   //ヴィオ・ダークトリニティ表示
@@ -78,131 +86,172 @@ EVENT_START	ev_scene_d27r0501_swsage7_01
   _FLAG_RESET( FV_D27R0501_NINJA_01 )
   //========================================//
   
-  //アニメ：主人公中央へ移動
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 12, 17, FORCE_TYPE_NPC, 8, DIR_UD)
-  _OBJ_ANIME_WAIT()
-  
-  //カメラ操作　ベル追従
-  _CAMERA_START()		//カメラ操作開始
-  _CAMERA_PURGE()		//カメラのバインドを解く
-  _CAMERA_MOVE( 9688,0,643072,819200,0,1032192,56 )
-  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
-  
-  _TIME_WAIT(32)
-  
-  //自機にカメラを戻す
-  _CAMERA_DEF_MOVE (20)
-  
-  //七賢人動作モデル生成
-  _OBJ_ADD( D27R0501_SWSAGE7_01 )
-  
-  //アニメ：ヴィオワープして登場・主人公振り向き
-  _OBJ_ANIME( D27R0501_SWSAGE7_01, anm_swsage7_warp_in )
-  _TIME_WAIT( 8 )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+
+  //アニメ：主人公はじへ移動
+  IF $LCW_POSX == 12 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER , anm_pl_go_center_x11)
+  ELSIF $LCW_POSX == 13 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER , anm_pl_go_center_x13)
+  ENDIF
   _OBJ_ANIME_WAIT()
   
   //イベント曲再生
   _START_TEMP_EVENT_BGM( SEQ_BGM_E_7_SAGE )
   
+  //アニメ：したっぱ振り向き
+  _OBJ_ANIME( D27R0501_SWPLAZMAM_01 , anm_staystep_d)
+  _OBJ_ANIME_WAIT()
+  
+  //ヴィオ：ここまで
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_01 , D27R0501_SWSAGE7_01 ,POS_UL )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ヴィオ振り向き
+  _OBJ_ANIME( D27R0501_SWSAGE7_01 , anm_staystep_d)
+  _OBJ_ANIME_WAIT()
+  
+  //ヴィオ：わざわざ
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_10 , D27R0501_SWSAGE7_01 ,POS_UL )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ヴィオキュレムを見せる
+  _OBJ_ANIME( D27R0501_SWSAGE7_01 , anm_swsage7_backstep)
+  _OBJ_ANIME_WAIT()
+  
+  //ヴィオ：キュレム！
+  _GIZAWIN_OBJMSG_POS( msg_d27r0101_sage7_02_02 , D27R0501_SWSAGE7_01, POS_UL )
+  _GIZAWIN_CLOSE()
+  
+  //カメラ操作　キュレム中心
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_MOVE( 9688,0,643072,819200,0,1032192,56 )
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  
+  _TIME_WAIT( 20 )
+  
+  //キュレム：ヒュララ……
+  _VOICE_PLAY(MONSNO_653,0)
+  _GIZAPLAINWIN_MSG_POS( msg_d27r0501_poke10_02_01, POS_DOWN )
+  _AB_KEYWAIT_MARK()
+  _GIZAPLAINWIN_CLOSE()
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (32)
   //カメラ待ち
   _CAMERA_WAIT_MOVE()
   _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
   _CAMERA_END()		//カメラ操作終了
   
-  //ヴィオ：そのポケモンは……
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_01 , D27R0501_SWSAGE7_01 ,POS_DEFAULT )
+  //ヴィオ：ソウリュウに
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_03 , D27R0501_SWSAGE7_01 ,POS_UL )
   _MSGWIN_CLOSE()
   
-  //ヴィオ：キュレム！
-  _GIZAWIN_OBJMSG_POS( msg_d27r0101_sage7_02_02 , D27R0501_SWSAGE7_01, POS_DEFAULT )
-  _GIZAWIN_CLOSE()
-  
-  //ヴィオ：ソウリュウに
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_03 , D27R0501_SWSAGE7_01 ,POS_DEFAULT )
+  //アニメ：ヴィオ向き合う
+  _OBJ_ANIME( D27R0501_SWSAGE7_01 , anm_staystep_d)
+  _OBJ_ANIME_WAIT()
   
   //ヴィオ：さて……
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_04 , D27R0501_SWSAGE7_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_04 , D27R0501_SWSAGE7_01 ,POS_UL )
   _MSGWIN_CLOSE()
   
-  //トレーナー戦
-  _TRAINER_BTL_SET( TRID_SWSAGE3_01, 0 )
-  _CALL ev_battle_check
+  //主人公向き合う
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_pl_go_left_x12)
+  _OBJ_ANIME_WAIT()
   
-  //ヴィオ：むぅ！
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_05 , D27R0501_SWSAGE7_01 ,POS_DEFAULT )
-  _MSGWIN_CLOSE()
+  _TIME_WAIT( 12 )
   
-  //ライバル動作モデル生成
+   //ライバル動作モデル生成
   _OBJ_ADD_EX( 12, 20, DIR_UP, MMDL_ID_EVENTOBJ_00, SWRIVAL, MV_DMY )
   
   //アニメ：ライバルワープして登場
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swrival_warp_in )
-  _TIME_WAIT( 16 )
-  _OBJ_ANIME( D27R0501_SWSAGE7_01, anm_staystep_d )
   _OBJ_ANIME_WAIT()
+  
+  //ライバル：させるかよ！
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0501_swrival_02_06 , MMDL_ID_EVENTOBJ_00 ,POS_DR )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：ライバルと向き合う
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_staystep_l)
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_r)
+  _OBJ_ANIME_WAIT()
+  
+  //ライバル：バリアを　かいじょして　くれて
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0501_swrival_02_07 , MMDL_ID_EVENTOBJ_00 ,POS_DR )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：したっぱ主人公と向き合う
+  _OBJ_ANIME( D27R0501_SWPLAZMAM_01 , anm_swplazmam_look_rival)
+  _OBJ_ANIME_WAIT()
+  
+  //ヴィオ：むう！
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_05 , D27R0501_SWSAGE7_01 ,POS_UL )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：主人公・ライバル、ヴィオに向き合う
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_staystep_u)
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_u)
+  _OBJ_ANIME_WAIT()
+  
+  //マルチバトル
+  IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
+    //初期３匹で草タイプを選択
+    _TRAINER_MULTI_BTL_SET( TRID_SWRIVAL_28, TRID_SWPLAZMAM_37, TRID_SWSAGE3_01 ) 
+  ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN
+    //初期３匹で炎タイプを選択
+    _TRAINER_MULTI_BTL_SET( TRID_SWRIVAL_29, TRID_SWPLAZMAM_37, TRID_SWSAGE3_01  ) 
+  ELSE
+    //初期３匹で水タイプを選択
+    _TRAINER_MULTI_BTL_SET( TRID_SWRIVAL_30, TRID_SWPLAZMAM_37, TRID_SWSAGE3_01 ) 
+  ENDIF
+  
+  _CALL ev_battle_check
+  
+  //ライバル：ちょろいな
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0501_swrival_02_01 , MMDL_ID_EVENTOBJ_00 ,POS_DR )
+  _MSGWIN_CLOSE()
   
   //主人公・ライバル名代入
   _PLAYER_NAME( 0 )
   _RIVAL_NAME( 1 )
-  
-  //ライバル：ここは……！？
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0501_swrival_02_01 , MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
-  _MSGWIN_CLOSE()
   
   //アニメ：ライバル「！」
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_common_gyoe )
   _OBJ_ANIME_WAIT()
   
   //ライバル：あの　ポケモンは……
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0501_swrival_02_02 , MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0501_swrival_02_02 , MMDL_ID_EVENTOBJ_00 ,POS_DR )
   _MSGWIN_CLOSE()
-  
-  //アニメ：ライバル窓を見る・ヴィオも隣接
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swrival_look_window )
-  _TIME_WAIT( 16 )
-  _OBJ_ANIME( D27R0501_SWSAGE7_01, anm_swsage7_look_swrival )
-  _TIME_WAIT( 8 )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
-  _OBJ_ANIME_WAIT()
   
   //ヴィオ：そうとも
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_06 , D27R0501_SWSAGE7_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_06 , D27R0501_SWSAGE7_01 ,POS_UL )
   _MSGWIN_CLOSE()
   
-  //アニメ：ライバル下を見る
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_d )
-  _OBJ_ANIME_WAIT()
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_swrival_anime )
-  _OBJ_ANIME_WAIT()
-  
   //ライバル：きまってるだろ！
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0501_swrival_02_03 , MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0501_swrival_02_03 , MMDL_ID_EVENTOBJ_00 ,POS_DR )
   _MSGWIN_CLOSE()
   
   //ヴィオ：チョロネコくらい
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_07 , D27R0501_SWSAGE7_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_07 , D27R0501_SWSAGE7_01 ,POS_UL )
   _MSGWIN_CLOSE()
   
   //ライバル：……しんだ
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0501_swrival_02_04 , MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0501_swrival_02_04 , MMDL_ID_EVENTOBJ_00 ,POS_DR )
   _MSGWIN_CLOSE()
   
   //ヴィオ：こじんの
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_08 , D27R0501_SWSAGE7_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_08 , D27R0501_SWSAGE7_01 ,POS_UL )
   
   //ヴィオ：……さて
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_09 , D27R0501_SWSAGE7_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02_09 , D27R0501_SWSAGE7_01 ,POS_UL )
   _MSGWIN_CLOSE()
   
   //ライバル：ふざけるな！
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0501_swrival_02_05 , MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
-  _MSGWIN_CLOSE()
-  
-  //キュレム：ヒュララ……
-  _VOICE_PLAY(MONSNO_653,0)
-  _PLAINWIN_MSG_DOWN( msg_d27r0501_poke10_02_01 )
-  _AB_KEYWAIT_MARK()
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0501_swrival_02_05 , MMDL_ID_EVENTOBJ_00 ,POS_DR )
   _MSGWIN_CLOSE()
   
   //ダークトリニティ動作モデル生成
@@ -214,7 +263,7 @@ EVENT_START	ev_scene_d27r0501_swsage7_01
   _OBJ_ANIME( D27R0501_NINJA_02, anm_ninja_coming_01 )
   _TIME_WAIT( 8 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_u )
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_r )
   _OBJ_ANIME_WAIT()
   
   //========================================//
@@ -253,16 +302,77 @@ EVENT_START	ev_scene_d27r0501_swsage7_01
 
 EVENT_END
 
+/************************************************************/
+/*					CALL：勝敗チェック				*/
+/************************************************************/
 ev_battle_check:	
   //敗戦チェック
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )
   
   IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    
+    //手持ちが0匹だったら
+    _GET_PARTY_POKE_COUNT( SCWK_TEMP0, POKECOUNT_MODE_BATTLE_ENABLE )
+    IF $SCWK_TEMP0 == 0 THEN
+      _TEMOTI_POKEMON_KAIFUKU() //回復処理
+    ENDIF
+    
     _TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
   ELSE
     _TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
   ENDIF
 _RET
+
+//--------------------------------------------------------------------
+//	主人公：中央へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_pl_go_center_x11
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	主人公：中央へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_pl_go_center_x13
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	主人公：左へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_pl_go_left_x12
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------------
+//	ヴィオ：キュレムを見せる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swsage7_backstep
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA AC_DIR_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_L_16F,1
+  _ANIME_DATA AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	ヴィオ：主人公と向き合う
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swsage7_look_pl
+  _ANIME_DATA	AC_WALK_R_16F,1
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	したっぱ：主人公と向き合う
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swplazmam_look_rival
+  _ANIME_DATA	AC_WALK_L_8F,3
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
+  _ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //	ヴィオ：ワープして登場
@@ -277,7 +387,8 @@ _ANIME_LABEL	anm_swsage7_warp_in
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swrival_warp_in
   _ANIME_DATA	AC_WARP_DOWN,1
-  _ANIME_DATA	AC_WALK_U_4F,1
+  _ANIME_DATA	AC_WALK_R_4F,1
+  _ANIME_DATA	AC_WALK_U_4F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------

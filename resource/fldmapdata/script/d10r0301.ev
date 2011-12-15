@@ -312,6 +312,8 @@ EVENT_START ev_pos_d10r0301_sage6_01
   $WK_SCENE_D10R0301_SWPLAZMA_01 = 1
   //D10R0401 SCENE_CHANGE有効
   $WK_SCENE_D10R0401_SWSAGE1_01 = 1
+  //D27R0101 ストッパー削除
+  _FLAG_SET(FV_D27R0101_STOPPER_01)
   //========================================//
   
 EVENT_END

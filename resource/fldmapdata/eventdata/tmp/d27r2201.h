@@ -17,6 +17,8 @@
 #define D27R2201_SWPLAZMAW_01              4
 #define D27R2201_SWPLAZMAM_01              5
 #define D27R2201_SWPLAZMAW_02              6
+#define D27R2201_SWPLAZMAM_02              7
+#define D27R2201_SWPLAZMAM_03              8
 
 #endif //ZONE_D27R2201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d27r2201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

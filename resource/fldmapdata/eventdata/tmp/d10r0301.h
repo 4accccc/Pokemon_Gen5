@@ -24,11 +24,17 @@
 #define FLD_ITEM_185_2                     9
 #define FLD_ITEM_186_2                    10
 #define FLD_ITEM_184_2                    11
+#define D10R0301_SWPLAZMAM_05             12
+#define D10R0301_SWPLAZMAM_06             13
 
 #endif //ZONE_D10R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d10r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_D10R0301_EVB_H
 #define ZONE_D10R0301_EVB_H
 
+#define BGID_D10R0301_TEST_03             0
+#define BGID_D10R0301_TEST_04             1
+#define BGID_D10R0301_TEST_01             2
+#define BGID_D10R0301_TEST_02             3
 
 #endif //ZONE_D10R0301_EVB_H

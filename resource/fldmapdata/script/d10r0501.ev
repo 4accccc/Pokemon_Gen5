@@ -98,6 +98,9 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
   _TIME_WAIT(10)
   
+  //イベント曲再生
+  _START_EVENT_BGM( SEQ_BGM_E_NEW_G_CIS )
+  
   //ゲーチス：パワースポット
   _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_01, D10R0501_SWSAGE1_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
@@ -149,6 +152,8 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 	_VOICE_WAIT()
 	_AB_KEYWAIT_MARK()
 	_GIZAPLAINWIN_CLOSE()
+	
+	_START_EVENT_BGM_SILENT( 12 )
 	
   // こごえるせかいエフェクト(前半)
   // 全部で500フレーム
@@ -324,6 +329,8 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   // デモ呼び出し
   // ※デモを2つに分けたので連続で呼び出している
 	_DEMO_FADEOUT_BLACK_CALL()
+	//イベント曲終了
+  _BGM_NOW_MAP_RECOVER()
 
   //=======================================
   // 解放状態のキュレムにする

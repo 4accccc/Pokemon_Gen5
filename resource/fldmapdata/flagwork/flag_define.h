@@ -935,6 +935,7 @@
 #define FV_WC10_SHOPM1_04                 1023 /* 0x03ff ホワイトフォレストお店４：店員 */
 #define FV_D27R0101_SWPLAZMA_03           1024 /* 0x0400 プラズマフリゲート：搭乗三回目プラズマ団員 */
 #define FV_D27R0101_STOPPER_02            1025 /* 0x0401 プラズマフリゲート：搭乗二回目ストッパー */
+#define FV_D27R1101_SWPLAZMA_03           1026 /* 0x0402 プラズマフリゲート：搭乗三回目プラズマ団員 */
 
 #define FV_AREA_END                       1099 /* 0x044b  */
 

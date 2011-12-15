@@ -12,6 +12,8 @@
 #define ZONE_D27R1201_EVC_H
 
 #define D27R1201_SWRIVAL_01                0
+#define D27R1201_SWPLAZMAW_01              1
+#define D27R1201_SWPLAZMAM_01              2
 
 #endif //ZONE_D27R1201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d27r1201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

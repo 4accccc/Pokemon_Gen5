@@ -16,6 +16,8 @@
 #define ZONE_D27R0201_EVC_H
 
 #define D27R0201_SWRIVAL_01                0
+#define D27R0201_SWPLAZMAW_01              1
+#define D27R0201_SWPLAZMAM_01              2
 
 #endif //ZONE_D27R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d27r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
