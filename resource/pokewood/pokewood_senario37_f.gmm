@@ -551,9 +551,9 @@
 	</row>
 	<row id="pw_event2_react_enemy_2">
 		<language name="JPN" width="256">しょうじょ『うふふふ！
-おねえちゃん　おとめねー</language>
+おねえちゃん　おとめチックねー</language>
 		<language name="JPN_KANJI" width="256">少女『うふふふ！
-おねえちゃん　おとめねー</language>
+おねえちゃん　おとめチックねー</language>
 	</row>
 	<row id="pw_event2_react_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『すべて　うそでしょ！</language>
@@ -575,14 +575,14 @@
 	</row>
 	<row id="pw_event3_enemy_0">
 		<language name="JPN" width="256">しょうじょ『アハハハハ
-おねえちゃん　つよいね▼
-ちからも　たくわえたし
-ここも　あきてきたし▽
+おにいちゃん　つよいね▼
+わたしも　ちから　たくわえたし
+ここも　あきてきたから▽
 そろそろ　おでかけしようかな……</language>
 		<language name="JPN_KANJI" width="256">少女『アハハハハ
-おねえちゃん　つよいね▼
-ちからも　たくわえたし
-ここも　あきてきたし▽
+おにいちゃん　つよいね▼
+わたしも　ちからも　たくわえたし
+ここも　あきてきたから▽
 そろそろ　おでかけしようかな……</language>
 	</row>
 	<row id="pw_event3_hero_1">

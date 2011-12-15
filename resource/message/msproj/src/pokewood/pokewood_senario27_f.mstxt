@@ -607,27 +607,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『なんで　こんな……▼
+			<Text>モニカ『なんで　こんな……
 なんで　わたしが　こんな　ことに！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T08:02:52" />
+				Time="2011-12-15T12:16:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T08:02:52" />
+				Time="2011-12-15T12:16:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『何で　こんな……▼
+			<Text>モニカ『何で　こんな……
 なんで　私が　こんな　ことに！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T08:02:52" />
+				Time="2011-12-15T12:16:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T08:02:52" />
+				Time="2011-12-15T12:16:53" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1682,7 +1682,7 @@
 ……それでも　おねえちゃんの
 いかりは　おさまらず▽
 せかいじゅうで　あばれまわった……▼
-……じたいを　おもく　みた　かっこくは
+……じたいを　おもく　みた　くにぐには
 おねえちゃんを　たおそうとしたけれど▽
 かなう　ものは　いなかった……▼
 けっきょく……
@@ -1690,11 +1690,11 @@
 せかいは　ほろんで　しまったの……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:42" />
+				Time="2011-12-15T09:38:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:42" />
+				Time="2011-12-15T09:38:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1961,7 +1961,7 @@
 			Language="JPN">
 			<Text>……おねえちゃんの　ちからに
 たえきれず　アタシは　たおれた……▼
-きずついた　アタシを　みて
+きずつき　たおれた　アタシを　みて
 なきじゃくる　おねえちゃん……▼
 その　なみだが　あめのように
 やさしく　アタシを　つつむ……▼
@@ -1969,29 +1969,29 @@
 アタシは　ゆっくり　めを　とじた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T05:44:05" />
+				Time="2011-12-15T09:38:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T05:44:05" />
+				Time="2011-12-15T09:38:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>……お姉ちゃんの　力に
 耐え切れず　アタシは　倒れた……▼
-傷ついた　アタシを　みて
+傷つき　倒れた　アタシを　みて
 泣きじゃくる　おねえちゃん……▼
-その　涙が　雨のように
+その涙が　雨のように
 優しく　アタシを　包む……▼
 それは　とても　心地良くて
 アタシは　ゆっくり　目を　閉じた……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T05:44:05" />
+				Time="2011-12-15T09:38:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T05:44:05" />
+				Time="2011-12-15T09:38:17" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2000,29 +2000,29 @@
 			Language="JPN">
 			<Text>モニカ『キャッ！　あつつっ！！
 だれ！？　イタズラするのはっ！！▽
-ストッキングが　こげちゃうでしょ！！
+ストッキングが　コゲちゃうでしょ！！▽
 コレ　おろしたてなんだからね！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T07:29:17" />
+				Time="2011-12-15T09:32:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T07:29:17" />
+				Time="2011-12-15T09:32:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『キャッ！　熱つっ！！
 だれ！？　イタズラするのはっ！！▽
-ストッキングが　こげちゃうでしょ！！
+ストッキングが　コゲちゃうでしょ！！▽
 コレ　おろしたてなんだからね！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T07:29:17" />
+				Time="2011-12-15T09:32:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T07:29:17" />
+				Time="2011-12-15T09:32:11" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2030,28 +2030,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『そんな……
-アタシの　ポケモンの▽
+いまのは　アタシの　ポケモンの▽
 とっておきの　わざ　なのに……　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T06:41:13" />
+				Time="2011-12-15T09:38:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T06:41:13" />
+				Time="2011-12-15T09:38:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『そんな……
-アタシの　ポケモンの▽
+今のは　アタシの　ポケモンの▽
 とっておきの　わざ　なのに……　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T06:41:13" />
+				Time="2011-12-15T09:38:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T06:41:13" />
+				Time="2011-12-15T09:38:17" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2059,34 +2059,38 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>グアイ『なんて　ことだ……
-でんせつ　とも　いわれる　わざを▽
+ダメージは　あるようだが▽
+からだは　きずついて　いない……▼　
+でんせつ　とも　いわれる　わざを
 くらっていながら　ストッキングが▽
 コゲる　ていど　とは……▼
 きけんだ……
 かのじょは　きけんすぎる……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T07:29:17" />
+				Time="2011-12-15T09:32:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T07:29:17" />
+				Time="2011-12-15T09:32:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>グアイ『何てことだ……
-伝説とも　いわれる　わざを▽
+			<Text>グアイ『何て　ことだ……
+ダメージは　あるようだが▽
+体は　傷ついて　いない……▼
+伝説とも　いわれる　わざを
 くらっていながら　ストッキングが▽
 コゲる　程度とは……▼
 危険だ……
 彼女の　存在は　危険すぎる……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T07:29:17" />
+				Time="2011-12-15T09:32:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T07:29:17" />
+				Time="2011-12-15T09:32:11" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2094,30 +2098,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>モニカ『キャッ！　かゆいっ！！
-だれ？　イタズラするのはっ！！▽
-ストッキングが　やぶけちゃうでしょ！！
+だれ！？　イタズラするのはっ！！▽
+ストッキングが　やぶけちゃうでしょ！！▽
 コレ　おろしたてなんだからね！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T07:29:17" />
+				Time="2011-12-15T09:32:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T07:29:17" />
+				Time="2011-12-15T09:32:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『キャッ！　かゆいっ！！
-だれ？　イタズラするのはっ！！▽
-ストッキングが　やぶけちゃうでしょ！！
+だれ！？　イタズラするのはっ！！▽
+ストッキングが　破けちゃうでしょ！！▽
 コレ　おろしたてなんだからね！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T07:29:17" />
+				Time="2011-12-15T09:32:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T07:29:17" />
+				Time="2011-12-15T09:32:11" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2125,28 +2129,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『そんな……
-アタシの　ポケモンの▽
+いまのは　アタシの　ポケモンの▽
 とっておきの　わざ　なのに……　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T06:41:13" />
+				Time="2011-12-15T09:38:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T06:41:13" />
+				Time="2011-12-15T09:38:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『そんな……
-アタシの　ポケモンの▽
+今のは　アタシの　ポケモンの▽
 とっておきの　わざ　なのに……　</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T06:41:13" />
+				Time="2011-12-15T09:38:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T06:41:13" />
+				Time="2011-12-15T09:38:17" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2154,34 +2158,137 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>グアイ『なんて　ことだ……
-でんせつ　とも　いわれる　わざを▽
+ダメージは　あるようだが▽
+からだは　きずついて　いない……▼
+でんせつ　とも　いわれる　わざを
 くらっていながら　ストッキングが▽
 でんせん　する　ていど　とは……▼
 きけんだ……
 かのじょは　きけんすぎる……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T07:29:17" />
+				Time="2011-12-15T09:48:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T07:29:17" />
+				Time="2011-12-15T09:48:29" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>グアイ『何てことだ……
-伝説とも　いわれる　わざを▽
+			<Text>グアイ『何て　ことだ……
+ダメージは　あるようだが▽
+体は　傷ついて　いない……▼
+伝説とも　いわれる　わざを
 くらっていながら　ストッキングが▽
 伝線する　程度とは……▼
 危険だ……
 彼女の　存在は　危険すぎる……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T07:29:17" />
+				Time="2011-12-15T09:32:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T07:29:17" />
+				Time="2011-12-15T09:32:11" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event8_enemy_0">
+		<LanguageCell
+			Language="JPN">
+			<Text>モニカ『キャッ！　つめたいっ！！
+だれ！？　イタズラするのはっ！！▽
+あしが　しもやけに　なるでしょ！！▽
+このストッキング　うすいんだから！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-15T09:32:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-15T09:32:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>モニカ『キャッ！　冷たいっ！！
+だれ！？　イタズラするのはっ！！▽
+足が　しもやけに　なるでしょ！！▽
+このストッキング　薄いんだから！！</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-15T09:32:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-15T09:32:11" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event8_hero_1">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『そんな……
+いまのは　アタシの　ポケモンの▽
+とっておきの　わざ　なのに……　</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-15T09:38:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-15T09:38:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『そんな……
+今のは　アタシの　ポケモンの▽
+とっておきの　わざ　なのに……　</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-15T09:38:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-15T09:38:17" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event8_enemy_1">
+		<LanguageCell
+			Language="JPN">
+			<Text>グアイ『なんて　ことだ……
+ダメージは　あるようだが▽
+からだは　きずついて　いない……▼
+でんせつ　とも　いわれる　わざを
+くらっていながら　ストッキングの▽
+あつみを　きにする　よゆう……▼
+きけんだ……
+かのじょは　きけんすぎる……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-15T09:48:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-15T09:48:29" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>グアイ『何て　ことだ……
+ダメージは　あるようだが▽
+体は　傷ついて　いない……▼
+伝説とも　いわれる　わざを
+くらっていながら　ストッキングの▽
+デニール数を　気にする　余裕……▼
+危険だ……
+彼女の　存在は　危険すぎる……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-15T09:32:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-15T09:32:11" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

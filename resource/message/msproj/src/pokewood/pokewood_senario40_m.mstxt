@@ -86,16 +86,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『ファファファ……▼
-せまい　地上など　我らの
+せまい地上など　我らの
 決戦の　場には　向かぬ……▽
 さあ！　ついてくるが　いいっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T09:23:11" />
+				Time="2011-12-15T09:38:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T09:23:11" />
+				Time="2011-12-15T09:38:25" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2095,17 +2095,17 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]キッド『そんな　オヤジが
-悪の　怪人に　なってる　なんて▽
-そんな　話　できすぎだよな……▼
+悪の怪人に　なってる　なんて▽
+そんな話　できすぎだよな……▼
 すまなかった……　ハチクマン……
 もう　行ってくれよ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T05:49:10" />
+				Time="2011-12-15T09:55:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T05:49:10" />
+				Time="2011-12-15T09:55:42" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2337,15 +2337,15 @@
 ハチクマンの　言葉……
 そして　その正体……▽
 そう　すべては　夢……▼
-もしくは　[Name:PokemonNickname Idx="0" ]　少年の
-理想　なのかも　しれない……▼</Text>
+もしくは　[Name:TrainerName Idx="1" ]少年の
+理想なのかも　しれない……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:11:03" />
+				Time="2011-12-15T09:55:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:11:03" />
+				Time="2011-12-15T09:55:42" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

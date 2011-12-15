@@ -859,26 +859,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>しょうじょ『うふふふ！
-おねえちゃん　おとめねー</Text>
+おねえちゃん　おとめチックねー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:42" />
+				Time="2011-12-15T10:33:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:42" />
+				Time="2011-12-15T10:33:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>少女『うふふふ！
-おねえちゃん　おとめねー</Text>
+おねえちゃん　おとめチックねー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:42" />
+				Time="2011-12-15T10:33:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:42" />
+				Time="2011-12-15T10:33:58" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -968,32 +968,32 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>しょうじょ『アハハハハ
-おねえちゃん　つよいね▼
-ちからも　たくわえたし
-ここも　あきてきたし▽
+おにいちゃん　つよいね▼
+わたしも　ちから　たくわえたし
+ここも　あきてきたから▽
 そろそろ　おでかけしようかな……</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-14T19:35:05" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-15T10:33:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-14T19:35:05" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-15T10:33:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>少女『アハハハハ
-おねえちゃん　つよいね▼
-ちからも　たくわえたし
-ここも　あきてきたし▽
+おにいちゃん　つよいね▼
+わたしも　ちからも　たくわえたし
+ここも　あきてきたから▽
 そろそろ　おでかけしようかな……</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-14T19:35:05" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-15T10:33:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-14T19:35:05" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-15T10:33:58" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
