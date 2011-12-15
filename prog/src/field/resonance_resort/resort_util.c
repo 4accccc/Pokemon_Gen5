@@ -680,7 +680,7 @@ BOOL RESORT_UTIL_CheckSpot( u16 want_spot, RESORT_RESIDENT_DATA *p_resident, RES
   u32 kind = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
   u32 shop = RESORT_BINARY_SHOP_DATA_GetData( cp_binary_shop_data, RESORT_BINARY_SHOP_PARAM_SHOP );
 
-  BOOL is_good = FALSE;
+  BOOL is_ok = FALSE;
   u32 ret_grade = 0;
   u32 ret_index = 0;
 
@@ -692,7 +692,7 @@ BOOL RESORT_UTIL_CheckSpot( u16 want_spot, RESORT_RESIDENT_DATA *p_resident, RES
     u16 data = RESORT_BINARY_SPOT_GetData( p_spot, want_spot, RESORT_BINARY_SPOT_PARAM_DATA + i*RESORT_BINARY_SPOT_ANSWER_NUM );
     u16 grade = RESORT_BINARY_SPOT_GetData( p_spot, want_spot, RESORT_BINARY_SPOT_PARAM_GRADE + i*RESORT_BINARY_SPOT_ANSWER_NUM );
 	
-    is_good = FALSE;
+    BOOL is_good = FALSE;
 	  //条件にあうかチェック
 	  switch( type )
 	  {
@@ -783,6 +783,9 @@ BOOL RESORT_UTIL_CheckSpot( u16 want_spot, RESORT_RESIDENT_DATA *p_resident, RES
 
     if( is_good )
     {
+      //一回でもOKならば当選
+      is_ok = TRUE;
+
       //もし評価最高なら
       if( grade == RESORT_GRADE_TYPE_EXCELLENT )
       {
@@ -802,7 +805,7 @@ BOOL RESORT_UTIL_CheckSpot( u16 want_spot, RESORT_RESIDENT_DATA *p_resident, RES
     *p_index = ret_index;
   }
 
-  return is_good;
+  return is_ok;
 }
 //----------------------------------------------------------------------------
 /**
