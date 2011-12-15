@@ -522,8 +522,8 @@
 助けようと　思ってくれてる！？</language>
 	</row>
 	<row id="pw_event3_react_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『しかたないからね</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『仕方ないからね</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『しかたないからね……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『仕方ないからね……</language>
 	</row>
 	<row id="pw_event3_react_enemy_0">
 		<language name="JPN" width="256">モニカ『なによ　しかたないって……▼
@@ -770,10 +770,10 @@
 	<row id="pw_event7_enemy_0">
 		<language name="JPN" width="256">モニカ『[1:00:トレーナー名:1]……▼
 ウウ……　いたいよ……▼
-ウッ……</language>
+……　……　……　……</language>
 		<language name="JPN_KANJI" width="256">モニカ『[1:00:トレーナー名:1]……▼
 ウウ……　痛いよ……▼
-ウッ……</language>
+……　……　……　……</language>
 	</row>
 	<row id="pw_event7_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ごめん……
@@ -830,12 +830,12 @@
 うばって　いきます……</language>
 	</row>
 	<row id="pw_event7_enemy_3">
-		<language name="JPN" width="256">グアイ『キミは……▼
+		<language name="JPN" width="256">グアイ『キミ……▼
 ひみつけいさつ　である　このわたしを
 おどすつもり　かね……
 </language>
-		<language name="JPN_KANJI" width="256">グアイ『キミは……▼
-秘密警察　である　この私を
+		<language name="JPN_KANJI" width="256">グアイ『キミ……▼
+秘密警察である　この私を
 おどすつもり　かね……
 </language>
 	</row>
@@ -1003,17 +1003,17 @@
 	</row>
 	<row id="pw_event8_enemy_6">
 		<language name="JPN" width="256">モニカ『ウフフ……▼
-だって　わたし　[1:00:トレーナー名:1]にさ
+わたしは　[1:00:トレーナー名:1]にさ
 かわいいね　って　いって　ほしくて▽
-アレ　きるまで　ダイエットも　したし▽
+アレ　きるまで　ダイエットも　したり▽
 かなり　がんばったんだよ▽
-むしされた　ままじゃ　さびしいじゃん</language>
+むしされた　ままじゃ　くやしいじゃん</language>
 		<language name="JPN_KANJI" width="256">モニカ『ウフフ……▼
-だって　私は　　[1:00:トレーナー名:1]にさ
+私は　　[1:00:トレーナー名:1]にさ
 可愛いね　って　言って欲しくて▽
-アレ　着るまで　ダイエットも　したし
+アレ　着るまで　ダイエットも　したり▽
 かなり　頑張ったんだよ▽
-無視された　ままじゃ　さびしいじゃん</language>
+無視された　ままじゃ　くやしいじゃん</language>
 	</row>
 	<row id="pw_event8_hero_7">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ごめん……</language>

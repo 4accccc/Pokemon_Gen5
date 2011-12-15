@@ -438,10 +438,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ああ……　そっか……
-そういや　そうだったよな……</Text>
+そういや　あんときも……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T09:58:55" />
+				Time="2011-12-15T03:39:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -450,10 +450,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ああ……　そっか……
-そういや　そうだったよな……</Text>
+そういや　あんときも……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-07T09:58:46" />
+				Time="2011-12-15T03:39:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -490,10 +490,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ふう……　ムシムシして　あつい……
-ちょっと　うわぎ　ぬいで　いい？</Text>
+ちょっと　エプロン　ぬいで　いい？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-10T06:02:11" />
+				Time="2011-12-14T07:08:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -502,10 +502,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ふう……　ムシムシして　あつい……
-ちょっと　上着　脱いで　いい？</Text>
+ちょっと　エプロン　脱いで　いい？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-10T06:02:22" />
+				Time="2011-12-14T07:08:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -892,10 +892,10 @@ OＬ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ねえねえ　いいかな……？
-ちょっと　こっち　むいて……</Text>
+ちょっと　こっち　おいでよ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-12T09:55:02" />
+				Time="2011-12-14T12:17:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -904,10 +904,10 @@ OＬ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ねえねえ　いいかな……？
-ちょっと　こっち　向いて……</Text>
+ちょっと　こっち　おいでよ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-12T09:55:10" />
+				Time="2011-12-14T12:17:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -943,10 +943,10 @@ OＬ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>ホラ……　さわってみて……
-うごいてるでしょう……　わかる？</Text>
+うごいてるでしょ……　わかる？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-13T02:50:07" />
+				Time="2011-12-15T02:47:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -955,10 +955,10 @@ OＬ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ホラ……　触ってみて……
-動いてるでしょう……　わかる？</Text>
+動いてるでしょ……　わかる？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-13T02:50:04" />
+				Time="2011-12-15T02:47:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1097,10 +1097,10 @@ OＬ</Comment>
 		<LanguageCell
 			Language="JPN">
 			<Text>すきだよ　って……　ウソだったんだ！
-……じゃ　なかったんだ！　グスッ！</Text>
+……じゃ　なかったんだ！　グスッ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-09T03:16:33" />
+				Time="2011-12-14T05:12:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1109,10 +1109,10 @@ OＬ</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>好きだよ　って……　ウソだったんだ！
-……じゃ　なかったんだ！　グスッ！</Text>
+……じゃ　なかったんだ！　グスッ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-09T03:16:43" />
+				Time="2011-12-14T05:12:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
