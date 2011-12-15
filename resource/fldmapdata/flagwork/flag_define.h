@@ -2333,6 +2333,7 @@
 #define SYS_FLAG_FES_OPEN_23              2551 /* 0x09f7 フェスミッションのオープンフラグその23 */
 #define SYS_FLAG_ENDING                   2552 /* 0x09f8 エンディングスクリプトの初期化フラグ */
 #define SYS_FLAG_BGM_C08_SILENT           2553 /* 0x09f9 BGM変更フラグ：無音ソウリュウシティ */
+#define SYS_FLAG_BGM_D27R0601_PLAZMA      2554 /* 0x09fa BGM変更フラグ：プラズマ団ゲーチス部屋 */
 
 #define SYS_FLAG_AREA_END                 2639 /* 0x0a4f  */
 

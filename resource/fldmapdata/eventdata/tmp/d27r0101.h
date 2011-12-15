@@ -39,6 +39,10 @@
 #define D27R0101_SWPLAZMAM_END_01         20
 #define D27R0101_SWPLAZMAM_END_02         21
 #define D27R0101_STOPPER_01               22
+#define D27R0101_SWPLAZMAM_03_01          23
+#define D27R0101_SWPLAZMAM_03_02          24
+#define D27R0101_SWPLAZMAM_03_03          25
+#define D27R0101_SWPLAZMAM_03_04          26
 
 #endif //ZONE_D27R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d27r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

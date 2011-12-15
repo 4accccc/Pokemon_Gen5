@@ -53,6 +53,10 @@ _EVENT_DATA    ev_scene_d27r0101_secondbtl_01
 _EVENT_DATA    ev_d27r0101_stopper_01
 _EVENT_DATA    ev_d27r0101_swplazmam_end_01
 _EVENT_DATA    ev_d27r0101_swplazmam_end_02
+_EVENT_DATA    ev_d27r0101_swplazmam_03_01
+_EVENT_DATA    ev_d27r0101_swplazmam_03_02
+_EVENT_DATA    ev_d27r0101_swplazmam_03_03
+_EVENT_DATA    ev_d27r0101_swplazmam_03_04
 _EVENT_DATA_END
 
 //バージョン取得
@@ -119,6 +123,11 @@ INIT_EVENT_START	ev_init_d27r0101
     _OBJ_POS_CHANGE(D27R0101_SWPLAZMAM_10,14,0,28,DIR_LEFT)  //その他
     _OBJ_POS_CHANGE(D27R0101_SWPLAZMAM_11,13,0,26,DIR_DOWN)  //その他
     _OBJ_POS_CHANGE(D27R0101_SWPLAZMAW_02,14,0,27,DIR_LEFT)  //その他
+  ENDIF
+  
+  //乗船3回目クリア前
+  IF $WK_SCENE_D27R0501_SWSAGE7_01 == 2 && $WK_SCENE_D27R0601_SWSAGE1_01 > 1 THEN
+    _OBJ_POS_CHANGE(D27R0101_SWRIVAL_01,27,0,33,DIR_RIGHT)
   ENDIF
 
   // 出口位置変更
@@ -214,11 +223,16 @@ EVENT_START	ev_scene_d27r0101_firstbtl_01
   _OBJ_ANIME( D27R0101_SWPLAZMAM_01, anm_swplazma_firstcome_u_01 )
   _OBJ_ANIME( D27R0101_SWPLAZMAM_02, anm_swplazma_firstcome_u_02 )
   _OBJ_ANIME( D27R0101_SWPLAZMAM_04, anm_swplazma_firstcome_u_02 )
+  
   _TIME_WAIT( 16 )
   
   _OBJ_ANIME( D27R0101_SWRIVAL_01, anm_staystep_u )
   _OBJ_ANIME( D27R0101_SWLEADER1_01, anm_staystep_u )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  
+  _OBJ_ANIME( D27R0101_SWPLAZMAM_03, anm_swplazma_firstcome_u_01 )
+  _OBJ_ANIME( D27R0101_SWPLAZMAM_05, anm_swplazma_firstcome_u_01 )
+  _OBJ_ANIME( D27R0101_SWPLAZMAW_01, anm_swplazma_firstcome_u_02 )
   _OBJ_ANIME_WAIT()
   
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
@@ -226,11 +240,6 @@ EVENT_START	ev_scene_d27r0101_firstbtl_01
   //プラズマ団員：まっ　どうでも
   _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swplazmam1_01 , D27R0101_SWPLAZMAM_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
-  
-  _OBJ_ANIME( D27R0101_SWPLAZMAM_03, anm_swplazma_firstcome_u_01 )
-  _OBJ_ANIME( D27R0101_SWPLAZMAM_05, anm_swplazma_firstcome_u_01 )
-  _OBJ_ANIME( D27R0101_SWPLAZMAW_01, anm_swplazma_firstcome_u_02 )
-  _OBJ_ANIME_WAIT()
   
   //ライバル名格納
   _RIVAL_NAME( 1 )
@@ -257,20 +266,21 @@ EVENT_START	ev_scene_d27r0101_firstbtl_01
   _OBJ_ANIME( D27R0101_SWPLAZMAM_07, anm_swplazma_firstcome_d_01 )
   _OBJ_ANIME( D27R0101_SWPLAZMAM_08, anm_swplazma_firstcome_d_02 )
   _OBJ_ANIME( D27R0101_SWPLAZMAM_10, anm_swplazma_firstcome_d_02 )
+  
   _TIME_WAIT( 16 )
+  
   _OBJ_ANIME( D27R0101_SWRIVAL_01, anm_staystep_d )
   _OBJ_ANIME( D27R0101_SWLEADER1_01, anm_staystep_d )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
-  _OBJ_ANIME_WAIT()
-  
-  //プラズマ団員：そう！　だから
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swplazmam2_04 , D27R0101_SWPLAZMAM_07 ,POS_DEFAULT )
-  _MSGWIN_CLOSE()
   
   _OBJ_ANIME( D27R0101_SWPLAZMAM_09, anm_swplazma_firstcome_d_01 )
   _OBJ_ANIME( D27R0101_SWPLAZMAM_11, anm_swplazma_firstcome_d_01 )
   _OBJ_ANIME( D27R0101_SWPLAZMAW_02, anm_swplazma_firstcome_d_02 )
   _OBJ_ANIME_WAIT()
+  
+  //プラズマ団員：そう！　だから
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swplazmam2_04 , D27R0101_SWPLAZMAM_07 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
   
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   
@@ -436,8 +446,54 @@ EVENT_START	ev_d27r0101_swrival_01
   _RIVAL_NAME(1)
   _PLAYER_NAME(0)
   
-  //タッグ戦条件を満たしていない
-  IF $WK_SCENE_D27R0101_FIRST_01 == 2 THEN
+  //乗船三回目
+  IF $WK_SCENE_D27R0501_SWSAGE7_01 == 2 && $WK_SCENE_D27R0601_SWSAGE1_01 == 2 && FLAG_OFF( FE_D27R0101_SWRIVAL_3RD_TALK ) THEN
+    //主人公名代入
+    _PLAYER_NAME( 0 )
+    //ライバル名代入
+    _RIVAL_NAME( 1 )
+    _TALK_OBJ_START()
+    
+    //ライバル：先に行け！
+    _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swrival_03_01 , D27R0101_SWRIVAL_01 ,POS_DEFAULT )
+    
+    //主人公方向取得
+    _PLAYER_DIR_GET( LWK_DIR )
+    
+    //話しかけ方向で処理を分岐
+    IF $LWK_DIR == DIR_LEFT THEN
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+      
+    ELSE
+      _AB_KEYWAIT_MARK()
+      _MSGWIN_CLOSE()
+      
+      //アニメ：ライバル右に向きなおす
+      _OBJ_ANIME( D27R0101_SWRIVAL_01, anm_staystep_r )
+      _OBJ_ANIME_WAIT()
+    ENDIF
+    
+    //========================================//
+    //搭乗三回目初回会話終了
+    _FLAG_SET( FE_D27R0101_SWRIVAL_3RD_TALK )
+    //========================================//
+    
+  //乗船三回目（二回目話しかけ）
+  ELSIF $WK_SCENE_D27R0501_SWSAGE7_01 == 2 && $WK_SCENE_D27R0601_SWSAGE1_01 == 2 && FLAG_ON( FE_D27R0101_SWRIVAL_3RD_TALK ) THEN
+    //主人公名代入
+    _PLAYER_NAME( 0 )
+    //ライバル名代入
+    _RIVAL_NAME( 1 )
+    _TALK_START_SE_PLAY()
+    
+    //オマエら！
+    _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swrival_03_02 , D27R0101_SWRIVAL_01 ,POS_DEFAULT )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    
+  //乗船一回目タッグ戦条件を満たしていない
+  ELSIF $WK_SCENE_D27R0101_FIRST_01 == 2 THEN
     _TALK_START_SE_PLAY()
     _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swrival_04 , D27R0101_SWRIVAL_01 ,POS_DEFAULT )
     _LAST_KEYWAIT()
@@ -484,14 +540,8 @@ EVENT_START	ev_d27r0101_swrival_01
     //結果チェック
     _CALL ev_battle_check
     
-    _PLAYER_NAME(0)
-    
     _RIVAL_NAME(1)
     _PLAYER_NAME(0)
-    
-    //戦闘後メッセージ
-    _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swrival_06 , D27R0101_SWRIVAL_01 ,POS_DEFAULT )
-    _MSGWIN_CLOSE()
     
     //CALL：乗船1回目終了イベント起動
     _CALL ev_d27r0101_first_end
@@ -529,7 +579,7 @@ EVENT_START	ev_d27r0101_swrival_01
     //主人公名代入
     _PLAYER_NAME( 0 )
     //ライバル名代入
-    _RIVAL_NAME( 0 )
+    _RIVAL_NAME( 1 )
     
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swrival_02_01 )
   
@@ -539,7 +589,7 @@ EVENT_START	ev_d27r0101_swrival_01
     //主人公名代入
     _PLAYER_NAME( 0 )
     //ライバル名代入
-    _RIVAL_NAME( 0 )
+    _RIVAL_NAME( 1 )
     
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swrival_02_02 )
   ENDIF
@@ -669,25 +719,17 @@ ev_d27r0101_first_end:
   _RIVAL_NAME(1)
   _PLAYER_NAME(0)
   
+  //ライバル：ほら！ぜんいん
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swrival_06 , D27R0101_SWRIVAL_01 ,POS_UL )
+  _MSGWIN_CLOSE()
+  
   //チェレン：左を向く
   _OBJ_ANIME( D27R0101_SWLEADER1_01 , anm_staystep_l )
   _OBJ_ANIME_WAIT()
 
-  //チェレン：さてと
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swleader1_06 , D27R0101_SWLEADER1_01 ,POS_DEFAULT )
+  //チェレン：そうだね
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swleader1_06 , D27R0101_SWLEADER1_01 ,POS_UR )
   _MSGWIN_CLOSE()
-  
-  //カメラ操作　アデク追従
-  _CAMERA_START()		//カメラ操作開始
-  _CAMERA_PURGE()		//カメラのバインドを解く
-  
-  _CAMERA_MOVE( 9688,0,970752,884736,0,1343488,104 )
-  
-  //アニメ：3人上に移動
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 13, 22, FORCE_TYPE_NPC, 8, DIR_UD)
-  _OBJ_ANIME_AUTO( D27R0101_SWRIVAL_01 , 12, 23, FORCE_TYPE_NPC, 8, DIR_UD)
-  _OBJ_ANIME_AUTO( D27R0101_SWLEADER1_01 , 14, 23, FORCE_TYPE_NPC, 8, DIR_UD)
-  _OBJ_ANIME_WAIT()
   
   //========================================//
   //ヴィオを表示
@@ -705,32 +747,42 @@ ev_d27r0101_first_end:
   
   //イベント曲再生
   _START_EVENT_BGM( SEQ_BGM_E_7_SAGE )
-  
-  //アニメ：ヴィオ1歩前へ
-  _OBJ_ANIME_AUTO( D27R0101_SWSAGE7_01 , 18, 16, FORCE_TYPE_NPC, 16, DIR_UD)
-  _OBJ_ANIME_WAIT()
-  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
-  
+ 
   //ヴィオ：なにごと　である？
   _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_01 , D27R0101_SWSAGE7_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
   
+  //アニメ：チェレン上に注目
+  _OBJ_ANIME( D27R0101_SWLEADER1_01 , anm_staystep_u )
   //アニメ：ヴィオ主人公に接近
-  _OBJ_ANIME_AUTO( D27R0101_SWSAGE7_01 , 13, 19, FORCE_TYPE_NPC, 8, DIR_UD)
+  _OBJ_ANIME_AUTO( D27R0101_SWSAGE7_01 , 13, 30, FORCE_TYPE_NPC, 8, DIR_UD)
+  
+  //カメラ操作　アデク追従
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラのバインドを解く
+  _CAMERA_MOVE( 9688,0,970752,884736,0,2068480,30 )
+  
+  //アニメ：プラズマ団したっぱのく
+  _OBJ_ANIME( D27R0101_SWPLAZMAM_03, anm_swplazma_yokeru_01 )
+  _OBJ_ANIME( D27R0101_SWPLAZMAM_11, anm_swplazma_yokeru_02 )
+  _TIME_WAIT( 10 )
+  _OBJ_ANIME( D27R0101_SWPLAZMAM_04, anm_staystep_r )
+  _OBJ_ANIME( D27R0101_SWPLAZMAM_10, anm_staystep_l )
+  _OBJ_ANIME( D27R0101_SWPLAZMAW_02, anm_staystep_l )
   _OBJ_ANIME_WAIT()
-  _OBJ_ANIME( D27R0101_SWSAGE7_01, anm_staystep_d )
-  _OBJ_ANIME_WAIT()
+  
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち  
   
   //アニメ：ヴィオ「！」「？」
   _OBJ_ANIME( D27R0101_SWSAGE7_01 , anm_swsage7_gyoe )
   _OBJ_ANIME_WAIT()
   
   //チェレン：やれやれ……
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swleader1_07 , D27R0101_SWLEADER1_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_swleader1_07 , D27R0101_SWLEADER1_01 ,POS_DR )
   _MSGWIN_CLOSE()
   
   //ヴィオ：ぐぬぬ
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02 , D27R0101_SWSAGE7_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_02 , D27R0101_SWSAGE7_01 ,POS_UR )
   _MSGWIN_CLOSE()
   
   //アニメ：ヴィオ・1歩上に移動してきょろきょろ
@@ -738,11 +790,14 @@ ev_d27r0101_first_end:
   _OBJ_ANIME_WAIT()
   
   //ヴィオ：おい！こいつらを
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_03 , D27R0101_SWSAGE7_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_sage7_03 , D27R0101_SWSAGE7_01 ,POS_UR )
   _MSGWIN_CLOSE()
   
   //イベント曲終了
   _END_EVENT_BGM()
+  
+  //自機にカメラを戻す
+  _CAMERA_DEF_MOVE (24)
   
   //ダークトリニティOBJ生成
   //アニメ：ダークトリニティ登場
@@ -754,11 +809,37 @@ ev_d27r0101_first_end:
   _OBJ_ANIME( D27R0101_NINJA_03 , anm_ninja_coming_01 )
   _OBJ_ANIME_WAIT()
   
+  //カメラ待ち
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+  _CAMERA_END()		//カメラ操作終了
+  
   //ダークトリニティ：ということだ
-  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_ninja_01 , D27R0101_NINJA_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d27r0101_ninja_01 , D27R0101_NINJA_01 ,POS_DL )
   _MSGWIN_CLOSE()
   
 _RET
+
+//--------------------------------------------------------------------
+//	したっぱ：どく
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swplazma_yokeru_01
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA AC_DIR_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	したっぱ：どく
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swplazma_yokeru_02
+  _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA AC_DIR_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //	ヴィオ：！？
@@ -928,6 +1009,48 @@ EVENT_END
 EVENT_START	ev_d27r0101_swplazmam1_02_02
 
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swplazmam2_02_02 )
+
+EVENT_END
+
+/************************************************************/
+/*					話しかけ：プラズマ団員03_01  						*/
+/************************************************************/
+EVENT_START	ev_d27r0101_swplazmam_03_01
+	
+	_TALK_START_SE_PLAY()
+	_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swplazmam1_03_01)
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+EVENT_END
+
+/************************************************************/
+/*					話しかけ：プラズマ団員03_02  						*/
+/************************************************************/
+EVENT_START	ev_d27r0101_swplazmam_03_02
+	
+	_TALK_START_SE_PLAY()
+	_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swplazmam2_03_01)
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+
+EVENT_END
+
+/************************************************************/
+/*					話しかけ：プラズマ団員03_03  						*/
+/************************************************************/
+EVENT_START	ev_d27r0101_swplazmam_03_03
+
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swplazmam3_03_01 )
+
+EVENT_END
+
+/************************************************************/
+/*					話しかけ：プラズマ団員03_04  						*/
+/************************************************************/
+EVENT_START	ev_d27r0101_swplazmam_03_04
+
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d27r0101_swplazmam4_03_01 )
 
 EVENT_END
 
@@ -1337,28 +1460,39 @@ ev_battle_check:
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )
   
   IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+  
+    //搭乗1回目チェレン戦後ならば
+    IF $WK_SCENE_D27R0101_FIRST_01 == 2 THEN
+    
+       //手持ち全滅チェック
+       _CALL ev_kaihuku_check
+    ENDIF
     
     //搭乗1回目ライバル戦後ならば
     IF $WK_SCENE_D27R0101_FIRST_01 == 3 THEN
+    
+        //手持ち全滅チェック
+       _CALL ev_kaihuku_check
       
-      //プラズマ団員1の動作モデルを非表示に
-      _OBJ_DEL( D27R0101_SWPLAZMAM_01 )
-      _OBJ_DEL( D27R0101_SWPLAZMAM_02 )
-      _OBJ_DEL( D27R0101_SWPLAZMAM_03 )
-      _OBJ_DEL( D27R0101_SWPLAZMAM_04 )
-      _OBJ_DEL( D27R0101_SWPLAZMAM_05 )
-      _OBJ_DEL( D27R0101_SWPLAZMAW_01 )
-      _OBJ_DEL( D27R0101_SWPLAZMAM_07 )
-      _OBJ_DEL( D27R0101_SWPLAZMAM_08 )
-      _OBJ_DEL( D27R0101_SWPLAZMAM_09 )
-      _OBJ_DEL( D27R0101_SWPLAZMAM_10 )
-      _OBJ_DEL( D27R0101_SWPLAZMAM_11 )
-      _OBJ_DEL( D27R0101_SWPLAZMAW_02 )
+      //最初に戦ったしたっぱの位置を調整
+      _OBJ_POS_CHANGE(D27R0101_SWPLAZMAM_01,10,0,30,DIR_RIGHT) //初回戦う人
+      _OBJ_POS_CHANGE(D27R0101_SWPLAZMAM_02,10,0,32,DIR_RIGHT) //初回戦う人
+      
+      _OBJ_POS_CHANGE(D27R0101_SWPLAZMAM_03,12,0,27,DIR_DOWN) //チェレンマルチバトルの人
+      _OBJ_POS_CHANGE(D27R0101_SWPLAZMAM_04,11,0,27,DIR_DOWN) //チェレンマルチバトルの人
+      _OBJ_POS_CHANGE(D27R0101_SWPLAZMAM_05,13,0,35,DIR_UP) //ライバルマルチバトルの人
+      _OBJ_POS_CHANGE(D27R0101_SWPLAZMAW_01,12,0,35,DIR_UP) //ライバルマルチバトルの人
+      _OBJ_POS_CHANGE(D27R0101_SWPLAZMAM_07,14,0,36,DIR_UP)  //その他
+      _OBJ_POS_CHANGE(D27R0101_SWPLAZMAM_08,11,0,36,DIR_UP)  //その他
+      _OBJ_POS_CHANGE(D27R0101_SWPLAZMAM_09,15,0,35,DIR_UP)  //その他
+      _OBJ_POS_CHANGE(D27R0101_SWPLAZMAM_10,14,0,28,DIR_DOWN)  //その他
+      _OBJ_POS_CHANGE(D27R0101_SWPLAZMAM_11,13,0,26,DIR_DOWN)  //その他
+      _OBJ_POS_CHANGE(D27R0101_SWPLAZMAW_02,14,0,27,DIR_DOWN)  //その他
       
       //ライバル・チェレン・主人公の位置を調整
-      _OBJ_POS_CHANGE( D27R0101_SWRIVAL_01, 12, 0, 32, DIR_DOWN )
-      _OBJ_POS_CHANGE( D27R0101_SWLEADER1_01, 14, 0, 32, DIR_DOWN )
-      _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 13, 0, 33, DIR_DOWN )
+      _OBJ_POS_CHANGE( D27R0101_SWRIVAL_01, 12, 0, 32, DIR_UP )
+      _OBJ_POS_CHANGE( D27R0101_SWLEADER1_01, 14, 0, 32, DIR_UP )
+      _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 13, 0, 33, DIR_UP )
       
       //========================================//
       //プラズマ船員1を非表示に
@@ -1372,6 +1506,16 @@ ev_battle_check:
   ENDIF
 _RET
 
+/************************************************************/
+/*					CALL：生存チェック		*/
+/************************************************************/
+ev_kaihuku_check:
+  //手持ちが0匹だったら
+  _GET_PARTY_POKE_COUNT( SCWK_TEMP0, POKECOUNT_MODE_BATTLE_ENABLE )
+  IF $SCWK_TEMP0 == 0 THEN
+    _TEMOTI_POKEMON_KAIFUKU() //回復処理
+  ENDIF
+_RET
 //--------------------------------------------------------------------
 //	☆共通処理：1歩歩く
 //--------------------------------------------------------------------
