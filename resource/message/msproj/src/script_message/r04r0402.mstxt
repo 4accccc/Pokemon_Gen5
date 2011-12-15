@@ -30,12 +30,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♂：Black2ver
 ・アイテム入手処理
 　No158「オボンのみ」×３</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T09:24:06" />
+				Time="2011-12-15T06:17:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -57,12 +57,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いろんな　ところに　いって
-いろんな　ひとと　はなす▽
+			<Text>いろんな　ひとと　はなす！
 そうすりゃ　いいこと　あるヨ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:29:32" />
+				Time="2011-12-15T06:17:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -70,12 +69,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いろんな　ところに　行って
-いろんな　人と　話す▽
+			<Text>いろんな　人と　話す！
 そうすりゃ　いいこと　あるヨ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:29:28" />
+				Time="2011-12-15T06:17:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -83,11 +81,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♂：Black2ver
 ・アイテム入手後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T09:22:25" />
+				Time="2011-12-15T06:17:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

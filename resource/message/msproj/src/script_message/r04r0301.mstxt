@@ -34,11 +34,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver</Comment>
+			<Comment>♂：Black2ver</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T07:04:25" />
+				Time="2011-12-15T06:15:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -135,14 +134,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♀：Black2ver
 ・ポケモン交換前
 ・はい/いいえの選択肢表示
 　はい→ポケモン選択画面
 　いいえ→girl2_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:58:41" />
+				Time="2011-12-15T06:15:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -192,13 +191,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♀：Black2ver
 ・はい選択
 　ポケモン選択画面で条件を満たすポケモンを選択
 　メッセージ表示後に、交換デモ開始</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:58:41" />
+				Time="2011-12-15T06:15:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -248,11 +247,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♀：Black2ver
 ・交換デモ終了後、以下のメッセージを自動表示</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:58:41" />
+				Time="2011-12-15T06:15:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -298,11 +297,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♀：Black2ver
 ・ポケモン交換</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:58:41" />
+				Time="2011-12-15T06:15:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -348,12 +347,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♀：Black2ver
 ・いいえ選択
 　もしくはポケモン選択画面で「やめる」を選択</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:58:41" />
+				Time="2011-12-15T06:15:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -375,12 +374,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname ]！
-[Name:PokemonNickname ]！▽
+			<Text>[Name:PokemonNickname ]！　[Name:PokemonNickname ]！
 あなたが　つけた　ニックネーム！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:58:41" />
+				Time="2011-12-15T06:15:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -388,12 +386,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname ]！
-[Name:PokemonNickname ]！▽
+			<Text>[Name:PokemonNickname ]！　[Name:PokemonNickname ]！
 あなたが　つけた　ニックネーム！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:58:41" />
+				Time="2011-12-15T06:15:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -401,12 +398,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♀：Black2ver
 ・ポケモン交換後
 ※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T06:58:41" />
+				Time="2011-12-15T06:15:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

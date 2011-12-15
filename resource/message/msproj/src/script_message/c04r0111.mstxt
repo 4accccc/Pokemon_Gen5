@@ -937,10 +937,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>WiFi</Comment>
+			<Comment>Ｗｉ－Ｆｉ
+</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T06:49:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -970,8 +971,8 @@
 			<Text>今回の　成績を　Ｗｉ－Ｆｉ
 コネクションに　送りますか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T06:49:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -979,10 +980,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>WiFi</Comment>
+			<Comment>Ｗｉ－Ｆｉ
+</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T06:49:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2478,10 +2480,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポリスとしての　トレーニングも
-かねて　挑戦　してるのだ</Text>
+かねて　挑戦してるのだ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T06:50:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3295,11 +3297,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダラダラと　うんてんしてる　より
+			<Text>ダラダラと　うんてん　してるより
 しょうぶで　ドキドキと　したいねぇ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T06:53:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3307,11 +3309,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダラダラと　運転してる　より
+			<Text>ダラダラと　運転してるより
 勝負で　ドキドキと　したいねぇ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T06:53:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6161,10 +6163,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つうしん　たいきちゅう…</Text>
+			<Text>つうしん　たいきちゅう……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T06:54:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6172,10 +6174,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>通信待機中…</Text>
+			<Text>通信待機中……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T06:54:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

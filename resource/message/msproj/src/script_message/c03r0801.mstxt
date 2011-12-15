@@ -1031,11 +1031,11 @@
 			<Text>ぼくはね　海辺の町に
 旅行に行くと▽
 いつも　遊覧船に　乗るんだ▼
-歩いた場所を　海から見直して
+歩いた場所を　海から　見直して
 しっかり　とらえなおすのさ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T07:41:56" />
+				Time="2011-12-15T05:41:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1147,11 +1147,11 @@
 			<Text>シンオウちほうの　ポケモンが
 せかいに　つうよう　すること▼
 しょうめい　したくて
-ずーっと　たびして　きたんだ！
+ずーっと　たびして　きたんだ！▽
 きみにも　まけないよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T07:50:25" />
+				Time="2011-12-15T05:41:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1162,11 +1162,11 @@
 			<Text>シンオウ地方の　ポケモンが
 世界に　通用すること▼
 証明したくて
-ずーっと　旅してきたんだ！
+ずーっと　旅してきたんだ！▽
 きみにも　負けないよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T07:38:20" />
+				Time="2011-12-15T05:41:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2053,7 +2053,7 @@
 ポケモン　あつめないとな　っと！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T07:57:47" />
+				Time="2011-12-15T05:42:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2061,12 +2061,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わたしの　ポケモンも　かわいいでしょ？▼
+			<Text>わたしの　ポケモン　かわいいでしょ？▼
 こっちでも　たくさん
 ポケモン　集めないとな　っと！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T07:57:44" />
+				Time="2011-12-15T05:42:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2132,7 +2132,7 @@
 静かに　味わったら　どうだい？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T08:35:38" />
+				Time="2011-12-15T05:42:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2181,7 +2181,7 @@
 はしって　いるんだって！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T08:00:55" />
+				Time="2011-12-15T05:42:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2432,12 +2432,11 @@
 ふなたび　たのしんでいるかな？▼
 ５かいめの　きてきは
 ありがとう　またきてね▼
-そんなふうに　ふねが
-いっていると　おもうと▽
-すこしは　なごまない？</Text>
+そんなふうに　ふねが　いっていると
+おもえば　すこしは　なごまない？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T08:35:48" />
+				Time="2011-12-15T05:43:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2453,12 +2452,11 @@
 船旅　楽しんでいるかな？▼
 ５回目の　汽笛は
 ありがとう　また来てね▼
-そんな風に　船が
-いっていると思うと▽
-少しは　和まない？</Text>
+そんな風に　船が　いっていると
+思えば　少しは　和まない？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T08:35:51" />
+				Time="2011-12-15T05:43:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2568,7 +2566,7 @@
 あたしではなく　ポケモンよね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T08:16:37" />
+				Time="2011-12-15T05:43:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3053,7 +3051,7 @@
 わきあがって　きたの！▼
 タイトルはね
 『なにもかも　青い』▽
-聞いてくれるかしら？▼
+きいてくれるかしら？▼
 ああ　海よ！　あなたは　青い！
 空よ！　あなたも　青い！▽
 わたしだって　青二才！▽
@@ -3069,7 +3067,7 @@
 ふふっ　泣いても　いいのよ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-20T11:11:09" />
+				Time="2011-12-15T05:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

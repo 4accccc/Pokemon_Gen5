@@ -763,13 +763,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>どうじょうでは
-ポケモンを　鍛えて　つよくします▼
+ポケモンを　鍛えて　強くします▼
 ポケモンの　レベルや
-ポケモンの　つよさの　基礎ポイントを▽
+ポケモンの　強さの　基礎ポイントを▽
 あげることが　できます▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T10:56:40" />
+				Time="2011-12-15T06:29:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -863,11 +863,11 @@
 食事を　した　ポケモンが
 喜んで　なつきやすく　なります▼
 また　食事の　効果に　より
-レベルや　つよさの　きそポイントを▽
-上げることが　できます▼</Text>
+レベルや　強さの　基礎ポイントを▽
+あげることが　できます▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T03:00:48" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T06:30:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2752,11 +2752,11 @@
 サプライズ　プレゼントが　あるよ▼
 きみの　がんばりを　
 まちのみんなが　いわって　くれるよ▼
-さあ！
-まちのみんなに　あいさつしに　いこう▼</Text>
+さあ！　まちの
+みんなに　あいさつしに　いこう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-27T07:56:41" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T06:30:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -2767,12 +2767,12 @@
 			<Text>きょうは　きみに
 サプライズ　プレゼントが　あるよ▼
 きみの　がんばりを　
-街の　みんなが　いわって　くれるよ▼
-さあ！
-街の　みんなに　あいさつしに　いこう▼</Text>
+街の　みんなが　祝ってくれるよ▼
+さあ！　街の
+みんなに　あいさつしに　いこう▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T03:29:21" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T06:31:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3255,11 +3255,11 @@
 レコードランキング！▽
 秘書の　役割の　交代！▽
 お店の　並び替え！▽
-なんでも　整理　しますので▽
+なんでも　整理しますので▽
 わたしに　話しかけて　ださいね▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-30T05:38:22" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T06:31:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"

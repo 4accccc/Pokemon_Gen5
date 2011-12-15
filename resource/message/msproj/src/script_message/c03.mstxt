@@ -9,11 +9,10 @@
 			<Text>アイリス『こっちが　サムピア！▼
 ヒウンで　あやしいと　いえば
 スリムストリート　か▽
-ここかなと　おもうんだ▼
-じゅんびが　できたら　おいでよ！▼</Text>
+ここかなと　おもうんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-11T02:55:00" />
+				Time="2011-12-15T05:14:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -24,11 +23,10 @@
 			<Text>アイリス『こっちが　サムピア！▼
 ヒウンで　怪しいと　いえば
 スリムストリート　か▽
-ここかなと　思うんだ▼
-準備が　できたら　おいでよ！▼</Text>
+ここかなと　思うんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-11T02:55:07" />
+				Time="2011-12-15T05:14:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -738,14 +736,14 @@
 ピエロに　はなしかけるだけ！▽
 やるも　やらぬも　じゆう　なのです！▼
 ラリーの　ポイントは
-メダルじむきょく！▽
-すれちがいちょうさたい！▽
+メダルじむきょく！▼
+すれちがいちょうさたい▼
 そして　バトルカンパニー！▼
-では　プレゼントした
+それでは　プレゼントした
 じてんしゃに　のって　レッツゴー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-11T05:40:33" />
+				Time="2011-12-15T05:16:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -759,14 +757,14 @@
 ピエロに　話しかけるだけ！▽
 やるも　やらぬも　自由なのです！▼
 ラリーの　ポイントは
-メダル事務局！▽
-すれちがい調査隊！▽
+メダル事務局！▼
+すれちがい調査隊！▼
 そして　バトルカンパニー！▼
-では　プレゼントした
+それでは　プレゼントした
 じてんしゃに　乗って　レッツゴー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-11T05:40:46" />
+				Time="2011-12-15T05:16:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -866,10 +864,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>メダルじむきょく！▼</Text>
+			<Text>メダル事務局！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-11T05:37:40" />
+				Time="2011-12-15T05:17:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -866,7 +866,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03r1103_girl3_06">
+		Label="msg_c03r1103_girl3_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ともだちてちょうに
@@ -1214,13 +1215,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あっ！　つれている
+			<Text>あっ！　連れている
 ポケモンが　いっぱい　ですね▼
 こんなときは　ボックスに
-あずけて　くださいね！</Text>
+預けて　くださいね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T10:32:05" />
+				Time="2011-12-15T05:58:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1268,12 +1269,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ざんねん　です▼
-でも　きが　かわったら
-また　はなしかけてください！</Text>
+			<Text>残念です▼
+でも　気が　変わったら
+また　話しかけてください！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T10:32:29" />
+				Time="2011-12-15T05:58:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1321,12 +1322,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イーブイは　おおくの
-しんかの　かのうせいを　ひめた▽
+			<Text>イーブイは　多くの
+進化の　可能性を　秘めた▽
 すごい　ポケモン　なんです！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T10:32:55" />
+				Time="2011-12-15T05:58:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

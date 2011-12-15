@@ -30,13 +30,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・１回目
 ・続けてtrainerw_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T07:23:06" />
+				Time="2011-12-15T06:08:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -84,8 +83,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・手持ち（ひんし/タマゴを除く）をサーチ
 ・？？？以上のポケモンが
 　いる　→trainerw_03、trainerw_04
@@ -94,7 +92,7 @@
 ・数字は一日中固定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T08:04:59" />
+				Time="2011-12-15T06:08:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -142,8 +140,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・指定された数値以上のポケモンがいる
 ・！マーク表示をしてからメッセージ表示
 ・アイテム入手処理
@@ -151,7 +148,7 @@
 ・0＝ポケモン種族名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T08:09:25" />
+				Time="2011-12-15T06:08:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -201,8 +198,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・指定された数値そのもののポケモンがいる
 ・！マーク表示をしてから
 　２度その場ジャンプしてメッセージ表示
@@ -211,7 +207,7 @@
 ・0＝ポケモン種族名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T08:09:20" />
+				Time="2011-12-15T06:08:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -261,13 +257,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・アイテム入手後
 　日付が変わるまで繰り返し</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T08:04:02" />
+				Time="2011-12-15T06:08:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -319,13 +314,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・条件を満たすポケモンがいない
 ・0＝３桁の数字（050～200からランダムで決定）（仮）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T08:04:02" />
+				Time="2011-12-15T06:08:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -371,11 +365,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver</Comment>
+			<Comment>♂：Black2ver</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T08:04:02" />
+				Time="2011-12-15T06:08:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

@@ -1300,12 +1300,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……そうなのか？▼
-でも　プラズマだん　だぜ
-わるいヤツらは　ほっておけないよ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『そうなの　か……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T03:13:13" />
+				Time="2011-12-15T05:12:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1313,12 +1311,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……そうなのか？▼
-でも　プラズマ団　だぜ
-悪いヤツらは　ほっておけないよ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『そうなの　か……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T11:14:37" />
+				Time="2011-12-15T05:12:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1361,15 +1357,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アーティ『そうだねー▼
-それについては
+			<Text>アーティ『そうだよー▼
+プラズマだんに　ついては
 ボクも　けいかい　しておくよー▼
-それよりも　ここから　でないかい？▼
+それよりも　ここから　でない？▼
 げすいどうは　なんだか
 ムシムシしている　からね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T03:27:22" />
+				Time="2011-12-15T05:12:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1377,15 +1373,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アーティ『そうだねー▼
-それについては
+			<Text>アーティ『そうだよー▼
+プラズマ団に　ついては
 ボクも　警戒しておくよー▼
-それよりも　ここから　でないかい？▼
+それよりも　ここから　でない？▼
 下水道は　なんだか
 ムシムシしている　からね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T03:27:27" />
+				Time="2011-12-15T05:12:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1553,12 +1549,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ほかの　プラズマだんも
-かならず　さがしだしてやるッ！▼
+かならず　さがしだすッ！▼
 オレ……　ポケモンどろぼう　は
-ゆるさないッ！　ぜったいにだッ！！▼</Text>
+ゆるさないッ！　ぜったいにッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T03:20:02" />
+				Time="2011-12-15T05:14:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1567,12 +1563,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>他の　プラズマ団も
-必ず　探しだしてやるッ！▼
+必ず　探しだしすッ！▼
 オレ……　ポケモンどろぼう　は
-許さないッ！　絶対にだッ！！▼</Text>
+許さないッ！　絶対にッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T03:20:19" />
+				Time="2011-12-15T05:14:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

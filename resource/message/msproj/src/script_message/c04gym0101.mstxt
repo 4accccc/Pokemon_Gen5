@@ -1234,7 +1234,7 @@ princess_03</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>この　ファッションショー　ジムは
+			<Text>この　ポケモンジムは
 ステージの　うえで　まちかまえる▼
 モデルの　トレーナーに　しょうりして
 さきに　すすんでいくだけっす！▼
@@ -1242,12 +1242,12 @@ princess_03</Text>
 ポケモンは　じめんタイプの▽
 わざが　にがて　なんすよ……▼
 あっ！　だけどですよ▼
-エモンガって　ポケモンは
+エモンガって　ポケモンには
 じめんタイプの　わざが　きかないので▽
 ようちゅうい　してくださいっす！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T06:45:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1255,7 +1255,7 @@ princess_03</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　ファッションショー　ジムは
+			<Text>この　ポケモンジムは
 ステージ上で　待ち構える▼
 モデルの　トレーナーに　勝利して
 先に　進んでいくだけっす！▼
@@ -1263,12 +1263,12 @@ princess_03</Text>
 ポケモンは　じめんタイプの▽
 技が　苦手なんすよ……▼
 あっ！　だけどですよ▼
-エモンガって　ポケモンは
+エモンガって　ポケモンには
 じめんタイプの　技が　効かないので▽
 要注意してくださいっす！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T06:45:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

@@ -36,12 +36,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♂：White2ver
 ・ここでのアクロマとの戦闘前
 ※アクロマ戦闘時は消去</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T03:24:44" />
+				Time="2011-12-15T06:23:05" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -91,11 +91,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♂：White2ver
 ・アクロマとの戦闘語</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T03:24:35" />
+				Time="2011-12-15T06:23:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -196,12 +196,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♂：White2ver
 ・c03p01でのイベント後に出現
 ・続けてswboss_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-12-15T06:23:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -254,14 +254,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♂：White2ver
 ・メッセージ表示後、イワパレスに向かう
 ・アクロマと正対した岩の動作モデルが
 　イワパレスに置き換わる
 ・続けてswboss_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-12-15T06:23:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -336,12 +336,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アクロマ『……イワパレス▼
+			<Text>アクロマ『……イワパレスたち▼
 いわを　せおったまま　ここで
 ちからつきていたの　でしょうか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T04:26:11" />
+				Time="2011-12-15T06:26:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -349,12 +349,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アクロマ『……イワパレス▼
+			<Text>アクロマ『……イワパレスたち▼
 岩を　背負ったまま　ここで
 力尽きていたの　でしょうか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T04:26:11" />
+				Time="2011-12-15T06:26:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -362,12 +362,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♂：White2ver
 ・画面上をむいてメッセージ表示
 ・続けて主人公を向いて</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T04:26:11" />
+				Time="2011-12-15T06:23:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -394,12 +394,12 @@
 ポケモンのもつ　かのうせいを　みとめ
 にんげんから　かいほう　すべきだと▼
 わたくしは　そうは　おもいません！▼
-むしろ　にんげんが
+むしろ　にんげんは！
 ポケモンが　ひめている▽
 のうりょくを　ひきだすべきなのです！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T04:26:11" />
+				Time="2011-12-15T06:26:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -411,12 +411,12 @@
 ポケモンの持つ　可能性を　認め
 人間から　開放すべきだと▼
 わたくしは　そうは　思いません！▼
-むしろ　人間が
+むしろ　人間は！
 ポケモンが　秘めている▽
 能力を　ひきだすべきなのです！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T04:26:11" />
+				Time="2011-12-15T06:26:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -424,11 +424,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♂：White2ver
 ・</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T04:26:11" />
+				Time="2011-12-15T06:23:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -489,12 +489,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♂：White2ver
 ・表示後、トレーナー戦闘に
 ・0＝主人公名前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T04:26:11" />
+				Time="2011-12-15T06:23:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -555,13 +555,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♂：White2ver
 ・トレーナー戦後、自動で表示
 ・アイテム入手処理
 　No270「いのちのたま」</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T04:26:11" />
+				Time="2011-12-15T06:23:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -620,13 +620,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♂：White2ver
 ・アイテム入手後、画面上に移動
 　画面外に消えると操作可能
 ・0＝主人公名前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-12-15T06:23:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -672,13 +672,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
-・White2ver
 ・毎週月曜日に出現
 ・あわせて鳴き声再生
 　続けて戦闘に</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-12-15T06:23:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -726,11 +725,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
-・White2ver
 ・捕獲以外での戦闘後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T09:18:17" />
+				Time="2011-12-15T06:23:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -891,11 +889,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♂：White2ver
 ・GRIDX＝427、GRIDZ＝592</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T03:15:06" />
+				Time="2011-12-15T06:23:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

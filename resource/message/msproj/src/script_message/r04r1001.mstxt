@@ -30,8 +30,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・White2ver
+			<Comment>♀：White2ver
 ・はい/いいえの選択肢表示
 　はい　→waitress_02
 　いいえ→waitress_03
@@ -39,7 +38,7 @@
 　続けてwaitress_08</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T11:52:14" />
+				Time="2011-12-15T06:22:17" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -92,7 +91,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♀：White2ver
 ・はい選択時
 ・続けて鳴き声再生
 　手持ちの中から
@@ -100,7 +99,7 @@
 ・再生後waitress_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T11:53:29" />
+				Time="2011-12-15T06:22:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -146,11 +145,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♀：White2ver
 ・いいえ選択時</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T11:52:06" />
+				Time="2011-12-15T06:22:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -198,11 +197,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♀：White2ver
 ・選択肢表示</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T11:53:16" />
+				Time="2011-12-15T06:22:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -254,14 +253,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♀：White2ver
 ・正解１回目
 ・正解SE再生後にメッセージ表示
 ・アイテム入手処理
 　No577「ポケじゃらし」</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T03:23:13" />
+				Time="2011-12-15T06:22:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -309,12 +308,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♀：White2ver
 ・正解２回目以降
 ・正解SE再生後にメッセージ表示</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T11:52:06" />
+				Time="2011-12-15T06:22:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -348,11 +347,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>惜しい！　くやしい！　悲しいです！
+			<Text>惜しい！　悔しい！　悲しいです！
 いまのは　[Name:PokemonName ]　でした！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T11:52:06" />
+				Time="2011-12-15T06:22:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -360,13 +359,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♀：White2ver
 ・不正解
 ・不正解SE再生後にメッセージ表示
 ・タマゴも含む</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T11:52:06" />
+				Time="2011-12-15T06:22:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -412,11 +411,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♀：White2ver
 ・手持ちポケモンが1種類のとき</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T11:52:06" />
+				Time="2011-12-15T06:22:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

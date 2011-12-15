@@ -30,12 +30,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・HP/PP満タン時</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T08:03:35" />
+				Time="2011-12-15T06:14:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -81,13 +80,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
+			<Comment>♀：Black2ver
 ・HP/PP満タンでない時
 　続けて画面暗転して回復処理</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T08:03:35" />
+				Time="2011-12-15T06:14:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

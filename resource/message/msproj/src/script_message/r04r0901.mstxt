@@ -30,11 +30,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・White2ver</Comment>
+			<Comment>♀：White2ver</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T07:56:03" />
+				Time="2011-12-15T06:21:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -87,11 +86,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver</Comment>
+			<Comment>♂：White2ver</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T07:56:03" />
+				Time="2011-12-15T06:21:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -139,8 +137,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ・手持ち（ひんし/タマゴを除く）をサーチ
 ・？？？以上のポケモンが
 　いる　→trainerm_03、trainerm_04
@@ -149,7 +146,7 @@
 ・数字は一日中固定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T07:56:03" />
+				Time="2011-12-15T06:21:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -197,8 +194,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ・指定された数値以上のポケモンがいる
 ・！マーク表示をしてからメッセージ表示
 ・アイテム入手処理
@@ -206,7 +202,7 @@
 ・0＝ポケモン種族名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T07:56:03" />
+				Time="2011-12-15T06:21:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -256,8 +252,7 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ・指定された数値そのもののポケモンがいる
 ・！マーク表示をしてから
 　２度その場ジャンプしてメッセージ表示
@@ -266,7 +261,7 @@
 ・0＝ポケモン種族名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T07:56:03" />
+				Time="2011-12-15T06:21:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -316,13 +311,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ・アイテム入手後
 　日付が変わるまで繰り返し</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T07:56:03" />
+				Time="2011-12-15T06:21:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -374,13 +368,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ・条件を満たすポケモンがいない
 ・0＝３桁の数字（050～200からランダムで決定）（仮）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T07:56:03" />
+				Time="2011-12-15T06:21:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

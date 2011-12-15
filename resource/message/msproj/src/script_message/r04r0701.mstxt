@@ -30,12 +30,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・White2ver
+			<Comment>♀：White2ver
 ・HP/PP満タン時</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T07:54:53" />
+				Time="2011-12-15T06:20:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -81,13 +80,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・White2ver
+			<Comment>♀：White2ver
 ・HP/PP満タンでない時
 　続けて画面暗転して回復処理</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T07:54:53" />
+				Time="2011-12-15T06:20:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -132,11 +130,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
-・White2ver
 ・あわせて鳴き声再生</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-26T07:54:58" />
+				Time="2011-12-15T06:20:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

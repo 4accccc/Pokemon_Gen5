@@ -30,12 +30,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♂：White2ver
 ・アイテム入手処理
 　No158「オボンのみ」×３</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T09:25:18" />
+				Time="2011-12-15T06:20:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -83,11 +83,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
+			<Comment>♂：White2ver
 ・アイテム入手後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T09:25:18" />
+				Time="2011-12-15T06:20:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -133,11 +133,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
+			<Comment>♂：White2ver
 ・ワシボンのヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T08:02:39" />
+				Time="2011-12-15T06:20:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -180,10 +180,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂</Comment>
+			<Comment>♂：White2ver</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T09:28:33" />
+				Time="2011-12-15T06:20:22" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

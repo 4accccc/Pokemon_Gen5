@@ -480,11 +480,10 @@
 ・はい/いいえの選択肢
 　はい　→juggling_01a
 　いいえ→juggling_05
-・0＝ポケモンのタイプ（日替わりでランダム）
-※swanでイベント変更予定</Comment>
+・0＝ポケモンのタイプ（日替わりでランダム）</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T03:06:11" />
+				Time="2011-12-15T05:32:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1301,10 +1300,11 @@ No153「ナナシのみ」</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>BGメッセージ
-・GRIDX＝15、GRIDZ＝6</Comment>
+・GRIDX＝15、GRIDZ＝6
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T05:16:47" />
+				Time="2011-12-15T05:32:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1349,10 +1349,11 @@ No153「ナナシのみ」</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>BGメッセージ
-・GRIDX＝15、GRIDZ＝8</Comment>
+・GRIDX＝15、GRIDZ＝8
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T05:16:55" />
+				Time="2011-12-15T05:32:15" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1397,10 +1398,11 @@ No153「ナナシのみ」</Comment>
 		<CommentCell
 			Language="JPN">
 			<Comment>BGメッセージ
-・GRIDX＝15、GRIDZ＝10</Comment>
+・GRIDX＝15、GRIDZ＝10
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T05:16:59" />
+				Time="2011-12-15T05:32:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
