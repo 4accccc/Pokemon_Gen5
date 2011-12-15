@@ -10,6 +10,8 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
+#ifdef PM_DEBUG
+
 #include <gflib.h>
 #include "arc/script_message.naix"
 #include "msg/script/msg_resort_scr.h"
@@ -106,3 +108,6 @@ static inline void Debug_Resort_SetRecv( RESORT_RECV_DATA *p_wk, GAMEDATA *p_gam
     GFL_MSG_Delete( p_msg );
   }
 }
+
+
+#endif //PM_DEBUG

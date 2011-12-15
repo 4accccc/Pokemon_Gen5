@@ -18,6 +18,11 @@
 #include "field/event_mapchange.h"
 #include "debug/debug_ui.h"
 #include "field/eventwork_def.h"
+#include "debug/debug_hudson_auto_ja_check.h"
+
+
+#ifdef DEBUG_ONLY_FOR_hudson
+#ifdef PM_DEBUG
 
 //ÉäÉ]Å[Ég
 #include "arc/fieldmap/zone_id.h"
@@ -29,12 +34,9 @@
 #include "field/resonance_resort/resort_shop.h"
 #include "field/resonance_resort/resort_debug.h"
 
-#include "debug/debug_hudson_auto_ja_check.h"
-
 
 extern void RESORT_RESIDENT_DATA_ConvertRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, const RESORT_BINARY_SHOP *cp_shop, u16 peopleID, u16 placeID );
 
-#ifdef DEBUG_ONLY_FOR_hudson
 //=============================================================================
 /**
  *					íËêîêÈåæ
@@ -478,4 +480,6 @@ static BOOL ResortShopCheck_CheckShopAllRankMax( GAMEDATA *p_gamedata )
   return TRUE;
 }
 
+#endif //PM_DEBUG
 #endif // DEBUG_ONLY_FOR_hudson
+
