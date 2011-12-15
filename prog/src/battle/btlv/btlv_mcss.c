@@ -675,7 +675,7 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
 
   // swan追加 mori
   // スターポケかどうか？
-  if( POKETOOL_StarPoint2Rank( PP_Get( pp, ID_PARA_star_point,NULL) ) >= PTL_STAR_RANK_2 )
+  if( POKETOOL_StarPoint2Rank( PP_Get( pp, ID_PARA_star_point,NULL) ) >= PTL_STAR_RANK_4 )
   {
     bmw->btlv_mcss[ index ].status_flag |= BTLV_MCSS_STATUS_FLAG_STAR;
   }
