@@ -504,6 +504,15 @@ bell_secondtalk:
   _BALLOONWIN_OBJMSG_POS( msg_c12_swrival_22 , C12_SWRIVAL_01 , POS_UP )
   _MSGWIN_CLOSE()
   
+  //アニメ：ベル考える動作
+  _OBJ_ANIME( C12_SWBELL_01, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C12_SWBELL_01, anm_common_tenten )
+  _OBJ_ANIME_WAIT()
+  _TIME_WAIT( 20 )
+  _OBJ_ANIME( C12_SWBELL_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
    //ベル：うん　いいよ！
   _BALLOONWIN_OBJMSG_POS( msg_c12_white_14 , C12_SWBELL_01 , POS_DEFAULT )
   _MSGWIN_CLOSE()
@@ -807,7 +816,8 @@ ev_vs_rival:
 	CASE FIRST_POKETYPE_MIZU THEN
 		_MONS_NAME( 3, MONSNO_TUTAAZYA )
 	ENDSWITCH
-
+	
+	_OBJ_ANIME( C12_SWBELL_01, anm_dir_d )
 	_OBJ_ANIME( C12_SWRIVAL_01, anm_swrival_anime )
 	_OBJ_ANIME_WAIT()
 
@@ -883,8 +893,7 @@ ev_vs_rival:
 	_TIME_WAIT( 24 )
 
 	//アニメ：ベル・主人公、ライバル見送る
-	_OBJ_ANIME( C12_SWBELL_01, anm_dir_d )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_d )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
 	
 	//ライバル曲停止
 	_END_EVENT_BGM()
@@ -1598,7 +1607,7 @@ EVENT_START ev_pos_c12_rival_pair_01
   //妹：主人公さーん！
   _PLAINWIN_MSG_DOWN( msg_c12_rivalsister_01 )
   _MSGWIN_CLOSE()
-	
+
   //アニメ：ライバル・妹登場
   _OBJ_ANIME_AUTO( C12_SWSISTER_01, 42, 758, FORCE_TYPE_NPC, 8, DIR_LR)
   _OBJ_ANIME_AUTO( C12_SWRIVAL_01, 43, 758, FORCE_TYPE_NPC, 8, DIR_LR)
@@ -1765,6 +1774,21 @@ EVENT_END
 ev_c12_rival_ng_return01:
   //進入方向によって演出を分岐
   _PLAYER_DIR_GET( LWK_DIR )
+
+  SWITCH $LWK_DIR
+  CASE DIR_LEFT THEN
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_l )
+	CASE DIR_RIGHT THEN
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_r )
+	CASE DIR_UP THEN
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_u )
+	CASE DIR_DOWN THEN  //本来ここにはこないが念のため
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_d )
+  ENDSWITCH
+
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+
   SWITCH $LWK_DIR
   CASE DIR_LEFT THEN
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
@@ -1795,27 +1819,36 @@ _RET
 /*  C12：POS：高台方面                         */
 /**************************************************************/
 EVENT_START ev_pos_c12_rival_pair_01_guide
+  //進入方向によって演出を分岐
+  _PLAYER_DIR_GET( LWK_DIR )
+
+  SWITCH $LWK_DIR
+  CASE DIR_LEFT THEN
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_l )
+	CASE DIR_RIGHT THEN
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_r )
+	CASE DIR_UP THEN
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_u )
+	CASE DIR_DOWN THEN  //本来ここにはこないが念のため
+    _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_d )
+  ENDSWITCH
+
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+
   //話しかけた方向によって演出を分岐
   _PLAYER_DIR_GET( LWK_DIR )
   SWITCH $LWK_DIR
   CASE DIR_LEFT THEN
-    _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_l )
-    _TIME_WAIT( 8 )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
     _OBJ_ANIME_WAIT()
   CASE DIR_RIGHT THEN //本来ここにはこないが念のため
-    _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_l )
-    _TIME_WAIT( 8 )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
     _OBJ_ANIME_WAIT()
   CASE DIR_UP THEN
-    _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_l )
-    _TIME_WAIT( 8 )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
     _OBJ_ANIME_WAIT()
   CASE DIR_DOWN THEN 
-    _OBJ_ANIME( PAIR_TRAINER_01, anm_staystep_u )
-    _TIME_WAIT( 8 )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
     _OBJ_ANIME_WAIT()
   ENDSWITCH
@@ -2085,10 +2118,60 @@ EVENT_END
 /************************************************************/
 EVENT_START    ev_c12_ending
 
-  //アニメ：家まで走る
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 47, 763, FORCE_TYPE_NPC, 4, DIR_UD )
+  //プレイヤーの初期位置決定
+  _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 53, 0, 745, DIR_DOWN )
+
+  _MAP_FADE_BLACK_IN_SLOW()
+  
+  //家まで走る
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_ending_01 )
+  _MAP_FADE_END_CHECK()
+  _OBJ_ANIME_WAIT()
+
+  _OBJ_ANIME( C12_MAMA_ED_01, anm_walk_l )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
   _OBJ_ANIME_WAIT()
   
+  _TIME_WAIT( 30 )
+
+  //アニメ：家に入る
+  _OBJ_ANIME_AUTO( C12_MAMA_ED_01, 47, 762, FORCE_TYPE_NOT, 8, DIR_LR )
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_ending_02 )
+  _OBJ_ANIME_WAIT()
+
+  //ドア開ける
+  _BMODEL_ANIME_CREATE( SCWK_ANSWER, SCR_BMID_DOOR, 47, 761 )
+  _BMODEL_ANIME_SET( SCWK_ANSWER, SCR_BMANM_DOOR_OPEN )
+  _BMODEL_ANIME_WAIT( SCWK_ANSWER )
+
+  _OBJ_ANIME( C12_MAMA_ED_01, anm_swmama_ending_01 )
+  _TIME_WAIT( 4 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_u )
+  _OBJ_ANIME_WAIT()
+  
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+
+  _TIME_WAIT( 20 )
+
+  _MAP_FADE_BLACK_OUT_SLOW()
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_swmama_ending_01 )
+  _OBJ_ANIME_WAIT()
+
+  //ドア閉める
+  _BMODEL_ANIME_SET( SCWK_ANSWER, SCR_BMANM_DOOR_CLOSE )
+  _BMODEL_ANIME_WAIT( SCWK_ANSWER )
+  _BMODEL_ANIME_DELETE( SCWK_ANSWER )
+
+  _MAP_FADE_END_CHECK()
+
+  //========================================//
+  // エンディングのキャラ非表示
+  _FLAG_SET( FV_C09P02_ENDING )
+  //========================================//
+
 EVENT_END
 
 //--------------------------------------------------------------------
@@ -2192,9 +2275,29 @@ _ANIME_LABEL	anm_game_start_04
 //	☆エンディング：主人公家まで走る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_ending_01
-  _ANIME_DATA	AC_WALK_D_4F,4
-  _ANIME_DATA	AC_WALK_R_4F,2
-	_ANIME_DATA	ACMD_END,0
+  _ANIME_DATA	AC_DASH_D_6F,7
+  _ANIME_DATA	AC_DASH_L_6F,10
+  _ANIME_DATA	AC_DASH_D_6F,7
+  _ANIME_DATA	AC_WALK_D_8F,4
+  _ANIME_DATA	AC_WALK_R_12F,1
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_swmama_ending_01
+  _ANIME_DATA	AC_WALK_U_12F,1
+  _ANIME_DATA	AC_VANISH_ON,1
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_ending_02
+  _ANIME_DATA	AC_WALK_R_8F,2
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：アイテムゲット
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_itemget
+  _ANIME_DATA AC_HERO_ITEMGET,1
+  _ANIME_DATA ACMD_END,0
 
 
 //--------------------------------------------------------------------
