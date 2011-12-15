@@ -1,3 +1,340 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <MessageStudioText
-	Format="1.2" xmlns="nintendo:msgstudio" />
+	Format="1.2" xmlns="nintendo:msgstudio">
+	<TextRow
+		Label="msg_d27r1101_swrival_03_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『オマエ　さきにいけ！▼
+オレは　こいつらから
+ダークトリニティのこと　ききだす▼
+チョロネコか　ダークトリニティを
+みつけたら　おしえてくれよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『オマエ　さきにいけ！▼
+オレは　こいつらから
+ダークトリニティのこと　ききだす▼
+チョロネコか　ダークトリニティを
+みつけたら　教えてくれよ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：３回目
+　GRIDX＝27、GRIDZ＝33　下向き
+・マップ切り替えでメッセージ表示
+・主人公をむいてメッセージ（１回のみ）
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1101_swrival_03_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>オマエら！
+ダークトリニティは　どこだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オマエら！
+ダークトリニティは　どこだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：３回目
+・swrival_03_01表示後
+　振り向かずにメッセージ表示
+・d27r0601での
+　msg_d27r0101_swrival_03_01表示で削除</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:04:59" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1101_swplazmam1_03_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こいつ！　プラズマだんの
+イッシュせいふくを　じゃまするな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こいつ！　プラズマ団の
+イッシュ征服を　じゃまするな！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：３回目
+・GRIDX＝27、GRIDZ＝34
+　ライバルと戦闘中という設定</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ１</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1101_swplazmam2_03_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もう　ポケモン　よこせよ！
+おまえらに　かちめなんて　ないッ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もう　ポケモン　よこせよ！
+おまえらに　勝ち目なんて　ないッ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：３回目
+・GRIDX＝28、GRIDZ＝33
+　ライバルと戦闘中という設定</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ２</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1101_swplazmam3_03_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あがけ　あがけ！▼
+レシラムの　ひばしら
+ゼクロムの　いなずま　よりも▽
+キュレムの　こおりが　うえだ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あがけ　あがけ！▼
+レシラムの　火柱
+ゼクロムの　稲妻　よりも▽
+キュレムの　氷塊が　上だ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：３回目
+・GRIDX＝26、GRIDZ＝29
+　すでにライバルに負けたという設定</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ３</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r1101_swplazmam4_03_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>イッシュの　すべてが！
+キュレムの　こおりで！▼
+……ヴィオさま　だいじょうぶかな
+あんなに　さむがり　なのに</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イッシュの　すべてが！
+キュレムの　氷で！▼
+……ヴィオさま　大丈夫かな
+あんなに　寒がり　なのに</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：３回目
+・GRIDX＝28、GRIDZ＝31
+　すでにライバルに負けたという設定</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ４</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T08:03:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+</MessageStudioText>
