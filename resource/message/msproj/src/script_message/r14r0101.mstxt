@@ -6,11 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんと！　ブラックシティで
-あのような　ものが　みつかるとは！</Text>
+			<Text>２ねんまえの　きおく……
+まちの　ようすは　どうだったかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:13:42" />
+				Time="2011-12-15T07:30:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なんと！　ブラックシティで
-あのような　ものが　みつかるとは！</Text>
+			<Text>２年前の　記憶……
+街の　様子は　どうだったかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:13:46" />
+				Time="2011-12-15T07:30:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -30,17 +30,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver
-・クリア前
-　ブラックシティへのストッパー
-　GRIDX＝2～8、GRIDZ＝5に全部配置
-　なんか適当にその場回転していてください
-・クリアすると削除
-※swanで新規作成</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:17:03" />
+				Time="2011-12-15T07:30:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -49,17 +42,24 @@
 				User="matsumiya:W00224"
 				Time="2011-08-01T09:17:15" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_r14r0101_man3_01w"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんと！　ホワイトフォレストで
-あのような　ものが　みつかるとは！</Text>
+			<Text>２ねんまえの　きおく……
+まちの　ようすは　どうだったかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:13:53" />
+				Time="2011-12-15T07:28:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -67,11 +67,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なんと！　ホワイトフォレストで
-あのような　ものが　みつかるとは！</Text>
+			<Text>２年前の　記憶……
+街の　様子は　どうだったかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:13:59" />
+				Time="2011-12-15T07:28:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -98,17 +98,24 @@
 				User="matsumiya:W00224"
 				Time="2011-08-01T09:17:16" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_r14r0101_infomationw_01b"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エネルギッシュな　まち
-ブラックシティへ　どうぞ</Text>
+			<Text>ゲートを　ぬければ……
+さあ　どこに　つながってるかしら？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:19:28" />
+				Time="2011-12-15T07:30:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -116,11 +123,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>エネルギッシュな　街
-ブラックシティへ　どうぞ</Text>
+			<Text>ゲートを　抜ければ……
+さあ　どこに　つながってるかしら？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:20:13" />
+				Time="2011-12-15T07:30:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -128,12 +135,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver
-※swanでメッセージ修正</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T03:31:07" />
+				Time="2011-12-15T07:30:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -145,7 +150,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -156,11 +161,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しぜんに　くるまれたいなら……
-ホワイトフォレストへ　どうぞ</Text>
+			<Text>ゲートを　ぬければ……
+さあ　どこに　つながってるかしら？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T02:32:40" />
+				Time="2011-12-15T07:28:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -168,11 +173,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>自然に　くるまれたいなら……
-ホワイトフォレストへ　どうぞ</Text>
+			<Text>ゲートを　抜ければ……
+さあ　どこに　つながってるかしら？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T02:32:45" />
+				Time="2011-12-15T07:28:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -215,13 +220,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ブラックシティの　ような
-とかいで　くらしていると▽
-いなかにも　あこがれるね▼
-ないものねだり　だけど……</Text>
+			<Text>そりゃそうよ！　ちがう　ものを
+くらべたら　いいところ　わるいところ▽
+りょうほう　みつかるに　きまってる！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T02:33:42" />
+				Time="2011-12-15T07:30:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -229,13 +233,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ブラックシティの　ような
-都会で　暮らしていると▽
-田舎にも　あこがれるね▼
-ないものねだり　だけど……</Text>
+			<Text>そりゃそうよ！　違う　ものを
+比べたら　いいところ　わるいところ▽
+両方　みつかるに　決まってる！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T02:33:42" />
+				Time="2011-12-15T07:30:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -243,12 +246,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver
-※swanでメッセージ修正</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T03:34:31" />
+				Time="2011-12-15T07:30:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -266,7 +267,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -277,13 +278,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホワイトフォレストの　ような
-いなかで　くらしていると▽
-とかいにも　あこがれるね▼
-ないものねだり　だけど……</Text>
+			<Text>そりゃそうよ！　ちがう　ものを
+くらべたら　いいところ　わるいところ▽
+りょうほう　みつかるに　きまってる！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T02:33:45" />
+				Time="2011-12-15T07:29:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -291,13 +291,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホワイトフォレストの　ような
-田舎で　暮らしていると▽
-都会にも　あこがれるね▼
-ないものねだり　だけど……</Text>
+			<Text>そりゃそうよ！　違う　ものを
+比べたら　いいところ　わるいところ▽
+両方　みつかるに　決まってる！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T02:33:46" />
+				Time="2011-12-15T07:29:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

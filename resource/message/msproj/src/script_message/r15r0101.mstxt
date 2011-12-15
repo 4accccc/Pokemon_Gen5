@@ -6,11 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エネルギッシュな　まち
-ブラックシティへ　どうぞ</Text>
+			<Text>ゲートを　ぬければ……
+さあ　どこに　つながってるかしら？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:29:38" />
+				Time="2011-12-15T07:26:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>エネルギッシュな　街
-ブラックシティへ　どうぞ</Text>
+			<Text>ゲートを　抜ければ……
+さあ　どこに　つながってるかしら？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:29:38" />
+				Time="2011-12-15T07:26:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -64,11 +64,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しぜんに　つつまれるなら……
-ホワイトフォレストへ　どうぞ</Text>
+			<Text>ゲートを　ぬければ……
+さあ　どこに　つながってるかしら？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:29:38" />
+				Time="2011-12-15T07:29:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -76,11 +76,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>自然に　つつまれるなら……
-ホワイトフォレストへ　どうぞ</Text>
+			<Text>ゲートを　抜ければ……
+さあ　どこに　つながってるかしら？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:29:38" />
+				Time="2011-12-15T07:29:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -88,11 +88,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・White2ver</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:26:32" />
+				Time="2011-12-15T07:30:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -111,7 +110,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -122,12 +121,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>とかいに　くたびれた　ひとは
-しぜんに　あこがれ　ひっこして▽
-そして　また　とかいに　もどるの……</Text>
+			<Text>ひとは　とかいと　いなかを
+いったりきたり　しながら▽
+じぶんの　いばしょを　さがすの</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:32:29" />
+				Time="2011-12-15T07:25:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -135,12 +134,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>都会に　くたびれた　人は
-自然に　あこがれ　引越して▽
-そして　また　都会に　戻るの……</Text>
+			<Text>人は　都会と　田舎を
+行ったり来たり　しながら▽
+自分の　居場所を　探すの</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:34:18" />
+				Time="2011-12-15T07:25:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -183,12 +182,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しぜんに　たいくつした　ひとは
-とかいに　あこがれ　ひっこして▽
-そして　また　しぜんに　もどるの……</Text>
+			<Text>ひとは　とかいと　いなかを
+いったりきたり　しながら▽
+じぶんの　いばしょを　さがすの</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:32:45" />
+				Time="2011-12-15T07:29:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -196,12 +195,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>自然に　退屈した　人は
-都会に　あこがれ　引越して▽
-そして　また　自然に　戻るの……</Text>
+			<Text>人は　都会と　田舎を
+行ったり来たり　しながら▽
+自分の　居場所を　探すの</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:34:41" />
+				Time="2011-12-15T07:29:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -209,12 +208,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・White2ver
-※swanでメッセージ修正</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:35:45" />
+				Time="2011-12-15T07:30:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -233,7 +230,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -244,11 +241,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あの　くろのまてんろう
-なんなんだろうね？</Text>
+			<Text>くろのまてんろうに　しろのじゅどう
+いったい　なんなんだろうね……？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:35:31" />
+				Time="2011-12-15T07:24:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -256,11 +253,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あの　黒の摩天楼
-なんなんだろうね？</Text>
+			<Text>黒の摩天楼に　白の樹洞
+一体　なんなんだろうね……？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:35:11" />
+				Time="2011-12-15T07:24:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -303,11 +300,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あの　しろのじゅどう
-なんなんだろうね？</Text>
+			<Text>くろのまてんろうに　しろのじゅどう
+いったい　なんなんだろうね……？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:35:37" />
+				Time="2011-12-15T07:29:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -315,11 +312,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あの　白の樹洞
-なんなんだろうね？</Text>
+			<Text>黒の摩天楼に　白の樹洞
+一体　なんなんだろうね……？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:35:21" />
+				Time="2011-12-15T07:29:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -327,12 +324,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
-※swanでメッセージ修正</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-01T09:35:47" />
+				Time="2011-12-15T07:30:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -351,7 +346,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
