@@ -50,11 +50,11 @@ enum{
 	BS_OBJ_PAL_POKE		= 0,		// ポケモン(0-2)
 	BS_OBJ_PAL_TYPE		= 4,		// タイプ(4-6)
 	BS_OBJ_PAL_CURSOR	= 7,		// カーソル(7)
-	BS_OBJ_PAL_ARROW	= 8,		// 矢印(8-11)
+	BS_OBJ_PAL_ARROW	= 8,		// 矢印(8-12)
 	//
 	BS_CURSOR_OFFSET	= 4,		// カーソルデータ(注意：palの中の4番目を使用)
 	//
-	BS_PAL_ARROW_NUM	= 4,		// 矢印の本数
+	BS_PAL_ARROW_NUM	= 5,		// 矢印の本数
 };
 
 // OBJのフラグ(WBTLIST_OBJ_DATA.dispflag)
@@ -388,7 +388,10 @@ const BS_OBJ_DATA bs_obj_03_tbl[] = {
 	{ 6,	0x28,	1,	0,	0,	1,	35,	BS_RES_ARROW_CHR,},	// 右
 	{ 0,	0x28,	1,	0,	0,	1,	36,	BS_RES_ARROW_CHR,},	// 戻る
 	{ 9,	0x28,	3,	0,	0,	1,	37,	BS_RES_ARROW_CHR,},	// 上マーク
-	
+	//
+	{ 10,	0x28,	3,	0,	0,	1,	38,	BS_RES_ARROW_CHR,},	// 強調マーク
+	{ 10,	0x28,	3,	0,	0,	1,	39,	BS_RES_ARROW_CHR,},	// 強調マーク
+	//
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
 
@@ -408,6 +411,12 @@ static const s16 bs_cursor_all_tbl[] = {
 	0, 1, 2,-1,			// TOP
 	0, 3, 4, 2,			// 脚本
 	0, 3, 4, 2,			// 共演者
+};
+
+// ヒントマーク
+static const s16 bs_hint_emp_tbl[] = {
+	38,		// 上
+	39,		// 下
 };
 
 //============================================================================================
@@ -1498,5 +1507,37 @@ void BsCmn_DispUpMark( BSCENARIO_WORK *wk, const s32 mode )
 		bflg = FALSE;
 	}
 	BsCmn_ObjVisible( wk, BS_CLWKMODE_ARROW, BS_CLWK_ARROW_UPMARK, bflg );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  強調マーク表示
+ *
+ *	@param	BSCENARIO_WORK* 	wk
+ *	@param	const s32			(0:上、1:下)
+ *  @param	const s32			(右オフセット)
+ *  @param	const BOOL			(TRUE:表示、FALSE:非表示)
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void BsCmn_DispHintMark( BSCENARIO_WORK *wk, const s32 mode, const s32 xoff, const BOOL bflg )
+{
+	GFL_CLACTPOS	pos;
+	
+	// 表示の場合は座標をセット
+	if(bflg == TRUE){
+		// 左側位置セット
+		pos.x = bscmn_get_empty( wk, 2*bs_hint_emp_tbl[mode] );
+		pos.y = bscmn_get_empty( wk, 2*bs_hint_emp_tbl[mode]+1 );
+		GFL_CLACT_WK_SetPos( wk->clwk_arrow[BS_CLWK_ARROW_HINT_00], &pos, CLSYS_DEFREND_SUB );
+		//
+		// 右側位置セット
+		pos.x += xoff;
+		GFL_CLACT_WK_SetPos( wk->clwk_arrow[BS_CLWK_ARROW_HINT_01], &pos, CLSYS_DEFREND_SUB );
+	}
+	// 表示/非表示
+	BsCmn_ObjVisible( wk, BS_CLWKMODE_ARROW, BS_CLWK_ARROW_HINT_00, bflg );
+	BsCmn_ObjVisible( wk, BS_CLWKMODE_ARROW, BS_CLWK_ARROW_HINT_01, bflg );
 }
 

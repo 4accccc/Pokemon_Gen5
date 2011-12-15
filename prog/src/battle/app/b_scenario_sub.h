@@ -128,5 +128,6 @@ extern void BsCmn_MainScreenAnime( BSCENARIO_WORK *wk );
 extern BOOL BsCmn_IsScreenAnimeEnd( BSCENARIO_WORK *wk );
 //
 extern void BsCmn_DispUpMark( BSCENARIO_WORK *wk, const s32 mode );
+extern void BsCmn_DispHintMark( BSCENARIO_WORK *wk, const s32 mode, const s32 xoff, const BOOL bflg );
 
 

@@ -34,7 +34,7 @@ enum{
 	BS_BG_MAXNUM		= 8,		// BG最大
 	BS_CANVAS_MAXNUM	= 14,		// canvas最大(場面ごとに切り替え)
 	BS_MES_MAX			= 2,		// メッセージ最大
-	BS_EMPTY_MAX		= 38*2,		// empty最大
+	BS_EMPTY_MAX		= 40*2,		// empty最大
 	//
 	BS_POKE_MAX			= 6,		// ポケモン最大
 };
@@ -120,6 +120,8 @@ enum{
 	BS_CLWK_ARROW_RIGHT,			// 右
 	BS_CLWK_ARROW_BACK,				// 戻る
 	BS_CLWK_ARROW_UPMARK,			// 上マーク
+	BS_CLWK_ARROW_HINT_00,			// 強調マーク00
+	BS_CLWK_ARROW_HINT_01,			// 強調マーク01
 	//
 	BS_CLWK_ARROW_MAX,
 };
