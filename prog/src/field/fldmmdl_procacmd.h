@@ -366,5 +366,6 @@ extern int (* const DATA_AC_SpPoke_Bark_Tbl[])( MMDL * ) ;
 extern int (* const DATA_AC_MelodyerSpin_Tbl[])( MMDL * );
 extern int (* const DATA_AC_MelodyerSpinPose_Tbl[])( MMDL * );
 extern int (* const DATA_AC_MelodyerShake_Tbl[])( MMDL * );
+extern int (* const DATA_AC_MelodyerStep_Tbl[])( MMDL * );
 
 #endif //MMDL_PROCACMD_H_FILE

@@ -411,7 +411,6 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
                 ac_act_d = AC_DIR_D;
                 ac_act_l = ac_act_r = AC_SPPOKE_BARK;
                 break;
-#if 1
               case MMDL_BLACT_ANMTBLNO_SHINMU_A:
                 ac_act_u = AC_DIR_U;
                 ac_act_d = AC_SHIN_MU_GUTARI;
@@ -426,7 +425,12 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
                 break;
               case MMDL_BLACT_ANMTBLNO_SHINMU_C:
                 ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_SHIN_MU_C_FLY;
-#endif
+                break;
+              case MMDL_BLACT_ANMTBLNO_MELODYER:
+                ac_act_u = AC_MELODYER_STEP;
+                ac_act_d = AC_MELODYER_SPIN;
+                ac_act_l = AC_MELODYER_SPIN_POSE;
+                ac_act_r = AC_MELODYER_SHAKE;
                 break;
               }
             }

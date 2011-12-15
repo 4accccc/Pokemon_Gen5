@@ -436,7 +436,8 @@
 #define DRAW_STA_MELODYER_SPIN (DRAW_STA_MAX)
 #define DRAW_STA_MELODYER_SPIN_POSE (DRAW_STA_MAX+1)
 #define DRAW_STA_MELODYER_SHAKE (DRAW_STA_MAX+2)
-#define DRAW_STA_MELODYER_MAX (DRAW_STA_MAX+3)
+#define DRAW_STA_MELODYER_STEP (DRAW_STA_MAX+3)
+#define DRAW_STA_MELODYER_MAX (DRAW_STA_MAX+4)
 
 //======================================================================
 //  フィールド動作モデル アニメーションコマンドコード
@@ -621,9 +622,9 @@
 #define AC_SHIN_MU_FLY_UPPER 0xae ///<シンム　上昇
 #define AC_SHIN_MU_GUTARI 0xaf ///<シンム　ぐったりアニメ
 #define AC_SHIN_MU_TURN 0xb0 ///<シンム　振り向き
-#define AC_MELODYER_SPIN 0xb1 ///<メロディア 回転
-#define AC_MELODYER_SPIN_POSE 0xb2 ///<メロディア 回転+ポーズ
-#define AC_MELODYER_SHAKE 0xb3 ///<メロディア 上下揺れ
+#define AC_MELODYER_SPIN 0xb1 ///<メロディア 回転(ボイスフォルム専用)
+#define AC_MELODYER_SPIN_POSE 0xb2 ///<メロディア 回転+ポーズ(ボイスフォルム専用)
+#define AC_MELODYER_SHAKE 0xb3 ///<メロディア 上下揺れ(ボイスフォルム専用)
 #define AC_SHIN_MU_OFFS_CLEAR 0xb4 ///<シンム 描画オフセットをクリア
 #define AC_ACT0_LOOP 0xb5 ///<演技(特定OBJ専用
 #define AC_ACT1_STOP 0xb6 ///<演技(特定OBJ専用
@@ -635,8 +636,10 @@
 #define AC_SHIN_MU_C_FLY 0xbc ///<シンムC 滞空アニメ
 #define AC_MARK_GYOE_NO_SE 0xbd ///<!マークを出す・SEなし [rail]
 #define AC_MARK_ONPU_NO_SE 0xbe ///<♪マークを出す・SEなし [rail]
+//以下SWAN新規
 #define AC_SPPOKE_BARK     0xbf ///<スワン レシゼク,キュレムx4形態専用 吼える
-#define ACMD_MAX 0xc0 ///<アニメーションコマンド最大数
+#define AC_MELODYER_STEP   0xc0 ///<メロディア ステップフォルム専用ダンス
+#define ACMD_MAX 0xc1 ///<アニメーションコマンド最大数
 
 #define ACMD_AUTO_END 0xfd  // アニメーションコマンド終了（_OBJ_ANIME_AUTO用）>> update ichiraku 2010/10/14
 #define ACMD_END 0xfe ///<アニメーションコマンド終了

@@ -4860,6 +4860,23 @@ static int AC_MelodyerShake( MMDL * mmdl )
 
 //--------------------------------------------------------------
 /**
+ * AC_MELODYER_STEP
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再起
+ */
+//--------------------------------------------------------------
+static int AC_MelodyerStep( MMDL * mmdl )
+{
+  MMDL_SetDrawStatus( mmdl, DRAW_STA_MELODYER_STEP );
+  MMDL_SetDrawMelodyerStartAnimeFrame( mmdl );
+
+  MMDL_IncAcmdSeq( mmdl );
+
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
  * AC_MELODYER系共通　アニメ終了待ちして終了
  * @param	mmdl	MMDL *
  * @retval	int		TRUE=再起
@@ -6797,6 +6814,15 @@ int (* const DATA_AC_MelodyerSpinPose_Tbl[])( MMDL * ) =
 int (* const DATA_AC_MelodyerShake_Tbl[])( MMDL * ) =
 {
   AC_MelodyerShake,
+  AC_Melodyer_1N,
+  AC_End,
+};
+//--------------------------------------------------------------
+///	AC_MELODYER_STEP
+//--------------------------------------------------------------
+int (* const DATA_AC_MelodyerStep_Tbl[])( MMDL * ) =
+{
+  AC_MelodyerStep,
   AC_Melodyer_1N,
   AC_End,
 };

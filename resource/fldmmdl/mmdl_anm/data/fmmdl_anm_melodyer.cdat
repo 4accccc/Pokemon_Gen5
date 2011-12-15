@@ -10,7 +10,7 @@
 //=========================================================================
 
 //============================================
-// 待機正面
+// 待機正面　ボイス・ステップ共通
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActMelodyer_Stop[] = {
   {  0, ANMFLIP_OFF, ANMFLIP_OFF,  1 },  ///<
@@ -18,7 +18,7 @@ static const GFL_BBDACT_ANM DATA_BlActMelodyer_Stop[] = {
 };
 
 //============================================
-// スピン
+// スピン　ボイスフォルム専用
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActMelodyer_Spin[] = {
   {  0, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
@@ -33,7 +33,7 @@ static const GFL_BBDACT_ANM DATA_BlActMelodyer_Spin[] = {
 };
 
 //============================================
-// スピンポーズ
+// スピンポーズ　ボイスフォルム専用
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActMelodyer_SpinPose[] = {
   {  8, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
@@ -48,7 +48,7 @@ static const GFL_BBDACT_ANM DATA_BlActMelodyer_SpinPose[] = {
 };
 
 //============================================
-// シェイク
+// シェイク　ボイスフォルム専用
 //============================================
 static const GFL_BBDACT_ANM DATA_BlActMelodyer_Shake[] = {
   { 16, ANMFLIP_OFF, ANMFLIP_OFF,  8 },  ///<
@@ -58,11 +58,23 @@ static const GFL_BBDACT_ANM DATA_BlActMelodyer_Shake[] = {
   { GFL_BBDACT_ANMCOM_END,0,0,0 },
 };
 
+//============================================
+// ステップフォルム専用ダンス
+//============================================
+static const GFL_BBDACT_ANM DATA_BlActMelodyer_Step[] = {
+  {  0, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  1, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  2, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  {  3, ANMFLIP_OFF, ANMFLIP_OFF,  5 },  ///<
+  { GFL_BBDACT_ANMCOM_END,0,0,0 },
+};
+
 static const GFL_BBDACT_ANM * const DATA_BlActMelodyerTbl[DRAW_ANMNO_MELODYER_MAX] = 
 {
   DATA_BlActMelodyer_Stop,
   DATA_BlActMelodyer_Spin,
   DATA_BlActMelodyer_SpinPose,
   DATA_BlActMelodyer_Shake,
+  DATA_BlActMelodyer_Step,
 };
 

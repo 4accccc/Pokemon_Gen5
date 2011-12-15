@@ -2080,7 +2080,7 @@ const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActSpider =
 //--------------------------------------------------------------
 static void DrawBlActMelodyer_Draw( MMDL *mmdl )
 {
-  u16 status;
+  u16 status,code;
   VecFx32 pos;
   u16 init_flag = FALSE;
   DRAW_BLACT_WORK *work;
@@ -2094,23 +2094,28 @@ static void DrawBlActMelodyer_Draw( MMDL *mmdl )
   
   actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
   
+  code = MMDL_GetOBJCode( mmdl );  
   status = MMDL_GetDrawStatus( mmdl );
-  
+
   if( status != work->anmcnt.set_anm_status ){
-    u16 anm_idx;
+    u16 anm_idx = DRAW_ANMNO_MELODYER_STOP;
     
-    switch( status ){
-    case DRAW_STA_MELODYER_SPIN:
-      anm_idx = DRAW_ANMNO_MELODYER_SPIN;
-      break;
-    case DRAW_STA_MELODYER_SPIN_POSE:
-      anm_idx = DRAW_ANMNO_MELODYER_SPINPOSE;
-      break;
-    case DRAW_STA_MELODYER_SHAKE:
-      anm_idx = DRAW_ANMNO_MELODYER_SHAKE;
-      break;
-    default:
-      anm_idx = DRAW_ANMNO_MELODYER_STOP;
+    if( code == POKE12 ){  //メロエッタ　ボイスフォルム
+      switch( status ){
+      case DRAW_STA_MELODYER_SPIN:
+        anm_idx = DRAW_ANMNO_MELODYER_SPIN;
+        break;
+      case DRAW_STA_MELODYER_SPIN_POSE:
+        anm_idx = DRAW_ANMNO_MELODYER_SPINPOSE;
+        break;
+      case DRAW_STA_MELODYER_SHAKE:
+        anm_idx = DRAW_ANMNO_MELODYER_SHAKE;
+        break;
+      }
+    }else if( code == POKE12_FORM ){  //メロエッタ　ステップフォルム
+      if( status == DRAW_STA_MELODYER_STEP ){
+        anm_idx = DRAW_ANMNO_MELODYER_STEP;
+      }
     }
     
     work->anmcnt.set_anm_status = status;
@@ -2135,7 +2140,8 @@ static void DrawBlActMelodyer_Draw( MMDL *mmdl )
 //--------------------------------------------------------------
 BOOL MMDL_CheckDrawMelodyerAnime( MMDL *mmdl )
 {
-  if( MMDL_GetOBJCode(mmdl) != POKE12 ){
+  u16 code = MMDL_GetOBJCode( mmdl );
+  if( code != POKE12 && code != POKE12_FORM ){
     GF_ASSERT( 0 );
     return( TRUE );
   }else{
@@ -2165,7 +2171,8 @@ BOOL MMDL_CheckDrawMelodyerAnime( MMDL *mmdl )
 //--------------------------------------------------------------
 void MMDL_SetDrawMelodyerStartAnimeFrame( MMDL *mmdl )
 {
-  if( MMDL_GetOBJCode(mmdl) == POKE12 ){
+  u16 code = MMDL_GetOBJCode( mmdl );
+  if( code == POKE12 || code == POKE12_FORM ){
     u16 actID = MMDL_CallDrawGetProc( mmdl, 0 );
     
     if( actID != MMDL_BLACTID_NULL ){
