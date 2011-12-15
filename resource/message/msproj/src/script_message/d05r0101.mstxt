@@ -14,7 +14,7 @@
 ３かい　かてば　ゆうしょう　だぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T07:51:36" />
+				Time="2011-12-15T10:44:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -127,16 +127,16 @@
 			<Text>ヤーコン『わかるか　チェレン
 ポケモンと　ともに　たたかう　いみを▽
 つたえられるのは　おまえ　なんだよ▼
-それに　おまえの
-ともだちだった　あいつは　いないしさ▼
-あとは　わかい　ちから　だ！▼
+それに　おまえの　ともだちだった
+あいつは　いないしさ▼
+それに　わかい　ちから！▼
 みんな　みらいの
 スターが　だいすき　だからな！▼
 さあ！　じゅんびが　できたら
 うけつけカウンターに　いくんだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T07:59:21" />
+				Time="2011-12-15T10:45:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -147,16 +147,16 @@
 			<Text>ヤーコン『わかるか　チェレン
 ポケモンと　共に戦う　意味を▽
 伝えられるのは　おまえ　なんだよ▼
-それに　おまえの
-友達だった　あいつは　いないしさ▼
-あとは　若い　力だ！▼
+それに　おまえの　友達だった
+あいつは　いないしさ▼
+それに　若い　力！▼
 みんな　未来の
 スターが　大好き　だからな！▼
 さあ！　準備が　できたら
 受付カウンターに　いくんだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T07:59:13" />
+				Time="2011-12-15T10:45:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -317,10 +317,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『あっ　オレも！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『あっ　オレもッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:46:38" />
+				Time="2011-12-15T10:45:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -328,10 +328,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『あっ　オレも！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『あっ　オレもッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T06:46:41" />
+				Time="2011-12-15T10:45:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -374,10 +374,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName ]も　はやくしろよ！▼</Text>
+			<Text>[Name:TrainerName ]も　はやくしろ！
+どっちが　うえか　しょうぶだぜッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T06:40:46" />
+				Time="2011-12-15T10:46:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -385,10 +386,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]も　はやくしろよ！▼</Text>
+			<Text>[Name:TrainerName ]も　はやくしろ！
+どっちが　上か　勝負だぜッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T06:40:45" />
+				Time="2011-12-15T10:46:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -682,10 +684,10 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『んー▼
 トーナメント　はつさんか
-はつゆうしょう　したかったぜ</Text>
+はつゆうしょう　したかったぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T10:26:47" />
+				Time="2011-12-15T10:47:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -695,10 +697,10 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『んー▼
 トーナメント　初参加
-初優勝　したかったぜ</Text>
+初優勝　したかったぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T10:27:06" />
+				Time="2011-12-15T10:47:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -848,12 +850,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あたし　かんせんに　きただけだけど
-ちょうせんのため　とおくから　くる▽
+			<Text>ちょうせんのため　とおくから　くる
 トレーナーも　たくさん　いそうね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T10:48:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -861,12 +862,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あたし　観戦に　来ただけだけど
-挑戦のため　遠くから　来る▽
+			<Text>挑戦のため　遠くから　来る
 トレーナーも　たくさん　いそうね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T10:48:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -968,11 +968,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ここって　２ねんまえは
+			<Text>このあたり　２ねんまえは
 れいとうコンテナ　だったのー！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T10:49:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -980,11 +980,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ここって　２年前は
+			<Text>この辺り　２年前は
 冷凍コンテナ　だったのー！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:13" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T10:49:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

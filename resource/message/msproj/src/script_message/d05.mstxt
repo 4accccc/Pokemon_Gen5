@@ -248,12 +248,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『プラズマだん！▼
-おいかけるぞ！
-[Name:TrainerName ]　オマエも　こい！！▼</Text>
+			<Text>おいかけるぞッ！
+[Name:TrainerName ]　オマエも　きてくれッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T06:31:06" />
+				Time="2011-12-15T11:02:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -261,12 +260,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『プラズマ団！▼
-追いかけるぞ！
-[Name:TrainerName ]　オマエも　来い！！▼</Text>
+			<Text>追いかけるぞッ！
+[Name:TrainerName ]　オマエも　来てくれッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T06:31:11" />
+				Time="2011-12-15T11:02:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -277,11 +275,10 @@
 			<Comment>♂
 ・主人公と向き合ってメッセージ表示
 ・続けてswboss_01
-・0＝主人公名
-・1＝ライバル名</Comment>
+・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:35:56" />
+				Time="2011-12-15T11:02:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -311,13 +308,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アクロマ『きこえましたが
-およしなさい▼
+			<Text>アクロマ『およしなさい▼
 わざわざ　きけんなことに
 くびを　はさむ　ひつようは　ない！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T06:31:36" />
+				Time="2011-12-15T11:02:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -325,13 +321,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アクロマ『聞こえましたが
-およしなさい▼
+			<Text>アクロマ『およしなさい▼
 わざわざ　危険なことに
 首を　はさむ　必要は　ない！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T06:31:37" />
+				Time="2011-12-15T11:03:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -374,11 +369,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『さがしてる　ポケモンが
-いるかも　しれないんだ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『さがしてる　ポケモンが！▼
+いもうとの　チョロネコが
+いるかも　しれないんだッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T06:11:43" />
+				Time="2011-12-15T11:04:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -386,11 +382,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『探してる　ポケモンが
-いるかも　しれないんだ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『探してる　ポケモンが！▼
+妹の　チョロネコが
+いるかも　しれないんだッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T06:11:47" />
+				Time="2011-12-15T11:04:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -499,11 +496,14 @@
 ゆうき　ではなく　おろか　です！▼
 ポケモンが　いれば　トレーナーは
 どんなことでも　できるというのか？▼
-はて？　その　しんらいが　ポケモンの
-のうりょくを　ひきだすのでしょうか……</Text>
+トレーナーと　ポケモンは
+モンスターボールで　むすばれている▼
+これは　たんなる　じじつ　でしかなく
+のうりょくを　はっき　させるには▽
+プラス　しんらいが　いるのですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T06:31:50" />
+				Time="2011-12-15T10:58:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -515,11 +515,14 @@
 勇気ではなく　愚行です！▼
 ポケモンが　いれば　トレーナーは
 どんなことでも　できるというのか？▼
-はて？　その信頼が　ポケモンの
-能力を　ひきだすのでしょうか……</Text>
+トレーナーと　ポケモンは
+モンスターボールで　結ばれている▼
+これは　単なる　事実でしかなく
+能力を　発揮させるには▽
+プラス　信頼が　いるのですか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:04:30" />
+				Time="2011-12-15T10:58:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -560,10 +563,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アクロマ『しんじる……　ね</Text>
+			<Text>アクロマ『しんじる……　ね
+ふかくていようそ　すぎますよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:59:01" />
+				Time="2011-12-15T10:56:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -571,10 +575,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アクロマ『信じる……　ね</Text>
+			<Text>アクロマ『信じる……　ね
+不確定要素すぎますよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:37:25" />
+				Time="2011-12-15T10:56:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -619,13 +624,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『いまの　やつら？
-なんだったんだ！？▼
-いいや！　それよりも　きえた
-プラズマだんを　さがさないと！！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『アイツら　なんだよッ！？▼
+あーッ！！
+プラズマだん　どこ　きえたんだよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T06:12:11" />
+				Time="2011-12-15T11:01:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -633,13 +637,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『いまの　やつら？
-なんだったんだ！？▼
-いいや！　それよりも　消えた
-プラズマ団を　探さないと！！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『アイツら　なんだよッ！？▼
+あーッ！！
+プラズマ団　どこ　消えたんだよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T06:12:16" />
+				Time="2011-12-15T11:01:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -687,13 +690,13 @@
 「われわれは　いまいちど
 でんせつの　ドラゴンポケモンを▽
 したがえ　イッシュを　しはいする！」▽
-って　どういうこと？▼
+とは　どういうことだろう？▼
 でんせつの　ドラゴンポケモン
 レシラムも　ゼクロムも▽
 イッシュには　いないはず……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T06:15:12" />
+				Time="2011-12-15T10:54:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -705,13 +708,13 @@
 「われわれは　いまいちど
 伝説の　ドラゴンポケモンを▽
 従え　イッシュを　支配する！」▽
-って　どういうこと？▼
+とは　どういうことだろう？▼
 伝説の　ドラゴンポケモン
 レシラムも　ゼクロムも▽
 イッシュには　いないはず……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T06:15:21" />
+				Time="2011-12-15T10:54:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1871,11 +1874,12 @@
 			<Text>そこの　ほらあなは
 こだいのぬけみち！▼
 さいきん　みつかったんだが
-なんと　リゾートデザートの▽
-こだいのしろに　つながってるぞ！</Text>
+なんと　なんと！▼
+あれ？　どこに
+つながって　いたんだっけ……？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T10:39:57" />
+				Time="2011-12-15T11:01:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1886,11 +1890,12 @@
 			<Text>そこの　洞穴は
 古代の抜け道！▼
 最近　みつかったんだが
-なんと　リゾートデザートの▽
-古代の城に　つながってるぞ！</Text>
+なんと　なんと！▼
+あれ？　どこに
+つながって　いたんだっけ……？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T06:37:02" />
+				Time="2011-12-15T11:02:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
