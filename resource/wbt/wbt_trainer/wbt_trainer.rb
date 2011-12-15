@@ -153,6 +153,8 @@ class WBT_TRDATA
 
     @ace_poke_no = if $monsno_hash.has_key?(@ace_poke) then
                      $monsno_hash[@ace_poke]
+                   elsif @ace_poke == "›" then
+                     1  #‚Æ‚è‚ ‚¦‚¸—LŒø’l‚ğ“ü‚ê‚é
                    else
                      0
                    end

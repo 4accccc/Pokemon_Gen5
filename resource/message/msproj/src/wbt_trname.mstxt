@@ -1755,25 +1755,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トウヤ</Text>
+			<Text>レッド</Text>
 			<TextModifiedBy
 				User="tamada:W00253"
-				Time="2011-10-24T03:58:17" />
+				Time="2011-12-15T12:32:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
-				Time="2011-10-24T03:58:17" />
+				Time="2011-12-15T12:32:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トウヤ</Text>
+			<Text>レッド</Text>
 			<TextModifiedBy
 				User="tamada:W00253"
-				Time="2011-10-24T03:58:17" />
+				Time="2011-12-15T12:32:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
-				Time="2011-10-24T03:58:17" />
+				Time="2011-12-15T12:32:39" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

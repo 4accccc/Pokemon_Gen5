@@ -1165,11 +1165,11 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		466, //切り札ポケモン
 	},
-	{ //053 トウヤ
+	{ //053 レッド
 		POKETYPE_MAX, //オールマイティ
 		PM_MALE, //男
-		HERO            ,// 動作モデル指定
-		TRTYPE_WBHERO      , //トレーナータイプ指定
+		RED             ,// 動作モデル指定
+		TRTYPE_RED         , //トレーナータイプ指定
 		FALSE, //ホドモエイベント参加
 		FALSE, //ホドモエトーナメント参加
 		FALSE, //ワールドトーナメント参加
@@ -1183,7 +1183,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		 4, //優先度
 		30, //パワー乱数
 		 0, //AI
-		SEQ_BGM_VS_WBT                          , // BTL_BGM
+		SEQ_BGM_VS_GS_CHAMP                     , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
 		0, //切り札ポケモン
 	},
@@ -1200,7 +1200,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		FALSE, //レンタルマスタートーナメント参加
 		FALSE, //ミックスマスタートーナメント参加
 		0,    //あまり領域1ビット
-		WBTCUP_CHAMPION, //限定トーナメント種別
+		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
 		30, //パワー乱数
