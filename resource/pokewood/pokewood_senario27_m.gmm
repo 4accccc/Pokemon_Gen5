@@ -468,9 +468,9 @@
 何とかして　落ち着かせないと……</language>
 	</row>
 	<row id="pw_event1_enemy_1">
-		<language name="JPN" width="256">モニカ『なによ　これ！！▼
+		<language name="JPN" width="256">モニカ『なんで　こんな……▼
 なんで　わたしが　こんな　ことに！！</language>
-		<language name="JPN_KANJI" width="256">モニカ『なによ　これ！！▼
+		<language name="JPN_KANJI" width="256">モニカ『何で　こんな……▼
 なんで　私が　こんな　ことに！！</language>
 	</row>
 	<row id="pw_event1_react_hero_0">
@@ -518,9 +518,9 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『[1:00:トレーナー名:1]だよ！！</language>
 	</row>
 	<row id="pw_event2_react_enemy_0">
-		<language name="JPN" width="256">モニカ『[1:00:トレーナー名:1]の　こえ……
+		<language name="JPN" width="256">モニカ『[1:00:トレーナー名:1]の　こえ！？
 どこっ！？　どこなのよーっ！！</language>
-		<language name="JPN_KANJI" width="256">モニカ『[1:00:トレーナー名:1]の　声……
+		<language name="JPN_KANJI" width="256">モニカ『[1:00:トレーナー名:1]の　声！？
 どこっ！？　どこなのよーっ！！</language>
 	</row>
 	<row id="pw_event2_react_hero_1">
@@ -591,7 +591,7 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『グアイさん！
 いったい　どうしたら　いいんですか！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『グアイさん！
-いったい　どうしたら　いいんですか！</language>
+一体　どうしたら　いいんですか！</language>
 	</row>
 	<row id="pw_event3_enemy_4">
 		<language name="JPN" width="256">グアイ『そうだな……
@@ -604,6 +604,12 @@
 逃げると　しよう……</language>
 	</row>
 	<row id="pw_event3_hero_5">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『グアイさん！
+ちょっと　まってください！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『グアイさん！
+ちょっと　待ってださい！！</language>
+	</row>
+	<row id="pw_event3_hero_6">
 		<language name="JPN" width="256">……ボールから　とびだす　モニカ▼
 そのからだは　ビルよりも
 きょだいに　なっていた……▼
@@ -747,6 +753,70 @@
 優しく　ボクを　包む……▼
 それは　とても　心地良くて
 ボクは　ゆっくり　目を　閉じた……</language>
+	</row>
+	<row id="pw_event6_enemy_0">
+		<language name="JPN" width="256">モニカ『キャッ！　あつつっ！！
+だれ！？　イタズラするのはっ！！▽
+ストッキングが　こげちゃうでしょ！！
+コレ　おろしたてなんだからね！！</language>
+		<language name="JPN_KANJI" width="256">モニカ『キャッ！　熱つっ！！
+だれ！？　イタズラするのはっ！！▽
+ストッキングが　こげちゃうでしょ！！
+コレ　おろしたてなんだからね！！</language>
+	</row>
+	<row id="pw_event6_hero_1">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな……
+ボクの　ポケモンの▽
+とっておきの　わざ　なのに……　</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな……
+ボクの　ポケモンの▽
+とっておきの　わざ　なのに……　</language>
+	</row>
+	<row id="pw_event6_enemy_1">
+		<language name="JPN" width="256">グアイ『なんて　ことだ……
+でんせつ　とも　いわれる　わざを▽
+くらっていながら　ストッキングが▽
+コゲる　ていど　とは……▼
+きけんだ……
+かのじょは　きけんすぎる……</language>
+		<language name="JPN_KANJI" width="256">グアイ『何てことだ……
+伝説とも　いわれる　わざを▽
+くらっていながら　ストッキングが▽
+コゲる　程度とは……▼
+危険だ……
+彼女の　存在は　危険すぎる……</language>
+	</row>
+	<row id="pw_event7_enemy_0">
+		<language name="JPN" width="256">モニカ『キャッ！　かゆいっ！！
+だれ！？　イタズラするのはっ！！▽
+ストッキングが　やぶけちゃうでしょ！！
+コレ　おろしたてなんだからね！！</language>
+		<language name="JPN_KANJI" width="256">モニカ『キャッ！　かゆいっ！！
+だれ？　イタズラするのはっ！！▽
+ストッキングが　やぶけちゃうでしょ！！
+コレ　おろしたてなんだからね！！</language>
+	</row>
+	<row id="pw_event7_hero_1">
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな……
+ボクの　ポケモンの▽
+とっておきの　わざ　なのに……　</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな……
+ボクの　ポケモンの▽
+とっておきの　わざ　なのに……　</language>
+	</row>
+	<row id="pw_event7_enemy_1">
+		<language name="JPN" width="256">グアイ『なんて　ことだ……
+でんせつ　とも　いわれる　わざを▽
+くらっていながら　ストッキングが▽
+でんせん　する　ていど　とは……▼
+きけんだ……
+かのじょは　きけんすぎる……</language>
+		<language name="JPN_KANJI" width="256">グアイ『何てことだ……
+伝説とも　いわれる　わざを▽
+くらっていながら　ストッキングが▽
+伝線する　程度とは……▼
+危険だ……
+彼女の　存在は　危険すぎる……</language>
 	</row>
 ﻿	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>

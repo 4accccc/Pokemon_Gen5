@@ -1567,10 +1567,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プロット　ダミー</Text>
+			<Text>NO DATA</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T10:53:06" />
+				Time="2011-12-15T06:48:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1578,10 +1578,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プロット　ダミー</Text>
+			<Text>NO DATA</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T10:54:39" />
+				Time="2011-12-15T06:48:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1604,10 +1604,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プロット　ダミー</Text>
+			<Text>NO DATA</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T10:53:06" />
+				Time="2011-12-15T06:48:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1615,10 +1615,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プロット　ダミー</Text>
+			<Text>NO DATA</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-06-02T10:54:39" />
+				Time="2011-12-15T06:48:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4155,11 +4155,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>５カットの　あいだ　いきのこれ
+			<Text>６カットの　あいだ　いきのこれ
 あいてを　たおすと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-11T03:47:17" />
+				Time="2011-12-15T07:06:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -4167,11 +4167,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>５カットの　あいだ　生き残れ
+			<Text>６カットの　あいだ　生き残れ
 相手を　倒すと　ＮＧ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-11T03:46:34" />
+				Time="2011-12-15T07:06:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
