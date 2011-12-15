@@ -2418,4 +2418,471 @@
 				Time="2011-07-22T10:24:57" />
 		</AttributeCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_memory1_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おお！　おまえが　もってる……
+って　トライバッジは　ないか！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:42:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:39:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>おお！　おまえが　もってる……
+って　トライバッジは　ないか！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:42:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:42:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリンク開始用メッセージ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:38:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER1C
+ポッド（火）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:38:14" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_memory1_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>トライバッジが　なくなった
+りゆうでも　きいていけよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:45:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:45:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>トライバッジが　なくなった
+理由でも　きいていけよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:45:47" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:45:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリンク起動用メッセージ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:37:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER1C
+ポッド（火）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:38:15" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_memory1_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いまはもう　てにはいらない
+トライバッジ……▼
+いや！　また　いつか
+トライバッジを　かがやかせる！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:46:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:45:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>今はもう　手に入らない
+トライバッジ……▼
+いや！　また　いつか
+トライバッジを　輝かせる！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:46:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:46:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリンク終了メッセージ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:37:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER1C
+ポッド（火）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:38:15" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_memory2_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなたに　とって　きょうが
+だいじな　ひに　なるといいね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:44:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:41:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなたに　とって　今日が
+大事な　日に　なるといいね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:45:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:42:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリンク開始用メッセージ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:38:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER1B
+コーン（水）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:38:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_memory2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　コーンにとって
+だいじな　ひ……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:41:36" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:41:26" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　コーンにとって
+大事な　日……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:41:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:41:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリンク起動用メッセージ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:38:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER1B
+コーン（水）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:38:23" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_memory2_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わすれたい　かこ……
+いいえ　わすれては　いけないのです</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:41:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:40:50" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>忘れたい　過去……
+いいえ　忘れては　いけないのです</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:41:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:41:09" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリンク終了メッセージ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:38:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER1B
+コーン（水）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:38:23" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_memory3_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いらっしゃいませ
+こちら　サンヨウレストランです▼
+……もとは　ポケモンジムでしたが
+じじょうが　ありまして</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:43:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:43:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>いらっしゃいませ
+こちら　サンヨウレストランです▼
+……もとは　ポケモンジムでしたが
+事情が　ありまして</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:43:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:43:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリンク開始用メッセージ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:38:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER1C
+デント（草）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:38:30" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_memory3_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そうですね
+じじょうを　おはなし　しましょうか▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:44:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:44:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そうですね
+事情を　お話し　しましょうか▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:44:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:44:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリンク起動用メッセージ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:38:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER1C
+デント（草）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:38:30" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c01gym0101_memory3_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あのひが　あるから
+ぼくたちは　うえを　めざせるんです</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:40:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:38:37" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あの日が　あるから
+ぼくたちは　上を　めざせるんです</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:40:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:40:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリンク終了メッセージ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:38:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER1C
+デント（草）</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:38:31" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

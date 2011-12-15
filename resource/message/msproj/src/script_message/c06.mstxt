@@ -237,13 +237,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>マスターボールは
-どんな　ポケモンも　ぜったいに▽
+どんな　ポケモンでも　ぜったいに▽
 つかまえられる　さいこうの　ボール▼
 たびは　ポケモンとの　であい！
 チャンスを　のがさないでね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T06:07:13" />
+				Time="2011-12-15T11:59:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -252,13 +252,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>マスターボールは
-どんな　ポケモンも　絶対に▽
+どんな　ポケモンでも　絶対に▽
 捕まえられる　最高の　ボール▼
 旅は　ポケモンとの　出会い！
 チャンスを　逃さないでね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T06:07:13" />
+				Time="2011-12-15T11:59:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -908,7 +908,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『はーい！▼
+			<Text>アララギ『ハーイ！▼
 さて　つぎは　やまを　こえても
 いい　ちょうさが▽
 おなじように　できると　いいわね！▼
@@ -918,7 +918,7 @@
 ポケモンずかんの　ためなんだけど▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T09:17:30" />
+				Time="2011-12-15T12:00:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -926,7 +926,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『はーい！▼
+			<Text>アララギ『ハーイ！▼
 さて　次は　山を　越えても
 いい　調査が▽
 同じように　できると　いいわね！▼
@@ -936,7 +936,7 @@
 ポケモン図鑑の　ためなんだけど▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T09:17:57" />
+				Time="2011-12-15T12:00:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1404,10 +1404,11 @@
 			Language="JPN">
 			<Text>２ねんまえ　までに　プラズマだんに
 ポケモンを　うばわれた　ひとって▽
-かなりの　かず　らしいわね……</Text>
+かなりの　かず　らしいわね……▼
+ほんと　ゆるせない！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T09:56:34" />
+				Time="2011-12-15T12:01:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1417,10 +1418,11 @@
 			Language="JPN_KANJI">
 			<Text>２年前までに　プラズマ団に
 ポケモンを　奪われた　人って▽
-かなりの数　らしいわね……</Text>
+かなりの数　らしいわね……▼
+ほんと　許せない！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T09:56:39" />
+				Time="2011-12-15T12:01:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1993,11 +1995,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おもいでリンクの　ラベル
-かりメッセージ▼</Text>
+			<Text>あら　どうしたの？▼
+そうだ！　せっかくだから
+ひみつの　おはなし　しますね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T10:21:40" />
+				Time="2011-12-15T12:58:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2005,11 +2008,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おもいでリンクの　ラベル
-仮メッセージ▼</Text>
+			<Text>あら　どうしたの？▼
+そうだ！　せっかくだから
+秘密の　お話　しますね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T10:21:40" />
+				Time="2011-12-15T12:58:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2017,11 +2021,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリンクようメッセージ</Comment>
+			<Comment>♀
+・おもいでリンク起動用メッセージ
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T10:21:40" />
+				Time="2011-12-15T12:58:40" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>フウロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T12:57:04" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -2029,6 +2042,52 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c06_memory_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……カミツレちゃんには　ひみつ
+おねがいしますね！
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T12:58:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T12:53:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……カミツレちゃんには　秘密
+お願いしますね！
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T12:57:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T12:53:02" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・おもいでリンク終了メッセージ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T12:58:44" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>フウロ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T12:57:08" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c06_mission_add_01"
@@ -2095,10 +2154,10 @@
 			Language="JPN">
 			<Text>ハイリンクに　フェスミッションの
 『[Name:FesMissionName ]』が▽
-ついか　されました</Text>
+ついか　されました！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-28T08:34:05" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T12:02:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2108,10 +2167,10 @@
 			Language="JPN_KANJI">
 			<Text>ハイリンクに　フェスミッションの
 『[Name:FesMissionName ]』が▽
-追加されました</Text>
+追加されました！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-28T08:34:18" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T12:02:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

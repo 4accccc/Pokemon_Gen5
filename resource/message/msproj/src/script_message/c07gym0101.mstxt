@@ -309,11 +309,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おもいでリンクの　ラベル
-かりメッセージ▼</Text>
+			<Text>あのひを　おもいだしていた……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T10:14:32" />
+				Time="2011-12-15T13:00:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -321,11 +320,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おもいでリンクの　ラベル
-仮メッセージ▼</Text>
+			<Text>あの日を　思いだしていた……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T10:14:32" />
+				Time="2011-12-15T13:00:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -333,11 +331,21 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリンクようメッセージ</Comment>
+			<Comment>♂
+・おもいでリンク起動用メッセージ
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T10:14:32" />
+				Time="2011-12-15T12:59:28" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER7
+元ジムリーダー・ハチク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T12:59:16" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -345,6 +353,51 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c07gym0101_memory_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……ありがたい　ことだ
+みなの　こころいきが　しみこむ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:22:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:00:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……ありがたい　ことだ
+みなの　心意気が　染み込む</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:22:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:22:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・おもいでリンク終了メッセージ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T12:59:30" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER7
+元ジムリーダー・ハチク</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T12:59:16" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c07gym0101_statue_01"

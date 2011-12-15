@@ -1596,11 +1596,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おもいでリンクの　ラベル
-かりメッセージ▼</Text>
+			<Text>おや？
+きみは……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T10:22:24" />
+				Time="2011-12-15T12:52:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1608,11 +1608,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おもいでリンクの　ラベル
-仮メッセージ▼</Text>
+			<Text>おや？
+きみは……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T10:22:24" />
+				Time="2011-12-15T12:52:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1620,15 +1620,60 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリンクようメッセージ
+			<Comment>おもいでリンク起動用メッセージ
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T03:37:45" />
+				Time="2011-12-15T12:51:02" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_pc_memory_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わるいね……▼
+きみを　みていたら
+なぜだか　はなしこんでしまったよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T12:51:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T12:51:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わるいね……▼
+きみを　みていたら
+なぜだか　話しこんでしまったよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T12:51:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T12:51:12" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリンク終了メッセージ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T12:51:10" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

@@ -3205,11 +3205,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おもいでリンクの　ラベル
-かりメッセージ▼</Text>
+			<Text>おっ！　きみ！
+その　おもかげは……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T10:17:30" />
+				Time="2011-12-15T13:34:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3217,11 +3217,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おもいでリンクの　ラベル
-仮メッセージ▼</Text>
+			<Text>おっ！　きみ！
+その　おもかげは……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T10:17:30" />
+				Time="2011-12-15T13:34:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3229,11 +3229,20 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリンクようメッセージ</Comment>
+			<Comment>おもいでリンク起動用メッセージ
+※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T10:17:30" />
+				Time="2011-12-15T13:33:45" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN
+＝オーナー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:33:53" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData />
@@ -3241,6 +3250,50 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c04r0201_memory_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>うーん
+メモリアル……！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:34:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:34:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>うーん
+メモリアル……！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:34:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:34:33" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>おもいでリンク終了メッセージ
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:33:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>GENTLEMAN
+＝オーナー</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T13:33:53" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c04r0201_confirm_00">
