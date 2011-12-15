@@ -119,7 +119,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わしは　プラズマだんに　さとされ
+			<Text>３ねんまえ　プラズマだんに　さとされ
 いとしの　ポケモンと　わかれた▼
 それいらい　きままな
 ホテルぐらしを　つづけておる▼
@@ -129,7 +129,7 @@
 いないのは　いいことだ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T02:40:21" />
+				Time="2011-12-15T10:31:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -137,8 +137,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わしは　プラズマ団に　諭され
-いとしの　ポケモンと　別れた▼
+			<Text>３年前　プラズマ団に　諭され
+愛しの　ポケモンと　別れた▼
 それ以来　気ままな
 ホテル暮らしを　続けておる▼
 ……正直　寂しいが
@@ -147,7 +147,7 @@
 いないのは　いいことだ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T02:40:49" />
+				Time="2011-12-15T10:31:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

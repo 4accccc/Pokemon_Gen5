@@ -66,13 +66,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『なあ　オマエも
+			<Text>[Name:TrainerName Idx="1" ]『アンタらも
 プラズマだん　だよな？▼
 さっきの　プラズマだんと
-なにが　ちがうか　おしえてくれよ！▼</Text>
+なにが　ちがうか　おしえてくれよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T10:08:21" />
+				Time="2011-12-15T10:18:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -80,13 +80,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『なあ　オマエも
+			<Text>[Name:TrainerName Idx="1" ]『アンタらも
 プラズマ団　だよな？▼
 さっきの　プラズマ団と
-なにが　違うか　教えてくれよ！▼</Text>
+なにが　違うか　教えてくれよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T10:08:26" />
+				Time="2011-12-15T10:19:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -127,11 +127,11 @@
 ２ねんまえの　けんを　きっかけに
 つみほろぼし　として▼
 もちぬしと　はなればなれに　なった
-ポケモンの　せわをしている▼
-で　おまえは？▼</Text>
+ポケモンの　せわを　している▼
+で　そなたは？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T06:51:55" />
+				Time="2011-12-15T10:19:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -145,10 +145,10 @@
 罪滅ぼし　として▼
 持ち主と　離れ離れに　なった
 ポケモンの　世話を　している▼
-で　おまえは？▼</Text>
+で　そなたは？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T06:52:20" />
+				Time="2011-12-15T10:19:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -195,12 +195,12 @@
 ５ねんまえ　オマエら　プラズマだんに
 いもうとの　だいじな▽
 ポケモンを　うばわれた▽
-なさけない　トレーナー　だよ！▼
+なさけない　トレーナー　だよッ！▼
 なにが　はなればなれ　だ！
-そうしたのは　オマエらだろ！！▼</Text>
+そうしたのは　オマエらだろッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T13:16:10" />
+				Time="2011-12-15T10:19:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -213,12 +213,12 @@
 ５年前　オマエら　プラズマ団に
 妹の　大事な▽
 ポケモンを　奪われた▽
-情けない　トレーナー　だよ！▼
+情けない　トレーナー　だよッ！▼
 なにが　離ればなれ　だ！
-そうしたのは　オマエらだろ！！▼</Text>
+そうしたのは　オマエらだろッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T13:16:24" />
+				Time="2011-12-15T10:19:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -314,11 +314,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『あやまるだけかよ！
-それで　おわり　なのかよ！！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『あやまるだけかよッ！
+それで　おわり　なのかよッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T06:10:36" />
+				Time="2011-12-15T10:23:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -326,11 +326,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『謝るだけかよ！
-それで　終わり　なのかよ！！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『謝るだけかよッ！
+それで　終わり　なのかよッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T13:16:38" />
+				Time="2011-12-15T10:23:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -373,11 +373,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>で　いもうとの　ポケモンは！？▼
-チョロネコだよ　チョロネコは？▼</Text>
+			<Text>いもうとの　ポケモンはッ！？▼
+チョロネコだよ　チョロネコはッ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T13:16:57" />
+				Time="2011-12-15T10:23:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -385,11 +385,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>で　妹の　ポケモンは！？▼
-チョロネコだよ　チョロネコは？▼</Text>
+			<Text>妹の　ポケモンはッ！？▼
+チョロネコだよ　チョロネコはッ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T13:17:04" />
+				Time="2011-12-15T10:23:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -432,7 +432,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ロット『おまえの　ポケモンは
+			<Text>ロット『おまえの　いう　ポケモンは
 ここには　いない……▼
 おそらくだが　いまも　プラズマだんに
 こきつかわれて　いるのだろう▼
@@ -442,7 +442,7 @@
 さきに　すすめないのだ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T06:21:40" />
+				Time="2011-12-15T10:24:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -450,7 +450,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ロット『おまえの　ポケモンは
+			<Text>ロット『おまえの　いう　ポケモンは
 ここには　いない……▼
 おそらくだが　いまも　プラズマ団に
 こきつかわれて　いるのだろう▼
@@ -460,7 +460,7 @@
 先に　進めないのだ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T06:55:20" />
+				Time="2011-12-15T10:24:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -504,10 +504,10 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『もう　いいって！▼
 あやまられても　いもうとの　ポケモン
-ここに　いないんだろ！▼</Text>
+ここに　いないんだろッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-04T10:34:00" />
+				Time="2011-12-15T10:24:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -517,10 +517,10 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『もう　いいって！▼
 謝られても　妹の　ポケモン
-ここに　いないんだろ！▼</Text>
+ここに　いないんだろッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-04T10:34:03" />
+				Time="2011-12-15T10:24:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1998,10 +1998,10 @@ Nの　気持ちは　わかりません▼
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『なあ　[Name:TrainerName ]
-オレと　しょうぶ　しろ！！</Text>
+オレと　しょうぶ　しないか！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T10:02:00" />
+				Time="2011-12-15T10:25:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2010,10 +2010,10 @@ Nの　気持ちは　わかりません▼
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『なあ　[Name:TrainerName ]
-オレと　勝負しろ！！</Text>
+オレと　勝負しないか！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T10:01:54" />
+				Time="2011-12-15T10:25:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2161,11 +2161,12 @@ Nの　気持ちは　わかりません▼
 こいつらみたいに　なにをいわれても
 しんねんを　つらぬくのも　つよさ　か▼
 [Name:TrainerName ]！
-あした　また　こいよ▽
-あいて　してやるから！</Text>
+あした　また　こいよ▼
+あいて　してやるッ！　それが
+オレの　かんしゃの　きもちだッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-29T10:12:06" />
+				Time="2011-12-15T10:26:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2180,11 +2181,12 @@ Nの　気持ちは　わかりません▼
 こいつらみたいに　なにをいわれても
 信念を　貫くのも　強さ　か▼
 [Name:TrainerName ]！
-明日　また　来いよ▽
-相手してやるから！</Text>
+明日　また　来いよ▼
+相手してやるッ！　それが
+オレの　感謝の　気持ちだッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-29T10:12:06" />
+				Time="2011-12-15T10:26:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

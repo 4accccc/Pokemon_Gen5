@@ -7,11 +7,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>テレビの　ばんぐみで　ときどき
-ポケモンの　わざや　とくせいのこと▽
+ポケモンの　わざや　どうぐのこと▽
 おしえてくれたり　するのよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T07:15:28" />
+				Time="2011-12-15T10:33:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20,11 +20,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>テレビの　番組で　ときどき
-ポケモンの　技や　特性のこと▽
+ポケモンの　技や　道具のこと▽
 教えてくれたり　するのよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T07:15:28" />
+				Time="2011-12-15T10:33:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

@@ -872,12 +872,13 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『トレーナーズスクールは
-いま　こうじちゅう▼
-ポケモンジムが　ついか　されるまで
-だれも　はいれないってッ！▼</Text>
+まだ　できたばっかり！▼
+せんせい　というか
+ジムリーダーが　くるまで▽
+だれも　はいれないぜッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T12:46:23" />
+				Time="2011-12-15T08:32:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -886,12 +887,13 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『トレーナーズスクールは
-今　工事中▼
-ポケモンジムが　併設されるまで
-だれも　はいれないってッ！▼</Text>
+まだ　できたばっかり！▼
+先生というか
+ジムリーダーが　赴任するまで▽
+だれも　はいれないぜッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T12:46:23" />
+				Time="2011-12-15T08:32:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

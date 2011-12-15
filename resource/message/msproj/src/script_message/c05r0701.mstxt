@@ -169,12 +169,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きいたか？　トーナメントに　かちぬけば
-ＢＰが　もらえる！　ＢＰを　ためれば▽
-いいものを　こうかん　できるって！</Text>
+			<Text>トーナメントに　かちぬけば　ＢＰ！
+つまり　バトルポイントが　もらえる！▼
+そして　ＢＰを　ためれば
+いいモノに　こうかん　できるんだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T02:53:28" />
+				Time="2011-12-15T10:13:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -182,12 +183,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きいたか？　トーナメントに　勝ち抜けば
-ＢＰが　もらえる！　ＢＰを　貯めれば▽
-いい道具を　交換できるって！</Text>
+			<Text>トーナメントに　勝ち抜けば　ＢＰ！
+つまり　バトルポイントが　もらえる！▼
+そして　ＢＰを　貯めれば
+いいモノに　交換できるんだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T02:53:34" />
+				Time="2011-12-15T10:14:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
