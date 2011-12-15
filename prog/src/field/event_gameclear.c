@@ -522,10 +522,8 @@ static void SetupSequence( GAMECLEAR_WORK* work )
   // 2回目のスクリプト
   work->seqArray[pos++] = GMCLEAR_SEQ_FIELD_OPEN_WAIT;
   work->seqArray[pos++] = GMCLEAR_SEQ_MAP_CHANGE_SECOND;
-  work->seqArray[pos++] = GMCLEAR_SEQ_FADEIN;
   work->seqArray[pos++] = GMCLEAR_SEQ_SCRIPT_CALL_SECOND;
   work->seqArray[pos++] = GMCLEAR_SEQ_BGM_FADE_OUT;
-  work->seqArray[pos++] = GMCLEAR_SEQ_FADEOUT;
   work->seqArray[pos++] = GMCLEAR_SEQ_BGM_STOP;
   work->seqArray[pos++] = GMCLEAR_SEQ_FIELD_CLOSE_WAIT;
 
