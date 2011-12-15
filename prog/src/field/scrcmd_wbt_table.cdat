@@ -81,5 +81,6 @@
   
   DEF_CMD( EvCmdWBTGetRegulationID,   EV_SEQ_WBT_GET_REGULATION_ID )
   DEF_CMD( EvCmdWBTGetNGMessageID,    EV_SEQ_WBT_GET_NG_MSG_ID )
+  DEF_CMD( EvCmdWBTBtlUtilCheckPartySelect,EV_SEQ_WBT_BTL_UTIL_PARTY_SELECT_CHECK )
   END_CMD
   //スクリプトコマンドテーブル終了

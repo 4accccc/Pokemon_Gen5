@@ -75,6 +75,7 @@ extern VMCMD_RESULT EvCmdWBTGMKEffectStart( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGMKWinEffectStart( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGMKLightSet( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGMKExplosion( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdWBTBtlUtilCheckPartySelect( VMHANDLE * core, void *wk );
 
 #include "wbt_system.h"
 #include "scrcmd_work.h"

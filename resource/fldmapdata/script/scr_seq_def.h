@@ -13922,6 +13922,22 @@
 //--------------------------------------------------------------
 /**
  * @def _BTL_UTIL_PARTY_SELECT_CALL
+ * @brief パーティ選択ウィンドウを呼び出す必要があるか返す
+ *
+ * @param ret_wk  TRUEの時、パーティー選択選択ウィンドウを呼び出す必要がある
+ */
+//--------------------------------------------------------------
+#define _WBT_BTL_UTIL_PARTY_SELECT_CALL_CHECK( ret_wk )  \
+    _ASM_WBT_BTL_UTIL_PARTY_SELECT_CALL_CHECK  ret_wk
+
+  .macro  _ASM_WBT_BTL_UTIL_PARTY_SELECT_CALL_CHECK ret_wk 
+  .short  EV_SEQ_WBT_BTL_UTIL_PARTY_SELECT_CHECK
+  .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _BTL_UTIL_PARTY_SELECT_CALL
  * @brief パーティ選択ウィンドウ呼び出し
  *
  * @param regulation  poke_tool/regulation_def.hに定義されたコード

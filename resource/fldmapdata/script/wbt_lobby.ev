@@ -491,6 +491,9 @@ _RET
 /*		手持ちが足りているかチェック処理					  */
 /**************************************************************/
 ev_regist_check:
+{
+  DEFINE_LOCAL LWK_NEED_WIN_CLOSE
+  $LWK_NEED_WIN_CLOSE = TRUE
 
   //レンタルの場合はチェックはスルー
   _WBT_GET_WBT_CUP( LWK_WBT_SELECT_TOURNAMENT )
@@ -499,14 +502,33 @@ ev_regist_check:
     _RET
   ENDIF
 
+  // ウィンドウを閉じるか判断する
+  IF $LWK_WBT_SELECT_TOURNAMENT != SCR_WBT_CUP_DOWNLOAD THEN
+    // パーティー選択ウィンドウが開くかどうかでメッセージウィンドウを閉じるか判断
+    _WBT_BTL_UTIL_PARTY_SELECT_CALL_CHECK( SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _MSGWIN_CLOSE()
+      $LWK_NEED_WIN_CLOSE = FALSE
+    ENDIF
+  ELSE
+    // ダウンロードトーナメント以外の場合はメッセージウィンドウを閉じる
+    $LWK_NEED_WIN_CLOSE = FALSE
+  ENDIF
+
+  // パーティー選択
   _WBT_BTL_UTIL_PARTY_SELECT_CALL( SCWK_ANSWER )
   _DEBUG_PRINT_WK( SCWK_ANSWER )
 
   IF $SCWK_ANSWER == SCR_BTL_PARTY_SELECT_CANCEL THEN
     _RET
-  ELSIF $SCWK_ANSWER != SCR_BTL_PARTY_SELECT_TEMOTI THEN
-  //ELSIF $SCWK_ANSWER == SCR_BTL_PARTY_SELECT_NG THEN
-    //_MSGWIN_CLOSE()
+  ELSIF $SCWK_ANSWER == SCR_BTL_PARTY_SELECT_NG THEN
+
+    // ウィンドウを閉じる必要がある場合のみ、クローズ
+    IF $LWK_NEED_WIN_CLOSE == TRUE THEN
+      _MSGWIN_CLOSE()
+    ENDIF
+
+    // NGメッセージを取得
     _WBT_GET_NG_MSG_ID( SCWK_ANSWER )
     SWITCH $SCWK_ANSWER
     CASE msg_wbt_info_ng_download THEN
@@ -514,12 +536,10 @@ ev_regist_check:
       _SYSWIN_MSG( msg_wbt_info_ng_download, POS_DOWN )
       _MSGWIN_CLOSE()
     CASE msg_wbt_info_ng_all_single, msg_wbt_info_ng_all_double, msg_wbt_info_ng_all_triple, msg_wbt_info_ng_all_rotation THEN
-      _MSGWIN_CLOSE()
       _SYSWIN_MSG( SCWK_ANSWER, POS_DOWN )
       _SYSWIN_MSG( msg_wbt_info_ng_all, POS_DOWN )
       _MSGWIN_CLOSE()
     DEFAULT
-      _MSGWIN_CLOSE()
       _SYSWIN_MSG( SCWK_ANSWER, POS_DOWN )
       _WBT_GET_REGULATION_ID( LWK_REG )
       _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL2( LWK_REG )
@@ -528,7 +548,7 @@ ev_regist_check:
   ENDIF
 
   $LWK_CHK_RULE = TRUE
-
+}
 _RET
 
 /**************************************************************/

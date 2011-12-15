@@ -37,7 +37,7 @@
 #include "arc/message.naix"
 #include "msg/script/msg_wbt_lobby.h" //msg_wbt_info_ng_
 
-#include "scrcmd_fld_battle.h"  //BtlPartySelectCheck
+#include "scrcmd_fld_battle.h"  //BtlPartySelectCheck,SCR_FLD_BATTLE_GetIsCallBtlPartySelect
 
 #include "event_wbt_wifi.h"
 #include "savedata/bsubway_savedata.h"
@@ -172,6 +172,34 @@ VMCMD_RESULT EvCmdWBTGetRegulationID( VMHANDLE * core, void *wk )
   TAMADA_Printf("EvCmdWBTGetRegulationID = %d\n", *ret_wk );
   return VMCMD_RESULT_CONTINUE;
 }
+
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：レギュレーション判定時にポケモン選択が発生するか
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTBtlUtilCheckPartySelect( VMHANDLE * core, void *wk )
+{
+  WBTSYS * wbtsys = WBT_SCR_getWBTSys( wk );
+
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  u16* ret_wk = SCRCMD_GetVMWork(core,work);  //結果を返すワーク
+
+  HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
+  const REGULATION* regu = WBTSYS_GetRegulation( wbtsys );
+
+#ifdef  PM_DEBUG
+  WBTSYS_DEBUG_PrintRegulation( regu );
+#endif
+
+  // レギュレーションチェック時にポケモン選択が必要かを調べる
+  (*ret_wk) = SCR_FLD_BATTLE_GetIsCallBtlPartySelect( gsys, TRUE, regu, heapID );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
 //--------------------------------------------------------------
 /**
  * @brief スクリプトコマンド：ダウンロードレギュレーションの判定
