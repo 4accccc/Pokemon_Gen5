@@ -64,7 +64,7 @@ RESORT_NPC_SYS * RESORT_NPC_SYS_Init( const RESORT_NPC_SYS_PARAM *cp_param, HEAP
   {
     RESORT_NPC_SYS *p_wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(RESORT_NPC_SYS) );
     p_wk->param = *cp_param;
-    p_wk->p_binary_npc        = RESORT_BINARY_NPC_Init( heapID );
+    p_wk->p_binary_npc        = cp_param->p_binary_npc;
     p_wk->p_binary_offreco    = NULL;
     p_wk->p_binary_mouthcomm  = RESORT_BINARY_MOUTHCOMM_Init( heapID );
 
@@ -83,7 +83,6 @@ RESORT_NPC_SYS * RESORT_NPC_SYS_Init( const RESORT_NPC_SYS_PARAM *cp_param, HEAP
 void RESORT_NPC_SYS_Exit( RESORT_NPC_SYS *p_wk )
 {
   RESORT_BINARY_MOUTHCOMM_Exit( p_wk->p_binary_mouthcomm );
-  RESORT_BINARY_NPC_Exit( p_wk->p_binary_npc );
   GFL_HEAP_FreeMemory( p_wk );
 }
 //----------------------------------------------------------------------------

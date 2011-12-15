@@ -145,6 +145,7 @@ void RESORT_RECEPTION_Setup( FIELDMAP_WORK *p_fieldmap )
     param.max   = RESORT_RECEPTION_NPC_MAX;
     param.p_city = RESORT_SYSTEM_GetCityData( p_wk->p_sys );
     param.placeID  = RESORT_PLACEID_RECEPTION;
+    param.p_binary_npc = RESORT_SYSTEM_GetBinaryNpc( p_wk->p_sys );
     p_wk->p_npc_sys = RESORT_NPC_SYS_Init( &param, heapID );
   }
 }

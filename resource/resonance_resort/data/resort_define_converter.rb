@@ -68,7 +68,8 @@ DEFINE_COL_ITEMLIST      = 36        #列：抽選アイテムタイプ
 DEFINE_COL_CITYPRIZE     = 38        #列：街LVご褒美
 DEFINE_COL_RANKDATA      = 40        #列：ランクデータ
 DEFINE_COL_VERSION       = 42        #列：バージョン
-DEFINE_COL_END           = 44        #列最後
+DEFINE_COL_SPOT_CONDITION = 44        #列：条件
+DEFINE_COL_END           = 46        #列最後
 def convertDefine( csv, header, hash, hashNumber )
 
   hashPersonStr     = Hash.new()
@@ -86,6 +87,7 @@ def convertDefine( csv, header, hash, hashNumber )
   hashPrizeType     = Hash.new()
   hashSpotRankType  = Hash.new()
   hashVersion       = Hash.new()
+  hashSpotCondition = Hash.new()
 
   #日本語→タグと日本語→値のハッシュを作成
   for row in DEFINE_ROW_START...csv.row_length-1
@@ -132,6 +134,8 @@ def convertDefine( csv, header, hash, hashNumber )
         hashSpotRankType.store( japStr, engStr )
       when DEFINE_COL_VERSION
         hashVersion.store( japStr, engStr )
+      when DEFINE_COL_SPOT_CONDITION
+        hashSpotCondition.store( japStr, engStr )
       end
 
       col+=2
@@ -232,6 +236,12 @@ def convertDefine( csv, header, hash, hashNumber )
     header.write( "#define RESORT_VERSION_#{v} (#{hashNumber[k]}) //#{k}\n" )
   }
   header.write( "#define RESORT_VERSION_MAX (#{hashVersion.size}) //最大\n" )
+
+  header.write( "//条件\n" )
+  hashSpotCondition.each{ |k,v|
+    header.write( "#define RESORT_SPOT_CONDITION_#{v} (#{hashNumber[k]}) //#{k}\n" )
+  }
+  header.write( "#define RESORT_SPOT_CONDITION_MAX (#{hashSpotCondition.size}) //最大\n" )
 
   #定義をruby用ハッシュテーブルに書き込み
   hash.write( "$define_hash = {\n" )

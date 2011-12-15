@@ -44,6 +44,7 @@ typedef struct
   u32 max;                //ìÆçÏè„å¿
   RESORT_PLACEID placeID; //Ç«ÇÃèÍèäÇ≈ìÆçÏÇ∑ÇÈÇ©
   RESORT_CITY_DATA    *p_city;
+  RESORT_BINARY_NPC   *p_binary_npc;
 } RESORT_NPC_SYS_PARAM;
 
 extern RESORT_NPC_SYS * RESORT_NPC_SYS_Init( const RESORT_NPC_SYS_PARAM *cp_param, HEAPID heapID );

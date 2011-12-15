@@ -1631,6 +1631,55 @@ static u32 Resort_Util_DrawLotsSpotGroup( const RESORT_ABSTRUCT_DATA *cp_wk, RES
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  スポット条件チェック
+ *
+ *	@param	RESORT_SYSTEM *p_sys  システム
+ *	@param	RESORT_BINARY_SPOT *cp_spot_data  スポットデータ
+ *	@param	idx   スポットインデックス
+ *
+ *	@return TRUE条件に合致  FALSE条件に合わずでない
+ */
+//-----------------------------------------------------------------------------
+static BOOL Resort_Util_IsSpotConditionOK( RESORT_SYSTEM *p_sys, const RESORT_BINARY_SPOT *cp_spot_data, u16 idx )
+{
+  u16 condition = RESORT_BINARY_SPOT_GetData( cp_spot_data, idx, RESORT_BINARY_SPOT_PARAM_CONDITION );
+
+  switch( condition )
+  {
+  default:
+    GF_ASSERT(0);
+    return FALSE;
+  case RESORT_SPOT_CONDITION_NONE:
+    return TRUE;
+  case RESORT_SPOT_CONDITION_MOUTHCOMM_00:
+  case RESORT_SPOT_CONDITION_MOUTHCOMM_01:
+  case RESORT_SPOT_CONDITION_MOUTHCOMM_02:
+  case RESORT_SPOT_CONDITION_MOUTHCOMM_03:
+  case RESORT_SPOT_CONDITION_MOUTHCOMM_04:
+  case RESORT_SPOT_CONDITION_MOUTHCOMM_05:
+  case RESORT_SPOT_CONDITION_MOUTHCOMM_06:
+  case RESORT_SPOT_CONDITION_MOUTHCOMM_07:
+  case RESORT_SPOT_CONDITION_MOUTHCOMM_08:
+  case RESORT_SPOT_CONDITION_MOUTHCOMM_09:
+  case RESORT_SPOT_CONDITION_MOUTHCOMM_10:
+  case RESORT_SPOT_CONDITION_MOUTHCOMM_11:
+  case RESORT_SPOT_CONDITION_MOUTHCOMM_12:
+  case RESORT_SPOT_CONDITION_MOUTHCOMM_13:
+  case RESORT_SPOT_CONDITION_MOUTHCOMM_14:
+  case RESORT_SPOT_CONDITION_MOUTHCOMM_15:
+    {
+      RESORT_CITY_DATA  *p_city_data  = RESORT_SYSTEM_GetCityData(p_sys);
+      RESORT_BINARY_NPC *p_binary_npc = RESORT_SYSTEM_GetBinaryNpc( p_sys );
+      u16 city_lv = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_LV, NULL );
+      int idx = condition - RESORT_SPOT_CONDITION_MOUTHCOMM_00;
+      u16 apper_lv = RESORT_BINARY_NPC_GetData(p_binary_npc, idx, RESORT_BINARY_NPC_PARAM_CITY_LV );
+      return city_lv >= apper_lv;
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  グループから行きたい場所IDを抽選
  *
  *	@param	const RESORT_ABSTRUCT_DATA *cp_wk ワーク
@@ -1655,7 +1704,9 @@ static u32 Resort_Util_DrawLotsWantSpotByGroup( const RESORT_ABSTRUCT_DATA *cp_w
     for( i = 1; i < RESORT_BINARY_SPOT_GetMax(cp_spot_data); i++ )
     {
       u16 g = RESORT_BINARY_SPOT_GetData( cp_spot_data, i, RESORT_BINARY_SPOT_PARAM_GROUP );
-      if( group == g )
+      BOOL is_condition_ok  = Resort_Util_IsSpotConditionOK( p_sys, cp_spot_data, i );
+
+      if( group == g && is_condition_ok )
       {
         cnt++;
       }
@@ -1669,7 +1720,8 @@ static u32 Resort_Util_DrawLotsWantSpotByGroup( const RESORT_ABSTRUCT_DATA *cp_w
     for( i = 1; i < RESORT_BINARY_SPOT_GetMax(cp_spot_data); i++ )
     {
       u16 g = RESORT_BINARY_SPOT_GetData( cp_spot_data, i, RESORT_BINARY_SPOT_PARAM_GROUP );
-      if( group == g )
+      BOOL is_condition_ok  = Resort_Util_IsSpotConditionOK( p_sys, cp_spot_data, i );
+      if( group == g && is_condition_ok )
       {
         if( cnt == rnd )
         {

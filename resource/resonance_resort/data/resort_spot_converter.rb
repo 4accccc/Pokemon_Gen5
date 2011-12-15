@@ -58,13 +58,14 @@ SPOT_COL_START    = 1     #列開始位置
 SPOT_COL_TAG      = SPOT_COL_START     #列：タグ
 SPOT_COL_MSG_M   = 2     #列:メッセージ（男）
 SPOT_COL_MSG_F   = 3     #列:メッセージ（女）
-SPOT_COL_GROUP    = 4     #列：グループ
-SPOT_COL_BASEEXP  = 5     #列：ベース経験値
-SPOT_COL_TYPE     = 6     #列：タイプ
-SPOT_COL_DATA     = 7     #列：データ
-SPOT_COL_EXP      = 8     #列：経験値
-SPOT_COL_EFF_MSG_M  = 9     #列：msgid
-SPOT_COL_EFF_MSG_F  = 10     #列：msgid
+SPOT_COL_CONDITION   = 4     #列:条件
+SPOT_COL_GROUP    = 5     #列：グループ
+SPOT_COL_BASEEXP  = 6     #列：ベース経験値
+SPOT_COL_TYPE     = 7     #列：タイプ
+SPOT_COL_DATA     = 8     #列：データ
+SPOT_COL_EXP      = 9     #列：経験値
+SPOT_COL_EFF_MSG_M  = 10     #列：msgid
+SPOT_COL_EFF_MSG_F  = 11     #列：msgid
 
 SPOT_COL_DATA_MAX = 6     #タイプ、データ、経験値が何回あるか
 
@@ -79,6 +80,7 @@ def convertAppeal( csv, data, msg_h, header )
     tag = csv.get( row, SPOT_COL_TAG )
     msg_m  = csv.get( row, SPOT_COL_MSG_M )
     msg_f  = csv.get( row, SPOT_COL_MSG_F )
+    condition = csv.get( row, SPOT_COL_CONDITION )
     baseexp  = csv.get( row, SPOT_COL_BASEEXP )
     group  = csv.get( row, SPOT_COL_GROUP )
 
@@ -97,6 +99,12 @@ def convertAppeal( csv, data, msg_h, header )
       exit(1)
     end
 
+    if $define_hash[condition] == nil
+      puts "#{condition}が見つかりません行#{row}"
+      exit(1)
+    end
+    data.write_u16( $define_hash[condition] )
+
     if $define_hash[group] == nil
       puts "#{group}が見つかりません行#{row}"
       exit(1)
@@ -104,6 +112,7 @@ def convertAppeal( csv, data, msg_h, header )
 
     data.write_u16( $define_hash[group] )
     data.write_u16( baseexp )
+    data.write_u16( 0 )
 
     for col in 0...SPOT_COL_DATA_MAX
       type  = csv.get( row, SPOT_COL_TYPE + col*5 )
@@ -121,14 +130,16 @@ def convertAppeal( csv, data, msg_h, header )
         exit(1)
       end
 
-    data.write_u16( $define_hash[type] )
+      data.write_u16( $define_hash[type] )
 
       if $define_hash[dat] == nil
-		data.write_u16( dat )
-	  else
-		data.write_u16( $define_hash[dat] )
-	  end
+		    data.write_u16( dat )
+	    else
+		    data.write_u16( $define_hash[dat] )
+	    end
+
       data.write_u16( $define_hash[exp] )
+
       begin
         data.write_u16( msgdata.search( "#{eff_m}", "#{row}行の#{msg_h}" ) )
       rescue HeaderSearchError
