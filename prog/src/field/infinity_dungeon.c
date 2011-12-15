@@ -1745,8 +1745,21 @@ static u32 gethint_gate_tr_is_up_down( const TRHINT_WK *p_wk )
 //-----------------------------------------------------------------------------
 static u32 gethint_boss_floor( const TRHINT_WK *p_wk )
 {
-  ONOUE_Printf("ヒント：どのフロアにいるか\n");
-  return msg_hint_boss_floor_01 + p_wk->talk_type;
+  // 現在のフロア
+  u8 now_floor = INFINITYDUNGEON_SAVE_GetFloorID( p_wk->p_save );
+  // ボス部屋の存在するフロア
+  u8 boss_floor = INFINITY_DUNGEON_GetBossFloor( p_wk->p_dungeon_data );
+
+  if( now_floor !=  boss_floor )
+  {
+    ONOUE_Printf("ヒント：どのフロアにいるか\n");
+    return msg_hint_boss_floor_01 + p_wk->talk_type;
+  }
+  else
+  {
+    ONOUE_Printf("ヒント：どのフロアにいるか(今の階)\n");
+    return msg_hint_boss_now_01 + p_wk->talk_type;
+  }
 }
 
 //----------------------------------------------------------------------------

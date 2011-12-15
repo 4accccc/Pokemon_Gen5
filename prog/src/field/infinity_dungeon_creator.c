@@ -89,7 +89,7 @@ void INF_DCREATOR_SetDungeonData( INF_DUNGEON_DATA *p_dungeon_data ,int area_no,
     }
   }
 
-  // エレベータ設置配列を設定（必ず右上）
+  // エレベータ設置配列を設定（必ず左上）
   {
     for( i = 0; i<INFINITYDUNGEON_FLOOR_MAX; i++ )
     {
