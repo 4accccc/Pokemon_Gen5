@@ -40,3 +40,17 @@ extern VMCMD_RESULT EvCmdBtlUtilPartySelect( VMHANDLE * core, void *wk );
 //--------------------------------------------------------------
 extern GMEVENT* BtlPartySelectCheck( GAMESYS_WORK* gsys, const BOOL same, const REGULATION* regulation, u16* ret_wk, HEAPID heapID );
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レギュレーションチェック時に、手持ち選択が発生するかチェック
+ *
+ *	@param	gsys        ゲームシステム
+ *	@param	same        同一種類ポケモンを許可するか
+ *	@param	*regulation レギュレーション
+ *	@param	heapID      ヒープID
+ *
+ *	@retval TRUEのとき呼出が発生する
+ */
+//-----------------------------------------------------------------------------
+extern BOOL SCR_FLD_BATTLE_GetIsCallBtlPartySelect( GAMESYS_WORK* gsys, const BOOL same, const REGULATION* regulation ,HEAPID heapID );
+

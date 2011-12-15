@@ -57,6 +57,8 @@ static u16* btlutil_CreateRegulationOutPokeArray(
     const REGULATION* regu, GAMEDATA* gdata, u16* num,HEAPID heapID );
 
 static GMEVENT_RESULT event_BtlPartySelect(GMEVENT * event, int *  seq, void * work);
+static GMEVENT* CreatePartySelectEvent( GAMESYS_WORK* gsys ,const POKE_REG_RETURN_ENUM reg_my, const POKE_REG_RETURN_ENUM reg_btl, u16* ret_wk ,HEAPID heapID );
+static BOOL GetBtlPartyRegulationCheckResult( GAMESYS_WORK* gsys, const BOOL same, const REGULATION* regulation,POKE_REG_RETURN_ENUM *reg_my, POKE_REG_RETURN_ENUM *reg_btl, u16* ret_wk ,HEAPID heapID );
 
 //////////////////////////////////////////////////////////////////////////
 //グローバル
@@ -193,24 +195,56 @@ static u16* btlutil_CreateRegulationOutPokeArray(
  */
 GMEVENT* BtlPartySelectCheck( GAMESYS_WORK* gsys, const BOOL same, const REGULATION* regulation, u16* ret_wk, HEAPID heapID )
 {
-  PARTY_SELECT_WORK* wk;
-  GAMEDATA* gdata;
-  POKEPARTY* btl_party,* my_party;
   POKE_REG_RETURN_ENUM reg_my,reg_btl;
-  GMEVENT* event;
+  BOOL is_event;
+
+  // レギュレーションを取得する
+  is_event = GetBtlPartyRegulationCheckResult( gsys ,same ,regulation ,&reg_my ,&reg_btl ,ret_wk ,heapID );
+
+  // 手持ち選択イベントの有無をチェック
+  if( is_event == TRUE )
+  {
+    // 手持ち選択イベントを実行
+    return CreatePartySelectEvent( gsys ,reg_my ,reg_btl ,ret_wk ,heapID);
+  }
+  
+  return NULL;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レギュレーションチェックを行う
+ *
+ *	@param	gsys　      ゲームシステム
+ *	@param	same　      ポケモンの重複を許可するか
+ *	@param	*regulation 調べるレギュレーション
+ *	@param	*reg_my     手持ちレギュレーションの状態
+ *	@param	*reg_btl    バトルボックスのレギュレーション状態
+ *	@param	ret_wk      レギュレーションチェックの結果（手持ち選択が必要な場合はNGがセットされている）      
+ *	@param	heapID      ヒープID
+ *
+ *	@retval バトルボックス、手持ちを選択する必要がある時はTRUEを返す
+ */
+//-----------------------------------------------------------------------------
+static BOOL GetBtlPartyRegulationCheckResult( GAMESYS_WORK* gsys, const BOOL same, const REGULATION* regulation,POKE_REG_RETURN_ENUM *reg_my, POKE_REG_RETURN_ENUM *reg_btl, u16* ret_wk ,HEAPID heapID )
+{
+  GAMEDATA* gdata;
+  POKEPARTY *my_party;
   u32 fail_bit = 0;
 
   gdata = GAMESYSTEM_GetGameData( gsys );
   
   fail_bit = 0;
   my_party = GAMEDATA_GetMyPokemon( gdata );
-  btl_party = NULL;
+        
+  // NGに初期化
+  *ret_wk = SCR_BTL_PARTY_SELECT_NG;          //ＮＧ
 
   if (same){
-    reg_my = PokeRegulationMatchPartialPokeParty( regulation, my_party);  //選択前のポケモンの重複OK
+    (*reg_my) = PokeRegulationMatchPartialPokeParty( regulation, my_party);  //選択前のポケモンの重複OK
   }
   else{
-    reg_my = PokeRegulationMatchLookAtPokeParty( regulation, my_party, &fail_bit ); //重複NG
+    (*reg_my) = PokeRegulationMatchLookAtPokeParty( regulation, my_party, &fail_bit ); //重複NG
   }
   
   {
@@ -218,47 +252,109 @@ GMEVENT* BtlPartySelectCheck( GAMESYS_WORK* gsys, const BOOL same, const REGULAT
   
     if(BATTLE_BOX_SAVE_IsIn( bb_save ) == TRUE){
       //バトルボックスにポケモンがいる
+      POKEPARTY *btl_party = NULL;
       fail_bit = 0;
+
       btl_party = BATTLE_BOX_SAVE_MakePokeParty( bb_save, heapID );
       if (same){
-        reg_btl = PokeRegulationMatchPartialPokeParty(regulation, btl_party);   //選択前のポケモンの重複OK
+        (*reg_btl) = PokeRegulationMatchPartialPokeParty(regulation, btl_party);   //選択前のポケモンの重複OK
       }
       else{
-        reg_btl = PokeRegulationMatchLookAtPokeParty( regulation, btl_party, &fail_bit ); //重複NG
+        (*reg_btl) = PokeRegulationMatchLookAtPokeParty( regulation, btl_party, &fail_bit ); //重複NG
       }
+      if( btl_party != NULL ){
+        GFL_HEAP_FreeMemory(btl_party); 
+      }
+
     }else{
       //バトルボックスにポケモンがいない
-      if(reg_my != POKE_REG_OK){
+      if( (*reg_my) != POKE_REG_OK){
         *ret_wk = SCR_BTL_PARTY_SELECT_NG;          //ＮＧ
       }else{
         *ret_wk = SCR_BTL_PARTY_SELECT_TEMOTI;      //手持ちのみＯＫ
       }
-      return NULL;
+      return FALSE;
     }
   }
 
-  if(reg_my != POKE_REG_OK && reg_btl != POKE_REG_OK){  //両方ダメ
-    if( btl_party != NULL ){
-      GFL_HEAP_FreeMemory(btl_party); 
-    }
+  if( (*reg_my) != POKE_REG_OK && (*reg_btl) != POKE_REG_OK){  //両方ダメ
     *ret_wk = SCR_BTL_PARTY_SELECT_NG;
+    return FALSE;
+  }
+    
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レギュレーションチェック時に、手持ち選択が発生するかチェック
+ *
+ *	@param	gsys        ゲームシステム
+ *	@param	same        同一種類ポケモンを許可するか
+ *	@param	*regulation レギュレーション
+ *	@param	heapID      ヒープID
+ *
+ *	@retval TRUEのとき呼出が発生する
+ */
+//-----------------------------------------------------------------------------
+BOOL SCR_FLD_BATTLE_GetIsCallBtlPartySelect( GAMESYS_WORK* gsys, const BOOL same, const REGULATION* regulation ,HEAPID heapID )
+{
+  POKE_REG_RETURN_ENUM reg_my,reg_btl;
+  u16 ret_wk;
+
+  // ポケモン選択が発生するかチェックする
+  return GetBtlPartyRegulationCheckResult( gsys ,same ,regulation ,&reg_my ,&reg_btl ,&ret_wk ,heapID );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  手持ち選択イベントを作成
+ *
+ *	@param	gsys 
+ *	@param	reg_my
+ *	@param	reg_btl
+ *	@param	ret_wk 
+ *	@param	heapID 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT* CreatePartySelectEvent( GAMESYS_WORK* gsys ,const POKE_REG_RETURN_ENUM reg_my, const POKE_REG_RETURN_ENUM reg_btl, u16* ret_wk ,HEAPID heapID )
+{
+  PARTY_SELECT_WORK* wk;
+  GAMEDATA* gdata;
+  GMEVENT* event;
+  BATTLE_BOX_SAVE *bb_save;
+  POKEPARTY* btl_party,* my_party;
+
+  gdata = GAMESYSTEM_GetGameData( gsys );
+  my_party = GAMEDATA_GetMyPokemon( gdata );
+  bb_save = BATTLE_BOX_SAVE_GetBattleBoxSave( GAMEDATA_GetSaveControlWork( gdata ) );
+
+  // バトルボックスにポケモンがいないときは呼び出す必要が無い
+  if(BATTLE_BOX_SAVE_IsIn( bb_save ) == TRUE){
+    btl_party = BATTLE_BOX_SAVE_MakePokeParty( bb_save, heapID );
+
+    event = GMEVENT_Create(gsys,NULL, event_BtlPartySelect, sizeof( PARTY_SELECT_WORK ));
+    wk = GMEVENT_GetEventWork(event);
+    wk->gsys = gsys;
+    wk->fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+    wk->ret_wk = ret_wk;
+    wk->heapID = heapID;
+
+    wk->my_party = my_party;
+    wk->btl_party = btl_party;
+    wk->my_party_ng = reg_my != POKE_REG_OK ? TRUE : FALSE;
+    wk->btl_party_ng = reg_btl != POKE_REG_OK ? TRUE : FALSE;
+
+    IWASAWA_Printf(" BoxSelect mine = %d, box = %d\n", wk->my_party_ng, wk->btl_party_ng );
+  }
+  else
+  {
+    GF_ASSERT_MSG(0,"バトルボックスにポケモンが存在しません\n");
     return NULL;
   }
-  
-  event = GMEVENT_Create(gsys,NULL, event_BtlPartySelect, sizeof( PARTY_SELECT_WORK ));
 
-  wk = GMEVENT_GetEventWork(event);
-  wk->gsys = gsys;
-  wk->fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-  wk->ret_wk = ret_wk;
-  wk->heapID = heapID;
-
-  wk->my_party = my_party;
-  wk->btl_party = btl_party;
-  wk->my_party_ng = reg_my != POKE_REG_OK ? TRUE : FALSE;
-  wk->btl_party_ng = reg_btl != POKE_REG_OK ? TRUE : FALSE;
-
-  IWASAWA_Printf(" BoxSelect mine = %d, box = %d\n", wk->my_party_ng, wk->btl_party_ng );
   return event;
 }
 
