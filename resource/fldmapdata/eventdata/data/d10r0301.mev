@@ -1,5 +1,5 @@
 #event data
-#save date:2011/12/15 17:56:17
+#save date:2011/12/15 21:09:40
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d10r0301.wms
 #SECTION START:OBJ_EVENT
@@ -107,7 +107,7 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-D10R0301_SWPLAZMAM_01
+D10R0301_SWPLAZMAM_03
 #OBJ CODE Number
 SWPLAZMAM
 #MOVE CODE Number
@@ -116,6 +116,37 @@ MV_DMY
 EV_TYPE_NORMAL
 #Flag Name
 FV_D10R0301_SWPLAZMAM_02
+#Event Script Name
+SCRID_D10R0301_SWPLAZMAM_03
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+264 16 -664
+#event number: 4
+#type
+1
+#ID name
+D10R0301_SWPLAZMAM_01
+#OBJ CODE Number
+SWPLAZMAM
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D10R0301_SWPLAZMAM_01
 #Event Script Name
 SCRID_D10R0301_SWPLAZMAM_01
 #Direction Type Number
@@ -134,37 +165,6 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 168 0 -792
-#event number: 4
-#type
-1
-#ID name
-D10R0301_SWPLAZMAM_03
-#OBJ CODE Number
-SWPLAZMAM
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_D10R0301_SWPLAZMAM_01
-#Event Script Name
-SCRID_DUMMY
-#Direction Type Number
-DIR_LEFT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-200 0 -840
 #event number: 5
 #type
 1
@@ -179,9 +179,9 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_D10R0301_SWPLAZMAM_01
 #Event Script Name
-SCRID_DUMMY
+SCRID_D10R0301_SWPLAZMAM_04
 #Direction Type Number
-DIR_LEFT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -195,7 +195,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-200 0 -872
+200 0 -792
 #event number: 6
 #type
 1
@@ -226,7 +226,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 0 -856
+168 0 -872
 #event number: 7
 #type
 1
@@ -239,7 +239,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_D10R0301_SWPLAZMAM_02
+FV_D10R0301_SWPLAZMAM_01
 #Event Script Name
 SCRID_D10R0301_SWPLAZMAM_02
 #Direction Type Number
@@ -270,7 +270,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_D10R0301_SWPLAZMAM_02
+FV_D10R0301_SWPLAZMAM_01
 #Event Script Name
 SCRID_D10R0301_SWPLAZMAW_01
 #Direction Type Number
@@ -396,7 +396,7 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_D10R0301_SWPLAZMAM_01
 #Event Script Name
-SCRID_DUMMY
+SCRID_D10R0301_SWPLAZMAM_05
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -412,7 +412,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-264 16 -664
+136 0 -792
 #event number: 13
 #type
 1
@@ -425,9 +425,9 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_D10R0301_SWPLAZMAM_01
+FV_D10R0301_SWPLAZMAM_02
 #Event Script Name
-SCRID_DUMMY
+SCRID_D10R0301_SWPLAZMAM_06
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -453,59 +453,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-4
-#event number: 0
-#Bg Event Label
-BGID_D10R0301_TEST_03
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
-#Bg Script Name
-SCRID_DUMMY
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-136 0 -792
-#event number: 1
-#Bg Event Label
-BGID_D10R0301_TEST_04
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
-#Bg Script Name
-SCRID_DUMMY
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-200 0 -792
-#event number: 2
-#Bg Event Label
-BGID_D10R0301_TEST_01
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
-#Bg Script Name
-SCRID_DUMMY
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-168 0 -856
-#event number: 3
-#Bg Event Label
-BGID_D10R0301_TEST_02
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_ALL
-#Bg Script Name
-SCRID_DUMMY
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-168 0 -872
+0
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
@@ -530,7 +478,7 @@ WK_SCENE_D10R0301_SWPLAZMA_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 0 -888
+152 8 -904
 #size
 3 1
 #Map Event List Data End

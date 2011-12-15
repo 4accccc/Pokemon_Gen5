@@ -15,8 +15,8 @@
 #define D10R0301_PLAZMAM_01                0
 #define D10R0301_PLAZMAM_02                1
 #define D10R0301_SAGE6_01                  2
-#define D10R0301_SWPLAZMAM_01              3
-#define D10R0301_SWPLAZMAM_03              4
+#define D10R0301_SWPLAZMAM_03              3
+#define D10R0301_SWPLAZMAM_01              4
 #define D10R0301_SWPLAZMAM_04              5
 #define D10R0301_SWRIVAL_01                6
 #define D10R0301_SWPLAZMAM_02              7
@@ -32,9 +32,5 @@
 #ifndef ZONE_D10R0301_EVB_H
 #define ZONE_D10R0301_EVB_H
 
-#define BGID_D10R0301_TEST_03             0
-#define BGID_D10R0301_TEST_04             1
-#define BGID_D10R0301_TEST_01             2
-#define BGID_D10R0301_TEST_02             3
 
 #endif //ZONE_D10R0301_EVB_H
