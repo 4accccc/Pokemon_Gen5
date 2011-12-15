@@ -1410,6 +1410,8 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
   DEFINE_LOCAL	LWK_TR_START_MSG_ID
   DEFINE_LOCAL	LWK_TR_END_MSG_ID
   DEFINE_LOCAL	LWK_BOSS_TRNO
+  DEFINE_LOCAL	LWK_PLAYER_X
+  DEFINE_LOCAL	LWK_PLAYER_Z
  
   // ROMバージョン
   _GET_ROM_VERSION ( LWK_ROM_VERSION )
@@ -1489,11 +1491,22 @@ EVENT_START  ev_infinity_dungeon_battle_boss_trainer
     _INFINITY_DUNGEON_SET_MAP_STATUS( INFINITY_DUNGEON_MAP_STATUS_BOSS_WIN )
   
     // 出口まで歩く
-	  IF $LWK_D_VERSION == VERSION_B2 THEN
-      _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 6, 13, FORCE_TYPE_NOT, 8, DIR_UD)
-    ELSE 
-      _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 6, 13, FORCE_TYPE_NOT, 8, DIR_UD)
+
+    //プレイヤー座標取得
+    _PLAYER_POS_GET( LWK_PLAYER_X,LWK_PLAYER_Z )
+
+    // 横から話しかけた時は一歩下に移動
+    IF $LWK_PLAYER_Z == 6 THEN
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_down_2 )
+      _OBJ_ANIME_WAIT()
+    ELSIF $LWK_PLAYER_Z == 5 THEN
+      // ボスの左下まで移動
+      _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 5, 8, FORCE_TYPE_NOT, 8, DIR_LR)
+      _OBJ_ANIME_WAIT()
     ENDIF
+
+    // 入り口まで移動
+    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 6, 14, FORCE_TYPE_NOT, 8, DIR_LR)
     _OBJ_ANIME_WAIT()
   
     // 下を向く
@@ -2670,6 +2683,13 @@ _ANIME_LABEL	anm_move_down_7
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_move_down_1
 	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 2歩前に進む
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_down_2
+	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
