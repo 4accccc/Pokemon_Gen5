@@ -102,7 +102,6 @@ extern WBT_TRPRI WBTTOOL_GetRomTrainerPriority(
 extern void WBTTOOL_GetRomTrainerData(
     const WBTROM_TRDATA * rom_trdata, WBTROM_TRID tr_id, WBT_TRDATA * tr_data );
 extern BOOL WBTTOOL_IsVaridRomTrainerID( const WBTROM_TRDATA * rom_trdata, WBTROM_TRID tr_id );
-extern WBTROM_TRID WBTTOOL_GetRivalTrainerID( const WBTROM_TRDATA * rom_trdata );
 
 extern u8 WBTTOOL_GetPartyPokeType( POKEPARTY * party, u64 seed );
 

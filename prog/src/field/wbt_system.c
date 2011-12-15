@@ -74,9 +74,6 @@ WBTSYS * WBTSYS_Create( HEAPID heapID, BOOL isTutorial )
   //ROMトレーナーデータを読み込む
   wbtsys->rom_trdata = WBTTOOL_CreateRomTrainerData( wbtsys->heapID );
 
-  //ライバルからは対戦したかどうかが記録されないトレーナーになっている
-  GF_ASSERT( WBTTOOL_GetRivalTrainerID( wbtsys->rom_trdata ) == WBTROM_TRID_MEM_MAX );
-
   return wbtsys;
 }
 

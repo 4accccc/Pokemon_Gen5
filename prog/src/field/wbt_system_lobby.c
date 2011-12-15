@@ -227,7 +227,7 @@ void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const WBT_TRCODE
       break;
     default:
       WBTTRAINER_SetRomTrainer( wbtsys, wbtsys->heapID, wbt_tr, tr_list[i].tr_id );
-      if ( tr_list[i].tr_id == WBTTOOL_GetRivalTrainerID(wbtsys->rom_trdata) )
+      if ( tr_list[i].tr_id == WBTROM_TRID_RIVAL )
       { //ライバルの場合はセーブデータから名前を引っ張る
         SAVE_CONTROL_WORK * sv_ctrl_work = GAMEDATA_GetSaveControlWork( gamedata );
         ETC_SAVE_WORK * etcsave = SaveData_GetEtc( sv_ctrl_work );

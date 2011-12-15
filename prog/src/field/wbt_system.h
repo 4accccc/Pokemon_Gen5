@@ -119,7 +119,9 @@ enum { WBT_AUDIENCE_TYPE_MAX = 4 };
 //------------------------------------------------------------------
 enum {
   ///  対戦したかどうかが記録されるWBTROMトレーナーの数
-  WBTROM_TRID_MEM_MAX = 55,
+  WBTROM_TRID_RED = 53,
+  WBTROM_TRID_MEM_MAX = 54,
+  WBTROM_TRID_RIVAL = 55,
   WBTROM_TRID_WEAK_MOB_START = 58,
   WBTROM_TRID_STRONG_MOB_START = 68,
   WBTROM_TRID_NOBATTLE_MOB_START = 78,

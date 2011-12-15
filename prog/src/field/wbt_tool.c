@@ -129,6 +129,9 @@ const WBTROM_TRDATA * WBTTOOL_CreateRomTrainerData( HEAPID heapID )
   GFL_ARC_CloseDataHandle( handle );
 
   GF_ASSERT( WBTROM_TRID_INVALID > output->num );
+  GF_ASSERT( output->data[WBTROM_TRID_RIVAL].mmdl_id == SWRIVAL );
+  GF_ASSERT( output->data[WBTROM_TRID_RED].mmdl_id == RED );
+
   return (const WBTROM_TRDATA *)output;
 }
 
@@ -165,22 +168,6 @@ void WBTTOOL_GetRomTrainerData(
 BOOL WBTTOOL_IsVaridRomTrainerID( const WBTROM_TRDATA * rom_trdata, WBTROM_TRID tr_id )
 {
   return ( tr_id < rom_trdata->num );
-}
-
-//------------------------------------------------------------------
-/**
- * @brief
- */
-//------------------------------------------------------------------
-WBTROM_TRID WBTTOOL_GetRivalTrainerID( const WBTROM_TRDATA * rom_trdata )
-{
-  WBTROM_TRID tr_id;
-  for ( tr_id = 0; tr_id < rom_trdata->num; tr_id ++ )
-  {
-    if ( rom_trdata->data[tr_id].mmdl_id == SWRIVAL ) return tr_id;
-  }
-  GF_ASSERT( 0 );
-  return 0;
 }
 
 //------------------------------------------------------------------
