@@ -3360,6 +3360,23 @@ u32 BTLV_CORE_GetGetAudienceBit( BTLV_CORE *wk )
   return BTLV_SCD_GetAudienceBit( wk->scrnD );
 }
 
+//=============================================================================================
+/**
+ * @brief	観客アニメＯＮを通知
+ *
+ * @param   wk  
+ * @param   no  
+ */
+//=============================================================================================
+void BTLV_CORE_SetAudienceAnimeOn( BTLV_CORE *wk, const s32 no )
+{
+  // ポケウッド上映意外は無視
+  if(BTL_MAIN_GetPokewoodMode(wk->mainModule)==BTL_POKEWOOD_SHOW){
+    BTLV_SCD_SetAudienceAnimeOn( wk->scrnD, no );
+  }
+}
+
+
 #ifdef PM_DEBUG
 //=============================================================================================
 /**

@@ -1641,3 +1641,16 @@ u32 BTLV_SCD_GetAudienceBit( BTLV_SCD *wk )
 {
   return BTLV_INPUT_GetAudienceBit( wk->biw );
 }
+
+//=============================================================================================
+/**
+ * @brief	観客OBJのアニメーションをスタートする
+ *
+ * @param   wk		
+ * @param   no		
+ */
+//=============================================================================================
+void BTLV_SCD_SetAudienceAnimeOn( BTLV_SCD *wk, const s32 no )
+{
+  BTLV_INPUT_SetAudienceAnimeOn( wk->biw, no );
+}

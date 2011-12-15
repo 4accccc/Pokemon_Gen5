@@ -443,6 +443,7 @@ extern BOOL BTLC_CORE_CheckRecTurnBarEnd( const BTLV_CORE *core );
 //=============================================================================================
 extern void BTLV_CORE_SetAudienceCondition( BTLV_CORE *wk, const BOOL bflg, const s32 num, const s32 mode );
 extern  u32 BTLV_CORE_GetGetAudienceBit( BTLV_CORE *wk );
+extern void BTLV_CORE_SetAudienceAnimeOn( BTLV_CORE *wk, const s32 no );
 
 
 //-----------------------------------------------------------

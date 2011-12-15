@@ -242,4 +242,6 @@ extern  BOOL              BTLV_INPUT_CheckExecute( BTLV_INPUT_WORK* biw );
 extern  BTLV_INPUT_SCRTYPE  BTLV_INPUT_GetScrType( BTLV_INPUT_WORK* biw );
 extern  void              BTLV_INPUT_SetAudienceCondition( BTLV_INPUT_WORK *biw, const BOOL bflg, const s32 num, const s32 mode );
 extern  u32               BTLV_INPUT_GetAudienceBit( BTLV_INPUT_WORK *biw );
+extern  void              BTLV_INPUT_SetAudienceAnimeOn( BTLV_INPUT_WORK *biw, int no );
+
 

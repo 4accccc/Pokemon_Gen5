@@ -630,20 +630,20 @@ struct _BTLV_INPUT_WORK
   BOOL                  waruagaki_flag;
 
   //ポケウッド観客
-//  u32                   audience_charID;		// objcharIDを流用
-  u32                   audience_plttID;
-  u32                   audience_cellID;
-  GFL_CLUNIT*           audience_clunit;
-  GFL_CLWK*             audience_wk[ BTLV_INPUT_AUDIENCE_MAX ];
-  BOOL                  audience_flag;
+//  u32                   audience_charID;  /// objcharIDを流用
+  u32                   audience_plttID;    /// リソースID
+  u32                   audience_cellID;    /// リソースID
+  GFL_CLUNIT*           audience_clunit;    /// リソースID
+  GFL_CLWK*             audience_wk[ BTLV_INPUT_AUDIENCE_MAX ]; /// CLACT_WORK
+  BOOL                  audience_flag;                          /// 観客アニメ許可フラグ
   //
-  u16                   *audience_char_pal;		// 観客のパレット
-  u16                   *audience_seat_pal;		// 座席のパレット
-  s32                   audience_palmode;       // パレットの段階
-  s32                   audience_timer;         // タイマ
-  s32                   audience_aninum;        // アニメの番号(0-2)
-  s32                   audience_loopnum;       // 繰り返し数(1-4)
-  BOOL                  audience_palflag;       // パレットチェンジの有無
+  u16                   *audience_char_pal;		/// 観客のパレット
+  u16                   *audience_seat_pal;		/// 座席のパレット
+  s32                   audience_palmode;       /// パレットの段階
+  s32                   audience_timer;         /// タイマ
+  s32                   audience_aninum;        /// アニメの番号(0-2)
+  s32                   audience_loopnum;       /// 繰り返し数(1-4)
+  BOOL                  audience_palflag;       /// パレットチェンジの有無
 
   //フォント
   GFL_FONT*             font;
@@ -3175,8 +3175,8 @@ static  void  BTLV_INPUT_CreateAudienceObj( BTLV_INPUT_WORK *biw )
     biw->audience_wk[ i ] = GFL_CLACT_WK_Create( biw->audience_clunit, biw->objcharID,
                                                  biw->audience_plttID, biw->audience_cellID,
                                                  &param, CLSYS_DEFREND_SUB, biw->heapID );
-    //
-    GFL_CLACT_WK_SetAutoAnmFlag( biw->audience_wk[ i ], TRUE );
+    //初期化時はアニメ有効にしない
+    GFL_CLACT_WK_SetAutoAnmFlag( biw->audience_wk[ i ], FALSE );
     GFL_CLACT_WK_SetDrawEnable(  biw->audience_wk[ i ], TRUE );
     
     // カラーをセット
@@ -3311,7 +3311,7 @@ static void btlv_init_audience_disp( BTLV_INPUT_WORK *biw )
  * @param	const s32		種類(AUDIENCE_SEQ_*)
  */
 //--------------------------------------------------------------
-void BTLV_INPUT_SetAudienceCondition( BTLV_INPUT_WORK *biw, const BOOL bflg, const s32 num, const s32 mode )
+void BTLV_INPUT_SetAudienceCondition( BTLV_INPUT_WORK *biw, const BOOL bflg, const s32 no, const s32 mode )
 {
   u8   col;
   s32  seq;
@@ -3320,7 +3320,7 @@ void BTLV_INPUT_SetAudienceCondition( BTLV_INPUT_WORK *biw, const BOOL bflg, con
   // 表示/非表示
   // (非表示の場合はそのまま終了)
   //--------------
-  GFL_CLACT_WK_SetDrawEnable( biw->audience_wk[ num ], bflg );
+  GFL_CLACT_WK_SetDrawEnable( biw->audience_wk[ no ], bflg );
   if(bflg == FALSE){
     return;
   }
@@ -3329,13 +3329,26 @@ void BTLV_INPUT_SetAudienceCondition( BTLV_INPUT_WORK *biw, const BOOL bflg, con
   //----------------------
   seq = mode;
   //
-  GFL_CLACT_WK_SetAnmSeq(      biw->audience_wk[ num ], seq );
-  GFL_CLACT_WK_SetAutoAnmFlag( biw->audience_wk[ num ], TRUE );
+  GFL_CLACT_WK_SetAnmSeq(      biw->audience_wk[ no ], seq );
+  GFL_CLACT_WK_SetAutoAnmFlag( biw->audience_wk[ no ], TRUE );
   // パレット変更
-  col = audience_info[num][2];
-  GFL_CLACT_WK_SetPlttOffs( biw->audience_wk[ num ], col, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+  col = audience_info[no][2];
+  GFL_CLACT_WK_SetPlttOffs( biw->audience_wk[ no ], col, CLWK_PLTTOFFS_MODE_PLTT_TOP );
 }
 
+
+//=============================================================================================
+/**
+ * @brief	観客OBJのアニメーションを有効にする
+ *
+ * @param   biw		
+ * @param   no		
+ */
+//=============================================================================================
+void BTLV_INPUT_SetAudienceAnimeOn( BTLV_INPUT_WORK *biw, int no )
+{
+  GFL_CLACT_WK_SetAutoAnmFlag( biw->audience_wk[ no ], TRUE );
+}
 
 //=============================================================================================
 /**

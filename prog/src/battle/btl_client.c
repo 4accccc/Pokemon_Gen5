@@ -1361,6 +1361,23 @@ BOOL BTL_CLIENT_IsRecPlayBufOver( const BTL_CLIENT* wk )
   return wk->fRecPlayEndBufOver;
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	初期家事観客のアニメ開始待ちのウェイト設定
+ *
+ * @param   psw		
+ */
+//----------------------------------------------------------------------------------
+static void _init_audience_wait( POKEWOOD_SEQ_WORK *psw )
+{
+  int i;
+  for(i=0;i<POKEWOOD_AUDIENCE_MAX;i++){
+    if((psw->Audience.on_off>>i)&1){
+      psw->Audience.timer[i] = GFUser_GetPublicRand( 300 );
+    }
+  }
+}
+/// アニメ開始までのWAITを設定
 
 //------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------
@@ -1389,7 +1406,6 @@ static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq )
           BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE_GAME_TIME, TRUE, TRUE );
         }
       }
-
       EnemyPokeHPBase_Update( wk );
 
       // 録画スキップ状態の場合、スクリーン設定
@@ -1400,6 +1416,8 @@ static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq )
 
       // 観客のON・OFF状態を取得
       wk->pokewoodSeqWork.Audience.on_off = BTLV_CORE_GetGetAudienceBit( wk->viewCore );
+      _init_audience_wait( &wk->pokewoodSeqWork );    /// アニメ開始までのウェイトを設定
+
       // スターポケモン登場得点を計上(初期メンバー登場)
       AddStarPokePoint( wk, &wk->pokewoodSeqWork, wk->myParty);
       
@@ -11158,6 +11176,7 @@ static void AudienceFunc( BTL_CLIENT *wk )
     if(wk->pokewoodSeqWork.Audience.timer[i]!=0){
       wk->pokewoodSeqWork.Audience.timer[i]--;
       if(wk->pokewoodSeqWork.Audience.timer[i]==0){
+        BTLV_CORE_SetAudienceAnimeOn( wk->viewCore, i );
         BTLV_CORE_SetAudienceCondition( wk->viewCore, TRUE, i, POKEWOOD_AUDIENCE_NOMOVE );
       }
     }

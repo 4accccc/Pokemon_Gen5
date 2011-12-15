@@ -302,7 +302,8 @@ typedef struct{
   u32         audience_cellID;
   GFL_CLUNIT* audience_clunit;
   GFL_CLWK*   audience_wk[ BTLV_INPUT_AUDIENCE_MAX ];
-  ARCHANDLE      *aHandle;
+  u16         audience_wait[ BTLV_INPUT_AUDIENCE_MAX ];
+  ARCHANDLE   *aHandle;
   
   // 観客席パレットチェンジ処理用ワーク
   u16         *audience_char_pal; ///< 観客OBJの変更用パレット
@@ -418,6 +419,7 @@ static void initEndrollBmpwin( G2D_CONTROL *CG2d, HEAPID heapID, int align );
 static void releaseEndrollBmpwin( G2D_CONTROL* CG2d );
 static void SetAudienceCondition_atEnd( AUDIENCE_CONTROL *AOam, int mode, u32 audienceBit );
 static void setAudienceReaction( PKWD_BRIEFING_WORK *tw, BATTLE_SETUP_PARAM *bsp );
+static void audience_main( PKWD_BRIEFING_WORK *wk );
 
 static void initEndrollMsgdata( PKWD_BRIEFING_PARAM *param, G2D_CONTROL* CG2d,  int scenario_no, HEAPID heapID );
 static void releaseEndrollMsgdata( G2D_CONTROL* CG2d );
@@ -1022,7 +1024,7 @@ static void MainFunc(PKWD_BRIEFING_WORK* tw)
 
   mainG3Dcontrol(&tw->CG3d, tw->heapID, tw->param->scenario_no);
   mainOAMcontrol(&tw->COam, tw->heapID);
-  btlv_main_palchg( &tw->AOam );
+  audience_main( tw );
   INFOWIN_Update();
 }
 
@@ -2485,7 +2487,7 @@ static  void  BTLV_INPUT_CreateAudienceObj( AUDIENCE_CONTROL *AOam, HEAPID heapI
                                                  AOam->audience_plttID, AOam->audience_cellID,
                                                  &param, CLSYS_DEFREND_SUB, heapID );
     //
-    GFL_CLACT_WK_SetAutoAnmFlag( AOam->audience_wk[ i ], TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( AOam->audience_wk[ i ], FALSE );   /// 自動アニメはOFFにしておく（後ほどONに）
     GFL_CLACT_WK_SetDrawEnable(  AOam->audience_wk[ i ], TRUE );
     
     // カラーをセット
@@ -2588,6 +2590,24 @@ static u32 set_audience_appear( AUDIENCE_CONTROL *AOam, int audienceNum )
   return audienceBit;
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief	観客が目パチアニメーションを開始するまでのウェイトを設定する
+ *
+ * @param   AOam		
+ * @param   AudienceBit		
+ */
+//----------------------------------------------------------------------------------
+static void set_audience_wait( AUDIENCE_CONTROL *AOam, u32 AudienceBit )
+{
+  int i;
+  for(i=0;i<BTLV_INPUT_AUDIENCE_MAX;i++){
+    if((AudienceBit>>i)&1){
+      AOam->audience_wait[i] = GFUser_GetPublicRand( 90 );
+    }
+  }
+}
+
 //--------------------------------------------------------------
 /**
  * @brief   観客の処理(初期化まとめ)
@@ -2606,6 +2626,10 @@ static void btlv_init_audience_disp( PKWD_BRIEFING_WORK *pbw, BOOL flag, HEAPID 
     // 観客表示のみ
     setAudienceObj( &pbw->AOam, pbw->param->audienceBit );
   }
+
+  // 観客アニメ開始までのウェイト設定
+  set_audience_wait( &pbw->AOam, pbw->param->audienceBit );
+
   // BG0非表示：操作パネル => 今回は表示(仮対応)
   // BG1表示：上書きして使用
   // BG2非表示：メッセージ、情報パネル
@@ -2665,7 +2689,7 @@ static void SetAudienceCondition( AUDIENCE_CONTROL *AOam, const s32 no, const s3
   seq = mode;
   //
   GFL_CLACT_WK_SetAnmSeq(      AOam->audience_wk[ no ], seq );
-  GFL_CLACT_WK_SetAutoAnmFlag( AOam->audience_wk[ no ], TRUE );
+
   // パレット変更
   col = audience_info[no][2];
   GFL_CLACT_WK_SetPlttOffs( AOam->audience_wk[ no ], col, CLWK_PLTTOFFS_MODE_PLTT_TOP );
@@ -2998,6 +3022,33 @@ static u32 btlv_get_random( AUDIENCE_CONTROL *AOam, const s32 num )
   return( rnum );
 }
 
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief	観客制御メイン
+ *
+ * @param   wk		
+ */
+//----------------------------------------------------------------------------------
+static void audience_main( PKWD_BRIEFING_WORK *wk )
+{
+  int i;
+  
+  // 観客一人一人をアニメ開始までのウェイトを消費してから個別にアニメ開始させる
+  for(i=0;i<BTLV_INPUT_AUDIENCE_MAX;i++){
+    if(_get_audienceBit(wk->param->audienceBit, i)){
+      if(wk->AOam.audience_wait[i]!=0){
+        wk->AOam.audience_wait[i]--;
+      }else{
+        GFL_CLACT_WK_SetAutoAnmFlag( wk->AOam.audience_wk[ i ], TRUE );   /// 観客の自動アニメ開始
+      }
+    }
+  }
+  
+  // パレットチェンジ処理
+  btlv_main_palchg( &wk->AOam );
+
+}
 
 
 //=============================================================================================
