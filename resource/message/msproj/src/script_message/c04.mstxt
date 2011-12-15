@@ -2872,12 +2872,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ジョインアベニューに
+			<Text>[Name:ResortTown ]に
 あたらしい　おみせが　できるのを▽
 こころまちにして　すれちがうのだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-10T07:53:15" />
+				Time="2011-12-15T12:35:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2885,12 +2885,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ジョインアベニューに
+			<Text>[Name:ResortTown ]に
 新しい　お店が　オープンするのを▽
 心待ちにして　すれ違うのだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-10T07:53:48" />
+				Time="2011-12-15T12:35:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2899,10 +2899,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
+・0＝ジョインアベニュー名
 ※swanでメッセージで修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-11T02:29:35" />
+				Time="2011-12-15T12:35:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

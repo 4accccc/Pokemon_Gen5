@@ -127,7 +127,7 @@
 おせば　うごくんだよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T08:02:26" />
+				Time="2011-12-15T11:43:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -140,7 +140,7 @@
 押せば　動くんだよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T08:02:29" />
+				Time="2011-12-15T11:43:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -658,10 +658,10 @@
 			Language="JPN">
 			<Text>ハイリンクに　フェスミッションの
 『[Name:FesMissionName ]』が▽
-ついか　されました</Text>
+ついか　されました！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-28T08:30:43" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T11:44:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -671,10 +671,10 @@
 			Language="JPN_KANJI">
 			<Text>ハイリンクに　フェスミッションの
 『[Name:FesMissionName ]』が▽
-追加されました</Text>
+追加されました！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-28T08:31:05" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T11:44:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -713,10 +713,10 @@
 			Language="JPN">
 			<Text>ハイリンクに　フェスミッションの
 『[Name:FesMissionName ]』が▽
-ついか　されました</Text>
+ついか　されました！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-28T08:31:21" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T11:44:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -726,10 +726,10 @@
 			Language="JPN_KANJI">
 			<Text>ハイリンクに　フェスミッションの
 『[Name:FesMissionName ]』が▽
-追加されました</Text>
+追加されました！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-28T08:31:32" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T11:44:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -8,14 +8,14 @@
 			Language="JPN">
 			<Text>チェレン『あまり
 わだいに　なっていないけれど▼
-１０ばんどうろで
+カゴメタウンの　ちかくで
 きになることが　あったんだよね▼
 いっしゅん　とはいえ
 マイナス５０ど　にもなる　すうちが▽
 けいそく　されたんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T04:00:09" />
+				Time="2011-12-15T11:39:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -25,14 +25,14 @@
 			Language="JPN_KANJI">
 			<Text>チェレン『あまり
 話題に　なっていないけれど▼
-１０番道路で
+カゴメタウンの　近くで
 気になることが　あったんだよね▼
 一瞬　とはいえ
 －５０度　にもなる　数値が▽
 計測されたんだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:53:24" />
+				Time="2011-12-15T11:39:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -720,12 +720,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>てんのめぐみ……▼
+			<Text>とくせい　てんのめぐみ……▼
 なんでも　わざのこうかが
 ２ばいに　なるそうですよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T10:22:39" />
+				Time="2011-12-15T11:40:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -733,12 +733,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>てんのめぐみ……▼
+			<Text>特性　てんのめぐみ……▼
 なんでも　技の効果が
 ２倍に　なるそうですよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T12:15:30" />
+				Time="2011-12-15T11:40:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3034,15 +3034,15 @@
 いわタイプの　ポケモンの▼
 特防が　５０パーセント
 アップする　現象が▽
-報告　されています！▼
+報告されています！▼
 なお　ポワルンという　ポケモンは
 天気が　かわると▽
 姿が　変わりますが▼
 すなあらしには
 影響を　受けないようです</Text>
 			<TextModifiedBy
-				User="swan_scenario:W00293"
-				Time="2011-09-01T04:48:19" />
+				User="matsumiya:W00224"
+				Time="2011-12-15T11:41:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

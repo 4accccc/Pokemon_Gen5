@@ -577,13 +577,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『キミは　ゼクロムに
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]キミは　ゼクロムに
 あたらしい　えいゆうと　みとめられた▼
 そう！　せかいを　かえるだけの
-おもいを　もつ　トレーナーとして！▼</Text>
+おもいを　もつ　トレーナーとして！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T07:29:43" />
+				Time="2011-12-15T12:32:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -591,13 +591,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『キミは　ゼクロムに
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]キミは　ゼクロムに
 新しい　英雄と　認められた▼
 そう！　世界を　変えるだけの
-想いを　持つ　トレーナーとして！▼</Text>
+想いを　持つ　トレーナーとして！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T07:29:06" />
+				Time="2011-12-15T12:32:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -635,11 +635,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『ゼクロムに　キミの　ポケモンの
-つよさを　しめしてみせたんだね▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ゼクロムに　キミの　ポケモンの
+つよさを　しめしてみせたんだね[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T07:17:50" />
+				Time="2011-12-15T12:32:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -647,11 +647,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『ゼクロムに　キミの　ポケモンの
-強さを　示してみせたんだね▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ゼクロムに　キミの　ポケモンの
+強さを　示してみせたんだね[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T07:27:02" />
+				Time="2011-12-15T12:33:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -687,12 +687,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『ゼクロムとの
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ゼクロムとの
 けっちゃくを　さけるだなんて▽
-キミは　おもしろい　トレーナーだ▼</Text>
+キミは　おもしろい　トレーナーだ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T07:17:50" />
+				Time="2011-12-15T12:33:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -700,12 +700,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『ゼクロムとの
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ゼクロムとの
 決着を　避けるだなんて▽
-キミは　おもしろい　トレーナーだ▼</Text>
+キミは　おもしろい　トレーナーだ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T07:17:50" />
+				Time="2011-12-15T12:33:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -741,13 +741,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『キミは　レシラムに
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]キミは　レシラムに
 あたらしい　えいゆうと　みとめられた▼
 そう！　せかいを　かえるだけの
-おもいを　もつ　トレーナーとして！▼</Text>
+おもいを　もつ　トレーナーとして！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T07:29:38" />
+				Time="2011-12-15T12:33:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -755,13 +755,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『キミは　レシラムに
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]キミは　レシラムに
 新しい　英雄と　認められた▼
 そう！　世界を　変えるだけの
-想いを　持つ　トレーナーとして！▼</Text>
+想いを　持つ　トレーナーとして！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T07:29:10" />
+				Time="2011-12-15T12:33:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -799,11 +799,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『レシラムに　キミの　ポケモンの
-つよさを　しめしてみせたんだね▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]レシラムに　キミの　ポケモンの
+つよさを　しめしてみせたんだね[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T06:30:16" />
+				Time="2011-12-15T12:33:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -811,11 +811,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『レシラムに　キミの　ポケモンの
-強さを　示してみせたんだね▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]レシラムに　キミの　ポケモンの
+強さを　示してみせたんだね[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T07:26:58" />
+				Time="2011-12-15T12:33:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -851,12 +851,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『レシラムとの
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]レシラムとの
 けっちゃくを　さけるだなんて▽
-キミは　おもしろい　トレーナーだ▼</Text>
+キミは　おもしろい　トレーナーだ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T07:01:42" />
+				Time="2011-12-15T12:33:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -864,12 +864,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『レシラムとの
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]レシラムとの
 決着を　避けるだなんて▽
-キミは　おもしろい　トレーナーだ▼</Text>
+キミは　おもしろい　トレーナーだ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T07:01:38" />
+				Time="2011-12-15T12:33:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -905,14 +905,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キミに　つたえることが　ある▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミに　つたえることが　ある▼
 ジャイアントホールに　いきたまえ！
 キュレムが　もどってきたんだ▼
 ボクの　トモダチが
-そう　おしえてくれたよ▼</Text>
+そう　おしえてくれたよ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T07:30:06" />
+				Time="2011-12-15T12:33:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -920,14 +920,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キミに　伝えることが　ある▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]キミに　伝えることが　ある▼
 ジャイアントホールに　行きたまえ！
 キュレムが　戻ってきたんだ▼
 ボクの　トモダチが
-そう　教えてくれたよ▼</Text>
+そう　教えてくれたよ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T07:27:36" />
+				Time="2011-12-15T12:33:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -962,14 +962,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName ]！▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ][Name:TrainerName ]！▼
 キミが　のぞむ
 ポケモンとの　せかい……▼
 どれほど　ラブに　あふれているのか
-ボクも　たのしみに　しているよ▼</Text>
+ボクも　たのしみに　しているよ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T07:22:23" />
+				Time="2011-12-15T12:32:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -977,18 +977,76 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]！▼
+			<Text>[Ctrl2:CtrlSpeed mode="1" ][Name:TrainerName ]！▼
 キミが　望む
 ポケモンとの　世界……▼
 どれほど　ラブに　あふれているのか
-ボクも　楽しみに　しているよ▼</Text>
+ボクも　楽しみに　しているよ[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T07:27:55" />
+				Time="2011-12-15T12:33:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-11-18T12:04:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてboss_06
+・0＝主人公名前
+※swanで新規作成</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T12:34:10" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>Ｎ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-11-18T12:04:08" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d08r0901_boss_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]いつか……▼
+モンスターボールなんか　なくても
+ポケモンと　ヒトが　むすびつき▽
+しんらいしあい　たすけあう……▽
+そんな　せかいに　するんだ[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T12:33:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T12:30:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Ctrl2:CtrlSpeed mode="1" ]いつか……▼
+モンスターボールなんか　なくても
+ポケモンと　ヒトが　結びつき▽
+信頼しあい　助けあう……▽
+そんな　世界に　するんだ[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T12:33:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-15T12:33:38" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -999,14 +1057,14 @@
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T07:30:18" />
+				Time="2011-12-15T12:31:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
 			<Text>Ｎ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T12:04:08" />
+				Time="2011-12-15T12:31:01" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
