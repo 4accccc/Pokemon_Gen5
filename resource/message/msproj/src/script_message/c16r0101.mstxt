@@ -751,10 +751,13 @@
 ポケモンを　きたえて　つよくします▼
 ポケモンの　レベルや
 ポケモンの　つよさの　きそポイントを▽
-あげることが　できます▼</Text>
+あげることが　できます▼
+ポケモンの　レベルを　あげたとき
+しんかや　わざを　おぼえることは▽
+できないので　ごちゅうい　ください▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-15T10:35:58" />
+				Time="2011-12-15T12:50:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -766,10 +769,13 @@
 ポケモンを　鍛えて　強くします▼
 ポケモンの　レベルや
 ポケモンの　強さの　基礎ポイントを▽
-あげることが　できます▼</Text>
+あげることが　できます▼
+ポケモンの　レベルを　あげたとき
+進化や　技を　覚えることは▽
+出来ないので　ご注意　ください▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-15T06:29:52" />
+				User="shimoyamada:W00184"
+				Time="2011-12-15T12:49:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -847,10 +853,13 @@
 よろこんで　なつきやすく　なります▼
 また　しょくじの　こうかに　より
 レベルや　つよさの　きそポイントを▽
-あげることが　できます▼</Text>
+あげることが　できます▼
+ポケモンの　レベルを　あげたとき
+しんかや　わざを　おぼえることは▽
+できないので　ごちゅうい　ください▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-15T10:35:11" />
+				Time="2011-12-15T12:49:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -864,10 +873,13 @@
 喜んで　なつきやすく　なります▼
 また　食事の　効果に　より
 レベルや　強さの　基礎ポイントを▽
-あげることが　できます▼</Text>
+あげることが　できます▼
+ポケモンの　レベルを　あげたとき
+進化や　技を　覚えることは▽
+出来ないので　ご注意　ください▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-15T06:30:06" />
+				User="shimoyamada:W00184"
+				Time="2011-12-15T12:49:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
