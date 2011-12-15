@@ -1,5 +1,5 @@
 #event data
-#save date:2011/12/13 16:01:10
+#save date:2011/12/15 20:33:17
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d27r0701.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\swan\resource\fldmapdata\eventdata\data\d27r0701.wms
 #hold event type:
 1
 #hold event number:
-3
+7
 #event number: 0
 #type
 1
@@ -49,7 +49,7 @@ D27R0701_SWPLAZMAM_02W
 #OBJ CODE Number
 SWPLAZMAM
 #MOVE CODE Number
-MV_RND
+MV_RND_H
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -65,13 +65,13 @@ DIR_RIGHT
 #Parameter 2 Number
 0
 #Move Limit X Number
-3
+0
 #Move Limit Z Number
-3
+0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--40 0 -552
+8 0 -568
 #event number: 2
 #type
 1
@@ -80,7 +80,7 @@ D27R0701_SWPLAZMAM_02B
 #OBJ CODE Number
 SWPLAZMAM
 #MOVE CODE Number
-MV_RND
+MV_RND_H
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -88,7 +88,7 @@ FV_D27R0701_SWPLAZMAM_02B
 #Event Script Name
 SCRID_D27R0701_SWPLAZMAM_02B
 #Direction Type Number
-DIR_RIGHT
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -96,13 +96,137 @@ DIR_RIGHT
 #Parameter 2 Number
 0
 #Move Limit X Number
-3
+0
 #Move Limit Z Number
-3
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 8
+#event number: 3
+#type
+1
+#ID name
+SWPLAZMAM_39
+#OBJ CODE Number
+SWPLAZMAM
+#MOVE CODE Number
+MV_RT2
+#EVENT TYPE Number
+EV_TYPE_TRAINER_KYORO
+#Flag Name
+FV_D27_BEFORE_PWPLAZMA_01
+#Event Script Name
+SCRID_TRID_SWPLAZMAM_39
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+1
+#Parameter 1 Number
+8
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+8
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 0 -152
+#event number: 4
+#type
+1
+#ID name
+SWPLAZMAW_15
+#OBJ CODE Number
+SWPLAZMAW
+#MOVE CODE Number
+MV_RT2
+#EVENT TYPE Number
+EV_TYPE_TRAINER_KYORO
+#Flag Name
+FV_D27_BEFORE_PWPLAZMA_01
+#Event Script Name
+SCRID_TRID_SWPLAZMAW_15
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+1
+#Parameter 1 Number
+8
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+8
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
 56 0 -24
+#event number: 5
+#type
+1
+#ID name
+SWPLAZMAM_42
+#OBJ CODE Number
+SWPLAZMAM
+#MOVE CODE Number
+MV_RT2
+#EVENT TYPE Number
+EV_TYPE_TRAINER_KYORO
+#Flag Name
+FV_D27_BEFORE_PWPLAZMA_01
+#Event Script Name
+SCRID_TRID_SWPLAZMAM_42
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+1
+#Parameter 1 Number
+8
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+8
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 0 -408
+#event number: 6
+#type
+1
+#ID name
+SWPLAZMAW_16
+#OBJ CODE Number
+SWPLAZMAW
+#MOVE CODE Number
+MV_RT2
+#EVENT TYPE Number
+EV_TYPE_TRAINER_KYORO
+#Flag Name
+FV_D27_BEFORE_PWPLAZMA_01
+#Event Script Name
+SCRID_TRID_SWPLAZMAW_16
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+1
+#Parameter 1 Number
+8
+#Parameter 2 Number
+0
+#Move Limit X Number
+1
+#Move Limit Z Number
+8
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 0 -536
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

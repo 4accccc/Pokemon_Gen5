@@ -27,6 +27,9 @@
 #define D27R1001_SWPLAZMAM_02             16
 #define D27R1001_SWPLAZMAM_03             17
 #define D27R1001_SWPLAZMAW_01             18
+#define SWPLAZMAM_41                      19
+#define SWPLAZMAW_18                      20
+#define DOCTOR_11                         21
 
 #endif //ZONE_D27R1001_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d27r1001.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
