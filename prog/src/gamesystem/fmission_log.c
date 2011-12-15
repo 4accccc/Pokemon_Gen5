@@ -697,8 +697,16 @@ static BOOL sub_BeaconCheckMushroomEnc( const FEST_BEACON*  beacon )
 //イベントタイプ エラーチェック
 static BOOL sub_BeaconCheckEvent( const FEST_BEACON*  beacon )
 {
-  if( beacon->base_param >= FMISSION_EVID_MAX ||
-      beacon->ex_param != 0 ){
+  if( beacon->base_param >= FMISSION_EVID_MAX ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  if( beacon->base_param == FMISSION_EVID_ANIMAL_TRAIL ){
+    if( beacon->ex_param >= FMISSION_EXP_TRAIL_MONS_MAX ){
+      GF_ASSERT(0);
+      return TRUE;
+    } 
+  }else if( beacon->ex_param != 0 ){
     GF_ASSERT(0);
     return TRUE;
   }
