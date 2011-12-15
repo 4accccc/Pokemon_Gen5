@@ -308,7 +308,7 @@ u32 RESORT_BINARY_SHOP_SearchShopID( const RESORT_BINARY_SHOP *cp_wk, u16 kind, 
     }
   }
 
-  //GF_ASSERT_MSG(0,"kind%dlv%dtype%d\n",kind,lv,type);
+  GF_ASSERT_MSG(0,"kind%dlv%dtype%d\n",kind,lv,type);
   return 0;
 }
 //----------------------------------------------------------------------------

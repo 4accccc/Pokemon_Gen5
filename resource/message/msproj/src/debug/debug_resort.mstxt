@@ -15000,10 +15000,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きょうみがない</Text>
+			<Text>興味がない</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
+				Time="2011-12-14T10:11:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15011,10 +15011,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうみがない</Text>
+			<Text>興味がない</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:45:14" />
+				Time="2011-12-14T10:11:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15052,10 +15052,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じぶんからいう</Text>
+			<Text>自分から言う</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
+				Time="2011-12-14T10:11:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15063,10 +15063,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じぶんからいう</Text>
+			<Text>自分から言う</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:45:14" />
+				Time="2011-12-14T10:11:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15078,10 +15078,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あいてをまつ</Text>
+			<Text>相手をまつ</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
+				Time="2011-12-14T10:12:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15089,10 +15089,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あいてをまつ</Text>
+			<Text>相手をまつ</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:45:14" />
+				Time="2011-12-14T10:12:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15286,10 +15286,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いいひと</Text>
+			<Text>細かい</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
+				Time="2011-12-14T10:12:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15297,10 +15297,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いいひと</Text>
+			<Text>細かい</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:45:14" />
+				Time="2011-12-14T10:12:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15312,10 +15312,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふつうのひと</Text>
+			<Text>おおざっぱ</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
+				Time="2011-12-14T10:12:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15323,36 +15323,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふつうのひと</Text>
+			<Text>おおざっぱ</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:45:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:45:14" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="MOUTHCOMM_00_14"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>へんなひと</Text>
-			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>へんなひと</Text>
-			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:45:14" />
+				Time="2011-12-14T10:12:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15390,10 +15364,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いちばんうえ</Text>
+			<Text>一番上</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
+				Time="2011-12-14T10:12:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15401,10 +15375,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いちばんうえ</Text>
+			<Text>一番上</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:45:14" />
+				Time="2011-12-14T10:12:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15416,10 +15390,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まんなか</Text>
+			<Text>真ん中</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
+				Time="2011-12-14T10:12:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15427,10 +15401,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まんなか</Text>
+			<Text>真ん中</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:45:14" />
+				Time="2011-12-14T10:12:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15442,10 +15416,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すえっこ</Text>
+			<Text>末っ子</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
+				Time="2011-12-14T10:12:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15453,10 +15427,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すえっこ</Text>
+			<Text>末っ子</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:45:14" />
+				Time="2011-12-14T10:12:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15468,10 +15442,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひとりっこ</Text>
+			<Text>一人っ子</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
+				Time="2011-12-14T10:12:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15479,10 +15453,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひとりっこ</Text>
+			<Text>一人っ子</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:45:14" />
+				Time="2011-12-14T10:12:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15520,10 +15494,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おとこのこ</Text>
+			<Text>男の子</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
+				Time="2011-12-14T10:12:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15531,10 +15505,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おとこのこ</Text>
+			<Text>男の子</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:45:14" />
+				Time="2011-12-14T10:13:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15546,10 +15520,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おんなのこ</Text>
+			<Text>女の子</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
+				Time="2011-12-14T10:12:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15557,10 +15531,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おんなのこ</Text>
+			<Text>女の子</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:45:14" />
+				Time="2011-12-14T10:13:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15572,10 +15546,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おとこのひと</Text>
+			<Text>男の人</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
+				Time="2011-12-14T10:12:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15583,10 +15557,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おとこのひと</Text>
+			<Text>男の人</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:45:14" />
+				Time="2011-12-14T10:13:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -15598,10 +15572,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おんなのひと</Text>
+			<Text>女の人</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
+				Time="2011-12-14T10:12:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -16508,10 +16482,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すぐわすれる</Text>
+			<Text>すぐ忘れる</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
+				Time="2011-12-14T10:13:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -16586,10 +16560,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こまかい</Text>
+			<Text>せっかち</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
+				Time="2011-12-14T10:13:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -16612,62 +16586,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おおざっぱ</Text>
-			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>おおざっぱ</Text>
-			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:45:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:45:14" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="MOUTHCOMM_00_54"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>せっかち</Text>
-			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>せっかち</Text>
-			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:45:14" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:45:14" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="MOUTHCOMM_00_55"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
 			<Text>のんびり</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
+				Time="2011-12-14T10:13:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -16675,7 +16597,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>のんびり</Text>
+			<Text>おおざっぱ</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-12-01T10:45:14" />
@@ -16794,10 +16716,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぜったい　いわない</Text>
+			<Text>絶対言わない</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
+				Time="2011-12-14T10:13:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -16805,10 +16727,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぜったい　いわない</Text>
+			<Text>絶対言わない</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:45:14" />
+				Time="2011-12-14T10:13:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -16820,10 +16742,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いっちゃう</Text>
+			<Text>言っちゃう</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:39:06" />
+				Time="2011-12-14T10:13:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -16831,10 +16753,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いっちゃう</Text>
+			<Text>言っちゃう</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-01T10:45:14" />
+				Time="2011-12-14T10:14:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"

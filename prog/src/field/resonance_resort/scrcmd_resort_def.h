@@ -345,6 +345,7 @@
 #define RESORT_NPC_DATA_MOUTHCOMM_MSG_02      (30)  //‰ñ“šŠm”F•¶
 #define RESORT_NPC_DATA_MOUTHCOMM_MSG_03      (31)  //ŒJ‚è•Ô‚µ•¶
 #define RESORT_NPC_DATA_MOUTHCOMM_MSG_04      (32)  //‰\‚ª‚È‚¢‚Æ‚«•¶
+#define RESORT_NPC_DATA_MOUTHCOMM_BUFFER      (33)
 
 //_RESORT_GET_SERVICE_DATA—p
 #define RESORT_SERVICE_DATA_EFFECT            (0)

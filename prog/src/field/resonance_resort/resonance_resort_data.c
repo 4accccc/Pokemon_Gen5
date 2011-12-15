@@ -936,6 +936,23 @@ static void RESORT_EXTEND4_DATA_SetMyData( RESORT_EXTEND4_DATA *p_wk, const GAME
 //-----------------------------------------------------------------------------
 static BOOL RESORT_EXTEND4_DATA_IsValid( const RESORT_EXTEND4_DATA *cp_wk )
 {
+  static const u8 sc_gossip_max[16]  =
+  {
+    4,2,5,2,5,8,3,2,2,2,9,5,2,2,2,2,
+  };
+
+  int i;
+
+  RESORT_EXTEND4_DATA *p_wk  = (RESORT_EXTEND4_DATA *)cp_wk;
+
+  for( i = 0; i < 16; i++ )
+  {
+    if( p_wk->gossip[i] > sc_gossip_max[i] )
+    {
+      p_wk->gossip[i] = 0;
+    }
+  }
+
   return TRUE;
 }
 //-------------------------------------
@@ -983,6 +1000,24 @@ static void RESORT_EXTEND5_DATA_SetMyData( RESORT_EXTEND5_DATA *p_wk, const GAME
 //-----------------------------------------------------------------------------
 static BOOL RESORT_EXTEND5_DATA_IsValid( const RESORT_EXTEND5_DATA *cp_wk )
 {
+  int i;
+
+  RESORT_EXTEND5_DATA *p_wk  = (RESORT_EXTEND5_DATA *)cp_wk;
+
+  for( i = 0; i < 4; i++ )
+  {
+    //１つでも変なレコードがあったら全クリア
+    //（ソートの関係のため中抜け対策）
+    if( p_wk->record[i] >= RESORT_RECORD_ID_MAX )
+    {
+      p_wk->record[0] = RESORT_RECORD_ID_NONE;
+      p_wk->record[1] = RESORT_RECORD_ID_NONE;
+      p_wk->record[2] = RESORT_RECORD_ID_NONE;
+      p_wk->record[3] = RESORT_RECORD_ID_NONE;
+      break;
+    }
+  }
+
   return TRUE;
 }
 //-------------------------------------

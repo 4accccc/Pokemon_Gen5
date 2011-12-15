@@ -1644,6 +1644,10 @@ VMCMD_RESULT EvCmdResortGetNpcData( VMHANDLE *p_core, void *p_wk_adrs )
       NAGI_Printf( "param[%d]ret[%d]\n", param ,*p_ret_wk );
     }
     break;
+  case RESORT_NPC_DATA_MOUTHCOMM_BUFFER:
+    *p_ret_wk = RESORT_NPC_SYS_GetParam( p_nps_sys, RESORT_NPC_MMDLID_TO_INDEX(objid) );
+    break;
+
   default:
     GF_ASSERT(0);
   }

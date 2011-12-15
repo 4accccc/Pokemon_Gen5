@@ -121,7 +121,7 @@ def convertAppeal( csv, data, msg_h, header )
         exit(1)
       end
 
-      data.write_u16( $define_hash[type] )
+    data.write_u16( $define_hash[type] )
 
       if $define_hash[dat] == nil
 		data.write_u16( dat )
