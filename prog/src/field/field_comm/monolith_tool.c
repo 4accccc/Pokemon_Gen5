@@ -1192,11 +1192,12 @@ APP_TASKMENU_WORK * MonolithTool_TaskMenu_WinInit( MONOLITH_APP_PARENT *appwk, M
   for(i=0;i<4;i++){
     if(i != 3){		// Ž‚Á‚Ä‚¢‚éGPOWER_ID(3‚Â)
       itemWork[i].str = GFL_MSG_CreateString( setup->mm_power, setup->powerdata[appwk->common->gpower_no[i]].msg_id_title );
+      itemWork[i].type = APP_TASKMENU_WIN_TYPE_NORMAL;
     }else{			// u‚â‚ß‚év
       itemWork[i].str = GFL_MSG_CreateString( setup->mm_monolith , msg_mono_pow_up_102 );
+      itemWork[i].type = APP_TASKMENU_WIN_TYPE_RETURN;
     }
     itemWork[i].msgColor = PRINTSYS_LSB_Make(0xe, 0xf, 0);
-    itemWork[i].type = APP_TASKMENU_WIN_TYPE_NORMAL;
   }
   initWork.heapId = heap_id;
   initWork.itemNum = 4;

@@ -526,8 +526,8 @@ static const GFL_UI_TP_HITTBL gpapp_rect_00_tbl[] = {
 
 // yes/no
 static const GFL_UI_TP_HITTBL gpapp_rect_01_tbl[] = {
-  { 168, 192,  96, 176 }, 			// はい
-  { 168, 192, 176, 255 }, 			// いいえ
+  { 168, 192, 128, 192 }, 			// はい
+  { 168, 192, 192, 255 }, 			// いいえ
   //
   { GFL_UI_TP_HIT_END,0,0,0 }
 };
@@ -2689,10 +2689,11 @@ static void gpower_app_init_yesnowin( GPOWER_APP_MAIN_WORK* wk )
 	// いいえ
 	wk->appitem[1].str      = GFL_MSG_CreateString( wk->MsgData[0], gpapp_mes_tbl[7] );
 	wk->appitem[1].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
-	wk->appitem[1].type     = APP_TASKMENU_WIN_TYPE_RETURN;
+//	wk->appitem[1].type     = APP_TASKMENU_WIN_TYPE_RETURN;
+	wk->appitem[1].type     = APP_TASKMENU_WIN_TYPE_NORMAL;
 	// メニュー作成
-	wk->pAppTask[0] = APP_TASKMENU_WIN_Create( wk->pAppTaskRes, &wk->appitem[0], 12, 21, APP_TASKMENU_PLATE_WIDTH_YN_WIN+2, wk->heapID );
-	wk->pAppTask[1] = APP_TASKMENU_WIN_Create( wk->pAppTaskRes, &wk->appitem[1], 22, 21, APP_TASKMENU_PLATE_WIDTH_YN_WIN+2, wk->heapID );
+	wk->pAppTask[0] = APP_TASKMENU_WIN_Create( wk->pAppTaskRes, &wk->appitem[0], 16, 21, APP_TASKMENU_PLATE_WIDTH_YN_WIN, wk->heapID );
+	wk->pAppTask[1] = APP_TASKMENU_WIN_Create( wk->pAppTaskRes, &wk->appitem[1], 24, 21, APP_TASKMENU_PLATE_WIDTH_YN_WIN, wk->heapID );
 	//
 	GFL_STR_DeleteBuffer( wk->appitem[0].str );
 	GFL_STR_DeleteBuffer( wk->appitem[1].str );
@@ -2788,8 +2789,8 @@ static BOOL gpower_app_chk_yesnowin( GPOWER_APP_MAIN_WORK* wk )
 		wk->YesNoCursor = 1;
 		bflg = TRUE;
 		flg = 1;
-		// SE
-		PMSND_PlaySE( SND_GPOWER_APP_CANCEL );
+		// SE(noの場合でもdecide)
+		PMSND_PlaySE( SND_GPOWER_APP_DECIDE );
 		// タッチ
 		GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
 	}
@@ -2835,8 +2836,8 @@ static BOOL gpower_app_chk_yesnowin( GPOWER_APP_MAIN_WORK* wk )
 			else{
 				APP_TASKMENU_WIN_SetActive( wk->pAppTask[0], FALSE );
 				APP_TASKMENU_WIN_SetDecide( wk->pAppTask[1], TRUE );
-				// SE
-				PMSND_PlaySE( SND_GPOWER_APP_CANCEL );
+				// SE(noで決定の場合でもdecide)
+				PMSND_PlaySE( SND_GPOWER_APP_DECIDE );
 				// キー
 				GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
 			}
