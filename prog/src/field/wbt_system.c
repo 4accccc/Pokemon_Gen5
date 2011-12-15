@@ -514,7 +514,7 @@ u32 WBTSYS_GetRegulationID( WBTSYS * wbtsys )
   {
   default:
   case WBTREG_DOWNLOAD:
-    GF_ASSERT( 0 ); //âºÅFñ¢ëŒâû
+    GF_ASSERT( 0 ); //Ç†ÇËÇ¶Ç»Ç¢ÇÕÇ∏Ç»ÇÃÇ≈ÅAñ¢ëŒâû
   case WBTREG_ALL:
     tbl = regAllTable;
     break;

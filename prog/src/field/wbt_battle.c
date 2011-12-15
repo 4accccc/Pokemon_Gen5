@@ -50,10 +50,6 @@ enum {
 };
 
 enum {
-  DUMMY_LEVEL_VALUE = 50, //後でレベル調整するので何でもよい
-};
-
-enum {
   ROM_POKE_MAX = 10,
 };
 
@@ -759,6 +755,10 @@ static void makeRomTrainerData(
 static void setRomPokeParty( POKEPARTY * party,
     const WBTTRAINER * wbt_tr, WBTCUP wbtcup, u8 num, HEAPID tempHeapID )
 {
+  enum {
+    DUMMY_LEVEL_VALUE = 50, //バトル直前であらためてレベル調整するので何でもよい
+  };
+
   BSUBWAY_POKEMON * btpwd;
 
   btpwd = GFL_HEAP_AllocMemoryLo( tempHeapID, sizeof(BSUBWAY_POKEMON) * TEMOTI_POKEMAX );

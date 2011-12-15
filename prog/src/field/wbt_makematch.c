@@ -274,7 +274,7 @@ static BOOL checkEnableEntryRomTrainer( const WBT_MATCH_CONDITION * cond, const 
   case WBTCUP_WORLD:
     return rom_data->entry_world;
   case WBTCUP_DOWNLOAD:
-    return TRUE;  //仮：とりいそぎ、ROM上のトレーナーは全員参戦可能にする
+    return TRUE;  //DLトーナメントではROMトレーナーを全員指定可能にする。
   }
   return FALSE;
 }
