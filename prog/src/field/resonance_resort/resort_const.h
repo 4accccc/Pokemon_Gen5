@@ -80,7 +80,7 @@
  *  フィーバー状態のときのMAX係数
  *
  */
-#define RESORT_CONST_FEVER_EXIST_COEFFEICENT    FX32_CONST(1.5f)
+#define RESORT_CONST_FEVER_EXIST_COEFFEICENT    FX32_CONST(1.75f)
 /*
  *  お店の品物・サービスの価格
  *  レベルキャップ
