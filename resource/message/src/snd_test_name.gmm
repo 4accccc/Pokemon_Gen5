@@ -9517,6 +9517,22 @@
 		<language name="JPN" width="256">SW-SOURYU-RUMBLE</language>
 		<language name="JPN_KANJI" width="256">SW-SOURYU-RUMBLE</language>
 	</row>
+	<row id="msg_seq_se_sw_toros_form">
+		<language name="JPN" width="256">SW-TOROS-FORM</language>
+		<language name="JPN_KANJI" width="256">SW-TOROS-FORM</language>
+	</row>
+	<row id="msg_seq_se_sw_kertio_form_01">
+		<language name="JPN" width="256">SW-KERTIO-FORM-01</language>
+		<language name="JPN_KANJI" width="256">SW-KERTIO-FORM-01</language>
+	</row>
+	<row id="msg_seq_se_sw_kertio_form_02">
+		<language name="JPN" width="256">SW-KERTIO-FORM-02</language>
+		<language name="JPN_KANJI" width="256">SW-KERTIO-FORM-02</language>
+	</row>
+	<row id="msg_seq_se_sw_kertio_form_03">
+		<language name="JPN" width="256">SW-KERTIO-FORM-03</language>
+		<language name="JPN_KANJI" width="256">SW-KERTIO-FORM-03</language>
+	</row>
 	<row id="msg_seq_se_sw_ci_vschamp_01">
 		<language name="JPN" width="256">SW-CI-VSCHAMP-01</language>
 		<language name="JPN_KANJI" width="256">SW-CI-VSCHAMP-01</language>
@@ -9705,6 +9721,78 @@
 		<language name="JPN" width="256">SW-AIRPLANE-03</language>
 		<language name="JPN_KANJI" width="256">SW-AIRPLANE-03</language>
 	</row>
+	<row id="msg_seq_se_sw_frigate_01">
+		<language name="JPN" width="256">SW-FRIGATE-01</language>
+		<language name="JPN_KANJI" width="256">SW-FRIGATE-01</language>
+	</row>
+	<row id="msg_seq_se_sw_frigate_02">
+		<language name="JPN" width="256">SW-FRIGATE-02</language>
+		<language name="JPN_KANJI" width="256">SW-FRIGATE-02</language>
+	</row>
+	<row id="msg_seq_se_sw_frigate_03">
+		<language name="JPN" width="256">SW-FRIGATE-03</language>
+		<language name="JPN_KANJI" width="256">SW-FRIGATE-03</language>
+	</row>
+	<row id="msg_seq_se_sw_frigate_04">
+		<language name="JPN" width="256">SW-FRIGATE-04</language>
+		<language name="JPN_KANJI" width="256">SW-FRIGATE-04</language>
+	</row>
+	<row id="msg_seq_se_sw_frigate_05">
+		<language name="JPN" width="256">SW-FRIGATE-05</language>
+		<language name="JPN_KANJI" width="256">SW-FRIGATE-05</language>
+	</row>
+	<row id="msg_seq_se_sw_frigate_06">
+		<language name="JPN" width="256">SW-FRIGATE-06</language>
+		<language name="JPN_KANJI" width="256">SW-FRIGATE-06</language>
+	</row>
+	<row id="msg_seq_se_sw_frigate_07">
+		<language name="JPN" width="256">SW-FRIGATE-07</language>
+		<language name="JPN_KANJI" width="256">SW-FRIGATE-07</language>
+	</row>
+	<row id="msg_seq_se_sw_frigate_08">
+		<language name="JPN" width="256">SW-FRIGATE-08</language>
+		<language name="JPN_KANJI" width="256">SW-FRIGATE-08</language>
+	</row>
+	<row id="msg_seq_se_sw_frigate_09">
+		<language name="JPN" width="256">SW-FRIGATE-09</language>
+		<language name="JPN_KANJI" width="256">SW-FRIGATE-09</language>
+	</row>
+	<row id="msg_seq_se_sw_frigate_10">
+		<language name="JPN" width="256">SW-FRIGATE-10</language>
+		<language name="JPN_KANJI" width="256">SW-FRIGATE-10</language>
+	</row>
+	<row id="msg_seq_se_sw_frigate_11">
+		<language name="JPN" width="256">SW-FRIGATE-11</language>
+		<language name="JPN_KANJI" width="256">SW-FRIGATE-11</language>
+	</row>
+	<row id="msg_seq_se_sw_frigate_12">
+		<language name="JPN" width="256">SW-FRIGATE-12</language>
+		<language name="JPN_KANJI" width="256">SW-FRIGATE-12</language>
+	</row>
+	<row id="msg_seq_se_sw_frigate_13">
+		<language name="JPN" width="256">SW-FRIGATE-13</language>
+		<language name="JPN_KANJI" width="256">SW-FRIGATE-13</language>
+	</row>
+	<row id="msg_seq_se_sw_frigate_14">
+		<language name="JPN" width="256">SW-FRIGATE-14</language>
+		<language name="JPN_KANJI" width="256">SW-FRIGATE-14</language>
+	</row>
+	<row id="msg_seq_se_sw_frigate_15">
+		<language name="JPN" width="256">SW-FRIGATE-15</language>
+		<language name="JPN_KANJI" width="256">SW-FRIGATE-15</language>
+	</row>
+	<row id="msg_seq_se_sw_frigate_16">
+		<language name="JPN" width="256">SW-FRIGATE-16</language>
+		<language name="JPN_KANJI" width="256">SW-FRIGATE-16</language>
+	</row>
+	<row id="msg_seq_se_sw_frigate_17">
+		<language name="JPN" width="256">SW-FRIGATE-17</language>
+		<language name="JPN_KANJI" width="256">SW-FRIGATE-17</language>
+	</row>
+	<row id="msg_seq_se_sw_frigate_18">
+		<language name="JPN" width="256">SW-FRIGATE-18</language>
+		<language name="JPN_KANJI" width="256">SW-FRIGATE-18</language>
+	</row>
 	<row id="msg_seq_se_sw_souryucity_01">
 		<language name="JPN" width="256">SW-SOURYUCITY-01</language>
 		<language name="JPN_KANJI" width="256">SW-SOURYUCITY-01</language>
@@ -9776,6 +9864,34 @@
 	<row id="msg_seq_se_sw_souryucity_18">
 		<language name="JPN" width="256">SW-SOURYUCITY-18</language>
 		<language name="JPN_KANJI" width="256">SW-SOURYUCITY-18</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_00_01">
+		<language name="JPN" width="256">SW-KYUREON-00-01</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-00-01</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_00_02a">
+		<language name="JPN" width="256">SW-KYUREON-00-02a</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-00-02a</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_00_02b">
+		<language name="JPN" width="256">SW-KYUREON-00-02b</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-00-02b</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_00_02c">
+		<language name="JPN" width="256">SW-KYUREON-00-02c</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-00-02c</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_00_02d">
+		<language name="JPN" width="256">SW-KYUREON-00-02d</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-00-02d</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_00_03a">
+		<language name="JPN" width="256">SW-KYUREON-00-03a</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-00-03a</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_00_03b">
+		<language name="JPN" width="256">SW-KYUREON-00-03b</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-00-03b</language>
 	</row>
 	<row id="msg_seq_se_sw_ending_01">
 		<language name="JPN" width="256">SW-ENDING-01</language>
