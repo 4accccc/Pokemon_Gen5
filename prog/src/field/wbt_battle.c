@@ -1050,10 +1050,12 @@ void WBTSYS_ReflectBattleResult( WBTSYS * wbtsys, GAMEDATA * gamedata, BATTLE_SE
 
     if ( wbtsys->wbtcup != WBTCUP_DOWNLOAD && wbt_tr->tr_id < WBTROM_TRID_MEM_MAX )
     {
-      //対戦相手のトレーナーIDを保存する
+      //対戦相手のトレーナーIDを保存する（レッド以外）
       u8 pos = getBattleRecordIndex( wbtsys->stage );
-      WBTSAVE_SetTrainerID( wbtsave, pos, wbt_tr->tr_id );
-
+      if ( wbt_tr->tr_id != WBTROM_TRID_RED )
+      {
+        WBTSAVE_SetTrainerID( wbtsave, pos, wbt_tr->tr_id );
+      }
       //戦ったかどうかのフラグを反映
       WBTSAVE_SetFlag( wbtsave, wbt_tr->tr_id );
     }
