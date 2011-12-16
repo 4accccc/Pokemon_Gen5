@@ -1856,10 +1856,14 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   // 登録
   }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
     if( ITEMMENU_CheckShortCutSetMode( pWork ) == TRUE ){
-      if( (pWork->pocketno == BAG_POKE_EVENT) || (pWork->pocketno == BAG_POKE_REPOSITORY) ){
-        SHORTCUT_SetEventItem( pWork, pWork->curpos );
+
+      // アイテムのYボタン登録
+      if( SHORTCUT_SetEventItem( pWork, pWork->curpos ) == TRUE )
+      {
+        // 登録されたときは画面リフレッシュ
         _windowRewrite(pWork);
       }else{
+        // 登録されなかったときはポケットをYボタン登録する
         SHORTCUT_SetPocket( pWork );
       }
       if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
@@ -3533,34 +3537,29 @@ static BOOL SHORTCUT_SetEventItem( FIELD_ITEMMENU_WORK* pWork, int pos )
   // 表示上の位置から実体の位置へ座標変換
   pos += pWork->oamlistpos + 1;
 
-  // 大切なものと、保管の場合のみチェック
-  if((pWork->pocketno == BAG_POKE_EVENT)||(pWork->pocketno == BAG_POKE_REPOSITORY)){
-    if( ITEMMENU_GetItemPocketNumber(pWork) <= pos ){
+  if( ITEMMENU_GetItemPocketNumber(pWork) <= pos ){
+    return FALSE;
+  }else{
+    ITEM_ST * item = ITEMMENU_GetItem( pWork, pos );
+    SHORTCUT_ID shortcut_id = SHORTCUT_DATA_GetItemToShortcutID( item->id );
+    // 登録可能かチェック
+    if( shortcut_id == SHORTCUT_ID_NULL ){
       return FALSE;
-    }else{
-      ITEM_ST * item = ITEMMENU_GetItem( pWork, pos );
-      SHORTCUT_ID shortcut_id = SHORTCUT_DATA_GetItemToShortcutID( item->id );
-      // 登録可能かチェック
-      if( shortcut_id == SHORTCUT_ID_NULL ){
-        return FALSE;
-      }
-
-      if( ITEMMENU_CheckCnvButtonItem(pWork,item->id) == TRUE ){
-        GAMEDATA_SetShortCut( pWork->gamedata, shortcut_id, FALSE );
-      }else{
-        GAMEDATA_SetShortCut( pWork->gamedata, shortcut_id, TRUE );
-      }
     }
 
-    PMSND_PlaySE( SE_BAG_REGIST_Y ); // 登録音
-
-    pWork->oamlistpos_old = 0xffff;
-//    _windowRewrite(pWork);        // キータッチを切り替えた後にも呼ぶことになるので、外で呼ぶ
-
-    return TRUE;
+    if( ITEMMENU_CheckCnvButtonItem(pWork,item->id) == TRUE ){
+      GAMEDATA_SetShortCut( pWork->gamedata, shortcut_id, FALSE );
+    }else{
+      GAMEDATA_SetShortCut( pWork->gamedata, shortcut_id, TRUE );
+    }
   }
 
-  return FALSE;
+  PMSND_PlaySE( SE_BAG_REGIST_Y ); // 登録音
+
+  pWork->oamlistpos_old = 0xffff;
+  //    _windowRewrite(pWork);        // キータッチを切り替えた後にも呼ぶことになるので、外で呼ぶ
+
+  return TRUE;
 }
 
 //-----------------------------------------------------------------------------
