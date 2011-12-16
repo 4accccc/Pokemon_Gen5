@@ -44,7 +44,7 @@
 	ARCID_WMI				"../../prog/arc/wmi.narc"	# 通信アイコン
 	ARCID_NET_ERR			"../../prog/arc/net_err.narc"
 	ARCID_FLDMAP_WINFRAME 	"../../prog/arc/winframe.narc"   # ウィンドウフレーム
-	ARCID_PERSONAL			"../../prog/arc/personal/personal.narc"		#パーソナルデータ
+	ARCID_PERSONAL			"../../prog/arc/personal/personal_wb.narc"		#パーソナルデータ
 	ARCID_GROW_TBL			"../../prog/arc/personal/growtbl.narc"			#成長曲線テーブル
 	ARCID_WOTBL				"../../prog/arc/personal/wotbl.narc"			#技覚えテーブル
 	ARCID_EVOTBL			"../../prog/arc/personal/evo.narc"			#進化テーブル

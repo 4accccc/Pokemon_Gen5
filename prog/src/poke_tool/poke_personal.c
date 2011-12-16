@@ -53,6 +53,10 @@ void POKE_PERSONAL_InitSystem( HEAPID heapID )
 {
   if( ArcHandle == NULL )
   {
+
+#ifdef MULTI_BOOT_MAKE
+    const u16 ARCID_PERSONAL_BW = ARCID_PERSONAL;
+#endif
     ArcHandle   = GFL_ARC_OpenDataHandle( ARCID_PERSONAL,    heapID );
     ArcHandleBW = GFL_ARC_OpenDataHandle( ARCID_PERSONAL_BW, heapID );
   }
