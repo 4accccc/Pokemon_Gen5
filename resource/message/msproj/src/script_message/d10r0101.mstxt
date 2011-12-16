@@ -210,11 +210,11 @@
 		<AttributeCell
 			Name="Character">
 			<Text>SWPLAZMAM
-ネオプラズマ団♂・したっぱ
+プラズマ団♂・したっぱ
 ※正体は元プラズマ団</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T07:04:47" />
+				Time="2011-12-16T07:21:15" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -295,11 +295,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ひとりに　なったな
-どっちと　たたかうか　えらべよ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『一人に　なったな
+どっちと　戦うか　選べよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T07:18:29" />
+				Time="2011-12-16T07:20:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -371,11 +371,11 @@
 		<AttributeCell
 			Name="Character">
 			<Text>SWPLAZMAM
-ネオプラズマ団♂・したっぱ
+プラズマ団♂・したっぱ
 ※正体は元プラズマ団</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T07:04:47" />
+				Time="2011-12-16T07:21:13" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -390,14 +390,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『なるほどね
-てきの　てきは　みかた　ってことか▼
-むかしは　ひとの　ポケモンを
-うばっていた　くせにな▼
-いまので　つみほろぼし　かよ？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ああ……
+そういや　いたな　オマエ……▼
+オマエら　もとプラズマだんって
+ほんと　ひっし　なんだな……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T07:04:47" />
+				Time="2011-12-16T07:29:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -405,14 +404,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『なるほどね
-敵の　敵は　味方ってことか▼
-昔は　他人の　ポケモンを
-奪っていた　くせにな▼
-いまので　罪滅ぼし　かよ？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ああ……
+そういや　いたな　オマエ……▼
+オマエら　元プラズマ団って
+ほんと　必死なんだな……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T07:04:47" />
+				Time="2011-12-16T07:29:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -448,13 +446,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……うう！　でも
+			<Text>……うう！　だって
 Ｎさま　ポケモンに　やさしかったし▼
 オレも　わるい　にんげんから
 ポケモンを　まもりたいって……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T07:04:47" />
+				Time="2011-12-16T07:27:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -462,13 +460,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……うう！　でも
+			<Text>……うう！　だって
 Ｎさま　ポケモンに　優しかったし▼
 オレも　悪い　人間から
 ポケモンを　守りたいって……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T07:15:57" />
+				Time="2011-12-16T07:27:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -485,11 +483,11 @@
 		<AttributeCell
 			Name="Character">
 			<Text>SWPLAZMAM
-ネオプラズマ団♂・したっぱ
+プラズマ団♂・したっぱ
 ※正体は元プラズマ団</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T07:04:47" />
+				Time="2011-12-16T07:21:20" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -504,11 +502,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……フンッ！
-オレは　いくぜ！　[Name:TrainerName ]！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……そうだな▼
+プラズマだんを　ぶっつぶさないと
+オマエも　その　Ｎって　ヤツも▽
+また　わるもの　あつかい　されるよな▼
+よし！
+オレは　いくぜッ！[Name:TrainerName ]！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T07:04:47" />
+				Time="2011-12-16T07:31:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -516,11 +518,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……フンッ！
-オレは　行くぜ！　[Name:TrainerName ]！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……そうだな▼
+プラズマ団を　ぶっつぶさないと
+オマエも　その　Ｎって　ヤツも▽
+また　悪者扱い　されるよな▼
+よし！
+オレは　行くぜッ！[Name:TrainerName ]！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T07:04:47" />
+				Time="2011-12-16T07:31:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -558,16 +564,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ああいう　ふうに　おもわれるのも
-じぶんらが　わるいからですよね……▼
+			<Text>うう……
+ありがたいです▼
 ポケモンのため　とはいえ
 けっきょくは　じぶんらの▽
-やりたいことを　やってただけだし……▼
+したいことを　してただけなのに……▼
 すみません！　じぶん
 まだ　やることが　あるので！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-08T12:52:23" />
+				Time="2011-12-16T07:43:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -575,16 +581,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ああいう風に　思われるのも
-自分らが　悪いからですよね……▼
+			<Text>うう……
+ありがたいです▼
 ポケモンのため　とはいえ
 結局は　自分らの▽
-やりたいことを　やってただけだし……▼
+したいことを　してただけなのに……▼
 すみません！　自分
 まだ　やることが　あるので！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-08T12:52:29" />
+				Time="2011-12-16T07:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -603,11 +609,11 @@
 		<AttributeCell
 			Name="Character">
 			<Text>SWPLAZMAM
-ネオプラズマ団♂・したっぱ
+プラズマ団♂・したっぱ
 ※正体は元プラズマ団</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T07:04:47" />
+				Time="2011-12-16T07:21:07" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

@@ -34,11 +34,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・Black2ver</Comment>
+			<Comment>♀：Black2ver</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:59:54" />
+				Time="2011-12-16T06:43:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -82,11 +81,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♀
-・White2ver</Comment>
+			<Comment>♀：White2ver</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T06:59:59" />
+				Time="2011-12-16T06:43:06" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -141,13 +139,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver
+			<Comment>♂：Black2ver
 ・クリア前
 ※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T07:00:46" />
+				Time="2011-12-16T06:43:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -209,13 +206,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ・クリア前
 ※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T07:00:42" />
+				Time="2011-12-16T06:43:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

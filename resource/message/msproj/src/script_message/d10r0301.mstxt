@@ -337,11 +337,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オマエら
-そこ　とおしてくれよ▼</Text>
+			<Text>オマエら！
+そこ　とおるぜッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T06:26:02" />
+				Time="2011-12-16T07:49:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -349,11 +349,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オマエら
-そこ　通してくれよ▼</Text>
+			<Text>オマエら！
+そこ　通るぜッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-12-16T07:50:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -441,12 +441,12 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『はいはい！▼
 オレは　うばわれた
-ポケモンを　とりもどす！▼
+ポケモンを　とりもどすッ！▼
 オマエら　あくとうの　ことば　なんか
-きくわけ　ないだろ！▼</Text>
+きくわけ　ないだろッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T06:29:46" />
+				Time="2011-12-16T07:50:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -456,12 +456,12 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『はいはい！▼
 オレは　奪われた
-ポケモンを　取り戻す！▼
+ポケモンを　取り戻すッ！▼
 オマエら　悪党の　言葉なんか
-きくわけ　ないだろ！▼</Text>
+きくわけ　ないだろッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T06:29:48" />
+				Time="2011-12-16T07:50:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -557,10 +557,10 @@
 			<Text>だいじな　ものを　まもるためだろ！▼
 たいせつな　ポケモンが！
 じぶんの　しんねんが！　きずついても▽
-たたかうときって　ないのかよ！！▼</Text>
+たたかうときって　いまだろッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-12-16T07:52:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -571,10 +571,10 @@
 			<Text>大事な　ものを　守るためだろ！▼
 大切な　ポケモンが！
 自分の　信念が！　傷ついても▽
-戦うときって　ないのかよ！！▼</Text>
+戦うときって　いまだろッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-12-16T07:53:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -669,10 +669,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『[Name:TrainerName ]！
-いつもどおり　そっちは　まかせる！！▼</Text>
+いつもどおり　そっちは　たのむぜッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T06:45:09" />
+				Time="2011-12-16T07:52:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -681,10 +681,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『[Name:TrainerName ]！
-いつもどおり　そっちは　任せる！！▼</Text>
+いつもどおり　そっちは　頼むぜッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T06:30:24" />
+				Time="2011-12-16T07:51:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -884,10 +884,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……あんがとよ▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……あんがと▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-12-16T07:53:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -895,10 +895,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……あんがとよ▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……あんがと▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-12-16T07:53:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1106,13 +1106,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……そっか▼
-あいつに　あえたなら
+			<Text>[Name:TrainerName Idx="1" ]『うん　わかった！▼
+アイツに　あえたなら
 アンタらの　つみほろぼし　だっけ？▽
-てつだってやるよ▼</Text>
+てつだってやるよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-12-16T07:59:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1120,13 +1120,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……そっか▼
-あいつに　会えたなら
+			<Text>[Name:TrainerName Idx="1" ]『うん　わかった！▼
+アイツに　会えたなら
 アンタらの　罪滅ぼし　だっけ？▽
-手伝ってやるよ▼</Text>
+手伝ってやるよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-12-16T07:59:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1324,12 +1324,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うらぎりものの　しちけんじん　め！▼
-アンタを　ボコボコにして
-ヴィオさまに　ほめてもらうぜ！</Text>
+			<Text>うらぎりものの　しちけんじん　め！
+ボコボコにして　ほめてもらうぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T10:40:45" />
+				Time="2011-12-16T07:59:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1337,12 +1336,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>裏切り者の　七賢人め！▼
-アンタを　ボコボコにして
-ヴィオさまに　ほめてもらうぜ！</Text>
+			<Text>裏切り者の　七賢人め！
+ボコボコにして　ほめてもらうぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T10:40:46" />
+				Time="2011-12-16T07:59:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1607,10 +1605,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>さすがだな！　モンスターボールで
-ポケモンを　しばりつけてるもんな！</Text>
+ポケモンを　縛りつけてるもんな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T12:41:25" />
+				Time="2011-12-16T08:00:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

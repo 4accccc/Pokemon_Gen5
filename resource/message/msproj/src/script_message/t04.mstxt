@@ -1190,7 +1190,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ヴィオ『ここは　あたたかいな▼
-さて　ほんだいに　はいるぞ！▼
+さて　ほんだいに　はいろう！▼
 ここに　ゲーチスさまが
 のこされた　しょもつが　ある▼
 これが　あれば　かいていいせきの
@@ -1199,7 +1199,7 @@
 この　しょもつを　よむがいい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T11:52:41" />
+				Time="2011-12-16T06:48:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1208,7 +1208,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヴィオ『ここは　あたたかいな▼
-さて　本題に　はいるぞ！▼
+さて　本題に　はいろう！▼
 ここに　ゲーチスさまが
 残された　書物が　ある▼
 これが　あれば　海底遺跡の
@@ -1217,7 +1217,7 @@
 この書物を　読むがいい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T09:56:03" />
+				Time="2011-12-16T06:48:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

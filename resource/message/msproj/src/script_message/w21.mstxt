@@ -7,10 +7,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……みつけたな！
-オマエ　なかなか　やるな▼</Text>
+オマエ　さすがだなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T09:52:10" />
+				Time="2011-12-16T06:52:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -19,10 +19,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……みつけたな！
-オマエ　なかなか　やるな▼</Text>
+オマエ　さすがだなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T09:52:13" />
+				Time="2011-12-16T06:52:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -658,11 +658,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『なんだよー
+			<Text>[Name:TrainerName Idx="1" ]『なんだよッ！
 さいご　しまらない　ひと　だな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:51:28" />
+				Time="2011-12-16T06:55:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -670,11 +670,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『なんだよー
+			<Text>[Name:TrainerName Idx="1" ]『なんだよッ！
 最後　しまらない　人だな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T09:51:54" />
+				Time="2011-12-16T06:55:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1051,10 +1051,11 @@
 だけど……
 ２ひきとも　いまは　いない……▼
 でんせつの　ポケモンに
-みとめられた　あいつは　どこにいる？</Text>
+みとめられた　あいつは　どこにいる？▽
+たすけを　もとめに　いくか……！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T09:26:35" />
+				Time="2011-12-16T06:56:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1071,10 +1072,11 @@
 だけど……
 ２匹とも　いまは　いない……▼
 伝説の　ポケモンに
-認められた　あいつは　どこにいる？</Text>
+認められた　あいつは　どこにいる？▽
+助けを　求めに　行くか……！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T09:26:48" />
+				Time="2011-12-16T06:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1121,10 +1123,11 @@
 だけど……
 ２ひきとも　いまは　いない……▼
 でんせつの　ポケモンに
-みとめられた　あいつは　どこにいる？</Text>
+みとめられた　あいつは　どこにいる？▽
+たすけを　もとめに　いくか……！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T09:26:37" />
+				Time="2011-12-16T06:56:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1141,10 +1144,11 @@
 だけど……
 ２匹とも　いまは　いない……▼
 伝説の　ポケモンに
-認められた　あいつは　どこにいる？</Text>
+認められた　あいつは　どこにいる？▽
+助けを　求めに　行くか……！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T09:26:51" />
+				Time="2011-12-16T06:56:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -69,7 +69,7 @@
 			<Text>いでよ　キュレム！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:03:35" />
+				Time="2011-12-16T07:03:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1096,10 +1096,10 @@ N</Text>
 			Language="JPN">
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]！？▼
 そ　そんな……▼
-ゼッ　ゼクロムがっ！！[Ctrl2:CtrlSpeed ]▼</Text>
+ゼッ　ゼクロム！！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T13:21:59" />
+				Time="2011-12-16T08:04:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1109,10 +1109,10 @@ N</Text>
 			Language="JPN_KANJI">
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]！？▼
 そ　そんな……▼
-ゼッ　ゼクロムがっ！！[Ctrl2:CtrlSpeed ]▼</Text>
+ゼッ　ゼクロム！！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T13:21:57" />
+				Time="2011-12-16T08:04:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1150,10 +1150,10 @@ N</Text>
 			Language="JPN">
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]！？▼
 そ　そんな……▼
-レッ　レシラムがっ！！[Ctrl2:CtrlSpeed ]▼</Text>
+レッ　レシラム！！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T13:22:04" />
+				Time="2011-12-16T08:04:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1163,10 +1163,10 @@ N</Text>
 			Language="JPN_KANJI">
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]！？▼
 そ　そんな……▼
-レッ　レシラムがっ！！[Ctrl2:CtrlSpeed ]▼</Text>
+レッ　レシラム！！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T13:22:06" />
+				Time="2011-12-16T08:04:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1501,11 +1501,12 @@ N</Text>
 キュレムに　いどみなさい！▼
 いっておきますが
 ほかくは　できませんよ▼
-ワタクシが　かいはつ　した
-ジャマーが　ありますからね！▼</Text>
+ワタクシの　ステッキから
+モンスターボールの　きのうを　うばう▽
+ぼうがいでんぱを　だしてますからね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2011-12-16T10:44:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1525,11 +1526,12 @@ N</Text>
 キュレムに　挑みなさい！▼
 いっておきますが
 捕獲は　できませんよ▼
-ワタクシが　開発した
-ジャマーが　ありますからね！▼</Text>
+ワタクシの　ステッキから
+モンスターボールの　機能を　封じる▽
+妨害電波を　だしてますからね！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2011-12-16T10:45:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2258,11 +2260,12 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダークトリニティ『ゲーチスさまの　ことは
-わたしたちが……▼</Text>
+			<Text>ダークトリニティ『ゲーチスさまは……
+もう　しょうきでは……▼
+ここは　わたしたちが……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:08:01" />
+				Time="2011-12-16T10:57:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2270,11 +2273,12 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダークトリニティ『ゲーチスさまの　ことは
-わたしたちが……▼</Text>
+			<Text>ダークトリニティ『ゲーチスさまは……
+もう　正気では……▼
+ここは　わたしたちが……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:08:04" />
+				Time="2011-12-16T10:57:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2417,7 +2421,7 @@ N</Text>
 また　ここに　あらわれる……！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:08:13" />
+				Time="2011-12-16T11:01:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2572,12 +2576,12 @@ N</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ゼクロムも　いっている
-キミに　ありがとう　って！▼
+キミに　アリガトウ　って！▼
 そうなんだ
 ボクは　ポケモンと　はなせる[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:09:32" />
+				Time="2011-12-16T11:01:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2586,12 +2590,12 @@ N</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]ゼクロムも　いっている
-キミに　ありがとう　って！▼
+キミに　アリガトウ　って！▼
 そうなんだ
 ボクは　ポケモンと　話せる[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:09:47" />
+				Time="2011-12-16T11:01:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2630,12 +2634,12 @@ N</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]レシラムも　いっている
-キミに　ありがとう　って！▼
+キミに　アリガトウ　って！▼
 そうなんだ
 ボクは　ポケモンと　はなせる[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:09:37" />
+				Time="2011-12-16T11:01:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2644,12 +2648,12 @@ N</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]レシラムも　いっている
-キミに　ありがとう　って！▼
+キミに　アリガトウ　って！▼
 そうなんだ
 ボクは　ポケモンと　話せる[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:09:50" />
+				Time="2011-12-16T11:01:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2690,7 +2694,7 @@ N</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]あのとき……　あの　トレーナーや
-アデクさんが　おしえてくれた……▼
+アデクが　おしえてくれた……▼
 さらに　おおくの　であいを　へて
 いろんな　こえを　きいた……▼
 ことなる　かんがえを　うけいれて
@@ -2699,7 +2703,7 @@ N</Text>
 しずかに　ひろがったんだ……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:09:41" />
+				Time="2011-12-16T11:03:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2708,7 +2712,7 @@ N</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]あのとき……　あの　トレーナーや
-アデクさんが　教えてくれた……▼
+アデクが　教えてくれた……▼
 さらに　多くの　出会いを　経て
 いろんな　声を　きいた……▼
 異なる　考えを　受け入れて
@@ -2717,7 +2721,7 @@ N</Text>
 静かに　広がったんだ……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:09:53" />
+				Time="2011-12-16T11:03:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2754,7 +2758,7 @@ N</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]あのとき……　[Name:TrainerName Idx="1" ]や
-アデクさんが　おしえてくれた……▼
+アデクが　おしえてくれた……▼
 さらに　おおくの　であいを　へて
 いろんな　こえを　きいた……▼
 ことなる　かんがえを　うけいれて
@@ -2763,7 +2767,7 @@ N</Text>
 しずかに　ひろがったんだ……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:09:59" />
+				Time="2011-12-16T11:03:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2772,7 +2776,7 @@ N</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]あのとき……　[Name:TrainerName Idx="1" ]や
-アデクさんが　教えてくれた……▼
+アデクが　教えてくれた……▼
 さらに　多くの　出会いを　経て
 いろんな　声を　きいた……▼
 異なる　考えを　受け入れて
@@ -2781,7 +2785,7 @@ N</Text>
 静かに　広がったんだ……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:09:56" />
+				Time="2011-12-16T11:03:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2823,10 +2827,14 @@ N</Text>
 ヒトと　いることで　ポケモンは
 ほんらいの　ちからを　はっきする……▼
 それが　ゼクロムが　おしえてくれた
-ポケモンと　ボクの　りそう……[Ctrl2:CtrlSpeed ]▼</Text>
+ポケモンと　ボクの　りそう……▼
+そして　いつのひか
+りそうと　しんじつは　まじわり▼
+モンスターボールの　しはいから
+ポケモンも　ヒトも　ときはなたれる▼[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:10:04" />
+				Time="2011-12-16T11:06:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2839,10 +2847,14 @@ N</Text>
 ヒトと　いることで　ポケモンは
 真の　力を　発揮する……▼
 それが　ゼクロムが　教えてくれた
-ポケモンと　ボクの　理想……[Ctrl2:CtrlSpeed ]▼</Text>
+ポケモンと　ボクの　理想……▼
+そして　いつの日か
+理想と　真実は　交わり▼
+モンスターボールの　支配から
+ポケモンも　ヒトも　解き放たれる[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:10:07" />
+				Time="2011-12-16T11:06:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2884,10 +2896,14 @@ N</Text>
 ヒトと　いることで　ポケモンは
 ほんらいの　ちからを　はっきする……▼
 それが　レシラムが　おしえてくれた
-ポケモンと　ボクの　しんじつ……[Ctrl2:CtrlSpeed ]▼</Text>
+ポケモンと　ボクの　しんじつ……▼
+そして　いつのひか
+しんじつと　りそうは　まじわり▼
+モンスターボールの　しはいから
+ポケモンも　ヒトも　ときはなたれる▼[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:10:11" />
+				Time="2011-12-16T11:06:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2900,10 +2916,14 @@ N</Text>
 ヒトと　いることで　ポケモンは
 真の　力を　発揮する……▼
 それが　レシラムが　教えてくれた
-ポケモンと　ボクの　真実……[Ctrl2:CtrlSpeed ]▼</Text>
+ポケモンと　ボクの　真実……▼
+そして　いつの日か
+真実と　理想は　交わり▼
+モンスターボールの　支配から
+ポケモンも　ヒトも　解き放たれる[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:10:14" />
+				Time="2011-12-16T11:06:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

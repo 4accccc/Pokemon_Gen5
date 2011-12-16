@@ -95,11 +95,11 @@
 			<Comment>♂
 ・フェス用システムフラグがOFF
 ・はい/いいえの選択肢
-　はい　→
-　いいえ→</Comment>
+　はい　→mission_add_02
+　いいえ→mission_add_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T03:47:33" />
+				Time="2011-12-16T06:09:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -237,10 +237,10 @@
 			Language="JPN">
 			<Text>ハイリンクに　フェスミッションの
 『[Name:FesMissionName ]』が▽
-ついか　されました</Text>
+ついか　されました！</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-28T08:35:16" />
+				User="matsumiya:W00224"
+				Time="2011-12-16T06:09:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -250,10 +250,10 @@
 			Language="JPN_KANJI">
 			<Text>ハイリンクに　フェスミッションの
 『[Name:FesMissionName ]』が▽
-追加されました</Text>
+追加されました！</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-28T08:35:31" />
+				User="matsumiya:W00224"
+				Time="2011-12-16T06:09:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

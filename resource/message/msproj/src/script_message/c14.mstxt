@@ -7,14 +7,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『いでんしのくさび
-ぜったいに　とりもどすぞ▼
-というわけで　オマエの　ミッションは
-ジムバッジを　てにいれること▼
+ぜったいに　とりもどすッ▼
+というわけで　オマエは
+まず　ジムバッジを　てにいれろッ！▼
 あいては　プラズマだん
-できるかぎり　つよくならないとな</Text>
+つよすぎて　こまることは　ないッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-01T09:32:16" />
+				Time="2011-12-16T06:58:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -23,14 +23,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『いでんしのくさび
-絶対に　取り戻すぞ▼
-というわけで　オマエの　ミッションは
-ジムバッジを　手に入れること▼
+絶対に　取り戻すッ▼
+というわけで　オマエは
+まず　ジムバッジを　手に入れろッ！▼
 相手は　プラズマ団
-できるかぎり　強くならないとな</Text>
+強すぎて　困ることは　ないッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T12:39:46" />
+				Time="2011-12-16T06:58:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -68,14 +68,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『いでんしのくさび
-ぜったいに　とりもどすぞ▼
-というわけで　オマエの　ミッションは
-ジムバッジを　てにいれること▼
+ぜったいに　とりもどすッ▼
+というわけで　オマエは
+まず　ジムバッジを　てにいれろッ！▼
 あいては　プラズマだん
-できるかぎり　つよくならないとな▼</Text>
+つよすぎて　こまることは　ないッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T12:39:22" />
+				Time="2011-12-16T06:58:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -84,14 +84,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『いでんしのくさび
-絶対に　取り戻すぞ▼
-というわけで　オマエの　ミッションは
-ジムバッジを　手に入れること▼
+絶対に　取り戻すッ▼
+というわけで　オマエは
+まず　ジムバッジを　手に入れろッ！▼
 相手は　プラズマ団
-できるかぎり　強くならないとな▼</Text>
+強すぎて　困ることは　ないッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T12:39:22" />
+				Time="2011-12-16T06:58:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -131,10 +131,10 @@
 			<Text>[Name:TrainerName Idx="1" ]『はやく
 ジムバッジを　もらってこいよ▼
 そうしたら　てわけして
-プラズマだんを　さがすぜ！</Text>
+プラズマだんを　さがすぜッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T12:40:49" />
+				Time="2011-12-16T07:00:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -145,10 +145,10 @@
 			<Text>[Name:TrainerName Idx="1" ]『はやく
 ジムバッジを　もらってこいよ▼
 そうしたら　手分けして
-プラズマ団を　探すぜ！</Text>
+プラズマ団を　探すぜッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T12:41:04" />
+				Time="2011-12-16T07:00:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -186,10 +186,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……イッシュを
-こおりづけに　されて　たまるかよ</Text>
+こおりづけに　されて　たまるかよッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T09:48:43" />
+				Time="2011-12-16T07:00:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -198,10 +198,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……イッシュを
-氷漬けに　されて　たまるかよ</Text>
+氷漬けに　されて　たまるかよッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T09:48:49" />
+				Time="2011-12-16T07:00:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -355,14 +355,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『バッジを　そろえたな！
+			<Text>[Name:TrainerName Idx="1" ]『バッジを　そろえたか！
 オマエ　すごい　ヤツだな！▼
 ほんとうなら　ポケモンリーグに
 ちょうせん……　だけど▽
-さきに　プラズマだん　だからな！▼</Text>
+さきに　プラズマだん　だからなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T12:41:43" />
+				Time="2011-12-16T07:01:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -370,14 +370,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『バッジを　そろえたな！
+			<Text>[Name:TrainerName Idx="1" ]『バッジを　そろえたか！
 オマエ　すごい　ヤツだな！▼
 本当なら　ポケモンリーグに
 挑戦……　だけど▽
-先に　プラズマ団だからな！▼</Text>
+先に　プラズマ団だからなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T12:41:46" />
+				Time="2011-12-16T07:01:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -823,11 +823,11 @@
 あいては　プラズマだん　だからな！▼
 きを　ひきしめろ！　って　そのまえに
 どこに　いるか　さがさないと……！▼
-よし！　てわけしよう
-オマエは　２２ばんどうろ　な！▼</Text>
+よし！　てわけするぞッ！
+オマエは　２２ばんどうろ　なッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-05T10:29:47" />
+				Time="2011-12-16T07:02:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -841,11 +841,11 @@
 相手は　プラズマ団だからな！▼
 気を　引き締めろ！　って　その前に
 どこに　いるか　探さないと……！▼
-よし！　手分けしよう
-オマエは　２２番道路　な！▼</Text>
+よし！　手分けするぞッ！
+オマエは　２２番道路　なッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-05T10:29:55" />
+				Time="2011-12-16T07:02:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1311,10 +1311,10 @@
 			Language="JPN">
 			<Text>ハイリンクに　フェスミッションの
 『[Name:FesMissionName ]』が▽
-ついか　されました</Text>
+ついか　されました！</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-28T08:36:53" />
+				User="matsumiya:W00224"
+				Time="2011-12-16T07:19:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1324,10 +1324,10 @@
 			Language="JPN_KANJI">
 			<Text>ハイリンクに　フェスミッションの
 『[Name:FesMissionName ]』が▽
-追加されました</Text>
+追加されました！</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-28T08:37:08" />
+				User="matsumiya:W00224"
+				Time="2011-12-16T07:19:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1813,10 +1813,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひとりだと……　さみしいから！▼</Text>
+			<Text>ひとりだと……▼
+さみしいから！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T05:17:20" />
+				Time="2011-12-16T07:19:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1824,10 +1825,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ひとりだと……　さみしいから！▼</Text>
+			<Text>ひとりだと……▼
+さみしいから！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-16T05:17:26" />
+				Time="2011-12-16T07:19:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2035,10 +2037,10 @@
 			Language="JPN">
 			<Text>ハイリンクに　フェスミッションの
 『[Name:FesMissionName ]』が▽
-ついか　されました</Text>
+ついか　されました！</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-28T08:36:18" />
+				User="matsumiya:W00224"
+				Time="2011-12-16T07:19:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2048,10 +2050,10 @@
 			Language="JPN_KANJI">
 			<Text>ハイリンクに　フェスミッションの
 『[Name:FesMissionName ]』が▽
-追加されました</Text>
+追加されました！</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-28T08:36:32" />
+				User="matsumiya:W00224"
+				Time="2011-12-16T07:19:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

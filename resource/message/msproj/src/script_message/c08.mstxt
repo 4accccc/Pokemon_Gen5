@@ -929,14 +929,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ようけんを　つたえよう！　シャガどの
-いでんしのくさび　とやらを　ください▼
+いでんしのくさび　とやらを　よこせ▼
 この　ソウリュウは
 かこと　みらいが　からみあう　まち▼
 わかれた　ポケモンを　つなげる
 くさびが　あるに　ふさわしい　ばしょ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T05:52:11" />
+				Time="2011-12-16T06:13:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -945,14 +945,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>用件を　伝えよう！　シャガ殿
-いでんしのくさび　とやらを　ください▼
+いでんしのくさび　とやらを　よこせ▼
 この　ソウリュウは
 過去と　未来が　絡みあう　街▼
 分かれた　ポケモンを　つなげる
 くさびが　あるに　ふさわしい　場所▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T05:52:11" />
+				Time="2011-12-16T06:13:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1034,7 +1034,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヴィオ『はい　そうぞうどおり▼
+			<Text>ヴィオ『そうぞうどおり▼
 ほんらいで　あれば　もういちど
 こおりを　うちこむと　おどしたいが▽
 しばらくは　つかえぬし……▼
@@ -1042,7 +1042,7 @@
 さがすと　しますか……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T05:53:35" />
+				Time="2011-12-16T06:13:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1050,15 +1050,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヴィオ『はい　想像通り▼
+			<Text>ヴィオ『想像通り▼
 本来であれば　もう一度
 氷を　撃ちこむと　脅したいが▽
 しばらくは　使えぬし……▼
 寒い中　面倒ですが
-探すと　しまうすか……！▼</Text>
+探すと　しますか……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T05:53:41" />
+				Time="2011-12-16T06:14:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1244,10 +1244,10 @@
 		<AttributeCell
 			Name="Character">
 			<Text>SWPLAZMAM
-ネオプラズマ団♂・したっぱ１</Text>
+プラズマ団♂・したっぱ１</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:43:11" />
+				Time="2011-12-16T06:14:14" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1297,10 +1297,10 @@
 		<AttributeCell
 			Name="Character">
 			<Text>SWPLAZMAM
-ネオプラズマ団♂・したっぱ１</Text>
+プラズマ団♂・したっぱ１</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:43:13" />
+				Time="2011-12-16T06:14:16" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1351,10 +1351,10 @@
 		<AttributeCell
 			Name="Character">
 			<Text>SWPLAZMAM
-ネオプラズマ団♂・したっぱ１</Text>
+プラズマ団♂・したっぱ１</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T05:34:34" />
+				Time="2011-12-16T06:14:18" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1402,10 +1402,10 @@
 		<AttributeCell
 			Name="Character">
 			<Text>SWPLAZMAM
-ネオプラズマ団♂・したっぱ２</Text>
+プラズマ団♂・したっぱ２</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:43:27" />
+				Time="2011-12-16T06:14:20" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1455,10 +1455,10 @@
 		<AttributeCell
 			Name="Character">
 			<Text>SWPLAZMAM
-ネオプラズマ団♂・したっぱ２</Text>
+プラズマ団♂・したっぱ２</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:43:26" />
+				Time="2011-12-16T06:14:21" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -1502,10 +1502,10 @@
 		<AttributeCell
 			Name="Character">
 			<Text>SWPLAZMAM
-ネオプラズマ団♂・したっぱ２</Text>
+プラズマ団♂・したっぱ２</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T05:34:52" />
+				Time="2011-12-16T06:14:23" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -1546,10 +1546,10 @@
 		<AttributeCell
 			Name="Character">
 			<Text>SWPLAZMAW
-ネオプラズマ団♀・したっぱ３</Text>
+プラズマ団♀・したっぱ３</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:43:43" />
+				Time="2011-12-16T06:14:25" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1597,10 +1597,10 @@
 		<AttributeCell
 			Name="Character">
 			<Text>SWPLAZMAW
-ネオプラズマ団♀・したっぱ３</Text>
+プラズマ団♀・したっぱ３</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:43:45" />
+				Time="2011-12-16T06:14:26" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1651,10 +1651,10 @@
 		<AttributeCell
 			Name="Character">
 			<Text>SWPLAZMAW
-ネオプラズマ団♀・したっぱ３</Text>
+プラズマ団♀・したっぱ３</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T05:35:10" />
+				Time="2011-12-16T06:14:30" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1702,10 +1702,10 @@
 		<AttributeCell
 			Name="Character">
 			<Text>SWPLAZMAM
-ネオプラズマ団♂・したっぱ４</Text>
+プラズマ団♂・したっぱ４</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:43:50" />
+				Time="2011-12-16T06:14:31" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -1747,10 +1747,10 @@
 		<AttributeCell
 			Name="Character">
 			<Text>SWPLAZMAM
-ネオプラズマ団♂・したっぱ４</Text>
+プラズマ団♂・したっぱ４</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T05:37:48" />
+				Time="2011-12-16T06:14:32" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -1791,10 +1791,10 @@
 		<AttributeCell
 			Name="Character">
 			<Text>SWPLAZMAM
-ネオプラズマ団♂・したっぱ５</Text>
+プラズマ団♂・したっぱ５</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:43:55" />
+				Time="2011-12-16T06:14:33" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1900,10 +1900,10 @@
 		<AttributeCell
 			Name="Character">
 			<Text>SWPLAZMAW
-ネオプラズマ団♀・したっぱ６</Text>
+プラズマ団♀・したっぱ６</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-17T02:44:04" />
+				Time="2011-12-16T06:14:34" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -1947,10 +1947,10 @@
 		<AttributeCell
 			Name="Character">
 			<Text>SWPLAZMAW
-ネオプラズマ団♀・したっぱ６</Text>
+プラズマ団♀・したっぱ６</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T05:38:13" />
+				Time="2011-12-16T06:14:37" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -2022,10 +2022,10 @@
 イッシュちほうの　すべてが
 こおりづけに　なる　さまを▼
 そのために　どうしても
-いでんしのくさびを　てにいれますから▼</Text>
+いでんしのくさびを　てにいれます▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T12:56:46" />
+				Time="2011-12-16T06:19:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2042,10 +2042,10 @@
 イッシュ地方の　すべてが
 氷漬けに　なる　様を▼
 そのために　どうしても
-いでんしのくさびを　手に入れますから▼</Text>
+いでんしのくさびを　手に入れます▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T12:57:11" />
+				Time="2011-12-16T06:19:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2187,11 +2187,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふむ……！　いって　もどるまでの
+			<Text>ふむ……！▼
+いって　もどるまでの
 きろくこうしん　だな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T09:47:14" />
+				Time="2011-12-16T06:26:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2199,11 +2200,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ふむ……！　行って　戻るまでの
+			<Text>ふむ……！▼
+行って　戻るまでの
 記録更新　だな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T09:47:10" />
+				Time="2011-12-16T06:26:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2361,10 +2363,10 @@
 ポケモンジムを　かいそう　したのも
 それが　りゆう　か▼
 ですが　いでんしのくさび　は
-いま　わたしが　いただきましたよ▼</Text>
+いま　わたしが　いただきました▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T09:51:34" />
+				Time="2011-12-16T06:26:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2381,10 +2383,10 @@
 ポケモンジムを　改装したのも
 それが　理由か▼
 ですが　いでんしのくさび　は
-今　わたしが　いただきましたよ▼</Text>
+今　わたしが　いただきました▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T09:51:45" />
+				Time="2011-12-16T06:26:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2475,7 +2477,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『ええ　おっしゃるとおり▼
+			<Text>？？？『ええ▼
 ですが　どんな　てを　つかってでも
 こんかいは　もくてきを　たっせいします▼
 Ｎさまの　ように
@@ -2486,7 +2488,7 @@
 ２ねんは　ぞんがい　ながいものです▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T12:59:31" />
+				Time="2011-12-16T06:26:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2494,7 +2496,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『ええ　おっしゃるとおり▼
+			<Text>？？？『ええ▼
 ですが　どんな　手段ででも
 今回は　目的を　達成します▼
 Ｎさまの　ように
@@ -2505,7 +2507,7 @@
 ２年は　存外　長いものです▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T12:59:25" />
+				Time="2011-12-16T06:26:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2696,7 +2698,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『……ざんねん▼
+			<Text>ダークトリニティ『……ざんねん▼
 いでんしのくさびを　もっているのは
 ほかの　なかま　です▼
 そう……
@@ -2704,7 +2706,7 @@
 では　ごきげんよう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T09:58:07" />
+				Time="2011-12-16T06:27:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2712,7 +2714,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『……残念▼
+			<Text>ダークトリニティ『……残念▼
 いでんしのくさびを　持っているのは
 他の　仲間です▼
 そう……
@@ -2720,7 +2722,7 @@
 では　ごきげんよう▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T09:58:03" />
+				Time="2011-12-16T06:27:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3222,14 +3224,14 @@
 			Language="JPN_KANJI">
 			<Text>チェレン『[Name:TrainerName ]！▼
 できれば　一緒に　来てほしい！▼
-きみは　ププラズマ団とも
+きみは　プラズマ団とも
 渡り合える　すごうでの▽
 ポケモントレーナー　だからね▼
 では　シャガさん
 行ってきます！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T06:02:20" />
+				Time="2011-12-16T06:27:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4279,14 +4281,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>りそうを　おいもとめる
-それは　ひと　それぞれ……▽
+			<Text>りそうを　おいもとめる……
+それは　ひと　それぞれ▽
 ポケモン　それぞれ　だよ▼
 この　まちが　れきしを　だいじにして
 りそうを　もとめているように……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-16T06:29:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4294,14 +4296,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>理想を　追い求める
-それは　人　それぞれ……▽
+			<Text>理想を　追い求める……
+それは　人　それぞれ▽
 ポケモン　それぞれ　だよ▼
 この街が　歴史を　大事にして
 理想を　求めているように……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-16T06:29:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4335,14 +4337,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しんじつを　おいもとめる
-それは　ひと　それぞれ……▽
+			<Text>しんじつを　おいもとめる……
+それは　ひと　それぞれ▽
 ポケモン　それぞれ　だよ▼
 この　まちが　へんかを　だいじにして
 しんじつを　もとめているように……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-16T06:29:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4350,14 +4352,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>真実を　追い求める
-それは　人　それぞれ……▽
+			<Text>真実を　追い求める……
+それは　人　それぞれ▽
 ポケモン　それぞれ　だよ▼
 この街が　変化を　大事にして
 真実を　求めているように……</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-16T06:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
