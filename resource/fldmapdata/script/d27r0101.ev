@@ -232,6 +232,7 @@ EVENT_START	ev_scene_d27r0101_firstbtl_01
   _OBJ_ANIME( D27R0101_SWRIVAL_01, anm_staystep_u )
   _OBJ_ANIME( D27R0101_SWLEADER1_01, anm_staystep_u )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
   
   _OBJ_ANIME( D27R0101_SWPLAZMAM_03, anm_swplazma_firstcome_u_01 )
   _OBJ_ANIME( D27R0101_SWPLAZMAM_05, anm_swplazma_firstcome_u_01 )
@@ -275,6 +276,7 @@ EVENT_START	ev_scene_d27r0101_firstbtl_01
   _OBJ_ANIME( D27R0101_SWRIVAL_01, anm_staystep_d )
   _OBJ_ANIME( D27R0101_SWLEADER1_01, anm_staystep_d )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
   
   _OBJ_ANIME( D27R0101_SWPLAZMAM_09, anm_swplazma_firstcome_d_01 )
   _OBJ_ANIME( D27R0101_SWPLAZMAM_11, anm_swplazma_firstcome_d_01 )
