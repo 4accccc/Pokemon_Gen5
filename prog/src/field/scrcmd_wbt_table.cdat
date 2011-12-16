@@ -43,7 +43,7 @@
   DEF_CMD( EvCmdWBTGetPartyMax,       EV_SEQ_WBT_GET_PARTY_MAX )
 
   DEF_CMD( EvCmdWBTGetDownLoadCount,  EV_SEQ_WBT_GET_DL_COUNT )
-  DEF_CMD( EvCmdWBTGetDownLoadName,   EV_SEQ_WBT_GET_DL_NAME )
+  NO_CMD()  //ÉRÉ}ÉìÉhçÌèú
   DEF_CMD( EvCmdWBTSetDLData,         EV_SEQ_WBT_SET_DL_DATA )
   DEF_CMD( EvCmdWBTGetDLNumber,       EV_SEQ_WBT_SET_DL_NUMBER )
 

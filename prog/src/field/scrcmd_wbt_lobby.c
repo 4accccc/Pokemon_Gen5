@@ -386,27 +386,6 @@ VMCMD_RESULT EvCmdWBTGetDownLoadCount( VMHANDLE * core, void * wk )
 
 //--------------------------------------------------------------
 /**
- * @brief スクリプトコマンド：ダウンロードデータ名セット
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdWBTGetDownLoadName( VMHANDLE * core, void * wk )
-{
-  SCRCMD_WORK*    work = wk;
-  SCRIPT_WORK*      sc = SCRCMD_WORK_GetScriptWork( work );
-  WORDSET*     wordset = SCRIPT_GetWordSet( sc );
-  WBTSYS * wbtsys = WBT_SCR_getWBTSys( wk );
-
-  u8 idx = VMGetU8(core);
-  u16 dl_number = SCRCMD_GetVMWorkValue( core, work );
-
-  TAMADA_Printf("EvCmdWBTGetDownLoadName\n");
-  //仮データセット
-  WORDSET_RegisterNumber( wordset, idx, dl_number, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
  * @brief スクリプトコマンド：WBTDLデータのナンバーセット
  */
 //--------------------------------------------------------------
