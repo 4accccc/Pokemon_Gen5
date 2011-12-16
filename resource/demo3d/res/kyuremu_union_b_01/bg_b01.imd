@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-12-15T15:32:06" source="kyuremu_union_b_01_028.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-12-16T19:15:17" source="kyuremu_union_b_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-12-15T15:32:06" source="kyuremu_union_b_01_028.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-12-16T19:15:17" source="kyuremu_union_b_01.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -20,7 +20,7 @@
 	magnify="1.000000"
 	tool_start_frame="1"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="9 7"
+	compress_node="none" node_size="9 9"
 	compress_material="off" material_size="4 4"
 	output_texture="used"
 	force_full_weight="off"
@@ -675,8 +675,8 @@
 	<matrix index="1" mtx_weight="1" node_idx="2"/>
 	<matrix index="2" mtx_weight="1" node_idx="3"/>
 	<matrix index="3" mtx_weight="1" node_idx="4"/>
-	<matrix index="4" mtx_weight="1" node_idx="5"/>
-	<matrix index="5" mtx_weight="1" node_idx="6"/>
+	<matrix index="4" mtx_weight="1" node_idx="6"/>
+	<matrix index="5" mtx_weight="1" node_idx="8"/>
 </matrix_array>
 
 <polygon_array size="10">
@@ -5776,7 +5776,7 @@
 	</polygon>
 </polygon_array>
 
-<node_array size="7">
+<node_array size="9">
 	<node index="0" name="bg_b01" kind="null"
 		parent="-1"
 		child="1"
@@ -5871,11 +5871,25 @@
 	>
 		<display index="0" material="2" polygon="3" priority="0"/>
 	</node>
-	<node index="5" name="model001" kind="mesh"
+	<node index="5" name="map01" kind="null"
 		parent="0"
-		child="-1"
-		brother_next="6"
+		child="6"
+		brother_next="7"
 		brother_prev="4"
+		draw_mtx="off"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="0"
+	>
+	</node>
+	<node index="6" name="model001" kind="mesh"
+		parent="5"
+		child="-1"
+		brother_next="-1"
+		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -5893,11 +5907,25 @@
 		<display index="1" material="1" polygon="5" priority="0"/>
 		<display index="2" material="3" polygon="4" priority="0"/>
 	</node>
-	<node index="6" name="model02" kind="mesh"
+	<node index="7" name="map02" kind="null"
 		parent="0"
-		child="-1"
+		child="8"
 		brother_next="-1"
 		brother_prev="5"
+		draw_mtx="off"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="off"
+		display_size="0"
+	>
+	</node>
+	<node index="8" name="model02" kind="mesh"
+		parent="7"
+		child="-1"
+		brother_next="-1"
+		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
