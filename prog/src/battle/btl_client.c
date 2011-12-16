@@ -2412,19 +2412,6 @@ static BOOL SubSeq_POKEWOOD_Event_Sequence( BTL_CLIENT *wk )
     _check_pokewood_success( wk, senario, wk->pokewoodSeqWork.event_no );
     BTL_STR_Register_PokewoodWord();  //WORDSET登録
 
-    //カットインをすぐ見るためのデバッグ処理
-#ifdef PM_DEBUG
-    if( BTL_MAIN_GetDebugFlag( wk->mainModule, BTL_DEBUGFLAG_POKEWOOD_CUTIN ) )
-    {
-      u16 event_no;
-      if( DEBUG_POKEWOOD_CUTIN_GetExitsEventNo( senario, s_debug_cutin_cnt, &event_no ) )
-      {
-        s_debug_cutin_cnt++;
-        wk->pokewoodSeqWork.event_no = event_no;
-      }
-    }
-#endif
-
     if(wk->pokewoodSeqWork.event_no>=0){
 
       if( BTL_MAIN_GetPokewoodMode( wk->mainModule ) == BTL_POKEWOOD_SHOW
@@ -11287,6 +11274,7 @@ static BOOL Debug_SubProc_CheckCutin(BTL_CLIENT *wk, int *seq )
 {
   enum
   {
+    SEQ_INIT,
     SEQ_START,
     SEQ_MAIN,
     SEQ_END,
@@ -11297,6 +11285,10 @@ static BOOL Debug_SubProc_CheckCutin(BTL_CLIENT *wk, int *seq )
 
   switch( *seq )
   {
+  case SEQ_INIT:
+    s_debug_cutin_cnt = 0;
+    (*seq)  = SEQ_START;
+    break;
   case SEQ_START:
     {
       u16 event_no;

@@ -563,6 +563,33 @@ BOOL DEBUG_POKEWOOD_CUTIN_GetExitsEventNo( const POKEWOOD_SENARIO * cp_senario, 
 
   return FALSE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  そのシナリオ中にあるカットインの数を返す
+ *
+ *	@param	const POKEWOOD_SENARIO * cp_senario   シナリオ
+ *
+ *	@return カットイン数
+ */
+//-----------------------------------------------------------------------------
+u32 DEBUG_POKEWOOD_CUTIN_GetSenarioCutinNum( const POKEWOOD_SENARIO * cp_senario )
+{ 
+  
+  int i;
+  int cnt = 0;
+
+  for( i = 0; i < NELEMS(sc_pw_cutin_dat_search); i++ )
+  {
+    if( sc_pw_cutin_dat_search[i].senario == cp_senario->senario_no )
+    {
+      cnt++;
+    }
+  }
+
+  return cnt;
+}
+
 #endif
 //----------------------------------------------------------------------------
 /**

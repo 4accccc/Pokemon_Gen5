@@ -42,6 +42,7 @@ extern POKEWOOD_CUTIN * BTL_MAIN_GetPokewoodCutin( BTL_MAIN_MODULE *wk );
 
 #ifdef PM_DEBUG
 extern BOOL DEBUG_POKEWOOD_CUTIN_GetExitsEventNo( const POKEWOOD_SENARIO * cp_senario, u16 cnt, u16 *pw_event_no );
+extern u32 DEBUG_POKEWOOD_CUTIN_GetSenarioCutinNum( const POKEWOOD_SENARIO * cp_senario );
 #endif
 
 //=============================================================================

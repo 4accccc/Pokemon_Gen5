@@ -6415,6 +6415,15 @@ void POKEWOOD_Init( BTL_MAIN_MODULE* wk, int senario_no )
   // シナリオデータを読み込む
   wk->pokewood_senario = GFL_ARC_LoadDataAlloc( ARCID_POKEWOOD, senario_no, HEAPID_BTL_SYSTEM);
   wk->pokewood_work = GFL_HEAP_AllocMemory( HEAPID_BTL_SYSTEM, sizeof(POKEWOOD_WORK) );
+
+#ifdef PM_DEBUG
+  if( BTL_MAIN_GetDebugFlag( wk, BTL_DEBUGFLAG_POKEWOOD_CUTIN ) )
+  {
+    //カットインの場合はターン数をカットイン個数分にする
+    wk->pokewood_senario->turn_max = DEBUG_POKEWOOD_CUTIN_GetSenarioCutinNum( wk->pokewood_senario );
+  }
+#endif
+
   OS_Printf("pokewood senario no=%d, size=%d\n", senario_no, sizeof(POKEWOOD_SENARIO));
   _print_pokewood_senario( wk->pokewood_senario );
 
