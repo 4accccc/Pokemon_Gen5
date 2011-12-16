@@ -353,6 +353,9 @@ ENDSWITCH
 
 //キミに　つたえることが　ある
 _BALLOONWIN_OBJMSG_POS( msg_d08r0901_boss_04 ,MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+_MSGWIN_CLOSE()
+
+_TIME_WAIT( 20 )
 
 //主人公名前格納
 _PLAYER_NAME( 0 )
@@ -361,8 +364,21 @@ _PLAYER_NAME( 0 )
 _BALLOONWIN_OBJMSG_POS( msg_d08r0901_boss_05 ,MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
 _MSGWIN_CLOSE()
 
+_CAMERA_START()		//カメラ操作開始
+_CAMERA_PURGE()		//カメラパージ
+_CAMERA_MOVE(9688,0,970752,1081344,0,1146880,32)
+_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_n_leave )
+_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+_OBJ_ANIME_WAIT()
+
+//キミが　のぞむ　ポケモンとの　せかい
+_BALLOONWIN_OBJMSG_POS( msg_d08r0901_boss_06 ,MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+_MSGWIN_CLOSE()
+
 //アニメ：Ｎ退場
-_OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 16, 20, FORCE_TYPE_NOT, 8, DIR_UD )
+_CAMERA_RECV_MOVE(40)	//カメラ復帰移動
+_OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 16, 23, FORCE_TYPE_NOT, 8, DIR_UD )
+_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 _OBJ_ANIME_WAIT()
 
 _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
@@ -373,6 +389,9 @@ _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 _FLAG_SET(FE_D08R0901_BOSS_TALK)
 
 //========================================//
+
+_CAMERA_BIND()		//カメラバインド
+_CAMERA_END()		//カメラ操作終了
 
 _RET
 
@@ -465,3 +484,12 @@ _ANIME_LABEL  anm_back_d
   _ANIME_DATA AC_WALK_D_4F,1
   _ANIME_DATA AC_DIR_PAUSE_OFF,1
   _ANIME_DATA ACMD_END,0
+
+//-----------------------------------------------------------
+//☆Ｎ：退場
+//-----------------------------------------------------------
+_ANIME_LABEL	anm_n_leave
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	ACMD_END,0

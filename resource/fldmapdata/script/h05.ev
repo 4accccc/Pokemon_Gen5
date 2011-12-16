@@ -26,6 +26,9 @@ _EVENT_DATA   ev_h05_middleman1_01
 _EVENT_DATA   ev_h05_man3_01
 _EVENT_DATA   ev_pos_h05_poke488_01
 _EVENT_DATA   ev_h05_poke488_01
+_EVENT_DATA	ev_init_h05
+_EVENT_DATA	ev_h05_man3_02
+_EVENT_DATA	ev_pos_h05_wandergirl
 _EVENT_DATA_END
 
 //主人公方向取得変数
@@ -51,7 +54,70 @@ INIT_EVENT_START  ev_zone_h05
 
   ENDIF
 
+  _FLAG_SET( FV_H05_WANDERGIRL )
+  $WK_SCENE_H05_GIRL = 0
+
+  //クレセリアとのイベント前の場合・消える少女イベント
+  IF FLAG_OFF( FE_H05_POKE488_BTL_01 ) THEN
+  
+  	//20％の確率で
+  	_GET_RND( SCWK_ANSWER, 100 )
+  	_DEBUG_PRINT_WK( SCWK_ANSWER )
+  	IF $SCWK_ANSWER < 20 THEN
+		//消える少女みたフラグをリセット
+  		_FLAG_RESET( FE_H05_LOOK_WANDERGIRL )
+		//消える少女を表示
+		_FLAG_RESET( FV_H05_WANDERGIRL )
+		//POSイベントを有効
+		$WK_SCENE_H05_GIRL = 1
+  	ENDIF
+  
+  ENDIF
+
 INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_h05
+	//少女出現位置の隣からハイリンクに行き来したとき、少女に話しかけられてしまう問題の対処
+	
+	//少女が表示されているなら、チェック処理へ
+	IF FLAG_OFF( FV_H05_WANDERGIRL ) THEN
+		_CALL	ev_wandergirl_pos_chk
+	ENDIF
+	
+INIT_EVENT_END
+
+ev_wandergirl_pos_chk:
+	{
+	DEFINE_LOCAL	lwk_pos_x
+	DEFINE_LOCAL	lwk_pos_z
+	
+	_PLAYER_POS_GET( lwk_pos_x, lwk_pos_z )	//自機の位置取得
+	
+	//自機の位置が少女出現位置と隣接しているなら、イベントを無効にする処理へ
+	IF $lwk_pos_x == 147 && $lwk_pos_z == 36 THEN
+		//少女の左隣り
+		_CALL	ev_wandergirl_off
+	ELSIF $lwk_pos_x == 148 && $lwk_pos_z == 35 THEN
+		//少女の上隣り
+		_CALL	ev_wandergirl_off
+	ELSIF $lwk_pos_x == 149 && $lwk_pos_z == 36 THEN
+		//少女の右隣り
+		_CALL	ev_wandergirl_off
+	ENDIF
+	
+	}
+_RET
+
+ev_wandergirl_off:
+	//消える少女を削除し、イベントを無効にします
+	_OBJ_DEL( H05_GIRL2_01 )
+	_FLAG_SET( FV_H05_WANDERGIRL )
+	$WK_SCENE_H05_GIRL = 0
+_RET
+
 
 /************************************************************/
 /*  コイキング購入                                          */
@@ -376,6 +442,10 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_h05_poke488_01
 
+  //========================================//
+  _FLAG_SET( FE_H05_POKE488_BTL_01 )
+  //========================================//
+
   _TALK_START_SE_PLAY()
 
   //クレセリア：るなーん
@@ -465,3 +535,102 @@ _ANIME_LABEL  anm_itemget
   _ANIME_DATA AC_HERO_ITEMGET,1
   _ANIME_DATA ACMD_END,0
 
+/************************************************************/
+/*						消える少女							*/
+/************************************************************/
+EVENT_START	ev_pos_h05_wandergirl
+	//少女：消える
+	_OBJ_ANIME( H05_GIRL2_01, anm_girl_vanish )
+	_OBJ_ANIME_WAIT()
+	
+	//少女を削除
+	_OBJ_DEL( H05_GIRL2_01 )
+	
+	//ふとっちょ：！マーク
+	_OBJ_ANIME( H05_MAN3_02, anm_man3_look )
+	_OBJ_ANIME_WAIT()
+	
+	//はわわわ
+	_BALLOONWIN_OBJMSG_POS( msg_h05_oldwoman1_02, H05_MAN3_02, POS_DEFAULT )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+	//========================================//
+	//POS無効
+	$WK_SCENE_H05_GIRL = 2
+	
+	//消える少女の表示フラグをセット
+	_FLAG_SET( FV_H05_WANDERGIRL )
+	
+	//消える少女を見た
+	_FLAG_SET( FE_H05_LOOK_WANDERGIRL )
+	//========================================//
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//少女：消える
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_girl_vanish
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	AC_WAIT_1F,1
+	_ANIME_DATA	AC_VANISH_OFF,1
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	AC_WAIT_1F,1
+	_ANIME_DATA	AC_VANISH_OFF,1
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	AC_WAIT_1F,1
+	_ANIME_DATA	AC_VANISH_OFF,1
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	AC_WAIT_1F,1
+	_ANIME_DATA	AC_VANISH_OFF,1
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	AC_WAIT_1F,1
+	_ANIME_DATA	AC_VANISH_OFF,1
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	AC_WAIT_1F,1
+	_ANIME_DATA	AC_VANISH_OFF,1
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	AC_WAIT_1F,1
+	_ANIME_DATA	AC_VANISH_OFF,1
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	AC_WAIT_1F,1
+	_ANIME_DATA	AC_VANISH_OFF,1
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ふとっちょ：！マーク
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_man3_look
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+/************************************************************/
+/*						ふとっちょ				*/
+/************************************************************/
+EVENT_START	ev_h05_man3_02
+
+  //クレセリアと戦闘後か？
+  IF FLAG_ON( FE_H05_POKE488_BTL_01 ) THEN
+  
+  	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h05_oldwoman1_01 )
+  
+  //まだ戦闘前
+  ELSE
+  
+  	//消える少女イベント起動後か？
+  	IF FLAG_ON( FE_H05_LOOK_WANDERGIRL ) THEN
+  	
+  		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h05_oldwoman1_02 )
+  	
+  	ELSE
+  	
+  		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h05_oldwoman1_01 )
+  	
+  	ENDIF
+  
+  ENDIF
+
+EVENT_END

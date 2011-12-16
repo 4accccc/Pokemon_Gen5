@@ -10,5 +10,8 @@
 #define SCRID_H05_MAN3_01 (3)
 #define SCRID_POS_H05_POKE488_01 (4)
 #define SCRID_H05_POKE488_01 (5)
+#define SCRID_INIT_H05 (6)
+#define SCRID_H05_MAN3_02 (7)
+#define SCRID_POS_H05_WANDERGIRL (8)
 
 #endif //_H05_DEF_H_

@@ -13,6 +13,8 @@
 #define H05_MIDDLEMAN1_01                  0
 #define H05_MAN3_01                        1
 #define H05_POKE488_01                     2
+#define H05_GIRL2_01                       3
+#define H05_MAN3_02                        4
 
 #endif //ZONE_H05_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/h05.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
