@@ -64,6 +64,17 @@ enum {
 	SUBSEQ_END,
 };
 
+// 2Dカットのシーケンス
+enum{
+  SEQ_CUT_NONE,       // なし
+  SEQ_CUT_LOAD,       // リソース読み込み
+  SEQ_CUT_FADE_IN,    // フェードしながら表示
+  SEQ_CUT_VIEW_WAIT,  // 表示中
+  SEQ_CUT_FADE_OUT,   // フェードしながら非表示
+  SEQ_CUT_EXIT,       // 終了処理
+};
+
+
 #ifdef	PM_DEBUG
 #define	LIST_START_INIT_WAIT	( wk->testStartInitWait )
 #define	LIST_START_END_WAIT		( wk->testStartEndWait )
@@ -108,6 +119,19 @@ enum {
 
 #define	ITEMLIST_MSG_NONE		( 0xffff )		// メッセージなし
 
+// カット
+// 画面選択
+#define CUT_DISP_MAIN         ( 1 )       // メインBG(上画面)
+#define CUT_DISP_SUB          ( 2 )       // サブBG(下画面)
+
+///	フェード
+typedef enum {
+  CUT_FADE_IN,
+  CUT_FADE_OUT,
+} CUT_FADE;
+#define CUT_FADE_SKIP_SPEED    ( 4 )      // スキップ時のフェード速度
+
+
 // コマンドラベル
 enum {
 	ITEMLIST_LABEL_NONE = 0,
@@ -120,6 +144,10 @@ enum {
 	ITEMLIST_LABEL_LOGO_PUT,
 
 	ITEMLIST_LABEL_VERSION,
+
+  // swan追加
+  // カットイン表示
+	ITEMLIST_LABEL_CUT,
 
 	ITEMLIST_LABEL_MAX,
 };
@@ -184,6 +212,12 @@ static BOOL ClearStr( SRMAIN_WORK * wk );
 
 static BOOL PutLogo( SRMAIN_WORK * wk );
 
+// swan追加
+// カット関係の処理
+static void CutMain( SRMAIN_WORK *p_parent_wk, CUT_WORK *p_wk );            // メイン
+static void CutSeqFunc_Load( CUT_WORK *p_wk, u32 sex );    // BG読み込み
+static BOOL CutSeqFunc_Fade( CUT_WORK *p_wk, CUT_FADE fade );    // フェード
+
 static BOOL Comm_LabelNone( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelStrPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelStrClear( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
@@ -192,6 +226,9 @@ static BOOL Comm_LabelScrollStop( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelEnd( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelLogoPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelVersion( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
+// swan追加
+// カット表示
+static BOOL Comm_LabelCut( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 
 #ifdef	PM_DEBUG
 static void DebugGridSet(void);
@@ -217,11 +254,11 @@ static const pSRMAIN_FUNC	MainSeq[] = {
 
 // VRAM割り振り
 static const GFL_DISP_VRAM VramTbl = {
-	GX_VRAM_BG_128_D,							// メイン2DエンジンのBG
-	GX_VRAM_BGEXTPLTT_NONE,				// メイン2DエンジンのBG拡張パレット
+	GX_VRAM_BG_128_A,							// メイン2DエンジンのBG
+	GX_VRAM_BGEXTPLTT_0123_E,			// メイン2DエンジンのBG拡張パレット
 
 	GX_VRAM_SUB_BG_128_C,					// サブ2DエンジンのBG
-	GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+	GX_VRAM_SUB_BGEXTPLTT_0123_H,	// サブ2DエンジンのBG拡張パレット
 
 	GX_VRAM_OBJ_NONE,							// メイン2DエンジンのOBJ
 	GX_VRAM_OBJEXTPLTT_NONE,			// メイン2DエンジンのOBJ拡張パレット
@@ -229,8 +266,8 @@ static const GFL_DISP_VRAM VramTbl = {
 	GX_VRAM_SUB_OBJ_NONE,					// サブ2DエンジンのOBJ
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
 
-	GX_VRAM_TEX_01_AB,						// テクスチャイメージスロット
-	GX_VRAM_TEXPLTT_0123_E,				// テクスチャパレットスロット
+	GX_VRAM_TEX_NONE,						  // テクスチャイメージスロット
+	GX_VRAM_TEXPLTT_NONE,				  // テクスチャパレットスロット
 
 	GX_OBJVRAMMODE_CHAR_1D_128K,	// メインOBJマッピングモード
 	GX_OBJVRAMMODE_CHAR_1D_128K		// サブOBJマッピングモード
@@ -255,10 +292,13 @@ static const pCOMM_FUNC CommFunc[] = {
 	Comm_LabelScrollStart,	// ラベル：スクロール開始
 	Comm_LabelScrollStop,		// ラベル：スクロール停止
 	Comm_LabelEnd,					// ラベル：終了
-
 	Comm_LabelLogoPut,					// ラベル：ロゴ表示
-
 	Comm_LabelVersion,			// ラベル：バージョン別処理
+
+  // swan 追加
+  // カットイン表示
+  Comm_LabelCut,          // ラベル：カットイン表示
+
 };
 
 //============================================================================================
@@ -533,6 +573,9 @@ static int MainSeq_Main( SRMAIN_WORK * wk )
 
 	ListScroll( wk );
 
+  // カットのメイン処理
+  CutMain( wk, &wk->cut );
+
 	return MAINSEQ_MAIN;
 }
 
@@ -571,7 +614,7 @@ static void InitBg(void)
 
 	{	// BG SYSTEM
 		GFL_BG_SYS_HEADER sysh = {
-			GX_DISPMODE_GRAPHICS, GX_BGMODE_3, GX_BGMODE_0, GX_BG0_AS_3D,
+			GX_DISPMODE_GRAPHICS, GX_BGMODE_3, GX_BGMODE_0, GX_BG0_AS_2D,
 		};
 		GFL_BG_SetBGMode( &sysh );
 	}
@@ -588,7 +631,7 @@ static void InitBg(void)
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
 			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x10000, 0x10000,
-			GX_BG_EXTPLTT_23, 1, 0, 0, FALSE
+			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &cnth, GFL_BG_MODE_256X16 );
 	}
@@ -598,6 +641,15 @@ static void InitBg(void)
 	  GFL_CALC2D_GetAffineMtx22( &mtx, 0, FX32_ONE*9, FX32_ONE*9, GFL_CALC2D_AFFINE_MAX_NORMAL );
 		GFL_BG_SetAffine( GFL_BG_FRAME3_M, &mtx, 128, 96 );
 	}
+  {	// メイン画面：カット
+		GFL_BG_BGCNT_HEADER cnth= {
+			0, 0, 0x1000, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
+			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
+			GX_BG_SCRBASE_0xc000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
+			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
+		};
+		GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &cnth, GFL_BG_MODE_TEXT );
+	}
 
 	{	// サブ画面：文字面
 		GFL_BG_BGCNT_HEADER cnth= {
@@ -606,6 +658,15 @@ static void InitBg(void)
 			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_S, &cnth, GFL_BG_MODE_TEXT );
+	}
+  {	// サブ画面：カット
+		GFL_BG_BGCNT_HEADER cnth= {
+			0, 0, 0x1000, 0,	//X,Y,ｽｸﾘｰﾝﾊﾞｯﾌｧ、ｽｸﾘｰﾝｵﾌｾｯﾄ
+			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,	//ｽｸﾘｰﾝｻｲｽﾞ、ｶﾗｰﾓｰﾄﾞ
+			GX_BG_SCRBASE_0xc000, GX_BG_CHARBASE_0x10000, GFL_BG_CHRSIZ_256x256,//ｽｸﾘｰﾝﾍﾞｰｽ、ｷｬﾗﾍﾞｰｽ、ｷｬﾗｻｲｽﾞ
+			GX_BG_EXTPLTT_23, 1, 0, 0, FALSE//拡張ﾊﾟﾚｯﾄｽﾛｯﾄ、表示優先度、ｴﾘｱｵｰﾊﾞｰ、ﾀﾞﾐｰ、ﾓｻﾞｲｸﾌﾗｸﾞ
+		};
+		GFL_BG_SetBGControl( GFL_BG_FRAME0_S, &cnth, GFL_BG_MODE_TEXT );
 	}
 
 #ifdef PM_DEBUG
@@ -622,6 +683,8 @@ static void InitBg(void)
 
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -649,6 +712,8 @@ static void ExitBg(void)
 	GFL_BG_FreeBGControl( GFL_BG_FRAME1_S );
 	GFL_BG_FreeBGControl( GFL_BG_FRAME3_M );
 	GFL_BG_FreeBGControl( GFL_BG_FRAME1_M );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME0_M );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME0_S );
 
 	GFL_BG_Exit();
 }
@@ -666,10 +731,13 @@ static void LoadBgGraphic(void)
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( TITLE_RES_ARCID, HEAPID_STAFF_ROLL_L );
 
+  GFL_ARCHDL_UTIL_TransVramPalette( 
+    ah, TITLE_RES_LOGO_NCLR, PALTYPE_MAIN_BG_EX, 0x6000, 0, HEAPID_STAFF_ROLL );
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, TITLE_RES_LOGO_NCGR, GFL_BG_FRAME3_M, 0, 0, TRUE, HEAPID_STAFF_ROLL );
 	GFL_ARCHDL_UTIL_TransVramScreen(
 		ah, TITLE_RES_LOGO_NSCR, GFL_BG_FRAME3_M, 0, 0, TRUE, HEAPID_STAFF_ROLL );
+
 
 	GFL_ARC_CloseDataHandle( ah );
 
@@ -702,21 +770,7 @@ static void LoadBgGraphic(void)
 //--------------------------------------------------------------------------------------------
 static void LoadLogoPalette( SRMAIN_WORK * wk, BOOL flg )
 {
-	if( flg == TRUE ){
-		ARCHANDLE * ah = GFL_ARC_OpenDataHandle( TITLE_RES_ARCID, HEAPID_STAFF_ROLL_L );
-		GFL_ARCHDL_UTIL_TransVramPalette(
-			ah, TITLE_RES_LOGO_NCLR, PALTYPE_MAIN_BG, 0, 0, HEAPID_STAFF_ROLL );
-		GFL_ARC_CloseDataHandle( ah );
-	}else{
-		// フォントパレット
-		ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_STAFF_ROLL, HEAPID_STAFF_ROLL_L );
-		GFL_ARCHDL_UTIL_TransVramPalette(
-			ah, NARC_staff_roll_staffroll_font_nclr,
-			PALTYPE_MAIN_BG, MBG_PAL_FONT*0x20, 0x20, HEAPID_STAFF_ROLL );
-		GFL_ARC_CloseDataHandle( ah );
-	}
-	// バックグラウンドカラー
-	GFL_BG_SetBackGroundColor( GFL_BG_FRAME1_M, BG_COLOR );
+
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1444,7 +1498,7 @@ static BOOL PutLogo( SRMAIN_WORK * wk )
 
 	switch( wk->labelSeq ){
 	case 0:
-		LoadLogoPalette( wk, TRUE );
+		//LoadLogoPalette( wk, TRUE );
 		G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG3, GX_BLEND_PLANEMASK_BD, 0, 16 );
 		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
 		GX_SetMasterBrightness( 0 );
@@ -1501,7 +1555,7 @@ static BOOL PutLogo( SRMAIN_WORK * wk )
 			GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_OFF );
 		  GFL_CALC2D_GetAffineMtx22( &mtx, 0, FX32_ONE, FX32_ONE, GFL_CALC2D_AFFINE_MAX_NORMAL );
 			GFL_BG_SetAffine( GFL_BG_FRAME3_M, &mtx, 128, 96 );
-			LoadLogoPalette( wk, FALSE );
+			//LoadLogoPalette( wk, FALSE );
 			wk->britness = 0;
 			wk->labelSeq = 0;
 			return FALSE;
@@ -1516,6 +1570,233 @@ static BOOL PutLogo( SRMAIN_WORK * wk )
 	return TRUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カットのメイン
+ *
+ *	@param	SRMAIN_WORK * wk  ワーク 
+ *
+ *	@return none
+ */
+//-----------------------------------------------------------------------------
+static void CutMain( SRMAIN_WORK *p_parent_wk, CUT_WORK *p_wk )
+{
+
+  // シーケンス別処理
+  switch( p_wk->seq ){
+  case SEQ_CUT_NONE:       // なし
+    /* 何もしない */
+    return;
+
+  case SEQ_CUT_LOAD:       // リソース読み込み
+    {
+      // 2Dカットの読み込み
+#ifdef	PM_DEBUG
+      if( p_parent_wk->dat->fastMode == STAFFROLL_MODE_DEBUG ){
+        CutSeqFunc_Load( p_wk, 0 );
+      }
+      else
+      {
+        CutSeqFunc_Load( p_wk, MyStatus_GetMySex( p_parent_wk->dat->mystatus ) );
+      }
+#else
+      CutSeqFunc_Load( p_wk, MyStatus_GetMySex( p_parent_wk->dat->mystatus ) );
+#endif
+
+      // アルファの設定
+      // 上画面
+      if( p_wk->disp_type & CUT_DISP_MAIN ) 
+      {
+        G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG0, GX_BLEND_PLANEMASK_BD|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3, 0, 16 );
+      }
+
+      // 下画面
+      if( p_wk->disp_type & CUT_DISP_SUB ) 
+      {
+        G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG0, GX_BLEND_PLANEMASK_BD|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3, 0, 16 );
+      }
+
+      ICHI_Printf("2Dカット：読み込み\n");
+      p_wk->seq = SEQ_CUT_FADE_IN;
+    }
+    break;
+
+  case SEQ_CUT_FADE_IN:    // フェードしながら表示
+    {
+      // 2Dカットのフェード
+      if( CutSeqFunc_Fade( p_wk, CUT_FADE_IN ) == TRUE )
+      {
+        ICHI_Printf("2Dカット：フェードイン\n");
+        p_wk->seq = SEQ_CUT_VIEW_WAIT;
+      }
+    }
+    break;
+  case SEQ_CUT_VIEW_WAIT:  // 表示中
+    {
+      // ウェイト時間
+      if( p_wk->wait-- <= 0 )
+      {
+        ICHI_Printf("2Dカット：待ち\n");
+        p_wk->seq = SEQ_CUT_FADE_OUT;
+      }
+    }
+    break;
+  case SEQ_CUT_FADE_OUT:   // フェードしながら非表示
+    {
+      // 2Dカットのフェード
+      if( CutSeqFunc_Fade( p_wk, CUT_FADE_OUT ) == TRUE )
+      {
+        ICHI_Printf("2Dカット：フェードアウト\n");
+        p_wk->seq = SEQ_CUT_EXIT;
+      }
+    }
+    break;
+  case SEQ_CUT_EXIT:       // 終了処理
+    {
+      // ブレンド初期化
+      G2_BlendNone();
+      G2S_BlendNone();
+
+      GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
+      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
+      p_wk->seq = SEQ_CUT_NONE;
+    }
+    break;
+
+  default: GF_ASSERT(0);
+  }
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  2Dカットの読み込み
+ *
+ *	@param	CUT_WORK *p_wk  2Dカットのワーク
+ */
+//-----------------------------------------------------------------------------
+static void CutSeqFunc_Load( CUT_WORK *p_wk, u32 sex )
+{
+  ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_STAFF_ROLL, HEAPID_STAFF_ROLL_L );
+
+  u32   arc_pal;    // パレット
+  u32   arc_cgx;    // キャラクタ
+  u32   arc_scr;    // スクリーン
+
+  // リソース
+  {
+    int diff = 0;   // 基準からのarc_id の差
+
+    // 基準となるarc_id  要は一番上
+    arc_pal = NARC_staff_roll_2d_cut_cut01_cut01_b_boy_nclr;
+    arc_cgx = NARC_staff_roll_2d_cut_cut01_cut01_b_boy_ncgr;
+    arc_scr = NARC_staff_roll_2d_cut_cut01_cut01_b_boy_nscr;
+
+    diff = p_wk->cut_no * 12;    // 12 リソース種類×男女×バージョン
+
+    // バージョンチェック
+    if( GET_VERSION() == VERSION_W2 )
+    {
+      diff += 6;   // ホワイト基準に。
+    }
+
+    // 男女チェック
+    if( sex == PM_FEMALE )
+    {
+      diff += 3;
+    }
+
+    arc_pal += diff;
+    arc_cgx += diff;
+    arc_scr += diff;
+  }
+
+  // 上画面
+  if( p_wk->disp_type & CUT_DISP_MAIN ) 
+  {
+    // 拡張パレットのメモリマップ
+    // スロット0:0x0000
+    // スロット1:0x2000
+    // スロット2:0x4000
+    // スロット3:0x6000
+    GFL_ARCHDL_UTIL_TransVramPalette( ah, arc_pal,
+        PALTYPE_MAIN_BG_EX, 0x0000, 0, HEAPID_STAFF_ROLL );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( ah, arc_cgx,
+        GFL_BG_FRAME0_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
+    GFL_ARCHDL_UTIL_TransVramScreen( ah, arc_scr,
+        GFL_BG_FRAME0_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
+
+    GFL_BG_LoadScreenReq(GFL_BG_FRAME0_M);
+    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+  }
+
+  // 下画面
+  if( p_wk->disp_type & CUT_DISP_SUB ) 
+  {
+    GFL_ARCHDL_UTIL_TransVramPalette( ah, arc_pal,
+        PALTYPE_SUB_BG_EX, 0x4000, 0, HEAPID_STAFF_ROLL );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( ah, arc_cgx,
+        GFL_BG_FRAME0_S, 0, 0, FALSE, HEAPID_STAFF_ROLL );
+    GFL_ARCHDL_UTIL_TransVramScreen( ah, arc_scr,
+        GFL_BG_FRAME0_S, 0, 0, FALSE, HEAPID_STAFF_ROLL );
+
+    GFL_BG_LoadScreenReq(GFL_BG_FRAME0_S);
+    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+  }
+
+  GFL_ARC_CloseDataHandle( ah );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  2Dカットのフェード
+ *
+ *	@param	CUT_WORK *p_wk  2Dカットのワーク
+ *	@param  CUT_FADE fade   フェードイン or フェードアウト 
+ *
+ *	@return フェードが終了するとTRUE
+ */
+//-----------------------------------------------------------------------------
+static BOOL CutSeqFunc_Fade( CUT_WORK *p_wk, CUT_FADE fade )
+{
+  int alpha1, alpha2;
+
+  // アルファ計算
+  p_wk->alpha_cnt++;
+
+  if( fade == CUT_FADE_IN )
+  {
+    // FADE_IN
+    alpha1 = 0 + 16 * p_wk->alpha_cnt / p_wk->alpha_fade_sync;
+    alpha2 = 16 - 16 * p_wk->alpha_cnt / p_wk->alpha_fade_sync;
+  }
+  else
+  {
+    // FADE_OUT
+    alpha1 = 16 - 16 * p_wk->alpha_cnt / p_wk->alpha_fade_sync;
+    alpha2 = 0 + 16 * p_wk->alpha_cnt / p_wk->alpha_fade_sync;
+  }
+
+
+  // アルファ設定
+  if( p_wk->disp_type & CUT_DISP_MAIN ) 
+  {
+    G2_ChangeBlendAlpha( alpha1, alpha2 );
+  }
+  if( p_wk->disp_type & CUT_DISP_SUB ) 
+  {
+    G2S_ChangeBlendAlpha( alpha1, alpha2 );
+  }
+
+  // フェード終了
+  if( p_wk->alpha_cnt >= p_wk->alpha_fade_sync )
+  {
+    p_wk->alpha_cnt = 0;
+    return TRUE;
+  }
+
+  return FALSE;
+}
 
 //============================================================================================
 //	コマンド
@@ -1699,6 +1980,35 @@ static BOOL Comm_LabelVersion( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  コマンド：カットイン表示
+ *
+ * @param		wk		ワーク
+ * @param		item	リスト項目データ
+ *
+ * @retval	"TRUE = 処理中"
+ * @retval	"FALSE = それ以外"
+ */
+//-----------------------------------------------------------------------------
+static BOOL Comm_LabelCut( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
+{
+  ICHI_Printf("***********************************\n");
+  ICHI_Printf("カット\n");
+  ICHI_Printf("***********************************\n");
+
+  // 初期化
+  wk->cut.cut_no = 0;
+  wk->cut.alpha_cnt = 0;
+  wk->cut.alpha_fade_sync = 30;
+  wk->cut.disp_type = CUT_DISP_SUB;
+  wk->cut.wait = 360;
+
+  // 読み込み
+  wk->cut.seq = SEQ_CUT_LOAD;
+
+  return FALSE;
+}
 
 
 

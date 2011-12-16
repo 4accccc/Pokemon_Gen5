@@ -41,21 +41,31 @@ MSPROJDIR	= ../message/msproj/
 #------------------------------------------------------------------------------
 SUBDIRS	=
 
+
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
 
 #ICAコンバータ
 ICACONV = ..\..\..\tools\ica\ica_converter.rb
 
+#------------------------------------------------------------------------------
+# グラフィックコンバータ
+#------------------------------------------------------------------------------
+SUBDIRS_TOP = .
+# 1枚絵カット
+SUBDIRS_CUT_01 = 2d_cut/cut01
+
+SUBDIRS_ARC = $(SUBDIRS_TOP) $(SUBDIRS_CUT_01)
+
 # 自動でリソースを集める
-lsources:=$(wildcard *.ncl)
-gsources:=$(wildcard *.ncg)
-ssources:=$(wildcard *.nsc)
+lsources:=$(wildcard $(addsuffix /*.ncl,$(SUBDIRS_ARC)))
+gsources:=$(wildcard $(addsuffix /*.ncg,$(SUBDIRS_ARC)))
+csources:=$(wildcard $(addsuffix /*.nsc,$(SUBDIRS_ARC)))
 
 # リソースが吐き出すファイルを自動でつくる
 lobjects = $(subst .ncl,.NCLR,$(lsources))
 gobjects = $(subst .ncg,.NCGR,$(gsources))
-sobjects = $(subst .nsc,.NSCR,$(ssources))
+sobjects = $(subst .nsc,.NSCR,$(csources))
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -103,7 +113,7 @@ $(targetname).narc: WBStaffList.xls arclist.txt $(lobjects) $(gobjects) $(sobjec
 	perl staff_roll_gmm.pl staff_list_eng.csv ../message/template.gmm
 	perl staff_roll_cnv.pl staff_list_jp.csv
 	perl staff_roll_cnv.pl staff_list_eng.csv
-	nnsarc -c -l -n -i $(targetname) -S arclist.txt
+	nnsarc -c -l -n -i -f $(targetname) -S arclist.txt
 	$(NAIXCUT) $(targetname).naix
 
 # gmm -> mstxt 変換
@@ -122,12 +132,24 @@ endif
 clean:
 	@$(MAKE_SUBDIR)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
+
+ifeq ($(sobjects),)
+	rm -f $(sobjects)
+endif
+ifeq ($(gobjects),)
+	rm -f $(gobjects)
+endif
+ifeq ($(lobjects),)
+	rm -f $(lobjects)
+endif
+
 	rm -f *.nclr
 	rm -f *.ncgr
 	rm -f *.nscr
 	rm -f *.narc
 	rm -f *.naix
-	rm -f *.N*R
+	rm -f $(SUBDIRS_TOP)/*.N*R
+	rm -f $(SUBDIRS_CUT_01)/*.N*R
 	rm -f *.dat
 	rm -f *.csv
 	rm -f $(targetname).narc

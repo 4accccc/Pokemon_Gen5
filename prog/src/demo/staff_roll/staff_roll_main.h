@@ -49,6 +49,22 @@ typedef struct {
 	u32	idx;
 }SRVBMP_DATA;
 
+//-------------------------------------
+///	2Dカットの構造体
+//=====================================
+typedef struct {
+
+  u8      seq;        // シーケンス
+  u8      disp_type;  // 画面選択
+
+  u8      cut_no;     // 何枚目のカットか
+
+  int     alpha_cnt;  // アルファカウント
+  int     alpha_fade_sync;  // アルファ
+  int     wait;       // 表示待ち
+
+} CUT_WORK;
+
 typedef struct {
 	STAFFROLL_DATA * dat;			// 外部設定データ
 
@@ -87,6 +103,9 @@ typedef struct {
 	int	mainSeq;
 	int	subSeq;
 	int	nextSeq;
+
+  // 2Dカットのワーク
+  CUT_WORK    cut;
 
 #ifdef	PM_DEBUG
 	BOOL	debugStopFlg;

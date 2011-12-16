@@ -457,6 +457,7 @@ static void SetupStaffRollDemoParam( GAMECLEAR_WORK* work )
 #endif
 #endif
 
+  work->staffRollDemoParam.mystatus = GAMEDATA_GetMyStatus( work->gamedata );
 
   // •¶šƒ‚[ƒh‚ğİ’è
   {

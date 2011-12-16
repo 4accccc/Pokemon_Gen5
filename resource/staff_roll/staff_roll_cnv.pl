@@ -25,8 +25,9 @@ $CNV_FILE = 0;				# 作成ファイル
 	"終了",
 	"ロゴ",
 	"バージョン別",
+	"カット",
 );
-$LABEL_NAME_MAX = 10;
+$LABEL_NAME_MAX = 8;
 
 # ラベル変換値
 @LabelConv = (
@@ -37,6 +38,7 @@ $LABEL_NAME_MAX = 10;
 	5,		# ITEMLIST_LABEL_END
 	6,		# ITEMLIST_LABEL_LOGO_PUT
 	7,		# ITEMLIST_LABEL_VERSION
+	8,		# ITEMLIST_LABEL_CUT
 );
 
 # 表示モードテーブル

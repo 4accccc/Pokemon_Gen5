@@ -51,9 +51,9 @@ static GFL_PROC_RESULT StaffRollProc_Init( GFL_PROC * proc, int * seq, void * pw
 {
 	SRMAIN_WORK * wk;
 
-//	OS_Printf( "↓↓↓↓↓　スタッフロール処理開始　↓↓↓↓↓\n" );
+	OS_Printf( "↓↓↓↓↓　スタッフロール処理開始　↓↓↓↓↓\n" );
 
-//	OS_Printf( "heap size [0] = 0x%x\n", GFL_HEAP_GetHeapFreeSize(GFL_HEAPID_APP) );
+	OS_Printf( "heap size [0] = 0x%x\n", GFL_HEAP_GetHeapFreeSize(GFL_HEAPID_APP) );
 	// OS_Printfの結果、0x1307d4 空いてる ( 2010/05/10 13:00 )
 	// GFL_HEAPID_APPが5000h減ったので、-5000h ( 2010/05/12 15:30 )
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_STAFF_ROLL, 0x125000 );

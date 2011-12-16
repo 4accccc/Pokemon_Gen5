@@ -17,7 +17,19 @@ enum {
 	NARC_staff_roll_end_ncgr = 3,
 	NARC_staff_roll_end_nscr = 4,
 	NARC_staff_roll_end_e_nscr = 5,
-	NARC_staff_roll_staffroll_font_nclr = 6
+	NARC_staff_roll_staffroll_font_nclr = 6,
+	NARC_staff_roll_2d_cut_cut01_cut01_b_boy_nclr = 7,
+	NARC_staff_roll_2d_cut_cut01_cut01_b_boy_ncgr = 8,
+	NARC_staff_roll_2d_cut_cut01_cut01_b_boy_nscr = 9,
+	NARC_staff_roll_2d_cut_cut01_cut01_b_girl_nclr = 10,
+	NARC_staff_roll_2d_cut_cut01_cut01_b_girl_ncgr = 11,
+	NARC_staff_roll_2d_cut_cut01_cut01_b_girl_nscr = 12,
+	NARC_staff_roll_2d_cut_cut01_cut01_w_boy_nclr = 13,
+	NARC_staff_roll_2d_cut_cut01_cut01_w_boy_ncgr = 14,
+	NARC_staff_roll_2d_cut_cut01_cut01_w_boy_nscr = 15,
+	NARC_staff_roll_2d_cut_cut01_cut01_w_girl_nclr = 16,
+	NARC_staff_roll_2d_cut_cut01_cut01_w_girl_ncgr = 17,
+	NARC_staff_roll_2d_cut_cut01_cut01_w_girl_nscr = 18
 };
 
 /* NARC_STAFF_ROLL_NAIX_ */
