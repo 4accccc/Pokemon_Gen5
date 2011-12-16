@@ -22,6 +22,7 @@ typedef struct {
 	// [ in ]
 	u32	fastMode;					// 早送り設定
 	MOJIMODE	mojiMode;		// 文字表示モード（ひらがな・漢字）
+  const MYSTATUS  *mystatus;  // マイステータス
 }STAFFROLL_DATA;
 
 // 呼び出しモード
