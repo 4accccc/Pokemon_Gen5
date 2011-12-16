@@ -10,5 +10,5 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-#define FES_ATRAIL_REPLACE_NUM (3)  // ミッション中に置き換える獣道の数
-#define FES_ATRAIL_FEMALE_SET_NUM (1)  // メスが配置されるかくし穴の数
+#define FES_ATRAIL_REPLACE_NUM (10)  // ミッション中に置き換える獣道の数
+#define FES_ATRAIL_FEMALE_SET_NUM (3)  // メスが配置されるかくし穴の数

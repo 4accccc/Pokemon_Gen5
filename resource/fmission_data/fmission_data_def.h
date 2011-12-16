@@ -281,14 +281,14 @@ typedef enum{
 #define  FMISSION_EXP_TRAIL_DUMMY  ( 0 )   ///<ダミーデータ
 #define  FMISSION_EXP_TRAIL_ROKON  ( 1 )   ///<ロコン
 #define  FMISSION_EXP_TRAIL_NYOROMO  ( 2 )   ///<ニョロモ
-#define  FMISSION_EXP_TRAIL_HUSIGIBANA  ( 3 )   ///<フシギバナ
-#define  FMISSION_EXP_TRAIL_HITOKAGE  ( 4 )   ///<ヒトカゲ
-#define  FMISSION_EXP_TRAIL_RIZAADO  ( 5 )   ///<リザード
-#define  FMISSION_EXP_TRAIL_RIZAADON  ( 6 )   ///<リザードン
-#define  FMISSION_EXP_TRAIL_ZENIGAME  ( 7 )   ///<ゼニガメ
-#define  FMISSION_EXP_TRAIL_KAMEERU  ( 8 )   ///<カメール
-#define  FMISSION_EXP_TRAIL_TORITODON  ( 9 )   ///<トリトドン
-#define  FMISSION_EXP_TRAIL_KYATAPII  ( 10 )   ///<キャタピー
+#define  FMISSION_EXP_TRAIL_PIKATYUU  ( 3 )   ///<ピカチュウ
+#define  FMISSION_EXP_TRAIL_KEESHI  ( 4 )   ///<ケーシィ
+#define  FMISSION_EXP_TRAIL_NASSII  ( 5 )   ///<ナッシー
+#define  FMISSION_EXP_TRAIL_BARUKII  ( 6 )   ///<バルキー
+#define  FMISSION_EXP_TRAIL_TANEBOO  ( 7 )   ///<タネボー
+#define  FMISSION_EXP_TRAIL_PAARURU  ( 8 )   ///<パールル
+#define  FMISSION_EXP_TRAIL_PINPUKU  ( 9 )   ///<ピンプク
+#define  FMISSION_EXP_TRAIL_GUREGGURU  ( 10 )   ///<グレッグル
 #define  FMISSION_EXP_TRAIL_MONS_MAX  ( 11 )   ///<
 
 
