@@ -280,6 +280,10 @@ sub_menu_kanto:
     IF $SCWK_ANSWER == TRUE THEN
       _BMPMENU_MAKE_LIST( msg_wbt_subev_kanto_00, msg_wbt_subev_kanto_00 )
     ENDIF
+    _WBT_GET_TRAINER_FLAG( 53, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      _BMPMENU_MAKE_LIST( msg_wbt_subev_kanto_08, msg_wbt_subev_kanto_08 )
+    ENDIF
     _BMPMENU_MAKE_LIST( msg_wbt_subev_cancel, msg_wbt_subev_cancel )
     _BMPMENU_START()
     SWITCH $LWK_SELECT_POS
@@ -301,6 +305,8 @@ sub_menu_kanto:
       _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_36,POS_DOWN )
     CASE msg_wbt_subev_kanto_00 THEN
       _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_15,POS_DOWN )
+    CASE msg_wbt_subev_kanto_08 THEN
+      _BALLOONWIN_TALKOBJ_MSG_POS( msg_wbt_subev_sunglasses_info_54,POS_DOWN )
     DEFAULT
       $LWK_LOOP = FALSE
     ENDSWITCH
@@ -494,7 +500,7 @@ sub_menu_sinou:
     IF $SCWK_ANSWER == TRUE THEN
       _BMPMENU_MAKE_LIST( msg_wbt_subev_sinou_08, msg_wbt_subev_sinou_08 )
     ENDIF
-    _WBT_GET_TRAINER_FLAG( 14, SCWK_ANSWER )
+    _WBT_GET_TRAINER_FLAG( 18, SCWK_ANSWER )
     IF $SCWK_ANSWER == TRUE THEN
       _BMPMENU_MAKE_LIST( msg_wbt_subev_sinou_00, msg_wbt_subev_sinou_00 )
     ENDIF
@@ -581,6 +587,9 @@ sub_count_kanto:
   $LWK_TOTAL += $SCWK_ANSWER
   //グリーン：赤緑チャンピオン
   _WBT_GET_TRAINER_FLAG( 14, SCWK_ANSWER )
+  $LWK_TOTAL += $SCWK_ANSWER
+  //レッド
+  _WBT_GET_TRAINER_FLAG( 53, SCWK_ANSWER )
   $LWK_TOTAL += $SCWK_ANSWER
   _RET
 
