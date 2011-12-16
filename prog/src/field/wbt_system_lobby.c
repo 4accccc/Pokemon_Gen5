@@ -31,6 +31,7 @@
 #include "savedata/wbt_ex_save.h"
 #include "savedata/wbt_download.h"
 
+#include "debug_wbt.h"
 
 
 //============================================================================================
@@ -270,16 +271,19 @@ void WBTSYS_MakeMatch( WBTSYS * wbtsys, GAMEDATA * gamedata )
   {
     cond.wbtdl_match = WBTDL_DATA_GetMatchData( &wbtsys->wbtdl_data );
   }
-
-  WBTSYS_MakeEntryList( gamedata, &cond, tr_list );
-
-  WBTSYS_SetupTrainer( wbtsys, gamedata, tr_list );
 #ifdef  PM_DEBUG
-  WBTSYS_DEBUG_dumpTrainer( wbtsys );
-  TAMADA_Printf("\n");
+  if ( DEBUG_WBT_ForceTrMode )
+  {
+    DEBUG_WBT_GetTrainerList( (u16 *)tr_list );
+    WBTSYS_SetupTrainer( wbtsys, gamedata, tr_list );
+  }
+  else
 #endif
-
-  WBTSYS_SortTrainer( wbtsys->wbt_trainer, wbtsys->seed64, wbtsys->heapID );
+  {
+    WBTSYS_MakeEntryList( gamedata, &cond, tr_list );
+    WBTSYS_SetupTrainer( wbtsys, gamedata, tr_list );
+    WBTSYS_SortTrainer( wbtsys->wbt_trainer, wbtsys->seed64, wbtsys->heapID );
+  }
 #ifdef  PM_DEBUG
   WBTSYS_DEBUG_dumpTrainer( wbtsys );
 #endif

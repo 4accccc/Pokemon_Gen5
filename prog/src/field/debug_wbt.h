@@ -12,7 +12,8 @@
 #include "field/wbt.h"
 #include "field/wbt_system.h"
 
-extern BOOL DEBUG_WBT_ForceMode;
+extern BOOL DEBUG_WBT_ForceTrMode;
+extern BOOL DEBUG_WBT_ReverseJudgeMode;
 extern u16 DEBUG_WBT_ForceTrList[ WBT_TRAINER_NUM ];
 
 //------------------------------------------------------------------

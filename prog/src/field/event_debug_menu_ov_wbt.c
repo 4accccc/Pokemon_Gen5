@@ -56,6 +56,7 @@
 #include "app/wbt_list.h"
 #include "event_wbt.h"  //WBT_EVENT_ShowTournamentList
 #include "event_wbt_wifi.h"
+#include "debug_wbt.h"
 
 #include "field/eventwork.h"  //EVENTWORK_
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"  //SYS_FLAG_GAMECLEAR
@@ -83,7 +84,8 @@ enum{
 // DebugMode
 enum{
 	DEBUG_MODE_TR	= 0,			// トレーナー選択
-	DEBUG_MODE_DBG,					// debug
+  DEBUG_MODE_FORCE_TR_MODE, //強制トレーナーリストモード選択
+	DEBUG_MODE_REVERSE_JUDGE,					// debug
 	//
 	DEBUG_MODE_MAX,					// max
 };
@@ -140,16 +142,19 @@ static BOOL debugMenuCallProc_TDownload( DEBUG_WBT_WORK *p_wk );
 static BOOL debugMenuMain( DEBUG_WBT_WORK *wk );
 static BOOL debugMenuKeyInput( DEBUG_WBT_WORK *wk );
 static BOOL debugMenuKeyInput_tr( DEBUG_WBT_WORK *wk );
-static BOOL debugMenuKeyInput_debug( DEBUG_WBT_WORK *wk );
+static BOOL debugMenuKeyInput_forceTrMode( DEBUG_WBT_WORK *wk );
+static BOOL debugMenuKeyInput_reverseJudgeMode( DEBUG_WBT_WORK *wk );
 //
 static void createNumWin( DEBUG_WBT_WORK * wk );
 static void deleteNumWin( DEBUG_WBT_WORK * wk );
 static void printNumWin(  DEBUG_WBT_WORK * wk, const s32 num, const s32 mnum, const s32 xpos, const s32 ypos, const s32 mode );
 static void printTrNameWin( DEBUG_WBT_WORK * wk, const u16 tr_id, const s32 xpos, const s32 ypos );
+static void printMsgStrWin( DEBUG_WBT_WORK * wk, const u16 msg_id, const s32 xpos, const s32 ypos );
 static void updateNumWin( DEBUG_WBT_WORK * wk );
 static void clearNumWin(  DEBUG_WBT_WORK * wk );
 static void dispInfo( DEBUG_WBT_WORK * wk );
-static void dispInfo_debug( DEBUG_WBT_WORK * wk );
+static void dispInfo_forceTrMode( DEBUG_WBT_WORK * wk );
+static void dispInfo_reverseJudgeMode( DEBUG_WBT_WORK * wk );
 static void dispInfoPrintf( DEBUG_WBT_WORK * wk );
 
 //=============================================================================
@@ -185,12 +190,12 @@ static const FLDMENUFUNC_HEADER WBTMenuHeader =
 static const DEBUG_MENU_LIST WBTMenuList[] =
 {
   { DEBUG_STR_WBT_01, (void*)DEBUG_STR_WBT_01, GFL_OVERLAY_BLANK_ID },  // トレーナーせってい
-  { DEBUG_STR_WBT_02, (void*)DEBUG_STR_WBT_02, GFL_OVERLAY_BLANK_ID },  // デバッグ出力
-  { DEBUG_STR_WBT_03, (void*)DEBUG_STR_WBT_03, GFL_OVERLAY_BLANK_ID },   // バックアップ読み込み
+  { DEBUG_STR_WBT_02, (void*)DEBUG_STR_WBT_02, GFL_OVERLAY_BLANK_ID },  // 逆転判定モード
+  { DEBUG_STR_WBT_03, (void*)DEBUG_STR_WBT_03, GFL_OVERLAY_BLANK_ID },   // 強制トレーナーモード
   { DEBUG_STR_WBT_04, (void*)DEBUG_STR_WBT_04, GFL_OVERLAY_BLANK_ID },   // トーナメント表アプリ
   { DEBUG_STR_WBT_05, (void*)DEBUG_STR_WBT_05, GFL_OVERLAY_BLANK_ID },   // トーナメント表アプリ
   { DEBUG_STR_WBT_06, (void*)DEBUG_STR_WBT_06, GFL_OVERLAY_BLANK_ID },   // トーナメント表アプリ
-  { DEBUG_STR_WBT_07, (void*)DEBUG_STR_WBT_07, GFL_OVERLAY_BLANK_ID },   // デバッグあり
+  { DEBUG_STR_WBT_07, (void*)DEBUG_STR_WBT_07, GFL_OVERLAY_BLANK_ID },   // デバッグ出力
   //
   { DEBUG_STR_WBT_08, (void*)DEBUG_STR_WBT_08, GFL_OVERLAY_BLANK_ID },   // エントリーチェック:1
   { DEBUG_STR_WBT_09, (void*)DEBUG_STR_WBT_09, GFL_OVERLAY_BLANK_ID },   // エントリーチェック:2
@@ -291,9 +296,22 @@ BOOL debugMenuCallProc_WBT( DEBUG_MENU_EVENT_WORK *wk )
 		work->Step	= 0;
 		work->DebugMode = 0;
 		// 値をセット
-		for(i=0;i<WBT_TRAINER_NUM;i++){
-			work->Trbuffer[i] = sample_trid[i];
-		}
+    if ( DEBUG_WBT_IsEmptyTrainerList() )
+    { //値がない場合は初期化して設定
+      TAMADA_Printf(" DEBUG_WBT_ForceTrList == Empty\n");
+      for(i=0;i<WBT_TRAINER_NUM;i++){
+        work->Trbuffer[i] = sample_trid[i];
+      }
+      DEBUG_WBT_SetTrainerList( work->Trbuffer );
+      DEBUG_WBT_ForceTrMode = FALSE;  //最初は無効値に設定
+      DEBUG_WBT_ReverseJudgeMode = FALSE; //最初は無効値に設定
+    }
+    else
+    { //セット済みの場合は取得する
+      TAMADA_Printf(" DEBUG_WBT_ForceTrList != Empty\n");
+      DEBUG_WBT_GetTrainerList( work->Trbuffer );
+    }
+
 		// 大丈夫?
 		work->fontHandle = FLDMSGBG_GetFontHandle( FIELDMAP_GetFldMsgBG( wk->fieldWork ) );
 	}
@@ -335,20 +353,14 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
     	work->DebugMode = DEBUG_MODE_TR;
       break;
 
-    case DEBUG_STR_WBT_02:
-#if 1
-      PMSND_PlaySE( SEQ_SE_KON );
-      debugCommand_printf( NULL );
-      return GMEVENT_RES_CONTINUE;
-#else
-//      	work->call_func = debugMenuCallProc_TDownload;
-//      	work->t_status = T_DOWNLOAD_STATUS_VIEW;
-		(*seq)++;
-		break;
-#endif
-	
-    case DEBUG_STR_WBT_03:
-      (*seq)++;
+    case DEBUG_STR_WBT_02:		// 逆転判定モード設定
+		*seq = 3;
+		work->DebugMode = DEBUG_MODE_REVERSE_JUDGE;
+      break;
+
+    case DEBUG_STR_WBT_03:  //強制トレーナーリストモード設定
+    	*seq = 3;
+    	work->DebugMode = DEBUG_MODE_FORCE_TR_MODE;
       break;
 
     case DEBUG_STR_WBT_04:
@@ -367,10 +379,18 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
       (*seq)++;
       break;
     //
-    case DEBUG_STR_WBT_07:		// デバッグあり
-		*seq = 3;
-		work->DebugMode = DEBUG_MODE_DBG;
-      break;
+    case DEBUG_STR_WBT_07:
+#if 1
+      PMSND_PlaySE( SEQ_SE_KON );
+      debugCommand_printf( NULL );
+      return GMEVENT_RES_CONTINUE;
+#else
+//      	work->call_func = debugMenuCallProc_TDownload;
+//      	work->t_status = T_DOWNLOAD_STATUS_VIEW;
+		(*seq)++;
+		break;
+#endif
+	
     //
     // 追加
     //
@@ -453,6 +473,8 @@ static GMEVENT_RESULT debugMenuWBTEvent( GMEVENT *event, int *seq, void *wk )
   // (内部で戻し)
   case 3:
 	if( debugMenuMain( work ) == TRUE ){
+    //修正結果を強制トレーナーリストに反映しておく
+    DEBUG_WBT_SetTrainerList( work->Trbuffer );
 		*seq = 1;
 	}
     break;
@@ -842,10 +864,19 @@ static BOOL debugMenuKeyInput( DEBUG_WBT_WORK *wk )
 	BOOL	bflg=FALSE;
 	
 	// 入力(トレーナー選択)
-	if(wk->DebugMode == DEBUG_MODE_TR){
+  switch ( wk->DebugMode )
+  {
+  case DEBUG_MODE_TR:
 		bflg = debugMenuKeyInput_tr( wk );
-	}else{
-		bflg = debugMenuKeyInput_debug( wk );
+    break;
+  case DEBUG_MODE_FORCE_TR_MODE:
+		bflg = debugMenuKeyInput_forceTrMode( wk );
+    break;
+  case DEBUG_MODE_REVERSE_JUDGE:
+		bflg = debugMenuKeyInput_reverseJudgeMode( wk );
+    break;
+  default:
+    GF_ASSERT( 0 );
 	}
 	return( bflg );
 }
@@ -945,7 +976,7 @@ static BOOL debugMenuKeyInput_tr( DEBUG_WBT_WORK *wk )
  *  @return BOOL			(FALSE:処理中、TRUE:終了)
  */
 //-----------------------------------------------------------------------------
-static BOOL debugMenuKeyInput_debug( DEBUG_WBT_WORK *wk )
+static BOOL debugMenuKeyInput_forceTrMode( DEBUG_WBT_WORK *wk )
 {
 	s16		flg=0;
 	BOOL	bflg=FALSE;
@@ -957,6 +988,11 @@ static BOOL debugMenuKeyInput_debug( DEBUG_WBT_WORK *wk )
 		bflg = TRUE;
 //		OS_Printf("end\n");
 	}
+  else if ( (GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A )) != 0 )
+  { //モードを反転
+    DEBUG_WBT_ForceTrMode = !(DEBUG_WBT_ForceTrMode);
+		flg = 1;
+  }
 	
 	// 更新
 	if(wk->Flag & FLG_WIN_UPDATE){
@@ -966,12 +1002,52 @@ static BOOL debugMenuKeyInput_debug( DEBUG_WBT_WORK *wk )
 	// 更新
 	if(flg == 1){
 		// 表示まとめ
-		dispInfo_debug( wk );
+		dispInfo_forceTrMode( wk );
 		wk->Flag &= ~FLG_WIN_UPDATE;
 	}
 	return( bflg );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *  @brief  デバッグ用処理(入力画面:デバッグ)
+ *
+ *  @param  DEBUG_WBT_WORK *wk
+ *
+ *  @return BOOL			(FALSE:処理中、TRUE:終了)
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuKeyInput_reverseJudgeMode( DEBUG_WBT_WORK *wk )
+{
+	s16		flg=0;
+	BOOL	bflg=FALSE;
+	
+	// 戻し
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+		// 戻し
+		wk->Flag &= ~FLG_SET_MODE;
+		bflg = TRUE;
+//		OS_Printf("end\n");
+	}
+  else if ( (GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A )) != 0 )
+  { //モードを反転
+    DEBUG_WBT_ReverseJudgeMode = !(DEBUG_WBT_ReverseJudgeMode);
+		flg = 1;
+  }
+	
+	// 更新
+	if(wk->Flag & FLG_WIN_UPDATE){
+		flg = 1;
+	}
+	
+	// 更新
+	if(flg == 1){
+		// 表示まとめ
+		dispInfo_reverseJudgeMode( wk );
+		wk->Flag &= ~FLG_WIN_UPDATE;
+	}
+	return( bflg );
+}
 //----------------------------------------------------------------------------
 /**
  *  @brief	数値入力ウインドウ：生成
@@ -1089,6 +1165,22 @@ static void printTrNameWin( DEBUG_WBT_WORK * wk, const u16 tr_id, const s32 xpos
 }
 
 //----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+static void printMsgStrWin( DEBUG_WBT_WORK * wk, const u16 msg_id, const s32 xpos, const s32 ypos )
+{
+	GFL_BMPWIN * bmpwin = wk->bmpwin;
+	STRBUF *strbuf	= GFL_STR_CreateBuffer( 64, wk->heapID );
+  GFL_MSGDATA * msgman;
+	//
+  msgman  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
+              ARCID_DEBUG_MESSAGE, NARC_debug_message_debug_wbt_dat, wk->heapID);
+  GFL_MSG_GetString( msgman, msg_id, strbuf );
+  GFL_MSG_Delete( msgman );
+	PRINTSYS_Print( GFL_BMPWIN_GetBmp( bmpwin ), xpos, ypos, strbuf, wk->fontHandle );
+	//
+	GFL_STR_DeleteBuffer( strbuf );
+}
+//----------------------------------------------------------------------------
 /**
  *  @brief	数値入力ウインドウ：更新のみ
  *
@@ -1174,7 +1266,7 @@ static void dispInfo( DEBUG_WBT_WORK * wk )
  *  @return
  */
 //-----------------------------------------------------------------------------
-static void dispInfo_debug( DEBUG_WBT_WORK * wk )
+static void dispInfo_forceTrMode( DEBUG_WBT_WORK * wk )
 {
 	s32		i;
 	s32		tmp;
@@ -1183,6 +1275,32 @@ static void dispInfo_debug( DEBUG_WBT_WORK * wk )
 	// クリア
 	clearNumWin( wk );
 	//
+	printMsgStrWin( wk, DEBUG_STR_WBT_03, 4,		0 );			// index
+	printNumWin( wk, DEBUG_WBT_ForceTrMode, 1, 4,		2+16, 0 );		// index(0)
+	// 更新
+	updateNumWin( wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief	表示項目まとめ(debug)
+ *
+ *  @param  DEBUG_WBT_WORK *wk
+ *
+ *  @return
+ */
+//-----------------------------------------------------------------------------
+static void dispInfo_reverseJudgeMode( DEBUG_WBT_WORK * wk )
+{
+	s32		i;
+	s32		tmp;
+	s32		mode=0;
+	
+	// クリア
+	clearNumWin( wk );
+	//
+	printMsgStrWin( wk, DEBUG_STR_WBT_02, 4,		0 );			// index
+	printNumWin( wk, DEBUG_WBT_ReverseJudgeMode, 1, 4,		2+16, 0 );		// index(0)
 	// 更新
 	updateNumWin( wk );
 }

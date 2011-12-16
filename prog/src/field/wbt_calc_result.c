@@ -15,6 +15,8 @@
 
 #include "poke_tool/poketype.h" //PokeType
 
+#include "debug_wbt.h"  //DEBUG_WBT_ReverseJudgeMode
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -174,6 +176,13 @@ static void calcWBTResult( WBTRESULT * result,
     else
     { //タイプ相性が高いほうが有利（７：３）に抽選
       result->upside_win = ( aff_a > aff_b );
+#ifdef  PM_DEBUG
+      if ( DEBUG_WBT_ReverseJudgeMode )
+      { //デバッグで逆転指定があれば、不利なほうを必ず勝利させる
+        result->upside_win = !(result->upside_win);
+      }
+      else
+#endif
       if ( GFL_STD_Rand( context, 10 ) >= 7 )
       {
         result->upside_win = !(result->upside_win);
@@ -186,7 +195,7 @@ static void calcWBTResult( WBTRESULT * result,
 
   }
 
-  //とりあえずプレイヤーは勝つ。MSGの整合性は後ほど
+  //プレイヤーは必ず勝つように結果を生成。MSGの整合性は後ほど
   if ( tr_a->wbt_tr_type == WBT_TRTYPE_PLAYER )
   {
     result->upside_win = TRUE;
