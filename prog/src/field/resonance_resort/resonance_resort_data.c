@@ -560,8 +560,19 @@ static void RESORT_BASIC1_DATA_GetName( const RESORT_BASIC1_DATA *cp_data, STRCO
 //-----------------------------------------------------------------------------
 static void RESORT_BASIC1_DATA_GetIntroduction( const RESORT_BASIC1_DATA *cp_data, STRCODE *p_str )
 {
-  GFL_STD_MemCopy( cp_data->introduction, p_str, sizeof(STRCODE)*GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN);
-  *((p_str)+GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN) = GFL_STR_GetEOMCode();
+  if( cp_data->introduction[0] != GFL_STR_GetEOMCode() )
+  {
+    GFL_STD_MemCopy( cp_data->introduction, p_str, sizeof(STRCODE)*GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN);
+    *((p_str)+GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN) = GFL_STR_GetEOMCode();
+  }
+  else
+  {
+    GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_resort_scr_dat, GFL_HEAP_LOWID(HEAPID_PROC) );
+    STRBUF *p_strbuf = GFL_MSG_CreateString( p_msg, resort_introduction_def_00+cp_data->trainerID%RESORT_INTRODUCTION_DEFAULT_NUM );
+    GFL_STR_GetStringCode( p_strbuf, p_str, GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN+EOM_SIZE );
+    GFL_STR_DeleteBuffer( p_strbuf );
+    GFL_MSG_Delete( p_msg );
+  }
 }
 
 #ifdef PM_DEBUG
