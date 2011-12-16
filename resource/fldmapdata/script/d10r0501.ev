@@ -507,41 +507,46 @@ _ANIME_LABEL anm_swsage_4
 /*					CALL：ゲーチス戦						*/
 /************************************************************/
 ev_vs_swsage1_01:
-  
-  //【仮】暗転処理
-  _BLACK_OUT_SLOW()
-  _DISP_FADE_END_CHECK()
-  
-  //キュラム・キュロム動作モデル削除
-  _OBJ_DEL( D10R0501_POKE2_01 )
-  //=======================================//
-  //キュラム・キュロム非表示
-  _FLAG_SET( FV_D10R0401_POKE_03 )
-  //キュレム・ゼクロム・レシラム表示
-  _FLAG_RESET( FV_D10R0401_POKE_02 )
-  //========================================//
-  
-  //レシラム・ゼクロム動作モデル生成
-  _OBJ_ADD( D10R0501_NPOKE_01 )
-  
-  //【仮】登場人物位置変更
-  _OBJ_POS_CHANGE(MMDL_ID_PLAYER,15,0,18,DIR_UP)
-  _OBJ_ANIME( D10R0501_SWSAGE1_01 , anm_dir_d)
-  _OBJ_ANIME( D10R0501_BOSS_01 , anm_dir_u)
-  _OBJ_ANIME_WAIT()
-  
-  //暗転復帰
-  _BLACK_IN_SLOW()
-  _DISP_FADE_END_CHECK()
-  
+
   //ゲーチス：まさか！
   _BALLOONWIN_OBJMSG_WB( msg_d10r0501_swsage01_15b , msg_d10r0501_swsage01_15w , D10R0501_SWSAGE1_01 , POS_DEFAULT)
   _MSGWIN_CLOSE()
   
   //トレーナー戦
   _TRAINER_BTL_SET( TRID_SWSAGE1_01, 0 )
-  //結果チェック
-  _CALL ev_battle_check
+  
+  //敗戦チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+  
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    
+   //========================================//
+    //ゲーチス動作モデル変更
+    _FLAG_SET( FV_D10R0401_SWSAGE1_01 )
+    _FLAG_RESET( FV_D10R0501_SWSAGE1_02 )
+    _FLAG_RESET( FV_D10R0501_WAND_01 )
+    //キュラム・キュロム非表示
+    _FLAG_SET( FV_D10R0401_POKE_03 )
+    //ゼクロム・レシラム表示
+    _FLAG_RESET( FV_D10R0401_POKE_02 )
+    //========================================//
+      
+    //ゲーチス動作モデル削除・生成
+    _OBJ_DEL( D10R0501_SWSAGE1_01 )
+    _OBJ_ADD( D10R0501_SWSAGE1_02 )
+    //レシラム・ゼクロム動作モデル生成
+    _OBJ_ADD( D10R0501_NPOKE_01 )
+      
+    //登場人物位置変更
+    _OBJ_POS_CHANGE(MMDL_ID_PLAYER,18,0,18,DIR_UP)
+    _OBJ_ANIME( D10R0501_SWSAGE1_02 , anm_dir_d)
+    _OBJ_ANIME( D10R0501_BOSS_01 , anm_dir_u)
+    _OBJ_ANIME_WAIT()
+    
+    _TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+  ELSE
+    _TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+  ENDIF
   
   //ゲーチス：…どういうことだ？
   _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_16 , D10R0501_SWSAGE1_02 ,POS_DEFAULT )
@@ -788,7 +793,41 @@ EVENT_START ev_d10r0501_poke10_01
   ENDIF
   
   //敗戦チェック
-  _CALL ev_battle_check
+  _WILD_LOSE_CHECK( SCWK_ANSWER )
+  
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+     
+     //戦闘後
+     
+    //========================================//
+    //キュラム・キュロム非表示
+    _FLAG_SET( FV_D10R0401_POKE_03 )
+    //========================================//
+      
+    //キュラム・キュロム動作モデル削除
+    _OBJ_DEL( D10R0501_POKE2_01 )
+      
+    //登場人物位置変更
+    _OBJ_POS_CHANGE(MMDL_ID_PLAYER,16,0,18,DIR_UP)
+    _OBJ_ANIME( D10R0501_SWSAGE1_01 , anm_dir_d)
+    _OBJ_ANIME( D10R0501_BOSS_01 , anm_dir_u)
+    _OBJ_ANIME_WAIT()
+    
+    _WILD_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+  ELSE
+  
+    //キュラム・キュロム戦後ならキュラム・キュロムを再表示
+    IF FLAG_ON( FV_D10R0401_POKE_03 ) THEN
+      //=======================================//
+      //キュラム・キュロム非表示
+      _FLAG_RESET( FV_D10R0401_POKE_03 )
+      //キュレム・ゼクロム・レシラム表示
+      _FLAG_SET( FV_D10R0401_POKE_02 )
+      //========================================//
+    ENDIF
+    
+    _WILD_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+  ENDIF
   
   //ゲーチス戦イベント開始
   _CALL ev_vs_swsage1_01
@@ -995,40 +1034,19 @@ ev_kyuremu_after:
 
 _RET
 
+/************************************************************/
+/*					CALL：勝敗チェック						*/
+/************************************************************/
 ev_battle_check:	
   //敗戦チェック
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )
   
   IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-    
-    //キュラム・キュロム戦後ならゲーチスの動作モデル変更の処理
-    IF FLAG_ON( FV_D10R0401_POKE_03 ) THEN
-      //========================================//
-    _FLAG_SET( FV_D10R0401_SWSAGE1_01 )
-    _FLAG_RESET( FV_D10R0501_SWSAGE1_02 )
-    _FLAG_RESET( FV_D10R0501_WAND_01 )
-    //========================================//
-    
-    _OBJ_DEL( D10R0501_SWSAGE1_01 )
-    _OBJ_ADD( D10R0501_SWSAGE1_02 )
-    
-    ENDIF
-    
     _TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
   ELSE
-  
-    //キュラム・キュロム戦後ならキュラム・キュロムを再表示
-    IF FLAG_ON( FV_D10R0401_POKE_03 ) THEN
-      //=======================================//
-      //キュラム・キュロム非表示
-      _FLAG_RESET( FV_D10R0401_POKE_03 )
-      //キュレム・ゼクロム・レシラム表示
-      _FLAG_SET( FV_D10R0401_POKE_02 )
-      //========================================//
-    ENDIF
-    
     _TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
   ENDIF
+  
 _RET
 
 //--------------------------------------------------------------------
