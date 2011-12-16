@@ -79,7 +79,7 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
   dataWork->permitLastSaveFirst = FALSE;
   dataWork->permitLastSaveSecond = FALSE;
   dataWork->isDummyCard = FALSE;
-  dataWork->isLockID = TRUE;
+  dataWork->isLockID = FALSE;
   MATH_CRC16CCITTInitTable( &dataWork->crcTable_ ); //CRC‰Šú‰»
   
   {
