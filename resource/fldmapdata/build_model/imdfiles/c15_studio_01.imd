@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="kawamoto_yuki" host="W00239" date="2011-12-12T20:52:29" source="c15_studio_01_01.mb"/>
+	<create user="kawamoto_yuki" host="W00239" date="2011-12-16T13:39:31" source="c15_studio_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="kawamoto_yuki" host="W00239" date="2011-12-12T20:52:29" source="c15_studio_01_01.mb"/>
+<original_create user="kawamoto_yuki" host="W00239" date="2011-12-16T13:39:31" source="c15_studio_01.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -378,51 +378,51 @@
 			9999 9999 9999 9999 9999 9999 a999 a566
 			9999 9999 7999 7777 6667 aa66 aaaa 0000
 			aa00 777a 9777 cca7 cccc cccc cccc a99c
-			aaaa aaaa 6aaa 6666 7777 7777 9977 9999
+			aaaa aaaa aaaa 6666 7777 7777 9977 9999
 			9999 9999 9999 cccc cccc cccc a9cc a566
 			9999 9999 9999 7777 6667 aa66 aaaa 0000
 			aa00 777a 9977 cca7 cccc cccc cccc a79c
-			aaaa aaaa 6aaa 6666 7777 7777 9977 9999
+			aaaa aaaa aaaa 6666 7777 7777 9977 9999
 			9999 c999 cccc cccc cccc cccc 9ccc 556a
 			ccca 9999 9999 7779 6667 aa66 aaaa 0000
 			aa00 a77a 99aa cca7 cccc cccc cccc a79c
-			aaaa aaaa 6aaa 6666 7776 7777 9977 9999
+			aaaa aaaa aaaa 6666 7776 7777 9977 9999
 			ccc9 cccc cccc cccc cccc cccc cccc 566a
 			ccca 999c 9999 7799 6677 a666 aaaa 0000
 			aa00 7a6a 9a77 cca7 cccc cccc cccc a79c
-			aaaa aaaa 6aaa 6666 7776 7777 9977 c999
+			aaaa aaaa aaaa 6666 7776 7777 9977 c999
 			cccc cccc cccc cccc cccc cccc cccc 566a
 			ccca 9ccc 9999 7999 6777 a666 aaaa 000a
 			aa00 7a6a 9a77 ccc7 cccc cccc cccc a79c
-			aaaa aaaa 6aaa 6666 7776 7777 9777 ccc9
+			aaaa aaaa aaaa 6666 7776 7777 9777 ccc9
 			cccc cccc cccc cccc cccc cccc cccc 566a
 			ccca cccc 999c 9999 6777 a666 aaaa 000a
 			aa00 7a6a 9a77 ccc7 cccc cccc cccc a79c
-			aaaa aaaa 6aaa 6666 7776 7777 c777 cccc
+			aaaa aaaa aaaa 6666 7776 7777 c777 cccc
 			cccc cccc cccc cccc cccc cccc cccc 566a
 			ccca cccc 99cc 9999 6777 a666 aaaa 000a
 			aa00 a66a 99aa ccc7 cccc cccc cccc a77c
-			aaaa aaaa 6aaa 6666 7766 7777 c997 cccc
+			aaaa aaaa aaaa 6666 7766 7777 c997 cccc
 			cccc cccc cccc cccc cccc cccc cccc 666a
 			ccca cccc 9ccc 9999 6777 a666 aaaa 000a
 			aa00 766a 9977 ccc9 cccc cccc cccc aa7c
-			aaaa aaaa 66aa 6666 7766 9977 c999 cccc
+			aaaa aaaa aaaa 6666 7766 9977 c999 cccc
 			cccc cccc cccc cccc cccc cccc cccc 666a
 			ccca cccc cccc 9999 6779 a666 aaaa 000a
 			aa00 766a 9977 ccc9 cccc cccc cccc 0a7c
-			aaaa aaaa 66aa 6666 7666 9999 9999 cccc
+			aaaa aaaa aaaa 6666 7666 9999 9999 cccc
 			cccc cccc cccc cccc cccc cccc 9ccc 666a
 			ccca cccc cccc 99cc 6799 a666 aaaa 000a
 			aa00 666a 9777 cca9 cccc cccc cccc 0a79
-			aaaa aaaa 66aa 6666 9777 9999 9999 cccc
+			aaaa aaaa aaaa 6666 9777 9999 9999 cccc
 			cccc cccc cccc cccc cccc cccc 999c 665a
 			99ca cccc cccc 9ccc 6799 a666 aaaa 000a
 			aa00 666a 7776 cca7 cccc cccc cccc 0077
-			aaaa aaaa 66aa 6666 9777 9999 9999 cccc
+			aaaa aaaa aaaa 6666 9777 9999 9999 cccc
 			cccc cccc cccc cccc cccc 99cc aa99 555a
 			9aaa cc99 cccc 9ccc 6799 a666 aaaa 000a
 			aa00 666a 7666 cca7 cccc cccc 9ccc 00aa
-			aaaa aaaa 66aa 7666 9777 9999 9999 ccc9
+			aaaa aaaa 6aaa 7666 9777 9999 9999 ccc9
 			cccc cccc cccc 9ccc 9999 a999 aaaa 555a
 			aaaa 999a cccc 9ccc 6799 a666 aaaa 0000
 			a000 6aaa 6666 cca6 cccc cccc 9acc 000a
