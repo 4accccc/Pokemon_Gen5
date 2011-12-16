@@ -5525,22 +5525,22 @@
 		<language name="JPN" width="256">BGM-CHAMPION-ROOM</language>
 		<language name="JPN_KANJI" width="256">BGM-CHAMPION-ROOM</language>
 	</row>
+	<row id="msg_seq_bgm_ev_gianthole_01">
+		<language name="JPN" width="256">BGM-EV-GIANTHOLE-01</language>
+		<language name="JPN_KANJI" width="256">BGM-EV-GIANTHOLE-01</language>
+	</row>
+	<row id="msg_seq_bgm_ev_gianthole_02">
+		<language name="JPN" width="256">BGM-EV-GIANTHOLE-02</language>
+		<language name="JPN_KANJI" width="256">BGM-EV-GIANTHOLE-02</language>
+	</row>
+	<row id="msg_seq_bgm_ev_gianthole_03">
+		<language name="JPN" width="256">BGM-EV-GIANTHOLE-03</language>
+		<language name="JPN_KANJI" width="256">BGM-EV-GIANTHOLE-03</language>
+	</row>
 	<row id="msg_seq_bgm_end">
 		<language name="JPN" width="256">BGM-END</language>
 		<language name="JPN_KANJI" width="256">BGM-END</language>
 	</row>
-          <row id="msg_seq_1271">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
-          <row id="msg_seq_1272">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
-          <row id="msg_seq_1273">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
           <row id="msg_seq_1274">
           <language name="JPN" width="256">dmy</language>
           <language name="JPN_KANJI" width="256">dmy</language>
