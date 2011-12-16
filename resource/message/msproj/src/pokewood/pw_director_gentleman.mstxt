@@ -7,10 +7,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カントク『ウーム　これは　なかなか
-いいシーンに　なりそうじゃ</Text>
+いい　シーンに　なりそうじゃ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-25T09:41:39" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T10:21:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -19,10 +19,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>監督『ウーム　これは　なかなか
-いいシーンに　なりそうじゃ</Text>
+いい　シーンに　なりそうじゃ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-08-25T09:41:44" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T10:21:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -767,11 +767,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『さっき　セリフ　じゃが…
+			<Text>カントク『さっき　セリフじゃが……
 うまく　えんじとるのう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T11:08:26" />
+				Time="2011-12-16T10:26:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -779,11 +779,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>監督『さっき　セリフ　じゃが……
+			<Text>監督『さっき　セリフじゃが……
 うまく　演じとるのう</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T11:08:14" />
+				Time="2011-12-16T10:26:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

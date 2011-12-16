@@ -318,10 +318,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『ハヤク　オワリナサイヨ！</Text>
+			<Text>カントク『ハヤク　オワリナサイヨ！
+フィルムガ　ナイテルワ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T09:20:58" />
+				Time="2011-12-16T10:17:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -329,10 +330,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>監督『ハヤク　終ワリナサイヨ！</Text>
+			<Text>監督『早ク　終ワリナサイヨ！
+フィルムガ　泣イテルワ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T06:08:27" />
+				Time="2011-12-16T10:17:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -356,7 +358,7 @@
 ユー　ガンバッタワネ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:57:34" />
+				Time="2011-12-16T10:18:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -365,10 +367,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>監督『ナイスデス！
-ユー　ガンバッタワネ！</Text>
+ユー　頑張ッタワネ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T06:19:49" />
+				Time="2011-12-16T10:18:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1526,11 +1528,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『コノ　シナリオハ　ユーノ
-コノミ　カシラ？</Text>
+			<Text>カントク『シナリオハ　ミタ？
+ユーノ　タメニ　カカレタ　ミタイネ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:54:45" />
+				Time="2011-12-16T10:20:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1538,11 +1540,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>監督『コノ　シナリオハ　ユーノ
-コノミ　カシラ？</Text>
+			<Text>監督『シナリオハ　ミタ？
+ユーノ　タメニ　書カレタ　ミタイネ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T10:54:52" />
+				Time="2011-12-16T10:20:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1563,10 +1565,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カントク『コノ　ダイホンハ
-アナタノ　コノミ　カシラ？</Text>
+ユーノ　コノミ　カシラ？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-27T06:09:50" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T10:20:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1575,10 +1577,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>監督『コノ　台本ハ
-アナタノ　好ミ　カシラ？</Text>
+ユーノ　好ミ　カシラ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T11:18:04" />
+				Time="2011-12-16T10:20:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

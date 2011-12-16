@@ -583,10 +583,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カントク『アドリブか……？
-わるくは　ないな……</Text>
+フン　わるくは　ないな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T11:47:31" />
+				Time="2011-12-16T10:11:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -595,10 +595,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>監督『アドリブか……？
-悪くは　ないな……</Text>
+フン　悪くは　ないな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T11:47:41" />
+				Time="2011-12-16T10:11:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -726,10 +726,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カントク『フフン……
-いい　えんぎ　だ</Text>
+いい　えんぎ　じゃないか</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T11:53:03" />
+				Time="2011-12-16T10:11:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -738,10 +738,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>監督『フフン……
-いい演技　だ</Text>
+いい　演技じゃないか</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T11:53:12" />
+				Time="2011-12-16T10:11:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -762,10 +762,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カントク『ホホウ……
-そのセリフとは……</Text>
+ここで　その　セリフとはな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T11:15:13" />
+				Time="2011-12-16T10:12:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -773,11 +773,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>監督『よし！　よし！
-そのセリフ　いただきだぜっ！</Text>
+			<Text>監督『ホホウ……
+ここで　そのセリフ　とはな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T08:16:58" />
+				Time="2011-12-16T10:12:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -918,10 +918,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>監督『カーーーーット！！！
-さつえい　しゅうりょうだッ！</Text>
+撮影終了だッ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T11:16:26" />
+				Time="2011-12-16T10:13:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -954,10 +954,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>監督『カット……
-やれやれ……　かえるぞ……</Text>
+やれやれ……　帰るぞ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T11:16:30" />
+				Time="2011-12-16T10:14:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -990,10 +990,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>監督『カット……
-これは　いがいに　いけるかもな……</Text>
+これは　意外に　いけるかもな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T11:16:34" />
+				Time="2011-12-16T10:14:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1014,11 +1014,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カントク『オイ！　いまいちど
-だいほん　かくにん　しとけよ！
-</Text>
+だいほん　かくにん　しておけ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-05T06:18:40" />
+				Time="2011-12-16T10:43:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -1026,12 +1025,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>監督『オイ！　いまいちど
-台本　確認は　しとけよ！
-</Text>
+			<Text>監督『オイ！　今一度
+台本　確認しておけ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-05T06:18:52" />
+				Time="2011-12-16T10:43:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1371,11 +1369,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『どうした……
+			<Text>カントク『どうしたんだ……
 なぜ　そんな　セリフを……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T12:07:46" />
+				Time="2011-12-16T10:14:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1383,11 +1381,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>監督『どうした……
+			<Text>監督『どうしたんだ……
 なぜ　そんな　セリフを……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-29T12:07:50" />
+				Time="2011-12-16T10:14:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1551,11 +1549,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『きほんに　もどり　だいほんをよむ
-それも　プロのやりかた　だぞ</Text>
+			<Text>カントク『きほんに　もどり
+だいほんを　ジックリよみこむ▽
+それも　プロの　やりかた　だぞ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-05T06:21:54" />
+				Time="2011-12-16T10:15:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -1563,11 +1562,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>監督『基本に　戻り　台本を読む
-それも　プロのやり方　だぞ</Text>
+			<Text>監督『基本に　戻り
+台本を　ジックリ読みこむ▽
+それも　プロの　やり方　だぞ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-05T06:22:17" />
+				Time="2011-12-16T10:15:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1588,10 +1588,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カントク『だいほんは……
-いわなくても　わかってるな　オマエなら</Text>
+いわずとも　わかるな　オマエなら</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-05T06:23:17" />
+				Time="2011-12-16T10:16:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -1599,11 +1599,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>監督「お前に　台本を
-見れれると　緊張　するな……</Text>
+			<Text>カントク『だいほんは……
+言わずとも　わかるな　オマエなら</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-27T04:35:11" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T10:16:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"

@@ -42,11 +42,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『ほらほら
+			<Text>カントク『ほらほら　ボケッとすんな！
 もっと　ビシッと　いけ！　ビシッと！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T05:33:23" />
+				Time="2011-12-16T10:28:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -54,11 +54,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>監督『ほらほら
+			<Text>監督『ほらほら　ボケッとすんな！
 もっと　ビシッと　いけ！　ビシッと！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T10:34:29" />
+				Time="2011-12-16T10:28:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -294,11 +294,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『なんだ　そのセリフはよ！
+			<Text>カントク『なんだ　そのセリフは！！
 テメー　おきゃくさまを　なめてんのか！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T11:45:27" />
+				Time="2011-12-16T10:28:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -306,11 +306,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>監督『なんだ　そのセリフはよ！
+			<Text>監督『なんだ　そのセリフは！！
 テメーは　お客様を　なめてんのか！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T11:45:24" />
+				Time="2011-12-16T10:28:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -514,7 +514,7 @@
 まずは　だいほん　だぜっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-18T11:46:17" />
+				Time="2011-12-16T10:29:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -582,10 +582,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『まだまだか……？</Text>
+			<Text>カントク『まだまだか……？
+しゅうちゅうりょくは　きらすなよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T10:03:47" />
+				Time="2011-12-16T10:24:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -593,10 +594,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>監督『まだまだか……？</Text>
+			<Text>監督『まだまだか……？
+集中力は　切らすなよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T10:34:29" />
+				Time="2011-12-16T10:24:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -832,10 +834,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>カントク『おいおい！
-そのセリフは　ないだろっ！</Text>
+そのセリフは　ないだろー！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T05:39:30" />
+				Time="2011-12-16T10:23:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -844,10 +846,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>監督『おいおい！
-そのセリフは　ないだろっ！</Text>
+そのセリフは　ないだろー！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T05:39:34" />
+				Time="2011-12-16T10:24:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1122,7 +1124,7 @@
 			<Text>カントク『くーっ！！　しぶいねえ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T10:14:04" />
+				Time="2011-12-16T10:23:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1153,10 +1155,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントク『おまえは　てんさいだ！</Text>
+			<Text>カントク『いいぜ！　いいぜ！　いいぜ！
+オマエは　さいこうに　いいぜッ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T10:15:29" />
+				Time="2011-12-16T10:27:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -1164,10 +1167,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>監督『お前は　天才だ！</Text>
+			<Text>監督『いいぜ！　いいぜ！　いいぜ！
+オマエは　最高に　いいぜッ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-09-13T10:39:50" />
+				Time="2011-12-16T10:27:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
