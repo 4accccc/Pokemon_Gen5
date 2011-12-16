@@ -17,7 +17,7 @@ static const DEMO3D_SCENE_DATA data_kyuremu_union_w_03_scene = {
 	ZONE_ID_T01,	///<ゾーンID
 	DEMO3D_FRAME_RATE_30FPS,	///<フレームレート定義
 	TRUE,	///<2画面連結
-	TRUE,FALSE,	///<αブレンドOn/Off,アンチエイリアスOn/Off
+	TRUE,TRUE,	///<αブレンドOn/Off,アンチエイリアスOn/Off
 	FALSE,FALSE,	///<1dotポリゴン描画、フォグOn/Off,エッジマーキングOn/Off
 	GX_SORTMODE_AUTO,GX_BUFFERMODE_W,	///<SwapBuf αソートモード,バッファモード
 	FALSE,16,	///<αテストOn/Off,αテスト敷居値
@@ -51,7 +51,7 @@ static const DEMO3D_CMD_DATA demo3d_cmd_kyuremu_union_w_03_data[] = {
  { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 210, { MASK_DOUBLE_DISPLAY, 50, 16, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 295, { MASK_DOUBLE_DISPLAY, 5, 0, 16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 300, { MASK_DOUBLE_DISPLAY, 50, 16, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 1040-60, { MASK_DOUBLE_DISPLAY, 60, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 1010-60, { MASK_DOUBLE_DISPLAY, 60, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_END, 0, { DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
 };
 
@@ -85,7 +85,7 @@ static const DEMO3D_FILE_UNIT res_kyuremu_union_w_03_file_unit_bg_w03[] = {
 
 static const u16 res_kyuremu_union_w_03_file_wk_w03[] = {
  NARC_data_demo3d_wk_w03_nsbmd,
- NARC_data_demo3d_wk_w03_nsbta,
+ NARC_data_demo3d_wk_w03_nsbtp,
  NARC_data_demo3d_wk_w03_nsbca,
  NARC_data_demo3d_wk_w03_nsbma,
 };
@@ -99,9 +99,9 @@ static const DEMO3D_FILE_UNIT res_kyuremu_union_w_03_file_unit_wk_w03[] = {
 
 static const u16 res_kyuremu_union_w_03_file_cd_w03[] = {
  NARC_data_demo3d_cd_w03_nsbmd,
+ NARC_data_demo3d_cd_w03_nsbta,
  NARC_data_demo3d_cd_w03_nsbca,
  NARC_data_demo3d_cd_w03_nsbma,
- NARC_data_demo3d_cd_w03_nsbva,
 };
 
 static const DEMO3D_FILE_UNIT res_kyuremu_union_w_03_file_unit_cd_w03[] = {
