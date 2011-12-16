@@ -6,10 +6,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まてよ！▼</Text>
+			<Text>まてよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T09:39:33" />
+				Time="2011-12-16T03:35:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -17,10 +17,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>待てよ！▼</Text>
+			<Text>待てよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T09:51:46" />
+				Time="2011-12-16T03:35:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -51,14 +51,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『オマエ
-ポケモンリーグに　むかってるよな▽
-あいて　してやるよ▼
+			<Text>[Name:TrainerName Idx="1" ]『ポケモンリーグ
+ちょうせんの　まえに▽
+オレが　あいて　してやるよ▼
 ポケモンしょうぶは　するほどに
-つよく　なれるからな！▼</Text>
+つよく　なれるからなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T09:52:12" />
+				Time="2011-12-16T03:45:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -66,14 +66,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『オマエ
-ポケモンリーグに　向かってるよな▽
-相手してやるよ▼
+			<Text>[Name:TrainerName Idx="1" ]『ポケモンリーグ
+挑戦の　前に▽
+オレが　相手してやるよ▼
 ポケモン勝負は　するほどに
-強く　なれるからな！▼</Text>
+強く　なれるからなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T09:52:07" />
+				Time="2011-12-16T03:45:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -109,10 +109,10 @@
 オマエの　おかげで
 オレの　たびは　ぶじに▽
 もくてきを　はたせた▼
-これは　オレからの　おれい　さ▼</Text>
+これは　オレからの　おれいだッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T09:48:39" />
+				Time="2011-12-16T03:40:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -124,10 +124,10 @@
 オマエの　おかげで
 オレの　旅は　無事に▽
 目的を　果たせた▼
-これは　オレからの　お礼　さ▼</Text>
+これは　オレからの　お礼だッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T09:52:28" />
+				Time="2011-12-16T03:40:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -159,14 +159,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オレじしん　これから　どうするか
-まったく　かんがえてないけどな▼
-まっ　オマエは
-チャンピオンに　なれよ▼
+			<Text>オレさ　オマエのこと
+すごい　ヤツだと　おもってる！▼
+だからさ
+チャンピオンに　なれよッ！▼
+オマエと　いっしょに　いる
+ポケモンが　ほこらしく　おもえる▼
+そんな　トレーナーの　あかし
+てに　いれてみせろよッ！！▼
 じゃーなー！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T09:50:16" />
+				Time="2011-12-16T03:43:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -174,14 +178,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレ自身　これから　どうするか
-まったく　考えてないけどな▼
-まっ　オマエは
-チャンピオンに　なれよ▼
+			<Text>オレさ　オマエのこと
+すごい　ヤツだと　思ってる！▼
+だからさ
+チャンピオンに　なれよッ！▼
+オマエと　一緒に　いる
+ポケモンが　誇らしく　思える▼
+そんな　トレーナーの　証
+手に　入れてみせろよッ！！▼
 じゃーなー！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T09:53:11" />
+				Time="2011-12-16T03:43:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

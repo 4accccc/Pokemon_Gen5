@@ -122,12 +122,12 @@
 			<Text>あのね　あたしね
 この　かざん……▼
 リバースマウンテン　でね
-しらべたい　ところが　あるのね▼
+しらべたい　ところが　あるの▼
 ということで　おねがい！
 いっしょに　つれていってくれるよね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T14:03:34" />
+				Time="2011-12-16T02:27:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -138,12 +138,12 @@
 			<Text>あのね　あたしね
 この　火山……▼
 リバースマウンテン　でね
-調査したい　ところが　あるのね▼
+調査したい　ところが　あるの▼
 ということで　お願い！
 一緒に　連れていってくれるよね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T14:03:34" />
+				Time="2011-12-16T02:27:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -391,7 +391,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -447,7 +447,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -503,7 +503,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -559,7 +559,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -616,7 +616,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -954,15 +954,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リバースマウンテンだけど　やはり
+			<Text>やっぱり　リバースマウンテンにも
 かざんのおきいしが　あるのかなあ？▼
-あのね　とおく　シンオウちほうの
-かざんには　かざんのおきいしが　あり▼
+あのね　とおく　はなれた
+シンオウちほうの　かざんには▽
+かざんのおきいしが　あって▼
 それが　ヒードランに
 かんけい　しているんだって！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T10:20:48" />
+				Time="2011-12-16T02:29:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -970,15 +971,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リバースマウンテンだけど　やはり
+			<Text>やっぱり　リバースマウンテンにも
 かざんのおきいしが　あるのかなあ？▼
-あのね　遠く　シンオウ地方の
-火山には　かざんのおきいしが　あり▼
+あのね　遠く　離れた
+シンオウ地方の　火山には▽
+かざんのおきいしが　あり▼
 それが　ヒードランに
 関係しているんだって！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T14:05:51" />
+				Time="2011-12-16T02:29:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

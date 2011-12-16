@@ -6,15 +6,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒヤップ　だけどさ
-おれの　いうことは　きかないのよ▼
-ひとに　つかわれるのが
-だいきらい　なのかもな……▼
-それでも　となりに　いてくれるから
-ありがたいんだけどな</Text>
+			<Text>むかし　プラズマだんに
+いわれたことが　むかつくからさ▼
+モンスターボールなしで
+ポケモンと　くらしてるのよ！▼
+ヒヤップ……　ちっとも
+おれの　いうこと　きかないけどさ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T02:34:45" />
+				Time="2011-12-16T03:09:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -22,15 +22,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒヤップ　だけどさ
-おれの　いうことは　きかないのよ▼
-人に　使役されるのが
-大嫌い　なのかもな……▼
-それでも　隣に　いてくれるから
-ありがたいんだけどな</Text>
+			<Text>昔　プラズマ団に
+いわれたことが　むかつくからさ▼
+モンスターボールなしで
+ポケモンと　暮らしてるのよ！▼
+ヒヤップ……　ちっとも
+おれの　いうこと　きかないけどさ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T02:34:49" />
+				Time="2011-12-16T03:09:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -100,13 +100,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いい　ポケモン　わるい　ポケモン
-そんなの　いなくって▼
-いい　トレーナー
-わるい　トレーナーが　いるのね</Text>
+			<Text>モンスターボールが　できたことで
+どんな　ひとでも　ポケモンと▽
+いっしょに　いられるように　なった▼
+そう　どんな　ひとでも……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T02:35:02" />
+				Time="2011-12-16T03:13:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -114,13 +114,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いい　ポケモン　悪い　ポケモン
-そんなの　いなくって▼
-いい　トレーナー
-悪い　トレーナーが　いるのね</Text>
+			<Text>モンスターボールが　できたことで
+どんな　人でも　ポケモンと▽
+一緒に　いられるように　なった▼
+そう　どんな　人でも……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T02:35:04" />
+				Time="2011-12-16T03:13:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

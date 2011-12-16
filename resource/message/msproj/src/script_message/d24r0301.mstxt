@@ -108,12 +108,12 @@
 			<Text>あのね　あたしね
 この　かざん……▼
 リバースマウンテン　でね
-しらべたい　ところが　あるのね▼
+しらべたい　ところが　あるの▼
 ということで　おねがい！
 いっしょに　つれていってくれるよね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T03:56:20" />
+				Time="2011-12-16T02:27:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -124,12 +124,12 @@
 			<Text>あのね　あたしね
 この　火山……▼
 リバースマウンテン　でね
-調査したい　ところが　あるのね▼
+調査したい　ところが　あるの▼
 ということで　お願い！
 一緒に　連れていってくれるよね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T03:56:02" />
+				Time="2011-12-16T02:27:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -878,15 +878,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>リバースマウンテンだけど　やはり
+			<Text>やっぱり　リバースマウンテンにも
 かざんのおきいしが　あるのかなあ？▼
-あのね　とおく　シンオウちほうの
-かざんには　かざんのおきいしが　あり▼
+あのね　とおく　はなれた
+シンオウちほうの　かざんには▽
+かざんのおきいしが　あって▼
 それが　ヒードランに
 かんけい　しているんだって！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T10:16:30" />
+				Time="2011-12-16T02:30:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -894,15 +895,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>リバースマウンテンだけど　やはり
+			<Text>やっぱり　リバースマウンテンにも
 かざんのおきいしが　あるのかなあ？▼
-あのね　遠く　シンオウ地方の
-火山には　かざんのおきいしが　あり▼
+あのね　遠く　離れた
+シンオウ地方の　火山には▽
+かざんのおきいしが　あり▼
 それが　ヒードランに
 関係しているんだって！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T03:58:18" />
+				Time="2011-12-16T02:30:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

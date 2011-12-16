@@ -34,10 +34,10 @@
 　崖上から飛び降りて
 　GRIDX＝468、GRIDZ＝175に配置
 ・あわせて鳴き声再生
-・その後、戦闘へ</Comment>
+・その後、話しかけで戦闘へ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-19T04:16:12" />
+				Time="2011-12-16T03:32:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
