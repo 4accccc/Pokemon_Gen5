@@ -170,7 +170,7 @@ typedef enum{
   FMISSION_ITEM_SET_TREASURE2,  ///<宝探しセット２
   FMISSION_ITEM_SET_LOST_ITEM_D,  ///<落し物配信
   FMISSION_ITEM_SET_KINOMI_D,  ///<きのみ配信　定時配信パターン
-  FMISSION_ITEM_SET_LOST_ITEM_D2,  ///<落し物配信2
+  FMISSION_ITEM_SET_KINOMI_MOVIE,  ///<きのみセット（メロエッタ用）
   FMISSION_ITEM_SET_KINOMI_GIFT,  ///<きのみ配信　不思議な贈り物
   FMISSION_ITEM_SET_MAX,  ///<
 }FMISSION_ITEM_SET;

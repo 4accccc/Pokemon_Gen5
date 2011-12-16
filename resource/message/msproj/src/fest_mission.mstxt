@@ -827,6 +827,52 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_fm_title_item_13">
+		<LanguageCell
+			Language="JPN">
+			<Text>きのみさがしで　だいぼうけん！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-16T03:47:11" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-16T03:46:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きのみ探しで　大冒険！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-16T03:47:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-16T03:46:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション名（メロエッタ用）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-16T03:46:52" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション名（メロエッタ用）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-16T03:47:01" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_fm_title_npc_01"
 		Style="Large">
 		<LanguageCell
@@ -3203,6 +3249,58 @@
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
 				Time="2011-11-20T11:22:28" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_explain_item_13">
+		<LanguageCell
+			Language="JPN">
+			<Text>きのみを　さがしに
+いろんな　ばしょへ　でかけよう！
+もりや　ほらあなの　キラキラひかる
+ばしょを　さがしてみよう！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-16T03:48:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-16T03:47:59" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>きのみを　探しに
+いろんな　場所へ　でかけよう！
+森や　洞穴の　キラキラ光る
+場所を　探してみよう！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-16T03:49:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-16T03:47:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ミッション説明文（配信）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-16T03:47:59" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>ミッション説明文（配信）</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-16T03:47:59" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

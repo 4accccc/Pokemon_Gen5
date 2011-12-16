@@ -54,7 +54,7 @@
 #define  FMISSION_ID_EFFECT_ENC_TARGET_03  ( 42 )  ///<(ポケモン名)を探せ３
 #define  FMISSION_ID_EFFECT_ENC_TARGET_04  ( 43 )  ///<(ポケモン名)を探せ４
 #define  FMISSION_ID_EFFECT_ENC_TARGET_02  ( 44 )  ///<(ポケモン名)を探せ２
-#define  FMISSION_ID_ITEM_DUMMY_01  ( 45 )  ///<未使用（予備）
+#define  FMISSION_ID_ITEM_KINOMI_MOVIE  ( 45 )  ///<木の実探し（メロエッタ用）
 #define  FMISSION_ID_EVENT_TRAIL_SP1  ( 46 )  ///<かくしあな_配信
 #define  FMISSION_ID_NPC_POKEQUIZ_SP1  ( 47 )  ///<図鑑クイズ_配信
 #define  FMISSION_ID_ITEM_KINOMI_SP1  ( 48 )  ///<きのみ_配信
