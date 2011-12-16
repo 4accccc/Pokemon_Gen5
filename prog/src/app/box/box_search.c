@@ -1935,6 +1935,9 @@ static int Subseq_SelectPokemon2(BOX_SEARCH_MAIN_WORK *wk, int seq)
 			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTPOKEMON2EXIT );
 		}else{
 			int	ret = HitCheckListBox( wk );
+			if( ret >= wk->flist_item_max ){
+				break;
+			}
 			if( ret >= 0 && ret <= 4 ){
 				if( GetPokeLibMax(wk,wk->topword-1,ret) != 0 ){
 					wk->nextword = ret;
@@ -2391,6 +2394,9 @@ static int Subseq_SelectTokusei2(BOX_SEARCH_MAIN_WORK *wk, int seq)
 			seq = SetButtonAnime( wk, BUTTON_ID_TB_RETURN, 0, SUBSEQ_SELECTTOKUSEI2EXIT );
 		}else{
 			int	ret = HitCheckListBox( wk );
+			if( ret >= wk->flist_item_max ){
+				break;
+			}
 			if( ret >= 0 && ret <= 4 ){
 				if( get_sort_tokusei_num(wk->topword-1,ret) != 0 ){
 					wk->nextword = ret;
