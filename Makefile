@@ -211,6 +211,7 @@ eventdata:
 trgra_clean:
 	$(MAKE) -C $(RESOURCE_DIR)/trgra/conv clean
 	$(MAKE) -C $(RESOURCE_DIR)/trgra clean
+	$(MAKE) -C $(RESOURCE_DIR)/trface clean
 
 #----------------------------------------------------------------------------
 #	makeå„ÅAì˙éûÇï\é¶
