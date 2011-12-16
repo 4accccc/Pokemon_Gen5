@@ -323,6 +323,12 @@
 #define WK_SCENE_C03P19                  16711 /* 0x4147 ヒウンシティはじまりの場所：ワルそうなチームイベント進行制御ワーク */
 #define WK_SCENE_D08R0101                16712 /* 0x4148 リュウラセンの塔フィールド：アララギ父イベント用 */
 #define WK_SCENE_D27_ANNOUNCE            16713 /* 0x4149 プラズマフリゲート：船内アナウンス */
+#define WK_SCENE_D27_HINT_01             16714 /* 0x414a プラズマフリゲート：POS制御トレーナー用 */
+#define WK_SCENE_D27_HINT_02             16715 /* 0x414b プラズマフリゲート：POS制御トレーナー用 */
+#define WK_SCENE_D27_HINT_03             16716 /* 0x414c プラズマフリゲート：POS制御トレーナー用 */
+#define WK_SCENE_D27_HINT_04             16717 /* 0x414d プラズマフリゲート：POS制御トレーナー用 */
+#define WK_SCENE_D27_HINT_05             16718 /* 0x414e プラズマフリゲート：POS制御トレーナー用 */
+#define WK_SCENE_H05_GIRL                16719 /* 0x414f ワンダーブリッジ：消える少女制御用 */
 
 #define WK_SCENE_AREA_END                16735 /* 0x415f  */
 

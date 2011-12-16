@@ -501,6 +501,7 @@
 #define FE_R07R0301_ZUKAN_LOOK             485 /* 0x01e5 r07r0301：ランドロス'sのずかん登録イベント */
 #define FE_N01R0502_N_RETRY_TALK           486 /* 0x01e6 N城：N再会話フラグ */
 #define FE_D27R0101_SWRIVAL_3RD_TALK       487 /* 0x01e7 プラズマフリゲート：搭乗三回目初回会話 */
+#define FE_H05_POKE488_BTL_01              488 /* 0x01e8 ワンダーブリッジ：クレセリア戦闘フラグ */
 
 #define FE_AREA_END                        599 /* 0x0257  */
 
@@ -936,6 +937,7 @@
 #define FV_D27R0101_SWPLAZMA_03           1024 /* 0x0400 プラズマフリゲート：搭乗三回目プラズマ団員 */
 #define FV_D27R0101_STOPPER_02            1025 /* 0x0401 プラズマフリゲート：搭乗二回目ストッパー */
 #define FV_D27R1101_SWPLAZMA_03           1026 /* 0x0402 プラズマフリゲート：搭乗三回目プラズマ団員 */
+#define FV_H05_WANDERGIRL                 1027 /* 0x0403 ワンダーブリッジ：消える少女 */
 
 #define FV_AREA_END                       1099 /* 0x044b  */
 
