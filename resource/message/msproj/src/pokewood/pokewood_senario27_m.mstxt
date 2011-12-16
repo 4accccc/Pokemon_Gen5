@@ -620,14 +620,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『何で　こんな……
-なんで　私が　こんな　ことに！！</Text>
+何で 　私が　こんな　ことに！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T12:16:55" />
+				Time="2011-12-16T02:18:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T12:16:55" />
+				Time="2011-12-16T02:18:17" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2059,7 +2059,7 @@
 			Language="JPN">
 			<Text>グアイ『なんて　ことだ……
 ダメージは　あるようだが▽
-からだは　きずついて　いない……▼　
+からだは　きずついて　いない……▼
 でんせつ　とも　いわれる　わざを
 くらっていながら　ストッキングが▽
 コゲる　ていど　とは……▼
@@ -2067,11 +2067,11 @@
 かのじょは　きけんすぎる……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T09:32:12" />
+				Time="2011-12-16T02:49:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T09:32:12" />
+				Time="2011-12-16T02:49:03" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2258,18 +2258,18 @@
 			<Text>グアイ『なんて　ことだ……
 ダメージは　あるようだが▽
 からだは　きずついて　いない……▼
-でんせつ　とも　いわれる　わざを
+でんせつとも　いわれる　わざを
 くらっていながら　ストッキングの▽
 あつみを　きにする　よゆう……▼
 きけんだ……
 かのじょは　きけんすぎる……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T09:48:30" />
+				Time="2011-12-16T02:18:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T09:48:30" />
+				Time="2011-12-16T02:18:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">

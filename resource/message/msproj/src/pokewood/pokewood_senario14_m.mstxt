@@ -315,29 +315,29 @@
 			Language="JPN">
 			<Text>つうしん『おい！　きこえるか！？
 おうとうせよ！　[Name:TrainerName Idx="1" ]！▼
-ボヤボヤ　していないで
+ボヤボヤしていないで
 じょうきょうを　ほうこく　しろ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T02:18:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T02:18:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信『おい！　聞こえるか！？
 応答せよ！　[Name:TrainerName Idx="1" ]！▼
-ボヤボヤ　していないで
+ボヤボヤしていないで
 状況を　報告　しろ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T02:18:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T02:18:06" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1434,18 +1434,18 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……　……▼
-……　……分かった
+……　……わかった
 今は　あなたを　信じよう……▼
 では　あなたの　目的は？
 オレなんかの　力を　試して▽
 どうする　つもりだ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:08" />
+				Time="2011-12-16T02:18:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:08" />
+				Time="2011-12-16T02:18:06" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2440,17 +2440,17 @@
 かいがんに　たおれている　ところを
 ぐうぜん　はっけん　されたらしい▼
 ……じぶんに　おこった　できごとを
-たいちょうに　ほうこくしたが▽
+キャップに　ほうこくしたが▽
 とりあって　もらえなかった……▼
 バンギラスと　ひかる　おんな……
 すべては　ゆめ　だったのか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:08" />
+				Time="2011-12-16T02:18:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:08" />
+				Time="2011-12-16T02:18:06" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2461,17 +2461,17 @@
 海岸に　倒れている　ところを
 ぐうぜん　発見　されたらしい▼
 ……自分に　起こった　出来事を
-隊長に　報告したが▽
+キャップに　報告したが▽
 取り合って　もらえなかった……▼
 バンギラスと　光る女……
 すべては　夢　だったのか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:08" />
+				Time="2011-12-16T02:18:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:08" />
+				Time="2011-12-16T02:18:06" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

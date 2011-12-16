@@ -1042,30 +1042,30 @@
 			<Text>モニカ『ハアッ……▼
 じゃあ　さっき　かってきた
 へんな　モンスターボールを▽
-わたしに　ちょうだい！▼
+わたしに　ちょうだいよ！▼
 そうしたら　ゆるしてあげても　いいわ</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T02:18:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:19" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T02:18:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>モニカ『ハアッ……▼
 じゃあ　さっき　買ってきた
 変な　モンスターボールを▽
-私に　ちょうだい！▼
-そうしたら許してあげても　いいわ</Text>
+私に　ちょうだいよ！▼
+そうしたら　許してあげても　いいわ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:19:01" />
+				Time="2011-12-16T02:18:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:19:01" />
+				Time="2011-12-16T02:18:10" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1191,14 +1191,14 @@
 なんで　モンスターボールが
 かってに　ひらいてるの！！▼
 ちょっと　[Name:TrainerName Idx="1" ]！
-ヘンな　イタズラは　やめてよ！</Text>
+ヘンな　イタズラは　やめて！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:27" />
+				Time="2011-12-16T02:18:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-20T10:59:27" />
+				Time="2011-12-16T02:18:10" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1206,14 +1206,14 @@
 何で　モンスターボールが
 勝手に　開いてるの！！▼
 ちょっと　[Name:TrainerName Idx="1" ]！
-ヘンな　イタズラは　やめてよ！</Text>
+ヘンな　イタズラは　やめて！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:19:01" />
+				Time="2011-12-16T02:18:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T09:19:01" />
+				Time="2011-12-16T02:18:10" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

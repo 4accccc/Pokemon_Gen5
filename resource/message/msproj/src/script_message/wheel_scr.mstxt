@@ -4492,7 +4492,9 @@ OL</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>さてと……▼
-あーあ……　やっぱり　きてるわ
+あーあ……　やっぱり　きてる……
+しかも　あの　イライラした　ようす……▽
+ずーっと　コッチを　のぞきみ　してたわね▽
 そういうのが　きらわれるのに……▼
 ……じゃあ　アナタ　ありがとう
 もう　いっても　いいわよ▼
@@ -4502,7 +4504,7 @@ OL</Text>
 それじゃあね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-12T10:46:00" />
+				Time="2011-12-16T02:07:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4511,7 +4513,9 @@ OL</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>さてと……▼
-あーあ……　やっぱり　来てるわ
+あーあ……　やっぱり　来てる……
+しかも　あの　イライラした　様子……▽
+ずーっと　コッチを　のぞき見　してたわね▽
 そういうのが　嫌われるのに……▼
 じゃあ　アナタ　ありがとう
 もう　行っても　いいわよ▼
@@ -4521,7 +4525,7 @@ OL</Text>
 それじゃあね</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-12T10:45:50" />
+				Time="2011-12-16T02:07:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

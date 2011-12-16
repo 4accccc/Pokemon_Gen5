@@ -541,13 +541,13 @@
 		<language name="JPN" width="256">モニカ『ハアッ……▼
 じゃあ　さっき　かってきた
 へんな　モンスターボールを▽
-わたしに　ちょうだい！▼
+わたしに　ちょうだいよ！▼
 そうしたら　ゆるしてあげても　いいわ</language>
 		<language name="JPN_KANJI" width="256">モニカ『ハアッ……▼
 じゃあ　さっき　買ってきた
 変な　モンスターボールを▽
-私に　ちょうだい！▼
-そうしたら許してあげても　いいわ</language>
+私に　ちょうだいよ！▼
+そうしたら　許してあげても　いいわ</language>
 	</row>
 	<row id="pw_event3_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんなあ……</language>
@@ -574,12 +574,12 @@
 なんで　モンスターボールが
 かってに　ひらいてるの！！▼
 ちょっと　[1:00:トレーナー名:1]！
-ヘンな　イタズラは　やめてよ！</language>
+ヘンな　イタズラは　やめて！</language>
 		<language name="JPN_KANJI" width="256">モニカ『ちょっと　何コレ！？▼
 何で　モンスターボールが
 勝手に　開いてるの！！▼
 ちょっと　[1:00:トレーナー名:1]！
-ヘンな　イタズラは　やめてよ！</language>
+ヘンな　イタズラは　やめて！</language>
 	</row>
 	<row id="pw_event3_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『なに　いってんの……？</language>

@@ -7,13 +7,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘヘヘ………▼
-ここさ　なんとか　って　ちほうで
+ここはな　なんとか　って　ちほうで
 スカウトされた　スゲー　びじんさんが▽
-つかってる　がくや　なんだぜ▼
-……きに　なるだろ</Text>
+つかってる　がくや　なんだ▼
+……きに　なるよなあ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T08:25:04" />
+				Time="2011-12-16T02:52:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -22,13 +22,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヘヘヘ………▼
-ここさ　何とか　って　地方で
+ここはな　何とか　って　地方で
 スカウトされた　スゲー　美人さんが▽
-使ってる　楽屋なんだぜ▼
-……気に　なるだろ</Text>
+使ってる　楽屋なんだ▼
+……気に　なるよなあ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-27T08:25:42" />
+				Time="2011-12-16T02:52:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -558,13 +558,13 @@ msg_c15r0301_middleman2_01</Comment>
 			<Text>ようこそ！
 ポケウッド　さつえいスタジオへ▼
 あらあら
-[Name:TrainerName ]さん　おつかれさまです▼　
+[Name:TrainerName ]さん　おつかれさまです▼
 ウフフ……▼
 まさか　キミが　こんなに
 ゆうめいに　なるなんてな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T09:44:10" />
+				Time="2011-12-16T02:54:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
@@ -575,13 +575,13 @@ msg_c15r0301_middleman2_01</Comment>
 			<Text>ようこそ！
 ポケウッド　撮影スタジオへ▼
 あらあら
-[Name:TrainerName ]さん　おつかれさまです▼　
+[Name:TrainerName ]さん　おつかれさまです▼
 ウフフ……▼
 まさか　あなたが　こんなに
 有名に　なるなんてな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-29T09:44:14" />
+				Time="2011-12-16T02:54:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
