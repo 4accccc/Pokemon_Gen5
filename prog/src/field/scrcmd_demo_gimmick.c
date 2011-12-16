@@ -128,9 +128,12 @@ VMCMD_RESULT EvCmdGianthole_NPokeAnmStart( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  int param1 = SCRCMD_GetVMWorkValue( core, work );  // ÉRÉ}ÉìÉhëÊ1à¯êî
+  BOOL is_down;
 
+  is_down = (param1==1) ? TRUE : FALSE;
   // 
-  GIANTHOLE_GIMMICK_N_POKE_AnmStart( gsys );
+  GIANTHOLE_GIMMICK_N_POKE_AnmStart( gsys, is_down );
 
   return VMCMD_RESULT_CONTINUE;
 }

@@ -24,5 +24,5 @@ extern void GIANTHOLE_GIMMICK_Disp( GAMESYS_WORK *gsys, int id );
 extern void GIANTHOLE_GIMMICK_AnmStart( GAMESYS_WORK *gsys, int id );
 
 extern void GIANTHOLE_GIMMICK_StoneFloat( GAMESYS_WORK *gsys, int obj_id );
-extern void GIANTHOLE_GIMMICK_N_POKE_AnmStart( GAMESYS_WORK *gsys );
+extern void GIANTHOLE_GIMMICK_N_POKE_AnmStart( GAMESYS_WORK *gsys, BOOL is_down );
 

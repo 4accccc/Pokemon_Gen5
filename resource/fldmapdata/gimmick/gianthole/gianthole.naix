@@ -17,10 +17,14 @@ enum {
 	NARC_gianthole_blizzard_02_nsbmd = 3,
 	NARC_gianthole_blizzard_02_nsbca = 4,
 	NARC_gianthole_blizzard_02_nsbta = 5,
-	NARC_gianthole_blizzard_n_nsbmd = 6,
-	NARC_gianthole_blizzard_n_nsbca = 7,
-	NARC_gianthole_blizzard_nr_nsbtp = 8,
-	NARC_gianthole_blizzard_nz_nsbtp = 9
+	NARC_gianthole_blizzard_n_up_nsbmd = 6,
+	NARC_gianthole_blizzard_n_up_nsbca = 7,
+	NARC_gianthole_blizzard_nr_up_nsbtp = 8,
+	NARC_gianthole_blizzard_nz_up_nsbtp = 9,
+	NARC_gianthole_blizzard_n_down_nsbmd = 10,
+	NARC_gianthole_blizzard_n_down_nsbca = 11,
+	NARC_gianthole_blizzard_nr_down_nsbtp = 12,
+	NARC_gianthole_blizzard_nz_down_nsbtp = 13
 };
 
 /* NARC_GIANTHOLE_NAIX_ */

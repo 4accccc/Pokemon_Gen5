@@ -220,7 +220,7 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   _MSGWIN_CLOSE()
 
   // É[ÉNÉçÉÄonNÇ™Ç®ÇËÇƒÇ≠ÇÈ
-  _DEMO_GIMMICK_GIANTHOLE_NPOKE_ANM_START()
+  _DEMO_GIMMICK_GIANTHOLE_NPOKE_ANM_START(1) // 1ÅFâ∫ç~ 0ÅFè„è∏
 
   _TIME_WAIT(100)
   

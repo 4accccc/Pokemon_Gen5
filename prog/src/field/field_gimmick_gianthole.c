@@ -99,9 +99,12 @@ enum{
   RESID_BLIZZARD_02_MDL,      // こごえるせかい 後半
   RESID_BLIZZARD_02_ANM_ICA,  // こごえるせかい 後半
   RESID_BLIZZARD_02_ANM_ITA,  // こごえるせかい 後半
-  RESID_BLIZZARD_N_MDL,       // ゼクロム(レシラム)に乗ったN
-  RESID_BLIZZARD_N_ANM_ICA,   // 
-  RESID_BLIZZARD_N_ANM_ITP,   // バージョンで違う
+  RESID_BLIZZARD_N_DOWN_MDL,  // ゼクロム(レシラム)に乗ったN下降
+  RESID_BLIZZARD_N_DOWN_ANM_ICA,// 
+  RESID_BLIZZARD_N_DOWN_ANM_ITP,// バージョンで違う
+  RESID_BLIZZARD_N_UP_MDL,    // ゼクロム(レシラム)に乗ったN上昇
+  RESID_BLIZZARD_N_UP_ANM_ICA,// 
+  RESID_BLIZZARD_N_UP_ANM_ITP,// バージョンで違う
 };
 
 // OBJインデックス
@@ -109,7 +112,8 @@ enum{
   OBJ_BLIZZARD_01,            // こごえるせかい 前半
   OBJ_BLIZZARD_02,            // こごえるせかい 後半
 
-  OBJ_BLIZZARD_N,                 // ゼクロム(レシラム)に乗ったN
+  OBJ_BLIZZARD_N_DOWN,        // ゼクロム(レシラム)に乗ったN 下降
+  OBJ_BLIZZARD_N_UP,          // ゼクロム(レシラム)に乗ったN 上昇
 
   OBJ_NUM,
 };
@@ -124,12 +128,22 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
   { ARCID_GIANTHOLE_GIMMICK, NARC_gianthole_blizzard_02_nsbca, GFL_G3D_UTIL_RESARC },
   { ARCID_GIANTHOLE_GIMMICK, NARC_gianthole_blizzard_02_nsbta, GFL_G3D_UTIL_RESARC },
 
-  { ARCID_GIANTHOLE_GIMMICK, NARC_gianthole_blizzard_n_nsbmd, GFL_G3D_UTIL_RESARC },
-  { ARCID_GIANTHOLE_GIMMICK, NARC_gianthole_blizzard_n_nsbca, GFL_G3D_UTIL_RESARC },
+  // レシゼク N 下降
+  { ARCID_GIANTHOLE_GIMMICK, NARC_gianthole_blizzard_n_down_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_GIANTHOLE_GIMMICK, NARC_gianthole_blizzard_n_down_nsbca, GFL_G3D_UTIL_RESARC },
 #if PM_VERSION == VERSION_B2
-  { ARCID_GIANTHOLE_GIMMICK, NARC_gianthole_blizzard_nz_nsbtp, GFL_G3D_UTIL_RESARC },
+  { ARCID_GIANTHOLE_GIMMICK, NARC_gianthole_blizzard_nz_down_nsbtp, GFL_G3D_UTIL_RESARC },
 #else
-  { ARCID_GIANTHOLE_GIMMICK, NARC_gianthole_blizzard_nr_nsbtp, GFL_G3D_UTIL_RESARC },
+  { ARCID_GIANTHOLE_GIMMICK, NARC_gianthole_blizzard_nr_down_nsbtp, GFL_G3D_UTIL_RESARC },
+#endif
+
+  // レシゼク N 上昇
+  { ARCID_GIANTHOLE_GIMMICK, NARC_gianthole_blizzard_n_up_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_GIANTHOLE_GIMMICK, NARC_gianthole_blizzard_n_up_nsbca, GFL_G3D_UTIL_RESARC },
+#if PM_VERSION == VERSION_B2
+  { ARCID_GIANTHOLE_GIMMICK, NARC_gianthole_blizzard_nz_up_nsbtp, GFL_G3D_UTIL_RESARC },
+#else
+  { ARCID_GIANTHOLE_GIMMICK, NARC_gianthole_blizzard_nr_up_nsbtp, GFL_G3D_UTIL_RESARC },
 #endif
 };
 
@@ -150,14 +164,21 @@ static const GFL_G3D_UTIL_ANM anm_blizzard_02[] =
 };
 #define ANM_BLIZZARD_02_NUM  ( NELEMS(anm_blizzard_02) )
 
-// ゼクロム(レシラム)に乗ったN
-static const GFL_G3D_UTIL_ANM anm_blizzard_n[] =
+// ゼクロム(レシラム)に乗ったN 下降
+static const GFL_G3D_UTIL_ANM anm_blizzard_n_down[] =
 {
-  { RESID_BLIZZARD_N_ANM_ICA, 0 },
-  { RESID_BLIZZARD_N_ANM_ITP, 0 },
+  { RESID_BLIZZARD_N_DOWN_ANM_ICA, 0 },
+  { RESID_BLIZZARD_N_DOWN_ANM_ITP, 0 },
 };
-#define ANM_BLIZZARD_N_NUM  ( NELEMS(anm_blizzard_n) )
+#define ANM_BLIZZARD_N_DOWN_NUM  ( NELEMS(anm_blizzard_n_down) )
 
+// ゼクロム(レシラム)に乗ったN 上昇
+static const GFL_G3D_UTIL_ANM anm_blizzard_n_up[] =
+{
+  { RESID_BLIZZARD_N_UP_ANM_ICA, 0 },
+  { RESID_BLIZZARD_N_UP_ANM_ITP, 0 },
+};
+#define ANM_BLIZZARD_N_UP_NUM  ( NELEMS(anm_blizzard_n_up) )
 
 
 // OBJ
@@ -179,13 +200,21 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
     anm_blizzard_02,        // アニメテーブル(複数指定のため)
     ANM_BLIZZARD_02_NUM,    // アニメリソース数
   },
-  // OBJ_BLIZZARD_N
+  // OBJ_BLIZZARD_N_DOWN
   {
-    RESID_BLIZZARD_N_MDL,   // モデルリソースID
-    0,                      // モデルデータID(リソース内部INDEX)
-    RESID_BLIZZARD_N_MDL,   // テクスチャリソースID
-    anm_blizzard_n,         // アニメテーブル(複数指定のため)
-    ANM_BLIZZARD_N_NUM,     // アニメリソース数
+    RESID_BLIZZARD_N_DOWN_MDL,  // モデルリソースID
+    0,                          // モデルデータID(リソース内部INDEX)
+    RESID_BLIZZARD_N_DOWN_MDL,  // テクスチャリソースID
+    anm_blizzard_n_down,        // アニメテーブル(複数指定のため)
+    ANM_BLIZZARD_N_DOWN_NUM,    // アニメリソース数
+  },
+  // OBJ_BLIZZARD_N_UP
+  {
+    RESID_BLIZZARD_N_UP_MDL,  // モデルリソースID
+    0,                        // モデルデータID(リソース内部INDEX)
+    RESID_BLIZZARD_N_UP_MDL,  // テクスチャリソースID
+    anm_blizzard_n_up,        // アニメテーブル(複数指定のため)
+    ANM_BLIZZARD_N_UP_NUM,    // アニメリソース数
   },
 };
 
@@ -201,7 +230,8 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_Setup = {
 static const int anm_num_tbl[ OBJ_NUM ] = {
   ANM_BLIZZARD_01_NUM,
   ANM_BLIZZARD_02_NUM,
-  ANM_BLIZZARD_N_NUM,
+  ANM_BLIZZARD_N_DOWN_NUM,
+  ANM_BLIZZARD_N_UP_NUM,
 };
 
 //=============================================================================
@@ -288,6 +318,28 @@ void GIANTHOLE_GIMMICK_End( FIELDMAP_WORK *p_fieldmap )
 void GIANTHOLE_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
 {
   GIANTHOLE_GIMMICK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GIMMICK_TMP_ASSIGN_ID );
+
+
+#ifdef PM_DEBUG
+  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
+    
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+    {
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+      OS_Printf("デバッグ N下降\n");
+
+      GIANTHOLE_GIMMICK_N_POKE_AnmStart( gsys, TRUE );
+    }
+    
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
+    {
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+      OS_Printf("デバッグ N上昇\n");
+
+      GIANTHOLE_GIMMICK_N_POKE_AnmStart( gsys, FALSE );
+    }
+  }
+#endif
 
   // SE再生
   {
@@ -439,9 +491,10 @@ void GIANTHOLE_GIMMICK_StoneFloat( GAMESYS_WORK *gsys, int obj_id )
  *	@brief  ゼクロム(レシラム)に乗ったNのアニメ開始
  *
  *	@param	GAMESYS_WORK *gsys 
+ *	@param  BOOL    is_down  TRUEで下降 FALSEで上昇
  */
 //-----------------------------------------------------------------------------
-void GIANTHOLE_GIMMICK_N_POKE_AnmStart( GAMESYS_WORK *gsys )
+void GIANTHOLE_GIMMICK_N_POKE_AnmStart( GAMESYS_WORK *gsys, BOOL is_down )
 {
   FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   GIANTHOLE_GIMMICK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GIMMICK_TMP_ASSIGN_ID );
@@ -449,7 +502,16 @@ void GIANTHOLE_GIMMICK_N_POKE_AnmStart( GAMESYS_WORK *gsys )
   p_wk->anm_type = ANIME_TYPE_N_POKE;
   p_wk->frame = 0;
 
-  ANM_Play( p_wk->exp_obj, OBJ_BLIZZARD_N );
+  if( is_down == TRUE )
+  {
+    // 下降アニメ再生
+    ANM_Play( p_wk->exp_obj, OBJ_BLIZZARD_N_DOWN );
+  }
+  else
+  {
+    // 上昇アニメ再生
+    ANM_Play( p_wk->exp_obj, OBJ_BLIZZARD_N_UP );
+  }
 }
 
 //=============================================================================
@@ -534,9 +596,9 @@ static void EXPOBJ_ObjSet( GIANTHOLE_GIMMICK_TMP *p_wk )
     }
   }
 
-  // OBJ_BLIZZARD_N
+  // OBJ_BLIZZARD_N_DOWN
   {
-    u16 obj_idx = OBJ_BLIZZARD_N;
+    u16 obj_idx = OBJ_BLIZZARD_N_DOWN;
 
     GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GIMMICK_UNIT_IDX, obj_idx );
     // 座標
@@ -549,7 +611,35 @@ static void EXPOBJ_ObjSet( GIANTHOLE_GIMMICK_TMP *p_wk )
     FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, obj_idx, TRUE );
 
     // アニメ再生
-    for( i=0; i<ANM_BLIZZARD_N_NUM; i++ )
+    for( i=0; i<ANM_BLIZZARD_N_DOWN_NUM; i++ )
+    {
+      EXP_OBJ_ANM_CNT_PTR exp_anm;
+      exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GIMMICK_UNIT_IDX, obj_idx, i );
+
+      // 1回再生設定
+      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
+      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );   // アニメ再生設定
+
+      // 無効化
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GIMMICK_UNIT_IDX, obj_idx, i, FALSE );
+    }
+  }
+  // OBJ_BLIZZARD_N_UP
+  {
+    u16 obj_idx = OBJ_BLIZZARD_N_UP;
+
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( p_wk->exp_obj, GIMMICK_UNIT_IDX, obj_idx );
+    // 座標
+    VEC_Set( &status->trans, BLIZZARD_N_X, BLIZZARD_N_Y, BLIZZARD_N_Z );
+
+    // カリング
+    // ※しない設定
+    FLD_EXP_OBJ_SetCulling( p_wk->exp_obj, GIMMICK_UNIT_IDX, obj_idx, FALSE );
+    // 非表示
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, obj_idx, TRUE );
+
+    // アニメ再生
+    for( i=0; i<ANM_BLIZZARD_N_UP_NUM; i++ )
     {
       EXP_OBJ_ANM_CNT_PTR exp_anm;
       exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GIMMICK_UNIT_IDX, obj_idx, i );
