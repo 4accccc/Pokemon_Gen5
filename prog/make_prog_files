@@ -237,6 +237,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/resonance_resort/resort_work.c \
         debug/debug_infinity_dungeon.c \
         debug/debug_animal_trail.c \
+        field/debug_wbt.c \
         field/resonance_resort/resort_debug.c
         
 
