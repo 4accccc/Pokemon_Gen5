@@ -3,7 +3,7 @@
 <iva version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-12-01T13:20:16" source="kyuremu_union_b_01_022.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-12-16T16:45:40" source="kyuremu_union_b_01_034.mb"/>
 	<title>Visibility Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -11,23 +11,25 @@
 <body>
 
 <visibility_info
-	frame_size="1085"
+	frame_size="1100"
 	tool_start_frame="1"
-	tool_end_frame="1085"
+	tool_end_frame="1100"
 	compress_node="merge" node_size="33 30"
 />
 
 <visibility_data>
-	<frame_idx size="42">
+	<frame_idx size="52">
 		0 0 180 195 0 344 375 0 375 465
 		0 554 630 0 540 691 0 411 601 0
-		614 691 0 214 228 0 214 229 0 947
+		614 691 0 614 691 765 766 0 614 691
+		705 730 0 214 228 0 214 229 0 947
 		0 850 0 660 705 0 213 241 0 1004
 		0 90
 	</frame_idx>
-	<visibility size="42">
+	<visibility size="52">
 		1 0 1 0 0 1 0 0 1 0
 		0 1 0 0 1 0 0 1 0 0
+		1 0 0 1 0 1 0 0 1 0
 		1 0 0 1 0 0 1 0 0 1
 		0 1 0 1 0 0 1 0 0 1
 		1 0
@@ -49,21 +51,21 @@
 	<visibility_anm index="11" data_size="3" data_head="16"/>
 	<visibility_anm index="12" data_size="3" data_head="16"/>
 	<visibility_anm index="13" data_size="3" data_head="19"/>
-	<visibility_anm index="14" data_size="3" data_head="19"/>
+	<visibility_anm index="14" data_size="5" data_head="22"/>
 	<visibility_anm index="15" data_size="3" data_head="19"/>
-	<visibility_anm index="16" data_size="3" data_head="19"/>
+	<visibility_anm index="16" data_size="5" data_head="27"/>
 	<visibility_anm index="17" data_size="3" data_head="4"/>
-	<visibility_anm index="18" data_size="3" data_head="22"/>
-	<visibility_anm index="19" data_size="3" data_head="22"/>
-	<visibility_anm index="20" data_size="3" data_head="25"/>
-	<visibility_anm index="21" data_size="2" data_head="28"/>
-	<visibility_anm index="22" data_size="2" data_head="30"/>
-	<visibility_anm index="23" data_size="3" data_head="32"/>
-	<visibility_anm index="24" data_size="3" data_head="35"/>
+	<visibility_anm index="18" data_size="3" data_head="32"/>
+	<visibility_anm index="19" data_size="3" data_head="32"/>
+	<visibility_anm index="20" data_size="3" data_head="35"/>
+	<visibility_anm index="21" data_size="2" data_head="38"/>
+	<visibility_anm index="22" data_size="2" data_head="40"/>
+	<visibility_anm index="23" data_size="3" data_head="42"/>
+	<visibility_anm index="24" data_size="3" data_head="45"/>
 	<visibility_anm index="25" data_size="1" data_head="0"/>
 	<visibility_anm index="26" data_size="1" data_head="0"/>
-	<visibility_anm index="27" data_size="2" data_head="38"/>
-	<visibility_anm index="28" data_size="2" data_head="40"/>
+	<visibility_anm index="27" data_size="2" data_head="48"/>
+	<visibility_anm index="28" data_size="2" data_head="50"/>
 	<visibility_anm index="29" data_size="1" data_head="0"/>
 </visibility_anm_array>
 

@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="swan_3dcg02" host="W00193" date="2011-11-25T19:38:53" source="kyuremu_union_b_02_v02b.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-12-16T18:18:12" source="kyuremu_union_b_02.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="swan_3dcg02" host="W00193" date="2011-11-25T19:38:53" source="kyuremu_union_b_02_v02b.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-12-16T18:18:12" source="kyuremu_union_b_02.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -2643,521 +2643,521 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="q_head_pl"
-		path="C:/home/swan_data3d/demo/kyurem/tex/q_head.tga"
+		path="C:/home/swan_data3d/demo/awoke_kyurem/tex/q_head.tga"
 	>
 		<bitmap size="4096">
-			5555 5555 b888 558b 5555 1b55 d233 dddd
-			5556 5555 5555 5555 5555 5555 5555 5555
-			5555 7855 dddd dddd dddd dddd 77bd ddb7
-			58bd 5555 5555 5555 db85 dddd 86bd 7785
-			5555 d655 332d 5d33 5555 1b55 d233 dddd
-			5556 5555 5555 5555 5555 5555 5555 5555
-			5555 ddb6 dddd dddd dddd dddd dddd dddd
-			8ddd 5555 5555 8555 ddd7 6bdd 5558 dd65
-			5555 dd85 3332 b333 5555 1b55 d233 dddd
-			5556 5555 5555 5555 5555 5555 5555 5555
-			d655 dddd dddd dddd dddd dddd dddd dddd
-			6ddd 5555 5555 db65 dddd 5867 8555 ddd7
-			5555 dd75 1132 2333 5555 3d55 2233 dddd
-			5556 5555 5555 5555 5555 5555 5555 7685
-			ddd7 dddd 22dd 2333 dddd dddd dddd dddd
-			bddd 5558 7855 dddd 8bdd 5555 d785 dddd
-			5555 dd75 0132 3331 5557 3265 2233 dddd
-			5556 5555 5555 5555 5555 5555 8555 ddd7
-			dddd 2ddd 3332 2333 dddd dddd dddd dddd
-			dddd 558d ddb6 dddd 556b 8555 ddd7 dddd
-			5555 dd85 013d 3310 5552 33d5 2333 dddd
-			5556 5555 5555 5555 5555 5868 db85 dddd
-			dddd 3322 3333 2333 dddd dddd dddd dddd
-			dddd b6bd dddd 6ddd 5555 b785 dddd dddd
-			5555 dd55 012d 3300 5583 333d 2333 dddd
-			5556 5555 5555 5555 7555 bddd dddb dddd
-			322d 3333 3333 2333 dddd dddd dddd dddd
-			dddd dddd dddd 556d 8555 ddd7 dddd dddd
-			5555 dd55 03dd 3100 b5d3 3333 2333 ddd2
-			5556 5555 5555 5555 d655 dddd dddd 222d
-			3333 3333 3333 2233 dddd dddd dddd dddd
-			dddd dddd 7ddd 5558 d755 dddd dddd dddd
-			5555 d755 02dd 3000 2b23 3333 3333 ddd2
-			5556 5555 5555 5555 dd55 dddd 22dd 3333
-			3333 3333 3333 2233 dddd dddd dddd dddd
-			dddd dddd 587d 5555 ddd6 dddd dddd dddd
-			5555 d855 12dd 1000 3333 3333 3333 ddd2
-			5556 5555 5555 5555 dd75 2ddd 3333 3333
-			3333 3333 3333 2223 dddd dddd dddd dddd
-			dddd 6bdd 5555 b855 dddd dddd dddd dddd
-			5555 b555 3ddd 1000 3333 3333 3333 dd22
-			5556 5555 5555 5555 ddd7 32dd 3333 3333
-			3333 3333 3333 d222 dddd dddd dddd dddd
-			dddd 556b 5555 dd78 dddd dddd dddd dddd
-			c955 759c 2ddd 0000 3333 3333 3333 dd22
-			5556 5555 5555 b855 dddd 3332 3333 3333
-			3333 3333 3333 d222 dddd dddd dddd dddd
-			6ddd 5555 7555 dddd dddd dddd dddd dddd
-			c955 859c 2ddd 0001 3331 3333 3333 dd22
-			5556 5555 5555 dd65 32dd 3333 3333 3333
-			3333 3333 2333 dd22 dddd dddd dddd dddd
-			587d 5555 ddb6 dddd dddd dddd dddd dddd
-			ccc5 55cc dddb 0003 3330 3333 3333 dd22
-			eee7 eeee 78ee dddd 332d 1113 1111 3111
-			3333 3333 2333 dd22 dddd dddd dddd bddd
-			5558 b855 dddd dddd dddd dddd dddd dddd
-			ccc5 55cc ddd6 0012 3310 3333 3333 ddd2
-			fffb ffff ddff 2ddd 1113 1111 1111 1111
-			3333 3333 2333 dd22 dddd dddd dddd 56bd
-			5555 ddb6 dddd dddd dddd dddd dddd dbdd
-			ccc5 55cc ddd8 0012 3310 3333 3333 ddd2
-			fffb ffff 2dff 1322 1111 1111 1111 1111
-			3333 3333 3333 dd23 dddd dddd dddd 5586
-			b655 dddd dddd dddd dddd dddd dddd d7dd
-			ccc9 5ccc dd75 003d 3100 3333 3333 ddd2
-			fffb ffff 12ff 0111 0000 1111 1111 1111
-			3331 3333 3333 dd23 dddd dddd 8bdd 5555
-			dd78 dddd dddd dddd dddd dddd dddd d7bd
-			ccc9 9ccc dd85 012d 3100 3333 2333 dddd
-			fffb ffff 01ff 0000 0000 1000 1111 1111
-			3331 3333 3333 ddd2 dddd dddd 556b b655
-			dddd dddd dddd dddd dddd dddd dddd db7d
-			ccc9 9ccc d755 032d 3100 3333 2333 dddd
-			fffb ffff 01ee 0000 0000 0000 1110 1111
-			3331 3333 3333 dddd dddd 8bdd 8555 ddd7
-			dddd dddd dddd dddd dddd dddd dddd db7d
-			9cc9 ccc9 d559 13dd 1000 3333 2333 dddd
-			fffb efff 01ee 0000 0000 0000 1000 1111
-			3331 3333 2333 dddd dddd 556d db65 dddd
-			dddd dddd dddd dddd dddd dddd dddd db6b
-			9cc9 cc99 7559 32dd 1000 3333 d333 dddd
-			fffb efff 01ee 0000 0000 0000 0000 1111
-			3331 3333 d333 dddd 7bdd 8558 ddd7 dddd
-			dddd dddd dddd dddd dddd dddd bddd db58
-			99cc c999 555c 3ddd 1001 3331 d233 dddd
-			fffb 9eef 01cc 0000 0000 0000 0000 1110
-			3331 3333 d233 dddd 587b d655 dddd dddd
-			dddd dddd dddd dddd dddd dddd 6ddd db55
-			99cc c999 559c 2ddb 0013 3331 d233 dddd
-			fffb c9ef 01cc 0000 0000 0000 0000 1110
-			3333 3333 dd33 7bdd 5556 ddb8 dddd dddd
-			dddd dddd dddd dddd dddd dddd 6ddd db85
-			99cc 9999 559c ddd6 0013 3311 5572 5555
-			fffe c9ef 01cc 0000 0000 0000 0000 1110
-			3333 3333 ddd3 587d 7855 dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd 7ddd dd85
-			99cc 9999 559c ddd5 0132 3310 5563 5555
-			fffe c9ef 01cc 0000 0000 0000 0000 1110
-			3333 3333 ddd2 5557 dd75 dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd 7ddd dd85
-			99cc 9999 55c9 dd75 013d 3100 5823 5555
-			fffe ceef 01cc 0000 0000 0000 0000 1111
-			3333 2333 7ddd 8555 dddb dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd 7ddd dd85
-			99cc 9999 55c9 dd85 132d 1000 6d33 5555
-			fffe ceef 01cc 0000 0000 0000 1000 3111
-			3333 2333 57dd d655 dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd 6ddd db55
-			99cc 9999 59c9 d755 12dd 0000 d331 587d
-			fffe 9eff 01cc 0000 0000 0000 1000 3111
-			3333 d333 55bd dd65 dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd 6ddd dd85
-			99cc 9999 5c99 d855 3ddd 0000 2100 6ddd
-			fffe 9eff 01cc 0000 0000 0000 1000 3311
-			3333 d233 558d ddd7 dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd 6ddd dd65
-			99cc 9999 5999 6555 2ddd 0001 1000 dd23
-			fffb eeff 01cc 0000 0000 0000 1000 3311
-			3333 dd23 7556 dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd 6ddd dd85
-			99cc 9999 9999 5555 dddb 0003 0000 2311
-			fffb efff 0399 0000 0000 0000 1100 3311
-			3333 bdd3 d655 dddd dddd dddd dddd dddd
-			dddd dddd dddd 7ddd dd76 dddd 6ddd dd85
-			99cc 9999 9999 5555 ddd5 0012 0000 2100
-			fffb efff 12ee 0000 0000 0000 1100 3331
-			3333 8dd2 dd65 dddd dddd dddd dddd dddd
-			dddd dddd dddd 56dd d785 dddd 6ddd dd85
-			99cc 9999 9999 5559 dd65 012d 0000 3100
-			fffb efff 2bee 0013 0000 0000 1100 3333
-			3333 56dd ddd8 dddd dddd dddd dddd dddd
-			dddd dddd dddd 558d d655 dddd 6ddd dd85
-			99cc 9999 9999 5559 db55 01dd 0000 1100
-			fffb ffff 68ef 01d7 0000 0000 1110 3333
-			2333 557d dddb dddd dddd dddd dddd dddd
-			dddd dddd dddd 5556 dd85 dddd 6ddd dd85
-			99cc 9999 4449 5559 d855 12dd 0000 3110
-			fffb ffff 55ef 0285 0000 0000 3111 3333
-			d233 755b dddd dddd dddd dddd dddd dddd
-			dddd dddd 6ddd 5555 ddd6 dddd 6ddd dd85
-			99cc 9999 5544 5555 7555 3ddd 0001 3310
-			fffb ffff 55ef 1b55 0000 0000 3311 3333
-			dd23 d655 dddd dddd dddd dddd dddd dddd
-			dddd dddd 5bdd 8555 dddd dddd 6ddd dd85
-			99cc 4999 5554 5555 5555 2ddb 0001 3310
-			fffb ffff eeff 3755 0000 1000 2331 2333
-			8d22 dd85 dddd dddd dddd dddd dddd dddd
-			dddd dddd 58bd b555 dddd dddd 6ddd dd85
-			99cc 4499 5555 5555 5555 ddd8 0013 3310
-			fffb ffff eeff 2655 0000 1000 2231 2222
-			5622 ddb5 dddd dddd dddd dddd dddd dddd
-			dddd dddd 555b d655 dddd dddd 6ddd dd85
-			99cc 5499 5555 5555 5555 dd65 0132 3311
-			fffb ffff eeef 2855 0000 1000 2221 2222
-			55b2 ddd7 dddd dddd dddd dddd dddd dddd
-			dddd bddd 5555 dd85 dddd dddd 6ddd dd85
-			99cc 5449 5555 5555 5555 d755 132d 3311
-			fffb ffff eeff 2855 0000 1000 dd31 d222
-			655b dddd dddd dddd dddd dddd dddd dddd
-			dddd 5bdd 5555 ddb5 dddd dddd 6ddd dd85
-			99cc 5549 5555 5555 5555 b555 32dd 3331
-			fffb ffff 9eef 1b55 0000 1000 d331 dddd
-			d658 dddd dddd dddd dddd dddd dddd dddd
-			dddd 56dd 5555 ddd7 dddd dddd 6ddd db85
-			99cc 5544 5555 5555 5555 8555 2ddd 3333
-			fffb ffff 9eef 0265 0000 1000 2331 6ddd
-			dd85 dddd dddd dddd dddd dddd dddd dddd
-			dddd 55dd 8555 dddd dddd dddd 6ddd dd65
-			999c 5544 5555 5555 5555 5555 ddb5 3332
-			fffb ffff 9eef 01d5 0000 1000 3331 57dd
-			ddb5 dddd dddd dddd dddd dddd dddd dddd
-			dddd 556d 7555 dddd dddd dddd 6ddd dd65
-			9999 5554 5555 5555 5555 5555 d755 22dd
-			fffb ffff ccef 0038 0000 1000 2331 58dd
-			ddd7 dddd dddd dddd dddd dddd dddd dddd
-			dddd 5556 d755 dddd dddd dddd 6ddd dd65
-			4999 5554 5555 5555 5555 5555 6555 dddd
-			fffb ffff ccef 0038 0000 1000 d231 658d
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			bddd 5555 dd85 dddd dddd dddd 6ddd dd65
-			4999 5555 5555 5555 5555 5555 d7e8 222d
-			b2b2 fffb ccef 0125 0000 1100 dd31 d858
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			6ddd 5555 ddb5 dddd dddd dddd 6ddd db65
-			4499 5555 5555 5555 5555 5555 2bbe 3333
-			3333 fffb ccef 11d5 1000 1111 6d23 db55
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			5ddd 5555 ddd6 dddd dddd dddd 6ddd dd65
-			4499 5555 5555 5555 5555 5555 2bfe 3333
-			3333 fffb ccef 1265 1111 3111 57d2 dd75
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			57dd 5555 dddd dddd dddd dddd 6ddd dd75
-			5449 5555 5555 5555 5555 5555 bbfe bbbb
-			bbbb fffb ceef 2655 3333 3111 55d2 ddd7
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			58dd 6555 dddd dddd dddd dddd 6ddd dd75
-			5444 5555 5555 5555 5555 5555 bbe5 bbbb
-			bbbb ffff 9eef d855 3332 2333 656d dddd
-			dddd dddd dddd dddd dddd 3222 2222 dddd
-			55bd d555 dddd dddd dddd dddd 6ddd dd75
-			5544 5555 5555 5555 5555 5555 fe55 ffff
-			ffff ffff eeef d755 22dd 6d22 d658 dddd
-			dddd dddd dddd dddd 222d 3333 2333 d222
-			558d d655 dddd dddd dddd dddd 7ddd dd75
-			5544 5555 5555 5555 5555 5555 fe55 ffff
-			ffff ffff eeff dd85 bddd 556b dd65 dddd
-			dddd dddd dddd 2ddd 3332 1113 3311 2222
-			5557 db55 dddd dddd dddd dddd dddd dd75
-			5554 5555 5555 5555 5555 5555 e555 ffff
-			ffff ffff efff dd75 67bb 8558 dddb dddd
-			dddd dddd dddd 3222 1113 1111 3311 d223
-			5556 dd65 dddd dddd dddd dddd dddd dd66
-			5554 5555 5555 5555 5555 5555 5555 fffe
-			ffff ffff efff 6db5 5867 d655 dddd dddd
-			dddd dddd 22dd 1333 1111 1111 3311 b223
-			5555 ddb5 dddd dddd dddd dddd dddd dd7b
-			5555 5555 5555 5555 5555 5555 5555 fffe
-			ffff ffff efff 8665 5556 dd75 dddd dddd
-			dddd 2ddd 3322 1111 1111 1111 3311 6d22
-			5555 ddd6 dddd dddd dddd dddd 2ddd dddd
-			5555 5555 5555 5555 5555 5555 5555 fffe
-			ffff ffff 5eff 8885 6555 dddb dddd dddd
-			dddd 322d 1133 1111 1111 1111 2311 5d22
-			5555 ddd7 dddd dddd dddd dddd 3ddd ddd2
-			5555 5555 5555 5555 5555 5555 5555 ffe5
-			ffff ffff 85ef 5558 da75 dddd dddd dddd
-			22dd 1133 1111 1111 1111 1111 2311 5b22
-			8555 dddd dddd dddd dddd dddd 32dd ddd2
+			5555 5555 7888 5587 5555 1755 c233 cccc
+			e556 eeee eeee eeee eeee 555e 5555 5555
+			5555 7855 cccc cccc cccc cccc 777c cc77
+			587c 5555 5555 5555 c785 cccc 867c 7785
+			5555 c655 332c 5c33 5555 1755 c233 cccc
+			e556 eeee eeee eeee eeee 555e 5555 5555
+			5555 cc76 cccc cccc cccc cccc cccc cccc
+			8ccc 5555 5555 8555 ccc7 67cc 5558 cc65
+			5555 cc85 3332 7333 5555 1755 c233 cccc
+			e556 eeee eeee eeee eeee 555e 5555 5555
+			c655 cccc cccc cccc cccc cccc cccc cccc
+			6ccc 5555 5555 c765 cccc 5867 8555 ccc7
+			5555 cc75 1132 2333 5555 3c55 2233 cccc
+			e556 eeee eeee eeee eeee 5555 5555 7685
+			ccc7 cccc 22cc 2333 cccc cccc cccc cccc
+			7ccc 5558 7855 cccc 87cc 5555 c785 cccc
+			5555 cc75 0132 3331 5557 3265 2233 cccc
+			f556 ffff ffff ffff 5fff 5555 8555 ccc7
+			cccc 2ccc 3332 2333 cccc cccc cccc cccc
+			cccc 558c cc76 cccc 5567 8555 ccc7 cccc
+			5555 cc85 013c 3310 5552 33c5 2333 cccc
+			f556 ffff ffff ffff 555f 5868 c785 cccc
+			cccc 3322 3333 2333 cccc cccc cccc cccc
+			cccc 767c cccc 6ccc 5555 7785 cccc cccc
+			5555 cc55 012c 3300 5583 333c 2333 cccc
+			f556 ffff ffff ffff 755f 7ccc ccc7 cccc
+			322c 3333 3333 2333 cccc cccc cccc cccc
+			cccc cccc cccc 556c 8555 ccc7 cccc cccc
+			5555 cc55 03cc 3100 75c3 3333 2333 ccc2
+			f556 ffff ffff 55ff c655 cccc cccc 222c
+			3333 3333 3333 2233 cccc cccc cccc cccc
+			cccc cccc 7ccc 5558 c755 cccc cccc cccc
+			5555 c755 02cc 3000 2723 3333 3333 ccc2
+			f556 ffff ffff 555f cc55 cccc 22cc 3333
+			3333 3333 3333 2233 cccc cccc cccc cccc
+			cccc cccc 587c 5555 ccc6 cccc cccc cccc
+			5555 c855 12cc 1000 3333 3333 3333 ccc2
+			f556 ffff ffff 5555 cc75 2ccc 3333 3333
+			3333 3333 3333 2223 cccc cccc cccc cccc
+			cccc 67cc 5555 7855 cccc cccc cccc cccc
+			5555 7555 3ccc 1000 3333 3333 3333 cc22
+			f556 ffff 5fff 5555 ccc7 32cc 3333 3333
+			3333 3333 3333 c222 cccc cccc cccc cccc
+			cccc 5567 5555 cc78 cccc cccc cccc cccc
+			b955 759b 2ccc 0000 3333 3333 3333 cc22
+			f556 ffff 55ff 7855 cccc 3332 3333 3333
+			3333 3333 3333 c222 cccc cccc cccc cccc
+			6ccc 5555 7555 cccc cccc cccc cccc cccc
+			b955 859b 2ccc 0001 3331 3333 3333 cc22
+			5556 5555 5555 cc65 32cc 3333 3333 3333
+			3333 3333 2333 cc22 cccc cccc cccc cccc
+			587c 5555 cc76 cccc cccc cccc cccc cccc
+			bbb5 55bb ccc7 0003 3330 3333 3333 cc22
+			ddd7 dddd 78dd cccc 332c 1113 1111 3111
+			3333 3333 2333 cc22 cccc cccc cccc 7ccc
+			5558 7855 cccc cccc cccc cccc cccc cccc
+			bbb5 55bb ccc6 0012 3310 3333 3333 ccc2
+			fff7 ffff ccff 2ccc 1113 1111 1111 1111
+			3333 3333 2333 cc22 cccc cccc cccc 567c
+			5555 cc76 cccc cccc cccc cccc cccc c7cc
+			bbb5 55bb ccc8 0012 3310 3333 3333 ccc2
+			fff7 ffff 2cff 1322 1111 1111 1111 1111
+			3333 3333 3333 cc23 cccc cccc cccc 5586
+			7655 cccc cccc cccc cccc cccc cccc c7cc
+			bbb9 5bbb cc75 003c 3100 3333 3333 ccc2
+			fff7 ffff 12ff 0111 0000 1111 1111 1111
+			3331 3333 3333 cc23 cccc cccc 87cc 5555
+			cc78 cccc cccc cccc cccc cccc cccc c77c
+			bbb9 9bbb cc85 012c 3100 3333 2333 cccc
+			fff7 ffff 01ff 0000 0000 1000 1111 1111
+			3331 3333 3333 ccc2 cccc cccc 5567 7655
+			cccc cccc cccc cccc cccc cccc cccc c77c
+			bbb9 9bbb c755 032c 3100 3333 2333 cccc
+			fff7 ffff 01dd 0000 0000 0000 1110 1111
+			3331 3333 3333 cccc cccc 87cc 8555 ccc7
+			cccc cccc cccc cccc cccc cccc cccc c77c
+			9bb9 bbb9 c559 13cc 1000 3333 2333 cccc
+			fff7 dfff 01dd 0000 0000 0000 1000 1111
+			3331 3333 2333 cccc cccc 556c c765 cccc
+			cccc cccc cccc cccc cccc cccc cccc c767
+			9bb9 bb99 7559 32cc 1000 3333 c333 cccc
+			fff7 dfff 01dd 0000 0000 0000 0000 1111
+			3331 3333 c333 cccc 77cc 8558 ccc7 cccc
+			cccc cccc cccc cccc cccc cccc 7ccc c758
+			99bb b999 555b 3ccc 1001 3331 c233 cccc
+			fff7 9ddf 01bb 0000 0000 0000 0000 1110
+			3331 3333 c233 cccc 5877 c655 cccc cccc
+			cccc cccc cccc cccc cccc cccc 6ccc c755
+			99bb b999 559b 2cc7 0013 3331 c233 cccc
+			fff7 b9df 01bb 0000 0000 0000 0000 1110
+			3333 3333 cc33 77cc 5556 cc78 cccc cccc
+			cccc cccc cccc cccc cccc cccc 6ccc c785
+			99bb 9999 559b ccc6 0013 3311 5572 5555
+			fffd b9df 01bb 0000 0000 0000 0000 1110
+			3333 3333 ccc3 587c 7855 cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc 7ccc cc85
+			99bb 9999 559b ccc5 0132 3310 5563 5555
+			fffd b9df 01bb 0000 0000 0000 0000 1110
+			3333 3333 ccc2 5557 cc75 cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc 7ccc cc85
+			99bb 9999 55b9 cc75 013c 3100 5823 5555
+			fffd bddf 01bb 0000 0000 0000 0000 1111
+			3333 2333 7ccc 8555 ccc7 cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc 7ccc cc85
+			99bb 9999 55b9 cc85 132c 1000 6c33 5555
+			fffd bddf 01bb 0000 0000 0000 1000 3111
+			3333 2333 57cc c655 cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc 6ccc c755
+			99bb 9999 59b9 c755 12cc 0000 c331 587c
+			fffd 9dff 01bb 0000 0000 0000 1000 3111
+			3333 c333 557c cc65 cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc 6ccc cc85
+			99bb 9999 5b99 c855 3ccc 0000 2100 6ccc
+			fffd 9dff 01bb 0000 0000 0000 1000 3311
+			3333 c233 558c ccc7 cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc 6ccc cc65
+			99bb 9999 5999 6555 2ccc 0001 1000 cc23
+			fff7 ddff 01bb 0000 0000 0000 1000 3311
+			3333 cc23 7556 cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc 6ccc cc85
+			99bb 9999 9999 5555 ccc7 0003 0000 2311
+			fff7 dfff 0399 0000 0000 0000 1100 3311
+			3333 7cc3 c655 cccc cccc cccc cccc cccc
+			cccc cccc cccc 7ccc cc76 cccc 6ccc cc85
+			99bb 9999 9999 5555 ccc5 0012 0000 2100
+			fff7 dfff 12dd 0000 0000 0000 1100 3331
+			3333 8cc2 cc65 cccc cccc cccc cccc cccc
+			cccc cccc cccc 56cc c785 cccc 6ccc cc85
+			99bb 9999 9999 5559 cc65 012c 0000 3100
+			fff7 dfff 27dd 0013 0000 0000 1100 3333
+			3333 56cc ccc8 cccc cccc cccc cccc cccc
+			cccc cccc cccc 558c c655 cccc 6ccc cc85
+			99bb 9999 9999 5559 c755 01cc 0000 1100
+			fff7 ffff 68df 01c7 0000 0000 1110 3333
+			2333 557c ccc7 cccc cccc cccc cccc cccc
+			cccc cccc cccc 5556 cc85 cccc 6ccc cc85
+			99bb 9999 4449 5559 c855 12cc 0000 3110
+			fff7 ffff 55df 0285 0000 0000 3111 3333
+			c233 7557 cccc cccc cccc cccc cccc cccc
+			cccc cccc 6ccc 5555 ccc6 cccc 6ccc cc85
+			99bb 9999 5544 5555 7555 3ccc 0001 3310
+			fff7 ffff 55df 1755 0000 0000 3311 3333
+			cc23 c655 cccc cccc cccc cccc cccc cccc
+			cccc cccc 57cc 8555 cccc cccc 6ccc cc85
+			99bb 4999 5554 5555 5555 2cc7 0001 3310
+			fff7 ffff ddff 3755 0000 1000 2331 2333
+			8c22 cc85 cccc cccc cccc cccc cccc cccc
+			cccc cccc 587c 7555 cccc cccc 6ccc cc85
+			99bb 4499 5555 5555 5555 ccc8 0013 3310
+			fff7 ffff ddff 2655 0000 1000 2231 2222
+			5622 cc75 cccc cccc cccc cccc cccc cccc
+			cccc cccc 5557 c655 cccc cccc 6ccc cc85
+			99bb 5499 5555 5555 5555 cc65 0132 3311
+			fff7 ffff dddf 2855 0000 1000 2221 2222
+			5572 ccc7 cccc cccc cccc cccc cccc cccc
+			cccc 7ccc 5555 cc85 cccc cccc 6ccc cc85
+			99bb 5449 5555 5555 5555 c755 132c 3311
+			fff7 ffff ddff 2855 0000 1000 cc31 c222
+			6557 cccc cccc cccc cccc cccc cccc cccc
+			cccc 57cc 5555 cc75 cccc cccc 6ccc cc85
+			99bb 5549 5555 5555 5555 7555 32cc 3331
+			fff7 ffff 9ddf 1755 0000 1000 c331 cccc
+			c658 cccc cccc cccc cccc cccc cccc cccc
+			cccc 56cc 5555 ccc7 cccc cccc 6ccc c785
+			99bb 5544 5555 5555 5555 8555 2ccc 3333
+			fff7 ffff 9ddf 0265 0000 1000 2331 6ccc
+			cc85 cccc cccc cccc cccc cccc cccc cccc
+			cccc 55cc 8555 cccc cccc cccc 6ccc cc65
+			999b 5544 5555 5555 5555 5555 cc75 3332
+			fff7 ffff 9ddf 01c5 0000 1000 3331 57cc
+			cc75 cccc cccc cccc cccc cccc cccc cccc
+			cccc 556c 7555 cccc cccc cccc 6ccc cc65
+			9999 5554 5555 5555 5555 5555 c755 22cc
+			fff7 ffff bbdf 0038 0000 1000 2331 58cc
+			ccc7 cccc cccc cccc cccc cccc cccc cccc
+			cccc 5556 c755 cccc cccc cccc 6ccc cc65
+			4999 5554 5555 5555 5555 5555 6555 cccc
+			fff7 ffff bbdf 0038 0000 1000 c231 658c
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			7ccc 5555 cc85 cccc cccc cccc 6ccc cc65
+			4999 5555 5555 5555 5555 5555 c7d8 222c
+			7272 fff7 bbdf 0125 0000 1100 cc31 c858
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			6ccc 5555 cc75 cccc cccc cccc 6ccc c765
+			4499 5555 5555 5555 5555 5555 277d 3333
+			3333 fff7 bbdf 11c5 1000 1111 6c23 c755
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			5ccc 5555 ccc6 cccc cccc cccc 6ccc cc65
+			4499 5555 5555 5555 5555 5555 27fd 3333
+			3333 fff7 bbdf 1265 1111 3111 57c2 cc75
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			57cc 5555 cccc cccc cccc cccc 6ccc cc75
+			5449 5555 5555 5555 5555 5555 77fd 7777
+			7777 fff7 bddf 2655 3333 3111 55c2 ccc7
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			58cc 6555 cccc cccc cccc cccc 6ccc cc75
+			5444 5555 5555 5555 5555 5555 77d5 7777
+			7777 ffff 9ddf c855 3332 2333 656c cccc
+			cccc cccc cccc cccc cccc 3222 2222 cccc
+			557c c555 cccc cccc cccc cccc 6ccc cc75
+			5544 5555 5555 5555 5555 5555 fd55 ffff
+			ffff ffff dddf c755 22cc 6c22 c658 cccc
+			cccc cccc cccc cccc 222c 3333 2333 c222
+			558c c655 cccc cccc cccc cccc 7ccc cc75
+			5544 5555 5555 5555 5555 5555 fd55 ffff
+			ffff ffff ddff cc85 7ccc 5567 cc65 cccc
+			cccc cccc cccc 2ccc 3332 1113 3311 2222
+			5557 c755 cccc cccc cccc cccc cccc cc75
+			5554 5555 5555 5555 5555 5555 d555 ffff
+			ffff ffff dfff cc75 677c 8558 ccc7 cccc
+			cccc cccc cccc 3222 1113 1111 3311 c223
+			5556 cc65 cccc cccc cccc cccc cccc cc66
+			5554 5555 5555 5555 5555 5555 5555 fffd
+			ffff ffff dfff 6c75 5867 c655 cccc cccc
+			cccc cccc 22cc 1333 1111 1111 3311 7223
+			5555 cc75 cccc cccc cccc cccc cccc cc77
+			5555 5555 5555 5555 5555 5555 5555 fffd
+			ffff ffff dfff 8665 5556 cc75 cccc cccc
+			cccc 2ccc 3322 1111 1111 1111 3311 6c22
+			5555 ccc6 cccc cccc cccc cccc 2ccc cccc
+			5555 5555 5555 5555 5555 5555 5555 fffd
+			ffff ffff 5dff 8885 6555 ccc7 cccc cccc
+			cccc 322c 1133 1111 1111 1111 2311 5c22
+			5555 ccc7 cccc cccc cccc cccc 3ccc ccc2
+			5555 5555 5555 5555 5555 5555 5555 ffd5
+			ffff ffff 85df 5558 ca75 cccc cccc cccc
+			22cc 1133 1111 1111 1111 1111 2311 5722
+			8555 cccc cccc cccc cccc cccc 32cc ccc2
 			5555 5555 5555 5555 5555 5555 5555 ff55
-			ffff ffff 68ef 6555 aaaa dddd dddd 2ddd
-			3322 3333 1111 1111 1111 1111 2331 56d2
-			7555 dddd dddd dddd dddd dddd 33dd ddd3
+			ffff ffff 68df 6555 aaaa cccc cccc 2ccc
+			3322 3333 1111 1111 1111 1111 2331 56c2
+			7555 cccc cccc cccc cccc cccc 33cc ccc3
 			5555 5555 5555 5555 5555 5555 5555 ff55
-			ffff ffff 578e 2d85 aaaa dddd dddd 2222
-			2222 3322 1133 1111 1111 1111 2331 55d2
-			d855 dddd dddd dddd dddd dddd 332d ddd3
-			5555 5555 5555 5555 5555 5555 5555 fe55
-			ffff ffff 5868 2227 aaa2 ddda 22dd 2222
-			2222 2222 3332 1113 1111 1111 2331 55b2
-			d655 dddd dddd dddd dddd dddd 333d ddd3
-			5555 5555 5555 5555 5555 5555 5555 fe55
-			ffff bfff d858 2222 aa22 2dda a313 aaaa
-			aaaa 222a 3222 3333 1111 1111 2331 556d
-			db85 dddd dddd dddd dddd dddd 3332 ddd3
-			5555 5555 5555 5555 5555 5555 5555 e555
-			eeee 56be 3265 2223 a222 132a a201 aaaa
-			aaaa 2aaa 2222 3332 1133 1111 2331 558d
-			dd75 dddd dddd dddd dddd dddd 2333 ddd3
+			ffff ffff 578d 2c85 aaaa cccc cccc 2222
+			2222 3322 1133 1111 1111 1111 2331 55c2
+			c855 cccc cccc cccc cccc cccc 332c ccc3
+			5555 5555 5555 5555 5555 5555 5555 fd55
+			ffff ffff 5868 2227 aaa2 ccca 22cc 2222
+			2222 2222 3332 1113 1111 1111 2331 5572
+			c655 cccc cccc cccc cccc cccc 333c ccc3
+			5555 5555 5555 5555 5555 5555 5555 fd55
+			ffff 7fff c858 2222 aa22 2cca a313 aaaa
+			aaaa 222a 3222 3333 1111 1111 2331 556c
+			c785 cccc cccc cccc cccc cccc 3332 ccc3
+			5555 5555 5555 5555 5555 5555 5555 d555
+			dddd 567d 3265 2223 a222 132a a201 aaaa
+			aaaa 2aaa 2222 3332 1133 1111 2331 558c
+			cc75 cccc cccc cccc cccc cccc 2333 ccc3
 			5555 5555 5555 5555 5555 5555 5555 5555
-			6555 856b 333d 3333 2222 0112 a210 aaaa
-			aaaa aaaa 222a 3222 3333 1113 2231 555d
-			ddd5 dddd dddd dddd dddd 2ddd 2233 dd33
+			6555 8567 333c 3333 2222 0112 a210 aaaa
+			aaaa aaaa 222a 3222 3333 1113 2231 555c
+			ccc5 cccc cccc cccc cccc 2ccc 2233 cc33
 			5555 5555 5555 5555 5555 5555 5555 5555
-			7755 2758 3333 3333 1333 0000 d211 dddd
+			7755 2758 3333 3333 1333 0000 c211 cccc
 			aaaa aaaa aaaa 2222 3332 1333 2231 5557
-			ddd8 dddd dddd dddd dddd 3ddd 2223 dd33
+			ccc8 cccc cccc cccc cccc 3ccc 2223 cc33
 			5555 5555 5555 5555 5555 5555 5555 5555
-			5bb5 32b5 3333 1333 0011 1000 d211 dddd
-			dddd aaad aaaa 2aaa 3222 3333 d233 5558
-			ddd7 dddd dddd dddd dddd 32dd 2222 dd33
+			5775 3275 3333 1333 0011 1000 c211 cccc
+			cccc aaac aaaa 2aaa 3222 3333 c233 5558
+			ccc7 cccc cccc cccc cccc 32cc 2222 cc33
 			5555 5555 5555 5555 5555 5555 5555 5555
-			58d6 333d 3333 0113 0000 1100 d211 dddd
-			dddd dddd aaad aaaa 2222 3333 d223 5555
-			dddb dddd dddd dddd dddd 33dd 2222 dd32
+			58c6 333c 3333 0113 0000 1100 c211 cccc
+			cccc cccc aaac aaaa 2222 3333 c223 5555
+			ccc7 cccc cccc cccc cccc 33cc 2222 cc32
 			5555 5555 5555 5555 5555 5555 8555 6558
-			d58d 3333 1133 0000 0000 1100 d211 dddd
-			dddd dddd addd aaaa 22aa 3332 7223 8555
-			dddd dddd dddd dddd dddd 232d 2222 dd32
-			5555 5555 5555 5555 5555 5555 8855 d888
-			2756 3333 0011 0000 0000 1110 d211 dddd
-			dddd dddd dddd aaad 2aaa 3322 6d23 6555
-			dddd dddd dddd dddd dddd 233d 2222 dd32
-			5555 5555 5555 5555 5555 5555 6885 7d68
-			3265 1333 0000 0000 1100 1111 d211 dddd
-			dddd dddd dddd aadd aaaa 3322 5dd2 7555
-			dddd dddd dddd dddd dddd 2232 2222 dd22
-			5555 5555 5555 5555 5555 5555 6685 5bb6
-			33d5 0133 0000 0000 1111 1111 d211 dddd
-			dddd dddd dddd dddd aaaa 332a 5bd2 d555
-			dddd dddd dddd dddd dddd 2233 2222 dd22
-			5555 5555 5555 5555 5555 5555 6668 58d7
-			333b 0013 0000 1310 1111 3311 d213 dddd
-			dddd dddd dddd dddd aaad 222a 5722 d655
-			dddd dddd dddd dddd 2ddd 2223 2222 dd22
-			5555 5555 5555 5555 5555 5555 7668 657d
-			3332 0001 0000 2d21 1111 2233 d212 dddd
-			dddd dddd dddd dddd aadd 222a 56d2 db55
-			dddd dddd dddd dd2d 3ddd 2223 2222 dd22
-			5555 5555 5555 5555 5555 8555 d666 d85b
-			3333 0001 3100 dddd 222d aa22 d21a dddd
-			dddd dddd dddd dddd aadd 2222 56dd dd85
-			dddd dddd dddd dd22 3ddd 2222 2222 dd22
-			5555 5555 5555 5555 5555 6555 db66 2b58
-			1333 0000 2110 dddd addd aaaa dd23 dddd
-			dddd dddd dddd aaad 322a 2333 8bdd ddb8
-			dddd dddd 2ddd dd22 32dd 2222 2222 dd22
-			5555 5555 5555 5555 5555 6855 7d66 3285
-			0133 0000 d211 dddd aadd aaaa ddd3 dddd
-			dddd dddd aadd 222a 3333 2333 bddd dddb
-			dddd dddd 2ddd dd22 23dd 2222 2222 d222
-			5555 5555 5555 5555 5555 6655 5bb6 22b5
-			0133 1000 dd23 dddd aaad 3aaa ddd2 dddd
-			dddd dddd dddd dddd 2222 2222 dddd dddd
-			dddd dddd 22dd dd22 232a 2222 2222 d222
-			5555 5555 5555 5555 5555 6685 58db 22ab
-			0013 3100 dd22 dddd aaaa 23aa 2222 2222
-			a222 ddaa dddd dddd dddd dddd dddd dddd
-			dddd dddd 222d d222 222a 2222 2222 a222
-			5555 5555 5555 5555 5555 7685 656d 2aad
-			0013 2310 ddd2 dddd aaaa 333a 3333 d233
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd 222d d222 222a 2222 2222 a222
-			5555 5555 5555 5555 5555 d768 d557 2aad
-			0003 d221 dddd dddd dddd 3332 d223 dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd 2222 d222 222a 2222 2222 a222
-			5555 5555 5555 5555 5555 b768 db58 2aad
-			1001 ddd2 dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd 2ddd 2222 d232 22aa 2222 2222 a222
-			5555 5555 5555 5555 5555 7b66 dd65 3aad
-			2100 dddd dddd dddd dddd dddd dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd 2ddd 2222 d232 22ad 2222 2222 aa22
-			5555 5555 5555 5555 8555 8b76 ddb5 12ad
-			b211 6668 bb76 bbbb bbbb dddb dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd 22dd 2222 d232 22ad 2222 2222 da22
-			5555 5555 5555 5555 6555 5777 ddd6 132d
-			4882 5499 6888 6666 7777 ddbb dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd 222d 2222 d233 2aad 2222 2222 daa2
-			5555 5555 5555 5555 6855 5877 2ddb dd32
-			9948 4499 4444 5444 7688 ddb7 dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd 2222 2222 d233 addd 2222 2222 dda2
-			5555 5555 5555 5555 6855 6567 32dd 86d3
-			9444 4499 4444 4444 6844 db77 dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			dddd 2222 2222 d233 addd 2222 2222 ddda
-			5555 5555 5555 5555 6655 b557 d22d 58bd
-			4445 4999 4444 4444 8444 d776 dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			2ddd 2222 2222 d233 addd 22aa a222 ddda
-			5555 5555 5555 5555 7685 b856 bddd 586b
-			4555 9994 4444 4444 8444 b768 dddd dddd
-			dddd dddd dddd dddd dddd dddd dddd dddd
-			222d 2222 3222 d233 dddd 2aad aaa2 dddd
-			5555 5555 5555 5555 7785 b788 bbbb 5586
-			5555 9944 4449 4444 4444 b768 dddd dddd
-			dddd dddd dddd dddd dddd dddd 2222 2222
-			2222 2222 3222 d233 dddd aadd ddaa dddd
+			c58c 3333 1133 0000 0000 1100 c211 cccc
+			cccc cccc accc aaaa 22aa 3332 7223 8555
+			cccc cccc cccc cccc cccc 232c 2222 cc32
+			5555 5555 5555 5555 5555 5555 8855 c888
+			2756 3333 0011 0000 0000 1110 c211 cccc
+			cccc cccc cccc aaac 2aaa 3322 6c23 6555
+			cccc cccc cccc cccc cccc 233c 2222 cc32
+			5555 5555 5555 5555 5555 5555 6885 7c68
+			3265 1333 0000 0000 1100 1111 c211 cccc
+			cccc cccc cccc aacc aaaa 3322 5cc2 7555
+			cccc cccc cccc cccc cccc 2232 2222 cc22
+			5555 5555 5555 5555 5555 5555 6685 5776
+			33c5 0133 0000 0000 1111 1111 c211 cccc
+			cccc cccc cccc cccc aaaa 332a 57c2 c555
+			cccc cccc cccc cccc cccc 2233 2222 cc22
+			5555 5555 5555 5555 5555 5555 6668 58c7
+			3337 0013 0000 1310 1111 3311 c213 cccc
+			cccc cccc cccc cccc aaac 222a 5722 c655
+			cccc cccc cccc cccc 2ccc 2223 2222 cc22
+			5555 5555 5555 5555 5555 5555 7668 657c
+			3332 0001 0000 2c21 1111 2233 c212 cccc
+			cccc cccc cccc cccc aacc 222a 56c2 c755
+			cccc cccc cccc cc2c 3ccc 2223 2222 cc22
+			5555 5555 5555 5555 5555 8555 c666 c857
+			3333 0001 3100 cccc 222c aa22 c21a cccc
+			cccc cccc cccc cccc aacc 2222 56cc cc85
+			cccc cccc cccc cc22 3ccc 2222 2222 cc22
+			5555 5555 5555 5555 5555 6555 c766 2758
+			1333 0000 2110 cccc accc aaaa cc23 cccc
+			cccc cccc cccc aaac 322a 2333 87cc cc78
+			cccc cccc 2ccc cc22 32cc 2222 2222 cc22
+			5555 5555 5555 5555 5555 6855 7c66 3285
+			0133 0000 c211 cccc aacc aaaa ccc3 cccc
+			cccc cccc aacc 222a 3333 2333 7ccc ccc7
+			cccc cccc 2ccc cc22 23cc 2222 2222 c222
+			5555 5555 5555 5555 5555 6655 5776 2275
+			0133 1000 cc23 cccc aaac 3aaa ccc2 cccc
+			cccc cccc cccc cccc 2222 2222 cccc cccc
+			cccc cccc 22cc cc22 232a 2222 2222 c222
+			5555 5555 5555 5555 5555 6685 58c7 22a7
+			0013 3100 cc22 cccc aaaa 23aa 2222 2222
+			a222 ccaa cccc cccc cccc cccc cccc cccc
+			cccc cccc 222c c222 222a 2222 2222 a222
+			5555 5555 5555 5555 5555 7685 656c 2aac
+			0013 2310 ccc2 cccc aaaa 333a 3333 c233
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc 222c c222 222a 2222 2222 a222
+			5555 5555 5555 5555 5555 c768 c557 2aac
+			0003 c221 cccc cccc cccc 3332 c223 cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc 2222 c222 222a 2222 2222 a222
+			5555 5555 5555 5555 5555 7768 c758 2aac
+			1001 ccc2 cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc 2ccc 2222 c232 22aa 2222 2222 a222
+			5555 5555 5555 5555 5555 7766 cc65 3aac
+			2100 cccc cccc cccc cccc cccc cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc 2ccc 2222 c232 22ac 2222 2222 aa22
+			5555 5555 5555 5555 8555 8776 cc75 12ac
+			7211 6668 7776 7777 7777 ccc7 cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc 22cc 2222 c232 22ac 2222 2222 ca22
+			5555 5555 5555 5555 6555 5777 ccc6 132c
+			4882 5499 6888 6666 7777 cc77 cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc 222c 2222 c233 2aac 2222 2222 caa2
+			5555 5555 5555 5555 6855 5877 2cc7 cc32
+			9948 4499 4444 5444 7688 cc77 cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc 2222 2222 c233 accc 2222 2222 cca2
+			5555 5555 5555 5555 6855 6567 32cc 86c3
+			9444 4499 4444 4444 6844 c777 cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			cccc 2222 2222 c233 accc 2222 2222 ccca
+			5555 5555 5555 5555 6655 7557 c22c 587c
+			4445 4999 4444 4444 8444 c776 cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			2ccc 2222 2222 c233 accc 22aa a222 ccca
+			5555 5555 5555 5555 7685 7856 7ccc 5867
+			4555 9994 4444 4444 8444 7768 cccc cccc
+			cccc cccc cccc cccc cccc cccc cccc cccc
+			222c 2222 3222 c233 cccc 2aac aaa2 cccc
+			5555 5555 5555 5555 7785 7788 7777 5586
+			5555 9944 4449 4444 4444 7768 cccc cccc
+			cccc cccc cccc cccc cccc cccc 2222 2222
+			2222 2222 3222 c233 cccc aacc ccaa cccc
 			5555 5555 5555 5555 7765 7777 6677 5558
-			5555 9445 4499 4444 4444 7684 dddd dddd
-			dddd dddd dddd dddd dddd dddd 333d 2233
-			2222 2222 3222 d233 dddd addd ddda dddd
-			5555 5555 5555 5555 7768 887b 8888 5555
-			5555 4455 4999 4444 4444 7684 dddb dddd
-			dddd dddd dddd dddd dddd dddd 3ddd 2233
-			2222 2222 3222 d233 dddd dddd dddd dddd
-			5555 5555 5555 5555 b778 5867 5555 5555
-			5555 4555 9994 4444 4444 6844 ddd7 dddd
-			dddd dddd dddd dddd dddd dddd 3ddd 2233
-			2222 2222 3322 d233 dddd dddd dddd dddd
-			5555 5555 5555 5555 b776 5867 5555 5555
-			5555 5555 9994 4449 4444 8444 ddb7 dddd
-			dddd dddd dddd dddd dddd dddd 3ddd 2223
-			2222 2222 3322 d233 dddd dddd dddd dddd
-			5555 5555 5555 5555 bb76 5867 5555 5555
-			5555 5555 9944 4999 4444 8444 ddb6 dddd
-			dddd dddd dddd dddd dddd dddd 3ddd 2223
-			2222 2222 3332 d333 dddd dddd dddd dddd
-			5555 5555 5555 8555 7b77 5866 5555 5555
-			5555 5555 9445 5599 5555 8555 dd76 dddd
-			dddd dddd dddd dddd dddd dddd 3ddd 2223
-			2222 2222 3332 d333 dddd dddd dddd dddd
-			5555 5555 5555 8555 7b77 5586 5555 5555
-			5555 5555 5555 5555 5555 8555 dd76 dddd
-			dddd dddd dddd dddd dddd dddd 3ddd 2222
-			2222 2222 3333 d333 dddd dddd dddd dddd
-			5555 5555 5555 6555 7b77 5586 5555 5555
-			5555 5555 5555 5555 5555 8555 dd76 dddd
-			dddd dddd dddd dddd dddd dddd 3ddd 2222
-			2222 3222 3333 d333 dddd dddd dddd dddd
-			5555 5555 5555 6555 7bb7 5558 5555 5555
-			5555 5555 5555 5555 5555 8555 ddb6 dddd
-			dddd dddd dddd dddd dddd dddd 32dd 2222
-			2222 3322 3333 d233 dddd dddd dddd dddd
-			5555 5555 5555 7855 6bb7 5558 5555 5555
-			5555 5555 5555 5555 5555 8555 ddb7 dddd
-			dddd dddd dddd dddd dddd dddd 22dd 2222
-			2222 3332 3333 d233 dddd dddd dddd dddd
-			5555 5555 5555 7655 67bb 5558 5555 5555
-			5555 5555 5555 5555 5555 8555 ddb7 dddd
-			dddd dddd dddd dddd dddd dddd 22dd 2222
-			3322 3333 3333 d233 dddd dddd dddd dddd
-			5555 5555 5555 b655 67bb 5555 5555 5555
-			5555 5555 5555 5555 5555 8555 ddb7 dddd
-			dddd dddd dddd dddd dddd dddd 22dd 3332
-			3333 3333 3333 2233 ddd2 dddd dddd bbdd
-			5555 5555 5555 b785 87bb 5555 5555 5555
-			5555 5555 5555 6888 8866 5555 ddd6 dddd
-			dddd dddd dddd dddd dddd dddd 22dd 3332
-			3333 3333 1133 2331 2222 dddd dddd 558d
-			5555 5555 5555 b765 87bb 5555 5555 5555
+			5555 9445 4499 4444 4444 7684 cccc cccc
+			cccc cccc cccc cccc cccc cccc 333c 2233
+			2222 2222 3222 c233 cccc accc ccca cccc
+			5555 5555 5555 5555 7768 8877 8888 5555
+			5555 4455 4999 4444 4444 7684 ccc7 cccc
+			cccc cccc cccc cccc cccc cccc 3ccc 2233
+			2222 2222 3222 c233 cccc cccc cccc cccc
+			5555 5555 5555 5555 7778 5867 5555 5555
+			5555 4555 9994 4444 4444 6844 ccc7 cccc
+			cccc cccc cccc cccc cccc cccc 3ccc 2233
+			2222 2222 3322 c233 cccc cccc cccc cccc
+			5555 5555 5555 5555 7776 5867 5555 5555
+			5555 5555 9994 4449 4444 8444 cc77 cccc
+			cccc cccc cccc cccc cccc cccc 3ccc 2223
+			2222 2222 3322 c233 cccc cccc cccc cccc
+			5555 5555 5555 5555 7776 5867 5555 5555
+			5555 5555 9944 4999 4444 8444 cc76 cccc
+			cccc cccc cccc cccc cccc cccc 3ccc 2223
+			2222 2222 3332 c333 cccc cccc cccc cccc
+			5555 5555 5555 8555 7777 5866 5555 5555
+			5555 5555 9445 5599 5555 8555 cc76 cccc
+			cccc cccc cccc cccc cccc cccc 3ccc 2223
+			2222 2222 3332 c333 cccc cccc cccc cccc
+			5555 5555 5555 8555 7777 5586 5555 5555
+			5555 5555 5555 5555 5555 8555 cc76 cccc
+			cccc cccc cccc cccc cccc cccc 3ccc 2222
+			2222 2222 3333 c333 cccc cccc cccc cccc
+			5555 5555 5555 6555 7777 5586 5555 5555
+			5555 5555 5555 5555 5555 8555 cc76 cccc
+			cccc cccc cccc cccc cccc cccc 3ccc 2222
+			2222 3222 3333 c333 cccc cccc cccc cccc
+			5555 5555 5555 6555 7777 5558 5555 5555
+			5555 5555 5555 5555 5555 8555 cc76 cccc
+			cccc cccc cccc cccc cccc cccc 32cc 2222
+			2222 3322 3333 c233 cccc cccc cccc cccc
+			5555 5555 5555 7855 6777 5558 5555 5555
+			5555 5555 5555 5555 5555 8555 cc77 cccc
+			cccc cccc cccc cccc cccc cccc 22cc 2222
+			2222 3332 3333 c233 cccc cccc cccc cccc
+			5555 5555 5555 7655 6777 5558 5555 5555
+			5555 5555 5555 5555 5555 8555 cc77 cccc
+			cccc cccc cccc cccc cccc cccc 22cc 2222
+			3322 3333 3333 c233 cccc cccc cccc cccc
+			5555 5555 5555 7655 6777 5555 5555 5555
+			5555 5555 5555 5555 5555 8555 cc77 cccc
+			cccc cccc cccc cccc cccc cccc 22cc 3332
+			3333 3333 3333 2233 ccc2 cccc cccc 77cc
+			5555 5555 5555 7785 8777 5555 5555 5555
+			5555 5555 5555 6888 8866 5555 ccc6 cccc
+			cccc cccc cccc cccc cccc cccc 22cc 3332
+			3333 3333 1133 2331 2222 cccc cccc 558c
+			5555 5555 5555 7765 8777 5555 5555 5555
 			5555 5555 6685 7777 8677 5558 6685 5586
-			5555 5555 6855 6666 6666 d766 2ddd 1113
-			1111 0011 0000 1100 2223 dddd dddd 5557
-			5544 5555 5555 bb65 86bb 5555 5555 5555
-			5555 6855 b776 7777 6777 9448 9599 5559
-			9999 9599 9999 9999 9999 6599 dddd 012d
-			0000 0000 0000 1000 2331 ddd2 dddd 5558
-			5449 5555 5555 bb78 567b 5555 5555 5555
-			5555 b768 bbbb 777b 8677 9444 cccc cccc
-			99cc 9999 9999 9999 9999 5559 ddb8 2ddd
-			0001 0000 0000 1000 2331 ddd2 dddd 5555
-			4499 5555 5555 db78 587b 5555 5555 5555
-			6855 bbb7 bbbb 777b 4866 9444 c999 cccc
-			cccc 999c 9999 9999 9999 5599 7655 db77
-			132d 0000 0000 1000 2331 ddd2 7ddd 5555
-			4999 5555 5555 ddb6 587b 5555 5555 5555
-			b768 bbbb 7bbb 8867 5558 4444 9994 cccc
-			cccc 999c 9999 9999 9999 9999 5595 7555
-			dddd 0012 0000 1000 2331 ddd2 6ddd 5555
-			9ccc 5554 8555 ddb6 587b 5555 5555 7685
-			bbb7 bbbb 667b 5558 5555 4455 9944 ccc9
-			cccc 99cc 9999 9999 9999 9999 9999 5959
-			ddb5 12dd 0001 1110 2331 ddd2 5ddd 5555
-			cccc 5544 8555 ddb7 557b 5555 6855 7776
-			bbbb 77bb 5586 5555 5555 5555 4444 cc99
-			cccc 99cc 9999 9999 9999 9999 9999 5999
-			7855 dddd 1132 1111 2233 dddd 56dd 5555
-			ccc9 5449 8555 ddd7 556b 8555 7768 bbbb
-			7bbb 5867 5555 5555 5555 5555 4455 c994
-			cccc 9ccc 9999 9999 9999 9999 9999 9999
-			5555 db65 2ddd 3113 d233 dddd 557d 5555
-			cc99 549c 8555 ddd7 556b 7685 bb77 bbbb
-			867b 5558 5555 5555 5555 5555 5555 9444
-			ccc9 9ccc 9999 9999 9999 9999 9999 9999
-			5555 8555 ddd7 332d d223 dddd 6bdd 5555
-			c994 49cc 6555 dddb 686d b777 bbbb 7bbb
+			5555 5555 6855 6666 6666 c766 2ccc 1113
+			1111 0011 0000 1100 2223 cccc cccc 5557
+			5544 5555 5555 7765 8677 5555 5555 5555
+			5555 6855 7776 7777 6777 9448 9599 5559
+			9999 9599 9999 9999 9999 6599 cccc 012c
+			0000 0000 0000 1000 2331 ccc2 cccc 5558
+			5449 5555 5555 7778 5677 5555 5555 5555
+			5555 7768 7777 7777 8677 9444 bbbb bbbb
+			99bb 9999 9999 9999 9999 5559 cc78 2ccc
+			0001 0000 0000 1000 2331 ccc2 cccc 5555
+			4499 5555 5555 c778 5877 5555 5555 5555
+			6855 7777 7777 7777 4866 9444 b999 bbbb
+			bbbb 999b 9999 9999 9999 5599 7655 c777
+			132c 0000 0000 1000 2331 ccc2 7ccc 5555
+			4999 5555 5555 cc76 5877 5555 5555 5555
+			7768 7777 7777 8867 5558 4444 9994 bbbb
+			bbbb 999b 9999 9999 9999 9999 5595 7555
+			cccc 0012 0000 1000 2331 ccc2 6ccc 5555
+			9bbb 5554 8555 cc76 5877 5555 5555 7685
+			7777 7777 6677 5558 5555 4455 9944 bbb9
+			bbbb 99bb 9999 9999 9999 9999 9999 5959
+			cc75 12cc 0001 1110 2331 ccc2 5ccc 5555
+			bbbb 5544 8555 cc77 5577 5555 6855 7776
+			7777 7777 5586 5555 5555 5555 4444 bb99
+			bbbb 99bb 9999 9999 9999 9999 9999 5999
+			7855 cccc 1132 1111 2233 cccc 56cc 5555
+			bbb9 5449 8555 ccc7 5567 8555 7768 7777
+			7777 5867 5555 5555 5555 5555 4455 b994
+			bbbb 9bbb 9999 9999 9999 9999 9999 9999
+			5555 c765 2ccc 3113 c233 cccc 557c 5555
+			bb99 549b 8555 ccc7 5567 7685 7777 7777
+			8677 5558 5555 5555 5555 5555 5555 9444
+			bbb9 9bbb 9999 9999 9999 9999 9999 9999
+			5555 8555 ccc7 332c c223 cccc 67cc 5555
+			b994 49bb 6555 ccc7 686c 7777 7777 7777
 			5586 5555 5555 5555 5555 5555 5555 4455
-			cc94 9ccc 9999 9999 9999 9999 9999 9999
-			9999 5999 d755 2ddd dd22 dddd dddd 555b
-			9994 4ccc 6854 dddb dddd bddd 7bbb 8677
+			bb94 9bbb 9999 9999 9999 9999 9999 9999
+			9999 5999 c755 2ccc cc22 cccc cccc 5557
+			9994 4bbb 6854 ccc7 cccc 7ccc 7777 8677
 			5555 5555 5555 5555 5555 5555 5555 5555
-			c944 cccc 9999 9999 9999 9999 9999 9999
-			9999 9999 5599 ddd7 dddd dddd dddd 556d
-			9944 9cc9 7854 dddb dddd bbdd 6677 5888
+			b944 bbbb 9999 9999 9999 9999 9999 9999
+			9999 9999 5599 ccc7 cccc cccc cccc 556c
+			9944 9bb9 7854 ccc7 cccc 77cc 6677 5888
 			5555 5555 5555 5555 5555 5555 5555 5555
-			9455 cccc 999c 9999 9999 9999 9999 9999
-			9999 9999 9999 d785 dddd dddd dddd 557d
-			9445 cc99 7654 dddd dddd 7bbb 5886 5555
+			9455 bbbb 999b 9999 9999 9999 9999 9999
+			9999 9999 9999 c785 cccc cccc cccc 557c
+			9445 bb99 7654 cccc cccc 7777 5886 5555
 			5555 5555 5555 5555 5555 5555 5555 5555
-			4555 ccc9 999c 9999 9999 9999 9999 9999
-			9999 9999 9999 8559 ddb6 dddd dddd 556d
-			4455 c999 7659 dddd bbdd 8677 5555 5555
+			4555 bbb9 999b 9999 9999 9999 9999 9999
+			9999 9999 9999 8559 cc76 cccc cccc 556c
+			4455 b999 7659 cccc 77cc 8677 5555 5555
 			5555 5555 5555 5555 5555 5555 5555 5555
-			5555 cc94 99cc 9999 9999 9999 9999 9999
-			9999 9999 9999 9999 6555 dddb dddd 555d
-			4555 c994 7659 dddb 67bb 5558 5555 5555
+			5555 bb94 99bb 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 6555 ccc7 cccc 555c
+			4555 b994 7659 ccc7 6777 5558 5555 5555
 			5555 5555 5555 5555 5555 5555 5555 5555
-			5555 9455 9ccc 9999 9999 9999 9999 9999
-			9999 9999 9999 9999 9999 6685 7b76 5558
-			5555 9944 685c bbb7 5587 5555 5555 5555
+			5555 9455 9bbb 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 6685 7776 5558
+			5555 9944 685b 7777 5587 5555 5555 5555
 			5555 5555 5555 5555 5555 5555 5555 5555
-			5555 4555 ccc9 9999 9999 9999 9999 9999
+			5555 4555 bbb9 9999 9999 9999 9999 9999
 			9999 9999 9999 9999 9999 5999 5555 5555
-			5555 9445 555c 8888 5555 5555 5555 5555
+			5555 9445 555b 8888 5555 5555 5555 5555
 			5555 5555 5555 5555 5555 5555 5555 5555
-			5555 5555 cc94 999c 9999 9999 9999 9999
-			9999 9999 9999 9999 cc99 999c 5559 5555
+			5555 5555 bb94 999b 9999 9999 9999 9999
+			9999 9999 9999 9999 bb99 999b 5559 5555
 			5555 4455 5549 5555 5555 5555 5555 5555
 			5555 5555 5555 5555 5555 5555 5555 5555
-			5555 5555 c945 999c 9999 9999 9999 9999
-			9999 9999 9999 9999 9999 9ccc 5599 5555
-			5555 4555 c494 9ccc 5449 5555 5555 5555
+			5555 5555 b945 999b 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9bbb 5599 5555
+			5555 4555 b494 9bbb 5449 5555 5555 5555
 			5555 5555 5555 5555 5555 5555 5555 5555
-			5555 5555 c455 99cc 9999 9999 9999 9999
-			9999 9999 9999 9999 9999 cc99 999c 5555
-			5555 5555 9944 c999 449c 5555 5555 5555
+			5555 5555 b455 99bb 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 bb99 999b 5555
+			5555 5555 9944 b999 449b 5555 5555 5555
 			5555 5555 5555 5555 5555 5555 5555 5555
-			5555 5555 9455 9ccc 9999 9999 9999 9999
-			9999 9999 9999 9999 9999 c999 9ccc 5999
-			5555 5555 4445 9999 9ccc 5544 5555 5555
+			5555 5555 9455 9bbb 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 b999 9bbb 5999
+			5555 5555 4445 9999 9bbb 5544 5555 5555
 			5555 5555 5555 5555 5555 5555 5555 5555
-			5555 5555 4555 ccc9 9999 9999 9999 9999
-			9999 9999 9999 9999 9999 9999 cccc 999c
-			5555 5555 4455 9994 ccc9 5449 5555 5555
+			5555 5555 4555 bbb9 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 bbbb 999b
+			5555 5555 4455 9994 bbb9 5449 5555 5555
 			5555 5555 5555 5555 5555 5555 5555 5555
-			5555 5555 4555 cc99 999c 9999 9999 9999
-			9999 9999 9999 9999 9999 9999 ccc9 9ccc
-			5555 5555 4555 9944 cc99 449c 5555 5555
+			5555 5555 4555 bb99 999b 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 bbb9 9bbb
+			5555 5555 4555 9944 bb99 449b 5555 5555
 			5555 5555 5555 5555 5555 5555 5555 5555
-			5555 5555 5555 c994 99cc 9999 9999 9999
-			9999 9999 9999 9999 9999 9999 ccc9 c9cc
-			5555 5555 5555 9444 c999 49cc 5554 5555
+			5555 5555 5555 b994 99bb 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 bbb9 b9bb
+			5555 5555 5555 9444 b999 49bb 5554 5555
 			5555 5555 5555 5555 5555 5555 5555 5555
-			5555 5555 5555 9944 9ccc 9999 9999 9999
-			9999 9999 9999 9999 9999 9999 cccc 5ccc
-			5555 5555 5555 4445 9999 9ccc 5544 5555
+			5555 5555 5555 9944 9bbb 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 bbbb 5bbb
+			5555 5555 5555 4445 9999 9bbb 5544 5555
 			5555 5555 5555 5555 5555 5555 5555 5555
-			5555 5555 5555 9445 ccc9 9999 9999 9999
-			9999 9999 9999 9999 9999 cccc cccc 55cc
-			5555 5555 5555 4455 9994 ccc9 5549 5555
+			5555 5555 5555 9445 bbb9 9999 9999 9999
+			9999 9999 9999 9999 9999 bbbb bbbb 55bb
+			5555 5555 5555 4455 9994 bbb9 5549 5555
 			5555 5555 5555 5555 5555 5555 5555 5555
-			5555 5555 5555 4455 cc99 999c 9999 9999
-			9999 9999 9999 9999 cccc cccc cccc 5555
-			5555 5555 5555 4555 9944 cc99 559c 5555
+			5555 5555 5555 4455 bb99 999b 9999 9999
+			9999 9999 9999 9999 bbbb bbbb bbbb 5555
+			5555 5555 5555 4555 9944 bb99 559b 5555
 			5555 5555 5555 5555 5555 5555 5555 5555
-			5555 5555 5555 4555 c994 99cc 9999 9999
-			9999 9999 9999 cc99 cccc cccc 55cc 5555
+			5555 5555 5555 4555 b994 99bb 9999 9999
+			9999 9999 9999 bb99 bbbb bbbb 55bb 5555
 		</bitmap>
 	</tex_image>
 	<tex_image index="5" name="q_parts"
@@ -5251,7 +5251,7 @@
 	</tex_palette>
 	<tex_palette index="4" name="q_head_pl" color_size="16">
 		3dac 41ee 4e51 460f 7bbb 7799 6737 6316
-		6b58 7bdc 5293 5ef6 7ffe 52b4 57de 3bdf
+		6b58 7bdc 5293 7ffe 52b4 57de 339d 3bdf
 	</tex_palette>
 	<tex_palette index="5" name="q_parts_pl" color_size="16">
 		333b 3dac 41ee 460f 4a30 4e72 5293 52b4
@@ -5264,7 +5264,31 @@
 </tex_palette_array>
 
 <material_array size="7">
-	<material index="0" name="q_body_2"
+	<material index="0" name="lambert85"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="4" tex_palette_idx="4"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="1" name="q_body_2"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -5288,7 +5312,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="q_cable_1"
+	<material index="2" name="q_cable_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -5312,7 +5336,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="q_clear_2"
+	<material index="3" name="q_clear_2"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="13"
@@ -5336,7 +5360,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="q_eye_2"
+	<material index="4" name="q_eye_2"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -5354,30 +5378,6 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="3" tex_palette_idx="3"
-		tex_tiling="clamp clamp"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="4" name="q_head_2"
-		light0="off" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="0"
-		fog_flag="on"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="12 12 12"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="4" tex_palette_idx="4"
 		tex_tiling="clamp clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -12764,11 +12764,11 @@
 		volume_max="10.416504 9.645264 13.476074"
 		volume_r="14.502441"
 	>
-		<display index="0" material="0" polygon="4" priority="0"/>
-		<display index="1" material="1" polygon="0" priority="0"/>
-		<display index="2" material="2" polygon="2" priority="0"/>
-		<display index="3" material="3" polygon="5" priority="0"/>
-		<display index="4" material="4" polygon="3" priority="0"/>
+		<display index="0" material="0" polygon="3" priority="0"/>
+		<display index="1" material="1" polygon="4" priority="0"/>
+		<display index="2" material="2" polygon="0" priority="0"/>
+		<display index="3" material="3" polygon="2" priority="0"/>
+		<display index="4" material="4" polygon="5" priority="0"/>
 		<display index="5" material="5" polygon="1" priority="0"/>
 		<display index="6" material="6" polygon="6" priority="0"/>
 	</node>
