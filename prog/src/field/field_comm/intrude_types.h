@@ -250,8 +250,6 @@ typedef struct{
 
 ///モノリスステータス(ミッションリスト以外でモノリス画面構築に必要なデータ)
 typedef struct{
-  u32 clear_mission_count;       ///<ミッションクリア数
-  s64 palace_sojourn_time;       ///<パレス滞在時間
   u8 gpower_distribution_bit[INTRUDE_SAVE_DISTRIBUTION_BIT_WORK_MAX]; ///<Gパワー配布受信bit
   u8 occ;                        ///<TRUE:データ有効
   u8 padding;

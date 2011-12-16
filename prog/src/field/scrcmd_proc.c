@@ -450,8 +450,6 @@ VMCMD_RESULT EvCmdCallMonolithProc( VMHANDLE *core, void *wk )
     INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork(gamedata) );
     
     GFL_STD_MemClear(monost, sizeof(MONOLITH_STATUS));
-    monost->clear_mission_count = ISC_SAVE_GetMissionClearCount(intsave); //‰¼
-    monost->palace_sojourn_time = ISC_SAVE_GetPalaceSojournTime(intsave); //‰¼
     ISC_SAVE_GetDistributionGPower_Array(
       intsave, monost->gpower_distribution_bit, INTRUDE_SAVE_DISTRIBUTION_BIT_WORK_MAX);
     monost->occ = TRUE;
