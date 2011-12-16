@@ -239,4 +239,5 @@ extern u8 INF_TOOL_DUNGEON_GetDungeonColor( const INF_DUNGEON_DATA *p_wk );
 extern int INF_TOOL_DUNGEON_GetRoomTrainerIDPos( const INF_DUNGEON_DATA *p_dungeon_data ,u32 floor_id ,u32 room_id,u8 room_tr_no);
 extern u16 INF_TOOL_DUNGEON_GetTrIDByIDPos( const INF_DUNGEON_DATA *p_dungeon_data ,u8 floor_id ,u8 id_pos );
 extern void INF_TOOL_RndArrayU16( u16 *p_array , int size ,GFL_STD_RandContext *rand_context );
+extern int INF_TOOL_DUNGEON_GetTrainerRoomID( const INF_DUNGEON_DATA *p_dungeon_data, int floor_id, int id_pos );
 

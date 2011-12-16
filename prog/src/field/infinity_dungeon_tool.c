@@ -552,6 +552,22 @@ u8 INF_TOOL_DUNGEON_GetDungeonColor( const INF_DUNGEON_DATA *p_wk )
 }
 
 //----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+int INF_TOOL_DUNGEON_GetTrainerRoomID( const INF_DUNGEON_DATA *p_dungeon_data, int floor_id, int id_pos )
+{
+  int room_id;
+  int member_total = 0;
+  for ( room_id = 0; room_id < ROOM_MAX; room_id ++ ){
+    u8 pos_type = p_dungeon_data->room_data[floor_id][room_id].tr_pos_type;
+    int member_num = INF_TOOL_GetMemberNum( pos_type );
+    if ( member_num == 0 ) continue;
+    member_total += member_num;
+    if ( id_pos < member_total ) return room_id;
+  }
+  GF_ASSERT( 0 );
+  return 0;
+}
+//----------------------------------------------------------------------------
 /**
  *	@brief  指定部屋IDのトレーナーID格納位置取得
  *
@@ -568,6 +584,7 @@ int INF_TOOL_DUNGEON_GetRoomTrainerIDPos( const INF_DUNGEON_DATA *p_dungeon_data
   int i;
   u32 tr_num = 0;
 
+  GF_ASSERT( room_tr_no < 4 );
   for( i = 0; i<ROOM_MAX; i++ )
   {
     u32 tr_pos_type = p_dungeon_data->room_data[floor_id][i].tr_pos_type;
