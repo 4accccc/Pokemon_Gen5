@@ -37,12 +37,567 @@ _EVENT_DATA    ev_d27_hint_04
 _EVENT_DATA    ev_d27_hint_05
 _EVENT_DATA    ev_d27_hint_06
 _EVENT_DATA    ev_d27_hint_07
+_EVENT_DATA    ev_pos_d27_hint_01b  //d27r2101（上）
+_EVENT_DATA    ev_pos_d27_hint_02b  //d27r2201
+_EVENT_DATA    ev_pos_d27_hint_03b  //d27r2101（右）
+_EVENT_DATA    ev_pos_d27_hint_04b  //d27r2101（右）
+_EVENT_DATA    ev_pos_d27_hint_05b  //d27r1901（中身は６）
+_EVENT_DATA    ev_pos_d27_hint_01w  //入り口
+_EVENT_DATA    ev_pos_d27_hint_02w  //左上
+_EVENT_DATA    ev_pos_d27_hint_03w  //右上
+_EVENT_DATA    ev_pos_d27_hint_04w  //右下
+_EVENT_DATA    ev_pos_d27_hint_05w  //左下（中身は６）
 _EVENT_DATA_END
 
 //バージョン取得
 DEFINE_LOCAL LCWK_VERSION
 DEFINE_LOCAL LCWK_PASSID
 DEFINE_LOCAL LCWK_MSGID
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+/**************************************************************/
+/*  POS：ヒント01b                         */
+/**************************************************************/
+EVENT_START ev_pos_d27_hint_01b
+  
+  _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  //ROMのバージョンを取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+  
+  //ヒントメッセージのIDを足して代入
+  $LCWK_MSGID = msg_hide_ship_hint1_01
+  $LCWK_MSGID += $LCWK_PASSID
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  $LCW_POSX -= 1
+  
+  //アニメ：「！」
+  _OBJ_ANIME( D27R1001_HINT_01, anm_common_gyoe )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+  _OBJ_ANIME_WAIT()
+  
+  //トレーナー曲再生
+  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_15 )
+  
+  //アニメ：隣接
+  _OBJ_ANIME_AUTO( D27R1001_HINT_01, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  
+  //戦闘前メッセージ
+  _BALLOONWIN_OBJMSG_POS( msg_hide_ship_hint1_start , D27R1001_HINT_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //トレーナー戦呼び出し
+  _TRAINER_BTL_SET( TRID_SWPLAZMAM_15, 0 )
+  
+  //結果チェック
+  _CALL ev_battle_check
+  
+  //ヒントメッセージ
+  _BALLOONWIN_OBJMSG_POS( LCWK_MSGID , D27R1001_HINT_01 ,POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+  //========================================//
+  //戦闘終了フラグセット
+  _FLAG_SET( FE_D27_HINT_01 )
+  //POSを無効
+  $WK_SCENE_D27_HINT_01 = 1
+  //========================================//
+  
+EVENT_END
+
+/**************************************************************/
+/*  POS：ヒント02b                         */
+/**************************************************************/
+EVENT_START ev_pos_d27_hint_02b
+
+  _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  //ROMのバージョンを取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+  
+  //ヒントメッセージのIDを足して代入
+  $LCWK_MSGID = msg_hide_ship_hint2_01
+  $LCWK_MSGID += $LCWK_PASSID
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  $LCW_POSX += 1
+  
+  //アニメ：「！」
+  _OBJ_ANIME( D27R1001_HINT_02, anm_common_gyoe )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
+  _OBJ_ANIME_WAIT()
+  
+  //トレーナー曲再生
+  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_17 )
+  
+  //アニメ：隣接
+  _OBJ_ANIME_AUTO( D27R1001_HINT_02, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  
+  //戦闘前メッセージ
+  _BALLOONWIN_OBJMSG_POS( msg_hide_ship_hint2_start , D27R1001_HINT_02 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //トレーナー戦呼び出し
+  _TRAINER_BTL_SET( TRID_SWPLAZMAM_17, 0 )
+  
+  //結果チェック
+  _CALL ev_battle_check
+  
+  //ヒントメッセージ
+  _BALLOONWIN_OBJMSG_POS( LCWK_MSGID , D27R1001_HINT_02 ,POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+  //========================================//
+  //戦闘終了フラグセット
+  _FLAG_SET( FE_D27_HINT_02 )
+  //POSを無効
+  $WK_SCENE_D27_HINT_02 = 1
+  //========================================//
+
+EVENT_END
+
+/**************************************************************/
+/*  POS：ヒント03b                         */
+/**************************************************************/
+EVENT_START ev_pos_d27_hint_03b
+
+  _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  //ROMのバージョンを取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+  
+  //ヒントメッセージのIDを足して代入
+  $LCWK_MSGID = msg_hide_ship_hint3_01
+  $LCWK_MSGID += $LCWK_PASSID
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  $LCW_POSX -= 1
+  
+  //アニメ：「！」
+  _OBJ_ANIME( D27R1001_HINT_03, anm_common_gyoe )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+  _OBJ_ANIME_WAIT()
+  
+  //トレーナー曲再生
+  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_19 )
+  
+  //アニメ：隣接
+  _OBJ_ANIME_AUTO( D27R1001_HINT_03, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  
+  //戦闘前メッセージ
+  _BALLOONWIN_OBJMSG_POS( msg_hide_ship_hint3_start , D27R1001_HINT_03 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //トレーナー戦呼び出し
+  _TRAINER_BTL_SET( TRID_SWPLAZMAM_19, 0 )
+  
+  //結果チェック
+  _CALL ev_battle_check
+  
+  //ヒントメッセージ
+  _BALLOONWIN_OBJMSG_POS( LCWK_MSGID , D27R1001_HINT_03 ,POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+  //========================================//
+  //戦闘終了フラグセット
+  _FLAG_SET( FE_D27_HINT_03 )
+  //POSを無効
+  $WK_SCENE_D27_HINT_03 = 1
+  //========================================//
+
+EVENT_END
+
+/**************************************************************/
+/*  POS：ヒント04b                         */
+/**************************************************************/
+EVENT_START ev_pos_d27_hint_04b
+
+  _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  //ROMのバージョンを取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+  
+  //ヒントメッセージのIDを足して代入
+  $LCWK_MSGID = msg_hide_ship_hint4_01
+  $LCWK_MSGID += $LCWK_PASSID
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  $LCW_POSX -= 1
+  
+  //アニメ：「！」
+  _OBJ_ANIME( D27R1001_HINT_04, anm_common_gyoe )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+  _OBJ_ANIME_WAIT()
+  
+  //トレーナー曲再生
+  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_20 )
+  
+  //アニメ：隣接
+  _OBJ_ANIME_AUTO( D27R1001_HINT_04, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  
+  //戦闘前メッセージ
+  _BALLOONWIN_OBJMSG_POS( msg_hide_ship_hint4_start , D27R1001_HINT_04 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //トレーナー戦呼び出し
+  _TRAINER_BTL_SET( TRID_SWPLAZMAM_20, 0 )
+  
+  //結果チェック
+  _CALL ev_battle_check
+  
+  //ヒントメッセージ
+  _BALLOONWIN_OBJMSG_POS( LCWK_MSGID , D27R1001_HINT_04 ,POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+  //========================================//
+  //戦闘終了フラグセット
+  _FLAG_SET( FE_D27_HINT_04 )
+  //POSを無効
+  $WK_SCENE_D27_HINT_04 = 1
+  //========================================//
+
+EVENT_END
+
+
+/**************************************************************/
+/*  POS：ヒント05b                         */
+/**************************************************************/
+EVENT_START ev_pos_d27_hint_05b
+
+  _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  //ROMのバージョンを取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+  
+  //ヒントメッセージのIDを足して代入
+  $LCWK_MSGID = msg_hide_ship_hint6_01
+  $LCWK_MSGID += $LCWK_PASSID
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  $LCW_POSX += 1
+  
+  //アニメ：「！」
+  _OBJ_ANIME( D27R1001_HINT_06, anm_common_gyoe )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
+  _OBJ_ANIME_WAIT()
+  
+  //トレーナー曲再生
+  _TRAINER_BGM_SET(  TRID_SWPLAZMAW_04 )
+  
+  //アニメ：隣接
+  _OBJ_ANIME_AUTO( D27R1001_HINT_06, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  
+  //戦闘前メッセージ
+  _BALLOONWIN_OBJMSG_POS( msg_hide_ship_hint6_start , D27R1001_HINT_06 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //トレーナー戦呼び出し
+  _TRAINER_BTL_SET( TRID_SWPLAZMAW_04, 0 )
+  
+  //結果チェック
+  _CALL ev_battle_check
+  
+  //ヒントメッセージ
+  _BALLOONWIN_OBJMSG_POS( LCWK_MSGID , D27R1001_HINT_06 ,POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+  //========================================//
+  //戦闘終了フラグセット
+  _FLAG_SET( FE_D27_HINT_06 )
+  //POSを無効
+  $WK_SCENE_D27_HINT_05 = 1
+  //========================================//
+
+EVENT_END
+
+/**************************************************************/
+/*  POS：ヒント01w                         */
+/**************************************************************/
+EVENT_START ev_pos_d27_hint_01w
+
+  _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  //ROMのバージョンを取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+  
+  //ヒントメッセージのIDを足して代入
+  $LCWK_MSGID = msg_hide_ship_hint1_01
+  $LCWK_MSGID += $LCWK_PASSID
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  $LCW_POSZ -= 1
+  
+  //アニメ：「！」
+  _OBJ_ANIME( D27R2101_HINT_01, anm_common_gyoe )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
+  _OBJ_ANIME_WAIT()
+  
+  //トレーナー曲再生
+  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_22 )
+  
+  //アニメ：隣接
+  _OBJ_ANIME_AUTO( D27R2101_HINT_01, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  
+  //戦闘前メッセージ
+  _BALLOONWIN_OBJMSG_POS( msg_hide_ship_hint1_start , D27R2101_HINT_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //トレーナー戦呼び出し
+  _TRAINER_BTL_SET( TRID_SWPLAZMAM_22, 0 )
+  
+  //結果チェック
+  _CALL ev_battle_check
+  
+  //ヒントメッセージ
+  _BALLOONWIN_OBJMSG_POS( LCWK_MSGID , D27R2101_HINT_01 ,POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+  //========================================//
+  //戦闘終了フラグセット
+  _FLAG_SET( FE_D27_HINT_01 )
+  //POSを無効
+  $WK_SCENE_D27_HINT_01 = 1
+  //========================================//
+
+EVENT_END
+
+/**************************************************************/
+/*  POS：ヒント02w                         */
+/**************************************************************/
+EVENT_START ev_pos_d27_hint_02w
+
+  _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  //ROMのバージョンを取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+  
+  //ヒントメッセージのIDを足して代入
+  $LCWK_MSGID = msg_hide_ship_hint2_01
+  $LCWK_MSGID += $LCWK_PASSID
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  $LCW_POSZ -= 1
+  
+  //アニメ：「！」
+  _OBJ_ANIME( D27R2201_HINT_02, anm_common_gyoe )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
+  _OBJ_ANIME_WAIT()
+  
+  //トレーナー曲再生
+  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_23 )
+  
+  //アニメ：隣接
+  _OBJ_ANIME_AUTO( D27R2201_HINT_02, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  
+  //戦闘前メッセージ
+  _BALLOONWIN_OBJMSG_POS( msg_hide_ship_hint2_start , D27R2201_HINT_02 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //トレーナー戦呼び出し
+  _TRAINER_BTL_SET( TRID_SWPLAZMAM_23, 0 )
+  
+  //結果チェック
+  _CALL ev_battle_check
+  
+  //ヒントメッセージ
+  _BALLOONWIN_OBJMSG_POS( LCWK_MSGID , D27R2201_HINT_02 ,POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+  //========================================//
+  //戦闘終了フラグセット
+  _FLAG_SET( FE_D27_HINT_02 )
+  //POSを無効
+  $WK_SCENE_D27_HINT_02 = 1
+  //========================================//
+  
+EVENT_END
+
+/**************************************************************/
+/*  POS：ヒント03w                         */
+/**************************************************************/
+EVENT_START ev_pos_d27_hint_03w
+
+  _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  //ROMのバージョンを取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+  
+  //ヒントメッセージのIDを足して代入
+  $LCWK_MSGID = msg_hide_ship_hint3_01
+  $LCWK_MSGID += $LCWK_PASSID
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  $LCW_POSX -= 1
+  
+  //アニメ：「！」
+  _OBJ_ANIME( D27R1801_HINT_03, anm_common_gyoe )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+  _OBJ_ANIME_WAIT()
+  
+  //トレーナー曲再生
+  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_24 )
+  
+  //アニメ：隣接
+  _OBJ_ANIME_AUTO( D27R1801_HINT_03, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  
+  //戦闘前メッセージ
+  _BALLOONWIN_OBJMSG_POS( msg_hide_ship_hint3_start , D27R1801_HINT_03 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //トレーナー戦呼び出し
+  _TRAINER_BTL_SET( TRID_SWPLAZMAM_24, 0 )
+  
+  //結果チェック
+  _CALL ev_battle_check
+  
+  //ヒントメッセージ
+  _BALLOONWIN_OBJMSG_POS( LCWK_MSGID , D27R1801_HINT_03 ,POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+  //========================================//
+  //戦闘終了フラグセット
+  _FLAG_SET( FE_D27_HINT_03 )
+  //POSを無効
+  $WK_SCENE_D27_HINT_03 = 1
+  //========================================//
+  
+EVENT_END
+
+/**************************************************************/
+/*  POS：ヒント04w                         */
+/**************************************************************/
+EVENT_START ev_pos_d27_hint_04w
+
+  _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  //ROMのバージョンを取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+  
+  //ヒントメッセージのIDを足して代入
+  $LCWK_MSGID = msg_hide_ship_hint4_01
+  $LCWK_MSGID += $LCWK_PASSID
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  $LCW_POSX -= 1
+  
+  //アニメ：「！」
+  _OBJ_ANIME( D27R2101_HINT_04, anm_common_gyoe )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+  _OBJ_ANIME_WAIT()
+  
+  //トレーナー曲再生
+  _TRAINER_BGM_SET(  TRID_SWPLAZMAM_25 )
+  
+  //アニメ：隣接
+  _OBJ_ANIME_AUTO( D27R2101_HINT_04, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  
+  //戦闘前メッセージ
+  _BALLOONWIN_OBJMSG_POS( msg_hide_ship_hint4_start , D27R2101_HINT_04 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //トレーナー戦呼び出し
+  _TRAINER_BTL_SET( TRID_SWPLAZMAM_25, 0 )
+  
+  //結果チェック
+  _CALL ev_battle_check
+  
+  //ヒントメッセージ
+  _BALLOONWIN_OBJMSG_POS( LCWK_MSGID , D27R2101_HINT_04 ,POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+  //========================================//
+  //戦闘終了フラグセット
+  _FLAG_SET( FE_D27_HINT_04 )
+  //POSを無効
+  $WK_SCENE_D27_HINT_04 = 1
+  //========================================//
+  
+EVENT_END
+
+
+/**************************************************************/
+/*  POS：ヒント05w                         */
+/**************************************************************/
+EVENT_START ev_pos_d27_hint_05w
+
+  _HIDE_SHIP_PASSWORD_ID_GET( LCWK_PASSID )
+  
+  //ROMのバージョンを取得
+  _GET_ROM_VERSION( LCWK_VERSION )
+  
+  //ヒントメッセージのIDを足して代入
+  $LCWK_MSGID = msg_hide_ship_hint6_01
+  $LCWK_MSGID += $LCWK_PASSID
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  $LCW_POSX += 1
+  
+  //アニメ：「！」
+  _OBJ_ANIME( D27R1901_HINT_06, anm_common_gyoe )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+  _OBJ_ANIME_WAIT()
+  
+  //トレーナー曲再生
+  _TRAINER_BGM_SET(  TRID_SWPLAZMAW_06 )
+  
+  //アニメ：隣接
+  _OBJ_ANIME_AUTO( D27R1901_HINT_06, LCW_POSX,LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  
+  //戦闘前メッセージ
+  _BALLOONWIN_OBJMSG_POS( msg_hide_ship_hint6_start , D27R1901_HINT_06 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //トレーナー戦呼び出し
+  _TRAINER_BTL_SET( TRID_SWPLAZMAW_06, 0 )
+  
+  //結果チェック
+  _CALL ev_battle_check
+  
+  //ヒントメッセージ
+  _BALLOONWIN_OBJMSG_POS( LCWK_MSGID , D27R1901_HINT_06 ,POS_DEFAULT )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
+  
+  //========================================//
+  //戦闘終了フラグセット
+  _FLAG_SET( FE_D27_HINT_06 )
+  //POSを無効
+  $WK_SCENE_D27_HINT_05 = 1
+  //========================================//
+  
+EVENT_END
 
 /**************************************************************/
 /*  ヒント1                         */
@@ -98,6 +653,8 @@ EVENT_START ev_d27_hint_01
     //========================================//
     //戦闘終了フラグセット
     _FLAG_SET( FE_D27_HINT_01 )
+    //POSを無効
+    $WK_SCENE_D27_HINT_01 = 1
     //========================================//
     
   //戦闘後
@@ -163,6 +720,8 @@ EVENT_START ev_d27_hint_02
     //========================================//
     //戦闘終了フラグセット
     _FLAG_SET( FE_D27_HINT_02 )
+    //POSを無効
+    $WK_SCENE_D27_HINT_02 = 1
     //========================================//
     
   //戦闘後
@@ -228,6 +787,8 @@ EVENT_START ev_d27_hint_03
     //========================================//
     //戦闘終了フラグセット
     _FLAG_SET( FE_D27_HINT_03 )
+    //POSを無効
+    $WK_SCENE_D27_HINT_03 = 1
     //========================================//
     
   //戦闘後
@@ -293,6 +854,8 @@ EVENT_START ev_d27_hint_04
     //========================================//
     //戦闘終了フラグセット
     _FLAG_SET( FE_D27_HINT_04 )
+    //POSを無効
+    $WK_SCENE_D27_HINT_04 = 1
     //========================================//
     
   //戦闘後
@@ -371,6 +934,8 @@ EVENT_START ev_d27_hint_06
     //========================================//
     //戦闘終了フラグセット
     _FLAG_SET( FE_D27_HINT_06 )
+    //POSを無効
+    $WK_SCENE_D27_HINT_05 = 1
     //========================================//
     
   //戦闘後
@@ -530,4 +1095,3 @@ _ANIME_LABEL	anm_staystep_r
 _ANIME_LABEL	anm_common_gyoe
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
-	
