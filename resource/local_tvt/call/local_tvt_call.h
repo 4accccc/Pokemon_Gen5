@@ -8,7 +8,7 @@
 //============================================================================================
 #pragma once
 //データ定義
-#define LOCAL_TVT_CALLDATA_MAX (119)
+#define LOCAL_TVT_CALLDATA_MAX (120)
 //人物定義
 #define LOCAL_TVT_PERSON_CHELEN (2)
 #define LOCAL_TVT_PERSON_MOTHER (4)
@@ -73,6 +73,7 @@
 #define CHELEN_STATE_PLASMAFRIGATE_3 (10)
 #define CHELEN_STATE_GIANTHOLE (11)
 #define CHELEN_STATE_PARK (12)
+#define CHELEN_STATE_YAGURUMA (13)
 #define BELL_STATE_HOME (0)
 #define BELL_STATE_C12 (1)
 #define BELL_STATE_D06 (2)
@@ -143,7 +144,7 @@
 #define SECRET_STATE_51 (50)
 #define SECRET_STATE_52 (51)
 //各状態最大数
-#define CHELEN_STATE_MAX (13)
+#define CHELEN_STATE_MAX (14)
 #define MOTHER_STATE_MAX (6)
 #define BELL_STATE_MAX (11)
 #define SECRET_STATE_MAX (52)
