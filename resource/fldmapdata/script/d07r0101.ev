@@ -21,7 +21,10 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_zone_d07r0101
 _EVENT_DATA    ev_d07r0101_workman1_02
+_EVENT_DATA    ev_d07r0101_workman1_01
+_EVENT_DATA    ev_d07r0101_workman2_01
 _EVENT_DATA_END
+DEFINE_LOCAL SCWK_SEASON
 
 /************************************************************/
 /*				ZONE CHANGE LABEL				*/
@@ -29,7 +32,6 @@ _EVENT_DATA_END
 INIT_EVENT_START ev_zone_d07r0101
 {
 	//季節チェック
-	DEFINE_LOCAL SCWK_SEASON
 	_GET_SEASON_ID( SCWK_SEASON )
 	
 	//冬以外の季節は作業員02を非表示にする
@@ -49,5 +51,31 @@ INIT_EVENT_END
 EVENT_START     ev_d07r0101_workman1_02
 	
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d07r0101_workman3_01 )
+	
+EVENT_END
+
+/**************************************************************/
+/* workmanメッセージ			                           */
+/**************************************************************/
+EVENT_START     ev_d07r0101_workman1_01
+
+	//季節チェック
+	_GET_SEASON_ID( SCWK_SEASON )
+	
+	//冬だった
+	IF $SCWK_SEASON == PMSEASON_WINTER THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d07r0101_workman1_02 )
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d07r0101_workman1_01 )
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/* workman2メッセージ（冬以外非表示）                           */
+/**************************************************************/
+EVENT_START     ev_d07r0101_workman2_01
+	
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d07r0101_workman2_01 )
 	
 EVENT_END

@@ -34,6 +34,8 @@
 #define TR_VETERANM_16                     6
 #define TR_MOUNT_24                        7
 #define TR_NURSE_05                        8
+#define D07R0101_WORKMAN1_01               9
+#define D07R0101_WORKMAN2_01              10
 
 #endif //ZONE_D07R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d07r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

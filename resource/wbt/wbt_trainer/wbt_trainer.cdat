@@ -323,7 +323,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_CHAMPION, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
-		30, //パワー乱数
+		25, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_RG_CHAMP                     , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -345,7 +345,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_CHAMPION, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
-		30, //パワー乱数
+		25, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_GS_CHAMP                     , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -367,7 +367,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_CHAMPION, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
-		30, //パワー乱数
+		25, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_RS_CHAMP                     , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -389,7 +389,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_CHAMPION, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
-		30, //パワー乱数
+		25, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_RS_CHAMP                     , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -411,7 +411,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_CHAMPION, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
-		30, //パワー乱数
+		25, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_DP_CHAMP                     , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -433,7 +433,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_CHAMPION, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
-		30, //パワー乱数
+		25, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_CHAMP                        , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM
@@ -1203,7 +1203,7 @@ static const WBT_TRDATA WBTTrainerData[] = {
 		WBTCUP_NULL, //限定トーナメント種別
 		POKETYPE_MAX + 1, //タイプトーナメント種別
 		 4, //優先度
-		30, //パワー乱数
+		 0, //パワー乱数
 		 0, //AI
 		SEQ_BGM_VS_WBT                          , // BTL_BGM
 		SEQ_BGM_WIN_WBT                         , // WIN_BGM

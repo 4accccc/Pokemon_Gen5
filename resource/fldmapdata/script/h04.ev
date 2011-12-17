@@ -398,7 +398,7 @@ EVENT_START   ev_pos_h04_stop_01
   _OBJ_ANIME_WAIT()
 
   //ストッパー：ちょっと　まてーい！▼
-  _BALLOONWIN_OBJMSG( msg_h04_stop_01, H04_STOP_01 )
+  _BALLOONWIN_OBJMSG( msg_h04_stop_02, H04_STOP_01 )
 
   //ストッパーと戦う？
   _YES_NO_WIN( SCWK_ANSWER )
