@@ -130,10 +130,6 @@ EVENT_START		ev_reserve_oldc01r0501_event_01
 	//ポッド：３ｖｓ３か！
 	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_leader1a_04 , OLDC01R0501_OLD_LEADER1A_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
-	
-	//ニンジャ：たあいも　ない
-	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_ninja1_01 , OLDC01R0501_OLD_NINJA_01, POS_DEFAULT )
-	_MSGWIN_CLOSE()
 
 	//全員一歩前に出つつ、暗転
 	_BLACK_OUT()
@@ -161,6 +157,10 @@ EVENT_START		ev_reserve_oldc01r0501_event_01
 	_OBJ_ANIME_WAIT()
 	
 	_TIME_WAIT( 30 )
+
+	//ニンジャ：たあいも　ない
+	_BALLOONWIN_OBJMSG_POS( msg_oldc01r0501_old_ninja1_02 , OLDC01R0501_OLD_NINJA_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
 
 	_OBJ_ANIME( OLDC01R0501_OLD_NINJA_02, anm_stay_d )
 	_OBJ_ANIME_WAIT()
