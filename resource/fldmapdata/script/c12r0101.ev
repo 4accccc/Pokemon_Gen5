@@ -109,11 +109,6 @@ EVENT_START ev_pos_c12r0101_startevents
   
   //メッセージ：アララギはかせって
   _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_02, C12R0101_SWMAMA_01, POS_UP )
-  _MSGWIN_CLOSE()
-  
-  //アニメ：ママ回転
-  _OBJ_ANIME( C12R0101_SWMAMA_01, anm_c12r0101_mama_turn )
-  _OBJ_ANIME_WAIT()
   
   //メッセージ：自分のパートナーがほしい？
   _PLAYER_NAME( 0 ) //プレイヤー名を反映
@@ -130,8 +125,11 @@ EVENT_START ev_pos_c12r0101_startevents
     WHILE $ans_yes == SCR_NO
       _MSGWIN_CLOSE()
       //アニメ：１歩後ずさる
+      _OBJ_ANIME( C12R0101_SWMAMA_01, anm_common_gyoe )
+      _OBJ_ANIME_WAIT()
       _OBJ_ANIME( C12R0101_SWMAMA_01, anm_c12r0101_mama_backstep_01 )
       _OBJ_ANIME_WAIT()
+      
       //メッセージ：ええーちょっとおどろき
      _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_05,C12R0101_SWMAMA_01, POS_UP )
      _MSGWIN_CLOSE()
@@ -159,11 +157,6 @@ EVENT_START ev_pos_c12r0101_startevents
   	//そっか…
   	_BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_09,C12R0101_SWMAMA_01, POS_UP )
   ENDIF
-  _MSGWIN_CLOSE()
-  
-  //アニメ：ママ回転
-  _OBJ_ANIME( C12R0101_SWMAMA_01, anm_c12r0101_mama_turn )
-  _OBJ_ANIME_WAIT()
 
   //メッセージ：またまた質問です
   _BALLOONWIN_OBJMSG_POS( msg_c12r0101_swmama_10,C12R0101_SWMAMA_01, POS_UP )

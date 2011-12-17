@@ -231,6 +231,8 @@ EVENT_END
 /*		C04		middleman2									  */
 /**************************************************************/
 EVENT_START		ev_c04_middleman2_01
+	//アベニュー名を格納
+	_RRESORT_NAME( 0 )
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04_middleman2_01 )
 EVENT_END
 
