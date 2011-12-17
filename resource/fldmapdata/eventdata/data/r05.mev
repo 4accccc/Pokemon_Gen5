@@ -1,5 +1,5 @@
 #event data
-#save date:2011/12/17 17:11:33
+#save date:2011/12/17 17:38:14
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r05.wms
 #SECTION START:OBJ_EVENT
@@ -739,7 +739,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_R05_GIRL1_01
 #Direction Type Number
-DIR_UP
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -747,13 +747,13 @@ DIR_UP
 #Parameter 2 Number
 0
 #Move Limit X Number
-1
+0
 #Move Limit Z Number
 1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-280 0 -120
+488 0 -56
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
