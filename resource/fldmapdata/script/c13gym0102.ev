@@ -181,7 +181,7 @@ EVENT_START	ev_c13gym0102_swleader2iss_01
         //ゲームクリア後なら
         ELSE
           //ホミカ『クリア後メッセージ』
-          _BALLOONWIN_OBJMSG( msg_c13gym0102_swleader_07 , C13GYM0102_SWLEADER2ISS_01 )
+          _BALLOONWIN_OBJMSG( msg_c13gym0102_swleader_08 , C13GYM0102_SWLEADER2ISS_01 )
           _LAST_KEYWAIT()
           _BALLOONWIN_CLOSE()
         ENDIF

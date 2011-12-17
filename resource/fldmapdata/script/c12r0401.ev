@@ -56,7 +56,15 @@ EVENT_END
 /*  女の子：話しかけ                                          */
 /**************************************************************/
 EVENT_START   ev_c12r0401_girl2_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0401_girl2_01 )
+  
+  //1個目のバッジを入手しているかチェック
+  _GET_BADGE_FLAG( SCWK_ANSWER, BADGE_ID_01 )
+  IF $SCWK_ANSWER == TRUE THEN
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0401_girl2_02 )
+  ELSE
+  	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0401_girl2_01 )
+  ENDIF
+
 EVENT_END
 
 /**************************************************************/
