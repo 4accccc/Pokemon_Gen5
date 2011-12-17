@@ -2499,6 +2499,7 @@
 #define TMFLG_D11R0401_EXPERIMENT         2781 /* 0x0add ヒウン下水道：毒実験イベント・アイテム入手フラグ（１日1回） */
 #define TMFLG_D11R0501_EXPERIMENT         2782 /* 0x0ade ヒウン下水道：毒実験イベント・アイテム入手フラグ（１日１回） */
 #define TMFLG_C14R0501_WALK_CLEAR         2783 /* 0x0adf セイガイハシティ民家：おさんぽクリア */
+#define TMFLG_T03R0401_ITEMGET_01         2784 /* 0x0ae0 カゴメタウン：ビジネスマンのアイテム入手イベント（1日1回） */
 
 #define TMFLG_AREA_END                    2819 /* 0x0b03  */
 
