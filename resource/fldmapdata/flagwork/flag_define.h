@@ -2337,6 +2337,8 @@
 #define SYS_FLAG_ENDING                   2552 /* 0x09f8 エンディングスクリプトの初期化フラグ */
 #define SYS_FLAG_BGM_C08_SILENT           2553 /* 0x09f9 BGM変更フラグ：無音ソウリュウシティ */
 #define SYS_FLAG_BGM_D27R0601_PLAZMA      2554 /* 0x09fa BGM変更フラグ：プラズマ団ゲーチス部屋 */
+#define SYS_FLAG_BGM_D10R0501_VS_GCIS     2555 /* 0x09fb BGM変更フラグ：ジャイアントホール・イベント曲 */
+#define SYS_FLAG_BGM_D10R0501_N_COME      2556 /* 0x09fc BGM変更フラグ：ジャイアントホール・N曲 */
 
 #define SYS_FLAG_AREA_END                 2639 /* 0x0a4f  */
 

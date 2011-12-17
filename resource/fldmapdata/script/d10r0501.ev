@@ -83,8 +83,6 @@ INIT_EVENT_END
 /************************************************************/
 EVENT_START ev_pos_d10r0501_swsage1_01
   
-  //========================================//
-  
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
 
@@ -153,7 +151,14 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 	_AB_KEYWAIT_MARK()
 	_GIZAPLAINWIN_CLOSE()
 	
-	_START_EVENT_BGM_SILENT( 12 )
+	//========================================//
+  //D10R0501 N登場曲に変更
+  _FLAG_SET( SYS_FLAG_BGM_D10R0501_N_COME )
+  //========================================//
+
+	
+	//イベント曲再生
+  _BGM_NOW_MAP_RECOVER()
 	
   // こごえるせかいエフェクト(前半)
   // 全部で500フレーム
@@ -268,6 +273,12 @@ EVENT_START ev_pos_d10r0501_swsage1_01
     _MAP_FADE_BLACK_IN()
     _MAP_FADE_END_CHECK()
   }
+  
+  //========================================//
+  //D10R0501 専用曲に変更
+  _FLAG_SET( SYS_FLAG_BGM_D10R0501_VS_GCIS )
+  _FLAG_RESET( SYS_FLAG_BGM_D10R0501_N_COME )
+  //========================================//
 
   _TIME_WAIT(7)
   
@@ -307,9 +318,15 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   _BALLOONWIN_OBJMSG_POS( msg_d10r0501_boss_03, D10R0501_BOSS_01, POS_DOWN )
   _MSGWIN_CLOSE()
   
+  //無音再生
+  _START_EVENT_BGM_SILENT( 12 )
+  
   //ゲーチス：できますとも！
   _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_09, D10R0501_SWSAGE1_01, POS_UP )
   _MSGWIN_CLOSE()
+  
+  //BGMを変更
+  _BGM_NOW_MAP_RECOVER()
   
   // ゲーチス：つえをかかげる
   _CAMERA_MOVE( 9688,0,970752,1015808,0,983040, 35 )	//一番最後の引数は移動にかかるフレーム数
@@ -329,9 +346,7 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   // デモ呼び出し
   // ※デモを2つに分けたので連続で呼び出している
 	_DEMO_FADEOUT_BLACK_CALL()
-	//イベント曲終了
-  _BGM_NOW_MAP_RECOVER()
-
+	
   //=======================================
   // 解放状態のキュレムにする
   _OBJ_DEL( D10R0501_POKE1_01 )
@@ -560,6 +575,9 @@ ev_vs_swsage1_01:
   _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_17 , D10R0501_SWSAGE1_02 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
   
+  //イベント曲再生
+  _START_EVENT_BGM( SEQ_BGM_EV_GIANTHOLE_03 )
+  
   //N：あえて　こうよびます
   _BALLOONWIN_OBJMSG_POS( msg_d10r0501_boss_06 , D10R0501_BOSS_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
@@ -672,6 +690,14 @@ ev_vs_swsage1_01:
   _MSGWIN_CLOSE()
   
   //【仮】アニメ：N退場
+  
+  //=======================================//
+  //D10R0501のBGMを元に戻す
+  _FLAG_RESET( SYS_FLAG_BGM_D10R0501_VS_GCIS )
+  //=======================================//
+  
+  //BGMを変更
+  _BGM_NOW_MAP_RECOVER()
   
   //階段SE再生
   _SE_PLAY( SEQ_SE_KAIDAN )
