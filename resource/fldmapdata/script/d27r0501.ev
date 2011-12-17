@@ -40,6 +40,8 @@ DEFINE_LOCAL  LCW_POSZ
 /************************************************************/
 INIT_EVENT_START	ev_zone_d27r0501
   
+  _DEBUG_PRINT_WK(99)
+  
   // ROMƒo[ƒWƒ‡ƒ“Žæ“¾
   _GET_ROM_VERSION( LCWK_VERSION )
   
