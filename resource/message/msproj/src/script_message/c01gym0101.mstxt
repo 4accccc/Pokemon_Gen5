@@ -8,11 +8,11 @@
 			Language="JPN">
 			<Text>オレは　ほのおタイプの
 ポケモンで　あばれる　ポッド！▼
-ずばり！　たのむけど
+ずばり！　たのむから
 オレの　パートナーに　なってくれよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T10:02:29" />
+				Time="2011-12-17T06:46:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -22,11 +22,11 @@
 			Language="JPN_KANJI">
 			<Text>オレは　ほのおタイプの
 ポケモンで　暴れる　ポッド！▼
-ずばり！　頼むけど
+ずばり！　頼むから
 オレの　パートナーに　なってくれよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T10:02:37" />
+				Time="2011-12-17T06:46:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -231,11 +231,11 @@
 オマエも　なかなか　やるな！▼
 どーだ！
 デントに　コーン！▼
-みつごの　なかで　いちばんの
+みつごで　いちばんの
 ポケモントレーナーは　オレだろ！？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T10:02:43" />
+				Time="2011-12-17T06:46:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -247,11 +247,11 @@
 オマエも　なかなか　やるな！▼
 どーだ！
 デントに　コーン！▼
-三つ子の　なかで　一番の
+三つ子で　一番の
 ポケモントレーナーは　オレだろ！？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T10:02:43" />
+				Time="2011-12-17T06:46:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -395,11 +395,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なっ！　ずばり！　たのむけど
+			<Text>なっ！　ずばり！　たのむから
 オレの　パートナーに　なってくれよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T10:02:43" />
+				Time="2011-12-17T06:48:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -407,11 +407,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なっ！　ずばり！　頼むけど
+			<Text>なっ！　ずばり！　頼むから
 オレの　パートナーに　なってくれよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T10:02:43" />
+				Time="2011-12-17T06:48:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -564,11 +564,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ざんねん　ですね
+			<Text>なんと　まあ
 この　コーンが　あいてされないとは</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T10:06:03" />
+				Time="2011-12-17T06:51:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -576,11 +576,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>残念ですね
+			<Text>なんと　まあ
 この　コーンが　相手されないとは</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T10:06:13" />
+				Time="2011-12-17T06:51:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -841,10 +841,10 @@
 			Language="JPN">
 			<Text>どうですか？　あなた
 この　コーンの　パートナーになり▽
-きょうだいと　しょうぶ　しませんか？</Text>
+きょうだいと　きそいませんか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T10:09:50" />
+				Time="2011-12-17T06:51:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -854,10 +854,10 @@
 			Language="JPN_KANJI">
 			<Text>どうですか？　あなた
 この　コーンの　パートナーになり▽
-兄弟と　勝負しませんか？</Text>
+兄弟と　競いませんか？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-22T10:11:02" />
+				Time="2011-12-17T06:51:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1578,11 +1578,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そっかー……　おもしろさには
+			<Text>そっかあ……　おもしろさには
 じしんが　あるから　また　きてね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T08:46:27" />
+				Time="2011-12-17T06:56:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1590,11 +1590,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そっかー……　おもしろさには
+			<Text>そっかあ……　おもしろさには
 自信が　あるから　また　来てね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-19T08:46:33" />
+				Time="2011-12-17T06:56:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2435,11 +2435,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おお！　おまえが　もってる……
+			<Text>おお！　おまえが　持ってる……
 って　トライバッジは　ないか！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T13:42:59" />
+				Time="2011-12-17T06:57:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

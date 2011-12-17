@@ -211,7 +211,7 @@
 			Language="JPN">
 			<Comment>♂
 ・GRIDX=295、GRIDZ=750、下向き
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-23T10:47:37" />
@@ -272,7 +272,7 @@
 			<Comment>♂
 ・GRIDX=296、GRIDZ=749、下向き
 ・主人公＝♂
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-23T10:47:34" />
@@ -333,7 +333,7 @@
 			<Comment>♂
 ・イベント終了後のセリフ
 ・主人公＝♀
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-23T10:47:32" />
@@ -393,7 +393,7 @@
 			Language="JPN">
 			<Comment>♀
 ・GRIDX=297、GRIDZ=750、右向き（向き固定）
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-23T10:47:30" />
@@ -428,10 +428,10 @@
 			<Text>しょうりポケモン
 ビクティニ　か……▼
 いまごろは　だれの　ために
-その　ちからを　はっき　してるんだろ？</Text>
+その　ちからを　はっき　してるのかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-23T10:33:41" />
+				Time="2011-12-17T05:39:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -442,10 +442,10 @@
 			<Text>しょうりポケモン
 ビクティニ　か……▼
 いまごろは　だれの　ために
-その能力を　発揮してるんだろ？</Text>
+その能力を　発揮してるのかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-23T10:46:09" />
+				Time="2011-12-17T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -456,7 +456,7 @@
 			<Comment>♂
 ・GRIDX=299、GRIDZ=749、下向き
 ・手持ちにビクティニがいない
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-23T10:47:28" />
@@ -520,7 +520,7 @@
 			Language="JPN">
 			<Comment>♂
 ・手持ちにビクティニがいる
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-23T10:47:27" />
@@ -582,7 +582,7 @@
 			Language="JPN">
 			<Comment>♀
 ・GRIDX=298、GRIDZ=745、下向き
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-23T10:47:25" />
@@ -644,7 +644,7 @@
 			Language="JPN">
 			<Comment>♂
 ・GRIDX=308、GRIDZ=746、右向き
-※swanでメッセージ調整</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-06-23T10:47:21" />

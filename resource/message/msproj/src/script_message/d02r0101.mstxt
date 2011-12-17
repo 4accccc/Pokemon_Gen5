@@ -820,12 +820,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>チェレン『プラズマだんは　すでに
-かいさん　したはず　ですよ▼
+かいさん　しましたよ▼
 それでも　まだ　あきらめきれず
 ここで　なにか　たくらんでいますか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-06T09:32:17" />
+				Time="2011-12-17T05:11:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -834,12 +834,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>チェレン『プラズマ団は　すでに
-解散した　はず　ですよ▼
+解散した　しましたよ▼
 それでも　まだ　あきらめきれず
 ここで　なにか　企んでいますか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-06T09:32:30" />
+				Time="2011-12-17T05:11:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1083,12 +1083,12 @@
 			Language="JPN">
 			<Text>それはともかく　ありがとう！▼
 [Name:TrainerName ]の　おかげで　ぶじに
-ちょうさが　おわったよ▼
+ちょうさが　おわったね▼
 これは　おれい！
 えんりょせずに　うけとってよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T03:04:39" />
+				Time="2011-12-17T05:14:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1098,12 +1098,12 @@
 			Language="JPN_KANJI">
 			<Text>それはともかく　ありがとう！▼
 [Name:TrainerName ]の　おかげで　無事に
-調査が　終わったよ▼
+調査が　終わったね▼
 これは　お礼！
 遠慮せずに　受け取ってよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-07T03:04:48" />
+				Time="2011-12-17T05:14:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1252,10 +1252,11 @@
 ばっさい……　ポケモンたちに▽
 きを　きってもらうんだとよ▼
 なんでも　きが　おおすぎると
-ぜんぶの　きが　よわっちまうとか……</Text>
+ぜんぶの　きが　よわっちまうとか……
+なかまのために　きられる　きね……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-06T08:57:28" />
+				Time="2011-12-17T05:15:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1267,10 +1268,11 @@
 伐採……　ポケモンたちに▽
 木を　切ってもらうんだとよ▼
 なんでも　木が　多すぎると
-全部の　木が　弱っちまうとか……</Text>
+全部の　木が　弱っちまうとか……▼
+仲間のために　切られる　木ね……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-06T08:58:09" />
+				Time="2011-12-17T05:15:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

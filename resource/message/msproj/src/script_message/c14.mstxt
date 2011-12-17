@@ -470,8 +470,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『プラズマだん　ってのは
-いもうとの　ポケモンは　うばうし▼
+			<Text>[Name:TrainerName Idx="1" ]『プラズマだん　ってのは！
+いもうとの……▽
+いや！　ひとの　ポケモンは　うばうし▼
 ポケモンの　ちからで
 イッシュを　こおりづけに　して▽
 しはい　しようと　もくろんでいる▽
@@ -479,7 +480,7 @@
 というか　しらないのか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-05T10:28:56" />
+				Time="2011-12-17T04:53:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -487,8 +488,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『プラズマ団　ってのは
-妹の　ポケモンは　奪うし▼
+			<Text>[Name:TrainerName Idx="1" ]『プラズマ団　ってのは！
+妹の……▽
+いや！　人の　ポケモンは　奪うし▼
 ポケモンの　力で
 イッシュを　氷漬けに　して▽
 支配しようと　目論んでいる▽
@@ -496,7 +498,7 @@
 というか　知らないのか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-05T10:29:01" />
+				Time="2011-12-17T04:53:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -885,10 +887,10 @@
 			<Text>おっ　あんた
 ジムリーダーに　ちょうせん？▼
 だけど　シーちゃんに　あえっかな？
-なんたって　にんきもの　だもんな</Text>
+なんたって　じゆうじん　だもんな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T09:02:01" />
+				Time="2011-12-17T04:55:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -899,10 +901,10 @@
 			<Text>おっ　あんた
 ジムリーダーに　挑戦？▼
 だけど　シーちゃんに　会えっかな？
-なんたって　人気者だもんな</Text>
+なんたって　自由人だもんな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T10:05:11" />
+				Time="2011-12-17T04:55:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1415,12 +1417,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>うみを……　しぜんを
-コントロールなんて　むりだな▼
+コントロールなんて　むりだ▼
 しぜんと　うまく　つきあうのが
 ポケモンや　ひと　なのだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T12:44:32" />
+				Time="2011-12-17T04:57:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1429,12 +1431,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>海を……　自然を
-コントロールなんて　無理だな▼
+コントロールなんて　無理だ▼
 自然と　うまく　つきあうのが
 ポケモンや　人なのだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T12:44:54" />
+				Time="2011-12-17T04:57:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

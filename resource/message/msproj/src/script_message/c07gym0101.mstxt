@@ -359,11 +359,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……ありがたい　ことだ
-みなの　こころいきが　しみこむ</Text>
+			<Text>みなの　こころいき……
+ほんとうに　ありがたい</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T13:22:05" />
+				Time="2011-12-17T06:37:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -371,11 +371,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……ありがたい　ことだ
-みなの　心意気が　染み込む</Text>
+			<Text>みなの　心意気……
+本当に　ありがたい</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T13:22:21" />
+				Time="2011-12-17T06:37:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

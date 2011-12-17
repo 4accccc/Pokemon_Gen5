@@ -8,11 +8,12 @@
 			Language="JPN">
 			<Text>りそうを　おいもとめる……
 それって　どういうことだろうね？▼
-いやなに　ゼクロムに　みとめられた
-せいねんが　いたらしくってさ……</Text>
+いやなに　でんせつの　ポケモン
+ゼクロムに　みとめられた▽
+Ｎという　わかものが　いてさ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T08:03:44" />
+				Time="2011-12-17T05:16:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -22,11 +23,12 @@
 			Language="JPN_KANJI">
 			<Text>理想を　追い求める……
 それって　どういうことだろうね？▼
-いやなに　ゼクロムに　認められた
-青年が　いたらしくってさ……</Text>
+いやなに　伝説の　ポケモン
+ゼクロムに　認められた▽
+Ｎという　若者が　いてさ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T08:03:08" />
+				Time="2011-12-17T05:16:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -34,12 +36,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver
+			<Comment>♂：Black2ver
 ※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T07:18:43" />
+				Time="2011-12-17T03:14:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -63,11 +64,12 @@
 			Language="JPN">
 			<Text>しんじつを　おいもとめる……
 それって　どういうことだろうね？▼
-いやなに　レシラムに　みとめられた
-せいねんが　いたらしくってさ……</Text>
+いやなに　でんせつの　ポケモン
+レシラムに　みとめられた▽
+Ｎという　わかものが　いてさ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T08:03:38" />
+				Time="2011-12-17T05:16:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -77,11 +79,12 @@
 			Language="JPN_KANJI">
 			<Text>真実を　追い求める……
 それって　どういうことだろうね？▼
-いやなに　レシラムに　認められた
-青年が　いたらしくってさ……</Text>
+いやなに　伝説の　ポケモン
+レシラムに　認められた▽
+Ｎという　若者が　いてさ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T08:03:19" />
+				Time="2011-12-17T05:16:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -89,12 +92,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-11T07:18:44" />
+				Time="2011-12-17T03:14:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

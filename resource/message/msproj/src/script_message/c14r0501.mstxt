@@ -354,11 +354,11 @@
 			Language="JPN">
 			<Comment>♀
 ・つづける/やめるの選択肢表示
-　つづける→
-　やめる　→</Comment>
+　つづける→select_01
+　やめる　→select_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-20T05:05:44" />
+				Time="2011-12-17T05:02:54" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

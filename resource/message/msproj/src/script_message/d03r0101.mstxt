@@ -382,10 +382,10 @@
 			Language="JPN">
 			<Text>ハイリンクに　フェスミッションの
 『[Name:FesMissionName ]』が▽
-ついか　されました</Text>
+ついか　されました！</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-28T08:30:32" />
+				User="matsumiya:W00224"
+				Time="2011-12-17T05:19:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -395,10 +395,10 @@
 			Language="JPN_KANJI">
 			<Text>ハイリンクに　フェスミッションの
 『[Name:FesMissionName ]』が▽
-追加されました</Text>
+追加されました！</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-28T08:30:55" />
+				User="matsumiya:W00224"
+				Time="2011-12-17T05:19:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
