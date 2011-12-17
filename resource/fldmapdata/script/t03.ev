@@ -504,8 +504,43 @@ EVENT_END
 /*	ライバル話しかけ								*/
 /************************************************************/
 EVENT_START	ev_t03_swrival_01
-_TALK_OBJ_START()
-  _CALL ev_pos_t03_swrivalev_01
+  _TALK_OBJ_START()
+  
+  //イベントの進行状況を確認（初見かどうか）
+  IF $WK_SCENE_T03_SWRIVAL == 1 THEN
+  	_CALL ev_pos_t03_swrivalev_01
+  ELSE
+
+	  //ライバル名代入
+	  _RIVAL_NAME( 1 )
+	  //ライバル：オマエの　ちからを
+	  _BALLOONWIN_OBJMSG_POS( msg_t03_swrival_05, T03_SWRIVAL_01, POS_DEFAULT )
+
+	  //戦う準備はいいか？
+	  _YES_NO_WIN( SCWK_ANSWER )
+
+	  IF $SCWK_ANSWER == SCR_YES THEN   //はい
+		//ライバル：よし
+		_BALLOONWIN_OBJMSG_POS( msg_t03_swrival_03, T03_SWRIVAL_01, POS_DEFAULT )
+		_MSGWIN_CLOSE()
+
+		//ライバルイベント02へ
+		_CALL ev_pos_t03_swrivalev_02
+
+	ELSE    //いいえ
+		//ライバル：わかった
+		_BALLOONWIN_OBJMSG_POS( msg_t03_swrival_04, T03_SWRIVAL_01, POS_DEFAULT )
+		_AB_KEYWAIT_MARK()
+		_MSGWIN_CLOSE()
+
+		//アニメ：ライバル向きなおす
+		_OBJ_ANIME( T03_SWRIVAL_01, anm_common_turn_l )
+		_OBJ_ANIME_WAIT()
+
+  	ENDIF
+
+  ENDIF
+
 EVENT_END
 
 /**************************************************************/
@@ -640,7 +675,7 @@ ev_pos_t03_swrivalev_01:
     //アニメ：ライバル移動
     _OBJ_ANIME_AUTO( T03_SWRIVAL_01, 647, 186, FORCE_TYPE_NPC, 4, DIR_LR )
     _OBJ_ANIME_WAIT()
-    _OBJ_ANIME( T03_SWRIVAL_01, anm_common_turn_l )
+    _OBJ_ANIME( T03_SWRIVAL_01, anm_dir_l )
     _OBJ_ANIME_WAIT()
     _OBJ_ANIME( T03_SWRIVAL_01, anm_swrival_anime )
     _OBJ_ANIME_WAIT()
