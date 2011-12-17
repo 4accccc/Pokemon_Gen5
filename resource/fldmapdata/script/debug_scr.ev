@@ -600,8 +600,8 @@ EVENT_START   ev_debug_mizuguchi
 			_FLAG_RESET( FV_R04_SWBOSS_01 )
 			_FLAG_RESET( FV_R04_BIGROCK_01 )
 			_FLAG_SET( FV_R04_WORKMAN_01 )
-			//_MAP_CHANGE( ZONE_ID_R04, 430, 589, DIR_LEFT )
-			_MAP_CHANGE( ZONE_ID_R04W, 405, 579, DIR_UP )
+			_MAP_CHANGE( ZONE_ID_R04, 430, 589, DIR_LEFT )
+			//_MAP_CHANGE( ZONE_ID_R04W, 405, 579, DIR_UP )
 		ELSIF $SCWK_TEMP2 == 4 THEN
 		  //C08アイリス表示
       $WK_SCENE_C08_SWCHAMPION = 1
@@ -658,6 +658,7 @@ EVENT_START   ev_debug_mizuguchi
       _FLAG_RESET(FV_D27R0101_SWPLAZMA_01)
       _FLAG_RESET(FV_D27R0101_SWLEADER1_01)
       _FLAG_SET(FV_D27R0101_SWPLAZMA_02)
+      _FLAG_SET(FV_D27R1101_SWPLAZMA_03)
       _FLAG_SET(FV_D27R0101_SWSAGE7_01)
       _FLAG_SET(FV_D27R0101_NINJA_01)
       
@@ -675,6 +676,7 @@ EVENT_START   ev_debug_mizuguchi
       //D27搭乗二回目
       _FLAG_RESET(FV_D27R0101_SWRIVAL_01)
       _FLAG_SET(FV_D27R0101_SWPLAZMA_01)
+      _FLAG_SET(FV_D27R1101_SWPLAZMA_03)
       _FLAG_SET(FV_D27R0101_SWLEADER1_01)
       _FLAG_RESET(FV_D27R0101_SWPLAZMA_02)
       _FLAG_SET(FV_D27R0101_SWSAGE7_01)
@@ -685,6 +687,21 @@ EVENT_START   ev_debug_mizuguchi
       
       // ROMバージョン取得
       _GET_ROM_VERSION( LCWK_VERSION )
+      
+      //ヒントPOS初期化
+      IF $LCWK_VERSION == VERSION_B2 THEN
+        $WK_SCENE_D27_HINT_01 = 1
+        $WK_SCENE_D27_HINT_02 = 1
+        $WK_SCENE_D27_HINT_03 = 1
+        $WK_SCENE_D27_HINT_04 = 1
+        $WK_SCENE_D27_HINT_05 = 1
+      ELSE
+        $WK_SCENE_D27_HINT_01 = 0
+        $WK_SCENE_D27_HINT_02 = 0
+        $WK_SCENE_D27_HINT_03 = 0
+        $WK_SCENE_D27_HINT_04 = 0
+        $WK_SCENE_D27_HINT_05 = 0
+      ENDIF
       
       //B2
       IF $LCWK_VERSION == VERSION_B2 THEN
@@ -714,7 +731,7 @@ EVENT_START   ev_debug_mizuguchi
     ELSIF $SCWK_TEMP2 == 10 THEN
       
       //D27搭乗三回目
-      _FLAG_SET(FV_D27R0101_SWRIVAL_01)
+      _FLAG_RESET(FV_D27R0101_SWRIVAL_01)
       _FLAG_SET(FV_D27R0101_SWPLAZMA_01)
       _FLAG_SET(FV_D27R0101_SWLEADER1_01)
       _FLAG_SET(FV_D27R0101_SWPLAZMA_02)
@@ -723,11 +740,32 @@ EVENT_START   ev_debug_mizuguchi
       _FLAG_SET( FV_D27R0101_STOPPER_01 )
       _FLAG_RESET(FV_D27R0201_SWRIVAL_01)
       _FLAG_RESET(FV_D27R1201_SWRIVAL_01)
+      //D27R0101 プラズマ団員表示
+      _FLAG_RESET(FV_D27R1101_SWPLAZMA_03)
       
       //ワーク初期化
       $WK_SCENE_D27R0101_FIRST_01 = 4
       $WK_SCENE_D27R0101_SECONDW_01 = 4
       $WK_SCENE_D27R0101_SECONDB_01 = 4
+      $WK_SCENE_D27R0501_SWSAGE7_01 = 2
+      
+      // ROMバージョン取得
+      _GET_ROM_VERSION( LCWK_VERSION )
+      
+      //ヒントPOS初期化
+      IF $LCWK_VERSION == VERSION_B2 THEN
+        $WK_SCENE_D27_HINT_01 = 0
+        $WK_SCENE_D27_HINT_02 = 0
+        $WK_SCENE_D27_HINT_03 = 0
+        $WK_SCENE_D27_HINT_04 = 0
+        $WK_SCENE_D27_HINT_05 = 0
+      ELSE
+        $WK_SCENE_D27_HINT_01 = 1
+        $WK_SCENE_D27_HINT_02 = 1
+        $WK_SCENE_D27_HINT_03 = 1
+        $WK_SCENE_D27_HINT_04 = 1
+        $WK_SCENE_D27_HINT_05 = 1
+      ENDIF
       
       //第二階層誘導イベント設定
       _FLAG_RESET(FV_D27R1301_SWPLAZMAM_01)
@@ -739,9 +777,6 @@ EVENT_START   ev_debug_mizuguchi
       _FLAG_SET( FV_D27R1001_SWSAGE7_01 )
       $WK_SCENE_D27R1001_PLAZMAM_01 = 1
       $WK_SCENE_D27R1001_SWSAGE7_01 = 0
-      
-      // ROMバージョン取得
-      _GET_ROM_VERSION( LCWK_VERSION )
       
       //バリア状態を初期化
       //B2
@@ -852,6 +887,10 @@ EVENT_START   ev_debug_mizuguchi
     ELSIF $SCWK_TEMP2 == 16 THEN
       //D10R0401 POS有効
       $WK_SCENE_D10R0401_SWSAGE1_01 = 1
+      _FLAG_SET( FV_D10R0401_POKE_03 )
+      _FLAG_SET( FV_D10R0401_POKE_02 )
+      _FLAG_RESET( FV_D10R0401_POKE_01 )
+      _FLAG_SET( FV_D10R0401_BOSS_01 )
       _FLAG_SET( FE_D10_PLAZMA_FRIGATE_01 )
       //マップ遷移
       _MAP_CHANGE( ZONE_ID_D10R0401, 16, 4, DIR_UP )
@@ -887,6 +926,109 @@ EVENT_START   ev_debug_mizuguchi
       
     ELSIF $SCWK_TEMP2 == 21 THEN
       
+      _PERSON_TVT_CALL_SET_MOTHER()
+      _PERSON_TVT_CALL_SET_DOCTOR()
+      _PERSON_TVT_CALL_SET_RIVAL()
+      _PERSON_TVT_CALL_SET_CHELEN()
+      _PERSON_TVT_CALL_SET_BELL()
+      
+      /*
+      //D10R0501ゼクロム・N表示
+      _FLAG_RESET( FV_D10R0401_BOSS_01 )
+      _FLAG_RESET( FV_D10R0401_POKE_02 )
+      _MAP_CHANGE( ZONE_ID_D10R0501, 15, 21, DIR_UP )
+      $WK_SCENE_D10R0401_SWSAGE1_01 = 2
+      */
+      
+      /*
+      //D10R0301イベント初期化
+      _FLAG_RESET( FV_D10R0301_SWRIVAL_01 )
+      _FLAG_RESET( FV_D10R0301_SWPLAZMAM_01 )
+      _FLAG_SET( FV_D10R0301_SWPLAZMAM_02 )
+      //D10R0301 POSを無効
+      $WK_SCENE_D10R0301_SWPLAZMA_01 = 0
+      _MAP_CHANGE( ZONE_ID_D10R0301, 26, 74, DIR_UP )
+      */
+      /*
+      //D27R0101 ヴィオイベント起動前
+      $WK_SCENE_D27R0101_FIRST_01 = 3
+      _FLAG_RESET(FV_D27R0101_SWRIVAL_01)
+      _FLAG_RESET(FV_D27R0101_SWPLAZMA_01)
+      _FLAG_RESET(FV_D27R0101_SWLEADER1_01)
+      _FLAG_SET(FV_D27R0101_SWPLAZMA_02)
+      _FLAG_SET(FV_D27R1101_SWPLAZMA_03)
+      _FLAG_SET(FV_D27R0101_SWSAGE7_01)
+      _FLAG_SET(FV_D27R0101_NINJA_01)
+      //マップ遷移
+      _MAP_CHANGE( ZONE_ID_D27R0101, 10, 32, DIR_RIGHT )
+      */
+      
+      /*
+      //D27R0601 ゲーチス演説起動
+      $WK_SCENE_D27R0601_SWSAGE1_01 = 1
+      _FLAG_RESET( FV_D27R0601_SWSAGE1_01 )
+      _FLAG_SET( FV_D27R0601_NINJA_01 )
+      _FLAG_SET( FV_D27R0601_SWRIVAL_01 )
+      _TRAINER_FLAG_RESET( TRID_NINJA_02 )
+      _TRAINER_FLAG_RESET( TRID_NINJA_03 )
+      _MAP_CHANGE( ZONE_ID_D27R1301, 6, 11, DIR_UP )
+      */
+      
+      /*
+      //アクロマ戦起動
+      $WK_SCENE_D27R0401_SWBOSS_01 = 2
+      */
+      
+      /*
+      //D27R0601 ダークトリニティ戦起動
+      $WK_SCENE_D27R0601_SWSAGE1_01 = 2
+      $WK_SCENE_D27R0601_STOPPER_01 = 1
+      _FLAG_SET( FV_D27R0601_SWSAGE1_01 )
+      _FLAG_RESET( FV_D27R0601_NINJA_01 )
+      _FLAG_RESET( FV_D27R0601_SWRIVAL_01 )
+      _TRAINER_FLAG_RESET( TRID_NINJA_02 )
+      _TRAINER_FLAG_RESET( TRID_NINJA_03 )
+      _MAP_CHANGE( ZONE_ID_D27R1301, 6, 11, DIR_UP )
+      */
+      
+      /*
+      //D27R1201イベント起動
+      $WK_SCENE_D27R0101_SECONDW_01 = 2
+      _FLAG_RESET( FV_D27R1201_SWRIVAL_01 )
+      _MAP_CHANGE( ZONE_ID_D27R0101, 18, 16, DIR_UP )
+      */
+      
+      //D27R0701 客室イベント起動
+      //$WK_SCENE_D27R0701_PLAZMAM_01 = 1
+      //$WK_SCENE_D27_ANNOUNCE = 1
+      
+      //コバルオンと遭遇
+      //$WK_SCENE_R13_POKE4 = 0
+      
+      /*
+      //タワーオブヘブン起動
+      $WK_SCENE_C06HAKASE = 3
+      _FLAG_RESET( FV_R07R0101_HAKASE2_01 )
+      */
+      
+      /*
+      //C06ジムクリア
+      $WK_SCENE_C06GYM = 1
+      $WK_SCENE_C06HAKASE = 3
+      _MAP_CHANGE( ZONE_ID_C06GYM0101, 10, 10, DIR_UP )
+      */
+      
+      /*
+      //C05ジムクリア後イベント起動
+      $WK_SCENE_C05 = 4
+      //ライバルを表示に
+      _FLAG_RESET( FV_C05_SWRIVAL_01 )
+      //ヤーコンを表示に
+      _FLAG_RESET( FV_C05_SWLEADER5_01 )
+      _MAP_CHANGE( ZONE_ID_C05GYM0201, 10, 10, DIR_UP )
+      */
+      
+      /*
       //シャガ誘導イベント発動
       $WK_SCENE_C08R0101 = 1
       _FLAG_RESET( FV_C08R0101_SWLEADER7_01 )
@@ -894,6 +1036,7 @@ EVENT_START   ev_debug_mizuguchi
       _MAP_CHANGE( ZONE_ID_C08, 418, 162, DIR_UP )
       _FLAG_RESET( SYS_FLAG_BGM_C08_PLAZMA )
       _FLAG_RESET( SYS_FLAG_BGM_C08_SILENT )
+      */
       
       /*
       //クリア後キュレム確認用
@@ -960,17 +1103,9 @@ EVENT_START   ev_debug_mizuguchi
       /*
       //D27R0501初期化
       $WK_SCENE_D27R0501_SWSAGE7_01 = 1
-      _FLAG_SET( FV_D27R0501_SWSAGE7_01 )
       _FLAG_SET( FV_D27R0501_NINJA_01 )
+      _FLAG_RESET( FV_D27R0501_SWSAGE7_01 )
       _MAP_CHANGE( ZONE_ID_D27R0201, 11, 3, DIR_UP )
-      */
-      
-      /*
-      //D10R0301イベント初期化
-      _FLAG_RESET( FV_D10R0301_SWRIVAL_01 )
-      _FLAG_RESET( FV_D10R0301_SWPLAZMAM_01 )
-      //D10R0301 POSを無効
-      $WK_SCENE_D10R0301_SWPLAZMA_01 = 0
       */
       
       /*

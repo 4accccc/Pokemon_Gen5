@@ -1207,6 +1207,9 @@ EVENT_START		ev_scene_c12_townmap_01
 	_FLAG_SET( FV_C12R0101_SWMAMA )
 	//C12R0202妹を非表示
 	_FLAG_SET( FV_C12R0202_RIVALSISTER_01 )
+	
+	//ローカルライブキャスター・ママ通話状態を変更（R19捕獲イベントまで）
+	_PERSON_STATE_SET_MOTHER( MOTHER_STATE_C12 )
 
 	//==================================//
 
@@ -1460,6 +1463,9 @@ EVENT_START		ev_scene_c12_gymclear_01
   
   //C-GEAR入手フラグセット
   _FLAG_SET( FE_CGEAR_GET )
+  
+  //ローカルライブキャスター・ベル通話状態を変更（R19到着まで）
+  _PERSON_STATE_SET_BELL( BELL_STATE_C12 )
   
   //========================================//
 EVENT_END

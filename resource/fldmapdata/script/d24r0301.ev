@@ -116,6 +116,8 @@ EVENT_START		ev_scene_d24r0301_pair_start
     _FLAG_SET( FE_D24_SWBELL_FIRSTTALK )
     //ヒードランイベント起動
     $WK_SCENE_D24_BELL_COMMENT = 1
+    //ローカルライブキャスター・ライバル通話状態を変更（T04ライバル戦まで）
+    _PERSON_STATE_SET_RIVAL( RIVAL_STATE_T04_1 )
     //==================================//
   
   //2回目以降

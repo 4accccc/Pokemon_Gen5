@@ -144,6 +144,8 @@ EVENT_START   ev_pos_c09_firstvisit_01
     //========================================//
     //初回会話フラグセット
     _FLAG_SET( FE_C09_GUIDE_TALK )
+    //ローカルライブキャスター・ライバル通話状態を変更（クリアまで）
+    _PERSON_STATE_SET_RIVAL( RIVAL_STATE_C09 )
     //========================================//
 
   ELSE

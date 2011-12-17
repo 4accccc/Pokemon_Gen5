@@ -452,6 +452,8 @@ EVENT_START   ev_pos_d26r0101_boss_01
   _FLAG_SET( FV_D26R0101_BOSS )
   //POSイベント進行
   $WK_SCENE_D26R0101_BOSS = 1
+  //ローカルライブキャスター・ライバル通話状態を変更（C09到達まで）
+  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_D26 )
   //========================================//
 
 EVENT_END

@@ -491,6 +491,10 @@ EVENT_START   ev_scene_t03_hakase2_01
   //アララギ娘、ベルを非表示に
   _FLAG_SET( FV_T03_HAKASE2_01 )
   _FLAG_SET( FV_T03_SWBELL_01 )
+  //ローカルライブキャスター・ベル通話状態を変更（ゲームクリアまで）
+  _PERSON_STATE_SET_BELL( BELL_STATE_R13 )
+  //ローカルライブキャスター・アララギ通話状態を変更（ゲームクリアまで）
+  _PERSON_STATE_SET_DOCTOR( DOCTOR_STATE_R13 )
   //========================================//
 
 }

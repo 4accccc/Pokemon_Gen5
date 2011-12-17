@@ -140,6 +140,8 @@ EVENT_START		ev_pos_d02r0101_swleader1_02
   $WK_SCENE_D02R0101_SWLEADER1 = 1
   _FLAG_SET( FV_D02R0101_SWLEADER1_01 )
   _FLAG_SET( FV_D02R0101_STOPPER_01 )
+  //ローカルライブキャスター・チェレン通話状態を変更（デフォルト設定）
+  _PERSON_STATE_SET_CHELEN( CHELEN_STATE_GYM )
   //==================================//
   
 EVENT_END

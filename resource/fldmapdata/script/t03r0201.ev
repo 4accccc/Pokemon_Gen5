@@ -220,6 +220,10 @@ EVENT_START   ev_reserve_t03r0201_hakase2_01
   //ライバルイベントの準備
   _FLAG_RESET( FV_T03_SWEIVAL_01 )
   $WK_SCENE_T03_SWRIVAL = 1
+  //ローカルライブキャスター・ベル通話状態を変更（T03昔話イベント終了まで）
+  _PERSON_STATE_SET_BELL( BELL_STATE_T02 )
+  //ローカルライブキャスター・アララギ通話状態を変更（T03昔話イベント終了まで）
+  _PERSON_STATE_SET_DOCTOR( DOCTOR_STATE_T03 )
   //========================================//
 
 EVENT_END

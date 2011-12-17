@@ -134,6 +134,10 @@ EVENT_START   ev_scene_t07_hakase2_01
   $WK_SCENE_T07 = 2
   //連れ歩きイベント起動
   $WK_SCENE_D24_PAIR_START = 1
+  //ローカルライブキャスター・ベル通話状態を変更（D24クリアまで）
+  _PERSON_STATE_SET_BELL( BELL_STATE_D24 )
+  //ローカルライブキャスター・アララギ通話状態を変更（T03到着まで）
+  _PERSON_STATE_SET_DOCTOR( DOCTOR_STATE_T07 )
   //========================================//
 
 }

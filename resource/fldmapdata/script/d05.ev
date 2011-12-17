@@ -395,6 +395,11 @@ EVENT_START		ev_scene_d05_swplazma_01
   _FLAG_RESET(FV_D27R0101_SWPLAZMA_01)
   _FLAG_RESET(FV_D27R0101_SWLEADER1_01)
   $WK_SCENE_D27R0101_FIRST_01 = 1
+  
+  //ローカルライブキャスター・チェレン通話状態を変更（D27搭乗一回目到達まで）
+  _PERSON_STATE_SET_CHELEN( CHELEN_STATE_WBT_2 )
+  //ローカルライブキャスター・ライバル通話状態を変更（D27搭乗一回目到達まで）
+  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_WBT_2 )
   //========================================//
 EVENT_END
 
@@ -523,6 +528,10 @@ EVENT_START		ev_reserve_d05_swplazma_af_01
   $WK_SCENE_R06_LEGEND_MEET = 1
   //d06r0101ストッパー非表示
   _FLAG_SET( FV_D06R0101_WORKMAN2_01 )
+  //ローカルライブキャスター・チェレン通話状態を変更（R06説明イベントまで）
+  _PERSON_STATE_SET_CHELEN( CHELEN_STATE_R06 )
+  //ローカルライブキャスター・ライバル通話状態を変更（C06ジムクリアまで）
+  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_R06_1 )
   //========================================//
 EVENT_END
 

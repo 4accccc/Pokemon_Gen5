@@ -318,6 +318,8 @@ EVENT_START   ev_scene_c08_guide_01
   //========================================//
   //C08：誘導イベントPOS起動（１）
   $WK_SCENE_C08_LEADER7 = 2
+  //ローカルライブキャスター・ライバル通話状態を変更（C08氷漬けクリアまで）
+  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_C14_1 )
   //========================================//
   //ハイリンク通信ブロック処理終了
   _ENABLE_NETWORK_IN_IMPORTANT_EVENT()
@@ -1286,6 +1288,8 @@ EVENT_START   ev_pos_c08_ninja_01
   $WK_SCENE_C14_SWRIVAL_01 = 1
   //T04,R20 ローカルライブキャスターPOS起動
   $WK_SCENE_T04_D20_TVT = 1
+  //ローカルライブキャスター・ライバル通話状態を変更（C14ジムクリアまで）
+  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_C14_2 )
   //========================================//
     
   //ハイリンク通信ブロック処理終了

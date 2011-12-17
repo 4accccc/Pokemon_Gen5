@@ -340,6 +340,8 @@ EVENT_START   ev_scene_c14_swleader8_01
   //ライバル、シズイ削除
   _FLAG_SET( FV_C14_SWRIVAL_01 )
   _FLAG_SET( FV_C14_SWLEADER8_01 )
+  //ローカルライブキャスター・ライバル通話状態を変更（プラズマフリゲート2回目搭乗まで）
+  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_C14_3 )
   //========================================//
 
 }

@@ -146,6 +146,9 @@ EVENT_START   ev_pos_r19_pokeget_01
 	_FLAG_RESET( FV_C12R0101_SWMAMA )
 	//C12R0202ライバル宅の妹を表示
 	_FLAG_RESET( FV_C12R0202_RIVALSISTER_01 )
+	
+	//ローカルライブキャスター・ママ通話状態を変更（デフォルト）
+	_PERSON_STATE_SET_MOTHER( MOTHER_STATE_HOME )
 
   //==================================//
   
@@ -648,6 +651,8 @@ EVENT_START   ev_pos_r19_zukan_01
   //==================================//
   //R19のすべてのPOS無効
   $WK_SCENE_R19 = 6
+  //ローカルライブキャスター・ベル通話状態を変更（D06到着まで）
+  _PERSON_STATE_SET_BELL( BELL_STATE_HOME )
   //==================================//
   
 EVENT_END

@@ -143,6 +143,9 @@ EVENT_START   ev_r07r0101_hakase2_01
     //カーゴサービス内のアララギ博士を表示
     _FLAG_RESET( FV_C06R0201_HAKASE2_01 )
     //========================================//
+    //ローカルライブキャスター・アララギ通話状態を変更（T07到着まで）
+    _PERSON_STATE_SET_DOCTOR( DOCTOR_STATE_CARGOSERVICE )
+    //========================================//
 
   ELSIF $WK_SCENE_C06HAKASE == 2 THEN   //フキヨセジム攻略まで繰り返し
 

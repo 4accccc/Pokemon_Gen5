@@ -588,6 +588,11 @@ EVENT_START   ev_c05r0501_swrival_01
 
       //ライバル戦闘へ
       _CALL ev_c05r0501_swrival_btl
+      
+      //========================================//
+      //ローカルライブキャスター・ライバル通話状態を変更（クリア後デフォルト状態）
+      _PERSON_STATE_SET_RIVAL( RIVAL_STATE_PLASMAHOME_2 )
+      //========================================//
 
     ELSE
 

@@ -98,10 +98,10 @@ EVENT_START   ev_reserve_r06r0101_swleader1_01
   _ITEM_EVENT_KEYWAIT( ITEM_HIDENMASIN03, 1 )
   
   //========================================//
-  
   //なみのりフラグセット・せいそくちリスト用
   _FLAG_SET(SYS_FLAG_NAMINORI_GET)
-  
+  //ローカルライブキャスター・チェレン通話状態を変更（W21まで）
+  _PERSON_STATE_SET_CHELEN( CHELEN_STATE_SEASONE )
   //========================================//
   
 

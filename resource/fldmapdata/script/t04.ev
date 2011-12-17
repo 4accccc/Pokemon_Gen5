@@ -367,6 +367,8 @@ EVENT_START   ev_pos_t04_swrival_01
   //========================================//
   //T04POS無効
   $WK_SCENE_T04 = 1
+  //ローカルライブキャスター・ライバル通話状態を変更（C08GYMクリアまで）
+  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_T04_2 )
   //========================================//
 
 EVENT_END
@@ -687,6 +689,8 @@ EVENT_START   ev_t04_swrival_01
       _FLAG_SET ( FV_T04_SWRIVAL_01 )
       //ホドモエ・ポケモンハウスのライバルを表示
       _FLAG_RESET ( FV_C05R0501_SWRIVAL_01 )
+      //ローカルライブキャスター・ライバル通話状態を変更（C05R0501戦闘前）
+      _PERSON_STATE_SET_RIVAL( RIVAL_STATE_PLASMAHOME_1 )
       //==================================//
 		
       _CALL ev_sage7
