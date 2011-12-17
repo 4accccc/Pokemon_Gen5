@@ -1999,6 +1999,7 @@ void  BTLV_EFFECT_SetTrainerBGMChangeFlag( int bgm_no )
   {
     BTLV_GAUGE_SetTrainerBGMChangeFlag( bew->bgw, 1 );
   }
+
 }
 
 //=============================================================================================
