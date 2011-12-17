@@ -168,9 +168,6 @@ animal_trail_scr_def.h: animal_trail_scr.ev
 pokewood_scr_def.h: pokewood_scr.ev
 	$(EV_DEF) pokewood_scr.ev $(SCR_OFFS_ID_H)
 
-hide_ship_hint_scr_def.h: hide_ship_hint_scr.ev
-	$(EV_DEF) hide_ship_hint_scr.ev $(SCR_OFFS_ID_H)
-
 dungeon_combi_scr_def.h: dungeon_combi_scr.ev
 	$(EV_DEF) dungeon_combi_scr.ev $(SCR_OFFS_ID_H)
 
@@ -179,6 +176,9 @@ local_tvt_scr_def.h: local_tvt_scr.ev
 
 pokewood_theater_def.h: pokewood_theater.ev
 	$(EV_DEF) pokewood_theater.ev $(SCR_OFFS_ID_H)
+
+hide_ship_hint_scr_def.h: hide_ship_hint_scr.ev
+	$(EV_DEF) hide_ship_hint_scr.ev $(SCR_OFFS_ID_H)
 
 bc10_def.h: bc10.ev
 	$(EV_DEF) bc10.ev $(SCR_OFFS_ID_H)

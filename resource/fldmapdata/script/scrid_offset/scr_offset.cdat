@@ -3,7 +3,7 @@
  * @file  scr_offset.cdat
  * @bfief  スクリプトIDのオフセットとそれに対応するアーカイブの定義テーブル
  * @author  tamada GAMEFREAK inc.
- * @date  2011 11/19 (Sat) 18:50
+ * @date  2011 12/17 (Sat) 17:13
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -21,6 +21,13 @@ static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
       NARC_debug_message_debug_scr_dat
     },
 #endif //PM_DEBUG
+    {//アジト船パスワードのヒント用スクリプト
+      ID_HIDE_SHIP_HINT_SCR_OFFSET,   //(10885),
+      ID_HIDE_SHIP_HINT_SCR_OFFSET_END,//(10914),
+      NARC_script_seq_hide_ship_hint_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
+      NARC_script_message_hide_ship_hint_dat
+    },
     {//ポケウッド用スクリプト：上映部分
       ID_POKEWOOD_THEATER_OFFSET,     //(10865),
       ID_POKEWOOD_THEATER_OFFSET_END, //(10884),
@@ -41,13 +48,6 @@ static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
       NARC_script_seq_dungeon_combi_scr_bin,
       ARCID_SCRIPT_MESSAGE,
       NARC_script_message_dungeon_combi_scr_dat
-    },
-    {//アジト船パスワードのヒント用スクリプト
-      ID_HIDE_SHIP_HINT_SCR_OFFSET,   //(10835),
-      ID_HIDE_SHIP_HINT_SCR_OFFSET_END,//(10849),
-      NARC_script_seq_hide_ship_hint_scr_bin,
-      ARCID_SCRIPT_MESSAGE,
-      NARC_script_message_hide_ship_hint_dat
     },
     {//ポケウッド用スクリプト：撮影部分
       ID_POKEWOOD_SCR_OFFSET,         //(10815),

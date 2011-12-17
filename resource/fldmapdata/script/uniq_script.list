@@ -3,7 +3,7 @@
 # @file  uniq_script.list
 # @bfief 非マップ依存のスクリプトリスト
 # @author  tamada GAMEFREAK inc.
-# @date  2011 11/19 (Sat) 18:50
+# @date  2011 12/17 (Sat) 17:13
 #
 #  このファイルはコンバータにより自動生成されています
 #
@@ -66,10 +66,10 @@ UNIQ_SCRIPTFILES = \
 	fmission_scr.ev \
 	animal_trail_scr.ev \
 	pokewood_scr.ev \
-	hide_ship_hint_scr.ev \
 	dungeon_combi_scr.ev \
 	local_tvt_scr.ev \
-	pokewood_theater.ev 
+	pokewood_theater.ev \
+	hide_ship_hint_scr.ev 
 
 #イベントデータで指定され直接呼ばれるスクリプトファイル
 UNIQ_TOP_EVENT_SCRFILES = \
@@ -120,10 +120,10 @@ UNIQ_TOP_EVENT_SCRFILES = \
 	fmission_scr.ev \
 	animal_trail_scr.ev \
 	pokewood_scr.ev \
-	hide_ship_hint_scr.ev \
 	dungeon_combi_scr.ev \
 	local_tvt_scr.ev \
-	pokewood_theater.ev 
+	pokewood_theater.ev \
+	hide_ship_hint_scr.ev 
 
 #プログラムやスクリプトから呼ばれるスクリプトファイル
 UNIQ_SUB_EVENT_SCRFILES = \
