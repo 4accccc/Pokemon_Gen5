@@ -49,6 +49,10 @@ IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
 	//おまえは……　なかなか
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d07_bigfour_01 )
 
+	//========================================//
+	_FLAG_SET(FE_D07_BIGFOUR3_TALK)
+	//========================================//
+
 //ゲームクリア後なら
 ELSE
 
@@ -142,7 +146,11 @@ IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
 	//主人公後退する
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
 	_OBJ_ANIME_WAIT()
-	
+
+	//========================================//
+	_FLAG_SET(FE_D07_BIGFOUR3_TALK)
+	//========================================//
+
 //ゲームクリア後なら
 ELSE
 

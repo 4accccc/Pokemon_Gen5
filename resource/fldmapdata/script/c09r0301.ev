@@ -13,6 +13,7 @@
   .include  "c09r0301.h"
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -128,15 +129,17 @@ EVENT_START   ev_c09r0301_bigfour3_01
     IF FLAG_OFF( SYS_FLAG_BIGFOUR_FIGHTWIN ) THEN
 
       //戦闘前---------------------------------------------------
-
-      //レンブ：ちょうせんしゃ　よ……
-      _BALLOONWIN_TALKOBJ_MSG( msg_c09r0301_bigfour3_01 )
-      _MSGWIN_CLOSE()
-
-      //d07で出会っている場合
-      //レンブ：ネジやまで　であったか……▼
-      //_BALLOONWIN_TALKOBJ_MSG( msg_c09r0301_bigfour3_02 )
-      //_MSGWIN_CLOSE()
+	 
+	 IF FLAG_OFF( FE_D07_BIGFOUR3_TALK ) THEN
+      	//レンブ：ちょうせんしゃ　よ……
+      	_BALLOONWIN_TALKOBJ_MSG( msg_c09r0301_bigfour3_01 )
+      	_MSGWIN_CLOSE()	 
+	 ELSE
+      	//d07で出会っている場合
+      	//レンブ：ネジやまで　であったか……▼
+      	_BALLOONWIN_TALKOBJ_MSG( msg_c09r0301_bigfour3_02 )
+      	_MSGWIN_CLOSE()
+	 ENDIF
 
       //========================================//
       //戦闘終了後にワープのアニメを再生させるため、マップ構築前に勝利フラグをたてておく
