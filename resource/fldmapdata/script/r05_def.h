@@ -23,5 +23,8 @@
 #define SCRID_R05_SWLEADER1_01 (16)
 #define SCRID_ZONE_R05 (17)
 #define SCRID_POS_R05_SWBELL_01 (18)
+#define SCRID_R05_MUSICIAN_01 (19)
+#define SCRID_R05_WOMAN1_01 (20)
+#define SCRID_R05_GIRL1_01 (21)
 
 #endif //_R05_DEF_H_

@@ -19,6 +19,7 @@
 #define T03PC0101_MEDALOYAJI               7
 #define T03PC0101_POLICEMAN_01             8
 #define T03PC0101_BREEDERM_01              9
+#define T03PC0101_ESPW_01                 10
 
 #endif //ZONE_T03PC0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t03pc0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

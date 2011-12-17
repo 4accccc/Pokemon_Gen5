@@ -11,6 +11,7 @@
 
 #define T03R0401_AMBRELLA_01               0
 #define FLD_ITEM_141                       1
+#define T03R0401_BUSINESSMAN_01            2
 
 #endif //ZONE_T03R0401_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t03r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

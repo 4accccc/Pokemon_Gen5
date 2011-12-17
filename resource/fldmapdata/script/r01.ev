@@ -91,7 +91,20 @@ EVENT_END
 /* 男性：話しかけ                                             */
 /**************************************************************/
 EVENT_START   ev_r01_man1_01
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r01_man1_01 )
+
+  //コンバート分岐
+  //ゲームをクリアしているかチェック
+  _DATACONV_GET_FLAG( DATACONV_FLAG_GAME_CLEAR, LWK_CONV )
+  //BWをクリアしている場合
+  IF $LWK_CONV == TRUE THEN
+	//旧主人公名を代入
+	_DATACONV_SET_NAME(DATACONV_ID_SYSTEM,0)
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r01_man1_02 )
+  //クリアしていない場合
+  ELSE
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r01_man1_01 )
+  ENDIF
+  
 EVENT_END
 
 /**************************************************************/

@@ -13,7 +13,7 @@
 
 #define R05_BREEDERW_01                    0
 #define TR_BAKER_04                        1
-#define TR_MUSICIAN_03                     2
+#define R05_MUSICIAN_01                    2
 #define TR_DANCER_07                       3
 #define TR_FANW_11                         4
 #define TR_FANW_11_2                       5
@@ -33,6 +33,8 @@
 #define FLD_ITEM_69                       19
 #define R05_CAMERAMAN_01                  20
 #define R05_SWLEADER1_01                  21
+#define R05_WOMAN1_01                     22
+#define R05_GIRL1_01                      23
 
 #endif //ZONE_R05_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r05.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
