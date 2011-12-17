@@ -506,11 +506,11 @@ EVENT_START ev_pos_d27_hint_04w
   
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-  $LCW_POSX -= 1
+  $LCW_POSX += 1
   
   //アニメ：「！」
   _OBJ_ANIME( D27R2101_HINT_04, anm_common_gyoe )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
   _OBJ_ANIME_WAIT()
   
   //トレーナー曲再生
@@ -565,7 +565,7 @@ EVENT_START ev_pos_d27_hint_05w
   
   //アニメ：「！」
   _OBJ_ANIME( D27R1901_HINT_06, anm_common_gyoe )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
   _OBJ_ANIME_WAIT()
   
   //トレーナー曲再生
