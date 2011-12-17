@@ -151,14 +151,8 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 	_AB_KEYWAIT_MARK()
 	_GIZAPLAINWIN_CLOSE()
 	
-	//========================================//
-  //D10R0501 N登場曲に変更
-  _FLAG_SET( SYS_FLAG_BGM_D10R0501_N_COME )
-  //========================================//
-
-	
-	//イベント曲再生
-  _BGM_NOW_MAP_RECOVER()
+	//無音再生
+  _START_EVENT_BGM_SILENT( 12 )
 	
   // こごえるせかいエフェクト(前半)
   // 全部で500フレーム
@@ -223,6 +217,14 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   //ゲーチス：きましたか　ひとのこころをもたぬ ばけもの Nよ
   _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_05 , D10R0501_SWSAGE1_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
+  
+  //========================================//
+  //D10R0501 N登場曲に変更
+  _FLAG_SET( SYS_FLAG_BGM_D10R0501_N_COME )
+  //========================================//
+  
+  //イベント曲再生
+  _BGM_NOW_MAP_RECOVER()
 
   // ゼクロムonNがおりてくる
   _DEMO_GIMMICK_GIANTHOLE_NPOKE_ANM_START(1) // 1：下降 0：上昇
