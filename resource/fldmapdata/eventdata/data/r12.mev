@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/23 11:30:16
+#save date:2011/12/17 19:56:02
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r12.wms
 #SECTION START:OBJ_EVENT
@@ -544,7 +544,7 @@ WK_SCENE_R12_LOCALTVT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-328 0 -152
+360 48 -8
 #size
 1 1
 #Map Event List Data End
