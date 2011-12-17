@@ -30,6 +30,7 @@
 #include "savedata/save_control.h"
 #include "savedata/wbt_ex_save.h"
 #include "savedata/wbt_download.h"
+#include "savedata/battle_box_save.h"
 
 #include "debug_wbt.h"
 
@@ -490,6 +491,24 @@ POKEPARTY * WBTSYS_GetUsePokeParty( WBTSYS * wbtsys, GAMEDATA * gamedata )
   }
   GF_ASSERT( party );
   return party;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief バトルボックス使用のセッティング
+ * @param   wbtsys
+ * @param   gamedata
+ */
+//------------------------------------------------------------------
+void WBTSYS_SetupBattleBox( WBTSYS * wbtsys, GAMEDATA * gamedata )
+{
+  BATTLE_BOX_SAVE * bb_save;
+  bb_save = BATTLE_BOX_SAVE_GetBattleBoxSave( GAMEDATA_GetSaveControlWork(gamedata) );
+
+  if ( BATTLE_BOX_SAVE_IsIn( bb_save ) )
+  { //バトルボックスにポケモンがいる場合、
+    wbtsys->btl_box_party = BATTLE_BOX_SAVE_MakePokeParty( bb_save, wbtsys->heapID );
+  }
 }
 
 //------------------------------------------------------------------

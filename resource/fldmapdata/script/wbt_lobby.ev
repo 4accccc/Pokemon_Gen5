@@ -517,6 +517,8 @@ ev_regist_check:
 
   // パーティー選択
   _WBT_BTL_UTIL_PARTY_SELECT_CALL( SCWK_ANSWER )
+  // バトルボックス使用反映（使用しない場合はクリア処理）
+  _WBT_SETUP_BTLBOX( SCWK_ANSWER )
   _DEBUG_PRINT_WK( SCWK_ANSWER )
 
   IF $SCWK_ANSWER == SCR_BTL_PARTY_SELECT_CANCEL THEN

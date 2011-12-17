@@ -13642,22 +13642,6 @@
 
 //--------------------------------------------------------------
 /**
- * @brief WBT:ダウンロードデータの名前をセット
- * @param[in] idx   セットするバッファ位置
- * @param[in] num   表示するデータの場所(1-3)
- */
-//--------------------------------------------------------------
-#define _WBT_SET_DL_NAME( idx, num ) \
-    _ASM_WBT_SET_DL_NAME idx, num     
-
-    .macro _ASM_WBT_SET_DL_NAME idx, num     
-    .short  EV_SEQ_WBT_GET_DL_NAME
-    .byte  \idx
-    .short  \num
-    .endm
-
-//--------------------------------------------------------------
-/**
  * @brief WBT:選択したダウンロードデータの番号をセット
  * @param[in]  number   セットする番号
  */
@@ -13956,6 +13940,20 @@
   .short  \ret_wk
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief   WBT:バトルボックス使用のセットアップ
+ * @param[in]   result  _BTL_UTIL_PARTY_SELECT_CALLの戻り値
+ * バトルボックス使用の場合、セットアップを行う（それ以外では初期化）
+ */
+//--------------------------------------------------------------
+#define _WBT_SETUP_BTLBOX( result ) \
+    _ASM_WBT_SETUP_BTLBOX result
+
+    .macro  _ASM_WBT_SETUP_BTLBOX result
+    .short  EV_SEQ_WBT_SETUP_BTLBOX
+    .short  \result
+    .endm
 
 //--------------------------------------------------------------
 /**

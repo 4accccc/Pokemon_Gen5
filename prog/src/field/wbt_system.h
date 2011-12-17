@@ -162,6 +162,8 @@ extern u8 WBTSYS_GetSelectDLData( const WBTSYS * wbtsys );
 extern void WBTSYS_SetScriptAnswerWork( WBTSYS * wbtsys, u16 * scr_answer_work );
 extern u16 * WBTSYS_GetScriptAnswerWork( WBTSYS * wbtsys );
 
+extern void WBTSYS_SetBattleBoxUse( WBTSYS * wbtsys, BOOL use_flag );
+
 extern void WBTSYS_SetMixInfoWinPointer( WBTSYS * wbtsys, WBT_MIXWIN * www );
 extern WBT_MIXWIN * WBTSYS_GetMixInfoWinPointer( WBTSYS * wbtsys );
 
@@ -218,6 +220,7 @@ extern void WBTSYS_MakeMatch( WBTSYS * wbtsys, GAMEDATA * gamedata );
 extern void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const WBT_TRCODE * tr_list );
 
 extern POKEPARTY * WBTSYS_GetUsePokeParty( WBTSYS * wbtsys, GAMEDATA * gamedata );
+extern void WBTSYS_SetupBattleBox( WBTSYS * wbtsys, GAMEDATA * gamedata );
 extern u8 WBTSYS_GetRewardCount( const WBTSYS * wbtsys );
 
 extern u32 WBTSYS_GetDownLoadCount( const WBTSYS * wbtsys, GAMEDATA * gamedata );

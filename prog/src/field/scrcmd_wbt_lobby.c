@@ -283,6 +283,36 @@ VMCMD_RESULT EvCmdWBTGetNGMessageID( VMHANDLE * core, void * wk )
 }
 //--------------------------------------------------------------
 /**
+ * @brief スクリプトコマンド：WBTバトルボックス使用のセットアップ
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWBTSetupBattleBox( VMHANDLE * core, void * wk )
+{
+  WBTSYS * wbtsys = WBT_SCR_getWBTSys( wk );
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( wk );
+  u16 use_mode = SCRCMD_GetVMWorkValue( core, wk );
+  BOOL use_flag = FALSE;
+
+  switch ( use_mode )
+  {
+  default:
+    GF_ASSERT( 0 );
+    /* FALL THROUGH */
+  case SCR_BTL_PARTY_SELECT_CANCEL:
+  case SCR_BTL_PARTY_SELECT_TEMOTI:
+  case SCR_BTL_PARTY_SELECT_NG:
+    use_flag = FALSE;
+    break;
+  case SCR_BTL_PARTY_SELECT_BTLBOX:
+    use_flag = TRUE;
+    break;
+  }
+  WBTSYS_SetBattleBoxUse( wbtsys, use_flag );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
  * @brief スクリプトコマンド：レンタルトーナメント用の手持ち生成
  */
 //--------------------------------------------------------------

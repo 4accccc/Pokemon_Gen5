@@ -43,6 +43,8 @@ extern VMCMD_RESULT EvCmdWBTGetDownLoadCount( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTSetDLData( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTGetDLNumber( VMHANDLE * core, void * wk );
 
+extern VMCMD_RESULT EvCmdWBTSetupBattleBox( VMHANDLE * core, void * wk );
+
 extern VMCMD_RESULT EvCmdWBTMixInfoWinClose( VMHANDLE *core, void * wk );
 extern VMCMD_RESULT EvCmdWBTMixInfoWinOpen( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdWBTMixInit( VMHANDLE * core, void * wk );

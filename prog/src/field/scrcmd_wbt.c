@@ -192,6 +192,9 @@ VMCMD_RESULT EvCmdWBTSystemStart( VMHANDLE * core, void * wk )
   GF_ASSERT( *wbtsys_work == NULL );
   *wbtsys_work = WBTSYS_Create( HEAPID_PROC, isTutorlal );
 
+  //バトルボックスにポケモンがいる場合のセットアップ
+  WBTSYS_SetupBattleBox( *wbtsys_work, gamedata );
+
   return VMCMD_RESULT_CONTINUE;
 }
 

@@ -27,6 +27,7 @@
 #include "savedata/save_control.h"
 #include "savedata/wbt_ex_save.h"
 #include "savedata/wbt_download.h"
+#include "savedata/battle_box_save.h"
 
 #include "sound/swan_sound_data.sadl"
 
@@ -70,7 +71,8 @@ WBTSYS * WBTSYS_Create( HEAPID heapID, BOOL isTutorial )
   wbtsys->my_party = PokeParty_AllocPartyWork( wbtsys->heapID );
   wbtsys->npc_party = PokeParty_AllocPartyWork( wbtsys->heapID );
   wbtsys->sp_party = PokeParty_AllocPartyWork( wbtsys->heapID );
-
+  wbtsys->btl_box_party = NULL;
+  
   //ROMトレーナーデータを読み込む
   wbtsys->rom_trdata = WBTTOOL_CreateRomTrainerData( wbtsys->heapID );
 
@@ -88,6 +90,10 @@ void WBTSYS_Delete( WBTSYS * wbtsys )
   GFL_HEAP_FreeMemory( wbtsys->sp_party );
   GFL_HEAP_FreeMemory( wbtsys->my_party );
   GFL_HEAP_FreeMemory( wbtsys->npc_party );
+  if ( wbtsys->btl_box_party )
+  {
+    GFL_HEAP_FreeMemory( wbtsys->btl_box_party );
+  }
   for ( i = 0; i < WBT_TRAINER_NUM; i ++ )
   {
     WBTTRAINER_Release( &wbtsys->wbt_trainer[ i ] );
@@ -199,6 +205,15 @@ u16 * WBTSYS_GetScriptAnswerWork( WBTSYS * wbtsys )
 {
   GF_ASSERT( wbtsys->scr_answer_work );
   return wbtsys->scr_answer_work;
+}
+//------------------------------------------------------------------
+/**
+ * @brief バトルボックスを使用するかどうかの設定
+ */
+//------------------------------------------------------------------
+void WBTSYS_SetBattleBoxUse( WBTSYS * wbtsys, BOOL use_flag )
+{
+  wbtsys->use_btlbox = use_flag;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
