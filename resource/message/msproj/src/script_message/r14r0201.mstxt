@@ -34,22 +34,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>システム
-・このマップに来たとき、てもちに
-　１：フォルムチェンジした
-　　　トルネロス、ボルトロス、ランドロスがいる
-　２：しかも技「しんそく」を覚えていない
-　１＋２ならこのメッセージを表示
-
-・はい/いいえの選択肢表示
-
-　はい　→技の空きチェック
-
-　いいえ→skill_05　or　skill_06
-※swanで新規作成</Comment>
+			<Comment>フォルムチェンジしたランドロスが手持ちにいる
+・モンスターナンバーチェック
+　MONSNO_RANDOROSU (645)
+・フォルムナンバーチェック
+　FORMNO_RANDOROSU_AR (1)</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:28:25" />
+				Time="2011-12-18T10:41:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -88,14 +80,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>システム
-・技に空きがない場合
-・わすれさせる/あきらめるの選択肢表示
-　わすれさせる→技リスト画面へ
-　あきらめる→skill_05　or　skill_06</Comment>
+			<Comment>新フォルムのランドロスを手持ちに入れて豊穣の社に行くと老人が出現。(X22,Z14：上向き)
+
+(X21～23,Z17)の位置でPOSイベント起動、老人が主人公に気づき話し始める		</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:28:07" />
+				Time="2011-12-18T10:44:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -132,13 +122,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>システム
-・選択肢
-　技リスト画面へ
-※swanで新規作成</Comment>
+			<Comment>3.話の内容は、だいたい以下のようなことを話す。	
+	a.霊獣フォルムのランドロスを捕まえたのね！
+	b.昔、霊獣フォルムでトロス３匹が大暴れしたんだよねー
+	c.この社は２匹の喧嘩をとめたランドロスを祭ったものらしい
+	※何かしらのトロスにまつわる噂話が聞ければ良いと思っています。</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:07:29" />
+				Time="2011-12-18T10:44:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -175,12 +166,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>システム
-・選択肢
-※swanで新規作成</Comment>
+			<Comment>社の前まで歩いてから主人公の前へ戻ってきて道具入手	</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:03:43" />
+				Time="2011-12-18T10:44:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -219,11 +208,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>システム
-※swanで新規作成</Comment>
+			<Comment>	
+5.道具の説明を話す	
+	a.映し鏡はトロスの姿を変えるという言い伝えじゃ！
+	
+6.老人立ち去って終わり	</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:02:57" />
+				Time="2011-12-18T10:44:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -262,13 +254,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>システム
-・条件を満たしたポケモンが複数いる場合
-　続けてskill_01
-※swanで新規作成</Comment>
+			<Comment>作成中</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:22:06" />
+				Time="2011-12-18T10:41:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
