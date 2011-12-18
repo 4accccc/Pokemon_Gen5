@@ -366,11 +366,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『フン！▼
-ぜんいん　かかってこいよ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『いいぜ！
+ぜんいん　かかってこいよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T02:46:31" />
+				Time="2011-12-18T09:59:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -378,11 +378,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『フン！▼
-全員　かかってこいよ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『いいぜ！
+全員　かかってこいよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T02:46:40" />
+				Time="2011-12-18T09:59:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -435,12 +435,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団『よし！　かこめ！▼
+			<Text>プラズマ団『よし！　囲め！▼
 こいつらを　ボコボコに　するぞ！
 プラーズマー！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T05:47:03" />
+				Time="2011-12-18T10:06:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
