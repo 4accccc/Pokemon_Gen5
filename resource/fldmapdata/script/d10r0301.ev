@@ -421,7 +421,7 @@ _ANIME_LABEL	anm_swsage6_ret_01
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//	SWPLAZMAMÅFëÃìñÇΩÇËÇ≥ÇÍÇƒÇÃÇ≠
+//	SWPLAZMAMÅFå„ëﬁÇ∑ÇÈ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_swplazmam_backstep
   _ANIME_DATA AC_DIR_PAUSE_ON,1

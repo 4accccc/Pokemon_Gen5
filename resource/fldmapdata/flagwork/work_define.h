@@ -391,6 +391,7 @@
 #define WK_OTHER_C16_NEON_SELECT         16787 /* 0x4193 ジョインアベニュー　ネオン最終確認 */
 #define WK_OTHER_N01R0502_N_SEASON       16788 /* 0x4194 N城：Nと戦闘した季節格納ワーク */
 #define WK_OTHER_D24_PAIR                16789 /* 0x4195 リバースマウンテン：ベル連れ歩きセリフ */
+#define WK_OTHER_C01GYM0101_LINK_TALK    16790 /* 0x4196 サンヨウジム：おもいでリンク起動人物 */
 
 #define WK_AREA_END                      16815 /* 0x41af  */
 

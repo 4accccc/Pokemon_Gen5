@@ -135,6 +135,11 @@ EVENT_START   ev_reserve_c07gym0101_link_ret
   _MAP_FADE_BLACK_IN()
   _MAP_FADE_END_CHECK()
   
+  //ハチク：おもいでリンク終了メッセージ
+  _BALLOONWIN_OBJMSG_POS(msg_c07gym0101_memory_02,C07GYM0101_LEADER7_01 , POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+  
   //初回イベントが未消化なら続けて
   IF FLAG_OFF( FE_C07GYM0101_LEADER7 ) THEN
   

@@ -526,7 +526,7 @@ _ANIME_LABEL anm_swsage_4
 ev_vs_swsage1_01:
 
   //ゲーチス：まさか！
-  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_swsage01_15b , msg_d10r0501_swsage01_15w , D10R0501_SWSAGE1_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_swsage01_15b , msg_d10r0501_swsage01_15w , D10R0501_SWSAGE1_01 , POS_UR)
   _MSGWIN_CLOSE()
   
   //トレーナー戦
@@ -544,19 +544,16 @@ ev_vs_swsage1_01:
     _FLAG_RESET( FV_D10R0501_WAND_01 )
     //キュラム・キュロム非表示
     _FLAG_SET( FV_D10R0401_POKE_03 )
-    //ゼクロム・レシラム表示
-    _FLAG_RESET( FV_D10R0401_POKE_02 )
     //========================================//
       
     //ゲーチス動作モデル削除・生成
     _OBJ_DEL( D10R0501_SWSAGE1_01 )
     _OBJ_ADD( D10R0501_SWSAGE1_02 )
-    //レシラム・ゼクロム動作モデル生成
-    _OBJ_ADD( D10R0501_NPOKE_01 )
       
     //登場人物位置変更
-    _OBJ_POS_CHANGE(MMDL_ID_PLAYER,18,0,18,DIR_UP)
-    _OBJ_ANIME( D10R0501_SWSAGE1_02 , anm_dir_d)
+    _OBJ_POS_CHANGE(MMDL_ID_PLAYER,15,0,16,DIR_RIGHT)
+    _OBJ_POS_CHANGE(D10R0501_SWSAGE1_02,17,0,16,DIR_LEFT)
+    _OBJ_POS_CHANGE(D10R0501_NPOKE_01,15,0,22,DIR_UP)
     _OBJ_ANIME( D10R0501_BOSS_01 , anm_dir_u)
     _OBJ_ANIME_WAIT()
     
@@ -565,8 +562,12 @@ ev_vs_swsage1_01:
     _TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
   ENDIF
   
+  //アニメ：ゲーチス後退する
+  _OBJ_ANIME( D10R0501_SWSAGE1_02 , anm_swsage1_backstep)
+  _OBJ_ANIME_WAIT()
+  
   //ゲーチス：…どういうことだ？
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_16 , D10R0501_SWSAGE1_02 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_16 , D10R0501_SWSAGE1_02 ,POS_UR )
   _MSGWIN_CLOSE()
   
   //アニメ：ゲーチスうろうろ
@@ -574,31 +575,31 @@ ev_vs_swsage1_01:
   _OBJ_ANIME_WAIT()
   
   //ゲーチス：みとめるか　ありえるか
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_17 , D10R0501_SWSAGE1_02 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_17 , D10R0501_SWSAGE1_02 ,POS_UR )
   _MSGWIN_CLOSE()
   
   //イベント曲再生
   _START_EVENT_BGM( SEQ_BGM_EV_GIANTHOLE_03 )
   
   //N：あえて　こうよびます
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_boss_06 , D10R0501_BOSS_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_boss_06 , D10R0501_BOSS_01 ,POS_DR )
   _MSGWIN_CLOSE()
   
   //アニメ：ゲーチス・目をそらして
-  _OBJ_ANIME( D10R0501_SWSAGE1_02 , anm_staystep_l)
+  _OBJ_ANIME( D10R0501_SWSAGE1_02 , anm_staystep_u)
   _OBJ_ANIME_WAIT()
     
   //ゲーチス：だまれ！
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_18 , D10R0501_SWSAGE1_02 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_18 , D10R0501_SWSAGE1_02 ,POS_UR )
   _MSGWIN_CLOSE()
   
   //フィールド上にダークトリニティ配置
-  _OBJ_ADD_EX( 14, 16, DIR_DOWN, MMDL_ID_EVENTOBJ_00, NINJA, MV_DMY )
+  _OBJ_ADD_EX( 19, 16, DIR_DOWN, MMDL_ID_EVENTOBJ_00, NINJA, MV_DMY )
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_ninja_coming_01 )
   _OBJ_ANIME_WAIT()
   
   //ダークトリニティ：Nさま
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_ninja_01 , MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_ninja_01 , MMDL_ID_EVENTOBJ_00 ,POS_UR )
   _MSGWIN_CLOSE()
   
   //N：…うん
@@ -606,11 +607,11 @@ ev_vs_swsage1_01:
   _MSGWIN_CLOSE()
   
   //ダークトリニティ：…はい
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_ninja_02 , MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_ninja_02 , MMDL_ID_EVENTOBJ_00 ,POS_UR )
   _MSGWIN_CLOSE()
   
   //ダークトリニティ退場
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_staystep_r )
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_staystep_l )
   _OBJ_ANIME_WAIT()
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_ninja_bye_01 )
   _OBJ_ANIME_WAIT()
@@ -620,78 +621,98 @@ ev_vs_swsage1_01:
   _OBJ_DEL( D10R0501_SWSAGE1_02 )
   _OBJ_ADD( D10R0501_WAND_01 )
   
-  //【仮】アニメ：Nと主人公向き合う
-  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_r )
-  _OBJ_ANIME( D10R0501_BOSS_01 , anm_staystep_l )
+  //【仮】主人公移動まで間
+  _TIME_WAIT( 16 )
+  
+  //アニメ：主人公Ｎに隣接
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_to_boss)
   _OBJ_ANIME_WAIT()
   
   //N：アリガトウ
-  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_boss_08 , D10R0501_BOSS_01 ,POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_boss_08 , D10R0501_BOSS_01 ,POS_DR )
   _MSGWIN_CLOSE()
+  
+  //アニメ：Ｎ下を向く
+  _OBJ_ANIME( D10R0501_BOSS_01 , anm_staystep_l)
+  _OBJ_ANIME_WAIT()
   
   // ROMバージョン取得
   _GET_ROM_VERSION( LCWK_VERSION )
   
   //ブラック
   IF $LCWK_VERSION == VERSION_B2 THEN
-    _BALLOONWIN_OBJMSG_POS(msg_d10r0501_mu_02,D10R0501_NPOKE_01 , POS_DEFAULT )
+    _PLAINWIN_MSG_UP( msg_d10r0501_mu_02 )
     _VOICE_PLAY( MONSNO_651, 0 )
     _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
   ELSE
-    _BALLOONWIN_OBJMSG_POS(msg_d10r0501_shin_02,D10R0501_NPOKE_01 , POS_DEFAULT )
-    _VOICE_PLAY( MONSNO_035, 0 )
+    _PLAINWIN_MSG_UP( msg_d10r0501_shin_02 )
+    _VOICE_PLAY( MONSNO_650, 0 )
     _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
     
   ENDIF
   
-  //N：～も言ってる
-  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_boss_09b , msg_d10r0501_boss_09w , D10R0501_BOSS_01 , POS_DEFAULT)
-  _MSGWIN_CLOSE()
-  
-  //【仮】ゼクロム・レシラム動作モデル削除
-  _OBJ_DEL( D10R0501_NPOKE_01 )
-  
-  //【仮】アニメ：Nと主人公出口方面へ
-  _OBJ_ANIME( MMDL_ID_PLAYER , anm_walk_d )
-  _OBJ_ANIME( D10R0501_BOSS_01 , anm_walk_d )
+  //アニメ：Ｎ上を向く
+  _OBJ_ANIME( D10R0501_BOSS_01 , anm_staystep_u)
   _OBJ_ANIME_WAIT()
   
-  //【仮】データ引継ぎ分岐（参照データ・反映データが仮）
-  IF $LCWK_VERSION == VERSION_B2 THEN
-    _BALLOONWIN_OBJMSG_POS( msg_d10r0501_boss_10 , D10R0501_BOSS_01 ,POS_DEFAULT )
+  //N：～も言ってる
+  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_boss_09b , msg_d10r0501_boss_09w , D10R0501_BOSS_01 , POS_DR)
+  _MSGWIN_CLOSE()
+  
+  {
+  
+  //データコンバートチェック
+  _DATACONV_IS_EXIST( DATACONV_ID_SYSTEM, LOCALWORK15 )
+  
+  //データ引継ぎ分岐（参照データ・反映データが仮）
+  IF $LOCALWORK15 >= 1 THEN
+    //名前代入
+    _DATACONV_SET_NAME( 1 ,DATACONV_ID_SYSTEM ) 
+    _BALLOONWIN_OBJMSG_POS( msg_d10r0501_boss_11 , D10R0501_BOSS_01 ,POS_DR )
   ELSE
-    _BALLOONWIN_OBJMSG_POS( msg_d10r0501_boss_11 , D10R0501_BOSS_01 ,POS_DEFAULT )
+    _BALLOONWIN_OBJMSG_POS( msg_d10r0501_boss_10 , D10R0501_BOSS_01 ,POS_DR )
   ENDIF
   
-  _MSGWIN_CLOSE()
+  }
   
-  //【仮】アニメ：Nと主人公向き合う
-  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_r )
-  _OBJ_ANIME( D10R0501_BOSS_01 , anm_staystep_l )
-  _OBJ_ANIME_WAIT()
+  //_MSGWIN_CLOSE()
   
   //N：ポケモンといることで
-  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_boss_12b , msg_d10r0501_boss_12w , D10R0501_BOSS_01 , POS_DEFAULT)
-  _MSGWIN_CLOSE()
-  
-  //【仮】アニメ：Nと主人公出口方面へ
-  _OBJ_ANIME( MMDL_ID_PLAYER , anm_walk_d )
-  _OBJ_ANIME( D10R0501_BOSS_01 , anm_walk_d )
-  _OBJ_ANIME_WAIT()
-  
-  //【仮】アニメ：Nと主人公向き合う
-  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_r )
-  _OBJ_ANIME( D10R0501_BOSS_01 , anm_staystep_l )
-  _OBJ_ANIME_WAIT()
+  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_boss_12b , msg_d10r0501_boss_12w , D10R0501_BOSS_01 , POS_DR)
+  //_MSGWIN_CLOSE()
   
   //N：キミ！キミと
-  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_boss_13b , msg_d10r0501_boss_13w , D10R0501_BOSS_01 , POS_DEFAULT)
+  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_boss_13b , msg_d10r0501_boss_13w , D10R0501_BOSS_01 , POS_DR)
   _MSGWIN_CLOSE()
   
-  //【仮】アニメ：N退場
+  _BLACK_OUT_SLOW()
+  
+  //アニメ：Ｎ退場
+  _OBJ_ANIME( D10R0501_BOSS_01 , anm_boss_bye)
+  _OBJ_ANIME_WAIT()
+  
+  _DISP_FADE_END_CHECK()
+  
+  //Ｎ動作モデル削除
+  _OBJ_DEL( D10R0501_BOSS_01 )
+  //ゼクロム・レシラム動作モデル削除
+  _OBJ_DEL( D10R0501_NPOKE_01 )
+  
+  //【仮】主人公Ｎを見送る位置に移動
+  _OBJ_POS_CHANGE(MMDL_ID_PLAYER,17,0,18,DIR_LEFT)
+  
+  _BLACK_IN_SLOW()
+  
+  _DEMO_GIMMICK_GIANTHOLE_NPOKE_ANM_START(0) // 1：下降 0：上昇
+  _TIME_WAIT(10)
+  
+  _DISP_FADE_END_CHECK()
+  
+  //アニメ：N退場
+  _TIME_WAIT(100)
   
   //=======================================//
   //D10R0501のBGMを元に戻す
@@ -700,13 +721,6 @@ ev_vs_swsage1_01:
   
   //BGMを変更
   _BGM_NOW_MAP_RECOVER()
-  
-  //階段SE再生
-  _SE_PLAY( SEQ_SE_KAIDAN )
-  _SE_WAIT()
-  
-  //Ｎ動作モデル削除
-  _OBJ_DEL( D10R0501_BOSS_01 )
   
   //=======================================//
   //D10R0201に接続するように状態を変更
@@ -742,7 +756,15 @@ _ANIME_LABEL	anm_swsage1_lose_walk01
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
-	
+
+//--------------------------------------------------------------------
+//	ゲーチス：後退する
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_swsage1_backstep
+  _ANIME_DATA AC_DIR_PAUSE_ON,1
+  _ANIME_DATA	AC_WALK_R_16F,1
+  _ANIME_DATA AC_DIR_PAUSE_OFF,1
+  _ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	ダークトリニティ：登場
@@ -757,6 +779,21 @@ _ANIME_LABEL	anm_ninja_coming_01
 _ANIME_LABEL	anm_ninja_bye_01
 	_ANIME_DATA	AC_NINJA_ACT1,1
 	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	主人公：Ｎに隣接
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_to_boss
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	Ｎ：退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_boss_bye
+	_ANIME_DATA AC_WALK_D_16F,2
 	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/
@@ -832,19 +869,23 @@ EVENT_START ev_d10r0501_poke10_01
   
   IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
      
-     //戦闘後
-     
+    //戦闘後
     //========================================//
     //キュラム・キュロム非表示
     _FLAG_SET( FV_D10R0401_POKE_03 )
+    //ゼクロム・レシラム表示
+    _FLAG_RESET( FV_D10R0401_POKE_02 )
     //========================================//
       
     //キュラム・キュロム動作モデル削除
     _OBJ_DEL( D10R0501_POKE2_01 )
+    //レシラム・ゼクロム動作モデル生成
+    _OBJ_ADD( D10R0501_NPOKE_01 )
       
     //登場人物位置変更
-    _OBJ_POS_CHANGE(MMDL_ID_PLAYER,16,0,18,DIR_UP)
-    _OBJ_ANIME( D10R0501_SWSAGE1_01 , anm_dir_d)
+    _OBJ_POS_CHANGE(MMDL_ID_PLAYER,15,0,16,DIR_RIGHT)
+    _OBJ_POS_CHANGE(D10R0501_NPOKE_01,15,0,22,DIR_UP)
+    _OBJ_POS_CHANGE(D10R0501_SWSAGE1_01,17,0,16,DIR_LEFT)
     _OBJ_ANIME( D10R0501_BOSS_01 , anm_dir_u)
     _OBJ_ANIME_WAIT()
     

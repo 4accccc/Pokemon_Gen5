@@ -40,6 +40,7 @@ _EVENT_DATA		ev_c01gym0101_man3_01
 _EVENT_DATA		ev_c01gym0101_woman3_01
 _EVENT_DATA		ev_zone_c01gym0101
 _EVENT_DATA		ev_reserve_c01gym0101_link_event_ret
+_EVENT_DATA    ev_init_c01gym0101
 _EVENT_DATA_END
 
 DEFINE_LOCAL	LWK_SARUHIT
@@ -86,6 +87,30 @@ INIT_EVENT_START	ev_zone_c01gym0101
 	
 	ENDIF
 
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START ev_init_c01gym0101
+  
+  //おもいでリンク：ポッド起動で復帰
+  IF $WK_OTHER_C01GYM0101_LINK_TALK == 1 THEN
+    _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 6, 0, 8, DIR_LEFT )
+    _OBJ_POS_CHANGE( C01GYM0101_LEADER1A_01, 5, 0, 8, DIR_RIGHT )
+    
+  //おもいでリンク：コーン起動で復帰
+  ELSIF $WK_OTHER_C01GYM0101_LINK_TALK == 2 THEN
+    _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 12, 0, 10, DIR_RIGHT )
+    _OBJ_POS_CHANGE( C01GYM0101_LEADER1B_01, 13, 0, 10, DIR_LEFT )
+  
+  //おもいでリンク：デント起動で復帰
+  ELSIF $WK_OTHER_C01GYM0101_LINK_TALK == 3 THEN
+    _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 15, 0, 14, DIR_RIGHT )
+    _OBJ_POS_CHANGE( C01GYM0101_LEADER1C_01, 16, 0, 14, DIR_LEFT )
+    
+  ENDIF
+  
 INIT_EVENT_END
 
 /**************************************************************/
@@ -516,28 +541,36 @@ ev_link_event:
   
   IF $LOCALWORK10 == 1 THEN
   
-    //ポッド・イベント起動（全員と話した）
-    IF FLAG_ON( FE_C01GYM0101_LINKEVENT_01 ) && FLAG_ON( FE_C01GYM0101_LINKEVENT_02 ) && FLAG_ON( FE_C01GYM0101_LINKEVENT_03 ) THEN
+    
       
-      //【仮】メッセージラベル仮
+      //========================================//
+      //起動人物をセット（ポッド）
+      $WK_OTHER_C01GYM0101_LINK_TALK = 1
+      //========================================//
+      
+      //ポッド：おもいでリンク起動メッセージ
       _TALK_OBJ_START()
-      _BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_waitress_01 )
+      _BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_memory1_02 )
       
       //過去イベント起動
       _CALL ev_old_brother
       
     //ポッド・イベント起動初回話しかけ
     ELSIF FLAG_OFF( FE_C01GYM0101_LINKEVENT_01 ) THEN
-      //【仮】メッセージラベル仮
-      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_poke29a_01 )
+      //ポッド：おもいでリンク起動前メッセージ
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_memory1_01 )
       //========================================//
       //会話済みフラグセット
       _FLAG_SET( FE_C01GYM0101_LINKEVENT_01 )
       //========================================//
+      
+      //ポッド・イベント起動（全員と話した）
+      IF FLAG_ON( FE_C01GYM0101_LINKEVENT_01 ) && FLAG_ON( FE_C01GYM0101_LINKEVENT_02 ) && FLAG_ON( FE_C01GYM0101_LINKEVENT_03 ) THEN
+      
     //ポッド・イベント起動話しかけ
     ELSIF FLAG_ON( FE_C01GYM0101_LINKEVENT_01 ) THEN
-      //【仮】メッセージラベル仮
-      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_poke29b_01 )
+      //ポッド：おもいでリンク起動前メッセージ
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_memory1_01 )
     ENDIF
   
   ELSIF $LOCALWORK10 == 2 THEN
@@ -545,52 +578,62 @@ ev_link_event:
     //コーン・イベント起動（全員と話した）
     IF FLAG_ON( FE_C01GYM0101_LINKEVENT_01 ) && FLAG_ON( FE_C01GYM0101_LINKEVENT_02 ) && FLAG_ON( FE_C01GYM0101_LINKEVENT_03 ) THEN
       
-      //【仮】メッセージラベル仮
+      //========================================//
+      //起動人物をセット（コーン）
+      $WK_OTHER_C01GYM0101_LINK_TALK = 2
+      //========================================//
+      
+      //コーン：おもいでリンク起動メッセージ
       _TALK_OBJ_START()
-      _BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_waitress_01 )
+      _BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_memory2_02 )
       
       //過去イベント起動
       _CALL ev_old_brother
       
     //コーン・イベント起動初回話しかけ
     ELSIF FLAG_OFF( FE_C01GYM0101_LINKEVENT_02 ) THEN
-      //【仮】メッセージラベル仮
-      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_poke29a_01 )
+      //コーン：おもいでリンク起動前メッセージ
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_memory2_01 )
       //========================================//
       //会話済みフラグセット
       _FLAG_SET( FE_C01GYM0101_LINKEVENT_02 )
       //========================================//
     //コーン・イベント起動話しかけ
     ELSIF FLAG_ON( FE_C01GYM0101_LINKEVENT_02 ) THEN
-      //【仮】メッセージラベル仮
-      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_poke29b_01 )
+      //コーン：おもいでリンク起動前メッセージ
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_memory2_01 )
     ENDIF
     
   //デント・イベント起動
   ELSIF  $LOCALWORK10 == 3 THEN
   
-    //コーン・イベント起動（全員と話した）
+    //デント・イベント起動（全員と話した）
     IF FLAG_ON( FE_C01GYM0101_LINKEVENT_01 ) && FLAG_ON( FE_C01GYM0101_LINKEVENT_02 ) && FLAG_ON( FE_C01GYM0101_LINKEVENT_03 ) THEN
-    
-      //【仮】メッセージラベル仮
+      
+      //========================================//
+      //起動人物をセット（デント）
+      $WK_OTHER_C01GYM0101_LINK_TALK = 3
+      //========================================//
+      
+      //デント：おもいでリンク起動メッセージ
       _TALK_OBJ_START()
-      _BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_waitress_01 )
+      _BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_memory3_02 )
       
       //過去イベント起動
       _CALL ev_old_brother
       
-    //コーン・イベント起動初回話しかけ
+    //デント・イベント起動初回話しかけ
     ELSIF FLAG_OFF( FE_C01GYM0101_LINKEVENT_03 ) THEN
-      //【仮】メッセージラベル仮
-      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_poke29a_01 )
+      //デント：おもいでリンク起動前メッセージ
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_memory3_01 )
       //========================================//
       //会話済みフラグセット
       _FLAG_SET( FE_C01GYM0101_LINKEVENT_03 )
       //========================================//
-    //コーン・イベント起動話しかけ
+    //デント・イベント起動話しかけ
     ELSIF FLAG_ON( FE_C01GYM0101_LINKEVENT_03 ) THEN
-      //【仮】メッセージラベル仮
-      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_poke29b_01 )
+      //デント：おもいでリンク起動前メッセージ
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_memory3_01 )
     ENDIF
     
   ENDIF
@@ -627,10 +670,28 @@ EVENT_START		ev_reserve_c01gym0101_link_event_ret
   //ブラックイン
   _MAP_FADE_BLACK_IN()
   _MAP_FADE_END_CHECK()
+  
+  //おもいでリンク：ポッド起動で復帰
+  IF $WK_OTHER_C01GYM0101_LINK_TALK == 1 THEN
+    _BALLOONWIN_OBJMSG_POS( msg_c01gym0101_memory1_03 , C01GYM0101_LEADER1A_01 ,POS_DEFAULT )
+    
+  //おもいでリンク：コーン起動で復帰
+  ELSIF $WK_OTHER_C01GYM0101_LINK_TALK == 2 THEN
+    _BALLOONWIN_OBJMSG_POS( msg_c01gym0101_memory2_03 , C01GYM0101_LEADER1B_01 ,POS_DEFAULT )
+  
+  //おもいでリンク：デント起動で復帰
+  ELSIF $WK_OTHER_C01GYM0101_LINK_TALK == 3 THEN
+    _BALLOONWIN_OBJMSG_POS( msg_c01gym0101_memory3_03 , C01GYM0101_LEADER1C_01 ,POS_DEFAULT )
+    
+  ENDIF
+  
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 
   //========================================//
   //リンクイベント終了
   $WK_SYS_LINK_EVENT_01 = 1
+  $WK_OTHER_C01GYM0101_LINK_TALK = 4
   //========================================//
 
 EVENT_END
