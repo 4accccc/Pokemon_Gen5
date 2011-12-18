@@ -262,7 +262,7 @@ static void taskAdd_SeEffectReq( DEMO3D_CMD_WORK* wk, u8 type, u16 seNo, int sta
   }
   
   twk->now = FX32_CONST(start);
-  twk->diff = FX_Div((FX32_CONST(end)-twk->now),FX32_CONST(frame));
+  twk->diff = FX_Div((FX32_CONST(end)-twk->now),FX32_CONST(twk->frame));
 }
 
 static void tcb_SeEffectReq( GFL_TCBL *tcb , void* tcb_wk)
