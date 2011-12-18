@@ -157,6 +157,8 @@ enum {
 	STR_PUT_MODE_LEFT = 0,		// 左詰め
 	STR_PUT_MODE_RIGHT,				// 右詰め
 	STR_PUT_MODE_CENTER,			// 中央
+	STR_PUT_MODE_UP,			    // 上画面
+	STR_PUT_MODE_DOWN,			  // 下画面
 };
 
 #define SKIP_SPEED					( 4 )			// スキップ速度
@@ -216,7 +218,7 @@ static BOOL PutLogo( SRMAIN_WORK * wk );
 // カット関係の処理
 static void CutMain( SRMAIN_WORK *p_parent_wk, CUT_WORK *p_wk );            // メイン
 static void CutSeqFunc_Load( CUT_WORK *p_wk, u32 sex );    // BG読み込み
-static BOOL CutSeqFunc_Fade( CUT_WORK *p_wk, CUT_FADE fade );    // フェード
+static BOOL CutSeqFunc_Fade( CUT_WORK *p_wk, CUT_FADE fade, BOOL skipFlag );    // フェード
 
 static BOOL Comm_LabelNone( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelStrPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
@@ -1624,7 +1626,7 @@ static void CutMain( SRMAIN_WORK *p_parent_wk, CUT_WORK *p_wk )
   case SEQ_CUT_FADE_IN:    // フェードしながら表示
     {
       // 2Dカットのフェード
-      if( CutSeqFunc_Fade( p_wk, CUT_FADE_IN ) == TRUE )
+      if( CutSeqFunc_Fade( p_wk, CUT_FADE_IN, p_parent_wk->skipFlag ) == TRUE )
       {
         ICHI_Printf("2Dカット：フェードイン\n");
         p_wk->seq = SEQ_CUT_VIEW_WAIT;
@@ -1634,7 +1636,14 @@ static void CutMain( SRMAIN_WORK *p_parent_wk, CUT_WORK *p_wk )
   case SEQ_CUT_VIEW_WAIT:  // 表示中
     {
       // ウェイト時間
-      if( p_wk->wait-- <= 0 )
+      if( p_parent_wk->skipFlag == 1 )
+      {
+        p_wk->wait -= SKIP_SPEED;
+      } else {
+        p_wk->wait--;
+      }
+
+      if( p_wk->wait <= 0 )
       {
         ICHI_Printf("2Dカット：待ち\n");
         p_wk->seq = SEQ_CUT_FADE_OUT;
@@ -1644,7 +1653,7 @@ static void CutMain( SRMAIN_WORK *p_parent_wk, CUT_WORK *p_wk )
   case SEQ_CUT_FADE_OUT:   // フェードしながら非表示
     {
       // 2Dカットのフェード
-      if( CutSeqFunc_Fade( p_wk, CUT_FADE_OUT ) == TRUE )
+      if( CutSeqFunc_Fade( p_wk, CUT_FADE_OUT, p_parent_wk->skipFlag ) == TRUE )
       {
         ICHI_Printf("2Dカット：フェードアウト\n");
         p_wk->seq = SEQ_CUT_EXIT;
@@ -1757,12 +1766,19 @@ static void CutSeqFunc_Load( CUT_WORK *p_wk, u32 sex )
  *	@return フェードが終了するとTRUE
  */
 //-----------------------------------------------------------------------------
-static BOOL CutSeqFunc_Fade( CUT_WORK *p_wk, CUT_FADE fade )
+static BOOL CutSeqFunc_Fade( CUT_WORK *p_wk, CUT_FADE fade, BOOL skipFlag )
 {
   int alpha1, alpha2;
 
   // アルファ計算
-  p_wk->alpha_cnt++;
+  if( skipFlag == TRUE )
+  {
+    p_wk->alpha_cnt += SKIP_SPEED;
+  }
+  else
+  {
+    p_wk->alpha_cnt++;
+  }
 
   if( fade == CUT_FADE_IN )
   {
@@ -1776,6 +1792,11 @@ static BOOL CutSeqFunc_Fade( CUT_WORK *p_wk, CUT_FADE fade )
     alpha1 = 16 - 16 * p_wk->alpha_cnt / p_wk->alpha_fade_sync;
     alpha2 = 0 + 16 * p_wk->alpha_cnt / p_wk->alpha_fade_sync;
   }
+  
+  if( alpha1 < 0 ) { alpha1 = 0; }
+  if( alpha2 < 0 ) { alpha2 = 0; }
+  if( alpha1 > 16 ) { alpha1 = 16; }
+  if( alpha2 > 16 ) { alpha2 = 16; }
 
 
   // アルファ設定
@@ -1997,12 +2018,31 @@ static BOOL Comm_LabelCut( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
   ICHI_Printf("カット\n");
   ICHI_Printf("***********************************\n");
 
+  ICHI_Printf("item->msgIdx %d\n", item->msgIdx );
+  ICHI_Printf("item->wait %d\n", item->wait );
+  ICHI_Printf("item->label %d\n", item->label );
+  ICHI_Printf("item->labelType %d\n", item->labelType );
+  ICHI_Printf("item->color %d\n", item->color );
+  ICHI_Printf("item->font %d\n", item->font );
+  ICHI_Printf("item->putMode %d\n", item->putMode );
+  ICHI_Printf("item->px %d\n", item->px );
+  ICHI_Printf("item->offs_x %d\n", item->offs_x );
+
   // 初期化
-  wk->cut.cut_no = 0;
+  wk->cut.cut_no = item->labelType;
   wk->cut.alpha_cnt = 0;
-  wk->cut.alpha_fade_sync = 30;
-  wk->cut.disp_type = CUT_DISP_SUB;
-  wk->cut.wait = 360;
+  wk->cut.alpha_fade_sync = item->px;
+  wk->cut.disp_type = 0;
+  wk->cut.wait = item->wait;
+
+  if( item->putMode == STR_PUT_MODE_UP )
+  {
+    wk->cut.disp_type = CUT_DISP_MAIN;
+  }
+  else if( item->putMode == STR_PUT_MODE_DOWN )
+  {
+    wk->cut.disp_type = CUT_DISP_SUB;
+  }
 
   // 読み込み
   wk->cut.seq = SEQ_CUT_LOAD;

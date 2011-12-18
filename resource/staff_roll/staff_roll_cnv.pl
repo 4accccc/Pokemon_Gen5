@@ -46,8 +46,10 @@ $LABEL_NAME_MAX = 8;
 	"左",
 	"右",
 	"中央",
+	"上画面",
+	"下画面",
 );
-$PUT_MODE_MAX = 3;
+$PUT_MODE_MAX = 5;
 
 # フォントテーブル
 @FontType = (
