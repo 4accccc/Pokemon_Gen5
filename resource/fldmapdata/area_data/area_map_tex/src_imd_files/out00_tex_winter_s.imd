@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-11-13T17:33:05" source="out00_tex_winter_s.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-12-18T23:37:55" source="out00_tex_winter_s.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-11-13T17:33:05" source="out00_tex_winter_s.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-12-18T23:37:55" source="out00_tex_winter_s.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -1673,22 +1673,22 @@
 		path="C:/home/swan_data3d/field/out00/chip/tex_winter_s/michi03a.tga"
 	>
 		<bitmap size="128">
-			4443 2244 3332 3333 4444 2334 4432 2323
-			3423 0223 3320 2333 4433 2233 2002 3322
-			3332 0022 3200 2333 3332 2223 0000 2220
+			4444 2233 3332 3333 3333 2333 3332 4333
+			3333 0223 3320 2333 3333 2233 2002 3322
+			3332 0022 3200 2333 3332 2223 0000 3220
 			2220 2002 2002 2233 3320 0022 0220 2220
 			2220 3320 2023 2222 2220 2002 2333 2222
 			2223 1133 2231 0222 2200 3222 3111 2233
 			3333 4111 3311 2223 2222 1333 1141 3331
 			1111 4441 1114 1111 1111 1111 4444 1111
-			4444 4444 4414 4444 4444 4444 4444 4444
+			4111 4444 1444 1111 1111 4441 4444 1144
 			4444 4444 4444 4444 4444 4444 4444 4444
 			5444 4445 4444 4444 4444 4444 5544 4455
-			5555 4445 4444 5554 4444 4444 5555 5555
-			5555 4555 4444 5554 4445 5444 5555 5544
-			5555 5555 5555 5555 4455 5544 4455 5544
-			5555 5445 5555 5555 5555 5555 5555 5444
-			4455 4444 5555 5555 5544 5555 5545 5455
+			5555 4455 4444 5555 4444 4444 5555 5555
+			5555 4555 5444 5555 4445 5444 5555 5555
+			5555 5555 5555 5555 4455 5544 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
 		</bitmap>
 	</tex_image>
 	<tex_image index="48" name="michi03b"
@@ -2330,10 +2330,10 @@
 		path="C:/home/swan_data3d/field/out00/chip/tex_winter_s/sea_grass.tga"
 	>
 		<bitmap size="32">
-			2112 2112 2222 2122 3333 1220 1100 3333
-			3444 1333 3311 4443 4444 3344 4333 4444
-			4555 4444 4444 5554 5666 4455 5444 6665
-			6666 5556 6555 6666 6666 6666 6666 6666
+			0222 0000 0000 2222 2333 0002 2000 3332
+			3466 2233 3222 6643 6666 3346 4333 6666
+			6777 6666 6666 7776 7555 6677 7666 5557
+			5555 7775 5777 5555 5555 5555 5555 5555
 		</bitmap>
 	</tex_image>
 	<tex_image index="64" name="sea_mizu1"
@@ -2746,7 +2746,7 @@
 		4210 4631 7fff 7fff
 	</tex_palette>
 	<tex_palette index="47" name="michi03a_pl" color_size="8">
-		4735 4f77 4756 4b77 4f98 4f9a 7fff 7fff
+		4735 4f77 4756 4b77 4f98 4f99 7fff 7fff
 	</tex_palette>
 	<tex_palette index="48" name="michi03b_pl" color_size="4">
 		4f97 4f99 4f9a 7fff
@@ -2802,7 +2802,7 @@
 		5f19 6b5b 7fff 6739 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="63" name="sea_grass_pl" color_size="8">
-		5717 5b38 5b59 5b5a 5f5c 637d 6bbf 7fff
+		4b77 4f98 4b57 4b37 575b 67bf 5f7e 639f
 	</tex_palette>
 	<tex_palette index="64" name="sea_mizu1_pl" color_size="16">
 		6a88 4da0 51c1 6642 6a87 4580 5a01 55e1

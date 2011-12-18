@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-11-13T17:32:04" source="out00_tex_summer.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-12-18T22:48:26" source="out00_tex_summer.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-11-13T17:32:04" source="out00_tex_summer.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-12-18T22:48:26" source="out00_tex_summer.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -1673,22 +1673,22 @@
 		path="C:/home/swan_data3d/field/out00/chip/tex_summer/michi03a.tga"
 	>
 		<bitmap size="128">
-			3352 1153 2221 2222 3333 2223 3322 2222
-			2322 0112 2210 1222 3322 1122 1001 2221
-			2222 0011 2100 1222 2221 1112 0000 2210
-			1110 1001 1001 1222 2210 0011 0110 1110
+			7777 1263 3321 3377 7773 3337 2222 7733
+			3333 0112 3210 1333 3332 1123 1001 3321
+			2222 0011 2100 1233 3321 1112 0000 2210
+			1110 1001 1001 1122 2210 0011 0110 1110
 			1110 2210 1012 1111 1110 1001 1222 1111
-			1112 6622 1126 0111 1100 2111 2666 1122
-			2222 6666 2266 1112 1111 6222 6666 2226
-			6666 6666 6666 2222 2222 6662 6666 6666
-			6666 6666 6666 6666 6666 6666 6666 6666
-			6666 4446 6666 6666 6666 6666 6666 6666
-			4666 4444 6444 6666 6666 6666 4466 6644
-			4444 4444 4444 6664 6666 6666 4444 4444
-			4444 4444 4444 7744 7777 4477 4444 4477
-			4444 4444 4444 4444 4444 4444 7744 4477
-			4444 4774 4444 4444 4444 4444 4444 4777
-			7744 7777 4444 4444 4477 4444 4474 4774
+			1112 7722 1127 0111 1100 2111 2777 1122
+			2222 7777 2277 1112 1111 7222 7777 2227
+			7777 7777 7777 2222 2222 7772 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 4447 7777 7777 7777 7777 7777 7777
+			4777 4444 7444 7777 7777 7777 4477 7744
+			4444 4444 4444 7774 7777 7777 4444 4444
+			4444 4444 4444 8844 8888 4488 4444 4488
+			5444 4555 4444 4444 4444 4444 5554 4488
+			5544 5555 4445 4444 4444 4444 5555 5555
+			5555 5555 4555 4444 4488 5544 5555 5555
 		</bitmap>
 	</tex_image>
 	<tex_image index="48" name="michi03b"
@@ -1699,10 +1699,10 @@
 		path="C:/home/swan_data3d/field/out00/chip/tex_summer/michi03b.tga"
 	>
 		<bitmap size="32">
-			5005 5015 4ff1 4f05 3ffc 3ff0 ffbf fffc
+			5555 5555 5ff1 5f05 7ffc 7ff1 ffbf fffc
 			feaf feff faab fabf eaea eaaf abfa abab
 			affe afea bc3f bffa f00f f03f c003 c00f
-			0140 0003 0550 0540 1555 1550 5555 5554
+			0140 0003 0550 0540 1555 1550 5555 5555
 		</bitmap>
 	</tex_image>
 	<tex_image index="49" name="michi_hage"
@@ -2330,10 +2330,10 @@
 		path="C:/home/swan_data3d/field/out00/chip/tex_summer/sea_grass.tga"
 	>
 		<bitmap size="32">
-			3223 3223 3333 3233 4444 2332 2211 4444
-			4000 2444 4422 0004 0000 4400 0444 0000
-			0555 0000 0000 5550 5666 0055 5000 6665
-			6666 5556 6555 6666 6666 6666 6666 6666
+			2222 0022 2200 2222 1111 2222 2222 1111
+			1333 2111 1122 3331 5555 1133 3111 5553
+			5666 5555 5555 6665 6444 5566 6555 4446
+			4444 6664 4666 4444 4444 4444 4444 4444
 		</bitmap>
 	</tex_image>
 	<tex_image index="64" name="sea_mizu1"
@@ -2746,8 +2746,9 @@
 	<tex_palette index="46" name="michi02b_pl" color_size="4">
 		4210 4631 7fff 7fff
 	</tex_palette>
-	<tex_palette index="47" name="michi03a_pl" color_size="8">
-		530f 532f 5750 5770 5791 5b70 5b71 5b91
+	<tex_palette index="47" name="michi03a_pl" color_size="16">
+		530f 532f 5750 5770 5791 57b1 5b70 5b71
+		5b91 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="48" name="michi03b_pl" color_size="4">
 		5791 57b1 5b71 5b91
@@ -2803,7 +2804,7 @@
 		5f19 6b5b 7fff 6739 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="63" name="sea_grass_pl" color_size="8">
-		5f5c 62ed 630e 632e 6354 637d 6bbf 7fff
+		5b90 5750 5b71 5b77 67bf 5f7e 639f 7fff
 	</tex_palette>
 	<tex_palette index="64" name="sea_mizu1_pl" color_size="16">
 		6a88 4da0 51c1 6642 6a87 4580 5a01 55e1
