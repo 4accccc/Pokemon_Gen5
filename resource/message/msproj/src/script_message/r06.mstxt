@@ -234,11 +234,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ロット『おお！　あの　けだかい
-ふんいきの　ポケモンが　コバルオン！▼</Text>
+			<Text>ロット『おお　コバルオン！
+なんと　けだかい　ふんいきだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:31:15" />
+				Time="2011-12-18T07:43:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -246,11 +246,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ロット『おお！　あの　気高い
-雰囲気の　ポケモンが　コバルオン！▼</Text>
+			<Text>ロット『おお　コバルオン！
+なんと　気高い　雰囲気だ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:31:15" />
+				Time="2011-12-18T07:43:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -544,10 +544,10 @@
 			<Text>ロット『ぐぬぬ……▼
 ゲーチスさまの　やぼう　あくいは
 いまも　ひろがりつづけ……▽
-ほかの　だれかを　ゆがめていくのだな▼</Text>
+ほかの　だれかを　ゆがめているのか▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T05:35:26" />
+				Time="2011-12-18T07:43:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -558,10 +558,10 @@
 			<Text>ロット『ぐぬぬ……▼
 ゲーチスさまの　野望　悪意は
 いまも　広がりつづけ……▽
-他の　だれかを　ゆがめていくのだな▼</Text>
+他の　だれかを　ゆがめているのか▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:55:12" />
+				Time="2011-12-18T07:44:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -607,14 +607,16 @@
 すがたを　みせたのは　たまたまか▼
 それとも　さわぎを　おさめてほしいと
 うったえる　ため　なのか……？▼
-もっとも　わたしには　ポケモンの
+Ｎさまのように　ポケモンの
+こころが　わかる　ちからを　もたない▼
+わたしには　ポケモンの
 きもちは　はかりかねるがな▼
 だた　おまえが　コバルオンを
 なかまに　できたなら　これからの▽
 おおきな　ちからと　なるだろうな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T08:54:41" />
+				Time="2011-12-18T08:06:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -626,14 +628,16 @@
 姿を　みせたのは　たまたまか▼
 それとも　騒ぎを　治めてほしいと
 訴える　ため　なのか……？▼
-もっとも　わたしには　ポケモンの
+Ｎさまのように　ポケモンの
+心が　わかる力を　持たない▼
+わたしには　ポケモンの
 気持ちは　はかりかねるがな▼
 だた　おまえが　コバルオンを
 仲間に　できたなら　これからの▽
 大きな　力と　なるだろうな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T03:40:48" />
+				Time="2011-12-18T08:06:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -705,11 +709,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・座標指定
-・仮メッセージ</Comment>
+・座標指定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-23T09:03:22" />
+				Time="2011-12-18T07:56:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -804,10 +807,12 @@
 あめが　だいすき　なの♪▼
 こういう　ポケモンの　とくせいのこと
 ヒオウギの　ジムリーダーさんが▽
-すごく　くわしいんでしょ？</Text>
+すごく　くわしいんでしょ？▼
+えっ　しりあい　なの？　じゃあ
+ライブキャスターで　きけるわね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T03:47:49" />
+				Time="2011-12-18T07:57:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -820,10 +825,12 @@
 雨が　大好き　なの♪▼
 こういう　ポケモンの　特性のこと
 ヒオウギの　ジムリーダーさんが▽
-すごく　詳しいんでしょ？</Text>
+すごく　詳しいんでしょ？▼
+えっ　知り合いなの？　じゃあ
+ライブキャスターで　きけるわね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-18T03:48:09" />
+				Time="2011-12-18T07:57:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

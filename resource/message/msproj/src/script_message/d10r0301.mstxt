@@ -121,14 +121,14 @@
 			<Text>ロット『ええい！　わからずやどもめ
 わかるまで　なんどでも　いう！▼
 ゲーチスが　もくろんで　いたのは
-イッシュちほうの　しはい　なのだ！▼
+イッシュちほうの　しはい　だ！▼
 ポケモンを　かいほう　するのは
 たてまえ　でしか　なかった！▼
 むしろ　ポケモンを
-くるしめることに　なったのだぞ！▼</Text>
+くるしめることに　なったのです！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-12-18T08:10:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -139,14 +139,14 @@
 			<Text>ロット『ええい！　わからずやどもめ
 わかるまで　何度でも　いう！▼
 ゲーチスが　目論んでいたのは
-イッシュ地方の　支配なのだ！▼
+イッシュ地方の　支配だ！▼
 ポケモンを　解放するのは
 建前　でしか　なかった！▼
 むしろ　ポケモンを
-苦しめることに　なったのだぞ！▼</Text>
+苦しめることに　なったのです！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-12-18T08:10:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -779,12 +779,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ロット『そなたたち
+			<Text>ロット『おまえたち
 ポケモンは　だいじょうぶか？▽
-これを　もっていけ▼</Text>
+これを　もっていくと　よい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-12-18T08:11:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -792,12 +792,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ロット『そなたたち
+			<Text>ロット『おまえたち
 ポケモンは　大丈夫か？▽
-これを　持っていけ▼</Text>
+これを　持っていくと　よい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-12-18T08:11:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -834,10 +834,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そなたにも▼</Text>
+			<Text>おまえも▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-12-18T08:11:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -845,10 +845,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そなたにも▼</Text>
+			<Text>おまえも▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-12-18T08:11:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -991,10 +991,10 @@
 こころの　ない　つよさも▽
 こんなとき　なにも　できない▼
 むかしの　なかまを　すくうため
-イッシュを　まもるため　たたかうぞ！▼</Text>
+イッシュを　まもるため　たたかう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-12-18T08:11:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1006,10 +1006,10 @@
 心の　ない　強さも▽
 こんなとき　なにも　できない▼
 むかしの　仲間を　救うため
-イッシュを　守るため　戦うぞ！▼</Text>
+イッシュを　守るため　戦う！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T11:10:14" />
+				Time="2011-12-18T08:11:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1051,10 +1051,10 @@
 おまえが　さがしている　ポケモンは
 ダークトリニティ……▼
 ニンジャ　みたいな　れんちゅうの
-だれかが　もっている　はずだ▼</Text>
+だれかが　もっている　はず▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T12:42:01" />
+				Time="2011-12-18T08:11:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1067,10 +1067,10 @@
 おまえが　探している　ポケモンは
 ダークトリニティ……▼
 ニンジャ　みたいな　連中の
-だれかが　持っている　はずだ▼</Text>
+だれかが　持っている　はず▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T12:42:08" />
+				Time="2011-12-18T08:11:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1164,13 +1164,16 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ロット『たしかに　あのとき
-おのれの　せいぎを　しんじていた▼
+わたしの　せいぎを　しんじていた▼
+おうである　Ｎさまのもと
+あらそいの　ない　せかいを　つくる！▼
 だが　それは　ひとりよがりで
-まわりが　みえていなかったのだ▼
-それを　わかってもらうぞ！</Text>
+まわりが　みえていなかった！▼
+だから　おなじことことを
+くりかえしては　ならない！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-12-18T08:15:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1179,13 +1182,16 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ロット『確かに　あのとき
-おのれの　正義を　信じていた▼
+わたしの　正義を　信じていた▼
+王である　Ｎさまの　もと
+争いの　ない　世界を　つくる！▼
 だが　それは　独善的で
-多くを　不幸に　するものであった▼
-それを　わかってもらうぞ！</Text>
+多くを　不幸に　するものであった！▼
+だから　同じことことを
+繰り返しては　ならない！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-12-18T08:16:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

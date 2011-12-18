@@ -1189,17 +1189,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヴィオ『ここは　あたたかいな▼
-さて　ほんだいに　はいろう！▼
+			<Text>ヴィオ『ここは　あたたかい▼
+さて　ほんだいに　はいるぞ！▼
 ここに　ゲーチスさまが
 のこされた　しょもつが　ある▼
 これが　あれば　かいていいせきの
 こだいもじが　よめるという　しろもの▼
-わたしなりの　つみほろぼし……
-この　しょもつを　よむがいい！▼</Text>
+ワタシなりの　つみほろぼし……
+この　しょもつを　よむのだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T06:48:48" />
+				Time="2011-12-18T08:57:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1207,17 +1207,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヴィオ『ここは　あたたかいな▼
-さて　本題に　はいろう！▼
+			<Text>ヴィオ『ここは　あたたかい▼
+さて　本題に　はいるぞ！▼
 ここに　ゲーチスさまが
 残された　書物が　ある▼
 これが　あれば　海底遺跡の
 古代文字が　読めるという　代物▼
-わたしなりの　罪滅ぼし……
-この書物を　読むがいい！▼</Text>
+ワタシなりの　罪滅ぼし……
+この書物を　読むのだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T06:48:51" />
+				Time="2011-12-18T08:57:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1307,13 +1307,13 @@
 			<Text>ねんのため　つたえておくが
 かいていいせきに　いくには▼
 サザナミわんに　でて
-ダイビングを　つかうと　よい▼
+ダイビングを　つかえ▼
 そして　かいていいせきの　なかで
-みつけた　あんごうを▽
+みつけた　あんごうを　おまえが▽
 じぶんで　かきとめるのだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T06:40:47" />
+				Time="2011-12-18T08:57:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1324,13 +1324,13 @@
 			<Text>念のため　伝えておくが
 海底遺跡に　行くには▼
 サザナミ湾に　でて
-ダイビングを　使うと　よい▼
+ダイビングを　使え▼
 そして　海底遺跡の　なかで
-みつけた　暗号を▽
+みつけた　暗号を　おまえが▽
 自分で　書き留めるのだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T06:40:53" />
+				Time="2011-12-18T08:57:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1367,10 +1367,10 @@
 			Language="JPN">
 			<Text>ゲーチスさまの　しょもつに　よると
 こだいの　にんげんは　ぶんしょうを▽
-はんたいから　よんだ　という▼</Text>
+はんたいから　よんだらしいぞ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T05:46:15" />
+				Time="2011-12-18T08:57:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1380,10 +1380,10 @@
 			Language="JPN_KANJI">
 			<Text>ゲーチスさまの　書物に　よると
 古代の　人間は　文章を▽
-反対から　読んでいた　という▼</Text>
+反対から　読んでいたらしいぞ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-17T05:46:22" />
+				Time="2011-12-18T08:58:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1428,10 +1428,10 @@
 ３かいに　あがったなら
 もじを　さらに　１つずらすと▼
 このばあい　ずらすとは
-まえの　もじに　おきかえることだろう▼</Text>
+まえの　もじに　おきかえることだな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T05:22:58" />
+				Time="2011-12-18T08:58:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1446,10 +1446,10 @@
 ３階に　あがったなら
 文字を　さらに　１つずらすと▼
 この場合　ずらすとは
-前の　文字に　置き換えることだろう▼</Text>
+前の　文字に　置き換えることだな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T05:22:59" />
+				Time="2011-12-18T08:58:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1609,10 +1609,10 @@
 いせきで　ねむりに　ついたと▼
 もし　おうの　しそんが　いるなら
 とくべつな　ちからも▽
-つたわっておるのかも　しれんな……▼</Text>
+つたわっておるのかも　しれぬ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T09:56:24" />
+				Time="2011-12-18T08:58:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1626,10 +1626,10 @@
 遺跡で　眠りに　ついたと▼
 もし　王の　子孫が　いるなら
 特別な　力も▽
-伝わっておるのかも　しれんな……▼</Text>
+伝わっておるのかも　しれぬ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-16T09:56:25" />
+				Time="2011-12-18T08:58:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

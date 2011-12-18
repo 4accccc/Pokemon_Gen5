@@ -1774,10 +1774,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ヴィオ『やれやれ
-それは　ごくろうな　はなしだな▼</Text>
+それは　ごくろうな　はなしだな▽
+ものずきな　トレーナーよ▼
+その　こうきしんに　おうじて
+すこし かたってやると するか▼
+ワタシが　いまも
+プラズマだんに　いるのは▽
+せかいが　かわるさまを　しるためだ▼
+いいか？　ポケモンは　しぜん
+モンスターボールは　ぶんめいだ▼
+ぶんめいを　しった　にんげんは
+なかなか　それを　すてられぬ▼
+もちろん　しぜんも　ぶんめいも
+どちらも　だいじ　だからな▼
+だが　プラズマだんが
+せかいを　しはい　すれば　どうなる？▼
+ひとびとは　モンスターボールという
+ぶんめいを　すてることに　なる！▼
+その　ようすを　みたいのだ！
+しりたいのだ！　たのしみたいのだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T03:20:01" />
+				Time="2011-12-18T08:51:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1786,10 +1804,28 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヴィオ『やれやれ
-それは　ごくろうな　話だな▼</Text>
+それは　ごくろうな　話しだな▽
+物好きな　トレーナーよ▼
+その　好奇心に　応じて
+すこし 語ってやると するか▼
+ワタシが　今なお
+プラズマ団に　いるのは▽
+世界が　変わる様を　知るためだ▼
+いいか？　ポケモンは　自然
+モンスターボールは　文明だ▼
+文明を　知った　人間は
+なかなか　それを　捨てられぬ▼
+もちろん　自然も　文明も
+どちらも　大事だからな▼
+だが　プラズマ団が
+世界を　支配すれば　どうなる？▼
+人々は　モンスターボールという
+文明を　捨てることに　なる！▼
+その様子を　みたいのだ！
+知りたいのだ！　楽しみたいのだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-05T07:27:05" />
+				Time="2011-12-18T08:51:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1823,13 +1859,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『オレは　うばわれた
-ポケモンを　とりもどすッ！▼
+			<Text>[Name:TrainerName Idx="1" ]『うるさいッ！▼
+オレは　うばわれた
+ポケモンを　とりもどすだけだッ！▼
 [Name:TrainerName ]！　ちから　かしてくれッ！
 じゅんびは　いいよな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T03:20:59" />
+				Time="2011-12-18T08:52:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1837,13 +1874,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『オレは　奪われた
-ポケモンを　取り戻すッ！▼
+			<Text>[Name:TrainerName Idx="1" ]『うるさいッ！▼
+オレは　奪われた
+ポケモンを　取り戻すだけだッ！▼
 [Name:TrainerName ]！　力　貸してくれッ！
 準備は　いいよな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T03:21:01" />
+				Time="2011-12-18T08:52:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2092,7 +2130,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ヴィオ『この　トレーナーども
-２ねんまえを　おもいださせます▼
+２ねんまえを　おもいださせる▼
 が　それよりも
 アレを　さがさねば！▼
 あの　かがくしゃが　いうように
@@ -2101,7 +2139,7 @@
 あそぶのは　また　こんどだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T03:25:05" />
+				Time="2011-12-18T08:52:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2110,7 +2148,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヴィオ『この　トレーナーども
-２年前を　思い出させます▼
+２年前を　思い出させる▼
 が　それよりも
 アレを　探さねば！▼
 あの　科学者が　いうように
@@ -2119,7 +2157,7 @@
 遊ぶのは　また　今度だ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T03:25:11" />
+				Time="2011-12-18T08:52:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -7,10 +7,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]さん
-ベルって　ひと　みつかったの？</Text>
+ベルって　ひと　みつかった？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-28T03:46:56" />
+				Time="2011-12-18T06:32:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -19,10 +19,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]さん
-ベルって　ひと　みつかったの？</Text>
+ベルって　ひと　みつかった？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-28T03:46:59" />
+				Time="2011-12-18T06:32:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -59,12 +59,12 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>あっ　[Name:TrainerName Idx="0" ]さん！
-[Name:PokemonName Idx="1" ]とは　なかよくね！▼
+[Name:PokemonName Idx="1" ]は　だいじに　してあげて！▼
 じぶんの　ポケモンを　まもれるのは
 トレーナーだけ　なんだよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T05:27:59" />
+				Time="2011-12-18T06:32:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -73,12 +73,12 @@ GIRL2</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あっ　[Name:TrainerName Idx="0" ]さん！
-[Name:PokemonName Idx="1" ]とは　なかよくね！▼
+[Name:PokemonName Idx="1" ]は　だいじに　してあげて！▼
 じぶんの　ポケモンを　まもれるのは
 トレーナーだけ　なんだよ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T05:28:03" />
+				Time="2011-12-18T06:32:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -190,7 +190,7 @@ GIRL2</Text>
 しってるんでしょ？　すごいなー！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T05:35:13" />
+				Time="2011-12-18T06:22:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -249,12 +249,15 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゾロアーク……▼
-どうして　あんな
-ゆめを　みるのかなぁ？</Text>
+			<Text>あのね
+おにいちゃんが　おしえてくれたの▼
+あたしのこと　おもいだすまでは
+こうやって　ボールの　なかの▼
+レパルダスに　いっぱいいっぱい
+はなしかけてあげろ！　って</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T05:25:08" />
+				Time="2011-12-18T06:27:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -262,12 +265,15 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゾロアーク……▼
-どうして　あんな
-ゆめを　みるのかなぁ？</Text>
+			<Text>あのね
+おにいちゃんが　おしえてくれたの▼
+あたしのこと　おもいだすまでは
+こうやって　ボールの　なかの▼
+レパルダスに　いっぱいいっぱい
+はなしかけてあげろ！　って</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T05:25:09" />
+				Time="2011-12-18T06:23:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -276,10 +282,10 @@ GIRL2</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・クリア後＋Nの城でNと戦闘する前</Comment>
+・クリア後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T05:25:27" />
+				Time="2011-12-18T06:31:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -309,11 +315,13 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あのね　レパルダスね
-むかしのこと　おもいだしたみたいなの</Text>
+			<Text>[Name:TrainerName Idx="0" ]さん！▼
+ほら　レパルダス！▼
+あたしのこと
+おもいだしてくれたの！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T05:36:20" />
+				Time="2011-12-18T06:22:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -321,11 +329,13 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あのね　レパルダスね
-むかしのこと　おもいだしたみたいなの</Text>
+			<Text>[Name:TrainerName Idx="0" ]さん！▼
+ほら　レパルダス！▼
+あたしのこと
+おもいだしてくれたの！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T05:36:24" />
+				Time="2011-12-18T06:22:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -334,10 +344,10 @@ GIRL2</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・殿堂入り５回</Comment>
+・rivalsister_04表示後＋d10r0501でキュレムと戦闘後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T05:25:32" />
+				Time="2011-12-18T06:31:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -360,10 +370,10 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>グルルルゥ……！</Text>
+			<Text>ぐにゃあおう……♪</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T04:51:35" />
+				Time="2011-12-18T06:27:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -371,10 +381,10 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>グルルルゥ……！</Text>
+			<Text>ぐにゃあおう……♪</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T04:51:38" />
+				Time="2011-12-18T06:27:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -383,11 +393,14 @@ GIRL2</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>ポケモン
+・rivalsister_04表示後＋d10r0501でキュレムと戦闘後
+　から出現
 ・あわせて鳴き声再生
-・クリア後から追加</Comment>
+・クリア後から追加
+　ライバル妹に隣接</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-20T05:00:55" />
+				Time="2011-12-18T06:31:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -432,12 +445,10 @@ GIRL2</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ポケモン
-・あわせて鳴き声再生
-・殿堂入り５回</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T10:01:21" />
+				Time="2011-12-18T06:30:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -447,6 +458,13 @@ GIRL2</Text>
 				User="matsumiya:W00224"
 				Time="2011-08-20T04:52:27" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c12r0202_map_01"

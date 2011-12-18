@@ -61,12 +61,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わざわざ　いらしたのです
-いいものを　おみせしましょう▼
+			<Text>わざわざ　きたのだ
+いいものを　みせてやると　するか▼
 これが……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T07:04:57" />
+				Time="2011-12-18T08:19:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -74,12 +74,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わざわざ　いらしたのです
-いいものを　おみせしましょう▼
+			<Text>わざわざ　きたのだ
+いいものを　みせてやると　するか▼
 これが……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T07:04:58" />
+				Time="2011-12-18T08:19:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -160,10 +160,10 @@
 こおりの　ミサイルは▼
 キュレムの　ちからと
 プラズマだんの　かがくりょくで▽
-つくりだした　もの　なのです▼</Text>
+つくりだした　もの　なのだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:02:26" />
+				Time="2011-12-18T08:19:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -175,10 +175,10 @@
 氷の　ミサイルは▼
 キュレムの　能力と
 プラズマ団の　科学力で▽
-造りだした　もの　なのです▼</Text>
+造りだした　もの　なのだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:02:31" />
+				Time="2011-12-18T08:19:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -209,11 +209,11 @@
 			Language="JPN">
 			<Text>さて……▼
 おまえは　プラズマだんに　とって
-ふあんようそ　といえる▽
-ここで　はいじょ　せねばならない！▼</Text>
+ふあんようそ　になりかねない▽
+ここで　はいじょ　するのだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T07:05:29" />
+				Time="2011-12-18T08:19:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -223,11 +223,11 @@
 			Language="JPN_KANJI">
 			<Text>さて……▼
 おまえは　プラズマ団に　とって
-不安要素と　なりえる　存在である▽
-ここで　排除せねばならない！▼</Text>
+不安要素に　なりかねない▽
+ここで　排除するのだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T07:05:36" />
+				Time="2011-12-18T08:19:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -266,10 +266,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>させるかよ！▼</Text>
+			<Text>させるかよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T07:12:36" />
+				Time="2011-12-18T08:20:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -277,10 +277,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>させるかよ！▼</Text>
+			<Text>させるかよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T07:12:38" />
+				Time="2011-12-18T08:20:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -370,10 +370,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ヴィオ『むう！
-まとめて　しまつ　ですね！▼</Text>
+まとめて　しまつ　するのだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T07:34:43" />
+				Time="2011-12-18T08:22:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -382,10 +382,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヴィオ『むう！
-まとめて　始末ですね！▼</Text>
+まとめて　始末するのだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T07:34:51" />
+				Time="2011-12-18T08:22:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -421,11 +421,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ちょろいな▼
-で　ここは　なんだよ？▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『らくしょうッ▼
+で　ここは　なんだッ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T07:29:05" />
+				Time="2011-12-18T08:22:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -433,11 +433,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ちょろいな▼
-で　ここは　なんだよ？▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『楽勝ッ▼
+で　ここは　なんだッ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T07:29:08" />
+				Time="2011-12-18T08:22:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -529,13 +529,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヴィオ『そうとも▼
+			<Text>ヴィオ『ふむう
+いがいに　かしこい　トレーナーだ▼
 それほど　ふんべつが　あるのに
-なぜ　われらの　アジトに　のりこむ▽
-そんな　きけんを　おかすのか？▼</Text>
+なぜ　ワタシたちの　アジトに
+のりこむ　きけんを　おかすのか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:03:04" />
+				Time="2011-12-18T08:24:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -546,11 +547,11 @@
 			<Text>ヴィオ『ふむう
 存外　さとい　トレーナーだ▼
 それほど　分別が　あるのに
-なぜ　われらの　アジトに　乗りこむ▽
-そんな　危険を　冒すのか？▼</Text>
+なぜ　ワタシたちの　アジトに
+乗りこむ　危険を　冒すのか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T07:29:35" />
+				Time="2011-12-18T08:24:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -579,14 +580,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『きまってるだろ！▼
+			<Text>[Name:TrainerName Idx="1" ]『きまってるだろッ！▼
 いもうとの　ポケモンを
 とりもどすためなら　なんでもする！▼
 ５ねんまえ　ヒオウギで
 チョロネコを　うばったのは　オマエか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:06:00" />
+				Time="2011-12-18T08:23:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -594,14 +595,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『決まってるだろ！▼
+			<Text>[Name:TrainerName Idx="1" ]『決まってるだろッ！▼
 妹の　ポケモンを
 取り戻すためなら　なんでもする！▼
 ５年前　ヒオウギで
 チョロネコを　奪ったのは　オマエか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:06:22" />
+				Time="2011-12-18T08:23:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -762,15 +763,15 @@
 ひとから　みれば
 どうにも　ちいさな　ものだぞ▼
 それにくらべ　この　おおきな
-ふねを　ごらんなさい！▼
+ふねを　みたか？
 この　ふね　そのものが　でんせつの
 ポケモン　キュレムの　ちからを▽
 りようする　ための　そうち！▼
 これで　こんどこそ！
-イッシュを　せいあつ　するのです▼</Text>
+イッシュを　せいあつ　するのだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:07:01" />
+				Time="2011-12-18T08:26:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -784,15 +785,15 @@
 他人から　みれば
 どうにも　小さな　ものだぞ▼
 それに比べ　この　船の
-威容を　ご覧なさい！▼
+威容を　みたか？▼
 この船　そのものが　伝説の
 ポケモン　キュレムの　力を▽
 利用する　ための　装置！▼
 これで　今度こそ！
-イッシュを　制圧するのです▼</Text>
+イッシュを　制圧するのだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T09:07:10" />
+				Time="2011-12-18T08:26:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -824,12 +825,12 @@
 			<Text>……さて　キュレムも
 すっかり　かいふく　したようだ▼
 いでんしのくさびは
-たいせつに　つかわせてもらいます▼
-では　あとは　まかせましたよ
-ダークトリニティの　みなさん▼</Text>
+たいせつに　つかわせてもらうぞ▼
+では　あとは　まかせた
+ダークトリニティ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T07:00:06" />
+				Time="2011-12-18T08:26:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -840,12 +841,12 @@
 			<Text>……さて　キュレムも
 すっかり　回復したようだ▼
 いでんしのくさびは
-大切に　使わせてもらいます▼
-あとは　任せましたよ
-ダークトリニティの　みなさん▼</Text>
+大切に　使わせてもらうぞ▼
+あとは　任せた
+ダークトリニティ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T07:00:14" />
+				Time="2011-12-18T08:27:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -874,11 +875,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ふざけるな！
+			<Text>[Name:TrainerName Idx="1" ]『ふざけるなッ！
 まけたくせに　きたないぞ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T07:22:54" />
+				Time="2011-12-18T08:27:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -886,11 +887,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ふざけるな！
+			<Text>[Name:TrainerName Idx="1" ]『ふざけるなッ！
 負けたくせに　きたないぞ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T07:22:47" />
+				Time="2011-12-18T08:27:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

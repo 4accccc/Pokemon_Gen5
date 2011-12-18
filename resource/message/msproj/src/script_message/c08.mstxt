@@ -868,10 +868,10 @@
 ぎじゅつで　うみだした▽
 とくしゅな　こおり！▼
 アイツを　とらえているかぎり
-とけたり　くだけたり　しません！▼</Text>
+とけたり　くだけたり　しないのだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-23T05:39:31" />
+				Time="2011-12-18T08:28:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -887,10 +887,10 @@
 さて　これらは　プラズマ団の
 技術で　うみだした　特殊な　氷！▼
 アイツを　捕らえているかぎり
-溶けたり　砕けたり　しません！▼</Text>
+溶けたり　砕けたり　しないのだ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-23T05:39:51" />
+				Time="2011-12-18T08:28:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -928,7 +928,8 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ようけんを　つたえよう！　シャガどの
+			<Text>ようけんを　つたえよう！▼
+シャガどの
 いでんしのくさび　とやらを　よこせ▼
 この　ソウリュウは
 かこと　みらいが　からみあう　まち▼
@@ -936,7 +937,7 @@
 くさびが　あるに　ふさわしい　ばしょ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T06:13:33" />
+				Time="2011-12-18T08:28:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -944,7 +945,8 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>用件を　伝えよう！　シャガ殿
+			<Text>用件を　伝えよう！▼
+シャガ殿
 いでんしのくさび　とやらを　よこせ▼
 この　ソウリュウは
 過去と　未来が　絡みあう　街▼
@@ -952,7 +954,7 @@
 くさびが　あるに　ふさわしい　場所▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T06:13:34" />
+				Time="2011-12-18T08:28:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1038,11 +1040,11 @@
 ほんらいで　あれば　もういちど
 こおりを　うちこむと　おどしたいが▽
 しばらくは　つかえぬし……▼
-さむい　なか　めんどう　ですが
-さがすと　しますか……！▼</Text>
+さむい　なか　わずらわしいが
+さがすと　するか……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T06:13:54" />
+				Time="2011-12-18T08:31:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1054,11 +1056,11 @@
 本来であれば　もう一度
 氷を　撃ちこむと　脅したいが▽
 しばらくは　使えぬし……▼
-寒い中　面倒ですが
-探すと　しますか……！▼</Text>
+寒い中　わずらわしいが
+探すと　するか……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T06:14:03" />
+				Time="2011-12-18T08:31:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1208,12 +1210,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>プラズマだん『ポケモンは　どうぐ！
-おれは　そう　おそわっている▼
+おれは　そう　おそわった！▼
 よけいな　おもいが　ないほうが
 うまく　どうぐを　あつかえるからな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-28T05:54:50" />
+				Time="2011-12-18T08:31:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1222,12 +1224,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>プラズマ団『ポケモンは　道具！
-おれは　そう　教わっている▼
+おれは　そう　教わった！▼
 余計な　思いが　ないほうが
 うまく　道具を　扱えるからな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T09:33:21" />
+				Time="2011-12-18T08:31:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1960,10 +1962,12 @@
 			Language="JPN">
 			<Text>ヴィオ『やれやれ……▼
 さむいなか　ワタシが
-たたかわねば　ならんとは▼</Text>
+たたかわねば　ならぬとは▼
+まあよい……　ふるえているかぎり
+ワタシは　いきておる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T09:39:07" />
+				Time="2011-12-18T08:38:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1973,10 +1977,12 @@
 			Language="JPN_KANJI">
 			<Text>ヴィオ『やれやれ……▼
 寒い中　ワタシが
-戦わねば　ならんとは▼</Text>
+戦わねば　ならぬとは▼
+まあよい……　震えているかぎり
+ワタシは　生きておる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T09:39:15" />
+				Time="2011-12-18T08:38:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2013,19 +2019,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヴィオ『つよい　トレーナーです▼
-さすが　ポケモンを　つかいこなすことに
-たけている　にんげん　ですね▼
-さて　ここは　いちど　ひきあげましょう
+			<Text>ヴィオ『つよい　トレーナーだな▼
+さすが　ポケモンを
+つかいこなすことに　たけておる▼
+さて　ここは　いちど　ひきあげるか
 なにより　さむくて　かなわん！▼
-ですが　そうぞう　してくださいよ▼
+だが　そうぞう　するのだ▼
 イッシュちほうの　すべてが
 こおりづけに　なる　さまを▼
-そのために　どうしても
-いでんしのくさびを　てにいれます▼</Text>
+そのために　なにがあっても
+いでんしのくさびは　てにいれるぞ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T06:19:54" />
+				Time="2011-12-18T08:39:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2033,19 +2039,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヴィオ『強い　トレーナーです▼
-さすが　ポケモンを　使いこなすことに
-長けている　人間ですね▼
-さて　ここは　一度　引き上げましょう
+			<Text>ヴィオ『強い　トレーナーだな▼
+さすが　ポケモンを
+使いこなすことに　長けておる▼
+さて　ここは　一度　引き上げるか
 なにより　寒くて　かなわん！▼
-ですが　想像してくださいよ▼
+だが　想像するのだ▼
 イッシュ地方の　すべてが
 氷漬けに　なる　様を▼
-そのために　どうしても
-いでんしのくさびを　手に入れます▼</Text>
+そのために　なにがあっても
+いでんしのくさびは　手に入れるぞ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T06:19:54" />
+				Time="2011-12-18T08:42:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2075,7 +2081,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャガ『さすがだな
+			<Text>シャガ『さすがだ
 きみの　おかげで　たすかった▼
 たたかってくれた　きみの　だいじな
 ポケモンにも　かんしゃ　しているよ▼
@@ -2083,7 +2089,7 @@
 この　くすりで　かいふくを……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T09:44:18" />
+				Time="2011-12-18T08:42:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2091,7 +2097,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シャガ『さすがだな
+			<Text>シャガ『さすがだ
 きみの　おかげで　助かった▼
 戦ってくれた　きみの　大事な
 ポケモンにも　感謝しているよ▼
@@ -2099,7 +2105,7 @@
 この薬で　回復を……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T09:40:46" />
+				Time="2011-12-18T08:42:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2354,7 +2360,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『……ジムが
+			<Text>ダークトリニティ『……ジムが
 かくしばしょ　だったか▼
 なるほど
 よく　かんがえている▼
@@ -2363,10 +2369,10 @@
 ポケモンジムを　かいそう　したのも
 それが　りゆう　か▼
 ですが　いでんしのくさび　は
-いま　わたしが　いただきました▼</Text>
+いま　わたしが　いただいた▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T06:26:24" />
+				Time="2011-12-18T08:43:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2374,7 +2380,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『……ジムが
+			<Text>ダークトリニティ『……ジムが
 隠し場所　だったか▼
 なるほど
 よく　考えている▼
@@ -2383,10 +2389,10 @@
 ポケモンジムを　改装したのも
 それが　理由か▼
 ですが　いでんしのくさび　は
-今　わたしが　いただきました▼</Text>
+今　わたしが　いただいた▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T06:26:25" />
+				Time="2011-12-18T08:43:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2477,18 +2483,18 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『ええ▼
+			<Text>ダークトリニティ『ああ▼
 ですが　どんな　てを　つかってでも
-こんかいは　もくてきを　たっせいします▼
+こんかいは　もくてきを　たっせいする▼
 Ｎさまの　ように
 たみの　こころを　うばう▽
 きゅうしんりょくが　ありません▼
 かわりに　あっとうてきな　ちからで
-ひとびとを　くっぷく　させるのです……▽
-２ねんは　ぞんがい　ながいものです▼</Text>
+ひとびとを　くっぷく　させる……▽
+２ねんは　ぞんがい　ながいぞ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T06:26:38" />
+				Time="2011-12-18T08:43:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2496,18 +2502,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『ええ▼
+			<Text>ダークトリニティ『ああ▼
 ですが　どんな　手段ででも
-今回は　目的を　達成します▼
+今回は　目的を　達成する▼
 Ｎさまの　ように
 民の　心を　奪う▽
 求心力が　ありません▼
 代わりに　圧倒的な　力で
-人々を　屈服させるのです……▽
-２年は　存外　長いものです▼</Text>
+人々を　屈服させる……▽
+２年は　存外　長いぞ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T06:26:38" />
+				Time="2011-12-18T08:43:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2647,11 +2653,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>？？？『……いでんしのくさび
+			<Text>ダークトリニティ『……フフ▼
+いでんしのくさび
 うばいかえせるか　わたしから？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T06:00:32" />
+				Time="2011-12-18T08:43:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2659,11 +2666,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>？？？『……いでんしのくさび
+			<Text>ダークトリニティ『……フフ▼
+いでんしのくさび
 奪い返せるか　わたしから？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T06:00:36" />
+				Time="2011-12-18T08:43:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
