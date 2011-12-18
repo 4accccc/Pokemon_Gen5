@@ -4860,12 +4860,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あいかわらず
-？？？に　いるよ▼
+ホドモエに　いるよ▼
 オマエは　オマエの
 すきに　すれば　いいんじゃない？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-14T05:40:35" />
+				Time="2011-12-18T09:28:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4908,6 +4908,632 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_21"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いもうとの　みた　ゆめ……
+おぼえているかッ！？▼
+チャンピオンロードの　ゾロアーク
+あれ　しらべたほうが　いいだろ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:50:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:28:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>妹の　みた　夢……
+おぼえているのかッ！？▼
+チャンピオンロードの　ゾロアーク
+あれ　調べたほうが　いいだろ？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:50:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:44:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・クリア後、n01r0502でＮと戦闘前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:30:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:27:03" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_22"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リュウラセンのとう　だよッ！▼
+でんせつの　ポケモン
+レシラムや　ゼクロムは▼
+そこで　うまれたとか　いろいろ
+でんせつが　あるんだよなッ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:49:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:41:05" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リュウラセンの塔　だよッ！▼
+でんせつの　ポケモン
+レシラムや　ゼクロムは▼
+そこで　生まれたとか　いろいろ
+伝説が　あるんだよなッ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:49:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:44:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・クリア後、d08r0901でレシラム/ゼクロムと戦闘前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:30:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:27:03" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_23"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ジャイアントホール……　か▼
+オマエ　あそこで
+キュレムと　たたかったんだよな▼
+そのあと　キュレムって
+どうしてるんだっけ……？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:49:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:42:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ジャイアントホール……　か▼
+オマエ　あそこで
+キュレムと　戦ったんだよな▼
+そのあと　キュレムって
+どうしてるんだっけ……？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:49:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:44:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・クリア後、d10r0501でキュレムと戦闘前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:31:02" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:27:03" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_24"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギはかせに　よばれたよ▼
+だけど　オレ　そんなに
+ポケモンずかんを　うめてないし……▼
+オマエは　だいじょうぶ　だろ？▼
+オレの　かわりに　すごい
+ポケモンずかんを　みせておけよッ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:48:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:42:48" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ博士に　呼ばれたよ▼
+だけど　オレ　そんなに
+ポケモン図鑑を　埋めてないし……▼
+オマエは　大丈夫だろ？▼
+オレの　代わりに　すごい
+ポケモン図鑑を　みせておけよッ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:48:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:44:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・クリア後、t01r0401、ポケモン研究所ですごいつりざお入手前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:31:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:27:03" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_25"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>オマエ　しってるか？
+２０ばんどうろの　ふしぎなほらあな▼
+めずらしい　ポケモンが　いたら
+ラッキーだから　いってみろよッ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:47:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:43:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オマエ　知ってるか？
+２０番道路の　不思議な洞穴▼
+珍しい　ポケモンが　いたら
+ラッキーだから　いってみろよッ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:47:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:44:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・クリア後、d33r0101で心の空洞イベント前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:31:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:27:03" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_26"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シッポウはくぶつかんは　イッシュで
+いちばん　ちしきが　あつまる▽
+ばしょという　ひとも　いるよな▼
+そういえば　さいきん　ふしぎな
+ポケモンを　みるって　うわさがある▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:41:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:39:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シッポウ博物館は　イッシュで
+一番　知識が　集まる▽
+場所という　ひとも　いるよな▼
+そういえば　最近　不思議な
+ポケモンを　みるって　うわさがある▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:47:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:44:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・クリア後、c02でユクシーとの戦闘前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:31:18" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:27:03" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_27"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>タワーオブヘブンの　かね……
+かんじょうを　ゆらす　かね　だよな▼
+そういえば　さいきん　ふしぎな
+ポケモンを　みるって　うわさがある▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:40:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:39:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>タワーオブヘブンの　鐘……
+感情を　揺らす　鐘だよな▼
+そういえば　最近　不思議な
+ポケモンを　みるって　うわさがある▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:47:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:44:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・クリア後、r07r0105でエムリットとの戦闘前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:31:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:27:03" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_28"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>チャンピオンロードに　つながる
+２３ばんどうろ……　あそこは▽
+つよい　いしが　ためされるよな▼
+そういえば　さいきん　ふしぎな
+ポケモンを　みるって　うわさがある▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:39:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:37:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>チャンピオンロードに　つながる
+２３番道路……　あそこは▽
+強い　意思が　試されるよな▼
+そういえば　最近　不思議な
+ポケモンを　みるって　うわさがある▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:46:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:44:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・クリア後、r23でアグノムとの戦闘前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:31:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:27:03" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_29"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゆめのあとちに　ひきよせられた
+まぼろしの　ポケモン……▼
+いや　なんでもないから▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:46:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:35:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>夢の跡地に　引き寄せられた
+幻の　ポケモン……▼
+いや　なんでもないから▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:46:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:44:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・クリア後、d01でラティオス/ラティアスとの戦闘前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:31:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:27:03" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_30"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>１８ばんどうろに　いったか？▼
+あそこで　きたえるのも
+わるくない　はなしだと　おもうぜッ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:34:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:33:27" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>１８番道路に　行ったか？▼
+あそこで　鍛えるのも
+悪くない　話しだと　思うぜッ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:45:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:44:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・クリア後、r18でかざんのおきいし入手前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:31:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:27:03" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_31"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あのさ……　リバースマウンテンに
+でかい　ほのおの　ポケモンが▽
+いるって　きいたけど　ほんとかな？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:34:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:34:02" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あのさ……　リバースマウンテンに
+でかい　ほのおの　ポケモンが▽
+いるって　きいたけど　ほんとかな？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:45:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:44:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・クリア後、d24でヒードランとの戦闘前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:31:40" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:27:03" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_32"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リバースマウンテンちかくに
+ストレンジャーハウスが　あるんだよ▼
+そこで　ふしぎなはねを　みたって
+きいたことがあるけど　しってるか？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:45:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:32:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リバースマウンテン近くに
+ストレンジャーハウスが　あるんだよ▼
+そこで　不思議なはねを　みたって
+きいたことがあるけど　知ってるか？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:45:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:44:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・クリア後、d25でみかづきのはね入手前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:31:46" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:27:03" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_33"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>オレ……　みたんだよ
+ワンダーブリッジで　ゆうれいを▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:35:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:34:41" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>オレ……　みたんだよ
+ワンダーブリッジで　幽霊を▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:44:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:44:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・h05でクレセリアとの戦闘前</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:32:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-18T09:32:10" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_CHELEN_GREET_01"
