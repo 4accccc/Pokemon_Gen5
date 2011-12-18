@@ -378,7 +378,7 @@ EVENT_START	ev_bg_c06gym0101_statue
 	_PLAYER_NAME( 0 )
 	_PLAINWIN_MSG_DOWN( msg_c06gym0101_statue_01 )
 
-  //ジムバッジを取得している場合【仮】
+  //ジムバッジを取得している場合
   ELSE
 	
 	//サザナミタウンにまだ行ってない場合

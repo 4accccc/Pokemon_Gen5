@@ -117,7 +117,7 @@ EVENT_START   ev_pos_r23_sppoke3_01
 
   ELSE    //‚¢‚¢‚¦
 
-    _AB_KEYWAIT_MARK()
+    _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
 
   ENDIF

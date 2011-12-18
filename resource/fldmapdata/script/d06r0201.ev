@@ -38,8 +38,6 @@ EVENT_START   ev_d06r0201_swbell_01
   _BALLOONWIN_OBJMSG( msg_d06r0201_swbell_01, D06R0201_SWBELL_01 )
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
-  
-  //【仮】OBJ非表示条件をヤマジタウン到着のタイミングで
 
 EVENT_END
 

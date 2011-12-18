@@ -390,6 +390,7 @@
 #define WK_OTHER_LINKEVENT_ZONE          16786 /* 0x4192 PC：おもいでリンク起動箇所 */
 #define WK_OTHER_C16_NEON_SELECT         16787 /* 0x4193 ジョインアベニュー　ネオン最終確認 */
 #define WK_OTHER_N01R0502_N_SEASON       16788 /* 0x4194 N城：Nと戦闘した季節格納ワーク */
+#define WK_OTHER_D24_PAIR                16789 /* 0x4195 リバースマウンテン：ベル連れ歩きセリフ */
 
 #define WK_AREA_END                      16815 /* 0x41af  */
 

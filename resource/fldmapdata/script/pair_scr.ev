@@ -143,29 +143,21 @@ EVENT_END
 EVENT_START		ev_d24_swbell
   _TALK_START_SE_PLAY()
   
-  //【仮】メッセージラベルが仮
-  _BALLOONWIN_OBJMSG( msg_d24r0901_swbell_07, PAIR_TRAINER_01 )
-  _LAST_KEYWAIT()
-  _MSGWIN_CLOSE()
-  
-   //主人公・チェレン名代入
+   //主人公名代入
   _PLAYER_NAME( 0 )
-  _RIVAL_NAME( 1 )
   
-  /*
   //話しかけるごとに0～4のセリフを順番に表示（4で終わり）
-  $SCWK_TEMP0 = msg_d02r0101_swleader1_05
-  $SCWK_TEMP0 += $WK_OTHER_D02R0101_PAIR
+  $SCWK_TEMP0 = msg_d24r0301_swbell_07
+  $SCWK_TEMP0 += $WK_OTHER_D24_PAIR
   
   _TALK_OBJ_START()
   _BALLOONWIN_OBJMSG( SCWK_TEMP0, PAIR_TRAINER_01 )
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
   
-  IF $WK_OTHER_D02R0101_PAIR != 4 THEN
-    $WK_OTHER_D02R0101_PAIR += 1
+  IF $WK_OTHER_D24_PAIR != 4 THEN
+    $WK_OTHER_D24_PAIR += 1
   ENDIF
- */
   
 EVENT_END
 

@@ -37,7 +37,7 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START   ev_d35r0101_poke_01
 
-  _TALK_START_SE_PLAY()
+  _TALK_OBJ_START()
 
   //黒オノノクス：グァオォーウッ！！
   _VOICE_PLAY( MONSNO_509, 0 ) 

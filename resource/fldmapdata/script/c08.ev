@@ -705,7 +705,7 @@ ev_c08_ninja_comming:
   _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_13 , C08_SWLEADER7_01 , POS_UR)
   _MSGWIN_CLOSE()
   
-  //【仮】回復処理（メッセージが必要かも）
+  //回復処理
   _SE_PLAY( SEQ_SE_RECOVERY )
   _SE_WAIT()
 	//回復処理

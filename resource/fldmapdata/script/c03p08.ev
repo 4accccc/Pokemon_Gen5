@@ -93,16 +93,6 @@ EVENT_START		ev_pos_c03p08_fesguide_01
   
   //自機座標取得
   _PLAYER_POS_GET( LCW_POSX,LCW_POSZ )
-
-/*【仮】移動バグが出たため以下の処理をコメントアウト。演出を要検討。
-
-  IF $LCW_POSX != 13 THEN
-    $LCW_POSX -= 1
-    _OBJ_ANIME_AUTO( C03P08_FESGUIDE_01, LCW_POSX , LCW_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
-    _OBJ_ANIME_WAIT()
-  ENDIF
-
-*/
   
   //ガイド：そこのあなた
   _BALLOONWIN_OBJMSG_POS( msg_c03p08_fesguide_02,C03P08_FESGUIDE_01, POS_DEFAULT )

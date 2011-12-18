@@ -66,7 +66,7 @@ INIT_EVENT_START   ev_zone_c06
   //データコンバートフラグチェック
   _DATACONV_GET_FLAG( DATACONV_FLAG_BADGE_06, LOCALWORK15 )
 
-  //【仮】C06到着イベント終了でヤマジタウン到着でリンクイベント起動
+  //C06到着イベント終了でヤマジタウン到着でリンクイベント起動
   IF $LOCALWORK15 == 1 && $WK_SYS_LINK_EVENT_02 == 0 && $WK_SCENE_T07 >= 1 THEN
     //========================================//
     //C06フウロ表示

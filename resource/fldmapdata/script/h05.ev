@@ -385,7 +385,7 @@ EVENT_START   ev_pos_h05_poke488_01
     $WK_SCENE_H05_POKE488 = 2
     //==================================//
 
-    //アニメ：主人公手を掲げる【仮】アニメは仮です
+    //アニメ：主人公手を掲げる
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
     _OBJ_ANIME_WAIT()
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_itemget )
@@ -529,7 +529,7 @@ _ANIME_LABEL  anm_common_turn_d
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//主人公：手を掲げる【仮】アイテムゲットと同じものを使用中
+//主人公：手を掲げる
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_itemget
   _ANIME_DATA AC_HERO_ITEMGET,1
