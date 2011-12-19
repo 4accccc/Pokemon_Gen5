@@ -602,14 +602,26 @@ const REGULATIONEX * WBTSYS_GetRegulationEx( WBTSYS * wbtsys )
 {
   u8 poketype = POKETYPE_NULL;
   u16 waza_no = 0;
-  if ( wbtsys->wbtcup == WBTCUP_POKETYPE )
-  { //タイプトーナメントの場合はタイプ指定
-    poketype = wbtsys->poketype;
-  }
-  else if ( wbtsys->wbtcup == WBTCUP_DOWNLOAD )
+
+  switch ( WBTTOOL_GetRegulationID( wbtsys->wbtcup ) )
   {
+  default:
+    GF_ASSERT( 0 );
+    /* FALL THROUGH */
+  case WBTREG_ALL:
+    break;
+  case WBTREG_SUBWAY:
+    //サブウェイルールではフリーフォール禁止
+    waza_no = WAZANO_HURIIFOORU;
+    break;
+  case WBTREG_POKETYPE:
+    //タイプトーナメントの場合はタイプ指定
+    poketype = wbtsys->poketype;
+    break;
+  case WBTREG_DOWNLOAD:
     poketype = wbtsys->wbtdl_data.wbtdl_rule.need_poketype;
     waza_no = wbtsys->wbtdl_data.wbtdl_rule.veto_waza_no;
+    break;
   }
   REGULATIONEX_Init( &wbtsys->wbtreg.ex_reg, poketype, waza_no );
 #ifdef PM_DEBUG
