@@ -6,7 +6,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]ぼくは　[Name:TrainerName ]
+			<Text>[Ctrl1:xcenter ]ぼくは　[Name:TrainerName Idx="1" ]
 
 [Ctrl1:xcenter ]ヘンなものを　あつめるのが　しゅみの
 [Ctrl1:xcenter ]ごくごく　ふつうの　おとこさ……
@@ -14,8 +14,8 @@
 [Ctrl1:xcenter ]まあ　かのじょからは　マニアって
 [Ctrl1:xcenter ]よばれてるけどさ</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-10T12:50:22" />
+				User="mori:W00269"
+				Time="2011-12-19T07:52:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23,7 +23,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]僕は　[Name:TrainerName ]
+			<Text>[Ctrl1:xcenter ]僕は　[Name:TrainerName Idx="1" ]
 
 [Ctrl1:xcenter ]ヘンなものを　集めるのが　趣味の
 [Ctrl1:xcenter ]ごくごく　普通の　男さ……
@@ -31,8 +31,8 @@
 [Ctrl1:xcenter ]まあ　彼女からは　マニアって
 [Ctrl1:xcenter ]呼ばれてるけどさ</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-10T12:50:25" />
+				User="mori:W00269"
+				Time="2011-12-19T07:52:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -310,7 +310,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Ctrl1:xcenter ]アタシは　[Name:TrainerName ]
+			<Text>[Ctrl1:xcenter ]アタシは　[Name:TrainerName Idx="1" ]
 
 [Ctrl1:xcenter ]ヘンなものを　あつめるのが　しゅみの
 [Ctrl1:xcenter ]ごくごく　ふつうの　おんなのこ……
@@ -318,8 +318,8 @@
 [Ctrl1:xcenter ]まあ　おねえちゃんからは　マニアって
 [Ctrl1:xcenter ]よばれてるけどさ</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-10T12:51:34" />
+				User="mori:W00269"
+				Time="2011-12-19T07:52:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
@@ -327,7 +327,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Ctrl1:xcenter ]アタシは　[Name:TrainerName ]
+			<Text>[Ctrl1:xcenter ]アタシは　[Name:TrainerName Idx="1" ]
 
 [Ctrl1:xcenter ]ヘンなものを　集めるのが　趣味の
 [Ctrl1:xcenter ]ごくごく　普通の　女の子……
@@ -335,8 +335,8 @@
 [Ctrl1:xcenter ]まあ　お姉ちゃんからは　マニアって
 [Ctrl1:xcenter ]呼ばれてるけどさ</Text>
 			<TextModifiedBy
-				User="nakatsui:DB5YGPBX"
-				Time="2011-11-10T12:52:16" />
+				User="mori:W00269"
+				Time="2011-12-19T07:52:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="mori:W00269"
