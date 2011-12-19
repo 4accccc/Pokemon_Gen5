@@ -237,9 +237,9 @@ sub_wheel_trade:
   // «•Ê‚Å‚à‚ç‚¤ƒ|ƒPƒ‚ƒ“•ÏX
   _GET_MY_SEX( SCWK_ANSWER )
   IF $SCWK_ANSWER == PM_MALE THEN
-    $fld_trade_poke_no = FLD_TRADE_POKE_26_NYAASU
+    $fld_trade_poke_no = FLD_TRADE_POKE_13_NYAASU
   ELSE
-    $fld_trade_poke_no = FLD_TRADE_POKE_14_MANKII
+    $fld_trade_poke_no = FLD_TRADE_POKE_1_MANKII
   ENDIF
 
   // ŒğŠ·‰ñ”‚ğ‘«‚·
