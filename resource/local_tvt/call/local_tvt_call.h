@@ -8,7 +8,7 @@
 //============================================================================================
 #pragma once
 //データ定義
-#define LOCAL_TVT_CALLDATA_MAX (133)
+#define LOCAL_TVT_CALLDATA_MAX (120)
 //人物定義
 #define LOCAL_TVT_PERSON_CHELEN (2)
 #define LOCAL_TVT_PERSON_MOTHER (4)
@@ -60,19 +60,6 @@
 #define RIVAL_STATE_PLASMAHOME_1 (24)
 #define RIVAL_STATE_PLASMAHOME_2 (25)
 #define RIVAL_STATE_PARK (26)
-#define RIVAL_STATE_N (27)
-#define RIVAL_STATE_RESHIRAMZEKROM (28)
-#define RIVAL_STATE_KYUREM (29)
-#define RIVAL_STATE_ROD (30)
-#define RIVAL_STATE_D33 (31)
-#define RIVAL_STATE_YUXIE (32)
-#define RIVAL_STATE_EMRIT (33)
-#define RIVAL_STATE_AGNOME (34)
-#define RIVAL_STATE_LATIASLATIOS (35)
-#define RIVAL_STATE_R18 (36)
-#define RIVAL_STATE_HEATRAN (37)
-#define RIVAL_STATE_D25 (38)
-#define RIVAL_STATE_CRECELIA (39)
 #define CHELEN_STATE_GYM (0)
 #define CHELEN_STATE_WBT_1 (1)
 #define CHELEN_STATE_WBT_2 (2)
@@ -162,4 +149,4 @@
 #define BELL_STATE_MAX (11)
 #define SECRET_STATE_MAX (52)
 #define DOCTOR_STATE_MAX (10)
-#define RIVAL_STATE_MAX (40)
+#define RIVAL_STATE_MAX (27)
