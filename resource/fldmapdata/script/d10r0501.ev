@@ -378,6 +378,8 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   _OBJ_POS_CHANGE( D10R0501_SWSAGE1_01, 17, 0, 16, DIR_DOWN)
   // ‰ð•úƒLƒ…ƒŒƒ€‚ÍX‚É+1‚·‚é
   _OBJ_POS_CHANGE( D10R0501_POKE1_01, 15, 0, 16, DIR_DOWN )
+  //N‚ÌŒü‚«‚ð¶Œü‚«‚É
+  _OBJ_POS_CHANGE( D10R0501_BOSS_01, 17, 0, 19, DIR_LEFT )
   //_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 15, 0, 20, DIR_UP)
 
   // N‚ð‚¸‚ç‚µ‚Ä‚¢‚½‚Ì‚ðŒ³‚É‚à‚Ç‚·
@@ -452,6 +454,8 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   _OBJ_POS_CHANGE( D10R0501_SWSAGE1_01, 17, 0, 16, DIR_DOWN)
   //ŽålŒöˆÚ“®
   _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 15, 0, 20, DIR_UP)
+  //Nã‚ðŒü‚­
+  _OBJ_POS_CHANGE( D10R0501_BOSS_01, 17, 0, 19, DIR_UP )
   //========================================//
 
   // ˆÃ“]’†‚ÉƒJƒƒ‰‚ð•Ï‚¦‚é
