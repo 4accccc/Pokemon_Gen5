@@ -2,17 +2,15 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_r14r0201_skill_01"
+		Label="msg_r14r0201_landorus_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName ]は　わざの
-しんそくを　おぼえようと　している！▼
-[Name:PokemonName ]に
-しんそくを　おぼえさせますか？</Text>
+			<Text>むむっ！▼
+</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:07:38" />
+				Time="2011-12-19T11:29:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -20,13 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName ]は　わざの
-しんそくを　おぼえようと　している！▼
-[Name:PokemonName ]に
-しんそくを　おぼえさせますか？</Text>
+			<Text>むむっ！▼
+</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:08:07" />
+				Time="2011-12-19T11:41:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -34,33 +30,41 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>フォルムチェンジしたランドロスが手持ちにいる
+			<Comment>♂
+・フォルムチェンジしたランドロスが手持ちにいると
+　GRIDX＝22、GRIDZ＝14、上向きで出現
+・posイベント
+　GRIDX＝21～23、GRIDZ＝17
+・振り向き→！マーク→メッセージ
+　→隣接してlandorus_02に
 ・モンスターナンバーチェック
 　MONSNO_RANDOROSU (645)
 ・フォルムナンバーチェック
 　FORMNO_RANDOROSU_AR (1)</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T10:41:31" />
+				Time="2011-12-19T11:39:36" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>システム</Text>
+			<Text>OLDMAN</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:03:48" />
+				Time="2011-12-19T11:39:11" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_r14r0201_skill_02"
+		Label="msg_r14r0201_landorus_02"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すでに　わざを　４つ　おぼえている！
-わざを　わすれさせますか？▼</Text>
+			<Text>ほほう！　ほうほう！
+なんと　たいした　トレーナーだ！▼
+おまえさんが　つれているのは　なんと
+れいじゅうフォルムの　ランドロス！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:02:51" />
+				Time="2011-12-19T12:00:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -68,11 +72,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すでに　技を　４つ　覚えている！
-技を　忘れさせますか？▼</Text>
+			<Text>ほほう！　ほうほう！
+なんと　たいした　トレーナーだ！▼
+おまえさんが　連れているのは　なんと
+霊獣フォルムの　ランドロス！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:02:51" />
+				Time="2011-12-19T12:07:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -80,30 +86,37 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>新フォルムのランドロスを手持ちに入れて豊穣の社に行くと老人が出現。(X22,Z14：上向き)
-
-(X21～23,Z17)の位置でPOSイベント起動、老人が主人公に気づき話し始める		</Comment>
+			<Comment>♂
+・続けてlandorus_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T10:44:20" />
+				Time="2011-12-19T12:00:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>システム</Text>
+			<Text>OLDMAN</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:03:50" />
+				Time="2011-12-19T11:39:12" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_r14r0201_skill_03"
+		Label="msg_r14r0201_landorus_03"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わすれさせる</Text>
+			<Text>むかし　むかしの　ことだ……▼
+トルネロス　ボルトロスが
+れいじゅうフォルムで　あばれだし▼
+イッシュちほうが　あれるのか……
+そう　みなが　あきらめたとき▼
+どこからともなく　あらわれ
+２ひきを　とめたのが　おなじく▽
+れいじゅうフォルムの　ランドロス！▼
+だったそうじゃ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:03:02" />
+				Time="2011-12-19T11:45:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -111,10 +124,18 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わすれさせる</Text>
+			<Text>昔々の　ことだ……▼
+トルネロス　ボルトロスが
+霊獣フォルムで　暴れだし▼
+イッシュ地方が　荒れるのか……
+そう　みなが　あきらめたとき▼
+どこからともなく　現われ
+２匹を　とめたのが　同じ▽
+霊獣フォルムの　ランドロス！▼
+だったそうじゃ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:03:02" />
+				Time="2011-12-19T12:08:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -122,32 +143,32 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>3.話の内容は、だいたい以下のようなことを話す。	
-	a.霊獣フォルムのランドロスを捕まえたのね！
-	b.昔、霊獣フォルムでトロス３匹が大暴れしたんだよねー
-	c.この社は２匹の喧嘩をとめたランドロスを祭ったものらしい
-	※何かしらのトロスにまつわる噂話が聞ければ良いと思っています。</Comment>
+			<Comment>♂
+・主人公とは向き合わずに
+　メッセージ表示
+・続けてlandorus_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T10:44:25" />
+				Time="2011-12-19T12:00:03" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>選択肢</Text>
+			<Text>OLDMAN</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:03:45" />
+				Time="2011-12-19T11:39:12" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_r14r0201_skill_04"
+		Label="msg_r14r0201_landorus_04"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あきらめる</Text>
+			<Text>おお！　そうだ！
+ちょいと　まっておれ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:03:02" />
+				Time="2011-12-19T11:46:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -155,10 +176,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あきらめる</Text>
+			<Text>おお！　そうだ！
+ちょいと　待っておれ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:03:02" />
+				Time="2011-12-19T12:08:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -166,29 +188,31 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>社の前まで歩いてから主人公の前へ戻ってきて道具入手	</Comment>
+			<Comment>♂
+・再度、主人公と向き合って
+　メッセージ表示</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T10:44:31" />
+				Time="2011-12-19T11:46:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>選択肢</Text>
+			<Text>OLDMAN</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:03:45" />
+				Time="2011-12-19T11:39:12" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_r14r0201_skill_05"
+		Label="msg_r14r0201_landorus_05"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName ]は
-しんそくを　おぼえなかった</Text>
+			<Text>やしろに　まつられていた
+これを　もってゆくが　いい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:08:00" />
+				Time="2011-12-19T11:48:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -196,11 +220,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName ]は
-しんそくを　おぼえなかった</Text>
+			<Text>社に　まつられていた
+これを　持ってゆくが　いい▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:08:03" />
+				Time="2011-12-19T12:09:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -208,63 +232,72 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>	
-5.道具の説明を話す	
-	a.映し鏡はトロスの姿を変えるという言い伝えじゃ！
-	
-6.老人立ち去って終わり	</Comment>
+			<Comment>♂
+・アイテム入手処理
+　No638「うつしかがみ」
+・続けてlandorus_06</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T10:44:36" />
+				Time="2011-12-19T12:00:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>システム</Text>
+			<Text>OLDMAN</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:21:34" />
+				Time="2011-12-19T11:39:12" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_r14r0201_boy1_06"
+		Label="msg_r14r0201_landorus_06"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonName ]は
-しんそくを　おぼえなかった▼</Text>
+			<Text>うつしかがみを　つかうと
+ランドロスたちの　ほんとうの▽
+すがたに　もどすと　いわれておる▼
+もっとも　けしんフォルム
+れいじゅうフォルムの　どっちが▽
+ほんとうの　すがたか　しらんがな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:21:44" />
+				Time="2011-12-19T11:45:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:21:39" />
+				Time="2011-12-19T11:45:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonName ]は
-しんそくを　おぼえなかった▼</Text>
+			<Text>うつしかがみを　使うと
+ランドロスたちの　本当の▽
+姿に　戻すと　いわれておる▼
+もっとも　化身フォルム
+霊獣フォルムの　どっちが▽
+本当の　姿か　知らんがな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:21:45" />
+				Time="2011-12-19T12:10:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:18:30" />
+				Time="2011-12-19T11:45:48" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>作成中</Comment>
+			<Comment>♂
+・メッセージ表示後、立ち去る
+・画面外に消えると主人公操作可能</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T10:41:39" />
+				Time="2011-12-19T11:45:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>システム</Text>
+			<Text>OLDMAN</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T10:21:39" />
+				Time="2011-12-19T11:45:48" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -342,10 +375,10 @@
 			Language="JPN">
 			<Text>ハイリンクに　フェスミッションの
 『[Name:FesMissionName ]』が▽
-ついか　されました</Text>
+ついか　されました！</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-28T08:33:49" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T10:54:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -355,10 +388,10 @@
 			Language="JPN_KANJI">
 			<Text>ハイリンクに　フェスミッションの
 『[Name:FesMissionName ]』が▽
-追加されました</Text>
+追加されました！</Text>
 			<TextModifiedBy
-				User="mizuguchi_mai:W00293"
-				Time="2011-11-28T08:34:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T10:54:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
