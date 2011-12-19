@@ -2,14 +2,16 @@
 <MessageStudioText
 	Format="1.2" xmlns="nintendo:msgstudio">
 	<TextRow
-		Label="msg_t06r0401_00_01"
+		Label="msg_t06r0401_cliff_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かりメッセージ</Text>
+			<Text>仮メッセージ▼
+かたい　がんばんに　３つの
+おおきな　きれつが　はいっている……</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-14T06:35:51" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T02:47:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -17,10 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
+			<Text>仮メッセージ▼
+かたい　がんばんに　３つの
+おおきな　きれつが　はいっている……</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-14T06:35:32" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T02:47:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -28,10 +32,611 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ケルディオイベント用</Comment>
+			<Comment>ケルディオイベント用
+・起動条件を満たしている場合はcliff_02へ
+・満たしていない場合はイベント終了</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-14T06:34:51" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T02:48:23" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BG
+</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T02:46:42" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06r0401_cliff_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>仮メッセージ▼
+モンスターボールに　はいっている
+[Name:PokemonNickname ]が▽
+でたがっている　ようだ……！▼
+そとに　だして　あげますか？</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T02:51:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T02:50:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼
+モンスターボールに　入っている
+[Name:PokemonNickname ]が▽
+出たがっている　ようだ……！▼
+外に　出して　あげますか？</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T02:51:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T02:51:11" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ケルディオイベント用
+・0＝ポケモンニックネーム
+・はい/いいえ選択肢分岐
+　　はい　⇒ボールから飛び出す演出
+　　　　　　　小芝居後、cliff_04へ
+　　いいえ⇒cliff_03へ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T02:55:32" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SYS</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T02:48:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06r0401_cliff_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>仮メッセージ▼
+モンスターボールの
+うごきが　とまったようだ……</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T02:54:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T02:52:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼
+モンスターボールの
+動きが　とまったようだ……</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T02:53:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T02:53:37" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ケルディオイベント用
+・表示後、イベント終了</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T02:55:51" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SYS</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T02:51:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06r0401_cliff_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname ]は
+３びきの　のこした　きずあとから▽
+しんぴのつるぎを　おもいだした！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T02:57:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T02:56:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname ]は
+３びきの　のこした　きずあとから▽
+しんぴのつるぎを　おもいだした！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T02:57:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T02:57:46" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ケルディオイベント用
+・0＝ポケモンニックネーム
+・わざを４つ覚えている場合はわざ忘れ処理へ
+・４つ未満の場合はフォルムチェンジ処理へ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T02:58:30" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SYS</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T02:56:16" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06r0401_cliff_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]は
+すでに　わざを　４つ　おぼえている！▼
+わざを　わすれさせますか？▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:47:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:47:40" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]は
+すでに　わざを　４つ　覚えている！▼
+わざを　忘れさせますか？▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:48:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:48:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・技スロットに空きがない場合
+・はい/いいえ選択肢表示
+　はい　→技忘れ画面へ
+　いいえ→cliff_06
+・0＝ケルディオのニックネーム</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:50:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SYS</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:49:51" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06r0401_cliff_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>それでは　しんぴのつるぎを
+おもいだすのを　あきらめますか？</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:48:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:48:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それでは　しんぴのつるぎを
+思い出すのを　あきらめますか？</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:48:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:48:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・「しんぴのつるぎ」を覚えない場合
+・0＝ケルディオのニックネーム</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:50:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SYS</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:49:51" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06r0401_cliff_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]は　しんぴのつるぎ　を
+おもいださなかった！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:49:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:48:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]は　しんぴのつるぎ　を
+思い出さなかった！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:49:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:48:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・「しんぴのつるぎ」を覚えない場合
+・0＝ケルディオのニックネーム</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:51:05" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SYS</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:49:51" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06r0401_cliff_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:Move Idx="1" ]を
+わすれさせて　よろしいですね？</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:48:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:48:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:Move Idx="1" ]を
+忘れさせて　よろしいですね？</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:48:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:48:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・「しんぴのつるぎ」を覚える場合
+・1＝忘れるわざ名
+・はい/いいえ選択肢表示
+　はい　→cliff_09
+　いいえ→cliff_05</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:51:29" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SYS</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:49:51" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06r0401_cliff_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>１[Ctrl2:WaitOne frame="20" ]　２の[Ctrl2:WaitOne frame="20" ]…[Ctrl2:WaitOne frame="20" ]…[Ctrl2:WaitOne frame="20" ]　ポカン！[Ctrl2:CallBackOne arg="3" ][Ctrl2:CallBackCont arg="2" ][Ctrl2:CallBackReset ][Ctrl2:WaitReset ]▼
+[Name:PokemonNickname Idx="0" ]は　[Name:Move Idx="1" ]の
+つかいかたを　きれいにわすれた！▼
+そして……！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:48:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:48:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>１[Ctrl2:WaitOne frame="20" ]　２の[Ctrl2:WaitOne frame="20" ]…[Ctrl2:WaitOne frame="20" ]…[Ctrl2:WaitOne frame="20" ]　ポカン！[Ctrl2:CallBackOne arg="3" ][Ctrl2:CallBackCont arg="2" ][Ctrl2:CallBackReset ][Ctrl2:WaitReset ]▼
+[Name:PokemonNickname Idx="0" ]は　[Name:Move Idx="1" ]の
+使い方を　きれいに忘れた！▼
+そして……！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:48:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:48:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・「しんぴのつるぎ」を覚える場合
+・0＝ケルディオのニックネーム
+・1＝忘れるわざ名
+続けてcliff_10へ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T05:17:27" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SYS</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:49:51" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06r0401_cliff_10"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:PokemonNickname ]は
+しんぴのつるぎを　おもいだした！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:50:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:50:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname ]は
+しんぴのつるぎを　思い出した！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:50:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:50:08" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・「しんぴのつるぎ」を覚える場合
+・0＝ケルディオのニックネーム
+続けてcliff_11へ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T05:17:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SYS</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T03:49:51" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06r0401_cliff_11"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>仮メッセージ▼
+[Name:PokemonNickname ]の　ようすが……？▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T05:22:16" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T05:16:32" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼
+[Name:PokemonNickname ]の　様子が……？▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T05:22:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T05:16:50" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・0＝ケルディオのニックネーム
+・メッセージ送り後、フォルムチェンジ演出へ
+・演出終了後cliff_12へ</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T05:22:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SYS</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T05:16:24" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t06r0401_cliff_12"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>仮メッセージ▼
+[Name:PokemonNickname ]は　なにごとにも　くっしない
+かくごを　もった　すがたに　へんかした！</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T05:21:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T05:21:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>仮メッセージ▼
+[Name:PokemonNickname ]は　何事にも　屈しない
+覚悟を　もった　姿に　変化した！</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T05:22:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T05:21:32" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・0＝ケルディオのニックネーム
+・メッセージ送り後、ケルディオが手持ちに戻りイベント終了</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T05:23:14" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SYS</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-19T05:19:53" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 </MessageStudioText>
