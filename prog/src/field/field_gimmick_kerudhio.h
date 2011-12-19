@@ -20,7 +20,8 @@ extern void KERUDHIO_GIMMICK_Setup( FIELDMAP_WORK *p_fieldmap );
 extern void KERUDHIO_GIMMICK_End( FIELDMAP_WORK *p_fieldmap );
 extern void KERUDHIO_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap );
 
-// エフェクト再生
-extern void KERUDHIO_GIMMICK_Effect( GAMESYS_WORK *gsys, u8 effect_id );
-
+// ケルディオ演出イベント
+extern GMEVENT* KERUDHIO_GIMMICK_Event( GAMESYS_WORK *gsys );
+// エフェクト削除
+extern void KERUDHIO_GIMMICK_EffectDelete( GAMESYS_WORK *gsys );
 

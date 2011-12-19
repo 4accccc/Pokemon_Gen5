@@ -1,0 +1,29 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: kerudhio.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_KERUDHIO_NAIX_
+#define NARC_KERUDHIO_NAIX_
+
+enum {
+	NARC_kerudhio_effect_01_nsbmd = 0,
+	NARC_kerudhio_effect_01_nsbta = 1,
+	NARC_kerudhio_bili_01_nsbmd = 2,
+	NARC_kerudhio_koba_01_nsbmd = 3,
+	NARC_kerudhio_tera_01_nsbmd = 4,
+	NARC_kerudhio_appear_nsbma = 5,
+	NARC_kerudhio_appear_nsbva = 6,
+	NARC_kerudhio_stay_nsbma = 7,
+	NARC_kerudhio_stay_nsbva = 8,
+	NARC_kerudhio_disappear_nsbca = 9,
+	NARC_kerudhio_disappear_nsbma = 10,
+	NARC_kerudhio_disappear_nsbva = 11
+};
+
+/* NARC_KERUDHIO_NAIX_ */
+#endif
