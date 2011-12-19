@@ -404,6 +404,13 @@ ELSE
 		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	
 		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+
+			/*手持ちが0匹だったら*/
+			_GET_PARTY_POKE_COUNT( SCWK_TEMP0, POKECOUNT_MODE_BATTLE_ENABLE )
+			IF $SCWK_TEMP0 == 0 THEN
+				_TEMOTI_POKEMON_KAIFUKU() /*回復処理*/
+			ENDIF
+
 			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 		ELSE
 			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）

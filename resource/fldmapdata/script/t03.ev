@@ -808,11 +808,15 @@ ev_pos_t03_swrivalev_02:  //ライバルイベント01からのみ起動可能
     _OBJ_ANIME_WAIT()
   ENDSWITCH
   
-  //座標移動が必要ない場合
   IF $LCW_POSZ == 185 THEN
   
-    _OBJ_ANIME( T03_SWRIVAL_01, anm_common_turn_l )
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
+    //座標移動が必要ない場合
+    IF $LCW_POSX == 650 THEN
+    		_OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 647, 185, FORCE_TYPE_MAP, 8, DIR_LR )
+    ELSE
+    		_OBJ_ANIME( T03_SWRIVAL_01, anm_common_turn_l )
+    		_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
+    ENDIF
     _OBJ_ANIME_WAIT()
   
   ENDIF
@@ -884,6 +888,12 @@ ev_battle_check:
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )
 
   IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+	/*手持ちが0匹だったら*/
+	_GET_PARTY_POKE_COUNT( SCWK_TEMP0, POKECOUNT_MODE_BATTLE_ENABLE )
+	IF $SCWK_TEMP0 == 0 THEN
+		_TEMOTI_POKEMON_KAIFUKU() /*回復処理*/
+	ENDIF
+
     _TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
   ELSE
     _TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）

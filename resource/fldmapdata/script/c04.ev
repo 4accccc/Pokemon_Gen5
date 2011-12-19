@@ -852,6 +852,13 @@ EVENT_START   ev_c04_swheroine_01
 	//カメラ操作
 	_CAMERA_MOVE( 9688,0,970752,27688960,65551,30310400,1 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()
+
+	/*手持ちが0匹だったら*/
+	_GET_PARTY_POKE_COUNT( SCWK_TEMP0, POKECOUNT_MODE_BATTLE_ENABLE )
+	IF $SCWK_TEMP0 == 0 THEN
+		_TEMOTI_POKEMON_KAIFUKU() /*回復処理*/
+	ENDIF
+
     _TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
   ELSE
     _TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
