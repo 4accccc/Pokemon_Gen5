@@ -1492,21 +1492,10 @@ N</Text>
 			<Text>おや？　アナタの
 モンスターボール　ふるえていますね▼
 もしかして　アナタの　ポケモンは
-いかりに　ふるえているとか？▼
-いな！
-そんなこと　あるわけが　ない！▼
-たかが　どうぐに　かんじょうや
-わきあがる　おもいなど　ないのです▼
-さあ！
-キュレムに　いどみなさい！▼
-いっておきますが
-ほかくは　できませんよ▼
-ワタクシの　ステッキから
-モンスターボールの　きのうを　うばう▽
-ぼうがいでんぱを　だしてますからね！▼</Text>
+いかりに　ふるえているとか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T10:44:56" />
+				Time="2011-12-19T13:04:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1517,21 +1506,10 @@ N</Text>
 			<Text>おや？　アナタの
 モンスターボール　震えていますね▼
 もしかして　アナタの　ポケモンは
-怒りに　震えているとか？▼
-否！
-そんなこと　あるわけが　ない！▼
-たかが　道具に　感情や
-わきあがる　思いなど　ないのです▼
-さあ！
-キュレムに　挑みなさい！▼
-いっておきますが
-捕獲は　できませんよ▼
-ワタクシの　ステッキから
-モンスターボールの　機能を　封じる▽
-妨害電波を　だしてますからね！▼</Text>
+怒りに　震えているとか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T10:45:13" />
+				Time="2011-12-19T13:04:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1563,6 +1541,69 @@ N</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_d10r0501_swsage01_15"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>いな！
+そんなこと　あるわけが　ない！▼
+たかが　どうぐに　かんじょうや
+わきあがる　おもいなど　ないのです▼
+さあ！
+キュレムに　いどみなさい！▼
+いっておきますが
+ほかくは　できませんよ▼
+ワタクシの　ステッキから
+モンスターボールの　きのうを　うばう▽
+ぼうがいでんぱを　だしてますからね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-19T13:04:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-19T13:04:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>否！
+そんなこと　あるわけが　ない！▼
+たかが　道具に　感情や
+わきあがる　思いなど　ないのです▼
+さあ！
+キュレムに　挑みなさい！▼
+いっておきますが
+捕獲は　できませんよ▼
+ワタクシの　ステッキから
+モンスターボールの　機能を　封じる▽
+妨害電波を　だしてますからね！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-19T13:04:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-19T13:04:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ゲーチスに？マーク表示
+※ジャマー関連の言葉は要調整</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-19T13:04:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE1
+ゲーチス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-19T13:04:17" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d10r0501_boss_05b"
 		Style="Large">
 		<LanguageCell
@@ -1576,7 +1617,7 @@ N</Text>
 ポケモンも　ヒトも……[Ctrl2:CtrlSpeed ]</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:06:30" />
+				Time="2011-12-19T13:05:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2006,6 +2047,57 @@ N</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_d10r0501_boss_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]！！[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-19T13:11:49" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-19T13:11:19" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]！！[Ctrl2:CtrlSpeed ]▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-19T13:11:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-19T13:11:51" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・主人公回復処理
+　システムメッセージ不要＋ここだけ別のＳＥ
+・続けてsage1_02</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-19T13:11:57" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>BOSS
+N</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-19T13:11:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d10r0501_swsage01_16"
 		Style="Large">
 		<LanguageCell
@@ -2206,11 +2298,12 @@ N</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>ゲーチス『だまれ！▼
+だまれ　だまれ　だまれいっ！！▼
 ポケモンと　はなせる　ばけものが！
 にんげんの　ことばを　かたるな！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:07:46" />
+				Time="2011-12-19T13:14:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2218,12 +2311,13 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゲーチス『だまれ！▼
+			<Text>ゲーチス『黙れ！▼
+黙れ　黙れ　黙れいっ！！▼
 ポケモンと　話せる　化け物が！
 人間の　言葉を　語るな！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:07:25" />
+				Time="2011-12-19T13:14:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2313,11 +2407,10 @@ N</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]うん……
-よろしく　たのむ[Ctrl2:CtrlSpeed ]▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]うん……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:07:41" />
+				Time="2011-12-19T13:15:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2325,11 +2418,10 @@ N</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]うん……
-よろしく　頼む[Ctrl2:CtrlSpeed ]▼</Text>
+			<Text>Ｎ『[Ctrl2:CtrlSpeed mode="1" ]うん……[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T04:07:31" />
+				Time="2011-12-19T13:15:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
