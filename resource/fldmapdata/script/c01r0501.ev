@@ -405,8 +405,8 @@ EVENT_START   ev_c01r0501_trainerm_01
       _AB_KEYWAIT_MARK()
       _MSGWIN_CLOSE()
 
-      //トレーナー戦呼び出し【仮】トレーナーIDは仮のもの
-      _TRAINER_BTL_SET( TRID_GENTLE_05, 0 ) 
+      //トレーナー戦呼び出し
+      _TRAINER_BTL_SET( TRID_ELITEM_33, 0 ) 
 
       //結果チェック
       _CALL ev_battle_check

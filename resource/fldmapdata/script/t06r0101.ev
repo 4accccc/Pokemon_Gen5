@@ -352,20 +352,21 @@ EVENT_END
 //アデク戦＆無限ダンジョンボス
 ev_mugenboss_01:
 
-  _TALK_OBJ_START()
-
+_TALK_OBJ_START()
+{
+  _WBT_GET_TRAINER_FLAG( 19, LOCALWORK15 )
+  
+  //WBT登場後
+  IF $LOCALWORK15 == TRUE THEN
+    //アデク：かれらにも　トレーナーの　すごみを
+    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_02, T06R0101_CHAMPION_01, POS_DEFAULT )
   //WBT登場前
-  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN    //【仮】クリアフラグで分岐中
+  ELSE
     //アデク：イッシュちほうで　さいきょうの
     _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_01, T06R0101_CHAMPION_01, POS_DEFAULT )
 
-  //WBT登場後
-  ELSE
-    //アデク：かれらにも　トレーナーの　すごみを
-    _BALLOONWIN_OBJMSG_POS( msg_t06r0101_champion_end_02, T06R0101_CHAMPION_01, POS_DEFAULT )
-
   ENDIF
-
+}
   //アデクと戦う？
   _YES_NO_WIN( SCWK_ANSWER )
 

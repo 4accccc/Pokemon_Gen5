@@ -57,7 +57,7 @@ IF FLAG_ON( FE_H04R0201_ITEMGET ) THEN
 ELSE
 	_TALK_OBJ_START()
 
-	//トレーナーと対戦後かチェック【仮】トレーナーID未発行のため仮当て
+	//トレーナーと対戦後かチェック
 	_TRAINER_FLAG_CHECK( TRID_BAKER_05, SCWK_ANSWER )
 
 	//対戦前の場合

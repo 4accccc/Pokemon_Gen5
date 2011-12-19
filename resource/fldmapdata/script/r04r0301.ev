@@ -13,6 +13,7 @@
   .include  "r04r0301.h"
 
   //@author fujimura_souichirou
+  //@author Mizuguchi_Mai（交換ポケモン名反映）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -57,8 +58,8 @@ EVENT_START   ev_r04r0301_girl2_01
   //ポケモン交換済みか
   IF FLAG_ON( FE_R04_POKETRADE_01 ) THEN
 
-    //交換したしたポケモンのニックネーム取得【仮】ニックネームを取得する方法がまだ仮
-    //_MONS_NAME( 0, SCR_TRPOKE_AFTER_SAVE_C05 )
+    //交換したしたポケモンのニックネーム取得
+    _SET_WORD_TRADEAFTER_POKENAME( SCR_TRPOKE_AFTER_SAVE_R04R0301 , 0 )
 
     //女の子：あなたが　つけた　ニックネーム！
     _BALLOONWIN_TALKOBJ_MSG( msg_r04r0301_girl2_06 )
@@ -97,8 +98,8 @@ EVENT_START   ev_r04r0301_girl2_01
         //交換可能であるか
         IF $LWK_TRADE_CHECK == FLD_TRADE_ENABLE THEN
 
-          //ポケモンのニックネームを格納【仮】格納先を勝手に借りている←停止したのでコメントアウト中
-          //_SET_WORD_TRADEAFTER_POKENAME( SCR_TRPOKE_AFTER_SAVE_C05, 0 )
+          //ポケモンのニックネームを格納
+          _TRADEPOKE_AFTER_SAVE( LWK_CHOICE , SCR_TRPOKE_AFTER_SAVE_R04R0301 )
 
           //女の子：ポケモンこうかん！
           _BALLOONWIN_TALKOBJ_MSG( msg_r04r0301_girl2_02 )
