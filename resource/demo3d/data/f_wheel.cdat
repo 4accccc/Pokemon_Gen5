@@ -276,10 +276,11 @@ static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_swidolw[] = {
 static const u16 res_f_wheel_file_field_sp[] = {
  NARC_data_demo3d_f_wheel_01sp_nsbmd,
  NARC_data_demo3d_f_wheel_01sp_nsbta,
+ NARC_data_demo3d_f_wheel_01sp_nsbma,
 };
 
 static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_field_sp[] = {
- { res_f_wheel_file_field_sp, 2 },
+ { res_f_wheel_file_field_sp, 3 },
 };
 
 ///==================================
@@ -288,10 +289,11 @@ static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_field_sp[] = {
 static const u16 res_f_wheel_file_field_su[] = {
  NARC_data_demo3d_f_wheel_01su_nsbmd,
  NARC_data_demo3d_f_wheel_01su_nsbta,
+ NARC_data_demo3d_f_wheel_01su_nsbma,
 };
 
 static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_field_su[] = {
- { res_f_wheel_file_field_su, 2 },
+ { res_f_wheel_file_field_su, 3 },
 };
 
 ///==================================
@@ -300,10 +302,11 @@ static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_field_su[] = {
 static const u16 res_f_wheel_file_field_au[] = {
  NARC_data_demo3d_f_wheel_01au_nsbmd,
  NARC_data_demo3d_f_wheel_01au_nsbta,
+ NARC_data_demo3d_f_wheel_01au_nsbma,
 };
 
 static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_field_au[] = {
- { res_f_wheel_file_field_au, 2 },
+ { res_f_wheel_file_field_au, 3 },
 };
 
 ///==================================
@@ -312,10 +315,11 @@ static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_field_au[] = {
 static const u16 res_f_wheel_file_field_wi[] = {
  NARC_data_demo3d_f_wheel_01wi_nsbmd,
  NARC_data_demo3d_f_wheel_01wi_nsbta,
+ NARC_data_demo3d_f_wheel_01wi_nsbma,
 };
 
 static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_field_wi[] = {
- { res_f_wheel_file_field_wi, 2 },
+ { res_f_wheel_file_field_wi, 3 },
 };
 
 ///==================================
