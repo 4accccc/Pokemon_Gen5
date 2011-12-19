@@ -1163,6 +1163,8 @@ static void SetTrainer( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p_ro
       const INF_MMDL_PARAM *p_mmdlp = INF_TOOL_GetMMDLParam(p_md->move_type);
       u16 tr_id;
       u8  id_pos;
+        
+      OS_Printf("移動タイプ=%u\n",p_md->move_type);
 
       id_pos = INF_TOOL_DUNGEON_GetRoomTrainerIDPos( p_wk->p_dungeon_data,p_wk->now_floor, p_room_data->room_id ,i );
       tr_id = INF_TOOL_DUNGEON_GetTrIDByIDPos( p_wk->p_dungeon_data,p_wk->now_floor ,id_pos );
@@ -1172,13 +1174,17 @@ static void SetTrainer( const MAP_CHAGE_EVENT_WORK *p_wk , const ROOM_DATA* p_ro
         MMDL *mmdl = MMDLSYS_AddMMdlParam( p_wk->p_mmdlsys,p_md->g_x, p_md->g_y, p_mmdlp->direction,
             id_pos + INFINITY_DUNGEON_TR_OBJ_ID_OFS , obj_code, p_mmdlp->move_code,
             p_next_map_data->zone_id );
+
+        // パラメータの設定
         MMDL_SetEventType( mmdl , p_mmdlp->ev_type);
         MMDL_SetParam( mmdl, p_mmdlp->param0 , MMDL_PARAM_0 );
         MMDL_SetParam( mmdl, p_mmdlp->param1 , MMDL_PARAM_1 );
         MMDL_SetMoveLimitX( mmdl, p_mmdlp->lim_x );
         MMDL_SetMoveLimitZ( mmdl, p_mmdlp->lim_z );
         MMDL_SetEventID( mmdl, SCRID_INFINITY_DUNGEON_TALK_BATTLE_TRAINER );
-        OS_Printf("TRID=%u 視線:%u\n",tr_id ,p_mmdlp->param0);
+
+        // パラメータにあわせてデータを更新する
+        MMDL_ChangeMoveCode( mmdl, p_mmdlp->move_code );
       }
     }
   }
