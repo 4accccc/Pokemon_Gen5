@@ -171,11 +171,7 @@ def convertPreset( csv, data, header, code_h, msg_h, shop_h, spot_h, trade_h )
 
     if type == "セレブ特定出現"
       trade  = csv.get( row, PRESET_COL_CELEB_TRADE )
-      begin
-        data.write_u16( tradedata.search( "#{trade}", "#{row}行の交換ポケ" ) )
-      rescue HeaderSearchError
-        exit(1)
-      end
+      data.write_u16( 0 )
 
       for msg in PRESET_COL_CELEB_MSG_START...PRESET_COL_CELEB_MSG_END+1
         msgid  = csv.get( row, msg )
