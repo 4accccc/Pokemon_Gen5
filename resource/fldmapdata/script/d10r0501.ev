@@ -397,6 +397,9 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 
 	//フェードインでフィールドに戻る
 	_DEMO_FADEIN_BLACK_CALL()
+	
+	//BGMを変更
+  _BGM_NOW_MAP_RECOVER()
   
   _TIME_WAIT(18)
 
@@ -453,6 +456,9 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 
 	//フェードインでフィールドに戻る
 	_DEMO_FADEIN_BLACK_CALL()
+	
+	//BGMを変更
+  _BGM_NOW_MAP_RECOVER()
   
   //N：まさか
   _BALLOONWIN_OBJMSG_POS( msg_d10r0501_boss_04 , D10R0501_BOSS_01 ,POS_DEFAULT )
@@ -524,6 +530,10 @@ _ANIME_LABEL anm_swsage_4
 /*					CALL：ゲーチス戦						*/
 /************************************************************/
 ev_vs_swsage1_01:
+  
+  //アニメ：主人公右を向く
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_r)
+  _OBJ_ANIME_WAIT()
 
   //ゲーチス：まさか！
   _BALLOONWIN_OBJMSG_WB( msg_d10r0501_swsage01_15b , msg_d10r0501_swsage01_15w , D10R0501_SWSAGE1_01 , POS_UR)
@@ -883,7 +893,7 @@ EVENT_START ev_d10r0501_poke10_01
     _OBJ_ADD( D10R0501_NPOKE_01 )
       
     //登場人物位置変更
-    _OBJ_POS_CHANGE(MMDL_ID_PLAYER,15,0,16,DIR_RIGHT)
+    _OBJ_POS_CHANGE(MMDL_ID_PLAYER,15,0,16,DIR_UP)
     _OBJ_POS_CHANGE(D10R0501_NPOKE_01,15,0,22,DIR_UP)
     _OBJ_POS_CHANGE(D10R0501_SWSAGE1_01,17,0,16,DIR_LEFT)
     _OBJ_ANIME( D10R0501_BOSS_01 , anm_dir_u)
