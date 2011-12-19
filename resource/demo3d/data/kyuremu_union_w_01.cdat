@@ -47,7 +47,7 @@ static const DEMO3D_CMD_DATA demo3d_cmd_kyuremu_union_w_01_data[] = {
  { DEMO3D_CMD_TYPE_FOVY_SET, 181, { FX32_CONST( 27 ), FX32_CONST( 27 ), 149, -142, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_FLASH_REQ, 675, { MASK_DOUBLE_DISPLAY, 0, 16, 0, 25, 10, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_FLASH_REQ, 770, { MASK_DOUBLE_DISPLAY, 0, 16, 0, 10, 20, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 1085-50, { MASK_MAIN_DISPLAY, 50, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 1100-50, { MASK_MAIN_DISPLAY, 50, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_END, 0, { DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
 };
 
@@ -121,6 +121,21 @@ static const DEMO3D_FILE_UNIT res_kyuremu_union_w_01_file_unit_eff01_w01[] = {
  { res_kyuremu_union_w_01_file_eff01_w01, 5 },
 };
 
+///==================================
+/// eff02_w01 Unit File Resource
+
+static const u16 res_kyuremu_union_w_01_file_eff02_w01[] = {
+ NARC_data_demo3d_eff02_w01_nsbmd,
+ NARC_data_demo3d_eff02_w01_nsbta,
+ NARC_data_demo3d_eff02_w01_nsbca,
+ NARC_data_demo3d_eff02_w01_nsbma,
+ NARC_data_demo3d_eff02_w01_nsbva,
+};
+
+static const DEMO3D_FILE_UNIT res_kyuremu_union_w_01_file_unit_eff02_w01[] = {
+ { res_kyuremu_union_w_01_file_eff02_w01, 5 },
+};
+
 ///========================================================
 /// シーンユニットテーブル
 ///========================================================
@@ -141,10 +156,15 @@ static const DEMO3D_FILE_UNIT_TBL res_kyuremu_union_w_01_file_unit_eff01_w01_tbl
  { res_kyuremu_union_w_01_file_unit_eff01_w01, 1 },
 };
 
+static const DEMO3D_FILE_UNIT_TBL res_kyuremu_union_w_01_file_unit_eff02_w01_tbl[] = {
+ { res_kyuremu_union_w_01_file_unit_eff02_w01, 1 },
+};
+
 static const DEMO3D_SCENE_UNIT res_kyuremu_union_w_01_scene_unit[] = {
  { res_kyuremu_union_w_01_file_unit_ak_w01_tbl, 1, DEMO3D_UNITCHG_NONE },
  { res_kyuremu_union_w_01_file_unit_shin_w01_tbl, 1, DEMO3D_UNITCHG_NONE },
  { res_kyuremu_union_w_01_file_unit_bg_w01_tbl, 1, DEMO3D_UNITCHG_NONE },
  { res_kyuremu_union_w_01_file_unit_eff01_w01_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_kyuremu_union_w_01_file_unit_eff02_w01_tbl, 1, DEMO3D_UNITCHG_NONE },
 };
 
