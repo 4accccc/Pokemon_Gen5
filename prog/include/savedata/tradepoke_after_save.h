@@ -29,8 +29,8 @@ extern "C"{
 */
 //-----------------------------------------------------------------------------
 typedef enum{
-  TRPOKE_AFTER_SAVE_C02,    // シッポウ
-  TRPOKE_AFTER_SAVE_C05,    // ホドモエ
+  TRPOKE_AFTER_SAVE_R04R0301,    // R04ブラック
+  TRPOKE_AFTER_SAVE_R04R0801,    // R04ホワイト
 
   TRPOKE_AFTER_SAVE_TYPE_MAX,
 } TRPOKE_AFTER_SAVE_TYPE;

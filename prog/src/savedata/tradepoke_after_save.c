@@ -181,23 +181,16 @@ u8 TRPOKE_AFTER_SV_GetSpeabino3( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_
 //-----------------------------------------------------------------------------
 u32 TRPOKE_AFTER_SV_GetTradeMonsNo( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE type, u32 rom_version )
 {
-  u32 monsno = MONSNO_533;
   GF_ASSERT( type < TRPOKE_AFTER_SAVE_TYPE_MAX );
   GF_ASSERT( (rom_version == VERSION_W2) || (rom_version == VERSION_B2) );
 
-  if( type == TRPOKE_AFTER_SAVE_C05 )
-  {
-    monsno = MONSNO_533;
+  switch( type ){
+  case TRPOKE_AFTER_SAVE_R04R0301:  //ブラック
+    return MONSNO_MONMEN;
+  case TRPOKE_AFTER_SAVE_R04R0801:  //ホワイト
+    return MONSNO_TYURINE;
   }
-  else
-  {
-    if( rom_version == VERSION_B2 ){
-      monsno = MONSNO_521;
-    }else{
-      monsno = MONSNO_517;
-    }
-  }
-  return monsno;
+  return MONSNO_MINEZUMI; //ここに来ることはない
 }
 
 //----------------------------------------------------------------------------

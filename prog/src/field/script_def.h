@@ -545,8 +545,8 @@
 // 交換ポケモン　と　再戦イベント
 // savedata/tradepoke_after_save.h TRPOKE_AFTER_SAVE_TYPEと一致
 //--------------------------------------------------------------
-#define SCR_TRPOKE_AFTER_SAVE_C02 (0)    // シッポウ
-#define SCR_TRPOKE_AFTER_SAVE_C05 (1)    // ホドモエ
+#define SCR_TRPOKE_AFTER_SAVE_R04R0301 (0)    // R04ブラック
+#define SCR_TRPOKE_AFTER_SAVE_R04R0801 (1)    // R04ホワイト
 
 
 
