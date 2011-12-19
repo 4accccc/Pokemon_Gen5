@@ -5,7 +5,7 @@
 #------------------------------------------------------------------------------
 #※コンバート作業が必要なユーザーの名前を記述する
 #------------------------------------------------------------------------------
-USERS	=	saitou unno ibe_mana yoshida ichiraku_katsuhiko kawamoto_yuki toyama fuchino_hiroki
+USERS	=	saitou unno ibe_mana yoshida ichiraku_katsuhiko kawamoto_yuki toyama fuchino_hiroki mizutani_megumi ohtani_mayo
 
 #ツールパス
 XLS_CNV   = ../../tools/exceltool/ExcelSeetConv.exe
