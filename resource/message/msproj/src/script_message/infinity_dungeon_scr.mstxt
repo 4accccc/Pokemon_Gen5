@@ -23945,14 +23945,14 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>しょしんしゃさん　
 やっと　きてくれたね　まってたよ▼
-あの　ゲートを　あける　ほうほうは
-さっき　おしえたね？▼
+あの　ゲートを　あける
+ほうほうは　しっているんでしょ▼
 さあ　キミが　ボストレーナーに
 ちょうせんする　じつりょくが　あるか▽
 ためしてみよう！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T04:08:12" />
+				Time="2011-12-19T10:16:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -23962,14 +23962,14 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>初心者さん
 やっと　来てくれたね　待ってたよ▼
-あの　ゲートを　開ける方法は
-さっき　教えたね？▼
+あの　ゲートを　開ける
+方法は　知っているんでしょ▼
 さあ　キミが　ボストレーナーに
 挑戦する　実力が　あるか▽
 試してみよう！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-27T06:56:41" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T10:16:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -23999,14 +23999,14 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN">
 			<Text>しょしんしゃさん
 やっと　きてくれたわね　まってたわ▼
-あの　ゲートを　あける　ほうほうは
-さっき　おしえたわね？▼
+あの　ゲートを　あける
+ほうほうは　しっているわね？▼
 さあ　キミが　ボストレーナーに
 ちょうせんする　じつりょくが　あるか▽
 ためしてあげる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T04:08:15" />
+				Time="2011-12-19T10:17:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -24016,14 +24016,14 @@ NPC：MUGENBOSS（バンジロウ）
 			Language="JPN_KANJI">
 			<Text>初心者さん
 やっと　来てくれたわね　待ってたわ▼
-あの　ゲートを　開ける方法は
-さっき　教えたたわね？▼
+あの　ゲートを　開ける
+方法は　知っているわね？▼
 さあ　キミが　ボストレーナーに
 挑戦する　実力が　あるか▽
 試してあげる！▼</Text>
 			<TextModifiedBy
-				User="nakamura_akira:W00280"
-				Time="2011-11-27T06:57:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T10:17:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
