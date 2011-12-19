@@ -895,61 +895,6 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03r0901_bussinesman_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>仮メッセージ▼
-つかれた　ハートが　いやされても
-ここに　わたしが　いる　りゆう……▽
-この　みせが　すきなんですね　わたし</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T02:09:42" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T01:13:01" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>仮メッセージ▼
-疲れた　ハートが　いやされても
-ここに　わたしが　いる　理由……▽
-この　店が　好きなんですね　わたし</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T02:07:36" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T01:13:01" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-※swanでメッセージ修正
-メロエッタイベント後</Comment>
-			<CommentModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T01:13:41" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>BUSSINESMAN</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T01:13:01" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
 		Label="msg_c03r0901_sunglasses_01"
 		Style="Large">
 		<LanguageCell
@@ -1011,67 +956,16 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c03r0901_sunglasses_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>仮メッセージ</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T02:09:11" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T01:16:21" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>仮メッセージ</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T01:16:37" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T01:16:21" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-※swanでメッセージ修正
-メロエッタイベント後</Comment>
-			<CommentModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T01:16:46" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SUNGLASSES</Text>
-			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T01:16:21" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
 		Label="msg_c03r0901_mission_add_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ▼
-だいの　おとなが
-ひとりで　カフェに　いる……▼
-さびしさと　なやみを
-まぎらわせて　いるのさ……</Text>
+			<Text>かぞくは　かえられない
+だから　つきあいかたを　かえるの▼
+そう　いわれても　なかなか……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T02:40:30" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T05:56:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -1079,14 +973,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼
-だいの　おとなが
-ひとりで　カフェに　いる……▼
-さびしさと　なやみを
-まぎらわせて　いるのさ……</Text>
+			<Text>家族は　替えられない
+だから　つきあいかたを　変えるの▼
+そう　いわれても　なかなか……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T02:40:26" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T05:56:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -1094,25 +986,24 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-※swan新規
-メロエッタイベント前
-一言メッセージ</Comment>
+			<Comment>♀
+・メロエッタイベント前
+　一言メッセージ
+※swan新規</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T01:23:55" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T05:49:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>VETERANM
-</Text>
+			<Text>TRAINERW</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T01:21:33" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T05:49:32" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#800000</CellData>
+			<CellData>#80ffff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1123,15 +1014,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ▼
-いい　うたと　おどりを　ありがとう
-すてた　ふるさとを　おもいだしたよ▽
-きのみしか　ない　いなかだったけど▽
-かぞくが　いて　ポケモンが　いて……▽
-それだけで　よかったんだな</Text>
+			<Text>うまれこきょう……
+おさないころ……▼
+きのみあつめを　おえて
+みんなで　うたっていたのを▽
+おもいだしちゃったよ……▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T02:38:10" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T05:54:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -1139,15 +1029,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼
-いい　うたと　おどりを　ありがとう
-すてた　ふるさとを　おもいだしたよ▽
-きのみしか　ない　いなかだったけど▽
-かぞくが　いて　ポケモンが　いて……▽
-それだけで　よかったんだな</Text>
+			<Text>生まれ故郷……
+幼いころ……▼
+きのみあつめを　終えて
+みんなで　歌っていたのを▽
+思い出しちゃったよ……▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T02:38:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T05:55:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -1156,24 +1045,23 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swan新規
-メロエッタイベント・いにしえのうたを歌った後
-続けてmission_add_03へ</Comment>
+・メロエッタイベント・いにしえのうたを歌った後
+　続けてmission_add_03へ
+※swan新規</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T01:25:04" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T05:49:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>VETERANM
-</Text>
+			<Text>TRAINERW</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T01:24:10" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T05:49:33" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#800000</CellData>
+			<CellData>#80ffff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1188,8 +1076,8 @@
 『[Name:FesMissionName ]』が▽
 ついか　されました！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T01:23:02" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T06:06:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -1214,10 +1102,10 @@
 ・ＳＥ再生
 　デルパワー登録＝SEQ_SE_FLD_133
 ・システムフラグをセット
-続けてmission_add_04へ</Comment>
+・続けてmission_add_04へ</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T01:25:24" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T05:50:02" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1228,7 +1116,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#800000</CellData>
+			<CellData>#80ffff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1239,14 +1127,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ▼
-じっかで　きのみさがしの
-てつだいを　することに　したよ▼
-ひさしぶりに　れんらく　とったら
-ごちそう　つくって　まってる　ってさ</Text>
+			<Text>ひとりで　はたらく　おかあさんの
+おてつだいを　しないとね▼
+ヒウンシティで　であった
+ポケモンたちと　ちからを　あわせて▼
+メロエッタの　うた　おどり……
+ふしぎな　メロディ……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T02:44:25" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T06:06:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -1254,14 +1143,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼
-じっかで　きのみさがしの
-てつだいを　することに　したよ▼
-ひさしぶりに　れんらく　とったら
-ごちそう　つくって　まってる　ってさ</Text>
+			<Text>一人で　働く　お母さんの
+お手伝いを　しないとね▼
+ヒウンシティで　出会った
+ポケモンたちと　力を　合わせて
+メロエッタの　歌　踊り……
+不思議な　メロディ……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T02:44:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T06:06:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -1270,24 +1160,23 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-※swan新規
-イベント終了
-以後このメッセージ繰り返し</Comment>
+・イベント終了
+　以後このメッセージ繰り返し
+※swan新規</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T01:26:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T05:50:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>VETERANM
-</Text>
+			<Text>TRAINERW</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T01:25:34" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T05:49:33" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#800000</CellData>
+			<CellData>#80ffff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

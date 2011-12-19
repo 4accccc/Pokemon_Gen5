@@ -6,12 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ▼
-かたい　がんばんに　３つの
-おおきな　きれつが　はいっている……</Text>
+			<Text>がんばんに　３ぼんの　するどく
+みごとな　さけめが　きざまれている！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T02:47:39" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T10:35:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -19,12 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼
-かたい　がんばんに　３つの
-おおきな　きれつが　はいっている……</Text>
+			<Text>岩盤に　３本の　するどく
+みごとな　裂け目が　刻まれている！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T02:47:42" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T10:35:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -60,14 +58,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ▼
-モンスターボールに　はいっている
+			<Text>モンスターボールに　はいっている
 [Name:PokemonNickname ]が▽
 でたがっている　ようだ……！▼
 そとに　だして　あげますか？</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T02:51:02" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T10:27:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -75,14 +72,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼
-モンスターボールに　入っている
+			<Text>モンスターボールに　入っている
 [Name:PokemonNickname ]が▽
-出たがっている　ようだ……！▼
-外に　出して　あげますか？</Text>
+でたがっている　ようだ……！▼
+外に　だして　あげますか？</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T02:51:26" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T10:27:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -120,12 +116,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ▼
-モンスターボールの
+			<Text>モンスターボールの
 うごきが　とまったようだ……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T02:54:00" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T10:28:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -133,12 +128,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼
-モンスターボールの
+			<Text>モンスターボールの
 動きが　とまったようだ……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T02:53:52" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T10:28:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -173,11 +167,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname ]は
-３びきの　のこした　きずあとから▽
+３びきが　きざみこんだ　けついから▽
 しんぴのつるぎを　おもいだした！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T02:57:41" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T10:35:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -186,11 +180,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname ]は
-３びきの　のこした　きずあとから▽
-しんぴのつるぎを　おもいだした！▼</Text>
+３匹が　刻みこんだ　決意から▽
+しんぴのつるぎを　思い出した！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T02:57:46" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T10:36:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -227,11 +221,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]は
-すでに　わざを　４つ　おぼえている！▼
+すでに　わざを　４つ　おぼえている！▽
 わざを　わすれさせますか？▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T03:47:40" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T10:28:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -240,11 +234,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]は
-すでに　わざを　４つ　覚えている！▼
-わざを　忘れさせますか？▼</Text>
+すでに　技を　４つ　覚えている！▽
+技を　忘れさせますか？▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T03:48:22" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T10:29:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -331,11 +325,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]は　しんぴのつるぎ　を
+			<Text>[Name:PokemonNickname Idx="0" ]は　しんぴのつるぎを
 おもいださなかった！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T03:49:01" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T10:39:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -343,11 +337,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]は　しんぴのつるぎ　を
+			<Text>[Name:PokemonNickname Idx="0" ]は　しんぴのつるぎを
 思い出さなかった！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T03:49:07" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T10:39:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -436,11 +430,11 @@
 			Language="JPN">
 			<Text>１[Ctrl2:WaitOne frame="20" ]　２の[Ctrl2:WaitOne frame="20" ]…[Ctrl2:WaitOne frame="20" ]…[Ctrl2:WaitOne frame="20" ]　ポカン！[Ctrl2:CallBackOne arg="3" ][Ctrl2:CallBackCont arg="2" ][Ctrl2:CallBackReset ][Ctrl2:WaitReset ]▼
 [Name:PokemonNickname Idx="0" ]は　[Name:Move Idx="1" ]の
-つかいかたを　きれいにわすれた！▼
+つかいかたを　きれいに　わすれた！▼
 そして……！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T03:48:22" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T10:30:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -450,11 +444,11 @@
 			Language="JPN_KANJI">
 			<Text>１[Ctrl2:WaitOne frame="20" ]　２の[Ctrl2:WaitOne frame="20" ]…[Ctrl2:WaitOne frame="20" ]…[Ctrl2:WaitOne frame="20" ]　ポカン！[Ctrl2:CallBackOne arg="3" ][Ctrl2:CallBackCont arg="2" ][Ctrl2:CallBackReset ][Ctrl2:WaitReset ]▼
 [Name:PokemonNickname Idx="0" ]は　[Name:Move Idx="1" ]の
-使い方を　きれいに忘れた！▼
+使い方を　きれいに　忘れた！▼
 そして……！▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T03:48:22" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T10:30:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -541,11 +535,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ▼
-[Name:PokemonNickname ]の　ようすが……？▼</Text>
+			<Text>[Name:PokemonNickname ]の　ようすが……？▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T05:22:16" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T10:37:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -553,11 +546,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼
-[Name:PokemonNickname ]の　様子が……？▼</Text>
+			<Text>[Name:PokemonNickname ]の　様子が……？▼</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T05:22:24" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T10:37:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -592,12 +584,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ▼
-[Name:PokemonNickname ]は　なにごとにも　くっしない
-かくごを　もった　すがたに　へんかした！</Text>
+			<Text>[Name:PokemonNickname ]は
+たたかう　けついも　あらたに▽
+かくごを　きめた　すがたに　なった！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T05:21:40" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T10:41:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -605,12 +597,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ▼
-[Name:PokemonNickname ]は　何事にも　屈しない
-覚悟を　もった　姿に　変化した！</Text>
+			<Text>[Name:PokemonNickname ]は
+戦う　決意も　新たに▽
+覚悟を　決めた　姿に　なった！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T05:22:05" />
+				User="matsumiya:W00224"
+				Time="2011-12-19T10:41:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
