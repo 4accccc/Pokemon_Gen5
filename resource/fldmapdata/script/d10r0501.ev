@@ -347,7 +347,8 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   
   // デモ呼び出し
   // ※デモを2つに分けたので連続で呼び出している
-	_DEMO_FADEOUT_BLACK_CALL()
+	//_DEMO_FADEOUT_BLACK_CALL()
+	_DEMO_FADEOUT_BLACK_WITH_BGM_CALL()
 	
   //=======================================
   // 解放状態のキュレムにする
@@ -396,11 +397,14 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   _DEMO_GIMMICK_GIANTHOLE_STONE_FLOAT( MMDL_ID_EVENTOBJ_00 )
 
 	//フェードインでフィールドに戻る
-	_DEMO_FADEIN_BLACK_CALL()
+	//_DEMO_FADEIN_BLACK_CALL()
+	_DEMO_FADEIN_BLACK_WITH_BGM_CALL()
 	
+	/*
 	//BGMを変更
 	_START_EVENT_BGM_SILENT(1)
   _BGM_NOW_MAP_RECOVER()
+  */
   
   _TIME_WAIT(18)
 
@@ -417,7 +421,8 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   _MSGWIN_CLOSE()
 
   // デモ呼び出し
-	_DEMO_FADEOUT_BLACK_CALL()
+	//_DEMO_FADEOUT_BLACK_CALL()
+	_DEMO_FADEOUT_BLACK_WITH_BGM_CALL()
 
   //========================================//
   // ストーン状態のゼクロム(レシラム)を削除
@@ -456,11 +461,14 @@ EVENT_START ev_pos_d10r0501_swsage1_01
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
 	//フェードインでフィールドに戻る
-	_DEMO_FADEIN_BLACK_CALL()
+	//_DEMO_FADEIN_BLACK_CALL()
+	_DEMO_FADEIN_BLACK_WITH_BGM_CALL()
 	
+	/*
 	//BGMを変更
 	_START_EVENT_BGM_SILENT(1)
   _BGM_NOW_MAP_RECOVER()
+  */
   
   //N：まさか
   _BALLOONWIN_OBJMSG_POS( msg_d10r0501_boss_04 , D10R0501_BOSS_01 ,POS_DEFAULT )
@@ -637,7 +645,7 @@ ev_vs_swsage1_01:
   _TIME_WAIT( 16 )
   
   //アニメ：主人公Ｎに隣接
-  _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_to_boss)
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_to_boss_01)
   _OBJ_ANIME_WAIT()
   
   //N：アリガトウ
@@ -703,6 +711,7 @@ ev_vs_swsage1_01:
   _BLACK_OUT_SLOW()
   
   //アニメ：Ｎ退場
+  _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_to_boss_02)
   _OBJ_ANIME( D10R0501_BOSS_01 , anm_boss_bye)
   _OBJ_ANIME_WAIT()
   
@@ -796,9 +805,17 @@ _ANIME_LABEL	anm_ninja_bye_01
 //--------------------------------------------------------------------
 //	主人公：Ｎに隣接
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_to_boss
+_ANIME_LABEL	anm_player_to_boss_01
 	_ANIME_DATA	AC_WALK_R_8F,2
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	主人公：Ｎに隣接
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_to_boss_02
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_D_16F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
