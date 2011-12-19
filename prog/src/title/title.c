@@ -61,15 +61,17 @@
 
 // 黒・白で違う定義
 #if PM_VERSION==VERSION_B2
-/// 黒：ポリゴンデモのループ終了フレームの指定
-#define POKE_LOOP_END_FRAME   ( 5619 )
-/// 黒：タイトル画面の鳴き声を出すポケモンの指定
-#define PLAY_MONSNO ( MONSNO_RESIRAMU )
+
+#define POKE_LOOP_END_FRAME   ( 5619 )      /// 黒：ポリゴンデモのループ終了フレームの指定
+#define PLAY_MONSNO     ( MONSNO_KYUREMU )  /// 黒：タイトル画面の鳴き声を出すポケモンの指定
+#define PLAY_MONS_FORM  ( 2 )               /// B2では黒キュレム
+
 #else
-/// 白：ポリゴンデモのループ終了フレームの指定
-#define POKE_LOOP_END_FRAME   ( 5779 )
-/// 白：タイトル画面の鳴き声を出すポケモンの指定
-#define PLAY_MONSNO ( MONSNO_ZEKUROMU )
+
+#define POKE_LOOP_END_FRAME   ( 5779 )      /// 白：ポリゴンデモのループ終了フレームの指定
+#define PLAY_MONSNO     ( MONSNO_KYUREMU )  /// 白：タイトル画面の鳴き声を出すポケモンの指定
+#define PLAY_MONS_FORM  ( 1 )               /// W2では白キュレム
+
 #endif
 
 /// 入力トリガマスク
@@ -379,7 +381,7 @@ static void _key_check( TITLE_WORK *tw )
   if(  GFL_UI_KEY_GetTrg() & NEXT_PROC_MASK){
     tw->mode = END_SELECT;
     tw->seq  = SEQ_VOICE_PLAY;
-    tw->voiceIndex = PMVOICE_Play(  PLAY_MONSNO,  0,  64, FALSE,  
+    tw->voiceIndex = PMVOICE_Play(  PLAY_MONSNO,  PLAY_MONS_FORM,  64, FALSE,  
                   0,  // コーラスボリューム差
                   0,  // 再生速度差
                   FALSE,    // 逆再生フラグ
