@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-12-07T16:03:27" source="blizzard_n.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-12-19T13:05:35" source="blizzard_n_up.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohtani_mayo" host="W00238" date="2011-12-07T16:03:27" source="blizzard_n.mb"/>
+<original_create user="ohtani_mayo" host="W00238" date="2011-12-19T13:05:35" source="blizzard_n_up.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="5" xyz="-1.000000 0.062500 -0.593750" whd="2.000000 5.062500 0.343750"/>
+<box_test pos_scale="4" xyz="-2.000000 0.125000 -1.979004" whd="4.000000 4.375000 1.582764"/>
 
 <tex_image_array size="11">
 	<tex_image index="0" name="bl_n.1"
@@ -2959,7 +2959,7 @@
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
-		scale="0.000000 0.000000 0.000000"
+		scale="0.800049 0.800049 0.800049"
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 2.000000 -19.000000"
 		visibility="on"
@@ -2981,7 +2981,7 @@
 		billboard="on"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 100.000000 -8.000000"
+		translate="0.000000 8.000000 -8.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
