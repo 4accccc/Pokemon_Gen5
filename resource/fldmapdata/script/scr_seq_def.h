@@ -3013,8 +3013,8 @@
  * @param tr_id       トレーナーID
  * @param trade_type  交換　ポケモン　タイプ
  *
-#define SCR_TRPOKE_AFTER_SAVE_C02 (0)    // シッポウ
-#define SCR_TRPOKE_AFTER_SAVE_C05 (1)    // ホドモエ
+#define SCR_TRPOKE_AFTER_SAVE_R04R0301 (0)    // R04ブラック 
+#define SCR_TRPOKE_AFTER_SAVE_R04R0801 (1)    // R04ホワイト
  */
 //--------------------------------------------------------------
 #define _TRADE_AFTER_TRAINER_BTL_SET( tr_id, trade_type ) \
@@ -5659,8 +5659,8 @@
  * @param	party_pos   保存するポケモンの位置
  * @param	trade_type  保存する交換タイプ
  *
-#define SCR_TRPOKE_AFTER_SAVE_C02 (0)    // シッポウ
-#define SCR_TRPOKE_AFTER_SAVE_C05 (1)    // ホドモエ
+#define SCR_TRPOKE_AFTER_SAVE_R04R0301 (0)    // R04ブラック 
+#define SCR_TRPOKE_AFTER_SAVE_R04R0801 (1)    // R04ホワイト
  */
 //--------------------------------------------------------------
 #define _TRADEPOKE_AFTER_SAVE( party_pos, trade_type ) \
@@ -5679,8 +5679,8 @@
  * @param	trade_type  保存する交換タイプ
  * @param	word_idx    GMMのワードバッファインデックス
  *
-#define SCR_TRPOKE_AFTER_SAVE_C02 (0)    // シッポウ
-#define SCR_TRPOKE_AFTER_SAVE_C05 (1)    // ホドモエ
+#define SCR_TRPOKE_AFTER_SAVE_R04R0301 (0)    // R04ブラック 
+#define SCR_TRPOKE_AFTER_SAVE_R04R0801 (1)    // R04ホワイト
  */
 //--------------------------------------------------------------
 #define _SET_WORD_TRADEAFTER_POKENAME( trade_type, word_idx ) \
