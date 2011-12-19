@@ -545,7 +545,7 @@ EVENT_START		ev_pos_c13gym0102_pokewood
 	
 	_OBJ_ANIME_WAIT()
 	
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
 	_OBJ_ANIME_WAIT()
 	
 	//ÉwÉCÅ@Ç†Ç»ÇΩÅI
@@ -558,14 +558,14 @@ EVENT_START		ev_pos_c13gym0102_pokewood
 	
 		_OBJ_ANIME( C13GYM0102_SUNGLASSES_01, anm_sunglasses_leave_x3 )
 		_TIME_WAIT( 10 )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
 	
 	//Xç¿ïWÇ™ÇSÇÃèÍçá
 	ELSE
 	
 		_OBJ_ANIME( C13GYM0102_SUNGLASSES_01, anm_sunglasses_leave_x4 )
 		_TIME_WAIT( 10 )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
 	
 	ENDIF
 	
@@ -588,12 +588,12 @@ EVENT_START		ev_pos_c13gym0102_pokewood
 	//Xç¿ïWÇ™ÇRÇÃèÍçá
 	IF $LWK_POSX == 3 THEN
 	
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
 	
 	//Xç¿ïWÇ™ÇSÇÃèÍçá
 	ELSE
 	
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
 	
 	ENDIF
 	
@@ -614,7 +614,7 @@ EVENT_START		ev_pos_c13gym0102_pokewood
 	
 		_OBJ_ANIME( C13GYM0102_SWLEADER2_01, anm_swleader2_leave_x4 )
 		_TIME_WAIT( 20 )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_r )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
 		
 	ENDIF
 	

@@ -15,7 +15,7 @@
 
   //@author fujimura_souichirou（ヒウン名所巡りイベント）
   //@author Mizuguchi_Mai（タチワキ接続関連・一言メッセージ配置）
-  //@author suginaka_katsunori（船の復帰処理）
+  //@author suginaka_katsunori（船の復帰処理）/不審船の表示
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -29,8 +29,46 @@ _EVENT_DATA   ev_scene_c03p15_first_01
 _EVENT_DATA	ev_reserve_c03p15_end
 _EVENT_DATA   ev_c03p15_woman1_01
 _EVENT_DATA   ev_c03p15_gentleman_01
+_EVENT_DATA	ev_init_c03p15
+_EVENT_DATA	ev_zone_c03p15
+_EVENT_DATA	ev_recover_c03p15
 _EVENT_DATA_END
 
+/**************************************************************/
+/*            特殊スクリプト                               */
+/**************************************************************/
+INIT_EVENT_START  ev_zone_c03p15
+{
+  DEFINE_LOCAL  LWK_MONTH
+  DEFINE_LOCAL  LWK_DAY
+  _GET_DATE( LWK_MONTH, LWK_DAY )
+
+//素数の日は船が出現しない。
+//その状態をマップに入ったとき、LOCALWORK1に保存しておく
+  SWITCH $LWK_DAY
+  CASE  2,3,5,7,11,13,17,19,23,29,31 THEN
+    $LOCALWORK1  = 1
+  DEFAULT
+    $LOCALWORK1  = 0
+  ENDSWITCH
+}
+INIT_EVENT_END
+
+/**************************************************************/
+/**************************************************************/
+INIT_EVENT_START  ev_init_c03p15
+  IF $LOCALWORK1 == 1 THEN
+	_BMODEL_CHANGE_VIEW_FLAG( SCR_BMID_EVENT, 0, 10, FALSE )
+  ENDIF
+INIT_EVENT_END
+
+/**************************************************************/
+/**************************************************************/
+INIT_EVENT_START  ev_recover_c03p15
+  IF $LOCALWORK1 == 1 THEN
+	_BMODEL_CHANGE_VIEW_FLAG( SCR_BMID_EVENT, 0, 10, FALSE )
+  ENDIF
+INIT_EVENT_END
 
 /************************************************************/
 /*  SCENE_CHANGE：船から下りたところ                        */
