@@ -37,6 +37,7 @@
 #include "scrcmd_infinity_dungeon_nw.h"
 #include "script_def.h"
 #include "item/itemsym.h"
+#include "field_encount.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h" // for SCRID_DUMMY
 
@@ -459,11 +460,22 @@ static GMEVENT_RESULT MapWarpEvent( GMEVENT *event, int *seq, void *wk )
         // マップ移動
         NEXT_MAP_DATA *p_next_map_data = &p_wk->next_map_data;
 
-        // 無限ダンジョン関連の岩データ位置をリセットする
-        INF_DUNGEON_FIELD_ResetPushRock( FIELDMAP_GetMMdlSys( p_wk->p_field_work ) );
-
         // 次ゾーンを設定
         SetNextZoneData( p_wk );
+
+        // 無限ダンジョン関連の岩データ位置をリセットする
+        INF_DUNGEON_FIELD_ResetPushRock( FIELDMAP_GetMMdlSys( p_wk->p_field_work ) );
+        
+        // 受付に戻るときのみフォームリセット
+        if( p_wk->warp_dir == WARP_INFORMATION )
+        {
+          //自機のフォームを二足歩行に戻す（ダンジョン内でダイビングはありえない）
+          PLAYER_WORK * player = GAMEDATA_GetMyPlayerWork(p_wk->p_gdata);
+          PLAYERWORK_SetMoveForm( player, PLAYER_MOVE_FORM_NORMAL );
+
+          // 特殊マップジャンプ用状態リセット
+          ENCOUNT_WORK_SpMapJumpUpdate( p_wk->p_gdata );
+        }
 
         // マップチェンジ
         GMEVENT_CallEvent(event,
