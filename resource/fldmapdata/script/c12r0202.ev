@@ -15,7 +15,8 @@
   
   //@author Mizuguchi_Mai
   //@author fujimura_souichirou
-
+  //@author suginaka_katsunori
+  
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -53,6 +54,16 @@ INIT_EVENT_START   ev_zone_c12r0202
     _FLAG_RESET( FV_C12R0202_RIVALSISTER_01 )
     //========================================//
 
+  ENDIF
+
+  //もしレパルダスが非表示なら？
+  IF FLAG_ON( FV_C12R0202_POKE32_01 ) THEN
+  
+  	//キュレム戦闘済みで、ライバル妹と会話している場合は表示
+  	IF FLAG_ON( FE_D10R0401_POKE10_MEET ) && FLAG_ON( FE_C12R0202_RIVALSISTER_TAL ) THEN
+  		_FLAG_RESET(FV_C12R0202_POKE32_01)
+  	ENDIF
+  
   ENDIF
 
 INIT_EVENT_END
@@ -100,16 +111,24 @@ EVENT_START   ev_c12r0202_rivalsister_01
   //クリア後
   ELSIF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
   	
-  	//殿堂入りが１０回以上か？
-  	IF $LOCALWORK15 >= 10 THEN
-  	
-  		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_05 )
-  	
-  	ELSE
-  	
-  		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_04 )
-  	
-  	ENDIF
+	IF FLAG_ON( FE_D10R0401_POKE10_MEET ) && FLAG_ON( FE_C12R0202_RIVALSISTER_TAL ) && FLAG_OFF( FV_C12R0202_POKE32_01 )  THEN
+		
+		_PLAYER_NAME( 0 )
+
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_05 )
+	
+	ELSE
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_04 )
+		
+		//========================================//
+		
+		//ライバル妹との会話フラグセット
+		_FLAG_SET(FE_C12R0202_RIVALSISTER_TAL)
+		
+		//========================================//
+	
+	ENDIF
   
   ENDIF
 }
@@ -119,18 +138,9 @@ EVENT_END
 /*  レパルダス：話しかけ                                      */
 /**************************************************************/
 EVENT_START   ev_c12r0202_poke32_01
-{
-  //殿堂入り回数を取得
-  _GET_RECORD( RECID_DENDOU_CNT, LOCALWORK15 )
-  
-  //殿堂入り10回超え
-  IF $LOCALWORK15 >= 10 THEN
-    _EASY_TALK_POKEVOICE( MONSNO_547, msg_c12r0202_rpoke32_02 )
-  //条件未達成
-  ELSE
+
     _EASY_TALK_POKEVOICE( MONSNO_547, msg_c12r0202_rpoke32_01 )
-  ENDIF
-}
+
 EVENT_END
 
 /**************************************************************/

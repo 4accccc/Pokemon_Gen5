@@ -50,7 +50,8 @@ DEFINE_LOCAL  LCW_POSZ
 DEFINE_LOCAL  LWK_TIMEZONE
 //ドア変数定義
 DEFINE_LOCAL	DOOR_ANIME_ID
-
+//MSGのPOS位置決定
+DEFINE_LOCAL	LWK_POSMSG
 
 /************************************************************/
 /*  ZONE_CHANGE_SCRIPT                                      */
@@ -146,6 +147,10 @@ EVENT_START   ev_pos_t03_hakase2_01
 	_OBJ_ANIME_AUTO( T03_HAKASE2_01, 664, 171, FORCE_TYPE_NPC, 8, DIR_LR )
 	_OBJ_ANIME_AUTO( T03_SWBELL_01, 664, 170, FORCE_TYPE_NPC, 8, DIR_LR )
 	_OBJ_ANIME_WAIT()
+	
+	//========================================//
+	$LWK_POSMSG = POS_DEFAULT
+	//========================================//
 
   ELSE  //それ以外（マップ下方）
 
@@ -157,13 +162,17 @@ EVENT_START   ev_pos_t03_hakase2_01
 	_OBJ_ANIME_AUTO( T03_HAKASE2_01, 669, 181, FORCE_TYPE_NPC, 8, DIR_UD )
 	_OBJ_ANIME_AUTO( T03_SWBELL_01, 670, 181, FORCE_TYPE_NPC, 8, DIR_UD )
 	_OBJ_ANIME_WAIT()
+	
+	//========================================//
+	$LWK_POSMSG = POS_UL
+	//========================================//
 
   ENDIF
 
   //主人公名代入
   _PLAYER_NAME( 0 )
   //アララギ娘：はーい　主人公！！
-  _BALLOONWIN_OBJMSG_POS( msg_t03_hakase2_01, T03_HAKASE2_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_t03_hakase2_01, T03_HAKASE2_01, LWK_POSMSG )
   _MSGWIN_CLOSE()
 
   //POSイベントをマップ上方（付近）で発生させた？
@@ -203,7 +212,7 @@ EVENT_START   ev_pos_t03_hakase2_01
   _MSGWIN_CLOSE()
 
   //アララギ娘：この　カゴメから
-  _BALLOONWIN_OBJMSG_POS( msg_t03_hakase2_02, T03_HAKASE2_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_t03_hakase2_02, T03_HAKASE2_01, LWK_POSMSG )
   _MSGWIN_CLOSE()
   
   //POSイベントをマップ上方（付近）で発生させた？
@@ -221,7 +230,7 @@ EVENT_START   ev_pos_t03_hakase2_01
   _MSGWIN_CLOSE()
 
   //アララギ娘：いいからいいから！
-  _BALLOONWIN_OBJMSG_POS( msg_t03_hakase2_03, T03_HAKASE2_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_t03_hakase2_03, T03_HAKASE2_01, LWK_POSMSG )
   _MSGWIN_CLOSE()
 
   //現在の時間帯を取得
@@ -663,13 +672,19 @@ ev_pos_t03_swrivalev_01:
     _OBJ_ANIME( T03_SWPLAZMAM_02, anm_walk_r_6 )
     _OBJ_ANIME_WAIT()
 
+    _CAMERA_START()		//カメラ操作開始
+    _CAMERA_PURGE()		//カメラパージ
+    _CAMERA_MOVE(9688,0,970752,42369024,0,12222464, 30)
+
     //アニメ：主人公、ライバル振り向き
     _OBJ_ANIME( T03_SWRIVAL_01, anm_common_turn_l )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
     _OBJ_ANIME_WAIT()
 
+    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
     //ヴィオ：やれやれ
-    _BALLOONWIN_OBJMSG_POS( msg_t03_sage7_01, T03_SWSAGE7_01, POS_DEFAULT )
+    _BALLOONWIN_OBJMSG_POS( msg_t03_sage7_01, T03_SWSAGE7_01, POS_DOWN )
     _MSGWIN_CLOSE()
 
     //アニメ：ライバル移動
@@ -695,6 +710,11 @@ ev_pos_t03_swrivalev_01:
       _BALLOONWIN_OBJMSG_POS( msg_t03_swrival_03, T03_SWRIVAL_01, POS_DEFAULT )
       _MSGWIN_CLOSE()
 
+      _CAMERA_RECV_MOVE(30)	//カメラ復帰移動
+      _CAMERA_WAIT_MOVE()	//カメラ移動待ち\
+      _CAMERA_BIND()		//カメラバインド
+      _CAMERA_END()		//カメラ操作終了
+
       //ライバルイベント02へ
       _CALL ev_pos_t03_swrivalev_02
 
@@ -704,8 +724,13 @@ ev_pos_t03_swrivalev_01:
       _AB_KEYWAIT_MARK()
       _MSGWIN_CLOSE()
 
-    ENDIF
+      _CAMERA_RECV_MOVE(30)	//カメラ復帰移動
+      _CAMERA_WAIT_MOVE()	//カメラ移動待ち\
+      _CAMERA_BIND()		//カメラバインド
+      _CAMERA_END()		//カメラ操作終了
 
+    ENDIF
+    
   //イベント起動が２度目以降
   ELSE
 
@@ -783,11 +808,11 @@ ev_pos_t03_swrivalev_02:  //ライバルイベント01からのみ起動可能
     _OBJ_ANIME_WAIT()
   ENDSWITCH
   
-  //話しかけイベント開始だった場合
-  IF $LCW_POSX == 650 THEN
+  //座標移動が必要ない場合
+  IF $LCW_POSZ == 185 THEN
   
-    //アニメ：主人公ライバルの隣へ移動
-    _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 647, 185, FORCE_TYPE_MAP, 8, DIR_UD )
+    _OBJ_ANIME( T03_SWRIVAL_01, anm_common_turn_l )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
     _OBJ_ANIME_WAIT()
   
   ENDIF
@@ -809,70 +834,37 @@ ev_pos_t03_swrivalev_02:  //ライバルイベント01からのみ起動可能
 
   //勝利時
   //プラズマ団男：ヴィオさまと
-  _BALLOONWIN_OBJMSG_POS( msg_t03_swplazmam1_01, T03_SWPLAZMAM_02, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_t03_swplazmam1_01, T03_SWPLAZMAM_02, POS_UP )
   _MSGWIN_CLOSE()
 
   //ヴィオ：この　トレーナーども
-  _BALLOONWIN_OBJMSG_POS( msg_t03_sage7_02, T03_SWSAGE7_01, POS_DEFAULT )
+  _BALLOONWIN_OBJMSG_POS( msg_t03_sage7_02, T03_SWSAGE7_01, POS_DOWN )
   _MSGWIN_CLOSE()
 
   _TIME_WAIT( 15 )  //暗転前の間
-
-  //暗転
-  _BLACK_OUT_SLOW()
   
   _OBJ_ANIME_AUTO( T03_SWSAGE7_01, 637, 186, FORCE_TYPE_NPC, 4, DIR_LR )
   _TIME_WAIT( 8 )
   _OBJ_ANIME_AUTO( T03_SWPLAZMAM_02, 637, 185, FORCE_TYPE_NPC, 4, DIR_LR )
   _OBJ_ANIME_WAIT()
-  
-  _DISP_FADE_END_CHECK()
 
   //プラズマ団削除
   _OBJ_DEL( T03_SWSAGE7_01 )
   _OBJ_DEL( T03_SWPLAZMAM_02 )
-
-  _TIME_WAIT( 45 ) 
 
   //========================================//
   //暗転中にヴィオとプラズマ団を非表示
   _FLAG_SET( FV_T03_SWPLASMAM_01 )
   //========================================//
 
-  //暗転復帰
-  _BLACK_IN_SLOW()
-  _DISP_FADE_END_CHECK()
-
-  _TIME_WAIT( 45 )  //暗転後の間
-
-  //自機座標取得
-  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
-
-  //主人公はライバルの隣にいるか？
-  IF $LCW_POSZ == 187 THEN
-    //アニメ：ライバル主人公と向き合う
-    _OBJ_ANIME( T03_SWRIVAL_01, anm_common_turn_d )
-    _TIME_WAIT( 3 )
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
-    _OBJ_ANIME_WAIT()
-  ELSE
-    //アニメ：ライバル主人公と向き合う
-    _OBJ_ANIME( T03_SWRIVAL_01, anm_common_turn_u )
-    _TIME_WAIT( 3 )
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_d )
-    _OBJ_ANIME_WAIT()
-  ENDIF
-
   //ライバル名代入
   _RIVAL_NAME( 1 )
-  //ライバル：にげたか……
-  _BALLOONWIN_OBJMSG_POS( msg_t03_swrival_06, T03_SWRIVAL_01, POS_DEFAULT )
-  _MSGWIN_CLOSE()
+  //ライバル：まて！
+  _GIZAWIN_OBJMSG_POS( msg_t03_swrival_06 , T03_SWRIVAL_01, POS_DEFAULT )
+  _GIZAWIN_CLOSE()
 
   //アニメ：ライバル退場、主人公見送り
   _OBJ_ANIME_AUTO( T03_SWRIVAL_01, 638, 186, FORCE_TYPE_NPC, 4, DIR_LR )
-  _TIME_WAIT( 8 )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
   _OBJ_ANIME_WAIT()
   _OBJ_DEL( T03_SWRIVAL_01 )
 
