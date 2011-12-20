@@ -245,6 +245,7 @@ ARC_TARGET_DATA = \
 	get1_medal.nsbma \
 	fes_ci.nsbmd \
 	fes_ci.nsbca \
+	fes_ci.nsbva \
 	mugen_banjiro_a.nsbmd \
 	mugen_banjiro_b.nsbmd \
 	zekuromu_a.spa \
