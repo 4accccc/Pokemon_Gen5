@@ -256,9 +256,9 @@ static void taskAdd_SeEffectReq( DEMO3D_CMD_WORK* wk, u8 type, u16 seNo, int sta
   twk->frame =  sub_ConvFrame( wk, frame );
   
   if( playerNo == DEMO3D_SE_PARAM_DEFAULT ){
-    twk->playerNo = playerNo;
-  }else{
     twk->playerNo = PMSND_GetSE_DefaultPlayerID( seNo );
+  }else{
+    twk->playerNo = playerNo;
   }
   
   twk->now = FX32_CONST(start);
