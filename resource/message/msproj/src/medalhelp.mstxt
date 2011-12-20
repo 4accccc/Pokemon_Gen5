@@ -1900,29 +1900,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おとくな　けいじばんの
-おとくな　じょうほうを
-たくさん　チェックしよう！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お得な　掲示板の
-お得な　情報を
-たくさん　チェックしよう！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1970,29 +1966,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なかまになった　ポケモンに
-じぶんだけの　すてきな　なまえを
-かんがえて　なづけてみよう！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仲間になった　ポケモンに
-自分だけの　素敵な　名前を
-考えて　名付けてみよう！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2007,29 +1999,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テレビを　たくさん　みて
-いろいろな　じょうほうを
-てにいれよう！</Text>
+			<Text>いろいろな　ばしょに　ある
+おとくな　けいじばんを
+チェックしよう！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>テレビを　たくさん　みて
-色々な　情報を
-手に入れよう！</Text>
+			<Text>色々な　場所に　ある
+お得な　掲示板を
+チェックしよう！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2044,29 +2036,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しなぞろえ　ほうふな
-ショップに　かよって
-じょうれんに　なろう！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>品ぞろえ　豊富な
-ショップに　通って
-常連に　なろう！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2081,29 +2069,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ためた　おかねを
-ショップで　つかって
-きぶんは　セレブリティ！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>貯めた　お金を
-ショップで　使って
-気分は　セレブリティ！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2118,29 +2102,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>モンスターボールを
-１０コ　まとめがいすると
-いいこと　あるかも！</Text>
+			<Text>なかまになった　ポケモンに
+じぶんだけの　すてきな　なまえを
+かんがえて　なづけてみよう！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モンスターボールを
-１０コ　まとめ買いすると
-いいこと　あるかも！</Text>
+			<Text>仲間になった　ポケモンに
+自分だけの　素敵な　名前を
+考えて　名付けてみよう！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2155,29 +2139,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そだてやさんに　ポケモンを
-あずけて　あずけて　あずけまくれ！
-……ひきとることも　わすれずに</Text>
+			<Text>テレビを　たくさん　みて
+いろいろな　じょうほうを
+てにいれよう！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そだてやさんに　ポケモンを
-預けて　預けて　預けまくれ！
-……引き取ることも　忘れずに</Text>
+			<Text>テレビを　たくさん　みて
+色々な　情報を
+手に入れよう！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2192,29 +2176,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たまには　ふるさとで
-しょしんに　かえって
-ひとやすみ　してみては？</Text>
+			<Text>しなぞろえ　ほうふな
+ショップに　かよって
+じょうれんに　なろう！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たまには　故郷で
-初心に　帰って
-一休み　してみては？</Text>
+			<Text>品ぞろえ　豊富な
+ショップに　通って
+常連に　なろう！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2229,29 +2213,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Ｃギアを　ひらいて
-いろいろな　ひとと
-すれちがって　みよう！</Text>
+			<Text>ためた　おかねを
+ショップで　つかって
+きぶんは　セレブリティ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＣーＧＥＡＲを　開いて
-色々な　人と
-すれ違って　みよう！</Text>
+			<Text>貯めた　お金を
+ショップで　使って
+気分は　セレブリティ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2365,29 +2349,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ふしぎな　ちから
-デルパワーを　つかって
-ぼうけんを　より　たのしく　しよう！</Text>
+			<Text>モンスターボールを
+１０コ　まとめがいすると
+いいこと　あるかも！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>不思議な　力
-デルパワーを　使って
-冒険を　より　楽しく　しよう！</Text>
+			<Text>モンスターボールを
+１０コ　まとめ買いすると
+いいこと　あるかも！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2402,25 +2386,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>そだてやさんに　ポケモンを
+あずけて　あずけて　あずけまくれ！
+……ひきとることも　わすれずに</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>そだてやさんに　ポケモンを
+預けて　預けて　預けまくれ！
+……引き取ることも　忘れずに</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2435,25 +2423,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>たまには　ふるさとで
+しょしんに　かえって
+ひとやすみ　してみては？</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>たまには　故郷で
+初心に　帰って
+一休み　してみては？</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2468,25 +2460,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>Ｃギアを　ひらいて
+いろいろな　ひとと
+すれちがって　みよう！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>ＣーＧＥＡＲを　開いて
+色々な　人と
+すれ違って　みよう！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2600,25 +2596,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>ふしぎな　ちから
+デルパワーを　つかって
+ぼうけんを　より　たのしく　しよう！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>不思議な　力
+デルパワーを　使って
+冒険を　より　楽しく　しよう！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2633,27 +2633,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すべての　かくしあなを
-みつけることが　できるか！？</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すべての　隠し穴を
-見つけることが　できるか！？</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2800,29 +2798,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おおむかしの　ポケモンが
-きみの　なかまに　なる
-カセキの　ふしぎを　たいけんしよう</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>大昔の　ポケモンが
-君の　仲間に　なる
-カセキの　不思議を　体験しよう</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2870,25 +2864,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>すべての　かくしあなを
+みつけることが　できるか！？</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>すべての　隠し穴を
+見つけることが　できるか！？</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2969,29 +2965,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>パソコンの　ボックス　ひとつが
-いっぱいに　なる　くらい
-ポケモンを　あつめてみよう！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>パソコンの　ボックス　ひとつが
-いっぱいに　なる　くらい
-ポケモンを　集めてみよう！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3039,25 +3031,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>おおむかしの　ポケモンが
+きみの　なかまに　なる
+カセキの　ふしぎを　たいけんしよう</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>大昔の　ポケモンが
+君の　仲間に　なる
+カセキの　不思議を　体験しよう</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3168,6 +3164,241 @@
 	</TextRow>
 	<TextRow
 		Label="MDL_HINT_FIELD_091"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MDL_HINT_FIELD_092"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>パソコンの　ボックス　ひとつが
+いっぱいに　なる　くらい
+ポケモンを　あつめてみよう！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>パソコンの　ボックス　ひとつが
+いっぱいに　なる　くらい
+ポケモンを　集めてみよう！</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MDL_HINT_FIELD_093"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MDL_HINT_FIELD_094"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MDL_HINT_FIELD_095"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MDL_HINT_FIELD_096"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MDL_HINT_FIELD_097"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MDL_HINT_FIELD_098"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -5376,25 +5607,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>ポケモンミュージカルで
+ステキに　ドレスアップすれば
+たかいひょうかを　もらえるよ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>ポケモンミュージカルで
+ステキに　ドレスアップすれば
+高い評価を　もらえるよ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -5409,29 +5644,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンミュージカルで
-ステキに　ドレスアップすれば
-たかいひょうかを　もらえるよ</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンミュージカルで
-ステキに　ドレスアップすれば
-高い評価を　もらえるよ</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -6973,29 +7204,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケウッドで　とることの　できる
-すべての　えいがを
-とりつくせ！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケウッドで　撮ることの　できる
-すべての　映画を
-撮り尽くせ！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -7010,29 +7237,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おうどうの　えいがを
-たくさん　とって　めざせ
-めいさくえいが　かんとく！</Text>
+			<Text>ポケウッドで　とることの　できる
+すべての　えいがを
+とりつくせ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T06:24:54" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T06:24:54" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>王道の　映画を
-たくさん　撮って　目指せ
-名作映画監督！</Text>
+			<Text>ポケウッドで　撮ることの　できる
+すべての　映画を
+撮り尽くせ！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T06:24:54" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T06:24:54" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -7047,29 +7274,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>えいがを　とるなら　やっぱり
-うれる　えいが！　めざせ
-こうぎょうしゅうにゅう　１０００億円！</Text>
+			<Text>おうどうの　えいがを
+たくさん　とって　めざせ
+めいさくえいが　かんとく！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>映画を　撮るなら　やっぱり
-売れる　映画！　めざせ
-興行収入　１０００億円！</Text>
+			<Text>王道の　映画を
+たくさん　撮って　目指せ
+名作映画監督！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -7084,29 +7311,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>だいほんの　ななめうえを　いく
-ヘンテコな　えいがを　とって
-カルトムービー　デビュー！</Text>
+			<Text>えいがを　とるなら　やっぱり
+うれる　えいが！　めざせ
+こうぎょうしゅうにゅう　１０００億円！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>台本の　ななめ上を　いく
-ヘンテコな　映画を　撮って
-カルトムービー　デビュー！</Text>
+			<Text>映画を　撮るなら　やっぱり
+売れる　映画！　めざせ
+興行収入　１０００億円！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -7121,29 +7348,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヘンテコな　えいがを
-たくさん　とって　めざせ
-カルトえいが　かんとく！</Text>
+			<Text>だいほんの　ななめうえを　いく
+ヘンテコな　えいがを　とって
+カルトムービー　デビュー！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヘンテコな　映画を
-たくさん　撮って　目指せ
-カルト映画監督！</Text>
+			<Text>台本の　ななめ上を　いく
+ヘンテコな　映画を　撮って
+カルトムービー　デビュー！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -7158,27 +7385,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おおにんずうで　あつまって
-フェスミッションに　さんかしよう！</Text>
+			<Text>ヘンテコな　えいがを
+たくさん　とって　めざせ
+カルトえいが　かんとく！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>大人数で　集まって
-フェスミッションに　参加しよう！</Text>
+			<Text>ヘンテコな　映画を
+たくさん　撮って　目指せ
+カルト映画監督！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -7193,25 +7422,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>おおにんずうで　あつまって
+フェスミッションに　さんかしよう！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>大人数で　集まって
+フェスミッションに　参加しよう！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -7226,27 +7457,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フェスミッションで
-ハイスコアを　めざそう！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フェスミッションで
-ハイスコアを　目指そう！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -7261,25 +7490,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>フェスミッションで
+ハイスコアを　めざそう！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>フェスミッションで
+ハイスコアを　目指そう！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -7294,29 +7525,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハイリンクへ　いき
-フェスミッションを
-かいさい　しよう！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハイリンクへ　行き
-フェスミッションを
-開催しよう！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -7331,25 +7558,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>ハイリンクへ　いき
+フェスミッションを
+かいさい　しよう！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>ハイリンクへ　行き
+フェスミッションを
+開催しよう！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -7364,29 +7595,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かいさい　された
-フェスミッションに
-さんか　しよう！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>開催　された
-フェスミッションに
-参加　しよう！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -7401,25 +7628,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>かいさい　された
+フェスミッションに
+さんか　しよう！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>開催　された
+フェスミッションに
+参加　しよう！</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -7434,29 +7665,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みんなで　きょうりょくして
-フェスミッションを
-クリア　しよう！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>みんなで　協力して
-フェスミッションを
-クリア　しよう！</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -7471,25 +7698,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>みんなで　きょうりょくして
+フェスミッションを
+クリア　しよう！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>みんなで　協力して
+フェスミッションを
+クリア　しよう！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -7537,29 +7768,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゲームシンク　それは
-ゆめと　げんじつを　つなげる
-すてきな　テクノロジー</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゲームシンク　それは
-夢と　現実を　つなげる
-素敵な　テクノロジー</Text>
+			<Text>なし</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -7574,29 +7801,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おもいでリンク　それは
-かこと　みらいを　つなげる
-ふしぎな　ノスタルジー</Text>
+			<Text>ゲームシンク　それは
+ゆめと　げんじつを　つなげる
+すてきな　テクノロジー</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おもいでリンク　それは
-過去と　未来を　つなげる
-不思議な　ノスタルジー</Text>
+			<Text>ゲームシンク　それは
+夢と　現実を　つなげる
+素敵な　テクノロジー</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:14" />
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -7611,25 +7838,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なし</Text>
+			<Text>おもいでリンク　それは
+かこと　みらいを　つなげる
+ふしぎな　ノスタルジー</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なし</Text>
+			<Text>おもいでリンク　それは
+過去と　未来を　つなげる
+不思議な　ノスタルジー</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-19T05:40:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -7662,6 +7893,31 @@
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
 				Time="2011-11-23T10:48:14" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="MDL_HINT_APPLICATION_075">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-25T11:24:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-25T11:24:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-25T11:24:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-11-25T11:24:23" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -8530,262 +8786,6 @@
 	</TextRow>
 	<TextRow
 		Label="MDL_HINT_SPECIAL_007"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="MDL_HINT_APPLICATION_075">
-		<LanguageCell
-			Language="JPN">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-25T11:24:23" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-25T11:24:23" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-25T11:24:23" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-25T11:24:23" />
-		</LanguageCell>
-	</TextRow>
-	<TextRow
-		Label="MDL_HINT_FIELD_092"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="MDL_HINT_FIELD_093"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="MDL_HINT_FIELD_094"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="MDL_HINT_FIELD_095"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="MDL_HINT_FIELD_096"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="MDL_HINT_FIELD_097"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>なし</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="MDL_HINT_FIELD_098"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">

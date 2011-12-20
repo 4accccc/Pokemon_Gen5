@@ -923,24 +923,60 @@
 	</row>
 
 	<row id="MDL_EXP_FIELD_053">
-		<language name="JPN" width="216">ダウジングマシンを　つかいこなし
-かくれたどうぐを　１００こ　みつけた
+		<language name="JPN" width="216">めに　みえない　かくされた
+どうぐを　はじめて　みつけた
 かんさつがんを　たたえるメダル。</language>
-		<language name="JPN_KANJI" width="216">ダウジングマシンを　使いこなし
-隠れた道具を　１００個　見つけた
+		<language name="JPN_KANJI" width="216">目に　見えない　隠された
+道具を　初めて　見つけた
 観察眼を　称えるメダル。</language>
 	</row>
 
 	<row id="MDL_EXP_FIELD_054">
-		<language name="JPN" width="216">おおくの　おとくな　けいじばんを
+		<language name="JPN" width="216">めに　みえない　かくされた
+どうぐを　１０こ　みつけた
+かんさつがんを　たたえるメダル。</language>
+		<language name="JPN_KANJI" width="216">目に　見えない　隠された
+道具を　１０個　見つけた
+観察眼を　称えるメダル。</language>
+	</row>
+
+	<row id="MDL_EXP_FIELD_055">
+		<language name="JPN" width="216">めに　みえない　かくされた
+どうぐを　５０こ　みつけた
+かんさつがんを　たたえるメダル。</language>
+		<language name="JPN_KANJI" width="216">目に　見えない　隠された
+道具を　５０個　見つけた
+観察眼を　称えるメダル。</language>
+	</row>
+
+	<row id="MDL_EXP_FIELD_056">
+		<language name="JPN" width="216">かくされた　どうぐを
+１５０こも　みつけた　まれにみる
+かんさつがんを　たたえるメダル。</language>
+		<language name="JPN_KANJI" width="216">隠された　道具を
+１５０個も　見つけた　希に見る
+観察眼を　称えるメダル。</language>
+	</row>
+
+	<row id="MDL_EXP_FIELD_057">
+		<language name="JPN" width="216">５かしょの　おとくな　けいじばんを
 みた　じょうほうしゅうしゅうに
 ねっしんな　ひとのための　メダル。</language>
-		<language name="JPN_KANJI" width="216">多くの　お得な　掲示板を　見た
+		<language name="JPN_KANJI" width="216">５箇所の　お得な　掲示板を　見た
 情報収集に　熱心な
 人のための　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_055">
+	<row id="MDL_EXP_FIELD_058">
+		<language name="JPN" width="216">２０かしょの　おとくな　けいじばんを
+みた　じょうほうしゅうしゅうを
+きわめた　ひとのための　メダル。</language>
+		<language name="JPN_KANJI" width="216">２０箇所の　お得な　掲示板を　見た
+情報収集を　極めた
+人のための　メダル。</language>
+	</row>
+
+	<row id="MDL_EXP_FIELD_059">
 		<language name="JPN" width="216">かんばんの　うらの
 ラクガキも　みのがさない
 どうさつりょくを　みとめる　メダル。</language>
@@ -949,7 +985,7 @@
 洞察力を　認める　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_056">
+	<row id="MDL_EXP_FIELD_060">
 		<language name="JPN" width="216">たくさんの　ポケモンの
 ニックネームを　かんがえた
 なづけおやに　あたえられる　メダル。</language>
@@ -958,7 +994,7 @@
 名付け親に　与えられる　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_057">
+	<row id="MDL_EXP_FIELD_061">
 		<language name="JPN" width="216">テレビばんぐみに　むちゅうになって
 ついつい　みいってしまう
 げんだいっこに　おくられる　メダル。</language>
@@ -967,7 +1003,7 @@
 現代っ子に　贈られる　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_058">
+	<row id="MDL_EXP_FIELD_062">
 		<language name="JPN" width="216">フレンドリィショップに　かよいつめ
 じょうれんきゃくになった
 トレーナーの　ための　メダル。</language>
@@ -976,7 +1012,25 @@
 トレーナーの　ための　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_059">
+	<row id="MDL_EXP_FIELD_063">
+		<language name="JPN" width="216">フレンドリィショップでの　かいもので
+１００００円も　つかった
+おかねもちの　ための　メダル。</language>
+		<language name="JPN_KANJI" width="216">フレンドリィショップでの　買い物で
+１００００円も　使った
+お金持ちの　ための　メダル。</language>
+	</row>
+
+	<row id="MDL_EXP_FIELD_064">
+		<language name="JPN" width="216">フレンドリィショップでの　かいもので
+１０００００円も　つかった
+おかねもちの　ための　メダル。</language>
+		<language name="JPN_KANJI" width="216">フレンドリィショップでの　買い物で
+１０００００円も　使った
+お金持ちの　ための　メダル。</language>
+	</row>
+
+	<row id="MDL_EXP_FIELD_065">
 		<language name="JPN" width="216">フレンドリィショップでの　かいもので
 １００００００円も　つかった
 おかねもちの　ための　メダル。</language>
@@ -985,7 +1039,16 @@
 お金持ちの　ための　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_060">
+	<row id="MDL_EXP_FIELD_066">
+		<language name="JPN" width="216">フレンドリィショップでの　かいもので
+１０００００００円も　つかった
+おかねもちの　ための　メダル。</language>
+		<language name="JPN_KANJI" width="216">フレンドリィショップでの　買い物で
+１０００００００円も　使った
+お金持ちの　ための　メダル。</language>
+	</row>
+
+	<row id="MDL_EXP_FIELD_067">
 		<language name="JPN" width="216">まとめがいを　こころがけ
 おまけの　プレミアボールを　もらった
 せつやくじょうずの　ための　メダル。</language>
@@ -994,7 +1057,7 @@
 節約上手の　ための　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_061">
+	<row id="MDL_EXP_FIELD_068">
 		<language name="JPN" width="216">そだてやさんに　たくさんの
 ポケモンを　あずけた
 いくせいずきの　あかしの　メダル。</language>
@@ -1003,7 +1066,7 @@
 育成好きの　証しの　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_062">
+	<row id="MDL_EXP_FIELD_069">
 		<language name="JPN" width="216">なつかしさ　あふれる
 じぶんの　いえで　やすんだ
 ふるさとおもいの　ための　メダル。</language>
@@ -1012,7 +1075,7 @@
 故郷思いの　ための　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_063">
+	<row id="MDL_EXP_FIELD_070">
 		<language name="JPN" width="216">はじめて　だれかと　すれちがった
 ささやかな　であいと　わかれの
 あかしとなる　メダル。</language>
@@ -1021,7 +1084,7 @@
 証しとなる　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_064">
+	<row id="MDL_EXP_FIELD_071">
 		<language name="JPN" width="216">３０にんと　すれちがった
 いりみだれる　であいと　わかれの
 あかしとなる　メダル。</language>
@@ -1030,7 +1093,7 @@
 証しとなる　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_065">
+	<row id="MDL_EXP_FIELD_072">
 		<language name="JPN" width="216">１００にんと　すれちがった
 げきどうの　であいと　わかれの
 あかしとなる　メダル。</language>
@@ -1039,7 +1102,7 @@
 証しとなる　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_066">
+	<row id="MDL_EXP_FIELD_073">
 		<language name="JPN" width="216">１０００にんと　すれちがった
 はらんばんじょうな　にんげんもようの
 あかしとなる　メダル。</language>
@@ -1048,7 +1111,7 @@
 証しとなる　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_067">
+	<row id="MDL_EXP_FIELD_074">
 		<language name="JPN" width="216">デルパワーを　はじめて　つかった
 ういういしい　ちからの　ながれを
 ひょうかする　メダル。</language>
@@ -1057,7 +1120,7 @@
 評価する　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_068">
+	<row id="MDL_EXP_FIELD_075">
 		<language name="JPN" width="216">デルパワーを　１０回　使った
 たくましい　ちからの　ながれを
 ひょうかする　メダル。</language>
@@ -1066,7 +1129,7 @@
 評価する　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_069">
+	<row id="MDL_EXP_FIELD_076">
 		<language name="JPN" width="216">デルパワーを　５０かい　つかった
 すさまじい　ちからの　ながれを
 ひょうかする　メダル。</language>
@@ -1075,7 +1138,7 @@
 評価する　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_070">
+	<row id="MDL_EXP_FIELD_077">
 		<language name="JPN" width="216">デルパワーを　１００かい　つかった
 このうえない　ちからの　ながれを
 ひょうかする　メダル。</language>
@@ -1084,7 +1147,7 @@
 評価する　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_071">
+	<row id="MDL_EXP_FIELD_078">
 		<language name="JPN" width="216">ハイリンクのもりで　はじめて
 ポケモンを　つかまえた
 ゆめみがちな　メダル。</language>
@@ -1093,7 +1156,7 @@
 夢見がちな　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_072">
+	<row id="MDL_EXP_FIELD_079">
 		<language name="JPN" width="216">ハイリンクのもりで　１０ひきの
 ポケモンを　つかまえた
 ゆめみがちな　メダル。</language>
@@ -1102,7 +1165,7 @@
 夢見がちな　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_073">
+	<row id="MDL_EXP_FIELD_080">
 		<language name="JPN" width="216">ハイリンクのもりで　５０ひきの
 ポケモンを　つかまえた
 ゆめみがちな　メダル。</language>
@@ -1111,7 +1174,7 @@
 夢見がちな　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_074">
+	<row id="MDL_EXP_FIELD_081">
 		<language name="JPN" width="216">ハイリンクのもりで　１００ひきの
 ポケモンを　つかまえた
 ゆめのような　メダル。</language>
@@ -1120,7 +1183,7 @@
 夢のような　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_075">
+	<row id="MDL_EXP_FIELD_082">
 		<language name="JPN" width="216">すべての　かくしあなを
 はっけんした　やせいを
 ほめたたえる　メダル。</language>
@@ -1128,7 +1191,7 @@
 野性を　褒め称える　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_076">
+	<row id="MDL_EXP_FIELD_083">
 		<language name="JPN" width="216">ヒウンシティに　たむろする
 ワルたちの　ちょうてんに　たった
 あかしとなる　メダル。</language>
@@ -1137,7 +1200,7 @@
 証しとなる　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_077">
+	<row id="MDL_EXP_FIELD_084">
 		<language name="JPN" width="216">マリンチューブに　まれに　あらわれる
 ポケモン　ホエルオーの　およぐ
 すがたを　みた　あかしの　メダル。</language>
@@ -1146,7 +1209,7 @@
 見た　証しの　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_078">
+	<row id="MDL_EXP_FIELD_085">
 		<language name="JPN" width="216">セイガイハシティの
 かおだしかんばんから　かおを　だした
 たびの　おもいでの　メダル。</language>
@@ -1155,7 +1218,7 @@
 旅の　思い出の　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_079">
+	<row id="MDL_EXP_FIELD_086">
 		<language name="JPN" width="216">めったに　みることが　できない
 ダイヤモンドダストを　みた
 しょうめいの　メダル。</language>
@@ -1164,7 +1227,7 @@
 証明 の　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_080">
+	<row id="MDL_EXP_FIELD_087">
 		<language name="JPN" width="216">ポケモンの　カセキを　ふくげんさせ
 げんだいに　よみがえらせた
 かがくの　ちからの　メダル。</language>
@@ -1173,7 +1236,7 @@
 科学の　力の　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_081">
+	<row id="MDL_EXP_FIELD_088">
 		<language name="JPN" width="216">かいていいせきの
 さいしんぶに　たどりついた
 ぼうけんかに　あたえられる　メダル。</language>
@@ -1181,7 +1244,7 @@
 冒険家に　与えられる　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_082">
+	<row id="MDL_EXP_FIELD_089">
 		<language name="JPN" width="216">でんせつの　ポケモンに　みとめられた
 トレーナーと　ともにいた　ポケモンを
 なかまにした　あかしの　メダル。</language>
@@ -1190,7 +1253,7 @@
 仲間にした　証しの　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_083">
+	<row id="MDL_EXP_FIELD_090">
 		<language name="JPN" width="216">いろちがいの　ポケモンと
 であった　ことのある
 こううんを　たたえる　メダル。</language>
@@ -1199,7 +1262,7 @@
 幸運を　称える　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_084">
+	<row id="MDL_EXP_FIELD_091">
 		<language name="JPN" width="216">ポケモンに　くっつく　なぞの
 せいめいたい　ポケルスを　みつけた
 トレーナーに　あたえられる　メダル。</language>
@@ -1208,7 +1271,7 @@
 トレーナーに　与えられる　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_085">
+	<row id="MDL_EXP_FIELD_092">
 		<language name="JPN" width="216">ボックスに　３０ひきの　ポケモンを
 あずけている　かけだしの
 トレーナーに　あたえられる　メダル。</language>
@@ -1217,7 +1280,7 @@
 トレーナーに　与えられる　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_086">
+	<row id="MDL_EXP_FIELD_093">
 		<language name="JPN" width="216">ボックスに　１２０ひきの　ポケモンを
 あずけている　うでのたつ
 トレーナーに　あたえられる　メダル。</language>
@@ -1226,7 +1289,7 @@
 トレーナーに　与えられる　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_087">
+	<row id="MDL_EXP_FIELD_094">
 		<language name="JPN" width="216">ボックスに　３６０ひきの　ポケモンを
 あずけている　すごうでの
 トレーナーに　あたえられる　メダル。</language>
@@ -1235,7 +1298,7 @@
 トレーナーに　与えられる　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_088">
+	<row id="MDL_EXP_FIELD_095">
 		<language name="JPN" width="216">ボックスに　はいりきらない　ほどの
 ポケモンを　つかまえた　うつわの
 おおきさを　たたえる　メダル。</language>
@@ -1244,7 +1307,7 @@
 器の　大きさを　称える　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_089">
+	<row id="MDL_EXP_FIELD_096">
 		<language name="JPN" width="216">はたらく　くるまの　ことなら
 なんでも　しっている
 ものしりの　ための　メダル。</language>
@@ -1253,7 +1316,7 @@
 物知りの　ための　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_090">
+	<row id="MDL_EXP_FIELD_097">
 		<language name="JPN" width="216">イッシュちほうの　すべての　まちを
 おとずれた　さいこうの　たびびとに
 あたえられる　メダル。</language>
@@ -1262,7 +1325,7 @@
 与えられる　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_FIELD_091">
+	<row id="MDL_EXP_FIELD_098">
 		<language name="JPN" width="216">『ぼうけん』メダルを　すべて　
 あつめた　ごほうびの　メダル。</language>
 		<language name="JPN_KANJI" width="216">『冒険』メダルを　すべて　
@@ -1834,19 +1897,19 @@
 
 	<row id="MDL_EXP_APPLICATION_008">
 		<language name="JPN" width="216">ミュージカルで　たかいひょうかを
-５かい　もらった　はなばなしい
+はじめて　もらった　ういういしい
 かつやくの　あかしとなる　メダル。</language>
 		<language name="JPN_KANJI" width="216">ミュージカルで　高い評価を
-５回　もらった　華々しい
+初めて　もらった　初々しい
 活躍の　証しとなる　メダル。</language>
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_009">
 		<language name="JPN" width="216">ミュージカルで　たかいひょうかを
-はじめて　もらった　ういういしい
+５かい　もらった　はなばなしい
 かつやくの　あかしとなる　メダル。</language>
 		<language name="JPN_KANJI" width="216">ミュージカルで　高い評価を
-初めて　もらった　初々しい
+５回　もらった　華々しい
 活躍の　証しとなる　メダル。</language>
 	</row>
 
@@ -2147,6 +2210,15 @@
 	</row>
 
 	<row id="MDL_EXP_APPLICATION_043">
+		<language name="JPN" width="216">ポケウッドでの　デビューさく　
+えいが　ハチクマン
+こうかい　きねん　メダル。</language>
+		<language name="JPN_KANJI" width="216">ポケウッドでの　デビュー作
+映画　ハチクマン
+公開記念メダル。</language>
+	</row>
+
+	<row id="MDL_EXP_APPLICATION_044">
 		<language name="JPN" width="216">ポケウッドの　えいが
 ハチクマンの　ぎゃくしゅう
 ぜんさく　こうかい　きねん　メダル。</language>
@@ -2155,7 +2227,7 @@
 全作　公開記念メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_044">
+	<row id="MDL_EXP_APPLICATION_045">
 		<language name="JPN" width="216">ポケウッドの　えいが
 フルメタルコップ　ぜんシリーズ
 こうかい　きねん　メダル。</language>
@@ -2164,7 +2236,7 @@
 公開記念メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_045">
+	<row id="MDL_EXP_APPLICATION_046">
 		<language name="JPN" width="216">ポケウッドの　えいが
 しんりゃくしゃ　ぜんシリーズ
 こうかい　きねん　メダル。</language>
@@ -2173,7 +2245,7 @@
 公開記念メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_046">
+	<row id="MDL_EXP_APPLICATION_047">
 		<language name="JPN" width="216">ポケウッドの　えいが
 だいかいじゅう　ぜんシリーズ
 こうかい　きねん　メダル。</language>
@@ -2182,7 +2254,7 @@
 公開記念メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_047">
+	<row id="MDL_EXP_APPLICATION_048">
 		<language name="JPN" width="216">ポケウッドの　えいが
 タイムゲート　トラベラー
 ぜんさく　こうかい　きねん　メダル。</language>
@@ -2191,7 +2263,7 @@
 全作　公開記念メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_048">
+	<row id="MDL_EXP_APPLICATION_049">
 		<language name="JPN" width="216">ポケウッドの　えいが
 トレーナーとポケモン　その　あい
 ぜんさく　こうかい　きねん　メダル。</language>
@@ -2200,7 +2272,7 @@
 全作　公開記念メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_049">
+	<row id="MDL_EXP_APPLICATION_050">
 		<language name="JPN" width="216">ポケウッドの　えいが
 まほうのくにの　ふしぎな　とびら
 ぜんさく　こうかい　きねん　メダル。</language>
@@ -2209,7 +2281,7 @@
 全作　公開記念メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_050">
+	<row id="MDL_EXP_APPLICATION_051">
 		<language name="JPN" width="216">ポケウッドの　えいが
 ＯＬ・ザ・ジャイアント！！
 ぜんさく　こうかい　きねん　メダル。</language>
@@ -2218,7 +2290,7 @@
 全作　公開記念メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_051">
+	<row id="MDL_EXP_APPLICATION_052">
 		<language name="JPN" width="216">ポケウッドの　えいが
 きょうふ！　あくむの　あかいきり
 ぜんさく　こうかい　きねん　メダル。</language>
@@ -2227,7 +2299,7 @@
 全作　公開記念メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_052">
+	<row id="MDL_EXP_APPLICATION_053">
 		<language name="JPN" width="216">ポケウッドの　えいが
 わすれえぬ　きおく　ぜんシリーズ
 こうかい　きねん　メダル。</language>
@@ -2236,7 +2308,7 @@
 公開記念メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_053">
+	<row id="MDL_EXP_APPLICATION_054">
 		<language name="JPN" width="216">ポケウッドの　えいが
 ゴーストイレイザー　ぜんシリーズ
 こうかい　きねん　メダル。</language>
@@ -2245,7 +2317,7 @@
 公開記念メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_054">
+	<row id="MDL_EXP_APPLICATION_055">
 		<language name="JPN" width="216">ポケウッドの　えいが
 ハチクマンのぎゃくしゅうリターンズ
 こうかい　きねん　メダル。</language>
@@ -2254,7 +2326,7 @@
 公開記念メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_055">
+	<row id="MDL_EXP_APPLICATION_056">
 		<language name="JPN" width="216">ポケウッドで　すべての　えいがに
 しゅつえんした　えいがはいゆうに
 おくられる　メダル。</language>
@@ -2263,7 +2335,7 @@
 贈られる　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_056">
+	<row id="MDL_EXP_APPLICATION_057">
 		<language name="JPN" width="216">ポケウッドの　すべての　えいがで
 グッドエンドの　ストーリーに　でた
 じつりょくは　はいゆうの　メダル。</language>
@@ -2272,7 +2344,7 @@
 実力派俳優の　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_057">
+	<row id="MDL_EXP_APPLICATION_058">
 		<language name="JPN" width="216">ポケウッドで　１０００億円いじょうの
 こうぎょうしゅうにゅうを　きろくした
 にんき　はいゆうの　ための　メダル。</language>
@@ -2281,7 +2353,7 @@
 人気俳優の　ための　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_058">
+	<row id="MDL_EXP_APPLICATION_059">
 		<language name="JPN" width="216">ポケウッドで　はじめて　ストレンジな
 ストーリーの　えいがに　でた
 きさい　たんじょう　きねん　メダル。</language>
@@ -2290,7 +2362,7 @@
 鬼才の　誕生を　記念する　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_059">
+	<row id="MDL_EXP_APPLICATION_060">
 		<language name="JPN" width="216">ポケウッドの　すべての　えいがで
 ストレンジな　ストーリーに　でた
 カルトえいがの　めいゆうの　メダル。</language>
@@ -2299,7 +2371,7 @@
 カルト映画の　名優の　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_060">
+	<row id="MDL_EXP_APPLICATION_061">
 		<language name="JPN" width="216">１０にんいじょう　あつまった
 なかなかの　きぼの　ミッションに
 さんかした　きねんの　メダル。</language>
@@ -2308,7 +2380,7 @@
 参加した　記念の　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_061">
+	<row id="MDL_EXP_APPLICATION_062">
 		<language name="JPN" width="216">３０にんいじょう　あつまった
 そうとうな　きぼの　ミッションに
 さんかした　きねんの　メダル。</language>
@@ -2317,7 +2389,7 @@
 参加した　記念の　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_062">
+	<row id="MDL_EXP_APPLICATION_063">
 		<language name="JPN" width="216">１００いじょうの　スコアを　きろくし
 なかなか　もりあがった　ミッションに
 さんかした　あかしの　メダル。</language>
@@ -2326,7 +2398,7 @@
 参加した　証しの　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_063">
+	<row id="MDL_EXP_APPLICATION_064">
 		<language name="JPN" width="216">１０００いじょうの　スコアを　きろくし
 そうとう　もりあがった　ミッションに
 さんかした　あかしの　メダル。</language>
@@ -2335,7 +2407,7 @@
 参加した　証しの　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_064">
+	<row id="MDL_EXP_APPLICATION_065">
 		<language name="JPN" width="216">フェスミッションを　１０かい
 かいさいした　それなりの
 じしゅせいを　たたえる　メダル。</language>
@@ -2344,7 +2416,7 @@
 自主性を　称える　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_065">
+	<row id="MDL_EXP_APPLICATION_066">
 		<language name="JPN" width="216">フェスミッションを　５０かい
 かいさいした　たぐいまれな
 じしゅせいを　たたえる　メダル。</language>
@@ -2353,7 +2425,7 @@
 自主性を　称える　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_066">
+	<row id="MDL_EXP_APPLICATION_067">
 		<language name="JPN" width="216">フェスミッションに　はじめて
 さんかした　かけだしの
 せっきょくせいを　たたえる　メダル。</language>
@@ -2362,7 +2434,7 @@
 積極性を　称える　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_067">
+	<row id="MDL_EXP_APPLICATION_068">
 		<language name="JPN" width="216">フェスミッションに　１０かい
 さんかした　かがやかしい
 せっきょくせいを　たたえる　メダル。</language>
@@ -2371,7 +2443,7 @@
 積極性を　称える　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_068">
+	<row id="MDL_EXP_APPLICATION_069">
 		<language name="JPN" width="216">フェスミッションを　３０かい
 クリアした　そこそこの
 じっこうりょくを　たたえる　メダル。</language>
@@ -2380,7 +2452,7 @@
 実行力を　称える　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_069">
+	<row id="MDL_EXP_APPLICATION_070">
 		<language name="JPN" width="216">フェスミッションを　１００かい
 クリアした　おどろくべき
 じっこうりょくを　たたえる　メダル。</language>
@@ -2389,7 +2461,7 @@
 実行力を　称える　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_070">
+	<row id="MDL_EXP_APPLICATION_071">
 		<language name="JPN" width="216">すべての　フェスミッションを
 クリアした　てんかむそうの
 じっこうりょくを　たたえる　メダル。</language>
@@ -2398,7 +2470,7 @@
 実行力を　称える　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_071">
+	<row id="MDL_EXP_APPLICATION_072">
 		<language name="JPN" width="216">ゲームシンクを　して　ポケモンを
 ゆめの　せかいで　あそばせた
 よい　ねむりを　たたえる　メダル。</language>
@@ -2407,14 +2479,14 @@
 良い　眠りを　称える　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_072">
+	<row id="MDL_EXP_APPLICATION_073">
 		<language name="JPN" width="216">おもいでリンクを　おこなった
 あかしの　メダル。</language>
 		<language name="JPN_KANJI" width="216">おもいでリンクを　行った
 証しの　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_073">
+	<row id="MDL_EXP_APPLICATION_074">
 		<language name="JPN" width="216">おもいでリンクを　おこない
 すべての　リンクイベントを　みた
 あかしの　メダル。</language>
@@ -2423,7 +2495,7 @@
 証しの　メダル。</language>
 	</row>
 
-	<row id="MDL_EXP_APPLICATION_074">
+	<row id="MDL_EXP_APPLICATION_075">
 		<language name="JPN" width="216">『おたのしみ』メダルを　すべて　
 あつめた　ごほうびの　メダル。</language>
 		<language name="JPN_KANJI" width="216">『お楽しみ』メダルを　すべて　
@@ -2651,50 +2723,6 @@
 		<language name="JPN_KANJI" width="216">すべての　メダルを　集め
 メダリストの　頂点に　立った
 栄誉の　証しの　メダル。</language>
-	</row>
-
-	<row id="MDL_EXP_APPLICATION_075">
-		<language name="JPN" width="216">ポケウッドでの　デビューさく　
-えいが　ハチクマン
-こうかい　きねん　メダル。</language>
-		<language name="JPN_KANJI" width="216">ポケウッドでの　デビュー作
-映画　ハチクマン
-公開記念メダル。</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_092">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_093">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_094">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_095">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_096">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_097">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
-	</row>
-
-	<row id="MDL_EXP_FIELD_098">
-		<language name="JPN" width="216">あき</language>
-		<language name="JPN_KANJI" width="216">空き</language>
 	</row>
 
 	<flowchart-group-list>

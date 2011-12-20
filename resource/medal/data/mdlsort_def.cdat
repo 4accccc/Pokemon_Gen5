@@ -22,13 +22,6 @@ u32 MedalSortList[] = {
     MDLID_DAYMAX_EXP_LV1,	//ＥＸＰみりおねあ
     MDLID_PKWD_SERIES5,	//ＳＦえいがまいすたー
     MDLID_PKWD_SERIES3,	//ＵＦＯえいがますたー
-    MDLID_FIELD_DUMMY_06,	//あきめだる
-    MDLID_FIELD_DUMMY_07,	//あきめだる
-    MDLID_FIELD_DUMMY_08,	//あきめだる
-    MDLID_FIELD_DUMMY_05,	//あきめだる
-    MDLID_FIELD_DUMMY_02,	//あきめだる
-    MDLID_FIELD_DUMMY_04,	//あきめだる
-    MDLID_FIELD_DUMMY_03,	//あきめだる
     MDLID_COMPLETE_AKU,	//あくこれくたー
     MDLID_CHAMPION_AKU,	//あくちゃんぷ
     MDLID_FIELD_COMPLETE,	//あどべんちゃーきんぐ
@@ -58,7 +51,9 @@ u32 MedalSortList[] = {
     MDLID_WBT_TYPE_ALL,	//おーるたいぷきんぐ
     MDLID_PKWD_SERIES9,	//おかるとのはながた
     MDLID_MUSICALGOODS,	//おしゃればんちょう
-    MDLID_DOWSING_LV1,	//おとしものはんたー
+    MDLID_DOWSING_LV3,	//おとしものこれくたー
+    MDLID_DOWSING_LV1,	//おとしものしーかー
+    MDLID_DOWSING_LV2,	//おとしものはんたー
     MDLID_PKWD_SERIES11,	//おばけえいがますたー
     MDLID_RESORT_SHOP_PRESENT_CNT_LV3,	//おみやげでらっくす
     MDLID_RESORT_SHOP_PRESENT_CNT_LV1,	//おみやげりーずなぶる
@@ -79,7 +74,8 @@ u32 MedalSortList[] = {
     MDLID_WBT_RENTAL,	//かりものきんぐ
     MDLID_PKWD_STRANGE_ALL,	//かるとえいがすたー
     MDLID_WBT_KANTO,	//かんとーさいきょう
-    MDLID_BILLBOARD_COUNT_LV1,	//かんばんめいじん
+    MDLID_BILLBOARD_COUNT_LV1,	//かんばんにゅうもん
+    MDLID_BILLBOARD_COUNT_LV2,	//かんばんめいじん
     MDLID_GOMIBAKO_LV1,	//がさいれのたつじん
     MDLID_COMM_TRADE_LV3,	//がっちりとれーど
     MDLID_PKWD_BOXOFFICE,	//がっぽりむーびー
@@ -117,6 +113,7 @@ u32 MedalSortList[] = {
     MDLID_MUGEN_AREA_W_LV2,	//じゅどうますたー
     MDLID_WBT_JOUTO,	//じょうとさいきょう
     MDLID_SHOPPING_CNT_LV1,	//じょうれんかすたまー
+    MDLID_SHOPPING_MONEY_LV4,	//すーぱーみりおねあ
     MDLID_RECOVERY_HOME,	//すいーとほーむ
     MDLID_FISHING_LV3,	//すごいつりびと
     MDLID_MUSICALPLAY_LV1,	//すてーじのもうしご
@@ -129,7 +126,9 @@ u32 MedalSortList[] = {
     MDLID_TAMAGO_MAX,	//せいめいのしんぴ
     MDLID_WBT_CHAMPION,	//せかいさいきょう
     MDLID_REPORT_LV2,	//せかせかれぽーたー
-    MDLID_SHOPPING_MONEY_LV1,	//ぜいたくかすたまー
+    MDLID_SHOPPING_MONEY_LV1,	//ぜいたくえんとりー
+    MDLID_SHOPPING_MONEY_LV2,	//ぜいたくぐれーと
+    MDLID_SHOPPING_MONEY_LV3,	//ぜいたくすぺしゃる
     MDLID_COMPLETE_ZENKOKU,	//ぜんこくこれくたー
     MDLID_MUGEN_ALL_WIN_LV1,	//ぜんぬきいーじー
     MDLID_MUGEN_ALL_WIN_LV2,	//ぜんぬきますたー
@@ -147,6 +146,7 @@ u32 MedalSortList[] = {
     MDLID_TAMAGO_LV2,	//たまごぶりーだー
     MDLID_EFFECT_ENCOUNT_LV1,	//たんさくはんたー
     MDLID_DIAMONDDUST,	//だいやもんどだすと
+    MDLID_DOWSING_LV4,	//だうじんぐきんぐ
     MDLID_SUBWAY_DOUBLE_LV1,	//だぶるえくすぷれす
     MDLID_REPORT_LV1,	//ちまちまれぽーたー
     MDLID_MISSION_COMPLETE,	//ちゃれんじじーにあす
