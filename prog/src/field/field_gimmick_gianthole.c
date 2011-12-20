@@ -320,28 +320,6 @@ void GIANTHOLE_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
 {
   GIANTHOLE_GIMMICK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GIMMICK_TMP_ASSIGN_ID );
 
-
-#ifdef PM_DEBUG
-  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
-    
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      OS_Printf("デバッグ N下降\n");
-
-      GIANTHOLE_GIMMICK_N_POKE_AnmStart( gsys, TRUE );
-    }
-    
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      OS_Printf("デバッグ N上昇\n");
-
-      GIANTHOLE_GIMMICK_N_POKE_AnmStart( gsys, FALSE );
-    }
-  }
-#endif
-
   // SE再生
   {
     if( p_wk->anm_type != ANIME_TYPE_NULL )
