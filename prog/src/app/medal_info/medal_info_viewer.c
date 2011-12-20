@@ -1439,6 +1439,8 @@ static void MEDALVIEWER_OBJInit( MEDALVIEWER_WK *p_wk )
 		GFL_CLACT_UNIT_SetDefaultRend( p_wk->p_clunit );
 	}
 
+  // OBJ表示状態
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 
 	//リソース読み込み
