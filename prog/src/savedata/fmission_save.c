@@ -377,7 +377,9 @@ void FMISSION_SAVE_SetMissionStatusClearLevel( FMISSION_SAVE* sv, FEST_MISSION_I
     GF_ASSERT(0);
     return;
   }
-  sv->status[id].level = level;
+  if( level < FMISSION_CLEAR_LEVEL_4 ){ //Level4ƒNƒŠƒAî•ñ‚Í•Û‘¶‚µ‚È‚¢
+    sv->status[id].level = level;
+  }
 }
 
 //---------------------------------------------------------------------------
