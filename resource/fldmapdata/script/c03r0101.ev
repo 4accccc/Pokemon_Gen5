@@ -651,10 +651,10 @@ SET_RES_REQ_ACHIEVE_FLAG:
   CASE RESEARCH_REQ_ID_PRECIOUS_time       THEN _FLAG_SET( FE_RES_REQ_PRECIOUS_TIME   ) //「だいじにしているものに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_PARTNER_count       THEN _FLAG_SET( FE_RES_REQ_PARTNER_COUNT   ) //「ひとのみりょくに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_PARTNER_time        THEN _FLAG_SET( FE_RES_REQ_PARTNER_TIME    ) //「ひとのみりょくに　ついて」( 時間 )
-  CASE RESEARCH_REQ_ID_FUTURE_count        THEN _FLAG_SET( FE_RES_REQ_FUTURE_COUNT    ) //「どんな　ひとに　なりたい？」( 人数 )
-  CASE RESEARCH_REQ_ID_FUTURE_time         THEN _FLAG_SET( FE_RES_REQ_FUTURE_TIME     ) //「どんな　ひとに　なりたい？」( 時間 )
-  CASE RESEARCH_REQ_ID_ART_count           THEN _FLAG_SET( FE_RES_REQ_ART_COUNT       ) //「げいじゅつに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_ART_time            THEN _FLAG_SET( FE_RES_REQ_ART_TIME        ) //「げいじゅつに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_FUTURE_count        THEN _FLAG_SET( FE_RES_REQ_FUTURE_COUNT    ) //「しょうらいに　ついて」( 人数 )
+  CASE RESEARCH_REQ_ID_FUTURE_time         THEN _FLAG_SET( FE_RES_REQ_FUTURE_TIME     ) //「しょうらいに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_ART_count           THEN _FLAG_SET( FE_RES_REQ_ART_COUNT       ) //「きょうかん　される　うたは？」( 人数 )
+  CASE RESEARCH_REQ_ID_ART_time            THEN _FLAG_SET( FE_RES_REQ_ART_TIME        ) //「きょうかん　される　うたは？」( 時間 )
   CASE RESEARCH_REQ_ID_MUSIC_count         THEN _FLAG_SET( FE_RES_REQ_MUSIC_COUNT     ) //「いちばんすきな　おんがくは？」( 人数 )
   CASE RESEARCH_REQ_ID_MUSIC_time          THEN _FLAG_SET( FE_RES_REQ_MUSIC_TIME      ) //「いちばんすきな　おんがくは？」( 時間 )
   CASE RESEARCH_REQ_ID_MOVIE_count         THEN _FLAG_SET( FE_RES_REQ_MOVIE_COUNT     ) //「えいぞうに　ついて」( 人数 )
@@ -663,8 +663,8 @@ SET_RES_REQ_ACHIEVE_FLAG:
   CASE RESEARCH_REQ_ID_TIME_MACHINE_time   THEN _FLAG_SET( FE_RES_REQ_TIME_MACHINE_TIME  ) //「タイムマシンが　あったら？」( 時間 )
   CASE RESEARCH_REQ_ID_IF_count            THEN _FLAG_SET( FE_RES_REQ_IF_COUNT        ) //「もしもシリーズ」( 人数 )
   CASE RESEARCH_REQ_ID_IF_time             THEN _FLAG_SET( FE_RES_REQ_IF_TIME         ) //「もしもシリーズ」( 時間 )
-  CASE RESEARCH_REQ_ID_GAME_count          THEN _FLAG_SET( FE_RES_REQ_GAME_COUNT      ) //「いちばん　にんきの　げーむは？」( 人数 )
-  CASE RESEARCH_REQ_ID_GAME_time           THEN _FLAG_SET( FE_RES_REQ_GAME_TIME       ) //「いちばん　にんきの　げーむは？」( 時間 )
+  CASE RESEARCH_REQ_ID_GAME_count          THEN _FLAG_SET( FE_RES_REQ_GAME_COUNT      ) //「いちばん　にんきの　ゲームは？」( 人数 )
+  CASE RESEARCH_REQ_ID_GAME_time           THEN _FLAG_SET( FE_RES_REQ_GAME_TIME       ) //「いちばん　にんきの　ゲームは？」( 時間 )
   CASE RESEARCH_REQ_ID_DAY_OFF_count       THEN _FLAG_SET( FE_RES_REQ_DAY_OFF_COUNT   )//「きゅうじつに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_DAY_OFF_time        THEN _FLAG_SET( FE_RES_REQ_DAY_OFF_TIME    )//「きゅうじつに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_HOW_LONG_PLAY_count THEN _FLAG_SET( FE_RES_REQ_PLAY_PERIOD_COUNT     )//「ポケモンを　どれくらい　あそんでる？」( 人数 )
@@ -779,10 +779,10 @@ GET_RES_REQ_QUESTION_NUM:
   CASE RESEARCH_REQ_ID_PRECIOUS_time       THEN $SCWK_ANSWER = 2 //「だいじにしているものに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_PARTNER_count       THEN $SCWK_ANSWER = 2 //「ひとのみりょくに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_PARTNER_time        THEN $SCWK_ANSWER = 2 //「ひとのみりょくに　ついて」( 時間 )
-  CASE RESEARCH_REQ_ID_FUTURE_count        THEN $SCWK_ANSWER = 1 //「どんな　ひとに　なりたい？」( 人数 )
-  CASE RESEARCH_REQ_ID_FUTURE_time         THEN $SCWK_ANSWER = 1 //「どんな　ひとに　なりたい？」( 時間 )
-  CASE RESEARCH_REQ_ID_ART_count           THEN $SCWK_ANSWER = 2 //「げいじゅつに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_ART_time            THEN $SCWK_ANSWER = 2 //「げいじゅつに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_FUTURE_count        THEN $SCWK_ANSWER = 1 //「しょうらいに　ついて」( 人数 )
+  CASE RESEARCH_REQ_ID_FUTURE_time         THEN $SCWK_ANSWER = 1 //「しょうらいに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_ART_count           THEN $SCWK_ANSWER = 2 //「きょうかん　される　うたは？」( 人数 )
+  CASE RESEARCH_REQ_ID_ART_time            THEN $SCWK_ANSWER = 2 //「きょうかん　される　うたは？」( 時間 )
   CASE RESEARCH_REQ_ID_MUSIC_count         THEN $SCWK_ANSWER = 1 //「いちばんすきな　おんがくは？」( 人数 )
   CASE RESEARCH_REQ_ID_MUSIC_time          THEN $SCWK_ANSWER = 1 //「いちばんすきな　おんがくは？」( 時間 )
   CASE RESEARCH_REQ_ID_MOVIE_count         THEN $SCWK_ANSWER = 2 //「えいぞうに　ついて」( 人数 )
@@ -791,8 +791,8 @@ GET_RES_REQ_QUESTION_NUM:
   CASE RESEARCH_REQ_ID_TIME_MACHINE_time   THEN $SCWK_ANSWER = 1 //「タイムマシンが　あったら？」( 時間 )
   CASE RESEARCH_REQ_ID_IF_count            THEN $SCWK_ANSWER = 2 //「もしもシリーズ」( 人数 )
   CASE RESEARCH_REQ_ID_IF_time             THEN $SCWK_ANSWER = 2 //「もしもシリーズ」( 時間 )
-  CASE RESEARCH_REQ_ID_GAME_count          THEN $SCWK_ANSWER = 1 //「いちばん　にんきの　げーむは？」( 人数 )
-  CASE RESEARCH_REQ_ID_GAME_time           THEN $SCWK_ANSWER = 1 //「いちばん　にんきの　げーむは？」( 時間 )
+  CASE RESEARCH_REQ_ID_GAME_count          THEN $SCWK_ANSWER = 1 //「いちばん　にんきの　ゲームは？」( 人数 )
+  CASE RESEARCH_REQ_ID_GAME_time           THEN $SCWK_ANSWER = 1 //「いちばん　にんきの　ゲームは？」( 時間 )
   CASE RESEARCH_REQ_ID_DAY_OFF_count       THEN $SCWK_ANSWER = 2 //「きゅうじつに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_DAY_OFF_time        THEN $SCWK_ANSWER = 2 //「きゅうじつに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_HOW_LONG_PLAY_count THEN $SCWK_ANSWER = 1 //「ポケモンを　どれくらい　あそんでる？」( 人数 )
@@ -830,10 +830,10 @@ GET_RES_REQ_ABS_NORM_COUNT:
   CASE RESEARCH_REQ_ID_FAVORITE_POKE_count  THEN $SCWK_TEMP1 = 20 //「すきな　ポケモンは？」( 人数 )
   CASE RESEARCH_REQ_ID_POKE_TYPE_count      THEN $SCWK_TEMP1 = 20 //「すきな　ポケモンのタイプは？」( 人数 )
   CASE RESEARCH_REQ_ID_PLACE_count          THEN $SCWK_TEMP1 = 20 //「とかいと　いなか　すみたいのは？」( 人数 )
-  CASE RESEARCH_REQ_ID_FUTURE_count         THEN $SCWK_TEMP1 = 30 //「どんな　ひとに　なりたい？」( 人数 )
+  CASE RESEARCH_REQ_ID_FUTURE_count         THEN $SCWK_TEMP1 = 30 //「しょうらいに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_MUSIC_count          THEN $SCWK_TEMP1 = 40 //「いちばんすきな　おんがくは？」( 人数 )
   CASE RESEARCH_REQ_ID_TIME_MACHINE_count   THEN $SCWK_TEMP1 = 40 //「タイムマシンが　あったら？」( 人数 )
-  CASE RESEARCH_REQ_ID_GAME_count           THEN $SCWK_TEMP1 = 50  //「いちばん　にんきの　げーむは？」( 人数 )
+  CASE RESEARCH_REQ_ID_GAME_count           THEN $SCWK_TEMP1 = 50  //「いちばん　にんきの　ゲームは？」( 人数 )
   CASE RESEARCH_REQ_ID_DAY_OFF_count        THEN $SCWK_TEMP1 = 50  //「きゅうじつに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_HOW_LONG_PLAY_count  THEN $SCWK_TEMP1 = 50  //「ポケモンを　どれくらい　あそんでる？」( 人数 )
   CASE RESEARCH_REQ_ID_GYM_LEADER_count     THEN $SCWK_TEMP1 = 50  //「いちばんにんきのある　ジムリーダーは？」( 人数 )
@@ -844,7 +844,7 @@ GET_RES_REQ_ABS_NORM_COUNT:
   CASE RESEARCH_REQ_ID_PARTNER_count THEN //「ひとのみりょくに　ついて」( 人数 )
     $SCWK_TEMP1 = 30
     $SCWK_TEMP2 = 30
-  CASE RESEARCH_REQ_ID_ART_count THEN //「げいじゅつに　ついて」( 人数 )
+  CASE RESEARCH_REQ_ID_ART_count THEN //「きょうかん　される　うたは？」( 人数 )
     $SCWK_TEMP1 = 30
     $SCWK_TEMP2 = 30
   CASE RESEARCH_REQ_ID_MOVIE_count THEN //「えいぞうに　ついて」( 人数 )
@@ -863,7 +863,7 @@ GET_RES_REQ_ABS_NORM_COUNT:
   CASE RESEARCH_REQ_ID_FAVORITE_POKE_time   THEN $SCWK_TEMP1 = 1  //「すきな　ポケモンは？」( 時間 )
   CASE RESEARCH_REQ_ID_POKE_TYPE_time       THEN $SCWK_TEMP1 = 1  //「すきな　ポケモンのタイプは？」( 時間 )
   CASE RESEARCH_REQ_ID_PLACE_time           THEN $SCWK_TEMP1 = 1  //「とかいと　いなか　すみたいのは？」( 時間 )
-  CASE RESEARCH_REQ_ID_GAME_time            THEN $SCWK_TEMP1 = 1   //「いちばん　にんきの　げーむは？」( 時間 )
+  CASE RESEARCH_REQ_ID_GAME_time            THEN $SCWK_TEMP1 = 1   //「いちばん　にんきの　ゲームは？」( 時間 )
   CASE RESEARCH_REQ_ID_DAY_OFF_time         THEN $SCWK_TEMP1 = 1   //「きゅうじつに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_HOW_LONG_PLAY_time   THEN $SCWK_TEMP1 = 1   //「ポケモンを　どれくらい　あそんでる？」( 時間 )
   CASE RESEARCH_REQ_ID_GYM_LEADER_time      THEN $SCWK_TEMP1 = 1   //「いちばんにんきのある　ジムリーダーは？」( 時間 )
@@ -874,8 +874,8 @@ GET_RES_REQ_ABS_NORM_COUNT:
   CASE RESEARCH_REQ_ID_PARTNER_time THEN //「ひとのみりょくに　ついて」( 時間 )
     $SCWK_TEMP1 = 1
     $SCWK_TEMP2 = 1
-  CASE RESEARCH_REQ_ID_FUTURE_time  THEN $SCWK_TEMP1 = 1  //「どんな　ひとに　なりたい？」( 時間 )
-  CASE RESEARCH_REQ_ID_ART_time THEN //「げいじゅつに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_FUTURE_time  THEN $SCWK_TEMP1 = 1  //「しょうらいに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_ART_time THEN //「きょうかん　される　うたは？」( 時間 )
     $SCWK_TEMP1 = 1
     $SCWK_TEMP2 = 1
   CASE RESEARCH_REQ_ID_MUSIC_time  THEN $SCWK_TEMP1 = 1  //「いちばんすきな　おんがくは？」( 時間 )
@@ -916,13 +916,13 @@ GET_RES_REQ_ABS_NORM_TIME:
   CASE RESEARCH_REQ_ID_PLACE_count         THEN $SCWK_TEMP1 = 0  //「とかいと　いなか　すみたいのは？」( 人数 )
   CASE RESEARCH_REQ_ID_PRECIOUS_count      THEN $SCWK_TEMP1 = 0  //「だいじにしているものに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_PARTNER_count       THEN $SCWK_TEMP1 = 0  //「ひとのみりょくに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_FUTURE_count        THEN $SCWK_TEMP1 = 0  //「どんな　ひとに　なりたい？」( 人数 )
-  CASE RESEARCH_REQ_ID_ART_count           THEN $SCWK_TEMP1 = 0  //「げいじゅつに　ついて」( 人数 )
+  CASE RESEARCH_REQ_ID_FUTURE_count        THEN $SCWK_TEMP1 = 0  //「しょうらいに　ついて」( 人数 )
+  CASE RESEARCH_REQ_ID_ART_count           THEN $SCWK_TEMP1 = 0  //「きょうかん　される　うたは？」( 人数 )
   CASE RESEARCH_REQ_ID_MUSIC_count         THEN $SCWK_TEMP1 = 0  //「いちばんすきな　おんがくは？」( 人数 )
   CASE RESEARCH_REQ_ID_MOVIE_count         THEN $SCWK_TEMP1 = 0  //「えいぞうに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_TIME_MACHINE_count  THEN $SCWK_TEMP1 = 0  //「タイムマシンが　あったら？」( 人数 )
   CASE RESEARCH_REQ_ID_IF_count            THEN $SCWK_TEMP1 = 0  //「もしもシリーズ」( 人数 )
-  CASE RESEARCH_REQ_ID_GAME_count          THEN $SCWK_TEMP1 = 0  //「いちばん　にんきの　げーむは？」( 人数 )
+  CASE RESEARCH_REQ_ID_GAME_count          THEN $SCWK_TEMP1 = 0  //「いちばん　にんきの　ゲームは？」( 人数 )
   CASE RESEARCH_REQ_ID_DAY_OFF_count       THEN $SCWK_TEMP1 = 0  //「きゅうじつに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_HOW_LONG_PLAY_count THEN $SCWK_TEMP1 = 0  //「ポケモンを　どれくらい　あそんでる？」( 人数 )
   CASE RESEARCH_REQ_ID_GYM_LEADER_count    THEN $SCWK_TEMP1 = 0  //「いちばんにんきのある　ジムリーダーは？」( 人数 )
@@ -939,13 +939,13 @@ GET_RES_REQ_ABS_NORM_TIME:
   CASE RESEARCH_REQ_ID_PLACE_time          THEN $SCWK_TEMP1 = 8  //「とかいと　いなか　すみたいのは？」( 時間 )
   CASE RESEARCH_REQ_ID_PRECIOUS_time       THEN $SCWK_TEMP1 = 12 //「だいじにしているものに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_PARTNER_time        THEN $SCWK_TEMP1 = 12 //「ひとのみりょくに　ついて」( 時間 )
-  CASE RESEARCH_REQ_ID_FUTURE_time         THEN $SCWK_TEMP1 = 12 //「どんな　ひとに　なりたい？」( 時間 )
-  CASE RESEARCH_REQ_ID_ART_time            THEN $SCWK_TEMP1 = 12 //「げいじゅつに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_FUTURE_time         THEN $SCWK_TEMP1 = 12 //「しょうらいに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_ART_time            THEN $SCWK_TEMP1 = 12 //「きょうかん　される　うたは？」( 時間 )
   CASE RESEARCH_REQ_ID_MUSIC_time          THEN $SCWK_TEMP1 = 16 //「いちばんすきな　おんがくは？」( 時間 )
   CASE RESEARCH_REQ_ID_MOVIE_time          THEN $SCWK_TEMP1 = 16 //「えいぞうに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_TIME_MACHINE_time   THEN $SCWK_TEMP1 = 16 //「タイムマシンが　あったら？」( 時間 )
   CASE RESEARCH_REQ_ID_IF_time             THEN $SCWK_TEMP1 = 16 //「もしもシリーズ」( 時間 )
-  CASE RESEARCH_REQ_ID_GAME_time           THEN $SCWK_TEMP1 = 20 //「いちばん　にんきの　げーむは？」( 時間 )
+  CASE RESEARCH_REQ_ID_GAME_time           THEN $SCWK_TEMP1 = 20 //「いちばん　にんきの　ゲームは？」( 時間 )
   CASE RESEARCH_REQ_ID_DAY_OFF_time        THEN $SCWK_TEMP1 = 20 //「きゅうじつに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_HOW_LONG_PLAY_time  THEN $SCWK_TEMP1 = 20 //「ポケモンを　どれくらい　あそんでる？」( 時間 )
   CASE RESEARCH_REQ_ID_GYM_LEADER_time     THEN $SCWK_TEMP1 = 24 //「いちばんにんきのある　ジムリーダーは？」( 時間 )
@@ -1017,11 +1017,11 @@ GET_RES_REQ_QUESTION_ID:
     $SCWK_TEMP1 = QUESTION_ID_PARTNER
     $SCWK_TEMP2 = QUESTION_ID_REQUIREMENT
     $SCWK_TEMP3 = QUESTION_ID_CHARACTER
-  CASE RESEARCH_REQ_ID_FUTURE_count, RESEARCH_REQ_ID_FUTURE_time THEN //「どんな　ひとに　なりたい？」
+  CASE RESEARCH_REQ_ID_FUTURE_count, RESEARCH_REQ_ID_FUTURE_time THEN //「しょうらいに　ついて」
     $SCWK_TEMP1 = QUESTION_ID_PERSON
     $SCWK_TEMP2 = QUESTION_ID_DREAM_OR_REAL
     $SCWK_TEMP3 = QUESTION_ID_DUMMY
-  CASE RESEARCH_REQ_ID_ART_count, RESEARCH_REQ_ID_ART_time THEN //「げいじゅつに　ついて」
+  CASE RESEARCH_REQ_ID_ART_count, RESEARCH_REQ_ID_ART_time THEN //「きょうかん　される　うたは？」
     $SCWK_TEMP1 = QUESTION_ID_WORK_HARD
     $SCWK_TEMP2 = QUESTION_ID_MUSIC
     $SCWK_TEMP3 = QUESTION_ID_DUMMY
@@ -1041,7 +1041,7 @@ GET_RES_REQ_QUESTION_ID:
     $SCWK_TEMP1 = QUESTION_ID_MAGIC
     $SCWK_TEMP2 = QUESTION_ID_RICH
     $SCWK_TEMP3 = QUESTION_ID_DUMMY
-  CASE RESEARCH_REQ_ID_GAME_count, RESEARCH_REQ_ID_GAME_time THEN //「いちばん　にんきの　げーむは？」
+  CASE RESEARCH_REQ_ID_GAME_count, RESEARCH_REQ_ID_GAME_time THEN //「いちばん　にんきの　ゲームは？」
     $SCWK_TEMP1 = QUESTION_ID_GAME
     $SCWK_TEMP2 = QUESTION_ID_DUMMY
     $SCWK_TEMP3 = QUESTION_ID_DUMMY
@@ -1107,10 +1107,10 @@ GET_RES_REQ_TYPE:
   CASE RESEARCH_REQ_ID_PRECIOUS_time       THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_TIME  //「だいじにしているものに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_PARTNER_count       THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_COUNT //「ひとのみりょくに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_PARTNER_time        THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_TIME  //「ひとのみりょくに　ついて」( 時間 )
-  CASE RESEARCH_REQ_ID_FUTURE_count        THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_COUNT //「どんな　ひとに　なりたい？」( 人数 )
-  CASE RESEARCH_REQ_ID_FUTURE_time         THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_TIME  //「どんな　ひとに　なりたい？」( 時間 )
-  CASE RESEARCH_REQ_ID_ART_count           THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_COUNT //「げいじゅつに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_ART_time            THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_TIME  //「げいじゅつに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_FUTURE_count        THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_COUNT //「しょうらいに　ついて」( 人数 )
+  CASE RESEARCH_REQ_ID_FUTURE_time         THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_TIME  //「しょうらいに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_ART_count           THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_COUNT //「きょうかん　される　うたは？」( 人数 )
+  CASE RESEARCH_REQ_ID_ART_time            THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_TIME  //「きょうかん　される　うたは？」( 時間 )
   CASE RESEARCH_REQ_ID_MUSIC_count         THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_COUNT //「いちばんすきな　おんがくは？」( 人数 )
   CASE RESEARCH_REQ_ID_MUSIC_time          THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_TIME  //「いちばんすきな　おんがくは？」( 時間 )
   CASE RESEARCH_REQ_ID_MOVIE_count         THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_COUNT //「えいぞうに　ついて」( 人数 )
@@ -1119,8 +1119,8 @@ GET_RES_REQ_TYPE:
   CASE RESEARCH_REQ_ID_TIME_MACHINE_time   THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_TIME  //「タイムマシンが　あったら？」( 時間 )
   CASE RESEARCH_REQ_ID_IF_count            THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_COUNT //「もしもシリーズ」( 人数 )
   CASE RESEARCH_REQ_ID_IF_time             THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_TIME  //「もしもシリーズ」( 時間 )
-  CASE RESEARCH_REQ_ID_GAME_count          THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_COUNT //「いちばん　にんきの　げーむは？」( 人数 )
-  CASE RESEARCH_REQ_ID_GAME_time           THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_TIME  //「いちばん　にんきの　げーむは？」( 時間 )
+  CASE RESEARCH_REQ_ID_GAME_count          THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_COUNT //「いちばん　にんきの　ゲームは？」( 人数 )
+  CASE RESEARCH_REQ_ID_GAME_time           THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_TIME  //「いちばん　にんきの　ゲームは？」( 時間 )
   CASE RESEARCH_REQ_ID_DAY_OFF_count       THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_COUNT //「きゅうじつに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_DAY_OFF_time        THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_TIME  //「きゅうじつに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_HOW_LONG_PLAY_count THEN $SCWK_ANSWER = RESEARCH_REQ_TYPE_COUNT //「ポケモンを　どれくらい　あそんでる？」( 人数 )
@@ -1171,10 +1171,10 @@ GET_PRIZE_ITEM:
   CASE RESEARCH_REQ_ID_PRECIOUS_time       THEN $SCWK_ANSWER = ITEM_HAATONOUROKO    //「だいじにしているものに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_PARTNER_count       THEN $SCWK_ANSWER = ITEM_OOKINAKINOKO    //「ひとのみりょくに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_PARTNER_time        THEN $SCWK_ANSWER = ITEM_OOKINAKINOKO    //「ひとのみりょくに　ついて」( 時間 )
-  CASE RESEARCH_REQ_ID_FUTURE_count        THEN $SCWK_ANSWER = ITEM_OOKINASINZYU    //「どんな　ひとに　なりたい？」( 人数 )
-  CASE RESEARCH_REQ_ID_FUTURE_time         THEN $SCWK_ANSWER = ITEM_OOKINASINZYU    //「どんな　ひとに　なりたい？」( 時間 )
-  CASE RESEARCH_REQ_ID_ART_count           THEN $SCWK_ANSWER = ITEM_HOSINOKAKERA    //「げいじゅつに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_ART_time            THEN $SCWK_ANSWER = ITEM_HOSINOKAKERA    //「げいじゅつに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_FUTURE_count        THEN $SCWK_ANSWER = ITEM_OOKINASINZYU    //「しょうらいに　ついて」( 人数 )
+  CASE RESEARCH_REQ_ID_FUTURE_time         THEN $SCWK_ANSWER = ITEM_OOKINASINZYU    //「しょうらいに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_ART_count           THEN $SCWK_ANSWER = ITEM_HOSINOKAKERA    //「きょうかん　される　うたは？」( 人数 )
+  CASE RESEARCH_REQ_ID_ART_time            THEN $SCWK_ANSWER = ITEM_HOSINOKAKERA    //「きょうかん　される　うたは？」( 時間 )
   CASE RESEARCH_REQ_ID_MUSIC_count         THEN $SCWK_ANSWER = ITEM_POINTOAPPU      //「いちばんすきな　おんがくは？」( 人数 )
   CASE RESEARCH_REQ_ID_MUSIC_time          THEN $SCWK_ANSWER = ITEM_POINTOAPPU      //「いちばんすきな　おんがくは？」( 時間 )
   CASE RESEARCH_REQ_ID_MOVIE_count         THEN $SCWK_ANSWER = ITEM_MAKKUSUAPPU     //「えいぞうに　ついて」( 人数 )
@@ -1183,8 +1183,8 @@ GET_PRIZE_ITEM:
   CASE RESEARCH_REQ_ID_TIME_MACHINE_time   THEN $SCWK_ANSWER = ITEM_INDOMETASIN     //「タイムマシンが　あったら？」( 時間 )
   CASE RESEARCH_REQ_ID_IF_count            THEN $SCWK_ANSWER = ITEM_BUROMUHEKISIN   //「もしもシリーズ」( 人数 )
   CASE RESEARCH_REQ_ID_IF_time             THEN $SCWK_ANSWER = ITEM_BUROMUHEKISIN   //「もしもシリーズ」( 時間 )
-  CASE RESEARCH_REQ_ID_GAME_count          THEN $SCWK_ANSWER = ITEM_TAURIN          //「いちばん　にんきの　げーむは？」( 人数 )
-  CASE RESEARCH_REQ_ID_GAME_time           THEN $SCWK_ANSWER = ITEM_TAURIN          //「いちばん　にんきの　げーむは？」( 時間 )
+  CASE RESEARCH_REQ_ID_GAME_count          THEN $SCWK_ANSWER = ITEM_TAURIN          //「いちばん　にんきの　ゲームは？」( 人数 )
+  CASE RESEARCH_REQ_ID_GAME_time           THEN $SCWK_ANSWER = ITEM_TAURIN          //「いちばん　にんきの　ゲームは？」( 時間 )
   CASE RESEARCH_REQ_ID_DAY_OFF_count       THEN $SCWK_ANSWER = ITEM_KITOSAN         //「きゅうじつに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_DAY_OFF_time        THEN $SCWK_ANSWER = ITEM_KITOSAN         //「きゅうじつに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_HOW_LONG_PLAY_count THEN $SCWK_ANSWER = ITEM_RIZOTIUMU       //「ポケモンを　どれくらい　あそんでる？」( 人数 )
@@ -1374,12 +1374,12 @@ RES_REQ_MENU:
       IF $SCWK_ANSWER == FALSE THEN
         _BMPMENU_MAKE_LIST( msg_c03r0101__choice_03l, RESEARCH_REQ_ID_PARTNER_count )  
       ENDIF
-      //「どんな　ひとに　なりたい？」( 人数 )
+      //「しょうらいに　ついて」( 人数 )
       _FLAG_CHECK( FE_RES_REQ_FUTURE_COUNT, SCWK_ANSWER )
       IF $SCWK_ANSWER == FALSE THEN
         _BMPMENU_MAKE_LIST( msg_c03r0101__choice_03m, RESEARCH_REQ_ID_FUTURE_count )   
       ENDIF
-      //「げいじゅつに　ついて」( 人数 )
+      //「きょうかん　される　うたは？」( 人数 )
       _FLAG_CHECK( FE_RES_REQ_ART_COUNT, SCWK_ANSWER )
       IF $SCWK_ANSWER == FALSE THEN
         _BMPMENU_MAKE_LIST( msg_c03r0101__choice_03n, RESEARCH_REQ_ID_ART_count )      
@@ -1407,7 +1407,7 @@ RES_REQ_MENU:
       IF $SCWK_ANSWER == FALSE THEN
         _BMPMENU_MAKE_LIST( msg_c03r0101__choice_03r, RESEARCH_REQ_ID_IF_count )   
       ENDIF
-      //「いちばん　にんきの　げーむは？」( 人数 )
+      //「いちばん　にんきの　ゲームは？」( 人数 )
       _FLAG_CHECK( FE_RES_REQ_GAME_COUNT, SCWK_ANSWER )
       IF $SCWK_ANSWER == FALSE THEN
         _BMPMENU_MAKE_LIST( msg_c03r0101__choice_03s, RESEARCH_REQ_ID_GAME_count )  
@@ -1506,12 +1506,12 @@ RES_REQ_MENU:
       IF $SCWK_ANSWER == FALSE THEN
         _BMPMENU_MAKE_LIST( msg_c03r0101__choice_03l, RESEARCH_REQ_ID_PARTNER_time )  
       ENDIF
-      //「どんな　ひとに　なりたい？」( 時間 )
+      //「しょうらいに　ついて」( 時間 )
       _FLAG_CHECK( FE_RES_REQ_FUTURE_TIME, SCWK_ANSWER )
       IF $SCWK_ANSWER == FALSE THEN
         _BMPMENU_MAKE_LIST( msg_c03r0101__choice_03m, RESEARCH_REQ_ID_FUTURE_time )   
       ENDIF
-      //「げいじゅつに　ついて」( 時間 )
+      //「きょうかん　される　うたは？」( 時間 )
       _FLAG_CHECK( FE_RES_REQ_ART_TIME, SCWK_ANSWER )
       IF $SCWK_ANSWER == FALSE THEN
         _BMPMENU_MAKE_LIST( msg_c03r0101__choice_03n, RESEARCH_REQ_ID_ART_time )      
@@ -1539,7 +1539,7 @@ RES_REQ_MENU:
       IF $SCWK_ANSWER == FALSE THEN
         _BMPMENU_MAKE_LIST( msg_c03r0101__choice_03r, RESEARCH_REQ_ID_IF_time )   
       ENDIF
-      //「いちばん　にんきの　げーむは？」( 時間 )
+      //「いちばん　にんきの　ゲームは？」( 時間 )
       _FLAG_CHECK( FE_RES_REQ_GAME_TIME, SCWK_ANSWER )
       IF $SCWK_ANSWER == FALSE THEN
         _BMPMENU_MAKE_LIST( msg_c03r0101__choice_03s, RESEARCH_REQ_ID_GAME_time )  
@@ -1615,10 +1615,10 @@ SYSTEM_MSG_REPORT_RESULT:
   CASE RESEARCH_REQ_ID_PRECIOUS_time       THEN $v1_2 = msg_c03r0101_assistantm_01_23k //「だいじにしているものに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_PARTNER_count       THEN $v1_2 = msg_c03r0101_assistantm_01_23l //「ひとのみりょくに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_PARTNER_time        THEN $v1_2 = msg_c03r0101_assistantm_01_23l //「ひとのみりょくに　ついて」( 時間 )
-  CASE RESEARCH_REQ_ID_FUTURE_count        THEN $v1_2 = msg_c03r0101_assistantm_01_23m //「どんな　ひとに　なりたい？」( 人数 )
-  CASE RESEARCH_REQ_ID_FUTURE_time         THEN $v1_2 = msg_c03r0101_assistantm_01_23m //「どんな　ひとに　なりたい？」( 時間 )
-  CASE RESEARCH_REQ_ID_ART_count           THEN $v1_2 = msg_c03r0101_assistantm_01_23n //「げいじゅつに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_ART_time            THEN $v1_2 = msg_c03r0101_assistantm_01_23n //「げいじゅつに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_FUTURE_count        THEN $v1_2 = msg_c03r0101_assistantm_01_23m //「しょうらいに　ついて」( 人数 )
+  CASE RESEARCH_REQ_ID_FUTURE_time         THEN $v1_2 = msg_c03r0101_assistantm_01_23m //「しょうらいに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_ART_count           THEN $v1_2 = msg_c03r0101_assistantm_01_23n //「きょうかん　される　うたは？」( 人数 )
+  CASE RESEARCH_REQ_ID_ART_time            THEN $v1_2 = msg_c03r0101_assistantm_01_23n //「きょうかん　される　うたは？」( 時間 )
   CASE RESEARCH_REQ_ID_MUSIC_count         THEN $v1_2 = msg_c03r0101_assistantm_01_23o //「いちばんすきな　おんがくは？」( 人数 )
   CASE RESEARCH_REQ_ID_MUSIC_time          THEN $v1_2 = msg_c03r0101_assistantm_01_23o //「いちばんすきな　おんがくは？」( 時間 )
   CASE RESEARCH_REQ_ID_MOVIE_count         THEN $v1_2 = msg_c03r0101_assistantm_01_23p //「えいぞうに　ついて」( 人数 )
@@ -1627,8 +1627,8 @@ SYSTEM_MSG_REPORT_RESULT:
   CASE RESEARCH_REQ_ID_TIME_MACHINE_time   THEN $v1_2 = msg_c03r0101_assistantm_01_23q //「タイムマシンが　あったら？」( 時間 )
   CASE RESEARCH_REQ_ID_IF_count            THEN $v1_2 = msg_c03r0101_assistantm_01_23r //「もしもシリーズ」( 人数 )
   CASE RESEARCH_REQ_ID_IF_time             THEN $v1_2 = msg_c03r0101_assistantm_01_23r //「もしもシリーズ」( 時間 )
-  CASE RESEARCH_REQ_ID_GAME_count          THEN $v1_2 = msg_c03r0101_assistantm_01_23s //「いちばん　にんきの　げーむは？」( 人数 )
-  CASE RESEARCH_REQ_ID_GAME_time           THEN $v1_2 = msg_c03r0101_assistantm_01_23s //「いちばん　にんきの　げーむは？」( 時間 )
+  CASE RESEARCH_REQ_ID_GAME_count          THEN $v1_2 = msg_c03r0101_assistantm_01_23s //「いちばん　にんきの　ゲームは？」( 人数 )
+  CASE RESEARCH_REQ_ID_GAME_time           THEN $v1_2 = msg_c03r0101_assistantm_01_23s //「いちばん　にんきの　ゲームは？」( 時間 )
   CASE RESEARCH_REQ_ID_DAY_OFF_count       THEN $v1_2 = msg_c03r0101_assistantm_01_23t //「きゅうじつに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_DAY_OFF_time        THEN $v1_2 = msg_c03r0101_assistantm_01_23t //「きゅうじつに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_HOW_LONG_PLAY_count THEN $v1_2 = msg_c03r0101_assistantm_01_23u //「ポケモンを　どれくらい　あそんでる？」( 人数 )
@@ -1685,10 +1685,10 @@ SYSTEM_MSG_RECEIVE_REQUEST:
   CASE RESEARCH_REQ_ID_PRECIOUS_time       THEN $v1_2 = msg_c03r0101_assistantm_01_16k //「だいじにしているものに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_PARTNER_count       THEN $v1_2 = msg_c03r0101_assistantm_01_16l //「ひとのみりょくに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_PARTNER_time        THEN $v1_2 = msg_c03r0101_assistantm_01_16l //「ひとのみりょくに　ついて」( 時間 )
-  CASE RESEARCH_REQ_ID_FUTURE_count        THEN $v1_2 = msg_c03r0101_assistantm_01_16m //「どんな　ひとに　なりたい？」( 人数 )
-  CASE RESEARCH_REQ_ID_FUTURE_time         THEN $v1_2 = msg_c03r0101_assistantm_01_16m //「どんな　ひとに　なりたい？」( 時間 )
-  CASE RESEARCH_REQ_ID_ART_count           THEN $v1_2 = msg_c03r0101_assistantm_01_16n //「げいじゅつに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_ART_time            THEN $v1_2 = msg_c03r0101_assistantm_01_16n //「げいじゅつに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_FUTURE_count        THEN $v1_2 = msg_c03r0101_assistantm_01_16m //「しょうらいに　ついて」( 人数 )
+  CASE RESEARCH_REQ_ID_FUTURE_time         THEN $v1_2 = msg_c03r0101_assistantm_01_16m //「しょうらいに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_ART_count           THEN $v1_2 = msg_c03r0101_assistantm_01_16n //「きょうかん　される　うたは？」( 人数 )
+  CASE RESEARCH_REQ_ID_ART_time            THEN $v1_2 = msg_c03r0101_assistantm_01_16n //「きょうかん　される　うたは？」( 時間 )
   CASE RESEARCH_REQ_ID_MUSIC_count         THEN $v1_2 = msg_c03r0101_assistantm_01_16o //「いちばんすきな　おんがくは？」( 人数 )
   CASE RESEARCH_REQ_ID_MUSIC_time          THEN $v1_2 = msg_c03r0101_assistantm_01_16o //「いちばんすきな　おんがくは？」( 時間 )
   CASE RESEARCH_REQ_ID_MOVIE_count         THEN $v1_2 = msg_c03r0101_assistantm_01_16p //「えいぞうに　ついて」( 人数 )
@@ -1697,8 +1697,8 @@ SYSTEM_MSG_RECEIVE_REQUEST:
   CASE RESEARCH_REQ_ID_TIME_MACHINE_time   THEN $v1_2 = msg_c03r0101_assistantm_01_16q //「タイムマシンが　あったら？」( 時間 )
   CASE RESEARCH_REQ_ID_IF_count            THEN $v1_2 = msg_c03r0101_assistantm_01_16r //「もしもシリーズ」( 人数 )
   CASE RESEARCH_REQ_ID_IF_time             THEN $v1_2 = msg_c03r0101_assistantm_01_16r //「もしもシリーズ」( 時間 )
-  CASE RESEARCH_REQ_ID_GAME_count          THEN $v1_2 = msg_c03r0101_assistantm_01_16s //「いちばん　にんきの　げーむは？」( 人数 )
-  CASE RESEARCH_REQ_ID_GAME_time           THEN $v1_2 = msg_c03r0101_assistantm_01_16s //「いちばん　にんきの　げーむは？」( 時間 )
+  CASE RESEARCH_REQ_ID_GAME_count          THEN $v1_2 = msg_c03r0101_assistantm_01_16s //「いちばん　にんきの　ゲームは？」( 人数 )
+  CASE RESEARCH_REQ_ID_GAME_time           THEN $v1_2 = msg_c03r0101_assistantm_01_16s //「いちばん　にんきの　ゲームは？」( 時間 )
   CASE RESEARCH_REQ_ID_DAY_OFF_count       THEN $v1_2 = msg_c03r0101_assistantm_01_16t //「きゅうじつに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_DAY_OFF_time        THEN $v1_2 = msg_c03r0101_assistantm_01_16t //「きゅうじつに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_HOW_LONG_PLAY_count THEN $v1_2 = msg_c03r0101_assistantm_01_16u //「ポケモンを　どれくらい　あそんでる？」( 人数 )
@@ -2127,10 +2127,10 @@ LEADER_SAY_This_request_is:
   CASE RESEARCH_REQ_ID_PRECIOUS_time       THEN $v4_1 = msg_c03r0101_assistantm_01_13k //「だいじにしているものに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_PARTNER_count       THEN $v4_1 = msg_c03r0101_assistantm_01_14l //「ひとのみりょくに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_PARTNER_time        THEN $v4_1 = msg_c03r0101_assistantm_01_13l //「ひとのみりょくに　ついて」( 時間 )
-  CASE RESEARCH_REQ_ID_FUTURE_count        THEN $v4_1 = msg_c03r0101_assistantm_01_14m //「どんな　ひとに　なりたい？」( 人数 )
-  CASE RESEARCH_REQ_ID_FUTURE_time         THEN $v4_1 = msg_c03r0101_assistantm_01_13m //「どんな　ひとに　なりたい？」( 時間 )
-  CASE RESEARCH_REQ_ID_ART_count           THEN $v4_1 = msg_c03r0101_assistantm_01_14n //「げいじゅつに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_ART_time            THEN $v4_1 = msg_c03r0101_assistantm_01_13n //「げいじゅつに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_FUTURE_count        THEN $v4_1 = msg_c03r0101_assistantm_01_14m //「しょうらいに　ついて」( 人数 )
+  CASE RESEARCH_REQ_ID_FUTURE_time         THEN $v4_1 = msg_c03r0101_assistantm_01_13m //「しょうらいに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_ART_count           THEN $v4_1 = msg_c03r0101_assistantm_01_14n //「きょうかん　される　うたは？」( 人数 )
+  CASE RESEARCH_REQ_ID_ART_time            THEN $v4_1 = msg_c03r0101_assistantm_01_13n //「きょうかん　される　うたは？」( 時間 )
   CASE RESEARCH_REQ_ID_MUSIC_count         THEN $v4_1 = msg_c03r0101_assistantm_01_14o //「いちばんすきな　おんがくは？」( 人数 )
   CASE RESEARCH_REQ_ID_MUSIC_time          THEN $v4_1 = msg_c03r0101_assistantm_01_13o //「いちばんすきな　おんがくは？」( 時間 )
   CASE RESEARCH_REQ_ID_MOVIE_count         THEN $v4_1 = msg_c03r0101_assistantm_01_14p //「えいぞうに　ついて」( 人数 )
@@ -2139,8 +2139,8 @@ LEADER_SAY_This_request_is:
   CASE RESEARCH_REQ_ID_TIME_MACHINE_time   THEN $v4_1 = msg_c03r0101_assistantm_01_13q //「タイムマシンが　あったら？」( 時間 )
   CASE RESEARCH_REQ_ID_IF_count            THEN $v4_1 = msg_c03r0101_assistantm_01_14r //「もしもシリーズ」( 人数 )
   CASE RESEARCH_REQ_ID_IF_time             THEN $v4_1 = msg_c03r0101_assistantm_01_13r //「もしもシリーズ」( 時間 )
-  CASE RESEARCH_REQ_ID_GAME_count          THEN $v4_1 = msg_c03r0101_assistantm_01_14s //「いちばん　にんきの　げーむは？」( 人数 )
-  CASE RESEARCH_REQ_ID_GAME_time           THEN $v4_1 = msg_c03r0101_assistantm_01_13s //「いちばん　にんきの　げーむは？」( 時間 )
+  CASE RESEARCH_REQ_ID_GAME_count          THEN $v4_1 = msg_c03r0101_assistantm_01_14s //「いちばん　にんきの　ゲームは？」( 人数 )
+  CASE RESEARCH_REQ_ID_GAME_time           THEN $v4_1 = msg_c03r0101_assistantm_01_13s //「いちばん　にんきの　ゲームは？」( 時間 )
   CASE RESEARCH_REQ_ID_DAY_OFF_count       THEN $v4_1 = msg_c03r0101_assistantm_01_14t //「きゅうじつに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_DAY_OFF_time        THEN $v4_1 = msg_c03r0101_assistantm_01_13t //「きゅうじつに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_HOW_LONG_PLAY_count THEN $v4_1 = msg_c03r0101_assistantm_01_14u //「ポケモンを　どれくらい　あそんでる？」( 人数 )
@@ -2197,10 +2197,10 @@ LEADER_SAY_Your_request_is:
   CASE RESEARCH_REQ_ID_PRECIOUS_time       THEN $v4_1 = msg_c03r0101_assistantm_01_13k //「だいじにしているものに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_PARTNER_count       THEN $v4_1 = msg_c03r0101_assistantm_01_14l //「ひとのみりょくに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_PARTNER_time        THEN $v4_1 = msg_c03r0101_assistantm_01_13l //「ひとのみりょくに　ついて」( 時間 )
-  CASE RESEARCH_REQ_ID_FUTURE_count        THEN $v4_1 = msg_c03r0101_assistantm_01_14m //「どんな　ひとに　なりたい？」( 人数 )
-  CASE RESEARCH_REQ_ID_FUTURE_time         THEN $v4_1 = msg_c03r0101_assistantm_01_13m //「どんな　ひとに　なりたい？」( 時間 )
-  CASE RESEARCH_REQ_ID_ART_count           THEN $v4_1 = msg_c03r0101_assistantm_01_14n //「げいじゅつに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_ART_time            THEN $v4_1 = msg_c03r0101_assistantm_01_13n //「げいじゅつに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_FUTURE_count        THEN $v4_1 = msg_c03r0101_assistantm_01_14m //「しょうらいに　ついて」( 人数 )
+  CASE RESEARCH_REQ_ID_FUTURE_time         THEN $v4_1 = msg_c03r0101_assistantm_01_13m //「しょうらいに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_ART_count           THEN $v4_1 = msg_c03r0101_assistantm_01_14n //「きょうかん　される　うたは？」( 人数 )
+  CASE RESEARCH_REQ_ID_ART_time            THEN $v4_1 = msg_c03r0101_assistantm_01_13n //「きょうかん　される　うたは？」( 時間 )
   CASE RESEARCH_REQ_ID_MUSIC_count         THEN $v4_1 = msg_c03r0101_assistantm_01_14o //「いちばんすきな　おんがくは？」( 人数 )
   CASE RESEARCH_REQ_ID_MUSIC_time          THEN $v4_1 = msg_c03r0101_assistantm_01_13o //「いちばんすきな　おんがくは？」( 時間 )
   CASE RESEARCH_REQ_ID_MOVIE_count         THEN $v4_1 = msg_c03r0101_assistantm_01_14p //「えいぞうに　ついて」( 人数 )
@@ -2209,8 +2209,8 @@ LEADER_SAY_Your_request_is:
   CASE RESEARCH_REQ_ID_TIME_MACHINE_time   THEN $v4_1 = msg_c03r0101_assistantm_01_13q //「タイムマシンが　あったら？」( 時間 )
   CASE RESEARCH_REQ_ID_IF_count            THEN $v4_1 = msg_c03r0101_assistantm_01_14r //「もしもシリーズ」( 人数 )
   CASE RESEARCH_REQ_ID_IF_time             THEN $v4_1 = msg_c03r0101_assistantm_01_13r //「もしもシリーズ」( 時間 )
-  CASE RESEARCH_REQ_ID_GAME_count          THEN $v4_1 = msg_c03r0101_assistantm_01_14s //「いちばん　にんきの　げーむは？」( 人数 )
-  CASE RESEARCH_REQ_ID_GAME_time           THEN $v4_1 = msg_c03r0101_assistantm_01_13s //「いちばん　にんきの　げーむは？」( 時間 )
+  CASE RESEARCH_REQ_ID_GAME_count          THEN $v4_1 = msg_c03r0101_assistantm_01_14s //「いちばん　にんきの　ゲームは？」( 人数 )
+  CASE RESEARCH_REQ_ID_GAME_time           THEN $v4_1 = msg_c03r0101_assistantm_01_13s //「いちばん　にんきの　ゲームは？」( 時間 )
   CASE RESEARCH_REQ_ID_DAY_OFF_count       THEN $v4_1 = msg_c03r0101_assistantm_01_14t //「きゅうじつに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_DAY_OFF_time        THEN $v4_1 = msg_c03r0101_assistantm_01_13t //「きゅうじつに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_HOW_LONG_PLAY_count THEN $v4_1 = msg_c03r0101_assistantm_01_14u //「ポケモンを　どれくらい　あそんでる？」( 人数 )
@@ -2282,10 +2282,10 @@ LEADER_SAY_Ah_hah:
   CASE RESEARCH_REQ_ID_PRECIOUS_time       THEN $v4_1 = msg_c03r0101_assistantm_01_24k //「だいじにしているものに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_PARTNER_count       THEN $v4_1 = msg_c03r0101_assistantm_01_24l //「ひとのみりょくに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_PARTNER_time        THEN $v4_1 = msg_c03r0101_assistantm_01_24l //「ひとのみりょくに　ついて」( 時間 )
-  CASE RESEARCH_REQ_ID_FUTURE_count        THEN $v4_1 = msg_c03r0101_assistantm_01_24m //「どんな　ひとに　なりたい？」( 人数 )
-  CASE RESEARCH_REQ_ID_FUTURE_time         THEN $v4_1 = msg_c03r0101_assistantm_01_24m //「どんな　ひとに　なりたい？」( 時間 )
-  CASE RESEARCH_REQ_ID_ART_count           THEN $v4_1 = msg_c03r0101_assistantm_01_24n //「げいじゅつに　ついて」( 人数 )
-  CASE RESEARCH_REQ_ID_ART_time            THEN $v4_1 = msg_c03r0101_assistantm_01_24n //「げいじゅつに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_FUTURE_count        THEN $v4_1 = msg_c03r0101_assistantm_01_24m //「しょうらいに　ついて」( 人数 )
+  CASE RESEARCH_REQ_ID_FUTURE_time         THEN $v4_1 = msg_c03r0101_assistantm_01_24m //「しょうらいに　ついて」( 時間 )
+  CASE RESEARCH_REQ_ID_ART_count           THEN $v4_1 = msg_c03r0101_assistantm_01_24n //「きょうかん　される　うたは？」( 人数 )
+  CASE RESEARCH_REQ_ID_ART_time            THEN $v4_1 = msg_c03r0101_assistantm_01_24n //「きょうかん　される　うたは？」( 時間 )
   CASE RESEARCH_REQ_ID_MUSIC_count         THEN $v4_1 = msg_c03r0101_assistantm_01_24o //「いちばんすきな　おんがくは？」( 人数 )
   CASE RESEARCH_REQ_ID_MUSIC_time          THEN $v4_1 = msg_c03r0101_assistantm_01_24o //「いちばんすきな　おんがくは？」( 時間 )
   CASE RESEARCH_REQ_ID_MOVIE_count         THEN $v4_1 = msg_c03r0101_assistantm_01_24p //「えいぞうに　ついて」( 人数 )
@@ -2294,8 +2294,8 @@ LEADER_SAY_Ah_hah:
   CASE RESEARCH_REQ_ID_TIME_MACHINE_time   THEN $v4_1 = msg_c03r0101_assistantm_01_24q //「タイムマシンが　あったら？」( 時間 )
   CASE RESEARCH_REQ_ID_IF_count            THEN $v4_1 = msg_c03r0101_assistantm_01_24r //「もしもシリーズ」( 人数 )
   CASE RESEARCH_REQ_ID_IF_time             THEN $v4_1 = msg_c03r0101_assistantm_01_24r //「もしもシリーズ」( 時間 )
-  CASE RESEARCH_REQ_ID_GAME_count          THEN $v4_1 = msg_c03r0101_assistantm_01_24s //「いちばん　にんきの　げーむは？」( 人数 )
-  CASE RESEARCH_REQ_ID_GAME_time           THEN $v4_1 = msg_c03r0101_assistantm_01_24s //「いちばん　にんきの　げーむは？」( 時間 )
+  CASE RESEARCH_REQ_ID_GAME_count          THEN $v4_1 = msg_c03r0101_assistantm_01_24s //「いちばん　にんきの　ゲームは？」( 人数 )
+  CASE RESEARCH_REQ_ID_GAME_time           THEN $v4_1 = msg_c03r0101_assistantm_01_24s //「いちばん　にんきの　ゲームは？」( 時間 )
   CASE RESEARCH_REQ_ID_DAY_OFF_count       THEN $v4_1 = msg_c03r0101_assistantm_01_24t //「きゅうじつに　ついて」( 人数 )
   CASE RESEARCH_REQ_ID_DAY_OFF_time        THEN $v4_1 = msg_c03r0101_assistantm_01_24t //「きゅうじつに　ついて」( 時間 )
   CASE RESEARCH_REQ_ID_HOW_LONG_PLAY_count THEN $v4_1 = msg_c03r0101_assistantm_01_24u //「ポケモンを　どれくらい　あそんでる？」( 人数 )
@@ -2371,13 +2371,13 @@ LEADER_SAY_You_dont_archieve:
     CASE RESEARCH_REQ_ID_PLACE_count         THEN $v4_1 = msg_c03r0101_assistantm_01_21j //「とかいと　いなか　すみたいのは？」( 人数 )
     CASE RESEARCH_REQ_ID_PRECIOUS_count      THEN $v4_1 = msg_c03r0101_assistantm_01_21k //「だいじにしているものに　ついて」( 人数 )
     CASE RESEARCH_REQ_ID_PARTNER_count       THEN $v4_1 = msg_c03r0101_assistantm_01_21l //「ひとのみりょくに　ついて」( 人数 )
-    CASE RESEARCH_REQ_ID_FUTURE_count        THEN $v4_1 = msg_c03r0101_assistantm_01_21m //「どんな　ひとに　なりたい？」( 人数 )
-    CASE RESEARCH_REQ_ID_ART_count           THEN $v4_1 = msg_c03r0101_assistantm_01_21n //「げいじゅつに　ついて」( 人数 )
+    CASE RESEARCH_REQ_ID_FUTURE_count        THEN $v4_1 = msg_c03r0101_assistantm_01_21m //「しょうらいに　ついて」( 人数 )
+    CASE RESEARCH_REQ_ID_ART_count           THEN $v4_1 = msg_c03r0101_assistantm_01_21n //「きょうかん　される　うたは？」( 人数 )
     CASE RESEARCH_REQ_ID_MUSIC_count         THEN $v4_1 = msg_c03r0101_assistantm_01_21o //「いちばんすきな　おんがくは？」( 人数 )
     CASE RESEARCH_REQ_ID_MOVIE_count         THEN $v4_1 = msg_c03r0101_assistantm_01_21p //「えいぞうに　ついて」( 人数 )
     CASE RESEARCH_REQ_ID_TIME_MACHINE_count  THEN $v4_1 = msg_c03r0101_assistantm_01_21q //「タイムマシンが　あったら？」( 人数 )
     CASE RESEARCH_REQ_ID_IF_count            THEN $v4_1 = msg_c03r0101_assistantm_01_21r //「もしもシリーズ」( 人数 )
-    CASE RESEARCH_REQ_ID_GAME_count          THEN $v4_1 = msg_c03r0101_assistantm_01_21s //「いちばん　にんきの　げーむは？」( 人数 )
+    CASE RESEARCH_REQ_ID_GAME_count          THEN $v4_1 = msg_c03r0101_assistantm_01_21s //「いちばん　にんきの　ゲームは？」( 人数 )
     CASE RESEARCH_REQ_ID_DAY_OFF_count       THEN $v4_1 = msg_c03r0101_assistantm_01_21t //「きゅうじつに　ついて」( 人数 )
     CASE RESEARCH_REQ_ID_HOW_LONG_PLAY_count THEN $v4_1 = msg_c03r0101_assistantm_01_21u //「ポケモンを　どれくらい　あそんでる？」( 人数 )
     CASE RESEARCH_REQ_ID_GYM_LEADER_count    THEN $v4_1 = msg_c03r0101_assistantm_01_21v //「いちばんにんきのある　ジムリーダーは？」( 人数 )
@@ -2400,13 +2400,13 @@ LEADER_SAY_You_dont_archieve:
     CASE RESEARCH_REQ_ID_PLACE_time         THEN $v4_1 = msg_c03r0101_assistantm_01_20j //「とかいと　いなか　すみたいのは？」( 時間 )
     CASE RESEARCH_REQ_ID_PRECIOUS_time      THEN $v4_1 = msg_c03r0101_assistantm_01_20k //「だいじにしているものに　ついて」( 時間 )
     CASE RESEARCH_REQ_ID_PARTNER_time       THEN $v4_1 = msg_c03r0101_assistantm_01_20l //「ひとのみりょくに　ついて」( 時間 )
-    CASE RESEARCH_REQ_ID_FUTURE_time        THEN $v4_1 = msg_c03r0101_assistantm_01_20m //「どんな　ひとに　なりたい？」( 時間 )
-    CASE RESEARCH_REQ_ID_ART_time           THEN $v4_1 = msg_c03r0101_assistantm_01_20n //「げいじゅつに　ついて」( 時間 )
+    CASE RESEARCH_REQ_ID_FUTURE_time        THEN $v4_1 = msg_c03r0101_assistantm_01_20m //「しょうらいに　ついて」( 時間 )
+    CASE RESEARCH_REQ_ID_ART_time           THEN $v4_1 = msg_c03r0101_assistantm_01_20n //「きょうかん　される　うたは？」( 時間 )
     CASE RESEARCH_REQ_ID_MUSIC_time         THEN $v4_1 = msg_c03r0101_assistantm_01_20o //「いちばんすきな　おんがくは？」( 時間 )
     CASE RESEARCH_REQ_ID_MOVIE_time         THEN $v4_1 = msg_c03r0101_assistantm_01_20p //「えいぞうに　ついて」( 時間 )
     CASE RESEARCH_REQ_ID_TIME_MACHINE_time  THEN $v4_1 = msg_c03r0101_assistantm_01_20q //「タイムマシンが　あったら？」( 時間 )
     CASE RESEARCH_REQ_ID_IF_time            THEN $v4_1 = msg_c03r0101_assistantm_01_20r //「もしもシリーズ」( 時間 )
-    CASE RESEARCH_REQ_ID_GAME_time          THEN $v4_1 = msg_c03r0101_assistantm_01_20s //「いちばん　にんきの　げーむは？」( 時間 )
+    CASE RESEARCH_REQ_ID_GAME_time          THEN $v4_1 = msg_c03r0101_assistantm_01_20s //「いちばん　にんきの　ゲームは？」( 時間 )
     CASE RESEARCH_REQ_ID_DAY_OFF_time       THEN $v4_1 = msg_c03r0101_assistantm_01_20t //「きゅうじつに　ついて」( 時間 )
     CASE RESEARCH_REQ_ID_HOW_LONG_PLAY_time THEN $v4_1 = msg_c03r0101_assistantm_01_20u //「ポケモンを　どれくらい　あそんでる？」( 時間 )
     CASE RESEARCH_REQ_ID_GYM_LEADER_time    THEN $v4_1 = msg_c03r0101_assistantm_01_20v //「いちばんにんきのある　ジムリーダーは？」( 時間 ) 
@@ -2420,7 +2420,7 @@ LEADER_SAY_You_dont_archieve:
     CASE RESEARCH_REQ_ID_W2B2_time          THEN $v4_1 = msg_c03r0101_assistantm_01_33_a //「ブラック２と　ホワイト２　おおいのは？」( 時間 )
     CASE RESEARCH_REQ_ID_FIRST_POKE_time    THEN $v4_1 = msg_c03r0101_assistantm_01_33b //「えらんだ　さいしょのポケモンは？」( 時間 ) 
     CASE RESEARCH_REQ_ID_PLAY_TIME_time     THEN $v4_1 = msg_c03r0101_assistantm_01_33c //「いちばんおおい　プレイじかんは？」( 時間 )
-    CASE RESEARCH_REQ_ID_SEX_time           THEN $v4_1 = msg_c03r0101_assistantm_01_33d //「おとこのこと　おんなのこ　おおいのは？」( 時間 )
+    CASE RESEARCH_REQ_ID_SEX_time           THEN $v4_1 = msg_c03r0101_assistantm_01_33d //「おとこと　おんな　おおいのは？」( 時間 )
     CASE RESEARCH_REQ_ID_JOB_time           THEN $v4_1 = msg_c03r0101_assistantm_01_33e //「いちばんおおい　しごとは？」( 時間 )
     CASE RESEARCH_REQ_ID_HOBBY_time         THEN $v4_1 = msg_c03r0101_assistantm_01_33f //「いちばんおおい　しゅみは？」( 時間 )
     CASE RESEARCH_REQ_ID_BTL_OR_TRD_time    THEN $v4_1 = msg_c03r0101_assistantm_01_33g //「たいせんと　こうかん　にんきがあるのは？」( 時間 ) 
@@ -2429,13 +2429,13 @@ LEADER_SAY_You_dont_archieve:
     CASE RESEARCH_REQ_ID_PLACE_time         THEN $v4_1 = msg_c03r0101_assistantm_01_33j //「とかいと　いなか　すみたいのは？」( 時間 )
     CASE RESEARCH_REQ_ID_PRECIOUS_time      THEN $v4_1 = msg_c03r0101_assistantm_01_33k //「だいじにしているものに　ついて」( 時間 )
     CASE RESEARCH_REQ_ID_PARTNER_time       THEN $v4_1 = msg_c03r0101_assistantm_01_33l //「ひとのみりょくに　ついて」( 時間 )
-    CASE RESEARCH_REQ_ID_FUTURE_time        THEN $v4_1 = msg_c03r0101_assistantm_01_33m //「どんな　ひとに　なりたい？」( 時間 )
-    CASE RESEARCH_REQ_ID_ART_time           THEN $v4_1 = msg_c03r0101_assistantm_01_33n //「げいじゅつに　ついて」( 時間 )
+    CASE RESEARCH_REQ_ID_FUTURE_time        THEN $v4_1 = msg_c03r0101_assistantm_01_33m //「しょうらいに　ついて」( 時間 )
+    CASE RESEARCH_REQ_ID_ART_time           THEN $v4_1 = msg_c03r0101_assistantm_01_33n //「きょうかん　される　うたは？」( 時間 )
     CASE RESEARCH_REQ_ID_MUSIC_time         THEN $v4_1 = msg_c03r0101_assistantm_01_33o //「いちばんすきな　おんがくは？」( 時間 )
     CASE RESEARCH_REQ_ID_MOVIE_time         THEN $v4_1 = msg_c03r0101_assistantm_01_33p //「えいぞうに　ついて」( 時間 )
     CASE RESEARCH_REQ_ID_TIME_MACHINE_time  THEN $v4_1 = msg_c03r0101_assistantm_01_33q //「タイムマシンが　あったら？」( 時間 )
     CASE RESEARCH_REQ_ID_IF_time            THEN $v4_1 = msg_c03r0101_assistantm_01_33r //「もしもシリーズ」( 時間 )
-    CASE RESEARCH_REQ_ID_GAME_time          THEN $v4_1 = msg_c03r0101_assistantm_01_33s //「いちばん　にんきの　げーむは？」( 時間 )
+    CASE RESEARCH_REQ_ID_GAME_time          THEN $v4_1 = msg_c03r0101_assistantm_01_33s //「いちばん　にんきの　ゲームは？」( 時間 )
     CASE RESEARCH_REQ_ID_DAY_OFF_time       THEN $v4_1 = msg_c03r0101_assistantm_01_33t //「きゅうじつに　ついて」( 時間 )
     CASE RESEARCH_REQ_ID_HOW_LONG_PLAY_time THEN $v4_1 = msg_c03r0101_assistantm_01_33u //「ポケモンを　どれくらい　あそんでる？」( 時間 )
     CASE RESEARCH_REQ_ID_GYM_LEADER_time    THEN $v4_1 = msg_c03r0101_assistantm_01_33v //「いちばんにんきのある　ジムリーダーは？」( 時間 ) 
@@ -3467,9 +3467,9 @@ MEMBER_Q_SAY_11:
   CASE RESEARCH_QUESTIONNAIRE_ID_FAVARITE_POKE THEN $v3_1 = msg_c03r0101_woman2_11b // 質問１『対戦と交換どっちが好き？』
   CASE RESEARCH_QUESTIONNAIRE_ID_WISH          THEN $v3_1 = msg_c03r0101_woman2_11c // 質問１『都会と田舎住むならどっち？』
   CASE RESEARCH_QUESTIONNAIRE_ID_PARTNER       THEN $v3_1 = msg_c03r0101_woman2_11d // 質問１『相手を選ぶならどっち？』
-  CASE RESEARCH_QUESTIONNAIRE_ID_FUTURE        THEN $v3_1 = msg_c03r0101_woman2_11e // 質問１『しょうらい　どんな　ひとに　なりたい？』
+  CASE RESEARCH_QUESTIONNAIRE_ID_FUTURE        THEN $v3_1 = msg_c03r0101_woman2_11e // 質問１『将来　どんな人に　なりたい？』
   CASE RESEARCH_QUESTIONNAIRE_ID_HOBBY         THEN $v3_1 = msg_c03r0101_woman2_11f // 質問１『好きな音楽は？』
-  CASE RESEARCH_QUESTIONNAIRE_ID_IF            THEN $v3_1 = msg_c03r0101_woman2_11g // 質問１『もしもタイムマシンがあったらどの時代に行きたいは？』
+  CASE RESEARCH_QUESTIONNAIRE_ID_IF            THEN $v3_1 = msg_c03r0101_woman2_11g // 質問１『もしもタイムマシンがあったらどの時代に行きたい？』
   CASE RESEARCH_QUESTIONNAIRE_ID_PLAY          THEN $v3_1 = msg_c03r0101_woman2_11h // 質問１『ともだちと　どう　あそぶ？』
   CASE RESEARCH_QUESTIONNAIRE_ID_POKEMON       THEN $v3_1 = msg_c03r0101_woman2_11i // 質問１『ポケモンの面白いところは？』
   DEFAULT _RET

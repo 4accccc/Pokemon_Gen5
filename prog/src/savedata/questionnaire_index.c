@@ -9,6 +9,7 @@
 #pragma once
 #include <gflib.h>
 #include "savedata/questionnaire_index.h"
+#include "../src/app/research_radar/research_data.h"
 
 #include "../../../../resource/research_radar/data/answer_id.h"              // for ANSWER_ID_xxxx
 #include "../../../../resource/research_radar/data/question_id.h"            // for QUESTION_ID_xxxx
@@ -21,41 +22,53 @@
 //=================================================================
 u8 QIDATA_Get_AnswerID( int question_id, int data_idx )
 {
-  GF_ASSERT(data_idx<17);
+  GF_ASSERT(data_idx<MAX_ANSWER_NUM_PER_QUESTION);
   return AnswerID_question[question_id][data_idx];
 }
 
 u8 QIDATA_Get_AnswerNum( int question_id )
 {
+  // IDエラー
+  if( QUESTION_ID_MAX < question_id ) {
+    GF_ASSERT(0);
+    return 0;
+  }
   return AnswerNum_question[question_id];
 }
 
+#if 0
 const QUESTIONNAIRE_INDEX* QIDATA_Get_QuestionnaireIndex( int question_id )
 {
   return &QuestionnaireIndex[question_id];
 }
+#endif
 
 //=================================================================
 // ■情報取得関数
 //=================================================================
-
 //---------------------------------------------------------------------------
 /**
- * @brief 回答の項目数を取得する
+ * @brief 回答の項目数　設定上限を取得する(選択肢いくつ分の枠が用意されているか？)
  *
  * @param questionID 質問ID
  *
- * @return 指定した質問の回答選択肢の数
+ * @return 指定した質問の回答選択肢の設定数上限
+ *
+ * 回答選択肢の設定上限数(用意された枠数)を返します。
+ * BW互換のため、実際の選択肢数はこの値未満のこともあります。
+ * Swanでの実際の選択肢数の取得にはQIDATA_Get_AnswerNum()を使用してください
+ *
+ * answerNumOffset値はこの値で計算されています
  */
 //---------------------------------------------------------------------------
-u8 QUESTIONNAIRE_INDEX_GetAnswerNum( u8 questionID )
+u8 QUESTIONNAIRE_INDEX_GetAnswerNumLimit( u8 questionID )
 {
   // IDエラー
   if( QUESTION_ID_MAX < questionID ) {
     GF_ASSERT(0);
     return 0;
   }
-  return QuestionnaireIndex[ questionID ].answerNum;
+  return QuestionnaireIndex[ questionID ].answerNumLimit;
 }
 
 //---------------------------------------------------------------------------
@@ -136,6 +149,16 @@ BOOL QUESTIONNAIRE_INDEX_IsSwanNewQuestion( u8 questionID )
   return QuestionnaireIndex[ questionID ].swanNew;
 }
 
+static inline BOOL sub_AnswerIsHitQuestion( u8 answerID, u8 questionID )
+{
+  const QUESTIONNAIRE_INDEX* index = &QuestionnaireIndex[questionID];
+
+  if( answerID <= index->answerNumOffset ||
+      answerID >= (index->answerNumOffset+index->answerNumLimit)){
+    return FALSE;
+  }
+  return TRUE;
+}
 
 //---------------------------------------------------------------------------
 /**
@@ -148,7 +171,6 @@ BOOL QUESTIONNAIRE_INDEX_IsSwanNewQuestion( u8 questionID )
 //---------------------------------------------------------------------------
 u8 GetQuestionID_byAnswerID( u8 answerID )
 {
-  int sum;
   int qID;
 
   // IDエラー
@@ -157,13 +179,9 @@ u8 GetQuestionID_byAnswerID( u8 answerID )
     return 0;
   }
 
-  sum = 0;
   for( qID=0; qID < QUESTION_ID_NUM; qID++ )
   {
-    sum += AnswerNum_question[ qID ];
-    if( answerID <= sum ) {
-      return qID;
-    }
+    if( sub_AnswerIsHitQuestion( answerID, qID )) return qID;
   }
 
   GF_ASSERT(0);
@@ -181,9 +199,7 @@ u8 GetQuestionID_byAnswerID( u8 answerID )
 //---------------------------------------------------------------------------
 u8 GetAnswerIndex_atQuestion( u8 answerID )
 {
-  int sum;
   int qID;
-  int answerNum;
 
   // IDエラー
   if( ANSWER_ID_MAX < answerID ) {
@@ -191,14 +207,10 @@ u8 GetAnswerIndex_atQuestion( u8 answerID )
     return 1;
   }
 
-  sum = 0;
   for( qID=0; qID < QUESTION_ID_NUM; qID++ )
   {
-    answerNum = AnswerNum_question[ qID ]; 
-    sum += answerNum;
-
-    if( answerID <= sum ) {
-      return answerNum - (sum - answerID);
+    if( sub_AnswerIsHitQuestion( answerID, qID )){
+      return ( answerID - QuestionnaireIndex[qID].answerNumOffset); //0は「無回答」なので1オリジンで返す
     }
   }
 
@@ -206,22 +218,3 @@ u8 GetAnswerIndex_atQuestion( u8 answerID )
   return 1;
 }
 
-//---------------------------------------------------------------------------
-/**
- * @brief 指定した質問に対する回答の選択肢の数を取得する
- *
- * @param questionID 質問ID ( QUESTION_ID_xxxx )
- *
- * @return 指定した質問の回答パターン数
- */
-//---------------------------------------------------------------------------
-u8 GetAnswerNum_byQuestionID( u8 questionID )
-{
-  // IDエラー
-  if( QUESTION_ID_MAX < questionID ) {
-    GF_ASSERT(0);
-    return 0;
-  }
-
-  return AnswerNum_question[ questionID ];
-}

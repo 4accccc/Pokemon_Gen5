@@ -199,10 +199,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q01 ブラックとホワイト　どっち？</Text>
+			<Text>Q01 ブラック２とホワイト２　どっち？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:24:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -210,15 +210,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q01 ブラックとホワイト　どっち？</Text>
+			<Text>Q01 ブラック２とホワイト２　どっち？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:24:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:25:04" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -228,7 +235,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -559,10 +566,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q10 あそびにいくなら？</Text>
+			<Text>Q10 ともだちと　どう　あそぶ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:25:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -570,15 +577,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q10 あそびにいくなら？</Text>
+			<Text>Q10 ともだちと　どう　あそぶ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:25:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:25:22" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -588,7 +602,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -599,10 +613,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q11 すきな　がっこうの　じかんは？</Text>
+			<Text>Q11 タイムマシンが　あったら？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:26:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -610,15 +624,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q11 すきな　がっこうの　じかんは？</Text>
+			<Text>Q11 タイムマシンが　あったら？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:26:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:25:24" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -628,7 +649,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -679,10 +700,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q13 どの　きせつが　すき？</Text>
+			<Text>Q13 どんな　ひとに　なりたい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:26:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -690,15 +711,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q13 どの　きせつが　すき？</Text>
+			<Text>Q13 どんな　ひとに　なりたい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:26:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:26:14" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -708,7 +736,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -719,10 +747,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q14 どんな　たべものが　すき？</Text>
+			<Text>Q14 ゆめを　おう？　げんじつを　みる？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:26:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -730,15 +758,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q14 どんな　たべものが　すき？</Text>
+			<Text>Q14 ゆめを　おう？　げんじつを　みる？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:26:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:26:15" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -748,7 +783,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -839,10 +874,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q17 すきな　べんきょうは？</Text>
+			<Text>Q17 どんな　まほうが　ほしい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:27:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -850,15 +885,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q17 すきな　べんきょうは？</Text>
+			<Text>Q17 どんな　まほうが　ほしい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:27:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:27:05" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -868,7 +910,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -879,10 +921,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q18 にがてな　べんきょうは？</Text>
+			<Text>Q18 おかねもちになったら　どうする？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:27:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -890,15 +932,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q18 にがてな　べんきょうは？</Text>
+			<Text>Q18 おかねもちになったら　どうする？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:27:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:27:06" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -908,7 +957,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -919,10 +968,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q19 もし　なれるとしたら？</Text>
+			<Text>Q19 ポケモンを　どれくらい　あそんでる？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:27:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -930,15 +979,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q19 もし　なれるとしたら？</Text>
+			<Text>Q19 ポケモンを　どれくらい　あそんでる？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:27:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:27:07" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -948,7 +1004,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1119,10 +1175,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q24 すきな　スポーツは？</Text>
+			<Text>Q24 すきな　ゲームは？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:28:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1130,15 +1186,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q24 すきな　スポーツは？</Text>
+			<Text>Q24 すきな　ゲームは？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:28:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:28:02" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -1148,7 +1211,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1159,10 +1222,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q25 すきないろは　どれ？</Text>
+			<Text>Q25 がんばりたい　ことは？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:28:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1170,15 +1233,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q25 すきないろは　どれ？</Text>
+			<Text>Q25 がんばりたい　ことは？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:28:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:28:18" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -1188,7 +1258,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1299,6 +1369,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:28:41" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -1308,7 +1385,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1379,6 +1456,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:28:41" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -1388,7 +1472,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1399,10 +1483,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q01 ブラックとホワイト　どっち？</Text>
+			<Text>Q01 ブラック２とホワイト２　どっち？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1410,15 +1494,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q01 ブラックとホワイト　どっち？</Text>
+			<Text>Q01 ブラック２とホワイト２　どっち？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -1428,7 +1519,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1468,7 +1559,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1508,7 +1599,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1548,7 +1639,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1588,7 +1679,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1628,7 +1719,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1668,7 +1759,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1708,7 +1799,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1748,7 +1839,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1759,10 +1850,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q10 あそびにいくなら？</Text>
+			<Text>Q10 ともだちと　どう　あそぶ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1770,15 +1861,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q10 あそびにいくなら？</Text>
+			<Text>Q10 ともだちと　どう　あそぶ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -1788,7 +1886,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1799,10 +1897,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q11 すきな　がっこうの　じかんは？</Text>
+			<Text>Q11 タイムマシンが　あったら？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1810,15 +1908,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q11 すきな　がっこうの　じかんは？</Text>
+			<Text>Q11 タイムマシンが　あったら？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -1828,7 +1933,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1868,7 +1973,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1879,10 +1984,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q13 どの　きせつが　すき？</Text>
+			<Text>Q13 どんな　ひとに　なりたい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1890,15 +1995,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q13 どの　きせつが　すき？</Text>
+			<Text>Q13 どんな　ひとに　なりたい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -1908,7 +2020,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1919,10 +2031,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q14 どんな　たべものが　すき？</Text>
+			<Text>Q14 ゆめを　おう？　げんじつを　みる？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1930,15 +2042,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q14 どんな　たべものが　すき？</Text>
+			<Text>Q14 ゆめを　おう？　げんじつを　みる？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -1948,7 +2067,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1988,7 +2107,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2028,7 +2147,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2039,10 +2158,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q17 すきな　べんきょうは？</Text>
+			<Text>Q17 どんな　まほうが　ほしい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2050,15 +2169,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q17 すきな　べんきょうは？</Text>
+			<Text>Q17 どんな　まほうが　ほしい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -2068,7 +2194,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2079,10 +2205,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q18 にがてな　べんきょうは？</Text>
+			<Text>Q18 おかねもちになったら　どうする？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2090,15 +2216,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q18 にがてな　べんきょうは？</Text>
+			<Text>Q18 おかねもちになったら　どうする？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -2108,7 +2241,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2119,10 +2252,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q19 もし　なれるとしたら？</Text>
+			<Text>Q19 ポケモンを　どれくらい　あそんでる？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2130,15 +2263,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q19 もし　なれるとしたら？</Text>
+			<Text>Q19 ポケモンを　どれくらい　あそんでる？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -2148,7 +2288,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2188,7 +2328,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2228,7 +2368,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2268,7 +2408,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2308,7 +2448,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2319,10 +2459,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q24 すきな　スポーツは？</Text>
+			<Text>Q24 すきな　ゲームは？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2330,15 +2470,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q24 すきな　スポーツは？</Text>
+			<Text>Q24 すきな　ゲームは？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -2348,7 +2495,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2359,10 +2506,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q25 すきないろは　どれ？</Text>
+			<Text>Q25 がんばりたい　ことは？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2370,15 +2517,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q25 すきないろは　どれ？</Text>
+			<Text>Q25 がんばりたい　ことは？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -2388,7 +2542,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2428,7 +2582,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2468,7 +2622,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2499,6 +2653,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -2508,7 +2669,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2548,7 +2709,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2579,6 +2740,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:08" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -2588,7 +2756,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#808080</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2599,10 +2767,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q01 ブラックとホワイト　どっち？</Text>
+			<Text>Q01 ブラック２とホワイト２　どっち？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2610,15 +2778,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q01 ブラックとホワイト　どっち？</Text>
+			<Text>Q01 ブラック２とホワイト２　どっち？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -2628,7 +2803,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2668,7 +2843,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2708,7 +2883,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2748,7 +2923,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2788,7 +2963,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2828,7 +3003,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2868,7 +3043,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2908,7 +3083,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2948,7 +3123,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2959,10 +3134,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q10 あそびにいくなら？</Text>
+			<Text>Q10 ともだちと　どう　あそぶ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2970,15 +3145,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q10 あそびにいくなら？</Text>
+			<Text>Q10 ともだちと　どう　あそぶ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -2988,7 +3170,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -2999,10 +3181,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q11 すきな　がっこうの　じかんは？</Text>
+			<Text>Q11 タイムマシンが　あったら？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3010,15 +3192,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q11 すきな　がっこうの　じかんは？</Text>
+			<Text>Q11 タイムマシンが　あったら？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -3028,7 +3217,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3068,7 +3257,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3079,10 +3268,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q13 どの　きせつが　すき？</Text>
+			<Text>Q13 どんな　ひとに　なりたい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3090,15 +3279,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q13 どの　きせつが　すき？</Text>
+			<Text>Q13 どんな　ひとに　なりたい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -3108,7 +3304,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3119,10 +3315,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q14 どんな　たべものが　すき？</Text>
+			<Text>Q14 ゆめを　おう？　げんじつを　みる？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3130,15 +3326,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q14 どんな　たべものが　すき？</Text>
+			<Text>Q14 ゆめを　おう？　げんじつを　みる？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -3148,7 +3351,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3188,7 +3391,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3228,7 +3431,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3239,10 +3442,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q17 すきな　べんきょうは？</Text>
+			<Text>Q17 どんな　まほうが　ほしい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3250,15 +3453,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q17 すきな　べんきょうは？</Text>
+			<Text>Q17 どんな　まほうが　ほしい？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -3268,7 +3478,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3279,10 +3489,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q18 にがてな　べんきょうは？</Text>
+			<Text>Q18 おかねもちになったら　どうする？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3290,15 +3500,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q18 にがてな　べんきょうは？</Text>
+			<Text>Q18 おかねもちになったら　どうする？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -3308,7 +3525,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3319,10 +3536,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q19 もし　なれるとしたら？</Text>
+			<Text>Q19 ポケモンを　どれくらい　あそんでる？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3330,15 +3547,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q19 もし　なれるとしたら？</Text>
+			<Text>Q19 ポケモンを　どれくらい　あそんでる？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -3348,7 +3572,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3388,7 +3612,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3428,7 +3652,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3468,7 +3692,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3508,7 +3732,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3519,10 +3743,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q24 すきな　スポーツは？</Text>
+			<Text>Q24 すきな　ゲームは？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3530,15 +3754,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q24 すきな　スポーツは？</Text>
+			<Text>Q24 すきな　ゲームは？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -3548,7 +3779,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3559,10 +3790,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>Q25 すきないろは　どれ？</Text>
+			<Text>Q25 がんばりたい　ことは？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3570,15 +3801,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>Q25 すきないろは　どれ？</Text>
+			<Text>Q25 がんばりたい　ことは？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -3588,7 +3826,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3628,7 +3866,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3668,7 +3906,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3699,6 +3937,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -3708,7 +3953,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3748,7 +3993,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#c0c0c0</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3779,6 +4024,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -3788,7 +4040,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ffffff</CellData>
+			<CellData>#ff8080</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3799,10 +4051,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「ブラック」</Text>
+			<Text>「ブラック２」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3810,15 +4062,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「ブラック」</Text>
+			<Text>「ブラック２」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:59" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -3828,7 +4087,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3839,10 +4098,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「ホワイト」</Text>
+			<Text>「ホワイト２」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3850,15 +4109,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「ホワイト」</Text>
+			<Text>「ホワイト２」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:29:59" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -3868,7 +4134,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -3879,10 +4145,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「しょうねん」</Text>
+			<Text>「おとこ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:30:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3890,10 +4156,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「しょうねん」</Text>
+			<Text>「おとこ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:30:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3919,10 +4185,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「しょうじょ」</Text>
+			<Text>「おんな」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:31:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3930,10 +4196,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「しょうじょ」</Text>
+			<Text>「おんな」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:31:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4479,10 +4745,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「ほのお」</Text>
+			<Text>「ポカブ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:33:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4490,10 +4756,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「ほのお」</Text>
+			<Text>「ポカブ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:33:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4519,10 +4785,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「みず」</Text>
+			<Text>「ミジュマル」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:33:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4530,10 +4796,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「みず」</Text>
+			<Text>「ミジュマル」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:33:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4559,10 +4825,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「くさ」</Text>
+			<Text>「ツタージャ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:33:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4570,10 +4836,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「くさ」</Text>
+			<Text>「ツタージャ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:33:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4599,10 +4865,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「うみ」</Text>
+			<Text>「きょうそう」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:31:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4610,15 +4876,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「うみ」</Text>
+			<Text>「きょうそう」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:32:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:32:25" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -4628,7 +4901,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4639,10 +4912,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「かわ」</Text>
+			<Text>「きょうりょく」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:32:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4650,15 +4923,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「かわ」</Text>
+			<Text>「きょうりょく」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:32:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:32:26" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -4668,7 +4948,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4679,10 +4959,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「やま」</Text>
+			<Text>「」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:32:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4690,15 +4970,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「やま」</Text>
+			<Text>「」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:32:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:32:26" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -4708,7 +4995,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4719,10 +5006,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「じゅぎょう」</Text>
+			<Text>「かこにいく」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:32:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4730,15 +5017,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「じゅぎょう」</Text>
+			<Text>「かこにいく」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:34:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:32:37" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -4748,7 +5042,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4759,10 +5053,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「やすみじかん」</Text>
+			<Text>「みらいにいく」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:32:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4770,15 +5064,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「やすみじかん」</Text>
+			<Text>「みらいにいく」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:34:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:32:37" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -4788,7 +5089,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4799,10 +5100,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「きゅうしょく」</Text>
+			<Text>「ひつようない」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:33:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4810,15 +5111,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「きゅうしょく」</Text>
+			<Text>「ひつようない」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:34:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:32:38" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -4828,7 +5136,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4959,10 +5267,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「はる」</Text>
+			<Text>「かっこいいひと」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:33:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4970,15 +5278,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「はる」</Text>
+			<Text>「かっこいいひと」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:34:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:33:48" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -4988,7 +5303,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4999,10 +5314,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「なつ」</Text>
+			<Text>「かしこいひと」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:34:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5010,15 +5325,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「なつ」</Text>
+			<Text>「かしこいひと」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:34:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:33:48" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -5028,7 +5350,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5039,10 +5361,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「あき」</Text>
+			<Text>「おもしろいひと」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:34:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5050,15 +5372,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「あき」</Text>
+			<Text>「おもしろいひと」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:34:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:33:49" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -5068,7 +5397,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5079,10 +5408,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「ふゆ」</Text>
+			<Text>「ふしぎなひと」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:34:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5090,15 +5419,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「ふゆ」</Text>
+			<Text>「ふしぎなひと」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:34:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:33:50" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -5108,7 +5444,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5119,10 +5455,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「あまい」</Text>
+			<Text>「ゆめをおう」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:34:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5130,15 +5466,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「あまい」</Text>
+			<Text>「ゆめをおう」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:34:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:34:53" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -5148,7 +5491,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5159,10 +5502,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「からい」</Text>
+			<Text>「げんじつをみる」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:34:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5170,15 +5513,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「からい」</Text>
+			<Text>「げんじつをみる」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:34:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:34:53" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -5188,7 +5538,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5199,10 +5549,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「すっぱい」</Text>
+			<Text>「」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:34:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5210,15 +5560,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「すっぱい」</Text>
+			<Text>「」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:34:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:34:53" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -5228,7 +5585,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5239,10 +5596,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「にがい」</Text>
+			<Text>「」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:34:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5250,15 +5607,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「にがい」</Text>
+			<Text>「」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:34:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:34:53" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -5268,7 +5632,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5599,10 +5963,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「こくご」</Text>
+			<Text>「そらをとぶ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:35:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5610,15 +5974,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「こくご」</Text>
+			<Text>「そらをとぶ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:37:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:36:51" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -5628,7 +5999,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5639,10 +6010,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「さんすう」</Text>
+			<Text>「とうめいになる」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:35:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5650,15 +6021,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「さんすう」</Text>
+			<Text>「とうめいになる」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:37:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:36:52" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -5668,7 +6046,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5679,10 +6057,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「りか」</Text>
+			<Text>「じかんをとめる」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:36:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5690,15 +6068,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「りか」</Text>
+			<Text>「じかんをとめる」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:37:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:36:52" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -5708,7 +6093,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5719,10 +6104,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「しゃかい」</Text>
+			<Text>「こころをよむ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:36:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5730,15 +6115,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「しゃかい」</Text>
+			<Text>「こころをよむ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:37:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:36:52" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -5748,7 +6140,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5759,10 +6151,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「こくご」</Text>
+			<Text>「つかう」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:36:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5770,15 +6162,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「こくご」</Text>
+			<Text>「つかう」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:37:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:37:25" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -5788,7 +6187,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5819,6 +6218,13 @@
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:37:25" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -5828,7 +6234,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5839,10 +6245,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「りか」</Text>
+			<Text>「じまんする」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:37:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5850,15 +6256,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「りか」</Text>
+			<Text>「じまんする」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:37:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:37:27" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -5868,7 +6281,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5879,10 +6292,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「しゃかい」</Text>
+			<Text>「きふする」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:37:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5890,15 +6303,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「しゃかい」</Text>
+			<Text>「きふする」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:37:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:37:26" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -5908,7 +6328,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5919,10 +6339,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「ポケモントレーナー」</Text>
+			<Text>「０－５ねん」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:39:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5930,15 +6350,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「ポケモントレーナー」</Text>
+			<Text>「０－５ねん」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:39:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:37:44" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -5948,7 +6375,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5959,10 +6386,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「ポケモンはかせ」</Text>
+			<Text>「５－１０ねん」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:38:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5970,15 +6397,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「ポケモンはかせ」</Text>
+			<Text>「５－１０ねん」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:39:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:37:45" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -5988,7 +6422,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -5999,10 +6433,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「プラズマだん」</Text>
+			<Text>「１０ー１５ねん」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:39:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6010,15 +6444,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「プラズマだん」</Text>
+			<Text>「１０ー１５ねん」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:39:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:37:46" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -6028,7 +6469,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -6039,10 +6480,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「ポケモン」</Text>
+			<Text>「１５ねんー」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:39:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6050,15 +6491,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「ポケモン」</Text>
+			<Text>「１５ねんー」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:39:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:37:46" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -6068,7 +6516,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -6919,10 +7367,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「やきゅう」</Text>
+			<Text>「アクション」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:50:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6930,15 +7378,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「やきゅう」</Text>
+			<Text>「アクション」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:52:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:50:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -6948,7 +7403,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -6959,10 +7414,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「サッカー」</Text>
+			<Text>「パズル」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:50:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6970,15 +7425,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「サッカー」</Text>
+			<Text>「パズル」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:52:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:50:19" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -6988,7 +7450,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -6999,10 +7461,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「バスケ」</Text>
+			<Text>「ＲＰＧ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:50:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7010,15 +7472,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「バスケ」</Text>
+			<Text>「ＲＰＧ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:52:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:50:20" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -7028,7 +7497,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -7039,10 +7508,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「アメフト」</Text>
+			<Text>「アドベンチャー」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:50:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7050,15 +7519,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「アメフト」</Text>
+			<Text>「アドベンチャー」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:52:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:50:20" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -7068,7 +7544,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -7079,10 +7555,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「ホッケー」</Text>
+			<Text>「シミュレーション」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:51:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7090,15 +7566,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「ホッケー」</Text>
+			<Text>「シミュレーション」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:52:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:50:21" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -7108,7 +7591,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -7119,10 +7602,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「かくとうぎ」</Text>
+			<Text>「スポーツ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:51:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7130,15 +7613,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「かくとうぎ」</Text>
+			<Text>「スポーツ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:52:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:52:09" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -7148,7 +7638,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -7159,10 +7649,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「あか」</Text>
+			<Text>「しごと」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:51:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7170,15 +7660,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「あか」</Text>
+			<Text>「しごと」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:52:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:52:09" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -7188,7 +7685,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -7199,10 +7696,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「みどり」</Text>
+			<Text>「ひとづきあい」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:51:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7210,15 +7707,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「みどり」</Text>
+			<Text>「ひとづきあい」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:52:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:52:09" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -7228,7 +7732,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -7239,10 +7743,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「あお」</Text>
+			<Text>「しゅみ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:51:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7250,15 +7754,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「あお」</Text>
+			<Text>「しゅみ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:52:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:52:09" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -7268,7 +7779,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -7279,10 +7790,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「きいろ」</Text>
+			<Text>「けんこう」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:51:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7290,15 +7801,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「きいろ」</Text>
+			<Text>「けんこう」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:52:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:52:09" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -7308,7 +7826,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -7319,10 +7837,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「しろ」</Text>
+			<Text>「えらくなる」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:51:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7330,15 +7848,22 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「しろ」</Text>
+			<Text>「えらくなる」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:52:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:06" />
 		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>スワン変更</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:52:11" />
+		</CommentCell>
 		<AttributeCell
 			Name="Width">
 			<Text>240</Text>
@@ -7348,7 +7873,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -7359,10 +7884,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「くろ」</Text>
+			<Text>「」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:51:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7370,10 +7895,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「くろ」</Text>
+			<Text>「」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:52:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8039,10 +8564,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「さんすくみ　くさ」</Text>
+			<Text>「チェレン」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:53:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8050,10 +8575,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「さんすくみ　くさ」</Text>
+			<Text>「チェレン」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:54:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8068,7 +8593,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -8079,10 +8604,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「さんすくみ　ほのお」</Text>
+			<Text>「ホミカ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:53:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8090,10 +8615,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「さんすくみ　ほのお」</Text>
+			<Text>「ホミカ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:54:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8108,7 +8633,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -8119,10 +8644,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「さんすくみ　みず」</Text>
+			<Text>「アーティ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:53:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8130,10 +8655,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「さんすくみ　みず」</Text>
+			<Text>「アーティ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:54:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8148,7 +8673,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -8159,10 +8684,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「ノーマル」</Text>
+			<Text>「カミツレ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:53:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8170,10 +8695,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「ノーマル」</Text>
+			<Text>「カミツレ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:54:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8188,7 +8713,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -8199,10 +8724,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「むし」</Text>
+			<Text>「ヤーコン」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:53:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8210,10 +8735,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「むし」</Text>
+			<Text>「ヤーコン」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:54:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8228,7 +8753,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -8239,10 +8764,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「でんき」</Text>
+			<Text>「フウロ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:53:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8250,10 +8775,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「でんき」</Text>
+			<Text>「フウロ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:54:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8268,7 +8793,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -8279,10 +8804,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「じめん」</Text>
+			<Text>「シャガ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:54:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8290,10 +8815,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「じめん」</Text>
+			<Text>「シャガ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:54:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8308,7 +8833,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -8319,10 +8844,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「ひこう」</Text>
+			<Text>「シズイ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:54:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8330,10 +8855,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「ひこう」</Text>
+			<Text>「シズイ」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:54:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8348,7 +8873,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -8359,10 +8884,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「こおり」</Text>
+			<Text>「」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:54:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8370,10 +8895,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「こおり」</Text>
+			<Text>「」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:54:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8388,7 +8913,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -8399,10 +8924,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「ドラゴンくろ」</Text>
+			<Text>「」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:54:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8410,10 +8935,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「ドラゴンくろ」</Text>
+			<Text>「」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:54:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8428,7 +8953,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -8439,10 +8964,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>「ドラゴンしろ」</Text>
+			<Text>「」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:54:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8450,10 +8975,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>「ドラゴンしろ」</Text>
+			<Text>「」</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-19T08:54:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8468,7 +8993,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#8080ff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

@@ -125,13 +125,13 @@ static const DEBUG_NUMINPUT_PARAM NumInputParam_todayCountOfA =
 }; 
 // Q1
 static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q01[] = {
-  { dni_a001, ANSWER_ID_001, &NumInputParam_todayCountOfA }, //「ブラック」
-  { dni_a002, ANSWER_ID_002, &NumInputParam_todayCountOfA }, //「ホワイト」
+  { dni_a001, ANSWER_ID_001, &NumInputParam_todayCountOfA }, //「ブラック２」
+  { dni_a002, ANSWER_ID_002, &NumInputParam_todayCountOfA }, //「ホワイト２」
 }; 
 // Q2
 static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q02[] = {
-  { dni_a003, ANSWER_ID_003, &NumInputParam_todayCountOfA }, //「しょうねん」
-  { dni_a004, ANSWER_ID_004, &NumInputParam_todayCountOfA }, //「しょうじょ」
+  { dni_a003, ANSWER_ID_003, &NumInputParam_todayCountOfA }, //「おとこ」
+  { dni_a004, ANSWER_ID_004, &NumInputParam_todayCountOfA }, //「おんな」
 }; 
 // Q3
 static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q03[] = {
@@ -166,21 +166,20 @@ static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q08[] = {
 }; 
 // Q9
 static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q09[] = {
-  { dni_a018, ANSWER_ID_018, &NumInputParam_todayCountOfA }, //「ほのお」
-  { dni_a019, ANSWER_ID_019, &NumInputParam_todayCountOfA }, //「みず」
-  { dni_a020, ANSWER_ID_020, &NumInputParam_todayCountOfA }, //「くさ」
+  { dni_a018, ANSWER_ID_018, &NumInputParam_todayCountOfA }, //「ポカブ」
+  { dni_a019, ANSWER_ID_019, &NumInputParam_todayCountOfA }, //「ミジュマル」
+  { dni_a020, ANSWER_ID_020, &NumInputParam_todayCountOfA }, //「ツタージャ」
 }; 
 // Q10
 static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q10[] = {
-  { dni_a021, ANSWER_ID_021, &NumInputParam_todayCountOfA }, //「うみ」
-  { dni_a022, ANSWER_ID_022, &NumInputParam_todayCountOfA }, //「かわ」
-  { dni_a023, ANSWER_ID_023, &NumInputParam_todayCountOfA }, //「やま」
+  { dni_a021, ANSWER_ID_021, &NumInputParam_todayCountOfA }, //「きょうそう」
+  { dni_a022, ANSWER_ID_022, &NumInputParam_todayCountOfA }, //「きょうりょく」
 }; 
 // Q11
 static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q11[] = {
-  { dni_a024, ANSWER_ID_024, &NumInputParam_todayCountOfA },//「じゅぎょう」
-  { dni_a025, ANSWER_ID_025, &NumInputParam_todayCountOfA },//「やすみじかん」
-  { dni_a026, ANSWER_ID_026, &NumInputParam_todayCountOfA },//「きゅうしょく」
+  { dni_a024, ANSWER_ID_024, &NumInputParam_todayCountOfA },//「かこにいく」
+  { dni_a025, ANSWER_ID_025, &NumInputParam_todayCountOfA },//「みらいにいく」
+  { dni_a026, ANSWER_ID_026, &NumInputParam_todayCountOfA },//「ひつようない」
 }; 
 // Q12
 static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q12[] = {
@@ -190,17 +189,15 @@ static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q12[] = {
 }; 
 // Q13
 static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q13[] = {
-  { dni_a030, ANSWER_ID_030, &NumInputParam_todayCountOfA },//「はる」
-  { dni_a031, ANSWER_ID_031, &NumInputParam_todayCountOfA },//「なつ」
-  { dni_a032, ANSWER_ID_032, &NumInputParam_todayCountOfA },//「あき」
-  { dni_a033, ANSWER_ID_033, &NumInputParam_todayCountOfA },//「ふゆ」
+  { dni_a030, ANSWER_ID_030, &NumInputParam_todayCountOfA },//「かっこいいひと」
+  { dni_a031, ANSWER_ID_031, &NumInputParam_todayCountOfA },//「かしこいひと」
+  { dni_a032, ANSWER_ID_032, &NumInputParam_todayCountOfA },//「おもしろいひと」
+  { dni_a033, ANSWER_ID_033, &NumInputParam_todayCountOfA },//「ふしぎなひと」
 }; 
 // Q14
 static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q14[] = {
-  { dni_a034, ANSWER_ID_034, &NumInputParam_todayCountOfA },//「あまい」
-  { dni_a035, ANSWER_ID_035, &NumInputParam_todayCountOfA },//「からい」
-  { dni_a036, ANSWER_ID_036, &NumInputParam_todayCountOfA },//「すっぱい」
-  { dni_a037, ANSWER_ID_037, &NumInputParam_todayCountOfA },//「にがい」
+  { dni_a034, ANSWER_ID_034, &NumInputParam_todayCountOfA },//「ゆめをおう」
+  { dni_a035, ANSWER_ID_035, &NumInputParam_todayCountOfA },//「げんじつをみる」
 }; 
 // Q15
 static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q15[] = {
@@ -218,24 +215,24 @@ static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q16[] = {
 }; 
 // Q17
 static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q17[] = {
-  { dni_a046, ANSWER_ID_046, &NumInputParam_todayCountOfA },//「こくご」
-  { dni_a047, ANSWER_ID_047, &NumInputParam_todayCountOfA },//「さんすう」
-  { dni_a048, ANSWER_ID_048, &NumInputParam_todayCountOfA },//「りか」
-  { dni_a049, ANSWER_ID_049, &NumInputParam_todayCountOfA },//「しゃかい」
+  { dni_a046, ANSWER_ID_046, &NumInputParam_todayCountOfA },//「そらをとぶ」
+  { dni_a047, ANSWER_ID_047, &NumInputParam_todayCountOfA },//「とうめいになる」
+  { dni_a048, ANSWER_ID_048, &NumInputParam_todayCountOfA },//「じかんをとめる」
+  { dni_a049, ANSWER_ID_049, &NumInputParam_todayCountOfA },//「こころをよむ」
 }; 
 // Q18
 static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q18[] = {
-  { dni_a050, ANSWER_ID_050, &NumInputParam_todayCountOfA },//「こくご」
-  { dni_a051, ANSWER_ID_051, &NumInputParam_todayCountOfA },//「さんすう」
-  { dni_a052, ANSWER_ID_052, &NumInputParam_todayCountOfA },//「りか」
-  { dni_a053, ANSWER_ID_053, &NumInputParam_todayCountOfA },//「しゃかい」
+  { dni_a050, ANSWER_ID_050, &NumInputParam_todayCountOfA },//「つかう」
+  { dni_a051, ANSWER_ID_051, &NumInputParam_todayCountOfA },//「ためる」
+  { dni_a052, ANSWER_ID_052, &NumInputParam_todayCountOfA },//「じまんする」
+  { dni_a053, ANSWER_ID_053, &NumInputParam_todayCountOfA },//「きふする」
 }; 
 // Q19
 static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q19[] = {
-  { dni_a054, ANSWER_ID_054, &NumInputParam_todayCountOfA },//「ポケモントレーナー」
-  { dni_a055, ANSWER_ID_055, &NumInputParam_todayCountOfA },//「ポケモンはかせ」
-  { dni_a056, ANSWER_ID_056, &NumInputParam_todayCountOfA },//「プラズマだん」
-  { dni_a057, ANSWER_ID_057, &NumInputParam_todayCountOfA },//「ポケモン」
+  { dni_a054, ANSWER_ID_054, &NumInputParam_todayCountOfA },//「０－５ねん」
+  { dni_a055, ANSWER_ID_055, &NumInputParam_todayCountOfA },//「５－１０ねん」
+  { dni_a056, ANSWER_ID_056, &NumInputParam_todayCountOfA },//「１０－１５ねん」
+  { dni_a057, ANSWER_ID_057, &NumInputParam_todayCountOfA },//「１５ねんー」
 }; 
 // Q20
 static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q20[] = {
@@ -251,7 +248,7 @@ static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q21[] = {
   { dni_a064, ANSWER_ID_064, &NumInputParam_todayCountOfA },//「ロック」
   { dni_a065, ANSWER_ID_065, &NumInputParam_todayCountOfA },//「ジャズ」
   { dni_a066, ANSWER_ID_066, &NumInputParam_todayCountOfA },//「ラップ」
-  { dni_a067, ANSWER_ID_067, &NumInputParam_todayCountOfA },//「オーケストラ」
+  { dni_a067, ANSWER_ID_067, &NumInputParam_todayCountOfA },//「クラシック」
 }; 
 // Q22
 static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q22[] = {
@@ -272,20 +269,20 @@ static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q23[] = {
 }; 
 // Q24
 static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q24[] = {
-  { dni_a079, ANSWER_ID_079, &NumInputParam_todayCountOfA },//「やきゅう」
-  { dni_a080, ANSWER_ID_080, &NumInputParam_todayCountOfA },//「サッカー」
-  { dni_a081, ANSWER_ID_081, &NumInputParam_todayCountOfA },//「バスケ」
-  { dni_a082, ANSWER_ID_082, &NumInputParam_todayCountOfA },//「アメフト」
-  { dni_a083, ANSWER_ID_083, &NumInputParam_todayCountOfA },//「ホッケー」
-  { dni_a084, ANSWER_ID_084, &NumInputParam_todayCountOfA },//「かくとうぎ」
+  { dni_a079, ANSWER_ID_079, &NumInputParam_todayCountOfA },//「アクション」
+  { dni_a080, ANSWER_ID_080, &NumInputParam_todayCountOfA },//「パズル」
+  { dni_a081, ANSWER_ID_081, &NumInputParam_todayCountOfA },//「ＲＰＧ」
+  { dni_a082, ANSWER_ID_082, &NumInputParam_todayCountOfA },//「アドベンチャー」
+  { dni_a083, ANSWER_ID_083, &NumInputParam_todayCountOfA },//「シミュレーション」
+  { dni_a084, ANSWER_ID_084, &NumInputParam_todayCountOfA },//「スポーツ」
 }; 
 // Q25
 static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q25[] = {
-  { dni_a085, ANSWER_ID_085, &NumInputParam_todayCountOfA },//「あか」
-  { dni_a086, ANSWER_ID_086, &NumInputParam_todayCountOfA },//「みどり」
-  { dni_a087, ANSWER_ID_087, &NumInputParam_todayCountOfA },//「あお」
-  { dni_a088, ANSWER_ID_088, &NumInputParam_todayCountOfA },//「きいろ」
-  { dni_a089, ANSWER_ID_089, &NumInputParam_todayCountOfA },//「しろ」
+  { dni_a085, ANSWER_ID_085, &NumInputParam_todayCountOfA },//「しごと」
+  { dni_a086, ANSWER_ID_086, &NumInputParam_todayCountOfA },//「ひとづきあい」
+  { dni_a087, ANSWER_ID_087, &NumInputParam_todayCountOfA },//「しゅみ」
+  { dni_a088, ANSWER_ID_088, &NumInputParam_todayCountOfA },//「けんこう」
+  { dni_a089, ANSWER_ID_089, &NumInputParam_todayCountOfA },//「えらくなる」
   { dni_a090, ANSWER_ID_090, &NumInputParam_todayCountOfA },//「くろ」
 }; 
 // Q26
@@ -312,17 +309,14 @@ static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q27[] = {
 }; 
 // Q28
 static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q28[] = {
-  { dni_a107, ANSWER_ID_107, &NumInputParam_todayCountOfA },//「さんすくみ　くさ」
-  { dni_a108, ANSWER_ID_108, &NumInputParam_todayCountOfA },//「さんすくみ　ほのお」
-  { dni_a109, ANSWER_ID_109, &NumInputParam_todayCountOfA },//「さんすくみ　みず」
-  { dni_a110, ANSWER_ID_110, &NumInputParam_todayCountOfA },//「ノーマル」
-  { dni_a111, ANSWER_ID_111, &NumInputParam_todayCountOfA },//「むし」
-  { dni_a112, ANSWER_ID_112, &NumInputParam_todayCountOfA },//「でんき」
-  { dni_a113, ANSWER_ID_113, &NumInputParam_todayCountOfA },//「じめん」
-  { dni_a114, ANSWER_ID_114, &NumInputParam_todayCountOfA },//「ひこう」
-  { dni_a115, ANSWER_ID_115, &NumInputParam_todayCountOfA },//「こおり」
-  { dni_a116, ANSWER_ID_116, &NumInputParam_todayCountOfA },//「ドラゴンくろ」
-  { dni_a117, ANSWER_ID_117, &NumInputParam_todayCountOfA },//「ドラゴンしろ」
+  { dni_a107, ANSWER_ID_107, &NumInputParam_todayCountOfA },//「チェレン」
+  { dni_a108, ANSWER_ID_108, &NumInputParam_todayCountOfA },//「ホミカ」
+  { dni_a109, ANSWER_ID_109, &NumInputParam_todayCountOfA },//「アーティ」
+  { dni_a110, ANSWER_ID_110, &NumInputParam_todayCountOfA },//「カミツレ」
+  { dni_a111, ANSWER_ID_111, &NumInputParam_todayCountOfA },//「ヤーコン」
+  { dni_a112, ANSWER_ID_112, &NumInputParam_todayCountOfA },//「フウロ」
+  { dni_a113, ANSWER_ID_113, &NumInputParam_todayCountOfA },//「シャガ」
+  { dni_a114, ANSWER_ID_114, &NumInputParam_todayCountOfA },//「シズイ」
 }; 
 // Q29
 static const DEBUG_NUMINPUT_LIST NumInputList_todayCountOfA_Q29[] = {
@@ -369,13 +363,13 @@ static const DEBUG_NUMINPUT_PARAM NumInputParam_totalCountOfA = {
 }; 
 // Q1
 static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q01[] = {
-  { dni_a001, ANSWER_ID_001, &NumInputParam_totalCountOfA }, //「ブラック」
-  { dni_a002, ANSWER_ID_002, &NumInputParam_totalCountOfA }, //「ホワイト」
+  { dni_a001, ANSWER_ID_001, &NumInputParam_totalCountOfA }, //「ブラック２」
+  { dni_a002, ANSWER_ID_002, &NumInputParam_totalCountOfA }, //「ホワイト２」
 }; 
 // Q2
 static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q02[] = {
-  { dni_a003, ANSWER_ID_003, &NumInputParam_totalCountOfA }, //「しょうねん」
-  { dni_a004, ANSWER_ID_004, &NumInputParam_totalCountOfA }, //「しょうじょ」
+  { dni_a003, ANSWER_ID_003, &NumInputParam_totalCountOfA }, //「おとこ」
+  { dni_a004, ANSWER_ID_004, &NumInputParam_totalCountOfA }, //「おんな」
 }; 
 // Q3
 static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q03[] = {
@@ -410,21 +404,20 @@ static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q08[] = {
 }; 
 // Q9
 static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q09[] = {
-  { dni_a018, ANSWER_ID_018, &NumInputParam_totalCountOfA }, //「ほのお」
-  { dni_a019, ANSWER_ID_019, &NumInputParam_totalCountOfA }, //「みず」
-  { dni_a020, ANSWER_ID_020, &NumInputParam_totalCountOfA }, //「くさ」
+  { dni_a018, ANSWER_ID_018, &NumInputParam_totalCountOfA }, //「ポカブ」
+  { dni_a019, ANSWER_ID_019, &NumInputParam_totalCountOfA }, //「ミジュマル」
+  { dni_a020, ANSWER_ID_020, &NumInputParam_totalCountOfA }, //「ツタージャ」
 }; 
 // Q10
 static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q10[] = {
-  { dni_a021, ANSWER_ID_021, &NumInputParam_totalCountOfA }, //「うみ」
-  { dni_a022, ANSWER_ID_022, &NumInputParam_totalCountOfA }, //「かわ」
-  { dni_a023, ANSWER_ID_023, &NumInputParam_totalCountOfA }, //「やま」
+  { dni_a021, ANSWER_ID_021, &NumInputParam_totalCountOfA }, //「きょうそう」
+  { dni_a022, ANSWER_ID_022, &NumInputParam_totalCountOfA }, //「きょうりょく」
 }; 
 // Q11
 static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q11[] = {
-  { dni_a024, ANSWER_ID_024, &NumInputParam_totalCountOfA },//「じゅぎょう」
-  { dni_a025, ANSWER_ID_025, &NumInputParam_totalCountOfA },//「やすみじかん」
-  { dni_a026, ANSWER_ID_026, &NumInputParam_totalCountOfA },//「きゅうしょく」
+  { dni_a024, ANSWER_ID_024, &NumInputParam_totalCountOfA },//「かこにいく」
+  { dni_a025, ANSWER_ID_025, &NumInputParam_totalCountOfA },//「みらいにいく」
+  { dni_a026, ANSWER_ID_026, &NumInputParam_totalCountOfA },//「ひつようない」
 }; 
 // Q12
 static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q12[] = {
@@ -434,17 +427,15 @@ static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q12[] = {
 }; 
 // Q13
 static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q13[] = {
-  { dni_a030, ANSWER_ID_030, &NumInputParam_totalCountOfA },//「はる」
-  { dni_a031, ANSWER_ID_031, &NumInputParam_totalCountOfA },//「なつ」
-  { dni_a032, ANSWER_ID_032, &NumInputParam_totalCountOfA },//「あき」
-  { dni_a033, ANSWER_ID_033, &NumInputParam_totalCountOfA },//「ふゆ」
+  { dni_a030, ANSWER_ID_030, &NumInputParam_totalCountOfA },//「かっこいいひと」
+  { dni_a031, ANSWER_ID_031, &NumInputParam_totalCountOfA },//「かしこいひと」
+  { dni_a032, ANSWER_ID_032, &NumInputParam_totalCountOfA },//「おもしろいひと」
+  { dni_a033, ANSWER_ID_033, &NumInputParam_totalCountOfA },//「ふしぎなひと」
 }; 
 // Q14
 static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q14[] = {
-  { dni_a034, ANSWER_ID_034, &NumInputParam_totalCountOfA },//「あまい」
-  { dni_a035, ANSWER_ID_035, &NumInputParam_totalCountOfA },//「からい」
-  { dni_a036, ANSWER_ID_036, &NumInputParam_totalCountOfA },//「すっぱい」
-  { dni_a037, ANSWER_ID_037, &NumInputParam_totalCountOfA },//「にがい」
+  { dni_a034, ANSWER_ID_034, &NumInputParam_totalCountOfA },//「ゆめをおう」
+  { dni_a035, ANSWER_ID_035, &NumInputParam_totalCountOfA },//「げんじつをみる」
 }; 
 // Q15
 static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q15[] = {
@@ -462,24 +453,24 @@ static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q16[] = {
 }; 
 // Q17
 static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q17[] = {
-  { dni_a046, ANSWER_ID_046, &NumInputParam_totalCountOfA },//「こくご」
-  { dni_a047, ANSWER_ID_047, &NumInputParam_totalCountOfA },//「さんすう」
-  { dni_a048, ANSWER_ID_048, &NumInputParam_totalCountOfA },//「りか」
-  { dni_a049, ANSWER_ID_049, &NumInputParam_totalCountOfA },//「しゃかい」
+  { dni_a046, ANSWER_ID_046, &NumInputParam_totalCountOfA },//「そらをとぶ」
+  { dni_a047, ANSWER_ID_047, &NumInputParam_totalCountOfA },//「とうめいになる」
+  { dni_a048, ANSWER_ID_048, &NumInputParam_totalCountOfA },//「じかんをとめる」
+  { dni_a049, ANSWER_ID_049, &NumInputParam_totalCountOfA },//「こころをよむ」
 }; 
 // Q18
 static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q18[] = {
-  { dni_a050, ANSWER_ID_050, &NumInputParam_totalCountOfA },//「こくご」
-  { dni_a051, ANSWER_ID_051, &NumInputParam_totalCountOfA },//「さんすう」
-  { dni_a052, ANSWER_ID_052, &NumInputParam_totalCountOfA },//「りか」
-  { dni_a053, ANSWER_ID_053, &NumInputParam_totalCountOfA },//「しゃかい」
+  { dni_a050, ANSWER_ID_050, &NumInputParam_totalCountOfA },//「つかう」
+  { dni_a051, ANSWER_ID_051, &NumInputParam_totalCountOfA },//「ためる」
+  { dni_a052, ANSWER_ID_052, &NumInputParam_totalCountOfA },//「じまんする」
+  { dni_a053, ANSWER_ID_053, &NumInputParam_totalCountOfA },//「きふする」
 }; 
 // Q19
 static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q19[] = {
-  { dni_a054, ANSWER_ID_054, &NumInputParam_totalCountOfA },//「ポケモントレーナー」
-  { dni_a055, ANSWER_ID_055, &NumInputParam_totalCountOfA },//「ポケモンはかせ」
-  { dni_a056, ANSWER_ID_056, &NumInputParam_totalCountOfA },//「プラズマだん」
-  { dni_a057, ANSWER_ID_057, &NumInputParam_totalCountOfA },//「ポケモン」
+  { dni_a054, ANSWER_ID_054, &NumInputParam_totalCountOfA },//「０－５ねん」
+  { dni_a055, ANSWER_ID_055, &NumInputParam_totalCountOfA },//「５－１０ねん」
+  { dni_a056, ANSWER_ID_056, &NumInputParam_totalCountOfA },//「１０－１５ねん」
+  { dni_a057, ANSWER_ID_057, &NumInputParam_totalCountOfA },//「１５ねんー」
 }; 
 // Q20
 static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q20[] = {
@@ -495,7 +486,7 @@ static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q21[] = {
   { dni_a064, ANSWER_ID_064, &NumInputParam_totalCountOfA },//「ロック」
   { dni_a065, ANSWER_ID_065, &NumInputParam_totalCountOfA },//「ジャズ」
   { dni_a066, ANSWER_ID_066, &NumInputParam_totalCountOfA },//「ラップ」
-  { dni_a067, ANSWER_ID_067, &NumInputParam_totalCountOfA },//「オーケストラ」
+  { dni_a067, ANSWER_ID_067, &NumInputParam_totalCountOfA },//「クラシック」
 }; 
 // Q22
 static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q22[] = {
@@ -516,21 +507,20 @@ static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q23[] = {
 }; 
 // Q24
 static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q24[] = {
-  { dni_a079, ANSWER_ID_079, &NumInputParam_totalCountOfA },//「やきゅう」
-  { dni_a080, ANSWER_ID_080, &NumInputParam_totalCountOfA },//「サッカー」
-  { dni_a081, ANSWER_ID_081, &NumInputParam_totalCountOfA },//「バスケ」
-  { dni_a082, ANSWER_ID_082, &NumInputParam_totalCountOfA },//「アメフト」
-  { dni_a083, ANSWER_ID_083, &NumInputParam_totalCountOfA },//「ホッケー」
-  { dni_a084, ANSWER_ID_084, &NumInputParam_totalCountOfA },//「かくとうぎ」
+  { dni_a079, ANSWER_ID_079, &NumInputParam_totalCountOfA },//「アクション」
+  { dni_a080, ANSWER_ID_080, &NumInputParam_totalCountOfA },//「パズル」
+  { dni_a081, ANSWER_ID_081, &NumInputParam_totalCountOfA },//「ＲＰＧ」
+  { dni_a082, ANSWER_ID_082, &NumInputParam_totalCountOfA },//「アドベンチャー」
+  { dni_a083, ANSWER_ID_083, &NumInputParam_totalCountOfA },//「シミュレーション」
+  { dni_a084, ANSWER_ID_084, &NumInputParam_totalCountOfA },//「スポーツ」
 }; 
 // Q25
 static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q25[] = {
-  { dni_a085, ANSWER_ID_085, &NumInputParam_totalCountOfA },//「あか」
-  { dni_a086, ANSWER_ID_086, &NumInputParam_totalCountOfA },//「みどり」
-  { dni_a087, ANSWER_ID_087, &NumInputParam_totalCountOfA },//「あお」
-  { dni_a088, ANSWER_ID_088, &NumInputParam_totalCountOfA },//「きいろ」
-  { dni_a089, ANSWER_ID_089, &NumInputParam_totalCountOfA },//「しろ」
-  { dni_a090, ANSWER_ID_090, &NumInputParam_totalCountOfA },//「くろ」
+  { dni_a085, ANSWER_ID_085, &NumInputParam_totalCountOfA },//「しごと」
+  { dni_a086, ANSWER_ID_086, &NumInputParam_totalCountOfA },//「ひとづきあい」
+  { dni_a087, ANSWER_ID_087, &NumInputParam_totalCountOfA },//「しゅみ」
+  { dni_a088, ANSWER_ID_088, &NumInputParam_totalCountOfA },//「けんこう」
+  { dni_a089, ANSWER_ID_089, &NumInputParam_totalCountOfA },//「えらくなる」
 }; 
 // Q26
 static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q26[] = {
@@ -556,17 +546,14 @@ static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q27[] = {
 }; 
 // Q28
 static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q28[] = {
-  { dni_a107, ANSWER_ID_107, &NumInputParam_totalCountOfA },//「さんすくみ　くさ」
-  { dni_a108, ANSWER_ID_108, &NumInputParam_totalCountOfA },//「さんすくみ　ほのお」
-  { dni_a109, ANSWER_ID_109, &NumInputParam_totalCountOfA },//「さんすくみ　みず」
-  { dni_a110, ANSWER_ID_110, &NumInputParam_totalCountOfA },//「ノーマル」
-  { dni_a111, ANSWER_ID_111, &NumInputParam_totalCountOfA },//「むし」
-  { dni_a112, ANSWER_ID_112, &NumInputParam_totalCountOfA },//「でんき」
-  { dni_a113, ANSWER_ID_113, &NumInputParam_totalCountOfA },//「じめん」
-  { dni_a114, ANSWER_ID_114, &NumInputParam_totalCountOfA },//「ひこう」
-  { dni_a115, ANSWER_ID_115, &NumInputParam_totalCountOfA },//「こおり」
-  { dni_a116, ANSWER_ID_116, &NumInputParam_totalCountOfA },//「ドラゴンくろ」
-  { dni_a117, ANSWER_ID_117, &NumInputParam_totalCountOfA },//「ドラゴンしろ」
+  { dni_a107, ANSWER_ID_107, &NumInputParam_totalCountOfA },//「チェレン」
+  { dni_a108, ANSWER_ID_108, &NumInputParam_totalCountOfA },//「ホミカ」
+  { dni_a109, ANSWER_ID_109, &NumInputParam_totalCountOfA },//「アーティ」
+  { dni_a110, ANSWER_ID_110, &NumInputParam_totalCountOfA },//「カミツレ」
+  { dni_a111, ANSWER_ID_111, &NumInputParam_totalCountOfA },//「ヤーコン」
+  { dni_a112, ANSWER_ID_112, &NumInputParam_totalCountOfA },//「フウロ」
+  { dni_a113, ANSWER_ID_113, &NumInputParam_totalCountOfA },//「シャガ」
+  { dni_a114, ANSWER_ID_114, &NumInputParam_totalCountOfA },//「シズイ」
 }; 
 // Q29
 static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q29[] = {

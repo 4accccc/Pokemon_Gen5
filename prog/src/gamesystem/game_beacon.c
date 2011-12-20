@@ -490,10 +490,11 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
         continue;
       }
       if(search_question_id == QUESTION_ID_PLAY_TIME){
+        u8 answer_num = QIDATA_Get_AnswerNum(search_question_id);
         answer = info->play_hour / 10;
         answer++; //0は無回答なので1インクリメント
-        if(answer > GetAnswerNum_byQuestionID(search_question_id)){
-          answer = GetAnswerNum_byQuestionID(search_question_id);
+        if(answer > answer_num){
+          answer = answer_num;
         }
       }
       else{
@@ -522,40 +523,7 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
       }
     } //end of for()
   } //end of アンケート反映
-#if 0
-  // 調査隊反映
-  {
-    SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(bsys->gamedata);
-    QUESTIONNAIRE_SAVE_WORK *questsave = SaveData_GetQuestionnaire(sv_ctrl);
-    MISC *misc = SaveData_GetMisc(sv_ctrl);
-    int radar_q_id, team_q_id, i, j;
-    u32 answer;
-
-    for(i = 0; i < MAX_QNUM_PER_RESEARCH_REQ; i++) {
-      team_q_id = MISC_GetResearchQuestionID(misc, i);
-      if(team_q_id == QUESTION_ID_DUMMY){ continue; }
-
-      for(j = 0; j < QUESTION_NUM_PER_TOPIC; j++) { 
-        radar_q_id = QuestionnaireWork_GetInvestigatingQuestion(questsave, j);
-        if(team_q_id == radar_q_id) {
-          if(team_q_id == QUESTION_ID_PLAY_TIME){
-            answer = info->play_hour / 10;
-            answer++; //0は無回答なので1インクリメント
-            if(answer > GetAnswerNum_byQuestionID(team_q_id)){
-              answer = GetAnswerNum_byQuestionID(team_q_id);
-            }
-          }
-          else {
-            answer = QuestionnaireAnswer_ReadBit(&info->question_answer, team_q_id);
-          }
-          if(answer != 0){  //0は無回答
-            MISC_AddResearchCount(misc, i, 1);
-          }
-        }
-      } 
-    }
-  }
-#endif
+  
   //ログにセット
   {
     RTCTime recv_time;

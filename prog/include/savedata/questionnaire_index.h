@@ -15,7 +15,7 @@
 typedef struct
 {
   u8 swanNew:1;        // スワンで変更された質問ならTRUE
-  u8 answerNum:7;      // 回答選択肢の数
+  u8 answerNumLimit:7; // 回答選択肢の設定上限数(選択肢の用意された枠数。実際の選択肢数はこの値未満のこともある)
   u8 bitCount;         // 回答を表現するのに必要なビット数
   u8 answerNumOffset;  // 項目数インデックス
   u8 bitCountOffset;   // bit数インデックス
@@ -29,14 +29,12 @@ extern u8 QIDATA_Get_AnswerID( int question_id, int data_idx );
 
 extern u8 QIDATA_Get_AnswerNum( int question_id );
 
-extern const QUESTIONNAIRE_INDEX* QIDATA_Get_QuestionnaireIndex( int question_id );
-
 //=================================================================
 // ■情報取得関数
 //=================================================================
 
-// 回答選択肢の数
-extern u8 QUESTIONNAIRE_INDEX_GetAnswerNum( u8 questionID );
+// 回答選択肢の数上限
+extern u8 QUESTIONNAIRE_INDEX_GetAnswerNumLimit( u8 questionID );
 
 // 回答を表現するのに必要なビット数
 extern u8 QUESTIONNAIRE_INDEX_GetBitCount( u8 questionID );
@@ -60,5 +58,3 @@ extern u8 GetQuestionID_byAnswerID( u8 answerID );
 // 指定した回答が, 所属する質問内の何番目の回答なのかを取得する
 extern u8 GetAnswerIndex_atQuestion( u8 answerID );
 
-// 指定した質問に対する回答の選択肢の数を取得する
-extern u8 GetAnswerNum_byQuestionID( u8 questionID );
