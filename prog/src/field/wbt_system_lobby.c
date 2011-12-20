@@ -47,7 +47,7 @@ enum {
 
 //============================================================================================
 //============================================================================================
-static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata );
+static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, const WBTSYS * wbtsys, GAMEDATA * gamedata );
 static void WBTTRAINER_SetRomTrainer(
     const WBTSYS * wbtsys, HEAPID heapID, WBTTRAINER * wbt_tr, WBTROM_TRID tr_id );
 static void WBTTRAINER_SetDLTrainer( WBTTRAINER * wbt_tr,
@@ -117,7 +117,7 @@ static void WBTTRAINER_SetRomTrainer(
  * @brief WBTTRAINER設定：プレイヤー自身
  */
 //------------------------------------------------------------------
-static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata )
+static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, const WBTSYS * wbtsys, GAMEDATA * gamedata )
 {
   const MYSTATUS * mystat = GAMEDATA_GetMyStatus( gamedata );
   WBTSAVE * wbtsave = GAMEDATA_GetWBTSave( gamedata );
@@ -126,6 +126,8 @@ static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata )
   u16 btl_tr_type = TRTYPE_HERO;
   u8 sex = MyStatus_GetMySex( mystat );
   u8 pri = WBT_TRPRI_LEADER;
+  PokeType poketype;
+
   if ( WBTSAVE_GetWinCount( wbtsave, WBTWIN_COUNT_CHAMPION ) != 0 )
   {
     pri = WBT_TRPRI_CHAMP;
@@ -135,8 +137,9 @@ static void WBTTRAINER_SetPlayer( WBTTRAINER * wbt_tr, GAMEDATA * gamedata )
     mmdl_id = SWHEROINE;
     btl_tr_type = TRTYPE_HEROINE;
   }
+  poketype = WBTTOOL_GetPartyPokeType( wbtsys->my_party, wbtsys->seed64 );
   WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_PLAYER,
-      0, sex, pri, 0, 0, FALSE, POKETYPE_NORMAL, mmdl_id, btl_tr_type, WBT_AI_BIT_BASIC );
+      0, sex, pri, 0, 0, FALSE, poketype, mmdl_id, btl_tr_type, WBT_AI_BIT_BASIC );
   MyStatus_CopyNameString( mystat, wbt_tr->name );
 }
 
@@ -150,13 +153,14 @@ static void WBTTRAINER_SetDLTrainer( WBTTRAINER * wbt_tr,
 {
   u8 sex;
   u32 trtype, mmdl_id;
+  PokeType poketype = POKETYPE_MAX; //ダウンロードトレーナーはオールマイティ扱い
 
   GF_ASSERT( dl_tr_id < WBTDL_CHAR_MAX );
   trtype = WBTTOOL_GetDLTrtype( dl_char->trtype_id );
   mmdl_id = FBI_TOOL_GetTrainerOBJCode( trtype );
   sex = TT_TrainerTypeSexGet( trtype );
   WBTTRAINER_Set( wbt_tr, WBT_TRTYPE_DL, 0, sex,
-      pri, 0, dl_tr_id, FALSE, POKETYPE_NORMAL, mmdl_id, trtype, dl_char->ai_bit );
+      pri, 0, dl_tr_id, FALSE, poketype, mmdl_id, trtype, dl_char->ai_bit );
 
   GFL_STR_SetStringCodeOrderLength( wbt_tr->name, dl_char->name, SAVELEN_TRAINER_NAME );
   GFL_STR_SetStringCodeOrderLength( wbt_tr->title, dl_char->title, WBTDL_TRAINER_TITLE_LEN );
@@ -204,7 +208,7 @@ void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const WBT_TRCODE
     switch ( tr_list[i].type )
     {
     case WBT_TRCODE_TYPE_PLAYER:
-      WBTTRAINER_SetPlayer( wbt_tr, gamedata );
+      WBTTRAINER_SetPlayer( wbt_tr, wbtsys, gamedata );
       WBTTOOL_GetRomTrainerTypeName( wbtsys->heapID, wbt_tr->tr_id, wbt_tr->title );
       break;
 
@@ -245,6 +249,17 @@ void WBTSYS_SetupTrainer( WBTSYS * wbtsys, GAMEDATA * gamedata, const WBT_TRCODE
       const WBTDL_MATCH * wbtdl_match = WBTDL_DATA_GetMatchData( &wbtsys->wbtdl_data );
       wbt_tr->pri = wbtdl_match[count].pri;
       count ++;
+    }
+    //レンタル・ミックスでは手持ちが確定しないため有利不利判定用の
+    //ポケモンタイプ指定をオールマイティ扱いにする
+    switch ( wbtsys->wbtcup )
+    {
+    case WBTCUP_RENTAL:
+    case WBTCUP_RENTALMASTER:
+    case WBTCUP_MIX:
+    case WBTCUP_MIXMASTER:
+      wbt_tr->poketype = POKETYPE_MAX;
+      break;
     }
   }
 }

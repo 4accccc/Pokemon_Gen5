@@ -314,6 +314,7 @@ u8 WBTTOOL_GetPartyPokeType( POKEPARTY * party, u64 seed )
   {
     u8 max_value = 0, max_count = 0;
     u8 max_pos_table[ POKETYPE_NUMS ];
+    u8 select_pos;
     GFL_STD_MemClear( max_pos_table, POKETYPE_NUMS );
     for ( i = 0; i < POKETYPE_NUMS; i ++ )
     {
@@ -331,7 +332,7 @@ u8 WBTTOOL_GetPartyPokeType( POKEPARTY * party, u64 seed )
       }
     }
     GF_ASSERT( max_count > 0 );
-    return GFL_STD_Rand( &rand_context, max_count );
+    return max_pos_table[ GFL_STD_Rand( &rand_context, max_count ) ];
   }
 }
 
