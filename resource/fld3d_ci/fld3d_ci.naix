@@ -287,7 +287,8 @@ enum {
 	NARC_fld3d_ci_kusabi_w_ci_a_nsbma = 273,
 	NARC_fld3d_ci_kusabi_w_ci_b_nsbca = 274,
 	NARC_fld3d_ci_kusabi_w_ci_b_nsbma = 275,
-	NARC_fld3d_ci_kusabi_w_ci_b_nsbtp = 276
+	NARC_fld3d_ci_kusabi_w_ci_b_nsbtp = 276,
+	NARC_fld3d_ci_get2_638_nsbmd = 277
 };
 
 /* NARC_FLD3D_CI_NAIX_ */

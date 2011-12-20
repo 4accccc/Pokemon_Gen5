@@ -275,4 +275,5 @@ ARC_TARGET_DATA = \
 	kusabi_w_ci_a.nsbma \
 	kusabi_w_ci_b.nsbca \
 	kusabi_w_ci_b.nsbma \
-	kusabi_w_ci_b.nsbtp
+	kusabi_w_ci_b.nsbtp \
+	get2_638.nsbmd

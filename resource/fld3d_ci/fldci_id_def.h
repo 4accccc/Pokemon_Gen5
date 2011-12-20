@@ -124,4 +124,5 @@
 #define FLDCIID_KUSABI_W (111)
 #define FLDCIID_GET2_24 (112)
 #define FLDCIID_GET2_25 (113)
-#define FLDCIID_MAX (114)
+#define FLDCIID_GET2_26 (114)
+#define FLDCIID_MAX (115)

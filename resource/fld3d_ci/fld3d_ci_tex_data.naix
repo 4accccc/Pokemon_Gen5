@@ -124,7 +124,8 @@ enum {
 	NARC_fld3d_ci_tex_data_fldciid_kusabi_b_tex_data_bin = 110,
 	NARC_fld3d_ci_tex_data_fldciid_kusabi_w_tex_data_bin = 111,
 	NARC_fld3d_ci_tex_data_fldciid_get2_24_tex_data_bin = 112,
-	NARC_fld3d_ci_tex_data_fldciid_get2_25_tex_data_bin = 113
+	NARC_fld3d_ci_tex_data_fldciid_get2_25_tex_data_bin = 113,
+	NARC_fld3d_ci_tex_data_fldciid_get2_26_tex_data_bin = 114
 };
 
 /* NARC_FLD3D_CI_TEX_DATA_NAIX_ */
