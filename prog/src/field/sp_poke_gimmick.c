@@ -78,17 +78,50 @@ enum {
   RES_ID_BALL_IN_ANM2,
   RES_ID_BALL_IN_ANM3,
 
+  // ↑↑↑↑↑↑↑↑
+  // ここまで共通部分
+
+  // ゾロア専用
   RES_ID_SMOKE_MDL = 8,
   RES_ID_SMOKE_ANM1,
   RES_ID_SMOKE_ANM2,
   RES_ID_SMOKE_ANM3,
+
+
+  // ケルディオ専用
+  RESID_EFFECT_01_MDL = 8,      // 気合のエフェクト
+  RESID_EFFECT_01_ANM_ITA,  // 気合のエフェクト アニメ
+  RESID_BIRIZION_MDL,       // ビリジオン モデル
+  RESID_KOBARUON_MDL,       // コバルオン モデル
+  RESID_TERAKION_MDL,       // テラキオン モデル
+  RESID_EFFECT_APPEAR_IMA,  // 出現アニメ
+  RESID_EFFECT_APPEAR_IVA,  // 出現アニメ
+  RESID_EFFECT_STAY_IMA,    // 待機アニメ
+  RESID_EFFECT_STAY_IVA,    // 待機アニメ
+  RESID_EFFECT_DISAPPEAR_ICA,// 消えるアニメ
+  RESID_EFFECT_DISAPPEAR_IMA,// 消えるアニメ
+  RESID_EFFECT_DISAPPEAR_IVA,// 消えるアニメ
+
+
 };
 
 //ＯＢＪインデックス
 enum {
   OBJ_BALL_OUT = 0,
   OBJ_BALL_IN,
+
+  // ↑↑↑↑↑↑↑↑
+  // ここまで共通部分
+  
+  // ゾロア専用
   OBJ_SMOKE = 2,
+
+  // ケルディオ専用
+  OBJ_EFFECT_01 = 2,        // 気合のエフェクト
+  OBJ_BIRIZION,             // ビリジオン
+  OBJ_KOBARUON,             // コバルオン
+  OBJ_TERAKION,             // テラキオン
+  OBJ_NUM_KERUDHIO,         // ケルディオのOBJ総数
 };
 
 //==========================================================================
@@ -266,74 +299,23 @@ static const GFL_G3D_UTIL_SETUP SetupZoroa = {
 	NELEMS(g3Dutil_objTbl_zoroa),		//オブジェクト数
 };
 
-//============================================================================================================
-//関数前方宣言
-//============================================================================================================
-static GMEVENT_RESULT BallMoveEvt( GMEVENT* event, int* seq, void* work );
-static GMEVENT_RESULT WaitPokeAppFrmEvt( GMEVENT* event, int* seq, void* work );
-static GMEVENT_RESULT WaitBallAnmEvt( GMEVENT* event, int* seq, void* work );
+//==========================================================================
+/**
+ ケルディオ関連リソース
+*/
+//==========================================================================
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl_kerudhio[] = {
+	{ ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD ボールアウト
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD ボールイン
 
-static GMEVENT_RESULT SmokeMoveEvt( GMEVENT* event, int* seq, void* work );
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbca, GFL_G3D_UTIL_RESARC }, //ICA ボールアウトアニメ
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbca, GFL_G3D_UTIL_RESARC }, //ICA ボールインアニメ
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
 
-//=============================================================================
-// 【配布】ケルディオ用
-
-// 座標
-// 気合のエフェクト
-#define EFF_POS_X       ( 248 << FX32_SHIFT )
-#define EFF_POS_Y       ( 0 )
-#define EFF_POS_Z       ( 232 << FX32_SHIFT )
-// ビリジオン
-#define BIRIZION_POS_X  ( 280 << FX32_SHIFT )
-#define BIRIZION_POS_Y  ( 0 )
-#define BIRIZION_POS_Z  ( 232  << FX32_SHIFT )
-// コバルオン
-#define KOBARUON_POS_X  ( 248 << FX32_SHIFT )
-#define KOBARUON_POS_Y  ( 48  << FX32_SHIFT )
-#define KOBARUON_POS_Z  ( 232 << FX32_SHIFT )
-// テラキオン
-#define TERAKION_POS_X  ( 216 << FX32_SHIFT )
-#define TERAKION_POS_Y  ( 0 )
-#define TERAKION_POS_Z  ( 232 << FX32_SHIFT )
-
-// ケルディオ演出イベント関係
-#define KERUDHIO_EFFECT_WAIT    (120)     // 気合のエフェクト表示フレーム数
-#define KERUDHIO_DELETE_WAIT    (40)      // 3匹同時に消えるまでの表示フレーム数
-
-// 3Dリソース
-//
-// リソースの並び順
-enum{
-  RESID_EFFECT_01_MDL,      // 気合のエフェクト
-  RESID_EFFECT_01_ANM_ITA,  // 気合のエフェクト アニメ
-  RESID_BIRIZION_MDL,       // ビリジオン モデル
-  RESID_KOBARUON_MDL,       // コバルオン モデル
-  RESID_TERAKION_MDL,       // テラキオン モデル
-  RESID_EFFECT_APPEAR_IMA,  // 出現アニメ
-  RESID_EFFECT_APPEAR_IVA,  // 出現アニメ
-  RESID_EFFECT_STAY_IMA,    // 待機アニメ
-  RESID_EFFECT_STAY_IVA,    // 待機アニメ
-  RESID_EFFECT_DISAPPEAR_ICA,// 消えるアニメ
-  RESID_EFFECT_DISAPPEAR_IMA,// 消えるアニメ
-  RESID_EFFECT_DISAPPEAR_IVA,// 消えるアニメ
-
-  RESI_MAX,
-};
-
-// OBJインデックス
-enum{
-  OBJ_EFFECT_01,            // 気合のエフェクト
-  OBJ_BIRIZION,             // ビリジオン
-  OBJ_KOBARUON,             // コバルオン
-  OBJ_TERAKION,             // テラキオン
-
-  OBJ_NUM,
-};
-
-
-// RES
-static const GFL_G3D_UTIL_RES res_3d_table[] =
-{
+  // ここからケルディオ専用
   { ARCID_KERUDHIO_GIMMICK, NARC_kerudhio_effect_01_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_KERUDHIO_GIMMICK, NARC_kerudhio_effect_01_nsbta, GFL_G3D_UTIL_RESARC },
   { ARCID_KERUDHIO_GIMMICK, NARC_kerudhio_bili_01_nsbmd, GFL_G3D_UTIL_RESARC },
@@ -347,7 +329,6 @@ static const GFL_G3D_UTIL_RES res_3d_table[] =
   { ARCID_KERUDHIO_GIMMICK, NARC_kerudhio_disappear_nsbma, GFL_G3D_UTIL_RESARC },
   { ARCID_KERUDHIO_GIMMICK, NARC_kerudhio_disappear_nsbva, GFL_G3D_UTIL_RESARC },
 };
-
 
 // ANIME
 // ケルディオ気合
@@ -370,21 +351,26 @@ static const GFL_G3D_UTIL_ANM anm_effect_02[] =
 };
 #define ANM_EFFECT_02_NUM  ( NELEMS(anm_effect_02) )
 
-// アニメの並び順(0オリジン)
-enum{
-  ANM_IDX_APPEAR_IMA,   // 出現
-  ANM_IDX_APPEAR_IVA,   // 出現
-  ANM_IDX_STAY_IMA,     // 待機
-  ANM_IDX_STAY_IVA,     // 待機
-  ANM_IDX_DISAPPEAR_ICA,// 消える
-  ANM_IDX_DISAPPEAR_IMA,// 消える
-  ANM_IDX_DISAPPEAR_IVA,// 消える
-};
+//3Dオブジェクト設定テーブル
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl_kerudhio[] = {
+  //出現モンスターボール
+  {
+		RES_ID_BALL_OUT_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_BALL_OUT_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_ball_out,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_ball_out),	//アニメリソース数
+	},
+  //格納モンスターボール
+  {
+		RES_ID_BALL_IN_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_BALL_IN_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_ball_in,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_ball_in),	//アニメリソース数
+	},
 
-
-// OBJ
-static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
-{
+  // ここからケルディオ専用
   // OBJ_EFFECT_01
   {
     RESID_EFFECT_01_MDL,  // モデルリソースID
@@ -419,16 +405,63 @@ static const GFL_G3D_UTIL_OBJ obj_3d_table[] =
   },
 };
 
-// セットアップデータ
-static const GFL_G3D_UTIL_SETUP g3Dutil_Setup = {
-  res_3d_table,				    //リソーステーブル
-	NELEMS(res_3d_table),		//リソース数
-	obj_3d_table,				    //オブジェクト設定テーブル
-	NELEMS(obj_3d_table),		//オブジェクト数
+static const GFL_G3D_UTIL_SETUP SetupKerushio = {
+  g3Dutil_resTbl_kerudhio,				//リソーステーブル
+	NELEMS(g3Dutil_resTbl_kerudhio),		//リソース数
+	g3Dutil_objTbl_kerudhio,				//オブジェクト設定テーブル
+	NELEMS(g3Dutil_objTbl_kerudhio),		//オブジェクト数
+};
+
+
+//============================================================================================================
+//関数前方宣言
+//============================================================================================================
+static GMEVENT_RESULT BallMoveEvt( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT WaitPokeAppFrmEvt( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT WaitBallAnmEvt( GMEVENT* event, int* seq, void* work );
+
+static GMEVENT_RESULT SmokeMoveEvt( GMEVENT* event, int* seq, void* work );
+
+//=============================================================================
+// 【配布】ケルディオ用
+
+// 座標
+// 気合のエフェクト
+#define EFF_POS_X       ( 248 << FX32_SHIFT )
+#define EFF_POS_Y       ( 0 )
+#define EFF_POS_Z       ( 232 << FX32_SHIFT )
+// ビリジオン
+#define BIRIZION_POS_X  ( 280 << FX32_SHIFT )
+#define BIRIZION_POS_Y  ( 0 )
+#define BIRIZION_POS_Z  ( 232  << FX32_SHIFT )
+// コバルオン
+#define KOBARUON_POS_X  ( 248 << FX32_SHIFT )
+#define KOBARUON_POS_Y  ( 48  << FX32_SHIFT )
+#define KOBARUON_POS_Z  ( 232 << FX32_SHIFT )
+// テラキオン
+#define TERAKION_POS_X  ( 216 << FX32_SHIFT )
+#define TERAKION_POS_Y  ( 0 )
+#define TERAKION_POS_Z  ( 232 << FX32_SHIFT )
+
+// ケルディオ演出イベント関係
+#define KERUDHIO_EFFECT_WAIT    (120)     // 気合のエフェクト表示フレーム数
+#define KERUDHIO_DELETE_WAIT    (40)      // 3匹同時に消えるまでの表示フレーム数
+
+// アニメの並び順(0オリジン)
+enum{
+  ANM_IDX_APPEAR_IMA,   // 出現
+  ANM_IDX_APPEAR_IVA,   // 出現
+  ANM_IDX_STAY_IMA,     // 待機
+  ANM_IDX_STAY_IVA,     // 待機
+  ANM_IDX_DISAPPEAR_ICA,// 消える
+  ANM_IDX_DISAPPEAR_IMA,// 消える
+  ANM_IDX_DISAPPEAR_IVA,// 消える
 };
 
 // OBJとアニメ総数の対応テーブル
-static const int anm_num_tbl[ OBJ_NUM ] = {
+static const int anm_num_tbl[ OBJ_NUM_KERUDHIO ] = {
+  NELEMS(g3Dutil_anmTbl_ball_out),
+  NELEMS(g3Dutil_anmTbl_ball_in),
   ANM_EFFECT_01_NUM,
   ANM_EFFECT_02_NUM,
   ANM_EFFECT_02_NUM,
@@ -436,7 +469,9 @@ static const int anm_num_tbl[ OBJ_NUM ] = {
 };
 
 // 配置座標テーブル
-static const VecFx32 pos_tbl[ OBJ_NUM ] = {
+static const VecFx32 pos_tbl[ OBJ_NUM_KERUDHIO ] = {
+  { 0, 0, 0 },    // ボールのダミー
+  { 0, 0, 0 },    // ボールのダミー
   { EFF_POS_X, EFF_POS_Y, EFF_POS_Z },
   { BIRIZION_POS_X, BIRIZION_POS_Y, BIRIZION_POS_Z },
   { KOBARUON_POS_X, KOBARUON_POS_Y, KOBARUON_POS_Z },
@@ -899,11 +934,11 @@ static void EXPOBJ_ObjSet( SPPOKE_GMK_WK *p_wk )
 {
   u16 obj_idx;
 
-  //必要なリソースの用意
-  FLD_EXP_OBJ_AddUnitByHandle( p_wk->exp_obj, &g3Dutil_Setup, KERUDHIO_UNIT_IDX);
+  //必要なリソースの用意(アーカイブＩＤが２つ以上あるのでハンドル関数を使用しません)
+  FLD_EXP_OBJ_AddUnit( p_wk->exp_obj, &SetupKerushio, KERUDHIO_UNIT_IDX);
 
   // OBJ
-  for( obj_idx=0; obj_idx<OBJ_NUM; obj_idx++ )
+  for( obj_idx=0; obj_idx<OBJ_NUM_KERUDHIO; obj_idx++ )
   {
     int anm_idx;
     int anm_num = anm_num_tbl[ obj_idx ];
