@@ -1224,12 +1224,12 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
       int mons_no = BPP_GetMonsNo( bpp );
       bisp.bidp[ vpos ].pp = pp;
       bisp.bidp[ vpos ].hpmax = BPP_GetValue( bpp, BPP_MAX_HP );
-      if( ( mons_no == MONSNO_NIDORAN_M ) || ( mons_no == MONSNO_NIDORAN_F ) )
+      if( PP_Get( BPP_GetViewSrcData( bpp ), ID_PARA_nidoran_nickname, NULL ) == FALSE )
       {
         bisp.bidp[ vpos ].sex = PTL_SEX_UNKNOWN;
       }
       else
-      {
+      { 
         //見た目にかかわるパラメータはPOKEMON_PARAM依存なので、ppから取得
         bisp.bidp[ vpos ].sex = PP_GetSex( BPP_GetViewSrcData( bpp ) );
       }

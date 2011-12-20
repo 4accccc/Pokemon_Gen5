@@ -549,16 +549,14 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_MAIN_MODULE* wk, const BTL
     bgw->bgcl[ pos ].getball  = BTL_MAIN_IsZukanRegistered( wk, bpp );
 
     {
-      u16 mons_no = BPP_GetMonsNo( bpp );
-
-      if( ( mons_no != MONSNO_NIDORAN_M ) && ( mons_no != MONSNO_NIDORAN_F ) )
-      {
-        //見た目にかかわるパラメータはPOKEMON_PARAM依存なので、ppから取得
-        bgw->bgcl[ pos ].sex  = PP_GetSex( BPP_GetViewSrcData( bpp ) );
+      if( PP_Get( BPP_GetViewSrcData( bpp ), ID_PARA_nidoran_nickname, NULL ) == FALSE )
+      { 
+        bgw->bgcl[ pos ].sex  = PTL_SEX_UNKNOWN;
       }
       else
-      {
-        bgw->bgcl[ pos ].sex  = PTL_SEX_UNKNOWN;
+      { 
+        //見た目にかかわるパラメータはPOKEMON_PARAM依存なので、ppから取得
+        bgw->bgcl[ pos ].sex  = PP_GetSex( BPP_GetViewSrcData( bpp ) );
       }
     }
   }
