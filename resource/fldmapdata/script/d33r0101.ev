@@ -118,8 +118,11 @@ EVENT_START   ev_pos_d33r0101_sppoke_01
 
   _TIME_WAIT( 16 )    //間
 
-  //ユクシー表示【仮】表示演出は仮のもの
+  //ユクシー表示
   _OBJ_ADD( D33R0101_TPOKE_0523_01 )
+  _OBJ_TRANS( D33R0101_TPOKE_0523_01, 18, 0, 15, 8*4 )
+  //再配置（接地させるため）
+  _OBJ_POS_CHANGE( D33R0101_TPOKE_0523_01, 18, 0, 15, DIR_DOWN )
 
   //ユクシー：きょううん！
   _VOICE_PLAY( MONSNO_480, 0 )
@@ -134,8 +137,11 @@ EVENT_START   ev_pos_d33r0101_sppoke_01
 
   _TIME_WAIT( 16 )    //間
 
-  //エムリット表示【仮】表示演出は仮のもの
+  //エムリット表示
   _OBJ_ADD( D33R0101_TPOKE_0524_01 )
+  _OBJ_TRANS( D33R0101_TPOKE_0524_01, 16, 0, 17, 8*4 )
+  //再配置（接地させるため）
+  _OBJ_POS_CHANGE( D33R0101_TPOKE_0524_01, 16, 0, 17, DIR_DOWN )
 
   //エムリット：きゃううん！
   _VOICE_PLAY( MONSNO_481, 0 )
@@ -156,8 +162,11 @@ EVENT_START   ev_pos_d33r0101_sppoke_01
 
   _TIME_WAIT( 16 )    //間
 
-  //アグノム表示【仮】表示演出は仮のもの
+  //アグノム表示
   _OBJ_ADD( D33R0101_TPOKE_0525_01 )
+  _OBJ_TRANS( D33R0101_TPOKE_0525_01, 20, 0, 17, 8*4 )
+  //再配置（接地させるため）
+  _OBJ_POS_CHANGE( D33R0101_TPOKE_0525_01, 20, 0, 17, DIR_DOWN )
 
   //アグノム：きゅううん！
   _VOICE_PLAY( MONSNO_482, 0 )
@@ -183,8 +192,12 @@ EVENT_START   ev_pos_d33r0101_sppoke_01
   _OBJ_ANIME_WAIT()
 
   _TIME_WAIT( 32 )    //間
-
-  //ユクシー退場【仮】表示演出は仮のもの
+  
+  //アニメ：ユクシー上を向く
+  _OBJ_ANIME( D33R0101_TPOKE_0523_01, anm_dir_u )
+  _OBJ_ANIME_WAIT()
+  //ユクシー退場
+  _OBJ_TRANS( D33R0101_TPOKE_0523_01, 17, 0, 7, 8*3 )
   _OBJ_DEL( D33R0101_TPOKE_0523_01 )
 
   //システム：ユクシーは
@@ -192,8 +205,12 @@ EVENT_START   ev_pos_d33r0101_sppoke_01
   _SYSWIN_CLOSE()
 
   _TIME_WAIT( 8 )    //間
-
-  //エムリット退場【仮】表示演出は仮のもの
+  
+  //アニメ：エムリット左を向く
+  _OBJ_ANIME( D33R0101_TPOKE_0524_01, anm_dir_l )
+  _OBJ_ANIME_WAIT()
+  //エムリット退場
+  _OBJ_TRANS( D33R0101_TPOKE_0524_01, 9, 0, 16, 8*3 )
   _OBJ_DEL( D33R0101_TPOKE_0524_01 )
 
   //システム：エムリットは
@@ -201,8 +218,12 @@ EVENT_START   ev_pos_d33r0101_sppoke_01
   _SYSWIN_CLOSE()
 
   _TIME_WAIT( 8 )    //間
-
-  //アグノム退場【仮】表示演出は仮のもの
+  
+  //アニメ：アグノム右を向く
+  _OBJ_ANIME( D33R0101_TPOKE_0525_01, anm_dir_r )
+  _OBJ_ANIME_WAIT()
+  //アグノム退場
+  _OBJ_TRANS( D33R0101_TPOKE_0525_01, 27, 0, 18, 8*3 )
   _OBJ_DEL( D33R0101_TPOKE_0525_01 )
 
   //システム：アグノムは
@@ -324,4 +345,21 @@ _ANIME_LABEL  anm_hakase2_guide01
   _ANIME_DATA AC_MARK_GYOE,1
   _ANIME_DATA ACMD_END,0
 
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
