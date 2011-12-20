@@ -1901,6 +1901,263 @@ N</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_d10r0501_mu_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>バリッシュ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:16:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:15:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バリッシュ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:16:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:15:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・ブラックキュレムとの戦闘後、画面暗転中
+・あわせて鳴き声再生
+・続けてpoke10_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:17:00" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>MU_B
+ポケモン・ゼクロム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:15:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff00</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0501_shin_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>バーニンガッ！ </Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:16:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:15:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>バーニンガッ！ </Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:16:24" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:15:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・ホワイトキュレムとの戦闘後、画面暗転中
+・あわせて鳴き声再生
+・続けてpoke10_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:17:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SHIN_B
+ポケモン・レシラム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:15:57" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff0000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0501_poke10_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヒュララララ……！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:14:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:12:58" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヒュララララ……！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:14:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:12:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>ポケモン
+・戦闘後の画面暗転中
+・あわせて鳴き声再生
+・続けて
+　Black2ver→swsage01_03
+　White2ver→swsage01_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:17:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>POKE10
+ポケモン・キュレム</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:12:58" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0501_poke10_04b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ブラックキュレムから
+ゼクロムが　ぶんり　した！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:14:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:14:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ブラックキュレムから
+ゼクロムが　分離した！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:15:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:15:01" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>戦闘後の画面暗転中
+・表示後、画面暗転終了し
+　msg_d10r0501_swsage01_15b表示へ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:15:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ナレーション</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:14:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0501_poke10_04w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ホワイトキュレムから
+レシラムが　ぶんり　した！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:14:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:14:21" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ホワイトキュレムから
+レシラムが　分離した！！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:15:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:14:48" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>戦闘後の画面暗転中
+・表示後、画面暗転終了し
+　msg_d10r0501_swsage01_15w表示へ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:15:38" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ナレーション</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-20T12:14:07" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d10r0501_swsage01_15b"
 		Style="Large">
 		<LanguageCell
