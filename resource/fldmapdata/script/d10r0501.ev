@@ -312,6 +312,13 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_07, D10R0501_SWSAGE1_01, POS_UP )
   _MSGWIN_CLOSE()
   
+  // ゲーチス：一度右を向いて、下に向き直る
+  _OBJ_ANIME( D10R0501_SWSAGE1_01, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  _TIME_WAIT( 30 )
+  _OBJ_ANIME( D10R0501_SWSAGE1_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
   //ゲーチス：だがそれも
   _BALLOONWIN_OBJMSG_WB( msg_d10r0501_swsage01_08w, msg_d10r0501_swsage01_08b, D10R0501_SWSAGE1_01, POS_UP)
   _MSGWIN_CLOSE()
@@ -480,9 +487,13 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   
   //ゲーチス：おろかものめ！
   _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_11 , D10R0501_SWSAGE1_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  _TIME_WAIT( 8 )
   
   //ゲーチス：さてトレーナーよ
   _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_12 , D10R0501_SWSAGE1_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
   
   // ゲーチス：?マーク表示
   _OBJ_ANIME( D10R0501_SWSAGE1_01, anm_common_hatena )
@@ -492,6 +503,13 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_13 , D10R0501_SWSAGE1_01 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
   
+  // ゲーチス：杖をつく
+  _OBJ_ANIME( D10R0501_SWSAGE1_01, anm_swsage_4 )
+  _OBJ_ANIME_WAIT()
+  
+  //ゲーチス：おや？アナタの
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_swsage01_15 , D10R0501_SWSAGE1_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
 
   // カメラ戻し
   _CAMERA_DEF_MOVE( 10 )
@@ -516,6 +534,7 @@ EVENT_END
 _ANIME_LABEL anm_swsage_1
 	_ANIME_DATA	AC_WALK_R_16F,2
 	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_SWSAGE1_RAISE_STICK,1
 	_ANIME_DATA	ACMD_END,0
 //-------------------------------------
 // 右に歩いてつえをかかげる
@@ -538,12 +557,22 @@ _ANIME_LABEL anm_swsage_4
 	_ANIME_DATA	AC_SWSAGE1_RAISE_STICK,1
 	_ANIME_DATA	ACMD_END,0
 //-------------------------------------
+// Nに向き直る
+//
+_ANIME_LABEL anm_swsage_5
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+//-------------------------------------
 
 
 /************************************************************/
 /*					CALL：ゲーチス戦						*/
 /************************************************************/
 ev_vs_swsage1_01:
+
+  //【仮】戦闘後暗転状態でメッセージ表示依頼（2011.12.20）
   
   //アニメ：主人公右を向く
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_r)
@@ -552,6 +581,18 @@ ev_vs_swsage1_01:
   //ゲーチス：まさか！
   _BALLOONWIN_OBJMSG_WB( msg_d10r0501_swsage01_15b , msg_d10r0501_swsage01_15w , D10R0501_SWSAGE1_01 , POS_UR)
   _MSGWIN_CLOSE()
+  
+  _PLAYER_NAME( 0 )
+  
+  //N：！！
+  _BALLOONWIN_OBJMSG_POS( msg_d10r0501_boss_09 , D10R0501_BOSS_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //N専用回復SE再生
+  _SE_PLAY(SEQ_SE_FLD_176)
+	//回復
+	_TEMOTI_POKEMON_KAIFUKU()
+	_SE_WAIT()
   
   //トレーナー戦
   _TRAINER_BTL_SET( TRID_SWSAGE1_01, 0 )
@@ -686,6 +727,17 @@ ev_vs_swsage1_01:
   _BALLOONWIN_OBJMSG_WB( msg_d10r0501_boss_09b , msg_d10r0501_boss_09w , D10R0501_BOSS_01 , POS_DR)
   _MSGWIN_CLOSE()
   
+  //アニメ：N下を向く
+  _OBJ_ANIME( D10R0501_BOSS_01 , anm_staystep_d)
+  _OBJ_ANIME_WAIT()
+  
+  //間
+  _TIME_WAIT( 30 )
+  
+  //アニメ：Ｎ上を向く
+  _OBJ_ANIME( D10R0501_BOSS_01 , anm_staystep_u)
+  _OBJ_ANIME_WAIT()
+  
   {
   
   //データコンバートチェック
@@ -706,7 +758,11 @@ ev_vs_swsage1_01:
   
   //N：ポケモンといることで
   _BALLOONWIN_OBJMSG_WB( msg_d10r0501_boss_12b , msg_d10r0501_boss_12w , D10R0501_BOSS_01 , POS_DR)
-  //_MSGWIN_CLOSE()
+  _MSGWIN_CLOSE()
+  
+  //アニメ：Ｎ一歩前に出る
+  _OBJ_ANIME( D10R0501_BOSS_01 , anm_walk_u)
+  _OBJ_ANIME_WAIT()
   
   //N：キミ！キミと
   _BALLOONWIN_OBJMSG_WB( msg_d10r0501_boss_13b , msg_d10r0501_boss_13w , D10R0501_BOSS_01 , POS_DR)
@@ -726,7 +782,7 @@ ev_vs_swsage1_01:
   //ゼクロム・レシラム動作モデル削除
   _OBJ_DEL( D10R0501_NPOKE_01 )
   
-  //【仮】主人公Ｎを見送る位置に移動
+  //主人公Ｎを見送る位置に移動
   _OBJ_POS_CHANGE(MMDL_ID_PLAYER,17,0,18,DIR_LEFT)
   
   _BLACK_IN_SLOW()
@@ -743,6 +799,9 @@ ev_vs_swsage1_01:
   //D10R0501のBGMを元に戻す
   _FLAG_RESET( SYS_FLAG_BGM_D10R0501_VS_GCIS )
   //=======================================//
+  
+  //BGMを戻すまで余韻
+  _TIME_WAIT( 20 )
   
   //BGMを変更
   _BGM_NOW_MAP_RECOVER()
@@ -826,6 +885,7 @@ _ANIME_LABEL	anm_player_to_boss_02
 //	Ｎ：退場
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_boss_bye
+  _ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA AC_WALK_D_16F,2
 	_ANIME_DATA	ACMD_END,0
 
