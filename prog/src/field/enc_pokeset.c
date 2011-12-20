@@ -476,7 +476,7 @@ void ENCPOKE_PPSetup(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, const ENC_P
   }
 
   //フォルムセット
-  PP_Put( pp, ID_PARA_form_no, poke->form );
+  PP_ChangeFormNo( pp, poke->form );
 
   //第3特性強制セット
   if( poke->spabi_3rd ){
