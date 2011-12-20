@@ -1418,34 +1418,34 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……　……▼
-……　……わかった
+……　……いいだろう
 いまは　あなたを　しんじよう……▼
 では　あなたの　もくてきは？
 オレなんかの　ちからを　ためして▽
 どうする　つもりだ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:08" />
+				Time="2011-12-16T11:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:08" />
+				Time="2011-12-16T11:48:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……　……▼
-……　……わかった
+……　……いいだろう
 今は　あなたを　信じよう……▼
 では　あなたの　目的は？
 オレなんかの　力を　試して▽
 どうする　つもりだ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T02:18:06" />
+				Time="2011-12-16T11:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T02:18:06" />
+				Time="2011-12-16T11:48:07" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1787,33 +1787,33 @@
 			Language="JPN">
 			<Text>？？？『さよう……▼
 あれは　このよに　あっては　ならぬ
-たいへんに　きけんな　しろもの……▼
+きけん　きわまりない　しろもの……▼
 しかし　あの　カラクリを　もちいて
 あしきことを　かんがている▽
 ふとどきものが　おるのじゃ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:08" />
+				Time="2011-12-16T11:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:08" />
+				Time="2011-12-16T11:48:07" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>？？？『左様……▼
 あれは　この世に　あってはならぬ
-大変　危険な　代物……▼
+危険　極まりない　代物……▼
 しかし　あの　カラクリを　用いて
 よからぬことを　企てている▽
 不届き者が　おるのじゃ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:08" />
+				Time="2011-12-16T11:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:08" />
+				Time="2011-12-16T11:48:07" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2044,16 +2044,16 @@
 			<Text>？？？『グロロロ……
 時は　次の　満月の晩……▽
 場所は　以前と　同じ……▽
-そこに　男は　現れる……▼
+そこに男は　現れる……▼
 頼む　[Name:TrainerName Idx="1" ]よ……
 この大地を……　守ってくれ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:08" />
+				Time="2011-12-16T11:48:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:08" />
+				Time="2011-12-16T11:48:07" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

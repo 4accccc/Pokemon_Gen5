@@ -444,8 +444,8 @@
 助けに　きてくれたぞ！</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『みなさん！　じゃまです！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『みなさん！　じゃまです！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『アンタら　じゃまだよ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『アンタら　　邪魔だよ！</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
 		<language name="JPN" width="256">にげおくれた　しみん『ひぃー！！
@@ -459,9 +459,9 @@
 	</row>
 	<row id="pw_event1_react_enemy_2">
 		<language name="JPN" width="256">にげおくれた　しみん『ひぃー！！
-もう　オレたち　おしまいだー！</language>
+もう　オレたち　オシマイだー！</language>
 		<language name="JPN_KANJI" width="256">逃げ遅れた　市民『『ひぃー！！
-もう　オレたち　おしまいだー！</language>
+もう　オレたち　オシマイだー！</language>
 	</row>
 	<row id="pw_event2_enemy_0">
 		<language name="JPN" width="256">だいバンギラス『グロロロ……　</language>
@@ -483,10 +483,10 @@
 	</row>
 	<row id="pw_event2_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『オレは　[1:00:トレーナー名:1]！
-イッシュのへいわを　まもる▽
+イッシュの　へいわを　まもる▽
 イッシュぼうえいたいの　クルーだ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『オレは　[1:00:トレーナー名:1]！
-イッシュの平和を　守る▽
+イッシュの　平和を　守る▽
 イッシュ防衛隊の　クルーだ！</language>
 	</row>
 	<row id="pw_event2_enemy_2">

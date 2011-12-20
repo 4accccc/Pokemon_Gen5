@@ -220,27 +220,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマン『グッ……　からだが……
-うまく……　うごかぬ……</Text>
+			<Text>ハチクマン『グッ……　からだが……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマン『グッ……　身体が……
-うまく……　動かぬ……</Text>
+			<Text>ハチクマン『グッ……　身体が……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -440,31 +438,35 @@
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]ガール『……
 ハチクほう　ですって……？▼
-……っていうか　けっきょく　およいで
-ごうかきゃくせんから　ブラックダイアを▽
-ぬすみだしたんだ　バカみたい……</Text>
+……っていうか　けっきょく　あのまま
+およいで　ごうかきゃくせんに▽
+しのびこんで　ブラックダイアを▽
+ぬすみだした　ってこと……▼
+バカみたい……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T09:00:08" />
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T09:00:08" />
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]ガール『……
 ハチク砲　ですって……？▼
-……っていうか　結局　泳いで
-豪華客船から　ブラックダイアを▽
-盗みだしたんだ　バカみたい……</Text>
+……っていうか　結局　あのまま
+泳いで　豪華客船に▽
+忍び込んで　ブラックダイアを▽
+盗み出した　ってこと……▼
+バカみたい……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T09:00:08" />
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T09:00:08" />
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -479,37 +481,38 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマン『ハチクほうは
+			<Text>ハチクマン『この　ハチクほうは
 きょうりょくな　エネルギーとともに▽
-ひとや　ポケモンを▽
-はっしゃする　マシン！▼
-しかも　はっしゃした　ものの
-のうりょくを　なんばいにも　▽
+あらゆるものを　はっしゃする▽
+ちょうこうせいのう　マシン！▼
+しかも　ブラックダイアこうかに　より
+はっしゃ　したもの　の▽
+のうりょくを　なんばいにも▽
 パワーアップ　するのだっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T07:21:36" />
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T07:21:36" />
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマン『ハチク砲は
+			<Text>ハチクマン『この　ハチク砲は
 強力な　エネルギーとともに▽
-人や　ポケモンを▽
-発射する　マシン！▼
-しかも　発射した　者の
-能力を　何倍　にも▽
+あらゆるものを　発射する▽
+超高性能マシン！▼
+しかも　ブラックダイア効果により
+発射物の能力を　何倍にも▽
 パワーアップ　するのだっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -840,30 +843,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハチクマン『ファファファ！！
-今さら　にがしは　せぬぞ！▼
+いまさら　にがしは　せぬぞ！▼
 きょうが　[Name:PokemonNickname Idx="0" ]ガールの
-さいごの　ひだっ！</Text>
+めいにちと　なるのだっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『ファファファ！！
 今さら　逃がしは　せぬぞ！▼
 今日が　[Name:PokemonNickname Idx="0" ]ガールの
-最後の　日だっ！</Text>
+最後の日と　なるのだっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -915,29 +918,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]キッド『つよい……▼
-これが　ブラックダイアの
-パワー　なの……</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ガール『つよい……▼
+これが　ブラックダイアを
+りようした　パワーなの……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]キッド『強い……▼
-これが　ブラックダイアの
-パワー　なの……</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]ガール『強い……▼
+これが　ブラックダイアを
+利用した　パワーなの……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -953,32 +956,32 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハチクマン『ファファファ！！
-このひを　まちのぞんでいた！▼
+このひを　まちのぞんでいたぞ！▼
 きさまを　たおすために　いままで
 ついやした　じかんも……▼
 ……グッ！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『ファファファ！！
-この日を　待ち望んでいた！▼
+この日を　待ち望んでいたぞ！▼
 貴様を　倒すために　今まで
 費やした　時間も……▼
 ……グッ！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1751,7 +1754,7 @@
 			Language="JPN_KANJI">
 			<Text>……ハチク艦に　装備された
 ハチク砲に　よって▽
-空の　彼方へと　散った▽
+空の彼方へと　散った▽
 [Name:PokemonNickname Idx="0" ]ガール！！▼
 彼女の　消えた　方角には
 大きな　星が　ひとつ▽
@@ -1762,11 +1765,11 @@
 [Name:PokemonNickname Idx="0" ]ガール！！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T03:53:41" />
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T03:53:41" />
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1881,26 +1884,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]ガール『もう　やめよ……
-ハチクマンさん……　……</Text>
+ハチクマンさん……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]ガール『もう　やめよ……
-ハチクマンさん……　……</Text>
+ハチクマンさん……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1916,32 +1919,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ハチクマン『……わが　やぼうも
-ここまでか……▼
-ファファファ……▼
+ここまでか　ファファファ……▼
 [Name:PokemonNickname Idx="0" ]ガール　よ……
-さあ……　とどめを　さすが　いい……</Text>
+さあ　とどめを　さすが　いい……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ハチクマン『……我が　野望も
-ここまでか……▼
-ファファファ……▼
+ここまでか　ファファファ……▼
 [Name:PokemonNickname Idx="0" ]ガール　よ……
-さあ……　とどめを　さすが　いい……</Text>
+さあ　とどめを　さすが　いい……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2006,14 +2007,14 @@
 			Language="JPN_KANJI">
 			<Text>ハチクマン『何だと……▼
 貴様……　この我輩に
-情けでも　かける　つもりかっ！？</Text>
+情けでもかける　つもりかっ！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T03:46:24" />
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-08T03:46:24" />
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2221,15 +2222,15 @@
 [Name:PokemonNickname Idx="0" ]ガール……
 きょうのひの　ことは　わすれぬ……▼
 そして　きさまの　ことも　な……▼
-いつの　ひか　かならず
+いつのひか　かならず
 けっちゃくを　つけてやる……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2237,15 +2238,15 @@
 [Name:PokemonNickname Idx="0" ]ガール……
 今日の日の　ことは　忘れぬ……▼
 そして　貴様の　ことも　な……▼
-いつの　日か　必ず
+いつの日か　必ず
 決着を　つけてやる……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2527,27 +2528,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハチクマン『グッ！　グフォ！！▼
+			<Text>ハチクマン『グッ！　グフォ！！
 ヌウウ……　もはや　これまでか……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハチクマン『グッ！　グフォ！！▼
+			<Text>ハチクマン『グッ！　グフォ！！
 ヌウウ……　もはや　これまでか……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2563,26 +2564,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname Idx="0" ]ガール『ほら……
-わたしの　てに　つかまって……</Text>
+わたしのてに　つかまって……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]ガール『ほら……
-私の　手に　つかまって……</Text>
+私の手に　つかまって……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2613,15 +2614,15 @@
 			Language="JPN_KANJI">
 			<Text>ハチクマン『うるさいわ……▼
 怪人が……　グッ……
-ヒロインの　手など　借りるか……▼
+ヒロインの手など　借りるか……▼
 グッ！　グフッ！　グフォッ！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2907,7 +2908,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>自らの　敗北を　受け入れた
+			<Text>自らの敗北を　受け入れた
 ハチクマンは　ハチク砲に▽
 よって　夜空に　散った……▼
 悪の怪人は　去った……▼
@@ -2917,11 +2918,11 @@
 さらば！　悪の怪人　ハチクマン！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T03:53:41" />
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T03:53:41" />
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2978,15 +2979,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]ガール『何が悪いの！▼
-私は　正義の　ためなら
+私は　正義のためなら
 手段は　選んだりしないわ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T03:53:41" />
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T03:53:41" />
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2997,15 +2998,15 @@
 わがはいのような　セリフを　はく……▼
 せいぎの　ヒロインに　しておくには
 いささか　おしい　じんざいよ……▼
-どうだ？　ヒロインなど　やめ
+どうだ？　ヒロインなど　やめて
 わがはいの　ぶかに　ならぬか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:07:25" />
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:07:25" />
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3013,15 +3014,15 @@
 我輩のような　セリフを　はく……▼
 正義のヒロインに　しておくには
 いささか　惜しい　人材よ……▼
-どうだ？　ヒロインなど　辞め
+どうだ？　ヒロインなど　辞めて
 我輩の　部下に　ならぬか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:07:25" />
+				Time="2011-12-16T11:35:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:07:25" />
+				Time="2011-12-16T11:35:22" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

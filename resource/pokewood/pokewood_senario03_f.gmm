@@ -386,10 +386,8 @@
 こんなことに　なろうとは……</language>
 	</row>
 	<row id="pw_turn_enemy_7">
-		<language name="JPN" width="256">ハチクマン『グッ……　からだが……
-うまく……　うごかぬ……</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『グッ……　身体が……
-うまく……　動かぬ……</language>
+		<language name="JPN" width="256">ハチクマン『グッ……　からだが……</language>
+		<language name="JPN_KANJI" width="256">ハチクマン『グッ……　身体が……</language>
 	</row>
 	<row id="pw_turn_enemy_9">
 		<language name="JPN" width="256">ハチクマン『グッ……
@@ -440,29 +438,34 @@
 	<row id="pw_event0_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『……
 ハチクほう　ですって……？▼
-……っていうか　けっきょく　およいで
-ごうかきゃくせんから　ブラックダイアを▽
-ぬすみだしたんだ　バカみたい……</language>
+……っていうか　けっきょく　あのまま
+およいで　ごうかきゃくせんに▽
+しのびこんで　ブラックダイアを▽
+ぬすみだした　ってこと……▼
+バカみたい……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『……
 ハチク砲　ですって……？▼
-……っていうか　結局　泳いで
-豪華客船から　ブラックダイアを▽
-盗みだしたんだ　バカみたい……</language>
+……っていうか　結局　あのまま
+泳いで　豪華客船に▽
+忍び込んで　ブラックダイアを▽
+盗み出した　ってこと……▼
+バカみたい……</language>
 	</row>
 	<row id="pw_event0_enemy_1">
-		<language name="JPN" width="256">ハチクマン『ハチクほうは
+		<language name="JPN" width="256">ハチクマン『この　ハチクほうは
 きょうりょくな　エネルギーとともに▽
-ひとや　ポケモンを▽
-はっしゃする　マシン！▼
-しかも　はっしゃした　ものの
-のうりょくを　なんばいにも　▽
+あらゆるものを　はっしゃする▽
+ちょうこうせいのう　マシン！▼
+しかも　ブラックダイアこうかに　より
+はっしゃ　したもの　の▽
+のうりょくを　なんばいにも▽
 パワーアップ　するのだっ！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『ハチク砲は
+		<language name="JPN_KANJI" width="256">ハチクマン『この　ハチク砲は
 強力な　エネルギーとともに▽
-人や　ポケモンを▽
-発射する　マシン！▼
-しかも　発射した　者の
-能力を　何倍　にも▽
+あらゆるものを　発射する▽
+超高性能マシン！▼
+しかも　ブラックダイア効果により
+発射物の能力を　何倍にも▽
 パワーアップ　するのだっ！</language>
 	</row>
 	<row id="pw_event0_hero_2">
@@ -521,13 +524,13 @@
 	</row>
 	<row id="pw_event0_react_enemy_3">
 		<language name="JPN" width="256">ハチクマン『ファファファ！！
-今さら　にがしは　せぬぞ！▼
+いまさら　にがしは　せぬぞ！▼
 きょうが　[1:02:ポケモンニックネーム:0]ガールの
-さいごの　ひだっ！</language>
+めいにちと　なるのだっ！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファファファ！！
 今さら　逃がしは　せぬぞ！▼
 今日が　[1:02:ポケモンニックネーム:0]ガールの
-最後の　日だっ！</language>
+最後の日と　なるのだっ！</language>
 	</row>
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">ハチクマン『ファファファ！！
@@ -538,21 +541,21 @@
 そして　ハチク砲の　威力！！</language>
 	</row>
 	<row id="pw_event1_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『つよい……▼
-これが　ブラックダイアの
-パワー　なの……</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]キッド『強い……▼
-これが　ブラックダイアの
-パワー　なの……</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『つよい……▼
+これが　ブラックダイアを
+りようした　パワーなの……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『強い……▼
+これが　ブラックダイアを
+利用した　パワーなの……</language>
 	</row>
 	<row id="pw_event1_enemy_1">
 		<language name="JPN" width="256">ハチクマン『ファファファ！！
-このひを　まちのぞんでいた！▼
+このひを　まちのぞんでいたぞ！▼
 きさまを　たおすために　いままで
 ついやした　じかんも……▼
 ……グッ！？</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファファファ！！
-この日を　待ち望んでいた！▼
+この日を　待ち望んでいたぞ！▼
 貴様を　倒すために　今まで
 費やした　時間も……▼
 ……グッ！？</language>
@@ -697,7 +700,7 @@
 [1:02:ポケモンニックネーム:0]ガール！！▼</language>
 		<language name="JPN_KANJI" width="256">……ハチク艦に　装備された
 ハチク砲に　よって▽
-空の　彼方へと　散った▽
+空の彼方へと　散った▽
 [1:02:ポケモンニックネーム:0]ガール！！▼
 彼女の　消えた　方角には
 大きな　星が　ひとつ▽
@@ -721,21 +724,19 @@
 	</row>
 	<row id="pw_event3_hero_2">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『もう　やめよ……
-ハチクマンさん……　……</language>
+ハチクマンさん……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『もう　やめよ……
-ハチクマンさん……　……</language>
+ハチクマンさん……</language>
 	</row>
 	<row id="pw_event3_enemy_2">
 		<language name="JPN" width="256">ハチクマン『……わが　やぼうも
-ここまでか……▼
-ファファファ……▼
+ここまでか　ファファファ……▼
 [1:02:ポケモンニックネーム:0]ガール　よ……
-さあ……　とどめを　さすが　いい……</language>
+さあ　とどめを　さすが　いい……</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『……我が　野望も
-ここまでか……▼
-ファファファ……▼
+ここまでか　ファファファ……▼
 [1:02:ポケモンニックネーム:0]ガール　よ……
-さあ……　とどめを　さすが　いい……</language>
+さあ　とどめを　さすが　いい……</language>
 	</row>
 	<row id="pw_event3_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『……ダメ
@@ -749,7 +750,7 @@
 なさけでも　かける　つもりかっ！？</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『何だと……▼
 貴様……　この我輩に
-情けでも　かける　つもりかっ！？</language>
+情けでもかける　つもりかっ！？</language>
 	</row>
 	<row id="pw_event3_hero_4">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『ちがうの……▼
@@ -800,13 +801,13 @@
 [1:02:ポケモンニックネーム:0]ガール……
 きょうのひの　ことは　わすれぬ……▼
 そして　きさまの　ことも　な……▼
-いつの　ひか　かならず
+いつのひか　かならず
 けっちゃくを　つけてやる……</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『……　……▼
 [1:02:ポケモンニックネーム:0]ガール……
 今日の日の　ことは　忘れぬ……▼
 そして　貴様の　ことも　な……▼
-いつの　日か　必ず
+いつの日か　必ず
 決着を　つけてやる……</language>
 	</row>
 	<row id="pw_event3_hero_7">
@@ -874,16 +875,16 @@
 観念して　ハチクマンさん……</language>
 	</row>
 	<row id="pw_event4_enemy_2">
-		<language name="JPN" width="256">ハチクマン『グッ！　グフォ！！▼
+		<language name="JPN" width="256">ハチクマン『グッ！　グフォ！！
 ヌウウ……　もはや　これまでか……</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『グッ！　グフォ！！▼
+		<language name="JPN_KANJI" width="256">ハチクマン『グッ！　グフォ！！
 ヌウウ……　もはや　これまでか……</language>
 	</row>
 	<row id="pw_event4_hero_3">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『ほら……
-わたしの　てに　つかまって……</language>
+わたしのてに　つかまって……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『ほら……
-私の　手に　つかまって……</language>
+私の手に　つかまって……</language>
 	</row>
 	<row id="pw_event4_enemy_3">
 		<language name="JPN" width="256">ハチクマン『うるさいわ……▼
@@ -892,7 +893,7 @@
 グッ！　グフッ！　グフォッ！！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『うるさいわ……▼
 怪人が……　グッ……
-ヒロインの　手など　借りるか……▼
+ヒロインの手など　借りるか……▼
 グッ！　グフッ！　グフォッ！！</language>
 	</row>
 	<row id="pw_event4_hero_4">
@@ -954,7 +955,7 @@
 いつまでも　かれの　わらいごえが▽
 こだま　するの　だった……▼
 さらば！　あくのかいじん　ハチクマン！</language>
-		<language name="JPN_KANJI" width="256">自らの　敗北を　受け入れた
+		<language name="JPN_KANJI" width="256">自らの敗北を　受け入れた
 ハチクマンは　ハチク砲に▽
 よって　夜空に　散った……▼
 悪の怪人は　去った……▼
@@ -976,7 +977,7 @@
 わたしは　せいぎの　ためなら
 しゅだんは　えらんだりしないわ！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『何が悪いの！▼
-私は　正義の　ためなら
+私は　正義のためなら
 手段は　選んだりしないわ！</language>
 	</row>
 	<row id="pw_event5_enemy_1">
@@ -984,13 +985,13 @@
 わがはいのような　セリフを　はく……▼
 せいぎの　ヒロインに　しておくには
 いささか　おしい　じんざいよ……▼
-どうだ？　ヒロインなど　やめ
+どうだ？　ヒロインなど　やめて
 わがはいの　ぶかに　ならぬか？</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『ファファファ……
 我輩のような　セリフを　はく……▼
 正義のヒロインに　しておくには
 いささか　惜しい　人材よ……▼
-どうだ？　ヒロインなど　辞め
+どうだ？　ヒロインなど　辞めて
 我輩の　部下に　ならぬか？</language>
 	</row>
 	<row id="pw_event5_hero_2">

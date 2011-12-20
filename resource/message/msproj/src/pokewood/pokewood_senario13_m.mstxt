@@ -284,15 +284,15 @@
 ……コイツは　ふつうの
 バンギラスでは　ありません……▼
 ぜんしんが……
-からだの　ぜんしんが▽
+からだぜんたいが　みたこともない▽
 きんぞくで　おおわれて　いますっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:48" />
+				Time="2011-12-16T11:35:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:48" />
+				Time="2011-12-16T11:35:34" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -302,15 +302,15 @@
 ……コイツは　普通の
 バンギラスでは　ありません……▼
 全身が……
-体の　全身が▽
+体全体が　みたこともない▽
 金属で　おおわれて　いますっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:34" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -517,32 +517,32 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしん『きこえるか！　[Name:TrainerName Idx="1" ]！
-しみんが　いる　なかで　Ｍ・Ｂと▽
+かれが　いる　なかで　Ｍ・Ｂと▽
 たたかうのは　きけんだっ！▼
 まず　かれを　にがすことを
 ゆうせん　するんだっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:14" />
+				Time="2011-12-16T11:35:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:14" />
+				Time="2011-12-16T11:35:34" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信『聞こえるか！　[Name:TrainerName Idx="1" ]！
-市民が　いる　中で　Ｍ・Ｂと▽
+彼が　いる　中で　Ｍ・Ｂと▽
 戦うのは　危険だっ！▼
 まず　彼を　逃がすことを
 優先するんだっ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:14" />
+				Time="2011-12-16T11:35:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:14" />
+				Time="2011-12-16T11:35:34" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -945,14 +945,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>男『ああ！！　分かったべっ！</Text>
+			<Text>男『ああ！！　わかったべっ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:34" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1668,30 +1668,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｍ・Ｂ『いいか！　[Name:TrainerName Idx="1" ]！▼
-ないたり　わらったり
+にどと　ないたり　わらったり
 できなくなるまで　トレーニングだ！▽
 いまから　かくごして　おけっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:14" />
+				Time="2011-12-16T11:35:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:14" />
+				Time="2011-12-16T11:35:34" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｍ・Ｂ『いいか！　[Name:TrainerName Idx="1" ]！▼
-泣いたり　笑ったり
+二度と　泣いたり　笑ったり
 出来なくなるまで　トレーニングだ！▽
 今から　覚悟して　おけっ！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:14" />
+				Time="2011-12-16T11:35:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:14" />
+				Time="2011-12-16T11:35:34" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

@@ -481,25 +481,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『みなさん！　邪魔です！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『アンタたち！　ジャマよ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:27" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『みなさん！　邪魔です！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『アンタたち　邪魔よ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:27" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -583,26 +583,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>にげおくれた　しみん『ひぃー！！
-もう　オレたち　おしまいだー！</Text>
+もう　オレたち　オシマイだー！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:27" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>逃げ遅れた　市民『『ひぃー！！
-もう　オレたち　おしまいだー！</Text>
+もう　オレたち　オシマイだー！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:27" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -723,28 +723,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『わたしは　[Name:TrainerName Idx="1" ]！
-イッシュのへいわを　まもる▽
+イッシュの　へいわを　まもる▽
 イッシュぼうえいたいの　クルーよ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:27" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『私は　[Name:TrainerName Idx="1" ]！
-イッシュの平和を　守る▽
+イッシュの　平和を　守る▽
 イッシュ防衛隊の　クルーよ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:35:27" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

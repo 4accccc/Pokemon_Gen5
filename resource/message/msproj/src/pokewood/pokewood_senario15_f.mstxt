@@ -140,25 +140,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おとこ『だれだね……</Text>
+			<Text>おとこ『ムウ……　だれだね……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:48:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>男『だれだね……</Text>
+			<Text>男『ムウ……　だれだね……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:48:13" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -405,27 +405,27 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『くっ！　やるきねっ！▼
 かれが　だいバンギラスの
-いっていた　おとこ　なのかっ！？</Text>
+いっていた　おとこ　なのっ！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:48:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『くっ！　やる気ねっ！▼
 彼が　大バンギラスの
-言っていた　男なのかっ！？</Text>
+言っていた　男なのっ！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:48:13" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -475,31 +475,31 @@
 			Language="JPN">
 			<Text>セリザワ『……よけいな　ことを
 してくれた　ものだよ　キミは▼
-……あの　バカな　さぎょういんが
+……あのバカな　さぎょういんが
 あのまま　Ｍ・Ｂを　つかっていれば▽
 まちを　はかい　できたものを……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:24" />
+				Time="2011-12-16T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:24" />
+				Time="2011-12-16T11:48:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>セリザワ『……余計な　ことを
 してくれた　ものだよ　キミは▼
-……あの　バカな　作業員が
+……あのバカな　作業員が
 あのまま　Ｍ・Ｂを　使っていれば▽
 街を　破壊できたものを……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:24" />
+				Time="2011-12-16T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:38:24" />
+				Time="2011-12-16T11:48:13" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -555,7 +555,7 @@
 			Language="JPN">
 			<Text>セリザワ『ハハハ　そうだな……▼
 じぶんが　てにした　パワーを
-ためして　みたい……▼
+ためして　みたいのだ……▼
 そして　その　けっかを
 つよく　しりたい……▽
 かんじたいのだ……▼
@@ -564,19 +564,19 @@
 わたしの　やっていることは
 それと　おなじさ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:48:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>セリザワ『ハハハ　そうだな……▼
 自分が　手にした　パワーを
-試して　みたい……▼
-そして　その　結果を
+試して　みたいのだ……▼
+そして　その結果を
 強く　知りたい……▽
 感じたいのだ……▼
 キミも　強いポケモンを　育てたら
@@ -584,12 +584,12 @@
 私の　やっていることは
 それと　同じさ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:48:13" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1543,14 +1543,14 @@
 			<Text>バンギラス『[Name:TrainerName Idx="1" ]よ……
 カラクリは……　とくせいに　よって▽
 弱点を　守って　おる……▼
-その　とくせいを　うばえ……</Text>
+その　とくせいを　奪え……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:48:13" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2172,16 +2172,16 @@
 キミの　もつ　そのパワー……
 まもるためだけに　つかうのは▽
 あまりに　おしい……▼
-どうだね……？▼
+なあ　どうだね……？▼
 わたしの　もとで　はたらいては
 いただけないかね……？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:56:29" />
+				Time="2011-12-16T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:56:29" />
+				Time="2011-12-16T11:48:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2189,16 +2189,16 @@
 キミの　持つ　そのパワー……
 守るためだけに　使うのは▽
 あまりに　おしい……▼
-どうだね……？▼
+なあ　どうだね……？▼
 わたしの　元で　働いては
 頂けないかね……？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:13" />
+				Time="2011-12-16T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:13" />
+				Time="2011-12-16T11:48:13" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2322,29 +2322,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>セリザワ『そうか……
+			<Text>セリザワ『フム　そうか……
 ５０ばいでは　たりないのかね……▼
 それでは　１００ばいで　いかがかね？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:48:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>セリザワ『そうか……
+			<Text>セリザワ『フム　そうか……
 ５０倍では　足りないのかね……▼
 それでは　１００倍で　いかがかね？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:48:13" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2766,29 +2766,29 @@
 			Language="JPN">
 			<Text>つうしん『やっと　つながったか……
 そちらの　おんせいは　ずっと▽
-きこえて　いたのだが……▼
+きこえていたのだが……▼
 ぶじだったようだな　[Name:TrainerName Idx="1" ]！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:48:13" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信『ようやく　つながったか……
 そちらの　音声は　ずっと▽
-聞こえて　いたのだが……▼
+聞こえていたのだが……▼
 無事だったようだな　[Name:TrainerName Idx="1" ]！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-16T11:48:13" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3009,17 +3009,17 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>セリザワ『ハハハ……
-なんだね　なんだね▽
+なんだね！　なんだね！▽
 その　手ぬるい　攻撃は？▼
 そんなことでは　私の　Ｍ・Ｂ２を
 倒すなど　夢のまた夢　だよ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:32" />
+				Time="2011-12-16T11:48:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:32" />
+				Time="2011-12-16T11:48:13" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

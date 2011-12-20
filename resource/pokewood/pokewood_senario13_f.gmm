@@ -389,18 +389,18 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ちょう　きょだいな
 バンギラスが　あばれて……▼
 いや……▼
-……これは　ふつうの
+……コイツは　ふつうの
 バンギラスでは　ありません……▼
 ぜんしんが……
-からだの　ぜんしんが▽
+からだぜんたいが　みたこともない▽
 きんぞくで　おおわれて　いますっ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『超巨大な
 バンギラスが　暴れて……▼
 いや……▼
-……これは　普通の
+……コイツは　普通の
 バンギラスでは　ありません……▼
 全身が……
-体の　全身が▽
+体全体が　みたこともない▽
 金属で　おおわれて　いますっ！</language>
 	</row>
 	<row id="pw_event0_hero_6">
@@ -451,12 +451,12 @@
 	</row>
 	<row id="pw_event1_hero_3">
 		<language name="JPN" width="256">つうしん『きこえるか！　[1:00:トレーナー名:1]！
-しみんが　いる　なかで　Ｍ・Ｂと▽
+かれが　いる　なかで　Ｍ・Ｂと▽
 たたかうのは　きけんだっ！▼
 まず　かれを　にがすことを
-ゆうせん　するんだっ！▼</language>
+ゆうせん　するんだっ！</language>
 		<language name="JPN_KANJI" width="256">通信『聞こえるか！　[1:00:トレーナー名:1]！
-市民が　いる　中で　Ｍ・Ｂと▽
+彼が　いる　中で　Ｍ・Ｂと▽
 戦うのは　危険だっ！▼
 まず　彼を　逃がすことを
 優先するんだっ！▼</language>
@@ -521,7 +521,7 @@
 	</row>
 	<row id="pw_event2_enemy_1">
 		<language name="JPN" width="256">おとこ『ああ！！　わかったべっ！</language>
-		<language name="JPN_KANJI" width="256">男『ああ！！　分かったべっ！</language>
+		<language name="JPN_KANJI" width="256">男『ああ！！　わかったべっ！</language>
 	</row>
 	<row id="pw_event3_enemy_0">
 		<language name="JPN" width="256">Ｍ・Ｂ『グゴガーンッ！！</language>
@@ -645,11 +645,11 @@
 	</row>
 	<row id="pw_event4_enemy_3">
 		<language name="JPN" width="256">Ｍ・Ｂ『いいか！　[1:00:トレーナー名:1]！▼
-ないたり　わらったり
+にどと　ないたり　わらったり
 できなくなるまで　トレーニングだ！▽
 いまから　かくごして　おけっ！！</language>
 		<language name="JPN_KANJI" width="256">Ｍ・Ｂ『いいか！　[1:00:トレーナー名:1]！▼
-泣いたり　笑ったり
+二度と　泣いたり　笑ったり
 出来なくなるまで　トレーニングだ！▽
 今から　覚悟して　おけっ！！</language>
 	</row>
