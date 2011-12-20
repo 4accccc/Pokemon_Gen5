@@ -370,26 +370,20 @@ void GIANTHOLE_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
       // Nonƒ[ƒNƒŒƒV
       else if( p_wk->anm_type == ANIME_TYPE_N_POKE )
       {
-        if(GetVersion()==VERSION_B2){
-          if( p_wk->frame == 10 ){
-            PMSND_PlaySE( GIANTHOLE_SE_ZEKUROMU_FLY );
-          }
-        } else {
-          // ƒŒƒVƒ‰ƒ€‚Í‰H‚Î‚½‚«‰¹
-          switch( p_wk->frame ){
-          case 10:
-          case 35:
-          case 60:
-          case 85:
-            PMSND_PlaySE( GIANTHOLE_SE_RESIRAMU_FLY_01 );
-            break;
-          case 13:
-          case 38:
-          case 63:
-          case 88:
-            PMSND_PlaySE( GIANTHOLE_SE_RESIRAMU_FLY_02 );
-            break;
-          }
+        // ƒŒƒVƒ‰ƒ€‚àƒ[ƒNƒƒ€‚à‰H‚Î‚½‚«‰¹
+        switch( p_wk->frame ){
+        case 10:
+        case 35:
+        case 60:
+        case 85:
+          PMSND_PlaySE( GIANTHOLE_SE_RESIRAMU_FLY_01 );
+          break;
+        case 13:
+        case 38:
+        case 63:
+        case 88:
+          PMSND_PlaySE( GIANTHOLE_SE_RESIRAMU_FLY_02 );
+          break;
         }
       }
 
