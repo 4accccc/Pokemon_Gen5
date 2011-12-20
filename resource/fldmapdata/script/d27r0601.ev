@@ -119,6 +119,10 @@ INIT_EVENT_START	ev_scene_d27r0601_swsage1_01
   _OBJ_ANIME_WAIT()
   //アニメ：芝居
   _OBJ_ANIME( D27R0601_SWSAGE1_01 ,anm_swsage_act )
+  _TIME_WAIT( 24 )
+  //SE再生：通常杖つき音
+  _SE_PLAY(SEQ_SE_SW_GHETSIS_STICK_01)
+  _SE_WAIT()
   _OBJ_ANIME_WAIT()
   
   //ゲーチス：アクロマめ
@@ -146,6 +150,10 @@ INIT_EVENT_START	ev_scene_d27r0601_swsage1_01
   _OBJ_ANIME_WAIT()
   //アニメ：芝居
   _OBJ_ANIME( D27R0601_SWSAGE1_01 ,anm_swsage_act )
+  _TIME_WAIT( 24 )
+  //SE再生：通常杖つき音
+  _SE_PLAY(SEQ_SE_SW_GHETSIS_STICK_01)
+  _SE_WAIT()
   _OBJ_ANIME_WAIT()
   
   //ゲーチス：キュレムはからっぽ
@@ -279,7 +287,7 @@ INIT_EVENT_START	ev_scene_d27r0601_swsage1_01
   
   _BALLOONWIN_OBJMSG_POS( msg_d27r0601_ninja2_03_00 , D27R0601_NINJA_02 ,POS_DEFAULT )
   _MSGWIN_CLOSE()
-
+  
   //========================================//
   //ゲーチス非表示
   _FLAG_SET( FV_D27R0601_SWSAGE1_01 )

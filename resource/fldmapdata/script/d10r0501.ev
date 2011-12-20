@@ -105,6 +105,10 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   
   // ゲーチス：右に移動
   _OBJ_ANIME( D10R0501_SWSAGE1_01, anm_swsage_1 )
+  _TIME_WAIT( 60 )
+  //SE再生：通常杖つき音
+  _SE_PLAY(SEQ_SE_SW_GHETSIS_STICK_01)
+  _SE_WAIT()
   _OBJ_ANIME_WAIT()
 
   //ゲーチス：いでよキュレム！
@@ -138,6 +142,10 @@ EVENT_START ev_pos_d10r0501_swsage1_01
  
   // ゲーチス：右に歩いてつえをかかげる
   _OBJ_ANIME( D10R0501_SWSAGE1_01, anm_swsage_2 )
+  _TIME_WAIT( 46 )
+  //SE再生：通常杖つき音
+  _SE_PLAY(SEQ_SE_SW_GHETSIS_STICK_01)
+  _SE_WAIT()
   _OBJ_ANIME_WAIT()
 
   //ゲーチス：キュレム！こごえるせかいです
@@ -341,9 +349,14 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   _CAMERA_MOVE( 9688,0,970752,1015808,0,983040, 35 )	//一番最後の引数は移動にかかるフレーム数
   _TIME_WAIT(20)
   _OBJ_ANIME( D10R0501_SWSAGE1_01, anm_swsage_4 )
+  
+  _TIME_WAIT( 23 )
+  //SE【仮】再生：強い杖つき音（2011.12.20.鳴らない不具合持つ）
+  _SE_PLAY(SEQ_SE_SW_GHETSIS_STICK_01)
+  
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   _OBJ_ANIME_WAIT()
-
+  _SE_WAIT()
 
   // いでんしのくさびカットイン
   IF $LCWK_VERSION == VERSION_B2 THEN
@@ -505,6 +518,10 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   
   // ゲーチス：杖をつく
   _OBJ_ANIME( D10R0501_SWSAGE1_01, anm_swsage_4 )
+  _TIME_WAIT( 25 )
+  //SE再生：通常杖つき音
+  _SE_PLAY(SEQ_SE_SW_GHETSIS_STICK_01)
+  _SE_WAIT()
   _OBJ_ANIME_WAIT()
   
   //ゲーチス：おや？アナタの
@@ -579,7 +596,7 @@ ev_vs_swsage1_01:
   _OBJ_ANIME_WAIT()
 
   //ゲーチス：まさか！
-  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_swsage01_15b , msg_d10r0501_swsage01_15w , D10R0501_SWSAGE1_01 , POS_UR)
+  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_swsage01_15w , msg_d10r0501_swsage01_15b , D10R0501_SWSAGE1_01 , POS_UR)
   _MSGWIN_CLOSE()
   
   _PLAYER_NAME( 0 )
@@ -724,7 +741,7 @@ ev_vs_swsage1_01:
   _OBJ_ANIME_WAIT()
   
   //N：～も言ってる
-  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_boss_09b , msg_d10r0501_boss_09w , D10R0501_BOSS_01 , POS_DR)
+  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_boss_09w , msg_d10r0501_boss_09b , D10R0501_BOSS_01 , POS_DR)
   _MSGWIN_CLOSE()
   
   //アニメ：N下を向く
@@ -757,7 +774,7 @@ ev_vs_swsage1_01:
   //_MSGWIN_CLOSE()
   
   //N：ポケモンといることで
-  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_boss_12b , msg_d10r0501_boss_12w , D10R0501_BOSS_01 , POS_DR)
+  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_boss_12w , msg_d10r0501_boss_12b , D10R0501_BOSS_01 , POS_DR)
   _MSGWIN_CLOSE()
   
   //アニメ：Ｎ一歩前に出る
@@ -765,7 +782,7 @@ ev_vs_swsage1_01:
   _OBJ_ANIME_WAIT()
   
   //N：キミ！キミと
-  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_boss_13b , msg_d10r0501_boss_13w , D10R0501_BOSS_01 , POS_DR)
+  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_boss_13w , msg_d10r0501_boss_13b , D10R0501_BOSS_01 , POS_DR)
   _MSGWIN_CLOSE()
   
   _BLACK_OUT_SLOW()
