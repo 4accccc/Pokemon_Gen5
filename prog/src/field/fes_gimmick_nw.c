@@ -68,6 +68,7 @@ u16 FES_GIMMICK_SUB_GetRndInitZone( const u16 zone_id )
     { ZONE_ID_D24R0601,	ZONE_ID_D24R1201 },
     { ZONE_ID_D26R0201,	ZONE_ID_D26R0901 },
     { ZONE_ID_D26R0401,	ZONE_ID_D26R1001 },
+    { ZONE_ID_BC10,	    ZONE_ID_WC10 },
   };
 
   for( i = 0; NELEMS(tbl);i++){
