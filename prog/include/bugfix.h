@@ -384,7 +384,7 @@
 //【ローテーションバトルで「たたかう」を選択した直後、「シューター」ボタンが「バッグ」ボタンに変化している】
 //battle/btlv/btlv_input.c
 //この定義を有効にする場合はresource/battle/battgra_wb.scrにbattle_w_bg0l.NSCRを追加しないとMAKEが通りません
-//#define BUGFIX_AF_BTS7728_20100914
+#define BUGFIX_AF_BTS7728_20100914
 
 //【じゅくがえりの『アン』が所持しているミノマダム（虫・地面）が「リーフストーム」を使用する】
 //tr_tool/tr_tool.c
