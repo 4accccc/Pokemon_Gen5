@@ -300,10 +300,10 @@ enum{
 	FLG_RIGHT_ANIM		= (1<<5),		// 右アニメ
 	FLG_UPDATE			= (1<<6),		// 更新
 	//
-	FLG_STR_WAIT		= (1<<8),		// 文字列待ち
-	//
 	FLG_FRAME_STAT		= (1<<12),		// フレーム
 	FLG_FRAME_SET_PAL	= (1<<13),		// パレット転送
+	//
+	FLG_TOUCH_DISP		= (1<<16),		// 非表示状態からタッチ(表示タイミング調整)
 };
 
 //-------------
@@ -3407,14 +3407,10 @@ static void pwb_key_book( PKWD_BOOK_MAIN_WORK * wk )
 			}
 		}
 	}
-	// 更新
-	if(flg == 1){
-		wk->Flag |= FLG_STR_WAIT;
-	}
 	//
 	// 上文字列更新
 	// Queの処理が終了したら更新
-	if(wk->Flag & FLG_STR_WAIT){
+	if(flg == 1){
 		//
 		// 固定文字列
 		pwb_disp_fix_string( wk, STR_MAIN, TMODE_BOOK );
@@ -3427,7 +3423,13 @@ static void pwb_key_book( PKWD_BOOK_MAIN_WORK * wk )
 		// ロゴ表示
 		tmp = pwb_get_title_no( wk, wk->FlagBuffer[wk->ScenarioCurPos].openid );
 		pwb_chg_bglogo( wk, tmp );
-		wk->Flag &= ~FLG_STR_WAIT;
+		//
+		// 決定時は非表示からタッチの場合がある
+		// =>表示タイミングをずらしている
+		if(wk->Flag & FLG_TOUCH_DISP){
+			pwb_disp_up_bg( wk, 1 );
+			wk->Flag &= ~FLG_TOUCH_DISP;
+		}
 	}
 	//
 	// あまりやりたくないが、
@@ -4831,6 +4833,8 @@ static s32 pwb_is_main_framelist( PKWD_BOOK_MAIN_WORK * wk, const u32 mode )
 		wk->SubMode = STEP_LV4;
 		// SE
 		PMSND_PlaySE( SND_PKWD_BOOK_DECIDE );
+		// 決定時は、すぐには上画面を表示しない
+		wk->Flag |= FLG_TOUCH_DISP;
 	}
 	//
 	// ここでなくてもいいはず
@@ -4839,7 +4843,7 @@ static s32 pwb_is_main_framelist( PKWD_BOOK_MAIN_WORK * wk, const u32 mode )
 		// 決定時は上表示、項目時は判定
 //		pwb_disp_up_bg( wk, 1 );
 		if(flg == 2){
-			pwb_disp_up_bg( wk, 1 );
+//			pwb_disp_up_bg( wk, 1 );
 		}else{
 			pwb_disp_up_bg( wk, 0 );
 		}
