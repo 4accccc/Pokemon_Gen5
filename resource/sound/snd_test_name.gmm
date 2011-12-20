@@ -9533,6 +9533,14 @@
 		<language name="JPN" width="256">SW-KERTIO-FORM-03</language>
 		<language name="JPN_KANJI" width="256">SW-KERTIO-FORM-03</language>
 	</row>
+	<row id="msg_seq_se_sw_ghetsis_stick_01">
+		<language name="JPN" width="256">SW-GHETSIS-STICK-01</language>
+		<language name="JPN_KANJI" width="256">SW-GHETSIS-STICK-01</language>
+	</row>
+	<row id="msg_seq_se_sw_ghetsis_stick_02">
+		<language name="JPN" width="256">SW-GHETSIS-STICK-02</language>
+		<language name="JPN_KANJI" width="256">SW-GHETSIS-STICK-02</language>
+	</row>
 	<row id="msg_seq_se_sw_ci_vschamp_01">
 		<language name="JPN" width="256">SW-CI-VSCHAMP-01</language>
 		<language name="JPN_KANJI" width="256">SW-CI-VSCHAMP-01</language>
@@ -9892,6 +9900,126 @@
 	<row id="msg_seq_se_sw_kyureon_00_03b">
 		<language name="JPN" width="256">SW-KYUREON-00-03b</language>
 		<language name="JPN_KANJI" width="256">SW-KYUREON-00-03b</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_01_01">
+		<language name="JPN" width="256">SW-KYUREON-01-01</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-01-01</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_01_01b">
+		<language name="JPN" width="256">SW-KYUREON-01-01b</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-01-01b</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_01_02a">
+		<language name="JPN" width="256">SW-KYUREON-01-02a</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-01-02a</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_01_02b">
+		<language name="JPN" width="256">SW-KYUREON-01-02b</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-01-02b</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_01_03">
+		<language name="JPN" width="256">SW-KYUREON-01-03</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-01-03</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_01_04">
+		<language name="JPN" width="256">SW-KYUREON-01-04</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-01-04</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_01_05">
+		<language name="JPN" width="256">SW-KYUREON-01-05</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-01-05</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_01_06">
+		<language name="JPN" width="256">SW-KYUREON-01-06</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-01-06</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_01_07">
+		<language name="JPN" width="256">SW-KYUREON-01-07</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-01-07</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_01_07b">
+		<language name="JPN" width="256">SW-KYUREON-01-07b</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-01-07b</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_01_08">
+		<language name="JPN" width="256">SW-KYUREON-01-08</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-01-08</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_01_09">
+		<language name="JPN" width="256">SW-KYUREON-01-09</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-01-09</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_01_10">
+		<language name="JPN" width="256">SW-KYUREON-01-10</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-01-10</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_01_11">
+		<language name="JPN" width="256">SW-KYUREON-01-11</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-01-11</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_01_12">
+		<language name="JPN" width="256">SW-KYUREON-01-12</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-01-12</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_01_13">
+		<language name="JPN" width="256">SW-KYUREON-01-13</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-01-13</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_01_14b">
+		<language name="JPN" width="256">SW-KYUREON-01-14b</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-01-14b</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_01_14w">
+		<language name="JPN" width="256">SW-KYUREON-01-14w</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-01-14w</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_01_15">
+		<language name="JPN" width="256">SW-KYUREON-01-15</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-01-15</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_01_16">
+		<language name="JPN" width="256">SW-KYUREON-01-16</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-01-16</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_02_01">
+		<language name="JPN" width="256">SW-KYUREON-02-01</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-02-01</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_02_02">
+		<language name="JPN" width="256">SW-KYUREON-02-02</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-02-02</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_02_03">
+		<language name="JPN" width="256">SW-KYUREON-02-03</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-02-03</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_02_04">
+		<language name="JPN" width="256">SW-KYUREON-02-04</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-02-04</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_02_05">
+		<language name="JPN" width="256">SW-KYUREON-02-05</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-02-05</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_02_06">
+		<language name="JPN" width="256">SW-KYUREON-02-06</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-02-06</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_02_07">
+		<language name="JPN" width="256">SW-KYUREON-02-07</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-02-07</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_02_08">
+		<language name="JPN" width="256">SW-KYUREON-02-08</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-02-08</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_02_09">
+		<language name="JPN" width="256">SW-KYUREON-02-09</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-02-09</language>
+	</row>
+	<row id="msg_seq_se_sw_kyureon_02_10">
+		<language name="JPN" width="256">SW-KYUREON-02-10</language>
+		<language name="JPN_KANJI" width="256">SW-KYUREON-02-10</language>
 	</row>
 	<row id="msg_seq_se_sw_ending_01">
 		<language name="JPN" width="256">SW-ENDING-01</language>
