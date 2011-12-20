@@ -343,10 +343,10 @@ static const FLD_GMK_TABLE FieldGimmickTable[] = {
     ENDING_GIMMICK_Move,   // エンディング
   },
   {
-    FS_OVERLAY_ID(field_gimmick_kerudhio),
-    KERUDHIO_GIMMICK_Setup,  // 【配布】ケルディオ
-    KERUDHIO_GIMMICK_End,    // 【配布】ケルディオ
-    KERUDHIO_GIMMICK_Move,   // 【配布】ケルディオ
+    FS_OVERLAY_ID(sppoke_gimmick),  // T06R0401
+    SPPOKE_GMK_SetupKerudhio,  // 【配布】ケルディオ
+    SPPOKE_GMK_EndKerudhio,    // 【配布】ケルディオ
+    SPPOKE_GMK_MoveKerudhio,   // 【配布】ケルディオ
   },
 };
 

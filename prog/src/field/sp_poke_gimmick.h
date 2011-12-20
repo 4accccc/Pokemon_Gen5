@@ -25,6 +25,17 @@ extern void SPPOKE_GMK_SetupZoroa(FIELDMAP_WORK *fieldWork);
 extern void SPPOKE_GMK_EndZoroa(FIELDMAP_WORK *fieldWork);
 extern void SPPOKE_GMK_MoveZoroa(FIELDMAP_WORK *fieldWork);
 
+// swan追加
+// 【配布】ケルディオ
+extern void SPPOKE_GMK_SetupKerudhio( FIELDMAP_WORK *p_fieldmap );
+extern void SPPOKE_GMK_EndKerudhio( FIELDMAP_WORK *p_fieldmap );
+extern void SPPOKE_GMK_MoveKerudhio( FIELDMAP_WORK *p_fieldmap );
+// ケルディオ演出イベント
+extern GMEVENT* KERUDHIO_GIMMICK_Event( GAMESYS_WORK *gsys );
+// ケルディオ エフェクト削除
+extern void KERUDHIO_GIMMICK_EffectDelete( GAMESYS_WORK *gsys );
+
+
 extern GMEVENT *SPPOKE_GMK_MoveBall(
     GAMESYS_WORK *gsys, const BALL_ANM_TYPE inType,
     const VecFx32 *inStart, const VecFx32 *inEnd ,

@@ -56,7 +56,6 @@
 #include "field_gimmick_c14.h"
 #include "field_gimmick_rezi.h"
 #include "field_gimmick_ending.h"
-#include "field_gimmick_kerudhio.h"
 
 FS_EXTERN_OVERLAY(field_gym_insect);
 FS_EXTERN_OVERLAY(field_gym_elec);
@@ -103,7 +102,6 @@ FS_EXTERN_OVERLAY(field_gimmick_c12);
 FS_EXTERN_OVERLAY(field_gimmick_c14);
 FS_EXTERN_OVERLAY(field_gimmick_rezi);
 FS_EXTERN_OVERLAY(field_gimmick_ending);
-FS_EXTERN_OVERLAY(field_gimmick_kerudhio);
 
 
 #include "field_gimmick_table.cdat"
