@@ -20,7 +20,172 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA		ev_r14r0201_backpackerw_01
+_EVENT_DATA		ev_zone_r14r0201
+_EVENT_DATA		ev_pos_r14r0201_randorus
 _EVENT_DATA_END
+
+//話しかけた方向取得変数
+DEFINE_LOCAL LWK_DIR
+DEFINE_LOCAL  LCW_POSX
+DEFINE_LOCAL  LCW_POSZ
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_r14r0201
+{
+
+  //チェックのための変数定義
+  DEFINE_LOCAL LWK_PARTY_NUM
+  DEFINE_LOCAL LWK_COUNT_NUM
+  DEFINE_LOCAL LWK_MONS_NO
+  DEFINE_LOCAL LWK_FORM_NO
+  DEFINE_LOCAL LWK_CHECK_RESULT
+  
+  //手持ちの数をチェックする
+  _GET_PARTY_POKE_COUNT ( LWK_PARTY_NUM , POKECOUNT_MODE_TOTAL)
+  
+  //手持ち分だけランドロスのチェックを行う
+  WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+    
+    //指定POSの種族をチェック
+    _GET_PARTY_POKE_MONSNO( LWK_MONS_NO, LWK_COUNT_NUM )
+    //指定POSのFORMNOをチェック
+    _GET_PARTY_POKE_FORMNO( LWK_FORM_NO, LWK_COUNT_NUM )
+    
+    //条件
+    IF $LWK_MONS_NO == MONSNO_652 && $LWK_FORM_NO == FORMNO_652_AR THEN
+      $LWK_CHECK_RESULT += 1
+    ENDIF
+  
+  //カウントアップ
+  $LWK_COUNT_NUM +=1
+  
+  ENDWHILE
+  
+  //イベントを終了しておらずランドロスが手持ちにいる
+  IF $LWK_CHECK_RESULT >= 1 && $WK_SCENE_R14R0201_RANDORUS != 2 THEN
+    
+    //老人を表示に
+    _FLAG_RESET( FV_R14R0201_OLDMAN_01 )
+    //イベント起動POSを有効にする
+    $WK_SCENE_R14R0201_RANDORUS = 1
+    
+  //イベントが終了しているor条件を満たしていない
+  ELSE
+    
+    //老人を非表示に
+    _FLAG_SET( FV_R14R0201_OLDMAN_01 )
+    
+    //イベント未終了の場合はPOSを無効にセット
+    IF $WK_SCENE_R14R0201_RANDORUS == 1 THEN
+      $WK_SCENE_R14R0201_RANDORUS = 0
+    ENDIF
+  
+  ENDIF
+  
+}
+INIT_EVENT_END
+
+/**************************************************************/
+/*  POS：うつしかがみ入手イベント                              */
+/**************************************************************/
+EVENT_START   ev_pos_r14r0201_randorus
+  
+  //プレイヤー位置取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  $LCW_POSZ -= 1
+  
+  //アニメ：老人「！」
+  _OBJ_ANIME( R14R0201_OLDMAN_01, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+  
+  _TIME_WAIT( 6 )
+  
+  //アニメ：老人ふりむく
+  _OBJ_ANIME( R14R0201_OLDMAN_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //老人：むむっ
+  _BALLOONWIN_OBJMSG_POS( msg_r14r0201_landorus_01, R14R0201_OLDMAN_01, POS_UR )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：老人隣接
+  _OBJ_ANIME_AUTO( R14R0201_OLDMAN_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  //老人：ほほう！ほうほう！
+  _BALLOONWIN_OBJMSG_POS( msg_r14r0201_landorus_02, R14R0201_OLDMAN_01, POS_UR )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：老人目をそらす
+  _OBJ_ANIME( R14R0201_OLDMAN_01, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+  
+  //老人：むかしのことじゃ
+  _BALLOONWIN_OBJMSG_POS( msg_r14r0201_landorus_03, R14R0201_OLDMAN_01, POS_UR )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：老人「！」主人公を見る
+  _OBJ_ANIME( R14R0201_OLDMAN_01, anm_oldman_gyoe )
+  _OBJ_ANIME_WAIT()
+  
+  //老人：おお！そうじゃ！
+  _BALLOONWIN_OBJMSG_POS( msg_r14r0201_landorus_04, R14R0201_OLDMAN_01, POS_UR )
+  _MSGWIN_CLOSE()
+  
+  //アニメ：老人社へ
+  _OBJ_ANIME_AUTO( R14R0201_OLDMAN_01, 22, 13, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  _TIME_WAIT( 8 )
+  
+  //アニメ：老人その場ステップ
+  _OBJ_ANIME( R14R0201_OLDMAN_01, anm_staystep_u )
+  _OBJ_ANIME_WAIT()
+  
+  _TIME_WAIT( 8 )
+  
+  //アニメ：老人隣接
+  _OBJ_ANIME_AUTO( R14R0201_OLDMAN_01, LCW_POSX, LCW_POSZ, FORCE_TYPE_NPC, 8, DIR_LR)
+  _OBJ_ANIME_WAIT()
+  
+  //老人：やしろに　まつられていた
+  _BALLOONWIN_OBJMSG_POS( msg_r14r0201_landorus_05, R14R0201_OLDMAN_01, POS_UR )
+  _MSGWIN_CLOSE()
+  
+  //うつしががみ入手処理
+  _ITEM_EVENT_KEYWAIT(ITEM_UTUSIKAGAMI, 1)
+  
+  //老人：うつしかがみを　つかうと
+  _BALLOONWIN_OBJMSG_POS( msg_r14r0201_landorus_06, R14R0201_OLDMAN_01, POS_UR )
+  _MSGWIN_CLOSE()
+  
+  IF $LCW_POSX == 22 THEN
+    _OBJ_ANIME_AUTO( R14R0201_OLDMAN_01, 23, 24, FORCE_TYPE_NPC, 8, DIR_LR)
+  ELSE
+    _OBJ_ANIME_AUTO( R14R0201_OLDMAN_01, 22, 24, FORCE_TYPE_NPC, 8, DIR_LR)
+  ENDIF
+  _TIME_WAIT( 16 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  _OBJ_DEL( R14R0201_OLDMAN_01 )
+  
+  //==================================//
+  //老人を非表示に
+  _FLAG_SET( FV_R14R0201_OLDMAN_01 )
+  //豊穣の社イベント終了
+  $WK_SCENE_R14R0201_RANDORUS = 2
+  //==================================//
+EVENT_END
+
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_oldman_gyoe
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*  BACKPACKERW                                            */
@@ -61,3 +226,81 @@ EVENT_START   ev_r14r0201_backpackerw_01
   
 EVENT_END
 
+//--------------------------------------------------------------------
+//	☆共通処理：1歩歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_walk_d
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_u
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_r
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_walk_l
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_d
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_l
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_dir_r
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ハテナ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：…
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_tenten
+	_ANIME_DATA	AC_MARK_TENTEN,1
+	_ANIME_DATA	ACMD_END,0
+	

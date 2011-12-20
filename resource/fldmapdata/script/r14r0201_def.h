@@ -6,5 +6,7 @@
 
 //スクリプトデータID定義
 #define SCRID_R14R0201_BACKPACKERW_01 (1)
+#define SCRID_ZONE_R14R0201 (2)
+#define SCRID_POS_R14R0201_RANDORUS (3)
 
 #endif //_R14R0201_DEF_H_

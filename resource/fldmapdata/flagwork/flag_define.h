@@ -940,6 +940,7 @@
 #define FV_D27R0101_STOPPER_02            1025 /* 0x0401 プラズマフリゲート：搭乗二回目ストッパー */
 #define FV_D27R1101_SWPLAZMA_03           1026 /* 0x0402 プラズマフリゲート：搭乗三回目プラズマ団員 */
 #define FV_H05_WANDERGIRL                 1027 /* 0x0403 ワンダーブリッジ：消える少女 */
+#define FV_R14R0201_OLDMAN_01             1028 /* 0x0404 豊穣の社：うつしかがみをくれる老人 */
 
 #define FV_AREA_END                       1099 /* 0x044b  */
 
