@@ -1726,7 +1726,6 @@ static void bs_disp_scenario_string( BSCENARIO_WORK * wk, const s32 mode )
 	s32		mesid;
 	s32		topid;
 	s32		buf[2];
-	s32		sbuf[2];
 	s32		tmp;
 	STRBUF	*strbuf;
 	
@@ -1754,8 +1753,6 @@ static void bs_disp_scenario_string( BSCENARIO_WORK * wk, const s32 mode )
 		//-----------
 		// 見出し
 		strbuf = GFL_MSG_CreateString( wk->MsgData[1], topid+2*wk->PageNum );
-		// 見出しの長さを調べる(シーン00)
-		sbuf[0] = PRINTSYS_GetStrWidth( strbuf, wk->dat->font, 0 );
 		BsCmn_DispString( wk, BS_CVS_SCENARIO_SCENE00, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0), 0, 0 );
 		GFL_STR_DeleteBuffer( strbuf );
 		//ヒント
@@ -1769,8 +1766,6 @@ static void bs_disp_scenario_string( BSCENARIO_WORK * wk, const s32 mode )
 		if((2*wk->PageNum+1) < wk->ScenarioMax){
 			// 見出し
 			strbuf = GFL_MSG_CreateString( wk->MsgData[1], topid+2*wk->PageNum+1 );
-			// 見出しの長さを調べる(シーン01)
-			sbuf[1] = PRINTSYS_GetStrWidth( strbuf, wk->dat->font, 0 );
 			BsCmn_DispString( wk, BS_CVS_SCENARIO_SCENE01, 0, 0, strbuf, 0, PRINTSYS_LSB_Make(1,2,0), 0, 0 );
 			GFL_STR_DeleteBuffer( strbuf );
 			// ヒント
@@ -1782,7 +1777,6 @@ static void bs_disp_scenario_string( BSCENARIO_WORK * wk, const s32 mode )
 			// 非表示
 			BsCmn_ClearCanvas( wk, BS_CVS_SCENARIO_SCENE01 );
 			BsCmn_ClearCanvas( wk, BS_CVS_SCENARIO_SCENE01_MES );
-			sbuf[1] = 0;	// 念のため
 		}
 		//------------------
 		// ヒントマーク表示
@@ -1790,8 +1784,8 @@ static void bs_disp_scenario_string( BSCENARIO_WORK * wk, const s32 mode )
 		buf[0] = (wk->dat->page_num-1)/2;	// ページ数
 		buf[1] = (wk->dat->page_num-1)%2;	// 表示位置(上、下)
 		if( wk->PageNum == buf[0] ){
-			// 文字列の長さ(sbuf[])+マークのサイズ(BS_HINTMARK_SIZE)ずらして表示
-			BsCmn_DispHintMark( wk, buf[1], sbuf[ buf[1] ]+BS_HINTMARK_SIZE, TRUE );
+			// 表示
+			BsCmn_DispHintMark( wk, buf[1], 0, TRUE );
 		}else{
 			// 非表示
 			BsCmn_DispHintMark( wk, 0, 0, FALSE );

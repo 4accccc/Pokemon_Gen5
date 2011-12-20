@@ -69,6 +69,11 @@ enum{
 	FLG_SCREEN_ANIM	= (1<<0),		// 再生中
 };
 
+// シーケンス
+enum{
+	SEQ_HINT		= 10,			// ヒントマーク
+};
+
 //-----------------------------------------
 // BGPALの定義
 //------------------------------------------
@@ -390,7 +395,6 @@ const BS_OBJ_DATA bs_obj_03_tbl[] = {
 	{ 9,	0x28,	3,	0,	0,	1,	37,	BS_RES_ARROW_CHR,},	// 上マーク
 	//
 	{ 10,	0x28,	3,	0,	0,	1,	38,	BS_RES_ARROW_CHR,},	// 強調マーク
-	{ 10,	0x28,	3,	0,	0,	1,	39,	BS_RES_ARROW_CHR,},	// 強調マーク
 	//
 	{ 0xff, 0, 0, 0, 0, 0, 0, 0,}, // end code
 };
@@ -1515,7 +1519,7 @@ void BsCmn_DispUpMark( BSCENARIO_WORK *wk, const s32 mode )
  *
  *	@param	BSCENARIO_WORK* 	wk
  *	@param	const s32			(0:上、1:下)
- *  @param	const s32			(右オフセット)
+ *  @param	const s32			(右オフセット)=>未使用
  *  @param	const BOOL			(TRUE:表示、FALSE:非表示)
  *
  *	@retval
@@ -1531,13 +1535,10 @@ void BsCmn_DispHintMark( BSCENARIO_WORK *wk, const s32 mode, const s32 xoff, con
 		pos.x = bscmn_get_empty( wk, 2*bs_hint_emp_tbl[mode] );
 		pos.y = bscmn_get_empty( wk, 2*bs_hint_emp_tbl[mode]+1 );
 		GFL_CLACT_WK_SetPos( wk->clwk_arrow[BS_CLWK_ARROW_HINT_00], &pos, CLSYS_DEFREND_SUB );
-		//
-		// 右側位置セット
-		pos.x += xoff;
-		GFL_CLACT_WK_SetPos( wk->clwk_arrow[BS_CLWK_ARROW_HINT_01], &pos, CLSYS_DEFREND_SUB );
+		// アニメをはじめからにする
+		BsCmn_ChgSeq( wk, BS_CLWK_ARROW_HINT_00, SEQ_HINT );
 	}
 	// 表示/非表示
 	BsCmn_ObjVisible( wk, BS_CLWKMODE_ARROW, BS_CLWK_ARROW_HINT_00, bflg );
-	BsCmn_ObjVisible( wk, BS_CLWKMODE_ARROW, BS_CLWK_ARROW_HINT_01, bflg );
 }
 

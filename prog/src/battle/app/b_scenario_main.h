@@ -121,7 +121,6 @@ enum{
 	BS_CLWK_ARROW_BACK,				// 戻る
 	BS_CLWK_ARROW_UPMARK,			// 上マーク
 	BS_CLWK_ARROW_HINT_00,			// 強調マーク00
-	BS_CLWK_ARROW_HINT_01,			// 強調マーク01
 	//
 	BS_CLWK_ARROW_MAX,
 };
