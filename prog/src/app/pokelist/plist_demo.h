@@ -66,4 +66,5 @@ extern const KYUREMU_CHECK_CODE PLIST_DEMO_CheckKyuremuToColor( PLIST_WORK *work
 extern const BOOL PLIST_DEMO_CheckKyuremuToNormal( PLIST_WORK *work , POKEMON_PARAM *pp );
 extern void PLIST_DEMO_ChangeKyuremuColor( PLIST_WORK *work, KYUREMU_UNION_CHECK mode, int kyuremu_idx, int target_idx );
 extern void PLIST_DEMO_ChangeKyuremuNormal( PLIST_WORK *work, POKEMON_PARAM* pp_k );
-
+extern const BOOL PLIST_DEMO_CheckTorosFormChange( PLIST_WORK *work , POKEMON_PARAM *pp );
+extern void PLIST_DEMO_ChangeTorosForm( PLIST_WORK *work , POKEMON_PARAM *pp );

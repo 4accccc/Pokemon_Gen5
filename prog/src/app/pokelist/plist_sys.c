@@ -1779,6 +1779,15 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
             work->mainSeq = PSMS_FORM_CHANGE_INIT;
             work->demoType = PDT_SHEIMI_TO_SKY;
           }
+          //うつしかがみチェック
+          else if( work->plData->item == ITEM_UTUSIKAGAMI &&
+                   PLIST_DEMO_CheckTorosFormChange( work , work->selectPokePara ) == TRUE )
+          {
+            PLIST_DEMO_ChangeTorosForm( work , work->selectPokePara );
+            work->plData->ret_mode = PL_RET_BAG;
+            work->mainSeq = PSMS_FORM_CHANGE_INIT;
+            work->demoType = PDT_TOROS_FORM_CHANGE;
+          }
           //いでんしのくさび(合体用)チェック
           else if( work->plData->item == ITEM_IDENSINOKUSABI )
           {

@@ -54,6 +54,7 @@ typedef enum
   SHORTCUT_ID_POKELIST,         //ポケモンリスト
 	SHORTCUT_ID_ZUKAN_HABITAT_LIST,				//ずかん＞せいそくちリスト
 	SHORTCUT_ID_ZUKAN_HABITAT_ZONE,				//ずかん＞せいそくちじょうほう
+  SHORTCUT_ID_UTUSIKAGAMI,         //うつしかがみ
 
 	SHORTCUT_ID_MAX,
 	SHORTCUT_ID_NULL	= 0xFF,	//データなし

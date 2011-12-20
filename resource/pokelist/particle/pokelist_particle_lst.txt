@@ -64,3 +64,11 @@ demo_kyuremu_perge_z.spa
 	change_eff05e.spr
 	change_eff05f.spr
 
+//--------------------------------------------------------------
+//	フォルムチェンジ：トロス3体のフォルムチェンジエフェクト
+//--------------------------------------------------------------
+demo_toros.spa
+	toros_eff01.spr
+	toros_eff02.spr
+	toros_eff03.spr
+

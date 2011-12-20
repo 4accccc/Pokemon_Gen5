@@ -58,6 +58,13 @@
 //demo_kyuremu_perge_z.spa内のリソース個数
 #define DEMO_KYUREMU_PERGE_Z_SPAMAX	(6)
 
+//demo_toros.hのsprリソース定義
+#define DEMO_TOROS_TOROS_EFF01		0
+#define DEMO_TOROS_TOROS_EFF02		1
+#define DEMO_TOROS_TOROS_EFF03		2
+//demo_toros.spa内のリソース個数
+#define DEMO_TOROS_SPAMAX	(3)
+
 
 
 //---- pokelist_particle_lst_tblテーブルのdefine定義 ----
@@ -68,8 +75,9 @@
 #define SPA_DEMO_ZEKUROMU		(4)
 #define SPA_DEMO_KYUREMU_PERGE_R		(5)
 #define SPA_DEMO_KYUREMU_PERGE_Z		(6)
+#define SPA_DEMO_TOROS		(7)
 
-#define SPA_POKELIST_PARTICLE_LST_MAX		(7)
+#define SPA_POKELIST_PARTICLE_LST_MAX		(8)
 
 
 #endif

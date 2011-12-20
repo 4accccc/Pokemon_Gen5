@@ -35,9 +35,11 @@
 #define PLIST_DEMO_EFFECT_WORK_SIZE (0x5000)
 
 ///パーティクルが出て、この時間だけ経ったらポケモンアイコン変更
-#define PLIST_DEMO_CHANGE_WAIT_GIRATHINA		(65)
+#define PLIST_DEMO_CHANGE_WAIT_GIRATHINA    (65)
 ///パーティクルが出て、この時間だけ経ったらポケモンアイコン変更
-#define PLIST_DEMO_CHANGE_WAIT_SHEIMI			(38)
+#define PLIST_DEMO_CHANGE_WAIT_SHEIMI       (38)
+///パーティクルが出て、この時間だけ経ったらポケモンアイコン変更
+#define PLIST_DEMO_CHANGE_WAIT_TOROS        (38)
 ///パーティクルが出て、この時間だけ経ったらホワイトアウト開始
 #define PLIST_DEMO_CHANGE_WAIT_KYUREMU_UNION_WHITEOUT		(110)
 #define PLIST_DEMO_CHANGE_WAIT_KYUREMU_PERGE_WHITEOUT		(130)
@@ -116,6 +118,7 @@ void PLIST_DEMO_DemoTerm( PLIST_WORK *work )
   case PDT_SHEIMI_TO_SKY:
   case PDT_KYUREMU_TO_COLOR:
   case PDT_KYUREMU_TO_NORMAL:
+  case PDT_TOROS_FORM_CHANGE:
     PLIST_MSG_CreateWordSet( work , work->msgWork );
     PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
     PLIST_MessageWaitInit( work , mes_pokelist_12_01 , TRUE , cbFunc );
@@ -138,6 +141,7 @@ void PLIST_DEMO_DemoMain( PLIST_WORK *work )
   case PDT_GIRATHINA_TO_ORIGIN:
   case PDT_GIRATHINA_TO_ANOTHER:
   case PDT_SHEIMI_TO_SKY:
+  case PDT_TOROS_FORM_CHANGE:
     ret = PLIST_DEMO_FormChangeSeq( work );
     break;
   case PDT_KYUREMU_TO_COLOR:
@@ -174,6 +178,7 @@ static const PLIST_DEMO_PARTICLE DATA_ParticleResTbl[SPA_POKELIST_PARTICLE_LST_M
   { NARC_pokelist_gra_demo_zekuromu_spa,         DEMO_ZEKUROMU_SPAMAX },          //キュレム合体ゼクロム
   { NARC_pokelist_gra_demo_kyuremu_perge_r_spa,  DEMO_KYUREMU_PERGE_R_SPAMAX },   //キュレム分離レシラム
   { NARC_pokelist_gra_demo_kyuremu_perge_z_spa,  DEMO_KYUREMU_PERGE_Z_SPAMAX },   //キュレム分離ゼクロム
+  { NARC_pokelist_gra_demo_toros_spa,            DEMO_TOROS_SPAMAX },   //トロスフォルムチェンジ
 };
 
 //--------------------------------------------------------------
@@ -262,6 +267,12 @@ static void PLIST_DEMO_InitEffect( PLIST_WORK *work )
       }
     }
     break;
+  case PDT_TOROS_FORM_CHANGE:
+    PLIST_DEMO_InitEffectCore( work, 0, SPA_DEMO_TOROS, work->pokeCursor );
+    work->demoChangeTimming = PLIST_DEMO_CHANGE_WAIT_TOROS;
+    work->demoSeNo = PLIST_SND_DEMO_TOROS;
+    break;
+    
   }
 }
 
@@ -704,4 +715,31 @@ static void PLIST_DEMO_KyuremuWazaChange( POKEMON_PARAM* pp, u8 s_idx, u8 d_idx 
   }
 }
 
+
+//--------------------------------------------------------------
+//	トロス3体：フォルムチェンジチェック
+//--------------------------------------------------------------
+const BOOL PLIST_DEMO_CheckTorosFormChange( PLIST_WORK *work , POKEMON_PARAM *pp )
+{
+  u16 monsno = PP_Get( pp , ID_PARA_monsno , NULL );
+  
+  if( monsno != MONSNO_TORUNEROSU &&
+      monsno != MONSNO_BORUTOROSU &&
+      monsno != MONSNO_RANDOROSU )
+  {
+    //トロス3体じゃない！
+    return FALSE;
+  }
+  return TRUE;
+}
+//--------------------------------------------------------------
+//	トロス3体：フォルム変更(再描画はしない
+//--------------------------------------------------------------
+void PLIST_DEMO_ChangeTorosForm( PLIST_WORK *work , POKEMON_PARAM *pp )
+{
+  u16 form = PP_Get( pp, ID_PARA_form_no, NULL );
+  
+  PP_ChangeFormNo( pp , form^1 ); //フォルムスワップ
+  ZUKANSAVE_SetPokeGet( work->plData->zkn , pp );
+}
 

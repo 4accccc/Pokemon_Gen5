@@ -27,6 +27,7 @@
 #define ITEMUSE_FLD_MEDALBOX		 	  ( 27 )	// フィールド：メダルボックス
 #define ITEMUSE_FLD_IDENSINOKUSABI_U  ( 28 )	// フィールド：いでんしのくさび(合体用)
 #define ITEMUSE_FLD_IDENSINOKUSABI_P  ( 29 )	// フィールド：いでんしのくさび(分離用)
+#define ITEMUSE_FLD_UTUSIKAGAMI       ( 30 )	// フィールド：うつしかがみ
 
 #define	ITEMUSE_BTL_BALL		( 1 )	// バトル：ボール
 #define	ITEMUSE_BTL_RECOVER		( 2 )	// バトル：回復

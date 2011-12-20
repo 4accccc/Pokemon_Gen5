@@ -924,7 +924,8 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
 
   if( param == ITEM_GURASIDEANOHANA ||
       param == ITEM_IDENSINOKUSABI  ||
-      param == ITEM_IDENSINOKUSABI_1 )
+      param == ITEM_IDENSINOKUSABI_1||
+      param == ITEM_UTUSIKAGAMI )
   { 
     //paramに有効なアイテムナンバーが入っていたら、大切な道具使用ショートカット
     //

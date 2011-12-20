@@ -44,7 +44,8 @@ enum {
 	NARC_pokelist_gra_demo_kyuremu_union_spa = 30,
 	NARC_pokelist_gra_demo_resiramu_spa = 31,
 	NARC_pokelist_gra_demo_sheimi_spa = 32,
-	NARC_pokelist_gra_demo_zekuromu_spa = 33
+	NARC_pokelist_gra_demo_toros_spa = 33,
+	NARC_pokelist_gra_demo_zekuromu_spa = 34
 };
 
 /* NARC_POKELIST_GRA_NAIX_ */

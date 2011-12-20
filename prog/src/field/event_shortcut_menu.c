@@ -916,6 +916,10 @@ static CALLTYPE ShortCutMenu_SetCallType( EVENT_PROCLINK_PARAM *p_param, SHORTCU
     p_param->call = EVENT_PROCLINK_CALL_POKELIST;
     p_param->data = EVENT_PROCLINK_DATA_NONE;   // 値を指定してしまうと大切などうぐ使用になる
     return CALLTYPE_PROC;
+	case SHORTCUT_ID_UTUSIKAGAMI:		//うつしかがみ
+		p_param->call	= EVENT_PROCLINK_CALL_POKELIST;
+		p_param->data	= ITEM_UTUSIKAGAMI;
+		return CALLTYPE_PROC;
   default:
 		GF_ASSERT(0);
 		p_param->call = EVENT_PROCLINK_CALL_ZUKAN;
