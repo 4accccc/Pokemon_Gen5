@@ -84,14 +84,17 @@ static const DEMO3D_FILE_UNIT res_plane_take_off_yamaji_file_unit_plane_take_off
 static const u16 res_plane_take_off_yamaji_file_plane_take_off_y_sky_morning[] = {
  NARC_data_demo3d_plane_take_off_y_sky_nsbmd,
  NARC_data_demo3d_plane_take_off_y_sky_d_nsbtp,
+ NARC_data_demo3d_plane_take_off_y_sky_d_nsbca,
 };
 static const u16 res_plane_take_off_yamaji_file_plane_take_off_y_sky_noon[] = {
  NARC_data_demo3d_plane_take_off_y_sky_nsbmd,
  NARC_data_demo3d_plane_take_off_y_sky_d_nsbtp,
+ NARC_data_demo3d_plane_take_off_y_sky_d_nsbca,
 };
 static const u16 res_plane_take_off_yamaji_file_plane_take_off_y_sky_evening[] = {
  NARC_data_demo3d_plane_take_off_y_sky_nsbmd,
  NARC_data_demo3d_plane_take_off_y_sky_e_nsbtp,
+ NARC_data_demo3d_plane_take_off_y_sky_e_nsbca,
 };
 static const u16 res_plane_take_off_yamaji_file_plane_take_off_y_sky_night[] = {
  NARC_data_demo3d_plane_take_off_y_sky_nsbmd,
@@ -103,9 +106,9 @@ static const u16 res_plane_take_off_yamaji_file_plane_take_off_y_sky_midnight[] 
 };
 
 static const DEMO3D_FILE_UNIT res_plane_take_off_yamaji_file_unit_plane_take_off_y_sky[] = {
- { res_plane_take_off_yamaji_file_plane_take_off_y_sky_morning, 2 },
- { res_plane_take_off_yamaji_file_plane_take_off_y_sky_noon, 2 },
- { res_plane_take_off_yamaji_file_plane_take_off_y_sky_evening, 2 },
+ { res_plane_take_off_yamaji_file_plane_take_off_y_sky_morning, 3 },
+ { res_plane_take_off_yamaji_file_plane_take_off_y_sky_noon, 3 },
+ { res_plane_take_off_yamaji_file_plane_take_off_y_sky_evening, 3 },
  { res_plane_take_off_yamaji_file_plane_take_off_y_sky_night, 2 },
  { res_plane_take_off_yamaji_file_plane_take_off_y_sky_midnight, 2 },
 };

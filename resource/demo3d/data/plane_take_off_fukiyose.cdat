@@ -66,16 +66,72 @@ static const DEMO3D_CMD_DATA demo3d_cmd_plane_take_off_fukiyose_end_data[] = {
 //============================================
 
 ///==================================
-/// plane_take_off_fukiyose Unit File Resource
+/// plane_fukiyose Unit File Resource
 
-static const u16 res_plane_take_off_fukiyose_file_plane_take_off_fukiyose[] = {
- NARC_data_demo3d_plane_take_off_fukiyose_nsbmd,
- NARC_data_demo3d_plane_take_off_fukiyose_nsbta,
- NARC_data_demo3d_plane_take_off_fukiyose_nsbca,
+static const u16 res_plane_take_off_fukiyose_file_plane_fukiyose[] = {
+ NARC_data_demo3d_plane_fukiyose_nsbmd,
+ NARC_data_demo3d_plane_fukiyose_nsbta,
+ NARC_data_demo3d_plane_fukiyose_nsbca,
 };
 
-static const DEMO3D_FILE_UNIT res_plane_take_off_fukiyose_file_unit_plane_take_off_fukiyose[] = {
- { res_plane_take_off_fukiyose_file_plane_take_off_fukiyose, 3 },
+static const DEMO3D_FILE_UNIT res_plane_take_off_fukiyose_file_unit_plane_fukiyose[] = {
+ { res_plane_take_off_fukiyose_file_plane_fukiyose, 3 },
+};
+
+///==================================
+/// fukiyose_field_sp Unit File Resource
+
+static const u16 res_plane_take_off_fukiyose_file_fukiyose_field_sp[] = {
+ NARC_data_demo3d_plane_take_off_fu_sp_nsbmd,
+ NARC_data_demo3d_plane_take_off_fu_sp_nsbtp,
+ NARC_data_demo3d_plane_take_off_fu_sp_nsbta,
+ NARC_data_demo3d_plane_take_off_fu_sp_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_plane_take_off_fukiyose_file_unit_fukiyose_field_sp[] = {
+ { res_plane_take_off_fukiyose_file_fukiyose_field_sp, 4 },
+};
+
+///==================================
+/// fukiyose_field_su Unit File Resource
+
+static const u16 res_plane_take_off_fukiyose_file_fukiyose_field_su[] = {
+ NARC_data_demo3d_plane_take_off_fu_su_nsbmd,
+ NARC_data_demo3d_plane_take_off_fu_su_nsbtp,
+ NARC_data_demo3d_plane_take_off_fu_su_nsbta,
+ NARC_data_demo3d_plane_take_off_fu_su_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_plane_take_off_fukiyose_file_unit_fukiyose_field_su[] = {
+ { res_plane_take_off_fukiyose_file_fukiyose_field_su, 4 },
+};
+
+///==================================
+/// fukiyose_field_au Unit File Resource
+
+static const u16 res_plane_take_off_fukiyose_file_fukiyose_field_au[] = {
+ NARC_data_demo3d_plane_take_off_fu_au_nsbmd,
+ NARC_data_demo3d_plane_take_off_fu_au_nsbtp,
+ NARC_data_demo3d_plane_take_off_fu_au_nsbta,
+ NARC_data_demo3d_plane_take_off_fu_au_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_plane_take_off_fukiyose_file_unit_fukiyose_field_au[] = {
+ { res_plane_take_off_fukiyose_file_fukiyose_field_au, 4 },
+};
+
+///==================================
+/// fukiyose_field_wi Unit File Resource
+
+static const u16 res_plane_take_off_fukiyose_file_fukiyose_field_wi[] = {
+ NARC_data_demo3d_plane_take_off_fu_wi_nsbmd,
+ NARC_data_demo3d_plane_take_off_fu_wi_nsbtp,
+ NARC_data_demo3d_plane_take_off_fu_wi_nsbta,
+ NARC_data_demo3d_plane_take_off_fu_wi_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_plane_take_off_fukiyose_file_unit_fukiyose_field_wi[] = {
+ { res_plane_take_off_fukiyose_file_fukiyose_field_wi, 4 },
 };
 
 ///==================================
@@ -84,14 +140,17 @@ static const DEMO3D_FILE_UNIT res_plane_take_off_fukiyose_file_unit_plane_take_o
 static const u16 res_plane_take_off_fukiyose_file_plane_take_off_f_sky_morning[] = {
  NARC_data_demo3d_plane_take_off_f_sky_nsbmd,
  NARC_data_demo3d_plane_take_off_f_sky_d_nsbtp,
+ NARC_data_demo3d_plane_take_off_f_sky_d_nsbca,
 };
 static const u16 res_plane_take_off_fukiyose_file_plane_take_off_f_sky_noon[] = {
  NARC_data_demo3d_plane_take_off_f_sky_nsbmd,
  NARC_data_demo3d_plane_take_off_f_sky_d_nsbtp,
+ NARC_data_demo3d_plane_take_off_f_sky_d_nsbca,
 };
 static const u16 res_plane_take_off_fukiyose_file_plane_take_off_f_sky_evening[] = {
  NARC_data_demo3d_plane_take_off_f_sky_nsbmd,
  NARC_data_demo3d_plane_take_off_f_sky_e_nsbtp,
+ NARC_data_demo3d_plane_take_off_f_sky_e_nsbca,
 };
 static const u16 res_plane_take_off_fukiyose_file_plane_take_off_f_sky_night[] = {
  NARC_data_demo3d_plane_take_off_f_sky_nsbmd,
@@ -103,9 +162,9 @@ static const u16 res_plane_take_off_fukiyose_file_plane_take_off_f_sky_midnight[
 };
 
 static const DEMO3D_FILE_UNIT res_plane_take_off_fukiyose_file_unit_plane_take_off_f_sky[] = {
- { res_plane_take_off_fukiyose_file_plane_take_off_f_sky_morning, 2 },
- { res_plane_take_off_fukiyose_file_plane_take_off_f_sky_noon, 2 },
- { res_plane_take_off_fukiyose_file_plane_take_off_f_sky_evening, 2 },
+ { res_plane_take_off_fukiyose_file_plane_take_off_f_sky_morning, 3 },
+ { res_plane_take_off_fukiyose_file_plane_take_off_f_sky_noon, 3 },
+ { res_plane_take_off_fukiyose_file_plane_take_off_f_sky_evening, 3 },
  { res_plane_take_off_fukiyose_file_plane_take_off_f_sky_night, 2 },
  { res_plane_take_off_fukiyose_file_plane_take_off_f_sky_midnight, 2 },
 };
@@ -114,8 +173,15 @@ static const DEMO3D_FILE_UNIT res_plane_take_off_fukiyose_file_unit_plane_take_o
 /// シーンユニットテーブル
 ///========================================================
 
-static const DEMO3D_FILE_UNIT_TBL res_plane_take_off_fukiyose_file_unit_plane_take_off_fukiyose_tbl[] = {
- { res_plane_take_off_fukiyose_file_unit_plane_take_off_fukiyose, 1 },
+static const DEMO3D_FILE_UNIT_TBL res_plane_take_off_fukiyose_file_unit_fukiyose_field_sp_tbl[] = {
+ { res_plane_take_off_fukiyose_file_unit_fukiyose_field_sp, 1 },
+ { res_plane_take_off_fukiyose_file_unit_fukiyose_field_su, 1 },
+ { res_plane_take_off_fukiyose_file_unit_fukiyose_field_au, 1 },
+ { res_plane_take_off_fukiyose_file_unit_fukiyose_field_wi, 1 },
+};
+
+static const DEMO3D_FILE_UNIT_TBL res_plane_take_off_fukiyose_file_unit_plane_fukiyose_tbl[] = {
+ { res_plane_take_off_fukiyose_file_unit_plane_fukiyose, 1 },
 };
 
 static const DEMO3D_FILE_UNIT_TBL res_plane_take_off_fukiyose_file_unit_plane_take_off_f_sky_tbl[] = {
@@ -123,7 +189,8 @@ static const DEMO3D_FILE_UNIT_TBL res_plane_take_off_fukiyose_file_unit_plane_ta
 };
 
 static const DEMO3D_SCENE_UNIT res_plane_take_off_fukiyose_scene_unit[] = {
- { res_plane_take_off_fukiyose_file_unit_plane_take_off_fukiyose_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_plane_take_off_fukiyose_file_unit_fukiyose_field_sp_tbl, 4, DEMO3D_UNITCHG_SEASON },
+ { res_plane_take_off_fukiyose_file_unit_plane_fukiyose_tbl, 1, DEMO3D_UNITCHG_NONE },
  { res_plane_take_off_fukiyose_file_unit_plane_take_off_f_sky_tbl, 1, DEMO3D_UNITCHG_NONE },
 };
 
