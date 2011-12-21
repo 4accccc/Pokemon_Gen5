@@ -7138,8 +7138,9 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
   // ポケウッド上映時に終了イベントを実行する
   case SEQ_POKEWOOD_END_EVENT:  
     if(SubSeq_POKEWOOD_Event_Sequence(wk)){
+      BATTLE_SETUP_PARAM *bsp = BTL_MAIN_GetBSP( wk->mainModule );
       // 最終評価値を決定する
-      CalcPokewoodEstimate( wk, &wk->pokewoodSeqWork.Estimate );
+      bsp->pokewoodProfit = CalcPokewoodEstimate( wk, &wk->pokewoodSeqWork.Estimate );
       return TRUE;
     }
     break;
