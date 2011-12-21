@@ -1516,7 +1516,7 @@ void CTVT_GAME_CommBalloonBurst( CTVT_GAME_WORK *p_wk, u8 netIdBit )
       // 破裂したなら得点加算
       if( ret == TRUE )
       {
-        p_wk->score[ i ] += 2;
+        p_wk->score[ i ] += 5;
         // プレートの得点更新
         GAME_PLATE_SetPoint( p_wk, i, p_wk->score[ i ] );
       }
