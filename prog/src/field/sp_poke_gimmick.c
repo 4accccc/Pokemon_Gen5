@@ -90,6 +90,7 @@ enum {
 
   // ケルディオ専用
   RESID_EFFECT_01_MDL = 8,      // 気合のエフェクト
+  RESID_EFFECT_01_ANM_ICA,  // 気合のエフェクト アニメ
   RESID_EFFECT_01_ANM_ITA,  // 気合のエフェクト アニメ
   RESID_BIRIZION_MDL,       // ビリジオン モデル
   RESID_KOBARUON_MDL,       // コバルオン モデル
@@ -317,6 +318,7 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl_kerudhio[] = {
 
   // ここからケルディオ専用
   { ARCID_KERUDHIO_GIMMICK, NARC_kerudhio_effect_01_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_KERUDHIO_GIMMICK, NARC_kerudhio_effect_01_nsbca, GFL_G3D_UTIL_RESARC },
   { ARCID_KERUDHIO_GIMMICK, NARC_kerudhio_effect_01_nsbta, GFL_G3D_UTIL_RESARC },
   { ARCID_KERUDHIO_GIMMICK, NARC_kerudhio_bili_01_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_KERUDHIO_GIMMICK, NARC_kerudhio_koba_01_nsbmd, GFL_G3D_UTIL_RESARC },
@@ -334,6 +336,7 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl_kerudhio[] = {
 // ケルディオ気合
 static const GFL_G3D_UTIL_ANM anm_effect_01[] =
 {
+  { RESID_EFFECT_01_ANM_ICA, 0 },
   { RESID_EFFECT_01_ANM_ITA, 0 },
 };
 #define ANM_EFFECT_01_NUM  ( NELEMS(anm_effect_01) )
