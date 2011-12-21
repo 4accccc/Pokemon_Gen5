@@ -1685,16 +1685,15 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>おきゃくさま！▼
-ランダムマッチに　さんかちゅう
-DSほんたいの▽
-でんげんが　きれましたね▼
-ルールにより　ランダムマッチには
-しばらく　さんか　できません▼
-じかんが　たちましたら
+ランダムマッチの　さんかちゅうに
+ほんたいの　でんげんが　きれましたね▼
+ランダムマッチには
+さんか　できません▼
+しばらく　じかんが　たちましたら
 また　おこしください</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-07T13:47:00" />
+				Time="2011-12-21T12:32:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1703,15 +1702,15 @@ DSほんたいの▽
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>お客様！▼
-ランダムマッチに　参加中▽
-DS本体の　電源が　切れましたね▼
-ルールにより　ランダムマッチには
-しばらく　参加できません▼
-時間が　たちましたら
-また　お越しください</Text>
+ランダムマッチの　参加中に
+本体の電源が　切れましたね▼
+ランダムマッチには
+参加できません▼
+しばらく　時間が　たちましたら
+また　お越しください▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-07T13:47:14" />
+				Time="2011-12-21T12:31:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -318,13 +318,13 @@ http://www.pokemon-gl.com/[Ctrl2:PageClear ]
 ポケモングローバルリンク▽
 ホームページで　かくにんしてください▼
 また　Ｗｉ－Ｆｉたいかいや
-ランダムマッチに　さんかちゅう▼
+ランダムマッチの　さんかちゅうに▼
 ほんたいの　でんげんが　きれると
 しばらく　たいかいに　でられなくなります▽
 ごちゅうい　ください▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-19T05:54:16" />
+				User="shimoyamada:W00184"
+				Time="2011-12-21T12:46:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -342,13 +342,13 @@ http://www.pokemon-gl.com/[Ctrl2:PageClear ]
 ポケモングローバルリンク▽
 ホームページで　確認してください▼
 また　Ｗｉ－Ｆｉ大会や
-ランダムマッチに参加中▼
+ランダムマッチの　参加中に▼
 本体の電源が　切れると
 しばらく　大会に　出られなくなります▽
 ご注意　ください▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-19T05:53:49" />
+				User="shimoyamada:W00184"
+				Time="2011-12-21T12:47:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -639,16 +639,16 @@ http://www.pokemon.co.jp/[Ctrl2:PageClear ]
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｗｉ－Ｆｉたいかい　または
-ランダムマッチに　さんかちゅうに▽
-でんげんを　きったため▼
+ランダムマッチの　さんかちゅうに▽
+ほんたいの　でんげんが　きれたため▼
 しばらくの　あいだ
 Ｗｉ－Ｆｉたいかい　には▽
 さんか　できません▼
 しばらく　じかんが　たちましたら
 おこしください▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-19T05:50:16" />
+				User="shimoyamada:W00184"
+				Time="2011-12-21T11:48:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -657,15 +657,15 @@ http://www.pokemon.co.jp/[Ctrl2:PageClear ]
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>Ｗｉ－Ｆｉ大会 または
-ランダムマッチに　参加中▽
-電源を　切ったため▼
+ランダムマッチの　参加中に▽
+本体の電源が　切れたため▼
 しばらくの　あいだ
 Ｗｉ－Ｆｉ大会には　参加できません▼
 しばらく　時間が　たちましたら
 お越しください▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-19T05:49:39" />
+				User="shimoyamada:W00184"
+				Time="2011-12-21T11:48:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
