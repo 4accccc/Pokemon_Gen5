@@ -3130,4 +3130,293 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swboss_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>おなじ　ポケモンでも
+ともにいる　トレーナーに　よって▽
+だせる　つよさは　ことなる……▼
+おもしろい！
+ひじょうに　おもしろい！▼
+さあ　あなた！
+しばし　つきあいなさい！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T07:17:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T06:24:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>同じ　ポケモンでも
+共にいる　トレーナーに　よって▽
+だせる　強さは　異なる……▼
+おもしろい！
+非常に　おもしろい！▼
+さあ　あなた！
+しばし　つきあいなさい！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T07:17:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T06:24:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・クリア後にd27r0401で戦闘後
+　日付が変わるとここに出現
+・以降、１日１回戦闘できる
+・はい/いいえの選択肢表示
+　はい　→swboss_end_02
+　いいえ→swboss_end_03
+・GRIDX＝18、GRIDZ＝9。上向き</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T06:56:04" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T06:23:53" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swboss_end_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなたと　ポケモンとの　あいだに
+そんざいする　みえない　ちから……▽
+こんどこそ　みきわめます！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T07:16:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T06:24:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなたと　ポケモンとの　あいだに
+存在する　みえない　力……▽
+今度こそ　見極めます！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T07:17:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T06:24:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい選択時
+　続けて戦闘に（トレーナーIDはd27r0401と同じ）</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T06:27:11" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T06:24:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swboss_end_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>わざわざ　ここまで
+あしを　はこんだというのに……▽
+つれない　ひと　ですね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T07:13:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T06:24:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>わざわざ　ここまで
+足を　運んだというのに……▽
+つれない　人ですね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T07:17:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T06:24:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・いいえ選択時</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T06:27:17" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T06:24:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swboss_end_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さあ　あなた！
+しばし　つきあいなさい！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T07:13:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T06:24:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さあ　あなた！
+しばし　つきあいなさい！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T07:16:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T06:24:54" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・はい/いいえの選択肢表示
+　はい　→swboss_end_02
+　いいえ→swboss_end_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T06:56:07" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T06:24:44" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_swboss_end_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなたと　ポケモンが
+みてきたもの　かんじたもの……▽
+それは　あなたたち「だけ」の　ものか▼
+よければ　また
+ポケモンしょうぶを　してください▼
+あなたと　むきあえば　これから
+なにをすべきか　みえそうです</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T06:52:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T06:48:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなたと　ポケモンが
+みてきたもの　感じたもの……▽
+それは　あなたたち「だけ」の　ものか▼
+よければ　また
+ポケモン勝負を　してください▼
+あなたと　向き合えば　これから
+なにをすべきか　みえそうです</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T07:17:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T06:48:19" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・戦闘後メッセージ
+・日付が変わるまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T06:28:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T06:49:05" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#0080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

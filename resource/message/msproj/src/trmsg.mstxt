@@ -79740,104 +79740,104 @@
 		Label="TRID_SWPLAZMAM_40_TRMSG_FIGHT_START">
 		<LanguageCell
 			Language="JPN">
-			<Text>まってたぞ！▼</Text>
+			<Text>くせもの　め！
+まっていたで　ござる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T05:40:39" />
+				Time="2011-12-21T06:23:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T05:40:39" />
+				Time="2011-12-21T06:23:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>待ってたぞ！▼</Text>
+			<Text>曲者め！
+待っていたで　ござる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T05:40:39" />
+				Time="2011-12-21T06:23:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T05:40:39" />
+				Time="2011-12-21T06:23:20" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="TRID_SWPLAZMAM_40_TRMSG_FIGHT_LOSE">
 		<LanguageCell
 			Language="JPN">
-			<Text>まけた！
-ちがう！　プラーズマー！</Text>
+			<Text>む　むねん……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T05:40:39" />
+				Time="2011-12-21T06:23:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T05:40:39" />
+				Time="2011-12-21T06:23:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>負けた！
-違う！　プラーズマー！</Text>
+			<Text>む　無念……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T05:40:39" />
+				Time="2011-12-21T06:23:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T05:40:39" />
+				Time="2011-12-21T06:23:20" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="TRID_SWPLAZMAM_40_TRMSG_FIGHT_AFTER">
 		<LanguageCell
 			Language="JPN">
-			<Text>まけろ！　まけろ！
-おまえなんか　まけてしまえ！</Text>
+			<Text>しからば　ごめん！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T05:40:39" />
+				Time="2011-12-21T06:23:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T05:40:39" />
+				Time="2011-12-21T06:23:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>負けろ！　負けろ！
-おまえなんか　負けてしまえ！</Text>
+			<Text>然らば御免！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T05:40:39" />
+				Time="2011-12-21T06:23:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T05:40:39" />
+				Time="2011-12-21T06:23:20" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
 		Label="TRID_SWPLAZMAW_17_TRMSG_FIGHT_START">
 		<LanguageCell
 			Language="JPN">
-			<Text>まってたわ！▼</Text>
+			<Text>オホホッ！
+まちぶせ　しちゃった！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T05:40:39" />
+				Time="2011-12-21T06:23:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T05:40:39" />
+				Time="2011-12-21T06:23:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>待ってたわ！▼</Text>
+			<Text>オホホッ！
+待ち伏せ　しちゃった！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T05:40:39" />
+				Time="2011-12-21T06:23:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T05:40:39" />
+				Time="2011-12-21T06:23:20" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -80420,26 +80420,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ファイティング　スイーパー！
-おまえという　ゴミを　そうじだ！▼</Text>
+おまえという　ゴミを　そうじ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T09:45:44" />
+				Time="2011-12-21T06:23:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T09:45:44" />
+				Time="2011-12-21T06:23:20" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ファイティング　スイーパー！
-おまえという　ゴミを　掃除だ！▼</Text>
+おまえという　ゴミを　掃除！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T09:45:44" />
+				Time="2011-12-21T06:23:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T09:45:44" />
+				Time="2011-12-21T06:23:20" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

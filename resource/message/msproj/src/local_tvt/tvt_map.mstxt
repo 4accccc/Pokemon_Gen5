@@ -8366,11 +8366,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>れんまのはやし
-かりメッセージ</Text>
+			<Text>ちかいのはやし……？▼
+ああ！　サンギタウンの！▼
+あそこの　いわに　きざまれた
+さけめって　やっぱり　ポケモンよね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T10:14:28" />
+				Time="2011-12-21T07:01:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8378,11 +8380,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>練磨の林
-仮メッセージ</Text>
+			<Text>誓いの林……？▼
+ああ！　サンギタウンの！▼
+あそこの　岩盤に　刻まれた
+裂け目って　やっぱり　ポケモンよね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T10:14:34" />
+				Time="2011-12-21T07:01:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8391,10 +8395,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>T06R0401
-※仮・</Comment>
+・誓いの林</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T10:14:19" />
+				Time="2011-12-21T07:00:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

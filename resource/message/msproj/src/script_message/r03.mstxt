@@ -619,7 +619,7 @@
 くさむらも　つりも　みずのうえも！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T03:37:27" />
+				Time="2011-12-21T06:41:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -633,7 +633,7 @@
 草むらも　つりも　水上も！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T03:28:47" />
+				Time="2011-12-21T06:41:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -669,13 +669,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>３ばんどうろの　ポケモン　ぜんぶだよ
-くさむらも　つりも　みずのうえも！▼
-せいそくちリストが　うまったら
-ぼくに　おしえてほしいな！</Text>
+			<Text>せいそくちリストが　うまったら
+ぼくに　おしえてほしいな！▼
+いいかい
+３ばんどうろの　ポケモン　ぜんぶだよ▽
+くさむらも　つりも　みずのうえも！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-13T03:37:49" />
+				Time="2011-12-21T06:44:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -683,13 +684,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>３番道路の　ポケモン　全部だよ
-草むらも　つりも　水上も！▼
-生息地リストが　うまったら
-ぼくに　教えてほしいな！</Text>
+			<Text>生息地リストが　うまったら
+ぼくに　教えてほしいな！▼
+いいかい
+３番道路の　ポケモン　全部だよ▽
+草むらも　つりも　水上も！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T03:28:35" />
+				Time="2011-12-21T06:43:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

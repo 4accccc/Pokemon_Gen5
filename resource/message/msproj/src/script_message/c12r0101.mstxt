@@ -1526,10 +1526,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>？？？『おお！　おまえさんが
-[Name:TrainerName ]　かい！▼</Text>
+[Name:TrainerName ]　かい！▼
+わたしは　アララギ！▼
+おまえさんに　ポケモンずかんを
+たくしたのは　わたしの　むすめだよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T07:24:53" />
+				Time="2011-12-21T07:28:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1538,10 +1541,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>？？？『おお！　おまえさんが
-[Name:TrainerName ]　かい！▼</Text>
+[Name:TrainerName ]　かい！▼
+わたしは　アララギ！▼
+おまえさんに　ポケモン図鑑を
+託したのは　わたしの　娘だよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T08:20:36" />
+				Time="2011-12-21T07:29:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1578,12 +1584,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ママ『そうですけれど▼
-おひさしぶり　ですね
+			<Text>ママ『おひさしぶり　ですね
 アララギはかせ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T05:38:21" />
+				Time="2011-12-21T07:29:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1591,12 +1596,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ママ『そうですけれど▼
-おひさしぶり　ですね
+			<Text>ママ『おひさしぶり　ですね
 アララギ博士！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T05:38:48" />
+				Time="2011-12-21T07:29:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1624,13 +1628,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アララギ『そんなに　たつかい？
+			<Text>アララギ『そんなに　ごぶさた　かい？
 ……おもいだせないねえ▼
 っと　そいつは　わたしが　きた
 もくてきとは　かんけい　ないからね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T07:43:17" />
+				Time="2011-12-21T07:30:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1638,13 +1642,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アララギ『そんなに　経つかい？
+			<Text>アララギ『そんなに　ごぶさた　かい？
 ……思い出せないねえ▼
 っと　そいつは　わたしが　来た
 目的とは　関係ないからね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T05:38:43" />
+				Time="2011-12-21T07:30:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2700,6 +2704,393 @@
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12r0101_swbell_end_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>えへへ
+あそびに　きちゃった！▼
+アララギはかせが　２０ばんどうろの
+どうくつを　しらべてみるんだって！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:11:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T07:40:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>えへへ
+遊びに　来ちゃった！▼
+アララギ博士が　２０番道路の
+洞穴を　調べてみるんだって！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:29:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:26:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・msg_d10r0501_swbell_04表示後に出現
+・心の空洞イベント成立まで繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:29:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T07:24:58" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12r0101_swbell_end_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こころのくうどう……▼
+ユクシー　エムリット　アグノム
+３びきの　ポケモンは▽
+どこへ　とんでいったのかなあ？▼
+ユクシーは　ちえを
+しょうちょうする　ポケモン……▼
+イッシュで　ちえが　あつまるのは
+シッポウの　はくぶつかん？▼
+エムリットは　かんじょうを
+つかさどる　ポケモン　でしょ▼
+かんじょうを　ゆさぶるのは
+タワーオブヘブンの　かね　かなあ？▼
+で　アグノムは　いし……▼
+いし　ねえ
+なにかをしたい　という　おもい……▽
+いったい　なんだろうね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:31:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T07:40:31" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>心の空洞……▼
+ユクシー　エムリット　アグノム
+３匹の　ポケモンは▽
+どこへ　飛んでいったのかなあ？▼
+ユクシーは　知恵を
+象徴する　ポケモン……▼
+イッシュで　知恵が　集うといえば
+シッポウの　博物館？▼
+エムリットは　感情を
+司る　ポケモン　でしょ▼
+感情を　揺さぶるのは
+タワーオブヘブンの　鐘かなあ？▼
+で　アグノムは　意思……▼
+意思ねえ
+なにかをしたい　という　思い……▽
+いったい　なんだろうね</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:31:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:26:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・心の空洞イベント後ランダムで
+　swbell_end_02～06の
+　表示確率はそれぞれ20％</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:29:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T07:31:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12r0101_swbell_end_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>２３ばんどうろの
+ふしぎな　ポケモン……▼
+なにかの　いしを
+かんじさせる　ポケモン……▼
+じっさいに　しらべに　いくのが
+いちばん　だよねえ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:32:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:06:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>２３番道路の
+不思議な　ポケモン……▼
+なにかの　意思を
+感じさせる　ポケモン……▼
+実際に　調べに　いくのが
+一番　だよねえ！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:32:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:26:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・心の空洞イベント後ランダムで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T07:39:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T07:31:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12r0101_swbell_end_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンの
+たいりょうはっせい　ってあるでしょ！▼
+あれって　ほんとうに
+おんなじ　ポケモンばかり　でてきて▼
+どこに　いたの！？　って
+ビックリしちゃうよねえ▼
+ゲートにある　でんこうけいじばん　で
+たいりょうはっせいのことが　わかるよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:33:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:06:54" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンの
+大量発生　ってあるでしょ！▼
+あれって　本当に
+おんなじ　ポケモンばかり　でてきて▼
+どこに　いたの！？　って
+ビックリしちゃうよねえ▼
+ゲートにある　電光掲示板　で
+大量発生のことが　わかるよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:33:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:26:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・心の空洞イベント後ランダムで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T07:39:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T07:31:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12r0101_swbell_end_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>アララギはかせの……
+あっ　むすめせんせいの　ほうね！▼
+かのじょの　けんきゅうテーマは
+ポケモンの　きげんに　ついて！▼
+いま　いる　ポケモンたちも
+おおむかしから　そんざい　するもの▽
+さいきん　みつかったもの　と▽
+まちまち　なんだよねえ▼
+ちなみに　おとうさんの
+けんきゅうテーマは▽
+ポケモンの　ぶんぷと　せいたい　だよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:23:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:07:03" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>アララギ博士の……
+あっ　娘先生の　ほうね！▼
+彼女の　研究テーマは
+ポケモンの　起源に　ついて！▼
+いま　いる　ポケモンたちも
+大昔から　存在する　もの▽
+最近　みつかった　もの　と▽
+まちまち　なんだよねえ▼
+ちなみに　お父さんの
+研究テーマは▽
+ポケモンの　分布と　生態だよ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:36:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:26:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・心の空洞イベント後ランダムで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T07:39:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T07:31:34" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12r0101_swbell_end_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あなたの　ママって　すごいのね！▼
+ポケモンセンターで
+うけつけを　しているときに▽
+あなたの　パパと　であって……▼
+えへへ
+いろいろ　おしえてもらっちゃった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:28:38" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:26:14" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あなたの　ママって　すごいのね！▼
+ポケモンセンターで
+受付を　しているときに▽
+あなたの　パパと　出会って……▼
+えへへ
+いろいろ　教えてもらっちゃった！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:33:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:26:58" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・心の空洞イベント後ランダムで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:26:12" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T08:28:49" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
