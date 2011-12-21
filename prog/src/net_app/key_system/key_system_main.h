@@ -28,7 +28,6 @@
 #include "key_system_util.h"
 #include "key_system_graphic.h"
 #include "key_system_net.h"
-#include "multiboot/mb_parent_dataconv_sys.h"
 
 //ÉZÅ[Éu
 #include "savedata/save_outside.h"
@@ -328,8 +327,6 @@ typedef struct
 
   KEYSYS_NET_WORK         *p_net;
 
-  MB_PARENT_DATACONV      *p_mb;
-
   KEYSYS_KEY_DATA         key_data[ KEYSYS_DATA_MAX ];
 
   KEYSYS_PLAYER_DATA      player_data[ KEYSYS_DATA_MAX ];
@@ -346,10 +343,13 @@ typedef struct
   BOOL                    is_wifi_start;
   BOOL                    is_convert;
   STRBUF                  *p_gamesync_id_code;
+  STRBUF                  *p_rom_title;
+  STRBUF                  *p_rom_info;
 
   void                    *p_proc_param;
 
   void                    *p_download_data;
+  DWCSvlResult            svl;
 
 }KEY_SYSTEM_WORK;
 

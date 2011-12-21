@@ -37,6 +37,7 @@
 #include "savedata/musical_dist_save.h"
 #include "savedata/resonance_resort_sv.h"
 
+#include "net_app/union/union_beacon_tool.h"
 #include "gsync_local.h"
 #include "gsync_download.h"
 #include "net/nhttp_rap.h"
@@ -205,7 +206,7 @@ static void _SymbolPokemonSave(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSa
 static void _furnitureInSaveArea(DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream);
 static BOOL _itemInSaveArea(DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream);
 static void _BoxPokeRemove(G_SYNC_WORK* pWork);
-
+static void _Resort_SetFootMark( GAMEDATA * gamedata, DREAM_WORLD_FOOTMARK_DATA footMark[], HEAPID heapID );
 
 
 static BOOL _responceChk(G_SYNC_WORK* pWork,int response)
@@ -775,6 +776,9 @@ static void _wakeupAction_1(G_SYNC_WORK* pWork)
     _furnitureInSaveArea(pDreamSave, pWork->pDreamDownload);
     //サインイン
     DREAMWORLD_SV_SetSignin(pDreamSave,pWork->pDreamDownload->signin);
+    //あしあとをJAへ
+    _Resort_SetFootMark(pWork->pGameData, pWork->pDreamDownload->footMark, pWork->heapID );
+
   }
 
   pWork->bSaveDataAsync=TRUE;
@@ -1199,7 +1203,9 @@ static void _symbolPokemonSave(G_SYNC_WORK* pWork,DREAMWORLD_SAVEDATA* pDreamSav
 {
   u8 move_type = act;
 
-  if((monsno!=0) && (monsno <= MONSNO_ARUSEUSU)){  // データ読み込み・破棄
+  if( monsno!=0 && monsno <= MONSNO_END)
+  {
+  //if((monsno!=0) && (monsno <= MONSNO_ARUSEUSU)){  // データ読み込み・破棄
     TPOKE_DATA* pTP =TPOKE_DATA_Create( pWork->heapID );
     int size = SYMBOL_ZONE_TYPE_FREE_SMALL;
     u8 form_no =  POKETOOL_CheckPokeFormNo(  monsno,  form );
@@ -1233,8 +1239,12 @@ static void _symbolPokemonSave(G_SYNC_WORK* pWork,DREAMWORLD_SAVEDATA* pDreamSav
     if(move_type > _MOVETYPE_MAX){
       move_type = 0;
     }
-    SymbolSave_SetFreeZone(
-      SymbolSave_GetSymbolData(pWork->pSaveData), monsno, tec, sex, form_no, move_type, size);
+    //インデックスが見つからない→動作モデルがない
+    if ( TPOKE_DATA_GetIndex( pTP, monsno, sex, form_no ) != TPOKE_DATA_INDEX_NG )
+    {
+      SymbolSave_SetFreeZone(
+          SymbolSave_GetSymbolData(pWork->pSaveData), monsno, tec, sex, form_no, move_type, size);
+    }
     TPOKE_DATA_Delete( pTP );
   }
 }
@@ -2667,6 +2677,101 @@ static void _BoxPokeRemove(G_SYNC_WORK* pWork)
  //   DREAMWORLD_SV_SetSleepPokemonFlg(pDream,FALSE);
  //   pWork->bBox2SleepSaveData = FALSE;/
 //  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  足あとデータ存在しているか？
+ *
+ *	@param	const DREAM_WORLD_FOOTMARK_DATA *cp_foot ワーク
+ *
+ *	@return TRUEある  FALSEない
+ */
+//-----------------------------------------------------------------------------
+static BOOL IsExistFootMark( const DREAM_WORLD_FOOTMARK_DATA *cp_foot )
+{
+  //pgl_swan_gs 00084 Re:【質問】足あとデータにつきまして
+
+  //名木橋質問
+  //Footmark構造体が空の場合どのようなデータになっておりますでしょうか。
+  //　　こちらで空の場合を調査いたしましたところ、name[8]の中身がすべて0xFFFFで他のデータが0となっておりました。
+
+  //BFS三浦様ご回答
+  //２．こちら、name[8]が0xFFFF埋め、その他すべて０は、おっしゃる通り、あしあとが空の状態を示しますが、
+  //　　name[8]は空入力の可能性が０ではないので、gsid=0の場合、あしあとなし、という判断をしていただければ確実かと思います。
+
+  if( cp_foot->profileID == 0 )
+  {
+    return FALSE;
+  }
+  else
+  {
+    return TRUE;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  足あとデータをマイステータスに変換
+ *
+ *	@param	const DREAM_WORLD_FOOTMARK_DATA *cp_foot
+ *	@param	*p_mystatus 
+ */
+//-----------------------------------------------------------------------------
+static void ConvertFootMarkToMyStatus( const DREAM_WORLD_FOOTMARK_DATA *cp_foot, MYSTATUS *p_mystatus )
+{
+  GFL_STD_MemClear( p_mystatus, sizeof(MYSTATUS) );
+
+  MyStatus_SetMyName(p_mystatus,cp_foot->name);
+  MyStatus_SetProfileID(p_mystatus, cp_foot->profileID);
+  MyStatus_SetMyNationArea(p_mystatus, cp_foot->nation, cp_foot->area);
+  MyStatus_SetMySex(p_mystatus, cp_foot->sex );
+  MyStatus_SetID(p_mystatus, cp_foot->id );
+  MyStatus_SetRomCode(p_mystatus, cp_foot->rom_code);
+  MyStatus_SetRegionCode(p_mystatus,cp_foot->region_code);
+
+  //足あとデータは見た目を持たない。
+  //トレーナーIDから決定する
+  {
+    u16 value = cp_foot->id % MYSTATUS_UNIONVIEW_MAX;
+    value += ( cp_foot->sex == PM_MALE ? UNION_VIEW_INDEX_MAN_START: UNION_VIEW_INDEX_WOMAN_START );
+    MyStatus_SetTrainerView( p_mystatus, value );
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ジョインアベニューに足あとデータ追加
+ *
+ *	@param	GAMEDATA * gamedata ゲームデータ
+ *	@param	footMark[]  足あとデータ配列
+ *	@param	heapID  テンポラリ用ヒープID
+ *
+ */
+//-----------------------------------------------------------------------------
+static void _Resort_SetFootMark( GAMEDATA * gamedata, DREAM_WORLD_FOOTMARK_DATA footMark[], HEAPID heapID )
+{
+  RESONANCE_RESORT_SV *p_resort_sv = RESONANCE_RESORT_SV_GetWork( GAMEDATA_GetSaveControlWork(gamedata) );
+  int i;
+
+  RESORT_PROXY_DATA *p_proxy = RESORT_PROXY_DATA_Init( heapID );
+  MYSTATUS *p_mystatus =  MyStatus_AllocWork(heapID);
+
+  for( i = 0; i < DREAM_WORLD_FOOTMARK_MAX; i++ )
+  {
+    DREAM_WORLD_FOOTMARK_DATA *foot = &footMark[i];
+
+    if( IsExistFootMark(foot) )
+    {
+      ConvertFootMarkToMyStatus( foot, p_mystatus );
+      RESORT_PROXY_DATA_SetCommData( p_proxy, p_mystatus, foot->pokemon, RESORT_COMM_TYPE_PDW );
+      RESONANCE_RESORT_SV_SetData( p_resort_sv, gamedata, p_proxy, RESORT_MERGE_TYPE_PROXY );
+    }
+  }
+
+  GFL_HEAP_FreeMemory( p_mystatus );
+  RESORT_PROXY_DATA_Exit( p_proxy );
 }
 
 FS_EXTERN_OVERLAY(dpw_common);

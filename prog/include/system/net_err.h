@@ -73,6 +73,7 @@ extern void NetErr_App_ReqErrorDisp(void);
 extern void NetErr_App_ReqErrorDispForce(int message );
 extern BOOL NetErr_App_FatalDispCall(void);
 
+extern u32 NetErr_Tool_GetGpfServerErrorMsg( u32 ret_cd );
 
 //PUSHPOP使用時、場合によってはシーケンス移動やメッセージ描画中などで、
 //エラー画面終了時後に表示が変わるものがある

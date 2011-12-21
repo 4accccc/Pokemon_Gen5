@@ -22,12 +22,17 @@
 #include "net/delivery_beacon.h"
 #include "net/delivery_irc.h"
 #include "net/dwc_error.h"
+#include "net/nhttp_rap.h"
+#include "msg\msg_wifi_system.h"
 
 //自分のモジュール
 #include "key_system_util.h"
 
 //外部公開
 #include "key_system_net.h"
+
+FS_EXTERN_OVERLAY( dpw_common );
+FS_EXTERN_OVERLAY( multiboot );
 
 //=============================================================================
 /**
@@ -62,6 +67,7 @@ enum
 //=====================================
 struct _KEYSYS_NET_WORK
 {
+  DWCSvlResult *p_svl;
   KEYSYS_NET_TYPE net_type;
   KEYSYS_NET_INIT_PARAM   param;
   u8 recv_buffer[ KEYSYS_NET_RECV_BUFFER_SIZE ];
@@ -70,6 +76,10 @@ struct _KEYSYS_NET_WORK
   KEYSYS_SEQ_WORK         *p_seq;
   u32 timingsync;
   u32 timeout_cnt;
+
+  NHTTP_RAP_WORK          *p_nhttp;
+  MB_PARENT_DATACONV      *p_mb;
+  HEAPID heapID;
 };
 
 //=============================================================================
@@ -78,12 +88,21 @@ struct _KEYSYS_NET_WORK
 */
 //=============================================================================
 //シーケンス
+//赤外線
 static void KeySys_Net_Seq_Wait( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Net_Seq_ConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Net_Seq_DisConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Net_Seq_WaitIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Net_Seq_SendDataIrcWirelessBoth( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void KeySys_Net_Seq_TimingSyncIrcWirelessBoth( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+
+//マルチブート
+static void KeySys_Net_Seq_MultiBoot_SendRom( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void KeySys_Net_Seq_MultiBoot_ConnectRom( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+
+//NHTTP
+static void KeySys_Net_Seq_Nhttp_GetBw( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void KeySys_Net_Seq_Nhttp_PlayStatus( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //ネットコールバック
 static void* KeySys_NetCallback_GetBeaconData( void *p_wk_adrs );
@@ -98,8 +117,10 @@ static void KeySys_NetCallback_IrcEndIrcWireless(void* p_wk_adrs);
 static void KeySys_NetRecv_IrcWireless_CommonData( const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_handle );
 
 //汎用
-static void *KeySys_Net_GetReqStateParam( KEYSYS_NET_WORK *p_wk );
 static BOOL KeySys_Net_IsEnableRequest( const KEYSYS_NET_WORK *cp_wk, KEYSYS_NET_REQ request );
+
+
+void KEYSYS_NET_End( KEYSYS_NET_WORK *p_wk );
 
 //=============================================================================
 /**
@@ -193,10 +214,10 @@ KEYSYS_NET_WORK * KEYSYS_NET_Init( const KEYSYS_NET_INIT_PARAM *cp_param, HEAPID
   KEYSYS_NET_WORK *p_wk;
   p_wk  = GFL_HEAP_AllocClearMemory( heapID, sizeof(KEYSYS_NET_WORK) );
   p_wk->param = *cp_param;
+  p_wk->heapID  = heapID;
 
   //モジュール作成
   p_wk->p_seq = KEYSYS_SEQ_Init( 1, p_wk, KeySys_Net_Seq_Wait, heapID );
-
   return p_wk;
 }
 
@@ -209,6 +230,8 @@ KEYSYS_NET_WORK * KEYSYS_NET_Init( const KEYSYS_NET_INIT_PARAM *cp_param, HEAPID
 //-----------------------------------------------------------------------------
 void KEYSYS_NET_Exit( KEYSYS_NET_WORK *p_wk )
 {
+  KEYSYS_NET_End( p_wk );
+
   //シーケンス破棄
   KEYSYS_SEQ_Exit( p_wk->p_seq );
 
@@ -226,6 +249,14 @@ void KEYSYS_NET_Main( KEYSYS_NET_WORK *p_wk )
 { 
   //シーケンス
   KEYSYS_SEQ_Main( p_wk->p_seq );
+
+  if( p_wk->net_type == KEYSYS_NET_TYPE_MULTIBOOT )
+  {
+    if( p_wk->p_mb )
+    {
+      MB_PARENT_DATACONV_Main( p_wk->p_mb );
+    }
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -237,9 +268,30 @@ void KEYSYS_NET_Main( KEYSYS_NET_WORK *p_wk )
 //-----------------------------------------------------------------------------
 void KEYSYS_NET_Start( KEYSYS_NET_WORK *p_wk, KEYSYS_NET_TYPE net_type )
 {
-  if( KEYSYS_NET_GetState(p_wk) == KEYSYS_NET_STATE_WAIT )
+  GF_ASSERT( KEYSYS_NET_GetState(p_wk) == KEYSYS_NET_STATE_WAIT );
+
+  if( p_wk->net_type == net_type )
   {
-    p_wk->net_type = net_type;
+    return ;
+  }
+
+  KEYSYS_NET_End( p_wk );
+
+  p_wk->net_type = net_type;
+
+  switch( p_wk->net_type )
+  {
+  case KEYSYS_NET_TYPE_IRCWIRELESS:
+    break;
+
+  case KEYSYS_NET_TYPE_MULTIBOOT:
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(multiboot) );
+    p_wk->p_mb = MB_PARENT_DATACONV_Init( GFL_HEAPID_APP );
+    break;
+
+  case KEYSYS_NET_TYPE_WIFI_NTTP:
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common) );
+    break;
   }
 }
 //----------------------------------------------------------------------------
@@ -255,7 +307,6 @@ void KEYSYS_NET_RequestState( KEYSYS_NET_WORK *p_wk, KEYSYS_NET_REQ req, const v
   KEYSYS_SEQ_FUNCTION next;
 
   KeySys_Net_IsEnableRequest( p_wk, req );
-
 
   if( cp_param_adrs )
   {
@@ -274,11 +325,27 @@ void KEYSYS_NET_RequestState( KEYSYS_NET_WORK *p_wk, KEYSYS_NET_REQ req, const v
     next = KeySys_Net_Seq_SendDataIrcWirelessBoth;
     break;
   case KEYSYS_NET_REQ_TIMINGSYNC:
-    next = KeySys_Net_Seq_TimingSyncIrcWirelessBoth;
+    next  = KeySys_Net_Seq_TimingSyncIrcWirelessBoth;
     break;
+  case KEYSYS_NET_REQ_MULTIBOOT_SEND_ROM:
+    next  = KeySys_Net_Seq_MultiBoot_SendRom;
+    break;
+  case KEYSYS_NET_REQ_MULTIBOOT_CONNECT_ROM:
+    next  = KeySys_Net_Seq_MultiBoot_ConnectRom;
+    break;
+  case KEYSYS_NET_REQ_PGL_GETBW:
+    next = KeySys_Net_Seq_Nhttp_GetBw;
+    break;
+  case KEYSYS_NET_REQ_PGL_PLAYSTATUS:
+    next = KeySys_Net_Seq_Nhttp_PlayStatus;
+    break;
+  default:
+    GF_ASSERT(0);
+    return;
   }
 
   KEYSYS_SEQ_Next( p_wk->p_seq, next );
+
 }
 //----------------------------------------------------------------------------
 /**
@@ -315,11 +382,28 @@ KEYSYS_NET_STATE KEYSYS_NET_GetState( const KEYSYS_NET_WORK *cp_wk )
   {
     return KEYSYS_NET_STATE_IRCWIRELESS_TIMINGSYNC;
   }
+  else if( KEYSYS_SEQ_IsCompireFunc( cp_wk->p_seq, KeySys_Net_Seq_MultiBoot_SendRom) )
+  {
+    return KEYSYS_NET_STATE_MULTIBOOT_SEND_ROM;
+  }
+  else if( KEYSYS_SEQ_IsCompireFunc( cp_wk->p_seq, KeySys_Net_Seq_MultiBoot_ConnectRom) )
+  {
+    return KEYSYS_NET_STATE_MULTIBOOT_CONNECT_ROM;
+  }
+  else if( KEYSYS_SEQ_IsCompireFunc( cp_wk->p_seq, KeySys_Net_Seq_Nhttp_GetBw ) )
+  {
+    return KEYSYS_NET_STATE_PGL_GETBW;
+  }
+  else if( KEYSYS_SEQ_IsCompireFunc( cp_wk->p_seq, KeySys_Net_Seq_Nhttp_PlayStatus ) )
+  {
+    return KEYSYS_NET_STATE_PGL_PLAYSTATUS;
+  }
 
 
   GF_ASSERT(0);
   return 0;
 }
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  受信データを受け取り
@@ -335,13 +419,32 @@ BOOL KEYSYS_NET_GetRecvData( const KEYSYS_NET_WORK *cp_wk, void *p_data, u32 siz
 {
   if( cp_wk->is_receive )
   {
-    GF_ASSERT( size < KEYSYS_NET_RECV_BUFFER_SIZE );
-    GFL_STD_MemCopy( cp_wk->recv_buffer, p_data, size );
-
+    if( p_data != NULL )
+    {
+      GF_ASSERT( size < KEYSYS_NET_RECV_BUFFER_SIZE );
+      GFL_STD_MemCopy( cp_wk->recv_buffer, p_data, size );
+    }
     return TRUE;
   }
 
   return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バッファーをデフォルトに戻す
+ *
+ *	@param	ワーク
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_NET_DefaultRecvBuffer( KEYSYS_NET_WORK *p_wk )
+{
+  switch( p_wk->net_type )
+  {
+  case KEYSYS_NET_TYPE_WIFI_NTTP:
+    NHTTP_RAP_DefaultBuffer(p_wk->p_nhttp);
+    break;
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -363,7 +466,7 @@ KEYSYS_NET_ERROR_TYPE KEYSYS_NET_HandleError( KEYSYS_NET_WORK *p_wk )
   switch( p_wk->net_type )
   {
   case KEYSYS_NET_TYPE_IRCWIRELESS:
-  case KEYSYS_NET_TYPE_WIRELESS_DLPLAY:
+  case KEYSYS_NET_TYPE_MULTIBOOT:
     if(NET_ERR_CHECK_NONE != NetErr_App_CheckError())
     {
       NetErr_DispCallPushPop();
@@ -407,10 +510,12 @@ KEYSYS_NET_ERROR_TYPE KEYSYS_NET_HandleError( KEYSYS_NET_WORK *p_wk )
 //-----------------------------------------------------------------------------
 void KEYSYS_NET_ClearError( KEYSYS_NET_WORK *p_wk )
 {
+  KEYSYS_NET_End( p_wk );
+
   switch( p_wk->net_type )
   {
   case KEYSYS_NET_TYPE_IRCWIRELESS:
-  case KEYSYS_NET_TYPE_WIRELESS_DLPLAY:
+  case KEYSYS_NET_TYPE_MULTIBOOT:
     GFL_NET_IRCWIRELESS_ResetSystemError();
     NetErr_ExitNetSystem();
     NetErr_ErrWorkInit();
@@ -418,6 +523,12 @@ void KEYSYS_NET_ClearError( KEYSYS_NET_WORK *p_wk )
     break;
 
   case KEYSYS_NET_TYPE_WIFI_NTTP:
+    if( p_wk->p_nhttp )
+    {
+      NHTTP_RAP_End( p_wk->p_nhttp );
+      p_wk->p_nhttp = NULL;
+    }
+
     NetErr_ExitNetSystem();
     NetErr_DispCallPushPop();
     NetErr_ErrWorkInit();
@@ -426,6 +537,18 @@ void KEYSYS_NET_ClearError( KEYSYS_NET_WORK *p_wk )
     KEYSYS_SEQ_Next( p_wk->p_seq, KeySys_Net_Seq_Wait );
     break;
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  サービスロケータを設定
+ *
+ *	@param	KEYSYS_NET_WORK *p_wk ワーク
+ *	@param	*p_svl  サービスロケータ
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_NET_SetDWCSvlResult( KEYSYS_NET_WORK *p_wk, DWCSvlResult *p_svl )
+{
+  p_wk->p_svl = p_svl;
 }
 
 //=============================================================================
@@ -469,7 +592,7 @@ static void KeySys_Net_Seq_ConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_
   };
 
   KEYSYS_NET_WORK *p_wk = p_wk_adrs;
-  KEYSYS_NET_SEQ_PARAM_IW_CONNECT *p_param = KeySys_Net_GetReqStateParam( p_wk );
+  KEYSYS_NET_SEQ_PARAM_IW_CONNECT *p_param = KEYSYS_NET_GetParamAdrs( p_wk );
 
   switch( *p_seq )
   {
@@ -482,6 +605,7 @@ static void KeySys_Net_Seq_ConnectIrcWireless( KEYSYS_SEQ_WORK *p_seqwk, int *p_
   case SEQ_NET_CHANGEOVER:
     if( GFL_NET_IsInit() )
     {
+      GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_KEY_SYSTEM );
       GFL_NET_ChangeoverConnect_IRCWIRELESS( KeySys_NetCallback_ConnectIrcWireless, KeySys_NetCallback_PreConnectIrcWireless, KeySys_NetCallback_IrcEndIrcWireless );
       (*p_seq)++;
     }
@@ -618,7 +742,7 @@ static void KeySys_Net_Seq_SendDataIrcWirelessBoth( KEYSYS_SEQ_WORK *p_seqwk, in
   };
 
   KEYSYS_NET_WORK *p_wk = p_wk_adrs;
-  KEYSYS_NET_SEQ_PARAM_IW_SEND *p_param = KeySys_Net_GetReqStateParam( p_wk );
+  KEYSYS_NET_SEQ_PARAM_IW_SEND *p_param = KEYSYS_NET_GetParamAdrs( p_wk );
 
   switch( *p_seq )
   {
@@ -701,6 +825,362 @@ static void KeySys_Net_Seq_TimingSyncIrcWirelessBoth( KEYSYS_SEQ_WORK *p_seqwk, 
     break;
   case SEQ_END:
     KEYSYS_SEQ_Next( p_seqwk, KeySys_Net_Seq_WaitIrcWireless );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  マルチブート  ロム送信
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq  内部シーケンス
+ *	@param	*p_wk_adrs  ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void KeySys_Net_Seq_MultiBoot_SendRom( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_ROM_SETUP,
+    SEQ_SEND_START,
+    SEQ_SEND_WAIT,
+    SEQ_CANCEL_WAIT,
+    SEQ_END,
+  };
+
+  KEYSYS_NET_WORK *p_wk = p_wk_adrs;
+  KEYSYS_NET_SEQ_PARAM_MULTIBOOT_SEND_ROM *p_param = KEYSYS_NET_GetParamAdrs( p_wk );
+
+  switch( *p_seq )
+  {
+  case SEQ_ROM_SETUP:
+    p_param->result = KEYSYS_NET_RESULT_MULTIBOOT_SEND_ROM_CONTINUE;
+    MB_PARENT_DATACONV_SetUpRomImage( p_wk->p_mb, p_param->cp_title, p_param->cp_info );
+    (*p_seq)++;
+    break;
+  case SEQ_SEND_START:
+    MB_PARENT_DATACONV_ReqestState( p_wk->p_mb, MB_PARENT_DATACONV_REQ_SEND_ROM );
+    (*p_seq)++;
+    break;
+  case SEQ_SEND_WAIT:
+    if( MB_PARENT_DATACONV_IsEndRequest( p_wk->p_mb ) )
+    {
+
+      p_param->result = KEYSYS_NET_RESULT_MULTIBOOT_SEND_ROM_FINISH;
+      (*p_seq) = SEQ_END;
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL )
+    {
+      MB_PARENT_DATACONV_ReqestState( p_wk->p_mb, MB_PARENT_DATACONV_REQ_SEND_ROM_CANCEL );
+      (*p_seq) = SEQ_CANCEL_WAIT;
+    }
+
+    break;
+  case SEQ_CANCEL_WAIT:
+    if( MB_PARENT_DATACONV_IsEndRequest( p_wk->p_mb ) )
+    {
+      p_param->result = KEYSYS_NET_RESULT_MULTIBOOT_SEND_ROM_CANCEL;
+      *p_seq  = SEQ_END;
+    }
+    break;
+  case SEQ_END:
+    KEYSYS_SEQ_Next( p_seqwk, KeySys_Net_Seq_Wait );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  マルチブート  ロムと通信
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq  内部シーケンス
+ *	@param	*p_wk_adrs  ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void KeySys_Net_Seq_MultiBoot_ConnectRom( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_CONNCET_ROM_START,
+    SEQ_CONNECT_ROM_WAIT,
+    SEQ_END,
+  };
+  KEYSYS_NET_WORK *p_wk = p_wk_adrs;
+  KEYSYS_NET_SEQ_PARAM_MULTIBOOT_CONNECT_ROM  *p_param = KEYSYS_NET_GetParamAdrs( p_wk );
+
+  switch( *p_seq )
+  {
+  case SEQ_CONNCET_ROM_START:
+    p_param->result = KEYSYS_NET_RESULT_MULTIBOOT_CONNECT_ROM_CONTINUE;
+    MB_PARENT_DATACONV_ReqestState( p_wk->p_mb, MB_PARENT_DATACONV_REQ_CONNECT_ROM );
+    (*p_seq)++;
+    break;
+  case SEQ_CONNECT_ROM_WAIT:
+    if( MB_PARENT_DATACONV_IsEndRequest( p_wk->p_mb ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_END:
+    p_param->result = KEYSYS_NET_RESULT_MULTIBOOT_CONNECT_ROM_FINISH;
+    p_param->data_result = MB_PARENT_DATACONV_GetResult(p_wk->p_mb );
+    p_param->p_recv_data = MB_PARENT_DATACONV_GetRecvData(p_wk->p_mb);
+    KEYSYS_SEQ_Next( p_seqwk, KeySys_Net_Seq_Wait );
+    break;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  PGLセーブデータ受信
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq  内部シーケンス
+ *	@param	*p_wk_adrs  ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void KeySys_Net_Seq_Nhttp_GetBw( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_INIT,
+    SEQ_START_CONNECT,
+    SEQ_WAIT_CONNECT,
+    SEQ_END,
+  };
+  
+  KEYSYS_NET_WORK *p_wk = p_wk_adrs;
+  KEYSYS_NET_SEQ_PARAM_PGL_GETBW  *p_param = KEYSYS_NET_GetParamAdrs( p_wk );
+
+  switch( *p_seq )
+  { 
+  case SEQ_INIT:
+    p_wk->is_receive = FALSE;
+    p_param->result = KEYSYS_NET_RESULT_PGL_GETBW_CONTINUE;
+
+    GF_ASSERT( p_wk->p_nhttp == NULL );
+    p_wk->p_nhttp = NHTTP_RAP_Init(p_wk->heapID,MyStatus_GetProfileID(GAMEDATA_GetMyStatus(p_wk->param.p_gamedata)), p_wk->p_svl);
+    NHTTP_RAP_SetBuffer(p_wk->p_nhttp, p_param->p_buffer_adrs, p_param->buffer_size );
+
+    if(NHTTP_RAP_ConectionCreateEx( NHTTPRAP_URL_SAVEDATE_GETBW, p_param->gsid, p_wk->p_nhttp ))
+    {
+      *p_seq  = SEQ_START_CONNECT;
+    }
+    break;
+
+  case SEQ_START_CONNECT:
+    if(NHTTP_RAP_StartConnect(p_wk->p_nhttp)==NHTTP_ERROR_NONE)
+    {
+      *p_seq  = SEQ_WAIT_CONNECT;
+    }
+    else
+    {
+      p_param->result = KEYSYS_NET_RESULT_PGL_GETBW_NHTTP_ERROR;
+      *p_seq = SEQ_END;
+    }
+    break;
+
+  case SEQ_WAIT_CONNECT:
+    {
+      NHTTPError error = NHTTP_RAP_Process(p_wk->p_nhttp);
+      if(NHTTP_ERROR_NONE == error)
+      {
+        u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(p_wk->p_nhttp);
+
+        switch( NHTTP_RAP_GetGetResultCode(p_wk->p_nhttp) )
+        {
+        case 503:
+          NetErr_App_ReqErrorDispForce( WIFI_GSYNC_ERR011 );
+
+          p_param->result = KEYSYS_NET_RESULT_PGL_GETBW_RESPONSE_ERROR;
+          *p_seq = SEQ_END;
+          return;
+
+        case 502:
+          NetErr_App_ReqErrorDispForce( WIFI_GSYNC_ERR012 );
+
+          p_param->result = KEYSYS_NET_RESULT_PGL_GETBW_RESPONSE_ERROR;
+          *p_seq = SEQ_END;
+          return;
+        }
+
+        NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
+        OS_Printf("GPFサーバーへの書き込み終了\n");
+
+        switch( ((gs_response*)pEvent)->ret_cd )
+        {
+        case DREAM_WORLD_SERVER_ERROR_NONE:
+          *p_seq  = SEQ_END;
+          p_param->result = KEYSYS_NET_RESULT_PGL_GETBW_FINISH;
+
+          //外部からバッファを設定されていないといけない
+          //直接NHTTPに渡している
+          //GFL_STD_MemCopy(ret, p_wk->recv_buffer, sizeof(KEYSYS_NET_SEQ_RESULT_PLAYSTATUS));
+          p_wk->is_receive = TRUE;
+          break;
+
+        case DREAM_WORLD_SERVER_NO_ACCOUNT:
+        case DREAM_WORLD_SERVER_ERROR_ETC:
+          *p_seq  = SEQ_END;
+          p_param->result = KEYSYS_NET_RESULT_PGL_GETBW_NO_REGIST;
+          break;
+
+        case DREAM_WORLD_SERVER_SWAN_DATA:
+          *p_seq  = SEQ_END;
+          p_param->result = KEYSYS_NET_RESULT_PGL_GETBW_SWANDATA;
+          break;
+
+        case DREAM_WORLD_SERVER_NO_DATA:
+          *p_seq  = SEQ_END;
+          p_param->result = KEYSYS_NET_RESULT_PGL_GETBW_NO_DATA;
+          break;
+
+        default:
+          NetErr_App_ReqErrorDispForce( NetErr_Tool_GetGpfServerErrorMsg( ((gs_response*)pEvent)->ret_cd ) );
+
+          p_param->result = KEYSYS_NET_RESULT_PGL_GETBW_PDW_ERROR;
+          *p_seq = SEQ_END;
+        }
+      }
+      else if( NHTTP_ERROR_BUSY != error )
+      { 
+        p_param->result = KEYSYS_NET_RESULT_PGL_GETBW_NHTTP_ERROR;
+        *p_seq = SEQ_END;
+      }
+    }
+    break;
+
+  case SEQ_END:
+    if( p_wk->p_nhttp )
+    {
+      NHTTP_RAP_End( p_wk->p_nhttp );
+      p_wk->p_nhttp = NULL;
+    }
+    KEYSYS_SEQ_Next( p_seqwk, KeySys_Net_Seq_Wait );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  PGLサーバーチェック
+ *
+ *	@param	KEYSYS_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq  内部シーケンス
+ *	@param	*p_wk_adrs  ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void KeySys_Net_Seq_Nhttp_PlayStatus( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  enum
+  {
+    SEQ_INIT,
+    SEQ_START_CONNECT,
+    SEQ_WAIT_CONNECT,
+    SEQ_END,
+  };
+  
+  KEYSYS_NET_WORK *p_wk = p_wk_adrs;
+  KEYSYS_NET_SEQ_RESULT_PLAYSTATUS  *p_param = KEYSYS_NET_GetParamAdrs( p_wk );
+
+  switch( *p_seq )
+  { 
+  case SEQ_INIT:
+    p_wk->is_receive = FALSE;
+    p_param->result = KEYSYS_NET_RESULT_PLAYSTATUS_CONTINUE;
+
+    GF_ASSERT( p_wk->p_nhttp == NULL );
+    p_wk->p_nhttp = NHTTP_RAP_Init(p_wk->heapID,MyStatus_GetProfileID(GAMEDATA_GetMyStatus(p_wk->param.p_gamedata)), p_wk->p_svl);
+
+    if(NHTTP_RAP_ConectionCreate( NHTTPRAP_URL_ACCOUNTINFO, p_wk->p_nhttp ))
+    {
+      *p_seq  = SEQ_START_CONNECT;
+    }
+    break;
+
+  case SEQ_START_CONNECT:
+    if(NHTTP_RAP_StartConnect(p_wk->p_nhttp)==NHTTP_ERROR_NONE)
+    {
+      *p_seq  = SEQ_WAIT_CONNECT;
+    }
+    else
+    {
+      p_param->result = KEYSYS_NET_RESULT_PLAYSTATUS_NHTTP_ERROR;
+      *p_seq = SEQ_END;
+    }
+    break;
+
+  case SEQ_WAIT_CONNECT:
+    {
+      NHTTPError error = NHTTP_RAP_Process(p_wk->p_nhttp);
+      if(NHTTP_ERROR_NONE == error)
+      {
+        u8* pEvent = (u8*)NHTTP_RAP_GetRecvBuffer(p_wk->p_nhttp);
+
+        switch( NHTTP_RAP_GetGetResultCode(p_wk->p_nhttp) )
+        {
+        case 503:
+          NetErr_App_ReqErrorDispForce( WIFI_GSYNC_ERR011 );
+
+          p_param->result = KEYSYS_NET_RESULT_PLAYSTATUS_RESPONSE_ERROR;
+          *p_seq = SEQ_END;
+          return;
+
+        case 502:
+          NetErr_App_ReqErrorDispForce( WIFI_GSYNC_ERR012 );
+
+          p_param->result = KEYSYS_NET_RESULT_PLAYSTATUS_RESPONSE_ERROR;
+          *p_seq = SEQ_END;
+          return;
+        }
+
+        NHTTP_DEBUG_GPF_HEADER_PRINT((gs_response*)pEvent);
+        OS_Printf("GPFサーバーへの書き込み終了\n");
+
+        if( ((gs_response*)pEvent)->ret_cd == DREAM_WORLD_SERVER_ERROR_NONE )
+        {  
+          gs_response* pRep = (gs_response*)pEvent;
+          DREAM_WORLD_SERVER_STATUS_DATA* pDream = (DREAM_WORLD_SERVER_STATUS_DATA*)&pEvent[sizeof(gs_response)];
+
+          KEYSYS_NET_SEQ_RESULT_PLAYSTATUS  ret = {0};
+
+          p_param->play_status = pDream->PlayStatus;
+
+          *p_seq  = SEQ_END;
+          p_param->result = KEYSYS_NET_RESULT_PLAYSTATUS_FIHISH;
+        }
+        else
+        {
+          NetErr_App_ReqErrorDispForce( NetErr_Tool_GetGpfServerErrorMsg( ((gs_response*)pEvent)->ret_cd ) );
+
+          p_param->result = KEYSYS_NET_RESULT_PLAYSTATUS_PDW_ERROR;
+          *p_seq = SEQ_END;
+        }
+      }
+      else if( NHTTP_ERROR_BUSY != error )
+      { 
+        p_param->result = KEYSYS_NET_RESULT_PLAYSTATUS_NHTTP_ERROR;
+        *p_seq = SEQ_END;
+      }
+    }
+    break;
+
+  case SEQ_END:
+    if( p_wk->p_nhttp )
+    {
+      NHTTP_RAP_End( p_wk->p_nhttp );
+      p_wk->p_nhttp = NULL;
+    }
+    KEYSYS_SEQ_Next( p_seqwk, KeySys_Net_Seq_Wait );
     break;
   default:
     GF_ASSERT(0);
@@ -792,7 +1272,7 @@ static void KeySys_NetCallback_PreConnectIrcWireless(void* p_wk_adrs, BOOL is_pa
 static void KeySys_NetCallback_IrcEndIrcWireless(void* p_wk_adrs)
 {
   KEYSYS_NET_WORK *p_wk = p_wk_adrs;
-  KEYSYS_NET_SEQ_PARAM_IW_CONNECT *p_param = KeySys_Net_GetReqStateParam( p_wk );
+  KEYSYS_NET_SEQ_PARAM_IW_CONNECT *p_param = KEYSYS_NET_GetParamAdrs( p_wk );
 
   if( p_param->IrcEnd )
   {
@@ -849,7 +1329,7 @@ static void KeySys_NetRecv_IrcWireless_CommonData( const int netID, const int si
  *	@return RequestStateの引数
  */
 //-----------------------------------------------------------------------------
-static void *KeySys_Net_GetReqStateParam( KEYSYS_NET_WORK *p_wk )
+void *KEYSYS_NET_GetParamAdrs( KEYSYS_NET_WORK *p_wk )
 {
   return p_wk->param_buffer;
 }
@@ -867,20 +1347,28 @@ static BOOL KeySys_Net_IsEnableRequest( const KEYSYS_NET_WORK *cp_wk, KEYSYS_NET
 {
   static const u8 sc_state_enable_tbl[KEYSYS_NET_STATE_MAX][KEYSYS_NET_REQ_MAX] =
   { // CONNECT_IRCWIRELESS, DISCONNECT_IRCWIRELESS
-    { TRUE, FALSE, FALSE, FALSE,},//KEYSYS_NET_STATE_WAIT
+    { TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE },//KEYSYS_NET_STATE_WAIT
     { FALSE, TRUE, FALSE, FALSE,},//KEYSYS_NET_STATE_IRCWIRELESS_CONNECT
     { FALSE, FALSE, FALSE, FALSE,},//KEYSYS_NET_STATE_IRCWIRELESS_DISCONNECT
     { FALSE, TRUE, TRUE, TRUE,},//KEYSYS_NET_STATE_IRCWIRELESS_WAIT,   
     { FALSE, FALSE, FALSE, FALSE,},//KEYSYS_NET_STATE_IRCWIRELESS_SENDATA_BOTH,
     { FALSE, FALSE, FALSE, FALSE, },//KEYSYS_NET_STATE_IRCWIRELESS_TIMINGSYNC
+
+    //マルチブート
+    {FALSE},//KEYSYS_NET_STATE_MULTIBOOT_SEND_ROM,
+    {FALSE},//KEYSYS_NET_STATE_MULTIBOOT_CONNECT_ROM,
+
+    //PGL
+    {FALSE},//KEYSYS_NET_STATE_PGL_GETBW,
+    {FALSE},//KEYSYS_NET_STATE_PGL_PLAYSTATUS,
   };
 
   static const u8 sc_type_enable_tbl[KEYSYS_NET_TYPE_MAX][KEYSYS_NET_REQ_MAX] =
   { // CONNECT_IRCWIRELESS, DISCONNECT_IRCWIRELESS
-    { FALSE, FALSE, FALSE, FALSE, },//NONE
-    { TRUE, TRUE, TRUE, TRUE, },//IRCWIRELESS
-    { FALSE, FALSE, FALSE, FALSE, },//WIRELESS_DLPLAY
-    { FALSE, FALSE, FALSE, FALSE, },//WIFI_NTTP
+    { FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE },//NONE
+    { TRUE,  TRUE,  TRUE,  TRUE,  FALSE, FALSE, FALSE, FALSE },//IRCWIRELESS
+    { FALSE, FALSE, FALSE, FALSE, TRUE,  TRUE,  FALSE, FALSE },//WIRELESS_DLPLAY
+    { FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE,  TRUE  },//WIFI_NTTP
   };
 
   KEYSYS_NET_STATE state = KEYSYS_NET_GetState( cp_wk );
@@ -889,4 +1377,31 @@ static BOOL KeySys_Net_IsEnableRequest( const KEYSYS_NET_WORK *cp_wk, KEYSYS_NET
   GF_ASSERT_MSG( sc_type_enable_tbl[cp_wk->net_type][request], "現在の通信タイプではこのリクエストは使えません net_type%d request%d",cp_wk->net_type, request );
 
   return sc_state_enable_tbl[state][request] && sc_type_enable_tbl[cp_wk->net_type][request];
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通信終了
+ *
+ *	@param	KEYSYS_NET_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void KEYSYS_NET_End( KEYSYS_NET_WORK *p_wk )
+{
+  switch( p_wk->net_type )
+  {
+  case KEYSYS_NET_TYPE_MULTIBOOT:
+    if( p_wk->p_mb )
+    {
+      MB_PARENT_DATACONV_Exit( p_wk->p_mb );
+      p_wk->p_mb = NULL;
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID(multiboot) );
+    }
+    break;
+
+  case KEYSYS_NET_TYPE_WIFI_NTTP:
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common) );
+    break;
+  }
 }

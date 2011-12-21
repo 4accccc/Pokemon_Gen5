@@ -16,6 +16,7 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 #include "field/fieldmap.h"
+#include "pdwacc_gamesync_id_inline.h"
 
 typedef struct _PDWACC_WORK PDWACC_WORK;
 
@@ -42,6 +43,4 @@ typedef enum{
 
 
 extern const GFL_PROC_DATA PDW_ACC_ProcData;
-
-extern void PDWACC_MESSAGE_GetPassWord(u32 profileID, STRBUF* pStrbuf);
 

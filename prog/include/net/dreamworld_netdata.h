@@ -9,8 +9,6 @@
 //============================================================================================
 #pragma once
 
-#define DREAM_WORK_SERVER_FOOTMARK_ON
-
 #include "savedata/dreamworld_data.h"
 
 #define DREAM_WORLD_SERVER_POKMEONLIST_MAX (1024)   //寝るポケモンのリスト最大
@@ -77,7 +75,6 @@ struct DREAM_WORLD_SERVER_CREATE_DATA{
 };
 
 
-
 #define DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX (10)   //ダウンロードできるポケモン最大数
 
 /// ダウンロードポケモン構造体
@@ -107,9 +104,7 @@ typedef struct {
   u8 itemNum[DREAM_WORLD_DATA_MAX_ITEMBOX];  ///< 持ち帰ったアイテムの個数
   DREAM_WORLD_FURNITUREDATA Furniture[DREAM_WORLD_DATA_MAX_FURNITURE];  ///<	26*5=130  配信家具情報
   u16 dummy1;
-#ifdef DREAM_WORK_SERVER_FOOTMARK_ON
   DREAM_WORLD_FOOTMARK_DATA footMark[DREAM_WORLD_FOOTMARK_MAX];
-#endif //DREAM_WORK_SERVER_FOOTMARK_ON
   u16 CRC;  /// このデータのCRC-16/CCITT
   u16 dummy2;
 } DREAM_WORLD_SERVER_DOWNLOAD_DATA;

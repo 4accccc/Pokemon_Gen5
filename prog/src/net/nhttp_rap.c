@@ -70,6 +70,8 @@ const static char CREATEUPLOAD_URL[] ="https://dev-ds.pokemon-gl.com/dsio/gw?p=a
 //const static char POKECHK_URL[] ="http://125.206.241.227/pokemon/validate"; //POST
 const static char POKECHK_URL[] ="https://pkvldttest.nintendo.co.jp/pokemon/validate"; //POST
 
+const static char SAVE_GETBW[] = "https://dev-ds.pokemon-gl.com/dsio/gw?p=savedata.getbw&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0";
+
 #else
 
 
@@ -84,6 +86,7 @@ const static char BTL_UP_URL[] ="https://ds.pokemon-gl.com/dsio/gw?p=worldbattle
 
 const static char POKECHK_URL[] ="https://pkvldtprod.nintendo.co.jp/pokemon/validate"; //POST
 
+const static char SAVE_GETBW[] = "https://dev-ds.pokemon-gl.com/dsio/gw?p=savedata.getbw&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0";
 
 #ifdef BUGFIX_GFBTS2030_20101025
 const static char CREATEUPLOAD_URL[] ="https://ds.pokemon-gl.com/dsio/gw?p=account.create.upload&gsid=%u&rom=%u&langcode=%u&dreamw=%u&tok=%s\0";  //POST
@@ -117,6 +120,7 @@ static NHTTPRAP_URLTBL urltable[]={
 #ifdef BUGFIX_GFBTS2030_20101025
   {CREATEUPLOAD_URL, NHTTP_REQMETHOD_POST},
 #endif //BUGFIX_GFBTS2030_20101025
+  {SAVE_GETBW, NHTTP_REQMETHOD_GET},
 };
 
 
@@ -139,6 +143,8 @@ struct _NHTTP_RAP_WORK {
   char urlbuff[_URL_BUFFER];
   HEAPID heapID;
   u32 profileid;
+  char *buffer_adrs;
+  int buffer_size;
 };
 
 static NHTTP_RAP_WORK* pNHTTPWork;  //この変数はエラーの際に使用される
@@ -175,40 +181,13 @@ static int ConnectionCallback( NHTTPConnectionHandle handle, NHTTPConnectionEven
   return NHTTP_ERROR_NONE;
 }
 
-
-
-BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
+static BOOL Nhttp_Rap_ConnectionCreateCore(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
 {
-  int     result;
-  NHTTPConnectionHandle   handle;
   NHTTPError              err;
-  OSTick                  tickStart, tickPrevious;
-  u32                     receivedCurrent = 0, receivedPrevious = 0;
-  u32                     contentLength;
-  u32                     averageSpeed = 0, currentSpeed = 0, maxSpeed = 0;
 
-  if(0!=NHTTPStartup(AllocForNhttp, FreeForNhttp, 12)){
-    GF_ASSERT_HEAVY(0);
-    return FALSE;
-  }
-  if(pWork==NULL){
-    return FALSE;
-  }
-
-  GFL_STD_MemClear(pWork->urlbuff,sizeof(_URL_BUFFER));
-
-  if(urlno==NHTTPRAP_URL_ACCOUNT_CREATE){
-    STD_TSNPrintf(pWork->urlbuff, _URL_BUFFER, urltable[urlno].url, pWork->pSvl->svltoken);
-  }
-  else{
-    STD_TSNPrintf(pWork->urlbuff, _URL_BUFFER, urltable[urlno].url, pWork->profileid, PM_VERSION, PM_LANG, NET_DREAMWORLD_VER, pWork->pSvl->svltoken);
-  }
-
-  
-  NET_PRINT(" Target URL: %s\n", pWork->urlbuff);
-  handle = NHTTPCreateConnection( pWork->urlbuff,
+  NHTTPConnectionHandle   handle = NHTTPCreateConnection( pWork->urlbuff,
                                   urltable[urlno].type,
-                                  pWork->getbuffer, _GET_MAXSIZE,
+                                  pWork->buffer_adrs, pWork->buffer_size,
                                   ConnectionCallback, pWork);
   GF_ASSERT_HEAVY(handle);
   if(handle==NULL){
@@ -240,6 +219,60 @@ BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
   return TRUE;
 }
 
+static void Nhttp_Rap_CreateUrlCommon( NHTTP_RAP_WORK* pWork, NHTTPRAP_URL_ENUM urlno )
+{
+  GFL_STD_MemClear(pWork->urlbuff,sizeof(_URL_BUFFER));
+
+  if(urlno==NHTTPRAP_URL_ACCOUNT_CREATE){
+    STD_TSNPrintf(pWork->urlbuff, _URL_BUFFER, urltable[urlno].url, pWork->pSvl->svltoken);
+  }
+  else{
+    STD_TSNPrintf(pWork->urlbuff, _URL_BUFFER, urltable[urlno].url, pWork->profileid, PM_VERSION, PM_LANG, NET_DREAMWORLD_VER, pWork->pSvl->svltoken);
+  }
+}
+
+BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork)
+{
+  //GETBWはこの関数使用禁止
+  GF_ASSERT( urlno != NHTTPRAP_URL_SAVEDATE_GETBW );
+
+  if(0!=NHTTPStartup(AllocForNhttp, FreeForNhttp, 12)){
+    GF_ASSERT_HEAVY(0);
+    return FALSE;
+  }
+  if(pWork==NULL){
+    return FALSE;
+  }
+
+  Nhttp_Rap_CreateUrlCommon( pWork, urlno );
+
+  return Nhttp_Rap_ConnectionCreateCore(urlno,pWork);
+}
+
+
+BOOL NHTTP_RAP_ConectionCreateEx(NHTTPRAP_URL_ENUM urlno, int param, NHTTP_RAP_WORK* pWork)
+{
+  //GETBWはこの関数使用禁止
+  if(0!=NHTTPStartup(AllocForNhttp, FreeForNhttp, 12)){
+    GF_ASSERT_HEAVY(0);
+    return FALSE;
+  }
+  if(pWork==NULL){
+    return FALSE;
+  }
+
+  if( urlno == NHTTPRAP_URL_SAVEDATE_GETBW )
+  {
+    GFL_STD_MemClear(pWork->urlbuff,sizeof(_URL_BUFFER));
+    STD_TSNPrintf(pWork->urlbuff, _URL_BUFFER, urltable[NHTTPRAP_URL_SAVEDATE_GETBW].url, param, PM_VERSION, PM_LANG, NET_DREAMWORLD_VER, pWork->pSvl->svltoken);
+  }
+  else
+  {
+    Nhttp_Rap_CreateUrlCommon( pWork, urlno );
+  }
+
+  return Nhttp_Rap_ConnectionCreateCore(urlno,pWork);
+}
 
 NHTTPConnectionHandle NHTTP_RAP_GetHandle(NHTTP_RAP_WORK* pWork)
 {
@@ -410,7 +443,7 @@ void* NHTTP_RAP_GetRecvBuffer(NHTTP_RAP_WORK* pWork)
   if(pWork==NULL){
     return NULL;
   }
-  return pWork->getbuffer;
+  return pWork->buffer_adrs;
 }
 
 
@@ -421,6 +454,9 @@ NHTTP_RAP_WORK* NHTTP_RAP_Init(HEAPID heapID,u32 profileid, DWCSvlResult* pSvl)
   pNHTTPWork = pWork;
   pWork->profileid=profileid;
   pWork->pSvl = pSvl;
+
+  NHTTP_RAP_DefaultBuffer(pWork);
+
   return pWork;
 }
 
@@ -541,7 +577,7 @@ BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork)
   NET_PRINT("type :%d\n", urltable[urlno].type );
   handle = NHTTPCreateConnection( urltable[urlno].url,
                                   urltable[urlno].type,
-                                  pWork->getbuffer, _GET_MAXSIZE,
+                                  pWork->buffer_adrs, pWork->buffer_size,
                                   ConnectionCallback, NULL);
   if(handle==NULL){
     NHTTPError  error = NHTTP_GetError();
@@ -594,3 +630,14 @@ int NHTTP_RAP_GetGetResultCode(NHTTP_RAP_WORK* pWork)
   return 0;
 }
 
+void NHTTP_RAP_SetBuffer(NHTTP_RAP_WORK* pWork, char *buffer, int size )
+{
+  pWork->buffer_adrs  = buffer;
+  pWork->buffer_size  = size;
+}
+
+void NHTTP_RAP_DefaultBuffer(NHTTP_RAP_WORK* pWork )
+{
+  pWork->buffer_adrs = pWork->getbuffer;
+  pWork->buffer_size = _GET_MAXSIZE;
+}

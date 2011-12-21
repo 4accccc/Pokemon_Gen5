@@ -4510,6 +4510,261 @@ DSシステムフォントなので
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="DATACONV_STR_16"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ごりようの　サービスは　しゅうりょう　いたしました
+「ワイヤレスで　うけつぐ」を　ごりよう　ください▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-19T10:37:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ご利用の　サービスは　終了　いたしました
+「ワイヤレスで　うけつぐ」を　ごg利用　ください▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-19T10:37:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:41:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_STR_17"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>つうしんちゅうです
+しばらく　おまちください</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-20T12:59:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>通信中です
+しばらく　お待ちください</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-20T12:59:23" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:41:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_STR_18"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケットモンスターブラック　ホワイトの
+ゲームシンクで　ポケモンを　
+ねむらせて　ください
+ねむらせたあとに
+おもいでリンクを
+おこなうことが　できます▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-20T13:14:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケットモンスターブラック　ホワイトの
+ゲームシンクで　ポケモンを　
+眠らせて　ください
+眠らせたあとに
+思い出リンクを
+おこなうことが　できます▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-20T13:14:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:41:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_STR_19"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　ゲームシンクIDコードは
+ポケットモンスターブラック２　ホワイト２
+のものでは　ありません▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-20T13:14:02" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　ゲームシンクIDコードは
+ポケットモンスターブラック２　ホワイト２
+のものでは　ありません▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-20T13:14:06" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:41:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="DATACONV_STR_20"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>この　ゲームシンクIDコードは
+とうろく　されて　おりません▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-20T13:15:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:11" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>この　ゲームシンクIDコードは
+登録　されて　おりません▼</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-20T13:15:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-06-24T01:37:18" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment />
+			<CommentModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-15T12:41:31" />
+		</CommentCell>
+		<AttributeCell
+			Name="Width">
+			<Text>208</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-07-07T10:06:40" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="DATACONV_LIST_00"
 		Style="Large">
 		<LanguageCell

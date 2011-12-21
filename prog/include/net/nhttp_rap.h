@@ -37,6 +37,7 @@ typedef enum{
 #ifdef BUGFIX_GFBTS2030_20101025
   NHTTPRAP_URL_ACCOUNT_CREATEUPLOAD,
 #endif //BUGFIX_GFBTS2030_20101025
+  NHTTPRAP_URL_SAVEDATE_GETBW,
 } NHTTPRAP_URL_ENUM;
 
 
@@ -44,6 +45,7 @@ typedef enum{
 
 
 extern BOOL NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ENUM urlno,NHTTP_RAP_WORK* pWork);
+extern BOOL NHTTP_RAP_ConectionCreateEx(NHTTPRAP_URL_ENUM urlno,int param, NHTTP_RAP_WORK* pWork);
 extern NHTTPConnectionHandle NHTTP_RAP_GetHandle(NHTTP_RAP_WORK* pWork);
 extern NHTTPError NHTTP_RAP_StartConnect(NHTTP_RAP_WORK* pWork);
 extern NHTTPError NHTTP_RAP_Process(NHTTP_RAP_WORK* pWork);
@@ -52,6 +54,9 @@ extern void* NHTTP_RAP_GetRecvBuffer(NHTTP_RAP_WORK* pWork);
 extern NHTTP_RAP_WORK* NHTTP_RAP_Init(HEAPID heapID,u32 profileid, DWCSvlResult* pSvl);
 extern void NHTTP_RAP_End(NHTTP_RAP_WORK* pWork);
 extern int NHTTP_RAP_GetGetResultCode(NHTTP_RAP_WORK* pWork);
+
+extern void NHTTP_RAP_SetBuffer(NHTTP_RAP_WORK* pWork, char *buffer, int size );
+extern void NHTTP_RAP_DefaultBuffer(NHTTP_RAP_WORK* pWork );
 
 //------------------------------------------------------------------------------
 /**

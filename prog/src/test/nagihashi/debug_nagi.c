@@ -51,8 +51,10 @@
 #include "savedata/irc_compatible_savedata.h"
 #include "savedata/shortcut.h"
 
+#include "net_app/pdwacc_gamesync_id_inline.h"
 #include "debug_utilproc.h"
 #include "net_app/wbt_download_sys.h"
+#include "debug/debug_nagihashi.h"
 
 //=============================================================================
 /**
@@ -171,7 +173,7 @@ typedef struct
 //-------------------------------------
 /// メインワーク
 //=====================================
-typedef struct
+typedef struct _DEBUG_NAGI_MAIN_WORK
 {
   GAMEDATA *p_gamedata;
   GRAPHIC_WORK      grp;
@@ -187,6 +189,8 @@ typedef struct
   FSOverlayID overlay_Id;
   const GFL_PROC_DATA *p_procdata;
   void  *p_proc_work;
+
+  void (*CallProcEnd)( struct _DEBUG_NAGI_MAIN_WORK * );
 
   union
   { 
@@ -299,6 +303,8 @@ static void CIRCLE_Draw( CIRCLE_WORK *p_wk );
 static void CIRCLE_SetAddR( CIRCLE_WORK *p_wk, u16 add_r );
 static void CIRCLE_SetAddColor( CIRCLE_WORK *p_wk, u16 add_color );
 static void Circle_DrawLine( VecFx16 *p_start, VecFx16 *p_end );
+
+static void Namein_CallProcEnd( DEBUG_NAGI_MAIN_WORK *p_wk );
 
 //=============================================================================
 /**
@@ -711,6 +717,10 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Main( GFL_PROC *p_proc, int *p_seq, void 
 
   case SEQ_RET_PROC:
     CreateTemporaryModules( p_wk, HEAPID_NAGI_DEBUG );
+    if( p_wk->CallProcEnd )
+    {
+      p_wk->CallProcEnd( p_wk );
+    }
     NAGI_Printf( "名前入力:cansel%d\n", p_wk->p_namein_param->cancel );
     *p_seq  = SEQ_FADEOUT_START;
     break;
@@ -1089,6 +1099,8 @@ static void LISTDATA_CallProcNamin( DEBUG_NAGI_MAIN_WORK *p_wk )
   }
 
   DEBUG_NAGI_COMMAND_CallProc( p_wk, FS_OVERLAY_ID(namein), &NameInputProcData, p_wk->p_namein_param );
+
+  p_wk->CallProcEnd = Namein_CallProcEnd;
 }
 
 #include "system/rtc_tool.h"
@@ -2229,6 +2241,31 @@ static void Circle_DrawLine( VecFx16 *p_start, VecFx16 *p_end )
   G3_Vtx( p_start->x, p_start->y, p_start->z);
   G3_Vtx( p_end->x, p_end->y, p_end->z);
   G3_Vtx( p_start->x, p_start->y, p_start->z);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メインワーク
+ *
+ *	@param	DEBUG_NAGI_MAIN_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Namein_CallProcEnd( DEBUG_NAGI_MAIN_WORK *p_wk )
+{
+  STRBUF* pStrbuf = GFL_STR_CreateBuffer( 13, HEAPID_NAGI_DEBUG );
+
+  u32 id = PDWACC_MESSAGE_ConvertID( p_wk->p_namein_param->strbuf );
+  OS_TFPrintf( 2,"gamesyncID = " );
+  DEBUG_STRBUF_Print( p_wk->p_namein_param->strbuf );
+  OS_TFPrintf( 2,"\n" );
+  OS_TFPrintf( 2,"gsid = %d\n", id );
+
+  PDWACC_MESSAGE_GetPassWord(id, pStrbuf);
+  OS_TFPrintf( 2,"gamesyncID = " );
+  DEBUG_STRBUF_Print( pStrbuf );
+  OS_TFPrintf( 2,"\n" );
+
+  GFL_STR_DeleteBuffer(pStrbuf);
 }
 
 #endif //PM_DEBUG

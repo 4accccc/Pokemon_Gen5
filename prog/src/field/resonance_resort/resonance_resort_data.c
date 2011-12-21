@@ -635,7 +635,7 @@ static void RESORT_BASIC2_DATA_SetMyData( RESORT_BASIC2_DATA *p_wk, const GAMEDA
 
     p_wk->city_lv = RESORT_CITY_DATA_GetData( p_city, RESORT_CITY_DATA_PARAM_LV, NULL );
     p_wk->want_job = RESORT_OWNER_DATA_GetWantJob( p_own, p_mystatus );
- 
+    GF_ASSERT( p_wk->want_job < RESORT_SHOP_ID_MAX );
   }
 }
 
@@ -2209,7 +2209,7 @@ BOOL RESORT_RECV_DATA_OverReservePeriod( const RESORT_RECV_DATA *cp_wk, s64 now 
     };
     static const u32 sc_extend_num_time[RESORT_EXTEND_TYPE_MAX+1] =
     {
-      1*60,3*60,4*60,5*60,7*60,8*60,1440*60
+      1*60,3*60,4*60,5*60,6*60,7*60,8*60,1440*60
     };
 
     int extend_num  = RESORT_RECV_DATA_GetData( cp_wk, RESORT_DATA_PARAM_EXTEND_NUM, NULL );
@@ -2639,6 +2639,8 @@ u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM
     return cp_wk->meet_day;
   case RESORT_DATA_PARAM_SPECIAL:
     return FALSE;
+  case RESORT_DATA_PARAM_POKEMON:
+    return cp_wk->pokemon;
 
   default:
     GF_ASSERT_MSG(0,"–¢‘Î‰ž%d\n",param);
@@ -4380,7 +4382,7 @@ u32 RESORT_OWNER_DATA_GetWantJob( const RESORT_RECV_DATA *cp_wk, const MYSTATUS 
   u16 id = MyStatus_GetID( cp_mystatus );
 
 
-  return  RESORT_DATA_GetDefaultWantJob( want_job, id, ver );
+  return RESORT_DATA_GetDefaultWantJob( want_job, id, ver );
 }
 
 
@@ -4397,6 +4399,12 @@ u32 RESORT_OWNER_DATA_GetWantJob( const RESORT_RECV_DATA *cp_wk, const MYSTATUS 
 //-----------------------------------------------------------------------------
 u32 RESORT_DATA_GetDefaultWantJob( u16 want_job, u16 id, u16 ver )
 {
+  GF_ASSERT( want_job < RESORT_SHOP_ID_MAX );
+  if( want_job >= RESORT_SHOP_ID_MAX )
+  {
+    want_job = RESORT_SHOP_ID_NULL;
+  }
+
   if( want_job == RESORT_SHOP_ID_NULL )
   {
     u32 shop_type = sc_resort_institution_release_tbl[id%RESORT_INSTITUTION_TBL_MAX][0];

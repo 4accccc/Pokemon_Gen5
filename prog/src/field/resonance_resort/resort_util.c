@@ -243,6 +243,19 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
         {
           return SexGetMsgID( sex, resort_tourist_greet_14_m, resort_tourist_greet_14_f);
         }
+        else if( comm == RESORT_COMM_TYPE_PDW )
+        {
+
+          //ポケモンを単語登録
+          u16 pokemon = RESORT_ABSTRUCT_DATA_GetData( p_abstruct, RESORT_DATA_PARAM_POKEMON, NULL );
+          GF_ASSERT( pokemon > 0 );
+          if( pokemon == 0 )
+          {
+            pokemon = 1;
+          }
+          WORDSET_RegisterPokeMonsNameNo( p_wordset, 1, pokemon );
+          return SexGetMsgID( sex, resort_tourist_greet_06_m, resort_tourist_greet_06_f);
+        }
         else if( comm == RESORT_COMM_TYPE_NULL )
         {
           //ファンかチュートリアル

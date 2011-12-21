@@ -10,6 +10,9 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 
+#include "multiboot/mb_parent_dataconv_sys.h"
+#include "net/nhttp_rap.h"
+#include "net/dreamworld_netdata.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -22,7 +25,7 @@ typedef enum
 {
   KEYSYS_NET_TYPE_NONE,
   KEYSYS_NET_TYPE_IRCWIRELESS,
-  KEYSYS_NET_TYPE_WIRELESS_DLPLAY,
+  KEYSYS_NET_TYPE_MULTIBOOT,
   KEYSYS_NET_TYPE_WIFI_NTTP,
 
   KEYSYS_NET_TYPE_MAX
@@ -48,6 +51,12 @@ typedef enum
   KEYSYS_NET_REQ_SENDATA_BOTH_IRCWIRELESS,//引数KEYSYS_NET_SEQ_PARAM_IW_SEND
   KEYSYS_NET_REQ_TIMINGSYNC,              //引数NULL
 
+  KEYSYS_NET_REQ_MULTIBOOT_SEND_ROM,      //引数KEYSYS_NET_SEQ_PARAM_MULTIBOOT_SEND_ROM
+  KEYSYS_NET_REQ_MULTIBOOT_CONNECT_ROM,      //引数KEYSYS_NET_SEQ_PARAM_MULTIBOOT_CONNECT_ROM
+
+  KEYSYS_NET_REQ_PGL_GETBW,//引数KEYSYS_NET_SEQ_PARAM_PGL_GETBW,
+  KEYSYS_NET_REQ_PGL_PLAYSTATUS,//引数NULL 受信データKEYSYS_NET_SEQ_RESULT_PLAYSTATUS
+
   KEYSYS_NET_REQ_MAX
 } KEYSYS_NET_REQ;
 
@@ -58,11 +67,20 @@ typedef enum
 {
   KEYSYS_NET_STATE_WAIT, //何もしていない
 
+  //赤外線ワイヤレス
   KEYSYS_NET_STATE_IRCWIRELESS_CONNECT,
   KEYSYS_NET_STATE_IRCWIRELESS_DISCONNECT,
   KEYSYS_NET_STATE_IRCWIRELESS_WAIT,
   KEYSYS_NET_STATE_IRCWIRELESS_SENDATA_BOTH,
   KEYSYS_NET_STATE_IRCWIRELESS_TIMINGSYNC,
+
+  //マルチブート
+  KEYSYS_NET_STATE_MULTIBOOT_SEND_ROM,
+  KEYSYS_NET_STATE_MULTIBOOT_CONNECT_ROM,
+
+  //PGL
+  KEYSYS_NET_STATE_PGL_GETBW,
+  KEYSYS_NET_STATE_PGL_PLAYSTATUS,
 
   KEYSYS_NET_STATE_MAX
 } KEYSYS_NET_STATE;
@@ -107,6 +125,80 @@ typedef struct
   u32 size;
 } KEYSYS_NET_SEQ_PARAM_IW_SEND;
 
+
+//-------------------------------------
+///	KEYSYS_NET_REQ_MULTIBOOT_SEND_ROMの引数
+//=====================================
+typedef enum
+{
+  KEYSYS_NET_RESULT_MULTIBOOT_SEND_ROM_CONTINUE,
+  KEYSYS_NET_RESULT_MULTIBOOT_SEND_ROM_FINISH,
+  KEYSYS_NET_RESULT_MULTIBOOT_SEND_ROM_CANCEL,
+}KEYSYS_NET_RESULT_MULTIBOOT_SEND_ROM;
+typedef struct
+{
+  const STRBUF *cp_title;
+  const STRBUF *cp_info;
+  KEYSYS_NET_RESULT_MULTIBOOT_SEND_ROM  result;
+} KEYSYS_NET_SEQ_PARAM_MULTIBOOT_SEND_ROM;
+
+//-------------------------------------
+///	KEYSYS_NET_SEQ_MULTIBOOT_CONNECT_ROMの引数
+//=====================================
+typedef enum
+{
+  KEYSYS_NET_RESULT_MULTIBOOT_CONNECT_ROM_CONTINUE,
+  KEYSYS_NET_RESULT_MULTIBOOT_CONNECT_ROM_FINISH,
+}KEYSYS_NET_RESULT_MULTIBBOT_CONNECT_ROM;
+typedef struct
+{
+  KEYSYS_NET_RESULT_MULTIBBOT_CONNECT_ROM result;
+  MB_PARENT_DATACONV_RESULT data_result;
+  void *p_recv_data;
+} KEYSYS_NET_SEQ_PARAM_MULTIBOOT_CONNECT_ROM;
+
+//-------------------------------------
+///	KEYSYS_NET_REQ_PGL_GETBWの引数
+//=====================================
+typedef enum
+{
+  KEYSYS_NET_RESULT_PGL_GETBW_CONTINUE,
+  KEYSYS_NET_RESULT_PGL_GETBW_NHTTP_ERROR,
+  KEYSYS_NET_RESULT_PGL_GETBW_RESPONSE_ERROR,
+  KEYSYS_NET_RESULT_PGL_GETBW_PDW_ERROR,
+  KEYSYS_NET_RESULT_PGL_GETBW_FINISH,
+  KEYSYS_NET_RESULT_PGL_GETBW_SWANDATA,
+  KEYSYS_NET_RESULT_PGL_GETBW_NO_REGIST,
+  KEYSYS_NET_RESULT_PGL_GETBW_NO_DATA,
+}KEYSYS_NET_RESULT_PGL_GETBW;
+typedef struct
+{
+  u32 gsid;
+  KEYSYS_NET_RESULT_PGL_GETBW result;
+  void *p_buffer_adrs; 
+  u32   buffer_size;
+} KEYSYS_NET_SEQ_PARAM_PGL_GETBW;
+
+//-------------------------------------
+///	KEYSYS_NET_REQ_PGL_PLAYSTATUSの引数
+//=====================================
+typedef enum
+{
+  KEYSYS_NET_RESULT_PLAYSTATUS_CONTINUE,
+  KEYSYS_NET_RESULT_PLAYSTATUS_NHTTP_ERROR,
+  KEYSYS_NET_RESULT_PLAYSTATUS_RESPONSE_ERROR,
+  KEYSYS_NET_RESULT_PLAYSTATUS_PDW_ERROR,
+  KEYSYS_NET_RESULT_PLAYSTATUS_FIHISH,
+}KEYSYS_NET_RESULT_PLAYSTATUS;
+typedef struct
+{
+  DREAM_WORLD_SERVER_PLAY_TYPE play_status;
+  KEYSYS_NET_RESULT_PLAYSTATUS  result;
+} KEYSYS_NET_SEQ_RESULT_PLAYSTATUS;
+
+
+
+
 //=============================================================================
 /**
  *					外部公開関数
@@ -123,7 +215,12 @@ extern void KEYSYS_NET_RequestState( KEYSYS_NET_WORK *p_wk, KEYSYS_NET_REQ req, 
 extern KEYSYS_NET_STATE KEYSYS_NET_GetState( const KEYSYS_NET_WORK *cp_wk );
 
 extern BOOL KEYSYS_NET_GetRecvData( const KEYSYS_NET_WORK *cp_wk, void *p_data, u32 size );
+extern void * KEYSYS_NET_GetParamAdrs( KEYSYS_NET_WORK *p_wk );
+
+extern void KEYSYS_NET_DefaultRecvBuffer( KEYSYS_NET_WORK *p_wk );
 
 //エラー
 extern KEYSYS_NET_ERROR_TYPE KEYSYS_NET_HandleError( KEYSYS_NET_WORK *p_wk );
 extern void KEYSYS_NET_ClearError( KEYSYS_NET_WORK *p_wk );
+
+extern void KEYSYS_NET_SetDWCSvlResult( KEYSYS_NET_WORK *p_wk, DWCSvlResult *p_svl );

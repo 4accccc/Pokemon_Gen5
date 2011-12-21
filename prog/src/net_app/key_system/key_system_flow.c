@@ -1088,7 +1088,20 @@ static void KeySys_Seq_App_Wfbc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     break;
 
   case SEQ_CONFIRM_MSG_START:
-    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, KEYSYS_SETTING_MES_04+KEY_SYSTEM_SAVE_GetWfbc(p_wk->p_key_sv), KEYSYS_TEXT_TYPE_STREAM );
+    {
+      int msg;
+
+      if( GET_VERSION() == VERSION_W2 )
+      {
+        msg = KEYSYS_SETTING_MES_04+!KEY_SYSTEM_SAVE_GetWfbc(p_wk->p_key_sv);
+      }
+      else
+      {
+        msg = KEYSYS_SETTING_MES_04+KEY_SYSTEM_SAVE_GetWfbc(p_wk->p_key_sv);
+      }
+
+      KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, msg, KEYSYS_TEXT_TYPE_STREAM );
+    }
     (*p_seq)++;
     break;
 

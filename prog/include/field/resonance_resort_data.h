@@ -287,6 +287,9 @@ typedef enum
   RESORT_DATA_PARAM_PHRASE_CODE,  //p_ret_adrs‚©‚çŽæ“¾
   RESORT_DATA_PARAM_THANKS_CODE,  //p_ret_adrs‚©‚çŽæ“¾  //90
 
+  //proxy‚É‚µ‚©‚È‚¢
+  RESORT_DATA_PARAM_POKEMON,
+
 } RESORT_DATA_PARAM;
 
 //-------------------------------------

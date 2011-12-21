@@ -48,7 +48,6 @@
 #include "net_app/key_system.h"
 
 FS_EXTERN_OVERLAY( outside_save );
-FS_EXTERN_OVERLAY( multiboot );
 FS_EXTERN_OVERLAY( ui_common );
 
 //=============================================================================
@@ -281,11 +280,6 @@ static GFL_PROC_RESULT Key_System_Proc_Main
     case KEYSYS_NET_ERROR_TYPE_DISCONNECT:  //切断したらメインメニューに戻る
       KEYSYS_NET_ClearError( p_wk->p_net );
       PMSND_StopSE(); //通信のループ音を消す
-      if( p_wk->p_mb )
-      {
-        MB_PARENT_DATACONV_Exit( p_wk->p_mb );
-        p_wk->p_mb = NULL;
-      }
       if( p_wk->p_download_data )
       {
         GFL_HEAP_FreeMemory( p_wk->p_download_data );
@@ -1266,7 +1260,6 @@ void KEYSYS_MAP_Clear( KEYSYS_MAP *p_wk )
 void KEYSYS_InitTemporaryModules( KEY_SYSTEM_WORK *p_wk, HEAPID heapID )
 {
   GFL_OVERLAY_Load( FS_OVERLAY_ID(outside_save) );
-  GFL_OVERLAY_Load( FS_OVERLAY_ID(multiboot) );
   GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
 
   //管理外セーブシステム
@@ -1400,7 +1393,6 @@ void KEYSYS_ExitTemporaryModules( KEY_SYSTEM_WORK *p_wk )
   p_wk->p_font = NULL;
 
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(multiboot) );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(outside_save) );
 }
 //-------------------------------------
