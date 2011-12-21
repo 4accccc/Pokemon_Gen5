@@ -58,6 +58,14 @@ INIT_EVENT_START   ev_zone_d24
     _SXY_MOVE_EXIT_EVENT( DOOR_ID_D24_D24R0501_EXIT02, 671, -1, 299 )
   ENDIF
   
+  //イベント進行状態を見てライブキャスターの状態をセット
+  IF FLAG_ON( SYS_FLAG_PAIR )  THEN
+    //==================================//
+    //ローカルライブキャスター・ベル通話状態を変更
+    _PERSON_STATE_SET_BELL( BELL_STATE_D24_2 )
+    //==================================//
+  ENDIF
+  
 INIT_EVENT_END
 
 /************************************************************/

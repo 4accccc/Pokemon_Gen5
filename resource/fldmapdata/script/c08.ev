@@ -1357,7 +1357,7 @@ EVENT_START   ev_c08_swleader7_01
   _PLAYER_NAME( 0 )
 
   //ヴィオ戦前（振り向きなし一言メッセージ）
-  IF $WK_SCENE_C08_SWPLAZMA <= 5 THEN
+  IF $WK_SCENE_C08_SWPLAZMA <= 4 THEN
     _TALK_START_TURN_NOT()
     _BALLOONWIN_OBJMSG_POS( msg_c08_swleader7_12 , C08_SWLEADER7_01 , POS_DEFAULT)
     _LAST_KEYWAIT()
@@ -1365,9 +1365,9 @@ EVENT_START   ev_c08_swleader7_01
   //D10後～クリアまで
   ELSIF $WK_SCENE_D10R0401_SWSAGE1_01 == 3 THEN
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08_swleader7_25 )
-  //【仮】ヴィオ戦条件を満たしている
-  ELSIF $WK_SCENE_C08_SWPLAZMA == 6 && $WK_SCENE_C08_NINJA == 0 THEN
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08_poke47_01 )
+  //ヴィオ戦条件を満たしている
+  ELSIF $WK_SCENE_C08_SWPLAZMA == 5 && $WK_SCENE_C08_NINJA == 0 THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08_swleader7_26 )
   //ダークトリニティイベント起動時
   ELSIF $WK_SCENE_C08_NINJA == 1 THEN
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08_swleader7_19 )

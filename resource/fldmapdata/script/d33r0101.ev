@@ -259,6 +259,8 @@ EVENT_START   ev_pos_d33r0101_sppoke_01
   _FLAG_SET( FV_D33R0101_SPPOKE_01 )
   //博士非表示
   _FLAG_SET( FV_D33R0101_HAKASE2_01 )
+  //ローカルライブキャスター：アララギ娘通話状態を変更
+  _PERSON_STATE_SET_DOCTOR( DOCTOR_STATE_RESEARCHINSTITUTE )
   //========================================//
 
 EVENT_END

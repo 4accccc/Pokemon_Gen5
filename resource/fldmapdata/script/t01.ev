@@ -54,8 +54,8 @@ EVENT_START ev_bg_t01_board_02
 
   ELSE
 
-    //【仮】トウコ・トウヤの家（メッセージラベルが仮）
-    _EASY_BGWIN_MSG( msg_t01_sign2_01, TYPE_POST )
+    //……の家
+    _EASY_BGWIN_MSG( msg_t01_sign2_02, TYPE_POST )
 
   ENDIF
 }

@@ -45,7 +45,7 @@ _EVENT_DATA    ev_c05_trainerm_01
 _EVENT_DATA    ev_c05_badman
 _EVENT_DATA    ev_c05_workman
 _EVENT_DATA    ev_c05_boy2_01
-_EVENT_DATA    ev_c05_rangerw_01
+_EVENT_DATA    ev_c05_woman2_02
 _EVENT_DATA    ev_c05_badman_02
 _EVENT_DATA    ev_c05_man2_01
 _EVENT_DATA    ev_bg_c05_board_06
@@ -749,10 +749,10 @@ EVENT_START   ev_bg_c05_board_05
 EVENT_END
 
 /**************************************************************/
-/*  【仮】C05 抜け穴看板：メッセージラベルが仮                                        */
+/*  C05 ヤーコンロード看板                                        */
 /**************************************************************/
 EVENT_START   ev_bg_c05_board_06
-  _EASY_BGWIN_MSG( msg_c05_gymsign_01, TYPE_POST )
+  _EASY_BGWIN_MSG( msg_c05_sign5_01, TYPE_POST )
 EVENT_END
 
 /************************************************************/
@@ -1049,7 +1049,7 @@ EVENT_END
 /**************************************************************/
 /*  C05 RANGERWの会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c05_rangerw_01
+EVENT_START   ev_c05_woman2_02
   _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_rangerw_01)
 EVENT_END
 

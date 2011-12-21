@@ -2051,6 +2051,8 @@ EVENT_START   ev_scene_c12_rivalsister_end_01
   _FLAG_SET( FV_C12_SWRIVAL_SISTER )
   //POSイベント進行
   $WK_SCENE_SPPOKE_EVENT_01 = 2
+  //ローカルライブキャスター：アララギ娘通話状態を変更（D33R0101終了まで）
+  _PERSON_STATE_SET_DOCTOR( DOCTOR_STATE_D33R0101 )
   //========================================//
 
 EVENT_END

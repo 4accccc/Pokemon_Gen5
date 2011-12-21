@@ -152,7 +152,7 @@ EVENT_START   ev_scene_c03p15_first_01
   $WK_SCENE_C03_RALLY_01 = 1
   //C03P15のライバル非表示
   _FLAG_SET( FV_C03P15_SWRIVAL_01 )
-  //ローカルライブキャスター・ライバル通話状態を変更（D11クリアまで）
+  //ローカルライブキャスター・ライバル通話状態を変更（C03P17まで）
   _PERSON_STATE_SET_RIVAL( RIVAL_STATE_C03_1 )
   //==================================//
     

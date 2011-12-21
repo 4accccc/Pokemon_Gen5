@@ -35,7 +35,7 @@
 #define C05_TRAINERM                      10
 #define C05_WORKMAN                       11
 #define C05_TRAINERM_01                   12
-#define C05_RANGERW_01                    13
+#define C05_WOMAN2_02                     13
 #define C05_BOY2_01                       14
 #define C05_BADMAN_02                     15
 #define C05_BADMAN                        16

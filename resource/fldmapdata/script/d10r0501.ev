@@ -703,7 +703,7 @@ ev_vs_swsage1_01:
   _OBJ_DEL( D10R0501_SWSAGE1_02 )
   _OBJ_ADD( D10R0501_WAND_01 )
   
-  //【仮】主人公移動まで間
+  //主人公移動まで間
   _TIME_WAIT( 16 )
   
   //アニメ：主人公Ｎに隣接

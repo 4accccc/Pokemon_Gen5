@@ -2248,7 +2248,7 @@
 #define SYS_FLAG_FES_SHOCKSHOP1           2459 /* 0x099b フェスミッションのオープンフラグその16 */
 #define SYS_FLAG_FES_TRADE2               2460 /* 0x099c フェスミッションのオープンフラグその17 */
 #define SYS_FLAG_FES_TRAIL2BW             2461 /* 0x099d フェスミッションのオープンフラグその18 */
-#define SYS_FLAG_FES_OPEN_19              2462 /* 0x099e フェスミッションのオープンフラグその19 */
+#define SYS_FLAG_FES_OPEN_POKEBTL1_T      2462 /* 0x099e フェスミッションのオープンフラグその19 */
 #define SYS_FLAG_ARRIVE_N01R0401          2463 /* 0x099f 到着フラグ：N01R0101 */
 #define SYS_FLAG_ARRIVE_D20R0501          2464 /* 0x09a0 到着フラグ：D20R0501 */
 #define SYS_FLAG_ARRIVE_D31R0201          2465 /* 0x09a1 到着フラグ：D31R0201 */
@@ -2334,15 +2334,16 @@
 #define SYS_FLAG_BGM_C16_PARADE           2545 /* 0x09f1 BGM変更フラグ：ジョインアベニュー */
 #define SYS_FLAG_BGM_C08_PLAZMA           2546 /* 0x09f2 BGM変更フラグ：氷漬けソウリュウシティ */
 #define SYS_FLAG_POKEWOOD_DISABLE_REC     2547 /* 0x09f3 ポケウッド：撮影を一時的に行わない状態 */
-#define SYS_FLAG_FES_OPEN_20              2548 /* 0x09f4 フェスミッションのオープンフラグその20 */
-#define SYS_FLAG_FES_OPEN_21              2549 /* 0x09f5 フェスミッションのオープンフラグその21 */
-#define SYS_FLAG_FES_OPEN_22              2550 /* 0x09f6 フェスミッションのオープンフラグその22 */
-#define SYS_FLAG_FES_OPEN_23              2551 /* 0x09f7 フェスミッションのオープンフラグその23 */
+#define SYS_FLAG_FES_TRBTL1_T             2548 /* 0x09f4 フェスミッションのオープンフラグその20 */
+#define SYS_FLAG_FES_STONE1_T             2549 /* 0x09f5 フェスミッションのオープンフラグその21 */
+#define SYS_FLAG_FES_TOH1_T               2550 /* 0x09f6 フェスミッションのオープンフラグその22 */
+#define SYS_FLAG_FES_MQUIZ1_T             2551 /* 0x09f7 フェスミッションのオープンフラグその23 */
 #define SYS_FLAG_ENDING                   2552 /* 0x09f8 エンディングスクリプトの初期化フラグ */
 #define SYS_FLAG_BGM_C08_SILENT           2553 /* 0x09f9 BGM変更フラグ：無音ソウリュウシティ */
 #define SYS_FLAG_BGM_D27R0601_PLAZMA      2554 /* 0x09fa BGM変更フラグ：プラズマ団ゲーチス部屋 */
 #define SYS_FLAG_BGM_D10R0501_VS_GCIS     2555 /* 0x09fb BGM変更フラグ：ジャイアントホール・イベント曲 */
 #define SYS_FLAG_BGM_D10R0501_N_COME      2556 /* 0x09fc BGM変更フラグ：ジャイアントホール・N曲 */
+#define SYS_FLAG_FES_KINOMI_M             2557 /* 0x09fd フェスミッションのオープンフラグその24 */
 
 #define SYS_FLAG_AREA_END                 2639 /* 0x0a4f  */
 

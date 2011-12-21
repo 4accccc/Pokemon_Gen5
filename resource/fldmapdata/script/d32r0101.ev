@@ -206,8 +206,8 @@ ev_vs_d32r0101_poke50_01:
     _AB_KEYWAIT_MARK()
     _MSGWIN_CLOSE()
 
-    //【仮】イワパレス戦をセット（レベルが仮）
-    _WILD_BTL_SET_TALK( MONSNO_569, 38 )
+    //イワパレス戦をセット
+    _WILD_BTL_SET_TALK( MONSNO_569, 42 )
     _WILD_LOSE_CHECK( SCWK_ANSWER )
 
     IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
