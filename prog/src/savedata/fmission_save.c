@@ -377,7 +377,7 @@ void FMISSION_SAVE_SetMissionStatusClearLevel( FMISSION_SAVE* sv, FEST_MISSION_I
     GF_ASSERT(0);
     return;
   }
-  if( level < FMISSION_CLEAR_LEVEL_4 ){ //Level4クリア情報は保存しない
+  if( level > sv->status[id].level && level < FMISSION_CLEAR_LEVEL_4 ){ //Level4クリア情報は保存しない
     sv->status[id].level = level;
   }
 }
