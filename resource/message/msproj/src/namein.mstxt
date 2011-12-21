@@ -391,11 +391,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたの　かたがきは？
-（このまち　だけの　よばれかた　です）</Text>
+			<Text>あなたの　肩書きは？
+（この街　だけの　呼ばれ方　です）</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-31T11:39:46" />
+				Time="2011-12-21T14:07:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -433,11 +433,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>自分の　口癖は？
+			<Text>自分の　くちぐせは？
 （世界の　みんなに　伝わります）</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-20T05:45:55" />
+				Time="2011-12-21T14:22:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -554,11 +554,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かんげき　したときの　ことばは？
+			<Text>かんどう　したときの　ことばは？
 （せかいの　みんなに　つたわります）</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-20T05:48:07" />
+				Time="2011-12-21T14:07:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -566,11 +566,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>感激したときの　言葉は？
+			<Text>感動したときの　言葉は？
 （世界の　みんなに　伝わります）</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-10-20T05:48:21" />
+				Time="2011-12-21T14:07:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
