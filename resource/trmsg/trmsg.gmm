@@ -18381,27 +18381,27 @@
 	</row>
 
 	<row id="TRID_SWPLAZMAM_40_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">まってたぞ！▼</language>
-		<language name="JPN_KANJI" width="216">待ってたぞ！▼</language>
+		<language name="JPN" width="216">くせもの　め！
+まっていたで　ござる！▼</language>
+		<language name="JPN_KANJI" width="216">曲者め！
+待っていたで　ござる！▼</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAM_40_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">まけた！
-ちがう！　プラーズマー！</language>
-		<language name="JPN_KANJI" width="216">負けた！
-違う！　プラーズマー！</language>
+		<language name="JPN" width="216">む　むねん……</language>
+		<language name="JPN_KANJI" width="216">む　無念……</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAM_40_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">まけろ！　まけろ！
-おまえなんか　まけてしまえ！</language>
-		<language name="JPN_KANJI" width="216">負けろ！　負けろ！
-おまえなんか　負けてしまえ！</language>
+		<language name="JPN" width="216">しからば　ごめん！</language>
+		<language name="JPN_KANJI" width="216">然らば御免！</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAW_17_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">まってたわ！▼</language>
-		<language name="JPN_KANJI" width="216">待ってたわ！▼</language>
+		<language name="JPN" width="216">オホホッ！
+まちぶせ　しちゃった！▼</language>
+		<language name="JPN_KANJI" width="216">オホホッ！
+待ち伏せ　しちゃった！▼</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAW_17_TRMSG_FIGHT_LOSE">
@@ -18561,9 +18561,9 @@
 
 	<row id="TRID_SWPLAZMAM_39_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">ファイティング　スイーパー！
-おまえという　ゴミを　そうじだ！▼</language>
+おまえという　ゴミを　そうじ！▼</language>
 		<language name="JPN_KANJI" width="216">ファイティング　スイーパー！
-おまえという　ゴミを　掃除だ！▼</language>
+おまえという　ゴミを　掃除！▼</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAM_39_TRMSG_FIGHT_LOSE">
