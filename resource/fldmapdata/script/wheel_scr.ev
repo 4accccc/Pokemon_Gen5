@@ -201,6 +201,8 @@ sub_wheel_talk_swan:
   _OBJ_ANIME_WAIT()
   _OBJ_DEL( SCWK_TARGET_OBJID )
   
+
+
   //========================================/
   // 初回フラグをたてる
   _FLAG_SET( lwk_flag_id )
@@ -212,6 +214,41 @@ sub_wheel_talk_swan:
   _CALL medal_get
 
   //========================================/
+
+  //ライバルならばイベント進行状態に合わせてセット
+  IF $lwk_npc_id == 0 && FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+    //ローカルライブキャスター・ライバル通話状態を変更
+    //サザナミ戦前
+    IF FLAG_OFF( FE_T04_SWRIVAL_WIN_01 ) && FLAG_OFF( FE_C05R0501_RIVAL_BTL_END ) THEN
+      _PERSON_STATE_SET_RIVAL( RIVAL_STATE_T04 )
+    //ポケモンハウス戦前
+    ELSIF FLAG_ON( FE_T04_SWRIVAL_WIN_01 ) && FLAG_OFF( FE_C05R0501_RIVAL_BTL_END ) THEN
+      _PERSON_STATE_SET_RIVAL( RIVAL_STATE_PLASMAHOME_1 )
+    //ポケモンハウス戦後
+    ELSIF FLAG_ON( FE_T04_SWRIVAL_WIN_01 ) && FLAG_ON( FE_C05R0501_RIVAL_BTL_END ) THEN
+      _PERSON_STATE_SET_RIVAL( RIVAL_STATE_PLASMAHOME_2 )
+    ENDIF
+  
+  ENDIF
+  
+  //ベルならばセット
+  IF $lwk_npc_id == 1 && FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+    //ローカルライブキャスター・ベル通話状態を変更
+    _PERSON_STATE_SET_BELL( BELL_STATE_HOME )
+  ENDIF
+  
+  //チェレンならばイベント進行状態に合わせてセット
+  IF $lwk_npc_id == 3 && FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+    //ローカルライブキャスター・チェレン通話状態を変更
+    //ヤグルマの森未クリア
+    IF $WK_SCENE_D02R0101_SWLEADER1 == 0  THEN
+      _PERSON_STATE_SET_CHELEN( CHELEN_STATE_YAGURUMA )
+    //ヤグルマの李クリア後
+    ELSIF $WK_SCENE_D02R0101_SWLEADER1 == 1  THEN
+      _PERSON_STATE_SET_CHELEN( CHELEN_STATE_GYM )
+    ENDIF
+    
+  ENDIF
 
 }
 _RET
