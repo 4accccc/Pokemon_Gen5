@@ -453,7 +453,7 @@ static void SetupStaffRollDemoParam( GAMECLEAR_WORK* work )
 #ifdef PM_DEBUG
 #if defined(DEBUG_ONLY_FOR_ichiraku_katsuhiko)
   // デバッグモード起動
-  work->staffRollDemoParam.fastMode = STAFFROLL_MODE_DEBUG;
+  //work->staffRollDemoParam.fastMode = STAFFROLL_MODE_DEBUG;
 #endif
 #endif
 
@@ -495,7 +495,7 @@ static void SetupSequence( GAMECLEAR_WORK* work )
   // *****************************************
   work->seqArray[pos++] = GMCLEAR_SEQ_INIT;
   work->seqArray[pos++] = GMCLEAR_SEQ_COMM_END_REQ;
-  work->seqArray[pos++] = GMCLEAR_SEQ_FADEOUT;
+  //work->seqArray[pos++] = GMCLEAR_SEQ_FADEOUT;
   work->seqArray[pos++] = GMCLEAR_SEQ_COMM_END_WAIT;
   work->seqArray[pos++] = GMCLEAR_SEQ_FIELD_CLOSE_WAIT;
   work->seqArray[pos++] = GMCLEAR_SEQ_DENDOU_DEMO;
