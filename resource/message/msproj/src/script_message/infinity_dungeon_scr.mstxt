@@ -3914,19 +3914,11 @@
 			Language="JPN">
 			<Text>おめでとう
 これで　しょしんしゃ　そつぎょうね▼
-エリア２　クリアの　きねんに
-エリア３の　ヒントを　すこしあげるわ▼
-エリア３からは　エリアが
-いまより　ひろくなるから▼
-ゲートトレーナーを　さがすのが
-いまより　むずかしくなるわ▼
-トレーナーから　ヒントを　よくきいて
-ゲートトレーナーを　さがしなさい▼
-さきは　ながいわよ
+だけど　さきは　ながいわよ
 つぎの　エリアも　がんばってね▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T08:40:51" />
+				Time="2011-12-21T07:16:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3936,19 +3928,11 @@
 			Language="JPN_KANJI">
 			<Text>おめでとう
 これで　初心者　卒業ね▼
-エリア2　クリアの　きねんに
-エリア3の　ヒントを　少しあげるわ▼
-エリア3からは　エリアが
-今より　広くなるから▼
-ゲートトレーナーを　探すのが
-今より　難しくなるわ▼
-トレーナーから　ヒントを　よく聞いて
-ゲートトレーナーを　探しなさい▼
-先は　長いわよ
+だけど　先は　長いわよ
 次の　エリアも　がんばってね▼</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T08:41:22" />
+				Time="2011-12-21T07:16:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -3982,14 +3966,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いたたた……
+			<Text>さすがだね！
 キミの　つよさも　よくわかったよ▼
-これで　エリア３も　クリアだ▼
+エリア３　クリアの　きねんに
+エリア４の　ヒントを　すこしおしえよう▼
+つぎの　エリア４からは
+エリアが　ひろくなるぞ▼
+ゲートトレーナーを　さがすのが
+いまより　むずかしくなるから▼
+トレーナーから　ヒントを　よくきいて
+ゲートトレーナーを　さがすんだ▼
 キミが　どこまで　いけるのか
 たのしみに　しているよ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-10T06:23:11" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-21T07:22:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3997,14 +3988,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>痛たたた……
+			<Text>さすがだね！
 キミの　強さも　よくわかったよ▼
-これで　エリア３も　クリアだ▼
+エリア３　クリアの　記念に
+エリア４の　ヒントを　少し教えよう▼
+次の　エリア４からは
+エリアが　広くなるぞ▼
+ゲートトレーナーを　探すのが
+今より　難しくなるから▼
+トレーナーから　ヒントを　よく聞いて
+ゲートトレーナーを　探すんだ▼
 キミが　どこまで　行けるのか
 楽しみに　しているよ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-10T06:23:14" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-21T07:22:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4608,17 +4606,11 @@
 			Language="JPN">
 			<Text>おめでとう
 これで　しょしんしゃ　そつぎょうだな▼
-エリア２　クリアの　きねんに
-エリア３の　ヒントを　すこしおしえよう▼
-つぎの　エリア３からは
-エリアが　ひろくなるぞ▼
-トレーナーから　ヒントを　よくきいて
-ゲートトレーナーを　さがすんだ▼
-さきは　ながいぞ
+だが　さきは　ながいぞ
 つぎの　エリアも　がんばれよ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-28T02:48:44" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-21T07:18:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4628,17 +4620,11 @@
 			Language="JPN_KANJI">
 			<Text>おめでとう
 これで　初心者　卒業だな▼
-エリア2　クリアの　記念に
-エリア3の　ヒントを　少し教えよう▼
-次の　エリア３からは
-エリアが　広くなるぞ▼
-トレーナーから　ヒントを　よくきいて
-ゲートトレーナーを　探すんだ▼
-先は　長いぞ
+だが　先は　長いぞ
 次の　エリアも　がんばれよ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-28T02:48:58" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-21T07:18:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4672,14 +4658,21 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いたたた……
+			<Text>おみごと　ね！
 キミの　つよさも　よくわかったわ▼
-これで　エリア３も　クリアよ▼
+エリア３　クリアの　きねんに
+エリア４の　ヒントを　すこしあげるわ▼
+つぎの　エリア４からは
+エリアが　ひろくなるわ▼
+ゲートトレーナーを　さがすのが
+いまより　むずかしくなるから▼
+トレーナーから　ヒントを　よくきいて
+ゲートトレーナーを　さがしなさい▼
 キミが　どこまで　いけるのか
 たのしみに　しているわ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-10T06:20:35" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-21T07:21:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4687,14 +4680,21 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>痛たたた……
+			<Text>おみごと　ね！
 キミの　強さも　よくわかったわ▼
-これで　エリア3も　クリアよ▼
+エリア３　クリアの　記念に
+エリア４の　ヒントを　少しあげるわ▼
+次の　エリア４からは
+エリアが　広くなるわ▼
+ゲートトレーナーを　探すのが
+今より　難しくなるから▼
+トレーナーから　ヒントを　よく聞いて
+ゲートトレーナーを　探しなさい▼
 キミが　どこまで　行けるのか
 楽しみに　しているわ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-10T06:20:38" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-21T07:20:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

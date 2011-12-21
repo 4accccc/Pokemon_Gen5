@@ -883,12 +883,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName ]は
-[Name:Item Idx="1" ]を　[Digit:1digit Idx="2" ]こ▽
-てにいれた！</Text>
+			<Text>[Name:TrainerName ]は　[Name:Item Idx="1" ]を
+[Digit:1digit Idx="2" ]こ　てにいれた！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-10T07:51:14" />
+				Time="2011-12-21T07:23:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -896,12 +895,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]は
-[Name:Item Idx="1" ]を　[Digit:1digit Idx="2" ]個▽
-手に入れた！</Text>
+			<Text>[Name:TrainerName ]は　[Name:Item Idx="1" ]を
+[Digit:1digit Idx="2" ]個　手に入れた！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-10T07:52:28" />
+				Time="2011-12-21T07:23:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
