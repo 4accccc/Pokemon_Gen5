@@ -2308,6 +2308,8 @@ EVENT_START   ev_debug_ichiraku
       _CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,1 )	//ˆê”ÔÅŒã‚Ìˆø”‚ÍˆÚ“®‚É‚©‚©‚éƒtƒŒ[ƒ€”
       _CAMERA_WAIT_MOVE()
 
+      _OBJ_ADD_EX( 20, 15, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, RGLEADER3, MV_DMY )
+
       _CAMERA_END()
     }
 
