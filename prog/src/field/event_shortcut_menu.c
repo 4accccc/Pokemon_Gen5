@@ -970,6 +970,7 @@ static BOOL GetItemCheckEnable( SHORTCUT_ID shortcutID, ITEMCHECK_ENABLE * enabl
 	case SHORTCUT_ID_GURASHIDEA:			// グラシデアの花
 	case SHORTCUT_ID_IDENSINOKUSABI_U:	// いでんしのくさび(合体用)
 	case SHORTCUT_ID_IDENSINOKUSABI_P:	// いでんしのくさび(分離用)
+	case SHORTCUT_ID_UTUSIKAGAMI:			// うつしかがみ
 		return FALSE;
 	}
 
