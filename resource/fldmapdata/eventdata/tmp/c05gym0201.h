@@ -9,8 +9,7 @@
 #ifndef ZONE_C05GYM0201_EVC_H
 #define ZONE_C05GYM0201_EVC_H
 
-#define C05GYM0201_STARTLIFT_01            0
-#define C05GYM0201_INFORMATIONW_01         1
+#define C05GYM0201_INFORMATIONW_01         0
 
 #endif //ZONE_C05GYM0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c05gym0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -19,5 +18,6 @@
 
 #define BG_C05GYM0201_STATUE_01           0
 #define BG_C05GYM0201_STATUE_02           1
+#define BG_C05GYM0201_STARTLIFT_01        2
 
 #endif //ZONE_C05GYM0201_EVB_H

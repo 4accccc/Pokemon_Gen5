@@ -99,6 +99,8 @@ EVENT_START	ev_reserve_c05gym0201_gymback_02
    $WK_SCENE_C05 = 4
   //C05ヤーコン表示
   _FLAG_RESET(FV_C05_SWLEADER5_01)
+  //一時的にBGイベントを移動する
+  _SXY_MOVE_BG_EVENT( BG_C05GYM0201_STARTLIFT_01, 31, 0, 0 )
   //========================================//
   
 EVENT_END
@@ -107,6 +109,7 @@ EVENT_END
 /*			ジムフロアへ降りるリフトのスイッチ				*/
 /************************************************************/
 EVENT_START	ev_c05gym0201_startlift_01
+
 	_PLAYER_DIR_GET( SCWK_ANSWER )	//主人公の向き情報を取得
 
   {
@@ -116,7 +119,7 @@ EVENT_START	ev_c05gym0201_startlift_01
 	//スイッチの下側から話しかけた場合はリフト起動
   // かつ ヤーコンリフトではない
 	IF $SCWK_ANSWER == DIR_UP && $LOCALWORK0 == 0 THEN
-	  
+	  _TALK_START_SE_PLAY()
 	  _PLAYER_NAME( 0 )
 	  
 	  //スイッチSE
