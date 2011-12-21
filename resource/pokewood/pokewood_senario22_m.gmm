@@ -496,10 +496,10 @@
 	<row id="pw_event1_react_enemy_1">
 		<language name="JPN" width="256">ジュジュベ『ちょっと　ちょっと！！▼
 ひとの　ポケモン　とったら
-どろぼうよ！？　じょうしきでしょ！？</language>
+ドロボウよ！？　じょうしきでしょ！？</language>
 		<language name="JPN_KANJI" width="256">ジュジュベ『ちょっと！　ちょっと！▼
 人の　ポケモン　取ったら
-どろぼうよ！？　常識でしょ！？</language>
+ドロボウよ！？　常識でしょ！？</language>
 	</row>
 	<row id="pw_event1_react_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]おうじ『ずかんでチェック！</language>
