@@ -602,12 +602,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オレの　なまえは　[Name:TrainerName Idx="1" ]！▼
-プラズマだん！
-ききたいことが　ある！▼</Text>
+			<Text>オレは　[Name:TrainerName Idx="1" ]▼
+プラズマだん
+はなしを　きかせろ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T07:20:04" />
+				Time="2011-12-21T13:21:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -615,12 +615,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレの　名前は　[Name:TrainerName Idx="1" ]！▼
-プラズマ団！
-ききたいことが　ある！▼</Text>
+			<Text>オレは　[Name:TrainerName Idx="1" ]▼
+プラズマ団
+話を　きかせろ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T07:20:07" />
+				Time="2011-12-21T13:21:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

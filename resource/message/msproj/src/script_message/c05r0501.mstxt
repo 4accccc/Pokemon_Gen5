@@ -69,10 +69,10 @@
 			<Text>[Name:TrainerName Idx="1" ]『アンタらも
 プラズマだん　だよな？▼
 さっきの　プラズマだんと
-なにが　ちがうか　おしえてくれよッ！▼</Text>
+なにが　ちがうか　おしえろよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T10:18:51" />
+				Time="2011-12-21T13:22:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -83,10 +83,10 @@
 			<Text>[Name:TrainerName Idx="1" ]『アンタらも
 プラズマ団　だよな？▼
 さっきの　プラズマ団と
-なにが　違うか　教えてくれよッ！▼</Text>
+なにが　違うか　教えろよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T10:19:03" />
+				Time="2011-12-21T13:22:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -190,17 +190,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オレは　[Name:TrainerName Idx="1" ]！
-ヒオウギシティの　[Name:TrainerName Idx="1" ]だ！▼
+			<Text>……オレは　[Name:TrainerName Idx="1" ]
+ヒオウギシティの　[Name:TrainerName Idx="1" ]▼
 ５ねんまえ　オマエら　プラズマだんに
 いもうとの　だいじな▽
 ポケモンを　うばわれた▽
-なさけない　トレーナー　だよッ！▼
-なにが　はなればなれ　だ！
+なさけない　トレーナー　だよ▼
+なにが　はなればなれ　だ▼
 そうしたのは　オマエらだろッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T10:19:34" />
+				Time="2011-12-21T13:23:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -208,17 +208,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレは　[Name:TrainerName Idx="1" ]！
-ヒオウギシティの　[Name:TrainerName Idx="1" ]だ！▼
+			<Text>……オレは　[Name:TrainerName Idx="1" ]
+ヒオウギシティの　[Name:TrainerName Idx="1" ]▼
 ５年前　オマエら　プラズマ団に
 妹の　大事な▽
 ポケモンを　奪われた▽
-情けない　トレーナー　だよッ！▼
-なにが　離ればなれ　だ！
+情けない　トレーナー　だよ▼
+なにが　離ればなれ　だ▼
 そうしたのは　オマエらだろッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T10:19:38" />
+				Time="2011-12-21T13:23:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

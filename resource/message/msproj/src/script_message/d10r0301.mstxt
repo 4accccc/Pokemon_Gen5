@@ -234,10 +234,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ダメだな▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……ダメだな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-12-21T13:48:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -245,10 +245,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ダメだな▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……ダメだな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-23T09:50:22" />
+				Time="2011-12-21T13:48:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -439,14 +439,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『はいはい！▼
-オレは　うばわれた
-ポケモンを　とりもどすッ！▼
+			<Text>[Name:TrainerName Idx="1" ]『……オレは　うばわれた
+ポケモンを　とりもどす▼
 オマエら　あくとうの　ことば　なんか
 きくわけ　ないだろッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T07:50:25" />
+				Time="2011-12-21T13:49:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -454,14 +453,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『はいはい！▼
-オレは　奪われた
-ポケモンを　取り戻すッ！▼
+			<Text>[Name:TrainerName Idx="1" ]『……オレは　奪われた
+ポケモンを　取り戻す▼
 オマエら　悪党の　言葉なんか
 きくわけ　ないだろッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T07:50:30" />
+				Time="2011-12-21T13:49:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1109,10 +1107,10 @@
 			<Text>[Name:TrainerName Idx="1" ]『うん　わかった！▼
 アイツに　あえたなら
 アンタらの　つみほろぼし　だっけ？▽
-てつだってやるよ！▼</Text>
+てつだってやるッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T07:59:28" />
+				Time="2011-12-21T13:50:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1123,10 +1121,10 @@
 			<Text>[Name:TrainerName Idx="1" ]『うん　わかった！▼
 アイツに　会えたなら
 アンタらの　罪滅ぼし　だっけ？▽
-手伝ってやるよ！▼</Text>
+手伝ってやるッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T07:59:23" />
+				Time="2011-12-21T13:50:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

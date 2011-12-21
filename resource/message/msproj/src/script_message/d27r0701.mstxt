@@ -171,13 +171,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『たいへん　だな
+			<Text>[Name:TrainerName Idx="1" ]『……たいへん　だな
 むかしの　なかまを　みはるなんて▼
-ところでさ　ヒオウギで　うばわれた
-チョロネコのこと　しってるか？▼</Text>
+で　オマエは　ヒオウギで　うばわれた
+チョロネコのこと　しっているのか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T05:02:56" />
+				Time="2011-12-21T13:40:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -185,13 +185,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『大変だな
+			<Text>[Name:TrainerName Idx="1" ]『……大変だな
 昔の　仲間を　みはるなんて▼
-ところでさ　ヒオウギで　奪われた
-チョロネコのこと　知ってるか？▼</Text>
+で　オマエは　ヒオウギで　奪われた
+チョロネコのこと　知っているのか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T05:02:49" />
+				Time="2011-12-21T13:40:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -281,12 +281,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『まあ　いいさ▼
+			<Text>[Name:TrainerName Idx="1" ]『……だよな▼
 せかいせいふくを　たくらんでいた
 れんちゅうに　きたい　してないし▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T04:44:53" />
+				Time="2011-12-21T13:40:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -294,12 +294,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『まあ　いいさ▼
+			<Text>[Name:TrainerName Idx="1" ]『……だよな▼
 世界征服を　たくらんでいた
 連中に　期待してないし▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T05:03:30" />
+				Time="2011-12-21T13:41:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

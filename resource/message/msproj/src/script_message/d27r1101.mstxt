@@ -6,14 +6,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『オマエ　さきにいけ！▼
+			<Text>[Name:TrainerName Idx="1" ]『オマエ　さきにいけッ！▼
 オレは　こいつらから
 ダークトリニティのこと　ききだす▼
 チョロネコか　ダークトリニティを
-みつけたら　おしえてくれよ！</Text>
+みつけたら　おしえてくれよッ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T08:03:34" />
+				Time="2011-12-21T13:42:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -21,14 +21,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『オマエ　さきにいけ！▼
+			<Text>[Name:TrainerName Idx="1" ]『オマエ　さきにいけッ！▼
 オレは　こいつらから
 ダークトリニティのこと　ききだす▼
 チョロネコか　ダークトリニティを
-みつけたら　教えてくれよ！</Text>
+みつけたら　教えてくれよッ！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T08:03:34" />
+				Time="2011-12-21T13:42:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -67,11 +67,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オマエら！
-ダークトリニティは　どこだ！</Text>
+			<Text>……オマエら
+ダークトリニティは　どこだ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T08:03:34" />
+				Time="2011-12-21T13:42:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -79,11 +79,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オマエら！
-ダークトリニティは　どこだ！</Text>
+			<Text>……オマエら
+ダークトリニティは　どこだ？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T08:03:34" />
+				Time="2011-12-21T13:42:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

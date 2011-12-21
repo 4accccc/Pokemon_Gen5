@@ -6,11 +6,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『まてッ！
-オマエら　ここで　なに　してた！？▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……まてよ
+オマエら　ここで　なに　してた？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T06:31:44" />
+				Time="2011-12-21T13:16:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -18,11 +18,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『待てッ！
-オマエら　ここで　なに　してた！？▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……待てよ
+オマエら　ここで　なに　してた？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T06:31:47" />
+				Time="2011-12-21T13:16:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -131,12 +131,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『なにも　していない！▼
-だけど　ひとの　ポケモンを　うばう
-プラズマだんは　ゆるさないッ！！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……なにも　していない▼
+だがな　ひとの　ポケモンを　うばう
+オマエらは　ぜったいに　ゆるさない▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T06:34:06" />
+				Time="2011-12-21T13:18:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -144,12 +144,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『なにも　していない！▼
-だけど　人の　ポケモンを　奪う
-プラズマ団は　許さないッ！！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……なにも　していない▼
+だがな　人の　ポケモンを　奪う
+オマエらは　絶対に　許さない▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T06:34:13" />
+				Time="2011-12-21T13:18:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -956,11 +956,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>さすがだな！　やっぱり
-オマエには　ガッツがあるッ！▼
+オマエには　ガッツが　あるッ！▼
 さてと……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T06:36:10" />
+				Time="2011-12-21T13:18:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -969,11 +969,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>さすがだな！　やっぱり
-オマエには　ガッツがあるッ！▼
+オマエには　ガッツが　あるッ！▼
 さてと……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T06:36:13" />
+				Time="2011-12-21T13:18:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

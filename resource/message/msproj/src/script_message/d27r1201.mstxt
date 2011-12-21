@@ -56,11 +56,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『いいから
-オマエらの　ポケモン　みせろ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……だまって
+オマエらの　ポケモン　みせな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T05:28:05" />
+				Time="2011-12-21T13:43:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -68,11 +68,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『いいから
-オマエらの　ポケモン　みせろ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……黙って
+オマエらの　ポケモン　みせな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T05:28:06" />
+				Time="2011-12-21T13:43:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -213,12 +213,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『チッ！▼
-アイツら　チョロネコ
+			<Text>[Name:TrainerName Idx="1" ]『……アイツら　チョロネコ
 つれていなかったな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T07:40:28" />
+				Time="2011-12-21T13:44:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -226,12 +225,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『チッ！▼
-アイツら　チョロネコ
+			<Text>[Name:TrainerName Idx="1" ]『……アイツら　チョロネコ
 つれていなかったな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T07:40:28" />
+				Time="2011-12-21T13:44:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

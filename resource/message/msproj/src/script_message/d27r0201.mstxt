@@ -56,11 +56,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『いいから
-オマエらの　ポケモン　みせろよ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……だまって
+オマエらの　ポケモン　みせな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T04:17:01" />
+				Time="2011-12-21T13:32:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -68,11 +68,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『いいから
-オマエらの　ポケモン　みせろよ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……黙って
+オマエらの　ポケモン　みせな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T04:17:04" />
+				Time="2011-12-21T13:32:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -122,11 +122,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマだん『やばい！
+			<Text>プラズマ団『やばい！
 スイッチを　守らないと！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T03:59:06" />
+				Time="2011-12-21T13:32:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -213,12 +213,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『チッ！▼
-アイツら　チョロネコ
+			<Text>[Name:TrainerName Idx="1" ]『……アイツら　チョロネコ
 つれていなかったな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T04:18:39" />
+				Time="2011-12-21T13:33:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -226,12 +225,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『チッ！▼
-アイツら　チョロネコ
+			<Text>[Name:TrainerName Idx="1" ]『……アイツら　チョロネコ
 つれていなかったな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-11T04:18:41" />
+				Time="2011-12-21T13:33:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -309,7 +307,7 @@
 スイッチを　さがすぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-12T02:59:23" />
+				Time="2011-12-21T13:33:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

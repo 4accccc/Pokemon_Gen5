@@ -121,10 +121,10 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『もう　きてたのか▼
 ジャマする　れんちゅうは
-ぜんぶ　ぶっとばして　いくからな！▼</Text>
+ぜんぶ　ぶっとばして　いくぜッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T07:04:47" />
+				Time="2011-12-21T13:45:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -134,10 +134,10 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『もう　来てたのか▼
 ジャマする　連中は
-全部　ぶっとばして　いくからな！▼</Text>
+全部　ぶっとばして　いくぜッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T07:04:47" />
+				Time="2011-12-21T13:46:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -284,10 +284,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『ひとりに　なったな
-どっちと　たたかうか　えらべよ！▼</Text>
+……どっちと　たたかうか　えらべよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-09T07:18:27" />
+				Time="2011-12-21T13:46:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -296,10 +296,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『一人に　なったな
-どっちと　戦うか　選べよ！▼</Text>
+……どっちと　戦うか　選べよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T07:20:53" />
+				Time="2011-12-21T13:46:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -392,11 +392,11 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『ああ……
 そういや　いたな　オマエ……▼
-オマエら　もとプラズマだんって
+もとプラズマだんって
 ほんと　ひっし　なんだな……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T07:29:03" />
+				Time="2011-12-21T13:54:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -406,11 +406,11 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ああ……
 そういや　いたな　オマエ……▼
-オマエら　元プラズマ団って
+元プラズマ団って
 ほんと　必死なんだな……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T07:29:04" />
+				Time="2011-12-21T13:54:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -505,12 +505,12 @@
 			<Text>[Name:TrainerName Idx="1" ]『……そうだな▼
 プラズマだんを　ぶっつぶさないと
 オマエも　その　Ｎって　ヤツも▽
-また　わるもの　あつかい　されるよな▼
+また　わるもの　あつかい　されるか▼
 よし！
 オレは　いくぜッ！[Name:TrainerName ]！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T07:31:32" />
+				Time="2011-12-21T13:46:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -521,12 +521,12 @@
 			<Text>[Name:TrainerName Idx="1" ]『……そうだな▼
 プラズマ団を　ぶっつぶさないと
 オマエも　その　Ｎって　ヤツも▽
-また　悪者扱い　されるよな▼
+また　悪者扱い　されるか▼
 よし！
 オレは　行くぜッ！[Name:TrainerName ]！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T07:31:48" />
+				Time="2011-12-21T13:47:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

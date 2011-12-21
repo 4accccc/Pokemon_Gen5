@@ -429,13 +429,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『まてッ！
-オマエが　ダークトリニティだな！▼
+			<Text>[Name:TrainerName Idx="1" ]『……まて
+オマエが　ダークトリニティだな▼
 ヒオウギで　うばわれた
-チョロネコのこと　しってるだろ！▼</Text>
+チョロネコのこと　しってるだろッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T13:32:56" />
+				Time="2011-12-21T13:37:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -443,13 +443,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『待てよ！
-オマエが　ダークトリニティだな！▼
+			<Text>[Name:TrainerName Idx="1" ]『……待て
+オマエが　ダークトリニティだな▼
 ヒオウギで　奪われた
-チョロネコのこと　知ってるだろ！▼</Text>
+チョロネコのこと　知ってるだろッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T13:33:08" />
+				Time="2011-12-21T13:37:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -644,10 +644,10 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『なん……　だと！▼
 ……ふざけるなよ
-ひとの　ポケモン　だろうが！▼</Text>
+ひとの　ポケモン　だぞ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T10:05:26" />
+				Time="2011-12-21T13:37:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -657,10 +657,10 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『なん……　だと！▼
 ……ふざけるなよ
-ひとの　ポケモン　だろうが！▼</Text>
+ひとの　ポケモン　だぞ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-17T10:05:30" />
+				Time="2011-12-21T13:38:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -723,13 +723,13 @@
 			Language="JPN_KANJI">
 			<Text>ダークトリニティ『……やれやれ
 ポケモンは　哀れだな▼
-モンスターボールに　しはいされ
+モンスターボールに　支配され
 トレーナーの　いいなり……▼
 ゲーチスさまは　野望のため
 ポケモン解放を　うたわれたが▼
 ２年前の　作戦が
 成功だったならば！▼
-実際に　すくわれた
+実際に　救われた
 ポケモンも　多かっただろう▼
 その　レパルダス……　いや
 おまえに　とっては　チョロネコか▼
@@ -738,7 +738,7 @@
 さてと……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T13:51:38" />
+				Time="2011-12-21T13:38:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -877,10 +877,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ダークトリニティ『さきに　いくなら
-わたしたちを　たおすんだな▼</Text>
+わたしたちを　たおせ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T13:54:31" />
+				Time="2011-12-21T13:38:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -888,11 +888,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダークトリニティ『さきに　いくなら
-わたしたちを　たおすんだな▼</Text>
+			<Text>ダークトリニティ『先に　行くなら
+わたしたちを　倒せ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T13:54:32" />
+				Time="2011-12-21T13:39:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1348,13 +1348,13 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……▼
 なあ……
-[Name:TrainerName ]▼
+……[Name:TrainerName ]▼
 あいつらの　おもいどおりに　させたら
 チョロネコや　キュレムみたいに▽
 かわいそうな　ポケモンが　ふえるよな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-08T13:41:40" />
+				Time="2011-12-21T13:39:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1364,13 +1364,13 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……▼
 なあ……
-[Name:TrainerName ]▼
+……[Name:TrainerName ]▼
 あいつらの　思い通りに　させたら
 チョロネコや　キュレムみたいに▽
 可哀想な　ポケモンが　増えるよな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-08T13:41:43" />
+				Time="2011-12-21T13:39:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

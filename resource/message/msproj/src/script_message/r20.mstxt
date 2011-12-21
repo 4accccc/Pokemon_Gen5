@@ -757,7 +757,7 @@ ID：mount_14</Text>
 オレの　サポートだからなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T06:16:41" />
+				Time="2011-12-21T12:56:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -959,14 +959,15 @@ ID：mount_14</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……オレも　にげられた▼
-どうやら　アイツら
-ふねで　いどう　しているらしいな▼
-ウーン　ここから　ふねで
-いくなら　ヒウンシティ　か……？▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……とりのがしたけど
+いいこと　ききだしたぜ▼
+アイツら　ふねで
+いどう　しているらしい▼
+ここからだと　ヒウンシティ　か？
+とにかく　さがすか……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T10:41:17" />
+				Time="2011-12-21T13:02:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -974,14 +975,15 @@ ID：mount_14</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……オレも　逃げられた▼
-どうやら　アイツら
-船で　移動している　らしいな▼
-ウーン　ここから　船で
-移動するなら　ヒウンシティ　か……？▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……とりのがしたけど
+いいこと　ききだしたぜ▼
+アイツら　船で
+移動しているらしい▼
+ここからだと　ヒウンシティ　か？
+とにかく　探すか……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T10:41:23" />
+				Time="2011-12-21T13:03:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -266,10 +266,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>させるかよッ！▼</Text>
+			<Text>……させないぜ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:20:01" />
+				Time="2011-12-21T13:35:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -277,10 +277,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>させるかよッ！▼</Text>
+			<Text>……させないぜ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:20:03" />
+				Time="2011-12-21T13:35:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -580,14 +580,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『きまってるだろッ！▼
-いもうとの　ポケモンを
-とりもどすためなら　なんでもする！▼
+			<Text>[Name:TrainerName Idx="1" ]『……きまってる▼
+……いもうとの　ポケモンを
+とりもどすためなら　なんでもする▼
 ５ねんまえ　ヒオウギで
 チョロネコを　うばったのは　オマエか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:23:07" />
+				Time="2011-12-21T13:36:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -595,14 +595,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『決まってるだろッ！▼
-妹の　ポケモンを
-取り戻すためなら　なんでもする！▼
+			<Text>[Name:TrainerName Idx="1" ]『……決まってる▼
+……妹の　ポケモンを
+取り戻すためなら　なんでもする▼
 ５年前　ヒオウギで
 チョロネコを　奪ったのは　オマエか！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:23:08" />
+				Time="2011-12-21T13:36:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -876,10 +876,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『ふざけるなッ！
-まけたくせに　きたないぞ！！▼</Text>
+まけたくせに！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:27:11" />
+				Time="2011-12-21T13:36:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -888,10 +888,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ふざけるなッ！
-負けたくせに　きたないぞ！！▼</Text>
+負けたくせに！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:27:14" />
+				Time="2011-12-21T13:36:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -657,15 +657,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『フフフ！▼
-あいたかったぜ！　プラズマだんッ！▼
+			<Text>[Name:TrainerName Idx="1" ]『……だまれよ▼
 ポケモンを　すくう！　といいつつ
 ただの　ポケモンどろぼう　だった▽
-さいていの　オマエらだ！▽
-ゆるしてもらえると　おもうなよッ！▼</Text>
+さいていの　オマエら　だ……▽
+ゆるしてもらえると　おもうな……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T13:20:40" />
+				Time="2011-12-21T12:47:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -673,15 +672,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『フフフ！▼
-会いたかったぜ！　プラズマ団ッ！▼
+			<Text>[Name:TrainerName Idx="1" ]『……黙れよ▼
 ポケモンを　救う！　といいつつ
 ただの　ポケモンどろぼう　だった▽
-最低の　オマエらだ！▽
-許してもらえると　思うなよッ！▼</Text>
+最低の　オマエら　だ……▽
+許してもらえると　思うな……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T13:20:47" />
+				Time="2011-12-21T12:47:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -914,13 +912,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ハッ！　オマエたちも！
-あたらしい　さくせんも！▽
-オレが　ぜんぶ　つぶす！▽
-とにかく　プラズマだんは　ゆるさない▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……オマエたちも
+あたらしい　さくせんも　つぶす▼
+オマエら　プラズマだんは
+ぜったいに　ゆるさない▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T11:06:26" />
+				Time="2011-12-21T12:48:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -928,13 +926,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ハッ！　オマエたちも！
-新しい　作戦も！▽
-オレが　全部　つぶす！▽
-とにかく　プラズマ団は　許さない▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……オマエたちも
+新しい　作戦も　つぶす▼
+オマエら　プラズマ団は
+絶対に　許さない▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T13:20:57" />
+				Time="2011-12-21T12:48:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1037,10 +1035,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『いくぜ！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……プラズマだん</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T03:08:11" />
+				Time="2011-12-21T12:48:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1048,10 +1046,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『いくぜ！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……プラズマ団</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T03:08:13" />
+				Time="2011-12-21T12:48:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2237,14 +2235,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]に　きいたよ
-プラズマだんを　おいはらったって！▼
-アリガト▼
-あんたなら　やりたいこと
-なんでもできる！　そんな　きがするよ▼</Text>
+			<Text>あっ……
+みちゃった？▼
+プラズマだんの　せいで
+バタバタ　しちゃったけど▽
+ヒウンいきの　ふねに　のれるから▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-26T06:39:48" />
+				Time="2011-12-21T13:07:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2252,14 +2250,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]に　きいたよ
-プラズマ団を　追い払ったって！▼
-アリガト▼
-あんたなら　やりたいこと
-なんでもできる！　そんな　気がするよ▼</Text>
+			<Text>あっ……
+みちゃった？▼
+プラズマ団の　せいで
+バタバタ　しちゃったけど▽
+ヒウン行きの　船に　乗れるから▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-26T06:40:29" />
+				Time="2011-12-21T13:07:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

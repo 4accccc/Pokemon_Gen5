@@ -366,11 +366,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『いいぜ！
-ぜんいん　かかってこいよッ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『まとめて　かかってこいよ
+……ぜんいん　たおすだけだからな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T09:59:03" />
+				Time="2011-12-21T13:27:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -378,11 +378,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『いいぜ！
-全員　かかってこいよッ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『まとめて　かかってこいよ
+……全員　倒すだけだからな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T09:59:10" />
+				Time="2011-12-21T13:27:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1533,12 +1533,12 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『さっさと　おわらせるから
 オマエも　ちからを　かせよ！▼
-５ねんまえ！▼
+……５ねんまえ▼
 ヒオウギで　チョロネコを
-うばったのは　オマエか！▼</Text>
+うばったのは　オマエか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T03:10:47" />
+				Time="2011-12-21T13:28:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1548,12 +1548,12 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さっさと　終わらせるから
 オマエも　力を　貸せよ！▼
-５年前！▼
+５年前▼
 ヒオウギで　チョロネコを
-奪ったのは　オマエか！▼</Text>
+奪ったのは　オマエか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T03:11:03" />
+				Time="2011-12-21T13:28:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1589,13 +1589,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ほら！
-ぜんいん　たおしただろ？▼
-さあ！　チョロネコについて
-いろいろ　きかせてもらうぜ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……ぜんいん　たおしたぜ▼
+……さあ　チョロネコについて
+いろいろ　きかせてもらおうか▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-08T10:17:28" />
+				Time="2011-12-21T13:30:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1603,13 +1602,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ほら！
-全員　倒しただろ？▼
-さあ！　チョロネコについて
-いろいろ　きかせてもらうぜ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……全員　倒したぜ▼
+……さあ　チョロネコについて
+いろいろ　きかせてもらおうか▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-08T10:17:36" />
+				Time="2011-12-21T13:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1755,11 +1753,12 @@
 			<Text>チェレン『やれやれ……▼
 あなたは　れいとうコンテナで
 ふるえていた　ひと　ですよね▼
+たしか　なまえは　ヴィオ！▼
 この　ふねで　なにを　するつもりなのか
-しらべさせて　もらいますよ▼</Text>
+しらべさせて　もらいます▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T03:11:35" />
+				Time="2011-12-21T13:31:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1770,11 +1769,12 @@
 			<Text>チェレン『やれやれ……▼
 あなたは　冷凍コンテナで
 震えていた　人　ですよね▼
+確か　名前は　ヴィオ！▼
 この船で　なにを　するつもりなのか
-調べさせて　もらいますよ▼</Text>
+調べさせて　もらいます▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-08T07:54:25" />
+				Time="2011-12-21T13:30:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

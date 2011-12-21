@@ -708,12 +708,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『プラズマだんッ！▼
-……オレたちの！
-せいぎの　いかり　くらえッ！！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……プラズマだん
+……この　あくとう　ども▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T03:34:35" />
+				Time="2011-12-21T13:14:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -721,12 +720,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『プラズマ団ッ！▼
-……オレたちの！
-正義の　怒り　くらえッ！！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……プラズマ団
+……この悪党　ども▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T03:34:47" />
+				Time="2011-12-21T13:15:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -824,14 +822,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ハンッ！
-なにが　ポケモン　かいほうだッ！▼
+			<Text>[Name:TrainerName Idx="1" ]『……だまれ▼
+なにが　ポケモン　かいほうだ
 おまえらは　ただの　ポケモンどろぼう▼
 しかも　うばった　ポケモンを
-どうぐとして　あつかってるだけだろ！▼</Text>
+どうぐとして　あつかいやがって……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T03:42:27" />
+				Time="2011-12-21T13:14:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -839,14 +837,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ハンッ！
-なにが　ポケモン解放だッ！▼
+			<Text>[Name:TrainerName Idx="1" ]『……黙れ▼
+なにが　ポケモン解放だ
 おまえらは　ただの　ポケモンどろぼう▼
 しかも　奪った　ポケモンを
-道具として　扱ってるだけだろ！▼</Text>
+道具として　扱いやがって……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T03:42:39" />
+				Time="2011-12-21T13:14:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
