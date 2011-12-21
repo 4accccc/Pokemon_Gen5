@@ -11,8 +11,11 @@
   .include  "scr_seq_def.h"
   .include  "msg_d35r0101.h"
   .include  "d35r0101.h"
+  
+  .include  "c06r0201_def.h"
 
   //@author fujimura_souichirou
+  //@author Mizuguchi_Mai（マップチェンジ）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -23,14 +26,20 @@
 //--------------------------------------------------------------
 _EVENT_DATA   ev_d35r0101_poke_01
 _EVENT_DATA   ev_d35r0101_swleader6_01
+_EVENT_DATA   ev_reserve_d35r0101_end
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_d35r0101:
-//  _END
+/************************************************************/
+/*		飛行機降りた後のリザーブ						*/
+/************************************************************/
+EVENT_START   ev_reserve_d35r0101_end
+
+	//暗転復帰
+	_MAP_FADE_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+	
+EVENT_END
 
 /**************************************************************/
 /*  黒オノノクス：話しかけ（戦闘／倒した場合は殿堂入り後復帰）*/
@@ -103,18 +112,14 @@ EVENT_START   ev_d35r0101_swleader6_01
     _BALLOONWIN_OBJMSG_POS( msg_d35r0101_swleader6_02, D35R0101_SWLEADER6_01, POS_DOWN )
     _MSGWIN_CLOSE()
 
-    //暗転【仮】発着デモへ（詳細未定）
-    _BLACK_OUT_SLOW()
+    _MAP_FADE_BLACK_OUT()
     _DISP_FADE_END_CHECK()
+    
+    //リザーブスクリプト
+    _RESERVE_SCRIPT( SCRID_RESERVE_C06R0201_END )
 
-    //c06フキヨセシティまでジャンプ【仮】
-    _MAP_CHANGE( ZONE_ID_C06R0201, 14, 19, DIR_DOWN )
-
-    //暗転復帰
-    _BLACK_IN_SLOW()
-    _DISP_FADE_END_CHECK()
-
-    _TIME_WAIT( 15 )
+    //c06フキヨセシティまでジャンプ
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C06R0201, 14, 0, 19, DIR_DOWN )
 
   ELSE    //いいえ
 

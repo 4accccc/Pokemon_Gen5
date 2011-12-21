@@ -13,9 +13,11 @@
   .include  "c06r0201.h"
   
   .include  "t07_def.h"
+  .include  "d35r0101_def.h"
 
   //@author fujimura_souichirou（ヤマジタウンへ行くまで、エースメダル見せイベント、カーゴサービス）
   //@author suginaka_katsunori //スクリプト調整・NPC配置・タイプ見せイベント作成
+  //@author Mizuguchi_Mai（マップチェンジ）
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -568,18 +570,15 @@ _RET
 //フキヨセカーゴ・保護区へへ
 ev_map_change_d35r0101:
 
-  //暗転【仮】発着デモへ（詳細未定）
-  _BLACK_OUT_SLOW()
-  _DISP_FADE_END_CHECK()
+  //３Ｄデモコール
+  _DEMO_FADEOUT_BLACK_CALL_SINGLE()
+  _CALL_3D_DEMO( DEMO3D_ID_PLANE_TAKE_OFF_FUKIYOSE )
 
-  //d34保護区までジャンプ【仮】
-  _MAP_CHANGE( ZONE_ID_D35R0101, 19, 35, DIR_DOWN )
+  //リザーブスクリプト
+  _RESERVE_SCRIPT( SCRID_RESERVE_D35R0101_END )
 
-  //暗転復帰
-  _BLACK_IN_SLOW()
-  _DISP_FADE_END_CHECK()
-
-  _TIME_WAIT( 15 )
+  //d34保護区までジャンプ
+  _MAP_CHANGE_NO_FADE( ZONE_ID_D35R0101, 21 , 0, 31, DIR_UP )
 
 _RET
 
