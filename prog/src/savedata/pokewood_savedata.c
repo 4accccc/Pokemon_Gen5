@@ -254,6 +254,16 @@ void POKEWOOD_SAVEDATA_SetBoxOfficeData( POKEWOOD_SAVEDATA *sv, int no, POKEWOOD
   }
 }
 
+#ifdef PM_DEBUG
+//=============================================================================================
+/// 興行成績を無理やり上書き
+//=============================================================================================
+void POKEWOOD_SAVEDATA_SetForceBoxOfficeData(POKEWOOD_SAVEDATA *sv, int no, POKEWOOD_BOXOFFICE_RECORD *data )
+{
+  sv->boxoffice_record[no]             = *data;
+}
+#endif
+
 //=============================================================================================
 /**
  * @brief	興行成績データの更新状態をOFFにする

@@ -119,6 +119,9 @@ extern const POKEWOOD_BOXOFFICE_RECORD *POKEWOOD_SAVEDATA_GetBoxOfficeData( POKE
 extern void  POKEWOOD_SAVEDATA_SetBoxOfficeData( POKEWOOD_SAVEDATA *sv, int no, POKEWOOD_BOXOFFICE_RECORD *data );
 extern void  POKEWOOD_SAVEDATA_ClearUpdate( POKEWOOD_SAVEDATA *sv, int no );
 
+#ifdef PM_DEBUG
+extern void POKEWOOD_SAVEDATA_SetForceBoxOfficeData(POKEWOOD_SAVEDATA *sv, int no, POKEWOOD_BOXOFFICE_RECORD *data );
+#endif
 
 //=============================================================================================
 /**

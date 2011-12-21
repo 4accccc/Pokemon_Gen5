@@ -151,6 +151,7 @@ static BOOL debugMenu_series08_ready(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_series09_ready(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_series10_ready(POKEWOOD_FUNC_WORK *wk);
 static BOOL debugMenu_series11_ready(POKEWOOD_FUNC_WORK *wk);
+static BOOL debugMenu_ProfitRecordClear( POKEWOOD_FUNC_WORK *wk );
 static BOOL debugMenu_scenario_full_open(POKEWOOD_FUNC_WORK *wk);
 
 static BOOL debugMenu_CutinCheck(POKEWOOD_FUNC_WORK *wk);
@@ -246,6 +247,7 @@ static const DEBUG_MENU_LIST DebugPokewoodMenuList[] =
   { DEBUG_STRID_POKEWOOD_OPEN39, (void*)debugMenu_OpenScenario39, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN40, (void*)debugMenu_OpenScenario40, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN41, (void*)debugMenu_OpenScenario41, GFL_OVERLAY_BLANK_ID },
+  { DEBUG_STRID_PKWD_RECORD_CLEAR, (void*)debugMenu_ProfitRecordClear, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_POKEWOOD_OPEN_GRAPHIC, (void*)debugMenu_OpenScenario_for_Graphic, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_SERIES01,        (void*)debugMenu_series01_ready, GFL_OVERLAY_BLANK_ID },
   { DEBUG_STRID_SERIES02,        (void*)debugMenu_series02_ready, GFL_OVERLAY_BLANK_ID },
@@ -903,6 +905,23 @@ static BOOL debugMenu_series11_ready(POKEWOOD_FUNC_WORK *wk)
   return FALSE;
 }
 
+
+static BOOL debugMenu_ProfitRecordClear( POKEWOOD_FUNC_WORK *wk )
+{
+  int i;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(wk->gmSys);
+  POKEWOOD_SAVEDATA *ps = GAMEDATA_GetPokewoodSavedata(gamedata);
+
+  POKEWOOD_BOXOFFICE_RECORD record = {
+    -9999,
+    {0,0,0,0,0,0,},
+    0,0,0,0,
+  };
+  for(i=0;i<POKEWOOD_PLAY_MAX;i++){
+    POKEWOOD_SAVEDATA_SetForceBoxOfficeData( ps, i, &record );
+  }
+  return FALSE;
+}
 
 static BOOL debugMenu_CutinCheck(POKEWOOD_FUNC_WORK *wk)
 {
