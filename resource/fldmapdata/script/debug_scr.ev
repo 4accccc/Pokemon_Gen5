@@ -2107,6 +2107,7 @@ EVENT_START   ev_debug_ichiraku
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_14,  14 ) // コバルオン入退場
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_15,  15 ) // キュレムデモ 覚醒
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_16,  16 ) // キュレムデモ 登場
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_17,  17 ) // PWTのカメラ合わせ
 	_BMPMENU_START()
 
   SWITCH $SCWK_ANSWER
@@ -2291,6 +2292,19 @@ EVENT_START   ev_debug_ichiraku
         _CALL_3D_DEMO( DEMO3D_ID_KYUREMU_UNION_W_03 )
       ENDIF
 	    _DEMO_FADEIN_BLACK_CALL()
+    }
+
+  CASE 17 THEN
+    {
+      //カメラ移動・中央固定　
+      _CAMERA_START()		//カメラ操作開始
+      _CAMERA_PURGE()		//カメラのバインドを解く
+
+      //カメラ操作　ステージ中央にカメラを合わせる
+      _CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,1 )	//一番最後の引数は移動にかかるフレーム数
+      _CAMERA_WAIT_MOVE()
+
+      _CAMERA_END()
     }
 
   ENDSWITCH
