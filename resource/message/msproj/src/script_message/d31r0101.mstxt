@@ -77,13 +77,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなた　もう　エリア６に
-いったらしいじゃない！▼
+			<Text>あなた　もう　エリア５を
+クリアしたらしいじゃない！▼
 くぅー！　まけてられないわね！
 すぐに　おいついて　みせるからね！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-29T09:51:56" />
+				Time="2011-12-21T03:29:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -91,13 +91,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなた　もう　エリア６に
-行ったらしいじゃない！▼
+			<Text>あなた　もう　エリア５を
+クリアしたらしいじゃない！▼
 くぅー！　負けてられないわね！
 すぐに　追いついて　みせるからね！</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-29T09:52:25" />
+				Time="2011-12-21T03:29:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -257,11 +257,11 @@
 			Language="JPN">
 			<Text>ふふふっ！　きいてくれ！
 ついに　エリア３まで　いったんだ！▼
-……って　エリア６！？
+……って　エリア５を　クリア！？
 うえには　うえが　いるもんだな……</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-29T09:52:07" />
+				Time="2011-12-21T03:30:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -271,11 +271,11 @@
 			Language="JPN_KANJI">
 			<Text>ふふふっ！　聞いてくれ！
 ついに　エリア３まで　行ったんだ！▼
-……って　エリア６！？
+……って　エリア５を　クリア！？
 上には　上が　いるもんだな……</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-09-29T09:52:33" />
+				Time="2011-12-21T03:30:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
