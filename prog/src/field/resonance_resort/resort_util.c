@@ -64,12 +64,92 @@ extern void RESORT_RESIDENT_DATA_ConvertProxy( RESORT_RESIDENT_DATA *p_wk, const
 
 
 static BOOL Resort_Util_CheckCameraRange( const MMDL *cp_mmdl, const FIELD_CAMERA *cp_camera );
+static u32 Resort_Util_GetPrizeIndex( RESORT_BINARY_CITY *p_binary_city, u32 prize );
+static u32 Resort_Util_GetNextPrize( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, u16 next_lv );
+
+//街ご褒美条件
+static BOOL PrizeCondition_None( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata );
+static BOOL PrizeCondition_IsDendou( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata );
+static BOOL PrizeCondition_IsResidentFull( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata );
 
 //=============================================================================
 /**
  *					構造体宣言
 */
 //=============================================================================
+
+
+//=============================================================================
+/**
+ *					データ
+*/
+//=============================================================================
+static const struct
+{
+  RESORT_CITY_DATA_PARAM ev_param;
+  RESORT_CITY_DATA_PARAM param;
+  u32 prize;
+  BOOL (*PrizeCondition)( RESORT_SYSTEM *, GAMEDATA * );
+  BOOL  is_continue;
+} sc_prize_data[] =
+{
+  {
+    RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC03,
+    RESORT_CITY_DATA_PARAM_PRIZE_SEC03,
+    RESORT_CITYPRIZE_TYPE_ADD_SECRETARY3,
+    PrizeCondition_None,
+    FALSE,
+  },
+  {
+    RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC04,
+    RESORT_CITY_DATA_PARAM_PRIZE_SEC04,
+    RESORT_CITYPRIZE_TYPE_ADD_SECRETARY4,
+    PrizeCondition_None,
+    FALSE,
+  },
+  {
+    RESORT_CITY_DATA_PARAM_EV_PRIZE_NEON,
+    RESORT_CITY_DATA_PARAM_PRIZE_NEON,
+    RESORT_CITYPRIZE_TYPE_CHANGE_CITYNEON,
+    PrizeCondition_None,
+    FALSE,
+  },
+  {
+    RESORT_CITY_DATA_PARAM_EV_PRIZE_SCOUT,
+    RESORT_CITY_DATA_PARAM_PRIZE_SCOUT,
+    RESORT_CITYPRIZE_TYPE_SCOUT_SECRETARY,
+    PrizeCondition_None,
+    FALSE,
+  },
+  {
+    RESORT_CITY_DATA_PARAM_EV_PRIZE_CITYNAME,
+    RESORT_CITY_DATA_PARAM_PRIZE_CITYNAME,
+    RESORT_CITYPRIZE_TYPE_CHANGE_CITYNAME,
+    PrizeCondition_None,
+    FALSE,
+  },
+  {
+    RESORT_CITY_DATA_PARAM_EV_PRIZE_PARADE,
+    RESORT_CITY_DATA_PARAM_PRIZE_PARADE,
+    RESORT_CITYPRIZE_TYPE_PARADE,
+    PrizeCondition_IsResidentFull,
+    FALSE,
+  },
+  {
+    RESORT_CITY_DATA_PARAM_EV_PRIZE_DENDOU,
+    RESORT_CITY_DATA_PARAM_PRIZE_DENDOU,
+    RESORT_CITYPRIZE_TYPE_DENDOU,
+    PrizeCondition_IsDendou,
+    FALSE,
+  },
+  {
+    RESORT_CITY_DATA_PARAM_EV_PRIZE_ITEM,
+    RESORT_CITY_DATA_PARAM_PRIZE_PARADE,
+    RESORT_CITYPRIZE_TYPE_ITEM,
+    PrizeCondition_None,
+    TRUE,
+  },
+};
 
 //=============================================================================
 /**
@@ -1011,12 +1091,10 @@ u32 RESORT_UTIL_AddExpCity( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, u16 add_
 
       city_next_idx = RESORT_BINARY_CITY_GetIndexByCityLv( p_city, *p_lv );
       {
-        u32 prev_prize =  RESORT_BINARY_CITY_GetData( p_city, city_prev_idx, RESORT_BINARY_CITY_PARAM_PRIZE );
         u32 prev_rank =  RESORT_BINARY_CITY_GetData( p_city, city_prev_idx, RESORT_BINARY_CITY_PARAM_RANK );
-        u32 next_prize =  RESORT_BINARY_CITY_GetData( p_city, city_next_idx, RESORT_BINARY_CITY_PARAM_PRIZE );
+        u32 next_prize =  Resort_Util_GetNextPrize( p_sys, p_gamedata, *p_lv );
         u32 next_rank =  RESORT_BINARY_CITY_GetData( p_city, city_next_idx, RESORT_BINARY_CITY_PARAM_RANK );
 
-        BOOL is_item = RESORT_CITY_DATA_GetData( p_city_data, RESORT_CITY_DATA_PARAM_PRIZE_ITEM, NULL );
 
         //肩書きに差があるか
         if( prev_rank != next_rank )
@@ -1028,55 +1106,17 @@ u32 RESORT_UTIL_AddExpCity( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, u16 add_
           is_rank = FALSE;
         }
 
-        //今回ご褒美があるか、もしくはご褒美道具がONか？
-        if( (next_prize != RESORT_CITYPRIZE_TYPE_NONE
-            && prev_prize != next_prize)
-            || is_item
-
-          )
+        //今回ご褒美があるか
+        if( next_prize != RESORT_CITYPRIZE_TYPE_NONE )
         {
-          BOOL is_ok  = TRUE;
-
-
-          //殿堂解放は殿堂入り後
-          if( next_prize == RESORT_CITYPRIZE_TYPE_DENDOU )
-          {
-            EVENTWORK *p_evwork = GAMEDATA_GetEventWork( p_gamedata );
-            if( !EVENTWORK_CheckEventFlag( p_evwork, SYS_FLAG_GAME_CLEAR ) )
-            {
-              RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_EV_PRIZE_DENDOU, TRUE );
-              is_ok = FALSE;
-            }
-          }
-          //パレードはお店８つないといけない
-          if( next_prize == RESORT_CITYPRIZE_TYPE_PARADE )
-          {
-            RESORT_PEOPLE_ALL_DATA *p_people_all = RESORT_SYSTEM_GetPeopleAllData(p_sys);
-            if( RESORT_PEOPLE_ALL_DATA_GetResidentCount(p_people_all) != RESORT_RESIDENT_DATA_NUM )
-            {
-              RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_EV_PRIZE_PARADE, TRUE );
-              is_ok = FALSE;
-            }
-          }
-
           //もう一度アイテム入手イベントを起こす
-          if( is_item )
+          if( next_prize == RESORT_CITYPRIZE_TYPE_ITEM )
           {
             RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_EV_PRIZE_ITEM, TRUE );
           }
 
-          if(is_ok)
-          {
-            if( next_prize != RESORT_CITYPRIZE_TYPE_NONE )
-            {
-              RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC03+next_prize-1, TRUE );
-            }
-            is_prize = TRUE;
-          }
-          else
-          {
-            is_prize = FALSE;
-          }
+          RESORT_CITY_DATA_SetData( p_city_data, RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC03+next_prize-1, TRUE );
+          is_prize = TRUE;
         }
         else
         {
@@ -2023,6 +2063,7 @@ void RESORT_UTIL_RANKWND_Write( FLDMSGWIN *p_fldmsgwin, RESORT_PEOPLE_ALL_DATA *
     GFL_STR_DeleteBuffer( p_name_str );
   }
 }
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  ご褒美ナンバーを取得
@@ -2034,69 +2075,112 @@ void RESORT_UTIL_RANKWND_Write( FLDMSGWIN *p_fldmsgwin, RESORT_PEOPLE_ALL_DATA *
 //-----------------------------------------------------------------------------
 u32 RESORT_UTIL_GetPrizeEv( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata )
 {
-  static const struct
-  {
-    RESORT_CITY_DATA_PARAM param;
-    u32 prize;
-  } sc_param_to_prize[] =
-  {
-    {
-      RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC03,
-      RESORT_CITYPRIZE_TYPE_ADD_SECRETARY3,
-    },
-    {
-      RESORT_CITY_DATA_PARAM_EV_PRIZE_SEC04,
-      RESORT_CITYPRIZE_TYPE_ADD_SECRETARY4,
-    },
-    {
-      RESORT_CITY_DATA_PARAM_EV_PRIZE_NEON,
-      RESORT_CITYPRIZE_TYPE_CHANGE_CITYNEON,
-    },
-    {
-      RESORT_CITY_DATA_PARAM_EV_PRIZE_SCOUT,
-      RESORT_CITYPRIZE_TYPE_SCOUT_SECRETARY,
-    },
-    {
-      RESORT_CITY_DATA_PARAM_EV_PRIZE_CITYNAME,
-      RESORT_CITYPRIZE_TYPE_CHANGE_CITYNAME,
-    },
-    {
-      RESORT_CITY_DATA_PARAM_EV_PRIZE_PARADE,
-      RESORT_CITYPRIZE_TYPE_PARADE,
-    },
-    {
-      RESORT_CITY_DATA_PARAM_EV_PRIZE_DENDOU,
-      RESORT_CITYPRIZE_TYPE_DENDOU,
-    },
-    {
-      RESORT_CITY_DATA_PARAM_EV_PRIZE_ITEM,
-      RESORT_CITYPRIZE_TYPE_ITEM,
-    },
-  };
-
-  EVENTWORK *p_evwork = GAMEDATA_GetEventWork( p_gamedata );
-  RESORT_PEOPLE_ALL_DATA *p_people_all = RESORT_SYSTEM_GetPeopleAllData(p_sys);
   RESORT_CITY_DATA *p_city = RESORT_SYSTEM_GetCityData(p_sys);
 
   int i;
 
-  for( i = 0; i < NELEMS(sc_param_to_prize); i++ )
+  for( i = 0; i < NELEMS(sc_prize_data); i++ )
   {
-    if( (sc_param_to_prize[i].param == RESORT_CITY_DATA_PARAM_EV_PRIZE_DENDOU)
-      && (EVENTWORK_CheckEventFlag( p_evwork, SYS_FLAG_GAME_CLEAR ) == FALSE) )
+    if( sc_prize_data[i].PrizeCondition(p_sys,p_gamedata) )
     {
-      continue;
+      if( RESORT_CITY_DATA_GetData(p_city,sc_prize_data[i].ev_param,NULL) )
+      {
+        return sc_prize_data[i].prize;
+      }
+    }
+  }
+  return RESORT_CITYPRIZE_TYPE_NONE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ご褒美のインデックス
+ *
+ *	@param	RESORT_BINARY_CITY *p_binary_city お店バイナリ
+ *	@param	prize ご褒美
+ *
+ *	@return ご褒美インデックスを取得
+ */
+//-----------------------------------------------------------------------------
+static u32 Resort_Util_GetPrizeIndex( RESORT_BINARY_CITY *p_binary_city, u32 prize )
+{
+  int i;
+  for( i = 0; i < RESORT_BINARY_CITY_GetMax(p_binary_city); i++ )
+  {
+    if( prize == RESORT_BINARY_CITY_GetData( p_binary_city, i, RESORT_BINARY_CITY_PARAM_PRIZE ) )
+    {
+      return i;
+    }
+  }
+  GF_ASSERT(0);
+  return 0;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  もらっていない次のご褒美条件取得
+ *
+ *	@param	RESORT_SYSTEM *p_sys  システム
+ *
+ *	@return 次のご褒美条件を取得します。
+ */
+//-----------------------------------------------------------------------------
+static u32 Resort_Util_GetNextPrize( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, u16 next_lv )
+{
+  RESORT_CITY_DATA *p_city = RESORT_SYSTEM_GetCityData(p_sys);
+  RESORT_BINARY_CITY *p_binary_city = RESORT_SYSTEM_GetBinaryCity(p_sys);
+
+  int i;
+
+  for( i = 0; i < NELEMS(sc_prize_data); i++ )
+  {
+    BOOL is_lv_range = FALSE;
+    BOOL is_get = FALSE;
+    BOOL is_condition = FALSE;
+
+    //レベル範囲チェック
+    {
+      u32 idx = Resort_Util_GetPrizeIndex( p_binary_city, sc_prize_data[i].prize );
+      u32 low = RESORT_BINARY_CITY_GetData( p_binary_city, idx, RESORT_BINARY_CITY_PARAM_LV_LOW );
+      if(next_lv >= low)
+      {
+        is_lv_range = TRUE;
+      }
     }
 
-    if( (sc_param_to_prize[i].param == RESORT_CITY_DATA_PARAM_EV_PRIZE_DENDOU)
-      && (RESORT_PEOPLE_ALL_DATA_GetResidentCount(p_people_all) != RESORT_RESIDENT_DATA_NUM) )
+    //すでにもらっているかチェック
     {
-      continue;
+      //すでにもらってる。ただし、永続効果があるものはもらっていないことにする
+      if( RESORT_CITY_DATA_GetData(p_city,sc_prize_data[i].param,NULL) )
+      {
+        if( sc_prize_data[i].is_continue )
+        {
+          is_get = FALSE;
+        }
+        else
+        {
+          is_get = TRUE;
+        }
+      }
+
+      //イベント発動していればすでにもらっている
+      if( RESORT_CITY_DATA_GetData(p_city,sc_prize_data[i].ev_param,NULL) )
+      {
+        is_get = TRUE;
+      }
+    } 
+    
+    //取得条件があっている
+    if( sc_prize_data[i].PrizeCondition(p_sys,p_gamedata) )
+    {
+      is_condition = TRUE;
     }
 
-    if( RESORT_CITY_DATA_GetData(p_city,sc_param_to_prize[i].param,NULL) )
+
+    //覚える条件があっている
+    if( is_lv_range && is_condition && !is_get )
     {
-      return sc_param_to_prize[i].prize;
+      return sc_prize_data[i].prize;
     }
   }
   return RESORT_CITYPRIZE_TYPE_NONE;
@@ -2359,6 +2443,52 @@ static BOOL Resort_Util_CheckCameraRange( const MMDL *cp_mmdl, const FIELD_CAMER
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  街ご褒美条件  なし
+ *
+ *	@param	RESORT_SYSTEM *p_sys  システム
+ *	@param	*p_gamedata   ゲームデータ
+ *
+ *	@return TRUE条件合致  条件満たしてない
+ */
+//-----------------------------------------------------------------------------
+static BOOL PrizeCondition_None( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata )
+{
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  殿堂入りしているか
+ *
+ *	@param	RESORT_SYSTEM *p_sys  システム
+ *	@param	*p_gamedata   ゲームデータ
+ *
+ *	@return TRUE条件合致  条件満たしてない
+ */
+//-----------------------------------------------------------------------------
+static BOOL PrizeCondition_IsDendou( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata )
+{
+  EVENTWORK *p_evwork = GAMEDATA_GetEventWork( p_gamedata );
+  return EVENTWORK_CheckEventFlag( p_evwork, SYS_FLAG_GAME_CLEAR );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  街の住人が全員いるか
+ *
+ *	@param	RESORT_SYSTEM *p_sys  システム
+ *	@param	*p_gamedata   ゲームデータ
+ *
+ *	@return TRUE条件合致  条件満たしてない
+ */
+//-----------------------------------------------------------------------------
+static BOOL PrizeCondition_IsResidentFull( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata )
+{
+  RESORT_PEOPLE_ALL_DATA *p_people_all = RESORT_SYSTEM_GetPeopleAllData(p_sys);
+  return RESORT_PEOPLE_ALL_DATA_GetResidentCount(p_people_all) == RESORT_RESIDENT_DATA_NUM;
+}
 
 //----------------------------------------------------------------------------
 /**

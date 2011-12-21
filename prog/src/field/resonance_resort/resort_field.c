@@ -3614,21 +3614,24 @@ static void RESORT_FIELD_PEOPLE_SetParadePeoplePos( RESORT_FIELD_PEOPLE *p_wk, R
     if( !RESORT_ABSTRUCT_DATA_IsEmpty(p_data) )
     {
       RESORT_PEOPLE *p_people = RESORT_PEOPLE_SYS_GetPeopleByAbstruct(p_wk->p_people_sys, p_data);
-      MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl(p_people);
-      s16 x = MMDL_GetGridPosX(p_mmdl);
-      u16 dir;
+      GF_ASSERT( p_people );
+      {
+        MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl(p_people);
+        s16 x = MMDL_GetGridPosX(p_mmdl);
+        u16 dir;
 
-      if( x < 15 )
-      {
-        x   = 11;
-        dir = DIR_RIGHT;
+        if( x < 15 )
+        {
+          x   = 11;
+          dir = DIR_RIGHT;
+        }
+        else
+        {
+          x   = 19;
+          dir = DIR_LEFT;
+        }
+        MMDL_InitGridPosition( p_mmdl, x, 0, MMDL_GetGridPosZ(p_mmdl), dir );
       }
-      else
-      {
-        x   = 19;
-        dir = DIR_LEFT;
-      }
-      MMDL_InitGridPosition( p_mmdl, x, 0, MMDL_GetGridPosZ(p_mmdl), dir );
     }
   }
 
@@ -3639,17 +3642,20 @@ static void RESORT_FIELD_PEOPLE_SetParadePeoplePos( RESORT_FIELD_PEOPLE *p_wk, R
     for( i = 0; i < RESORT_NPS_SYS_GetMax(p_npc_sys); i++ )
     {
       MMDL *p_mmdl = RESORT_NPC_SYS_GetMmdl( p_npc_sys, i );
-      s16 x = MMDL_GetGridPosX(p_mmdl);
-      u16 dir;
-      if( x < 15 )
+      if( p_mmdl )
       {
-        dir = DIR_RIGHT;
+        s16 x = MMDL_GetGridPosX(p_mmdl);
+        u16 dir;
+        if( x < 15 )
+        {
+          dir = DIR_RIGHT;
+        }
+        else
+        {
+          dir = DIR_LEFT;
+        }
+        MMDL_ChangeMoveCode( p_mmdl, MV_UP + dir );
       }
-      else
-      {
-        dir = DIR_LEFT;
-      }
-      MMDL_ChangeMoveCode( p_mmdl, MV_UP + dir );
     }
   }
  
