@@ -564,10 +564,10 @@
 	<row id="pw_event3_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『しかたない……
 ほら……　これだよ……▼
-あれ……？</language>
+ん……　あれ……？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『仕方ない……
 ほら……　これだよ……▼
-あれ……？</language>
+ん……　あれ……？</language>
 	</row>
 	<row id="pw_event3_enemy_3">
 		<language name="JPN" width="256">モニカ『ちょっと　なに　コレ！？▼
@@ -651,7 +651,7 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『はは……　ゴメン……
 アタシ　かっちゃった……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『はは……　ゴメン……
-ボク　かっちゃった……</language>
+アタシ　勝っちゃった……</language>
 	</row>
 	<row id="pw_event4_enemy_0">
 		<language name="JPN" width="256">モニカ『……　……</language>
@@ -659,7 +659,7 @@
 	</row>
 	<row id="pw_event4_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『おねえちゃん……？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『おねえちゃん……？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『お姉ちゃん……？</language>
 	</row>
 	<row id="pw_event4_enemy_1">
 		<language name="JPN" width="256">モニカ『なによ……　もう……</language>
@@ -667,20 +667,20 @@
 	</row>
 	<row id="pw_event4_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『しかたないよ……▼
-アタシの　ほうが
-ポケモンは　上手いんだし……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『しかたないよ……▼
-ボクの　ほうが
-ポケモンは　うまいんだし……</language>
+アタシの　ほうが　ずーっと
+ポケモンは　うまいんだしさ……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『仕方ないよ……▼
+アタシの　ほうが　ずーっと
+ポケモンは　上手いんだしさ……</language>
 	</row>
 	<row id="pw_event4_enemy_2">
-		<language name="JPN" width="256">モニカ『ウッ　ウワーン！！▼
+		<language name="JPN" width="256">モニカ『ウッ……　ウワーン！！▼
 なんなのよ！！　もうー！！
 なんで　わたしが　こんな　めに▽
 あわないと　いけないのよー！！</language>
-		<language name="JPN_KANJI" width="256">モニカ『ウッ　ウワーン！！▼
-なんなのよ！！　もうー！！
-なんで　私が　こんな目に▽
+		<language name="JPN_KANJI" width="256">モニカ『ウッ……　ウワーン！！▼
+何なのよ！！　もうー！！
+何で　私が　こんな目に▽
 あわないと　いけないのよー！！</language>
 	</row>
 	<row id="pw_event4_hero_3">
@@ -699,7 +699,7 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんなっ！！
 ちょっと　まって！　おねえちゃん！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんなっ！！
-ちょっと　まって！　おねえちゃん！</language>
+ちょっと　待って！　お姉ちゃん！</language>
 	</row>
 	<row id="pw_event4_hero_5">
 		<language name="JPN" width="256">きっかけは　いつもと　おなじ

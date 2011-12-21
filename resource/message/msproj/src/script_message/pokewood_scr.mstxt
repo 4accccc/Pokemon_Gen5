@@ -333,11 +333,11 @@
 		Label="msg_pw_studio_08">
 		<LanguageCell
 			Language="JPN">
-			<Text>オーケー！　じゃあ　この　さくひんに
+			<Text>オーケー！　じゃあ　さくひんに
 しゅつえんする　ポケモンは　どうする？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:45:57" />
+				Time="2011-12-20T10:13:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -345,11 +345,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ＯＫ！　じゃあ　この　作品に
+			<Text>ＯＫ！　じゃあ　作品に
 出演する　ポケモンは　どうする？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-08-30T07:39:40" />
+				Time="2011-12-20T10:13:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -427,11 +427,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>オーケー！　オーケー！▼
-じゃあ　この　さくひんに　ピッタリの
+じゃあ　さくひんに　ピッタリの
 ポケモンを　てはい　しとくぜ！▼</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-29T09:46:53" />
+				Time="2011-12-20T10:08:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"
@@ -440,11 +440,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ＯＫ！　ＯＫ！▼
-じゃあ　この　作品に　ピッタリの
+じゃあ　作品に　ピッタリの
 ポケモンを　手配しとくぜ！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-25T03:16:53" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-20T10:08:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tamada:W00253"

@@ -565,10 +565,10 @@
 	<row id="pw_event3_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『しかたない……
 ほら……　これだよ……▼
-あれ……？</language>
+ん……　あれ……？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『仕方ない……
 ほら……　これだよ……▼
-あれ……？</language>
+ん……　あれ……？</language>
 	</row>
 	<row id="pw_event3_enemy_3">
 		<language name="JPN" width="256">モニカ『ちょっと　なに　コレ！？▼
@@ -666,20 +666,20 @@
 	</row>
 	<row id="pw_event4_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『しかたないよ……▼
-ボクの　ほうが
+ボクの　ほうが　ずーっと
 ポケモンは　うまいんだし……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『仕方ないよ……▼
-ボクの　ほうが
+ボクの　ほうが　ずーっと
 ポケモンは　上手いんだし……</language>
 	</row>
 	<row id="pw_event4_enemy_2">
-		<language name="JPN" width="256">モニカ『ウッ　ウワーン！！▼
+		<language name="JPN" width="256">モニカ『ウッ……　ウワーン！！▼
 なんなのよ！！　もうー！！
 なんで　わたしが　こんな　めに▽
 あわないと　いけないのよー！！</language>
-		<language name="JPN_KANJI" width="256">モニカ『ウッ　ウワーン！！▼
-なんなのよ！！　もうー！！
-なんで　私が　こんな目に▽
+		<language name="JPN_KANJI" width="256">モニカ『ウッ……　ウワーン！！▼
+何なのよ！！　もうー！！
+何で　私が　こんな目に▽
 あわないと　いけないのよー！！</language>
 	</row>
 	<row id="pw_event4_hero_3">
@@ -707,7 +707,7 @@
 いえを　とびだして　しまった……▼
 いそいで　あとを　おいかけたけど
 モニカは　どこにも　いなかった……▼
-ボクたちは　もう
+ボクたちの　かんけいは　もう
 ダメなのかも　しれない……</language>
 		<language name="JPN_KANJI" width="256">きっかけは　いつもと　同じ
 ささいな　ケンカ……▼
@@ -715,7 +715,7 @@
 家を　飛び出して　しまった……▼
 急いで　後を　追いかけたけど
 モニカは　どこにも　いなかった……▼
-ボクたちは　もう
+ボクたちの　関係は
 ダメなのかも　しれない……</language>
 	</row>
 	<row id="pw_event5_enemy_0">
