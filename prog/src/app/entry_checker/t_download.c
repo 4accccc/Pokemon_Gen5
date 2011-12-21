@@ -2948,7 +2948,7 @@ static void td_key_save( T_DOWNLOAD_MAIN_WORK* wk )
 					// アニメ戻し
 					TdCmn_stop_anim_speed( wk, FALSE );
 					// 左上タイトル表示
-					TdCmn_disp_title_info( wk, wk->Mode, 0);
+//					TdCmn_disp_title_info( wk, wk->Mode, 0);
 					wk->Step = STEP_LV3+10;
 					// 詳細画面に行く(戻りで必要)
 					wk->Flag |= FLG_MW_SAVE2INFO;
