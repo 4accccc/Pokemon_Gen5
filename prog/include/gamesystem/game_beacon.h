@@ -20,6 +20,10 @@
 #include "savedata/questionnaire_save.h"
 #include "app/mdlid_def.h"
 
+#ifdef PM_DEBUG
+#define DEBUG_JA_EXTEND_BUFF_CHECK
+#endif
+
 //==============================================================================
 //  íËêîíËã`
 //==============================================================================
@@ -348,6 +352,10 @@ extern void DEBUG_GetBeaconRecvLogCopy( void* log_buf, s8* log_num, s8* start_lo
 extern void DEBUG_SendBeaconCancel(void);
 extern void DEBUG_SendBeaconPriorityEgnoreFlagSet( BOOL flag );
 extern void DEBUG_RecvBeaconBufferClear(void);
+#endif
+
+#ifdef DEBUG_JA_EXTEND_BUFF_CHECK
+extern void DEBUG_GAMEBEACON_CheckJAExtendCheck(void);
 #endif
 
 //--------------------------------------------------------------

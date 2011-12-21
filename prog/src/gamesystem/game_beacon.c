@@ -47,6 +47,10 @@
 //#define DEBUG_MAIN_TIME_AVERAGE_MASTER_ON_BEACON
 #endif
 
+#ifdef DEBUG_JA_EXTEND_BUFF_CHECK
+static BOOL s_ja_extend_check_flag    = FALSE;
+static u8 s_ja_extend_check_buff[20]  = {0};
+#endif
 
 //==============================================================================
 //  ’è”’è‹`
@@ -212,6 +216,9 @@ void GAMEBEACON_Update(void)
 {
   GAMEBEACON_SYSTEM *bsys = GameBeaconSys;
   int i;
+#ifdef DEBUG_JA_EXTEND_BUFF_CHECK
+  s_ja_extend_check_flag  = FALSE;
+#endif
   
   if(GameBeaconSys == NULL || GFL_NET_IsInit() == FALSE){
     return;
@@ -364,6 +371,9 @@ void GAMEBEACON_SendBeaconUpdate(void)
 {
   if(GameBeaconSys->send.beacon_update == TRUE){
     if(GFL_NET_IsInit() == TRUE){
+#ifdef DEBUG_JA_EXTEND_BUFF_CHECK
+      DEBUG_GAMEBEACON_CheckJAExtendCheck();
+#endif
       NET_WHPIPE_BeaconSetInfo();
       GameBeaconSys->send.beacon_update = FALSE;
     }
@@ -2361,6 +2371,12 @@ static void GAMEBEACON_Set_SendResortData( GAMEBEACON_SYSTEM *bsys )
 
   RESORT_BEACON_DATA_Exit( p_data );
 
+
+#ifdef DEBUG_JA_EXTEND_BUFF_CHECK
+  s_ja_extend_check_flag    = TRUE;
+  GFL_STD_MemCopy( &bsys->send.info.action.extend_buff, s_ja_extend_check_buff, 20 );
+#endif
+
 }
 //==================================================================
 /**
@@ -2510,6 +2526,19 @@ void DEBUG_RecvBeaconBufferClear(void)
   GameBeaconSys->end_log = -1;
   GameBeaconSys->update_log = 0;
 }
+
+#ifdef DEBUG_JA_EXTEND_BUFF_CHECK
+void DEBUG_GAMEBEACON_CheckJAExtendCheck(void)
+{
+  if( s_ja_extend_check_flag )
+  {
+    if( GFL_STD_MemComp( s_ja_extend_check_buff, GameBeaconSys->send.info.action.extend_buff, 20 ) != 0 )
+    {
+      GF_ASSERT_MSG( 0, "action=%d\n", GameBeaconSys->send.info.action.action_no );
+    }
+  }
+}
+#endif
 
 #ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON_BEACON
 
