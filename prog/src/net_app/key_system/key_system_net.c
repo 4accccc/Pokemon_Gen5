@@ -116,6 +116,7 @@ static void KeySys_NetCallback_IrcEndIrcWireless(void* p_wk_adrs);
 //ネットレシーブ
 static void KeySys_NetRecv_IrcWireless_CommonData( const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_handle );
 
+// memo 落とせるもの
 // 8 2 E 7 Q J A 5 7 B 
 
 //汎用
@@ -232,7 +233,6 @@ KEYSYS_NET_WORK * KEYSYS_NET_Init( const KEYSYS_NET_INIT_PARAM *cp_param, HEAPID
 //-----------------------------------------------------------------------------
 void KEYSYS_NET_Exit( KEYSYS_NET_WORK *p_wk )
 {
-
   KEYSYS_NET_End( p_wk );
 
   //シーケンス破棄

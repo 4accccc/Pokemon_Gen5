@@ -705,10 +705,13 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     SEQ_SAVE,
     SEQ_COMPLETE_MSG_START,
 
+
+    SEQ_MSG_RETRY_START,
+    SEQ_MSG_RETRY_WAIT,
+
     SEQ_MSG_CANCEL_START,
     SEQ_MSG_NOSWAN_START,
     SEQ_MSG_NODATA_START,
-    SEQ_MSG_NOREGISTER_START,
     SEQ_MSG_END_WAIT,
 
     SEQ_CLOSE_PROC_TO_WIFI_LOGOUT,
@@ -885,7 +888,13 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
         *p_seq = SEQ_MSG_NOSWAN_START;
         break;
       case KEYSYS_NET_RESULT_PGL_GETBW_NO_REGIST:
-        *p_seq = SEQ_MSG_NOREGISTER_START;
+
+        if( p_wk->p_download_data )
+        {
+          GFL_HEAP_FreeMemory( p_wk->p_download_data );
+          p_wk->p_download_data = NULL;
+        }
+        *p_seq = SEQ_MSG_RETRY_START;
         break;
       case KEYSYS_NET_RESULT_PGL_GETBW_NO_DATA:
         *p_seq = SEQ_MSG_NODATA_START;
@@ -999,6 +1008,18 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     break;
 
 
+  case SEQ_MSG_RETRY_START:
+    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_11, KEYSYS_TEXT_TYPE_STREAM ); 
+    (*p_seq)  = SEQ_MSG_RETRY_WAIT;
+    break;
+
+  case SEQ_MSG_RETRY_WAIT:
+    if( KEYSYS_TEXT_IsMsgEnd( p_wk->p_text ) )
+    {
+      *p_seq = SEQ_MSG_INPUT_START;
+    } 
+    break;
+
   case SEQ_MSG_CANCEL_START:
     KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_08, KEYSYS_TEXT_TYPE_STREAM ); 
     (*p_seq)  = SEQ_MSG_END_WAIT;
@@ -1011,11 +1032,6 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 
   case SEQ_MSG_NODATA_START:
     KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_18, KEYSYS_TEXT_TYPE_STREAM ); 
-    (*p_seq)  = SEQ_MSG_END_WAIT;
-    break;
-
-  case SEQ_MSG_NOREGISTER_START:
-    KEYSYS_TEXT_Print( p_wk->p_text, p_wk->p_msg, DATACONV_STR_20, KEYSYS_TEXT_TYPE_STREAM ); 
     (*p_seq)  = SEQ_MSG_END_WAIT;
     break;
 

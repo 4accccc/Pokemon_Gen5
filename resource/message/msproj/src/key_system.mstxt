@@ -4258,10 +4258,10 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN">
 			<Text>ゲームシンクＩＤコード　が
-まちがって　いるようです</Text>
+まちがって　いるようです▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:15:42" />
+				User="nagihashi_toru:W00268"
+				Time="2011-12-21T08:22:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4270,10 +4270,10 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ゲームシンクＩＤコード　が
-間違っているようです</Text>
+間違っているようです▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T07:15:46" />
+				User="nagihashi_toru:W00268"
+				Time="2011-12-21T08:22:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4527,10 +4527,10 @@ DSシステムフォントなので
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ご利用の　サービスは　終了　いたしました
-「ワイヤレスで　うけつぐ」を　ごg利用　ください▼</Text>
+「ワイヤレスで　うけつぐ」を　ご利用　ください▼</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-19T10:37:44" />
+				Time="2011-12-21T07:42:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4688,55 +4688,6 @@ DSシステムフォントなので
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-12-20T13:14:06" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:37:18" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment />
-			<CommentModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-15T12:41:31" />
-		</CommentCell>
-		<AttributeCell
-			Name="Width">
-			<Text>208</Text>
-			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-07T10:06:40" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
-		Label="DATACONV_STR_20"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>この　ゲームシンクIDコードは
-とうろく　されて　おりません▼</Text>
-			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-12-20T13:15:40" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-06-24T01:37:11" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>この　ゲームシンクIDコードは
-登録　されて　おりません▼</Text>
-			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-12-20T13:15:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
