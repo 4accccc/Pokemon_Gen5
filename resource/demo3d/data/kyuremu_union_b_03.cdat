@@ -108,6 +108,35 @@ static const DEMO3D_FILE_UNIT res_kyuremu_union_b_03_file_unit_cd_b03[] = {
  { res_kyuremu_union_b_03_file_cd_b03, 3 },
 };
 
+///==================================
+/// eff01_b03 Unit File Resource
+
+static const u16 res_kyuremu_union_b_03_file_eff01_b03[] = {
+ NARC_data_demo3d_eff01_b03_nsbmd,
+ NARC_data_demo3d_eff01_b03_nsbta,
+ NARC_data_demo3d_eff01_b03_nsbca,
+ NARC_data_demo3d_eff01_b03_nsbma,
+ NARC_data_demo3d_eff01_b03_nsbva,
+};
+
+static const DEMO3D_FILE_UNIT res_kyuremu_union_b_03_file_unit_eff01_b03[] = {
+ { res_kyuremu_union_b_03_file_eff01_b03, 5 },
+};
+
+///==================================
+/// eff02_b03 Unit File Resource
+
+static const u16 res_kyuremu_union_b_03_file_eff02_b03[] = {
+ NARC_data_demo3d_eff02_b03_nsbmd,
+ NARC_data_demo3d_eff02_b03_nsbta,
+ NARC_data_demo3d_eff02_b03_nsbca,
+ NARC_data_demo3d_eff02_b03_nsbva,
+};
+
+static const DEMO3D_FILE_UNIT res_kyuremu_union_b_03_file_unit_eff02_b03[] = {
+ { res_kyuremu_union_b_03_file_eff02_b03, 4 },
+};
+
 ///========================================================
 /// シーンユニットテーブル
 ///========================================================
@@ -124,9 +153,19 @@ static const DEMO3D_FILE_UNIT_TBL res_kyuremu_union_b_03_file_unit_cd_b03_tbl[] 
  { res_kyuremu_union_b_03_file_unit_cd_b03, 1 },
 };
 
+static const DEMO3D_FILE_UNIT_TBL res_kyuremu_union_b_03_file_unit_eff01_b03_tbl[] = {
+ { res_kyuremu_union_b_03_file_unit_eff01_b03, 1 },
+};
+
+static const DEMO3D_FILE_UNIT_TBL res_kyuremu_union_b_03_file_unit_eff02_b03_tbl[] = {
+ { res_kyuremu_union_b_03_file_unit_eff02_b03, 1 },
+};
+
 static const DEMO3D_SCENE_UNIT res_kyuremu_union_b_03_scene_unit[] = {
  { res_kyuremu_union_b_03_file_unit_bg_b03_tbl, 1, DEMO3D_UNITCHG_NONE },
  { res_kyuremu_union_b_03_file_unit_bk_b03_tbl, 1, DEMO3D_UNITCHG_NONE },
  { res_kyuremu_union_b_03_file_unit_cd_b03_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_kyuremu_union_b_03_file_unit_eff01_b03_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_kyuremu_union_b_03_file_unit_eff02_b03_tbl, 1, DEMO3D_UNITCHG_NONE },
 };
 

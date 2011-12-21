@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="swan_3dcg02" host="W00193" date="2011-11-28T11:20:32" source="kyuremu_union_b_03_v00.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2011-12-21T18:53:06" source="kyuremu_union_b_03_002.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="swan_3dcg02" host="W00193" date="2011-11-28T11:20:32" source="kyuremu_union_b_03_v00.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2011-12-21T18:53:06" source="kyuremu_union_b_03_002.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="7" xyz="-2.625000 0.000000 -2.625000" whd="4.875000 0.375000 5.625000"/>
+<box_test pos_scale="7" xyz="-2.625000 -0.061768 -2.625000" whd="4.875000 0.375000 5.625000"/>
 
 <tex_image_array size="9">
 	<tex_image index="0" name="d0_miz"
@@ -6592,7 +6592,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		translate="0.000000 -7.900879 0.000000"
 		visibility="on"
 		display_size="9"
 		vertex_size="2474" polygon_size="734"
