@@ -13,6 +13,7 @@
 #define C03R0901_WAITER_01                 1
 #define C03R0901_SUNGLASSES_01             2
 #define C03R0901_BUSINESSMAN_01            3
+#define C03R0901_VETERANW_01               4
 
 #endif //ZONE_C03R0901_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03r0901.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -1329,4 +1329,54 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c03r0901_narrator_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ボールの　なかの
+[Name:PokemonNickname Idx="0" ]が　とびだした！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-21T04:02:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-21T04:01:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ボールの　中の
+[Name:PokemonNickname Idx="0" ]が　飛び出した！▼</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-21T04:02:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-21T04:01:25" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>・0＝メロエッタのニックネーム
+・ダンスをする前に表示</Comment>
+			<CommentModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-21T04:02:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ナレーション</Text>
+			<TextModifiedBy
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-21T04:01:25" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

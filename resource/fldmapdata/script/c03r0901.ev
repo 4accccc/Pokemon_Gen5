@@ -14,6 +14,7 @@
   .include  "skill_teach_scr_def.h"     //for SCRID_SKILL_LEARN
 
   //@author fujimura_souichirou（移植作業）
+  //@author suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -26,8 +27,11 @@ _EVENT_DATA   ev_c03r0901_musician_01
 _EVENT_DATA   ev_c03r0901_waiter_01
 _EVENT_DATA   ev_c03r0901_businessman_01
 _EVENT_DATA   ev_c03r0901_sunglasses_01
+_EVENT_DATA	ev_c03r0901_veteranw_01
 _EVENT_DATA_END
 
+DEFINE_LOCAL	LWK_POSX
+DEFINE_LOCAL	LWK_POSZ
 
 /**************************************************************/
 /*  MUSICIAN  C03R0901                                        */
@@ -36,11 +40,10 @@ EVENT_START   ev_c03r0901_musician_01
 
     DEFINE_LOCAL target_poke_pos
 
-    //_TALK_OBJ_START()
     _TALK_START_SE_PLAY()
 
     //条件を満たすメロエッタがいるか?
-    _GET_EVT_POKE_POS( MONSNO_655, TRUE, target_poke_pos, SCWK_ANSWER )
+    _GET_EVT_POKE_POS( MONSNO_655, FALSE, target_poke_pos, SCWK_ANSWER )
     IF $SCWK_ANSWER == TRUE THEN
       _BALLOONWIN_TALKOBJ_MSG( msg_c03r0901_musician_02 )
       _BALLOONWIN_CLOSE()
@@ -56,7 +59,17 @@ EVENT_START   ev_c03r0901_musician_01
       _CAMERA_PURGE()   //対象物とカメラのバインドを解く
       _CAMERA_MOVE( 9688, 0, 970752, 360448, 0, 425984, 30 )
       _CAMERA_WAIT_MOVE()   //カメラ移動待ち
-
+	 
+	 //お客さんの方向を変える
+	 _CALL visitor_move
+	 
+	//前口上メッセージ表示
+	_PLAINWIN_MSG_DOWN( msg_c03r0901_narrator_00 )
+	_PLAINWIN_CLOSE()
+	 
+      //ボール投げるアニメ
+      _CALL ball_out
+      
       //BGMの再生
       _START_EVENT_BGM( SEQ_BGM_E_INISHIE )
       //ギターアニメ開始
@@ -64,8 +77,6 @@ EVENT_START   ev_c03r0901_musician_01
       
       //ウェイト
       _TIME_WAIT( MERODHIA_BALL_OUT_WAIT )
-      //ボール投げるアニメ
-      _CALL ball_out
 
       //ウェイト
       _TIME_WAIT( MERODHIA_DANCE_WAIT )
@@ -93,7 +104,7 @@ EVENT_START   ev_c03r0901_musician_01
       
       _END_EVENT_BGM()
 
-      //カットンエフェクト再生
+      //カットインエフェクト再生
       _CALL_FLD3D_CUTIN( FLDCIID_MERODIA )
 
       //メロエッタきめポーズを通常に戻す（アニメ更新）
@@ -105,7 +116,9 @@ EVENT_START   ev_c03r0901_musician_01
       //「○○は古の歌をおもいだした」
       _SYSWIN_MSG( msg_c03r0901_narrator_01, POS_DOWN )
       _SYSWIN_CLOSE()
-
+      
+      _CALL cheer
+      
       _CAMERA_WAIT_MOVE()   //カメラ移動待ち
       //カメラもどし
       _CAMERA_DEF_MOVE( 30 )
@@ -119,6 +132,21 @@ EVENT_START   ev_c03r0901_musician_01
       
       //技を覚えさせる処理
       _CALL learn_skill
+      
+      //ハイリンクフェス追加前の場合
+      IF FLAG_OFF ( FE_C03R0901_MELODY ) THEN
+    		_CALL fes_append
+      //ハイリンクフェス追加後の場合
+      ELSE
+      	_OBJ_ANIME( C03R0901_VETERANW_01, anm_staystep_u )
+      	_OBJ_ANIME( C03R0901_BUSINESSMAN_01, anm_staystep_d )
+      	_OBJ_ANIME_WAIT()
+      
+    		//ギタリストメッセージ
+    		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0901_musician_04 )
+    		_LAST_KEYWAIT()
+    		_BALLOONWIN_CLOSE()
+      ENDIF
 
     ELSE
       _CALL last_message
@@ -144,22 +172,20 @@ _RET
 //自機の動き
 player_move:
 {
-  DEFINE_LOCAL player_dir
-  //自機の向きを取得
-  _PLAYER_DIR_GET(player_dir)
-  //自機の向きでアニメ分岐
-  SWITCH $player_dir
-  CASE DIR_UP THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_up )
-  CASE DIR_DOWN THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_down )
-  CASE DIR_LEFT THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_left )
-  CASE DIR_RIGHT THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_right )
-  ENDSWITCH
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 5, 9, FORCE_TYPE_NOT, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_u )
   _OBJ_ANIME_WAIT()
 }  
+_RET
+
+//お客の動き
+visitor_move:
+{
+  _OBJ_ANIME( C03R0901_BUSINESSMAN_01, anm_staystep_l )
+  _OBJ_ANIME( C03R0901_VETERANW_01, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+}
 _RET
 
 //技を覚える処理
@@ -172,8 +198,7 @@ learn_skill:
   _CHG_COMMON_SCR SCRID_SKILL_LEARN
   //覚えた？
   IF $SCWK_ANSWER == TRUE THEN
-    //覚えた場合、イベント消化フラグＯＮ
-    _FLAG_SET( FE_C03R0901_MELODY )
+
   ENDIF
 
   //ボールに戻るアニメ
@@ -190,10 +215,7 @@ learn_skill:
     _BALLOONWIN_CLOSE()
     //メッセージ間ウェイト
     _TIME_WAIT( 8 )
-    //ギタリストメッセージ
-    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0901_musician_04 )
-    _LAST_KEYWAIT()
-    _BALLOONWIN_CLOSE()
+
   ENDIF
 }
 _RET
@@ -224,6 +246,62 @@ ball_in:
   _DISP_FADE_END_CHECK()
   _WAIT_BALL_ANM( SCR_BALL_ANM_TYPE_IN )
   _MOVE_BALL( SCR_BALL_ANM_TYPE_IN, 5, 3, 7, 3, 8 )
+_RET
+
+cheer:
+  _SUBWIN_MSG( msg_c03r0901_sub_01, 3, 3, 1 )
+  _TIME_WAIT( 32 )
+  _SUBWIN_MSG( msg_c03r0901_sub_02, 22, 10, 2 )
+  _TIME_WAIT( 32 )
+  _SUBWIN_MSG( msg_c03r0901_sub_03, 4, 16, 3 )
+  _TIME_WAIT( 16 )
+  _SUBWIN_CLOSE( 1 )
+  _TIME_WAIT( 16 )
+  _SUBWIN_CLOSE( 2 )
+  _TIME_WAIT( 16 )
+  _SUBWIN_CLOSE( 3 )
+_RET
+
+fes_append:
+  _PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+
+  //ギタリストメッセージ
+  _BALLOONWIN_TALKOBJ_MSG( msg_c03r0901_musician_04 )
+  _AB_KEYWAIT_MARK()
+  _BALLOONWIN_CLOSE()
+
+  //アニメ：ベテラン♀隣接
+  _OBJ_ANIME_AUTO( C03R0901_VETERANW_01, 4, LWK_POSZ, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C03R0901_VETERANW_01, anm_staystep_r )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+
+  _BALLOONWIN_OBJMSG_POS( msg_c03r0901_mission_add_02 ,C03R0901_VETERANW_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  //フェスミッション名格納
+  //_FMISSION_NAME( 0, FMISSION_ID_ITEM_KINOMI_02, 0 )
+
+  //フェスミッションが追加されました
+  _SE_PLAY( SEQ_SE_FLD_133 )
+  _SYSWIN_MSG( msg_c03r0901_mission_add_03, POS_DEFAULT )
+  _SE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+
+  //========================================//
+  //覚えた場合、イベント消化フラグＯＮ
+  _FLAG_SET( FE_C03R0901_MELODY )
+  //========================================//
+
+  //アニメ：ベテラン♀戻る
+  _OBJ_ANIME_AUTO( C03R0901_VETERANW_01, 2, 8, FORCE_TYPE_NOT, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( C03R0901_VETERANW_01, anm_staystep_u )
+  _OBJ_ANIME( C03R0901_BUSINESSMAN_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
 _RET
 
 //--------------------------------------------------------------------
@@ -295,6 +373,26 @@ _ANIME_LABEL  anm_player_move_front
   _ANIME_DATA AC_WALK_U_8F,3
   _ANIME_DATA ACMD_END,0
 
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+
 /**************************************************************/
 /*  WAITER（アイテム入手）  C03R0901                          */
 /**************************************************************/
@@ -317,4 +415,17 @@ EVENT_START   ev_c03r0901_sunglasses_01
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0901_sunglasses_01 )
 EVENT_END
 
+/************************************************************/
+/*	ベテラントレーナー♀：話しかけ					*/
+/************************************************************/
+EVENT_START	ev_c03r0901_veteranw_01
+
+	//メロエッタイベント起動前の場合
+	IF FLAG_OFF( FE_C03R0901_MELODY ) THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0901_mission_add_01 )
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0901_mission_add_04 )
+	ENDIF
+
+EVENT_END
 

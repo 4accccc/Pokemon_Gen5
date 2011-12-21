@@ -154,7 +154,6 @@ EVENT_START   ev_r02_pipe_01
       _AB_KEYWAIT_MARK()
       //お姉さん：こ　この　《ポケモン》……
       _BALLOONWIN_TALKOBJ_MSG( msg_r02_hardrock_02 )
-      _AB_KEYWAIT_MARK()
 
       //アイテム入手処理
       //バッグ空きチェック
