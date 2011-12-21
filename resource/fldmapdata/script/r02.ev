@@ -47,7 +47,7 @@ INIT_EVENT_START  ev_zone_r02
 
   //特性「ハードロック」見せイベントが終了してる？
   IF $WK_OTHER_R02_HAADOROKKU == 0 THEN
-    $OBJCHRWORK0 = PIPE     //可変OBJ01の見た目を笛吹きに
+    $OBJCHRWORK0 = GIRL4     //可変OBJ01の見た目を少女４に
   ELSE
     $OBJCHRWORK0 = GUITARW  //可変OBJ01の見た目をロッカーに
   ENDIF
