@@ -8,7 +8,7 @@
 //============================================================================================
 #pragma once
 //データ定義
-#define LOCAL_TVT_CALLDATA_MAX (120)
+#define LOCAL_TVT_CALLDATA_MAX (121)
 //人物定義
 #define LOCAL_TVT_PERSON_CHELEN (2)
 #define LOCAL_TVT_PERSON_MOTHER (4)
@@ -33,6 +33,7 @@
 #define DOCTOR_STATE_PLASMAFRIGATE_2 (7)
 #define DOCTOR_STATE_PLASMAFRIGATE_3 (8)
 #define DOCTOR_STATE_GIANTHOLE (9)
+#define DOCTOR_STATE_D33R0101 (10)
 #define RIVAL_STATE_C03_1 (0)
 #define RIVAL_STATE_D11 (1)
 #define RIVAL_STATE_C03_2 (2)
@@ -148,5 +149,5 @@
 #define MOTHER_STATE_MAX (6)
 #define BELL_STATE_MAX (11)
 #define SECRET_STATE_MAX (52)
-#define DOCTOR_STATE_MAX (10)
+#define DOCTOR_STATE_MAX (11)
 #define RIVAL_STATE_MAX (27)
