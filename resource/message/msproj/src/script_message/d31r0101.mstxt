@@ -10,10 +10,10 @@
 せっかく　いいところまで　いったのに▽
 やられちゃった！▼
 むりして　たたかわないで
-ドクターを　さがすべきだったかな</Text>
+ナースを　さがすべきだったかな</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-11-13T01:22:49" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-21T05:48:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25,10 +25,10 @@
 せっかく　いいところまで　行ったのに▽
 やられちゃった！▼
 無理して　戦わないで
-ドクターを　探すべきだったかな？</Text>
+ナースを　探すべきだったかな？</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-12T03:00:20" />
+				User="nakamura_akira:W00280"
+				Time="2011-12-21T05:48:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -257,11 +257,11 @@
 			Language="JPN">
 			<Text>ふふふっ！　きいてくれ！
 ついに　エリア３まで　いったんだ！▼
-……って　エリア５を　クリア！？
+……もう　エリア５を　クリアした！？
 うえには　うえが　いるもんだな……</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-21T03:30:14" />
+				Time="2011-12-21T05:51:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
@@ -271,11 +271,11 @@
 			Language="JPN_KANJI">
 			<Text>ふふふっ！　聞いてくれ！
 ついに　エリア３まで　行ったんだ！▼
-……って　エリア５を　クリア！？
+……もう　エリア５を　クリア！？
 上には　上が　いるもんだな……</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-12-21T03:30:23" />
+				Time="2011-12-21T05:51:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakamura_akira:W00280"
