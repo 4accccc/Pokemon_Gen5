@@ -3271,6 +3271,22 @@ static void pwb_main_book( PKWD_BOOK_MAIN_WORK * wk )
 			}
 			break;
 		//
+		case STEP_LV3+10:
+			// 終了してから、上画面を切り替える
+			// =>FakeNetModeの時に問題がでてしまうため
+			if( PRINTSYS_QUE_IsFinished( wk->print_que ) == TRUE ){
+				// 決定時は非表示からタッチの場合がある
+				// =>表示タイミングをずらしている
+				if(wk->Flag & FLG_TOUCH_DISP){
+					pwb_disp_up_bg( wk, 1 );
+					wk->Flag &= ~FLG_TOUCH_DISP;
+				}
+				pwb_init_meswin( wk );
+				pwb_init_selectwin( wk );
+				wk->SubMode = STEP_LV4;
+			}
+			break;
+		//
 		// 選択肢ウインドウ待ち
 		case STEP_LV4:
 			flg = pwb_update_selectwin( wk );
@@ -3426,10 +3442,10 @@ static void pwb_key_book( PKWD_BOOK_MAIN_WORK * wk )
 		//
 		// 決定時は非表示からタッチの場合がある
 		// =>表示タイミングをずらしている
-		if(wk->Flag & FLG_TOUCH_DISP){
-			pwb_disp_up_bg( wk, 1 );
-			wk->Flag &= ~FLG_TOUCH_DISP;
-		}
+//		if(wk->Flag & FLG_TOUCH_DISP){
+//			pwb_disp_up_bg( wk, 1 );
+//			wk->Flag &= ~FLG_TOUCH_DISP;
+//		}
 	}
 	//
 	// あまりやりたくないが、
@@ -4828,9 +4844,7 @@ static s32 pwb_is_main_framelist( PKWD_BOOK_MAIN_WORK * wk, const u32 mode )
 		// カーソル位置の取得
 		pwb_calc_framelist( wk );
 		//
-		pwb_init_meswin( wk );
-		pwb_init_selectwin( wk );
-		wk->SubMode = STEP_LV4;
+		wk->SubMode = STEP_LV3+10;
 		// SE
 		PMSND_PlaySE( SND_PKWD_BOOK_DECIDE );
 		// 決定時は、すぐには上画面を表示しない
