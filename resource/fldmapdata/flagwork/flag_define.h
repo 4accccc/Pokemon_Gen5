@@ -504,6 +504,7 @@
 #define FE_H05_POKE488_BTL_01              488 /* 0x01e8 ワンダーブリッジ：クレセリア戦闘フラグ */
 #define FE_D07_BIGFOUR3_TALK               489 /* 0x01e9 ネジ山：レンブ会話フラグ */
 #define FE_C12R0202_RIVALSISTER_TAL        490 /* 0x01ea ライバルの家２階：クリア後のライバル妹会話フラグ */
+#define FE_C05R0501_RIVAL_BTL_END          491 /* 0x01eb ホドモエシティ：クリア後ライバルと戦闘済み */
 
 #define FE_AREA_END                        599 /* 0x0257  */
 

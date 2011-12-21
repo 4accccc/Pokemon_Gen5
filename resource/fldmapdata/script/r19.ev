@@ -653,6 +653,9 @@ EVENT_START   ev_pos_r19_zukan_01
   $WK_SCENE_R19 = 6
   //ローカルライブキャスター・ベル通話状態を変更（D06到着まで）
   _PERSON_STATE_SET_BELL( BELL_STATE_HOME )
+  //C12のベル・ライバルを非表示
+  _FLAG_SET( FV_C12_SWBELL )
+  _FLAG_SET( FV_C12_SWANLEADER1 )
   //==================================//
   
 EVENT_END

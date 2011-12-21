@@ -122,6 +122,66 @@ INIT_EVENT_START  ev_zone_c04p01
     ENDIF
   }
 
+  {
+  //クリア後ライブキャスターステータス設定
+  
+  //変数を定義
+  DEFINE_LOCAL LCWK_NOW_WEEK
+  
+  //曜日を取得
+  _GET_WEEK( LCWK_NOW_WEEK )
+  
+  //ライバル出現状態（火曜）
+  IF $LCWK_NOW_WEEK == RTC_WEEK_TUESDAY  && FLAG_OFF( TMFLG_AMUSEMENT_NPC ) && FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+    //ローカルライブキャスター・ライバル通話状態を変更
+    _PERSON_STATE_SET_RIVAL( RIVAL_STATE_PARK )
+  //ベル出現状態（水曜）
+  ELSIF $LCWK_NOW_WEEK == RTC_WEEK_WEDNESDAY  && FLAG_OFF( TMFLG_AMUSEMENT_NPC ) && FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+    //ローカルライブキャスター・ベル通話状態を変更
+    _PERSON_STATE_SET_BELL( BELL_STATE_PARK )
+  //チェレン出現状態（土曜）
+  ELSIF $LCWK_NOW_WEEK == RTC_WEEK_SATURDAY  && FLAG_OFF( TMFLG_AMUSEMENT_NPC ) && FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+    //ローカルライブキャスター・チェレン通話状態を変更
+    _PERSON_STATE_SET_CHELEN( CHELEN_STATE_PARK )
+  ENDIF
+  
+  //ライバル出現条件を満たしていないならばイベント進行状態に合わせてセット
+  IF $LCWK_NOW_WEEK != RTC_WEEK_TUESDAY && FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+    //ローカルライブキャスター・ライバル通話状態を変更
+    //サザナミ戦前
+    IF FLAG_OFF( FE_T04_SWRIVAL_WIN_01 ) && FLAG_OFF( FE_C05R0501_RIVAL_BTL_END ) THEN
+      _PERSON_STATE_SET_RIVAL( RIVAL_STATE_T04 )
+    //ポケモンハウス戦前
+    ELSIF FLAG_ON( FE_T04_SWRIVAL_WIN_01 ) && FLAG_OFF( FE_C05R0501_RIVAL_BTL_END ) THEN
+      _PERSON_STATE_SET_RIVAL( RIVAL_STATE_PLASMAHOME_1 )
+    //ポケモンハウス戦後
+    ELSIF FLAG_ON( FE_T04_SWRIVAL_WIN_01 ) && FLAG_ON( FE_C05R0501_RIVAL_BTL_END ) THEN
+      _PERSON_STATE_SET_RIVAL( RIVAL_STATE_PLASMAHOME_2 )
+    ENDIF
+  
+  ENDIF
+  
+  //ベル出現条件を満たしていないならばセット
+  IF $LCWK_NOW_WEEK != RTC_WEEK_WEDNESDAY && FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+    //ローカルライブキャスター・ベル通話状態を変更
+    _PERSON_STATE_SET_BELL( BELL_STATE_HOME )
+  ENDIF
+  
+  //チェレン出現条件を満たしていないならばイベント進行状態に合わせてセット
+  IF $LCWK_NOW_WEEK != RTC_WEEK_SATURDAY && FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+    //ローカルライブキャスター・チェレン通話状態を変更
+    //ヤグルマの森未クリア
+    IF $WK_SCENE_D02R0101_SWLEADER1 == 0  THEN
+      _PERSON_STATE_SET_CHELEN( CHELEN_STATE_YAGURUMA )
+    //ヤグルマの李クリア後
+    ELSIF $WK_SCENE_D02R0101_SWLEADER1 == 1  THEN
+      _PERSON_STATE_SET_CHELEN( CHELEN_STATE_GYM )
+    ENDIF
+    
+  ENDIF
+  
+  }
+
 INIT_EVENT_END
 
 

@@ -40,7 +40,13 @@ DEFINE_LOCAL  LCW_POSZ
 /************************************************************/
 INIT_EVENT_START   ev_zone_c12gym0201
   
-//
+  //イベント進行状態を見てライブキャスターの状態をセット
+  IF $WK_SCENE_D02R0101_SWLEADER1 == 1  THEN
+    //==================================//
+    //ローカルライブキャスター・チェレン通話状態を変更（デフォルト設定）
+    _PERSON_STATE_SET_CHELEN( CHELEN_STATE_GYM )
+    //==================================//
+  ENDIF
   
 INIT_EVENT_END
 

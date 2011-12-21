@@ -33,12 +33,28 @@ _EVENT_DATA		ev_d02r0101_man2_01
 _EVENT_DATA		ev_d02r0101_man1_01
 _EVENT_DATA		ev_d02r0101_mountain_01
 _EVENT_DATA		ev_d02r0101_assistantw_01
+_EVENT_DATA    ev_zone_d02r0101
 _EVENT_DATA_END
 
 //話しかけた方向取得変数
 DEFINE_LOCAL LWK_DIR
 DEFINE_LOCAL  LCW_POSX
 DEFINE_LOCAL  LCW_POSZ
+/************************************************************/
+/*		ZONE_CHANGE                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_d02r0101
+
+  //イベント進行状態を見てライブキャスターの状態をセット
+  IF $WK_SCENE_D02R0101_SWLEADER1 == 0  THEN
+    //==================================//
+    //ローカルライブキャスター・チェレン通話状態を変更
+    _PERSON_STATE_SET_CHELEN( CHELEN_STATE_YAGURUMA )
+    //==================================//
+  ENDIF
+
+INIT_EVENT_END
+
 /**************************************************************/
 /*		POS：チェレン連れ歩き						  */
 /**************************************************************/
@@ -142,6 +158,8 @@ EVENT_START		ev_pos_d02r0101_swleader1_02
   _FLAG_SET( FV_D02R0101_STOPPER_01 )
   //ローカルライブキャスター・チェレン通話状態を変更（デフォルト設定）
   _PERSON_STATE_SET_CHELEN( CHELEN_STATE_GYM )
+  //C12GYM0101 チェレン表示
+  _FLAG_RESET( FV_C12GYM0201_SWLEADER1_01 )
   //==================================//
   
 EVENT_END

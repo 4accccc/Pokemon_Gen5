@@ -82,6 +82,22 @@ INIT_EVENT_START   ev_zone_c05r0501
     
   ENDIF
   
+  //ゾーン切り替え時にライバルのライブキャスター状態をセット
+  
+  //クリア後ライバルイベント終了状態
+  IF FLAG_ON( FE_T04_SWRIVAL_WIN_01 ) && FLAG_ON( FE_C05R0501_RIVAL_BTL_END ) THEN
+    //========================================//
+    //ライバルのライブキャスターの状態を変更
+    _PERSON_STATE_SET_RIVAL( RIVAL_STATE_PLASMAHOME_2 )
+    //========================================//
+  //クリア後ポケモンハウス戦闘終了前
+  ELSIF FLAG_ON( FE_T04_SWRIVAL_WIN_01 ) && FLAG_OFF( FE_C05R0501_RIVAL_BTL_END ) THEN
+    //========================================//
+    //ライバルのライブキャスターの状態を変更
+    _PERSON_STATE_SET_RIVAL( RIVAL_STATE_PLASMAHOME_1 )
+    //========================================//
+  ENDIF
+  
 INIT_EVENT_END
 
 /************************************************************/
@@ -592,6 +608,8 @@ EVENT_START   ev_c05r0501_swrival_01
       //========================================//
       //ローカルライブキャスター・ライバル通話状態を変更（クリア後デフォルト状態）
       _PERSON_STATE_SET_RIVAL( RIVAL_STATE_PLASMAHOME_2 )
+      //戦闘済みフラグセット
+      _FLAG_SET( FE_C05R0501_RIVAL_BTL_END )
       //========================================//
 
     ELSE
