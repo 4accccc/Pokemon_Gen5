@@ -429,19 +429,19 @@ static GMEVENT_RESULT SmokeMoveEvt( GMEVENT* event, int* seq, void* work );
 // 気合のエフェクト
 #define EFF_POS_X       ( 248 << FX32_SHIFT )
 #define EFF_POS_Y       ( 0 )
-#define EFF_POS_Z       ( 232 << FX32_SHIFT )
+#define EFF_POS_Z       ( 248 << FX32_SHIFT )
 // ビリジオン
 #define BIRIZION_POS_X  ( 280 << FX32_SHIFT )
 #define BIRIZION_POS_Y  ( 0 )
-#define BIRIZION_POS_Z  ( 232  << FX32_SHIFT )
+#define BIRIZION_POS_Z  ( 248  << FX32_SHIFT )
 // コバルオン
 #define KOBARUON_POS_X  ( 248 << FX32_SHIFT )
 #define KOBARUON_POS_Y  ( 48  << FX32_SHIFT )
-#define KOBARUON_POS_Z  ( 232 << FX32_SHIFT )
+#define KOBARUON_POS_Z  ( 248 << FX32_SHIFT )
 // テラキオン
 #define TERAKION_POS_X  ( 216 << FX32_SHIFT )
 #define TERAKION_POS_Y  ( 0 )
-#define TERAKION_POS_Z  ( 232 << FX32_SHIFT )
+#define TERAKION_POS_Z  ( 248 << FX32_SHIFT )
 
 // ケルディオ演出イベント関係
 #define KERUDHIO_EFFECT_WAIT    (120)     // 気合のエフェクト表示フレーム数
@@ -1263,6 +1263,9 @@ static GMEVENT_RESULT KerudhioEvent( GMEVENT* event, int* seq, void* wk )
         ANM_Play( p_wk->exp_obj, OBJ_EFFECT_01, i );
       }
 
+      // SE:気が集まる
+      PMSND_PlaySE( SEQ_SE_SW_KERTIO_FORM_01 );
+
       // ウェイトを設定
       p_wk->wait = KERUDHIO_EFFECT_WAIT;
     }
@@ -1280,6 +1283,10 @@ static GMEVENT_RESULT KerudhioEvent( GMEVENT* event, int* seq, void* wk )
   case SEQ_TERAKION:       // テラキオン表示
     // 登場アニメ再生
     ANM_AppearPlay( p_wk->exp_obj, OBJ_TERAKION );
+
+    // SE:登場
+    PMSND_PlaySE( SEQ_SE_SW_KERTIO_FORM_02 );
+
     *seq = SEQ_TERAKION_WAIT;
     break;
 
@@ -1296,6 +1303,10 @@ static GMEVENT_RESULT KerudhioEvent( GMEVENT* event, int* seq, void* wk )
   case SEQ_BIRIJION:       // ビリジオン表示
     // 登場アニメ再生
     ANM_AppearPlay( p_wk->exp_obj, OBJ_BIRIZION );
+
+    // SE:登場
+    PMSND_PlaySE( SEQ_SE_SW_KERTIO_FORM_02 );
+
     *seq = SEQ_BIRIJION_WAIT;
     break;
 
@@ -1312,6 +1323,10 @@ static GMEVENT_RESULT KerudhioEvent( GMEVENT* event, int* seq, void* wk )
   case SEQ_KOBARUON:       // コバルオン表示
     // 登場アニメ再生
     ANM_AppearPlay( p_wk->exp_obj, OBJ_KOBARUON );
+
+    // SE:登場
+    PMSND_PlaySE( SEQ_SE_SW_KERTIO_FORM_02 );
+
     *seq = SEQ_KOBARUON_WAIT;
     break;
 

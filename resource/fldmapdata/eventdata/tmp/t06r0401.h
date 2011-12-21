@@ -15,5 +15,6 @@
 #ifndef ZONE_T06R0401_EVB_H
 #define ZONE_T06R0401_EVB_H
 
+#define T06R0401_KERUDHIO                 0
 
 #endif //ZONE_T06R0401_EVB_H

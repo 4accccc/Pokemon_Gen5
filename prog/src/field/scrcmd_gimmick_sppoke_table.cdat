@@ -20,5 +20,9 @@
   DEF_CMD( EvCmdRegiGMK_SetDoorState, EV_SEQ_REZI_GMK_SET_DOOR )
   DEF_CMD( EvCmdRegiGMK_AnmDoorStart, EV_SEQ_REZI_GMK_ANM_DOOR )
 
+  // 【配布】ケルディオ
+  DEF_CMD( EvCmdKerudhioGMK_RememberEvent, EV_SEQ_KERUDHIO_GMK_REMEMBER_EVENT )
+  DEF_CMD( EvCmdKerudhioGMK_EffectDelete, EV_SEQ_KERUDHIO_GMK_EFFECT_DELETE )
+
   END_CMD
   //スクリプトコマンドテーブル終了

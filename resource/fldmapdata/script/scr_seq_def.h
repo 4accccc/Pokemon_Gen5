@@ -16774,5 +16774,35 @@
 	.short	\is_open
 	.endm
 
+//==============================================================
+// 【配布】ケルディオ関係
+//==============================================================
+//--------------------------------------------------------------
+/**
+ * @def   _KERUDHIO_GMK_REMEMBER_EVENT
+ * @brief ケルディオの思い出しイベント
+ *
+ */
+//--------------------------------------------------------------
+#define _KERUDHIO_GMK_REMEMBER_EVENT()  \
+    _ASM_KERUDHIO_GMK_REMEMBER_EVENT
+
+	.macro	_ASM_KERUDHIO_GMK_REMEMBER_EVENT
+	.short	EV_SEQ_KERUDHIO_GMK_REMEMBER_EVENT
+	.endm
+
+//--------------------------------------------------------------
+/**
+ * @def   _KERUDHIO_GMK_EFFECT_DELETE
+ * @brief ケルディオのエフェクト削除
+ *
+ */
+//--------------------------------------------------------------
+#define _KERUDHIO_GMK_EFFECT_DELETE()  \
+    _ASM_KERUDHIO_GMK_EFFECT_DELETE
+
+	.macro	_ASM_KERUDHIO_GMK_EFFECT_DELETE
+	.short	EV_SEQ_KERUDHIO_GMK_EFFECT_DELETE
+	.endm
 
 
