@@ -1005,11 +1005,15 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『おい
-あの　ひと……▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『スパークしたぜッ！▼
+ヒオウギといえば　たかだい▼
+ベルって　ひとも　きっと
+たかだいで　けしきを　みているはずッ▼
+さあ！
+ポケモン　もらってこい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-28T05:58:51" />
+				Time="2011-12-21T12:03:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1017,11 +1021,15 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『おい
-あの　人……▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『スパークしたぜッ！▼
+ヒオウギといえば　高台▼
+ベルって　人も　きっと
+高台で　景色を　みているはずッ▼
+さあ！
+ポケモン　もらってこい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-28T05:59:01" />
+				Time="2011-12-21T12:03:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1030,12 +1038,14 @@ GIRL2</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂：高台でのイベント
-・pos（local 4~6.10）を踏むとメッセージ表示
+・posイベント
+　GRIDX＝36～38、GRIDZ＝720
+・！マーク表示後にメッセージ
 ・表示後、連れ歩き解除
 ・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T07:19:57" />
+				Time="2011-12-21T11:51:40" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1065,11 +1075,11 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『あの　ひとが
-ベルって　ひと　じゃないのか？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『オレの　スパークに
+まちがいは　ないぜッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-30T03:54:43" />
+				Time="2011-12-21T12:04:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1077,11 +1087,11 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『あの　人が
-ベルって　人じゃないのか？</Text>
+			<Text>[Name:TrainerName Idx="1" ]『オレの　スパークに
+間違いは　ないぜッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-30T03:54:53" />
+				Time="2011-12-21T12:04:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1124,11 +1134,11 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『あのひとが
-ベルって　ひとか　たしかめろよ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『オレの　スパークに
+まちがいは　ないぜッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T09:09:08" />
+				Time="2011-12-21T12:04:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1136,11 +1146,11 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『あの人が
-ベルって　人か　確かめろよ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『オレの　スパークに
+間違いは　ないぜッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T09:09:10" />
+				Time="2011-12-21T12:04:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1208,12 +1218,11 @@ GIRL2</Text>
 			Language="JPN">
 			<Comment>♀
 ・pos（local 10.5）上向きに配置
-・話しかけるとメッセージ表示後
-　左右をきょろきょろする
+・上向きのママメッセージ表示
 ・続けてwhite_02</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T11:00:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1268,12 +1277,11 @@ GIRL2</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・移動してきて主人公と向き合い
-　メッセージ表示
+・主人公と向き合いメッセージ表示
 ・続けてwhite_03</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T11:00:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1336,12 +1344,13 @@ GIRL2</Text>
 			<Comment>♀
 ・！マーク表示
 ・はい/いいえ選択肢表示
-　はい　→white_04
-　いいえ→swrival_03
+　選択に関係なく
+　♂ならwhite_37
+　♀ならwhite_38
 ・0＝主人公名前</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T12:05:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1357,6 +1366,118 @@ GIRL2</Text>
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_white_37"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>って！
+あなた　[Name:TrainerName ]くん！▼
+うわー
+きいてた　とおり　だよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T12:10:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T11:05:18" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>って！
+あなた　[Name:TrainerName ]くん！▼
+うわー
+きいてた　とおり　だよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T12:05:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T11:19:40" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・主人公＝♂
+・続けてwhite_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T12:05:25" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T12:04:29" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_white_38"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>って！
+あなた　[Name:TrainerName ]さん！▼
+うわー
+きいてた　とおり　だよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T12:05:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T11:05:47" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>って！
+あなた　[Name:TrainerName ]さん！▼
+うわー
+きいてた　とおり　だよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T12:05:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T11:19:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・主人公＝♀
+・続けてwhite_04</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T12:05:33" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T12:04:29" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1391,7 +1512,7 @@ GIRL2</Text>
 ソイツが　[Name:TrainerName Idx="0" ]　です</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T12:47:09" />
+				Time="2011-12-21T12:05:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1425,7 +1546,7 @@ GIRL2</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1625,11 +1746,13 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『はやく
-ポケモン　もらえって！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『なッ！
+ベルって　ひと　いたんだろ▼
+って　オマエ
+ポケモン　もらってこいよッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T09:11:25" />
+				Time="2011-12-21T12:01:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1637,11 +1760,13 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『はやく
-ポケモン　もらえって！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『なッ！
+ベルって　人　いたんだろ▼
+って　オマエ
+ポケモン　もらってこいよッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T09:11:32" />
+				Time="2011-12-21T12:01:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1677,11 +1802,13 @@ GIRL2</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『はやく
-ポケモン　もらえって！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『なッ！
+ベルって　ひと　いたんだろ▼
+って　オマエ
+ポケモン　もらってこいよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T09:11:42" />
+				Time="2011-12-21T12:02:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1689,11 +1816,13 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『はやく
-ポケモン　もらえって！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『なッ！
+ベルって　人　いたんだろ▼
+って　オマエ
+ポケモン　もらってこいよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T09:11:44" />
+				Time="2011-12-21T12:02:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2711,69 +2840,6 @@ GIRL2</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_c12_swrival_15"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『そいつが
-オマエの　パートナー！▼
-いもうとも　いってたけど　ポケモンは
-ぜったい　たいせつに　しろよな！▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-14T11:14:45" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『そいつが
-オマエの　パートナー！▼
-妹も　いってたけど　ポケモンは
-絶対　大切に　しろよな！▼</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-14T11:14:46" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>♂
-・続けてwhite_10
-・1＝ライバル名</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-10-20T06:01:48" />
-		</CommentCell>
-		<AttributeCell
-			Name="Character">
-			<Text>SWRIVAL
-ライバル</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-06-17T02:24:44" />
-		</AttributeCell>
-		<AttributeCell
-			Name="Width">
-			<Text>256</Text>
-			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
-		</AttributeCell>
-		<ExtraCell
-			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ff80</CellData>
-			<CellModifiedBy
-				User=":"
-				Time="0001-01-01T00:00:00" />
-		</ExtraCell>
-	</TextRow>
-	<TextRow
 		Label="msg_c12_white_10"
 		Style="Large">
 		<LanguageCell
@@ -2902,10 +2968,10 @@ GIRL2</Text>
 イッシュちほう　すべての
 ポケモンに　であってほしいんだ▼
 それが　アララギはかせの
-おねがい　なんだよ▼</Text>
+おねがい　なんだよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-20T08:13:05" />
+				Time="2011-12-21T11:55:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2922,10 +2988,10 @@ GIRL2</Text>
 イッシュ地方　すべての
 ポケモンに　出会ってほしいんだ▼
 それが　アララギ博士の
-お願い　なんだよ▼</Text>
+お願い　なんだよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T12:47:49" />
+				Time="2011-12-21T11:55:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2934,10 +3000,10 @@ GIRL2</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・続けてswrival_16</Comment>
+・メッセージ表示後、フリームーブ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T05:54:49" />
+				Time="2011-12-21T11:54:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2963,11 +3029,235 @@ GIRL2</Text>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c12_white_39"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>それにしても
+アララギはかせ　ったら！▼
+ふつうは　オーケーの
+へんじを　もらってから▽
+しゅっぱつ　させるよね？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T12:09:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T11:55:13" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>それにしても
+アララギ博士　ったら！▼
+普通は　オーケーの
+返事を　もらってから▽
+出発　させるよね？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T12:08:57" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T11:55:38" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・posを踏むまで繰り返し</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T11:55:09" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T11:55:11" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_swrival_26"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>[Name:TrainerName Idx="1" ]『おーい
+いつまで　またせるんだよ！▼
+って　オマエ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T11:57:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T11:56:39" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:TrainerName Idx="1" ]『おーい
+いつまで　待たせるんだよ！▼
+って　オマエ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T12:17:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T11:56:42" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・posイベント
+　GRIDX＝36～38、GRIDZ＝714
+・　GRIDX＝37、GRIDZ＝716に出現
+・メッセージ表示後に
+　！マーク表示して主人公に隣接
+・続けてswrival_15</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T12:18:23" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T11:56:38" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_swrival_15"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>そいつが
+オマエの　パートナー！▼
+いもうとも　いってたけど　ポケモンは
+ぜったい　たいせつに　しろよな！▼
+で　オマエ
+もってる　ソレ　なに？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T12:09:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T11:56:07" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>そいつが
+オマエの　パートナー！▼
+妹も　いってたけど　ポケモンは
+絶対　大切に　しろよな！▼
+で　オマエ
+持ってる　ソレ　なに？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T12:09:28" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T11:56:07" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・続けてwhite_41
+・1＝ライバル名</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T11:59:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T11:56:07" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12_white_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ベル『それは　ポケモンずかん　だよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T11:59:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T11:59:46" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ベル『それは　ポケモン図鑑　だよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T12:09:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T11:59:59" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・続けてswrival_16</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T12:00:08" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBELL
+ベル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T11:59:35" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ffff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_c12_swrival_16"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『オレにも
+			<Text>[Name:TrainerName Idx="1" ]『……オレにも
 ポケモンずかんを　くれませんか？▼
 オレは　つよくなりたい！▼
 ポケモンずかんが　あれば
@@ -2975,7 +3265,7 @@ GIRL2</Text>
 つまり　つよくなれるだろッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T12:48:38" />
+				Time="2011-12-21T12:09:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2983,7 +3273,7 @@ GIRL2</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『オレにも
+			<Text>[Name:TrainerName Idx="1" ]『……オレにも
 ポケモン図鑑を　くれませんか？▼
 オレは　強くなりたい！▼
 ポケモン図鑑が　あれば
@@ -2991,7 +3281,7 @@ GIRL2</Text>
 つまり　強くなれるだろッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T12:48:39" />
+				Time="2011-12-21T12:09:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3000,10 +3290,12 @@ GIRL2</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・続けてwhite_13</Comment>
+・ベルの方をむいて
+・続けてwhite_13
+・1＝ライバル名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-02T05:54:53" />
+				Time="2011-12-21T12:28:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3095,7 +3387,7 @@ GIRL2</Text>
 イッシュちほうを　たび　する！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T11:15:24" />
+				Time="2011-12-21T12:01:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6935,13 +7227,15 @@ GIRL2</Text>
 			Language="JPN">
 			<Text>で　なあに？　そのコ　ってば
 もう　こっちに　きてるの？▼
+なによそれ　あいかわらずね
+きめたら　すぐに　うごくんだから▼
 うん！　ベルちゃんね！
 おおきな　みどりの　ぼうし　っと▼
 はいはい
 だいじょうぶ！　だいじょうぶ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T02:42:27" />
+				Time="2011-12-21T11:13:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -6951,13 +7245,15 @@ GIRL2</Text>
 			Language="JPN_KANJI">
 			<Text>で　なあに？　その子ってば
 もう　こっちに　来てるの？▼
+なによそれ　あいかわらずね
+決めたら　すぐに　行動なんだから▼
 うん！　ベルちゃんね！
 大きな　緑の　帽子っと▼
 はいはい
 大丈夫！　大丈夫！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T02:42:31" />
+				Time="2011-12-21T11:13:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
