@@ -641,10 +641,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・みた数が
-　105～124匹</Comment>
+　105～134匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:17:38" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:07:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -703,10 +703,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・みた数が
-　125～144匹</Comment>
+　135～164匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:17:47" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:07:34" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -765,10 +765,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・みた数が
-　145～164匹</Comment>
+　165～194匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:17:53" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:07:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -829,10 +829,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・みた数が
-　165～184匹</Comment>
+　195～224匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:20:09" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:08:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -891,10 +891,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・みた数が
-　185～204匹</Comment>
+　225～244匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:19:57" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:10:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -946,10 +946,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・みた数が
-　205～224匹</Comment>
+　245～264匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:19:48" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:10:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -997,10 +997,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・みた数が
-　225～239匹</Comment>
+　265～284匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:19:36" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:09:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1050,10 +1050,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・みた数が
-　240～249匹</Comment>
+　285～296匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:19:19" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:09:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1113,10 +1113,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・みた数が
-　250匹</Comment>
+　297匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:16:19" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:09:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1168,8 +1168,8 @@
 ・捕まえた数が
 　0～14匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:22:09" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:10:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1221,8 +1221,8 @@
 ・捕まえた数が
 　15～29匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:22:11" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:10:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1274,8 +1274,8 @@
 ・捕まえた数が
 　30～44匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:22:12" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:10:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1327,8 +1327,8 @@
 ・捕まえた数が
 　45～64匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:22:13" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:10:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1378,8 +1378,8 @@
 ・捕まえた数が
 　65～84匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:22:15" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:10:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1431,8 +1431,8 @@
 ・捕まえた数が
 　85～104匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:22:17" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:10:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1484,10 +1484,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・捕まえた数が
-　105～124匹</Comment>
+　105～134匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:22:19" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:10:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1539,10 +1539,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・捕まえた数が
-　125～144匹</Comment>
+　135～164匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:22:20" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:10:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1590,10 +1590,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・捕まえた数が
-　145～164匹</Comment>
+　165～194匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:22:23" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:10:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1643,10 +1643,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・捕まえた数が
-　165～184匹</Comment>
+　195～224匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:22:24" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:10:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1698,10 +1698,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・捕まえた数が
-　185～204匹</Comment>
+　225～244匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:22:43" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:10:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1753,10 +1753,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・捕まえた数が
-　205～224匹</Comment>
+　245～264匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:22:48" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:10:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1808,10 +1808,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・捕まえた数が
-　225～239匹</Comment>
+　265～284匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:22:50" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:10:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1863,10 +1863,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・捕まえた数が
-　240～249匹</Comment>
+　285～296匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:22:51" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:10:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1918,10 +1918,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：イッシュ図鑑
 ・捕まえた数が
-　250匹</Comment>
+　297匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:22:52" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:10:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2954,10 +2954,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：全国図鑑
 ・捕まえた数が
-　345～444匹</Comment>
+　345～394匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:26:42" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:12:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3016,10 +3016,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：全国図鑑
 ・捕まえた数が
-　445～494匹</Comment>
+　395～444匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:26:57" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:13:08" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3080,10 +3080,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：全国図鑑
 ・捕まえた数が
-　495～529匹</Comment>
+　445～494匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:27:06" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:13:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3142,10 +3142,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：全国図鑑
 ・捕まえた数が
-　530～559匹</Comment>
+　495～529匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:27:19" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:14:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3202,10 +3202,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：全国図鑑
 ・捕まえた数が
-　560～579匹</Comment>
+　530～559匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:27:33" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:14:48" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3268,10 +3268,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：全国図鑑
 ・捕まえた数が
-　580～599匹</Comment>
+　560～579匹</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-07-03T06:27:41" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:15:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3518,10 +3518,10 @@
 			Language="JPN">
 			<Comment>図鑑評価：全国図鑑
 ・捕まえた数が
-　630～633匹</Comment>
+　630～635匹</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:15:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3595,11 +3595,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>図鑑評価：全国図鑑
-・捕まえた数が
-　634匹</Comment>
+・捕えた数が
+　636匹</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:14" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:15:55" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3656,11 +3656,11 @@
 			Language="JPN">
 			<Comment>図鑑評価：全国図鑑
 ・捕まえた数が
-　634匹
+　636匹
 ・初回からNo632「ひかるおまもり」入手まで</Comment>
 			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-08-29T09:09:45" />
+				User="iwasawa:W00270"
+				Time="2011-12-21T12:16:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

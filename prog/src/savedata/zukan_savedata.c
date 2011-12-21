@@ -1561,14 +1561,14 @@ static const ZUKAN_HYOUKA_TABLE LocalSeeTable[] = {
   {  64, msg_hyouka_i03 },
   {  84, msg_hyouka_i04 },
   { 104, msg_hyouka_i05 },
-  { 124, msg_hyouka_i06 },
-  { 144, msg_hyouka_i07 },
-  { 164, msg_hyouka_i08 },
-  { 184, msg_hyouka_i09 },
-  { 204, msg_hyouka_i10 },
-  { 224, msg_hyouka_i11 },
-  { 239, msg_hyouka_i12 },
-  { 249, msg_hyouka_i13 },
+  { 134, msg_hyouka_i06 },
+  { 164, msg_hyouka_i07 },
+  { 194, msg_hyouka_i08 },
+  { 224, msg_hyouka_i09 },
+  { 244, msg_hyouka_i10 },
+  { 264, msg_hyouka_i11 },
+  { 284, msg_hyouka_i12 },
+  { 296, msg_hyouka_i13 },
   {   0, msg_hyouka_i13 },  //Sentinel
 };
 
@@ -1579,14 +1579,14 @@ static const ZUKAN_HYOUKA_TABLE LocalGetTable[] = {
   {  64, msg_hyouka_i18 },
   {  84, msg_hyouka_i19 },
   { 104, msg_hyouka_i20 },
-  { 124, msg_hyouka_i21 },
-  { 144, msg_hyouka_i22 },
-  { 164, msg_hyouka_i23 },
-  { 184, msg_hyouka_i24 },
-  { 204, msg_hyouka_i25 },
-  { 224, msg_hyouka_i26 },
-  { 239, msg_hyouka_i27 },
-  { 249, msg_hyouka_i28 },
+  { 134, msg_hyouka_i21 },
+  { 164, msg_hyouka_i22 },
+  { 194, msg_hyouka_i23 },
+  { 224, msg_hyouka_i24 },
+  { 244, msg_hyouka_i25 },
+  { 264, msg_hyouka_i26 },
+  { 289, msg_hyouka_i27 },
+  { 296, msg_hyouka_i28 },
   {   0, msg_hyouka_i28 },  //Sentinel
 };
 
@@ -1606,16 +1606,16 @@ static const ZUKAN_HYOUKA_TABLE GlobalGetTable[] = {
   { 599, msg_hyouka_z13 },
   { 614, msg_hyouka_z14 },
   { 629, msg_hyouka_z15 },
-  { 633, msg_hyouka_z16 },
+  { 635, msg_hyouka_z16 },
   {   0, msg_hyouka_z16 },  //Sentinel
 };
 
 static const ZUKAN_HYOUKA_TABLE LocalMeGetTable[] = {
   {  39, SEQ_ME_HYOUKA1 },
   {  99, SEQ_ME_HYOUKA2 },
-  { 149, SEQ_ME_HYOUKA3 },
-  { 199, SEQ_ME_HYOUKA4 },
-  { 249, SEQ_ME_HYOUKA5 },
+  { 159, SEQ_ME_HYOUKA3 },
+  { 229, SEQ_ME_HYOUKA4 },
+  { 296, SEQ_ME_HYOUKA5 },
   {   0, SEQ_ME_HYOUKA6 },  //Sentinel
 };
 
@@ -1624,7 +1624,7 @@ static const ZUKAN_HYOUKA_TABLE GlobalMeGetTable[] = {
   { 349, SEQ_ME_HYOUKA2 },
   { 449, SEQ_ME_HYOUKA3 },
   { 549, SEQ_ME_HYOUKA4 },
-  { 633, SEQ_ME_HYOUKA5 },
+  { 635, SEQ_ME_HYOUKA5 },
   {   0, SEQ_ME_HYOUKA6 },  //Sentinel
 };
 
