@@ -447,8 +447,8 @@ static GMEVENT_RESULT SmokeMoveEvt( GMEVENT* event, int* seq, void* work );
 #define TERAKION_POS_Z  ( 248 << FX32_SHIFT )
 
 // ケルディオ演出イベント関係
-#define KERUDHIO_EFFECT_WAIT    (120)     // 気合のエフェクト表示フレーム数
-#define KERUDHIO_DELETE_WAIT    (40)      // 3匹同時に消えるまでの表示フレーム数
+#define KERUDHIO_EFFECT_WAIT    (60)     // 気合のエフェクト表示フレーム数
+#define KERUDHIO_DELETE_WAIT    (20)      // 3匹同時に消えるまでの表示フレーム数
 
 // アニメの並び順(0オリジン)
 enum{
