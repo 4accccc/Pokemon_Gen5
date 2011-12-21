@@ -280,7 +280,7 @@ static BOOL SearchEventPoke( POKEPARTY* party,
     }
     rc = TRUE;
     *outPos = i;
-    NOZOMU_Printf("対象ポケモン発見　位置%d\n",i);
+    ICHI_Printf("対象ポケモン発見　位置%d\n",i);
     break;
   }
   return rc;

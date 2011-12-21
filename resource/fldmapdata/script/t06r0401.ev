@@ -34,17 +34,26 @@ DEFINE_LOCAL  target_poke_pos     // 配布ケルディオの場所
 EVENT_START   ev_bg_t06r0401_kerudhio
 {
 
-  _TALK_START_SE_PLAY()
-
   // BG:がんばんに　３ぼんの　するどく　みごとな　さけめが　きざまれている
-  _BGWIN_MSG( msg_t06r0401_cliff_01, TYPE_INFO )
+  _EASY_BGWIN_MSG( msg_t06r0401_cliff_01, TYPE_INFO )
 
   // 条件を満たすケルディオがいるかチェック
-  _GET_EVT_POKE_POS( MONSNO_654, TRUE, target_poke_pos, SCWK_ANSWER )
+  _GET_EVT_POKE_POS( MONSNO_654, FALSE, target_poke_pos, SCWK_ANSWER )
+
+  // 条件をみたしている場合
+  // フォルムが0かチェック
+  IF $SCWK_ANSWER == TRUE THEN
+    DEFINE_LOCAL form_no
+    // フォルムナンバー取得
+    _GET_PARTY_POKE_FORMNO( form_no, target_poke_pos )
+    // フォルムが0以外なら条件を満たさない
+    IF $form_no != 0 THEN
+      $SCWK_ANSWER = FALSE  // 条件を満たさないことにする
+    ENDIF
+  ENDIF
+
   // いる
   IF $SCWK_ANSWER == TRUE THEN
-
-    _BGWIN_CLOSE()
 
     _TEMOTI_NICK_NAME( 0, target_poke_pos )
     // SYS:○○が　でたがっているようだ そとに　だしてあげますか？
@@ -70,8 +79,6 @@ EVENT_START   ev_bg_t06r0401_kerudhio
 
   ELSE
   // いない
-    _LAST_KEYWAIT()
-    _BGWIN_CLOSE()
     // イベント終了
   ENDIF
 }
@@ -109,11 +116,11 @@ func_kerudhio_main:
     // SYS:しんぴのつるぎを　おもいだした！
     _SYSWIN_MSG( msg_t06r0401_cliff_04, POS_DOWN )
 
-    //【仮】技思い出し処理
+    //技思い出し処理
     $SCWK_PARAM0 = $target_poke_pos
     $SCWK_PARAM1 = WAZANO_SINPINOTURUGI
-    //技覚えシーケンス SCWK_ANSWER=TRUEで覚えた
-    _CHG_COMMON_SCR SCRID_SKILL_LEARN
+    //技おもいだしシーケンス SCWK_ANSWER=TRUEで覚えた
+    _CALL func_skill_remember
 
     // 覚えたかチェック
     IF $SCWK_ANSWER == TRUE THEN
@@ -208,8 +215,137 @@ func_form_change:
 
   // SYS:かくごを　きめた　すがたに　なった！
   _SYSWIN_MSG( msg_t06r0401_cliff_12, POS_DOWN )
+  _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
 }
 _RET
+//-----------------------------------------------------------------------------
+// わざおもいだしルーチン
+// 
+// skill_teach_scr.evを参考
+// 
+// @param SCWK_PARAM0   選択したポケモンの位置
+// @param SCWK_PARAM1   おもいだすわざのID
+//
+// @return SCWK_ANSWER  TRUEでおもいだした
+//-----------------------------------------------------------------------------
+{
+  DEFINE_LOCAL select_pos	        // 選択ポケモン
+  DEFINE_LOCAL teach_waza_id
+	DEFINE_LOCAL waza_pos	// 選択技
+	DEFINE_LOCAL waza_id	// 技番号
+	DEFINE_LOCAL loop_flag	// 技ループ処理監視
+	DEFINE_LOCAL user_result	// 
 
+func_skill_remember:
+  
+  $select_pos     = $SCWK_PARAM0
+  $teach_waza_id  = $SCWK_PARAM1
+
+  // わざの数取得
+  _GET_TEMOTI_WAZA_NUM( SCWK_ANSWER, select_pos )
+
+  // わざが空いているのでそのまま設定
+  IF $SCWK_ANSWER != 4 THEN 
+
+    _TEMOTI_NICK_NAME( 0, select_pos )
+    _ME_PLAY( SEQ_ME_LVUP )
+    //"○○はしんぴのつるぎを思い出した！"
+    _SYSWIN_MSG( msg_t06r0401_cliff_10 , POS_DEFAULT )
+    _ME_WAIT()
+    _SYSWIN_CLOSE()
+
+    _SET_TEMOTI_WAZA( select_pos , SCWK_ANSWER , teach_waza_id )
+
+    // おもいだした
+    $SCWK_ANSWER = TRUE
+
+    _RET
+  ENDIF
+
+  // どれをわすれる？
+  $loop_flag = TRUE
+  WHILE $loop_flag == TRUE
+
+    _CALL   sub_skillteacher_wasure_core
+
+    IF $user_result == TRUE THEN
+      $SCWK_ANSWER = TRUE
+      $loop_flag = FALSE
+    ELSE
+
+      _CALL   sub_skillteacher_wasure_ask_retire
+      IF $user_result == TRUE THEN
+        $SCWK_ANSWER = FALSE
+        $loop_flag = FALSE
+      ENDIF
+
+    ENDIF
+
+  ENDWHILE
+
+_RET
+
+/**************************************************************/
+/**************************************************************/
+sub_skillteacher_wasure_ask_retire:
+  //"それでは　しんぴのつるぎをおもいだすのをあきらめますか？"
+  _SYSWIN_MSG( msg_t06r0401_cliff_06, POS_DEFAULT )
+  _YES_NO_WIN( SCWK_ANSWER )
+
+  IF $SCWK_ANSWER == SCR_YES THEN
+    //"～は　しんぴのつるぎを　おもいださなかった！"
+    _TEMOTI_NICK_NAME( 0, select_pos )
+    _SYSWIN_MSG( msg_t06r0401_cliff_07 , POS_DEFAULT )
+    $user_result = TRUE //終了
+    _RET
+  ENDIF
+
+  $user_result = FALSE //継続
+  _RET
+
+/**************************************************************/
+/**************************************************************/
+sub_skillteacher_wasure_core:
+    $user_result = FALSE
+
+		//"○○はすでにわざを４つおぼえている　わざをわすれさせますか？"
+    _TEMOTI_NICK_NAME( 0, select_pos )
+		_SYSWIN_MSG( msg_t06r0401_cliff_05 , POS_DEFAULT )
+    _YES_NO_WIN( SCWK_ANSWER )
+    IF $SCWK_ANSWER == SCR_NO THEN
+      _RET
+    ENDIF
+    
+    _SYSWIN_CLOSE()
+    _SELECT_WAZA_TEMOTI_POKE( SCWK_ANSWER , waza_pos , select_pos , teach_waza_id )
+    IF $SCWK_ANSWER == FALSE THEN
+      _RET
+    ENDIF
+
+    _GET_TEMOTI_WAZA_ID( waza_id , select_pos , waza_pos )
+    _WAZA_NAME( 1 , waza_id )
+    //"～をわすれさせて　よろしいですね？"
+    _SYSWIN_MSG( msg_t06r0401_cliff_08, POS_DEFAULT )
+    _YES_NO_WIN( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_NO THEN
+      _RET
+    ENDIF
+    
+    _GET_TEMOTI_WAZA_ID( waza_id , select_pos , waza_pos )
+    _TEMOTI_NICK_NAME( 0, select_pos )
+    _WAZA_NAME( 1 , waza_id )
+    //"1　２　のポカン！"
+    _SYSWIN_MSG( msg_t06r0401_cliff_09 , POS_DEFAULT )
+    _SYSWIN_MSG( msg_t06r0401_cliff_10 , POS_DEFAULT )
+    _ME_PLAY( SEQ_ME_LVUP )
+    _ME_WAIT()
+
+    _SYSWIN_CLOSE()
+    
+    _SET_TEMOTI_WAZA( select_pos , waza_pos , teach_waza_id )
+    $user_result = TRUE
+    _RET
+}
 
