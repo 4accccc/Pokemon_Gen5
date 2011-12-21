@@ -3182,13 +3182,14 @@ GIRL2</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
+・「…」をベルの頭上に表示
 ・メッセージ後、ベル、ライバルに隣接
 　（図鑑をあげている様子）
 ・アニメ後、主人公、自由行動可能
 　レポートタイミングとして設定</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T12:49:08" />
+				Time="2011-12-21T10:32:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
