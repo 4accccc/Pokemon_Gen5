@@ -903,7 +903,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_infinity_dungeon_field.c \
         field/scrcmd_wbt_st.c \
         field/scrcmd_un.c \
-        field/medal_common.c
+        field/medal_common.c \
+        field/kerudhio_normalform.c
 
 # デバッグメニュー並列化  ジャンプ系
 #===> SRCS_OVERLAY_FIELDMAP

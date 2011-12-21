@@ -16,6 +16,8 @@
 #include "system/net_err.h"
 #include "field_data.h"   //FIELDDATA_GetFieldHeapSize
 
+#include "kerudhio_normalform.h"  //KERUDHIO_FORM_ChangeNormal
+
 //======================================================================
 //	define
 //======================================================================
@@ -122,6 +124,8 @@ static GFL_PROC_RESULT FieldMapProcInit
         }
       }
     }
+    //swan追加
+    KERUDHIO_FORM_ChangeNormal( gsys );
   	return GFL_PROC_RES_FINISH;
   }
   
@@ -171,6 +175,9 @@ static GFL_PROC_RESULT FieldMapProcEnd
   GFL_HEAP_DeleteHeap( HEAPID_FLD3DCUTIN ); //フィールド3Ｄカットインヒープ解放
 	GFL_HEAP_DeleteHeap( HEAPID_FIELD_SUBSCREEN );
 	GFL_HEAP_DeleteHeap( HEAPID_FIELDMAP );
+
+  //swan追加
+  KERUDHIO_FORM_ChangeNormal( gsys );
 
 	return GFL_PROC_RES_FINISH;
 }
