@@ -39,13 +39,13 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="MDL_EXP_FIELD_001"
+		Label="MDL_EXP_SPECIAL_002"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンセンターで　ポケモンを
-なんども　やすませた　やさしい
-トレーナーに　おくられる　メダル。</Text>
+			<Text>メダルラリーに　さんかし　いっていの
+せいせきを　おさめ　ゴールインした
+きねんとなる　メダル。</Text>
 			<TextModifiedBy
 				User="ichiraku_katsuhiko:W00271"
 				Time="2011-10-12T14:08:08" />
@@ -56,9 +56,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンセンターで　ポケモンを
-何度も　休ませた　優しい
-トレーナーに　贈られる　メダル。</Text>
+			<Text>メダルラリーに　参加し　一定の
+成績を　修め　ゴールインした
+記念となる　メダル。</Text>
 			<TextModifiedBy
 				User="ichiraku_katsuhiko:W00271"
 				Time="2011-10-12T14:08:08" />
@@ -66,6 +66,228 @@
 			<StatusModifiedBy
 				User="ichiraku_katsuhiko:W00271"
 				Time="2011-10-12T14:08:08" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MDL_EXP_SPECIAL_003"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>メダルラリーで　どりょくを　かさね
+ルーキーランクに　ランクアップした
+きねんとなる　メダル。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メダルラリーで　努力を　重ね
+ルーキーランクに　ランクアップした
+記念となる　メダル。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MDL_EXP_SPECIAL_004"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>メダルラリーで　どりょくを　かさね
+エリートランクに　ランクアップした
+きねんとなる　メダル。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メダルラリーで　努力を　重ね
+エリートランクに　ランクアップした
+記念となる　メダル。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MDL_EXP_SPECIAL_005"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>メダルラリーで　どりょくを　かさね
+マスターランクに　ランクアップした
+きねんとなる　メダル。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メダルラリーで　努力を　重ね
+マスターランクに　ランクアップした
+記念となる　メダル。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MDL_EXP_SPECIAL_006"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>メダルラリーで　どりょくを　かさね
+レジェンドランクに　ランクアップした
+きねんとなる　メダル。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>メダルラリーで　努力を　重ね
+レジェンドランクに　ランクアップした
+記念となる　メダル。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MDL_EXP_SPECIAL_007"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>すべての　メダルを　あつめ
+メダリストの　ちょうてんに　たった
+えいよの　あかしの　メダル。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>すべての　メダルを　集め
+メダリストの　頂点に　立った
+栄誉の　証しの　メダル。</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>216</Text>
+			<TextModifiedBy
+				User="ichiraku_katsuhiko:W00271"
+				Time="2011-10-12T14:08:08" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="MDL_EXP_FIELD_001"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>イッシュの　だいちを　５０００かい
+ふみしめた　そこそこの
+けんきゃくを　たたえる　メダル。</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>イッシュの　大地を　５０００回
+踏みしめた　そこそこの
+健脚を　称える　メダル。</Text>
+			<TextModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -80,29 +302,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レポートを　１０かい　かいた
-ういういしい　たびの　きろくを
-ひょうかする　メダル。</Text>
+			<Text>イッシュの　だいちを　１００００かい
+ふみしめた　なかなかの
+けんきゃくを　たたえる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レポートを　１０回　書いた
-初々しい　旅の記録を
-評価する　メダル。</Text>
+			<Text>イッシュの　大地を　１００００回
+踏みしめた　なかなかの
+健脚を　称える　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -117,29 +339,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レポートを　２０かい　かいた
-けっき　さかんな　たびの　きろくを
-ひょうかする　メダル。</Text>
+			<Text>イッシュの　だいちを　２００００かい
+ふみしめた　かなりの
+けんきゃくを　たたえる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-22T01:23:49" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-22T01:23:49" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レポートを　２０回　書いた
-血気盛んな　旅の記録を
-評価する　メダル。</Text>
+			<Text>イッシュの　大地を　２００００回
+踏みしめた　かなりの
+健脚を　称える　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-22T01:23:49" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-22T01:23:49" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -154,29 +376,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レポートを　５０かい　かいた
-じゅんちょうな　たびの　きろくを
-ひょうかする　メダル。</Text>
+			<Text>イッシュの　だいちを　１０００００かい
+ふみしめた　きゅうきょくの
+けんきゃくを　たたえる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-22T01:23:49" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-22T01:23:49" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レポートを　５０回　書いた
-順調な　旅の記録を
-評価する　メダル。</Text>
+			<Text>イッシュの　大地を　１０００００回
+踏みしめた　究極の
+健脚を　称える　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-22T01:23:49" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-22T01:23:49" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -191,29 +413,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>レポートを　１００かい　かいた
-おどろくべき　たびの　きろくを
+			<Text>レポートを　１０かい　かいた
+ういういしい　たびの　きろくを
 ひょうかする　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-22T01:23:49" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-22T01:23:49" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>レポートを　１００回　書いた
-驚くべき　旅の記録を
+			<Text>レポートを　１０回　書いた
+初々しい　旅の記録を
 評価する　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-22T01:23:49" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-22T01:23:49" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -228,29 +450,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュの　だいちを　５０００かい
-ふみしめた　そこそこの
-けんきゃくを　たたえる　メダル。</Text>
+			<Text>レポートを　２０かい　かいた
+けっき　さかんな　たびの　きろくを
+ひょうかする　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-18T11:42:48" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-18T11:42:48" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュの　大地を　５０００回
-踏みしめた　そこそこの
-健脚を　称える　メダル。</Text>
+			<Text>レポートを　２０回　書いた
+血気盛んな　旅の記録を
+評価する　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-18T11:42:48" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-18T11:42:48" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -265,29 +487,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュの　だいちを　１００００かい
-ふみしめた　なかなかの
-けんきゃくを　たたえる　メダル。</Text>
+			<Text>レポートを　５０かい　かいた
+じゅんちょうな　たびの　きろくを
+ひょうかする　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-18T11:42:48" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-18T11:42:48" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュの　大地を　１００００回
-踏みしめた　なかなかの
-健脚を　称える　メダル。</Text>
+			<Text>レポートを　５０回　書いた
+順調な　旅の記録を
+評価する　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-18T11:42:48" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-18T11:42:48" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -302,29 +524,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュの　だいちを　２００００かい
-ふみしめた　かなりの
-けんきゃくを　たたえる　メダル。</Text>
+			<Text>レポートを　１００かい　かいた
+おどろくべき　たびの　きろくを
+ひょうかする　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-18T11:42:48" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-18T11:42:48" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュの　大地を　２００００回
-踏みしめた　かなりの
-健脚を　称える　メダル。</Text>
+			<Text>レポートを　１００回　書いた
+驚くべき　旅の記録を
+評価する　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-18T11:42:48" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-18T11:42:48" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -339,29 +561,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュの　だいちを　１０００００かい
-ふみしめた　きゅうきょくの
-けんきゃくを　たたえる　メダル。</Text>
+			<Text>ポケモンセンターで　ポケモンを
+なんども　やすませた　やさしい
+トレーナーに　おくられる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュの　大地を　１０００００回
-踏みしめた　究極の
-健脚を　称える　メダル。</Text>
+			<Text>ポケモンセンターで　ポケモンを
+何度も　休ませた　優しい
+トレーナーに　贈られる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -376,29 +598,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンの　タマゴを　はじめて
-ふかさせた　めばえたての
-ぼせいの　あかしとなる　メダル。</Text>
+			<Text>５かしょの　おとくな　けいじばんを
+みた　じょうほうしゅうしゅうに
+ねっしんな　ひとのための　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　タマゴを　初めて
-ふかさせた　芽生えたての
-母性の　証しとなる　メダル。</Text>
+			<Text>５箇所の　お得な　掲示板を　見た
+情報収集に　熱心な
+人のための　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -413,29 +635,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンの　タマゴを　１０かい
-ふかさせた　それなりの
-ぼせいの　あかしとなる　メダル。</Text>
+			<Text>２０かしょの　おとくな　けいじばんを
+みた　じょうほうしゅうしゅうを
+きわめた　ひとのための　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　タマゴを　１０回
-ふかさせた　それなりの
-母性の　証しとなる　メダル。</Text>
+			<Text>２０箇所の　お得な　掲示板を　見た
+情報収集を　極めた
+人のための　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -450,29 +672,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンの　タマゴを　５０かい
-ふかさせた　ぐんをぬく
-ぼせいの　あかしとなる　メダル。</Text>
+			<Text>かんばんの　うらの
+ラクガキも　みのがさない
+どうさつりょくを　みとめる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　タマゴを　５０回
-ふかさせた　群を抜く
-母性の　証しとなる　メダル。</Text>
+			<Text>看板の　裏の
+ラクガキも　見逃さない
+洞察力を　認める　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -487,29 +709,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンの　タマゴを　１００かい
-ふかさせた　そこなしの
-ぼせいの　あかしとなる　メダル。</Text>
+			<Text>じてんしゃに　はじめて　のった
+かけだしの　じてんしゃのりに
+おくられる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　タマゴを　１００回
-ふかさせた　底なしの
-母性の　証しとなる　メダル。</Text>
+			<Text>じてんしゃに　初めて　乗った
+駆け出しの　自転車乗りに
+贈られる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -524,29 +746,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じてんしゃに　はじめて　のった
-かけだしの　じてんしゃのりに
+			<Text>じてんしゃに　３０かい　のった
+さっそうとした　じてんしゃのりに
 おくられる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じてんしゃに　初めて　乗った
-駆け出しの　自転車乗りに
+			<Text>じてんしゃに　３０回　乗った
+さっそうとした　自転車乗りに
 贈られる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -561,29 +783,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じてんしゃに　３０かい　のった
-さっそうとした　じてんしゃのりに
+			<Text>じてんしゃに　１００かい　のった
+のりに　のっている　じてんしゃのりに
 おくられる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-26T06:23:51" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-26T06:23:51" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じてんしゃに　３０回　乗った
-さっそうとした　自転車乗りに
+			<Text>じてんしゃに　１００回　乗った
+のりに　のっている　自転車乗りに
 贈られる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-26T06:23:51" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-26T06:23:51" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -598,29 +820,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じてんしゃに　１００かい　のった
-のりに　のっている　じてんしゃのりに
-おくられる　メダル。</Text>
+			<Text>じてんしゃに　５００かい　のった
+てんちをゆるがす　じてんしゃのりに
+おくられる　おくられる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-26T06:23:51" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-26T06:23:51" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じてんしゃに　１００回　乗った
-のりに　のっている　自転車乗りに
+			<Text>じてんしゃに　５００回　乗った
+天地を揺るがす　自転車乗りに
 贈られる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-26T06:23:51" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-26T06:23:51" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -635,29 +857,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じてんしゃに　５００かい　のった
-てんちをゆるがす　じてんしゃのりに
-おくられる　おくられる　メダル。</Text>
+			<Text>ポケモンを　はじめて　つりあげた
+しょしんしゃの　つりびとに
+さずけられる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-26T06:23:51" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-26T06:23:51" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じてんしゃに　５００回　乗った
-天地を揺るがす　自転車乗りに
-贈られる　メダル。</Text>
+			<Text>ポケモンを　初めて　釣り上げた
+初心者の　釣り人に
+授けられる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-26T06:23:51" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-26T06:23:51" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -672,29 +894,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンを　はじめて　つりあげた
-しょしんしゃの　つりびとに
+			<Text>ポケモンを　１０ひき　つりあげた
+たしなむ　ていどの　つりびとに
 さずけられる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンを　初めて　釣り上げた
-初心者の　釣り人に
+			<Text>ポケモンを　１０匹　釣り上げた
+たしなむ　程度の　釣り人に
 授けられる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -709,29 +931,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンを　１０ひき　つりあげた
-たしなむ　ていどの　つりびとに
+			<Text>ポケモンを　５０ひき　つりあげた
+じゅくたつした　つりびとに
 さずけられる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンを　１０匹　釣り上げた
-たしなむ　程度の　釣り人に
+			<Text>ポケモンを　５０匹　釣り上げた
+熟達した　釣り人に
 授けられる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -746,29 +968,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンを　５０ひき　つりあげた
-じゅくたつした　つりびとに
+			<Text>ポケモンを　１００ひき　つりあげた
+でんせつてきな　つりびとに
 さずけられる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンを　５０匹　釣り上げた
-熟達した　釣り人に
+			<Text>ポケモンを　１００匹　釣り上げた
+伝説的な　釣り人に
 授けられる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -783,29 +1005,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンを　１００ひき　つりあげた
-でんせつてきな　つりびとに
-さずけられる　メダル。</Text>
+			<Text>イッシュずかんの　ノーマルポケモンを
+すべて　つかまえた
+きねんとなる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンを　１００匹　釣り上げた
-伝説的な　釣り人に
-授けられる　メダル。</Text>
+			<Text>イッシュ図鑑の　ノーマルポケモンを
+すべて　捕まえた
+記念となる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -820,29 +1042,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュずかんの　ノーマルポケモンを
+			<Text>イッシュずかんの　ほのおポケモンを
 すべて　つかまえた
 きねんとなる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ図鑑の　ノーマルポケモンを
+			<Text>イッシュ図鑑の　ほのおポケモンを
 すべて　捕まえた
 記念となる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -857,29 +1079,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュずかんの　ほのおポケモンを
+			<Text>イッシュずかんの　みずポケモンを
 すべて　つかまえた
 きねんとなる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ図鑑の　ほのおポケモンを
+			<Text>イッシュ図鑑の　みずポケモンを
 すべて　捕まえた
 記念となる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -894,29 +1116,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュずかんの　みずポケモンを
+			<Text>イッシュずかんの　でんきポケモンを
 すべて　つかまえた
 きねんとなる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ図鑑の　みずポケモンを
+			<Text>イッシュ図鑑の　でんきポケモンを
 すべて　捕まえた
 記念となる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -931,29 +1153,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュずかんの　でんきポケモンを
+			<Text>イッシュずかんの　くさポケモンを
 すべて　つかまえた
 きねんとなる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ図鑑の　でんきポケモンを
+			<Text>イッシュ図鑑の　くさポケモンを
 すべて　捕まえた
 記念となる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -968,29 +1190,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュずかんの　くさポケモンを
+			<Text>イッシュずかんの　こおりポケモンを
 すべて　つかまえた
 きねんとなる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ図鑑の　くさポケモンを
+			<Text>イッシュ図鑑の　こおりポケモンを
 すべて　捕まえた
 記念となる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1005,29 +1227,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュずかんの　こおりポケモンを
+			<Text>イッシュずかんの　かくとうポケモンを
 すべて　つかまえた
 きねんとなる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ図鑑の　こおりポケモンを
+			<Text>イッシュ図鑑の　かくとうポケモンを
 すべて　捕まえた
 記念となる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1042,29 +1264,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュずかんの　かくとうポケモンを
+			<Text>イッシュずかんの　どくポケモンを
 すべて　つかまえた
 きねんとなる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ図鑑の　かくとうポケモンを
+			<Text>イッシュ図鑑の　どくポケモンを
 すべて　捕まえた
 記念となる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1079,29 +1301,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュずかんの　どくポケモンを
+			<Text>イッシュずかんの　じめんポケモンを
 すべて　つかまえた
 きねんとなる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ図鑑の　どくポケモンを
+			<Text>イッシュ図鑑の　じめんポケモンを
 すべて　捕まえた
 記念となる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1116,29 +1338,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュずかんの　じめんポケモンを
+			<Text>イッシュずかんの　ひこうポケモンを
 すべて　つかまえた
 きねんとなる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ図鑑の　じめんポケモンを
+			<Text>イッシュ図鑑の　ひこうポケモンを
 すべて　捕まえた
 記念となる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1153,29 +1375,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュずかんの　ひこうポケモンを
+			<Text>イッシュずかんの　エスパーポケモンを
 すべて　つかまえた
 きねんとなる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ図鑑の　ひこうポケモンを
+			<Text>イッシュ図鑑の　エスパーポケモンを
 すべて　捕まえた
 記念となる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1190,29 +1412,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュずかんの　エスパーポケモンを
+			<Text>イッシュずかんの　むしポケモンを
 すべて　つかまえた
 きねんとなる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ図鑑の　エスパーポケモンを
+			<Text>イッシュ図鑑の　むしポケモンを
 すべて　捕まえた
 記念となる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1227,29 +1449,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュずかんの　むしポケモンを
+			<Text>イッシュずかんの　いわポケモンを
 すべて　つかまえた
 きねんとなる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ図鑑の　むしポケモンを
+			<Text>イッシュ図鑑の　いわポケモンを
 すべて　捕まえた
 記念となる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1264,29 +1486,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュずかんの　いわポケモンを
+			<Text>イッシュずかんの　ゴーストポケモンを
 すべて　つかまえた
 きねんとなる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ図鑑の　いわポケモンを
+			<Text>イッシュ図鑑の　ゴーストポケモンを
 すべて　捕まえた
 記念となる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1301,29 +1523,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュずかんの　ゴーストポケモンを
+			<Text>イッシュずかんの　ドラゴンポケモンを
 すべて　つかまえた
 きねんとなる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ図鑑の　ゴーストポケモンを
+			<Text>イッシュ図鑑の　ドラゴンポケモンを
 すべて　捕まえた
 記念となる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1338,29 +1560,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュずかんの　ドラゴンポケモンを
+			<Text>イッシュずかんの　あくポケモンを
 すべて　つかまえた
 きねんとなる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ図鑑の　ドラゴンポケモンを
+			<Text>イッシュ図鑑の　あくポケモンを
 すべて　捕まえた
 記念となる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1375,29 +1597,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュずかんの　あくポケモンを
+			<Text>イッシュずかんの　はがねポケモンを
 すべて　つかまえた
 きねんとなる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ図鑑の　あくポケモンを
+			<Text>イッシュ図鑑の　はがねポケモンを
 すべて　捕まえた
 記念となる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1412,29 +1634,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュずかんの　はがねポケモンを
-すべて　つかまえた
-きねんとなる　メダル。</Text>
+			<Text>イッシュずかんを　かんせいし
+ディレクターから　しょうじょうを
+もらった　きねんとなる　メダル。</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ図鑑の　はがねポケモンを
-すべて　捕まえた
-記念となる　メダル。</Text>
+			<Text>イッシュ図鑑を　完成し
+ディレクターから　賞状を
+もらった　記念となる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1449,29 +1671,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュずかんを　かんせいし
+			<Text>ぜんこくずかんを　かんせいし
 ディレクターから　しょうじょうを
 もらった　きねんとなる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T06:24:53" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T06:24:53" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ図鑑を　完成し
+			<Text>全国図鑑を　完成し
 ディレクターから　賞状を
 もらった　記念となる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T06:24:53" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T06:24:53" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1486,29 +1708,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぜんこくずかんを　かんせいし
-ディレクターから　しょうじょうを
-もらった　きねんとなる　メダル。</Text>
+			<Text>ボックスに　３０ひきの　ポケモンを
+あずけている　かけだしの
+トレーナーに　あたえられる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T06:24:53" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T06:24:53" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>全国図鑑を　完成し
-ディレクターから　賞状を
-もらった　記念となる　メダル。</Text>
+			<Text>ボックスに　３０匹の　ポケモンを
+預けている　駆け出しの
+トレーナーに　与えられる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T06:24:53" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T06:24:53" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1523,29 +1745,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１にちの　うちに　５０ひき　もの
-ポケモンを　つかまえた
-ほかくの　きろくの　メダル。</Text>
+			<Text>ボックスに　１２０ひきの　ポケモンを
+あずけている　うでのたつ
+トレーナーに　あたえられる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１日の　うちに　５０匹　もの
-ポケモンを　捕まえた
-捕獲の　記録の　メダル。</Text>
+			<Text>ボックスに　１２０匹の　ポケモンを
+預けている　腕の立つ
+トレーナーに　与えられる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1560,29 +1782,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じどうはんばいきで　のみものを
-１０ほんいじょう　かった
-ドリンクずきの　ための　メダル。</Text>
+			<Text>ボックスに　３６０ひきの　ポケモンを
+あずけている　すごうでの
+トレーナーに　あたえられる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>自動販売機で　飲み物を
-１０本以上　買った
-ドリンク好きの　ための　メダル。</Text>
+			<Text>ボックスに　３６０匹の　ポケモンを
+預けている　スゴ腕の
+トレーナーに　与えられる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1597,29 +1819,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>じどうはんばいきで
-『あたり』を　だした　ラッキーな
-ひとの　ための　メダル。</Text>
+			<Text>ボックスに　はいりきらない　ほどの
+ポケモンを　つかまえた　うつわの
+おおきさを　たたえる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>自動販売機で
-『当たり』を　出した
-ラッキーな　人のための　メダル。</Text>
+			<Text>ボックスに　入りきらない程の
+ポケモンを　捕まえた
+器の　大きさを　称える　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1634,29 +1856,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カナワタウンで　すべての
-しゃりょうの　せつめいを　きいた
-でんしゃずきの　ための　メダル。</Text>
+			<Text>１にちの　うちに　５０ひき　もの
+ポケモンを　つかまえた
+ほかくの　きろくの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カナワタウンで　すべての
-車両の　説明を　聞いた
-電車好きの　ための　メダル。</Text>
+			<Text>１日の　うちに　５０匹　もの
+ポケモンを　捕まえた
+捕獲の　記録の　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1671,29 +1893,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>イッシュちほうの　すべての　はしに
-もれなく　おとずれた
-はしずきの　ための　メダル。</Text>
+			<Text>じどうはんばいきで　のみものを
+１０ほんいじょう　かった
+ドリンクずきの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>イッシュ地方の　すべての　橋に
-もれなく　訪れた
-橋好きの　ための　メダル。</Text>
+			<Text>自動販売機で　飲み物を
+１０本以上　買った
+ドリンク好きの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1708,29 +1930,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンを　はじめて　しんかさせた
-しょうらい　ゆうぼうな
-いくせいじょうずの　ための　メダル。</Text>
+			<Text>じどうはんばいきで
+『あたり』を　だした　ラッキーな
+ひとの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンを　初めて　進化させた
-将来　有望な
-育成上手の　ための　メダル。</Text>
+			<Text>自動販売機で
+『当たり』を　出した
+ラッキーな　人のための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1745,29 +1967,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンを　１０かい　しんかさせた
-ポケモンブリーダーも　みとめる
+			<Text>ポケモンを　はじめて　しんかさせた
+しょうらい　ゆうぼうな
 いくせいじょうずの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンを　１０回　進化させた
-ポケモンブリーダーも　認める
+			<Text>ポケモンを　初めて　進化させた
+将来　有望な
 育成上手の　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1782,29 +2004,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンを　５０かい　しんかさせた
-そだてやじいさんも　おどろく
+			<Text>ポケモンを　１０かい　しんかさせた
+ポケモンブリーダーも　みとめる
 いくせいじょうずの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンを　５０回　進化させた
-育て屋じいさんも　驚く
+			<Text>ポケモンを　１０回　進化させた
+ポケモンブリーダーも　認める
 育成上手の　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1819,29 +2041,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンを　１００かい　しんかさせた
-ポケモンはかせも　どぎもをぬく
+			<Text>ポケモンを　５０かい　しんかさせた
+そだてやじいさんも　おどろく
 いくせいじょうずの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンを　１００回　進化させた
-ポケモン博士も　度肝を抜く
+			<Text>ポケモンを　５０回　進化させた
+育て屋じいさんも　驚く
 育成上手の　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1856,29 +2078,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そらをとぶを　じざいに　つかい
-イッシュのそらを　じゅうおうむじんに
-またにかけた　あかしの　メダル。</Text>
+			<Text>ポケモンを　１００かい　しんかさせた
+ポケモンはかせも　どぎもをぬく
+いくせいじょうずの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そらをとぶを　自在に　使い
-イッシュの空を　縦横無尽に
-またにかけた　証しの　メダル。</Text>
+			<Text>ポケモンを　１００回　進化させた
+ポケモン博士も　度肝を抜く
+育成上手の　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1893,29 +2115,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ぞんぶんに　かいりきを　はっきし
-じゃまな　いわを　たくさん　どかせた
-ちからづよさを　たたえる　メダル。</Text>
+			<Text>そらをとぶを　じざいに　つかい
+イッシュのそらを　じゅうおうむじんに
+またにかけた　あかしの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>存分に　かいりきを　発揮し
-邪魔な　岩を　たくさん　どかせた
-力強さを　称える　メダル。</Text>
+			<Text>そらをとぶを　自在に　使い
+イッシュの空を　縦横無尽に
+またにかけた　証しの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1930,29 +2152,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カラッポだと　わかっていても
-こりずに　ゴミばこを　しらべた
-ものずきの　ための　メダル。</Text>
+			<Text>ぞんぶんに　かいりきを　はっきし
+じゃまな　いわを　たくさん　どかせた
+ちからづよさを　たたえる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カラッポだと　わかっていても
-こりずに　ゴミ箱を　調べた
-物好きの　ための　メダル。</Text>
+			<Text>存分に　かいりきを　発揮し
+邪魔な　岩を　たくさん　どかせた
+力強さを　称える　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1967,29 +2189,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>めに　みえない　かくされた
-どうぐを　はじめて　みつけた
-かんさつがんを　たたえるメダル。</Text>
+			<Text>カラッポだと　わかっていても
+こりずに　ゴミばこを　しらべた
+ものずきの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T08:17:18" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T08:17:18" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>目に　見えない　隠された
-道具を　初めて　見つけた
-観察眼を　称えるメダル。</Text>
+			<Text>カラッポだと　わかっていても
+こりずに　ゴミ箱を　調べた
+物好きの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T08:17:18" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T08:17:18" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2005,28 +2227,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>めに　みえない　かくされた
-どうぐを　１０こ　みつけた
+どうぐを　はじめて　みつけた
 かんさつがんを　たたえるメダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T08:17:18" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T08:17:18" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>目に　見えない　隠された
-道具を　１０個　見つけた
+道具を　初めて　見つけた
 観察眼を　称えるメダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T08:17:18" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T08:17:18" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2042,28 +2264,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>めに　みえない　かくされた
-どうぐを　５０こ　みつけた
+どうぐを　１０こ　みつけた
 かんさつがんを　たたえるメダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T08:17:18" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T08:17:18" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>目に　見えない　隠された
-道具を　５０個　見つけた
+道具を　１０個　見つけた
 観察眼を　称えるメダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T08:17:18" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T08:17:18" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2078,29 +2300,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かくされた　どうぐを
-１５０こも　みつけた　まれにみる
+			<Text>めに　みえない　かくされた
+どうぐを　５０こ　みつけた
 かんさつがんを　たたえるメダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T08:17:18" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T08:17:18" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>隠された　道具を
-１５０個も　見つけた　希に見る
+			<Text>目に　見えない　隠された
+道具を　５０個　見つけた
 観察眼を　称えるメダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T08:17:18" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T08:17:18" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2115,29 +2337,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>５かしょの　おとくな　けいじばんを
-みた　じょうほうしゅうしゅうに
-ねっしんな　ひとのための　メダル。</Text>
+			<Text>かくされた　どうぐを
+１５０こも　みつけた　まれにみる
+かんさつがんを　たたえるメダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>５箇所の　お得な　掲示板を　見た
-情報収集に　熱心な
-人のための　メダル。</Text>
+			<Text>隠された　道具を
+１５０個も　見つけた　希に見る
+観察眼を　称えるメダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2152,29 +2374,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>２０かしょの　おとくな　けいじばんを
-みた　じょうほうしゅうしゅうを
-きわめた　ひとのための　メダル。</Text>
+			<Text>たくさんの　ポケモンの
+ニックネームを　かんがえた
+なづけおやに　あたえられる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２０箇所の　お得な　掲示板を　見た
-情報収集を　極めた
-人のための　メダル。</Text>
+			<Text>たくさんの　ポケモンの
+ニックネームを　考えた
+名付け親に　与えられる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2189,29 +2411,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かんばんの　うらの
-ラクガキも　みのがさない
-どうさつりょくを　みとめる　メダル。</Text>
+			<Text>テレビばんぐみに　むちゅうになって
+ついつい　みいってしまう
+げんだいっこに　おくられる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>看板の　裏の
-ラクガキも　見逃さない
-洞察力を　認める　メダル。</Text>
+			<Text>テレビ番組に　夢中になって
+ついつい　見入ってしまう
+現代っ子に　贈られる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2226,29 +2448,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たくさんの　ポケモンの
-ニックネームを　かんがえた
-なづけおやに　あたえられる　メダル。</Text>
+			<Text>フレンドリィショップに　かよいつめ
+じょうれんきゃくになった
+トレーナーの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>たくさんの　ポケモンの
-ニックネームを　考えた
-名付け親に　与えられる　メダル。</Text>
+			<Text>フレンドリィショップに　通いつめ
+常連客になった
+トレーナーの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2263,29 +2485,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>テレビばんぐみに　むちゅうになって
-ついつい　みいってしまう
-げんだいっこに　おくられる　メダル。</Text>
+			<Text>フレンドリィショップでの　かいもので
+１００００円も　つかった
+おかねもちの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>テレビ番組に　夢中になって
-ついつい　見入ってしまう
-現代っ子に　贈られる　メダル。</Text>
+			<Text>フレンドリィショップでの　買い物で
+１００００円も　使った
+お金持ちの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2300,29 +2522,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フレンドリィショップに　かよいつめ
-じょうれんきゃくになった
-トレーナーの　ための　メダル。</Text>
+			<Text>フレンドリィショップでの　かいもので
+１０００００円も　つかった
+おかねもちの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フレンドリィショップに　通いつめ
-常連客になった
-トレーナーの　ための　メダル。</Text>
+			<Text>フレンドリィショップでの　買い物で
+１０００００円も　使った
+お金持ちの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2338,28 +2560,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>フレンドリィショップでの　かいもので
-１００００円も　つかった
+１００００００円も　つかった
 おかねもちの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>フレンドリィショップでの　買い物で
-１００００円も　使った
+１００００００円も　使った
 お金持ちの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2375,28 +2597,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>フレンドリィショップでの　かいもので
-１０００００円も　つかった
+１０００００００円も　つかった
 おかねもちの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>フレンドリィショップでの　買い物で
-１０００００円も　使った
+１０００００００円も　使った
 お金持ちの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2411,29 +2633,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フレンドリィショップでの　かいもので
-１００００００円も　つかった
-おかねもちの　ための　メダル。</Text>
+			<Text>まとめがいを　こころがけ
+おまけの　プレミアボールを　もらった
+せつやくじょうずの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フレンドリィショップでの　買い物で
-１００００００円も　使った
-お金持ちの　ための　メダル。</Text>
+			<Text>まとめ買いを　心がけ
+おまけの　プレミアボールを　もらった
+節約上手の　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2448,29 +2670,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>フレンドリィショップでの　かいもので
-１０００００００円も　つかった
-おかねもちの　ための　メダル。</Text>
+			<Text>なつかしさ　あふれる
+じぶんの　いえで　やすんだ
+ふるさとおもいの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>フレンドリィショップでの　買い物で
-１０００００００円も　使った
-お金持ちの　ための　メダル。</Text>
+			<Text>懐かしさ　あふれる
+自分の家で　休んだ
+故郷思いの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2485,29 +2707,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まとめがいを　こころがけ
-おまけの　プレミアボールを　もらった
-せつやくじょうずの　ための　メダル。</Text>
+			<Text>はじめて　だれかと　すれちがった
+ささやかな　であいと　わかれの
+あかしとなる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まとめ買いを　心がけ
-おまけの　プレミアボールを　もらった
-節約上手の　ための　メダル。</Text>
+			<Text>初めて　だれかと　すれ違った
+ささやかな　出会いと　別れの
+証しとなる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2522,29 +2744,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そだてやさんに　たくさんの
-ポケモンを　あずけた
-いくせいずきの　あかしの　メダル。</Text>
+			<Text>３０にんと　すれちがった
+いりみだれる　であいと　わかれの
+あかしとなる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そだてやさんに　たくさんの
-ポケモンを　預けた
-育成好きの　証しの　メダル。</Text>
+			<Text>３０人と　すれ違った
+入り乱れる　出会いと　別れの
+証しとなる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2559,29 +2781,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なつかしさ　あふれる
-じぶんの　いえで　やすんだ
-ふるさとおもいの　ための　メダル。</Text>
+			<Text>１００にんと　すれちがった
+げきどうの　であいと　わかれの
+あかしとなる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>懐かしさ　あふれる
-自分の家で　休んだ
-故郷思いの　ための　メダル。</Text>
+			<Text>１００人と　すれ違った
+激動の　出会いと　別れの
+証しとなる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2596,29 +2818,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はじめて　だれかと　すれちがった
-ささやかな　であいと　わかれの
+			<Text>１０００にんと　すれちがった
+はらんばんじょうな　にんげんもようの
 あかしとなる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>初めて　だれかと　すれ違った
-ささやかな　出会いと　別れの
+			<Text>１０００人と　すれ違った
+波乱万丈な　人間模様の
 証しとなる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2633,29 +2855,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>３０にんと　すれちがった
-いりみだれる　であいと　わかれの
-あかしとなる　メダル。</Text>
+			<Text>デルパワーを　はじめて　つかった
+ういういしい　ちからの　ながれを
+ひょうかする　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>３０人と　すれ違った
-入り乱れる　出会いと　別れの
-証しとなる　メダル。</Text>
+			<Text>デルパワーを　初めて　使った
+初々しい　力の　流れを
+評価する　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2670,29 +2892,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１００にんと　すれちがった
-げきどうの　であいと　わかれの
-あかしとなる　メダル。</Text>
+			<Text>デルパワーを　１０回　使った
+たくましい　ちからの　ながれを
+ひょうかする　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１００人と　すれ違った
-激動の　出会いと　別れの
-証しとなる　メダル。</Text>
+			<Text>デルパワーを　１０回　使った
+たくましい　力の　流れを
+評価する　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2707,29 +2929,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１０００にんと　すれちがった
-はらんばんじょうな　にんげんもようの
-あかしとなる　メダル。</Text>
+			<Text>デルパワーを　５０かい　つかった
+すさまじい　ちからの　ながれを
+ひょうかする　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１０００人と　すれ違った
-波乱万丈な　人間模様の
-証しとなる　メダル。</Text>
+			<Text>デルパワーを　５０回　使った
+すさまじい　力の　流れを
+評価する　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2744,29 +2966,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>デルパワーを　はじめて　つかった
-ういういしい　ちからの　ながれを
+			<Text>デルパワーを　１００かい　つかった
+このうえない　ちからの　ながれを
 ひょうかする　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>デルパワーを　初めて　使った
-初々しい　力の　流れを
+			<Text>デルパワーを　１００回　使った
+この上ない　力の　流れを
 評価する　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2781,29 +3003,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>デルパワーを　１０回　使った
-たくましい　ちからの　ながれを
-ひょうかする　メダル。</Text>
+			<Text>ハイリンクのもりで　はじめて
+ポケモンを　つかまえた
+ゆめみがちな　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>デルパワーを　１０回　使った
-たくましい　力の　流れを
-評価する　メダル。</Text>
+			<Text>ハイリンクの森で　初めて
+ポケモンを　捕まえた
+夢見がちな　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2818,29 +3040,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>デルパワーを　５０かい　つかった
-すさまじい　ちからの　ながれを
-ひょうかする　メダル。</Text>
+			<Text>ハイリンクのもりで　１０ひきの
+ポケモンを　つかまえた
+ゆめみがちな　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>デルパワーを　５０回　使った
-すさまじい　力の　流れを
-評価する　メダル。</Text>
+			<Text>ハイリンクの森で　１０匹の
+ポケモンを　捕まえた
+夢見がちな　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2855,29 +3077,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>デルパワーを　１００かい　つかった
-このうえない　ちからの　ながれを
-ひょうかする　メダル。</Text>
+			<Text>ハイリンクのもりで　５０ひきの
+ポケモンを　つかまえた
+ゆめみがちな　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>デルパワーを　１００回　使った
-この上ない　力の　流れを
-評価する　メダル。</Text>
+			<Text>ハイリンクの森で　５０匹の
+ポケモンを　捕まえた
+夢見がちな　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2892,29 +3114,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハイリンクのもりで　はじめて
+			<Text>ハイリンクのもりで　１００ひきの
 ポケモンを　つかまえた
-ゆめみがちな　メダル。</Text>
+ゆめのような　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハイリンクの森で　初めて
+			<Text>ハイリンクの森で　１００匹の
 ポケモンを　捕まえた
-夢見がちな　メダル。</Text>
+夢のような　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2929,29 +3151,28 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハイリンクのもりで　１０ひきの
-ポケモンを　つかまえた
-ゆめみがちな　メダル。</Text>
+			<Text>すべての　かくしあなを
+はっけんした　やせいを
+ほめたたえる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハイリンクの森で　１０匹の
-ポケモンを　捕まえた
-夢見がちな　メダル。</Text>
+			<Text>すべての　隠し穴を　発見した
+野性を　褒め称える　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2966,29 +3187,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハイリンクのもりで　５０ひきの
-ポケモンを　つかまえた
-ゆめみがちな　メダル。</Text>
+			<Text>ポケモンの　タマゴを　はじめて
+ふかさせた　めばえたての
+ぼせいの　あかしとなる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハイリンクの森で　５０匹の
-ポケモンを　捕まえた
-夢見がちな　メダル。</Text>
+			<Text>ポケモンの　タマゴを　初めて
+ふかさせた　芽生えたての
+母性の　証しとなる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3003,29 +3224,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ハイリンクのもりで　１００ひきの
-ポケモンを　つかまえた
-ゆめのような　メダル。</Text>
+			<Text>ポケモンの　タマゴを　１０かい
+ふかさせた　それなりの
+ぼせいの　あかしとなる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ハイリンクの森で　１００匹の
-ポケモンを　捕まえた
-夢のような　メダル。</Text>
+			<Text>ポケモンの　タマゴを　１０回
+ふかさせた　それなりの
+母性の　証しとなる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3040,28 +3261,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>すべての　かくしあなを
-はっけんした　やせいを
-ほめたたえる　メダル。</Text>
+			<Text>ポケモンの　タマゴを　５０かい
+ふかさせた　ぐんをぬく
+ぼせいの　あかしとなる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>すべての　隠し穴を　発見した
-野性を　褒め称える　メダル。</Text>
+			<Text>ポケモンの　タマゴを　５０回
+ふかさせた　群を抜く
+母性の　証しとなる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3076,29 +3298,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ヒウンシティに　たむろする
-ワルたちの　ちょうてんに　たった
-あかしとなる　メダル。</Text>
+			<Text>ポケモンの　タマゴを　１００かい
+ふかさせた　そこなしの
+ぼせいの　あかしとなる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ヒウンシティに　たむろする
-ワル達の　頂点に　君臨した
-証しとなる　メダル。</Text>
+			<Text>ポケモンの　タマゴを　１００回
+ふかさせた　底なしの
+母性の　証しとなる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3113,29 +3335,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>マリンチューブに　まれに　あらわれる
-ポケモン　ホエルオーの　およぐ
-すがたを　みた　あかしの　メダル。</Text>
+			<Text>そだてやさんに　たくさんの
+ポケモンを　あずけた
+いくせいずきの　あかしの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>マリンチューブに　まれに　現れる
-ポケモン　ホエルオーの　泳ぐ姿を
-見た　証しの　メダル。</Text>
+			<Text>そだてやさんに　たくさんの
+ポケモンを　預けた
+育成好きの　証しの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3150,29 +3372,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>セイガイハシティの
-かおだしかんばんから　かおを　だした
-たびの　おもいでの　メダル。</Text>
+			<Text>ポケモンの　カセキを　ふくげんさせ
+げんだいに　よみがえらせた
+かがくの　ちからの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>セイガイハシティの
-顔出し看板から　顔を　出した
-旅の　思い出の　メダル。</Text>
+			<Text>ポケモンの　カセキを　復元させ
+現代に　よみがえらせた
+科学の　力の　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3187,29 +3409,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>めったに　みることが　できない
-ダイヤモンドダストを　みた
-しょうめいの　メダル。</Text>
+			<Text>でんせつの　ポケモンに　みとめられた
+トレーナーと　ともにいた　ポケモンを
+なかまにした　あかしの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>めったに　見ることが　できない
-ダイヤモンドダストを　見た
-証明 の　メダル。</Text>
+			<Text>伝説の　ポケモンに　認められた
+トレーナーと　共にいた　ポケモンを
+仲間にした　証しの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3224,29 +3446,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンの　カセキを　ふくげんさせ
-げんだいに　よみがえらせた
-かがくの　ちからの　メダル。</Text>
+			<Text>いろちがいの　ポケモンと
+であった　ことのある
+こううんを　たたえる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　カセキを　復元させ
-現代に　よみがえらせた
-科学の　力の　メダル。</Text>
+			<Text>色違いの　ポケモンと
+出会った　ことのある
+幸運を　称える　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3261,28 +3483,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かいていいせきの
-さいしんぶに　たどりついた
-ぼうけんかに　あたえられる　メダル。</Text>
+			<Text>ポケモンに　くっつく　なぞの
+せいめいたい　ポケルスを　みつけた
+トレーナーに　あたえられる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>海底遺跡の　最深部に　たどり着いた
-冒険家に　与えられる　メダル。</Text>
+			<Text>ポケモンに　くっつく　なぞの
+生命体　ポケルスを　見つけた
+トレーナーに　与えられる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3297,29 +3520,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>でんせつの　ポケモンに　みとめられた
-トレーナーと　ともにいた　ポケモンを
-なかまにした　あかしの　メダル。</Text>
+			<Text>ヒウンシティに　たむろする
+ワルたちの　ちょうてんに　たった
+あかしとなる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>伝説の　ポケモンに　認められた
-トレーナーと　共にいた　ポケモンを
-仲間にした　証しの　メダル。</Text>
+			<Text>ヒウンシティに　たむろする
+ワル達の　頂点に　君臨した
+証しとなる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3334,29 +3557,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いろちがいの　ポケモンと
-であった　ことのある
-こううんを　たたえる　メダル。</Text>
+			<Text>カナワタウンで　すべての
+しゃりょうの　せつめいを　きいた
+でんしゃずきの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>色違いの　ポケモンと
-出会った　ことのある
-幸運を　称える　メダル。</Text>
+			<Text>カナワタウンで　すべての
+車両の　説明を　聞いた
+電車好きの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3371,29 +3594,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンに　くっつく　なぞの
-せいめいたい　ポケルスを　みつけた
-トレーナーに　あたえられる　メダル。</Text>
+			<Text>マリンチューブに　まれに　あらわれる
+ポケモン　ホエルオーの　およぐ
+すがたを　みた　あかしの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンに　くっつく　なぞの
-生命体　ポケルスを　見つけた
-トレーナーに　与えられる　メダル。</Text>
+			<Text>マリンチューブに　まれに　現れる
+ポケモン　ホエルオーの　泳ぐ姿を
+見た　証しの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3408,29 +3631,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボックスに　３０ひきの　ポケモンを
-あずけている　かけだしの
-トレーナーに　あたえられる　メダル。</Text>
+			<Text>セイガイハシティの
+かおだしかんばんから　かおを　だした
+たびの　おもいでの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボックスに　３０匹の　ポケモンを
-預けている　駆け出しの
-トレーナーに　与えられる　メダル。</Text>
+			<Text>セイガイハシティの
+顔出し看板から　顔を　出した
+旅の　思い出の　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3445,29 +3668,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボックスに　１２０ひきの　ポケモンを
-あずけている　うでのたつ
-トレーナーに　あたえられる　メダル。</Text>
+			<Text>はたらく　くるまの　ことなら
+なんでも　しっている
+ものしりの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボックスに　１２０匹の　ポケモンを
-預けている　腕の立つ
-トレーナーに　与えられる　メダル。</Text>
+			<Text>働く車の　ことなら
+なんでも　知っている
+物知りの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3482,29 +3705,28 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボックスに　３６０ひきの　ポケモンを
-あずけている　すごうでの
-トレーナーに　あたえられる　メダル。</Text>
+			<Text>かいていいせきの
+さいしんぶに　たどりついた
+ぼうけんかに　あたえられる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボックスに　３６０匹の　ポケモンを
-預けている　スゴ腕の
-トレーナーに　与えられる　メダル。</Text>
+			<Text>海底遺跡の　最深部に　たどり着いた
+冒険家に　与えられる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3519,29 +3741,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ボックスに　はいりきらない　ほどの
-ポケモンを　つかまえた　うつわの
-おおきさを　たたえる　メダル。</Text>
+			<Text>めったに　みることが　できない
+ダイヤモンドダストを　みた
+しょうめいの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ボックスに　入りきらない程の
-ポケモンを　捕まえた
-器の　大きさを　称える　メダル。</Text>
+			<Text>めったに　見ることが　できない
+ダイヤモンドダストを　見た
+証明 の　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3556,29 +3778,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はたらく　くるまの　ことなら
-なんでも　しっている
-ものしりの　ための　メダル。</Text>
+			<Text>イッシュちほうの　すべての　はしに
+もれなく　おとずれた
+はしずきの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>働く車の　ことなら
-なんでも　知っている
-物知りの　ための　メダル。</Text>
+			<Text>イッシュ地方の　すべての　橋に
+もれなく　訪れた
+橋好きの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-12-19T05:40:02" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3813,29 +4035,28 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１にちの　うちに　１００００００もの
-けいけんちを　てにいれた
-たたかいの　きろくの　メダル。</Text>
+			<Text>はじめて　つうしんたいせんを　した
+しんせんな　きょうそうしんを
+たたえる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１日の　うちに　１００００００もの
-経験値を　手に入れた
-戦いの　記録の　メダル。</Text>
+			<Text>初めて　通信対戦を　した
+新鮮な　競争心を　称える　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3850,28 +4071,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はじめて　つうしんたいせんを　した
-しんせんな　きょうそうしんを
+			<Text>つうしんたいせんを　１０かい　した
+せんしんてきな　きょうそうしんを
 たたえる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>初めて　通信対戦を　した
-新鮮な　競争心を　称える　メダル。</Text>
+			<Text>通信対戦を　１０回　した
+先進的な　競争心を
+称える　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3886,29 +4108,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つうしんたいせんを　１０かい　した
-せんしんてきな　きょうそうしんを
+			<Text>つうしんたいせんを　５０かい　した
+じゅくたつした　きょうそうしんを
 たたえる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>通信対戦を　１０回　した
-先進的な　競争心を
+			<Text>通信対戦を　５０回　した
+熟達した　競争心を
 称える　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3923,29 +4145,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つうしんたいせんを　５０かい　した
-じゅくたつした　きょうそうしんを
+			<Text>つうしんたいせんを　１００かい　した
+うまれもっての　きょうそうしんを
 たたえる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>通信対戦を　５０回　した
-熟達した　競争心を
+			<Text>通信対戦を　１００回　した
+生まれ持っての　競争心を
 称える　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3960,29 +4182,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つうしんたいせんを　１００かい　した
-うまれもっての　きょうそうしんを
-たたえる　メダル。</Text>
+			<Text>あめにもまけず　かぜにもまけず
+『はねる』を　つかった
+こんじょうを　たたえる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>通信対戦を　１００回　した
-生まれ持っての　競争心を
-称える　メダル。</Text>
+			<Text>雨にも負けず　風にも負けず
+『はねる』を　使った
+根性を　称える　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3997,29 +4219,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あめにもまけず　かぜにもまけず
-『はねる』を　つかった
-こんじょうを　たたえる　メダル。</Text>
+			<Text>ばんさくつきても　なお　たたかう
+ほこりたかき　あきらめのわるさを
+しょうめいする　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>雨にも負けず　風にも負けず
-『はねる』を　使った
-根性を　称える　メダル。</Text>
+			<Text>万策尽きても　なお　戦う
+誇り高き　あきらめの悪さを
+証明する　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -4034,29 +4256,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ばんさくつきても　なお　たたかう
-ほこりたかき　あきらめのわるさを
-しょうめいする　メダル。</Text>
+			<Text>こうかのないわざを　だしてしまった
+おちゃめな　ミステイクを
+わらって　ゆるす　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>万策尽きても　なお　戦う
-誇り高き　あきらめの悪さを
-証明する　メダル。</Text>
+			<Text>効果のない技を　出してしまった
+お茶目な　ミステイクを
+笑って　許す　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -4071,29 +4293,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こうかのないわざを　だしてしまった
-おちゃめな　ミステイクを
-わらって　ゆるす　メダル。</Text>
+			<Text>かずおおくの　あいての　じゃくてんを
+みやぶり　たたかいを　ゆうりに
+すすめた　あかしの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>効果のない技を　出してしまった
-お茶目な　ミステイクを
-笑って　許す　メダル。</Text>
+			<Text>数多くの　相手の　弱点を
+見破り　戦いを　有利に
+進めた　証しの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -4108,29 +4330,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かずおおくの　あいての　じゃくてんを
-みやぶり　たたかいを　ゆうりに
-すすめた　あかしの　メダル。</Text>
+			<Text>はじめて　バトルサブウェイに
+いどんだ　はしりはじめの
+ちょうせんしゃの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>数多くの　相手の　弱点を
-見破り　戦いを　有利に
-進めた　証しの　メダル。</Text>
+			<Text>初めて　バトルサブウェイに
+挑んだ　走り始めの
+挑戦者の　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -4145,29 +4367,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はじめて　バトルサブウェイに
-いどんだ　はしりはじめの
+			<Text>１０かいも　バトルサブウェイに
+いどんだ　かそくしてきた
 ちょうせんしゃの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>初めて　バトルサブウェイに
-挑んだ　走り始めの
+			<Text>１０回も　バトルサブウェイに
+挑んだ　加速してきた
 挑戦者の　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -4182,29 +4404,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１０かいも　バトルサブウェイに
-いどんだ　かそくしてきた
+			<Text>５０かいも　バトルサブウェイに
+いどんだ　エンジン　ぜんかいの
 ちょうせんしゃの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１０回も　バトルサブウェイに
-挑んだ　加速してきた
+			<Text>５０回も　バトルサブウェイに
+挑んだ　エンジン　全開の
 挑戦者の　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -4219,29 +4441,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>５０かいも　バトルサブウェイに
-いどんだ　エンジン　ぜんかいの
+			<Text>１００かいも　バトルサブウェイに
+いどんだ　とどまることを　しらない
 ちょうせんしゃの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>５０回も　バトルサブウェイに
-挑んだ　エンジン　全開の
+			<Text>１００回も　バトルサブウェイに
+挑んだ　とどまることを　知らない
 挑戦者の　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -4256,29 +4478,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>１００かいも　バトルサブウェイに
-いどんだ　とどまることを　しらない
-ちょうせんしゃの　ための　メダル。</Text>
+			<Text>バトルサブウェイ　シングルトレインで
+サブウェイマスターを　たおした
+しょうぶづよさを　たたえる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>１００回も　バトルサブウェイに
-挑んだ　とどまることを　知らない
-挑戦者の　ための　メダル。</Text>
+			<Text>バトルサブウェイ　シングルトレインで
+サブウェイマスターを　倒した
+勝負強さを　称える　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -4293,29 +4515,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バトルサブウェイ　シングルトレインで
+			<Text>バトルサブウェイ　ダブルトレインで
 サブウェイマスターを　たおした
 しょうぶづよさを　たたえる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バトルサブウェイ　シングルトレインで
+			<Text>バトルサブウェイ　ダブルトレインで
 サブウェイマスターを　倒した
 勝負強さを　称える　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -4330,29 +4552,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バトルサブウェイ　ダブルトレインで
+			<Text>バトルサブウェイ　マルチトレインで
 サブウェイマスターを　たおした
 しょうぶづよさを　たたえる　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バトルサブウェイ　ダブルトレインで
+			<Text>バトルサブウェイ　マルチトレインで
 サブウェイマスターを　倒した
 勝負強さを　称える　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -4367,29 +4589,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バトルサブウェイ　マルチトレインで
-サブウェイマスターを　たおした
-しょうぶづよさを　たたえる　メダル。</Text>
+			<Text>はじめて　バトルけんていを　うけた
+きたいの　ニューカマーな
+チャレンジャーの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バトルサブウェイ　マルチトレインで
-サブウェイマスターを　倒した
-勝負強さを　称える　メダル。</Text>
+			<Text>初めて　バトル検定を　受けた
+期待の　ニューカマーな
+チャレンジャーの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -4404,29 +4626,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はじめて　バトルけんていを　うけた
-きたいの　ニューカマーな
+			<Text>バトルけんていを　１０かいも　うけて
+いきおいづいてきた
 チャレンジャーの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>初めて　バトル検定を　受けた
-期待の　ニューカマーな
+			<Text>バトル検定を　１０回も　受けて
+勢いづいてきた
 チャレンジャーの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -4441,29 +4663,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バトルけんていを　１０かいも　うけて
-いきおいづいてきた
+			<Text>バトルけんていを　３０かいも　うけた
+まいど　おなじみな
 チャレンジャーの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バトル検定を　１０回も　受けて
-勢いづいてきた
+			<Text>バトル検定を　３０回も　受けた
+毎度　おなじみな
 チャレンジャーの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -4478,29 +4700,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バトルけんていを　３０かいも　うけた
-まいど　おなじみな
+			<Text>バトルけんていを　５０かいも　うけた
+けんていと　いえば　このひと！　な
 チャレンジャーの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バトル検定を　３０回も　受けた
-毎度　おなじみな
+			<Text>バトル検定を　５０回も　受けた
+検定と　いえば　この人！　な
 チャレンジャーの　ための　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -4515,29 +4737,29 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>バトルけんていを　５０かいも　うけた
-けんていと　いえば　このひと！　な
-チャレンジャーの　ための　メダル。</Text>
+			<Text>１にちの　うちに　１００００００もの
+けいけんちを　てにいれた
+たたかいの　きろくの　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>バトル検定を　５０回も　受けた
-検定と　いえば　この人！　な
-チャレンジャーの　ための　メダル。</Text>
+			<Text>１日の　うちに　１００００００もの
+経験値を　手に入れた
+戦いの　記録の　メダル。</Text>
 			<TextModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
-				Time="2011-11-23T10:48:13" />
+				Time="2011-12-21T15:41:09" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -9118,228 +9340,6 @@
 			<StatusModifiedBy
 				User="ito_hiroto:W00178"
 				Time="2011-11-23T10:48:13" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="MDL_EXP_SPECIAL_002"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>メダルラリーに　さんかし　いっていの
-せいせきを　おさめ　ゴールインした
-きねんとなる　メダル。</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>メダルラリーに　参加し　一定の
-成績を　修め　ゴールインした
-記念となる　メダル。</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="MDL_EXP_SPECIAL_003"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>メダルラリーで　どりょくを　かさね
-ルーキーランクに　ランクアップした
-きねんとなる　メダル。</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>メダルラリーで　努力を　重ね
-ルーキーランクに　ランクアップした
-記念となる　メダル。</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="MDL_EXP_SPECIAL_004"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>メダルラリーで　どりょくを　かさね
-エリートランクに　ランクアップした
-きねんとなる　メダル。</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>メダルラリーで　努力を　重ね
-エリートランクに　ランクアップした
-記念となる　メダル。</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="MDL_EXP_SPECIAL_005"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>メダルラリーで　どりょくを　かさね
-マスターランクに　ランクアップした
-きねんとなる　メダル。</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>メダルラリーで　努力を　重ね
-マスターランクに　ランクアップした
-記念となる　メダル。</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="MDL_EXP_SPECIAL_006"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>メダルラリーで　どりょくを　かさね
-レジェンドランクに　ランクアップした
-きねんとなる　メダル。</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>メダルラリーで　努力を　重ね
-レジェンドランクに　ランクアップした
-記念となる　メダル。</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<AttributeCell
-			Name="Width">
-			<Text>216</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</AttributeCell>
-	</TextRow>
-	<TextRow
-		Label="MDL_EXP_SPECIAL_007"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>すべての　メダルを　あつめ
-メダリストの　ちょうてんに　たった
-えいよの　あかしの　メダル。</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>すべての　メダルを　集め
-メダリストの　頂点に　立った
-栄誉の　証しの　メダル。</Text>
-			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-12T14:08:08" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
