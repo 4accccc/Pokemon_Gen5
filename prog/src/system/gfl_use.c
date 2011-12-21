@@ -296,9 +296,6 @@ void GFLUser_Init(void)
       GFL_HEAPID_SYSTEM, GFL_TCB_CalcSystemWorkSize(TCB_VINTR_MAX));
   gfl_work->TCBSysVintr = GFL_TCB_Init(TCB_VINTR_MAX, gfl_work->TCBMemVintr);
 
-  // 汎用乱数初期化
-  GFUser_PublicRandInit();
-
   //FADEシステム初期化
   GFL_FADE_Init(GFL_HEAPID_SYSTEM);
 
@@ -314,6 +311,9 @@ void GFLUser_Init(void)
   GFL_TEXT_CreateSystem( NULL );
   //RTC初期化
   GFL_RTC_Init();
+
+  // 汎用乱数初期化
+  GFUser_PublicRandInit();
 
   GFL_USE_VintrCounter = 0;
 
