@@ -157,7 +157,11 @@ const CI_FADE_TBL FTbl34[] = {
 	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
 };
 
-#define CI_FADE_TBL_MAX  (35)
+const CI_FADE_TBL FTbl35[] = {
+	{ CI_FADE_NONE ,0 ,0 ,0 ,0 },
+};
+
+#define CI_FADE_TBL_MAX  (36)
 const CI_FADE_TBL * const FadeTbl[ CI_FADE_TBL_MAX ] = {
 	FTbl0,
 	FTbl1,
@@ -194,4 +198,5 @@ const CI_FADE_TBL * const FadeTbl[ CI_FADE_TBL_MAX ] = {
 	FTbl32,
 	FTbl33,
 	FTbl34,
+	FTbl35,
 };
