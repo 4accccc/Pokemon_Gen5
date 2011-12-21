@@ -3988,6 +3988,51 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="CALL_RIVAL_SP_34"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>もしもーし！
+すぐ　そばに　いるけど？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:57:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:56:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>もしもーし！
+すぐ　そばに　いるけど？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:57:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:57:13" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・下水道連れ歩き開始から
+　下水道イベントクリアまで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:51:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:52:02" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="CALL_RIVAL_SP_02"
 		Style="Large">
 		<LanguageCell
@@ -4192,15 +4237,159 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="CALL_RIVAL_SP_35"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモンワールドトーナメント！▼
+はつさんか　はつゆうしょう　って
+すごい　トレーナー　みたいだよな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:57:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:57:24" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモンワールドトーナメント！▼
+初参加　初優勝　って
+すごい　トレーナー　みたいだよな▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:58:07" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:57:57" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・PWT会場前のイベントから
+　ホドモエトーナメント優勝まで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:53:41" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:53:41" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData />
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_36"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>どんな　トーナメントでも
+ゆうしょうは　すごいぜッ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:59:18" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:58:15" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>どんな　トーナメントでも
+優勝は　すごいぜッ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:59:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:58:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・ホドモエトーナメント優勝から
+　PWT会場前のプラズマ団イベント開始まで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:53:34" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:52:55" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_37"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだん　だッ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:58:59" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:54:04" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマ団　だッ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:59:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:59:00" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・PWT会場前のプラズマ団イベント開始から
+　ホドモエのプラズマフリゲート進入まで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:53:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:53:09" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="CALL_RIVAL_SP_06"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>きいてる　ばあいか！
-プラズマだん　だぞッ！！▼</Text>
+			<Text>かけてきた　オマエも
+うけた　オレも　そうだけど▽
+よゆうが　あって　いいよな▼
+ッて　そんな　ばあい　かよッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T09:07:36" />
+				Time="2011-12-21T03:55:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4208,11 +4397,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きいてる　場合か！
-プラズマ団　だぞッ！！▼</Text>
+			<Text>かけてきた　オマエも
+受けた　オレも　そうだけど▽
+余裕が　あって　いいよな▼
+ッて　そんな　場合かよッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T09:07:33" />
+				Time="2011-12-21T03:55:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4956,6 +5147,13 @@
 				User="matsumiya:W00224"
 				Time="2011-12-18T09:27:03" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_RIVAL_SP_22"
@@ -5006,6 +5204,13 @@
 				User="matsumiya:W00224"
 				Time="2011-12-18T09:27:03" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_RIVAL_SP_23"
@@ -5056,6 +5261,13 @@
 				User="matsumiya:W00224"
 				Time="2011-12-18T09:27:03" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_RIVAL_SP_24"
@@ -5108,6 +5320,13 @@
 				User="matsumiya:W00224"
 				Time="2011-12-18T09:27:03" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_RIVAL_SP_25"
@@ -5156,6 +5375,13 @@
 				User="matsumiya:W00224"
 				Time="2011-12-18T09:27:03" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_RIVAL_SP_26"
@@ -5206,6 +5432,13 @@
 				User="matsumiya:W00224"
 				Time="2011-12-18T09:27:03" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_RIVAL_SP_27"
@@ -5254,6 +5487,13 @@
 				User="matsumiya:W00224"
 				Time="2011-12-18T09:27:03" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_RIVAL_SP_28"
@@ -5304,6 +5544,13 @@
 				User="matsumiya:W00224"
 				Time="2011-12-18T09:27:03" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_RIVAL_SP_29"
@@ -5350,6 +5597,13 @@
 				User="matsumiya:W00224"
 				Time="2011-12-18T09:27:03" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_RIVAL_SP_30"
@@ -5396,6 +5650,13 @@
 				User="matsumiya:W00224"
 				Time="2011-12-18T09:27:03" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_RIVAL_SP_31"
@@ -5442,6 +5703,13 @@
 				User="matsumiya:W00224"
 				Time="2011-12-18T09:27:03" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_RIVAL_SP_32"
@@ -5490,6 +5758,13 @@
 				User="matsumiya:W00224"
 				Time="2011-12-18T09:27:03" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_RIVAL_SP_33"
@@ -5534,6 +5809,13 @@
 				User="matsumiya:W00224"
 				Time="2011-12-18T09:32:10" />
 		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#404040</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="CALL_CHELEN_GREET_01"

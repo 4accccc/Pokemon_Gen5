@@ -1865,6 +1865,59 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_c08_swleader7_26"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シャガ『のこるは
+しちけんじん　ヴィオだけか！▽
+あやつは　どこだ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:33:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:31:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シャガ『残るは
+七賢人　ヴィオだけか！▽
+あやつは　どこだ？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:33:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:32:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・ヴィオ戦可能状態</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:32:58" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER7
+ジムリーダー・シャガ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:31:48" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d27r0101_swplazmaw2_01"
 		Style="Large">
 		<LanguageCell
@@ -4521,11 +4574,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あなたを　みていたら
-アイリスさまの　こと　おもいだしたよ▼</Text>
+			<Text>ふと
+アイリスの　ことが　よぎった▼
+そう　チャンピオンの
+アイリスの　ことだよ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T13:28:10" />
+				Time="2011-12-21T03:26:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4533,11 +4588,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あなたを　みていたら
-アイリスさまの　こと　思いだしたよ▼</Text>
+			<Text>ふと
+アイリスの　ことが　よぎった▼
+そう　チャンピオンの
+アイリスの　ことだよ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T13:28:15" />
+				Time="2011-12-21T03:26:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4545,15 +4602,24 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリンク起動用メッセージ
+			<Comment>♂
+・おもいでリンク起動用メッセージ
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T13:23:11" />
+				Time="2011-12-21T03:18:51" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER7
+ジムリーダー・シャガ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:18:45" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#80ff80</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -4564,11 +4630,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おくりものに　こめられた　おもい……
-ずっと　わすれずに　いたいものです</Text>
+			<Text>かのじょは　どのような
+チャンピオンに　なるのだろうな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T13:27:44" />
+				Time="2011-12-21T03:29:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4576,11 +4642,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>贈り物に　こめられた　思い……
-ずっと　忘れずに　いたいものです</Text>
+			<Text>彼女は　どのような
+チャンピオンに　なるのだろうな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T13:28:04" />
+				Time="2011-12-21T03:29:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -4588,12 +4654,28 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリンク終了メッセージ
+			<Comment>♂
+・おもいでリンク終了メッセージ
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T13:23:11" />
+				Time="2011-12-21T03:18:54" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWLEADER7
+ジムリーダー・シャガ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:18:45" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c08_sign1_01"

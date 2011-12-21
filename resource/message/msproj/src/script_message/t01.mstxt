@@ -395,13 +395,10 @@
 			Language="JPN">
 			<Comment>BGメッセージ
 ・0＝前作主人公の名前
-※データ引継ぎで変更される
-　ない場合は
-　♂→トウヤ
-　♀→トウコ</Comment>
+※データ引継ぎで変更される</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T12:23:16" />
+				Time="2011-12-21T03:41:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -416,6 +413,55 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:17" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#8080ff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_t01_sign2_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>……のいえ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:42:04" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:41:43" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……の家</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:42:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:42:06" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>BGメッセージ
+・前作主人公の家
+・名前代入がない状態</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:42:26" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>看板：主人公</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:41:12" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

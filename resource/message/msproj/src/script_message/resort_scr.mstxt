@@ -321,11 +321,11 @@ IRC♂
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
-ハイリンクで　であったこと
+ハイリンクで　出会ったこと
 覚えている？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:51:51" />
+				Time="2011-12-21T02:17:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -399,15 +399,14 @@ GTSで　交換したこと
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>※未使用
-旅行者挨拶文
+			<Comment>旅行者挨拶文
 GTS♂
 0：旅行者
 1：－
 2：クチグセ</Comment>
 			<CommentModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-20T14:18:03" />
+				Time="2011-09-15T03:59:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1489,11 +1488,11 @@ IRC♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]▼
-ハイリンクで　であったこと
+ハイリンクで　出会ったこと
 覚えている？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T05:54:57" />
+				Time="2011-12-21T02:17:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3384,12 +3383,12 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]！
-ここが　あたらしいまち　ですか？▼
-すてきな　おみせは
+ここが　新しい街　ですか？▼
+すてきな　お店は
 あるかなぁ……▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-16T06:45:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:18:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -3422,8 +3421,8 @@ BW♀
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]！
 [Name:ResortMayor Idx="1" ]！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-20T14:30:58" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3434,8 +3433,8 @@ BW♀
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]！
 [Name:ResortMayor Idx="1" ]！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-20T14:31:13" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3473,8 +3472,8 @@ BW♀
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]！
 [Name:ResortMayor Idx="1" ]！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-20T14:29:15" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3485,8 +3484,8 @@ BW♀
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="2" ]！
 [Name:ResortMayor Idx="1" ]！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-20T14:30:49" />
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3521,11 +3520,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortMayor Idx="0" ]！
-[Name:ResortGreet Idx="2" ]！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="2" ]！
+[Name:ResortMayor Idx="0" ]！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-20T14:21:56" />
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:28:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3533,11 +3532,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortMayor Idx="0" ]！
-[Name:ResortGreet Idx="2" ]！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="2" ]！
+[Name:ResortMayor Idx="0" ]！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-20T14:21:56" />
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:28:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3572,11 +3571,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortMayor Idx="0" ]！
-[Name:ResortGreet Idx="2" ]！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="2" ]！
+[Name:ResortMayor Idx="0" ]！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-20T14:21:40" />
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:28:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3584,11 +3583,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortMayor Idx="0" ]！
-[Name:ResortGreet Idx="2" ]！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="2" ]！
+[Name:ResortMayor Idx="0" ]！</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-20T14:21:46" />
+				User="nagihashi_toru:W00268"
+				Time="2011-10-19T06:28:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4204,11 +4203,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>げんざい　[Name:ResortTown ]は
+			<Text>現在　[Name:ResortTown ]は
 サービス期間中　です！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T06:39:46" />
+				Time="2011-12-21T02:49:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4256,11 +4255,10 @@ BW♀
 つぎの　ランクに　あがれて▽
 [Name:ResortGreet Idx="4" ]　なんです！▼
 [Name:ResortMayor Idx="3" ]
-よろしく　おねがいします！！▼
-</Text>
+よろしく　おねがいします！！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T12:12:59" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:18:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -4271,14 +4269,13 @@ BW♀
 			<Text>『[Name:ResortShop Idx="1" ]』の　ランクは
 現在　[Digit:2digits Idx="2" ]　です▼
 人気が　あと　[Digit:3digits Idx="0" ]なると
-つぎの　ランクに　あがれて！▽
+次の　ランクに　あがれて！▽
 [Name:ResortGreet Idx="4" ]　なんです！▼
 [Name:ResortMayor Idx="3" ]
-よろしく　おねがいします！▼
-</Text>
+よろしく　おねがいします！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T12:12:59" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:49:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -4401,10 +4398,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　がんばりますよ▼</Text>
+			<Text>今日は　がんばりますよ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-24T07:56:02" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:19:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -4456,10 +4453,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　やるき　いっぱいです▼</Text>
+			<Text>今日は　やるき　いっぱいです▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T11:49:38" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:19:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -4512,11 +4509,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは
+			<Text>今日は
 やるき　まんまん　なのです▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T11:49:52" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:19:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -4563,11 +4560,10 @@ BW♀
 つぎの　ランクに　あがれて▽
 [Name:ResortGreet Idx="4" ]　なんです！▼
 [Name:ResortMayor Idx="3" ]
-よろしく　おねがいします！！▼
-</Text>
+よろしく　おねがいします！！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T12:12:37" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:18:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -4578,14 +4574,13 @@ BW♀
 			<Text>『[Name:ResortShop Idx="1" ]』の　ランクは
 現在　[Digit:2digits Idx="2" ]　です▼
 人気が　あと　[Digit:3digits Idx="0" ]なると
-つぎの　ランクに　あがれて！▽
+次の　ランクに　あがれて！▽
 [Name:ResortGreet Idx="4" ]　なんです！▼
 [Name:ResortMayor Idx="3" ]
-よろしく　おねがいします！▼
-</Text>
+よろしく　おねがいします！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T12:12:47" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:19:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -4708,10 +4703,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　がんばりますよ▼</Text>
+			<Text>今日は　がんばりますよ▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-24T07:56:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:19:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -4763,10 +4758,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは　やるき　いっぱいです▼</Text>
+			<Text>今日は　やるき　いっぱいです▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T11:50:06" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:19:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -4819,11 +4814,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>きょうは
+			<Text>今日は
 やるき　まんまん　なのです▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T11:50:06" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:19:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -4881,10 +4876,10 @@ BW♀
 			<Text>[Name:TrainerName ]『[Name:ResortGreet Idx="2" ]！
 [Name:TrainerName Idx="1" ]さん……！▼
 わたしの　とっておきの　お店が
-あるんですが　いってみませんか？▼</Text>
+あるんですが　行ってみませんか？▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T09:26:46" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:49:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5254,10 +5249,10 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>笑顔で　[Name:TrainerName ]の
-前歯が　キラっと　ひかった！！！▼</Text>
+前歯が　キラっと　光った！！！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T09:27:02" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:20:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5317,10 +5312,10 @@ BW♀
 			<Text>[Name:TrainerName ]『[Name:ResortGreet Idx="2" ]！
 [Name:TrainerName Idx="1" ]さん……！▼
 わたしの　とっておきの　お店が
-あるんですが　いってみませんか？▼</Text>
+あるんですが　行ってみませんか？▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T09:27:16" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:19:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5369,11 +5364,11 @@ BW♀
 ……[Name:ResortShop Idx="2" ]　って
 「[Name:ResortGreet Idx="4" ]」　って　かんじです！▽
 ぜひ　どうぞ！▼
-……　……　……　……　……　……
-……　……　……　……　……　……▼</Text>
+……　……　……
+……　……　……▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T12:25:59" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:20:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5385,11 +5380,11 @@ BW♀
 ……[Name:ResortShop Idx="2" ]　って
 「[Name:ResortGreet Idx="4" ]」　って　感じです！▽
 ぜひ　どうぞ！▼
-……　……　……　……　……　……
-……　……　……　……　……　……▼</Text>
+……　……　……
+……　……　……▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T12:26:08" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:20:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5496,12 +5491,13 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="3" ]！
-……　……　……　……　……　……▽
-…………　またに　します▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="3" ]！▼
+……　……　……
+……　……　……▼
+……またに　します▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-25T13:14:38" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:20:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5509,12 +5505,13 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="3" ]！
-……　……　……　……　……　……▽
-…………　またに　します▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『[Name:ResortGreet Idx="3" ]！▼
+……　……　……
+……　……　……▼
+……またに　します▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-25T13:14:44" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:20:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5688,10 +5685,10 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>笑顔で　[Name:TrainerName ]の
-前歯が　キラっと　ひかった！！！▼</Text>
+前歯が　キラっと　光った！！！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T09:27:40" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:49:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -5976,13 +5973,13 @@ BW♀
 			Language="JPN_KANJI">
 			<Text>……きいてきいて！▼
 ぼく　この街で
-買い物につかった金額　が▽
+買い物に使った金額　が▽
 一番　多いんだ！▼
 もう　[Name:ResortGreet ]
 って　感じだよ▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T09:37:56" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:49:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -6606,13 +6603,13 @@ BW♀
 			Language="JPN_KANJI">
 			<Text>……きいてきいて！▼
 わたし　この街で
-買い物につかった金額　が▽
+買い物に使った金額　が▽
 一番　多いの！▼
 もう　[Name:ResortGreet ]
 って　感じなの▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T09:42:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:50:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -8427,10 +8424,10 @@ BW♀
 			Language="JPN_KANJI">
 			<Text>[Name:ResortTown Idx="3" ]は
 現在　サービス期間中　です▽
-あと　[Digit:2digits Idx="4" ]にち　　おみのがしなく！▼</Text>
+あと　[Digit:2digits Idx="4" ]日　　おみのがしなく！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T06:43:25" />
+				Time="2011-12-21T02:21:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8724,10 +8721,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みんなに　あいさつを　おこないますか？</Text>
+			<Text>みんなに
+あいさつを　おこないますか？</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T18:20:51" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:21:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8735,10 +8733,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>みんなに　あいさつを　おこないますか？</Text>
+			<Text>みんなに
+あいさつを　おこないますか？</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T18:20:54" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:21:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -9445,10 +9444,11 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>みんなに　あいさつを　おこないますか？</Text>
+			<Text>みんなに
+あいさつを　おこないますか？</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T18:30:01" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:21:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -9456,10 +9456,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>みんなに　あいさつを　おこないますか？</Text>
+			<Text>みんなに
+あいさつを　おこないますか？</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-28T18:30:01" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:21:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -10152,7 +10153,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -10200,7 +10201,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -10248,7 +10249,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -10296,7 +10297,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -10344,7 +10345,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -10392,7 +10393,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -10440,7 +10441,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -10488,7 +10489,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -10576,7 +10577,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -10624,7 +10625,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -10672,7 +10673,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -10720,7 +10721,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -10768,7 +10769,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -10896,7 +10897,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -10918,10 +10919,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まちの　なまえを　かえる</Text>
+			<Text>街の　名前を　変える</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:51:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10958,10 +10959,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じぶんの　かたがきを　かえる</Text>
+			<Text>自分の　肩書きを　変える</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-29T05:42:01" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:51:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10998,10 +10999,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>くちぐせの　ことばを　かえる</Text>
+			<Text>くちぐせの　言葉を　変える</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-20T09:25:50" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:51:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11027,10 +11028,10 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょうたいする</Text>
+			<Text>しょうたい　する</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:50:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11118,10 +11119,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>転職　させる</Text>
+			<Text>転職させる</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-08-29T09:45:51" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:50:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11238,10 +11239,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かんげき　したときの　ことばを　かえる</Text>
+			<Text>感激したときの　言葉を　変える</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-20T09:23:57" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:51:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11598,10 +11599,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモン　こうかんする</Text>
+			<Text>ポケモン交換する</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T09:39:57" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:52:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -11623,7 +11624,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ffff</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -11946,10 +11947,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かいもので　つかった　金額</Text>
+			<Text>買い物で　使った　金額</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T09:55:56" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:51:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12262,8 +12263,8 @@ BW♀
 			<Text>おすすめの　おみせを　おしえて
 あそびに　きてもらいます</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-15T07:22:39" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:52:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12271,11 +12272,11 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おすすめの　お店を　おしえて
-遊びに　来てもます</Text>
+			<Text>おすすめの　お店を　教えて
+遊びに　来てもらいます</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-15T07:23:07" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:52:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12421,7 +12422,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -12470,7 +12471,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -12619,10 +12620,10 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモン　こうかんをします</Text>
+			<Text>ポケモン交換をします</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-12T09:41:00" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:52:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13364,11 +13365,11 @@ BW♀
 			Language="JPN">
 			<Text>しせつが　いっぱいで
 これ　いじょう　たてられません▼
-たてかえる　しせつを
-えらんでください▼</Text>
+たてかえる
+しせつを　えらんでください▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-15T07:32:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:53:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13378,11 +13379,11 @@ BW♀
 			Language="JPN_KANJI">
 			<Text>施設が　一杯で
 これ以上　建てられません▼
-建てかえる　施設を
-選んでください▼</Text>
+建てかえる
+施設を　選んでください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T06:48:50" />
+				Time="2011-12-21T02:53:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13410,11 +13411,11 @@ BW♀
 			Language="JPN">
 			<Text>しせつが　いっぱいで
 これ　いじょう　たてられません▼
-たてかえる　しせつを
-えらんでください▼</Text>
+たてかえる
+しせつを　えらんでください▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-15T07:32:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:53:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13424,11 +13425,11 @@ BW♀
 			Language="JPN_KANJI">
 			<Text>施設が　一杯で
 これ以上　建てられません▼
-建てかえる　施設を
-選んでください▼</Text>
+建てかえる
+施設を　選んでください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T06:48:47" />
+				Time="2011-12-21T02:53:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13454,12 +13455,12 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ひしょが　いっぱいです！
-こうたい　する　ひしょを▽
-えらんでください▼</Text>
+			<Text>ひしょが　いっぱいです！▼
+こうたい　する
+ひしょを　えらんでください▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:53:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13468,11 +13469,11 @@ BW♀
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>秘書が　一杯です！▼
-交代する　秘書を
-選んでください▼</Text>
+交代する
+秘書を　選んでください▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T06:49:10" />
+				Time="2011-12-21T02:53:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13717,7 +13718,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -14898,7 +14899,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ffff</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -15315,7 +15316,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ffff</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -15534,7 +15535,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ffff</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -15750,7 +15751,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ffff</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -15966,7 +15967,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ffff</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -16182,7 +16183,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ffff</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -16398,7 +16399,7 @@ BW♀
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ffff</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -19739,11 +19740,11 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うまれるまで　かなり　じかんが
-かかりそう　です！▼</Text>
+			<Text>うまれるまで　かなり
+じかんが　かかりそう　です！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-15T11:48:06" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:24:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -19751,11 +19752,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うまれるまで　かなり　時間が
-かかりそう　です！▼</Text>
+			<Text>うまれるまで　かなり
+時間が　かかりそう　です！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-15T11:48:06" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:24:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -20039,11 +20040,11 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うまれるまで　かなり　じかんが
-かかりそう　です！▼</Text>
+			<Text>うまれるまで　かなり
+じかんが　かかりそう　です！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-15T11:47:58" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:25:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -20051,11 +20052,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うまれるまで　かなり　時間が
-かかりそう　です！▼</Text>
+			<Text>うまれるまで　かなり
+時間が　かかりそう　です！▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-15T11:48:00" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:25:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -21238,7 +21239,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -21285,7 +21286,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -21332,7 +21333,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -21379,7 +21380,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -21426,7 +21427,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -21473,7 +21474,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -21520,7 +21521,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -21567,7 +21568,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -21614,7 +21615,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -21661,7 +21662,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -21708,7 +21709,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -21755,7 +21756,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -21802,7 +21803,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -21849,7 +21850,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -21896,7 +21897,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -21943,7 +21944,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -21990,7 +21991,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -22037,7 +22038,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -22084,7 +22085,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -22131,7 +22132,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -22178,7 +22179,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -22225,7 +22226,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -22272,7 +22273,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -22319,7 +22320,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -22366,7 +22367,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -22651,11 +22652,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
-たいりょくの　基礎ポイントが
+体力の　基礎ポイントが
 さがります。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:20:05" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:54:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -22702,11 +22703,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
-こうげきの　基礎ポイントが
+攻撃の　基礎ポイントが
 さがります。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:20:05" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:54:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -22753,11 +22754,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
-ぼうぎょの　基礎ポイントが
+防御の　基礎ポイントが
 さがります。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:20:05" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:54:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -22804,11 +22805,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
-とうこうの　基礎ポイントが
+特攻の　基礎ポイントが
 さがります。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:20:05" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:54:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -22855,11 +22856,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
-とくぼうの　基礎ポイントが
+特防の　基礎ポイントが
 さがります。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:20:05" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:55:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -22909,8 +22910,8 @@ ME
 すばやさの　基礎ポイントが
 さがります。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:20:05" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:55:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -22957,11 +22958,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
-たいりょくの　基礎ポイントが
+体力の　基礎ポイントが
 かなり　さがります。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:23:34" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:55:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -23008,11 +23009,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
-こうげきの　基礎ポイントが
+攻撃の　基礎ポイントが
 かなり　さがります。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:23:34" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:55:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -23059,11 +23060,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
-ぼうぎょの　基礎ポイントが
+防御の　基礎ポイントが
 かなり　さがります。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:23:34" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:55:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -23110,11 +23111,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
-とうこうの　基礎ポイントが
+特攻の　基礎ポイントが
 かなり　さがります。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:23:34" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:55:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -23161,11 +23162,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
-とくぼうの　基礎ポイントが
+特防の　基礎ポイントが
 かなり　さがります。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:23:34" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:55:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -23263,11 +23264,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
-たいりょくの　基礎ポイントが
+体力の　基礎ポイントが
 なくなります。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:23:46" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:55:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -23314,11 +23315,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
-こうげきの　基礎ポイントが
+攻撃の　基礎ポイントが
 なくなります。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:23:46" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:55:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -23365,11 +23366,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
-ぼうぎょの　基礎ポイントが
+防御の　基礎ポイントが
 なくなります。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:23:46" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:55:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -23416,11 +23417,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
-とうこうの　基礎ポイントが
+特攻の　基礎ポイントが
 なくなります。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:23:46" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:55:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -23467,11 +23468,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>メイクで　なついてもらいます。
-とくぼうの　基礎ポイントが
+特防の　基礎ポイントが
 なくなります。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:23:46" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:55:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -23591,7 +23592,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -23615,8 +23616,8 @@ ME
 			Language="JPN_KANJI">
 			<Text />
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T10:14:51" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:55:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -23638,7 +23639,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -23685,7 +23686,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -23732,7 +23733,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -23779,7 +23780,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -23826,7 +23827,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -23873,7 +23874,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -23920,7 +23921,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -23967,7 +23968,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -24014,7 +24015,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -24061,7 +24062,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -24108,7 +24109,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -24155,7 +24156,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -24202,7 +24203,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -24249,7 +24250,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -24296,7 +24297,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -24343,7 +24344,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -24390,7 +24391,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -24437,7 +24438,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -24484,7 +24485,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -24531,7 +24532,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -24578,7 +24579,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -24625,7 +24626,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -24672,7 +24673,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -24719,7 +24720,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -27830,7 +27831,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#ff78ff</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -31966,7 +31967,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -32013,7 +32014,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -32573,7 +32574,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -33822,11 +33823,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>インドメタシン　１２こ　セット。
-ポケモン　１匹の　素早さの
+ポケモン　１匹の　すばやさの
 基礎ポイントを　あげる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T08:07:47" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:56:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -34180,10 +34181,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>スピーダー　１２こ　セット。
 戦闘中の　ポケモンの
-素早さを　あげる　道具。</Text>
+すばやさを　あげる　道具。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T08:14:32" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:57:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -37058,7 +37059,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -37106,7 +37107,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -37153,7 +37154,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -37200,7 +37201,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -37247,7 +37248,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -37294,7 +37295,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -37341,7 +37342,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -37690,7 +37691,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -37749,7 +37750,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -38063,12 +38064,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　たいりょくを　鍛えて
-ちょっぴり　つよくする。
-たいりょくの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　体力を　鍛えて
+ちょっぴり　強くする。
+体力の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:42:35" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:57:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -38121,12 +38122,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　たいりょくを　鍛えて
-すこし　つよくする。
-たいりょくの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　体力を　鍛えて
+すこし　強くする。
+体力の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:44:26" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:57:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -38179,12 +38180,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　たいりょくを　鍛えて
-つよくする。
-たいりょくの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　体力を　鍛えて
+強くする。
+体力の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:33:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:58:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -38237,12 +38238,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　たいりょくを　鍛えて
-かなり　つよくする。
-たいりょくの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　体力を　鍛えて
+かなり　強くする。
+体力の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:44:39" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:58:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -38295,12 +38296,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　たいりょくを　鍛えて
-すごく　つよくする。
-たいりょくの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　体力を　鍛えて
+すごく　強くする。
+体力の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:51:10" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:58:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -38353,12 +38354,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　たいりょくを　鍛えて
-ものすごく　つよくする。
-たいりょくの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　体力を　鍛えて
+ものすごく　強くする。
+体力の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:42:18" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:58:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -38411,12 +38412,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　たいりょくを　鍛えて
-とてつもなく　つよくする。
-たいりょくの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　体力を　鍛えて
+とてつもなく　強くする。
+体力の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:42:18" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:58:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -38469,12 +38470,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　こうげきを　鍛えて
-ちょっぴり　つよくする。
-こうげきの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　攻撃を　鍛えて
+ちょっぴり　強くする。
+攻撃の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:45:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:58:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -38527,12 +38528,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　こうげきを　鍛えて
-すこし　つよくする。
-こうげきの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　攻撃を　鍛えて
+すこし　強くする。
+攻撃の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:45:32" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:58:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -38585,12 +38586,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　こうげきを　鍛えて
-つよくする。
-こうげきの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　攻撃を　鍛えて
+強くする。
+攻撃の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:42:34" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:58:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -38643,12 +38644,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　こうげきを　鍛えて
-かなり　つよくする。
-こうげきの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　攻撃を　鍛えて
+かなり　強くする。
+攻撃の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:45:46" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:59:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -38701,12 +38702,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　こうげきを　鍛えて
-すごく　つよくする。
-こうげきの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　攻撃を　鍛えて
+すごく　強くする。
+攻撃の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:50:48" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:59:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -38759,12 +38760,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　こうげきを　鍛えて
-ものすごく　つよくする。
-こうげきの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　攻撃を　鍛えて
+ものすごく　強くする。
+攻撃の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:43:16" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:59:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -38817,12 +38818,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　こうげきを　鍛えて
-とてつもなく　つよくする。
-こうげきの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　攻撃を　鍛えて
+とてつもなく　強くする。
+攻撃の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:43:16" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:59:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -38864,10 +38865,10 @@ ME
 			Language="JPN">
 			<Text>ポケモンの　ぼうぎょを　きたえて
 ちょっぴり　つよくする。
-こうげきの　きそポイントが　あがる。</Text>
+ぼうぎょの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:46:14" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:02:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -38875,12 +38876,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　ぼうぎょを　鍛えて
-ちょっぴり　つよくする。
-こうげきの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　防御を　鍛えて
+ちょっぴり　強くする。
+防御の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:46:16" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:59:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -38933,12 +38934,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　ぼうぎょを　鍛えて
-すこし　つよくする。
-ぼうぎょの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　防御を　鍛えて
+すこし　強くする。
+防御の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:43:56" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:59:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -38991,12 +38992,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　ぼうぎょを　鍛えて
-つよくする。
-ぼうぎょの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　防御を　鍛えて
+強くする。
+防御の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:44:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:59:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -39049,12 +39050,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　ぼうぎょを　鍛えて
-かなり　つよくする。
-ぼうぎょの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　防御を　鍛えて
+かなり　強くする。
+防御の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:44:28" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:59:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -39107,12 +39108,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　ぼうぎょを　鍛えて
-すごく　つよくする。
-ぼうぎょの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　防御を　鍛えて
+すごく　強くする。
+防御の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:50:25" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:00:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -39165,12 +39166,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　ぼうぎょを　鍛えて
-ものすごく　つよくする。
-ぼうぎょの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　防御を　鍛えて
+ものすごく　強くする。
+防御の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:44:51" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:00:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -39223,12 +39224,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　ぼうぎょを　鍛えて
-とてつもなく　つよくする。
-ぼうぎょの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　防御を　鍛えて
+とてつもなく　強くする。
+防御の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:44:51" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:00:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -39281,12 +39282,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　とくこうを　鍛えて
-ちょっぴり　つよくする。
-とくこうの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　特攻を　鍛えて
+ちょっぴり　強くする。
+特攻の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:47:53" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:00:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -39339,12 +39340,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　とくこうを　鍛えて
-すこし　つよくする。
-とくこうの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　特攻を　鍛えて
+すこし　強くする。
+特攻の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:48:02" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:00:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -39397,12 +39398,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　とくこうを　鍛えて
-つよくする。
-とくこうの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　特攻を　鍛えて
+強くする。
+特攻の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:45:03" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:00:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -39455,12 +39456,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　とくこうを　鍛えて
-かなり　つよくする。
-とくこうの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　特攻を　鍛えて
+かなり　強くする。
+特攻の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:45:24" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:00:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -39513,12 +39514,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　とくこうを　鍛えて
-すごく　つよくする。
-とくこうの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　特攻を　鍛えて
+すごく　強くする。
+特攻の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:50:00" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:01:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -39571,12 +39572,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　とくこうを　鍛えて
-ものすごく　つよくする。
-とくこうの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　特攻を　鍛えて
+ものすごく　強くする。
+特攻の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:45:50" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:01:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -39629,12 +39630,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　とくこうを　鍛えて
-とてつもなく　つよくする。
-とくこうの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　特攻を　鍛えて
+とてつもなく　強くする。
+特攻の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:45:50" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:01:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -39687,12 +39688,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　とくぼうを　鍛えて
-ちょっぴり　つよくする。
-とくぼうの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　特防を　鍛えて
+ちょっぴり　強くする。
+特防の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:49:00" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:01:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -39745,12 +39746,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　とくぼうを　鍛えて
-すこし　つよくする。
-とくぼうの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　特防を　鍛えて
+すこし　強くする。
+特防の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T17:49:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:01:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -39803,12 +39804,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　とくぼうを　鍛えて
-つよくする。
-とくぼうの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　特防を　鍛えて
+強くする。
+特防の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:46:05" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:01:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -39861,12 +39862,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　とくぼうを　鍛えて
-かなり　つよくする。
-とくぼうの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　特防を　鍛えて
+かなり　強くする。
+特防の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:46:00" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:01:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -39919,12 +39920,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　とくぼうを　鍛えて
-すごく　つよくする。
-とくぼうの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　特防を　鍛えて
+すごく　強くする。
+特防の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:49:36" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:01:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -39977,12 +39978,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　とくぼうを　鍛えて
-ものすごく　つよくする。
-とくぼうの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　特防を　鍛えて
+ものすごく　強くする。
+特防の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:46:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:02:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -40035,12 +40036,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンの　とくぼうを　鍛えて
-とてつもなく　つよくする。
-とくぼうの　基礎ポイントが　あがる。</Text>
+			<Text>ポケモンの　特防を　鍛えて
+とてつもなく　強くする。
+特防の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:46:31" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:02:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -40094,11 +40095,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンの　すばやさを　鍛えて
-ちょっぴり　つよくする。
+ちょっぴり　強くする。
 すばやさの　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:47:07" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:02:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -40140,10 +40141,10 @@ ME
 			Language="JPN">
 			<Text>ポケモンの　すばやさを　きたえて
 すこし　つよくする。
-とくぼうの　きそポイントが　あがる。</Text>
+すばやさの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:47:07" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:03:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -40152,11 +40153,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンの　すばやさを　鍛えて
-すこし　つよくする。
-とくぼうの　基礎ポイントが　あがる。</Text>
+すこし　強くする。
+すばやさの　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:47:07" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:03:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -40198,10 +40199,10 @@ ME
 			Language="JPN">
 			<Text>ポケモンの　すばやさを　きたえて
 つよくする。
-とくぼうの　きそポイントが　あがる。</Text>
+すばやさの　きそポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:47:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:03:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -40210,11 +40211,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンの　すばやさを　鍛えて
-つよくする。
-とくぼうの　基礎ポイントが　あがる。</Text>
+強くする。
+すばやさの　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:47:14" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:03:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -40268,11 +40269,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンの　すばやさを　鍛えて
-かなり　つよくする。
+かなり　強くする。
 すばやさの　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:47:33" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:03:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -40326,11 +40327,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンの　すばやさを　鍛えて
-すごく　つよくする。
+すごく　強くする。
 すばやさの　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:49:02" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:03:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -40384,11 +40385,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンの　すばやさを　鍛えて
-ものすごく　つよくする。
+ものすごく　強くする。
 すばやさの　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:47:57" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:03:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -40442,11 +40443,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンの　すばやさを　鍛えて
-とてつもなく　つよくする。
+とてつもなく　強くする。
 すばやさの　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-28T03:47:59" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:03:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -40499,8 +40500,8 @@ ME
 			Language="JPN_KANJI">
 			<Text />
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T10:16:55" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:03:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -40529,7 +40530,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -40583,7 +40584,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -40637,7 +40638,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -40691,7 +40692,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -41825,7 +41826,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -41879,7 +41880,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -41933,7 +41934,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -41987,7 +41988,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -42041,7 +42042,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -42095,7 +42096,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -42149,7 +42150,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -42203,7 +42204,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -42257,7 +42258,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -42311,7 +42312,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -42365,7 +42366,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -42419,7 +42420,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -42473,7 +42474,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -42527,7 +42528,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -42581,7 +42582,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -42635,7 +42636,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -42689,7 +42690,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -42743,7 +42744,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -42797,7 +42798,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -42851,7 +42852,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -42905,7 +42906,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -42959,7 +42960,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -43013,7 +43014,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -43067,7 +43068,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -43121,7 +43122,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -43175,7 +43176,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -43229,7 +43230,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -43283,7 +43284,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -43653,12 +43654,12 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プルプル　シコシコ　した　歯さわりの
+			<Text>プルプル　シコシコ　した　歯ざわりの
 不思議な　デザート。
 ポケモンの　レベルが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T10:48:42" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:03:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -43711,10 +43712,10 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>食べた　ポケモンの
-たいりょくの　基礎ポイントが　あがる。</Text>
+体力の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T10:50:20" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:04:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -43767,10 +43768,10 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>食べた　ポケモンの
-こうげきの　基礎ポイントが　あがる。</Text>
+攻撃の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T04:04:53" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:04:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -43823,10 +43824,10 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>食べた　ポケモンの
-ぼうぎょの　基礎ポイントが　あがる。</Text>
+防御の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T18:07:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:04:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -43879,10 +43880,10 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>食べた　ポケモンの
-とうこうの　基礎ポイントが　あがる。</Text>
+特攻の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T18:07:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:04:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -43935,10 +43936,10 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>食べた　ポケモンの
-とくぼうの　基礎ポイントが　あがる。</Text>
+特防の　基礎ポイントが　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T18:07:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:04:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -44104,11 +44105,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>食べた　ポケモンの　たいりょくの
+			<Text>食べた　ポケモンの　体力の
 基礎ポイントが　か　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-06T04:23:19" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:04:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -44160,11 +44161,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>食べた　ポケモンの　こうげきの
+			<Text>食べた　ポケモンの　攻撃の
 基礎ポイントが　かなり　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T18:12:18" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:04:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -44216,11 +44217,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>食べた　ポケモンの　ぼうぎょの
+			<Text>食べた　ポケモンの　防御の
 基礎ポイントが　かなり　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T18:12:36" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:04:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -44272,11 +44273,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>食べた　ポケモンの　とうこうの
+			<Text>食べた　ポケモンの　特攻の
 基礎ポイントが　かなり　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T18:12:51" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:04:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -44328,11 +44329,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>食べた　ポケモンの　とくぼうの
+			<Text>食べた　ポケモンの　特防の
 基礎ポイントが　かなり　あがる。</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-27T18:13:05" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:04:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -44473,7 +44474,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -44497,8 +44498,8 @@ ME
 			Language="JPN_KANJI">
 			<Text />
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:04:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -44529,7 +44530,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -44585,7 +44586,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -44641,7 +44642,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -44697,7 +44698,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -44753,7 +44754,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -44809,7 +44810,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -44865,7 +44866,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -44921,7 +44922,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -44977,7 +44978,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -45033,7 +45034,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -45089,7 +45090,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -45145,7 +45146,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -45201,7 +45202,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -45257,7 +45258,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -45313,7 +45314,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -45369,7 +45370,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -45425,7 +45426,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -45481,7 +45482,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -45537,7 +45538,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -45593,7 +45594,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -45649,7 +45650,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -45705,7 +45706,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -45761,7 +45762,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -45817,7 +45818,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -45873,7 +45874,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -45929,7 +45930,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -45985,7 +45986,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -46906,7 +46907,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -46963,7 +46964,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -47020,7 +47021,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -47077,7 +47078,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -47134,7 +47135,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -47191,7 +47192,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -47248,7 +47249,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -47305,7 +47306,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -47362,7 +47363,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -47419,7 +47420,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -47476,7 +47477,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -47533,7 +47534,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -47590,7 +47591,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -47647,7 +47648,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -47704,7 +47705,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -47761,7 +47762,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -47818,7 +47819,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -47875,7 +47876,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -47932,7 +47933,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -47989,7 +47990,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -48046,7 +48047,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -48103,7 +48104,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -48160,7 +48161,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -48217,7 +48218,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -48274,7 +48275,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -48331,7 +48332,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -48388,7 +48389,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -48445,7 +48446,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -48502,7 +48503,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -48559,7 +48560,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -48616,7 +48617,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -48673,7 +48674,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -49662,7 +49663,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -49719,7 +49720,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -49776,7 +49777,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -49833,7 +49834,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -49890,7 +49891,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -49947,7 +49948,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -50004,7 +50005,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -50061,7 +50062,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -50118,7 +50119,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -50175,7 +50176,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -50232,7 +50233,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -50289,7 +50290,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -50346,7 +50347,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -50403,7 +50404,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -50460,7 +50461,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -50517,7 +50518,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -50574,7 +50575,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -50631,7 +50632,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -50688,7 +50689,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -50745,7 +50746,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -50802,7 +50803,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -50859,7 +50860,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -50916,7 +50917,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -50973,7 +50974,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -51030,7 +51031,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -51087,7 +51088,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -51144,7 +51145,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -51201,7 +51202,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -51258,7 +51259,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -51315,7 +51316,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -51372,7 +51373,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -51429,7 +51430,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -51484,7 +51485,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -53989,11 +53990,11 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
-入れます）▼[/System:Color]</Text>
+			<Text>[System:Color name="2" ]（スクリプトによる
+　演出とテキストを入れます）▼[/System:Color]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:33:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -54001,11 +54002,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[System:Color name="2" ]（スクリプトによる演出とテキストを
-入れます）▼[/System:Color]</Text>
+			<Text>[System:Color name="2" ]（スクリプトによる
+　演出とテキストを入れます）▼[/System:Color]</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:33:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -54460,14 +54461,14 @@ ME
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
 さあ　きれいに　なりましょうね▼
 チョキ　チョキ　チョッキン！
-チョキ　チョキ　チョッキン！
+チョキ　チョキ　チョッキン！▼
 ……　……　……　
 ……　……　……▼
 [Name:PokemonNickname Idx="2" ]は
 きれい　さっぱりした！！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-30T08:10:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:33:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -54478,14 +54479,14 @@ ME
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
 さあ　きれいに　なりましょうね▼
 チョキ　チョキ　チョッキン！
-チョキ　チョキ　チョッキン！
+チョキ　チョキ　チョッキン！▼
 ……　……　……　
 ……　……　……▼
 [Name:PokemonNickname Idx="2" ]は
 きれい　さっぱりした！！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-30T08:10:18" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:33:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -54524,14 +54525,14 @@ ME
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
 さあ　きれいに　なりましょうね▼
 チョキ　チョキ　チョッキン！
-チョキ　チョキ　チョッキン！
+チョキ　チョキ　チョッキン！▼
 ……　……　……　
 ……　……　……▼
 [Name:PokemonNickname Idx="2" ]は
 きれい　さっぱりした！！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-30T08:10:26" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:33:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -54542,14 +54543,14 @@ ME
 			<Text>[Name:TrainerName Idx="0" ]『[Name:ResortGreet Idx="1" ]
 さあ　きれいに　なりましょうね▼
 チョキ　チョキ　チョッキン！
-チョキ　チョキ　チョッキン！
+チョキ　チョキ　チョッキン！▼
 ……　……　……　
 ……　……　……▼
 [Name:PokemonNickname Idx="2" ]は
 きれい　さっぱりした！！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-30T08:10:23" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:33:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -55730,8 +55731,8 @@ ME
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
 テレビを　みていました！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-15T16:50:43" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:08:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -55921,11 +55922,11 @@ ME
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……えーと▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
-つりざで　ポケモンを▽
+つりざおで　ポケモンを▽
 つりあげました！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-15T16:50:43" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:36:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -55935,11 +55936,11 @@ ME
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……えーと▼
 ２０[Digit:2digits ]年[Digit:2digits Idx="2" ]月[Digit:2digits Idx="3" ]日　に
-つりざで　ポケモンを▽
+つりざおで　ポケモンを▽
 つりあげました！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T07:52:58" />
+				Time="2011-12-21T02:36:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -56391,10 +56392,10 @@ ME
 			<Text>[Name:TrainerName Idx="1" ]『……えーと▼
 ２０[Digit:2digits ]年[Digit:2digits Idx="2" ]月[Digit:2digits Idx="3" ]日　に
 ランダムマッチで▽
-ポケモンたいせんを　していました！▼</Text>
+ポケモン対戦を　していました！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T07:53:23" />
+				Time="2011-12-21T02:36:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -56769,8 +56770,8 @@ ME
 Ｗｉ－Ｆｉクラブで▽
 みんなと　つうしん　していました！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-15T16:50:43" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:37:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -57609,8 +57610,8 @@ ME
 ハイリンクで　あいての　せかいへ▽
 しんにゅう　してきました！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-15T16:50:43" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:37:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -58059,11 +58060,11 @@ ME
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……えーと▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
-つりざで　ポケモンを▽
+つりざおで　ポケモンを▽
 つりあげました！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-15T16:50:43" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:37:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -58073,11 +58074,11 @@ ME
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……えーと▼
 ２０[Digit:2digits ]年[Digit:2digits Idx="2" ]月[Digit:2digits Idx="3" ]日　に
-つりざで　ポケモンを▽
+つりざおで　ポケモンを▽
 つりあげました！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T07:59:19" />
+				Time="2011-12-21T02:38:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -58529,10 +58530,10 @@ ME
 			<Text>[Name:TrainerName Idx="1" ]『……えーと▼
 ２０[Digit:2digits ]年[Digit:2digits Idx="2" ]月[Digit:2digits Idx="3" ]日　に
 ランダムマッチで▽
-ポケモンたいせんを　していました！▼</Text>
+ポケモン対戦を　していました！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T07:59:19" />
+				Time="2011-12-21T02:38:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -59629,11 +59630,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>じまんできる
+			<Text>自慢できる
 メダルが　ないですね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T07:59:54" />
+				Time="2011-12-21T02:38:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -63126,11 +63127,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レコードのことを　ききたい▼
-『買い物で　つかった　金額』　が
+『買い物で　使った　金額』　が
 一番の　人に　会いたいな▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T10:08:43" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:09:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -64224,11 +64225,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
-『買い物で　つかった　金額』　が
+『買い物で　使った　金額』　が
 ２０００００　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T10:09:13" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:10:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -64287,11 +64288,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
-『買い物で　つかった　金額』　が
+『買い物で　使った　金額』　が
 ２０００００　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T10:09:18" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:10:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -65330,11 +65331,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
-『買い物で　つかった　金額』　が
+『買い物で　使った　金額』　が
 ４０００００　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T10:09:39" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:10:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -65392,11 +65393,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
-『買い物で　つかった　金額』　が
+『買い物で　使った　金額』　が
 ４０００００　以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T10:09:45" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:10:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -66430,11 +66431,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
-『買い物で　つかった　金額』　が
+『買い物で　使った　金額』　が
 １００００００以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T10:10:10" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:10:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -66492,11 +66493,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>レコード勝負が　したい▼
-『買い物で　つかった　金額』　が
+『買い物で　使った　金額』　が
 １００００００以上の　人　いる？▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T10:10:16" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:10:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -69951,10 +69952,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>ともだちを　作りたい▼
 好きな人が　できたら　相手からの
-告白を　まつ　タイプ　いない？▼</Text>
+告白を　待つ　タイプ　いない？▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-27T12:05:21" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:40:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -70011,10 +70012,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>ともだちを　作りたい▼
 好きな人が　できたら　相手からの
-告白を　まつ　タイプ　いない？▼</Text>
+告白を　待つ　タイプ　いない？▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-27T12:05:54" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:40:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -71262,11 +71263,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>こんな　人　いない？▼
-人生は　さいのうが　一番
+人生は　才能が　一番
 大事　っていう人▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-27T14:25:19" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:40:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -71322,11 +71323,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>こんな　人　いない？▼
-人生は　さいのうが　一番
+人生は　才能が　一番
 大事　っていう人▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-27T14:25:28" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:40:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -71616,11 +71617,11 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せっちな　ひとが　やっている
+			<Text>せっかちな　ひとが　やっている
 おみせへ　いきたい▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-27T13:57:36" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:40:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -71628,11 +71629,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せっちな　人が　やっている
+			<Text>せっかちな　人が　やっている
 お店へ　行きたい▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-27T13:57:41" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:40:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -71674,11 +71675,11 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>せっちな　ひとが　やっている
+			<Text>せっかちな　ひとが　やっている
 おみせへ　いきたい▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-27T13:57:49" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:40:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -71686,11 +71687,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>せっちな　人が　やっている
+			<Text>せっかちな　人が　やっている
 お店へ　行きたい▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-27T13:57:49" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:40:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -73468,11 +73469,11 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はでな　かんじの　おみせに
-いきたいな▼</Text>
+			<Text>はでな　かんじの
+おみせに　いきたいな▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-23T13:33:06" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:41:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -73480,11 +73481,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>派手な　感じの　お店に
-行きたいな▼</Text>
+			<Text>派手な　感じの
+お店に　行きたいな▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-23T13:33:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:41:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -73526,11 +73527,11 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はでな　かんじの　おみせに
-いきたいな▼</Text>
+			<Text>はでな　かんじの
+おみせに　いきたいな▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-23T13:33:06" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:41:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -73538,11 +73539,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>派手な　感じの　お店に
-行きたいな▼</Text>
+			<Text>派手な　感じの
+お店に　行きたいな▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-23T13:33:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:41:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -73584,11 +73585,11 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントリーふうの　おみせに
-いきたいな▼</Text>
+			<Text>カントリーふうの
+おみせに　いきたいな▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-23T13:33:19" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:41:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -73596,11 +73597,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カントリー風の　お店に
-行きたいな▼</Text>
+			<Text>カントリー風の
+お店に　行きたいな▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-23T13:33:22" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:41:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -73642,11 +73643,11 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カントリーふうの　おみせに
-いきたいな▼</Text>
+			<Text>カントリーふうの
+おみせに　いきたいな▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-23T13:33:19" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:41:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -73654,11 +73655,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カントリー風の　お店に
-行きたいな▼</Text>
+			<Text>カントリー風の
+お店に　行きたいな▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-23T13:33:22" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:41:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -73945,10 +73946,10 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>自分の　直感を
-ためせる　場所ない？▼</Text>
+試せる　場所ない？▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-23T13:34:14" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:41:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -74003,10 +74004,10 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>自分の　直感を
-ためせる　場所ない？▼</Text>
+試せる　場所ない？▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-23T13:34:14" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:41:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -74582,11 +74583,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>とても　へんな人が　やっている
+			<Text>とても　変な人が　やっている
 お店へ　行きたい▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-25T08:45:47" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:41:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -74756,11 +74757,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ストレスかいしょう　できそうな
+			<Text>ストレス解消　できそうな
 場所は　ない？▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-23T13:35:37" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:41:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -74814,11 +74815,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ストレスかいしょう　できそうな
+			<Text>ストレス解消　できそうな
 場所は　ない？▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-23T13:35:37" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:41:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -74976,11 +74977,11 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンが　いそうな　ばしょに
-いきたいの▼</Text>
+			<Text>ポケモンが　いそうな
+ばしょに　いきたいの▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-23T13:35:53" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:42:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -74988,11 +74989,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンが　いそうな　場所に
-行きたいの▼</Text>
+			<Text>ポケモンが　いそうな
+場所に　行きたいの▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-23T13:35:56" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:42:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -75034,11 +75035,11 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンが　いそうな　ばしょに
-いきたいの▼</Text>
+			<Text>ポケモンが　いそうな
+ばしょに　いきたいの▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-23T13:35:53" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:42:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -75046,11 +75047,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンが　いそうな　場所に
-行きたいの▼</Text>
+			<Text>ポケモンが　いそうな
+場所に　行きたいの▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-23T13:35:56" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:42:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -75336,11 +75337,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ごうかいな　感じの　人の
+			<Text>豪快な　感じの　人の
 お店に　行きたいんだけど▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-23T13:36:46" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:42:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -75394,11 +75395,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ごうかいな　感じの　人の
+			<Text>豪快な　感じの　人の
 お店に　行きたいんだけど▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-23T13:36:54" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:42:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -75684,11 +75685,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちょっと　面白い
+			<Text>ちょっと　おもしろい
 話が　ききたいんだけど▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-23T13:40:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:42:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -75742,11 +75743,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ちょっと　面白い
+			<Text>ちょっと　おもしろい
 話が　ききたいんだけど▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-23T13:40:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:42:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -80686,10 +80687,10 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>赤外線つうしん</Text>
+			<Text>赤外線通信</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:17" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:43:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -81174,10 +81175,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>ねえねえ　[Name:ResortMayor ]！▼
 あなたの　アピールポイントを
-おしえて！</Text>
+教えて！</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-11-30T06:13:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:43:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -82211,10 +82212,10 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>自分から言う</Text>
+			<Text>自分からいう</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T11:07:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:44:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -82266,10 +82267,10 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>相手をまつ</Text>
+			<Text>相手を待つ</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T11:07:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:44:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -85006,10 +85007,10 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>絶対　言わない</Text>
+			<Text>絶対　いわない</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T11:11:08" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:44:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -85046,10 +85047,10 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>言っちゃう</Text>
+			<Text>いっちゃう</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T11:11:21" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:44:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -85422,11 +85423,11 @@ ME
 			<Text>[Name:TrainerName Idx="0" ]さんって……▼
 好きな人が　できたら
 自分から　告白　できないんで▼
-相手を　まつんだって
+相手を　待つんだって
 守りが　かたいって　感じするよね▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T11:46:46" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:44:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -86815,11 +86816,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="0" ]さんの　へやは
+			<Text>[Name:TrainerName Idx="0" ]さんの　部屋は
 とても　ごちゃごちゃ　しているんだって！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-27T16:10:24" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:45:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -87421,10 +87422,10 @@ ME
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="0" ]さんは
 いま　もっとも　あついものは▽
-ＷＢＴ　だって！▼</Text>
+PWT　だって！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-27T16:23:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:45:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -87434,10 +87435,10 @@ ME
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="0" ]さんは
 いま　もっとも　熱いものは▽
-ＷＢＴ　だって！▼</Text>
+PWT　だって！▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-27T16:23:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:45:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -87448,10 +87449,10 @@ ME
 			<Comment>回答10-3
 
 今熱いものは
-ＷＢＴ</Comment>
+PWT</Comment>
 			<CommentModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-09-27T16:19:18" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:45:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -88727,10 +88728,10 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>みんな　口が　かたいの！
-だれも　言わないの</Text>
+だれも　いわないの</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T11:16:59" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:45:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -90814,10 +90815,10 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>いまの　言葉に
-つよい　おもいを　感じたよ</Text>
+強い　想いを　感じたよ</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T11:22:19" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:46:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -90965,10 +90966,10 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>今度　挑戦　してみるよ</Text>
+			<Text>今度　挑戦してみるよ</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T11:22:30" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:46:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -92464,11 +92465,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>『性格』は　おおきく
+			<Text>『性格』は　大きく
 ２つ　わかれると　思うの</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T11:26:45" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:46:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -109411,7 +109412,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -109469,7 +109470,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -109524,7 +109525,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -109680,7 +109681,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -109733,7 +109734,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -109785,7 +109786,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -111084,11 +111085,11 @@ ME
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ヤーコン『オレさまも
-商売人　だからな　わかるのよ▼
-この　店は　とびっきり　だな！▼</Text>
+商売人だからな　わかるのよ▼
+この店は　とびっきり　だな！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-26T11:12:15" />
+				Time="2011-12-21T02:47:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -111794,7 +111795,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ffff</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -111841,7 +111842,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#00ffff</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -111892,7 +111893,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -111941,7 +111942,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -111992,7 +111993,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -112041,7 +112042,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -112096,7 +112097,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -112151,7 +112152,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -112200,7 +112201,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -112253,7 +112254,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -112304,7 +112305,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -112355,7 +112356,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -112404,7 +112405,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -112451,7 +112452,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -112498,7 +112499,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -112545,7 +112546,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -112592,7 +112593,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -112641,7 +112642,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -112690,7 +112691,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -112737,7 +112738,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -112784,7 +112785,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -112831,7 +112832,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -112880,7 +112881,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -112929,7 +112930,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -112976,7 +112977,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -113025,7 +113026,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -113074,7 +113075,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -113123,7 +113124,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -113172,7 +113173,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -113223,7 +113224,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -113270,7 +113271,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -113317,7 +113318,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -113366,7 +113367,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -113415,7 +113416,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -113466,7 +113467,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -113515,7 +113516,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -113564,7 +113565,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -113615,7 +113616,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -113664,7 +113665,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -113715,7 +113716,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -113764,7 +113765,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -113813,7 +113814,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -113862,7 +113863,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -113909,7 +113910,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -113958,7 +113959,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -114007,7 +114008,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -114056,7 +114057,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -114105,7 +114106,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -114154,7 +114155,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -114203,7 +114204,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -114252,7 +114253,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -114301,7 +114302,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -114350,7 +114351,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#c0c0c0</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -114401,7 +114402,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -114450,7 +114451,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -114501,7 +114502,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -114550,7 +114551,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -114601,7 +114602,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -114652,7 +114653,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -114701,7 +114702,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -114750,7 +114751,7 @@ ME
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#80ffff</CellData>
+			<CellData>#ff0000</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -115409,10 +115410,10 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>買い物でつかった　金額</Text>
+			<Text>買い物で　使った　金額</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-12-10T10:00:46" />
+				User="matsumiya:W00224"
+				Time="2011-12-21T02:48:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

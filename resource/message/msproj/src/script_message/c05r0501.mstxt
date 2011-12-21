@@ -2223,10 +2223,10 @@ Nの　気持ちは　わかりません▼
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……あれは　ゆめ　だったのかな？▼</Text>
+			<Text>くあぁあぁん！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T13:33:04" />
+				Time="2011-12-21T03:43:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2234,10 +2234,10 @@ Nの　気持ちは　わかりません▼
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……あれは　夢だったのかな？▼</Text>
+			<Text>くあぁあぁん！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T13:33:09" />
+				Time="2011-12-21T03:43:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2245,46 +2245,21 @@ Nの　気持ちは　わかりません▼
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリンク起動用メッセージ
+			<Comment>ポケモン
+・おもいでリンク起動用メッセージ
+・あわせて鳴き声再生
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T13:30:54" />
+				Time="2011-12-21T03:43:49" />
 		</CommentCell>
-	</TextRow>
-	<TextRow
-		Label="msg_c05r0501_memory_02"
-		Style="Large">
-		<LanguageCell
-			Language="JPN">
-			<Text>……うーん　ゆめ　だったのかなあ？</Text>
+		<AttributeCell
+			Name="Character">
+			<Text>ゾロアーク</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T13:32:45" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-15T13:32:33" />
-		</LanguageCell>
-		<LanguageCell
-			Language="JPN_KANJI">
-			<Text>……うーん　夢だったのかなあ？</Text>
-			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-15T13:33:13" />
-			<Status>Editing</Status>
-			<StatusModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-15T13:32:58" />
-		</LanguageCell>
-		<CommentCell
-			Language="JPN">
-			<Comment>おもいでリンク終了メッセージ
-※swanで新規作成</Comment>
-			<CommentModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-15T13:30:54" />
-		</CommentCell>
+				Time="2011-12-21T03:42:57" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c05r0501_poke_01"

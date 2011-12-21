@@ -1622,10 +1622,11 @@ RANGERW</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホネは　かたる！▼</Text>
+			<Text>あんた！
+ホネは　かたるのさ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T13:29:42" />
+				Time="2011-12-21T03:45:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1633,10 +1634,11 @@ RANGERW</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホネは　語る！▼</Text>
+			<Text>あんた！
+ホネは　語るのさ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T13:30:09" />
+				Time="2011-12-21T03:45:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1644,15 +1646,24 @@ RANGERW</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリンク起動用メッセージ
+			<Comment>♀
+・おもいでリンク起動用メッセージ
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T13:28:55" />
+				Time="2011-12-21T03:44:48" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER2
+アロエ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:44:39" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData />
+			<CellData>#80ffff</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -1663,10 +1674,15 @@ RANGERW</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ホネは　かたるのです！</Text>
+			<Text>あんたなら　だいじょうぶだろうけど
+ひとと　いけんが　ちがっても▽
+それが　あたりまえ　なんだからね▼
+いちいち　もめるんじゃないよ
+むしろ　たのしみなよ▽
+なぜ　そうおもうのか　ってね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T13:29:58" />
+				Time="2011-12-21T03:47:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1674,10 +1690,15 @@ RANGERW</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ホネは　語るのです！</Text>
+			<Text>あんたなら　大丈夫だろうけど
+ひとと　意見が　違っても▽
+それが　当然　なんだからね▼
+いちいち　もめるんじゃないよ
+むしろ　楽しみなよ▽
+なぜ　そう思うのか　ってね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T13:30:16" />
+				Time="2011-12-21T03:47:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1685,12 +1706,28 @@ RANGERW</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>おもいでリンク終了メッセージ
+			<Comment>♀
+・おもいでリンク終了メッセージ
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T13:28:55" />
+				Time="2011-12-21T03:44:52" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>LEADER2
+アロエ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-21T03:44:39" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c02gym0101_plate_01"
