@@ -406,8 +406,9 @@ ev_c05r0501_poke22_get:
     //ゾロア動作モデル削除
     _OBJ_DEL(C05R0501_POKE22_01)
     
-    //ポケモン入手処理
-    _ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_529, 0, 25 )
+    //ポケモン入手処理（ゾロア：Lv.25/せっかち/イリュージョン/♂）
+    _ADD_NPOKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_529, 25, SCR_SEIKAKU_SEKKATI, SCR_TOKUSEI_SPEC_1, SCR_SEX_SPEC_MALE )
+    //_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_529, 0, 25 )
     
     //主人公名代入
     _PLAYER_NAME( 0 )

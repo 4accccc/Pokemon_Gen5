@@ -1456,7 +1456,7 @@ _ANIME_LABEL	anm_common_hatena
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//	☆共通処理：ハテナ
+//	☆共通処理：…
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_tenten
 	_ANIME_DATA	AC_MARK_TENTEN,1
