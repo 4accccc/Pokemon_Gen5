@@ -294,7 +294,8 @@ enum {
 	NARC_fld3d_ci_get2_638_nsbmd = 280,
 	NARC_fld3d_ci_kerudhio_ci_nsbmd = 281,
 	NARC_fld3d_ci_kerudhio_ci_nsbca = 282,
-	NARC_fld3d_ci_kerudhio_ci_nsbva = 283
+	NARC_fld3d_ci_kerudhio_ci_nsbma = 283,
+	NARC_fld3d_ci_kerudhio_ci_nsbta = 284
 };
 
 /* NARC_FLD3D_CI_NAIX_ */

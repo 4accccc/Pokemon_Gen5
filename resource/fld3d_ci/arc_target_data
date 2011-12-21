@@ -282,4 +282,5 @@ ARC_TARGET_DATA = \
 	get2_638.nsbmd \
 	kerudhio_ci.nsbmd \
 	kerudhio_ci.nsbca \
-	kerudhio_ci.nsbva
+	kerudhio_ci.nsbma \
+	kerudhio_ci.nsbta
