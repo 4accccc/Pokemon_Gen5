@@ -105,8 +105,8 @@ inline u32 PDWACC_MESSAGE_ConvertID( const STRBUF *cp_strbuf )
   id = code%0x100000000;
   crc = code/0x100000000;
 
-  OS_TPrintf("id=%d crc=%d code=%d\n",id,crc,code);
+  OS_TPrintf("id=%d crc=%d code=%d calc%d\n",id,crc,code,GFL_STD_CrcCalc( &id, 4 ) );
 
-  GF_ASSERT( crc == GFL_STD_CrcCalc( &id, 4 ) );
+  //GF_ASSERT( crc == GFL_STD_CrcCalc( &id, 4 ) );
   return id;
 }

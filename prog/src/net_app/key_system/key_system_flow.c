@@ -636,6 +636,7 @@ static void KeySys_Seq_App_Irc( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     p_wk->ret = FALSE;
     KEYSYS_SEQ_Call( p_seqwk, KeySys_Seq_CreateDisplayIrc );
 
+    GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_KEY_SYSTEM );
     //通信をIRCワイヤレスモードで開始
     KEYSYS_NET_Start( p_wk->p_net, KEYSYS_NET_TYPE_IRCWIRELESS );
 

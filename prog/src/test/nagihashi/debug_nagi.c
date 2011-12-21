@@ -2265,6 +2265,13 @@ static void Namein_CallProcEnd( DEBUG_NAGI_MAIN_WORK *p_wk )
   DEBUG_STRBUF_Print( pStrbuf );
   OS_TFPrintf( 2,"\n" );
 
+
+  OS_TFPrintf( 2,"284070686  " );
+  PDWACC_MESSAGE_GetPassWord(284070686, pStrbuf);
+  OS_TFPrintf( 2,"gamesyncID = " );
+  DEBUG_STRBUF_Print( pStrbuf );
+  OS_TFPrintf( 2,"\n" );
+
   GFL_STR_DeleteBuffer(pStrbuf);
 }
 

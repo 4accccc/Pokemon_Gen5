@@ -217,8 +217,6 @@ extern KEYSYS_NET_STATE KEYSYS_NET_GetState( const KEYSYS_NET_WORK *cp_wk );
 extern BOOL KEYSYS_NET_GetRecvData( const KEYSYS_NET_WORK *cp_wk, void *p_data, u32 size );
 extern void * KEYSYS_NET_GetParamAdrs( KEYSYS_NET_WORK *p_wk );
 
-extern void KEYSYS_NET_DefaultRecvBuffer( KEYSYS_NET_WORK *p_wk );
-
 //ÉGÉâÅ[
 extern KEYSYS_NET_ERROR_TYPE KEYSYS_NET_HandleError( KEYSYS_NET_WORK *p_wk );
 extern void KEYSYS_NET_ClearError( KEYSYS_NET_WORK *p_wk );

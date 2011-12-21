@@ -873,7 +873,8 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       KEYSYS_NET_SEQ_PARAM_PGL_GETBW *p_param = KEYSYS_NET_GetParamAdrs(p_wk->p_net);
       switch( p_param->result )
       {
-      default:
+      case KEYSYS_NET_RESULT_PGL_GETBW_RESPONSE_ERROR:
+      case KEYSYS_NET_RESULT_PGL_GETBW_PDW_ERROR:
         NetErr_DispCallPushPop();
         *p_seq = SEQ_END;
         break;
@@ -900,7 +901,6 @@ static void DataConv_Seq_Wifi( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       }
       p_wk->p_recv_data = WB_SAVE_CONV_AllocConvertAllData( (u8*)p_wk->p_download_data+sizeof(gs_response), HEAPID_KEY_SYSTEM );
 
-      KEYSYS_NET_DefaultRecvBuffer( p_wk->p_net );
       GFL_HEAP_FreeMemory( p_wk->p_download_data );
       p_wk->p_download_data = NULL;
       (*p_seq)++;
@@ -1728,11 +1728,11 @@ static void DataConv_Seq_SubProc_WifiLogin( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq
     GFL_HEAP_FreeMemory( p_wk->p_proc_param );
     p_wk->p_proc_param = NULL;
 
-    GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_KEY_SYSTEM );
-
     KEYSYS_InitTemporaryModules( p_wk, HEAPID_KEY_SYSTEM );
     KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
     KEYSYS_BG_RequestPltFade( p_wk->p_bg, KEYSYS_BG_PLTFADE_REQ_MAIN_TO_DATACONV, 1 );
+
+    GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_KEY_SYSTEM );
 
     (*p_seq)++;
     break;
@@ -1850,8 +1850,11 @@ static void DataConv_Seq_SubProc_NameIn( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, v
       NAMEIN_PARAM *p_param = p_wk->p_proc_param;
       if( p_param->cancel )
       {
-        GFL_STR_DeleteBuffer( p_wk->p_gamesync_id_code );
-        p_wk->p_gamesync_id_code = NULL;
+        if( p_wk->p_gamesync_id_code )
+        {
+          GFL_STR_DeleteBuffer( p_wk->p_gamesync_id_code );
+          p_wk->p_gamesync_id_code = NULL;
+        }
       }
       else
       {
@@ -1870,6 +1873,7 @@ static void DataConv_Seq_SubProc_NameIn( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, v
     KEYSYS_BG_TransScreen( p_wk->p_bg, KEYSYS_BG_FRAME_WND_M, KEYSYS_BG_SCR_TITLE_M );
     KEYSYS_BG_RequestPltFade( p_wk->p_bg, KEYSYS_BG_PLTFADE_REQ_MAIN_TO_DATACONV, 1 );
 
+    GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_KEY_SYSTEM );
     (*p_seq)++;
     break;
   case SEQ_END:

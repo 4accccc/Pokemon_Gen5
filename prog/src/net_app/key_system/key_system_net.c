@@ -116,10 +116,11 @@ static void KeySys_NetCallback_IrcEndIrcWireless(void* p_wk_adrs);
 //ネットレシーブ
 static void KeySys_NetRecv_IrcWireless_CommonData( const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_handle );
 
+// 8 2 E 7 Q J A 5 7 B 
+
 //汎用
 static BOOL KeySys_Net_IsEnableRequest( const KEYSYS_NET_WORK *cp_wk, KEYSYS_NET_REQ request );
-
-
+static void Kesys_Net_DisconnectCallback(void* p_wk_adrs, int code, int type, int ret);
 void KEYSYS_NET_End( KEYSYS_NET_WORK *p_wk );
 
 //=============================================================================
@@ -218,6 +219,7 @@ KEYSYS_NET_WORK * KEYSYS_NET_Init( const KEYSYS_NET_INIT_PARAM *cp_param, HEAPID
 
   //モジュール作成
   p_wk->p_seq = KEYSYS_SEQ_Init( 1, p_wk, KeySys_Net_Seq_Wait, heapID );
+
   return p_wk;
 }
 
@@ -230,6 +232,7 @@ KEYSYS_NET_WORK * KEYSYS_NET_Init( const KEYSYS_NET_INIT_PARAM *cp_param, HEAPID
 //-----------------------------------------------------------------------------
 void KEYSYS_NET_Exit( KEYSYS_NET_WORK *p_wk )
 {
+
   KEYSYS_NET_End( p_wk );
 
   //シーケンス破棄
@@ -291,6 +294,7 @@ void KEYSYS_NET_Start( KEYSYS_NET_WORK *p_wk, KEYSYS_NET_TYPE net_type )
 
   case KEYSYS_NET_TYPE_WIFI_NTTP:
     GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common) );
+    GFL_NET_DWC_SetErrDisconnectCallback(Kesys_Net_DisconnectCallback, p_wk );
     break;
   }
 }
@@ -432,23 +436,6 @@ BOOL KEYSYS_NET_GetRecvData( const KEYSYS_NET_WORK *cp_wk, void *p_data, u32 siz
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  バッファーをデフォルトに戻す
- *
- *	@param	ワーク
- */
-//-----------------------------------------------------------------------------
-void KEYSYS_NET_DefaultRecvBuffer( KEYSYS_NET_WORK *p_wk )
-{
-  switch( p_wk->net_type )
-  {
-  case KEYSYS_NET_TYPE_WIFI_NTTP:
-    NHTTP_RAP_DefaultBuffer(p_wk->p_nhttp);
-    break;
-  }
-}
-
-//----------------------------------------------------------------------------
-/**
  *	@brief  エラー解消しエラーのタイプを渡す
  *
  *	@param	KEYSYS_NET_WORK *p_wk   ワーク
@@ -523,11 +510,6 @@ void KEYSYS_NET_ClearError( KEYSYS_NET_WORK *p_wk )
     break;
 
   case KEYSYS_NET_TYPE_WIFI_NTTP:
-    if( p_wk->p_nhttp )
-    {
-      NHTTP_RAP_End( p_wk->p_nhttp );
-      p_wk->p_nhttp = NULL;
-    }
 
     NetErr_ExitNetSystem();
     NetErr_DispCallPushPop();
@@ -537,6 +519,8 @@ void KEYSYS_NET_ClearError( KEYSYS_NET_WORK *p_wk )
     KEYSYS_SEQ_Next( p_wk->p_seq, KeySys_Net_Seq_Wait );
     break;
   }
+
+  p_wk->net_type  = KEYSYS_NET_TYPE_NONE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -968,6 +952,8 @@ static void KeySys_Net_Seq_Nhttp_GetBw( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, vo
 
     GF_ASSERT( p_wk->p_nhttp == NULL );
     p_wk->p_nhttp = NHTTP_RAP_Init(p_wk->heapID,MyStatus_GetProfileID(GAMEDATA_GetMyStatus(p_wk->param.p_gamedata)), p_wk->p_svl);
+
+
     NHTTP_RAP_SetBuffer(p_wk->p_nhttp, p_param->p_buffer_adrs, p_param->buffer_size );
 
     if(NHTTP_RAP_ConectionCreateEx( NHTTPRAP_URL_SAVEDATE_GETBW, p_param->gsid, p_wk->p_nhttp ))
@@ -1059,8 +1045,10 @@ static void KeySys_Net_Seq_Nhttp_GetBw( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, vo
     break;
 
   case SEQ_END:
+    NHTTP_RAP_DefaultBuffer(p_wk->p_nhttp);
     if( p_wk->p_nhttp )
     {
+      NHTTP_RAP_ErrorClean( p_wk->p_nhttp );
       NHTTP_RAP_End( p_wk->p_nhttp );
       p_wk->p_nhttp = NULL;
     }
@@ -1177,6 +1165,7 @@ static void KeySys_Net_Seq_Nhttp_PlayStatus( KEYSYS_SEQ_WORK *p_seqwk, int *p_se
   case SEQ_END:
     if( p_wk->p_nhttp )
     {
+      NHTTP_RAP_ErrorClean( p_wk->p_nhttp );
       NHTTP_RAP_End( p_wk->p_nhttp );
       p_wk->p_nhttp = NULL;
     }
@@ -1401,7 +1390,36 @@ void KEYSYS_NET_End( KEYSYS_NET_WORK *p_wk )
     break;
 
   case KEYSYS_NET_TYPE_WIFI_NTTP:
+    GFL_NET_DWC_SetErrDisconnectCallback(NULL, NULL );
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common) );
     break;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  通信が切断されたときに呼ばれるコールバック
+ *
+ *	@param	p_wk_adrs ワークアドレス
+ *	@param	code  エラーコード
+ *	@param	type  エラータイプ
+ *	@param	ret   エラー
+ */
+//-----------------------------------------------------------------------------
+static void Kesys_Net_DisconnectCallback(void* p_wk_adrs, int code, int type, int ret)
+{
+  KEYSYS_NET_WORK *p_wk = p_wk_adrs;
+
+  switch( type )
+  {
+  //切断エラー
+  case DWC_ETYPE_SHUTDOWN_FM:
+  case DWC_ETYPE_DISCONNECT:
+    if(p_wk->p_nhttp)
+    {
+      NHTTP_RAP_ErrorClean(p_wk->p_nhttp);
+      NHTTP_RAP_End(p_wk->p_nhttp);
+      p_wk->p_nhttp  = NULL;
+    }
   }
 }
