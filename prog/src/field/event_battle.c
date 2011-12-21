@@ -75,9 +75,10 @@
 FS_EXTERN_OVERLAY(amprotect);
 
 #ifdef AMPROTECT_FUNC
-static void magicon1_need_func(void);
-static void magicon2_need_func(void);
-static void magicon3_failure_func(void);
+static void *magicon1_failure_func   ( void *param1, void *param2 );
+static void *magicon2_need_func   ( void *param1, void *param2 );
+static void *magicon3_failure_func( void *param1, void *param2 );
+static void *magicon4_need_func( void *param1, void *param2 );
 extern void magicon_dummy_task(GFL_TCB *tcb, void *pWork);
 extern int  debug_tcb_num;
 
@@ -839,6 +840,7 @@ static GMEVENT_RESULT fieldBattleEvent(
   case 5:
 #ifdef AMPROTECT_FUNC
     GFL_OVERLAY_Load( FS_OVERLAY_ID(amprotect) );  
+    AM_Init();
 #endif
     //N“üƒVƒXƒeƒ€‚ÉƒtƒB[ƒ‹ƒh’†‚Å‚ ‚é‚±‚Æ‚ð“`‚¦‚é
     {
@@ -846,12 +848,16 @@ static GMEVENT_RESULT fieldBattleEvent(
       FIELD_STATUS_SetProcAction( fldstatus, PROC_ACTION_FIELD );
       COMM_PLAYER_SUPPORT_SetBattleEnd(GAMEDATA_GetCommPlayerSupportPtr(gamedata));
     }
+#ifdef AMPROTECT_FUNC
+    AM_SetCallback( magicon2_need_func, magicon1_failure_func );
+#endif
     (*seq) ++;
     break;
 
   case 6: 
 #ifdef AMPROTECT_FUNC
-    magicon_number += 977*(!AM_IsNotMagiconA1(magicon1_need_func));
+//    magicon_number += 977*(!AM_IsNotMagiconA1(magicon1_failure_func));
+    AM_IsMagiconB1( &magicon_number, bew );
 #endif
     //í“¬Œ‹‰Ê”½‰fˆ—
     BEW_ReflectBattleResult( bew, gamedata ); 
@@ -864,13 +870,16 @@ static GMEVENT_RESULT fieldBattleEvent(
     }
     (*seq) ++;
 #ifdef AMPROTECT_FUNC
-    magicon_number += 1489*(!AM_IsNotMagiconA2(magicon2_need_func));
+//    magicon_number += 1489*(!AM_IsNotMagiconA2(magicon2_need_func));
+    AM_SetCallback( magicon4_need_func, magicon3_failure_func );
+
 #endif
     break;
 
   case 7:
 #ifdef AMPROTECT_FUNC
-    magicon_number += 157*AM_IsMagiconA3(magicon3_failure_func);
+//    magicon_number += 157*AM_IsMagiconA3(magicon3_failure_func);
+      AM_IsMagiconB2( &magicon_number, bew );
 #endif
     // •‰‚¯‚½ê‡, BGM‚ð’âŽ~‚·‚é
     if( (bew->is_no_lose == FALSE) && (BEW_IsLoseResult(bew) == TRUE) ) { 
@@ -1255,22 +1264,33 @@ static void BEW_Destructor(BATTLE_EVENT_WORK * bew)
 
 
 #ifdef AMPROTECT_FUNC
-static void magicon1_need_func(void)
+static void *magicon1_failure_func( void *param1, void *param2 )
 {
+  u32 *magicon_number = (u32*)param1;
   int primal = 71*83;
   primal += GFL_STD_MtRand(GFL_STD_RAND_MAX)+GFL_STD_MtRand(GFL_STD_RAND_MAX);
-  return;
+
+  *magicon_number += 977;
+  return param1;
 }
-static void magicon2_need_func(void)
+static void *magicon2_need_func( void *param1, void *param2 )
 {
   int primal = 2111*101;
   primal += GFL_STD_MtRand(GFL_STD_RAND_MAX)+GFL_STD_MtRand(GFL_STD_RAND_MAX);
-  return;
+  return param2;
 }
-static void magicon3_failure_func(void)
+static void *magicon3_failure_func( void *param1, void *param2 )
 {
   int primal = 1759*2677;
+  u32 *magicon_number = (u32*)param1;
   primal += GFL_STD_MtRand(GFL_STD_RAND_MAX)+GFL_STD_MtRand(GFL_STD_RAND_MAX);
-  return;
+
+  *magicon_number += 157;
+  return param1;
+}
+
+static void *magicon4_need_func( void *param1, void *param2 )
+{
+  return param2;
 }
 #endif

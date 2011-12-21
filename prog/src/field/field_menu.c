@@ -36,6 +36,14 @@
 // LとRで項目を減らすテストができる
 //#define TEST_FIELD_MENU
 
+//有効にするとトレーナーカードの部分にデバッグ情報がでる
+//#define FINAL_ROM_DEBUG
+
+// FINAL_ROMで残りHEAPを表示する
+#ifdef FINAL_ROM_DEBUG
+#define MAGICON_MEMORY
+extern int debug_tcb_num;
+#endif
 
 //======================================================================
 //  define
@@ -1018,8 +1026,18 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle, 
       initWork.str = GFL_STR_CreateBuffer( 16 , work->tempHeapId );
       if( MyStatus_CheckNameClear( work->my ) == FALSE )
       {
+#ifdef FINAL_ROM_DEBUG
+#ifdef MAGICON_MEMORY
+        u32 memory = GFL_HEAP_GetHeapFreeSize(HEAPID_PROC);
+        STRTOOL_SetHexNumber( initWork.str, memory+0x100000*debug_tcb_num, 8, 0, 0 );
+#else
+        u32 memory = (u32)(OS_GetMainArenaHi())-(u32)(OS_GetMainArenaLo());
+        STRTOOL_SetHexNumber( initWork.str, memory, 8, 0, 0 );
+#endif
+#else
         const STRCODE *myname = MyStatus_GetMyName( work->my );
         GFL_STR_SetStringCode( initWork.str , myname );
+#endif
       }
       else
       {

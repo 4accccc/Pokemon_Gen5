@@ -4,6 +4,27 @@
 
   Copyright NetAgent Co. Ltd., All rights reserved.
 
+  Revision 2.03 2010/01/25
+  検出できないマジコンを検出できるように修正
+  暗号化方式の改善
+  内部処理を変更
+   
+  Revision 2.02 2010/10/19
+  検出できないマジコンを検出できるように修正
+  
+  Revision 2.01 2010/06/30
+  DSTWO,ezViに対応
+  初期化をNitroStaticInitから明示的（AM_Init）に変更
+  
+  Revision 2.00 2010/06/14
+  検知APIのインターフェース変更
+  暗号化方式の改善
+  内部処理を変更
+  
+  Revision 1.28 2010/06/02
+  HDMA転送とのタイミングによる不都合修正
+  検出できないマジコンを検出できるように修正
+  
   Revision 1.27 2010/02/26
   暗号鍵変更の実施
   内部処理を変更
@@ -69,216 +90,224 @@
 #include <nitro/os.h>
 #include <nitro/card.h>
 
-#define AM_VERSION (127)
+#define AM_VERSION (203)
 
-/* -- 関数ポインタ操作用定義 ------------------------------------- */
-#define _ADD_VAL        ((u32)(8 * 100))
-#define _SET_FUNC(x)    (((u32)(x)) + (_ADD_VAL))
-#define _GET_FUNC(x)    (((u32)(x)) - (_ADD_VAL))
 
 /* 引数に使用する関数ポインタの定義 */
-typedef void (*AM_PTR_FUNC)(void);
-typedef u32 (*AM_CALLBACK_PTR)(void*);
+#ifndef __AM_USER_CALLBACK__
+# define __AM_USER_CALLBACK__
+  typedef void* (*AM_USER_CALLBACK)(void*,void*);
+# endif
+
+/* API 呼び出しマクロ */
+# define IMPORT_AM_API(__FUNC) Stub_##__FUNC
 
 /* 実体関数をエクスポート */
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+/* -- callbackポインタ用 --------------------------------------------------------
+ * g_am_user_callback および g_am_user_callback_order の実体は
+ * AMProtectR2a.a に定義されています。
+ */
+extern AM_USER_CALLBACK g_am_user_callback[2];
+extern u32 g_am_user_callback_order;
 
-#ifndef __UTILS_H__
-# define IMPORT_AM_API(__FUNC) Stub_##__FUNC
-#endif /* __UTILS_H__ */
+/* ------------------------------------------------------------------------------
+ * ライブラリ側関数定義
+ * 実際には AM_IsMagiconB* 関数より呼び出される
+ */
+extern void* IMPORT_AM_API(ProtectB1)(void* param1, void* param2);
+extern void* IMPORT_AM_API(ProtectB2)(void* param1, void* param2);
+extern void* IMPORT_AM_API(ProtectB3)(void* param1, void* param2);
+extern void* IMPORT_AM_API(ProtectB4)(void* param1, void* param2);
 
-
-// API定義
-extern u32 IMPORT_AM_API(ProtectB1)(AM_CALLBACK_PTR addr, void* param, u32 reserve);
-extern u32 IMPORT_AM_API(NotProtectB1)(AM_CALLBACK_PTR addr, void* param, u32 reserve);
-extern u32 IMPORT_AM_API(ProtectB2)(AM_CALLBACK_PTR addr, void* param, u32 reserve);
-extern u32 IMPORT_AM_API(NotProtectB2)(AM_CALLBACK_PTR addr, void* param, u32 reserve);
-extern u32 IMPORT_AM_API(ProtectB3)(AM_CALLBACK_PTR addr, void* param, u32 reserve);
-extern u32 IMPORT_AM_API(NotProtectB3)(AM_CALLBACK_PTR addr, void* param, u32 reserve);
-
-
-// ver 1.24 において ver 1.23以前とのAPI互換性をとるための関数
-static u32 __wrap_func( void* param ){
-	if( param ){
-		(*((AM_PTR_FUNC)param))();
+/* ------------------------------------------------------------------------------
+ * 検知関数の改ざんチェック用マクロ
+ */
+#define CHECK_AND_INVOKE(func,p1,p2)											\
+	u32* addr = (u32*)(func);													\
+	u32 checksum, i;															\
+	i = 28;																		\
+	checksum = 0;																\
+	do																			\
+	{																			\
+		checksum ^= ( ((*addr)>>i) | ((*addr)<<(32-i)) );						\
+		++addr;																	\
+	}while( --i );																\
+	if( checksum == 0x0786385F )												\
+	{																			\
+		return (func)((p1),(p2));												\
+	}																			\
+	else																		\
+	{																			\
+		return (g_am_user_callback[ g_am_user_callback_order ^ 1 ])((p1),(p2));	\
 	}
-	return ~(u32)param;
-}
-
 
 /*-----------------------------------------------------------------*
-  undocumented
+ * DSプロテクト ライブラリ API 定義
  *-----------------------------------------------------------------*/
-#ifdef SDK_FINALROM
-#define AM_IsMagiconB1(func,arg,reserve)	(IMPORT_AM_API(ProtectB1)(func,arg,reserve))
-#define AM_IsMagiconB2(func,arg,reserve)	(IMPORT_AM_API(ProtectB2)(func,arg,reserve))
-#define AM_IsMagiconB3(func,arg,reserve)	(IMPORT_AM_API(ProtectB3)(func,arg,reserve))
-#else
-/* DEBUG,RELEASE版では公式開発環境でのチェックを抑制する */
-static u32 AM_IsMagiconB1(AM_CALLBACK_PTR func, void *arg, u32 reserve) {
-	
-	// LockIDの空き確認
-	// LockIDを使い切っているようであればOS_Panic()
-	s32 lockId = OS_GetLockID();
-	if (OS_LOCK_ID_ERROR == lockId) {
-		OS_Panic("lock ID get error.");
-	}
-	OS_ReleaseLockID((u16)lockId);
-	
-	
-	switch (OS_GetConsoleType() & OS_CONSOLE_MASK) {
-	case OS_CONSOLE_ENSATA:
-	case OS_CONSOLE_ISEMULATOR:
-	case OS_CONSOLE_ISDEBUGGER:
-#ifdef OS_CONSOLE_TWLDEBUGGER
-	case OS_CONSOLE_TWLDEBUGGER:
-#endif
-		return (u32)arg;
-	default:
-		;
-	}
-	
-	return IMPORT_AM_API(ProtectB1)( func, arg, reserve );
-	
-}
-
-static u32 AM_IsMagiconB2(AM_CALLBACK_PTR func, void *arg, u32 reserve) {
-	
-	switch (OS_GetConsoleType() & OS_CONSOLE_MASK) {
-	case OS_CONSOLE_ENSATA:
-	case OS_CONSOLE_ISEMULATOR:
-	case OS_CONSOLE_ISDEBUGGER:
-#ifdef OS_CONSOLE_TWLDEBUGGER
-	case OS_CONSOLE_TWLDEBUGGER:
-#endif
-		return (u32)arg;
-	default:
-		;
-	}
-	
-	return IMPORT_AM_API(ProtectB2)( func, arg, reserve );
-	
-}
-
-static u32 AM_IsMagiconB3(AM_CALLBACK_PTR func, void *arg, u32 reserve) {
-	
-	switch (OS_GetConsoleType() & OS_CONSOLE_MASK) {
-	case OS_CONSOLE_ENSATA:
-	case OS_CONSOLE_ISEMULATOR:
-	case OS_CONSOLE_ISDEBUGGER:
-#ifdef OS_CONSOLE_TWLDEBUGGER
-	case OS_CONSOLE_TWLDEBUGGER:
-#endif
-		return (u32)arg;
-	default:
-		;
-	}
-	
-	return IMPORT_AM_API(ProtectB3)( func, arg, reserve );
-	
-}
-
-#endif /* SDK_FINALROM */
-
-
-/*-----------------------------------------------------------------*
-  undocumented
- *-----------------------------------------------------------------*/
-#ifdef SDK_FINALROM
-#define AM_IsNotMagiconB1(func,arg,seed)	(IMPORT_AM_API(NotProtectB1)(func,arg,seed))
-#define AM_IsNotMagiconB2(func,arg,seed)	(IMPORT_AM_API(NotProtectB2)(func,arg,seed))
-#define AM_IsNotMagiconB3(func,arg,seed)	(IMPORT_AM_API(NotProtectB3)(func,arg,seed))
-#else
-/* DEBUG,RELEASE版では公式開発環境でのチェックを抑制する */
-static u32 AM_IsNotMagiconB1(AM_CALLBACK_PTR func, void *arg, u32 reserve) {
-	
-	// LockIDの空き確認
-	// LockIDを使い切っているようであればOS_Panic()
-	s32 lockId = OS_GetLockID();
-	if (OS_LOCK_ID_ERROR == lockId) {
-		OS_Panic("lock ID get error.");
-	}
-	OS_ReleaseLockID((u16)lockId);
-	
-	
-	switch (OS_GetConsoleType() & OS_CONSOLE_MASK) {
-	case OS_CONSOLE_ENSATA:
-	case OS_CONSOLE_ISEMULATOR:
-	case OS_CONSOLE_ISDEBUGGER:
-#ifdef OS_CONSOLE_TWLDEBUGGER
-	case OS_CONSOLE_TWLDEBUGGER:
-#endif
-		if (NULL != func) {
-			(*func)( arg );
-		}
-		return ~(u32)arg;
-	default:
-		;
-	}
-	
-	return IMPORT_AM_API(NotProtectB1)( func, arg, reserve );
-	
-}
-
-static u32 AM_IsNotMagiconB2(AM_CALLBACK_PTR func, void *arg, u32 reserve) {
-	
-	switch (OS_GetConsoleType() & OS_CONSOLE_MASK) {
-	case OS_CONSOLE_ENSATA:
-	case OS_CONSOLE_ISEMULATOR:
-	case OS_CONSOLE_ISDEBUGGER:
-#ifdef OS_CONSOLE_TWLDEBUGGER
-	case OS_CONSOLE_TWLDEBUGGER:
-#endif
-		if (NULL != func) {
-			(*func)( arg );
-		}
-		return ~(u32)arg;
-	default:
-		;
-	}
-	
-	return IMPORT_AM_API(NotProtectB2)( func, arg, reserve );
-	
-}
-
-
-static u32 AM_IsNotMagiconB3(AM_CALLBACK_PTR func, void *arg, u32 reserve) {
-	
-	switch (OS_GetConsoleType() & OS_CONSOLE_MASK) {
-	case OS_CONSOLE_ENSATA:
-	case OS_CONSOLE_ISEMULATOR:
-	case OS_CONSOLE_ISDEBUGGER:
-#ifdef OS_CONSOLE_TWLDEBUGGER
-	case OS_CONSOLE_TWLDEBUGGER:
-#endif
-		if (NULL != func) {
-			(*func)( arg );
-		}
-		return ~(u32)arg;
-	default:
-		;
-	}
-	
-	return IMPORT_AM_API(NotProtectB3)( func, arg, reserve );
-	
-}
-
-#endif /* SDK_FINALROM */
-
-
+ 
 /*
-  version 1.23以前のAPIとの互換性のための関数定義
-  インライン関数定義を使用してユーザーコードエリアに展開させる
-*/
-inline static u32 AM_IsMagiconA1( AM_PTR_FUNC func ){ return AM_IsMagiconB1(__wrap_func, func,0) == ~(u32)func; }
-inline static u32 AM_IsMagiconA2( AM_PTR_FUNC func ){ return AM_IsMagiconB2(__wrap_func, func,0) == ~(u32)func; }
-inline static u32 AM_IsMagiconA3( AM_PTR_FUNC func ){ return AM_IsMagiconB3(__wrap_func, func,0) == ~(u32)func; }
-inline static u32 AM_IsNotMagiconA1( AM_PTR_FUNC func ){ return AM_IsNotMagiconB1(__wrap_func, func,0) == ~(u32)func; }
-inline static u32 AM_IsNotMagiconA2( AM_PTR_FUNC func ){ return AM_IsNotMagiconB2(__wrap_func, func,0) == ~(u32)func; }
-inline static u32 AM_IsNotMagiconA3( AM_PTR_FUNC func ){ return AM_IsNotMagiconB3(__wrap_func, func,0) == ~(u32)func; }
+ * AM_IsMagiconB* 関数内部で使用する、反映関数のポインタをセットする
+ *  [引数]
+ *    legal_cb : 正規環境時に AM_IsMagiconB* 関数内部より呼び出される関数へのポインタ
+ *    illegal_cb : 不正環境時に AM_IsMagiconB* 関数内部より呼び出される関数へのポインタ
+ *  [備考]
+ *    この関数は、実行時コスト低減のために inline 展開される
+ *    
+ */
+inline void AM_SetCallback( AM_USER_CALLBACK legal_cb, AM_USER_CALLBACK illegal_cb )
+{
+	// VBlankCounterを使ってCB格納先を変化させる
+	g_am_user_callback_order = OS_GetVBlankCount() & 1ul;
+	g_am_user_callback[ g_am_user_callback_order ]       = legal_cb;
+	g_am_user_callback[ g_am_user_callback_order ^ 1ul ] = illegal_cb;
+}
+
+#ifdef SDK_FINALROM
+/* -----------------------------------------------------------------------------
+ * AM_IsMagiconB*
+ *   実際にマジコン検知を行います。
+ *   AM_IsMagiconB1 : マジコン検知を行います
+ *   AM_IsMagiconB2 : エミュレータ検知を行います
+ *   AM_IsMagiconB3 : マジコン検知を行います
+ *   AM_IsmagiconB4 : エミュレータ検知を行います
+ *  [引数]
+ *    param1, param2 : AM_SetCallback で設定した関数を実行する際に、
+ *                     引数としてパススルーされます
+ *                     内部での使用用途は定められていないので、
+ *                     自由に使用する事が可能です
+ *  [備考]
+ *    AM_IsMagiconB1 と AM_IsMagiconB3 は、動作結果は同一ですが内部での実装は異なります
+ *    AM_IsMagiconB2 と AM_IsMagiconB4 は、動作結果は同一ですが内部での実装は異なります
+ *    Debug・Releaseビルド時には、公式エミュレータ・デバッガは検知対象外となり、
+ *    常に正規環境となります。
+ */
+inline void* AM_IsMagiconB1( void* param1, void* param2 )
+{
+	CHECK_AND_INVOKE( IMPORT_AM_API(ProtectB1), param1, param2 );
+}
+
+inline void* AM_IsMagiconB2( void* param1, void* param2 )
+{
+	CHECK_AND_INVOKE( IMPORT_AM_API(ProtectB2), param1, param2 );
+}
+
+inline void* AM_IsMagiconB3( void* param1, void* param2 )
+{
+	CHECK_AND_INVOKE( IMPORT_AM_API(ProtectB3), param1, param2 );
+}
+
+inline void* AM_IsMagiconB4( void* param1, void* param2 )
+{
+	CHECK_AND_INVOKE( IMPORT_AM_API(ProtectB4), param1, param2 );
+}
+#else
+/* DEBUG,RELEASE版では公式開発環境でのチェックを抑制する */
+static void* AM_IsMagiconB1( void *param1, void* param2 ) {
+	
+	// LockIDの空き確認
+	// LockIDを使い切っているようであればOS_Panic()
+	s32 lockId = OS_GetLockID();
+	if (OS_LOCK_ID_ERROR == lockId) {
+		OS_Panic("lock ID get error.");
+	}
+	OS_ReleaseLockID((u16)lockId);
+
+
+	switch (OS_GetConsoleType() & OS_CONSOLE_MASK) {
+	case OS_CONSOLE_ENSATA:
+	case OS_CONSOLE_ISEMULATOR:
+	case OS_CONSOLE_ISDEBUGGER:
+#ifdef OS_CONSOLE_TWLDEBUGGER
+	case OS_CONSOLE_TWLDEBUGGER:
+#endif
+		return g_am_user_callback[ g_am_user_callback_order ]( param1, param2 );
+	default:
+		;
+	}
+	
+	return IMPORT_AM_API(ProtectB1)( param1, param2 );
+	
+}
+
+static void* AM_IsMagiconB2( void *param1, void* param2 ) {
+	
+	switch (OS_GetConsoleType() & OS_CONSOLE_MASK) {
+	case OS_CONSOLE_ENSATA:
+	case OS_CONSOLE_ISEMULATOR:
+	case OS_CONSOLE_ISDEBUGGER:
+#ifdef OS_CONSOLE_TWLDEBUGGER
+	case OS_CONSOLE_TWLDEBUGGER:
+#endif
+		return g_am_user_callback[ g_am_user_callback_order ]( param1, param2 );
+	default:
+		;
+	}
+	
+	return IMPORT_AM_API(ProtectB2)( param1, param2 );
+	
+}
+
+static void* AM_IsMagiconB3( void *param1, void* param2 ) {
+	
+	// LockIDの空き確認
+	// LockIDを使い切っているようであればOS_Panic()
+	s32 lockId = OS_GetLockID();
+	if (OS_LOCK_ID_ERROR == lockId) {
+		OS_Panic("lock ID get error.");
+	}
+	OS_ReleaseLockID((u16)lockId);
+	
+	
+	switch (OS_GetConsoleType() & OS_CONSOLE_MASK) {
+	case OS_CONSOLE_ENSATA:
+	case OS_CONSOLE_ISEMULATOR:
+	case OS_CONSOLE_ISDEBUGGER:
+#ifdef OS_CONSOLE_TWLDEBUGGER
+	case OS_CONSOLE_TWLDEBUGGER:
+#endif
+		return g_am_user_callback[ g_am_user_callback_order ]( param1, param2 );
+	default:
+		;
+	}
+	
+	return IMPORT_AM_API(ProtectB3)( param1, param2 );
+	
+}
+
+static void* AM_IsMagiconB4( void *param1, void* param2 ) {
+	
+	switch (OS_GetConsoleType() & OS_CONSOLE_MASK) {
+	case OS_CONSOLE_ENSATA:
+	case OS_CONSOLE_ISEMULATOR:
+	case OS_CONSOLE_ISDEBUGGER:
+#ifdef OS_CONSOLE_TWLDEBUGGER
+	case OS_CONSOLE_TWLDEBUGGER:
+#endif
+		return g_am_user_callback[ g_am_user_callback_order ]( param1, param2 );
+	default:
+		;
+	}
+	
+	return IMPORT_AM_API(ProtectB4)( param1, param2 );
+	
+}
+
+#endif /* SDK_FINALROM */
+
+/*------------------------------------------------------------------------------
+ * DSプロテクトライブラリの初期化を行います
+ * 引数 : 無し
+ * 戻り値 : 無し
+ *
+ * 各種検知関数を呼び出す前に一度だけ実行を行う必要があります
+ * 二度目以降の呼び出しでは何も行わないため、複数回呼び出しても問題はありません
+ ---------------------------------------------------------------------------- */
+void AM_Init();
+
 
 #ifdef __cplusplus
 }

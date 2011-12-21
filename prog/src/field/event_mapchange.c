@@ -156,9 +156,9 @@ static void SheimiFromBackIllegal(GAMEDATA * gamedata);
 
 
 #ifdef AMPROTECT_FUNC
-static void magicon1_failure_func(void);
-static void magicon2_failure_func(void);
-static void magicon3_need_func(void);
+static void *magicon1_failure_func( void* param1, void *param2 );
+static void *magicon2_failure_func( void* param1, void *param2 );
+static void *magicon3_need_func( void* param1, void *param2 );
 
 
 #endif
@@ -973,6 +973,7 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
   case MAPCORE_SEQ_COMM_CHECK:
 #ifdef AMPROTECT_FUNC
   GFL_OVERLAY_Load( FS_OVERLAY_ID(amprotect) );  
+  AM_Init();
 #endif
     if ( ZONEDATA_IsFieldBeaconNG(work->loc_req.zone_id ) == TRUE )
     { 
@@ -1001,7 +1002,8 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
   case MAPCORE_SEQ_UPDATE_DATA:
 
 #ifdef AMPROTECT_FUNC
-    AM_IsMagiconA1(magicon1_failure_func);
+    AM_SetCallback( magicon3_need_func, magicon1_failure_func );
+    AM_IsMagiconB3( work, gameSystem );
 #endif
     //マップモードなど機能指定を解除する
     MAPCHG_releaseMapTools( gameSystem );
@@ -1027,7 +1029,8 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
       }
     }
 #ifdef AMPROTECT_FUNC
-    AM_IsMagiconA2(magicon2_failure_func);
+    AM_SetCallback( magicon3_need_func, magicon2_failure_func );
+    AM_IsMagiconB4( work, gameSystem );
 #endif
 
 
@@ -1044,9 +1047,10 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     if( work->mapchange_type != EV_MAPCHG_UNION ){
       GAMEBEACON_Set_ZoneChange( work->loc_req.zone_id, gameData );
     }
-#ifdef AMPROTECT_FUNC
-    AM_IsNotMagiconA3(magicon3_need_func);
-#endif
+
+//#ifdef AMPROTECT_FUNC
+//    AM_IsNotMagiconA3(magicon3_need_func);
+//#endif
 
     //タイプに応じたフラグ初期化
     switch(work->mapchange_type){
@@ -3769,20 +3773,22 @@ static void SheimiFromBackIllegal(GAMEDATA * gamedata)
 extern void magicon_dummy_task(GFL_TCB *tcb, void *pWork);
 extern int debug_tcb_num;
 
-// 検出関数notA1がFALSEの時に実行されます（＝破壊工作）
-static void magicon1_failure_func(void){
+// 検出関数B3が不正の時に実行されます（＝破壊工作）
+static void *magicon1_failure_func( void* param1, void *param2 ){
   u32 *test_adr = GFL_HEAP_AllocMemoryLo( HEAPID_PROC, 0x1000);
+  return param1;
 }
 
-// 検出関数notA2がFALSEの時に実行されます（＝破壊工作）
-static void magicon2_failure_func(void){
+// 検出関数B4が不正の時に実行されます（＝破壊工作）
+static void *magicon2_failure_func( void* param1, void *param2 ){
   u32 *test_adr = GFL_HEAP_AllocMemoryLo( HEAPID_PROC, 0x1000);
+  return param2;
 }
 
-// 検出関数notA3がFALSEの時に実行されます（＝必要な処理or実行しても害の無い処理）
-static void magicon3_need_func(void)
+// 検出関数B3,B4が正常の時に実行されます（＝必要な処理or実行しても害の無い処理）
+static void *magicon3_need_func( void* param1, void *param2 )
 {
-  return;
+  return param1;
 }
 
 #endif
