@@ -124,6 +124,10 @@ enum {
   POKEWOOD_AUDIENCE_LEAVE,    ///< 怒って離席
 };
 
+/// バッドエンドとストレンジエンドの境を定義したファイルのインクルード
+#define __BTL_CLIENT_C__
+#include "..\..\..\resource\pokewood\pokewood_parameter.cdat"
+
 /*--------------------------------------------------------------------------*/
 /* Typedefs                                                                 */
 /*--------------------------------------------------------------------------*/
@@ -2240,9 +2244,9 @@ static void _check_pokewood_success( BTL_CLIENT *wk, POKEWOOD_SENARIO *senario, 
     if(senario->success_event==event_no){
       _set_pokewood_success_flag( wk, BTL_POKEWOOD_RESULT_SUCCESS );    // 成功フラグを立てる
     }else{
-      // 100点以上だったらストレンジEND
-      if(senario->event[event_no].point >= 100){
-        _set_pokewood_success_flag( wk, BTL_POKEWOOD_RESULT_STRANGE );  // 100以上の場合はストレンジEND
+      // イベントポイントがしきい値以上の場合はストレンジEND
+      if(senario->event[event_no].point >= POKEWOOD_STRANGE_THRESHOLD){
+        _set_pokewood_success_flag( wk, BTL_POKEWOOD_RESULT_STRANGE );
       // それ以外は「クリア」だろうと「失敗」だろうとサクセスENDでなければ全てBAD
       }else{
         _set_pokewood_success_flag( wk, BTL_POKEWOOD_RESULT_BAD );      // それ以外は全てBAD
@@ -2952,7 +2956,7 @@ static u32 _set_director_end_msg( BTL_CLIENT *wk, POKEWOOD_SENARIO *senario, con
   rank_offset = rank_tbl[bsp->player_star_rank];
 
   // イベントの獲得点数で監督のメッセージを設定する
-  if(point>100){
+  if(point>POKEWOOD_STRANGE_THRESHOLD){
     msg = pw_director_0_STRANGEEND + PW_DIRECTOR_1RANK_MSG_MAX * rank_offset;
   }else if(point>=0){
     msg = pw_director_0_GOODEND    + PW_DIRECTOR_1RANK_MSG_MAX * rank_offset;
@@ -11116,11 +11120,12 @@ static int CalcPokewoodEstimate( BTL_CLIENT *wk, POKEWOOD_ESTIMATE_WORK *pew )
 {
   POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario( wk->mainModule );
   const BATTLE_SETUP_PARAM *bsp   = BTL_MAIN_GetBSPConst( wk->mainModule );
-  int temp   = 0;
+  int temp = 0;
+  int flag = 0;
 
   temp  = pew->endturn_point + pew->star_point + pew->ending_point + pew->serif_point;
   // マイナスは無いとおもうが補正・０でも１に補正
-  if(temp<0){
+  if(temp==0){
     temp=1;
   }
   pew->scenario_difficult = senario->difficult;
@@ -11131,11 +11136,25 @@ static int CalcPokewoodEstimate( BTL_CLIENT *wk, POKEWOOD_ESTIMATE_WORK *pew )
 
   pew->estimate = temp;
 
+  // 興行収入の最大値を超えたら補正する
+  if(pew->estimate>POKEWOOD_PROFIT_VALUE_MAX){
+    pew->estimate = POKEWOOD_PROFIT_VALUE_MAX;
+    flag = 1;
+  // 最小値も丸める
+  }else if(pew->estimate<POKEWOOD_PROFIT_VALUE_MIN){
+    pew->estimate = -POKEWOOD_PROFIT_VALUE_MIN;
+    flag = 1;
+  }
+
+#ifdef PM_DEBUG
   OS_TFPrintf(1,"star_point=%d, poke_count=%d\n", pew->star_point, pew->pokemon_count );
   OS_TFPrintf(1,"serif_point=%d\n", pew->serif_point );
   OS_TFPrintf(1,"scenario_difficult=%d, audience_point=%d\n", pew->scenario_difficult, pew->audience_point );
   OS_TFPrintf(1,"total pokewood estimate=%d\n", pew->estimate );
-
+  if(flag){
+    OS_TFPrintf(1,"評価値が最大最小値をオーバーしました.\n");
+  }
+#endif
   return pew->estimate;
 }
 

@@ -10,9 +10,11 @@
 #pragma once
 
 /// ポケウッドシナリオ最大定義
-#define POKEWOOD_SENARIO_MAX    ( 41 )  ///< ポケウッドのシナリオ最大数
-#define POKEWOOD_PLAY_MAX       ( 40 )  ///< ポケウッドでプレイヤーが遊ぶシナリオの最大
-#define POKEWOOD_SAVEDATA_MAX   (  8 )  ///< ポケウッド録画データ最大数（＝キャンセル値）
+#define POKEWOOD_SENARIO_MAX      (    41 ) ///< ポケウッドのシナリオ最大数
+#define POKEWOOD_PLAY_MAX         (    40 ) ///< ポケウッドでプレイヤーが遊ぶシナリオの最大
+#define POKEWOOD_SAVEDATA_MAX     (     8 ) ///< ポケウッド録画データ最大数（＝キャンセル値）
+#define POKEWOOD_PROFIT_VALUE_MAX (  9999 ) ///< 興行収入の最大値
+#define POKEWOOD_PROFIT_VALUE_MIN ( -9998 ) ///< 興行収入の最小値(-9999は記録無し時の値なので）
 
 /// 作品ジャンル
 enum{

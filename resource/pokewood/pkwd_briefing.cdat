@@ -1,0 +1,612 @@
+//==============================================================================
+/**
+ * @file  pkwd_briefing.cdat
+ * @brief ポケウッドあらすじ画面用モデリングデータ定義
+ * @author  mori
+ *
+ * @note このファイルはresource/pokewoodで自動生成されています。
+ *       またresource/battle/wb_battle_bg.xlsに登録されているモデリングデータを
+ *       登録するようにしています。そのため上記のテーブルからファイルが
+ *       無くなるとコンパイルが通らなくなりますので注意。
+ *
+ *
+ */
+//==============================================================================
+
+//=======================================================
+// 読み込む3Dデータ
+//=======================================================
+//遊園地Ａ
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl0[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field02a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field02a_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//波止場ー１
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl1[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field06a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field06a_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//都会・雑踏Ｂー１
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl2[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field03f_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field03f_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//波止場
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl3[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field06a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field06a_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//都会・雑踏ー１
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl4[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field03a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field03a_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//砂浜ー１
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl5[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field05a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field05a_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//ビル屋上Ａー２
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl6[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01b_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field01b_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//波止場ー３
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl7[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field06c_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field06c_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//研究施設
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl8[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field10a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field10a_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//未来都市
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl9[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field04a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field04a_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//砂浜
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl10[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field05a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field05a_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//墓地
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl11[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field09a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field09a_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//魔法の世界
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl12[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field08a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field08a_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//一般家屋室内
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl13[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field11a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field11a_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//遊園地Ｂ
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl14[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field02f_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field02f_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//研究施設ー４
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl15[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field10d_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field10d_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+//都会・雑踏
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl16[] = {
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field03a_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_BATTGRA, NARC_battgra_wb_pkwd_field03a_NSBCA, GFL_G3D_UTIL_RESARC },
+};
+
+//=======================================================
+// 3Dアニメ定義
+//=======================================================
+// 「遊園地Ａ」 アニメ定義
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl0[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// 「波止場ー１」 アニメ定義
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl1[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// 「都会・雑踏Ｂー１」 アニメ定義
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl2[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// 「波止場」 アニメ定義
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl3[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// 「都会・雑踏ー１」 アニメ定義
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl4[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// 「砂浜ー１」 アニメ定義
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl5[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// 「ビル屋上Ａー２」 アニメ定義
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl6[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// 「波止場ー３」 アニメ定義
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl7[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// 「研究施設」 アニメ定義
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl8[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// 「未来都市」 アニメ定義
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl9[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// 「砂浜」 アニメ定義
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl10[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// 「墓地」 アニメ定義
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl11[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// 「魔法の世界」 アニメ定義
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl12[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// 「一般家屋室内」 アニメ定義
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl13[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// 「遊園地Ｂ」 アニメ定義
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl14[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// 「研究施設ー４」 アニメ定義
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl15[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+// 「都会・雑踏」 アニメ定義
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl16[] = {
+  { G3DRES_BCTA_BCA, 0  },
+//  { G3DRES_01_BTP, 0  },
+};
+
+//=======================================================
+//3Dオブジェクト設定テーブル
+//=======================================================
+// 遊園地Ａ
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl0[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルID
+    0,                       //モデルデータID(データ内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャID
+    g3Dutil_anmTbl0,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl0), //アニメデータ数
+  },
+};
+// 波止場ー１
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl1[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルID
+    0,                       //モデルデータID(データ内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャID
+    g3Dutil_anmTbl1,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl1), //アニメデータ数
+  },
+};
+// 都会・雑踏Ｂー１
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl2[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルID
+    0,                       //モデルデータID(データ内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャID
+    g3Dutil_anmTbl2,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl2), //アニメデータ数
+  },
+};
+// 波止場
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl3[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルID
+    0,                       //モデルデータID(データ内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャID
+    g3Dutil_anmTbl3,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl3), //アニメデータ数
+  },
+};
+// 都会・雑踏ー１
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl4[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルID
+    0,                       //モデルデータID(データ内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャID
+    g3Dutil_anmTbl4,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl4), //アニメデータ数
+  },
+};
+// 砂浜ー１
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl5[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルID
+    0,                       //モデルデータID(データ内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャID
+    g3Dutil_anmTbl5,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl5), //アニメデータ数
+  },
+};
+// ビル屋上Ａー２
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl6[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルID
+    0,                       //モデルデータID(データ内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャID
+    g3Dutil_anmTbl6,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl6), //アニメデータ数
+  },
+};
+// 波止場ー３
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl7[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルID
+    0,                       //モデルデータID(データ内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャID
+    g3Dutil_anmTbl7,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl7), //アニメデータ数
+  },
+};
+// 研究施設
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl8[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルID
+    0,                       //モデルデータID(データ内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャID
+    g3Dutil_anmTbl8,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl8), //アニメデータ数
+  },
+};
+// 未来都市
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl9[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルID
+    0,                       //モデルデータID(データ内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャID
+    g3Dutil_anmTbl9,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl9), //アニメデータ数
+  },
+};
+// 砂浜
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl10[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルID
+    0,                       //モデルデータID(データ内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャID
+    g3Dutil_anmTbl10,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl10), //アニメデータ数
+  },
+};
+// 墓地
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl11[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルID
+    0,                       //モデルデータID(データ内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャID
+    g3Dutil_anmTbl11,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl11), //アニメデータ数
+  },
+};
+// 魔法の世界
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl12[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルID
+    0,                       //モデルデータID(データ内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャID
+    g3Dutil_anmTbl12,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl12), //アニメデータ数
+  },
+};
+// 一般家屋室内
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl13[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルID
+    0,                       //モデルデータID(データ内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャID
+    g3Dutil_anmTbl13,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl13), //アニメデータ数
+  },
+};
+// 遊園地Ｂ
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl14[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルID
+    0,                       //モデルデータID(データ内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャID
+    g3Dutil_anmTbl14,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl14), //アニメデータ数
+  },
+};
+// 研究施設ー４
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl15[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルID
+    0,                       //モデルデータID(データ内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャID
+    g3Dutil_anmTbl15,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl15), //アニメデータ数
+  },
+};
+// 都会・雑踏
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl16[] = {
+  {
+    G3DRES_BCTA_BMD,         //モデルID
+    0,                       //モデルデータID(データ内部INDEX)
+    G3DRES_BCTA_BMD,         //テクスチャID
+    g3Dutil_anmTbl16,         //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anmTbl16), //アニメデータ数
+  },
+};
+
+//=======================================================
+// 3Dデータセットアップデータ
+//=======================================================
+static const GFL_G3D_UTIL_SETUP g3Dutil_setup[] = {
+  { // シナリオ1 ( 遊園地Ａ )
+    g3Dutil_resTbl0,           //データテーブル
+    NELEMS(g3Dutil_resTbl0),   //データ数
+    g3Dutil_objTbl0,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl0),   //オブジェクト数
+  },
+  { // シナリオ2 ( 波止場ー１ )
+    g3Dutil_resTbl1,           //データテーブル
+    NELEMS(g3Dutil_resTbl1),   //データ数
+    g3Dutil_objTbl1,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl1),   //オブジェクト数
+  },
+  { // シナリオ3 ( 都会・雑踏Ｂー１ )
+    g3Dutil_resTbl2,           //データテーブル
+    NELEMS(g3Dutil_resTbl2),   //データ数
+    g3Dutil_objTbl2,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl2),   //オブジェクト数
+  },
+  { // シナリオ4 ( 遊園地Ａ )
+    g3Dutil_resTbl0,           //データテーブル
+    NELEMS(g3Dutil_resTbl0),   //データ数
+    g3Dutil_objTbl0,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl0),   //オブジェクト数
+  },
+  { // シナリオ5 ( 波止場 )
+    g3Dutil_resTbl3,           //データテーブル
+    NELEMS(g3Dutil_resTbl3),   //データ数
+    g3Dutil_objTbl3,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl3),   //オブジェクト数
+  },
+  { // シナリオ6 ( 遊園地Ａ )
+    g3Dutil_resTbl0,           //データテーブル
+    NELEMS(g3Dutil_resTbl0),   //データ数
+    g3Dutil_objTbl0,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl0),   //オブジェクト数
+  },
+  { // シナリオ7 ( 波止場 )
+    g3Dutil_resTbl3,           //データテーブル
+    NELEMS(g3Dutil_resTbl3),   //データ数
+    g3Dutil_objTbl3,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl3),   //オブジェクト数
+  },
+  { // シナリオ8 ( 都会・雑踏ー１ )
+    g3Dutil_resTbl4,           //データテーブル
+    NELEMS(g3Dutil_resTbl4),   //データ数
+    g3Dutil_objTbl4,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl4),   //オブジェクト数
+  },
+  { // シナリオ9 ( 砂浜ー１ )
+    g3Dutil_resTbl5,           //データテーブル
+    NELEMS(g3Dutil_resTbl5),   //データ数
+    g3Dutil_objTbl5,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl5),   //オブジェクト数
+  },
+  { // シナリオ10 ( 都会・雑踏ー１ )
+    g3Dutil_resTbl4,           //データテーブル
+    NELEMS(g3Dutil_resTbl4),   //データ数
+    g3Dutil_objTbl4,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl4),   //オブジェクト数
+  },
+  { // シナリオ11 ( ビル屋上Ａー２ )
+    g3Dutil_resTbl6,           //データテーブル
+    NELEMS(g3Dutil_resTbl6),   //データ数
+    g3Dutil_objTbl6,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl6),   //オブジェクト数
+  },
+  { // シナリオ12 ( 砂浜ー１ )
+    g3Dutil_resTbl5,           //データテーブル
+    NELEMS(g3Dutil_resTbl5),   //データ数
+    g3Dutil_objTbl5,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl5),   //オブジェクト数
+  },
+  { // シナリオ13 ( 波止場ー３ )
+    g3Dutil_resTbl7,           //データテーブル
+    NELEMS(g3Dutil_resTbl7),   //データ数
+    g3Dutil_objTbl7,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl7),   //オブジェクト数
+  },
+  { // シナリオ14 ( 砂浜ー１ )
+    g3Dutil_resTbl5,           //データテーブル
+    NELEMS(g3Dutil_resTbl5),   //データ数
+    g3Dutil_objTbl5,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl5),   //オブジェクト数
+  },
+  { // シナリオ15 ( 波止場ー３ )
+    g3Dutil_resTbl7,           //データテーブル
+    NELEMS(g3Dutil_resTbl7),   //データ数
+    g3Dutil_objTbl7,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl7),   //オブジェクト数
+  },
+  { // シナリオ16 ( 研究施設 )
+    g3Dutil_resTbl8,           //データテーブル
+    NELEMS(g3Dutil_resTbl8),   //データ数
+    g3Dutil_objTbl8,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl8),   //オブジェクト数
+  },
+  { // シナリオ17 ( 未来都市 )
+    g3Dutil_resTbl9,           //データテーブル
+    NELEMS(g3Dutil_resTbl9),   //データ数
+    g3Dutil_objTbl9,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl9),   //オブジェクト数
+  },
+  { // シナリオ18 ( 砂浜 )
+    g3Dutil_resTbl10,           //データテーブル
+    NELEMS(g3Dutil_resTbl10),   //データ数
+    g3Dutil_objTbl10,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl10),   //オブジェクト数
+  },
+  { // シナリオ19 ( 遊園地Ａ )
+    g3Dutil_resTbl0,           //データテーブル
+    NELEMS(g3Dutil_resTbl0),   //データ数
+    g3Dutil_objTbl0,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl0),   //オブジェクト数
+  },
+  { // シナリオ20 ( 遊園地Ａ )
+    g3Dutil_resTbl0,           //データテーブル
+    NELEMS(g3Dutil_resTbl0),   //データ数
+    g3Dutil_objTbl0,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl0),   //オブジェクト数
+  },
+  { // シナリオ21 ( 遊園地Ａ )
+    g3Dutil_resTbl0,           //データテーブル
+    NELEMS(g3Dutil_resTbl0),   //データ数
+    g3Dutil_objTbl0,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl0),   //オブジェクト数
+  },
+  { // シナリオ22 ( 墓地 )
+    g3Dutil_resTbl11,           //データテーブル
+    NELEMS(g3Dutil_resTbl11),   //データ数
+    g3Dutil_objTbl11,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl11),   //オブジェクト数
+  },
+  { // シナリオ23 ( 魔法の世界 )
+    g3Dutil_resTbl12,           //データテーブル
+    NELEMS(g3Dutil_resTbl12),   //データ数
+    g3Dutil_objTbl12,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl12),   //オブジェクト数
+  },
+  { // シナリオ24 ( 魔法の世界 )
+    g3Dutil_resTbl12,           //データテーブル
+    NELEMS(g3Dutil_resTbl12),   //データ数
+    g3Dutil_objTbl12,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl12),   //オブジェクト数
+  },
+  { // シナリオ25 ( 一般家屋室内 )
+    g3Dutil_resTbl13,           //データテーブル
+    NELEMS(g3Dutil_resTbl13),   //データ数
+    g3Dutil_objTbl13,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl13),   //オブジェクト数
+  },
+  { // シナリオ26 ( 一般家屋室内 )
+    g3Dutil_resTbl13,           //データテーブル
+    NELEMS(g3Dutil_resTbl13),   //データ数
+    g3Dutil_objTbl13,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl13),   //オブジェクト数
+  },
+  { // シナリオ27 ( 都会・雑踏Ｂー１ )
+    g3Dutil_resTbl2,           //データテーブル
+    NELEMS(g3Dutil_resTbl2),   //データ数
+    g3Dutil_objTbl2,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl2),   //オブジェクト数
+  },
+  { // シナリオ28 ( 波止場 )
+    g3Dutil_resTbl3,           //データテーブル
+    NELEMS(g3Dutil_resTbl3),   //データ数
+    g3Dutil_objTbl3,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl3),   //オブジェクト数
+  },
+  { // シナリオ29 ( 一般家屋室内 )
+    g3Dutil_resTbl13,           //データテーブル
+    NELEMS(g3Dutil_resTbl13),   //データ数
+    g3Dutil_objTbl13,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl13),   //オブジェクト数
+  },
+  { // シナリオ30 ( 遊園地Ｂ )
+    g3Dutil_resTbl14,           //データテーブル
+    NELEMS(g3Dutil_resTbl14),   //データ数
+    g3Dutil_objTbl14,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl14),   //オブジェクト数
+  },
+  { // シナリオ31 ( 墓地 )
+    g3Dutil_resTbl11,           //データテーブル
+    NELEMS(g3Dutil_resTbl11),   //データ数
+    g3Dutil_objTbl11,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl11),   //オブジェクト数
+  },
+  { // シナリオ32 ( 研究施設ー４ )
+    g3Dutil_resTbl15,           //データテーブル
+    NELEMS(g3Dutil_resTbl15),   //データ数
+    g3Dutil_objTbl15,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl15),   //オブジェクト数
+  },
+  { // シナリオ33 ( 研究施設 )
+    g3Dutil_resTbl8,           //データテーブル
+    NELEMS(g3Dutil_resTbl8),   //データ数
+    g3Dutil_objTbl8,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl8),   //オブジェクト数
+  },
+  { // シナリオ34 ( 研究施設 )
+    g3Dutil_resTbl8,           //データテーブル
+    NELEMS(g3Dutil_resTbl8),   //データ数
+    g3Dutil_objTbl8,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl8),   //オブジェクト数
+  },
+  { // シナリオ35 ( 研究施設 )
+    g3Dutil_resTbl8,           //データテーブル
+    NELEMS(g3Dutil_resTbl8),   //データ数
+    g3Dutil_objTbl8,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl8),   //オブジェクト数
+  },
+  { // シナリオ36 ( 都会・雑踏 )
+    g3Dutil_resTbl16,           //データテーブル
+    NELEMS(g3Dutil_resTbl16),   //データ数
+    g3Dutil_objTbl16,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl16),   //オブジェクト数
+  },
+  { // シナリオ37 ( 墓地 )
+    g3Dutil_resTbl11,           //データテーブル
+    NELEMS(g3Dutil_resTbl11),   //データ数
+    g3Dutil_objTbl11,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl11),   //オブジェクト数
+  },
+  { // シナリオ38 ( 研究施設 )
+    g3Dutil_resTbl8,           //データテーブル
+    NELEMS(g3Dutil_resTbl8),   //データ数
+    g3Dutil_objTbl8,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl8),   //オブジェクト数
+  },
+  { // シナリオ39 ( 一般家屋室内 )
+    g3Dutil_resTbl13,           //データテーブル
+    NELEMS(g3Dutil_resTbl13),   //データ数
+    g3Dutil_objTbl13,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl13),   //オブジェクト数
+  },
+  { // シナリオ40 ( 魔法の世界 )
+    g3Dutil_resTbl12,           //データテーブル
+    NELEMS(g3Dutil_resTbl12),   //データ数
+    g3Dutil_objTbl12,           //オブジェクト設定テーブル
+    NELEMS(g3Dutil_objTbl12),   //オブジェクト数
+  },
+};

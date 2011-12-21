@@ -514,20 +514,9 @@ void PKWDSYS_RecordSet( GAMEDATA * gamedata, PKWDSYS *pkwdsys )
 }
 
 
-//エンディングに対応したポケモン用取得スターポイント
-static int star_point_tbl_poke[]={
-  -250,  // BAD END
-  150,  // GOOD END
-  250,  // STRANGE END
-};
-
-//エンディングに対応したプレイヤー用取得スターポイント
-static int star_point_table_player[]={
-  1,  // BAD END
-  2,  // GOOD END
-  4,  // STRANGE END
-};
-
+// 調整用の定義が書かれているファイル（スターポイント・ポケモンスターポイント増減テーブル）
+#define __POKEWOOD_SYSTEM_C__
+#include "..\..\..\resource\pokewood\pokewood_parameter.cdat"
 
 //=============================================================================================
 /**
