@@ -216,10 +216,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『アジトか！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……アジトかよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T02:27:14" />
+				Time="2011-12-22T08:50:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -227,10 +227,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『アジトか！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……アジトかよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T02:27:20" />
+				Time="2011-12-22T08:50:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -367,10 +367,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『まとめて　かかってこいよ
-……ぜんいん　たおすだけだからな▼</Text>
+……ぜんいん　たおすだけだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:27:04" />
+				Time="2011-12-22T08:50:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -379,10 +379,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『まとめて　かかってこいよ
-……全員　倒すだけだからな▼</Text>
+……全員　倒すだけだ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:27:17" />
+				Time="2011-12-22T08:50:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1538,7 +1538,7 @@
 うばったのは　オマエか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:28:49" />
+				Time="2011-12-22T08:51:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1548,12 +1548,12 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『さっさと　終わらせるから
 オマエも　力を　貸せよ！▼
-５年前▼
+……５年前▼
 ヒオウギで　チョロネコを
 奪ったのは　オマエか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:28:56" />
+				Time="2011-12-22T08:51:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1925,10 +1925,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ダークトリニティ『ということだ▼</Text>
+			<Text>ダークトリニティ『いっておくが
+オレたちは……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:18:24" />
+				Time="2011-12-22T09:44:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1936,14 +1937,110 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ダークトリニティ『ということだ▼</Text>
+			<Text>ダークトリニティ『いっておくが
+オレたちは……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T08:18:24" />
+				Time="2011-12-22T09:44:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
 				Time="2011-07-18T03:39:52" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：1回目
+</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-22T09:44:50" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>NINJA
+ダークトリニティ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-07-18T03:39:52" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#408080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_sage7_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ヴィオ『わかっておる！
+いいから　はやく　つまみだすのだ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-22T09:44:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-22T09:44:30" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ヴィオ『わかっておる！
+いいから　はやく　つまみだすのだ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-22T09:44:34" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-22T09:44:34" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・アジト船：1回目
+</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-22T09:44:52" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE7
+七賢人ヴィオ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-22T09:44:16" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d27r0101_ninja_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ダークトリニティ『ということだ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-22T09:44:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-22T09:44:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ダークトリニティ『ということだ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-22T09:44:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-22T09:44:25" />
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
@@ -1956,7 +2053,7 @@
 ・そのあとd05へ</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T03:39:52" />
+				Time="2011-12-22T09:44:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1964,7 +2061,7 @@
 ダークトリニティ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-18T03:39:52" />
+				Time="2011-12-22T09:44:20" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -2083,10 +2180,10 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『なんだよ！▼
 オレは　だいじょうぶ　だから
-なかへの　いりぐちを　さがせよ</Text>
+なかへの　いりぐちを　さがせ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T05:33:51" />
+				Time="2011-12-22T08:47:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2096,10 +2193,10 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『なんだよ！▼
 オレは　大丈夫だから
-船内への　入り口を　探せよ</Text>
+船内への　入り口を　探せ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-24T05:34:08" />
+				Time="2011-12-22T08:47:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2248,10 +2345,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『おい！
-ちょっと　きてくれよ！！▼</Text>
+ちょっと　きてくれッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T06:40:51" />
+				Time="2011-12-22T08:47:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2260,10 +2357,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『おい！
-ちょっと　来てくれよ！！▼</Text>
+ちょっと　来てくれッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T06:40:57" />
+				Time="2011-12-22T08:47:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

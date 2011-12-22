@@ -374,11 +374,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName ]も　はやくしろ！
-どっちが　うえか　しょうぶだぜッ！▼</Text>
+			<Text>[Name:TrainerName ]も　はやくしろよ
+どっちが　うえか　しょうぶしようぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T10:46:44" />
+				Time="2011-12-22T09:35:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -386,11 +386,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]も　はやくしろ！
-どっちが　上か　勝負だぜッ！▼</Text>
+			<Text>[Name:TrainerName ]も　はやくしろよ
+どっちが　上か　勝負しようぜ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T10:46:51" />
+				Time="2011-12-22T09:35:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

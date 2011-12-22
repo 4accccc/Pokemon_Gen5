@@ -721,11 +721,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>とくせい　てんのめぐみ……▼
-なんでも　わざのこうかが
-２ばいに　なるそうですよ</Text>
+なんでも　わざの　ついかこうかが
+はっせいする　かくりつが▽
+なんと　２ばいに　なるそうですよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T11:40:18" />
+				Time="2011-12-22T08:26:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -734,11 +735,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>特性　てんのめぐみ……▼
-なんでも　技の効果が
-２倍に　なるそうですよ</Text>
+なんでも　技の　追加効果が　でる
+確率が　２倍に　なるそうですよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T11:40:22" />
+				Time="2011-12-22T08:25:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
