@@ -2305,7 +2305,7 @@ EVENT_START   ev_debug_ichiraku
       _CAMERA_PURGE()		//カメラのバインドを解く
 
       //カメラ操作　ステージ中央にカメラを合わせる
-      _CAMERA_MOVE( 2648,0,1069056,1515520,131103,962560,1 )	//一番最後の引数は移動にかかるフレーム数
+      _CAMERA_MOVE( 2008,0,1036288,1515520,131103,946176,1 )	//一番最後の引数は移動にかかるフレーム数
       _CAMERA_WAIT_MOVE()
 
       _OBJ_ADD_EX( 20, 15, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, RGLEADER3, MV_DMY )
