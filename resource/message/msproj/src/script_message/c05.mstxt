@@ -602,12 +602,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>オレは　[Name:TrainerName Idx="1" ]▼
-プラズマだん
+			<Text>プラズマだん
 はなしを　きかせろ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:21:30" />
+				Time="2011-12-22T11:11:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -615,12 +614,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>オレは　[Name:TrainerName Idx="1" ]▼
-プラズマ団
+			<Text>プラズマ団
 話を　きかせろ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:21:35" />
+				Time="2011-12-22T11:11:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -631,11 +629,10 @@
 			<Comment>♂
 ・倍速移動でプラズマ団に隣接
 ・プラズマ団、左に２キャラほど移動
-・続けてswplazmam_02
-・1＝ライバル名前</Comment>
+・続けてswplazmam_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T07:20:14" />
+				Time="2011-12-22T11:11:43" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1349,13 +1346,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ロット『すまない！
+			<Text>ロット『もうしわけない！
 ためすような　まねをして　わるかった▼
 もとプラズマだんと　いうことで
 いろいろ　あるのだよ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:05:20" />
+				Time="2011-12-22T11:12:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1363,13 +1360,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ロット『すまない！
+			<Text>ロット『申し訳ない！
 試すような　まねをして　悪かった▼
 元プラズマ団と　いうことで
 いろいろ　あるのだよ……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-22T04:05:34" />
+				Time="2011-12-22T11:12:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1547,7 +1544,7 @@
 ちょいと　くろう　するかもな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T08:58:23" />
+				Time="2011-12-22T11:12:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1612,14 +1609,14 @@
 ジムバッジ　もらったか！　さすがだな▼
 あのさ……　ジムバッジを　とれたのは
 あいぼうたちの　おかげ　だけど▼
-オレと　　コイツたちの　つながりって
+オレと　コイツたちの　つながりって
 モンスターボールだけじゃ　ないよな▼
 そうでないと
 うばわれた　チョロネコの　こころ……▽
-とりもどせないもんなッ！▼</Text>
+とりもどせないよなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-17T07:22:38" />
+				Time="2011-12-22T11:14:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1631,14 +1628,14 @@
 ジムバッジ　もらったか！　さすがだな▼
 あのさ……　ジムバッジを　とれたのは
 相棒たちの　おかげ　だけど▼
-オレと　　コイツたちの　つながりって
+オレと　コイツたちの　つながりって
 モンスターボールだけじゃ　ないよな▼
 そうでないと
 奪われた　チョロネコの　こころ……▽
-取り戻せないもんなッ！▼</Text>
+取り戻せないよなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T03:55:19" />
+				Time="2011-12-22T11:14:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1866,12 +1863,12 @@
 			<Text>[Name:TrainerName Idx="1" ]『フウン
 それが　おとなの　はんだん　てやつ？▼
 まあ　いいよ！　オレは
-プラズマだんと　たたかう！▼
-で　ヤーコンさんが　いってた
-いい　ところ　って　なんだよ？▼</Text>
+プラズマだんと　たたかうからッ！▼
+で　さっき　いってた
+いい　ところ　って？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T09:56:32" />
+				Time="2011-12-22T11:19:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1882,12 +1879,12 @@
 			<Text>[Name:TrainerName Idx="1" ]『フウン
 それが　大人の　判断て　やつ？▼
 まあ　いいよ！　オレは
-プラズマ団と　戦う！▼
-で　ヤーコンさんが　いってた
-いい　ところ　って　なんだよ？▼</Text>
+プラズマ団と　戦うからッ！▼
+で　さっき　いってた
+いい　ところ　って？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T09:56:36" />
+				Time="2011-12-22T11:19:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1933,12 +1930,12 @@
 			<Text>ヤーコン『きいたこと　ないか？
 ポケモンワールドトーナメント▼
 かくちの　トレーナーを　あつめ
-つよいのは　だれか　きめるのさ！▼
-まちの　みなみに　あるからな
-では　まってるぞ！▼</Text>
+つよいのは　だれか　きめるのよ！▼
+じゃ　おまえら
+まちの　みなみで　まってるぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T11:11:21" />
+				Time="2011-12-22T11:22:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1949,12 +1946,12 @@
 			<Text>ヤーコン『きいたこと　ないか？
 ポケモンワールドトーナメント▼
 各地の　トレーナーを　集め
-強いのは　だれか　決めるのさ！▼
-街の　南に　あるからな
-では　待ってるぞ！▼</Text>
+強いのは　だれか　決めるのよ！▼
+じゃ　おまえら
+街の　南で　待ってるぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T11:11:26" />
+				Time="2011-12-22T11:21:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

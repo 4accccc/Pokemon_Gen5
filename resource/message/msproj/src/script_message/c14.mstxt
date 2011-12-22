@@ -6,15 +6,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『いでんしのくさび
+			<Text>[Name:TrainerName Idx="1" ]『いでんしのくさびは
 ぜったいに　とりもどすッ▼
 というわけで　オマエは
-まず　ジムバッジを　てにいれろッ！▼
-あいては　プラズマだん
-つよすぎて　こまることは　ないッ！</Text>
+まず　ジムバッジを　てにいれなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T06:58:42" />
+				Time="2011-12-22T10:28:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -22,15 +20,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『いでんしのくさび
+			<Text>[Name:TrainerName Idx="1" ]『いでんしのくさびは
 絶対に　取り戻すッ▼
 というわけで　オマエは
-まず　ジムバッジを　手に入れろッ！▼
-相手は　プラズマ団
-強すぎて　困ることは　ないッ！</Text>
+まず　ジムバッジを　手に入れなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T06:58:37" />
+				Time="2011-12-22T10:28:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -67,15 +63,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『いでんしのくさび
+			<Text>[Name:TrainerName Idx="1" ]『いでんしのくさびは
 ぜったいに　とりもどすッ▼
 というわけで　オマエは
-まず　ジムバッジを　てにいれろッ！▼
-あいては　プラズマだん
-つよすぎて　こまることは　ないッ！▼</Text>
+まず　ジムバッジを　てにいれなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T06:58:45" />
+				Time="2011-12-22T10:28:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -83,15 +77,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『いでんしのくさび
+			<Text>[Name:TrainerName Idx="1" ]『いでんしのくさびは
 絶対に　取り戻すッ▼
 というわけで　オマエは
-まず　ジムバッジを　手に入れろッ！▼
-相手は　プラズマ団
-強すぎて　困ることは　ないッ！</Text>
+まず　ジムバッジを　手に入れなッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T06:58:33" />
+				Time="2011-12-22T10:28:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -134,7 +126,7 @@
 プラズマだんを　さがすぜッ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-16T07:00:51" />
+				Time="2011-12-22T10:27:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

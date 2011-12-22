@@ -67,11 +67,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだんを　おいかける！
+			<Text>プラズマだんを　さがす！
 あいつら　ゆるさないッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T03:31:09" />
+				Time="2011-12-22T11:00:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -79,11 +79,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団を　追いかける！
+			<Text>プラズマ団を　探す！
 あいつら　許さないッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T03:31:12" />
+				Time="2011-12-22T11:00:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -253,10 +253,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>おや？　どうなさいました
-ヒウンまで　船に　だしますよ？</Text>
+ヒウンまで　船を　だしますよ？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-22T11:06:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -535,12 +535,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>じぶんの　じんせい　だもの▼
-ひとつのことを　つきつめるのも
-いろんなことを　やるのも▽
-どちらも　せいかい　なんだよ　きっと</Text>
+ひとつのことを　つきつめても
+いろんなことを　やっても　いいんだよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-24T05:38:08" />
+				Time="2011-12-22T11:01:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -549,12 +548,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>自分の　人生だもの▼
-ひとつのことを　突き詰めるのも
-いろんなことを　やるのも▽
-どちらも　正解なんだよ　きっと</Text>
+ひとつのことを　突き詰めても
+いろんなことを　やっても　いいんだよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-22T11:01:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
