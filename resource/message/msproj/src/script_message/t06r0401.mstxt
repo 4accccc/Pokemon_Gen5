@@ -168,10 +168,10 @@
 			Language="JPN">
 			<Text>[Name:PokemonNickname ]は
 ３びきが　きざみこんだ　けついから▽
-しんぴのつるぎを　おもいだした！▼</Text>
+しんぴのつるぎを　おもいだした！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-19T10:35:44" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-22T03:11:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -181,10 +181,10 @@
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname ]は
 ３匹が　刻みこんだ　決意から▽
-しんぴのつるぎを　思い出した！▼</Text>
+しんぴのつるぎを　思い出した！</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-19T10:36:01" />
+				User="suginaka_katsunori:W00289"
+				Time="2011-12-22T03:11:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -485,10 +485,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname ]は
-しんぴのつるぎを　おもいだした！▼</Text>
+しんぴのつるぎを　おもいだした！</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T03:50:04" />
+				Time="2011-12-22T03:11:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -497,10 +497,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname ]は
-しんぴのつるぎを　思い出した！▼</Text>
+しんぴのつるぎを　思い出した！</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2011-12-19T03:50:12" />
+				Time="2011-12-22T03:11:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"

@@ -14,6 +14,7 @@
   .include  "skill_teach_scr_def.h"     //for SCRID_SKILL_LEARN
 
 	//@author ichiraku_katsuhiko //仕組作成
+	//@author suginaka_katsunori //演出追加
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -33,10 +34,8 @@ DEFINE_LOCAL  target_poke_pos     // 配布ケルディオの場所
 /************************************************************/
 EVENT_START   ev_bg_t06r0401_kerudhio
 {
-
-  // BG:がんばんに　３ぼんの　するどく　みごとな　さけめが　きざまれている
-  _EASY_BGWIN_MSG( msg_t06r0401_cliff_01, TYPE_INFO )
-
+  _TALK_START_SE_PLAY()
+  
   // 条件を満たすケルディオがいるかチェック
   _GET_EVT_POKE_POS( MONSNO_654, FALSE, target_poke_pos, SCWK_ANSWER )
 
@@ -54,15 +53,20 @@ EVENT_START   ev_bg_t06r0401_kerudhio
 
   // いる
   IF $SCWK_ANSWER == TRUE THEN
+	// BG:がんばんに　３ぼんの　するどく　みごとな　さけめが　きざまれている
+   	_PLAINWIN_MSG_DOWN( msg_t06r0401_cliff_01 )
+   	_AB_KEYWAIT_MARK()
 
     _TEMOTI_NICK_NAME( 0, target_poke_pos )
     // SYS:○○が　でたがっているようだ そとに　だしてあげますか？
-    _SYSWIN_MSG( msg_t06r0401_cliff_02, POS_DOWN )
+    _PLAINWIN_MSG_DOWN( msg_t06r0401_cliff_02 )
     _YES_NO_WIN( SCWK_ANSWER )
 
     // YES
     IF $SCWK_ANSWER == SCR_YES THEN
-  
+  	 
+  	 _PLAINWIN_CLOSE()
+  	 
       // ケルディオイベントメイン
       _CALL func_kerudhio_main
 
@@ -70,16 +74,20 @@ EVENT_START   ev_bg_t06r0401_kerudhio
     ELSE
 
       // SYS:モンスターボールの うごきが とまったようだ
-      _SYSWIN_MSG( msg_t06r0401_cliff_03, POS_DOWN )
+      _PLAINWIN_MSG_DOWN( msg_t06r0401_cliff_03 )
       _LAST_KEYWAIT()
-      _SYSWIN_CLOSE()
+      _PLAINWIN_CLOSE()
       // イベント終了
 
     ENDIF
 
   ELSE
   // いない
-    // イベント終了
+   	// BG:がんばんに　３ぼんの　するどく　みごとな　さけめが　きざまれている
+   	_PLAINWIN_MSG_DOWN( msg_t06r0401_cliff_01 )
+   	_LAST_KEYWAIT()
+   	_PLAINWIN_CLOSE()
+   	
   ENDIF
 }
 EVENT_END
@@ -92,14 +100,55 @@ EVENT_END
 //-----------------------------------------------------------------------------
 func_kerudhio_main:
 {
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+
   // ボールを投げる
   _CALL func_ball_out
 
-  //【仮】鳴き声
-  _TIME_WAIT(10)
+  //鳴き声
+  _VOICE_PLAY( MONSNO_KERUDHIO,FORMNO_KERUDHIO_NORMAL )
+  _VOICE_WAIT()
 
-  //【仮】ケルディオ動き回る
-  _TIME_WAIT(10)
+  //アニメ：ケルディオ周囲を見渡した後、岩に気づく
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_kyorokyoro )
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：左から岩に近づく
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_poke11_move01 )
+  _TIME_WAIT( 16 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
+  _OBJ_ANIME_WAIT()
+  
+  //アニメ：右の方から岩を見る
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_poke11_move02 )
+  _TIME_WAIT( 16 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+
+  //鳴き声
+  _VOICE_PLAY( MONSNO_KERUDHIO,FORMNO_KERUDHIO_NORMAL )
+
+  //アニメ：右の方から岩を見る
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_poke11_move03 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+
+  //アニメ：主人公をどかして岩の前に行く
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_poke11_move04 )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move01 )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_poke11_move05 )
+  _OBJ_ANIME_WAIT()
+
+  //鳴き声
+  _VOICE_PLAY( MONSNO_KERUDHIO,FORMNO_KERUDHIO_NORMAL )
+  _VOICE_WAIT()
+
+  //アニメ：しんぴのつるぎを思い出す。
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_poke11_move06 )
+  _OBJ_ANIME_WAIT()
 
   // しんぴのつるぎを覚えているかチェック
   _CHECK_POKE_WAZA( SCWK_ANSWER, WAZANO_SINPINOTURUGI, target_poke_pos )
@@ -115,6 +164,7 @@ func_kerudhio_main:
 
     // SYS:しんぴのつるぎを　おもいだした！
     _SYSWIN_MSG( msg_t06r0401_cliff_04, POS_DOWN )
+    _AB_KEYWAIT_MARK()
 
     //技思い出し処理
     $SCWK_PARAM0 = $target_poke_pos
@@ -138,6 +188,7 @@ func_kerudhio_main:
 
   // ボールに戻る
   _CALL func_ball_in
+  
 }
 _RET
 //-----------------------------------------------------------------------------
@@ -146,15 +197,15 @@ _RET
 func_ball_out:
 {
   // ボール移動
-  _MOVE_BALL( SCR_BALL_ANM_TYPE_OUT, 15, 0, 15, 3, 8 )
+  _MOVE_BALL( SCR_BALL_ANM_TYPE_OUT, 15, 0, 16, 3, 8 )
   // ボールアニメ
-  _START_BALL_ANM( SCR_BALL_ANM_TYPE_OUT, 15, 0, 15 )
+  _START_BALL_ANM( SCR_BALL_ANM_TYPE_OUT, 15, 0, 16 )
   //ボール出現フレーム待ち
   _WAIT_BALL_POKE_APP( SCR_BALL_ANM_TYPE_OUT )
   _WHITE_OUT()
   _DISP_FADE_END_CHECK()
   //ポケを表示
-  _OBJ_ADD_EX( 15, 15, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE11, MV_DMY )
+  _OBJ_ADD_EX( 15, 16, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE11, MV_DMY )
   _WHITE_IN()
   _DISP_FADE_END_CHECK()
   _WAIT_BALL_ANM( SCR_BALL_ANM_TYPE_OUT )
@@ -165,7 +216,7 @@ _RET
 //-----------------------------------------------------------------------------
 func_ball_in:
 {
-  _START_BALL_ANM( SCR_BALL_ANM_TYPE_IN, 15, 0, 15 )
+  _START_BALL_ANM( SCR_BALL_ANM_TYPE_IN, 15, 0, 13 )
   //ポケ非表示フレーム待ち
   _WAIT_BALL_POKE_APP( SCR_BALL_ANM_TYPE_IN )
   _WHITE_OUT()
@@ -183,9 +234,17 @@ _RET
 //-----------------------------------------------------------------------------
 func_form_change:
 {
-  // SYS:○○のようすが・・・・？
-  _SYSWIN_MSG( msg_t06r0401_cliff_11, POS_DOWN )
-  _SYSWIN_CLOSE()
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラパージ
+  _CAMERA_MOVE(7768,0,970752,1015808,45056,765952, 40)
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
+  //○○のようすが・・・・？
+  _PLAINWIN_MSG_DOWN( msg_t06r0401_cliff_11 )
+  _PLAINWIN_CLOSE()
+
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
 
   // 思い出しイベント
   _KERUDHIO_GMK_REMEMBER_EVENT()
@@ -199,24 +258,30 @@ func_form_change:
 
   // フォルムチェンジ後に 動作モデル変更
   _OBJ_DEL(MMDL_ID_EVENTOBJ_00)
-  _OBJ_ADD_EX( 15, 15, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE11_FORM, MV_DMY )
+  _OBJ_ADD_EX( 15, 13, DIR_DOWN, MMDL_ID_EVENTOBJ_00, POKE11_FORM, MV_DMY )
 
+  // カットイン
+  _CALL_FLD3D_CUTIN( FLDCIID_KERUDHIO )
   // 鳴き声とともにフェードイン
   _VOICE_PLAY( MONSNO_654, 1 )
   _WHITE_IN()
   _DISP_FADE_END_CHECK()
   _VOICE_WAIT()
 
-  // カットイン
-  _CALL_FLD3D_CUTIN( FLDCIID_KERUDHIO )
-
   // フォルムチェンジ
   _CHANGE_FORM_NO( target_poke_pos, 1 )
 
   // SYS:かくごを　きめた　すがたに　なった！
-  _SYSWIN_MSG( msg_t06r0401_cliff_12, POS_DOWN )
+  //○○のようすが・・・・？
+  _PLAINWIN_MSG_DOWN( msg_t06r0401_cliff_12 )
   _LAST_KEYWAIT()
-  _SYSWIN_CLOSE()
+  _PLAINWIN_CLOSE()
+
+  _CAMERA_RECV_MOVE(30)	//カメラ復帰移動
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  _CAMERA_BIND()		//カメラバインド
+  _CAMERA_END()		//カメラ操作終了
+
 }
 _RET
 //-----------------------------------------------------------------------------
@@ -249,10 +314,12 @@ func_skill_remember:
   IF $SCWK_ANSWER != 4 THEN 
 
     _TEMOTI_NICK_NAME( 0, select_pos )
-    _ME_PLAY( SEQ_ME_LVUP )
+
     //"○○はしんぴのつるぎを思い出した！"
     _SYSWIN_MSG( msg_t06r0401_cliff_10 , POS_DEFAULT )
+    _ME_PLAY( SEQ_ME_LVUP )
     _ME_WAIT()
+    _AB_KEYWAIT_MARK()
     _SYSWIN_CLOSE()
 
     _SET_TEMOTI_WAZA( select_pos , SCWK_ANSWER , teach_waza_id )
@@ -297,6 +364,7 @@ sub_skillteacher_wasure_ask_retire:
     //"～は　しんぴのつるぎを　おもいださなかった！"
     _TEMOTI_NICK_NAME( 0, select_pos )
     _SYSWIN_MSG( msg_t06r0401_cliff_07 , POS_DEFAULT )
+    _SYSWIN_CLOSE()
     $user_result = TRUE //終了
     _RET
   ENDIF
@@ -341,7 +409,7 @@ sub_skillteacher_wasure_core:
     _SYSWIN_MSG( msg_t06r0401_cliff_10 , POS_DEFAULT )
     _ME_PLAY( SEQ_ME_LVUP )
     _ME_WAIT()
-
+    _AB_KEYWAIT_MARK()
     _SYSWIN_CLOSE()
     
     _SET_TEMOTI_WAZA( select_pos , waza_pos , teach_waza_id )
@@ -349,3 +417,121 @@ sub_skillteacher_wasure_core:
     _RET
 }
 
+//--------------------------------------------------------------------
+//☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_staystep_u
+  _ANIME_DATA AC_STAY_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_d
+  _ANIME_DATA AC_STAY_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_l
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_staystep_r
+  _ANIME_DATA AC_STAY_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：歩く
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_walk_d
+  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_walk_u
+  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_walk_r
+  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_walk_l
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------------
+//☆共通処理：方向転換
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_dir_u
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_dir_d
+  _ANIME_DATA AC_DIR_D,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_dir_l
+  _ANIME_DATA AC_DIR_L,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL  anm_dir_r
+  _ANIME_DATA AC_DIR_R,1
+  _ANIME_DATA ACMD_END,0
+  
+//-----------------------------------------------------------
+//☆ケルディオ用：アニメラベル
+//-----------------------------------------------------------
+_ANIME_LABEL	anm_kyorokyoro
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_poke11_move01
+	_ANIME_DATA	AC_WALK_L_4F,3
+	_ANIME_DATA	AC_WALK_U_4F,4
+	_ANIME_DATA	AC_WAIT_8F,2
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_JUMP_R_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_poke11_move02
+	_ANIME_DATA	AC_WALK_D_4F,2
+	_ANIME_DATA	AC_WALK_R_4F,6
+	_ANIME_DATA	ACMD_END,0
+
+
+_ANIME_LABEL	anm_poke11_move03
+	_ANIME_DATA	AC_WALK_U_4F,2
+	_ANIME_DATA	AC_WAIT_8F,2
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_JUMP_L_8F,2
+	_ANIME_DATA	AC_WAIT_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_poke11_move04
+	_ANIME_DATA	AC_WALK_D_4F,1
+	_ANIME_DATA	AC_WALK_L_4F,2
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WAIT_8F,2
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_poke11_move05
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_poke11_move06
+	_ANIME_DATA	AC_WAIT_8F,5
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+
+//-----------------------------------------------------------
+//☆主人公：アニメラベル
+//-----------------------------------------------------------
+_ANIME_LABEL	anm_player_move01
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
