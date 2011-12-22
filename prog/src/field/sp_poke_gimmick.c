@@ -485,19 +485,19 @@ static GMEVENT_RESULT SmokeMoveEvt( GMEVENT* event, int* seq, void* work );
 // 気合のエフェクト
 #define EFF_POS_X       ( 248 << FX32_SHIFT )
 #define EFF_POS_Y       ( 0 )
-#define EFF_POS_Z       ( 248 << FX32_SHIFT )
+#define EFF_POS_Z       ( 216 << FX32_SHIFT )
 // ビリジオン
 #define BIRIZION_POS_X  ( 280 << FX32_SHIFT )
 #define BIRIZION_POS_Y  ( 0 )
-#define BIRIZION_POS_Z  ( 248  << FX32_SHIFT )
+#define BIRIZION_POS_Z  ( 216  << FX32_SHIFT )
 // コバルオン
 #define KOBARUON_POS_X  ( 248 << FX32_SHIFT )
 #define KOBARUON_POS_Y  ( 48  << FX32_SHIFT )
-#define KOBARUON_POS_Z  ( 248 << FX32_SHIFT )
+#define KOBARUON_POS_Z  ( 216 << FX32_SHIFT )
 // テラキオン
 #define TERAKION_POS_X  ( 216 << FX32_SHIFT )
 #define TERAKION_POS_Y  ( 0 )
-#define TERAKION_POS_Z  ( 248 << FX32_SHIFT )
+#define TERAKION_POS_Z  ( 216 << FX32_SHIFT )
 
 // ケルディオ演出イベント関係
 #define KERUDHIO_EFFECT_WAIT    (60)     // 気合のエフェクト表示フレーム数
@@ -767,39 +767,6 @@ void SPPOKE_GMK_MoveMerodhia(FIELDMAP_WORK *fieldWork)
   MERO_GMK_WK *p_ica_wk = (MERO_GMK_WK*)p_wk->Work;
   int i;
 
-#ifdef PM_DEBUG
-  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-      GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH );
-
-      status->trans.x = 88 << FX32_SHIFT;
-      status->trans.z = 120 << FX32_SHIFT;
-
-      // 光のエフェクト開始
-      p_ica_wk->eff_flash_flag = 1;
-
-      // アニメ再生
-      FLD_EXP_OBJ_SetVanish( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH, FALSE );
-      // アニメ設定
-      for( i=0; i<ANM_MERO_FLASH_NUM; i++ )
-      {
-        EXP_OBJ_ANM_CNT_PTR exp_anm;
-        exp_anm = FLD_EXP_OBJ_GetAnmCnt( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH, i );
-
-        // 1回再生設定
-        FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
-        FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
-
-        // 有効化
-        FLD_EXP_OBJ_ValidCntAnm( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH, i, TRUE );
-        // 頭だし
-        FLD_EXP_OBJ_SetObjAnmFrm( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH, i, 0 );
-      }
-
-      ICHI_Printf("エフェクト開始\n");
-    }
-  }
-#endif
 
   // icaアニメ処理
   switch( p_ica_wk->anime_status ) {
