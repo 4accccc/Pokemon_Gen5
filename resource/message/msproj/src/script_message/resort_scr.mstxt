@@ -8107,14 +8107,13 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ズバリ！
-[Name:ResortType ]です▼
+			<Text>[Name:ResortType ]！　すばらしい！▼
 [Name:ResortType ]を
-[Name:ResortTown Idx="1" ]にひらいたら▽
+[Name:ResortTown Idx="1" ]に　ひらいたら▽
 あっというまに　にんきに　なるでしょう▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-28T09:33:11" />
+				Time="2011-12-22T10:30:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8122,14 +8121,13 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ズバリ！
-[Name:ResortType ]です▼
+			<Text>[Name:ResortType ]！　素晴らしい！▼
 [Name:ResortType ]を
 [Name:ResortTown Idx="1" ]に　ひらいたら▽
 あっというまに　人気に　なるでしょう▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-28T09:33:11" />
+				Time="2011-12-22T10:30:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8872,14 +8870,13 @@ BW♀
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>そうです！
-[Name:ResortType ]です▼
+			<Text>[Name:ResortType ]！　すばらしい　です！▼
 [Name:ResortType ]を
-[Name:ResortTown Idx="1" ]にひらいたら▽
+[Name:ResortTown Idx="1" ]に　ひらいたら▽
 あっというまに　にんきに　なるでしょう▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-29T11:35:00" />
+				Time="2011-12-22T10:31:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8887,14 +8884,13 @@ BW♀
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そうです！
-[Name:ResortType ]です▼
+			<Text>[Name:ResortType ]！　素晴らしい　です！▼
 [Name:ResortType ]を
 [Name:ResortTown Idx="1" ]に　ひらいたら▽
 あっというまに　人気に　なるでしょう▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-11-29T11:35:03" />
+				Time="2011-12-22T10:31:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
