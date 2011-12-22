@@ -943,6 +943,10 @@ EVENT_START  ev_infinity_dungeon_comeback
       IF $LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_5 THEN
         // エリア５クリア
         _CALL item_get
+        
+        // 自分の名前をセット
+        _PLAYER_NAME( 0 )
+
         IF $LWK_D_VERSION == VERSION_B2 THEN
           _BALLOONWIN_OBJMSG_POS( msg_info_clear_b_03_00 , LWK_INFOOBJ_ID, POS_DOWN )
           // エレベータにカメラをを寄せる
