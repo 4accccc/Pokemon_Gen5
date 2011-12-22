@@ -454,29 +454,14 @@ void ENCPOKE_PPSetup(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, const ENC_P
         break;
       }
     }
-#if 0
-    // 「ひかるおまもり」所持チェック
-    //  かつ 既にレアでない
-    if( rare_item == TRUE && POKETOOL_CheckRare( efp->myID, p_rnd ) == FALSE )
-    {
-      // 持っていたら、+２回レア抽選する
-      for( i=0; i<RARE_POKE_CHANGE; i++ )
-      {
-        p_rnd = eps_EncPokeCalcPersonalRand( efp, personal, poke );
-
-        // レアになった
-        if( POKETOOL_CheckRare( efp->myID, p_rnd ) )
-        {
-          break;
-        }
-      }
-    }
-#endif
     PP_SetupEx( pp, poke->monsNo, poke->level, efp->myID, PTL_SETUP_POW_AUTO, p_rnd );
   }
 
   //フォルムセット
   PP_ChangeFormNo( pp, poke->form );
+
+  // デフォルト技をセットする
+  PP_SetWazaDefault( pp );
 
   //第3特性強制セット
   if( poke->spabi_3rd ){
