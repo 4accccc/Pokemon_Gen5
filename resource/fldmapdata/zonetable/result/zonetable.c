@@ -16149,7 +16149,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		0,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
-		9,
+		3,
 		TRUE,
 		TRUE,
 		FALSE,
@@ -18129,7 +18129,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		5,
 		TRUE,
 		TRUE,
 		TRUE,
@@ -18165,7 +18165,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		5,
 		TRUE,
 		TRUE,
 		TRUE,
@@ -18187,10 +18187,10 @@ static const ZONEDATA ZoneData[] = {
 		NARC_script_seq_d28r0301_bin,
 		NARC_script_seq_sp_d28r0301_bin,	//NARC_script_seq_sp_d28r0301_bin,
 		NARC_script_message_d28r0301_dat,
-		SEQ_BGM_D_03,
-		SEQ_BGM_D_03,
-		SEQ_BGM_D_03,
-		SEQ_BGM_D_03,
+		SEQ_BGM_D_02,
+		SEQ_BGM_D_02,
+		SEQ_BGM_D_02,
+		SEQ_BGM_D_02,
 		NARC_encount_data_w_d28r0301_bin,
 		FMISSION_MAP_ATTR_CAVE,
 		NARC_eventdata_d28r0301_bin,
@@ -18201,7 +18201,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		5,
 		TRUE,
 		TRUE,
 		TRUE,
