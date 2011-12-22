@@ -1205,11 +1205,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いらっしゃいませ
+			<Text>こんにちは
 ゲームフリーク　です！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T09:04:17" />
+				Time="2011-12-22T02:59:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1217,11 +1217,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>いらっしゃいませ
+			<Text>こんにちは
 ゲームフリーク　です！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T09:04:19" />
+				Time="2011-12-22T02:59:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

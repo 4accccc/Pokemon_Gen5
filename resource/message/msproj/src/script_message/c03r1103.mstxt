@@ -397,12 +397,10 @@
 じゃあ　ポケモンセンターの
 パソコン　つかっていますか？▼
 あたし　あの　ボックスを
-かんりしています　ショウロです▼
-はじめましての　あいさつがわりに
-えんりょせずに　もらってください▼</Text>
+かんりしています　ショウロです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:15:48" />
+				Time="2011-12-22T03:06:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -414,12 +412,10 @@
 じゃあ　ポケモンセンターの
 パソコン　使っていますか？▼
 あたし　あの　ボックスを
-管理しています　ショウロです▼
-はじめましての　あいさつがわりに
-遠慮せずに　もらってください▼</Text>
+管理しています　ショウロです</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:19:37" />
+				Time="2011-12-22T03:06:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -428,15 +424,13 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・アイテム入手処理
-　No437「ともだちてちょう」
 ・会話後、パソコンメニューの
 　「だれかのパソコン」が
 　「ショウロのパソコン」に変更
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:17:56" />
+				Time="2011-12-22T03:07:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -459,7 +453,9 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>その　ともだちてちょう　に
+			<Text>あっ！
+ともだちてちょうを　おもちですね！▼
+その　ともだちてちょう　に
 とうろくした　おともだちと▽
 Ｗｉ－Ｆｉコネクションを　つかって▼
 ポケモンたいせん　や
@@ -475,7 +471,7 @@
 ばっちり　とうろく　できます！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:15:58" />
+				Time="2011-12-22T03:07:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -483,7 +479,9 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>その　ともだちてちょう　に
+			<Text>あっ！
+ともだちてちょうを　おもちですね！▼
+その　ともだちてちょう　に
 登録した　おともだちと▽
 Ｗｉ－Ｆｉコネクションを　使って▼
 ポケモン対戦や
@@ -499,7 +497,7 @@
 ばっちり　登録できます！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:17:20" />
+				Time="2011-12-22T03:07:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -508,11 +506,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・アイテム入手後、自動で表示
+・！マーク表示後にメッセージ
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-19T07:18:07" />
+				Time="2011-12-22T03:07:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

@@ -727,12 +727,12 @@
 ポケモンジムに　きて
 アタシに　ちょうせん　する？▼
 それとも　はかせが　むかった
-タワーオブヘブンで　きたえる？▼
+タワーオブヘブンで　きたえます？▼
 アタシとしては　つよい　トレーナーと
 たたかえるなら　どっちでも　いいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T06:26:25" />
+				Time="2011-12-22T02:13:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -744,12 +744,12 @@
 ポケモンジムに　きて
 アタシに　挑戦する？▼
 それとも　博士が　向かった
-タワーオブヘブンで　鍛える？▼
+タワーオブヘブンで　鍛えます？▼
 アタシとしては　強い　トレーナーと
 戦えるなら　どっちでも　いいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T06:26:26" />
+				Time="2011-12-22T02:13:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -844,15 +844,13 @@
 			Language="JPN">
 			<Text>まだ　タワーオブヘブンを
 しらべて　いるのかな？▼
-はかせ　ちょうさに　むちゅう　だと
-ライブキャスターにも　きづかないし▼
 んー　おねがいだけど　アナタ
 はかせを　よんできて　くれない？▼
 アタシは　フキヨセカーゴサービスで
 フライトの　じゅんびを　しておくから▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:09:49" />
+				Time="2011-12-22T02:13:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -862,15 +860,13 @@
 			Language="JPN_KANJI">
 			<Text>まだ　タワーオブヘブンを
 調べて　いるのかな？▼
-博士　調査に　夢中だと
-ライブキャスターにも　きづかないし▼
 んー　お願いだけど　アナタ
 博士を　呼んできて　くれない？▼
 アタシは　フキヨセカーゴサービスで
 フライトの　準備を　しておくから▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:10:01" />
+				Time="2011-12-22T02:13:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -909,16 +905,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アララギ『ハーイ！▼
-さて　つぎは　やまを　こえても
-いい　ちょうさが▽
-おなじように　できると　いいわね！▼
+さて　やまを　こえても
+おなじように　いい　ちょうさが▽
+できると　いいわね！▼
 そ！　わたしと　いっしょに
-ひこうきに　のりましょ！▼
-というのも
-ポケモンずかんの　ためなんだけど▼</Text>
+ひこうきに　のりましょ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T12:00:29" />
+				Time="2011-12-22T02:18:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -927,16 +921,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アララギ『ハーイ！▼
-さて　次は　山を　越えても
-いい　調査が▽
-同じように　できると　いいわね！▼
+さて　山を　越えても
+同じように　いい　調査が▽
+できると　いいわね！▼
 そ！　わたしと　いっしょに
-飛行機に　乗りましょ！▼
-というのも
-ポケモン図鑑の　ためなんだけど▼</Text>
+飛行機に　乗りましょ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T12:00:33" />
+				Time="2011-12-22T02:19:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -973,14 +965,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それに　ソウリュウシティに
-あってほしい　ひとが　いるんだ▼
+			<Text>ソウリュウシティで
+あって　ほしい　ひとが　いるけど▽
+いま　ネジやまは　とおれないからね▼
 というわけで
 フキヨセ　カーゴ　サービスで▽
 まってまーす！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:19:38" />
+				Time="2011-12-22T02:18:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -988,14 +981,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それに　ソウリュウシティに
-会ってほしい　人が　いるんだ▼
+			<Text>ソウリュウシティで
+会って　ほしい　人が　いるけど▽
+いま　ネジ山は　通れないからね▼
 というわけで
 フキヨセ　カーゴ　サービスで▽
-待ってまーす！▼</Text>
+まってまーす！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-05-25T13:19:55" />
+				Time="2011-12-22T02:19:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1295,12 +1289,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>この　フキヨセは　もともとは
-あれはてた　とち……▼
+あれはてた　とち……　それを▼
 ポケモンと　ひとが　きょうりょくして
 きりひらいた　ばしょ　なんだよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T10:03:04" />
+				Time="2011-12-22T02:19:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1309,12 +1303,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>この　フキヨセは　元々は
-荒れ果てた　土地……▼
+荒れ果てた　土地……　それを▼
 ポケモンと　人が　協力して
 切り拓いた　場所なんだよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T10:03:38" />
+				Time="2011-12-22T02:19:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1702,13 +1696,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>なんてね▼
-ぼくら　コアルヒーに
-つばめがえしを　おぼえさせたから▼
+ぼくらの　コアルヒー
+つばめがえしを　おぼえたから▼
 その　わざマシンは
 おにいちゃんに　あげるよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T10:13:25" />
+				Time="2011-12-22T02:25:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1717,13 +1711,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なんてね▼
-ぼくら　コアルヒーに
-つばめがえしを　覚えさせたから▼
+ぼくらの　コアルヒー
+つばめがえしを　覚えたから▼
 その　わざマシンは
 お兄ちゃんに　あげるよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T10:13:15" />
+				Time="2011-12-22T02:25:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1766,13 +1760,13 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>なんてね▼
-ぼくら　コアルヒーに
-つばめがえしを　おぼえさせたから▼
+ぼくらの　コアルヒー
+つばめがえしを　おぼえたから▼
 その　わざマシンは
 おねえちゃんに　あげるよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T10:13:32" />
+				Time="2011-12-22T02:25:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1781,13 +1775,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>なんてね▼
-ぼくら　コアルヒーに
-つばめがえしを　覚えさせたから▽
+ぼくらの　コアルヒー
+つばめがえしを　覚えたから▼
 その　わざマシンは
 お姉ちゃんに　あげるよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T10:13:39" />
+				Time="2011-12-22T02:25:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2048,12 +2042,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……カミツレちゃんには　ひみつ
-おねがいしますね！
-</Text>
+			<Text>このことは　カミツレちゃんに
+ひみつで　おねがい　しますね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T12:58:00" />
+				Time="2011-12-22T02:27:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2061,12 +2054,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……カミツレちゃんには　秘密
-お願いしますね！
-</Text>
+			<Text>このことは　カミツレちゃんに
+秘密で　お願い　しますね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T12:57:56" />
+				Time="2011-12-22T02:28:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2212,7 +2204,7 @@
 とっても　べんりな　きのみよね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T05:56:29" />
+				Time="2011-12-22T02:26:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2226,7 +2218,7 @@
 とっても　便利な　きのみよね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T05:56:29" />
+				Time="2011-12-22T02:26:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

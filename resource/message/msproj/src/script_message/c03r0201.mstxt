@@ -106,10 +106,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タイトル「そらのみず」</Text>
+			<Text>タイトル「ドラゴン　しろと　くろと」</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T05:23:08" />
+				Time="2011-12-22T02:51:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -117,10 +117,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タイトル「空の水」</Text>
+			<Text>タイトル「ドラゴン　白と　黒と」</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T05:23:19" />
+				Time="2011-12-22T02:52:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -130,10 +130,10 @@
 			Language="JPN">
 			<Comment>BGメッセージ
 ・GRIDX=8~9、GRIDZ=10の絵画
-※swanでメッセージ調整予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T03:05:44" />
+				Time="2011-12-22T02:52:13" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -176,7 +176,7 @@
 			<Text>タイトル「積み重ね　罪と金」</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T05:23:35" />
+				Time="2011-12-22T02:52:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -185,11 +185,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>BGメッセージ
-・GRIDX=11、GRIDZ=10の絵画
-※swanでメッセージ調整予定</Comment>
+・GRIDX=11、GRIDZ=10の絵画</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T03:05:46" />
+				Time="2011-12-22T02:52:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -218,10 +217,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タイトル「しろの　しんじつ」</Text>
+			<Text>タイトル「むごたらしい　しんじつ」</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T05:24:45" />
+				Time="2011-12-22T02:54:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -229,10 +228,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タイトル「白の真実」</Text>
+			<Text>タイトル「惨たらしい真実」</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T05:24:53" />
+				Time="2011-12-22T02:54:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -242,10 +241,10 @@
 			Language="JPN">
 			<Comment>BGメッセージ
 ・GRIDX=7~8、GRIDZ=5の絵画
-※swanでメッセージ調整予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T03:05:47" />
+				Time="2011-12-22T02:55:31" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -274,10 +273,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タイトル「えいゆう」</Text>
+			<Text>タイトル「きえた　えいゆう」</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T05:25:21" />
+				Time="2011-12-22T02:55:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -285,10 +284,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タイトル「英雄」</Text>
+			<Text>タイトル「消えた英雄」</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T05:25:32" />
+				Time="2011-12-22T02:55:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -298,10 +297,10 @@
 			Language="JPN">
 			<Comment>BGメッセージ
 ・GRIDX=10、GRIDZ=5の絵画
-※swanでメッセージ調整予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T03:05:48" />
+				Time="2011-12-22T02:55:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -330,10 +329,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タイトル「黒の理想」</Text>
+			<Text>タイトル「はるかな　りそう」</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T05:25:05" />
+				Time="2011-12-22T02:53:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -341,10 +340,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タイトル「黒の理想」</Text>
+			<Text>タイトル「悠久の理想」</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T05:25:11" />
+				Time="2011-12-22T02:54:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -354,10 +353,10 @@
 			Language="JPN">
 			<Comment>BGメッセージ
 ・GRIDX=12~13、GRIDZ=5の絵画
-※swanでメッセージ調整予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T03:05:50" />
+				Time="2011-12-22T02:55:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -386,11 +385,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タイトル「であう　まえに
-こんにちはの　れんしゅう」</Text>
+			<Text>タイトル「であうべくして　であった
+いっぴきと　ひとり」</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T05:24:21" />
+				Time="2011-12-22T02:55:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -398,11 +397,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タイトル「出会う　まえに
-こんにちはの　練習」</Text>
+			<Text>タイトル「出会うべくして　出会った
+一匹と　一人」</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T05:24:29" />
+				Time="2011-12-22T02:56:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -412,10 +411,10 @@
 			Language="JPN">
 			<Comment>BGメッセージ
 ・GRIDX=2、GRIDZ=9の絵画
-※swanでメッセージ調整予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-21T03:05:52" />
+				Time="2011-12-22T02:56:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

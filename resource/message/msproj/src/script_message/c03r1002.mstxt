@@ -62,12 +62,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あんた　ねむれてる？▼
-ねむらないと　かいふく　しないよ▼
+			<Text>あんた　ねてる？▼
+ねないと　かいふく　しないよ▼
 とゆーわけで　これ　あげる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T08:17:22" />
+				Time="2011-12-22T03:04:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -75,12 +75,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>あんた　眠れてる？▼
-眠らないと　回復しないよ▼
+			<Text>あんた　ねてる？▼
+ねないと　回復しないよ▼
 とゆーわけで　これ　あげる！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T08:17:08" />
+				Time="2011-12-22T03:04:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -90,10 +90,11 @@
 			Language="JPN">
 			<Comment>♀
 ・アイテム入手処理
-　No371「ねむる」</Comment>
+　No371「ねむる」
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T06:57:06" />
+				Time="2011-12-22T03:04:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -124,11 +125,11 @@
 			Language="JPN">
 			<Text>ポケモンに　きのみの
 カゴのみを　もたせておくの！▼
-そうすりゃ　ねむって　げんきになって
+そうすりゃ　ねて　げんきになって
 すぐに　めざめて……ってわけ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T06:58:34" />
+				Time="2011-12-22T03:04:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -138,11 +139,11 @@
 			Language="JPN_KANJI">
 			<Text>ポケモンに　きのみの
 カゴのみを　持たせておくの！▼
-そうすりゃ　眠って　元気になって
+そうすりゃ　ねて　元気になって
 すぐに　めざめて……ってわけ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T08:17:36" />
+				Time="2011-12-22T03:04:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -151,10 +152,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・アイテム入手後</Comment>
+・アイテム入手後
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-13T06:57:09" />
+				Time="2011-12-22T03:04:59" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

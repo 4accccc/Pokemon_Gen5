@@ -105,7 +105,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アクロマ『ひさしぶり　ですね！▼
+			<Text>アクロマ『ひさしぶり　です！▼
 いま　あなたが　むきあった
 ポケモンは　テラキオン！▼
 たたかいの　ほのおから　ポケモンを
@@ -113,7 +113,7 @@
 ３びきの　ポケモンの　いっぴき！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-23T10:55:35" />
+				Time="2011-12-22T03:24:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -121,7 +121,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アクロマ『ひさしぶり　ですね！▼
+			<Text>アクロマ『ひさしぶり　です！▼
 いま　あなたが　向き合った
 ポケモンは　テラキオン！▼
 戦いの　炎から　ポケモンを
@@ -129,7 +129,7 @@
 ３匹の　ポケモンの　１匹！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-23T10:55:27" />
+				Time="2011-12-22T03:24:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -489,11 +489,12 @@
 			Language="JPN">
 			<Text>そういえば！▼
 ２１ばんすいどうに　ある
-ほらあなの　ちかくで▽
-きょうみぶかい　ものを　みましたよ▼</Text>
+うみべのどうくつの　なかで▼
+４ばんどうろを　おもいだすような
+なつかしい　ものを　みましたよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T13:15:41" />
+				Time="2011-12-22T03:23:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -503,11 +504,12 @@
 			Language="JPN_KANJI">
 			<Text>そういえば！▼
 ２１番水道に　ある
-洞穴の　近くで▽
-興味深い　ものを　みましたよ▼</Text>
+海辺の洞穴の　中で▼
+４番道路を　思いだすような
+懐かしい　ものを　みましたよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T13:15:50" />
+				Time="2011-12-22T03:24:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

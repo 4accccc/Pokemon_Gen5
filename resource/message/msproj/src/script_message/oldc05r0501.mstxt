@@ -752,13 +752,14 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>その１『な！▼
-というけど　Ｎさまは　ポケモンの
-そんな　おもいを　きいていたんだ……▼
+というけど　Ｎさまは
+ポケモンたちの　そんな　おもいを▽
+ことばを　きいていたんだよね「……▼
 ……そうぞうすると
 こころ　こわれそうだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T03:34:06" />
+				Time="2011-12-22T02:38:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -767,13 +768,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>その１『な！▼
-というけど　Ｎさまは　ポケモンの
-そんな　思いを　きいていたんだ……▼
+というけど　Ｎさまは
+ポケモンたちの　そんな　想いを▽
+言葉を　きいていたんだよね……▼
 ……想像すると
 心　壊れそうだね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-05T04:20:51" />
+				Time="2011-12-22T02:38:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -918,13 +920,13 @@ N</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクを　しんじてくれた
-ミンナが　どうなんているか▽
+ミンナが　どうしているか▽
 あんじて　いたが……▼
 カレラは　カレラで　ポケモンのために
 やれることを　わかっているんだね[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T04:00:43" />
+				Time="2011-12-22T02:37:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -933,13 +935,13 @@ N</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ]ボクを　信じてくれた
-ミンナが　どうなんているか▽
+ミンナが　どうしているか▽
 案じていたが……▼
 カレラは　カレラで　ポケモンのために
 やれることを　わかっているんだね[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T04:00:44" />
+				Time="2011-12-22T02:37:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
