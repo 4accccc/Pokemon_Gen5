@@ -8,6 +8,19 @@
 
 "staffroll_font.nclr"
 
+"2d_cut/cut00/cut00_b_boy.nclr"
+"2d_cut/cut00/cut00_b_boy.ncgr"
+"2d_cut/cut00/cut00_b_boy.nscr"
+"2d_cut/cut00/cut00_b_girl.nclr"
+"2d_cut/cut00/cut00_b_girl.ncgr"
+"2d_cut/cut00/cut00_b_girl.nscr"
+"2d_cut/cut00/cut00_w_boy.nclr"
+"2d_cut/cut00/cut00_w_boy.ncgr"
+"2d_cut/cut00/cut00_w_boy.nscr"
+"2d_cut/cut00/cut00_w_girl.nclr"
+"2d_cut/cut00/cut00_w_girl.ncgr"
+"2d_cut/cut00/cut00_w_girl.nscr"
+
 "2d_cut/cut01/cut01_b_boy.nclr"
 "2d_cut/cut01/cut01_b_boy.ncgr"
 "2d_cut/cut01/cut01_b_boy.nscr"
@@ -124,4 +137,17 @@
 "2d_cut/cut09/cut09_w_girl.nclr"
 "2d_cut/cut09/cut09_w_girl.ncgr"
 "2d_cut/cut09/cut09_w_girl.nscr"
+
+"2d_cut/cut10/cut10_b_boy.nclr"
+"2d_cut/cut10/cut10_b_boy.ncgr"
+"2d_cut/cut10/cut10_b_boy.nscr"
+"2d_cut/cut10/cut10_b_girl.nclr"
+"2d_cut/cut10/cut10_b_girl.ncgr"
+"2d_cut/cut10/cut10_b_girl.nscr"
+"2d_cut/cut10/cut10_w_boy.nclr"
+"2d_cut/cut10/cut10_w_boy.ncgr"
+"2d_cut/cut10/cut10_w_boy.nscr"
+"2d_cut/cut10/cut10_w_girl.nclr"
+"2d_cut/cut10/cut10_w_girl.ncgr"
+"2d_cut/cut10/cut10_w_girl.nscr"
 

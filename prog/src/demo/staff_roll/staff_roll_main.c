@@ -1697,9 +1697,9 @@ static void CutSeqFunc_Load( CUT_WORK *p_wk, u32 sex )
     int diff = 0;   // 基準からのarc_id の差
 
     // 基準となるarc_id  要は一番上
-    arc_pal = NARC_staff_roll_2d_cut_cut01_cut01_b_boy_nclr;
-    arc_cgx = NARC_staff_roll_2d_cut_cut01_cut01_b_boy_ncgr;
-    arc_scr = NARC_staff_roll_2d_cut_cut01_cut01_b_boy_nscr;
+    arc_pal = NARC_staff_roll_2d_cut_cut00_cut00_b_boy_nclr;
+    arc_cgx = NARC_staff_roll_2d_cut_cut00_cut00_b_boy_ncgr;
+    arc_scr = NARC_staff_roll_2d_cut_cut00_cut00_b_boy_nscr;
 
     diff = p_wk->cut_no * 12;    // 12 リソース種類×男女×バージョン
 
