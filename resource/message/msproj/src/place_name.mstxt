@@ -6290,10 +6290,10 @@ R14R0101/R15R0101</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>れんまのはやし</Text>
+			<Text>ちかいのはやし</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2011-12-10T06:57:50" />
+				Time="2011-12-22T03:23:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -6301,10 +6301,10 @@ R14R0101/R15R0101</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>練磨の林</Text>
+			<Text>誓いの林</Text>
 			<TextModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2011-12-10T06:35:33" />
+				Time="2011-12-22T03:23:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -6312,12 +6312,10 @@ R14R0101/R15R0101</Comment>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>T06R0401
-※仮名
-</Comment>
+			<Comment>T06R0401</Comment>
 			<CommentModifiedBy
 				User="suginaka_katsunori:W00289"
-				Time="2011-12-10T06:58:07" />
+				Time="2011-12-22T03:23:40" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
