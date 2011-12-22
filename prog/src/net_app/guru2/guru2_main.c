@@ -7153,12 +7153,14 @@ static void print_all_egg_data( GURU2MAIN_WORK* g2m )
   m_pp = PokeParty_GetMemberPointer( m_poke, m_pos );
   OS_TPrintf( "Ž©•ª‚Ì—‘ monsno= %d \n", PP_Get( m_pp, ID_PARA_monsno, NULL ) );
 
-  for( id=0; id<g2m->comm.play_max; id++ )
+  for( id=0; id<G2MEMBER_MAX; id++ )
   {
-    f_poke = (POKEPARTY *)Guru2Comm_FriendPokePartyGet( g2m->g2c, id );
-    f_pos = g2m->comm.trade_no_tbl[id];
-    f_pp = PokeParty_GetMemberPointer( f_poke, f_pos );
-    OS_TPrintf( "comm_id[%d]‚Ì—‘ monsno= %d \n",id, PP_Get( f_pp, ID_PARA_monsno, NULL ) );
+    if( Guru2MainCommIDPlayCheck(g2m,id) ){
+      f_poke = (POKEPARTY *)Guru2Comm_FriendPokePartyGet( g2m->g2c, id );
+      f_pos = g2m->comm.trade_no_tbl[id];
+      f_pp = PokeParty_GetMemberPointer( f_poke, f_pos );
+      OS_TPrintf( "comm_id[%d]‚Ì—‘ monsno= %d \n",id, PP_Get( f_pp, ID_PARA_monsno, NULL ) );
+    }
   }
 
 }
