@@ -81,6 +81,7 @@ extern STRBUF * RESORT_UTIL_CreateShopName( const RESORT_BINARY_SHOP *cp_wk, con
 
 
 extern void RESORT_UTIL_SetProxyRandom( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, RESORT_PROXY_DATA *p_wk, u32 proxy_type, HEAPID heapID );
+extern void RESORT_UTIL_SetProxy( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, RESORT_PROXY_DATA *p_wk, u32 proxy_type, u16 presetID, HEAPID heapID );
 extern void RESORT_UTIL_SetSecretaryPreset( RESORT_SYSTEM *p_sys, RESORT_SECRETARY_DATA *p_wk, u16 type, u16 preset_type, u16 peopleID, HEAPID heapID );
 extern void RESORT_UTIL_SetProxyPreset( RESORT_SYSTEM *p_sys, RESORT_PROXY_DATA *p_wk, u16 type, u16 preset_type, HEAPID heapID );
 

@@ -28,6 +28,8 @@ typedef enum
   RESORT_DEBUG_FLAG_FORCE_INIT_COMBO,   //初回コンボ必ず成功
   RESORT_DEBUG_FLAG_FORCE_COMBO_MAX,    //コンボ必ず最大連鎖
   RESORT_DEBUG_FLAG_PRESENT_NONE,       //おみやげなし
+  RESORT_DEBUG_FLAG_FORCE_SPOT_WORK_ON,  //強制行きたいお店使う？
+  RESORT_DEBUG_FLAG_FORCE_RND_WORK_ON,   //乱数操作使う？
 
   RESORT_DEBUG_FLAG_MAX
 }RESORT_DEBUG_FLAG;
@@ -41,7 +43,7 @@ extern BOOL RESORT_DEBUG_FLAG_Get( RESORT_DEBUG_FLAG flag );
  *					デバッグワーク
 */
 //=============================================================================
-#define RESORT_DEBUG_WORK_DEFAULT (0xFFFFFFFF)
+#define RESORT_DEBUG_WORK_DEFAULT (0)
 
 typedef enum
 {

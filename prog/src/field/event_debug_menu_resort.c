@@ -40,6 +40,13 @@
 #include "resonance_resort/resort_shop.h"
 #include "resonance_resort/resort_binary.h"
 #include "resonance_resort/resort_shop.h"
+#include "resonance_resort/resort_sys.h"
+#include "resonance_resort/resort_field.h"
+#include "resonance_resort/resort_people.h"
+#include "resonance_resort/resort_data_manager.h"
+#include "resonance_resort/resort_util.h"
+#include "resonance_resort/resort_npc.h"
+#include "resonance_resort/resort_binary.h"
 #include "net_app/union/union_beacon_tool.h"
 #include "resonance_resort/resort_debug_inline.h"
 #include "script.h"
@@ -47,6 +54,8 @@
 #include "../../../resource/fldmapdata/script/resort_scr_def.h"
 
 
+extern void RESORT_FIELD_AppearFun( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, HEAPID heapID );
+extern void RESORT_FIELD_AppearCeleb( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, HEAPID heapID );
 extern void RESORT_RESIDENT_DATA_JobChange( RESORT_RESIDENT_DATA *p_wk, const RESORT_BINARY_SHOP *cp_shop );
 extern void RESORT_RESIDENT_DATA_ConvertRecv( RESORT_RESIDENT_DATA *p_wk, const RESORT_RECV_DATA *cp_recv, const RESORT_BINARY_SHOP *cp_shop, u16 peopleID, u16 placeID );
 extern void RESORT_RESIDENT_DATA_ConvertProxy( RESORT_RESIDENT_DATA *p_wk, const RESORT_PROXY_DATA *cp_proxy, const RESORT_BINARY_SHOP *cp_shop, u16 peopleID, u16 placeID );
@@ -74,6 +83,8 @@ static BOOL debugMenuCallProc_AllClear( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_UpdateDay( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DesignerSetup1( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Script( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_AddFun( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_AddCeleb( DEBUG_MENU_EVENT_WORK *p_wk );
 
 static const DEBUG_MENU_LIST DATA_SubMenuList[] =
 {
@@ -95,6 +106,8 @@ static const DEBUG_MENU_LIST DATA_SubMenuList[] =
   { DEBUG_FIELD_RESORT_04, debugMenuCallProc_ClearProxyBuff, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_08, debugMenuCallProc_AllSecretary, GFL_OVERLAY_BLANK_ID},
   { DEBUG_FIELD_RESORT_09, debugMenuCallProc_AllResident, GFL_OVERLAY_BLANK_ID},
+  { DEBUG_FIELD_RESORT_50, debugMenuCallProc_AddFun, GFL_OVERLAY_BLANK_ID},
+  { DEBUG_FIELD_RESORT_49, debugMenuCallProc_AddCeleb, GFL_OVERLAY_BLANK_ID},
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSubMenuData = {
@@ -158,6 +171,20 @@ static const DEBUG_MENU_INITIALIZER DebugSubMenuData_Input = {
 };
 
 
+typedef struct
+{
+  u32 seq;
+  s32 num;
+  GFL_MSGDATA * msgData;
+  FLDSYSWIN * win;
+  FIELDMAP_WORK *fieldWork;
+  HEAPID heapID;
+}NUM_INPUT;
+
+#define NUMINPUT_NONE (0xFFFF)
+static s32 NumInput_State( NUM_INPUT *p_wk, FIELDMAP_WORK *fieldWork, s32 default_num, s32 min, s32 max, HEAPID heapID);
+static void NumInput_Draw( NUM_INPUT *p_wk );
+
 static BOOL Debig_Menu_Resort_ChangeOutZone( DEBUG_MENU_EVENT_WORK*p_wk, u16 checkID, u16 nextID )
 {
   if( FIELDMAP_GetZoneID( p_wk->fieldWork) == checkID )
@@ -182,6 +209,12 @@ typedef struct
   const DEBUG_MENU_INITIALIZER *cp_menu_data;
 }DEBUG_MENU_SUB_EVENT_WORK;
 
+static struct 
+{
+  int seq;
+  NUM_INPUT num_input;
+} s_debug_wk  = {0};
+
 //--------------------------------------------------------------
 /**
  * イベント：レゾナンスリゾート
@@ -201,6 +234,8 @@ GMEVENT * DEBUG_EVENT_DebugMenu_Resort( GAMESYS_WORK *gsys, void *wk )
 
   work = GMEVENT_GetEventWork( event );
   GFL_STD_MemClear( work, sizeof(DEBUG_MENU_SUB_EVENT_WORK) );
+
+  GFL_STD_MemClear( &s_debug_wk, sizeof(s_debug_wk) );
 
   work->ev_work  = *debug_work;
   work->ev_work.gmEvent = event;
@@ -240,6 +275,7 @@ static GMEVENT_RESULT debugMenuListEvent(GMEVENT *event, int *seq, void *wk )
         (*seq)++;
       }else if( ret != FLDMENUFUNC_CANCEL ){  //決定
         work->call_proc = (DEBUG_MENU_CALLPROC)ret;
+        s_debug_wk.seq = 0;
         (*seq)++;
       }
     }
@@ -605,6 +641,89 @@ static BOOL debugMenuCallProc_Script( DEBUG_MENU_EVENT_WORK *p_wk )
     return FALSE;
   }
 }
+static BOOL debugMenuCallProc_AddFun( DEBUG_MENU_EVENT_WORK *p_wk )
+{
+  enum
+  {
+    SEQ_NUM_INPUT,
+    SEQ_FUN_SET,
+  };
+
+  if( FIELDMAP_GetZoneID( p_wk->fieldWork) != RESORT_ZONE_ID_FIELD )
+  {
+    PMSND_PlaySE( SEQ_SE_BEEP );
+    return FALSE;
+  }
+
+  switch( s_debug_wk.seq )
+  {
+  case SEQ_NUM_INPUT:
+    if( NUMINPUT_NONE != NumInput_State( &s_debug_wk.num_input, p_wk->fieldWork, 7, 7, 54, p_wk->heapID) )
+    {
+      s_debug_wk.seq++;
+    }
+    break;
+  case SEQ_FUN_SET:
+    {
+      SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
+      RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
+      RESORT_SYSTEM *p_sys = RESORT_FIELD_GetResortSys( p_wk->fieldWork );
+      RESORT_PROXY_DATA *p_proxy = RESORT_PROXY_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID ));
+
+      RESORT_UTIL_SetProxy( p_sys, p_wk->gdata, p_proxy, RESORT_PROXY_TYPE_FUN, s_debug_wk.num_input.num-1, p_wk->heapID );
+       RESONANCE_RESORT_SV_SetData( p_resort, p_wk->gdata, p_proxy, RESORT_MERGE_TYPE_PROXY );
+      RESORT_PROXY_DATA_Exit(p_proxy);
+
+      return FALSE;
+    }
+    break;
+  }
+
+
+  return TRUE;
+}
+
+static BOOL debugMenuCallProc_AddCeleb( DEBUG_MENU_EVENT_WORK *p_wk )
+{
+  enum
+  {
+    SEQ_NUM_INPUT,
+    SEQ_SET,
+  };
+
+  if( FIELDMAP_GetZoneID( p_wk->fieldWork) != RESORT_ZONE_ID_FIELD )
+  {
+    PMSND_PlaySE( SEQ_SE_BEEP );
+    return FALSE;
+  }
+
+  switch( s_debug_wk.seq )
+  {
+  case SEQ_NUM_INPUT:
+    if( NUMINPUT_NONE != NumInput_State( &s_debug_wk.num_input, p_wk->fieldWork, 55, 55, 62, p_wk->heapID) )
+    {
+      s_debug_wk.seq++;
+    }
+    break;
+  case SEQ_SET:
+    {
+      SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
+      RESONANCE_RESORT_SV *p_resort = RESONANCE_RESORT_SV_GetWork( pSave );
+      RESORT_SYSTEM *p_sys = RESORT_FIELD_GetResortSys( p_wk->fieldWork );
+      RESORT_PROXY_DATA *p_proxy = RESORT_PROXY_DATA_Init( GFL_HEAP_LOWID(p_wk->heapID ));
+
+      RESORT_UTIL_SetProxy( p_sys, p_wk->gdata, p_proxy, RESORT_PROXY_TYPE_CELEB, s_debug_wk.num_input.num-1, p_wk->heapID );
+       RESONANCE_RESORT_SV_SetData( p_resort, p_wk->gdata, p_proxy, RESORT_MERGE_TYPE_PROXY );
+      RESORT_PROXY_DATA_Exit(p_proxy);
+
+      return FALSE;
+    }
+    break;
+  }
+
+
+  return TRUE;
+}
 
 static BOOL debugMenuCallProc_CallDebugInput( DEBUG_MENU_EVENT_WORK *p_wk )
 {
@@ -638,6 +757,112 @@ static BOOL debugMenuCallProc_CallOwnerThanksInput( DEBUG_MENU_EVENT_WORK *p_wk 
   GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_NameInput_Resort( RESORT_NAMEIN_TYPE_AUTHER_THANKS, p_wk->gmSys, NULL, TRUE ) );
 
   return TRUE;
+}
+
+#include "msg/debug/msg_debug_infinity.h"
+//----------------------------------------------------------------------------
+/**
+ *	@brief  数字表示
+ *
+ *	@param	NUM_INPUT *p_wk ワーク
+ *	@param	*fieldWork  フィールド
+ *	@param	default_num デフォルトのあ対
+ *	@param	min 最小値
+ *	@param	max 最大値
+ *
+ *	@return 値
+ */
+//-----------------------------------------------------------------------------
+static s32 NumInput_State( NUM_INPUT *p_wk, FIELDMAP_WORK *fieldWork, s32 default_num, s32 min, s32 max, HEAPID heapID)
+{
+  enum
+  {
+    SEQ_INIT,
+    SEQ_MAIN,
+  };
+
+  switch( p_wk->seq )
+  {
+  case SEQ_INIT:
+    {
+      FLDMSGBG * msgBG  = FIELDMAP_GetFldMsgBG( fieldWork );
+      p_wk->num = default_num;
+      p_wk->heapID   = heapID;
+      p_wk->fieldWork = fieldWork;
+
+      p_wk->msgData = DEBUGFLDMENU_CreateMSGDATA(fieldWork, NARC_debug_message_debug_infinity_dat );
+      p_wk->win = FLDSYSWIN_AddEx( msgBG, p_wk->msgData , 1, 1, 30, 2 );
+      NumInput_Draw( p_wk );
+      p_wk->seq++;
+    }
+    break;
+  case SEQ_MAIN:
+    {
+      u32 num = p_wk->num;
+
+      //動作
+      if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT
+          || GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
+      {
+        p_wk->num--;
+      }
+      if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT
+          || GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
+      {
+        p_wk->num++;
+      }
+
+      //最大最小値補正
+      if( p_wk->num < min )
+      {
+        p_wk->num = max;
+      }
+      else if( p_wk->num > max )
+      {
+        p_wk->num = min;
+      }
+
+      //値が変更したときだけ描画
+      if( num != p_wk->num )
+      {
+        NumInput_Draw( p_wk );
+      }
+      
+      // 終了判定
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+      {
+        FLDSYSWIN_ClearWindow( p_wk->win );
+        FLDSYSWIN_Delete( p_wk->win );
+        GFL_MSG_Delete( p_wk->msgData );
+
+        p_wk->seq = 0;
+        return p_wk->num;
+      }
+      break;
+    }
+  }
+  return NUMINPUT_NONE;
+}
+static void NumInput_Draw( NUM_INPUT *p_wk )
+{
+  STRBUF *str;
+  STRBUF *exp;
+  FLDMSGBG * msgBG;
+  WORDSET * wset;
+
+  str = GFL_MSG_CreateString( p_wk->msgData, DEBUG_STR_INFINITY_NUM );
+  wset = WORDSET_Create( p_wk->heapID );
+  exp  = GFL_STR_CreateBuffer( 128, p_wk->heapID );
+  WORDSET_RegisterNumber( wset, 0, p_wk->num, 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+  WORDSET_ExpandStr( wset, exp, str );
+
+  msgBG = FIELDMAP_GetFldMsgBG( p_wk->fieldWork );
+  FLDSYSWIN_ClearWindow( p_wk->win );
+  FLDSYSWIN_PrintStrBuf( p_wk->win, 0, 0, exp );
+
+  GFL_STR_DeleteBuffer( str );
+  GFL_STR_DeleteBuffer( exp );
+  WORDSET_Delete( wset );
 }
 
 #endif  //  PM_DEBUG

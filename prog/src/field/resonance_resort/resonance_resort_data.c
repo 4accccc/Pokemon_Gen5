@@ -4384,8 +4384,14 @@ u32 RESORT_OWNER_DATA_GetWantJob( const RESORT_RECV_DATA *cp_wk, const MYSTATUS 
   u16 ver = MyStatus_GetRomCode( cp_mystatus );
   u16 id = MyStatus_GetID( cp_mystatus );
 
-
-  return RESORT_DATA_GetDefaultWantJob( want_job, id, ver );
+  if( want_job == RESORT_SHOP_ID_NULL )
+  {
+    return RESORT_DATA_GetDefaultWantJob( want_job, id, ver );
+  }
+  else
+  {
+    return want_job;
+  }
 }
 
 
@@ -4402,13 +4408,6 @@ u32 RESORT_OWNER_DATA_GetWantJob( const RESORT_RECV_DATA *cp_wk, const MYSTATUS 
 //-----------------------------------------------------------------------------
 u32 RESORT_DATA_GetDefaultWantJob( u16 want_job, u16 id, u16 ver )
 {
-  GF_ASSERT( want_job < RESORT_SHOP_ID_MAX );
-  if( want_job >= RESORT_SHOP_ID_MAX )
-  {
-    want_job = RESORT_SHOP_ID_NULL;
-  }
-
-  if( want_job == RESORT_SHOP_ID_NULL )
   {
     u32 shop_type = sc_resort_institution_release_tbl[id%RESORT_INSTITUTION_TBL_MAX][0];
 
@@ -4519,8 +4518,6 @@ u32 RESORT_DATA_GetDefaultWantJob( u16 want_job, u16 id, u16 ver )
       }
     }
   }
-    
-  return want_job;
 }
 
 //----------------------------------------------------------------------------
@@ -5121,7 +5118,7 @@ u32 RESORT_DATA_GetRnd( u32 seed, RESORT_RND_ID id, u32 range )
 #ifdef PM_DEBUG
     {
       u32 ret = RESORT_DEBUG_WORK_Get(RESORT_DEBUG_WORK_FORCE_RND);
-      if( ret != RESORT_DEBUG_WORK_DEFAULT )
+      if( RESORT_DEBUG_FLAG_Get( RESORT_DEBUG_FLAG_FORCE_RND_WORK_ON ) )
       {
         return MATH_CLAMP( ret, 0, range-1 );
       }

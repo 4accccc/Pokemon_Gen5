@@ -12359,10 +12359,10 @@ LR→補完"</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>代理人セット</Text>
+			<Text>GTSorPDWセット</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T06:38:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12370,10 +12370,10 @@ LR→補完"</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>代理人セット</Text>
+			<Text>GTSorPDWセット</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T06:38:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12392,10 +12392,10 @@ LR→補完"</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>旅行者バッファ全クリア</Text>
+			<Text>広場＋拡張全クリア</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T04:11:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12403,10 +12403,10 @@ LR→補完"</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>旅行者バッファ全クリア</Text>
+			<Text>広場＋拡張全クリア</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T04:11:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12425,10 +12425,10 @@ LR→補完"</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>代理人バッファ全クリア</Text>
+			<Text>共通構造体全クリア</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T04:11:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12436,10 +12436,10 @@ LR→補完"</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>代理人バッファ全クリア</Text>
+			<Text>共通構造体全クリア</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T04:11:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12491,10 +12491,10 @@ LR→補完"</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>代理人フル</Text>
+			<Text>拡張構造体フル</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T04:11:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -12502,10 +12502,10 @@ LR→補完"</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>代理人フル</Text>
+			<Text>拡張構造体フル</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:06" />
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T04:11:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -13892,6 +13892,72 @@ LR→補完"</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-12-01T04:03:55" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>240</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_FIELD_RESORT_49"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>セレブセット</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T07:28:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="0" ]セレブ[/System:Color]セット</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T07:28:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>240</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="DEBUG_FIELD_RESORT_50"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ファンセット</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T07:28:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[System:Color name="0" ]ファン[/System:Color]セット</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T07:28:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

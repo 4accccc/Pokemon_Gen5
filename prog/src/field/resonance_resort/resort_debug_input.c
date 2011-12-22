@@ -184,6 +184,8 @@ typedef enum {
   EDITBOX_ID_BASIC_SEX,
   EDITBOX_ID_BASIC_PLAY_HOUR,
   EDITBOX_ID_BASIC_PLAY_MIN,
+  EDITBOX_ID_BASIC_JOB,
+  EDITBOX_ID_BASIC_HOBBY,
 
   //住民準基本データ
   EDITBOX_ID_SUB_SPECIAL,
@@ -322,6 +324,8 @@ typedef enum {
   EDITBOX_ID_FLAG_04,
   EDITBOX_ID_FLAG_05,
   EDITBOX_ID_FLAG_06,
+  EDITBOX_ID_FLAG_07,
+  EDITBOX_ID_FLAG_08,
   EDITBOX_ID_WORK_00,
   EDITBOX_ID_WORK_01,
 
@@ -402,6 +406,7 @@ typedef struct
 {
   const STR_PARAM_DISPLAY * display;
   u32 len;
+  u32 index_max;
   void (*StoreData)( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv );
   BOOL (*ReStoreData)( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk );
   BOOL (*PushCallback)( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv, u32 boxID );
@@ -724,6 +729,14 @@ static const STR_PARAM StrParamsResidentBasic[] =
   {STR_TYPE_NUM, RESORT_DATA_13,  8*8+6*8, STR_LINE7_POS_Y,
     8*8+8*8,STR_LINE7_POS_Y,3*8,TOUCH_H,
     59,0,EDITBOX_ID_BASIC_PLAY_MIN },
+  //職業
+  {STR_TYPE_SWITCH, RESORT_DATA_152,  STR_POS_X, STR_LINE8_POS_Y,
+    2*8,STR_LINE8_POS_Y,3*8,TOUCH_H,
+    ANSWER_119,9,EDITBOX_ID_BASIC_JOB },
+  //趣味
+  {STR_TYPE_SWITCH, RESORT_DATA_151,  6*8, STR_LINE8_POS_Y,
+    8*8,STR_LINE8_POS_Y,3*8,TOUCH_H,
+    ANSWER_071,6,EDITBOX_ID_BASIC_HOBBY },
 };
 
 //住民準基本データ
@@ -1519,10 +1532,18 @@ static const STR_PARAM StrParamsDebugFlag[] =
   {STR_TYPE_SWITCH, RESORT_DATA_113, STR_POS_X, STR_LINE10_POS_Y,
     60,STR_LINE10_POS_Y, 2*8,TOUCH_H,
     YESNO_00,2,EDITBOX_ID_FLAG_04 },
-  //強制行きたいお店
+  //強制行きたいお店  フラグ
+  {STR_TYPE_SWITCH, RESORT_DATA_149, STR_POS_X, STR_LINE11_POS_Y,
+    60,STR_LINE11_POS_Y, 3*8,TOUCH_H,
+    YESNO_00,2,EDITBOX_ID_FLAG_07 },
+  //強制行きたいお店  番号
   {STR_TYPE_NUM, RESORT_DATA_114, STR_POS_X, STR_LINE12_POS_Y,
     60,STR_LINE12_POS_Y, 3*8,TOUCH_H,
     RESORT_SPOT_ID_MAX,0,EDITBOX_ID_WORK_00 },
+  //強制乱数固定
+  {STR_TYPE_SWITCH, RESORT_DATA_150, STR_POS_X, STR_LINE13_POS_Y,
+    60,STR_LINE13_POS_Y, 3*8,TOUCH_H,
+    YESNO_00,2,EDITBOX_ID_FLAG_08 },
   //強制乱数固定
   {STR_TYPE_NUM, RESORT_DATA_133, STR_POS_X, STR_LINE14_POS_Y,
     60,STR_LINE14_POS_Y, 3*8,TOUCH_H,
@@ -1603,6 +1624,7 @@ static const STR_PARAM_PAGE sc_first_page =
 {
   sc_first_display_tbl,
   NELEMS(sc_first_display_tbl),
+  0,
   NULL,
   NULL,
   NULL,
@@ -1612,6 +1634,7 @@ static const STR_PARAM_PAGE sc_city_page =
 {
   sc_city_display_tbl,
   NELEMS(sc_city_display_tbl),
+  0,
   City_StoreData,
   City_ReStoreData,
   NULL,
@@ -1621,6 +1644,7 @@ static const STR_PARAM_PAGE sc_resident_page =
 {
   sc_resident_display_tbl,
   NELEMS(sc_resident_display_tbl),
+  8,
   Resident_StoreData,
   Resident_ReStoreData,
   NULL,
@@ -1630,6 +1654,7 @@ static const STR_PARAM_PAGE sc_tourist_page =
 {
   sc_resident_display_tbl,
   NELEMS(sc_resident_display_tbl),
+  8,
   Tourist_StoreData,
   Tourist_ReStoreData,
   NULL,
@@ -1639,6 +1664,7 @@ static const STR_PARAM_PAGE sc_owner_page =
 {
   sc_resident_display_tbl,
   NELEMS(sc_resident_display_tbl),
+  0,
   Owner_StoreData,
   Owner_ReStoreData,
   NULL,
@@ -1648,6 +1674,7 @@ static const STR_PARAM_PAGE sc_shoppos_page =
 {
   sc_shoppos_display_tbl,
   NELEMS(sc_shoppos_display_tbl),
+  0,
   ShopPos_StoreData,
   ShopPos_ReStoreData,
   ShopPos_PushCallback,
@@ -1656,6 +1683,7 @@ static const STR_PARAM_PAGE sc_debug_flag_page =
 {
   sc_debugflag_display_tbl,
   NELEMS(sc_debugflag_display_tbl),
+  0,
   DebugFlag_StoreData,
   DebugFlag_ReStoreData,
   NULL,
@@ -2979,31 +3007,32 @@ static BOOL is_hiragana( const STRBUF* buf )
  *  BUTTONのアクションコールバック
  */
 //=============================================================================
-static void ButtonAction_First_Add( DEBUG_INPUT_WORK *wk, const STR_PARAM *StrParam )
+
+static const STR_PARAM_PAGE * GetPage( int value )
 {
-  switch( wk->BoxValue[EDITBOX_ID_FIRST_PEOPLE] )
+  switch( value )
   {
   case 0: //街
-    wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_city_page );
-    break;
+    return &sc_city_page;
   case 1: //店配置
-    wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_shoppos_page );
-    break;
+    return &sc_shoppos_page;
   case 2: //住民
-    wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_resident_page );
-    break;
+    return &sc_resident_page;
   case 3: //旅行者
-    wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_tourist_page );
-    break;
+    return &sc_tourist_page;
   case 4: //自分
-    wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_owner_page );
-    break;
+    return &sc_owner_page;
   case 5: //デバッグ入力
-    wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_debug_flag_page );
-    break;
+    return &sc_debug_flag_page;
   default:
     GF_ASSERT(0);
+    return NULL;
   }
+}
+
+static void ButtonAction_First_Add( DEBUG_INPUT_WORK *wk, const STR_PARAM *StrParam )
+{
+  wk->p_pageData  = Page_PushPage( wk->p_pageData, GetPage( wk->BoxValue[EDITBOX_ID_FIRST_PEOPLE] ) );
   wk->modify_type = DATA_MODIRY_TYPE_ADD;
   Page_StoreData( wk, wk->p_resort_sv );
   wk->Seq = SEQ_REDRAW;
@@ -3011,29 +3040,7 @@ static void ButtonAction_First_Add( DEBUG_INPUT_WORK *wk, const STR_PARAM *StrPa
 
 static void ButtonAction_First_Change( DEBUG_INPUT_WORK *wk, const STR_PARAM *StrParam )
 {
-  switch( wk->BoxValue[EDITBOX_ID_FIRST_PEOPLE] )
-  {
-  case 0: //街
-    wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_city_page );
-    break;
-  case 1: //店配置
-    wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_shoppos_page );
-    break;
-  case 2: //住民
-    wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_resident_page );
-    break;
-  case 3: //旅行者
-    wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_tourist_page );
-    break;
-  case 4: //自分
-    wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_owner_page );
-    break;
-  case 5: //デバッグ入力
-    wk->p_pageData  = Page_PushPage( wk->p_pageData, &sc_debug_flag_page );
-    break;
-  default:
-    GF_ASSERT(0);
-  }
+  wk->p_pageData  = Page_PushPage( wk->p_pageData, GetPage( wk->BoxValue[EDITBOX_ID_FIRST_PEOPLE] ) );
   wk->modify_type = DATA_MODIRY_TYPE_CHANGE;
   Page_StoreData( wk, wk->p_resort_sv );
   wk->Seq = SEQ_REDRAW;
@@ -3140,6 +3147,8 @@ static const struct
   { EDITBOX_ID_BASIC_SEX,       RESORT_DATA_PARAM_SEX },
   { EDITBOX_ID_BASIC_PLAY_HOUR, RESORT_DATA_PARAM_PLAY_HOUR },
   { EDITBOX_ID_BASIC_PLAY_MIN,  RESORT_DATA_PARAM_PLAY_MIN },
+  { EDITBOX_ID_BASIC_JOB,       RESORT_DATA_PARAM_JOB },
+  { EDITBOX_ID_BASIC_HOBBY,     RESORT_DATA_PARAM_HOBBY },
   { EDITBOX_ID_SUB_SPECIAL,     RESORT_DATA_PARAM_SPECIAL },
   { EDITBOX_ID_SUB_WANTJOB,     RESORT_DATA_PARAM_WANT_JOB },
   { EDITBOX_ID_SUB_CITYLV,      RESORT_DATA_PARAM_CITYLV },
@@ -3776,6 +3785,8 @@ static const struct
   { EDITBOX_ID_FLAG_04, RESORT_DEBUG_FLAG_FORCE_FEVER },
   { EDITBOX_ID_FLAG_05, RESORT_DEBUG_FLAG_FORCE_INIT_COMBO },
   { EDITBOX_ID_FLAG_06, RESORT_DEBUG_FLAG_FORCE_COMBO_MAX },
+  { EDITBOX_ID_FLAG_07, RESORT_DEBUG_FLAG_FORCE_SPOT_WORK_ON },
+  { EDITBOX_ID_FLAG_08, RESORT_DEBUG_FLAG_FORCE_RND_WORK_ON },
 };
 static const struct
 {

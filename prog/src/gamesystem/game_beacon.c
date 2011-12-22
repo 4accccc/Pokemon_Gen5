@@ -216,9 +216,6 @@ void GAMEBEACON_Update(void)
 {
   GAMEBEACON_SYSTEM *bsys = GameBeaconSys;
   int i;
-#ifdef DEBUG_JA_EXTEND_BUFF_CHECK
-  s_ja_extend_check_flag  = FALSE;
-#endif
   
   if(GameBeaconSys == NULL || GFL_NET_IsInit() == FALSE){
     return;
@@ -247,6 +244,7 @@ void GAMEBEACON_Update(void)
   {
     bsys->resort_set_request = TRUE;
   }
+  NAGI_Printf( "action_no %d\n", bsys->send.info.action.action_no );
 
   if( WB_NET_FIELDMOVE_SERVICEID == GFL_NET_GetGameServiceID() 
         && !GFL_NET_WLIsChildStateScan() )
@@ -2530,11 +2528,11 @@ void DEBUG_RecvBeaconBufferClear(void)
 #ifdef DEBUG_JA_EXTEND_BUFF_CHECK
 void DEBUG_GAMEBEACON_CheckJAExtendCheck(void)
 {
-  if( s_ja_extend_check_flag )
+  if( GameBeaconSys->send.info.action.action_no == GAMEBEACON_ACTION_SEARCH )
   {
     if( GFL_STD_MemComp( s_ja_extend_check_buff, GameBeaconSys->send.info.action.extend_buff, 20 ) != 0 )
     {
-      GF_ASSERT_MSG( 0, "action=%d\n", GameBeaconSys->send.info.action.action_no );
+      GF_ASSERT_MSG( 0, "ジョインアベニュービーコンチェック\n" );
     }
   }
 }

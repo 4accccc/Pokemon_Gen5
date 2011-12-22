@@ -238,7 +238,7 @@ u16 RESORT_UTIL_GetMsgID( u16 param, RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA 
         RESORT_ABSTRUCT_DATA_SetData( p_abstruct, RESORT_DATA_PARAM_WANT_SPOT, spot );
       }
 #ifdef PM_DEBUG
-    if( RESORT_DEBUG_WORK_Get(RESORT_DEBUG_WORK_FORCE_SPOT) != RESORT_DEBUG_WORK_DEFAULT )
+    if( RESORT_DEBUG_FLAG_Get(RESORT_DEBUG_FLAG_FORCE_SPOT_WORK_ON) )
     {
       spot = RESORT_DEBUG_WORK_Get(RESORT_DEBUG_WORK_FORCE_SPOT);
     }
@@ -2794,7 +2794,7 @@ STRBUF * RESORT_UTIL_CreateShopName( const RESORT_BINARY_SHOP *cp_wk, const RESO
  *	@param	heapID  テンポラリ用ヒープID
  */
 //-----------------------------------------------------------------------------
-static void Resort_Util_SetProxyPreset( RESORT_PROXY_DATA *p_wk, u16 type, const RESORT_BINARY_PRESET *cp_preset, u16 presetID, HEAPID heapID )
+static void Resort_Util_SetProxyCore( RESORT_PROXY_DATA *p_wk, u16 type, const RESORT_BINARY_PRESET *cp_preset, u16 presetID, HEAPID heapID )
 {
   RESORT_PROXY_DATA_InitInstance( p_wk );
 
@@ -2934,7 +2934,26 @@ void RESORT_UTIL_SetProxyRandom( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, RES
   GF_ASSERT(presetID != 0xFF );
 
   //プリセットを設定
-  Resort_Util_SetProxyPreset( p_wk, proxy_type, cp_preset, presetID, heapID );
+  RESORT_UTIL_SetProxy( p_sys, p_gamedata, p_wk, proxy_type, presetID, heapID );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ファン設定処理
+ *
+ *	@param	RESORT_PROXY_DATA *p_wk ワーク
+ *	@param	RESORT_BINARY_PRESET *cp_preset プリセットデータ
+ *	@param	RESORT_RECV_DATA *cp_owner  自分のデータ
+ */
+//-----------------------------------------------------------------------------
+void RESORT_UTIL_SetProxy( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, RESORT_PROXY_DATA *p_wk, u32 proxy_type, u16 presetID, HEAPID heapID )
+{
+  RESORT_PEOPLE_ALL_DATA *p_people_all = RESORT_SYSTEM_GetPeopleAllData(p_sys);
+  const RESORT_BINARY_PRESET *cp_preset = RESORT_SYSTEM_GetBinaryPreset(p_sys);
+  const RESORT_RECV_DATA *cp_owner  = RESORT_PEOPLE_ALL_DATA_GetOwnerData(p_people_all);
+
+  //プリセットを設定
+  Resort_Util_SetProxyCore( p_wk, proxy_type, cp_preset, presetID, heapID );
 
   //ファンは主人公のフリーワードをコピーする
   if( proxy_type == RESORT_PROXY_TYPE_FUN )
@@ -2954,6 +2973,8 @@ void RESORT_UTIL_SetProxyRandom( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, RES
   }
 
 }
+
+
 
 
 //----------------------------------------------------------------------------
@@ -2982,7 +3003,7 @@ void RESORT_UTIL_SetSecretaryPreset( RESORT_SYSTEM *p_sys, RESORT_SECRETARY_DATA
 
   {
     RESORT_PROXY_DATA *p_proxy = RESORT_PROXY_DATA_Init( GFL_HEAP_LOWID(heapID ));
-    Resort_Util_SetProxyPreset( p_proxy, 0, cp_preset, presetID, heapID );
+    Resort_Util_SetProxyCore( p_proxy, 0, cp_preset, presetID, heapID );
     RESORT_SECRETARY_DATA_ConvertProxy( p_wk, p_proxy, peopleID, RESORT_PLACEID_RECEPTION, type );
     RESORT_PROXY_DATA_Exit(p_proxy);
   }
@@ -3013,7 +3034,7 @@ void RESORT_UTIL_SetProxyPreset( RESORT_SYSTEM *p_sys, RESORT_PROXY_DATA *p_wk, 
   GF_ASSERT( presetID < RESORT_BINARY_GetMax(cp_preset) );
 
   //プリセットを設定
-  Resort_Util_SetProxyPreset( p_wk, type, cp_preset, presetID, heapID );
+  Resort_Util_SetProxyCore( p_wk, type, cp_preset, presetID, heapID );
 }
 
 

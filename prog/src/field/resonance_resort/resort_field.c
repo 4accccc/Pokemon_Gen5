@@ -4287,7 +4287,7 @@ static void RESORT_FIELD_AppearFun( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, 
 
       u32 rank  = TRAINERCARD_GetCardRank( p_gamedata );
       u8  badge = MISC_GetBadgeCount( SaveData_GetMisc(p_sv) );
-      u16 medal = MEDALBOX_GetMedalCount( SaveData_GetMedalBox(p_sv) , FALSE );
+      u16 medal = MEDALBOX_GetMedalBoxRank( SaveData_GetMedalBox(p_sv) );
 
       if( rank < NELEMS(sc_card_rank_add) )
       {
@@ -4297,17 +4297,17 @@ static void RESORT_FIELD_AppearFun( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, 
       {
         fun_appear_num += sc_card_rank_add[ NELEMS(sc_card_rank_add)-1 ];
       }
-      if( rank < NELEMS(sc_badge_add) )
+      if( badge < NELEMS(sc_badge_add) )
       {
-        fun_appear_num += sc_badge_add[ rank ];
+        fun_appear_num += sc_badge_add[ badge ];
       }
       else
       {
         fun_appear_num += sc_badge_add[ NELEMS(sc_badge_add)-1 ];
       }
-      if( rank < NELEMS(sc_medal_add) )
+      if( medal < NELEMS(sc_medal_add) )
       {
-        fun_appear_num += sc_medal_add[ rank ];
+        fun_appear_num += sc_medal_add[ medal ];
       }
       else
       {
