@@ -701,7 +701,7 @@ void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
       strbuf2  = MyStatus_CreateNameString( myStatus, p_wk->heapID );
 
       OS_Printf("デバッグ VSビジョン\n");
-      WBT_GIMMICK_VisionChange( p_fieldmap, SCR_WBT_VISION_VS, strbuf1, strbuf2, 0, debug_wbt_trtype );
+      WBT_GIMMICK_VisionChange( p_fieldmap, SCR_WBT_VISION_VS, strbuf1, strbuf2, debug_wbt_trtype, debug_wbt_trtype );
 
       GFL_STR_DeleteBuffer( strbuf1 );
       GFL_STR_DeleteBuffer( strbuf2 );
