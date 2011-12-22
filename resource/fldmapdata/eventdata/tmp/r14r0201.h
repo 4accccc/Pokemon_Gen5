@@ -47,5 +47,6 @@
 #define BG_R14R0201_DUMMY_FES_10         16
 #define BG_R14R0201_DUMMY_FES_11         17
 #define BG_R14R0201_DUMMY_FES_12         18
+#define BG_R14R0201_HOKORA               19
 
 #endif //ZONE_R14R0201_EVB_H

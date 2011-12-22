@@ -215,21 +215,23 @@ EVENT_START		ev_c03r1103_girl3_01
 _TALK_OBJ_START()
 	DEFINE_LOCAL	LWK_ITEM_CHK
 	
-	//ともだちてちょうを所持しているかチェック
-	_ITEM_CHK( ITEM_TOMODATITETYOU, 1, LWK_ITEM_CHK )
-	
-	//ともだちてちょうを所持いない場合
-	IF $LWK_ITEM_CHK == FALSE THEN
+	//初回会話
+	IF FLAG_OFF( SYS_FLAG_PCNAME ) THEN
 		
 		//あなた　トレーナー？
 		_BALLOONWIN_TALKOBJ_MSG( msg_c03r1103_girl3_01 )
 		_MSGWIN_CLOSE()
 		
-		//ともだちてちょう入手
-		_ITEM_EVENT_KEYWAIT( ITEM_TOMODATITETYOU, 1 )
+		_OBJ_ANIME(C03R1103_GIRL3_01,anm_common_gyoe)
+		_OBJ_ANIME_WAIT()
 		
 		//その　ともだちてちょうに
 		_BALLOONWIN_TALKOBJ_MSG( msg_c03r1103_girl3_02 )
+		
+		//========================================/
+		//だれかのパソコンをショーロのパソコンに
+		_FLAG_SET( SYS_FLAG_PCNAME )
+		//========================================/
 
 	ENDIF
 
@@ -409,3 +411,10 @@ WHILE $LWK_REPEAT != 1
 ENDWHILE
 	
 _RET
+
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0

@@ -22,6 +22,7 @@
 _EVENT_DATA		ev_r14r0201_backpackerw_01
 _EVENT_DATA		ev_zone_r14r0201
 _EVENT_DATA		ev_pos_r14r0201_randorus
+_EVENT_DATA		ev_bg_r14r0201_hokora
 _EVENT_DATA_END
 
 //òbÇµÇ©ÇØÇΩï˚å¸éÊìæïœêî
@@ -223,6 +224,19 @@ EVENT_START   ev_r14r0201_backpackerw_01
   ELSE
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_r14r0201_mission_add_03 )
   ENDIF
+  
+EVENT_END
+
+/**************************************************************/
+/*  BGÅFÇŸÇ±ÇÁ                              */
+/**************************************************************/
+EVENT_START   ev_bg_r14r0201_hokora
+  
+  //Ç”ÇÈÇ—ÇΩ ÇøÇ¢Ç≥Ç» ÇŸÇ±ÇÁÇ™Ç†ÇÈÅc
+  _TALK_START_SE_PLAY()
+  _PLAINWIN_MSG_DOWN( msg_r14r0201_narration_01)
+  _LAST_KEYWAIT()
+  _PLAINWIN_CLOSE()
   
 EVENT_END
 
