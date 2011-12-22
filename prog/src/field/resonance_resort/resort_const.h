@@ -52,12 +52,12 @@
  *  どれぐらいアップさせるのかの割合
  *
  */
-#define RESORT_CONST_SPOT_EXP_GOOD FX32_CONST(0.5f)
+#define RESORT_CONST_SPOT_EXP_GOOD FX32_CONST(0.50f)
 /*
  *  お店にファンが行ったときの経験値レート
  *
  */
-#define RESORT_CONST_FUN_EXP_RATE   FX32_CONST(0.5f)
+#define RESORT_CONST_FUN_EXP_RATE   FX32_CONST(0.75f)
 /*
  *  お店にセレブが行ったときの経験値レート
  *
