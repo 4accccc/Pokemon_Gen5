@@ -129,7 +129,7 @@
  *  •ª•ê‚Í‚P‚O‚O
  *
  */
-#define RESORT_CONST_COMBO_SHOP_RESULT_RATE    (75)
+#define RESORT_CONST_COMBO_SHOP_RESULT_RATE    (85)
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /*
