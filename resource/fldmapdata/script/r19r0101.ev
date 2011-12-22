@@ -71,6 +71,10 @@ EVENT_START   ev_pos_r19r0101_informationw_01
   
   //主人公名代入
   _PLAYER_NAME( 0 )
+  
+  //種族名代入
+  _TEMOTI_MONS_NAME( 1, 0 )
+  
   //受付嬢：ポケモンと　いっしょなんだ！▼
   _BALLOONWIN_OBJMSG_POS( msg_r19r0101_infomationw_02, R19R0101_INFORMATIONW_01, POS_DEFAULT )
   _MSGWIN_CLOSE()
@@ -109,6 +113,10 @@ EVENT_START   ev_r19r0101_informationw_01
     
     //主人公名代入
     _PLAYER_NAME( 0 )
+    
+    //種族名代入
+    _TEMOTI_MONS_NAME( 1, 0 )
+    
     //受付嬢：ポケモンと　いっしょなんだ！▼
     _BALLOONWIN_TALKOBJ_MSG( msg_r19r0101_infomationw_02 )
     _MSGWIN_CLOSE()

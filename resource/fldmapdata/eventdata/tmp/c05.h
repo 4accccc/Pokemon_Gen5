@@ -40,7 +40,7 @@
 #define C05_BADMAN_02                     15
 #define C05_BADMAN                        16
 #define C05_BABYGIRL1                     17
-#define C05_BACKPACKERW_01                18
+#define C05_WOMAN2_03                     18
 #define C05_POKE20_01                     19
 #define C05_STOPPER_01                    20
 

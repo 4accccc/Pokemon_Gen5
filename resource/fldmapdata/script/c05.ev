@@ -39,7 +39,7 @@ _EVENT_DATA    ev_init_c05
 _EVENT_DATA    ev_scene_c05_swleader5_01
 _EVENT_DATA    ev_c05_woman2
 _EVENT_DATA    ev_c05_babygirl1
-_EVENT_DATA    ev_c05_backpackerw
+_EVENT_DATA    ev_c05_woman2_03
 _EVENT_DATA    ev_c05_trainerm_02
 _EVENT_DATA    ev_c05_trainerm_01
 _EVENT_DATA    ev_c05_badman
@@ -1000,7 +1000,7 @@ EVENT_END
 /**************************************************************/
 /*  C05 BACKPACKERWの会話用イベントスクリプト                      */
 /**************************************************************/
-EVENT_START   ev_c05_backpackerw
+EVENT_START   ev_c05_woman2_03
   _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_backpackerw_01)
 EVENT_END
 
