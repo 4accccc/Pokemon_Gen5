@@ -112,6 +112,10 @@ EVENT_START	ev_scene_d27r0701_plazmam_01
   // ROMバージョン取得
   _GET_ROM_VERSION( LCWK_VERSION )
   
+  //主人公・ライバル名代入
+  _PLAYER_NAME( 0 )
+  _RIVAL_NAME( 1 )
+  
   //アニメ：主人公移動
   IF $LCWK_VERSION == VERSION_B2 THEN
     _OBJ_ANIME_AUTO( MMDL_ID_PLAYER , 16, 24, FORCE_TYPE_NPC, 8, DIR_LR)

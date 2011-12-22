@@ -41,5 +41,9 @@
 #define BG_D27R2001_BED_22               21
 #define BG_D27R2001_BED_23               22
 #define BG_D27R2001_BED_24               23
+#define BG_D27R2001_BED_25               24
+#define BG_D27R2001_BED_26               25
+#define BG_D27R2001_BED_27               26
+#define BG_D27R2001_BED_28               27
 
 #endif //ZONE_D27R2001_EVB_H

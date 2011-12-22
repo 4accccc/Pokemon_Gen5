@@ -735,7 +735,6 @@ _TALK_OBJ_START()
 					_MSGWIN_CLOSE()
 					
 					_SE_PLAY( SEQ_SE_SYS_22 )
-					//参照テーブルが仮
 					_ITEMJUDGE_ADD_MONEY( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_KOYASI )
 					_GOLD_WIN_UPDATE()
 					
