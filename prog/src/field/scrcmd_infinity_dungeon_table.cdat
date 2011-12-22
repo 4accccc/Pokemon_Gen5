@@ -46,7 +46,7 @@
   DEF_CMD( EvCmdInfinityDungeonGetGateTrainerRoomTrNum ,EV_SEQ_INFINITY_DUNGEON_GET_GATE_TRAINER_ROOM_TR_NUM )
   DEF_CMD( EvCmdInfinityDungeonGetPenaltyGold ,EV_SEQ_INFINITY_DUNGEON_GET_PENALTY_GOLD )
   DEF_CMD( EvCmdInfinityDungeonOpenGate ,EV_SEQ_INFINITY_DUNGEON_GATE_OPEN )
-  NO_CMD()
+  DEF_CMD( EvCmdInfinityDungeonSetPenaltyGold ,EV_SEQ_INFINITY_DUNGEON_SET_PENALTY_GOLD )
  
   END_CMD
   //スクリプトコマンドテーブル終了

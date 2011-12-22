@@ -15380,8 +15380,8 @@
 //--------------------------------------------------------------
 /**
  * @def _INFINITY_DUNGEON_GET_PENALTY_GOLD
- * @brief 無限ダンジョンリタイア時のペナルティー金額
- * @param ret_wk   ペナルティー金額
+ * @brief 無限ダンジョンリタイア時のペナルティーが存在するかチェック
+ * @param ret_wk   ペナルティーが存在するときTRUE
  */
 //--------------------------------------------------------------
 #define _INFINITY_DUNGEON_GET_PENALTY_GOLD( ret_wk ) \
@@ -15390,6 +15390,21 @@
     .macro  _ASM_INFINITY_DUNGEON_GET_PENALTY_GOLD ret_wk
     .short  EV_SEQ_INFINITY_DUNGEON_GET_PENALTY_GOLD
     .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _INFINITY_DUNGEON_SET_PENALTY
+ * @brief ペナルティー処理を実行し、ワードセットに金額をセット
+ * @param ret_wk   ペナルティーが存在するか
+ */
+//--------------------------------------------------------------
+#define _INFINITY_DUNGEON_SET_PENALTY( word_set_id ) \
+    _ASM_INFINITY_DUNGEON_SET_PENALTY word_set_id
+
+    .macro  _ASM_INFINITY_DUNGEON_SET_PENALTY word_set_id
+    .short  EV_SEQ_INFINITY_DUNGEON_SET_PENALTY_GOLD
+    .short  \word_set_id
     .endm
 
 //--------------------------------------------------------------

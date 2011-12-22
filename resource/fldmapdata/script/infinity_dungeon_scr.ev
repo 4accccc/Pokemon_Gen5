@@ -1025,11 +1025,13 @@ EVENT_START  ev_infinity_dungeon_comeback
       
       // リタイア
       _INFINITY_DUNGEON_GET_PENALTY_GOLD( LWK_PENALTY_GOLD )
- 
-      // ペナルティー金額を登録
-      _NUMBER( 1 ,LWK_PENALTY_GOLD ,7 )
 
-      IF $LWK_PENALTY_GOLD > 0 THEN
+      // ペナルティーがあるかどうか
+      IF $LWK_PENALTY_GOLD == TRUE THEN
+        
+        // ペナルティー処理を実行し、金額をワードセットに登録
+        _INFINITY_DUNGEON_SET_PENALTY( 1 )
+
         // ペナルティー有り
         IF $LWK_D_VERSION == VERSION_B2 THEN
           _BALLOONWIN_OBJMSG_POS(msg_info_clear_b_09_00 , LWK_INFOOBJ_ID, POS_DL )
@@ -1037,8 +1039,6 @@ EVENT_START  ev_infinity_dungeon_comeback
           _BALLOONWIN_OBJMSG_POS(msg_info_clear_w_09_00 , LWK_INFOOBJ_ID, POS_DL )
         ENDIF
 
-        // 所持金からペナルティー金額を引く
-        _SUBTRACT_GOLD( LWK_PENALTY_GOLD )
       ELSE
         // ペナルティーなし
         IF $LWK_D_VERSION == VERSION_B2 THEN

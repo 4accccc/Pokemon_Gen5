@@ -28,6 +28,9 @@
 extern u32  g_debug_inf_master_seed;
 #endif
 
+// ペナルティーデータの最大値
+#define PENALTY_GOLD_MAX (9999999)
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -1068,9 +1071,68 @@ VMCMD_RESULT EvCmdInfinityDungeonGetPenaltyGold( VMHANDLE *p_core, void *p_wk_ad
 
   u32 now_gold    = MISC_GetGold( p_misc );
   u32 start_gold  = INFINITYDUNGEON_SAVE_GetDungeonStartGold( p_save );
+  
+  // 所持金が増えているときのみペナルティー
+  if( now_gold > start_gold )
+  {
+    (*p_ret_wk) = TRUE;
+  }
+  else
+  {
+    (*p_ret_wk) = FALSE;
+  }
+  return VMCMD_RESULT_CONTINUE;
+}
 
-  // 増えた分を返す
-  (*p_ret_wk) = (now_gold - start_gold);
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ペナルティー処理を実行
+ *
+ *	@param	*p_core
+ *	@param	*p_wk_adrs 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdInfinityDungeonSetPenaltyGold( VMHANDLE *p_core, void *p_wk_adrs )
+{
+  u32 gold;
+  SCRCMD_WORK *p_wk = p_wk_adrs;
+  GAMESYS_WORK *p_gamesys         = SCRCMD_WORK_GetGameSysWork( p_wk );
+  SCRIPT_WORK *sc                 = SCRCMD_WORK_GetScriptWork( p_wk );
+  GAMEDATA *p_gamedata            = GAMESYSTEM_GetGameData(p_gamesys);
+  SAVE_CONTROL_WORK *p_save_data  = GAMEDATA_GetSaveControlWork(p_gamedata);
+  INFINITYDUNGEON_SAVE  *p_save   = SaveData_GetINFINITYDUNGEON( p_save_data );
+  MISC *p_misc      = SaveData_GetMisc( p_save_data );
+  u16 work_id	      = SCRCMD_GetVMWorkValue( p_core, p_wk );
+  WORDSET*  wordset = SCRIPT_GetWordSet( sc );
+  u32 now_gold      = MISC_GetGold( p_misc );
+  u32 start_gold    = INFINITYDUNGEON_SAVE_GetDungeonStartGold( p_save );
+  
+  // 所持金が増えているときのみペナルティー
+  if( now_gold > start_gold )
+  {
+    u32 penalty_gold = (now_gold - start_gold);
+
+    // 限界値設定
+    if( penalty_gold > PENALTY_GOLD_MAX )
+    {
+      penalty_gold = PENALTY_GOLD_MAX;
+    }
+
+    // 所持金以上には引かない
+    if( penalty_gold > now_gold )
+    {
+      penalty_gold = now_gold;
+    }
+
+    WORDSET_RegisterNumber( wordset, work_id , penalty_gold, 7, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    MISC_SubGold( p_misc, penalty_gold );
+  }
+  else
+  {
+    GF_ASSERT_MSG(0,"ペナルティーが存在しない\n");
+  }
   return VMCMD_RESULT_CONTINUE;
 }
 
