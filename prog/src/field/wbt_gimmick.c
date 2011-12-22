@@ -605,6 +605,10 @@ static void DEBUGMENU_Exit( void );
 
 static int  debug_trface;
 static int  debug_wbt_trtype;
+static int  debug_wbt_mmdl_id;
+
+// zone
+#include "../../../resource/fldmapdata/zonetable/zone_id.h"  // for ZONE_ID_
 
 #endif // WBT_DEBUG_MENU
 
@@ -705,6 +709,20 @@ void WBT_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
 
       GFL_STR_DeleteBuffer( strbuf1 );
       GFL_STR_DeleteBuffer( strbuf2 );
+
+      // 動作モデル変更
+      {
+        MMDLSYS *p_mmdlsys =  FIELDMAP_GetMMdlSys( p_fieldmap );
+        MMDL *mmdl;
+
+        // 一旦削除する
+        mmdl = MMDLSYS_SearchOBJID( p_mmdlsys, MMDL_ID_EVENTOBJ_00 );
+        if( mmdl != NULL ) { MMDL_Delete( mmdl ); }
+
+        // 削除
+        mmdl = MMDLSYS_AddMMdlParam( p_mmdlsys, 20, 15, DIR_RIGHT,
+            MMDL_ID_EVENTOBJ_00, debug_wbt_mmdl_id, MV_DMY, ZONE_ID_D05R0201 );
+      }
     }
   }
 #endif
@@ -2177,6 +2195,7 @@ static void DebugWin_Update_ChangeData( void *userWork, DEBUGWIN_ITEM *item )
   if( DebugWin_ChangeData( &value, 0, 77-1+2 ) )    // MOB+主人公分
   {
     u16 wbt_trtype;
+    u16 wbt_mmdl_id;
     // 更新あり
     debug_trface = value;
 
@@ -2187,13 +2206,17 @@ static void DebugWin_Update_ChangeData( void *userWork, DEBUGWIN_ITEM *item )
       WBTROM_TRDATA *wbtrom = (void*)WBTTOOL_CreateRomTrainerData( HEAPID_FIELDMAP );
       // WBTのトレーナータイプに変換
       wbt_trtype = WBTTOOL_GetRomTrainerBtlTrType( wbtrom, debug_trface - 2 );
+      wbt_mmdl_id = WBTTOOL_GetRomTrainerMMdlID( wbtrom, debug_trface - 2 );
       WBTTOOL_DeleteRomTrainerData( wbtrom );
       debug_wbt_trtype = wbt_trtype;
+      debug_wbt_mmdl_id = wbt_mmdl_id;
     }
     else
     {
       wbt_trtype = debug_trface;
+      wbt_mmdl_id = debug_trface;
       debug_wbt_trtype = wbt_trtype;
+      debug_wbt_mmdl_id = wbt_mmdl_id;
     }
 
     // トレーナータイプ名取得
