@@ -5084,6 +5084,39 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
+		Label="RESORT_DATA_153"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケモン</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T10:51:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケモン</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T10:51:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-28T07:59:13" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="CASETTE_00"
 		Style="Large">
 		<LanguageCell
@@ -7431,10 +7464,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>旅行者</Text>
+			<Text>広場ストック</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-09-08T03:06:11" />
+				Time="2011-12-22T10:24:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -7442,10 +7475,76 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>旅行者</Text>
+			<Text>広場ストック</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
+				Time="2011-12-22T10:24:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
 				Time="2011-12-01T10:45:14" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="PEOPLE_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>拡張メモリ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T10:24:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>拡張メモリ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T10:24:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:45:14" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="PEOPLE_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>共通構造体</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T10:24:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>共通構造体</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T10:24:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -16889,6 +16988,266 @@
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
 				Time="2011-12-14T10:14:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:45:14" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="COMMTYPE_00"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T11:14:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:39:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>なし</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T11:14:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:45:14" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="COMMTYPE_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ランダムマッチ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T11:15:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:39:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ランダムマッチ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T11:15:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:45:14" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="COMMTYPE_02"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>GTSネゴ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T11:15:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:39:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>GTSネゴ</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T11:15:20" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:45:14" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="COMMTYPE_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ユニオン</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T11:15:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:39:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ユニオン</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T11:15:27" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:45:14" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="COMMTYPE_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>CGEAR</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T11:15:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:39:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>CGEAR</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T11:15:35" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:45:14" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="COMMTYPE_05"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ハイリンク</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T11:15:43" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:39:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ハイリンク</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T11:15:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:45:14" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="COMMTYPE_06"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>GTS</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T11:15:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:39:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>GTS</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T11:15:50" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:45:14" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="COMMTYPE_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あしあと</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T11:15:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:39:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あしあと</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T11:15:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:45:14" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="COMMTYPE_08"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ビーコン</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T11:16:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:39:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ビーコン</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T11:16:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:45:14" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="COMMTYPE_09"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>リンクフェス</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T11:16:08" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-01T10:39:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>リンクフェス</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-22T11:16:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"

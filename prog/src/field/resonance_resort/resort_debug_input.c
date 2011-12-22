@@ -329,6 +329,8 @@ typedef enum {
   EDITBOX_ID_WORK_00,
   EDITBOX_ID_WORK_01,
 
+  EDITBOX_ID_PROXY_POKEMON,
+
   EDITBOX_ID_MAX,
   //文字列の場合は以下を使う
 
@@ -406,7 +408,7 @@ typedef struct
 {
   const STR_PARAM_DISPLAY * display;
   u32 len;
-  u32 index_max;
+  BOOL (*IsPageOpen)( DEBUG_INPUT_WORK *p_wk );
   void (*StoreData)( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv );
   BOOL (*ReStoreData)( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk );
   BOOL (*PushCallback)( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv, u32 boxID );
@@ -512,15 +514,30 @@ typedef void (*ButtonAction_Callback)( DEBUG_INPUT_WORK *wk, const STR_PARAM *St
 static void ButtonAction_First_Add( DEBUG_INPUT_WORK *wk, const STR_PARAM *StrParam );
 static void ButtonAction_First_Change( DEBUG_INPUT_WORK *wk, const STR_PARAM *StrParam );
 
+
+
+static BOOL IsPageOpen_True( DEBUG_INPUT_WORK *p_wk );
 //STR_PARAM_PAGEのStore,Restore関数
 static void City_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv );
 static BOOL City_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk );
 
+
+static BOOL Resident_IsPageOpen( DEBUG_INPUT_WORK *p_wk );
 static void Resident_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv );
 static BOOL Resident_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk );
 
+static BOOL Tourist_IsPageOpen( DEBUG_INPUT_WORK *p_wk );
 static void Tourist_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv );
 static BOOL Tourist_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk );
+
+
+static BOOL TouristEx_IsPageOpen( DEBUG_INPUT_WORK *p_wk );
+static void TouristEx_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv );
+static BOOL TouristEx_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk );
+
+static BOOL Proxy_IsPageOpen( DEBUG_INPUT_WORK *p_wk );
+static void Proxy_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv );
+static BOOL Proxy_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk );
 
 static void Owner_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv );
 static BOOL Owner_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk );
@@ -731,12 +748,31 @@ static const STR_PARAM StrParamsResidentBasic[] =
     59,0,EDITBOX_ID_BASIC_PLAY_MIN },
   //職業
   {STR_TYPE_SWITCH, RESORT_DATA_152,  STR_POS_X, STR_LINE8_POS_Y,
-    2*8,STR_LINE8_POS_Y,3*8,TOUCH_H,
+    3*8,STR_LINE8_POS_Y,6*8,TOUCH_H,
     ANSWER_119,9,EDITBOX_ID_BASIC_JOB },
   //趣味
-  {STR_TYPE_SWITCH, RESORT_DATA_151,  6*8, STR_LINE8_POS_Y,
-    8*8,STR_LINE8_POS_Y,3*8,TOUCH_H,
+  {STR_TYPE_SWITCH, RESORT_DATA_151,  9*8, STR_LINE8_POS_Y,
+    12*8,STR_LINE8_POS_Y,6*8,TOUCH_H,
     ANSWER_071,6,EDITBOX_ID_BASIC_HOBBY },
+
+  //拡張6データ
+  {STR_TYPE_CAPTION, RESORT_DATA_66,  STR_POS_X, STR_LINE9_POS_Y,
+    0,0,0,0,
+    0,0,0 },
+  //なまえ
+  {STR_TYPE_EDITSTR, RESORT_DATA_81,  STR_POS_X, STR_LINE10_POS_Y,
+    5*8,STR_LINE10_POS_Y,12*8,TOUCH_H,
+    0,0,EDITBOX_ID_EXT6_PHRASE },
+
+
+  //拡張7データ
+  {STR_TYPE_CAPTION, RESORT_DATA_67,  STR_POS_X, STR_LINE12_POS_Y,
+    0,0,0,0,
+    0,0,0 },
+  //なまえ
+  {STR_TYPE_EDITSTR, RESORT_DATA_148,  STR_POS_X, STR_LINE13_POS_Y,
+    5*8,STR_LINE13_POS_Y,12*8,TOUCH_H,
+    0,0,EDITBOX_ID_EXT7_THANKS },
 };
 
 //住民準基本データ
@@ -791,9 +827,9 @@ static const STR_PARAM StrParamsResidentBasicSub[] =
     27*8+2*8,STR_LINE7_POS_Y,3*8,TOUCH_H,
     59,0,EDITBOX_ID_RESI_MEET_MIN },
   //通信ID
-  {STR_TYPE_NUM, RESORT_DATA_35,  STR_POS_X, STR_LINE8_POS_Y,
+  {STR_TYPE_SWITCH, RESORT_DATA_35,  STR_POS_X, STR_LINE8_POS_Y,
     6*8,STR_LINE8_POS_Y,4*8,TOUCH_H,
-    255,0,EDITBOX_ID_RESI_COMM_ID },
+    COMMTYPE_00,10,EDITBOX_ID_RESI_COMM_ID },
   //マージ
   {STR_TYPE_SWITCH, RESORT_DATA_36,  10*8+STR_POS_X, STR_LINE8_POS_Y,
     10*8+4*8,STR_LINE8_POS_Y,2*8,TOUCH_H,
@@ -1282,25 +1318,6 @@ static const STR_PARAM StrParamsResidentExtend89[] =
   {STR_TYPE_NUM, RESORT_DATA_11_01,  20*8+STR_POS_X, STR_LINE4_POS_Y,
     20*8+3*8,STR_LINE4_POS_Y,2*8,TOUCH_H,
     31,0,EDITBOX_ID_EXT8_RECORD_DAY_03 },
-
-  //拡張6データ
-  {STR_TYPE_CAPTION, RESORT_DATA_66,  STR_POS_X, STR_LINE6_POS_Y,
-    0,0,0,0,
-    0,0,0 },
-  //なまえ
-  {STR_TYPE_EDITSTR, RESORT_DATA_81,  STR_POS_X, STR_LINE7_POS_Y,
-    5*8,STR_LINE7_POS_Y,12*8,TOUCH_H,
-    0,0,EDITBOX_ID_EXT6_PHRASE },
-
-
-  //拡張7データ
-  {STR_TYPE_CAPTION, RESORT_DATA_67,  STR_POS_X, STR_LINE9_POS_Y,
-    0,0,0,0,
-    0,0,0 },
-  //なまえ
-  {STR_TYPE_EDITSTR, RESORT_DATA_148,  STR_POS_X, STR_LINE10_POS_Y,
-    5*8,STR_LINE10_POS_Y,12*8,TOUCH_H,
-    0,0,EDITBOX_ID_EXT7_THANKS },
 };
 
 //お店配置ページ
@@ -1564,6 +1581,73 @@ static const STR_PARAM StrParamsDebugFlag[] =
 };
 
 
+//代理人準基本データ
+static const STR_PARAM StrParamsProxyBasicSub[] = 
+{
+  //住民生成データ
+  {STR_TYPE_CAPTION, RESORT_DATA_31,  STR_POS_X, STR_LINE5_POS_Y,
+    0,0,0,0,
+    0,0,0 },
+  //プレゼントID
+  {STR_TYPE_NUM, RESORT_DATA_32,  STR_POS_X, STR_LINE6_POS_Y,
+    8*8,STR_LINE6_POS_Y,6*8,TOUCH_H,
+    512,0,EDITBOX_ID_RESI_PRESENT_ID },
+  //出会った
+  {STR_TYPE_CAPTION, RESORT_DATA_34,  STR_POS_X, STR_LINE7_POS_Y,
+    0,0,0,0,
+    0,0,0 },
+  //年
+  {STR_TYPE_NUM, RESORT_DATA_10,  7*8+STR_POS_X, STR_LINE7_POS_Y,
+    7*8+2*8,STR_LINE7_POS_Y,3*8,TOUCH_H,
+    99,0,EDITBOX_ID_RESI_MEET_YEAR },
+  //月
+  {STR_TYPE_NUM, RESORT_DATA_11,  12*8+STR_POS_X, STR_LINE7_POS_Y,
+    12*8+2*8,STR_LINE7_POS_Y,3*8,TOUCH_H,
+    12,0,EDITBOX_ID_RESI_MEET_MONTH },
+  //日
+  {STR_TYPE_NUM, RESORT_DATA_11_01,  17*8+STR_POS_X, STR_LINE7_POS_Y,
+    17*8+2*8,STR_LINE7_POS_Y,3*8,TOUCH_H,
+    31,0,EDITBOX_ID_RESI_MEET_DAY },
+  //時
+  {STR_TYPE_NUM, RESORT_DATA_12,  22*8+STR_POS_X, STR_LINE7_POS_Y,
+    22*8+2*8,STR_LINE7_POS_Y,3*8,TOUCH_H,
+    24,0,EDITBOX_ID_RESI_MEET_HOUR },
+  //分
+  {STR_TYPE_NUM, RESORT_DATA_13,  27*8+STR_POS_X, STR_LINE7_POS_Y,
+    27*8+2*8,STR_LINE7_POS_Y,3*8,TOUCH_H,
+    59,0,EDITBOX_ID_RESI_MEET_MIN },
+  //通信ID
+  {STR_TYPE_SWITCH, RESORT_DATA_35,  STR_POS_X, STR_LINE8_POS_Y,
+    4*8,STR_LINE8_POS_Y,6*8,TOUCH_H,
+    COMMTYPE_00,10,EDITBOX_ID_RESI_COMM_ID },
+  //ポケモン
+  {STR_TYPE_NUM, RESORT_DATA_153,  STR_POS_X, STR_LINE9_POS_Y,
+    4*8,STR_LINE9_POS_Y,4*8,TOUCH_H,
+    650,0,EDITBOX_ID_PROXY_POKEMON },
+  //人物ID
+  {STR_TYPE_NUM, RESORT_DATA_45,  STR_POS_X, STR_LINE13_POS_Y,
+    4*8,STR_LINE13_POS_Y,6*8,TOUCH_H,
+    32,0,EDITBOX_ID_RESI_PEOPLE_ID },
+  //場所ID
+  {STR_TYPE_SWITCH, RESORT_DATA_46,  10*8+STR_POS_X, STR_LINE13_POS_Y,
+    10*8+4*8,STR_LINE13_POS_Y,8*8,TOUCH_H,
+    PLACE_00,17,EDITBOX_ID_RESI_PLACE_ID },
+  //タイプ
+  {STR_TYPE_NUM, RESORT_DATA_82,  24*8+STR_POS_X, STR_LINE13_POS_Y,
+    28*8,STR_LINE13_POS_Y,4*8,TOUCH_H,
+    32,0,EDITBOX_ID_RESI_TYPE },
+  //個性
+  {STR_TYPE_NUM, RESORT_DATA_47,  STR_POS_X, STR_LINE14_POS_Y,
+    4*8,STR_LINE14_POS_Y,8*8,TOUCH_H,
+    32,0,EDITBOX_ID_RESI_KOSEI },
+  //更新
+  {STR_TYPE_NUM, RESORT_DATA_83,  13*8+STR_POS_X, STR_LINE14_POS_Y,
+    17*8,STR_LINE14_POS_Y,4*8,TOUCH_H,
+    10,0,EDITBOX_ID_RESI_UPDATE },
+};
+
+
+
 static const STR_PARAM_DISPLAY sc_first_display_tbl[]  =
 {
   //最初のページ
@@ -1606,6 +1690,19 @@ static const STR_PARAM_DISPLAY sc_resident_display_tbl[]  =
   },
 };
 
+static const STR_PARAM_DISPLAY sc_proxy_display_tbl[]  =
+{
+  //住民基礎情報
+  {
+    StrParamsResidentBasic, NELEMS(StrParamsResidentBasic)
+  },
+  {
+    StrParamsProxyBasicSub, NELEMS(StrParamsProxyBasicSub)
+  },
+};
+
+
+
 static const STR_PARAM_DISPLAY sc_shoppos_display_tbl[]  =
 {
   //お店配置
@@ -1624,7 +1721,7 @@ static const STR_PARAM_PAGE sc_first_page =
 {
   sc_first_display_tbl,
   NELEMS(sc_first_display_tbl),
-  0,
+  IsPageOpen_True,
   NULL,
   NULL,
   NULL,
@@ -1634,7 +1731,7 @@ static const STR_PARAM_PAGE sc_city_page =
 {
   sc_city_display_tbl,
   NELEMS(sc_city_display_tbl),
-  0,
+  IsPageOpen_True,
   City_StoreData,
   City_ReStoreData,
   NULL,
@@ -1644,7 +1741,7 @@ static const STR_PARAM_PAGE sc_resident_page =
 {
   sc_resident_display_tbl,
   NELEMS(sc_resident_display_tbl),
-  8,
+  Resident_IsPageOpen,
   Resident_StoreData,
   Resident_ReStoreData,
   NULL,
@@ -1654,9 +1751,29 @@ static const STR_PARAM_PAGE sc_tourist_page =
 {
   sc_resident_display_tbl,
   NELEMS(sc_resident_display_tbl),
-  8,
+  Tourist_IsPageOpen,
   Tourist_StoreData,
   Tourist_ReStoreData,
+  NULL,
+};
+
+static const STR_PARAM_PAGE sc_tourist_ex_page =
+{
+  sc_resident_display_tbl,
+  NELEMS(sc_resident_display_tbl),
+  TouristEx_IsPageOpen,
+  TouristEx_StoreData,
+  TouristEx_ReStoreData,
+  NULL,
+};
+
+static const STR_PARAM_PAGE sc_proxy_page =
+{
+  sc_proxy_display_tbl,
+  NELEMS(sc_proxy_display_tbl),
+  Proxy_IsPageOpen,
+  Proxy_StoreData,
+  Proxy_ReStoreData,
   NULL,
 };
 
@@ -1664,7 +1781,7 @@ static const STR_PARAM_PAGE sc_owner_page =
 {
   sc_resident_display_tbl,
   NELEMS(sc_resident_display_tbl),
-  0,
+  IsPageOpen_True,
   Owner_StoreData,
   Owner_ReStoreData,
   NULL,
@@ -1674,7 +1791,7 @@ static const STR_PARAM_PAGE sc_shoppos_page =
 {
   sc_shoppos_display_tbl,
   NELEMS(sc_shoppos_display_tbl),
-  0,
+  IsPageOpen_True,
   ShopPos_StoreData,
   ShopPos_ReStoreData,
   ShopPos_PushCallback,
@@ -1683,7 +1800,7 @@ static const STR_PARAM_PAGE sc_debug_flag_page =
 {
   sc_debugflag_display_tbl,
   NELEMS(sc_debugflag_display_tbl),
-  0,
+  IsPageOpen_True,
   DebugFlag_StoreData,
   DebugFlag_ReStoreData,
   NULL,
@@ -3020,9 +3137,13 @@ static const STR_PARAM_PAGE * GetPage( int value )
     return &sc_resident_page;
   case 3: //旅行者
     return &sc_tourist_page;
-  case 4: //自分
+  case 4:
+    return &sc_tourist_ex_page;
+  case 5:
+    return &sc_proxy_page;
+  case 6: //自分
     return &sc_owner_page;
-  case 5: //デバッグ入力
+  case 7: //デバッグ入力
     return &sc_debug_flag_page;
   default:
     GF_ASSERT(0);
@@ -3032,18 +3153,26 @@ static const STR_PARAM_PAGE * GetPage( int value )
 
 static void ButtonAction_First_Add( DEBUG_INPUT_WORK *wk, const STR_PARAM *StrParam )
 {
-  wk->p_pageData  = Page_PushPage( wk->p_pageData, GetPage( wk->BoxValue[EDITBOX_ID_FIRST_PEOPLE] ) );
-  wk->modify_type = DATA_MODIRY_TYPE_ADD;
-  Page_StoreData( wk, wk->p_resort_sv );
-  wk->Seq = SEQ_REDRAW;
+  const STR_PARAM_PAGE *cp_page = GetPage( wk->BoxValue[EDITBOX_ID_FIRST_PEOPLE] );
+  if( cp_page->IsPageOpen(wk) )
+  {
+    wk->p_pageData  = Page_PushPage( wk->p_pageData, cp_page );
+    wk->modify_type = DATA_MODIRY_TYPE_ADD;
+    Page_StoreData( wk, wk->p_resort_sv );
+    wk->Seq = SEQ_REDRAW;
+  }
 }
 
 static void ButtonAction_First_Change( DEBUG_INPUT_WORK *wk, const STR_PARAM *StrParam )
 {
-  wk->p_pageData  = Page_PushPage( wk->p_pageData, GetPage( wk->BoxValue[EDITBOX_ID_FIRST_PEOPLE] ) );
-  wk->modify_type = DATA_MODIRY_TYPE_CHANGE;
-  Page_StoreData( wk, wk->p_resort_sv );
-  wk->Seq = SEQ_REDRAW;
+  const STR_PARAM_PAGE *cp_page = GetPage( wk->BoxValue[EDITBOX_ID_FIRST_PEOPLE] );
+  if( cp_page->IsPageOpen(wk) )
+  {
+    wk->p_pageData  = Page_PushPage( wk->p_pageData, cp_page );
+    wk->modify_type = DATA_MODIRY_TYPE_CHANGE;
+    Page_StoreData( wk, wk->p_resort_sv );
+    wk->Seq = SEQ_REDRAW;
+  }
 }
 
 //普通に受け取るだけのテーブル
@@ -3208,120 +3337,95 @@ static const struct
   { EDITBOX_ID_EXT8_RECORD_02,  RESORT_DATA_PARAM_EXT5_RECORD_02 },
   { EDITBOX_ID_EXT8_RECORD_03,  RESORT_DATA_PARAM_EXT5_RECORD_03 },
 };
-static void Resident_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv )
+static const struct
 {
-  //もしAddだったら何もしない
-  if( p_wk->modify_type == DATA_MODIRY_TYPE_ADD )
-  {
-    GFL_STR_ClearBuffer(p_wk->BoxStrBuf[ EDITBOX_ID_BASIC_NAME - EDITBOX_ID_MAX ]);
-    GFL_STR_ClearBuffer(p_wk->BoxStrBuf[ EDITBOX_ID_BASIC_INTRODUCTION - EDITBOX_ID_MAX ]);
-    GFL_STR_ClearBuffer(p_wk->BoxStrBuf[ EDITBOX_ID_EXT6_PHRASE - EDITBOX_ID_MAX ]);
-    GFL_STR_ClearBuffer(p_wk->BoxStrBuf[ EDITBOX_ID_EXT7_THANKS - EDITBOX_ID_MAX ]);
-  }
-  else
-  {
-    RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
-    int index = p_wk->BoxValue[EDITBOX_ID_FIRST_CHANGE_NUM];
-    RESORT_RESIDENT_DATA * p_data = RESORT_PEOPLE_ALL_DATA_GetResident( p_people_all, index );
-    STRCODE strcode[64];
-    int i;
-
-    if( index >= RESORT_RESIDENT_DATA_NUM )
-    {
-      return;
-    }
-
-    //普通に受け取るだけのデータ
-    for( i = 0; i < NELEMS(sc_resident_restore_tbl); i++ )
-    {
-      p_wk->BoxValue[sc_resident_restore_tbl[i].editBoxID]  = RESORT_RESIDENT_DATA_GetData( p_data, sc_resident_restore_tbl[i].resort_param, NULL );
-    }
-
-    //文字データ
-    RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_NAME, strcode );
-    GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_BASIC_NAME - EDITBOX_ID_MAX ], strcode );
-    RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_INTRODUCTION, strcode );
-    GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_BASIC_INTRODUCTION - EDITBOX_ID_MAX ], strcode );
-    RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT6_PHRASE, strcode );
-    GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_EXT6_PHRASE - EDITBOX_ID_MAX ], strcode );
-    RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT7_THANKS, strcode );
-    GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_EXT7_THANKS - EDITBOX_ID_MAX ], strcode );
-
-
-    //施設データ
-    {
-      RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_data );
-      p_wk->BoxValue[EDITBOX_ID_RESI_INSTITUTION_ID]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID );
-      p_wk->BoxValue[EDITBOX_ID_RESI_LV]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
-      p_wk->BoxValue[EDITBOX_ID_RESI_EXP]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_EXP );
-      p_wk->BoxValue[EDITBOX_ID_RESI_EV_BIT]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_BIT );
-    }
-
-
-    //日付
-    {
-      RESORT_DATE date = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_RECOMMEND_DATE, NULL );
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_YEAR]  = RESORT_DATE_GET_YEAR( date );
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_MONTH]  = RESORT_DATE_GET_MONTH( date );
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_DAY]  = RESORT_DATE_GET_DAY( date );
-
-      for( i = 0; i < 4; i++ )
-      {
-        date = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, NULL );
-        p_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_YEAR_00+i] = RESORT_DATE_GET_YEAR( date );
-        p_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_MONTH_00+i] = RESORT_DATE_GET_MONTH( date );
-        p_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_DAY_00+i] = RESORT_DATE_GET_DAY( date );
-      }
-
-      date = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_START_DATE, NULL );
-      p_wk->BoxValue[ EDITBOX_ID_EXT1_START_Y ] =  RESORT_DATE_GET_YEAR( date );
-      p_wk->BoxValue[ EDITBOX_ID_EXT1_START_M ] =  RESORT_DATE_GET_MONTH( date );
-      p_wk->BoxValue[ EDITBOX_ID_EXT1_START_D ] =  RESORT_DATE_GET_DAY( date );
-
-      date = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_DENDOU_DATE, NULL );
-      p_wk->BoxValue[ EDITBOX_ID_EXT1_DENDOU_Y ] =  RESORT_DATE_GET_YEAR( date );
-      p_wk->BoxValue[ EDITBOX_ID_EXT1_DENDOU_M ] =  RESORT_DATE_GET_MONTH( date );
-      p_wk->BoxValue[ EDITBOX_ID_EXT1_DENDOU_D ] =  RESORT_DATE_GET_DAY( date );
-    }
-  }
-
-}
-
-static BOOL Resident_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk )
+  EDITBOX_ID editBoxID;
+  RESORT_DATA_PARAM resort_param;
+} sc_proxy_restore_tbl[]  =
 {
-  RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
-  RESORT_RESIDENT_DATA * p_data = NULL;
-  const STRCODE *cp_strcode;
+  { EDITBOX_ID_BASIC_TRAINERID, RESORT_DATA_PARAM_TRAINER_ID },
+  { EDITBOX_ID_BASIC_CONTRY,    RESORT_DATA_PARAM_NATION },
+  { EDITBOX_ID_BASIC_AREA,      RESORT_DATA_PARAM_AREA },
+  { EDITBOX_ID_BASIC_LANG,      RESORT_DATA_PARAM_LANG },
+  { EDITBOX_ID_BASIC_VER,       RESORT_DATA_PARAM_VER },
+  { EDITBOX_ID_BASIC_VIEW,      RESORT_DATA_PARAM_OBJCODE },
+  { EDITBOX_ID_BASIC_SEX,       RESORT_DATA_PARAM_SEX },
+  { EDITBOX_ID_BASIC_PLAY_HOUR, RESORT_DATA_PARAM_PLAY_HOUR },
+  { EDITBOX_ID_BASIC_PLAY_MIN,  RESORT_DATA_PARAM_PLAY_MIN },
+  { EDITBOX_ID_BASIC_JOB,       RESORT_DATA_PARAM_JOB },
+  { EDITBOX_ID_BASIC_HOBBY,     RESORT_DATA_PARAM_HOBBY },
+  { EDITBOX_ID_SUB_WANTJOB,     RESORT_DATA_PARAM_WANT_JOB },
+  { EDITBOX_ID_RESI_PRESENT_ID,   RESORT_DATA_PARAM_PRESENT_BIT  },
+  { EDITBOX_ID_RESI_MEET_YEAR,    RESORT_DATA_PARAM_MEET_YEAR   },
+  { EDITBOX_ID_RESI_MEET_MONTH,   RESORT_DATA_PARAM_MEET_MONTH  },
+  { EDITBOX_ID_RESI_MEET_DAY,     RESORT_DATA_PARAM_MEET_DAY    },
+  { EDITBOX_ID_RESI_COMM_ID,      RESORT_DATA_PARAM_COMM_ID     },
+  { EDITBOX_ID_RESI_PEOPLE_ID,  RESORT_DATA_PARAM_PEOPLE_ID },
+  { EDITBOX_ID_RESI_PLACE_ID,   RESORT_DATA_PARAM_PLACE_ID },
+  { EDITBOX_ID_RESI_TYPE,   RESORT_DATA_PARAM_TYPE },
+  { EDITBOX_ID_PROXY_POKEMON,   RESORT_DATA_PARAM_POKEMON },
+};
+static void RecvCommon_StoreData( DEBUG_INPUT_WORK *p_wk, const RESORT_RECV_DATA * p_data )
+{
+  STRCODE strcode[64];
   int i;
 
-  if( cp_wk->modify_type == DATA_MODIRY_TYPE_ADD )
+  //普通に受け取るだけのデータ
+  for( i = 0; i < NELEMS(sc_resident_restore_tbl); i++ )
   {
-    int i;
-    BOOL is_exits = FALSE;
-    for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
-    {
-      p_data = RESORT_PEOPLE_ALL_DATA_GetResident( p_people_all, i);
-      if( RESORT_RESIDENT_DATA_IsEmpty( p_data ) )
-      {
-        is_exits = TRUE;
-        break;
-      }
-    }
-    if( is_exits == FALSE )
-    {
-      //いれられなかった
-      return FALSE;
-    }
+    p_wk->BoxValue[sc_resident_restore_tbl[i].editBoxID]  = RESORT_RECV_DATA_GetData( p_data, sc_resident_restore_tbl[i].resort_param, NULL );
   }
-  else
+
+  //文字データ
+  RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_NAME, strcode );
+  GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_BASIC_NAME - EDITBOX_ID_MAX ], strcode );
+  RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_INTRODUCTION, strcode );
+  GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_BASIC_INTRODUCTION - EDITBOX_ID_MAX ], strcode );
+  RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT6_PHRASE, strcode );
+  GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_EXT6_PHRASE - EDITBOX_ID_MAX ], strcode );
+  RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT7_THANKS, strcode );
+  GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_EXT7_THANKS- EDITBOX_ID_MAX ], strcode );
+
+  //施設データ
   {
-    int index = cp_wk->BoxValue[EDITBOX_ID_FIRST_CHANGE_NUM];
-    if( index >= RESORT_RESIDENT_DATA_NUM )
-    {
-      return FALSE;
-    }
-    p_data = RESORT_PEOPLE_ALL_DATA_GetResident( p_people_all, index );
+    RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( (RESORT_RECV_DATA *)p_data );
+    p_wk->BoxValue[EDITBOX_ID_RESI_INSTITUTION_ID]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID );
+    p_wk->BoxValue[EDITBOX_ID_RESI_LV]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
+    p_wk->BoxValue[EDITBOX_ID_RESI_EXP]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_EXP );
+    p_wk->BoxValue[EDITBOX_ID_RESI_EV_BIT]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_BIT );
   }
+
+
+  //日付
+  {
+    RESORT_DATE date = RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_RECOMMEND_DATE, NULL );
+    p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_YEAR]  = RESORT_DATE_GET_YEAR( date );
+    p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_MONTH]  = RESORT_DATE_GET_MONTH( date );
+    p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_DAY]  = RESORT_DATE_GET_DAY( date );
+
+    for( i = 0; i < 4; i++ )
+    {
+      date = RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, NULL );
+      p_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_YEAR_00+i] = RESORT_DATE_GET_YEAR( date );
+      p_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_MONTH_00+i] = RESORT_DATE_GET_MONTH( date );
+      p_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_DAY_00+i] = RESORT_DATE_GET_DAY( date );
+    }
+
+    date = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_START_DATE, NULL );
+    p_wk->BoxValue[ EDITBOX_ID_EXT1_START_Y ] =  RESORT_DATE_GET_YEAR( date );
+    p_wk->BoxValue[ EDITBOX_ID_EXT1_START_M ] =  RESORT_DATE_GET_MONTH( date );
+    p_wk->BoxValue[ EDITBOX_ID_EXT1_START_D ] =  RESORT_DATE_GET_DAY( date );
+
+    date = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_DENDOU_DATE, NULL );
+    p_wk->BoxValue[ EDITBOX_ID_EXT1_DENDOU_Y ] =  RESORT_DATE_GET_YEAR( date );
+    p_wk->BoxValue[ EDITBOX_ID_EXT1_DENDOU_M ] =  RESORT_DATE_GET_MONTH( date );
+    p_wk->BoxValue[ EDITBOX_ID_EXT1_DENDOU_D ] =  RESORT_DATE_GET_DAY( date );
+  }
+}
+static void RecvCommon_ReStoreData( const DEBUG_INPUT_WORK *cp_wk, RESORT_RECV_DATA * p_data )
+{
+  int i;
+  const STRCODE *cp_strcode;
 
   //普通に受け取るだけのデータ
   for( i = 0; i < NELEMS(sc_resident_restore_tbl); i++ )
@@ -3378,8 +3482,122 @@ static BOOL Resident_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_
 
     RESORT_RESIDENT_DATA_SetData( p_data, RESORT_DATA_PARAM_EXT1_DENDOU_DATE, date );
   }
+}
+
+static void ProxyCommon_StoreData( DEBUG_INPUT_WORK *p_wk, const RESORT_PROXY_DATA * p_data )
+{
+  STRCODE strcode[64];
+  int i;
+
+  //普通に受け取るだけのデータ
+  for( i = 0; i < NELEMS(sc_proxy_restore_tbl); i++ )
+  {
+    p_wk->BoxValue[sc_proxy_restore_tbl[i].editBoxID]  = RESORT_PROXY_DATA_GetData( p_data, sc_proxy_restore_tbl[i].resort_param, NULL );
+  }
+
+  //文字データ
+  RESORT_PROXY_DATA_GetData( p_data, RESORT_DATA_PARAM_NAME, strcode );
+  GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_BASIC_NAME - EDITBOX_ID_MAX ], strcode );
+  RESORT_PROXY_DATA_GetData( p_data, RESORT_DATA_PARAM_INTRODUCTION, strcode );
+  GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_BASIC_INTRODUCTION - EDITBOX_ID_MAX ], strcode );
+  RESORT_PROXY_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT6_PHRASE, strcode );
+  GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_EXT6_PHRASE - EDITBOX_ID_MAX ], strcode );
+  RESORT_PROXY_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT7_THANKS, strcode );
+  GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_EXT7_THANKS- EDITBOX_ID_MAX ], strcode );
+}
+static void ProxyCommon_ReStoreData( const DEBUG_INPUT_WORK *cp_wk, RESORT_PROXY_DATA * p_data )
+{
+  int i;
+  const STRCODE *cp_strcode;
+
+  //普通に受け取るだけのデータ
+  for( i = 0; i < NELEMS(sc_proxy_restore_tbl); i++ )
+  {
+    RESORT_PROXY_DATA_SetData( p_data, sc_proxy_restore_tbl[i].resort_param, cp_wk->BoxValue[sc_proxy_restore_tbl[i].editBoxID] );
+  }
+  //文字データ
+  cp_strcode = GFL_STR_GetStringCodePointer( cp_wk->BoxStrBuf[ EDITBOX_ID_BASIC_NAME - EDITBOX_ID_MAX ] );
+  RESORT_PROXY_DATA_SetData( p_data, RESORT_DATA_PARAM_NAME, (u32)cp_strcode );
+  cp_strcode = GFL_STR_GetStringCodePointer( cp_wk->BoxStrBuf[ EDITBOX_ID_BASIC_INTRODUCTION - EDITBOX_ID_MAX ] );
+  RESORT_PROXY_DATA_SetData( p_data, RESORT_DATA_PARAM_INTRODUCTION, (u32)cp_strcode );
+  cp_strcode = GFL_STR_GetStringCodePointer( cp_wk->BoxStrBuf[ EDITBOX_ID_EXT6_PHRASE - EDITBOX_ID_MAX ] );
+  RESORT_PROXY_DATA_SetData( p_data, RESORT_DATA_PARAM_EXT6_PHRASE, (u32)cp_strcode );
+
+  cp_strcode = GFL_STR_GetStringCodePointer( cp_wk->BoxStrBuf[ EDITBOX_ID_EXT7_THANKS - EDITBOX_ID_MAX ] );
+  RESORT_PROXY_DATA_SetData( p_data, RESORT_DATA_PARAM_EXT7_THANKS, (u32)cp_strcode );
+
+}
+
+
+static BOOL IsPageOpen_True( DEBUG_INPUT_WORK *p_wk )
+{
+  return TRUE;
+}
+
+
+static BOOL Resident_IsPageOpen( DEBUG_INPUT_WORK *p_wk )
+{
+  return p_wk->BoxValue[EDITBOX_ID_FIRST_CHANGE_NUM] < 8;
+}
+
+static void Resident_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv )
+{
+  //もしAddだったら何もしない
+  if( p_wk->modify_type == DATA_MODIRY_TYPE_ADD )
+  {
+    GFL_STR_ClearBuffer(p_wk->BoxStrBuf[ EDITBOX_ID_BASIC_NAME - EDITBOX_ID_MAX ]);
+    GFL_STR_ClearBuffer(p_wk->BoxStrBuf[ EDITBOX_ID_BASIC_INTRODUCTION - EDITBOX_ID_MAX ]);
+    GFL_STR_ClearBuffer(p_wk->BoxStrBuf[ EDITBOX_ID_EXT6_PHRASE - EDITBOX_ID_MAX ]);
+    GFL_STR_ClearBuffer(p_wk->BoxStrBuf[ EDITBOX_ID_EXT7_THANKS - EDITBOX_ID_MAX ]);
+  }
+  else
+  {
+    RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
+    int index = p_wk->BoxValue[EDITBOX_ID_FIRST_CHANGE_NUM];
+    RESORT_RESIDENT_DATA * p_data = RESORT_PEOPLE_ALL_DATA_GetResident( p_people_all, index );
+
+    RecvCommon_StoreData( p_wk, p_data );
+  }
+}
+
+static BOOL Resident_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk )
+{
+  RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
+  RESORT_RESIDENT_DATA * p_data = NULL;
+
+  if( cp_wk->modify_type == DATA_MODIRY_TYPE_ADD )
+  {
+    int i;
+    BOOL is_exits = FALSE;
+    for( i = 0; i < RESORT_RESIDENT_DATA_NUM; i++ )
+    {
+      p_data = RESORT_PEOPLE_ALL_DATA_GetResident( p_people_all, i);
+      if( RESORT_RESIDENT_DATA_IsEmpty( p_data ) )
+      {
+        is_exits = TRUE;
+        break;
+      }
+    }
+    if( is_exits == FALSE )
+    {
+      //いれられなかった
+      return FALSE;
+    }
+  }
+  else
+  {
+    int index = cp_wk->BoxValue[EDITBOX_ID_FIRST_CHANGE_NUM];
+    p_data = RESORT_PEOPLE_ALL_DATA_GetResident( p_people_all, index );
+  }
+
+  RecvCommon_ReStoreData( cp_wk, p_data );
 
   return TRUE;
+}
+
+static BOOL Tourist_IsPageOpen( DEBUG_INPUT_WORK *p_wk )
+{
+  return p_wk->BoxValue[EDITBOX_ID_FIRST_CHANGE_NUM] < 8;
 }
 
 static void Tourist_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv )
@@ -3396,65 +3614,9 @@ static void Tourist_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_re
     RESORT_RECV_BUFF *p_buff = RESONANCE_RESORT_SV_GetDataBuff( p_resort_sv );
     int index = p_wk->BoxValue[EDITBOX_ID_FIRST_CHANGE_NUM];
     RESORT_RECV_DATA * p_data = RESORT_RECV_BUFF_GetData( p_buff, index );
-    STRCODE strcode[64];
-    int i;
 
-    if( index >= RESONANCE_RESORT_SV_RECV_BUFF_NUM )
-    {
-      return;
-    }
-
-    //普通に受け取るだけのデータ
-    for( i = 0; i < NELEMS(sc_resident_restore_tbl); i++ )
-    {
-      p_wk->BoxValue[sc_resident_restore_tbl[i].editBoxID]  = RESORT_RECV_DATA_GetData( p_data, sc_resident_restore_tbl[i].resort_param, NULL );
-    }
-
-    //文字データ
-    RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_NAME, strcode );
-    GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_BASIC_NAME - EDITBOX_ID_MAX ], strcode );
-    RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_INTRODUCTION, strcode );
-    GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_BASIC_INTRODUCTION - EDITBOX_ID_MAX ], strcode );
-    RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT6_PHRASE, strcode );
-    GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_EXT6_PHRASE - EDITBOX_ID_MAX ], strcode );
-
-    //施設データ
-    {
-      RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_data );
-      p_wk->BoxValue[EDITBOX_ID_RESI_INSTITUTION_ID]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID );
-      p_wk->BoxValue[EDITBOX_ID_RESI_LV]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
-      p_wk->BoxValue[EDITBOX_ID_RESI_EXP]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_EXP );
-      p_wk->BoxValue[EDITBOX_ID_RESI_EV_BIT]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_BIT );
-    }
-
-
-    //日付
-    {
-      RESORT_DATE date = RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_RECOMMEND_DATE, NULL );
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_YEAR]  = RESORT_DATE_GET_YEAR( date );
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_MONTH]  = RESORT_DATE_GET_MONTH( date );
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_DAY]  = RESORT_DATE_GET_DAY( date );
-
-      for( i = 0; i < 4; i++ )
-      {
-        date = RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, NULL );
-        p_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_YEAR_00+i] = RESORT_DATE_GET_YEAR( date );
-        p_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_MONTH_00+i] = RESORT_DATE_GET_MONTH( date );
-        p_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_DAY_00+i] = RESORT_DATE_GET_DAY( date );
-      }
-
-      date = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_START_DATE, NULL );
-      p_wk->BoxValue[ EDITBOX_ID_EXT1_START_Y ] =  RESORT_DATE_GET_YEAR( date );
-      p_wk->BoxValue[ EDITBOX_ID_EXT1_START_M ] =  RESORT_DATE_GET_MONTH( date );
-      p_wk->BoxValue[ EDITBOX_ID_EXT1_START_D ] =  RESORT_DATE_GET_DAY( date );
-
-      date = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_DENDOU_DATE, NULL );
-      p_wk->BoxValue[ EDITBOX_ID_EXT1_DENDOU_Y ] =  RESORT_DATE_GET_YEAR( date );
-      p_wk->BoxValue[ EDITBOX_ID_EXT1_DENDOU_M ] =  RESORT_DATE_GET_MONTH( date );
-      p_wk->BoxValue[ EDITBOX_ID_EXT1_DENDOU_D ] =  RESORT_DATE_GET_DAY( date );
-    }
-  }
-
+    RecvCommon_StoreData( p_wk, p_data );
+ }
 }
 
 static BOOL Tourist_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk )
@@ -3487,120 +3649,146 @@ static BOOL Tourist_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_I
   else
   {
     int index = cp_wk->BoxValue[EDITBOX_ID_FIRST_CHANGE_NUM];
-    if( index >= RESONANCE_RESORT_SV_RECV_BUFF_NUM )
-    {
-      return FALSE;
-    }
     p_data = RESORT_RECV_BUFF_GetData( p_buff, index );
   }
 
-  //普通に受け取るだけのデータ
-  for( i = 0; i < NELEMS(sc_resident_restore_tbl); i++ )
-  {
-    RESORT_RECV_DATA_SetData( p_data, sc_resident_restore_tbl[i].resort_param, cp_wk->BoxValue[sc_resident_restore_tbl[i].editBoxID] );
-  }
-  //文字データ
-  cp_strcode = GFL_STR_GetStringCodePointer( cp_wk->BoxStrBuf[ EDITBOX_ID_BASIC_NAME - EDITBOX_ID_MAX ] );
-  RESORT_RECV_DATA_SetData( p_data, RESORT_DATA_PARAM_NAME, (u32)cp_strcode );
-  cp_strcode = GFL_STR_GetStringCodePointer( cp_wk->BoxStrBuf[ EDITBOX_ID_BASIC_INTRODUCTION - EDITBOX_ID_MAX ] );
-  RESORT_RECV_DATA_SetData( p_data, RESORT_DATA_PARAM_INTRODUCTION, (u32)cp_strcode );
-  cp_strcode = GFL_STR_GetStringCodePointer( cp_wk->BoxStrBuf[ EDITBOX_ID_EXT6_PHRASE - EDITBOX_ID_MAX ] );
-  RESORT_RECV_DATA_SetData( p_data, RESORT_DATA_PARAM_EXT6_PHRASE, (u32)cp_strcode );
-
-  //施設データ
-  {
-    RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_data );
-    RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID, cp_wk->BoxValue[EDITBOX_ID_RESI_INSTITUTION_ID] );
-    RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV, cp_wk->BoxValue[EDITBOX_ID_RESI_LV] );
-    RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_EXP, cp_wk->BoxValue[EDITBOX_ID_RESI_EXP] );
-    RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_BIT, cp_wk->BoxValue[EDITBOX_ID_RESI_EV_BIT] );
-  }
-
-  //日付
-  {
-    RESORT_DATE date;
-
-    date = RESORT_DATE_SET( cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_YEAR], 
-                            cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_MONTH],
-                            cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_DAY] );
-    RESORT_RECV_DATA_SetData( p_data, RESORT_DATA_PARAM_EXT1_RECOMMEND_DATE, date );
-
-
-    for( i = 0; i < 4; i++ )
-    {
-      date = RESORT_DATE_SET( cp_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_YEAR_00+i],
-                              cp_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_MONTH_00+i],
-                              cp_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_DAY_00+i] );
-      RESORT_RECV_DATA_SetData( p_data, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, date );
-    }
-  }
-
-  //更新フラグ
-  RESORT_RECV_DATA_SetData(p_data,RESORT_DATA_PARAM_UPDATE, RESORT_RECV_DATA_UPDATE_FIRST );
+  RecvCommon_ReStoreData( cp_wk, p_data );
 
   return TRUE;
 }
 
+static BOOL TouristEx_IsPageOpen( DEBUG_INPUT_WORK *p_wk )
+{
+  PLAYER_WORK *p_player = GAMEDATA_GetMyPlayerWork(p_wk->p_gamedata);
+  void **pp_buff = GAMEDATA_GetResortBuffer( p_wk->p_gamedata );
+  return *pp_buff != NULL
+   && ( p_wk->BoxValue[EDITBOX_ID_FIRST_CHANGE_NUM] < 8 );
+}
+static void TouristEx_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv )
+{
+  //もしAddだったら何もしない
+  if( p_wk->modify_type == DATA_MODIRY_TYPE_ADD )
+  {
+    GFL_STR_ClearBuffer(p_wk->BoxStrBuf[ EDITBOX_ID_BASIC_NAME - EDITBOX_ID_MAX ]);
+    GFL_STR_ClearBuffer(p_wk->BoxStrBuf[ EDITBOX_ID_BASIC_INTRODUCTION - EDITBOX_ID_MAX ]);
+    GFL_STR_ClearBuffer(p_wk->BoxStrBuf[ EDITBOX_ID_EXT6_PHRASE - EDITBOX_ID_MAX ]);
+  }
+  else
+  {
+    void **pp_buff = GAMEDATA_GetResortBuffer( p_wk->p_gamedata );
+    RESORT_RECV_BUFF *p_buff = *pp_buff;
+    int index = p_wk->BoxValue[EDITBOX_ID_FIRST_CHANGE_NUM];
+    RESORT_RECV_DATA * p_data = RESORT_RECV_BUFF_GetData( p_buff, index );
+
+    RecvCommon_StoreData( p_wk, p_data );
+ }
+}
+
+static BOOL TouristEx_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk )
+{
+  void **pp_buff = GAMEDATA_GetResortBuffer( cp_wk->p_gamedata );
+  RESORT_RECV_BUFF *p_buff = *pp_buff;
+  RESORT_RECV_DATA * p_data = NULL;
+  const STRCODE *cp_strcode;
+  int i;
+
+  if( cp_wk->modify_type == DATA_MODIRY_TYPE_ADD )
+  {
+    int i;
+    BOOL is_exits = FALSE;
+    for( i = 0; i < RESONANCE_RESORT_SV_RECV_BUFF_NUM; i++ )
+    {
+
+      p_data = RESORT_RECV_BUFF_GetData( p_buff, i );
+      if( RESORT_RECV_DATA_IsEmpty( p_data ) )
+      {
+        is_exits = TRUE;
+        break;
+      }
+    }
+    if( is_exits == FALSE )
+    {
+      //いれられなかった
+      return FALSE;
+    }
+  }
+  else
+  {
+    int index = cp_wk->BoxValue[EDITBOX_ID_FIRST_CHANGE_NUM];
+    p_data = RESORT_RECV_BUFF_GetData( p_buff, index );
+  }
+
+  RecvCommon_ReStoreData( cp_wk, p_data );
+
+  return TRUE;
+}
+static BOOL Proxy_IsPageOpen( DEBUG_INPUT_WORK *p_wk )
+{
+  return p_wk->BoxValue[EDITBOX_ID_FIRST_CHANGE_NUM] < 12;
+}
+static void Proxy_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv )
+{
+  //もしAddだったら何もしない
+  if( p_wk->modify_type == DATA_MODIRY_TYPE_ADD )
+  {
+    GFL_STR_ClearBuffer(p_wk->BoxStrBuf[ EDITBOX_ID_BASIC_NAME - EDITBOX_ID_MAX ]);
+    GFL_STR_ClearBuffer(p_wk->BoxStrBuf[ EDITBOX_ID_BASIC_INTRODUCTION - EDITBOX_ID_MAX ]);
+    GFL_STR_ClearBuffer(p_wk->BoxStrBuf[ EDITBOX_ID_EXT6_PHRASE - EDITBOX_ID_MAX ]);
+  }
+  else
+  {
+    RESORT_PROXY_BUFF *p_buff = RESONANCE_RESORT_SV_GetProxyBuff( p_resort_sv );
+    int index = p_wk->BoxValue[EDITBOX_ID_FIRST_CHANGE_NUM];
+    RESORT_PROXY_DATA * p_data = RESORT_PROXY_BUFF_GetData( p_buff, index );
+
+    ProxyCommon_StoreData( p_wk, p_data );
+ }
+}
+static BOOL Proxy_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk )
+{
+  RESORT_PROXY_BUFF *p_buff = RESONANCE_RESORT_SV_GetProxyBuff( p_resort_sv );
+  RESORT_PROXY_DATA * p_data = NULL;
+  const STRCODE *cp_strcode;
+  int i;
+
+  if( cp_wk->modify_type == DATA_MODIRY_TYPE_ADD )
+  {
+    int i;
+    BOOL is_exits = FALSE;
+    for( i = 0; i < RESONANCE_RESORT_SV_PROXY_BUFF_NUM; i++ )
+    {
+
+      p_data = RESORT_PROXY_BUFF_GetData( p_buff, i );
+      if( RESORT_PROXY_DATA_IsEmpty( p_data ) )
+      {
+        is_exits = TRUE;
+        break;
+      }
+    }
+    if( is_exits == FALSE )
+    {
+      //いれられなかった
+      return FALSE;
+    }
+  }
+  else
+  {
+    int index = cp_wk->BoxValue[EDITBOX_ID_FIRST_CHANGE_NUM];
+    p_data = RESORT_PROXY_BUFF_GetData( p_buff, index );
+  }
+
+  ProxyCommon_ReStoreData( cp_wk, p_data );
+
+  return TRUE;
+
+}
 
 static void Owner_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv )
 {
   {
     RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
     RESORT_RECV_DATA * p_data = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_people_all );
-    STRCODE strcode[64];
-    int i;
-
-    //普通に受け取るだけのデータ
-    for( i = 0; i < NELEMS(sc_resident_restore_tbl); i++ )
-    {
-      p_wk->BoxValue[sc_resident_restore_tbl[i].editBoxID]  = RESORT_RECV_DATA_GetData( p_data, sc_resident_restore_tbl[i].resort_param, NULL );
-    }
-
-    //文字データ
-    RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_NAME, strcode );
-    GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_BASIC_NAME - EDITBOX_ID_MAX ], strcode );
-    RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_INTRODUCTION, strcode );
-    GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_BASIC_INTRODUCTION - EDITBOX_ID_MAX ], strcode );
-    RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT6_PHRASE, strcode );
-    GFL_STR_SetStringCode( p_wk->BoxStrBuf[ EDITBOX_ID_EXT6_PHRASE - EDITBOX_ID_MAX ], strcode );
-
-
-    //施設データ
-    {
-      RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_data );
-      p_wk->BoxValue[EDITBOX_ID_RESI_INSTITUTION_ID]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID );
-      p_wk->BoxValue[EDITBOX_ID_RESI_LV]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_LV );
-      p_wk->BoxValue[EDITBOX_ID_RESI_EXP]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_EXP );
-      p_wk->BoxValue[EDITBOX_ID_RESI_EV_BIT]  = RESORT_INSTITUTION_DATA_GetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_BIT );
-    }
-
-
-    //日付
-    {
-      RESORT_DATE date = RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_RECOMMEND_DATE, NULL );
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_YEAR]  = RESORT_DATE_GET_YEAR( date );
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_MONTH]  = RESORT_DATE_GET_MONTH( date );
-      p_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_DAY]  = RESORT_DATE_GET_DAY( date );
-
-      for( i = 0; i < 4; i++ )
-      {
-        date = RESORT_RECV_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, NULL );
-        p_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_YEAR_00+i] = RESORT_DATE_GET_YEAR( date );
-        p_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_MONTH_00+i] = RESORT_DATE_GET_MONTH( date );
-        p_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_DAY_00+i] = RESORT_DATE_GET_DAY( date );
-      }
-
-
-      date = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_START_DATE, NULL );
-      p_wk->BoxValue[ EDITBOX_ID_EXT1_START_Y ] =  RESORT_DATE_GET_YEAR( date );
-      p_wk->BoxValue[ EDITBOX_ID_EXT1_START_M ] =  RESORT_DATE_GET_MONTH( date );
-      p_wk->BoxValue[ EDITBOX_ID_EXT1_START_D ] =  RESORT_DATE_GET_DAY( date );
-
-      date = RESORT_RESIDENT_DATA_GetData( p_data, RESORT_DATA_PARAM_EXT1_DENDOU_DATE, NULL );
-      p_wk->BoxValue[ EDITBOX_ID_EXT1_DENDOU_Y ] =  RESORT_DATE_GET_YEAR( date );
-      p_wk->BoxValue[ EDITBOX_ID_EXT1_DENDOU_M ] =  RESORT_DATE_GET_MONTH( date );
-      p_wk->BoxValue[ EDITBOX_ID_EXT1_DENDOU_D ] =  RESORT_DATE_GET_DAY( date );
-    }
+    RecvCommon_StoreData( p_wk, p_data );
   }
 }
 
@@ -3608,53 +3796,7 @@ static BOOL Owner_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INP
 {
   RESORT_PEOPLE_ALL_DATA *p_people_all = RESONANCE_RESORT_SV_GetPeopleAllData( p_resort_sv );
   RESORT_RECV_DATA * p_data = RESORT_PEOPLE_ALL_DATA_GetOwnerData( p_people_all );
-  const STRCODE *cp_strcode;
-  int i;
-
-  //普通に受け取るだけのデータ
-  for( i = 0; i < NELEMS(sc_resident_restore_tbl); i++ )
-  {
-    RESORT_RECV_DATA_SetData( p_data, sc_resident_restore_tbl[i].resort_param, cp_wk->BoxValue[sc_resident_restore_tbl[i].editBoxID] );
-  }
-  //文字データ
-  cp_strcode = GFL_STR_GetStringCodePointer( cp_wk->BoxStrBuf[ EDITBOX_ID_BASIC_NAME - EDITBOX_ID_MAX ] );
-  RESORT_RECV_DATA_SetData( p_data, RESORT_DATA_PARAM_NAME, (u32)cp_strcode );
-  cp_strcode = GFL_STR_GetStringCodePointer( cp_wk->BoxStrBuf[ EDITBOX_ID_BASIC_INTRODUCTION - EDITBOX_ID_MAX ] );
-  RESORT_RECV_DATA_SetData( p_data, RESORT_DATA_PARAM_INTRODUCTION, (u32)cp_strcode );
-  cp_strcode = GFL_STR_GetStringCodePointer( cp_wk->BoxStrBuf[ EDITBOX_ID_EXT6_PHRASE - EDITBOX_ID_MAX ] );
-  RESORT_RECV_DATA_SetData( p_data, RESORT_DATA_PARAM_EXT6_PHRASE, (u32)cp_strcode );
-
-
-  //施設データ
-  {
-    RESORT_INSTITUTION_DATA *p_institution = RESORT_RESIDENT_DATA_GetInstitution( p_data );
-    RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_ID, cp_wk->BoxValue[EDITBOX_ID_RESI_INSTITUTION_ID] );
-    RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_EXP, cp_wk->BoxValue[EDITBOX_ID_RESI_EXP] );
-    RESORT_INSTITUTION_DATA_SetData( p_institution, RESORT_INSTITUTION_DATA_PARAM_BIT, cp_wk->BoxValue[EDITBOX_ID_RESI_EV_BIT] );
-  }
-
-
-  //日付
-  {
-    RESORT_DATE date;
-
-    date = RESORT_DATE_SET( cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_YEAR], 
-                            cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_MONTH],
-                            cp_wk->BoxValue[EDITBOX_ID_EXT1_MEDAL_DAY] );
-    RESORT_RECV_DATA_SetData( p_data, RESORT_DATA_PARAM_EXT1_RECOMMEND_DATE, date );
-
-
-    for( i = 0; i < 4; i++ )
-    {
-      date = RESORT_DATE_SET( cp_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_YEAR_00+i],
-                              cp_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_MONTH_00+i],
-                              cp_wk->BoxValue[ EDITBOX_ID_EXT8_RECORD_DAY_00+i] );
-      RESORT_RECV_DATA_SetData( p_data, RESORT_DATA_PARAM_EXT5_RECORD_DATE_00+i, date );
-    }
-  }
-
-  //更新フラグ
-  RESORT_RECV_DATA_SetData(p_data,RESORT_DATA_PARAM_UPDATE, RESORT_RECV_DATA_UPDATE_FIRST );
+  RecvCommon_ReStoreData( cp_wk, p_data );
 
   return TRUE;
 

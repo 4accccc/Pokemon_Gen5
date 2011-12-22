@@ -1258,8 +1258,8 @@ struct _RESORT_PROXY_DATA
   RESORT_EXTEND6_DATA extend6;
   RESORT_EXTEND7_DATA extend7;
 
-  u8    id;
-  u8    celevID;
+  u8    id; //nouse
+  u8    celevID;  //nouse
   u8    type;
   u8    present_bit;
   u16   pokemon;
@@ -2645,6 +2645,11 @@ u32 RESORT_PROXY_DATA_GetData( const RESORT_PROXY_DATA *cp_wk, RESORT_DATA_PARAM
   case RESORT_DATA_PARAM_POKEMON:
     return cp_wk->pokemon;
 
+  case RESORT_DATA_PARAM_JOB:
+    return 0;
+  case RESORT_DATA_PARAM_HOBBY:
+    return 0;
+
   default:
     GF_ASSERT_MSG(0,"–¢‘Î‰ž%d\n",param);
     return 0;
@@ -2729,8 +2734,14 @@ void RESORT_PROXY_DATA_SetData( RESORT_PROXY_DATA *p_wk, RESORT_DATA_PARAM param
     p_wk->meet_day  = data;
     break;
   case RESORT_DATA_PARAM_PRESENT_BIT:
-   p_wk->present_bit  = data;
-   break;
+    p_wk->present_bit  = data;
+    break;
+
+  case RESORT_DATA_PARAM_JOB:
+    break;
+  case RESORT_DATA_PARAM_HOBBY:
+    break;
+
   default:
     GF_ASSERT_MSG(0,"–¢‘Î‰ž%d\n",param);
   }
