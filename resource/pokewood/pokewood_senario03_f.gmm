@@ -483,7 +483,7 @@
 [1:02:ポケモンニックネーム:0]ガール！！</language>
 	</row>
 	<row id="pw_event0_react_hero_0">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『らくしょうさ！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『らくしょうよ！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『楽勝よ！</language>
 	</row>
 	<row id="pw_event0_react_enemy_0">
@@ -497,7 +497,7 @@
 思い知るが　よいわっ！！</language>
 	</row>
 	<row id="pw_event0_react_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『もう　ダメだ……</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『もう　ダメかも……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『もう　ダメかも……</language>
 	</row>
 	<row id="pw_event0_react_enemy_1">
@@ -509,7 +509,7 @@
 そのまま　あきらめて　しまえっ！！</language>
 	</row>
 	<row id="pw_event0_react_hero_2">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『……いくよっ！！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『……いくよっ！！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『……いくよっ！！</language>
 	</row>
 	<row id="pw_event0_react_enemy_2">
@@ -519,7 +519,7 @@
 それでこそ　我輩の　敵！！</language>
 	</row>
 	<row id="pw_event0_react_hero_3">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]キッド『にげようかな……</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『にげようかな……</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『逃げようかな……</language>
 	</row>
 	<row id="pw_event0_react_enemy_3">
