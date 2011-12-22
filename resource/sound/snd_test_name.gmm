@@ -9533,6 +9533,14 @@
 		<language name="JPN" width="256">SW-KERTIO-FORM-03</language>
 		<language name="JPN_KANJI" width="256">SW-KERTIO-FORM-03</language>
 	</row>
+	<row id="msg_seq_se_sw_kertio_form_04">
+		<language name="JPN" width="256">SW-KERTIO-FORM-04</language>
+		<language name="JPN_KANJI" width="256">SW-KERTIO-FORM-04</language>
+	</row>
+	<row id="msg_seq_se_sw_kertio_form_05">
+		<language name="JPN" width="256">SW-KERTIO-FORM-05</language>
+		<language name="JPN_KANJI" width="256">SW-KERTIO-FORM-05</language>
+	</row>
 	<row id="msg_seq_se_sw_ghetsis_stick_01">
 		<language name="JPN" width="256">SW-GHETSIS-STICK-01</language>
 		<language name="JPN_KANJI" width="256">SW-GHETSIS-STICK-01</language>
