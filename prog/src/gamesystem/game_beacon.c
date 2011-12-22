@@ -603,7 +603,7 @@ static void BeaconInfo_BeaconTypeOverwrite( GAMEBEACON_INFO *info, GAMEBEACON_TY
     */
 
     //アンケートのバッファを上書き
-    for( i = 0;i < QUESTION_ID_MAX;i++ ){
+    for( i = 0;i <= QUESTION_ID_MAX;i++ ){
       if( QUESTIONNAIRE_INDEX_IsSwanNewQuestion( i ) ){
         //スワンで変更があった質問の内容は無回答=0にする
         QuestionnaireAnswer_WriteBit( &info->question_answer, i, 0);
