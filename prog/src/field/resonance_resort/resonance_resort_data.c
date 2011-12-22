@@ -19,6 +19,7 @@
 #include "system/main.h"
 #include "field/resort_work.h"
 #include "app/research_radar/question_id.h"
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
 //arc
 #include "arc/arc_def.h"
@@ -710,12 +711,14 @@ static void RESORT_EXTEND1_DATA_SetMyData( RESORT_EXTEND1_DATA *p_wk, const GAME
     RTC_ConvertSecondToDateTime( &date , &time , p_time->start_sec );
 
     p_wk->start_date = RESORT_DATA_RtcToDate( &date );
-  
-    if( p_time->clear_sec == 0 )
-    {
-      RTC_ConvertSecondToDateTime( &date , &time , p_time->clear_sec );
 
-      p_wk->dendou_date = RESORT_DATA_RtcToDate( &date );
+    {
+      EVENTWORK *p_evwork = GAMEDATA_GetEventWork( (GAMEDATA *)cp_gamedata );
+      if( EVENTWORK_CheckEventFlag( p_evwork, SYS_FLAG_GAME_CLEAR ) )
+      {
+        RTC_ConvertSecondToDateTime( &date , &time , p_time->clear_sec );
+        p_wk->dendou_date = RESORT_DATA_RtcToDate( &date );
+      }
     }
   }
 
@@ -5174,4 +5177,5 @@ void DEBUG_RESORT_DATA_SetPermission( BOOL enable )
 {
   s_debug_permission = enable;
 }
+
 #endif //PM_DEBUG
