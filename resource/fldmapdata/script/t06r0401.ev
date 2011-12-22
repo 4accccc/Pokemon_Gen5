@@ -126,9 +126,6 @@ func_kerudhio_main:
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
   _OBJ_ANIME_WAIT()
 
-  //鳴き声
-  _VOICE_PLAY( MONSNO_KERUDHIO,FORMNO_KERUDHIO_NORMAL )
-
   //アニメ：右の方から岩を見る
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_poke11_move03 )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
@@ -136,8 +133,13 @@ func_kerudhio_main:
 
   //アニメ：主人公をどかして岩の前に行く
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_poke11_move04 )
+  _TIME_WAIT( 60 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_l )
   _OBJ_ANIME_WAIT()
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move01 )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
   _TIME_WAIT( 8 )
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_poke11_move05 )
   _OBJ_ANIME_WAIT()
@@ -148,6 +150,9 @@ func_kerudhio_main:
 
   //アニメ：しんぴのつるぎを思い出す。
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_poke11_move06 )
+  _OBJ_ANIME_WAIT()
+
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_d )
   _OBJ_ANIME_WAIT()
 
   // しんぴのつるぎを覚えているかチェック
@@ -197,9 +202,9 @@ _RET
 func_ball_out:
 {
   // ボール移動
-  _MOVE_BALL( SCR_BALL_ANM_TYPE_OUT, 15, 0, 16, 3, 8 )
+  _MOVE_BALL( SCR_BALL_ANM_TYPE_OUT, 15, 3, 16, 3, 8 )
   // ボールアニメ
-  _START_BALL_ANM( SCR_BALL_ANM_TYPE_OUT, 15, 0, 16 )
+  _START_BALL_ANM( SCR_BALL_ANM_TYPE_OUT, 15, 3, 16 )
   //ボール出現フレーム待ち
   _WAIT_BALL_POKE_APP( SCR_BALL_ANM_TYPE_OUT )
   _WHITE_OUT()
@@ -216,7 +221,7 @@ _RET
 //-----------------------------------------------------------------------------
 func_ball_in:
 {
-  _START_BALL_ANM( SCR_BALL_ANM_TYPE_IN, 15, 0, 13 )
+  _START_BALL_ANM( SCR_BALL_ANM_TYPE_IN, 15, 3, 13 )
   //ポケ非表示フレーム待ち
   _WAIT_BALL_POKE_APP( SCR_BALL_ANM_TYPE_IN )
   _WHITE_OUT()
@@ -243,14 +248,11 @@ func_form_change:
   _PLAINWIN_MSG_DOWN( msg_t06r0401_cliff_11 )
   _PLAINWIN_CLOSE()
 
-  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_staystep_d )
-  _OBJ_ANIME_WAIT()
-
   // 思い出しイベント
   _KERUDHIO_GMK_REMEMBER_EVENT()
 
   // ホワイトフェードアウト
-  _WHITE_OUT()
+  _WHITE_OUT_SLOW()
   _DISP_FADE_END_CHECK()
 
   // エフェクト削除
@@ -264,14 +266,14 @@ func_form_change:
   _CALL_FLD3D_CUTIN( FLDCIID_KERUDHIO )
   // 鳴き声とともにフェードイン
   _VOICE_PLAY( MONSNO_654, 1 )
-  _WHITE_IN()
+  _WHITE_IN_SLOW()
   _DISP_FADE_END_CHECK()
   _VOICE_WAIT()
 
   // フォルムチェンジ
   _CHANGE_FORM_NO( target_poke_pos, 1 )
 
-  // SYS:かくごを　きめた　すがたに　なった！
+  //かくごを　きめた　すがたに　なった！
   //○○のようすが・・・・？
   _PLAINWIN_MSG_DOWN( msg_t06r0401_cliff_12 )
   _LAST_KEYWAIT()
@@ -473,7 +475,7 @@ _ANIME_LABEL  anm_dir_l
 _ANIME_LABEL  anm_dir_r
   _ANIME_DATA AC_DIR_R,1
   _ANIME_DATA ACMD_END,0
-  
+
 //-----------------------------------------------------------
 //☆ケルディオ用：アニメラベル
 //-----------------------------------------------------------
@@ -492,7 +494,8 @@ _ANIME_LABEL	anm_poke11_move01
 	_ANIME_DATA	AC_WALK_U_4F,4
 	_ANIME_DATA	AC_WAIT_8F,2
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
-	_ANIME_DATA	AC_STAY_JUMP_R_8F,2
+	_ANIME_DATA	AC_STAY_JUMP_R_8F,1
+	_ANIME_DATA	AC_WAIT_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_poke11_move02
@@ -505,7 +508,10 @@ _ANIME_LABEL	anm_poke11_move03
 	_ANIME_DATA	AC_WALK_U_4F,2
 	_ANIME_DATA	AC_WAIT_8F,2
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
-	_ANIME_DATA	AC_STAY_JUMP_L_8F,2
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	AC_WAIT_8F,2
 	_ANIME_DATA	ACMD_END,0
 
@@ -515,14 +521,26 @@ _ANIME_LABEL	anm_poke11_move04
 	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	AC_WAIT_8F,2
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_WALK_D_4F,1
+	_ANIME_DATA	AC_WALK_L_4F,2
+	_ANIME_DATA	AC_WALK_U_4F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_WAIT_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_poke11_move05
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_poke11_move06
+	_ANIME_DATA	AC_WAIT_8F,3
+	_ANIME_DATA	AC_MARK_TENTEN,1
 	_ANIME_DATA	AC_WAIT_8F,5
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
