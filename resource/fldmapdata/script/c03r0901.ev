@@ -60,12 +60,15 @@ EVENT_START   ev_c03r0901_musician_01
       _CAMERA_MOVE( 9688, 0, 970752, 360448, 0, 425984, 30 )
       _CAMERA_WAIT_MOVE()   //カメラ移動待ち
 	 
-	 //お客さんの方向を変える
-	 _CALL visitor_move
+	    //お客さんの方向を変える
+	    _CALL visitor_move
 	 
-	//前口上メッセージ表示
-	_PLAINWIN_MSG_DOWN( msg_c03r0901_narrator_00 )
-	_PLAINWIN_CLOSE()
+      //対象メロエッタのニックネームをタグ０番にセット
+      _TEMOTI_NICK_NAME( 0, target_poke_pos )
+
+	    //前口上メッセージ表示
+	    _PLAINWIN_MSG_DOWN( msg_c03r0901_narrator_00 )
+	    _PLAINWIN_CLOSE()
 	 
       //ボール投げるアニメ
       _CALL ball_out
@@ -74,6 +77,9 @@ EVENT_START   ev_c03r0901_musician_01
       _START_EVENT_BGM( SEQ_BGM_E_INISHIE )
       //ギターアニメ開始
       _OBJ_ANIME( SCWK_TARGET_OBJID, anm_guitar_move )
+
+      // メロエッタ ICAアニメ開始
+      _MERO_GMK_START_ANIME( MMDL_ID_EVENTOBJ_00 )
       
       //ウェイト
       _TIME_WAIT( MERODHIA_BALL_OUT_WAIT )
@@ -89,16 +95,15 @@ EVENT_START   ev_c03r0901_musician_01
 
       //カメラ移動
       _CAMERA_MOVE( 9688, 0, 970752, 360448, 151552, 331776, 120 )
-      //上昇
-      _EVENT_RISE_OBJ( MMDL_ID_EVENTOBJ_00, 8, 120 )
 
       //ウェイト
       _TIME_WAIT( MERODHIA_ROTATE_WAIT )
-      //回転
-      _EVENT_ROTATE_OBJ( MMDL_ID_EVENTOBJ_00 )
 
       //メロエッタアニメ待ち
       _OBJ_ANIME_WAIT()
+
+      //メロエッタICAアニメ終了チェック
+      _MERO_GMK_IS_ANIME_END()
 
       _BGM_WAIT()
       
@@ -123,9 +128,6 @@ EVENT_START   ev_c03r0901_musician_01
       //カメラもどし
       _CAMERA_DEF_MOVE( 30 )
 
-      //メロエッタ着地
-      _EVENT_RISE_OBJ( MMDL_ID_EVENTOBJ_00, 0, 24 )
-      
       _CAMERA_WAIT_MOVE() //カメラ移動待ち
       _CAMERA_BIND()    //カメラバインド
       _CAMERA_END()   //カメラ操作終了

@@ -20,6 +20,10 @@ extern void SPPOKE_GMK_MoveTrio(FIELDMAP_WORK *fieldWork);
 extern void SPPOKE_GMK_SetupMerodhia(FIELDMAP_WORK *fieldWork);
 extern void SPPOKE_GMK_EndMerodhia(FIELDMAP_WORK *fieldWork);
 extern void SPPOKE_GMK_MoveMerodhia(FIELDMAP_WORK *fieldWork);
+// swan追加
+// ケルディオアニメ
+extern void SPPOKE_GMK_MerodhiaStartAnime(FIELDMAP_WORK *fieldWork, u16 obj_id );
+extern BOOL SPPOKE_GMK_MerodhiaIsAnimeEnd(FIELDMAP_WORK *fieldWork);
 
 extern void SPPOKE_GMK_SetupZoroa(FIELDMAP_WORK *fieldWork);
 extern void SPPOKE_GMK_EndZoroa(FIELDMAP_WORK *fieldWork);

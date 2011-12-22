@@ -27,3 +27,7 @@ extern VMCMD_RESULT EvCmdRegiGMK_AnmDoorStart( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdKerudhioGMK_RememberEvent( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdKerudhioGMK_EffectDelete( VMHANDLE *core, void *wk );
 
+// 【配布】メロエッタ
+extern VMCMD_RESULT EvCmdMeroGMK_StartAnime( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdMeroGMK_IsAnimeEnd( VMHANDLE *core, void *wk );
+

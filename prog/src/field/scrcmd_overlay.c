@@ -254,6 +254,7 @@ static const ZONEID UseZoneIDTbl_gimmick_sppoke[] =
 {
   ZONE_ID_D29R0401,   // レジ３体の地底遺跡
   ZONE_ID_T06R0401,   // 【配布】ケルディオ
+  ZONE_ID_C03R0901,   // 【配布】メロエッタ
 };
 
 

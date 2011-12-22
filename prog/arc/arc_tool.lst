@@ -378,3 +378,4 @@
   ARCID_PERSONAL_BW    "personal/personal_wb.narc"    #BWのパーソナルデータ
   ARCID_ENDING_GIMMICK "fieldmap/ending.narc" # エンディングイベントのギミック
   ARCID_KERUDHIO_GIMMICK "fieldmap/kerudhio.narc" # 【配布】ケルディオのギミック
+  ARCID_MERO_GIMMICK "fieldmap/mero.narc" # 【配布】メロエッタのギミック

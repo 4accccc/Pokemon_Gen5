@@ -16805,4 +16805,32 @@
 	.short	EV_SEQ_KERUDHIO_GMK_EFFECT_DELETE
 	.endm
 
+//--------------------------------------------------------------
+/**
+ * @def   _MERO_GMK_START_ANIME
+ * @brief メロエッタにICAアニメを設定して再生
+ *
+ * @param obj_id      メロエッタのOBJ_ID
+ */
+//--------------------------------------------------------------
+#define _MERO_GMK_START_ANIME( obj_id )  \
+    _ASM_MERO_GMK_START_ANIME obj_id
+
+	.macro	_ASM_MERO_GMK_START_ANIME	obj_id
+	.short	EV_SEQ_MERO_GMK_START_ANIME
+	.short	\obj_id
+	.endm
+
+//--------------------------------------------------------------
+/**
+ * @def   _MERO_GMK_IS_ANIME_END
+ * @brief メロエッタのICAアニメの終了待ち
+ */
+//--------------------------------------------------------------
+#define _MERO_GMK_IS_ANIME_END()  \
+    _ASM_MERO_GMK_IS_ANIME_END
+
+	.macro	_ASM_MERO_GMK_IS_ANIME_END
+	.short	EV_SEQ_MERO_GMK_IS_ANIME_END
+	.endm
 

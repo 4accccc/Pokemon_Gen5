@@ -13,15 +13,18 @@
 #include "gmk_tmp_wk.h"
 
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
+#include "system/ica_anime.h"
 
 #include "arc/fieldmap/sppoke.naix"
 #include "arc/fieldmap/zoroa.naix"
 #include "arc/fieldmap/kerudhio.naix"
+#include "arc/fieldmap/mero.naix"
 
 #include "sound/pm_sndsys.h"
 #include "sp_poke_gimmick_se_def.h"
 
 #include "../../../resource/fldmapdata/gimmick/zoroa/zoroa_gmk_timing_def.h" //for ZOROA_CHG_FRAME
+#include "../../../resource/fldmapdata/gimmick/merodhia/gmk_timing_def.h"
 #include "field/eventdata_sxy.h"  //for  EVENTDATA_GetNpcData
 
 #define SPPOKE_GMK_ASSIGN_ID    (1)
@@ -60,6 +63,26 @@ typedef struct SMOKE_GMK_WK_tag
   u16 AfterObj;
 }SMOKE_GMK_WK;
 
+//-------------------------------------
+///	メロエッタ　動作ワーク ICAアニメ用
+//=====================================
+#define MERO_ANIME_INTERVAL ( 10 )
+#define MERO_ANIME_BUF      ( 0x180 )
+typedef struct {
+  MMDL      *p_poke;      // 対象の動作モデル
+  u8        animebuf[ MERO_ANIME_BUF ];
+  ICA_ANIME *p_anime;
+  VecFx32   offset;
+  u8        anime_status;
+  u8        eff_flash_flag;
+
+} MERO_GMK_WK;
+
+enum {
+  MERO_ANIME_STATUS_NONE,
+  MERO_ANIME_STATUS_DOING,
+};
+
 //==============================================================================================
 /**
  @note    ※三銃士とメロディアとゾロアでボールリソースは共有するので、リソース番号は一致するようにする
@@ -87,6 +110,10 @@ enum {
   RES_ID_SMOKE_ANM2,
   RES_ID_SMOKE_ANM3,
 
+  // メロエッタ専用
+  RESID_MERO_FLASH_MDL = 8,   // フラッシュ
+  RESID_MERO_FLASH_ANM_ICA,   // フラッシュ アニメ
+  RESID_MERO_FLASH_ANM_IMA,   // フラッシュ アニメ
 
   // ケルディオ専用
   RESID_EFFECT_01_MDL = 8,      // 気合のエフェクト
@@ -116,6 +143,9 @@ enum {
   
   // ゾロア専用
   OBJ_SMOKE = 2,
+
+  // メロエッタ専用
+  OBJ_MERO_FLASH = 2,
 
   // ケルディオ専用
   OBJ_EFFECT_01 = 2,        // 気合のエフェクト
@@ -212,7 +242,21 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl_mero[] = {
   { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbca, GFL_G3D_UTIL_RESARC }, //ICA ボールインアニメ
   { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
   { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
+
+  // ここからメロエッタ専用
+  { ARCID_MERO_GIMMICK, NARC_mero_mero_flash_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
+  { ARCID_MERO_GIMMICK, NARC_mero_mero_flash_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
+  { ARCID_MERO_GIMMICK, NARC_mero_mero_flash_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
 };
+
+// ANIME
+// メロエッタフラッシュエフェクト
+static const GFL_G3D_UTIL_ANM anm_mero_flash[] =
+{
+  { RESID_MERO_FLASH_ANM_ICA, 0 },
+  { RESID_MERO_FLASH_ANM_IMA, 0 },
+};
+#define ANM_MERO_FLASH_NUM  ( NELEMS(anm_mero_flash) )
 
 //3Dオブジェクト設定テーブル
 static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl_mero[] = {
@@ -232,6 +276,15 @@ static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl_mero[] = {
 		g3Dutil_anmTbl_ball_in,			//アニメテーブル(複数指定のため)
 		NELEMS(g3Dutil_anmTbl_ball_in),	//アニメリソース数
 	},
+  // ここからメロエッタ専用
+  // OBJ_MERO_FLASH 
+  {
+    RESID_MERO_FLASH_MDL, // モデルリソースID
+    0,                    // モデルデータID(リソース内部INDEX)
+    RESID_MERO_FLASH_MDL, // テクスチャリソースID
+    anm_mero_flash,       // アニメテーブル(複数指定のため)
+    ANM_MERO_FLASH_NUM,   // アニメリソース数
+  },
 };
 
 static const GFL_G3D_UTIL_SETUP SetupMero = {
@@ -616,7 +669,10 @@ void SPPOKE_GMK_SetupMerodhia(FIELDMAP_WORK *fieldWork)
 {
   SPPOKE_GMK_WK *p_wk;
   int i;
+  HEAPID heap_id;
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+
+  heap_id = FIELDMAP_GetHeapID(fieldWork);
 
   //汎用ワーク確保
   GMK_TMP_WK_AllocWork
@@ -624,11 +680,12 @@ void SPPOKE_GMK_SetupMerodhia(FIELDMAP_WORK *fieldWork)
 
   //メロディアイベント用ワークのアロケーション
   p_wk = GMK_TMP_WK_GetWork( fieldWork, SPPOKE_GMK_ASSIGN_ID );
+  p_wk->Work = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(heap_id), sizeof(MERO_GMK_WK) );
   p_wk->p_fieldmap  = fieldWork;
   p_wk->exp_obj     = FIELDMAP_GetExpObjCntPtr( fieldWork );
   
-  //必要なリソースの用意
-  FLD_EXP_OBJ_AddUnitByHandle(ptr, &SetupMero, SPPOKE_MERO_UNIT_IDX );
+  //必要なリソースの用意(アーカイブＩＤが２つ以上あるのでハンドル関数を使用しません)
+  FLD_EXP_OBJ_AddUnit(ptr, &SetupMero, SPPOKE_MERO_UNIT_IDX );
   
   //ボール初期化
   //OBJを非表示状態にする
@@ -654,6 +711,25 @@ void SPPOKE_GMK_SetupMerodhia(FIELDMAP_WORK *fieldWork)
     //無効化
     FLD_EXP_OBJ_ValidCntAnm(ptr, SPPOKE_MERO_UNIT_IDX, OBJ_BALL_IN, i, FALSE);
   }
+
+  // フラッシュの設定
+  {
+    // 非表示
+    FLD_EXP_OBJ_SetVanish(ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH, TRUE);
+    // アニメ設定
+    for( i=0; i<ANM_MERO_FLASH_NUM; i++ )
+    {
+      EXP_OBJ_ANM_CNT_PTR exp_anm;
+      exp_anm = FLD_EXP_OBJ_GetAnmCnt( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH, i );
+
+      // 1回再生設定
+      FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
+      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );   // アニメ再生設定
+
+      // 無効化
+      FLD_EXP_OBJ_ValidCntAnm( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH, i, FALSE );
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -666,8 +742,10 @@ void SPPOKE_GMK_SetupMerodhia(FIELDMAP_WORK *fieldWork)
 void SPPOKE_GMK_EndMerodhia(FIELDMAP_WORK *fieldWork)
 {
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  SPPOKE_GMK_WK *p_wk = GMK_TMP_WK_GetWork( fieldWork, SPPOKE_GMK_ASSIGN_ID );
 
   //メロディアイベント用ワーク解放
+  GFL_HEAP_FreeMemory( p_wk->Work );
   
   //汎用ワーク解放
   GMK_TMP_WK_FreeWork(fieldWork, SPPOKE_GMK_ASSIGN_ID);
@@ -684,9 +762,252 @@ void SPPOKE_GMK_EndMerodhia(FIELDMAP_WORK *fieldWork)
 //--------------------------------------------------------------
 void SPPOKE_GMK_MoveMerodhia(FIELDMAP_WORK *fieldWork)
 {
+  SPPOKE_GMK_WK *p_wk = GMK_TMP_WK_GetWork( fieldWork, SPPOKE_GMK_ASSIGN_ID );
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  MERO_GMK_WK *p_ica_wk = (MERO_GMK_WK*)p_wk->Work;
+  int i;
+
+#ifdef PM_DEBUG
+  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+      GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH );
+
+      status->trans.x = 88 << FX32_SHIFT;
+      status->trans.z = 120 << FX32_SHIFT;
+
+      // 光のエフェクト開始
+      p_ica_wk->eff_flash_flag = 1;
+
+      // アニメ再生
+      FLD_EXP_OBJ_SetVanish( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH, FALSE );
+      // アニメ設定
+      for( i=0; i<ANM_MERO_FLASH_NUM; i++ )
+      {
+        EXP_OBJ_ANM_CNT_PTR exp_anm;
+        exp_anm = FLD_EXP_OBJ_GetAnmCnt( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH, i );
+
+        // 1回再生設定
+        FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
+        FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+
+        // 有効化
+        FLD_EXP_OBJ_ValidCntAnm( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH, i, TRUE );
+        // 頭だし
+        FLD_EXP_OBJ_SetObjAnmFrm( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH, i, 0 );
+      }
+
+      ICHI_Printf("エフェクト開始\n");
+    }
+  }
+#endif
+
+  // icaアニメ処理
+  switch( p_ica_wk->anime_status ) {
+  case MERO_ANIME_STATUS_NONE:
+    break;
+  case MERO_ANIME_STATUS_DOING:
+    {
+      BOOL result;  // アニメ終了チェック
+
+      // アニメーションを進めて反映
+      result = ICA_ANIME_IncAnimeFrame( p_ica_wk->p_anime, FX32_ONE );
+
+      if( result == FALSE )
+      {
+        // 動作モデルの位置反映
+        {
+          VecFx32 trans;
+
+          ICA_ANIME_GetTranslate( p_ica_wk->p_anime, &trans );
+          VEC_Add( &trans, &p_ica_wk->offset, &trans );
+
+          // 位置反映
+          MMDL_SetVectorPos( p_ica_wk->p_poke, &trans );
+        }
+
+        // エフェクトメイン
+        if( p_ica_wk->eff_flash_flag == 1 )
+        {
+          EXP_OBJ_ANM_CNT_PTR exp_anm;
+          GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH );
+          VecFx32 trans;
+
+          // メロディア位置取得
+          MMDL_GetVectorPos( p_ica_wk->p_poke, &trans );
+
+          // エフェクト位置更新
+          status->trans = trans;
+          
+          // 終了チェック
+          exp_anm = FLD_EXP_OBJ_GetAnmCnt( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH, 0 );
+          // 終了していないアニメを発見
+          if( FLD_EXP_OBJ_ChkAnmEnd(exp_anm) == TRUE )
+          {
+            ICHI_Printf("エフェクト終了\n");
+            
+            // 非表示
+            FLD_EXP_OBJ_SetVanish( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH, TRUE );
+            // フラグOFF
+            p_ica_wk->eff_flash_flag = 0;
+          }
+        }
+
+        // フレーム監視
+        {
+          fx32 now_frame = ICA_ANIME_GetNowFrame( p_ica_wk->p_anime );
+          int frame;
+
+          // 変換
+          frame = now_frame >> FX32_SHIFT;
+
+          ICHI_Printf("現在のフレーム %d\n", frame);
+
+          switch( frame ){
+          case MERODHIA_FORM_STEP_FRAME:  // ボイスフォルムからステップフォルムにチェンジするフレーム
+          case MERODHIA_FORM_VOICE_FRAME:// ステップフォルムからボイスフォルムにチェンジするフレーム
+            {
+              GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH );
+
+              // 位置反映
+              MMDL_GetVectorPos( p_ica_wk->p_poke, &status->trans );
+
+              // 光のエフェクト開始
+              p_ica_wk->eff_flash_flag = 1;
+
+              // アニメ再生
+              FLD_EXP_OBJ_SetVanish( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH, FALSE );
+              // アニメ設定
+              for( i=0; i<ANM_MERO_FLASH_NUM; i++ )
+              {
+                EXP_OBJ_ANM_CNT_PTR exp_anm;
+                exp_anm = FLD_EXP_OBJ_GetAnmCnt( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH, i );
+
+                // 1回再生設定
+                FLD_EXP_OBJ_ChgAnmLoopFlg( exp_anm, FALSE );  // ループ再生設定
+                FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, FALSE );  // アニメ再生設定
+
+                // 有効化
+                FLD_EXP_OBJ_ValidCntAnm( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH, i, TRUE );
+                // 頭だし
+                FLD_EXP_OBJ_SetObjAnmFrm( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH, i, 0 );
+              }
+
+              ICHI_Printf("エフェクト開始\n");
+            }
+            break;
+          }
+        }
+
+      }
+      else
+      {
+        // 終了
+        ICA_ANIME_Delete( p_ica_wk->p_anime );
+        p_ica_wk->p_anime = NULL;
+        p_ica_wk->anime_status = MERO_ANIME_STATUS_NONE;
+
+        // 位置を初期化
+        {
+          VecFx32 pos;
+          MMDL_GetVectorPos( p_ica_wk->p_poke, &pos );
+          MMDL_InitPosition( p_ica_wk->p_poke, &pos, MMDL_GetDirDisp(p_ica_wk->p_poke) );
+        }
+
+        // 影をON
+        MMDL_OffMoveBit( p_ica_wk->p_poke, MMDL_MOVEBIT_SHADOW_VANISH );
+      }
+
+      // アニメーション再生
+      // 特別に移動ポケモンのみ動かす。
+      GF_ASSERT( MMDL_CheckMoveBitCompletedDrawInit(p_ica_wk->p_poke) );
+      MMDL_CallDrawProc(p_ica_wk->p_poke);
+
+    }
+    break;
+  }
+
+
   //アニメーション再生
   FLD_EXP_OBJ_PlayAnime( ptr );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メロディアのICAアニメ再生
+ *
+ *	@param	*fieldWork
+ */
+//-----------------------------------------------------------------------------
+void SPPOKE_GMK_MerodhiaStartAnime(FIELDMAP_WORK *fieldWork, u16 obj_id )
+{
+  SPPOKE_GMK_WK *p_wk = GMK_TMP_WK_GetWork( fieldWork, SPPOKE_GMK_ASSIGN_ID );
+  MERO_GMK_WK *p_ica_wk = (MERO_GMK_WK*)p_wk->Work;
+  HEAPID heap_id = FIELDMAP_GetHeapID(fieldWork);
+
+  GF_ASSERT( p_ica_wk->anime_status == MERO_ANIME_STATUS_NONE );
+
+  // アニメーション生成
+  p_ica_wk->p_anime = ICA_ANIME_CreateStreaming( heap_id,
+      ARCID_MERO_GIMMICK, NARC_mero_mero_move_ica_bin,
+      MERO_ANIME_INTERVAL, p_ica_wk->animebuf, MERO_ANIME_BUF );
+
+  // 動作モデル
+  // オブジェをSEARCH
+  {
+    MMDLSYS* mmdlsys = FIELDMAP_GetMMdlSys( fieldWork );
+    p_ica_wk->p_poke = MMDLSYS_SearchOBJID( mmdlsys, obj_id );
+
+    if( p_ica_wk->p_poke == NULL )
+    {
+      GF_ASSERT_MSG(0, "指定した動作モデルが見つかりません");
+      return;
+    }
+
+    // 影をOFF
+    MMDL_OnMoveBit( p_ica_wk->p_poke, MMDL_MOVEBIT_SHADOW_VANISH );
+
+    // 基準位置を設定しておく
+    MMDL_GetVectorPos( p_ica_wk->p_poke, &p_ica_wk->offset );
+
+    // 反映
+    {
+      VecFx32 trans;
+
+      ICA_ANIME_GetTranslate( p_ica_wk->p_anime, &trans );
+      VEC_Add( &trans, &p_ica_wk->offset, &trans );
+
+      // 位置反映
+      MMDL_SetVectorPos( p_ica_wk->p_poke, &trans );
+    }
+  }
+
+  // アニメーション開始
+  p_ica_wk->anime_status = MERO_ANIME_STATUS_DOING;
+
+  // エフェクトOFF
+  p_ica_wk->eff_flash_flag = 0;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メロディアのICAアニメ終了チェック
+ *
+ *	@param	*fieldWork
+ *
+ *	@retval TRUE    終了
+ *	@retval FALSE   途中
+ */
+//-----------------------------------------------------------------------------
+BOOL SPPOKE_GMK_MerodhiaIsAnimeEnd(FIELDMAP_WORK *fieldWork)
+{
+  SPPOKE_GMK_WK *p_wk = GMK_TMP_WK_GetWork( fieldWork, SPPOKE_GMK_ASSIGN_ID );
+  MERO_GMK_WK *p_ica_wk = (MERO_GMK_WK*)p_wk->Work;
+
+  if( p_ica_wk->anime_status != MERO_ANIME_STATUS_NONE ){
+    return FALSE;
+  }
+  return TRUE;
 }
 
 //============================================================================================================
@@ -849,26 +1170,6 @@ void SPPOKE_GMK_EndKerudhio( FIELDMAP_WORK *p_fieldmap )
 void SPPOKE_GMK_MoveKerudhio( FIELDMAP_WORK *p_fieldmap )
 {
   SPPOKE_GMK_WK *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, SPPOKE_GMK_ASSIGN_ID );
-
-
-#ifdef PM_DEBUG
-  if (GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      GMEVENT *event;
-      event = KERUDHIO_CreateEvent(gsys);
-      GAMESYSTEM_SetEvent(gsys, event);
-      OS_Printf("ケルディオ演出\n");
-    }
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-    {
-      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
-      KERUDHIO_GIMMICK_EffectDelete(gsys);
-      OS_Printf("エフェクト削除\n");
-    }
-  }
-#endif
 
   // EXPOBJアニメメイン
   EXPOBJ_ObjMain( p_wk );

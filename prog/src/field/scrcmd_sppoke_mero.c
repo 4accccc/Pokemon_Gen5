@@ -29,6 +29,16 @@
 
 #include "../../../resource/fldmapdata/gimmick/merodhia/gmk_timing_def.h"
 
+#define ROUND_RANGE (0*FIELD_CONST_GRID_FX32_SIZE)
+#define ROUND_OUT_SYNC  (0)  //拡散に必要なシンク数
+#define ROUND_OUT_NUM   (0)   //回転回数
+
+#define ROUND_SYNC  (0)  //大回り回転に必要なシンク数
+#define ROUND_NUM   (0)   //回転回数
+
+#define ROUND_IN_SYNC  (0)  //収縮に必要なシンク数
+#define ROUND_IN_NUM   (0)   //回転回数
+/*
 #define ROUND_RANGE (MERODHIA_ROTATE_RANGE*FIELD_CONST_GRID_FX32_SIZE)
 #define ROUND_OUT_SYNC  (MERODHIA_ROUND_OUT_SYNC)  //拡散に必要なシンク数
 #define ROUND_OUT_NUM   (MERODHIA_ROUND_OUT_NUM)   //回転回数
@@ -38,6 +48,7 @@
 
 #define ROUND_IN_SYNC  (MERODHIA_ROUND_IN_SYNC)  //収縮に必要なシンク数
 #define ROUND_IN_NUM   (MERODHIA_ROUND_IN_NUM)   //回転回数
+*/
 
 typedef struct OBJ_RISE_WORK_tag
 {

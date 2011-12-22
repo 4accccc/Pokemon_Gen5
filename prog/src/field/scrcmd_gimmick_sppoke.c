@@ -153,6 +153,77 @@ VMCMD_RESULT EvCmdKerudhioGMK_EffectDelete( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メロエッタ　ICAアニメ開始
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdMeroGMK_StartAnime( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FIELD_PLAYER *p_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
+  VecFx32 pos;
+
+  u16 obj_id; // オブジェID
+  obj_id = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
+
+  // メロディアのICAアニメ再生
+  SPPOKE_GMK_MerodhiaStartAnime( p_fieldmap, obj_id );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//　移動ぽけもん　アニメーション終了待ち
+//-------------------------------------
+///	ワーク
+//=====================================
+typedef struct {
+  FIELDMAP_WORK *p_fieldmap;
+} SCR_MERO_ANIME_WORK;
+
+static GMEVENT_RESULT EVMero_AnimeEndWait( GMEVENT * event, int *seq, void*work )
+{
+  SCR_MERO_ANIME_WORK* p_wk =  work;
+
+  if( SPPOKE_GMK_MerodhiaIsAnimeEnd( p_wk->p_fieldmap ) == TRUE ){
+		return GMEVENT_RES_FINISH;
+  }
+	return GMEVENT_RES_CONTINUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メロエッタ  ICAアニメ終了チェック
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdMeroGMK_IsAnimeEnd( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+	GMEVENT *event;
+	SCR_MERO_ANIME_WORK *p_wk;
+  
+  // アニメ終了チェックイベント作成
+  event = GMEVENT_Create( gsys, NULL, EVMero_AnimeEndWait, sizeof(SCR_MERO_ANIME_WORK) );
+
+	p_wk = GMEVENT_GetEventWork( event );
+  p_wk->p_fieldmap = p_fieldmap;
+
+  if( event == NULL ) {
+    GF_ASSERT(0);
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  SCRIPT_CallEvent( sc, event );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
 //=============================================================================
 /**
  *					static関数

@@ -1,0 +1,21 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: mero.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_MERO_NAIX_
+#define NARC_MERO_NAIX_
+
+enum {
+	NARC_mero_mero_flash_nsbmd = 0,
+	NARC_mero_mero_flash_nsbca = 1,
+	NARC_mero_mero_flash_nsbma = 2,
+	NARC_mero_mero_move_ica_bin = 3
+};
+
+/* NARC_MERO_NAIX_ */
+#endif
