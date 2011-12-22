@@ -73,6 +73,12 @@ EVENT_START		ev_scene_d24r0901_pair_start
   
   //初回入室
   IF FLAG_OFF( FE_D24_SWBELL_FIRSTTALK ) THEN
+  
+    //自転車に乗ってるなら歩行状態へ
+    _PLAYER_FORM_GET( SCWK_ANSWER )
+    IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+      _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+    ENDIF
     
     //アニメ：主人公自動で移動
     _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 7,9, FORCE_TYPE_NOT, 8, DIR_LR )
@@ -122,6 +128,12 @@ EVENT_START		ev_scene_d24r0901_pair_start
   
   //2回目以降
   ELSE
+  
+    //自転車に乗ってるなら歩行状態へ
+    _PLAYER_FORM_GET( SCWK_ANSWER )
+    IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+      _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+    ENDIF
   
     //アニメ：ベル隣接
     _OBJ_ANIME( D24R0901_SWBELL_01, anm_bell_come )

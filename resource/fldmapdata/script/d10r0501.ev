@@ -351,8 +351,8 @@ EVENT_START ev_pos_d10r0501_swsage1_01
   _OBJ_ANIME( D10R0501_SWSAGE1_01, anm_swsage_4 )
   
   _TIME_WAIT( 23 )
-  //SE【仮】再生：強い杖つき音（2011.12.20.鳴らない不具合持つ）
-  _SE_PLAY(SEQ_SE_SW_GHETSIS_STICK_01)
+  //SE【仮】★★★再生：強い杖つき音（2011.12.20.鳴らない不具合持つ）
+  _SE_PLAY(SEQ_SE_SW_GHETSIS_STICK_02)
   
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   _OBJ_ANIME_WAIT()
@@ -1144,6 +1144,8 @@ EVENT_START ev_d10r0501_kyuremu_01
     //==================================//
     //キュレムを捕獲した
     _FLAG_SET( FE_D10R0401_POKE10_GET )
+    //ボックス壁紙を追加
+    _GET_BOX_WALLPAPER( SCR_BOX_EX_WALLPAPER2 )
     //==================================//
 
   CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN   //勝利した場合、あるいは逃げた場合

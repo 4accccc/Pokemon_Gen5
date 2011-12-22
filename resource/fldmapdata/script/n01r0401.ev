@@ -112,6 +112,12 @@ ev_n01r0401_pairstart_01:
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
     
+    //自転車に乗ってるなら歩行状態へ
+    _PLAYER_FORM_GET( SCWK_ANSWER )
+    IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+      _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+    ENDIF
+    
     //連れ歩き開始
     _PAIR_TRAINER_SET( N01R0401_BOSS_01 , PAIR_ID_N01_BOSS, PAIR_TYPE_FREE_ZONE, 0, SCRID_N01R0401_BOSS )
     //==================================//

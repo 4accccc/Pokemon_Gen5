@@ -246,6 +246,12 @@ ev_d02r0101_pairstart_01:
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
     
+    //é©ì]é‘Ç…èÊÇ¡ÇƒÇÈÇ»ÇÁï‡çsèÛë‘Ç÷
+    _PLAYER_FORM_GET( SCWK_ANSWER )
+    IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+      _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+    ENDIF
+    
     //é©ã@ç¿ïWéÊìæ
     _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
     IF $LCW_POSX != 69 THEN

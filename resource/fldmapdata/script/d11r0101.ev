@@ -94,6 +94,12 @@ ev_d11r0101_pairstart_01:
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
     
+    //é©ì]é‘Ç…èÊÇ¡ÇƒÇÈÇ»ÇÁï‡çsèÛë‘Ç÷
+    _PLAYER_FORM_GET( SCWK_ANSWER )
+    IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+      _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+    ENDIF
+    
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_l )
     _OBJ_ANIME_WAIT()
     
