@@ -3590,6 +3590,58 @@ msg_fm_npc_trade01_02へ</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_fm_npc_btl01_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>むむ　これでは
+けいこに　ならんなあ……▼
+……は！
+もしや　わたしが　つよすぎる？？</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-24T08:08:46" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-24T08:06:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>むむ　これでは
+けいこに　ならんなあ……▼
+……は！
+もしや　私が　強すぎるのか？？</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-24T08:09:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-24T08:06:49" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>全滅後メッセージ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-24T08:06:58" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>全滅後メッセージ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-24T08:07:00" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#bcf8b1</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_fm_npc_btl02_01"
 		Style="Large">
 		<LanguageCell
@@ -3835,6 +3887,58 @@ msg_fm_npc_trade01_02へ</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
 				Time="2011-09-13T13:51:30" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_btl02_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>……だめだわ
+こんな　かちかたでは　だめなの▼
+ほんとうの　つよさ……
+いったい　どうすれば……</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-24T08:11:39" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-24T08:09:36" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>……だめだわ
+こんな　勝ち方では　だめなの▼
+本当の　強さ……
+いったい　どうすれば……</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-24T08:11:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-24T08:09:36" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>勝利後メッセージ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-24T08:09:41" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>勝利後メッセージ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-24T08:09:41" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -4092,6 +4196,64 @@ msg_fm_npc_trade01_02へ</Comment>
 			<CommentModifiedBy
 				User="masafumi_saitou:W00225"
 				Time="2011-11-20T07:08:18" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#008000</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_fm_npc_btl03_06">
+		<LanguageCell
+			Language="JPN">
+			<Text>やはり　あなたには
+わたしの　しゅぎょう　あいては▽
+むずかしかった　ようですね▼
+でも　よいのです
+あなたも　いずれ　つよくなる！▼
+いっしょに　しゅぎょうの　みちを
+すすむのです！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-24T08:14:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-24T08:12:10" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>やはり　あなたには
+私の　修行相手は▽
+難しかった　ようですね▼
+でも　良いのです
+あなたも　いずれ　強くなる！▼
+一緒に　修行の道を
+進むのです！</Text>
+			<TextModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-24T08:15:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-24T08:12:10" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>勝利後メッセージ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-24T08:12:10" />
+		</CommentCell>
+		<CommentCell
+			Language="JPN_KANJI">
+			<Comment>勝利後メッセージ</Comment>
+			<CommentModifiedBy
+				User="masafumi_saitou:W00225"
+				Time="2011-12-24T08:12:10" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
