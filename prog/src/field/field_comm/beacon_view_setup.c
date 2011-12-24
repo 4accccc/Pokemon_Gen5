@@ -175,6 +175,8 @@ GMEVENT* BVSEvent_CheckCommon( BEACON_VIEW_PTR wk, BOOL bEvReqOK )
   case EV_RETURN_CGEAR_WIRELESS_TR:
 
     BEACON_STATUS_SetViewTopOffset( wk->b_status, 0 );
+    GAMEDATA_SetSubScreenStatus( wk->gdata, FIELD_SUBSCREEN_STATUS_CGEAR );
+
     call_event = EVENT_ChangeSubScreen( wk->gsys, wk->fieldWork, FIELD_SUBSCREEN_NORMAL);
     event = BVSEvent_EventStart( wk, call_event, EVWAIT_MENU_ANM, MENU_RETURN );
     break;

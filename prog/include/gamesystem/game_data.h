@@ -381,6 +381,28 @@ extern const u8 GAMEDATA_GetSubScreenType(const GAMEDATA *gamedata);
 //--------------------------------------------------------------
 extern void GAMEDATA_SetSubScreenType(GAMEDATA *gamedata, const u8 subscreen_type);
 
+//--------------------------------------------------------------
+/**
+ * @brief   フィールド下画面 NORMAL指定時のステータス
+ * @param   gamedata    GAMEDATAへのポインタ
+ * @retval  FIELD_SUBSCREEN_STATUS_CGEAR        NORMAL指定時にCギアになる
+ * @retval  FIELD_SUBSCREEN_STATUS_BEACON_VIEW  NORMAL指定時にすれ違いログになる
+ */
+//--------------------------------------------------------------
+extern u8 GAMEDATA_GetSubScreenStatus(const GAMEDATA *gamedata);
+
+//--------------------------------------------------------------
+/**
+ * @brief   フィールド下画面 NORMAL指定時のステータス
+ * @param   gamedata    GAMEDATAへのポインタ
+ * @param   status      FIELD_SUBSCREEN_STATUS
+ *
+ * FIELD_SUBSCREEN_STATUS_CGEAR        NORMAL指定時にCギアになる
+ * FIELD_SUBSCREEN_STATUS_BEACON_VIEW  NORMAL指定時にすれ違いログになる
+ */
+//--------------------------------------------------------------
+extern void GAMEDATA_SetSubScreenStatus(GAMEDATA *gamedata, u8 subscreen_status);
+
 //------------------------------------------------------------------
 /**
  * @brief   フレーム分割動作で動作する場合の許可フラグ設定

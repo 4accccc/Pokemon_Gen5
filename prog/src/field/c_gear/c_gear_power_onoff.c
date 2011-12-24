@@ -861,6 +861,7 @@ static BOOL PowerOnOff_UpdateOn( CGEAR_POWER_ONOFF* p_sys )
     PowerOnOff_PrintMsg( p_sys, p_sys->p_talkmsg, cg_power_01 );
     PowerOnOff_PrintMsg( p_sys, p_sys->p_sysmsg, cg_power_04 );
     PowerOnOff_CreateYesNo( p_sys, p_sys->heapID );
+    GAMEDATA_SetSubScreenStatus( GAMESYSTEM_GetGameData( p_sys->p_gamesys), FIELD_SUBSCREEN_STATUS_CGEAR );
 
     p_sys->seq++;
     break;
@@ -938,6 +939,7 @@ static BOOL PowerOnOff_UpdateOff( CGEAR_POWER_ONOFF* p_sys )
     PowerOnOff_PrintMsg( p_sys, p_sys->p_talkmsg, cg_power_03 );
     PowerOnOff_PrintMsg( p_sys, p_sys->p_sysmsg, cg_power_04 );
     PowerOnOff_CreateYesNo( p_sys, p_sys->heapID );
+    GAMEDATA_SetSubScreenStatus( GAMESYSTEM_GetGameData( p_sys->p_gamesys), FIELD_SUBSCREEN_STATUS_CGEAR );
 
     p_sys->seq++;
     break;
@@ -1010,6 +1012,7 @@ static BOOL PowerOnOff_UpdateCannot( CGEAR_POWER_ONOFF* p_sys )
     
     // 最初のメッセージは、一気に表示しておく。
     PowerOnOff_PrintMsg( p_sys, p_sys->p_sysmsg, cg_power_05 );
+    GAMEDATA_SetSubScreenStatus( GAMESYSTEM_GetGameData( p_sys->p_gamesys), FIELD_SUBSCREEN_STATUS_CGEAR );
 
     p_sys->seq++;
     break;

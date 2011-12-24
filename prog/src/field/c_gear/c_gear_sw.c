@@ -881,6 +881,7 @@ struct _C_GEAR_WORK {
   HEAPID heapID;
   FIELD_SUBSCREEN_WORK* subscreen;
   GAMESYS_WORK* pGameSys;
+  GAMEDATA* pGameData;
   CGEAR_SAVEDATA* pCGSV;
   ARCHANDLE* handle;  // アーカイブハンドル
   u32 objRes[_CLACT_RES_MAX];  //CLACTリソース
@@ -1412,7 +1413,7 @@ static void _PanelPaletteColorSetUp( C_GEAR_WORK* pWork, int anime_type, int pan
     anime_type_off = _CGEAR_NET_CHANGEPAL_ANM_TYPE_FIRST;
   }
 
-  bit = WIH_DWC_GetAllBeaconTypeBit( GAMEDATA_GetWiFiList(GAMESYSTEM_GetGameData(pWork->pGameSys)) );
+  bit = WIH_DWC_GetAllBeaconTypeBit( GAMEDATA_GetWiFiList(pWork->pGameData) );
 
 #ifdef DEBUG_KEY_CONTROL
   if( (GFL_UI_KEY_GetCont() & (PAD_BUTTON_L | PAD_BUTTON_A)) == (PAD_BUTTON_L | PAD_BUTTON_A) ){
@@ -3641,7 +3642,7 @@ static void _gearPanelSetDrugMode( C_GEAR_WORK* pWork, CGEAR_PANEL_ID id, BOOL o
 //------------------------------------------------------------------------------
 static void _modeInit(C_GEAR_WORK* pWork,BOOL bBoot)
 {
-  MYSTATUS* pMy = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(pWork->pGameSys) );
+  MYSTATUS* pMy = GAMEDATA_GetMyStatus( pWork->pGameData );
 
   pWork->sex = MyStatus_GetMySex(pMy) % 2;  //PM_NEUTRALは男性扱い
   pWork->design_no = CGEAR_SV_GetCGearType(pWork->pCGSV);
@@ -3966,7 +3967,7 @@ static BOOL _loadExData(C_GEAR_WORK* pWork,GAMESYS_WORK* pGameSys)
   {
     int i;
     u8* pCGearWork = GFL_HEAP_AllocMemory(HEAPID_FIELD_SUBSCREEN,SAVESIZE_EXTRA_CGEAR_PICTURE);
-    SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(pGameSys));
+    SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork( pWork->pGameData );
     u16* screen;
 
 
@@ -4060,6 +4061,7 @@ static void cgear_InitWork( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pCGSV,FIELD_SUBS
   pWork->pCGSV = pCGSV;
   pWork->subscreen = pSub;
   pWork->pGameSys = pGameSys;
+  pWork->pGameData = GAMESYSTEM_GetGameData( pGameSys );
   pWork->bAction = TRUE;
   pWork->power_flag = GAMESYSTEM_GetAlwaysNetFlag( pWork->pGameSys );
   pWork->use_skip = TRUE;
@@ -4195,7 +4197,7 @@ static void cgear_ExitWork( C_GEAR_WORK* pWork )
 
   // Wireless以外の画面にいくならライブキャスターのSEをとめる
   if( pWork->doEvent != FIELD_SUBSCREEN_ACTION_WIRELESS ){
-    FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
+    FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( pWork->pGameData );
     FSND_StopTVTRingTone( fsnd );
   }
 
@@ -4923,13 +4925,14 @@ static GMEVENT_RESULT EVENT_ButtonEffectWait( GMEVENT *event, int *seq, void *wk
     break;
   case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW:
     GAMEBEACON_ResetCGearInfoFlag( INFO_FLAG_HOT );
+    GAMEDATA_SetSubScreenStatus( pWork->pGameData, FIELD_SUBSCREEN_STATUS_BEACON_VIEW );
 
     p_cevent= EVENT_ChangeSubScreen(pWork->pGameSys, fieldWork, FIELD_SUBSCREEN_BeaconViewCheck(pWork->subscreen));
     break;
   case FIELD_SUBSCREEN_ACTION_CGEAR_HELP:
     {
       CG_HELP_INIT_WORK *initWork = GFL_HEAP_AllocClearMemory( HEAPID_PROC,sizeof(CG_HELP_INIT_WORK) );
-      initWork->myStatus = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(pWork->pGameSys));
+      initWork->myStatus = GAMEDATA_GetMyStatus(pWork->pGameData);
       initWork->gameSys = pWork->pGameSys;
       p_cevent= EVENT_FieldSubProc_Callback(pWork->pGameSys, fieldWork, FS_OVERLAY_ID(cg_help),&CGearHelp_ProcData,initWork,NULL,initWork);
     }
@@ -5091,8 +5094,8 @@ static void _cgear_CheckTVTStatus( C_GEAR_WORK* pWork, INTRUDE_CONNECT intrude_s
     return;
   }
       
-  bit = WIH_DWC_GetAllBeaconTypeBit(GAMEDATA_GetWiFiList(GAMESYSTEM_GetGameData(pWork->pGameSys)));
-  fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
+  bit = WIH_DWC_GetAllBeaconTypeBit(GAMEDATA_GetWiFiList(pWork->pGameData));
+  fsnd = GAMEDATA_GetFieldSound( pWork->pGameData );
 
   // トランシーバー再生処理
   if(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR){ // トランシーバー

@@ -61,6 +61,12 @@ typedef enum {
   FIELD_SUBSCREEN_FIRST_CALL,
 }FIELD_SUBSCREEN_MODE;
 
+//下画面のステータス指定(Cギアかすれ違いログか？)
+typedef enum{
+  FIELD_SUBSCREEN_STATUS_CGEAR,       //<FIELD_SUBSCREEN_NORMAL指定時にCギアになる
+  FIELD_SUBSCREEN_STATUS_BEACON_VIEW, //<FIELD_SUBSCREEN_NORMAL指定時にすれ違いログになる
+  FIELD_SUBSCREEN_STATUS_MAX,
+}FIELD_SUBSCREEN_STATUS;
 
 ///下画面の受け渡し値
 typedef enum {

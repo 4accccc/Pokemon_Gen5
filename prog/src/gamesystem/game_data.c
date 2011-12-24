@@ -110,6 +110,7 @@ struct _GAMEDATA{
   FIELD_STATUS * fldstatus;  ///<フィールドマップ情報
 
   u32 last_battle_result;   ///<最新のバトルの結果
+  u8  is_save;             ///<TRUE:セーブ実行中
   u8  battle_cursor_mode;   // バトルカーソルフラグ 0:非表示 1:表示 ichiraku
 
   int fieldmap_walk_count; ///<フィールドマップ歩数カウント
@@ -117,6 +118,7 @@ struct _GAMEDATA{
   u8 weather_id;      ///<天気指定ID
   u8 subscreen_mode; ///< フィールド下画面の状態
   u8 subscreen_type;
+  u8 subscreen_status;   ///<FIELD_SUBSCREEN_STATUS(FIELD_SUBSCREEN_NORMAL指定がCギアになるかすれ違いログになるか？)
   u8 frameSpritcount;    ///< フレーム分割動作で動作する場合のカウント
   u8 frameSpritEnable;   ///< フレーム分割動作で動作する場合の許可
 
@@ -125,7 +127,6 @@ struct _GAMEDATA{
   u8 intrude_reverse_area;  ///<TRUE:裏フィールド侵入中
   u8 intrude_palace_area;   ///<現在侵入中のパレスエリア番号(自分が今いるROM番号)
   
-  u8 is_save;             ///<TRUE:セーブ実行中
   u8 symbol_map_id;       ///<シンボルマップの現在位置
   
   u8 intrude_season[FIELD_COMM_MEMBER_MAX];    ///<通信相手の季節
@@ -209,6 +210,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 
   //
   gd->subscreen_mode = FIELD_SUBSCREEN_NORMAL;
+  gd->subscreen_status = FIELD_SUBSCREEN_STATUS_CGEAR;
 
   //状況データ
   gd->situation = SaveData_GetSituation(gd->sv_control_ptr);
@@ -833,6 +835,35 @@ const u8 GAMEDATA_GetSubScreenType(const GAMEDATA *gamedata)
 void GAMEDATA_SetSubScreenType(GAMEDATA *gamedata, const u8 subscreen_type)
 {
   gamedata->subscreen_type = subscreen_type;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   フィールド下画面 NORMAL指定時のステータス
+ * @param   gamedata    GAMEDATAへのポインタ
+ * @retval  FIELD_SUBSCREEN_STATUS_CGEAR        NORMAL指定時にCギアになる
+ * @retval  FIELD_SUBSCREEN_STATUS_BEACON_VIEW  NORMAL指定時にすれ違いログになる
+ */
+//--------------------------------------------------------------
+u8 GAMEDATA_GetSubScreenStatus(const GAMEDATA *gamedata)
+{
+  return gamedata->subscreen_status;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   フィールド下画面 NORMAL指定時のステータス
+ * @param   gamedata    GAMEDATAへのポインタ
+ * @param   status      FIELD_SUBSCREEN_STATUS
+ *
+ * FIELD_SUBSCREEN_STATUS_CGEAR        NORMAL指定時にCギアになる
+ * FIELD_SUBSCREEN_STATUS_BEACON_VIEW  NORMAL指定時にすれ違いログになる
+ */
+//--------------------------------------------------------------
+void GAMEDATA_SetSubScreenStatus(GAMEDATA *gamedata, u8 subscreen_status)
+{
+  GF_ASSERT(subscreen_status < FIELD_SUBSCREEN_STATUS_MAX);
+  gamedata->subscreen_status = subscreen_status;
 }
 
 //------------------------------------------------------------------

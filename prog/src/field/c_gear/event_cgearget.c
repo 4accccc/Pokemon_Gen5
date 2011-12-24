@@ -91,6 +91,7 @@ static GMEVENT_RESULT CGEARGET_Proc( GMEVENT *event, int *seq, void *wk )
       // ƒIƒ“
       GAMESYSTEM_SetAlwaysNetFlag( gsys, TRUE );
       GAMESYSTEM_CommBootAlways( gsys );
+      GAMEDATA_SetSubScreenStatus( GAMESYSTEM_GetGameData( gsys ), FIELD_SUBSCREEN_STATUS_CGEAR );
     }
     (*seq) ++;
     break;

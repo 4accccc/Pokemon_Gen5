@@ -588,10 +588,12 @@ const BOOL FIELD_SUBSCREEN_CanChange( FIELD_SUBSCREEN_WORK* pWork )
 FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_CGearCheck(FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_MODE new_mode)
 {
   GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork(pWork->fieldmap);
+  GAMEDATA* pGame = GAMESYSTEM_GetGameData(gsys);
+  FIELD_SUBSCREEN_STATUS status = GAMEDATA_GetSubScreenStatus(pGame);
   
   if(FIELD_SUBSCREEN_NORMAL==new_mode){
-    GAMEDATA* pGame = GAMESYSTEM_GetGameData(gsys);
     u16 zone_id = FIELDMAP_GetZoneID(pWork->fieldmap);
+
     //遊覧船内 or バトルサブウェイ中では標準==NOGEARとなる
     if(ZONEDATA_IsPlBoat(zone_id) || ZONEDATA_IsSubway(zone_id))
     {
@@ -609,6 +611,15 @@ FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_CGearCheck(FIELD_SUBSCREEN_WORK* pWork, FIE
     if(ZONEDATA_IsPalace(zone_id) || ZONEDATA_IsBingo(zone_id))
     {
       return FIELD_SUBSCREEN_NOGEAR;
+    }
+
+    //ステータスによってCギアを呼ぶか、すれ違いログを呼ぶか決定(この分岐ないで一番最後に判定すること)
+    if( status == FIELD_SUBSCREEN_STATUS_BEACON_VIEW ){ 
+      if( GAMESYSTEM_GetAlwaysNetFlag(gsys) ){
+        return FIELD_SUBSCREEN_BEACON_VIEW;
+      }
+      //常時通信できない状態なのでステータスをCギアに戻しておく
+      GAMEDATA_SetSubScreenStatus( pGame, FIELD_SUBSCREEN_STATUS_CGEAR );
     }
   }
   return new_mode;

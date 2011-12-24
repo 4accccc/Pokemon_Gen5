@@ -871,6 +871,7 @@ static void GameSystem_CallbackBatt10Sleep( void *gsys_void )
   if(GAMESYSTEM_GetAlwaysNetFlag(gsys))
   {
     GAMESYSTEM_SetAlwaysNetFlag(gsys, FALSE);
+    GAMEDATA_SetSubScreenStatus( GAMESYSTEM_GetGameData(gsys), FIELD_SUBSCREEN_STATUS_CGEAR );  //OffƒMƒA‚É–ß‚é‚Ì‚Å
     gsys->batt10sleep = TRUE;
   }
 }

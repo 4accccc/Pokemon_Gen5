@@ -231,6 +231,8 @@ VMCMD_RESULT EvCmdSetCGearOff( VMHANDLE * core, void * wk )
 {
   GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( wk );
   GAMESYSTEM_SetAlwaysNetFlag( gsys, FALSE );
+  GAMEDATA_SetSubScreenStatus( GAMESYSTEM_GetGameData(gsys), FIELD_SUBSCREEN_STATUS_CGEAR );
+
   return VMCMD_RESULT_CONTINUE;
 }
 
