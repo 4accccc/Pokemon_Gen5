@@ -808,9 +808,12 @@ ev_vs_swsage1_01:
   _TIME_WAIT(10)
   
   _DISP_FADE_END_CHECK()
-  
+
   //アニメ：N退場
   _TIME_WAIT(100)
+
+  // ゼクロム・レシラムに乗ったNを非表示
+  _DEMO_GIMMICK_GIANTHOLE_NPOKE_ANM_END()
   
   //=======================================//
   //D10R0501のBGMを元に戻す

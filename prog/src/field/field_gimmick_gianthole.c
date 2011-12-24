@@ -461,6 +461,41 @@ void GIANTHOLE_GIMMICK_StoneFloat( GAMESYS_WORK *gsys, int obj_id )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ゼクロム(レシラム)に乗ったNのアニメ終了
+ *
+ *	@param	GAMESYS_WORK *gsys 
+ */
+//-----------------------------------------------------------------------------
+void GIANTHOLE_GIMMICK_N_POKE_AnmEnd( GAMESYS_WORK *gsys )
+{
+  FIELDMAP_WORK *p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  GIANTHOLE_GIMMICK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GIMMICK_TMP_ASSIGN_ID );
+
+  // 非表示
+  {
+    u16 obj_idx = OBJ_BLIZZARD_N_UP;
+    int i;
+
+    // 非表示
+    FLD_EXP_OBJ_SetVanish( p_wk->exp_obj, GIMMICK_UNIT_IDX, obj_idx, TRUE );
+
+    // 一応アニメ停止
+    for( i=0; i<ANM_BLIZZARD_N_UP_NUM; i++ )
+    {
+      EXP_OBJ_ANM_CNT_PTR exp_anm;
+      exp_anm = FLD_EXP_OBJ_GetAnmCnt( p_wk->exp_obj, GIMMICK_UNIT_IDX, obj_idx, i );
+      // アニメ停止
+      FLD_EXP_OBJ_ChgAnmStopFlg( exp_anm, TRUE );
+
+      // 無効化
+      FLD_EXP_OBJ_ValidCntAnm( p_wk->exp_obj, GIMMICK_UNIT_IDX, obj_idx, i, FALSE );
+    }
+  }
+
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  ゼクロム(レシラム)に乗ったNのアニメ開始
  *
  *	@param	GAMESYS_WORK *gsys 

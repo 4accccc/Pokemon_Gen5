@@ -140,6 +140,22 @@ VMCMD_RESULT EvCmdGianthole_NPokeAnmStart( VMHANDLE *core, void *wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ジャイアントホール　ゼクロム(レシラム)に乗ったNアニメ終了
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdGianthole_NPokeAnmEnd( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  // レシゼクNを非表示
+  GIANTHOLE_GIMMICK_N_POKE_AnmEnd( gsys );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  ジャイアントホール　OBJのオフセット設定
  */
 //-----------------------------------------------------------------------------

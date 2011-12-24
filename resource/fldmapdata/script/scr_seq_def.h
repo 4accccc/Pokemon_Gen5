@@ -16610,7 +16610,7 @@
 
 //--------------------------------------------------------------
 /**
- * @def   _DEMO_GIMMICK_GIANTHOLE_BRIGHTNESS_BLACK
+ * @def   _DEMO_GIMMICK_GIANTHOLE_NPOKE_ANM_START
  * @brief ゼクロム(レシラム)に乗ったNのアニメ再生
  * @param is_down   1:下降アニメ 0:上昇アニメ
  *
@@ -16626,6 +16626,24 @@
   .macro  _ASM_DEMO_GIMMICK_GIANTHOLE_NPOKE_ANM_START is_down 
   .short  EV_SEQ_DEMO_GIMMICK_GIANTHOLE_NPOKE_ANM_START
   .short  \is_down
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def   _DEMO_GIMMICK_GIANTHOLE_NPOKE_ANM_END
+ * @brief ゼクロム(レシラム)に乗ったNのアニメ終了
+ *
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ *
+ *        ※ジャイアントホールデモ専用のコマンドです。
+ *        　通常は使わないように！
+ */
+//--------------------------------------------------------------
+#define _DEMO_GIMMICK_GIANTHOLE_NPOKE_ANM_END() \
+    _ASM_DEMO_GIMMICK_GIANTHOLE_NPOKE_ANM_END
+
+  .macro  _ASM_DEMO_GIMMICK_GIANTHOLE_NPOKE_ANM_END
+  .short  EV_SEQ_DEMO_GIMMICK_GIANTHOLE_NPOKE_ANM_END
   .endm
 
 //--------------------------------------------------------------
@@ -16649,6 +16667,7 @@
   .short  \offset_x
   .short  \offset_z
   .endm
+
 
 // 物語開始デモ
 //--------------------------------------------------------------
