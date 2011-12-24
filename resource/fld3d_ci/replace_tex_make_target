@@ -40,17 +40,17 @@ TARGET_LIST = \
 	cnv_tmp\medal_icon_8_0_4_4_LZ.bin \
 	cnv_tmp\medal_icon_12_0_4_4_LZ.bin \
 	cnv_tmp\medal_icon_0_12_4_4_LZ.bin \
-	cnv_tmp\medal_icon_16_0_4_4_LZ.bin \
-	cnv_tmp\medal_icon_20_0_4_4_LZ.bin \
-	cnv_tmp\medal_icon_24_0_4_4_LZ.bin \
-	cnv_tmp\medal_icon_28_0_4_4_LZ.bin \
-	cnv_tmp\medal_icon_4_12_4_4_LZ.bin \
 	cnv_tmp\medal_icon_0_4_4_4_LZ.bin \
 	cnv_tmp\medal_icon_4_4_4_4_LZ.bin \
 	cnv_tmp\medal_icon_8_4_4_4_LZ.bin \
 	cnv_tmp\medal_icon_12_4_4_4_LZ.bin \
-	cnv_tmp\medal_icon_16_4_4_4_LZ.bin \
+	cnv_tmp\medal_icon_4_12_4_4_LZ.bin \
+	cnv_tmp\medal_icon_16_0_4_4_LZ.bin \
+	cnv_tmp\medal_icon_20_0_4_4_LZ.bin \
+	cnv_tmp\medal_icon_24_0_4_4_LZ.bin \
+	cnv_tmp\medal_icon_28_0_4_4_LZ.bin \
 	cnv_tmp\medal_icon_8_12_4_4_LZ.bin \
+	cnv_tmp\medal_icon_16_4_4_4_LZ.bin \
 	cnv_tmp\medal_icon_20_4_4_4_LZ.bin \
 	cnv_tmp\medal_icon_24_4_4_4_LZ.bin \
 	cnv_tmp\medal_icon_28_4_4_4_LZ.bin \
