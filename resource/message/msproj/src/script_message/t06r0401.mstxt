@@ -167,11 +167,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:PokemonNickname ]は
+コバルオン　ビリジオン　テラキオンの▽
 ３びきが　きざみこんだ　けついから▽
 しんぴのつるぎを　おもいだした！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-22T03:11:56" />
+				User="matsumiya:W00224"
+				Time="2011-12-24T03:22:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -180,11 +181,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname ]は
+コバルオン　ビリジオン　テラキオンの▽
 ３匹が　刻みこんだ　決意から▽
 しんぴのつるぎを　思い出した！</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-12-22T03:11:57" />
+				User="matsumiya:W00224"
+				Time="2011-12-24T03:21:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -535,10 +537,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname ]の　ようすが……？▼</Text>
+			<Text>……おや！？
+[Name:PokemonNickname ]の　ようすが……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-19T10:37:36" />
+				Time="2011-12-24T03:25:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -546,10 +549,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname ]の　様子が……？▼</Text>
+			<Text>……おや！？
+[Name:PokemonNickname ]の　様子が……？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-19T10:37:40" />
+				Time="2011-12-24T03:25:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -586,10 +590,10 @@
 			Language="JPN">
 			<Text>[Name:PokemonNickname ]は
 たたかう　けついも　あらたに▽
-かくごを　きめた　すがたに　なった！</Text>
+かくごのすがたに　なった！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-19T10:41:13" />
+				Time="2011-12-24T03:20:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -599,10 +603,10 @@
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname ]は
 戦う　決意も　新たに▽
-覚悟を　決めた　姿に　なった！</Text>
+覚悟の姿に　なった！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-19T10:41:41" />
+				Time="2011-12-24T03:20:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"

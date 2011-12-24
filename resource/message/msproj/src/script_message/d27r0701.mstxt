@@ -317,6 +317,14 @@
 				User="matsumiya:W00224"
 				Time="2011-12-11T06:05:29" />
 		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWRIVAL
+ライバル</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-24T03:26:14" />
+		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
 			<CellData>#80ff80</CellData>
@@ -553,10 +561,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWPLAZMAM</Text>
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T05:26:14" />
+				Time="2011-12-24T03:26:06" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -607,10 +616,11 @@
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
-			<Text>SWPLAZMAM</Text>
+			<Text>SWPLAZMAM
+プラズマ団♂・したっぱ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-10T05:26:15" />
+				Time="2011-12-24T03:26:06" />
 		</AttributeCell>
 	</TextRow>
 	<TextRow
@@ -618,7 +628,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん　だけど
+			<Text>プラズマだん　は
 かいさん　しちゃったよ▼
 ようやく　ワープパネルでの
 いどうを　おぼえたのに……▼
@@ -626,7 +636,7 @@
 ワープパネルで　いどう　しまくるぞ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T10:34:21" />
+				Time="2011-12-24T03:25:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -634,7 +644,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団　だけど
+			<Text>プラズマ団は
 解散しちゃったよ▼
 ようやく　ワープパネルでの
 移動を　覚えたのに……▼
@@ -642,7 +652,7 @@
 ワープパネルで　移動しまくるぞ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T10:34:44" />
+				Time="2011-12-24T03:25:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

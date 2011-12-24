@@ -439,10 +439,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……あんがとよ▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……あんがと▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T09:56:49" />
+				Time="2011-12-24T02:52:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -450,10 +450,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……あんがとよ▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……あんがと▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T09:56:53" />
+				Time="2011-12-24T02:52:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
