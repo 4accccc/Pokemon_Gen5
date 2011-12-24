@@ -30,8 +30,11 @@
 
 #define GRID_HALF_SIZE ((FIELD_CONST_GRID_SIZE/2)*FX32_ONE)
 
+// 配布ポケモンのフォルムチェック用
+#define EVT_POKE_FORM_NO_NULL   ( 0xff )
+
 static BOOL SearchEventPoke( POKEPARTY* party,
-                             const int inMonsNo, const int inSkillNo, const int inEventFlg,
+                             const int inMonsNo, const int inSkillNo, const u8 inFormNo, const int inEventFlg,
                              u16 *outPos );
 
 //--------------------------------------------------------------
@@ -195,33 +198,40 @@ VMCMD_RESULT EvCmdGetEvtPokePos( VMHANDLE *core, void *wk )
   u16 *ret = SCRCMD_GetVMWork( core, work );
   int evt_flg;
   int skill_no;
+  u8  form_no;
 
   switch(monsno){
   case MONSNO_654:
     evt_flg = POKE_MEMO_EVENT_DARUTANISU;
-    skill_no = WAZANO_SINPINOTURUGI;
+    skill_no = WAZANO_NULL;
+    form_no = FORMNO_KERUDHIO_NORMAL;    // いつものすがた
     break;
   case MONSNO_655:
     evt_flg = POKE_MEMO_EVENT_MERODHIA;
     skill_no = WAZANO_INISIENOUTA;
+    form_no = EVT_POKE_FORM_NO_NULL;
     break;
   case MONSNO_SEREBHI:
     evt_flg = POKE_MEMO_EVENT_2010MOVIE_SEREBIXI_BEF;
     skill_no = WAZANO_NULL;
+    form_no = EVT_POKE_FORM_NO_NULL;
     break;
   case MONSNO_ENTEI:
   case MONSNO_RAIKOU:
   case MONSNO_SUIKUN:
     evt_flg = POKE_MEMO_EVENT_2010MOVIE_ENRAISUI_BEF;
     skill_no = WAZANO_NULL;
+    form_no = EVT_POKE_FORM_NO_NULL;
     break;
   case MONSNO_656:
     evt_flg = POKE_MEMO_EVENT_INSEKUTA;
     skill_no = WAZANO_NULL;
+    form_no = EVT_POKE_FORM_NO_NULL;
     break;
   case MONSNO_SHEIMI:
     evt_flg = POKE_MEMO_EVENT_SHEIMI;
     skill_no = WAZANO_NULL;
+    form_no = EVT_POKE_FORM_NO_NULL;
     break;
   default:
     *ret = FALSE;
@@ -231,7 +241,7 @@ VMCMD_RESULT EvCmdGetEvtPokePos( VMHANDLE *core, void *wk )
   if ( skill_flg == FALSE ) skill_no = WAZANO_NULL;
 
   *ret = SearchEventPoke(
-      party, monsno, skill_no, evt_flg, poke_pos );
+      party, monsno, skill_no, form_no, evt_flg, poke_pos );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -243,6 +253,7 @@ VMCMD_RESULT EvCmdGetEvtPokePos( VMHANDLE *core, void *wk )
  * @param   party         　対象パーティ
  * @param   inMonsNo        対象ポケモン
  * @param   inSkillNo       対象技
+ * @param   inFormNo        対象フォルムNO
  * @param   inEventFlg      イベントフラグ
  * @param   outPos          手持ちポケモン位置
  *
@@ -250,10 +261,11 @@ VMCMD_RESULT EvCmdGetEvtPokePos( VMHANDLE *core, void *wk )
  * @note    条件を満たすポケモンがいない場合は retにFALSEがセットされる
  * @note　　条件は配布されたポケモンでかつ、固有技を覚えていないこと
  * @note    引数inSkillNo が WAZANO_NULLの場合は技チェックはしない
+ * @note    引数inFormNo が EVT_POKE_FORM_NO_NULLの場合はフォルムチェックはしない
  */
 //--------------------------------------------------------------
 static BOOL SearchEventPoke( POKEPARTY* party,
-                             const int inMonsNo, const int inSkillNo, const int inEventFlg,
+                             const int inMonsNo, const int inSkillNo, const u8 inFormNo, const int inEventFlg,
                              u16 *outPos )
 {
   BOOL rc;
@@ -277,6 +289,12 @@ static BOOL SearchEventPoke( POKEPARTY* party,
       if ( PP_Get( pp, ID_PARA_waza2, NULL ) == inSkillNo) continue;
       if ( PP_Get( pp, ID_PARA_waza3, NULL ) == inSkillNo) continue;
       if ( PP_Get( pp, ID_PARA_waza4, NULL ) == inSkillNo) continue;
+    }
+
+    if( inFormNo != EVT_POKE_FORM_NO_NULL )
+    {
+      //フォルムNOチェック
+      if ( PP_Get( pp, ID_PARA_form_no, NULL ) != inFormNo) continue;
     }
     rc = TRUE;
     *outPos = i;

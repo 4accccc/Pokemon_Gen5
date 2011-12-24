@@ -39,18 +39,6 @@ EVENT_START   ev_bg_t06r0401_kerudhio
   // 条件を満たすケルディオがいるかチェック
   _GET_EVT_POKE_POS( MONSNO_654, FALSE, target_poke_pos, SCWK_ANSWER )
 
-  // 条件をみたしている場合
-  // フォルムが0かチェック
-  IF $SCWK_ANSWER == TRUE THEN
-    DEFINE_LOCAL form_no
-    // フォルムナンバー取得
-    _GET_PARTY_POKE_FORMNO( form_no, target_poke_pos )
-    // フォルムが0以外なら条件を満たさない
-    IF $form_no != 0 THEN
-      $SCWK_ANSWER = FALSE  // 条件を満たさないことにする
-    ENDIF
-  ENDIF
-
   // いる
   IF $SCWK_ANSWER == TRUE THEN
 	// BG:がんばんに　３ぼんの　するどく　みごとな　さけめが　きざまれている
