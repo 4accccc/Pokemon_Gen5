@@ -487,7 +487,7 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ここは　[Name:ResortMayor ]の
-じむしょ　です▼
+オフィス　です▼
 [Name:ResortTown Idx="1" ]の　ために
 ひしょや　わたしたちが▽
 おしごとを　サポート　します▼
@@ -496,8 +496,8 @@
 たのしい　はなしが　きけるので
 ときどき　のぞいて　みてください▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-29T08:27:49" />
+				User="shimoyamada:W00184"
+				Time="2011-12-24T10:56:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -506,7 +506,7 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ここは　[Name:ResortMayor ]の
-事務所です▼
+オフィス　です▼
 [Name:ResortTown Idx="1" ]の　ために
 秘書や　わたしたちが▽
 お仕事を　サポート　します▼
@@ -515,8 +515,8 @@
 楽しい　話が　きけるので
 ときどき　のぞいて　みてください▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-29T08:27:49" />
+				User="shimoyamada:W00184"
+				Time="2011-12-24T10:57:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"

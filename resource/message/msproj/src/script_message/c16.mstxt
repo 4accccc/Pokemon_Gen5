@@ -1407,10 +1407,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ここは　[Name:ResortTown ]
-[Name:ResortMayor Idx="1" ]の　じむしょ▼</Text>
+[Name:ResortMayor Idx="1" ]の　オフィス▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-24T07:25:23" />
+				Time="2011-12-24T10:56:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1419,10 +1419,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ここは　[Name:ResortTown ]
-[Name:ResortMayor Idx="1" ]の　事務所▼</Text>
+[Name:ResortMayor Idx="1" ]の　オフィス▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T04:22:24" />
+				User="shimoyamada:W00184"
+				Time="2011-12-24T10:56:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
