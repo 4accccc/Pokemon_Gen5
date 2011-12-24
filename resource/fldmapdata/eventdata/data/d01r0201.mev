@@ -1,5 +1,5 @@
 #event data
-#save date:2011/11/26 23:17:24
+#save date:2011/12/24 13:26:54
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\d01r0201.wms
 #SECTION START:OBJ_EVENT
@@ -173,9 +173,9 @@ TR_ESPW_15
 #OBJ CODE Number
 ESPW
 #MOVE CODE Number
-MV_RND
+MV_RTUR         
 #EVENT TYPE Number
-EV_TYPE_TRAINER_KYORO
+EV_TYPE_TRAINER_ESCAPE
 #Flag Name
 0
 #Event Script Name
@@ -189,13 +189,13 @@ DIR_UP
 #Parameter 2 Number
 0
 #Move Limit X Number
-2
+4
 #Move Limit Z Number
-2
+4
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-40 0 -136
+24 0 -104
 #event number: 6
 #type
 1
