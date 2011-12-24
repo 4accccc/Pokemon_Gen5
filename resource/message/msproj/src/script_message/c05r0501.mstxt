@@ -314,11 +314,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『あやまるだけかよッ！
+			<Text>[Name:TrainerName Idx="1" ]『あやまるだけかッ！
 それで　おわり　なのかよッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T10:23:36" />
+				Time="2011-12-24T12:10:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -326,11 +326,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『謝るだけかよッ！
+			<Text>[Name:TrainerName Idx="1" ]『謝るだけかッ！
 それで　終わり　なのかよッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T10:23:56" />
+				Time="2011-12-24T12:10:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
