@@ -230,15 +230,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]は
-かかれている　もじを　よんだ……▼
-いわの　からだ▼
-こおりの　からだ▼
-はがねの　からだ▼
-３つの　ポケモン　あつまりしとき
-おう　すがたを　みせる</Text>
+きざまれている　もじを　よんだ……▼
+いわの　からだ
+おうを　よぶための　いちぶ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T13:02:46" />
+				Time="2011-12-24T11:27:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -247,15 +244,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]は
-かかれている　文字を　読んだ……▼
-岩の　体▼
-氷の　体▼
-鋼の　体▼
-３つの　ポケモン　集まりしとき
-王　その姿を　みせる</Text>
+刻まれている　文字を　読んだ……▼
+岩の　体
+王を　呼ぶための　一部……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-18T13:14:45" />
+				Time="2011-12-24T11:26:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -263,13 +257,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>レジロックの石像
-
-BGメッセージ
+			<Comment>BGメッセージ
+・レジロックの石像
 ・0＝トレーナー名</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-26T06:23:47" />
+				User="matsumiya:W00224"
+				Time="2011-12-24T11:23:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -291,11 +284,13 @@ BGメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ[Name:TrainerName ]は
-かかれている　もじを　よんだ……</Text>
+			<Text>[Name:TrainerName ]は
+きざまれている　もじを　よんだ……▼
+こおりの　からだ
+おうを　よぶための　いちぶ……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-26T06:23:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-24T11:27:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -303,11 +298,13 @@ BGメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ[Name:TrainerName ]は
-かかれている　もじを　よんだ……</Text>
+			<Text>[Name:TrainerName ]は
+刻まれている　文字を　読んだ……▼
+氷の　体
+王を　呼ぶための　一部……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-26T06:23:16" />
+				User="matsumiya:W00224"
+				Time="2011-12-24T11:26:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -315,13 +312,12 @@ BGメッセージ
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>レジアイスの石像
-
-BGメッセージ
+			<Comment>BGメッセージ
+・レジアイスの石像
 ・0＝トレーナー名</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-26T06:23:57" />
+				User="matsumiya:W00224"
+				Time="2011-12-24T11:23:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -343,11 +339,13 @@ BGメッセージ
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>仮メッセージ[Name:TrainerName ]は
-かかれている　もじを　よんだ……</Text>
+			<Text>[Name:TrainerName ]は
+きざまれている　もじを　よんだ……▼
+くろがねの　からだ
+おうを　よぶための　いちぶ……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-26T06:23:23" />
+				User="matsumiya:W00224"
+				Time="2011-12-24T11:27:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -355,11 +353,13 @@ BGメッセージ
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>仮メッセージ[Name:TrainerName ]は
-かかれている　もじを　よんだ……</Text>
+			<Text>[Name:TrainerName ]は
+刻まれている　文字を　読んだ……▼
+鉄の　体
+王を　呼ぶための　一部……</Text>
 			<TextModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-26T06:23:23" />
+				User="matsumiya:W00224"
+				Time="2011-12-24T11:26:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -367,13 +367,12 @@ BGメッセージ
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>レジスチルの石像
-
-BGメッセージ
+			<Comment>BGメッセージ
+・レジスチルの石像
 ・0＝トレーナー名</Comment>
 			<CommentModifiedBy
-				User="suginaka_katsunori:W00289"
-				Time="2011-11-26T06:24:05" />
+				User="matsumiya:W00224"
+				Time="2011-12-24T11:23:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

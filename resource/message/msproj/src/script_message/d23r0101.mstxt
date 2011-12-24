@@ -122,11 +122,11 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なんとまあ……！
-みんな　ガッツが　たりないぞ！</Text>
+			<Text>なんとまあ……！　みんな
+ハングリーせいしんが　たりないぞ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T02:03:37" />
+				Time="2011-12-24T09:18:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -134,11 +134,11 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なんとまあ……！
-みんな　ガッツが　たりないぞ！</Text>
+			<Text>なんとまあ……！　みんな
+ハングリー精神が　たりないぞ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T02:03:41" />
+				Time="2011-12-24T09:18:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -420,13 +420,13 @@ GRIDX=15、GRIDZ=26
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンが　かつやく　できるように
-コンビナートに　きてるんだった！▼
+			<Text>ポケモンに　かつやく　してもらうため
+コンビナートへ　きてるんだった！▼
 ということは　トレーナーの　おれが
 がむしゃらに　しごと　しないとな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T03:06:15" />
+				Time="2011-12-24T09:19:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -434,13 +434,13 @@ GRIDX=15、GRIDZ=26
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンが　活躍できるように
-コンビナートに　来てるんだった！▼
+			<Text>ポケモンに　活躍してもらうため
+コンビナートへ　来てるんだった！▼
 ということは　トレーナーの　おれが
 がむしゃらに　仕事しないとな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T03:07:37" />
+				Time="2011-12-24T09:19:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -724,12 +724,10 @@ GRIDX=15、GRIDZ=26
 		<LanguageCell
 			Language="JPN">
 			<Text>コンビナートの　しごとは
-まいにち　おんなじで　いいんだ▼
-まいにち　たのしく　できない
-おれが　あまえて　いたんだな……</Text>
+まいにち　おんなじでも　いいんだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T03:09:42" />
+				Time="2011-12-24T09:23:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -738,12 +736,10 @@ GRIDX=15、GRIDZ=26
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>コンビナートの　仕事は
-毎日　おんなじで　いいんだ▼
-毎日　楽しく　できない
-おれが　甘えて　いたんだな……</Text>
+毎日　おんなじでも　いいんだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-28T03:09:32" />
+				Time="2011-12-24T09:23:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

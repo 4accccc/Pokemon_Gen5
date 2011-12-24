@@ -184,12 +184,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こどもは　わたしの　せんせい
-ポケモンは　あなたの　せんせい▽
-いろんなことを　おしえてくれるもの</Text>
+			<Text>いろんなことを　おしえてくれる
+こどもは　わたしの　せんせい▽
+ポケモンは　あなたの　せんせい</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T02:42:44" />
+				Time="2011-12-24T09:59:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -197,12 +197,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こどもは　わたしの　先生
-ポケモンは　あなたの　先生▽
-いろんなことを　教えてくれるもの</Text>
+			<Text>いろんなことを　教えてくれる
+こどもは　わたしの　先生▽
+ポケモンは　あなたの　先生</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-14T02:42:55" />
+				Time="2011-12-24T09:59:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

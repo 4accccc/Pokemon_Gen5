@@ -844,16 +844,16 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>プラズマだん『まあ　いいさ▼
+			<Text>プラズマだん『まあ　いいじゃないか▼
 いま　こいつから
-ポケモンを　うばうか……▼
+ポケモンを　うばえば……▼
 イッシュちほうを　しはい　したあと
 ポケモンを　うばうかの　ちがいさ▼
 ボーイ　アンド　ガール
 じゅんびが　できたら　かかってきな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T10:35:37" />
+				Time="2011-12-24T09:25:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -861,16 +861,16 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>プラズマ団『まあ　いいさ▼
+			<Text>プラズマ団『まあ　いいじゃないか▼
 いま　こいつから
-ポケモンを　奪うか……▼
+ポケモンを　奪うえば……▼
 イッシュ地方を　支配したあと
 ポケモンを　奪うかの　違いさ▼
 ボーイ　アンド　ガール
 準備が　できたら　かかってきな▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-21T10:35:57" />
+				Time="2011-12-24T09:25:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -914,11 +914,11 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……オマエたちも
 あたらしい　さくせんも　つぶす▼
-オマエら　プラズマだんは
+……プラズマだんは
 ぜったいに　ゆるさない▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T12:48:18" />
+				Time="2011-12-24T09:25:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -928,11 +928,11 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……オマエたちも
 新しい　作戦も　つぶす▼
-オマエら　プラズマ団は
+……プラズマ団は
 絶対に　許さない▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T12:48:34" />
+				Time="2011-12-24T09:25:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1035,10 +1035,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……プラズマだん</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……ポケモンどろぼう　め</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T12:48:46" />
+				Time="2011-12-24T09:26:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1046,10 +1046,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……プラズマ団</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……ポケモンどろぼう　め</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T12:48:52" />
+				Time="2011-12-24T09:26:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2237,12 +2237,12 @@
 			Language="JPN">
 			<Text>あっ……
 みちゃった？▼
-プラズマだんの　せいで
+プラズマだんを　おいかけたりで
 バタバタ　しちゃったけど▽
 ヒウンいきの　ふねに　のれるから▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:07:42" />
+				Time="2011-12-24T09:35:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2252,12 +2252,12 @@
 			Language="JPN_KANJI">
 			<Text>あっ……
 みちゃった？▼
-プラズマ団の　せいで
+プラズマ団を　追いかけたりで
 バタバタ　しちゃったけど▽
 ヒウン行きの　船に　乗れるから▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T13:07:35" />
+				Time="2011-12-24T09:35:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

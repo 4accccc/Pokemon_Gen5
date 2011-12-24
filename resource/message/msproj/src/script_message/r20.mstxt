@@ -372,10 +372,11 @@ ID：mount_14</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName ]！▼</Text>
+			<Text>[Name:TrainerName ]！
+こっちに　こいよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T05:01:56" />
+				Time="2011-12-24T08:49:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -383,10 +384,11 @@ ID：mount_14</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]！▼</Text>
+			<Text>[Name:TrainerName ]！
+こっちに　来いよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T05:02:00" />
+				Time="2011-12-24T08:49:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -426,10 +428,10 @@ ID：mount_14</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『ふたりとも　みて！▼</Text>
+			<Text>チェレン『ふたりとも　みて▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-13T12:42:42" />
+				Time="2011-12-24T08:49:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -437,10 +439,10 @@ ID：mount_14</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『二人とも　みて！▼</Text>
+			<Text>チェレン『二人とも　みて▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-13T13:02:38" />
+				Time="2011-12-24T08:49:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
