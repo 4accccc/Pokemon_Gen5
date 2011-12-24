@@ -4268,14 +4268,14 @@ BW♀
 			Language="JPN_KANJI">
 			<Text>『[Name:ResortShop Idx="1" ]』の　ランクは
 現在　[Digit:2digits Idx="2" ]　です▼
-人気が　あと　[Digit:3digits Idx="0" ]なると
-次の　ランクに　あがれて！▽
+人気が　あと　[Digit:3digits Idx="0" ]　あつまると
+次の　ランクに　あがれて▽
 [Name:ResortGreet Idx="4" ]　なんです！▼
 [Name:ResortMayor Idx="3" ]
 よろしく　おねがいします！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-21T02:49:07" />
+				User="shimoyamada:W00184"
+				Time="2011-12-24T11:13:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -4573,14 +4573,14 @@ BW♀
 			Language="JPN_KANJI">
 			<Text>『[Name:ResortShop Idx="1" ]』の　ランクは
 現在　[Digit:2digits Idx="2" ]　です▼
-人気が　あと　[Digit:3digits Idx="0" ]なると
-次の　ランクに　あがれて！▽
+人気が　あと　[Digit:3digits Idx="0" ]　あつまると
+次の　ランクに　あがれて▽
 [Name:ResortGreet Idx="4" ]　なんです！▼
 [Name:ResortMayor Idx="3" ]
 よろしく　おねがいします！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-21T02:19:00" />
+				User="shimoyamada:W00184"
+				Time="2011-12-24T11:14:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
