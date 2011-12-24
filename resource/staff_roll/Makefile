@@ -53,6 +53,7 @@ ICACONV = ..\..\..\tools\ica\ica_converter.rb
 #------------------------------------------------------------------------------
 SUBDIRS_TOP = .
 # 1枚絵カット
+SUBDIRS_CUT_11 = 2d_cut/cut11
 SUBDIRS_CUT_00 = 2d_cut/cut00
 SUBDIRS_CUT_01 = 2d_cut/cut01
 SUBDIRS_CUT_02 = 2d_cut/cut02
@@ -65,7 +66,7 @@ SUBDIRS_CUT_08 = 2d_cut/cut08
 SUBDIRS_CUT_09 = 2d_cut/cut09
 SUBDIRS_CUT_10 = 2d_cut/cut10
 
-SUBDIRS_ARC = $(SUBDIRS_TOP) $(SUBDIRS_CUT_00) $(SUBDIRS_CUT_01) $(SUBDIRS_CUT_02) $(SUBDIRS_CUT_03) $(SUBDIRS_CUT_04) $(SUBDIRS_CUT_05) $(SUBDIRS_CUT_06) $(SUBDIRS_CUT_07) $(SUBDIRS_CUT_08) $(SUBDIRS_CUT_09) $(SUBDIRS_CUT_10)
+SUBDIRS_ARC = $(SUBDIRS_TOP) $(SUBDIRS_CUT_11) $(SUBDIRS_CUT_00) $(SUBDIRS_CUT_01) $(SUBDIRS_CUT_02) $(SUBDIRS_CUT_03) $(SUBDIRS_CUT_04) $(SUBDIRS_CUT_05) $(SUBDIRS_CUT_06) $(SUBDIRS_CUT_07) $(SUBDIRS_CUT_08) $(SUBDIRS_CUT_09) $(SUBDIRS_CUT_10)
 
 # 自動でリソースを集める
 lsources:=$(wildcard $(addsuffix /*.ncl,$(SUBDIRS_ARC)))
@@ -159,6 +160,7 @@ endif
 	rm -f *.narc
 	rm -f *.naix
 	rm -f $(SUBDIRS_TOP)/*.N*R
+	rm -f $(SUBDIRS_CUT_11)/*.N*R
 	rm -f $(SUBDIRS_CUT_00)/*.N*R
 	rm -f $(SUBDIRS_CUT_01)/*.N*R
 	rm -f $(SUBDIRS_CUT_02)/*.N*R

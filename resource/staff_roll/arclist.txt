@@ -8,6 +8,19 @@
 
 "staffroll_font.nclr"
 
+"2d_cut/cut11/cut11_b_boy.nclr"
+"2d_cut/cut11/cut11_b_boy.ncgr"
+"2d_cut/cut11/cut11_b_boy.nscr"
+"2d_cut/cut11/cut11_b_girl.nclr"
+"2d_cut/cut11/cut11_b_girl.ncgr"
+"2d_cut/cut11/cut11_b_girl.nscr"
+"2d_cut/cut11/cut11_w_boy.nclr"
+"2d_cut/cut11/cut11_w_boy.ncgr"
+"2d_cut/cut11/cut11_w_boy.nscr"
+"2d_cut/cut11/cut11_w_girl.nclr"
+"2d_cut/cut11/cut11_w_girl.ncgr"
+"2d_cut/cut11/cut11_w_girl.nscr"
+
 "2d_cut/cut00/cut00_b_boy.nclr"
 "2d_cut/cut00/cut00_b_boy.ncgr"
 "2d_cut/cut00/cut00_b_boy.nscr"
