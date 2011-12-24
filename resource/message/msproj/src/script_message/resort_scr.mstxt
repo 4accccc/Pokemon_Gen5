@@ -14462,10 +14462,10 @@ BW♀
 			<Text>……おや？▼
 オーナーが　やってきた！▼
 [Name:ResortMayor ]の
-じむしょへ　いってみよう▼</Text>
+オフィスへ　いってみよう▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:52:52" />
+				User="shimoyamada:W00184"
+				Time="2011-12-24T10:57:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -14476,10 +14476,10 @@ BW♀
 			<Text>……おや？▼
 オーナーが　やってきた！▼
 [Name:ResortMayor ]の
-事務所へ　行ってみよう▼</Text>
+オフィスへ　行ってみよう▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T06:52:47" />
+				User="shimoyamada:W00184"
+				Time="2011-12-24T10:57:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -57278,11 +57278,11 @@ ME
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……えーと▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
-チャンピオンに　しょうりして
+チャンピオンに　しょうりして▽
 でんどういり　してきました！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:59:19" />
+				User="shimoyamada:W00184"
+				Time="2011-12-24T08:38:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -57292,11 +57292,11 @@ ME
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……えーと▼
 ２０[Digit:2digits ]年[Digit:2digits Idx="2" ]月[Digit:2digits Idx="3" ]日　に
-チャンピオンに　勝利して
+チャンピオンに　勝利して▽
 殿堂入り　してきました！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:59:19" />
+				User="shimoyamada:W00184"
+				Time="2011-12-24T08:38:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -57343,11 +57343,11 @@ ME
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……えーと▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
-バトルサブウェイに　じょうしゃして
+バトルサブウェイに　じょうしゃして▽
 たいせん　してきました！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T16:50:43" />
+				Time="2011-12-24T08:38:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -57357,11 +57357,11 @@ ME
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……えーと▼
 ２０[Digit:2digits ]年[Digit:2digits Idx="2" ]月[Digit:2digits Idx="3" ]日　に
-バトルサブウェイに　乗車して
+バトルサブウェイに　乗車して▽
 対戦してきました！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:59:19" />
+				User="shimoyamada:W00184"
+				Time="2011-12-24T08:38:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -57408,11 +57408,11 @@ ME
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『……えーと▼
 ２０[Digit:2digits ]ねん[Digit:2digits Idx="2" ]がつ[Digit:2digits Idx="3" ]にち　に
-ポケウッドで　えいがを
+ポケウッドで　えいがを▽
 さつえい　してきました！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-15T16:50:43" />
+				Time="2011-12-24T08:37:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -57422,11 +57422,11 @@ ME
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『……えーと▼
 ２０[Digit:2digits ]年[Digit:2digits Idx="2" ]月[Digit:2digits Idx="3" ]日　に
-ポケウッドで　映画を
+ポケウッドで　映画を▽
 撮影してきました！▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T07:59:19" />
+				User="shimoyamada:W00184"
+				Time="2011-12-24T08:38:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -70533,11 +70533,11 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆめは　ぜったい　かなえる！
+			<Text>ゆめは　ぜったい　かなえるもの！
 っていう　ひとの　おみせへ　いきたい！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-27T12:16:28" />
+				Time="2011-12-24T10:13:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -70545,11 +70545,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>夢は　絶対　かなえる！
+			<Text>夢は　絶対　かなえるもの！
 っていう　人の　お店へ　行きたい！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-27T12:16:52" />
+				Time="2011-12-24T10:13:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -70591,11 +70591,11 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゆめは　ぜったい　かなえる！
+			<Text>ゆめは　ぜったい　かなえるもの！
 っていう　ひとの　おみせへ　いきたい！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-27T12:36:11" />
+				Time="2011-12-24T10:13:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -70603,11 +70603,11 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>夢は　絶対　かなえる！
+			<Text>夢は　絶対　かなえるもの！
 っていう　人の　お店へ　行きたい！▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-27T12:36:11" />
+				Time="2011-12-24T10:13:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -83525,10 +83525,10 @@ ME
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>かなえる</Text>
+			<Text>かなえるもの</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-10T11:09:54" />
+				Time="2011-12-24T10:14:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -83570,10 +83570,10 @@ ME
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>あきらめる</Text>
+			<Text>あきらめるもの</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-09-25T10:14:06" />
+				Time="2011-12-24T10:14:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
