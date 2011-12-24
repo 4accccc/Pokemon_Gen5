@@ -39,12 +39,37 @@ DEFINE_LOCAL	LWK_POSZ
 EVENT_START   ev_c03r0901_musician_01
 
     DEFINE_LOCAL target_poke_pos
+    DEFINE_LOCAL is_event_start
 
     _TALK_START_SE_PLAY()
 
-    //条件を満たすメロエッタがいるか?
-    _GET_EVT_POKE_POS( MONSNO_655, FALSE, target_poke_pos, SCWK_ANSWER )
-    IF $SCWK_ANSWER == TRUE THEN
+    // イベント起動条件
+    // １．いにしえのうたを覚えていない配布メロエッタがいる
+    // ２．フェスのミッションが追加されていない
+    $is_event_start = 0
+    // ↑の変数が
+    // 0:条件を満たさないのでイベント起動しない
+    // 1:１の条件を満たす
+    // 2:２の条件を満たす = いにしえのうたを思い出さない
+
+    //１．いにしえのうたを覚えていない配布メロエッタがいるか？
+    _GET_EVT_POKE_POS( MONSNO_655, TRUE, target_poke_pos, is_event_start )
+
+    //２．フェスのミッションは追加されてるか
+    IF $is_event_start == FALSE THEN
+    {
+      // 配布メロエッタがいる
+      _GET_EVT_POKE_POS( MONSNO_655, FALSE, target_poke_pos, SCWK_ANSWER )
+
+      // フェスが追加されていない
+      IF $SCWK_ANSWER == TRUE && FLAG_OFF( FE_C03R0901_MELODY ) THEN
+        $is_event_start = 2
+      ENDIF
+    }
+    ENDIF
+
+    // イベント開始
+    IF $is_event_start != 0 THEN
       _BALLOONWIN_TALKOBJ_MSG( msg_c03r0901_musician_02 )
       _BALLOONWIN_CLOSE()
 
@@ -81,26 +106,29 @@ EVENT_START   ev_c03r0901_musician_01
       // メロエッタ ICAアニメ開始
       _MERO_GMK_START_ANIME( MMDL_ID_EVENTOBJ_00 )
       
-      //ウェイト
-      _TIME_WAIT( MERODHIA_BALL_OUT_WAIT )
-
-      //ウェイト
+      //ウェイト:ダンス開始まで
       _TIME_WAIT( MERODHIA_DANCE_WAIT )
       
       //ダンス開始
-      _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_merodhia )
+      _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_merodhia_01 )
       
-      //ウェイト
-      _TIME_WAIT( MERODHIA_RISE_WAIT ) 
+      //ウェイト：カメラ移動開始まで
+      _TIME_WAIT( MERODHIA_CAMERA_WAIT ) 
 
       //カメラ移動
       _CAMERA_MOVE( 9688, 0, 970752, 360448, 151552, 331776, 120 )
 
-      //ウェイト
-      _TIME_WAIT( MERODHIA_ROTATE_WAIT )
+      //ウェイト：ステップフォルムに変化まで
+      _TIME_WAIT( MERODHIA_STER_ANIME ) 
+      
+      //ステップフォルムのアニメ
+      _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_merodhia_02 )
 
-      //メロエッタアニメ待ち
-      _OBJ_ANIME_WAIT()
+      //ウェイト：ボイスフォルムに変化まで
+      _TIME_WAIT( MERODHIA_VOICE_ANIME ) 
+
+      //ボイスフォルムのアニメ
+      _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_merodhia_03 )
 
       //メロエッタICAアニメ終了チェック
       _MERO_GMK_IS_ANIME_END()
@@ -116,11 +144,14 @@ EVENT_START   ev_c03r0901_musician_01
       _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_merodhia_normal )
       _OBJ_ANIME_WAIT()
 
-      //対象メロエッタのニックネームをタグ０番にセット
-      _TEMOTI_NICK_NAME( 0, target_poke_pos )
-      //「○○は古の歌をおもいだした」
-      _SYSWIN_MSG( msg_c03r0901_narrator_01, POS_DOWN )
-      _SYSWIN_CLOSE()
+      // いにしえのうたを覚えていないときのみ
+      IF $is_event_start == 1 THEN
+        //対象メロエッタのニックネームをタグ０番にセット
+        _TEMOTI_NICK_NAME( 0, target_poke_pos )
+        //「○○は古の歌をおもいだした」
+        _SYSWIN_MSG( msg_c03r0901_narrator_01, POS_DOWN )
+        _SYSWIN_CLOSE()
+      ENDIF
       
       _CALL cheer
       
@@ -132,8 +163,19 @@ EVENT_START   ev_c03r0901_musician_01
       _CAMERA_BIND()    //カメラバインド
       _CAMERA_END()   //カメラ操作終了
       
-      //技を覚えさせる処理
-      _CALL learn_skill
+      // いにしえのうたを覚えていないときのみ
+      IF $is_event_start == 1 THEN
+        //技を覚えさせる処理
+        _CALL learn_skill
+      ELSE
+
+        //ボールに戻るアニメ
+        _CALL ball_in
+
+        //自機3歩前
+        _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_front )
+        _OBJ_ANIME_WAIT()
+      ENDIF
       
       //ハイリンクフェス追加前の場合
       IF FLAG_OFF ( FE_C03R0901_MELODY ) THEN
@@ -284,7 +326,7 @@ fes_append:
   _MSGWIN_CLOSE()
 
   //フェスミッション名格納
-  //_FMISSION_NAME( 0, FMISSION_ID_ITEM_KINOMI_02, 0 )
+  _FMISSION_NAME( 0, FMISSION_ID_ITEM_KINOMI_MOVIE, 0 )
 
   //フェスミッションが追加されました
   _SE_PLAY( SEQ_SE_FLD_133 )
@@ -296,6 +338,9 @@ fes_append:
   //========================================//
   //覚えた場合、イベント消化フラグＯＮ
   _FLAG_SET( FE_C03R0901_MELODY )
+
+  //フェスミッションオープンフラグON
+  _FLAG_SET( SYS_FLAG_FES_KINOMI_M )
   //========================================//
 
   //アニメ：ベテラン♀戻る
@@ -353,11 +398,24 @@ _ANIME_LABEL  anm_player_move_right
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
-//　メロエッタアニメ
+//　メロエッタアニメ（最初）
 //--------------------------------------------------------------------
-_ANIME_LABEL  anm_merodhia
+_ANIME_LABEL  anm_merodhia_01
   _ANIME_DATA AC_MELODYER_SHAKE,4
-  _ANIME_DATA AC_MELODYER_SPIN,13
+  _ANIME_DATA AC_MELODYER_SPIN,3
+  _ANIME_DATA ACMD_END,0
+//--------------------------------------------------------------------
+//　メロエッタアニメ（ステップフォルム）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_merodhia_02
+  _ANIME_DATA AC_MELODYER_STEP,4
+  _ANIME_DATA ACMD_END,0
+//--------------------------------------------------------------------
+//　メロエッタアニメ（最後）
+//--------------------------------------------------------------------
+_ANIME_LABEL  anm_merodhia_03
+  _ANIME_DATA AC_MELODYER_SHAKE,3
+  _ANIME_DATA AC_MELODYER_SPIN,2
   _ANIME_DATA AC_MELODYER_SPIN_POSE,1
   _ANIME_DATA ACMD_END,0
 

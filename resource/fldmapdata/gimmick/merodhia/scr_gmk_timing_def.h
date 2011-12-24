@@ -9,13 +9,23 @@
 #pragma once
 
 //↓スクリプトが使用します
-#define MERODHIA_BALL_OUT_WAIT    (290)   //ボールから出す
-#define MERODHIA_DANCE_WAIT       (30)   //ダンス開始
-#define MERODHIA_RISE_WAIT        (175)     //上昇開始
-#define MERODHIA_ROTATE_WAIT      (170)   //旋回開始
+
+/*
+ * メモ
+ *
+ *  566fあたり
+ *  ボイスフォルムからステップフォルムに変化
+ *
+ *  847fあたり
+ *  ステップフォルムからボイスフォルムに変化
+ *
+ * */
 
 
+#define MERODHIA_DANCE_WAIT       (30)    //ダンス開始
+#define MERODHIA_CAMERA_WAIT      (175)   //カメラ移動開始
+#define MERODHIA_STER_ANIME       (361)   //ステップフォルム開始 361+175+30 = 566
 
-
+#define MERODHIA_VOICE_ANIME      (281)   //ボイスフォルムに戻った時 847-566 = 281
 
 

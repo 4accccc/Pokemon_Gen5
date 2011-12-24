@@ -13,7 +13,10 @@
 // 光のエフェクトが出るフレームを指定します
 
 // ボイスフォルムからステップフォルムにチェンジするフレーム
-#define MERODHIA_FORM_STEP_FRAME  ( 554 )
+#define MERODHIA_FORM_STEP_FRAME    ( 554 )
 // ステップフォルムからボイスフォルムにチェンジするフレーム
-#define MERODHIA_FORM_VOICE_FRAME  ( 835 )
+#define MERODHIA_FORM_VOICE_FRAME   ( 835 )
+
+// エフェクトを開始してから動作モデルを入れ替えるまでのフレーム数
+#define MERODHIA_FORM_CHANGE        ( 12 )
 

@@ -793,17 +793,39 @@ void SPPOKE_GMK_MoveMerodhia(FIELDMAP_WORK *fieldWork)
         }
 
         // エフェクトメイン
-        if( p_ica_wk->eff_flash_flag == 1 )
+        if( p_ica_wk->eff_flash_flag != 0 )
         {
           EXP_OBJ_ANM_CNT_PTR exp_anm;
           GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH );
           VecFx32 trans;
+          fx32 frame;
 
           // メロディア位置取得
           MMDL_GetVectorPos( p_ica_wk->p_poke, &trans );
 
           // エフェクト位置更新
           status->trans = trans;
+
+          // アニメの現在フレームを取得
+          frame = FLD_EXP_OBJ_GetObjAnmFrm( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH, 0 );
+          // メロエッタのフォルムチェンジ
+          // 動作モデルのOBJコードを変更
+          if( frame == (MERODHIA_FORM_CHANGE*FX32_ONE) )
+          {
+            if( p_ica_wk->eff_flash_flag == 2 )
+            {
+              // ステップフォルムに
+              MMDL_ChangeOBJCode( p_ica_wk->p_poke, POKE12_FORM );
+              ICHI_Printf("ステップフォルムに\n");
+            }
+            else
+            {
+              // ボイスフォルムに
+              MMDL_ChangeOBJCode( p_ica_wk->p_poke, POKE12 );
+            }
+            // 影をOFF
+            MMDL_OnMoveBit( p_ica_wk->p_poke, MMDL_MOVEBIT_SHADOW_VANISH );
+          }
           
           // 終了チェック
           exp_anm = FLD_EXP_OBJ_GetAnmCnt( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH, 0 );
@@ -831,15 +853,17 @@ void SPPOKE_GMK_MoveMerodhia(FIELDMAP_WORK *fieldWork)
 
           switch( frame ){
           case MERODHIA_FORM_STEP_FRAME:  // ボイスフォルムからステップフォルムにチェンジするフレーム
+              // 光のエフェクト開始
+              p_ica_wk->eff_flash_flag++; // 計2になる
           case MERODHIA_FORM_VOICE_FRAME:// ステップフォルムからボイスフォルムにチェンジするフレーム
+              // 光のエフェクト開始
+              p_ica_wk->eff_flash_flag++; // 計1になる
             {
               GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH );
 
               // 位置反映
               MMDL_GetVectorPos( p_ica_wk->p_poke, &status->trans );
 
-              // 光のエフェクト開始
-              p_ica_wk->eff_flash_flag = 1;
 
               // アニメ再生
               FLD_EXP_OBJ_SetVanish( ptr, SPPOKE_MERO_UNIT_IDX, OBJ_MERO_FLASH, FALSE );
