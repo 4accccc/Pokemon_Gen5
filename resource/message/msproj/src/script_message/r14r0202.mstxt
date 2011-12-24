@@ -9,12 +9,10 @@
 			<Text>この　とちは　ランドロスさまに
 まもられて　おるからのう▼
 ゆたかな　つちと　おおくの　みのりを
-やくそくされて　おるのじゃ▼
-あんたも　ランドロスさまの　ほこらに
-あいさつしていくが　ええ</Text>
+やくそくされて　おるのじゃ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T08:26:42" />
+				Time="2011-12-24T05:26:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -25,12 +23,10 @@
 			<Text>この　土地は　ランドロス様に
 守られて　おるからのう▼
 豊かな　土と　多くの　実りを
-約束されて　おるのじゃ▼
-あんたも　ランドロス様の　ほこらに
-あいさつしていくが　ええ</Text>
+約束されて　おるのじゃ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T08:27:01" />
+				Time="2011-12-24T05:26:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -39,10 +35,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・祠の前のイベント終了まで</Comment>
+・うつしかがみ入手前</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T02:30:26" />
+				Time="2011-12-24T05:23:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -72,13 +68,12 @@ CLEANINGM</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おおあらしを　おこす　トルネロスと
-らいうを　もたらす　ボルトロスが▽
-ひとところに　つどうと▽
-ランドロスさまが　やってくるのじゃ</Text>
+			<Text>みのり　ゆたかな　とちは
+ひとと　ポケモンが　いっしょに▽
+まもっていかにゃあ　いかんのう</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T08:26:50" />
+				Time="2011-12-24T05:23:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -86,13 +81,12 @@ CLEANINGM</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>おおあらしを　起こす　トルネロスと
-雷雨を　もたらす　ボルトロスが▽
-一所に　集うと▽
-ランドロス様が　やってくるのじゃ</Text>
+			<Text>実り　豊かな　土地は
+人と　ポケモンが　いっしょに▽
+守っていかにゃあ　いかんのう</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-24T08:27:09" />
+				Time="2011-12-24T05:23:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -101,11 +95,10 @@ CLEANINGM</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♂
-・祠前イベント終了から
-　ランドロス出現まで</Comment>
+・うつしかがみ入手後</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T02:30:30" />
+				Time="2011-12-24T05:23:29" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -161,11 +154,10 @@ CLEANINGM</Text>
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・ランドロス出現後～繰り返し</Comment>
+			<Comment>未使用</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-17T02:30:11" />
+				Time="2011-12-24T05:23:53" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -184,7 +176,7 @@ CLEANINGM</Text>
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#8080ff</CellData>
+			<CellData>#404040</CellData>
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

@@ -477,12 +477,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ランドロスさまの　ほこらに
-イタズラ　すると▽
-おおあらしに　なるんだぞー！▼</Text>
+			<Text>ランドロスさまの　ほんき
+おまえ　しってるかよ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T03:38:06" />
+				Time="2011-12-24T05:45:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -490,12 +489,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ランドロスさまの　ほこらに
-イタズラ　すると▽
-おおあらしに　なるんだぞー！▼</Text>
+			<Text>ランドロスさまの　本気
+おまえ　知ってるかよ？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T03:38:12" />
+				Time="2011-12-24T05:53:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -526,7 +524,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -537,13 +535,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちがうもーん！▼
-おおあめ　ふらせて
-カミナリを　おっことすのは▽
-ほかの　ポケモンだもーん！▼</Text>
+			<Text>しってるよ！▼
+べつの　すがたに　なって
+そらを　とびまわるんだろ！▼
+トルネロスも　ボルトロスも
+すがたが　かわるんだよ！▽
+……って　はなし　だよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T03:38:19" />
+				Time="2011-12-24T05:51:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -551,13 +551,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>違うもーん！▼
-大雨　降らせて
-カミナリを　落っことすのは▽
-他の　ポケモンだもーん！▼</Text>
+			<Text>しってるよ！▼
+べつの　すがたに　なって
+そらを　とびまわるんだろ！▼
+トルネロスも　ボルトロスも
+すがたが　かわるんだよ！▽
+……って　はなし　だよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T03:38:16" />
+				Time="2011-12-24T05:51:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -587,7 +589,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -598,13 +600,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちがうもーん！▼
-おおあめ　ふらせて
-かぜを　びゅーびゅー　させるのは▽
-ほかの　ポケモンだもーん！▼</Text>
+			<Text>しってるよ！▼
+べつの　すがたに　なって
+そらを　とびまわるんだろ！▼
+ボルトロスも　トルネロスも
+すがたが　かわるんだよ！▽
+……って　はなし　だよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T03:38:26" />
+				Time="2011-12-24T05:53:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -612,13 +616,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>違うもーん！▼
-大雨　降らせて
-風を　びゅーびゅー　させるのは▽
-他の　ポケモンだもーん！▼</Text>
+			<Text>しってるよ！▼
+べつの　すがたに　なって
+そらを　とびまわるんだろ！▼
+ボルトロスも　トルネロスも
+すがたが　かわるんだよ！▽
+……って　はなし　だよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T03:38:22" />
+				Time="2011-12-24T05:53:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -648,7 +654,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -659,10 +665,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ちがうよ　バカっ！▼</Text>
+			<Text>なら　いいんだよ！▼
+……だって　おれも
+はなしで　きいただけだし</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T03:35:29" />
+				Time="2011-12-24T05:54:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -670,10 +678,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>違うよ　バカっ！▼</Text>
+			<Text>なら　いいんだよ！▼
+……だって　おれも
+はなしで　きいただけだし</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T03:38:31" />
+				Time="2011-12-24T05:54:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -705,7 +715,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />
@@ -906,10 +916,12 @@
 イッシュちほうの　いえや　はたけを▽
 あらしまわった　ときに▼
 ランドロスって　ポケモンが
-やっつけて　くれたんだって▼</Text>
+やっつけて　くれたんだって▼
+あたしの　おじいちゃんが
+こどもだったころの　おはなし　よ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T03:35:57" />
+				Time="2011-12-24T05:36:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -923,10 +935,12 @@
 イッシュ地方の　家や　畑を▽
 荒らしまわった　ときに▼
 ランドロスって　ポケモンが
-やっつけて　くれたんだって▼</Text>
+やっつけて　くれたんだって▼
+あたしの　おじいちゃんが
+こどもだったころの　お話よ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-21T03:36:08" />
+				Time="2011-12-24T05:36:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -956,7 +970,7 @@
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
-			<CellData>#404040</CellData>
+			<CellData />
 			<CellModifiedBy
 				User=":"
 				Time="0001-01-01T00:00:00" />

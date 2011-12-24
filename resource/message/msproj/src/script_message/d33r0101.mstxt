@@ -66,11 +66,11 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>それにしても　この　くうかん……▼
-ことばに　いいあわらしにくい
+ことばで　いいあわらしにくい
 なにかで　みちているわね……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-29T03:36:39" />
+				Time="2011-12-24T08:30:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -78,12 +78,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それにしても　この　くうかん……▼
-ことばに　いいあわらしにくい
-なにかで　みちているわね……</Text>
+			<Text>それにしても　この空間……▼
+言葉で　言い表しにくい
+なにかで　満ちているわね……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-29T03:45:31" />
+				Time="2011-12-24T08:30:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -214,10 +214,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ユクシー！</Text>
+			<Text>ユクシー！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-29T03:41:21" />
+				Time="2011-12-24T08:30:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -225,10 +225,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ユクシー！</Text>
+			<Text>ユクシー！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-29T03:41:42" />
+				Time="2011-12-24T08:30:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -313,10 +313,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>エムリット……！</Text>
+			<Text>エムリット……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-29T03:41:31" />
+				Time="2011-12-24T08:30:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -324,10 +324,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>エムリット……！</Text>
+			<Text>エムリット……！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-29T03:41:42" />
+				Time="2011-12-24T08:30:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -412,10 +412,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>それに　アグノム！</Text>
+			<Text>それに　アグノム！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-29T03:41:38" />
+				Time="2011-12-24T08:30:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -423,10 +423,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>それに　アグノム！</Text>
+			<Text>それに　アグノム！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-29T03:41:42" />
+				Time="2011-12-24T08:30:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -463,10 +463,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ユクシーは
-どこかに　とびさっていった……</Text>
+どこかに　とびさっていった……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T02:33:05" />
+				Time="2011-12-24T08:30:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -475,10 +475,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ユクシーは
-どこかに　飛び去っていった……</Text>
+どこかに　飛び去っていった……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T02:32:45" />
+				Time="2011-12-24T08:31:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -515,10 +515,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>エムリットは
-どこかに　とびさっていった……</Text>
+どこかに　とびさっていった……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T02:33:09" />
+				Time="2011-12-24T08:30:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -527,10 +527,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>エムリットは
-どこかに　飛び去っていった……</Text>
+どこかに　飛び去っていった……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T02:32:49" />
+				Time="2011-12-24T08:31:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -567,10 +567,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>アグノムは
-どこかに　とびさっていった……</Text>
+どこかに　とびさっていった……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T02:33:12" />
+				Time="2011-12-24T08:31:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -579,10 +579,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>アグノムは
-どこかに　飛び去っていった……</Text>
+どこかに　飛び去っていった……▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-12T02:32:52" />
+				Time="2011-12-24T08:31:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

@@ -90,13 +90,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver
+			<Comment>♂：Black2ver
 ・続けてboss_03
 ※今回は横向きで対峙させる</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:25:46" />
+				Time="2011-12-24T08:21:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -149,12 +148,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ・続けてboss_03</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:25:48" />
+				Time="2011-12-24T08:22:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -519,12 +517,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver
+			<Comment>♂：Black2ver
 ・続けてboss_07</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:26:11" />
+				Time="2011-12-24T08:21:46" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -573,12 +570,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ・続けてboss_07</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:26:13" />
+				Time="2011-12-24T08:22:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -729,14 +725,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ポケモン
-・Black2ver
+			<Comment>ポケモン：Black2ver
 ・あわせて鳴き声再生
 ・続けてトレーナー戦闘に
 　トレーナーID：boss_01</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T03:17:01" />
+				Time="2011-12-24T08:21:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -781,14 +776,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>ポケモン
-・White2ver
+			<Comment>ポケモン：White2ver
 ・あわせて鳴き声再生
 ・続けてトレーナー戦闘に
 　トレーナーID：boss_02</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-05T03:17:08" />
+				Time="2011-12-24T08:21:38" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -891,13 +885,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver
+			<Comment>♂：Black2ver
 ・戦闘後
 ・続けてboss_11</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:26:40" />
+				Time="2011-12-24T08:21:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -948,13 +941,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ・戦闘後
 ・続けてboss_11</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:26:38" />
+				Time="2011-12-24T08:21:33" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1579,10 +1571,10 @@
 			Language="JPN">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ][Name:TrainerName ]！▼
 キミに　この！
-ダークストーンを　たくす！[Ctrl2:CtrlSpeed ]</Text>
+ダークストーンを　たくす！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T09:01:38" />
+				Time="2011-12-24T08:06:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1592,10 +1584,10 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ][Name:TrainerName ]！▼
 キミに　この！
-ダークストーンを　託す！[Ctrl2:CtrlSpeed ]</Text>
+ダークストーンを　託す！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T09:01:42" />
+				Time="2011-12-24T08:06:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1603,15 +1595,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver
+			<Comment>♂：Black2ver
 ・アイテム入手処理
 　No617「ダークストーン」
 ・続けてboss_17b
 ・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:27:32" />
+				Time="2011-12-24T08:22:01" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1636,10 +1627,10 @@
 			Language="JPN">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ][Name:TrainerName ]！▼
 キミに　この！
-ライトストーンを　たくす！[Ctrl2:CtrlSpeed ]</Text>
+ライトストーンを　たくす！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T09:01:34" />
+				Time="2011-12-24T08:06:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1649,10 +1640,10 @@
 			Language="JPN_KANJI">
 			<Text>[Ctrl2:CtrlSpeed mode="1" ][Name:TrainerName ]！▼
 キミに　この！
-ライトストーンを　託す！[Ctrl2:CtrlSpeed ]</Text>
+ライトストーンを　託す！[Ctrl2:CtrlSpeed ]▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T09:01:29" />
+				Time="2011-12-24T08:06:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1660,15 +1651,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ・アイテム入手処理
 　No616「ライトストーン」
 ・続けてboss_17w
 ・0＝主人公名</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T08:27:36" />
+				Time="2011-12-24T08:22:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1715,11 +1705,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver</Comment>
+			<Comment>♂：Black2ver</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T06:48:47" />
+				Time="2011-12-24T08:22:04" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1766,11 +1755,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver</Comment>
+			<Comment>♂：White2ver</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-04T06:48:44" />
+				Time="2011-12-24T08:22:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2014,13 +2002,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・Black2ver
+			<Comment>♂：Black2ver
 ・トレーナー戦闘後メッセージ
 ・続けてboss_01_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T11:31:26" />
+				Time="2011-12-24T08:22:10" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2089,13 +2076,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・White2ver
+			<Comment>♂：White2ver
 ・トレーナー戦闘後メッセージ
 ・続けてboss_01_04</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-19T11:31:23" />
+				Time="2011-12-24T08:22:18" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

@@ -1127,15 +1127,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>いなかで　くらす　みんなの
-おてつだいも　しないとね▼
-ヒウンシティで　であった
-ポケモンたちと　ちからを　あわせて▼
-メロエッタの　うた　おどり……
-ふしぎな　メロディ……</Text>
+			<Text>いなかで　くらす　みんなと
+ヒウンシティで　であった　ポケモンで▽
+たのしく　きのみあつめ！▼
+もちろん　メロエッタの
+うたを　くちずさみながらね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-22T03:03:30" />
+				Time="2011-12-24T05:31:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"
@@ -1143,15 +1142,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>田舎で　暮らす　みんなの
-お手伝いも　しないとね▼
-ヒウンシティで　出会った
-ポケモンたちと　力を　合わせて
-メロエッタの　歌　踊り……
-不思議な　メロディ……</Text>
+			<Text>田舎で　暮らす　みんなと
+ヒウンシティで　出会った　ポケモンで▽
+たのしく　きのみあつめ！▼
+もちろん　メロエッタの
+歌を　くちずさみながらね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-22T03:03:25" />
+				Time="2011-12-24T05:31:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="suginaka_katsunori:W00289"

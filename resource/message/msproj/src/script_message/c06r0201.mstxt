@@ -488,10 +488,10 @@
 			<Text>フウロ『うふふ
 みなさん　おそろい　ですね！▼
 それでは
-レッツ　フライトだよ！▼</Text>
+レッツ　フライト　です！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T11:18:00" />
+				Time="2011-12-24T06:28:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -502,10 +502,10 @@
 			<Text>フウロ『うふふ
 みなさん　おそろい　ですね！▼
 それでは
-レッツ　フライトだよ！▼</Text>
+レッツ　フライト　です！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T11:18:06" />
+				Time="2011-12-24T06:28:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1337,11 +1337,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンが　いてくれる……
-それって　あたりまえ　だよねー</Text>
+			<Text>ポケモンが　いてくれて
+ほんと　たすかるよねー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T10:56:15" />
+				Time="2011-12-24T06:36:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1349,11 +1349,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンが　いてくれる……
-それって　当たり前　だよねー</Text>
+			<Text>ポケモンが　いてくれて
+ほんと　助かるよねー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T10:57:05" />
+				Time="2011-12-24T06:36:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1391,10 +1391,10 @@
 			Language="JPN">
 			<Text>そっかー▼
 ひこうポケモンや　エスパーポケモンに
-てつだって　もらいたいこと　あってさ</Text>
+てつだって　もらいたかったなー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T10:44:01" />
+				Time="2011-12-24T06:35:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1404,10 +1404,10 @@
 			Language="JPN_KANJI">
 			<Text>そっかー▼
 ひこうポケモンや　エスパーポケモンに
-手伝って　もらいたいこと　あってさ</Text>
+手伝って　もらいたかったなー</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-08T10:57:11" />
+				Time="2011-12-24T06:35:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
