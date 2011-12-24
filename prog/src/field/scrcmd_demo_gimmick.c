@@ -201,6 +201,52 @@ VMCMD_RESULT EvCmdGianthole_ObjOffsetSet( VMHANDLE *core, void *wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ジャイアントホール　キュラム・キュロム戦闘後専用処理
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdGianthole_WildWin( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  // 通常のWILD_WINでやっていること
+  // ・フィールドBGを初期化
+  // ・マスター輝度でフェードイン
+  //
+  // この演出では暗転中にメッセージをだしたいので
+  // ・フィールドBGを初期化
+  // ・上画面を通常輝度で黒にする
+  // ・下画面はマスター輝度で黒にする
+  // を処理する
+  //
+
+  // フィールドBG初期化
+  {
+    int mv = GFL_DISP_GetMainVisible();
+    int	sv = GFL_DISP_GetSubVisible();
+    FIELDMAP_InitBGMode();
+    GFL_DISP_GX_SetVisibleControlDirect( mv );
+    GFL_DISP_GXS_SetVisibleControlDirect( sv );
+
+    FIELDMAP_InitBG( fieldmap );
+  }
+
+  // 輝度設定
+  {
+    // 上画面
+    GX_SetMasterBrightness( 0 );
+		G2_SetBlendBrightness( (GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD), -16 );
+    // 下画面
+    GXS_SetMasterBrightness( 0 );
+		G2S_SetBlendBrightness( (GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD), -16 );
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  物語開始デモ  花びらアニメ再生
  */
 //-----------------------------------------------------------------------------

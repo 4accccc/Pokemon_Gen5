@@ -16668,6 +16668,23 @@
   .short  \offset_z
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def   _DEMO_GIMMICK_GIANTHOLE_WILD_WIN
+ * @brief キュラム・キュロム戦後専用の勝利処理
+ *
+ * @note  オーバーレイ化してあるため特定のゾーンのみでしか使用禁止
+ *
+ *        ※ジャイアントホールデモ専用のコマンドです。
+ *        　通常は使わないように！
+ */
+//--------------------------------------------------------------
+#define _DEMO_GIMMICK_GIANTHOLE_WILD_WIN() \
+    _ASM_DEMO_GIMMICK_GIANTHOLE_WILD_WIN
+
+  .macro  _ASM_DEMO_GIMMICK_GIANTHOLE_WILD_WIN
+  .short  EV_SEQ_DEMO_GIMMICK_GIANTHOLE_WILD_WIN
+  .endm
 
 // 物語開始デモ
 //--------------------------------------------------------------

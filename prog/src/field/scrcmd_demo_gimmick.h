@@ -39,6 +39,7 @@ extern VMCMD_RESULT EvCmdGianthole_StoneFloat( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGianthole_NPokeAnmStart( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGianthole_NPokeAnmEnd( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGianthole_ObjOffsetSet( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGianthole_WildWin( VMHANDLE *core, void *wk );
 
 // 物語開始
 // c12 ヒオウギシティ

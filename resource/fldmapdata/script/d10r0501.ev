@@ -590,7 +590,39 @@ _ANIME_LABEL anm_swsage_5
 ev_vs_swsage1_01:
 
   //【仮】戦闘後暗転状態でメッセージ表示依頼（2011.12.20）
-  
+  //ゼクロム・レシラム鳴き声
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _GIZAPLAINWIN_MSG_POS( msg_d10r0501_mu_03, POS_DOWN )
+    // ゼクロム 鳴き声指定仮
+    _VOICE_PLAY( MONSNO_651, 0 )
+  ELSE
+    _GIZAPLAINWIN_MSG_POS( msg_d10r0501_shin_03, POS_DOWN )
+    // レシラム 鳴き声指定仮
+    _VOICE_PLAY( MONSNO_650, 0 )
+  ENDIF
+	_VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _GIZAPLAINWIN_CLOSE()
+
+  //キュレム鳴き声
+  _VOICE_PLAY(MONSNO_653,0)
+	_GIZAPLAINWIN_MSG_POS( msg_d10r0501_poke10_03, POS_UR )
+	_VOICE_WAIT()
+	_AB_KEYWAIT_MARK()
+	_GIZAPLAINWIN_CLOSE()
+
+  //ナレーション
+  IF $LCWK_VERSION == VERSION_B2 THEN
+    _PLAINWIN_MSG_DOWN( msg_d10r0501_poke10_04b )
+  ELSE
+    _PLAINWIN_MSG_DOWN( msg_d10r0501_poke10_04w )
+  ENDIF
+	_AB_KEYWAIT_MARK()
+  _PLAINWIN_CLOSE()
+
+  // 専用フェードイン
+  _MAP_FADE_IN_MSG_ENABLE( MSG_FADE_BLACK, 0 )
+
   //アニメ：主人公右を向く
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_staystep_r)
   _OBJ_ANIME_WAIT()
@@ -1025,7 +1057,11 @@ EVENT_START ev_d10r0501_poke10_01
       //勝利するまでイベント進行はしない（2011.12.20 水口）
     ENDIF
     
-    _WILD_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+    // ※ 暗転中にメッセージを表示する為に専用の処理を使う
+    // ここは変更しないで下さい ichiraku
+    //_WILD_WIN()
+    _DEMO_GIMMICK_GIANTHOLE_WILD_WIN()
+
   ELSE
     //キュラム・キュロム戦後ならキュラム・キュロムを再表示
     IF FLAG_ON( FV_D10R0401_POKE_03 ) THEN
