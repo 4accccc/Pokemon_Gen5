@@ -483,7 +483,7 @@ static const INF_TR_AREA_DATA sc_tr_area_data[] = {
  { 6 ,7 ,VERSION_B2 ,19 ,},
  { 6 ,7 ,VERSION_B2 ,20 ,},
  { 6 ,7 ,VERSION_B2 ,20 ,},
- { 6 ,7 ,VERSION_B2 ,21 ,},
+ { 6 ,7 ,VERSION_B2 ,20 ,},
  { 6 ,7 ,VERSION_B2 ,21 ,},
  { 6 ,7 ,VERSION_B2 ,21 ,},
  { 6 ,7 ,VERSION_B2 ,21 ,},
