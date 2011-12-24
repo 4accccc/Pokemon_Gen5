@@ -149,8 +149,6 @@ ev_pokewood_rec_main:
       _BALLOONWIN_OBJMSG_POS( msg_pw_studio_14, SCWK_TARGET_OBJID, POS_DOWN )
       _SE_PLAY(	SEQ_SE_TDEMO_001 ) 
       _SE_WAIT()
-      //_ME_PLAY(	SEQ_ME_KEYITEM )  //âºÅF
-      //_ME_WAIT()
       _AB_KEYWAIT_MARK()
     ENDIF
 
