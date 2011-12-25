@@ -6,11 +6,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>キミも　ポケモンを　もっていれば
-[Name:TrainerName Idx="1" ]と　きそいあえるのにな</Text>
+			<Text>キミも　ポケモンと　いっしょなら
+[Name:TrainerName Idx="1" ]と　トレーナーとしての▽
+うでまえを　きそいあえるのにな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T11:11:57" />
+				Time="2011-12-25T03:58:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -18,11 +19,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>キミも　ポケモンを　持っていれば
-[Name:TrainerName Idx="1" ]と　競いあえるのにな</Text>
+			<Text>キミも　ポケモンと　一緒なら
+[Name:TrainerName Idx="1" ]と　トレーナーとしての▽
+腕前を　競いあえるのにな</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-09T11:11:59" />
+				Time="2011-12-25T03:59:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -111,10 +113,10 @@
 			<Text>むすこは　だいじな　ものを
 みつけたようだね▼
 ポケモンが……　そして
-キミが　いてくれた　おかげだね</Text>
+キミが　いてくれた　おかげだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T09:59:52" />
+				Time="2011-12-25T04:00:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -125,10 +127,10 @@
 			<Text>息子は　大事な　ものを
 みつけたようだね▼
 ポケモンが……　そして
-キミが　いてくれた　おかげだね</Text>
+キミが　いてくれた　おかげだ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T10:00:02" />
+				Time="2011-12-25T04:00:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -218,10 +220,12 @@
 			<Text>[Name:TrainerName Idx="0" ]くん▼
 もし　[Name:TrainerName Idx="1" ]が　たびさきで
 みちに……　いえ　じんせいに▽
-まよったりしたら　たすけてあげてね</Text>
+まよったりしたら　たすけてあげてね▼
+あのコ……
+わりと　ぼうそう　しやすいから</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T04:21:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -232,10 +236,12 @@
 			<Text>[Name:TrainerName Idx="0" ]くん▼
 もし　[Name:TrainerName Idx="1" ]が　旅先で
 道に……　いえ　人生に▽
-迷ったりしたら　助けてあげてね</Text>
+迷ったりしたら　助けてあげてね▼
+あのコ……
+わりと　暴走しやすいから</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T04:21:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -281,10 +287,12 @@
 			<Text>[Name:TrainerName Idx="0" ]さん▼
 もし　[Name:TrainerName Idx="1" ]が　たびさきで
 みちに……　いえ　じんせいに▽
-まよったりしたら　たすけてあげてね</Text>
+まよったりしたら　たすけてあげてね▼
+あのコ……
+わりと　ぼうそう　しやすいから</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T04:21:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -295,10 +303,12 @@
 			<Text>[Name:TrainerName Idx="0" ]さん▼
 もし　[Name:TrainerName Idx="1" ]が　旅先で
 道に……　いえ　人生に▽
-迷ったりしたら　助けてあげてね</Text>
+迷ったりしたら　助けてあげてね▼
+あのコ……
+わりと　暴走しやすいから</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:12" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T04:21:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -327,6 +337,57 @@
 			<TextModifiedBy
 				User="ariizumi_nobuhiko:W00248"
 				Time="2011-05-20T09:30:12" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ff80</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c12r0201_woman3_03"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あのコも　レパルダスと
+たびを　するのかな……？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-25T04:29:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-25T04:29:00" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あのコも　レパルダスと
+たびを　するのかな……？</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-25T04:29:15" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-25T04:29:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♀
+・クリア後</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-25T04:22:37" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>WOMAN3
+ライバル母</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-25T04:22:41" />
 		</AttributeCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

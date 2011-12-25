@@ -64,13 +64,12 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ポケモンとの　たびは
-ポケモンの　ケアが　だいじ！▼
-たいりょくが　へったら
-すぐに　かいふく　してあげなさい</Text>
+			<Text>しまう　どうぐの　しゅるいによって
+じどうてきに　ふりわけてくれる▽
+バッグとは　すごいもんじゃのう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T07:25:37" />
+				Time="2011-12-25T05:01:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -78,13 +77,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ポケモンとの　旅は
-ポケモンの　ケアが　大事！▼
-体力が　減ったら
-すぐに　回復してあげなさい</Text>
+			<Text>しまう　道具の　種類によって
+自動的に　ふりわけてくれる▽
+バッグとは　すごいもんじゃのう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-14T07:25:38" />
+				Time="2011-12-25T05:00:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
