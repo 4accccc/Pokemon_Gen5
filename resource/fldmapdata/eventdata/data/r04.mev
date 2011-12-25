@@ -1,5 +1,5 @@
 #event data
-#save date:2011/12/13 15:50:35
+#save date:2011/12/25 15:00:00
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r04.wms
 #SECTION START:OBJ_EVENT
@@ -369,19 +369,19 @@ SCRID_TRID_BREEDERW_04
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
-0
+4
 #Parameter 1 Number
 0
 #Parameter 2 Number
 0
 #Move Limit X Number
-1
+0
 #Move Limit Z Number
-3
+0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-584 0 -1576
+536 0 -1528
 #event number: 12
 #type
 1
