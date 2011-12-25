@@ -693,6 +693,7 @@ sub_npc_tr_battle_main:
 {
   DEFINE_LOCAL  i_ret
   DEFINE_LOCAL  i_tr_id
+  DEFINE_LOCAL  i_flag
 
   _TALK_OBJ_START()
 
@@ -715,17 +716,25 @@ sub_npc_tr_battle_main:
   _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_btl01_03, FES_NPC_MSGSET_NUM_TR_BATTLE )
   _MSGWIN_CLOSE()
 
-  //トレーナー戦呼び出し
-  _TRAINER_BTL_SP_SET( i_tr_id, 0, SCR_BATTLE_MODE_FES_TRAINER )
+  //トレーナー戦呼び出し(全滅無しバトル)
+  $i_flag = SCR_BATTLE_MODE_FES_TRAINER
+  $i_flag |= SCR_BATTLE_MODE_NOLOSE
+  _TRAINER_BTL_SP_SET( i_tr_id, 0, i_flag )
+  
+  _TRAINER_WIN()      //勝利処理実行
   
   //敗戦チェック
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )
 
   IF $SCWK_ANSWER == SCR_BATTLE_RESULT_LOSE THEN
-    _TRAINER_LOSE()     //負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+    _TEMOTI_POKEMON_KAIFUKU() //負け(0)なら回復処理
+  
+    //また戦ってくれ
+    _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_btl01_06, FES_NPC_MSGSET_NUM_TR_BATTLE )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
     _RET
   ENDIF
-  _TRAINER_WIN()      //勝ち(1)ならトレーナー勝利処理へ
   
   _FMISSION_LOG_ACTION( FMISSION_LOG_ACT_TR_BATTLE_WIN )
 
