@@ -17238,7 +17238,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		MATRIX_ID_MUGEN01, // camera_area
 		19,   // padding > placeicon
-    0,
+    5,
 		5,
 		0,
 		4,
@@ -17274,7 +17274,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		MATRIX_ID_MUGEN02, // camera_area
 		19,   // padding > placeicon
-    0,
+    5,
 		5,
 		0,
 		4,
@@ -17310,7 +17310,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		MATRIX_ID_MUGEN03, // camera_area
 		19,   // padding > placeicon
-    0,
+    5,
 		5,
 		0,
 		4,
@@ -17346,7 +17346,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		MATRIX_ID_MUGEN04, // camera_area
 		19,   // padding > placeicon
-    0,
+    5,
 		5,
 		0,
 		4,
@@ -17382,7 +17382,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		MATRIX_ID_MUGEN05, // camera_area
 		19,   // padding > placeicon
-    0,
+    5,
 		5,
 		0,
 		4,
@@ -17418,7 +17418,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		MATRIX_ID_MUGEN06, // camera_area
 		19,   // padding > placeicon
-    0,
+    5,
 		5,
 		0,
 		4,
@@ -17454,7 +17454,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		MATRIX_ID_MUGEN07, // camera_area
 		19,   // padding > placeicon
-    0,
+    5,
 		5,
 		0,
 		4,
@@ -17490,7 +17490,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		MATRIX_ID_MUGEN08, // camera_area
 		19,   // padding > placeicon
-    0,
+    5,
 		5,
 		0,
 		4,
@@ -17526,7 +17526,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		MATRIX_ID_MUGEN09, // camera_area
 		19,   // padding > placeicon
-    0,
+    5,
 		5,
 		0,
 		4,
@@ -17562,7 +17562,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		MATRIX_ID_MUGEN10, // camera_area
 		19,   // padding > placeicon
-    0,
+    5,
 		5,
 		0,
 		4,
@@ -18237,7 +18237,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		4,
 		TRUE,
 		TRUE,
 		TRUE,
@@ -18273,7 +18273,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		4,
 		TRUE,
 		TRUE,
 		TRUE,
@@ -18309,7 +18309,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		4,
 		TRUE,
 		TRUE,
 		TRUE,
@@ -18561,7 +18561,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		4,
 		TRUE,
 		TRUE,
 		TRUE,
@@ -18597,7 +18597,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		5,
 		TRUE,
 		TRUE,
 		TRUE,
@@ -20361,7 +20361,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		4,
 		TRUE,
 		TRUE,
 		TRUE,
@@ -21031,10 +21031,10 @@ static const ZONEDATA ZoneData[] = {
 		NARC_script_seq_d35r0101_bin,
 		NARC_script_seq_sp_d35r0101_bin,	//NARC_script_seq_sp_d35r0101_bin,
 		NARC_script_message_d35r0101_dat,
-		SEQ_BGM_D_01,
-		SEQ_BGM_D_01,
-		SEQ_BGM_D_01,
-		SEQ_BGM_D_01,
+		SEQ_BGM_D_06,
+		SEQ_BGM_D_06,
+		SEQ_BGM_D_06,
+		SEQ_BGM_D_06,
 		NARC_encount_data_w_d35r0101_bin,
 		FMISSION_MAP_ATTR_FOREST,
 		NARC_eventdata_d35r0101_bin,
@@ -21945,7 +21945,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		4,
 		TRUE,
 		TRUE,
 		TRUE,
@@ -21981,7 +21981,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		4,
 		TRUE,
 		TRUE,
 		TRUE,
@@ -22017,7 +22017,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		4,
 		TRUE,
 		TRUE,
 		TRUE,
@@ -22053,7 +22053,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		4,
 		TRUE,
 		TRUE,
 		TRUE,
@@ -22089,7 +22089,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
-		9,
+		4,
 		TRUE,
 		TRUE,
 		TRUE,
