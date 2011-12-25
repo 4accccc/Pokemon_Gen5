@@ -6837,25 +6837,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ニコラ</Text>
+			<Text>テスラ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-25T05:03:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-25T05:03:14" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ニコラ</Text>
+			<Text>テスラ</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-25T05:03:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-13T14:17:09" />
+				User="ito_hiroto:W00178"
+				Time="2011-12-25T05:03:14" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
