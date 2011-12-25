@@ -55,12 +55,35 @@
 //------------------------------------------------------------------
 BOOL FMISSION_ENTRY_TBL_GetData( LINK_FESTIVAL* fest_sys, FEST_MISSION* fmwk, STRBUF* name_buf )
 {
+  int i;
   BOOL ret = FALSE;
   FMISSION_ENTRY_TBL* tbl = &fest_sys->mlog_entry_tbl;
 
   if( tbl->entry_num == 0 ){
     return FALSE;
   }
+  //配信ミッションを優先チェック
+  for( i = 0;i < tbl->entry_num ;i++ ){
+    if( tbl->entry[i].mission.beacon.distribution_f &&
+        FEST_MISSION_IsLifeLeftForEntry( &tbl->entry[i].mission ) ){  //残り時間が30秒以上じゃないと返さない
+    
+      GFL_STR_SetStringCodeOrderLength( name_buf, tbl->entry[i].name, PERSON_NAME_SIZE+EOM_SIZE );
+      *fmwk = tbl->entry[i].mission;
+      return TRUE;
+    }
+  }
+  //配信ミッションがなければトップから返す
+  for( i = 0;i < tbl->entry_num ;i++ ){
+    if( FEST_MISSION_IsLifeLeftForEntry( &tbl->entry[i].mission ) ){  //残り時間が30秒以上じゃないと返さない
+    
+      GFL_STR_SetStringCodeOrderLength( name_buf, tbl->entry[i].name, PERSON_NAME_SIZE+EOM_SIZE );
+      *fmwk = tbl->entry[i].mission;
+      return TRUE;
+    }
+  }
+  GFL_STR_ClearBuffer( name_buf );
+  return FALSE;
+#if 0
   if( FEST_MISSION_IsLifeLeftForEntry( &tbl->entry[0].mission ) ){  //残り時間が30秒以上じゃないと返さない
     GFL_STR_SetStringCodeOrderLength( name_buf, tbl->entry[0].name, PERSON_NAME_SIZE+EOM_SIZE );
     *fmwk = tbl->entry[0].mission;
@@ -68,16 +91,7 @@ BOOL FMISSION_ENTRY_TBL_GetData( LINK_FESTIVAL* fest_sys, FEST_MISSION* fmwk, ST
   }else{
     GFL_STR_ClearBuffer( name_buf );
   }
-#if 0
-  //テーブル前詰め
-  GFL_STD_MemCopy32( &tbl->entry[1], &tbl->entry[0], sizeof(FMISSION_ENTRY)*FMISSION_ENTRY_TBL_END);
-  FMISSION_ENTRY_Clear( &tbl->entry[FMISSION_ENTRY_TBL_END] );
-  --tbl->entry_num;
-
-  if( tbl->entry_num == 0){
-    GAMEBEACON_ResetCGearInfoFlag( GAMEBEACON_CGEAR_INFO_FMISSION );
-  }
-#endif
   return ret;
+#endif
 }
 
