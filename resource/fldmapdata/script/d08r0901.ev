@@ -14,6 +14,7 @@
   .include  "d08_def.h"
 
   //@author fujimura_souichirou
+  //@author suginaka_katsunori //演出修正
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -371,7 +372,10 @@ _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_n_leave )
 _CAMERA_WAIT_MOVE()	//カメラ移動待ち
 _OBJ_ANIME_WAIT()
 
-//キミが　のぞむ　ポケモンとの　せかい
+_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_common_turn_left )
+_OBJ_ANIME_WAIT()
+
+//いつか……
 _BALLOONWIN_OBJMSG_POS( msg_d08r0901_boss_06 ,MMDL_ID_EVENTOBJ_00 ,POS_DEFAULT )
 _MSGWIN_CLOSE()
 
@@ -491,5 +495,6 @@ _ANIME_LABEL  anm_back_d
 _ANIME_LABEL	anm_n_leave
 	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	AC_WALK_D_16F,1
-	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_WAIT_8F,3
+	_ANIME_DATA	AC_N_ACT1,1
 	_ANIME_DATA	ACMD_END,0
