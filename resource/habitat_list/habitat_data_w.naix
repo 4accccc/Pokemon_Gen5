@@ -13,8 +13,8 @@
 enum {
 	NARC_habitat_data_w_hb_w_r04_bin = 0,
 	NARC_habitat_data_w_hb_w_r15_bin = 1,
-	NARC_habitat_data_w_hb_w_d29r0101_bin = 2,
-	NARC_habitat_data_w_hb_w_w21_bin = 3,
+	NARC_habitat_data_w_hb_w_w21_bin = 2,
+	NARC_habitat_data_w_hb_w_d29r0101_bin = 3,
 	NARC_habitat_data_w_hb_w_d07_bin = 4,
 	NARC_habitat_data_w_hb_w_h04_bin = 5,
 	NARC_habitat_data_w_hb_w_d08_bin = 6,

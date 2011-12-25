@@ -12,8 +12,8 @@
 $habitat_arc_idx_table = {
   "ZONE_ID_R04"=>0,
   "ZONE_ID_R15"=>1,
-  "ZONE_ID_D29R0101"=>2,
-  "ZONE_ID_W21"=>3,
+  "ZONE_ID_W21"=>2,
+  "ZONE_ID_D29R0101"=>3,
   "ZONE_ID_D07"=>4,
   "ZONE_ID_H04"=>5,
   "ZONE_ID_D08"=>6,
