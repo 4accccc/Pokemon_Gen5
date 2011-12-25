@@ -2866,6 +2866,7 @@ static void PlaceData_Init( PLACE_DATA *p_wk, const TOWNMAP_DATA *cp_data, u32 d
 	case TOWNMAP_PLACETYPE_DUNGEON:
 		p_wk->active_anm			= 3;
 		p_wk->non_active_anm	= PLACEDATA_ANIME_SEQ_VANISH;
+    p_wk->is_arrive = TRUE;//GFBTS22
 		break;
 	case TOWNMAP_PLACETYPE_ROAD:
 		p_wk->active_anm			= PLACEDATA_ANIME_SEQ_VANISH;
