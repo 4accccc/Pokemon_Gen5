@@ -5352,9 +5352,9 @@
 
 	<row id="TRID_MINI_14_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">……まけても　かわいいもん
-あたしの　ポケモン！</language>
+あたしの　チョロネコ！</language>
 		<language name="JPN_KANJI" width="216">……負けても　かわいいもん
-あたしの　ポケモン！</language>
+あたしの　チョロネコ！</language>
 	</row>
 
 	<row id="TRID_MINI_14_TRMSG_FIGHT_AFTER">
@@ -5448,33 +5448,33 @@
 	</row>
 
 	<row id="TRID_TANPAN_20_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">まけて　おちこむ　ヒマが　むだ！
-どんどん　たたかって　つよくなるよ</language>
-		<language name="JPN_KANJI" width="216">負けて　落ち込む　ヒマが　むだ！
-どんどん　戦って　強くなるよ</language>
+		<language name="JPN" width="216">アンラッキーを　ラッキーに　かえる！
+どうすれば　いいか　わかんないけど</language>
+		<language name="JPN_KANJI" width="216">アンラッキーを　ラッキーに　変える！
+どうすれば　いいか　わかんないけど</language>
 	</row>
 
 	<row id="TRID_MINI_16_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">あなたと　あたし
-どちらの　ポケモンが　かわいいか▽
+どちらの　ポケモンが　けなげか▽
 みせあいっこ　しましょ！▼</language>
 		<language name="JPN_KANJI" width="216">あなたと　あたし
-どちらの　ポケモンが　可愛いか▽
+どちらの　ポケモンが　けなげか▽
 みせあいっこ　しましょ！▼</language>
 	</row>
 
 	<row id="TRID_MINI_16_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">あなたの　ポケモンは　つよくて
-あたしの　ポケモンは　かわいいの……</language>
-		<language name="JPN_KANJI" width="216">あなたの　ポケモンは　強くて
-あたしの　ポケモンは　可愛いの……</language>
+		<language name="JPN" width="216">まけても　あたしの
+ポケモンは　けなげなの……</language>
+		<language name="JPN_KANJI" width="216">負けても　あたしの
+ポケモンは　健気なの……</language>
 	</row>
 
 	<row id="TRID_MINI_16_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">まよっちゃうなあ……　かわいくて
-つよい　ポケモンが　いちばん　かな？</language>
-		<language name="JPN_KANJI" width="216">迷っちゃうなあ……　可愛くて
-強い　ポケモンが　一番　かな？</language>
+		<language name="JPN" width="216">１ぴき　２ひきで　かてないなら
+なかまを　ふやしてあげようかな</language>
+		<language name="JPN_KANJI" width="216">１匹　２匹で　勝てないなら
+仲間を　増やしてあげようかな</language>
 	</row>
 
 	<row id="TRID_CLEANING_03_TRMSG_FIGHT_START">
@@ -9983,9 +9983,9 @@
 
 	<row id="TRID_TANPAN_24_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">たぎる　たましい！
-オレの　ポケモン　すっげーぜ！！▼</language>
+オレの ミネズミ　すっげーぜ！！▼</language>
 		<language name="JPN_KANJI" width="216">たぎる　魂！
-オレの　ポケモン　すっげーぜ！！▼</language>
+オレの　ミネズミ　すっげーぜ！！▼</language>
 	</row>
 
 	<row id="TRID_TANPAN_24_TRMSG_FIGHT_LOSE">
@@ -9997,13 +9997,11 @@
 
 	<row id="TRID_TANPAN_24_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">ふたたび　たぎる　たましい！
-まけたって　きにしない！▼
-それよりも　とまらず
-まえに　すすむことが　だいじ！</language>
+まけたって　きにしない！▽
+まえに　すすむことが　だいじだぜ！</language>
 		<language name="JPN_KANJI" width="216">再び　たぎる　魂！
-負けたって　気にしない！▼
-それよりも　止まらず
-前に　進むことが　大事！</language>
+負けたって　気にしない！▽
+前に　進むことが　大事だぜ！</language>
 	</row>
 
 	<row id="TRID_SCHOOLB_13_TRMSG_POKE_UNDER_TWO">
