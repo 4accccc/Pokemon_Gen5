@@ -61,6 +61,7 @@ EVENT_START   ev_d07r0601_poke4_01
 
     //システム：きょだいな　ちからを　かんじさせる
     _SYSWIN_MSG( msg_d07r0601_poke4_01, POS_DOWN )
+    _LAST_KEYWAIT()
     _SYSWIN_CLOSE()
 
   ELSE
@@ -78,6 +79,7 @@ ev_gigasu_01:
 
   //システム：きょだいな　ちからを　かんじさせる
   _SYSWIN_MSG( msg_d07r0601_poke4_02, POS_DOWN )
+  _AB_KEYWAIT_MARK()
   _SYSWIN_CLOSE()
 
   //レジギガス：……ズッ　ズッ！！
@@ -129,6 +131,7 @@ _RET
 /*  BGイベント：レジロックの石像                            */
 /************************************************************/
 EVENT_START   ev_bg_d07r0601_monument_01
+  _PLAYER_NAME( 0 )
   _TALK_START_SE_PLAY()
   _PLAINWIN_MSG_DOWN( msg_d07r0601_poke4_05 )
   _LAST_KEYWAIT()
@@ -139,6 +142,7 @@ EVENT_END
 /*  BGイベント：レジアイスの石像                            */
 /************************************************************/
 EVENT_START   ev_bg_d07r0601_monument_02
+  _PLAYER_NAME( 0 )
   _TALK_START_SE_PLAY()
   _PLAINWIN_MSG_DOWN( msg_d07r0601_poke4_06 )
   _LAST_KEYWAIT()
@@ -149,6 +153,7 @@ EVENT_END
 /*  BGイベント：レジスチルの石像                            */
 /************************************************************/
 EVENT_START   ev_bg_d07r0601_monument_03
+  _PLAYER_NAME( 0 )
   _TALK_START_SE_PLAY()
   _PLAINWIN_MSG_DOWN( msg_d07r0601_poke4_07 )
   _LAST_KEYWAIT()
