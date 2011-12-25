@@ -52,11 +52,22 @@
  *					構造体宣言
 */
 //=============================================================================
+//-------------------------------------
+///	花火SEフェードアウトイベントワーク
+//=====================================
+typedef struct {
+  int   se_no;
+  int   volume;
+} SE_FADE_OUT_TASK_WORK;
+
 //=============================================================================
 /**
  *					static関数宣言
 */
 //=============================================================================
+
+// 花火SEフェードアウトタスク関数
+static FIELD_TASK_RETVAL SE_FadeOutTask( void *work );
 
 //=============================================================================
 /**
@@ -273,5 +284,59 @@ VMCMD_RESULT EvCmdEnding_FireWorks( VMHANDLE *core, void *wk )
   ENDING_GIMMICK_FireWorks( gsys );
 
   return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エンディング  花火アニメSE終了
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdEnding_FireWorksSeEnd( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK * p_fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  HEAPID heapID = FIELDMAP_GetHeapID( p_fieldmap );
+  FIELD_TASK      *task;
+  FIELD_TASK_MAN  *taskMan;
+	SE_FADE_OUT_TASK_WORK *p_wk;
+
+  int se_no = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
+
+  taskMan = FIELDMAP_GetTaskManager( p_fieldmap );
+
+  // 生成
+  task = FIELD_TASK_Create( heapID, sizeof(SE_FADE_OUT_TASK_WORK), SE_FadeOutTask );
+
+  // ワーク初期化
+	p_wk = FIELD_TASK_GetWork( task );
+  p_wk->se_no = se_no;
+  p_wk->volume = 127;
+
+  // タスク追加
+  FIELD_TASK_MAN_AddTask( taskMan, task, NULL );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+// 花火SEフェードアウトタスク関数
+static FIELD_TASK_RETVAL SE_FadeOutTask( void *work )
+{
+  SE_FADE_OUT_TASK_WORK *p_wk = work;
+
+  p_wk->volume -= 2; // 音量減算
+
+  if( p_wk->volume < 0 )
+  {
+    PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID( p_wk->se_no ) );// 停止
+    return FIELD_TASK_RETVAL_FINISH;
+  }
+  else
+  {
+    PMSND_PlayerSetVolume( PMSND_GetSE_DefaultPlayerID( p_wk->se_no ), p_wk->volume );
+  }
+
+  return FIELD_TASK_RETVAL_CONTINUE;
 }
 

@@ -48,4 +48,5 @@ extern VMCMD_RESULT EvCmdC12_AnmStart( VMHANDLE *core, void *wk );
 // エンディング
 // C09P03 エンディング用のポケモンリーグ
 extern VMCMD_RESULT EvCmdEnding_FireWorks( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdEnding_FireWorksSeEnd( VMHANDLE *core, void *wk );
 

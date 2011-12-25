@@ -32,6 +32,7 @@
 
   // エンディング
   DEF_CMD( EvCmdEnding_FireWorks, EV_SEQ_DEMO_GIMMICK_ENDING_FIREWORKS )
+  DEF_CMD( EvCmdEnding_FireWorksSeEnd, EV_SEQ_DEMO_GIMMICK_ENDING_FIREWORKS_SE_END )
 
   END_CMD
   //スクリプトコマンドテーブル終了

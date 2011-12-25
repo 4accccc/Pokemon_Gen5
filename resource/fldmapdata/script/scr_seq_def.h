@@ -16719,6 +16719,23 @@
   .short  EV_SEQ_DEMO_GIMMICK_ENDING_FIREWORKS
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _DEMO_GIMMICK_ENDING_FIREWORKS_SE_END
+ * @brief 花火再生SEをフェード終了
+ * 
+ * @param no SEナンバー
+ *
+ * @note  エンディング用
+ */
+//--------------------------------------------------------------
+#define _DEMO_GIMMICK_ENDING_FIREWORKS_SE_END( no ) \
+    _ASM_DEMO_GIMMICK_ENDING_FIREWORKS_SE_END no 
+
+  .macro  _ASM_DEMO_GIMMICK_ENDING_FIREWORKS_SE_END no 
+  .short  EV_SEQ_DEMO_GIMMICK_ENDING_FIREWORKS_SE_END
+  .short  \no
+  .endm
 
 
 //======================================================================
@@ -16856,6 +16873,9 @@
 	.short	EV_SEQ_KERUDHIO_GMK_EFFECT_DELETE
 	.endm
 
+//==============================================================
+// 【配布】メロエッタ関係
+//==============================================================
 //--------------------------------------------------------------
 /**
  * @def   _MERO_GMK_START_ANIME
