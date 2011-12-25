@@ -169,6 +169,12 @@ void ENDING_GIMMICK_Setup( FIELDMAP_WORK *p_fieldmap )
   // EXPOBJセット
   EXPOBJ_ObjSet( p_wk );
 
+  // ライトを夜に設定する
+  {
+    FIELD_LIGHT *p_light = FIELDMAP_GetFieldLight( p_fieldmap );
+    FIELD_LIGHT_COLORFADE_StartOneWay( p_light, GX_RGB(11, 11, 16), 1 );
+  }
+
   OS_Printf("エンディングギミックセットアップ\n");
 }
 
