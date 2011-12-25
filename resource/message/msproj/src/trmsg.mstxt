@@ -20727,27 +20727,29 @@
 			Language="JPN">
 			<Text>みぎ　よし！　ひだり　よし！▼
 それでは　しょうぶの　フライト
-テイク　オフ！▼</Text>
+テイク　アウト！▼
+じゃなかった　テイク　オフ！！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T10:53:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T10:53:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>右よし！　左よし！▼
 それでは　勝負の　フライト
-テイク　オフ！▼</Text>
+テイク　オフ！▼
+じゃなかった　テイク　オフ！！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T10:53:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T10:53:41" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -21012,26 +21014,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ちょっとーッ！
-アンコール！　アンコール！！</Text>
+まだ　サビの　とちゅう　だって！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T09:58:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T09:58:31" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ちょっとーッ！
-アンコール！　アンコール！！</Text>
+まだ　サビの　途中だって！！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T09:58:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T09:58:31" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -75755,26 +75757,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ちょっとーッ！
-アンコール！　アンコール！！</Text>
+まだ　サビの　とちゅう　だって！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T12:08:17" />
+				Time="2011-12-25T09:58:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T12:08:17" />
+				Time="2011-12-25T09:58:31" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ちょっとーッ！
-アンコール！　アンコール！！</Text>
+まだ　サビの　途中だって！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T12:08:17" />
+				Time="2011-12-25T09:58:31" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-23T12:08:17" />
+				Time="2011-12-25T09:58:31" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
