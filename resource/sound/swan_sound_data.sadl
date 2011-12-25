@@ -5261,3 +5261,5 @@
 #define GROUP_GLOBAL	0
 #define GROUP_LCG01	1
 #define GROUP_LCG02	2
+#define GROUP_KYUREM02_B	3
+#define GROUP_KYUREM02_W	4
