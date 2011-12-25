@@ -59,6 +59,8 @@ enum
   DEMO3D_HEAP_SIZE = 0x130000,  ///< ヒープサイズ
 };
 
+#define DEMO_SND_GROUP_MAX    (2)   // サウンドグループ定義がある数
+
 //=============================================================================
 /**
  *                構造体定義
@@ -106,12 +108,25 @@ typedef struct
 } DEMO3D_MAIN_WORK;
 
 
+
 //=============================================================================
 /**
  *              データ定義
  */
 //=============================================================================
+//-------------------------------------
+///	デモIDとサウンドグループ定義用
+//=====================================
+typedef struct {
+  DEMO3D_ID   demo_id;
+  int         snd_group;
+} SND_GROUP_TBL;
 
+// デモIDとサウンドグループIDの対応テーブル
+static const SND_GROUP_TBL snd_group_tbl[ DEMO_SND_GROUP_MAX ] = {
+  { DEMO3D_ID_KYUREMU_UNION_B_02, GROUP_KYUREM02_B },
+  { DEMO3D_ID_KYUREMU_UNION_W_02, GROUP_KYUREM02_W },
+};
 
 //=============================================================================
 /**
@@ -134,6 +149,10 @@ static void APP_EXCEPTION_Main( APP_EXCEPTION_WORK* wk );
 
 static BOOL sub_FadeInOutReq( u8 demo_id, u8 wipe, HEAPID heapID );
 static int _key_check( DEMO3D_MAIN_WORK *wk );
+
+// サウンドグループ処理
+static void APP_EXCEPTION_SndGroupLoad( DEMO3D_ID demo_id );
+static void APP_EXCEPTION_SndGroupExit( DEMO3D_ID demo_id );
 
 #ifdef PM_DEBUG
 static void debug_FldmmdlAnmCodeCheck( const GAMESYS_WORK* gsys );
@@ -171,13 +190,21 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
 {
   DEMO3D_MAIN_WORK *wk;
   DEMO3D_PARAM *param = pwk;
-  
+
   //オーバーレイ読み込み
   GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
 
   GF_ASSERT( param->demo_id != DEMO3D_ID_NULL && param->demo_id < DEMO3D_ID_MAX );
 #ifdef PM_DEBUG
   debug_FldmmdlAnmCodeCheck( param->gsys );
+#endif
+
+#ifdef PM_DEBUG
+  // 空きヒープサイズ
+  {
+    u32 heap_size = GFI_HEAP_GetHeapFreeSize( GFL_HEAPID_APP );
+    OS_Printf("開始前残りヒープサイズ:%x\n",heap_size);
+  }
 #endif
 
   //ヒープ作成
@@ -217,6 +244,9 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
  
   // デモ毎の例外処理エンジン初期化
   wk->expection = APP_EXCEPTION_Create( param->demo_id, wk->graphic, wk->engine, wk->heapID );
+
+  // デモ毎の例外処理サウンドヒープ読み込み
+  APP_EXCEPTION_SndGroupLoad( param->demo_id );
 
   {
     u8  type, sync;
@@ -267,6 +297,9 @@ static GFL_PROC_RESULT Demo3DProc_Exit( GFL_PROC *proc, int *seq, void *pwk, voi
     PMSND_StopSE_byPlayerID( PLAYER_SE_PSG );
   }
 #endif
+
+  // デモ毎の例外処理サウンドヒープ破棄
+  APP_EXCEPTION_SndGroupExit( wk->param->demo_id );
 
   // 例外処理エンジン 終了処理
   APP_EXCEPTION_Delete( wk->expection );
@@ -547,6 +580,75 @@ static void APP_EXCEPTION_Main( APP_EXCEPTION_WORK* wk )
   if( wk->p_funcset )
   {
     wk->p_funcset->Main( wk );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アプリ例外処理サウンドグループ　読み込み
+ *
+ *	@param	DEMO3D_ID demo_id 
+ */
+//-----------------------------------------------------------------------------
+static void APP_EXCEPTION_SndGroupLoad( DEMO3D_ID demo_id )
+{
+  int i;
+
+  for( i=0; i<DEMO_SND_GROUP_MAX; i++ )
+  {
+    // サウンドグループがあるデモIDがあるかチェック
+    if( snd_group_tbl[i].demo_id == demo_id )
+    {
+      NNSSndHeapHandle  snd_heap = PMSND_GetSndHeap();
+
+      // 前の状態保存
+      {
+        int ret;
+        ret = NNS_SndHeapSaveState( snd_heap );
+        GF_ASSERT_MSG( (ret!=-1), "サウンドヒープ状態保存失敗\n");
+      }
+
+      OS_Printf("サウンドヒープの空き容量 %d\n", NNS_SndHeapGetFreeSize( snd_heap ) );
+      // 新しいグループ読み込み
+      {
+        BOOL ret;
+        ret = NNS_SndArcLoadGroup( snd_group_tbl[i].snd_group, snd_heap);
+        GF_ASSERT(ret);
+      }
+      OS_Printf("サウンドグループ読み込み GROUPID %d\n", snd_group_tbl[i].snd_group);
+      OS_Printf("サウンドヒープの空き容量 %d\n", NNS_SndHeapGetFreeSize( snd_heap ) );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アプリ例外処理サウンドグループ　破棄
+ *
+ *	@param	DEMO3D_ID demo_id 
+ */
+//-----------------------------------------------------------------------------
+static void APP_EXCEPTION_SndGroupExit( DEMO3D_ID demo_id )
+{
+  int i;
+
+  for( i=0; i<DEMO_SND_GROUP_MAX; i++ )
+  {
+    // サウンドグループがあるデモIDがあるかチェック
+    if( snd_group_tbl[i].demo_id == demo_id )
+    {
+      NNSSndHeapHandle  snd_heap = PMSND_GetSndHeap();
+      // グループアンロード
+      // 状態を戻すと自動で解放するので呼ばなくて良い
+      //NNS_SndHeapDestroy(snd_heap);
+
+      // 保存しておいた状態を戻す
+      {
+        int level = NNS_SndHeapGetCurrentLevel( snd_heap );
+        NNS_SndHeapLoadState( snd_heap, level );
+      }
+      OS_Printf("サウンドグループ 保存状態に戻す\n");
+    }
   }
 }
 
