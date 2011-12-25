@@ -29,7 +29,6 @@ _EVENT_DATA		ev_d29r0101_d29r0301_workman2_01
 _EVENT_DATA		ev_d29r0101_d29r0301_workman2_02
 _EVENT_DATA_END
 
-
 /**************************************************************/
 /*            ZONE_CHANGE_LABEL                               */
 /**************************************************************/
@@ -49,6 +48,7 @@ IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 	_TALK_OBJ_START()
 	
 	_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_stop1_02 )
+	_AB_KEYWAIT_MARK()
 	
 	_CHECK_POKE_WAZA_GROUP( LWK_CHKWAZA, WAZANO_IWAKUDAKI )
 	
@@ -61,13 +61,23 @@ IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 	
 	//いわくだきもってる
 	ELSE
-	
+		_MSGWIN_CLOSE()
+		
+		_OBJ_ANIME( D29R0101_STOP1_01, anm_common_gyoe )
+		_OBJ_ANIME_WAIT()
+		
 		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_stop1_03 )
 		_MSGWIN_CLOSE()
 	
+		_OBJ_ANIME( D29R0101_STOP1_01, anm_break )
+		_TIME_WAIT( 5 )
+		_OBJ_ANIME( D29R0101_STOP2_01, anm_break )
+		_OBJ_ANIME( D29R0101_STOP3_01, anm_break )
+		_TIME_WAIT( 10 )
 		//暗転・岩OBJ削除
 		_BLACK_OUT()
 		_DISP_FADE_END_CHECK()
+		_OBJ_ANIME_WAIT()
 		
 		_OBJ_DEL( D29R0101_SPROCK_01 )
 		_OBJ_DEL( D29R0101_SPROCK_02 )
@@ -91,15 +101,28 @@ IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 		_OBJ_ANIME_WAIT()
 		
 		//ばんざ－い！
-		_BALLOONWIN_TALKOBJ_MSG( msg_d29r0101_stop1_04 )
+		_BALLOONWIN_TALKOBJ_MSG_POS( msg_d29r0101_stop1_04,POS_UP )
 		_MSGWIN_CLOSE()
 		
-		//退場
-		_OBJ_ANIME_AUTO( D29R0101_STOP1_01, 5, 26, FORCE_TYPE_NPC, 8, DIR_UD )
-		_TIME_WAIT( 20 )
-		_OBJ_ANIME_AUTO( D29R0101_STOP2_01, 5, 26, FORCE_TYPE_NPC, 8, DIR_LR )
-		_TIME_WAIT( 20 )
-		_OBJ_ANIME_AUTO( D29R0101_STOP3_01, 5, 26, FORCE_TYPE_NPC, 8, DIR_LR )
+		_PLAYER_DIR_GET(SCWK_ANSWER)
+		
+		SWITCH $SCWK_ANSWER
+		CASE DIR_LEFT THEN
+			_OBJ_ANIME( D29R0101_STOP1_01, anm_stop1_leave_01 )
+			_TIME_WAIT( 12 )
+			_OBJ_ANIME( D29R0101_STOP3_01, anm_stop3_leave_01 )
+			_OBJ_ANIME( D29R0101_STOP2_01, anm_stop2_leave_01 )
+		CASE DIR_UP THEN
+			_OBJ_ANIME( D29R0101_STOP1_01, anm_stop1_leave_02 )
+			_OBJ_ANIME( D29R0101_STOP3_01, anm_stop3_leave_02 )
+			_TIME_WAIT( 12 )
+			_OBJ_ANIME( D29R0101_STOP2_01, anm_stop2_leave_02 )
+		CASE DIR_DOWN THEN
+			_OBJ_ANIME( D29R0101_STOP1_01, anm_stop1_leave_01 )
+			_TIME_WAIT( 12 )
+			_OBJ_ANIME( D29R0101_STOP3_01, anm_stop3_leave_01 )
+			_OBJ_ANIME( D29R0101_STOP2_01, anm_stop2_leave_01 )
+		ENDSWITCH
 		_OBJ_ANIME_WAIT()
 
 		//作業員OBJ削除
@@ -130,8 +153,52 @@ EVENT_END
 //		☆ネジ山ストッパー用アニメラベル
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_jump_l
-	_ANIME_DATA	AC_STAY_JUMP_L_8F,1
+	_ANIME_DATA	AC_STAY_JUMP_L_8F,2
 	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_break
+	_ANIME_DATA	AC_STAY_JUMP_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_2F,20
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop1_leave_01
+	_ANIME_DATA	AC_WALK_D_8F,10
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop2_leave_01
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,10
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop3_leave_01
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,10
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop1_leave_02
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,10
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop2_leave_02
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,10
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stop3_leave_02
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,10
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
 
 /**************************************************************/
 /*		ネジ山ストッパー	一言メッセージのみ				  */
