@@ -5085,6 +5085,25 @@ u32 RESORT_CITY_DATA_GetRnd( const RESORT_CITY_DATA *cp_wk, RESORT_RND_ID id, u3
   return RESORT_DATA_GetRnd( seed, id, range );
 }
 
+
+#ifdef PM_DEBUG
+//----------------------------------------------------------------------------
+/**
+ *	@brief  トレーナーIDアドレスを取得
+ *
+ *	@param	RESORT_CITY_DATA *p_wk  ワーク
+ *
+ *	@return トレーナーIDアドレス
+ */
+//-----------------------------------------------------------------------------
+u32* RESORT_CITY_DATA_GetTrainerIDAdrs( RESORT_CITY_DATA *p_wk, int index )
+{
+  GF_ASSERT( index < RESORT_TRAINER_ID_STORE_SIZE );
+
+  return &p_wk->trainerID[index];
+}
+#endif
+
 //=============================================================================
 /**
  *  データ初期化

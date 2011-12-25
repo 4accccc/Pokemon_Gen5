@@ -722,6 +722,10 @@ extern u32 RESORT_CITY_DATA_GetRnd( const RESORT_CITY_DATA *cp_wk, RESORT_RND_ID
 
 extern u32 RESORT_DATA_GetRnd( u32 seed, RESORT_RND_ID id, u32 range );
 
+#ifdef PM_DEBUG
+extern u32* RESORT_CITY_DATA_GetTrainerIDAdrs( RESORT_CITY_DATA *p_wk, int index );
+#endif
+
 //=============================================================================
 /**
  *　  デバッグ
