@@ -8,6 +8,7 @@
   .include  "../../../prog/include/msg/script/msg_t01r0101.h"
   .include  "t01r0101.h"
 
+  //@author suginaka_katsunori
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,10 +20,11 @@
 _EVENT_DATA    ev_t01r0101_mother_01
 _EVENT_DATA    ev_t01r0101_gameover_recover		//ゲームオーバー復帰時
 _EVENT_DATA    ev_init_t01r0101
+_EVENT_DATA	ev_scene_t01r0101_mama
 _EVENT_DATA_END
 
 
-//	！！！	イベントで　LOCALWORK15　を使用しています	！！！
+//	！！！	イベントで　LOCALWORK15・LOCALWORK10　を使用しています	！！！
 //	！！！	同マップ内での使用を禁止します				！！！
 
 
@@ -33,16 +35,138 @@ INIT_EVENT_START ev_init_t01r0101
 
 INIT_EVENT_END
 
+/************************************************************/
+/*	前作ママのシーンチェンジイベント					*/
+/************************************************************/
+EVENT_START ev_scene_t01r0101_mama
+
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラパージ
+  _CAMERA_MOVE(9688,0,970752,425984,0,360448, 40)
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
+  //あら　おかえり
+  _BALLOONWIN_OBJMSG_POS( msg_t01r0101_mama_01 ,T01R0101_MAMA_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+  
+  //主人公の方を向いて！マーク
+  _OBJ_ANIME( T01R0101_MAMA_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( T01R0101_MAMA_01, anm_common_gyoe )
+  _OBJ_ANIME_WAIT()
+
+  //あれ……？
+  _BALLOONWIN_OBJMSG_POS( msg_t01r0101_mama_02 ,T01R0101_MAMA_01 ,POS_DEFAULT )
+  _MSGWIN_CLOSE()
+
+  _CAMERA_RECV_MOVE(30)	//カメラ復帰移動
+
+  //主人公に近づく
+  _OBJ_ANIME_AUTO( T01R0101_MAMA_01, 6, 9, FORCE_TYPE_NOT, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  _CAMERA_BIND()		//カメラバインド
+  _CAMERA_END()		//カメラ操作終了
+  
+  _TIME_WAIT( 16 )
+  _OBJ_ANIME( T01R0101_MAMA_01, anm_common_tenten )
+  _OBJ_ANIME_WAIT()
+
+  //プレイヤー名格納
+  _PLAYER_NAME( 0 )
+
+  //あなた
+  _BALLOONWIN_OBJMSG_MF( msg_t01r0101_mama_03, msg_t01r0101_mama_04, T01R0101_MAMA_01, POS_DEFAULT )
+
+  //はい・いいえ選択
+  _YES_NO_WIN( SCWK_ANSWER )
+  
+  //はいの場合
+  IF $SCWK_ANSWER == SCR_YES THEN
+      //だと思った！
+      _BALLOONWIN_OBJMSG_POS( msg_t01r0101_mama_05 ,T01R0101_MAMA_01 ,POS_DEFAULT )
+  //いいえの場合
+  ELSE
+      _BALLOONWIN_OBJMSG_POS( msg_t01r0101_mama_06 ,T01R0101_MAMA_01 ,POS_DEFAULT )
+  ENDIF
+
+  //あなたの　ママとは
+  _BALLOONWIN_OBJMSG_POS( msg_t01r0101_mama_07 ,T01R0101_MAMA_01 ,POS_DEFAULT )
+  _AB_KEYWAIT_MARK()
+  _MSGWIN_CLOSE()
+  
+  //定位置に戻る
+  _OBJ_ANIME_AUTO( T01R0101_MAMA_01, 6, 5, FORCE_TYPE_NOT, 8, DIR_UD )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( T01R0101_MAMA_01, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  //========================================//
+  $WK_SCENE_T01R0101 = 1
+  //========================================//
+  
+EVENT_END
+
 
 /************************************************************/
-/*						主人公ママ							*/
+/*						主人公ママ				*/
 /************************************************************/
 EVENT_START ev_t01r0101_mother_01
+  
+  _TALK_OBJ_START()
+  //入室して初会話の場合
+  IF $LOCALWORK10 == 0 THEN
 
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_end_08 )
+    _BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_08 )
+    _MSGWIN_CLOSE()
+
+    //暗転して手持ちポケモンを回復
+    _BLACK_OUT()
+    _DISP_FADE_END_CHECK()
+    _TEMOTI_POKEMON_KAIFUKU()   //回復処理
+    _ME_PLAY( SEQ_ME_ASA )
+    _ME_WAIT()
+    _BLACK_IN()
+    _DISP_FADE_END_CHECK()
+    
+    //========================================//
+    //回復した
+    $LOCALWORK10 = 1
+    //========================================//
+
+    _CALL mama_msg
+
+  ELSE
+  
+    _CALL mama_msg
+
+  ENDIF
 
 EVENT_END
 
+mama_msg:
+
+_GET_RND( SCWK_ANSWER, 100 )
+
+IF $SCWK_ANSWER <= 19 THEN
+  _BALLOONWIN_TALKOBJ_MSG_POS( msg_t01r0101_mama_09a, POS_DEFAULT )
+ELSIF $SCWK_ANSWER <= 39 THEN
+  _BALLOONWIN_TALKOBJ_MSG_POS( msg_t01r0101_mama_09b, POS_DEFAULT )
+ELSIF $SCWK_ANSWER <= 59 THEN
+  _BALLOONWIN_TALKOBJ_MSG_POS( msg_t01r0101_mama_09c, POS_DEFAULT )
+ELSIF $SCWK_ANSWER <= 79 THEN
+  _BALLOONWIN_TALKOBJ_MSG_POS( msg_t01r0101_mama_09d, POS_DEFAULT )
+ELSIF $SCWK_ANSWER <= 99 THEN
+  _BALLOONWIN_TALKOBJ_MSG_POS( msg_t01r0101_mama_09e, POS_DEFAULT )
+ENDIF
+
+_LAST_KEYWAIT()
+_MSGWIN_CLOSE()
+
+_DEBUG_PRINT_WK( SCWK_ANSWER )
+
+_RET
 
 /************************************************************/
 /*                 ゲームオーバー復帰時                     */
@@ -74,4 +198,40 @@ EVENT_START ev_t01r0101_gameover_recover
 }
 EVENT_END
 
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_staystep_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	☆共通処理：ギョエ・？・…
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_hatena
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_tenten
+	_ANIME_DATA	AC_MARK_TENTEN,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_onpu
+	_ANIME_DATA	AC_MARK_ONPU,1
+	_ANIME_DATA	ACMD_END,0

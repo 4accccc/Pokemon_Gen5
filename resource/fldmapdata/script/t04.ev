@@ -15,7 +15,7 @@
   
   //@author Mizuguchi_Mai
   //@author fujimura_souichirou（ライバル戦のトレーナーデータ差し替え・クリア後イベント）
-  //@author suginaka_katsunori//海底遺跡イベント
+  //@author suginaka_katsunori//海底遺跡イベント・スクリプト修正
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -519,6 +519,9 @@ EVENT_END
 EVENT_START   ev_t04_swrival_01
 
   _TALK_OBJ_START()
+
+  //プレイヤー名代入
+  _PLAYER_NAME( 0 )
 
   //ライバル名代入
   _RIVAL_NAME( 1 )
