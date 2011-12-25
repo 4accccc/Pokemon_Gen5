@@ -99,7 +99,8 @@ enum {
   GMCLEAR_SEQ_SCRIPT_CALL_SECOND,// スクリプト呼び出し(C12)
   GMCLEAR_SEQ_FIELD_OPEN_WAIT,  // フィールドマップ開始待ち
   GMCLEAR_SEQ_FADEIN,           // フェードイン
-  GMCLEAR_SEQ_BGM_PLAY,         // BGM再生
+  GMCLEAR_SEQ_ENDING_BGM_PLAY,  // エンディングBGM再生
+  GMCLEAR_SEQ_THEEND_BGM_PLAY,  // 「おわり」BGM再生
   GMCLEAR_SEQ_BGM_FADE_OUT,     // BGMフェードアウト
   GMCLEAR_SEQ_BGM_STOP,         // BGM停止
   //
@@ -318,14 +319,24 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
     }
     break;
 
-  // BGM再生
-  case GMCLEAR_SEQ_BGM_PLAY:
+  // エンディング BGM再生
+  case GMCLEAR_SEQ_ENDING_BGM_PLAY:
     {
       // BGM再生開始
       // 2回目のスクリプトが終了まで再生する。
       //
       // 【仮】ラベルは仮
       PMSND_PlayBGM( SEQ_BGM_ENDING );
+
+      NowSeqFinish( work, seq );
+    }
+    break;
+
+  // THE END BGM再生
+  case GMCLEAR_SEQ_THEEND_BGM_PLAY:
+    {
+      // BGM再生開始
+      PMSND_PlayBGM( SEQ_BGM_THEEND );
 
       NowSeqFinish( work, seq );
     }
@@ -512,7 +523,7 @@ static void SetupSequence( GAMECLEAR_WORK* work )
   // 最初のスクリプト
   work->seqArray[pos++] = GMCLEAR_SEQ_FIELD_OPEN_WAIT;
   work->seqArray[pos++] = GMCLEAR_SEQ_MAP_CHANGE_FIRST;
-  work->seqArray[pos++] = GMCLEAR_SEQ_BGM_PLAY;
+  work->seqArray[pos++] = GMCLEAR_SEQ_ENDING_BGM_PLAY;
   work->seqArray[pos++] = GMCLEAR_SEQ_SCRIPT_CALL_FIRST;
   work->seqArray[pos++] = GMCLEAR_SEQ_FIELD_CLOSE_WAIT;
 
@@ -528,6 +539,7 @@ static void SetupSequence( GAMECLEAR_WORK* work )
   work->seqArray[pos++] = GMCLEAR_SEQ_BGM_STOP;
   work->seqArray[pos++] = GMCLEAR_SEQ_FIELD_CLOSE_WAIT;
 
+  work->seqArray[pos++] = GMCLEAR_SEQ_THEEND_BGM_PLAY;
   work->seqArray[pos++] = GMCLEAR_SEQ_THE_END;
   work->seqArray[pos++] = GMCLEAR_SEQ_END;
 
