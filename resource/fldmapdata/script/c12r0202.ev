@@ -15,7 +15,7 @@
   
   //@author Mizuguchi_Mai
   //@author fujimura_souichirou
-  //@author suginaka_katsunori
+  //@author suginaka_katsunori　スクリプト修正
   
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -76,6 +76,11 @@ EVENT_START   ev_c12r0202_rivalsister_01
   //主人公名代入
   _PLAYER_NAME( 0 )
   
+  //手持ちポケモンの位置を取得
+  _GET_PARTY_FRONT_POKEMON( LWK_FRONT, POKECOUNT_MODE_BATTLE_ENABLE )
+  //先頭ポケモンの名前を格納
+  _TEMOTI_MONS_NAME( 1, LWK_FRONT )
+
   //殿堂入り回数を取得
   _GET_RECORD( RECID_DENDOU_CNT, LOCALWORK15 )
 
@@ -92,28 +97,19 @@ EVENT_START   ev_c12r0202_rivalsister_01
 
   //タウンマップをライバルに渡すまで
   ELSIF $WK_SCENE_D22R0101 == 0 && FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
-  
-    //先頭ポケモンの名前を取得
-    _TEMOTI_MONS_NAME( 1 , LWK_FRONT )
 
     //ライバル妹：
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_02 )
-
     
   ELSIF $WK_SCENE_C12GYM_OPEN == 3 && FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
-     
-     //先頭ポケモンの名前を取得
-    _TEMOTI_MONS_NAME( 1 , LWK_FRONT )
      
     //ライバル妹：
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_03 )
 
-  //クリア後
-  ELSIF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+  //チャンピオンロードでライバルと戦った後なら
+  ELSIF $WK_SCENE_D09R1401_SWRIVAL_01 == 1 THEN
   	
 	IF FLAG_ON( FE_D10R0401_POKE10_MEET ) && FLAG_ON( FE_C12R0202_RIVALSISTER_TAL ) && FLAG_OFF( FV_C12R0202_POKE32_01 )  THEN
-		
-		_PLAYER_NAME( 0 )
 
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c12r0202_rivalsister_05 )
 	
