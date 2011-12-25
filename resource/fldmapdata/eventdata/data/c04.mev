@@ -1,5 +1,5 @@
 #event data
-#save date:2011/12/17 19:53:34
+#save date:2011/12/25 10:15:27
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\c04.wms
 #SECTION START:OBJ_EVENT
@@ -328,7 +328,7 @@ C04_FOOTBALLM_01
 #OBJ CODE Number
 FOOTBALLM
 #MOVE CODE Number
-MV_DMY
+MV_RND_DLR
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -359,7 +359,7 @@ C04_CLOWN_02
 #OBJ CODE Number
 CLOWN
 #MOVE CODE Number
-MV_RND
+MV_RT2
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -377,11 +377,11 @@ DIR_DOWN
 #Move Limit X Number
 0
 #Move Limit Z Number
-3
+7
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-216 16 -312
+152 16 -264
 #event number: 12
 #type
 1
@@ -390,7 +390,7 @@ C04_BADMAN_01
 #OBJ CODE Number
 BADMAN
 #MOVE CODE Number
-MV_RND
+MV_RTDR         
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -406,13 +406,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-3
+5
 #Move Limit Z Number
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-360 16 -600
+344 16 -600
 #event number: 13
 #type
 1
@@ -483,7 +483,7 @@ C04_GIRL3_01
 #OBJ CODE Number
 GIRL3
 #MOVE CODE Number
-MV_DMY
+MV_DIR_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -505,7 +505,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-568 16 -376
+568 16 -424
 #event number: 16
 #type
 1
@@ -514,7 +514,7 @@ C04_POKE34_01
 #OBJ CODE Number
 POKE34
 #MOVE CODE Number
-MV_DMY
+MV_RTURLD       
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -522,7 +522,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C04_POKE34_01
 #Direction Type Number
-DIR_LEFT
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -530,13 +530,13 @@ DIR_LEFT
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+1
 #Move Limit Z Number
-0
+2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-568 16 -392
+552 16 -440
 #event number: 17
 #type
 1
@@ -576,7 +576,7 @@ C04_MIDDLEWOMAN1_01
 #OBJ CODE Number
 MIDDLEWOMAN1
 #MOVE CODE Number
-MV_RND_UDL
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -592,13 +592,13 @@ DIR_LEFT
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+1
 #Move Limit Z Number
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-568 16 -552
+536 16 -584
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
