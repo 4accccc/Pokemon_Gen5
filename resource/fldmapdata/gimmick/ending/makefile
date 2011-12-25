@@ -58,6 +58,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 	@rm -f $(targetname).naix
 	@rm -f *.nsb*
 	@rm -f *.bin
+	@rm -f *.N*R
 endif
 
 
@@ -94,6 +95,18 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 %.nsbva:	data/%.iva
 #	@echo $<をコンバート
 	@g3dcvtr $<
+
+%.NCLR:	data/%.ncl
+#	@echo $<をコンバート
+	@g2dcvtr $<
+
+%.NCGR:	data/%.ncg
+#	@echo $<をコンバート
+	@g2dcvtr $< -bg
+
+%.NSCR:	data/%.nsc
+#	@echo $<をコンバート
+	@g2dcvtr $<
 
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(DATA_LIST)

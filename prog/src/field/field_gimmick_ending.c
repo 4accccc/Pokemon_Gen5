@@ -57,6 +57,7 @@ typedef struct {
   FLD_EXP_OBJ_CNT_PTR exp_obj;        // 拡張3Dモデルコントローラ
   FIELDMAP_WORK       *p_fieldmap;    // フィールドマップ
 
+  BOOL                bg_init;
 } ENDING_GIMMICK_TMP;
 
 
@@ -129,6 +130,10 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_Setup = {
 */
 //=============================================================================
 
+// BG
+static void BG_Load( ENDING_GIMMICK_TMP *p_wk );
+static void BG_Exit( ENDING_GIMMICK_TMP *p_wk );
+
 // EXPOBJ
 static void EXPOBJ_ObjSet( ENDING_GIMMICK_TMP *p_wk );
 static void EXPOBJ_ObjDell( ENDING_GIMMICK_TMP *p_wk );
@@ -159,9 +164,11 @@ void ENDING_GIMMICK_Setup( FIELDMAP_WORK *p_fieldmap )
   p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GIMMICK_TMP_ASSIGN_ID );
   p_wk->p_fieldmap  = p_fieldmap;
   p_wk->exp_obj     = FIELDMAP_GetExpObjCntPtr( p_fieldmap );
+  p_wk->bg_init     = FALSE;
 
   // EXPOBJセット
   EXPOBJ_ObjSet( p_wk );
+
   OS_Printf("エンディングギミックセットアップ\n");
 }
 
@@ -176,6 +183,8 @@ void ENDING_GIMMICK_End( FIELDMAP_WORK *p_fieldmap )
 {
   ENDING_GIMMICK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GIMMICK_TMP_ASSIGN_ID );
 
+  // BG破棄
+  BG_Exit( p_wk );
   // EXPOBJ破棄
   EXPOBJ_ObjDell( p_wk );
 
@@ -194,6 +203,14 @@ void ENDING_GIMMICK_Move( FIELDMAP_WORK *p_fieldmap )
 {
   ENDING_GIMMICK_TMP *p_wk = GMK_TMP_WK_GetWork( p_fieldmap, GIMMICK_TMP_ASSIGN_ID );
 
+  if( p_wk->bg_init == FALSE )
+  {
+    // BG初期化
+    BG_Load( p_wk );
+
+    p_wk->bg_init = TRUE;
+    ICHI_Printf("BG_Load \n");
+  }
   // EXPOBJアニメメイン
   EXPOBJ_ObjMain( p_wk );
 }
@@ -222,6 +239,69 @@ void ENDING_GIMMICK_FireWorks( GAMESYS_WORK *gsys )
  *					static関数
 */
 //=============================================================================
+//=============================================================================
+/**
+ *          BG
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  シネマ枠のBG読み込み
+ *
+ *	@param	ENDING_GIMMICK_TMP *p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void BG_Load( ENDING_GIMMICK_TMP *p_wk )
+{
+  HEAPID heap_id = FIELDMAP_GetHeapID( p_wk->p_fieldmap );
+
+
+  GFL_BG_FreeBGControl( FLDBG_MFRM_EFF2 );
+
+#if 1
+  // BGのセットアップ
+  {
+    //BG Frame
+    GFL_BG_BGCNT_HEADER bgcntText = {
+      0, 0, 0x800, 0,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x04000, GFL_BG_CHRSIZ_256x256,
+      GX_BG_EXTPLTT_01, FLDBG_MFRM_EFF2_PRI, 0, 0, FALSE
+    };
+    GFL_BG_SetBGControl( FLDBG_MFRM_EFF2, &bgcntText, GFL_BG_MODE_TEXT );
+  }
+#endif
+
+  // BGリソース読み込み
+  {
+    ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ENDING_GIMMICK, GFL_HEAP_LOWID( heap_id ) );
+
+    GFL_ARCHDL_UTIL_TransVramPalette( 
+        ah, NARC_ending_ed_back_NCLR, PALTYPE_MAIN_BG, 0, 0, heap_id );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter(
+        ah, NARC_ending_ed_back_NCGR, FLDBG_MFRM_EFF2, 0, 0, FALSE, heap_id );
+    GFL_ARCHDL_UTIL_TransVramScreen(
+        ah, NARC_ending_ed_back_NSCR, FLDBG_MFRM_EFF2, 0, 0, FALSE, heap_id );
+
+    GFL_ARC_CloseDataHandle( ah );
+
+    GFL_BG_LoadScreenReq( FLDBG_MFRM_EFF2 );
+    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BG破棄
+ *
+ *	@param	ENDING_GIMMICK_TMP *p_wk 
+ */
+//-----------------------------------------------------------------------------
+static void BG_Exit( ENDING_GIMMICK_TMP *p_wk )
+{
+  GFL_BG_FreeBGControl( FLDBG_MFRM_EFF2 );
+}
+
 //=============================================================================
 /**
  *          EXPOBJ

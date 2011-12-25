@@ -2,5 +2,8 @@ DATA_LIST = \
     ed_hanabi01.nsbmd \
     ed_hanabi01.nsbca \
     ed_hanabi01.nsbma \
-    ed_hanabi01.nsbta
+    ed_hanabi01.nsbta \
+    data/ed_back.NCLR \
+    data/ed_back.NCGR \
+    data/ed_back.NSCR
 
