@@ -265,7 +265,8 @@ static void Local_Tvt_SetCallSelect( LOCAL_TVT_CALL *p_wk, LOCAL_TVT_CALLSELECT_
     u16 msgid   = 0;
     for( i = 0; i < NELEMS(sc_call_data) && cnt < LOCAL_TVT_CALLSELECT_SELECT_MAX; i++ )
     {
-      if( LOCAL_TVT_CALLDATA_IsCall( p_wk->p_data, sc_call_data[i].person ) )
+      if( LOCAL_TVT_CALLDATA_IsCall( p_wk->p_data, sc_call_data[i].person )
+        && LOCAL_TVT_CALLDATA_IsSelect( p_wk->p_data, person ) )
       {
         if( i == LOCAL_TVT_PERSON_SECRET )
         {
@@ -286,7 +287,7 @@ static void Local_Tvt_SetCallSelect( LOCAL_TVT_CALL *p_wk, LOCAL_TVT_CALLSELECT_
         }
         p_wk->call_list[cnt]    = person;
         p_param->msgID[cnt]     = msgid;
-        p_param->is_select[cnt] = LOCAL_TVT_CALLDATA_IsSelect( p_wk->p_data, person );
+        p_param->is_select[cnt] = TRUE;
         cnt++;
       }
     }
