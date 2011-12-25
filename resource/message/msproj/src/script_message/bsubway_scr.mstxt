@@ -2899,14 +2899,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんにちは！　ぼく　トウヤ！▼
+			<Text>やあ　ひさしぶり！
+キョウヘイだよ　おぼえてる？▼
 きみ　マルチトレインに
-ちょうせんするの　はじめて　でしょ？▼
+ちょうせんするの　はじめて　だろ？▼
 マルチトレインに　ちょうせんするには
 パートナーが　ひつようなんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:43:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2914,14 +2915,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんにちは！　ぼく　トウヤ！▼
+			<Text>やあ　ひさしぶり！
+キョウヘイだよ　おぼえてる？▼
 きみ　マルチトレインに
-挑戦するの　はじめて　でしょ？▼
+挑戦するの　はじめて　だろ？▼
 マルチトレインに　挑戦するには
 パートナーが　必要なんだ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:43:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2930,10 +2932,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>マルチ　パートナー男
-※SWANでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:41:07" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -2955,14 +2957,15 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>こんにちは！　わたし　トウコ！▼
+			<Text>あら！
+メイだけど　おぼえてる？▼
 あなた　マルチトレインに
-ちょうせんするの　はじめて　でしょ？▼
+ちょうせんするの　はじめて　だよね？▼
 マルチトレインに　ちょうせんするには
 パートナーが　ひつようなのよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:43:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2970,14 +2973,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こんにちは！　わたし　トウコ！▼
+			<Text>あら！
+メイだけど　おぼえてる？▼
 あなた　マルチトレインに
-挑戦するの　はじめて　でしょ？▼
+挑戦するの　はじめて　だよね？▼
 マルチトレインに　挑戦するには
 パートナーが　必要なのよ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:43:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2986,10 +2990,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>マルチ　パートナー女
-※SWANでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:41:09" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3113,14 +3117,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もしかして　きょうは　ひとり？？▼
-だったら　ぼくと　パートナーを
-くもうよ！　うん　うん　それがいい▼
-じゃ　ぼくは　どんな　ポケモンを
-さんか　させればいい？</Text>
+			<Text>あれ　きょうは　ひとり？▼
+だったら　じぶんと
+コンビを　くもうよ！▼
+よし！　どんな　ポケモンを
+さんか　させようか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:54:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3128,14 +3132,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もしかして　きょうは　１人？？▼
-だったら　ぼくと　パートナーを
-組もうよ！　うん　うん　それがいい▼
-じゃ　ぼくは　どんな　ポケモンを
-参加させればいい？</Text>
+			<Text>あれ　きょうは　ひとり？▼
+だったら　自分と
+コンビを　組もうよ！▼
+よし！　どんな　ポケモンを
+参加させようか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:54:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3144,10 +3148,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>マルチ　パートナー男
-※SWANでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:55:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3169,14 +3173,14 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>もしかして　きょうは　ひとり？？▼
-だったら　わたしと　パートナーを
-くもうよ！　うん　うん　それがいいわ▼
-じゃ　わたしは　どんな　ポケモンを
-さんか　させればいい？</Text>
+			<Text>あら　ひとり　なの？▼
+よかったら　あたしと
+コンビを　くんでほしいな！▼
+ね！　じゃあ　あたしは　どんな
+ポケモンを　さんか　させようかな？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:56:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3184,14 +3188,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>もしかして　きょうは　１人？？▼
-だったら　わたしと　パートナーを
-組もうよ！　うん　うん　それがいいわ▼
-じゃ　わたしは　どんな　ポケモンを
-参加させればいい？</Text>
+			<Text>あら　ひとり　なの？▼
+よかったら　あたしと
+コンビを　組んでほしいな！▼
+ね！　じゃあ　あたしは　どんな
+ポケモンを　参加させようかな？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:56:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3200,10 +3204,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>マルチ　パートナー女
-※SWANでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:55:30" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3345,11 +3349,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わかった　こうげきじゅうし　だね！
-じゃ　はじめよう！▼</Text>
+			<Text>りょうかい！　それじゃあ
+こうげきじゅうしで　いくよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:57:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3357,11 +3361,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わかった　攻撃重視だね！
-じゃ　はじめよう！▼</Text>
+			<Text>了解！　それじゃあ
+攻撃重視で　いくよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:57:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3370,10 +3374,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>マルチ　パートナー男
-※SWANでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:58:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3395,11 +3399,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わかった　ぼうぎょじゅうし　だね！
-じゃ　はじめよう！▼</Text>
+			<Text>りょうかい！　それじゃあ
+ぼうぎょじゅうしで　いくよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:57:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3407,11 +3411,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わかった　防御重視だね！
-じゃ　はじめよう！▼</Text>
+			<Text>了解！　それじゃあ
+防御重視で　いくよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:58:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3420,10 +3424,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>マルチ　パートナー男
-※SWANでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:58:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3445,11 +3449,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わかった　バランスじゅうし　だね！
-じゃ　はじめよう！▼</Text>
+			<Text>りょうかい！　それじゃあ
+バランスじゅうしで　いくよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:58:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3457,11 +3461,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わかった　バランス重視だね！
-じゃ　はじめよう！▼</Text>
+			<Text>了解！　それじゃあ
+バランス重視で　いくよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:58:10" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3470,10 +3474,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>マルチ　パートナー男
-※SWANでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:58:21" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3495,11 +3499,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わかったわ　こうげきじゅうし　ね！
-じゃ　はじめましょ！▼</Text>
+			<Text>うん！　こうげきじゅうし　ね！
+さいこうの　ペアに　なろうね！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:59:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3507,11 +3511,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わかったわ　攻撃重視ね！
-じゃ　はじめましょ！▼</Text>
+			<Text>うん！　攻撃重視　ね！
+最高の　ペアに　なろうね！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:59:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3520,10 +3524,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>マルチ　パートナー女
-※SWANでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:58:24" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3545,11 +3549,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わかったわ　ぼうぎょじゅうし　ね！
-じゃ　はじめましょ！▼</Text>
+			<Text>うん！　ぼうぎょじゅうし　ね！
+さいこうの　ペアに　なろうね！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:59:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3557,11 +3561,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わかったわ　防御重視ね！
-じゃ　はじめましょ！▼</Text>
+			<Text>うん！　防御重視　ね！
+最高の　ペアに　なろうね！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T09:00:07" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3570,10 +3574,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>マルチ　パートナー女
-※SWANでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:58:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3595,11 +3599,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>わかったわ　バランスじゅうし　ね！
-じゃ　はじめましょ！▼</Text>
+			<Text>うん！　バランスじゅうし　ね！
+さいこうの　ペアに　なろうね！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T09:00:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3607,11 +3611,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>わかったわ　バランス重視ね！
-じゃ　はじめましょ！▼</Text>
+			<Text>うん！　バランス重視　ね！
+最高の　ペアに　なろうね！！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T09:00:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3620,10 +3624,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>マルチ　パートナー女
-※SWANでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T08:58:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3645,11 +3649,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>えー　ぼくと　くむき　ないの？▼
-さよなら……▼</Text>
+			<Text>あっ　そうか！
+じゅんびが　できていないのか▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T09:00:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3657,11 +3661,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>えー　ぼくと　組む気ないの？▼
-さよなら……▼</Text>
+			<Text>あっ　そうか！
+準備が　できていないのか▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T09:00:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3670,10 +3674,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>マルチ　パートナー男
-※SWANでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T09:00:56" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -3688,11 +3692,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>えー　わたしと　くむき　ないの？▼
-さよなら……▼</Text>
+			<Text>あっ　そうか！
+じゅんびが　できていないのね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T09:00:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3700,11 +3704,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>えー　わたしと　組む気ないの？▼
-さよなら……▼</Text>
+			<Text>あっ　そうか！
+準備が　できていないのね▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T09:01:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3713,10 +3717,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>マルチ　パートナー女
-※SWANでメッセージ変更予定</Comment>
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:09" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T09:00:58" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">

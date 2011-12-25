@@ -372,11 +372,10 @@ ID：mount_14</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName ]！
-こっちに　こいよッ！▼</Text>
+			<Text>[Name:TrainerName ]！　まてよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T08:49:08" />
+				Time="2011-12-25T07:25:25" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -384,11 +383,10 @@ ID：mount_14</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName ]！
-こっちに　来いよッ！▼</Text>
+			<Text>[Name:TrainerName ]！　待てよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T08:49:16" />
+				Time="2011-12-25T07:25:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -428,10 +426,11 @@ ID：mount_14</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>チェレン『ふたりとも　みて▼</Text>
+			<Text>チェレン『ふたりとも
+こっちに　おいで▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T08:49:30" />
+				Time="2011-12-25T07:25:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -439,10 +438,11 @@ ID：mount_14</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>チェレン『二人とも　みて▼</Text>
+			<Text>チェレン『二人とも
+こっちに　おいで▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T08:49:33" />
+				Time="2011-12-25T07:25:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -481,12 +481,14 @@ ID：mount_14</Text>
 			Language="JPN">
 			<Text>いろの　こい　くさむらが　あるよね▼
 ここは　まれにだけど　ポケモンが
-２ひき　どうじに　とびだしてくるんだ▼
+２ひき　どうじに　とびだしたり▼
+ちょっと　つよめの
+ポケモンが　ひそんでいるんだ▼
 だから　はいるときは
 ちゅうい　したほうが　いいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T05:15:14" />
+				Time="2011-12-25T07:32:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -496,12 +498,14 @@ ID：mount_14</Text>
 			Language="JPN_KANJI">
 			<Text>色の　濃い　草むらが　あるよね▼
 ここは　まれにだけど　ポケモンが
-２匹同時に　飛びだしてくるんだ▼
+２匹同時に　飛びだしたり▼
+ちょっと　強めの
+ポケモンが　潜んでいるんだ▼
 だから　入るときは
 注意したほうが　いいよ▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T05:15:21" />
+				Time="2011-12-25T07:32:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -537,12 +541,12 @@ ID：mount_14</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>つぎに　ちょうせん　するなら
+			<Text>きみたちが　つぎに　いどむのは
 タチワキジム　だね▽
 じゃあ　これを！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T05:15:41" />
+				Time="2011-12-25T07:30:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -550,12 +554,12 @@ ID：mount_14</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>次に　挑戦するなら
+			<Text>きみたちが　次に　挑むのは
 タチワキジム　だね▽
 じゃあ　これを！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-10T05:15:44" />
+				Time="2011-12-25T07:30:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

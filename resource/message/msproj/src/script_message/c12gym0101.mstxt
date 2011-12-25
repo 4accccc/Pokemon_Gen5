@@ -1295,4 +1295,58 @@
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
 	</TextRow>
+	<TextRow
+		Label="msg_c12gym0101_glasses_01"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>まさにいま　ジムリーダーは
+ねっせんの　まっさいちゅう　っす！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-25T07:03:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-25T07:01:28" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>まさにいま　ジムリーダーは
+熱戦の　真っ最中　っす！</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-25T07:03:42" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-25T07:01:28" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・c12gym0201へのストッパー
+　GRIDX＝9、GRIDZ=2
+・msg_c12_swrival_25表示後から
+　msg_r20_swrival_01表示まで出現</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-25T07:04:42" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>DANPEI
+ダンペイ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-25T07:01:28" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
 </MessageStudioText>

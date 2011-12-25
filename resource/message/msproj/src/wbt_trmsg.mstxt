@@ -3973,10 +3973,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>たいようが　てらす　うみのおとこッ！
-シズイーッ！　すべてを　うけとめろ！</Text>
+シズイーッ！　すべてを　うけとめろ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T11:39:35" />
+				Time="2011-12-25T09:06:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3985,10 +3985,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>太陽が　照らす　海の男ッ！
-シズイーッ！　すべてを　受け止めろ！</Text>
+シズイーッ！　すべてを　受け止めろ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-15T11:39:51" />
+				Time="2011-12-25T09:06:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10842,10 +10842,10 @@
 			<Text>カスミ『あたし……　たびに　でて
 つよい　トレーナーと　たたかうのが▽
 ゆめ　だったの……▼
-それが　いま　かなったのねっ！</Text>
+それが　いま　かなったのねっ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T09:06:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -10856,10 +10856,10 @@
 			<Text>カスミ『あたし……　旅に　でて
 強い　トレーナーと　戦うのが▽
 夢だったの……▼
-それが　いま　かなったのねっ！</Text>
+それが　いま　かなったのねっ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T09:06:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21321,12 +21321,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>あたしと　ポケモンは
-きもちを　ひとつに　できるヨ！▼
+きもちを　ひとつに　できる！▼
 そんな　あたしの　コンビネーション
 きみに　やぶることが　できる？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T09:07:35" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21339,8 +21339,8 @@
 そんな　あたしの　コンビネーション
 きみに　破ることが　できる？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T09:07:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21385,12 +21385,12 @@
 			Language="JPN">
 			<Text>きびしい　しゅぎょうの　けっか
 あたしと　ポケモンは▽
-きもちを　ひとつに　できるヨ！▼
+きもちを　ひとつに　できる！▼
 そんな　あたしの　コンビネーション
 きみに　やぶることが　できる？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T09:07:38" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -21450,13 +21450,13 @@
 			Language="JPN">
 			<Text>きびしい　しゅぎょうの　けっか
 あたしと　ポケモンは▽
-きもちを　ひとつに　できるヨ！▼
+きもちを　ひとつに　できる！▼
 そんな　あたしの　コンビネーション！
 あたしと　ポケモンとの　きずなを▽
 きみに　やぶることが　できる？▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T09:07:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22134,11 +22134,11 @@
 わたしの　ふくでも
 かして　あげましょうか？▼
 ……　……　……
-……　……　……
+……　……　……▼
 はっはっは　ジョークですよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T09:07:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22153,11 +22153,11 @@
 わたしの　服でも
 貸して　あげましょうか？▼
 ……　……　……
-……　……　……
+……　……　……▼
 はっはっは　ジョークですよ！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T09:07:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22262,10 +22262,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>みずも　したたる　ダンディズム！
-アダン！　おしゃれに　ふるまえッ！！</Text>
+アダン！　おしゃれに　ふるまえッ！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T09:08:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -22274,10 +22274,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>みずも　したたる　ダンディズム！
-アダン！　おしゃれに　ふるまえッ！！</Text>
+アダン！　おしゃれに　ふるまえッ！！▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:25" />
+				User="matsumiya:W00224"
+				Time="2011-12-25T09:08:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
