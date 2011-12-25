@@ -4264,6 +4264,7 @@ static void RESORT_FIELD_AppearFun( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, 
       && RESORT_CITY_DATA_GetData(p_city,RESORT_CITY_DATA_FUN_DAY_FLAG, NULL) == FALSE )
   {
     int i;
+    int cnt;
     SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(p_gamedata);
     RESONANCE_RESORT_SV *p_reso_sv = RESONANCE_RESORT_SV_GetWork(p_sv);
     RESORT_PROXY_BUFF *p_buff = RESORT_SYSTEM_GetProxyBuff( p_sys );
@@ -4315,12 +4316,19 @@ static void RESORT_FIELD_AppearFun( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, 
       }
     }
 
-    for( i = 0; i < fun_appear_num; i++ )
+    i = 0;
+    cnt = 0;
+    while(i < fun_appear_num )
     {
-      RESORT_UTIL_SetProxyRandom( p_sys, p_gamedata, p_proxy, RESORT_PROXY_TYPE_FUN, heapID );
-      if( RESONANCE_RESORT_SV_SetData( p_reso_sv, p_gamedata, p_proxy, RESORT_MERGE_TYPE_PROXY ) != RESORT_SETDATA_SET )
+      RESORT_UTIL_SetProxyRandom( p_sys, p_gamedata, p_proxy, RESORT_PROXY_TYPE_FUN, cnt, heapID );
+      if( RESONANCE_RESORT_SV_SetData( p_reso_sv, p_gamedata, p_proxy, RESORT_MERGE_TYPE_PROXY ) == RESORT_SETDATA_SET )
       {
-        continue;
+        i++;
+      }
+      if( cnt++ >500 )
+      {
+        //無限ループ防止
+        break;
       }
     }
 
@@ -4403,7 +4411,7 @@ static void RESORT_FIELD_AppearCeleb( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata
       //セレブいれる
       RESORT_PROXY_DATA *p_proxy = RESORT_PROXY_DATA_Init( GFL_HEAP_LOWID(heapID) );
 
-      RESORT_UTIL_SetProxyRandom( p_sys, p_gamedata, p_proxy, RESORT_PROXY_TYPE_CELEB, heapID );
+      RESORT_UTIL_SetProxyRandom( p_sys, p_gamedata, p_proxy, RESORT_PROXY_TYPE_CELEB, 0, heapID );
 
       if( RESONANCE_RESORT_SV_SetData( p_reso_sv, p_gamedata, p_proxy, RESORT_MERGE_TYPE_PROXY ) == RESORT_SETDATA_SET )
       {

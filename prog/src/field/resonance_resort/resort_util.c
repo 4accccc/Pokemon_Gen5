@@ -2864,7 +2864,7 @@ static void Resort_Util_SetProxyCore( RESORT_PROXY_DATA *p_wk, u16 type, const R
  *	@param	RESORT_RECV_DATA *cp_owner  é©ï™ÇÃÉfÅ[É^
  */
 //-----------------------------------------------------------------------------
-void RESORT_UTIL_SetProxyRandom( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, RESORT_PROXY_DATA *p_wk, u32 proxy_type, HEAPID heapID )
+void RESORT_UTIL_SetProxyRandom( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, RESORT_PROXY_DATA *p_wk, u32 proxy_type, int rnd_cnt, HEAPID heapID )
 {
   static const struct
   {
@@ -2916,7 +2916,7 @@ void RESORT_UTIL_SetProxyRandom( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, RES
   }
   GF_ASSERT(cnt!=0);
 
-  rnd = RESORT_CITY_DATA_GetRnd( p_city, RESORT_RND_ID_CITY_PRESET, cnt );
+  rnd = RESORT_CITY_DATA_GetRnd( p_city, RESORT_RND_ID_CITY_PRESET+rnd_cnt, cnt );
 
   cnt = 0;
   for( i = 0; i < RESORT_BINARY_GetMax( cp_preset ); i++ )
