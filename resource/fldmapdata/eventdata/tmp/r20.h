@@ -11,7 +11,7 @@
 #define ZONE_R20_EVC_H
 
 #define R20_MOUNTMAN_01                    0
-#define TR_MINI_14                         1
+#define TR_TANPAN_24                       1
 #define TR_FUTAGO_05                       2
 #define TR_FUTAGO_05_2                     3
 #define TR_KINDERGARTENM_06                4
@@ -22,7 +22,7 @@
 #define TR_RANGERM_18                      9
 #define TR_RANGERW_18                     10
 #define TR_RANGERM_17                     11
-#define TR_TANPAN_24                      12
+#define TR_MINI_14                        12
 #define FLD_ITEM_3                        13
 #define FLD_ITEM_4                        14
 #define FLD_ITEM_5                        15
