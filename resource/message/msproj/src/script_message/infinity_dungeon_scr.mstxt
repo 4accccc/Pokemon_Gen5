@@ -24918,11 +24918,13 @@ NPC：MUGENBOSS（バンジロウ）
 			<Text>ここからが　ほんばんだ▼
 ボストレーナーは　このエリアで
 いちばんの　じつりょくしゃだ▼
+ボストレーナーは
+ひだりのほうに　いる▼
 ゲートの　さきに　すすんで
 ぜんりょくで　ちょうせんするんだ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T03:48:57" />
+				Time="2011-12-26T09:53:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -24933,11 +24935,13 @@ NPC：MUGENBOSS（バンジロウ）
 			<Text>ここからが　本番だ▼
 ボストレーナーは　このエリアで
 一番の　実力者だ▼
+ボストレーナーは
+左の方に　いる▼
 ゲートの　先に　進んで
 全力で　挑戦するんだ</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T03:49:05" />
+				Time="2011-12-26T09:54:06" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -24968,11 +24972,13 @@ NPC：MUGENBOSS（バンジロウ）
 			<Text>ここからが　ほんばんよ▼
 ボストレーナーは　このエリアで
 いちばんの　じつりょくしゃよ▼
+ボストレーナーは
+ひだりのほうに　いるわ▼
 ゲートの　さきに　すすんで
 ぜんりょくで　ちょうせんしてね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T03:48:36" />
+				Time="2011-12-26T09:53:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="onoue_masayuki:W00272"
@@ -24983,11 +24989,13 @@ NPC：MUGENBOSS（バンジロウ）
 			<Text>ここからが　本番よ▼
 ボストレーナーは　このエリアで
 一番の　実力者よ▼
+ボストレーナーは
+左の方に　いるわ▼
 ゲートの　先に　進んで
 全力で　挑戦してね</Text>
 			<TextModifiedBy
 				User="nakamura_akira:W00280"
-				Time="2011-11-25T03:48:48" />
+				Time="2011-12-26T09:54:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
