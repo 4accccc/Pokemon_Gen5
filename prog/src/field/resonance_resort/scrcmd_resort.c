@@ -98,6 +98,13 @@ VMCMD_RESULT EvCmdResortTalkStart( VMHANDLE *p_core, void *p_wk_adrs )
     }
   }
 
+#ifdef PM_DEBUG
+  if( GMK_TMP_CheckAssignID( p_field, RESORT_FIELD_ASSIGN_ID ) )
+  {
+    DEBUG_RESORT_FIELD_SetCheckMMDL( p_field, RESORT_PEOPLE_GetMmdl(p_people) );
+  }
+#endif //PM_DEBUG
+
   return VMCMD_RESULT_CONTINUE;
 }
 //----------------------------------------------------------------------------

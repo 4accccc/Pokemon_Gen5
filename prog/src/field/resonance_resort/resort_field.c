@@ -52,7 +52,8 @@
 
 #ifdef PM_DEBUG
 #define DEBUG_RESORT_FIELD_PRINT_ON
-#define DEBUG_EFFECT_MOVE
+//#define DEBUG_EFFECT_MOVE
+//#define DEBUG_MMDL_POS_CHECK
 #endif
 
 #if defined(DEBUG_RESORT_FIELD_PRINT_ON) && ( defined(DEBUG_ONLY_FOR_nagihashi_toru) || defined(DEBUG_ONLY_FOR_shimoyamada) )
@@ -60,6 +61,11 @@
 #else
 #define RESORT_FIELD_Printf(...)  /* */
 #endif
+
+
+#ifdef DEBUG_MMDL_POS_CHECK
+static MMDL *s_mmdl = NULL;
+#endif //DEBUG_MMDL_POS_CHECK
 
 //=============================================================================
 /**
@@ -301,6 +307,10 @@ void RESORT_FIELD_Setup( FIELDMAP_WORK *p_fieldmap )
   }
 
   RESORT_FIELD_Printf( "レゾナンスsetup\n" );
+
+#ifdef DEBUG_MMDL_POS_CHECK
+  s_mmdl = NULL;
+#endif //DEBUG_MMDL_POS_CHECK
 }
 //----------------------------------------------------------------------------
 /**
@@ -323,6 +333,11 @@ void RESORT_FIELD_End( FIELDMAP_WORK *p_fieldmap )
 
   //汎用ワーク解放
   GMK_TMP_WK_FreeWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
+
+
+#ifdef DEBUG_MMDL_POS_CHECK
+  s_mmdl = NULL;
+#endif //DEBUG_MMDL_POS_CHECK
 }
 //----------------------------------------------------------------------------
 /**
@@ -339,6 +354,32 @@ void RESORT_FIELD_Move( FIELDMAP_WORK *p_fieldmap )
   RESORT_NPC_SYS_Main( p_wk->p_npc_sys, p_fieldmap );
   RESORT_CROWD_NOISE_Main( p_wk->p_noise, p_fieldmap );
   RESORT_FIELD_EFFECT_Main( p_wk->p_effect );
+
+
+
+#ifdef DEBUG_MMDL_POS_CHECK
+  if( s_mmdl )
+  {
+    VecFx32 vec_pos,vec_offs,vec_out,vec_attr,vec_ctrl;
+    MMDL_GRIDPOS  grid;
+
+    MMDL_GetVectorPos( s_mmdl, &vec_pos );
+    MMDL_GetVectorDrawOffsetPos( s_mmdl, &vec_offs );
+    MMDL_GetVectorOuterDrawOffsetPos( s_mmdl, &vec_out );
+    MMDL_GetVectorAttrDrawOffsetPos( s_mmdl, &vec_attr );
+    MMDL_GetControlOffsetPos( s_mmdl, &vec_ctrl );
+    MMDL_GetGridPos(s_mmdl, &grid );
+
+    NAGI_Printf( "▼mmdlpos\n" );
+    NAGI_Printf( "pos   x%d z%d\n", FX_Whole(vec_pos.x),FX_Whole(vec_pos.z));
+    NAGI_Printf( "draw  x%d z%d\n", FX_Whole(vec_offs.x),FX_Whole(vec_offs.z));
+    NAGI_Printf( "outer x%d z%d\n", FX_Whole(vec_out.x),FX_Whole(vec_out.z));
+    NAGI_Printf( "attr  x%d z%d\n", FX_Whole(vec_attr.x),FX_Whole(vec_attr.z));
+    NAGI_Printf( "ctrl  x%d z%d\n", FX_Whole(vec_ctrl.x),FX_Whole(vec_ctrl.z));
+    NAGI_Printf( "grid  x%d[%d] z%d[%d]\n", grid.gx, SIZE_GRID_FX32(vec_pos.x), grid.gz, SIZE_GRID_FX32(vec_pos.z) );
+    NAGI_Printf( "▲▲▲▲▲▲\n" );
+  }
+#endif //DEBUG_MMDL_POS_CHECK
 }
 
 //----------------------------------------------------------------------------
@@ -478,6 +519,22 @@ void RESORT_FIELD_SetNoiseReq( FIELDMAP_WORK *p_fieldmap, BOOL is_visible )
   RESORT_FIELD_WORK *p_wk = GMK_TMP_WK_GetWork(p_fieldmap, RESORT_FIELD_ASSIGN_ID);
   RESORT_CROWD_NOISE_ForceRequest( p_wk->p_noise, is_visible );
 }
+#ifdef PM_DEBUG
+//----------------------------------------------------------------------------
+/**
+ *	@brief  MMDLチェック
+ *
+ *	@param	FIELDMAP_WORK *p_fieldmap フィールド
+ *	@param	p_mmdl 動作モデル
+ */
+//-----------------------------------------------------------------------------
+void DEBUG_RESORT_FIELD_SetCheckMMDL( FIELDMAP_WORK *p_fieldmap, MMDL* p_mmdl )
+{
+#ifdef DEBUG_MMDL_POS_CHECK
+  s_mmdl =  p_mmdl;
+#endif //DEBUG_MMDL_POS_CHECK
+}
+#endif //PM_DEBUG
 
 //=============================================================================
 /**
@@ -786,6 +843,8 @@ static RESORT_CROWD_PEOPLE_WK * Resort_Crowd_People_GetWkByPeople( RESORT_CROWD_
 
 static void RESORT_CROWD_PEOPLE_ChangeOBJCodeReq( RESORT_CROWD_PEOPLE *p_wk, RESORT_PEOPLE *p_people );
 
+static void Resort_Crowd_People_SetPos( MMDL *p_mmdl, u16 grid_x, u16 grid_z );
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  群集管理初期化
@@ -987,6 +1046,27 @@ static void RESORT_CROWD_PEOPLE_ChangeOBJCodeReq( RESORT_CROWD_PEOPLE *p_wk, RES
   {
     RESORT_CROWD_PEOPLE_WK_ChangeOBJCodeReq( p_crowd );
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物位置設定
+ *
+ *	@param	MMDL *p_mmdl  動作モデル
+ *	@param	grid_x  グリッドX
+ *	@param	grid_z  グリッドZ
+ */
+//-----------------------------------------------------------------------------
+static void Resort_Crowd_People_SetPos( MMDL *p_mmdl, u16 grid_x, u16 grid_z )
+{
+  VecFx32 vec;
+
+  vec.x = GRID_SIZE_FX32( grid_x ) + MMDL_VEC_X_GRID_OFFS_FX32;
+  vec.y = 0;
+  vec.z = GRID_SIZE_FX32( grid_z ) + MMDL_VEC_Z_GRID_OFFS_FX32;
+
+  MMDL_SetVectorPos( p_mmdl, &vec );
+  MMDL_SetGridPosX( p_mmdl, grid_x );
+  MMDL_SetGridPosZ( p_mmdl, grid_z );
 }
 
 //----------------------------------------------------------------------------
@@ -1202,23 +1282,14 @@ static void RESORT_CROWD_PEOPLE_WK_StartMovePos( RESORT_CROWD_PEOPLE_WK *p_wk, u
   {
     MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk->p_people );
 
-    VecFx32 vec;
-
-    MMDL_GetVectorPos( p_mmdl, &vec );
-
     if( RESORT_CROWD_PEOPLE_WK_IsNewData(p_wk) )
     {
-      vec.x = GRID_TO_FX32(x) + MMDL_VEC_X_GRID_OFFS_FX32;
-      MMDL_SetGridPosX( p_mmdl, x );
       if( p_wk->move_dir == DIR_UP )
       {
         if( z == 0 )
         {
           z = RESORT_CROWD_MOVE_LIMIT_FRONT;
         }
-
-        MMDL_SetGridPosZ( p_mmdl, z );
-        vec.z = GRID_TO_FX32(z) + MMDL_VEC_Z_GRID_OFFS_FX32;
         p_wk->move_grid = z - RESORT_CROWD_MOVE_LIMIT_BACK+1;
         if( p_wk->move_grid <= 0 )
         {
@@ -1231,16 +1302,14 @@ static void RESORT_CROWD_PEOPLE_WK_StartMovePos( RESORT_CROWD_PEOPLE_WK *p_wk, u
         {
           z = RESORT_CROWD_MOVE_LIMIT_BACK;
         }
-
-        MMDL_SetGridPosZ( p_mmdl, z );
-        vec.z = GRID_TO_FX32(z) + MMDL_VEC_Z_GRID_OFFS_FX32;
         p_wk->move_grid = RESORT_CROWD_MOVE_LIMIT_FRONT-z+1;
         if( p_wk->move_grid <= 0 )
         {
           p_wk->move_grid = 1;
         }
       }
-      MMDL_SetVectorPos( p_mmdl, &vec );
+
+      Resort_Crowd_People_SetPos( p_mmdl, x, z );
     }
     else
     {
@@ -1249,14 +1318,12 @@ static void RESORT_CROWD_PEOPLE_WK_StartMovePos( RESORT_CROWD_PEOPLE_WK *p_wk, u
       {
         if( now_z < RESORT_CROWD_MOVE_LIMIT_BACK )
         {
-          MMDL_SetGridPosZ( p_mmdl, RESORT_CROWD_MOVE_LIMIT_FRONT );
-          vec.z = GRID_TO_FX32(RESORT_CROWD_MOVE_LIMIT_FRONT) + MMDL_VEC_Z_GRID_OFFS_FX32;
+          Resort_Crowd_People_SetPos( p_mmdl, x, RESORT_CROWD_MOVE_LIMIT_FRONT );
           p_wk->move_grid = RESORT_CROWD_MOVE_LIMIT_FRONT-RESORT_CROWD_MOVE_LIMIT_BACK+1;
           if( p_wk->move_grid <= 0 )
           {
             p_wk->move_grid = 1;
           }
-          MMDL_SetVectorPos( p_mmdl, &vec );
         }
         else
         {
@@ -1265,20 +1332,20 @@ static void RESORT_CROWD_PEOPLE_WK_StartMovePos( RESORT_CROWD_PEOPLE_WK *p_wk, u
           {
             p_wk->move_grid = 1;
           }
+          Resort_Crowd_People_SetPos( p_mmdl, x, now_z );
         }
       }
       else if( p_wk->move_dir == DIR_DOWN )
       {
         if( now_z > RESORT_CROWD_MOVE_LIMIT_FRONT )
         {
-          MMDL_SetGridPosZ( p_mmdl, RESORT_CROWD_MOVE_LIMIT_BACK );
-          vec.z = GRID_TO_FX32(RESORT_CROWD_MOVE_LIMIT_BACK) + MMDL_VEC_Z_GRID_OFFS_FX32;
+
+          Resort_Crowd_People_SetPos( p_mmdl, x, RESORT_CROWD_MOVE_LIMIT_BACK );
           p_wk->move_grid = RESORT_CROWD_MOVE_LIMIT_FRONT-RESORT_CROWD_MOVE_LIMIT_BACK+1;
           if( p_wk->move_grid <= 0 )
           {
             p_wk->move_grid = 1;
           }
-          MMDL_SetVectorPos( p_mmdl, &vec );
         }
         else
         {
@@ -1287,6 +1354,7 @@ static void RESORT_CROWD_PEOPLE_WK_StartMovePos( RESORT_CROWD_PEOPLE_WK *p_wk, u
           {
             p_wk->move_grid = 1;
           }
+          Resort_Crowd_People_SetPos( p_mmdl, x, now_z );
         }
       }
     }
@@ -1613,13 +1681,8 @@ static BOOL Resort_Crowd_People_Walk_CheckEnd(RESORT_CROWD_PEOPLE_WK *p_wk, MMDL
 
     //0,0に戻る
     {
-      VecFx32 vec;
       MMDL *p_mmdl = RESORT_PEOPLE_GetMmdl( p_wk->p_people );
-      MMDL_GetVectorPos( p_mmdl, &vec );
-      vec.x = vec.z = 0;
-      MMDL_SetVectorPos( p_mmdl, &vec );
-      MMDL_SetGridPosX( p_mmdl, 0 );
-      MMDL_SetGridPosZ( p_mmdl, 0 );
+      Resort_Crowd_People_SetPos( p_mmdl, 0, 0 );
     }
 
     RESORT_PEOPLE_SetData( p_wk->p_people, RESORT_DATA_PARAM_REPLACE_LOCK, FALSE );

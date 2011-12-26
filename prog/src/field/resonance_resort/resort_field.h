@@ -50,3 +50,7 @@ extern void RESORT_FIELD_StartPeople( FIELDMAP_WORK *p_fieldmap );
 
 extern void RESORT_FIELD_SetParade( FIELDMAP_WORK *p_fieldmap );
 extern void RESORT_FIELD_SetNoiseReq( FIELDMAP_WORK *p_fieldmap, BOOL is_visible );
+
+#ifdef PM_DEBUG
+extern void DEBUG_RESORT_FIELD_SetCheckMMDL( FIELDMAP_WORK *p_fieldmap, MMDL* p_mmdl );
+#endif //PM_DEBUG
