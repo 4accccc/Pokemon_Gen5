@@ -308,16 +308,65 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="msg_d05_swboss_04"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>およしなさい▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T12:47:22" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T12:46:22" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>およしなさい▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T12:47:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T12:46:22" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・WBTから登場してメッセージ
+・続けてswrival_03</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T12:46:22" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWBOSS
+アクロマ</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T12:46:22" />
+		</AttributeCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#80ffff</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="msg_d05_swboss_01"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>アクロマ『およしなさい▼
-わざわざ　きけんなことに
+			<Text>アクロマ『わざわざ　きけんなことに
 くびを　はさむ　ひつようは　ない！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-22T02:07:44" />
+				Time="2011-12-26T12:47:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -325,12 +374,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>アクロマ『およしなさい▼
-わざわざ　危険なことに
+			<Text>アクロマ『わざわざ　危険なことに
 首を　はさむ　必要は　ない！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T11:03:02" />
+				Time="2011-12-26T12:47:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -436,11 +484,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>チェレン『ぼくも　いきます▼
-プラズマだん　ふっかつが
-ほんとう　なのか　しらべないと！▼</Text>
+かれを　まもらないと！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T05:39:47" />
+				Time="2011-12-26T12:48:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -449,11 +496,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>チェレン『ぼくも　いきます▼
-プラズマ団　復活が
-本当なのか　調べないと！▼</Text>
+彼を　守らないと！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-12T05:40:04" />
+				Time="2011-12-26T12:48:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

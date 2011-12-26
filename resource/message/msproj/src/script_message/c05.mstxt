@@ -863,11 +863,10 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>もとプラズマだん『ロットさま
-ほら　きましたよ！▼
-こっちです　こっち！▼</Text>
+ほら　きましたよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T06:15:54" />
+				Time="2011-12-26T11:10:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -876,11 +875,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>元プラズマ団『ロットさま
-ほら　来ましたよ！▼
-こっちです　こっち！▼</Text>
+ほら　来ましたよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T06:21:31" />
+				Time="2011-12-26T11:10:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -894,10 +892,10 @@
 　GRIDX＝194、GRIDZ＝397～399
 ・メッセージ表示後、
 　GRIDX＝197、GRIDZ＝398まで主人公移動
-・続けてsage6_01</Comment>
+・続けてhakaim_07</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-19T06:17:17" />
+				Time="2011-12-26T11:11:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -921,6 +919,50 @@
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_c05_hakaim_07"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>こっちです　こっち！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T11:10:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T11:10:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>こっちです　こっち！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T11:10:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T11:10:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・主人公の前に移動して
+　メッセージ表示、表示後、連れ歩き誘導に
+・続けてsage6_01</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T11:11:30" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>HAKAIM
+元プラズマ団♂</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T11:10:57" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_c05_sage6_01"
@@ -1735,11 +1777,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『なんで！　なんでッ！
+			<Text>[Name:TrainerName Idx="1" ]『そうだッ　おもいだした！
+ヤーコンさん　あんた……▼
+なんで！　なんでッ！
 プラズマだんを　ゆるしてるんだよ！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T09:56:01" />
+				Time="2011-12-26T11:40:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1747,11 +1791,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『なんで！　なんでッ！
+			<Text>[Name:TrainerName Idx="1" ]『そうだッ　思い出した！
+ヤーコンさん　あんた……▼
+なんで！　なんでッ！
 プラズマ団を　赦してるんだよ！？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T09:56:07" />
+				Time="2011-12-26T11:40:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -2596,10 +2642,10 @@
 			<Text>ここに　いるのは
 もとプラズマだんの　れんちゅう▼
 また　わるさを　しないか
-しんぱい　なんでな</Text>
+しんぱい　なんでな……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T08:57:35" />
+				Time="2011-12-26T11:18:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2610,10 +2656,10 @@
 			<Text>ここに　いるのは
 元プラズマ団の　連中▼
 また　悪さを　しないか
-心配　なんでな</Text>
+心配なんでな……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T08:57:46" />
+				Time="2011-12-26T11:18:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
