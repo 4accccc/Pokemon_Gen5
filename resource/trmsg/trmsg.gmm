@@ -9699,10 +9699,10 @@
 	</row>
 
 	<row id="TRID_SWPLAZMAM_08_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">……おれたち
-おなじ　かっこう　なのに！</language>
-		<language name="JPN_KANJI" width="216">……おれたち
-同じ　格好なのに！</language>
+		<language name="JPN" width="216">おなじように　ボールを　さわる
+コンビネーション　だったのに！</language>
+		<language name="JPN_KANJI" width="216">同じように　ボールを　触る
+コンビネーション　だったのに！</language>
 	</row>
 
 	<row id="TRID_SWPLAZMAM_09_TRMSG_FIGHT_LOSE">
@@ -13188,11 +13188,15 @@
 		<language name="JPN" width="216">おおむかしの　ひとたちが　これだけ
 ながい　トンネルを　ほったのか▼
 やはり　たくさんの　ポケモンと
-ちからを　あわせて　ほったんだろうな</language>
+ちからを　あわせて　ほったんだろうな▼
+……いや　もしかしたら
+こきつかわれていたのかも　しれないぞ</language>
 		<language name="JPN_KANJI" width="216">大昔の　人たちが　これだけ
 長い　トンネルを　掘ったのか▼
 やはり　たくさんの　ポケモンと
-協力して　掘ったんだろうな</language>
+協力して　掘ったんだろうな▼
+……いや　もしかしたら
+こき使われていたのかも　しれないぞ</language>
 	</row>
 
 	<row id="TRID_BACKPACKERM_26_TRMSG_FIGHT_START">
@@ -13221,17 +13225,17 @@
 	</row>
 
 	<row id="TRID_BACKPACKERM_27_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">まずは　しんこきゅう……
-よーし！　レディ　ゴー！！▼</language>
-		<language name="JPN_KANJI" width="216">まずは　深呼吸……
-よーし！　レディ　ゴー！！▼</language>
+		<language name="JPN" width="216">まずは　おおきく……▼
+いきを　しない！▼</language>
+		<language name="JPN_KANJI" width="216">まずは　大きく……▼
+息を　しない！▼</language>
 	</row>
 
 	<row id="TRID_BACKPACKERM_27_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">はああああ
-……これは　ためいき</language>
-		<language name="JPN_KANJI" width="216">はああああ
-……これは　ため息</language>
+		<language name="JPN" width="216">ぷはああああ！！
+……いき　とめてると　しんどいな！</language>
+		<language name="JPN_KANJI" width="216">ぷはああああ！！
+……息　止めてると　しんどいな！</language>
 	</row>
 
 	<row id="TRID_BACKPACKERM_27_TRMSG_FIGHT_AFTER">
