@@ -61,12 +61,13 @@ static void makeMyBag(GAMEDATA * gamedata, HEAPID heapID)
   {
 		MYITEM_AddItem( myitem, ITEM_RAIBUKYASUTAA_1, 1, heapID );
   }
+  MYITEM_AddItem( myitem, ITEM_TOMODATITETYOU, 1, heapID );
 }
 
 
 #if 0
 //2011.09.28  tamada
-//‚Æ‚è‚ ‚¦‚¸A¡‰ñ‚Íƒ[ƒ‹‚Í“ü‚ê‚Ä‚¨‚©‚È‚¢
+//swan‚Å‚Íƒ[ƒ‹‚ÍÅ‰‚©‚ç‚Í“ü‚ê‚Ä‚¨‚©‚È‚¢
 //=====================================================================
 //=====================================================================
 static const PMS_DATA mail_pmsdata[]={
