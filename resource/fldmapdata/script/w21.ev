@@ -430,6 +430,8 @@ EVENT_START	ev_reserve_w21_swplazma_end_01
   _FLAG_SET( FE_D10_PLAZMA_FRIGATE_01 )
   //ローカルライブキャスター・チェレン通話状態を変更（ジャイアントホール到達まで）
   _PERSON_STATE_SET_CHELEN( CHELEN_STATE_W21 )
+  //ローカルライブキャスター・ライバル通話状態を変更（D10R0301イベント終了まで）
+  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_R22 )
   //========================================//
   
 EVENT_END

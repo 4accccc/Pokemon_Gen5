@@ -318,8 +318,8 @@ EVENT_START   ev_scene_c08_guide_01
   //========================================//
   //C08：誘導イベントPOS起動（１）
   $WK_SCENE_C08_LEADER7 = 2
-  //ローカルライブキャスター・ライバル通話状態を変更（C08氷漬けクリアまで）
-  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_C14_1 )
+  //ローカルライブキャスター・ライバル通話状態を変更（C08攻撃デモまで）
+  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_C14_0 )
   //========================================//
   //ハイリンク通信ブロック処理終了
   _ENABLE_NETWORK_IN_IMPORTANT_EVENT()
@@ -663,6 +663,8 @@ EVENT_START   ev_reserve_c08_plazma_comming_02
   //イベント再生
   _FLAG_SET( SYS_FLAG_BGM_C08_PLAZMA )
   _FLAG_RESET( SYS_FLAG_BGM_C08_SILENT )
+  //ローカルライブキャスター・ライバル通話状態を変更（C08でチェレンと会話まで）
+  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_C14_1 )
   //========================================//
   
   //BGMを変更
@@ -1290,6 +1292,8 @@ EVENT_START   ev_pos_c08_ninja_01
   $WK_SCENE_T04_D20_TVT = 1
   //ローカルライブキャスター・ライバル通話状態を変更（C14ジムクリアまで）
   _PERSON_STATE_SET_RIVAL( RIVAL_STATE_C14_2 )
+  //ローカルライブキャスター・チェレン通話状態を変更（C08会話まで）
+  _PERSON_STATE_SET_CHELEN( CHELEN_STATE_C14 )
   //========================================//
     
   //ハイリンク通信ブロック処理終了

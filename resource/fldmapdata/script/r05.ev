@@ -286,6 +286,9 @@ EVENT_START		ev_pos_r05_swbell_01
   //========================================//
   //R05かくしあなイベントPOS無効
   $WK_SCENE_R05_SWBELL_01 = 1
+  
+  //そらをとぶヒントメダル取得
+  _SET_MEDAL_HINT_ACHIEVE( MDLID_SORAWOTOBU )
   //========================================//
   
 EVENT_END

@@ -878,6 +878,8 @@ ev_pos_t03_swrivalev_02:  //ライバルイベント01からのみ起動可能
   //POSイベント進行
   $WK_SCENE_T03_SWRIVAL = 3
   $WK_SCENE_T03 = 4
+  //ローカルライブキャスター・ライバル通話状態を変更（C08GYMクリアまで）
+  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_T04_2 )
   //========================================//
 
 _RET

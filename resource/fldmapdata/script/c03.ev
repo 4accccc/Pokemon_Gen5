@@ -164,6 +164,8 @@ DEFINE_LOCAL  LCW_POSS
   //==================================//
   //SCENE_CHANGE–³Œø
   $WK_SCENE_C03_RALLY_01 = 2
+  //‚¶‚Ä‚ñ‚µ‚áƒqƒ“ƒgƒƒ_ƒ‹Žæ“¾
+  _SET_MEDAL_HINT_ACHIEVE( MDLID_CYCLE_LV1 )
   //==================================//
   
 }

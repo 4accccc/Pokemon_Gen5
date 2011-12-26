@@ -280,6 +280,8 @@ EVENT_START   ev_pos_c04_swrival_01
   //==================================//
   //POSイベント終了
   $WK_SCENE_C04_SWRIVAL = 2
+  //ローカルライブキャスター・ライバル通話状態を変更（C04ゲート前イベント終了まで）
+  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_C04_3 )
   //==================================//
 
 	_CAMERA_START()		//カメラ操作開始
@@ -723,6 +725,8 @@ EVENT_START   ev_pos_c04_swrival_02
   //========================================//
   //ライバルを非表示
   _FLAG_SET( FV_C04_SWRIVAL_01 )
+  //ローカルライブキャスター・ライバル通話状態を変更（C05橋上イベントまで）
+  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_C04_4 )
   //========================================//
 
   _END_EVENT_BGM()

@@ -101,6 +101,8 @@ EVENT_START	ev_reserve_c05gym0201_gymback_02
   _FLAG_RESET(FV_C05_SWLEADER5_01)
   //一時的にBGイベントを移動する
   _SXY_MOVE_BG_EVENT( BG_C05GYM0201_STARTLIFT_01, 31, 0, 0 )
+  //ローカルライブキャスター・ライバル通話状態を変更（ジム前イベントまで）
+  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_C05_2 )
   //========================================//
   
 EVENT_END

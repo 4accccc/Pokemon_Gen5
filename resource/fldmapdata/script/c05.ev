@@ -365,6 +365,8 @@ EVENT_START		ev_pos_c05_hakaim_01
   $WK_SCENE_C05 = 1
   //C05到着フラグセット
   _FLAG_SET(SYS_FLAG_ARRIVE_C05)
+  //ローカルライブキャスター・ライバル通話状態を変更（ポケモンハウスイベントまで）
+  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_C05_0 )
   //========================================//
   
   

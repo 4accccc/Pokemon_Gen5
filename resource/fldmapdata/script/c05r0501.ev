@@ -282,6 +282,8 @@ EVENT_START ev_reserve_c05r0501_sage6_01
   _FLAG_SET(FV_C05_STOPPER_02)
   //リンクイベント起動条件をセット（初回入室を終えていないと起動しない）
   $WK_SCENE_C05R0501_LINK_EVENT = 1
+  //ローカルライブキャスター・ライバル通話状態を変更（C05GYMクリアまで）
+  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_C05 )
   //========================================//
 EVENT_END
 

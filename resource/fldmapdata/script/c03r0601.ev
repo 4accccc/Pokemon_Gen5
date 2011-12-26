@@ -136,6 +136,9 @@ EVENT_START   ev_pos_c03r0601_swbell_01
   //POSイベント進行
   $WK_SCENE_C03R0601_SWBELL_01 = 1
   //========================================//
+  //ダウジングマシンヒントメダル取得
+  _SET_MEDAL_HINT_ACHIEVE( MDLID_DOWSING_LV1 )
+  //========================================//
 
 EVENT_END
 

@@ -184,6 +184,8 @@ ev_leader8_btl:
   _FLAG_RESET( FV_R22_POKE5_01 )
   //C14GYM0101 シズイ非表示
   _FLAG_SET( FV_C14GYM0101_SWLEADER8_01 )
+  //ローカルライブキャスター・ライバル通話状態を変更（C14GYM前イベント終了まで）
+  _PERSON_STATE_SET_RIVAL( RIVAL_STATE_C14_4 )
   //================================================//
   
   //主人公方向取得

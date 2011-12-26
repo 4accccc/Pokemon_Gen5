@@ -503,6 +503,8 @@ EVENT_START		ev_pos_d11r0101_plasma_01
   //ローカルライブキャスター・ライバル通話状態を変更（C03GYMクリアまで）
   _PERSON_STATE_SET_RIVAL( RIVAL_STATE_C03_2 )
   
+  //かいりきヒントメダル取得
+  _SET_MEDAL_HINT_ACHIEVE( MDLID_KAIRIKI )
   //==================================//
 
 EVENT_END

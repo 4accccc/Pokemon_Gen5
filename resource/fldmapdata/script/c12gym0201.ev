@@ -367,7 +367,10 @@ ev_leader1_btl:
    
    //R19イベント起動
    $WK_SCENE_R19 = 5
-    
+   
+   //C12GYMクリアヒントメダル取得
+   _SET_MEDAL_HINT_ACHIEVE( MDLID_EFFECT_ENCOUNT_LV1 )
+   
    //========================================//
    
 EVENT_END

@@ -261,6 +261,8 @@ EVENT_START   ev_t01r0401_hakase1_01
 	//========================================//
 	//すごいつりざおフラグON・せいそくちリストのつり解禁
 	_FLAG_SET( SYS_FLAG_SUGOI_TSURI_GET )
+	//すごいつりざおヒントメダル取得
+  _SET_MEDAL_HINT_ACHIEVE( MDLID_FISHING_LV1 )
 	//========================================//
 
   ENDIF
