@@ -34,6 +34,7 @@
 #include "field/field_flagcontrol.h" // FIELD_FLAGCONT_INIT～
 #include "field/fieldmap_proc.h"  // FLDMAP_BASESSYS_GRID
 #include "field/fes_gimmick.h"
+#include "field/field_subscreen.h"
 
 #include "event_season_display.h"
 #include "event_fieldmap_control.h"
@@ -1961,6 +1962,19 @@ static GMEVENT_RESULT EVENT_MapChangeToUnion( GMEVENT* event, int* seq, void* wk
   switch( *seq )
   {
   case 0:
+    /*
+     * 下画面がフェスミッションログだった場合、intrude_systemがUnloadされると
+     * MapChangeCore内でのフェスミッションログ画面破棄処理に不都合があるので
+     * ここで一度CGearに戻しておく
+     *
+     * 出てきた時のステータスを保存するため、一手間かける
+     */
+    {
+      FIELD_SUBSCREEN_STATUS status = GAMEDATA_GetSubScreenStatus(gameData);
+      GAMEDATA_SetSubScreenStatus( gameData, FIELD_SUBSCREEN_STATUS_CGEAR); //これをやらないとCギアに戻らない
+      FIELD_SUBSCREEN_ChangeForce( FIELDMAP_GetFieldSubscreenWork( fieldmap ), FIELD_SUBSCREEN_NORMAL );
+      GAMEDATA_SetSubScreenStatus( gameData, status ); //ステータスを書き戻す
+    }
     // 動作モデル停止
     GMEVENT_CallEvent( event, EVENT_ObjPauseAll( gameSystem, fieldmap ) );
     (*seq)++;
