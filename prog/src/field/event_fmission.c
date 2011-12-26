@@ -413,17 +413,23 @@ static GMEVENT_RESULT event_FMissionStartMain(GMEVENT * event, int *  seq, void 
       MEDALBOX * medalbox = SaveData_GetMedalBox( save );
 
       if( wk->succeed_f ){  //他者ミッションに参加
+        u32 entry_num = FMISSION_SAVE_IncMissionEntryNum( f_save );
         LINK_FESTIVAL_MissionStart( wk->fest_sys, (const FEST_MISSION*)&wk->mission, wk->succeed_f );
         wk->mission = *LINK_FESTIVAL_GetMissionWork( wk->fest_sys );  //スタートで情報が書き換わるので取得しなおし
-        FMISSION_SAVE_IncMissionEntryNum( f_save );
   
         //ミッションエントリースタックテーブルから削除
         FMISSION_ENTRY_TBL_DeleteData( wk->fest_sys, (const FEST_MISSION*)&wk->mission );
-
+        
+        //参加回数でメダルセット
+        if( entry_num >= 1 ){
+          MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_FES_JOIN_LV1 );
+          if( entry_num >= 10 ){
+            MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_FES_JOIN_LV2 );
+          }
+        }
       }else{  //自分で開催した場合。LINK_FESTIVAL_MissionStartはこのイベントに来る前に呼ばれている
         u32 open_num = FMISSION_SAVE_IncMissionOpenNum( f_save );
       
-
         //開催回数でメダルセット
         if( open_num >= 30 ){
           MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_FES_HOLD_LV1 );

@@ -110,11 +110,12 @@ u32 FMISSION_SAVE_GetMissionEntryNum( FMISSION_SAVE* sv )
  * @param	work		ワークへのポインタ
  */
 //---------------------------------------------------------------------------
-void FMISSION_SAVE_IncMissionEntryNum( FMISSION_SAVE* sv )
+u32 FMISSION_SAVE_IncMissionEntryNum( FMISSION_SAVE* sv )
 {
   if( sv->entry_num < FMISSION_SAVE_ENTRY_NUM_MAX ){
     ++sv->entry_num;
   }
+  return sv->entry_num;
 }
 
 //---------------------------------------------------------------------------
