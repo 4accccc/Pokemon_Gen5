@@ -4956,10 +4956,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>案内固定　使用</Text>
+			<Text>案内固定</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-22T04:07:43" />
+				Time="2011-12-26T10:26:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4967,10 +4967,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>案内固定使用</Text>
+			<Text>案内固定</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-22T04:07:45" />
+				Time="2011-12-26T10:26:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -4989,10 +4989,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>乱数固定　使用</Text>
+			<Text>乱数固定</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-22T04:07:33" />
+				Time="2011-12-26T10:26:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5000,10 +5000,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>乱数固定　使用</Text>
+			<Text>乱数固定</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-22T04:07:36" />
+				Time="2011-12-26T10:26:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -5121,10 +5121,10 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トレーナーリスト</Text>
+			<Text>受信拒否トレーナーリスト</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-25T10:07:51" />
+				Time="2011-12-25T10:18:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -5132,10 +5132,76 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トレーナーリスト</Text>
+			<Text>受信拒否トレーナーリスト</Text>
 			<TextModifiedBy
 				User="nagihashi_toru:W00268"
-				Time="2011-12-25T10:07:52" />
+				Time="2011-12-25T10:18:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-28T07:59:13" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="RESORT_DATA_155"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>受信拒否トレーナーリスト</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-25T10:18:29" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>受信拒否トレーナーリスト</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-25T10:18:31" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-09-28T07:59:13" />
+		</LanguageCell>
+		<AttributeCell
+			Name="Width">
+			<Text>256</Text>
+			<TextModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="RESORT_DATA_156"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>抽選固定</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-26T10:27:21" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="ariizumi_nobuhiko:W00248"
+				Time="2011-05-20T09:30:06" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>抽選固定</Text>
+			<TextModifiedBy
+				User="nagihashi_toru:W00268"
+				Time="2011-12-26T10:27:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"

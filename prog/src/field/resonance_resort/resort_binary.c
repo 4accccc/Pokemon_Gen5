@@ -15,6 +15,9 @@
 //resource
 #include "arc_def.h"
 
+//debug
+#include "resort_debug.h"
+
 //outer
 #include "resort_binary.h"
 
@@ -453,6 +456,14 @@ u16 RESORT_BINARY_PRESENT_DrawLotsIndex( const RESORT_BINARY_PRESENT *cp_wk, u32
 {
   int i;
   u32 percent = 0;
+
+
+#ifdef PM_DEBUG
+  if( RESORT_DEBUG_FLAG_Get(RESORT_DEBUG_FLAG_FORCE_ITEM_WORK_ON) )
+  {
+    return RESORT_DEBUG_WORK_Get(RESORT_DEBUG_WORK_FORCE_ITEM);
+  }
+#endif
 
   for( i = 0; i < RESORT_BINARY_PRESENT_PARAM_ITEM_MAX; i++ )
   {
