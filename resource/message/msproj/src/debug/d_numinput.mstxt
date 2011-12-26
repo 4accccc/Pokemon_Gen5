@@ -1198,6 +1198,86 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="dni_npoke_flag13">
+		<LanguageCell
+			Language="JPN">
+			<Text>R03R0301　コロモリ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-26T07:01:26" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-26T07:00:44" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>R03R0301　コロモリ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-26T07:01:30" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-26T07:00:44" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>Ｎポケエンカウント関連
+　Ｎポケ捕獲フラグ</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-26T07:00:44" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="dni_npoke_flag14">
+		<LanguageCell
+			Language="JPN">
+			<Text>D03R0101 ヒヒダルマ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-26T07:01:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-26T07:00:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>D03R0101 ヒヒダルマ</Text>
+			<TextModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-26T07:01:44" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-26T07:00:45" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>Ｎポケエンカウント関連
+　Ｎポケ捕獲フラグ</Comment>
+			<CommentModifiedBy
+				User="iwasawa:W00270"
+				Time="2011-12-26T07:00:45" />
+		</CommentCell>
+		<ExtraCell
+			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
+			<CellData>#ff8080</CellData>
+			<CellModifiedBy
+				User=":"
+				Time="0001-01-01T00:00:00" />
+		</ExtraCell>
+	</TextRow>
+	<TextRow
 		Label="dni_number_string"
 		Style="Large">
 		<LanguageCell

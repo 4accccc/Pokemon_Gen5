@@ -57,6 +57,8 @@ static const DEBUG_NUMINPUT_LIST DNI_NPokeList[] = {
  { dni_npoke_flag10, 9, &npoke_enc_capture_flag },
  { dni_npoke_flag11, 10, &npoke_enc_capture_flag },
  { dni_npoke_flag12, 11, &npoke_enc_capture_flag },
+ { dni_npoke_flag13, 12, &npoke_enc_capture_flag },
+ { dni_npoke_flag14, 13, &npoke_enc_capture_flag },
 };
 
 //////////////////////////////////////////////////////

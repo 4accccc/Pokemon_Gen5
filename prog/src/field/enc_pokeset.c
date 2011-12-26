@@ -361,11 +361,15 @@ u8 ENCPOKE_CheckNPokeEncount( ENCPOKE_FLD_PARAM* efp, u16 zone_id )
 
   //Šm—¦”»’è
   {
-    int per = 10;
+    int per = 50;
     int num = EncDataSave_GetNPokeCaptureNum( efp->enc_save );
 
     if(num == 0){
       per = 400;  
+    }else if( num < 6 ){
+      per = 200;
+    }else if( num < 12 ){
+      per = 100;
     }
 #ifdef PM_DEBUG
     {
