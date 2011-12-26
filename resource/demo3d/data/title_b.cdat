@@ -18,7 +18,7 @@ static const DEMO3D_SCENE_DATA data_title_b_scene = {
 	DEMO3D_FRAME_RATE_60FPS,	///<フレームレート定義
 	FALSE,	///<2画面連結
 	TRUE,TRUE,	///<αブレンドOn/Off,アンチエイリアスOn/Off
-	FALSE,FALSE,	///<1dotポリゴン描画、フォグOn/Off,エッジマーキングOn/Off
+	TRUE,FALSE,	///<1dotポリゴン描画、フォグOn/Off,エッジマーキングOn/Off
 	GX_SORTMODE_AUTO,GX_BUFFERMODE_W,	///<SwapBuf αソートモード,バッファモード
 	FALSE,16,	///<αテストOn/Off,αテスト敷居値
 	FX32_CONST(60.0),FX32_CONST(60.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
@@ -31,8 +31,8 @@ static const DEMO3D_SCENE_DATA data_title_b_scene = {
 	GX_RGB(0,0,0),31,	///<フォグRGB,A
 	0,0,GX_FOGBLEND_COLOR_ALPHA,	///<フォグshift,フォグoffset,フォグモード
 	{ 0,0,0,0,0,0,0,0, }, 	///<フォグ濃度テーブル
-	{ GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),	///<エッジマーキングカラーテーブル
-	  GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0), },
+	{ GX_RGB(0,0,8),GX_RGB(0,0,8),GX_RGB(0,0,8),GX_RGB(0,0,8),	///<エッジマーキングカラーテーブル
+	  GX_RGB(0,0,8),GX_RGB(0,0,8),GX_RGB(0,0,8),GX_RGB(0,0,8), },
 	DEMO3D_FADE_WHITE, 10,	///<フェードイン
 	DEMO3D_FADE_BLACK, 0,	///<フェードアウト
 };
@@ -89,11 +89,14 @@ static const DEMO3D_FILE_UNIT res_title_b_file_unit_title_b_02[] = {
 
 static const u16 res_title_b_file_title_b_03[] = {
  NARC_data_demo3d_title_b_03_nsbmd,
+ NARC_data_demo3d_title_b_03_nsbtp,
+ NARC_data_demo3d_title_b_03_nsbta,
  NARC_data_demo3d_title_b_03_nsbca,
+ NARC_data_demo3d_title_b_03_nsbva,
 };
 
 static const DEMO3D_FILE_UNIT res_title_b_file_unit_title_b_03[] = {
- { res_title_b_file_title_b_03, 2 },
+ { res_title_b_file_title_b_03, 5 },
 };
 
 ///========================================================

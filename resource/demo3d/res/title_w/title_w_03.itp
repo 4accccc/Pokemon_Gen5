@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<itp version="1.6.0">
+
+<head>
+	<create user="ibe_mana" host="W00191" date="2011-12-26T19:17:16" source="title_w.mb"/>
+	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
+</head>
+
+<body>
+
+<tex_pattern_info
+	frame_size="5781"
+	tool_start_frame="0"
+	tool_end_frame="5780"
+	compress_material="on" material_size="6 6"
+/>
+
+</body>
+
+</itp>
