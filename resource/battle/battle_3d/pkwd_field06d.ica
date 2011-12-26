@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="toyama" host="W00153" date="2011-12-01T13:05:58" source="pkwd_field06d_all.mb"/>
+	<create user="toyama" host="W00153" date="2011-12-25T13:09:29" source="pkwd_field06d_all.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -17,26 +17,27 @@
 	tool_start_frame="0"
 	tool_end_frame="800"
 	interpolation="frame"
-	compress_node="merge" node_size="8 8"
+	compress_node="merge" node_size="9 9"
 	frame_step_mode="1"
 	tolerance_scale="0.100000"
 	tolerance_rotate="0.100000"
 	tolerance_translate="0.100000"
 />
 
-<node_scale_data size="1">
-	1.000000
+<node_scale_data size="2">
+	1.000000 1.280518
 </node_scale_data>
 
 <node_rotate_data size="1">
 	0.000000
 </node_rotate_data>
 
-<node_translate_data size="10">
+<node_translate_data size="13">
 	0.000000 0.000977 1.639893 -16.197510 -0.000977 -5.283447 3.997070 29.704102 -86.985352 -26.565430
+	11.938477 0.474365 -18.246582
 </node_translate_data>
 
-<node_anm_array size="8">
+<node_anm_array size="9">
 	<node_anm index="0">
 		<scale_x frame_step="1" data_size="1" data_head="0"/>
 		<scale_y frame_step="1" data_size="1" data_head="0"/>
@@ -104,6 +105,17 @@
 		<translate_z frame_step="1" data_size="1" data_head="0"/>
 	</node_anm>
 	<node_anm index="6">
+		<scale_x frame_step="1" data_size="1" data_head="1"/>
+		<scale_y frame_step="1" data_size="1" data_head="1"/>
+		<scale_z frame_step="1" data_size="1" data_head="1"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="10"/>
+		<translate_y frame_step="1" data_size="1" data_head="11"/>
+		<translate_z frame_step="1" data_size="1" data_head="12"/>
+	</node_anm>
+	<node_anm index="7">
 		<scale_x frame_step="1" data_size="1" data_head="0"/>
 		<scale_y frame_step="1" data_size="1" data_head="0"/>
 		<scale_z frame_step="1" data_size="1" data_head="0"/>
@@ -114,7 +126,7 @@
 		<translate_y frame_step="1" data_size="1" data_head="0"/>
 		<translate_z frame_step="1" data_size="1" data_head="0"/>
 	</node_anm>
-	<node_anm index="7">
+	<node_anm index="8">
 		<scale_x frame_step="1" data_size="1" data_head="0"/>
 		<scale_y frame_step="1" data_size="1" data_head="0"/>
 		<scale_z frame_step="1" data_size="1" data_head="0"/>
