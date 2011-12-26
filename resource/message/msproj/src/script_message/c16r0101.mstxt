@@ -273,19 +273,24 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>おやくさまをよぶ　には
+			<Text>おきゃくさまをよぶ　には
 とにかく　つうしんすること　です▼
 Ｃギアを　オンにしておけば
 すれちがった　あいてが　やってきます▼
 ユニオンルームや　ＩＲつうしん
 ランダムマッチ　ＧＴＳ　などで▽
 あそんだ　あいても　やってきます▼
-また　つうしん　しなくても
+つうしん　しなくても
 イッシュちほうで　かつやく　することで▽
-ファンが　くることも　ありますよ▼</Text>
+ファンが　くることも　あります▼
+また　いま　げんざい　まちに
+あそびに　きている　ひとの　かずは▽
+タウンマップで　かくにんが　できます▼
+ぼうけん　しているとき
+ときおり　のぞいてみましょう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-29T08:27:31" />
+				User="shimoyamada:W00184"
+				Time="2011-12-26T11:23:03" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -293,19 +298,24 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゲストを呼ぶ　には
+			<Text>お客様を呼ぶ　には
 とにかく　通信すること　です▼
 Ｃ－ＧＥＡＲを　ＯＮにしておけば
 すれちがった　相手が　やってきます▼
 ユニオンルームや　ＩＲ通信
 ランダムマッチ　ＧＴＳ　などで▽
 遊んだ　相手も　やってきます▼
-また　通信しなくても
+通信しなくても
 イッシュ地方で　活躍することで▽
-ファンが　来ることも　ありますよ▼</Text>
+ファンが　来ることも　あります▼
+また　今　現在　街に
+遊びに来ている　人の数は▽
+タウンマップで　確認　できます▼
+冒険　しているとき
+ときおり　のぞいてみましょう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-29T08:27:33" />
+				User="shimoyamada:W00184"
+				Time="2011-12-26T11:23:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
@@ -364,11 +374,11 @@
 お店が　つくられます▼
 それぞれの　人が
 夢を　もっているので▼
-正体する　ときに　相手の
+招待する　ときに　相手の
 話を　よくきいて　選びましょう▼</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-09-29T08:27:38" />
+				User="shimoyamada:W00184"
+				Time="2011-12-26T11:08:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nagihashi_toru:W00268"
