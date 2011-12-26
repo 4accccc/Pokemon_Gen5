@@ -41875,27 +41875,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>……おれたち
-おなじ　かっこう　なのに！</Text>
+			<Text>おなじように　ボールを　さわる
+コンビネーション　だったのに！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T13:26:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T13:26:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……おれたち
-同じ　格好なのに！</Text>
+			<Text>同じように　ボールを　触る
+コンビネーション　だったのに！</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T13:26:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T13:26:39" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -57496,28 +57496,32 @@
 			<Text>おおむかしの　ひとたちが　これだけ
 ながい　トンネルを　ほったのか▼
 やはり　たくさんの　ポケモンと
-ちからを　あわせて　ほったんだろうな</Text>
+ちからを　あわせて　ほったんだろうな▼
+……いや　もしかしたら
+こきつかわれていたのかも　しれないぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T09:36:43" />
+				Time="2011-12-26T13:26:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T09:36:43" />
+				Time="2011-12-26T13:26:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>大昔の　人たちが　これだけ
 長い　トンネルを　掘ったのか▼
 やはり　たくさんの　ポケモンと
-協力して　掘ったんだろうな</Text>
+協力して　掘ったんだろうな▼
+……いや　もしかしたら
+こき使われていたのかも　しれないぞ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T09:36:43" />
+				Time="2011-12-26T13:26:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-24T09:36:43" />
+				Time="2011-12-26T13:26:39" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -57641,27 +57645,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>まずは　しんこきゅう……
-よーし！　レディ　ゴー！！▼</Text>
+			<Text>まずは　おおきく……▼
+いきを　しない！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T03:31:07" />
+				Time="2011-12-26T13:26:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T03:31:07" />
+				Time="2011-12-26T13:26:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>まずは　深呼吸……
-よーし！　レディ　ゴー！！▼</Text>
+			<Text>まずは　大きく……▼
+息を　しない！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T03:31:07" />
+				Time="2011-12-26T13:26:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-28T03:31:07" />
+				Time="2011-12-26T13:26:39" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -57676,27 +57680,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>はああああ
-……これは　ためいき</Text>
+			<Text>ぷはああああ！！
+……いき　とめてると　しんどいな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T03:54:03" />
+				Time="2011-12-26T13:26:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T03:54:03" />
+				Time="2011-12-26T13:26:39" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>はああああ
-……これは　ため息</Text>
+			<Text>ぷはああああ！！
+……息　止めてると　しんどいな！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T03:54:03" />
+				Time="2011-12-26T13:26:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-18T03:54:03" />
+				Time="2011-12-26T13:26:39" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
