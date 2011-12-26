@@ -664,16 +664,16 @@
 だって　アタシたち　家族でしょ？</language>
 	</row>
 	<row id="pw_event5_enemy_0">
-		<language name="JPN" width="256">モニカ『[1:00:トレーナー名:1]……　ごめん</language>
-		<language name="JPN_KANJI" width="256">モニカ『[1:00:トレーナー名:1]……　ごめん</language>
+		<language name="JPN" width="256">モニカ『[1:00:トレーナー名:1]……</language>
+		<language name="JPN_KANJI" width="256">モニカ『[1:00:トレーナー名:1]……</language>
 	</row>
 	<row id="pw_event5_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『おねえちゃん……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『おねえちゃん……</language>
 	</row>
 	<row id="pw_event5_enemy_1">
-		<language name="JPN" width="256">モニカ『[1:00:トレーナー名:1]……</language>
-		<language name="JPN_KANJI" width="256">モニカ『[1:00:トレーナー名:1]……</language>
+		<language name="JPN" width="256">モニカ『うん……</language>
+		<language name="JPN_KANJI" width="256">モニカ『うん……</language>
 	</row>
 	<row id="pw_event5_hero_2">
 		<language name="JPN" width="256">……ふたりで　わらいあってると
