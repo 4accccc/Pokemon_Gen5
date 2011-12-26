@@ -727,21 +727,20 @@ sub_npc_tr_battle_main:
   _TRAINER_LOSE_CHECK( SCWK_ANSWER )
 
   IF $SCWK_ANSWER == SCR_BATTLE_RESULT_LOSE THEN
+    //負け
     _TEMOTI_POKEMON_KAIFUKU() //負け(0)なら回復処理
   
-    //また戦ってくれ
+    //これではだめだ　さらば
     _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_btl01_06, FES_NPC_MSGSET_NUM_TR_BATTLE )
-    _LAST_KEYWAIT()
-    _MSGWIN_CLOSE()
-    _RET
-  ENDIF
-  
-  _FMISSION_LOG_ACTION( FMISSION_LOG_ACT_TR_BATTLE_WIN )
+  ELSE
+    //勝ち
+    _FMISSION_LOG_ACTION( FMISSION_LOG_ACT_TR_BATTLE_WIN )  //勝ちならスコアアップビーコン
 
-  //君は強い！ 
-  _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_btl01_04, FES_NPC_MSGSET_NUM_TR_BATTLE )
-  //また戦ってくれ
-  _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_btl01_05, FES_NPC_MSGSET_NUM_TR_BATTLE )
+    //君は強い！ 
+    _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_btl01_04, FES_NPC_MSGSET_NUM_TR_BATTLE )
+    //また戦ってくれ
+    _BALLOONWIN_TALKOBJ_MSG_FES_NPC( msg_fm_npc_btl01_05, FES_NPC_MSGSET_NUM_TR_BATTLE )
+  ENDIF
   _MSGWIN_CLOSE()
 
   //暗転復帰でNPC消す
