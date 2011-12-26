@@ -8853,10 +8853,6 @@
 		<language name="JPN" width="256">SW-WBT-07</language>
 		<language name="JPN_KANJI" width="256">SW-WBT-07</language>
 	</row>
-	<row id="msg_seq_se_sw_wbt_08">
-		<language name="JPN" width="256">SW-WBT-08</language>
-		<language name="JPN_KANJI" width="256">SW-WBT-08</language>
-	</row>
 	<row id="msg_seq_se_sw_wbt_09">
 		<language name="JPN" width="256">SW-WBT-09</language>
 		<language name="JPN_KANJI" width="256">SW-WBT-09</language>
@@ -9540,6 +9536,10 @@
 	<row id="msg_seq_se_sw_kertio_form_05">
 		<language name="JPN" width="256">SW-KERTIO-FORM-05</language>
 		<language name="JPN_KANJI" width="256">SW-KERTIO-FORM-05</language>
+	</row>
+	<row id="msg_seq_se_sw_kertio_form_06">
+		<language name="JPN" width="256">SW-KERTIO-FORM-06</language>
+		<language name="JPN_KANJI" width="256">SW-KERTIO-FORM-06</language>
 	</row>
 	<row id="msg_seq_se_sw_ghetsis_stick_01">
 		<language name="JPN" width="256">SW-GHETSIS-STICK-01</language>
