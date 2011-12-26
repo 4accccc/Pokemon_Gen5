@@ -386,6 +386,8 @@ static BOOL _check_pokewoodseries_played( POKEWOOD_SAVEDATA *ps, int index )
 }
 
 
+#define POKEWOOD_GOODEND_HINT_MEDAL_PROVISION   ( 2 )
+
 //=============================================================================================
 /**
  * @brief	メダルボックス用登録処理
@@ -412,11 +414,22 @@ void PKWDSYS_CheckPokewoodMedal( GAMEDATA * gamedata )
   // 全ての映画を撮影したかチェック
   if(POKEWOOD_SAVEDATA_GetFlagTotal(ps, PWSV_TYPE_SENARIO_PLAYED)==POKEWOOD_BOXOFFICE_DATA_MAX){
     MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_PKWD_SERIES_ALL );
+    MEDALBOX_SetHintMedalAchive( medalbox,  MDLID_PKWD_STRANGE_ALL );
   }
 
   // 全ての映画で成功ENDにしたかチェック
   if(POKEWOOD_SAVEDATA_GetFlagTotal(ps, PWSV_TYPE_SENARIO_SUCCESS)==POKEWOOD_BOXOFFICE_DATA_MAX){
     MEDALBOX_SetTitleMedalAchive( medalbox, MDLID_PKWD_GOODEND );
+  }
+
+  // スターランク２以上でヒントメダルPKWD_GOODENDを解放する
+  {
+    int point = POKEWOOD_SAVEDATA_GetStarPoint( ps );
+    int rank  = POKEWOOD_SAVEDATA_CalcStarPoint2StarRank(point);
+
+    if(rank>=POKEWOOD_GOODEND_HINT_MEDAL_PROVISION){
+      MEDALBOX_SetHintMedalAchive( medalbox, MDLID_PKWD_GOODEND );
+    }
   }
 
   // ストレンジEND関連
