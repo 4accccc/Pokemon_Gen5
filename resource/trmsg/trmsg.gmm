@@ -6571,7 +6571,7 @@
 ポケモンに　持たせてあげな！▼</language>
 	</row>
 
-	<row id="TRID_RANGERW_13_TRMSG_FIGHT_AFTER">
+	<row id="TRID_RANGERW_13_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">クラボのみを　もってる　ポケモンは
 まひに　なっちゃったとき▽
 じぶんで　たべて　なおすんだよ</language>
@@ -9832,7 +9832,7 @@
 あげる　つもりだったんだ▼</language>
 	</row>
 
-	<row id="TRID_RANGERM_17_TRMSG_FIGHT_AFTER">
+	<row id="TRID_RANGERM_17_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">おちばに　くるまれながら
 ミノムッチという　ポケモンの▽
 きもちを　そうぞう　していたんだ！</language>
@@ -9862,7 +9862,7 @@
 発見した　きのみ　だよ▼</language>
 	</row>
 
-	<row id="TRID_RANGERM_18_TRMSG_FIGHT_AFTER">
+	<row id="TRID_RANGERM_18_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">じめんに　もぐっている
 ポケモンの　きもちを▽
 あじわいたくて　うまっていたのさ！</language>
@@ -9892,7 +9892,7 @@
 と　いうことで　これを！▼</language>
 	</row>
 
-	<row id="TRID_RANGERW_17_TRMSG_FIGHT_AFTER">
+	<row id="TRID_RANGERW_17_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">おちばの　したに　もぐっていたのは
 しぜんと　ひとつに　なるためなんだ！</language>
 		<language name="JPN_KANJI" width="216">落ち葉の下に　潜っていたのは
@@ -9920,7 +9920,7 @@
 これを　捧げるわ▼</language>
 	</row>
 
-	<row id="TRID_RANGERW_18_TRMSG_FIGHT_AFTER">
+	<row id="TRID_RANGERW_18_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">あかい　コスチュームと
 おちばの　コーディネートなの！</language>
 		<language name="JPN_KANJI" width="216">赤い　コスチュームと
@@ -14828,7 +14828,7 @@
 こいつに　かぎるぜ▼</language>
 	</row>
 
-	<row id="TRID_RANGERM_29_TRMSG_FIGHT_AFTER">
+	<row id="TRID_RANGERM_29_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">パワーあふれる　たたかいかたも
 テクニカルな　せんりゃくも▽
 ポケモン　ありき　なんだよね！</language>
@@ -14858,7 +14858,7 @@
 これを　使いな！▼</language>
 	</row>
 
-	<row id="TRID_RANGERW_29_TRMSG_FIGHT_AFTER">
+	<row id="TRID_RANGERW_29_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">あつい　とうそうしんと
 れいせいな　はんだんりょく▼
 ポケモンリーグに　いどむためには
