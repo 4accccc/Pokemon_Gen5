@@ -20,6 +20,7 @@
 //=============================================================================
 static MY_MEDAL_ST* GetMyMedalST( MY_MEDALDATA *p_my_medal , u8 page_num , u8 num );
 static void ResetSortList( MY_MEDALDATA *p_my_medal );
+static u32 get_ymd_num( MY_MEDAL_ST *p_st );
 
 //----------------------------------------------------------------------------
 /**
@@ -257,10 +258,8 @@ void MEDALDATASYS_SortMedal( MY_MEDALDATA* p_my_medal , SORT_MODE sort_mode )
           {
             MY_MEDAL_ST *p_st_i = &p_my_medal->p_medal_st[p_my_medal->sort_medal_id[i]];
             MY_MEDAL_ST *p_st_n = &p_my_medal->p_medal_st[p_my_medal->sort_medal_id[n]];
-            u32 ymd_i = 0xfffffff;
-            u32 ymd_n = 0xfffffff;
-            ymd_i = (p_st_i->year * 10000) + (p_st_i->month + 100 ) + (p_st_n->day);
-            ymd_n = (p_st_n->year * 10000) + (p_st_n->month + 100 ) + (p_st_n->day);
+            u32 ymd_i = get_ymd_num( p_st_i );
+            u32 ymd_n = get_ymd_num( p_st_n );
 
             GF_ASSERT(p_st_i);
             GF_ASSERT(p_st_n);
@@ -296,10 +295,8 @@ void MEDALDATASYS_SortMedal( MY_MEDALDATA* p_my_medal , SORT_MODE sort_mode )
           {
             MY_MEDAL_ST *p_st_i = &p_my_medal->p_medal_st[p_my_medal->sort_medal_id[i]];
             MY_MEDAL_ST *p_st_n = &p_my_medal->p_medal_st[p_my_medal->sort_medal_id[n]];
-            u32 ymd_i = 0xfffffff;
-            u32 ymd_n = 0xfffffff;
-            ymd_i = (p_st_i->year * 10000) + (p_st_i->month + 100 ) + (p_st_n->day);
-            ymd_n = (p_st_n->year * 10000) + (p_st_n->month + 100 ) + (p_st_n->day);
+            u32 ymd_i = get_ymd_num( p_st_i );
+            u32 ymd_n = get_ymd_num( p_st_n );
 
             GF_ASSERT(p_st_i);
             GF_ASSERT(p_st_n);
@@ -334,10 +331,8 @@ void MEDALDATASYS_SortMedal( MY_MEDALDATA* p_my_medal , SORT_MODE sort_mode )
           {
             MY_MEDAL_ST *p_st_i = &p_my_medal->p_medal_st[p_my_medal->sort_medal_id[i]];
             MY_MEDAL_ST *p_st_n = &p_my_medal->p_medal_st[p_my_medal->sort_medal_id[n]];
-            u32 ymd_i = 0xfffffff;
-            u32 ymd_n = 0xfffffff;
-            ymd_i = (p_st_i->year * 10000) + (p_st_i->month + 100 ) + (p_st_n->day);
-            ymd_n = (p_st_n->year * 10000) + (p_st_n->month + 100 ) + (p_st_n->day);
+            u32 ymd_i = get_ymd_num( p_st_i );
+            u32 ymd_n = get_ymd_num( p_st_n );
 
             GF_ASSERT(p_st_i);
             GF_ASSERT(p_st_n);
@@ -482,6 +477,21 @@ void MEDALDATASYS_SortMedal( MY_MEDALDATA* p_my_medal , SORT_MODE sort_mode )
     }
   }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  入手した日付をパックした値にする
+ *
+ *	@param	*p_st 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static u32 get_ymd_num( MY_MEDAL_ST *p_st )
+{
+  return (p_st->year * 10000) + (p_st->month * 100 ) + (p_st->day);
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  ソートリストをresetする
