@@ -480,6 +480,24 @@ static void DEBUG_Point( GAMEDATA *gamedata )
   MISC_SetGold(p_misc, MY_GOLD_MAX);
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  コンフィグセット処理
+ *
+ *	@param	GAMEDATA *gamedata ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+static void DEBUG_Config( GAMEDATA *gamedata )
+{
+  CONFIG *p_config = SaveData_GetConfig( GAMEDATA_GetSaveControlWork( gamedata ) );
+#ifdef DEBUG_ONLY_FOR_nagihashi_toru
+  {
+    CONFIG_SetMsgSpeed( p_config, MSGSPEED_FAST );
+    CONFIG_SetWirelessSaveMode( p_config, WIRELESSSAVE_OFF );
+  }
+#endif
+}
+
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 void DEBUG_SetStartData( GAMEDATA * gamedata, HEAPID heapID )
@@ -490,6 +508,8 @@ void DEBUG_SetStartData( GAMEDATA * gamedata, HEAPID heapID )
   DEBUG_IntrudeParam( gamedata, heapID );
   DEBUG_QuestionnaireParam( gamedata );
   DEBUG_Point( gamedata );
+  DEBUG_Config( gamedata );
+
 }
 
 
