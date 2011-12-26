@@ -1813,9 +1813,13 @@ static void _parentMeasurechanneling(GFL_NETWL* pNetWL)
 			pNetWL->_sTgid = WM_GetNextTgid();
 		}
 #endif
+
+#ifndef MULTI_BOOT_MAKE
 #ifdef DEBUG_JA_EXTEND_BUFF_CHECK
       DEBUG_GAMEBEACON_CheckJAExtendCheck();
 #endif
+#endif
+
 		NET_WHPIPE_BeaconSetInfo();
 		bRet = WH_ParentConnect(mode[pInit->bMPMode], pNetWL->_sTgid, channel, pInit->maxConnectNum-1 );
 		//   pNetWL->pCallback(bRet);
