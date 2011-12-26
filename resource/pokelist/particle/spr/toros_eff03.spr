@@ -60,7 +60,7 @@
 		init_vel_r="102"
 		air_resist="69"
 		base_scl_r="60"
-		base_alp="31"
+		base_alp="25"
 		loop_frame="1"
 		dbb_scale="0"
 		tex_rep_num_s="0"
