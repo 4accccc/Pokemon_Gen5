@@ -216,7 +216,7 @@ void GAMEBEACON_Update(void)
 {
   GAMEBEACON_SYSTEM *bsys = GameBeaconSys;
   int i;
-  
+
   if(GameBeaconSys == NULL || GFL_NET_IsInit() == FALSE){
     return;
   }
@@ -240,6 +240,8 @@ void GAMEBEACON_Update(void)
     bsys->backup_hour = play_hour;
   }
 
+  //もし寿命が切れたらNONEにし
+  //リゾートビーコンセット予約
   if( SendBeacon_Update(&bsys->send) )
   {
     bsys->resort_set_request = TRUE;
@@ -251,12 +253,16 @@ void GAMEBEACON_Update(void)
   {
     if( SendBeacon_Update_ResortData(bsys) )
     {
-      bsys->resort_set_request = TRUE;
+      //リゾートビーコン再セットはサーチかNULLじゃないとやらない
+      if(bsys->send.info.action.action_no == GAMEBEACON_ACTION_SEARCH
+      || bsys->send.info.action.action_no == GAMEBEACON_ACTION_NULL )
+      {
+        bsys->resort_set_request = TRUE;
+      }
     }
   }
 
   if( bsys->gamedata != NULL
-      && bsys->send.info.action.action_no == GAMEBEACON_ACTION_SEARCH
       && GAMEDATA_GetIsSave( bsys->gamedata ) == FALSE
       && bsys->resort_enable 
       && WB_NET_FIELDMOVE_SERVICEID == GFL_NET_GetGameServiceID() 
@@ -264,16 +270,27 @@ void GAMEBEACON_Update(void)
   {
     if( !GFL_NET_WLIsChildStateScan() )
     {
-      //送信処理
-      if( bsys->resort_set_request == TRUE )
+      //サーチかNULLかつリクエスト状態ならば、
+      //ビーコンセットして、GAMEBEACON_ACTION_SEARCHにする
+      //
+      //これにより、拡張とアクションNOのずれを回避している。
+      if(bsys->send.info.action.action_no == GAMEBEACON_ACTION_SEARCH
+      || bsys->send.info.action.action_no == GAMEBEACON_ACTION_NULL )
       {
-        GAMEBEACON_Set_SendResortData( bsys );
-        bsys->resort_set_request = FALSE;
+        //送信処理
+        //内部でGAMEBEACON_ACTION_NULLの場合GAMEBEACON_ACTION_SEARCHに書き換えている
+        if( bsys->resort_set_request == TRUE )
+        {
+          GAMEBEACON_Set_SendResortData( bsys );
+          bsys->resort_set_request = FALSE;
+        }
       }
     }
     else
     {
       //受信処理
+      //
+      //送信していないときの受信処理。受信リクエストは別な場所でやっている。
       if( bsys->resort_recv_request == TRUE )
       {
         if( BeaconInfo_RecvResortDataMain( bsys ) )
@@ -436,7 +453,7 @@ static BOOL SendBeacon_Update(GAMEBEACON_SEND_MANAGER *send)
     send->life++;
     if(send->life > CrossCommData[send->info.action.action_no].life){
       send->life = 0;
-      send->info.action.action_no = GAMEBEACON_ACTION_SEARCH;
+      send->info.action.action_no = GAMEBEACON_ACTION_NULL;
       send->info.version_bit = GAMEBEACON_RECV_VERSION_FULL; //全バージョン指定に戻す
       return TRUE;
     }
@@ -2369,6 +2386,10 @@ static void GAMEBEACON_Set_SendResortData( GAMEBEACON_SYSTEM *bsys )
 
   RESORT_BEACON_DATA_Exit( p_data );
 
+  if( bsys->send.info.action.action_no == GAMEBEACON_ACTION_NULL )
+  {
+    bsys->send.info.action.action_no = GAMEBEACON_ACTION_SEARCH;
+  }
 
 #ifdef DEBUG_JA_EXTEND_BUFF_CHECK
   s_ja_extend_check_flag    = TRUE;
