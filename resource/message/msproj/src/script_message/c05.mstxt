@@ -2707,11 +2707,11 @@
 ほれた　おんなの　きをひきたくて
 あたらしい　スタイルの▽
 ポケモンしょうぶを　まなんだのさ▼
-そのなも　トリプルバトル！
+そのなも　ローテーションバトル！
 どんな　しょうぶか　しりたいか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:34:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2724,11 +2724,11 @@
 ほれた　女の　気をひきたくて
 新しい　スタイルの▽
 ポケモン勝負を　学んだのさ▼
-その名も　トリプルバトル！
+その名も　ローテーションバトル！
 どんな　勝負か　知りたいか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:34:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2736,15 +2736,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・WHITEver
-・トリプルバトルチュートリアル
+			<Comment>♂：White2ver
+・ローテーションバトルチュートリアル
 ・はい/いいえ選択時
 　はい→badrider_02
 　いいえ→badrider_03</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:34:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2797,13 +2796,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・WHITEver
+			<Comment>♂：White2ver
 ・いいえ選択時
 　再度会話はbadrider_01から</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:33:51" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2832,17 +2830,19 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>トリプルバトルとは
+			<Text>ローテーションバトルとは
 ポケモンを　３びきずつ　だして▽
 たたかう　ポケモンしょうぶ　さ！▼
-ルールは　かんたん！▼
-あいての　ポケモンを
-すべて　ひんしに　するだけ……▼
+そして　だした　ポケモンは
+まえに１ひき！　うしろに２ひきの▽
+ポジションで　セットされる▼
+この　ポジションは　１ターンごとに
+かわるというのが　ポイント……▼
 ざっと　いじょうが
-トリプルバトルの　あらましさ▼</Text>
+ローテーションバトルの　あらましさ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:34:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2850,17 +2850,19 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>トリプルバトルとは
+			<Text>ローテーションバトルとは
 ポケモンを　３匹ずつ　だして▽
 戦う　ポケモン勝負　さ！▼
-ルールは　簡単！▼
-相手の　ポケモンを
-すべて　ひんしに　するだけ……▼
+そして　だした　ポケモンは
+前衛に１匹！　後衛に２匹の▽
+ポジションで　セットされる▼
+この　ポジションは　１ターンごとに
+換わるというのが　ポイント……▼
 ざっと　以上が
-トリプルバトルの　あらましさ▼</Text>
+ローテーションバトルの　あらましさ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:34:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2868,13 +2870,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・WHITEver
+			<Comment>♂：White2ver
 ・メッセージ表示後にアニメ(どこかに行って戻る）
 ・続けてbadrider_04</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:33:50" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2906,10 +2907,10 @@
 			<Text>オレは……　こいする　おとこ
 そのなも　チャールズ▼
 どうだ！　おまえも　トレーナーなら
-やらないか　トリプルバトルを？</Text>
+やらないか　ローテーションバトルを？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:34:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2920,10 +2921,10 @@
 			<Text>オレは……　恋する男
 その名も　チャールズ▼
 どうだ！　おまえも　トレーナーなら
-やらないか　トリプルバトルを？</Text>
+やらないか　ローテーションバトルを？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:34:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2931,15 +2932,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・WHITEver
+			<Comment>♂：White2ver
 ・はい/いいえ選択肢表示
 ・はい→badrider_05
 　はい、だけど戦闘可能ポケモン2匹以下→badrider_06
 　いいえ→badrider_07</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:33:47" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2996,13 +2996,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・WHITEver
+			<Comment>♂：White2ver
 ・はい選択時
 　メッセージ表示後、トレーナー戦闘へ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:33:45" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3033,12 +3032,12 @@
 			Language="JPN">
 			<Text>もえあがった　きもちに
 みずを　さして　すまない……▼
-トリプルバトルには
+ローテーションバトルには
 たたかえる　ポケモンが▽
 ３びき　ひつよう　なんだよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:34:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3048,12 +3047,12 @@
 			Language="JPN_KANJI">
 			<Text>燃えあがった　気持ちに
 水を　さして　すまないな……▼
-トリプルバトルには
+ローテーションバトルには
 戦える　ポケモンが▽
 ３匹　必要なんだよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:34:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3061,12 +3060,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・WHITEver
+			<Comment>♂：White2ver
 ・はい、だけど戦えるポケモンが２匹以下</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:33:44" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3123,13 +3121,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・WHITEver
+			<Comment>♂：White2ver
 ・いいえ選択時
 　再度会話はbadrider_04から</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:33:42" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3163,12 +3160,12 @@
 それにしても　おまえには
 みどころが　ある▼
 じぶんの　ポケモンへの　りかいがなきゃ
-トリプルバトルは　かてないからな▼
-もっと　トリプルバトルが　したけりゃ
+ローテーションバトルは　かてないからな▼
+ローテーションバトルが　したけりゃ
 ポケモンワールドトーナメント　だぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T11:12:34" />
+				Time="2011-12-26T09:34:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3181,12 +3178,12 @@
 それにしても　おまえには
 見所が　ある▼
 自分の　ポケモンへの　理解がなきゃ
-トリプルバトルは　勝てないからな▼
-もっと　トリプルバトルが　したけりゃ
+ローテーションバトルは　勝てないからな▼
+ローテーションバトルが　したけりゃ
 ポケモンワールドトーナメント　だぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T08:58:20" />
+				Time="2011-12-26T09:34:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3194,13 +3191,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・WHITEver
+			<Comment>♂：White2ver
 ・トレーナー戦闘後、フィールド復帰時で自動表示
 ※swanでメッセージ変更</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T09:45:42" />
+				Time="2011-12-26T09:33:41" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3257,12 +3253,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・WHITEver
+			<Comment>♂：White2ver
 ・c08r0201でトリプルバトル後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:33:39" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3296,11 +3291,11 @@
 ほれた　おんなの　きをひきたくて
 あたらしい　スタイルの▽
 ポケモンしょうぶを　まなんだのさ▼
-そのなも　ローテーションバトル！
+そのなも　トリプルバトル！
 どんな　しょうぶか　しりたいか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:34:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3313,11 +3308,11 @@
 ほれた　女の　気をひきたくて
 新しい　スタイルの▽
 ポケモン勝負を　学んだのさ▼
-その名も　ローテーションバトル！
+その名も　トリプルバトル！
 どんな　勝負か　知りたいか？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:34:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3325,15 +3320,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・BLACKver
+			<Comment>♂：Black2ver
 ・トリプルバトルチュートリアル
 ・はい/いいえ選択時
 　はい→badrider_02
 　いいえ→badrider_03</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:33:11" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3386,13 +3380,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・BLACKver
+			<Comment>♂：Black2ver
 ・いいえ選択時
 　再度会話はbadrider_01から</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:33:12" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3421,19 +3414,17 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ローテーションバトルとは
+			<Text>トリプルバトルとは
 ポケモンを　３びきずつ　だして▽
 たたかう　ポケモンしょうぶ　さ！▼
-そして　だした　ポケモンは
-まえに１ひき！　うしろに２ひきの▽
-ポジションで　セットされる▼
-この　ポジションは　１ターンごとに
-かわるというのが　ポイント……▼
+ルールは　かんたん！▼
+あいての　ポケモンを
+すべて　ひんしに　するだけ……▼
 ざっと　いじょうが
-ローテーションバトルの　あらましさ▼</Text>
+トリプルバトルの　あらましさ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:34:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3441,19 +3432,17 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ローテーションバトルとは
+			<Text>トリプルバトルとは
 ポケモンを　３匹ずつ　だして▽
 戦う　ポケモン勝負　さ！▼
-そして　だした　ポケモンは
-前衛に１匹！　後衛に２匹の▽
-ポジションで　セットされる▼
-この　ポジションは　１ターンごとに
-換わるというのが　ポイント……▼
+ルールは　簡単！▼
+相手の　ポケモンを
+すべて　ひんしに　するだけ……▼
 ざっと　以上が
-ローテーションバトルの　あらましさ▼</Text>
+トリプルバトルの　あらましさ▼</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:34:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3461,13 +3450,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・BLACKver
+			<Comment>♂：Black2ver
 ・メッセージ表示後にアニメ(どこかに行って戻る）
 ・続けてbadrider_04</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:33:14" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3499,10 +3487,10 @@
 			<Text>オレは……　こいする　おとこ
 そのなも　チャールズ▼
 どうだ！　おまえも　トレーナーなら
-やらないか　ローテーションバトルを？</Text>
+やらないか　トリプルバトルを？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:34:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3513,10 +3501,10 @@
 			<Text>オレは……　恋する男
 その名も　チャールズ▼
 どうだ！　おまえも　トレーナーなら
-やらないか　ローテーションバトルを？</Text>
+やらないか　トリプルバトルを？</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:34:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3524,15 +3512,14 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・BLACKver
+			<Comment>♂：Black2ver
 ・はい/いいえ選択肢表示
 ・はい→badrider_05
 　はい、だけど戦闘可能ポケモン2匹以下→badrider_06
 　いいえ→badrider_07</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:33:16" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3589,13 +3576,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・BLACKver
+			<Comment>♂：Black2ver
 ・はい選択時
 　メッセージ表示後、トレーナー戦闘へ</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:33:19" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3626,12 +3612,12 @@
 			Language="JPN">
 			<Text>もえあがった　きもちに
 みずを　さして　すまない……▼
-ローテーションバトルには
+トリプルバトルには
 たたかえる　ポケモンが▽
 ３びき　ひつよう　なんだよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:34:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3641,12 +3627,12 @@
 			Language="JPN_KANJI">
 			<Text>燃えあがった　気持ちに
 水を　さして　すまないな……▼
-ローテーションバトルには
+トリプルバトルには
 戦える　ポケモンが▽
 ３匹　必要なんだよ</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:34:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3654,12 +3640,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・BLACKver
+			<Comment>♂：Black2ver
 ・はい、だけど戦えるポケモンが２匹以下</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:33:20" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3716,13 +3701,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・BLACKver
+			<Comment>♂：Black2ver
 ・いいえ選択時
 　再度会話はbadrider_04から</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:33:23" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3756,12 +3740,12 @@
 それにしても　おまえには
 みどころが　ある▼
 じぶんの　ポケモンへの　りかいがなきゃ
-ローテーションバトルは　かてないからな▼
-ローテーションバトルが　したけりゃ
+トリプルバトルは　かてないからな▼
+もっと　トリプルバトルが　したけりゃ
 ポケモンワールドトーナメント　だぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-22T11:12:27" />
+				Time="2011-12-26T09:34:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3774,12 +3758,12 @@
 それにしても　おまえには
 見所が　ある▼
 自分の　ポケモンへの　理解がなきゃ
-ローテーションバトルは　勝てないからな▼
-ローテーションバトルが　したけりゃ
+トリプルバトルは　勝てないからな▼
+もっと　トリプルバトルが　したけりゃ
 ポケモンワールドトーナメント　だぜ！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T08:58:12" />
+				Time="2011-12-26T09:34:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3787,13 +3771,12 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・BLACKver
+			<Comment>♂：Black2ver
 ・トレーナー戦闘後、フィールド復帰時で自動表示
 ※swanでメッセージ変更</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-29T09:45:58" />
+				Time="2011-12-26T09:33:26" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -3850,12 +3833,11 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>♂
-・BLACKver
+			<Comment>♂：Black2ver
 ・c08r0201でトリプルバトル後</Comment>
 			<CommentModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T09:33:28" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
