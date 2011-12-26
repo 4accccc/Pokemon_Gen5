@@ -492,9 +492,6 @@ _RET
 /**************************************************************/
 ev_regist_check:
 {
-  DEFINE_LOCAL LWK_NEED_WIN_CLOSE
-  $LWK_NEED_WIN_CLOSE = TRUE
-
   //レンタルの場合はチェックはスルー
   _WBT_GET_WBT_CUP( LWK_WBT_SELECT_TOURNAMENT )
   IF $LWK_WBT_SELECT_TOURNAMENT == SCR_WBT_CUP_RENTAL || $LWK_WBT_SELECT_TOURNAMENT == SCR_WBT_CUP_RENTALMASTER THEN
@@ -504,15 +501,8 @@ ev_regist_check:
 
   // ウィンドウを閉じるか判断する
   IF $LWK_WBT_SELECT_TOURNAMENT != SCR_WBT_CUP_DOWNLOAD THEN
-    // パーティー選択ウィンドウが開くかどうかでメッセージウィンドウを閉じるか判断
-    _WBT_BTL_UTIL_PARTY_SELECT_CALL_CHECK( SCWK_ANSWER )
-    IF $SCWK_ANSWER == TRUE THEN
-      _MSGWIN_CLOSE()
-      $LWK_NEED_WIN_CLOSE = FALSE
-    ENDIF
-  ELSE
     // ダウンロードトーナメント以外の場合はメッセージウィンドウを閉じる
-    $LWK_NEED_WIN_CLOSE = FALSE
+    _MSGWIN_CLOSE()
   ENDIF
 
   // パーティー選択
@@ -524,11 +514,6 @@ ev_regist_check:
   IF $SCWK_ANSWER == SCR_BTL_PARTY_SELECT_CANCEL THEN
     _RET
   ELSIF $SCWK_ANSWER == SCR_BTL_PARTY_SELECT_NG THEN
-
-    // ウィンドウを閉じる必要がある場合のみ、クローズ
-    IF $LWK_NEED_WIN_CLOSE == TRUE THEN
-      _MSGWIN_CLOSE()
-    ENDIF
 
     // NGメッセージを取得
     _WBT_GET_NG_MSG_ID( SCWK_ANSWER )
