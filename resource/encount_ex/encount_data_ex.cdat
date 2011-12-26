@@ -21,7 +21,7 @@ static const ENCOUNT_DATA_N_POKE DATA_EncountDataNPoke[] = {
  { ZONE_ID_D06R0101, 3, 597, 28, 18, PM_MALE, 0 },  //テッシード, てれや, てつのトゲ
  { ZONE_ID_D06R0101, 3, 595, 28, 6, PM_MALE, 1 },  //バチュル, すなお, きんちょうかん
  { ZONE_ID_D06R0101, 3, 599, 28, 19, PM_MALE, 0 },  //ギアル, うっかりや, プラス
- { ZONE_ID_R03R0301, 1, 527, 55, 14, PM_MALE, 0 },  //コロモリ, むじゃき, てんねん
- { ZONE_ID_D03R0101, 1, 555, 35, 7, PM_MALE, 2 },  //ヒヒダルマ, のんき, ダルマモード
+ { ZONE_ID_R03R0301, 1, 527, 55, 10, PM_MALE, 0 },  //コロモリ, おくびょう, てんねん
+ { ZONE_ID_D03R0101, 1, 555, 35, 20, PM_MALE, 2 },  //ヒヒダルマ, おだやか, ダルマモード
 };
 
