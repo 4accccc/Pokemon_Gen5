@@ -2505,6 +2505,14 @@
 #define TMFLG_D11R0501_EXPERIMENT         2782 /* 0x0ade ヒウン下水道：毒実験イベント・アイテム入手フラグ（１日１回） */
 #define TMFLG_C14R0501_WALK_CLEAR         2783 /* 0x0adf セイガイハシティ民家：おさんぽクリア */
 #define TMFLG_T03R0401_ITEMGET_01         2784 /* 0x0ae0 カゴメタウン：ビジネスマンのアイテム入手イベント（1日1回） */
+#define TMFLG_WC10_SHOPBUY_01             2785 /* 0x0ae1 白の樹洞：ショップ１（１日１回買える） */
+#define TMFLG_WC10_SHOPBUY_02             2786 /* 0x0ae2 白の樹洞：ショップ２（１日１回買える） */
+#define TMFLG_WC10_SHOPBUY_03             2787 /* 0x0ae3 白の樹洞：ショップ３（１日１回買える） */
+#define TMFLG_WC10_SHOPBUY_04             2788 /* 0x0ae4 白の樹洞：ショップ４（１日１回買える） */
+#define TMFLG_BC10R0401_SHOPBUY_01        2789 /* 0x0ae5 黒の摩天楼：ショップ１（１日１回買える） */
+#define TMFLG_BC10R0401_SHOPBUY_02        2790 /* 0x0ae6 黒の摩天楼：ショップ２（１日１回買える） */
+#define TMFLG_BC10R0401_SHOPBUY_03        2791 /* 0x0ae7 黒の摩天楼：ショップ３（１日１回買える） */
+#define TMFLG_BC10R0401_SHOPBUY_04        2792 /* 0x0ae8 黒の摩天楼：ショップ４（１日１回買える） */
 
 #define TMFLG_AREA_END                    2819 /* 0x0b03  */
 
