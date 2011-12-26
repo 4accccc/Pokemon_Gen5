@@ -109366,10 +109366,10 @@ PWT</Comment>
 			Language="JPN">
 			<Text>そうだね▼
 ポケモンを　そだてられる
-おみせが　きになるよ</Text>
+おみせが　きになるよ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-19T12:43:51" />
+				User="shimoyamada:W00184"
+				Time="2011-12-26T09:24:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -109379,10 +109379,10 @@ PWT</Comment>
 			Language="JPN_KANJI">
 			<Text>そうだね▼
 ポケモンを　育てられる
-お店が　気になるよ</Text>
+お店が　気になるよ▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-19T12:44:01" />
+				User="shimoyamada:W00184"
+				Time="2011-12-26T09:24:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -109423,10 +109423,10 @@ PWT</Comment>
 ぶっちゃけ　いっちゃうよ！▼
 カフェ！　はなや！　ほいくじょ！
 びようしつ！　どうじょう！▽
-こーゆー　おみせ　しってる！？</Text>
+こーゆー　おみせ　しってる！？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-19T12:45:04" />
+				User="shimoyamada:W00184"
+				Time="2011-12-26T09:23:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -109438,10 +109438,10 @@ PWT</Comment>
 ぶっちゃけ　いっちゃうよ！▼
 カフェ！　花屋！　保育所！
 美容室！　道場！▽
-こーゆー　お店　知ってる！？</Text>
+こーゆー　お店　知ってる！？▼</Text>
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-12-19T12:45:30" />
+				User="shimoyamada:W00184"
+				Time="2011-12-26T09:24:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -109793,11 +109793,10 @@ PWT</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かわいい　てんいんさんが　いる
-おみせに　いきたいかな▼</Text>
+			<Text />
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T10:29:46" />
+				User="shimoyamada:W00184"
+				Time="2011-12-26T09:23:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -109805,11 +109804,10 @@ PWT</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>可愛い　店員さんが　いる
-お店に　行きたいかな▼</Text>
+			<Text />
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T10:50:58" />
+				User="shimoyamada:W00184"
+				Time="2011-12-26T09:23:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -109844,11 +109842,10 @@ PWT</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>かわいい　てんいんさんが　いる
-おみせに　いきたいな▼</Text>
+			<Text />
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T10:29:53" />
+				User="shimoyamada:W00184"
+				Time="2011-12-26T09:23:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -109856,11 +109853,10 @@ PWT</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>可愛い　店員さんが　いる
-お店に　行きたいな▼</Text>
+			<Text />
 			<TextModifiedBy
-				User="matsumiya:W00224"
-				Time="2011-09-26T10:51:04" />
+				User="shimoyamada:W00184"
+				Time="2011-12-26T09:23:18" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
