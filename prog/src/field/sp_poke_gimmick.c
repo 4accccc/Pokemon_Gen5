@@ -1647,6 +1647,9 @@ static GMEVENT_RESULT KerudhioEvent( GMEVENT* event, int* seq, void* wk )
       ANM_DisappearPlay( p_wk->exp_obj, OBJ_BIRIZION );
       ANM_DisappearPlay( p_wk->exp_obj, OBJ_KOBARUON );
 
+      // SE:è¡Ç¶ÇÈ
+      PMSND_PlaySE( SEQ_SE_SW_KERTIO_FORM_06 );
+
       *seq = SEQ_ALL_DELETE_WAIT;
     }
     break;
