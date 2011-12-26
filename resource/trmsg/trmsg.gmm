@@ -8142,14 +8142,14 @@
 ポケモンしょうぶを　おみせする！▼</language>
 		<language name="JPN_KANJI" width="216">いつも　この辺りを
 パトロールしている　この　オレ！▼
-地形を　生かした
+地形を　活かした
 ポケモン勝負を　おみせする！▼</language>
 	</row>
 
 	<row id="TRID_RANGERM_15_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">ちけいを　いかしきれなかった……
 なんたることだ！！</language>
-		<language name="JPN_KANJI" width="216">地形を　生かしきれなかった……
+		<language name="JPN_KANJI" width="216">地形を　活かしきれなかった……
 なんたることだ！！</language>
 	</row>
 
