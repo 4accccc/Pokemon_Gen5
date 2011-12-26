@@ -1921,6 +1921,7 @@ static GMEVENT_RESULT EVENT_MapChangeFromUnion( GMEVENT * event, int *seq, void 
   MAPCHANGE_WORK* work       = wk;
   GAMESYS_WORK*   gameSystem = work->gameSystem;
   FIELDMAP_WORK*  fieldmap   = work->fieldmap;
+  GAMEDATA*       gameData   = work->gameData;
 
   switch( *seq )
   {
@@ -1937,6 +1938,16 @@ static GMEVENT_RESULT EVENT_MapChangeFromUnion( GMEVENT * event, int *seq, void 
   case 2:
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( union_system ) );
     GFL_OVERLAY_Load( FS_OVERLAY_ID( intrude_system ) );
+    /*
+     * ユニオンに入る前の下画面ステータスに戻す
+     *
+     * 下画面がすれ違いまたはフェスミッションログだった場合、intrude_systemがUnloadされていると
+     * 初期化が出来ないため、ToUnion処理で一度Cギアに戻したものを
+     * 覚えておいたステータスを書き戻して、下画面作り直し
+     */
+    GAMEDATA_SetSubScreenStatusFromUnion( gameData );
+    FIELD_SUBSCREEN_ChangeForce( FIELDMAP_GetFieldSubscreenWork( fieldmap ), FIELD_SUBSCREEN_NORMAL );
+
     // エレベータからの登場スクリプト実行
     SCRIPT_CallScript( event, SCRID_POKECEN_ELEVATOR_OUT, NULL, NULL, HEAPID_FIELDMAP );
     (*seq)++;
@@ -1963,18 +1974,13 @@ static GMEVENT_RESULT EVENT_MapChangeToUnion( GMEVENT* event, int* seq, void* wk
   {
   case 0:
     /*
-     * 下画面がフェスミッションログだった場合、intrude_systemがUnloadされると
+     * 下画面がすれ違いまたはフェスミッションログだった場合、intrude_systemがUnloadされると
      * MapChangeCore内でのフェスミッションログ画面破棄処理に不都合があるので
-     * ここで一度CGearに戻しておく
-     *
-     * 出てきた時のステータスを保存するため、一手間かける
+     * ここで今のステータスを覚えておきつつ、一度CGearに戻しておく
      */
-    {
-      FIELD_SUBSCREEN_STATUS status = GAMEDATA_GetSubScreenStatus(gameData);
-      GAMEDATA_SetSubScreenStatus( gameData, FIELD_SUBSCREEN_STATUS_CGEAR); //これをやらないとCギアに戻らない
-      FIELD_SUBSCREEN_ChangeForce( FIELDMAP_GetFieldSubscreenWork( fieldmap ), FIELD_SUBSCREEN_NORMAL );
-      GAMEDATA_SetSubScreenStatus( gameData, status ); //ステータスを書き戻す
-    }
+    GAMEDATA_SetSubScreenStatusToUnion( gameData );
+    FIELD_SUBSCREEN_ChangeForce( FIELDMAP_GetFieldSubscreenWork( fieldmap ), FIELD_SUBSCREEN_NORMAL );
+    
     // 動作モデル停止
     GMEVENT_CallEvent( event, EVENT_ObjPauseAll( gameSystem, fieldmap ) );
     (*seq)++;

@@ -403,6 +403,22 @@ extern u8 GAMEDATA_GetSubScreenStatus(const GAMEDATA *gamedata);
 //--------------------------------------------------------------
 extern void GAMEDATA_SetSubScreenStatus(GAMEDATA *gamedata, u8 subscreen_status);
 
+//--------------------------------------------------------------
+/**
+ * @brief   フィールド下画面 NORMAL指定時のステータス変更 ユニオンルームに行く時処理
+ * @param   gamedata    GAMEDATAへのポインタ
+ */
+//--------------------------------------------------------------
+extern void GAMEDATA_SetSubScreenStatusToUnion( GAMEDATA *gamedata);
+
+//--------------------------------------------------------------
+/**
+ * @brief   フィールド下画面 NORMAL指定時のステータス変更 ユニオンルームから出る時処理
+ * @param   gamedata    GAMEDATAへのポインタ
+ */
+//--------------------------------------------------------------
+extern void GAMEDATA_SetSubScreenStatusFromUnion( GAMEDATA *gamedata);
+
 //------------------------------------------------------------------
 /**
  * @brief   フレーム分割動作で動作する場合の許可フラグ設定
