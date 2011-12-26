@@ -21,6 +21,13 @@
 #include "fldeff_fes_kira.h"
 #include "field_encount_local.h"
 
+#ifdef PM_DEBUG
+ #include "field/eventdata_sxy.h"
+ #include "field/eventdata_type.h"
+ #include "field/eventdata_local.h"
+ #include "debug/debug_flg.h"
+#endif
+
 //======================================================================
 //  define
 //======================================================================
@@ -72,6 +79,11 @@ typedef struct
   MMDLSYS* mmdl_sys;
   MMDL *fmmdl;
 
+#ifdef PM_DEBUG
+  int deb_pos_num;
+  const BG_TALK_DATA *deb_pos;
+  const FIELD_RAIL_MAN* deb_railman;
+#endif  //PM_DEBUG
 }TASKHEADER_FES_KIRA;
 
 //--------------------------------------------------------------
@@ -285,6 +297,20 @@ FLDEFF_TASK* FLDEFF_FES_KIRA_SetEffect( FLDEFF_CTRL *fectrl )
   head.eff_wk = eff_wk;
   head.mmdl_sys = FIELDMAP_GetMMdlSys( fieldMapWork );
 
+#ifdef PM_DEBUG
+  {
+    GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( fieldMapWork );
+    GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
+    EVENTDATA_SYSTEM* evdata = GAMEDATA_GetEventData( gdata );
+    const FLDNOGRID_MAPPER* cp_mapper = FIELDMAP_GetFldNoGridMapper( fieldMapWork );
+
+    head.deb_pos = EVENTDATA_GetTalkBGEventTbl( evdata, &head.deb_pos_num ); 
+    if( cp_mapper != NULL ){
+      head.deb_railman = FLDNOGRID_MAPPER_GetRailMan( cp_mapper );
+    }
+  }
+#endif  //PM_DEBUG
+
   return FLDEFF_CTRL_AddTask(
       fectrl, &DATA_fldeffFesKiraTaskHeader, NULL, 0, &head, 0 );
 }
@@ -460,6 +486,34 @@ static void fldeffFesKiraTask_Draw( FLDEFF_TASK *task, void *wk )
     status.trans = work->obj[i].pos;
     GFL_G3D_DRAW_DrawObjectCullingON( eff_wk->g3d_obj.obj, &status );
   }
+
+#ifdef PM_DEBUG
+  if( DEBUG_FLG_GetFlg(DEBUG_FLG_FMissionEvPosView))
+  {
+    int d_num = 0;
+    const BG_TALK_DATA *target = work->head.deb_pos;
+
+    if( target == NULL ) return;
+
+    for(i = 0;i < work->head.deb_pos_num;i++, target++ ){
+      if( target->type != BG_TALK_TYPE_DUMMY_FES ){
+        continue;
+      }
+      if( d_num++ >= 20 ){
+        break;  //ãŒÀ’´‚¦‚½‚Ì‚Å‚±‚êˆÈãƒT[ƒ`‚µ‚È‚¢
+      }
+      if( target->pos_type == EVENTDATA_POSTYPE_GRID ){
+        EVENTDATA_GetBGTalkCenterPos( target, &status.trans);
+      }
+      else{
+        RAIL_LOCATION loc;
+        EVENTDATA_GetBGTalkCenterRailLocation( target, &loc );
+        FIELD_RAIL_MAN_GetLocationPosition( work->head.deb_railman, &loc, &status.trans );
+      }
+      GFL_G3D_DRAW_DrawObjectCullingON( eff_wk->g3d_obj.obj, &status );
+    }
+  }
+#endif
 }
 
 //--------------------------------------------------------------
