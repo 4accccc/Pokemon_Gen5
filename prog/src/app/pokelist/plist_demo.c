@@ -39,7 +39,7 @@
 ///パーティクルが出て、この時間だけ経ったらポケモンアイコン変更
 #define PLIST_DEMO_CHANGE_WAIT_SHEIMI       (38)
 ///パーティクルが出て、この時間だけ経ったらポケモンアイコン変更
-#define PLIST_DEMO_CHANGE_WAIT_TOROS        (38)
+#define PLIST_DEMO_CHANGE_WAIT_TOROS        (25)
 ///パーティクルが出て、この時間だけ経ったらホワイトアウト開始
 #define PLIST_DEMO_CHANGE_WAIT_KYUREMU_UNION_WHITEOUT		(110)
 #define PLIST_DEMO_CHANGE_WAIT_KYUREMU_PERGE_WHITEOUT		(130)
