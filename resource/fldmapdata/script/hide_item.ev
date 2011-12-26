@@ -1290,8 +1290,8 @@ EVENT_START ev_hide_item_210
 EVENT_END
 
 EVENT_START ev_hide_item_211
-//未使用 ( 1, 1 )
-	_ITEM_EVENT_HIDEITEM( 17, 1, FLAG_HIDEITEM_211 )// キズぐすり
+//牧場入り口 ( 156, 639 )
+	_ITEM_EVENT_HIDEITEM( 4, 1, FLAG_HIDEITEM_211 )// モンスターボール
 EVENT_END
 
 EVENT_START ev_hide_item_212

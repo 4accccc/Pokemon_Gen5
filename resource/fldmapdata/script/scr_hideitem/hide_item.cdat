@@ -1266,11 +1266,11 @@ static const HIDE_ITEM_DATA hide_item_data[213] = {
 		ZONE_ID_R03, // ３番道路
 		697,558, // x, y
 	},
-	{ // キズぐすり
+	{ // モンスターボール
 		211, 
 		1,0, // flags
-		ZONE_ID_C01, // 未使用
-		  1,  1, // x, y
+		ZONE_ID_D22, // 牧場入り口
+		156,639, // x, y
 	},
 	{ // キズぐすり
 		212, 
