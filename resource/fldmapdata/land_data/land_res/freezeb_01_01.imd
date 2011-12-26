@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2011-07-26T20:48:54" source="freezeb_01_01.mb"/>
+	<create user="ibe_mana" host="W00191" date="2011-12-26T12:55:49" source="freezeb_01_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2011-07-26T20:48:54" source="freezeb_01_01.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2011-12-26T12:55:49" source="freezeb_01_01.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -1401,7 +1401,7 @@
 		462a 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="5" name="c8k_ki02c_pl" color_size="8">
-		150a 156e 15af 1a11 7bde 7fff 7fff 7fff
+		318c 4210 4631 4e73 7bde 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="6" name="c8k_ki02dx_pl" color_size="8">
 		7fff 5aee 4e8d 52ce 5b2f 574f 7fff 7fff
@@ -3894,8 +3894,8 @@
 				<primitive index="1" type="quad_strip" vertex_size="6">
 					<tex st="-192.000000 115.187500"/>
 					<pos_xz xz="-3.062500 0.799805"/>
-					<tex st="-256.000000 0.000000"/>
-					<pos_xz xz="-4.000000 -1.000000"/>
+					<tex st="-255.437500 15.625000"/>
+					<pos_xz xz="-4.000000 -0.750000"/>
 					<tex st="-188.812500 128.000000"/>
 					<pos_xz xz="-3.012207 1.062500"/>
 					<tex st="-256.000000 144.000000"/>
@@ -4000,8 +4000,8 @@
 					<pos_xz xz="-4.000000 -2.250000"/>
 					<tex st="-160.000000 6.500000"/>
 					<pos_xz xz="-2.500000 -0.960938"/>
-					<tex st="-256.000000 0.000000"/>
-					<pos_xz xz="-4.000000 -1.000000"/>
+					<tex st="-255.437500 15.625000"/>
+					<pos_xz xz="-4.000000 -0.750000"/>
 				</primitive>
 				<primitive index="9" type="quad_strip" vertex_size="6">
 					<tex st="-96.000000 77.000000"/>
@@ -4042,12 +4042,12 @@
 					<pos_xz xz="-3.062500 -0.187500"/>
 					<tex st="-192.000000 115.187500"/>
 					<pos_xz xz="-3.062500 0.799805"/>
-					<tex st="-256.000000 0.000000"/>
-					<pos_xz xz="-4.000000 -1.000000"/>
+					<tex st="-255.437500 15.625000"/>
+					<pos_xz xz="-4.000000 -0.750000"/>
 				</primitive>
 				<primitive index="12" type="triangle_strip" vertex_size="4">
 					<tex st="31.937500 16.000000"/>
-					<pos_xz xz="0.436279 -0.750000"/>
+					<pos_xy xy="0.436279 0.062500"/>
 					<tex st="31.750000 -40.625000"/>
 					<pos_xz xz="0.496094 -1.635254"/>
 					<tex st="0.000000 16.000000"/>
@@ -4062,8 +4062,8 @@
 					<pos_xz xz="-2.750000 -0.562500"/>
 					<tex st="-173.312500 16.000000"/>
 					<pos_xz xz="-2.707520 -0.812500"/>
-					<tex st="-256.000000 0.000000"/>
-					<pos_xz xz="-4.000000 -1.000000"/>
+					<tex st="-255.437500 15.625000"/>
+					<pos_xz xz="-4.000000 -0.750000"/>
 					<tex st="32.125000 -146.250000"/>
 					<pos_xz xz="0.502441 -3.285156"/>
 					<tex st="32.000000 -192.000000"/>
@@ -4080,8 +4080,8 @@
 					<pos_xz xz="-0.250000 -3.218750"/>
 					<tex st="-48.000000 -136.937500"/>
 					<pos_xz xz="-0.750000 -3.108643"/>
-					<tex st="-256.000000 0.000000"/>
-					<pos_xz xz="-4.000000 -1.000000"/>
+					<tex st="-255.437500 15.625000"/>
+					<pos_xz xz="-4.000000 -0.750000"/>
 					<tex st="-192.000000 48.000000"/>
 					<pos_xz xz="-3.062500 -0.187500"/>
 					<tex st="-190.125000 33.625000"/>
@@ -4102,8 +4102,8 @@
 					<pos_xz xz="-2.707520 -0.812500"/>
 					<tex st="-160.000000 6.500000"/>
 					<pos_xz xz="-2.500000 -0.960938"/>
-					<tex st="-256.000000 0.000000"/>
-					<pos_xz xz="-4.000000 -1.000000"/>
+					<tex st="-255.437500 15.625000"/>
+					<pos_xz xz="-4.000000 -0.750000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -4481,8 +4481,8 @@
 					<pos_xz xz="-4.000000 -2.500000"/>
 					<tex st="0.812500 0.312500"/>
 					<pos_xz xz="-4.125000 -2.593750"/>
-					<tex st="15.187500 0.312500"/>
-					<pos_xz xz="-4.125000 -2.250000"/>
+					<tex st="10.187500 0.312500"/>
+					<pos_xz xz="-4.125000 -2.375000"/>
 					<tex st="15.187500 14.375000"/>
 					<pos_xz xz="-2.781250 -2.274414"/>
 					<tex st="0.812500 14.375000"/>
