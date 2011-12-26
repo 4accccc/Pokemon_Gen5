@@ -44,7 +44,7 @@ EVENT_START ev_c09p03_ending
   _CAMERA_PURGE()		//カメラのバインドを解く
 	
   //カメラ操作
-  _CAMERA_MOVE( 65496,0,1495040,2068480,4494063,229376,1 )	//一番最後の引数は移動にかかるフレーム数
+  _CAMERA_MOVE( 62296,0,970752,2093056,4219631,491520,1 )	//一番最後の引数は移動にかかるフレーム数
   _CAMERA_WAIT_MOVE()
   
   // フェードイン
@@ -79,11 +79,14 @@ EVENT_START ev_c09p03_ending
   //カメラ操作
   _OBJ_ANIME_WAIT()
 
+  _TIME_WAIT( 16 )
+
   _OBJ_ADD( C09P03_SWCHAMPION )
 
   //アニメ：アイリスも続けて出てくる
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
   _OBJ_ANIME( C09P03_SWCHAMPION, anm_swchampion_1 )
+  _TIME_WAIT( 16 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
   _OBJ_ANIME_WAIT()
 
   _OBJ_ANIME( C09P03_SWCHAMPION, anm_stay_l )
@@ -91,15 +94,15 @@ EVENT_START ev_c09p03_ending
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_r )
   _OBJ_ANIME_WAIT()
   
-  _TIME_WAIT( 45 )
+  _TIME_WAIT( 30 )
 
   //カメラ操作
-  _CAMERA_MOVE( 5080,0,905216,2064384,2589203,1015808,60 )	//一番最後の引数は移動にかかるフレーム数
+  _CAMERA_MOVE( 5080,0,905216,2064384,2589203,1015808,120 )	//一番最後の引数は移動にかかるフレーム数
 
   //アニメ：2人で階段を降りる
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 31, 14, FORCE_TYPE_NOT, 8, DIR_UD )
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 31, 14, FORCE_TYPE_NOT, 16, DIR_UD )
   _TIME_WAIT( 4 )
-  _OBJ_ANIME_AUTO( C09P03_SWCHAMPION, 31, 13, FORCE_TYPE_NOT, 8, DIR_UD )
+  _OBJ_ANIME_AUTO( C09P03_SWCHAMPION, 31, 13, FORCE_TYPE_NOT, 16, DIR_UD )
   _OBJ_ANIME_WAIT()
   _OBJ_ANIME( C09P03_SWCHAMPION, anm_stay_d )
   _OBJ_ANIME_WAIT()
@@ -124,7 +127,7 @@ EVENT_START ev_c09p03_ending
   _TIME_WAIT( 30 )
   
   //主人公二歩移動・ギーマとカトレア眼で追いかける
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 31, 16, FORCE_TYPE_NOT, 8, DIR_UD )
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 31, 16, FORCE_TYPE_NOT, 16, DIR_UD )
   _TIME_WAIT( 8 )
   _OBJ_ANIME( C09P03_BIGFOUR2, anm_stay_d )
   _OBJ_ANIME( C09P03_BIGFOUR4, anm_stay_d )
@@ -146,11 +149,11 @@ EVENT_START ev_c09p03_ending
   
   _TIME_WAIT( 30 )
 
-  //カメラ操作
-  _CAMERA_MOVE( 5080,0,905216,2064384,2392595,1212416,30 )	//一番最後の引数は移動にかかるフレーム数
+  //カメラ操作  
+  _CAMERA_MOVE( 8536,0,970752,2064384,2490899,1171456,30 )	//一番最後の引数は移動にかかるフレーム数
 
   //主人公二歩移動・ギーマとカトレア眼で追いかける
-  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 31, 18, FORCE_TYPE_NOT, 8, DIR_UD )
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 31, 18, FORCE_TYPE_NOT, 16, DIR_UD )
   _TIME_WAIT( 8 )
   _OBJ_ANIME( C09P03_BIGFOUR1, anm_stay_d )
   _OBJ_ANIME( C09P03_BIGFOUR3, anm_stay_d )
@@ -161,18 +164,21 @@ EVENT_START ev_c09p03_ending
   //主人公振り向く・ギーマとカトレアとアイリスが移動
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
   _OBJ_ANIME_WAIT()
-  _OBJ_ANIME_AUTO( C09P03_BIGFOUR2, 29, 15, FORCE_TYPE_NOT, 8, DIR_LR )
-  _OBJ_ANIME_AUTO( C09P03_BIGFOUR4, 33, 15, FORCE_TYPE_NOT, 8, DIR_LR )
-  _OBJ_ANIME_AUTO( C09P03_SWCHAMPION, 31, 17, FORCE_TYPE_NOT, 8, DIR_UD )
+  _OBJ_ANIME_AUTO( C09P03_BIGFOUR2, 29, 15, FORCE_TYPE_NOT, 16, DIR_LR )
+  _OBJ_ANIME_AUTO( C09P03_BIGFOUR4, 33, 15, FORCE_TYPE_NOT, 16, DIR_LR )
+  _OBJ_ANIME_AUTO( C09P03_SWCHAMPION, 31, 17, FORCE_TYPE_NOT, 16, DIR_UD )
   _OBJ_ANIME_WAIT()
 
   _TIME_WAIT( 45 )
 
+  _CAMERA_MOVE( 9688,0,970752,2064384,1999379,1605632,30 )
+
   //暗転処理
-  _BLACK_OUT_SLOW()
+  _MAP_FADE_BLACK_OUT_SLOW()
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_dash_d )
   _OBJ_ANIME_WAIT()
-  _DISP_FADE_END_CHECK()
+  _MAP_FADE_END_CHECK()
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
   _CAMERA_BIND()		//カメラバインド
   _CAMERA_END()		//カメラ操作終了
 
@@ -183,7 +189,7 @@ EVENT_END
 //--------------------------------------------------------------------
 // 部屋から出てくる
 _ANIME_LABEL  anm_player_1
-  _ANIME_DATA AC_WALK_D_8F,6
+  _ANIME_DATA AC_WALK_D_12F,6
   _ANIME_DATA ACMD_END,0
 
 // 振り向く
@@ -200,7 +206,7 @@ _ANIME_LABEL  anm_player_3
 //  アイリスアニメ
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_swchampion_1
-  _ANIME_DATA AC_WALK_D_8F,7
+  _ANIME_DATA AC_WALK_D_12F,7
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -226,19 +232,19 @@ _ANIME_LABEL  anm_stay_r
 //☆共通処理：歩く
 //--------------------------------------------------------------------
 _ANIME_LABEL  anm_walk_d
-  _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA AC_WALK_D_16F,1
   _ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL  anm_walk_u
-  _ANIME_DATA AC_WALK_U_8F,1
+  _ANIME_DATA AC_WALK_U_16F,1
   _ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL  anm_walk_r
-  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_WALK_R_16F,1
   _ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL  anm_walk_l
-  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_L_16F,1
   _ANIME_DATA ACMD_END,0
 
 //--------------------------------------------------------------------

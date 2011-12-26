@@ -2139,7 +2139,7 @@ EVENT_START    ev_c12_ending
   _DEMO_GIMMICK_ENDING_C12_INIT()
 
   //プレイヤーの初期位置決定
-  _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 53, 0, 745, DIR_DOWN )
+  _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 53, 0, 750, DIR_DOWN )
 
   _MAP_FADE_BLACK_IN_SLOW()
   
@@ -2147,18 +2147,49 @@ EVENT_START    ev_c12_ending
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_ending_01 )
   _MAP_FADE_END_CHECK()
   _OBJ_ANIME_WAIT()
+  
+  _TIME_WAIT( 30 )
+  
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラパージ
+  _CAMERA_MOVE(9688,0,970752,2854912,65551,50036736, 60)
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  _TIME_WAIT( 20 )
+  _OBJ_ANIME( C12_MAMA_ED_01, anm_staystep_u_16 )
+  _OBJ_ANIME_WAIT()
+ 
+  _TIME_WAIT( 30 )
 
-  _OBJ_ANIME( C12_MAMA_ED_01, anm_walk_l )
-  _TIME_WAIT( 8 )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_ending_02 )
   _OBJ_ANIME_WAIT()
   
   _TIME_WAIT( 30 )
 
+  _CAMERA_MOVE(9688,0,970752,3112960,65551,49971200, 60)
+
   //アニメ：家に入る
-  _OBJ_ANIME_AUTO( C12_MAMA_ED_01, 47, 762, FORCE_TYPE_NOT, 8, DIR_LR )
+  _OBJ_ANIME_AUTO( C12_MAMA_ED_01, 46, 763, FORCE_TYPE_NOT, 16, DIR_LR )
   _TIME_WAIT( 4 )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_ending_02 )
+  _OBJ_ANIME_AUTO( MMDL_ID_PLAYER, 46, 762, FORCE_TYPE_NOT, 16, DIR_LR )
+  _OBJ_ANIME_WAIT()
+  
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  
+  _OBJ_ANIME( C12_MAMA_ED_01, anm_staystep_u_16 )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+  _OBJ_ANIME_WAIT()
+  
+  _TIME_WAIT( 60 )
+  
+  _OBJ_ANIME_AUTO( C12_MAMA_ED_01, 47, 762, FORCE_TYPE_NOT, 16, DIR_LR )
+  _TIME_WAIT( 24 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_r )
+  _OBJ_ANIME_WAIT()
+
+  _TIME_WAIT( 30 )
+
+  _OBJ_ANIME( C12_MAMA_ED_01, anm_staystep_u_16 )
   _OBJ_ANIME_WAIT()
 
   //ドア開ける
@@ -2167,17 +2198,20 @@ EVENT_START    ev_c12_ending
   _BMODEL_ANIME_WAIT( SCWK_ANSWER )
 
   _OBJ_ANIME( C12_MAMA_ED_01, anm_swmama_ending_01 )
-  _TIME_WAIT( 4 )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_u )
+  _TIME_WAIT( 8 )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_walk_r )
   _OBJ_ANIME_WAIT()
   
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_staystep_d_16 )
   _OBJ_ANIME_WAIT()
+  
+  _TIME_WAIT( 45 )
+
+  _CAMERA_MOVE(9688,0,970752,3112960,741391,49971200, 100)
 
   _TIME_WAIT( 20 )
-
-  _MAP_FADE_BLACK_OUT_SLOW()
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_swmama_ending_01 )
+  _MAP_FADE_BLACK_OUT_SLOW()
   _OBJ_ANIME_WAIT()
 
   //ドア閉める
@@ -2186,6 +2220,10 @@ EVENT_START    ev_c12_ending
   _BMODEL_ANIME_DELETE( SCWK_ANSWER )
 
   _MAP_FADE_END_CHECK()
+
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  _CAMERA_BIND()		//カメラバインド
+  _CAMERA_END()		//カメラ操作終了
 
   //========================================//
   // エンディングのキャラ非表示
@@ -2295,21 +2333,19 @@ _ANIME_LABEL	anm_game_start_04
 //	☆エンディング：主人公家まで走る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_ending_01
-  _ANIME_DATA	AC_DASH_D_6F,7
-  _ANIME_DATA	AC_DASH_L_6F,10
-  _ANIME_DATA	AC_DASH_D_6F,7
-  _ANIME_DATA	AC_WALK_D_8F,4
-  _ANIME_DATA	AC_WALK_R_12F,1
+  _ANIME_DATA	AC_WALK_D_8F,2
+  _ANIME_DATA	AC_WALK_L_8F,10
+  _ANIME_DATA	AC_WALK_D_8F,2
+  _ANIME_DATA	AC_WALK_D_16F,2
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_ending_02
+  _ANIME_DATA	AC_DASH_D_6F,6
   _ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_swmama_ending_01
   _ANIME_DATA	AC_WALK_U_12F,1
   _ANIME_DATA	AC_VANISH_ON,1
-  _ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_ending_02
-  _ANIME_DATA	AC_WALK_R_8F,2
-  _ANIME_DATA	AC_STAY_WALK_U_8F,1
   _ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -2376,7 +2412,26 @@ _ANIME_LABEL	anm_staystep_l
 _ANIME_LABEL	anm_staystep_r
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
-	
+
+//--------------------------------------------------------------------
+//	☆共通処理：その場歩き	16F:
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_staystep_u_16
+	_ANIME_DATA	AC_STAY_WALK_U_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_d_16
+	_ANIME_DATA	AC_STAY_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_l_16
+	_ANIME_DATA	AC_STAY_WALK_L_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_staystep_r_16
+	_ANIME_DATA	AC_STAY_WALK_R_16F,1
+	_ANIME_DATA	ACMD_END,0
+
 //--------------------------------------------------------------------
 //	☆共通処理：ギョエ・？・…
 //--------------------------------------------------------------------
@@ -2395,7 +2450,6 @@ _ANIME_LABEL	anm_common_tenten
 _ANIME_LABEL	anm_common_onpu
 	_ANIME_DATA	AC_MARK_ONPU,1
 	_ANIME_DATA	ACMD_END,0
-
 
 _ANIME_LABEL	anm_swrival_anime
 	_ANIME_DATA	AC_SWRIVAL_ACT0,1
