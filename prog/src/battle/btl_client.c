@@ -10991,14 +10991,14 @@ static void AddStarPokePoint( BTL_CLIENT *wk, POKEWOOD_SEQ_WORK *psw, const BTL_
   
   GF_ASSERT_MSG( rank<5, "スターランクが５未満じゃない\n");
   
-  psw->Estimate.estimate += starrank2point[rank];
+  psw->Estimate.star_point += starrank2point[rank];
   
   psw->Estimate.pokemon_count++;
   
   // 観客リアクションも設定する
   _set_audience_star_reaction( wk->viewCore, &wk->pokewoodSeqWork, rank );
 
-  OS_TFPrintf(1,"monsno=%d, star=%d, 合計star=%d\n", monsno, star,psw->Estimate.estimate );
+  OS_TFPrintf(1,"monsno=%d, star=%d, 合計star=%d\n", monsno, star,psw->Estimate.star_point );
 
 }
 
