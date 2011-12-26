@@ -661,7 +661,7 @@ extern void RESORT_RECORD_AddID( u32 record_id );
 
 #define RESORT_TRAINER_ID_STORE_SIZE (32)
 
-#define RESORT_FEVER_DAY  (3)
+#define RESORT_FEVER_DAY  (7)
 
 //-------------------------------------
 ///	à¯êî
