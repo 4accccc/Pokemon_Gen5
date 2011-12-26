@@ -86,13 +86,13 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>その　研究に　かかせないのが
-[System:Color name="2" ]ずばり　ゲームシンク　[/System:Color]なの！▼
+ずばり　[System:Color name="2" ]ゲームシンク[/System:Color]　なの！▼
 それでは
 トレーナーの　レポートを　集める▽
 システムについて　説明しますね▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-11T03:23:25" />
+				Time="2011-12-26T03:53:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

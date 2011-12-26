@@ -10,10 +10,10 @@
 オマエには　つよくなってもらうッ！▼
 さすがに　オレ　ひとりで　アイツらと
 やりあうのは　キツイからな……▼
-たのむぜ！　ともだち！！</Text>
+たのむぜッ！　[Name:TrainerName ]！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T04:01:23" />
+				Time="2011-12-25T11:22:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -25,10 +25,10 @@
 オマエには　強くなってもらうッ！▼
 さすがに　オレ　ひとりで　アイツらと
 やりあうのは　キツイからな……▼
-頼むぜ！　友達！！</Text>
+頼むぜッ！　[Name:TrainerName ]！！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T04:01:29" />
+				Time="2011-12-25T11:23:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -67,11 +67,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『……ったく！
-はやく　じゅんび　しろよッ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……なに？
+はやく　じゅんび　してくれよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T03:45:52" />
+				Time="2011-12-25T11:23:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -79,11 +79,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『……ったく！
-はやく　準備しろよッ！▼</Text>
+			<Text>[Name:TrainerName Idx="1" ]『……なに？
+はやく　準備してくれよッ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-15T03:45:58" />
+				Time="2011-12-25T11:23:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
