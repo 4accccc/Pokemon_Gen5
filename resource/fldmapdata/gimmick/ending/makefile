@@ -73,40 +73,31 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
 #.SUFFIXES:	.nsbmd .imd
 #imdデータからの生成ルール
 %.nsbmd:	data/%.imd
-#	@echo $<をコンバート
 	@g3dcvtr $<
 
 %.nsbca:	data/%.ica
-#	@echo $<をコンバート
 	@g3dcvtr $<
 
 %.nsbma:	data/%.ima
-#	@echo $<をコンバート
 	@g3dcvtr $<
 
 %.nsbtp:	data/%.itp
-#	@echo $<をコンバート
 	@g3dcvtr $<
 
 %.nsbta:	data/%.ita
-#	@echo $<をコンバート
 	@g3dcvtr $<
 
 %.nsbva:	data/%.iva
-#	@echo $<をコンバート
 	@g3dcvtr $<
 
 %.NCLR:	data/%.ncl
-#	@echo $<をコンバート
-	@g2dcvtr $<
+	@g2dcvtr $< -o/.
 
 %.NCGR:	data/%.ncg
-#	@echo $<をコンバート
-	@g2dcvtr $< -bg
+	@g2dcvtr $< -bg -o/.
 
 %.NSCR:	data/%.nsc
-#	@echo $<をコンバート
-	@g2dcvtr $<
+	@g2dcvtr $< -o/.
 
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(DATA_LIST)
