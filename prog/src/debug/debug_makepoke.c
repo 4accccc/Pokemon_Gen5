@@ -216,7 +216,7 @@ static u8 countryCode_formal_to_local( u8 val );
 static u8 countryCode_local_to_formal( u8 value );
 static u8 personalSpeabi_formal_to_local( const POKEMON_PARAM* pp, u8 val );
 static u8 personalSpeabi_local_to_formal( const POKEMON_PARAM* pp, u8 value );
-static void personalSpeabi_3rd_flag_set( POKEMON_PARAM* pp );
+static void personalSpeabi_3rd_flag_set( DMP_MAINWORK* wk, POKEMON_PARAM* pp );
 
 //--------------------------------------------------------------
 /**
@@ -832,24 +832,6 @@ static void update_dst( DMP_MAINWORK* wk )
     personal_rnd |= box_getvalue( wk, INPUTBOX_ID_PER_RND_L);
     sex = POKETOOL_GetSex( mons_no, form_no, personal_rnd );
   }
-#if 0
-  {
-    //“Á«‚â«•ÊÝ’è—Dæ
-    PtlTokuseiSpec tokusei;
-    switch( box_getvalue( wk, INPUTBOX_ID_TOKUSEI_SWITCH ) )
-    {
-    default:
-    case 0:
-      tokusei = PTL_TOKUSEI_SPEC_1;
-      break;
-    case 1:
-      tokusei = PTL_TOKUSEI_SPEC_2;
-      break;
-    }
-    sex = box_getvalue( wk, INPUTBOX_ID_SEX );
-    personal_rnd = POKETOOL_CalcPersonalRandSpec( wk->oyaID, mons_no, form_no, sex, tokusei, rare_flag );
-  }
-#endif
   PP_Get( wk->dst, ID_PARA_nickname, (void*)(wk->strbuf) );
 
   PP_Clear( wk->dst );
@@ -1296,14 +1278,16 @@ static void pp_update( DMP_MAINWORK* wk, u32 boxID, u32 value )
     break;
 
   case INPUTBOX_ID_TOKUSEI_SWITCH:
+    box_update( wk, boxID, value );
     value = personalSpeabi_local_to_formal( wk->dst, value );
     PP_Put( wk->dst, p->paraID, value );
-    personalSpeabi_3rd_flag_set( wk->dst );
+    personalSpeabi_3rd_flag_set( wk, wk->dst );
     break;
 
   case INPUTBOX_ID_TOKUSEI:
     PP_Put( wk->dst, p->paraID, value );
-    personalSpeabi_3rd_flag_set( wk->dst );
+    box_update( wk, boxID, value );
+    personalSpeabi_3rd_flag_set( wk, wk->dst );
     break;
 
   default:
@@ -1440,7 +1424,6 @@ static void box_setup_form_change( DMP_MAINWORK* wk )
   u16 item = box_getvalue( wk, INPUTBOX_ID_ITEM );
   u16 mons = box_getvalue( wk, INPUTBOX_ID_POKETYPE );
   u16 form = box_getvalue( wk, INPUTBOX_ID_FORM );
-  u8  now_form = PP_Get( wk->dst, ID_PARA_form_no, NULL );
 
   switch( mons ){
   case MONSNO_GIRATHINA:
@@ -1454,9 +1437,6 @@ static void box_setup_form_change( DMP_MAINWORK* wk )
     break;
   default:
     break;
-  }
-  if( form == now_form ){
-    return;
   }
   box_update( wk, INPUTBOX_ID_FORM, form );
   update_dst( wk );
@@ -1483,7 +1463,7 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
       PP_ChangeMonsNo( wk->dst, monsno );
       PP_Put( wk->dst, ID_PARA_exp, exp );
       PP_Put( wk->dst, ID_PARA_form_no, 0 );
-      personalSpeabi_3rd_flag_set( wk->dst );
+      personalSpeabi_3rd_flag_set( wk, wk->dst );
       PP_Renew( wk->dst );
       box_setup_form_change( wk );
 
@@ -1680,7 +1660,7 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
     {
       u32 value = box_getvalue( wk, updateBoxID );
       PP_Put( wk->dst, ID_PARA_speabino, value );
-      personalSpeabi_3rd_flag_set( wk->dst );
+      personalSpeabi_3rd_flag_set( wk, wk->dst );
       box_update( wk, INPUTBOX_ID_TOKUSEI_SWITCH,
           personalSpeabi_formal_to_local( wk->dst, value ) );
       box_setup( wk, INPUTBOX_ID_TOKUSEI_3RD, wk->dst );
@@ -2310,14 +2290,22 @@ static u8 personalSpeabi_local_to_formal( const POKEMON_PARAM* pp, u8 value )
   }
   return abi[ value ];
 }
-static void personalSpeabi_3rd_flag_set( POKEMON_PARAM* pp )
+static void personalSpeabi_3rd_flag_set( DMP_MAINWORK* wk, POKEMON_PARAM* pp )
 {
   u8  abi[3];
   u8  speabi = PP_Get( pp, ID_PARA_speabino, NULL );
 
   speabi_ary_get( pp, abi );
 
-  PP_Put( pp, ID_PARA_tokusei_3_flag, (speabi == abi[2]));
+  if( speabi == abi[2]
+      && box_getvalue( wk, INPUTBOX_ID_TOKUSEI_SWITCH ) == 2 )
+  {
+    PP_Put( pp, ID_PARA_tokusei_3_flag, TRUE);
+  }
+  else
+  {
+    PP_Put( pp, ID_PARA_tokusei_3_flag, FALSE);
+  }
 
   IWASAWA_Printf(" Speabi 3rd = %d abi=%d, %d\n", (speabi == abi[2] ), speabi, abi[2]);
 }
