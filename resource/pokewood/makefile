@@ -7,8 +7,8 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= mori nakatsui ito_hiroto sato_hitomi shimoyamada
-
+USERS	 = mori nakatsui ito_hiroto sato_hitomi shimoyamada
+CALCUSER = mori
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
@@ -20,6 +20,7 @@ SENARIO_CONV  = ruby -Ks senario_conv.rb
 BGM_HASH_CONV = ruby make_bgmhash.rb
 BRIEFING_CONV = ruby briefing_conv.rb
 BRIEFING_MODEL_CDAT = pkwd_briefing_model.cdat
+PROFIT_CALC_CONV = ruby senario_calc_tool.rb
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -37,7 +38,7 @@ SUBDIRS	=
 include	$(PROJECT_RSCDIR)\macro_define
 
 # 自動でリソースを集める
-lsources:=$(wildcard *.xls)
+lsources:=$(wildcard pokewood_*.xls)
 
 # リソースが吐き出すファイルを自動でつくる(.xls→.txt)
 ltexts = $(subst .xls,.txt,$(lsources))
@@ -83,6 +84,10 @@ $(targetname).narc: $(lsources) $(lbins) $(ltexts) $(recdata)
 	nnsarc -r -l -n -i $(targetname).narc -S arc.scr
 	$(NAIXCUT) $(targetname).naix
 	$(BRIEFING_CONV) $(BRIEFING_MODEL_CDAT)
+ifeq ($(CALCUSER),nakatsui)
+	$(PROFIT_CALC_CONV) pkwd_calc_templete.xls ウッド結果算出.xls
+endif
+
 endif
 
 # narc のコピーだけ実行する
