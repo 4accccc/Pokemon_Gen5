@@ -349,11 +349,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　街の　名前は？
+			<Text>この街の　名前は？
 （世界の　みんなには　ヒミツです）</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-20T05:49:36" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T07:12:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -503,11 +503,11 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>ゲームシンクIDコードを
-にゅうりょくしてください</Text>
+			<Text>ゲームシンクＩＤコードを
+にゅうりょく　してください</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-21T03:39:36" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T07:11:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -515,11 +515,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ゲームシンクIDコードを
+			<Text>ゲームシンクＩＤコードを
 入力してください</Text>
 			<TextModifiedBy
-				User="nagihashi_toru:W00268"
-				Time="2011-07-21T03:39:41" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T07:11:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -800,11 +800,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>入力　できる　数字は
+			<Text>入力できる　数字は
 ４文字　まで　です</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:22" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T07:09:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

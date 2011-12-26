@@ -630,11 +630,10 @@
 			<Text>ようこそ！　ライモンジムへ
 ポケモンと　トレーナーがつくる▼
 かれいな　ポケモンしょうぶと
-ファッションショーの▽
-はじまり　でーす！▼</Text>
+ファッションショーの　はじまりよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-11T02:42:56" />
+				Time="2011-12-26T08:56:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -645,11 +644,10 @@
 			<Text>ようこそ！　ライモンジムへ
 ポケモンと　トレーナーが　つくる▼
 華麗な　ポケモン勝負と
-ファッションショーの▽
-はじまり　でーす！▼</Text>
+ファッションショーの　はじまりよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-11T02:42:56" />
+				Time="2011-12-26T08:56:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -747,11 +745,10 @@ princess_01</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>あなたと　あなたのポケモン
-とっても　シャイニング！▼
-わたしも　みならわなきゃ！</Text>
+とっても　シャイニング！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T08:56:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -760,11 +757,10 @@ princess_01</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あなたと　あなたのポケモン
-とっても　シャイニング！▼
-わたしも　見習わなきゃ！</Text>
+とっても　シャイニング！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T08:56:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -806,13 +802,11 @@ princess_01</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>うつくしく　あるだけではダメ
-トレーナーとして　つよくなければ▼
-わたしたちの　かれいな　たたかいぶり
-みとれてしまわないで▼</Text>
+			<Text>トレーナーとして　うつくしいの？
+あたしを　おどろかせてよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-11T02:43:01" />
+				Time="2011-12-26T08:54:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -820,13 +814,11 @@ princess_01</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>うつくしく　あるだけではダメ
-トレーナーとして　強くなければ▼
-わたしたちの　華麗な　戦いぶり
-みとれてしまわないで▼</Text>
+			<Text>トレーナーとして　美しいの？
+あたしを　驚かせてよ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-11T02:43:01" />
+				Time="2011-12-26T08:55:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -861,12 +853,13 @@ princess_02</Text>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>カミツレさまは　おつよい……▼
+			<Text>カミツレさまは
+つよくて　うつくしいの……▼
 わたしたちと　おなじと
 あなどらない　ことね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T10:57:13" />
+				Time="2011-12-26T08:55:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -874,12 +867,13 @@ princess_02</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>カミツレさまは　お強い……▼
+			<Text>カミツレさまは
+強くて　美しいの……▼
 わたしたちと　同じと
 あなどらない　ことね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T10:57:09" />
+				Time="2011-12-26T08:55:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -922,12 +916,12 @@ princess_02</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>うつくしさ　というのは
-みため　だけじゃない▼
+ルックス　だけじゃない▼
 あなたも　カミツレさまも
 つよさが　うつくしさの　いちぶね</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:11" />
+				User="matsumiya:W00224"
+				Time="2011-12-26T08:55:50" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -936,12 +930,12 @@ princess_02</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>美しさ　というのは
-みため　だけじゃない▼
+ルックス　だけじゃない▼
 あなたも　カミツレさまも
 強さが　美しさの　一部ね</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-20T10:57:28" />
+				Time="2011-12-26T08:55:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
