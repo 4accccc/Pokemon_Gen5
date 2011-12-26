@@ -17742,7 +17742,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		MATRIX_ID_MUGEN11, // camera_area
 		19,   // padding > placeicon
-    0,
+    5,
 		5,
 		0,
 		4,
@@ -17778,7 +17778,7 @@ static const ZONEDATA ZoneData[] = {
     FALSE,
 		MATRIX_ID_MUGEN12, // camera_area
 		19,   // padding > placeicon
-    0,
+    5,
 		5,
 		0,
 		4,
