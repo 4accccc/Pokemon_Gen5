@@ -1052,14 +1052,27 @@ static const GFL_G3D_OBJSTATUS drawStatus = {
 };
 
 
+// リソースの並び順
 enum{
   G3DRES_01_BMD = 0,
+  G3DRES_01_BTP,
   G3DRES_01_BCA,
   G3DRES_02_BMD,
   G3DRES_02_BCA,
   G3DRES_03_BMD,
+  G3DRES_03_BTP,
+  G3DRES_03_BTA,
   G3DRES_03_BCA,
-  G3DRES_01_BTP,
+  G3DRES_03_BVA,
+};
+
+// OBJインデックス
+enum{
+  OBJ_01,
+  OBJ_02,
+  OBJ_03,
+
+  OBJ_NUM,  // OBJの総数
 };
 
 //読み込む3Dリソース
@@ -1067,27 +1080,33 @@ enum{
 // 黒：モデリングデータ
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_01_nsbmd, GFL_G3D_UTIL_RESARC },
-  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_01_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_01_nsbtp, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_01_nsbtp, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_02_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_02_nsbca, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_03_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_03_nsbtp, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_03_nsbta, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_03_nsbca, GFL_G3D_UTIL_RESARC },
-  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_01_nsbtp, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_03_nsbva, GFL_G3D_UTIL_RESARC },
 };
 // 黒：カメラデータ
 #define CAMERA_DATA_BIN_NAME  NARC_data_demo3d_title_b_camera_bin
 
 #else
 
-// 黒：モデリングデータ
+// 白：モデリングデータ
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_01_nsbmd, GFL_G3D_UTIL_RESARC },
-  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_01_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_01_nsbtp, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_01_nsbtp, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_02_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_02_nsbca, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_03_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_03_nsbtp, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_03_nsbta, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_03_nsbca, GFL_G3D_UTIL_RESARC },
-  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_01_nsbtp, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_03_nsbva, GFL_G3D_UTIL_RESARC },
 };
 
 // 白：カメラデータ
@@ -1100,12 +1119,20 @@ static const GFL_G3D_UTIL_ANM g3Dutil_anm1Tbl[] = {
   { G3DRES_01_BCA, 0  },
   { G3DRES_01_BTP, 0  },
 };
+#define ANM_01_NUM  ( NELEMS(g3Dutil_anm1Tbl) )
+
 static const GFL_G3D_UTIL_ANM g3Dutil_anm2Tbl[] = {
   { G3DRES_02_BCA, 0  },
 };
+#define ANM_02_NUM  ( NELEMS(g3Dutil_anm2Tbl) )
+
 static const GFL_G3D_UTIL_ANM g3Dutil_anm3Tbl[] = {
+  { G3DRES_03_BTP, 0  },
+  { G3DRES_03_BTA, 0  },
   { G3DRES_03_BCA, 0  },
+  { G3DRES_03_BVA, 0  },
 };
+#define ANM_03_NUM  ( NELEMS(g3Dutil_anm3Tbl) )
 
 //3Dオブジェクト設定テーブル
 static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
@@ -1144,6 +1171,12 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
 // アニメOBJ数
 #define G3DUTIL_OBJCOUNT  (NELEMS(g3Dutil_objTbl))
 
+// OBJとアニメ総数の対応テーブル
+static const int anm_num_tbl[ OBJ_NUM ] = {
+  ANM_01_NUM,
+  ANM_02_NUM,
+  ANM_03_NUM,
+};
 
 static const VecFx32 sc_CAMERA_PER_POS    = { 0,0,FX32_CONST( 0 ) };  //位置
 static const VecFx32 sc_CAMERA_PER_UP     = { 0,FX32_ONE,0 };         //上方向
@@ -1160,18 +1193,26 @@ static const VecFx32 sc_CAMERA_PER_TARGET = { 0,0,FX32_CONST( 0 ) };  //ターゲッ
 //----------------------------------------------------------------------------------
 static void setupG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID)
 {
-  u16 objIdx;
+  u16 obj_idx_base;
+  u16 obj_idx;
   
   CG3d->g3Dutil = GFL_G3D_UTIL_Create( G3DUTIL_RESCOUNT, G3DUTIL_OBJCOUNT, heapID );
   CG3d->g3DutilUnitIdx = GFL_G3D_UTIL_AddUnit( CG3d->g3Dutil, &g3Dutil_setup );
 
-  //アニメーションを有効にする
-  objIdx = GFL_G3D_UTIL_GetUnitObjIdx( CG3d->g3Dutil, CG3d->g3DutilUnitIdx );
-  GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle(CG3d->g3Dutil, objIdx + 0), 0); // 0:ica
-  GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle(CG3d->g3Dutil, objIdx + 0), 1); // 0:ica
-  GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle(CG3d->g3Dutil, objIdx + 1), 0); // 1:ica
-  GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle(CG3d->g3Dutil, objIdx + 2), 0); // 1:ica
+  // オブジェインデックス取得
+  obj_idx_base = GFL_G3D_UTIL_GetUnitObjIdx( CG3d->g3Dutil, CG3d->g3DutilUnitIdx );
+  // OBJの数分回す
+  for( obj_idx=0; obj_idx<OBJ_NUM; obj_idx++ )
+  {
+    int anm_num = anm_num_tbl[ obj_idx ];
+    int anm_idx;
 
+    // アニメ数分回す
+    for( anm_idx=0; anm_idx<anm_num; anm_idx++ )
+    {
+      GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle(CG3d->g3Dutil, obj_idx_base+obj_idx), anm_idx ); //
+    }
+  }
 
   // カメラ作成
   {
@@ -1247,7 +1288,7 @@ static void mainG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID)
   {
     int i;
 
-    for(i=0; i<NELEMS(g3Dutil_objTbl); i++){
+    for(i=0; i<G3DUTIL_OBJCOUNT; i++){
       g3Dobj = GFL_G3D_UTIL_GetObjHandle( CG3d->g3Dutil, objIdx + i );
       GFL_G3D_DRAW_DrawObject( g3Dobj, &drawStatus);  // 全部デフォ位置でOK
     }
@@ -1255,13 +1296,18 @@ static void mainG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID)
   GFL_G3D_DRAW_End();
 
   // アニメフレーム進める
-  { // ica3つとitp1つ
+  { 
     int i;
-    for(i=0;i<NELEMS(g3Dutil_objTbl); i++){
+    for(i=0;i<G3DUTIL_OBJCOUNT; i++){
+      int anm_num = anm_num_tbl[ i ];
+      int anm_idx;
+
       g3Dobj = GFL_G3D_UTIL_GetObjHandle( CG3d->g3Dutil, objIdx + i );
-      GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj, 0, FX32_ONE );
-      if(i==0){
-        GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj, 1, FX32_ONE );
+
+      // アニメの数分
+      for( anm_idx=0; anm_idx<anm_num; anm_idx++ )
+      {
+        GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj, anm_idx, FX32_ONE );
       }
     }
   }
