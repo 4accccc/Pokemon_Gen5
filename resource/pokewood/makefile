@@ -8,7 +8,6 @@
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
 USERS	 = mori nakatsui ito_hiroto sato_hitomi shimoyamada
-CALCUSER = mori
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
 #------------------------------------------------------------------------------
@@ -84,7 +83,7 @@ $(targetname).narc: $(lsources) $(lbins) $(ltexts) $(recdata)
 	nnsarc -r -l -n -i $(targetname).narc -S arc.scr
 	$(NAIXCUT) $(targetname).naix
 	$(BRIEFING_CONV) $(BRIEFING_MODEL_CDAT)
-ifeq ($(CALCUSER),nakatsui)
+ifeq ($(USERNAME),mori)		#中津井くん専用のポケウッドバランス確認表作成
 	$(PROFIT_CALC_CONV) pkwd_calc_templete.xls ウッド結果算出.xls
 endif
 
