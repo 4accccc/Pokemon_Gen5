@@ -60,7 +60,7 @@
 
 #include "message.naix"
 
-// ダウンロードチェック(後に消すこと)
+// ダウンロードチェック(local)
 #define __DOWNLOAD_CHECK__
 #undef  __DOWNLOAD_CHECK__
 
@@ -74,10 +74,20 @@ FS_EXTERN_OVERLAY(ui_common);
  *								定数定義
  */
 //=============================================================================
+#ifdef __DOWNLOAD_CHECK__
+enum
+{
+	UI_TEMPLATE_HEAP_SIZE = 0x50000,  ///< ヒープサイズ(debug)
+};
+#endif
+//
+#ifndef __DOWNLOAD_CHECK__
 enum
 {
 	UI_TEMPLATE_HEAP_SIZE = 0x40000,  ///< ヒープサイズ
 };
+#endif
+
 
 // 段階
 enum{
@@ -524,29 +534,35 @@ static void td_init( T_DOWNLOAD_MAIN_WORK* wk )
 	
 	// セーブデータの読み込み(全モード必ず)
 	wk->SaveMaxNum = TdSave_init_data( wk );
-	
 #ifdef __DOWNLOAD_CHECK__	// debug用
-#if 0	// なし
-    // 選択画面からの場合だけデバッグを発動(暫定処理)
+	wk->ListMaxNum = 0;
+	// 選択画面からの場合だけデバッグを発動(暫定処理)
 	if(wk->Param->status == T_DOWNLOAD_MODE_SELECT){
 		wk->TestBuffer = GFL_ARC_LoadDataAlloc( ARCID_WBT_DLDATA, NARC_wbt_dldata_test_all_crc_bin, wk->heapID );
-   		
+		
 		// 12ブロック分上書き
 		{
-//			WBTDL_DATA *adr = &wk->Param->data->data[0];
-			// wbtdl => save_p
-			GFL_STD_MemCopy32( wk->TestBuffer, adr, 12*sizeof(WBTDL_DATA) );
+			WBTDL_DATA* wbtdl;
+			WBTDL_DATA *adr = &wk->Param->data->data[0];
+			wbtdl = (WBTDL_DATA*)wk->TestBuffer;
+			for(i=0;i<WBTDL_TOTAL_NUM;i++){
+				wk->CheckBuffer[i] = GFL_HEAP_AllocClearMemoryLo( wk->heapID, sizeof(WBTDL_DATA) );
+				// wbtdl => check
+				GFL_STD_MemCopy32( wbtdl, wk->CheckBuffer[i], sizeof(WBTDL_DATA) );
+				wbtdl++;
+			}
 		}
+		wk->ListMaxNum = WBTDL_TOTAL_NUM;
 	}
-#endif
 #endif
 	// リストデータのチェック
 	// =>選択モードの場合のみ
+#ifndef __DOWNLOAD_CHECK__
 	wk->ListMaxNum = 0;
 	if(wk->Mode == T_DOWNLOAD_MODE_SELECT){
 		wk->ListMaxNum = TdSave_init_list_data( wk );
 	}
-	
+#endif
 	//--------------------------------
 	// データ(bg+string+obj)の初期化
 	// (yes/no)winも含む
@@ -902,14 +918,16 @@ static BOOL td_chk_tp_input_join( T_DOWNLOAD_MAIN_WORK* wk )
 	// 決定
 	if(mflg == 1){
 		// 上画面処理
-		TdCmn_chk_up_disp( wk, FALSE, TRUE, TRUE );
+//		TdCmn_chk_up_disp( wk, FALSE, TRUE, TRUE );
 		//
 		wk->Flag |= FLG_MW_JOIN_UPDATE;
 		// 決定アニメ
 		TdCmn_set_panel_cursor( wk, 1 );
-		wk->Step = STEP_LV2;
+//		wk->Step = STEP_LV2;
+		wk->Step = STEP_LV1+30;
 		// SE
 		PMSND_PlaySE( SND_T_DOWNLOAD_DECIDE );
+		GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
 	}
 	//
 	// 更新
@@ -984,11 +1002,13 @@ static BOOL td_chk_key_input_join( T_DOWNLOAD_MAIN_WORK* wk )
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
 			// 決定アニメ
 			TdCmn_set_panel_cursor( wk, 1 );
-			wk->Step = STEP_LV2;
+//			wk->Step = STEP_LV2;
+			wk->Step = STEP_LV1+30;
 			// SE
 			PMSND_PlaySE( SND_T_DOWNLOAD_DECIDE );
 			// 上画面処理
-			TdCmn_chk_up_disp( wk, TRUE, FALSE, TRUE );
+//			TdCmn_chk_up_disp( wk, TRUE, FALSE, TRUE );
+			GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
 		}
 		// 戻る
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
@@ -1108,6 +1128,18 @@ static void td_key_join( T_DOWNLOAD_MAIN_WORK* wk )
 			if(bflg == TRUE){
 				wk->CmnFlag |= T_DOWNLOAD_FLG_UPDATE;
 				wk->Step = STEP_LV1;
+			}
+			break;
+		// 待ち
+		case STEP_LV1+30:
+			// 終了してから、上画面を切り替える
+			// =>FakeNetModeの時に問題がでてしまうため
+			if( PRINTSYS_QUE_IsFinished( wk->print_que ) == TRUE ){
+				// 決定時は非表示からタッチの場合がある
+				// =>表示タイミングをずらしている
+				// 上画面処理
+				TdCmn_chk_up_disp( wk, FALSE, FALSE, TRUE );
+				wk->Step = STEP_LV2;
 			}
 			break;
 		//
@@ -1797,6 +1829,7 @@ static void td_init_select( T_DOWNLOAD_MAIN_WORK* wk )
 	if( FRAMELIST_Init( wk->frame_list_work ) == FALSE ){
 		wk->Flag |= FLG_MW_FRAME_STAT;
 	}
+//	FRAMELIST_SetFrameMax( wk->frame_list_work, 7 );
 	// カーソル表示
 	TdCmn_set_obj_visible( wk, T_DOWNLOAD_CLWKMODE_NORMAL, T_DOWNLOAD_CLWKID_CURSOR, TRUE );
 	// 通常アニメ
@@ -1901,17 +1934,21 @@ static void td_chk_input_select( T_DOWNLOAD_MAIN_WORK* wk )
 	if(listflg != 0){
 		flg = 1;
 		// 上画面処理
-		TdCmn_chk_up_disp( wk, FALSE, FALSE, FALSE );
+		// => パネルタッチの場合は消さない
+		if(listflg != 2){
+			TdCmn_chk_up_disp( wk, FALSE, FALSE, FALSE );
+		}
 	}
 	if(listflg == 2){
 		// 決定アニメ
 		TdCmn_set_panel_cursor( wk, 1 );
 		//
-		wk->Step = STEP_LV2;
+//		wk->Step = STEP_LV2;
+		wk->Step = STEP_LV1+30;
 		// SE
 		PMSND_PlaySE( SND_T_DOWNLOAD_DECIDE );
 		// 上画面処理
-		TdCmn_chk_up_disp( wk, FALSE, FALSE, TRUE );
+//		TdCmn_chk_up_disp( wk, FALSE, FALSE, TRUE );
 		flg = 1;
 	}
 	// 左右キー
@@ -2189,6 +2226,22 @@ static void td_key_select( T_DOWNLOAD_MAIN_WORK* wk )
 			}
 			break;
 		//
+		
+		//---------------
+		// 決定タッチ処理
+		//---------------
+		case STEP_LV1+30:
+			// 終了してから、上画面を切り替える
+			// =>FakeNetModeの時に問題がでてしまうため
+			if( PRINTSYS_QUE_IsFinished( wk->print_que ) == TRUE ){
+				// 決定時は非表示からタッチの場合がある
+				// =>表示タイミングをずらしている
+				// 上画面処理
+				TdCmn_chk_up_disp( wk, FALSE, FALSE, TRUE );
+				wk->Step = STEP_LV2;
+			}
+			break;
+		
 		//---------------
 		// 決定アニメ待ち
 		// (save3択)
@@ -2570,11 +2623,13 @@ static BOOL td_chk_tp_input_save( T_DOWNLOAD_MAIN_WORK* wk )
 		wk->Flag |= FLG_MW_SAVE_UPDATE;
 		// 決定アニメ
 		TdCmn_set_panel_cursor( wk, 1 );
-		wk->Step = STEP_LV2;
+//		wk->Step = STEP_LV2;
+		wk->Step = STEP_LV1+30;
 		// SE
 		PMSND_PlaySE( SND_T_DOWNLOAD_DECIDE );
 		// 上画面処理
-		TdCmn_chk_up_disp( wk, FALSE, TRUE, TRUE );
+//		TdCmn_chk_up_disp( wk, FALSE, TRUE, TRUE );
+		GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
 	}
 	//
 	// 更新
@@ -2648,11 +2703,13 @@ static BOOL td_chk_key_input_save( T_DOWNLOAD_MAIN_WORK* wk )
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
 			// 決定アニメ
 			TdCmn_set_panel_cursor( wk, 1 );
-			wk->Step = STEP_LV2;
+//			wk->Step = STEP_LV2;
+			wk->Step = STEP_LV1+30;
 			// SE
 			PMSND_PlaySE( SND_T_DOWNLOAD_DECIDE );
 			// 上画面処理
-			TdCmn_chk_up_disp( wk, TRUE, FALSE, TRUE );
+//			TdCmn_chk_up_disp( wk, TRUE, FALSE, TRUE );
+			GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
 		}
 		// 戻る
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
@@ -2860,6 +2917,21 @@ static void td_key_save( T_DOWNLOAD_MAIN_WORK* wk )
 				// 再計算
 				wk->CmnFlag |= T_DOWNLOAD_FLG_UPDATE;
 				wk->Step = STEP_LV1;
+			}
+			break;
+		//
+		//-----------------
+		// 待ち
+		//-----------------
+		case STEP_LV1+30:
+			// 終了してから、上画面を切り替える
+			// =>FakeNetModeの時に問題がでてしまうため
+			if( PRINTSYS_QUE_IsFinished( wk->print_que ) == TRUE ){
+				// 決定時は非表示からタッチの場合がある
+				// =>表示タイミングをずらしている
+				// 上画面処理
+				TdCmn_chk_up_disp( wk, FALSE, FALSE, TRUE );
+				wk->Step = STEP_LV2;
 			}
 			break;
 		//

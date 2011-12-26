@@ -2755,9 +2755,13 @@ static void pwm_disp_record_monitor_string( PKWD_RECORD_MONITOR_MAIN_WORK * wk, 
 	strbuf  = GFL_MSG_CreateString( wk->MsgData, pwm_mes_tbl[3] );
 	namebuf = GFL_STR_CreateBuffer( 128, wk->heapID );
 	num = p_pkwd_record->profits;
-	if(num > 9999){
-		num = 9999;
+	if(num > POKEWOOD_PROFIT_VALUE_MAX){
+		num = POKEWOOD_PROFIT_VALUE_MAX;
 		OS_Printf("max over:%d\n",p_pkwd_record->profits);
+	}
+	else if(num < POKEWOOD_PROFIT_VALUE_MIN){
+		num = POKEWOOD_PROFIT_VALUE_MIN;
+		OS_Printf("min over:%d\n",p_pkwd_record->profits);
 	}
 	WORDSET_RegisterNumber( wk->Wordset, 2, num, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	WORDSET_ExpandStr( wk->Wordset, namebuf, strbuf );
