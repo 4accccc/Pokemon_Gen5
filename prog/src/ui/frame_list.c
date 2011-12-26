@@ -2375,6 +2375,10 @@ void FRAMELIST_SetFrameMax( FRAMELIST_WORK * wk, const s32 num )
 {
 	// ‘¼‚Ö‚Ì‰e‹¿‚ðl‚¦‚Ä•ÊŠÖ”‚Æ‚µ‚Ä‚¨‚­
 	wk->putFrameMaxMain = num;
+	// –ˆƒtƒŒ[ƒ€‚Å‚È‚­‚Ä‚à‚æ‚¢‚Í‚¸
+	if(wk->putFrameMain > num){
+		wk->putFrameMain = 0;
+	}
 }
 
 

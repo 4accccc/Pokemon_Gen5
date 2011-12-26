@@ -2388,6 +2388,7 @@ static void wr_init_framelist( WIN_RECORD_MAIN_WORK * wk )
 	if( FRAMELIST_Init( wk->frame_list_work ) == FALSE ){
 		wk->Flag |= FLG_MW_FRAME_STAT;
 	}
+	FRAMELIST_SetFrameMax( wk->frame_list_work, 7 );
 }
 
 //--------------------------------------------------------------------------------------------
