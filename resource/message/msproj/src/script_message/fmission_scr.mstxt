@@ -3596,10 +3596,11 @@ msg_fm_npc_trade01_02へ</Comment>
 			<Text>むむ　これでは
 けいこに　ならんなあ……▼
 ……は！
-もしや　わたしが　つよすぎる？？</Text>
+わたしが　つよすぎるのか！！▽
+がっはっは！！▼</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-12-24T08:08:46" />
+				Time="2011-12-26T10:42:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3610,10 +3611,11 @@ msg_fm_npc_trade01_02へ</Comment>
 			<Text>むむ　これでは
 けいこに　ならんなあ……▼
 ……は！
-もしや　私が　強すぎるのか？？</Text>
+私が　強すぎるのか！！▽
+がっはっは！！▼</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-12-24T08:09:14" />
+				Time="2011-12-26T10:43:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3903,10 +3905,10 @@ msg_fm_npc_trade01_02へ</Comment>
 			<Text>……だめだわ
 こんな　かちかたでは　だめなの▼
 ほんとうの　つよさ……
-いったい　どうすれば……</Text>
+いったい　どうすれば……▼</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-12-24T08:11:39" />
+				Time="2011-12-26T10:40:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -3917,10 +3919,10 @@ msg_fm_npc_trade01_02へ</Comment>
 			<Text>……だめだわ
 こんな　勝ち方では　だめなの▼
 本当の　強さ……
-いったい　どうすれば……</Text>
+いったい　どうすれば……▼</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-12-24T08:11:54" />
+				Time="2011-12-26T10:40:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4209,16 +4211,14 @@ msg_fm_npc_trade01_02へ</Comment>
 		Label="msg_fm_npc_btl03_06">
 		<LanguageCell
 			Language="JPN">
-			<Text>やはり　あなたには
-わたしの　しゅぎょう　あいては▽
+			<Text>わたしの　しゅぎょう　あいては
 むずかしかった　ようですね▼
 でも　よいのです
-あなたも　いずれ　つよくなる！▼
-いっしょに　しゅぎょうの　みちを
-すすむのです！</Text>
+あなたも　いずれ　つよくなる！▽
+また　たたかおう！　さらば！▼</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-12-24T08:14:32" />
+				Time="2011-12-26T10:40:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
@@ -4226,16 +4226,14 @@ msg_fm_npc_trade01_02へ</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>やはり　あなたには
-私の　修行相手は▽
+			<Text>私の　修行相手は
 難しかった　ようですね▼
 でも　良いのです
 あなたも　いずれ　強くなる！▼
-一緒に　修行の道を
-進むのです！</Text>
+また　戦おう！　さらば！</Text>
 			<TextModifiedBy
 				User="masafumi_saitou:W00225"
-				Time="2011-12-24T08:15:32" />
+				Time="2011-12-26T10:41:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="masafumi_saitou:W00225"
