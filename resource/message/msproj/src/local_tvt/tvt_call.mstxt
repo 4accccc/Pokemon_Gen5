@@ -5818,6 +5818,411 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
+		Label="CALL_RIVAL_SP_38"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだんを　みたんだ！
+５ばんどうろへ　むかうぞッ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:49:25" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:48:25" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマ団を　みたんだ！
+５番道路へ　向かうぞッ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:56:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:48:43" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・c04ポケモンジムクリアから
+ ゲート前イベントまで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:44:03" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:43:44" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_39"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだんに　バレないよう
+ライブキャスター　つかってるのか？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:55:51" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:48:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマ団に　バレないよう
+ライブキャスター　使ってるのか？▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:56:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:49:20" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・ゲート前イベントから
+ ゲート前イベント終了まで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:44:06" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:43:44" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_40"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>さっきは　たすかった！
+じゃ　ホドモエに　いくよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:49:56" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:49:35" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>さっきは　たすかった！
+じゃ　ホドモエに　行くよ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:56:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:55:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・ゲート前イベント終了から
+ ホドモエの跳ね橋出口のイベントまで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:44:19" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:43:44" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_41"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>しんぱい　するな！
+ぜったいに　にがさないぜッ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:51:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:50:57" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>心配するな！
+絶対に　逃がさないぜッ！！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:56:32" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:55:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・ホドモエの跳ね橋出口のイベントから
+ プラズマハウスのイベントまで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:44:54" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:43:44" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_42"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>スパークした！　オマエッ！
+ジムバッジを　もらっただろ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:54:41" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:54:12" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>スパークした！　オマエッ！
+ジムバッジを　もらっただろ▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:55:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:55:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・c05ポケモンジムクリア後から
+ ホドモエジム前のイベントまで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:45:13" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:43:44" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_43"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>プラズマだんを　みたって
+ウワサを　しらべているんだ……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:52:12" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:51:49" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>プラズマ団を　みたって
+ウワサを　調べているんだ……▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:56:40" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:55:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・サザナミでのライバル戦闘後から
+ カゴメのダブルバトルまで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:45:20" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:43:44" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_44"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>へえ！　シャガさんにも
+かったのか！　オマエ　すごいな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:55:13" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:54:45" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>へえ！　シャガさんにも
+勝ったのか！　オマエ　すごいな！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:56:45" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:55:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・c08ポケモンジムクリア後から
+ プラズマフリゲート攻撃デモまで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:45:30" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:43:44" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_45"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>シズイさんに　かったか？
+いつまでも　またせるなよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:53:54" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:53:34" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>シズイさんに　勝ったか？
+いつまでも　待たせるなよ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:56:53" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:55:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・c14ポケモンジムクリア後から
+ ジム前イベントまで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:45:40" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:43:44" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="CALL_RIVAL_SP_46"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>あいつらが　むかったのは
+ジャイアントホール　だよなッ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:53:19" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:53:01" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>あいつらが　向かったのは
+ジャイアントホール　だよなッ！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:56:58" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:55:17" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>目的地メッセージ
+・２回目のプラズマフリゲートクリアから
+ ジャイアントホール進入まで</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:45:45" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>ライバル
+</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-26T06:43:44" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
 		Label="CALL_CHELEN_GREET_01"
 		Style="Large">
 		<LanguageCell
