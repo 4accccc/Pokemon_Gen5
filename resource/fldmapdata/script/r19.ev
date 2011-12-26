@@ -656,6 +656,8 @@ EVENT_START   ev_pos_r19_zukan_01
   //C12のベル・ライバルを非表示
   _FLAG_SET( FV_C12_SWBELL )
   _FLAG_SET( FV_C12_SWANLEADER1 )
+  //C12の動作モデル操作を終了（C12ジムクリア関連イベント終了）
+  $WK_SCENE_C12GYM_OPEN = 4
   //==================================//
   
 EVENT_END
