@@ -2007,10 +2007,15 @@ static void _print_movie_information( PKWD_SELECT_SCREEN_MAIN_WORK *wk, int inde
     plot_str     = GFL_MSG_CreateString( wk->msg, pw_plot_000+wk->valid_list[index]->scenario_no );
     PRINT_UTIL_Print( &wk->print_util[PKWD_BMP_INFORMATION], wk->print_que, 8, 12*8, plot_str, wk->font );
 
-    // 興行収入の実際の数値＋「おく円」
-    money_str    = GFL_MSG_CreateString( wk->msg, pw_record_monitor_03 );
-    WORDSET_RegisterNumber( wk->valid_list[index]->wordset, 2, wk->valid_list[index]->profit, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-    WORDSET_ExpandStr( wk->valid_list[index]->wordset, wk->strbuf, money_str );
+    // 興行収入の実際の数値＋「おく円」（まだ観ていない場合は「？？？おく円」
+    if(wk->valid_list[index]->watched){
+      money_str    = GFL_MSG_CreateString( wk->msg, pw_record_monitor_03 );
+      WORDSET_RegisterNumber( wk->valid_list[index]->wordset, 2, wk->valid_list[index]->profit, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      WORDSET_ExpandStr( wk->valid_list[index]->wordset, wk->strbuf, money_str );
+    }else{
+      money_str    = GFL_MSG_CreateString( wk->msg, pw_select_monitor_hate );
+      GFL_STR_CopyBuffer( wk->strbuf, money_str );
+    }
     length = PRINTSYS_GetStrWidth( wk->strbuf, wk->font, 0 );
     x = 8*INFORMATION_W - length-8;
     PRINT_UTIL_Print( &wk->print_util[PKWD_BMP_INFORMATION], wk->print_que, x, 7*8, wk->strbuf, wk->font );

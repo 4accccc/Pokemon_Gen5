@@ -6345,10 +6345,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>上映選択画面</Comment>
+			<Comment>上映選択画面日付指定</Comment>
 			<CommentModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-11-21T03:42:27" />
+				User="mori:W00269"
+				Time="2011-12-22T09:30:09" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -6378,10 +6378,10 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>上映選択画面</Comment>
+			<Comment>上映選択画面時間指定</Comment>
 			<CommentModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-11-21T03:45:21" />
+				User="mori:W00269"
+				Time="2011-12-22T09:30:15" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
@@ -6400,10 +6400,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>こうかいび</Text>
+			<Text>公開日</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-11-21T03:46:15" />
+				User="mori:W00269"
+				Time="2011-12-22T09:30:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -6411,10 +6411,44 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>上映選択画面</Comment>
+			<Comment>上映選択画面で使用する公開日インデックス</Comment>
 			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-12-22T09:30:27" />
+		</CommentCell>
+	</TextRow>
+	<TextRow
+		Label="pw_select_monitor_hate"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>？？？おく円</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-22T09:32:33" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
-				Time="2011-11-21T03:46:09" />
+				Time="2011-11-21T03:45:51" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>？？？億円</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-22T09:32:37" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="tanaka_ryota:W00283"
+				Time="2011-11-21T03:46:15" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>上映選択画面で興行収入が
+まだ分からない時に表示する替わりの文字列</Comment>
+			<CommentModifiedBy
+				User="mori:W00269"
+				Time="2011-12-22T09:32:55" />
 		</CommentCell>
 	</TextRow>
 	<TextRow
