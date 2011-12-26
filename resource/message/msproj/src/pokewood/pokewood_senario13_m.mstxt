@@ -1001,28 +1001,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『よし……▼
-これで　おもいきり　Ｍ・Ｂ
+これで　おもいきり　Ｍ・Ｂと
 たたかうことが　できるぞ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:48" />
+				Time="2011-12-26T04:26:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:48" />
+				Time="2011-12-26T04:26:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『よし……▼
-これで　思い切り　Ｍ・Ｂ
+これで　思い切り　Ｍ・Ｂと
 戦うことが　できるぞ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:48" />
+				Time="2011-12-26T04:26:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:48" />
+				Time="2011-12-26T04:26:48" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

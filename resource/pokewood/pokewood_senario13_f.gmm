@@ -529,10 +529,10 @@
 	</row>
 	<row id="pw_event3_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『よし……▼
-これで　おもいきり　Ｍ・Ｂ
+これで　おもいきり　Ｍ・Ｂと
 たたかうことが　できるわ……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『よし……▼
-これで　思い切り　Ｍ・Ｂ
+これで　思い切り　Ｍ・Ｂと
 戦うことが　できるわ……</language>
 	</row>
 	<row id="pw_event3_enemy_1">
@@ -588,7 +588,7 @@
 まるで　はが　たたないし……▼
 アハハ……　もうダメ……
 ここで　わたし　おしまいよ……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『くっ……▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『もうっ……▼
 何て　かたい体　なの……
 [1:02:ポケモンニックネーム:0]の　こうげきも▽
 まるで　歯が　立たないし……▼

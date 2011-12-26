@@ -626,7 +626,7 @@
 聞こえるか……　[1:00:トレーナー名:1]……</language>
 	</row>
 	<row id="pw_event3_hero_2">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ん……　なんだ……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ん……　なんなの……
 この　こえは……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ん……　何なの……
 この　声は……</language>
@@ -830,10 +830,10 @@
 ポケモンともども　破壊されるかね？</language>
 	</row>
 	<row id="pw_event5_hero_5">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『とっ　とんでない！▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『とっ　とんでもない！▼
 １００ばいで　おねがいします！
 セリザワさん！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『とっ　とんでない！▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『とっ　とんでもない！▼
 １００倍で　お願いします！
 セリザワさん！</language>
 	</row>
@@ -1013,7 +1013,7 @@
 シリーズか　も　されている▽
 にんきしょうひん　なんだがねェ▼
 かねと　ちょっとしたコネさえ　あれば
-かんたんに　てに　いれられるさ</language>
+かんたんに　てに　いれられるのさ</language>
 		<language name="JPN_KANJI" width="256">セリザワ『ん？　意外かね？
 このＭ・Ｂは　売り物　なのだよ▽
 シリーズ化も　されている▽

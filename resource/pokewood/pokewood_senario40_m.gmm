@@ -713,7 +713,7 @@
 	<row id="pw_event4_enemy_2">
 		<language name="JPN" width="256">ハチクマン『そんな　うでまえでは
 わがはいの　ライバルとは　よべぬ！</language>
-		<language name="JPN_KANJI" width="256">ハチクマン『そんな　うでまえでは
+		<language name="JPN_KANJI" width="256">ハチクマン『そんな　腕前では
 我輩の　ライバルとは　呼べぬ！</language>
 	</row>
 	<row id="pw_event4_hero_3">
@@ -734,7 +734,7 @@
 トレーニングするのだっ！！</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『グムム……▼
 貴様が　そんな　有様では
-我輩の名　まで　けがれるわ……▼
+我輩の名まで　けがれるわ……▼
 止む得ぬ……▼
 こうなれば　我輩が　直々に
 貴様を　きたえ直して　やろう！▼

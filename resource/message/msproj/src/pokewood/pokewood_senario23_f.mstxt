@@ -594,29 +594,29 @@
 			Language="JPN">
 			<Text>ぬいぐるみ『なんだよ……▼
 もしかして　キミ
-ボクの　こと　きに　してるの？▼
+ボクのこと　きにして　くれてるの？▼
 ……　……　……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-21T10:56:41" />
+				Time="2011-12-26T04:27:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-21T10:56:41" />
+				Time="2011-12-26T04:27:52" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ぬいぐるみ『なんだよ……▼
+			<Text>ぬいぐるみ『何だよ……▼
 もしかして　キミ
-ボクの　こと　気に　してるの？▼
+ボクのこと　気にして　くれてるの？▼
 ……　……　……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-21T10:56:41" />
+				Time="2011-12-26T04:27:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-21T10:56:41" />
+				Time="2011-12-26T04:27:52" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3303,16 +3303,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]姫『えっ！？
-急に　何よ！？▼
-……ああ　もしかして　この
-みがわりの　ぬいぐるみの　ことか</Text>
+急に　何よ！？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:24" />
+				Time="2011-12-26T04:27:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:24" />
+				Time="2011-12-26T04:27:52" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3346,27 +3344,27 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]ひめ『……ああ
 この　みがわりの　ぬいぐるみの　こと？▼
-そういえば　あなたに　そっくりね</Text>
+そういえば　あなたに　そっくりね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T02:48:37" />
+				Time="2011-12-26T04:27:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T02:48:37" />
+				Time="2011-12-26T04:27:52" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]姫『……ああ
 この　みがわりの　ぬいぐるみの　こと？▼
-そういえば　あなたに　そっくりね</Text>
+そういえば　あなたに　そっくりね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T02:48:37" />
+				Time="2011-12-26T04:27:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-22T02:48:37" />
+				Time="2011-12-26T04:27:52" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

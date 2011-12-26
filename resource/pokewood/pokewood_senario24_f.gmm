@@ -636,7 +636,7 @@
 じき　ふたつの　せかいのバランスは
 ぎゃくてんして……▽
 この　わたしに　さからえる　ものは▽
-いなくなんじゃないの？</language>
+いなくなるわねェ……　ふふふ</language>
 		<language name="JPN_KANJI" width="256">ジュジュベ『生きる　エネルギーを
 吸われた　人間たちは▽
 逃げだそうとも　思わなくなり▽
@@ -644,7 +644,7 @@
 じき　ふたつの　世界のバランスは
 逆転して……▽
 この　私に　逆らえる者は▽
-いなくなんじゃないの？</language>
+いなくなるわねェ……　ふふふ</language>
 	</row>
 	<row id="pw_event3_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『そんな……
@@ -1094,8 +1094,8 @@
 せいぜい　頑張りなさいね！</language>
 	</row>
 	<row id="pw_event7_react_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『あれ？　なまえが……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『あれ？　名前が……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『なまえなんだっけ？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『名前なんだっけ？</language>
 	</row>
 	<row id="pw_event7_react_enemy_1">
 		<language name="JPN" width="256">ジュジュベ『……　……　……

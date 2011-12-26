@@ -478,11 +478,11 @@
 	<row id="pw_event1_react_enemy_1">
 		<language name="JPN" width="256">ぬいぐるみ『なんだよ……▼
 もしかして　キミ
-ボクの　こと　きに　してるの？▼
+ボクのこと　きにして　くれてるの？▼
 ……　……　……</language>
-		<language name="JPN_KANJI" width="256">ぬいぐるみ『なんだよ……▼
+		<language name="JPN_KANJI" width="256">ぬいぐるみ『何だよ……▼
 もしかして　キミ
-ボクの　こと　気に　してるの？▼
+ボクのこと　気にして　くれてるの？▼
 ……　……　……</language>
 	</row>
 	<row id="pw_event1_react_hero_2">
@@ -1157,9 +1157,7 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『えっ！？
 きゅうに　なによ！？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『えっ！？
-急に　何よ！？▼
-……ああ　もしかして　この
-みがわりの　ぬいぐるみの　ことか</language>
+急に　何よ！？</language>
 	</row>
 	<row id="pw_event10_enemy_1">
 		<language name="JPN" width="256">ぬいぐるみ『その　ぬいぐるみ……</language>
@@ -1168,10 +1166,10 @@
 	<row id="pw_event10_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]ひめ『……ああ
 この　みがわりの　ぬいぐるみの　こと？▼
-そういえば　あなたに　そっくりね</language>
+そういえば　あなたに　そっくりね……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]姫『……ああ
 この　みがわりの　ぬいぐるみの　こと？▼
-そういえば　あなたに　そっくりね</language>
+そういえば　あなたに　そっくりね……</language>
 	</row>
 	<row id="pw_event10_enemy_2">
 		<language name="JPN" width="256">ぬいぐるみ『そうだね……▼

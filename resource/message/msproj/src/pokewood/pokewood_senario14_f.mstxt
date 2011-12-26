@@ -352,7 +352,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『りっ　りょうかい！▼
+			<Text>[Name:TrainerName Idx="1" ]『りょっ　りょうかい！▼
 ぜんぽうに　きょだいな
 バンギラスを　かくにん！▼
 いぜんに　しゅつげん　した
@@ -360,16 +360,16 @@
 それに……　めのまえに
 ふしぎな　ひかりが……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-26T04:26:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-26T04:26:54" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『りっ　了解！▼
+			<Text>[Name:TrainerName Idx="1" ]『りょっ　了解！▼
 前方に　巨大な
 バンギラスを　確認！▼
 以前に　出現した
@@ -377,12 +377,12 @@
 それに……　目の前に
 不思議な　光が……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-26T04:26:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-26T04:26:54" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -759,31 +759,31 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『ちっ　ちょっと　まって！
+			<Text>[Name:TrainerName Idx="1" ]『ちょっと　まって！
 なぜ　たたかう　ひつようが　ある？▼
 それに　あなたは
 いったい　なにもの！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-26T04:26:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-26T04:26:54" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『ちっ　ちょっと　待って！
+			<Text>[Name:TrainerName Idx="1" ]『ちょっと　待って！
 なぜ　戦う　必要が　ある？▼
 それに　あなたは
 一体　何者！？</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-26T04:26:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-26T04:26:54" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -814,15 +814,15 @@
 			Language="JPN_KANJI">
 			<Text>？？？『グロロロ……
 それを　知りたくば……▽
-ワシのバンギラスの　放つ▽
+ワシのバンギラスが　放つ▽
 一撃を　こらえてみせよ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:56:22" />
+				Time="2011-12-26T04:26:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T10:56:22" />
+				Time="2011-12-26T04:26:54" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1789,15 +1789,15 @@
 あれは　このよに　あっては　ならぬ
 きけん　きわまりない　しろもの……▼
 しかし　あの　カラクリを　もちいて
-あしきことを　かんがている▽
+あしきことを　かんがえておる▽
 ふとどきものが　おるのじゃ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T11:48:06" />
+				Time="2011-12-26T04:26:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T11:48:06" />
+				Time="2011-12-26T04:26:54" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1805,15 +1805,15 @@
 あれは　この世に　あってはならぬ
 危険　極まりない　代物……▼
 しかし　あの　カラクリを　用いて
-よからぬことを　企てている▽
+良からぬことを　企てておる▽
 不届き者が　おるのじゃ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T11:48:06" />
+				Time="2011-12-26T04:26:54" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-16T11:48:06" />
+				Time="2011-12-26T04:26:54" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

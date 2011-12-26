@@ -368,8 +368,8 @@
 私　ずっと　このままなのかな……</language>
 	</row>
 	<row id="pw_event0_react_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『あきらめよう……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あきらめよう……</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『あきらめよ……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あきらめよ……</language>
 	</row>
 	<row id="pw_event0_react_enemy_0">
 		<language name="JPN" width="256">モニカ『ちょっと！　ちょっと！
@@ -386,10 +386,10 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『何とかするよ！</language>
 	</row>
 	<row id="pw_event0_react_enemy_1">
-		<language name="JPN" width="256">モニカ『おねがい　はやく　してっ！
+		<language name="JPN" width="256">モニカ『おねがい　はやく　してっ！！
 こんな　はずかしい　すがたじゃ▽
 わたし　いきてられないよっ！！</language>
-		<language name="JPN_KANJI" width="256">モニカ『お願い　早く　してっ！
+		<language name="JPN_KANJI" width="256">モニカ『お願い　早く　してっ！！
 こんな　恥ずかしい　姿じゃ▽
 私　生きてられないよっ！！</language>
 	</row>
@@ -417,7 +417,7 @@
 		<language name="JPN" width="256">グアイ『ボールに　かけられた
 のろいを　とく　ほうほう　か……▼
 そうだな……▼
-のろいとは　つまるところ
+のろいとは　詰まるところ
 こころの　ちから　だ……▼
 だから　ボールの　もつ　のろいよりも
 つよいこころの　ちからを　かのじょに▽
@@ -425,7 +425,7 @@
 		<language name="JPN_KANJI" width="256">グアイ『ボールに　かけられた
 のろいを　解く　方法か……▼
 そうだな……▼
-のろいとは　つまるところ
+のろいとは　詰まるところ
 心の　力だ……▼
 だから　ボールが　宿す　のろいよりも
 強い心の　力を　彼女に▽
@@ -485,7 +485,7 @@
 		<language name="JPN" width="256">モニカ『なに　いってるのよ！？▼
 そもそも　あなたが　かくれて
 へんなボール　かってきたのが▽
-げんいんじゃない！！</language>
+げんいん　じゃない！！</language>
 		<language name="JPN_KANJI" width="256">モニカ『何　言ってるのよ！？▼
 そもそも　あなたが　隠れて
 変なボール　買ってきたのが▽
@@ -502,14 +502,16 @@
 こんな目に　合ってるんだから！</language>
 	</row>
 	<row id="pw_event3_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]（どうしたら　いいの……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『うう……▼
+（どうしたら　いいのよ　もう……
 あいを　つたえろ　って▽
-いったって　ただの　ことばじゃ▽
+いわれても　ただの　ことばじゃ▽
 いまの　おねえちゃんには▽
 きっと　つうじないよ……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]（どうしたら　いいの……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『うう……▼
+（どうしたら　いいのよ　もう……
 愛を　伝えろ　って▽
-言ったって　ただの　言葉じゃ▽
+言われても　ただの　言葉じゃ▽
 今の　お姉ちゃんには▽
 きっと　通じないよ……</language>
 	</row>
@@ -644,19 +646,19 @@
 		<language name="JPN_KANJI" width="256">モニカ『[1:00:トレーナー名:1]……</language>
 	</row>
 	<row id="pw_event5_hero_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『いい　おねえちゃん！！
-アタシ　なにも　かわらないよ！！▼
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『いい！？　おねえちゃん！
+アタシ　なにも　かわんないよ！！▼
 たとえ　おねえちゃんが　ずっと
 このまんま　デカいまま　だって▽
 べつに　なーんにも　かわらない！！▼
 ……いつも
 いつも　ずーっと　いっしょ　だよ？▽
 だって　アタシたち　かぞく　でしょ？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『いい　お姉ちゃん！！
-アタシ　なにも　変わらないよ！！▼
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『いい！？　お姉ちゃん！
+アタシ　何も　変わんないよ！！▼
 例え　お姉ちゃんが　ずっと
 このまんま　デカいまま　だって▽
-別に　なーにも　変わらない！！▼
+別に　なーんにも　変わらない！！▼
 ……いつも
 いつも　ずーっと　一緒　だよ？▽
 だって　アタシたち　家族でしょ？</language>
@@ -684,7 +686,7 @@
 みるみる　ちぢんでいった……</language>
 		<language name="JPN_KANJI" width="256">……ふたりで　笑いあってると
 突然　グアイさんが▽
-大きな　声で　さけんだの……▼
+大きな　声で　叫んだの……▼
 お姉ちゃんの　入っていた
 ボールが　弾けて　壊れたって▼
 急いで　お姉ちゃんを　みると
@@ -778,10 +780,10 @@
 ……　……　……　……</language>
 	</row>
 	<row id="pw_event7_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ごめん……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ごめんなさい……▼
 ごめんなさい　おねえちゃん……
 アタシには　こうするしかないの……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ごめんね……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ごめんなさい……▼
 ごめんなさい　お姉ちゃん……
 アタシには　こうするしかないの……</language>
 	</row>
@@ -827,7 +829,7 @@
 運命を　共に　します……▼
 そのボールを　くれないなら
 アタシは　あなたを　倒してでも▽
-うばっていく　つもりよ……</language>
+奪っていく　つもりよ……</language>
 	</row>
 	<row id="pw_event7_enemy_3">
 		<language name="JPN" width="256">グアイ『キミ……▼

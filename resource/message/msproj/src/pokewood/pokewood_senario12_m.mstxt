@@ -221,34 +221,34 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>つうしん『りょうかい！　[Name:TrainerName Idx="1" ]！
-ただいまから　われわれは　そいつを▽
+ただいまより　われわれは　そいつを▽
 だいバンギラスと　こしょう　する！▼
 いいか！　[Name:TrainerName Idx="1" ]！
 なんとしても　だいバンギラスの▽
 まちに　はいるのを　ふせいでくれ！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-26T04:26:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-26T04:26:43" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>通信『了解！　[Name:TrainerName Idx="1" ]！
-ただ今から　我々は　その個体を▽
+ただいまより　我々は　その個体を▽
 大バンギラスと　呼称する！▼
 いいか！　[Name:TrainerName Idx="1" ]！
 何としても　大バンギラスが▽
 街に　入るのを　防いでくれ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:42" />
+				Time="2011-12-26T04:26:43" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:42" />
+				Time="2011-12-26T04:26:43" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

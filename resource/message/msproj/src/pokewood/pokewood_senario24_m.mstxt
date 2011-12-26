@@ -1043,14 +1043,14 @@
 じき　ふたつの　せかいのバランスは
 ぎゃくてんして……▽
 この　わたしに　さからえる　ものは▽
-いなくなんじゃないの？</Text>
+いなくなるわねェ……　ふふふ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T05:30:49" />
+				Time="2011-12-26T04:28:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T05:30:49" />
+				Time="2011-12-26T04:28:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1061,14 +1061,14 @@
 じき　ふたつの　世界のバランスは
 逆転して……▽
 この　私に　逆らえる者は▽
-いなくなんじゃないの？</Text>
+いなくなるわねェ……　ふふふ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T05:30:49" />
+				Time="2011-12-26T04:28:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T05:30:49" />
+				Time="2011-12-26T04:28:01" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -2930,25 +2930,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]おうじ『なまえが……</Text>
+			<Text>[Name:TrainerName Idx="1" ]おうじ『なまえなんだっけ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T13:05:49" />
+				Time="2011-12-26T04:28:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-24T13:05:49" />
+				Time="2011-12-26T04:28:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]王子『あれ？　名前が……</Text>
+			<Text>[Name:TrainerName Idx="1" ]王子『名前なんだっけ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:31" />
+				Time="2011-12-26T04:28:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:09:31" />
+				Time="2011-12-26T04:28:01" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
