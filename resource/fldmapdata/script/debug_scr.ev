@@ -55,6 +55,7 @@
   
   .include  "w21.h" //w21への遷移参照用
   .include  "w21_def.h" //w21への遷移参照用
+  .include  "c09p03_def.h" //c09p03への遷移参照用
 
 
 //--------------------------------------------------------------
@@ -2112,6 +2113,7 @@ EVENT_START   ev_debug_ichiraku
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_15,  15 ) // キュレムデモ 覚醒
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_16,  16 ) // キュレムデモ 登場
 	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_17,  17 ) // PWTのカメラ合わせ
+	_BMPMENU_MAKE_LIST( msg_debug_ichiraku_18,  18 ) // エンディング　花火
 	_BMPMENU_START()
 
   SWITCH $SCWK_ANSWER
@@ -2312,6 +2314,14 @@ EVENT_START   ev_debug_ichiraku
 
       _CAMERA_END()
     }
+  CASE 18 THEN
+    _MAP_FADE_BLACK_OUT_SLOW()
+    _MAP_FADE_END_CHECK()
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C09P03, 31, 47, 1, DIR_DOWN )
+    _GLOBAL_CALL  SCRID_C09P03_ENDING
+    _MAP_CHANGE_NO_FADE( ZONE_ID_C09P03, 31, 47, 1, DIR_DOWN )
+    _MAP_FADE_BLACK_IN()
+    _MAP_FADE_END_CHECK()
 
   ENDSWITCH
 
