@@ -340,3 +340,18 @@ static FIELD_TASK_RETVAL SE_FadeOutTask( void *work )
   return FIELD_TASK_RETVAL_CONTINUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エンディング  C12初期化
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdEnding_C12Init( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+
+  C12_GIMMICK_Init( gsys );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+

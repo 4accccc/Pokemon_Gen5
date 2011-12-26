@@ -2126,6 +2126,9 @@ EVENT_END
 /************************************************************/
 EVENT_START    ev_c12_ending
 
+  // 初期化
+  _DEMO_GIMMICK_ENDING_C12_INIT()
+
   //プレイヤーの初期位置決定
   _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 53, 0, 745, DIR_DOWN )
 

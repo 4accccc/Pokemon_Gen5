@@ -16737,6 +16737,22 @@
   .short  \no
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _DEMO_GIMMICK_ENDING_C12_INIT
+ * @brief C12のスクリプトイベントの初期化
+ *
+ * @note  エンディング用
+ */
+//--------------------------------------------------------------
+#define _DEMO_GIMMICK_ENDING_C12_INIT() \
+    _ASM_DEMO_GIMMICK_ENDING_C12_INIT
+
+  .macro  _ASM_DEMO_GIMMICK_ENDING_C12_INIT
+  .short  EV_SEQ_DEMO_GIMMICK_ENDING_C12_INIT
+  .endm
+
+
 
 //======================================================================
 
