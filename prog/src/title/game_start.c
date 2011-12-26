@@ -75,6 +75,8 @@ static void _mystatus_info_set( MYSTATUS *my, STRBUF *name, int sex );
 static void OutSideSave_ErasePermanent( SAVE_CONTROL_WORK *sv_ctrl );
 static void OutSideSave_ConvertNormal( SAVE_CONTROL_WORK *sv_ctrl );
 
+static void UnicodeToStrcode( const u16 * cp_src, STRBUF *p_dst, u16 len );
+
 //==============================================================================
 //  データ
 //==============================================================================
@@ -113,6 +115,7 @@ enum{
   DEBUG_COMM_SEARCH_ONLY,
   DEBUG_COMM_ON,
   DEBUG_COMM_OFF,
+  DEBUG_COMM_SEARCH_ONLY_AND_BODYNAME,
 };
 
 //==============================================================================
@@ -208,6 +211,17 @@ void GameStart_Debug_SelectName(void)
 #endif
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   testmenuの「デバッグ開始（本体名）」を選択
+ */
+//--------------------------------------------------------------
+void GameStart_Debug_BodyName(void)
+{
+#ifdef PM_DEBUG
+  GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &GameStart_DebugProcData, (void*)DEBUG_COMM_SEARCH_ONLY_AND_BODYNAME);
+#endif
+}
 
 
 //==============================================================================
@@ -669,6 +683,9 @@ static GFL_PROC_RESULT GameStart_DebugProcMain( GFL_PROC * proc, int * seq, void
 static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
 #ifdef PM_DEBUG
+
+  BOOL is_body_name = FALSE;
+
   GAME_INIT_WORK * init_param;
   VecFx32 pos = {0,0,0};
   int always_net;
@@ -677,8 +694,53 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
   
   always_net = (int)pwk;   //TRUE:常時通信で「続きから」
 
+  if( always_net == DEBUG_COMM_SEARCH_ONLY_AND_BODYNAME )
+  {
+    is_body_name = TRUE;
+    always_net = DEBUG_COMM_SEARCH_ONLY;
+  }
+
   SaveControl_ClearData(sv_ctrl);  //セーブデータクリア
   
+  if( is_body_name )
+  {
+    STRBUF *namebuf = GFL_STR_CreateBuffer( 32, GFL_HEAPID_APP );
+    int sex = PM_MALE;
+
+#if (defined(SDK_TWL))
+    OSOwnerInfoEx info;
+    OS_GetOwnerInfoEx(&info);
+#else
+    OSOwnerInfo owner_info;
+    OS_GetOwnerInfo(&owner_info);
+#endif
+
+
+    //名前を本体からコンバート
+    {
+      UnicodeToStrcode( info.nickName, namebuf, PERSON_NAME_SIZE + EOM_SIZE );
+    }
+
+    //性別を色からコンバート
+    {
+      if( info.favoriteColor <= 7 )
+      {
+        sex = PM_MALE;
+      }
+      else
+      {
+        sex = PM_FEMALE;
+      }
+    }
+
+    {
+      MYSTATUS    *myStatus = SaveData_GetMyStatus( sv_ctrl );
+      _mystatus_info_set(myStatus, namebuf, sex);
+    }
+
+    GFL_STR_DeleteBuffer(namebuf);
+  }
+  else
   {//名前のセット
     MYSTATUS    *myStatus;
     GFL_MSGDATA *msgman;
@@ -938,4 +1000,68 @@ static void OutSideSave_ConvertNormal( SAVE_CONTROL_WORK *sv_ctrl )
     OutsideSave_SystemUnload(outsv);
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(outside_save) );
   }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ユニコードをSTRCODEに変換
+ *
+ *	@param	const u16 * cp_scr  ユニコード文字列
+ *	@param	*p_dst  コンバート先（STRCODEをSTRBUFにセット）
+ */
+//-----------------------------------------------------------------------------
+static void UnicodeToStrcode( const u16 * cp_src, STRBUF *p_dst, u16 len )
+{
+  int i;
+  BOOL is_eom = FALSE;
+
+  u16 src[ 32 ];
+
+  GF_ASSERT( len < 32 );
+  GFL_STD_MemCopy( cp_src, src, sizeof(u16)*len );
+
+  for( i = 0; i < len; i++ )
+  {
+    if( L'ぁ' <= src[i] && src[i] <= L'ん' )
+    {
+    }
+    else if( L'ァ' <= src[i] && src[i] <= L'ヴ' )
+    {
+    }
+    else if( L'0' <= src[i] && src[i] <= L'9' )
+    {
+      src[i]  = L'０' + src[i] - L'0';
+    }
+    else if( L'０' <= src[i] && src[i] <= L'９' )
+    {
+    }
+    else if( L'a' <= src[i] && src[i] <= L'z' )
+    {
+      src[i]  = L'ａ' + src[i] - L'a';
+    }
+    else if( L'A' <= src[i] && src[i] <= L'Z' )
+    {
+      src[i]  = L'Ａ' + src[i] - L'A';
+    }
+    else if( L'ａ' <= src[i] && src[i] <= L'ｚ' )
+    {
+    }
+    else if( L'Ａ' <= src[i] && src[i] <= L'Ｚ' )
+    {
+    }
+    else if( src[i] == 0 )
+    {
+      src[i]  = GFL_STR_GetEOMCode();
+    }
+    else
+    {
+      //他の文字は全部スペースにするよ
+      src[i]  = L'　';
+    }
+  }
+
+  src[len-1]  = GFL_STR_GetEOMCode();
+
+  GFL_STR_SetStringCode( p_dst, src );
 }

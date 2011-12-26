@@ -20,6 +20,7 @@ extern void GameStart_Debug(void);
 extern void GameStart_DebugNet(void);
 extern void GameStart_DebugNetOff(void);
 extern void GameStart_Debug_SelectName(void);
+extern void GameStart_Debug_BodyName(void);
 
 
 #endif	//__GAME_START_H__

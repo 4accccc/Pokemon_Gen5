@@ -73,6 +73,7 @@ typedef enum
   TMI_DEBUG_START_NET,
   TMI_DEBUG_START_NET_OFF,
   TMI_DEBUG_SELECT_NAME,
+  TMI_DEBUG_START_BODYNAME,
 
   TMI_MAX,
 
@@ -147,6 +148,7 @@ static void TESTMODE_COMMAND_ChangeMenu( TESTMODE_WORK *work , TESTMODE_MENU_LIS
 static void TESTMODE_COMMAND_StartGame( TESTMODE_WORK *work , TESTMODE_INITGAME_TYPE type );
 
 //メニュー決定時の関数群
+static BOOL TESTMODE_ITEM_SelectFuncDebugStartBodyName( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncDebugStart( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncDebugStartComm( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncDebugStartCommOff( TESTMODE_WORK *work , const int idx );
@@ -236,6 +238,7 @@ static BOOL TESTMODE_ITEM_DebugFight( TESTMODE_WORK *work , const int idx );
 static TESTMODE_MENU_LIST topMenu[] =
 {
   //汎用
+  {L"デバッグ開始(本体名：通信ON)", TESTMODE_ITEM_SelectFuncDebugStartBodyName},
   {L"デバッグ開始(処理負荷：サーチ)"        ,TESTMODE_ITEM_SelectFuncDebugStart },
   {L"デバッグ開始(処理負荷：接続(要侵入)"  ,TESTMODE_ITEM_SelectFuncDebugStartComm },
   {L"デバッグ開始(通信OFF)"  ,TESTMODE_ITEM_SelectFuncDebugStartCommOff },
@@ -764,6 +767,9 @@ static GFL_PROC_RESULT TestModeProcEnd(GFL_PROC * proc, int * seq, void * pwk, v
       case TMI_DEBUG_SELECT_NAME:
         GameStart_Debug_SelectName();
         break;
+      case TMI_DEBUG_START_BODYNAME:
+        GameStart_Debug_BodyName();
+        break;
       }
       GFL_OVERLAY_Unload(FS_OVERLAY_ID(title));
     }
@@ -841,6 +847,12 @@ static BOOL TESTMODE_ITEM_SelectFuncDummy( TESTMODE_WORK *work , const int idx )
 //------------------------------------------------------------------
 //  トップメニュー用
 //------------------------------------------------------------------
+//本体名でデバッグスタート
+static BOOL TESTMODE_ITEM_SelectFuncDebugStartBodyName( TESTMODE_WORK *work , const int idx )
+{
+  TESTMODE_COMMAND_StartGame( work , TMI_DEBUG_START_BODYNAME );
+  return TRUE;
+}
 
 //デバッグスタート
 static BOOL TESTMODE_ITEM_SelectFuncDebugStart( TESTMODE_WORK *work , const int idx )
