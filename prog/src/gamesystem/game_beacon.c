@@ -1314,6 +1314,8 @@ void GAMEBEACON_SUB_SendBeaconSetCommonForFMissionEx(GAMEBEACON_SEND_MANAGER *se
   fest_sys = GAMESYSTEM_GetLinkFestivalWork( GameBeaconSys->gsys );
   fmwk = LINK_FESTIVAL_GetMissionWork( fest_sys );
 
+  GF_ASSERT( fmwk->beacon.m_id != FMISSION_ID_NULL );
+
   tmp = *send;  //現時点での内容をコピー
 
   //パラメータ生成
