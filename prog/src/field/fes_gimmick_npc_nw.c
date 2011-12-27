@@ -54,6 +54,10 @@
 #include "field/fes_gimmick_npc_dat.h"
 #include "arc/fmission_data.naix"
 
+#ifdef PM_DEBUG
+ #include "debug/debug_flg.h"
+#endif
+
 #define LOT_PROB_MAG (1000)  ///<乱数精度を高めるため、100(%)に倍率をかけた値で抽選する->1%=1000
 #define NPC_MISSION_EXPARAM_MAX (3) //拡張パラメータ許容値
 #define NPC_MISSION_POINT_NUM_VALUE (8)  //ポイント数バリエーション
@@ -353,6 +357,14 @@ static BOOL sub_SetPosByLot( GAMESYS_WORK* gsys, FES_GIMMICK_NPC_WORK* wk, FEST_
     int rnd = FES_GIMMICK_SUB_RndGet( rnd_c, NPC_MISSION_POINT_NUM_VALUE, NULL, 0 );
 
     wk->point_max = DATA_FesNpcPointNumTbl[pat_idx][rnd];
+
+#ifdef PM_DEBUG
+    if( DEBUG_FLG_GetFlg(DEBUG_FLG_FMissionEvPosMax) ){
+      //常に最大数抽選
+      wk->point_max = FES_GIMMICK_NPC_POINT_MAX; 
+    }
+#endif  //PM_DEBUG
+
 #if defined(DEBUG_ONLY_FOR_iwasawa) || defined(DEBUG_ONLY_FOR_masafumi_saitou)
     OS_FPrintf(OSPRINT_LINKFEST_PAGE,"zone-%d mattr=%d, pat=%08x, ofs=%d, idx=%d, rnd=%d, point=%d\n", 
         wk->zone_id, map_attr, fmwk->beacon.pattern, bit_ofs, pat_idx, rnd, wk->point_max );
