@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="toyama" host="W00153" date="2011-11-30T20:26:23" source="pkwd_field02e_all.mb"/>
+	<create user="toyama" host="W00153" date="2011-12-27T13:11:32" source="pkwd_field02e_all.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -16,7 +16,7 @@
 	tool_end_frame="1000"
 	interpolation="frame"
 	tex_matrix_mode="maya"
-	compress_material="on" material_size="22 22"
+	compress_material="on" material_size="21 21"
 	frame_step_mode="1"
 	tolerance_tex_scale="0.100000"
 	tolerance_tex_rotate="0.100000"
@@ -236,14 +236,14 @@
 </tex_translate_data>
 
 <tex_srt_anm_array size="2">
-	<tex_srt_anm index="0" material_name="park_frame_1">
+	<tex_srt_anm index="0" material_name="park_frame">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1001" data_head="0"/>
 		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
 	</tex_srt_anm>
-	<tex_srt_anm index="1" material_name="cmtry_star_1">
+	<tex_srt_anm index="1" material_name="cmtry_star">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
