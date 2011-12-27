@@ -2279,6 +2279,10 @@ static void CTVT_TALK_GameEnter_End( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkW
   GFL_BG_LoadScreenReq(CTVT_FRAME_MAIN_MSG);
   GFL_BG_LoadScreenReq(CTVT_FRAME_SUB_MSG);
 
+  // ”gŒ`‚ÌBMP‰Šú‰»
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( talkWork->waveWin) , 0x0 );
+  GFL_BMPWIN_MakeScreen( talkWork->waveWin );
+
   if( talkWork->yesNoWork != NULL )
   {
     APP_TASKMENU_CloseMenu( talkWork->yesNoWork );
