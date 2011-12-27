@@ -1,22 +1,22 @@
 <?xml version='1.0' encoding='SHIFT_JIS'?><imd version='1.6.0'>
 
 <head>
-	<create date='2010-12-20T14:43:47' host='W00163' user='saya_tsuruta' source='t4x4x7.mb'/>
+	<create date='2010-12-20T14:43:47' host='W00163' user='saya_tsuruta' source='t4x4x12.mb'/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 </head>
 
 <body>
 
-<original_create date='2010-12-20T14:43:47' host='W00163' user='saya_tsuruta' source='t4x4x7.mb'/>
+<original_create date='2010-12-20T14:43:47' host='W00163' user='saya_tsuruta' source='t4x4x12.mb'/>
 <original_generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 
 <model_info tool_start_frame='0' force_full_weight='off' magnify='1.000000' scaling_rule='standard' compress_node='none' material_size='1 1' vertex_style='direct' compress_material='off' output_texture='used' node_size='1 1' pos_scale='3' tex_matrix_mode='maya' use_primitive_strip='on'/>
 
 <box_test xyz='-2.000000 0.000000 0.000000' whd='4.000000 4.000000 0.000000' pos_scale='3'/>
 
-<tex_image_array size='7'>
-	<tex_image name='t4x4x7.0' format='palette16' original_width='32' original_height='32' index='0' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x7.0.tga' palette_name='t4x4x7' width='32' color0_mode='transparency'>
+<tex_image_array size='12'>
+	<tex_image name='t4x4x12.0' format='palette16' original_width='32' original_height='32' index='0' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x12.0.tga' palette_name='t4x4x12' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -52,7 +52,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4x7.1' format='palette16' original_width='32' original_height='32' index='1' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x7.1.tga' palette_name='t4x4x7' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4x12.1' format='palette16' original_width='32' original_height='32' index='1' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x12.1.tga' palette_name='t4x4x12' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -88,7 +88,43 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4x7.2' format='palette16' original_width='32' original_height='32' index='2' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x7.2.tga' palette_name='t4x4x7' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4x12.2' format='palette16' original_width='32' original_height='32' index='2' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x12.2.tga' palette_name='t4x4x12' width='32' color0_mode='transparency'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 00ff 0000 0000 ff00 0000 0000 
+			0000 0000 0fff 0000 0000 fff0 0000 0000 
+			0000 0000 fff0 0000 0000 0fff 0000 0000 
+			0000 0000 ff00 000f f000 00ff 0000 0000 
+			0000 0000 f000 00ff ff00 000f 0000 0000 
+			0000 0000 0000 0fff fff0 0000 0000 0000 
+			0000 0000 0000 fff0 0fff 0000 0000 0000 
+			0000 0000 0000 ff00 00ff 0000 0000 0000 
+			0000 0000 0000 ff00 00ff 0000 0000 0000 
+			0000 0000 0000 fff0 0fff 0000 0000 0000 
+			0000 0000 0000 0fff fff0 0000 0000 0000 
+			0000 0000 f000 00ff ff00 000f 0000 0000 
+			0000 0000 ff00 000f f000 00ff 0000 0000 
+			0000 0000 fff0 0000 0000 0fff 0000 0000 
+			0000 0000 0fff 0000 0000 fff0 0000 0000 
+			0000 0000 00ff 0000 0000 ff00 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='t4x4x12.3' format='palette16' original_width='32' original_height='32' index='3' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x12.3.tga' palette_name='t4x4x12' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 5000 0555 0000 0000 5550 0005 0000 
@@ -124,7 +160,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4x7.3' format='palette16' original_width='32' original_height='32' index='3' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x7.3.tga' palette_name='t4x4x7' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4x12.4' format='palette16' original_width='32' original_height='32' index='4' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x12.4.tga' palette_name='t4x4x12' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -160,7 +196,43 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4x7.4' format='palette16' original_width='32' original_height='32' index='4' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x7.4.tga' palette_name='t4x4x7' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4x12.5' format='palette16' original_width='32' original_height='32' index='5' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x12.5.tga' palette_name='t4x4x12' width='32' color0_mode='transparency'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 00ff 0000 0000 ff00 0000 0000 
+			0000 0000 0fff 0000 0000 fff0 0000 0000 
+			0000 0000 fff0 0000 0000 0fff 0000 0000 
+			0000 0000 ff00 000f f000 00ff 0000 0000 
+			0000 0000 f000 00ff ff00 000f 0000 0000 
+			0000 0000 0000 0fff fff0 0000 0000 0000 
+			0000 0000 0000 fff0 0fff 0000 0000 0000 
+			0000 0000 0000 ff00 00ff 0000 0000 0000 
+			0000 0000 0000 ff00 00ff 0000 0000 0000 
+			0000 0000 0000 fff0 0fff 0000 0000 0000 
+			0000 0000 0000 0fff fff0 0000 0000 0000 
+			0000 0000 f000 00ff ff00 000f 0000 0000 
+			0000 0000 ff00 000f f000 00ff 0000 0000 
+			0000 0000 fff0 0000 0000 0fff 0000 0000 
+			0000 0000 0fff 0000 0000 fff0 0000 0000 
+			0000 0000 00ff 0000 0000 ff00 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='t4x4x12.6' format='palette16' original_width='32' original_height='32' index='6' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x12.6.tga' palette_name='t4x4x12' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -196,7 +268,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4x7.5' format='palette16' original_width='32' original_height='32' index='5' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x7.5.tga' palette_name='t4x4x7' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4x12.7' format='palette16' original_width='32' original_height='32' index='7' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x12.7.tga' palette_name='t4x4x12' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 6666 0000 
@@ -232,7 +304,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4x7.6' format='palette16' original_width='32' original_height='32' index='6' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x7.6.tga' palette_name='t4x4x7' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4x12.8' format='palette16' original_width='32' original_height='32' index='8' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x12.8.tga' palette_name='t4x4x12' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 6666 0000 
@@ -268,10 +340,118 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
+	<tex_image name='t4x4x12.9' format='palette16' original_width='32' original_height='32' index='9' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x12.9.tga' palette_name='t4x4x12' width='32' color0_mode='transparency'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 6666 0000 0000 0000 0000 0000 0000 
+			6000 8688 0006 0000 0000 0000 0000 0000 
+			7d00 8688 00d6 0000 0000 0000 0000 0000 
+			7d00 7867 00d6 ddd0 00dd 0000 0000 0000 
+			6d00 6776 d0d7 887d dd78 0000 0000 0000 
+			7d00 7667 7567 8888 7888 000d 0000 0000 
+			d000 7ddd 76d6 8887 7788 0067 0000 0000 
+			8600 d768 77d6 7777 6655 0067 0000 0000 
+			87d0 6768 776d 5777 6887 06a6 0000 0000 
+			77d0 6876 777d 7577 a688 06bb 0000 0000 
+			66d0 7688 776d 8577 ca68 05cc 0000 0000 
+			77d0 7767 666d 8767 cc67 0dcc 0000 0000 
+			6d00 5776 6655 7755 c7b6 0dcc 0000 0000 
+			d600 6ddd 56d6 775a dec6 09cc 0000 0000 
+			7600 6776 5d56 775a 6fb6 09cc 0000 0000 
+			7600 7767 d055 7566 cca6 0acc 0000 0000 
+			d000 6677 000d 56dd ca57 009a 0000 0000 
+			0000 dddd 0000 9d00 d955 000d 0000 0000 
+			0000 0000 0000 6000 07ad 0000 0000 0000 
+			0000 0000 0000 d000 68bb 0000 0000 0000 
+			0000 0000 0000 1660 67ab 0000 0000 0000 
+			0000 0000 d000 178d d67e 0000 0000 0000 
+			0000 0000 7d00 e188 7e7e 00d6 0000 0000 
+			0000 0000 78d0 e17f 886f 0d7e 0000 0000 
+			0000 6000 8886 f588 775f 6888 000d 0000 
+			0000 d000 8777 57e8 8875 778f 000d 0000 
+			0000 0000 77dd 7777 8888 dd77 0000 0000 
+			0000 0000 dd00 7667 7667 00dd 0000 0000 
+			0000 0000 0000 d55d d55d 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='t4x4x12.10' format='palette16' original_width='32' original_height='32' index='10' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x12.10.tga' palette_name='t4x4x12' width='32' color0_mode='transparency'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 6666 0000 0000 0000 0000 0000 0000 
+			6000 8688 0006 0000 0000 0000 0000 0000 
+			7d00 8688 00d6 0000 0000 0000 0000 0000 
+			7d00 7867 00d6 ddd0 00dd 0000 0000 0000 
+			6d00 6776 d0d7 887d dd78 0000 0000 0000 
+			7d00 7667 7567 8888 7888 000d 0000 0000 
+			d000 7ddd 76d6 8887 7788 0067 0000 0000 
+			8600 d768 77d6 7777 6655 0067 0000 0000 
+			87d0 6768 776d 5777 6887 06a6 0000 0000 
+			77d0 6876 777d 7577 a688 06bb 0000 0000 
+			66d0 7688 776d 8577 ca68 05cc 0000 0000 
+			77d0 7767 666d 8767 cc67 0dcc 0000 0000 
+			6d00 5776 6655 7755 c7b6 0dcc 0000 0000 
+			d600 6ddd 56d6 775a dec6 09cc 0000 0000 
+			7600 6776 5d56 775a 6fb6 09cc 0000 0000 
+			7600 7767 d055 7566 cca6 0acc 0000 0000 
+			d000 6677 000d 56dd ca57 009a 0000 0000 
+			0000 dddd 0000 9d00 d955 000d 0000 0000 
+			0000 0000 0000 6000 07ad 0000 0000 0000 
+			0000 0000 0000 d000 68bb 0000 0000 0000 
+			0000 0000 0000 1660 67ab 0000 0000 0000 
+			0000 0000 0000 e18d d67e 0006 0000 0000 
+			0000 0000 d000 e188 7e87 0d67 0000 0000 
+			0000 0000 ed00 fe17 7786 678f 000d 0000 
+			0000 0000 8860 ff58 8775 7888 000d 0000 
+			0000 0000 877d 557f f888 d788 0000 0000 
+			0000 0000 77dd 8777 8888 0d77 0000 0000 
+			0000 0000 dd00 7667 7667 00dd 0000 0000 
+			0000 0000 0000 d55d 5d5d 00d5 0000 0000 
+			0000 0000 0000 0000 d000 000d 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='t4x4x12.11' format='palette16' original_width='32' original_height='32' index='11' height='32' path='C:/SWANwork/mmdl/mmdl_dammy_mb/t4x4x12.11.tga' palette_name='t4x4x12' width='32' color0_mode='transparency'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 6666 0000 0000 0000 0000 0000 0000 
+			6000 8688 0006 0000 0000 0000 0000 0000 
+			7d00 8688 00d6 0000 0000 0000 0000 0000 
+			7d00 7867 00d6 ddd0 00dd 0000 0000 0000 
+			6d00 6776 d0d7 887d dd78 0000 0000 0000 
+			7d00 7667 7567 8888 7888 000d 0000 0000 
+			d000 7ddd 76d6 8887 7788 0067 0000 0000 
+			8600 d768 77d6 7777 6655 0067 0000 0000 
+			87d0 6768 776d 5777 6887 06a6 0000 0000 
+			77d0 6876 777d 7577 a688 06bb 0000 0000 
+			66d0 7688 776d 8577 ca68 05cc 0000 0000 
+			77d0 7767 666d 8767 cc67 0dcc 0000 0000 
+			6d00 5776 6655 7755 c7b6 0dcc 0000 0000 
+			d600 6ddd 56d6 775a dec6 09cc 0000 0000 
+			7600 6776 5d56 775a 6fb6 09cc 0000 0000 
+			7600 7767 d055 7566 cca6 0acc 0000 0000 
+			d000 6677 000d 56dd ca57 009a 0000 0000 
+			0000 dddd 0000 9d00 d955 000d 0000 0000 
+			0000 0000 0000 6000 07ad 0000 0000 0000 
+			0000 0000 0000 d000 68bb 0000 0000 0000 
+			0000 0000 0000 1660 67ab 0000 0000 0000 
+			0000 0000 d000 1786 d67e 0000 0000 0000 
+			0000 0000 76d0 1888 8f1e 000d 0000 0000 
+			0000 d000 8886 17e7 76fe 00de 0000 0000 
+			0000 d000 8877 5888 75ff d688 0000 0000 
+			0000 0000 777d 7f88 8755 d7e8 0000 0000 
+			0000 0000 76d0 7777 8888 0d67 0000 0000 
+			0000 0000 5500 7667 7667 00dd 0000 0000 
+			0000 0000 5d00 d555 d55d 0000 0000 0000 
+			0000 0000 d000 000d 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size='1'>
-	<tex_palette name='t4x4x7' color_size='16' index='0'>
+	<tex_palette name='t4x4x12' color_size='16' index='0'>
 		4738 41aa 5eae 2614 3f9d 2887 34cc 5132 
 		65b7 192f 3a7a 4efd 5f5f 0000 6af5 7fff 
 	</tex_palette>
