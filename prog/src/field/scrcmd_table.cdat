@@ -1157,6 +1157,9 @@
   NO_CMD()
   NO_CMD()
 
+  //ソフトリセット
+  DEF_CMD( EvCmdSetSoftReset, EV_SEQ_SET_SOFT_RESET )
+
   END_CMD
   //スクリプトコマンドテーブル終了
 

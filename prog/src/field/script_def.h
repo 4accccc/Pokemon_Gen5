@@ -989,3 +989,13 @@
 #define SCR_FES_TUTORIAL_GPOWER_EXP_EVENT (5)  ///<デルパワー使用説明イベント有効
 #define SCR_FES_TUTORIAL_END              (6)  ///<フェスチュートリアル終了
 
+
+//--------------------------------------------------------------
+//  SET_SOFT_RESET用
+//--------------------------------------------------------------
+//第一引数
+#define SCR_SOFTRESET_DISALBE (0) ///<不許可
+#define SCR_SOFTRESET_ENABLE  (1) ///<許可
+
+//第二引数
+#define SCR_SOFTRESET_RNDMATCH (0) ///<ランダムマッチ用

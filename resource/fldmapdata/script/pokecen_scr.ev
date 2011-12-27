@@ -845,13 +845,16 @@ EVENT_END
 //==============================================================
 sub_rndmatch_end:
 {
+  DEFINE_LOCAL  i_power_off
   DEFINE_LOCAL  i_ret
 
-  _RNDMATCH_GET_DATA( RNDMATCH_PARAM_POWER_OFF, i_ret )
-  IF $i_ret == TRUE THEN
+  _RNDMATCH_GET_DATA( RNDMATCH_PARAM_POWER_OFF, i_power_off )
 
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_up )
-    _OBJ_ANIME_WAIT()
+  //上を向く
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_up )
+  _OBJ_ANIME_WAIT()
+
+  IF $i_power_off == TRUE THEN
 
     _BALLOONWIN_OBJMSG_POS( msg_rndmatch_00, SCWK_TARGET_OBJID, POS_DL )
 	  _LAST_KEYWAIT()
@@ -860,10 +863,6 @@ sub_rndmatch_end:
     //BP獲得処理
     _RNDMATCH_GET_DATA( RNDMATCH_PARAM_BP, i_ret )
     IF $i_ret > 0 THEN
- 
-
-      _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_up )
-      _OBJ_ANIME_WAIT()
 
       _RNDMATCH_ADD_BP( i_ret )
 
@@ -876,7 +875,6 @@ sub_rndmatch_end:
 	    _AB_KEYWAIT_MARK()
       _SYSWIN_CLOSE()
     ENDIF
-
   ENDIF
 
   //最後にセーブ
@@ -885,6 +883,9 @@ sub_rndmatch_end:
   _TIME_WAIT(1) //画面に反映
   _SYSWIN_TIMEICON( SCR_SYSWIN_TIMEICON_ON )  // タイムアイコンON
   _REPORT_CALL( i_ret )
+  IF $i_power_off == FALSE THEN //通常時たけソフリセを戻す
+    _SET_SOFT_RESET(SCR_SOFTRESET_ENABLE,SCR_SOFTRESET_RNDMATCH)
+  ENDIF
   _MSGWIN_CLOSE()
 }
 _RET

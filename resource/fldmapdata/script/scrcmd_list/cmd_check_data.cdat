@@ -745,4 +745,5 @@ static const CMD_CHECK_DATA cmd_check_data[] = {
   { TRUE, FALSE, FALSE }, // _ADD_NPOKEMON_TO_PARTY (742)
   { FALSE, FALSE, FALSE }, // NO_CMD (743)
   { FALSE, FALSE, FALSE }, // NO_CMD (744)
+  { TRUE, TRUE, TRUE }, // _SET_SOFT_RESET (745)
 };

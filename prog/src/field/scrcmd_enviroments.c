@@ -696,6 +696,48 @@ VMCMD_RESULT EvCmdSetZukanHabitatFlag( VMHANDLE * core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief ソフトリセット禁止設定
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSetSoftReset( VMHANDLE * core, void *wk )
+{
+  //@note GFL_UI_SLEEP_RNDMATCHはGFL_UI_SLEEP_DSPとビットが同じため
+  //同時に成り立ちません！
+  //これはGFLIBのマスク値がu8が最大で使い切っているためです。
+  //そのため、同時に使わないことを注意してください。
+
+
+  static const sc_type_to_mask[] =
+  {
+    GFL_UI_SLEEP_RNDMATCH,
+  };
+
+  SCRCMD_WORK* work = wk;
+
+  u16 enable = SCRCMD_GetVMWorkValue( core, work );
+  u16 type = SCRCMD_GetVMWorkValue( core, work );
+
+  GF_ASSERT( type < NELEMS(sc_type_to_mask) );
+
+  switch( enable )
+  {
+  case SCR_SOFTRESET_DISALBE:
+    //すでにdisableの場合アサート
+    GF_ASSERT( GFL_UI_CheckSoftResetDisable( sc_type_to_mask[type]) == FALSE );
+    GFL_UI_SoftResetDisable( sc_type_to_mask[type] );
+    break;
+  case SCR_SOFTRESET_ENABLE:
+    //すでにenableの場合アサート
+    GF_ASSERT( GFL_UI_CheckSoftResetDisable( sc_type_to_mask[type]) == TRUE );
+    GFL_UI_SoftResetEnable( sc_type_to_mask[type] );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+}
+
 //======================================================================
 //======================================================================
 //--------------------------------------------------------------

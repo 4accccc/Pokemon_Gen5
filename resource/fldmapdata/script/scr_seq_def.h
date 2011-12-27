@@ -16921,3 +16921,23 @@
 	.short	EV_SEQ_MERO_GMK_IS_ANIME_END
 	.endm
 
+//--------------------------------------------------------------
+/**
+ * @def   _SET_SOFT_RESET
+ * @brief ソフトリセットの禁止・許可
+ * @param enable
+ *        SCR_SOFTRESET_DISALBE (0) ///<不許可
+ *        SCR_SOFTRESET_ENABLE  (1) ///<許可
+ *
+ * @param type
+ *        SCR_SOFTRESET_RNDMATCH (0) ///<ランダムマッチ用
+ */
+//--------------------------------------------------------------
+#define _SET_SOFT_RESET( enable, type )  \
+    _ASM_SET_SOFT_RESET enable, type
+
+	.macro	_ASM_SET_SOFT_RESET enable, type
+	.short	EV_SEQ_SET_SOFT_RESET
+	.short	\enable
+	.short	\type
+	.endm

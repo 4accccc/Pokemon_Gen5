@@ -1071,6 +1071,12 @@ static void SEQFUNC_CheckPowerOff( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     *p_seq = SEQ_START_SAVE;
     break;
   case SEQ_START_SAVE:
+
+  //@note GFL_UI_SLEEP_RNDMATCHはGFL_UI_SLEEP_DSPとビットが同じため
+  //同時に成り立ちません！
+  //これはGFLIBのマスク値がu8が最大で使い切っているためです。
+  //そのため、同時に使わないことを注意してください。
+    GFL_UI_SoftResetDisable( GFL_UI_SLEEP_RNDMATCH );
     GAMEDATA_SaveAsyncStart(p_wk->param.p_gamedata);
     *p_seq = SEQ_WAIT_SAVE;
     break;
@@ -1218,6 +1224,12 @@ static void SEQFUNC_ReturnWifiCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
       switch(result){
       case SAVE_RESULT_OK:
       case SAVE_RESULT_NG:
+
+  //@note GFL_UI_SLEEP_RNDMATCHはGFL_UI_SLEEP_DSPとビットが同じため
+  //同時に成り立ちません！
+  //これはGFLIBのマスク値がu8が最大で使い切っているためです。
+  //そのため、同時に使わないことを注意してください。
+        GFL_UI_SoftResetEnable( GFL_UI_SLEEP_RNDMATCH );
         *p_seq = SEQ_END;
         break;
       }
