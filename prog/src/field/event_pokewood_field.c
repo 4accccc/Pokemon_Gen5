@@ -31,6 +31,8 @@
 #include "pokewood_system.h"
 #include "savedata/pokewood_rec.h"
 #include "savedata/pokewood_savedata.h"
+#include "savedata/record.h"
+
 //#include "pkwd_scenario_open.h"
 
 //#include "msg/msg_pw_movietitle.h"
@@ -76,6 +78,12 @@ static void updatePokewoodSaveParams(
 
     // 手持ちポケモンを出していた場合はスターポイントを加算
     PKWDSYS_CalcMyPokeStarPoint( gamedata, pkwdsys );
+  }
+  
+  //撮影回数を+1
+  {
+    RECORD *rec = SaveData_GetRecord( GAMEDATA_GetSaveControlWork(gamedata));
+    RECORD_Inc( rec, RECID_POKEWOOD_REC_CNT);
   }
 }
 
