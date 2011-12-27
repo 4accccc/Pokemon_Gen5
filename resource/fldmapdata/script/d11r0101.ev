@@ -199,6 +199,11 @@ ev_d11r0101_pairend_01:
     //ローカルライブキャスター・ライバル通話状態を変更（連れ歩き再開まで）
     _PERSON_STATE_SET_RIVAL( RIVAL_STATE_D11_2 )
     //==================================//
+      
+    //ライバル動作モデル生成
+    _OBJ_ADD( D11R0101_SWRIVAL_01 )
+    //ペアトレーナー動作モデル削除
+    _OBJ_DEL( PAIR_TRAINER_01 )
     
   //いいえ
   ELSE
