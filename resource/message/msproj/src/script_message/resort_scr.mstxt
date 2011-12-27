@@ -109105,7 +109105,7 @@ PWT</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_celeb_greet_06"
+		Label="resort_celeb_greet_05"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
@@ -109156,7 +109156,7 @@ PWT</Comment>
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="resort_celeb_greet_05"
+		Label="resort_celeb_greet_06"
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
