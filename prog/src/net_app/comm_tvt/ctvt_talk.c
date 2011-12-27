@@ -781,14 +781,13 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
         talkWork->befVCount = vCount;
         if( talkWork->timeCnt > 60 )
         {
-          talkWork->timeLimit--;
-          talkWork->timeCnt -= 60;
+          talkWork->timeCnt = 0;
 
-          ICHI_Printf("%d timeLimit%d timeCnt %d \n", talkWork->isUpdateAcceptMsg_Main, talkWork->timeLimit, talkWork->timeCnt );
           // 参加者を募集中です。あとXX秒 表示
           if( talkWork->isUpdateAcceptMsg_Main == FALSE &&
               talkWork->isUpdateAcceptMsg_Sub == FALSE )
           {
+            talkWork->timeLimit--;
             CTVT_TALK_AcceptMsg_Main( work, talkWork, COMM_TVT_GAME_01, talkWork->timeLimit );
           }
 
@@ -2240,7 +2239,7 @@ static void CTVT_TALK_GameEnter_Init( COMM_TVT_WORK *work , CTVT_TALK_WORK *talk
   talkWork->cancelWork= NULL;
 
   // 制限時間
-  talkWork->timeLimit = 30;
+  talkWork->timeLimit = 31;
   talkWork->timeCnt   = 0;
   talkWork->befVCount = 0;
 
