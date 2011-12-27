@@ -1476,6 +1476,11 @@ EVENT_START		ev_scene_c12_gymclear_01
   //ローカルライブキャスター・ベル通話状態を変更（R19到着まで）
   _PERSON_STATE_SET_BELL( BELL_STATE_C12 )
   
+  //スタートメニューに「バトル大会」を追加
+  _SET_STARTMENU_FLAG( SCR_STARTMENU_FLAG_BATTLE )
+  //スタートメニューに「ゲームシンク設定」を追加
+  _SET_STARTMENU_FLAG( SCR_STARTMENU_FLAG_GAMESYNC )
+  
   //========================================//
 EVENT_END
 
