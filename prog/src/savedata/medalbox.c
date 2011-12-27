@@ -431,12 +431,15 @@ u16 MEDALBOX_GetMedalCount( const MEDALBOX *p_mdlbox , BOOL is_hint_count )
 
   for( medal_id = 0; medal_id < MDLID_MAX ; medal_id++ )
   {
+    u32 ymd_sub = 0;
     const MEDAL_ST* p_medal_st = GetMedalSTConst( p_mdlbox , medal_id );
-
+    ymd_sub = p_medal_st->get_year + p_medal_st->get_month + p_medal_st->get_day;
     if( is_hint_count )
     {
+      // タイトル達成でかつ、日付が入っている場合はヒント取得として数える
       if( (p_medal_st->medal_state == MEDAL_STATE_TITLE_GET) ||
-          (p_medal_st->medal_state == MEDAL_STATE_HINT_GET ) )
+          (p_medal_st->medal_state == MEDAL_STATE_HINT_GET ) ||
+          ((p_medal_st->medal_state == MEDAL_STATE_TITLE_ACHIVE) && (ymd_sub != 0) ))
       {
         count++;
       }

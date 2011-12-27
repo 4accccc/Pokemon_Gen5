@@ -60,10 +60,27 @@ void MEDALDATASYS_InitMedalData( MY_MEDALDATA* p_my_medal , GAMEDATA* p_gamedata
     for( medal_id = 0 ; medal_id < MDLID_MAX ; medal_id++ )
     {
       u8 state = MEDALBOX_GetMedalState( p_medal_box , medal_id );
+
+      // タイトル達成時にはヒント取得状態のチェック
+      if( state == MEDAL_STATE_TITLE_ACHIVE  )
+      {
+        u32 ymd_sub = 0;
+        u8 y,m,d;
+        
+        // 日付が設定されているか調べる(ymd_sub == 0の時未設定)
+        MEDALBOX_GetDate( p_medal_box , medal_id , &y , &m , &d );
+        ymd_sub = y+m+d;
+
+        // 日付が設定されているときは、状態をヒント取得に書き換える
+        if( ymd_sub != 0 )
+        {
+          state = MEDAL_STATE_HINT_GET;
+        }
+      }
+
       if( (state == MEDAL_STATE_HINT_GET ) || (state == MEDAL_STATE_TITLE_GET ) )
       {
         MY_MEDAL_ST* p_st = &p_my_medal->p_medal_st[count];
-        p_st->medal_state = MEDALBOX_GetMedalState( p_medal_box , medal_id );
         p_st->medal_state = state;
         p_st->medal_id    = medal_id;
         p_st->new_state   = MEDALBOX_GetNewMedalFlg( p_medal_box , medal_id );
