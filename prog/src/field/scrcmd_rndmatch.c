@@ -205,6 +205,13 @@ VMCMD_RESULT EvCmdRndMatchAddBp( VMHANDLE *p_core, void *p_wk_adrs )
 
   BSUBWAY_SCOREDATA_AddBattlePoint( p_bsubway, param );
 
+  // ƒŒƒR[ƒh‰ÁŽZ(Ÿ‚¿Žæ‚Á‚½BP)
+  if( param > 0 ){
+    RECORD * record_sv =
+      SaveData_GetRecord( GAMEDATA_GetSaveControlWork(p_gamedata) );
+    RECORD_Add( record_sv ,RECID_WIN_BP ,param );
+  }
+
   NAGI_Printf( "RndMatchAdBp param%d", param );
 
   return VMCMD_RESULT_CONTINUE;

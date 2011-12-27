@@ -1205,6 +1205,13 @@ static void SEQFUNC_ReturnWifiCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
       u16 bp = GAMEDATA_GetRndMaptchBp(p_wk->param.p_gamedata);
       BSUBWAY_SCOREDATA_AddBattlePoint( p_bsubway, bp );
       GAMEDATA_ResetRndMaptchBp( p_wk->param.p_gamedata );
+      
+      // ƒŒƒR[ƒh‰ÁŽZ(Ÿ‚¿Žæ‚Á‚½BP)
+      if( bp > 0 ){
+        RECORD*   record_sv =
+         SaveData_GetRecord( GAMEDATA_GetSaveControlWork(p_wk->param.p_gamedata) );
+        RECORD_Add( record_sv ,RECID_WIN_BP ,bp );
+      }
 
       *p_seq = SEQ_START_SAVE_MSG;
     }

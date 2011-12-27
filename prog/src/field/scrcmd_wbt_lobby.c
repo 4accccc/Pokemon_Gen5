@@ -78,6 +78,14 @@ VMCMD_RESULT EvCmdWBTGetReward( VMHANDLE * core, void * wk )
   { //Ç≤ÇŸÇ§Ç—ÇÃBPÇë´Ç∑
     BSUBWAY_SCOREDATA * bsw_score = getBSubwayScoreData( work );
     BSUBWAY_SCOREDATA_AddBattlePoint( bsw_score, count );
+
+    {
+      // ÉåÉRÅ[Éhâ¡éZ(èüÇøéÊÇ¡ÇΩBP)
+      GAMEDATA* gamedata = SCRCMD_WORK_GetGameData( work );
+      RECORD*   record_sv =
+                  SaveData_GetRecord( GAMEDATA_GetSaveControlWork(gamedata) );
+      RECORD_Add( record_sv ,RECID_WIN_BP ,count );
+    }
   }
   *ret_wk = count;
   TAMADA_Printf("EvCmdWBTGetReward == %d\n", *ret_wk );

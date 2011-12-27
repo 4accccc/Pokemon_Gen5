@@ -810,6 +810,13 @@ u16  BSUBWAY_SCRWORK_AddBattlePoint( BSUBWAY_SCRWORK *bsw_scr )
   }
   
   BSUBWAY_SCOREDATA_AddBattlePoint( bsw_scr->scoreData, point );
+
+  // ƒŒƒR[ƒh‰ÁŽZ(Ÿ‚¿Žæ‚Á‚½BP)
+  if( point > 0 ){
+    RECORD* record_sv = 
+          SaveData_GetRecord( GAMEDATA_GetSaveControlWork(bsw_scr->gdata) );
+    RECORD_Add( record_sv ,RECID_WIN_BP ,point );
+  }
   return point;
 }
 
