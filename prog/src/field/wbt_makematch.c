@@ -309,7 +309,26 @@ static void makeEntryTable( MAKE_ENTRY_WORK * mew, const WBTSAVE * wbtsave )
 static void entryDownloadTournament(
     const WBTDL_MATCH * wbtdl_match, MAKE_ENTRY_WORK * mew, WBT_TRCODE * tr_list )
 {
+  enum { RAND_RANGE = 10 };
   int index = 0;
+  int rand_index = 0;
+  u8 rand_table[RAND_RANGE];
+
+  {
+    int i;
+    for ( i = 0; i < RAND_RANGE; i ++ )
+    {
+      rand_table[i] = i;
+    }
+    for ( i = RAND_RANGE; i > 0; i -- )
+    {
+      u8 temp;
+      u8 pos = GFUser_GetPublicRand0( i );
+      temp = rand_table[i - 1];
+      rand_table[i - 1] = rand_table[pos];
+      rand_table[pos] = temp;
+    }
+  }
 
   GFL_STD_MemClear( tr_list, sizeof(WBT_TRCODE) * WBT_TRAINER_NUM );
   tr_list[ index ++ ].code = WBT_TRCODE_PLAYER;
@@ -324,10 +343,14 @@ static void entryDownloadTournament(
       GF_ASSERT( 0 );
       /* FALL THROUGH */
     case WBTDL_MATCH_TRAINER_RND:
+      //êÌÇÌÇ»Ç¢ÉÇÉuÇ™Ç†ÇΩÇÈÇÕÇ∏
+      tr_list[ index ].type = WBT_TRCODE_TYPE_ROM;
+      tr_list[ index ].tr_id = WBTROM_TRID_BATTLE_MOB_START + rand_table[rand_index ++ ];
+      break;
     case WBTDL_MATCH_TRAINER_RND_DMY:
       //êÌÇÌÇ»Ç¢ÉÇÉuÇ™Ç†ÇΩÇÈÇÕÇ∏
       tr_list[ index ].type = WBT_TRCODE_TYPE_ROM;
-      tr_list[ index ].tr_id = WBTROM_TRID_NOBATTLE_MOB_START + GFUser_GetPublicRand0( 10 );
+      tr_list[ index ].tr_id = WBTROM_TRID_NOBATTLE_MOB_START + rand_table[rand_index ++ ];
       break;
     case WBTDL_MATCH_TRAINER_ROM:
       tr_list[ index ].type = WBT_TRCODE_TYPE_ROM;
