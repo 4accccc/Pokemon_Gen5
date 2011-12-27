@@ -1278,7 +1278,7 @@ GMEVENT * INFINITY_DUNGEON_EVENT_TrainerBattle(GAMESYS_WORK *gsys, FIELDMAP_WORK
         &tr_data,
         NULL ,TRID_OFFSET_INFINITY_DUNGEON ,
         p_lv_param->level_max ,
-        p_lv_param->level_min , 0 ,version ,area_no, &rand_context);
+        p_lv_param->level_min , 0 ,version ,area_no, fieldmap ,&rand_context);
 
     GFL_HEAP_FreeMemory(party);
 

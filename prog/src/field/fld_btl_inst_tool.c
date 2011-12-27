@@ -637,6 +637,7 @@ BATTLE_SETUP_PARAM * FBI_TOOL_INFINITY_DUNGEON_CreateBattleParam(
     const u16 level_max, const u16 level_min,
     const int level_correction,
     const u8 version, const u32 area_no,
+    FIELDMAP_WORK *fieldmap,
     GFL_STD_RandContext *rand_context)
 {
   BATTLE_SETUP_PARAM *dst;
@@ -705,6 +706,9 @@ BATTLE_SETUP_PARAM * FBI_TOOL_INFINITY_DUNGEON_CreateBattleParam(
     dst->fieldSituation.bgType = area_no;
     dst->fieldSituation.bgAttr = BATTLE_BG_ATTR_MUGEN_W;
   }
+   
+  // “ïˆÕ“x‚ð”½‰f‚·‚é
+  BTL_SETUP_SetDifficulty( dst, gdata, FIELDMAP_GetZoneID( fieldmap ) );
 
   return dst;
 }
