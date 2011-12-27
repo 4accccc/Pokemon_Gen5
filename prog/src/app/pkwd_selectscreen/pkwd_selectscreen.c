@@ -2518,6 +2518,7 @@ static BOOL SubSeq_PutInformationWait( PKWD_SELECT_SCREEN_MAIN_WORK *wk )
     GFL_BMPWIN_ClearTransWindow( wk->print_util[PKWD_BMP_INFORMATION].win );
     GFL_BMPWIN_Delete( wk->print_util[PKWD_BMP_INFORMATION].win );
     _touchbar_button_refresh( wk, TRUE ); //ページ替えボタン復帰
+    _set_cursor_blink( wk, wk->nowpos );
     wk->seq = MENU_START;
   }
   return FALSE;
