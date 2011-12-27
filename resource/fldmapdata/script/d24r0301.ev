@@ -46,7 +46,13 @@ INIT_EVENT_START   ev_zone_d24r0301
   
   //全滅復帰ならば連れ歩き状態を初期化
   IF $WK_SCENE_D24_PAIR_START == 2 && FLAG_OFF( SYS_FLAG_PAIR ) THEN
+    
+    //==================================//
     $WK_SCENE_D24_PAIR_START = 1
+    //スタート地点のベルを表示に
+    _FLAG_RESET( FV_D24_PAIR_START_BELL_01 )
+    //==================================//
+    
   ENDIF
   
 INIT_EVENT_END
