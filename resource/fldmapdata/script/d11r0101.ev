@@ -40,7 +40,14 @@ DEFINE_LOCAL  LCW_POSZ
 /************************************************************/
 INIT_EVENT_START  ev_zone_d11r0101
   
-//
+  IF $WK_SCENE_D11R0101 == 0 && FLAG_OFF(SYS_FLAG_PAIR) THEN
+    
+    //==================================//
+    //ƒ‰ƒCƒoƒ‹‚ð•\Ž¦‚É
+    _FLAG_RESET( FV_D11R0101_SWRIVAL_01 )
+    //==================================//
+    
+  ENDIF
   
 INIT_EVENT_END
 
