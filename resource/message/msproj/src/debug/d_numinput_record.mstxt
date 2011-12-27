@@ -5504,4 +5504,56 @@
 				Time="2011-09-04T09:26:34" />
 		</LanguageCell>
 	</TextRow>
+	<TextRow
+		Label="dni_record_134"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケウッド最高興行収入</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-27T08:23:48" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-04T09:26:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケウッド最高興行収入</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-27T08:23:52" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-04T09:26:34" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="dni_record_135"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ポケウッド累計興行収入</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-27T08:24:00" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-04T09:26:23" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ポケウッド累計興行収入</Text>
+			<TextModifiedBy
+				User="mori:W00269"
+				Time="2011-12-27T08:24:03" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="mori:W00269"
+				Time="2011-09-04T09:26:34" />
+		</LanguageCell>
+	</TextRow>
 </MessageStudioText>
