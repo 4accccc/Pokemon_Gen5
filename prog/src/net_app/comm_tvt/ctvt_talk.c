@@ -784,6 +784,7 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
           talkWork->timeLimit--;
           talkWork->timeCnt -= 60;
 
+          ICHI_Printf("%d timeLimit%d timeCnt %d \n", talkWork->isUpdateAcceptMsg_Main, talkWork->timeLimit, talkWork->timeCnt );
           // 参加者を募集中です。あとXX秒 表示
           if( talkWork->isUpdateAcceptMsg_Main == FALSE &&
               talkWork->isUpdateAcceptMsg_Sub == FALSE )
@@ -992,11 +993,30 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
     }
     if( talkWork->msgWait == 0 )
     {
-      GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
-      GFL_NET_HANDLE_TimeSyncStart( pNet, CTVT_COMM_EXIT_GAME, WB_NET_COMM_TVT );
-      talkWork->state = CTS_RETURN_WAIT;
-
-      ICHI_Printf("受付中止同期待ち\n");
+      /*
+      // 参加する人がいるかどうかで受付中止同期をとるか決める
+      if( talkWork->acceptBit == 0 && talkWork->acceptBit2 == 0 )
+      {
+        // 参加する人がいない
+        // すぐ戻る
+        CTVT_TALK_GameEnter_End( work, talkWork );
+        ICHI_Printf("参加する人がいない\n");
+      }
+      else
+      */
+      // 
+      // この時点で子機にはEXIT_GAMEのフラグが送られていて
+      // 落書きモードではそのフラグをみて同期をとるようにしている。
+      //
+      // よってここでは参加する人がいなくても同期をとることにした
+      //
+      {
+        // 参加する人がいる
+        GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
+        GFL_NET_HANDLE_TimeSyncStart( pNet, CTVT_COMM_EXIT_GAME, WB_NET_COMM_TVT );
+        talkWork->state = CTS_RETURN_WAIT;
+        ICHI_Printf("受付中止同期待ち\n");
+      }
     }
     break;
   case CTS_RETURN_WAIT:      // 会話モードへ戻るときの同期待ち
@@ -1202,6 +1222,7 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       GFL_BMPWIN_MakeScreen( talkWork->acceptMsgWin_Main );
       GFL_BG_LoadScreenReq(CTVT_FRAME_MAIN_MSG);
       talkWork->isUpdateAcceptMsg_Main = FALSE;
+      ICHI_Printf("メッセージ更新 \n");
     }
   }
   // 受付用メッセージ更新(下画面)
@@ -2105,6 +2126,20 @@ static const BOOL CTVT_TALK_CheckFinishReq( COMM_TVT_WORK *work , CTVT_TALK_WORK
     return TRUE;
   }
 
+  // 親からミニゲーム受付中止が通知
+  if( talkWork->isExitGame == TRUE )
+  {
+    // 子しか通らないはず
+    if( COMM_TVT_GetSelfIdx(work) != 0 )
+    {
+      talkWork->isExitGame = FALSE;
+      talkWork->state = CTS_RETURN;
+      // 中止されましたメッセージ表示 
+      CTVT_TALK_AcceptMsg_Sub( work, talkWork, COMM_TVT_GAME_03, NULL, 120 );
+      ICHI_Printf("通常状態でのミニゲーム終了通知がきた\n");
+    }
+  }
+
   return FALSE;
 }
 
@@ -2268,16 +2303,7 @@ static const BOOL CTVT_TALK_GameEnter_CheckFinishReq( COMM_TVT_WORK *work , CTVT
 {
   BOOL ret = FALSE;
   
-  // 共通の終了検知
-  if( CTVT_TALK_CheckFinishReq( work , talkWork ) == TRUE )
-  {
-    // 受付で設定したことを戻す
-    CTVT_TALK_GameEnter_End( work, talkWork );
-    return TRUE;
-  }
-
   // ミニゲーム参加の時専用の終了検知を入れる
-
   // 子の参加拒否が通知
   if( talkWork->isCancelGame == TRUE )
   {
@@ -2304,6 +2330,7 @@ static const BOOL CTVT_TALK_GameEnter_CheckFinishReq( COMM_TVT_WORK *work , CTVT
       talkWork->state = CTS_RETURN;
       // 中止されましたメッセージ表示 
       CTVT_TALK_AcceptMsg_Sub( work, talkWork, COMM_TVT_GAME_03, NULL, 120 );
+      ICHI_Printf("ゲーム状態でのミニゲーム終了通知がきた\n");
       ret = TRUE;
     }
   }
@@ -2321,6 +2348,14 @@ static const BOOL CTVT_TALK_GameEnter_CheckFinishReq( COMM_TVT_WORK *work , CTVT
       APP_TASKMENU_CloseMenu( talkWork->cancelWork );
       talkWork->cancelWork = NULL;
     }
+  }
+
+  // 共通の終了検知
+  if( CTVT_TALK_CheckFinishReq( work , talkWork ) == TRUE )
+  {
+    // 受付で設定したことを戻す
+    CTVT_TALK_GameEnter_End( work, talkWork );
+    return TRUE;
   }
 
   return ret;
@@ -2372,6 +2407,19 @@ void CTVT_TALK_SetIsCancelGame( CTVT_TALK_WORK *talkWork, const BOOL flg )
 void CTVT_TALK_SetIsExitGame( CTVT_TALK_WORK *talkWork, const BOOL flg )
 {
   talkWork->isExitGame = flg;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  終了通知フラグ取得
+ *
+ *	@param	CTVT_TALK_WORK *talkWork
+ *	@return	BOOL flg 
+ */
+//-----------------------------------------------------------------------------
+const BOOL CTVT_TALK_GetIsExitGame( CTVT_TALK_WORK *talkWork )
+{
+  return talkWork->isExitGame;
 }
 
 //----------------------------------------------------------------------------

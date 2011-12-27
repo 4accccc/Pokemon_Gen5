@@ -23,6 +23,7 @@
 #include "comm_tvt.naix"
 
 #include "ctvt_draw.h"
+#include "ctvt_talk.h"
 #include "ctvt_comm.h"
 #include "ctvt_camera.h"
 #include "ctvt_snd_def.h"
@@ -119,6 +120,13 @@ typedef enum
   
 }CTVT_DRAW_STATE;
 
+// ミニゲーム終了同期シーケンス
+typedef enum{
+  SEQ_EXIT_GAME_SYNC_NONE,
+  SEQ_EXIT_GAME_SYNC_START,
+  SEQ_EXIT_GAME_SYNC_END,
+}SEQ_EXIT_GAME_SYNC;
+
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -175,6 +183,7 @@ struct _CTVT_DRAW_WORK
   u16 palColBuf;
   u16 palCalAnm;
   
+  SEQ_EXIT_GAME_SYNC  seqTimeSync;    // BTS200 ミニゲームの終了通知の同期用
 };
 
 //======================================================================
@@ -195,6 +204,9 @@ static const BOOL CTVT_DRAW_CheckFinishReq( COMM_TVT_WORK *work , CTVT_DRAW_WORK
 static void CTVT_DRAW_DispMessage( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork , const u16 msgId );
 
 static void CTVT_DRAW_EreseSubWindow( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork );
+
+// BTS200 落書き画面でもミニゲームの終了通知は検知する
+static void CTVT_DRAW_CheckExitGame( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork );
 
 //--------------------------------------------------------------
 //	初期化
@@ -452,6 +464,7 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   drawWork->isFinish = FALSE;
   drawWork->reqStopCamera = FALSE;
   drawWork->palCalAnm = 0;
+  drawWork->seqTimeSync = SEQ_EXIT_GAME_SYNC_NONE;
   {
     //ペンの色転送
     u16* spoitColAdr = (u16*)(HW_OBJ_PLTT + 0*32 + 2*0xd);
@@ -595,7 +608,17 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
     {
       if( drawWork->isFinish == FALSE )
       {
-        return CTM_TALK;
+        // 同期を開始していた場合は同期をとるまでまつ
+        if( drawWork->seqTimeSync != SEQ_EXIT_GAME_SYNC_NONE )
+        {
+          // ミニゲーム終了通知チェック
+          CTVT_DRAW_CheckExitGame( work , drawWork );
+        }
+        else
+        {
+          // 会話モードへ
+          return CTM_TALK;
+        }
       }
       else
       {
@@ -607,6 +630,10 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
   case CDS_DRAW:
     if( CTVT_DRAW_CheckFinishReq( work , drawWork ) == FALSE )
     {
+      // ミニゲーム終了通知チェック
+      CTVT_DRAW_CheckExitGame( work , drawWork );
+
+      // 更新
       CTVT_DRAW_UpdateDraw( work , drawWork );
     }
     break;
@@ -614,6 +641,10 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
   case CDS_EDIT:
     if( CTVT_DRAW_CheckFinishReq( work , drawWork ) == FALSE )
     {
+      // ミニゲーム終了通知チェック
+      CTVT_DRAW_CheckExitGame( work , drawWork );
+
+      // 更新
       CTVT_DRAW_UpdateEdit( work , drawWork );
     }
     break;
@@ -1674,6 +1705,7 @@ static const BOOL CTVT_DRAW_CheckFinishReq( COMM_TVT_WORK *work , CTVT_DRAW_WORK
     drawWork->state = CDS_END_MEMBER_NONE_INIT;
     return TRUE;
   }
+
   return FALSE;
 }
 
@@ -1740,3 +1772,61 @@ static void CTVT_DRAW_EreseSubWindow( COMM_TVT_WORK *work , CTVT_DRAW_WORK *draw
   GFL_CLACT_WK_SetDrawEnable( drawWork->clwkSelectButton , FALSE );
 
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ミニゲームの終了通知が来たかチェックする
+ *
+ *	@param	COMM_TVT_WORK *work 
+ *	@param	*drawWork 
+ *
+ *	@note   BTS200  落書きモードの時にミニゲーム終了通知がくると
+ *	                親が同期待ちのためはまる
+ *	                その解消のために落書きモードでも同期をとってやる
+ */
+//-----------------------------------------------------------------------------
+static void CTVT_DRAW_CheckExitGame( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
+{
+  CTVT_TALK_WORK *talkWork = COMM_TVT_GetTalkWork( work );
+
+  // ミニゲームの終了通知を受信したかチェック
+  if( CTVT_TALK_GetIsExitGame( talkWork ) == TRUE &&
+      drawWork->seqTimeSync == SEQ_EXIT_GAME_SYNC_NONE )
+  {
+    drawWork->seqTimeSync = SEQ_EXIT_GAME_SYNC_START;
+  }
+
+  // 同期をしないとはまるので同期をとる
+  switch( drawWork->seqTimeSync ){
+  case SEQ_EXIT_GAME_SYNC_NONE:
+    /* なにもしない */
+    break;
+
+  // ミニゲーム終了通知同期開始
+  case SEQ_EXIT_GAME_SYNC_START:
+    {
+      GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
+      GFL_NET_HANDLE_TimeSyncStart( pNet, CTVT_COMM_EXIT_GAME, WB_NET_COMM_TVT );
+      drawWork->seqTimeSync = SEQ_EXIT_GAME_SYNC_END;
+      ICHI_Printf("受付中止同期待ち\n");
+    }
+    break;
+
+  // ミニゲーム終了通知同期待ち
+  case SEQ_EXIT_GAME_SYNC_END:
+    {
+      GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
+      if( GFL_NET_HANDLE_IsTimeSync( pNet, CTVT_COMM_EXIT_GAME , WB_NET_COMM_TVT ) == TRUE )
+      {
+        // 終了通知のフラグを落とす
+        CTVT_TALK_SetIsExitGame( talkWork, FALSE );
+
+        // シーケンス初期化
+        drawWork->seqTimeSync = SEQ_EXIT_GAME_SYNC_NONE;
+        ICHI_Printf("受付中止同期\n");
+      }
+    }
+    break;
+  }
+}
+
