@@ -951,6 +951,7 @@ void KEYSYS_MENU_Main( KEYSYS_MENU_WORK *p_wk )
   case SEQ_SELECT:
     {
       const int repeat = GFL_UI_KEY_GetRepeat();
+      const int trg = GFL_UI_KEY_GetTrg();
       BOOL is_key = FALSE;
       BOOL is_trg = FALSE;
 
@@ -969,7 +970,7 @@ void KEYSYS_MENU_Main( KEYSYS_MENU_WORK *p_wk )
         p_wk->cursor %= p_wk->param.max;
         is_key = TRUE;
       }
-      else if( repeat & PAD_BUTTON_DECIDE )
+      else if( trg & PAD_BUTTON_DECIDE )
       {
         is_trg = TRUE;
         if( p_wk->param.DecideCallBack )
@@ -988,7 +989,7 @@ void KEYSYS_MENU_Main( KEYSYS_MENU_WORK *p_wk )
           PMSND_PlaySE( KEYSYS_SE_BEEP );
         }
       }
-      else if( repeat & PAD_BUTTON_CANCEL )
+      else if( trg & PAD_BUTTON_CANCEL )
       {
         p_wk->cursor = p_wk->param.max-1;
         is_trg = TRUE;
