@@ -198,9 +198,9 @@ static GMEVENT_RESULT ObjRotateEvt(GMEVENT * event, int * seq, void * work)
       fx32 r;
       fx32 x, z;
     
-      rad = (0x10000*ROUND_OUT_NUM*evt_work->NowSync) / ROUND_OUT_SYNC;
+      rad = (0x10000*ROUND_OUT_NUM*evt_work->NowSync);// / ROUND_OUT_SYNC;
       if (rad >= 0x10000) rad = rad % 0x10000;
-      r = (ROUND_RANGE*evt_work->NowSync) / ROUND_OUT_SYNC;
+      r = (ROUND_RANGE*evt_work->NowSync);// / ROUND_OUT_SYNC;
       x = FX_Mul( FX_CosIdx(rad), r );
       z = FX_Mul( FX_SinIdx(rad), r );
 
@@ -221,7 +221,7 @@ static GMEVENT_RESULT ObjRotateEvt(GMEVENT * event, int * seq, void * work)
       fx32 r;
       fx32 x, z;
     
-      rad = (0x10000*ROUND_NUM*evt_work->NowSync) / ROUND_SYNC;
+      rad = (0x10000*ROUND_NUM*evt_work->NowSync);// / ROUND_SYNC;
       if (rad >= 0x10000) rad = rad % 0x10000;
       r = ROUND_RANGE;
       x = FX_Mul( FX_CosIdx(rad), r );
@@ -244,9 +244,9 @@ static GMEVENT_RESULT ObjRotateEvt(GMEVENT * event, int * seq, void * work)
       fx32 r;
       fx32 x, z;
     
-      rad = (0x10000*ROUND_IN_NUM*evt_work->NowSync) / ROUND_IN_SYNC;
+      rad = (0x10000*ROUND_IN_NUM*evt_work->NowSync);// / ROUND_IN_SYNC;
       if (rad >= 0x10000) rad = rad % 0x10000;
-      r = (ROUND_RANGE*(ROUND_IN_SYNC-evt_work->NowSync)) / ROUND_IN_SYNC;
+      r = 0;// (ROUND_RANGE*(ROUND_IN_SYNC-evt_work->NowSync)) / ROUND_IN_SYNC;
       x = FX_Mul( FX_CosIdx(rad), r );
       z = FX_Mul( FX_SinIdx(rad), r );
       vec.x += x;
