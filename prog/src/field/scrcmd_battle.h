@@ -24,6 +24,7 @@ extern VMCMD_RESULT EvCmdWildBattleRevengeCheck( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdWildLose( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdWildLoseCheck( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdWildBattleRetryCheck( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdTrainerLose(VMHANDLE *core,void *wk);
 extern VMCMD_RESULT EvCmdTrainerLoseCheck(VMHANDLE *core,void *wk);

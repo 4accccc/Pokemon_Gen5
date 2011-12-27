@@ -189,6 +189,25 @@ VMCMD_RESULT EvCmdWildLoseCheck( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
+ * 野生戦闘 再戦コードチェック
+ * @param	core		仮想マシン制御構造体へのポインタ
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdWildBattleRetryCheck( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  BtlResult res = GAMEDATA_GetLastBattleResult(gdata);
+	
+	u16* ret_wk = SCRCMD_GetVMWork( core, work );
+  *ret_wk = FIELD_BATTLE_GetWildBattleRevengeCode( res );
+	return VMCMD_RESULT_CONTINUE;
+}
+
+
+
+//--------------------------------------------------------------
+/**
  * 観覧車トレーナーのOBJIDを返す
  * @param	core		仮想マシン制御構造体へのポインタ
  * @return	"0"

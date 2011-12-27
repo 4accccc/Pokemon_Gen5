@@ -10,7 +10,6 @@
 extern VMCMD_RESULT EvCmdWildBattleSet( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdWildBattleSetEx( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdWildWin( VMHANDLE * core, void *wk );
-extern VMCMD_RESULT EvCmdWildBattleRetryCheck( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdCaptureDemoBattleSet( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdGetEffectEncountItem( VMHANDLE* core, void* wk );
