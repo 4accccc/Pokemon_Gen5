@@ -327,6 +327,11 @@ EVENT_START ev_bg_d27r1201_pass_01
         _LAST_KEYWAIT()
         _MSGWIN_CLOSE()
       ENDIF
+    
+    //‚¢‚¢‚¦
+    ELSE
+    _MSGWIN_CLOSE()
+    
       
     ENDIF
   
