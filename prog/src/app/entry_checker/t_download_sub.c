@@ -309,7 +309,7 @@ static const T_DOWNLOAD_BGSCN_DATA *td_bgscn_sub_tbl[] = {
 static const T_DOWNLOAD_CANVAS_DATA td_canvas_tbl[] = {
 	{ GFL_BG_FRAME1_S,	2,	3,	28,	2,	2,},		// 上：トーナメントリスト名
 	{ GFL_BG_FRAME1_S,	2,	7,	12,	2,	2,},		// 上：ルール(左)
-	{ GFL_BG_FRAME1_S,	18,	7,	12,	2,	2,},		// 上：ルール(右)
+	{ GFL_BG_FRAME1_S,	15,	7,	16,	2,	2,},		// 上：ルール(右)
 	{ GFL_BG_FRAME1_S,	2,	9,	28,	6,	2,},		// 上：レベル制限
 	{ GFL_BG_FRAME1_S,	2,	16,	18,	2,	2,},		// 上：トーナメント名
 	{ GFL_BG_FRAME1_S,	2,	18,	28,	4,	2,},		// 上：内容
