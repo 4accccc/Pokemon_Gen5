@@ -258,7 +258,6 @@ ARC_TARGET_DATA = \
 	resiramu_ci_a.nsbca \
 	resiramu_ci_a.nsbta \
 	resiramu_ci_a.nsbma \
-	blizzard_ci_a.spa \
 	blizzard_ci_a.nsbmd \
 	blizzard_ci_a.nsbca \
 	kusabi_b_ci_a.nsbmd \

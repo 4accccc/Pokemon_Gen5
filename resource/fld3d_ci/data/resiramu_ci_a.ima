@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="kawamoto_yuki" host="W00239" date="2011-11-22T14:00:51" source="resiramu_ci_a23.mb"/>
+	<create user="kawamoto_yuki" host="W00239" date="2011-12-27T09:28:25" source="resiramu_ci_a_s.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -20,7 +20,7 @@
 	tolerance_color="2"
 />
 
-<mat_color_data size="123">
+<mat_color_data size="244">
 	25 0 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
@@ -32,8 +32,20 @@
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
-	31 31 31 28 25 22 19 16 12 9
-	6 3 0
+	31 31 31 30 29 26 23 19 15 11
+	7 3 0 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 29
+	23 15 7 0
 </mat_color_data>
 
 <mat_color_anm_array size="2">
@@ -65,7 +77,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="1"/>
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="121" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="121" data_head="123"/>
 	</mat_color_anm>
 </mat_color_anm_array>
 
