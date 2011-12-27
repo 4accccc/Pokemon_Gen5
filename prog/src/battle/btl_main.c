@@ -6420,7 +6420,9 @@ void POKEWOOD_Init( BTL_MAIN_MODULE* wk, int senario_no )
   if( BTL_MAIN_GetDebugFlag( wk, BTL_DEBUGFLAG_POKEWOOD_CUTIN ) )
   {
     //カットインの場合はターン数をカットイン個数分にする
-    wk->pokewood_senario->turn_max = DEBUG_POKEWOOD_CUTIN_GetSenarioCutinNum( wk->pokewood_senario );
+    u32 cutin_num = DEBUG_POKEWOOD_CUTIN_GetSenarioCutinNum( wk->pokewood_senario );
+    wk->pokewood_senario->turn_max = cutin_num;
+    OS_Printf( "cutin_num=%d\n", cutin_num );
   }
 #endif
 

@@ -56,8 +56,6 @@
 #include "msg/msg_pw_director_gentleman.h"
 
 #ifdef PM_DEBUG
-static int s_debug_cutin_cnt = 0;    /// カットインデバッグ確認用ワーク
-
 static s8  debug_force_end      = -1; /// サウンドデバッグ用にエンディングを指定できるようにする
 static s8  debug_force_audience = 0; /// サウンドデバッグ用に観客の反応を指定できるようにする
 
@@ -11299,6 +11297,7 @@ static BOOL Debug_SubProc_CheckCutin(BTL_CLIENT *wk, int *seq )
     SEQ_MAIN,
     SEQ_END,
   };
+  static int s_debug_cutin_cnt = 0;    /// カットインデバッグ確認用ワーク
 
   POKEWOOD_SENARIO *senario = BTL_MAIN_GetPokewoodSenario(wk->mainModule);
   POKEWOOD_CUTIN   *p_cutin = BTL_MAIN_GetPokewoodCutin( wk->mainModule );
@@ -11306,9 +11305,9 @@ static BOOL Debug_SubProc_CheckCutin(BTL_CLIENT *wk, int *seq )
   switch( *seq )
   {
   case SEQ_INIT:
-    s_debug_cutin_cnt = 0;
     (*seq)  = SEQ_START;
     break;
+
   case SEQ_START:
     {
       u16 event_no;
