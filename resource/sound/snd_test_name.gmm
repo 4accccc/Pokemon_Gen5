@@ -5521,10 +5521,6 @@
 		<language name="JPN" width="256">BGM-THEEND</language>
 		<language name="JPN_KANJI" width="256">BGM-THEEND</language>
 	</row>
-	<row id="msg_seq_bgm_champion_room">
-		<language name="JPN" width="256">BGM-CHAMPION-ROOM</language>
-		<language name="JPN_KANJI" width="256">BGM-CHAMPION-ROOM</language>
-	</row>
 	<row id="msg_seq_bgm_ev_gianthole_01">
 		<language name="JPN" width="256">BGM-EV-GIANTHOLE-01</language>
 		<language name="JPN_KANJI" width="256">BGM-EV-GIANTHOLE-01</language>
@@ -5541,6 +5537,10 @@
 		<language name="JPN" width="256">BGM-END</language>
 		<language name="JPN_KANJI" width="256">BGM-END</language>
 	</row>
+          <row id="msg_seq_1273">
+          <language name="JPN" width="256">dmy</language>
+          <language name="JPN_KANJI" width="256">dmy</language>
+          </row>
           <row id="msg_seq_1274">
           <language name="JPN" width="256">dmy</language>
           <language name="JPN_KANJI" width="256">dmy</language>
