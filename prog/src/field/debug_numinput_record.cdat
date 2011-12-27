@@ -64,6 +64,8 @@ static const DEBUG_NUMINPUT_LIST DNI_RecordList_Field[] = {
   { dni_record_130, RECID_RESORT_SHOP_MAKE_CNT, &DNP_Record_4 },      // レゾナンスリゾートでお店を作った数
   { dni_record_132, RECID_RESORT_PRESENT_CNT, &DNP_Record_4 },        // レゾナンスリゾートでお店を作った数
   { dni_record_133, RECID_POKEWOOD_REC_CNT, &DNP_Record_4 },          // ポケウッドで撮影をした回数
+  { dni_record_133, RECID_POKEWOOD_HIGH, &DNP_Record_4 },             // ポケウッド最高興行収入
+  { dni_record_133, RECID_POKEWOOD_TOTAL, &DNP_Record_1 },            // ポケウッド累計興行収入
 };
 //-------------------------
 // 通信関連レコード

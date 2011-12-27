@@ -521,9 +521,14 @@ void PKWDSYS_RecordSet( GAMEDATA * gamedata, PKWDSYS *pkwdsys )
 {
   RECORD      *record = SaveData_GetRecord(GAMEDATA_GetSaveControlWork(gamedata));
 
-  RECORD_SetIfLarge( record, RECID_POKEWOOD_HIGH, pkwdsys->BoxofficeData.profits);  // 最高
-  RECORD_Add( record, RECID_POKEWOOD_TOTAL, pkwdsys->BoxofficeData.profits); // 累計
-  
+  // 最高興行収入を保存（黒字の時だけ）
+  if(pkwdsys->BoxofficeData.profits>0){
+    RECORD_SetIfLarge( record, RECID_POKEWOOD_HIGH, pkwdsys->BoxofficeData.profits);  
+  }
+  // 累計興行収入を加算（ただし赤字もあるので、黒字の場合のみ加算）
+  if(pkwdsys->BoxofficeData.profits>0){
+    RECORD_Add( record, RECID_POKEWOOD_TOTAL, pkwdsys->BoxofficeData.profits);
+  }
 }
 
 
