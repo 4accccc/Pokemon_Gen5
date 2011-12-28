@@ -1,5 +1,5 @@
 #event data
-#save date:2011/12/17 19:55:13
+#save date:2011/12/28 15:52:07
 # linked worldmap file name
 C:\home\swan\resource\fldmapdata\eventdata\data\r07.wms
 #SECTION START:OBJ_EVENT
@@ -423,7 +423,7 @@ BOY2
 #MOVE CODE Number
 MV_RTLU         
 #EVENT TYPE Number
-EV_TYPE_TRAINER
+EV_TYPE_TRAINER_SPIN_STOP_L
 #Flag Name
 0
 #Event Script Name
@@ -433,17 +433,17 @@ DIR_UP
 #Parameter 0 Number
 1
 #Parameter 1 Number
-0
+3
 #Parameter 2 Number
 0
 #Move Limit X Number
-5
+4
 #Move Limit Z Number
-7
+5
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 0 -536
+24 0 -520
 #event number: 14
 #type
 1
