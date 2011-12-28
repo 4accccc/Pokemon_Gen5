@@ -7878,8 +7878,8 @@
 	<row id="TRID_BASKET_10_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
 		<language name="JPN" width="216">この　どうぐを　あげるから
 きみも　あせを　かこうな！▼</language>
-		<language name="JPN_KANJI" width="216">この　どうぐを　あげるから
-きみも　あせを　かこうな！▼</language>
+		<language name="JPN_KANJI" width="216">この　道具を　あげるから
+きみも　汗を　かこうな！▼</language>
 	</row>
 
 	<row id="TRID_BASKET_10_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
@@ -17066,14 +17066,14 @@
 しかと　受け取ったわ……！</language>
 	</row>
 
-	<row id="TRID_NURSE_05_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+	<row id="TRID_NURSE_05_TRMSG_FIGHT_AFTER_RECOVER_BEFORE">
 		<language name="JPN" width="216">あなたの　ポケモンへの　あい
 わたしの　ポケモンへの　あい！▼</language>
 		<language name="JPN_KANJI" width="216">あなたの　ポケモンへの　愛
 わたしの　ポケモンへの　愛！▼</language>
 	</row>
 
-	<row id="TRID_NURSE_05_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
+	<row id="TRID_NURSE_05_TRMSG_FIGHT_AFTER_RECOVER_AFTER">
 		<language name="JPN" width="216">わたしの　ポケモンへの　あいは
 いくどでも　げんきに　してあげること</language>
 		<language name="JPN_KANJI" width="216">わたしの　ポケモンへの　愛は
