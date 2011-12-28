@@ -30,6 +30,7 @@ _EVENT_DATA    ev_d10r0501_poke10_01
 _EVENT_DATA    ev_d10r0501_wand_01
 _EVENT_DATA    ev_d10r0501_kusabi_01
 _EVENT_DATA    ev_d10r0501_kyuremu_01
+_EVENT_DATA    ev_pos_d10r0501_swsage1_vs
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -74,7 +75,12 @@ INIT_EVENT_START ev_init_d10r0501
   //ゲーチス勝利前だったらゲーチス配置を変更
    IF $WK_SCENE_D10R0401_SWSAGE1_01 == 2 THEN
     _OBJ_POS_CHANGE( D10R0501_SWSAGE1_01, 17, 0, 16, DIR_DOWN)
-   ENDIF
+   
+  //ゲーチス戦全滅復帰後なら動作モデル位置を変更
+  ELSIF $WK_SCENE_D10R0401_SWSAGE1_01 == 3 THEN
+   _OBJ_POS_CHANGE(D10R0501_NPOKE_01,15,0,22,DIR_UP)
+   _OBJ_POS_CHANGE(D10R0501_SWSAGE1_01,17,0,16,DIR_LEFT)
+  ENDIF
 
 INIT_EVENT_END
 
@@ -585,11 +591,10 @@ _ANIME_LABEL anm_swsage_5
 
 
 /************************************************************/
-/*					CALL：ゲーチス戦						*/
+/*					CALL：キュレム戦後会話						*/
 /************************************************************/
 ev_vs_swsage1_01:
 
-  //【仮】戦闘後暗転状態でメッセージ表示依頼（2011.12.20）
   //ゼクロム・レシラム鳴き声
   IF $LCWK_VERSION == VERSION_B2 THEN
     _GIZAPLAINWIN_MSG_POS( msg_d10r0501_mu_03, POS_DOWN )
@@ -639,10 +644,89 @@ ev_vs_swsage1_01:
   
   //N専用回復SE再生
   _SE_PLAY(SEQ_SE_FLD_176)
-	//回復
-	_TEMOTI_POKEMON_KAIFUKU()
-	_SE_WAIT()
+  //回復
+  _TEMOTI_POKEMON_KAIFUKU()
+  _SE_WAIT()
   
+  //=======================================//
+  //D10R0401イベント進行（全滅復帰時にPOS有効）
+  $WK_SCENE_D10R0401_SWSAGE1_01 = 3
+  //=======================================//
+  
+  //ゲーチス戦をCALL
+  _CALL ev_vs_swsage1_02
+  
+_RET
+
+/************************************************************/
+/*					POS：全滅時用ゲーチス戦POS						*/
+/************************************************************/
+EVENT_START ev_pos_d10r0501_swsage1_vs
+  
+  //自機座標取得
+  _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+  
+  SWITCH $LCW_POSX
+  CASE 13 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_vs_sage1_x13 )
+  CASE 14 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_vs_sage1_x14 )
+  CASE 15 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_vs_sage1_x15 )
+  CASE 16 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_vs_sage1_x16 )
+  CASE 17 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER , anm_player_vs_sage1_x17 )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
+  
+  //【仮】ゲーチス：まさか！（メッセージラベル仮／20111228 水口）
+  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_swsage01_15w , msg_d10r0501_swsage01_15b , D10R0501_SWSAGE1_01 , POS_UR)
+  _MSGWIN_CLOSE()
+
+  //ゲーチス戦をCALL
+  _CALL ev_vs_swsage1_02
+  
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//	ゲーチス戦隣接アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_vs_sage1_x13
+  _ANIME_DATA	AC_WALK_U_8F,7
+  _ANIME_DATA	AC_WALK_R_8F,2
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_vs_sage1_x14
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_WALK_U_8F,7
+  _ANIME_DATA	AC_WALK_R_8F,2
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_vs_sage1_x15
+  _ANIME_DATA	AC_WALK_L_8F,2
+  _ANIME_DATA	AC_WALK_U_8F,7
+  _ANIME_DATA	AC_WALK_R_8F,2
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_vs_sage1_x16
+  _ANIME_DATA	AC_WALK_L_8F,3
+  _ANIME_DATA	AC_WALK_U_8F,7
+  _ANIME_DATA	AC_WALK_R_8F,2
+  _ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_vs_sage1_x17
+  _ANIME_DATA	AC_WALK_L_8F,4
+  _ANIME_DATA	AC_WALK_U_8F,7
+  _ANIME_DATA	AC_WALK_R_8F,2
+  _ANIME_DATA	ACMD_END,0
+
+/************************************************************/
+/*					CALL：ゲーチス戦						*/
+/************************************************************/
+ev_vs_swsage1_02:
+
   //トレーナー戦
   _TRAINER_BTL_SET( TRID_SWSAGE1_01, 0 )
   
@@ -813,6 +897,8 @@ ev_vs_swsage1_01:
   _OBJ_ANIME( D10R0501_BOSS_01 , anm_walk_u)
   _OBJ_ANIME_WAIT()
   
+  _PLAYER_NAME( 0 )
+  
   //N：キミ！キミと
   _BALLOONWIN_OBJMSG_WB( msg_d10r0501_boss_13w , msg_d10r0501_boss_13b , D10R0501_BOSS_01 , POS_DR)
   _MSGWIN_CLOSE()
@@ -862,7 +948,7 @@ ev_vs_swsage1_01:
   //D10R0201に接続するように状態を変更
   _FLAG_RESET( FE_D10_PLAZMA_FRIGATE_01 )
   //D10R0401イベント終了
-  $WK_SCENE_D10R0401_SWSAGE1_01 = 3
+  $WK_SCENE_D10R0401_SWSAGE1_01 = 4
   //D10プラズマ団員を削除
   _FLAG_SET( FV_D10R0101_SWPLAZMAM_01 )
   _FLAG_SET( FV_D10R0101_SWPLAZMAM_03 )
@@ -880,7 +966,7 @@ ev_vs_swsage1_01:
   _PERSON_STATE_SET_BELL( BELL_STATE_R13 )
   _PERSON_STATE_SET_MOTHER( MOTHER_STATE_HOME )
   //=======================================//
-  
+
 _RET
 
 //--------------------------------------------------------------------
