@@ -3160,6 +3160,7 @@ void RESORT_UTIL_InitCombo( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstru
   RESORT_WORK *p_work = RESORT_SYSTEM_GetWork( p_sys );
 
   u32 tbl_idx = 0xFFFF;
+  u16 now_pos;
 
   //連続抽選テーブルを引く
   {
@@ -3184,6 +3185,43 @@ void RESORT_UTIL_InitCombo( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstru
     }
     RESORT_BINARY_COMBO_NEXT_Exit( p_binary );
   }
+
+  //コンボ
+  RESORT_UTIL_InitComboCore(p_sys, tbl_idx );
+
+
+  //初期値にはいかない
+  now_pos = RESORT_ABSTRUCT_DATA_GetBufferIndex( p_abstruct );
+  RESORT_WORK_SetData( p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_INDEX_00+now_pos, TRUE );
+
+#ifdef PM_DEBUG
+  {
+    int i;
+    for( i = 0; i < 8; i++ )
+    {
+      RESORT_DEBUG_WORK_Set( RESORT_DEBUG_WORK_COMBO_LOG_00+i, 0 );
+      RESORT_DEBUG_WORK_Set( RESORT_DEBUG_WORK_COMBO_PER_00+i, 0 );
+    }
+    RESORT_DEBUG_WORK_Set( RESORT_DEBUG_WORK_COMBO_LOG_00, now_pos );
+    RESORT_DEBUG_WORK_Set( RESORT_DEBUG_WORK_COMBO_LOG_CNT, 0 );
+    RESORT_DEBUG_WORK_Set( RESORT_DEBUG_WORK_COMBO_LOG_TBL, tbl_idx );
+  }
+#endif
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  コンボシステム初期化
+ *
+ *	@param	RESORT_SYSTEM *p_sys 
+ */
+//-----------------------------------------------------------------------------
+void RESORT_UTIL_InitComboCore( RESORT_SYSTEM *p_sys, u32 tbl_idx )
+{
+  const RESORT_CITY_DATA *cp_city = RESORT_SYSTEM_GetCityData(p_sys);
+
+  RESORT_WORK *p_work = RESORT_SYSTEM_GetWork( p_sys );
+
   RESORT_Printf( "継続テーブル%d\n", tbl_idx );
   //テーブル
   RESORT_WORK_SetData( p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_TBL, tbl_idx );
@@ -3199,12 +3237,6 @@ void RESORT_UTIL_InitCombo( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstru
     {
       RESORT_WORK_SetData( p_work, i, FALSE );
     }
-  }
-
-  //初期値にはいかない
-  {
-    u16 now_pos = RESORT_ABSTRUCT_DATA_GetBufferIndex( p_abstruct );
-    RESORT_WORK_SetData( p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_INDEX_00+now_pos, TRUE );
   }
 }
 
@@ -3425,6 +3457,11 @@ u32 RESORT_UTIL_GetComboInitRnd( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_a
 
   RESORT_Printf( "見た目確率%d お店確率%d\n", rnd_view, rnd_shop );
 
+
+#ifdef PM_DEBUG
+  RESORT_DEBUG_WORK_Set( RESORT_DEBUG_WORK_COMBO_PER_00+RESORT_WORK_GetData(p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_CNT), rnd_view + rnd_shop );
+#endif
+
   return rnd_view + rnd_shop;
 }
 
@@ -3441,6 +3478,7 @@ u32 RESORT_UTIL_GetComboInitRnd( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_a
 u32 RESORT_UTIL_GetComboNextRnd( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct )
 {
   RESORT_WORK *p_work = RESORT_SYSTEM_GetWork(p_sys);
+  u32 ret;
 
   //初回確率
   s16 init_rnd = RESORT_UTIL_GetComboInitRnd( p_sys, p_abstruct );
@@ -3453,14 +3491,20 @@ u32 RESORT_UTIL_GetComboNextRnd( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_a
     RESORT_BINARY_COMBO_NEXT  *p_binary = RESORT_BINARY_COMBO_NEXT_Init( HEAPID_PROC );
 
     GF_ASSERT( cnt + RESORT_BINARY_COMBO_NEXT_PARAM_EXTENDED_01 <= RESORT_BINARY_COMBO_NEXT_PARAM_EXTENDED_07 );
-    next_rnd = RESORT_BINARY_COMBO_NEXT_GetData( p_binary, tbl_idx, cnt );
+    next_rnd = RESORT_BINARY_COMBO_NEXT_GetData( p_binary, tbl_idx, cnt+RESORT_BINARY_COMBO_NEXT_PARAM_EXTENDED_01 );
 
     RESORT_BINARY_COMBO_NEXT_Exit( p_binary );
   }
 
 
   RESORT_Printf( "連続確率%d\n", next_rnd );
-  return MATH_CLAMP( init_rnd + next_rnd, 0, 100 );
+  ret = MATH_CLAMP( init_rnd + next_rnd, 0, 100 );
+
+#ifdef PM_DEBUG
+  RESORT_DEBUG_WORK_Set( RESORT_DEBUG_WORK_COMBO_PER_00+RESORT_WORK_GetData(p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_CNT), ret );
+#endif
+
+  return ret;
 }
 
 //----------------------------------------------------------------------------
@@ -3474,15 +3518,20 @@ u32 RESORT_UTIL_GetComboNextRnd( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_a
 void RESORT_UTIL_SuccessCombo( RESORT_SYSTEM *p_sys, RESORT_ABSTRUCT_DATA *p_abstruct, u32 next_index )
 {
   RESORT_WORK *p_work = RESORT_SYSTEM_GetWork(p_sys);
+  u32 cnt;
 
   //次のお店は行ったフラグを立てる
   RESORT_WORK_SetData( p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_INDEX_00+next_index, TRUE );
 
   //回数を増やす
-  {
-    u32 cnt = RESORT_WORK_GetData(p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_CNT);
-    RESORT_WORK_SetData(p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_CNT, ++cnt);
-  }
+  cnt = RESORT_WORK_GetData(p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_CNT);
+  RESORT_WORK_SetData(p_work, RESORT_WORK_GET_PARAM_RECOMMENDED_CNT, ++cnt);
+
+#ifdef PM_DEBUG
+  RESORT_DEBUG_WORK_Set( RESORT_DEBUG_WORK_COMBO_LOG_00+cnt, next_index );
+  RESORT_DEBUG_WORK_Set( RESORT_DEBUG_WORK_COMBO_LOG_CNT, cnt );
+#endif
+
 }
 
 

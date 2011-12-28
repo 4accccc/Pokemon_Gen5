@@ -4383,11 +4383,21 @@ static void RESORT_FIELD_AppearFun( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, 
     cnt = 0;
     while(i < fun_appear_num )
     {
+      RESORT_SETDATA ret;
       RESORT_UTIL_SetProxyRandom( p_sys, p_gamedata, p_proxy, RESORT_PROXY_TYPE_FUN, cnt, heapID );
-      if( RESONANCE_RESORT_SV_SetData( p_reso_sv, p_gamedata, p_proxy, RESORT_MERGE_TYPE_PROXY ) == RESORT_SETDATA_SET )
+      ret = RESONANCE_RESORT_SV_SetData( p_reso_sv, p_gamedata, p_proxy, RESORT_MERGE_TYPE_PROXY );
+
+      if( ret == RESORT_SETDATA_SET )
       {
         i++;
       }
+
+      //バッファいっぱいなら終了
+      if( ret == RESORT_SETDATA_NONE )
+      {
+        break;
+      }
+
       if( cnt++ >500 )
       {
         //無限ループ防止

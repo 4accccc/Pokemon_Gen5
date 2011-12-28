@@ -38,6 +38,9 @@
 #include "resort_debug_inline.h"
 #include "resort_debug.h"
 #include "resort_people.h"
+#include "resort_npc.h"
+#include "resort_data_manager.h"
+#include "resort_util.h"
 
 #define PROC_HEAP_SIZE  (0x40000)
 #define PRINT_FRAME (GFL_BG_FRAME1_M)
@@ -368,6 +371,26 @@ typedef enum {
   EDITBOX_ID_TRAINERLIST_30,
   EDITBOX_ID_TRAINERLIST_31,
 
+  //コンボ確率
+  EDITBOX_ID_COMBO_CNT,
+  EDITBOX_ID_COMBO_TBL,
+  EDITBOX_ID_COMBO_NUM_00,
+  EDITBOX_ID_COMBO_NUM_01,
+  EDITBOX_ID_COMBO_NUM_02,
+  EDITBOX_ID_COMBO_NUM_03,
+  EDITBOX_ID_COMBO_NUM_04,
+  EDITBOX_ID_COMBO_NUM_05,
+  EDITBOX_ID_COMBO_NUM_06,
+  EDITBOX_ID_COMBO_NUM_07,
+  EDITBOX_ID_COMBO_PER_00,
+  EDITBOX_ID_COMBO_PER_01,
+  EDITBOX_ID_COMBO_PER_02,
+  EDITBOX_ID_COMBO_PER_03,
+  EDITBOX_ID_COMBO_PER_04,
+  EDITBOX_ID_COMBO_PER_05,
+  EDITBOX_ID_COMBO_PER_06,
+  EDITBOX_ID_COMBO_PER_07,
+
   EDITBOX_ID_MAX,
   //文字列の場合は以下を使う
 
@@ -553,6 +576,7 @@ static void ButtonAction_First_Change( DEBUG_INPUT_WORK *wk, const STR_PARAM *St
 
 
 
+static BOOL IsPageOpen_ZoneID_JA( DEBUG_INPUT_WORK *p_wk );
 static BOOL IsPageOpen_True( DEBUG_INPUT_WORK *p_wk );
 //STR_PARAM_PAGEのStore,Restore関数
 static void City_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv );
@@ -585,6 +609,8 @@ static BOOL ShopPos_PushCallback( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p
 
 static void TrainerList_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv );
 static BOOL TrainerList_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk );
+static void Combo_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv );
+static BOOL Combo_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk );
 
 static void DebugFlag_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv );
 static BOOL DebugFlag_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk );
@@ -602,7 +628,7 @@ static const STR_PARAM StrParamsFirst[] =
   //何を操作するか
   {STR_TYPE_SWITCH, RESORT_DATA_16,  STR_POS_X, STR_LINE2_POS_Y,
     8*8,STR_LINE2_POS_Y,12*8,TOUCH_H,
-    PEOPLE_00,9,EDITBOX_ID_FIRST_PEOPLE },
+    PEOPLE_00,10,EDITBOX_ID_FIRST_PEOPLE },
 
   //追加ボタン
   {STR_TYPE_BUTTON, CAPTION_NONE,  STR_POS_X, STR_LINE4_POS_Y,
@@ -1680,6 +1706,86 @@ static const STR_PARAM StrParamsTrainerList[] =
 };
 
 
+//コンボ
+static const STR_PARAM StrParamsCombo[] =
+{
+  //コンボ
+  {STR_TYPE_CAPTION, PEOPLE_09,  STR_POS_X, STR_LINE0_POS_Y,
+    0,0,0,0,
+    0,0,0 },
+
+  //コンボ回数
+  {STR_TYPE_FIXNUM, RESORT_DATA_160, STR_POS_X, STR_LINE2_POS_Y,
+    60,STR_LINE2_POS_Y, 2*8,TOUCH_H,
+    0,0,EDITBOX_ID_COMBO_CNT },
+
+  //継続テーブル
+  {STR_TYPE_FIXNUM, RESORT_DATA_159, STR_POS_X, STR_LINE4_POS_Y,
+    60,STR_LINE4_POS_Y, 2*8,TOUCH_H,
+    0,0,EDITBOX_ID_COMBO_TBL },
+
+  //コンボ順番
+  {STR_TYPE_CAPTION, RESORT_DATA_157,  STR_POS_X, STR_LINE6_POS_Y,
+    0,0,0,0,
+    0,0,0 },
+
+  {STR_TYPE_FIXNUM, CAPTION_NONE, STR_POS_X, STR_LINE7_POS_Y,
+    8,STR_LINE7_POS_Y, 2*8,TOUCH_H,
+    0,0,EDITBOX_ID_COMBO_NUM_00 },
+  {STR_TYPE_FIXNUM, CAPTION_NONE, STR_POS_X, STR_LINE7_POS_Y,
+    32,STR_LINE7_POS_Y, 2*8,TOUCH_H,
+    0,0,EDITBOX_ID_COMBO_NUM_01 },
+  {STR_TYPE_FIXNUM, CAPTION_NONE, STR_POS_X, STR_LINE7_POS_Y,
+    56,STR_LINE7_POS_Y, 2*8,TOUCH_H,
+    0,0,EDITBOX_ID_COMBO_NUM_02 },
+  {STR_TYPE_FIXNUM, CAPTION_NONE, STR_POS_X, STR_LINE7_POS_Y,
+    80,STR_LINE7_POS_Y, 2*8,TOUCH_H,
+    0,0,EDITBOX_ID_COMBO_NUM_03 },
+  {STR_TYPE_FIXNUM, CAPTION_NONE, STR_POS_X, STR_LINE7_POS_Y,
+    104,STR_LINE7_POS_Y, 2*8,TOUCH_H,
+    0,0,EDITBOX_ID_COMBO_NUM_04 },
+  {STR_TYPE_FIXNUM, CAPTION_NONE, STR_POS_X, STR_LINE7_POS_Y,
+    128,STR_LINE7_POS_Y, 2*8,TOUCH_H,
+    0,0,EDITBOX_ID_COMBO_NUM_05 },
+  {STR_TYPE_FIXNUM, CAPTION_NONE, STR_POS_X, STR_LINE7_POS_Y,
+    152,STR_LINE7_POS_Y, 2*8,TOUCH_H,
+    0,0,EDITBOX_ID_COMBO_NUM_06 },
+  {STR_TYPE_FIXNUM, CAPTION_NONE, STR_POS_X, STR_LINE7_POS_Y,
+    176,STR_LINE7_POS_Y, 2*8,TOUCH_H,
+    0,0,EDITBOX_ID_COMBO_NUM_07 },
+
+  //コンボ確率
+  {STR_TYPE_CAPTION, RESORT_DATA_158,  STR_POS_X, STR_LINE9_POS_Y,
+    0,0,0,0,
+    0,0,0 },
+
+  {STR_TYPE_FIXNUM, CAPTION_NONE, STR_POS_X, STR_LINE10_POS_Y,
+    8,STR_LINE10_POS_Y, 2*8,TOUCH_H,
+    0,0,EDITBOX_ID_COMBO_PER_00 },
+  {STR_TYPE_FIXNUM, CAPTION_NONE, STR_POS_X, STR_LINE10_POS_Y,
+    32,STR_LINE10_POS_Y, 2*8,TOUCH_H,
+    0,0,EDITBOX_ID_COMBO_PER_01 },
+  {STR_TYPE_FIXNUM, CAPTION_NONE, STR_POS_X, STR_LINE10_POS_Y,
+    56,STR_LINE10_POS_Y, 2*8,TOUCH_H,
+    0,0,EDITBOX_ID_COMBO_PER_02 },
+  {STR_TYPE_FIXNUM, CAPTION_NONE, STR_POS_X, STR_LINE10_POS_Y,
+    80,STR_LINE10_POS_Y, 2*8,TOUCH_H,
+    0,0,EDITBOX_ID_COMBO_PER_03 },
+  {STR_TYPE_FIXNUM, CAPTION_NONE, STR_POS_X, STR_LINE10_POS_Y,
+    104,STR_LINE10_POS_Y, 2*8,TOUCH_H,
+    0,0,EDITBOX_ID_COMBO_PER_04 },
+  {STR_TYPE_FIXNUM, CAPTION_NONE, STR_POS_X, STR_LINE10_POS_Y,
+    128,STR_LINE10_POS_Y, 2*8,TOUCH_H,
+    0,0,EDITBOX_ID_COMBO_PER_05 },
+  {STR_TYPE_FIXNUM, CAPTION_NONE, STR_POS_X, STR_LINE10_POS_Y,
+    152,STR_LINE10_POS_Y, 2*8,TOUCH_H,
+    0,0,EDITBOX_ID_COMBO_PER_06 },
+  {STR_TYPE_FIXNUM, CAPTION_NONE, STR_POS_X, STR_LINE10_POS_Y,
+    176,STR_LINE10_POS_Y, 2*8,TOUCH_H,
+    0,0,EDITBOX_ID_COMBO_PER_07 },
+};
+
+
 //デバッグフラグ
 static const STR_PARAM StrParamsDebugFlag[] =
 {
@@ -1888,6 +1994,14 @@ static const STR_PARAM_DISPLAY sc_trainer_display_tbl[]  =
   },
 };
 
+static const STR_PARAM_DISPLAY sc_combo_display_tbl[]  =
+{
+  //トレーナーリスト
+  {
+    StrParamsCombo, NELEMS(StrParamsCombo)
+  },
+};
+
 static const STR_PARAM_DISPLAY sc_debugflag_display_tbl[]  =
 {
   //デバッグ
@@ -1981,6 +2095,15 @@ static const STR_PARAM_PAGE sc_trainer_page =
   IsPageOpen_True,
   TrainerList_StoreData,
   TrainerList_ReStoreData,
+  NULL,
+};
+static const STR_PARAM_PAGE sc_combo_page =
+{
+  sc_combo_display_tbl,
+  NELEMS(sc_combo_display_tbl),
+  IsPageOpen_ZoneID_JA,
+  Combo_StoreData,
+  Combo_ReStoreData,
   NULL,
 };
 static const STR_PARAM_PAGE sc_debug_flag_page =
@@ -2142,9 +2265,13 @@ const GFL_PROC_DATA DEBUG_INPUT_Resort_ProcData = {
   DEBUG_INPUT_Resort_Quit,
 };
 
+FS_EXTERN_OVERLAY( resonance_resort_gimmick );
+
 static GFL_PROC_RESULT DEBUG_INPUT_Resort_Init( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
   RESORT_DEBUG_INPUT_PARAM *p_param  = pwk;
+
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( resonance_resort_gimmick ) );
 
   DEBUG_RESORT_DATA_SetPermission( TRUE );
 
@@ -2193,6 +2320,8 @@ static GFL_PROC_RESULT DEBUG_INPUT_Resort_Quit( GFL_PROC* proc, int* seq, void* 
   GFL_HEAP_DeleteHeap( HEAPID_WIFIMATCH_DEBUG );
 
   DEBUG_RESORT_DATA_SetPermission( FALSE );
+
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( resonance_resort_gimmick ) );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -2726,7 +2855,7 @@ static void GetBoxStr( DEBUG_INPUT_WORK* wk, u32 inBoxID, STRBUF* buf )
     GFL_MSG_GetString( wk->MsgData, p->arg+value, wk->StrBuf );
     break;    
   case STR_TYPE_FIXNUM:
-    STRTOOL_SetUnsignedNumber( wk->StrBuf, value, CalcDisit(p->arg), STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
+    STRTOOL_SetUnsignedNumber( wk->StrBuf, value, CalcDisit(value), STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
     break;
   case STR_TYPE_BUTTON:
     GFL_MSG_GetString( wk->MsgData, p->arg, wk->StrBuf );
@@ -3332,7 +3461,9 @@ static const STR_PARAM_PAGE * GetPage( int value )
     return &sc_owner_page;
   case 7: //拒否トレーナーリスト
     return &sc_trainer_page;
-  case 8: //デバッグ入力
+  case 8: //コンボ確率
+    return &sc_combo_page;
+  case 9: //デバッグ入力
     return &sc_debug_flag_page;
   default:
     GF_ASSERT(0);
@@ -3723,6 +3854,11 @@ static BOOL IsPageOpen_True( DEBUG_INPUT_WORK *p_wk )
   return TRUE;
 }
 
+static BOOL IsPageOpen_ZoneID_JA( DEBUG_INPUT_WORK *p_wk )
+{
+  PLAYER_WORK *p_player = GAMEDATA_GetMyPlayerWork(p_wk->p_gamedata);
+  return PLAYERWORK_getZoneID(p_player) == ZONE_ID_C16;
+}
 
 static BOOL Resident_IsPageOpen( DEBUG_INPUT_WORK *p_wk )
 {
@@ -4132,7 +4268,43 @@ static BOOL TrainerList_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEB
 
   return TRUE;
 }
-
+static const struct
+{
+  EDITBOX_ID  id;
+  RESORT_DEBUG_WORK work;
+}sc_debugwork_to_exitbox_combo[]=
+{
+  { EDITBOX_ID_COMBO_NUM_00, RESORT_DEBUG_WORK_COMBO_LOG_00,  },
+  { EDITBOX_ID_COMBO_NUM_01, RESORT_DEBUG_WORK_COMBO_LOG_01,  },
+  { EDITBOX_ID_COMBO_NUM_02, RESORT_DEBUG_WORK_COMBO_LOG_02,  },
+  { EDITBOX_ID_COMBO_NUM_03, RESORT_DEBUG_WORK_COMBO_LOG_03,  },
+  { EDITBOX_ID_COMBO_NUM_04, RESORT_DEBUG_WORK_COMBO_LOG_04,  },
+  { EDITBOX_ID_COMBO_NUM_05, RESORT_DEBUG_WORK_COMBO_LOG_05,  },
+  { EDITBOX_ID_COMBO_NUM_06, RESORT_DEBUG_WORK_COMBO_LOG_06,  },
+  { EDITBOX_ID_COMBO_NUM_07, RESORT_DEBUG_WORK_COMBO_LOG_07,  },
+  { EDITBOX_ID_COMBO_PER_00, RESORT_DEBUG_WORK_COMBO_PER_00,  },
+  { EDITBOX_ID_COMBO_PER_01, RESORT_DEBUG_WORK_COMBO_PER_01,  },
+  { EDITBOX_ID_COMBO_PER_02, RESORT_DEBUG_WORK_COMBO_PER_02,  },
+  { EDITBOX_ID_COMBO_PER_03, RESORT_DEBUG_WORK_COMBO_PER_03,  },
+  { EDITBOX_ID_COMBO_PER_04, RESORT_DEBUG_WORK_COMBO_PER_04,  },
+  { EDITBOX_ID_COMBO_PER_05, RESORT_DEBUG_WORK_COMBO_PER_05,  },
+  { EDITBOX_ID_COMBO_PER_06, RESORT_DEBUG_WORK_COMBO_PER_06,  },
+  { EDITBOX_ID_COMBO_PER_07, RESORT_DEBUG_WORK_COMBO_PER_07,  },
+  { EDITBOX_ID_COMBO_CNT, RESORT_DEBUG_WORK_COMBO_LOG_CNT, },
+  { EDITBOX_ID_COMBO_TBL, RESORT_DEBUG_WORK_COMBO_LOG_TBL, },
+};
+static void Combo_StoreData( DEBUG_INPUT_WORK *p_wk, RESONANCE_RESORT_SV *p_resort_sv )
+{
+  int i;
+  for( i = 0; i < NELEMS(sc_debugwork_to_exitbox_combo); i++ )
+  {
+    p_wk->BoxValue[ sc_debugwork_to_exitbox_combo[i].id ] = RESORT_DEBUG_WORK_Get( sc_debugwork_to_exitbox_combo[i].work );
+  }
+}
+static BOOL Combo_ReStoreData( RESONANCE_RESORT_SV *p_resort_sv, const DEBUG_INPUT_WORK *cp_wk )
+{
+  return TRUE;
+}
 
 static const struct
 {
