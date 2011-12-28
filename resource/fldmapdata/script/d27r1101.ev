@@ -41,7 +41,8 @@ DEFINE_LOCAL  LCW_POSZ
 /************************************************************/
 INIT_EVENT_START	ev_zone_d27r1101
 
-//
+  // 出口位置変更
+  _CALL sub_exit_change
 
 INIT_EVENT_END
 
@@ -60,7 +61,8 @@ INIT_EVENT_END
 /************************************************************/
 INIT_EVENT_START	ev_init_d27r1101
 
-//
+  // 出口位置変更
+  _CALL sub_exit_change
 
 INIT_EVENT_END
 
