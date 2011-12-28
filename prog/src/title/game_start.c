@@ -718,7 +718,7 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
 
     //名前を本体からコンバート
     {
-      UnicodeToStrcode( info.nickName, namebuf, PERSON_NAME_SIZE + EOM_SIZE );
+      UnicodeToStrcode( info.nickName, namebuf, 5 + EOM_SIZE );
     }
 
     //性別を色からコンバート
@@ -1048,6 +1048,9 @@ static void UnicodeToStrcode( const u16 * cp_src, STRBUF *p_dst, u16 len )
     {
     }
     else if( L'Ａ' <= src[i] && src[i] <= L'Ｚ' )
+    {
+    }
+    else if( L'ー' == src[i] )
     {
     }
     else if( src[i] == 0 )
