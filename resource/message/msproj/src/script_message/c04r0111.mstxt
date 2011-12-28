@@ -1168,11 +1168,11 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>相手も　強くなるけど
-あたしたちなら　余裕　だよね！▽
+あたしたちなら　余裕だよね！▽
 楽しみつつ　勝ち進もうね！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-14T02:36:19" />
+				Time="2011-12-28T07:31:30" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1222,12 +1222,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ありがとう！　きみの　おかげで
-ここまで　これたんだよね！▼
+ここまで　来れたんだよね！▼
 これからも　ベストすぎる
 コンビネーション　みせていこう！</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-14T02:31:41" />
+				Time="2011-12-28T07:31:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1277,12 +1277,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>あなたの　おかげで
-ついに　ここまで　これたわね！▼
+ついに　ここまで　来れたわね！▼
 あたしたち……
 最高の　ペアに　なれたかな？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-10-14T02:31:46" />
+				Time="2011-12-28T07:31:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

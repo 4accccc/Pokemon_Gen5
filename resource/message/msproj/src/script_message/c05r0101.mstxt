@@ -150,7 +150,7 @@
 ズバリ　ほしがる！▼
 ほしがるは　技が　当たったとき
 相手が　持ち物を　持っていると▽
-それを　うばうことが　できるのです！▼
+それを　奪うことが　できるのです！▼
 野生の　ポケモンから
 持ち物を　奪えば▽
 戦闘が　終わったあとも▼
@@ -158,8 +158,8 @@
 自分の　物に▽
 することが　できますぞ！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-14T07:25:01" />
+				User="matsumiya:W00224"
+				Time="2011-12-27T02:59:09" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -291,7 +291,7 @@
 			<Text>トレーナーさん！▼
 あなたに　オススメする　技は
 ズバリ　けたぐり！▼
-けたぐりは　あいての　ポケモンが
+けたぐりは　相手の　ポケモンが
 重ければ　重いほど▽
 威力が　あがる　技！▼
 かくとうタイプの　技ですので
@@ -300,8 +300,8 @@
 ポケモンに　高い　効果を▽
 発揮しますぞ！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-14T07:27:15" />
+				User="matsumiya:W00224"
+				Time="2011-12-27T03:00:16" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -374,10 +374,10 @@
 できなく　なります！▼
 これが　メリットになるか
 デメリットに　なるかは▽
-あなたしだい　ですぞ！</Text>
+あなた次第　ですぞ！</Text>
 			<TextModifiedBy
-				User="ito_hiroto:W00178"
-				Time="2011-11-14T07:27:35" />
+				User="matsumiya:W00224"
+				Time="2011-12-27T03:00:28" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -416,10 +416,10 @@
 			<Text>こんにちは
 ゴージャス　ホドモエ　です▼
 よやくで　いっぱい　ですが
-のんびりと　なさって　くださいませ</Text>
+のんびり　なさって　くださいませ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T05:52:29" />
+				Time="2011-12-27T03:00:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -430,10 +430,10 @@
 			<Text>こんにちは
 ゴージャス　ホドモエ　です▼
 予約で　一杯ですが
-のんびりと　なさって　くださいませ</Text>
+のんびり　なさって　くださいませ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-07T05:52:17" />
+				Time="2011-12-27T03:00:37" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

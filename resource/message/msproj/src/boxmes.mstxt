@@ -1228,7 +1228,8 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_boxmes_01_33_01">
+		Label="msg_boxmes_01_33_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>がったいした　キュレムは　にがせません！</Text>
@@ -1254,10 +1255,10 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>合体キュレムをにがそうとしたときの警告メッセージ
-スワン追加</Comment>
+swan追加</Comment>
 			<CommentModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-06-01T08:11:42" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T07:16:16" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

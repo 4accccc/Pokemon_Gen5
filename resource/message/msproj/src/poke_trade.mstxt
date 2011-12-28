@@ -3418,7 +3418,8 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="POKETRADE_STR2_03_01">
+		Label="POKETRADE_STR2_03_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>その　ポケモンは
@@ -3434,10 +3435,10 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>その　ポケモンは
-交換　できません</Text>
+交換できません</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-05-30T05:04:04" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T07:11:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -3445,13 +3446,13 @@
 		</LanguageCell>
 		<CommentCell
 			Language="JPN">
-			<Comment>スワン追加
+			<Comment>swan追加
 
 スワンで新規に追加されたフォルムのポケモンが
 交換できない旨のメッセージ</Comment>
 			<CommentModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-05-30T03:59:42" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T07:11:15" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

@@ -1135,7 +1135,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_shortcut_menu_07_02">
+		Label="msg_shortcut_menu_07_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ずかん[System:Color name="1" ]＞[/System:Color]せいそくちじょうほう</Text>
@@ -1174,7 +1175,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_shortcut_menu_08_01">
+		Label="msg_shortcut_menu_08_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>[System:Color name="2" ]うつしかがみ[/System:Color]</Text>

@@ -24224,7 +24224,8 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="juggling_1_01">
+		Label="juggling_1_01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>キハチ</Text>
@@ -24249,7 +24250,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="juggling_1_02">
+		Label="juggling_1_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ジャック</Text>
@@ -24274,7 +24276,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="juggling_1_03">
+		Label="juggling_1_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ゲイリー</Text>
@@ -24299,7 +24302,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="juggling_1_04">
+		Label="juggling_1_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>アキオ</Text>
@@ -24324,7 +24328,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="mini_26">
+		Label="mini_26"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>タカコ</Text>
@@ -24349,7 +24354,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="schoolb_16">
+		Label="schoolb_16"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>アキヒト</Text>
@@ -24374,7 +24380,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="schoolg_14">
+		Label="schoolg_14"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ミノリ</Text>
@@ -24399,7 +24406,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="espw_15">
+		Label="espw_15"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>オリエ</Text>
@@ -24424,7 +24432,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="espm_16">
+		Label="espm_16"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>セイヤ</Text>
@@ -24449,7 +24458,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="scientistw_15">
+		Label="scientistw_15"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>リカコ</Text>
@@ -24474,7 +24484,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="scientistm_18">
+		Label="scientistm_18"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヒデヨ</Text>
@@ -24499,7 +24510,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="tanpan_33">
+		Label="tanpan_33"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>マサヒロ</Text>
@@ -24524,7 +24536,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="tanpan_34">
+		Label="tanpan_34"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>クニユキ</Text>
@@ -24549,7 +24562,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="schoolb_17">
+		Label="schoolb_17"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ケンサク</Text>
@@ -24574,7 +24588,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="schoolg_15">
+		Label="schoolg_15"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>サチ</Text>
@@ -24599,7 +24614,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="schoolb_18">
+		Label="schoolb_18"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ケンサク</Text>
@@ -24624,7 +24640,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="schoolg_16">
+		Label="schoolg_16"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>サチ</Text>
@@ -24649,7 +24666,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swplazmaw_12">
+		Label="swplazmaw_12"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>したっぱ</Text>
@@ -24674,7 +24692,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="breederw_06">
+		Label="breederw_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>コハル</Text>
@@ -24699,7 +24718,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="fanw_13">
+		Label="fanw_13"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>マミとミホ</Text>
@@ -24724,7 +24744,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="heads_11">
+		Label="heads_11"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>リッキー</Text>
@@ -24749,7 +24770,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="dancer_08">
+		Label="dancer_08"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ベルモンド</Text>
@@ -24774,7 +24796,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="guitarw_04">
+		Label="guitarw_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ティナ</Text>
@@ -24799,7 +24822,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="veteranm_22">
+		Label="veteranm_22"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>アルバレス</Text>
@@ -24824,7 +24848,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="veteranm_23">
+		Label="veteranm_23"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>イーライ</Text>
@@ -24849,7 +24874,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="veteranm_24">
+		Label="veteranm_24"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ダイゴロウ</Text>
@@ -24874,7 +24900,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="veteranm_25">
+		Label="veteranm_25"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>シゲマツ</Text>
@@ -24899,7 +24926,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="veteranm_26">
+		Label="veteranm_26"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ジョー</Text>
@@ -24924,7 +24952,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="veteranm_27">
+		Label="veteranm_27"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ウェイン</Text>
@@ -24949,7 +24978,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swplazmaw_13">
+		Label="swplazmaw_13"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>したっぱ</Text>
@@ -24974,7 +25004,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swleader1_02">
+		Label="swleader1_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>チェレン</Text>
@@ -24999,7 +25030,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swleader2_02">
+		Label="swleader2_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ホミカ</Text>
@@ -25024,7 +25056,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swleader3_02">
+		Label="swleader3_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>アーティ</Text>
@@ -25049,7 +25082,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swleader4_02">
+		Label="swleader4_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>カミツレ</Text>
@@ -25074,7 +25108,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swleader5_02">
+		Label="swleader5_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヤーコン</Text>
@@ -25099,7 +25134,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swleader6_02">
+		Label="swleader6_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>フウロ</Text>
@@ -25124,7 +25160,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swleader7_02">
+		Label="swleader7_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>シャガ</Text>
@@ -25149,7 +25186,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swleader8_02">
+		Label="swleader8_02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>シズイ</Text>
@@ -25174,7 +25212,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="bigfour1_03">
+		Label="bigfour1_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>シキミ</Text>
@@ -25199,7 +25238,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="bigfour2_03">
+		Label="bigfour2_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ギーマ</Text>
@@ -25224,7 +25264,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="bigfour3_03">
+		Label="bigfour3_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>レンブ</Text>
@@ -25249,7 +25290,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="bigfour4_03">
+		Label="bigfour4_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>カトレア</Text>
@@ -25274,7 +25316,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swchampion_03">
+		Label="swchampion_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>アイリス</Text>
@@ -25299,7 +25342,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="bigfour1_04">
+		Label="bigfour1_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>シキミ</Text>
@@ -25324,7 +25368,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="bigfour2_04">
+		Label="bigfour2_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ギーマ</Text>
@@ -25349,7 +25394,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="bigfour3_04">
+		Label="bigfour3_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>レンブ</Text>
@@ -25374,7 +25420,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="bigfour4_04">
+		Label="bigfour4_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>カトレア</Text>
@@ -25399,7 +25446,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swchampion_04">
+		Label="swchampion_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>アイリス</Text>
@@ -25424,7 +25472,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="boss_03">
+		Label="boss_03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｎ</Text>
@@ -25449,7 +25498,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="boss_04">
+		Label="boss_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｎ</Text>
@@ -25474,7 +25524,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="boss_05">
+		Label="boss_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｎ</Text>
@@ -25499,7 +25550,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="boss_06">
+		Label="boss_06"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>Ｎ</Text>
@@ -25524,7 +25576,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="elitem_45">
+		Label="elitem_45"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ゲンヤ</Text>
@@ -25549,7 +25602,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="elitew_50">
+		Label="elitew_50"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>チフユ</Text>
@@ -25574,7 +25628,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="backpackerm_31">
+		Label="backpackerm_31"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ノブヒコ</Text>
@@ -25599,7 +25654,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="backpackerw_26">
+		Label="backpackerw_26"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>クミコ</Text>
@@ -25624,7 +25680,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="childcare_11">
+		Label="childcare_11"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>チヅル</Text>
@@ -25649,7 +25706,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="kindergartenm_12">
+		Label="kindergartenm_12"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>カイト</Text>
@@ -25674,7 +25732,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="tanpan_35">
+		Label="tanpan_35"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヘイタ</Text>
@@ -25699,7 +25758,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="mini_27">
+		Label="mini_27"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヒヨリ</Text>
@@ -25724,7 +25784,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swrival_28">
+		Label="swrival_28"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ライバル</Text>
@@ -25749,7 +25810,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swrival_29">
+		Label="swrival_29"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ライバル</Text>
@@ -25774,7 +25836,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swrival_30">
+		Label="swrival_30"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ライバル</Text>
@@ -25799,7 +25862,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swplazmam_37">
+		Label="swplazmam_37"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>したっぱ</Text>
@@ -25824,7 +25888,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swplazmam_38">
+		Label="swplazmam_38"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>したっぱ</Text>
@@ -25849,7 +25914,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swplazmaw_14">
+		Label="swplazmaw_14"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>したっぱ</Text>
@@ -25874,7 +25940,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swplazmam_39">
+		Label="swplazmam_39"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>したっぱ</Text>
@@ -25899,7 +25966,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swplazmaw_15">
+		Label="swplazmaw_15"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>したっぱ</Text>
@@ -25924,7 +25992,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swplazmaw_16">
+		Label="swplazmaw_16"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>したっぱ</Text>
@@ -25949,7 +26018,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="childcare_12">
+		Label="childcare_12"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>エナツ</Text>
@@ -25974,7 +26044,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="adultw_04">
+		Label="adultw_04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>マフユ</Text>
@@ -25999,7 +26070,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="business1_13">
+		Label="business1_13"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ヒロナツ</Text>
@@ -26024,7 +26096,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="guitarw_05">
+		Label="guitarw_05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>フユミ</Text>
@@ -26049,7 +26122,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swplazmam_40">
+		Label="swplazmam_40"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>したっぱ</Text>
@@ -26074,7 +26148,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swplazmam_41">
+		Label="swplazmam_41"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>したっぱ</Text>
@@ -26099,7 +26174,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swplazmaw_17">
+		Label="swplazmaw_17"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>したっぱ</Text>
@@ -26124,7 +26200,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swplazmaw_18">
+		Label="swplazmaw_18"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>したっぱ</Text>
@@ -26149,7 +26226,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="doctor_11">
+		Label="doctor_11"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>キリツグ</Text>
@@ -26174,7 +26252,8 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="swplazmam_42">
+		Label="swplazmam_42"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>したっぱ</Text>

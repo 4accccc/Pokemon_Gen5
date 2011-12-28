@@ -482,7 +482,8 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="CG_HELP_INFO_13">
+		Label="CG_HELP_INFO_13"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>「カスタム」について</Text>
@@ -514,7 +515,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="CG_HELP_INFO_14">
+		Label="CG_HELP_INFO_14"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>「オン／オフ」について</Text>
@@ -546,7 +548,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="CG_HELP_INFO_15">
+		Label="CG_HELP_INFO_15"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>「オン／オフ」について</Text>
@@ -1055,11 +1058,10 @@
 			<Comment>説明文
 「すれちがいログ」について
 ２ページ目
-
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T02:09:14" />
+				Time="2011-12-28T07:10:25" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1165,11 +1167,10 @@
 			<Comment>説明文
 「ちょうさたんちき」について
 ２ページ目
-
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T02:09:15" />
+				Time="2011-12-28T07:10:27" />
 		</CommentCell>
 		<AttributeCell
 			Name="Width">
@@ -1226,11 +1227,10 @@
 			<Comment>説明文
 「カスタム」について
 ・何の色が変わる？
-
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T02:09:16" />
+				Time="2011-12-28T07:10:29" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">
@@ -1329,11 +1329,10 @@
 			<Comment>説明文
 「Ｃ－ＧＥＡＲ　ＯＮ／ＯＦＦ」について
 ２ページ目
-
 ※swanで新規作成</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-08-12T02:09:21" />
+				Time="2011-12-28T07:10:34" />
 		</CommentCell>
 		<ExtraCell
 			DataHolder="f803f354-0c78-4e1d-a1a9-1525faa0efba">

@@ -748,7 +748,8 @@
 		</ExtraCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fld_ev_warp_07">
+		Label="msg_fld_ev_warp_07"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ふたりで　いるときは
@@ -763,11 +764,11 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>二人で　いる時は
+			<Text>二人で　いるときは
 ハイリンクに　ワープできません</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-09-22T08:52:25" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T07:56:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"

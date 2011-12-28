@@ -14,10 +14,10 @@
 かぜ！　あめ！　かみなり！　と▽
 あたりを　あらすもんじゃから▼
 だいじに　そだてた　さくもつが
-すっかり　ダメに　なるんよ▼</Text>
+すっかり　ダメに　なるんよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T08:14:09" />
+				Time="2011-12-27T02:31:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -33,10 +33,10 @@
 風！　雨！　雷！　と▽
 あたりを　荒らすもんじゃから▼
 大事に　育てた　作物が
-すっかり　ダメに　なるんよ▼</Text>
+すっかり　ダメに　なるんよ</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-22T08:14:04" />
+				Time="2011-12-27T02:31:47" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -551,10 +551,12 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・HP/PP満タン時</Comment>
+・HP/PP満タンでない時
+　続けて画面暗転して回復処理
+※swanでメッセージ修正</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-12T07:49:12" />
+				Time="2011-12-27T03:51:57" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -609,12 +611,10 @@ WOMAN3</Text>
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・HP/PP満タンでない時
-　続けて画面暗転して回復処理
-※swanでメッセージ修正</Comment>
+・HP/PP満タン時</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-22T08:21:25" />
+				Time="2011-12-27T03:52:00" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

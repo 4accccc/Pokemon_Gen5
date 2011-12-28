@@ -1904,10 +1904,10 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　かずが
-じょうけん　みたしていません▼</Text>
+じょうけんを　みたしていません▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-03T05:57:53" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T07:02:21" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1916,10 +1916,10 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンの　数が
-条件　満たしていません▼</Text>
+条件を　満たしていません▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-03T05:58:02" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T07:02:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -1956,10 +1956,10 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>ポケモンの　レベルが
-じょうけん　みたしていません▼</Text>
+じょうけんを　みたしていません▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-03T05:57:53" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T07:02:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -1968,10 +1968,10 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ポケモンの　レベルが
-条件　満たしていません▼</Text>
+条件を　満たしていません▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-03T05:58:02" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T07:02:32" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2069,11 +2069,11 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>同じ　しゅるいの
+			<Text>同じ　種類の
 ポケモンが　います▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-03T05:58:02" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T07:01:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2120,11 +2120,11 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>同じ　どうぐを　もった
+			<Text>同じ　道具を　持った
 ポケモンが　います▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-03T05:58:02" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T07:02:05" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2221,11 +2221,11 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>持たせられない　どうぐを
-もっています▼</Text>
+			<Text>持たせられない　道具を
+持っています▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-03T05:58:02" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T07:01:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"
@@ -2314,10 +2314,10 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		<LanguageCell
 			Language="JPN">
 			<Text>さんか　できる　レベルの　ごうけいが
-じょうけんを　みたして　いません▼</Text>
+じょうけんを　みたしていません▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-03T05:57:53" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T07:02:15" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -2325,11 +2325,11 @@ Aボタンを　押してください[Ctrl2:PageClear ]</Text>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>参加　できる　レベルの　合計が
-条件を　満たして　いません▼</Text>
+			<Text>参加できる　レベルの　合計が
+条件を　満たしていません▼</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-10-03T05:58:02" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T07:02:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="shimoyamada:W00184"

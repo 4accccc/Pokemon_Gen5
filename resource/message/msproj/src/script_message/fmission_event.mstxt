@@ -203,7 +203,8 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fmission_start_failed_timeout01">
+		Label="msg_fmission_start_failed_timeout01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さんかに　しっぱい　しました▼
@@ -219,12 +220,12 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>参加に　失敗　しました▼
+			<Text>参加に　失敗しました▼
 残り時間が　少ないと
 参加できないことが　あります</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-10-28T09:09:07" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T08:03:13" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -240,7 +241,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fmission_start_failed_timeout02">
+		Label="msg_fmission_start_failed_timeout02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>さんか　できない　ミッションでした▼
@@ -277,16 +279,17 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fmission_start_failed_entry01">
+		Label="msg_fmission_start_failed_entry01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>このミッションには
+			<Text>この　ミッションには
 まだ　さんか　できません▼
 ぼうけんを　すすめることで
 あそべる　ミッションが　ふえます！</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-11-24T08:43:39" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T08:03:20" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -294,13 +297,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>このミッションには
-まだ　参加　できません▼
+			<Text>この　ミッションには
+まだ　参加できません▼
 冒険を　進めることで
 遊べる　ミッションが　増えます！</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-11-24T08:45:00" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T08:03:23" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -392,7 +395,8 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fmission_reward02">
+		Label="msg_fmission_reward02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>ほうしゅう　[Ctrl1:xright value="16" ][Name:Item ][Digit:4digits Idx="1" ]こ～</Text>
@@ -483,7 +487,8 @@
 		</AttributeCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fmission_goal01">
+		Label="msg_fmission_goal01"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>クリアもくひょう[Ctrl1:xright value="16" ][Digit:4digits Idx="4" ]</Text>
@@ -515,7 +520,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fmission_goal02">
+		Label="msg_fmission_goal02"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>クリアもくひょう[Ctrl1:xright value="16" ][Digit:4digits Idx="4" ]にん</Text>
@@ -547,7 +553,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fmission_goal03">
+		Label="msg_fmission_goal03"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>クリアもくひょう[Ctrl1:xright value="16" ][Digit:4digits Idx="4" ]ひき</Text>
@@ -579,7 +586,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fmission_goal04">
+		Label="msg_fmission_goal04"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>クリアもくひょう[Ctrl1:xright value="16" ][Digit:4digits Idx="4" ]こ</Text>
@@ -611,7 +619,8 @@
 		</CommentCell>
 	</TextRow>
 	<TextRow
-		Label="msg_fmission_goal05">
+		Label="msg_fmission_goal05"
+		Style="Large">
 		<LanguageCell
 			Language="JPN">
 			<Text>クリアもくひょう[Ctrl1:xright value="16" ][Digit:4digits Idx="4" ]かい</Text>

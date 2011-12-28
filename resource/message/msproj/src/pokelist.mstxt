@@ -3627,10 +3627,10 @@ PP値上昇アイテムで技選択するとき</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>手持ちが　いっぱい　なので
-分離　できません</Text>
+分離できません</Text>
 			<TextModifiedBy
-				User="iwasawa:W00270"
-				Time="2011-05-23T08:22:36" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T07:05:39" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="iwasawa:W00270"
@@ -3669,10 +3669,10 @@ PP値上昇アイテムで技選択するとき</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>その　ポケモンとは
-合体　できません</Text>
+合体できません</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:23" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T07:05:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3718,10 +3718,10 @@ PP値上昇アイテムで技選択するとき</Comment>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ひんしの　ポケモンとは
-合体　できません</Text>
+合体できません</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:23" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T07:05:33" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3754,11 +3754,11 @@ PP値上昇アイテムで技選択するとき</Comment>
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>タマゴとは　がったい
-できません</Text>
+			<Text>タマゴとは
+がったい　できません</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:23" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T07:05:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3766,11 +3766,11 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タマゴとは　合体
-できません</Text>
+			<Text>タマゴとは
+合体できません</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:23" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T07:05:44" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -3814,10 +3814,10 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>２ひき　そろってません！</Text>
+			<Text>２匹　そろってません！</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:23" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T07:05:26" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -4189,11 +4189,11 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>タマゴには　どうぐを
+			<Text>タマゴには　道具を
 持たせられない！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-12-02T10:52:56" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T07:06:00" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -6984,11 +6984,11 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>参加　しなければ　ならない
-ポケモンが　選ばれて　いません</Text>
+			<Text>参加しなければ　ならない
+ポケモンが　選ばれていません</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:23" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T07:06:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"
@@ -8245,10 +8245,10 @@ PP値上昇アイテムで技選択するとき</Comment>
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:Item Idx="0" ]が　無くなりました</Text>
+			<Text>[Name:Item Idx="0" ]が　なくなりました</Text>
 			<TextModifiedBy
-				User="ariizumi_nobuhiko:W00248"
-				Time="2011-05-20T09:30:23" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T07:06:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="ariizumi_nobuhiko:W00248"

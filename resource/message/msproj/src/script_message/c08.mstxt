@@ -983,12 +983,13 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>シャガ『２ねんまえの　おまえたちの
-しょぎょうを　しっている　にんげんが▽
+			<Text>シャガ『おまえたちが　した
+２ねんまえの　しょぎょう……▼
+あれを　しっている　にんげんが▽
 すなおに　わたすと　かんがえるのか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-23T05:40:56" />
+				Time="2011-12-28T06:57:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -996,12 +997,13 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>シャガ『２年前の　おまえたちの
-所業を　知っている　人間が▽
+			<Text>シャガ『おまえたちが　した
+２年前の　所業……▼
+あれを　知っている　人間が
 素直に　渡すと　考えるのか？▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-23T05:41:00" />
+				Time="2011-12-28T06:58:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1152,12 +1154,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName ]！
-きみの　ちからを　かしてほしい▼
+きみの　ちからを　かしてくれい▼
 この　ソウリュウから
 プラズマだんを　おいはらうぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T05:54:40" />
+				Time="2011-12-27T12:17:49" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1166,12 +1168,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName ]！
-君の　力を　貸してほしい▼
+君の　力を　貸してくれい▼
 この　ソウリュウから
 プラズマ団を　追い払うぞ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-09T05:54:49" />
+				Time="2011-12-27T12:17:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1672,10 +1674,12 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>プラズマだん『まけた……
-オノノクスに　ふっとばされちまったよ</Text>
+かんぜんに　まけちまったよ▼
+オノノクスに　ここまで
+ふっとばされちまったよ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-10T10:12:38" />
+				Time="2011-12-27T12:14:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1684,10 +1688,12 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>プラズマ団『負けた……
-オノノクスに　ふっとばされちまったよ</Text>
+完全に　負けちまったよ▼
+オノノクスに　ここまで
+吹っ飛ばされちまったよ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-06-11T02:48:01" />
+				Time="2011-12-27T12:14:45" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1871,10 +1877,12 @@
 			Language="JPN">
 			<Text>シャガ『のこるは
 しちけんじん　ヴィオだけか！▽
-あやつは　どこだ？</Text>
+あやつは　どこだ？▼
+……そうだ！
+ポケモンジムは　どうなっておる！？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T03:33:34" />
+				Time="2011-12-27T12:25:27" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1884,10 +1892,12 @@
 			Language="JPN_KANJI">
 			<Text>シャガ『残るは
 七賢人　ヴィオだけか！▽
-あやつは　どこだ？</Text>
+あやつは　どこだ？▼
+……そうだ！
+ポケモンジムは　どうなっておる！？</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-21T03:33:32" />
+				Time="2011-12-27T12:25:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

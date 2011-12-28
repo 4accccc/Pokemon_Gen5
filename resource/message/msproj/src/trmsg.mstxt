@@ -33760,15 +33760,15 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>この　どうぐを　あげるから
-きみも　あせを　かこうな！▼</Text>
+			<Text>この　道具を　あげるから
+きみも　汗を　かこうな！▼</Text>
 			<TextModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T03:40:22" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="ichiraku_katsuhiko:W00271"
-				Time="2011-10-14T02:39:29" />
+				User="matsumiya:W00224"
+				Time="2011-12-28T03:40:22" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -74999,18 +74999,18 @@
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="TRID_NURSE_05_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
+		Label="TRID_NURSE_05_TRMSG_FIGHT_AFTER_RECOVER_BEFORE">
 		<LanguageCell
 			Language="JPN">
 			<Text>あなたの　ポケモンへの　あい
 わたしの　ポケモンへの　あい！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T06:57:42" />
+				Time="2011-12-28T08:16:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T06:57:42" />
+				Time="2011-12-28T08:16:12" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -75018,26 +75018,26 @@
 わたしの　ポケモンへの　愛！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T06:57:42" />
+				Time="2011-12-28T08:16:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T06:57:42" />
+				Time="2011-12-28T08:16:12" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
-		Label="TRID_NURSE_05_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
+		Label="TRID_NURSE_05_TRMSG_FIGHT_AFTER_RECOVER_AFTER">
 		<LanguageCell
 			Language="JPN">
 			<Text>わたしの　ポケモンへの　あいは
 いくどでも　げんきに　してあげること</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T06:57:42" />
+				Time="2011-12-28T08:16:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T06:57:42" />
+				Time="2011-12-28T08:16:12" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -75045,11 +75045,11 @@
 いくどでも　元気に　してあげること</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T06:57:42" />
+				Time="2011-12-28T08:16:12" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-21T06:57:42" />
+				Time="2011-12-28T08:16:12" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
