@@ -2921,10 +2921,14 @@ static u32 Util_BtlResult_GetStrID( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
   switch( cp_score->result )
   {
   case BTL_RESULT_RUN_ENEMY:
+    strID = LIVE_STR_47;
+    break;
   case BTL_RESULT_WIN:
     strID = LIVE_STR_43;
     break;
   case BTL_RESULT_RUN:
+    strID = LIVE_STR_46;
+    break;
   case BTL_RESULT_LOSE:
     strID = LIVE_STR_44;
     break;
