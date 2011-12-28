@@ -16,6 +16,7 @@
 //#include "wbt_tool.h"
 
 #include "poke_tool/poketype_def.h"
+#include "poke_tool/status_rcv.h"
 #include "tr_tool/trtype_def.h" //TRTYPE_HERO/TRTYPE_HEROINE
 
 #include "fld_btl_inst_tool.h"
@@ -279,6 +280,7 @@ void PKWDSYS_CreateBattleParty( PKWDSYS * pkwdsys, GAMEDATA * gamedata, POKEPART
     }
     pos -= 1; //1 origin --> 0 origin
     base_pp = PokeParty_GetMemberPointer( base_party, pos );
+     STATUS_RCV_PokeParam_RecoverAll( base_pp );    //‰ñ•œ
     POKETOOL_CopyPPtoPP( base_pp, entry_pp );
     PokeParty_Add( entry_party, entry_pp );
   }
