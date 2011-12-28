@@ -243,7 +243,19 @@ EVENT_START	ev_pos_d27r1301_swsage7_01
   
   //トレーナー戦
   _TRAINER_BTL_SET( TRID_SWSAGE3_02, 0 )
-  _CALL ev_battle_check
+  
+  //敗戦チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+  
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+  ELSE
+    //=====================================
+    //ヴィオ非表示
+    _FLAG_SET( FV_D27R1301_SWSAGE7_01 )
+    //=====================================
+    _TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+  ENDIF
   
   //アニメ：ヴィオ後退
   _OBJ_ANIME( D27R1301_SWSAGE7_01 , anm_swsage7_backstep)
