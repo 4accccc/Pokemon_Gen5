@@ -5094,6 +5094,38 @@
 				<MultilingualName />
 			</Item>
 		</Attribute>
+		<Attribute
+			Name="Importance"
+			Type="List"
+			Default="unknown"
+			LimitEnabled="False">
+			<MultilingualName>
+				<Japanese>重要度</Japanese>
+			</MultilingualName>
+			<MultilingualComment>
+				<Japanese>○A（意味：ほぼFIXテキスト、日本語が変わった場合、翻訳も絶対修正）
+○B（意味：ほぼFIXテキスト、日本語が変わった場合、余裕があれば翻訳修正）
+○C（意味：ほぼFIXテキスト、ただし日本語が変わっても、翻訳は修正しなくていい</Japanese>
+			</MultilingualComment>
+			<Item
+				Name="unknown">
+				<MultilingualName>
+					<Japanese> </Japanese>
+				</MultilingualName>
+			</Item>
+			<Item
+				Name="A">
+				<MultilingualName />
+			</Item>
+			<Item
+				Name="B">
+				<MultilingualName />
+			</Item>
+			<Item
+				Name="C">
+				<MultilingualName />
+			</Item>
+		</Attribute>
 	</Attributes>
 	<Dictionaries />
 	<BuildSettings>
