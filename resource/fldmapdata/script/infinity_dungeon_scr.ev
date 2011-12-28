@@ -1752,6 +1752,9 @@ EVENT_START  ev_infinity_dungeon_area2_tutorial
   // 無限ダンジョンのバージョン取得
   _INFINITY_DUNGEON_GET_VERSION( LWK_D_VERSION )
 
+  // ゲートトレーナーが右に移動
+  _OBJ_ANIME_AUTO( MMDL_ID_EVENTOBJ_00, 1, 7, FORCE_TYPE_NOT, 8, DIR_LR)
+
   // 一歩下に移動
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_down_1 )
   _OBJ_ANIME_WAIT()
