@@ -2207,12 +2207,10 @@ N</Text>
 ・このときキュレム不在
 　ゼクロムだけを表示
 ・表示後、トレーナー戦闘へ
-・連戦、回復処理なし
-※難易度的に問題がある場合は
-　ＢＷと同じく、Ｎが回復もあり</Comment>
+</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2011-12-28T11:11:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2280,12 +2278,10 @@ N</Text>
 ・このときキュレム不在
 　レシラムだけを表示
 ・表示後、トレーナー戦闘へ
-・連戦、回復処理なし
-※難易度的に問題がある場合は
-　ＢＷと同じく、Ｎが回復もあり</Comment>
+</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-09-07T03:33:40" />
+				Time="2011-12-28T11:11:35" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -2302,6 +2298,110 @@ N</Text>
 				User=":"
 				Time="0001-01-01T00:00:00" />
 		</ExtraCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0501_swsage01_19b"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲーチス『めざわりな　トレーナーは
+ワタクシが　てを　くだしましょう！▼
+こんどこそ！
+だれが　なにを　しようと！▽
+ワタクシを　とめることは　できない！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-28T11:11:01" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-28T11:10:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲーチス『目障りな　トレーナーは
+ワタクシが　手を　くだしましょう！▼
+今度こそ！
+だれが　なにを　しようと！▽
+ワタクシを　とめることは　できない！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-28T11:11:14" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-28T11:10:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・Black2ver
+・全滅処理用
+・表示後、トレーナー戦闘へ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-28T11:11:53" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE1
+ゲーチス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-28T11:10:11" />
+		</AttributeCell>
+	</TextRow>
+	<TextRow
+		Label="msg_d10r0501_swsage01_19w"
+		Style="Large">
+		<LanguageCell
+			Language="JPN">
+			<Text>ゲーチス『めざわりな　トレーナーは
+ワタクシが　てを　くだしましょう！▼
+こんどこそ！
+だれが　なにを　しようと！▽
+ワタクシを　とめることは　できない！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-28T11:11:05" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-28T11:10:56" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>ゲーチス『目障りな　トレーナーは
+ワタクシが　手を　くだしましょう！▼
+今度こそ！
+だれが　なにを　しようと！▽
+ワタクシを　とめることは　できない！▼</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-28T11:11:10" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-28T11:10:56" />
+		</LanguageCell>
+		<CommentCell
+			Language="JPN">
+			<Comment>♂
+・White2ver
+・全滅処理用
+・表示後、トレーナー戦闘へ</Comment>
+			<CommentModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-28T11:11:55" />
+		</CommentCell>
+		<AttributeCell
+			Name="Character">
+			<Text>SWSAGE1
+ゲーチス</Text>
+			<TextModifiedBy
+				User="matsumiya:W00224"
+				Time="2011-12-28T11:10:12" />
+		</AttributeCell>
 	</TextRow>
 	<TextRow
 		Label="msg_d10r0501_boss_09"
