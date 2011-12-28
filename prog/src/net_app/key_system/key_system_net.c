@@ -57,6 +57,16 @@ enum
   NET_TIMING_NO_IW_TIMINGSYNC_COMMON  = 20,
 };
 
+//-------------------------------------
+///	“à•”ƒGƒ‰[
+//=====================================
+typedef enum
+{
+  KEYSYS_NET_ERROR_NONE,
+  KEYSYS_NET_ERROR_USERCODE,
+} KEYSYS_NET_ERROR;
+
+
 //=============================================================================
 /**
  *					\‘¢‘ÌéŒ¾
@@ -80,6 +90,9 @@ struct _KEYSYS_NET_WORK
   NHTTP_RAP_WORK          *p_nhttp;
   MB_PARENT_DATACONV      *p_mb;
   HEAPID heapID;
+
+  KEYSYS_NET_ERROR        error;
+  u32                     error_msg;
 };
 
 //=============================================================================
@@ -462,7 +475,13 @@ KEYSYS_NET_ERROR_TYPE KEYSYS_NET_HandleError( KEYSYS_NET_WORK *p_wk )
     break;
 
   case KEYSYS_NET_TYPE_WIFI_NTTP:
-    if(NET_ERR_CHECK_NONE != NetErr_App_CheckError())
+    if( p_wk->error != KEYSYS_NET_ERROR_NONE )
+    {
+      NetErr_App_ReqErrorDispForce( p_wk->error_msg );
+      return KEYSYS_NET_ERROR_TYPE_DISCONNECT;
+    }
+
+    if(NET_ERR_CHECK_NONE != NetErr_App_CheckError() )
     {
       const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
 
@@ -519,6 +538,9 @@ void KEYSYS_NET_ClearError( KEYSYS_NET_WORK *p_wk )
     KEYSYS_SEQ_Next( p_wk->p_seq, KeySys_Net_Seq_Wait );
     break;
   }
+
+  p_wk->error     = KEYSYS_NET_ERROR_NONE;
+  p_wk->error_msg = 0;
 
   p_wk->net_type  = KEYSYS_NET_TYPE_NONE;
 }
@@ -984,14 +1006,16 @@ static void KeySys_Net_Seq_Nhttp_GetBw( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, vo
         switch( NHTTP_RAP_GetGetResultCode(p_wk->p_nhttp) )
         {
         case 503:
-          NetErr_App_ReqErrorDispForce( WIFI_GSYNC_ERR011 );
+          p_wk->error     = KEYSYS_NET_ERROR_USERCODE;
+          p_wk->error_msg =  WIFI_GSYNC_ERR011;
 
           p_param->result = KEYSYS_NET_RESULT_PGL_GETBW_RESPONSE_ERROR;
           *p_seq = SEQ_END;
           return;
 
         case 502:
-          NetErr_App_ReqErrorDispForce( WIFI_GSYNC_ERR012 );
+          p_wk->error     = KEYSYS_NET_ERROR_USERCODE;
+          p_wk->error_msg =  WIFI_GSYNC_ERR012;
 
           p_param->result = KEYSYS_NET_RESULT_PGL_GETBW_RESPONSE_ERROR;
           *p_seq = SEQ_END;
@@ -1030,7 +1054,8 @@ static void KeySys_Net_Seq_Nhttp_GetBw( KEYSYS_SEQ_WORK *p_seqwk, int *p_seq, vo
           break;
 
         default:
-          NetErr_App_ReqErrorDispForce( NetErr_Tool_GetGpfServerErrorMsg( ((gs_response*)pEvent)->ret_cd ) );
+          p_wk->error     = KEYSYS_NET_ERROR_USERCODE;
+          p_wk->error_msg =  NetErr_Tool_GetGpfServerErrorMsg( ((gs_response*)pEvent)->ret_cd );
 
           p_param->result = KEYSYS_NET_RESULT_PGL_GETBW_PDW_ERROR;
           *p_seq = SEQ_END;
@@ -1117,14 +1142,16 @@ static void KeySys_Net_Seq_Nhttp_PlayStatus( KEYSYS_SEQ_WORK *p_seqwk, int *p_se
         switch( NHTTP_RAP_GetGetResultCode(p_wk->p_nhttp) )
         {
         case 503:
-          NetErr_App_ReqErrorDispForce( WIFI_GSYNC_ERR011 );
+          p_wk->error     = KEYSYS_NET_ERROR_USERCODE;
+          p_wk->error_msg =  WIFI_GSYNC_ERR011;
 
           p_param->result = KEYSYS_NET_RESULT_PLAYSTATUS_RESPONSE_ERROR;
           *p_seq = SEQ_END;
           return;
 
         case 502:
-          NetErr_App_ReqErrorDispForce( WIFI_GSYNC_ERR012 );
+          p_wk->error     = KEYSYS_NET_ERROR_USERCODE;
+          p_wk->error_msg =  WIFI_GSYNC_ERR012;
 
           p_param->result = KEYSYS_NET_RESULT_PLAYSTATUS_RESPONSE_ERROR;
           *p_seq = SEQ_END;
@@ -1148,7 +1175,9 @@ static void KeySys_Net_Seq_Nhttp_PlayStatus( KEYSYS_SEQ_WORK *p_seqwk, int *p_se
         }
         else
         {
-          NetErr_App_ReqErrorDispForce( NetErr_Tool_GetGpfServerErrorMsg( ((gs_response*)pEvent)->ret_cd ) );
+
+          p_wk->error     = KEYSYS_NET_ERROR_USERCODE;
+          p_wk->error_msg = NetErr_Tool_GetGpfServerErrorMsg( ((gs_response*)pEvent)->ret_cd );
 
           p_param->result = KEYSYS_NET_RESULT_PLAYSTATUS_PDW_ERROR;
           *p_seq = SEQ_END;
@@ -1391,6 +1420,12 @@ void KEYSYS_NET_End( KEYSYS_NET_WORK *p_wk )
 
   case KEYSYS_NET_TYPE_WIFI_NTTP:
     GFL_NET_DWC_SetErrDisconnectCallback(NULL, NULL );
+    if( p_wk->p_nhttp )
+    {
+      NHTTP_RAP_ErrorClean( p_wk->p_nhttp );
+      NHTTP_RAP_End( p_wk->p_nhttp );
+      p_wk->p_nhttp = NULL;
+    }
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common) );
     break;
   }
