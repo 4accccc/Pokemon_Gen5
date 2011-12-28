@@ -945,17 +945,6 @@ static GMEVENT_RESULT ElevatorLiftBanEvent( GMEVENT *p_event, int *seq, void *wk
   MODEL *p_model_off = &p_wk->p_gimmick_wk->elev_wk.model[MODELID_ELEVATOR_3];
   MODEL *p_model_on = &p_wk->p_gimmick_wk->elev_wk.model[MODELID_ELEVATOR_2];
   INF_DUNGEON_DATA  *p_dungeon_data = p_wk->p_gimmick_wk->p_dungeon_data;
-  u32 sound_id; 
-
-
-  if( INF_TOOL_DUNGEON_GetDungeonColor( p_dungeon_data ) == VERSION_B2 )
-  {
-    sound_id = SEQ_SE_SW_MDUN_BL_02;  //エレベータのしまる音
-  }
-  else
-  {
-    sound_id = SEQ_SE_SW_MDUN_WH_02;  //エレベータのしまる音
-  }
 
   // アニメーション
   switch( *seq )
@@ -973,7 +962,7 @@ static GMEVENT_RESULT ElevatorLiftBanEvent( GMEVENT *p_event, int *seq, void *wk
         FLD_EXP_OBJ_SetObjAnmFrm(p_model_off->p_ex_obj, p_model_off->unitID, p_model_off->modelID, n , 0);
         FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
       }
-      PMSND_PlaySE( sound_id );
+      PMSND_PlaySE( SEQ_SE_SW_MDUN_BL_06 );
       (*seq)++;
 
     }
