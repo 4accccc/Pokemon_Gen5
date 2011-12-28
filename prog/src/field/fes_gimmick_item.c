@@ -226,15 +226,6 @@ static GMEVENT* sub_MakeEvent( FES_GIMMICK* sys_wk, FES_GIMMICK_ITEM_WORK* wk, u
   event = SCRIPT_SetEventScript( sys_wk->gsys, SCRID_FMISSION_ITEM_GET, NULL, HEAPID_FIELDMAP );
   sc = SCRIPT_GetScriptWorkFromEvent( event );
   SCRIPT_SetScriptWorkParam( sc, item, 0, 0, 0 );
- 
-  /*
-   * GFBTS1967関連対処
-   * 8番道路の一本橋から落ちてすぐ、エフェクトエンカウントが起動した場合
-   * 自機の特殊落下中ステータスがクリアされないため、明示的にクリアする
-   */
-  if( FIELD_PLAYER_CheckOzeFallOut( sys_wk->field_player ) ){
-    FIELD_PLAYER_FinishOzeFallOut( sys_wk->field_player );
-  }
   return event;
 }
 
