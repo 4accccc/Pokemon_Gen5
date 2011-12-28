@@ -206,6 +206,11 @@ EVENT_START	ev_reserve_d27r0201_rival_01
   //D27R0501のSCENE_CHANGEを起動
   $WK_SCENE_D27R0501_SWSAGE7_01 = 1
   //========================================//
+  //D27R0101のPOSを無効に
+  $WK_SCENE_D27R0101_SECONDB_01 = 3
+  //D27R0101のライバルを非表示
+  _FLAG_SET( FV_D27R0101_SWRIVAL_01 )
+  //========================================//
 
 EVENT_END
 

@@ -1210,14 +1210,6 @@ EVENT_START	ev_pos_d27r0101_second_w_01
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_walk_u )
   _OBJ_ANIME_WAIT()
   
-  //========================================//
-  //D27R0101のPOSを無効に
-  $WK_SCENE_D27R0101_SECONDW_01 = 3
-  //D27R0101のライバル・プラズマ団員を非表示
-  _FLAG_SET( FV_D27R0101_SWRIVAL_01 )
-  _FLAG_SET( FV_D27R0101_SWPLAZMA_02 )
-  //========================================//
-  
   //予約スクリプト
   _RESERVE_SCRIPT( SCRID_RESERVE_D27R1201_RIVAL_01 )
   //マップチェンジ
@@ -1274,13 +1266,6 @@ EVENT_START	ev_pos_d27r0101_second_b_01
   _OBJ_ANIME_WAIT()
   _OBJ_ANIME( MMDL_ID_PLAYER , anm_walk_u )
   _OBJ_ANIME_WAIT()
-  
-  //========================================//
-  //D27R0101のPOSを無効に
-  $WK_SCENE_D27R0101_SECONDB_01 = 3
-  //D27R0101のライバルを非表示
-  _FLAG_SET( FV_D27R0101_SWRIVAL_01 )
-  //========================================//
   
   //予約スクリプト
   _RESERVE_SCRIPT( SCRID_RESERVE_D27R0201_RIVAL_01 )
