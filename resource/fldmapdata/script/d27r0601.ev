@@ -274,7 +274,22 @@ INIT_EVENT_START	ev_scene_d27r0601_swsage1_01
   
   //トレーナー戦
   _TRAINER_BTL_SET( TRID_NINJA_01, 0 )
-  _CALL ev_battle_check
+  
+  //敗戦チェック
+  _TRAINER_LOSE_CHECK( SCWK_ANSWER )
+  
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    _TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+  ELSE
+    //=====================================
+    //ライバル・ダークトリニティ非表示
+    _FLAG_SET( FV_D27R0601_NINJA_01 )
+    _FLAG_SET( FV_D27R0601_SWRIVAL_01 )
+    //BGMを元の状態に戻す
+    _FLAG_RESET( SYS_FLAG_BGM_D27R0601_PLAZMA )
+    //=====================================
+    _TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+  ENDIF
   
   _OBJ_ADD( D27R0601_NINJA_02 )
   _OBJ_ADD( D27R0601_NINJA_03 )
