@@ -1701,6 +1701,9 @@ EVENT_START  ev_infinity_dungeon_area1_tutorial_01
   // 画面外まで移動させる
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_move_up_3 )
   _OBJ_ANIME_WAIT()
+  
+  // OBJ削除
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 }
 EVENT_END
 
@@ -1741,6 +1744,9 @@ EVENT_START  ev_infinity_dungeon_area1_tutorial_02
   // 画面外まで移動させる
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_move_down_3 )
   _OBJ_ANIME_WAIT()
+   
+  // OBJ削除
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 }
 EVENT_END
 
@@ -1784,6 +1790,9 @@ EVENT_START  ev_infinity_dungeon_area2_tutorial
   // 画面外まで移動させる
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_move_left_3 )
   _OBJ_ANIME_WAIT()
+   
+  // OBJ削除
+  _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 }
 EVENT_END
 
@@ -1854,6 +1863,15 @@ EVENT_START  ev_infinity_dungeon_area3_tutorial_boss
   // 非表示フラグセット
   _FLAG_SET( FV_D31R0601_MUGENBOSS_01 ) // リセット
   _FLAG_SET( FV_D31R0501_MUGENBOSS_01 ) // リセット
+
+   
+  // OJB削除
+  IF $LWK_D_VERSION == VERSION_B2 THEN
+    _OBJ_DEL( D31R0601_MUGENBOSS )
+  ELSE
+    _OBJ_DEL( D31R0501_MUGENBOSS )
+  ENDIF
+
 }
 EVENT_END
 
