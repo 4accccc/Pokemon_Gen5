@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2011-12-19T21:21:13" source="kyuremu_union_w_01_007.mb"/>
+	<create user="swan_3dcg02" host="W00193" date="2011-12-27T19:36:42" source="kyuremu_union_w_01_v04b.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2011-12-19T21:21:13" source="kyuremu_union_w_01_007.mb"/>
+<original_create user="swan_3dcg02" host="W00193" date="2011-12-27T19:36:42" source="kyuremu_union_w_01_v04b.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -20,14 +20,14 @@
 	magnify="1.000000"
 	tool_start_frame="1"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="35 29"
-	compress_material="on" material_size="22 22"
+	compress_node="none" node_size="35 35"
+	compress_material="off" material_size="22 22"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="7" xyz="-1.235107 -0.464844 -2.108398" whd="1.829346 4.825195 4.224854"/>
+<box_test pos_scale="7" xyz="-1.235107 -0.464844 -2.108398" whd="2.701172 4.825195 4.224854"/>
 
 <tex_image_array size="12">
 	<tex_image index="0" name="fx_shad2_q"
@@ -6941,33 +6941,33 @@
 
 <matrix_array size="28">
 	<matrix index="0" mtx_weight="1" node_idx="1"/>
-	<matrix index="1" mtx_weight="1" node_idx="2"/>
-	<matrix index="2" mtx_weight="1" node_idx="3"/>
-	<matrix index="3" mtx_weight="1" node_idx="4"/>
-	<matrix index="4" mtx_weight="1" node_idx="5"/>
-	<matrix index="5" mtx_weight="1" node_idx="6"/>
-	<matrix index="6" mtx_weight="1" node_idx="7"/>
-	<matrix index="7" mtx_weight="1" node_idx="8"/>
-	<matrix index="8" mtx_weight="1" node_idx="9"/>
-	<matrix index="9" mtx_weight="1" node_idx="10"/>
-	<matrix index="10" mtx_weight="1" node_idx="11"/>
-	<matrix index="11" mtx_weight="1" node_idx="12"/>
-	<matrix index="12" mtx_weight="1" node_idx="13"/>
-	<matrix index="13" mtx_weight="1" node_idx="14"/>
-	<matrix index="14" mtx_weight="1" node_idx="15"/>
-	<matrix index="15" mtx_weight="1" node_idx="16"/>
-	<matrix index="16" mtx_weight="1" node_idx="17"/>
-	<matrix index="17" mtx_weight="1" node_idx="18"/>
-	<matrix index="18" mtx_weight="1" node_idx="19"/>
-	<matrix index="19" mtx_weight="1" node_idx="20"/>
-	<matrix index="20" mtx_weight="1" node_idx="21"/>
-	<matrix index="21" mtx_weight="1" node_idx="22"/>
-	<matrix index="22" mtx_weight="1" node_idx="23"/>
-	<matrix index="23" mtx_weight="1" node_idx="24"/>
-	<matrix index="24" mtx_weight="1" node_idx="25"/>
-	<matrix index="25" mtx_weight="1" node_idx="26"/>
-	<matrix index="26" mtx_weight="1" node_idx="27"/>
-	<matrix index="27" mtx_weight="1" node_idx="28"/>
+	<matrix index="1" mtx_weight="1" node_idx="3"/>
+	<matrix index="2" mtx_weight="1" node_idx="4"/>
+	<matrix index="3" mtx_weight="1" node_idx="5"/>
+	<matrix index="4" mtx_weight="1" node_idx="6"/>
+	<matrix index="5" mtx_weight="1" node_idx="7"/>
+	<matrix index="6" mtx_weight="1" node_idx="8"/>
+	<matrix index="7" mtx_weight="1" node_idx="9"/>
+	<matrix index="8" mtx_weight="1" node_idx="10"/>
+	<matrix index="9" mtx_weight="1" node_idx="11"/>
+	<matrix index="10" mtx_weight="1" node_idx="12"/>
+	<matrix index="11" mtx_weight="1" node_idx="13"/>
+	<matrix index="12" mtx_weight="1" node_idx="14"/>
+	<matrix index="13" mtx_weight="1" node_idx="15"/>
+	<matrix index="14" mtx_weight="1" node_idx="16"/>
+	<matrix index="15" mtx_weight="1" node_idx="17"/>
+	<matrix index="16" mtx_weight="1" node_idx="18"/>
+	<matrix index="17" mtx_weight="1" node_idx="19"/>
+	<matrix index="18" mtx_weight="1" node_idx="20"/>
+	<matrix index="19" mtx_weight="1" node_idx="22"/>
+	<matrix index="20" mtx_weight="1" node_idx="23"/>
+	<matrix index="21" mtx_weight="1" node_idx="25"/>
+	<matrix index="22" mtx_weight="1" node_idx="27"/>
+	<matrix index="23" mtx_weight="1" node_idx="28"/>
+	<matrix index="24" mtx_weight="1" node_idx="29"/>
+	<matrix index="25" mtx_weight="1" node_idx="31"/>
+	<matrix index="26" mtx_weight="1" node_idx="33"/>
+	<matrix index="27" mtx_weight="1" node_idx="34"/>
 </matrix_array>
 
 <polygon_array size="36">
@@ -9789,13 +9789,14 @@
 					<tex st="58.187500 0.500000"/>
 					<clr rgb="31 18 31"/>
 					<pos_xyz xyz="-0.014893 0.000000 0.019043"/>
-					<tex st="72.875000 0.500000"/>
-					<pos_xy xy="0.014893 0.000000"/>
-					<tex st="72.875000 15.500000"/>
-					<clr rgb="31 28 30"/>
-					<pos_xz xz="0.014893 -0.017822"/>
 					<tex st="58.187500 15.500000"/>
-					<pos_xy xy="-0.014893 0.000000"/>
+					<clr rgb="31 28 30"/>
+					<pos_xz xz="-0.014893 -0.017822"/>
+					<tex st="72.875000 15.500000"/>
+					<pos_xy xy="0.014893 0.000000"/>
+					<tex st="72.875000 0.500000"/>
+					<clr rgb="31 18 31"/>
+					<pos_xz xz="0.014893 0.019043"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -9810,7 +9811,7 @@
 		nrm_flag="off" clr_flag="off" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">23</mtx_list>
+			<mtx_list size="1">22</mtx_list>
 			<primitive_array size="2">
 				<primitive index="0" type="triangle_strip" vertex_size="5">
 					<mtx idx="0"/>
@@ -9846,7 +9847,7 @@
 		nrm_flag="off" clr_flag="off" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">25</mtx_list>
+			<mtx_list size="1">23</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quad_strip" vertex_size="6">
 					<mtx idx="0"/>
@@ -9876,7 +9877,7 @@
 		nrm_flag="off" clr_flag="off" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">26</mtx_list>
+			<mtx_list size="1">24</mtx_list>
 			<primitive_array size="2">
 				<primitive index="0" type="triangle_strip" vertex_size="5">
 					<mtx idx="0"/>
@@ -9912,7 +9913,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">22</mtx_list>
+			<mtx_list size="1">25</mtx_list>
 			<primitive_array size="2">
 				<primitive index="0" type="quad_strip" vertex_size="6">
 					<mtx idx="0"/>
@@ -9961,7 +9962,7 @@
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
-			<mtx_list size="1">24</mtx_list>
+			<mtx_list size="1">26</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
@@ -10650,7 +10651,7 @@
 	</polygon>
 </polygon_array>
 
-<node_array size="29">
+<node_array size="35">
 	<node index="0" name="eff01_w01" kind="null"
 		parent="-1"
 		child="1"
@@ -10685,16 +10686,30 @@
 	>
 		<display index="0" material="11" polygon="0" priority="0"/>
 	</node>
-	<node index="2" name="beam01_01" kind="mesh"
+	<node index="2" name="beam" kind="null"
 		parent="0"
-		child="-1"
-		brother_next="3"
+		child="3"
+		brother_next="20"
 		brother_prev="1"
+		draw_mtx="off"
+		billboard="off"
+		scale="-1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="0"
+	>
+	</node>
+	<node index="3" name="beam01_01" kind="mesh"
+		parent="2"
+		child="-1"
+		brother_next="4"
+		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 -1.000000"
-		rotate="-57.393799 35.974365 -116.851563"
-		translate="1.880615 -47.859863 -91.412109"
+		scale="1.000000 1.000000 1.000000"
+		rotate="57.393799 144.025635 116.851563"
+		translate="-1.880615 -47.859863 -91.412109"
 		visibility="off"
 		display_size="1"
 		vertex_size="24" polygon_size="8"
@@ -10705,16 +10720,16 @@
 	>
 		<display index="0" material="7" polygon="1" priority="0"/>
 	</node>
-	<node index="3" name="beam01_02" kind="mesh"
-		parent="0"
+	<node index="4" name="beam01_02" kind="mesh"
+		parent="2"
 		child="-1"
-		brother_next="4"
-		brother_prev="2"
+		brother_next="5"
+		brother_prev="3"
 		draw_mtx="on"
 		billboard="off"
-		scale="0.500000 0.500000 -0.500000"
-		rotate="93.840576 159.067871 1.373779"
-		translate="8.446045 2.066406 -28.597412"
+		scale="0.500000 0.500000 0.500000"
+		rotate="-93.840576 20.932129 -1.373779"
+		translate="-8.446045 2.066406 -28.597412"
 		visibility="off"
 		display_size="1"
 		vertex_size="26" polygon_size="14"
@@ -10725,16 +10740,16 @@
 	>
 		<display index="0" material="12" polygon="2" priority="0"/>
 	</node>
-	<node index="4" name="beam02_03" kind="mesh"
-		parent="0"
+	<node index="5" name="beam02_03" kind="mesh"
+		parent="2"
 		child="-1"
-		brother_next="5"
-		brother_prev="3"
+		brother_next="6"
+		brother_prev="4"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 -1.000000"
-		rotate="-159.392578 -63.008545 90.721191"
-		translate="11.319336 262.941650 202.076904"
+		scale="1.000000 1.000000 1.000000"
+		rotate="-20.607422 -63.008545 89.278809"
+		translate="-11.319336 262.941650 202.076904"
 		visibility="off"
 		display_size="2"
 		vertex_size="28" polygon_size="12"
@@ -10746,16 +10761,16 @@
 		<display index="0" material="8" polygon="4" priority="0"/>
 		<display index="1" material="14" polygon="3" priority="0"/>
 	</node>
-	<node index="5" name="beam02_04" kind="mesh"
-		parent="0"
+	<node index="6" name="beam02_04" kind="mesh"
+		parent="2"
 		child="-1"
-		brother_next="6"
-		brother_prev="4"
+		brother_next="7"
+		brother_prev="5"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 -1.000000"
-		rotate="176.756348 -51.942139 107.125244"
-		translate="-65.774414 244.603516 194.204834"
+		scale="1.000000 1.000000 1.000000"
+		rotate="3.243652 -51.942139 72.874756"
+		translate="65.774414 244.603516 194.204834"
 		visibility="off"
 		display_size="2"
 		vertex_size="28" polygon_size="12"
@@ -10767,16 +10782,16 @@
 		<display index="0" material="9" polygon="5" priority="0"/>
 		<display index="1" material="14" polygon="6" priority="0"/>
 	</node>
-	<node index="6" name="beam02_05" kind="mesh"
-		parent="0"
+	<node index="7" name="beam02_05" kind="mesh"
+		parent="2"
 		child="-1"
-		brother_next="7"
-		brother_prev="5"
+		brother_next="8"
+		brother_prev="6"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 -1.000000"
-		rotate="145.732178 -57.681885 107.732910"
-		translate="42.285645 246.859863 209.313721"
+		scale="1.000000 1.000000 1.000000"
+		rotate="34.268066 -57.681885 72.267090"
+		translate="-42.285645 246.859863 209.313721"
 		visibility="off"
 		display_size="2"
 		vertex_size="20" polygon_size="8"
@@ -10788,15 +10803,15 @@
 		<display index="0" material="8" polygon="8" priority="0"/>
 		<display index="1" material="13" polygon="7" priority="0"/>
 	</node>
-	<node index="7" name="beam03_01" kind="mesh"
-		parent="0"
+	<node index="8" name="beam03_01" kind="mesh"
+		parent="2"
 		child="-1"
-		brother_next="8"
-		brother_prev="6"
+		brother_next="9"
+		brother_prev="7"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 -1.000000"
-		rotate="0.000000 -180.000000 0.000000"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="off"
 		display_size="3"
@@ -10810,15 +10825,15 @@
 		<display index="1" material="17" polygon="10" priority="0"/>
 		<display index="2" material="18" polygon="11" priority="0"/>
 	</node>
-	<node index="8" name="beam04_01" kind="mesh"
-		parent="0"
+	<node index="9" name="beam04_01" kind="mesh"
+		parent="2"
 		child="-1"
-		brother_next="9"
-		brother_prev="7"
+		brother_next="10"
+		brother_prev="8"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 -1.000000"
-		rotate="0.000000 -180.000000 0.000000"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="off"
 		display_size="3"
@@ -10832,15 +10847,15 @@
 		<display index="1" material="17" polygon="13" priority="0"/>
 		<display index="2" material="18" polygon="14" priority="0"/>
 	</node>
-	<node index="9" name="beam04_02" kind="mesh"
-		parent="0"
+	<node index="10" name="beam04_02" kind="mesh"
+		parent="2"
 		child="-1"
-		brother_next="10"
-		brother_prev="8"
+		brother_next="11"
+		brother_prev="9"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 -1.000000"
-		rotate="0.000000 -180.000000 0.000000"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="off"
 		display_size="1"
@@ -10852,16 +10867,16 @@
 	>
 		<display index="0" material="16" polygon="15" priority="0"/>
 	</node>
-	<node index="10" name="beamhead01" kind="mesh"
-		parent="0"
+	<node index="11" name="beamhead01" kind="mesh"
+		parent="2"
 		child="-1"
-		brother_next="11"
-		brother_prev="9"
+		brother_next="12"
+		brother_prev="10"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 -1.000000"
-		rotate="88.355713 -14.216064 145.692871"
-		translate="-103.742188 47.148193 -26.357178"
+		scale="1.000000 1.000000 1.000000"
+		rotate="91.644287 -14.216064 34.307129"
+		translate="103.742188 47.148193 -26.357178"
 		visibility="off"
 		display_size="1"
 		vertex_size="12" polygon_size="4"
@@ -10872,16 +10887,16 @@
 	>
 		<display index="0" material="9" polygon="16" priority="0"/>
 	</node>
-	<node index="11" name="beamhead02" kind="mesh"
-		parent="0"
+	<node index="12" name="beamhead02" kind="mesh"
+		parent="2"
 		child="-1"
-		brother_next="12"
-		brother_prev="10"
+		brother_next="13"
+		brother_prev="11"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 -1.000000"
-		rotate="89.378906 -1.184082 135.863525"
-		translate="-80.529053 82.468506 -33.085938"
+		scale="1.000000 1.000000 1.000000"
+		rotate="90.621094 -1.184082 44.136475"
+		translate="80.529053 82.468506 -33.085938"
 		visibility="off"
 		display_size="1"
 		vertex_size="12" polygon_size="4"
@@ -10892,16 +10907,16 @@
 	>
 		<display index="0" material="6" polygon="17" priority="0"/>
 	</node>
-	<node index="12" name="beamhead03" kind="mesh"
-		parent="0"
+	<node index="13" name="beamhead03" kind="mesh"
+		parent="2"
 		child="-1"
-		brother_next="13"
-		brother_prev="11"
+		brother_next="14"
+		brother_prev="12"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 -1.000000"
-		rotate="126.035400 -14.187256 -177.431152"
-		translate="26.559082 190.517334 -11.515381"
+		scale="1.000000 1.000000 1.000000"
+		rotate="53.964600 -14.187256 -2.568848"
+		translate="-26.559082 190.517334 -11.515381"
 		visibility="off"
 		display_size="1"
 		vertex_size="12" polygon_size="4"
@@ -10912,16 +10927,16 @@
 	>
 		<display index="0" material="9" polygon="18" priority="0"/>
 	</node>
-	<node index="13" name="beamhead04" kind="mesh"
-		parent="0"
+	<node index="14" name="beamhead04" kind="mesh"
+		parent="2"
 		child="-1"
-		brother_next="14"
-		brother_prev="12"
+		brother_next="15"
+		brother_prev="13"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 -1.000000"
-		rotate="39.104004 67.363281 48.390869"
-		translate="-75.627197 104.236816 -43.207031"
+		scale="1.000000 1.000000 1.000000"
+		rotate="140.895996 67.363281 131.609131"
+		translate="75.627197 104.236816 -43.207031"
 		visibility="off"
 		display_size="1"
 		vertex_size="12" polygon_size="4"
@@ -10932,16 +10947,16 @@
 	>
 		<display index="0" material="9" polygon="19" priority="0"/>
 	</node>
-	<node index="14" name="beamhead05" kind="mesh"
-		parent="0"
+	<node index="15" name="beamhead05" kind="mesh"
+		parent="2"
 		child="-1"
-		brother_next="15"
-		brother_prev="13"
+		brother_next="16"
+		brother_prev="14"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 -1.000000"
-		rotate="-129.994629 -44.831055 83.166504"
-		translate="-62.071777 83.782715 -3.076660"
+		scale="1.000000 1.000000 1.000000"
+		rotate="-50.005371 -44.831055 96.833496"
+		translate="62.071777 83.782715 -3.076660"
 		visibility="off"
 		display_size="1"
 		vertex_size="12" polygon_size="4"
@@ -10952,16 +10967,16 @@
 	>
 		<display index="0" material="9" polygon="20" priority="0"/>
 	</node>
-	<node index="15" name="beamhead06" kind="mesh"
-		parent="0"
+	<node index="16" name="beamhead06" kind="mesh"
+		parent="2"
 		child="-1"
-		brother_next="16"
-		brother_prev="14"
+		brother_next="17"
+		brother_prev="15"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 -1.000000"
-		rotate="-130.279541 -46.075928 62.370850"
-		translate="-87.031006 74.605713 -67.887451"
+		scale="1.000000 1.000000 1.000000"
+		rotate="-49.720459 -46.075928 117.629150"
+		translate="87.031006 74.605713 -67.887451"
 		visibility="off"
 		display_size="1"
 		vertex_size="12" polygon_size="4"
@@ -10972,16 +10987,16 @@
 	>
 		<display index="0" material="9" polygon="21" priority="0"/>
 	</node>
-	<node index="16" name="beamhead07" kind="mesh"
-		parent="0"
+	<node index="17" name="beamhead07" kind="mesh"
+		parent="2"
 		child="-1"
-		brother_next="17"
-		brother_prev="15"
+		brother_next="18"
+		brother_prev="16"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 -1.000000"
-		rotate="-141.246582 -73.898682 21.241211"
-		translate="-136.643066 272.083740 -140.811523"
+		scale="1.000000 1.000000 1.000000"
+		rotate="-38.753418 -73.898682 158.758789"
+		translate="136.643066 272.083740 -140.811523"
 		visibility="off"
 		display_size="1"
 		vertex_size="12" polygon_size="4"
@@ -10992,16 +11007,16 @@
 	>
 		<display index="0" material="9" polygon="22" priority="0"/>
 	</node>
-	<node index="17" name="beamhead08" kind="mesh"
-		parent="0"
+	<node index="18" name="beamhead08" kind="mesh"
+		parent="2"
 		child="-1"
-		brother_next="18"
-		brother_prev="16"
+		brother_next="19"
+		brother_prev="17"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 -1.000000"
-		rotate="-122.179199 -45.610596 67.264160"
-		translate="-22.321533 26.865234 -44.334473"
+		scale="1.000000 1.000000 1.000000"
+		rotate="-57.821045 -45.610596 112.735840"
+		translate="22.321533 26.865234 -44.334473"
 		visibility="off"
 		display_size="1"
 		vertex_size="12" polygon_size="4"
@@ -11012,16 +11027,16 @@
 	>
 		<display index="0" material="9" polygon="23" priority="0"/>
 	</node>
-	<node index="18" name="bean02_06" kind="mesh"
-		parent="0"
+	<node index="19" name="bean02_06" kind="mesh"
+		parent="2"
 		child="-1"
-		brother_next="19"
-		brother_prev="17"
+		brother_next="-1"
+		brother_prev="18"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 -1.000000"
-		rotate="153.884521 -61.133301 109.865479"
-		translate="-45.517334 250.656738 205.088135"
+		scale="1.000000 1.000000 1.000000"
+		rotate="26.115479 -61.133301 70.134521"
+		translate="45.517334 250.656738 205.088135"
 		visibility="off"
 		display_size="2"
 		vertex_size="24" polygon_size="10"
@@ -11033,11 +11048,11 @@
 		<display index="0" material="8" polygon="25" priority="0"/>
 		<display index="1" material="13" polygon="24" priority="0"/>
 	</node>
-	<node index="19" name="bhead_R" kind="mesh"
+	<node index="20" name="bhead_R" kind="mesh"
 		parent="0"
 		child="-1"
-		brother_next="20"
-		brother_prev="18"
+		brother_next="21"
+		brother_prev="2"
 		draw_mtx="on"
 		billboard="off"
 		scale="0.500000 0.500000 0.500000"
@@ -11053,16 +11068,30 @@
 	>
 		<display index="0" material="10" polygon="26" priority="0"/>
 	</node>
-	<node index="20" name="hikari01" kind="mesh"
+	<node index="21" name="hikari" kind="null"
 		parent="0"
+		child="22"
+		brother_next="24"
+		brother_prev="20"
+		draw_mtx="off"
+		billboard="off"
+		scale="-1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="0"
+	>
+	</node>
+	<node index="22" name="hikari01" kind="mesh"
+		parent="21"
 		child="-1"
-		brother_next="21"
-		brother_prev="19"
+		brother_next="23"
+		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.500000 1.500000 -1.500000"
-		rotate="146.335205 -3.342529 -161.691650"
-		translate="0.051758 233.343994 244.070313"
+		scale="1.500000 1.500000 1.500000"
+		rotate="33.664795 -3.342529 -18.308350"
+		translate="-0.051758 233.343994 244.070313"
 		visibility="off"
 		display_size="1"
 		vertex_size="332" polygon_size="144"
@@ -11073,16 +11102,16 @@
 	>
 		<display index="0" material="3" polygon="27" priority="0"/>
 	</node>
-	<node index="21" name="hikari02" kind="mesh"
-		parent="0"
+	<node index="23" name="hikari02" kind="mesh"
+		parent="21"
 		child="-1"
-		brother_next="22"
-		brother_prev="20"
+		brother_next="-1"
+		brother_prev="22"
 		draw_mtx="on"
 		billboard="off"
-		scale="0.699951 0.699951 -0.699951"
-		rotate="0.000000 -180.000000 0.000000"
-		translate="0.643311 465.114258 213.877686"
+		scale="0.699951 0.699951 0.699951"
+		rotate="0.000000 0.000000 0.000000"
+		translate="-0.643311 465.114258 213.877686"
 		visibility="off"
 		display_size="1"
 		vertex_size="12" polygon_size="4"
@@ -11093,16 +11122,30 @@
 	>
 		<display index="0" material="4" polygon="28" priority="0"/>
 	</node>
-	<node index="22" name="hikari03" kind="mesh"
+	<node index="24" name="hikari_f" kind="null"
 		parent="0"
-		child="-1"
-		brother_next="23"
+		child="25"
+		brother_next="26"
 		brother_prev="21"
+		draw_mtx="off"
+		billboard="off"
+		scale="-1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="0"
+	>
+	</node>
+	<node index="25" name="hikari03" kind="mesh"
+		parent="24"
+		child="-1"
+		brother_next="-1"
+		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 -1.000000"
-		rotate="95.128906 117.905029 0.000000"
-		translate="0.431641 428.278809 -146.408447"
+		scale="1.000000 1.000000 1.000000"
+		rotate="-77.963379 -115.145264 0.000000"
+		translate="-186.437256 51.681885 -185.283936"
 		visibility="off"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -11113,31 +11156,25 @@
 	>
 		<display index="0" material="5" polygon="29" priority="0"/>
 	</node>
-	<node index="23" name="kemuri01" kind="mesh"
+	<node index="26" name="kage" kind="null"
 		parent="0"
-		child="-1"
-		brother_next="24"
-		brother_prev="22"
-		draw_mtx="on"
+		child="27"
+		brother_next="30"
+		brother_prev="24"
+		draw_mtx="off"
 		billboard="off"
-		scale="0.699951 0.699951 -0.699951"
-		rotate="90.000000 151.273193 0.000000"
-		translate="21.157959 0.000000 -3.752686"
-		visibility="off"
-		display_size="1"
-		vertex_size="12" polygon_size="4"
-		triangle_size="0" quad_size="4"
-		volume_min="-0.292725 0.000000 0.007080"
-		volume_max="0.292725 0.000000 0.371582"
-		volume_r="0.473145"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="0"
 	>
-		<display index="0" material="20" polygon="33" priority="0"/>
 	</node>
-	<node index="24" name="kshad" kind="mesh"
-		parent="0"
+	<node index="27" name="kshad" kind="mesh"
+		parent="26"
 		child="-1"
-		brother_next="25"
-		brother_prev="23"
+		brother_next="28"
+		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
@@ -11153,31 +11190,11 @@
 	>
 		<display index="0" material="0" polygon="30" priority="0"/>
 	</node>
-	<node index="25" name="res_pera" kind="mesh"
-		parent="0"
+	<node index="28" name="res_shdw" kind="mesh"
+		parent="26"
 		child="-1"
-		brother_next="26"
-		brother_prev="24"
-		draw_mtx="on"
-		billboard="off"
-		scale="1.000000 1.000000 -1.000000"
-		rotate="90.000000 157.163330 0.000000"
-		translate="20.009521 34.275635 -15.362305"
-		visibility="on"
-		display_size="1"
-		vertex_size="4" polygon_size="1"
-		triangle_size="0" quad_size="1"
-		volume_min="-0.475342 -0.117676 -0.286865"
-		volume_max="0.447510 0.000000 0.153809"
-		volume_r="0.555176"
-	>
-		<display index="0" material="19" polygon="34" priority="0"/>
-	</node>
-	<node index="26" name="res_shdw" kind="mesh"
-		parent="0"
-		child="-1"
-		brother_next="27"
-		brother_prev="25"
+		brother_next="29"
+		brother_prev="27"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.518555 1.000000 -1.594971"
@@ -11193,16 +11210,16 @@
 	>
 		<display index="0" material="1" polygon="31" priority="0"/>
 	</node>
-	<node index="27" name="reshad" kind="mesh"
-		parent="0"
+	<node index="29" name="reshad" kind="mesh"
+		parent="26"
 		child="-1"
-		brother_next="28"
-		brother_prev="26"
+		brother_next="-1"
+		brother_prev="28"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 -180.000000 0.000000"
-		translate="18.719971 0.755859 4.576904"
+		rotate="-0.287598 -180.000000 0.000000"
+		translate="-14.824463 1.257568 -5.283203"
 		visibility="on"
 		display_size="1"
 		vertex_size="8" polygon_size="4"
@@ -11213,11 +11230,79 @@
 	>
 		<display index="0" material="2" polygon="32" priority="0"/>
 	</node>
-	<node index="28" name="stone_w" kind="mesh"
+	<node index="30" name="kemuri_eff" kind="null"
+		parent="0"
+		child="31"
+		brother_next="32"
+		brother_prev="26"
+		draw_mtx="off"
+		billboard="off"
+		scale="-1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="0"
+	>
+	</node>
+	<node index="31" name="kemuri01" kind="mesh"
+		parent="30"
+		child="-1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="off"
+		scale="0.699951 0.699951 0.699951"
+		rotate="-90.000000 28.726807 0.000000"
+		translate="-21.157959 0.000000 -3.752686"
+		visibility="off"
+		display_size="1"
+		vertex_size="12" polygon_size="4"
+		triangle_size="0" quad_size="4"
+		volume_min="-0.292725 0.000000 0.007080"
+		volume_max="0.292725 0.000000 0.371582"
+		volume_r="0.473145"
+	>
+		<display index="0" material="20" polygon="33" priority="0"/>
+	</node>
+	<node index="32" name="pera" kind="null"
+		parent="0"
+		child="33"
+		brother_next="34"
+		brother_prev="30"
+		draw_mtx="off"
+		billboard="off"
+		scale="-1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="0"
+	>
+	</node>
+	<node index="33" name="res_pera" kind="mesh"
+		parent="32"
+		child="-1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="-90.000000 22.836670 -3.917725"
+		translate="15.197510 34.351563 -15.906250"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.475342 -0.117676 -0.286865"
+		volume_max="0.447510 0.000000 0.153809"
+		volume_r="0.555176"
+	>
+		<display index="0" material="19" polygon="34" priority="0"/>
+	</node>
+	<node index="34" name="stone_w" kind="mesh"
 		parent="0"
 		child="-1"
 		brother_next="-1"
-		brother_prev="27"
+		brother_prev="32"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
