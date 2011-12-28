@@ -857,7 +857,6 @@ sub_rndmatch_end:
   IF $i_power_off == TRUE THEN
 
     _BALLOONWIN_OBJMSG_POS( msg_rndmatch_00, SCWK_TARGET_OBJID, POS_DL )
-	  _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
   ELSE
     //BPälìæèàóù
