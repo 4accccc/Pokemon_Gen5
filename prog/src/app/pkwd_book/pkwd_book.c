@@ -1404,7 +1404,8 @@ static GFL_PROC_RESULT PkwdBookProc_Init( GFL_PROC *proc, int *seq, void *pwk, v
 	wk->print_que = PRINTSYS_QUE_Create( wk->heapID );
 	//
 	// WORDSET生成
-	wk->Wordset = WORDSET_Create( wk->heapID );
+//	wk->Wordset = WORDSET_Create( wk->heapID );
+	wk->Wordset = WORDSET_CreateEx( WORDSET_DEFAULT_SETNUM, 64, wk->heapID );
 	
 	// 選択肢ウインドウ用
 	wk->pAppTask 	= 0;
@@ -5033,6 +5034,8 @@ static void _strbuf_print( PKWD_BOOK_MAIN_WORK *wk, PRINT_UTIL *print_util, PRIN
 static void pwb_init_meswin( PKWD_BOOK_MAIN_WORK * wk )
 {
 	STRBUF		*str;
+	STRBUF		*str2;
+	s32			id;
 	
 	// 会話ウィンドウセット(キャラデータを転送)
 	BmpWinFrame_GraphicSet( GFL_BG_FRAME0_S, 1, 9, MENU_TYPE_SYSTEM, wk->heapID);
@@ -5047,10 +5050,16 @@ static void pwb_init_meswin( PKWD_BOOK_MAIN_WORK * wk )
 	//
 	// clear
 	pwb_clear_canvas( wk, STR_SUB, PWB_CVS_BOOK_WIN, 15 );
+	// シナリオ番号
+	id = pwb_get_scenario_curpos( wk, wk->ScenarioCurPos );
 	// メッセージ表示
+	str2 = GFL_STR_CreateBuffer( 128, wk->heapID );
+	WORDSET_RegisterPokewoodMovieTitle( wk->Wordset, 0, id );
 	str = GFL_MSG_CreateString( wk->MsgData[0], pwb_winmes_tbl[0] );
-	PRINT_UTIL_PrintColor( &wk->PrintUtil[PWB_CVS_BOOK_WIN],  wk->print_que, 0, 0, str, wk->font, PRINTSYS_LSB_Make(1,2,15) );
+	WORDSET_ExpandStr( wk->Wordset, str2, str );
+	PRINT_UTIL_PrintColor( &wk->PrintUtil[PWB_CVS_BOOK_WIN],  wk->print_que, 0, 0, str2, wk->font, PRINTSYS_LSB_Make(1,2,15) );
 	GFL_STR_DeleteBuffer( str );
+	GFL_STR_DeleteBuffer( str2 );
 }
 
 //--------------------------------------------------------------------------------------------
