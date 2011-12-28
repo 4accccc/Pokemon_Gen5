@@ -400,7 +400,7 @@ class CMission
 
     @unit = c_def_list.search( work[COLUMN_UNIT], "FMISSION_UNIT_", "単位系")
     @end_type = c_def_list.search( work[COLUMN_END_TYPE], "FMISSION_ENDTYPE_", "終了条件" ) 
-    @time_bonus = work[COLUMN_TBONUS].to_i
+    @time_bonus = c_def_list.search( work[COLUMN_TBONUS], "FMISSION_TBONUS_", "タイムボーナス" )
     @pay_bonus = c_def_list.search( work[COLUMN_PAY_BONUS], "FMISSION_PAY_", "報酬ボーナスタイプ" )
     
     ev_flag = work[COLUMN_OPEN_FLAG]
