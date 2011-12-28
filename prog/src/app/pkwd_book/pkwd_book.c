@@ -1184,7 +1184,7 @@ static s16  pwb_get_empty( PKWD_BOOK_MAIN_WORK *wk, const s32 num );
 // bgの設定
 static void pwb_init_bg( PKWD_BOOK_MAIN_WORK* wk );
 static void pwb_init_bg2( PKWD_BOOK_MAIN_WORK* wk, const s32 type, const s32 pnum );
-static void pwb_chg_bglogo( PKWD_BOOK_MAIN_WORK* wk, const s32 num );
+static void pwb_chg_bglogo( PKWD_BOOK_MAIN_WORK* wk, const s32 num, const s32 mode );
 //
 // objの設定
 static void pwb_init_obj_res_font( PKWD_BOOK_MAIN_WORK* wk, const s32 drawtype );
@@ -1403,8 +1403,7 @@ static GFL_PROC_RESULT PkwdBookProc_Init( GFL_PROC *proc, int *seq, void *pwk, v
 	// PRINT_QUE作成
 	wk->print_que = PRINTSYS_QUE_Create( wk->heapID );
 	//
-	// WORDSET生成
-//	wk->Wordset = WORDSET_Create( wk->heapID );
+	// WORDSET生成(タイトル文字を含んだメッセージ用に大きく取っておく)
 	wk->Wordset = WORDSET_CreateEx( WORDSET_DEFAULT_SETNUM, 64, wk->heapID );
 	
 	// 選択肢ウインドウ用
@@ -1650,7 +1649,7 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	//---------------
 	pwb_init_bg(  wk );
 	pwb_init_bg2( wk, GFL_BG_FRAME1_S, PLTID_SUB_BG_CMN );
-	pwb_chg_bglogo( wk, 0 );
+	pwb_chg_bglogo( wk, 0, 0 );
 	
 	//------------------------
 	// フォントパレットセット
@@ -2005,35 +2004,71 @@ static void pwb_init_bg2( PKWD_BOOK_MAIN_WORK* wk, const s32 type, const s32 pnu
  *
  *	@param	PKWD_BOOK_MAIN_WORK* wk
  *	@param	const s32			(番号)
+ *	@param	const s32			(0:初期化、1:通常)
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
-static void pwb_chg_bglogo( PKWD_BOOK_MAIN_WORK* wk, const s32 num )
+static void pwb_chg_bglogo( PKWD_BOOK_MAIN_WORK* wk, const s32 num, const s32 mode )
 {
 	u16		*adr;
 	const PKWD_BOOK_BGCHR_DATA	*cadr = &pwc_bgchr_logo_tbl[0];
 	const PKWD_BOOK_BGSCN_DATA	*sadr = &pwc_bgscn_logo_tbl[0];
 	//
-	ARCHANDLE		*handle;
+	ARCHANDLE			*handle;
+	void				*cbuffer;
+	NNSG2dCharacterData	*cdata;
+	void				*sbuffer;
+	NNSG2dScreenData	*sdata;
 	//
-	handle	= GFL_ARC_OpenDataHandle( ARCID_B_SCENARIO_GRA, wk->heapID );
-	//
-	// キャラ転送
-	cadr += num;
-	GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, cadr->arcid, cadr->frmnumber, cadr->offset, 0, 0, wk->heapID );
-	// スクリーン転送
-	sadr += num;
-	GFL_ARCHDL_UTIL_TransVramScreen( handle, sadr->arcid, sadr->frmnumber, sadr->offset, 0, 0, wk->heapID );
-	//
-	// 終了
-	GFL_ARC_CloseDataHandle( handle );
-	//
-	//--------------------
-	// スクリーンの書き換え
-	//--------------------
-	GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_M, 0, 0, 32, 24, PLTID_MAIN_LOGO );
-	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
+	// 通常時
+	if(mode == 1){
+		handle	= GFL_ARC_OpenDataHandle( ARCID_B_SCENARIO_GRA, wk->heapID );
+		//
+		// スクリーン読み込み
+		sadr += num;
+		sbuffer = GFL_ARCHDL_UTIL_LoadScreen( handle, sadr->arcid, FALSE, &sdata, wk->heapID );
+		GFL_BG_LoadScreenBuffer( GFL_BG_FRAME2_M, sdata->rawData, 0x800 );
+		GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_M, 0, 0, 32, 24, PLTID_MAIN_LOGO );
+		// 転送
+		GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
+		//
+		// キャラ読み込み
+		cadr += num;
+		cbuffer = GFL_ARCHDL_UTIL_LoadBGCharacter( handle, cadr->arcid, FALSE, &cdata, wk->heapID );
+		// 転送
+		NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG2_CHAR_MAIN, 0, cdata->pRawData, 0x4000 );
+		// 終了
+		GFL_ARC_CloseDataHandle( handle );
+		
+		// バッファ破棄
+		GFL_HEAP_FreeMemory( sbuffer );
+		GFL_HEAP_FreeMemory( cbuffer );
+	}
+	// 初期化時
+	else{
+		// 本来はこちらは使いたくないのだが、
+		// なぜか(初期化時に)うまく転送されないことがあったので、
+		// 初期化時のみこちらを使用する
+		// (たぶん、転送が間に合わかなった?ため)
+		handle	= GFL_ARC_OpenDataHandle( ARCID_B_SCENARIO_GRA, wk->heapID );
+		//
+		// キャラ転送
+		cadr += num;
+		GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, cadr->arcid, cadr->frmnumber, cadr->offset, 0, 0, wk->heapID );
+		// スクリーン転送
+		sadr += num;
+		GFL_ARCHDL_UTIL_TransVramScreen( handle, sadr->arcid, sadr->frmnumber, sadr->offset, 0, 0, wk->heapID );
+		//
+		// 終了
+		GFL_ARC_CloseDataHandle( handle );
+		//
+		//--------------------
+		// スクリーンの書き換え
+		//--------------------
+		GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_M, 0, 0, 32, 24, PLTID_MAIN_LOGO );
+		GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -3439,7 +3474,7 @@ static void pwb_key_book( PKWD_BOOK_MAIN_WORK * wk )
 		//
 		// ロゴ表示
 		tmp = pwb_get_title_no( wk, wk->FlagBuffer[wk->ScenarioCurPos].openid );
-		pwb_chg_bglogo( wk, tmp );
+		pwb_chg_bglogo( wk, tmp, 1 );
 		//
 		// 決定時は非表示からタッチの場合がある
 		// =>表示タイミングをずらしている
