@@ -1690,10 +1690,10 @@
 ランダムマッチには
 さんか　できません▼
 しばらく　じかんが　たちましたら
-また　おこしください</Text>
+また　おこしください▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-21T12:32:41" />
+				Time="2011-12-28T08:29:56" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1701,7 +1701,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>お客様！▼
+			<Text>お客さま！▼
 ランダムマッチの　参加中に
 本体の電源が　切れましたね▼
 ランダムマッチには
@@ -1710,7 +1710,7 @@
 また　お越しください▼</Text>
 			<TextModifiedBy
 				User="shimoyamada:W00184"
-				Time="2011-12-21T12:31:56" />
+				Time="2011-12-28T08:30:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
