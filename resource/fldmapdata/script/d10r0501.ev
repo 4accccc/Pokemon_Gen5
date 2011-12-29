@@ -680,8 +680,8 @@ EVENT_START ev_pos_d10r0501_swsage1_vs
   ENDSWITCH
   _OBJ_ANIME_WAIT()
   
-  //【仮】ゲーチス：まさか！（メッセージラベル仮／20111228 水口）
-  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_swsage01_15w , msg_d10r0501_swsage01_15b , D10R0501_SWSAGE1_01 , POS_UR)
+  //ゲーチス：まさか！
+  _BALLOONWIN_OBJMSG_WB( msg_d10r0501_swsage01_19w , msg_d10r0501_swsage01_19b , D10R0501_SWSAGE1_01 , POS_UR)
   _MSGWIN_CLOSE()
 
   //ゲーチス戦をCALL
