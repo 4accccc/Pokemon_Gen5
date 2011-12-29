@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="ohtani_mayo" host="W00238" date="2011-12-21T20:45:57" source="stay.mb"/>
+	<create user="ohtani_mayo" host="W00238" date="2011-12-28T11:56:58" source="stay_03.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
@@ -20,13 +20,11 @@
 	tolerance_color="2"
 />
 
-<mat_color_data size="804">
-	25 0 0 1 2 4 5 6 8 9
-	11 12 14 15 17 18 19 21 22 23
-	24 25 26 27 27 28 28 28 28 28
-	28 28 28 28 28 28 28 28 28 28
-	28 28 26 25 23 20 17 14 11 8
-	5 3 0 0 0 0 0 0 0 0
+<mat_color_data size="1606">
+	25 0 0 2 5 7 10 13 15 18
+	21 23 25 27 29 30 31 31 31 31
+	31 31 31 31 31 31 31 31 31 28
+	19 9 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
@@ -64,10 +62,10 @@
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 3
+	11 20 28 31 30 29 26 23 19 15
+	11 7 3 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 3 11 20 28 31 31
-	30 29 27 25 23 21 18 15 13 10
-	7 5 2 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
@@ -101,10 +99,92 @@
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 2 5 7 10 13
+	15 18 21 23 25 27 29 30 31 31
+	31 29 28 26 23 20 17 14 11 8
+	5 3 2 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 25 25 24 24 24
+	23 23 22 21 21 20 20 19 19 19
+	19 19 19 19 20 20 21 21 22 23
+	23 24 24 24 25 25 25 24 24 24
+	23 23 22 21 21 20 20 19 19 19
+	19 19 19 19 20 20 21 21 22 23
+	23 24 24 24 25 25 25 24 24 24
+	23 23 22 21 21 20 20 19 19 19
+	19 19 19 19 20 20 21 21 22 23
+	23 24 24 24 25 25 25 24 24 24
+	23 23 22 21 21 20 20 19 19 19
+	19 19 19 19 20 20 21 21 22 23
+	23 24 24 24 25 25 25 24 24 24
+	23 23 22 21 21 20 20 19 19 19
+	19 19 19 19 20 20 21 21 22 23
+	23 24 24 24 25 25 25 24 24 24
+	23 23 22 21 21 20 20 19 19 19
+	19 19 19 19 20 20 21 21 22 23
+	23 24 24 24 25 25 25 24 24 24
+	23 23 22 21 21 20 20 19 19 19
+	19 19 19 19 20 20 21 21 22 23
+	23 24 24 24 25 25 25 24 24 24
+	23 23 22 21 21 20 20 19 19 19
+	19 19 19 19 20 20 21 21 22 23
+	23 24 24 24 25 25 25 24 24 24
+	23 23 22 21 21 20 20 19 19 19
+	19 19 19 19 20 20 21 21 22 23
+	23 24 24 24 25 25 25 24 24 24
+	23 23 22 21 21 20 20 19 19 19
+	19 19 19 19 20 20 21 21 22 23
+	23 24 24 24 25 25 25 24 24 24
+	23 23 22 21 21 20 20 19 19 19
+	19 19 19 19 20 20 21 21 22 23
+	23 24 24 24 25 25 25 24 24 24
+	23 23 22 21 21 20 20 19 19 19
+	19 19 19 19 20 20 21 21 22 23
+	23 24 24 24 25 25 25 24 24 24
+	23 23 22 21 21 20 20 19 19 19
+	19 19 19 19 20 20 21 21 22 23
+	23 24 24 24 25 25 25 24 24 24
+	23 23 22 21 21 20
 </mat_color_data>
 
-<mat_color_anm_array size="3">
+<mat_color_anm_array size="4">
 	<mat_color_anm index="0" material_name="effect_02">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
@@ -135,7 +215,22 @@
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
 		<polygon_alpha frame_step="1" data_size="401" data_head="403"/>
 	</mat_color_anm>
-	<mat_color_anm index="2" material_name="poke_white">
+	<mat_color_anm index="2" material_name="kira_02">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="16"/>
+		<ambient_g frame_step="1" data_size="1" data_head="16"/>
+		<ambient_b frame_step="1" data_size="1" data_head="16"/>
+		<specular_r frame_step="1" data_size="1" data_head="1"/>
+		<specular_g frame_step="1" data_size="1" data_head="1"/>
+		<specular_b frame_step="1" data_size="1" data_head="1"/>
+		<emission_r frame_step="1" data_size="1" data_head="16"/>
+		<emission_g frame_step="1" data_size="1" data_head="16"/>
+		<emission_b frame_step="1" data_size="1" data_head="16"/>
+		<polygon_alpha frame_step="1" data_size="401" data_head="804"/>
+	</mat_color_anm>
+	<mat_color_anm index="3" material_name="poke_white">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
@@ -148,7 +243,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="1"/>
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="1" data_head="448"/>
+		<polygon_alpha frame_step="1" data_size="401" data_head="1205"/>
 	</mat_color_anm>
 </mat_color_anm_array>
 
