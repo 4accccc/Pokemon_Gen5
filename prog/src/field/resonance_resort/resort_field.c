@@ -4398,7 +4398,7 @@ static void RESORT_FIELD_AppearFun( RESORT_SYSTEM *p_sys, GAMEDATA *p_gamedata, 
         break;
       }
 
-      if( cnt++ >500 )
+      if( cnt++ >100 )
       {
         //–³ŒÀƒ‹[ƒv–h~
         break;

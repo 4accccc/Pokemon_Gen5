@@ -2548,7 +2548,11 @@ void RESORT_PROXY_DATA_SetCommData( RESORT_PROXY_DATA *p_wk, const MYSTATUS *cp_
   }
 
   p_wk->comm_type = comm_type;
-  p_wk->want_job  = 0;
+  {
+    u16 id  = MyStatus_GetID_Low( cp_status );
+    u32 ver = MyStatus_GetRomCode( cp_status );
+    p_wk->want_job  = RESORT_DATA_GetDefaultWantJob( id, ver );
+  }
 
   RESORT_BASIC1_DATA_SetMyStatus( &p_wk->basic1, cp_status );
 
@@ -4397,7 +4401,7 @@ u32 RESORT_OWNER_DATA_GetWantJob( const RESORT_RECV_DATA *cp_wk, const MYSTATUS 
 
   if( want_job == RESORT_SHOP_ID_NULL )
   {
-    return RESORT_DATA_GetDefaultWantJob( want_job, id, ver );
+    return RESORT_DATA_GetDefaultWantJob( id, ver );
   }
   else
   {
@@ -4417,7 +4421,7 @@ u32 RESORT_OWNER_DATA_GetWantJob( const RESORT_RECV_DATA *cp_wk, const MYSTATUS 
  *	@return èCê≥å„ÇÃÇ»ÇËÇΩÇ¢Ç®ìXIDÇèÓïÒ
  */
 //-----------------------------------------------------------------------------
-u32 RESORT_DATA_GetDefaultWantJob( u16 want_job, u16 id, u16 ver )
+u32 RESORT_DATA_GetDefaultWantJob( u16 id, u16 ver )
 {
   {
     u32 shop_type = sc_resort_institution_release_tbl[id%RESORT_INSTITUTION_TBL_MAX][0];
@@ -5181,7 +5185,7 @@ u16 RESORT_DATA_GetWantJobModify( u16 want_job, u16 id, u16 ver, BOOL is_special
 
   if( (want_job == RESORT_SHOP_ID_NULL) || (!is_dendou && shop_type == RESORT_RESIDENT_TYPE_NURSERY ) || ((lv!=0) && !is_special ) )
   {
-    return RESORT_DATA_GetDefaultWantJob( want_job, id, ver );
+    return RESORT_DATA_GetDefaultWantJob( id, ver );
   }
     
   return want_job;

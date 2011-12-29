@@ -76,7 +76,7 @@ static inline void Debug_Resort_SetRecv( RESORT_RECV_DATA *p_wk, GAMEDATA *p_gam
 
   //なりたいお店
   {
-    RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_WANT_JOB, RESORT_DATA_GetDefaultWantJob( 0, trainerID, ver ) );
+    RESORT_RECV_DATA_SetData( p_wk, RESORT_DATA_PARAM_WANT_JOB, RESORT_DATA_GetDefaultWantJob( trainerID, ver ) );
   }
 
   //名前セット

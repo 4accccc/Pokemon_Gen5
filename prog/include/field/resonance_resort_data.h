@@ -56,7 +56,7 @@ typedef enum
 //=============================================================================
 extern void RESORT_DATA_Boot( const SAVE_CONTROL_WORK* ctrl );
 
-extern u32 RESORT_DATA_GetDefaultWantJob( u16 want_job, u16 id, u16 ver );
+extern u32 RESORT_DATA_GetDefaultWantJob( u16 id, u16 ver );
 
 //=============================================================================
 /**
