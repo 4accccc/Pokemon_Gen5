@@ -736,6 +736,8 @@ VMCMD_RESULT EvCmdSetSoftReset( VMHANDLE * core, void *wk )
   default:
     GF_ASSERT(0);
   }
+
+  return VMCMD_RESULT_CONTINUE;
 }
 
 //======================================================================
