@@ -635,9 +635,9 @@
 		<language name="JPN_KANJI" width="256">E『……　……　……</language>
 	</row>
 	<row id="pw_event2_hero_1">
-		<language name="JPN" width="256">E『どうしたんだ……
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『どうしたんだ……
 そらが……　ゆれている……</language>
-		<language name="JPN_KANJI" width="256">E『どうしたんだ……
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『どうしたんだ……
 空が　ゆれている……</language>
 	</row>
 	<row id="pw_event2_enemy_1">
@@ -682,7 +682,7 @@
 わるいこと　なんかじゃ　ない……▼
 ……でも　じぶんたちの　つごうだけで
 ほかの　いきものたちを▽
-ほろぼしてしおう　なんて▽
+ほろぼしてしまおう　なんて▽
 みとめるわけには　いかないんだ</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『だから……
 今まで　この星に　いなかった▽
@@ -702,7 +702,7 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『オレたち　にんげん……
 そして　ポケモンと　エイリアン……▼
 ……みんなが　いっしょに　くらせる
-ほうほうを　さがせば　いいじゃないか？</language>
+ほうほうを　さがさないか？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『オレたち　人間……
 そして　ポケモンと　エイリアン……▼
 ……みんなが　一緒に　暮らせる

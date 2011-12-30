@@ -561,15 +561,15 @@
 さて……
 どうにかして　あのひとを▽
 ここから　にがさないと……▼
-どうにかして　Ｍ・Ｂの　ちゅういを
+よし　Ｍ・Ｂの　ちゅういを
 ひいて　じかんを　かせぐか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:48" />
+				Time="2011-12-30T07:36:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:48" />
+				Time="2011-12-30T07:36:29" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -577,15 +577,15 @@
 さて……
 どうにかして　あの人を▽
 ここから　逃がさないと……▼
-どうにかして　Ｍ・Ｂの　注意を
+よし　Ｍ・Ｂの　注意を
 ひいて　時間を　かせぐか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:48" />
+				Time="2011-12-30T07:36:29" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:48" />
+				Time="2011-12-30T07:36:29" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1707,26 +1707,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『ハ……　ハハハ……
-もう　ぼくは　おしまいだ……</Text>
+もう　ぼくは　オシマイだ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-30T05:10:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-30T05:10:52" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ハ……　ハハハ……
-もう　僕は　おしまいだ……</Text>
+もう　僕は　オシマイだ……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-30T05:10:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-30T05:10:52" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

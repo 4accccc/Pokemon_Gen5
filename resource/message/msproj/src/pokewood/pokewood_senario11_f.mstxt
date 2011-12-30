@@ -1513,27 +1513,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>E『どうしたんだろう……
+			<Text>[Name:TrainerName Idx="1" ]『どうしたんだろう……
 そらが……　ゆれている……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T03:50:53" />
+				Time="2011-12-30T05:10:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T03:50:53" />
+				Time="2011-12-30T05:10:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>E『どうしたんだろう……
+			<Text>[Name:TrainerName Idx="1" ]『どうしたんだろう……
 空が　ゆれている……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T03:50:53" />
+				Time="2011-12-30T05:10:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T03:50:53" />
+				Time="2011-12-30T05:10:41" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1676,15 +1676,15 @@
 わるいこと　なんかじゃ　ない……▼
 ……でも　じぶんたちの　つごうだけで
 ほかの　いきものたちを▽
-ほろぼしてしおう　なんて▽
+ほろぼしてしまおう　なんて▽
 みとめるわけには　いかないよ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T03:50:53" />
+				Time="2011-12-30T05:10:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T03:50:53" />
+				Time="2011-12-30T05:10:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2264,27 +2264,27 @@
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『くっ……　なにコレ？▼
 きゅうに……　からだが……
-しびれて　きたぞ……</Text>
+しびれて　きた……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-30T05:10:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-30T05:10:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『くっ……　何コレ？▼
 急に……　全身が……
-しびれて　きたぞ……</Text>
+しびれて　きた……</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-30T05:10:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:17" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-30T05:10:41" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

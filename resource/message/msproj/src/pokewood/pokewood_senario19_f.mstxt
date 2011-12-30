@@ -133,15 +133,15 @@
 この　やぼったい　トレーナーに▽
 やぼったい　[Name:PokemonNickname Idx="0" ]は……▼
 さあ！　ミゲル！！
-われらの　かれいな　コンビネーションで▽
+われらの　コンビネーションで▽
 おこづかいを　はぎとって　やりましょう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T04:51:53" />
+				Time="2011-12-30T05:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-28T04:51:53" />
+				Time="2011-12-30T05:11:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -150,15 +150,15 @@
 この　やぼったい　トレーナーに▽
 やぼったい　[Name:PokemonNickname Idx="0" ]は……▼
 さあ！　ミゲル！！
-われらの　美しい　コンビネーションで▽
+我らの　美しい　コンビネーションで▽
 お小遣いを　はぎとって　やりましょう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:59" />
+				Time="2011-12-30T05:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:59" />
+				Time="2011-12-30T05:11:11" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -186,14 +186,14 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『こっ　こんにちは……
-めと　めが　あってしまいましたね……</Text>
+目と　目が　あってしまいましたね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-24T12:53:40" />
+				Time="2011-12-30T05:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-24T12:53:40" />
+				Time="2011-12-30T05:11:11" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -323,14 +323,14 @@
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『すごい……
 あなたの　ドーブルも▽
-やるき　じゅうぶん　みたいですね！</Text>
+やる気　十分　みたいですね！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T05:24:53" />
+				Time="2011-12-30T05:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-25T05:24:53" />
+				Time="2011-12-30T05:11:11" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -606,31 +606,31 @@
 			Language="JPN">
 			<Text>ドーブル『ブルーッ！　ブルッ！！▼
 （なんですか！　ミゲル！！▼
-なぜ　あんな　わざ　つかわせるのです！
+なぜ　あんな　わざ　つかわせる！！
 わたくし　じまんの　ハサミギロチンで▽
-まっぷつたつに　させなさいっ！</Text>
+まっぷたつに　させなさいっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-12-30T05:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-12-30T05:11:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ドーブル『ブルーッ！　ブルッ！！▼
 （何ですか！　ミゲル！！▼
-なぜ　あんな　わざ　使わせるのです！
+なぜ　あんな　わざ　使わせる！！
 私　自慢の　ハサミギロチンで▽
 真っ二つに　させなさいっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-12-30T05:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-12-30T05:11:11" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1067,27 +1067,27 @@
 			Language="JPN">
 			<Text>ドーブル『ブルッ！　ブルーッ！！▼
 （フッ！！　あたりまえですっ！！
-すぐに　とどめを　さしてあげましょう！</Text>
+とどめを　さしてあげましょう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-24T12:53:40" />
+				Time="2011-12-30T05:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-24T12:53:40" />
+				Time="2011-12-30T05:11:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ドーブル『ブルッ！　ブルーッ！！▼
 （フッ！！　当たり前ですっ！！
-すぐに　とどめを　さしてあげましょう！</Text>
+とどめを　さしてあげましょう！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T06:40:05" />
+				Time="2011-12-30T05:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-03T06:40:05" />
+				Time="2011-12-30T05:11:11" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1968,29 +1968,29 @@
 			Language="JPN">
 			<Text>ドーブル『ブルッ！　ブルブルッ！！▼
 （これが　わたしの　じつりょくっ！
-キミような　やぼったい　トレーナーに▽
+キミのように　サエない　トレーナーに▽
 まけるはずが　ないのだよっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-24T12:53:40" />
+				Time="2011-12-30T05:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-24T12:53:40" />
+				Time="2011-12-30T05:11:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ドーブル『ブルッ！　ブルブルッ！！▼
 （これが　私の　実力っ！
-キミような　やぼったい　トレーナーに▽
+キミのように　冴えない　トレーナーに▽
 負けるはずが　ないのだよっ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:59" />
+				Time="2011-12-30T05:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:59" />
+				Time="2011-12-30T05:11:11" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2240,15 +2240,15 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『ハアッ　ハアッ……▼
-なんて　タフなんだ……
+なんて　タフなの……
 ミゲルさんの　ドーブル……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-12-30T05:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T03:44:22" />
+				Time="2011-12-30T05:11:11" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2692,37 +2692,37 @@
 			Language="JPN">
 			<Text>ドーブル『ブルブルッ！▼
 （やれやれ　ミゲルめ……
-しかし　まあ　しかたないでしょうな……▼
+しかし　しかたないでしょうな……▼
 この　わたしの　みりょくの　まえでは
-にんげんで　さえ　メロメロに　なるのは▽
+にんげんでさえ　メロメロに　なるのは▽
 しかたのないこと　ですからね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:59" />
+				Time="2011-12-30T05:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:59" />
+				Time="2011-12-30T05:11:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ドーブル『ブルブルッ！▼
 （やれやれ　ミゲルめ……
-恋に　目がくらんで　私を　交換とは……▼
+恋に　目がくらんで　私を交換とは……▼
 まあ　仕方が　ありませんかね……▼
 ひとたび　人に　捕まれば　交換されて
 人から人へと　流れ　渡り歩くのも▽
 我々　ポケモンの　定め……▼
-せいぜい　新しい　主に　飽きられぬよう
+せいぜい　新しい主に　飽きられぬよう
 勤めを　果たすと　しましょうか……
 </Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:59" />
+				Time="2011-12-30T05:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:59" />
+				Time="2011-12-30T05:11:11" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2910,28 +2910,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>ドーブル『ブルーッ！！　ブルッ！▼
-（ハハハ……　よわきに　なっている……
+（ハハハ　よわきに　なっている……
 よし……　いまが　チャンスですね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T05:09:57" />
+				Time="2011-12-30T05:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T05:09:57" />
+				Time="2011-12-30T05:11:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>ドーブル『ブルーッ！！　ブルッ！▼
-（ハハハ……　弱気に　なっている……
+（ハハハ　弱気に　なっている……
 よし……　今が　チャンスですね……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T05:09:57" />
+				Time="2011-12-30T05:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T05:09:57" />
+				Time="2011-12-30T05:11:11" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2967,31 +2967,31 @@
 		Label="pw_event7_enemy_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミゲル『えっ！？　ここで　このわざ……？▼
-（あれー！？　マジかよ！？
+			<Text>ミゲル『ここで　このわざ……？▼
+（ちょっと　マジかよ！？
 オレが　ドーブルに　もたせてる▽
 どうぐに　きが　ついてないのか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:54:39" />
+				Time="2011-12-30T05:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:54:39" />
+				Time="2011-12-30T05:11:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミゲル『えっ！？　ここで　このわざ……？▼
-（あれー！？　マジかよ！？
+			<Text>ミゲル『ここで　このわざ……？▼
+（ちょっと　マジかよ！？
 オレが　ドーブルに　持たせてる▽
 どうぐに　気が　ついてないのか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:54:39" />
+				Time="2011-12-30T05:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:54:39" />
+				Time="2011-12-30T05:11:11" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3199,33 +3199,33 @@
 		Label="pw_event7_enemy_5">
 		<LanguageCell
 			Language="JPN">
-			<Text>ミゲル『もっ　もんだいないっ！▼
-さあさあ！　しょうぶを　つづけようっ！▼
+			<Text>ミゲル『も　もんだいないっ！▼
+さあさあ　しょうぶを　つづけようっ！▼
 （あー　ヤベえ！　ヤベえ！
 ぜったい　ほんにんには　いえないこと▽
 ばかり　そうぞう　しちゃったぜ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:59" />
+				Time="2011-12-30T05:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:59" />
+				Time="2011-12-30T05:11:11" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>ミゲル『もっ　問題ないっ！▼
-さあさあ！　勝負を　続けようっ！▼
+			<Text>ミゲル『も　問題ないっ！▼
+さあさあ　勝負を　続けようっ！▼
 （あー　ヤベえ！　ヤベえ！
 絶対　本人には　言えないこと▽
 ばかり　想像　しちゃったぜ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:59" />
+				Time="2011-12-30T05:11:11" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:59" />
+				Time="2011-12-30T05:11:11" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

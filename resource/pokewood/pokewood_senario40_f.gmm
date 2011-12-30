@@ -472,10 +472,10 @@
 	<row id="pw_event1_hero_1">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『ふっ……
 それは　わたしも　おなじ！▼
-あくの　ちからに　まけたりしないよ！</language>
+あくの　ちからには　まけないよ！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『ふっ……
 それは　私も　同じ！▼
-悪の　力に　負けしないよ！</language>
+悪の　力には　負けないよ！</language>
 	</row>
 	<row id="pw_event1_enemy_1">
 		<language name="JPN" width="256">ハチクマン『ファファファ……▼
@@ -498,8 +498,8 @@
 我輩の　血も　踊るわっ！！</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『はあっ？</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『はあっ？</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]ガール『ハアッ？</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]ガール『ハアッ？</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
 		<language name="JPN" width="256">ハチクマン『グムム……▼
@@ -549,12 +549,12 @@
 		<language name="JPN" width="256">ハチクマン『きさま……▼
 しばらく　　あわぬ　あいだに
 ずいぶん　くちが　わるくなったな……▼
-[1:02:ポケモンニックネーム:0]キッド……
+[1:02:ポケモンニックネーム:0]ガール……
 きさまも　そろそろ　はんこうき　か……</language>
 		<language name="JPN_KANJI" width="256">ハチクマン『貴様……▼
 しばらく　　会わぬ間に
 ずいぶん　口が　悪くなったな……▼
-[1:02:ポケモンニックネーム:0]キッド……
+[1:02:ポケモンニックネーム:0]ガール……
 貴様も　そろそろ　反抗期か……</language>
 	</row>
 	<row id="pw_event3_hero_0">

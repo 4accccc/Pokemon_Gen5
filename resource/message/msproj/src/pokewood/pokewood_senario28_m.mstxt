@@ -1196,25 +1196,25 @@
 		Label="pw_event5_enemy_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『[Name:TrainerName Idx="1" ]……　ゴメン</Text>
+			<Text>モニカ『[Name:TrainerName Idx="1" ]……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T13:41:13" />
+				Time="2011-12-26T13:58:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T13:41:13" />
+				Time="2011-12-26T13:58:41" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『[Name:TrainerName Idx="1" ]……　ゴメン</Text>
+			<Text>モニカ『[Name:TrainerName Idx="1" ]……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T13:41:13" />
+				Time="2011-12-26T13:58:41" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T13:41:13" />
+				Time="2011-12-26T13:58:41" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

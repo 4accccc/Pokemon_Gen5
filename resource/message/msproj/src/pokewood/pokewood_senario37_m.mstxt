@@ -253,25 +253,25 @@
 		Label="pw_event0_react_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]『あくりょう　たいじだ</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『あくりょう　たいじだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:17" />
+				Time="2011-12-28T10:43:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:17" />
+				Time="2011-12-28T10:43:02" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]『悪霊退治だ</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『悪霊退治だ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:17" />
+				Time="2011-12-28T10:43:02" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:17" />
+				Time="2011-12-28T10:43:02" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1330,30 +1330,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>しょうじょ『もっと　よろこんで？
-よわい　おにいちゃん　でも
+よわい　おにいちゃん　でも▽
 はかいのまじん　ふっかつの▽
 たし　には　なるんだからさァ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-12T11:22:44" />
+				Time="2011-12-29T07:05:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-12T11:22:44" />
+				Time="2011-12-29T07:05:53" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>少女『もっと　よろこんで？
-よわい　おにいちゃん　でも
+よわい　おにいちゃん　でも▽
 はかいのまじん　ふっかつの▽
 たし　には　なるんだからさァ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-12T11:22:44" />
+				Time="2011-12-29T07:05:53" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-12T11:22:44" />
+				Time="2011-12-29T07:05:53" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

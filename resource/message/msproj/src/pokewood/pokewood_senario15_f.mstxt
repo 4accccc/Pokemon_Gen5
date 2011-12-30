@@ -674,25 +674,25 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:TrainerName Idx="1" ]『おなじ　じゃない！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『ちがう！！</Text>
 			<TextModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-30T05:11:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="mori:W00269"
-				Time="2011-10-14T09:40:18" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-30T05:11:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:TrainerName Idx="1" ]『同じ　じゃない！</Text>
+			<Text>[Name:TrainerName Idx="1" ]『違う！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:13" />
+				Time="2011-12-30T05:11:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:45:13" />
+				Time="2011-12-30T05:11:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -3189,16 +3189,16 @@
 かんがえても　みたまえよ▼
 わたしのように　はかいを　あいする
 はかいマニアが　いるのだよ？▼
-Ｍ・Ｂのような　マシンを　つくることを
+Ｍ・Ｂのようなマシンを　つくることを
 よろこびとする　マニアが　いても▽
 べつに　ふしぎでは　ないだろう？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:32" />
+				Time="2011-12-30T05:11:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:32" />
+				Time="2011-12-30T05:11:04" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -3208,16 +3208,16 @@
 考えて　みたまえよ▼
 私のように　破壊を　愛する
 破壊マニアが　いるのだよ？▼
-Ｍ・Ｂのような　マシンを　作ることを
+Ｍ・Ｂのようなマシンを　作ることを
 喜びとする　マニアが　いても▽
 別に　不思議では　ないだろう？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:32" />
+				Time="2011-12-30T05:11:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:08:32" />
+				Time="2011-12-30T05:11:04" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

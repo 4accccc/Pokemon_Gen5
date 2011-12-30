@@ -402,8 +402,8 @@
 （ここは　様子を　みるか？）</language>
 	</row>
 	<row id="pw_event0_react_hero_0">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『あくりょう　たいじだ</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『悪霊退治だ</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『あくりょう　たいじだ……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『悪霊退治だ……</language>
 	</row>
 	<row id="pw_event0_react_enemy_0">
 		<language name="JPN" width="256">しょうじょ『アハハ……
@@ -687,11 +687,11 @@
 	</row>
 	<row id="pw_event4_enemy_1">
 		<language name="JPN" width="256">しょうじょ『もっと　よろこんで？
-よわい　おにいちゃん　でも
+よわい　おにいちゃん　でも▽
 はかいのまじん　ふっかつの▽
 たし　には　なるんだからさァ……</language>
 		<language name="JPN_KANJI" width="256">少女『もっと　よろこんで？
-よわい　おにいちゃん　でも
+よわい　おにいちゃん　でも▽
 はかいのまじん　ふっかつの▽
 たし　には　なるんだからさァ……</language>
 	</row>

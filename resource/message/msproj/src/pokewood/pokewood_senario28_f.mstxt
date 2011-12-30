@@ -1200,25 +1200,25 @@
 		Label="pw_event5_enemy_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『[Name:TrainerName Idx="1" ]……　ごめん</Text>
+			<Text>モニカ『[Name:TrainerName Idx="1" ]……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T13:41:12" />
+				Time="2011-12-26T13:58:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T13:41:12" />
+				Time="2011-12-26T13:58:40" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『[Name:TrainerName Idx="1" ]……　ごめん</Text>
+			<Text>モニカ『[Name:TrainerName Idx="1" ]……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T13:41:12" />
+				Time="2011-12-26T13:58:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-25T13:41:12" />
+				Time="2011-12-26T13:58:40" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1250,25 +1250,25 @@
 		Label="pw_event5_enemy_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>モニカ『[Name:TrainerName Idx="1" ]……</Text>
+			<Text>モニカ『うん……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-12-26T13:58:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-12-26T13:58:40" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>モニカ『[Name:TrainerName Idx="1" ]……</Text>
+			<Text>モニカ『うん……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-12-26T13:58:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-26T09:55:48" />
+				Time="2011-12-26T13:58:40" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

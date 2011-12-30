@@ -412,10 +412,12 @@
 	<row id="pw_event0_enemy_2">
 		<language name="JPN" width="256">ドーブル『ちょっと　あんた　ねえ
 めのまえに　ゆうれいが　いるんすよ？▽
-ポケモンが　しゃべったって　いいっしょ？</language>
+べつに　ポケモンが　しゃべるくらい▽
+たいしたこと　ないっしょ？</language>
 		<language name="JPN_KANJI" width="256">ドーブル『ちょっと　あんた　ねえ
 目の前に　幽霊が　いるんすよ？▽
-ポケモンが　しゃべったって　いいっしょ？</language>
+別に　ポケモンが　しゃべるくらい▽
+大したこと　ないっしょ？</language>
 	</row>
 	<row id="pw_event0_hero_3">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ゆうれい　ですって……！
@@ -429,14 +431,14 @@
 	</row>
 	<row id="pw_event0_enemy_3">
 		<language name="JPN" width="256">ドーブル『しんだっす！▼
-でも　ゆうれいに　なって　アントニオは
+でも　ゆうれいになって　アントニオは
 アンタに　あいに　きたんす！▼
-ただねー　ちょっとした　アクシデントで
+ただ　ちょっとした　アクシデントで
 きおくを　うしなっちゃったんすよねー</language>
 		<language name="JPN_KANJI" width="256">ドーブル『死んだっす！▼
-でも　幽霊に　なって　アントニオは
-アンタに　合いに　来たんす！▼
-ただねー　ちょっとした　アクシデントで
+でも　幽霊になって　アントニオは
+アンタに　あいに　来たんす！▼
+ただ　ちょっとした　アクシデントで
 記憶を　失っちゃったんすねー</language>
 	</row>
 	<row id="pw_event0_hero_4">
@@ -447,7 +449,7 @@
 	</row>
 	<row id="pw_event0_enemy_4">
 		<language name="JPN" width="256">ドーブル『いいすか？
-ポケモンが　しゃべるくらい　なんすよ！▼
+ポケモンが　しゃべるんすよ！▼
 ゆうれいが　きおくを　なくしたって
 べつに　おかしく　ないっしょ？▼
 というかね　じかんも　ないし
@@ -458,14 +460,14 @@
 アントニオの　きおくも　ぜったい▽
 よみがえると　おもうんすよねー</language>
 		<language name="JPN_KANJI" width="256">ドーブル『いいすか？
-ポケモンが　しゃべるくらい　なんすよ！▼
+ポケモンが　しゃべるんすよ！▼
 幽霊が　記憶を　なくしたって
 別に　おかしく　ないっしょ？▼
 というかね　時間も　ないし
 本題に　入りますからね▼
 オレと　アントニオと
 勝負して　くださいよ！▼
-アンタの　イカした姿　見たら
+アンタの　イカした　姿　みたら
 アントニオの　記憶も　ぜってー▽
 よみがえると　思うんすよねー</language>
 	</row>
@@ -489,9 +491,11 @@
 	</row>
 	<row id="pw_event1_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『アントニオ……▼
-（よし！　つのる　おもいを　つたえよう）</language>
+（よーし！　こうなったら
+つのる　おもいを　つたえよう！）</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『アントニオ……▼
-（よし！　つのる　思いを　伝えよう）</language>
+（よーし！　こうなったら
+つのる　思いを　伝えよう！）</language>
 	</row>
 	<row id="pw_event1_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『あなたが　いないとダメ！</language>
@@ -538,12 +542,12 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ほら　[1:02:ポケモンニックネーム:0]よ</language>
 	</row>
 	<row id="pw_event2_react_enemy_0">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『あなたが　かわいがっていた
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『あなたが　だいじにしてた
 [1:02:ポケモンニックネーム:0]よ　おぼえているでしょ？▼
-アントニオ『……　……　……　フフフフッ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あなたが　可愛がっていた
+アントニオ『……　……フフフフッ</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『あなたが　大事にしてた
 [1:02:ポケモンニックネーム:0]よ　覚えているでしょ？▼
-アントニオ『……　……　……　フフフフッ</language>
+アントニオ『……　……フフフフッ</language>
 	</row>
 	<row id="pw_event2_react_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ほら　[1:00:トレーナー名:1]よ</language>
@@ -554,7 +558,7 @@
 [1:00:トレーナー名:1]よ　おぼえているでしょ？▼
 アントニオ『……　……　……　……？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『いつも　甘えていた
-[1:00:トレーナー名:1]だよ　覚えているでしょ？▼
+[1:00:トレーナー名:1]よ　覚えているでしょ？▼
 アントニオ『……　……　……　……？</language>
 	</row>
 	<row id="pw_event3_hero_0">
@@ -580,7 +584,7 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『コーヒーカップへ！</language>
 	</row>
 	<row id="pw_event3_react_enemy_1">
-		<language name="JPN" width="256">アントニオ『……　フッ……　フフフフッ</language>
+		<language name="JPN" width="256">アントニオ『フッ……　フフフフッ</language>
 		<language name="JPN_KANJI" width="256">アントニオ『……　フッ……　フフフフッ</language>
 	</row>
 	<row id="pw_event3_react_hero_2">
@@ -596,7 +600,7 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『観覧車へ！</language>
 	</row>
 	<row id="pw_event3_react_enemy_3">
-		<language name="JPN" width="256">アントニオ『……　フッ……　フフフフッ</language>
+		<language name="JPN" width="256">アントニオ『フッ……　フフフフッ</language>
 		<language name="JPN_KANJI" width="256">アントニオ『……　フッ……　フフフフッ</language>
 	</row>
 	<row id="pw_event4_hero_0">
@@ -756,14 +760,16 @@
 ……　……　……　……　……</language>
 	</row>
 	<row id="pw_event6_hero_4">
-		<language name="JPN" width="256">……きがつけば　わたしは　ゆうえんちの
-ベンチに　すわっていた▼
+		<language name="JPN" width="256">……きがつくと　わたしは
+ゆうえんちの　ベンチに▽
+ひとり　すわっていた▼
 あれは　ゆめだったのか？
 げんじつ　だったのか？▼
 ……ただ　わたしは　きょうも　また
 ゆうえんちへ　かよいつづける……</language>
-		<language name="JPN_KANJI" width="256">……気がつけば　私は　遊園地の
-ベンチに　座っていた▼
+		<language name="JPN_KANJI" width="256">……気がつけば　私は
+遊園地の　ベンチに▽
+ひとり　座っていた▼
 あれは　夢だったのか？
 現実　だったのか？▼
 ……ただ　私は　今日も　また

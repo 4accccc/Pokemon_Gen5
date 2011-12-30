@@ -466,13 +466,13 @@
 さて……
 どうにかして　あのひとを▽
 ここから　にがさないと……▼
-どうにかして　Ｍ・Ｂの　ちゅういを
+よし　Ｍ・Ｂの　ちゅういを
 ひいて　じかんを　かせぐか……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ラジャー！！▼
 さて……
 どうにかして　あの人を▽
 ここから　逃がさないと……▼
-どうにかして　Ｍ・Ｂの　注意を
+よし　Ｍ・Ｂの　注意を
 ひいて　時間を　かせぐか……</language>
 	</row>
 	<row id="pw_event1_react_hero_0">
@@ -655,9 +655,9 @@
 	</row>
 	<row id="pw_event4_hero_4">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ハ……　ハハハ……
-もう　ぼくは　おしまいだ……</language>
+もう　ぼくは　オシマイだ……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ハ……　ハハハ……
-もう　僕は　おしまいだ……</language>
+もう　僕は　オシマイだ……</language>
 	</row>
 	<row id="pw_event5_enemy_0">
 		<language name="JPN" width="256">Ｍ・Ｂ『グゴガーンッ！！</language>

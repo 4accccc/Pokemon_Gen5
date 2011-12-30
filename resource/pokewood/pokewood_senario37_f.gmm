@@ -402,8 +402,8 @@
 （ここは　様子を　みるか？）</language>
 	</row>
 	<row id="pw_event0_react_hero_0">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『あくりょうたいじだ</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『悪霊退治だ</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『あくりょう　たいじよ……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『悪霊退治よ……</language>
 	</row>
 	<row id="pw_event0_react_enemy_0">
 		<language name="JPN" width="256">しょうじょ『アハハ……
@@ -575,12 +575,12 @@
 	</row>
 	<row id="pw_event3_enemy_0">
 		<language name="JPN" width="256">しょうじょ『アハハハハ
-おにいちゃん　つよいね▼
+おねえちゃん　つよいね▼
 わたしも　ちから　たくわえたし
 ここも　あきてきたから▽
 そろそろ　おでかけしようかな……</language>
 		<language name="JPN_KANJI" width="256">少女『アハハハハ
-おにいちゃん　つよいね▼
+おねえちゃん　つよいね▼
 わたしも　ちからも　たくわえたし
 ここも　あきてきたから▽
 そろそろ　おでかけしようかな……</language>
@@ -687,11 +687,11 @@
 	</row>
 	<row id="pw_event4_enemy_1">
 		<language name="JPN" width="256">しょうじょ『もっと　よろこんで？
-よわい　おにいちゃん　でも
+よわい　おねえちゃん　でも▽
 はかいのまじん　ふっかつの▽
 たし　には　なるんだからさァ……</language>
 		<language name="JPN_KANJI" width="256">少女『もっと　よろこんで？
-よわい　おにいちゃん　でも
+よわい　おねえちゃん　でも▽
 はかいのまじん　ふっかつの▽
 たし　には　なるんだからさァ……</language>
 	</row>
@@ -730,19 +730,19 @@
 動きが　止まった……</language>
 	</row>
 	<row id="pw_event5_enemy_0">
-		<language name="JPN" width="256">しょうじょ『おにいちゃん！
+		<language name="JPN" width="256">しょうじょ『おねえちゃん！
 あそんでくれて　ありがとう！▼
 もう　いいや！　じかん　みたい！
-……ねえねえ　おにいちゃん！▼
+……ねえねえ　おねえちゃん！▼
 さいごに　おねがいが　あるの！
-おにいちゃんの　からだ▽
+おねえちゃんの　からだ▽
 もらってもいい？</language>
-		<language name="JPN_KANJI" width="256">少女『おにいちゃん！
+		<language name="JPN_KANJI" width="256">少女『おねえちゃん！
 あそんでくれて　ありがとう！▼
 もう　いいや！　じかん　みたい！
-……ねえねえ　おにいちゃん！▼
+……ねえねえ　おねえちゃん！▼
 さいごに　おねがいが　あるの！
-おにいちゃんの　からだ▽
+おねえちゃんの　からだ▽
 もらってもいい？</language>
 	</row>
 	<row id="pw_event5_hero_1">
@@ -757,10 +757,10 @@
 	</row>
 	<row id="pw_event5_enemy_1">
 		<language name="JPN" width="256">しょうじょ『もっと　よろこんでー
-いだいなる　たましいの　うつわに
+いだいなる　たましいの　うつわに▽
 なれるの　だから……</language>
 		<language name="JPN_KANJI" width="256">少女『もっと　よろこんでー
-いだいなる　たましいの　うつわに
+いだいなる　たましいの　うつわに▽
 なれるの　だから……</language>
 	</row>
 	<row id="pw_event5_hero_2">

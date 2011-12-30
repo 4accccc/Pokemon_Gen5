@@ -529,14 +529,14 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]『あなたを　消しさる者の！</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『あなたを　消しさる者！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-30T06:14:52" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-30T06:14:52" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1293,7 +1293,7 @@
 			<Text>こえ『いかにも……
 はるかはるか　むかしのことだ……▼
 われは　アーカムに　そそのかされ
-いまの　きさまと　おなじく
+いまの　きさまと　おなじく▽
 この　こだいぞうに　いどんだのだ▼
 そして　その　たたかいの　さなか
 ぞうに　とりこまれて　しまった……▼
@@ -1303,18 +1303,18 @@
 まもるものと　なったのだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:55:18" />
+				Time="2011-12-30T08:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:55:18" />
+				Time="2011-12-30T08:33:55" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>声『いかにも……
 はるかはるか　昔の　ことだ……▼
 我は　アーカムに　そそのかされ
-今の　貴様と　同じく
+今の　貴様と　同じく▽
 この　古代像に　挑んだのだ▼
 そして　その戦いの　最中
 像に　取り込まれて　しまった……▼
@@ -1324,11 +1324,11 @@
 守護する者と　なったのだ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2011-12-30T08:33:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-17T05:47:16" />
+				Time="2011-12-30T08:33:55" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1776,32 +1776,28 @@
 			<Text>[Name:PokemonNickname Idx="0" ]『やめろ……
 ちからが　はいらない……▼
 やっ……め…ろ……
-……　……　……　……　……　……▽
-……　……　……　……　……　……▼
-シュルルルルルル！！　ゴックンッ！！</Text>
+シュルルルルルル！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-29T04:36:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-29T04:36:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:PokemonNickname Idx="0" ]『やめろ……
 力が　入らない……▼
 やっ……め…ろ……
-……　……　……　……　……　……▽
-……　……　……　……　……　……▼
-シュルルルルルル！！　ゴックンッ！！</Text>
+シュルルルルルル！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-29T04:36:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-29T04:36:17" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -1841,6 +1837,31 @@
 		Label="pw_event6_hero_2">
 		<LanguageCell
 			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]『……　……　……　……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-29T04:36:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-29T04:36:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]『……　……　……　……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-29T04:36:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-29T04:36:17" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event6_hero_3">
+		<LanguageCell
+			Language="JPN">
 			<Text>『ゴーストイレイザー　ほうこくしょ
 ファイルＮｏ．００３への　ついき』▼
 ファイルＮｏ．００３を　さいごに
@@ -1848,11 +1869,11 @@
 [Name:PokemonNickname Idx="0" ]の　しょうそく　ふめい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-29T04:36:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-29T04:36:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1863,11 +1884,11 @@
 [Name:PokemonNickname Idx="0" ]の　消息不明</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-29T04:36:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-29T04:36:17" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2069,18 +2090,14 @@
 せまい　ところに　はいってなんか……▽
 ちからが　ぬける……▼
 すっ　すいこまれる……▼
-シューーーーーーーーーー！
-キュポッ！▼
-……　……　……　……　……　……
-……　……　……　……　……　……
-　</Text>
+シュルルルルルルーーーーー！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-29T04:36:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-29T04:36:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2088,18 +2105,14 @@
 狭い　ところに　入ってなんか……▽
 力が　抜ける……▼
 すっ　吸い込まれる……▼
-シューーーーーーーーーー！
-キュポッ！▼
-……　……　……　……　……　……
-……　……　……　……　……　……
-　</Text>
+シュルルルルルルーーーーー！！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-29T04:36:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-29T04:36:17" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2141,6 +2154,31 @@
 		Label="pw_event7_hero_4">
 		<LanguageCell
 			Language="JPN">
+			<Text>[Name:PokemonNickname Idx="0" ]『……　……　……　……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-29T04:36:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-29T04:36:17" />
+		</LanguageCell>
+		<LanguageCell
+			Language="JPN_KANJI">
+			<Text>[Name:PokemonNickname Idx="0" ]『……　……　……　……</Text>
+			<TextModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-29T04:36:17" />
+			<Status>Editing</Status>
+			<StatusModifiedBy
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-29T04:36:17" />
+		</LanguageCell>
+	</TextRow>
+	<TextRow
+		Label="pw_event7_hero_5">
+		<LanguageCell
+			Language="JPN">
 			<Text>『ゴーストイレイザー　ほうこくしょ
 ファイルＮｏ．００３への　ついき』▼
 ファイルＮｏ．００３を　さいごに
@@ -2148,11 +2186,11 @@
 いぜん　[Name:PokemonNickname Idx="0" ]の　しょうそく　ふめい</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-29T04:36:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-29T04:36:17" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -2163,11 +2201,11 @@
 依然　[Name:PokemonNickname Idx="0" ]の　消息不明</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-29T04:36:17" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-29T04:36:17" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -2504,29 +2542,29 @@
 		Label="pw_event8_hero_6">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]『ゆるしません！▼
+			<Text>[Name:PokemonNickname Idx="0" ]『へえ……▼
 あとの　はなしは　ウチの　じむしょで
-じっくり　ききましょうかねえ！</Text>
+じっくり　ききましょうかねえ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-27T03:48:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-27T03:48:58" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]『許しません！▼
+			<Text>[Name:PokemonNickname Idx="0" ]『へえ……▼
 あとの話は　ウチの　事務所で
-じっくり　聞きましょうかねえ！</Text>
+じっくり　聞きましょうかねえ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-27T03:48:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-27T03:48:58" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -3045,15 +3083,15 @@
 アーカムの　策略により
 秘宝の　封印　解かれる▼
 破壊の魔神　復活の　恐れあり
-アーカムの　行方　追う▼
+アーカムの　行方を　追う▼
 コードネーム　[Name:PokemonNickname Idx="0" ]</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-27T03:48:58" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:24" />
+				Time="2011-12-27T03:48:58" />
 		</LanguageCell>
 	</TextRow>
 </MessageStudioText>

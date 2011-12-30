@@ -492,8 +492,8 @@
 エジキに　なってくれたまえ！</language>
 	</row>
 	<row id="pw_event1_react_hero_1">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『おなじ　じゃない！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『同じ　じゃない！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『ちがう！！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『違う！</language>
 	</row>
 	<row id="pw_event1_react_enemy_1">
 		<language name="JPN" width="256">セリザワ『では　なにが　ちがう？▼
@@ -1034,7 +1034,7 @@
 かんがえても　みたまえよ▼
 わたしのように　はかいを　あいする
 はかいマニアが　いるのだよ？▼
-Ｍ・Ｂのような　マシンを　つくることを
+Ｍ・Ｂのようなマシンを　つくることを
 よろこびとする　マニアが　いても▽
 べつに　ふしぎでは　ないだろう？</language>
 		<language name="JPN_KANJI" width="256">セリザワ『そうだねェ……▼
@@ -1043,7 +1043,7 @@
 考えて　みたまえよ▼
 私のように　破壊を　愛する
 破壊マニアが　いるのだよ？▼
-Ｍ・Ｂのような　マシンを　作ることを
+Ｍ・Ｂのようなマシンを　作ることを
 喜びとする　マニアが　いても▽
 別に　不思議では　ないだろう？</language>
 	</row>

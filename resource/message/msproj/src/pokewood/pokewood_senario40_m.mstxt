@@ -592,25 +592,25 @@
 		Label="pw_event1_react_hero_1">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]キッド『はあっ？</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『ハアッ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T09:23:11" />
+				Time="2011-12-28T02:40:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T09:23:11" />
+				Time="2011-12-28T02:40:48" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]キッド『はあっ？</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]キッド『ハアッ？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T09:23:11" />
+				Time="2011-12-28T02:40:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-10-27T09:23:11" />
+				Time="2011-12-28T02:40:48" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow

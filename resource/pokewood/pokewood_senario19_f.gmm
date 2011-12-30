@@ -373,21 +373,21 @@
 この　やぼったい　トレーナーに▽
 やぼったい　[1:02:ポケモンニックネーム:0]は……▼
 さあ！　ミゲル！！
-われらの　かれいな　コンビネーションで▽
+われらの　コンビネーションで▽
 おこづかいを　はぎとって　やりましょう！</language>
 		<language name="JPN_KANJI" width="256">ドーブル『ブルッ！　ブルブルッ！！▼
 （フッ……　何だ？
 この　やぼったい　トレーナーに▽
 やぼったい　[1:02:ポケモンニックネーム:0]は……▼
 さあ！　ミゲル！！
-われらの　美しい　コンビネーションで▽
+我らの　美しい　コンビネーションで▽
 お小遣いを　はぎとって　やりましょう！</language>
 	</row>
 	<row id="pw_event0_hero_1">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『こっ　こんにちは……
 めと　めが　あってしまいましたね……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『こっ　こんにちは……
-めと　めが　あってしまいましたね……</language>
+目と　目が　あってしまいましたね……</language>
 	</row>
 	<row id="pw_event0_enemy_1">
 		<language name="JPN" width="256">ミゲル『はっ　はじめまして……▼
@@ -417,7 +417,7 @@
 やるき　じゅうぶん　みたいですね！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『すごい……
 あなたの　ドーブルも▽
-やるき　じゅうぶん　みたいですね！</language>
+やる気　十分　みたいですね！</language>
 	</row>
 	<row id="pw_event0_enemy_3">
 		<language name="JPN" width="256">ミゲル『フフ……　そうだね……▼
@@ -488,12 +488,12 @@
 	<row id="pw_event1_enemy_0">
 		<language name="JPN" width="256">ドーブル『ブルーッ！　ブルッ！！▼
 （なんですか！　ミゲル！！▼
-なぜ　あんな　わざ　つかわせるのです！
+なぜ　あんな　わざ　つかわせる！！
 わたくし　じまんの　ハサミギロチンで▽
-まっぷつたつに　させなさいっ！</language>
+まっぷたつに　させなさいっ！</language>
 		<language name="JPN_KANJI" width="256">ドーブル『ブルーッ！　ブルッ！！▼
 （何ですか！　ミゲル！！▼
-なぜ　あんな　わざ　使わせるのです！
+なぜ　あんな　わざ　使わせる！！
 私　自慢の　ハサミギロチンで▽
 真っ二つに　させなさいっ！</language>
 	</row>
@@ -620,10 +620,10 @@
 	<row id="pw_event2_enemy_1">
 		<language name="JPN" width="256">ドーブル『ブルッ！　ブルーッ！！▼
 （フッ！！　あたりまえですっ！！
-すぐに　とどめを　さしてあげましょう！</language>
+とどめを　さしてあげましょう！</language>
 		<language name="JPN_KANJI" width="256">ドーブル『ブルッ！　ブルーッ！！▼
 （フッ！！　当たり前ですっ！！
-すぐに　とどめを　さしてあげましょう！</language>
+とどめを　さしてあげましょう！</language>
 	</row>
 	<row id="pw_event2_hero_2">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『ふう……
@@ -880,11 +880,11 @@
 	<row id="pw_event4_enemy_1">
 		<language name="JPN" width="256">ドーブル『ブルッ！　ブルブルッ！！▼
 （これが　わたしの　じつりょくっ！
-キミような　やぼったい　トレーナーに▽
+キミのように　サエない　トレーナーに▽
 まけるはずが　ないのだよっ！</language>
 		<language name="JPN_KANJI" width="256">ドーブル『ブルッ！　ブルブルッ！！▼
 （これが　私の　実力っ！
-キミような　やぼったい　トレーナーに▽
+キミのように　冴えない　トレーナーに▽
 負けるはずが　ないのだよっ！</language>
 	</row>
 	<row id="pw_event4_hero_2">
@@ -974,7 +974,7 @@
 なんて　タフなの……
 ミゲルさんの　ドーブルは……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ハアッ　ハアッ……▼
-なんて　タフなんだ……
+なんて　タフなの……
 ミゲルさんの　ドーブル……</language>
 	</row>
 	<row id="pw_event5_enemy_0">
@@ -1100,18 +1100,18 @@
 	<row id="pw_event5_enemy_8">
 		<language name="JPN" width="256">ドーブル『ブルブルッ！▼
 （やれやれ　ミゲルめ……
-しかし　まあ　しかたないでしょうな……▼
+しかし　しかたないでしょうな……▼
 この　わたしの　みりょくの　まえでは
-にんげんで　さえ　メロメロに　なるのは▽
+にんげんでさえ　メロメロに　なるのは▽
 しかたのないこと　ですからね……</language>
 		<language name="JPN_KANJI" width="256">ドーブル『ブルブルッ！▼
 （やれやれ　ミゲルめ……
-恋に　目がくらんで　私を　交換とは……▼
+恋に　目がくらんで　私を交換とは……▼
 まあ　仕方が　ありませんかね……▼
 ひとたび　人に　捕まれば　交換されて
 人から人へと　流れ　渡り歩くのも▽
 我々　ポケモンの　定め……▼
-せいぜい　新しい　主に　飽きられぬよう
+せいぜい　新しい主に　飽きられぬよう
 勤めを　果たすと　しましょうか……
 </language>
 	</row>
@@ -1171,10 +1171,10 @@
 	</row>
 	<row id="pw_event6_react_enemy_1">
 		<language name="JPN" width="256">ドーブル『ブルーッ！！　ブルッ！▼
-（ハハハ……　よわきに　なっている……
+（ハハハ　よわきに　なっている……
 よし……　いまが　チャンスですね……</language>
 		<language name="JPN_KANJI" width="256">ドーブル『ブルーッ！！　ブルッ！▼
-（ハハハ……　弱気に　なっている……
+（ハハハ　弱気に　なっている……
 よし……　今が　チャンスですね……</language>
 	</row>
 	<row id="pw_event7_enemy_0">
@@ -1186,12 +1186,12 @@
 小賢しい　わざを　使いますね……</language>
 	</row>
 	<row id="pw_event7_enemy_1">
-		<language name="JPN" width="256">ミゲル『えっ！？　ここで　このわざ……？▼
-（あれー！？　マジかよ！？
+		<language name="JPN" width="256">ミゲル『ここで　このわざ……？▼
+（ちょっと　マジかよ！？
 オレが　ドーブルに　もたせてる▽
 どうぐに　きが　ついてないのか？</language>
-		<language name="JPN_KANJI" width="256">ミゲル『えっ！？　ここで　このわざ……？▼
-（あれー！？　マジかよ！？
+		<language name="JPN_KANJI" width="256">ミゲル『ここで　このわざ……？▼
+（ちょっと　マジかよ！？
 オレが　ドーブルに　持たせてる▽
 どうぐに　気が　ついてないのか？</language>
 	</row>
@@ -1250,13 +1250,13 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ミゲルさん？</language>
 	</row>
 	<row id="pw_event7_enemy_5">
-		<language name="JPN" width="256">ミゲル『もっ　もんだいないっ！▼
-さあさあ！　しょうぶを　つづけようっ！▼
+		<language name="JPN" width="256">ミゲル『も　もんだいないっ！▼
+さあさあ　しょうぶを　つづけようっ！▼
 （あー　ヤベえ！　ヤベえ！
 ぜったい　ほんにんには　いえないこと▽
 ばかり　そうぞう　しちゃったぜ……</language>
-		<language name="JPN_KANJI" width="256">ミゲル『もっ　問題ないっ！▼
-さあさあ！　勝負を　続けようっ！▼
+		<language name="JPN_KANJI" width="256">ミゲル『も　問題ないっ！▼
+さあさあ　勝負を　続けようっ！▼
 （あー　ヤベえ！　ヤベえ！
 絶対　本人には　言えないこと▽
 ばかり　想像　しちゃったぜ……</language>

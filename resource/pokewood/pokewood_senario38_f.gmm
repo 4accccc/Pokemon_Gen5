@@ -463,7 +463,7 @@
 	</row>
 	<row id="pw_event1_react_hero_0">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『あなたを　けしさるもの！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『あなたを　消しさる者の！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『あなたを　消しさる者！</language>
 	</row>
 	<row id="pw_event1_react_enemy_0">
 		<language name="JPN" width="256">こえ『われを　けすだと……
@@ -625,7 +625,7 @@
 		<language name="JPN" width="256">こえ『いかにも……
 はるかはるか　むかしのことだ……▼
 われは　アーカムに　そそのかされ
-いまの　きさまと　おなじく
+いまの　きさまと　おなじく▽
 この　こだいぞうに　いどんだのだ▼
 そして　その　たたかいの　さなか
 ぞうに　とりこまれて　しまった……▼
@@ -636,7 +636,7 @@
 		<language name="JPN_KANJI" width="256">声『いかにも……
 はるかはるか　昔の　ことだ……▼
 我は　アーカムに　そそのかされ
-今の　貴様と　同じく
+今の　貴様と　同じく▽
 この　古代像に　挑んだのだ▼
 そして　その戦いの　最中
 像に　取り込まれて　しまった……▼
@@ -753,15 +753,11 @@
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『やめろ……
 ちからが　はいらない……▼
 やっ……め…ろ……
-……　……　……　……　……　……▽
-……　……　……　……　……　……▼
-シュルルルルルル！！　ゴックンッ！！</language>
+シュルルルルルル！！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『やめろ……
 力が　入らない……▼
 やっ……め…ろ……
-……　……　……　……　……　……▽
-……　……　……　……　……　……▼
-シュルルルルルル！！　ゴックンッ！！</language>
+シュルルルルルル！！</language>
 	</row>
 	<row id="pw_event6_enemy_1">
 		<language name="JPN" width="256">こえ『これも　きさまの　うんめい……
@@ -776,6 +772,10 @@
 ……　……　……　……　……　……</language>
 	</row>
 	<row id="pw_event6_hero_2">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『……　……　……　……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『……　……　……　……</language>
+	</row>
+	<row id="pw_event6_hero_3">
 		<language name="JPN" width="256">『ゴーストイレイザー　ほうこくしょ
 ファイルＮｏ．００３への　ついき』▼
 ファイルＮｏ．００３を　さいごに
@@ -849,20 +849,12 @@
 せまい　ところに　はいってなんか……▽
 ちからが　ぬける……▼
 すっ　すいこまれる……▼
-シューーーーーーーーーー！
-キュポッ！▼
-……　……　……　……　……　……
-……　……　……　……　……　……
-　</language>
+シュルルルルルルーーーーー！！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『……そんな
 狭い　ところに　入ってなんか……▽
 力が　抜ける……▼
 すっ　吸い込まれる……▼
-シューーーーーーーーーー！
-キュポッ！▼
-……　……　……　……　……　……
-……　……　……　……　……　……
-　</language>
+シュルルルルルルーーーーー！！</language>
 	</row>
 	<row id="pw_event7_enemy_3">
 		<language name="JPN" width="256">こえ『つぎに　めざめしとき
@@ -879,6 +871,10 @@
 貴様の　存在は　消える……</language>
 	</row>
 	<row id="pw_event7_hero_4">
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『……　……　……　……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『……　……　……　……</language>
+	</row>
+	<row id="pw_event7_hero_5">
 		<language name="JPN" width="256">『ゴーストイレイザー　ほうこくしょ
 ファイルＮｏ．００３への　ついき』▼
 ファイルＮｏ．００３を　さいごに
@@ -990,12 +986,12 @@
 って　あっ……</language>
 	</row>
 	<row id="pw_event8_hero_6">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『ゆるしません！▼
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]『へえ……▼
 あとの　はなしは　ウチの　じむしょで
-じっくり　ききましょうかねえ！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『許しません！▼
+じっくり　ききましょうかねえ……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]『へえ……▼
 あとの話は　ウチの　事務所で
-じっくり　聞きましょうかねえ！</language>
+じっくり　聞きましょうかねえ……</language>
 	</row>
 	<row id="pw_event8_enemy_7">
 		<language name="JPN" width="256">いらいぬし『ああ……</language>
@@ -1164,7 +1160,7 @@
 アーカムの　策略により
 秘宝の　封印　解かれる▼
 破壊の魔神　復活の　恐れあり
-アーカムの　行方　追う▼
+アーカムの　行方を　追う▼
 コードネーム　[1:02:ポケモンニックネーム:0]</language>
 	</row>
 ﻿	<flowchart-group-list>

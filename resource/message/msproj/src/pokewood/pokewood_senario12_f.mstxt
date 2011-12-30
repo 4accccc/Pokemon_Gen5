@@ -224,15 +224,15 @@
 ただいまより　われわれは　そいつを▽
 だいバンギラスと　こしょう　する！▼
 いいか！　[Name:TrainerName Idx="1" ]！
-なんとしても　だいバンギラスの▽
+なんとしても　だいバンギラスが▽
 まちに　はいるのを　ふせいでくれ！</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-26T06:29:17" />
+				Time="2011-12-30T05:10:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-26T06:29:17" />
+				Time="2011-12-30T05:10:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1089,17 +1089,17 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>[Name:TrainerName Idx="1" ]『でも……▼
-なぜ　みずのにがてな　バンギラスが
+なぜ　みずの　にがてな　バンギラスが
 うみのそばに　あらわれたんだろ？▼
 ……それに　さっきの　ひかり……
 あれは　いったい……？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:41" />
+				Time="2011-12-30T05:10:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T06:22:41" />
+				Time="2011-12-30T05:10:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">

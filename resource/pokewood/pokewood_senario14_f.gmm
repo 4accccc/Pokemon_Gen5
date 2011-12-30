@@ -509,14 +509,6 @@
 ワシのバンギラスが　放つ▽
 一撃を　こらえてみせよ……</language>
 	</row>
-	<row id="pw_event1_hero_5">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『そんな　いきなり……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『そんな　いきなり……</language>
-	</row>
-	<row id="pw_event1_hero_6">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『いいわよ……</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『いいわよ……</language>
-	</row>
 	<row id="pw_event1_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『へ？　なに？　なに？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『へ？　何？　何？</language>

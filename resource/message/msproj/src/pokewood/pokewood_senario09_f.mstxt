@@ -1504,14 +1504,14 @@
 ちょっとくらい　やすんだって
 だいじょうぶでしょ　きっと▼
 あー　もー　つかれた！
-おなかも　へったし　みず　のみたいなー</Text>
+おなか　へったし　みず　のみたいなー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T08:50:18" />
+				Time="2011-12-30T05:10:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T08:50:18" />
+				Time="2011-12-30T05:10:34" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1522,14 +1522,14 @@
 ちょっとくらい　休んだって
 大丈夫でしょ　きっと▼
 あー　もー　疲れた！
-お腹も　減ったし　水　飲みたいなー</Text>
+お腹　減ったし　水　飲みたいなー</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T08:50:18" />
+				Time="2011-12-30T05:10:34" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T08:50:18" />
+				Time="2011-12-30T05:10:34" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1678,18 +1678,18 @@
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>[Name:TrainerName Idx="1" ]『あーあ　行っちゃった……▼
-まあいいか　どうせ　オレより
+まあいいか　どうせ　私より
 強いトレーナーなんて　いないし▽
 Ｅも　そのうち　帰ってくるでしょ▼
 あーあ▼
 疲れたし　ちょっと　休むか……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T08:50:18" />
+				Time="2011-12-28T03:53:48" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-30T08:50:18" />
+				Time="2011-12-28T03:53:48" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

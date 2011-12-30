@@ -508,10 +508,10 @@
 気がついて　もらわないと……</language>
 	</row>
 	<row id="pw_event2_enemy_1">
-		<language name="JPN" width="256">モニカ『イヤーッ！！
-どうなっちゃってるのよっ！！</language>
-		<language name="JPN_KANJI" width="256">モニカ『イヤーッ！！
-どうなっちゃってるのよっ！！</language>
+		<language name="JPN" width="256">モニカ『なんで……　なんで……
+わたし　いったい　どうなったの……</language>
+		<language name="JPN_KANJI" width="256">モニカ『何で……　何で……
+私　一体　どうなったの……</language>
 	</row>
 	<row id="pw_event2_react_hero_0">
 		<language name="JPN" width="256">[1:00:トレーナー名:1]『[1:00:トレーナー名:1]だよ！！</language>
@@ -656,18 +656,20 @@
 いい加減に　しなさいよーっ！！</language>
 	</row>
 	<row id="pw_event4_enemy_3">
-		<language name="JPN" width="256">グアイ『なにっ！！
+		<language name="JPN" width="256">グアイ『なんだってっ！？
 まだ　おきあがってくるのかっ！？▼
 こいつは　マズいぞ！！
 おい！　はやく　にげるんだ！！</language>
-		<language name="JPN_KANJI" width="256">グアイ『なにっ！！
+		<language name="JPN_KANJI" width="256">グアイ『何だって！？
 まだ　起き上がってくるのかっ！？▼
 こいつは　マズいぞ！！
 おい！　早く　逃げるんだ！！</language>
 	</row>
 	<row id="pw_event4_hero_4">
-		<language name="JPN" width="256">[1:00:トレーナー名:1]『ウギャー！！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『ウギャー！！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:1]『おねえちゃん……
+どうして　こんなことに……</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]『お姉ちゃん……
+どうして　こんなことに……</language>
 	</row>
 	<row id="pw_event4_hero_5">
 		<language name="JPN" width="256">……まるで　かみなりの　ような

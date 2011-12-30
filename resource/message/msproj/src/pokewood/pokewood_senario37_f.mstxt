@@ -253,25 +253,25 @@
 		Label="pw_event0_react_hero_0">
 		<LanguageCell
 			Language="JPN">
-			<Text>[Name:PokemonNickname Idx="0" ]『あくりょうたいじだ</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『あくりょう　たいじよ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:17" />
+				Time="2011-12-28T10:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:17" />
+				Time="2011-12-28T10:43:01" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>[Name:PokemonNickname Idx="0" ]『悪霊退治だ</Text>
+			<Text>[Name:PokemonNickname Idx="0" ]『悪霊退治よ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:17" />
+				Time="2011-12-28T10:43:01" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-28T12:53:17" />
+				Time="2011-12-28T10:43:01" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -968,32 +968,32 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>しょうじょ『アハハハハ
-おにいちゃん　つよいね▼
+おねえちゃん　つよいね▼
 わたしも　ちから　たくわえたし
 ここも　あきてきたから▽
 そろそろ　おでかけしようかな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T10:33:58" />
+				Time="2011-12-30T08:36:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T10:33:58" />
+				Time="2011-12-30T08:36:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>少女『アハハハハ
-おにいちゃん　つよいね▼
+おねえちゃん　つよいね▼
 わたしも　ちからも　たくわえたし
 ここも　あきてきたから▽
 そろそろ　おでかけしようかな……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T10:33:58" />
+				Time="2011-12-30T08:36:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-15T10:33:58" />
+				Time="2011-12-30T08:36:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1330,30 +1330,30 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>しょうじょ『もっと　よろこんで？
-よわい　おにいちゃん　でも
+よわい　おねえちゃん　でも▽
 はかいのまじん　ふっかつの▽
 たし　には　なるんだからさァ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-12T11:22:43" />
+				Time="2011-12-30T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-12T11:22:43" />
+				Time="2011-12-30T08:29:08" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>少女『もっと　よろこんで？
-よわい　おにいちゃん　でも
+よわい　おねえちゃん　でも▽
 はかいのまじん　ふっかつの▽
 たし　には　なるんだからさァ……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-12T11:22:43" />
+				Time="2011-12-30T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-12T11:22:43" />
+				Time="2011-12-30T08:29:08" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1486,37 +1486,37 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>しょうじょ『おにいちゃん！
+			<Text>しょうじょ『おねえちゃん！
 あそんでくれて　ありがとう！▼
 もう　いいや！　じかん　みたい！
-……ねえねえ　おにいちゃん！▼
+……ねえねえ　おねえちゃん！▼
 さいごに　おねがいが　あるの！
-おにいちゃんの　からだ▽
+おねえちゃんの　からだ▽
 もらってもいい？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:44" />
+				Time="2011-12-30T08:36:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:44" />
+				Time="2011-12-30T08:36:24" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>少女『おにいちゃん！
+			<Text>少女『おねえちゃん！
 あそんでくれて　ありがとう！▼
 もう　いいや！　じかん　みたい！
-……ねえねえ　おにいちゃん！▼
+……ねえねえ　おねえちゃん！▼
 さいごに　おねがいが　あるの！
-おにいちゃんの　からだ▽
+おねえちゃんの　からだ▽
 もらってもいい？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:44" />
+				Time="2011-12-30T08:36:24" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T13:09:44" />
+				Time="2011-12-30T08:36:24" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1571,28 +1571,28 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>しょうじょ『もっと　よろこんでー
-いだいなる　たましいの　うつわに
+いだいなる　たましいの　うつわに▽
 なれるの　だから……</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-09T08:32:02" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-30T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-09T08:32:02" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-30T08:29:08" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>少女『もっと　よろこんでー
-いだいなる　たましいの　うつわに
+いだいなる　たましいの　うつわに▽
 なれるの　だから……</Text>
 			<TextModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-09T08:32:02" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-30T08:29:08" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
-				User="shimoyamada:W00184"
-				Time="2011-11-09T08:32:02" />
+				User="nakatsui:DB5YGPBX"
+				Time="2011-12-30T08:29:08" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

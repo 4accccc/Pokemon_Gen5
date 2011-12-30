@@ -2118,7 +2118,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>……それから　私は　必死で▽
+			<Text>……それから　私は　必死で
 Ｆー００を　修理した……▼
 その結果　Ｆー００は　より
 高性能の　ロボットとして▽
@@ -2128,11 +2128,11 @@
 芽生えることは　なかった……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:20" />
+				Time="2011-12-27T07:18:04" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-11-16T10:10:20" />
+				Time="2011-12-27T07:18:04" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">

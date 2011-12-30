@@ -1513,27 +1513,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>E『どうしたんだ……
+			<Text>[Name:TrainerName Idx="1" ]『どうしたんだ……
 そらが……　ゆれている……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T03:50:55" />
+				Time="2011-12-30T05:10:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T03:50:55" />
+				Time="2011-12-30T05:10:42" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>E『どうしたんだ……
+			<Text>[Name:TrainerName Idx="1" ]『どうしたんだ……
 空が　ゆれている……</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T03:50:55" />
+				Time="2011-12-30T05:10:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T03:50:55" />
+				Time="2011-12-30T05:10:42" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -1676,15 +1676,15 @@
 わるいこと　なんかじゃ　ない……▼
 ……でも　じぶんたちの　つごうだけで
 ほかの　いきものたちを▽
-ほろぼしてしおう　なんて▽
+ほろぼしてしまおう　なんて▽
 みとめるわけには　いかないんだ</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T03:50:55" />
+				Time="2011-12-30T05:10:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T03:50:55" />
+				Time="2011-12-30T05:10:42" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
@@ -1754,14 +1754,14 @@
 			<Text>[Name:TrainerName Idx="1" ]『オレたち　にんげん……
 そして　ポケモンと　エイリアン……▼
 ……みんなが　いっしょに　くらせる
-ほうほうを　さがせば　いいじゃないか？</Text>
+ほうほうを　さがさないか？</Text>
 			<TextModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T03:50:55" />
+				Time="2011-12-30T05:10:42" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="nakatsui:DB5YGPBX"
-				Time="2011-12-01T03:50:55" />
+				Time="2011-12-30T05:10:42" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
