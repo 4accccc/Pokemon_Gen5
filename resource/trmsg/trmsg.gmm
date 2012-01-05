@@ -12059,10 +12059,10 @@
 	</row>
 
 	<row id="TRID_RANGERW_21_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">たしかに
-みせて　もらったわ……</language>
-		<language name="JPN_KANJI" width="216">確かに
-みせて　もらったわ……</language>
+		<language name="JPN" width="216">そんなに
+みせなくても　いいわ……</language>
+		<language name="JPN_KANJI" width="216">そんなに
+みせなくても　いいわ……</language>
 	</row>
 
 	<row id="TRID_RANGERW_21_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
@@ -17759,7 +17759,7 @@
 じんせい　やまあり　たにあり</language>
 		<language name="JPN_KANJI" width="216">登った　マウンテンは
 いつか　くだらなければ　ならない▼
-じんせい　やまあり　たにあり</language>
+人生　山あり　谷あり</language>
 	</row>
 
 	<row id="TRID_MOUNT_18_TRMSG_FIGHT_START">
@@ -17856,9 +17856,9 @@
 
 	<row id="TRID_ELITEW_31_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">さいあいの　ポケモンたちと
-かなでる　ハーモニーよ！▼</language>
+かなでる　コンチェルト　よ！▼</language>
 		<language name="JPN_KANJI" width="216">最愛の　ポケモンたちと
-奏でる　ハーモニーよ！▼</language>
+奏でる　コンチェルト　よ！▼</language>
 	</row>
 
 	<row id="TRID_ELITEW_31_TRMSG_FIGHT_LOSE">
