@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="shiiyama_yukiko" host="W00229" date="2011-12-19T19:33:10" source="mero_flash.mb"/>
+	<create user="shiiyama_yukiko" host="W00229" date="2012-01-05T19:50:46" source="mero_flash_5.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 </head>
 
 <body>
 
-<original_create user="shiiyama_yukiko" host="W00229" date="2011-12-19T19:33:10" source="mero_flash.mb"/>
+<original_create user="shiiyama_yukiko" host="W00229" date="2012-01-05T19:50:46" source="mero_flash_5.mb"/>
 <original_generator name="Maya 2010 NNS_Export" version="1.6.0.20100331"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="2" xyz="-1.349121 3.650879 0.750000" whd="2.697754 2.697754 0.750000"/>
+<box_test pos_scale="2" xyz="-1.349121 4.245361 0.704590" whd="2.697754 2.535156 1.166016"/>
 
 <tex_image_array size="2">
 	<tex_image index="0" name="ef_a"
@@ -41,11 +41,11 @@
 			1010 1010 1010 1010 1010 1010 1010 1010
 			2828 2828 2828 2828 2828 2828 2828 2828
 			4848 4848 4048 4848 4848 4848 4848 4048
+			4040 4040 4040 4040 7070 7070 7070 7070
 			7070 7070 7070 7070 7070 7070 7070 7070
 			9898 9898 9898 9898 9898 9898 9898 9898
-			c8c8 c8d0 d0c8 c8c8 c8c8 c8c8 c8d0 c8c8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
+			9898 9898 9898 9898 c8c8 c8c8 c8c8 c8c8
+			c8c8 c8c8 c8c8 c8c8 c8c8 c8c8 c8c8 c8c8
 			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
 			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
 			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
@@ -509,7 +509,7 @@
 		draw_mtx="off"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
+		rotate="-20.000000 0.000000 0.000000"
 		translate="0.000000 20.000000 0.000000"
 		visibility="on"
 		display_size="0"
