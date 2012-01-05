@@ -367,7 +367,7 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>なるほど……！
+			<Text>なるほど……！▼
 あなたの　へんじは
 わたくしに　とっての　りそう！▼
 じっさい　あなたは
@@ -376,7 +376,7 @@
 ちからを　ひきだしているッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-08T13:16:35" />
+				Time="2012-01-05T08:53:14" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -384,7 +384,7 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なるほど……！
+			<Text>なるほど……！▼
 あなたの　返答は
 わたくしに　とっての　理想！▼
 実際　あなたは
@@ -393,7 +393,7 @@
 力を　ひきだしているッ！！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-13T13:29:42" />
+				Time="2012-01-05T08:53:19" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"

@@ -1434,11 +1434,11 @@
 			Language="JPN">
 			<Text>パスワード？
 すきに　いれちゃいなさいよ！▼
-ちなみに　あたしが
-すきな　すうじは「０」だけど</Text>
+ちなみに　あたしが　すきな
+ポケモンは　ドラゴンタイプ　だけど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T09:53:56" />
+				Time="2012-01-05T08:35:36" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1448,11 +1448,11 @@
 			Language="JPN_KANJI">
 			<Text>パスワード？
 好きに　いれちゃいなさいよ！▼
-ちなみに　あたしが
-好きな　数字は「０」だけど</Text>
+ちなみに　あたしが　好きな
+ポケモンは　ドラゴンタイプ　だけど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T09:54:04" />
+				Time="2012-01-05T08:35:51" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1461,10 +1461,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・ヒント6-1</Comment>
+・ヒント6-1
+・レシラムのヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-07-25T10:42:42" />
+				Time="2012-01-05T08:34:37" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">
@@ -1489,11 +1490,11 @@
 			Language="JPN">
 			<Text>パスワード？
 すきに　いれちゃいなさいよ！▼
-ちなみに　あたしが
-すきな　すうじは「０」だけど</Text>
+ちなみに　あたしが　すきな
+ポケモンは　ドラゴンタイプ　だけど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T09:53:47" />
+				Time="2012-01-05T08:35:40" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1503,11 +1504,11 @@
 			Language="JPN_KANJI">
 			<Text>パスワード？
 好きに　いれちゃいなさいよ！▼
-ちなみに　あたしが
-好きな　数字は「０」だけど</Text>
+ちなみに　あたしが　好きな
+ポケモンは　ドラゴンタイプ　だけど</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T09:54:06" />
+				Time="2012-01-05T08:35:57" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
@@ -1516,10 +1517,11 @@
 		<CommentCell
 			Language="JPN">
 			<Comment>♀
-・ヒント6-2</Comment>
+・ヒント6-2
+・ゼクロムのヒント</Comment>
 			<CommentModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-10T09:57:12" />
+				Time="2012-01-05T08:34:32" />
 		</CommentCell>
 		<AttributeCell
 			Name="Character">

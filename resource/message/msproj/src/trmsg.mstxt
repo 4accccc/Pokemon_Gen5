@@ -52351,27 +52351,27 @@
 		Style="Large">
 		<LanguageCell
 			Language="JPN">
-			<Text>たしかに
-みせて　もらったわ……</Text>
+			<Text>そんなに
+みせなくても　いいわ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T07:04:22" />
+				Time="2012-01-05T10:27:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T07:04:22" />
+				Time="2012-01-05T10:27:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>確かに
-みせて　もらったわ……</Text>
+			<Text>そんなに
+みせなくても　いいわ……</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T07:04:22" />
+				Time="2012-01-05T10:27:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-07T07:04:22" />
+				Time="2012-01-05T10:27:46" />
 		</LanguageCell>
 		<AttributeCell
 			Name="Width">
@@ -77404,14 +77404,14 @@
 			Language="JPN_KANJI">
 			<Text>登った　マウンテンは
 いつか　くだらなければ　ならない▼
-じんせい　やまあり　たにあり</Text>
+人生　山あり　谷あり</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T04:09:06" />
+				Time="2012-01-05T10:27:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-12-24T04:09:06" />
+				Time="2012-01-05T10:27:46" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
@@ -77751,26 +77751,26 @@
 		<LanguageCell
 			Language="JPN">
 			<Text>さいあいの　ポケモンたちと
-かなでる　ハーモニーよ！▼</Text>
+かなでる　コンチェルト　よ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T11:21:19" />
+				Time="2012-01-05T10:27:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T11:21:19" />
+				Time="2012-01-05T10:27:46" />
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
 			<Text>最愛の　ポケモンたちと
-奏でる　ハーモニーよ！▼</Text>
+奏でる　コンチェルト　よ！▼</Text>
 			<TextModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T11:21:19" />
+				Time="2012-01-05T10:27:46" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="matsumiya:W00224"
-				Time="2011-11-27T11:21:19" />
+				Time="2012-01-05T10:27:46" />
 		</LanguageCell>
 	</TextRow>
 	<TextRow
