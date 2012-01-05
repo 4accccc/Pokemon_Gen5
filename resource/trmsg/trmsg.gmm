@@ -9146,15 +9146,15 @@
 
 	<row id="TRID_SWIMMERW_06_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">え！？　あなた　トレーナーなの
-わーい！　ポケモンたち　でておいで！▼</language>
+わーい！　テッポウオたち　カモーン！▼</language>
 		<language name="JPN_KANJI" width="216">え！？　あなた　トレーナーなの
-わーい！　ポケモンたち　でておいで！▼</language>
+わーい！　テッポウオたち　カモーン！▼</language>
 	</row>
 
 	<row id="TRID_SWIMMERW_06_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">ああ……！　パートナーたち
+		<language name="JPN" width="216">ああ……！　テッポウオたち
 ボールに　もどる　じかんよ……</language>
-		<language name="JPN_KANJI" width="216">ああ……！　パートナーたち
+		<language name="JPN_KANJI" width="216">ああ……！　テッポウオたち
 ボールに　戻る　時間よ……</language>
 	</row>
 
@@ -9172,7 +9172,7 @@
 	<row id="TRID_SWIMMERW_07_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">みて！　わたしの　ポケモン
 すっごく　おおきいんだよ！▼</language>
-		<language name="JPN_KANJI" width="216">みて！　私の　ポケモン▽
+		<language name="JPN_KANJI" width="216">みて！　私の　ポケモン
 すっごく　大きいんだよ！▼</language>
 	</row>
 
@@ -18305,9 +18305,9 @@
 	</row>
 
 	<row id="TRID_SWPLAZMAM_36_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">プラーズマー！
+		<language name="JPN" width="216">オー！　プラーズマー！
 プラズマだんに　えいこう　あれ！</language>
-		<language name="JPN_KANJI" width="216">プラーズマー！
+		<language name="JPN_KANJI" width="216">オー！　プラーズマー！
 プラズマ団に　栄光あれ！</language>
 	</row>
 
