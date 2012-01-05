@@ -246,7 +246,6 @@ void GAMEBEACON_Update(void)
   {
     bsys->resort_set_request = TRUE;
   }
-  NAGI_Printf( "action_no %d\n", bsys->send.info.action.action_no );
 
   if( WB_NET_FIELDMOVE_SERVICEID == GFL_NET_GetGameServiceID() 
         && !GFL_NET_WLIsChildStateScan() )

@@ -2722,6 +2722,12 @@ static void ConvertFootMarkToMyStatus( const DREAM_WORLD_FOOTMARK_DATA *cp_foot,
 {
   GFL_STD_MemClear( p_mystatus, sizeof(MYSTATUS) );
 
+  NAGI_Printf( "足あとデータ受信\n" );
+  NAGI_Printf( "ID  = %d\n", cp_foot->id );
+  NAGI_Printf( "sex = %d\n", cp_foot->sex );
+  NAGI_Printf( "ver = %d\n", cp_foot->rom_code);
+  NAGI_Printf( "lag = %d\n", cp_foot->region_code);
+
   MyStatus_SetMyName(p_mystatus,cp_foot->name);
   MyStatus_SetProfileID(p_mystatus, cp_foot->profileID);
   MyStatus_SetMyNationArea(p_mystatus, cp_foot->nation, cp_foot->area);
