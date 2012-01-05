@@ -1380,10 +1380,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>そうゆうしょうかいすう</Text>
+			<Text>総優勝回数</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-07-28T10:21:40" />
+				User="matsumiya:W00224"
+				Time="2012-01-05T03:31:55" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
@@ -1413,10 +1413,10 @@
 		</LanguageCell>
 		<LanguageCell
 			Language="JPN_KANJI">
-			<Text>なまえ</Text>
+			<Text>名前</Text>
 			<TextModifiedBy
-				User="tanaka_ryota:W00283"
-				Time="2011-07-28T10:22:11" />
+				User="matsumiya:W00224"
+				Time="2012-01-05T03:31:59" />
 			<Status>Editing</Status>
 			<StatusModifiedBy
 				User="tanaka_ryota:W00283"
