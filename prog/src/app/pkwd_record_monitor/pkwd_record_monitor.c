@@ -299,6 +299,10 @@ enum{
 	//
 	FLG_FRAME_STAT		= (1<<12),		// フレーム初期化終了
 	FLG_FRAME_SET_PAL	= (1<<13),		// パレット転送
+	//
+	FLG_TP_NUMBER		= (1<<16),		// 番号タッチ
+	FLG_ANIM_END		= (1<<17),		// アニメ終了
+	FLG_TOUCH_DISP		= (1<<18),		// 非表示状態からの表示
 };
 
 //-------------
@@ -930,6 +934,10 @@ static void pwm_scroll_newmark( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s8 rat
 // マーク
 static void pwm_disp_mark( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const BOOL bflg, const s32 mode, const s32 pos );
 
+// obj非表示
+static void pwm_hide_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk );
+
+
 // debug
 static void pwm_debug( PKWD_RECORD_MONITOR_MAIN_WORK *wk );
 
@@ -1259,7 +1267,8 @@ static void pwm_init( PKWD_RECORD_MONITOR_MAIN_WORK* wk )
 	//------------
 	// 上画面表示
 	//------------
-	pwm_disp_up_bg( wk, 0 );
+//	pwm_disp_up_bg( wk, 0 );
+	GFL_BG_SetVisible( GFL_BG_FRAME0_M, FALSE );
 }
 
 //-----------------------------------------------------------------------------
@@ -2381,7 +2390,7 @@ static void pwm_init_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 	// objの初期化
 	pwm_clear_obj( wk, 0 );
   // キーとタッチでもう1回処理
-	pwm_disp_up_bg( wk, 0 );
+//	pwm_disp_up_bg( wk, 0 );
 	//
 	// スクロールバー初期化
 	pwm_init_scrollbar( wk );
@@ -2460,7 +2469,7 @@ static void pwm_main_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 				&& pwm_is_anime_end(wk, CLWKMODE_UP, CLWK_UP_LINE_BLUE) == FALSE
 			)
 			{
-				GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
+//				GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
 				GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
 				GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
 				GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
@@ -2468,9 +2477,13 @@ static void pwm_main_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 				pwm_disp_record_monitor_string( wk, 1 );
 				// poke icon 表示
 				pwm_disp_poke_obj( wk );
-        // フラグセット(すでに見た)
-        wk->FlagBuffer[wk->ScenarioCurPos].stateflag |= FLG_PWRM_FINISH;
-				wk->SubMode = STEP_LV1;
+				// フラグセット(すでに見た)
+				wk->FlagBuffer[wk->ScenarioCurPos].stateflag |= FLG_PWRM_FINISH;
+//				wk->SubMode = STEP_LV1;
+				wk->SubMode = STEP_LV3+10;
+				wk->Flag |= FLG_TOUCH_DISP;
+				//
+				wk->Flag |= FLG_ANIM_END;
 			}
 			break;
 		// 通常
@@ -2522,6 +2535,20 @@ static void pwm_main_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 			}
 			break;
 		//
+		case STEP_LV3+10:
+			// 終了してから、上画面を切り替える
+			// =>FakeNetModeの時に問題がでてしまうため
+			if( PRINTSYS_QUE_IsFinished( wk->print_que ) == TRUE ){
+				// 決定時は非表示からタッチの場合がある
+				// =>表示タイミングをずらしている
+				if(wk->Flag & FLG_TOUCH_DISP){
+					pwm_disp_up_bg( wk, 1 );
+					wk->Flag &= ~FLG_TOUCH_DISP;
+				}
+				wk->SubMode = STEP_LV1;
+			}
+			break;
+		//
 		case STEP_END:
 			break;
 		//
@@ -2563,6 +2590,7 @@ static void pwm_key_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 	s32		mflg=0;		// 決定の有無
 	s32		listflg=0;
 	s32		kflg=0;		// 入力したか
+	s32		nnflg=0;
 	s32		id;
 	s32		tmp;
 	u32		ret;
@@ -2583,7 +2611,7 @@ static void pwm_key_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 		kflg = 1;
 	}
 	// キーにタッチ=>そのまま(更新)
-	else if(listflg == 2){
+	else if((listflg == 2)||(listflg == 3)){
 		flg = 1;
 		kflg = 2;
 	}
@@ -2638,25 +2666,47 @@ static void pwm_key_record_monitor( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
 	}
 	// 上文字列更新
 	if(wk->Flag & FLG_STR_WAIT){
+		// 通常
+		if(wk->Flag & FLG_ANIM_END){
+			nnflg = 0;
+			if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY ){
+				nnflg = 1;
+			}
+			// 番号をタッチ
+			if(wk->Flag & FLG_TP_NUMBER){
+				nnflg = 1;
+			}
+			if(nnflg == 1){
+				pwm_disp_record_monitor_string( wk, 1 );
+				// poke icon 表示
+				pwm_disp_poke_obj( wk );
+				// フラグセット(すでに見た)
+				wk->FlagBuffer[wk->ScenarioCurPos].stateflag |= FLG_PWRM_FINISH;
+				// BG表示
+//				pwm_disp_up_bg( wk, 1 );
+				wk->SubMode = STEP_LV3+10;
+				wk->Flag |= FLG_TOUCH_DISP;
+				//
+				wk->Flag &= ~FLG_TP_NUMBER;
+			}
+		}
+#if 0
 		//
 		// 画面に何も出ていない状態ならアニメ開始から入る
-#if 0
-		if( wk->first_anime_flag == FALSE )
-		{
-			// アニメさせるシーケンスに移行
-			wk->SubMode = STEP_LINE_ANIME;
-			wk->first_anime_flag = TRUE;
-		}
-//		else
-#endif
 		if( wk->first_anime_flag == TRUE)
 		{
-			pwm_disp_record_monitor_string( wk, 1 );
-			// poke icon 表示
-			pwm_disp_poke_obj( wk );
-			// フラグセット(すでに見た)
-			wk->FlagBuffer[wk->ScenarioCurPos].stateflag |= FLG_PWRM_FINISH;
+			// 1回きりにしておく
+			if(!(wk->Flag & FLG_ANIM_END)){
+				pwm_disp_record_monitor_string( wk, 1 );
+				// poke icon 表示
+				pwm_disp_poke_obj( wk );
+				// フラグセット(すでに見た)
+				wk->FlagBuffer[wk->ScenarioCurPos].stateflag |= FLG_PWRM_FINISH;
+				//
+				wk->Flag |= FLG_ANIM_END;
+			}
 		}
+#endif
 		// カラーの変更
 		//tmp = wk->FlagBuffer[wk->ScenarioCurPos].color;
 		wk->Flag &= ~FLG_STR_WAIT;
@@ -3129,34 +3179,31 @@ static s32 pwm_get_scenario_curpos( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s3
 //--------------------------------------------------------------------------------------------
 static void pwm_disp_up_bg( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const s32 smode )
 {
-	u8		flag = VISIBLE_OFF;
+	u8		flag = VISIBLE_ON;
 	int		mode;
 	//
 	// 引き継ぐ
 	if(smode == 0){
-#if 0
 		// 限定で大丈夫なはずなのでここで判定
 		mode = GFL_UI_CheckTouchOrKey();
 		//
-		// キーだと表示
-		if(mode == GFL_APP_END_KEY){
-			//flag = VISIBLE_ON;    // アニメ後ONにする
-			if( wk->first_anime_flag == FALSE )
-			{
-				// アニメさせるシーケンスに移行
-				wk->SubMode = STEP_LINE_ANIME;
-				wk->first_anime_flag = TRUE;
-			}
+		// タッチはoff
+		if(mode == GFL_APP_END_TOUCH){
+			flag = VISIBLE_OFF;
 		}
-#endif
 		// 一旦消しておく
 		GFL_BG_SetVisible( GFL_BG_FRAME0_M, flag );
 	}
 	// 表示
 	else{
-		flag = VISIBLE_ON;
+//		flag = VISIBLE_ON;
 		// フォント面のみを考慮にいれる
 		GFL_BG_SetVisible( GFL_BG_FRAME0_M, flag );
+	}
+	//
+	// 非表示の場合は消す
+	if(flag == VISIBLE_OFF){
+		pwm_hide_obj( wk );
 	}
 }
 
@@ -3328,7 +3375,11 @@ static s32 pwm_is_main_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const u32 
 		//
 		case FRAMELIST_RET_MOVE:			// move
 		case FRAMELIST_RET_SCROLL:			// move
+		case FRAMELIST_RET_RAIL:
 			flg = 1;
+			break;
+		case FRAMELIST_RET_CURSOR_ON:		// カーソルがついた(タッチ/キー)
+			flg = 3;
 			break;
 		default:
 			break;
@@ -3359,21 +3410,33 @@ static s32 pwm_is_main_framelist( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const u32 
 		}
 	}
 	// 決定
-	else if(flg == 2){
+	else if((flg == 2)||(flg == 3)){
 		// カーソル位置の取得
 		pwm_calc_framelist( wk );
 		//
 		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
-      // SE
-      PMSND_PlaySE( SND_PKWD_RECORD_MONITOR_ARROW );
-    }
+			// SE
+			PMSND_PlaySE( SND_PKWD_RECORD_MONITOR_ARROW );
+		}
+		// 点滅(消えているはず)
+		FRAMELIST_ChangePosPalette( wk->frame_list_work, wk->ListCurPos, 1 );
+		// 項目をタッチしたときに点滅させるために、
+		// キーで終了したものとする(特別処理)
+		if(flg == 2){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+		}
+		//
+		// アニメ終了してから判定
+		if( wk->first_anime_flag == TRUE){
+			wk->Flag |= FLG_TP_NUMBER;
+		}
 	}
 	//
 	// ここでなくてもいいはず
 	// 上画面表示
-	//if(flg != 0){
-	//  pwm_disp_up_bg( wk, 1 );
-	//}
+	if(flg == 1){
+		pwm_disp_up_bg( wk, 0 );
+	}
 	return( flg );
 }
 
@@ -3732,6 +3795,36 @@ static void pwm_disp_mark( PKWD_RECORD_MONITOR_MAIN_WORK * wk, const BOOL bflg, 
 	pwm_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_MARK_GOOD+pos, bflg );
 	if(bflg == TRUE){
 		pwm_chg_objseq(  wk, CLWKMODE_UP, CLWK_UP_MARK_GOOD+pos, CLWK_LIST_ANM_SEQ_GOOD+mode );
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	obj非表示
+ *
+ * @param	PKWD_RECORD_MONITOR_MAIN_WORK*		wk
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void pwm_hide_obj( PKWD_RECORD_MONITOR_MAIN_WORK * wk )
+{
+	s32 i;
+	//
+	// ポケモン
+	for(i=0;i<PKWD_RECORD_MONITOR_POKE_OBJ_MAXNUM;i++){
+		// ポケモン
+		pwm_set_obj_visible( wk, CLWKMODE_POKE, i, FALSE );
+		// スター
+		pwm_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_STAR_00+i, FALSE );
+	}
+	// 王冠
+	pwm_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_CROWN, FALSE );
+	pwm_set_obj_visible( wk, CLWKMODE_UP, CLWK_UP_KIRA, FALSE );
+	//
+	// 評価マーク表示
+	for(i=0;i<3;i++){
+		pwm_disp_mark( wk, FALSE, i, i );
 	}
 }
 

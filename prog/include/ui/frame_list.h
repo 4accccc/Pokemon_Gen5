@@ -14,6 +14,7 @@
 #pragma once
 
 #include "print/printsys.h"
+#include "system/blink_palanm.h"
 
 
 //============================================================================================
@@ -398,3 +399,8 @@ extern void FRAMELIST_ForceScroll( FRAMELIST_WORK * wk, int scroll );
  */
 //-----------------------------------------------------------------------------
 extern u8 FRAMELIST_GetBgScrollCount( const FRAMELIST_WORK * wk );
+
+
+// 点滅用ワーク
+extern BLINKPALANM_WORK * FRAMELIST_GetBlinkPalAnm( FRAMELIST_WORK * wk );
+

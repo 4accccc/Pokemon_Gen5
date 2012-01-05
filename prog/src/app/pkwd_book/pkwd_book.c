@@ -16,6 +16,7 @@
 
 //簡易CLWK読み込み＆開放ユーティリティー
 #include "ui/ui_easy_clwk.h"
+#include "system/blink_palanm.h"
 #include "ui/frame_list.h"
 
 // サウンド
@@ -1649,7 +1650,7 @@ static void pwb_init( PKWD_BOOK_MAIN_WORK* wk )
 	//---------------
 	pwb_init_bg(  wk );
 	pwb_init_bg2( wk, GFL_BG_FRAME1_S, PLTID_SUB_BG_CMN );
-	pwb_chg_bglogo( wk, 0, 0 );
+//	pwb_chg_bglogo( wk, 0, 0 );
 	
 	//------------------------
 	// フォントパレットセット
@@ -1821,6 +1822,8 @@ static void pwb_key_all( PKWD_BOOK_MAIN_WORK* wk )
 		// 初期化
 		case STEP_INIT:
 			wk->Step = STEP_INIT+10;
+			// Vblank待ち
+			pwb_chg_bglogo( wk, 0, 1 );
 			break;
 		//
 		// wipe待ち
@@ -2045,12 +2048,10 @@ static void pwb_chg_bglogo( PKWD_BOOK_MAIN_WORK* wk, const s32 num, const s32 mo
 		GFL_HEAP_FreeMemory( sbuffer );
 		GFL_HEAP_FreeMemory( cbuffer );
 	}
-	// 初期化時
+	// 初期化時(未使用)
 	else{
-		// 本来はこちらは使いたくないのだが、
-		// なぜか(初期化時に)うまく転送されないことがあったので、
-		// 初期化時のみこちらを使用する
-		// (たぶん、転送が間に合わかなった?ため)
+		// 転送のタイミングを待ってから、通常時の処理をしたところ、
+		// 正しく動いたので、こちらは未使用とした
 		handle	= GFL_ARC_OpenDataHandle( ARCID_B_SCENARIO_GRA, wk->heapID );
 		//
 		// キャラ転送
@@ -3317,6 +3318,21 @@ static void pwb_main_book( PKWD_BOOK_MAIN_WORK * wk )
 					pwb_disp_up_bg( wk, 1 );
 					wk->Flag &= ~FLG_TOUCH_DISP;
 				}
+//				pwb_init_meswin( wk );
+//				pwb_init_selectwin( wk );
+//				wk->SubMode = STEP_LV4;
+				wk->SubMode = STEP_LV3+20;
+				// 決定、点滅処理
+				BLINKPALANM_SetDecideAnime( FRAMELIST_GetBlinkPalAnm( wk->frame_list_work) );
+			}
+			break;
+		//
+		// 点滅待ち
+		case STEP_LV3+20:
+			// 点滅のMainはpwb_main_framelist()を通す必要があるが、
+			// 他の入力を考慮にいれてblinkのみにしておく
+			BLINKPALANM_Main( FRAMELIST_GetBlinkPalAnm( wk->frame_list_work) );
+			if( BLINKPALANM_CheckDecideAnime( FRAMELIST_GetBlinkPalAnm( wk->frame_list_work )) == TRUE ){
 				pwb_init_meswin( wk );
 				pwb_init_selectwin( wk );
 				wk->SubMode = STEP_LV4;
@@ -3354,6 +3370,12 @@ static void pwb_main_book( PKWD_BOOK_MAIN_WORK * wk )
 					wk->SubMode = STEP_LV1;
 					// 上画面表示
 					pwb_disp_up_bg( wk, 0 );
+					// 点滅後処理(通常点滅に戻す)
+					BLINKPALANM_InitAnimeCount( FRAMELIST_GetBlinkPalAnm( wk->frame_list_work) );
+					// タッチ時、点滅カーソルをoff
+					if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
+						FRAMELIST_ChangePosPalette( wk->frame_list_work, wk->ListCurPos, 0 );
+					}
 				}
 //				OS_Printf("selwin :%d\n",flg);
 				//
@@ -4844,6 +4866,7 @@ static s32 pwb_is_main_framelist( PKWD_BOOK_MAIN_WORK * wk, const u32 mode )
 		//
 		case FRAMELIST_RET_MOVE:			// move
 		case FRAMELIST_RET_SCROLL:			// move
+		case FRAMELIST_RET_RAIL:
 			flg = 1;
 			break;
 		case FRAMELIST_RET_CURSOR_ON:		// カーソルがついた(タッチ/キー)
@@ -4885,6 +4908,9 @@ static s32 pwb_is_main_framelist( PKWD_BOOK_MAIN_WORK * wk, const u32 mode )
 		PMSND_PlaySE( SND_PKWD_BOOK_DECIDE );
 		// 決定時は、すぐには上画面を表示しない
 		wk->Flag |= FLG_TOUCH_DISP;
+		//
+		// 点滅させる
+		FRAMELIST_ChangePosPalette( wk->frame_list_work, wk->ListCurPos, 1 );
 	}
 	//
 	// ここでなくてもいいはず

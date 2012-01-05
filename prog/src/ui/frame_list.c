@@ -2428,3 +2428,18 @@ u8 FRAMELIST_GetBgScrollCount( const FRAMELIST_WORK * wk )
 {
 	return wk->listBgScrollCount;
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		点滅用(blink)
+ *
+ * @param		wk				ワーク
+ *
+ * @return		BLINKPALANIM_WORK
+ */
+//--------------------------------------------------------------------------------------------
+BLINKPALANM_WORK * FRAMELIST_GetBlinkPalAnm( FRAMELIST_WORK * wk )
+{
+	return( wk->blink );
+}
+
