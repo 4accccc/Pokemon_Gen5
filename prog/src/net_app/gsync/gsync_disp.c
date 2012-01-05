@@ -36,6 +36,7 @@
 #include "system/bmp_menu.h"
 #include "sound/pm_sndsys.h"
 #include "ui/touchbar.h"
+#include "field/tpoke_data.h"
 
 #include "../../field/event_ircbattle.h"
 #include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
@@ -1147,14 +1148,23 @@ void GSYNC_DISP_PokemonMove(GSYNC_DISP_WORK* pWork)
 
 void GSYNC_DISP_MoveIconPokeAdd(GSYNC_DISP_WORK* pWork,int index, int no, int form, int sex)
 {
-  if((no!=0) && (no <= MONSNO_ARUSEUSU)){  // データ読み込み・破棄
-    pWork->aIconParam[index].no = no;
-    pWork->aIconParam[index].form = form;
-    if(sex > 2){
-      sex=0;
+  TPOKE_DATA* pTP =TPOKE_DATA_Create( pWork->heapID );
+
+  //if((no!=0) && (no <= MONSNO_ARUSEUSU)){  // データ読み込み・破棄
+  if( no!= 0 && no <= MONSNO_END ){
+    if ( TPOKE_DATA_GetIndex( pTP, no, sex, form ) != TPOKE_DATA_INDEX_NG )
+    {
+      pWork->aIconParam[index].no = no;
+      pWork->aIconParam[index].form = form;
+      if(sex > 2){
+        sex=0;
+      }
+      pWork->aIconParam[index].sex = sex;
     }
-    pWork->aIconParam[index].sex = sex;
   }
+
+
+  TPOKE_DATA_Delete( pTP );
 }
 
 void GSYNC_DISP_MoveIconItemAdd(GSYNC_DISP_WORK* pWork,int index, int no)
