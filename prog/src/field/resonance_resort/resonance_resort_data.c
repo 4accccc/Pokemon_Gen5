@@ -2560,6 +2560,16 @@ void RESORT_PROXY_DATA_SetCommData( RESORT_PROXY_DATA *p_wk, const MYSTATUS *cp_
   p_wk->pokemon = pokemon;
 
 
+  //ŽóM“úŽž
+  {
+    RTCDate date;
+    GFL_RTC_GetDate(&date);
+    p_wk->meet_year = date.year;
+    p_wk->meet_month = date.month;
+    p_wk->meet_day  = date.day;
+  }
+
+
   //—”
   p_wk->rnd_seed = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
 
