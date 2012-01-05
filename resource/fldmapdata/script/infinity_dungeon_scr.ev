@@ -1264,6 +1264,8 @@ EVENT_END
 // トレーナー会話
 trainer_talk:
 {
+  DEFINE_LOCAL	LWK_IS_AREA1_TUTORIAL
+
   // ダンジョンの状態を取得
   _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
 
@@ -1272,12 +1274,15 @@ trainer_talk:
  
   // バージョン取得
   _INFINITY_DUNGEON_GET_VERSION( LWK_D_VERSION )
- 
+
   //移動終了前、会話へ
   IF $LWK_IS_GATE == TRUE THEN
 
+    // エリア１チュートリアルメッセージを話すかどうか判断
+    _INFINITY_DUNGEON_GET_PARAM( SCR_INFDUNGEON_PARAM_IS_TUTORIAL_AREA_1  ,0 ,LWK_IS_AREA1_TUTORIAL )
+   
     // 現在エリア１でかつ未クリア時のみ
-    IF (($LWK_DUNGEON_STATUS == $LWK_NOW_AREA) && ($LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_1)) THEN
+    IF ($LWK_IS_AREA1_TUTORIAL == TRUE ) THEN
       // バージョンによってメッセージ変化
       IF $LWK_D_VERSION == VERSION_B2 THEN
         _BALLOONWIN_OBJMSG( msg_tutorial_gate_start_01_b, SCWK_TARGET_OBJID )
@@ -1304,6 +1309,8 @@ _RET
 // ゲート開放イベント
 gate_open_talk:
 {
+  DEFINE_LOCAL	LWK_IS_AREA1_TUTORIAL
+
   // ダンジョンの状態を取得
   _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
 
@@ -1313,8 +1320,12 @@ gate_open_talk:
   // バージョン取得
   _INFINITY_DUNGEON_GET_VERSION( LWK_D_VERSION )
 
+  // エリア１チュートリアルメッセージを話すかどうか判断
+  _INFINITY_DUNGEON_GET_PARAM( SCR_INFDUNGEON_PARAM_IS_TUTORIAL_AREA_1  ,0 ,LWK_IS_AREA1_TUTORIAL )
+  
   // ゲート専用会話メッセージ
-  IF (($LWK_DUNGEON_STATUS == $LWK_NOW_AREA) && ($LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_1)) THEN
+  IF ($LWK_IS_AREA1_TUTORIAL == TRUE ) THEN
+    // チュートリアル時
     // バージョンによってメッセージ変化
     IF $LWK_D_VERSION == VERSION_B2 THEN
       _BALLOONWIN_OBJMSG( msg_tutorial_gate_end_01_b, SCWK_TARGET_OBJID )
@@ -1322,6 +1333,7 @@ gate_open_talk:
       _BALLOONWIN_OBJMSG( msg_tutorial_gate_end_01_w, SCWK_TARGET_OBJID )
     ENDIF
   ELSE
+    // 通常時
     _INFINITY_DUNGEON_GET_GATE_TR_MSG_ID( FALSE, LWK_MSG_ID )
     _BALLOONWIN_OBJMSG( LWK_MSG_ID, SCWK_TARGET_OBJID )
   ENDIF
@@ -2330,6 +2342,7 @@ talk_hint:
 {
   DEFINE_LOCAL  LWK_BOSS_FLOOR
   DEFINE_LOCAL  LWK_GK_ROOM_TR_NUM
+  DEFINE_LOCAL	LWK_IS_AREA1_TUTORIAL
 
   // ダンジョンの状態を取得
   _INFINITY_DUNGEON_GET_DUNGEON_STATUS( LWK_DUNGEON_STATUS )
@@ -2402,7 +2415,10 @@ talk_hint:
 
   
   // ゲート専用会話メッセージ
-  IF (($LWK_DUNGEON_STATUS == $LWK_NOW_AREA) && ($LWK_NOW_AREA == INFINITY_DUNGEON_AREA_ID_1) && ($LWK_IS_GATE == TRUE)) THEN
+  // エリア１チュートリアルメッセージを話すかどうか判断
+  _INFINITY_DUNGEON_GET_PARAM( SCR_INFDUNGEON_PARAM_IS_TUTORIAL_AREA_1  ,0 ,LWK_IS_AREA1_TUTORIAL )
+  
+  IF (($LWK_IS_AREA1_TUTORIAL == TRUE) && ($LWK_IS_GATE == TRUE)) THEN
     // バージョンによってメッセージ変化
     IF $LWK_D_VERSION == VERSION_B2 THEN
       _BALLOONWIN_OBJMSG_POS( msg_tutorial_gate_hint_01_b , SCWK_TARGET_OBJID, POS_DOWN )

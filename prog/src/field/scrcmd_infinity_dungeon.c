@@ -913,6 +913,23 @@ VMCMD_RESULT EvCmdInfinityDungeonGetDungeonData( VMHANDLE *p_core, void *p_wk_ad
       *p_ret_wk = p_dungeon_data->reward_item_num;
     }
     break;
+  case SCR_INFDUNGEON_PARAM_IS_TUTORIAL_AREA_1:
+    {
+      u8 dungeon_status_b = INFINITYDUNGEON_SAVE_GetDungeonStatus( p_save ,FIELD_WFBC_CORE_TYPE_BLACK_CITY );
+      u8 dungeon_status_w = INFINITYDUNGEON_SAVE_GetDungeonStatus( p_save ,FIELD_WFBC_CORE_TYPE_WHITE_FOREST );
+
+      // 白、黒バージョンともにエリア１をクリアしていない時のみチュートリアル中
+      if( (dungeon_status_b  == INFINITY_DUNGEON_AREA_ID_1) &&
+          (dungeon_status_w  == INFINITY_DUNGEON_AREA_ID_1) )
+      {
+        *p_ret_wk = TRUE;
+      }
+      else
+      {
+        *p_ret_wk = FALSE;
+      }
+    }
+    break;
   default:
     {
       GF_ASSERT(0);

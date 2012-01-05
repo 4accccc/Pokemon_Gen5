@@ -924,6 +924,7 @@
 #define SCR_INFDUNGEON_WARP_FADE                (8) ///<無限ダンジョン：フェード有りワープ
 #define SCR_INFDUNGEON_PARAM_REWARD_ITEM        (9) ///<無限ダンジョン：報酬アイテムID
 #define SCR_INFDUNGEON_PARAM_REWARD_NUM         (10) ///<無限ダンジョン：報酬アイテム個数
+#define SCR_INFDUNGEON_PARAM_IS_TUTORIAL_AREA_1 (11) ///<無限ダンジョン：エリア１チュートリアル中かどうか
 
 //--------------------------------------------------------------
 //  アジト船の位置をタウンマップに通知するための定義
